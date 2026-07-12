@@ -44,6 +44,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const role = (session.user as any)?.role;
   // Kitchen staff use the kitchen display, not the admin panel
   if (role === "kitchen_staff") redirect("/kitchen");
+  // Platform support staff belong in /superadmin — NEVER /login: an authed
+  // user bounced to /login loops forever (the login page routes them right
+  // back). Same class of bug as the superadmin/restaurantId rule in AGENTS.md.
+  if (role === "platform_support") redirect("/superadmin");
   if (!["restaurant_admin", "superadmin", "reseller_partner"].includes(role)) redirect("/login");
 
   const user = await getSessionUser();

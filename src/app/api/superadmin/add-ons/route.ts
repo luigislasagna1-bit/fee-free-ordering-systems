@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionUser } from "@/lib/session";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
 
 export async function GET() {
-  const user = await getSessionUser();
-  if (!user || user.role !== "superadmin") {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const addOns = await prisma.addOn.findMany({ orderBy: { displayOrder: "asc" } });
@@ -12,8 +12,8 @@ export async function GET() {
 }
 
 export async function PATCH(req: NextRequest) {
-  const user = await getSessionUser();
-  if (!user || user.role !== "superadmin") {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const body = await req.json().catch(() => ({} as any));

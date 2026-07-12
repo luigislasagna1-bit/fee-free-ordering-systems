@@ -114,7 +114,7 @@ function LoginFormInner({
       const session = await getSession();
       const role = (session?.user as any)?.role;
       const dest =
-        role === "superadmin" ? "/superadmin"
+        role === "superadmin" || role === "platform_support" ? "/superadmin"
         : role === "reseller_partner" || role === "pending_reseller" ? "/reseller"
         : "/admin";
       window.location.assign(dest);

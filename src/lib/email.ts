@@ -406,6 +406,37 @@ export async function sendShipdayPartnerIntro(params: {
   });
 }
 
+/**
+ * Platform TEAM invite (Team feature, Luigi 2026-07-12) — sent when the
+ * superadmin invites a new platform user from /superadmin/team. Carries a
+ * 30-day set-your-password link (PasswordResetToken), so no password ever
+ * travels through chat/UI/email. English by design (internal staff mail).
+ */
+export async function sendPlatformTeamInviteEmail(params: {
+  to: string;
+  name?: string | null;
+  roleLabel: string;
+  invitedBy: string;
+  inviteUrl: string;
+}) {
+  const esc = (s: string) =>
+    s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
+  const first = params.name?.trim().split(/\s+/)[0] || "there";
+  const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827">
+    <p style="font-size:15px">Hi ${esc(first)},</p>
+    <p style="font-size:15px;line-height:1.6"><strong>${esc(params.invitedBy)}</strong> invited you to the <strong>Fee Free Ordering</strong> platform team as <strong>${esc(params.roleLabel)}</strong>.</p>
+    <p style="font-size:14px;line-height:1.6">Set your password to activate your account (link valid for 30 days):</p>
+    <p style="margin:18px 0"><a href="${params.inviteUrl}" style="background:#059669;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;display:inline-block">Set your password</a></p>
+    <p style="font-size:12px;color:#6b7280;line-height:1.6">If the button doesn't work, paste this link into your browser:<br/>${params.inviteUrl}</p>
+    <p style="font-size:12px;color:#9ca3af;margin-top:20px">If you weren't expecting this invitation, you can ignore this email.</p>
+  </div>`;
+  return send({
+    to: params.to,
+    subject: "You're invited to the Fee Free Ordering platform team",
+    html,
+  });
+}
+
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const t = await getDict(params.locale);
   const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });

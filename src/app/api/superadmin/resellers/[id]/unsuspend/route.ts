@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isSuperadmin } from "@/lib/roles";
+import { requireSuperadmin } from "@/lib/platform-auth";
 
 /**
  * POST /api/superadmin/resellers/[id]/unsuspend
@@ -11,8 +10,8 @@ import { isSuperadmin } from "@/lib/roles";
  * time of payment).
  */
 export async function POST(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
-  if (!isSuperadmin(user?.role)) {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

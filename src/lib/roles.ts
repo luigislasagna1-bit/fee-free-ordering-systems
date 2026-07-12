@@ -5,6 +5,13 @@
  *
  * Roles:
  *   superadmin        — platform operator. Can do anything.
+ *   platform_support  — platform TEAM member with restricted powers (Team
+ *                       feature, Luigi 2026-07-12): sees the /superadmin area
+ *                       read-mostly (restaurants, resellers, reports) but can
+ *                       NOT touch platform secrets (Stripe/email/maps keys),
+ *                       plans/add-on pricing, payouts, impersonation, or the
+ *                       team itself. Gate mutations with requireSuperadmin(),
+ *                       reads with requirePlatformStaff() (platform-auth.ts).
  *   reseller_partner  — approved reseller who manages a set of restaurants
  *                       and earns commission on their subscription revenue.
  *   pending_reseller  — has applied via /partners/apply, awaiting approval.
@@ -14,6 +21,7 @@
  */
 export const ROLES = {
   SUPERADMIN: "superadmin",
+  PLATFORM_SUPPORT: "platform_support",
   RESELLER_PARTNER: "reseller_partner",
   PENDING_RESELLER: "pending_reseller",
   RESTAURANT_ADMIN: "restaurant_admin",
@@ -30,6 +38,13 @@ export function isRole(value: unknown): value is Role {
 
 export function isSuperadmin(role: string | null | undefined): boolean {
   return role === ROLES.SUPERADMIN;
+}
+
+/** Platform STAFF = full superadmin OR restricted platform_support. Gates the
+ *  /superadmin AREA and its read endpoints; mutations/secrets stay behind
+ *  isSuperadmin. See src/lib/platform-auth.ts for the request-level guards. */
+export function isPlatformStaff(role: string | null | undefined): boolean {
+  return role === ROLES.SUPERADMIN || role === ROLES.PLATFORM_SUPPORT;
 }
 
 export function isResellerPartner(role: string | null | undefined): boolean {

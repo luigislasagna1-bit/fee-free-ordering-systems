@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
 
 /**
@@ -9,9 +8,9 @@ import prisma from "@/lib/db";
  * (restaurants then fall back to the free map / their own key).
  */
 export async function POST(req: NextRequest) {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (session?.user?.role !== "superadmin") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const user = await requireSuperadmin();
+  if (!user) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   const body = (await req.json().catch(() => ({}))) as { googleMapsApiKey?: unknown };
@@ -19,8 +18,8 @@ export async function POST(req: NextRequest) {
 
   await prisma.platformSettings.upsert({
     where: { id: "singleton" },
-    create: { id: "singleton", googleMapsApiKey: raw || null, updatedBy: session.user?.email ?? null },
-    update: { googleMapsApiKey: raw || null, updatedBy: session.user?.email ?? null },
+    create: { id: "singleton", googleMapsApiKey: raw || null, updatedBy: user.email ?? null },
+    update: { googleMapsApiKey: raw || null, updatedBy: user.email ?? null },
   });
 
   return NextResponse.json({ ok: true });

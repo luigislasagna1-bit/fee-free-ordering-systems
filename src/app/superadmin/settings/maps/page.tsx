@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
 import { MapsSettingsClient } from "./MapsSettingsClient";
 
 export default async function MapsSettingsPage() {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (session?.user?.role !== "superadmin") redirect("/login");
+  // Platform secrets — FULL superadmin only. The layout already bounced
+  // unauthenticated visitors to /login; a support user lands on the dashboard.
+  const gate = await requireSuperadmin();
+  if (!gate) redirect("/superadmin");
 
   // Tolerate the column not yet existing on this DB (prod migration may lag the
   // deploy) — render empty rather than 500 until the schema lands.

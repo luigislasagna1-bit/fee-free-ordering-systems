@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isSuperadmin, ROLES } from "@/lib/roles";
+import { requireSuperadmin } from "@/lib/platform-auth";
+import { ROLES } from "@/lib/roles";
 import { notifyResellerOfApplicationChange } from "@/lib/reseller-application-notify";
 
 /**
@@ -11,8 +11,8 @@ import { notifyResellerOfApplicationChange } from "@/lib/reseller-application-no
  * the reseller dashboard. Idempotent.
  */
 export async function POST(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
-  if (!isSuperadmin(user?.role)) {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -30,7 +30,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
       data: {
         status: "approved",
         approvedAt: new Date(),
-        approvedBy: user!.id,
+        approvedBy: user.id,
         suspendedAt: null,
         suspendedReason: null,
       },

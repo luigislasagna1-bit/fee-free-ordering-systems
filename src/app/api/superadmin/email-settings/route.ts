@@ -1,25 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
 import { encrypt, decrypt } from "@/lib/encrypt";
 import { resetEmailTransport } from "@/lib/email";
-
-async function requireSuperAdmin() {
-  const session = await getServerSession(authOptions as any) as any;
-  const role = session?.user?.role;
-  if (role !== "superadmin") {
-    return { error: NextResponse.json({ error: "Forbidden" }, { status: 403 }) };
-  }
-  return { user: session.user };
-}
 
 // Returns a *safe* view of platform email settings — never returns the full
 // decrypted API key, but does return a short masked preview ("re_abc…wXyZ") so
 // the super-admin can verify what's stored without exposing the secret.
 export async function GET() {
-  const auth = await requireSuperAdmin();
-  if ("error" in auth) return auth.error;
+  const user = await requireSuperadmin();
+  if (!user) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const settings = await prisma.platformSettings.findUnique({ where: { id: "singleton" } });
 
@@ -45,8 +35,8 @@ export async function GET() {
 }
 
 export async function PUT(req: NextRequest) {
-  const auth = await requireSuperAdmin();
-  if ("error" in auth) return auth.error;
+  const user = await requireSuperadmin();
+  if (!user) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   if (!process.env.ENCRYPTION_KEY) {
     return NextResponse.json(
@@ -60,7 +50,7 @@ export async function PUT(req: NextRequest) {
 
   const data: Record<string, any> = {
     id: "singleton",
-    updatedBy: (auth.user as any).email ?? null,
+    updatedBy: user.email ?? null,
   };
 
   if (typeof emailFrom === "string") {

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
 import { encrypt } from "@/lib/encrypt";
 import { resetStripeCache } from "@/lib/stripe";
@@ -10,8 +9,8 @@ function preview(value: string): string {
 }
 
 export async function PUT(req: NextRequest) {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (session?.user?.role !== "superadmin") {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -50,7 +49,7 @@ export async function PUT(req: NextRequest) {
     stripeMode: mode,
     stripeEnabled: enabled,
     stripePublishableKey: publishableKey,
-    updatedBy: session.user.email ?? null,
+    updatedBy: user.email ?? null,
   };
 
   let secretKeyPreviewOut: string | null = null;

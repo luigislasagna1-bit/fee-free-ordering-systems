@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import { formatCurrency } from "@/lib/utils";
 import { Sparkles, AlertTriangle, CheckCircle2, Clock, XCircle } from "lucide-react";
 import { RunSettlementButton } from "./RunSettlementButton";
@@ -20,6 +22,12 @@ import { RunSettlementButton } from "./RunSettlementButton";
 export const dynamic = "force-dynamic";
 
 export default async function SettlementsPage() {
+  // Money (marketplace billing + manual settlement rerun) — FULL superadmin
+  // only. The layout already bounced unauthenticated visitors to /login; a
+  // support user lands back on the dashboard.
+  const gate = await requireSuperadmin();
+  if (!gate) redirect("/superadmin");
+
   const rows = await prisma.marketplaceSettlement.findMany({
     orderBy: [{ monthStart: "desc" }, { createdAt: "desc" }],
     take: 200,

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isSuperadmin } from "@/lib/roles";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import { notifyResellerOfPayoutChange } from "@/lib/reseller-payout-notify";
 
 /**
@@ -12,8 +11,8 @@ import { notifyResellerOfPayoutChange } from "@/lib/reseller-payout-notify";
  * superadmin "claim" the payout so two superadmins don't double-pay.
  */
 export async function POST(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
-  if (!isSuperadmin(user?.role)) {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const { id } = await params;
@@ -24,7 +23,7 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
   }
   await prisma.payoutRequest.update({
     where: { id },
-    data: { status: "approved", approvedAt: new Date(), approvedBy: user!.id },
+    data: { status: "approved", approvedAt: new Date(), approvedBy: user.id },
   });
 
   // Fire-and-forget — email failure doesn't roll back the approval.

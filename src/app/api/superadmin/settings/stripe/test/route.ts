@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import { getStripe, getStripeConfig } from "@/lib/stripe";
 
 /**
@@ -9,8 +8,8 @@ import { getStripe, getStripeConfig } from "@/lib/stripe";
  * accessible. Doesn't touch any data.
  */
 export async function POST() {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (session?.user?.role !== "superadmin") {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

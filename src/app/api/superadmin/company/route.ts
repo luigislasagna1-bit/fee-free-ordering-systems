@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
 
 /**
@@ -11,9 +10,9 @@ import prisma from "@/lib/db";
  * page. Empty string clears a field. (Luigi 2026-07-02.)
  */
 export async function POST(req: NextRequest) {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (session?.user?.role !== "superadmin") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const user = await requireSuperadmin();
+  if (!user) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   const body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
@@ -29,7 +28,7 @@ export async function POST(req: NextRequest) {
     companyLogoUrl: str(body.companyLogoUrl, 500),
     companyRegistryNo: str(body.companyRegistryNo, 120),
     companyWebsite: str(body.companyWebsite, 200),
-    updatedBy: session.user?.email ?? null,
+    updatedBy: user.email ?? null,
   };
 
   await prisma.platformSettings.upsert({

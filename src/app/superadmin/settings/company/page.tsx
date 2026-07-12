@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
 import { CompanySettingsClient } from "./CompanySettingsClient";
 
@@ -10,8 +9,11 @@ import { CompanySettingsClient } from "./CompanySettingsClient";
  * Configured ONCE here, read system-wide by the invoice page — never hardcoded.
  */
 export default async function CompanySettingsPage() {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (session?.user?.role !== "superadmin") redirect("/login");
+  // Platform legal/invoicing identity — FULL superadmin only. The layout
+  // already bounced unauthenticated visitors to /login; a support user lands
+  // on the dashboard.
+  const gate = await requireSuperadmin();
+  if (!gate) redirect("/superadmin");
 
   // Tolerate the columns not yet existing (prod migration may lag the deploy).
   let s: {

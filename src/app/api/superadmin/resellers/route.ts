@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
-import { isSuperadmin } from "@/lib/roles";
+import { requirePlatformStaff } from "@/lib/platform-auth";
 
 /**
  * GET /api/superadmin/resellers
  * List all reseller profiles. Optional ?status=pending|approved|suspended|rejected filter.
+ * Read-only — platform_support may view.
  */
 export async function GET(req: NextRequest) {
-  const user = await getSessionUser();
-  if (!isSuperadmin(user?.role)) {
+  const user = await requirePlatformStaff();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 

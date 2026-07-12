@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSessionUser } from "@/lib/session";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
-
-async function requireSuperadmin() {
-  const user = await getSessionUser();
-  if (!user || user.role !== "superadmin") return null;
-  return user;
-}
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const user = await requireSuperadmin();

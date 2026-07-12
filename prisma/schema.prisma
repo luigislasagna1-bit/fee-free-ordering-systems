@@ -826,6 +826,32 @@ model PasswordResetToken {
   @@index([userId])
 }
 
+/// Append-only audit trail for PLATFORM-LEVEL actions (Team feature,
+/// Luigi 2026-07-12 — the superadmin routes' "[SUPERADMIN AUDIT]"
+/// console.warn calls anticipated exactly this table). One row per
+/// sensitive action: who (actor email snapshot — survives account
+/// deletion), what (action slug), against which entity, and a small
+/// JSON detail blob. Never updated, never deleted from app code.
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  /// Actor snapshot — email + role AT THE TIME of the action.
+  actorId    String
+  actorEmail String
+  actorRole  String
+  /// kebab-case action slug, e.g. "team.invite", "team.deactivate",
+  /// "restaurant.delete", "impersonate.start".
+  action     String
+  /// What the action targeted: "user:<id>", "restaurant:<id>", … Free-form
+  /// but prefixed so it's greppable.
+  entity     String?
+  /// Small JSON context (old/new role, restaurant name, …). Never secrets.
+  detail     Json?
+  createdAt  DateTime @default(now())
+
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
+}
+
 /// A named menu version owned by a restaurant (e.g. "Main", "Summer",
 /// "Winter"). Exactly ONE menu per restaurant is active (isActive=true) at a
 /// time — that's the one customers see. Others are drafts/archived that the

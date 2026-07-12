@@ -34,7 +34,7 @@
 4. While you're there: note the **D-U-N-S Number** shown — paste it to Claude (useful reference).
 5. Tell Claude "done A4".
 
-### A5. ☐ ShipDay webhook — SIMPLIFIED (2026-07-12: the wizard now does the hard part)
+### A5. ✅ DONE 2026-07-12 — ShipDay webhook configured + verified (wizard flow)
 **Why:** the delivery-status webhook rejects unauthenticated callers (security hardening). ~~Vercel env var + manual URL~~ **Replaced:** every restaurant now gets its own personal webhook link, shown right on the Driver Pool page — no Vercel steps, no password manager.
 **After the ShipDay wizard deploys (Claude will tell you when):**
 1. `feefreeordering.com/admin` → **Driver Pool** → the **"Live driver status (webhook)"** card.
@@ -166,6 +166,7 @@ When you have the iPad handy, tell Claude "let's do C3": print a real test order
 | 2026-07-11 | A1 — Online Payments re-subscribed before the Jul 17 free-period end | Luigi confirmed in chat; DB verification pending ("verify A1 on prod") |
 | 2026-07-11 | A2 — Stripe Test connection clicked (registers refund-sync + dispute webhooks) | Screenshot: green "Connection successful", Live mode, pk_live key |
 | 2026-07-11 | A4 — Apple Developer membership renewal submitted (was expiring ~Aug 3) | Luigi confirmed in chat; Apple shows "being processed" — normal, confirm the new expiry date shows within a day |
+| 2026-07-12 | A5 — ShipDay webhook link pasted in his dashboard + token verified | DB: webhookVerifiedAt 10:20Z; auto-dispatch verified live same day (order 50239818); status back-flow deploys tested, witnessed on next real delivery |
 
 ---
 

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import prisma from "@/lib/db";
-import { getSessionUser, SA_RESELLER_IMPERSONATE_COOKIE } from "@/lib/session";
-import { isSuperadmin } from "@/lib/roles";
+import { SA_RESELLER_IMPERSONATE_COOKIE } from "@/lib/session";
+import { requireSuperadmin } from "@/lib/platform-auth";
 
 /**
  * POST — set the sa_reseller_impersonate cookie. Superadmin only.
@@ -12,8 +12,8 @@ import { isSuperadmin } from "@/lib/roles";
  * every request and swaps the superadmin's effective identity to that reseller.
  */
 export async function POST(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
-  if (!isSuperadmin(user?.role)) {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const { id } = await params;
@@ -39,11 +39,11 @@ export async function POST(_req: NextRequest, { params }: { params: Promise<{ id
 }
 
 export async function DELETE() {
-  const user = await getSessionUser();
   // user.role stays "superadmin" even while in SA→reseller mode (effectiveRole
   // is the one that gets swapped), so this check admits the exit-impersonation
   // request correctly.
-  if (!isSuperadmin(user?.role)) {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const cookieStore = await cookies();

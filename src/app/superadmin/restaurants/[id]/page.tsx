@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
+import { requirePlatformStaff } from "@/lib/platform-auth";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import { RestaurantControls } from "./RestaurantControls";
@@ -30,9 +30,12 @@ export default async function SuperadminRestaurantDetail({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const user = await getSessionUser();
-  if (!user) redirect("/login");
-  if (user.role !== "superadmin") redirect("/admin");
+  // Read-only detail view — platform_support may view (matches the
+  // requirePlatformStaff gate on GET /api/superadmin/restaurants/[id]).
+  // The layout already bounced unauthenticated visitors to /login and
+  // non-staff to /admin before this page runs.
+  const user = await requirePlatformStaff();
+  if (!user) redirect("/admin");
 
   const { id } = await params;
 

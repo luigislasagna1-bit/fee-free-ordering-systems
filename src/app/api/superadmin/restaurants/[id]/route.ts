@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
-import { getSessionUser } from "@/lib/session";
+import { requirePlatformStaff, requireSuperadmin } from "@/lib/platform-auth";
 import { deleteRestaurantCompletely } from "@/lib/delete-restaurant";
 import crypto from "node:crypto";
 
@@ -31,8 +31,9 @@ import crypto from "node:crypto";
  * the production logs for "who touched this restaurant".
  */
 export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
-  if (!user || user.role !== "superadmin") {
+  // Read-only detail view — platform_support may view.
+  const user = await requirePlatformStaff();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const { id } = await params;
@@ -50,8 +51,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
 }
 
 export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
-  if (!user || user.role !== "superadmin") {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const { id } = await params;
@@ -124,8 +125,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
  * locations (see deleteRestaurantCompletely). Luigi 2026-07-01.
  */
 export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const user = await getSessionUser();
-  if (!user || user.role !== "superadmin") {
+  const user = await requireSuperadmin();
+  if (!user) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const { id } = await params;

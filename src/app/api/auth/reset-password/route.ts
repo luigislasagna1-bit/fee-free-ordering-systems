@@ -30,7 +30,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Reset link expired. Request a new one." }, { status: 400 });
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    // Cost 12 = the same as account CREATION (register/locations/reseller
+    // stubs) — this path used to re-hash at 10, silently DOWNGRADING every
+    // password that went through a reset (launch-audit 04-security §213).
+    const passwordHash = await bcrypt.hash(password, 12);
     await prisma.$transaction([
       prisma.user.update({ where: { id: tokenRow.userId }, data: { passwordHash } }),
       prisma.passwordResetToken.update({ where: { id: tokenRow.id }, data: { usedAt: new Date() } }),

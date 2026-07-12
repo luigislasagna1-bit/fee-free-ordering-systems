@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
+import { requireSuperadmin } from "@/lib/platform-auth";
 import { formatCurrency } from "@/lib/utils";
 import { Settings, Zap, CheckCircle2, XCircle, Sparkles, Users, AlertTriangle } from "lucide-react";
 import { getStripeConfig } from "@/lib/stripe";
@@ -19,6 +21,12 @@ import { getStripeConfig } from "@/lib/stripe";
 export const dynamic = "force-dynamic";
 
 export default async function SuperadminBilling() {
+  // Billing config — FULL superadmin only. The layout already bounced
+  // unauthenticated visitors to /login; a support user lands back on the
+  // dashboard.
+  const gate = await requireSuperadmin();
+  if (!gate) redirect("/superadmin");
+
   const [stripeCfg, addOns, plans] = await Promise.all([
     getStripeConfig(),
     // Real revenue driver.
