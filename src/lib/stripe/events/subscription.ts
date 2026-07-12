@@ -61,16 +61,41 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
       console.warn(
         `[stripe] ignoring deletion of superseded platform subscription ${sub.id} for restaurant ${restaurant.id} (row tracks ${restaurant.stripeSubscriptionId})`
       );
+      // The dead duplicate may be the last thing holding the shared dunning
+      // clock (its failed invoice started it) — release it if everything the
+      // row tracks is healthy. Health-checked no-op otherwise.
+      try {
+        await clearRestaurantGraceIfHealthy(restaurant.id);
+      } catch (e) {
+        console.error("[stripe/subscription] superseded-delete: clearRestaurantGraceIfHealthy failed", e);
+      }
       return;
     }
-    await prisma.restaurant.update({
-      where: { id: restaurant.id },
+    // Sub-id check ALSO lives in the WHERE: the read above races a concurrent
+    // supersede that re-stamps the row (the dispatcher runs retried deliveries
+    // concurrently), so the write must be conditional to be safe. The null arm
+    // keeps legacy rows with no tracked id cancellable.
+    await prisma.restaurant.updateMany({
+      where: {
+        id: restaurant.id,
+        OR: [{ stripeSubscriptionId: sub.id }, { stripeSubscriptionId: null }],
+      },
       data: {
         subscriptionStatus: "cancelled",
         stripeSubscriptionId: null,
         cancelAtPeriodEnd: false,
       },
     });
+    // A plan cancelled while failing must also end its dunning (same hook the
+    // add-on deleted branch has): otherwise the cron keeps counting down and
+    // ends by telling an owner who already cancelled that we paused their
+    // features for non-payment. Health-checked — refuses to clear while any
+    // add-on is still inside its own grace window.
+    try {
+      await clearRestaurantGraceIfHealthy(restaurant.id);
+    } catch (e) {
+      console.error("[stripe/subscription] platform delete: clearRestaurantGraceIfHealthy failed", e);
+    }
     return;
   }
 
@@ -171,18 +196,39 @@ async function handleAddOnSubscriptionEvent(
       console.warn(
         `[stripe] ignoring deletion of superseded add-on subscription ${sub.id} for ${addOnSlug} (restaurant ${restaurantId}, row tracks ${prior.stripeSubscriptionId})`
       );
+      // The dead duplicate's failed invoice may have started the shared
+      // restaurant dunning clock — nothing else resolves that sub, so release
+      // the clock here if everything still tracked is healthy.
+      try {
+        await clearRestaurantGraceIfHealthy(restaurantId);
+      } catch (e) {
+        console.error("[stripe] add-on superseded-delete: clearRestaurantGraceIfHealthy failed", e);
+      }
       return;
     }
-    await prisma.restaurantAddOn.updateMany({
-      where: { restaurantId, addOnId: addOn.id },
+    // Conditional write (sub-id check in the WHERE, mirroring the read-guard
+    // above): a concurrent supersede can re-stamp the row between our read and
+    // this write — the winner's row state must not be clobbered by the loser's
+    // deleted event. graceEndsAt is cleared too: a cancelled row's dunning
+    // story is over (matches getAddOnBillingState, which treats cancelled rows
+    // as inactive) — leaving it stamped lets a later crash-race re-stamp
+    // contradict the restaurant-level clock.
+    const cancelled = await prisma.restaurantAddOn.updateMany({
+      where: {
+        restaurantId,
+        addOnId: addOn.id,
+        OR: [{ stripeSubscriptionId: sub.id }, { stripeSubscriptionId: null }],
+      },
       data: {
         status: "cancelled",
         cancelAtPeriodEnd: false,
+        graceEndsAt: null,
       },
     });
-    // Only notify if it was actually active before — a repeat "deleted" or a
-    // delete of an already-cancelled row shouldn't re-alert anyone.
-    if (wasActive) {
+    // Only notify if it was actually active before AND our write landed — a
+    // repeat "deleted", a delete of an already-cancelled row, or a write
+    // skipped by the conditional guard shouldn't alert anyone.
+    if (wasActive && cancelled.count === 1) {
       try {
         await notifyAddOnChange(restaurantId, { slug: addOn.slug, name: addOn.name }, "cancelled");
       } catch (e) {
@@ -388,8 +434,14 @@ async function handleResellerWhiteLabelEvent(
       );
       return;
     }
-    await prisma.resellerProfile.update({
-      where: { id: resellerProfileId },
+    // Conditional write — same read-vs-write race as the platform/add-on
+    // deleted guards: the loser's deleted event must not clobber a row a
+    // concurrent supersede just re-stamped to the winner.
+    await prisma.resellerProfile.updateMany({
+      where: {
+        id: resellerProfileId,
+        OR: [{ whiteLabelStripeSubscriptionId: sub.id }, { whiteLabelStripeSubscriptionId: null }],
+      },
       data: {
         whiteLabelTier: null,
         whiteLabelStatus: "cancelled",
@@ -466,11 +518,17 @@ async function handleResellerWhiteLabelEvent(
  *  refund would hand back weeks of already-consumed service. */
 const DUPLICATE_CHECKOUT_WINDOW_SEC = 26 * 60 * 60;
 
-/** 0 = dead, 1 = incomplete (first payment never landed), 2 = live. */
+/** 0 = dead, 1 = incomplete (first payment never landed), 2 = failing
+ *  (past_due / unpaid), 3 = paying (active / trialing / paused). A paying sub
+ *  must OUTRANK a failing one — with equal rank the created-recency tie-break
+ *  would let a newer duplicate whose card just died cancel an older paying
+ *  sub and drag the owner into dunning. paused ranks with paying: its billing
+ *  isn't failing, and killing a paused sub for a failing newer one is wrong. */
 function subscriptionLiveness(s: Stripe.Subscription): number {
   if (s.status === "canceled" || s.status === "incomplete_expired") return 0;
   if (s.status === "incomplete") return 1;
-  return 2;
+  if (s.status === "past_due" || s.status === "unpaid") return 2;
+  return 3;
 }
 
 /**
@@ -505,22 +563,47 @@ async function supersedeDuplicateSubscription(
   }
 
   if (subscriptionLiveness(existing) === 0) return true; // legit re-subscribe after cancel
-  if (subscriptionLiveness(incoming) === 0) {
+
+  // Judge the INCOMING side from retrieved truth too — the webhook payload is
+  // a snapshot from emission time and Stripe delivers out of order, so an
+  // "active" snapshot can describe a sub this very guard already cancelled.
+  // Deciding from the snapshot would cancel the SURVIVING paid sub (and
+  // refund it). Only this rare duplicate path pays the extra retrieve.
+  let incomingFresh: Stripe.Subscription;
+  try {
+    const stripe = await getStripe();
+    incomingFresh = await stripe.subscriptions.retrieve(incoming.id);
+  } catch (e: any) {
+    const missing =
+      e?.code === "resource_missing" || e?.raw?.code === "resource_missing" || e?.statusCode === 404;
+    if (!missing) {
+      console.error(
+        `[stripe] supersede check for ${label}: could not inspect incoming ${incoming.id}; keeping row on ${existing.id}`,
+        e
+      );
+    }
+    // Unfetchable/gone incoming = treat as dead: never risk cancelling the
+    // tracked live sub on unverifiable state. A later event on either sub
+    // re-runs this path with fresh reads.
+    return false;
+  }
+
+  if (subscriptionLiveness(incomingFresh) === 0) {
     // Late event from a sub that's already dead must not clobber the live row.
     console.warn(
-      `[stripe] supersede for ${label}: ignoring event for dead subscription ${incoming.id}; row keeps ${existing.id}`
+      `[stripe] supersede for ${label}: ignoring event for dead subscription ${incomingFresh.id}; row keeps ${existing.id}`
     );
     return false;
   }
 
   const incomingWins =
-    subscriptionLiveness(incoming) !== subscriptionLiveness(existing)
-      ? subscriptionLiveness(incoming) > subscriptionLiveness(existing)
-      : incoming.created !== existing.created
-        ? incoming.created > existing.created
-        : incoming.id > existing.id;
-  const winner = incomingWins ? incoming : existing;
-  const loser = incomingWins ? existing : incoming;
+    subscriptionLiveness(incomingFresh) !== subscriptionLiveness(existing)
+      ? subscriptionLiveness(incomingFresh) > subscriptionLiveness(existing)
+      : incomingFresh.created !== existing.created
+        ? incomingFresh.created > existing.created
+        : incomingFresh.id > existing.id;
+  const winner = incomingWins ? incomingFresh : existing;
+  const loser = incomingWins ? existing : incomingFresh;
   console.warn(
     `[stripe] duplicate subscription for ${label}: keeping ${winner.id} (created ${winner.created}), superseding ${loser.id} (created ${loser.created})`
   );

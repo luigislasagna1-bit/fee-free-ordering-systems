@@ -26,6 +26,10 @@ const h = vi.hoisted(() => {
     restaurants: [] as any[],
     resellers: [] as any[],
     notifications: [] as Array<{ restaurantId: string; slug: string; change: string }>,
+    // restaurant ids passed to clearRestaurantGraceIfHealthy — the composed
+    // supersede×grace assertions read this (a missing mock export here once
+    // silently disabled every grace hook via the handlers' try/catch).
+    graceClears: [] as string[],
   };
   return { state };
 });
@@ -44,7 +48,12 @@ vi.mock("@/lib/db", () => {
         findUnique: async ({ where }: any) => s.addOns.find((a) => a.slug === where.slug) ?? null,
       },
       restaurantAddOn: {
-        findUnique: async ({ where }: any) => matchAddOnRow(where) ?? null,
+        // Snapshot copy, like real Prisma — the handler's `prior` read must not
+        // be aliased to the row a later update mutates.
+        findUnique: async ({ where }: any) => {
+          const row = matchAddOnRow(where);
+          return row ? { ...row } : null;
+        },
         upsert: async ({ where, create, update }: any) => {
           const row = matchAddOnRow(where);
           if (row) {
@@ -56,8 +65,13 @@ vi.mock("@/lib/db", () => {
           return created;
         },
         updateMany: async ({ where, data }: any) => {
+          // Honors the conditional sub-id OR-guard the deleted branch uses —
+          // without it the mock would let a guarded write through and the
+          // clobber regressions below could never fail.
+          const orOk = (r: any) =>
+            !where.OR || where.OR.some((c: any) => r.stripeSubscriptionId === c.stripeSubscriptionId);
           const rows = s.addOnRows.filter(
-            (r) => r.restaurantId === where.restaurantId && r.addOnId === where.addOnId
+            (r) => r.restaurantId === where.restaurantId && r.addOnId === where.addOnId && orOk(r)
           );
           rows.forEach((r) => Object.assign(r, data));
           return { count: rows.length };
@@ -73,6 +87,13 @@ vi.mock("@/lib/db", () => {
           Object.assign(r, data);
           return r;
         },
+        updateMany: async ({ where, data }: any) => {
+          const orOk = (r: any) =>
+            !where.OR || where.OR.some((c: any) => r.stripeSubscriptionId === c.stripeSubscriptionId);
+          const rows = s.restaurants.filter((r) => r.id === where.id && orOk(r));
+          rows.forEach((r) => Object.assign(r, data));
+          return { count: rows.length };
+        },
       },
       resellerProfile: {
         findUnique: async ({ where }: any) => s.resellers.find((r) => r.id === where.id) ?? null,
@@ -80,6 +101,14 @@ vi.mock("@/lib/db", () => {
           const r = s.resellers.find((x) => x.id === where.id);
           Object.assign(r, data);
           return r;
+        },
+        updateMany: async ({ where, data }: any) => {
+          const orOk = (r: any) =>
+            !where.OR ||
+            where.OR.some((c: any) => r.whiteLabelStripeSubscriptionId === c.whiteLabelStripeSubscriptionId);
+          const rows = s.resellers.filter((r) => r.id === where.id && orOk(r));
+          rows.forEach((r) => Object.assign(r, data));
+          return { count: rows.length };
         },
       },
     },
@@ -145,6 +174,10 @@ vi.mock("@/lib/platform-notifications", () => ({
 vi.mock("@/lib/dunning", () => ({
   graceDeadline: () => new Date("2026-08-01T00:00:00Z"),
   startRestaurantGrace: async () => {},
+  clearRestaurantGraceIfHealthy: async (restaurantId: string) => {
+    h.state.graceClears.push(restaurantId);
+    return false;
+  },
 }));
 vi.mock("@/lib/reseller-subdomain", () => ({ ensureResellerGenericSubdomain: async () => {} }));
 
@@ -199,6 +232,7 @@ beforeEach(() => {
   h.state.refunds = [];
   h.state.retrieved = [];
   h.state.notifications = [];
+  h.state.graceClears = [];
   h.state.addOns = [{ id: "ao_1", slug: "driver_pool", name: "Driver Pool" }];
   h.state.addOnRows = [];
   h.state.restaurants = [
@@ -394,6 +428,99 @@ describe("add-on supersede — duplicate Checkout race", () => {
     expect(h.state.cancelled).toEqual([{ id: "sub_a", params: {} }]);
     expect(h.state.refunds).toEqual([]);
   });
+
+  it("STALE snapshot: an out-of-order 'active' event for a sub Stripe already cancelled must not kill the survivor", async () => {
+    // Backend truth: sub_a live + tracked; sub_b already canceled (e.g. by an
+    // earlier run of this very guard). The webhook snapshot for sub_b still
+    // claims "active" (emitted before the cancel; Stripe delivers out of
+    // order). Deciding from the snapshot would cancel + refund the PAYING sub.
+    seedStripeSub({ id: "sub_a", created: T0, metadata: ADDON_META });
+    seedAddOnRow({ stripeSubscriptionId: "sub_a" });
+    const bBackend = seedStripeSub({ id: "sub_b", created: T0 + 600, status: "canceled", metadata: ADDON_META });
+    const staleSnapshot = { ...bBackend, status: "active" };
+
+    await handleSubscriptionEvent(evt("customer.subscription.updated", staleSnapshot));
+
+    expect(h.state.cancelled).toEqual([]); // nobody dies on unverified state
+    expect(h.state.refunds).toEqual([]);
+    expect(h.state.addOnRows[0].stripeSubscriptionId).toBe("sub_a");
+    expect(h.state.addOnRows[0].status).toBe("active");
+  });
+
+  it("a PAYING sub outranks a newer FAILING duplicate (past_due never wins on recency)", async () => {
+    seedStripeSub({ id: "sub_a", created: T0, metadata: ADDON_META });
+    seedAddOnRow({ stripeSubscriptionId: "sub_a" });
+    const b = seedStripeSub({
+      id: "sub_b",
+      created: T0 + 600,
+      status: "past_due",
+      metadata: ADDON_META,
+      invoice: { id: "in_sub_b", status: "open", amount_paid: 0 },
+    });
+
+    await handleSubscriptionEvent(evt("customer.subscription.updated", b));
+
+    expect(h.state.cancelled).toEqual([{ id: "sub_b", params: {} }]); // failing dup dies
+    expect(h.state.refunds).toEqual([]); // nothing paid to refund
+    expect(h.state.addOnRows[0].stripeSubscriptionId).toBe("sub_a"); // paying sub survives
+    expect(h.state.addOnRows[0].status).toBe("active");
+  });
+
+  it("mirror ordering: the older PAYING sub's event re-claims a row stamped with the failing newer sub", async () => {
+    seedStripeSub({
+      id: "sub_b",
+      created: T0 + 600,
+      status: "past_due",
+      metadata: ADDON_META,
+      invoice: { id: "in_sub_b", status: "open", amount_paid: 0 },
+    });
+    seedAddOnRow({ stripeSubscriptionId: "sub_b", status: "past_due" });
+    const a = seedStripeSub({ id: "sub_a", created: T0, metadata: ADDON_META });
+
+    await handleSubscriptionEvent(evt("customer.subscription.updated", a));
+
+    // Same survivor as the other ordering — the rule is two-sided.
+    expect(h.state.cancelled).toEqual([{ id: "sub_b", params: {} }]);
+    expect(h.state.addOnRows[0].stripeSubscriptionId).toBe("sub_a");
+    expect(h.state.addOnRows[0].status).toBe("active");
+  });
+
+  it("superseded-delete releases the shared dunning clock (health-checked) while leaving the row untouched", async () => {
+    // The loser's failed invoice may have started the restaurant clock; its
+    // deleted event is the only event that ever resolves that sub — the guard's
+    // early-return must still offer to clear, or the clock is orphaned and a
+    // healthy restaurant rides a phantom countdown into "features paused".
+    seedStripeSub({ id: "sub_b", created: T0 + 600, metadata: ADDON_META });
+    seedAddOnRow({ stripeSubscriptionId: "sub_b" });
+    const a = seedStripeSub({ id: "sub_a", created: T0, status: "canceled", metadata: ADDON_META });
+
+    await handleSubscriptionEvent(evt("customer.subscription.deleted", a));
+
+    expect(h.state.addOnRows[0].status).toBe("active"); // row untouched
+    expect(h.state.graceClears).toEqual(["r1"]); // clock offered for release
+  });
+
+  it("recovery (past_due → active) releases the restaurant clock via clearRestaurantGraceIfHealthy", async () => {
+    const b = seedStripeSub({ id: "sub_b", created: T0, metadata: ADDON_META });
+    seedAddOnRow({ stripeSubscriptionId: "sub_b", status: "past_due", graceEndsAt: new Date("2026-07-20") });
+
+    await handleSubscriptionEvent(evt("customer.subscription.updated", b));
+
+    expect(h.state.addOnRows[0].status).toBe("active");
+    expect(h.state.addOnRows[0].graceEndsAt).toBeNull();
+    expect(h.state.graceClears).toEqual(["r1"]);
+  });
+
+  it("deleted TRACKED add-on sub clears the row's own graceEndsAt too", async () => {
+    const b = seedStripeSub({ id: "sub_b", created: T0, metadata: ADDON_META });
+    seedAddOnRow({ stripeSubscriptionId: "sub_b", status: "past_due", graceEndsAt: new Date("2026-07-20") });
+
+    await handleSubscriptionEvent(evt("customer.subscription.deleted", b));
+
+    expect(h.state.addOnRows[0].status).toBe("cancelled");
+    expect(h.state.addOnRows[0].graceEndsAt).toBeNull(); // dunning story over
+    expect(h.state.graceClears).toEqual(["r1"]); // failing sub cancelled → clock released
+  });
 });
 
 describe("platform-plan supersede", () => {
@@ -429,6 +556,20 @@ describe("platform-plan supersede", () => {
 
     expect(h.state.restaurants[0].subscriptionStatus).toBe("cancelled");
     expect(h.state.restaurants[0].stripeSubscriptionId).toBeNull();
+    // A plan cancelled while failing must end its dunning too — otherwise the
+    // cron counts down to a false "features paused for non-payment" email.
+    expect(h.state.graceClears).toEqual(["r1"]);
+  });
+
+  it("deleted event for the superseded plan sub still offers to release the dunning clock", async () => {
+    seedStripeSub({ id: "sub_p2", created: T0 + 300 });
+    h.state.restaurants[0].stripeSubscriptionId = "sub_p2";
+    const p1 = seedStripeSub({ id: "sub_p1", created: T0, status: "canceled" });
+
+    await handleSubscriptionEvent(evt("customer.subscription.deleted", p1));
+
+    expect(h.state.restaurants[0].stripeSubscriptionId).toBe("sub_p2"); // untouched
+    expect(h.state.graceClears).toEqual(["r1"]); // orphaned-clock release offered
   });
 });
 
