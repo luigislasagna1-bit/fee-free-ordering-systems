@@ -2,7 +2,7 @@ import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
 import { notifyAddOnChange } from "@/lib/platform-notifications";
-import { graceDeadline, startRestaurantGrace } from "@/lib/dunning";
+import { graceDeadline, startRestaurantGrace, clearRestaurantGraceIfHealthy } from "@/lib/dunning";
 import { ensureResellerGenericSubdomain } from "@/lib/reseller-subdomain";
 
 /**
@@ -81,15 +81,27 @@ export async function handleSubscriptionEvent(event: Stripe.Event) {
   const sAny = sub as any;
   const periodEndSec: number | undefined =
     sAny.current_period_end ?? sAny.items?.data?.[0]?.current_period_end;
+  const platformStatus = mapStripeStatus(sub.status);
   await prisma.restaurant.update({
     where: { id: restaurant.id },
     data: {
-      subscriptionStatus: mapStripeStatus(sub.status),
+      subscriptionStatus: platformStatus,
       stripeSubscriptionId: sub.id,
       currentPeriodEnd: periodEndSec ? new Date(periodEndSec * 1000) : null,
       cancelAtPeriodEnd: sub.cancel_at_period_end ?? false,
     },
   });
+  // Platform recovery — when the plan reads healthy again, release the shared
+  // dunning grace clock if nothing else is failing. Covers event orderings
+  // where invoice.paid processed BEFORE stripeSubscriptionId was stamped (so
+  // its platform-scoped writes were skipped). No-ops when no clock is running.
+  if (platformStatus === "active") {
+    try {
+      await clearRestaurantGraceIfHealthy(restaurant.id);
+    } catch (e) {
+      console.error("[stripe/subscription] clearRestaurantGraceIfHealthy failed", e);
+    }
+  }
 }
 
 /**
@@ -153,6 +165,16 @@ async function handleAddOnSubscriptionEvent(
         console.error("[stripe] add-on cancel notification failed", e);
       }
     }
+    // Cancelling a FAILING add-on (owner gives up on it, or Stripe auto-cancels
+    // after exhausted retries) ends its dunning: release the shared restaurant
+    // grace clock if nothing else is still failing.
+    if (prior?.status === "past_due") {
+      try {
+        await clearRestaurantGraceIfHealthy(restaurantId);
+      } catch (e) {
+        console.error("[stripe] add-on delete: clearRestaurantGraceIfHealthy failed", e);
+      }
+    }
     return;
   }
 
@@ -201,6 +223,20 @@ async function handleAddOnSubscriptionEvent(
       await startRestaurantGrace(restaurantId);
     } catch (e) {
       console.error("[stripe] add-on past_due: startRestaurantGrace failed", e);
+    }
+  }
+
+  // Recovery transition (past_due → anything else): this row's own grace was
+  // just cleared by the upsert above — release the restaurant-level clock too
+  // when nothing else is failing. Needed here because invoice.paid may process
+  // BEFORE this event, while the row still read past_due; without this hook
+  // that ordering leaves a recovered restaurant stuck in the countdown until
+  // it falsely "expires".
+  if (prior?.status === "past_due" && status !== "past_due") {
+    try {
+      await clearRestaurantGraceIfHealthy(restaurantId);
+    } catch (e) {
+      console.error("[stripe] add-on recovery: clearRestaurantGraceIfHealthy failed", e);
     }
   }
 

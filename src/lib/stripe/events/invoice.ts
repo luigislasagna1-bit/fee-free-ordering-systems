@@ -2,7 +2,7 @@ import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { sendBillingNotificationEmail } from "@/lib/email";
 import { recordCommissionForInvoice } from "@/lib/commission";
-import { startRestaurantGrace, clearRestaurantGrace, GRACE_DAYS } from "@/lib/dunning";
+import { startRestaurantGrace, clearRestaurantGraceIfHealthy, GRACE_DAYS } from "@/lib/dunning";
 
 /**
  * Handle invoice.* events for the platform subscription billing (Layer B).
@@ -16,6 +16,15 @@ import { startRestaurantGrace, clearRestaurantGrace, GRACE_DAYS } from "@/lib/du
  *
  * Every event logs to the SubscriptionInvoice table for audit trail and
  * cross-references the restaurant by stripeCustomerId.
+ *
+ * SCOPING (2026-07-11): one Stripe customer carries SEVERAL subscriptions —
+ * the platform plan (Restaurant.stripeSubscriptionId) plus one per add-on
+ * (tracked per-row on RestaurantAddOn by subscription.ts). Restaurant-level
+ * plan state (subscriptionStatus, currentPeriodEnd) only reacts to PLATFORM
+ * invoices; an add-on renewal must neither overwrite the plan's period with
+ * the ADD-ON's period nor flip a past_due plan back to "active". The shared
+ * dunning grace clock stays COARSE (any failure starts it) but only clears
+ * when nothing is still failing — see clearRestaurantGraceIfHealthy.
  */
 export async function handleInvoiceEvent(event: Stripe.Event) {
   const invoice = event.data.object as Stripe.Invoice;
@@ -25,7 +34,15 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { stripeCustomerId: customerId },
-    select: { id: true, email: true, name: true },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      // Needed to scope restaurant-level writes to the PLATFORM plan's
+      // invoices and to gate the free→active flip below.
+      stripeSubscriptionId: true,
+      subscriptionStatus: true,
+    },
   });
   if (!restaurant) {
     console.warn(`[stripe] invoice event for unknown customer ${customerId}`);
@@ -39,6 +56,12 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
     typeof invAny.subscription === "string"
       ? invAny.subscription
       : invAny.subscription?.id ?? invAny.parent?.subscription_details?.subscription ?? null;
+  // Is this the PLATFORM plan's invoice (vs an add-on subscription's, a
+  // marketplace settlement's, or a one-off)? NOTE the null guard: a free-plan
+  // restaurant has stripeSubscriptionId=null and a one-off invoice has no
+  // subscription — null === null must NOT read as "platform".
+  const isPlatformInvoice =
+    !!subscriptionId && subscriptionId === restaurant.stripeSubscriptionId;
   const upserted = await prisma.subscriptionInvoice.upsert({
     where: { stripeInvoiceId: invoice.id! },
     update: {
@@ -106,22 +129,42 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
   }
 
   if (event.type === "invoice.paid") {
-    // Subscription successfully charged — extend the active window.
-    await prisma.restaurant.update({
-      where: { id: restaurant.id },
-      data: {
-        subscriptionStatus: "active",
-        currentPeriodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
-      },
-    });
-    // Recovery — a successful charge clears any dunning grace clock so the
-    // daily reminders stop and the account reads healthy again. (Per-add-on
-    // RestaurantAddOn.graceEndsAt is cleared by the subscription.updated→active
-    // event that accompanies a successful add-on charge.)
+    if (isPlatformInvoice) {
+      // Platform plan successfully charged — extend the active window. Scoped
+      // to the platform subscription: an add-on invoice must not overwrite
+      // currentPeriodEnd with the ADD-ON's period or flip a past_due plan back
+      // to "active" (add-on lifecycle is mirrored per-row by subscription.ts).
+      await prisma.restaurant.update({
+        where: { id: restaurant.id },
+        data: {
+          subscriptionStatus: "active",
+          currentPeriodEnd: invoice.period_end ? new Date(invoice.period_end * 1000) : null,
+        },
+      });
+    } else if (subscriptionId && restaurant.subscriptionStatus === "free") {
+      // First paid ADD-ON subscription — flip the free plan to "active"
+      // (documented rule, see /api/auth/register: paying for any add-on makes
+      // the restaurant an "active paying" customer, which reseller commission
+      // tiers count on). Conditional updateMany so a problem status
+      // (past_due / cancelled) is never overwritten, and currentPeriodEnd —
+      // the PLATFORM plan's window — is left alone.
+      await prisma.restaurant.updateMany({
+        where: { id: restaurant.id, subscriptionStatus: "free" },
+        data: { subscriptionStatus: "active" },
+      });
+    }
+    // Recovery — a successful charge is the cue to take the dunning grace
+    // clock off, but only when NOTHING is still failing (platform plan not
+    // past_due, no add-on inside its own grace window). An unrelated renewal
+    // must not silently kill the countdown for a genuinely broken
+    // subscription. (Per-add-on RestaurantAddOn.graceEndsAt is cleared by the
+    // subscription.updated→active event that accompanies a successful add-on
+    // charge; that handler re-runs this same healthy check, so either event
+    // order converges.)
     try {
-      await clearRestaurantGrace(restaurant.id);
+      await clearRestaurantGraceIfHealthy(restaurant.id);
     } catch (e) {
-      console.error("[stripe/invoice.paid] clearRestaurantGrace failed", e);
+      console.error("[stripe/invoice.paid] clearRestaurantGraceIfHealthy failed", e);
     }
     // Reseller Partner Program — record commission if the restaurant has an
     // approved reseller. No-op for direct (non-reseller) restaurants.
@@ -131,10 +174,18 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
       console.error("[stripe] recordCommissionForInvoice failed", err);
     }
   } else if (event.type === "invoice.payment_failed") {
-    await prisma.restaurant.update({
-      where: { id: restaurant.id },
-      data: { subscriptionStatus: "past_due" },
-    });
+    if (isPlatformInvoice) {
+      // Only the PLATFORM plan's failure marks the plan past_due — the admin
+      // billing gate locks on this once grace expires, so a failed ADD-ON
+      // charge must not brand the plan (its own row goes past_due via
+      // subscription.ts, and with the paid branch scoped above nothing would
+      // ever flip the plan back). The shared grace clock below still starts
+      // for ANY failure — that's the coarse "billing problem" flag.
+      await prisma.restaurant.update({
+        where: { id: restaurant.id },
+        data: { subscriptionStatus: "past_due" },
+      });
+    }
     // Dunning (Luigi 2026-06-15): DON'T cut service. Start a GRACE_DAYS grace
     // clock — paid features stay on (entitlements honor the window) and the
     // daily /api/cron/dunning job sends the countdown to the owner + reseller.

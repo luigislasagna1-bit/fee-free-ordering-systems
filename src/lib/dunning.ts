@@ -81,6 +81,43 @@ export async function clearRestaurantGrace(restaurantId: string): Promise<void> 
   });
 }
 
+/**
+ * Clear the restaurant-level grace clock ONLY when no billing problem remains:
+ *   - the PLATFORM plan isn't past_due (Restaurant.subscriptionStatus), and
+ *   - no add-on is still inside its own failed-payment grace window
+ *     (status=past_due with a live graceEndsAt). A past_due row whose grace
+ *     already EXPIRED is "downgraded" — its dunning story is over (features
+ *     dropped, final notice sent) — so it must not hold the restaurant-level
+ *     clock hostage forever.
+ *
+ * The clock is a COARSE "this restaurant has a billing problem" flag started
+ * by ANY failed charge (platform plan or add-on). Clearing it on just any
+ * paid invoice was wrong in both directions: an add-on renewal killed the
+ * countdown for a past_due platform plan (and each later retry-failure
+ * restarted a fresh clock, pushing the deadline out forever), while a
+ * platform renewal killed the countdown — and the grace-expiry Multi-Location
+ * cascade — for a still-failing add-on.
+ *
+ * Safe to call on ANY potential recovery (paid invoice, subscription status
+ * flip, add-on cancellation): it no-ops with a single point read when no
+ * clock is running. Returns true when the clock was actually cleared.
+ */
+export async function clearRestaurantGraceIfHealthy(restaurantId: string): Promise<boolean> {
+  const prisma = (await import("@/lib/db")).default;
+  const r = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { graceEndsAt: true, subscriptionStatus: true },
+  });
+  if (!r?.graceEndsAt) return false; // no clock running — nothing to clear
+  if (r.subscriptionStatus === "past_due") return false; // platform plan still failing
+  const failingAddOns = await prisma.restaurantAddOn.count({
+    where: { restaurantId, status: "past_due", graceEndsAt: { gt: new Date() } },
+  });
+  if (failingAddOns > 0) return false; // an add-on is still inside its grace window
+  await clearRestaurantGrace(restaurantId);
+  return true;
+}
+
 /** Per-add-on billing health for the in-context admin notices (Luigi 2026-06-15).
  *  - active      → subscribed + paid (or no notice needed)
  *  - grace       → charge failed, still within the grace window (show countdown)
