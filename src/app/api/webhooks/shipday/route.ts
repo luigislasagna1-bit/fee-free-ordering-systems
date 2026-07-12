@@ -57,7 +57,11 @@ export async function POST(req: NextRequest) {
   // (wizard) are tried after the legacy env token.
   const envToken = process.env.SHIPDAY_WEBHOOK_TOKEN;
   const tokenFromQuery = req.nextUrl.searchParams.get("token");
-  const tokenFromHeader = req.headers.get("x-shipday-token");
+  // ShipDay's documented delivery is a header literally named "token"
+  // (docs.shipday.com/reference/order-status-update-2); x-shipday-token was
+  // our guess and is kept as an alias. The query param comes from the URL the
+  // wizard hands out, so any ONE of the three authenticates.
+  const tokenFromHeader = req.headers.get("token") ?? req.headers.get("x-shipday-token");
   const provided = tokenFromQuery ?? tokenFromHeader ?? "";
   // When authenticated by a per-restaurant token, every matched order must
   // belong to THIS restaurant — the token identifies the caller.
@@ -96,7 +100,18 @@ export async function POST(req: NextRequest) {
 
   let body: {
     event?: string;
-    order?: { orderId?: number | string; additionalId?: string };
+    order?: {
+      // DOCUMENTED shape: the order object carries `id` + `order_number`
+      // (snake_case). `orderId`/`additionalId` were our original guesses —
+      // kept as fallbacks. Found live 2026-07-12: Luigi's delivered order
+      // never completed because we only read the guessed keys and 400'd
+      // "Missing order identifier" on every real event.
+      id?: number | string;
+      orderId?: number | string;
+      order_number?: string;
+      orderNumber?: string;
+      additionalId?: string;
+    };
   };
   try {
     body = await req.json();
@@ -106,21 +121,31 @@ export async function POST(req: NextRequest) {
 
   const event = body.event ?? "";
   const additionalId = body.order?.additionalId ?? null;
-  const shipdayOrderId = body.order?.orderId != null ? String(body.order.orderId) : null;
+  const rawShipdayId = body.order?.id ?? body.order?.orderId;
+  const shipdayOrderId = rawShipdayId != null ? String(rawShipdayId) : null;
+  const orderNumber = body.order?.order_number ?? body.order?.orderNumber ?? null;
 
   if (!event) {
     return NextResponse.json({ error: "Missing event field" }, { status: 400 });
   }
-  if (!additionalId && !shipdayOrderId) {
+  if (!additionalId && !shipdayOrderId && !orderNumber) {
     return NextResponse.json({ error: "Missing order identifier" }, { status: 400 });
   }
 
-  // Locate the Order row. Prefer the additionalId (our internal ID) as
-  // it's a direct primary-key lookup. Fall back to scanning by
-  // shipdayOrderId for events where additionalId got dropped.
-  const order = additionalId
-    ? await prisma.order.findUnique({ where: { id: additionalId } })
-    : await prisma.order.findFirst({ where: { shipdayOrderId: shipdayOrderId! } });
+  // Locate the Order row. Preference order:
+  //  1. additionalId — our own Order.id (primary-key lookup), when present.
+  //  2. shipdayOrderId — stamped at dispatch, indexed.
+  //  3. order_number — ShipDay echoes OUR orderNumber back; only trusted
+  //     scoped to the token's restaurant (or any restaurant for the legacy
+  //     platform-wide token, where the id checks below still gate writes).
+  const order =
+    (additionalId ? await prisma.order.findUnique({ where: { id: additionalId } }) : null) ??
+    (shipdayOrderId ? await prisma.order.findFirst({ where: { shipdayOrderId } }) : null) ??
+    (orderNumber
+      ? await prisma.order.findFirst({
+          where: { orderNumber, ...(tokenRestaurantId ? { restaurantId: tokenRestaurantId } : {}) },
+        })
+      : null);
 
   if (!order) {
     console.warn("[shipday webhook] no matching order", { additionalId, shipdayOrderId, event });

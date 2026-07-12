@@ -59,6 +59,62 @@ export type DispatchInput = {
   items?: Array<{ name: string; quantity: number; unitPrice: number }>;
 };
 
+/**
+ * Map a ShipDay webhook event type to our internal Order.status value.
+ *
+ * The DOCUMENTED event vocabulary (docs.shipday.com/reference/
+ * order-status-update-2) is: ORDER_ASSIGNED, ORDER_ACCEPTED_AND_STARTED,
+ * ORDER_ONTHEWAY, ORDER_COMPLETED, ORDER_FAILED, ORDER_INCOMPLETE,
+ * ORDER_DELETE, ORDER_INSERTED, ORDER_PIKEDUP (ShipDay's own spelling —
+ * keep the typo!), ORDER_UNASSIGNED, ORDER_PIKEDUP_REMOVED,
+ * ORDER_ONTHEWAY_REMOVED, ORDER_POD_UPLOAD. Our original guessed names
+ * (ORDER_PICKED_UP, ORDER_ONTHEWAY_STATUS, ORDER_FAILED_DELIVERY,
+ * ORDER_DELETED) are kept as aliases. Found live 2026-07-12: Luigi's
+ * delivered order never completed because the real event names + payload
+ * shape didn't match what we listened for.
+ *
+ * Returns null/null when the event doesn't translate (assignment shuffles,
+ * proof-of-delivery uploads — tracked or ignored, never Order.status).
+ */
+export function translateShipdayEvent(event: string): {
+  shipdayStatus: string | null;
+  orderStatus: string | null;
+} {
+  switch (event) {
+    case "ORDER_ASSIGNED":
+    case "ORDER_DRIVER_ASSIGNED":
+      return { shipdayStatus: "assigned", orderStatus: null };
+    case "ORDER_ACCEPTED_AND_STARTED":
+      return { shipdayStatus: "started", orderStatus: null };
+    case "ORDER_PIKEDUP": // ShipDay's documented spelling
+    case "ORDER_PICKED_UP":
+      return { shipdayStatus: "picked_up", orderStatus: "ready" };
+    case "ORDER_ONTHEWAY":
+    case "ORDER_ONTHEWAY_STATUS":
+      return { shipdayStatus: "picked_up", orderStatus: "ready" };
+    case "ORDER_COMPLETED":
+      return { shipdayStatus: "delivered", orderStatus: "completed" };
+    case "ORDER_FAILED":
+    case "ORDER_FAILED_DELIVERY":
+    case "ORDER_INCOMPLETE":
+      return { shipdayStatus: "failed", orderStatus: null };
+    case "ORDER_DELETE":
+    case "ORDER_DELETED":
+    case "ORDER_CANCELLED":
+      return { shipdayStatus: "cancelled", orderStatus: null };
+    case "ORDER_UNASSIGNED":
+      return { shipdayStatus: "unassigned", orderStatus: null };
+    // Backward driver corrections — undo the shipdayStatus, never touch
+    // Order.status (the forward-only guard in the webhook protects it anyway).
+    case "ORDER_PIKEDUP_REMOVED":
+    case "ORDER_ONTHEWAY_REMOVED":
+      return { shipdayStatus: "assigned", orderStatus: null };
+    default:
+      // ORDER_INSERTED, ORDER_POD_UPLOAD, future events → acknowledged, ignored.
+      return { shipdayStatus: null, orderStatus: null };
+  }
+}
+
 export function buildShipdayOrderBody(input: DispatchInput, now: Date): Record<string, unknown> {
   const r2 = (n: number) => Math.round(n * 100) / 100;
   const pickupAt = new Date(now.getTime() + input.preparationMinutes * 60_000);

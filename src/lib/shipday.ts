@@ -228,33 +228,7 @@ export async function cancelShipdayOrder(
   }
 }
 
-/**
- * Map a ShipDay webhook event type to our internal Order.status value.
- * ShipDay sends events as strings like "ORDER_ONTHEWAY_STATUS" or
- * "ORDER_COMPLETED" — we collapse them into our status taxonomy.
- *
- * Returns null when the event doesn't translate (e.g. driver-assigned
- * which we track in shipdayStatus but doesn't change Order.status).
- */
-export function translateShipdayEvent(event: string): {
-  shipdayStatus: string | null;
-  orderStatus: string | null;
-} {
-  switch (event) {
-    case "ORDER_ASSIGNED":
-    case "ORDER_DRIVER_ASSIGNED":
-      return { shipdayStatus: "assigned", orderStatus: null };
-    case "ORDER_ONTHEWAY_STATUS":
-    case "ORDER_PICKED_UP":
-      return { shipdayStatus: "picked_up", orderStatus: "ready" };
-    case "ORDER_COMPLETED":
-      return { shipdayStatus: "delivered", orderStatus: "completed" };
-    case "ORDER_FAILED_DELIVERY":
-      return { shipdayStatus: "failed", orderStatus: null };
-    case "ORDER_DELETED":
-    case "ORDER_CANCELLED":
-      return { shipdayStatus: "cancelled", orderStatus: null };
-    default:
-      return { shipdayStatus: null, orderStatus: null };
-  }
-}
+// translateShipdayEvent lives in the prisma-free shipday-payload.ts so the
+// event vocabulary is unit-tested against ShipDay's documented list;
+// re-exported here for existing importers (webhook route).
+export { translateShipdayEvent } from "@/lib/shipday-payload";

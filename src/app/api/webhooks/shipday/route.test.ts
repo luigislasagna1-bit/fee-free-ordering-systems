@@ -27,17 +27,13 @@ vi.mock("@/lib/db", () => ({ default: prismaMock }));
 vi.mock("@/lib/coupon-ledger", () => ({ redeemCouponsForOrder: vi.fn() }));
 vi.mock("@/lib/reward-ledger", () => ({ redeemForOrder: vi.fn(), awardForOrder: vi.fn() }));
 vi.mock("@/lib/reward-earn", () => ({ awardEarnRulesForOrder: vi.fn(), awardPromoCreditsForOrder: vi.fn() }));
-// translateShipdayEvent lives in shipday.ts which imports prisma + encrypt —
-// mock the module with the real translation table inlined (kept in sync by
-// the dispatch tests if they ever exist; here we only need two events).
-vi.mock("@/lib/shipday", () => ({
-  translateShipdayEvent: (event: string) => {
-    if (/COMPLETED/i.test(event)) return { shipdayStatus: "delivered", orderStatus: "completed" };
-    if (/ONTHEWAY|PICKED_UP/i.test(event)) return { shipdayStatus: "picked_up", orderStatus: "ready" };
-    if (/ASSIGNED/i.test(event)) return { shipdayStatus: "assigned", orderStatus: null };
-    return { shipdayStatus: null, orderStatus: null };
-  },
-}));
+// shipday.ts imports prisma + encrypt (unmockable here), but the REAL event
+// translation now lives in the prisma-free shipday-payload.ts — use it, so
+// these tests can never drift from the actual vocabulary.
+vi.mock("@/lib/shipday", async () => {
+  const payload = await vi.importActual<typeof import("@/lib/shipday-payload")>("@/lib/shipday-payload");
+  return { translateShipdayEvent: payload.translateShipdayEvent };
+});
 
 import { POST } from "./route";
 
@@ -137,5 +133,55 @@ describe("shipday webhook token auth", () => {
     expect(res.status).toBe(200);
     const updateArg = prismaMock.order.update.mock.calls[0]?.[0];
     expect(updateArg?.data?.status).toBeUndefined(); // shipdayStatus may update; order.status must not
+  });
+});
+
+// ── ShipDay's DOCUMENTED payload shape (found live 2026-07-12) ──────────────
+// Real webhooks carry order.id + order.order_number (snake_case) and the token
+// in a header literally named "token" — none of which the original handler
+// read; Luigi's delivered order 400'd "Missing order identifier" and never
+// completed. These lock the documented contract.
+describe("shipday webhook — documented payload shape", () => {
+  it("order.id (documented) identifies the order without additionalId", async () => {
+    vi.stubEnv("SHIPDAY_WEBHOOK_TOKEN", "platform-secret");
+    prismaMock.order.findFirst.mockResolvedValueOnce(DISPATCHED_ORDER); // shipdayOrderId lookup
+    const res = await POST(
+      makeReq({ token: "platform-secret", body: { event: "ORDER_COMPLETED", order: { id: 555, order_number: "ORD-1" } } }),
+    );
+    expect(res.status).toBe(200);
+    expect(prismaMock.order.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { shipdayOrderId: "555" } }),
+    );
+    expect(prismaMock.order.update).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ status: "completed", shipdayStatus: "delivered" }) }),
+    );
+  });
+
+  it("order_number fallback is scoped to the token's restaurant", async () => {
+    prismaMock.shipdayConfig.findUnique.mockResolvedValue({
+      id: "cfg_A", restaurantId: "rest_A", webhookVerifiedAt: new Date(),
+    });
+    prismaMock.order.findFirst
+      .mockResolvedValueOnce(null) // no shipdayOrderId match
+      .mockResolvedValueOnce(DISPATCHED_ORDER); // order_number match
+    const res = await POST(
+      makeReq({ token: "resto-a-token", body: { event: "ORDER_PIKEDUP", order: { id: 999, order_number: "ORD-1" } } }),
+    );
+    expect(res.status).toBe(200);
+    expect(prismaMock.order.findFirst).toHaveBeenLastCalledWith(
+      expect.objectContaining({ where: { orderNumber: "ORD-1", restaurantId: "rest_A" } }),
+    );
+  });
+
+  it("the token arrives in ShipDay's documented `token` HEADER (no query param)", async () => {
+    vi.stubEnv("SHIPDAY_WEBHOOK_TOKEN", "platform-secret");
+    const req = new NextRequest("http://localhost/api/webhooks/shipday", {
+      method: "POST",
+      body: JSON.stringify({ event: "ORDER_COMPLETED", order: { id: 555, additionalId: "ord_1" } }),
+      headers: { "content-type": "application/json", token: "platform-secret" },
+    });
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    expect(prismaMock.order.update).toHaveBeenCalled();
   });
 });

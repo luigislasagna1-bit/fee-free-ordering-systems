@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildShipdayOrderBody, type DispatchInput } from "@/lib/shipday-payload";
+import { buildShipdayOrderBody, translateShipdayEvent, type DispatchInput } from "@/lib/shipday-payload";
 
 // Locks the ShipDay insert-delivery-order CONTRACT
 // (docs.shipday.com/reference/insert-delivery-order). Both regressions these
@@ -108,5 +108,40 @@ describe("buildShipdayOrderBody — ShipDay insert-order contract", () => {
     expect(withCoords.pickupLongitude).toBe(-79.87);
     const without = buildShipdayOrderBody(mkInput({ customerLat: null, customerLng: null }), NOW);
     expect(without.deliveryLatitude).toBeUndefined();
+  });
+});
+
+// ShipDay's DOCUMENTED webhook event vocabulary (order-status-update-2) —
+// the original guessed names missed ORDER_PIKEDUP (ShipDay's spelling!),
+// ORDER_ONTHEWAY, ORDER_FAILED, ORDER_DELETE; Luigi's live delivered order
+// stayed "accepted" forever (2026-07-12).
+describe("translateShipdayEvent — documented vocabulary", () => {
+  it("ORDER_PIKEDUP (their typo) and ORDER_ONTHEWAY → picked_up / ready", () => {
+    expect(translateShipdayEvent("ORDER_PIKEDUP")).toEqual({ shipdayStatus: "picked_up", orderStatus: "ready" });
+    expect(translateShipdayEvent("ORDER_ONTHEWAY")).toEqual({ shipdayStatus: "picked_up", orderStatus: "ready" });
+  });
+
+  it("ORDER_COMPLETED → delivered / completed", () => {
+    expect(translateShipdayEvent("ORDER_COMPLETED")).toEqual({ shipdayStatus: "delivered", orderStatus: "completed" });
+  });
+
+  it("failure + deletion families map without touching order status", () => {
+    expect(translateShipdayEvent("ORDER_FAILED")).toEqual({ shipdayStatus: "failed", orderStatus: null });
+    expect(translateShipdayEvent("ORDER_INCOMPLETE")).toEqual({ shipdayStatus: "failed", orderStatus: null });
+    expect(translateShipdayEvent("ORDER_DELETE")).toEqual({ shipdayStatus: "cancelled", orderStatus: null });
+  });
+
+  it("assignment shuffle events track shipdayStatus only; unknown events are inert", () => {
+    expect(translateShipdayEvent("ORDER_UNASSIGNED")).toEqual({ shipdayStatus: "unassigned", orderStatus: null });
+    expect(translateShipdayEvent("ORDER_PIKEDUP_REMOVED")).toEqual({ shipdayStatus: "assigned", orderStatus: null });
+    expect(translateShipdayEvent("ORDER_ACCEPTED_AND_STARTED")).toEqual({ shipdayStatus: "started", orderStatus: null });
+    expect(translateShipdayEvent("ORDER_POD_UPLOAD")).toEqual({ shipdayStatus: null, orderStatus: null });
+    expect(translateShipdayEvent("ORDER_INSERTED")).toEqual({ shipdayStatus: null, orderStatus: null });
+  });
+
+  it("legacy guessed aliases still translate (backward compat)", () => {
+    expect(translateShipdayEvent("ORDER_ONTHEWAY_STATUS").orderStatus).toBe("ready");
+    expect(translateShipdayEvent("ORDER_FAILED_DELIVERY").shipdayStatus).toBe("failed");
+    expect(translateShipdayEvent("ORDER_DELETED").shipdayStatus).toBe("cancelled");
   });
 });
