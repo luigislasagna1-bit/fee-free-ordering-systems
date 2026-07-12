@@ -187,6 +187,16 @@ async function send({
     console.log("[Email placeholder]", to, "·", subject);
     return { success: true };
   }
+  // DEV GUARD (2026-07-12): the dev Neon branch is a COPY of prod, so the
+  // PlatformSettings row carries the REAL Resend key and decrypts fine with
+  // the local ENCRYPTION_KEY — which means dev tests were sending REAL email
+  // to real people (a ShipDay partner intro fired to Justin during a local
+  // E2E). Outside production, log-and-skip unless ALLOW_DEV_EMAIL=1 is set
+  // deliberately (e.g. checking rendering in a real inbox).
+  if (!IS_PROD && process.env.ALLOW_DEV_EMAIL !== "1") {
+    console.log("[Email suppressed — dev] set ALLOW_DEV_EMAIL=1 to really send.", to, "·", subject);
+    return { success: true };
+  }
   try {
     const headers: Record<string, string> = {};
     if (listUnsubscribeUrl) {
@@ -381,7 +391,7 @@ export async function sendShipdayPartnerIntro(params: {
     <p style="font-size:15px;line-height:1.6"><strong>${esc(params.restaurantName)}</strong> on Fee Free Ordering has selected the Shipday delivery add-on. Please create their account, apply the partner discount, add credits, and schedule onboarding.</p>
     <table style="border-collapse:collapse;margin:14px 0">${table}</table>
     <p style="font-size:14px;line-height:1.6">${esc(firstName)} (CC&rsquo;d) — meet <strong>Justin Brandon</strong>, your Shipday delivery contact. He&rsquo;ll set up your account with the partner discount + credits and walk you through onboarding.</p>
-    <p style="font-size:14px;line-height:1.6">Book a setup call: <a href="${calendly}" style="color:#059669">${calendly}</a></p>
+    <p style="font-size:14px;line-height:1.6">Book a setup call: <a href="${calendly}" style="color:#059669">${calendly}</a><br/>Or text/call Justin directly: <strong>(321) 340-7571</strong></p>
     <p style="font-size:12px;color:#9ca3af;margin-top:20px">Sent automatically by Fee Free Ordering when a restaurant connects Shipday.</p>
   </div>`;
 

@@ -50,9 +50,16 @@ export default async function IntegrationsPage() {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { shipdayConfig: { select: { id: true } }, facebookPixelId: true, googleAnalyticsId: true },
+    select: {
+      shipdayConfig: { select: { enabled: true, apiKeyEnc: true } },
+      facebookPixelId: true,
+      googleAnalyticsId: true,
+    },
   });
-  const shipdayActive = !!restaurant?.shipdayConfig;
+  // "Active" = actually dispatching (enabled + a saved API key). A bare config
+  // row doesn't count — the pool page auto-creates one on first visit, which
+  // used to make every own-drivers restaurant read as "Active" here.
+  const shipdayActive = !!restaurant?.shipdayConfig?.enabled && !!restaurant?.shipdayConfig?.apiKeyEnc;
 
   const t = await getTranslations("admin.integrations");
   const tc = await getTranslations("common");

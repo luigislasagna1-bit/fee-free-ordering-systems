@@ -43,6 +43,15 @@ export default async function DriverPoolConfigPage() {
   // "Replace" button to set a new one.
   const hasApiKey = !!config.apiKeyEnc;
 
+  // Owner's personal webhook URL for the wizard's "connect the webhook" step.
+  // The token is minted on the first shipday/both save (driver-pool PUT) —
+  // null until then. Exposing it to the OWNER is the point: they paste it
+  // into their ShipDay dashboard; it only authorizes THEIR orders.
+  const base = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001").replace(/\/$/, "");
+  const webhookUrl = config.webhookToken
+    ? `${base}/api/webhooks/shipday?token=${config.webhookToken}`
+    : null;
+
   return (
     <DriverPoolClient
       initial={{
@@ -53,6 +62,9 @@ export default async function DriverPoolConfigPage() {
         flatDeliveryFee: config.flatDeliveryFee ?? 0,
         tieredRules: safeJsonArray(config.tieredRules),
         hasApiKey,
+        webhookUrl,
+        webhookVerified: !!config.webhookVerifiedAt,
+        partnerContacted: !!config.partnerNotifiedAt,
       }}
       driverPoolEntitled={entitled}
     />

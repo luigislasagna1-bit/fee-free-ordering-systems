@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse, after } from "next/server";
+import { randomBytes } from "crypto";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
 import { encrypt } from "@/lib/encrypt";
-import { sendShipdayPartnerIntro } from "@/lib/email";
+import { claimPartnerIntro, unclaimPartnerIntro, buildAndSendPartnerIntro } from "@/lib/shipday-partner";
 import { restaurantHasOnlinePayments } from "@/lib/shipday";
 
 /**
@@ -158,36 +159,35 @@ export async function PUT(req: NextRequest) {
     update,
   });
 
+  const cfg = await prisma.shipdayConfig.findUnique({
+    where: { restaurantId },
+    select: { deliverySource: true, partnerNotifiedAt: true, webhookToken: true },
+  });
+
+  // PER-RESTAURANT webhook token — minted the first time the restaurant picks
+  // a ShipDay source (wizard step 3 shows the URL to paste into ShipDay →
+  // Integrations). 16 random bytes hex = exactly ShipDay's 32-char token cap.
+  // Never regenerated on later saves (the pasted dashboard URL must stay valid).
+  if (cfg && cfg.deliverySource !== "own" && !cfg.webhookToken) {
+    await prisma.shipdayConfig.update({
+      where: { restaurantId },
+      data: { webhookToken: randomBytes(16).toString("hex") },
+    });
+  }
+
   // Auto-intro to the Shipday partner (Justin) the FIRST time this restaurant
   // turns Shipday on — loops Justin + the merchant + ops into one thread so the
   // account is created, the partner discount applied, credits added, and
-  // onboarding scheduled (the handoff Justin asked for). Idempotent via
-  // partnerNotifiedAt; after() so a slow email never blocks the save.
-  const cfg = await prisma.shipdayConfig.findUnique({
-    where: { restaurantId },
-    select: { deliverySource: true, partnerNotifiedAt: true },
-  });
+  // onboarding scheduled (the handoff Justin asked for). Atomic one-shot claim
+  // (shared with the wizard's "Have ShipDay contact me" button); after() so a
+  // slow email never blocks the save; failed send un-claims for a retry.
   if (cfg && cfg.deliverySource !== "own" && !cfg.partnerNotifiedAt) {
-    // Claim it first (idempotent) so a double-save can't email Justin twice.
-    await prisma.shipdayConfig.update({ where: { restaurantId }, data: { partnerNotifiedAt: new Date() } });
-    const r = await prisma.restaurant.findUnique({
-      where: { id: restaurantId },
-      select: {
-        name: true, address: true, city: true, state: true, email: true, phone: true,
-        users: { where: { role: "restaurant_admin" }, select: { name: true, email: true }, take: 1 },
-      },
-    });
-    if (r) {
-      const owner = r.users[0];
-      const addr = [r.address, r.city, r.state].filter(Boolean).join(", ");
+    if (await claimPartnerIntro(restaurantId)) {
       after(() =>
-        sendShipdayPartnerIntro({
-          restaurantName: r.name,
-          restaurantAddress: addr || null,
-          ownerName: owner?.name ?? null,
-          ownerEmail: owner?.email ?? r.email ?? null,
-          ownerPhone: r.phone ?? null,
-        }).catch((e) => console.error("[driver-pool] shipday partner intro failed", e)),
+        buildAndSendPartnerIntro(restaurantId).catch(async (e) => {
+          console.error("[driver-pool] shipday partner intro failed", e);
+          await unclaimPartnerIntro(restaurantId);
+        }),
       );
     }
   }

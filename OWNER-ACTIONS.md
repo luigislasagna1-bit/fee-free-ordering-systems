@@ -11,7 +11,7 @@
 
 ## A. DO NOW — this week, in priority order
 
-### A1. ☐ Re-subscribe "Online Payments" with your real card — DEADLINE THURSDAY JULY 17
+### A1. ✅ DONE 2026-07-11 (Luigi clicked Subscribe; Claude's prod verification pending — say "verify A1 on prod") — Re-subscribe "Online Payments" with your real card — was due THURSDAY JULY 17
 **Why:** your free partner period ends July 17. When it does, card checkout on luigispizzapastawings.com STOPS until this is done.
 **⚠️ 2026-07-11 update:** you tried this and the page showed "Renews automatically" with NO Subscribe button — that was a bug (the free-period card looked subscribed and the system even refused an early subscribe). Claude built the fix: the card now says **"Free until July 17, 2026"** with a **"Subscribe to keep it"** button, and subscribing early does NOT double-charge — your card is saved now and the first charge lands only when the free period ends. **✅ DEPLOYED 2026-07-11 (056747a1, adversarially reviewed, site verified healthy) — ready for your click:**
 1. Go to `feefreeordering.com/admin` → **Billing** → **Add-ons**.
@@ -20,13 +20,13 @@
 4. Tell Claude "done A1" → Claude verifies the subscription is attached on the platform Stripe account.
 *(Note: this covers ONLY Online Payments. Your other complimentary add-ons each show the same button now — subscribe to each one you want to keep past its free date.)*
 
-### A2. ☐ One click to activate refund-sync: "Test connection"
+### A2. ✅ DONE 2026-07-11 (screenshot: "Connection successful — your Stripe keys work", Live mode; DB webhook-row verification pending — covered by "verify A1 and A2 on prod") — One click to activate refund-sync: "Test connection"
 **Why:** this registers the new webhook on your Stripe account so refunds made in the Stripe dashboard update orders + Luigi Bucks automatically.
 1. `feefreeordering.com/admin` → **Payments** → **Payment providers**.
 2. In the Stripe card, click **Test connection**. Expect the green success message.
 3. Tell Claude "done A2" → Claude verifies the webhook registered in the database.
 
-### A4. ☐ Turn on Apple membership auto-renew — expires ~August 3
+### A4. ✅ DONE 2026-07-11 (Luigi renewed the membership) — Turn on Apple membership auto-renew — was expiring ~August 3
 **Why:** if the Luigi's Lasagna Apple Developer membership lapses mid-launch, the iOS app can't be submitted and TestFlight stops.
 1. Go to `developer.apple.com/account` and sign in.
 2. Open **Membership details**.
@@ -34,18 +34,14 @@
 4. While you're there: note the **D-U-N-S Number** shown — paste it to Claude (useful reference).
 5. Tell Claude "done A4".
 
-### A5. ☐ ShipDay webhook token (two halves — do both)
-**Why:** the delivery-status webhook now rejects unauthenticated callers (security hardening). Until this token is set in BOTH places, ShipDay driver status updates are paused (orders still complete automatically — nothing is lost, just live driver status).
-**Half 1 — Vercel:**
-1. Go to `vercel.com` → your project → **Settings** → **Environment Variables**.
-2. Click **Add New**: Name = `SHIPDAY_WEBHOOK_TOKEN`. Value = a long random password (30+ characters — generate one in your password manager, and SAVE it there).
-3. Environment: tick **Production** → Save.
-4. Go to **Deployments** → latest deployment → "..." menu → **Redeploy** (env changes need a redeploy).
-**Half 2 — ShipDay:**
-5. In the ShipDay dashboard → look for **Integrations / Webhook settings**.
-6. The webhook URL should be `https://feefreeordering.com/api/webhooks/shipday?token=PASTE-THE-SAME-VALUE-HERE`.
-7. Tell Claude "done A5" → Claude verifies the webhook accepts ShipDay again.
-*(If you're not actively using ShipDay drivers right now, this can slide a few days — but do it before the next driver dispatch.)*
+### A5. ☐ ShipDay webhook — SIMPLIFIED (2026-07-12: the wizard now does the hard part)
+**Why:** the delivery-status webhook rejects unauthenticated callers (security hardening). ~~Vercel env var + manual URL~~ **Replaced:** every restaurant now gets its own personal webhook link, shown right on the Driver Pool page — no Vercel steps, no password manager.
+**After the ShipDay wizard deploys (Claude will tell you when):**
+1. `feefreeordering.com/admin` → **Driver Pool** → the **"Live driver status (webhook)"** card.
+2. Click **Copy link**, then in your ShipDay dashboard open **Integrations → Webhook** and paste it as the endpoint URL.
+3. The card flips to **"Webhook verified"** on the first update ShipDay sends.
+4. Tell Claude "done A5".
+*(This doubles as the live test of the new wizard with your ShipDay account — Claude will walk you through placing one test delivery.)*
 
 ### A6. ☐ Change the superadmin password (it appeared in a chat screenshot)
 1. Log out of `feefreeordering.com/admin`.
@@ -167,6 +163,9 @@ When you have the iPad handy, tell Claude "let's do C3": print a real test order
 | 2026-07-10 | Free partner periods set (yours Jul 17, Fabrizio Aug 24, Milton Aug 2) | Conversion script ran; prod DB verified |
 | 2026-07-10 | Money-path hardening shipped (commit 91d11c07) | 590 tests, adversarial review, pushed |
 | 2026-07-10 | A3 — Android signing key backed up to multiple sources (Google Drive + USB) + passwords saved | Luigi confirmed in chat; original at android/app/feefree-release.jks intact |
+| 2026-07-11 | A1 — Online Payments re-subscribed before the Jul 17 free-period end | Luigi confirmed in chat; DB verification pending ("verify A1 on prod") |
+| 2026-07-11 | A2 — Stripe Test connection clicked (registers refund-sync + dispute webhooks) | Screenshot: green "Connection successful", Live mode, pk_live key |
+| 2026-07-11 | A4 — Apple Developer membership renewal submitted (was expiring ~Aug 3) | Luigi confirmed in chat; Apple shows "being processed" — normal, confirm the new expiry date shows within a day |
 
 ---
 

@@ -3396,6 +3396,20 @@ model ShipdayConfig {
   /// fires EXACTLY once, not on every settings save. Luigi/Justin 2026-06-17.
   partnerNotifiedAt DateTime?
 
+  /// PER-RESTAURANT webhook token (Luigi 2026-07-12, ShipDay onboarding wizard).
+  /// The owner pastes `https://<platform>/api/webhooks/shipday?token=<this>` into
+  /// ShipDay → Integrations. ShipDay caps tokens at 32 chars. Identifies AND
+  /// authenticates the caller (webhook route looks the row up by token and
+  /// requires the matched order to belong to this restaurant), replacing the
+  /// shared platform-wide SHIPDAY_WEBHOOK_TOKEN env (kept as a legacy fallback).
+  /// Generated server-side on the first shipday/both save; never client-supplied.
+  webhookToken String? @unique
+
+  /// Stamped the first time a correctly-tokened ShipDay webhook arrives —
+  /// drives the wizard's "Webhook verified ✓" step so the owner KNOWS the
+  /// dashboard paste worked without placing a test order.
+  webhookVerifiedAt DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

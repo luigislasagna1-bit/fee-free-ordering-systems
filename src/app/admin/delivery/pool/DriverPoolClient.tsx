@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
-import { Loader2, Truck, User, Users, Key, DollarSign, Check, X, Plus, Trash2, Lock, ArrowRight } from "lucide-react";
+import { Loader2, Truck, User, Users, Key, DollarSign, Check, X, Plus, Trash2, Lock, ArrowRight, Copy, RefreshCw } from "lucide-react";
 
 /**
  * Driver pool / ShipDay configuration UI.
@@ -29,6 +29,14 @@ type Initial = {
   flatDeliveryFee: number;
   tieredRules: Tier[];
   hasApiKey: boolean;
+  /** Full per-restaurant webhook URL to paste into ShipDay → Integrations.
+   *  Null until the first shipday/both save mints the token. */
+  webhookUrl: string | null;
+  /** True once the first correctly-tokened ShipDay webhook arrived. */
+  webhookVerified: boolean;
+  /** True once the partner intro (Justin) has been emailed for this
+   *  restaurant — drives the "waiting on your ShipDay account" state. */
+  partnerContacted: boolean;
 };
 
 export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Initial; driverPoolEntitled: boolean }) {
@@ -47,6 +55,12 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
   // "Do you have a Shipday account?" gate — a saved key implies yes; otherwise
   // ask, so a brand-new restaurant is routed to create one. Luigi/Justin 2026-06-17.
   const [hasAccount, setHasAccount] = useState<"yes" | "no" | null>(initial.hasApiKey ? "yes" : null);
+  // "Have ShipDay contact me" (no-account path) — fires the three-way intro
+  // email (owner + Justin + ops). partnerContacted persists across visits so
+  // the waiting state survives a reload. Luigi/Justin handoff 2026-07-12.
+  const [contactSending, setContactSending] = useState(false);
+  const [contactSent, setContactSent] = useState(initial.partnerContacted);
+  const [copiedWebhook, setCopiedWebhook] = useState(false);
 
   // Shipday is required when source is "shipday" or "both" — surface a
   // soft warning if they pick those without credentials.
@@ -112,6 +126,30 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
     }
   }
 
+  // "Have ShipDay contact me" — the guided handoff for owners WITHOUT a
+  // ShipDay account: one click emails the three-way intro (Justin + owner +
+  // ops) so the account is created with the partner discount + credits +
+  // scheduled onboarding, instead of the owner signing up cold. Idempotent
+  // server-side; alreadySent still flips the local waiting state.
+  async function contactShipday() {
+    if (!driverPoolEntitled) { toast.error(t("toastSubscribeFirst")); return; }
+    setContactSending(true);
+    try {
+      const res = await fetch("/api/admin/driver-pool/contact", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data?.error || t("contactMeFailed"));
+        return;
+      }
+      setContactSent(true);
+      toast.success(data?.alreadySent ? t("contactMeAlready") : t("contactMeSent"), { duration: 9000 });
+    } catch {
+      toast.error(t("contactMeFailed"));
+    } finally {
+      setContactSending(false);
+    }
+  }
+
   // "Test connection" — validate the key against ShipDay WITHOUT placing a real
   // order. Tests the key being typed (if any), else the saved one. Luigi 2026-06-17.
   async function testConnection() {
@@ -148,6 +186,20 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
           {t("headingDescription")}
         </p>
       </div>
+
+      {/* Setup progress — GloriaFood-style guided steps, derived from saved
+          state so the owner can leave mid-setup and resume exactly where they
+          were. Only meaningful once a ShipDay source is picked. */}
+      {needsShipDay && driverPoolEntitled && (
+        <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-5">
+          <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">{t("stepsTitle")}</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <StepChip n={1} label={t("step1Label")} done={initial.hasApiKey} active={!initial.hasApiKey} />
+            <StepChip n={2} label={t("step2Label")} done={initial.webhookVerified} active={initial.hasApiKey && !initial.webhookVerified} />
+            <StepChip n={3} label={t("step3Label")} done={initial.enabled && initial.hasApiKey} active={initial.hasApiKey && initial.webhookVerified && !initial.enabled} />
+          </div>
+        </div>
+      )}
 
       {/* Section 1: Delivery source */}
       <Section
@@ -258,22 +310,43 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
                 </div>
               </div>
             ) : hasAccount === "no" ? (
-              /* No account — send them to Shipday + explain the partner handoff. */
+              /* No account — the PARTNER HANDOFF is the primary path (Justin's
+                 rule: never leave the ball entirely in the restaurant's court).
+                 One click emails a three-way intro; signing up cold on
+                 shipday.com stays as the self-serve fallback. */
               <div className="border border-gray-200 rounded-lg px-4 py-3 space-y-2">
-                <p className="text-[13px] text-gray-700 leading-snug">{t("noAccountConnectNote")}</p>
-                <div className="flex items-center gap-3 flex-wrap">
-                  <a
-                    href="https://www.shipday.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white"
-                  >
-                    {t("createAccount")} <ArrowRight className="w-4 h-4" />
-                  </a>
-                  <button type="button" onClick={() => setHasAccount("yes")} className="text-xs text-gray-500 hover:underline">
-                    {t("haveAccountInstead")}
-                  </button>
-                </div>
+                {contactSent ? (
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2.5 flex items-start gap-2">
+                    <Check className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                    <p className="text-[13px] text-emerald-900 leading-snug">{t("waitingBanner")}</p>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-[13px] text-gray-700 leading-snug">{t("contactMeNote")}</p>
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <button
+                        type="button"
+                        onClick={contactShipday}
+                        disabled={contactSending}
+                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white"
+                      >
+                        {contactSending ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                        {t("contactMeButton")} {!contactSending && <ArrowRight className="w-4 h-4" />}
+                      </button>
+                      <a
+                        href="https://www.shipday.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-gray-500 hover:underline"
+                      >
+                        {t("createAccount")}
+                      </a>
+                    </div>
+                  </>
+                )}
+                <button type="button" onClick={() => setHasAccount("yes")} className="text-xs text-gray-500 hover:underline">
+                  {t("haveAccountInstead")}
+                </button>
               </div>
             ) : (
               /* Yes, they have an account — enter the API key. */
@@ -347,6 +420,64 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
               {t("masterEnableHint")}
             </p>
           </div>
+        </Section>
+      )}
+
+      {/* Section 2b: Live driver status webhook — the owner pastes their
+          personal tokened URL into ShipDay → Integrations so driver events
+          (picked up, delivered) flow back into their orders. Verified state
+          is stamped server-side by the first correctly-tokened webhook. */}
+      {needsShipDay && driverPoolEntitled && (
+        <Section title={t("webhookTitle")} description={t("webhookDescription")}>
+          {initial.webhookUrl ? (
+            <div className="space-y-3">
+              <ol className="list-decimal pl-5 space-y-1.5 text-[13px] text-gray-700 leading-snug">
+                <li>{t("webhookInstruction1")}</li>
+                <li>{t("webhookInstruction2")}</li>
+                <li>{t("webhookInstruction3")}</li>
+              </ol>
+              <div className="flex items-center gap-2 flex-wrap">
+                <code className="flex-1 min-w-[240px] bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-[12px] font-mono text-gray-800 break-all select-all">
+                  {initial.webhookUrl}
+                </code>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(initial.webhookUrl!);
+                      setCopiedWebhook(true);
+                      setTimeout(() => setCopiedWebhook(false), 2500);
+                    } catch {
+                      toast.error(t("toastFailedToSave"));
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold border border-gray-300 hover:bg-gray-50"
+                >
+                  {copiedWebhook ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                  {copiedWebhook ? t("webhookCopied") : t("webhookCopy")}
+                </button>
+              </div>
+              {initial.webhookVerified ? (
+                <div className="bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2.5 flex items-center gap-2">
+                  <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <span className="text-[13px] font-semibold text-emerald-900">{t("webhookVerifiedMsg")}</span>
+                </div>
+              ) : (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5 flex items-center justify-between gap-2 flex-wrap">
+                  <span className="text-[13px] text-amber-900">{t("webhookWaiting")}</span>
+                  <button
+                    type="button"
+                    onClick={() => router.refresh()}
+                    className="text-xs font-semibold text-amber-800 hover:underline inline-flex items-center gap-1"
+                  >
+                    <RefreshCw className="w-3 h-3" /> {t("webhookCheckNow")}
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <p className="text-[13px] text-gray-600 leading-snug">{t("webhookSaveFirst")}</p>
+          )}
         </Section>
       )}
 
@@ -463,6 +594,29 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
           )}
         </button>
       </div>
+    </div>
+  );
+}
+
+/** One step in the setup-progress strip: number → ✓ when done, blue ring on
+ *  the current step. Purely presentational — state is derived by the caller. */
+function StepChip({ n, label, done, active }: { n: number; label: string; done: boolean; active: boolean }) {
+  return (
+    <div
+      className={`flex items-center gap-2.5 rounded-xl border-2 px-3 py-2.5 ${
+        done ? "border-emerald-200 bg-emerald-50" : active ? "border-blue-300 bg-blue-50" : "border-gray-200 bg-gray-50"
+      }`}
+    >
+      <div
+        className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold ${
+          done ? "bg-emerald-500 text-white" : active ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-500"
+        }`}
+      >
+        {done ? <Check className="w-3.5 h-3.5" /> : n}
+      </div>
+      <span className={`text-xs font-semibold leading-tight ${done ? "text-emerald-900" : active ? "text-blue-900" : "text-gray-500"}`}>
+        {label}
+      </span>
     </div>
   );
 }

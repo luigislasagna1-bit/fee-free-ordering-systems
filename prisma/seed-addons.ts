@@ -348,12 +348,13 @@ async function main() {
       name: "Driver Pool",
       description:
         "Tap into our ShipDay third-party driver network when your in-house drivers are busy or unavailable. Per-delivery fees only — no monthly minimums beyond this subscription. Set your own delivery pricing for customers and decide how much you absorb vs pass through.",
-      monthlyPriceCents: 1999, // $19.99
+      monthlyPriceCents: 999, // $9.99 — matches the LIVE prod AddOn row (seed said $19.99, stale; fixed 2026-07-12)
       displayOrder: 100,
       enabledFeatures: ["driver_pool"],
-      // ShipDay REST wrapper + webhook handler don't exist yet (task #59).
-      // UI is there but no actual dispatch happens. Hide until built.
-      comingSoon: true,
+      // Dispatch + webhook + onboarding wizard are LIVE (2026-07-12). The
+      // stale comingSoon:true here only affected fresh DB seeds — prod's
+      // row is active and the marketing pages sell it as launching now.
+      comingSoon: false,
     },
   ];
 

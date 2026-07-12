@@ -21,12 +21,24 @@
  * dispatch time) to find the right Order row. Falls back to looking up
  * by shipdayOrderId if additionalId is missing.
  *
- * Security: ShipDay supports a shared secret token in the request. We
- * verify it matches the SHIPDAY_WEBHOOK_TOKEN env var. In PRODUCTION the
- * token is REQUIRED — an unauthenticated caller who knows/guesses an order
- * id could otherwise flip live orders to ready/completed (hardening
- * 2026-07-10; previously this failed OPEN with just a log line). In dev the
- * old warn-and-accept behaviour survives for local testing without ShipDay.
+ * Security: ShipDay supports a shared secret token in the request (query
+ * `?token=` or `x-shipday-token` header, max 32 chars). Two accepted forms:
+ *
+ *   1. PER-RESTAURANT token (`ShipdayConfig.webhookToken`, unique) — the one
+ *      the onboarding wizard hands each owner to paste into ShipDay →
+ *      Integrations. It both authenticates AND identifies the caller: the
+ *      matched order must belong to that restaurant, so one restaurant's
+ *      token can never move another restaurant's orders. First valid hit
+ *      stamps `webhookVerifiedAt` (drives the wizard's "Verified ✓" step).
+ *   2. The legacy platform-wide SHIPDAY_WEBHOOK_TOKEN env — kept so any
+ *      dashboard already configured with it keeps working.
+ *
+ * In PRODUCTION a valid token is REQUIRED — an unauthenticated caller who
+ * knows/guesses an order id could otherwise flip live orders to
+ * ready/completed (hardening 2026-07-10; previously this failed OPEN with
+ * just a log line). In dev the warn-and-accept behaviour survives for local
+ * testing without ShipDay — but a PROVIDED token that matches nothing is
+ * rejected even in dev, so token bugs surface during testing.
  */
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
@@ -40,23 +52,46 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  // Verify the shared-secret token. ShipDay sends it via the `token` query
-  // param (per their docs) or a custom header — we accept both.
-  const expected = process.env.SHIPDAY_WEBHOOK_TOKEN;
-  if (expected) {
-    const tokenFromQuery = req.nextUrl.searchParams.get("token");
-    const tokenFromHeader = req.headers.get("x-shipday-token");
-    const provided = tokenFromQuery ?? tokenFromHeader ?? "";
-    if (!timingSafeEqualString(provided, expected)) {
-      console.warn("[shipday webhook] rejected — token mismatch");
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Verify the token. ShipDay sends it via the `token` query param (per
+  // their docs) or a custom header — we accept both. Per-restaurant tokens
+  // (wizard) are tried after the legacy env token.
+  const envToken = process.env.SHIPDAY_WEBHOOK_TOKEN;
+  const tokenFromQuery = req.nextUrl.searchParams.get("token");
+  const tokenFromHeader = req.headers.get("x-shipday-token");
+  const provided = tokenFromQuery ?? tokenFromHeader ?? "";
+  // When authenticated by a per-restaurant token, every matched order must
+  // belong to THIS restaurant — the token identifies the caller.
+  let tokenRestaurantId: string | null = null;
+
+  if (provided) {
+    if (envToken && timingSafeEqualString(provided, envToken)) {
+      // Legacy platform-wide token — trusted for any restaurant.
+    } else {
+      const cfg = await prisma.shipdayConfig.findUnique({
+        where: { webhookToken: provided },
+        select: { id: true, restaurantId: true, webhookVerifiedAt: true },
+      });
+      if (!cfg) {
+        console.warn("[shipday webhook] rejected — token matched neither env nor any restaurant");
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      }
+      tokenRestaurantId = cfg.restaurantId;
+      // First correctly-tokened call proves the owner's dashboard paste
+      // worked — light the wizard's "Verified ✓" BEFORE any order checks
+      // (ShipDay test pings carry no order we'd recognize).
+      if (!cfg.webhookVerifiedAt) {
+        await prisma.shipdayConfig.update({
+          where: { id: cfg.id },
+          data: { webhookVerifiedAt: new Date() },
+        }).catch((e) => console.error("[shipday webhook] verify-stamp failed", e));
+      }
     }
   } else if (process.env.NODE_ENV === "production") {
-    // Fail CLOSED in prod: no token configured = endpoint disabled.
-    console.error("[shipday webhook] SHIPDAY_WEBHOOK_TOKEN not set — rejecting (fail closed in production)");
-    return NextResponse.json({ error: "Webhook not configured" }, { status: 401 });
+    // Fail CLOSED in prod: tokenless callers are never trusted.
+    console.error("[shipday webhook] no token provided — rejecting (fail closed in production)");
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   } else {
-    console.warn("[shipday webhook] SHIPDAY_WEBHOOK_TOKEN not set — accepting any caller (dev only).");
+    console.warn("[shipday webhook] no token provided — accepting any caller (dev only).");
   }
 
   let body: {
@@ -92,6 +127,17 @@ export async function POST(req: NextRequest) {
     // Return 200 so ShipDay doesn't retry forever on permanently-missing
     // orders. We've logged it for investigation.
     return NextResponse.json({ ok: true, skipped: "no_matching_order" });
+  }
+
+  // Per-restaurant tokens are TENANT-SCOPED: a caller holding restaurant A's
+  // token must never move restaurant B's orders, no matter what ids the
+  // payload claims. 200-skip (not 401) so a ShipDay data mix-up doesn't
+  // retry forever; the log line is the investigation trail.
+  if (tokenRestaurantId && order.restaurantId !== tokenRestaurantId) {
+    console.warn("[shipday webhook] token restaurant mismatch — ignoring", {
+      orderId: order.id, tokenRestaurantId, orderRestaurantId: order.restaurantId, event,
+    });
+    return NextResponse.json({ ok: true, skipped: "restaurant_mismatch" });
   }
 
   // Only orders we actually HANDED to ShipDay may be driven by this webhook
