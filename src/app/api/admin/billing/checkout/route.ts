@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { getStripe, stripeReady } from "@/lib/stripe";
+import { checkoutSessionExpiresAt, getStripe, stripeReady } from "@/lib/stripe";
 import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
 import { euVatSubscriptionBlock } from "@/lib/vies";
 
@@ -73,6 +73,9 @@ export async function POST(req: NextRequest) {
     success_url: `${baseUrl}/admin/billing?success=1`,
     cancel_url: `${baseUrl}/admin/billing`,
     allow_promotion_codes: true,
+    // Short fuse (Stripe default is 24h): two open sessions can BOTH be
+    // completed → duplicate live subscriptions for the plan.
+    expires_at: checkoutSessionExpiresAt(),
   });
 
   return NextResponse.json({ url: session.url });

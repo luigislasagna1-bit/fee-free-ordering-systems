@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { requireRestaurantAccess } from "@/lib/access";
-import { getStripe, stripeReady } from "@/lib/stripe";
+import { checkoutSessionExpiresAt, getStripe, stripeReady } from "@/lib/stripe";
 import { ensureStripeCustomerForRestaurant } from "@/lib/addons";
 import {
   isComplimentaryAddOnRow,
@@ -149,6 +149,9 @@ export async function POST(req: NextRequest) {
     success_url: `${baseUrl}/admin/billing/add-ons?subscribed=${encodeURIComponent(slug)}`,
     cancel_url: `${baseUrl}/admin/billing/add-ons`,
     allow_promotion_codes: true,
+    // Short fuse (Stripe default is 24h): two open sessions can BOTH be
+    // completed → duplicate live subscriptions for the same add-on.
+    expires_at: checkoutSessionExpiresAt(),
   });
 
   return NextResponse.json({ url: session.url });
