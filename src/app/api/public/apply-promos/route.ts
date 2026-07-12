@@ -160,9 +160,15 @@ export async function POST(req: NextRequest) {
     : [];
   let committedExclusive: { id: string; name: string } | null = null;
   if (committedIds.length > 0) {
-    const bundleOwnerIds = Array.from(
-      new Set([restaurant.id, restaurant.parentRestaurantId].filter(Boolean)),
-    ) as string[];
+    // Owner list must MATCH the charge (orders/route.ts bundlePromoMap): the
+    // parent only counts when the child actually serves the brand menu
+    // (resolveMenuRestaurantId rule, inlined — the full row is loaded above).
+    // Unconditional parentRestaurantId here let a non-brand-menu child see a
+    // parent bundle as committed-exclusive in preview while the charge would
+    // reject it as unavailable → preview ≠ charge on which promos are blocked.
+    const menuOwnerId =
+      restaurant.parentRestaurantId && restaurant.useBrandMenu ? restaurant.parentRestaurantId : restaurant.id;
+    const bundleOwnerIds = Array.from(new Set([restaurant.id, menuOwnerId]));
     const nowTs = new Date();
     const row = await prisma.promotion.findFirst({
       where: {
@@ -181,6 +187,23 @@ export async function POST(req: NextRequest) {
     committedExclusive = row ? { id: row.id, name: row.name } : null;
   }
 
+  // free_delivery promos compete at their REAL fee value (audit B10). Use the
+  // customer's resolved ZONE fee when a zone is known — the charge scores with
+  // the zone fee (orders/route.ts zoneDeliveryFee), so a base-fee preview could
+  // pick a different winner between two competing exclusives whenever zone fee
+  // ≠ base fee (always customer-favorable, but preview must equal charge).
+  // Zone lookup is scoped to this restaurant so a foreign zone id can't leak
+  // another store's fee. Falls back to the base fee (pre-zone typing stage).
+  const previewZoneId = typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined;
+  let previewDeliveryFee = Math.max(0, restaurant.deliveryFee ?? 0);
+  if ((orderType ?? "pickup") === "delivery" && previewZoneId) {
+    const zone = await prisma.deliveryZone.findFirst({
+      where: { id: previewZoneId, restaurantId: restaurant.id },
+      select: { deliveryFee: true },
+    });
+    if (zone) previewDeliveryFee = Math.max(0, zone.deliveryFee ?? 0);
+  }
+
   const ctx: ApplyContext = {
     orderType: orderType ?? "pickup",
     now: promoEvalNow,
@@ -192,10 +215,8 @@ export async function POST(req: NextRequest) {
     couponCode: effectiveCouponCode,
     paymentMethod,
     hasUsedLifetime: promoCtx.hasUsedLifetime,
-    deliveryZoneId: typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined,
-    // So a free_delivery EXCLUSIVE competes at its real fee value, not $0
-    // (audit B10). Base fee is a fine estimate for the preview tie-break.
-    deliveryFee: (orderType ?? "pickup") === "delivery" ? Math.max(0, restaurant.deliveryFee ?? 0) : 0,
+    deliveryZoneId: previewZoneId,
+    deliveryFee: (orderType ?? "pickup") === "delivery" ? previewDeliveryFee : 0,
     // Restaurant's IANA timezone — drives Happy Hour / day-of-week
     // evaluation in the owner's local time, not the Vercel UTC clock.
     // Without this the Italian "15:00–18:00" window was being matched

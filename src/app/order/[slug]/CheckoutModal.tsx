@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Autocomplete } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { computeApplied } from "@/lib/reward-math";
 import { childBuildLines } from "@/lib/bundle-child-lines";
 import { pickHoursForService } from "@/lib/service-hours";
 import { rowIntervals } from "@/lib/restaurant-hours";
@@ -651,7 +652,22 @@ export function CheckoutModal({
         (rewardInfo!.maxRedeemPercent > 0 ? rewardBase * (rewardInfo!.maxRedeemPercent / 100) : rewardBase),
       ))
     : 0;
-  const creditChosen = rewardEligible ? Math.min(Math.max(0, r2(creditToApply)), rewardMax) : 0;
+  // Mirror the server's claim EXACTLY (same pure computeApplied the orders
+  // route runs), including the card-processor min-charge floor on online
+  // payments — otherwise "To pay today" can understate by up to $0.49 on
+  // small card orders (preview ≠ charge). Recomputes live when the customer
+  // switches payment method. Luigi audit 2026-07-07, fixed 2026-07-11.
+  const payingOnline = customerInfo.paymentMethod === "card" || customerInfo.paymentMethod === "paypal";
+  const creditChosen = rewardEligible
+    ? computeApplied({
+        requested: Math.max(0, r2(creditToApply)),
+        balance: rewardInfo!.balance,
+        orderTotal: rewardBase,
+        minRedeemBalance: rewardInfo!.minRedeemBalance ?? 0,
+        maxRedeemPercent: rewardInfo!.maxRedeemPercent ?? 100,
+        minCharge: payingOnline ? 0.5 : 0,
+      }).applied
+    : 0;
   const chargeToday = r2(total - creditChosen);
   const setCredit = (n: number) => setCreditToApply?.(Math.min(Math.max(0, r2(n)), rewardMax));
 
@@ -793,13 +809,13 @@ export function CheckoutModal({
             row shows the promo name + savings. Stays sticky-at-top of the
             modal body so customers see what they earned even as they
             scroll the form below. */}
-        {(appliedPromos.some((p) => p.type !== "free_delivery" && p.discount > 0 && !checkoutBundlePromoIds.has(p.promoId)) || (hasFreeDelivery && baseDeliveryFee > 0)) && (
+        {(appliedPromos.some((p) => p.type !== "free_delivery" && p.discount > 0 && !checkoutBundlePromoIds.has(p.promoId)) || (hasFreeDelivery && baseDeliveryFee > 0) || appliedPromos.some((p) => p.type === "reward_credit" && (p.creditAmount ?? 0) > 0)) && (
           <div className="px-5 pt-4 flex-shrink-0">
             <div className="rounded-xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50 p-4 shadow-sm">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xl" aria-hidden>🎉</span>
                 <div className="text-sm font-bold text-emerald-800">
-                  {appliedPromos.filter((p) => p.type !== "free_delivery" && p.discount > 0 && !checkoutBundlePromoIds.has(p.promoId)).length + (hasFreeDelivery && baseDeliveryFee > 0 ? 1 : 0) === 1
+                  {appliedPromos.filter((p) => p.type !== "free_delivery" && p.discount > 0 && !checkoutBundlePromoIds.has(p.promoId)).length + (hasFreeDelivery && baseDeliveryFee > 0 ? 1 : 0) + appliedPromos.filter((p) => p.type === "reward_credit" && (p.creditAmount ?? 0) > 0).length === 1
                     ? tc("unlockedPromoOne")
                     : tc("unlockedPromoMany")}
                 </div>

@@ -8,6 +8,7 @@ import {
   UserCircle, LogIn, Search, Utensils, Package, Gift, Trash2, PiggyBank,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { computeApplied } from "@/lib/reward-math";
 import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
@@ -3394,14 +3395,21 @@ export function OrderingPageClient({
   const cartRewardEligible =
     !!rewardInfo && rewardInfo.balance > 0 && rewardInfo.balance >= (rewardInfo.minRedeemBalance ?? 0) && total > 0;
   const cartRewardBase = cartRewardEligible ? Math.max(0, cartR2(total - (rewardInfo!.redeemExcludedTotal ?? 0))) : 0;
-  const cartRewardMax = cartRewardEligible
-    ? cartR2(Math.min(
-        rewardInfo!.balance,
-        cartRewardBase,
-        (rewardInfo!.maxRedeemPercent > 0 ? cartRewardBase * (rewardInfo!.maxRedeemPercent / 100) : cartRewardBase),
-      ))
+  // Same pure computeApplied the server runs at charge — including the
+  // card-processor min-charge floor when the chosen method pays online —
+  // so the drawer's "charge today" matches checkout AND the final charge
+  // to the cent. Luigi audit 2026-07-07, fixed 2026-07-11.
+  const cartPayingOnline = customerInfo.paymentMethod === "card" || customerInfo.paymentMethod === "paypal";
+  const cartCreditChosen = cartRewardEligible
+    ? computeApplied({
+        requested: Math.max(0, cartR2(creditToApply)),
+        balance: rewardInfo!.balance,
+        orderTotal: cartRewardBase,
+        minRedeemBalance: rewardInfo!.minRedeemBalance ?? 0,
+        maxRedeemPercent: rewardInfo!.maxRedeemPercent ?? 100,
+        minCharge: cartPayingOnline ? 0.5 : 0,
+      }).applied
     : 0;
-  const cartCreditChosen = cartRewardEligible ? Math.min(Math.max(0, cartR2(creditToApply)), cartRewardMax) : 0;
   const cartChargeToday = cartR2(total - cartCreditChosen);
 
   const getModPrice = (item: MenuItem, selectedMods: Record<string, string[]>) =>

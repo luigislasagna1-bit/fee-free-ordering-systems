@@ -79,6 +79,11 @@ export type OrderConfirmationProps = {
    *  Only sent when the restaurant's rewards program is ON (feature-gated). */
   creditApplied?: number;
   rewardLabel?: string | null;
+  /** Projected Reward Dollars EARNED on this order (credited at completion) —
+   *  adds the green "You earned {label} +$X" row after the balance block, same
+   *  as the confirmation/status pages and printed receipt. Feature-gated by
+   *  the caller (only sent when rewards + earning are ON). */
+  rewardEarned?: number;
   /** RESOLVED localized payment-method text ("Cash on pickup") — the sender
    *  resolves it (it has the raw orderType; the template's is localized). */
   paymentValue?: string | null;
@@ -93,7 +98,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
-    appliedPromos, creditApplied, rewardLabel, paymentValue, paidStatus, t,
+    appliedPromos, creditApplied, rewardLabel, rewardEarned, paymentValue, paidStatus, t,
   } = props;
   const cur = currency ?? "usd";
   // Reward Dollars part-payment rows — mirror the confirmation page exactly:
@@ -282,6 +287,8 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           freeLabel={t("email.orderConfirmed.promoFreeLabel")}
           rewardUsed={rewardUsed}
           rewardUsedLabel={t("receipt.customer.paidWithReward", { label: rewardName })}
+          rewardEarned={Math.max(0, Number(rewardEarned ?? 0))}
+          rewardEarnedLabel={t("receipt.customer.earnedReward", { label: rewardName })}
           balanceDue={balanceDue}
           balanceDueLabel={isPaid ? t("money.paid") : t("receipt.customer.balanceDue")}
           paymentLabel={t("checkout.paymentMethod")}

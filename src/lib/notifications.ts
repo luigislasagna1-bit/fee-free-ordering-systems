@@ -502,6 +502,9 @@ export type CustomerEventPayload =
       subtotal?: number; taxAmount?: number; deliveryFee?: number; tip?: number; depositTotal?: number; discount?: number;
       serviceFees?: Array<{ name?: string; amount?: number }>;
       creditApplied?: number; rewardLabel?: string | null; paymentMethod?: string | null; paidStatus?: string | null;
+      /** Projected Reward Dollars EARNED on this order (credited at completion) —
+       *  green "+ $X" row. Caller only sets it when rewards + earning are ON. */
+      rewardEarned?: number;
       /** True when the platform already captured the money (Stripe card, PayPal,
        *  or fully covered by store credit) — drives the green "Paid online" badge.
        *  Was NEVER passed before 2026-07-11, so every customer receipt email
@@ -659,6 +662,7 @@ export async function notifyCustomer(args: {
           logoUrl: (restaurant as any).receiptLogoUrl ?? undefined,
           creditApplied: payload.creditApplied,
           rewardLabel: payload.rewardLabel,
+          rewardEarned: payload.rewardEarned,
           paymentMethod: payload.paymentMethod,
           paidStatus: payload.paidStatus,
           paidOnline: payload.paidOnline,

@@ -319,6 +319,9 @@ interface OrderEmailParams {
    *  when the restaurant's rewards program is ON (feature-gated display). */
   creditApplied?: number;
   rewardLabel?: string | null;
+  /** Projected Reward Dollars earned on this order (credited at completion) —
+   *  the green "You earned {label}" row. Caller feature-gates on rewardsEnabled. */
+  rewardEarned?: number;
   /** Order.paymentMethod — renders a localized "Payment method" line. */
   paymentMethod?: string | null;
   /** Order.paymentStatus — "paid" flips the balance label to "Paid". */
@@ -470,6 +473,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       // (the template's orderType is already localized).
       creditApplied: params.creditApplied,
       rewardLabel: params.rewardLabel,
+      rewardEarned: params.rewardEarned,
       paidStatus: params.paidStatus,
       paymentValue: (() => {
         if (!params.paymentMethod) return undefined;

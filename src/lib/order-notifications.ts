@@ -22,6 +22,7 @@ import { notifyStaff, notifyCustomer } from "@/lib/notifications";
 import { recordAppliedCoupons } from "@/lib/coupon-ledger";
 import { sendKitchenPush } from "@/lib/push";
 import { formatCurrency } from "@/lib/utils";
+import { projectOrderEarn } from "@/lib/reward-earn";
 
 // Promo usage give-back on a killed/abandoned order now lives in
 // `releasePromotionUsageForOrder(orderId)` in @/lib/promo-usage — it deletes the
@@ -201,6 +202,13 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     return [];
   })();
 
+  // Projected Reward Dollars EARN — what the wallet will be credited when the
+  // order completes (base %-back + matching earn rules). Same read-only helper
+  // the printed receipt uses; returns 0 for guests / earning off, never throws.
+  // Awaited here because fireOrderNotifications is already off the request hot
+  // path (fire-and-forget from the orders route / Stripe webhook).
+  const projectedEarn = rewardsOn ? await projectOrderEarn(orderId) : 0;
+
   // Customer confirmation email — fire-and-forget so a Resend hiccup
   // doesn't fail the webhook (Stripe would retry the whole event).
   notifyCustomer({
@@ -227,6 +235,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       serviceFees: serviceFeesForEmail,
       creditApplied: creditApplied > 0 ? creditApplied : undefined,
       rewardLabel,
+      rewardEarned: projectedEarn > 0 ? projectedEarn : undefined,
       paymentMethod: order.paymentMethod,
       paidStatus: order.paymentStatus,
       // Same rule as the staff email below: card/PayPal are captured online,

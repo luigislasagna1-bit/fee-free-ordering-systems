@@ -146,6 +146,37 @@ describe("resolvePromotions — committed exclusive bundle (GloriaFood parity)",
     expect(results.map((r) => r.promoId)).toEqual([std.id]);
     expect(blockedPromos.map((b) => b.promoId)).toContain(ex.id);
   });
+
+  it("a COUPON-entered standard is also blocked by a committed exclusive (code surfaces in blockedPromos)", () => {
+    // A typed code must not sneak past the exclusive slot — same rule as
+    // auto-apply standards; the blocked entry keeps its couponCode so the UI
+    // can explain which code was set aside.
+    const coded = mkPromo({ autoApply: false, couponCode: "SAVE", ruleConfig: { discountAmount: 5 } });
+    const { results, blockedPromos } = resolvePromotions(
+      [coded],
+      mkCtx({ committedExclusive: committed, couponCode: "SAVE" }),
+    );
+    expect(results.map((r) => r.promoId)).not.toContain(coded.id);
+    const b = blockedPromos.find((x) => x.promoId === coded.id);
+    expect(b?.winnerName).toBe("2 for 30");
+    expect(b?.couponCode).toBe("SAVE");
+  });
+
+  it("the committed bundle's OWN promo auto-forming from loose items is blocked too (no double benefit)", () => {
+    // The bundle line already carries the deal in its price. If the same
+    // promotion would ALSO trigger from loose cart items, applying it in the
+    // engine would discount twice. With the committed signal set, the engine
+    // must not emit any discount for that promo id.
+    const samePromo = mkPromo({
+      id: "bundleX", // same id as the committed exclusive
+      stackingRule: "exclusive",
+      ruleConfig: { discountAmount: 8 },
+    });
+    const master = mkPromo({ stackingRule: "master", ruleConfig: { discountAmount: 2 } });
+    const { results } = resolvePromotions([samePromo, master], mkCtx({ committedExclusive: committed }));
+    expect(results.map((r) => r.promoId)).not.toContain("bundleX");
+    expect(results.map((r) => r.promoId)).toContain(master.id);
+  });
 });
 
 // ─── Coupon-gating split (autoApply vs coupon code) ─────────────────────────

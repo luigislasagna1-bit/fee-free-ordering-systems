@@ -366,6 +366,7 @@ export function OrderTotals({
   taxLabel = "Tax",
   savedDeliveryFee,
   rewardUsed, rewardUsedLabel,
+  rewardEarned, rewardEarnedLabel,
   balanceDue, balanceDueLabel,
   paymentLabel, paymentValue,
   subtotalLabel, deliveryFeeLabel, tipLabel, discountLabel, totalLabel, freeLabel,
@@ -398,6 +399,12 @@ export function OrderTotals({
    *  customer emails, English for staff). Both rows skipped when unset/0. */
   rewardUsed?: number;
   rewardUsedLabel?: string;
+  /** Reward Dollars the customer WILL EARN on this order (projected — credited
+   *  at completion) — rendered green with a plus after the balance block, same
+   *  as the confirmation/status pages and the printed receipt. Caller resolves
+   *  the localized label ("You earned {label}"). Skipped when unset/0. */
+  rewardEarned?: number;
+  rewardEarnedLabel?: string;
   /** Total − rewardUsed. Label = "Balance to pay"/"Paid" (customer) or
    *  "To collect"/"Collected" (staff) — resolved by the caller. */
   balanceDue?: number;
@@ -490,6 +497,16 @@ export function OrderTotals({
         <div style={{ borderTop: `1px solid ${COLORS.border}`, marginTop: 6, paddingTop: 6 }}>
           {row(balanceDueLabel ?? "Balance to pay", balanceDue, true)}
         </div>
+      )}
+      {!!rewardEarned && rewardEarned > 0 && (
+        <Row>
+          <Column style={{ fontSize: 14, color: "#059669", padding: "4px 0", fontWeight: 600 }}>
+            {rewardEarnedLabel ?? "You earned credit"}
+          </Column>
+          <Column style={{ fontSize: 14, textAlign: "right", color: "#059669", padding: "4px 0", fontWeight: 700 }}>
+            + {formatCurrency(rewardEarned, currency)}
+          </Column>
+        </Row>
       )}
       {paymentValue && (
         <Row>

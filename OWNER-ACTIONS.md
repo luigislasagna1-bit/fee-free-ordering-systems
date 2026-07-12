@@ -5,7 +5,7 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-11 by Claude (A1 rewritten — comped-card Subscribe flow built, awaiting deploy; A3 → DONE LOG).
+**Last updated:** 2026-07-11 by Claude (A12 added — order-placed email needs your 1-minute check; marketing batch + billing branch merges deployed).
 
 ---
 
@@ -80,6 +80,12 @@
 1. `feefreeordering.com/superadmin` → **Restaurants**.
 2. Find the two named like "Test July" → use the **Delete** button on each (leave *Kaori* and *Japanese Restaurant | TEST* alone).
 3. Tell Claude "done A10".
+
+### A12. ☐ Order-placed email — 1-minute check (your report from 2026-07-11)
+**Why:** you reported the restaurant didn't get an immediate email when a customer placed an order. Claude verified the CODE is correct — the staff "Order placed" email fires the moment the order lands (before you accept it), separately from the customer's confirmation. So the likely cause is the recipient setup on your restaurant.
+1. `feefreeordering.com/admin` → **Notifications**.
+2. Check your email address is listed as a recipient, the row is ACTIVE, and the **"Order placed"** toggle is ON. Add/fix it if not.
+3. If it already looks right, tell Claude **"A12 looks right — run the prod check"** — that authorizes a read-only look at the recipient rows + exact send timestamps for the recent orders to find what really happened.
 
 ---
 
