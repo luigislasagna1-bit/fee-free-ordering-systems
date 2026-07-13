@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Pedido nº {number}",
         "someExcluded": "Alguns itens (como vales-presente) não ganham {label}."
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Próxima",
+        "page": "Página {page}"
       }
     },
     "bundle": {

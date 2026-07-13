@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Objednávka #{number}",
         "someExcluded": "Některé položky (např. dárkové karty) nezískávají {label}."
+      },
+      "pagination": {
+        "previous": "Předchozí",
+        "next": "Další",
+        "page": "Strana {page}"
       }
     },
     "bundle": {

@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Đơn hàng #{number}",
         "someExcluded": "Một số mặt hàng (như thẻ quà tặng) không tích {label}."
+      },
+      "pagination": {
+        "previous": "Trước",
+        "next": "Tiếp",
+        "page": "Trang {page}"
       }
     },
     "bundle": {

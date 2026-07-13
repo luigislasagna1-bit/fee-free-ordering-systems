@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Bestelling #{number}",
         "someExcluded": "Sommige items (zoals cadeaubonnen) verdienen geen {label}."
+      },
+      "pagination": {
+        "previous": "Vorige",
+        "next": "Volgende",
+        "page": "Pagina {page}"
       }
     },
     "bundle": {

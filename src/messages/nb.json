@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Ordre #{number}",
         "someExcluded": "Noen varer (som gavekort) tjener ikke {label}."
+      },
+      "pagination": {
+        "previous": "Forrige",
+        "next": "Neste",
+        "page": "Side {page}"
       }
     },
     "bundle": {

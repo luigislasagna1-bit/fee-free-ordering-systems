@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Поруџбина #{number}",
         "someExcluded": "Неке ставке (попут поклон картица) не зарађују {label}."
+      },
+      "pagination": {
+        "previous": "Prethodna",
+        "next": "Sledeća",
+        "page": "Stranica {page}"
       }
     },
     "bundle": {

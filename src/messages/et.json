@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Tellimus #{number}",
         "someExcluded": "Mõned tooted (nt kinkekaardid) ei teeni {label}."
+      },
+      "pagination": {
+        "previous": "Eelmine",
+        "next": "Järgmine",
+        "page": "Lehekülg {page}"
       }
     },
     "bundle": {

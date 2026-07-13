@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Commande n° {number}",
         "someExcluded": "Certains articles (comme les cartes-cadeaux) ne rapportent pas de {label}."
+      },
+      "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant",
+        "page": "Page {page}"
       }
     },
     "bundle": {

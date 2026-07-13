@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Užsakymas #{number}",
         "someExcluded": "Kai kurios prekės (pvz., dovanų kortelės) neuždirba {label}."
+      },
+      "pagination": {
+        "previous": "Ankstesnis",
+        "next": "Kitas",
+        "page": "Puslapis {page}"
       }
     },
     "bundle": {

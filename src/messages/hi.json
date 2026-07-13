@@ -5681,6 +5681,11 @@
         },
         "orderRef": "ऑर्डर #{number}",
         "someExcluded": "कुछ आइटम (जैसे गिफ्ट कार्ड) {label} नहीं कमाते।"
+      },
+      "pagination": {
+        "previous": "पिछला",
+        "next": "अगला",
+        "page": "पृष्ठ {page}"
       }
     },
     "bundle": {

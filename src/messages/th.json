@@ -5681,6 +5681,11 @@
         },
         "orderRef": "คำสั่งซื้อ #{number}",
         "someExcluded": "บางรายการ (เช่น บัตรของขวัญ) ไม่สะสม {label}"
+      },
+      "pagination": {
+        "previous": "ก่อนหน้า",
+        "next": "ถัดไป",
+        "page": "หน้า {page}"
       }
     },
     "bundle": {

@@ -5681,6 +5681,11 @@
         },
         "orderRef": "הזמנה #{number}",
         "someExcluded": "פריטים מסוימים (כמו כרטיסי מתנה) לא צוברים {label}."
+      },
+      "pagination": {
+        "previous": "הקודם",
+        "next": "הבא",
+        "page": "עמוד {page}"
       }
     },
     "bundle": {

@@ -5681,6 +5681,11 @@
         },
         "orderRef": "الطلب #{number}",
         "someExcluded": "بعض العناصر (مثل بطاقات الهدايا) لا تكسب {label}."
+      },
+      "pagination": {
+        "previous": "السابق",
+        "next": "التالي",
+        "page": "الصفحة {page}"
       }
     },
     "bundle": {

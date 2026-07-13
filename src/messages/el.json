@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Παραγγελία #{number}",
         "someExcluded": "Ορισμένα είδη (όπως δωροκάρτες) δεν κερδίζουν {label}."
+      },
+      "pagination": {
+        "previous": "Προηγούμενη",
+        "next": "Επόμενη",
+        "page": "Σελίδα {page}"
       }
     },
     "bundle": {

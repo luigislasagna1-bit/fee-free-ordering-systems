@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Beställning #{number}",
         "someExcluded": "Vissa varor (som presentkort) tjänar inte {label}."
+      },
+      "pagination": {
+        "previous": "Föregående",
+        "next": "Nästa",
+        "page": "Sida {page}"
       }
     },
     "bundle": {

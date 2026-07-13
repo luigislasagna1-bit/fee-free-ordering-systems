@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Заказ №{number}",
         "someExcluded": "Некоторые товары (например, подарочные карты) не приносят {label}."
+      },
+      "pagination": {
+        "previous": "Назад",
+        "next": "Далее",
+        "page": "Страница {page}"
       }
     },
     "bundle": {

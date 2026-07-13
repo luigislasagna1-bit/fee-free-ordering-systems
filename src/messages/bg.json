@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Поръчка №{number}",
         "someExcluded": "Някои артикули (като ваучери) не печелят {label}."
+      },
+      "pagination": {
+        "previous": "Предишна",
+        "next": "Следваща",
+        "page": "Страница {page}"
       }
     },
     "bundle": {

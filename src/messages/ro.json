@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Comanda #{number}",
         "someExcluded": "Unele articole (precum cardurile cadou) nu acumulează {label}."
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Următor",
+        "page": "Pagina {page}"
       }
     },
     "bundle": {

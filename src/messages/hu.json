@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Rendelés #{number}",
         "someExcluded": "Egyes termékek (például ajándékkártyák) nem gyűjtenek {label}."
+      },
+      "pagination": {
+        "previous": "Előző",
+        "next": "Következő",
+        "page": "{page}. oldal"
       }
     },
     "bundle": {

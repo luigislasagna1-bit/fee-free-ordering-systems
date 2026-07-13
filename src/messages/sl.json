@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Naročilo #{number}",
         "someExcluded": "Nekateri izdelki (npr. darilne kartice) ne prinašajo {label}."
+      },
+      "pagination": {
+        "previous": "Prejšnja",
+        "next": "Naslednja",
+        "page": "Stran {page}"
       }
     },
     "bundle": {

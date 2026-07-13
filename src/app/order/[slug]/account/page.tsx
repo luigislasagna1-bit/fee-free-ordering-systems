@@ -21,6 +21,9 @@ import { LogoutButton } from "./LogoutButton";
 import { ProfileEditor } from "./ProfileEditor";
 import { OrderAgainButton } from "./OrderAgainButton";
 import { AddressBook } from "./AddressBook";
+import { RewardActivityList } from "./RewardActivityList";
+import { OrderHistoryList } from "./OrderHistoryList";
+import { REWARD_PAGE_SIZE, ORDERS_PAGE_SIZE } from "@/app/api/order/[slug]/account/history/route";
 import { getTranslations } from "next-intl/server";
 import { HelpTip } from "@/components/HelpTip";
 import { qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
@@ -58,7 +61,7 @@ export default async function RestaurantAccountDashboard({
   // Reward Dollars wallet (balance + last 20 ledger rows), only when the
   // restaurant has the feature on. Best-effort. Luigi 2026-06-27.
   const rewardLabelPlural = restaurant.rewardLabelPlural?.trim() || t("reward.defaultPlural");
-  let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; createdAt: Date; orderId: string | null }> } | null = null;
+  let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; createdAt: Date; orderId: string | null }>; hasMore: boolean } | null = null;
   // Map a ledger row's orderId → its order number, so each order-tied activity
   // row can link to that order's receipt (where the full breakdown + payment
   // method + reward used/earned live). Synthetic ids ("signup:…", "sched:…")
@@ -69,12 +72,16 @@ export default async function RestaurantAccountDashboard({
       where: { restaurantId_customerId: { restaurantId: restaurant.id, customerId: me.id } },
       select: {
         balance: true,
-        ledger: { orderBy: { createdAt: "desc" }, take: 20, select: { id: true, amount: true, reason: true, createdAt: true, orderId: true } },
+        // Fetch one extra row so the client knows a "Next" page exists without
+        // a count query. Slice back to the page size before rendering.
+        ledger: { orderBy: { createdAt: "desc" }, take: REWARD_PAGE_SIZE + 1, select: { id: true, amount: true, reason: true, createdAt: true, orderId: true } },
       },
     }).catch(() => null);
     if (acct) {
-      rewardWallet = { balance: acct.balance, ledger: acct.ledger };
-      const realOrderIds = [...new Set(acct.ledger.map((l) => l.orderId).filter((o): o is string => !!o && !o.includes(":")))];
+      const ledgerHasMore = acct.ledger.length > REWARD_PAGE_SIZE;
+      const ledgerRows = acct.ledger.slice(0, REWARD_PAGE_SIZE);
+      rewardWallet = { balance: acct.balance, ledger: ledgerRows, hasMore: ledgerHasMore };
+      const realOrderIds = [...new Set(ledgerRows.map((l) => l.orderId).filter((o): o is string => !!o && !o.includes(":")))];
       if (realOrderIds.length) {
         const ords = await prisma.order.findMany({
           where: { id: { in: realOrderIds } },
@@ -96,7 +103,7 @@ export default async function RestaurantAccountDashboard({
   }
 
   const now = new Date();
-  const [offers, orders] = await Promise.all([
+  const [offers, orders, orderTotal] = await Promise.all([
     // Promotions assigned to this customer (CustomerCoupon grants — the model
     // that replaced personal coupons). Available = not yet redeemed, on an active
     // non-expired promotion, matched by customerId OR email. Luigi 2026-06-26.
@@ -119,13 +126,17 @@ export default async function RestaurantAccountDashboard({
     prisma.order.findMany({
       where: { customerId: me.id },
       orderBy: { createdAt: "desc" },
-      take: 10,
+      // One extra to detect a next page (sliced before render).
+      take: ORDERS_PAGE_SIZE + 1,
       select: {
         id: true, orderNumber: true, total: true, status: true,
         createdAt: true, type: true,
       },
     }),
+    prisma.order.count({ where: { customerId: me.id } }),
   ]);
+  const ordersHasMore = orders.length > ORDERS_PAGE_SIZE;
+  const orderRows = orders.slice(0, ORDERS_PAGE_SIZE);
 
   // "Order again" rail data — the 3 most recent SUCCESSFUL orders
   // (status NOT IN cancelled/rejected) with their items so we can
@@ -263,46 +274,14 @@ export default async function RestaurantAccountDashboard({
               </div>
               <span className="text-2xl font-extrabold text-emerald-700">{formatCurrency(rewardWallet.balance)}</span>
             </div>
-            {rewardWallet.ledger.length > 0 && (
-              <ul className="divide-y divide-gray-100 px-6 py-2">
-                {rewardWallet.ledger.map((l) => {
-                  // Normalise reason keys like "earn:first_order:<ruleId>" to a
-                  // display label. "earn:signup:<ruleId>" is a sign-up campaign
-                  // grant — it must read "Sign-up bonus", not "Earned on an
-                  // order" (there is no order; Luigi 2026-07-09). "promo:<id>"
-                  // maps to its own label so the raw promo id never leaks.
-                  const baseReason = l.reason.startsWith("earn:signup:") ? "signup_bonus"
-                    : l.reason.startsWith("promo:") ? "promo"
-                    : l.reason.split(":")[0];
-                  const reasonLabel = ["earn", "grant", "spend", "release", "adjust", "signup_bonus", "expire", "refund", "reverse", "promo"].includes(baseReason)
-                    ? t(`reward.reason.${baseReason}`)
-                    : l.reason;
-                  const orderNumber = l.orderId ? rewardOrderNumbers[l.orderId] : undefined;
-                  return (
-                    <li key={l.id} className="flex items-center justify-between py-2 text-sm">
-                      <span className="text-gray-600">
-                        {reasonLabel}
-                        {orderNumber && l.orderId && (
-                          <>
-                            {" "}
-                            <Link
-                              href={`/order/${slug}/status/${l.orderId}`}
-                              className="text-emerald-600 hover:underline font-medium"
-                            >
-                              {t("reward.orderRef", { number: orderNumber })}
-                            </Link>
-                          </>
-                        )}
-                        <span className="text-gray-400"> · {fmtDate(l.createdAt)}</span>
-                      </span>
-                      <span className={l.amount >= 0 ? "text-emerald-600 font-medium" : "text-gray-700 font-medium"}>
-                        {l.amount >= 0 ? "+" : "−"} {formatCurrency(Math.abs(l.amount))}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+            <RewardActivityList
+              slug={slug}
+              currency={restaurant.currency}
+              timezone={restaurant.timezone}
+              initialRows={rewardWallet.ledger.map((l) => ({ ...l, createdAt: l.createdAt.toISOString() }))}
+              initialOrderNumbers={rewardOrderNumbers}
+              initialHasMore={rewardWallet.hasMore}
+            />
             {rewardHasExclusions && (
               <p className="px-6 pb-4 pt-1 text-xs text-gray-400">{t("reward.someExcluded", { label: rewardLabelPlural })}</p>
             )}
@@ -428,9 +407,9 @@ export default async function RestaurantAccountDashboard({
         <div className="mt-6">
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <ShoppingBag className="w-4 h-4 text-emerald-500" />
-            {t("recentOrders", { count: orders.length })}
+            {t("recentOrders", { count: orderTotal })}
           </h2>
-          {orders.length === 0 ? (
+          {orderRows.length === 0 ? (
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center text-sm text-gray-500">
               {t("noOrdersYet")}{" "}
               <Link href={`/order/${slug}`} className="text-emerald-600 font-semibold hover:underline">
@@ -438,33 +417,13 @@ export default async function RestaurantAccountDashboard({
               </Link>
             </div>
           ) : (
-            <ul className="bg-white rounded-xl border border-gray-200 divide-y divide-gray-100 overflow-hidden">
-              {orders.map((o) => (
-                <li key={o.id}>
-                  <Link
-                    href={`/order/${slug}/status/${o.id}`}
-                    className="flex items-center justify-between gap-3 p-4 hover:bg-gray-50 transition"
-                  >
-                    <div className="min-w-0">
-                      <div className="text-sm font-bold text-gray-900">#{o.orderNumber}</div>
-                      <div className="text-[11px] text-gray-500 mt-0.5">
-                        {new Date(o.createdAt).toLocaleString(undefined, {
-                          month: "short", day: "numeric", year: "numeric",
-                          hour: "numeric", minute: "2-digit", ...tzOpts,
-                        })}
-                        {" · "}{o.type}
-                      </div>
-                    </div>
-                    <div className="text-right flex-shrink-0">
-                      <div className="text-sm font-bold text-gray-900">{formatCurrency(o.total)}</div>
-                      <div className="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-0.5">
-                        {o.status}
-                      </div>
-                    </div>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <OrderHistoryList
+              slug={slug}
+              currency={restaurant.currency}
+              timezone={restaurant.timezone}
+              initialRows={orderRows.map((o) => ({ ...o, createdAt: o.createdAt.toISOString() }))}
+              initialHasMore={ordersHasMore}
+            />
           )}
         </div>
       </div>

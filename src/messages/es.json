@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Pedido n.º {number}",
         "someExcluded": "Algunos artículos (como las tarjetas regalo) no ganan {label}."
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "page": "Página {page}"
       }
     },
     "bundle": {

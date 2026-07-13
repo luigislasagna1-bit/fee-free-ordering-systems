@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Comanda #{number}",
         "someExcluded": "Alguns articles (com les targetes regal) no guanyen {label}."
+      },
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Següent",
+        "page": "Pàgina {page}"
       }
     },
     "bundle": {

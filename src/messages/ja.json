@@ -5681,6 +5681,11 @@
         },
         "orderRef": "注文 #{number}",
         "someExcluded": "一部の商品（ギフトカードなど）は{label}が貯まりません。"
+      },
+      "pagination": {
+        "previous": "前へ",
+        "next": "次へ",
+        "page": "{page} ページ"
       }
     },
     "bundle": {

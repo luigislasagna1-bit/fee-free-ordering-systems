@@ -5681,6 +5681,11 @@
         },
         "orderRef": "주문 #{number}",
         "someExcluded": "일부 항목(예: 기프트 카드)은 {label}이(가) 적립되지 않습니다."
+      },
+      "pagination": {
+        "previous": "이전",
+        "next": "다음",
+        "page": "{page}페이지"
       }
     },
     "bundle": {

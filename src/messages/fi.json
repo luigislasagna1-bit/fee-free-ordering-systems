@@ -5681,6 +5681,11 @@
         },
         "orderRef": "Tilaus #{number}",
         "someExcluded": "Jotkin tuotteet (kuten lahjakortit) eivät kerrytä {label}."
+      },
+      "pagination": {
+        "previous": "Edellinen",
+        "next": "Seuraava",
+        "page": "Sivu {page}"
       }
     },
     "bundle": {
