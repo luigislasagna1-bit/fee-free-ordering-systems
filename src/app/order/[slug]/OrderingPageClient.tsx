@@ -283,21 +283,6 @@ function isItemDayAvailable(item: MenuItem, timezone?: string): boolean {
   }
 }
 
-// ─── Mobile detection ────────────────────────────────────────────────────────
-// SSR-safe: starts false (desktop) and corrects on mount via matchMedia, so the
-// mobile-only category accordion never affects desktop or the server render.
-function useIsMobile(breakpointPx = 640): boolean {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${breakpointPx - 0.02}px)`);
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, [breakpointPx]);
-  return isMobile;
-}
-
 // True when a hex colour is light enough that white text on it would be hard to
 // read — used to flip the themed-fallback banner's text to dark on a pale brand
 // colour (e.g. yellow). Photos always use white text (the scrim guarantees it).
@@ -2435,10 +2420,10 @@ export function OrderingPageClient({
   // ── Collapsible categories (GloriaFood-style accordion) ──────────────────
   // Opt-in per restaurant (theme.mobileCollapsibleCategories) — on BOTH mobile
   // AND desktop (Luigi 2026-06-30). The customer expands/collapses category
-  // sections, with Expand all / Collapse all controls. Every category starts
-  // COLLAPSED on both devices (see the seed effect) so the customer lands on a
-  // compact list of category banners and opens the ones they want. Luigi 2026-07-01.
-  const isMobile = useIsMobile();
+  // sections, with Expand all / Collapse all controls. Categories now start
+  // EXPANDED (Fabrizio cmrhnlfs5, 2026-07-13): collapsed-by-default made the
+  // sticky category scrollspy jump too fast through the short banners, and an
+  // expanded menu is the expected default — the customer can hit "Collapse all".
   // Suspended while a search is active so matching items are always visible
   // (a collapsed header would hide the very results they want).
   const collapsibleActive =
@@ -2484,22 +2469,9 @@ export function OrderingPageClient({
       promoStripUpdateRef.current();
     }, 350);
   };
-  // Seed "all collapsed" the first time the accordion becomes active (so it
-  // doesn't fight the customer if they later expand things). When a search
-  // filters the menu we leave their open/closed choices intact.
-  const collapseSeededRef = useRef(false);
-  useEffect(() => {
-    // Seed "all collapsed" on BOTH mobile and desktop the first time the
-    // accordion turns on — the customer opens the categories they want rather
-    // than scrolling a fully-expanded menu. `isMobile` stays in the deps so the
-    // effect re-checks on a breakpoint change (the seededRef guards re-seeding).
-    // Luigi 2026-07-01 (was mobile-only before).
-    if (collapsibleActive && !collapseSeededRef.current && visibleCategories.length) {
-      collapseSeededRef.current = true;
-      setCollapsedCats(new Set(visibleCategories.map((c) => c.id)));
-    }
-    if (!collapsibleActive) collapseSeededRef.current = false;
-  }, [collapsibleActive, isMobile, visibleCategories.length]);
+  // Categories start EXPANDED — no auto-collapse seeding (Fabrizio cmrhnlfs5,
+  // 2026-07-13). collapsedCats stays empty until the customer collapses a
+  // section or clicks "Collapse all"; a search leaves their choices intact.
   const toggleCatCollapsed = (id: string) =>
     setCollapsedCats((prev) => {
       const next = new Set(prev);
