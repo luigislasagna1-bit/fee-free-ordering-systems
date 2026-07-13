@@ -15,7 +15,8 @@ import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { childBuildLines } from "@/lib/bundle-child-lines";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rules";
-import { resolveServiceHours, type ServiceKind } from "@/lib/service-hours";
+import { resolveServiceHours, pickHoursForService, type ServiceKind } from "@/lib/service-hours";
+import { buildDaySlots } from "@/lib/schedule-slots";
 import { resolveSlotModes } from "@/lib/slot-modes";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint, fulfilWindowsOf, windowMatches } from "@/lib/menu-fulfilment";
@@ -3265,10 +3266,74 @@ export function OrderingPageClient({
   // Whether the schedule picker is shown at all. Off only when the owner
   // disabled scheduling AND nothing forces it (catering / closed now / fulfilment).
   const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow || fulfilForcesSchedule;
+  // Closed-now default = the FIRST slot the picker actually offers on the opening
+  // day, NOT the raw opening minute. A new order can't be ready before now +
+  // standard prep (zone-aware for delivery, mirroring estimatedDeliveryMinutes /
+  // the scheduledTooEarly guard / the picker's minTimeForDate), so when a service
+  // opens WITHIN the prep window — e.g. pickup opens 2:00 PM at 1:45 PM with
+  // 20-min prep — the raw 2:00 default fell below that floor and checkout
+  // false-blocked with "the scheduled time you picked has already passed"
+  // (Fabrizio cmrj5skxd). We reuse the SAME buildDaySlots the picker uses, so the
+  // pre-filled default is identical to the dropdown's first option — grid-aligned
+  // to the service interval, window-clipped, split/overnight aware. Falls back to
+  // the raw opening when the window is too short to offer any slot (an
+  // un-orderable config — the order stays blocked exactly as it did before).
+  const closedNowFirstSlot = (() => {
+    if (!restaurantIsClosedNow || !closedMinScheduledLocal) return closedMinScheduledLocal;
+    const openDate = closedMinScheduledLocal.split("T")[0];
+    const todayLocal = toRestaurantWallClock(Date.now()).split("T")[0];
+    const isToday = openDate === todayLocal;
+    // Delivery honours the resolved zone's estimate exactly like the guard/picker
+    // (estimatedDeliveryMinutes = zone estimate ?? base); pickup/dine-in/take-out
+    // use estimatedPickup.
+    const deliveryPrep = resolvedZone?.zone.estimatedMinutes ?? restaurant.estimatedDelivery;
+    const prep = Math.max(0, orderType === "delivery" ? deliveryPrep : restaurant.estimatedPickup);
+    // now+prep is a same-day floor ONLY when the opening lands today; a future-day
+    // opening is already valid with no same-day prep constraint. Guard the rare
+    // case where prep pushes now past midnight into the opening day.
+    const minMin = (() => {
+      if (!isToday) return 0;
+      const [npDate, npTime] = toRestaurantWallClock(Date.now() + prep * 60_000).split("T");
+      if (npDate > openDate) return 24 * 60; // prep spills past this day → no same-day slot
+      if (npDate < openDate) return 0;
+      const [hh, mm] = (npTime || "").split(":").map(Number);
+      return (hh || 0) * 60 + (mm || 0);
+    })();
+    // Per-service interval (serviceSettings.slotInterval → scheduledOrderInterval
+    // → 15), mirroring perServiceSlotInterval below.
+    const step = (() => {
+      try {
+        const ss = (restaurant as any).serviceSettings ? JSON.parse((restaurant as any).serviceSettings) : null;
+        const key = orderType === "delivery" ? "delivery" : orderType === "dine_in" ? "dineIn" : orderType === "take_out" ? "takeOut" : "pickup";
+        const v = ss?.[key]?.slotInterval;
+        if (typeof v === "number" && v > 0) return v;
+      } catch { /* malformed serviceSettings */ }
+      return (restaurant as any).scheduledOrderInterval ?? 15;
+    })();
+    const svcKind = orderType === "delivery" ? "delivery" : orderType === "pickup" ? "pickup" : null; // dine_in/take_out → general hours
+    const openDow = new Date(`${openDate}T12:00:00`).getDay();
+    // A per-service special-day OPEN window today overrides the weekly row (same
+    // as the picker), so the earliest slot lands on it.
+    const specialIvs = isToday && serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null;
+    const row = pickHoursForService((restaurant.openingHours ?? []) as any, openDow, svcKind);
+    const dayIvs = specialIvs ?? (row && row.isOpen ? rowIntervals(row as any) : []);
+    const prevRow = pickHoursForService((restaurant.openingHours ?? []) as any, (openDow + 6) % 7, svcKind);
+    const prevIvs = prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : [];
+    const slots = buildDaySlots({
+      dayIntervals: dayIvs as any,
+      prevDayIntervals: prevIvs as any,
+      stepMinutes: Math.max(5, Math.min(120, step || 15)),
+      minMinutes: minMin,
+    });
+    return slots.length > 0 ? `${openDate}T${slots[0]}` : closedMinScheduledLocal;
+  })();
   const effectiveMinScheduledLocal = (() => {
     const candidates: string[] = [];
     if (cartHasCatering && cateringMinScheduledLocal) candidates.push(cateringMinScheduledLocal);
-    if (restaurantIsClosedNow && closedMinScheduledLocal) candidates.push(closedMinScheduledLocal);
+    // Closed-now minimum = the first genuinely-offerable slot on the opening day
+    // (raw opening snapped up past now+prep), so the default never sits below the
+    // picker's first option or the too-early guard (Fabrizio cmrj5skxd).
+    if (restaurantIsClosedNow && closedNowFirstSlot) candidates.push(closedNowFirstSlot);
     if (orderMinLeadMinutes > 0 && leadMinScheduledLocal) candidates.push(leadMinScheduledLocal);
     if (fulfilMinScheduledLocal) candidates.push(fulfilMinScheduledLocal);
     if (candidates.length === 0) return "";
