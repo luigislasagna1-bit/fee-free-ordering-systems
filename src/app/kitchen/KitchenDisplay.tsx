@@ -1802,6 +1802,19 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const autoAcceptTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const alertSoundRef = useRef(alertSound);
   useEffect(() => () => { if (autoAcceptTimerRef.current) clearTimeout(autoAcceptTimerRef.current); }, []);
+  // GHOST-RING FIX (Luigi, iOS TestFlight 2026-07-13): the auto-accept FYI flag
+  // must NEVER survive a background→resume. Its 5s clear-timer FREEZES while the
+  // iOS WebView is backgrounded, so without this the flag stays true and the
+  // ~4-min gloriafood track REPLAYS on every app-open with ZERO pending orders.
+  // Clearing it whenever the page hides guarantees the flag can only ring for a
+  // genuinely-fresh FOREGROUND auto-accept (whose timer fires normally). The
+  // real pending-order ring (ringAudible) is untouched.
+  useEffect(() => {
+    if (!pageVisible) {
+      if (autoAcceptTimerRef.current) { clearTimeout(autoAcceptTimerRef.current); autoAcceptTimerRef.current = null; }
+      setAutoAcceptRinging(false);
+    }
+  }, [pageVisible]);
 
   const loggedRingPathRef = useRef(false);
   const ringBellOnce = useCallback((volumeOverride?: number) => {
@@ -2402,6 +2415,17 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       const newAutoAccepted = fresh.filter(
         o => o.status === "accepted" && !seenIdsRef.current.has(o.id),
       );
+      // RING only for genuinely-fresh auto-accepts (placed in the last ~45s). An
+      // order re-noticed on RESUME that auto-accepted a while ago — while the app
+      // was backgrounded — must NOT ring: the native alarm already alerted then,
+      // so a web re-ring on app-open is the "ghost ring" Luigi hit on iOS
+      // TestFlight (2026-07-13). The toast + auto-print + seen-tracking below
+      // still cover EVERY newly-seen auto-accept (only the RING is gated).
+      const autoAcceptNowMs = Date.now();
+      const ringworthy = newAutoAccepted.filter(o => {
+        const ts = o.notifiedAt || o.createdAt;
+        return !!ts && (autoAcceptNowMs - new Date(ts).getTime()) <= 45_000;
+      });
       if (newAutoAccepted.length > 0) {
         // Brief (~5s) LOUD official ring. gloriafood (the default + Luigi's
         // choice) rings via the SAME foreground long-alert HTMLAudio path that
@@ -2416,7 +2440,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         // Auto-accept ring: in a browser / v2.5 app the WebView plays the ~5s ring. In the
         // v2.6 app the NATIVE engine rings the ~8s auto-accept window (server alarm-state),
         // so skip the web ring to avoid a double. (Auto-PRINT below still fires in both.)
-        if (!isNativeAlarmAvailable()) {
+        if (ringworthy.length > 0 && !isNativeAlarmAvailable()) {
           try {
             if (alertSoundRef.current === "gloriafood") {
               setAutoAcceptRinging(true);
