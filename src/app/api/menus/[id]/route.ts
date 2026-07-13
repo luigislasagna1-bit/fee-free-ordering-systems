@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
-import { findCoverageGaps, openIntervalsFromHours, toMenuWindow } from "@/lib/menu-schedule";
+import { findCoverageGaps, openIntervalsFromHours, expandMenuWindows } from "@/lib/menu-schedule";
 
 async function ownMenu(restaurantId: string, id: string) {
   return prisma.menu.findFirst({ where: { id, restaurantId }, select: { id: true, isActive: true } });
@@ -48,37 +48,52 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
   }
 
-  // Recurring daily window (Luigi 2026-06-12). body.window:
-  //   null                          → clear (this menu becomes the all-hours default)
-  //   { from, to, days? }           → set; from/to are "HH:MM" (from !== to), days
-  //                                    an optional [0..6] subset (omitted = every day)
-  // After applying the change we validate that the restaurant's open hours stay
-  // fully covered by SOME active menu — else we reject so customers never hit an
-  // open hour with no menu.
+  // Recurring daily windows (Luigi 2026-06-12; MULTI-window Fabrizio cmrjb8voz
+  // 2026-07-13). Accepts either:
+  //   body.windows: [{ from, to, days? }, ...] | []  → the full list ([] clears)
+  //   body.window:  { from, to, days? } | null       → legacy single (still ok)
+  // availableWindows stores the full list when there's 2+; availableFrom/To/Days
+  // always mirror window[0] as the legacy envelope. After applying we validate
+  // the restaurant's open hours stay fully covered by SOME menu — else we reject
+  // so customers never hit an open hour with no menu.
   let windowChanged = false;
-  if (body.window !== undefined) {
+  const rawWindows: unknown =
+    body.windows !== undefined ? body.windows
+    : body.window !== undefined ? (body.window === null ? [] : [body.window])
+    : undefined;
+  if (rawWindows !== undefined) {
     windowChanged = true;
-    if (body.window === null) {
+    if (rawWindows === null || (Array.isArray(rawWindows) && rawWindows.length === 0)) {
+      data.availableWindows = null;
       data.availableDays = null;
       data.availableFrom = null;
       data.availableTo = null;
+    } else if (Array.isArray(rawWindows)) {
+      const parsed: Array<{ from: string; to: string; days: number[] | null }> = [];
+      for (const raw of rawWindows) {
+        const w = raw as { from?: unknown; to?: unknown; days?: unknown };
+        if (typeof w.from !== "string" || typeof w.to !== "string" || !HHMM_RE.test(w.from) || !HHMM_RE.test(w.to)) {
+          return NextResponse.json({ error: "Each window needs a valid start and end time (HH:MM)." }, { status: 400 });
+        }
+        if (w.from === w.to) {
+          return NextResponse.json({ error: "A window's start and end time can't be the same." }, { status: 400 });
+        }
+        let days: number[] | null = null;
+        if (Array.isArray(w.days)) {
+          days = [...new Set(w.days.map((n) => Number(n)).filter((n) => n >= 0 && n <= 6))].sort((a, b) => a - b);
+          if (days.length === 0) return NextResponse.json({ error: "Pick at least one day for each menu window." }, { status: 400 });
+          if (days.length === 7) days = null; // all days = no day restriction
+        }
+        parsed.push({ from: w.from, to: w.to, days });
+      }
+      // Store the full list only when there's more than one; a single window
+      // stays in the legacy fields (no availableWindows) for back-compat.
+      data.availableWindows = parsed.length > 1 ? JSON.stringify(parsed) : null;
+      data.availableFrom = parsed[0].from;
+      data.availableTo = parsed[0].to;
+      data.availableDays = parsed[0].days ? JSON.stringify(parsed[0].days) : null;
     } else {
-      const w = body.window as { from?: unknown; to?: unknown; days?: unknown };
-      if (typeof w.from !== "string" || typeof w.to !== "string" || !HHMM_RE.test(w.from) || !HHMM_RE.test(w.to)) {
-        return NextResponse.json({ error: "Window needs a valid start and end time (HH:MM)." }, { status: 400 });
-      }
-      if (w.from === w.to) {
-        return NextResponse.json({ error: "Start and end time can't be the same." }, { status: 400 });
-      }
-      let days: number[] | null = null;
-      if (Array.isArray(w.days)) {
-        days = [...new Set(w.days.map((n) => Number(n)).filter((n) => n >= 0 && n <= 6))].sort();
-        if (days.length === 0) return NextResponse.json({ error: "Pick at least one day for the menu window." }, { status: 400 });
-        if (days.length === 7) days = null; // all days = no day restriction
-      }
-      data.availableFrom = w.from;
-      data.availableTo = w.to;
-      data.availableDays = days ? JSON.stringify(days) : null;
+      return NextResponse.json({ error: "Invalid windows payload." }, { status: 400 });
     }
   }
 
@@ -94,18 +109,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       }),
       prisma.menu.findMany({
         where: { restaurantId, isArchived: false },
-        select: { id: true, name: true, availableDays: true, availableFrom: true, availableTo: true },
+        select: { id: true, name: true, availableDays: true, availableFrom: true, availableTo: true, availableWindows: true },
       }),
     ]);
-    const windows = menus.map((m) =>
+    const windows = menus.flatMap((m) =>
       m.id === id
-        ? toMenuWindow({
+        ? expandMenuWindows({
             id: m.id, name: m.name,
+            availableWindows: (data.availableWindows as string | null) ?? null,
             availableDays: (data.availableDays as string | null) ?? null,
             availableFrom: (data.availableFrom as string | null) ?? null,
             availableTo: (data.availableTo as string | null) ?? null,
           })
-        : toMenuWindow(m),
+        : expandMenuWindows(m),
     );
     const gaps = findCoverageGaps(openIntervalsFromHours(hours), windows);
     if (gaps.length > 0) {

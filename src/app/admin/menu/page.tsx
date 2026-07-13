@@ -8,6 +8,7 @@ import { MasterMenuBanner } from "./MasterMenuBanner";
 import { isInheritingMenu, resolveMenuRestaurantId } from "@/lib/brand";
 import { isLocked } from "@/lib/inherited-settings";
 import { resolveActiveMenuId } from "@/lib/menu";
+import { resolveScheduledMenuId } from "@/lib/menu-schedule";
 import { hasFeature } from "@/lib/entitlements";
 import { getTranslations } from "next-intl/server";
 import { ExternalLink } from "lucide-react";
@@ -102,10 +103,14 @@ export default async function MenuPage({
     select: {
       id: true, name: true, isActive: true, isArchived: true,
       scheduledActivateAt: true, publishedAt: true,
-      availableDays: true, availableFrom: true, availableTo: true,
+      availableDays: true, availableFrom: true, availableTo: true, availableWindows: true,
       _count: { select: { categories: true } },
     },
   });
+  // Which menu is served RIGHT NOW (honours daily windows, restaurant tz) — drives
+  // the "LIVE" badge so it follows the active day-part, not just the manually-set
+  // default menu (Fabrizio cmrjb8voz).
+  const liveMenuId = restaurantId ? await resolveScheduledMenuId(restaurantId) : null;
   // Combos are gated behind the Advanced Promotions add-on.
   const canUseCombos = await hasFeature(restaurantId, "advanced_promo_types");
   const menus = menusRaw.map((m) => ({
@@ -113,6 +118,7 @@ export default async function MenuPage({
     scheduledActivateAt: m.scheduledActivateAt?.toISOString() ?? null,
     publishedAt: m.publishedAt?.toISOString() ?? null,
     availableDays: m.availableDays, availableFrom: m.availableFrom, availableTo: m.availableTo,
+    availableWindows: m.availableWindows,
     categoryCount: m._count.categories,
   }));
 
@@ -197,6 +203,7 @@ export default async function MenuPage({
         <MenuSwitcher
           menus={menus as MenuLite[]}
           selectedMenuId={selectedMenuId}
+          liveMenuId={liveMenuId}
           hoursFormat={selfRow?.hoursFormat === "12h" ? "12h" : "24h"}
         />
       )}

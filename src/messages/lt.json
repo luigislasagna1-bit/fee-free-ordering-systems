@@ -4186,7 +4186,10 @@
       "coverageGap": "Kai kuriomis darbo valandomis nebūtų jokio meniu: {list}. Pridėkite meniu toms valandoms arba pažymėkite jas kaip uždarytas.",
       "dailyHoursExplainer": "Jūsų Aktyvus meniu yra numatytasis — klientai jį mato, kai negalioja joks suplanuotas meniu. Suteikite kitiems meniu jų pačių dienos valandas ir jie tuo metu automatiškai perima, o paskui grąžina valdymą numatytajam. Kiekvieną darbo valandą turi dengti koks nors meniu.",
       "scheduleHelp": "Pasirinkite datą ir laiką, ir šis meniu tą akimirką automatiškai pakeis jūsų aktyvų meniu — vienkartinis perjungimas. Kasdien pasikartojančiam meniu (pietūs/vakarienė) verčiau naudokite Dienos valandas.",
-      "deletePromoBlocked": "Šio meniu patiekalai naudojami šiose akcijose: {names}. Ištrynus jas galite sugadinti klientams. Vis tiek ištrinti?"
+      "deletePromoBlocked": "Šio meniu patiekalai naudojami šiose akcijose: {names}. Ištrynus jas galite sugadinti klientams. Vis tiek ištrinti?",
+      "windowN": "Laiko intervalas {n}",
+      "windowRemove": "Pašalinti",
+      "windowAdd": "Pridėti dar vieną laiko intervalą"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

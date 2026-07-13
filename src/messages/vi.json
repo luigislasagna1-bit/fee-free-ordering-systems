@@ -4186,7 +4186,10 @@
       "coverageGap": "Một số giờ mở cửa sẽ không có thực đơn: {list}. Thêm một thực đơn cho những giờ đó, hoặc đặt những giờ đó là đóng cửa.",
       "dailyHoursExplainer": "Thực đơn Đang hoạt động của bạn là mặc định — khách hàng thấy nó bất cứ khi nào không có thực đơn theo giờ nào áp dụng. Hãy đặt giờ hằng ngày riêng cho các thực đơn khác và chúng sẽ tự động tiếp quản trong những khung giờ đó, rồi trả lại cho thực đơn mặc định. Mỗi giờ mở cửa phải được một thực đơn nào đó bao phủ.",
       "scheduleHelp": "Chọn ngày và giờ, thực đơn này sẽ tự động thay thế thực đơn đang hoạt động vào thời điểm đó — một lần đổi duy nhất. Với thực đơn lặp lại mỗi ngày (trưa/tối), hãy dùng Giờ hằng ngày.",
-      "deletePromoBlocked": "Các món trong thực đơn này đang được dùng trong khuyến mãi: {names}. Xóa có thể làm hỏng khuyến mãi với khách hàng. Vẫn xóa?"
+      "deletePromoBlocked": "Các món trong thực đơn này đang được dùng trong khuyến mãi: {names}. Xóa có thể làm hỏng khuyến mãi với khách hàng. Vẫn xóa?",
+      "windowN": "Khung giờ {n}",
+      "windowRemove": "Xóa",
+      "windowAdd": "Thêm khung giờ khác"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

@@ -4186,7 +4186,10 @@
       "coverageGap": "Noen åpningstider ville mangle en meny: {list}. Legg til en meny som dekker de timene, eller merk dem som stengt.",
       "dailyHoursExplainer": "Din Aktive meny er standard — kundene ser den når ingen tidsstyrt meny gjelder. Gi andre menyer egne daglige tider, så overtar de automatisk i de tidsrommene og gir så tilbake til standarden. Hver åpningstime må dekkes av en meny.",
       "scheduleHelp": "Velg dato og tid, så erstatter denne menyen automatisk din aktive meny på det tidspunktet — et engangsbytte. For en meny som gjentas hver dag (lunsj/middag), bruk Daglige tider i stedet.",
-      "deletePromoBlocked": "Rettene i denne menyen brukes av disse kampanjene: {names}. Sletting kan ødelegge dem for kundene dine. Slette likevel?"
+      "deletePromoBlocked": "Rettene i denne menyen brukes av disse kampanjene: {names}. Sletting kan ødelegge dem for kundene dine. Slette likevel?",
+      "windowN": "Tidsrom {n}",
+      "windowRemove": "Fjern",
+      "windowAdd": "Legg til et tidsrom til"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

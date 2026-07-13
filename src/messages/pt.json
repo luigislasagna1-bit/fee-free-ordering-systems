@@ -4186,7 +4186,10 @@
       "coverageGap": "Algumas horas de funcionamento ficariam sem menu: {list}. Adicione um menu que cubra essas horas ou marque-as como fechadas.",
       "dailyHoursExplainer": "O seu menu Ativo é o predefinido — os clientes veem-no sempre que nenhum menu programado se aplica. Dê a outros menus os seus próprios horários diários e eles assumem automaticamente nessas horas, devolvendo depois o controlo ao predefinido. Cada hora de funcionamento tem de ser coberta por um menu.",
       "scheduleHelp": "Escolha uma data e hora e este menu substitui automaticamente o seu menu ativo nesse momento — uma troca única. Para um menu que se repete todos os dias (almoço/jantar), use antes o Horário diário.",
-      "deletePromoBlocked": "Os pratos deste menu são usados por estas promoções: {names}. Eliminá-lo pode quebrá-las para os seus clientes. Eliminar mesmo assim?"
+      "deletePromoBlocked": "Os pratos deste menu são usados por estas promoções: {names}. Eliminá-lo pode quebrá-las para os seus clientes. Eliminar mesmo assim?",
+      "windowN": "Faixa {n}",
+      "windowRemove": "Remover",
+      "windowAdd": "Adicionar outra faixa horária"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

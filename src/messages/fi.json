@@ -4186,7 +4186,10 @@
       "coverageGap": "Joiltakin aukioloajoilta puuttuisi menu: {list}. Lisää menu, joka kattaa nuo ajat, tai merkitse ne suljetuiksi.",
       "dailyHoursExplainer": "Käytössä oleva menusi on oletus — asiakkaat näkevät sen aina, kun mikään ajastettu menu ei ole voimassa. Anna muille menuille omat päivittäiset ajat, niin ne ottavat automaattisesti vallan noina aikoina ja palauttavat sitten oletukselle. Jokaisen aukiolotunnin on oltava jonkin menun kattama.",
       "scheduleHelp": "Valitse päivä ja kellonaika, niin tämä menu korvaa käytössä olevan menun automaattisesti sillä hetkellä — kertaluonteinen vaihto. Joka päivä toistuvaa menua varten (lounas/illallinen) käytä sen sijaan Päivittäisiä aikoja.",
-      "deletePromoBlocked": "Tämän valikon annokset kuuluvat näihin kampanjoihin: {names}. Poistaminen voi rikkoa ne asiakkailtasi. Poistetaanko silti?"
+      "deletePromoBlocked": "Tämän valikon annokset kuuluvat näihin kampanjoihin: {names}. Poistaminen voi rikkoa ne asiakkailtasi. Poistetaanko silti?",
+      "windowN": "Aikaväli {n}",
+      "windowRemove": "Poista",
+      "windowAdd": "Lisää toinen aikaväli"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

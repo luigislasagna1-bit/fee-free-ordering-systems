@@ -4186,7 +4186,10 @@
       "coverageGap": "Niektoré otváracie hodiny by nemali žiadne menu: {list}. Pridajte menu pokrývajúce tieto hodiny alebo ich označte ako zatvorené.",
       "dailyHoursExplainer": "Vaše Aktívne menu je predvolené — zákazníci ho vidia vždy, keď neplatí žiadne časované menu. Dajte iným menu vlastné denné hodiny a v tých časoch sa automaticky ujmú a potom odovzdajú späť predvolenému. Každú otváraciu hodinu musí pokrývať nejaké menu.",
       "scheduleHelp": "Vyberte dátum a čas a toto menu v danom okamihu automaticky nahradí vaše aktívne menu — jednorazová zmena. Pre menu, ktoré sa opakuje každý deň (obed/večera), použite namiesto toho Denné hodiny.",
-      "deletePromoBlocked": "Jedlá z tohto menu používajú tieto akcie: {names}. Vymazaním ich môžete pre zákazníkov pokaziť. Napriek tomu vymazať?"
+      "deletePromoBlocked": "Jedlá z tohto menu používajú tieto akcie: {names}. Vymazaním ich môžete pre zákazníkov pokaziť. Napriek tomu vymazať?",
+      "windowN": "Časové okno {n}",
+      "windowRemove": "Odstrániť",
+      "windowAdd": "Pridať ďalšie časové okno"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

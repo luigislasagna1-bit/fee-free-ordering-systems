@@ -52,9 +52,58 @@ export function parseDays(raw: string | null | undefined): number[] | null {
   return null;
 }
 
-/** Map a raw Menu row to a MenuWindow. */
+/** Map a raw Menu row to a MenuWindow (single legacy window). */
 export function toMenuWindow(m: { id: string; name: string; availableDays: string | null; availableFrom: string | null; availableTo: string | null }): MenuWindow {
   return { id: m.id, name: m.name, days: parseDays(m.availableDays), from: m.availableFrom, to: m.availableTo };
+}
+
+/** One window's shape as stored in Menu.availableWindows. */
+export type StoredMenuWindow = { from: string; to: string; days: number[] | null };
+
+/** Parse Menu.availableWindows JSON → validated window list. Empty / invalid → [].
+ *  Days are normalised to a sorted 0..6 subset (or null = every day). Windows
+ *  with a bad time or from===to are dropped. */
+export function parseMenuWindows(raw: string | null | undefined): StoredMenuWindow[] {
+  if (!raw) return [];
+  try {
+    const arr = JSON.parse(raw);
+    if (!Array.isArray(arr)) return [];
+    return arr
+      .map((w) => {
+        let days: number[] | null = null;
+        if (Array.isArray(w?.days)) {
+          const nums = (w.days as unknown[]).map((n) => Number(n)).filter((n) => Number.isFinite(n) && n >= 0 && n <= 6);
+          const uniq = [...new Set(nums)].sort((a, b) => a - b);
+          days = uniq.length > 0 && uniq.length < 7 ? uniq : null;
+        }
+        return {
+          from: typeof w?.from === "string" ? w.from : "",
+          to: typeof w?.to === "string" ? w.to : "",
+          days,
+        };
+      })
+      .filter((w) => /^\d\d:\d\d$/.test(w.from) && /^\d\d:\d\d$/.test(w.to) && w.from !== w.to);
+  } catch { return []; }
+}
+
+type RawMenu = { id: string; name: string; availableWindows?: string | null; availableDays: string | null; availableFrom: string | null; availableTo: string | null };
+
+/** Expand one menu into its MenuWindow list (for pickMenuAt / findCoverageGaps):
+ *  availableWindows (non-empty) → one MenuWindow per window; else the legacy
+ *  single window; a menu with neither yields a single all-hours "default"
+ *  window (from/to null). Multiple entries share the menu's id — the pure
+ *  helpers already handle repeated ids, so multi-window "just works". */
+export function expandMenuWindows(m: RawMenu, isActive = false): Array<MenuWindow & { isActive: boolean }> {
+  const multi = parseMenuWindows(m.availableWindows);
+  if (multi.length > 0) {
+    return multi.map((w) => ({ id: m.id, name: m.name, days: w.days, from: w.from, to: w.to, isActive }));
+  }
+  return [{ ...toMenuWindow(m), isActive }];
+}
+
+/** True when ANY menu in the set uses a daily window (single OR multi). */
+export function anyMenuWindowed(menus: RawMenu[]): boolean {
+  return menus.some((m) => (!!m.availableFrom && !!m.availableTo) || parseMenuWindows(m.availableWindows).length > 0);
 }
 
 function inDays(days: number[] | null, dow: number): boolean {
@@ -173,17 +222,17 @@ export async function resolveScheduledMenuId(restaurantId: string, now: Date = n
     prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { timezone: true } }),
     prisma.menu.findMany({
       where: { restaurantId, isArchived: false },
-      select: { id: true, name: true, isActive: true, availableDays: true, availableFrom: true, availableTo: true },
+      select: { id: true, name: true, isActive: true, availableDays: true, availableFrom: true, availableTo: true, availableWindows: true },
     }),
   ]);
   if (menus.length === 0) return null;
   // Fast path: nobody uses windows → the existing single-active behaviour.
-  if (!menus.some((m) => m.availableFrom && m.availableTo)) {
+  if (!anyMenuWindowed(menus)) {
     return (menus.find((m) => m.isActive) ?? null)?.id ?? null;
   }
   const { dow, hhmm } = localDowAndHHMM(now, rest?.timezone ?? undefined);
   return pickMenuAt(
-    menus.map((m) => ({ ...toMenuWindow(m), isActive: m.isActive })),
+    menus.flatMap((m) => expandMenuWindows(m, m.isActive)),
     dow,
     toMinutes(hhmm),
   );

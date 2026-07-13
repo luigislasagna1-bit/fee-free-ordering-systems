@@ -4186,7 +4186,10 @@
       "coverageGap": "Algunes hores d'obertura es quedarien sense menú: {list}. Afegeix un menú que cobreixi aquestes hores o marca-les com a tancades.",
       "dailyHoursExplainer": "El teu menú Actiu és el predeterminat: els clients el veuen sempre que no s'apliqui cap menú programat. Dona a altres menús els seus propis horaris diaris i prendran el relleu automàticament en aquelles hores, tornant després el control al predeterminat. Cada hora d'obertura ha d'estar coberta per un menú.",
       "scheduleHelp": "Tria una data i hora i aquest menú substituirà automàticament el teu menú actiu en aquell moment: un canvi únic. Per a un menú que es repeteix cada dia (dinar/sopar), fes servir l'Horari diari.",
-      "deletePromoBlocked": "Els plats d'aquest menú s'usen en aquestes promocions: {names}. Eliminar-lo pot fer que deixin de funcionar per als teus clients. Eliminar igualment?"
+      "deletePromoBlocked": "Els plats d'aquest menú s'usen en aquestes promocions: {names}. Eliminar-lo pot fer que deixin de funcionar per als teus clients. Eliminar igualment?",
+      "windowN": "Franja {n}",
+      "windowRemove": "Elimina",
+      "windowAdd": "Afegeix una altra franja horària"
     },
     "marketingStudio": {
       "pageTitle": "Marketing Studio",

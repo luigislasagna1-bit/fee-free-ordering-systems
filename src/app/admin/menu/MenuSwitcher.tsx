@@ -17,8 +17,34 @@ export type MenuLite = {
   availableDays: string | null; // JSON [0..6]
   availableFrom: string | null; // "HH:MM"
   availableTo: string | null;
+  /** Multiple daily windows (JSON array of {from,to,days}); when set it replaces
+   *  the single availableFrom/To/Days above. Fabrizio cmrjb8voz. */
+  availableWindows: string | null;
   categoryCount: number;
 };
+
+type WinRow = { days: number[]; from: string; to: string };
+
+/** A menu's daily windows: the multi-window JSON if present, else the single
+ *  legacy window, else [] (all-hours default). */
+function menuWindowsOf(m: MenuLite): WinRow[] {
+  try {
+    if (m.availableWindows) {
+      const arr = JSON.parse(m.availableWindows);
+      if (Array.isArray(arr) && arr.length) {
+        return arr
+          .filter((w) => typeof w?.from === "string" && typeof w?.to === "string")
+          .map((w) => ({ from: w.from, to: w.to, days: Array.isArray(w.days) && w.days.length ? w.days.map(Number) : [0, 1, 2, 3, 4, 5, 6] }));
+      }
+    }
+  } catch { /* fall through to legacy */ }
+  if (m.availableFrom && m.availableTo) {
+    let days = [0, 1, 2, 3, 4, 5, 6];
+    try { const d = m.availableDays ? JSON.parse(m.availableDays) : null; if (Array.isArray(d) && d.length) days = d.map(Number); } catch { /* every day */ }
+    return [{ from: m.availableFrom, to: m.availableTo, days }];
+  }
+  return [];
+}
 
 // 0=Sun..6=Sat short labels in the viewer's locale (no per-day i18n keys
 // needed — 2023-01-01 was a Sunday, so +dow lands on the right weekday).
@@ -86,7 +112,7 @@ function TimeField({ value, onChange, fmt }: { value: string; onChange: (v: stri
  * create / duplicate / rename / delete menus, and set one live. Multi-menu
  * Phase 2. Luigi 2026-06-05.
  */
-export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { menus: MenuLite[]; selectedMenuId: string; hoursFormat?: "12h" | "24h" }) {
+export function MenuSwitcher({ menus, selectedMenuId, liveMenuId = null, hoursFormat = "24h" }: { menus: MenuLite[]; selectedMenuId: string; liveMenuId?: string | null; hoursFormat?: "12h" | "24h" }) {
   const router = useRouter();
   const t = useTranslations("admin.menus");
   const locale = useLocale();
@@ -94,11 +120,9 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
   const [open, setOpen] = useState(false);
   const [scheduling, setScheduling] = useState(false);
   const [schedAt, setSchedAt] = useState("");
-  // Daily-window editor state.
+  // Daily-window editor state — a LIST of windows (Fabrizio cmrjb8voz).
   const [windowing, setWindowing] = useState(false);
-  const [winDays, setWinDays] = useState<number[]>([0, 1, 2, 3, 4, 5, 6]);
-  const [winFrom, setWinFrom] = useState("");
-  const [winTo, setWinTo] = useState("");
+  const [winList, setWinList] = useState<WinRow[]>([]);
 
   const selected = menus.find((m) => m.id === selectedMenuId) ?? menus[0];
   const visible = menus.filter((m) => !m.isArchived);
@@ -194,46 +218,45 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
   const clearSchedule = () =>
     run(() => fetch(`/api/menus/${selected.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ scheduledActivateAt: null }) }), t("scheduleCleared"));
 
-  // Daily window — open the editor prefilled from the selected menu.
+  // Daily windows — open the editor prefilled from the selected menu's list
+  // (or one sensible default window when none exists yet).
   const openWindowEditor = () => {
-    try {
-      const days = selected.availableDays ? (JSON.parse(selected.availableDays) as number[]) : [0, 1, 2, 3, 4, 5, 6];
-      setWinDays(Array.isArray(days) && days.length ? days : [0, 1, 2, 3, 4, 5, 6]);
-    } catch { setWinDays([0, 1, 2, 3, 4, 5, 6]); }
-    // Sensible defaults so the time selects start populated for a new window.
-    setWinFrom(selected.availableFrom ?? "10:00");
-    setWinTo(selected.availableTo ?? "22:00");
+    const existing = menuWindowsOf(selected);
+    setWinList(existing.length ? existing : [{ days: [0, 1, 2, 3, 4, 5, 6], from: "10:00", to: "22:00" }]);
     setWindowing(true);
   };
-  const toggleWinDay = (d: number) =>
-    setWinDays((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d].sort()));
+  const toggleWinDay = (i: number, d: number) =>
+    setWinList((prev) => prev.map((w, idx) => idx !== i ? w : { ...w, days: w.days.includes(d) ? w.days.filter((x) => x !== d) : [...w.days, d].sort((a, b) => a - b) }));
+  const setWinField = (i: number, field: "from" | "to", v: string) =>
+    setWinList((prev) => prev.map((w, idx) => (idx === i ? { ...w, [field]: v } : w)));
+  const addWindow = () => setWinList((prev) => [...prev, { days: [0, 1, 2, 3, 4, 5, 6], from: "10:00", to: "22:00" }]);
+  const removeWindow = (i: number) => setWinList((prev) => prev.filter((_, idx) => idx !== i));
+  const winListValid = winList.length > 0 && winList.every((w) => w.from && w.to && w.from !== w.to && w.days.length > 0);
   const saveWindow = () => {
-    if (!winFrom || !winTo || winDays.length === 0) return;
+    if (!winListValid) return;
     run(
       () => fetch(`/api/menus/${selected.id}`, {
         method: "PATCH", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ window: { from: winFrom, to: winTo, days: winDays } }),
+        body: JSON.stringify({ windows: winList.map((w) => ({ from: w.from, to: w.to, days: w.days })) }),
       }),
       t("windowSaved"), () => setWindowing(false),
     );
   };
   const clearWindow = () =>
-    run(() => fetch(`/api/menus/${selected.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ window: null }) }),
+    run(() => fetch(`/api/menus/${selected.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ windows: [] }) }),
       t("windowCleared"), () => setWindowing(false));
 
   if (!selected) return null;
 
-  const hasWindow = !!(selected.availableFrom && selected.availableTo);
-  // "Mon, Tue, Wed 10:00–14:00" or "Every day 10:00–14:00".
-  const windowLabel = (() => {
-    if (!hasWindow) return null;
-    let daysTxt = t("everyDay");
-    try {
-      const days = selected.availableDays ? (JSON.parse(selected.availableDays) as number[]) : null;
-      if (days && days.length && days.length < 7) daysTxt = days.map((d) => dayNames[d]).join(", ");
-    } catch { /* every day */ }
-    return `${daysTxt} ${fmtTime(selected.availableFrom!, hoursFormat)}–${fmtTime(selected.availableTo!, hoursFormat)}`;
-  })();
+  const selectedWindows = menuWindowsOf(selected);
+  const hasWindow = selectedWindows.length > 0;
+  // Each window labelled ("Mon, Tue, Wed 10:00–14:00" / "Every day 18:00–22:00"),
+  // multiple joined with " · ".
+  const oneWindowLabel = (w: WinRow) => {
+    const daysTxt = w.days.length >= 7 ? t("everyDay") : w.days.map((d) => dayNames[d] ?? d).join(", ");
+    return `${daysTxt} ${fmtTime(w.from, hoursFormat)}–${fmtTime(w.to, hoursFormat)}`;
+  };
+  const windowLabel = hasWindow ? selectedWindows.map(oneWindowLabel).join(" · ") : null;
 
   const schedLabel = selected.scheduledActivateAt
     ? new Date(selected.scheduledActivateAt).toLocaleString(undefined, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })
@@ -249,7 +272,7 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
           className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-800 hover:border-gray-300"
         >
           <span className="truncate max-w-[200px]">{selected.name}</span>
-          {selected.isActive && (
+          {selected.id === liveMenuId && (
             <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600">
               <Radio className="w-3 h-3" /> {t("live")}
             </span>
@@ -270,7 +293,7 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
                     <span className="block truncate font-medium text-gray-800">{m.name}</span>
                     <span className="block text-[11px] text-gray-400">{t("categories", { n: m.categoryCount })}{m.availableFrom && m.availableTo ? ` · ${fmtTime(m.availableFrom, hoursFormat)}–${fmtTime(m.availableTo, hoursFormat)}` : ""}{m.scheduledActivateAt ? ` · ${t("scheduled")}` : ""}</span>
                   </span>
-                  {m.isActive && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 flex-shrink-0"><Radio className="w-3 h-3" /> {t("live")}</span>}
+                  {m.id === liveMenuId && <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 flex-shrink-0"><Radio className="w-3 h-3" /> {t("live")}</span>}
                 </button>
               ))}
             </div>
@@ -358,7 +381,7 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
             <button onClick={clearWindow} disabled={busy} className="text-xs font-semibold text-gray-400 hover:text-red-500 ml-1 inline-flex items-center gap-1"><X className="w-3 h-3" />{t("windowClear")}</button>
           </div>
         ) : (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             {/* Heading + hover help (Luigi 2026-06-12 standing rule: explain
                 non-obvious features via a hover ⓘ, not a cluttering text box).
                 The ⓘ explains the default-vs-timed-menu model. */}
@@ -367,25 +390,44 @@ export function MenuSwitcher({ menus, selectedMenuId, hoursFormat = "24h" }: { m
               <HelpTip text={t("dailyHoursExplainer")} />
             </div>
             <span className="text-sm text-gray-600">{t("dailyHoursHint")}</span>
-            <div className="flex flex-wrap items-center gap-1.5">
-              {dayNames.map((label, d) => (
-                <button
-                  key={d}
-                  type="button"
-                  onClick={() => toggleWinDay(d)}
-                  className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition ${winDays.includes(d) ? "bg-sky-500 border-sky-500 text-white" : "border-gray-300 text-gray-600 hover:border-gray-400"}`}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
+            {/* One block per time slot (Fabrizio cmrjb8voz — a menu can be live in
+                more than one band per day, e.g. Lunch 11–15 AND Late 22–02). */}
+            {winList.map((w, i) => (
+              <div key={i} className="flex flex-col gap-2 rounded-lg border border-gray-100 bg-gray-50/60 p-2.5">
+                {winList.length > 1 && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-semibold text-gray-500">{t("windowN", { n: i + 1 })}</span>
+                    <button type="button" onClick={() => removeWindow(i)} className="text-[11px] font-semibold text-gray-400 hover:text-red-500 inline-flex items-center gap-1"><X className="w-3 h-3" />{t("windowRemove")}</button>
+                  </div>
+                )}
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {dayNames.map((label, d) => (
+                    <button
+                      key={d}
+                      type="button"
+                      onClick={() => toggleWinDay(i, d)}
+                      className={`px-2.5 py-1 rounded-full text-xs font-semibold border transition ${w.days.includes(d) ? "bg-sky-500 border-sky-500 text-white" : "border-gray-300 text-gray-600 hover:border-gray-400"}`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <label className="text-xs text-gray-500">{t("windowFrom")}</label>
+                  <TimeField value={w.from} onChange={(v) => setWinField(i, "from", v)} fmt={hoursFormat} />
+                  <label className="text-xs text-gray-500">{t("windowTo")}</label>
+                  <TimeField value={w.to} onChange={(v) => setWinField(i, "to", v)} fmt={hoursFormat} />
+                </div>
+              </div>
+            ))}
             <div className="flex flex-wrap items-center gap-2">
-              <label className="text-xs text-gray-500">{t("windowFrom")}</label>
-              <TimeField value={winFrom} onChange={setWinFrom} fmt={hoursFormat} />
-              <label className="text-xs text-gray-500">{t("windowTo")}</label>
-              <TimeField value={winTo} onChange={setWinTo} fmt={hoursFormat} />
-              <button onClick={saveWindow} disabled={busy || !winFrom || !winTo || winDays.length === 0} className="px-3 py-1.5 rounded-lg bg-sky-500 text-white text-sm font-semibold hover:bg-sky-600 disabled:opacity-50">{t("windowSave")}</button>
-              <button onClick={() => setWindowing(false)} className="text-xs text-gray-400 hover:text-gray-600">{t("cancel")}</button>
+              <button type="button" onClick={addWindow} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-dashed border-gray-300 text-sm text-gray-600 hover:border-sky-400 hover:text-sky-600">
+                <Plus className="w-4 h-4" />{t("windowAdd")}
+              </button>
+              <div className="ml-auto flex items-center gap-2">
+                <button onClick={saveWindow} disabled={busy || !winListValid} className="px-3 py-1.5 rounded-lg bg-sky-500 text-white text-sm font-semibold hover:bg-sky-600 disabled:opacity-50">{t("windowSave")}</button>
+                <button onClick={() => setWindowing(false)} className="text-xs text-gray-400 hover:text-gray-600">{t("cancel")}</button>
+              </div>
             </div>
           </div>
         )}

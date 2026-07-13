@@ -876,6 +876,12 @@ model Menu {
   availableDays       String? // JSON: [0,1,2,3,4,5,6] — null = every day
   availableFrom       String? // "HH:MM" — null = no time restriction (default menu)
   availableTo         String? // "HH:MM"
+  /// Multiple daily windows (Fabrizio cmrjb8voz, 2026-07-13). JSON array of
+  /// { "from":"HH:MM", "to":"HH:MM", "days":[0..6]|null }. When present AND
+  /// non-empty it REPLACES availableFrom/To/Days, which are kept dual-written as
+  /// the window[0] envelope so legacy readers still work. Null/[] = read the
+  /// single legacy window. Mirrors OpeningHours.intervals (split hours).
+  availableWindows    String?
   isArchived          Boolean   @default(false)
   sortOrder           Int       @default(0)
   createdAt           DateTime  @default(now())

@@ -1029,7 +1029,10 @@
       "everyDay": "Every day",
       "coverageGap": "Some open hours would have no menu: {list}. Add a menu covering those hours, or set those hours to closed.",
       "dailyHoursExplainer": "Your Live menu is the default — customers see it whenever no timed menu applies. Give other menus their own daily hours and they take over automatically during those times, then hand back to the default. Every open hour must be covered by a menu.",
-      "scheduleHelp": "Pick a date and time and this menu replaces your live menu automatically at that moment — a one-time switch. For a menu that repeats every day (like lunch/dinner), use Daily hours instead."
+      "scheduleHelp": "Pick a date and time and this menu replaces your live menu automatically at that moment — a one-time switch. For a menu that repeats every day (like lunch/dinner), use Daily hours instead.",
+      "windowN": "Slot {n}",
+      "windowRemove": "Remove",
+      "windowAdd": "Add another time slot"
     },
     "menu": {
       "title": "Menu",
