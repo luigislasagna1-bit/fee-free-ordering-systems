@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Pieskarieties jebkur, lai ieslēgtu skaņu un dzirdētu katru jaunu pasūtījumu.",
     "zoomTitle": "Tālummaiņa — teksta izmērs",
     "zoomSubtitle": "Palielina visu tekstu un skaitļus šajā ierīcē",
-    "zoomStandard": "Standarta"
+    "zoomStandard": "Standarta",
+    "filterAll": "Visi",
+    "filterTakeaway": "Paņemšana",
+    "filterDelivery": "Piegāde",
+    "filterReservations": "Rezervācijas"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

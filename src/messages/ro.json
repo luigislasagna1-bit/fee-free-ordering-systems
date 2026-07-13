@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Atingeți oriunde pentru a activa sunetul și a auzi fiecare comandă nouă.",
     "zoomTitle": "Zoom — dimensiunea textului",
     "zoomSubtitle": "Mărește tot textul și cifrele pe acest dispozitiv",
-    "zoomStandard": "Standard"
+    "zoomStandard": "Standard",
+    "filterAll": "Toate",
+    "filterTakeaway": "Ridicare",
+    "filterDelivery": "Livrare",
+    "filterReservations": "Rezervări"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

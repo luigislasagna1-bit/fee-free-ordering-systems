@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Klepnite kdekoľvek pre zapnutie zvuku, aby ste počuli každú novú objednávku.",
     "zoomTitle": "Priblíženie — veľkosť textu",
     "zoomSubtitle": "Zväčší všetok text a čísla na tomto zariadení",
-    "zoomStandard": "Štandard"
+    "zoomStandard": "Štandard",
+    "filterAll": "Všetky",
+    "filterTakeaway": "Vyzdvihnutie",
+    "filterDelivery": "Doručenie",
+    "filterReservations": "Rezervácie"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

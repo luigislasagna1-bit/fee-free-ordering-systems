@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Ketuk di mana saja untuk mengaktifkan suara agar Anda mendengar setiap pesanan baru.",
     "zoomTitle": "Zoom — ukuran teks",
     "zoomSubtitle": "Memperbesar semua teks dan angka di perangkat ini",
-    "zoomStandard": "Standar"
+    "zoomStandard": "Standar",
+    "filterAll": "Semua",
+    "filterTakeaway": "Ambil Sendiri",
+    "filterDelivery": "Pengiriman",
+    "filterReservations": "Reservasi"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

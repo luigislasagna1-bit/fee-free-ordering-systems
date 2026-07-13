@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Palieskite bet kur, kad įjungtumėte garsą ir girdėtumėte kiekvieną naują užsakymą.",
     "zoomTitle": "Mastelis — teksto dydis",
     "zoomSubtitle": "Padidina visą tekstą ir skaičius šiame įrenginyje",
-    "zoomStandard": "Standartinis"
+    "zoomStandard": "Standartinis",
+    "filterAll": "Visi",
+    "filterTakeaway": "Atsiėmimas",
+    "filterDelivery": "Pristatymas",
+    "filterReservations": "Rezervacijos"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

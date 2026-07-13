@@ -790,7 +790,11 @@
     "soundGateSubtitle": "どこかをタップして音をオンにして、すべての新しい注文を聞き逃さないようにしましょう。",
     "zoomTitle": "ズーム — 文字サイズ",
     "zoomSubtitle": "この端末のすべての文字と数字を大きくします",
-    "zoomStandard": "標準"
+    "zoomStandard": "標準",
+    "filterAll": "すべて",
+    "filterTakeaway": "テイクアウト",
+    "filterDelivery": "デリバリー",
+    "filterReservations": "予約"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

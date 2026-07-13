@@ -790,7 +790,11 @@
     "soundGateSubtitle": "แตะที่ใดก็ได้เพื่อเปิดเสียงเพื่อให้คุณได้ยินทุกคำสั่งซื้อใหม่",
     "zoomTitle": "ซูม — ขนาดตัวอักษร",
     "zoomSubtitle": "ขยายตัวอักษรและตัวเลขทั้งหมดบนอุปกรณ์นี้",
-    "zoomStandard": "มาตรฐาน"
+    "zoomStandard": "มาตรฐาน",
+    "filterAll": "ทั้งหมด",
+    "filterTakeaway": "รับที่ร้าน",
+    "filterDelivery": "จัดส่ง",
+    "filterReservations": "การจอง"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",

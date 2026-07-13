@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Koppintson bárhova a hang bekapcsolásához, hogy halljon minden új rendelést.",
     "zoomTitle": "Nagyítás — szövegméret",
     "zoomSubtitle": "Minden szöveget és számot nagyobbá tesz ezen az eszközön",
-    "zoomStandard": "Normál"
+    "zoomStandard": "Normál",
+    "filterAll": "Összes",
+    "filterTakeaway": "Elvitel",
+    "filterDelivery": "Szállítás",
+    "filterReservations": "Foglalások"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

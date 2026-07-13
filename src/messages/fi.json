@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Napauta mitä tahansa kohtaa ottaaksesi äänen käyttöön, jotta kuulet jokaisen uuden tilauksen.",
     "zoomTitle": "Zoomaus — tekstin koko",
     "zoomSubtitle": "Suurentaa kaiken tekstin ja numerot tällä laitteella",
-    "zoomStandard": "Vakio"
+    "zoomStandard": "Vakio",
+    "filterAll": "Kaikki",
+    "filterTakeaway": "Nouto",
+    "filterDelivery": "Toimitus",
+    "filterReservations": "Varaukset"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

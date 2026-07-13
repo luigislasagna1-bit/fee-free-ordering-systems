@@ -790,7 +790,11 @@
     "soundGateSubtitle": "点击任意位置开启声音，确保您听到每一个新订单。",
     "zoomTitle": "缩放 — 文字大小",
     "zoomSubtitle": "放大此设备上的所有文字和数字",
-    "zoomStandard": "标准"
+    "zoomStandard": "标准",
+    "filterAll": "全部",
+    "filterTakeaway": "自取",
+    "filterDelivery": "外卖配送",
+    "filterReservations": "预订"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

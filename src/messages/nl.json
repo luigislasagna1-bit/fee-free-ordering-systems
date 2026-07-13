@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Tik ergens om het geluid in te schakelen, zodat je elke nieuwe bestelling hoort.",
     "zoomTitle": "Zoom — tekstgrootte",
     "zoomSubtitle": "Maakt alle tekst en cijfers groter op dit apparaat",
-    "zoomStandard": "Standaard"
+    "zoomStandard": "Standaard",
+    "filterAll": "Alle",
+    "filterTakeaway": "Afhalen",
+    "filterDelivery": "Bezorgen",
+    "filterReservations": "Reserveringen"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

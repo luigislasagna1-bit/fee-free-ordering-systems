@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Докоснете навсякъде, за да включите звука и да чувате всяка нова поръчка.",
     "zoomTitle": "Мащаб — размер на текста",
     "zoomSubtitle": "Уголемява целия текст и числата на това устройство",
-    "zoomStandard": "Стандартен"
+    "zoomStandard": "Стандартен",
+    "filterAll": "Всички",
+    "filterTakeaway": "Вземане",
+    "filterDelivery": "Доставка",
+    "filterReservations": "Резервации"
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",

@@ -790,7 +790,11 @@
     "soundGateSubtitle": "انقر في أي مكان لتشغيل الصوت حتى تسمع كل طلب جديد.",
     "zoomTitle": "التكبير — حجم النص",
     "zoomSubtitle": "يكبّر كل النصوص والأرقام على هذا الجهاز",
-    "zoomStandard": "قياسي"
+    "zoomStandard": "قياسي",
+    "filterAll": "الكل",
+    "filterTakeaway": "استلام",
+    "filterDelivery": "توصيل",
+    "filterReservations": "الحجوزات"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

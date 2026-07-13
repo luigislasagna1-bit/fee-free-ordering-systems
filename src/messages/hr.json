@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Dodirnite bilo gdje da uključite zvuk i čujete svaku novu narudžbu.",
     "zoomTitle": "Zumiranje — veličina teksta",
     "zoomSubtitle": "Povećava sav tekst i brojeve na ovom uređaju",
-    "zoomStandard": "Standardno"
+    "zoomStandard": "Standardno",
+    "filterAll": "Sve",
+    "filterTakeaway": "Preuzimanje",
+    "filterDelivery": "Dostava",
+    "filterReservations": "Rezervacije"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

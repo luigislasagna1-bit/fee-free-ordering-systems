@@ -679,6 +679,8 @@ function ConfirmModal({ title, message, confirmLabel, onConfirm, onCancel, t }: 
 
 // ── Main KitchenDisplay ───────────────────────────────────────────────────────
 type KTab = "orders" | "inprogress" | "complete" | "reservations";
+/** Service-type filter on the 3 order screens (Fabrizio cmrjatqy6). */
+type ServiceFilter = "all" | "takeaway" | "delivery" | "reservation";
 
 // Per-tab visual identity. Each kitchen tab gets its own accent color +
 // icon so staff can scan + identify at a glance — even the inactive
@@ -828,6 +830,14 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
 
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [activeTab, setActiveTab] = useState<KTab>("orders");
+  // Service-type filter for the 3 order screens (Fabrizio cmrjatqy6). Auto-reverts
+  // to "all" after 2 min so the kitchen never gets stuck on a narrowed view.
+  const [serviceFilter, setServiceFilter] = useState<ServiceFilter>("all");
+  useEffect(() => {
+    if (serviceFilter === "all") return;
+    const id = setTimeout(() => setServiceFilter("all"), 2 * 60 * 1000);
+    return () => clearTimeout(id);
+  }, [serviceFilter]);
   const [reservations, setReservations] = useState<KitchenReservation[]>([]);
   // Kitchen workflow mode — drives whether the order detail panel shows
   // the full state-machine buttons (Preparing/Ready/Out for delivery/
@@ -3540,6 +3550,36 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
             The always-visible trash button was removed so the tab bar stays clean. */}
       </div>
 
+      {/* Service-type filter (Fabrizio cmrjatqy6) — narrows all 3 order screens to
+          Takeaway / Delivery / Table reservations. Auto-reverts to All after 2 min
+          (serviceFilter effect) so the kitchen never lingers on a partial view. */}
+      <div className={`flex items-center gap-1.5 px-2 sm:px-4 py-2 flex-shrink-0 overflow-x-auto border-b ${t.border} ${themeMode === "dark" ? "bg-gray-900/40" : "bg-gray-50"}`}>
+        {([
+          ["all", tk("filterAll")],
+          ["takeaway", tk("filterTakeaway")],
+          ["delivery", tk("filterDelivery")],
+          ["reservation", tk("filterReservations")],
+        ] as [ServiceFilter, string][]).map(([key, label]) => {
+          const on = serviceFilter === key;
+          return (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setServiceFilter(key)}
+              className={`px-3 py-1 rounded-full text-xs font-semibold border whitespace-nowrap flex-shrink-0 transition touch-manipulation ${
+                on
+                  ? "bg-sky-500 border-sky-500 text-white"
+                  : themeMode === "dark"
+                    ? "border-gray-700 text-gray-300 hover:border-gray-500"
+                    : "border-gray-300 text-gray-600 hover:border-gray-400"
+              }`}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+
       {/* Render a reservation card, reused on both Reservations tab and Orders tab. */}
       {/* (defined as a const so the JSX below can reference it) */}
 
@@ -3607,6 +3647,18 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
               | { kind: "order"; sortTs: number; order: Order }
               | { kind: "reservation"; sortTs: number; r: KitchenReservation };
 
+            // Service-type filter (Fabrizio cmrjatqy6): narrow the 3 order screens
+            // to Takeaway (non-delivery orders) / Delivery / Table reservations.
+            // "all" (the auto-reverting default) shows everything.
+            const matchesServiceFilter = (m: Mixed): boolean => {
+              if (serviceFilter === "all") return true;
+              if (serviceFilter === "reservation") return m.kind === "reservation";
+              if (m.kind === "reservation") return false;
+              const ty = m.order.type;
+              if (serviceFilter === "delivery") return ty === "delivery" || ty === "catering";
+              return ty !== "delivery" && ty !== "catering"; // takeaway = pickup / take_out / dine_in
+            };
+
             // ── ALL tab: orders + walk-up bookings, chronological ─
             // Walk-up table bookings appear here alongside orders, just like a
             // regular order, and are cleared by THIS tab's trash button (their
@@ -3614,7 +3666,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
             // by their ORDER tile, so they're excluded from allTabReservations.
             // Luigi 2026-06-08.
             if (activeTab === "orders") {
-              const items: Mixed[] = [];
+              let items: Mixed[] = [];
               for (const o of tabOrders) {
                 const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
                 items.push({ kind: "order", sortTs: arrived, order: o });
@@ -3625,6 +3677,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                 const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
                 items.push({ kind: "reservation", sortTs: arrived, r });
               }
+              items = items.filter(matchesServiceFilter);
               items.sort((a, b) => b.sortTs - a.sortTs);
 
               if (items.length === 0) {
@@ -3649,7 +3702,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
               }
               const today: Mixed[] = [];
               const later: Mixed[] = [];
-              for (const it of items) {
+              for (const it of items.filter(matchesServiceFilter)) {
                 if (it.sortTs < tomorrowStartMs) today.push(it);
                 else later.push(it);
               }
@@ -3714,7 +3767,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
             // rejected) appear here alongside completed orders and are cleared
             // by THIS tab's trash button (their clearedFromCompleteAt flag).
             // Pre-orders show as their order tile. Luigi 2026-06-08.
-            const items: Mixed[] = [];
+            let items: Mixed[] = [];
             for (const o of tabOrders) {
               const arrived = o.createdAt ? new Date(o.createdAt).getTime() : Date.now();
               items.push({ kind: "order", sortTs: arrived, order: o });
@@ -3723,6 +3776,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
               const arrived = r.createdAt ? new Date(r.createdAt).getTime() : Date.now();
               items.push({ kind: "reservation", sortTs: arrived, r });
             }
+            items = items.filter(matchesServiceFilter);
             items.sort((a, b) => b.sortTs - a.sortTs);
             if (items.length === 0) {
               return (

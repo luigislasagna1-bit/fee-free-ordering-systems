@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Toca qualsevol lloc per activar el so i sentir cada nova comanda.",
     "zoomTitle": "Zoom — mida del text",
     "zoomSubtitle": "Fa més grans tot el text i els números en aquest dispositiu",
-    "zoomStandard": "Estàndard"
+    "zoomStandard": "Estàndard",
+    "filterAll": "Totes",
+    "filterTakeaway": "Recollida",
+    "filterDelivery": "Lliurament",
+    "filterReservations": "Reserves"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

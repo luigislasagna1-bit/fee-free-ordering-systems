@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Puudutage ükskõik kus, et lülitada heli sisse ja kuulda iga uut tellimust.",
     "zoomTitle": "Suum — teksti suurus",
     "zoomSubtitle": "Suurendab kogu teksti ja numbreid sellel seadmel",
-    "zoomStandard": "Standard"
+    "zoomStandard": "Standard",
+    "filterAll": "Kõik",
+    "filterTakeaway": "Järeletulek",
+    "filterDelivery": "Kojuvedu",
+    "filterReservations": "Broneeringud"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

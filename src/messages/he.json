@@ -790,7 +790,11 @@
     "soundGateSubtitle": "הקש בכל מקום להפעלת הצליל כדי שתשמע כל הזמנה חדשה.",
     "zoomTitle": "זום — גודל טקסט",
     "zoomSubtitle": "מגדיל את כל הטקסט והמספרים במכשיר זה",
-    "zoomStandard": "רגיל"
+    "zoomStandard": "רגיל",
+    "filterAll": "הכל",
+    "filterTakeaway": "איסוף עצמי",
+    "filterDelivery": "משלוח",
+    "filterReservations": "הזמנות שולחנות"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

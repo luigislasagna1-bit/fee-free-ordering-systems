@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Chạm vào bất kỳ đâu để bật âm thanh và nghe mọi đơn hàng mới.",
     "zoomTitle": "Thu phóng — cỡ chữ",
     "zoomSubtitle": "Phóng to mọi chữ và số trên thiết bị này",
-    "zoomStandard": "Chuẩn"
+    "zoomStandard": "Chuẩn",
+    "filterAll": "Tất cả",
+    "filterTakeaway": "Tự lấy",
+    "filterDelivery": "Giao hàng",
+    "filterReservations": "Đặt bàn"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

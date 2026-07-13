@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Πατήστε οπουδήποτε για να ενεργοποιήσετε τον ήχο και να ακούτε κάθε νέα παραγγελία.",
     "zoomTitle": "Ζουμ — μέγεθος κειμένου",
     "zoomSubtitle": "Μεγαλώνει όλο το κείμενο και τους αριθμούς σε αυτή τη συσκευή",
-    "zoomStandard": "Κανονικό"
+    "zoomStandard": "Κανονικό",
+    "filterAll": "Όλα",
+    "filterTakeaway": "Παραλαβή",
+    "filterDelivery": "Παράδοση",
+    "filterReservations": "Κρατήσεις"
   },
   "admin": {
     "welcomeBack": "Καλώς ορίσατε",

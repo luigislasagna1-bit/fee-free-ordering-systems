@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Stuknij gdziekolwiek, aby włączyć dźwięk i słyszeć każde nowe zamówienie.",
     "zoomTitle": "Powiększenie — rozmiar tekstu",
     "zoomSubtitle": "Powiększa cały tekst i liczby na tym urządzeniu",
-    "zoomStandard": "Standard"
+    "zoomStandard": "Standard",
+    "filterAll": "Wszystkie",
+    "filterTakeaway": "Odbiór",
+    "filterDelivery": "Dostawa",
+    "filterReservations": "Rezerwacje"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Her yeni siparişi duyabilmek için sesi açmak üzere herhangi bir yere dokunun.",
     "zoomTitle": "Yakınlaştırma — metin boyutu",
     "zoomSubtitle": "Bu cihazda tüm metin ve rakamları büyütür",
-    "zoomStandard": "Standart"
+    "zoomStandard": "Standart",
+    "filterAll": "Tümü",
+    "filterTakeaway": "Gel-Al",
+    "filterDelivery": "Teslimat",
+    "filterReservations": "Rezervasyonlar"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Tap anywhere to turn on sound so you hear every new order.",
     "zoomTitle": "Zoom — text size",
     "zoomSubtitle": "Make all text and numbers bigger on this device",
-    "zoomStandard": "Standard"
+    "zoomStandard": "Standard",
+    "filterAll": "All",
+    "filterTakeaway": "Takeaway",
+    "filterDelivery": "Delivery",
+    "filterReservations": "Reservations"
   },
   "admin": {
     "comingSoonPlaceholder": {

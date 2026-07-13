@@ -790,7 +790,11 @@
     "soundGateSubtitle": "Tryck var som helst för att slå på ljudet så att du hör varje ny order.",
     "zoomTitle": "Zoom — textstorlek",
     "zoomSubtitle": "Gör all text och alla siffror större på den här enheten",
-    "zoomStandard": "Standard"
+    "zoomStandard": "Standard",
+    "filterAll": "Alla",
+    "filterTakeaway": "Avhämtning",
+    "filterDelivery": "Leverans",
+    "filterReservations": "Reservationer"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
