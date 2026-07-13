@@ -102,6 +102,17 @@ export function formatDate(
   }).format(new Date(date));
 }
 
+/**
+ * Capitalize the first letter of each word in a person's name for DISPLAY
+ * (e.g. "fabrizio pisu" → "Fabrizio Pisu"), leaving existing inner capitals
+ * alone ("McMaster" stays "McMaster"). Display-only — the raw value is still
+ * stored as typed. Mirrors the kitchen order-tile name rendering so table
+ * reservation names read the same as order names (Fabrizio cmrj7jivw).
+ */
+export function capitalizeName(s: string | null | undefined): string {
+  return String(s ?? "").replace(/\S+/g, (w) => w.charAt(0).toUpperCase() + w.slice(1));
+}
+
 export function slugify(text: string): string {
   return text
     .toLowerCase()

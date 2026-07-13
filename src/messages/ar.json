@@ -610,7 +610,11 @@
     "reservationFailed": "فشل الحجز",
     "addFoodToBooking": "أضف طعامًا إلى حجزك",
     "justBookTable": "احجز الطاولة فقط",
-    "holdMinutesNote": "نحتفظ بطاولتك لمدة {minutes} دقيقة بعد موعد الحجز — يرجى الحضور في الوقت المحدد."
+    "holdMinutesNote": "نحتفظ بطاولتك لمدة {minutes} دقيقة بعد موعد الحجز — يرجى الحضور في الوقت المحدد.",
+    "closedOnDay": "نحن مغلقون يوم {day} — يرجى اختيار تاريخ آخر.",
+    "jumpToNextOpen": "الانتقال إلى اليوم المفتوح التالي ({date})",
+    "closedPickAnother": "نحن مغلقون في التاريخ المحدد — يرجى اختيار يوم آخر.",
+    "emailRequired": "البريد الإلكتروني مطلوب"
   },
   "kitchen": {
     "title": "Kitchen Order App",

@@ -4,7 +4,7 @@ import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2 } from "l
 import toast from "react-hot-toast";
 import { validateBooking, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { parseTheme } from "@/lib/theme";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { pickHoursForService } from "@/lib/service-hours";
 import { formatTime, type HoursFormat } from "@/lib/format-time";
 import { formatCurrency } from "@/lib/utils";
@@ -143,19 +143,21 @@ function findNextOpenDate(
  * disabled by the parent).
  */
 function ClosedDayBlock({
-  dayOfWeek,
   date,
   settings,
   fallbackOpeningHours,
   onJump,
 }: {
-  dayOfWeek: number;
   date: string;
   settings: { reservationHours?: string | null };
   fallbackOpeningHours: Array<{ dayOfWeek: number; isOpen: boolean; service?: string | null }>;
   onJump: (next: string) => void;
 }) {
-  const dayLabel = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayOfWeek] ?? "this day";
+  const tr = useTranslations("reservation");
+  const locale = useLocale();
+  // Localized weekday of the closed date (Fabrizio cmrj7jivw — was a hardcoded
+  // English array, so the whole notice rendered English in every locale).
+  const dayLabel = new Date(`${date}T00:00:00`).toLocaleDateString(locale, { weekday: "long" });
   const nextOpen = findNextOpenDate(
     settings.reservationHours,
     fallbackOpeningHours,
@@ -167,16 +169,14 @@ function ClosedDayBlock({
   );
   return (
     <div className="text-sm text-rose-800 bg-rose-50 border border-rose-200 rounded-lg px-3 py-3 space-y-2">
-      <div>
-        We&apos;re closed on <strong>{dayLabel}</strong> — please pick a different date.
-      </div>
+      <div>{tr("closedOnDay", { day: dayLabel })}</div>
       {nextOpen && (
         <button
           type="button"
           onClick={() => onJump(nextOpen)}
           className="text-xs font-semibold underline hover:no-underline"
         >
-          Jump to next open day ({new Date(`${nextOpen}T00:00:00`).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric" })})
+          {tr("jumpToNextOpen", { date: new Date(`${nextOpen}T00:00:00`).toLocaleDateString(locale, { weekday: "long", month: "short", day: "numeric" }) })}
         </button>
       )}
     </div>
@@ -264,7 +264,6 @@ export function ReservationModal({
     setFirstName(parts[0] ?? "");
     setLastName(parts.slice(1).join(" "));
   };
-  void setName; // suppress unused-warn — kept available for future autofill
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
@@ -298,6 +297,25 @@ export function ReservationModal({
       return !!row && row.isOpen === false;
     })();
     if (todayClosedExplicit && next && next !== date) setDate(next);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Prefill guest contact from the device — the SAME "ff-guest-info" store the
+  // takeaway/delivery checkout uses — so a returning guest doesn't retype their
+  // name / phone / email (Fabrizio cmrj7jivw). This modal is guest-only (no
+  // signed-in account prop), and the fields start empty, so this only prefills.
+  // Runs once on mount.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("ff-guest-info");
+      if (!raw) return;
+      const s = JSON.parse(raw) as Record<string, unknown>;
+      const str = (v: unknown) => (typeof v === "string" ? v : "");
+      if (!str(s.name) && !str(s.email) && !str(s.phone)) return;
+      if (str(s.name)) setName(str(s.name)); // shim splits "First Last"
+      if (str(s.phone)) setPhone(str(s.phone));
+      if (str(s.email)) setEmail(str(s.email));
+    } catch { /* ignore malformed storage */ }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -508,7 +526,7 @@ export function ReservationModal({
       // Belt-and-suspenders to the disabled submit button — refuse
       // to fire the request when the day is explicitly closed in
       // admin hours. GloriaFood-strict: no requests get through.
-      toast.error("We're closed on the selected date — please pick another day.");
+      toast.error(tr("closedPickAnother"));
       return false;
     }
     if (!validation.ok) { toast.error(validation.reason); return false; }
@@ -526,7 +544,7 @@ export function ReservationModal({
       const digits = (phone.match(/\d/g) || []).length;
       if (/[a-z]/i.test(phone) || digits < 6) { toast.error(tOrd("toasts.phoneInvalid")); return false; }
     }
-    if (requireCustomerEmail && !email.trim()) { toast.error("Email is required"); return false; }
+    if (requireCustomerEmail && !email.trim()) { toast.error(tr("emailRequired")); return false; }
     return true;
   };
 
@@ -557,6 +575,16 @@ export function ReservationModal({
       setConfirmationCode(data.confirmationCode);
       setFinalStatus(data.status === "confirmed" ? "confirmed" : "pending");
       setStep("done");
+      // Remember guest contact on the device for next time (Fabrizio cmrj7jivw).
+      // MERGE into the shared "ff-guest-info" store so we never clobber a saved
+      // delivery address — this form has no address fields. Same guard as checkout.
+      try {
+        if (name.trim() && (email.trim() || phone.trim())) {
+          let prev: Record<string, unknown> = {};
+          try { prev = JSON.parse(localStorage.getItem("ff-guest-info") || "{}"); } catch { /* ignore */ }
+          localStorage.setItem("ff-guest-info", JSON.stringify({ ...prev, name, email, phone }));
+        }
+      } catch { /* ignore storage failures */ }
     } catch (e: any) {
       toast.error(e.message || tr("reservationFailed"));
     }
@@ -641,7 +669,6 @@ export function ReservationModal({
                     - "open" → just the time picker. */}
                 {dayStatus === "closedHard" ? (
                   <ClosedDayBlock
-                    dayOfWeek={dayOfWeek}
                     date={date}
                     settings={settings}
                     fallbackOpeningHours={fallbackOpeningHours}

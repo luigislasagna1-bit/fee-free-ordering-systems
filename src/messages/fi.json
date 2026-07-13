@@ -610,7 +610,11 @@
     "reservationFailed": "Varaus epäonnistui",
     "addFoodToBooking": "Lisää ruokaa varaukseesi",
     "justBookTable": "Varaa vain pöytä",
-    "holdMinutesNote": "Pidämme pöytäsi varattuna {minutes} min varausaikasi jälkeen — saavuthan ajoissa."
+    "holdMinutesNote": "Pidämme pöytäsi varattuna {minutes} min varausaikasi jälkeen — saavuthan ajoissa.",
+    "closedOnDay": "Olemme suljettuna päivänä {day} — valitse toinen päivämäärä.",
+    "jumpToNextOpen": "Siirry seuraavaan avoinna olevaan päivään ({date})",
+    "closedPickAnother": "Olemme suljettuna valittuna päivänä — valitse toinen päivä.",
+    "emailRequired": "Sähköpostiosoite vaaditaan"
   },
   "kitchen": {
     "title": "Kitchen Order App",

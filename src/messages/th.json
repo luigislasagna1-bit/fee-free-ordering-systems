@@ -610,7 +610,11 @@
     "reservationFailed": "การจองล้มเหลว",
     "addFoodToBooking": "เพิ่มอาหารลงในการจองของคุณ",
     "justBookTable": "จองโต๊ะอย่างเดียว",
-    "holdMinutesNote": "เราจะเก็บโต๊ะไว้ให้คุณ {minutes} นาทีหลังเวลาที่จองไว้ — กรุณามาตรงเวลา"
+    "holdMinutesNote": "เราจะเก็บโต๊ะไว้ให้คุณ {minutes} นาทีหลังเวลาที่จองไว้ — กรุณามาตรงเวลา",
+    "closedOnDay": "เราปิดทำการใน{day} — กรุณาเลือกวันที่อื่น",
+    "jumpToNextOpen": "ไปยังวันเปิดทำการถัดไป ({date})",
+    "closedPickAnother": "เราปิดทำการในวันที่ที่เลือก — กรุณาเลือกวันอื่น",
+    "emailRequired": "จำเป็นต้องกรอกอีเมล"
   },
   "kitchen": {
     "title": "Kitchen Order App",

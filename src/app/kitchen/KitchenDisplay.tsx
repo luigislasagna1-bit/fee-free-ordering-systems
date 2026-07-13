@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, capitalizeName } from "@/lib/utils";
 import { formatTime, formatDueLabel } from "@/lib/format-time";
 import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
@@ -149,7 +149,7 @@ function ReservationCard({
               in BOTH densities so order + reservation names read one size
               everywhere (Fabrizio: identical sizes; Luigi 2026-07-03). */}
           <div className={`font-bold ${t.text} text-lg leading-tight truncate`}>
-            {r.customerName}
+            {capitalizeName(r.customerName)}
           </div>
           {/* Status chip + a single time cue below (GloriaFood-clean,
               Luigi 2026-06-15). Party size, table, deposit, notes, booking
@@ -242,7 +242,7 @@ function ReservationDetail({
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
-          <span className={`font-bold ${t.text} truncate`}>{r.customerName}</span>
+          <span className={`font-bold ${t.text} truncate`}>{capitalizeName(r.customerName)}</span>
           <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} />
           {r.depositPaid && (
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
@@ -1910,7 +1910,6 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // feed now carries for the persistent Reservations tab. Luigi 2026-06-08.
   const isoOf = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   const todayISO = isoOf(new Date());
-  const tomorrowISO = (() => { const d = new Date(); d.setDate(d.getDate() + 1); return isoOf(d); })();
   // Pending reservations (manual-accept mode arrivals not yet
   // accepted/declined by staff) re-arm the alarm right alongside
   // pending orders. The existing alarm-loop reads pendingCount, so
@@ -3170,13 +3169,17 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // PRE-ORDER bookings (orderId set) are EXCLUDED here — they're represented by
   // their (flagged) order tile, so they don't double up as a second tile. They
   // still live in the dedicated Reservations tab. Luigi 2026-06-08.
-  // DATE-GUARDED to today/tomorrow: the feed now keeps ~30 days of history for
+  // DATE-GUARDED to today-or-future: the feed now keeps ~30 days of history for
   // the Reservations tab, but In Progress is the live floor view — a confirmed
-  // booking from last week (never marked completed) must NOT linger here. Only
-  // today's + tomorrow's active bookings are "in progress". Luigi 2026-06-08.
+  // booking from last week (never marked completed) must NOT linger here. A
+  // future-day booking DOES belong here though: it sits in the LATER group until
+  // its day arrives, exactly like a future-scheduled order (Fabrizio cmrj7jivw —
+  // future reservations were only showing in All Orders). `r.date` is YYYY-MM-DD,
+  // so lexical `>= todayISO` = today + all future while still dropping stale past
+  // bookings. Luigi 2026-06-08 / 2026-07-13.
   const inProgressReservations = reservations.filter(
     r => !r.orderId && (r.status === "confirmed" || r.status === "seated")
-      && (r.date === todayISO || r.date === tomorrowISO),
+      && r.date >= todayISO,
   );
   // Reservations tab list — the persistent ledger. Shows EVERY booking the feed
   // returns (all statuses, ~30 days + all future), hiding ONLY what staff

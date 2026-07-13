@@ -610,7 +610,11 @@
     "reservationFailed": "Broneerimine ebaõnnestus",
     "addFoodToBooking": "Lisa broneeringule toidud",
     "justBookTable": "Broneeri ainult laud",
-    "holdMinutesNote": "Hoiame teie lauda {minutes} min pärast broneeringu aega — palun saabuge õigeks ajaks."
+    "holdMinutesNote": "Hoiame teie lauda {minutes} min pärast broneeringu aega — palun saabuge õigeks ajaks.",
+    "closedOnDay": "Oleme suletud sel päeval: {day} — palun valige teine kuupäev.",
+    "jumpToNextOpen": "Mine järgmisele avatud päevale ({date})",
+    "closedPickAnother": "Valitud kuupäeval oleme suletud — palun valige teine päev.",
+    "emailRequired": "E-posti aadress on kohustuslik"
   },
   "kitchen": {
     "title": "Kitchen Order App",

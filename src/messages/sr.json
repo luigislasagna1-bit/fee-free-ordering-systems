@@ -610,7 +610,11 @@
     "reservationFailed": "Rezervacija nije uspela",
     "addFoodToBooking": "Dodaj hranu rezervaciji",
     "justBookTable": "Samo rezerviši sto",
-    "holdMinutesNote": "Vaš sto čuvamo {minutes} min nakon termina rezervacije — molimo vas da stignete na vreme."
+    "holdMinutesNote": "Vaš sto čuvamo {minutes} min nakon termina rezervacije — molimo vas da stignete na vreme.",
+    "closedOnDay": "Zatvoreno je u {day} — izaberite drugi datum.",
+    "jumpToNextOpen": "Pređi na sledeći otvoreni dan ({date})",
+    "closedPickAnother": "Zatvoreno je na izabrani datum — izaberite drugi dan.",
+    "emailRequired": "Email je obavezan"
   },
   "kitchen": {
     "title": "Kitchen Order App",

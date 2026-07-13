@@ -610,7 +610,11 @@
     "reservationFailed": "Rezervacija nepavyko",
     "addFoodToBooking": "Pridėti maisto prie rezervacijos",
     "justBookTable": "Tik rezervuoti staliuką",
-    "holdMinutesNote": "Jūsų staliuką laikome {minutes} min po rezervacijos laiko — prašome atvykti laiku."
+    "holdMinutesNote": "Jūsų staliuką laikome {minutes} min po rezervacijos laiko — prašome atvykti laiku.",
+    "closedOnDay": "Esame uždaryti šią dieną: {day} — pasirinkite kitą datą.",
+    "jumpToNextOpen": "Pereiti prie kitos atviros dienos ({date})",
+    "closedPickAnother": "Pasirinktą dieną esame uždaryti — pasirinkite kitą dieną.",
+    "emailRequired": "El. paštas yra privalomas"
   },
   "kitchen": {
     "title": "Kitchen Order App",

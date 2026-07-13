@@ -610,7 +610,11 @@
     "reservationFailed": "Reservation mislykkedes",
     "addFoodToBooking": "Tilføj mad til din reservation",
     "justBookTable": "Reservér kun bordet",
-    "holdMinutesNote": "Vi holder dit bord i {minutes} min efter din reservationstid — mød venligst til tiden."
+    "holdMinutesNote": "Vi holder dit bord i {minutes} min efter din reservationstid — mød venligst til tiden.",
+    "closedOnDay": "Vi har lukket på {day} — vælg venligst en anden dato.",
+    "jumpToNextOpen": "Spring til næste åbne dag ({date})",
+    "closedPickAnother": "Vi har lukket på den valgte dato — vælg venligst en anden dag.",
+    "emailRequired": "E-mailadresse er påkrævet"
   },
   "kitchen": {
     "title": "Kitchen Order App",

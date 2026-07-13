@@ -610,7 +610,11 @@
     "reservationFailed": "Reservasi gagal",
     "addFoodToBooking": "Tambahkan makanan ke pesanan Anda",
     "justBookTable": "Cukup pesan meja saja",
-    "holdMinutesNote": "Kami menahan meja Anda selama {minutes} mnt setelah waktu reservasi — mohon datang tepat waktu."
+    "holdMinutesNote": "Kami menahan meja Anda selama {minutes} mnt setelah waktu reservasi — mohon datang tepat waktu.",
+    "closedOnDay": "Kami tutup pada {day} — silakan pilih tanggal lain.",
+    "jumpToNextOpen": "Lompat ke hari buka berikutnya ({date})",
+    "closedPickAnother": "Kami tutup pada tanggal yang dipilih — silakan pilih hari lain.",
+    "emailRequired": "Email wajib diisi"
   },
   "kitchen": {
     "title": "Kitchen Order App",

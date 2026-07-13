@@ -610,7 +610,11 @@
     "reservationFailed": "Rezervácia zlyhala",
     "addFoodToBooking": "Pridať jedlo k rezervácii",
     "justBookTable": "Len rezervovať stôl",
-    "holdMinutesNote": "Váš stôl držíme {minutes} min po čase rezervácie — príďte prosím včas."
+    "holdMinutesNote": "Váš stôl držíme {minutes} min po čase rezervácie — príďte prosím včas.",
+    "closedOnDay": "V {day} máme zatvorené — vyberte prosím iný dátum.",
+    "jumpToNextOpen": "Prejsť na ďalší otvorený deň ({date})",
+    "closedPickAnother": "Vo vybraný deň máme zatvorené — vyberte prosím iný deň.",
+    "emailRequired": "E-mail je povinný"
   },
   "kitchen": {
     "title": "Kitchen Order App",

@@ -610,7 +610,11 @@
     "reservationFailed": "Reservation failed",
     "addFoodToBooking": "Add Food To Your Booking",
     "justBookTable": "Just Book The Table",
-    "holdMinutesNote": "We hold your table for {minutes} min after your reservation time — please arrive on time."
+    "holdMinutesNote": "We hold your table for {minutes} min after your reservation time — please arrive on time.",
+    "closedOnDay": "We're closed on {day} — please pick a different date.",
+    "jumpToNextOpen": "Jump to next open day ({date})",
+    "closedPickAnother": "We're closed on the selected date — please pick another day.",
+    "emailRequired": "Email is required"
   },
   "kitchen": {
     "title": "Kitchen Order App",

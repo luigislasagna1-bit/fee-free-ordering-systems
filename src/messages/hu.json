@@ -610,7 +610,11 @@
     "reservationFailed": "A foglalás nem sikerült",
     "addFoodToBooking": "Étel hozzáadása a foglaláshoz",
     "justBookTable": "Csak asztalt foglalok",
-    "holdMinutesNote": "Az asztalát a foglalás időpontja után még {minutes} percig fenntartjuk — kérjük, érkezzen időben."
+    "holdMinutesNote": "Az asztalát a foglalás időpontja után még {minutes} percig fenntartjuk — kérjük, érkezzen időben.",
+    "closedOnDay": "Zárva tartunk ezen a napon: {day} — kérjük, válasszon másik dátumot.",
+    "jumpToNextOpen": "Ugrás a következő nyitva tartó napra ({date})",
+    "closedPickAnother": "A kiválasztott napon zárva tartunk — kérjük, válasszon másik napot.",
+    "emailRequired": "Az e-mail cím megadása kötelező"
   },
   "kitchen": {
     "title": "Kitchen Order App",

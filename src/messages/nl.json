@@ -610,7 +610,11 @@
     "reservationFailed": "Reservering mislukt",
     "addFoodToBooking": "Eten aan je reservering toevoegen",
     "justBookTable": "Alleen de tafel reserveren",
-    "holdMinutesNote": "We houden uw tafel tot {minutes} min na uw reserveringstijd vrij — kom alstublieft op tijd."
+    "holdMinutesNote": "We houden uw tafel tot {minutes} min na uw reserveringstijd vrij — kom alstublieft op tijd.",
+    "closedOnDay": "We zijn gesloten op {day} — kies een andere datum.",
+    "jumpToNextOpen": "Ga naar de volgende open dag ({date})",
+    "closedPickAnother": "We zijn gesloten op de geselecteerde datum — kies een andere dag.",
+    "emailRequired": "E-mailadres is verplicht"
   },
   "kitchen": {
     "title": "Kitchen Order App",

@@ -610,7 +610,11 @@
     "reservationFailed": "आरक्षण विफल हो गया",
     "addFoodToBooking": "अपनी बुकिंग में खाना जोड़ें",
     "justBookTable": "बस टेबल बुक करें",
-    "holdMinutesNote": "हम आपकी मेज़ को आरक्षण समय के बाद {minutes} मिनट तक रोके रखते हैं — कृपया समय पर पहुँचें।"
+    "holdMinutesNote": "हम आपकी मेज़ को आरक्षण समय के बाद {minutes} मिनट तक रोके रखते हैं — कृपया समय पर पहुँचें।",
+    "closedOnDay": "हम {day} को बंद रहते हैं — कृपया कोई दूसरी तारीख़ चुनें।",
+    "jumpToNextOpen": "अगले खुले दिन पर जाएँ ({date})",
+    "closedPickAnother": "चयनित तारीख़ को हम बंद रहते हैं — कृपया कोई दूसरा दिन चुनें।",
+    "emailRequired": "ईमेल आवश्यक है"
   },
   "kitchen": {
     "title": "Kitchen Order App",

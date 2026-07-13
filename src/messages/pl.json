@@ -610,7 +610,11 @@
     "reservationFailed": "Rezerwacja nie powiodła się",
     "addFoodToBooking": "Dodaj jedzenie do rezerwacji",
     "justBookTable": "Zarezerwuj tylko stolik",
-    "holdMinutesNote": "Trzymamy Twój stolik przez {minutes} min po godzinie rezerwacji — prosimy o punktualne przybycie."
+    "holdMinutesNote": "Trzymamy Twój stolik przez {minutes} min po godzinie rezerwacji — prosimy o punktualne przybycie.",
+    "closedOnDay": "Jesteśmy zamknięci w {day} — proszę wybrać inną datę.",
+    "jumpToNextOpen": "Przejdź do następnego dnia otwarcia ({date})",
+    "closedPickAnother": "Jesteśmy zamknięci w wybranym dniu — proszę wybrać inny dzień.",
+    "emailRequired": "Adres e-mail jest wymagany"
   },
   "kitchen": {
     "title": "Kitchen Order App",

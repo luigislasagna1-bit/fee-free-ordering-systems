@@ -610,7 +610,11 @@
     "reservationFailed": "预订失败",
     "addFoodToBooking": "为您的预订添加餐点",
     "justBookTable": "仅预订餐桌",
-    "holdMinutesNote": "我们会在您的预订时间后为您保留座位 {minutes} 分钟 — 请准时到达。"
+    "holdMinutesNote": "我们会在您的预订时间后为您保留座位 {minutes} 分钟 — 请准时到达。",
+    "closedOnDay": "我们{day}不营业 — 请选择其他日期。",
+    "jumpToNextOpen": "跳转到下一个营业日 ({date})",
+    "closedPickAnother": "我们所选日期不营业 — 请选择其他日子。",
+    "emailRequired": "电子邮箱为必填项"
   },
   "kitchen": {
     "title": "Kitchen Order App",

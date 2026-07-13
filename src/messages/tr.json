@@ -610,7 +610,11 @@
     "reservationFailed": "Rezervasyon Başarısız",
     "addFoodToBooking": "Rezervasyonunuza yemek ekleyin",
     "justBookTable": "Sadece masa ayırt",
-    "holdMinutesNote": "Masanızı rezervasyon saatinden sonra {minutes} dk tutuyoruz — lütfen zamanında gelin."
+    "holdMinutesNote": "Masanızı rezervasyon saatinden sonra {minutes} dk tutuyoruz — lütfen zamanında gelin.",
+    "closedOnDay": "{day} günü kapalıyız — lütfen başka bir tarih seçin.",
+    "jumpToNextOpen": "Sonraki açık güne geç ({date})",
+    "closedPickAnother": "Seçilen tarihte kapalıyız — lütfen başka bir gün seçin.",
+    "emailRequired": "E-posta zorunludur"
   },
   "kitchen": {
     "title": "Kitchen Order App",

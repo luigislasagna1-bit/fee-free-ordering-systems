@@ -610,7 +610,11 @@
     "reservationFailed": "Rezervarea a eșuat",
     "addFoodToBooking": "Adaugă mâncare la rezervare",
     "justBookTable": "Doar rezervă masa",
-    "holdMinutesNote": "Vă păstrăm masa timp de {minutes} min după ora rezervării — vă rugăm să ajungeți la timp."
+    "holdMinutesNote": "Vă păstrăm masa timp de {minutes} min după ora rezervării — vă rugăm să ajungeți la timp.",
+    "closedOnDay": "Suntem închiși în {day} — te rugăm să alegi o altă dată.",
+    "jumpToNextOpen": "Sari la următoarea zi de deschidere ({date})",
+    "closedPickAnother": "Suntem închiși în data selectată — te rugăm să alegi o altă zi.",
+    "emailRequired": "E-mailul este obligatoriu"
   },
   "kitchen": {
     "title": "Kitchen Order App",

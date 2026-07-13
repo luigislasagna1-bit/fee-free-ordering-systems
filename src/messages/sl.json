@@ -610,7 +610,11 @@
     "reservationFailed": "Rezervacija ni uspela",
     "addFoodToBooking": "Dodaj hrano k rezervaciji",
     "justBookTable": "Samo rezerviraj mizo",
-    "holdMinutesNote": "Vašo mizo zadržimo {minutes} min po terminu rezervacije — prosimo, pridite pravočasno."
+    "holdMinutesNote": "Vašo mizo zadržimo {minutes} min po terminu rezervacije — prosimo, pridite pravočasno.",
+    "closedOnDay": "Ob {day} smo zaprti — izberite drug datum.",
+    "jumpToNextOpen": "Skoči na naslednji odprt dan ({date})",
+    "closedPickAnother": "Na izbrani datum smo zaprti — izberite drug dan.",
+    "emailRequired": "E-pošta je obvezna"
   },
   "kitchen": {
     "title": "Kitchen Order App",

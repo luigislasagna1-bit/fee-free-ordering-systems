@@ -610,7 +610,11 @@
     "reservationFailed": "Rezervācija neizdevās",
     "addFoodToBooking": "Pievienot rezervācijai ēdienu",
     "justBookTable": "Tikai rezervēt galdiņu",
-    "holdMinutesNote": "Mēs paturam jūsu galdiņu {minutes} min pēc rezervācijas laika — lūdzu, ierodieties laikā."
+    "holdMinutesNote": "Mēs paturam jūsu galdiņu {minutes} min pēc rezervācijas laika — lūdzu, ierodieties laikā.",
+    "closedOnDay": "Esam slēgti šajā dienā: {day} — lūdzu, izvēlieties citu datumu.",
+    "jumpToNextOpen": "Pāriet uz nākamo atvērto dienu ({date})",
+    "closedPickAnother": "Izvēlētajā datumā esam slēgti — lūdzu, izvēlieties citu dienu.",
+    "emailRequired": "E-pasts ir obligāts"
   },
   "kitchen": {
     "title": "Kitchen Order App",

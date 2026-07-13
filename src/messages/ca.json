@@ -610,7 +610,11 @@
     "reservationFailed": "Error en la reserva",
     "addFoodToBooking": "Afegeix menjar a la reserva",
     "justBookTable": "Només reserva la taula",
-    "holdMinutesNote": "Reservem la teva taula {minutes} min després de l'hora de la reserva — si us plau, arriba puntual."
+    "holdMinutesNote": "Reservem la teva taula {minutes} min després de l'hora de la reserva — si us plau, arriba puntual.",
+    "closedOnDay": "Estem tancats el {day} — trieu una altra data.",
+    "jumpToNextOpen": "Salta al proper dia obert ({date})",
+    "closedPickAnother": "Estem tancats en la data seleccionada — trieu un altre dia.",
+    "emailRequired": "El correu electrònic és obligatori"
   },
   "kitchen": {
     "title": "Kitchen Order App",

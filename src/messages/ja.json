@@ -610,7 +610,11 @@
     "reservationFailed": "予約に失敗しました",
     "addFoodToBooking": "予約に料理を追加する",
     "justBookTable": "席のみ予約する",
-    "holdMinutesNote": "予約時間から{minutes}分間お席をお取り置きします — 時間どおりにお越しください。"
+    "holdMinutesNote": "予約時間から{minutes}分間お席をお取り置きします — 時間どおりにお越しください。",
+    "closedOnDay": "{day}は休業日です — 別の日付をお選びください。",
+    "jumpToNextOpen": "次の営業日に移動 ({date})",
+    "closedPickAnother": "選択された日付は休業日です — 別の日をお選びください。",
+    "emailRequired": "メールアドレスは必須です"
   },
   "kitchen": {
     "title": "Kitchen Order App",

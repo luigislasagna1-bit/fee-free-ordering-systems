@@ -610,7 +610,11 @@
     "reservationFailed": "Đặt bàn thất bại",
     "addFoodToBooking": "Thêm món ăn vào lượt đặt bàn của bạn",
     "justBookTable": "Chỉ đặt bàn",
-    "holdMinutesNote": "Chúng tôi giữ bàn cho bạn {minutes} phút sau giờ đặt chỗ — vui lòng đến đúng giờ."
+    "holdMinutesNote": "Chúng tôi giữ bàn cho bạn {minutes} phút sau giờ đặt chỗ — vui lòng đến đúng giờ.",
+    "closedOnDay": "Chúng tôi đóng cửa vào {day} — vui lòng chọn ngày khác.",
+    "jumpToNextOpen": "Chuyển đến ngày mở cửa tiếp theo ({date})",
+    "closedPickAnother": "Chúng tôi đóng cửa vào ngày đã chọn — vui lòng chọn ngày khác.",
+    "emailRequired": "Email là bắt buộc"
   },
   "kitchen": {
     "title": "Kitchen Order App",
