@@ -83,6 +83,20 @@
 2. Check your email address is listed as a recipient, the row is ACTIVE, and the **"Order placed"** toggle is ON. Add/fix it if not.
 3. If it already looks right, tell Claude **"A12 looks right — run the prod check"** — that authorizes a read-only look at the recipient rows + exact send timestamps for the recent orders to find what really happened.
 
+### A13. 🔷 iOS APP — the plan is set (Luigi 2026-07-13: "ship now, transfer later"). Full details: `IOS_APP_STORE_SUBMISSION.md`.
+**Context:** the app WORKS on TestFlight (build 24 — ring on locked phone device-verified). It's a WebView of /kitchen, so all web fixes are already in it. No iOS code is broken. Two tracks:
+
+**A13a. ☐ TestFlight for Fabrizio's new restaurant — do THIS to get them running in days (NO App Store needed).**
+1. App Store Connect → your app → **TestFlight** → confirm build 24 is "Ready to Test".
+2. **External testing → enable the public link** (one-time ~24h Beta App Review) — OR add the restaurant's Apple ID as a tester by email.
+3. Send the restaurant: install **TestFlight** → open the link → install **Fee Free Order App** → Kitchen login with THEIR credentials. Done. (Any restaurant uses the same app.)
+
+**A13b. 🔷 The 15-minute "100% working" test — do WITH Claude + your iPad + the Star printer (this is the last real gate).**
+Say **"let's do the iOS test"**: place a live order → confirm it RINGS with the iPad locked → **print it on the Star printer** and confirm the receipt is correct. Printing is the one thing not yet device-confirmed on iOS.
+
+**A13c. ☐ Submit to the App Store (Option A — under "Luigi's Lasagna & Pizzeria Inc." now, transfer to Fee Free Ordering Inc. later).**
+Everything is pre-written in `IOS_APP_STORE_SUBMISSION.md` (listing copy, privacy answers, reviewer notes tuned to avoid a rejection, submit steps). Owner steps: (1) run the demo-restaurant script with a password → put it in the App Review field; (2) paste the copy into App Store Connect; (3) attach build 24; (4) Submit. Say **"make the App Store screenshots"** and Claude generates the required iPhone + iPad images from the demo restaurant.
+
 ---
 
 ## B. YOUR DECISIONS — tell Claude the answer, no clicking needed
