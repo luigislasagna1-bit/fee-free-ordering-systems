@@ -2119,6 +2119,15 @@ export function OrderingPageClient({
   const [geocodeError, setGeocodeError] = useState<string | null>(null);
   const categoryRefs = useRef<Record<string, HTMLElement>>({});
   const pillRef = useRef<HTMLDivElement>(null);
+  // Each category PILL button, so the sticky strip can auto-scroll the active
+  // one into view as the customer scrolls the menu (Fabrizio cmrhnlfs5 —
+  // CloudWaitress-style category scrollspy).
+  const pillRefs = useRef<Record<string, HTMLButtonElement>>({});
+  // Set true while a PILL CLICK is smooth-scrolling a section to the top, so
+  // the scrollspy observer doesn't fight the click by re-picking every section
+  // the page flies past mid-animation. Cleared when the scroll settles.
+  const programmaticScrollRef = useRef(false);
+  const programmaticScrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Menu search query (Luigi 2026-05-31). Drives client-side filtering
   // of categories + items by name + description. CloudWaitress-style
   // always-visible search bar above the category pills.
@@ -2357,6 +2366,71 @@ export function OrderingPageClient({
   useEffect(() => {
     if (visibleCategories.length && !activeCategory) setActiveCategory(visibleCategories[0].id);
   }, [visibleCategories.length]);
+
+  // ── Category SCROLLSPY (Fabrizio cmrhnlfs5) ──────────────────────────────
+  // As the customer scrolls the menu vertically, the active category tracks
+  // whichever section currently sits just under the sticky pill strip — and
+  // the strip auto-scrolls that pill into view. Matches CloudWaitress/DoorDash.
+  // Split in two: (1) an IntersectionObserver picks the active section on
+  // scroll; (2) a second effect slides the pill strip when activeCategory
+  // changes (from scroll OR a pill click), so both drivers share one follow.
+  const visibleCategoryKey = visibleCategories.map((c) => c.id).join(",");
+  useEffect(() => {
+    const ids = visibleCategories.map((c) => c.id);
+    if (ids.length === 0) return;
+    // A scroll listener (deliberately NOT IntersectionObserver — its callbacks
+    // are unreliable in some mobile webviews, which is exactly where customers
+    // order; and NOT rAF-throttled — rAF is paused in background/headless
+    // contexts, which would silently freeze the spy). recompute() is cheap: it
+    // early-exits at the first section still below the trigger line, so it reads
+    // only a handful of rects per scroll even on a long menu. The active
+    // category is the LAST section whose top has scrolled above a line just
+    // under the sticky strip (sections are in DOM order, top-to-bottom).
+    const recompute = () => {
+      // A pill click owns activeCategory until its smooth-scroll settles.
+      if (programmaticScrollRef.current) return;
+      const line = (pillRef.current?.offsetHeight ?? 56) + 12;
+      let current = ids[0];
+      for (const id of ids) {
+        const el = categoryRefs.current[id];
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= line) current = id;
+        else break;
+      }
+      // The last screenful of categories can never each scroll up to the
+      // trigger line (nothing below them to push them there), so once the page
+      // has bottomed out, highlight the LAST category — the standard scrollspy
+      // fix (DoorDash/UberEats do the same). Without it the final categories
+      // never light up.
+      const scrollEl = document.scrollingElement || document.documentElement;
+      const atBottom = window.innerHeight + window.scrollY >= scrollEl.scrollHeight - 4;
+      if (atBottom) current = ids[ids.length - 1];
+      setActiveCategory((prev) => (prev === current ? prev : current));
+    };
+    recompute(); // sync the initial state
+    window.addEventListener("scroll", recompute, { passive: true });
+    window.addEventListener("resize", recompute, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", recompute);
+      window.removeEventListener("resize", recompute);
+    };
+    // Re-bind when the visible set changes (search filter / collapse recreates
+    // the section refs). isMobile/collapse don't change the id set.
+  }, [visibleCategoryKey]);
+
+  // Slide the sticky pill strip so the active pill is centered — HORIZONTAL
+  // only (scrollTo on the strip, never scrollIntoView, which would yank the
+  // page vertically). getBoundingClientRect math is scroll-position-safe.
+  useEffect(() => {
+    const strip = pillRef.current;
+    const pill = pillRefs.current[activeCategory];
+    if (!strip || !pill) return;
+    const stripRect = strip.getBoundingClientRect();
+    const pillRect = pill.getBoundingClientRect();
+    const pillLeftInContent = pillRect.left - stripRect.left + strip.scrollLeft;
+    const target = pillLeftInContent - (strip.clientWidth - pill.clientWidth) / 2;
+    strip.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
+  }, [activeCategory]);
 
   // ── Collapsible categories (GloriaFood-style accordion) ──────────────────
   // Opt-in per restaurant (theme.mobileCollapsibleCategories) — on BOTH mobile
@@ -4236,6 +4310,13 @@ export function OrderingPageClient({
 
   const scrollToCategory = (catId: string) => {
     setActiveCategory(catId);
+    // Hold the scrollspy off while this click's smooth-scroll animates past
+    // intermediate sections — otherwise the active pill would flicker through
+    // every category the page flies over. Cleared ~700ms later (no reliable
+    // cross-browser scrollend event); a fresh click resets the timer.
+    programmaticScrollRef.current = true;
+    if (programmaticScrollTimer.current) clearTimeout(programmaticScrollTimer.current);
+    programmaticScrollTimer.current = setTimeout(() => { programmaticScrollRef.current = false; }, 700);
     // In the mobile accordion, tapping a category pill expands that category
     // so the customer lands on its items, not a collapsed header.
     if (collapsibleActive) {
@@ -5632,6 +5713,7 @@ export function OrderingPageClient({
             {visibleCategories.map(cat => (
               <button
                 key={cat.id}
+                ref={(el) => { if (el) pillRefs.current[cat.id] = el; }}
                 onClick={() => scrollToCategory(cat.id)}
                 // hover:brightness-90 darkens the pill ~10% on hover (mirrors the
                 // banner's darken-on-hover). Uses a filter, not a bg class, so it
@@ -5707,7 +5789,15 @@ export function OrderingPageClient({
               collapsible={collapsibleActive}
               collapsed={collapsedCats.has(cat.id)}
               onToggleCollapse={() => toggleCatCollapsed(cat.id)}
-              onRef={(el: HTMLElement | null) => { if (el) categoryRefs.current[cat.id] = el; }}
+              onRef={(el: HTMLElement | null) => {
+                if (el) {
+                  categoryRefs.current[cat.id] = el;
+                  // Clicking a pill scrolls the section to top with block:start,
+                  // which would tuck it BEHIND the sticky strip; this offset drops
+                  // it just below (also aligns with the scrollspy trigger line).
+                  el.style.scrollMarginTop = "72px";
+                }
+              }}
               onOpen={openItem}
             />
           ))}
