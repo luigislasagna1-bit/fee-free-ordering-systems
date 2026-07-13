@@ -897,7 +897,7 @@ export function CheckoutModal({
             horizontal-scroll: bare inputs/selects in the grid-cols-2 rows otherwise
             can't shrink below their intrinsic min-width and push the modal sideways
             on a narrow phone (Luigi 2026-06-22). */}
-        <div className="flex-1 overflow-y-auto [&_input]:min-w-0 [&_select]:min-w-0 [&_textarea]:min-w-0">
+        <div className="flex-1 overflow-y-auto overscroll-contain [&_input]:min-w-0 [&_select]:min-w-0 [&_textarea]:min-w-0">
           <div className="grid md:grid-cols-2 gap-0">
             {/* ── Left column: settings cards ── */}
             <div className="min-w-0 p-5 space-y-3 md:border-r md:border-gray-100">

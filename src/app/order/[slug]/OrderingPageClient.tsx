@@ -2029,6 +2029,43 @@ export function OrderingPageClient({
     if (checkoutOpen) fireStep("checkout_open");
   }, [checkoutOpen, fireStep]);
 
+  // Lock background scroll while the cart drawer OR checkout modal is open
+  // (Fabrizio cmrj664ru): on mobile, dragging over the sheet was scrolling the
+  // MENU behind it (scroll bleed). position:fixed on <body> — preserving and
+  // restoring the exact scroll position — is the iOS-Safari-reliable lock; the
+  // sheet is itself position:fixed so it stays put while the page underneath
+  // can't move, and its own inner list still scrolls normally.
+  useEffect(() => {
+    if (!cartOpen && !checkoutOpen) return;
+    const body = document.body;
+    const scrollY = window.scrollY;
+    // Compensate for the vanishing scrollbar so DESKTOP content doesn't jump
+    // ~15px when we fix the body (mobile is touch → 0, a no-op there).
+    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+    const prev = {
+      position: body.style.position, top: body.style.top, left: body.style.left,
+      right: body.style.right, width: body.style.width, overflow: body.style.overflow,
+      paddingRight: body.style.paddingRight,
+    };
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+    if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
+    return () => {
+      body.style.position = prev.position;
+      body.style.top = prev.top;
+      body.style.left = prev.left;
+      body.style.right = prev.right;
+      body.style.width = prev.width;
+      body.style.overflow = prev.overflow;
+      body.style.paddingRight = prev.paddingRight;
+      window.scrollTo(0, scrollY);
+    };
+  }, [cartOpen, checkoutOpen]);
+
   // Tracks whether the customer has MANUALLY toggled the marketing checkbox
   // for the CURRENT email. While true, the async consent pre-fill below leaves
   // their choice alone (so an in-progress uncheck is never clobbered). It's
@@ -6110,7 +6147,7 @@ export function OrderingPageClient({
       {/* ── Cart drawer ───────────────────────────────────────────────── */}
       {cartOpen && (
         <div className="fixed inset-0 bg-black/60 z-50 flex justify-end" onClick={() => setCartOpen(false)}>
-          <div className="bg-white w-full max-w-md h-full overflow-y-auto flex flex-col" onClick={e => e.stopPropagation()}>
+          <div className="bg-white w-full max-w-md h-full overflow-y-auto overscroll-contain flex flex-col" onClick={e => e.stopPropagation()}>
             <div className="p-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
               <h2 className="font-bold text-lg text-gray-900">{t("yourCart")}</h2>
               <div className="flex items-center gap-1">
@@ -6122,7 +6159,7 @@ export function OrderingPageClient({
                 <button onClick={() => setCartOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-400" /></button>
               </div>
             </div>
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto overscroll-contain">
               {cart.length === 0 ? (
                 <div className="p-12 text-center text-gray-400">
                   <ShoppingCart className="w-12 h-12 mx-auto mb-3 opacity-40" />
