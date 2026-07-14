@@ -120,8 +120,35 @@ export function parseUberSource(input: string): UberSource {
 // ────────────────────────────────────────────────────────────────────
 
 const UBER_ORIGIN = "https://www.ubereats.com";
+const UBER_UA =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36";
 
-async function uberPost<T>(path: string, localeCode: string, body: unknown, label: string): Promise<T> {
+/** Uber has bot-challenged the request (reCAPTCHA). getStoreV1 is tolerant, but
+ *  getMenuItemV1 (modifiers) challenges an over-eager datacenter IP. We surface
+ *  this loudly rather than silently importing a modifier-less menu. */
+export class UberBlockedError extends Error {
+  constructor() {
+    super("Uber Eats is temporarily blocking automated menu reads from our server. Please wait a few minutes and try again.");
+    this.name = "UberBlockedError";
+  }
+}
+
+/** Reduce a Set-Cookie list to a request Cookie header (name=value pairs). */
+function toCookieHeader(setCookies: string[]): string {
+  return setCookies.map((c) => c.split(";")[0]).filter(Boolean).join("; ");
+}
+
+/** One Uber XHR call. Threads a cookie session through (bot defense keys on
+ *  session continuity — warming from getStoreV1 makes getMenuItemV1 far more
+ *  likely to pass), returns any refreshed cookie, and throws UberBlockedError on
+ *  a reCAPTCHA/botdefense challenge. */
+async function uberCall<T>(
+  path: string,
+  localeCode: string,
+  body: unknown,
+  cookie: string,
+  label: string,
+): Promise<{ data: T; cookie: string }> {
   const res = await fetch(`${UBER_ORIGIN}${path}?localeCode=${encodeURIComponent(localeCode)}`, {
     method: "POST",
     headers: {
@@ -131,21 +158,32 @@ async function uberPost<T>(path: string, localeCode: string, body: unknown, labe
       // literal "x" is what the ordering page sends for read-only calls.
       "x-csrf-token": "x",
       origin: UBER_ORIGIN,
-      "user-agent": "Mozilla/5.0 (compatible; FFOS-MenuImport/1.0)",
+      referer: `${UBER_ORIGIN}/`,
+      "user-agent": UBER_UA,
+      ...(cookie ? { cookie } : {}),
     },
     body: JSON.stringify(body),
     cache: "no-store",
   });
+  const setCookies = typeof (res.headers as any).getSetCookie === "function" ? (res.headers as any).getSetCookie() : [];
+  const nextCookie = setCookies.length ? toCookieHeader(setCookies) : cookie;
+  const text = await res.text().catch(() => "");
+  let json: any = null;
+  try { json = JSON.parse(text); } catch { /* non-JSON (challenge HTML) */ }
+
+  if (json?.metadata?.botdefense?.state === "challenge" || /botdefense|recaptcha|px-captcha/i.test(text)) {
+    throw new UberBlockedError();
+  }
   if (!res.ok) {
-    const txt = await res.text().catch(() => "");
-    throw new Error(`Uber Eats ${label} fetch failed (HTTP ${res.status}). ${txt.slice(0, 160)}`.trim());
+    throw new Error(`Uber Eats ${label} fetch failed (HTTP ${res.status}). ${text.slice(0, 160)}`.trim());
   }
-  const json = (await res.json()) as { status?: string; data?: T; message?: string };
-  if (json.status !== "success" || !json.data) {
-    throw new Error(`Uber Eats ${label} responded but the payload didn't look right (status=${json.status ?? "?"}).`);
+  if (json?.status !== "success" || !json.data) {
+    throw new Error(`Uber Eats ${label} responded but the payload didn't look right (status=${json?.status ?? "?"}).`);
   }
-  return json.data;
+  return { data: json.data as T, cookie: nextCookie };
 }
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // Raw Uber shapes (only the fields we read).
 interface UberStoreRaw {
@@ -182,30 +220,14 @@ interface UberOption {
 }
 
 export async function fetchUberStore(src: UberSource): Promise<UberStoreRaw> {
-  return uberPost<UberStoreRaw>("/api/getStoreV1", src.localeCode, {
-    storeUuid: src.storeUuid,
-    diningMode: "PICKUP",
-    time: { asap: true },
-  }, "store");
-}
-
-export async function fetchUberItemCustomizations(
-  src: UberSource,
-  it: { sectionUuid: string; subsectionUuid: string; uuid: string },
-): Promise<UberCustomization[]> {
-  const data = await uberPost<{ customizationsList?: UberCustomization[] }>(
-    "/api/getMenuItemV1",
+  const { data } = await uberCall<UberStoreRaw>(
+    "/api/getStoreV1",
     src.localeCode,
-    {
-      itemRequestType: "ITEM",
-      storeUuid: src.storeUuid,
-      sectionUuid: it.sectionUuid,
-      subsectionUuid: it.subsectionUuid,
-      menuItemUuid: it.uuid,
-    },
-    "item",
+    { storeUuid: src.storeUuid, diningMode: "PICKUP", time: { asap: true } },
+    "",
+    "store",
   );
-  return data.customizationsList ?? [];
+  return data;
 }
 
 // ────────────────────────────────────────────────────────────────────
@@ -322,49 +344,89 @@ export interface UberMenu {
 }
 
 /**
- * Fetch a complete Uber menu: the store payload, then getMenuItemV1 for every
- * item flagged `hasCustomizations`. Item detail calls run with small concurrency
- * (Uber, like GloriaFood, throttles bursts) — for a big menu expect a handful of
- * seconds. Items without customizations skip the detail call entirely.
+ * Fetch a complete Uber menu: the store payload (reliable), then getMenuItemV1
+ * for every item flagged `hasCustomizations`. The item-detail endpoint is
+ * bot-defended, so we go GENTLY — sequential, cookie-warmed from the store call,
+ * a paced delay + one retry per item — and, crucially, we DON'T silently ship a
+ * modifier-less menu: if Uber challenges us and NONE of the items with
+ * customizations came back, we throw UberBlockedError so the caller can tell the
+ * owner to retry. A partial success (some modifiers blocked) imports what landed
+ * and is reported via `modifiersBlocked`.
  */
 export async function fetchUberMenu(
   src: UberSource,
-  opts: { concurrency?: number; onProgress?: (done: number, total: number) => void } = {},
-): Promise<UberMenu> {
-  const store = await fetchUberStore(src);
+  opts: { onProgress?: (done: number, total: number) => void } = {},
+): Promise<UberMenu & { modifiersFetched: number; modifiersBlocked: number; itemsWithCustomizations: number }> {
+  const storeCall = await uberCall<UberStoreRaw>(
+    "/api/getStoreV1",
+    src.localeCode,
+    { storeUuid: src.storeUuid, diningMode: "PICKUP", time: { asap: true } },
+    "",
+    "store",
+  );
+  let cookie = storeCall.cookie; // warm session → getMenuItemV1 is far likelier to pass
+  const store = storeCall.data;
   const cats = extractUberCategories(store);
 
   const toDetail: { sectionUuid: string; subsectionUuid: string; uuid: string }[] = [];
   for (const c of cats) for (const it of c.items) if (it.hasCustomizations) toDetail.push(it);
 
   const customizationsByItem = new Map<string, UberCustomization[]>();
-  const concurrency = Math.max(1, Math.min(opts.concurrency ?? 4, 8));
+  let fetched = 0;
+  let blocked = 0;
   let done = 0;
-  for (let i = 0; i < toDetail.length; i += concurrency) {
-    const batch = toDetail.slice(i, i + concurrency);
-    const results = await Promise.all(
-      batch.map(async (it) => {
-        try {
-          return [it.uuid, await fetchUberItemCustomizations(src, it)] as const;
-        } catch {
-          return [it.uuid, [] as UberCustomization[]] as const; // degrade: item without its modifiers rather than fail the whole import
+
+  for (const it of toDetail) {
+    let ok = false;
+    for (let attempt = 0; attempt < 2 && !ok; attempt++) {
+      try {
+        const r = await uberCall<{ customizationsList?: UberCustomization[] }>(
+          "/api/getMenuItemV1",
+          src.localeCode,
+          { itemRequestType: "ITEM", storeUuid: src.storeUuid, sectionUuid: it.sectionUuid, subsectionUuid: it.subsectionUuid, menuItemUuid: it.uuid },
+          cookie,
+          "item",
+        );
+        cookie = r.cookie;
+        customizationsByItem.set(it.uuid, r.data.customizationsList ?? []);
+        fetched++;
+        ok = true;
+      } catch (e) {
+        if (e instanceof UberBlockedError) {
+          // Bot-challenged: once it triggers, the IP stays challenged, so stop
+          // hammering — count the rest as blocked and break out.
+          blocked += toDetail.length - done;
+          done = toDetail.length;
+          opts.onProgress?.(done, toDetail.length);
+          if (fetched === 0) throw new UberBlockedError(); // total block → fail loudly
+          // partial: return what we have (below)
+          return buildResult();
         }
-      }),
-    );
-    for (const [uuid, cl] of results) customizationsByItem.set(uuid, cl);
-    done += batch.length;
+        if (attempt === 1) blocked++; // transient, gave up after retry
+        else await sleep(400);
+      }
+    }
+    done++;
     opts.onProgress?.(done, toDetail.length);
+    await sleep(150); // pace — be gentle so we don't trip the bot defense
   }
 
-  return {
-    title: store.title || "Imported menu",
-    currency: store.currencyCode || "CAD",
-    categories: cats.map((c) => ({
-      uuid: c.uuid,
-      title: c.title,
-      items: c.items.map((it) => ({ ...it, customizations: customizationsByItem.get(it.uuid) ?? [] })),
-    })),
-  };
+  return buildResult();
+
+  function buildResult() {
+    return {
+      title: store.title || "Imported menu",
+      currency: store.currencyCode || "CAD",
+      categories: cats.map((c) => ({
+        uuid: c.uuid,
+        title: c.title,
+        items: c.items.map((it) => ({ ...it, customizations: customizationsByItem.get(it.uuid) ?? [] })),
+      })),
+      modifiersFetched: fetched,
+      modifiersBlocked: blocked,
+      itemsWithCustomizations: toDetail.length,
+    };
+  }
 }
 
 // ────────────────────────────────────────────────────────────────────

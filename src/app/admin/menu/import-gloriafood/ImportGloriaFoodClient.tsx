@@ -149,7 +149,7 @@ export function ImportGloriaFoodClient({ menuId }: { menuId?: string }) {
             onChange={(e) => setSource(e.target.value)}
             rows={5}
             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm font-mono focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-            placeholder={`<span class="glf-button" data-glf-cuid="..." data-glf-ruid="...">See MENU & Order</span>\n<script src="https://www.fbgcdn.com/embedder/js/ewm2.js" defer async></script>`}
+            placeholder={`GloriaFood:  <span class="glf-button" data-glf-cuid="..." data-glf-ruid="...">See MENU & Order</span>\n\nOR Uber Eats:  https://www.ubereats.com/ca/store/your-restaurant/AbC123...`}
           />
           <div className="flex items-center justify-between mt-4">
             <Link

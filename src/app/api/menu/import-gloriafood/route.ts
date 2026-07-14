@@ -3,13 +3,8 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { blockIfInheritingMenu } from "@/lib/brand";
 import { resolveActiveMenuId } from "@/lib/menu";
-import {
-  fetchGloriaFoodMenu,
-  fetchGloriaFoodPictures,
-  mapMenu,
-  parseSource,
-  type ImportPreview,
-} from "@/lib/menu-import/gloriafood";
+import { type ImportPreview } from "@/lib/menu-import/gloriafood";
+import { buildImportPreview } from "@/lib/menu-import/resolve";
 
 // Preview is fast (menu + pictures fetch ~2 s + parse ~100 ms). Commit is
 // now ALSO fast: it writes the menu rows and ENQUEUES photos as
@@ -49,32 +44,27 @@ export async function POST(req: NextRequest) {
   const body = (await req.json().catch(() => ({}))) as { source?: string };
   if (typeof body.source !== "string" || !body.source.trim()) {
     return NextResponse.json(
-      { error: "Provide the embed snippet, ordering URL, or restaurant UID." },
+      { error: "Provide the GloriaFood embed snippet / ordering URL / UID, or your Uber Eats store link." },
       { status: 400 },
     );
   }
 
-  let parsed;
-  try {
-    parsed = parseSource(body.source);
-  } catch (e) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 400 });
-  }
-
+  // Detect + fetch + map — GloriaFood snippet/URL/UID OR an Uber Eats store URL.
+  // The commit PUT below is entirely source-agnostic (it just consumes the
+  // ImportPreview), so only the preview build branches by source.
   let preview: ImportPreview;
+  let sourceLabel: string;
   try {
-    // Fetch menu + pictures in parallel — they're independent endpoints
-    // on the same host so there's no benefit to serialising. mapMenu
-    // takes both so item/category sourceImageUrls land on the preview.
-    const [menu, pictures] = await Promise.all([
-      fetchGloriaFoodMenu(parsed),
-      fetchGloriaFoodPictures(parsed),
-    ]);
-    preview = mapMenu(menu, pictures);
+    const resolved = await buildImportPreview(body.source);
+    preview = resolved.preview;
+    sourceLabel = resolved.sourceLabel;
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    console.error("[import-gloriafood] preview failed:", msg);
-    return NextResponse.json({ error: msg }, { status: 502 });
+    console.error("[import-menu] preview failed:", msg);
+    // Parse/validation errors are the caller's fault (400); network/upstream
+    // failures are 502. parseSource/parseUberSource throw friendly messages.
+    const isParseError = /paste|couldn't find|store link|uber eats store/i.test(msg);
+    return NextResponse.json({ error: msg }, { status: isParseError ? 400 : 502 });
   }
 
   // Surface the existing FFOS categories so the UI can offer
@@ -87,11 +77,11 @@ export async function POST(req: NextRequest) {
   });
 
   console.log(
-    `[import-gloriafood] preview: ${preview.stats.categories} cats, ${preview.stats.items} items, ${preview.stats.modifierGroups} groups, ${preview.stats.modifierOptions} opts`,
+    `[import-menu] preview (${preview.source} ${sourceLabel}): ${preview.stats.categories} cats, ${preview.stats.items} items, ${preview.stats.modifierGroups} groups, ${preview.stats.modifierOptions} opts`,
   );
 
   return NextResponse.json({
-    source: parsed,
+    source: preview.source,
     preview,
     existingCategories,
   });

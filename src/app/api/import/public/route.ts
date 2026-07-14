@@ -1,13 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
-import {
-  parseSource,
-  clampToGloriaFoodHost,
-  fetchGloriaFoodMenu,
-  fetchGloriaFoodPictures,
-  mapMenu,
-} from "@/lib/menu-import/gloriafood";
+import { buildImportPreview } from "@/lib/menu-import/resolve";
 import { provisionSandbox, commitSandboxMenu, deleteSandbox } from "@/lib/menu-import/sandbox";
 
 // Most menus import in seconds; an unusually huge one (Luigi's = 12k options)
@@ -39,35 +33,34 @@ export async function POST(req: NextRequest) {
   const source = typeof body.source === "string" ? body.source.trim() : "";
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
   if (!source) {
-    return NextResponse.json({ error: "Paste your GloriaFood menu link or embed snippet." }, { status: 400 });
+    return NextResponse.json({ error: "Paste your GloriaFood or Uber Eats menu link." }, { status: 400 });
   }
   if (!EMAIL_RE.test(email) || email.length > 254) {
     return NextResponse.json({ error: "Enter a valid email so we can save your live preview." }, { status: 400 });
   }
 
-  // Parse + SSRF-clamp the host to a GloriaFood origin BEFORE any network call.
-  let parsed;
-  try {
-    parsed = clampToGloriaFoodHost(parseSource(source));
-  } catch (e) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : "Couldn't read that menu link." }, { status: 400 });
-  }
-
   // Fetch + map — the exact same library the (trusted) admin importer uses.
+  // Source-agnostic (GloriaFood snippet/URL/UID OR an Uber Eats store URL);
+  // publicSafe SSRF-clamps the GloriaFood host before any network call (Uber's
+  // host is fixed, so it's inherently safe).
   let preview;
+  let sourceLabel;
   try {
-    const [menu, pictures] = await Promise.all([fetchGloriaFoodMenu(parsed), fetchGloriaFoodPictures(parsed)]);
-    preview = mapMenu(menu, pictures);
+    const resolved = await buildImportPreview(source, { publicSafe: true });
+    preview = resolved.preview;
+    sourceLabel = resolved.sourceLabel;
   } catch (e) {
-    console.error("[import-public] fetch/map failed:", e instanceof Error ? e.message : String(e));
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[import-public] fetch/map failed:", msg);
+    const isParseError = /paste|couldn't find|store link|uber eats store/i.test(msg);
     return NextResponse.json(
-      { error: "We couldn't reach that GloriaFood menu. Double-check the link — or sign up and our team will build it for you." },
-      { status: 502 },
+      { error: isParseError ? msg : "We couldn't reach that menu. Double-check the link — or sign up and our team will build it for you." },
+      { status: isParseError ? 400 : 502 },
     );
   }
   if (!preview.categories.length || preview.stats.items === 0) {
     return NextResponse.json(
-      { error: "That menu came back empty. Make sure you pasted your GloriaFood ordering link or embed snippet." },
+      { error: "That menu came back empty. Make sure you pasted your GloriaFood or Uber Eats ordering link." },
       { status: 422 },
     );
   }
@@ -77,7 +70,7 @@ export async function POST(req: NextRequest) {
   const restaurantName = (preview.sourceMenuName || "").trim() || "Your Restaurant";
   let sandbox;
   try {
-    sandbox = await provisionSandbox({ restaurantName, email, country: body.country, ipHash, sourceLabel: parsed.restaurantUid });
+    sandbox = await provisionSandbox({ restaurantName, email, country: body.country, ipHash, sourceLabel });
     await commitSandboxMenu(sandbox.restaurantId, preview);
   } catch (e) {
     console.error("[import-public] provision/commit failed:", e instanceof Error ? e.message : String(e));
