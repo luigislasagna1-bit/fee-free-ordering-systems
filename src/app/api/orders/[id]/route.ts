@@ -18,7 +18,7 @@ import { isStripeAlreadyCaptured, isPaypalAlreadyCaptured } from "@/lib/capture-
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { cancelShipdayOrder } from "@/lib/shipday";
-import { dispatchOrderNow } from "@/lib/shipday-dispatch";
+import { dispatchDeliveryNow } from "@/lib/delivery-dispatch";
 import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
@@ -603,23 +603,24 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
   }
 
-  // ── ShipDay dispatch on accept / cancel on kill ─────────────────────────
-  // When the restaurant accepts a delivery order AND has the ShipDay
-  // driver pool configured + active, dispatch the order to ShipDay
-  // immediately. Fire-and-forget via after() so the kitchen UI doesn't
-  // block on the ShipDay API roundtrip — kitchen sees "Accepted" instantly;
-  // the shipdayOrderId fills in within a second or two.
+  // ── Delivery dispatch on accept / cancel on kill ────────────────────────
+  // When the restaurant accepts a delivery order, hand it to its delivery
+  // provider — our in-house FeeFree driver pool if enabled, else ShipDay if
+  // configured, else nothing ("own"). Fire-and-forget via after() so the kitchen
+  // UI doesn't block on any API roundtrip — kitchen sees "Accepted" instantly.
+  // Behaviour is unchanged for ShipDay/own restaurants; the FeeFree branch only
+  // activates on explicit opt-in (FeeFreeDeliveryConfig.enabled).
   if (newStatus === "accepted" && existing.type === "delivery" && !existing.shipdayOrderId) {
     after(
-      dispatchOrderNow(id)
+      dispatchDeliveryNow(id)
         .then((r) => {
           if (!r.ok && !r.skipped) {
-            // ShipDay itself rejected — surfaced in the admin order page's
-            // ShipDay card (Send/Retry button), which shares this code path.
-            console.error("[orders PATCH] ShipDay rejected the dispatch", { orderId: id, error: r.error });
+            // The provider itself rejected — surfaced in the admin order page's
+            // delivery card (Send/Retry button), which shares this code path.
+            console.error("[orders PATCH] delivery dispatch rejected", { orderId: id, provider: r.provider, error: r.error });
           }
         })
-        .catch((e) => console.error("[orders PATCH] ShipDay dispatch threw:", e)),
+        .catch((e) => console.error("[orders PATCH] delivery dispatch threw:", e)),
     );
   }
 
