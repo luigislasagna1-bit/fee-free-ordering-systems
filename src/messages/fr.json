@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "En interne",
-      "description": "Envoyez les commandes à livrer à vos propres livreurs — un tarif fixe de $7.99 par livraison, facturé chaque semaine. Une fois activé, les nouvelles commandes à livrer sont confiées à vos livreurs Fee Free plutôt qu'à ShipDay.",
+      "description": "Répartissez les commandes en livraison vers vos propres livreurs locaux — facturé chaque semaine, tarifé selon la distance de livraison (à partir de $7.99). Une fois activé, les nouvelles commandes en livraison vont à vos livreurs Fee Free plutôt qu'à ShipDay.",
       "enableLabel": "Activer Fee Free Delivery",
       "enableHint": "Acheminez les nouvelles commandes à livrer vers votre propre Driver Pool.",
       "autoSendLabel": "Envoi auto à l'acceptation",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Acceptée",
       "st_started": "En route vers le resto",
       "st_enroute": "En route"
+    },
+    "deliveryProvider": {
+      "title": "Mode de livraison",
+      "desc": "Choisissez comment les nouvelles commandes en livraison sont réparties. Vous pouvez changer à tout moment — seuls les réglages du mode choisi s'affichent ci-dessous.",
+      "ownLabel": "Vos propres livreurs",
+      "ownDesc": "Vous gérez la livraison vous-même — rien n'est réparti pour vous.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Répartissez vers le réseau de coursiers tiers ShipDay. Disponible partout.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Notre propre réseau de livreurs locaux — à partir de $7.99 par livraison selon la distance, facturé chaque semaine.",
+      "feefreeAreaBadge": "Dans votre zone",
+      "activeBadge": "Actif",
+      "addonRequired": "Module complémentaire",
+      "ownNote": "Vous gérez la livraison avec vos propres livreurs. Les nouvelles commandes en livraison ne seront réparties nulle part par Fee Free — vous les gérez vous-même.",
+      "toastSaved": "Mode de livraison mis à jour",
+      "toastFailed": "Changement impossible. Veuillez réessayer.",
+      "lockedToast": "Abonnez-vous à Driver Pool pour répartir avec ShipDay ou Fee Free Delivery.",
+      "onlinePaymentToast": "Vous devez d'abord activer un mode de paiement en ligne — les commandes en livraison doivent être payées en ligne.",
+      "notInAreaToast": "Fee Free Delivery n'est pas encore disponible dans votre zone.",
+      "lockedNotice": "ShipDay et Fee Free Delivery nécessitent le module Driver Pool. Vos propres livreurs sont toujours gratuits à utiliser.",
+      "getDriverPool": "Obtenir Driver Pool"
     }
   },
   "impersonation": {

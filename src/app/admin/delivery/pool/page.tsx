@@ -6,6 +6,7 @@ import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
 import { DriverPoolClient } from "./DriverPoolClient";
 import { FeeFreeDeliverySection } from "./FeeFreeDeliverySection";
 import { FeeFreeDeliveryOps } from "./FeeFreeDeliveryOps";
+import { DeliveryProviderClient, type DeliveryProvider } from "./DeliveryProviderClient";
 
 /**
  * /admin/delivery/pool — delivery dispatch configuration.
@@ -73,18 +74,17 @@ export default async function DriverPoolConfigPage() {
     ? `${base}/api/webhooks/shipday?token=${config.webhookToken}`
     : null;
 
-  return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      {feefree && (
-        <>
-          <FeeFreeDeliverySection
-            initial={{ enabled: feefree.enabled, autoSend: feefree.autoSend }}
-            entitled={entitled}
-          />
-          {feefree.enabled && <FeeFreeDeliveryOps restaurantId={user.restaurantId} />}
-        </>
-      )}
-      <DriverPoolClient
+  // The single active provider: FeeFree (if enabled + in area) wins, else ShipDay
+  // (any non-"own" source), else own — mirrors resolveDeliveryProvider's precedence.
+  const initialProvider: DeliveryProvider = feefree?.enabled
+    ? "feefree"
+    : config.deliverySource !== "own"
+      ? "shipday"
+      : "own";
+
+  const shipdayPanel = (
+    <DriverPoolClient
+      hideSourceSelector
       initial={{
         enabled: config.enabled,
         driverPoolEnabled: config.driverPoolEnabled,
@@ -98,6 +98,24 @@ export default async function DriverPoolConfigPage() {
         partnerContacted: !!config.partnerNotifiedAt,
       }}
       driverPoolEntitled={entitled}
+    />
+  );
+
+  const feefreePanel = feefree ? (
+    <div className="space-y-6">
+      <FeeFreeDeliverySection embedded initial={{ enabled: feefree.enabled, autoSend: feefree.autoSend }} entitled={entitled} />
+      <FeeFreeDeliveryOps restaurantId={user.restaurantId} />
+    </div>
+  ) : null;
+
+  return (
+    <div className="max-w-3xl mx-auto">
+      <DeliveryProviderClient
+        initialProvider={initialProvider}
+        entitled={entitled}
+        feefreeAvailable={feefreeAvailable}
+        shipdayPanel={shipdayPanel}
+        feefreePanel={feefreePanel}
       />
     </div>
   );

@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Saját kézben",
-      "description": "Irányítsd a kiszállítási rendeléseket a saját futáraidhoz — fix $7.99 kiszállításonként, heti elszámolással. Bekapcsolva az új kiszállítási rendelések a Fee Free futáraidhoz kerülnek a ShipDay helyett.",
+      "description": "Add fel a kézbesítési rendeléseket saját helyi sofőrjeidnek — hetente számlázva, a kézbesítési távolság alapján árazva ($7.99-tól). Bekapcsolt állapotban az új kézbesítési rendelések a ShipDay helyett a Fee Free sofőrjeidhez kerülnek.",
       "enableLabel": "Fee Free Delivery bekapcsolása",
       "enableHint": "Irányítsd az új kiszállítási rendeléseket a saját Driver Poolodba.",
       "autoSendLabel": "Automatikus küldés elfogadáskor",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Elfogadva",
       "st_started": "Az üzletbe tart",
       "st_enroute": "Úton"
+    },
+    "deliveryProvider": {
+      "title": "Kézbesítési mód",
+      "desc": "Válaszd ki, hogyan kerülnek feladásra az új kézbesítési rendelések. Bármikor módosíthatod — lent csak a kiválasztott mód beállításai jelennek meg.",
+      "ownLabel": "Saját sofőrjeid",
+      "ownDesc": "Te magad intézed a kézbesítést — semmit nem adunk fel helyetted.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Feladás a ShipDay külső futárhálózatnak. Mindenhol elérhető.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Saját helyi sofőrcsapatunk — $7.99-tól kézbesítésenként a távolság alapján, hetente számlázva.",
+      "feefreeAreaBadge": "A te területeden",
+      "activeBadge": "Aktív",
+      "addonRequired": "Kiegészítő",
+      "ownNote": "A kézbesítést saját sofőrjeiddel intézed. Az új kézbesítési rendeléseket a Fee Free sehová nem adja fel — te kezeled őket.",
+      "toastSaved": "Kézbesítési mód frissítve",
+      "toastFailed": "A váltás nem sikerült. Kérjük, próbáld újra.",
+      "lockedToast": "Fizess elő a Driver Pool szolgáltatásra, hogy ShipDay-jel vagy Fee Free Delivery-vel adhass fel rendeléseket.",
+      "onlinePaymentToast": "Először online fizetési módra van szükséged — a kézbesítési rendeléseket online kell fizetni.",
+      "notInAreaToast": "A Fee Free Delivery még nem érhető el a te területeden.",
+      "lockedNotice": "A ShipDay és a Fee Free Delivery a Driver Pool kiegészítőt igényli. Saját sofőrjeidet mindig ingyen használhatod.",
+      "getDriverPool": "Driver Pool beszerzése"
     }
   },
   "impersonation": {

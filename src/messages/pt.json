@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Interno",
-      "description": "Encaminhe os pedidos de entrega aos seus próprios estafetas — uma tarifa fixa de $7.99 por entrega, faturada semanalmente. Quando ativado, os novos pedidos de entrega vão para os seus estafetas Fee Free em vez de ShipDay.",
+      "description": "Despache os pedidos de entrega para os seus próprios estafetas locais — faturado semanalmente, com preço consoante a distância de entrega (desde $7.99). Quando ativado, os novos pedidos de entrega vão para os seus estafetas Fee Free em vez do ShipDay.",
       "enableLabel": "Ativar Fee Free Delivery",
       "enableHint": "Encaminhe os novos pedidos de entrega para o seu próprio Driver Pool.",
       "autoSendLabel": "Envio automático ao aceitar",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Aceite",
       "st_started": "A caminho do restaurante",
       "st_enroute": "A caminho"
+    },
+    "deliveryProvider": {
+      "title": "Método de entrega",
+      "desc": "Escolha como os novos pedidos de entrega são despachados. Pode alterar a qualquer momento — só são apresentadas abaixo as definições do método escolhido.",
+      "ownLabel": "Os seus próprios estafetas",
+      "ownDesc": "É você que trata da entrega — nada é despachado por si.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Despache para a rede de estafetas externa ShipDay. Disponível em todo o lado.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "A nossa própria rede de estafetas locais — desde $7.99 por entrega consoante a distância, faturado semanalmente.",
+      "feefreeAreaBadge": "Na sua área",
+      "activeBadge": "Ativo",
+      "addonRequired": "Extra",
+      "ownNote": "Está a tratar da entrega com os seus próprios estafetas. Os novos pedidos de entrega não serão despachados para lado nenhum pela Fee Free — é você que os gere.",
+      "toastSaved": "Método de entrega atualizado",
+      "toastFailed": "Não foi possível mudar. Tente novamente.",
+      "lockedToast": "Subscreva o Driver Pool para despachar com o ShipDay ou o Fee Free Delivery.",
+      "onlinePaymentToast": "Precisa primeiro de um método de pagamento online — os pedidos de entrega têm de ser pagos online.",
+      "notInAreaToast": "O Fee Free Delivery ainda não está disponível na sua área.",
+      "lockedNotice": "O ShipDay e o Fee Free Delivery precisam do extra Driver Pool. Os seus próprios estafetas são sempre gratuitos.",
+      "getDriverPool": "Obter Driver Pool"
     }
   },
   "impersonation": {

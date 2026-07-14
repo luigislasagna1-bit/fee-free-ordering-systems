@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Lastna dostava",
-      "description": "Usmerite naročila z dostavo k lastnim voznikom — pavšalnih $7.99 na dostavo, obračunano tedensko. Ko je vklopljeno, nova naročila z dostavo gredo k vašim voznikom Fee Free namesto k ShipDay.",
+      "description": "Odpremljajte naročila z dostavo svojim lastnim lokalnim voznikom — obračunano tedensko, cena glede na razdaljo dostave (od $7.99). Ko je vklopljeno, gredo nova naročila z dostavo k vašim voznikom Fee Free namesto k ShipDay.",
       "enableLabel": "Omogoči Fee Free Delivery",
       "enableHint": "Usmerite nova naročila z dostavo v svoj Driver Pool.",
       "autoSendLabel": "Samodejno pošiljanje ob sprejemu",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Sprejeto",
       "st_started": "Na poti v restavracijo",
       "st_enroute": "Na poti"
+    },
+    "deliveryProvider": {
+      "title": "Način dostave",
+      "desc": "Izberite, kako se odpremljajo nova naročila z dostavo. To lahko kadar koli spremenite — spodaj so prikazane samo nastavitve izbranega načina.",
+      "ownLabel": "Vaši lastni vozniki",
+      "ownDesc": "Za dostavo poskrbite sami — namesto vas se ne odpremi nič.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Odprema v mrežo zunanjih kurirjev ShipDay. Na voljo povsod.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Naša lastna lokalna ekipa voznikov — od $7.99 na dostavo glede na razdaljo, obračunano tedensko.",
+      "feefreeAreaBadge": "Na vašem območju",
+      "activeBadge": "Aktivno",
+      "addonRequired": "Dodatek",
+      "ownNote": "Za dostavo poskrbite s svojimi lastnimi vozniki. Novih naročil z dostavo Fee Free ne bo nikamor odpremljal — upravljate jih sami.",
+      "toastSaved": "Način dostave je posodobljen",
+      "toastFailed": "Preklop ni uspel. Poskusite znova.",
+      "lockedToast": "Naročite se na Driver Pool za odpremo prek ShipDay ali Fee Free Delivery.",
+      "onlinePaymentToast": "Najprej potrebujete spletni način plačila — naročila z dostavo morajo biti plačana prek spleta.",
+      "notInAreaToast": "Fee Free Delivery na vašem območju še ni na voljo.",
+      "lockedNotice": "ShipDay in Fee Free Delivery potrebujeta dodatek Driver Pool. Svoje lastne voznike lahko vedno uporabljate brezplačno.",
+      "getDriverPool": "Pridobi Driver Pool"
     }
   },
   "impersonation": {

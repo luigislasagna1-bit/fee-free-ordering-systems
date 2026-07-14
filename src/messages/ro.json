@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Intern",
-      "description": "Trimite comenzile de livrare propriilor tăi șoferi — o taxă fixă de $7.99 pe livrare, facturată săptămânal. Când este activat, comenzile noi de livrare merg la șoferii tăi Fee Free în loc de ShipDay.",
+      "description": "Expediază comenzile de livrare către propriii tăi șoferi locali — facturat săptămânal, cu preț în funcție de distanța de livrare (de la $7.99). Când este activat, comenzile noi de livrare merg către șoferii tăi Fee Free în loc de ShipDay.",
       "enableLabel": "Activează Fee Free Delivery",
       "enableHint": "Direcționează comenzile noi de livrare către propriul tău Driver Pool.",
       "autoSendLabel": "Trimitere automată la acceptare",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Acceptat",
       "st_started": "Se îndreaptă spre magazin",
       "st_enroute": "Pe drum"
+    },
+    "deliveryProvider": {
+      "title": "Metodă de livrare",
+      "desc": "Alege cum sunt expediate comenzile noi de livrare. Poți schimba oricând — mai jos apar doar setările metodei alese.",
+      "ownLabel": "Șoferii tăi proprii",
+      "ownDesc": "Te ocupi singur de livrare — nimic nu este expediat în locul tău.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Expediere către rețeaua de curieri terți ShipDay. Disponibilă peste tot.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Rezerva noastră locală de șoferi — de la $7.99 per livrare în funcție de distanță, facturat săptămânal.",
+      "feefreeAreaBadge": "În zona ta",
+      "activeBadge": "Activ",
+      "addonRequired": "Supliment",
+      "ownNote": "Te ocupi de livrare cu propriii tăi șoferi. Comenzile noi de livrare nu vor fi expediate nicăieri de Fee Free — le gestionezi singur.",
+      "toastSaved": "Metoda de livrare a fost actualizată",
+      "toastFailed": "Comutarea nu a reușit. Încearcă din nou.",
+      "lockedToast": "Abonează-te la Driver Pool pentru a expedia cu ShipDay sau Fee Free Delivery.",
+      "onlinePaymentToast": "Ai nevoie mai întâi de o metodă de plată online — comenzile de livrare trebuie plătite online.",
+      "notInAreaToast": "Fee Free Delivery nu este încă disponibil în zona ta.",
+      "lockedNotice": "ShipDay și Fee Free Delivery necesită suplimentul Driver Pool. Propriii tăi șoferi pot fi folosiți întotdeauna gratuit.",
+      "getDriverPool": "Obține Driver Pool"
     }
   },
   "impersonation": {

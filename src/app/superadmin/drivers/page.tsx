@@ -30,8 +30,12 @@ export default async function SuperadminDriversPage() {
     prisma.restaurant.findMany({ where: { isActive: true }, select: { id: true, name: true }, orderBy: { name: "asc" }, take: 500 }),
   ]);
 
+  // Where drivers sign in — the standalone /driver PWA (nothing else links to it).
+  const driverAppUrl = `${(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001").replace(/\/$/, "")}/driver`;
+
   return (
     <DriversClient
+      driverAppUrl={driverAppUrl}
       initialDrivers={drivers.map((d) => ({
         id: d.id, name: d.name, email: d.email, phone: d.phone, isActive: d.isActive,
         hourlyRateCents: d.hourlyRateCents, homeRestaurantId: d.homeRestaurantId,

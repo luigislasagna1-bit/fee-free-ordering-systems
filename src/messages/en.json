@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "In-house",
-      "description": "Dispatch delivery orders to your own drivers — a flat $7.99 per delivery, billed weekly. When on, new delivery orders go to your Fee Free drivers instead of ShipDay.",
+      "description": "Dispatch delivery orders to your own local drivers — billed weekly, priced by delivery distance (from $7.99). When on, new delivery orders go to your Fee Free drivers instead of ShipDay.",
       "enableLabel": "Enable Fee Free Delivery",
       "enableHint": "Route new delivery orders to your own driver pool.",
       "autoSendLabel": "Auto-send on accept",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Accepted",
       "st_started": "Heading to store",
       "st_enroute": "On the way"
+    },
+    "deliveryProvider": {
+      "title": "Delivery method",
+      "desc": "Choose how new delivery orders are dispatched. You can change this anytime — only your chosen method's settings show below.",
+      "ownLabel": "Your own drivers",
+      "ownDesc": "You handle delivery yourself — nothing is dispatched for you.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Dispatch to the ShipDay third-party courier network. Available everywhere.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Our own local driver pool — from $7.99 per delivery by distance, billed weekly.",
+      "feefreeAreaBadge": "In your area",
+      "activeBadge": "Active",
+      "addonRequired": "Add-on",
+      "ownNote": "You're handling delivery with your own drivers. New delivery orders won't be dispatched anywhere by Fee Free — you manage them yourself.",
+      "toastSaved": "Delivery method updated",
+      "toastFailed": "Couldn't switch. Please try again.",
+      "lockedToast": "Subscribe to Driver Pool to dispatch with ShipDay or Fee Free Delivery.",
+      "onlinePaymentToast": "You need an online payment method first — delivery orders must be paid online.",
+      "notInAreaToast": "Fee Free Delivery isn't available in your area yet.",
+      "lockedNotice": "ShipDay and Fee Free Delivery need the Driver Pool add-on. Your own drivers are always free to use.",
+      "getDriverPool": "Get Driver Pool"
     }
   },
   "impersonation": {

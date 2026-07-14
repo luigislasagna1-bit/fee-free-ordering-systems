@@ -24,17 +24,22 @@ type Initial = { enabled: boolean; autoSend: boolean };
 export function FeeFreeDeliverySection({
   initial,
   entitled,
+  embedded = false,
 }: {
   initial: Initial;
   entitled: boolean;
+  /** When rendered UNDER the provider chooser (which owns the enable/select
+   *  decision), show only the auto-send control — no heading, upsell, master
+   *  enable toggle, or precedence note. */
+  embedded?: boolean;
 }) {
   const t = useTranslations("admin.feefreeDelivery");
   const router = useRouter();
-  const [enabled, setEnabled] = useState(initial.enabled);
+  const [enabled, setEnabled] = useState(embedded ? true : initial.enabled);
   const [autoSend, setAutoSend] = useState(initial.autoSend);
   const [saving, setSaving] = useState(false);
 
-  async function save(next: { enabled: boolean; autoSend: boolean }) {
+  async function save(next: { enabled?: boolean; autoSend?: boolean }) {
     setSaving(true);
     try {
       const res = await fetch("/api/admin/feefree-delivery", {
@@ -78,8 +83,23 @@ export function FeeFreeDeliverySection({
   async function toggleAutoSend() {
     const next = !autoSend;
     setAutoSend(next); // optimistic
-    const ok = await save({ enabled, autoSend: next });
+    // Send ONLY autoSend — never re-trigger the enable gates (service-area /
+    // entitlement / online-payment) just for a preference toggle.
+    const ok = await save({ autoSend: next });
     if (!ok) setAutoSend(!next); // revert
+  }
+
+  // Embedded (under the provider chooser): just the auto-send control.
+  if (embedded) {
+    return (
+      <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-gray-900">{t("autoSendLabel")}</p>
+          <p className="text-xs text-gray-500 mt-0.5">{autoSend ? t("autoSendOnHint") : t("autoSendOffHint")}</p>
+        </div>
+        <Toggle checked={autoSend} disabled={saving} onClick={toggleAutoSend} />
+      </div>
+    );
   }
 
   return (

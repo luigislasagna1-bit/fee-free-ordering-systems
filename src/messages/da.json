@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Egne chauffører",
-      "description": "Send leveringsordrer til dine egne chauffører – en fast pris på $7.99 pr. levering, faktureret ugentligt. Når det er slået til, går nye leveringsordrer til dine Fee Free-chauffører i stedet for ShipDay.",
+      "description": "Send leveringsordrer til dine egne lokale chauffører — faktureres ugentligt, prissat efter leveringsafstand (fra $7.99). Når det er slået til, går nye leveringsordrer til dine Fee Free-chauffører i stedet for ShipDay.",
       "enableLabel": "Aktivér Fee Free Delivery",
       "enableHint": "Send nye leveringsordrer til din egen Driver Pool.",
       "autoSendLabel": "Send automatisk ved accept",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Accepteret",
       "st_started": "På vej til butik",
       "st_enroute": "På vej"
+    },
+    "deliveryProvider": {
+      "title": "Leveringsmetode",
+      "desc": "Vælg, hvordan nye leveringsordrer sendes ud. Du kan ændre dette når som helst — kun indstillingerne for din valgte metode vises nedenfor.",
+      "ownLabel": "Dine egne chauffører",
+      "ownDesc": "Du står selv for leveringen — der sendes ikke noget ud for dig.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Send via ShipDays tredjeparts kurernetværk. Tilgængeligt overalt.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Vores egen lokale chaufførpulje — fra $7.99 pr. levering efter afstand, faktureres ugentligt.",
+      "feefreeAreaBadge": "I dit område",
+      "activeBadge": "Aktiv",
+      "addonRequired": "Tilføjelse",
+      "ownNote": "Du står for leveringen med dine egne chauffører. Nye leveringsordrer sendes ikke ud nogen steder af Fee Free — du håndterer dem selv.",
+      "toastSaved": "Leveringsmetode opdateret",
+      "toastFailed": "Kunne ikke skifte. Prøv igen.",
+      "lockedToast": "Abonnér på Driver Pool for at sende ud med ShipDay eller Fee Free Delivery.",
+      "onlinePaymentToast": "Du skal først have en online betalingsmetode — leveringsordrer skal betales online.",
+      "notInAreaToast": "Fee Free Delivery er endnu ikke tilgængeligt i dit område.",
+      "lockedNotice": "ShipDay og Fee Free Delivery kræver Driver Pool-tilføjelsen. Dine egne chauffører kan du altid bruge gratis.",
+      "getDriverPool": "Få Driver Pool"
     }
   },
   "impersonation": {

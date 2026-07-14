@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Internal",
-      "description": "Kirim pesanan pengantaran ke pengemudi Anda sendiri — tarif tetap $7.99 per pengantaran, ditagih mingguan. Saat aktif, pesanan pengantaran baru diteruskan ke pengemudi Fee Free Anda, bukan ShipDay.",
+      "description": "Kirim pesanan pengantaran ke pengemudi lokal Anda sendiri — ditagih mingguan, harga berdasarkan jarak pengantaran (mulai dari $7.99). Saat aktif, pesanan pengantaran baru masuk ke pengemudi Fee Free Anda alih-alih ShipDay.",
       "enableLabel": "Aktifkan Fee Free Delivery",
       "enableHint": "Arahkan pesanan pengantaran baru ke Driver Pool Anda sendiri.",
       "autoSendLabel": "Kirim otomatis saat diterima",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Diterima",
       "st_started": "Menuju toko",
       "st_enroute": "Dalam perjalanan"
+    },
+    "deliveryProvider": {
+      "title": "Metode pengiriman",
+      "desc": "Pilih cara pengiriman pesanan pengantaran baru dikirim. Anda dapat mengubahnya kapan saja — hanya pengaturan metode yang Anda pilih yang ditampilkan di bawah.",
+      "ownLabel": "Pengemudi Anda sendiri",
+      "ownDesc": "Anda menangani pengantaran sendiri — tidak ada yang dikirimkan untuk Anda.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Kirim ke jaringan kurir pihak ketiga ShipDay. Tersedia di mana saja.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Kumpulan pengemudi lokal kami sendiri — mulai dari $7.99 per pengantaran berdasarkan jarak, ditagih mingguan.",
+      "feefreeAreaBadge": "Di area Anda",
+      "activeBadge": "Aktif",
+      "addonRequired": "Add-on",
+      "ownNote": "Anda menangani pengantaran dengan pengemudi Anda sendiri. Pesanan pengantaran baru tidak akan dikirim ke mana pun oleh Fee Free — Anda mengelolanya sendiri.",
+      "toastSaved": "Metode pengiriman diperbarui",
+      "toastFailed": "Tidak dapat beralih. Silakan coba lagi.",
+      "lockedToast": "Berlangganan Driver Pool untuk mengirim dengan ShipDay atau Fee Free Delivery.",
+      "onlinePaymentToast": "Anda memerlukan metode pembayaran online terlebih dahulu — pesanan pengantaran harus dibayar online.",
+      "notInAreaToast": "Fee Free Delivery belum tersedia di area Anda.",
+      "lockedNotice": "ShipDay dan Fee Free Delivery memerlukan add-on Driver Pool. Pengemudi Anda sendiri selalu gratis digunakan.",
+      "getDriverPool": "Dapatkan Driver Pool"
     }
   },
   "impersonation": {

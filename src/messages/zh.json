@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "自有团队",
-      "description": "将外送订单派给你自己的司机——每单固定 $7.99，按周结算。开启后，新的外送订单将交给你的 Fee Free 司机，而非 ShipDay。",
+      "description": "将配送订单派送给你自己的本地司机——每周结算，按配送距离计价（起价 $7.99）。开启后，新的配送订单将发送给你的 Fee Free 司机，而非 ShipDay。",
       "enableLabel": "启用 Fee Free Delivery",
       "enableHint": "将新的外送订单派往你自己的 Driver Pool。",
       "autoSendLabel": "接单时自动派送",
@@ -4660,6 +4660,27 @@
       "st_accepted": "已接单",
       "st_started": "前往餐厅",
       "st_enroute": "配送途中"
+    },
+    "deliveryProvider": {
+      "title": "配送方式",
+      "desc": "选择如何派送新的配送订单。你可以随时更改——下方仅显示所选方式的设置。",
+      "ownLabel": "你自己的司机",
+      "ownDesc": "你自行处理配送——不会为你派送任何订单。",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "派送至 ShipDay 第三方快递网络。全境可用。",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "我们自有的本地司机团队——按距离每单起价 $7.99，每周结算。",
+      "feefreeAreaBadge": "在你的区域内",
+      "activeBadge": "已启用",
+      "addonRequired": "附加功能",
+      "ownNote": "你正用自己的司机处理配送。Fee Free 不会为新的配送订单派送到任何地方——由你自行管理。",
+      "toastSaved": "配送方式已更新",
+      "toastFailed": "切换失败，请重试。",
+      "lockedToast": "订阅 Driver Pool 即可使用 ShipDay 或 Fee Free Delivery 派送。",
+      "onlinePaymentToast": "你需要先设置在线支付方式——配送订单必须在线支付。",
+      "notInAreaToast": "Fee Free Delivery 尚未在你的区域提供服务。",
+      "lockedNotice": "ShipDay 和 Fee Free Delivery 需要 Driver Pool 附加功能。你自己的司机始终可免费使用。",
+      "getDriverPool": "获取 Driver Pool"
     }
   },
   "impersonation": {

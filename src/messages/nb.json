@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Egne sjåfører",
-      "description": "Send leveringsordrer til dine egne sjåfører – en fast pris på $7.99 per levering, fakturert ukentlig. Når det er på, går nye leveringsordrer til dine Fee Free-sjåfører i stedet for ShipDay.",
+      "description": "Send leveringsordrer til dine egne lokale sjåfører — fakturert ukentlig, priset etter leveringsavstand (fra $7.99). Når det er på, går nye leveringsordrer til dine Fee Free-sjåfører i stedet for ShipDay.",
       "enableLabel": "Aktiver Fee Free Delivery",
       "enableHint": "Send nye leveringsordrer til din egen Driver Pool.",
       "autoSendLabel": "Send automatisk ved godkjenning",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Akseptert",
       "st_started": "På vei til butikk",
       "st_enroute": "På vei"
+    },
+    "deliveryProvider": {
+      "title": "Leveringsmetode",
+      "desc": "Velg hvordan nye leveringsordrer sendes ut. Du kan endre dette når som helst — bare innstillingene for den valgte metoden vises nedenfor.",
+      "ownLabel": "Dine egne sjåfører",
+      "ownDesc": "Du håndterer leveringen selv — ingenting sendes ut for deg.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Send via ShipDays tredjeparts budnettverk. Tilgjengelig overalt.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Vår egen lokale sjåførpool — fra $7.99 per levering etter avstand, fakturert ukentlig.",
+      "feefreeAreaBadge": "I ditt område",
+      "activeBadge": "Aktiv",
+      "addonRequired": "Tillegg",
+      "ownNote": "Du håndterer leveringen med dine egne sjåfører. Nye leveringsordrer sendes ikke ut noe sted av Fee Free — du administrerer dem selv.",
+      "toastSaved": "Leveringsmetode oppdatert",
+      "toastFailed": "Kunne ikke bytte. Prøv igjen.",
+      "lockedToast": "Abonner på Driver Pool for å sende ut med ShipDay eller Fee Free Delivery.",
+      "onlinePaymentToast": "Du trenger først en betalingsmetode på nett — leveringsordrer må betales på nett.",
+      "notInAreaToast": "Fee Free Delivery er ikke tilgjengelig i ditt område ennå.",
+      "lockedNotice": "ShipDay og Fee Free Delivery krever Driver Pool-tillegget. Dine egne sjåfører kan du alltid bruke gratis.",
+      "getDriverPool": "Skaff Driver Pool"
     }
   },
   "impersonation": {

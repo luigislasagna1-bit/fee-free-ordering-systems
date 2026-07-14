@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Nội bộ",
-      "description": "Chuyển đơn giao hàng đến tài xế của riêng bạn — mức cố định $7.99 mỗi lần giao, tính phí hằng tuần. Khi bật, đơn giao hàng mới sẽ đến tài xế Fee Free của bạn thay vì ShipDay.",
+      "description": "Điều phối đơn giao hàng đến tài xế địa phương của riêng bạn — tính phí hàng tuần, giá theo khoảng cách giao hàng (từ $7.99). Khi bật, đơn giao hàng mới sẽ đến tài xế Fee Free của bạn thay vì ShipDay.",
       "enableLabel": "Bật Fee Free Delivery",
       "enableHint": "Định tuyến đơn giao hàng mới đến Driver Pool của riêng bạn.",
       "autoSendLabel": "Tự động gửi khi chấp nhận",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Đã nhận",
       "st_started": "Đang đến cửa hàng",
       "st_enroute": "Đang trên đường"
+    },
+    "deliveryProvider": {
+      "title": "Phương thức giao hàng",
+      "desc": "Chọn cách điều phối đơn giao hàng mới. Bạn có thể thay đổi bất cứ lúc nào — chỉ cài đặt của phương thức bạn chọn mới hiển thị bên dưới.",
+      "ownLabel": "Tài xế của riêng bạn",
+      "ownDesc": "Bạn tự xử lý việc giao hàng — không có gì được điều phối thay cho bạn.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Điều phối đến mạng lưới giao hàng bên thứ ba ShipDay. Có sẵn ở mọi nơi.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Nhóm tài xế địa phương của riêng chúng tôi — từ $7.99 mỗi lần giao theo khoảng cách, tính phí hàng tuần.",
+      "feefreeAreaBadge": "Trong khu vực của bạn",
+      "activeBadge": "Đang hoạt động",
+      "addonRequired": "Tiện ích bổ sung",
+      "ownNote": "Bạn đang xử lý việc giao hàng bằng tài xế của riêng mình. Đơn giao hàng mới sẽ không được Fee Free điều phối đi đâu cả — bạn tự quản lý chúng.",
+      "toastSaved": "Đã cập nhật phương thức giao hàng",
+      "toastFailed": "Không thể chuyển đổi. Vui lòng thử lại.",
+      "lockedToast": "Đăng ký Driver Pool để điều phối qua ShipDay hoặc Fee Free Delivery.",
+      "onlinePaymentToast": "Bạn cần một phương thức thanh toán trực tuyến trước — đơn giao hàng phải được thanh toán trực tuyến.",
+      "notInAreaToast": "Fee Free Delivery chưa có sẵn trong khu vực của bạn.",
+      "lockedNotice": "ShipDay và Fee Free Delivery cần tiện ích bổ sung Driver Pool. Tài xế của riêng bạn luôn được sử dụng miễn phí.",
+      "getDriverPool": "Nhận Driver Pool"
     }
   },
   "impersonation": {

@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "自社配達",
-      "description": "配達注文を自社のドライバーに割り当てます。1配達あたり定額 $7.99、週ごとに請求。オンにすると、新しい配達注文は ShipDay ではなく Fee Free のドライバーに送られます。",
+      "description": "配達注文を自社の地域ドライバーに手配します——毎週請求、配達距離に応じた料金（$7.99 から）。オンにすると、新しい配達注文は ShipDay ではなく Fee Free のドライバーに送られます。",
       "enableLabel": "Fee Free Delivery を有効にする",
       "enableHint": "新しい配達注文を自社の Driver Pool に振り分けます。",
       "autoSendLabel": "受注時に自動送信",
@@ -4660,6 +4660,27 @@
       "st_accepted": "受諾済み",
       "st_started": "店舗へ移動中",
       "st_enroute": "配達中"
+    },
+    "deliveryProvider": {
+      "title": "配達方法",
+      "desc": "新しい配達注文をどう手配するか選択します。いつでも変更でき、選択した方法の設定のみ下に表示されます。",
+      "ownLabel": "自社のドライバー",
+      "ownDesc": "配達はご自身で対応します——こちらからは何も手配しません。",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "ShipDay の第三者宅配ネットワークに手配します。どこでも利用可能です。",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "当社独自の地域ドライバープール——距離に応じて1配達あたり $7.99 から、毎週請求。",
+      "feefreeAreaBadge": "対応エリア内",
+      "activeBadge": "有効",
+      "addonRequired": "アドオン",
+      "ownNote": "自社のドライバーで配達を対応しています。新しい配達注文は Fee Free からどこにも手配されません——ご自身で管理してください。",
+      "toastSaved": "配達方法を更新しました",
+      "toastFailed": "切り替えできませんでした。もう一度お試しください。",
+      "lockedToast": "ShipDay または Fee Free Delivery で手配するには Driver Pool を購読してください。",
+      "onlinePaymentToast": "まずオンライン決済方法が必要です——配達注文はオンラインで支払う必要があります。",
+      "notInAreaToast": "Fee Free Delivery はまだお住まいのエリアで利用できません。",
+      "lockedNotice": "ShipDay と Fee Free Delivery には Driver Pool アドオンが必要です。自社のドライバーは常に無料で利用できます。",
+      "getDriverPool": "Driver Pool を入手"
     }
   },
   "impersonation": {

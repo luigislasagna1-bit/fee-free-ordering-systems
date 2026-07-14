@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Iekšējā",
-      "description": "Novirziet piegādes pasūtījumus saviem vadītājiem — vienota maksa $7.99 par piegādi, rēķins tiek izrakstīts katru nedēļu. Kad tā ir ieslēgta, jaunie piegādes pasūtījumi nonāk pie jūsu Fee Free vadītājiem, nevis ShipDay.",
+      "description": "Nosūtiet piegādes pasūtījumus saviem vietējiem kurjeriem — ar iknedēļas norēķiniem, cena atkarībā no piegādes attāluma (no $7.99). Kad ieslēgts, jaunie piegādes pasūtījumi tiek novirzīti jūsu Fee Free kurjeriem, nevis ShipDay.",
       "enableLabel": "Iespējot Fee Free Delivery",
       "enableHint": "Novirziet jaunos piegādes pasūtījumus uz savu Driver Pool.",
       "autoSendLabel": "Automātiska nosūtīšana pēc pieņemšanas",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Pieņemts",
       "st_started": "Ceļā uz veikalu",
       "st_enroute": "Ceļā"
+    },
+    "deliveryProvider": {
+      "title": "Piegādes metode",
+      "desc": "Izvēlieties, kā tiek nosūtīti jaunie piegādes pasūtījumi. Jūs to varat mainīt jebkurā laikā — zemāk tiek rādīti tikai izvēlētās metodes iestatījumi.",
+      "ownLabel": "Jūsu paši kurjeri",
+      "ownDesc": "Jūs veicat piegādi paši — jūsu vietā nekas netiek nosūtīts.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Nosūtīšana uz ShipDay trešās puses kurjeru tīklu. Pieejams visur.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Mūsu pašu vietējais kurjeru kopums — no $7.99 par piegādi atkarībā no attāluma, ar iknedēļas norēķiniem.",
+      "feefreeAreaBadge": "Jūsu apgabalā",
+      "activeBadge": "Aktīvs",
+      "addonRequired": "Papildinājums",
+      "ownNote": "Jūs veicat piegādi ar saviem kurjeriem. Fee Free nenosūtīs jaunos piegādes pasūtījumus nekur — jūs tos pārvaldāt paši.",
+      "toastSaved": "Piegādes metode atjaunināta",
+      "toastFailed": "Pārslēgšana neizdevās. Lūdzu, mēģiniet vēlreiz.",
+      "lockedToast": "Abonējiet Driver Pool, lai nosūtītu ar ShipDay vai Fee Free Delivery.",
+      "onlinePaymentToast": "Vispirms nepieciešama tiešsaistes maksājumu metode — piegādes pasūtījumi jāapmaksā tiešsaistē.",
+      "notInAreaToast": "Fee Free Delivery jūsu apgabalā vēl nav pieejams.",
+      "lockedNotice": "ShipDay un Fee Free Delivery ir nepieciešams Driver Pool papildinājums. Jūsu pašu kurjeri vienmēr ir bez maksas.",
+      "getDriverPool": "Iegūt Driver Pool"
     }
   },
   "impersonation": {

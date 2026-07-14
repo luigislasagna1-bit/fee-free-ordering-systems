@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Egna förare",
-      "description": "Skicka leveransbeställningar till dina egna förare – ett fast pris på $7.99 per leverans, fakturerat veckovis. När det är på går nya leveransbeställningar till dina Fee Free-förare i stället för ShipDay.",
+      "description": "Skicka leveransbeställningar till dina egna lokala förare — faktureras veckovis, prissatt efter leveransavstånd (från $7.99). När det är på går nya leveransbeställningar till dina Fee Free-förare i stället för ShipDay.",
       "enableLabel": "Aktivera Fee Free Delivery",
       "enableHint": "Dirigera nya leveransbeställningar till din egen Driver Pool.",
       "autoSendLabel": "Skicka automatiskt vid godkännande",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Accepterad",
       "st_started": "På väg till butik",
       "st_enroute": "På väg"
+    },
+    "deliveryProvider": {
+      "title": "Leveransmetod",
+      "desc": "Välj hur nya leveransbeställningar skickas ut. Du kan ändra detta när som helst — endast inställningarna för din valda metod visas nedan.",
+      "ownLabel": "Dina egna förare",
+      "ownDesc": "Du sköter leveransen själv — inget skickas ut åt dig.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Skicka via ShipDays tredjeparts budnätverk. Tillgängligt överallt.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Vår egen lokala förarpool — från $7.99 per leverans efter avstånd, faktureras veckovis.",
+      "feefreeAreaBadge": "I ditt område",
+      "activeBadge": "Aktiv",
+      "addonRequired": "Tillägg",
+      "ownNote": "Du sköter leveransen med dina egna förare. Nya leveransbeställningar skickas inte ut någonstans av Fee Free — du hanterar dem själv.",
+      "toastSaved": "Leveransmetod uppdaterad",
+      "toastFailed": "Kunde inte byta. Försök igen.",
+      "lockedToast": "Prenumerera på Driver Pool för att skicka ut med ShipDay eller Fee Free Delivery.",
+      "onlinePaymentToast": "Du behöver först en betalningsmetod online — leveransbeställningar måste betalas online.",
+      "notInAreaToast": "Fee Free Delivery är inte tillgängligt i ditt område ännu.",
+      "lockedNotice": "ShipDay och Fee Free Delivery kräver tillägget Driver Pool. Dina egna förare kan du alltid använda kostnadsfritt.",
+      "getDriverPool": "Skaffa Driver Pool"
     }
   },
   "impersonation": {

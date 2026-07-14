@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Eigen bezorgers",
-      "description": "Verstuur bezorgbestellingen naar je eigen bezorgers – een vast tarief van $7.99 per bezorging, wekelijks gefactureerd. Wanneer ingeschakeld gaan nieuwe bezorgbestellingen naar je Fee Free-bezorgers in plaats van naar ShipDay.",
+      "description": "Verzend bezorgbestellingen naar je eigen lokale bezorgers — wekelijks gefactureerd, geprijsd op bezorgafstand (vanaf $7.99). Wanneer ingeschakeld gaan nieuwe bezorgbestellingen naar je Fee Free-bezorgers in plaats van ShipDay.",
       "enableLabel": "Fee Free Delivery inschakelen",
       "enableHint": "Stuur nieuwe bezorgbestellingen naar je eigen Driver Pool.",
       "autoSendLabel": "Automatisch verzenden bij acceptatie",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Geaccepteerd",
       "st_started": "Op weg naar winkel",
       "st_enroute": "Onderweg"
+    },
+    "deliveryProvider": {
+      "title": "Bezorgmethode",
+      "desc": "Kies hoe nieuwe bezorgbestellingen worden verzonden. Je kunt dit altijd wijzigen — alleen de instellingen van je gekozen methode worden hieronder weergegeven.",
+      "ownLabel": "Je eigen bezorgers",
+      "ownDesc": "Je regelt de bezorging zelf — er wordt niets voor je verzonden.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Verzenden via het ShipDay-koeriersnetwerk van derden. Overal beschikbaar.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Onze eigen lokale bezorgerspool — vanaf $7.99 per bezorging op basis van afstand, wekelijks gefactureerd.",
+      "feefreeAreaBadge": "In jouw gebied",
+      "activeBadge": "Actief",
+      "addonRequired": "Add-on",
+      "ownNote": "Je regelt de bezorging met je eigen bezorgers. Nieuwe bezorgbestellingen worden nergens door Fee Free verzonden — je beheert ze zelf.",
+      "toastSaved": "Bezorgmethode bijgewerkt",
+      "toastFailed": "Wisselen mislukt. Probeer het opnieuw.",
+      "lockedToast": "Neem een abonnement op Driver Pool om te verzenden met ShipDay of Fee Free Delivery.",
+      "onlinePaymentToast": "Je hebt eerst een online betaalmethode nodig — bezorgbestellingen moeten online worden betaald.",
+      "notInAreaToast": "Fee Free Delivery is nog niet beschikbaar in jouw gebied.",
+      "lockedNotice": "ShipDay en Fee Free Delivery vereisen de Driver Pool-add-on. Je eigen bezorgers kun je altijd gratis gebruiken.",
+      "getDriverPool": "Driver Pool aanschaffen"
     }
   },
   "impersonation": {

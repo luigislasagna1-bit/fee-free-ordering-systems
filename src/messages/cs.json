@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Vlastní rozvoz",
-      "description": "Směrujte objednávky s doručením k vlastním řidičům — pevná sazba $7.99 za doručení, účtováno týdně. Když je zapnuto, nové objednávky s doručením jdou k vašim řidičům Fee Free místo ShipDay.",
+      "description": "Odesílejte objednávky s doručením svým vlastním místním řidičům — účtováno týdně, cena podle vzdálenosti doručení (od $7.99). Když je zapnuto, nové objednávky s doručením jdou k vašim řidičům Fee Free místo ShipDay.",
       "enableLabel": "Zapnout Fee Free Delivery",
       "enableHint": "Směrujte nové objednávky s doručením do vlastního Driver Pool.",
       "autoSendLabel": "Automatické odeslání při přijetí",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Přijato",
       "st_started": "Míří do restaurace",
       "st_enroute": "Na cestě"
+    },
+    "deliveryProvider": {
+      "title": "Způsob doručení",
+      "desc": "Zvolte, jak se odesílají nové objednávky s doručením. Můžete to kdykoli změnit — níže se zobrazí pouze nastavení zvolené metody.",
+      "ownLabel": "Vaši vlastní řidiči",
+      "ownDesc": "Doručení si zajišťujete sami — nic se za vás neodesílá.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Odesílání do sítě externích kurýrů ShipDay. Dostupné všude.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Náš vlastní místní tým řidičů — od $7.99 za doručení podle vzdálenosti, účtováno týdně.",
+      "feefreeAreaBadge": "Ve vaší oblasti",
+      "activeBadge": "Aktivní",
+      "addonRequired": "Doplněk",
+      "ownNote": "Doručení zajišťujete s vlastními řidiči. Nové objednávky s doručením nebude Fee Free nikam odesílat — spravujete si je sami.",
+      "toastSaved": "Způsob doručení byl aktualizován",
+      "toastFailed": "Přepnutí se nezdařilo. Zkuste to prosím znovu.",
+      "lockedToast": "Předplaťte si Driver Pool, abyste mohli odesílat přes ShipDay nebo Fee Free Delivery.",
+      "onlinePaymentToast": "Nejprve potřebujete online platební metodu — objednávky s doručením musí být hrazeny online.",
+      "notInAreaToast": "Fee Free Delivery zatím není ve vaší oblasti dostupné.",
+      "lockedNotice": "ShipDay a Fee Free Delivery vyžadují doplněk Driver Pool. Vaše vlastní řidiče můžete vždy využívat zdarma.",
+      "getDriverPool": "Získat Driver Pool"
     }
   },
   "impersonation": {

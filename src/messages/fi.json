@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Omat kuljettajat",
-      "description": "Lähetä toimitustilaukset omille kuljettajillesi – kiinteä $7.99 per toimitus, laskutus viikoittain. Kun tämä on käytössä, uudet toimitustilaukset ohjautuvat Fee Free -kuljettajillesi ShipDayn sijaan.",
+      "description": "Lähetä toimitustilaukset omille paikallisille kuljettajillesi — laskutetaan viikoittain, hinnoiteltu toimitusetäisyyden mukaan (alkaen $7.99). Kun päällä, uudet toimitustilaukset menevät Fee Free -kuljettajillesi ShipDayn sijaan.",
       "enableLabel": "Ota Fee Free Delivery käyttöön",
       "enableHint": "Ohjaa uudet toimitustilaukset omaan Driver Pooliin.",
       "autoSendLabel": "Lähetä automaattisesti hyväksyttäessä",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Hyväksytty",
       "st_started": "Matkalla myymälään",
       "st_enroute": "Matkalla"
+    },
+    "deliveryProvider": {
+      "title": "Toimitustapa",
+      "desc": "Valitse, miten uudet toimitustilaukset lähetetään. Voit muuttaa tätä milloin tahansa — vain valitsemasi tavan asetukset näkyvät alla.",
+      "ownLabel": "Omat kuljettajat",
+      "ownDesc": "Hoidat toimituksen itse — mitään ei lähetetä puolestasi.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Lähetä ShipDayn kolmannen osapuolen kuriiriverkostoon. Saatavilla kaikkialla.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Oma paikallinen kuljettajapoolimme — alkaen $7.99 toimitukselta etäisyyden mukaan, laskutetaan viikoittain.",
+      "feefreeAreaBadge": "Alueellasi",
+      "activeBadge": "Aktiivinen",
+      "addonRequired": "Lisäosa",
+      "ownNote": "Hoidat toimituksen omilla kuljettajillasi. Fee Free ei lähetä uusia toimitustilauksia minnekään — hallinnoit niitä itse.",
+      "toastSaved": "Toimitustapa päivitetty",
+      "toastFailed": "Vaihtaminen epäonnistui. Yritä uudelleen.",
+      "lockedToast": "Tilaa Driver Pool lähettääksesi ShipDaylla tai Fee Free Deliverylla.",
+      "onlinePaymentToast": "Tarvitset ensin verkkomaksutavan — toimitustilaukset on maksettava verkossa.",
+      "notInAreaToast": "Fee Free Delivery ei ole vielä saatavilla alueellasi.",
+      "lockedNotice": "ShipDay ja Fee Free Delivery vaativat Driver Pool -lisäosan. Omia kuljettajiasi voit aina käyttää maksutta.",
+      "getDriverPool": "Hanki Driver Pool"
     }
   },
   "impersonation": {

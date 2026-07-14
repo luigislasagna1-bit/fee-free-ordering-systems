@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "داخلي",
-      "description": "أرسِل طلبات التوصيل إلى سائقيك الخاصين — سعر ثابت $7.99 لكل عملية توصيل، تُحتسب أسبوعيًا. عند التفعيل، تذهب طلبات التوصيل الجديدة إلى سائقي Fee Free Delivery بدلًا من ShipDay.",
+      "description": "أرسل طلبات التوصيل إلى سائقيك المحليين الخاصين — تُحتسب أسبوعيًا، ويُحدد السعر حسب مسافة التوصيل (تبدأ من $7.99). عند التفعيل، تذهب طلبات التوصيل الجديدة إلى سائقي Fee Free بدلاً من ShipDay.",
       "enableLabel": "تفعيل Fee Free Delivery",
       "enableHint": "وجِّه طلبات التوصيل الجديدة إلى Driver Pool الخاص بك.",
       "autoSendLabel": "الإرسال التلقائي عند القبول",
@@ -4660,6 +4660,27 @@
       "st_accepted": "تم القبول",
       "st_started": "في الطريق إلى المتجر",
       "st_enroute": "في الطريق"
+    },
+    "deliveryProvider": {
+      "title": "طريقة التوصيل",
+      "desc": "اختر كيفية إرسال طلبات التوصيل الجديدة. يمكنك تغيير ذلك في أي وقت — تظهر أدناه إعدادات الطريقة التي اخترتها فقط.",
+      "ownLabel": "سائقوك الخاصون",
+      "ownDesc": "تتولى التوصيل بنفسك — لا يتم إرسال أي شيء نيابةً عنك.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "الإرسال إلى شبكة السعاة الخارجية ShipDay. متاح في كل مكان.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "مجموعة السائقين المحليين الخاصة بنا — تبدأ من $7.99 لكل توصيلة حسب المسافة، تُحتسب أسبوعيًا.",
+      "feefreeAreaBadge": "في منطقتك",
+      "activeBadge": "نشط",
+      "addonRequired": "إضافة",
+      "ownNote": "أنت تتولى التوصيل بسائقيك الخاصين. لن يتم إرسال طلبات التوصيل الجديدة إلى أي مكان عبر Fee Free — تديرها بنفسك.",
+      "toastSaved": "تم تحديث طريقة التوصيل",
+      "toastFailed": "تعذر التبديل. يرجى المحاولة مرة أخرى.",
+      "lockedToast": "اشترك في Driver Pool للإرسال عبر ShipDay أو Fee Free Delivery.",
+      "onlinePaymentToast": "تحتاج أولاً إلى طريقة دفع عبر الإنترنت — يجب دفع طلبات التوصيل عبر الإنترنت.",
+      "notInAreaToast": "Fee Free Delivery غير متاح في منطقتك بعد.",
+      "lockedNotice": "يتطلب ShipDay وFee Free Delivery إضافة Driver Pool. يمكنك دائمًا استخدام سائقيك الخاصين مجانًا.",
+      "getDriverPool": "احصل على Driver Pool"
     }
   },
   "impersonation": {

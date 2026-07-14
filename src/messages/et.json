@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Oma",
-      "description": "Suunake kohaletoimetamise tellimused oma juhtidele — ühtne tasu $7.99 kohaletoimetamise kohta, arveldatakse iganädalaselt. Kui see on sees, lähevad uued kohaletoimetamise tellimused ShipDay asemel teie Fee Free juhtidele.",
+      "description": "Edastage tarnetellimused oma kohalikele kulleritele — arveldatakse iganädalaselt, hind vastavalt tarnekaugusele (alates $7.99). Kui see on sees, lähevad uued tarnetellimused teie Fee Free kulleritele ShipDay asemel.",
       "enableLabel": "Luba Fee Free Delivery",
       "enableHint": "Suunake uued kohaletoimetamise tellimused oma Driver Pooli.",
       "autoSendLabel": "Automaatne saatmine kinnitamisel",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Vastu võetud",
       "st_started": "Teel poodi",
       "st_enroute": "Teel"
+    },
+    "deliveryProvider": {
+      "title": "Tarneviis",
+      "desc": "Valige, kuidas uued tarnetellimused edastatakse. Saate seda igal ajal muuta — allpool kuvatakse ainult valitud viisi seaded.",
+      "ownLabel": "Teie enda kullerid",
+      "ownDesc": "Tegelete tarnega ise — teie eest ei edastata midagi.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Edastamine ShipDay kolmanda osapoole kullerivõrku. Saadaval kõikjal.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Meie enda kohalik kullerite kogum — alates $7.99 tarne kohta vastavalt kaugusele, arveldatakse iganädalaselt.",
+      "feefreeAreaBadge": "Teie piirkonnas",
+      "activeBadge": "Aktiivne",
+      "addonRequired": "Lisandmoodul",
+      "ownNote": "Tegelete tarnega oma kulleritega. Fee Free ei edasta uusi tarnetellimusi kuhugi — haldate neid ise.",
+      "toastSaved": "Tarneviis uuendatud",
+      "toastFailed": "Vahetamine ebaõnnestus. Palun proovige uuesti.",
+      "lockedToast": "Tellige Driver Pool, et edastada tellimusi ShipDay või Fee Free Delivery kaudu.",
+      "onlinePaymentToast": "Kõigepealt on vaja veebimakseviisi — tarnetellimused tuleb tasuda veebis.",
+      "notInAreaToast": "Fee Free Delivery pole teie piirkonnas veel saadaval.",
+      "lockedNotice": "ShipDay ja Fee Free Delivery vajavad Driver Pool lisandmoodulit. Teie enda kullerite kasutamine on alati tasuta.",
+      "getDriverPool": "Hankige Driver Pool"
     }
   },
   "impersonation": {

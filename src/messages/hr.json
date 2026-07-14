@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Vlastita",
-      "description": "Dodijelite narudžbe za dostavu vlastitim vozačima — fiksnih $7.99 po dostavi, naplaćeno tjedno. Kada je uključeno, nove narudžbe za dostavu idu vašim Fee Free vozačima umjesto ShipDayu.",
+      "description": "Šaljite narudžbe za dostavu vlastitim lokalnim vozačima — s tjednim obračunom, cijena ovisno o udaljenosti dostave (od $7.99). Kada je uključeno, nove narudžbe za dostavu idu vašim Fee Free vozačima umjesto ShipDay-u.",
       "enableLabel": "Omogući Fee Free Delivery",
       "enableHint": "Usmjeri nove narudžbe za dostavu u vlastiti Driver Pool.",
       "autoSendLabel": "Automatsko slanje pri prihvaćanju",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Prihvaćeno",
       "st_started": "Ide u trgovinu",
       "st_enroute": "Na putu"
+    },
+    "deliveryProvider": {
+      "title": "Način dostave",
+      "desc": "Odaberite kako se šalju nove narudžbe za dostavu. Možete to promijeniti u bilo kojem trenutku — u nastavku su prikazane samo postavke odabranog načina.",
+      "ownLabel": "Vaši vlastiti vozači",
+      "ownDesc": "Sami obavljate dostavu — ništa se ne šalje umjesto vas.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Slanje mreži vanjskih kurira ShipDay. Dostupno svugdje.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Naš vlastiti lokalni skup vozača — od $7.99 po dostavi ovisno o udaljenosti, s tjednim obračunom.",
+      "feefreeAreaBadge": "U vašem području",
+      "activeBadge": "Aktivno",
+      "addonRequired": "Dodatak",
+      "ownNote": "Dostavu obavljate s vlastitim vozačima. Nove narudžbe za dostavu Fee Free neće slati nikamo — vi ih sami upravljate.",
+      "toastSaved": "Način dostave ažuriran",
+      "toastFailed": "Promjena nije uspjela. Pokušajte ponovno.",
+      "lockedToast": "Pretplatite se na Driver Pool za slanje putem ShipDay ili Fee Free Delivery.",
+      "onlinePaymentToast": "Prvo vam je potreban online način plaćanja — narudžbe za dostavu moraju se platiti online.",
+      "notInAreaToast": "Fee Free Delivery još nije dostupan u vašem području.",
+      "lockedNotice": "ShipDay i Fee Free Delivery trebaju dodatak Driver Pool. Vaši vlastiti vozači uvijek su besplatni za korištenje.",
+      "getDriverPool": "Nabavite Driver Pool"
     }
   },
   "impersonation": {

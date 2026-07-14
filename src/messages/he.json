@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "פנימי",
-      "description": "שלח הזמנות משלוח לנהגים שלך — מחיר קבוע של $7.99 למשלוח, בחיוב שבועי. כשהאפשרות פעילה, הזמנות משלוח חדשות מגיעות לנהגי Fee Free Delivery שלך במקום ל-ShipDay.",
+      "description": "שלח הזמנות משלוח לנהגים המקומיים שלך — חיוב שבועי, תמחור לפי מרחק המשלוח (החל מ-$7.99). כאשר מופעל, הזמנות משלוח חדשות עוברות לנהגי Fee Free שלך במקום ל-ShipDay.",
       "enableLabel": "הפעל את Fee Free Delivery",
       "enableHint": "נתב הזמנות משלוח חדשות ל-Driver Pool שלך.",
       "autoSendLabel": "שליחה אוטומטית עם האישור",
@@ -4660,6 +4660,27 @@
       "st_accepted": "אושר",
       "st_started": "בדרך לחנות",
       "st_enroute": "בדרך"
+    },
+    "deliveryProvider": {
+      "title": "שיטת משלוח",
+      "desc": "בחר כיצד נשלחות הזמנות משלוח חדשות. אפשר לשנות זאת בכל עת — למטה מוצגות רק ההגדרות של השיטה שבחרת.",
+      "ownLabel": "הנהגים שלך",
+      "ownDesc": "אתה מטפל במשלוח בעצמך — שום דבר לא נשלח עבורך.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "שליחה לרשת השליחים החיצונית ShipDay. זמין בכל מקום.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "מאגר הנהגים המקומי שלנו — החל מ-$7.99 למשלוח לפי מרחק, חיוב שבועי.",
+      "feefreeAreaBadge": "באזור שלך",
+      "activeBadge": "פעיל",
+      "addonRequired": "תוסף",
+      "ownNote": "אתה מטפל במשלוח עם הנהגים שלך. הזמנות משלוח חדשות לא יישלחו לשום מקום על ידי Fee Free — אתה מנהל אותן בעצמך.",
+      "toastSaved": "שיטת המשלוח עודכנה",
+      "toastFailed": "המעבר נכשל. נסה שוב.",
+      "lockedToast": "הירשם ל-Driver Pool כדי לשלוח דרך ShipDay או Fee Free Delivery.",
+      "onlinePaymentToast": "תחילה נדרשת שיטת תשלום מקוונת — הזמנות משלוח חייבות להיות משולמות באופן מקוון.",
+      "notInAreaToast": "Fee Free Delivery עדיין לא זמין באזור שלך.",
+      "lockedNotice": "ShipDay ו-Fee Free Delivery דורשים את תוסף Driver Pool. את הנהגים שלך תמיד אפשר להשתמש בחינם.",
+      "getDriverPool": "קבל Driver Pool"
     }
   },
   "impersonation": {

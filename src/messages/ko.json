@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "자체 배달",
-      "description": "배달 주문을 자체 배달원에게 배정하세요 — 배달 건당 정액 $7.99, 주 단위 청구. 켜면 새 배달 주문이 ShipDay 대신 Fee Free 배달원에게 전달됩니다.",
+      "description": "배달 주문을 자체 지역 기사에게 배차합니다——매주 청구되며 배달 거리에 따라 요금이 책정됩니다($7.99부터). 켜면 새 배달 주문이 ShipDay 대신 Fee Free 기사에게 전달됩니다.",
       "enableLabel": "Fee Free Delivery 사용",
       "enableHint": "새 배달 주문을 자체 Driver Pool로 전달합니다.",
       "autoSendLabel": "수락 시 자동 전송",
@@ -4660,6 +4660,27 @@
       "st_accepted": "수락됨",
       "st_started": "매장으로 이동 중",
       "st_enroute": "배달 중"
+    },
+    "deliveryProvider": {
+      "title": "배달 방법",
+      "desc": "새 배달 주문을 어떻게 배차할지 선택하세요. 언제든지 변경할 수 있으며, 선택한 방법의 설정만 아래에 표시됩니다.",
+      "ownLabel": "자체 기사",
+      "ownDesc": "배달을 직접 처리합니다——저희 쪽에서 배차되는 것은 없습니다.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "ShipDay 제3자 택배 네트워크로 배차합니다. 어디서나 이용 가능합니다.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "저희 자체 지역 기사 풀——거리에 따라 배달당 $7.99부터, 매주 청구.",
+      "feefreeAreaBadge": "내 지역에서 이용 가능",
+      "activeBadge": "활성",
+      "addonRequired": "부가기능",
+      "ownNote": "자체 기사로 배달을 처리하고 있습니다. 새 배달 주문은 Fee Free에서 어디로도 배차되지 않으며——직접 관리하셔야 합니다.",
+      "toastSaved": "배달 방법이 업데이트되었습니다",
+      "toastFailed": "전환하지 못했습니다. 다시 시도해 주세요.",
+      "lockedToast": "ShipDay 또는 Fee Free Delivery로 배차하려면 Driver Pool을 구독하세요.",
+      "onlinePaymentToast": "먼저 온라인 결제 수단이 필요합니다——배달 주문은 온라인으로 결제해야 합니다.",
+      "notInAreaToast": "Fee Free Delivery는 아직 내 지역에서 이용할 수 없습니다.",
+      "lockedNotice": "ShipDay와 Fee Free Delivery에는 Driver Pool 부가기능이 필요합니다. 자체 기사는 항상 무료로 사용할 수 있습니다.",
+      "getDriverPool": "Driver Pool 받기"
     }
   },
   "impersonation": {

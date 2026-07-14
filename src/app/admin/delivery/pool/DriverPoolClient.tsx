@@ -39,11 +39,24 @@ type Initial = {
   partnerContacted: boolean;
 };
 
-export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Initial; driverPoolEntitled: boolean }) {
+export function DriverPoolClient({
+  initial,
+  driverPoolEntitled,
+  hideSourceSelector = false,
+}: {
+  initial: Initial;
+  driverPoolEntitled: boolean;
+  /** When embedded under the provider chooser (which owns the own/shipday/feefree
+   *  choice), hide the own/shipday/both source cards and lock the source to
+   *  ShipDay — this panel is only shown when ShipDay is the chosen provider. */
+  hideSourceSelector?: boolean;
+}) {
   const t = useTranslations("admin.driverPool");
   const router = useRouter();
   const [enabled, setEnabled] = useState(initial.enabled);
-  const [deliverySource, setDeliverySource] = useState<Initial["deliverySource"]>(initial.deliverySource);
+  const [deliverySource, setDeliverySource] = useState<Initial["deliverySource"]>(
+    hideSourceSelector ? "shipday" : initial.deliverySource,
+  );
   // Fee-mode fields are read-only pass-through now (the picker UI was removed —
   // dormant scaffolding; fees come from Delivery Zones). Saved values echo back
   // unchanged so the API payload shape stays identical.
@@ -204,7 +217,8 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
         </div>
       )}
 
-      {/* Section 1: Delivery source */}
+      {/* Section 1: Delivery source (hidden when driven by the provider chooser) */}
+      {!hideSourceSelector && (
       <Section
         title={t("deliverySourceTitle")}
         description={t("deliverySourceDescription")}
@@ -266,6 +280,7 @@ export function DriverPoolClient({ initial, driverPoolEntitled }: { initial: Ini
           </div>
         )}
       </Section>
+      )}
 
       {/* Section 2: ShipDay credentials — only shown when source isn't "own" */}
       {needsShipDay && (

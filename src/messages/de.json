@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Eigene Fahrer",
-      "description": "Liefern Sie Bestellungen mit Ihren eigenen Fahrern aus – pauschal $7.99 pro Lieferung, wöchentlich abgerechnet. Wenn aktiviert, gehen neue Lieferbestellungen an Ihre Fee Free-Fahrer statt an ShipDay.",
+      "description": "Senden Sie Lieferbestellungen an Ihre eigenen lokalen Fahrer — wöchentlich abgerechnet, nach Lieferentfernung berechnet (ab $7.99). Wenn aktiviert, gehen neue Lieferbestellungen an Ihre Fee-Free-Fahrer statt an ShipDay.",
       "enableLabel": "Fee Free Delivery aktivieren",
       "enableHint": "Neue Lieferbestellungen an Ihren eigenen Driver Pool weiterleiten.",
       "autoSendLabel": "Automatisch bei Annahme senden",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Angenommen",
       "st_started": "Auf dem Weg zum Laden",
       "st_enroute": "Unterwegs"
+    },
+    "deliveryProvider": {
+      "title": "Liefermethode",
+      "desc": "Legen Sie fest, wie neue Lieferbestellungen versendet werden. Sie können dies jederzeit ändern — nur die Einstellungen der gewählten Methode werden unten angezeigt.",
+      "ownLabel": "Eigene Fahrer",
+      "ownDesc": "Sie übernehmen die Lieferung selbst — es wird nichts für Sie versendet.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Versand über das ShipDay-Kuriernetzwerk von Drittanbietern. Überall verfügbar.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Unser eigener lokaler Fahrerpool — ab $7.99 pro Lieferung je nach Entfernung, wöchentlich abgerechnet.",
+      "feefreeAreaBadge": "In Ihrer Region",
+      "activeBadge": "Aktiv",
+      "addonRequired": "Add-on",
+      "ownNote": "Sie wickeln die Lieferung mit Ihren eigenen Fahrern ab. Neue Lieferbestellungen werden von Fee Free nirgendwohin versendet — Sie verwalten sie selbst.",
+      "toastSaved": "Liefermethode aktualisiert",
+      "toastFailed": "Wechsel fehlgeschlagen. Bitte versuchen Sie es erneut.",
+      "lockedToast": "Abonnieren Sie Driver Pool, um mit ShipDay oder Fee Free Delivery zu versenden.",
+      "onlinePaymentToast": "Sie benötigen zuerst eine Online-Zahlungsmethode — Lieferbestellungen müssen online bezahlt werden.",
+      "notInAreaToast": "Fee Free Delivery ist in Ihrer Region noch nicht verfügbar.",
+      "lockedNotice": "ShipDay und Fee Free Delivery erfordern das Driver-Pool-Add-on. Ihre eigenen Fahrer können Sie immer kostenlos nutzen.",
+      "getDriverPool": "Driver Pool holen"
     }
   },
   "impersonation": {

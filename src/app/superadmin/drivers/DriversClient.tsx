@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Bike, Plus, Loader2, X, Circle, MapPin, Star } from "lucide-react";
+import { Bike, Plus, Loader2, X, Circle, MapPin, Star, Smartphone, Copy, Check, ExternalLink } from "lucide-react";
 
 type Driver = {
   id: string;
@@ -27,14 +27,17 @@ const emptyForm = { name: "", email: "", phone: "", password: "", homeRestaurant
 export function DriversClient({
   initialDrivers,
   restaurants,
+  driverAppUrl,
 }: {
   initialDrivers: Driver[];
   restaurants: Restaurant[];
+  driverAppUrl: string;
 }) {
   const router = useRouter();
   const [showAdd, setShowAdd] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [saving, setSaving] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   async function createDriver() {
     if (!form.name.trim() || !form.email.trim() || form.password.length < 8) {
@@ -102,6 +105,47 @@ export function DriversClient({
         >
           {showAdd ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />} {showAdd ? "Cancel" : "New driver"}
         </button>
+      </div>
+
+      {/* Where drivers sign in — the standalone /driver PWA. */}
+      <div className="mb-6 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
+        <div className="w-9 h-9 rounded-lg bg-emerald-500 text-white flex items-center justify-center flex-shrink-0">
+          <Smartphone className="w-5 h-5" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="text-sm font-bold text-emerald-900">Driver app</div>
+          <p className="text-xs text-emerald-800/90 mt-0.5">
+            Drivers sign in here with the email + password you set. It installs to the home screen (Add to Home Screen) and works like a native app.
+          </p>
+          <div className="mt-2 flex items-center gap-2 flex-wrap">
+            <code className="text-[13px] font-mono bg-white border border-emerald-200 rounded-lg px-3 py-1.5 text-emerald-900 break-all select-all">
+              {driverAppUrl}
+            </code>
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(driverAppUrl);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                } catch {
+                  toast.error("Couldn't copy");
+                }
+              }}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold border border-emerald-300 text-emerald-800 hover:bg-emerald-100 rounded-lg px-3 py-1.5"
+            >
+              {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />} {copied ? "Copied" : "Copy"}
+            </button>
+            <a
+              href={driverAppUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold border border-emerald-300 text-emerald-800 hover:bg-emerald-100 rounded-lg px-3 py-1.5"
+            >
+              <ExternalLink className="w-3.5 h-3.5" /> Open
+            </a>
+          </div>
+        </div>
       </div>
 
       {showAdd && (

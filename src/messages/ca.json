@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Intern",
-      "description": "Assigna les comandes a domicili als teus propis repartidors — una tarifa fixa de $7.99 per lliurament, facturada setmanalment. Quan està activat, les noves comandes a domicili van als teus repartidors Fee Free en lloc de ShipDay.",
+      "description": "Despatxa les comandes de lliurament als teus propis repartidors locals — facturat setmanalment, amb preu segons la distància de lliurament (des de $7.99). Quan està activat, les noves comandes de lliurament van als teus repartidors Fee Free en lloc de ShipDay.",
       "enableLabel": "Activa Fee Free Delivery",
       "enableHint": "Encamina les noves comandes a domicili al teu propi Driver Pool.",
       "autoSendLabel": "Enviament automàtic en acceptar",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Acceptada",
       "st_started": "Cap al restaurant",
       "st_enroute": "En camí"
+    },
+    "deliveryProvider": {
+      "title": "Mètode de lliurament",
+      "desc": "Tria com es despatxen les noves comandes de lliurament. Ho pots canviar en qualsevol moment — a sota només es mostren els ajustos del mètode triat.",
+      "ownLabel": "Els teus propis repartidors",
+      "ownDesc": "Gestiones tu mateix el lliurament — no es despatxa res per tu.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Despatxa a la xarxa de missatgers externa ShipDay. Disponible a tot arreu.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "La nostra pròpia xarxa de repartidors locals — des de $7.99 per lliurament segons la distància, facturat setmanalment.",
+      "feefreeAreaBadge": "A la teva zona",
+      "activeBadge": "Actiu",
+      "addonRequired": "Complement",
+      "ownNote": "Estàs gestionant el lliurament amb els teus propis repartidors. Fee Free no despatxarà les noves comandes de lliurament enlloc — les gestiones tu mateix.",
+      "toastSaved": "Mètode de lliurament actualitzat",
+      "toastFailed": "No s'ha pogut canviar. Torna-ho a provar.",
+      "lockedToast": "Subscriu-te a Driver Pool per despatxar amb ShipDay o Fee Free Delivery.",
+      "onlinePaymentToast": "Primer necessites un mètode de pagament en línia — les comandes de lliurament s'han de pagar en línia.",
+      "notInAreaToast": "Fee Free Delivery encara no està disponible a la teva zona.",
+      "lockedNotice": "ShipDay i Fee Free Delivery necessiten el complement Driver Pool. Els teus propis repartidors sempre són gratuïts d'utilitzar.",
+      "getDriverPool": "Obtén Driver Pool"
     }
   },
   "impersonation": {

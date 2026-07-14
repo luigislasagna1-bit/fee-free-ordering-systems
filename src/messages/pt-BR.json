@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Interno",
-      "description": "Envie os pedidos de entrega aos seus próprios entregadores — uma taxa fixa de $7.99 por entrega, cobrada semanalmente. Quando ativado, os novos pedidos de entrega vão para os seus entregadores Fee Free em vez do ShipDay.",
+      "description": "Despache os pedidos de entrega para seus próprios entregadores locais — cobrado semanalmente, com preço conforme a distância de entrega (a partir de $7.99). Quando ativado, os novos pedidos de entrega vão para seus entregadores Fee Free em vez do ShipDay.",
       "enableLabel": "Ativar Fee Free Delivery",
       "enableHint": "Direcione os novos pedidos de entrega para o seu próprio Driver Pool.",
       "autoSendLabel": "Envio automático ao aceitar",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Aceita",
       "st_started": "Indo ao restaurante",
       "st_enroute": "A caminho"
+    },
+    "deliveryProvider": {
+      "title": "Método de entrega",
+      "desc": "Escolha como os novos pedidos de entrega são despachados. Você pode mudar quando quiser — só aparecem abaixo as configurações do método escolhido.",
+      "ownLabel": "Seus próprios entregadores",
+      "ownDesc": "Você cuida da entrega — nada é despachado para você.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Despache para a rede de entregadores terceirizada ShipDay. Disponível em todos os lugares.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Nossa própria rede de entregadores locais — a partir de $7.99 por entrega conforme a distância, cobrado semanalmente.",
+      "feefreeAreaBadge": "Na sua região",
+      "activeBadge": "Ativo",
+      "addonRequired": "Complemento",
+      "ownNote": "Você está cuidando da entrega com seus próprios entregadores. Os novos pedidos de entrega não serão despachados para lugar nenhum pela Fee Free — você mesmo os gerencia.",
+      "toastSaved": "Método de entrega atualizado",
+      "toastFailed": "Não foi possível trocar. Tente novamente.",
+      "lockedToast": "Assine o Driver Pool para despachar com o ShipDay ou o Fee Free Delivery.",
+      "onlinePaymentToast": "Você precisa primeiro de um método de pagamento on-line — os pedidos de entrega devem ser pagos on-line.",
+      "notInAreaToast": "O Fee Free Delivery ainda não está disponível na sua região.",
+      "lockedNotice": "O ShipDay e o Fee Free Delivery precisam do complemento Driver Pool. Seus próprios entregadores são sempre gratuitos.",
+      "getDriverPool": "Obter Driver Pool"
     }
   },
   "impersonation": {

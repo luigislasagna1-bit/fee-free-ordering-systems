@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Interno",
-      "description": "Assegna gli ordini in consegna ai tuoi fattorini — una tariffa fissa di $7.99 per consegna, fatturata settimanalmente. Quando è attivo, i nuovi ordini in consegna vanno ai tuoi fattorini Fee Free anziché a ShipDay.",
+      "description": "Smista gli ordini in consegna ai tuoi corrieri locali — con fatturazione settimanale, prezzo in base alla distanza di consegna (da $7.99). Quando è attivo, i nuovi ordini in consegna vanno ai tuoi corrieri Fee Free invece che a ShipDay.",
       "enableLabel": "Attiva Fee Free Delivery",
       "enableHint": "Instrada i nuovi ordini in consegna al tuo Driver Pool.",
       "autoSendLabel": "Invio automatico all'accettazione",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Accettata",
       "st_started": "In viaggio verso il locale",
       "st_enroute": "In arrivo"
+    },
+    "deliveryProvider": {
+      "title": "Metodo di consegna",
+      "desc": "Scegli come vengono smistati i nuovi ordini in consegna. Puoi cambiarlo in qualsiasi momento — qui sotto compaiono solo le impostazioni del metodo scelto.",
+      "ownLabel": "I tuoi corrieri",
+      "ownDesc": "Gestisci tu stesso la consegna — non viene smistato nulla per te.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Smista alla rete di corrieri terzi ShipDay. Disponibile ovunque.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "La nostra rete di corrieri locali — da $7.99 per consegna in base alla distanza, con fatturazione settimanale.",
+      "feefreeAreaBadge": "Nella tua zona",
+      "activeBadge": "Attivo",
+      "addonRequired": "Componente aggiuntivo",
+      "ownNote": "Stai gestendo la consegna con i tuoi corrieri. I nuovi ordini in consegna non verranno smistati da nessuna parte da Fee Free — li gestisci tu.",
+      "toastSaved": "Metodo di consegna aggiornato",
+      "toastFailed": "Impossibile cambiare. Riprova.",
+      "lockedToast": "Abbonati a Driver Pool per smistare con ShipDay o Fee Free Delivery.",
+      "onlinePaymentToast": "Ti serve prima un metodo di pagamento online — gli ordini in consegna devono essere pagati online.",
+      "notInAreaToast": "Fee Free Delivery non è ancora disponibile nella tua zona.",
+      "lockedNotice": "ShipDay e Fee Free Delivery richiedono il componente Driver Pool. I tuoi corrieri sono sempre gratuiti da usare.",
+      "getDriverPool": "Ottieni Driver Pool"
     }
   },
   "impersonation": {

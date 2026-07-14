@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Vidinis",
-      "description": "Nukreipkite pristatymo užsakymus savo vairuotojams — fiksuotas $7.99 mokestis už pristatymą, sąskaita išrašoma kas savaitę. Kai įjungta, nauji pristatymo užsakymai keliauja jūsų Fee Free vairuotojams, o ne ShipDay.",
+      "description": "Siųskite pristatymo užsakymus savo vietiniams kurjeriams — atsiskaitoma kas savaitę, kaina pagal pristatymo atstumą (nuo $7.99). Kai įjungta, nauji pristatymo užsakymai keliauja jūsų Fee Free kurjeriams, o ne ShipDay.",
       "enableLabel": "Įjungti Fee Free Delivery",
       "enableHint": "Nukreipkite naujus pristatymo užsakymus į savo Driver Pool.",
       "autoSendLabel": "Automatinis siuntimas priėmus",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Priimta",
       "st_started": "Vyksta į parduotuvę",
       "st_enroute": "Pakeliui"
+    },
+    "deliveryProvider": {
+      "title": "Pristatymo būdas",
+      "desc": "Pasirinkite, kaip siunčiami nauji pristatymo užsakymai. Galite tai pakeisti bet kada — žemiau rodomi tik pasirinkto būdo nustatymai.",
+      "ownLabel": "Jūsų pačių kurjeriai",
+      "ownDesc": "Pristatymą tvarkote patys — už jus niekas nesiunčiama.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "Siuntimas į ShipDay trečiosios šalies kurjerių tinklą. Pasiekiama visur.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Mūsų pačių vietinis kurjerių telkinys — nuo $7.99 už pristatymą pagal atstumą, atsiskaitoma kas savaitę.",
+      "feefreeAreaBadge": "Jūsų vietovėje",
+      "activeBadge": "Aktyvus",
+      "addonRequired": "Priedas",
+      "ownNote": "Pristatymą tvarkote su savo kurjeriais. Fee Free nesiųs naujų pristatymo užsakymų niekur — juos valdote patys.",
+      "toastSaved": "Pristatymo būdas atnaujintas",
+      "toastFailed": "Nepavyko perjungti. Bandykite dar kartą.",
+      "lockedToast": "Užsiprenumeruokite Driver Pool, kad galėtumėte siųsti per ShipDay arba Fee Free Delivery.",
+      "onlinePaymentToast": "Pirmiausia reikia internetinio mokėjimo būdo — pristatymo užsakymai turi būti apmokami internetu.",
+      "notInAreaToast": "Fee Free Delivery jūsų vietovėje dar nepasiekiama.",
+      "lockedNotice": "ShipDay ir Fee Free Delivery reikia Driver Pool priedo. Jūsų pačių kurjeriais naudotis visada nemokama.",
+      "getDriverPool": "Gauti Driver Pool"
     }
   },
   "impersonation": {

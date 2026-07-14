@@ -4630,7 +4630,7 @@
     "feefreeDelivery": {
       "heading": "Fee Free Delivery",
       "badge": "Kendi ekibiniz",
-      "description": "Teslimat siparişlerini kendi sürücülerinize yönlendirin — teslimat başına sabit $7.99, haftalık faturalandırılır. Açık olduğunda, yeni teslimat siparişleri ShipDay yerine Fee Free sürücülerinize gider.",
+      "description": "Teslimat siparişlerini kendi yerel sürücülerinize gönderin — haftalık faturalandırılır, teslimat mesafesine göre fiyatlandırılır ($7.99'dan başlar). Etkinken, yeni teslimat siparişleri ShipDay yerine Fee Free sürücülerinize gider.",
       "enableLabel": "Fee Free Delivery'yi etkinleştir",
       "enableHint": "Yeni teslimat siparişlerini kendi Driver Pool'unuza yönlendirin.",
       "autoSendLabel": "Kabul edince otomatik gönder",
@@ -4660,6 +4660,27 @@
       "st_accepted": "Kabul edildi",
       "st_started": "Mağazaya gidiyor",
       "st_enroute": "Yolda"
+    },
+    "deliveryProvider": {
+      "title": "Teslimat yöntemi",
+      "desc": "Yeni teslimat siparişlerinin nasıl gönderileceğini seçin. Bunu istediğiniz zaman değiştirebilirsiniz — aşağıda yalnızca seçtiğiniz yöntemin ayarları görünür.",
+      "ownLabel": "Kendi sürücüleriniz",
+      "ownDesc": "Teslimatı kendiniz yönetirsiniz — sizin adınıza hiçbir gönderim yapılmaz.",
+      "shipdayLabel": "ShipDay",
+      "shipdayDesc": "ShipDay üçüncü taraf kurye ağına gönderin. Her yerde kullanılabilir.",
+      "feefreeLabel": "Fee Free Delivery",
+      "feefreeDesc": "Kendi yerel sürücü havuzumuz — mesafeye göre teslimat başına $7.99'dan başlar, haftalık faturalandırılır.",
+      "feefreeAreaBadge": "Bölgenizde",
+      "activeBadge": "Etkin",
+      "addonRequired": "Eklenti",
+      "ownNote": "Teslimatı kendi sürücülerinizle yönetiyorsunuz. Yeni teslimat siparişleri Fee Free tarafından hiçbir yere gönderilmez — onları kendiniz yönetirsiniz.",
+      "toastSaved": "Teslimat yöntemi güncellendi",
+      "toastFailed": "Değiştirilemedi. Lütfen tekrar deneyin.",
+      "lockedToast": "ShipDay veya Fee Free Delivery ile gönderim yapmak için Driver Pool'a abone olun.",
+      "onlinePaymentToast": "Önce bir çevrimiçi ödeme yöntemine ihtiyacınız var — teslimat siparişleri çevrimiçi ödenmelidir.",
+      "notInAreaToast": "Fee Free Delivery henüz bölgenizde kullanılamıyor.",
+      "lockedNotice": "ShipDay ve Fee Free Delivery için Driver Pool eklentisi gerekir. Kendi sürücülerinizi her zaman ücretsiz kullanabilirsiniz.",
+      "getDriverPool": "Driver Pool edinin"
     }
   },
   "impersonation": {
