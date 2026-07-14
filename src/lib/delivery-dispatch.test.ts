@@ -98,8 +98,9 @@ describe("resolveDeliveryProvider (feefree > shipday > own)", () => {
 });
 
 describe("assignToFeeFreeDriver", () => {
-  it("creates a queued assignment for a valid prepaid delivery", async () => {
+  it("creates a queued assignment for a valid prepaid delivery (autoSend on)", async () => {
     prismaMock.order.findUnique.mockResolvedValue({ ...base(), id: "o1", restaurantId: "r1", deliveryAssignment: null });
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ autoSend: true }); // auto-dispatch enabled
     prismaMock.deliveryAssignment.create.mockResolvedValue({ id: "a1" });
     const r = await assignToFeeFreeDriver("o1");
     expect(r).toEqual({ ok: true, provider: "feefree", assignmentId: "a1" });
@@ -120,6 +121,14 @@ describe("assignToFeeFreeDriver", () => {
   it("holds for manual dispatch when autoSend is off (no assignment created)", async () => {
     prismaMock.order.findUnique.mockResolvedValue({ ...base(), id: "o1", restaurantId: "r1", deliveryAssignment: null });
     prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ autoSend: false });
+    const r = await assignToFeeFreeDriver("o1");
+    expect(r).toEqual({ ok: false, provider: "feefree", skipped: "manual_hold" });
+  });
+
+  it("holds by default — manual unless autoSend is explicitly ON (Luigi 2026-07-14)", async () => {
+    prismaMock.order.findUnique.mockResolvedValue({ ...base(), id: "o1", restaurantId: "r1", deliveryAssignment: null });
+    // config exists but autoSend not turned on → must NOT auto-fly to a driver
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ enabled: true });
     const r = await assignToFeeFreeDriver("o1");
     expect(r).toEqual({ ok: false, provider: "feefree", skipped: "manual_hold" });
     expect(prismaMock.deliveryAssignment.create).not.toHaveBeenCalled();
@@ -146,7 +155,8 @@ describe("dispatchDeliveryNow (provider branch)", () => {
     prismaMock.order.findUnique
       .mockResolvedValueOnce({ id: "o1", restaurantId: "r1", type: "delivery" }) // dispatchDeliveryNow's lookup
       .mockResolvedValueOnce({ ...base(), id: "o1", restaurantId: "r1", deliveryAssignment: null }); // assignToFeeFreeDriver's lookup
-    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ enabled: true });
+    // enabled → resolveDeliveryProvider picks feefree; autoSend → auto-queue (vs manual hold)
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ enabled: true, autoSend: true });
     prismaMock.deliveryAssignment.create.mockResolvedValue({ id: "a1" });
     const r = await dispatchDeliveryNow("o1");
     expect(r).toEqual({ ok: true, provider: "feefree", assignmentId: "a1" });

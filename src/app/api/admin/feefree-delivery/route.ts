@@ -29,7 +29,10 @@ export async function GET() {
 
   const cfg =
     (await prisma.feeFreeDeliveryConfig.findUnique({ where: { restaurantId } })) ??
-    (await prisma.feeFreeDeliveryConfig.create({ data: { restaurantId } }));
+    // Default to MANUAL dispatch (autoSend off): a new delivery order should
+    // NOT auto-fly to a driver — the restaurant decides per order until they opt
+    // into auto-dispatch (Luigi 2026-07-14).
+    (await prisma.feeFreeDeliveryConfig.create({ data: { restaurantId, autoSend: false } }));
 
   return NextResponse.json({
     enabled: cfg.enabled,
@@ -105,7 +108,9 @@ export async function PUT(req: NextRequest) {
 
   await prisma.feeFreeDeliveryConfig.upsert({
     where: { restaurantId },
-    create: { restaurantId, ...update },
+    // Manual by default — auto-send is opt-in (spread lets an explicit autoSend
+    // in the body win). See the GET default above.
+    create: { restaurantId, autoSend: false, ...update },
     update,
   });
 

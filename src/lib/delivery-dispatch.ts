@@ -106,14 +106,16 @@ export async function assignToFeeFreeDriver(
   if (!guard.ok) return { ok: false, provider: "feefree", skipped: guard.skipped };
 
   // Manual-dispatch hold: the accept hook (force=false) defers to the owner's
-  // autoSend preference. Default true (schema default) so a missing config still
-  // auto-queues. The manual button passes force=true.
+  // autoSend preference, which is MANUAL by default (Luigi 2026-07-14) — a new
+  // order should NOT auto-fly to a driver. It only auto-queues when the owner has
+  // explicitly turned Auto-send ON. The manual "Send to driver" button passes
+  // force=true and always queues.
   if (!opts.force) {
     const cfg = await prisma.feeFreeDeliveryConfig.findUnique({
       where: { restaurantId: order.restaurantId },
       select: { autoSend: true },
     });
-    if (cfg && cfg.autoSend === false) {
+    if (!cfg?.autoSend) {
       return { ok: false, provider: "feefree", skipped: "manual_hold" };
     }
   }
