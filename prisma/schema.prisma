@@ -3520,6 +3520,10 @@ model DeliveryAssignment {
   deliveredAt  DateTime?
   returnedAt   DateTime?
   failedAt     DateTime?
+  /// Set when the "no driver accepted within 3 min" escalation SMS has been sent
+  /// to the Fee Free platform owner, so the per-minute cron alerts exactly once
+  /// per stuck order (Luigi 2026-07-14).
+  unclaimedAlertedAt DateTime?
   /// Frozen platform fee in cents at delivery (799). Source of truth for the
   /// weekly settlement so a later price change never re-bills old deliveries.
   platformFeeCents        Int?

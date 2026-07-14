@@ -11,6 +11,12 @@
 
 ## A. DO NOW — this week, in priority order
 
+### A18. 🔷 Set the Fee Free Delivery "unclaimed order" alert phone (Sameem)
+A new safety net texts the Fee Free platform owner when a delivery order sits in the pool with NO driver accepting for 3 minutes (so it never gets silently dropped). To turn it on, set in Vercel env:
+- `FEEFREE_DISPATCH_ALERT_PHONE` = `+16476690808` (Sameem Nabil)
+- (SMS goes through the existing Twilio setup — needs `FFOS_TWILIO_ACCOUNT_SID` / `FFOS_TWILIO_AUTH_TOKEN` / `FFOS_TWILIO_FROM_NUMBER` set too, same as the driver-invite SMS.)
+Until the phone is set, the cron still runs but just logs "no alert phone configured" (no text sent) — nothing breaks. The alert links to `/superadmin/drivers` to assign it manually.
+
 ### A17. 🔷 Enrol the Apple Developer ORG account for Fee Free Ordering Inc. (D-U-N-S landed 2026-07-14)
 Your D-U-N-S number for **Fee Free Ordering Inc.** is in hand — this was the blocker for the company Apple account. Now:
 1. Go to **developer.apple.com/enroll** → choose **Company/Organization** → enter the D-U-N-S + legal entity details (use a *company* Apple Account/email if you have one, not a personal one). Pay the $99/yr. Apple verifies the org — usually **1–5 business days** (they may phone to confirm).
