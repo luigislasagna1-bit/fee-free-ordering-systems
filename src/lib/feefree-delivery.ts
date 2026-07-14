@@ -3,11 +3,69 @@
  * The billing week runs Monday 00:00 UTC → next Monday, mirroring the monthly
  * boundary helpers in marketplace-settlement.ts.
  */
+import { haversineKm } from "@/lib/geocode";
 
-/** Flat platform fee charged to the restaurant per DELIVERED order, in cents.
- *  Frozen onto DeliveryAssignment.platformFeeCents at delivery so a later price
- *  change never re-bills old deliveries. ($7.99 — vs ShipDay 10.99–12.99.) */
+/** Base/fallback platform fee (cents) — the first (nearest) distance tier. Used
+ *  when the delivery distance can't be computed (missing coordinates). Frozen
+ *  onto DeliveryAssignment.platformFeeCents at delivery so a later price change
+ *  never re-bills old deliveries. */
 export const FEEFREE_DELIVERY_PER_ORDER_CENTS = 799;
+
+/**
+ * DISTANCE-TIERED platform fee (Luigi 2026-07-14) — what FeeFree bills the
+ * restaurant per delivered order, by straight-line distance restaurant→customer:
+ *   ≤ 3.5 km → $7.99 · 3.5–7 km → $8.99 · 7–10 km → $9.99.
+ * Beyond 10 km bills the top tier (the restaurant's Delivery Zones cap the actual
+ * deliverable range, so this is a safety default, not a real band). Not advertised
+ * as a single flat number.
+ */
+export const FEEFREE_DELIVERY_TIERS: ReadonlyArray<{ maxKm: number; cents: number }> = [
+  { maxKm: 3.5, cents: 799 },
+  { maxKm: 7, cents: 899 },
+  { maxKm: 10, cents: 999 },
+];
+
+/** The platform fee (cents) for a delivery of `km` straight-line distance. */
+export function feeCentsForDistanceKm(km: number): number {
+  if (!Number.isFinite(km) || km < 0) return FEEFREE_DELIVERY_PER_ORDER_CENTS;
+  for (const tier of FEEFREE_DELIVERY_TIERS) if (km <= tier.maxKm) return tier.cents;
+  return FEEFREE_DELIVERY_TIERS[FEEFREE_DELIVERY_TIERS.length - 1].cents; // > top band
+}
+
+/**
+ * The frozen fee for a delivered order, given the restaurant + customer
+ * coordinates. Falls back to the base fee when either coordinate is missing
+ * (so a delivery is never un-billable). Cents.
+ */
+export function feeCentsForDelivery(
+  restaurantLat: number | null | undefined,
+  restaurantLng: number | null | undefined,
+  customerLat: number | null | undefined,
+  customerLng: number | null | undefined,
+): number {
+  if (restaurantLat == null || restaurantLng == null || customerLat == null || customerLng == null) {
+    return FEEFREE_DELIVERY_PER_ORDER_CENTS;
+  }
+  return feeCentsForDistanceKm(haversineKm(restaurantLat, restaurantLng, customerLat, customerLng));
+}
+
+/**
+ * FeeFreeDelivery SERVICE AREA (Luigi 2026-07-14) — the in-house driver pool is
+ * only offered to restaurants near the operation's home base (Milton / L9T, the
+ * Greater Toronto Area), within 100 km. Restaurants outside this radius never see
+ * the FeeFree option (they still get Own + ShipDay). ShipDay is a global
+ * third-party network, so it isn't geo-gated.
+ */
+export const FEEFREE_SERVICE_ANCHOR = { lat: 43.5183, lng: -79.8774, label: "Milton, ON (L9T)" };
+export const FEEFREE_SERVICE_RADIUS_KM = 100;
+
+/** True if a restaurant at (lat,lng) is inside the FeeFree service area. A
+ *  restaurant with no coordinates is treated as OUT (can't be placed → not
+ *  offered). */
+export function isFeeFreeServiceArea(lat: number | null | undefined, lng: number | null | undefined): boolean {
+  if (lat == null || lng == null) return false;
+  return haversineKm(FEEFREE_SERVICE_ANCHOR.lat, FEEFREE_SERVICE_ANCHOR.lng, lat, lng) <= FEEFREE_SERVICE_RADIUS_KM;
+}
 
 /** First moment (UTC) of the Monday-anchored week that contains `d`. */
 export function weekStartUtc(d: Date): Date {

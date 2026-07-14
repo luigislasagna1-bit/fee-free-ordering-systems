@@ -8,6 +8,7 @@ const { prismaMock, dispatchOrderNowMock, shouldDispatchToShipdayMock } = vi.hoi
     order: { findUnique: vi.fn() },
     feeFreeDeliveryConfig: { findUnique: vi.fn() },
     deliveryAssignment: { create: vi.fn() },
+    restaurant: { findUnique: vi.fn() },
   },
   dispatchOrderNowMock: vi.fn(),
   shouldDispatchToShipdayMock: vi.fn(),
@@ -31,8 +32,13 @@ const base = (over: Partial<DispatchableOrder> = {}): DispatchableOrder => ({
   ...over,
 });
 
+// Milton, ON — inside the FeeFree service area (the anchor). Default so feefree
+// resolves; individual tests override for the out-of-area case.
+const IN_AREA = { lat: 43.5183, lng: -79.8774 };
+
 beforeEach(() => {
   vi.clearAllMocks();
+  prismaMock.restaurant.findUnique.mockResolvedValue(IN_AREA);
 });
 
 describe("assertDispatchable (shared ShipDay + FeeFree guards)", () => {
@@ -80,6 +86,12 @@ describe("resolveDeliveryProvider (feefree > shipday > own)", () => {
   });
   it("returns own when neither is configured", async () => {
     prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue(null);
+    shouldDispatchToShipdayMock.mockResolvedValue(false);
+    expect(await resolveDeliveryProvider("r1")).toBe("own");
+  });
+  it("does NOT return feefree when the restaurant is OUTSIDE the service area (falls through)", async () => {
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ enabled: true });
+    prismaMock.restaurant.findUnique.mockResolvedValue({ lat: 45.5019, lng: -73.5674 }); // Montreal, ~500km
     shouldDispatchToShipdayMock.mockResolvedValue(false);
     expect(await resolveDeliveryProvider("r1")).toBe("own");
   });

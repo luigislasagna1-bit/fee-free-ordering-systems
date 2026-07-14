@@ -8,6 +8,7 @@
 import prisma from "@/lib/db";
 import { dispatchOrderNow } from "@/lib/shipday-dispatch";
 import { shouldDispatchToShipday } from "@/lib/shipday";
+import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
 
 export type DeliveryProvider = "own" | "shipday" | "feefree";
 
@@ -22,7 +23,14 @@ export async function resolveDeliveryProvider(restaurantId: string): Promise<Del
     where: { restaurantId },
     select: { enabled: true },
   });
-  if (cfg?.enabled) return "feefree";
+  if (cfg?.enabled) {
+    // FeeFree is geo-gated to its service area (≤100km of the home base). Only
+    // route here when the restaurant is actually in range — defensive: the enable
+    // API blocks out-of-area restaurants, but never dispatch to a pool we don't
+    // serve. Out of area → fall through to ShipDay/own.
+    const r = await prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { lat: true, lng: true } });
+    if (isFeeFreeServiceArea(r?.lat, r?.lng)) return "feefree";
+  }
   if (await shouldDispatchToShipday(restaurantId)) return "shipday";
   return "own";
 }

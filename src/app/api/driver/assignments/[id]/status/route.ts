@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import { getDriverSession, checkDriverSessionFresh } from "@/lib/driver-session";
 import { checkDriverTransition, STAGE_TIMESTAMP } from "@/lib/driver-assignment";
 import { applyDeliveryStatus, translateDriverEvent } from "@/lib/delivery-status";
-import { FEEFREE_DELIVERY_PER_ORDER_CENTS } from "@/lib/feefree-delivery";
+import { feeCentsForDelivery } from "@/lib/feefree-delivery";
 import { notifyCustomer } from "@/lib/notifications";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
@@ -43,7 +43,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
           id: true, status: true, type: true, orderNumber: true,
           customerName: true, customerEmail: true, customerPhone: true,
           estimatedReady: true, paymentMethod: true, paymentStatus: true,
-          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true } },
+          deliveryLat: true, deliveryLng: true,
+          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true } },
         },
       },
     },
@@ -66,10 +67,12 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   if (!assignment.driverId) data.driverId = driver.driverId;
   const stamp = STAGE_TIMESTAMP[next];
   if (stamp) data[stamp] = new Date();
-  // Freeze the $7.99 platform fee at delivery — source of truth for the weekly
-  // settlement. Only set once (never re-bill a re-fired delivered).
+  // Freeze the DISTANCE-TIERED platform fee at delivery (7.99/8.99/9.99 by the
+  // restaurant→customer distance) — source of truth for the weekly settlement.
+  // Only set once (never re-bill a re-fired delivered).
   if (next === "delivered" && assignment.platformFeeCents == null) {
-    data.platformFeeCents = FEEFREE_DELIVERY_PER_ORDER_CENTS;
+    const o = assignment.order;
+    data.platformFeeCents = feeCentsForDelivery(o.restaurant.lat, o.restaurant.lng, o.deliveryLat, o.deliveryLng);
   }
 
   // Claim race guard: when accepting a still-unowned assignment, do it

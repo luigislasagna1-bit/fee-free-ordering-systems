@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
 import { restaurantHasOnlinePayments } from "@/lib/shipday";
+import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
 
 /**
  * FeeFreeDelivery config — our OWN in-house driver pool, a sibling to the
@@ -70,6 +71,17 @@ export async function PUT(req: NextRequest) {
   // mirroring the ShipDay driver-pool route. Turning FeeFree OFF, or tweaking
   // fee settings while it's already off, always passes through.
   if (update.enabled === true) {
+    // Geo-gate: FeeFree drivers only serve their home region (≤100km of the base).
+    const r = await prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { lat: true, lng: true } });
+    if (!isFeeFreeServiceArea(r?.lat, r?.lng)) {
+      return NextResponse.json(
+        {
+          error: "Fee Free Delivery isn't available in your area yet. It currently serves the Greater Toronto Area (within 100 km of Milton). ShipDay dispatch is available everywhere.",
+          code: "not_in_service_area",
+        },
+        { status: 412 },
+      );
+    }
     if (!(await hasFeature(restaurantId, "driver_pool"))) {
       return NextResponse.json(
         {
