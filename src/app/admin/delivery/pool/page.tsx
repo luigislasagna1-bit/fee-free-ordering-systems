@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
 import { DriverPoolClient } from "./DriverPoolClient";
 import { FeeFreeDeliverySection } from "./FeeFreeDeliverySection";
 import { FeeFreeDeliveryOps } from "./FeeFreeDeliveryOps";
@@ -40,11 +41,23 @@ export default async function DriverPoolConfigPage() {
 
   const entitled = await hasFeature(user.restaurantId, "driver_pool");
 
+  // FeeFree Delivery is geo-gated: our own driver pool only serves its home region
+  // (≤100km of Milton / the GTA). Restaurants OUTSIDE that radius never see the
+  // FeeFree option at all — they only get Own + ShipDay (ShipDay is global). Luigi
+  // 2026-07-14.
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: user.restaurantId },
+    select: { lat: true, lng: true },
+  });
+  const feefreeAvailable = isFeeFreeServiceArea(restaurant?.lat, restaurant?.lng);
+
   // Fee Free Delivery (our own driver pool) — sibling config, precedence over
   // ShipDay when enabled. Upsert so the section always has a row to bind to.
-  const feefree =
-    (await prisma.feeFreeDeliveryConfig.findUnique({ where: { restaurantId: user.restaurantId } })) ??
-    (await prisma.feeFreeDeliveryConfig.create({ data: { restaurantId: user.restaurantId } }));
+  // Only touched/read when FeeFree is available in this restaurant's area.
+  const feefree = feefreeAvailable
+    ? ((await prisma.feeFreeDeliveryConfig.findUnique({ where: { restaurantId: user.restaurantId } })) ??
+       (await prisma.feeFreeDeliveryConfig.create({ data: { restaurantId: user.restaurantId } })))
+    : null;
 
   // Never send the encrypted API key blob to the client — just whether
   // one has been saved. The form shows "•••• saved" if so, with a
@@ -62,11 +75,15 @@ export default async function DriverPoolConfigPage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <FeeFreeDeliverySection
-        initial={{ enabled: feefree.enabled, autoSend: feefree.autoSend }}
-        entitled={entitled}
-      />
-      {feefree.enabled && <FeeFreeDeliveryOps restaurantId={user.restaurantId} />}
+      {feefree && (
+        <>
+          <FeeFreeDeliverySection
+            initial={{ enabled: feefree.enabled, autoSend: feefree.autoSend }}
+            entitled={entitled}
+          />
+          {feefree.enabled && <FeeFreeDeliveryOps restaurantId={user.restaurantId} />}
+        </>
+      )}
       <DriverPoolClient
       initial={{
         enabled: config.enabled,
