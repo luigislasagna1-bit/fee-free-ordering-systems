@@ -5,7 +5,7 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-14 by Claude (A14 added — marketplace is now FREE; run the retirement migration on prod to stop any paid marketplace billing).
+**Last updated:** 2026-07-14 by Claude (A15 added — native Fee Free Delivery driver apps are built: Android APK ready to sideload now, iOS ready for a Codemagic → TestFlight build).
 
 ---
 
@@ -16,7 +16,23 @@
 1. First see the plan (safe, read-only): `npx tsx scripts/run-on-prod.ts scripts/retire-marketplace-addon.ts` — it lists which subscriptions would be cancelled + who keeps Driver Pool.
 2. Review the list. When you're happy, apply it: `npx tsx scripts/run-on-prod.ts scripts/retire-marketplace-addon.ts --apply` (this cancels the live Stripe subscriptions and retires the add-on).
 3. Tell Claude "done A14" → Claude confirms 0 active marketplace subs on prod and Driver Pool intact for each affected restaurant.
-*(NOTE: the customer marketplace is already live + free. Still on Claude's list, separate from this: rewriting the ADMIN/pricing/features pages that still describe the marketplace as a paid add-on — tracked in TODO. Those are copy only; no one is being wrongly charged.)*
+*(NOTE: the customer marketplace is already live + free. The ADMIN/pricing pages that described it as a paid add-on were ALSO fixed 2026-07-14 — the marketplace admin page now shows "Included — free". Done.)*
+
+### A15. 🔷 Install the Fee Free Delivery DRIVER app on your phone (native builds are ready)
+**Why:** you asked for native Android + iOS apps of the `/driver` app so you can take it on real deliveries — including BACKGROUND GPS (location keeps streaming with the phone locked / in your pocket), which a browser/PWA can't do. Both are built as WebView shells of `feefreeordering.com/driver`, bundle id `com.feefreeordering.driver`, name "Fee Free Delivery". Android is ready to sideload right now; iOS needs a few Apple steps (no Mac required — Codemagic builds it in the cloud like the Kitchen app).
+
+**Android (fastest — do this to test today):**
+1. The debug APK is on this PC at `C:\Users\luigi\Downloads\FeeFreeDelivery-driver-debug.apk`. Copy it to an Android phone (email it to yourself, Google Drive, or USB).
+2. On the phone, tap the APK. Android will ask to allow "install unknown apps" for whatever app you opened it from → allow → Install.
+3. Open "Fee Free Delivery", sign in with a driver login, and it'll ask for location permission — choose **Allow all the time** so background tracking works.
+
+**iOS / TestFlight (needs your Apple account — reuses the SAME setup as the Kitchen app):**
+1. In the **Apple Developer portal** → Certificates, IDs & Profiles → **Identifiers** → register a new App ID with bundle id **`com.feefreeordering.driver`** (team `NT5ZY28ATK`, "Luigi's Lasagna & Pizzeria Inc.").
+2. In **App Store Connect** → Apps → **+ New App** → pick that bundle id, name "Fee Free Delivery", primary language English. (No screenshots/metadata needed just for TestFlight.)
+3. In **Codemagic**, open this repo → run the new **"Fee Free Delivery (iOS)"** workflow (`ios-driver`). It builds on the cloud Mac, signs with your existing `ff-asc-key` + stored cert, and uploads to TestFlight automatically. Use **"Start new build"**, not "Rebuild".
+4. When it finishes (~15 min), the build appears in App Store Connect → TestFlight. Add yourself as an internal tester, accept the invite in the **TestFlight** app on your iPhone, install, and choose **Allow location "Always"** on first run.
+
+Tell Claude how the on-device test goes (does it load, sign in, stream GPS on a real short drive) and I'll fix anything that comes up. NOTE: the app icon is currently the default Capacitor icon — cosmetic, easy to swap later; not worth blocking testing on.
 
 ### A13. 🔷 Turn on FeeFreeDelivery for a store (the Phase 1 MVP just shipped)
 **Why:** the whole in-house delivery product is live in software — the enable path, the `/driver` PWA (live GPS), weekly $7.99 billing, customer live-tracking, and admin/superadmin management. Before a real delivery can flow, three things need YOU (all ops/legal — insurance, payroll, unit-economics — remain your separate call).
