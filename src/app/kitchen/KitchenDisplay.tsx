@@ -31,6 +31,11 @@ import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from
 import { useTranslations, useLocale } from "next-intl";
 import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 
+// Web bundle stamp baked at build time (next.config.ts env). Shown in the 3-dot
+// menu next to the native app version + compared against /api/build-id so a
+// stale WebView-cached bundle can auto-refresh when idle. "dev" locally.
+const WEB_BUILD = process.env.NEXT_PUBLIC_WEB_BUILD || "dev";
+
 // ── Countdown hook ────────────────────────────────────────────────────────────
 // Returns 0 until the client mounts so SSR and the first client render match
 // (Date.now() differs between them, which triggers a hydration warning).
@@ -2152,6 +2157,47 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     else nativeRearmAlarm();
   }, [nativeAlarm, pageVisible, acknowledged, ringAudible, openOrderIsPending, openReservationIsPending]);
 
+  // ── Auto-refresh a stale WebView bundle (Fabrizio iOS report, 2026-07-14) ──
+  // Installed apps load the LIVE /kitchen, but the long-lived WebView session
+  // never reloads on its own, so a web fix (e.g. the ghost-ring fix) can fail to
+  // reach a device until a manual reinstall. Here we poll /api/build-id (the
+  // CURRENT deploy's stamp) on foreground + every 5 min; if it differs from the
+  // bundle we booted, flag it — then reload the moment the kitchen is IDLE
+  // (nothing ringing, foregrounded, no order open) so a refresh never interrupts
+  // a live order alarm. Guarded to real deploys (skip "dev").
+  const staleBuildRef = useRef(false);
+  const reloadedForBuildRef = useRef(false);
+  useEffect(() => {
+    if (WEB_BUILD === "dev") return;
+    let cancelled = false;
+    const check = async () => {
+      try {
+        const res = await fetch("/api/build-id", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = (await res.json()) as { build?: string };
+        if (!cancelled && data.build && data.build !== WEB_BUILD) staleBuildRef.current = true;
+      } catch { /* offline / transient — try again next tick */ }
+    };
+    const onVis = () => { if (document.visibilityState === "visible") check(); };
+    document.addEventListener("visibilitychange", onVis);
+    const iv = setInterval(check, 5 * 60_000);
+    check();
+    return () => { cancelled = true; document.removeEventListener("visibilitychange", onVis); clearInterval(iv); };
+  }, []);
+  useEffect(() => {
+    if (
+      staleBuildRef.current && !reloadedForBuildRef.current &&
+      !ringAudible && !autoAcceptRinging && pageVisible &&
+      selectedId === null && selectedReservationId === null
+    ) {
+      // Reload at most once per session — if the WebView still serves stale code
+      // after this (a deeper HTTP-cache issue), we don't loop; the version stamp
+      // will show the mismatch so it's diagnosable.
+      reloadedForBuildRef.current = true;
+      window.location.reload();
+    }
+  }, [ringAudible, autoAcceptRinging, pageVisible, selectedId, selectedReservationId]);
+
   const testAlertSound = useCallback(() => {
     // Preview the ONE official sound — a short snippet of the liked GloriaFood
     // alert track (NOT the old short ding). A separate one-off Audio so it never
@@ -3462,12 +3508,16 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                     <LogOut className="w-4 h-4 flex-shrink-0" />
                     <span>{tk("logOut")}</span>
                   </button>
-                  {appVersion && (
-                    <>
-                      <div className={`my-1 border-t ${t.border}`} />
-                      <div className="px-4 py-1.5 text-[11px] text-center text-gray-400">v{appVersion}</div>
-                    </>
-                  )}
+                  <>
+                    <div className={`my-1 border-t ${t.border}`} />
+                    {/* Native app version (installed binary) + WEB build (the live
+                        /kitchen bundle the WebView actually loaded). Showing both
+                        tells us instantly whether a device is on current web code
+                        or a stale WebView-cached bundle. */}
+                    <div className="px-4 py-1.5 text-[11px] text-center text-gray-400">
+                      {appVersion ? `v${appVersion} · ` : ""}web {WEB_BUILD}
+                    </div>
+                  </>
                 </div>
               </>
             )}

@@ -11,6 +11,14 @@
 
 ## A. DO NOW — this week, in priority order
 
+### A16. ☐ TEST this session's shipped work (2026-07-14) — NOT DONE YET (Luigi will do when ready)
+Everything below is built + pushed + preflight-green, but NOT yet verified by you on real devices / real data:
+1. **Uber Eats import** — Admin → Menu → Import → paste your Koozina Uber link → confirm categories/items/modifiers/photos land. (Best from your own IP; a datacenter IP can get Uber's bot-challenge on the modifier fetch.)
+2. **Driver app on your phone** — sideload `C:\Users\luigi\Downloads\FeeFreeDelivery-driver-debug.apk` (Android), and/or do A15 (iOS → TestFlight). Take it on a short drive to confirm background GPS.
+3. **Fee Free Delivery end-to-end** (see A13) — create a driver, enable it on a store, run a test delivery accept→picked up→delivered.
+4. **A14** (marketplace retirement on prod) + **A15** (driver app store steps) are the related owner steps.
+Tell Claude the results of each and it'll fix anything that surfaces.
+
 ### A14. 🔷 Run the marketplace retirement migration on PROD (marketplace is now free)
 **Why:** the marketplace is now free + included for every restaurant (customer site shows only restaurants within 15 km, with Pickup/Delivery badges; no per-order or monthly fee). The per-order fee is already $0 in code, but any restaurant still on the OLD paid marketplace add-on ($199.99/mo or PAYG) is still attached to a Stripe subscription until this runs. The migration cancels those subs, **keeps their Driver Pool** (grants a free standalone Driver Pool so ShipDay/FeeFree dispatch never drops), and retires the add-on from sale so nobody signs up for a now-free thing. It is **dry-run by default** (shows the plan, changes nothing) — I already verified it on the dev branch.
 1. First see the plan (safe, read-only): `npx tsx scripts/run-on-prod.ts scripts/retire-marketplace-addon.ts` — it lists which subscriptions would be cancelled + who keeps Driver Pool.

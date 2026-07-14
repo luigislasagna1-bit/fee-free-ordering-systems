@@ -6,6 +6,15 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   serverExternalPackages: ["better-sqlite3", "@prisma/adapter-better-sqlite3", "pdfkit"],
+  // Web build stamp baked into the client bundle at build time. The kitchen 3-dot
+  // menu shows this next to the NATIVE app version so we can tell — for an
+  // installed iOS/Android app that loads the LIVE /kitchen — whether a device is
+  // running current web code or a stale WebView-cached bundle (the root cause of
+  // "the fix didn't reach the installed app"). /api/build-id returns the CURRENT
+  // deploy's value at runtime; the kitchen compares the two and reloads when idle.
+  env: {
+    NEXT_PUBLIC_WEB_BUILD: (process.env.VERCEL_GIT_COMMIT_SHA || "").slice(0, 7) || "dev",
+  },
   experimental: {
     // Prevent Next.js HMR cache from serving stale fetch responses across
     // hot-reloads — belt-and-suspenders alongside the node:https Connection:close fix.
