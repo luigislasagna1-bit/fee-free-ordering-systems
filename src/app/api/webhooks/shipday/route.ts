@@ -44,9 +44,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { translateShipdayEvent } from "@/lib/shipday";
 import { timingSafeEqualString } from "@/lib/security";
-import { redeemCouponsForOrder } from "@/lib/coupon-ledger";
-import { redeemForOrder as redeemRewardForOrder, awardForOrder as awardRewardForOrder } from "@/lib/reward-ledger";
-import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
+import { applyDeliveryStatus } from "@/lib/delivery-status";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -192,44 +190,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, skipped: "unknown_event" });
   }
 
-  const updates: Record<string, unknown> = {};
-  if (shipdayStatus) updates.shipdayStatus = shipdayStatus;
-  // FORWARD-ONLY: delivery progress must never resurrect a terminal order —
-  // a late/replayed ORDER_COMPLETED on a cancelled/rejected/refunded order
-  // would flip it back to completed (and re-trigger completion side effects).
-  const TERMINAL = new Set(["cancelled", "rejected", "completed"]);
-  if (orderStatus && !TERMINAL.has(order.status)) {
-    updates.status = orderStatus;
-    if (orderStatus === "completed") updates.completedAt = new Date();
-  }
-  // Capture the shipdayOrderId if we didn't already have it (edge case:
-  // ORDER_ASSIGNED fires before our dispatch response landed).
-  if (!order.shipdayOrderId && shipdayOrderId) {
-    updates.shipdayOrderId = shipdayOrderId;
-  }
+  // ShipDay-specific columns merged into the SAME order update as the shared
+  // status transition below. Capture the shipdayOrderId if we didn't already
+  // have it (edge: ORDER_ASSIGNED fires before our dispatch response landed).
+  const extraUpdates: Record<string, unknown> = {};
+  if (shipdayStatus) extraUpdates.shipdayStatus = shipdayStatus;
+  if (!order.shipdayOrderId && shipdayOrderId) extraUpdates.shipdayOrderId = shipdayOrderId;
 
-  await prisma.order.update({
-    where: { id: order.id },
-    data: updates,
-  });
-
-  // A ShipDay-driven completion bypasses the [id] PATCH route AND the
-  // Simple-mode cron (which only sweeps accepted/ready rows — this order is
-  // already "completed" by the time it runs), so the fulfillment-tied ledger
-  // hooks must run here too or ShipDay-delivered orders never finalize
-  // coupons / redeem / earn Reward Dollars. Same set as the cron; all
-  // idempotent + never-throw. Keyed off the TRANSLATED status, not
-  // updates.status: if we crashed after the update but before the hooks last
-  // time, the ShipDay retry finds order.status already "completed" (TERMINAL
-  // guard skips the update) — the hooks must still run on that replay, and
-  // idempotency makes re-runs free. (2026-07-10 hardening + review.)
-  if (orderStatus === "completed") {
-    await redeemCouponsForOrder(order.id);
-    await redeemRewardForOrder(order.id);
-    await awardRewardForOrder({ orderId: order.id });
-    await awardEarnRulesForOrder({ orderId: order.id });
-    await awardPromoCreditsForOrder({ orderId: order.id });
-  }
+  // Shared with the in-house FeeFreeDelivery driver path: forward-only Order.status
+  // guard + the five idempotent completion ledger hooks (coupons / reward redeem+
+  // earn / earn rules / promo credits). A ShipDay-driven completion bypasses the
+  // [id] PATCH route AND the Simple-mode cron, so those hooks MUST run here or a
+  // delivered order never finalizes — keyed off the TRANSLATED status so a
+  // crash-then-retry still finalizes exactly once. (2026-07-10 hardening + review.)
+  await applyDeliveryStatus(order, { orderStatus, extraUpdates });
 
   console.log("[shipday webhook] applied", { orderId: order.id, event, shipdayStatus, orderStatus });
   return NextResponse.json({ ok: true });
