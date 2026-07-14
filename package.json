@@ -18,7 +18,13 @@
     "cap:marketplace:sync": "cap sync --config capacitor.marketplace.config.ts",
     "cap:marketplace:copy": "cap copy --config capacitor.marketplace.config.ts",
     "cap:marketplace:open:ios": "cap open ios --config capacitor.marketplace.config.ts",
-    "cap:marketplace:open:android": "cap open android --config capacitor.marketplace.config.ts"
+    "cap:marketplace:open:android": "cap open android --config capacitor.marketplace.config.ts",
+    "cap:driver:sync": "node scripts/cap-driver.mjs sync",
+    "cap:driver:sync:ios": "node scripts/cap-driver.mjs sync ios",
+    "cap:driver:sync:android": "node scripts/cap-driver.mjs sync android",
+    "cap:driver:copy": "node scripts/cap-driver.mjs copy",
+    "cap:driver:open:ios": "node scripts/cap-driver.mjs open ios",
+    "cap:driver:open:android": "node scripts/cap-driver.mjs open android"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.96.0",

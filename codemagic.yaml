@@ -132,3 +132,82 @@ workflows:
         # Upload to TestFlight (internal testers can install immediately). We
         # do NOT auto-submit to App Store review yet — that's a later step.
         submit_to_testflight: true
+
+  # ── Fee Free DELIVERY driver app (iOS) ──────────────────────────────────
+  # Same pipeline as ios-kitchen, but for the driver app: a WebView shell of
+  # feefreeordering.com/driver + background-location capability. Separate bundle
+  # id (com.feefreeordering.driver) → its OWN App Store Connect app record (you
+  # create it once, see OWNER-ACTIONS). Reuses the SAME signing setup (ff-asc-key
+  # integration + the ios_signing group's IOS_SIGNING_KEY_PEM cert-reuse key).
+  # The one real difference: `cap sync` must target the DRIVER config, so this
+  # workflow syncs via scripts/cap-driver.mjs (Capacitor 8 has no --config flag,
+  # so the helper briefly swaps capacitor.config.ts to the driver config).
+  ios-driver:
+    name: Fee Free Delivery (iOS)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: ff-asc-key
+    environment:
+      groups:
+        - ios_signing
+      vars:
+        XCODE_PROJECT: "ios-driver/App/App.xcodeproj"
+        XCODE_SCHEME: "App"
+        BUNDLE_ID: "com.feefreeordering.driver"
+      node: 22
+    triggering:
+      events: []
+    scripts:
+      - name: Install npm dependencies
+        script: npm install --no-audit --no-fund
+      - name: Capacitor sync (iOS, DRIVER config)
+        # Syncs the ios-driver project (NOT ios/). The helper swaps the driver
+        # config into capacitor.config.ts, runs `cap sync ios`, then restores.
+        script: node scripts/cap-driver.mjs sync ios
+      - name: Set up code signing (REUSE one cert if stored key is present)
+        script: |
+          set -e
+          keychain initialize
+          if [ -n "$IOS_SIGNING_KEY_PEM" ]; then
+            echo "Cert reuse: using stored distribution key (no new cert minted)."
+            printf '%s\n' "$IOS_SIGNING_KEY_PEM" > /tmp/ff_signing_key.pem
+          else
+            echo "WARNING: IOS_SIGNING_KEY_PEM not set — minting a NEW distribution cert (counts against Apple's limit). Set up the ios_signing group to enable reuse."
+            openssl genrsa -out /tmp/ff_signing_key.pem 2048
+            app-store-connect certificates create \
+              --type IOS_DISTRIBUTION \
+              --certificate-key @file:/tmp/ff_signing_key.pem \
+              --save
+          fi
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --certificate-key @file:/tmp/ff_signing_key.pem \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+      - name: Set build number (monotonic; higher than any prior upload)
+        script: |
+          set -e
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$BUNDLE_ID" 2>/dev/null || echo 0)
+          [[ "$LATEST" =~ ^[0-9]+$ ]] || LATEST=0
+          CI="${BUILD_NUMBER:-0}"
+          [[ "$CI" =~ ^[0-9]+$ ]] || CI=0
+          NEXT=$((LATEST + 1))
+          if [ "$CI" -gt "$NEXT" ]; then NEXT="$CI"; fi
+          if [ "$NEXT" -lt 2 ]; then NEXT=2; fi
+          echo "CFBundleVersion -> $NEXT (TestFlight latest=$LATEST, CI build=$CI)"
+          cd ios-driver/App
+          agvtool new-version -all "$NEXT"
+      - name: Build IPA
+        script: |
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
