@@ -4626,6 +4626,23 @@
       "useOriginal": "Folosiți originalul",
       "cancel": "Anulare",
       "cropAndUpload": "Decupați și încărcați"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Intern",
+      "description": "Trimite comenzile de livrare propriilor tăi șoferi — o taxă fixă de $7.99 pe livrare, facturată săptămânal. Când este activat, comenzile noi de livrare merg la șoferii tăi Fee Free în loc de ShipDay.",
+      "enableLabel": "Activează Fee Free Delivery",
+      "enableHint": "Direcționează comenzile noi de livrare către propriul tău Driver Pool.",
+      "autoSendLabel": "Trimitere automată la acceptare",
+      "autoSendOnHint": "Activat: fiecare livrare nouă este atribuită unui șofer în momentul în care o accepți.",
+      "autoSendOffHint": "Dezactivat: livrările noi sunt reținute pentru a le trimite manual unui șofer.",
+      "precedenceNote": "Fee Free Delivery este activat, deci are prioritate față de ShipDay — comenzile noi de livrare merg la propriii tăi șoferi. Dezactivează-l pentru a folosi sursa ShipDay de mai jos.",
+      "lockedNotice": "Fee Free Delivery face parte din suplimentul Driver Pool. Abonează-te pentru a trimite comenzi către propriul tău Driver Pool.",
+      "getDriverPool": "Obține Driver Pool",
+      "toastSaved": "Salvat",
+      "toastFailedToSave": "Nu s-a putut salva. Te rugăm să încerci din nou.",
+      "toastAddonRequired": "Abonează-te la Driver Pool pentru a activa Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery necesită mai întâi o metodă de plată online — șoferii tăi nu încasează la ușă, așa că comenzile de livrare trebuie plătite online. Activează plățile cu cardul sau conectează PayPal, apoi activează-l."
     }
   },
   "impersonation": {

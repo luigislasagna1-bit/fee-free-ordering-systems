@@ -4626,6 +4626,23 @@
       "useOriginal": "元の画像を使う",
       "cancel": "キャンセル",
       "cropAndUpload": "切り抜いてアップロード"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "自社配達",
+      "description": "配達注文を自社のドライバーに割り当てます。1配達あたり定額 $7.99、週ごとに請求。オンにすると、新しい配達注文は ShipDay ではなく Fee Free のドライバーに送られます。",
+      "enableLabel": "Fee Free Delivery を有効にする",
+      "enableHint": "新しい配達注文を自社の Driver Pool に振り分けます。",
+      "autoSendLabel": "受注時に自動送信",
+      "autoSendOnHint": "オン：新しい配達は、受注した瞬間にドライバーへキューイングされます。",
+      "autoSendOffHint": "オフ：新しい配達は保留され、手動でドライバーに送信できます。",
+      "precedenceNote": "Fee Free Delivery がオンのため、ShipDay より優先されます。新しい配達注文は自社のドライバーに送られます。オフにすると、下の ShipDay ソースを使用できます。",
+      "lockedNotice": "Fee Free Delivery は Driver Pool アドオンの一部です。ご登録いただくと、自社の Driver Pool に注文を送信できます。",
+      "getDriverPool": "Driver Pool を入手",
+      "toastSaved": "保存しました",
+      "toastFailedToSave": "保存できませんでした。もう一度お試しください。",
+      "toastAddonRequired": "Fee Free Delivery を有効にするには Driver Pool にご登録ください。",
+      "toastOnlinePaymentRequired": "Fee Free Delivery には、まずオンライン決済方法が必要です。ドライバーは玄関先で集金しないため、配達注文はオンラインで支払う必要があります。カード決済を有効にするか PayPal を接続してから、オンにしてください。"
     }
   },
   "impersonation": {

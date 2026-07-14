@@ -4626,6 +4626,23 @@
       "useOriginal": "Brug original",
       "cancel": "Annuller",
       "cropAndUpload": "Beskær og upload"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Egne chauffører",
+      "description": "Send leveringsordrer til dine egne chauffører – en fast pris på $7.99 pr. levering, faktureret ugentligt. Når det er slået til, går nye leveringsordrer til dine Fee Free-chauffører i stedet for ShipDay.",
+      "enableLabel": "Aktivér Fee Free Delivery",
+      "enableHint": "Send nye leveringsordrer til din egen Driver Pool.",
+      "autoSendLabel": "Send automatisk ved accept",
+      "autoSendOnHint": "Til: hver ny levering sættes i kø til en chauffør, i det øjeblik du accepterer den.",
+      "autoSendOffHint": "Fra: nye leveringer holdes tilbage, så du kan sende dem til en chauffør manuelt.",
+      "precedenceNote": "Fee Free Delivery er slået til og har derfor forrang frem for ShipDay – nye leveringsordrer går til dine egne chauffører. Slå det fra for at bruge ShipDay-kilden nedenfor.",
+      "lockedNotice": "Fee Free Delivery er en del af Driver Pool-tilføjelsen. Abonnér for at sende ordrer til din egen Driver Pool.",
+      "getDriverPool": "Få Driver Pool",
+      "toastSaved": "Gemt",
+      "toastFailedToSave": "Kunne ikke gemme. Prøv igen.",
+      "toastAddonRequired": "Abonnér på Driver Pool for at slå Fee Free Delivery til.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery kræver først en online betalingsmetode – dine chauffører opkræver ikke ved døren, så leveringsordrer skal betales online. Aktivér kortbetalinger eller tilslut PayPal, og slå det derefter til."
     }
   },
   "impersonation": {

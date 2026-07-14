@@ -4626,6 +4626,23 @@
       "useOriginal": "השתמשו במקור",
       "cancel": "ביטול",
       "cropAndUpload": "חיתוך והעלאה"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "פנימי",
+      "description": "שלח הזמנות משלוח לנהגים שלך — מחיר קבוע של $7.99 למשלוח, בחיוב שבועי. כשהאפשרות פעילה, הזמנות משלוח חדשות מגיעות לנהגי Fee Free Delivery שלך במקום ל-ShipDay.",
+      "enableLabel": "הפעל את Fee Free Delivery",
+      "enableHint": "נתב הזמנות משלוח חדשות ל-Driver Pool שלך.",
+      "autoSendLabel": "שליחה אוטומטית עם האישור",
+      "autoSendOnHint": "פעיל: כל משלוח חדש נכנס לתור אצל נהג ברגע שאתה מאשר אותו.",
+      "autoSendOffHint": "כבוי: משלוחים חדשים מוחזקים כדי שתוכל לשלוח אותם לנהג באופן ידני.",
+      "precedenceNote": "השירות Fee Free Delivery פעיל, ולכן יש לו עדיפות על פני ShipDay — הזמנות משלוח חדשות מגיעות לנהגים שלך. כבה אותו כדי להשתמש במקור ShipDay שלמטה.",
+      "lockedNotice": "השירות Fee Free Delivery הוא חלק מתוסף Driver Pool. הירשם כדי לשלוח הזמנות ל-Driver Pool שלך.",
+      "getDriverPool": "קבל את Driver Pool",
+      "toastSaved": "נשמר",
+      "toastFailedToSave": "השמירה נכשלה. אנא נסה שוב.",
+      "toastAddonRequired": "הירשם ל-Driver Pool כדי להפעיל את Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "השירות Fee Free Delivery זקוק תחילה לאמצעי תשלום מקוון — הנהגים שלך לא גובים תשלום בדלת, ולכן יש לשלם על הזמנות משלוח באופן מקוון. הפעל תשלום בכרטיס או חבר את PayPal, ואז הפעל אותו."
     }
   },
   "impersonation": {

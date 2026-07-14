@@ -4626,6 +4626,23 @@
       "useOriginal": "Gunakan asli",
       "cancel": "Batal",
       "cropAndUpload": "Pangkas & unggah"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Internal",
+      "description": "Kirim pesanan pengantaran ke pengemudi Anda sendiri — tarif tetap $7.99 per pengantaran, ditagih mingguan. Saat aktif, pesanan pengantaran baru diteruskan ke pengemudi Fee Free Anda, bukan ShipDay.",
+      "enableLabel": "Aktifkan Fee Free Delivery",
+      "enableHint": "Arahkan pesanan pengantaran baru ke Driver Pool Anda sendiri.",
+      "autoSendLabel": "Kirim otomatis saat diterima",
+      "autoSendOnHint": "Aktif: setiap pengantaran baru masuk antrean pengemudi begitu Anda menerimanya.",
+      "autoSendOffHint": "Nonaktif: pengantaran baru ditahan agar Anda bisa mengirimnya ke pengemudi secara manual.",
+      "precedenceNote": "Fee Free Delivery aktif, jadi lebih diutamakan daripada ShipDay — pesanan pengantaran baru diteruskan ke pengemudi Anda sendiri. Nonaktifkan untuk menggunakan sumber ShipDay di bawah.",
+      "lockedNotice": "Fee Free Delivery adalah bagian dari add-on Driver Pool. Berlangganan untuk mengirim pesanan ke Driver Pool Anda sendiri.",
+      "getDriverPool": "Dapatkan Driver Pool",
+      "toastSaved": "Tersimpan",
+      "toastFailedToSave": "Tidak bisa menyimpan. Silakan coba lagi.",
+      "toastAddonRequired": "Berlangganan Driver Pool untuk mengaktifkan Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery memerlukan metode pembayaran online terlebih dahulu — pengemudi Anda tidak menerima pembayaran di pintu, jadi pesanan pengantaran harus dibayar online. Aktifkan pembayaran kartu atau hubungkan PayPal, lalu aktifkan."
     }
   },
   "impersonation": {

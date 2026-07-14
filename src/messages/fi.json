@@ -4626,6 +4626,23 @@
       "useOriginal": "Käytä alkuperäistä",
       "cancel": "Peruuta",
       "cropAndUpload": "Rajaa ja lataa"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Omat kuljettajat",
+      "description": "Lähetä toimitustilaukset omille kuljettajillesi – kiinteä $7.99 per toimitus, laskutus viikoittain. Kun tämä on käytössä, uudet toimitustilaukset ohjautuvat Fee Free -kuljettajillesi ShipDayn sijaan.",
+      "enableLabel": "Ota Fee Free Delivery käyttöön",
+      "enableHint": "Ohjaa uudet toimitustilaukset omaan Driver Pooliin.",
+      "autoSendLabel": "Lähetä automaattisesti hyväksyttäessä",
+      "autoSendOnHint": "Päällä: jokainen uusi toimitus asetetaan kuljettajan jonoon heti, kun hyväksyt sen.",
+      "autoSendOffHint": "Pois: uudet toimitukset pidetään odottamassa, jotta voit lähettää ne kuljettajalle manuaalisesti.",
+      "precedenceNote": "Fee Free Delivery on päällä, joten se on etusijalla ShipDayhin nähden – uudet toimitustilaukset ohjautuvat omille kuljettajillesi. Poista se käytöstä käyttääksesi alla olevaa ShipDay-lähdettä.",
+      "lockedNotice": "Fee Free Delivery on osa Driver Pool -lisäosaa. Tilaa, jotta voit lähettää tilauksia omaan Driver Pooliisi.",
+      "getDriverPool": "Hanki Driver Pool",
+      "toastSaved": "Tallennettu",
+      "toastFailedToSave": "Tallennus epäonnistui. Yritä uudelleen.",
+      "toastAddonRequired": "Tilaa Driver Pool ottaaksesi Fee Free Delivery käyttöön.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery tarvitsee ensin verkkomaksutavan – kuljettajasi eivät veloita ovella, joten toimitustilaukset on maksettava verkossa. Ota korttimaksut käyttöön tai yhdistä PayPal, ja kytke se sitten päälle."
     }
   },
   "impersonation": {

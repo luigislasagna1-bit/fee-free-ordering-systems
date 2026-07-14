@@ -4626,6 +4626,23 @@
       "useOriginal": "Naudoti originalą",
       "cancel": "Atšaukti",
       "cropAndUpload": "Apkirpti ir įkelti"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Vidinis",
+      "description": "Nukreipkite pristatymo užsakymus savo vairuotojams — fiksuotas $7.99 mokestis už pristatymą, sąskaita išrašoma kas savaitę. Kai įjungta, nauji pristatymo užsakymai keliauja jūsų Fee Free vairuotojams, o ne ShipDay.",
+      "enableLabel": "Įjungti Fee Free Delivery",
+      "enableHint": "Nukreipkite naujus pristatymo užsakymus į savo Driver Pool.",
+      "autoSendLabel": "Automatinis siuntimas priėmus",
+      "autoSendOnHint": "Įjungta: kiekvienas naujas pristatymas priskiriamas vairuotojui tą akimirką, kai jį priimate.",
+      "autoSendOffHint": "Išjungta: nauji pristatymai sulaikomi, kad galėtumėte juos vairuotojui išsiųsti rankiniu būdu.",
+      "precedenceNote": "Fee Free Delivery yra įjungtas, todėl jis turi pirmenybę prieš ShipDay — nauji pristatymo užsakymai keliauja jūsų vairuotojams. Išjunkite jį, kad naudotumėte toliau esantį ShipDay šaltinį.",
+      "lockedNotice": "Fee Free Delivery yra Driver Pool priedo dalis. Užsiprenumeruokite, kad galėtumėte siųsti užsakymus į savo Driver Pool.",
+      "getDriverPool": "Gauti Driver Pool",
+      "toastSaved": "Išsaugota",
+      "toastFailedToSave": "Nepavyko išsaugoti. Bandykite dar kartą.",
+      "toastAddonRequired": "Užsiprenumeruokite Driver Pool, kad įjungtumėte Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery pirmiausia reikia internetinio mokėjimo būdo — jūsų vairuotojai nerenka mokesčio prie durų, todėl pristatymo užsakymai turi būti apmokėti internetu. Įjunkite mokėjimus kortele arba prijunkite PayPal, tada jį įjunkite."
     }
   },
   "impersonation": {

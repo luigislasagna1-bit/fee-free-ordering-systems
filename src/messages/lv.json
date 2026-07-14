@@ -4626,6 +4626,23 @@
       "useOriginal": "Izmantot oriģinālu",
       "cancel": "Atcelt",
       "cropAndUpload": "Apgriezt un augšupielādēt"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Iekšējā",
+      "description": "Novirziet piegādes pasūtījumus saviem vadītājiem — vienota maksa $7.99 par piegādi, rēķins tiek izrakstīts katru nedēļu. Kad tā ir ieslēgta, jaunie piegādes pasūtījumi nonāk pie jūsu Fee Free vadītājiem, nevis ShipDay.",
+      "enableLabel": "Iespējot Fee Free Delivery",
+      "enableHint": "Novirziet jaunos piegādes pasūtījumus uz savu Driver Pool.",
+      "autoSendLabel": "Automātiska nosūtīšana pēc pieņemšanas",
+      "autoSendOnHint": "Ieslēgts: katra jauna piegāde tiek nodota vadītājam brīdī, kad to pieņemat.",
+      "autoSendOffHint": "Izslēgts: jaunās piegādes tiek aizturētas, lai jūs varētu tās nosūtīt vadītājam manuāli.",
+      "precedenceNote": "Fee Free Delivery ir ieslēgts, tāpēc tam ir prioritāte pār ShipDay — jaunie piegādes pasūtījumi nonāk pie jūsu vadītājiem. Izslēdziet to, lai izmantotu zemāk esošo ShipDay avotu.",
+      "lockedNotice": "Fee Free Delivery ir daļa no Driver Pool papildinājuma. Abonējiet, lai sūtītu pasūtījumus uz savu Driver Pool.",
+      "getDriverPool": "Iegūt Driver Pool",
+      "toastSaved": "Saglabāts",
+      "toastFailedToSave": "Neizdevās saglabāt. Lūdzu, mēģiniet vēlreiz.",
+      "toastAddonRequired": "Abonējiet Driver Pool, lai ieslēgtu Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery vispirms nepieciešama tiešsaistes maksājuma metode — jūsu vadītāji neiekasē maksu pie durvīm, tāpēc piegādes pasūtījumi jāapmaksā tiešsaistē. Iespējojiet karšu maksājumus vai savienojiet PayPal un pēc tam ieslēdziet to."
     }
   },
   "impersonation": {

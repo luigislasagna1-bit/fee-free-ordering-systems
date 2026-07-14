@@ -4626,6 +4626,23 @@
       "useOriginal": "Använd original",
       "cancel": "Avbryt",
       "cropAndUpload": "Beskär och ladda upp"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Egna förare",
+      "description": "Skicka leveransbeställningar till dina egna förare – ett fast pris på $7.99 per leverans, fakturerat veckovis. När det är på går nya leveransbeställningar till dina Fee Free-förare i stället för ShipDay.",
+      "enableLabel": "Aktivera Fee Free Delivery",
+      "enableHint": "Dirigera nya leveransbeställningar till din egen Driver Pool.",
+      "autoSendLabel": "Skicka automatiskt vid godkännande",
+      "autoSendOnHint": "På: varje ny leverans köas till en förare i samma stund som du godkänner den.",
+      "autoSendOffHint": "Av: nya leveranser hålls kvar så att du kan skicka dem till en förare manuellt.",
+      "precedenceNote": "Fee Free Delivery är på och har därför företräde framför ShipDay – nya leveransbeställningar går till dina egna förare. Stäng av det för att använda ShipDay-källan nedan.",
+      "lockedNotice": "Fee Free Delivery ingår i Driver Pool-tillägget. Prenumerera för att skicka beställningar till din egen Driver Pool.",
+      "getDriverPool": "Skaffa Driver Pool",
+      "toastSaved": "Sparat",
+      "toastFailedToSave": "Det gick inte att spara. Försök igen.",
+      "toastAddonRequired": "Prenumerera på Driver Pool för att aktivera Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery behöver först en betalningsmetod online – dina förare tar inte betalt vid dörren, så leveransbeställningar måste betalas online. Aktivera kortbetalningar eller anslut PayPal och slå sedan på det."
     }
   },
   "impersonation": {

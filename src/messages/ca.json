@@ -4626,6 +4626,23 @@
       "useOriginal": "Fes servir l'original",
       "cancel": "Cancel·la",
       "cropAndUpload": "Retalla i puja"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Intern",
+      "description": "Assigna les comandes a domicili als teus propis repartidors — una tarifa fixa de $7.99 per lliurament, facturada setmanalment. Quan està activat, les noves comandes a domicili van als teus repartidors Fee Free en lloc de ShipDay.",
+      "enableLabel": "Activa Fee Free Delivery",
+      "enableHint": "Encamina les noves comandes a domicili al teu propi Driver Pool.",
+      "autoSendLabel": "Enviament automàtic en acceptar",
+      "autoSendOnHint": "Activat: cada nou lliurament es posa a la cua per a un repartidor en el moment que l'acceptes.",
+      "autoSendOffHint": "Desactivat: els nous lliuraments queden en espera perquè els puguis enviar a un repartidor manualment.",
+      "precedenceNote": "Fee Free Delivery està activat, per la qual cosa té prioritat sobre ShipDay — les noves comandes a domicili van als teus propis repartidors. Desactiva'l per fer servir la font de ShipDay que apareix a sota.",
+      "lockedNotice": "Fee Free Delivery forma part del complement Driver Pool. Subscriu-te per enviar comandes al teu propi Driver Pool.",
+      "getDriverPool": "Obtén Driver Pool",
+      "toastSaved": "Desat",
+      "toastFailedToSave": "No s'ha pogut desar. Torna-ho a provar.",
+      "toastAddonRequired": "Subscriu-te a Driver Pool per activar Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery necessita primer un mètode de pagament en línia — els teus repartidors no cobren a la porta, així que les comandes a domicili s'han de pagar en línia. Activa els pagaments amb targeta o connecta PayPal i, tot seguit, activa'l."
     }
   },
   "impersonation": {

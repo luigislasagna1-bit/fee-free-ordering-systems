@@ -72,8 +72,16 @@ export type DeliveryDispatchResult =
  * second call (retry / duplicate accept) returns the existing assignment rather
  * than double-queuing. Prepaid-only via assertDispatchable (MVP restriction —
  * FeeFree drivers never collect cash).
+ *
+ * Honors FeeFreeDeliveryConfig.autoSend: when autoSend is OFF, the automatic
+ * accept-hook path holds the order (skipped "manual_hold") instead of queuing —
+ * the owner sends it later from /admin/delivery. `opts.force` is the manual
+ * "Send to driver" button, which queues regardless of autoSend.
  */
-export async function assignToFeeFreeDriver(orderId: string): Promise<DeliveryDispatchResult> {
+export async function assignToFeeFreeDriver(
+  orderId: string,
+  opts: { force?: boolean } = {},
+): Promise<DeliveryDispatchResult> {
   const order = await prisma.order.findUnique({
     where: { id: orderId },
     select: {
@@ -88,6 +96,20 @@ export async function assignToFeeFreeDriver(orderId: string): Promise<DeliveryDi
   if (order.deliveryAssignment) return { ok: true, provider: "feefree", assignmentId: order.deliveryAssignment.id };
   const guard = assertDispatchable(order);
   if (!guard.ok) return { ok: false, provider: "feefree", skipped: guard.skipped };
+
+  // Manual-dispatch hold: the accept hook (force=false) defers to the owner's
+  // autoSend preference. Default true (schema default) so a missing config still
+  // auto-queues. The manual button passes force=true.
+  if (!opts.force) {
+    const cfg = await prisma.feeFreeDeliveryConfig.findUnique({
+      where: { restaurantId: order.restaurantId },
+      select: { autoSend: true },
+    });
+    if (cfg && cfg.autoSend === false) {
+      return { ok: false, provider: "feefree", skipped: "manual_hold" };
+    }
+  }
+
   const assignment = await prisma.deliveryAssignment.create({
     data: { orderId: order.id, restaurantId: order.restaurantId, status: "queued" },
   });

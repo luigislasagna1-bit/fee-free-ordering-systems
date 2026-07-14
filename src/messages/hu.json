@@ -4626,6 +4626,23 @@
       "useOriginal": "Eredeti használata",
       "cancel": "Mégse",
       "cropAndUpload": "Kivágás és feltöltés"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Saját kézben",
+      "description": "Irányítsd a kiszállítási rendeléseket a saját futáraidhoz — fix $7.99 kiszállításonként, heti elszámolással. Bekapcsolva az új kiszállítási rendelések a Fee Free futáraidhoz kerülnek a ShipDay helyett.",
+      "enableLabel": "Fee Free Delivery bekapcsolása",
+      "enableHint": "Irányítsd az új kiszállítási rendeléseket a saját Driver Poolodba.",
+      "autoSendLabel": "Automatikus küldés elfogadáskor",
+      "autoSendOnHint": "Bekapcsolva: minden új kiszállítás futárhoz kerül abban a pillanatban, ahogy elfogadod.",
+      "autoSendOffHint": "Kikapcsolva: az új kiszállítások visszatartásra kerülnek, hogy manuálisan küldhesd őket futárhoz.",
+      "precedenceNote": "A Fee Free Delivery be van kapcsolva, ezért elsőbbséget élvez a ShipDay-jel szemben — az új kiszállítási rendelések a saját futáraidhoz kerülnek. Kapcsold ki az alábbi ShipDay forrás használatához.",
+      "lockedNotice": "A Fee Free Delivery a Driver Pool kiegészítő része. Fizess elő, hogy rendeléseket küldhess a saját Driver Poolodba.",
+      "getDriverPool": "Driver Pool beszerzése",
+      "toastSaved": "Mentve",
+      "toastFailedToSave": "A mentés nem sikerült. Kérjük, próbáld újra.",
+      "toastAddonRequired": "Fizess elő a Driver Poolra a Fee Free Delivery bekapcsolásához.",
+      "toastOnlinePaymentRequired": "A Fee Free Delivery-hez először online fizetési mód szükséges — a futáraid nem szednek be fizetést az ajtónál, ezért a kiszállítási rendeléseket online kell kifizetni. Engedélyezd a kártyás fizetést vagy csatlakoztasd a PayPalt, majd kapcsold be."
     }
   },
   "impersonation": {

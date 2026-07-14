@@ -4626,6 +4626,23 @@
       "useOriginal": "Orijinali kullan",
       "cancel": "İptal",
       "cropAndUpload": "Kırp ve yükle"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Kendi ekibiniz",
+      "description": "Teslimat siparişlerini kendi sürücülerinize yönlendirin — teslimat başına sabit $7.99, haftalık faturalandırılır. Açık olduğunda, yeni teslimat siparişleri ShipDay yerine Fee Free sürücülerinize gider.",
+      "enableLabel": "Fee Free Delivery'yi etkinleştir",
+      "enableHint": "Yeni teslimat siparişlerini kendi Driver Pool'unuza yönlendirin.",
+      "autoSendLabel": "Kabul edince otomatik gönder",
+      "autoSendOnHint": "Açık: her yeni teslimat, kabul ettiğiniz anda bir sürücüye kuyruğa alınır.",
+      "autoSendOffHint": "Kapalı: yeni teslimatlar bekletilir, böylece bir sürücüye elle gönderebilirsiniz.",
+      "precedenceNote": "Fee Free Delivery açık, bu nedenle ShipDay'e göre önceliklidir — yeni teslimat siparişleri kendi sürücülerinize gider. Aşağıdaki ShipDay kaynağını kullanmak için kapatın.",
+      "lockedNotice": "Fee Free Delivery, Driver Pool eklentisinin bir parçasıdır. Siparişleri kendi Driver Pool'unuza göndermek için abone olun.",
+      "getDriverPool": "Driver Pool'u edin",
+      "toastSaved": "Kaydedildi",
+      "toastFailedToSave": "Kaydedilemedi. Lütfen tekrar deneyin.",
+      "toastAddonRequired": "Fee Free Delivery'yi açmak için Driver Pool'a abone olun.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery önce çevrimiçi bir ödeme yöntemi gerektirir — sürücüleriniz kapıda tahsilat yapmaz, bu nedenle teslimat siparişleri çevrimiçi ödenmelidir. Kart ödemelerini etkinleştirin veya PayPal'ı bağlayın, ardından açın."
     }
   },
   "impersonation": {

@@ -4626,6 +4626,23 @@
       "useOriginal": "استخدام الأصل",
       "cancel": "إلغاء",
       "cropAndUpload": "اقتصاص ورفع"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "داخلي",
+      "description": "أرسِل طلبات التوصيل إلى سائقيك الخاصين — سعر ثابت $7.99 لكل عملية توصيل، تُحتسب أسبوعيًا. عند التفعيل، تذهب طلبات التوصيل الجديدة إلى سائقي Fee Free Delivery بدلًا من ShipDay.",
+      "enableLabel": "تفعيل Fee Free Delivery",
+      "enableHint": "وجِّه طلبات التوصيل الجديدة إلى Driver Pool الخاص بك.",
+      "autoSendLabel": "الإرسال التلقائي عند القبول",
+      "autoSendOnHint": "مُفعّل: يُدرَج كل طلب توصيل جديد في قائمة انتظار سائق فور قبولك له.",
+      "autoSendOffHint": "مُعطّل: تُحتجَز طلبات التوصيل الجديدة لتتمكن من إرسالها إلى سائق يدويًا.",
+      "precedenceNote": "خدمة Fee Free Delivery مُفعّلة، لذا فهي تتقدم على ShipDay — تذهب طلبات التوصيل الجديدة إلى سائقيك الخاصين. أوقِف تفعيلها لاستخدام مصدر ShipDay أدناه.",
+      "lockedNotice": "خدمة Fee Free Delivery جزء من إضافة Driver Pool. اشترك لإرسال الطلبات إلى Driver Pool الخاص بك.",
+      "getDriverPool": "الحصول على Driver Pool",
+      "toastSaved": "تم الحفظ",
+      "toastFailedToSave": "تعذّر الحفظ. يُرجى المحاولة مرة أخرى.",
+      "toastAddonRequired": "اشترك في Driver Pool لتفعيل Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "تحتاج خدمة Fee Free Delivery إلى طريقة دفع عبر الإنترنت أولًا — فسائقوك لا يحصّلون المبلغ عند الباب، لذا يجب دفع طلبات التوصيل عبر الإنترنت. فعّل الدفع بالبطاقة أو اربط PayPal، ثم قم بتفعيلها."
     }
   },
   "impersonation": {

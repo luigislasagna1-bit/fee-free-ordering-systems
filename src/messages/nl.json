@@ -4626,6 +4626,23 @@
       "useOriginal": "Origineel gebruiken",
       "cancel": "Annuleren",
       "cropAndUpload": "Bijsnijden en uploaden"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Eigen bezorgers",
+      "description": "Verstuur bezorgbestellingen naar je eigen bezorgers – een vast tarief van $7.99 per bezorging, wekelijks gefactureerd. Wanneer ingeschakeld gaan nieuwe bezorgbestellingen naar je Fee Free-bezorgers in plaats van naar ShipDay.",
+      "enableLabel": "Fee Free Delivery inschakelen",
+      "enableHint": "Stuur nieuwe bezorgbestellingen naar je eigen Driver Pool.",
+      "autoSendLabel": "Automatisch verzenden bij acceptatie",
+      "autoSendOnHint": "Aan: elke nieuwe bezorging wordt aan een bezorger toegewezen zodra je deze accepteert.",
+      "autoSendOffHint": "Uit: nieuwe bezorgingen worden vastgehouden zodat je ze handmatig naar een bezorger kunt sturen.",
+      "precedenceNote": "Fee Free Delivery staat aan en heeft daarom voorrang op ShipDay – nieuwe bezorgbestellingen gaan naar je eigen bezorgers. Schakel het uit om de ShipDay-bron hieronder te gebruiken.",
+      "lockedNotice": "Fee Free Delivery maakt deel uit van de Driver Pool-add-on. Neem een abonnement om bestellingen naar je eigen Driver Pool te sturen.",
+      "getDriverPool": "Driver Pool aanschaffen",
+      "toastSaved": "Opgeslagen",
+      "toastFailedToSave": "Opslaan mislukt. Probeer het opnieuw.",
+      "toastAddonRequired": "Neem een abonnement op Driver Pool om Fee Free Delivery in te schakelen.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery heeft eerst een online betaalmethode nodig – je bezorgers innen niet aan de deur, dus bezorgbestellingen moeten online worden betaald. Schakel kaartbetalingen in of koppel PayPal en zet het daarna aan."
     }
   },
   "impersonation": {

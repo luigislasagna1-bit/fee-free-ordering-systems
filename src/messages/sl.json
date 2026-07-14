@@ -4626,6 +4626,23 @@
       "useOriginal": "Uporabi izvirnik",
       "cancel": "Prekliči",
       "cropAndUpload": "Obreži in naloži"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Lastna dostava",
+      "description": "Usmerite naročila z dostavo k lastnim voznikom — pavšalnih $7.99 na dostavo, obračunano tedensko. Ko je vklopljeno, nova naročila z dostavo gredo k vašim voznikom Fee Free namesto k ShipDay.",
+      "enableLabel": "Omogoči Fee Free Delivery",
+      "enableHint": "Usmerite nova naročila z dostavo v svoj Driver Pool.",
+      "autoSendLabel": "Samodejno pošiljanje ob sprejemu",
+      "autoSendOnHint": "Vklopljeno: vsaka nova dostava se dodeli vozniku v trenutku, ko jo sprejmete.",
+      "autoSendOffHint": "Izklopljeno: nove dostave se zadržijo, da jih lahko vozniku pošljete ročno.",
+      "precedenceNote": "Fee Free Delivery je vklopljena, zato ima prednost pred ShipDay — nova naročila z dostavo gredo k vašim lastnim voznikom. Izklopite jo, če želite uporabiti vir ShipDay spodaj.",
+      "lockedNotice": "Fee Free Delivery je del dodatka Driver Pool. Naročite se, da lahko pošiljate naročila v svoj Driver Pool.",
+      "getDriverPool": "Pridobi Driver Pool",
+      "toastSaved": "Shranjeno",
+      "toastFailedToSave": "Shranjevanje ni uspelo. Poskusite znova.",
+      "toastAddonRequired": "Naročite se na Driver Pool, da vklopite Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery najprej potrebuje spletni način plačila — vaši vozniki ne pobirajo plačila pri vratih, zato morajo biti naročila z dostavo plačana prek spleta. Omogočite plačila s kartico ali povežite PayPal, nato jo vklopite."
     }
   },
   "impersonation": {

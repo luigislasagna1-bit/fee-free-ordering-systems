@@ -4626,6 +4626,23 @@
       "useOriginal": "Dùng ảnh gốc",
       "cancel": "Hủy",
       "cropAndUpload": "Cắt và tải lên"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Nội bộ",
+      "description": "Chuyển đơn giao hàng đến tài xế của riêng bạn — mức cố định $7.99 mỗi lần giao, tính phí hằng tuần. Khi bật, đơn giao hàng mới sẽ đến tài xế Fee Free của bạn thay vì ShipDay.",
+      "enableLabel": "Bật Fee Free Delivery",
+      "enableHint": "Định tuyến đơn giao hàng mới đến Driver Pool của riêng bạn.",
+      "autoSendLabel": "Tự động gửi khi chấp nhận",
+      "autoSendOnHint": "Bật: mỗi đơn giao hàng mới được đưa vào hàng đợi tài xế ngay khi bạn chấp nhận.",
+      "autoSendOffHint": "Tắt: đơn giao hàng mới được giữ lại để bạn gửi cho tài xế theo cách thủ công.",
+      "precedenceNote": "Fee Free Delivery đang bật nên được ưu tiên hơn ShipDay — đơn giao hàng mới sẽ đến tài xế của riêng bạn. Tắt đi để dùng nguồn ShipDay bên dưới.",
+      "lockedNotice": "Fee Free Delivery là một phần của tiện ích bổ sung Driver Pool. Đăng ký để gửi đơn đến Driver Pool của riêng bạn.",
+      "getDriverPool": "Nhận Driver Pool",
+      "toastSaved": "Đã lưu",
+      "toastFailedToSave": "Không thể lưu. Vui lòng thử lại.",
+      "toastAddonRequired": "Đăng ký Driver Pool để bật Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery cần một phương thức thanh toán trực tuyến trước — tài xế của bạn không thu tiền tại cửa, nên đơn giao hàng phải được thanh toán trực tuyến. Bật thanh toán bằng thẻ hoặc kết nối PayPal, rồi bật lên."
     }
   },
   "impersonation": {

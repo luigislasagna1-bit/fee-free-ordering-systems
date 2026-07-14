@@ -4626,6 +4626,23 @@
       "useOriginal": "Usa originale",
       "cancel": "Annulla",
       "cropAndUpload": "Ritaglia e carica"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Interno",
+      "description": "Assegna gli ordini in consegna ai tuoi fattorini — una tariffa fissa di $7.99 per consegna, fatturata settimanalmente. Quando è attivo, i nuovi ordini in consegna vanno ai tuoi fattorini Fee Free anziché a ShipDay.",
+      "enableLabel": "Attiva Fee Free Delivery",
+      "enableHint": "Instrada i nuovi ordini in consegna al tuo Driver Pool.",
+      "autoSendLabel": "Invio automatico all'accettazione",
+      "autoSendOnHint": "Attivo: ogni nuova consegna viene messa in coda per un fattorino nel momento in cui la accetti.",
+      "autoSendOffHint": "Disattivo: le nuove consegne restano in sospeso così puoi inviarle a un fattorino manualmente.",
+      "precedenceNote": "Fee Free Delivery è attivo, quindi ha la priorità su ShipDay — i nuovi ordini in consegna vanno ai tuoi fattorini. Disattivalo per usare la sorgente ShipDay qui sotto.",
+      "lockedNotice": "Fee Free Delivery fa parte del componente aggiuntivo Driver Pool. Abbonati per inviare gli ordini al tuo Driver Pool.",
+      "getDriverPool": "Ottieni Driver Pool",
+      "toastSaved": "Salvato",
+      "toastFailedToSave": "Impossibile salvare. Riprova.",
+      "toastAddonRequired": "Abbonati a Driver Pool per attivare Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery richiede prima un metodo di pagamento online — i tuoi fattorini non incassano alla porta, quindi gli ordini in consegna devono essere pagati online. Attiva i pagamenti con carta o collega PayPal, poi attivalo."
     }
   },
   "impersonation": {

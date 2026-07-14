@@ -4626,6 +4626,23 @@
       "useOriginal": "Use original",
       "cancel": "Cancel",
       "cropAndUpload": "Crop & upload"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "In-house",
+      "description": "Dispatch delivery orders to your own drivers — a flat $7.99 per delivery, billed weekly. When on, new delivery orders go to your Fee Free drivers instead of ShipDay.",
+      "enableLabel": "Enable Fee Free Delivery",
+      "enableHint": "Route new delivery orders to your own driver pool.",
+      "autoSendLabel": "Auto-send on accept",
+      "autoSendOnHint": "On: every new delivery is queued to a driver the moment you accept it.",
+      "autoSendOffHint": "Off: new deliveries are held so you can send them to a driver manually.",
+      "precedenceNote": "Fee Free Delivery is on, so it takes priority over ShipDay — new delivery orders go to your own drivers. Turn it off to use the ShipDay source below.",
+      "lockedNotice": "Fee Free Delivery is part of the Driver Pool add-on. Subscribe to send orders to your own driver pool.",
+      "getDriverPool": "Get Driver Pool",
+      "toastSaved": "Saved",
+      "toastFailedToSave": "Couldn't save. Please try again.",
+      "toastAddonRequired": "Subscribe to Driver Pool to turn on Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery needs an online payment method first — your drivers don't collect at the door, so delivery orders must be paid online. Enable card payments or connect PayPal, then turn it on."
     }
   },
   "impersonation": {

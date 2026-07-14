@@ -4626,6 +4626,23 @@
       "useOriginal": "원본 사용",
       "cancel": "취소",
       "cropAndUpload": "자르고 업로드"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "자체 배달",
+      "description": "배달 주문을 자체 배달원에게 배정하세요 — 배달 건당 정액 $7.99, 주 단위 청구. 켜면 새 배달 주문이 ShipDay 대신 Fee Free 배달원에게 전달됩니다.",
+      "enableLabel": "Fee Free Delivery 사용",
+      "enableHint": "새 배달 주문을 자체 Driver Pool로 전달합니다.",
+      "autoSendLabel": "수락 시 자동 전송",
+      "autoSendOnHint": "켜짐: 새 배달은 주문을 수락하는 즉시 배달원에게 대기열로 전달됩니다.",
+      "autoSendOffHint": "꺼짐: 새 배달은 보류되어 배달원에게 수동으로 전송할 수 있습니다.",
+      "precedenceNote": "Fee Free Delivery가 켜져 있어 ShipDay보다 우선합니다 — 새 배달 주문은 자체 배달원에게 전달됩니다. 아래 ShipDay 소스를 사용하려면 끄세요.",
+      "lockedNotice": "Fee Free Delivery는 Driver Pool 부가 기능의 일부입니다. 구독하여 자체 Driver Pool로 주문을 전송하세요.",
+      "getDriverPool": "Driver Pool 이용하기",
+      "toastSaved": "저장됨",
+      "toastFailedToSave": "저장하지 못했습니다. 다시 시도해 주세요.",
+      "toastAddonRequired": "Fee Free Delivery를 켜려면 Driver Pool을 구독하세요.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery는 먼저 온라인 결제 수단이 필요합니다 — 배달원이 문 앞에서 수금하지 않으므로 배달 주문은 온라인으로 결제해야 합니다. 카드 결제를 활성화하거나 PayPal을 연결한 후 켜세요."
     }
   },
   "impersonation": {

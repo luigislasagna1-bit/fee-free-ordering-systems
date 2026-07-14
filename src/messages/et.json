@@ -4626,6 +4626,23 @@
       "useOriginal": "Kasuta originaali",
       "cancel": "Tühista",
       "cropAndUpload": "Kärbi ja laadi üles"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Oma",
+      "description": "Suunake kohaletoimetamise tellimused oma juhtidele — ühtne tasu $7.99 kohaletoimetamise kohta, arveldatakse iganädalaselt. Kui see on sees, lähevad uued kohaletoimetamise tellimused ShipDay asemel teie Fee Free juhtidele.",
+      "enableLabel": "Luba Fee Free Delivery",
+      "enableHint": "Suunake uued kohaletoimetamise tellimused oma Driver Pooli.",
+      "autoSendLabel": "Automaatne saatmine kinnitamisel",
+      "autoSendOnHint": "Sees: iga uus kohaletoimetamine suunatakse juhile hetkel, kui selle kinnitate.",
+      "autoSendOffHint": "Väljas: uued kohaletoimetamised hoitakse kinni, et saaksite need juhile käsitsi saata.",
+      "precedenceNote": "Fee Free Delivery on sees, seega on sellel ShipDay ees eelisõigus — uued kohaletoimetamise tellimused lähevad teie oma juhtidele. Lülitage see välja, et kasutada allpool olevat ShipDay allikat.",
+      "lockedNotice": "Fee Free Delivery on osa Driver Pooli lisast. Tellige, et saata tellimusi oma Driver Pooli.",
+      "getDriverPool": "Hangi Driver Pool",
+      "toastSaved": "Salvestatud",
+      "toastFailedToSave": "Salvestamine ebaõnnestus. Palun proovige uuesti.",
+      "toastAddonRequired": "Tellige Driver Pool, et lülitada sisse Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery vajab esmalt veebimakseviisi — teie juhid ei kogu makseid ukse taga, seega tuleb kohaletoimetamise tellimused tasuda veebis. Lubage kaardimaksed või ühendage PayPal ja seejärel lülitage see sisse."
     }
   },
   "impersonation": {

@@ -4626,6 +4626,23 @@
       "useOriginal": "Usar original",
       "cancel": "Cancelar",
       "cropAndUpload": "Recortar e enviar"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Interno",
+      "description": "Envie os pedidos de entrega aos seus próprios entregadores — uma taxa fixa de $7.99 por entrega, cobrada semanalmente. Quando ativado, os novos pedidos de entrega vão para os seus entregadores Fee Free em vez do ShipDay.",
+      "enableLabel": "Ativar Fee Free Delivery",
+      "enableHint": "Direcione os novos pedidos de entrega para o seu próprio Driver Pool.",
+      "autoSendLabel": "Envio automático ao aceitar",
+      "autoSendOnHint": "Ativado: cada nova entrega é colocada na fila para um entregador no momento em que você a aceita.",
+      "autoSendOffHint": "Desativado: as novas entregas ficam retidas para que você possa enviá-las a um entregador manualmente.",
+      "precedenceNote": "O Fee Free Delivery está ativado, então ele tem prioridade sobre o ShipDay — os novos pedidos de entrega vão para os seus próprios entregadores. Desative-o para usar a fonte ShipDay abaixo.",
+      "lockedNotice": "O Fee Free Delivery faz parte do complemento Driver Pool. Assine para enviar pedidos ao seu próprio Driver Pool.",
+      "getDriverPool": "Obter Driver Pool",
+      "toastSaved": "Salvo",
+      "toastFailedToSave": "Não foi possível salvar. Tente novamente.",
+      "toastAddonRequired": "Assine o Driver Pool para ativar o Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "O Fee Free Delivery precisa primeiro de um método de pagamento online — os seus entregadores não recebem na porta, então os pedidos de entrega devem ser pagos online. Ative os pagamentos com cartão ou conecte o PayPal e depois ative-o."
     }
   },
   "impersonation": {

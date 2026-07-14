@@ -105,6 +105,28 @@ describe("assignToFeeFreeDriver", () => {
     expect(r).toEqual({ ok: false, provider: "feefree", skipped: "not_prepaid" });
     expect(prismaMock.deliveryAssignment.create).not.toHaveBeenCalled();
   });
+  it("holds for manual dispatch when autoSend is off (no assignment created)", async () => {
+    prismaMock.order.findUnique.mockResolvedValue({ ...base(), id: "o1", restaurantId: "r1", deliveryAssignment: null });
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ autoSend: false });
+    const r = await assignToFeeFreeDriver("o1");
+    expect(r).toEqual({ ok: false, provider: "feefree", skipped: "manual_hold" });
+    expect(prismaMock.deliveryAssignment.create).not.toHaveBeenCalled();
+  });
+  it("force=true queues even when autoSend is off (manual Send to driver)", async () => {
+    prismaMock.order.findUnique.mockResolvedValue({ ...base(), id: "o1", restaurantId: "r1", deliveryAssignment: null });
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ autoSend: false });
+    prismaMock.deliveryAssignment.create.mockResolvedValue({ id: "a1" });
+    const r = await assignToFeeFreeDriver("o1", { force: true });
+    expect(r).toEqual({ ok: true, provider: "feefree", assignmentId: "a1" });
+    expect(prismaMock.feeFreeDeliveryConfig.findUnique).not.toHaveBeenCalled(); // force skips the autoSend read
+  });
+  it("auto-queues when autoSend is on (default)", async () => {
+    prismaMock.order.findUnique.mockResolvedValue({ ...base(), id: "o1", restaurantId: "r1", deliveryAssignment: null });
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ autoSend: true });
+    prismaMock.deliveryAssignment.create.mockResolvedValue({ id: "a1" });
+    const r = await assignToFeeFreeDriver("o1");
+    expect(r).toEqual({ ok: true, provider: "feefree", assignmentId: "a1" });
+  });
 });
 
 describe("dispatchDeliveryNow (provider branch)", () => {

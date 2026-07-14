@@ -4626,6 +4626,23 @@
       "useOriginal": "Użyj oryginału",
       "cancel": "Anuluj",
       "cropAndUpload": "Przytnij i prześlij"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Własna obsługa",
+      "description": "Kieruj zamówienia z dostawą do własnych kierowców — stała opłata $7.99 za dostawę, rozliczana tygodniowo. Po włączeniu nowe zamówienia z dostawą trafiają do Twoich kierowców Fee Free zamiast do ShipDay.",
+      "enableLabel": "Włącz Fee Free Delivery",
+      "enableHint": "Kieruj nowe zamówienia z dostawą do własnego Driver Pool.",
+      "autoSendLabel": "Automatyczne wysyłanie po przyjęciu",
+      "autoSendOnHint": "Włączone: każda nowa dostawa trafia do kolejki kierowcy w chwili jej przyjęcia.",
+      "autoSendOffHint": "Wyłączone: nowe dostawy są wstrzymywane, abyś mógł ręcznie przydzielić je kierowcy.",
+      "precedenceNote": "Fee Free Delivery jest włączona, więc ma priorytet nad ShipDay — nowe zamówienia z dostawą trafiają do Twoich kierowców. Wyłącz ją, aby korzystać ze źródła ShipDay poniżej.",
+      "lockedNotice": "Fee Free Delivery jest częścią dodatku Driver Pool. Wykup subskrypcję, aby kierować zamówienia do własnego Driver Pool.",
+      "getDriverPool": "Uzyskaj Driver Pool",
+      "toastSaved": "Zapisano",
+      "toastFailedToSave": "Nie udało się zapisać. Spróbuj ponownie.",
+      "toastAddonRequired": "Wykup subskrypcję Driver Pool, aby włączyć Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery wymaga najpierw metody płatności online — Twoi kierowcy nie pobierają opłat przy drzwiach, więc zamówienia z dostawą muszą być opłacone online. Włącz płatności kartą lub połącz PayPal, a następnie ją włącz."
     }
   },
   "impersonation": {

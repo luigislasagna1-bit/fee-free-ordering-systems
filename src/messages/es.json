@@ -4626,6 +4626,23 @@
       "useOriginal": "Usar original",
       "cancel": "Cancelar",
       "cropAndUpload": "Recortar y subir"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Interno",
+      "description": "Asigna los pedidos a domicilio a tus propios repartidores — una tarifa fija de $7.99 por entrega, facturada semanalmente. Cuando está activado, los nuevos pedidos a domicilio van a tus repartidores Fee Free en lugar de a ShipDay.",
+      "enableLabel": "Activar Fee Free Delivery",
+      "enableHint": "Dirige los nuevos pedidos a domicilio a tu propio Driver Pool.",
+      "autoSendLabel": "Envío automático al aceptar",
+      "autoSendOnHint": "Activado: cada nueva entrega se pone en cola para un repartidor en cuanto la aceptas.",
+      "autoSendOffHint": "Desactivado: las nuevas entregas quedan en espera para que puedas enviarlas a un repartidor manualmente.",
+      "precedenceNote": "Fee Free Delivery está activado, por lo que tiene prioridad sobre ShipDay — los nuevos pedidos a domicilio van a tus propios repartidores. Desactívalo para usar la fuente de ShipDay que aparece abajo.",
+      "lockedNotice": "Fee Free Delivery forma parte del complemento Driver Pool. Suscríbete para enviar pedidos a tu propio Driver Pool.",
+      "getDriverPool": "Obtener Driver Pool",
+      "toastSaved": "Guardado",
+      "toastFailedToSave": "No se pudo guardar. Inténtalo de nuevo.",
+      "toastAddonRequired": "Suscríbete a Driver Pool para activar Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery necesita primero un método de pago en línea — tus repartidores no cobran en la puerta, así que los pedidos a domicilio deben pagarse en línea. Activa los pagos con tarjeta o conecta PayPal, y luego actívalo."
     }
   },
   "impersonation": {

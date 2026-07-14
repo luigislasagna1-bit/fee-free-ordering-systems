@@ -4626,6 +4626,23 @@
       "useOriginal": "Utiliser l'original",
       "cancel": "Annuler",
       "cropAndUpload": "Recadrer et téléverser"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "En interne",
+      "description": "Envoyez les commandes à livrer à vos propres livreurs — un tarif fixe de $7.99 par livraison, facturé chaque semaine. Une fois activé, les nouvelles commandes à livrer sont confiées à vos livreurs Fee Free plutôt qu'à ShipDay.",
+      "enableLabel": "Activer Fee Free Delivery",
+      "enableHint": "Acheminez les nouvelles commandes à livrer vers votre propre Driver Pool.",
+      "autoSendLabel": "Envoi auto à l'acceptation",
+      "autoSendOnHint": "Activé : chaque nouvelle livraison est mise en file d'attente pour un livreur dès que vous l'acceptez.",
+      "autoSendOffHint": "Désactivé : les nouvelles livraisons sont mises en attente afin que vous puissiez les envoyer manuellement à un livreur.",
+      "precedenceNote": "Fee Free Delivery est activé, il est donc prioritaire sur ShipDay — les nouvelles commandes à livrer sont confiées à vos propres livreurs. Désactivez-le pour utiliser la source ShipDay ci-dessous.",
+      "lockedNotice": "Fee Free Delivery fait partie du module complémentaire Driver Pool. Abonnez-vous pour envoyer les commandes à votre propre Driver Pool.",
+      "getDriverPool": "Obtenir Driver Pool",
+      "toastSaved": "Enregistré",
+      "toastFailedToSave": "Échec de l'enregistrement. Veuillez réessayer.",
+      "toastAddonRequired": "Abonnez-vous à Driver Pool pour activer Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery nécessite d'abord un moyen de paiement en ligne — vos livreurs n'encaissent pas à la porte, les commandes à livrer doivent donc être payées en ligne. Activez les paiements par carte ou connectez PayPal, puis activez-le."
     }
   },
   "impersonation": {

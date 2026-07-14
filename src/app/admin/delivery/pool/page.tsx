@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { DriverPoolClient } from "./DriverPoolClient";
+import { FeeFreeDeliverySection } from "./FeeFreeDeliverySection";
 
 /**
  * /admin/delivery/pool — delivery dispatch configuration.
@@ -38,6 +39,12 @@ export default async function DriverPoolConfigPage() {
 
   const entitled = await hasFeature(user.restaurantId, "driver_pool");
 
+  // Fee Free Delivery (our own driver pool) — sibling config, precedence over
+  // ShipDay when enabled. Upsert so the section always has a row to bind to.
+  const feefree =
+    (await prisma.feeFreeDeliveryConfig.findUnique({ where: { restaurantId: user.restaurantId } })) ??
+    (await prisma.feeFreeDeliveryConfig.create({ data: { restaurantId: user.restaurantId } }));
+
   // Never send the encrypted API key blob to the client — just whether
   // one has been saved. The form shows "•••• saved" if so, with a
   // "Replace" button to set a new one.
@@ -53,7 +60,12 @@ export default async function DriverPoolConfigPage() {
     : null;
 
   return (
-    <DriverPoolClient
+    <div className="max-w-3xl mx-auto space-y-6">
+      <FeeFreeDeliverySection
+        initial={{ enabled: feefree.enabled, autoSend: feefree.autoSend }}
+        entitled={entitled}
+      />
+      <DriverPoolClient
       initial={{
         enabled: config.enabled,
         driverPoolEnabled: config.driverPoolEnabled,
@@ -67,7 +79,8 @@ export default async function DriverPoolConfigPage() {
         partnerContacted: !!config.partnerNotifiedAt,
       }}
       driverPoolEntitled={entitled}
-    />
+      />
+    </div>
   );
 }
 

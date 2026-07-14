@@ -4626,6 +4626,23 @@
       "useOriginal": "Original verwenden",
       "cancel": "Abbrechen",
       "cropAndUpload": "Zuschneiden & hochladen"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Eigene Fahrer",
+      "description": "Liefern Sie Bestellungen mit Ihren eigenen Fahrern aus – pauschal $7.99 pro Lieferung, wöchentlich abgerechnet. Wenn aktiviert, gehen neue Lieferbestellungen an Ihre Fee Free-Fahrer statt an ShipDay.",
+      "enableLabel": "Fee Free Delivery aktivieren",
+      "enableHint": "Neue Lieferbestellungen an Ihren eigenen Driver Pool weiterleiten.",
+      "autoSendLabel": "Automatisch bei Annahme senden",
+      "autoSendOnHint": "Ein: Jede neue Lieferung wird einem Fahrer zugewiesen, sobald Sie sie annehmen.",
+      "autoSendOffHint": "Aus: Neue Lieferungen werden zurückgehalten, damit Sie sie manuell an einen Fahrer senden können.",
+      "precedenceNote": "Fee Free Delivery ist aktiviert und hat daher Vorrang vor ShipDay – neue Lieferbestellungen gehen an Ihre eigenen Fahrer. Deaktivieren Sie es, um die ShipDay-Quelle unten zu verwenden.",
+      "lockedNotice": "Fee Free Delivery ist Teil des Driver Pool-Add-ons. Abonnieren Sie, um Bestellungen an Ihren eigenen Driver Pool zu senden.",
+      "getDriverPool": "Driver Pool holen",
+      "toastSaved": "Gespeichert",
+      "toastFailedToSave": "Speichern fehlgeschlagen. Bitte erneut versuchen.",
+      "toastAddonRequired": "Abonnieren Sie Driver Pool, um Fee Free Delivery zu aktivieren.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery benötigt zuerst eine Online-Zahlungsmethode – Ihre Fahrer kassieren nicht an der Tür, daher müssen Lieferbestellungen online bezahlt werden. Aktivieren Sie Kartenzahlungen oder verbinden Sie PayPal und schalten Sie es dann ein."
     }
   },
   "impersonation": {

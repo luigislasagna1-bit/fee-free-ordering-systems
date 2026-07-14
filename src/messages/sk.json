@@ -4626,6 +4626,23 @@
       "useOriginal": "Použiť originál",
       "cancel": "Zrušiť",
       "cropAndUpload": "Orezať a nahrať"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "Vlastný rozvoz",
+      "description": "Smerujte objednávky s doručením k vlastným vodičom — pevná sadzba $7.99 za doručenie, účtované týždenne. Keď je zapnuté, nové objednávky s doručením idú k vašim vodičom Fee Free namiesto ShipDay.",
+      "enableLabel": "Zapnúť Fee Free Delivery",
+      "enableHint": "Smerujte nové objednávky s doručením do vlastného Driver Pool.",
+      "autoSendLabel": "Automatické odoslanie pri prijatí",
+      "autoSendOnHint": "Zapnuté: každé nové doručenie sa zaradí k vodičovi vo chvíli, keď ho prijmete.",
+      "autoSendOffHint": "Vypnuté: nové doručenia sa podržia, aby ste ich mohli vodičovi odoslať ručne.",
+      "precedenceNote": "Fee Free Delivery je zapnutá, takže má prednosť pred ShipDay — nové objednávky s doručením idú k vašim vlastným vodičom. Vypnite ju, ak chcete použiť zdroj ShipDay nižšie.",
+      "lockedNotice": "Fee Free Delivery je súčasťou doplnku Driver Pool. Predplaťte si ho, aby ste mohli odosielať objednávky do vlastného Driver Pool.",
+      "getDriverPool": "Získať Driver Pool",
+      "toastSaved": "Uložené",
+      "toastFailedToSave": "Nepodarilo sa uložiť. Skúste to prosím znova.",
+      "toastAddonRequired": "Predplaťte si Driver Pool, aby ste zapli Fee Free Delivery.",
+      "toastOnlinePaymentRequired": "Fee Free Delivery najprv vyžaduje online platobnú metódu — vaši vodiči nevyberajú platbu pri dverách, takže objednávky s doručením musia byť zaplatené online. Zapnite platby kartou alebo pripojte PayPal a potom ju zapnite."
     }
   },
   "impersonation": {

@@ -4626,6 +4626,23 @@
       "useOriginal": "ใช้รูปต้นฉบับ",
       "cancel": "ยกเลิก",
       "cropAndUpload": "ครอบตัดและอัปโหลด"
+    },
+    "feefreeDelivery": {
+      "heading": "Fee Free Delivery",
+      "badge": "ทีมภายใน",
+      "description": "ส่งออร์เดอร์เดลิเวอรีให้คนขับของคุณเอง — คิดค่าบริการคงที่ $7.99 ต่อการจัดส่ง เรียกเก็บรายสัปดาห์ เมื่อเปิดใช้งาน ออร์เดอร์เดลิเวอรีใหม่จะไปที่คนขับ Fee Free ของคุณแทน ShipDay",
+      "enableLabel": "เปิดใช้งาน Fee Free Delivery",
+      "enableHint": "ส่งออร์เดอร์เดลิเวอรีใหม่ไปยัง Driver Pool ของคุณเอง",
+      "autoSendLabel": "ส่งอัตโนมัติเมื่อรับออร์เดอร์",
+      "autoSendOnHint": "เปิด: ทุกออร์เดอร์เดลิเวอรีใหม่จะเข้าคิวให้คนขับทันทีที่คุณรับออร์เดอร์",
+      "autoSendOffHint": "ปิด: ออร์เดอร์เดลิเวอรีใหม่จะถูกพักไว้เพื่อให้คุณส่งให้คนขับด้วยตนเอง",
+      "precedenceNote": "Fee Free Delivery เปิดอยู่ จึงมีลำดับความสำคัญเหนือ ShipDay — ออร์เดอร์เดลิเวอรีใหม่จะไปที่คนขับของคุณเอง ปิดใช้งานเพื่อใช้แหล่ง ShipDay ด้านล่าง",
+      "lockedNotice": "Fee Free Delivery เป็นส่วนหนึ่งของส่วนเสริม Driver Pool สมัครสมาชิกเพื่อส่งออร์เดอร์ไปยัง Driver Pool ของคุณเอง",
+      "getDriverPool": "รับ Driver Pool",
+      "toastSaved": "บันทึกแล้ว",
+      "toastFailedToSave": "บันทึกไม่สำเร็จ กรุณาลองอีกครั้ง",
+      "toastAddonRequired": "สมัครใช้ Driver Pool เพื่อเปิดใช้งาน Fee Free Delivery",
+      "toastOnlinePaymentRequired": "Fee Free Delivery ต้องมีวิธีการชำระเงินออนไลน์ก่อน — คนขับของคุณไม่ได้เก็บเงินที่หน้าประตู ดังนั้นออร์เดอร์เดลิเวอรีต้องชำระเงินออนไลน์ เปิดใช้การชำระด้วยบัตรหรือเชื่อมต่อ PayPal แล้วจึงเปิดใช้งาน"
     }
   },
   "impersonation": {
