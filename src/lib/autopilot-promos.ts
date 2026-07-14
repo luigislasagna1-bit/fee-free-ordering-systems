@@ -27,6 +27,34 @@ type PromoDef = {
   name: string;
 };
 
+/**
+ * How long an already-EMAILED offer code stays redeemable after its campaign is
+ * switched off. The bug (Luigi 2026-07-14, "CARTBACK invalid or expired"): a
+ * campaign toggle-off flipped the shared promo to isActive=false, which instantly
+ * killed every code already sitting in customers' inboxes — a freshly-delivered
+ * offer read "invalid or expired." Fix: disabling a campaign no longer deactivates
+ * the code; it keeps it redeemable for this grace window (then it expires
+ * naturally). NEW sends still stop immediately — the cron never runs a disabled
+ * campaign — so only outstanding codes get the grace.
+ */
+export const OFFER_GRACE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+/**
+ * The isActive/endsAt patch for a campaign promo given the campaign's enabled
+ * state + the row's current endsAt. Enabled → fully live + open-ended. Disabled →
+ * keep it redeemable but stamp a grace end (once — don't keep pushing it out on
+ * repeated disables), so delivered codes are honored, then expire.
+ */
+export function activationPatch(
+  enabled: boolean,
+  existingEndsAt: Date | null,
+  now: Date = new Date(),
+): { isActive?: boolean; endsAt?: Date | null } {
+  if (enabled) return { isActive: true, endsAt: null };
+  if (existingEndsAt == null) return { isActive: true, endsAt: new Date(now.getTime() + OFFER_GRACE_MS) };
+  return {}; // already in a grace window — leave it
+}
+
 /** The progressive win-back ladder — bigger discounts for longer-lapsed
  *  customers (the cron sends WINn to the n-th recency tier). Luigi's values
  *  from the GloriaFood walkthrough. */
@@ -65,11 +93,14 @@ export async function ensureCartRecoveryPromo(restaurantId: string, enabled: boo
   try {
     const existing = await prisma.promotion.findFirst({
       where: { restaurantId, campaignRef: CART_RECOVERY.campaignRef },
-      select: { id: true, isActive: true },
+      select: { id: true, isActive: true, endsAt: true },
     });
     if (existing) {
-      if (existing.isActive !== enabled) {
-        await prisma.promotion.update({ where: { id: existing.id }, data: { isActive: enabled } });
+      // Disabling keeps the code redeemable for a grace window instead of killing
+      // codes already in inboxes (the "invalid or expired" bug).
+      const patch = activationPatch(enabled, existing.endsAt);
+      if (Object.keys(patch).length) {
+        await prisma.promotion.update({ where: { id: existing.id }, data: patch });
       }
       return existing.id;
     }
@@ -108,11 +139,14 @@ export async function ensureCartRecoveryPromo(restaurantId: string, enabled: boo
 async function ensurePromo(restaurantId: string, def: PromoDef, enabled: boolean): Promise<void> {
   const existing = await prisma.promotion.findFirst({
     where: { restaurantId, campaignRef: def.campaignRef },
-    select: { id: true, isActive: true },
+    select: { id: true, isActive: true, endsAt: true },
   });
   if (existing) {
-    if (existing.isActive !== enabled) {
-      await prisma.promotion.update({ where: { id: existing.id }, data: { isActive: enabled } });
+    // Disabling keeps emailed codes redeemable for the grace window (see
+    // activationPatch) rather than instantly invalidating inbox codes.
+    const patch = activationPatch(enabled, existing.endsAt);
+    if (Object.keys(patch).length) {
+      await prisma.promotion.update({ where: { id: existing.id }, data: patch });
     }
     return;
   }
@@ -197,16 +231,22 @@ export function nameForStepPromo(def: PromoDef, pct: number): string {
 async function upsertStepPromo(restaurantId: string, def: PromoDef, discountPercent: number, active: boolean): Promise<void> {
   const existing = await prisma.promotion.findFirst({
     where: { restaurantId, campaignRef: def.campaignRef },
-    select: { id: true, ruleConfig: true },
+    select: { id: true, ruleConfig: true, endsAt: true },
   });
   if (existing) {
     const rc =
       existing.ruleConfig && typeof existing.ruleConfig === "object" && !Array.isArray(existing.ruleConfig)
         ? (existing.ruleConfig as Record<string, unknown>)
         : {};
+    // isActive/endsAt via activationPatch (grace on disable so emailed codes stay
+    // honored); the step editor still writes through discount % + name.
     await prisma.promotion.update({
       where: { id: existing.id },
-      data: { isActive: active, ruleConfig: { ...rc, discountPercent }, name: nameForStepPromo(def, discountPercent) },
+      data: {
+        ...activationPatch(active, existing.endsAt),
+        ruleConfig: { ...rc, discountPercent },
+        name: nameForStepPromo(def, discountPercent),
+      },
     });
     return;
   }

@@ -221,8 +221,23 @@ async function resolveCampaignCoupon(
   couponId: string | null,
 ): Promise<{ code: string; label: string } | null> {
   if (!couponId) return null;
+  // Symmetry with the redeem route (/api/public/coupon): only email a code that is
+  // actually redeemable RIGHT NOW — active + inside its date window. Otherwise the
+  // email would carry a link the redeem side rejects as "invalid or expired"
+  // (Luigi 2026-07-14). If not redeemable, return null so the email still sends,
+  // just without a dead coupon link.
+  const now = new Date();
   const promo = await prisma.promotion.findFirst({
-    where: { id: couponId, restaurantId, couponCode: { not: null } },
+    where: {
+      id: couponId,
+      restaurantId,
+      couponCode: { not: null },
+      isActive: true,
+      AND: [
+        { OR: [{ startsAt: null }, { startsAt: { lte: now } }] },
+        { OR: [{ endsAt: null }, { endsAt: { gte: now } }] },
+      ],
+    },
     select: { couponCode: true, name: true, ruleConfig: true },
   });
   if (promo?.couponCode) {
