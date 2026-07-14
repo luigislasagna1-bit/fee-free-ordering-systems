@@ -5,11 +5,9 @@ import prisma from "@/lib/db";
 import {
   ensureMarketplaceListing,
   computeMonthlyChargeCents,
-  getMarketplaceMembership,
 } from "@/lib/marketplace";
 import { getAddOnBillingState } from "@/lib/dunning";
 import { AddOnBillingNotice } from "@/components/admin/AddOnBillingNotice";
-import { MarketplaceLockedView } from "./MarketplaceLockedView";
 import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
 
 /**
@@ -34,22 +32,12 @@ export default async function MarketplaceAdminPage() {
     );
   }
 
-  // Membership = "monthly" (paid subscription) | "payg" (opted into PAYG) | "none".
-  // Only "none" sees the upsell; both billing modes get the editor.
-  const membership = await getMarketplaceMembership(user.restaurantId);
-  // Marketplace add-on dunning state → grace / downgraded notice.
+  // Marketplace is FREE + INCLUDED for every restaurant (Luigi 2026-07-14).
+  // Everyone gets the editor — the isListed toggle inside it handles opt-in/out;
+  // there is no paid upsell wall anymore.
+  // Marketplace add-on dunning state → only surfaces if a legacy paid sub is
+  // still mid-dunning (cleared once the prod retirement migration, A14, runs).
   const billingState = await getAddOnBillingState(user.restaurantId, "marketplace");
-
-  if (membership === "none") {
-    return (
-      <>
-        <div className="max-w-5xl mx-auto px-4 pt-4">
-          <AddOnBillingNotice state={billingState} addOnSlug="marketplace" />
-        </div>
-        <MarketplaceLockedView />
-      </>
-    );
-  }
 
   // Ensure listing exists (defensive against webhook race conditions)
   await ensureMarketplaceListing(user.restaurantId);
@@ -107,7 +95,6 @@ export default async function MarketplaceAdminPage() {
           capHit: billing.capHit,
         },
       }}
-      billingMode={membership}
       isSuperadmin={user.role === "superadmin"}
     />
     </>

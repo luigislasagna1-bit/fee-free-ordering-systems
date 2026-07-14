@@ -2632,7 +2632,7 @@
       "since": "od {date}",
       "statOrders": "Narudžbe",
       "statRevenue": "Prihod",
-      "billingHeading": "Račun za Marketplace ovog mjeseca",
+      "billingHeading": "Vaš oglas na tržnici",
       "monthlyPriceLabel": "/ mj. · fiksno",
       "monthlyTaxNote": "USD · porez po provinciji (CA) · SAD/međunarodno izuzeto",
       "monthlyPlanDetail": "Na ste <strong>Mjesečnom planu</strong>. Neograničene Marketplace narudžbe uključene — bez naknade po narudžbi. {n, plural, one {# narudžba} other {# narudžbi}} ovog mjeseca, sve besplatno.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Prebaci na Mjesečno ($199,99/mj., neograničeno) →",
       "noOrdersYet": "Još nema Marketplace narudžbi ovog mjeseca. Jednom kada kupac naruči putem <link>/marketplace</link> → vaš oglas, stvarni brojevi će se pojaviti ovdje.",
       "saveSuccess": "Oglas na Marketplaceu ažuriran",
-      "saveError": "Nije uspjelo spremanje"
+      "saveError": "Nije uspjelo spremanje",
+      "includedFree": "Uključeno — besplatno",
+      "includedDetail": "Bez mjesečne naknade ili naknade po narudžbi. Kupci unutar 15 km mogu vas pronaći i naručiti od vas."
     },
     "paymentMethods": {
       "heading": "Prihvaćeni načini plaćanja",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Oglas na tržnici",
-            "body": "Budite otkriveni na Fee Free tržnici — jeftin kanal za nove goste, bez naknada od 30%."
+            "body": "Budite otkriveni na Fee Free tržnici — besplatnom kanalu za nove kupce, bez naknada od 30%."
           },
           "unlimited": {
             "title": "Neograničene narudžbe",

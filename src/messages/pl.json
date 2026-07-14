@@ -2576,7 +2576,7 @@
       "since": "od {date}",
       "statOrders": "Zamówienia",
       "statRevenue": "Przychód",
-      "billingHeading": "Rachunek Marketplace w tym miesiącu",
+      "billingHeading": "Twoja wizytówka w marketplace",
       "monthlyPriceLabel": "/ miesiąc · stała",
       "monthlyTaxNote": "USD · podatek wg prowincji (CA) · US/zagranica zwolnione",
       "monthlyPlanDetail": "Jesteś na <strong>planie Miesięcznym</strong>. Nieograniczone zamówienia z marketplace wliczone — bez opłat za zamówienie. {n, plural, one {# zamówienie} other {# zamówień}} w tym miesiącu, wszystkie bezpłatne.",
@@ -2588,7 +2588,9 @@
       "switchToMonthly": "Przełącz na Miesięczną ($199.99/mies., nieograniczone) →",
       "noOrdersYet": "Brak zamówień z marketplace w tym miesiącu. Gdy klient zamówi przez <link>/marketplace</link> → Twój listing, tutaj pojawią się dane.",
       "saveSuccess": "Listing Marketplace zaktualizowany",
-      "saveError": "Zapis nie powiódł się"
+      "saveError": "Zapis nie powiódł się",
+      "includedFree": "W zestawie — za darmo",
+      "includedDetail": "Bez opłaty miesięcznej ani za zamówienie. Klienci w promieniu 15 km mogą Cię znaleźć i złożyć zamówienie."
     },
     "paymentMethods": {
       "heading": "Akceptowane metody płatności",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Wpis na marketplace",
-            "body": "Daj się odkryć na marketplace Fee Free — tani kanał pozyskiwania nowych klientów, bez prowizji 30%."
+            "body": "Zaistniej na marketplace Fee Free — darmowy kanał nowych klientów, bez 30% prowizji."
           },
           "unlimited": {
             "title": "Nieograniczone zamówienia",

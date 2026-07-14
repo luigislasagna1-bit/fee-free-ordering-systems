@@ -2632,7 +2632,7 @@
       "since": "自 {date}",
       "statOrders": "订单",
       "statRevenue": "营业额",
-      "billingHeading": "本月 Marketplace 账单",
+      "billingHeading": "您的市场平台商家信息",
       "monthlyPriceLabel": "/ 月 · 固定",
       "monthlyTaxNote": "美元 · 加拿大按省份征税 · 美国/国际免税",
       "monthlyPlanDetail": "您正在使用<strong>月套餐</strong>，含无限 Marketplace 订单——无按单收费。本月共 {n, plural, one {# 笔订单} other {# 笔订单}}，全部免费。",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "切换至月套餐（$199.99/月，无限订单）→",
       "noOrdersYet": "本月暂无 Marketplace 订单。一旦有顾客通过 <link>/marketplace</link> → 您的上架页面下单，真实数据将在此显示。",
       "saveSuccess": "Marketplace 上架信息已更新",
-      "saveError": "保存失败"
+      "saveError": "保存失败",
+      "includedFree": "已包含 — 免费",
+      "includedDetail": "无月费，也无单笔订单费用。15 km 范围内的顾客可以找到您并下单。"
     },
     "paymentMethods": {
       "heading": "接受的支付方式",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "市集上架",
-            "body": "在 Fee Free 市集上被发现——一个低成本的新客渠道，没有 30% 的高额抽成。"
+            "body": "在 Fee Free 市场平台上被发现 — 一个免费的新客户渠道，没有 30% 的费用。"
           },
           "unlimited": {
             "title": "无限订单",

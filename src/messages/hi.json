@@ -3006,7 +3006,7 @@
       "since": "{date} से",
       "statOrders": "ऑर्डर",
       "statRevenue": "राजस्व",
-      "billingHeading": "इस महीने का Marketplace बिल",
+      "billingHeading": "आपकी मार्केटप्लेस लिस्टिंग",
       "monthlyPriceLabel": "/ माह · निश्चित",
       "monthlyTaxNote": "USD · प्रांत के अनुसार कर (CA) · US/अंतर्राष्ट्रीय छूट",
       "monthlyPlanDetail": "आप <strong>Monthly plan</strong> पर हैं। असीमित Marketplace ऑर्डर शामिल — कोई प्रति-ऑर्डर शुल्क नहीं। इस महीने {n, plural, one {# ऑर्डर} other {# ऑर्डर}}, सभी मुफ़्त।",
@@ -3018,7 +3018,9 @@
       "switchToMonthly": "Monthly पर स्विच करें ($199.99/माह, असीमित) →",
       "noOrdersYet": "इस महीने अभी तक कोई Marketplace ऑर्डर नहीं। जैसे ही कोई ग्राहक <link>/marketplace</link> → आपकी लिस्टिंग से ऑर्डर करेगा, यहाँ असली संख्याएं दिखेंगी।",
       "saveSuccess": "Marketplace लिस्टिंग अपडेट की गई",
-      "saveError": "सहेजने में विफल"
+      "saveError": "सहेजने में विफल",
+      "includedFree": "शामिल — मुफ़्त",
+      "includedDetail": "कोई मासिक या प्रति-ऑर्डर शुल्क नहीं। 15 km के भीतर के ग्राहक आपको ढूंढ सकते हैं और आपसे ऑर्डर कर सकते हैं।"
     },
     "paymentMethods": {
       "heading": "स्वीकृत भुगतान विधियाँ",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "मार्केटप्लेस लिस्टिंग",
-            "body": "Fee Free मार्केटप्लेस पर खोजे जाएँ — कम लागत का नया-ग्राहक चैनल, कोई 30% फ़ीस नहीं।"
+            "body": "Fee Free मार्केटप्लेस पर खोजे जाएं — नए ग्राहकों के लिए एक मुफ़्त चैनल, कोई 30% शुल्क नहीं।"
           },
           "unlimited": {
             "title": "असीमित ऑर्डर",

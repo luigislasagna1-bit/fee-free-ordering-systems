@@ -2576,7 +2576,7 @@
       "since": "từ {date}",
       "statOrders": "Đơn hàng",
       "statRevenue": "Doanh thu",
-      "billingHeading": "Hóa đơn marketplace tháng này",
+      "billingHeading": "Danh sách của bạn trên chợ",
       "monthlyPriceLabel": "/ tháng · cố định",
       "monthlyTaxNote": "USD · thuế theo tỉnh (CA) · Mỹ/quốc tế miễn thuế",
       "monthlyPlanDetail": "Bạn đang dùng <strong>Gói Hàng Tháng</strong>. Đơn marketplace không giới hạn — không tính phí mỗi đơn. {n, plural, one {# đơn} other {# đơn}} tháng này, tất cả miễn phí.",
@@ -2588,7 +2588,9 @@
       "switchToMonthly": "Chuyển sang Hàng Tháng ($199.99/tháng, không giới hạn) →",
       "noOrdersYet": "Chưa có đơn marketplace tháng này. Khi khách đặt qua <link>/marketplace</link> → danh sách của bạn, số liệu thật sẽ xuất hiện ở đây.",
       "saveSuccess": "Đã cập nhật danh sách marketplace",
-      "saveError": "Lưu thất bại"
+      "saveError": "Lưu thất bại",
+      "includedFree": "Đã bao gồm — miễn phí",
+      "includedDetail": "Không phí hàng tháng hay phí mỗi đơn. Khách hàng trong bán kính 15 km có thể tìm thấy và đặt hàng từ bạn."
     },
     "paymentMethods": {
       "heading": "Phương thức thanh toán chấp nhận",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Hiển thị trên sàn",
-            "body": "Được khám phá trên sàn Fee Free — một kênh khách mới chi phí thấp, không phí 30%."
+            "body": "Được khám phá trên chợ Fee Free — một kênh khách hàng mới miễn phí, không mất phí 30%."
           },
           "unlimited": {
             "title": "Đơn hàng không giới hạn",

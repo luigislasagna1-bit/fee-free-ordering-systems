@@ -63,16 +63,11 @@ export function MarketplaceSettingsClient({
   initialListing,
   restaurant,
   stats,
-  billingMode,
   isSuperadmin,
 }: {
   initialListing: Listing;
   restaurant: Restaurant;
   stats: Stats;
-  /** Which plan the restaurant is on. Drives the "billing this month"
-   *  card — monthly subscribers see "$199.99 — flat", PAYG subscribers
-   *  see the running $X / $249.99 cap accrual. */
-  billingMode: "payg" | "monthly";
   isSuperadmin: boolean;
 }) {
   const t = useTranslations("admin.marketplaceSettings");
@@ -477,89 +472,19 @@ export function MarketplaceSettingsClient({
                 />
               </div>
 
-              {/* Billing summary — totally different copy for the two
-                  plans. Monthly subscribers see a flat $199.99/mo card.
-                  PAYG subscribers see the running $X / $249.99 accrual.
-                  Mutual-exclusive: a restaurant is ONE or the OTHER,
-                  never billed twice for the same orders. */}
-              {billingMode === "monthly" ? (
-                <div className="mt-4 rounded-xl p-3 border border-emerald-300 bg-emerald-50">
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <TrendingUp className="w-3.5 h-3.5 text-emerald-700" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
-                      {t("billingHeading")}
-                    </span>
-                  </div>
-                  <div className="text-xl font-bold text-emerald-900">
-                    $199.99
-                    <span className="text-xs font-semibold opacity-70 ml-1">{t("monthlyPriceLabel")}</span>
-                  </div>
-                  <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
-                    {t("monthlyTaxNote")}
-                  </div>
-                  <p className="text-[11px] mt-1 leading-snug text-emerald-800">
-                    {t.rich("monthlyPlanDetail", {
-                      n: stats.currentMonthOrders,
-                      strong: (c) => <strong>{c}</strong>,
-                    })}
-                  </p>
-                  <Link
-                    href="/admin/marketplace/payg-opt-in"
-                    className="mt-2 inline-block text-[11px] font-semibold text-emerald-700 hover:underline"
-                  >
-                    {t("switchToPayg")}
-                  </Link>
+              {/* Marketplace is included FREE (Luigi 2026-07-14): no monthly or
+                  per-order fee. This panel replaces the old monthly/PAYG billing
+                  cards; the order/revenue StatCells above still show volume. */}
+              <div className="mt-4 rounded-xl p-3 border border-emerald-200 bg-emerald-50">
+                <div className="flex items-center gap-1.5 mb-1">
+                  <TrendingUp className="w-3.5 h-3.5 text-emerald-700" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
+                    {t("billingHeading")}
+                  </span>
                 </div>
-              ) : (
-                <div className={`mt-4 rounded-xl p-3 border ${
-                  stats.billing.capHit
-                    ? "border-emerald-300 bg-emerald-50"
-                    : "border-emerald-200 bg-emerald-50"
-                }`}>
-                  <div className="flex items-center gap-1.5 mb-1">
-                    <TrendingUp className={`w-3.5 h-3.5 ${
-                      stats.billing.capHit ? "text-emerald-700" : "text-emerald-700"
-                    }`} />
-                    <span className={`text-xs font-bold uppercase tracking-wider ${
-                      stats.billing.capHit ? "text-emerald-800" : "text-emerald-800"
-                    }`}>
-                      {t("billingHeading")}
-                    </span>
-                  </div>
-                  <div className={`text-xl font-bold ${
-                    stats.billing.capHit ? "text-emerald-900" : "text-emerald-900"
-                  }`}>
-                    {formatCurrency(stats.billing.effectiveCents / 100)}
-                    <span className="text-xs font-semibold opacity-70 ml-1">
-                      {t("paygCapLabel", { cap: formatCurrency(stats.billing.capCents / 100) })}
-                    </span>
-                  </div>
-                  <div className="text-[10px] uppercase tracking-wider opacity-60 mt-0.5">
-                    {t("paygTaxNote")}
-                  </div>
-                  <p className={`text-[11px] mt-1 leading-snug ${
-                    stats.billing.capHit ? "text-emerald-800" : "text-emerald-800"
-                  }`}>
-                    {stats.billing.capHit ? (
-                      t.rich("paygCapHitDetail", {
-                        capAmount: formatCurrency(stats.billing.capCents / 100),
-                        strong: (c) => <strong>{c}</strong>,
-                      })
-                    ) : (
-                      t.rich("paygRunningDetail", {
-                        capAmount: formatCurrency(stats.billing.capCents / 100),
-                        strong: (c) => <strong>{c}</strong>,
-                      })
-                    )}
-                  </p>
-                  <Link
-                    href="/admin/billing/add-ons"
-                    className="mt-2 inline-block text-[11px] font-semibold text-emerald-700 hover:underline"
-                  >
-                    {t("switchToMonthly")}
-                  </Link>
-                </div>
-              )}
+                <div className="text-xl font-bold text-emerald-900">{t("includedFree")}</div>
+                <p className="text-[11px] mt-1 leading-snug text-emerald-800">{t("includedDetail")}</p>
+              </div>
 
               {stats.currentMonthOrders === 0 && (
                 <p className="mt-3 text-[11px] text-gray-500 italic leading-relaxed">

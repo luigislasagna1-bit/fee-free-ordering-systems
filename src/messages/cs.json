@@ -2632,7 +2632,7 @@
       "since": "od {date}",
       "statOrders": "Objednávky",
       "statRevenue": "Tržby",
-      "billingHeading": "Faktura za marketplace tento měsíc",
+      "billingHeading": "Váš záznam v marketplace",
       "monthlyPriceLabel": "/ měsíc · paušál",
       "monthlyTaxNote": "USD · daň podle provincie (CA) · USA/mezinárodní osvobozeno",
       "monthlyPlanDetail": "Jste na <strong>Měsíčním plánu</strong>. Neomezené objednávky přes marketplace jsou zahrnuty — žádné poplatky za objednávku. {n, plural, one {# objednávka} other {# objednávek}} tento měsíc, vše zdarma.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Přejít na Měsíční ($199.99/měs., neomezeno) →",
       "noOrdersYet": "Tento měsíc zatím žádné objednávky přes marketplace. Jakmile zákazník objedná přes <link>/marketplace</link> → váš zápis, zde se zobrazí skutečná čísla.",
       "saveSuccess": "Zápis na marketplace aktualizován",
-      "saveError": "Uložení selhalo"
+      "saveError": "Uložení selhalo",
+      "includedFree": "Součástí — zdarma",
+      "includedDetail": "Žádný měsíční poplatek ani poplatek za objednávku. Zákazníci do 15 km vás najdou a mohou u vás objednat."
     },
     "paymentMethods": {
       "heading": "Přijímané způsoby platby",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Zařazení do tržiště",
-            "body": "Nechte se najít na tržišti Fee Free — levný kanál pro nové zákazníky, bez 30% poplatků."
+            "body": "Nechte se objevit na marketplace Fee Free — bezplatný kanál nových zákazníků, bez 30% poplatků."
           },
           "unlimited": {
             "title": "Neomezené objednávky",

@@ -2632,7 +2632,7 @@
       "since": "منذ {date}",
       "statOrders": "الطلبات",
       "statRevenue": "الإيرادات",
-      "billingHeading": "فاتورة Marketplace هذا الشهر",
+      "billingHeading": "إعلانك في السوق",
       "monthlyPriceLabel": "/ شهر · ثابت",
       "monthlyTaxNote": "USD · ضريبة حسب المقاطعة (CA) · الولايات المتحدة/الدولي معفاة",
       "monthlyPlanDetail": "أنت على <strong>الخطة الشهرية</strong>. طلبات Marketplace غير محدودة مشمولة — بدون رسوم لكل طلب. {n, plural, one {# طلب} other {# طلبات}} هذا الشهر، كلها مجانية.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "التحويل إلى الشهري (199.99$/شهر، غير محدود) →",
       "noOrdersYet": "لا توجد طلبات Marketplace بعد هذا الشهر. بمجرد طلب عميل عبر <link>/marketplace</link> → قائمتك، تظهر الأرقام الحقيقية هنا.",
       "saveSuccess": "تم تحديث قائمة Marketplace",
-      "saveError": "فشل الحفظ"
+      "saveError": "فشل الحفظ",
+      "includedFree": "مشمول — مجاني",
+      "includedDetail": "لا رسوم شهرية ولا رسوم لكل طلب. يمكن للعملاء ضمن نطاق 15 km العثور عليك والطلب منك."
     },
     "paymentMethods": {
       "heading": "طرق الدفع المقبولة",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "الإدراج في السوق",
-            "body": "احصل على الاكتشاف في سوق Fee Free — قناة منخفضة التكلفة لجلب عملاء جدد، بلا رسوم 30%."
+            "body": "احصل على الظهور في سوق Fee Free — قناة مجانية لجذب عملاء جدد، دون رسوم 30%."
           },
           "unlimited": {
             "title": "طلبات غير محدودة",

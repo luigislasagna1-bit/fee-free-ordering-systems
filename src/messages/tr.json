@@ -2576,7 +2576,7 @@
       "since": "{date} tarihinden beri",
       "statOrders": "Siparişler",
       "statRevenue": "Gelir",
-      "billingHeading": "Bu ayki marketplace faturası",
+      "billingHeading": "Pazar yeri ilanınız",
       "monthlyPriceLabel": "/ ay · sabit",
       "monthlyTaxNote": "USD · ildeki vergiye göre (CA) · ABD/uluslararası muaf",
       "monthlyPlanDetail": "<strong>Aylık plan</strong>'dasınız. Sınırsız marketplace siparişi dahil — sipariş başına ücret yok. Bu ay {n, plural, one {# sipariş} other {# sipariş}}, hepsi ücretsiz.",
@@ -2588,7 +2588,9 @@
       "switchToMonthly": "Aylığa Geç ($199.99/ay, sınırsız) →",
       "noOrdersYet": "Bu ay henüz marketplace siparişi yok. Bir müşteri <link>/marketplace</link> → listeniz üzerinden sipariş verdiğinde gerçek rakamlar burada görünür.",
       "saveSuccess": "Marketplace listesi güncellendi",
-      "saveError": "Kaydedilemedi"
+      "saveError": "Kaydedilemedi",
+      "includedFree": "Dahil — ücretsiz",
+      "includedDetail": "Aylık veya sipariş başına ücret yok. 15 km çevredeki müşteriler sizi bulabilir ve sipariş verebilir."
     },
     "paymentMethods": {
       "heading": "Kabul edilen ödeme yöntemleri",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Pazar yeri listelemesi",
-            "body": "Fee Free pazar yerinde keşfedilin — düşük maliyetli bir yeni müşteri kanalı, %30 ücret yok."
+            "body": "Fee Free pazar yerinde keşfedilin — ücretsiz yeni müşteri kanalı, %30 komisyon yok."
           },
           "unlimited": {
             "title": "Sınırsız Sipariş",

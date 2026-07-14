@@ -2632,7 +2632,7 @@
       "since": "din {date}",
       "statOrders": "Comenzi",
       "statRevenue": "Venituri",
-      "billingHeading": "Factura marketplace a acestei luni",
+      "billingHeading": "Anunțul tău din marketplace",
       "monthlyPriceLabel": "/ lună · fix",
       "monthlyTaxNote": "USD · taxă pe provincie (CA) · SUA/internațional scutit",
       "monthlyPlanDetail": "Ești pe <strong>planul lunar</strong>. Comenzi nelimitate pe marketplace incluse — fără taxe per comandă. {n, plural, one {# comandă} other {# comenzi}} luna aceasta, toate gratuite.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Treci la lunar ($199.99/lună, nelimitat) →",
       "noOrdersYet": "Nicio comandă marketplace încă luna aceasta. Odată ce un client comandă prin <link>/marketplace</link> → listarea ta, datele reale apar aici.",
       "saveSuccess": "Listare marketplace actualizată",
-      "saveError": "Salvarea a eșuat"
+      "saveError": "Salvarea a eșuat",
+      "includedFree": "Inclus — gratuit",
+      "includedDetail": "Fără taxă lunară sau per comandă. Clienții aflați la 15 km te pot găsi și comanda de la tine."
     },
     "paymentMethods": {
       "heading": "Metode de plată acceptate",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Listare în marketplace",
-            "body": "Fii descoperit în marketplace-ul Fee Free — un canal accesibil de clienți noi, fără comisioane de 30%."
+            "body": "Fii descoperit în marketplace-ul Fee Free — un canal gratuit de clienți noi, fără comisioane de 30%."
           },
           "unlimited": {
             "title": "Comenzi nelimitate",

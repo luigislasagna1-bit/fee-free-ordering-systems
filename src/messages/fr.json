@@ -2632,7 +2632,7 @@
       "since": "depuis le {date}",
       "statOrders": "Commandes",
       "statRevenue": "Revenus",
-      "billingHeading": "Facture Marketplace ce mois-ci",
+      "billingHeading": "Votre fiche sur la marketplace",
       "monthlyPriceLabel": "/ mois · fixe",
       "monthlyTaxNote": "USD · taxe par province (CA) · US/intl exonéré",
       "monthlyPlanDetail": "Vous êtes sur le <strong>Forfait Mensuel</strong>. Commandes Marketplace illimitées incluses — aucun frais par commande. {n, plural, one {# commande} other {# commandes}} ce mois-ci, toutes gratuites.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Passer au Mensuel (199,99 $/mois, illimité) →",
       "noOrdersYet": "Aucune commande Marketplace ce mois-ci. Dès qu'un client commande via <link>/marketplace</link> → votre fiche, les vrais chiffres apparaissent ici.",
       "saveSuccess": "Fiche Marketplace mise à jour",
-      "saveError": "Échec de l'enregistrement"
+      "saveError": "Échec de l'enregistrement",
+      "includedFree": "Inclus — gratuit",
+      "includedDetail": "Aucuns frais mensuels ni par commande. Les clients situés à moins de 15 km peuvent vous trouver et commander chez vous."
     },
     "paymentMethods": {
       "heading": "Modes de paiement acceptés",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Référencement sur la place de marché",
-            "body": "Faites-vous découvrir sur la place de marché Fee Free — un canal d'acquisition à faible coût, sans frais de 30 %."
+            "body": "Faites-vous découvrir sur la marketplace Fee Free — un canal gratuit pour attirer de nouveaux clients, sans commission de 30 %."
           },
           "unlimited": {
             "title": "Commandes illimitées",

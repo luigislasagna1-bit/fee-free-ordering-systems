@@ -2632,7 +2632,7 @@
       "since": "seit {date}",
       "statOrders": "Bestellungen",
       "statRevenue": "Umsatz",
-      "billingHeading": "Marketplace-Rechnung diesen Monat",
+      "billingHeading": "Ihr Marketplace-Eintrag",
       "monthlyPriceLabel": "/ Monat · pauschal",
       "monthlyTaxNote": "USD · Steuer nach Provinz (CA) · US/international befreit",
       "monthlyPlanDetail": "Sie nutzen den <strong>Monatlichen Plan</strong>. Unbegrenzte Marketplace-Bestellungen inklusive — keine Gebühren pro Bestellung. {n, plural, one {# Bestellung} other {# Bestellungen}} diesen Monat, alle kostenlos.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Zu Monatlich wechseln (199,99 $/Monat, unbegrenzt) →",
       "noOrdersYet": "Noch keine Marketplace-Bestellungen diesen Monat. Sobald ein Kunde über <link>/marketplace</link> → Ihren Eintrag bestellt, erscheinen hier echte Zahlen.",
       "saveSuccess": "Marketplace-Eintrag aktualisiert",
-      "saveError": "Speichern fehlgeschlagen"
+      "saveError": "Speichern fehlgeschlagen",
+      "includedFree": "Inklusive — kostenlos",
+      "includedDetail": "Keine monatlichen Gebühren und keine Gebühr pro Bestellung. Kunden im Umkreis von 15 km können Sie finden und bei Ihnen bestellen."
     },
     "paymentMethods": {
       "heading": "Akzeptierte Zahlungsmethoden",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Marktplatz-Eintrag",
-            "body": "Werden Sie auf dem Fee Free Marktplatz gefunden – ein günstiger Kanal für Neukunden, ohne 30 % Gebühren."
+            "body": "Werden Sie auf dem Fee Free-Marketplace entdeckt — ein kostenloser Kanal für neue Kunden, ohne 30 % Gebühren."
           },
           "unlimited": {
             "title": "Unbegrenzte Bestellungen",

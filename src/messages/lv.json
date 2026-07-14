@@ -2632,7 +2632,7 @@
       "since": "kopš {date}",
       "statOrders": "Pasūtījumi",
       "statRevenue": "Ieņēmumi",
-      "billingHeading": "Marketplace rēķins šomēnes",
+      "billingHeading": "Jūsu sludinājums tirdzniecības vietā",
       "monthlyPriceLabel": "/ mēnesī · fiksēts",
       "monthlyTaxNote": "USD · nodoklis pēc provinces (CA) · US/starptaut. atbrīvots",
       "monthlyPlanDetail": "Jūs izmantojat <strong>Ikmēneša plānu</strong>. Neierobežoti Marketplace pasūtījumi iekļauti — nav maksas par pasūtījumu. {n, plural, one {# pasūtījums} other {# pasūtījumi}} šomēnes, visi bez maksas.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Pārslēgties uz Ikmēneša ($199.99/mēn., neierobežoti) →",
       "noOrdersYet": "Šomēnes vēl nav Marketplace pasūtījumu. Kad klients pasūtīs caur <link>/marketplace</link> → jūsu ierakstu, šeit parādīsies īstie skaitļi.",
       "saveSuccess": "Marketplace ieraksts atjaunināts",
-      "saveError": "Neizdevās saglabāt"
+      "saveError": "Neizdevās saglabāt",
+      "includedFree": "Iekļauts — bez maksas",
+      "includedDetail": "Nav ikmēneša vai pasūtījuma maksas. Klienti 15 km rādiusā var jūs atrast un pasūtīt."
     },
     "paymentMethods": {
       "heading": "Pieņemtie maksājuma veidi",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Tirgus platformas saraksts",
-            "body": "Kļūsti pamanāms Fee Free tirgus platformā — lēts jaunu klientu kanāls, bez 30% maksas."
+            "body": "Kļūstiet pamanāms Fee Free tirdzniecības vietā — bezmaksas jaunu klientu kanālā, bez 30% maksām."
           },
           "unlimited": {
             "title": "Neierobežoti pasūtījumi",

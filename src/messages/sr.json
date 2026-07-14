@@ -2632,7 +2632,7 @@
       "since": "od {date}",
       "statOrders": "Porudžbine",
       "statRevenue": "Prihodi",
-      "billingHeading": "Račun na Marketplace-u ovog meseca",
+      "billingHeading": "Vaš oglas na pijaci",
       "monthlyPriceLabel": "/ mesečno · fiksno",
       "monthlyTaxNote": "USD · porez po provinciji (CA) · US/međunarodni oslobođeni",
       "monthlyPlanDetail": "Na ste <strong>Mesečnom planu</strong>. Neograničene marketplace porudžbine su uključene — bez naknade po porudžbini. {n, plural, one {# porudžbina} other {# porudžbina}} ovog meseca, sve besplatno.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Pređi na Mesečno ($199.99/mes., neograničeno) →",
       "noOrdersYet": "Još nema marketplace porudžbina ovog meseca. Kada kupac naruči putem <link>/marketplace</link> → vaš listing, stvarni brojevi će se pojaviti ovde.",
       "saveSuccess": "Listing na Marketplace-u ažuriran",
-      "saveError": "Čuvanje nije uspelo"
+      "saveError": "Čuvanje nije uspelo",
+      "includedFree": "Uključeno — besplatno",
+      "includedDetail": "Bez mesečne naknade ili naknade po porudžbini. Kupci u krugu od 15 km mogu da vas pronađu i naruče od vas."
     },
     "paymentMethods": {
       "heading": "Prihvaćeni načini plaćanja",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Oglas na pijaci",
-            "body": "Budite otkriveni na Fee Free pijaci — jeftin kanal za nove goste, bez naknada od 30%."
+            "body": "Budite otkriveni na Fee Free pijaci — besplatnom kanalu za nove kupce, bez naknada od 30%."
           },
           "unlimited": {
             "title": "Neograničene porudžbine",

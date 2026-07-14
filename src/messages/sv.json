@@ -2632,7 +2632,7 @@
       "since": "sedan {date}",
       "statOrders": "Beställningar",
       "statRevenue": "Intäkter",
-      "billingHeading": "Marketplace-faktura den här månaden",
+      "billingHeading": "Din annons på marknadsplatsen",
       "monthlyPriceLabel": "/ månad · fast",
       "monthlyTaxNote": "USD · skatt per provins (CA) · USA/intl undantagna",
       "monthlyPlanDetail": "Du är på <strong>Månadsplanen</strong>. Obegränsade marketplace-beställningar inkluderade — inga avgifter per beställning. {n, plural, one {# beställning} other {# beställningar}} den här månaden, alla gratis.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Byt till Månadsvis ($199.99/mån, obegränsat) →",
       "noOrdersYet": "Inga marketplace-beställningar ännu den här månaden. När en kund beställer via <link>/marketplace</link> → din annons visas riktiga siffror här.",
       "saveSuccess": "Marketplace-annons uppdaterad",
-      "saveError": "Det gick inte att spara"
+      "saveError": "Det gick inte att spara",
+      "includedFree": "Ingår — gratis",
+      "includedDetail": "Inga månadsavgifter eller avgifter per beställning. Kunder inom 15 km kan hitta dig och beställa från dig."
     },
     "paymentMethods": {
       "heading": "Accepterade betalningsmetoder",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Marknadsplatsannons",
-            "body": "Bli upptäckt på Fee Free-marknadsplatsen – en billig kanal för nya kunder, utan 30% i avgifter."
+            "body": "Bli upptäckt på Fee Free-marknadsplatsen — en gratis kanal för nya kunder, utan 30 % avgifter."
           },
           "unlimited": {
             "title": "Obegränsade beställningar",

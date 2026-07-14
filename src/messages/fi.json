@@ -2632,7 +2632,7 @@
       "since": "alkaen {date}",
       "statOrders": "Tilaukset",
       "statRevenue": "Tulot",
-      "billingHeading": "Marketplace-lasku tässä kuussa",
+      "billingHeading": "Kauppapaikkasi ilmoitus",
       "monthlyPriceLabel": "/ kk · kiinteä",
       "monthlyTaxNote": "USD · maakuntavero (CA) · USA/kansainvälinen vapautettu",
       "monthlyPlanDetail": "Olet <strong>Kuukausittainen suunnitelma</strong> -sopimuksella. Rajattomat markkinapaikkatilaukset sisältyvät — ei tilauskohtaisia kuluja. {n, plural, one {# tilaus} other {# tilausta}} tässä kuussa, kaikki ilmaisia.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Vaihda kuukausittaiseen (199,99 $/kk, rajaton) →",
       "noOrdersYet": "Ei markkinapaikkatilauksia vielä tässä kuussa. Kun asiakas tilaa <link>/marketplace</link> → listauksesi kautta, oikeat luvut ilmestyvät tähän.",
       "saveSuccess": "Marketplace-listaus päivitetty",
-      "saveError": "Tallennus epäonnistui"
+      "saveError": "Tallennus epäonnistui",
+      "includedFree": "Sisältyy — ilmainen",
+      "includedDetail": "Ei kuukausi- tai tilauskohtaista maksua. Asiakkaat 15 km:n säteellä löytävät sinut ja voivat tilata."
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brändikojelauta",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Markkinapaikkalistaus",
-            "body": "Tule löydetyksi Fee Free -markkinapaikalla — edullinen uusasiakaskanava, ei 30 % maksuja."
+            "body": "Tule löydetyksi Fee Free -kauppapaikalla — ilmainen uusien asiakkaiden kanava, ei 30 % maksuja."
           },
           "unlimited": {
             "title": "Rajattomat tilaukset",

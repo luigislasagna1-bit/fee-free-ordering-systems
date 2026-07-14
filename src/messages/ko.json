@@ -2632,7 +2632,7 @@
       "since": "{date}부터",
       "statOrders": "주문",
       "statRevenue": "매출",
-      "billingHeading": "이번 달 마켓플레이스 청구",
+      "billingHeading": "내 마켓플레이스 등록",
       "monthlyPriceLabel": "/ 월 · 정액",
       "monthlyTaxNote": "USD · 캐나다 세금 (주별 적용) · 미국/해외 면세",
       "monthlyPlanDetail": "<strong>월정액 플랜</strong>을 이용 중입니다. 무제한 마켓플레이스 주문 포함 — 주문당 추가 요금 없음. 이번 달 {n, plural, one {# 건} other {# 건}} 주문, 모두 무료.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "월정액으로 전환 ($199.99/월, 무제한) →",
       "noOrdersYet": "이번 달 마켓플레이스 주문이 아직 없습니다. 고객이 <link>/marketplace</link> → 내 등록을 통해 주문하면 실제 수치가 여기에 표시됩니다.",
       "saveSuccess": "마켓플레이스 등록이 업데이트되었습니다",
-      "saveError": "저장에 실패했습니다"
+      "saveError": "저장에 실패했습니다",
+      "includedFree": "포함됨 — 무료",
+      "includedDetail": "월 요금이나 주문당 수수료가 없습니다. 15 km 이내의 고객이 회원님을 찾아 주문할 수 있습니다."
     },
     "paymentMethods": {
       "heading": "허용된 결제 수단",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "마켓플레이스 등록",
-            "body": "Fee Free 마켓플레이스에서 발견되세요 — 30% 수수료 없는 저비용 신규 고객 채널."
+            "body": "Fee Free 마켓플레이스에서 발견되세요 — 30% 수수료 없는 무료 신규 고객 채널입니다."
           },
           "unlimited": {
             "title": "무제한 주문",

@@ -2632,7 +2632,7 @@
       "since": "מאז {date}",
       "statOrders": "הזמנות",
       "statRevenue": "הכנסות",
-      "billingHeading": "חשבון Marketplace החודש",
+      "billingHeading": "הרישום שלך בשוק",
       "monthlyPriceLabel": "/ חודש · קבוע",
       "monthlyTaxNote": "USD · מס לפי מחוז (CA) · ארה\"כ/בינלאומי פטור",
       "monthlyPlanDetail": "אתה בתוכנית <strong>חודשית</strong>. הזמנות Marketplace ללא הגבלה כלולות — ללא חיובים לפי הזמנה. {n, plural, one {# הזמנה} other {# הזמנות}} החודש, הכל חינם.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "עבור לחודשי ($199.99/חודש, ללא הגבלה) →",
       "noOrdersYet": "אין הזמנות Marketplace החודש עדיין. ברגע שלקוח מזמין דרך <link>/marketplace</link> → הרישום שלך, מספרים אמיתיים יופיעו כאן.",
       "saveSuccess": "רישום Marketplace עודכן",
-      "saveError": "השמירה נכשלה"
+      "saveError": "השמירה נכשלה",
+      "includedFree": "כלול — חינם",
+      "includedDetail": "ללא עמלה חודשית או עמלה לכל הזמנה. לקוחות ברדיוס של 15 km יכולים למצוא אותך ולהזמין ממך."
     },
     "paymentMethods": {
       "heading": "שיטות תשלום מקובלות",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "הופעה בזירת המסחר",
-            "body": "תגיעו ללקוחות חדשים בזירת המסחר של Fee Free — ערוץ לקוחות חדשים בעלות נמוכה, בלי עמלות של 30%."
+            "body": "היחשף בשוק של Fee Free — ערוץ חינמי ללקוחות חדשים, ללא עמלות של 30%."
           },
           "unlimited": {
             "title": "הזמנות ללא הגבלה",

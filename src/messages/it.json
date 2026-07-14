@@ -2632,7 +2632,7 @@
       "since": "dal {date}",
       "statOrders": "Ordini",
       "statRevenue": "Entrate",
-      "billingHeading": "Conto Marketplace questo mese",
+      "billingHeading": "La tua scheda nel marketplace",
       "monthlyPriceLabel": "/ mese · fisso",
       "monthlyTaxNote": "USD · imposta per provincia (CA) · US/internaz. esente",
       "monthlyPlanDetail": "Sei sul <strong>piano Mensile</strong>. Ordini Marketplace illimitati inclusi — nessun costo per ordine. {n, plural, one {# ordine} other {# ordini}} questo mese, tutti gratuiti.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Passa a Mensile ($199.99/mese, illimitato) →",
       "noOrdersYet": "Nessun ordine Marketplace questo mese. Una volta che un cliente ordina tramite <link>/marketplace</link> → la tua scheda, i dati reali appariranno qui.",
       "saveSuccess": "Scheda Marketplace aggiornata",
-      "saveError": "Salvataggio non riuscito"
+      "saveError": "Salvataggio non riuscito",
+      "includedFree": "Incluso — gratis",
+      "includedDetail": "Nessun costo mensile o per ordine. I clienti entro 15 km possono trovarti e ordinare da te."
     },
     "paymentMethods": {
       "heading": "Metodi di pagamento accettati",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Inserimento nel marketplace",
-            "body": "Fatti trovare sul marketplace Fee Free — un canale a basso costo per nuovi clienti, senza commissioni del 30%."
+            "body": "Fatti scoprire sul marketplace Fee Free — un canale gratuito per nuovi clienti, senza commissioni del 30%."
           },
           "unlimited": {
             "title": "Ordini illimitati",

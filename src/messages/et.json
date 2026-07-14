@@ -2632,7 +2632,7 @@
       "since": "alates {date}",
       "statOrders": "Tellimused",
       "statRevenue": "Käive",
-      "billingHeading": "Marketplace'i arve sel kuul",
+      "billingHeading": "Teie kuulutus turuplatsil",
       "monthlyPriceLabel": "/ kuus · fikseeritud",
       "monthlyTaxNote": "USD · maks provintsi järgi (CA) · USA/rahvusvah. vabastatud",
       "monthlyPlanDetail": "Oled <strong>Kuupõhisel plaanil</strong>. Piiramatu arv Marketplace'i tellimusi — ühe tellimuse tasusid pole. {n, plural, one {# tellimus} other {# tellimust}} sel kuul, kõik tasuta.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Lülitu Kuupõhisele (199,99 $/kuus, piiramatu) →",
       "noOrdersYet": "Sel kuul pole Marketplace'i tellimusi veel. Kui klient tellib <link>/marketplace</link> → sinu kuulutuse kaudu, ilmuvad päris numbrid siia.",
       "saveSuccess": "Marketplace'i kuulutus uuendatud",
-      "saveError": "Salvestamine ebaõnnestus"
+      "saveError": "Salvestamine ebaõnnestus",
+      "includedFree": "Sisaldub — tasuta",
+      "includedDetail": "Ei mingit kuu- ega tellimuspõhist tasu. Kliendid 15 km raadiuses leiavad teid ja saavad tellida."
     },
     "paymentMethods": {
       "heading": "Aktsepteeritavad makseviisid",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Turuplatsi nimekiri",
-            "body": "Lase end leida Fee Free turuplatsil — soodne uute klientide kanal, ilma 30% tasudeta."
+            "body": "Saage avastatud Fee Free turuplatsil — tasuta uute klientide kanal, ilma 30% tasudeta."
           },
           "unlimited": {
             "title": "Piiramatud tellimused",

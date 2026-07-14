@@ -2632,7 +2632,7 @@
       "since": "desde {date}",
       "statOrders": "Pedidos",
       "statRevenue": "Receita",
-      "billingHeading": "Fatura do Marketplace neste mês",
+      "billingHeading": "A sua ficha no marketplace",
       "monthlyPriceLabel": "/ mês · fixo",
       "monthlyTaxNote": "USD · imposto por província (CA) · EUA/internacional isento",
       "monthlyPlanDetail": "Você está no <strong>Plano Mensal</strong>. Pedidos do marketplace ilimitados incluídos — sem cobrança por pedido. {n, plural, one {# pedido} other {# pedidos}} neste mês, todos gratuitos.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Mudar para Mensal ($199.99/mês, ilimitado) →",
       "noOrdersYet": "Nenhum pedido do marketplace ainda este mês. Assim que um cliente pedir via <link>/marketplace</link> → sua listagem, os números reais aparecerão aqui.",
       "saveSuccess": "Listagem do marketplace atualizada",
-      "saveError": "Falha ao salvar"
+      "saveError": "Falha ao salvar",
+      "includedFree": "Incluído — grátis",
+      "includedDetail": "Sem taxa mensal nem por encomenda. Os clientes a menos de 15 km podem encontrá-lo e fazer encomendas."
     },
     "paymentMethods": {
       "heading": "Métodos de pagamento aceitos",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Listagem no marketplace",
-            "body": "Seja descoberto no marketplace Fee Free — um canal de novos clientes a baixo custo, sem taxas de 30%."
+            "body": "Seja descoberto no marketplace Fee Free — um canal gratuito para novos clientes, sem comissões de 30%."
           },
           "unlimited": {
             "title": "Encomendas Ilimitadas",

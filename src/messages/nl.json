@@ -2632,7 +2632,7 @@
       "since": "sinds {date}",
       "statOrders": "Bestellingen",
       "statRevenue": "Omzet",
-      "billingHeading": "Marketplace-factuur deze maand",
+      "billingHeading": "Je vermelding op de marketplace",
       "monthlyPriceLabel": "/ maand · vast",
       "monthlyTaxNote": "USD · belasting per provincie (CA) · VS/internationaal vrijgesteld",
       "monthlyPlanDetail": "U zit op het <strong>Maandelijks plan</strong>. Onbeperkte marketplace-bestellingen inbegrepen — geen kosten per bestelling. {n, plural, one {# bestelling} other {# bestellingen}} deze maand, allemaal gratis.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Overstappen naar Maandelijks ($199,99/maand, onbeperkt) →",
       "noOrdersYet": "Nog geen marketplace-bestellingen deze maand. Zodra een klant bestelt via <link>/marketplace</link> → uw vermelding, verschijnen hier echte cijfers.",
       "saveSuccess": "Marketplace-vermelding bijgewerkt",
-      "saveError": "Opslaan mislukt"
+      "saveError": "Opslaan mislukt",
+      "includedFree": "Inbegrepen — gratis",
+      "includedDetail": "Geen maandelijkse kosten of kosten per bestelling. Klanten binnen 15 km kunnen je vinden en bij je bestellen."
     },
     "paymentMethods": {
       "heading": "Geaccepteerde betaalmethoden",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Marktplaatsvermelding",
-            "body": "Word ontdekt op de Fee Free-marktplaats — een goedkoop kanaal voor nieuwe klanten, geen 30% kosten."
+            "body": "Laat je ontdekken op de Fee Free-marketplace — een gratis kanaal voor nieuwe klanten, zonder 30% commissie."
           },
           "unlimited": {
             "title": "Onbeperkt bestellen",

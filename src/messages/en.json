@@ -3054,7 +3054,7 @@
       "since": "since {date}",
       "statOrders": "Orders",
       "statRevenue": "Revenue",
-      "billingHeading": "Marketplace bill this month",
+      "billingHeading": "Your marketplace listing",
       "monthlyPriceLabel": "/ month · flat",
       "monthlyTaxNote": "USD · tax by province (CA) · US/intl exempt",
       "monthlyPlanDetail": "You're on the <strong>Monthly plan</strong>. Unlimited marketplace orders included — no per-order charges. {n, plural, one {# order} other {# orders}} this month, all free.",
@@ -3066,7 +3066,9 @@
       "switchToMonthly": "Switch to Monthly ($199.99/mo, unlimited) →",
       "noOrdersYet": "No marketplace orders yet this month. Once a customer orders through <link>/marketplace</link> → your listing, real numbers appear here.",
       "saveSuccess": "Marketplace listing updated",
-      "saveError": "Failed to save"
+      "saveError": "Failed to save",
+      "includedFree": "Included — free",
+      "includedDetail": "No monthly or per-order fee. Customers within 15 km can find and order from you."
     },
     "paymentMethods": {
       "heading": "Accepted payment methods",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Marketplace listing",
-            "body": "Get discovered on the Fee Free marketplace — a low-cost new-customer channel, no 30% fees."
+            "body": "Get discovered on the Fee Free marketplace — a free new-customer channel, no 30% fees."
           },
           "unlimited": {
             "title": "Unlimited Orders",

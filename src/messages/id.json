@@ -2632,7 +2632,7 @@
       "since": "sejak {date}",
       "statOrders": "Pesanan",
       "statRevenue": "Pendapatan",
-      "billingHeading": "Tagihan Marketplace bulan ini",
+      "billingHeading": "Daftar bisnis Anda di marketplace",
       "monthlyPriceLabel": "/ bulan · tetap",
       "monthlyTaxNote": "USD · pajak per provinsi (CA) · AS/internasional bebas pajak",
       "monthlyPlanDetail": "Anda menggunakan <strong>paket Bulanan</strong>. Pesanan marketplace tanpa batas termasuk — tidak ada biaya per pesanan. {n, plural, one {# pesanan} other {# pesanan}} bulan ini, semua gratis.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Beralih ke Bulanan ($199.99/bulan, tanpa batas) →",
       "noOrdersYet": "Belum ada pesanan marketplace bulan ini. Begitu pelanggan memesan melalui <link>/marketplace</link> → listing Anda, angka sebenarnya akan muncul di sini.",
       "saveSuccess": "Listing marketplace diperbarui",
-      "saveError": "Gagal menyimpan"
+      "saveError": "Gagal menyimpan",
+      "includedFree": "Termasuk — gratis",
+      "includedDetail": "Tanpa biaya bulanan atau biaya per pesanan. Pelanggan dalam radius 15 km dapat menemukan dan memesan dari Anda."
     },
     "paymentMethods": {
       "heading": "Metode pembayaran yang diterima",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Pencatuman di Marketplace",
-            "body": "Ditemukan di marketplace Fee Free — kanal pelanggan baru berbiaya rendah, tanpa biaya 30%."
+            "body": "Temukan pelanggan baru di marketplace Fee Free — saluran pelanggan baru gratis, tanpa biaya 30%."
           },
           "unlimited": {
             "title": "Pesanan Tak Terbatas",

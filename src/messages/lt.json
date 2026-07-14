@@ -3349,7 +3349,7 @@
       "since": "nuo {date}",
       "statOrders": "Užsakymai",
       "statRevenue": "Pajamos",
-      "billingHeading": "Marketplace sąskaita šį mėnesį",
+      "billingHeading": "Jūsų skelbimas prekyvietėje",
       "monthlyPriceLabel": "/ mėnuo · fiksuota",
       "monthlyTaxNote": "USD · mokestis pagal provinciją (CA) · JAV/tarpt. neapmokestinama",
       "monthlyPlanDetail": "Naudojate <strong>mėnesinį planą</strong>. Įskaičiuoti neriboti Marketplace užsakymai — jokių mokesčių už užsakymą. Šį mėnesį {n, plural, one {# užsakymas} few {# užsakymai} many {# užsakymai} other {# užsakymų}}, visi nemokami.",
@@ -3361,7 +3361,9 @@
       "switchToMonthly": "Pereiti prie mėnesinio ($199.99/mėn, neribota) →",
       "noOrdersYet": "Šį mėnesį dar nėra Marketplace užsakymų. Kai klientas užsisakys per <link>/marketplace</link> → jūsų skelbimą, čia atsiras tikri skaičiai.",
       "saveSuccess": "Marketplace skelbimas atnaujintas",
-      "saveError": "Nepavyko išsaugoti"
+      "saveError": "Nepavyko išsaugoti",
+      "includedFree": "Įtraukta — nemokama",
+      "includedDetail": "Jokio mėnesinio ar užsakymo mokesčio. Klientai 15 km spinduliu gali jus rasti ir užsisakyti."
     },
     "paymentMethods": {
       "heading": "Priimami mokėjimo būdai",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Įtraukimas į prekyvietę",
-            "body": "Būkite pastebėti Fee Free prekyvietėje — nebrangus naujų klientų kanalas be 30 % mokesčių."
+            "body": "Būkite pastebėti Fee Free prekyvietėje — nemokamame naujų klientų kanale, be 30% mokesčių."
           },
           "unlimited": {
             "title": "Neriboti užsakymai",

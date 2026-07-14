@@ -202,8 +202,8 @@ export default async function PartnersPage() {
 
           <p className="text-center text-xs text-gray-500 mt-6 max-w-2xl mx-auto">
             Commission is paid only on net <strong>add-on subscription revenue</strong> (excluding taxes, Stripe
-            fees, refunds, and chargebacks). Per-order fees that restaurants pay (Marketplace orders, payment
-            processing, etc.) are <strong>not</strong> commissionable — only the monthly add-on subscriptions are.{" "}
+            fees, refunds, and chargebacks). Per-order fees that restaurants pay (payment processing, delivery,
+            etc.) are <strong>not</strong> commissionable — only the monthly add-on subscriptions are.{" "}
             <strong>Below 5 active paying restaurants, commission is 0%</strong> — once you cross the threshold
             (and each restaurant has at least one paid add-on), it kicks in retroactively across your whole roster.
           </p>

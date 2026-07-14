@@ -2632,7 +2632,7 @@
       "since": "od {date}",
       "statOrders": "Naročila",
       "statRevenue": "Prihodek",
-      "billingHeading": "Račun Marketplace ta mesec",
+      "billingHeading": "Vaš oglas na tržnici",
       "monthlyPriceLabel": "/ mesec · pavšal",
       "monthlyTaxNote": "USD · davek po pokrajinah (CA) · US/mednar. oproščeno",
       "monthlyPlanDetail": "Ste na <strong>Mesečnem načrtu</strong>. Neomejena naročila na Marketplace so vključena — brez stroškov na naročilo. {n, plural, one {# naročilo} other {# naročil}} ta mesec, vse brezplačno.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Preklopi na Mesečno ($199,99/mes., neomejeno) →",
       "noOrdersYet": "Ta mesec še ni naročil Marketplace. Ko stranka naroči prek <link>/marketplace</link> → vaše uvrstitve, se tukaj prikažejo pravi podatki.",
       "saveSuccess": "Uvrstitev na Marketplace posodobljena",
-      "saveError": "Shranjevanje ni uspelo"
+      "saveError": "Shranjevanje ni uspelo",
+      "includedFree": "Vključeno — brezplačno",
+      "includedDetail": "Brez mesečne ali po naročilu obračunane pristojbine. Stranke v oddaljenosti 15 km vas lahko najdejo in naročijo pri vas."
     },
     "paymentMethods": {
       "heading": "Sprejete plačilne metode",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Objava na tržnici",
-            "body": "Naj vas odkrijejo na tržnici Fee Free — poceni kanal za nove stranke, brez 30% provizij."
+            "body": "Naj vas odkrijejo na tržnici Fee Free — brezplačen kanal za nove stranke, brez 30 % provizij."
           },
           "unlimited": {
             "title": "Neomejena naročila",

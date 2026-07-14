@@ -2632,7 +2632,7 @@
       "since": "{date} 以降",
       "statOrders": "注文数",
       "statRevenue": "売上",
-      "billingHeading": "今月のマーケットプレイス請求",
+      "billingHeading": "あなたのマーケットプレイス掲載",
       "monthlyPriceLabel": "/ 月 · 定額",
       "monthlyTaxNote": "USD · 州別税（CA） · 米国/国際免税",
       "monthlyPlanDetail": "<strong>月額プラン</strong>をご利用中です。マーケットプレイス注文数無制限 — 注文ごとの課金なし。今月 {n, plural, one {# 件} other {# 件}} の注文、すべて無料。",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "月額プランに切り替え（$199.99/月、無制限）→",
       "noOrdersYet": "今月のマーケットプレイス注文はまだありません。顧客が <link>/marketplace</link> → あなたの掲載から注文すると、実際の数字がここに表示されます。",
       "saveSuccess": "マーケットプレイス掲載を更新しました",
-      "saveError": "保存に失敗しました"
+      "saveError": "保存に失敗しました",
+      "includedFree": "含まれています — 無料",
+      "includedDetail": "月額料金も注文ごとの手数料もありません。15 km 圏内のお客様があなたを見つけて注文できます。"
     },
     "paymentMethods": {
       "heading": "受付可能な支払い方法",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "マーケットプレイス掲載",
-            "body": "Fee Free のマーケットプレイスで見つけてもらう — 低コストの新規顧客チャネル、30%の手数料なし。"
+            "body": "Fee Free マーケットプレイスで見つけてもらえます — 無料の新規顧客チャネルで、30% の手数料はかかりません。"
           },
           "unlimited": {
             "title": "注文数無制限",

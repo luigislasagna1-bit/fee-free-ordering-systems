@@ -2632,7 +2632,7 @@
       "since": "des de {date}",
       "statOrders": "Comandes",
       "statRevenue": "Ingressos",
-      "billingHeading": "Factura del Marketplace aquest mes",
+      "billingHeading": "La teva fitxa al marketplace",
       "monthlyPriceLabel": "/ mes · fix",
       "monthlyTaxNote": "USD · impost per província (CA) · EUA/intl exempt",
       "monthlyPlanDetail": "Esteu al <strong>pla Mensual</strong>. Comandes al marketplace il·limitades incloses — sense càrrecs per comanda. {n, plural, one {# comanda} other {# comandes}} aquest mes, totes gratuïtes.",
@@ -2644,7 +2644,9 @@
       "switchToMonthly": "Canvia a Mensual ($199.99/mes, il·limitat) →",
       "noOrdersYet": "Encara no hi ha comandes del marketplace aquest mes. Un cop un client demani a través de <link>/marketplace</link> → el vostre llistat, aquí apareixeran xifres reals.",
       "saveSuccess": "Llistat del Marketplace actualitzat",
-      "saveError": "No s'ha pogut desar"
+      "saveError": "No s'ha pogut desar",
+      "includedFree": "Inclòs — gratis",
+      "includedDetail": "Sense quota mensual ni per comanda. Els clients a menys de 15 km et poden trobar i fer comandes."
     },
     "paymentMethods": {
       "heading": "Mètodes de pagament acceptats",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Llistat al marketplace",
-            "body": "Fes-te descobrir al marketplace de Fee Free — un canal de captació de clients de baix cost, sense comissions del 30%."
+            "body": "Fes-te descobrir al marketplace de Fee Free — un canal gratuït per a nous clients, sense comissions del 30%."
           },
           "unlimited": {
             "title": "Comandes il·limitades",

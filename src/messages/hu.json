@@ -2576,7 +2576,7 @@
       "since": "{date} óta",
       "statOrders": "Rendelések",
       "statRevenue": "Bevétel",
-      "billingHeading": "Marketplace számla ebben a hónapban",
+      "billingHeading": "Az Ön piactéri hirdetése",
       "monthlyPriceLabel": "/ hó · fix",
       "monthlyTaxNote": "USD · tartomány szerinti adó (CA) · USA/külföld adómentes",
       "monthlyPlanDetail": "Ön a <strong>Havi csomagot</strong> használja. Korlátlan marketplace rendelés beleszámítva — nincs rendelésenkénti díj. {n, plural, one {# rendelés} other {# rendelés}} ebben a hónapban, mind ingyenes.",
@@ -2588,7 +2588,9 @@
       "switchToMonthly": "Váltás Havira ($199.99/hó, korlátlan) →",
       "noOrdersYet": "Még nincsenek marketplace rendelések ebben a hónapban. Ha egy ügyfél a <link>/marketplace</link> oldalon keresztül rendel → a listázásánál, a valódi számok megjelennek itt.",
       "saveSuccess": "Marketplace listázás frissítve",
-      "saveError": "Mentés sikertelen"
+      "saveError": "Mentés sikertelen",
+      "includedFree": "Tartalmazza — ingyenes",
+      "includedDetail": "Nincs havi vagy rendelésenkénti díj. A 15 km-en belüli vásárlók megtalálhatják, és rendelhetnek Öntől."
     },
     "paymentMethods": {
       "heading": "Elfogadott fizetési módok",
@@ -5277,7 +5279,7 @@
           },
           "marketplace": {
             "title": "Piactéri megjelenés",
-            "body": "Találjanak rád a Fee Free piactéren — olcsó új-vendég csatorna, 30% díjak nélkül."
+            "body": "Fedezzék fel a Fee Free piactéren — ingyenes új ügyfélcsatorna, 30% díjak nélkül."
           },
           "unlimited": {
             "title": "Korlátlan rendelés",

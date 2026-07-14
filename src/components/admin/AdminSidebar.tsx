@@ -223,9 +223,9 @@ const navGroups: NavGroup[] = [
     label: "Marketing Tools",
     icon: Megaphone,
     // FREE for everyone: Customers, Promotions (basic types — advanced types
-    // are gated in the promo wizard), Social Media. Marketplace is a separate
-    // paid channel (its own billing). The PAID marketing suite lives under the
-    // GrowthNet sub-group below. Luigi 2026-06-11.
+    // are gated in the promo wizard), Social Media, and Marketplace (now free +
+    // included for every restaurant — Luigi 2026-07-14, no more paid-add-on
+    // lock). The PAID marketing suite lives under the GrowthNet sub-group below.
     items: [
       { href: "/admin/customers",    labelKey: "customers",    label: "Customers",    icon: Users },
       { href: "/admin/promotions",   labelKey: "promotions",   label: "Promotions",   icon: Tag },
@@ -233,7 +233,7 @@ const navGroups: NavGroup[] = [
       { href: "/admin/rewards", labelKey: "rewards", label: "Reward Dollars", icon: Gift },
       { href: "/admin/promo-popup",  labelKey: "promoPopup",   label: "Promo Popup",  icon: MessageSquare },
       { href: "/admin/social-media", labelKey: "socialMedia",  label: "Social Media", icon: Share2 },
-      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles, requiresFeature: "marketplace_listing" },
+      { href: "/admin/marketplace",  labelKey: "marketplace",  label: "Marketplace",  icon: Sparkles },
     ],
     subGroups: [
       // GrowthNet — Fee Free's Restaurant Growth System. The bundle hub: its
