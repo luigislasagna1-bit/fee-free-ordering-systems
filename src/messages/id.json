@@ -6282,7 +6282,8 @@
     "status_picked_up": "Sudah diambil — dalam perjalanan ke pelanggan",
     "status_out_for_delivery": "Sedang diantar",
     "status_delivered": "Terkirim",
-    "status_failed": "Tidak selesai"
+    "status_failed": "Tidak selesai",
+    "gpsBgMessage": "Membagikan lokasi Anda untuk pengiriman yang sedang berlangsung."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",

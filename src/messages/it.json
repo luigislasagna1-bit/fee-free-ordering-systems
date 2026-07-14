@@ -6282,7 +6282,8 @@
     "status_picked_up": "Ritirato — in viaggio verso il cliente",
     "status_out_for_delivery": "In consegna",
     "status_delivered": "Consegnato",
-    "status_failed": "Non completata"
+    "status_failed": "Non completata",
+    "gpsBgMessage": "Condivisione della tua posizione per la consegna in corso."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assegna e monitora le tue consegne",

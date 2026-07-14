@@ -6282,7 +6282,8 @@
     "status_picked_up": "उठा लिया — ग्राहक के रास्ते में",
     "status_out_for_delivery": "डिलीवरी के लिए निकला",
     "status_delivered": "डिलीवर किया गया",
-    "status_failed": "पूरा नहीं हुआ"
+    "status_failed": "पूरा नहीं हुआ",
+    "gpsBgMessage": "चालू डिलीवरी के लिए आपका स्थान साझा किया जा रहा है।"
   },
   "feefreeApp": {
     "dispatchSubtitle": "अपनी डिलीवरी असाइन करें और ट्रैक करें",

@@ -6282,7 +6282,8 @@
     "status_picked_up": "Átvéve — úton az ügyfélhez",
     "status_out_for_delivery": "Kiszállítás alatt",
     "status_delivered": "Kézbesítve",
-    "status_failed": "Nem teljesült"
+    "status_failed": "Nem teljesült",
+    "gpsBgMessage": "Tartózkodási helyed megosztása az aktív kiszállításhoz."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",

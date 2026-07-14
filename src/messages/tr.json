@@ -6282,7 +6282,8 @@
     "status_picked_up": "Alındı — müşteriye gidiliyor",
     "status_out_for_delivery": "Teslimatta",
     "status_delivered": "Teslim edildi",
-    "status_failed": "Tamamlanmadı"
+    "status_failed": "Tamamlanmadı",
+    "gpsBgMessage": "Etkin teslimat için konumunuz paylaşılıyor."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",

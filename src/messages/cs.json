@@ -6282,7 +6282,8 @@
     "status_picked_up": "Vyzvednuto — na cestě k zákazníkovi",
     "status_out_for_delivery": "Na cestě k doručení",
     "status_delivered": "Doručeno",
-    "status_failed": "Nedokončeno"
+    "status_failed": "Nedokončeno",
+    "gpsBgMessage": "Sdílení vaší polohy pro aktivní doručení."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Přiřazujte a sledujte své rozvozy",

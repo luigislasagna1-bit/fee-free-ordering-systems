@@ -6282,7 +6282,8 @@
     "status_picked_up": "Noudettu – matkalla asiakkaalle",
     "status_out_for_delivery": "Toimituksessa",
     "status_delivered": "Toimitettu",
-    "status_failed": "Ei suoritettu"
+    "status_failed": "Ei suoritettu",
+    "gpsBgMessage": "Jaetaan sijaintiasi käynnissä olevaa toimitusta varten."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",

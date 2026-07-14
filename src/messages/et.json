@@ -6282,7 +6282,8 @@
     "status_picked_up": "Kätte võetud — teel kliendi juurde",
     "status_out_for_delivery": "Kohaletoimetamisel",
     "status_delivered": "Kohale toimetatud",
-    "status_failed": "Lõpetamata"
+    "status_failed": "Lõpetamata",
+    "gpsBgMessage": "Sinu asukoha jagamine käimasoleva tarne jaoks."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",

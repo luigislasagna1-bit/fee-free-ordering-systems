@@ -6282,7 +6282,8 @@
     "status_picked_up": "Odebrano — w drodze do klienta",
     "status_out_for_delivery": "W trakcie dostawy",
     "status_delivered": "Dostarczono",
-    "status_failed": "Niezrealizowana"
+    "status_failed": "Niezrealizowana",
+    "gpsBgMessage": "Udostępnianie Twojej lokalizacji na potrzeby aktywnej dostawy."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",

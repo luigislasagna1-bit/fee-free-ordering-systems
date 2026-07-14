@@ -6282,7 +6282,8 @@
     "status_picked_up": "Paimta — pakeliui pas klientą",
     "status_out_for_delivery": "Pristatoma",
     "status_delivered": "Pristatyta",
-    "status_failed": "Neužbaigta"
+    "status_failed": "Neužbaigta",
+    "gpsBgMessage": "Bendrinama jūsų vieta vykdomam pristatymui."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",

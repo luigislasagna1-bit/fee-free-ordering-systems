@@ -6282,7 +6282,8 @@
     "status_picked_up": "Récupérée — en route vers le client",
     "status_out_for_delivery": "En cours de livraison",
     "status_delivered": "Livrée",
-    "status_failed": "Non effectuée"
+    "status_failed": "Non effectuée",
+    "gpsBgMessage": "Partage de votre position pour la livraison en cours."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Gérez et suivez vos livraisons",

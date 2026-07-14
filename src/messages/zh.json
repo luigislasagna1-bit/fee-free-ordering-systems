@@ -6282,7 +6282,8 @@
     "status_picked_up": "已取餐 — 正在前往顾客",
     "status_out_for_delivery": "配送中",
     "status_delivered": "已送达",
-    "status_failed": "未完成"
+    "status_failed": "未完成",
+    "gpsBgMessage": "正在共享您的位置以用于当前配送。"
   },
   "feefreeApp": {
     "dispatchSubtitle": "分配并跟踪您的配送",

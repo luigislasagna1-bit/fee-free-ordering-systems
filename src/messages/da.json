@@ -6282,7 +6282,8 @@
     "status_picked_up": "Afhentet – på vej til kunden",
     "status_out_for_delivery": "Under levering",
     "status_delivered": "Leveret",
-    "status_failed": "Ikke fuldført"
+    "status_failed": "Ikke fuldført",
+    "gpsBgMessage": "Deler din placering til den aktive levering."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg dine leveringer",

@@ -6282,7 +6282,8 @@
     "status_picked_up": "Ridicată — pe drum spre client",
     "status_out_for_delivery": "În curs de livrare",
     "status_delivered": "Livrată",
-    "status_failed": "Nefinalizată"
+    "status_failed": "Nefinalizată",
+    "gpsBgMessage": "Se partajează locația ta pentru livrarea în curs."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",

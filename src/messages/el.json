@@ -6282,7 +6282,8 @@
     "status_picked_up": "Παραλήφθηκε — καθ' οδόν προς τον πελάτη",
     "status_out_for_delivery": "Προς παράδοση",
     "status_delivered": "Παραδόθηκε",
-    "status_failed": "Δεν ολοκληρώθηκε"
+    "status_failed": "Δεν ολοκληρώθηκε",
+    "gpsBgMessage": "Κοινοποίηση της τοποθεσίας σας για την ενεργή παράδοση."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Αναθέστε και παρακολουθήστε τις παραδόσεις σας",

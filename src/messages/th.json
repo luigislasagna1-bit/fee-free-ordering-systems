@@ -6282,7 +6282,8 @@
     "status_picked_up": "รับอาหารแล้ว — กำลังไปหาลูกค้า",
     "status_out_for_delivery": "กำลังจัดส่ง",
     "status_delivered": "ส่งแล้ว",
-    "status_failed": "ไม่สำเร็จ"
+    "status_failed": "ไม่สำเร็จ",
+    "gpsBgMessage": "กำลังแชร์ตำแหน่งของคุณสำหรับการจัดส่งที่กำลังดำเนินอยู่"
   },
   "feefreeApp": {
     "dispatchSubtitle": "มอบหมายและติดตามการจัดส่งของคุณ",

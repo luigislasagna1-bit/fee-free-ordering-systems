@@ -6282,7 +6282,8 @@
     "status_picked_up": "Opgehaald – onderweg naar de klant",
     "status_out_for_delivery": "Onderweg voor bezorging",
     "status_delivered": "Bezorgd",
-    "status_failed": "Niet voltooid"
+    "status_failed": "Niet voltooid",
+    "gpsBgMessage": "Je locatie wordt gedeeld voor de actieve bezorging."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",

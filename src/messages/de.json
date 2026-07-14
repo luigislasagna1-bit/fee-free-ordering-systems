@@ -6282,7 +6282,8 @@
     "status_picked_up": "Abgeholt – auf dem Weg zum Kunden",
     "status_out_for_delivery": "In Zustellung",
     "status_delivered": "Zugestellt",
-    "status_failed": "Nicht abgeschlossen"
+    "status_failed": "Nicht abgeschlossen",
+    "gpsBgMessage": "Ihr Standort wird für die laufende Lieferung geteilt."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",

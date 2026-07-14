@@ -6282,7 +6282,8 @@
     "status_picked_up": "Recogido — de camino al cliente",
     "status_out_for_delivery": "En reparto",
     "status_delivered": "Entregado",
-    "status_failed": "No completada"
+    "status_failed": "No completada",
+    "gpsBgMessage": "Compartiendo tu ubicación para la entrega en curso."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Asigna y haz seguimiento de tus entregas",

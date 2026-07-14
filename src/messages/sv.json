@@ -6282,7 +6282,8 @@
     "status_picked_up": "Upphämtad – på väg till kunden",
     "status_out_for_delivery": "Ute för leverans",
     "status_delivered": "Levererad",
-    "status_failed": "Ej slutförd"
+    "status_failed": "Ej slutförd",
+    "gpsBgMessage": "Delar din plats för den pågående leveransen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tilldela och följ dina leveranser",

@@ -79,42 +79,100 @@ export function DriverQueue({ driverName }: { driverName: string }) {
   // The one active job we're streaming GPS for (first mine + active).
   const activeAssignment = assignments.find((a) => a.mine && ACTIVE.has(a.status));
 
-  // Foreground GPS: watchPosition while on an active run; POST throttled to ~10s.
-  const watchIdRef = useRef<number | null>(null);
+  // GPS while on an active run; POST throttled to ~10s.
+  //   • Native app (Capacitor) → @capacitor-community/background-geolocation:
+  //     keeps streaming with the phone LOCKED / app backgrounded (Android
+  //     foreground service; iOS background location). This is why the driver
+  //     app is worth wrapping natively — a PWA can't do this.
+  //   • Web → browser watchPosition (foreground only; stops when the tab hides).
+  // Same throttled POST to /api/driver/location for both paths.
   const lastSentRef = useRef(0);
   useEffect(() => {
-    if (!activeAssignment || typeof navigator === "undefined" || !navigator.geolocation) {
+    if (!activeAssignment) {
       setGpsOn(false);
       return;
     }
     const assignmentId = activeAssignment.id;
-    setGpsOn(true);
-    const id = navigator.geolocation.watchPosition(
-      (pos) => {
-        const now = Date.now();
-        if (now - lastSentRef.current < 10000) return; // throttle
-        lastSentRef.current = now;
-        fetch("/api/driver/location", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-            accuracy: pos.coords.accuracy,
-            assignmentId,
-          }),
-        }).catch(() => {});
-      },
-      () => setGpsOn(false),
-      { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 },
-    );
-    watchIdRef.current = id;
-    return () => {
-      if (watchIdRef.current !== null) navigator.geolocation.clearWatch(watchIdRef.current);
-      watchIdRef.current = null;
-      setGpsOn(false);
+    const post = (lat: number, lng: number, accuracy?: number | null) => {
+      const now = Date.now();
+      if (now - lastSentRef.current < 10000) return; // throttle
+      lastSentRef.current = now;
+      fetch("/api/driver/location", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lat, lng, accuracy: accuracy ?? null, assignmentId }),
+      }).catch(() => {});
     };
-  }, [activeAssignment?.id]);
+
+    let cancelled = false;
+    let cleanup = () => {};
+
+    (async () => {
+      // Dynamic import so @capacitor/core never runs at SSR/module-eval on the server.
+      const { Capacitor, registerPlugin } = await import("@capacitor/core");
+      if (Capacitor.isNativePlatform()) {
+        const BG = registerPlugin<{
+          addWatcher(opts: Record<string, unknown>, cb: (loc: { latitude: number; longitude: number; accuracy?: number } | null, err?: unknown) => void): Promise<string>;
+          removeWatcher(opts: { id: string }): Promise<void>;
+        }>("BackgroundGeolocation");
+        let watcherId: string | null = null;
+        try {
+          watcherId = await BG.addWatcher(
+            {
+              backgroundTitle: t("appName"),
+              backgroundMessage: t("gpsBgMessage"),
+              requestPermissions: true,
+              stale: false,
+              distanceFilter: 15,
+            },
+            (loc, err) => {
+              if (err || !loc) {
+                if (!loc) setGpsOn(false);
+                return;
+              }
+              setGpsOn(true);
+              post(loc.latitude, loc.longitude, loc.accuracy);
+            },
+          );
+        } catch {
+          setGpsOn(false);
+        }
+        // If the effect was torn down while addWatcher was awaiting, remove now.
+        if (cancelled && watcherId) {
+          BG.removeWatcher({ id: watcherId }).catch(() => {});
+          return;
+        }
+        cleanup = () => {
+          if (watcherId) BG.removeWatcher({ id: watcherId }).catch(() => {});
+          setGpsOn(false);
+        };
+      } else {
+        if (typeof navigator === "undefined" || !navigator.geolocation) {
+          setGpsOn(false);
+          return;
+        }
+        setGpsOn(true);
+        const id = navigator.geolocation.watchPosition(
+          (pos) => post(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy),
+          () => setGpsOn(false),
+          { enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 },
+        );
+        if (cancelled) {
+          navigator.geolocation.clearWatch(id);
+          return;
+        }
+        cleanup = () => {
+          navigator.geolocation.clearWatch(id);
+          setGpsOn(false);
+        };
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
+  }, [activeAssignment?.id, t]);
 
   async function advance(a: Assignment, next: string) {
     setActing(a.id);

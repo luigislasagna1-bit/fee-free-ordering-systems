@@ -6282,7 +6282,8 @@
     "status_picked_up": "Paņemts — ceļā pie klienta",
     "status_out_for_delivery": "Piegādes procesā",
     "status_delivered": "Piegādāts",
-    "status_failed": "Nav pabeigts"
+    "status_failed": "Nav pabeigts",
+    "gpsBgMessage": "Notiek jūsu atrašanās vietas kopīgošana aktīvajai piegādei."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",

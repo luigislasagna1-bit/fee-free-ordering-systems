@@ -6282,7 +6282,8 @@
     "status_picked_up": "تم الاستلام — في الطريق إلى العميل",
     "status_out_for_delivery": "خارج للتوصيل",
     "status_delivered": "تم التوصيل",
-    "status_failed": "لم يكتمل"
+    "status_failed": "لم يكتمل",
+    "gpsBgMessage": "يتم مشاركة موقعك من أجل عملية التوصيل الجارية."
   },
   "feefreeApp": {
     "dispatchSubtitle": "عيّن وتتبّع عمليات التوصيل الخاصة بك",

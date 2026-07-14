@@ -6282,7 +6282,8 @@
     "status_picked_up": "Picked up — on the way to the customer",
     "status_out_for_delivery": "Out for delivery",
     "status_delivered": "Delivered",
-    "status_failed": "Not completed"
+    "status_failed": "Not completed",
+    "gpsBgMessage": "Sharing your location for the active delivery."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",

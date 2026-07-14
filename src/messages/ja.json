@@ -6282,7 +6282,8 @@
     "status_picked_up": "受け取り済み — お客様へ向かっています",
     "status_out_for_delivery": "配達中",
     "status_delivered": "配達完了",
-    "status_failed": "未完了"
+    "status_failed": "未完了",
+    "gpsBgMessage": "配達中のため位置情報を共有しています。"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",

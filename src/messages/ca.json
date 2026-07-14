@@ -6282,7 +6282,8 @@
     "status_picked_up": "Recollit — de camí al client",
     "status_out_for_delivery": "En lliurament",
     "status_delivered": "Lliurat",
-    "status_failed": "No completat"
+    "status_failed": "No completat",
+    "gpsBgMessage": "S'està compartint la vostra ubicació per a l'entrega en curs."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",

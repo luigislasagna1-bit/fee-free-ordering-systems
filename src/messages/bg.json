@@ -6282,7 +6282,8 @@
     "status_picked_up": "Взето — на път към клиента",
     "status_out_for_delivery": "В процес на доставка",
     "status_delivered": "Доставено",
-    "status_failed": "Незавършено"
+    "status_failed": "Незавършено",
+    "gpsBgMessage": "Споделяне на местоположението ви за активната доставка."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Възлагайте и проследявайте доставките си",

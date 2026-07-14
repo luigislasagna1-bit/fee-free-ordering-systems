@@ -6282,7 +6282,8 @@
     "status_picked_up": "נאסף — בדרך ללקוח",
     "status_out_for_delivery": "יצא למשלוח",
     "status_delivered": "נמסר",
-    "status_failed": "לא הושלם"
+    "status_failed": "לא הושלם",
+    "gpsBgMessage": "משתף את המיקום שלך עבור המשלוח הפעיל."
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",

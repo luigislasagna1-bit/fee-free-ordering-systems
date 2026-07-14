@@ -6282,7 +6282,8 @@
     "status_picked_up": "Coletado — a caminho do cliente",
     "status_out_for_delivery": "Saiu para entrega",
     "status_delivered": "Entregue",
-    "status_failed": "Não concluída"
+    "status_failed": "Não concluída",
+    "gpsBgMessage": "Compartilhando sua localização para a entrega em andamento."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe suas entregas",

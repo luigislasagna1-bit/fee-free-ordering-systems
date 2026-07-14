@@ -6282,7 +6282,8 @@
     "status_picked_up": "픽업 완료 — 고객에게 이동 중",
     "status_out_for_delivery": "배달 중",
     "status_delivered": "배달 완료",
-    "status_failed": "미완료"
+    "status_failed": "미완료",
+    "gpsBgMessage": "진행 중인 배달을 위해 위치를 공유하고 있습니다."
   },
   "feefreeApp": {
     "dispatchSubtitle": "배달 배정 및 추적",

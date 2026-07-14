@@ -6282,7 +6282,8 @@
     "status_picked_up": "Преузето — на путу до купца",
     "status_out_for_delivery": "У достави",
     "status_delivered": "Достављено",
-    "status_failed": "Није завршено"
+    "status_failed": "Није завршено",
+    "gpsBgMessage": "Дељење ваше локације за активну испоруку."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodelite i pratite svoje dostave",
