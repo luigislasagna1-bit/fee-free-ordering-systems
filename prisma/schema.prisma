@@ -507,6 +507,11 @@ model Restaurant {
   marketplaceListing     MarketplaceListing?
   marketplaceSettlements MarketplaceSettlement[]
   shipdayConfig          ShipdayConfig?
+  // FeeFreeDelivery (in-house driver pool) — see models near ShipdayConfig.
+  feefreeDeliveryConfig  FeeFreeDeliveryConfig?
+  homeDrivers            Driver[]             @relation("DriverHomeRestaurant")
+  deliveryAssignments    DeliveryAssignment[]
+  deliverySettlements    DeliverySettlement[]
 
   // Reports — see "REPORTS" section at bottom of file. 4-year retention.
   reportDailySnapshots ReportDailySnapshot[]
@@ -1468,6 +1473,8 @@ model Order {
   customer     Customer?     @relation(fields: [customerId], references: [id])
   coupon       Coupon?       @relation(fields: [couponId], references: [id])
   deliveryZone DeliveryZone? @relation(fields: [deliveryZoneId], references: [id])
+  // FeeFreeDelivery in-house driver job (side table — no physical column on Order).
+  deliveryAssignment DeliveryAssignment?
   items        OrderItem[]
   rating       OrderRating?
 
@@ -3444,6 +3451,151 @@ model ShipdayConfig {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([enabled])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// FeeFreeDelivery — our OWN in-house delivery driver pool (2026-07-13). Distinct
+// from the ShipDay third-party integration above: restaurants can send delivery
+// orders to hourly FeeFree drivers for a flat $7.99/delivery, billed weekly.
+// Plugs into the same dispatch + status seams as ShipDay; the whole driver
+// lifecycle lives in DeliveryAssignment (a side table) so the hot Order table
+// gets ZERO new columns.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// An hourly in-house courier in OUR pool — a person, decoupled from any one
+/// restaurant User. Authenticated via a SEPARATE NextAuth (auth-driver.ts),
+/// exactly like the kitchen app, with single-active-session enforcement.
+model Driver {
+  id                 String      @id @default(cuid())
+  name               String
+  email              String      @unique
+  phone              String?
+  passwordHash       String
+  /// Base/busiest store the driver starts from + does in-store work at when idle.
+  homeRestaurantId   String?
+  homeRestaurant     Restaurant? @relation("DriverHomeRestaurant", fields: [homeRestaurantId], references: [id], onDelete: SetNull)
+  isActive           Boolean     @default(true)
+  hourlyRateCents    Int         @default(0)
+  ratingAvg          Float?
+  ratingCount        Int         @default(0)
+  /// Single-active-session token (mirrors Restaurant.kitchenSessionToken) —
+  /// rotated on each login so the last login owns the session.
+  driverSessionToken String?
+  /// Denormalized last-known location for cheap "where's my driver" reads; the
+  /// full trail lives in DriverLocation.
+  lastLat            Float?
+  lastLng            Float?
+  lastLocationAt     DateTime?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  assignments        DeliveryAssignment[]
+  locations          DriverLocation[]
+
+  @@index([isActive])
+}
+
+/// One in-house delivery job: an Order ⇄ a Driver + its lifecycle + the frozen
+/// $7.99 fee. The FeeFree analog of Order.shipdayOrderId/shipdayStatus, kept in a
+/// side table so Order stays untouched.
+model DeliveryAssignment {
+  id           String     @id @default(cuid())
+  orderId      String     @unique
+  order        Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  driverId     String?
+  driver       Driver?    @relation(fields: [driverId], references: [id], onDelete: SetNull)
+  /// Denormalized — drivers serve multiple nearby stores + weekly settlement
+  /// scans by restaurant.
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  /// queued | assigned | accepted | started | picked_up | out_for_delivery |
+  /// delivered | returned | failed | cancelled
+  status       String     @default("queued")
+  assignedAt   DateTime?
+  acceptedAt   DateTime?
+  startedAt    DateTime?
+  pickedUpAt   DateTime?
+  deliveredAt  DateTime?
+  returnedAt   DateTime?
+  failedAt     DateTime?
+  /// Frozen platform fee in cents at delivery (799). Source of truth for the
+  /// weekly settlement so a later price change never re-bills old deliveries.
+  platformFeeCents        Int?
+  /// What the customer was charged toward delivery (cents) — reporting only.
+  customerFeeChargedCents Int?
+  /// Set once this row is rolled into a weekly DeliverySettlement invoice.
+  settlementId String?
+  settlement   DeliverySettlement? @relation(fields: [settlementId], references: [id], onDelete: SetNull)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  locations    DriverLocation[]
+
+  @@index([driverId, status])
+  @@index([restaurantId, status])
+  @@index([settlementId])
+  @@index([status, deliveredAt])
+}
+
+/// Append-only GPS ping from the driver app (foreground watchPosition). The latest
+/// is denormalized onto Driver.lastLat/Lng; this table keeps the trail.
+model DriverLocation {
+  id           String              @id @default(cuid())
+  driverId     String
+  driver       Driver              @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  assignmentId String?
+  assignment   DeliveryAssignment? @relation(fields: [assignmentId], references: [id], onDelete: SetNull)
+  lat          Float
+  lng          Float
+  accuracy     Float?
+  recordedAt   DateTime            @default(now())
+
+  @@index([driverId, recordedAt])
+}
+
+/// Weekly per-restaurant delivery bill — mirror of MarketplaceSettlement. Accrues
+/// $7.99 per delivered assignment, invoiced once against the card on file, then
+/// reconciled from the Stripe webhook (metadata.type = "delivery_settlement").
+model DeliverySettlement {
+  id               String     @id @default(cuid())
+  restaurantId     String
+  restaurant       Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  /// Monday 00:00 UTC of the billed week.
+  weekStart        DateTime
+  deliveriesInWeek Int        @default(0)
+  accruedCents     Int        @default(0)
+  invoicedCents    Int        @default(0)
+  /// pending | invoiced | paid | void | failed
+  status           String     @default("pending")
+  stripeInvoiceId  String?    @unique
+  failureReason    String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  assignments      DeliveryAssignment[]
+
+  @@unique([restaurantId, weekStart])
+  @@index([status])
+}
+
+/// Per-restaurant FeeFreeDelivery dispatch settings — sibling to ShipdayConfig
+/// (kept separate so the ShipDay-named model stays coherent).
+model FeeFreeDeliveryConfig {
+  id              String     @id @default(cuid())
+  restaurantId    String     @unique
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  /// Master enable — route new delivery orders to FeeFree drivers.
+  enabled         Boolean    @default(false)
+  /// true = auto-send every new delivery on accept; false = queue for manual send.
+  autoSend        Boolean    @default(true)
+  /// How much of the delivery fee the customer pays vs the restaurant absorbs:
+  /// pass_through | flat | absorb
+  customerFeeMode String     @default("pass_through")
+  customerFee     Float?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
 
   @@index([enabled])
 }
