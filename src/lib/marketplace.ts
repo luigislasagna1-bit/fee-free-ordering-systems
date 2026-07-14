@@ -8,36 +8,29 @@
  */
 
 import prisma from "@/lib/db";
-import { hasFeature } from "@/lib/entitlements";
+import { haversineKm } from "@/lib/geocode";
 
 /** UberEats / DoorDash standard commission, used as the comparison
  *  baseline in our "savings" pitch. Three big delivery apps all hover
  *  around 30% — see https://www.fastcompany.com/.../ubereats-commissions */
 export const UBER_EATS_COMMISSION_PCT = 30;
 
-/** Hard monthly cap we charge a marketplace subscriber. Above this,
- *  every additional order is free for the restaurant. With the new
- *  $3.00/order rate, the cap hits at ~83 orders/month — covering all
- *  but the very highest-volume restaurants for a predictable $249.99.
- *  Defined here (not in the AddOn row) so order-time billing math
- *  stays consistent even if a superadmin tweaks the AddOn's price. */
-export const MARKETPLACE_MONTHLY_CAP_CENTS = 24999; // $249.99
+/** MARKETPLACE IS NOW FREE + INCLUDED for every restaurant (Luigi 2026-07-14).
+ *  There is no per-order fee and no monthly plan — every restaurant that offers
+ *  pickup or delivery is auto-listed at no charge, and customers see the ones
+ *  within MARKETPLACE_RADIUS_KM of them. The fee constants are kept (at 0) so the
+ *  order-counter + settlement plumbing keeps running harmlessly (it still powers
+ *  the "orders this month / savings vs UberEats" display); the settlement never
+ *  bills a $0 invoice. Premium placement (highlights, top spots) is a FUTURE paid
+ *  add-on — not built yet. */
+export const MARKETPLACE_MONTHLY_CAP_CENTS = 0; // free — no cap needed
+export const MARKETPLACE_PER_ORDER_CENTS = 0;   // free — no per-order fee
+export const MARKETPLACE_MONTHLY_PLAN_CENTS = 0; // free — no monthly plan
 
-/** Per-order rate for marketplace orders on the pay-as-you-go (PAYG)
- *  billing mode. This is what the platform bills the restaurant —
- *  NOT what the customer pays (customer pays the menu price, same
- *  as a direct order). Covers system, operations, marketing, support
- *  — explicitly NOT delivery (that's ShipDay passthrough).
- *
- *  PAYG only — restaurants on the $199.99/mo monthly plan pay flat
- *  via Stripe subscription and the settlement engine skips them. */
-export const MARKETPLACE_PER_ORDER_CENTS = 300; // $3.00/order
-
-/** Flat monthly subscription price for the Marketplace monthly plan.
- *  Source of truth for the $199.99 price tag we show in marketing UI.
- *  The actual Stripe Price is created from AddOn.monthlyPriceCents
- *  when the superadmin clicks Sync — keep this in sync with the seed. */
-export const MARKETPLACE_MONTHLY_PLAN_CENTS = 19999; // $199.99
+/** How far a customer sees restaurants on the public marketplace (feefreefood).
+ *  Only restaurants within this radius of the customer's location are shown as
+ *  orderable — a global directory that surfaces what's actually nearby. */
+export const MARKETPLACE_RADIUS_KM = 15;
 
 /** USD — the platform always bills in USD regardless of where the
  *  restaurant is located. Marketing copy + Stripe invoice currency.
@@ -62,107 +55,101 @@ export type PublicListing = {
   marketplaceTags: string[];
   marketplaceFeatured: boolean;
   marketplaceSortOrder: number;
+  /** Service-type badges — the restaurant's own accepts* flags, so the card can
+   *  show "Pickup" / "Delivery" without another query. */
+  acceptsPickup: boolean;
+  acceptsDelivery: boolean;
+  /** Geocoded coordinates (null until geocoded) + distance from the customer
+   *  when a location was supplied — drives the 15km radius filter + "X km away". */
+  lat: number | null;
+  lng: number | null;
+  distanceKm: number | null;
   /** When the restaurant signed up — used by the marketplace grid's
    *  "Newest" sort mode. ISO-string serialised at the server→client boundary. */
   createdAt: Date;
 };
 
 /**
- * Public marketplace browse: every restaurant that's opted into the
- * marketplace AND `isListed = true`. Sorted: featured restaurants
- * first, then by manual sort order, then alphabetical.
+ * Public marketplace browse (FREE + INCLUDED, Luigi 2026-07-14).
  *
- * "Opted into the marketplace" = EITHER
- *   - billingMode "monthly" backed by an active marketplace add-on
- *     subscription ($199.99/mo); OR
- *   - billingMode "payg" — they hit the PAYG opt-in confirmation page
- *     and agreed to $3-per-marketplace-order billing.
+ * The marketplace is no longer opt-in or paid. Every restaurant that:
+ *   - is active + published,
+ *   - offers pickup OR delivery,
+ *   - can take an online card order (marketplace orders are card-only), and
+ *   - hasn't explicitly opted OUT (a MarketplaceListing row with isListed=false),
+ * is discoverable — with NO listing row or subscription required. The optional
+ * MarketplaceListing row only carries customization (tagline/banner/tags/featured).
  *
- * Both modes appear identically to customers; the only difference is
- * how the restaurant gets billed.
+ * When a customer location is supplied, only restaurants within `radiusKm`
+ * (default 15km) are returned, nearest first — a global directory that surfaces
+ * what's actually orderable near you. Without a location, all eligible
+ * restaurants are returned (the page prompts for a location).
  *
- * Result is small enough to render without pagination at typical scale
- * (sub-1000 restaurants). When we cross that we'll add cursor pagination.
+ * Sub-1000-restaurant scale: a bounding-box pre-filter keeps the query local,
+ * precise haversine + sort happen in JS. Add PostGIS/cursor pagination past that.
  */
-export async function listPublicMarketplaceListings(): Promise<PublicListing[]> {
-  // Step 1: candidates — every listing that's set to "listed" and whose
-  // restaurant is active. Pull the active add-on rows so we can verify
-  // monthly subscribers are still entitled (subscription could have
-  // lapsed since the listing was first created).
-  const rows = await prisma.marketplaceListing.findMany({
+export async function listPublicMarketplaceListings(opts?: {
+  lat?: number | null;
+  lng?: number | null;
+  radiusKm?: number;
+}): Promise<PublicListing[]> {
+  const radiusKm = opts?.radiusKm ?? MARKETPLACE_RADIUS_KM;
+  const hasLoc =
+    typeof opts?.lat === "number" && Number.isFinite(opts.lat) &&
+    typeof opts?.lng === "number" && Number.isFinite(opts.lng);
+
+  // Bounding-box pre-filter (coarse; precise haversine below) so a local customer
+  // doesn't scan a global table.
+  let geoWhere: Record<string, unknown> = {};
+  if (hasLoc) {
+    const dLat = radiusKm / 111; // ~111 km per degree of latitude
+    const cosLat = Math.max(0.01, Math.cos((opts!.lat! * Math.PI) / 180));
+    const dLng = radiusKm / (111 * cosLat);
+    geoWhere = {
+      lat: { gte: opts!.lat! - dLat, lte: opts!.lat! + dLat },
+      lng: { gte: opts!.lng! - dLng, lte: opts!.lng! + dLng },
+    };
+  }
+
+  const restaurants = await prisma.restaurant.findMany({
     where: {
-      isListed: true,
-      restaurant: {
-        isActive: true,
-        // PUBLISHED-ONLY. An unpublished restaurant can't actually
-        // receive marketplace orders (their /order/<slug> page would
-        // 404 from the customer side), so they shouldn't be discoverable.
-        // The marketplace eligibility gate prevents new signups from
-        // unpublished restaurants, but this filter is the defense-in-depth
-        // for restaurants that got their listing created back when
-        // publishing-before-marketplace wasn't enforced.
-        publishedAt: { not: null },
-        // CARD-CAPABLE filtering happens in the post-filter below (it's an OR
-        // across the legacy Connect flag and the key-only capability, which is
-        // awkward to express in one Prisma WHERE). We pull stripeChargesEnabled
-        // + the PaymentProvider + add-ons here to evaluate it in JS. Marketplace
-        // orders are card-only by platform contract. Luigi 2026-06-04.
-      },
+      isActive: true,
+      publishedAt: { not: null },
+      OR: [{ acceptsPickup: true }, { acceptsDelivery: true }],
+      // Explicit opt-out only: a restaurant whose listing row is hidden stays
+      // off. No row (the default) → included.
+      NOT: { marketplaceListing: { is: { isListed: false } } },
+      ...geoWhere,
     },
-    include: {
-      restaurant: {
+    select: {
+      id: true, name: true, slug: true, city: true, cuisineType: true,
+      bannerUrl: true, logoUrl: true, createdAt: true,
+      lat: true, lng: true, acceptsPickup: true, acceptsDelivery: true,
+      stripeChargesEnabled: true,
+      paymentProvider: { select: { isActive: true, publishableKey: true } },
+      addOns: {
+        where: { status: { in: ["active", "trialing"] } },
+        include: { addOn: { select: { enabledFeatures: true } } },
+      },
+      marketplaceListing: {
         select: {
-          id: true,
-          name: true,
-          slug: true,
-          city: true,
-          cuisineType: true,
-          bannerUrl: true,
-          logoUrl: true,
-          createdAt: true,
-          stripeChargesEnabled: true,
-          paymentProvider: { select: { isActive: true, publishableKey: true } },
-          addOns: {
-            where: { status: { in: ["active", "trialing"] } },
-            include: { addOn: { select: { enabledFeatures: true } } },
-          },
+          id: true, marketplaceTagline: true, marketplaceShortDesc: true,
+          marketplaceBanner: true, marketplaceCategories: true, marketplaceTags: true,
+          marketplaceFeatured: true, marketplaceSortOrder: true,
         },
       },
     },
-    orderBy: [
-      { marketplaceFeatured: "desc" },
-      { marketplaceSortOrder: "asc" },
-    ],
   });
 
-  // Step 2: filter by billing mode + entitlement.
-  //   - payg listings are always entitled (no Stripe sub required)
-  //   - monthly listings need an active add-on grant — if the
-  //     subscription lapsed, the webhook would have flipped them back
-  //     to payg, but we double-check here as defense in depth.
   const out: PublicListing[] = [];
-  for (const r of rows) {
-    let granted = false;
-    if (r.billingMode === "payg") {
-      granted = true;
-    } else if (r.billingMode === "monthly") {
-      granted = r.restaurant.addOns.some((sub) => {
-        try {
-          const features = JSON.parse(sub.addOn.enabledFeatures || "[]");
-          return Array.isArray(features) && features.includes("marketplace_listing");
-        } catch {
-          return false;
-        }
-      });
-    }
-    if (!granted) continue;
-    // CARD-CAPABLE post-filter — accept EITHER the legacy Stripe-Connect flag
-    // OR the key-only capability (active PaymentProvider w/ publishable key AND
-    // the card_payments entitlement). This mirrors restaurantCanTakeCardOnline()
-    // without an N+1, and is additive so no currently-listed restaurant drops.
+  for (const r of restaurants) {
+    // ORDER-READY ONLY (Luigi 2026-07-14): marketplace orders are card-only, so
+    // only list restaurants that can actually take an online order — legacy
+    // Stripe-Connect flag OR the key-only capability (active PaymentProvider +
+    // publishable key + card_payments entitlement).
     const keyOnlyReady =
-      !!(r.restaurant.paymentProvider?.isActive && r.restaurant.paymentProvider?.publishableKey) &&
-      r.restaurant.addOns.some((sub) => {
+      !!(r.paymentProvider?.isActive && r.paymentProvider?.publishableKey) &&
+      r.addOns.some((sub) => {
         try {
           const f = JSON.parse(sub.addOn.enabledFeatures || "[]");
           return Array.isArray(f) && f.includes("card_payments");
@@ -170,36 +157,50 @@ export async function listPublicMarketplaceListings(): Promise<PublicListing[]> 
           return false;
         }
       });
-    if (!(r.restaurant.stripeChargesEnabled || keyOnlyReady)) continue;
+    if (!(r.stripeChargesEnabled || keyOnlyReady)) continue;
+
+    // Precise 15km radius (the bounding box above is only coarse). A restaurant
+    // without coordinates can't be placed, so it's excluded from a located view.
+    let distanceKm: number | null = null;
+    if (hasLoc) {
+      if (r.lat == null || r.lng == null) continue;
+      distanceKm = haversineKm(opts!.lat!, opts!.lng!, r.lat, r.lng);
+      if (distanceKm > radiusKm) continue;
+    }
+
+    const listing = r.marketplaceListing;
     out.push({
-      id: r.id,
-      restaurantId: r.restaurantId,
-      name: r.restaurant.name,
-      slug: r.restaurant.slug,
-      city: r.restaurant.city,
-      cuisineType: r.restaurant.cuisineType,
-      bannerUrl: r.restaurant.bannerUrl,
-      logoUrl: r.restaurant.logoUrl,
-      marketplaceTagline: r.marketplaceTagline,
-      marketplaceShortDesc: r.marketplaceShortDesc,
-      marketplaceBanner: r.marketplaceBanner,
-      marketplaceCategories: safeJsonStringArray(r.marketplaceCategories),
-      marketplaceTags: safeJsonStringArray(r.marketplaceTags),
-      marketplaceFeatured: r.marketplaceFeatured,
-      marketplaceSortOrder: r.marketplaceSortOrder,
-      createdAt: r.restaurant.createdAt,
+      id: listing?.id ?? r.id,
+      restaurantId: r.id,
+      name: r.name,
+      slug: r.slug,
+      city: r.city,
+      cuisineType: r.cuisineType,
+      bannerUrl: r.bannerUrl,
+      logoUrl: r.logoUrl,
+      marketplaceTagline: listing?.marketplaceTagline ?? null,
+      marketplaceShortDesc: listing?.marketplaceShortDesc ?? null,
+      marketplaceBanner: listing?.marketplaceBanner ?? null,
+      marketplaceCategories: safeJsonStringArray(listing?.marketplaceCategories ?? null),
+      marketplaceTags: safeJsonStringArray(listing?.marketplaceTags ?? null),
+      marketplaceFeatured: listing?.marketplaceFeatured ?? false,
+      marketplaceSortOrder: listing?.marketplaceSortOrder ?? 0,
+      acceptsPickup: r.acceptsPickup,
+      acceptsDelivery: r.acceptsDelivery,
+      lat: r.lat,
+      lng: r.lng,
+      distanceKm,
+      createdAt: r.createdAt,
     });
   }
 
-  // Alphabetical tiebreaker — Prisma orderBy can't combine with our
-  // post-filter, so do it here.
+  // Featured first; then nearest (when located), else manual order; then A→Z.
   out.sort((a, b) => {
-    if (a.marketplaceFeatured !== b.marketplaceFeatured) {
-      return a.marketplaceFeatured ? -1 : 1;
+    if (a.marketplaceFeatured !== b.marketplaceFeatured) return a.marketplaceFeatured ? -1 : 1;
+    if (hasLoc && a.distanceKm != null && b.distanceKm != null && a.distanceKm !== b.distanceKm) {
+      return a.distanceKm - b.distanceKm;
     }
-    if (a.marketplaceSortOrder !== b.marketplaceSortOrder) {
-      return a.marketplaceSortOrder - b.marketplaceSortOrder;
-    }
+    if (a.marketplaceSortOrder !== b.marketplaceSortOrder) return a.marketplaceSortOrder - b.marketplaceSortOrder;
     return a.name.localeCompare(b.name);
   });
   return out;
@@ -259,17 +260,14 @@ export async function ensureMarketplaceListing(restaurantId: string): Promise<{ 
  * appear publicly the same way.
  */
 export async function isOnMarketplace(restaurantId: string): Promise<boolean> {
-  const [listing, hasMarketplace] = await Promise.all([
-    prisma.marketplaceListing.findUnique({
-      where: { restaurantId },
-      select: { isListed: true, billingMode: true },
-    }),
-    hasFeature(restaurantId, "marketplace_listing"),
-  ]);
-  if (!listing?.isListed) return false;
-  if (listing.billingMode === "payg") return true;          // PAYG → no sub required
-  if (listing.billingMode === "monthly") return hasMarketplace; // monthly → must be entitled
-  return false;
+  // FREE + INCLUDED (Luigi 2026-07-14): every restaurant is on the marketplace
+  // unless it explicitly opted OUT (a listing row with isListed=false). No
+  // subscription/entitlement required. A missing listing row = included.
+  const listing = await prisma.marketplaceListing.findUnique({
+    where: { restaurantId },
+    select: { isListed: true },
+  });
+  return listing?.isListed !== false;
 }
 
 /**
@@ -288,18 +286,24 @@ export async function isOnMarketplace(restaurantId: string): Promise<boolean> {
  * silent-PAYG surprise.
  */
 export async function getMarketplaceMembership(restaurantId: string): Promise<"none" | "payg" | "monthly"> {
-  const [listing, hasMarketplace] = await Promise.all([
-    prisma.marketplaceListing.findUnique({
-      where: { restaurantId },
-      select: { billingMode: true, isListed: true },
-    }),
-    hasFeature(restaurantId, "marketplace_listing"),
-  ]);
-  // Monthly always wins when the add-on is active — the webhook flips
-  // billingMode to "monthly" on activation, so this is just defensive.
-  if (hasMarketplace) return "monthly";
-  if (listing?.billingMode === "payg" && listing.isListed) return "payg";
-  return "none";
+  // FREE + INCLUDED (Luigi 2026-07-14): every restaurant is on the marketplace
+  // for free; only an explicit opt-out (listing row with isListed=false) removes
+  // them. Mapped onto the legacy union: "included" → "payg" (admin shows the
+  // listing editor), opted-out → "none". The $/plan framing is gone (copy pass).
+  const listing = await prisma.marketplaceListing.findUnique({
+    where: { restaurantId },
+    select: { isListed: true },
+  });
+  return listing?.isListed === false ? "none" : "payg";
+}
+
+/** Included on the marketplace unless explicitly opted out. Free for everyone. */
+export async function isMarketplaceIncluded(restaurantId: string): Promise<boolean> {
+  const listing = await prisma.marketplaceListing.findUnique({
+    where: { restaurantId },
+    select: { isListed: true },
+  });
+  return listing?.isListed !== false;
 }
 
 /**

@@ -220,16 +220,19 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
       continue;
     }
 
-    // Zero-order month — record a void settlement so we have a clean
-    // audit row and don't try again next time.
-    if (orders === 0) {
+    // Nothing to bill — record a void settlement so we have a clean audit row
+    // and don't try again next time. Covers BOTH a zero-order month AND the
+    // marketplace-is-now-free world (MARKETPLACE_PER_ORDER_CENTS=0 ⇒ invoiced=0
+    // for everyone): a $0 bill must never create a Stripe invoice item (Stripe
+    // rejects $0 / it'd be junk). This keeps the counter-reset side effect.
+    if (orders === 0 || invoiced === 0) {
       await prisma.marketplaceSettlement.create({
         data: {
           restaurantId: c.restaurantId,
           monthStart: targetMonth,
-          ordersInMonth: 0,
-          accruedCents: 0,
-          invoicedCents: 0,
+          ordersInMonth: orders,
+          accruedCents: accrued,
+          invoicedCents: invoiced,
           status: "void",
         },
       });
@@ -246,9 +249,9 @@ export async function settleMarketplaceMonth(opts: { now?: Date; monthStart?: Da
         restaurantId: c.restaurantId,
         restaurantName: c.restaurant.name,
         monthStart: targetMonth,
-        ordersInMonth: 0,
-        accruedCents: 0,
-        invoicedCents: 0,
+        ordersInMonth: orders,
+        accruedCents: accrued,
+        invoicedCents: invoiced,
         status: "void",
       });
       continue;

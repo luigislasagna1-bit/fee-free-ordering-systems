@@ -64,6 +64,9 @@ export default async function MarketplacePage() {
     marketplaceTagline: r.marketplaceTagline,
     marketplaceTags: r.marketplaceTags,
     marketplaceFeatured: r.marketplaceFeatured,
+    acceptsPickup: r.acceptsPickup,
+    acceptsDelivery: r.acceptsDelivery,
+    distanceKm: r.distanceKm,
     createdAt:
       r.createdAt instanceof Date
         ? r.createdAt.toISOString()
