@@ -5,11 +5,25 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-11 by Claude (A12 added — order-placed email needs your 1-minute check; marketing batch + billing branch merges deployed).
+**Last updated:** 2026-07-14 by Claude (A14 added — marketplace is now FREE; run the retirement migration on prod to stop any paid marketplace billing).
 
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A14. 🔷 Run the marketplace retirement migration on PROD (marketplace is now free)
+**Why:** the marketplace is now free + included for every restaurant (customer site shows only restaurants within 15 km, with Pickup/Delivery badges; no per-order or monthly fee). The per-order fee is already $0 in code, but any restaurant still on the OLD paid marketplace add-on ($199.99/mo or PAYG) is still attached to a Stripe subscription until this runs. The migration cancels those subs, **keeps their Driver Pool** (grants a free standalone Driver Pool so ShipDay/FeeFree dispatch never drops), and retires the add-on from sale so nobody signs up for a now-free thing. It is **dry-run by default** (shows the plan, changes nothing) — I already verified it on the dev branch.
+1. First see the plan (safe, read-only): `npx tsx scripts/run-on-prod.ts scripts/retire-marketplace-addon.ts` — it lists which subscriptions would be cancelled + who keeps Driver Pool.
+2. Review the list. When you're happy, apply it: `npx tsx scripts/run-on-prod.ts scripts/retire-marketplace-addon.ts --apply` (this cancels the live Stripe subscriptions and retires the add-on).
+3. Tell Claude "done A14" → Claude confirms 0 active marketplace subs on prod and Driver Pool intact for each affected restaurant.
+*(NOTE: the customer marketplace is already live + free. Still on Claude's list, separate from this: rewriting the ADMIN/pricing/features pages that still describe the marketplace as a paid add-on — tracked in TODO. Those are copy only; no one is being wrongly charged.)*
+
+### A13. 🔷 Turn on FeeFreeDelivery for a store (the Phase 1 MVP just shipped)
+**Why:** the whole in-house delivery product is live in software — the enable path, the `/driver` PWA (live GPS), weekly $7.99 billing, customer live-tracking, and admin/superadmin management. Before a real delivery can flow, three things need YOU (all ops/legal — insurance, payroll, unit-economics — remain your separate call).
+1. **Create a driver** — go to `feefreeordering.com/superadmin` → **Delivery Drivers** → **New driver** (name, email, an 8+ char temporary password, optional home store + hourly rate). Give the driver their email + password; they sign in at `feefreeordering.com/driver` (installable to the home screen).
+2. **Enable it on the store** — `feefreeordering.com/admin` → **Driver Pool** → the new **Fee Free Delivery** card → toggle **Enable**. Requires the **Driver Pool** add-on + an online payment method (drivers never collect at the door, so delivery must be prepaid). "Auto-send on accept" is on by default; turn it off to hold orders for a manual "Send to driver".
+3. **Card on file for billing** — the weekly settlement (every Monday 00:10 UTC) invoices $7.99 per delivered order to the store's card on file. Make sure the store has completed billing setup, or the settlement will show "no card on file" and skip.
+*(Verified end-to-end on the demo: accept→picked up→delivered flips the order to completed, freezes the $7.99, streams live GPS, and shows the customer a live map. Test scripts: `_create-demo-driver`, `_enable-feefree-demo`, `_seed-feefree-test`.)*
 
 ### A1. ✅ DONE 2026-07-11 (Luigi clicked Subscribe; Claude's prod verification pending — say "verify A1 on prod") — Re-subscribe "Online Payments" with your real card — was due THURSDAY JULY 17
 **Why:** your free partner period ends July 17. When it does, card checkout on luigispizzapastawings.com STOPS until this is done.
@@ -91,8 +105,7 @@
 2. **External testing → enable the public link** (one-time ~24h Beta App Review) — OR add the restaurant's Apple ID as a tester by email.
 3. Send the restaurant: install **TestFlight** → open the link → install **Fee Free Order App** → Kitchen login with THEIR credentials. Done. (Any restaurant uses the same app.)
 
-**A13b. 🔷 The 15-minute "100% working" test — do WITH Claude + your iPad + the Star printer (this is the last real gate).**
-Say **"let's do the iOS test"**: place a live order → confirm it RINGS with the iPad locked → **print it on the Star printer** and confirm the receipt is correct. Printing is the one thing not yet device-confirmed on iOS.
+**A13b. ✅ DONE 2026-07-13 — the "100% working" device test PASSED.** Verified on Luigi's iPad: rings + notifies with phone LOCKED + app backgrounded ✓; PRINTS correctly on the Star printer ✓; ghost ring FIXED (was stale WebView-cached code; a clean reinstall + the auto-accept hardening commit 767ae631 cleared it) ✓. The app is 100% working. (Auto-accept is OFF on Luigi's store by choice for the first 1–2 months — orders arrive PENDING and ring the full alarm until accepted.)
 
 **A13c. ☐ Submit to the App Store (Option A — under "Luigi's Lasagna & Pizzeria Inc." now, transfer to Fee Free Ordering Inc. later).**
 Everything is pre-written in `IOS_APP_STORE_SUBMISSION.md` (listing copy, privacy answers, reviewer notes tuned to avoid a rejection, submit steps). Owner steps: (1) run the demo-restaurant script with a password → put it in the App Review field; (2) paste the copy into App Store Connect; (3) attach build 24; (4) Submit. Say **"make the App Store screenshots"** and Claude generates the required iPhone + iPad images from the demo restaurant.
