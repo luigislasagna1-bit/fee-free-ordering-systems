@@ -112,7 +112,7 @@ export interface GFOption {
 // ────────────────────────────────────────────────────────────────────
 
 export interface ImportPreview {
-  source: "gloriafood";
+  source: "gloriafood" | "ubereats";
   sourceMenuId: number;
   sourceMenuName: string;
   currency: string;
