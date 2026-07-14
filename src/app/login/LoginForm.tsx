@@ -113,10 +113,20 @@ function LoginFormInner({
       // session cookie is picked up by the server render of the destination.
       const session = await getSession();
       const role = (session?.user as any)?.role;
+      // A same-origin relative callbackUrl (e.g. the FeeFreeDelivery app at
+      // /driver sending a restaurant owner here to sign in) is honored ONLY for
+      // restaurant/kitchen roles. Must start with a single "/" (not "//", which
+      // is protocol-relative and an open-redirect vector). Superadmins and
+      // resellers always land in their own area regardless of callbackUrl.
+      const rawCallback = params.get("callbackUrl");
+      const safeCallback =
+        rawCallback && rawCallback.startsWith("/") && !rawCallback.startsWith("//")
+          ? rawCallback
+          : null;
       const dest =
         role === "superadmin" || role === "platform_support" ? "/superadmin"
         : role === "reseller_partner" || role === "pending_reseller" ? "/reseller"
-        : "/admin";
+        : safeCallback ?? "/admin";
       window.location.assign(dest);
     } catch (err: any) {
       toast.error(err.message);

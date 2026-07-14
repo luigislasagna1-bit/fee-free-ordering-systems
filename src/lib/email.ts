@@ -437,6 +437,43 @@ export async function sendPlatformTeamInviteEmail(params: {
   });
 }
 
+/**
+ * Fee Free Delivery driver welcome — sent automatically when a superadmin
+ * creates a driver. Carries the app link + the driver's login email and the
+ * temporary password the superadmin set, so the driver can sign in without any
+ * manual relay. English-only body (drivers pick their language inside the app);
+ * subject stays generic. The password is a one-time temp credential — never
+ * logged, only emailed to the driver themselves.
+ */
+export async function sendDriverInviteEmail(params: {
+  to: string;
+  name?: string | null;
+  loginEmail: string;
+  tempPassword: string;
+  appUrl: string;
+}) {
+  const esc = (s: string) =>
+    s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
+  const first = params.name?.trim().split(/\s+/)[0] || "there";
+  const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827">
+    <p style="font-size:15px">Hi ${esc(first)},</p>
+    <p style="font-size:15px;line-height:1.6">You've been added as a driver on <strong>Fee Free Delivery</strong>. Sign in on your phone to see and accept delivery jobs.</p>
+    <p style="margin:18px 0"><a href="${esc(params.appUrl)}" style="background:#059669;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;display:inline-block">Open Fee Free Delivery</a></p>
+    <table style="font-size:14px;line-height:1.7;border-collapse:collapse;margin:8px 0">
+      <tr><td style="color:#6b7280;padding-right:12px">App link</td><td><a href="${esc(params.appUrl)}" style="color:#059669">${esc(params.appUrl)}</a></td></tr>
+      <tr><td style="color:#6b7280;padding-right:12px">Login (email)</td><td><strong>${esc(params.loginEmail)}</strong></td></tr>
+      <tr><td style="color:#6b7280;padding-right:12px">Temporary password</td><td><strong>${esc(params.tempPassword)}</strong></td></tr>
+    </table>
+    <p style="font-size:13px;color:#6b7280;line-height:1.6">Tip: after opening the link, use "Add to Home Screen" so it installs like a normal app. Keep this password private — ask your manager if you ever need it reset.</p>
+    <p style="font-size:12px;color:#9ca3af;margin-top:20px">If you weren't expecting this, you can ignore this email.</p>
+  </div>`;
+  return send({
+    to: params.to,
+    subject: "Your Fee Free Delivery driver login",
+    html,
+  });
+}
+
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const t = await getDict(params.locale);
   const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });

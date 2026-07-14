@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Fahrer-Anmeldung",
     "loginHelp": "Melde dich an, um Lieferaufträge zu übernehmen.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Meine Lieferungen",
     "openQueueTitle": "Verfügbare Aufträge",
     "emptyQueue": "Derzeit keine Aufträge verfügbar.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "In Zustellung",
     "status_delivered": "Zugestellt",
     "status_failed": "Nicht abgeschlossen"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",
+    "openDashboard": "Dashboard öffnen",
+    "notEnabledTitle": "Fee Free Delivery ist für dieses Geschäft nicht aktiviert",
+    "notEnabledBody": "Aktiviere es in deinem Dashboard, um Bestellungen an deine Fahrer zu senden.",
+    "restaurantLoginCta": "Restaurantinhaber? Melde dich mit deinen Dashboard-Zugangsdaten an"
   }
 }

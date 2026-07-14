@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "骑手登录",
     "loginHelp": "登录以接取配送任务。",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "我的配送",
     "openQueueTitle": "可接任务",
     "emptyQueue": "当前暂无可接任务。",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "配送中",
     "status_delivered": "已送达",
     "status_failed": "未完成"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "分配并跟踪您的配送",
+    "openDashboard": "打开仪表板",
+    "notEnabledTitle": "本店尚未启用 Fee Free Delivery",
+    "notEnabledBody": "在您的仪表板中启用它，即可开始向您的配送员派发订单。",
+    "restaurantLoginCta": "餐厅老板？使用您的仪表板账号登录"
   }
 }

@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Accés del repartidor",
     "loginHelp": "Inicia la sessió per acceptar lliuraments.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Els meus lliuraments",
     "openQueueTitle": "Lliuraments disponibles",
     "emptyQueue": "No hi ha cap lliurament disponible ara mateix.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "En lliurament",
     "status_delivered": "Lliurat",
     "status_failed": "No completat"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",
+    "openDashboard": "Obre el tauler",
+    "notEnabledTitle": "Fee Free Delivery no està activat per a aquest establiment",
+    "notEnabledBody": "Activa'l al teu tauler per començar a enviar comandes als teus repartidors.",
+    "restaurantLoginCta": "Ets el propietari del restaurant? Inicia la sessió amb les dades del teu tauler"
   }
 }

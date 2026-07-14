@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Chaufførlogin",
     "loginHelp": "Log ind for at tage leveringsopgaver.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Mine leveringer",
     "openQueueTitle": "Ledige opgaver",
     "emptyQueue": "Ingen opgaver tilgængelige lige nu.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Under levering",
     "status_delivered": "Leveret",
     "status_failed": "Ikke fuldført"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Tildel og følg dine leveringer",
+    "openDashboard": "Åbn dashboardet",
+    "notEnabledTitle": "Fee Free Delivery er ikke aktiveret for denne butik",
+    "notEnabledBody": "Aktivér det i dit dashboard for at begynde at sende ordrer til dine chauffører.",
+    "restaurantLoginCta": "Er du restaurantejer? Log ind med dine dashboard-loginoplysninger"
   }
 }

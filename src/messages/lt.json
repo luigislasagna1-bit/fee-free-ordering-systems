@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Vairuotojo prisijungimas",
     "loginHelp": "Prisijunkite, kad galėtumėte imtis pristatymo užsakymų.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Mano pristatymai",
     "openQueueTitle": "Galimi užsakymai",
     "emptyQueue": "Šiuo metu nėra galimų užsakymų.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Pristatoma",
     "status_delivered": "Pristatyta",
     "status_failed": "Neužbaigta"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",
+    "openDashboard": "Atidaryti valdymo skydelį",
+    "notEnabledTitle": "Fee Free Delivery šiai parduotuvei neįjungtas",
+    "notEnabledBody": "Įjunkite jį valdymo skydelyje, kad galėtumėte pradėti siųsti užsakymus savo vairuotojams.",
+    "restaurantLoginCta": "Restorano savininkas? Prisijunkite naudodami valdymo skydelio paskyrą"
   }
 }

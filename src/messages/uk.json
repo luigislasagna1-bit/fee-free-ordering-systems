@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Вхід для водія",
     "loginHelp": "Увійдіть, щоб брати замовлення на доставку.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Мої доставки",
     "openQueueTitle": "Доступні замовлення",
     "emptyQueue": "Наразі немає доступних замовлень.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "У процесі доставки",
     "status_delivered": "Доставлено",
     "status_failed": "Не виконано"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Призначайте та відстежуйте свої доставки",
+    "openDashboard": "Відкрити панель керування",
+    "notEnabledTitle": "Fee Free Delivery не ввімкнено для цього закладу",
+    "notEnabledBody": "Увімкніть його в панелі керування, щоб почати надсилати замовлення своїм водіям.",
+    "restaurantLoginCta": "Власник ресторану? Увійдіть за допомогою даних панелі керування"
   }
 }

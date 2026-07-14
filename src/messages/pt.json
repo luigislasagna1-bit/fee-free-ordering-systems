@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Início de sessão do estafeta",
     "loginHelp": "Inicie sessão para aceitar entregas.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "As minhas entregas",
     "openQueueTitle": "Entregas disponíveis",
     "emptyQueue": "Não há entregas disponíveis de momento.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Em entrega",
     "status_delivered": "Entregue",
     "status_failed": "Não concluída"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Atribua e acompanhe as suas entregas",
+    "openDashboard": "Abrir painel",
+    "notEnabledTitle": "O Fee Free Delivery não está ativado para este estabelecimento",
+    "notEnabledBody": "Ative-o no seu painel para começar a enviar pedidos aos seus estafetas.",
+    "restaurantLoginCta": "É proprietário do restaurante? Inicie sessão com os dados do seu painel"
   }
 }

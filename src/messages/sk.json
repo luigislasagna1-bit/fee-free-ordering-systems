@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Prihlásenie vodiča",
     "loginHelp": "Prihláste sa na prijímanie rozvozových zákaziek.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Moje rozvozy",
     "openQueueTitle": "Dostupné zákazky",
     "emptyQueue": "Momentálne nie sú k dispozícii žiadne zákazky.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Na ceste k doručeniu",
     "status_delivered": "Doručené",
     "status_failed": "Nedokončené"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Priraďujte a sledujte svoje rozvozy",
+    "openDashboard": "Otvoriť nástenku",
+    "notEnabledTitle": "Fee Free Delivery nie je pre túto prevádzku zapnuté",
+    "notEnabledBody": "Zapnite ho na nástenke a začnite odosielať objednávky svojim vodičom.",
+    "restaurantLoginCta": "Ste majiteľ reštaurácie? Prihláste sa prihlasovacími údajmi k nástenke"
   }
 }

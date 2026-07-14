@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Bezorger inloggen",
     "loginHelp": "Log in om bezorgopdrachten op te pakken.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Mijn bezorgingen",
     "openQueueTitle": "Beschikbare opdrachten",
     "emptyQueue": "Momenteel geen opdrachten beschikbaar.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Onderweg voor bezorging",
     "status_delivered": "Bezorgd",
     "status_failed": "Niet voltooid"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",
+    "openDashboard": "Dashboard openen",
+    "notEnabledTitle": "Fee Free Delivery is niet ingeschakeld voor deze vestiging",
+    "notEnabledBody": "Schakel het in je dashboard in om bestellingen naar je bezorgers te sturen.",
+    "restaurantLoginCta": "Bent u de restauranteigenaar? Log in met uw dashboardgegevens"
   }
 }

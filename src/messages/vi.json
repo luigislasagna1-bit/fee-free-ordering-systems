@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Đăng nhập tài xế",
     "loginHelp": "Đăng nhập để nhận đơn giao hàng.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Đơn giao của tôi",
     "openQueueTitle": "Đơn khả dụng",
     "emptyQueue": "Hiện không có đơn nào khả dụng.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Đang giao hàng",
     "status_delivered": "Đã giao",
     "status_failed": "Chưa hoàn tất"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",
+    "openDashboard": "Mở bảng điều khiển",
+    "notEnabledTitle": "Fee Free Delivery chưa được bật cho cửa hàng này",
+    "notEnabledBody": "Hãy bật tính năng này trong bảng điều khiển để bắt đầu gửi đơn cho tài xế của bạn.",
+    "restaurantLoginCta": "Chủ nhà hàng? Đăng nhập bằng tài khoản bảng điều khiển của bạn"
   }
 }

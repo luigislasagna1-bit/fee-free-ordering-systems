@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Logowanie kierowcy",
     "loginHelp": "Zaloguj się, aby przyjmować zlecenia dostaw.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Moje dostawy",
     "openQueueTitle": "Dostępne zlecenia",
     "emptyQueue": "Brak dostępnych zleceń w tej chwili.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "W trakcie dostawy",
     "status_delivered": "Dostarczono",
     "status_failed": "Niezrealizowana"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",
+    "openDashboard": "Otwórz panel",
+    "notEnabledTitle": "Fee Free Delivery nie jest włączone dla tego sklepu",
+    "notEnabledBody": "Włącz je w panelu, aby zacząć wysyłać zamówienia do swoich kierowców.",
+    "restaurantLoginCta": "Właściciel restauracji? Zaloguj się danymi do panelu"
   }
 }

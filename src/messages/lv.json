@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Vadītāja pieteikšanās",
     "loginHelp": "Piesakieties, lai uzņemtos piegādes darbus.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Manas piegādes",
     "openQueueTitle": "Pieejamie darbi",
     "emptyQueue": "Pašlaik nav pieejamu darbu.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Piegādes procesā",
     "status_delivered": "Piegādāts",
     "status_failed": "Nav pabeigts"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",
+    "openDashboard": "Atvērt vadības paneli",
+    "notEnabledTitle": "Fee Free Delivery šai veikalam nav ieslēgts",
+    "notEnabledBody": "Ieslēdziet to vadības panelī, lai sāktu nosūtīt pasūtījumus saviem vadītājiem.",
+    "restaurantLoginCta": "Restorāna īpašnieks? Pierakstieties ar vadības paneļa pieteikumvārdu"
   }
 }

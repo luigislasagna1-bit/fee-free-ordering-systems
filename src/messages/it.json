@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Accesso corriere",
     "loginHelp": "Accedi per prendere le consegne.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Le mie consegne",
     "openQueueTitle": "Consegne disponibili",
     "emptyQueue": "Nessuna consegna disponibile al momento.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "In consegna",
     "status_delivered": "Consegnato",
     "status_failed": "Non completata"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Assegna e monitora le tue consegne",
+    "openDashboard": "Apri la dashboard",
+    "notEnabledTitle": "Fee Free Delivery non è attivo per questo locale",
+    "notEnabledBody": "Attivalo nella tua dashboard per iniziare a inviare ordini ai tuoi fattorini.",
+    "restaurantLoginCta": "Sei il titolare del ristorante? Accedi con le credenziali della dashboard"
   }
 }

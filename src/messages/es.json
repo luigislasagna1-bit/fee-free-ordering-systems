@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Acceso de repartidor",
     "loginHelp": "Inicia sesión para aceptar entregas.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Mis entregas",
     "openQueueTitle": "Entregas disponibles",
     "emptyQueue": "No hay entregas disponibles ahora mismo.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "En reparto",
     "status_delivered": "Entregado",
     "status_failed": "No completada"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Asigna y haz seguimiento de tus entregas",
+    "openDashboard": "Abrir panel",
+    "notEnabledTitle": "Fee Free Delivery no está activado para este local",
+    "notEnabledBody": "Actívalo en tu panel para empezar a enviar pedidos a tus repartidores.",
+    "restaurantLoginCta": "¿Eres el propietario del restaurante? Inicia sesión con los datos de tu panel"
   }
 }

@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { requireSuperadmin } from "@/lib/platform-auth";
 import prisma from "@/lib/db";
+import { sendDriverInviteEmail } from "@/lib/email";
+import { sendSms } from "@/lib/sms";
 
 /**
  * Superadmin FeeFreeDelivery driver-pool management.
@@ -73,5 +75,21 @@ export async function POST(req: NextRequest) {
     data: { name, email, phone, passwordHash, homeRestaurantId, hourlyRateCents, isActive: true },
     select: { id: true },
   });
+
+  // Auto-send the driver their login (email always; SMS too when a phone is on
+  // file). Fire-and-forget — a slow/failed Resend or Twilio call must never
+  // block or fail driver creation. The superadmin can still relay manually if
+  // the send is skipped (e.g. providers unconfigured). Never log the password.
+  const appUrl = `${(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001").replace(/\/$/, "")}/driver`;
+  void sendDriverInviteEmail({ to: email, name, loginEmail: email, tempPassword: password, appUrl }).catch(
+    (e) => console.error("[driver-invite] email failed", { driverId: driver.id, error: e instanceof Error ? e.message : String(e) }),
+  );
+  if (phone) {
+    void sendSms({
+      to: phone,
+      body: `You're set up as a driver on Fee Free Delivery. Sign in at ${appUrl} with ${email} — your password was sent to your email.`,
+    }).catch((e) => console.error("[driver-invite] sms failed", { driverId: driver.id, error: e instanceof Error ? e.message : String(e) }));
+  }
+
   return NextResponse.json({ ok: true, id: driver.id });
 }

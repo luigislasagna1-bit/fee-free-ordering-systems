@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "ドライバーログイン",
     "loginHelp": "ログインして配達の仕事を受け付けます。",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "自分の配達",
     "openQueueTitle": "受付可能な仕事",
     "emptyQueue": "現在、受付可能な仕事はありません。",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "配達中",
     "status_delivered": "配達完了",
     "status_failed": "未完了"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "配達の割り当てと追跡",
+    "openDashboard": "ダッシュボードを開く",
+    "notEnabledTitle": "この店舗では Fee Free Delivery が有効になっていません",
+    "notEnabledBody": "ダッシュボードで有効にすると、ドライバーへの注文の割り当てを開始できます。",
+    "restaurantLoginCta": "レストランのオーナーですか？ダッシュボードのログインでサインイン"
   }
 }

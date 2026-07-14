@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "ड्राइवर साइन इन",
     "loginHelp": "डिलीवरी जॉब लेने के लिए साइन इन करें।",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "मेरी डिलीवरी",
     "openQueueTitle": "उपलब्ध जॉब",
     "emptyQueue": "अभी कोई जॉब उपलब्ध नहीं है।",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "डिलीवरी के लिए निकला",
     "status_delivered": "डिलीवर किया गया",
     "status_failed": "पूरा नहीं हुआ"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "अपनी डिलीवरी असाइन करें और ट्रैक करें",
+    "openDashboard": "डैशबोर्ड खोलें",
+    "notEnabledTitle": "इस स्टोर के लिए Fee Free Delivery चालू नहीं है",
+    "notEnabledBody": "अपने ड्राइवरों को ऑर्डर भेजना शुरू करने के लिए इसे अपने डैशबोर्ड में चालू करें।",
+    "restaurantLoginCta": "रेस्तराँ के मालिक हैं? अपने डैशबोर्ड लॉगिन से साइन इन करें"
   }
 }

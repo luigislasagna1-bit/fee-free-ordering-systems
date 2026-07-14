@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Kuljettajan kirjautuminen",
     "loginHelp": "Kirjaudu sisään ottaaksesi toimitustehtäviä.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Omat toimitukset",
     "openQueueTitle": "Saatavilla olevat tehtävät",
     "emptyQueue": "Ei tehtäviä saatavilla juuri nyt.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Toimituksessa",
     "status_delivered": "Toimitettu",
     "status_failed": "Ei suoritettu"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",
+    "openDashboard": "Avaa hallintapaneeli",
+    "notEnabledTitle": "Fee Free Delivery ei ole käytössä tässä myymälässä",
+    "notEnabledBody": "Ota se käyttöön hallintapaneelissa, niin voit alkaa lähettää tilauksia kuljettajillesi.",
+    "restaurantLoginCta": "Ravintolan omistaja? Kirjaudu sisään hallintapaneelin tunnuksillasi"
   }
 }

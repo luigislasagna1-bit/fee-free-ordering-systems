@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Prijava voznika",
     "loginHelp": "Prijavite se za prevzem dostavnih naročil.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Moje dostave",
     "openQueueTitle": "Razpoložljiva naročila",
     "emptyQueue": "Trenutno ni razpoložljivih naročil.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Na poti za dostavo",
     "status_delivered": "Dostavljeno",
     "status_failed": "Ni dokončano"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Dodeljujte in spremljajte svoje dostave",
+    "openDashboard": "Odpri nadzorno ploščo",
+    "notEnabledTitle": "Fee Free Delivery ni vklopljen za to trgovino",
+    "notEnabledBody": "Vklopite ga v nadzorni plošči, da začnete pošiljati naročila svojim voznikom.",
+    "restaurantLoginCta": "Ste lastnik restavracije? Prijavite se s podatki za nadzorno ploščo"
   }
 }

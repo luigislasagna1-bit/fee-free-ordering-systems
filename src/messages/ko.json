@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "기사 로그인",
     "loginHelp": "로그인하여 배달 작업을 받으세요.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "내 배달",
     "openQueueTitle": "수락 가능한 작업",
     "emptyQueue": "현재 수락 가능한 작업이 없습니다.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "배달 중",
     "status_delivered": "배달 완료",
     "status_failed": "미완료"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "배달 배정 및 추적",
+    "openDashboard": "대시보드 열기",
+    "notEnabledTitle": "이 매장에는 Fee Free Delivery가 켜져 있지 않습니다",
+    "notEnabledBody": "대시보드에서 켜면 기사에게 주문 배차를 시작할 수 있습니다.",
+    "restaurantLoginCta": "레스토랑 사장님이신가요? 대시보드 로그인으로 로그인하세요"
   }
 }

@@ -8,11 +8,11 @@ import { DriverSessionProvider } from "./DriverSessionProvider";
 // that opens straight into the driver app. Its own manifest/cookie keep it
 // independent of the kitchen and admin surfaces.
 export const metadata: Metadata = {
-  title: "Fee Free Driver",
+  title: "Fee Free Delivery",
   manifest: "/manifest-driver.webmanifest",
   appleWebApp: {
     capable: true,
-    title: "Driver",
+    title: "Delivery",
     statusBarStyle: "black-translucent",
   },
 };

@@ -1,7 +1,7 @@
 {
-  "name": "Fee Free Driver",
-  "short_name": "Driver",
-  "description": "Delivery driver app — accept jobs, navigate, mark picked up and delivered.",
+  "name": "Fee Free Delivery",
+  "short_name": "Delivery",
+  "description": "Fee Free Delivery — drivers accept jobs and navigate; restaurants assign orders to drivers.",
   "start_url": "/driver",
   "scope": "/driver",
   "display": "standalone",

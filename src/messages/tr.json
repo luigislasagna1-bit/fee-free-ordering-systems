@@ -6255,7 +6255,7 @@
   "driver": {
     "loginTitle": "Sürücü girişi",
     "loginHelp": "Teslimat işlerini almak için giriş yapın.",
-    "appName": "Fee Free Driver",
+    "appName": "Fee Free Delivery",
     "myJobsTitle": "Teslimatlarım",
     "openQueueTitle": "Uygun işler",
     "emptyQueue": "Şu anda uygun iş yok.",
@@ -6281,5 +6281,12 @@
     "status_out_for_delivery": "Teslimatta",
     "status_delivered": "Teslim edildi",
     "status_failed": "Tamamlanmadı"
+  },
+  "feefreeApp": {
+    "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",
+    "openDashboard": "Kontrol panelini aç",
+    "notEnabledTitle": "Fee Free Delivery bu mağaza için etkin değil",
+    "notEnabledBody": "Sürücülerinize sipariş göndermeye başlamak için kontrol panelinizden etkinleştirin.",
+    "restaurantLoginCta": "Restoran sahibi misiniz? Kontrol paneli girişinizle oturum açın"
   }
 }

@@ -113,9 +113,9 @@ export function DriversClient({
           <Smartphone className="w-5 h-5" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-bold text-emerald-900">Driver app</div>
+          <div className="text-sm font-bold text-emerald-900">Fee Free Delivery app</div>
           <p className="text-xs text-emerald-800/90 mt-0.5">
-            Drivers sign in here with the email + password you set. It installs to the home screen (Add to Home Screen) and works like a native app.
+            One app for both drivers and restaurants. Drivers sign in with the email + password you set (auto-emailed to them on create); restaurant owners open the same link and sign in with their existing dashboard login to assign orders. It installs to the home screen (Add to Home Screen) and works like a native app.
           </p>
           <div className="mt-2 flex items-center gap-2 flex-wrap">
             <code className="text-[13px] font-mono bg-white border border-emerald-200 rounded-lg px-3 py-1.5 text-emerald-900 break-all select-all">
@@ -159,7 +159,7 @@ export function DriversClient({
               <input type="email" className="input" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
             </Field>
             <Field label="Temporary password (8+ chars)">
-              <input type="text" className="input font-mono" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="give this to the driver" />
+              <input type="text" className="input font-mono" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="auto-emailed to the driver on save" />
             </Field>
             <Field label="Phone (optional)">
               <input className="input" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />

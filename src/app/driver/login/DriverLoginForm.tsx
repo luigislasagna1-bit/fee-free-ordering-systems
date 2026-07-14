@@ -1,7 +1,8 @@
 "use client";
 import { useState, Suspense } from "react";
+import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { Bike, Loader2 } from "lucide-react";
+import { Bike, Loader2, Store } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
@@ -9,6 +10,7 @@ import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 function DriverLoginFormInner({ locale }: { locale: string }) {
   const tAuth = useTranslations("auth");
   const t = useTranslations("driver");
+  const tApp = useTranslations("feefreeApp");
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
 
@@ -88,6 +90,16 @@ function DriverLoginFormInner({ locale }: { locale: string }) {
             </button>
           </form>
         </div>
+
+        {/* Restaurant owners use the SAME app to assign & track deliveries, but
+            sign in with their existing dashboard (admin) login — routed through
+            the admin login with a callback back into this app. */}
+        <Link
+          href="/login?callbackUrl=%2Fdriver"
+          className="mt-4 flex items-center justify-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition"
+        >
+          <Store className="w-4 h-4" /> {tApp("restaurantLoginCta")}
+        </Link>
       </div>
     </div>
   );
