@@ -126,7 +126,8 @@
     "resellerScopeError": "Aquest inici de sessió és només per a clients de {brandName}.",
     "thisPartner": "aquest soci",
     "signingUpUnder": "T'estàs registrant amb {brand}",
-    "restaurantLogin": "Accés del restaurant"
+    "restaurantLogin": "Accés del restaurant",
+    "tooManyAttempts": "Massa intents. Espera uns minuts i torna-ho a provar una vegada."
   },
   "ordering": {
     "viewCart": "Veure la cistella",

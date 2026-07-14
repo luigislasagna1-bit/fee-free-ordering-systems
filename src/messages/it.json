@@ -126,7 +126,8 @@
     "resellerScopeError": "Questo accesso è riservato ai clienti di {brandName}.",
     "thisPartner": "questo partner",
     "signingUpUnder": "Ti stai registrando tramite {brand}",
-    "restaurantLogin": "Accesso ristorante"
+    "restaurantLogin": "Accesso ristorante",
+    "tooManyAttempts": "Troppi tentativi. Attendi qualche minuto, poi riprova una volta."
   },
   "ordering": {
     "viewCart": "Vedi carrello",

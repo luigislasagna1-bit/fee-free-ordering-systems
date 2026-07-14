@@ -126,7 +126,8 @@
     "resellerScopeError": "Denne innloggingen er kun for kunder hos {brandName}.",
     "thisPartner": "denne partneren",
     "signingUpUnder": "Du registrerer deg via {brand}",
-    "restaurantLogin": "Restaurantinnlogging"
+    "restaurantLogin": "Restaurantinnlogging",
+    "tooManyAttempts": "For mange forsøk. Vent noen minutter, og prøv så en gang."
   },
   "ordering": {
     "viewCart": "Vis handlekurv",

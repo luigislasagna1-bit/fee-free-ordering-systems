@@ -126,7 +126,8 @@
     "resellerScopeError": "This sign-in is for {brandName} customers only.",
     "thisPartner": "this partner",
     "signingUpUnder": "You're signing up under {brand}",
-    "restaurantLogin": "Restaurant Login"
+    "restaurantLogin": "Restaurant Login",
+    "tooManyAttempts": "Too many attempts. Please wait a few minutes, then try once."
   },
   "ordering": {
     "viewCart": "View Cart",

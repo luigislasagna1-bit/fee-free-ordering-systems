@@ -126,7 +126,8 @@
     "resellerScopeError": "Login ini hanya untuk pelanggan {brandName}.",
     "thisPartner": "mitra ini",
     "signingUpUnder": "Anda mendaftar melalui {brand}",
-    "restaurantLogin": "Masuk Restoran"
+    "restaurantLogin": "Masuk Restoran",
+    "tooManyAttempts": "Terlalu banyak percobaan. Harap tunggu beberapa menit, lalu coba sekali lagi."
   },
   "ordering": {
     "viewCart": "Lihat Keranjang",

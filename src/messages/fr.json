@@ -126,7 +126,8 @@
     "resellerScopeError": "Cette connexion est réservée aux clients de {brandName}.",
     "thisPartner": "ce partenaire",
     "signingUpUnder": "Vous vous inscrivez via {brand}",
-    "restaurantLogin": "Connexion restaurant"
+    "restaurantLogin": "Connexion restaurant",
+    "tooManyAttempts": "Trop de tentatives. Veuillez patienter quelques minutes, puis réessayer une fois."
   },
   "ordering": {
     "viewCart": "Voir le panier",

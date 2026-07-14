@@ -126,7 +126,8 @@
     "resellerScopeError": "Toto přihlášení je určeno pouze pro zákazníky {brandName}.",
     "thisPartner": "tento partner",
     "signingUpUnder": "Registrujete se prostřednictvím {brand}",
-    "restaurantLogin": "Přihlášení restaurace"
+    "restaurantLogin": "Přihlášení restaurace",
+    "tooManyAttempts": "Příliš mnoho pokusů. Počkejte několik minut a pak to zkuste jednou."
   },
   "ordering": {
     "viewCart": "Zobrazit košík",

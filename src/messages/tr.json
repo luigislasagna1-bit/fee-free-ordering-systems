@@ -126,7 +126,8 @@
     "resellerScopeError": "Bu giriş yalnızca {brandName} müşterileri içindir.",
     "thisPartner": "bu iş ortağı",
     "signingUpUnder": "{brand} üzerinden kayıt oluyorsunuz",
-    "restaurantLogin": "Restoran girişi"
+    "restaurantLogin": "Restoran girişi",
+    "tooManyAttempts": "Çok fazla deneme yapıldı. Lütfen birkaç dakika bekleyip bir kez daha deneyin."
   },
   "ordering": {
     "viewCart": "Sepeti Gör",

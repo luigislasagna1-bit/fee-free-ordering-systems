@@ -126,7 +126,8 @@
     "resellerScopeError": "Šī pieteikšanās ir paredzēta tikai {brandName} klientiem.",
     "thisPartner": "šis partneris",
     "signingUpUnder": "Jūs reģistrējaties caur {brand}",
-    "restaurantLogin": "Restorāna pieteikšanās"
+    "restaurantLogin": "Restorāna pieteikšanās",
+    "tooManyAttempts": "Pārāk daudz mēģinājumu. Lūdzu, uzgaidi dažas minūtes un pēc tam mēģini vēlreiz."
   },
   "ordering": {
     "viewCart": "Skatīt grozu",

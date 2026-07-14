@@ -126,7 +126,8 @@
     "resellerScopeError": "Ez a bejelentkezés csak a {brandName} ügyfelei számára van.",
     "thisPartner": "ez a partner",
     "signingUpUnder": "A(z) {brand} partneren keresztül regisztrál",
-    "restaurantLogin": "Étterem bejelentkezés"
+    "restaurantLogin": "Étterem bejelentkezés",
+    "tooManyAttempts": "Túl sok próbálkozás. Várj néhány percet, majd próbáld meg egyszer."
   },
   "ordering": {
     "viewCart": "Kosár megtekintése",

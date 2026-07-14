@@ -126,7 +126,8 @@
     "resellerScopeError": "Diese Anmeldung ist nur für Kunden von {brandName}.",
     "thisPartner": "diesem Partner",
     "signingUpUnder": "Sie registrieren sich über {brand}",
-    "restaurantLogin": "Restaurant-Anmeldung"
+    "restaurantLogin": "Restaurant-Anmeldung",
+    "tooManyAttempts": "Zu viele Versuche. Bitte warte ein paar Minuten und versuche es dann einmal."
   },
   "ordering": {
     "viewCart": "Warenkorb anzeigen",

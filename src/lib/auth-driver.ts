@@ -62,7 +62,9 @@ export const driverAuthOptions: NextAuthOptions = {
         // "driver". Driver isn't a User, so there is no per-User lockout — the
         // IP+email throttle is the guard.
         const ip = ipFromHeaderBag(req?.headers as Record<string, string | undefined> | undefined);
-        if (!(await loginAttemptAllowed({ scope: "driver", ip, email: emailLower }))) return null;
+        // "login-rate-limited" == RATE_LIMITED_ERROR in auth.ts — thrown so the
+        // client shows "too many attempts" instead of "invalid password".
+        if (!(await loginAttemptAllowed({ scope: "driver", ip, email: emailLower }))) throw new Error("login-rate-limited");
 
         const driver = await prisma.driver.findUnique({ where: { email: emailLower } });
         if (!driver || !driver.isActive) {

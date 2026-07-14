@@ -126,7 +126,8 @@
     "resellerScopeError": "Цей вхід призначений лише для клієнтів {brandName}.",
     "thisPartner": "цей партнер",
     "signingUpUnder": "Ви реєструєтеся через {brand}",
-    "restaurantLogin": "Вхід для ресторану"
+    "restaurantLogin": "Вхід для ресторану",
+    "tooManyAttempts": "Забагато спроб. Зачекайте кілька хвилин, а потім спробуйте ще раз."
   },
   "ordering": {
     "viewCart": "Переглянути кошик",

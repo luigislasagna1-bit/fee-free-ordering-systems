@@ -126,7 +126,8 @@
     "resellerScopeError": "Ova prijava je namenjena samo klijentima usluge {brandName}.",
     "thisPartner": "ovaj partner",
     "signingUpUnder": "Registrujete se putem {brand}",
-    "restaurantLogin": "Пријава ресторана"
+    "restaurantLogin": "Пријава ресторана",
+    "tooManyAttempts": "Превише покушаја. Сачекајте неколико минута, па покушајте једном."
   },
   "ordering": {
     "viewCart": "Pogledaj korpu",

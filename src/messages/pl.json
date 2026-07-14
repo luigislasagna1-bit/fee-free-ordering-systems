@@ -126,7 +126,8 @@
     "resellerScopeError": "To logowanie jest przeznaczone wyłącznie dla klientów {brandName}.",
     "thisPartner": "ten partner",
     "signingUpUnder": "Rejestrujesz się przez {brand}",
-    "restaurantLogin": "Logowanie restauracji"
+    "restaurantLogin": "Logowanie restauracji",
+    "tooManyAttempts": "Zbyt wiele prób. Odczekaj kilka minut, a potem spróbuj raz."
   },
   "ordering": {
     "viewCart": "Zobacz koszyk",

@@ -25,7 +25,11 @@ function DriverLoginFormInner({ locale }: { locale: string }) {
         password: form.password,
         redirect: false,
       });
-      if (!result || result.error) throw new Error(tAuth("invalidCredentials"));
+      if (!result || result.error) {
+        // Distinct message when the login rate-limiter (not a bad password) blocked us.
+        if (result?.error === "login-rate-limited") throw new Error(tAuth("tooManyAttempts"));
+        throw new Error(tAuth("invalidCredentials"));
+      }
       // Hard navigation so the driver session cookie is read on the next server
       // render (soft-nav can race the cookie write on some mobile browsers).
       window.location.assign("/driver");
@@ -94,12 +98,17 @@ function DriverLoginFormInner({ locale }: { locale: string }) {
         {/* Restaurant owners use the SAME app to assign & track deliveries, but
             sign in with their existing dashboard (admin) login — routed through
             the admin login with a callback back into this app. */}
-        <Link
-          href="/login?callbackUrl=%2Fdriver"
-          className="mt-4 flex items-center justify-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition"
-        >
-          <Store className="w-4 h-4" /> {tApp("restaurantLoginCta")}
-        </Link>
+        {/* Restaurant owners land here by mistake and try their dashboard login
+            in the DRIVER box (which only checks driver accounts). Make their
+            door an obvious, separate button — not a faint link. */}
+        <div className="mt-5 pt-5 border-t border-gray-700/70">
+          <Link
+            href="/login?callbackUrl=%2Fdriver"
+            className="inline-flex items-center justify-center gap-2 w-full bg-gray-700/60 hover:bg-gray-700 border border-gray-600 text-white font-semibold py-3 rounded-xl transition"
+          >
+            <Store className="w-4 h-4" /> {tApp("restaurantLoginCta")}
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -126,7 +126,8 @@
     "resellerScopeError": "Această autentificare este doar pentru clienții {brandName}.",
     "thisPartner": "acest partener",
     "signingUpUnder": "Vă înregistrați prin {brand}",
-    "restaurantLogin": "Autentificare restaurant"
+    "restaurantLogin": "Autentificare restaurant",
+    "tooManyAttempts": "Prea multe încercări. Așteaptă câteva minute, apoi încearcă din nou o dată."
   },
   "ordering": {
     "viewCart": "Vezi coșul",

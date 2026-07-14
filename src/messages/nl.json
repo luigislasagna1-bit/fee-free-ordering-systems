@@ -126,7 +126,8 @@
     "resellerScopeError": "Deze aanmelding is alleen voor klanten van {brandName}.",
     "thisPartner": "deze partner",
     "signingUpUnder": "U registreert zich via {brand}",
-    "restaurantLogin": "Restaurant-login"
+    "restaurantLogin": "Restaurant-login",
+    "tooManyAttempts": "Te veel pogingen. Wacht een paar minuten en probeer het dan één keer."
   },
   "ordering": {
     "viewCart": "Winkelwagen bekijken",

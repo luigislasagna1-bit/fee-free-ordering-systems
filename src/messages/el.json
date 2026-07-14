@@ -126,7 +126,8 @@
     "resellerScopeError": "Αυτή η σύνδεση προορίζεται μόνο για πελάτες της {brandName}.",
     "thisPartner": "αυτόν τον συνεργάτη",
     "signingUpUnder": "Εγγράφεστε μέσω {brand}",
-    "restaurantLogin": "Σύνδεση εστιατορίου"
+    "restaurantLogin": "Σύνδεση εστιατορίου",
+    "tooManyAttempts": "Πάρα πολλές προσπάθειες. Περιμένετε λίγα λεπτά και δοκιμάστε ξανά μία φορά."
   },
   "ordering": {
     "viewCart": "Προβολή καλαθιού",

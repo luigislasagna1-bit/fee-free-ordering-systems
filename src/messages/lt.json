@@ -126,7 +126,8 @@
     "resellerScopeError": "Šis prisijungimas skirtas tik {brandName} klientams.",
     "thisPartner": "šis partneris",
     "signingUpUnder": "Registruojatės per {brand}",
-    "restaurantLogin": "Restorano prisijungimas"
+    "restaurantLogin": "Restorano prisijungimas",
+    "tooManyAttempts": "Per daug bandymų. Palaukite kelias minutes ir pabandykite dar kartą."
   },
   "ordering": {
     "viewCart": "Peržiūrėti krepšelį",

@@ -126,7 +126,8 @@
     "resellerScopeError": "Đăng nhập này chỉ dành cho khách hàng của {brandName}.",
     "thisPartner": "đối tác này",
     "signingUpUnder": "Bạn đang đăng ký qua {brand}",
-    "restaurantLogin": "Đăng nhập nhà hàng"
+    "restaurantLogin": "Đăng nhập nhà hàng",
+    "tooManyAttempts": "Quá nhiều lần thử. Vui lòng đợi vài phút, rồi thử lại một lần."
   },
   "ordering": {
     "viewCart": "Xem giỏ hàng",

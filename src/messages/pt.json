@@ -126,7 +126,8 @@
     "resellerScopeError": "Este login é apenas para clientes da {brandName}.",
     "thisPartner": "este parceiro",
     "signingUpUnder": "Você está se cadastrando por meio de {brand}",
-    "restaurantLogin": "Início de sessão do restaurante"
+    "restaurantLogin": "Início de sessão do restaurante",
+    "tooManyAttempts": "Demasiadas tentativas. Aguarde alguns minutos e tente novamente uma vez."
   },
   "ordering": {
     "viewCart": "Ver carrinho",

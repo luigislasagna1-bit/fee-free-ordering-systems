@@ -65,7 +65,9 @@ export const kitchenAuthOptions: NextAuthOptions = {
         // failure limiting + User lockout as the admin login; kitchen and
         // admin share the User table, so a lock covers both surfaces.
         const ip = ipFromHeaderBag(req?.headers as Record<string, string | undefined> | undefined);
-        if (!(await loginAttemptAllowed({ scope: "kitchen", ip, email: emailLower }))) return null;
+        // "login-rate-limited" == RATE_LIMITED_ERROR in auth.ts — thrown so the
+        // client shows "too many attempts" instead of "invalid password".
+        if (!(await loginAttemptAllowed({ scope: "kitchen", ip, email: emailLower }))) throw new Error("login-rate-limited");
 
         const user = await prisma.user.findUnique({
           // emailLower, NOT the raw credential — User.email is always stored

@@ -126,7 +126,8 @@
     "resellerScopeError": "تسجيل الدخول هذا مخصص لعملاء {brandName} فقط.",
     "thisPartner": "هذا الشريك",
     "signingUpUnder": "أنت تسجّل عبر {brand}",
-    "restaurantLogin": "تسجيل دخول المطعم"
+    "restaurantLogin": "تسجيل دخول المطعم",
+    "tooManyAttempts": "محاولات كثيرة جدًا. يرجى الانتظار بضع دقائق ثم المحاولة مرة أخرى."
   },
   "ordering": {
     "viewCart": "عرض السلة",

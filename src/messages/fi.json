@@ -126,7 +126,8 @@
     "resellerScopeError": "Tämä kirjautuminen on tarkoitettu vain {brandName}-asiakkaille.",
     "thisPartner": "tämä kumppani",
     "signingUpUnder": "Rekisteröidyt {brand}-kumppanin kautta",
-    "restaurantLogin": "Ravintolan kirjautuminen"
+    "restaurantLogin": "Ravintolan kirjautuminen",
+    "tooManyAttempts": "Liian monta yritystä. Odota muutama minuutti ja yritä sitten kerran."
   },
   "ordering": {
     "viewCart": "Näytä ostoskori",

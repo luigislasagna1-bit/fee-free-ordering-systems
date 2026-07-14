@@ -126,7 +126,8 @@
     "resellerScopeError": "Това вписване е само за клиенти на {brandName}.",
     "thisPartner": "този партньор",
     "signingUpUnder": "Регистрирате се чрез {brand}",
-    "restaurantLogin": "Вход за ресторант"
+    "restaurantLogin": "Вход за ресторант",
+    "tooManyAttempts": "Твърде много опити. Изчакайте няколко минути и опитайте отново веднъж."
   },
   "ordering": {
     "viewCart": "Виж количката",

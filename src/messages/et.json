@@ -126,7 +126,8 @@
     "resellerScopeError": "See sisselogimine on mõeldud ainult {brandName} klientidele.",
     "thisPartner": "see partner",
     "signingUpUnder": "Registreerute partneri {brand} kaudu",
-    "restaurantLogin": "Restorani sisselogimine"
+    "restaurantLogin": "Restorani sisselogimine",
+    "tooManyAttempts": "Liiga palju katseid. Oota paar minutit ja proovi siis üks kord."
   },
   "ordering": {
     "viewCart": "Vaata ostukorvi",

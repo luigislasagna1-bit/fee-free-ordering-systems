@@ -126,7 +126,8 @@
     "resellerScopeError": "כניסה זו מיועדת ללקוחות {brandName} בלבד.",
     "thisPartner": "שותף זה",
     "signingUpUnder": "אתה נרשם דרך {brand}",
-    "restaurantLogin": "כניסת מסעדה"
+    "restaurantLogin": "כניסת מסעדה",
+    "tooManyAttempts": "יותר מדי ניסיונות. המתן כמה דקות ואז נסה שוב פעם אחת."
   },
   "ordering": {
     "viewCart": "צפה בסל",

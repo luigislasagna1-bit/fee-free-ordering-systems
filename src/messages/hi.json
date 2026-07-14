@@ -126,7 +126,8 @@
     "resellerScopeError": "यह साइन-इन केवल {brandName} के ग्राहकों के लिए है।",
     "thisPartner": "यह पार्टनर",
     "signingUpUnder": "आप {brand} के माध्यम से साइन अप कर रहे हैं",
-    "restaurantLogin": "रेस्तरां लॉगिन"
+    "restaurantLogin": "रेस्तरां लॉगिन",
+    "tooManyAttempts": "बहुत अधिक प्रयास। कृपया कुछ मिनट प्रतीक्षा करें, फिर एक बार पुनः प्रयास करें।"
   },
   "ordering": {
     "viewCart": "कार्ट देखें",

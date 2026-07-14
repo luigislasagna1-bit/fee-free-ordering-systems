@@ -19,6 +19,11 @@ import {
  * string in two places.
  */
 export const RESELLER_SCOPE_ERROR = "reseller-scope-mismatch";
+/** Thrown (not null-returned) when the IP/email login rate-limiter blocks an
+ *  attempt BEFORE the password is checked, so the client can show "too many
+ *  attempts — wait a few minutes" instead of the misleading "invalid password"
+ *  (which makes people retry and stay blocked). Mirrored in the login forms. */
+export const RATE_LIMITED_ERROR = "login-rate-limited";
 
 /**
  * Given a request host, return the resellerProfileId if it matches an
@@ -149,7 +154,7 @@ export const authOptions: NextAuthOptions = {
           // limiting + DB lockout. Every refusal is the same generic null →
           // "invalid credentials", so nothing leaks about WHY.
           const ip = ipFromHeaderBag(req?.headers as Record<string, string | undefined> | undefined);
-          if (!(await loginAttemptAllowed({ scope: "admin", ip, email: emailLower }))) return null;
+          if (!(await loginAttemptAllowed({ scope: "admin", ip, email: emailLower }))) throw new Error(RATE_LIMITED_ERROR);
 
           const user = await prisma.user.findUnique({
             where: { email: emailLower },

@@ -126,7 +126,8 @@
     "resellerScopeError": "このサインインは {brandName} のお客様専用です。",
     "thisPartner": "このパートナー",
     "signingUpUnder": "{brand} を通じて登録しています",
-    "restaurantLogin": "レストランログイン"
+    "restaurantLogin": "レストランログイン",
+    "tooManyAttempts": "試行回数が多すぎます。数分待ってから、もう一度お試しください。"
   },
   "ordering": {
     "viewCart": "カートを見る",

@@ -126,7 +126,8 @@
     "resellerScopeError": "การลงชื่อเข้าใช้นี้สำหรับลูกค้าของ {brandName} เท่านั้น",
     "thisPartner": "พาร์ทเนอร์รายนี้",
     "signingUpUnder": "คุณกำลังสมัครผ่าน {brand}",
-    "restaurantLogin": "เข้าสู่ระบบร้านอาหาร"
+    "restaurantLogin": "เข้าสู่ระบบร้านอาหาร",
+    "tooManyAttempts": "พยายามหลายครั้งเกินไป โปรดรอสักครู่ แล้วลองอีกครั้ง"
   },
   "ordering": {
     "viewCart": "ดูตะกร้า",

@@ -126,7 +126,8 @@
     "resellerScopeError": "Este inicio de sesión es solo para clientes de {brandName}.",
     "thisPartner": "este socio",
     "signingUpUnder": "Te estás registrando con {brand}",
-    "restaurantLogin": "Acceso del restaurante"
+    "restaurantLogin": "Acceso del restaurante",
+    "tooManyAttempts": "Demasiados intentos. Espera unos minutos y vuelve a intentarlo una vez."
   },
   "ordering": {
     "viewCart": "Ver carrito",

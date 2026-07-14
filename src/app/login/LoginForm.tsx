@@ -13,6 +13,10 @@ import type { ResellerBranding } from "@/lib/reseller-branding";
 // here as a string literal so the client doesn't import server-only
 // modules. If you change one, change both.
 const RESELLER_SCOPE_ERROR = "reseller-scope-mismatch";
+// Mirrors RATE_LIMITED_ERROR in src/lib/auth.ts — surfaced as a distinct,
+// non-alarming "too many attempts" message so a throttled user doesn't think
+// their password is wrong and keep retrying (which keeps them blocked).
+const RATE_LIMITED_ERROR = "login-rate-limited";
 
 function LoginFormInner({
   locale,
@@ -103,6 +107,7 @@ function LoginFormInner({
             branding?.companyName ?? branding?.title ?? tAuth("thisPartner");
           throw new Error(tAuth("resellerScopeError", { brandName }));
         }
+        if (result?.error === RATE_LIMITED_ERROR) throw new Error(tAuth("tooManyAttempts"));
         throw new Error(tAuth("invalidCredentials"));
       }
       toast.success(tToasts("saved"));
