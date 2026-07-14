@@ -128,6 +128,33 @@ export async function handleInvoiceEvent(event: Stripe.Event) {
     return;
   }
 
+  // FeeFreeDelivery WEEKLY settlement invoices — same shape as marketplace but a
+  // separate metadata.type + model. Flip the DeliverySettlement row and
+  // short-circuit before the subscription-renewal logic (a one-off delivery
+  // charge must never extend currentPeriodEnd).
+  if (meta.type === "delivery_settlement" && meta.settlementId) {
+    if (event.type === "invoice.paid") {
+      try {
+        await prisma.deliverySettlement.update({
+          where: { id: meta.settlementId },
+          data: { status: "paid" },
+        });
+      } catch (e) {
+        console.error(`[stripe] delivery_settlement paid: failed to update row ${meta.settlementId}`, e);
+      }
+    } else if (event.type === "invoice.payment_failed") {
+      try {
+        await prisma.deliverySettlement.update({
+          where: { id: meta.settlementId },
+          data: { status: "failed", failureReason: "Stripe charge failed" },
+        });
+      } catch (e) {
+        console.error(`[stripe] delivery_settlement failed: failed to update row ${meta.settlementId}`, e);
+      }
+    }
+    return;
+  }
+
   if (event.type === "invoice.paid") {
     if (isPlatformInvoice) {
       // Platform plan successfully charged — extend the active window. Scoped

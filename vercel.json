@@ -22,6 +22,10 @@
       "schedule": "5 0 1 * *"
     },
     {
+      "path": "/api/cron/delivery-settle",
+      "schedule": "10 0 * * 1"
+    },
+    {
       "path": "/api/cron/auto-reject-stale-orders",
       "schedule": "*/5 * * * *"
     },
