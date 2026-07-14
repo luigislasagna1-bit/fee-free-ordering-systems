@@ -4642,7 +4642,24 @@
       "toastSaved": "Išsaugota",
       "toastFailedToSave": "Nepavyko išsaugoti. Bandykite dar kartą.",
       "toastAddonRequired": "Užsiprenumeruokite Driver Pool, kad įjungtumėte Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery pirmiausia reikia internetinio mokėjimo būdo — jūsų vairuotojai nerenka mokesčio prie durų, todėl pristatymo užsakymai turi būti apmokėti internetu. Įjunkite mokėjimus kortele arba prijunkite PayPal, tada jį įjunkite."
+      "toastOnlinePaymentRequired": "Fee Free Delivery pirmiausia reikia internetinio mokėjimo būdo — jūsų vairuotojai nerenka mokesčio prie durų, todėl pristatymo užsakymai turi būti apmokėti internetu. Įjunkite mokėjimus kortele arba prijunkite PayPal, tada jį įjunkite.",
+      "opsTitle": "Pristatymai ir atsiskaitymai",
+      "amountOwed": "Mokėtina suma",
+      "deliveriesThisWeek": "Pristatymai šią savaitę",
+      "nextCharge": "Kitas mokestis",
+      "heldTitle": "Laukiama išsiuntimo",
+      "sendToDriver": "Siųsti kurjeriui",
+      "sending": "Siunčiama…",
+      "sent": "Išsiųsta kurjeriui",
+      "sendFailed": "Nepavyko išsiųsti. Bandykite dar kartą.",
+      "activeDeliveries": "Aktyvūs pristatymai",
+      "noActiveDeliveries": "Vykdomų pristatymų nėra.",
+      "unassigned": "Laukiama kurjerio",
+      "st_queued": "Eilėje",
+      "st_assigned": "Priskirta",
+      "st_accepted": "Priimta",
+      "st_started": "Vyksta į parduotuvę",
+      "st_enroute": "Pakeliui"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Pridėti vieną {name}",
       "removeOneAria": "Pašalinti vieną {name}",
       "stepDoneHint": "Šis žingsnis baigtas — palieskite Toliau, kad tęstumėte."
+    },
+    "tracking": {
+      "onTheWayTitle": "Jūsų pristatymas jau pakeliui",
+      "headingToStoreTitle": "Kurjeris atsiima jūsų užsakymą",
+      "live": "Tiesiogiai",
+      "onTheWayNamed": "{name} pakeliui su jūsų užsakymu.",
+      "headingToStoreNamed": "{name} vyksta į restoraną atsiimti jūsų užsakymo.",
+      "onTheWayGeneric": "Jūsų kurjeris pakeliui su jūsų užsakymu.",
+      "headingToStoreGeneric": "Jūsų kurjeris vyksta į restoraną atsiimti jūsų užsakymo.",
+      "etaAway": "Maždaug už {minutes} min",
+      "mapTitle": "Kurjerio vieta tiesiogiai"
     }
   },
   "partnerPeriod": {

@@ -4642,7 +4642,24 @@
       "toastSaved": "Enregistré",
       "toastFailedToSave": "Échec de l'enregistrement. Veuillez réessayer.",
       "toastAddonRequired": "Abonnez-vous à Driver Pool pour activer Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery nécessite d'abord un moyen de paiement en ligne — vos livreurs n'encaissent pas à la porte, les commandes à livrer doivent donc être payées en ligne. Activez les paiements par carte ou connectez PayPal, puis activez-le."
+      "toastOnlinePaymentRequired": "Fee Free Delivery nécessite d'abord un moyen de paiement en ligne — vos livreurs n'encaissent pas à la porte, les commandes à livrer doivent donc être payées en ligne. Activez les paiements par carte ou connectez PayPal, puis activez-le.",
+      "opsTitle": "Livraisons et facturation",
+      "amountOwed": "Montant dû",
+      "deliveriesThisWeek": "Livraisons cette semaine",
+      "nextCharge": "Prochain prélèvement",
+      "heldTitle": "En attente d'envoi",
+      "sendToDriver": "Envoyer à un livreur",
+      "sending": "Envoi…",
+      "sent": "Envoyé à un livreur",
+      "sendFailed": "Échec de l'envoi. Veuillez réessayer.",
+      "activeDeliveries": "Livraisons en cours",
+      "noActiveDeliveries": "Aucune livraison en cours.",
+      "unassigned": "En attente d'un livreur",
+      "st_queued": "En file",
+      "st_assigned": "Attribuée",
+      "st_accepted": "Acceptée",
+      "st_started": "En route vers le resto",
+      "st_enroute": "En route"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Ajouter un(e) {name}",
       "removeOneAria": "Retirer un(e) {name}",
       "stepDoneHint": "Cette étape est terminée — appuyez sur Suivant pour continuer."
+    },
+    "tracking": {
+      "onTheWayTitle": "Votre livraison est en route",
+      "headingToStoreTitle": "Un livreur récupère votre commande",
+      "live": "En direct",
+      "onTheWayNamed": "{name} est en route avec votre commande.",
+      "headingToStoreNamed": "{name} se dirige vers le restaurant pour récupérer votre commande.",
+      "onTheWayGeneric": "Votre livreur est en route avec votre commande.",
+      "headingToStoreGeneric": "Votre livreur se dirige vers le restaurant pour récupérer votre commande.",
+      "etaAway": "À environ {minutes} min",
+      "mapTitle": "Position du livreur en direct"
     }
   },
   "partnerPeriod": {

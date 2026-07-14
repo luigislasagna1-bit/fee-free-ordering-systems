@@ -4642,7 +4642,24 @@
       "toastSaved": "Kaydedildi",
       "toastFailedToSave": "Kaydedilemedi. Lütfen tekrar deneyin.",
       "toastAddonRequired": "Fee Free Delivery'yi açmak için Driver Pool'a abone olun.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery önce çevrimiçi bir ödeme yöntemi gerektirir — sürücüleriniz kapıda tahsilat yapmaz, bu nedenle teslimat siparişleri çevrimiçi ödenmelidir. Kart ödemelerini etkinleştirin veya PayPal'ı bağlayın, ardından açın."
+      "toastOnlinePaymentRequired": "Fee Free Delivery önce çevrimiçi bir ödeme yöntemi gerektirir — sürücüleriniz kapıda tahsilat yapmaz, bu nedenle teslimat siparişleri çevrimiçi ödenmelidir. Kart ödemelerini etkinleştirin veya PayPal'ı bağlayın, ardından açın.",
+      "opsTitle": "Teslimatlar ve faturalandırma",
+      "amountOwed": "Borç tutarı",
+      "deliveriesThisWeek": "Bu haftaki teslimatlar",
+      "nextCharge": "Sonraki tahsilat",
+      "heldTitle": "Gönderilmeyi bekliyor",
+      "sendToDriver": "Kuryeye gönder",
+      "sending": "Gönderiliyor…",
+      "sent": "Bir kuryeye gönderildi",
+      "sendFailed": "Gönderilemedi. Lütfen tekrar deneyin.",
+      "activeDeliveries": "Aktif teslimatlar",
+      "noActiveDeliveries": "Devam eden teslimat yok.",
+      "unassigned": "Kurye bekleniyor",
+      "st_queued": "Sırada",
+      "st_assigned": "Atandı",
+      "st_accepted": "Kabul edildi",
+      "st_started": "Mağazaya gidiyor",
+      "st_enroute": "Yolda"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Bir {name} ekle",
       "removeOneAria": "Bir {name} çıkar",
       "stepDoneHint": "Bu adım tamamlandı — devam etmek için İleri'ye dokunun."
+    },
+    "tracking": {
+      "onTheWayTitle": "Siparişiniz yolda",
+      "headingToStoreTitle": "Bir kurye siparişinizi alıyor",
+      "live": "Canlı",
+      "onTheWayNamed": "{name} siparişinizle birlikte yolda.",
+      "headingToStoreNamed": "{name} siparişinizi almak için restorana gidiyor.",
+      "onTheWayGeneric": "Kuryeniz siparişinizle birlikte yolda.",
+      "headingToStoreGeneric": "Kuryeniz siparişinizi almak için restorana gidiyor.",
+      "etaAway": "Yaklaşık {minutes} dk uzakta",
+      "mapTitle": "Kuryenin canlı konumu"
     }
   },
   "partnerPeriod": {

@@ -4642,7 +4642,24 @@
       "toastSaved": "Sparat",
       "toastFailedToSave": "Det gick inte att spara. Försök igen.",
       "toastAddonRequired": "Prenumerera på Driver Pool för att aktivera Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery behöver först en betalningsmetod online – dina förare tar inte betalt vid dörren, så leveransbeställningar måste betalas online. Aktivera kortbetalningar eller anslut PayPal och slå sedan på det."
+      "toastOnlinePaymentRequired": "Fee Free Delivery behöver först en betalningsmetod online – dina förare tar inte betalt vid dörren, så leveransbeställningar måste betalas online. Aktivera kortbetalningar eller anslut PayPal och slå sedan på det.",
+      "opsTitle": "Leveranser & fakturering",
+      "amountOwed": "Utestående belopp",
+      "deliveriesThisWeek": "Leveranser denna vecka",
+      "nextCharge": "Nästa debitering",
+      "heldTitle": "Väntar på att skickas",
+      "sendToDriver": "Skicka till förare",
+      "sending": "Skickar…",
+      "sent": "Skickad till förare",
+      "sendFailed": "Kunde inte skicka. Försök igen.",
+      "activeDeliveries": "Aktiva leveranser",
+      "noActiveDeliveries": "Inga pågående leveranser.",
+      "unassigned": "Väntar på förare",
+      "st_queued": "I kö",
+      "st_assigned": "Tilldelad",
+      "st_accepted": "Accepterad",
+      "st_started": "På väg till butik",
+      "st_enroute": "På väg"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Lägg till en {name}",
       "removeOneAria": "Ta bort en {name}",
       "stepDoneHint": "Det här steget är klart — tryck på Nästa för att fortsätta."
+    },
+    "tracking": {
+      "onTheWayTitle": "Din leverans är på väg",
+      "headingToStoreTitle": "En förare hämtar din beställning",
+      "live": "Live",
+      "onTheWayNamed": "{name} är på väg med din beställning.",
+      "headingToStoreNamed": "{name} är på väg till restaurangen för att hämta din beställning.",
+      "onTheWayGeneric": "Din förare är på väg med din beställning.",
+      "headingToStoreGeneric": "Din förare är på väg till restaurangen för att hämta din beställning.",
+      "etaAway": "Cirka {minutes} min bort",
+      "mapTitle": "Förarens liveposition"
     }
   },
   "partnerPeriod": {

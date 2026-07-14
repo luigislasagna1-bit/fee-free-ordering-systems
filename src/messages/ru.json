@@ -4642,7 +4642,24 @@
       "toastSaved": "Сохранено",
       "toastFailedToSave": "Не удалось сохранить. Пожалуйста, попробуйте снова.",
       "toastAddonRequired": "Оформите подписку на Driver Pool, чтобы включить Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Для Fee Free Delivery сначала нужен способ онлайн-оплаты — ваши курьеры не принимают оплату у двери, поэтому заказы на доставку должны оплачиваться онлайн. Включите оплату картой или подключите PayPal, затем включите функцию."
+      "toastOnlinePaymentRequired": "Для Fee Free Delivery сначала нужен способ онлайн-оплаты — ваши курьеры не принимают оплату у двери, поэтому заказы на доставку должны оплачиваться онлайн. Включите оплату картой или подключите PayPal, затем включите функцию.",
+      "opsTitle": "Доставки и оплата",
+      "amountOwed": "Сумма к оплате",
+      "deliveriesThisWeek": "Доставки за неделю",
+      "nextCharge": "Следующее списание",
+      "heldTitle": "Ожидает отправки",
+      "sendToDriver": "Отправить курьеру",
+      "sending": "Отправка…",
+      "sent": "Отправлено курьеру",
+      "sendFailed": "Не удалось отправить. Повторите попытку.",
+      "activeDeliveries": "Активные доставки",
+      "noActiveDeliveries": "Нет доставок в процессе.",
+      "unassigned": "Ожидание курьера",
+      "st_queued": "В очереди",
+      "st_assigned": "Назначен",
+      "st_accepted": "Принят",
+      "st_started": "Едет в магазин",
+      "st_enroute": "В пути"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Добавить один {name}",
       "removeOneAria": "Убрать один {name}",
       "stepDoneHint": "Этот шаг завершён — нажмите «Далее», чтобы продолжить."
+    },
+    "tracking": {
+      "onTheWayTitle": "Ваш заказ уже в пути",
+      "headingToStoreTitle": "Курьер забирает ваш заказ",
+      "live": "В реальном времени",
+      "onTheWayNamed": "{name} везёт ваш заказ.",
+      "headingToStoreNamed": "{name} едет в ресторан, чтобы забрать ваш заказ.",
+      "onTheWayGeneric": "Ваш курьер везёт ваш заказ.",
+      "headingToStoreGeneric": "Ваш курьер едет в ресторан, чтобы забрать ваш заказ.",
+      "etaAway": "Примерно {minutes} мин в пути",
+      "mapTitle": "Местоположение курьера онлайн"
     }
   },
   "partnerPeriod": {

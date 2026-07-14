@@ -4642,7 +4642,24 @@
       "toastSaved": "Đã lưu",
       "toastFailedToSave": "Không thể lưu. Vui lòng thử lại.",
       "toastAddonRequired": "Đăng ký Driver Pool để bật Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery cần một phương thức thanh toán trực tuyến trước — tài xế của bạn không thu tiền tại cửa, nên đơn giao hàng phải được thanh toán trực tuyến. Bật thanh toán bằng thẻ hoặc kết nối PayPal, rồi bật lên."
+      "toastOnlinePaymentRequired": "Fee Free Delivery cần một phương thức thanh toán trực tuyến trước — tài xế của bạn không thu tiền tại cửa, nên đơn giao hàng phải được thanh toán trực tuyến. Bật thanh toán bằng thẻ hoặc kết nối PayPal, rồi bật lên.",
+      "opsTitle": "Giao hàng & thanh toán",
+      "amountOwed": "Số tiền còn nợ",
+      "deliveriesThisWeek": "Giao hàng tuần này",
+      "nextCharge": "Lần thu phí tiếp theo",
+      "heldTitle": "Đang chờ gửi",
+      "sendToDriver": "Gửi cho tài xế",
+      "sending": "Đang gửi…",
+      "sent": "Đã gửi cho tài xế",
+      "sendFailed": "Không gửi được. Vui lòng thử lại.",
+      "activeDeliveries": "Đơn đang giao",
+      "noActiveDeliveries": "Không có đơn nào đang giao.",
+      "unassigned": "Đang chờ tài xế",
+      "st_queued": "Trong hàng đợi",
+      "st_assigned": "Đã phân công",
+      "st_accepted": "Đã nhận",
+      "st_started": "Đang đến cửa hàng",
+      "st_enroute": "Đang trên đường"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Thêm một {name}",
       "removeOneAria": "Bớt một {name}",
       "stepDoneHint": "Bước này đã xong — chạm Tiếp theo để tiếp tục."
+    },
+    "tracking": {
+      "onTheWayTitle": "Đơn hàng của bạn đang trên đường giao",
+      "headingToStoreTitle": "Tài xế đang đến lấy đơn hàng của bạn",
+      "live": "Trực tiếp",
+      "onTheWayNamed": "{name} đang trên đường giao đơn hàng của bạn.",
+      "headingToStoreNamed": "{name} đang đến nhà hàng để lấy đơn hàng của bạn.",
+      "onTheWayGeneric": "Tài xế đang trên đường giao đơn hàng của bạn.",
+      "headingToStoreGeneric": "Tài xế đang đến nhà hàng để lấy đơn hàng của bạn.",
+      "etaAway": "Còn khoảng {minutes} phút nữa",
+      "mapTitle": "Vị trí tài xế trực tiếp"
     }
   },
   "partnerPeriod": {

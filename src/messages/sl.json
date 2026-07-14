@@ -4642,7 +4642,24 @@
       "toastSaved": "Shranjeno",
       "toastFailedToSave": "Shranjevanje ni uspelo. Poskusite znova.",
       "toastAddonRequired": "Naročite se na Driver Pool, da vklopite Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery najprej potrebuje spletni način plačila — vaši vozniki ne pobirajo plačila pri vratih, zato morajo biti naročila z dostavo plačana prek spleta. Omogočite plačila s kartico ali povežite PayPal, nato jo vklopite."
+      "toastOnlinePaymentRequired": "Fee Free Delivery najprej potrebuje spletni način plačila — vaši vozniki ne pobirajo plačila pri vratih, zato morajo biti naročila z dostavo plačana prek spleta. Omogočite plačila s kartico ali povežite PayPal, nato jo vklopite.",
+      "opsTitle": "Dostave in obračun",
+      "amountOwed": "Dolgovani znesek",
+      "deliveriesThisWeek": "Dostave ta teden",
+      "nextCharge": "Naslednja bremenitev",
+      "heldTitle": "Čaka na pošiljanje",
+      "sendToDriver": "Pošlji dostavljavcu",
+      "sending": "Pošiljanje…",
+      "sent": "Poslano dostavljavcu",
+      "sendFailed": "Pošiljanje ni uspelo. Poskusite znova.",
+      "activeDeliveries": "Aktivne dostave",
+      "noActiveDeliveries": "Ni dostav v teku.",
+      "unassigned": "Čakanje na dostavljavca",
+      "st_queued": "V čakalni vrsti",
+      "st_assigned": "Dodeljeno",
+      "st_accepted": "Sprejeto",
+      "st_started": "Na poti v restavracijo",
+      "st_enroute": "Na poti"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Dodaj en {name}",
       "removeOneAria": "Odstrani en {name}",
       "stepDoneHint": "Ta korak je končan — tapnite Naprej za nadaljevanje."
+    },
+    "tracking": {
+      "onTheWayTitle": "Vaša dostava je na poti",
+      "headingToStoreTitle": "Dostavljavec prevzema vaše naročilo",
+      "live": "V živo",
+      "onTheWayNamed": "{name} je na poti z vašim naročilom.",
+      "headingToStoreNamed": "{name} se odpravlja v restavracijo, da prevzame vaše naročilo.",
+      "onTheWayGeneric": "Vaš dostavljavec je na poti z vašim naročilom.",
+      "headingToStoreGeneric": "Vaš dostavljavec se odpravlja v restavracijo, da prevzame vaše naročilo.",
+      "etaAway": "Približno {minutes} min oddaljen",
+      "mapTitle": "Lokacija dostavljavca v živo"
     }
   },
   "partnerPeriod": {

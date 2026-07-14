@@ -4642,7 +4642,24 @@
       "toastSaved": "تم الحفظ",
       "toastFailedToSave": "تعذّر الحفظ. يُرجى المحاولة مرة أخرى.",
       "toastAddonRequired": "اشترك في Driver Pool لتفعيل Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "تحتاج خدمة Fee Free Delivery إلى طريقة دفع عبر الإنترنت أولًا — فسائقوك لا يحصّلون المبلغ عند الباب، لذا يجب دفع طلبات التوصيل عبر الإنترنت. فعّل الدفع بالبطاقة أو اربط PayPal، ثم قم بتفعيلها."
+      "toastOnlinePaymentRequired": "تحتاج خدمة Fee Free Delivery إلى طريقة دفع عبر الإنترنت أولًا — فسائقوك لا يحصّلون المبلغ عند الباب، لذا يجب دفع طلبات التوصيل عبر الإنترنت. فعّل الدفع بالبطاقة أو اربط PayPal، ثم قم بتفعيلها.",
+      "opsTitle": "التوصيل والفوترة",
+      "amountOwed": "المبلغ المستحق",
+      "deliveriesThisWeek": "عمليات التوصيل هذا الأسبوع",
+      "nextCharge": "الرسوم التالية",
+      "heldTitle": "بانتظار الإرسال",
+      "sendToDriver": "إرسال إلى سائق",
+      "sending": "جارٍ الإرسال…",
+      "sent": "تم الإرسال إلى سائق",
+      "sendFailed": "تعذّر الإرسال. يرجى المحاولة مرة أخرى.",
+      "activeDeliveries": "عمليات التوصيل النشطة",
+      "noActiveDeliveries": "لا توجد عمليات توصيل قيد التنفيذ.",
+      "unassigned": "بانتظار سائق",
+      "st_queued": "في قائمة الانتظار",
+      "st_assigned": "تم التعيين",
+      "st_accepted": "تم القبول",
+      "st_started": "في الطريق إلى المتجر",
+      "st_enroute": "في الطريق"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "أضف {name} واحدًا",
       "removeOneAria": "أزل {name} واحدًا",
       "stepDoneHint": "اكتملت هذه الخطوة — اضغط «التالي» للمتابعة."
+    },
+    "tracking": {
+      "onTheWayTitle": "طلبك في الطريق إليك",
+      "headingToStoreTitle": "أحد السائقين في طريقه لاستلام طلبك",
+      "live": "مباشر",
+      "onTheWayNamed": "{name} في الطريق إليك مع طلبك.",
+      "headingToStoreNamed": "{name} في طريقه إلى المطعم لاستلام طلبك.",
+      "onTheWayGeneric": "سائقك في الطريق إليك مع طلبك.",
+      "headingToStoreGeneric": "سائقك في طريقه إلى المطعم لاستلام طلبك.",
+      "etaAway": "يبعد حوالي {minutes} دقيقة",
+      "mapTitle": "موقع السائق المباشر"
     }
   },
   "partnerPeriod": {

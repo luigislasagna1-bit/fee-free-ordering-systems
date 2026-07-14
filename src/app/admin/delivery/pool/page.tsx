@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { DriverPoolClient } from "./DriverPoolClient";
 import { FeeFreeDeliverySection } from "./FeeFreeDeliverySection";
+import { FeeFreeDeliveryOps } from "./FeeFreeDeliveryOps";
 
 /**
  * /admin/delivery/pool — delivery dispatch configuration.
@@ -65,6 +66,7 @@ export default async function DriverPoolConfigPage() {
         initial={{ enabled: feefree.enabled, autoSend: feefree.autoSend }}
         entitled={entitled}
       />
+      {feefree.enabled && <FeeFreeDeliveryOps restaurantId={user.restaurantId} />}
       <DriverPoolClient
       initial={{
         enabled: config.enabled,

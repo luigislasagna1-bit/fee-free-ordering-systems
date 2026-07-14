@@ -4642,7 +4642,24 @@
       "toastSaved": "Salvat",
       "toastFailedToSave": "Nu s-a putut salva. Te rugăm să încerci din nou.",
       "toastAddonRequired": "Abonează-te la Driver Pool pentru a activa Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery necesită mai întâi o metodă de plată online — șoferii tăi nu încasează la ușă, așa că comenzile de livrare trebuie plătite online. Activează plățile cu cardul sau conectează PayPal, apoi activează-l."
+      "toastOnlinePaymentRequired": "Fee Free Delivery necesită mai întâi o metodă de plată online — șoferii tăi nu încasează la ușă, așa că comenzile de livrare trebuie plătite online. Activează plățile cu cardul sau conectează PayPal, apoi activează-l.",
+      "opsTitle": "Livrări și facturare",
+      "amountOwed": "Sumă datorată",
+      "deliveriesThisWeek": "Livrări săptămâna aceasta",
+      "nextCharge": "Următoarea plată",
+      "heldTitle": "În așteptare pentru trimitere",
+      "sendToDriver": "Trimite către curier",
+      "sending": "Se trimite…",
+      "sent": "Trimis către un curier",
+      "sendFailed": "Trimiterea a eșuat. Încearcă din nou.",
+      "activeDeliveries": "Livrări active",
+      "noActiveDeliveries": "Nicio livrare în desfășurare.",
+      "unassigned": "Se așteaptă un curier",
+      "st_queued": "În coadă",
+      "st_assigned": "Alocat",
+      "st_accepted": "Acceptat",
+      "st_started": "Se îndreaptă spre magazin",
+      "st_enroute": "Pe drum"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Adaugă un {name}",
       "removeOneAria": "Elimină un {name}",
       "stepDoneHint": "Acest pas este gata — apăsați Înainte pentru a continua."
+    },
+    "tracking": {
+      "onTheWayTitle": "Comanda ta este pe drum",
+      "headingToStoreTitle": "Un curier ridică comanda ta",
+      "live": "În direct",
+      "onTheWayNamed": "{name} este pe drum cu comanda ta.",
+      "headingToStoreNamed": "{name} se îndreaptă spre restaurant pentru a ridica comanda ta.",
+      "onTheWayGeneric": "Curierul tău este pe drum cu comanda ta.",
+      "headingToStoreGeneric": "Curierul tău se îndreaptă spre restaurant pentru a ridica comanda ta.",
+      "etaAway": "La aproximativ {minutes} min distanță",
+      "mapTitle": "Locația curierului în timp real"
     }
   },
   "partnerPeriod": {

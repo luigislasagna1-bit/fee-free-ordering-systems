@@ -4642,7 +4642,24 @@
       "toastSaved": "Spremljeno",
       "toastFailedToSave": "Spremanje nije uspjelo. Pokušajte ponovno.",
       "toastAddonRequired": "Pretplatite se na Driver Pool kako biste uključili Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery prvo treba internetski način plaćanja — vaši vozači ne naplaćuju na vratima, pa se narudžbe za dostavu moraju platiti online. Omogućite plaćanje karticom ili povežite PayPal, a zatim ga uključite."
+      "toastOnlinePaymentRequired": "Fee Free Delivery prvo treba internetski način plaćanja — vaši vozači ne naplaćuju na vratima, pa se narudžbe za dostavu moraju platiti online. Omogućite plaćanje karticom ili povežite PayPal, a zatim ga uključite.",
+      "opsTitle": "Dostave i naplata",
+      "amountOwed": "Dugovani iznos",
+      "deliveriesThisWeek": "Dostave ovaj tjedan",
+      "nextCharge": "Sljedeća naplata",
+      "heldTitle": "Čeka na slanje",
+      "sendToDriver": "Pošalji vozaču",
+      "sending": "Slanje…",
+      "sent": "Poslano vozaču",
+      "sendFailed": "Slanje nije uspjelo. Pokušajte ponovno.",
+      "activeDeliveries": "Aktivne dostave",
+      "noActiveDeliveries": "Nema dostava u tijeku.",
+      "unassigned": "Čeka vozača",
+      "st_queued": "U redu čekanja",
+      "st_assigned": "Dodijeljeno",
+      "st_accepted": "Prihvaćeno",
+      "st_started": "Ide u trgovinu",
+      "st_enroute": "Na putu"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Dodaj jedan {name}",
       "removeOneAria": "Ukloni jedan {name}",
       "stepDoneHint": "Ovaj je korak gotov — dodirnite Dalje za nastavak."
+    },
+    "tracking": {
+      "onTheWayTitle": "Vaša dostava je na putu",
+      "headingToStoreTitle": "Vozač preuzima vašu narudžbu",
+      "live": "Uživo",
+      "onTheWayNamed": "{name} je na putu s vašom narudžbom.",
+      "headingToStoreNamed": "{name} ide u restoran po vašu narudžbu.",
+      "onTheWayGeneric": "Vaš vozač je na putu s vašom narudžbom.",
+      "headingToStoreGeneric": "Vaš vozač ide u restoran po vašu narudžbu.",
+      "etaAway": "Otprilike {minutes} min udaljenosti",
+      "mapTitle": "Lokacija vozača uživo"
     }
   },
   "partnerPeriod": {

@@ -4642,7 +4642,24 @@
       "toastSaved": "Uložené",
       "toastFailedToSave": "Nepodarilo sa uložiť. Skúste to prosím znova.",
       "toastAddonRequired": "Predplaťte si Driver Pool, aby ste zapli Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery najprv vyžaduje online platobnú metódu — vaši vodiči nevyberajú platbu pri dverách, takže objednávky s doručením musia byť zaplatené online. Zapnite platby kartou alebo pripojte PayPal a potom ju zapnite."
+      "toastOnlinePaymentRequired": "Fee Free Delivery najprv vyžaduje online platobnú metódu — vaši vodiči nevyberajú platbu pri dverách, takže objednávky s doručením musia byť zaplatené online. Zapnite platby kartou alebo pripojte PayPal a potom ju zapnite.",
+      "opsTitle": "Doručenia a fakturácia",
+      "amountOwed": "Dlžná suma",
+      "deliveriesThisWeek": "Doručenia tento týždeň",
+      "nextCharge": "Ďalšia platba",
+      "heldTitle": "Čaká na odoslanie",
+      "sendToDriver": "Odoslať vodičovi",
+      "sending": "Odosiela sa…",
+      "sent": "Odoslané vodičovi",
+      "sendFailed": "Odoslanie sa nepodarilo. Skúste to znova.",
+      "activeDeliveries": "Aktívne doručenia",
+      "noActiveDeliveries": "Žiadne prebiehajúce doručenia.",
+      "unassigned": "Čaká sa na vodiča",
+      "st_queued": "V poradí",
+      "st_assigned": "Priradené",
+      "st_accepted": "Prijaté",
+      "st_started": "Mieri do reštaurácie",
+      "st_enroute": "Na ceste"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Pridať jeden {name}",
       "removeOneAria": "Odobrať jeden {name}",
       "stepDoneHint": "Tento krok je hotový — pokračujte ťuknutím na Ďalej."
+    },
+    "tracking": {
+      "onTheWayTitle": "Vaše doručenie je na ceste",
+      "headingToStoreTitle": "Vodič vyzdvihuje vašu objednávku",
+      "live": "Naživo",
+      "onTheWayNamed": "{name} je na ceste s vašou objednávkou.",
+      "headingToStoreNamed": "{name} mieri do reštaurácie, aby vyzdvihol vašu objednávku.",
+      "onTheWayGeneric": "Váš vodič je na ceste s vašou objednávkou.",
+      "headingToStoreGeneric": "Váš vodič mieri do reštaurácie, aby vyzdvihol vašu objednávku.",
+      "etaAway": "Približne {minutes} min cesty",
+      "mapTitle": "Poloha vodiča v reálnom čase"
     }
   },
   "partnerPeriod": {

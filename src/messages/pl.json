@@ -4642,7 +4642,24 @@
       "toastSaved": "Zapisano",
       "toastFailedToSave": "Nie udało się zapisać. Spróbuj ponownie.",
       "toastAddonRequired": "Wykup subskrypcję Driver Pool, aby włączyć Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery wymaga najpierw metody płatności online — Twoi kierowcy nie pobierają opłat przy drzwiach, więc zamówienia z dostawą muszą być opłacone online. Włącz płatności kartą lub połącz PayPal, a następnie ją włącz."
+      "toastOnlinePaymentRequired": "Fee Free Delivery wymaga najpierw metody płatności online — Twoi kierowcy nie pobierają opłat przy drzwiach, więc zamówienia z dostawą muszą być opłacone online. Włącz płatności kartą lub połącz PayPal, a następnie ją włącz.",
+      "opsTitle": "Dostawy i rozliczenia",
+      "amountOwed": "Kwota do zapłaty",
+      "deliveriesThisWeek": "Dostawy w tym tygodniu",
+      "nextCharge": "Następna opłata",
+      "heldTitle": "Oczekuje na wysłanie",
+      "sendToDriver": "Wyślij do kuriera",
+      "sending": "Wysyłanie…",
+      "sent": "Wysłano do kuriera",
+      "sendFailed": "Nie udało się wysłać. Spróbuj ponownie.",
+      "activeDeliveries": "Aktywne dostawy",
+      "noActiveDeliveries": "Brak dostaw w toku.",
+      "unassigned": "Oczekiwanie na kuriera",
+      "st_queued": "W kolejce",
+      "st_assigned": "Przypisano",
+      "st_accepted": "Zaakceptowano",
+      "st_started": "Jedzie do lokalu",
+      "st_enroute": "W drodze"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Dodaj jeden {name}",
       "removeOneAria": "Usuń jeden {name}",
       "stepDoneHint": "Ten krok jest gotowy — dotknij Dalej, aby kontynuować."
+    },
+    "tracking": {
+      "onTheWayTitle": "Twoja dostawa jest w drodze",
+      "headingToStoreTitle": "Kurier odbiera Twoje zamówienie",
+      "live": "Na żywo",
+      "onTheWayNamed": "{name} jest w drodze z Twoim zamówieniem.",
+      "headingToStoreNamed": "{name} jedzie do restauracji, aby odebrać Twoje zamówienie.",
+      "onTheWayGeneric": "Twój kurier jest w drodze z Twoim zamówieniem.",
+      "headingToStoreGeneric": "Twój kurier jedzie do restauracji, aby odebrać Twoje zamówienie.",
+      "etaAway": "Około {minutes} min drogi",
+      "mapTitle": "Lokalizacja kuriera na żywo"
     }
   },
   "partnerPeriod": {

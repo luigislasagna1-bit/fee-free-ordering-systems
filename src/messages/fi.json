@@ -4642,7 +4642,24 @@
       "toastSaved": "Tallennettu",
       "toastFailedToSave": "Tallennus epäonnistui. Yritä uudelleen.",
       "toastAddonRequired": "Tilaa Driver Pool ottaaksesi Fee Free Delivery käyttöön.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery tarvitsee ensin verkkomaksutavan – kuljettajasi eivät veloita ovella, joten toimitustilaukset on maksettava verkossa. Ota korttimaksut käyttöön tai yhdistä PayPal, ja kytke se sitten päälle."
+      "toastOnlinePaymentRequired": "Fee Free Delivery tarvitsee ensin verkkomaksutavan – kuljettajasi eivät veloita ovella, joten toimitustilaukset on maksettava verkossa. Ota korttimaksut käyttöön tai yhdistä PayPal, ja kytke se sitten päälle.",
+      "opsTitle": "Toimitukset ja laskutus",
+      "amountOwed": "Maksettava summa",
+      "deliveriesThisWeek": "Toimitukset tällä viikolla",
+      "nextCharge": "Seuraava veloitus",
+      "heldTitle": "Odottaa lähetystä",
+      "sendToDriver": "Lähetä kuljettajalle",
+      "sending": "Lähetetään…",
+      "sent": "Lähetetty kuljettajalle",
+      "sendFailed": "Lähetys epäonnistui. Yritä uudelleen.",
+      "activeDeliveries": "Aktiiviset toimitukset",
+      "noActiveDeliveries": "Ei toimituksia käynnissä.",
+      "unassigned": "Odottaa kuljettajaa",
+      "st_queued": "Jonossa",
+      "st_assigned": "Osoitettu",
+      "st_accepted": "Hyväksytty",
+      "st_started": "Matkalla myymälään",
+      "st_enroute": "Matkalla"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Lisää yksi {name}",
       "removeOneAria": "Poista yksi {name}",
       "stepDoneHint": "Tämä vaihe on valmis — jatka napauttamalla Seuraava."
+    },
+    "tracking": {
+      "onTheWayTitle": "Toimituksesi on matkalla",
+      "headingToStoreTitle": "Kuljettaja noutaa tilaustasi",
+      "live": "Live",
+      "onTheWayNamed": "{name} on matkalla tilauksesi kanssa.",
+      "headingToStoreNamed": "{name} on matkalla ravintolaan noutamaan tilauksesi.",
+      "onTheWayGeneric": "Kuljettajasi on matkalla tilauksesi kanssa.",
+      "headingToStoreGeneric": "Kuljettajasi on matkalla ravintolaan noutamaan tilauksesi.",
+      "etaAway": "Noin {minutes} min päässä",
+      "mapTitle": "Kuljettajan reaaliaikainen sijainti"
     }
   },
   "partnerPeriod": {

@@ -4642,7 +4642,24 @@
       "toastSaved": "נשמר",
       "toastFailedToSave": "השמירה נכשלה. אנא נסה שוב.",
       "toastAddonRequired": "הירשם ל-Driver Pool כדי להפעיל את Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "השירות Fee Free Delivery זקוק תחילה לאמצעי תשלום מקוון — הנהגים שלך לא גובים תשלום בדלת, ולכן יש לשלם על הזמנות משלוח באופן מקוון. הפעל תשלום בכרטיס או חבר את PayPal, ואז הפעל אותו."
+      "toastOnlinePaymentRequired": "השירות Fee Free Delivery זקוק תחילה לאמצעי תשלום מקוון — הנהגים שלך לא גובים תשלום בדלת, ולכן יש לשלם על הזמנות משלוח באופן מקוון. הפעל תשלום בכרטיס או חבר את PayPal, ואז הפעל אותו.",
+      "opsTitle": "משלוחים וחיוב",
+      "amountOwed": "סכום לתשלום",
+      "deliveriesThisWeek": "משלוחים השבוע",
+      "nextCharge": "החיוב הבא",
+      "heldTitle": "ממתין לשליחה",
+      "sendToDriver": "שליחה לשליח",
+      "sending": "שולח…",
+      "sent": "נשלח לשליח",
+      "sendFailed": "השליחה נכשלה. נסה שוב.",
+      "activeDeliveries": "משלוחים פעילים",
+      "noActiveDeliveries": "אין משלוחים בתהליך.",
+      "unassigned": "ממתין לשליח",
+      "st_queued": "בתור",
+      "st_assigned": "הוקצה",
+      "st_accepted": "אושר",
+      "st_started": "בדרך לחנות",
+      "st_enroute": "בדרך"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "הוסיפו {name} אחד",
       "removeOneAria": "הסירו {name} אחד",
       "stepDoneHint": "השלב הזה הושלם — הקישו על הבא כדי להמשיך."
+    },
+    "tracking": {
+      "onTheWayTitle": "המשלוח שלך בדרך אליך",
+      "headingToStoreTitle": "שליח בדרך לאסוף את ההזמנה שלך",
+      "live": "בשידור חי",
+      "onTheWayNamed": "{name} בדרך אליך עם ההזמנה שלך.",
+      "headingToStoreNamed": "{name} בדרך למסעדה כדי לאסוף את ההזמנה שלך.",
+      "onTheWayGeneric": "השליח שלך בדרך אליך עם ההזמנה שלך.",
+      "headingToStoreGeneric": "השליח שלך בדרך למסעדה כדי לאסוף את ההזמנה שלך.",
+      "etaAway": "בערך {minutes} דקות מכאן",
+      "mapTitle": "מיקום השליח בזמן אמת"
     }
   },
   "partnerPeriod": {

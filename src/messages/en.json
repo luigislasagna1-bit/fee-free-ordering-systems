@@ -4642,7 +4642,24 @@
       "toastSaved": "Saved",
       "toastFailedToSave": "Couldn't save. Please try again.",
       "toastAddonRequired": "Subscribe to Driver Pool to turn on Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery needs an online payment method first — your drivers don't collect at the door, so delivery orders must be paid online. Enable card payments or connect PayPal, then turn it on."
+      "toastOnlinePaymentRequired": "Fee Free Delivery needs an online payment method first — your drivers don't collect at the door, so delivery orders must be paid online. Enable card payments or connect PayPal, then turn it on.",
+      "opsTitle": "Deliveries & billing",
+      "amountOwed": "Amount owed",
+      "deliveriesThisWeek": "Deliveries this week",
+      "nextCharge": "Next charge",
+      "heldTitle": "Waiting to send",
+      "sendToDriver": "Send to driver",
+      "sending": "Sending…",
+      "sent": "Sent to a driver",
+      "sendFailed": "Couldn't send. Please try again.",
+      "activeDeliveries": "Active deliveries",
+      "noActiveDeliveries": "No deliveries in progress.",
+      "unassigned": "Waiting for a driver",
+      "st_queued": "Queued",
+      "st_assigned": "Assigned",
+      "st_accepted": "Accepted",
+      "st_started": "Heading to store",
+      "st_enroute": "On the way"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "alreadyHaveAccount": "Already have an account?",
       "signIn": "Sign in",
       "scopeNote": "This account is for <strong>{name}</strong> only — separate from any marketplace account you may have at feefreefood.com."
+    },
+    "tracking": {
+      "onTheWayTitle": "Your delivery is on the way",
+      "headingToStoreTitle": "A driver is picking up your order",
+      "live": "Live",
+      "onTheWayNamed": "{name} is on the way with your order.",
+      "headingToStoreNamed": "{name} is heading to the restaurant to pick up your order.",
+      "onTheWayGeneric": "Your driver is on the way with your order.",
+      "headingToStoreGeneric": "Your driver is heading to the restaurant to pick up your order.",
+      "etaAway": "About {minutes} min away",
+      "mapTitle": "Live driver location"
     }
   },
   "partnerPeriod": {

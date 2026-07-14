@@ -4642,7 +4642,24 @@
       "toastSaved": "Salvestatud",
       "toastFailedToSave": "Salvestamine ebaõnnestus. Palun proovige uuesti.",
       "toastAddonRequired": "Tellige Driver Pool, et lülitada sisse Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery vajab esmalt veebimakseviisi — teie juhid ei kogu makseid ukse taga, seega tuleb kohaletoimetamise tellimused tasuda veebis. Lubage kaardimaksed või ühendage PayPal ja seejärel lülitage see sisse."
+      "toastOnlinePaymentRequired": "Fee Free Delivery vajab esmalt veebimakseviisi — teie juhid ei kogu makseid ukse taga, seega tuleb kohaletoimetamise tellimused tasuda veebis. Lubage kaardimaksed või ühendage PayPal ja seejärel lülitage see sisse.",
+      "opsTitle": "Tarned ja arveldus",
+      "amountOwed": "Võlgnetav summa",
+      "deliveriesThisWeek": "Tarned sel nädalal",
+      "nextCharge": "Järgmine tasu",
+      "heldTitle": "Ootab saatmist",
+      "sendToDriver": "Saada kullerile",
+      "sending": "Saatmine…",
+      "sent": "Saadetud kullerile",
+      "sendFailed": "Saatmine ebaõnnestus. Proovige uuesti.",
+      "activeDeliveries": "Aktiivsed tarned",
+      "noActiveDeliveries": "Pooleliolevaid tarneid pole.",
+      "unassigned": "Ootab kullerit",
+      "st_queued": "Järjekorras",
+      "st_assigned": "Määratud",
+      "st_accepted": "Vastu võetud",
+      "st_started": "Teel poodi",
+      "st_enroute": "Teel"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Lisa üks {name}",
       "removeOneAria": "Eemalda üks {name}",
       "stepDoneHint": "See samm on valmis — jätkamiseks puudutage Edasi."
+    },
+    "tracking": {
+      "onTheWayTitle": "Teie tellimus on teel",
+      "headingToStoreTitle": "Kuller võtab teie tellimuse vastu",
+      "live": "Reaalajas",
+      "onTheWayNamed": "{name} on teie tellimusega teel.",
+      "headingToStoreNamed": "{name} suundub restorani teie tellimusele järele.",
+      "onTheWayGeneric": "Teie kuller on teie tellimusega teel.",
+      "headingToStoreGeneric": "Teie kuller suundub restorani teie tellimusele järele.",
+      "etaAway": "Umbes {minutes} min kaugusel",
+      "mapTitle": "Kulleri asukoht reaalajas"
     }
   },
   "partnerPeriod": {

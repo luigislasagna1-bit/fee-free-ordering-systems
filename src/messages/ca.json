@@ -4642,7 +4642,24 @@
       "toastSaved": "Desat",
       "toastFailedToSave": "No s'ha pogut desar. Torna-ho a provar.",
       "toastAddonRequired": "Subscriu-te a Driver Pool per activar Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery necessita primer un mètode de pagament en línia — els teus repartidors no cobren a la porta, així que les comandes a domicili s'han de pagar en línia. Activa els pagaments amb targeta o connecta PayPal i, tot seguit, activa'l."
+      "toastOnlinePaymentRequired": "Fee Free Delivery necessita primer un mètode de pagament en línia — els teus repartidors no cobren a la porta, així que les comandes a domicili s'han de pagar en línia. Activa els pagaments amb targeta o connecta PayPal i, tot seguit, activa'l.",
+      "opsTitle": "Lliuraments i facturació",
+      "amountOwed": "Import degut",
+      "deliveriesThisWeek": "Lliuraments aquesta setmana",
+      "nextCharge": "Pròxim càrrec",
+      "heldTitle": "Esperant per enviar",
+      "sendToDriver": "Envia a un repartidor",
+      "sending": "Enviant…",
+      "sent": "Enviat a un repartidor",
+      "sendFailed": "No s'ha pogut enviar. Torna-ho a provar.",
+      "activeDeliveries": "Lliuraments actius",
+      "noActiveDeliveries": "No hi ha lliuraments en curs.",
+      "unassigned": "Esperant un repartidor",
+      "st_queued": "En cua",
+      "st_assigned": "Assignada",
+      "st_accepted": "Acceptada",
+      "st_started": "Cap al restaurant",
+      "st_enroute": "En camí"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Afegeix un {name}",
       "removeOneAria": "Treu un {name}",
       "stepDoneHint": "Aquest pas està complet — toca Següent per continuar."
+    },
+    "tracking": {
+      "onTheWayTitle": "El teu lliurament està en camí",
+      "headingToStoreTitle": "Un repartidor està recollint la teva comanda",
+      "live": "En directe",
+      "onTheWayNamed": "{name} està en camí amb la teva comanda.",
+      "headingToStoreNamed": "{name} es dirigeix al restaurant per recollir la teva comanda.",
+      "onTheWayGeneric": "El teu repartidor està en camí amb la teva comanda.",
+      "headingToStoreGeneric": "El teu repartidor es dirigeix al restaurant per recollir la teva comanda.",
+      "etaAway": "A uns {minutes} min",
+      "mapTitle": "Ubicació del repartidor en directe"
     }
   },
   "partnerPeriod": {

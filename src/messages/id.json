@@ -4642,7 +4642,24 @@
       "toastSaved": "Tersimpan",
       "toastFailedToSave": "Tidak bisa menyimpan. Silakan coba lagi.",
       "toastAddonRequired": "Berlangganan Driver Pool untuk mengaktifkan Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery memerlukan metode pembayaran online terlebih dahulu — pengemudi Anda tidak menerima pembayaran di pintu, jadi pesanan pengantaran harus dibayar online. Aktifkan pembayaran kartu atau hubungkan PayPal, lalu aktifkan."
+      "toastOnlinePaymentRequired": "Fee Free Delivery memerlukan metode pembayaran online terlebih dahulu — pengemudi Anda tidak menerima pembayaran di pintu, jadi pesanan pengantaran harus dibayar online. Aktifkan pembayaran kartu atau hubungkan PayPal, lalu aktifkan.",
+      "opsTitle": "Pengiriman & tagihan",
+      "amountOwed": "Jumlah tertunggak",
+      "deliveriesThisWeek": "Pengiriman minggu ini",
+      "nextCharge": "Penagihan berikutnya",
+      "heldTitle": "Menunggu dikirim",
+      "sendToDriver": "Kirim ke kurir",
+      "sending": "Mengirim…",
+      "sent": "Terkirim ke kurir",
+      "sendFailed": "Gagal mengirim. Silakan coba lagi.",
+      "activeDeliveries": "Pengiriman aktif",
+      "noActiveDeliveries": "Tidak ada pengiriman yang berlangsung.",
+      "unassigned": "Menunggu kurir",
+      "st_queued": "Antre",
+      "st_assigned": "Ditugaskan",
+      "st_accepted": "Diterima",
+      "st_started": "Menuju toko",
+      "st_enroute": "Dalam perjalanan"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Tambah satu {name}",
       "removeOneAria": "Hapus satu {name}",
       "stepDoneHint": "Langkah ini selesai — ketuk Berikutnya untuk melanjutkan."
+    },
+    "tracking": {
+      "onTheWayTitle": "Pesanan Anda sedang dalam perjalanan",
+      "headingToStoreTitle": "Seorang kurir sedang mengambil pesanan Anda",
+      "live": "Langsung",
+      "onTheWayNamed": "{name} sedang dalam perjalanan mengantar pesanan Anda.",
+      "headingToStoreNamed": "{name} sedang menuju ke restoran untuk mengambil pesanan Anda.",
+      "onTheWayGeneric": "Kurir Anda sedang dalam perjalanan mengantar pesanan Anda.",
+      "headingToStoreGeneric": "Kurir Anda sedang menuju ke restoran untuk mengambil pesanan Anda.",
+      "etaAway": "Sekitar {minutes} mnt lagi",
+      "mapTitle": "Lokasi kurir langsung"
     }
   },
   "partnerPeriod": {

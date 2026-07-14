@@ -4642,7 +4642,24 @@
       "toastSaved": "Saglabāts",
       "toastFailedToSave": "Neizdevās saglabāt. Lūdzu, mēģiniet vēlreiz.",
       "toastAddonRequired": "Abonējiet Driver Pool, lai ieslēgtu Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery vispirms nepieciešama tiešsaistes maksājuma metode — jūsu vadītāji neiekasē maksu pie durvīm, tāpēc piegādes pasūtījumi jāapmaksā tiešsaistē. Iespējojiet karšu maksājumus vai savienojiet PayPal un pēc tam ieslēdziet to."
+      "toastOnlinePaymentRequired": "Fee Free Delivery vispirms nepieciešama tiešsaistes maksājuma metode — jūsu vadītāji neiekasē maksu pie durvīm, tāpēc piegādes pasūtījumi jāapmaksā tiešsaistē. Iespējojiet karšu maksājumus vai savienojiet PayPal un pēc tam ieslēdziet to.",
+      "opsTitle": "Piegādes un norēķini",
+      "amountOwed": "Maksājamā summa",
+      "deliveriesThisWeek": "Piegādes šonedēļ",
+      "nextCharge": "Nākamais maksājums",
+      "heldTitle": "Gaida nosūtīšanu",
+      "sendToDriver": "Nosūtīt kurjeram",
+      "sending": "Nosūta…",
+      "sent": "Nosūtīts kurjeram",
+      "sendFailed": "Nosūtīšana neizdevās. Mēģiniet vēlreiz.",
+      "activeDeliveries": "Aktīvās piegādes",
+      "noActiveDeliveries": "Nav aktīvu piegāžu.",
+      "unassigned": "Gaida kurjeru",
+      "st_queued": "Rindā",
+      "st_assigned": "Piešķirts",
+      "st_accepted": "Pieņemts",
+      "st_started": "Ceļā uz veikalu",
+      "st_enroute": "Ceļā"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Pievienot vienu {name}",
       "removeOneAria": "Noņemt vienu {name}",
       "stepDoneHint": "Šis solis ir pabeigts — pieskarieties Tālāk, lai turpinātu."
+    },
+    "tracking": {
+      "onTheWayTitle": "Jūsu piegāde ir ceļā",
+      "headingToStoreTitle": "Kurjers saņem jūsu pasūtījumu",
+      "live": "Tiešraidē",
+      "onTheWayNamed": "{name} ir ceļā ar jūsu pasūtījumu.",
+      "headingToStoreNamed": "{name} dodas uz restorānu, lai saņemtu jūsu pasūtījumu.",
+      "onTheWayGeneric": "Jūsu kurjers ir ceļā ar jūsu pasūtījumu.",
+      "headingToStoreGeneric": "Jūsu kurjers dodas uz restorānu, lai saņemtu jūsu pasūtījumu.",
+      "etaAway": "Aptuveni {minutes} min attālumā",
+      "mapTitle": "Kurjera atrašanās vieta tiešraidē"
     }
   },
   "partnerPeriod": {

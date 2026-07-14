@@ -4642,7 +4642,24 @@
       "toastSaved": "Guardado",
       "toastFailedToSave": "No se pudo guardar. Inténtalo de nuevo.",
       "toastAddonRequired": "Suscríbete a Driver Pool para activar Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery necesita primero un método de pago en línea — tus repartidores no cobran en la puerta, así que los pedidos a domicilio deben pagarse en línea. Activa los pagos con tarjeta o conecta PayPal, y luego actívalo."
+      "toastOnlinePaymentRequired": "Fee Free Delivery necesita primero un método de pago en línea — tus repartidores no cobran en la puerta, así que los pedidos a domicilio deben pagarse en línea. Activa los pagos con tarjeta o conecta PayPal, y luego actívalo.",
+      "opsTitle": "Entregas y facturación",
+      "amountOwed": "Importe adeudado",
+      "deliveriesThisWeek": "Entregas esta semana",
+      "nextCharge": "Próximo cobro",
+      "heldTitle": "Esperando para enviar",
+      "sendToDriver": "Enviar a un repartidor",
+      "sending": "Enviando…",
+      "sent": "Enviado a un repartidor",
+      "sendFailed": "No se pudo enviar. Inténtalo de nuevo.",
+      "activeDeliveries": "Entregas activas",
+      "noActiveDeliveries": "No hay entregas en curso.",
+      "unassigned": "Esperando un repartidor",
+      "st_queued": "En cola",
+      "st_assigned": "Asignada",
+      "st_accepted": "Aceptada",
+      "st_started": "Yendo al local",
+      "st_enroute": "En camino"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Añadir un {name}",
       "removeOneAria": "Quitar un {name}",
       "stepDoneHint": "Este paso está completo: toca Siguiente para continuar."
+    },
+    "tracking": {
+      "onTheWayTitle": "Tu pedido está en camino",
+      "headingToStoreTitle": "Un repartidor está recogiendo tu pedido",
+      "live": "En vivo",
+      "onTheWayNamed": "{name} está en camino con tu pedido.",
+      "headingToStoreNamed": "{name} se dirige al restaurante para recoger tu pedido.",
+      "onTheWayGeneric": "Tu repartidor está en camino con tu pedido.",
+      "headingToStoreGeneric": "Tu repartidor se dirige al restaurante para recoger tu pedido.",
+      "etaAway": "A unos {minutes} min",
+      "mapTitle": "Ubicación del repartidor en vivo"
     }
   },
   "partnerPeriod": {

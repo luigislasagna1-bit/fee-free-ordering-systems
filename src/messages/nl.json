@@ -4642,7 +4642,24 @@
       "toastSaved": "Opgeslagen",
       "toastFailedToSave": "Opslaan mislukt. Probeer het opnieuw.",
       "toastAddonRequired": "Neem een abonnement op Driver Pool om Fee Free Delivery in te schakelen.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery heeft eerst een online betaalmethode nodig – je bezorgers innen niet aan de deur, dus bezorgbestellingen moeten online worden betaald. Schakel kaartbetalingen in of koppel PayPal en zet het daarna aan."
+      "toastOnlinePaymentRequired": "Fee Free Delivery heeft eerst een online betaalmethode nodig – je bezorgers innen niet aan de deur, dus bezorgbestellingen moeten online worden betaald. Schakel kaartbetalingen in of koppel PayPal en zet het daarna aan.",
+      "opsTitle": "Bezorgingen & facturatie",
+      "amountOwed": "Verschuldigd bedrag",
+      "deliveriesThisWeek": "Bezorgingen deze week",
+      "nextCharge": "Volgende afschrijving",
+      "heldTitle": "Wacht op verzenden",
+      "sendToDriver": "Naar bezorger sturen",
+      "sending": "Bezig met verzenden…",
+      "sent": "Naar bezorger gestuurd",
+      "sendFailed": "Verzenden mislukt. Probeer het opnieuw.",
+      "activeDeliveries": "Actieve bezorgingen",
+      "noActiveDeliveries": "Geen bezorgingen bezig.",
+      "unassigned": "Wacht op bezorger",
+      "st_queued": "In wachtrij",
+      "st_assigned": "Toegewezen",
+      "st_accepted": "Geaccepteerd",
+      "st_started": "Op weg naar winkel",
+      "st_enroute": "Onderweg"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Eén {name} toevoegen",
       "removeOneAria": "Eén {name} verwijderen",
       "stepDoneHint": "Deze stap is klaar — tik op Volgende om door te gaan."
+    },
+    "tracking": {
+      "onTheWayTitle": "Je bezorging is onderweg",
+      "headingToStoreTitle": "Een bezorger haalt je bestelling op",
+      "live": "Live",
+      "onTheWayNamed": "{name} is onderweg met je bestelling.",
+      "headingToStoreNamed": "{name} is op weg naar het restaurant om je bestelling op te halen.",
+      "onTheWayGeneric": "Je bezorger is onderweg met je bestelling.",
+      "headingToStoreGeneric": "Je bezorger is op weg naar het restaurant om je bestelling op te halen.",
+      "etaAway": "Nog ongeveer {minutes} min",
+      "mapTitle": "Live locatie van bezorger"
     }
   },
   "partnerPeriod": {

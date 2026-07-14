@@ -4642,7 +4642,24 @@
       "toastSaved": "Gespeichert",
       "toastFailedToSave": "Speichern fehlgeschlagen. Bitte erneut versuchen.",
       "toastAddonRequired": "Abonnieren Sie Driver Pool, um Fee Free Delivery zu aktivieren.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery benötigt zuerst eine Online-Zahlungsmethode – Ihre Fahrer kassieren nicht an der Tür, daher müssen Lieferbestellungen online bezahlt werden. Aktivieren Sie Kartenzahlungen oder verbinden Sie PayPal und schalten Sie es dann ein."
+      "toastOnlinePaymentRequired": "Fee Free Delivery benötigt zuerst eine Online-Zahlungsmethode – Ihre Fahrer kassieren nicht an der Tür, daher müssen Lieferbestellungen online bezahlt werden. Aktivieren Sie Kartenzahlungen oder verbinden Sie PayPal und schalten Sie es dann ein.",
+      "opsTitle": "Lieferungen & Abrechnung",
+      "amountOwed": "Offener Betrag",
+      "deliveriesThisWeek": "Lieferungen diese Woche",
+      "nextCharge": "Nächste Abbuchung",
+      "heldTitle": "Wartet auf Versand",
+      "sendToDriver": "An Fahrer senden",
+      "sending": "Wird gesendet…",
+      "sent": "An Fahrer gesendet",
+      "sendFailed": "Senden fehlgeschlagen. Bitte erneut versuchen.",
+      "activeDeliveries": "Aktive Lieferungen",
+      "noActiveDeliveries": "Keine Lieferungen in Bearbeitung.",
+      "unassigned": "Warten auf Fahrer",
+      "st_queued": "In Warteschlange",
+      "st_assigned": "Zugewiesen",
+      "st_accepted": "Angenommen",
+      "st_started": "Auf dem Weg zum Laden",
+      "st_enroute": "Unterwegs"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Ein {name} hinzufügen",
       "removeOneAria": "Ein {name} entfernen",
       "stepDoneHint": "Dieser Schritt ist fertig — tippen Sie auf Weiter."
+    },
+    "tracking": {
+      "onTheWayTitle": "Deine Lieferung ist unterwegs",
+      "headingToStoreTitle": "Ein Fahrer holt deine Bestellung ab",
+      "live": "Live",
+      "onTheWayNamed": "{name} ist mit deiner Bestellung unterwegs.",
+      "headingToStoreNamed": "{name} fährt zum Restaurant, um deine Bestellung abzuholen.",
+      "onTheWayGeneric": "Dein Fahrer ist mit deiner Bestellung unterwegs.",
+      "headingToStoreGeneric": "Dein Fahrer fährt zum Restaurant, um deine Bestellung abzuholen.",
+      "etaAway": "Noch etwa {minutes} Min.",
+      "mapTitle": "Live-Standort des Fahrers"
     }
   },
   "partnerPeriod": {

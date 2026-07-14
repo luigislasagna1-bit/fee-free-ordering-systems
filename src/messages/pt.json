@@ -4642,7 +4642,24 @@
       "toastSaved": "Guardado",
       "toastFailedToSave": "Não foi possível guardar. Tente novamente.",
       "toastAddonRequired": "Subscreva o Driver Pool para ativar o Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "O Fee Free Delivery necessita primeiro de um método de pagamento online — os seus estafetas não cobram à porta, por isso os pedidos de entrega têm de ser pagos online. Ative os pagamentos com cartão ou ligue o PayPal e depois ative-o."
+      "toastOnlinePaymentRequired": "O Fee Free Delivery necessita primeiro de um método de pagamento online — os seus estafetas não cobram à porta, por isso os pedidos de entrega têm de ser pagos online. Ative os pagamentos com cartão ou ligue o PayPal e depois ative-o.",
+      "opsTitle": "Entregas e faturação",
+      "amountOwed": "Montante em dívida",
+      "deliveriesThisWeek": "Entregas esta semana",
+      "nextCharge": "Próxima cobrança",
+      "heldTitle": "A aguardar envio",
+      "sendToDriver": "Enviar a um estafeta",
+      "sending": "A enviar…",
+      "sent": "Enviado a um estafeta",
+      "sendFailed": "Não foi possível enviar. Tente novamente.",
+      "activeDeliveries": "Entregas ativas",
+      "noActiveDeliveries": "Nenhuma entrega em curso.",
+      "unassigned": "A aguardar um estafeta",
+      "st_queued": "Em fila",
+      "st_assigned": "Atribuída",
+      "st_accepted": "Aceite",
+      "st_started": "A caminho do restaurante",
+      "st_enroute": "A caminho"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Adicionar um {name}",
       "removeOneAria": "Remover um {name}",
       "stepDoneHint": "Este passo está concluído — toque em Seguinte para continuar."
+    },
+    "tracking": {
+      "onTheWayTitle": "A sua entrega está a caminho",
+      "headingToStoreTitle": "Um estafeta está a levantar o seu pedido",
+      "live": "Em direto",
+      "onTheWayNamed": "{name} está a caminho com o seu pedido.",
+      "headingToStoreNamed": "{name} está a dirigir-se ao restaurante para levantar o seu pedido.",
+      "onTheWayGeneric": "O seu estafeta está a caminho com o seu pedido.",
+      "headingToStoreGeneric": "O seu estafeta está a dirigir-se ao restaurante para levantar o seu pedido.",
+      "etaAway": "A cerca de {minutes} min",
+      "mapTitle": "Localização do estafeta em direto"
     }
   },
   "partnerPeriod": {

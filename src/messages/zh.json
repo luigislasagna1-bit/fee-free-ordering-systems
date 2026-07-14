@@ -4642,7 +4642,24 @@
       "toastSaved": "已保存",
       "toastFailedToSave": "保存失败，请重试。",
       "toastAddonRequired": "订阅 Driver Pool 以开启 Fee Free Delivery。",
-      "toastOnlinePaymentRequired": "Fee Free Delivery 需要先设置在线支付方式——你的司机不会上门收款，因此外送订单必须在线支付。请启用刷卡支付或连接 PayPal，然后再开启。"
+      "toastOnlinePaymentRequired": "Fee Free Delivery 需要先设置在线支付方式——你的司机不会上门收款，因此外送订单必须在线支付。请启用刷卡支付或连接 PayPal，然后再开启。",
+      "opsTitle": "配送与账单",
+      "amountOwed": "应付金额",
+      "deliveriesThisWeek": "本周配送量",
+      "nextCharge": "下次扣费",
+      "heldTitle": "等待发送",
+      "sendToDriver": "发送给骑手",
+      "sending": "发送中…",
+      "sent": "已发送给骑手",
+      "sendFailed": "发送失败，请重试。",
+      "activeDeliveries": "进行中的配送",
+      "noActiveDeliveries": "暂无进行中的配送。",
+      "unassigned": "正在等待骑手",
+      "st_queued": "排队中",
+      "st_assigned": "已指派",
+      "st_accepted": "已接单",
+      "st_started": "前往餐厅",
+      "st_enroute": "配送途中"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "添加一份{name}",
       "removeOneAria": "移除一份{name}",
       "stepDoneHint": "此步骤已完成——点按“下一步”继续。"
+    },
+    "tracking": {
+      "onTheWayTitle": "您的外卖正在配送中",
+      "headingToStoreTitle": "骑手正在前往取您的订单",
+      "live": "实时",
+      "onTheWayNamed": "{name} 正带着您的订单赶来。",
+      "headingToStoreNamed": "{name} 正前往餐厅取您的订单。",
+      "onTheWayGeneric": "骑手正带着您的订单赶来。",
+      "headingToStoreGeneric": "骑手正前往餐厅取您的订单。",
+      "etaAway": "大约还有 {minutes} 分钟",
+      "mapTitle": "骑手实时位置"
     }
   },
   "partnerPeriod": {

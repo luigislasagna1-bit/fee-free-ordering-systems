@@ -4642,7 +4642,24 @@
       "toastSaved": "Lagret",
       "toastFailedToSave": "Kunne ikke lagre. Prøv igjen.",
       "toastAddonRequired": "Abonner på Driver Pool for å slå på Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery trenger først en betalingsmetode på nett – sjåførene dine tar ikke betalt ved døren, så leveringsordrer må betales på nett. Aktiver kortbetalinger eller koble til PayPal, og slå det deretter på."
+      "toastOnlinePaymentRequired": "Fee Free Delivery trenger først en betalingsmetode på nett – sjåførene dine tar ikke betalt ved døren, så leveringsordrer må betales på nett. Aktiver kortbetalinger eller koble til PayPal, og slå det deretter på.",
+      "opsTitle": "Leveringer og fakturering",
+      "amountOwed": "Skyldig beløp",
+      "deliveriesThisWeek": "Leveringer denne uken",
+      "nextCharge": "Neste betaling",
+      "heldTitle": "Venter på å sendes",
+      "sendToDriver": "Send til sjåfør",
+      "sending": "Sender…",
+      "sent": "Sendt til sjåfør",
+      "sendFailed": "Kunne ikke sende. Prøv igjen.",
+      "activeDeliveries": "Aktive leveringer",
+      "noActiveDeliveries": "Ingen leveringer pågår.",
+      "unassigned": "Venter på sjåfør",
+      "st_queued": "I kø",
+      "st_assigned": "Tildelt",
+      "st_accepted": "Akseptert",
+      "st_started": "På vei til butikk",
+      "st_enroute": "På vei"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Legg til en {name}",
       "removeOneAria": "Fjern en {name}",
       "stepDoneHint": "Dette trinnet er ferdig — trykk på Neste for å fortsette."
+    },
+    "tracking": {
+      "onTheWayTitle": "Leveringen din er på vei",
+      "headingToStoreTitle": "En sjåfør henter bestillingen din",
+      "live": "Live",
+      "onTheWayNamed": "{name} er på vei med bestillingen din.",
+      "headingToStoreNamed": "{name} er på vei til restauranten for å hente bestillingen din.",
+      "onTheWayGeneric": "Sjåføren din er på vei med bestillingen din.",
+      "headingToStoreGeneric": "Sjåføren din er på vei til restauranten for å hente bestillingen din.",
+      "etaAway": "Omtrent {minutes} min unna",
+      "mapTitle": "Sjåførens live-posisjon"
     }
   },
   "partnerPeriod": {

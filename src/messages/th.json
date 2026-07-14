@@ -4642,7 +4642,24 @@
       "toastSaved": "บันทึกแล้ว",
       "toastFailedToSave": "บันทึกไม่สำเร็จ กรุณาลองอีกครั้ง",
       "toastAddonRequired": "สมัครใช้ Driver Pool เพื่อเปิดใช้งาน Fee Free Delivery",
-      "toastOnlinePaymentRequired": "Fee Free Delivery ต้องมีวิธีการชำระเงินออนไลน์ก่อน — คนขับของคุณไม่ได้เก็บเงินที่หน้าประตู ดังนั้นออร์เดอร์เดลิเวอรีต้องชำระเงินออนไลน์ เปิดใช้การชำระด้วยบัตรหรือเชื่อมต่อ PayPal แล้วจึงเปิดใช้งาน"
+      "toastOnlinePaymentRequired": "Fee Free Delivery ต้องมีวิธีการชำระเงินออนไลน์ก่อน — คนขับของคุณไม่ได้เก็บเงินที่หน้าประตู ดังนั้นออร์เดอร์เดลิเวอรีต้องชำระเงินออนไลน์ เปิดใช้การชำระด้วยบัตรหรือเชื่อมต่อ PayPal แล้วจึงเปิดใช้งาน",
+      "opsTitle": "การจัดส่งและการเรียกเก็บเงิน",
+      "amountOwed": "ยอดค้างชำระ",
+      "deliveriesThisWeek": "การจัดส่งสัปดาห์นี้",
+      "nextCharge": "การเรียกเก็บครั้งถัดไป",
+      "heldTitle": "รอส่ง",
+      "sendToDriver": "ส่งให้คนขับ",
+      "sending": "กำลังส่ง…",
+      "sent": "ส่งให้คนขับแล้ว",
+      "sendFailed": "ส่งไม่สำเร็จ กรุณาลองอีกครั้ง",
+      "activeDeliveries": "การจัดส่งที่กำลังดำเนินการ",
+      "noActiveDeliveries": "ไม่มีการจัดส่งที่กำลังดำเนินการ",
+      "unassigned": "กำลังรอคนขับ",
+      "st_queued": "อยู่ในคิว",
+      "st_assigned": "มอบหมายแล้ว",
+      "st_accepted": "รับแล้ว",
+      "st_started": "กำลังไปที่ร้าน",
+      "st_enroute": "กำลังเดินทาง"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "เพิ่ม {name} หนึ่งรายการ",
       "removeOneAria": "นำ {name} ออกหนึ่งรายการ",
       "stepDoneHint": "ขั้นตอนนี้เสร็จแล้ว — แตะถัดไปเพื่อดำเนินการต่อ"
+    },
+    "tracking": {
+      "onTheWayTitle": "อาหารของคุณกำลังจัดส่ง",
+      "headingToStoreTitle": "คนขับกำลังไปรับออร์เดอร์ของคุณ",
+      "live": "สด",
+      "onTheWayNamed": "{name} กำลังนำออร์เดอร์ของคุณมาส่ง",
+      "headingToStoreNamed": "{name} กำลังไปที่ร้านเพื่อรับออร์เดอร์ของคุณ",
+      "onTheWayGeneric": "คนขับกำลังนำออร์เดอร์ของคุณมาส่ง",
+      "headingToStoreGeneric": "คนขับกำลังไปที่ร้านเพื่อรับออร์เดอร์ของคุณ",
+      "etaAway": "อีกประมาณ {minutes} นาที",
+      "mapTitle": "ตำแหน่งคนขับแบบเรียลไทม์"
     }
   },
   "partnerPeriod": {

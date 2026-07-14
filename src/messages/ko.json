@@ -4642,7 +4642,24 @@
       "toastSaved": "저장됨",
       "toastFailedToSave": "저장하지 못했습니다. 다시 시도해 주세요.",
       "toastAddonRequired": "Fee Free Delivery를 켜려면 Driver Pool을 구독하세요.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery는 먼저 온라인 결제 수단이 필요합니다 — 배달원이 문 앞에서 수금하지 않으므로 배달 주문은 온라인으로 결제해야 합니다. 카드 결제를 활성화하거나 PayPal을 연결한 후 켜세요."
+      "toastOnlinePaymentRequired": "Fee Free Delivery는 먼저 온라인 결제 수단이 필요합니다 — 배달원이 문 앞에서 수금하지 않으므로 배달 주문은 온라인으로 결제해야 합니다. 카드 결제를 활성화하거나 PayPal을 연결한 후 켜세요.",
+      "opsTitle": "배달 및 청구",
+      "amountOwed": "미납 금액",
+      "deliveriesThisWeek": "이번 주 배달 건수",
+      "nextCharge": "다음 청구",
+      "heldTitle": "전송 대기 중",
+      "sendToDriver": "기사에게 전송",
+      "sending": "전송 중…",
+      "sent": "기사에게 전송됨",
+      "sendFailed": "전송하지 못했습니다. 다시 시도해 주세요.",
+      "activeDeliveries": "진행 중인 배달",
+      "noActiveDeliveries": "진행 중인 배달이 없습니다.",
+      "unassigned": "기사를 기다리는 중",
+      "st_queued": "대기열",
+      "st_assigned": "배정됨",
+      "st_accepted": "수락됨",
+      "st_started": "매장으로 이동 중",
+      "st_enroute": "배달 중"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "{name} 하나 추가",
       "removeOneAria": "{name} 하나 제거",
       "stepDoneHint": "이 단계가 완료되었습니다 — 계속하려면 다음을 탭하세요."
+    },
+    "tracking": {
+      "onTheWayTitle": "주문하신 음식을 배달 중입니다",
+      "headingToStoreTitle": "기사님이 주문을 픽업하러 가고 있습니다",
+      "live": "실시간",
+      "onTheWayNamed": "{name} 님이 주문하신 음식을 가지고 오고 있습니다.",
+      "headingToStoreNamed": "{name} 님이 주문을 픽업하러 매장으로 가고 있습니다.",
+      "onTheWayGeneric": "기사님이 주문하신 음식을 가지고 오고 있습니다.",
+      "headingToStoreGeneric": "기사님이 주문을 픽업하러 매장으로 가고 있습니다.",
+      "etaAway": "약 {minutes}분 후 도착",
+      "mapTitle": "실시간 기사 위치"
     }
   },
   "partnerPeriod": {

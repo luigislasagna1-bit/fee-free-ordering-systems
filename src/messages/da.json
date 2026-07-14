@@ -4642,7 +4642,24 @@
       "toastSaved": "Gemt",
       "toastFailedToSave": "Kunne ikke gemme. Prøv igen.",
       "toastAddonRequired": "Abonnér på Driver Pool for at slå Fee Free Delivery til.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery kræver først en online betalingsmetode – dine chauffører opkræver ikke ved døren, så leveringsordrer skal betales online. Aktivér kortbetalinger eller tilslut PayPal, og slå det derefter til."
+      "toastOnlinePaymentRequired": "Fee Free Delivery kræver først en online betalingsmetode – dine chauffører opkræver ikke ved døren, så leveringsordrer skal betales online. Aktivér kortbetalinger eller tilslut PayPal, og slå det derefter til.",
+      "opsTitle": "Leveringer & fakturering",
+      "amountOwed": "Skyldigt beløb",
+      "deliveriesThisWeek": "Leveringer denne uge",
+      "nextCharge": "Næste betaling",
+      "heldTitle": "Venter på at blive sendt",
+      "sendToDriver": "Send til chauffør",
+      "sending": "Sender…",
+      "sent": "Sendt til chauffør",
+      "sendFailed": "Kunne ikke sende. Prøv igen.",
+      "activeDeliveries": "Aktive leveringer",
+      "noActiveDeliveries": "Ingen igangværende leveringer.",
+      "unassigned": "Venter på chauffør",
+      "st_queued": "I kø",
+      "st_assigned": "Tildelt",
+      "st_accepted": "Accepteret",
+      "st_started": "På vej til butik",
+      "st_enroute": "På vej"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Tilføj en {name}",
       "removeOneAria": "Fjern en {name}",
       "stepDoneHint": "Dette trin er færdigt — tryk på Næste for at fortsætte."
+    },
+    "tracking": {
+      "onTheWayTitle": "Din levering er på vej",
+      "headingToStoreTitle": "En chauffør henter din bestilling",
+      "live": "Live",
+      "onTheWayNamed": "{name} er på vej med din bestilling.",
+      "headingToStoreNamed": "{name} er på vej til restauranten for at hente din bestilling.",
+      "onTheWayGeneric": "Din chauffør er på vej med din bestilling.",
+      "headingToStoreGeneric": "Din chauffør er på vej til restauranten for at hente din bestilling.",
+      "etaAway": "Cirka {minutes} min væk",
+      "mapTitle": "Chaufførens live-placering"
     }
   },
   "partnerPeriod": {

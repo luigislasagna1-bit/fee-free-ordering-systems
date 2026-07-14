@@ -14,6 +14,7 @@ import Link from "next/link";
 import { use } from "react";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import { resolvePoweredByCredit } from "@/lib/white-label";
+import { DriverTrackingCard } from "./DriverTrackingCard";
 
 // Two step sets based on the restaurant's kitchen workflow mode. The
 // "simple" mode (GloriaFood-style) just has accept/reject in the kitchen —
@@ -751,6 +752,9 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
               <div className="flex justify-between"><span>{t("placed")}</span><span>{new Date(order.createdAt).toLocaleString()}</span></div>
             </div>
           </div>
+
+          {/* ── Live driver tracking (FeeFreeDelivery, delivery only) ── */}
+          {order.type === "delivery" && <DriverTrackingCard orderId={orderId} />}
 
           {/* ── Delivery address (delivery only) ───────────────────── */}
           {order.type === "delivery" && order.deliveryAddress && (

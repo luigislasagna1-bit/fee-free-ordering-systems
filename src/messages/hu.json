@@ -4642,7 +4642,24 @@
       "toastSaved": "Mentve",
       "toastFailedToSave": "A mentés nem sikerült. Kérjük, próbáld újra.",
       "toastAddonRequired": "Fizess elő a Driver Poolra a Fee Free Delivery bekapcsolásához.",
-      "toastOnlinePaymentRequired": "A Fee Free Delivery-hez először online fizetési mód szükséges — a futáraid nem szednek be fizetést az ajtónál, ezért a kiszállítási rendeléseket online kell kifizetni. Engedélyezd a kártyás fizetést vagy csatlakoztasd a PayPalt, majd kapcsold be."
+      "toastOnlinePaymentRequired": "A Fee Free Delivery-hez először online fizetési mód szükséges — a futáraid nem szednek be fizetést az ajtónál, ezért a kiszállítási rendeléseket online kell kifizetni. Engedélyezd a kártyás fizetést vagy csatlakoztasd a PayPalt, majd kapcsold be.",
+      "opsTitle": "Kiszállítások és számlázás",
+      "amountOwed": "Fizetendő összeg",
+      "deliveriesThisWeek": "Kiszállítások ezen a héten",
+      "nextCharge": "Következő terhelés",
+      "heldTitle": "Küldésre vár",
+      "sendToDriver": "Küldés futárnak",
+      "sending": "Küldés…",
+      "sent": "Elküldve egy futárnak",
+      "sendFailed": "A küldés nem sikerült. Próbáld újra.",
+      "activeDeliveries": "Aktív kiszállítások",
+      "noActiveDeliveries": "Nincs folyamatban lévő kiszállítás.",
+      "unassigned": "Futárra vár",
+      "st_queued": "Sorban",
+      "st_assigned": "Kiosztva",
+      "st_accepted": "Elfogadva",
+      "st_started": "Az üzletbe tart",
+      "st_enroute": "Úton"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Egy {name} hozzáadása",
       "removeOneAria": "Egy {name} eltávolítása",
       "stepDoneHint": "Ez a lépés kész — a folytatáshoz koppintson a Tovább gombra."
+    },
+    "tracking": {
+      "onTheWayTitle": "A rendelésed úton van",
+      "headingToStoreTitle": "Egy futár felveszi a rendelésedet",
+      "live": "Élő",
+      "onTheWayNamed": "{name} úton van a rendeléseddel.",
+      "headingToStoreNamed": "{name} az étterembe tart, hogy felvegye a rendelésedet.",
+      "onTheWayGeneric": "A futárod úton van a rendeléseddel.",
+      "headingToStoreGeneric": "A futárod az étterembe tart, hogy felvegye a rendelésedet.",
+      "etaAway": "Körülbelül {minutes} percre van",
+      "mapTitle": "A futár élő helyzete"
     }
   },
   "partnerPeriod": {

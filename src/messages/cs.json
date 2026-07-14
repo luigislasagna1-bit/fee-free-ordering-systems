@@ -4642,7 +4642,24 @@
       "toastSaved": "Uloženo",
       "toastFailedToSave": "Nepodařilo se uložit. Zkuste to prosím znovu.",
       "toastAddonRequired": "Předplaťte si Driver Pool, abyste zapnuli Fee Free Delivery.",
-      "toastOnlinePaymentRequired": "Fee Free Delivery nejprve vyžaduje online platební metodu — vaši řidiči nevybírají platbu u dveří, takže objednávky s doručením musí být zaplaceny online. Zapněte platby kartou nebo připojte PayPal a poté ji zapněte."
+      "toastOnlinePaymentRequired": "Fee Free Delivery nejprve vyžaduje online platební metodu — vaši řidiči nevybírají platbu u dveří, takže objednávky s doručením musí být zaplaceny online. Zapněte platby kartou nebo připojte PayPal a poté ji zapněte.",
+      "opsTitle": "Doručení a fakturace",
+      "amountOwed": "Dlužná částka",
+      "deliveriesThisWeek": "Doručení tento týden",
+      "nextCharge": "Další platba",
+      "heldTitle": "Čeká na odeslání",
+      "sendToDriver": "Odeslat řidiči",
+      "sending": "Odesílání…",
+      "sent": "Odesláno řidiči",
+      "sendFailed": "Odeslání se nezdařilo. Zkuste to znovu.",
+      "activeDeliveries": "Aktivní doručení",
+      "noActiveDeliveries": "Žádné probíhající doručení.",
+      "unassigned": "Čeká se na řidiče",
+      "st_queued": "Ve frontě",
+      "st_assigned": "Přiřazeno",
+      "st_accepted": "Přijato",
+      "st_started": "Míří do restaurace",
+      "st_enroute": "Na cestě"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "Přidat jeden {name}",
       "removeOneAria": "Odebrat jeden {name}",
       "stepDoneHint": "Tento krok je hotový — pokračujte klepnutím na Další."
+    },
+    "tracking": {
+      "onTheWayTitle": "Vaše doručení je na cestě",
+      "headingToStoreTitle": "Řidič vyzvedává vaši objednávku",
+      "live": "Živě",
+      "onTheWayNamed": "{name} je na cestě s vaší objednávkou.",
+      "headingToStoreNamed": "{name} míří do restaurace, aby vyzvedl vaši objednávku.",
+      "onTheWayGeneric": "Váš řidič je na cestě s vaší objednávkou.",
+      "headingToStoreGeneric": "Váš řidič míří do restaurace, aby vyzvedl vaši objednávku.",
+      "etaAway": "Přibližně {minutes} min cesty",
+      "mapTitle": "Poloha řidiče v reálném čase"
     }
   },
   "partnerPeriod": {

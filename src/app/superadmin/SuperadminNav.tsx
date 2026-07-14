@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2 } from "lucide-react";
+import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +14,7 @@ const items = [
   { href: "/superadmin/billing", label: "Billing", icon: CreditCard, adminOnly: true },
   { href: "/superadmin/add-ons", label: "Add-Ons", icon: Zap, adminOnly: true },
   { href: "/superadmin/marketplace-settlements", label: "Marketplace Settlements", icon: Sparkles, adminOnly: true },
+  { href: "/superadmin/drivers", label: "Delivery Drivers", icon: Bike, adminOnly: true },
   { href: "/superadmin/resellers", label: "Resellers", icon: Users },
   { href: "/reseller-reports", label: "Reseller Reports", icon: Bug },
   { href: "/reseller-reports/notifications", label: "Notifications", icon: Bell },

@@ -4642,7 +4642,24 @@
       "toastSaved": "保存しました",
       "toastFailedToSave": "保存できませんでした。もう一度お試しください。",
       "toastAddonRequired": "Fee Free Delivery を有効にするには Driver Pool にご登録ください。",
-      "toastOnlinePaymentRequired": "Fee Free Delivery には、まずオンライン決済方法が必要です。ドライバーは玄関先で集金しないため、配達注文はオンラインで支払う必要があります。カード決済を有効にするか PayPal を接続してから、オンにしてください。"
+      "toastOnlinePaymentRequired": "Fee Free Delivery には、まずオンライン決済方法が必要です。ドライバーは玄関先で集金しないため、配達注文はオンラインで支払う必要があります。カード決済を有効にするか PayPal を接続してから、オンにしてください。",
+      "opsTitle": "配達と請求",
+      "amountOwed": "未払い金額",
+      "deliveriesThisWeek": "今週の配達件数",
+      "nextCharge": "次回の請求",
+      "heldTitle": "送信待ち",
+      "sendToDriver": "ドライバーに送信",
+      "sending": "送信中…",
+      "sent": "ドライバーに送信済み",
+      "sendFailed": "送信できませんでした。もう一度お試しください。",
+      "activeDeliveries": "進行中の配達",
+      "noActiveDeliveries": "進行中の配達はありません。",
+      "unassigned": "ドライバーを待っています",
+      "st_queued": "待機中",
+      "st_assigned": "割り当て済み",
+      "st_accepted": "受諾済み",
+      "st_started": "店舗へ移動中",
+      "st_enroute": "配達中"
     }
   },
   "impersonation": {
@@ -6120,6 +6137,17 @@
       "addOneMoreAria": "{name}を1つ追加",
       "removeOneAria": "{name}を1つ削除",
       "stepDoneHint": "このステップは完了です — 「次へ」をタップして続行してください。"
+    },
+    "tracking": {
+      "onTheWayTitle": "ご注文の商品を配達中です",
+      "headingToStoreTitle": "ドライバーがご注文を受け取りに向かっています",
+      "live": "リアルタイム",
+      "onTheWayNamed": "{name} さんがご注文の商品をお届け中です。",
+      "headingToStoreNamed": "{name} さんがご注文を受け取りにレストランへ向かっています。",
+      "onTheWayGeneric": "ドライバーがご注文の商品をお届け中です。",
+      "headingToStoreGeneric": "ドライバーがご注文を受け取りにレストランへ向かっています。",
+      "etaAway": "あと約 {minutes} 分",
+      "mapTitle": "ドライバーのリアルタイム位置"
     }
   },
   "partnerPeriod": {
