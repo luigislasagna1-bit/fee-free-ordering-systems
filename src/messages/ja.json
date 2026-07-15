@@ -796,7 +796,22 @@
     "filterAll": "すべて",
     "filterTakeaway": "テイクアウト",
     "filterDelivery": "デリバリー",
-    "filterReservations": "予約"
+    "filterReservations": "予約",
+    "acceptOrderTitle": "注文を受ける",
+    "confirmScheduledTitle": "予約注文を確認",
+    "scheduledForLabel": "予約日時",
+    "scheduledConfirmNote": "お客様がご注文時にこの時間を選択しました。確認すると厨房用に確定されます。",
+    "prepTimeLabel": "調理時間（分）",
+    "prepTimeNote": "これに基づき、お客様に完成予定時刻が表示されます。",
+    "autoPrintNote": "レシートは自動的に印刷されます。",
+    "addPrepTimeDelay": "調理時間・遅延を追加",
+    "addPrepTimeTitle": "調理時間を追加",
+    "addPrepTimeNote": "この注文の完成予定時刻を遅らせます。お客様に新しい時刻のメールが送られます。",
+    "customMinutes": "カスタム（1〜240分）",
+    "delayReasonLabel": "理由（任意・お客様に表示されます）",
+    "delayReasonPlaceholder": "厨房が混雑、材料切れ など",
+    "savingEllipsis": "保存中…",
+    "delayByMin": "{n}分遅らせる"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

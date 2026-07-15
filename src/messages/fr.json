@@ -796,7 +796,22 @@
     "filterAll": "Toutes",
     "filterTakeaway": "À emporter",
     "filterDelivery": "Livraison",
-    "filterReservations": "Réservations"
+    "filterReservations": "Réservations",
+    "acceptOrderTitle": "Accepter la commande",
+    "confirmScheduledTitle": "Confirmer la commande programmée",
+    "scheduledForLabel": "Programmé pour",
+    "scheduledConfirmNote": "Le client a choisi cet horaire lors de la commande. En confirmant, il est verrouillé pour la cuisine.",
+    "prepTimeLabel": "Temps de préparation (minutes)",
+    "prepTimeNote": "Le client verra l'heure de disponibilité estimée en fonction de ceci.",
+    "autoPrintNote": "Le reçu s'imprimera automatiquement.",
+    "addPrepTimeDelay": "Ajouter du temps de préparation / retard",
+    "addPrepTimeTitle": "Ajouter du temps de préparation",
+    "addPrepTimeNote": "Repousse l'heure de disponibilité estimée de cette commande. Le client reçoit un e-mail avec le nouvel horaire.",
+    "customMinutes": "Personnalisé (1–240 min)",
+    "delayReasonLabel": "Motif (facultatif — visible par le client)",
+    "delayReasonPlaceholder": "Cuisine très chargée, ingrédient manquant, etc.",
+    "savingEllipsis": "Enregistrement…",
+    "delayByMin": "Retarder de {n} min"
   },
   "admin": {
     "welcomeBack": "Bon retour",

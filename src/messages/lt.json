@@ -796,7 +796,22 @@
     "filterAll": "Visi",
     "filterTakeaway": "Atsiėmimas",
     "filterDelivery": "Pristatymas",
-    "filterReservations": "Rezervacijos"
+    "filterReservations": "Rezervacijos",
+    "acceptOrderTitle": "Priimti užsakymą",
+    "confirmScheduledTitle": "Patvirtinti suplanuotą užsakymą",
+    "scheduledForLabel": "Suplanuota",
+    "scheduledConfirmNote": "Klientas pasirinko šį laiką užsakydamas. Patvirtinus jis fiksuojamas virtuvei.",
+    "prepTimeLabel": "Ruošimo laikas (minutės)",
+    "prepTimeNote": "Klientas pagal tai matys numatomą paruošimo laiką.",
+    "autoPrintNote": "Kvitas bus atspausdintas automatiškai.",
+    "addPrepTimeDelay": "Pridėti ruošimo laiko / vėlavimą",
+    "addPrepTimeTitle": "Pridėti ruošimo laiko",
+    "addPrepTimeNote": "Atideda numatomą užsakymo paruošimo laiką. Klientas gaus el. laišką su nauju laiku.",
+    "customMinutes": "Pasirinktinis (1–240 min)",
+    "delayReasonLabel": "Priežastis (nebūtina — matys klientas)",
+    "delayReasonPlaceholder": "Virtuvėje daug darbo, baigėsi ingredientas ir pan.",
+    "savingEllipsis": "Įrašoma…",
+    "delayByMin": "Atidėti {n} min"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

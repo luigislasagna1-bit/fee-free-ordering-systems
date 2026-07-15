@@ -796,7 +796,22 @@
     "filterAll": "Все",
     "filterTakeaway": "Самовывоз",
     "filterDelivery": "Доставка",
-    "filterReservations": "Брони"
+    "filterReservations": "Брони",
+    "acceptOrderTitle": "Принять заказ",
+    "confirmScheduledTitle": "Подтвердить запланированный заказ",
+    "scheduledForLabel": "Запланировано на",
+    "scheduledConfirmNote": "Клиент выбрал это время при оформлении. Подтверждение фиксирует его для кухни.",
+    "prepTimeLabel": "Время приготовления (минуты)",
+    "prepTimeNote": "Клиент увидит примерное время готовности на основе этого.",
+    "autoPrintNote": "Чек будет напечатан автоматически.",
+    "addPrepTimeDelay": "Добавить время приготовления / задержку",
+    "addPrepTimeTitle": "Добавить время приготовления",
+    "addPrepTimeNote": "Сдвигает примерное время готовности заказа. Клиент получит письмо с новым временем.",
+    "customMinutes": "Другое (1–240 мин)",
+    "delayReasonLabel": "Причина (необязательно — видна клиенту)",
+    "delayReasonPlaceholder": "Кухня загружена, закончился ингредиент и т. д.",
+    "savingEllipsis": "Сохранение…",
+    "delayByMin": "Задержать на {n} мин"
   },
   "admin": {
     "welcomeBack": "С возвращением",

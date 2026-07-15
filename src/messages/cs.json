@@ -796,7 +796,22 @@
     "filterAll": "Vše",
     "filterTakeaway": "Vyzvednutí",
     "filterDelivery": "Doručení",
-    "filterReservations": "Rezervace"
+    "filterReservations": "Rezervace",
+    "acceptOrderTitle": "Přijmout objednávku",
+    "confirmScheduledTitle": "Potvrdit naplánovanou objednávku",
+    "scheduledForLabel": "Naplánováno na",
+    "scheduledConfirmNote": "Zákazník zvolil tento čas při objednávce. Potvrzením se čas zafixuje pro kuchyni.",
+    "prepTimeLabel": "Doba přípravy (minuty)",
+    "prepTimeNote": "Zákazník podle toho uvidí odhadovaný čas připravenosti.",
+    "autoPrintNote": "Účtenka se vytiskne automaticky.",
+    "addPrepTimeDelay": "Přidat dobu přípravy / zpoždění",
+    "addPrepTimeTitle": "Přidat dobu přípravy",
+    "addPrepTimeNote": "Posune odhadovaný čas připravenosti objednávky. Zákazník dostane e-mail s novým časem.",
+    "customMinutes": "Vlastní (1–240 min)",
+    "delayReasonLabel": "Důvod (nepovinné — zobrazí se zákazníkovi)",
+    "delayReasonPlaceholder": "V kuchyni je rušno, došla surovina apod.",
+    "savingEllipsis": "Ukládání…",
+    "delayByMin": "Zpozdit o {n} min"
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",

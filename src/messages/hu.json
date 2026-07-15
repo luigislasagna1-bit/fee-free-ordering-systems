@@ -796,7 +796,22 @@
     "filterAll": "Összes",
     "filterTakeaway": "Elvitel",
     "filterDelivery": "Szállítás",
-    "filterReservations": "Foglalások"
+    "filterReservations": "Foglalások",
+    "acceptOrderTitle": "Rendelés elfogadása",
+    "confirmScheduledTitle": "Ütemezett rendelés megerősítése",
+    "scheduledForLabel": "Erre az időpontra",
+    "scheduledConfirmNote": "A vásárló ezt az időpontot választotta a rendeléskor. A megerősítés rögzíti a konyha számára.",
+    "prepTimeLabel": "Elkészítési idő (perc)",
+    "prepTimeNote": "A vásárló ez alapján látja a becsült elkészülési időt.",
+    "autoPrintNote": "A nyugta automatikusan nyomtatásra kerül.",
+    "addPrepTimeDelay": "Elkészítési idő / késés hozzáadása",
+    "addPrepTimeTitle": "Elkészítési idő hozzáadása",
+    "addPrepTimeNote": "Kitolja a rendelés becsült elkészülési idejét. A vásárló e-mailt kap az új időpontról.",
+    "customMinutes": "Egyéni (1–240 perc)",
+    "delayReasonLabel": "Indok (nem kötelező — a vásárló látja)",
+    "delayReasonPlaceholder": "A konyha leterhelt, elfogyott egy hozzávaló stb.",
+    "savingEllipsis": "Mentés…",
+    "delayByMin": "Késleltetés {n} perccel"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

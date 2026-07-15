@@ -796,7 +796,22 @@
     "filterAll": "ทั้งหมด",
     "filterTakeaway": "รับที่ร้าน",
     "filterDelivery": "จัดส่ง",
-    "filterReservations": "การจอง"
+    "filterReservations": "การจอง",
+    "acceptOrderTitle": "รับออร์เดอร์",
+    "confirmScheduledTitle": "ยืนยันออร์เดอร์ที่นัดเวลา",
+    "scheduledForLabel": "นัดเวลาไว้",
+    "scheduledConfirmNote": "ลูกค้าเลือกเวลานี้ตอนสั่งซื้อ การยืนยันจะล็อกเวลานี้ให้ครัว",
+    "prepTimeLabel": "เวลาเตรียม (นาที)",
+    "prepTimeNote": "ลูกค้าจะเห็นเวลาที่คาดว่าจะเสร็จตามนี้",
+    "autoPrintNote": "ใบเสร็จจะพิมพ์อัตโนมัติ",
+    "addPrepTimeDelay": "เพิ่มเวลาเตรียม / ความล่าช้า",
+    "addPrepTimeTitle": "เพิ่มเวลาเตรียม",
+    "addPrepTimeNote": "เลื่อนเวลาที่คาดว่าจะเสร็จของออร์เดอร์นี้ ลูกค้าจะได้รับอีเมลแจ้งเวลาใหม่",
+    "customMinutes": "กำหนดเอง (1–240 นาที)",
+    "delayReasonLabel": "เหตุผล (ไม่บังคับ — ลูกค้าจะเห็น)",
+    "delayReasonPlaceholder": "ครัวงานยุ่ง วัตถุดิบหมด ฯลฯ",
+    "savingEllipsis": "กำลังบันทึก…",
+    "delayByMin": "เลื่อน {n} นาที"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",

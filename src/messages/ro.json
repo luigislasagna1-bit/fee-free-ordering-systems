@@ -796,7 +796,22 @@
     "filterAll": "Toate",
     "filterTakeaway": "Ridicare",
     "filterDelivery": "Livrare",
-    "filterReservations": "Rezervări"
+    "filterReservations": "Rezervări",
+    "acceptOrderTitle": "Acceptă comanda",
+    "confirmScheduledTitle": "Confirmă comanda programată",
+    "scheduledForLabel": "Programat pentru",
+    "scheduledConfirmNote": "Clientul a ales această oră la finalizarea comenzii. Confirmarea o fixează pentru bucătărie.",
+    "prepTimeLabel": "Timp de preparare (minute)",
+    "prepTimeNote": "Clientul va vedea ora estimată de finalizare pe baza acesteia.",
+    "autoPrintNote": "Bonul se va tipări automat.",
+    "addPrepTimeDelay": "Adaugă timp de preparare / întârziere",
+    "addPrepTimeTitle": "Adaugă timp de preparare",
+    "addPrepTimeNote": "Amână ora estimată de finalizare a comenzii. Clientul primește un e-mail cu noua oră.",
+    "customMinutes": "Personalizat (1–240 min)",
+    "delayReasonLabel": "Motiv (opțional — vizibil pentru client)",
+    "delayReasonPlaceholder": "Bucătărie aglomerată, s-a terminat un ingredient etc.",
+    "savingEllipsis": "Se salvează…",
+    "delayByMin": "Întârzie cu {n} min"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

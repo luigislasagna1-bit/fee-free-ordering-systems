@@ -796,7 +796,22 @@
     "filterAll": "Vsa",
     "filterTakeaway": "Prevzem",
     "filterDelivery": "Dostava",
-    "filterReservations": "Rezervacije"
+    "filterReservations": "Rezervacije",
+    "acceptOrderTitle": "Sprejmi naročilo",
+    "confirmScheduledTitle": "Potrdi načrtovano naročilo",
+    "scheduledForLabel": "Načrtovano za",
+    "scheduledConfirmNote": "Stranka je izbrala ta čas ob naročilu. Potrditev ga določi za kuhinjo.",
+    "prepTimeLabel": "Čas priprave (minute)",
+    "prepTimeNote": "Stranka bo na podlagi tega videla predviden čas pripravljenosti.",
+    "autoPrintNote": "Račun se bo natisnil samodejno.",
+    "addPrepTimeDelay": "Dodaj čas priprave / zamudo",
+    "addPrepTimeTitle": "Dodaj čas priprave",
+    "addPrepTimeNote": "Premakne predviden čas pripravljenosti naročila. Stranka prejme e-pošto z novim časom.",
+    "customMinutes": "Po meri (1–240 min)",
+    "delayReasonLabel": "Razlog (neobvezno — vidi ga stranka)",
+    "delayReasonPlaceholder": "Kuhinja je zasedena, zmanjkalo je sestavine ipd.",
+    "savingEllipsis": "Shranjevanje…",
+    "delayByMin": "Zamakni za {n} min"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

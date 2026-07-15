@@ -796,7 +796,22 @@
     "filterAll": "Totes",
     "filterTakeaway": "Recollida",
     "filterDelivery": "Lliurament",
-    "filterReservations": "Reserves"
+    "filterReservations": "Reserves",
+    "acceptOrderTitle": "Accepta la comanda",
+    "confirmScheduledTitle": "Confirma la comanda programada",
+    "scheduledForLabel": "Programat per a",
+    "scheduledConfirmNote": "El client va triar aquesta hora en fer la comanda. En confirmar, queda fixada per a la cuina.",
+    "prepTimeLabel": "Temps de preparació (minuts)",
+    "prepTimeNote": "El client veurà l'hora estimada de preparació segons això.",
+    "autoPrintNote": "El rebut s'imprimirà automàticament.",
+    "addPrepTimeDelay": "Afegeix temps de preparació / retard",
+    "addPrepTimeTitle": "Afegeix temps de preparació",
+    "addPrepTimeNote": "Endarrereix l'hora estimada de preparació d'aquesta comanda. El client rep un correu amb la nova hora.",
+    "customMinutes": "Personalitzat (1–240 min)",
+    "delayReasonLabel": "Motiu (opcional — visible per al client)",
+    "delayReasonPlaceholder": "Cuina molt ocupada, falta un ingredient, etc.",
+    "savingEllipsis": "S'està desant…",
+    "delayByMin": "Retarda {n} min"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

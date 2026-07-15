@@ -796,7 +796,22 @@
     "filterAll": "Всі",
     "filterTakeaway": "Самовивіз",
     "filterDelivery": "Доставка",
-    "filterReservations": "Бронювання"
+    "filterReservations": "Бронювання",
+    "acceptOrderTitle": "Прийняти замовлення",
+    "confirmScheduledTitle": "Підтвердити заплановане замовлення",
+    "scheduledForLabel": "Заплановано на",
+    "scheduledConfirmNote": "Клієнт обрав цей час при оформленні. Підтвердження фіксує його для кухні.",
+    "prepTimeLabel": "Час приготування (хвилини)",
+    "prepTimeNote": "Клієнт побачить орієнтовний час готовності на основі цього.",
+    "autoPrintNote": "Чек буде надруковано автоматично.",
+    "addPrepTimeDelay": "Додати час приготування / затримку",
+    "addPrepTimeTitle": "Додати час приготування",
+    "addPrepTimeNote": "Зсуває орієнтовний час готовності замовлення. Клієнт отримає лист із новим часом.",
+    "customMinutes": "Інше (1–240 хв)",
+    "delayReasonLabel": "Причина (необов'язково — бачить клієнт)",
+    "delayReasonPlaceholder": "Кухня завантажена, закінчився інгредієнт тощо.",
+    "savingEllipsis": "Збереження…",
+    "delayByMin": "Затримати на {n} хв"
   },
   "admin": {
     "welcomeBack": "З поверненням",

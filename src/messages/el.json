@@ -796,7 +796,22 @@
     "filterAll": "Όλα",
     "filterTakeaway": "Παραλαβή",
     "filterDelivery": "Παράδοση",
-    "filterReservations": "Κρατήσεις"
+    "filterReservations": "Κρατήσεις",
+    "acceptOrderTitle": "Αποδοχή παραγγελίας",
+    "confirmScheduledTitle": "Επιβεβαίωση προγραμματισμένης παραγγελίας",
+    "scheduledForLabel": "Προγραμματισμένο για",
+    "scheduledConfirmNote": "Ο πελάτης επέλεξε αυτή την ώρα κατά την παραγγελία. Η επιβεβαίωση την κλειδώνει για την κουζίνα.",
+    "prepTimeLabel": "Χρόνος προετοιμασίας (λεπτά)",
+    "prepTimeNote": "Ο πελάτης θα δει την εκτιμώμενη ώρα ετοιμότητας βάσει αυτού.",
+    "autoPrintNote": "Η απόδειξη θα εκτυπωθεί αυτόματα.",
+    "addPrepTimeDelay": "Προσθήκη χρόνου προετοιμασίας / καθυστέρησης",
+    "addPrepTimeTitle": "Προσθήκη χρόνου προετοιμασίας",
+    "addPrepTimeNote": "Μεταθέτει την εκτιμώμενη ώρα ετοιμότητας. Ο πελάτης λαμβάνει email με τη νέα ώρα.",
+    "customMinutes": "Προσαρμοσμένο (1–240 λεπτά)",
+    "delayReasonLabel": "Αιτία (προαιρετικό — εμφανίζεται στον πελάτη)",
+    "delayReasonPlaceholder": "Η κουζίνα έχει φόρτο, εξαντλήθηκε ένα υλικό κ.λπ.",
+    "savingEllipsis": "Αποθήκευση…",
+    "delayByMin": "Καθυστέρηση κατά {n} λεπτά"
   },
   "admin": {
     "welcomeBack": "Καλώς ορίσατε",

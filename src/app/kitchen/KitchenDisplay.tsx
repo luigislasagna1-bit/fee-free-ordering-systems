@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { formatCurrency, capitalizeName } from "@/lib/utils";
-import { formatTime, formatDueLabel } from "@/lib/format-time";
+import { formatTime, formatDueLabel, formatDateCapitalized } from "@/lib/format-time";
 import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
   FlaskConical, Loader2, Volume2, VolumeX, AlertTriangle, XCircle,
   CalendarDays, X, ChevronRight, ArrowLeft, CalendarClock, UtensilsCrossed,
-  MoreVertical, Settings, ClipboardList,
+  MoreVertical, Settings, ClipboardList, Users,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
@@ -161,9 +161,15 @@ function ReservationCard({
               code + exact date/time now live in the detail (tap to open). */}
           <div className="mt-1 flex items-center gap-2 flex-wrap">
             <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} />
+            {/* The In Progress tab passes its own dayChip; every other tab lets
+                the card compute `autoCountdown`. That split is why the CLOCK was
+                missing only in "In Progress" — this chip had no icon while the
+                autoCountdown one below did (Fabrizio 2026-07-15). Same clock chip
+                for both now, and day names are UPPERCASED to match the order
+                tiles (he asked for caps or first-letter caps). */}
             {dayChip && (
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 tracking-wider">
-                {dayChip}
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
+                <Clock className="w-3 h-3" /> {dayChip.toUpperCase()}
               </span>
             )}
             {showAcceptCountdown ? (
@@ -180,7 +186,9 @@ function ReservationCard({
               <>
                 {autoCountdown && (
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold px-1.5 py-0.5 rounded bg-blue-100 text-blue-700">
-                    <Clock className="w-3 h-3" /> {autoCountdown}
+                    {/* Uppercased for the same reason as the dayChip above — a
+                        weekday label must read "GIOVEDÌ", not "giovedì". */}
+                    <Clock className="w-3 h-3" /> {autoCountdown.toUpperCase()}
                   </span>
                 )}
                 {opensLabel && (
@@ -191,6 +199,14 @@ function ReservationCard({
               </>
             )}
           </div>
+        </div>
+        {/* Cover count on the RIGHT — the same slot an order tile puts its total
+            in, so a reservation row reads "who / when … how many" at a glance
+            (Fabrizio 2026-07-15, matching the GloriaFood layout). The detail
+            view still carries table, deposit, notes + booking code. */}
+        <div className={`flex-shrink-0 flex items-center gap-1 font-bold ${t.text}`}>
+          {r.partySize}
+          <Users className="w-4 h-4 opacity-70" />
         </div>
       </div>
     </button>
@@ -224,7 +240,7 @@ function ReservationDetail({
   // e.g. "sabato 27 giugno 2026", instead of the raw ISO "2026-06-27").
   const resvDateObj = new Date(`${r.date}T${r.time || "00:00"}:00`);
   const resvDateLabel = Number.isFinite(resvDateObj.getTime())
-    ? resvDateObj.toLocaleDateString(locale || undefined, { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+    ? formatDateCapitalized(resvDateObj, locale, { weekday: "long", day: "numeric", month: "long", year: "numeric" })
     : r.date;
   const act = async (status: string) => {
     if (busy) return;
@@ -818,6 +834,9 @@ const ACCEPT_WINDOW_MS = 245 * 1000;
 
 export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = null }: { restaurant: any; initialOrders: Order[]; resellerLogoUrl?: string | null }) {
   const tk = useTranslations("kitchen");
+  // Confirm/Cancel already exist translated in `common` — reuse rather than
+  // duplicate them into the kitchen namespace (Fabrizio 2026-07-15 #3).
+  const tCommon = useTranslations("common");
   const locale = useLocale();
   // Kitchen zoom (restaurateur feedback via Fabrizio, 2026-07-03): scale the
   // WHOLE display — text, numbers, tiles — for staff who have trouble seeing
@@ -4012,7 +4031,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
           <div className={`${t.modal} rounded-2xl w-full max-w-sm p-6`}>
             <h3 className={`text-xl font-bold ${t.text} mb-4`}>
-              {isScheduled ? "Confirm Scheduled Order" : "Accept Order"}
+              {isScheduled ? tk("confirmScheduledTitle") : tk("acceptOrderTitle")}
             </h3>
 
             {isScheduled ? (
@@ -4023,10 +4042,10 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                     confirming. */}
                 <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4">
                   <div className="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-1">
-                    Scheduled for
+                    {tk("scheduledForLabel")}
                   </div>
                   <div className="text-lg font-bold text-emerald-900 leading-tight">
-                    {scheduledFor!.toLocaleString(locale || undefined, {
+                    {formatDateCapitalized(scheduledFor!, locale, {
                       weekday: "long",
                       month: "short",
                       day: "numeric",
@@ -4051,12 +4070,12 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                   </div>
                 </div>
                 <p className={`text-xs ${t.muted} mb-4`}>
-                  The customer chose this time at checkout. Confirming locks it in for the kitchen.
+                  {tk("scheduledConfirmNote")}
                 </p>
               </>
             ) : (
               <>
-                <label className={`text-sm ${t.muted} block mb-2`}>Preparation time (minutes)</label>
+                <label className={`text-sm ${t.muted} block mb-2`}>{tk("prepTimeLabel")}</label>
                 <div className="flex flex-wrap gap-2 mb-3">
                   {["10", "15", "20", "25", "30", "45", "60"].map(tm => (
                     <button
@@ -4077,14 +4096,14 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                   onChange={e => setPrepTime(e.target.value)}
                 />
                 <p className={`text-xs ${t.muted} mb-4`}>
-                  Customer will see estimated ready time based on this.
+                  {tk("prepTimeNote")}
                 </p>
               </>
             )}
 
             {printerSettings?.autoPrint && printerReady && (
               <p className="text-xs text-emerald-500 mb-4 flex items-center gap-1">
-                <Printer className="w-3 h-3" /> Receipt will print automatically.
+                <Printer className="w-3 h-3" /> {tk("autoPrintNote")}
               </p>
             )}
             <div className="flex gap-3">
@@ -4093,13 +4112,13 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                 className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition"
               >
                 <CheckCircle className="w-4 h-4 inline mr-1.5" />
-                {isScheduled ? "Confirm" : "Confirm"}
+                {tCommon("confirm")}
               </button>
               <button
                 onClick={() => setPrepModal(null)}
                 className={`flex-1 ${t.btn} py-3 rounded-xl font-semibold transition`}
               >
-                Cancel
+                {tCommon("cancel")}
               </button>
             </div>
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { formatTime, formatDueCountdown, formatDueLabel, formatMinutes } from "@/lib/format-time";
+import { formatTime, formatDueCountdown, formatDueLabel, formatMinutes, formatDateCapitalized } from "@/lib/format-time";
 
 describe("formatTime — 12h/24h, with the midnight fix", () => {
   it("formats 24h", () => {
@@ -52,5 +52,32 @@ describe("formatMinutes — minutes-since-midnight", () => {
   it("clamps out-of-range values and ignores junk", () => {
     expect(formatMinutes(null)).toBe("");
     expect(formatMinutes(2000, "24h")).toBe("24:00"); // clamped to 1440
+  });
+});
+
+describe("formatDateCapitalized", () => {
+  const d = new Date(Date.UTC(2026, 6, 15, 15, 0)); // Wed 15 Jul 2026, 15:00 UTC
+  const opts: Intl.DateTimeFormatOptions = {
+    weekday: "long", month: "short", day: "numeric",
+    hour: "numeric", minute: "2-digit", hourCycle: "h23", timeZone: "UTC",
+  };
+
+  it("capitalises the Italian weekday + month (Fabrizio 2026-07-15)", () => {
+    // Italian renders these lowercase: "mercoledì 15 lug, 15:00"
+    expect(formatDateCapitalized(d, "it", opts)).toBe("Mercoledì 15 Lug, 15:00");
+  });
+
+  it("leaves already-capitalised English alone", () => {
+    expect(formatDateCapitalized(d, "en", opts)).toBe("Wednesday, Jul 15, 15:00");
+  });
+
+  it("does not mangle non-cased scripts (ja)", () => {
+    const out = formatDateCapitalized(d, "ja", opts);
+    expect(out).toContain("15");
+    expect(out.length).toBeGreaterThan(0);
+  });
+
+  it("never throws on a bad locale", () => {
+    expect(() => formatDateCapitalized(d, "not-a-locale", opts)).not.toThrow();
   });
 });

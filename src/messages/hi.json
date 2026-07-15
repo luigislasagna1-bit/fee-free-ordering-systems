@@ -796,7 +796,22 @@
     "filterAll": "सभी",
     "filterTakeaway": "पिकअप",
     "filterDelivery": "डिलीवरी",
-    "filterReservations": "आरक्षण"
+    "filterReservations": "आरक्षण",
+    "acceptOrderTitle": "ऑर्डर स्वीकारें",
+    "confirmScheduledTitle": "शेड्यूल ऑर्डर की पुष्टि करें",
+    "scheduledForLabel": "इसके लिए निर्धारित",
+    "scheduledConfirmNote": "ग्राहक ने ऑर्डर करते समय यह समय चुना। पुष्टि करने पर यह रसोई के लिए तय हो जाता है।",
+    "prepTimeLabel": "तैयारी का समय (मिनट)",
+    "prepTimeNote": "ग्राहक इसके आधार पर अनुमानित तैयार समय देखेगा।",
+    "autoPrintNote": "रसीद अपने आप प्रिंट होगी।",
+    "addPrepTimeDelay": "तैयारी का समय / देरी जोड़ें",
+    "addPrepTimeTitle": "तैयारी का समय जोड़ें",
+    "addPrepTimeNote": "इस ऑर्डर का अनुमानित तैयार समय बढ़ाएँ। ग्राहक को नए समय का ईमेल मिलेगा।",
+    "customMinutes": "कस्टम (1–240 मिनट)",
+    "delayReasonLabel": "कारण (वैकल्पिक — ग्राहक को दिखेगा)",
+    "delayReasonPlaceholder": "रसोई व्यस्त है, कोई सामग्री खत्म, आदि।",
+    "savingEllipsis": "सहेजा जा रहा है…",
+    "delayByMin": "{n} मिनट देरी करें"
   },
   "admin": {
     "comingSoonPlaceholder": {

@@ -796,7 +796,22 @@
     "filterAll": "Visi",
     "filterTakeaway": "Paņemšana",
     "filterDelivery": "Piegāde",
-    "filterReservations": "Rezervācijas"
+    "filterReservations": "Rezervācijas",
+    "acceptOrderTitle": "Pieņemt pasūtījumu",
+    "confirmScheduledTitle": "Apstiprināt ieplānoto pasūtījumu",
+    "scheduledForLabel": "Ieplānots uz",
+    "scheduledConfirmNote": "Klients izvēlējās šo laiku, veicot pasūtījumu. Apstiprinot tas tiek fiksēts virtuvei.",
+    "prepTimeLabel": "Gatavošanas laiks (minūtes)",
+    "prepTimeNote": "Klients, pamatojoties uz to, redzēs aptuveno gatavības laiku.",
+    "autoPrintNote": "Čeks tiks izdrukāts automātiski.",
+    "addPrepTimeDelay": "Pievienot gatavošanas laiku / aizkavi",
+    "addPrepTimeTitle": "Pievienot gatavošanas laiku",
+    "addPrepTimeNote": "Pārceļ pasūtījuma aptuveno gatavības laiku. Klients saņem e-pastu ar jauno laiku.",
+    "customMinutes": "Pielāgots (1–240 min)",
+    "delayReasonLabel": "Iemesls (neobligāti — redzams klientam)",
+    "delayReasonPlaceholder": "Virtuvē ir noslogojums, beigusies sastāvdaļa utt.",
+    "savingEllipsis": "Saglabāšana…",
+    "delayByMin": "Aizkavēt par {n} min"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

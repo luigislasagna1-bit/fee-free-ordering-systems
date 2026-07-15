@@ -796,7 +796,22 @@
     "filterAll": "All",
     "filterTakeaway": "Takeaway",
     "filterDelivery": "Delivery",
-    "filterReservations": "Reservations"
+    "filterReservations": "Reservations",
+    "acceptOrderTitle": "Accept Order",
+    "confirmScheduledTitle": "Confirm Scheduled Order",
+    "scheduledForLabel": "Scheduled for",
+    "scheduledConfirmNote": "The customer chose this time at checkout. Confirming locks it in for the kitchen.",
+    "prepTimeLabel": "Preparation time (minutes)",
+    "prepTimeNote": "Customer will see estimated ready time based on this.",
+    "autoPrintNote": "Receipt will print automatically.",
+    "addPrepTimeDelay": "Add prep time / delay",
+    "addPrepTimeTitle": "Add prep time",
+    "addPrepTimeNote": "Bump this order's estimated ready time. The customer gets an email with the new ETA.",
+    "customMinutes": "Custom (1–240 min)",
+    "delayReasonLabel": "Reason (optional — shown to customer)",
+    "delayReasonPlaceholder": "Kitchen running busy, out of an ingredient, etc.",
+    "savingEllipsis": "Saving…",
+    "delayByMin": "Delay by {n} min"
   },
   "admin": {
     "comingSoonPlaceholder": {

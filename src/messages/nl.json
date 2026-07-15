@@ -796,7 +796,22 @@
     "filterAll": "Alle",
     "filterTakeaway": "Afhalen",
     "filterDelivery": "Bezorgen",
-    "filterReservations": "Reserveringen"
+    "filterReservations": "Reserveringen",
+    "acceptOrderTitle": "Bestelling accepteren",
+    "confirmScheduledTitle": "Geplande bestelling bevestigen",
+    "scheduledForLabel": "Gepland voor",
+    "scheduledConfirmNote": "De klant heeft deze tijd bij het afrekenen gekozen. Bevestigen legt de tijd vast voor de keuken.",
+    "prepTimeLabel": "Bereidingstijd (minuten)",
+    "prepTimeNote": "De klant ziet de geschatte klaartijd op basis hiervan.",
+    "autoPrintNote": "De bon wordt automatisch afgedrukt.",
+    "addPrepTimeDelay": "Bereidingstijd / vertraging toevoegen",
+    "addPrepTimeTitle": "Bereidingstijd toevoegen",
+    "addPrepTimeNote": "Verschuift de geschatte klaartijd van deze bestelling. De klant krijgt een e-mail met de nieuwe tijd.",
+    "customMinutes": "Aangepast (1–240 min)",
+    "delayReasonLabel": "Reden (optioneel — zichtbaar voor de klant)",
+    "delayReasonPlaceholder": "Keuken erg druk, ingrediënt op, enz.",
+    "savingEllipsis": "Opslaan…",
+    "delayByMin": "{n} min uitstellen"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

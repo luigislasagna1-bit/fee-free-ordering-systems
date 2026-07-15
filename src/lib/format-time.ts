@@ -19,6 +19,40 @@
 
 export type HoursFormat = "12h" | "24h";
 
+/**
+ * Locale-format a date, capitalising the WEEKDAY and MONTH words.
+ *
+ * Italian (and Spanish/French/German-adjacent locales) render these lowercase —
+ * "mercoledì 15 lug, 15:00" — which reads like a typo on a kitchen ticket.
+ * Fabrizio 2026-07-15: "Capitalize the first letter of the day of the week, and
+ * do the same for the month."
+ *
+ * Uses Intl.formatToParts so we only touch the weekday/month parts and never
+ * mangle separators, digits or AM/PM. Scripts without case (zh/ja/ko/ar/he/th)
+ * are unaffected — toUpperCase() on those characters is a no-op — so this is
+ * safe across all 38 locales.
+ */
+export function formatDateCapitalized(
+  date: Date | number | string,
+  locale: string | undefined,
+  opts: Intl.DateTimeFormatOptions,
+): string {
+  const d = date instanceof Date ? date : new Date(date);
+  try {
+    return new Intl.DateTimeFormat(locale || undefined, opts)
+      .formatToParts(d)
+      .map((p) =>
+        p.type === "weekday" || p.type === "month"
+          ? p.value.charAt(0).toUpperCase() + p.value.slice(1)
+          : p.value,
+      )
+      .join("");
+  } catch {
+    // Bad locale/options → never throw at render time.
+    return d.toLocaleString(locale || undefined, opts);
+  }
+}
+
 export function formatTime(
   hhmm: string | null | undefined,
   format: HoursFormat = "24h",

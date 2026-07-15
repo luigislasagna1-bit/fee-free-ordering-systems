@@ -796,7 +796,22 @@
     "filterAll": "Semua",
     "filterTakeaway": "Ambil Sendiri",
     "filterDelivery": "Pengiriman",
-    "filterReservations": "Reservasi"
+    "filterReservations": "Reservasi",
+    "acceptOrderTitle": "Terima pesanan",
+    "confirmScheduledTitle": "Konfirmasi pesanan terjadwal",
+    "scheduledForLabel": "Dijadwalkan untuk",
+    "scheduledConfirmNote": "Pelanggan memilih waktu ini saat memesan. Mengonfirmasi mengunci waktu untuk dapur.",
+    "prepTimeLabel": "Waktu persiapan (menit)",
+    "prepTimeNote": "Pelanggan akan melihat perkiraan waktu siap berdasarkan ini.",
+    "autoPrintNote": "Struk akan dicetak otomatis.",
+    "addPrepTimeDelay": "Tambah waktu persiapan / penundaan",
+    "addPrepTimeTitle": "Tambah waktu persiapan",
+    "addPrepTimeNote": "Menunda perkiraan waktu siap pesanan ini. Pelanggan menerima email dengan waktu baru.",
+    "customMinutes": "Kustom (1–240 mnt)",
+    "delayReasonLabel": "Alasan (opsional — ditampilkan ke pelanggan)",
+    "delayReasonPlaceholder": "Dapur sedang sibuk, bahan habis, dll.",
+    "savingEllipsis": "Menyimpan…",
+    "delayByMin": "Tunda {n} mnt"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

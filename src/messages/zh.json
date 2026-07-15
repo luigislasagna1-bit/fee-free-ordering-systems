@@ -796,7 +796,22 @@
     "filterAll": "全部",
     "filterTakeaway": "自取",
     "filterDelivery": "外卖配送",
-    "filterReservations": "预订"
+    "filterReservations": "预订",
+    "acceptOrderTitle": "接受订单",
+    "confirmScheduledTitle": "确认预约订单",
+    "scheduledForLabel": "预约时间",
+    "scheduledConfirmNote": "顾客在下单时选择了该时间。确认后将为厨房锁定该时间。",
+    "prepTimeLabel": "备餐时间（分钟）",
+    "prepTimeNote": "顾客将根据此时间看到预计出餐时间。",
+    "autoPrintNote": "小票将自动打印。",
+    "addPrepTimeDelay": "增加备餐时间 / 延迟",
+    "addPrepTimeTitle": "增加备餐时间",
+    "addPrepTimeNote": "推迟此订单的预计出餐时间。顾客会收到新时间的邮件。",
+    "customMinutes": "自定义（1–240 分钟）",
+    "delayReasonLabel": "原因（可选——顾客可见）",
+    "delayReasonPlaceholder": "厨房繁忙、食材用完等。",
+    "savingEllipsis": "保存中…",
+    "delayByMin": "延迟 {n} 分钟"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

@@ -796,7 +796,22 @@
     "filterAll": "Всички",
     "filterTakeaway": "Вземане",
     "filterDelivery": "Доставка",
-    "filterReservations": "Резервации"
+    "filterReservations": "Резервации",
+    "acceptOrderTitle": "Приемане на поръчката",
+    "confirmScheduledTitle": "Потвърдете планираната поръчка",
+    "scheduledForLabel": "Планирано за",
+    "scheduledConfirmNote": "Клиентът избра този час при поръчката. Потвърждаването го фиксира за кухнята.",
+    "prepTimeLabel": "Време за приготвяне (минути)",
+    "prepTimeNote": "Клиентът ще види прогнозното време за готовност според това.",
+    "autoPrintNote": "Касовата бележка ще се отпечата автоматично.",
+    "addPrepTimeDelay": "Добавяне на време за приготвяне / забавяне",
+    "addPrepTimeTitle": "Добавяне на време за приготвяне",
+    "addPrepTimeNote": "Отлага прогнозното време за готовност. Клиентът получава имейл с новия час.",
+    "customMinutes": "Персонализирано (1–240 мин)",
+    "delayReasonLabel": "Причина (по избор — показва се на клиента)",
+    "delayReasonPlaceholder": "Кухнята е натоварена, свърши съставка и т.н.",
+    "savingEllipsis": "Запазване…",
+    "delayByMin": "Забавяне с {n} мин"
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",

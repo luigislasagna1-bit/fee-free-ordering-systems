@@ -796,7 +796,22 @@
     "filterAll": "Kaikki",
     "filterTakeaway": "Nouto",
     "filterDelivery": "Toimitus",
-    "filterReservations": "Varaukset"
+    "filterReservations": "Varaukset",
+    "acceptOrderTitle": "Hyväksy tilaus",
+    "confirmScheduledTitle": "Vahvista ajastettu tilaus",
+    "scheduledForLabel": "Ajastettu",
+    "scheduledConfirmNote": "Asiakas valitsi tämän ajan tilatessaan. Vahvistaminen lukitsee sen keittiölle.",
+    "prepTimeLabel": "Valmistusaika (minuuttia)",
+    "prepTimeNote": "Asiakas näkee arvioidun valmistumisajan tämän perusteella.",
+    "autoPrintNote": "Kuitti tulostuu automaattisesti.",
+    "addPrepTimeDelay": "Lisää valmistusaikaa / viivettä",
+    "addPrepTimeTitle": "Lisää valmistusaikaa",
+    "addPrepTimeNote": "Siirtää tilauksen arvioitua valmistumisaikaa. Asiakas saa sähköpostin uudesta ajasta.",
+    "customMinutes": "Mukautettu (1–240 min)",
+    "delayReasonLabel": "Syy (valinnainen — näytetään asiakkaalle)",
+    "delayReasonPlaceholder": "Keittiössä ruuhkaa, ainesosa loppu jne.",
+    "savingEllipsis": "Tallennetaan…",
+    "delayByMin": "Viivytä {n} min"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

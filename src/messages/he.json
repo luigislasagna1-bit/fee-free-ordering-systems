@@ -796,7 +796,22 @@
     "filterAll": "הכל",
     "filterTakeaway": "איסוף עצמי",
     "filterDelivery": "משלוח",
-    "filterReservations": "הזמנות שולחנות"
+    "filterReservations": "הזמנות שולחנות",
+    "acceptOrderTitle": "אישור הזמנה",
+    "confirmScheduledTitle": "אישור הזמנה מתוזמנת",
+    "scheduledForLabel": "מתוזמן ל",
+    "scheduledConfirmNote": "הלקוח בחר את הזמן הזה בהזמנה. אישור נועל אותו עבור המטבח.",
+    "prepTimeLabel": "זמן הכנה (דקות)",
+    "prepTimeNote": "הלקוח יראה את זמן המוכנות המשוער על סמך זה.",
+    "autoPrintNote": "הקבלה תודפס אוטומטית.",
+    "addPrepTimeDelay": "הוספת זמן הכנה / עיכוב",
+    "addPrepTimeTitle": "הוספת זמן הכנה",
+    "addPrepTimeNote": "דוחה את זמן המוכנות המשוער של ההזמנה. הלקוח יקבל אימייל עם הזמן החדש.",
+    "customMinutes": "מותאם אישית (1–240 דק')",
+    "delayReasonLabel": "סיבה (רשות — מוצגת ללקוח)",
+    "delayReasonPlaceholder": "המטבח עמוס, נגמר מצרך וכו'.",
+    "savingEllipsis": "שומר…",
+    "delayByMin": "עיכוב ב-{n} דק'"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

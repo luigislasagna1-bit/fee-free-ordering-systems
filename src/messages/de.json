@@ -796,7 +796,22 @@
     "filterAll": "Alle",
     "filterTakeaway": "Abholung",
     "filterDelivery": "Lieferung",
-    "filterReservations": "Reservierungen"
+    "filterReservations": "Reservierungen",
+    "acceptOrderTitle": "Bestellung annehmen",
+    "confirmScheduledTitle": "Geplante Bestellung bestätigen",
+    "scheduledForLabel": "Geplant für",
+    "scheduledConfirmNote": "Der Kunde hat diese Zeit bei der Bestellung gewählt. Mit dem Bestätigen wird sie für die Küche fixiert.",
+    "prepTimeLabel": "Zubereitungszeit (Minuten)",
+    "prepTimeNote": "Der Kunde sieht die voraussichtliche Fertigstellungszeit basierend darauf.",
+    "autoPrintNote": "Der Beleg wird automatisch gedruckt.",
+    "addPrepTimeDelay": "Zubereitungszeit / Verzögerung hinzufügen",
+    "addPrepTimeTitle": "Zubereitungszeit hinzufügen",
+    "addPrepTimeNote": "Verschiebt die voraussichtliche Fertigstellungszeit. Der Kunde erhält eine E-Mail mit der neuen Zeit.",
+    "customMinutes": "Benutzerdefiniert (1–240 Min.)",
+    "delayReasonLabel": "Grund (optional — für den Kunden sichtbar)",
+    "delayReasonPlaceholder": "Küche stark ausgelastet, Zutat ausgegangen usw.",
+    "savingEllipsis": "Wird gespeichert…",
+    "delayByMin": "Um {n} Min. verzögern"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

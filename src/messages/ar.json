@@ -796,7 +796,22 @@
     "filterAll": "الكل",
     "filterTakeaway": "استلام",
     "filterDelivery": "توصيل",
-    "filterReservations": "الحجوزات"
+    "filterReservations": "الحجوزات",
+    "acceptOrderTitle": "قبول الطلب",
+    "confirmScheduledTitle": "تأكيد الطلب المجدول",
+    "scheduledForLabel": "مجدول لـ",
+    "scheduledConfirmNote": "اختار العميل هذا الوقت عند الطلب. التأكيد يثبّته للمطبخ.",
+    "prepTimeLabel": "وقت التحضير (دقائق)",
+    "prepTimeNote": "سيرى العميل الوقت التقديري للجاهزية بناءً على ذلك.",
+    "autoPrintNote": "ستتم طباعة الإيصال تلقائيًا.",
+    "addPrepTimeDelay": "إضافة وقت تحضير / تأخير",
+    "addPrepTimeTitle": "إضافة وقت تحضير",
+    "addPrepTimeNote": "تأجيل الوقت التقديري لجاهزية هذا الطلب. سيصل العميل بريد إلكتروني بالوقت الجديد.",
+    "customMinutes": "مخصص (1–240 دقيقة)",
+    "delayReasonLabel": "السبب (اختياري — يظهر للعميل)",
+    "delayReasonPlaceholder": "المطبخ مزدحم، نفاد أحد المكونات، إلخ.",
+    "savingEllipsis": "جارٍ الحفظ…",
+    "delayByMin": "تأخير {n} دقيقة"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

@@ -6,7 +6,7 @@ import {
   ReceiptText, User, Plus, Timer, MoreHorizontal, ChevronDown, ChevronUp, ArrowLeft, Navigation,
 } from "lucide-react";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
-import { formatDueLabel } from "@/lib/format-time";
+import { formatDueLabel , formatDateCapitalized } from "@/lib/format-time";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
@@ -123,10 +123,12 @@ function fmtTimeOnly(d: string | Date | null | undefined, hoursFormat: "12h" | "
   return new Date(d).toLocaleTimeString(locale || undefined, { hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
-/** Full weekday + date + time — used for the scheduled "order for later" line. */
+/** Full weekday + date + time — used for the scheduled "order for later" line.
+ *  Weekday + month are capitalised (Fabrizio 2026-07-15: Italian rendered
+ *  "mercoledi 15 lug" lowercase; he wants "Mercoledì 15 Lug"). */
 function fmtDateTime(d: string | Date | null | undefined, hoursFormat: "12h" | "24h" = "12h", locale?: string) {
   if (!d) return "—";
-  return new Date(d).toLocaleString(locale || undefined, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
+  return formatDateCapitalized(new Date(d), locale, { weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit", hourCycle: hoursFormat === "24h" ? "h23" : "h12" });
 }
 
 export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady, workflowMode = "simple", fromInProgress = false, hoursFormat = "12h", currency = "usd", onReservationStatusChange }: Props) {
@@ -854,7 +856,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                   onClick={() => setShowDelay(true)}
                   className={`w-full inline-flex items-center justify-center gap-2 py-2 rounded-lg border border-dashed text-sm font-semibold transition ${t.btn}`}
                 >
-                  <Plus className="w-4 h-4" /> Add prep time / delay
+                  <Plus className="w-4 h-4" /> {tk("addPrepTimeDelay")}
                 </button>
               )}
               {/* Reprint — Kitchen / Customer / Both receipts, each with a
@@ -938,10 +940,9 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           hits the dedicated /delay endpoint which bumps estimatedReady
           and fires a customer email with the new ETA. */}
       {showDelay && (
-        <Modal title="Add prep time" t={t} onClose={() => setShowDelay(false)}>
+        <Modal title={tk("addPrepTimeTitle")} t={t} onClose={() => setShowDelay(false)}>
           <p className={`text-sm ${t.muted} mb-3`}>
-            Bump this order&apos;s estimated ready time. The customer gets an
-            email with the new ETA.
+            {tk("addPrepTimeNote")}
           </p>
           <div className="grid grid-cols-5 gap-2 mb-3">
             {[5, 10, 15, 20, 30].map((m) => (
@@ -959,7 +960,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               </button>
             ))}
           </div>
-          <label className={`text-xs ${t.muted} block mb-1`}>Custom (1–240 min)</label>
+          <label className={`text-xs ${t.muted} block mb-1`}>{tk("customMinutes")}</label>
           <input
             type="number"
             min={1}
@@ -969,12 +970,12 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             onChange={(e) => setDelayMinutes(parseInt(e.target.value, 10) || 0)}
             className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-blue-500 mb-3`}
           />
-          <label className={`text-xs ${t.muted} block mb-1`}>Reason (optional — shown to customer)</label>
+          <label className={`text-xs ${t.muted} block mb-1`}>{tk("delayReasonLabel")}</label>
           <textarea
             rows={2}
             value={delayReason}
             onChange={(e) => setDelayReason(e.target.value)}
-            placeholder="Kitchen running busy, out of an ingredient, etc."
+            placeholder={tk("delayReasonPlaceholder")}
             className={`w-full rounded-xl px-3 py-2 text-sm border ${t.input} focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4`}
             maxLength={200}
           />
@@ -985,7 +986,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               className="flex-1 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white font-bold py-2.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
             >
               {delaying ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-              {delaying ? "Saving…" : `Delay by ${delayMinutes || 0} min`}
+              {delaying ? tk("savingEllipsis") : tk("delayByMin", { n: delayMinutes || 0 })}
             </button>
             <button onClick={() => setShowDelay(false)} className={`flex-1 ${t.btn} py-2.5 rounded-xl text-sm transition`}>
               {tCommon("back")}

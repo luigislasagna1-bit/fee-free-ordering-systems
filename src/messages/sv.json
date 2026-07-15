@@ -796,7 +796,22 @@
     "filterAll": "Alla",
     "filterTakeaway": "Avhämtning",
     "filterDelivery": "Leverans",
-    "filterReservations": "Reservationer"
+    "filterReservations": "Reservationer",
+    "acceptOrderTitle": "Acceptera beställning",
+    "confirmScheduledTitle": "Bekräfta schemalagd beställning",
+    "scheduledForLabel": "Schemalagd till",
+    "scheduledConfirmNote": "Kunden valde denna tid i kassan. Att bekräfta låser tiden för köket.",
+    "prepTimeLabel": "Tillagningstid (minuter)",
+    "prepTimeNote": "Kunden ser den beräknade klartiden utifrån detta.",
+    "autoPrintNote": "Kvittot skrivs ut automatiskt.",
+    "addPrepTimeDelay": "Lägg till tillagningstid / försening",
+    "addPrepTimeTitle": "Lägg till tillagningstid",
+    "addPrepTimeNote": "Skjuter fram beställningens beräknade klartid. Kunden får ett mejl med den nya tiden.",
+    "customMinutes": "Anpassad (1–240 min)",
+    "delayReasonLabel": "Orsak (valfritt — visas för kunden)",
+    "delayReasonPlaceholder": "Köket har mycket att göra, en ingrediens är slut osv.",
+    "savingEllipsis": "Sparar…",
+    "delayByMin": "Försena med {n} min"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

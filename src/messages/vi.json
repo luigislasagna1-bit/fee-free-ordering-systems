@@ -796,7 +796,22 @@
     "filterAll": "Tất cả",
     "filterTakeaway": "Tự lấy",
     "filterDelivery": "Giao hàng",
-    "filterReservations": "Đặt bàn"
+    "filterReservations": "Đặt bàn",
+    "acceptOrderTitle": "Chấp nhận đơn hàng",
+    "confirmScheduledTitle": "Xác nhận đơn đặt trước",
+    "scheduledForLabel": "Đặt cho",
+    "scheduledConfirmNote": "Khách đã chọn giờ này khi đặt hàng. Xác nhận sẽ chốt giờ cho bếp.",
+    "prepTimeLabel": "Thời gian chuẩn bị (phút)",
+    "prepTimeNote": "Khách sẽ thấy thời gian dự kiến xong dựa trên thông tin này.",
+    "autoPrintNote": "Hóa đơn sẽ được in tự động.",
+    "addPrepTimeDelay": "Thêm thời gian chuẩn bị / trễ",
+    "addPrepTimeTitle": "Thêm thời gian chuẩn bị",
+    "addPrepTimeNote": "Dời thời gian dự kiến xong của đơn này. Khách sẽ nhận email với giờ mới.",
+    "customMinutes": "Tùy chỉnh (1–240 phút)",
+    "delayReasonLabel": "Lý do (không bắt buộc — khách sẽ thấy)",
+    "delayReasonPlaceholder": "Bếp đang bận, hết nguyên liệu, v.v.",
+    "savingEllipsis": "Đang lưu…",
+    "delayByMin": "Trễ {n} phút"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

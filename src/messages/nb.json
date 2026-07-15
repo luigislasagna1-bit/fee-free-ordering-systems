@@ -796,7 +796,22 @@
     "filterAll": "Alle",
     "filterTakeaway": "Henting",
     "filterDelivery": "Levering",
-    "filterReservations": "Reservasjoner"
+    "filterReservations": "Reservasjoner",
+    "acceptOrderTitle": "Godta bestilling",
+    "confirmScheduledTitle": "Bekreft planlagt bestilling",
+    "scheduledForLabel": "Planlagt til",
+    "scheduledConfirmNote": "Kunden valgte dette tidspunktet i kassen. Å bekrefte låser det for kjøkkenet.",
+    "prepTimeLabel": "Tilberedningstid (minutter)",
+    "prepTimeNote": "Kunden ser beregnet klartidspunkt basert på dette.",
+    "autoPrintNote": "Kvitteringen skrives ut automatisk.",
+    "addPrepTimeDelay": "Legg til tilberedningstid / forsinkelse",
+    "addPrepTimeTitle": "Legg til tilberedningstid",
+    "addPrepTimeNote": "Utsetter bestillingens beregnede klartidspunkt. Kunden får en e-post med det nye tidspunktet.",
+    "customMinutes": "Egendefinert (1–240 min)",
+    "delayReasonLabel": "Årsak (valgfritt — vises til kunden)",
+    "delayReasonPlaceholder": "Kjøkkenet har mye å gjøre, en ingrediens er tom osv.",
+    "savingEllipsis": "Lagrer…",
+    "delayByMin": "Utsett med {n} min"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

@@ -796,7 +796,22 @@
     "filterAll": "Wszystkie",
     "filterTakeaway": "Odbiór",
     "filterDelivery": "Dostawa",
-    "filterReservations": "Rezerwacje"
+    "filterReservations": "Rezerwacje",
+    "acceptOrderTitle": "Zaakceptuj zamówienie",
+    "confirmScheduledTitle": "Potwierdź zaplanowane zamówienie",
+    "scheduledForLabel": "Zaplanowano na",
+    "scheduledConfirmNote": "Klient wybrał tę godzinę przy zamówieniu. Potwierdzenie ustala ją dla kuchni.",
+    "prepTimeLabel": "Czas przygotowania (minuty)",
+    "prepTimeNote": "Klient zobaczy szacowany czas gotowości na tej podstawie.",
+    "autoPrintNote": "Paragon wydrukuje się automatycznie.",
+    "addPrepTimeDelay": "Dodaj czas przygotowania / opóźnienie",
+    "addPrepTimeTitle": "Dodaj czas przygotowania",
+    "addPrepTimeNote": "Przesuwa szacowany czas gotowości zamówienia. Klient otrzyma e-mail z nową godziną.",
+    "customMinutes": "Własny (1–240 min)",
+    "delayReasonLabel": "Powód (opcjonalnie — widoczny dla klienta)",
+    "delayReasonPlaceholder": "Duży ruch w kuchni, brak składnika itp.",
+    "savingEllipsis": "Zapisywanie…",
+    "delayByMin": "Opóźnij o {n} min"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

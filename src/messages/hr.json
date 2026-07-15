@@ -796,7 +796,22 @@
     "filterAll": "Sve",
     "filterTakeaway": "Preuzimanje",
     "filterDelivery": "Dostava",
-    "filterReservations": "Rezervacije"
+    "filterReservations": "Rezervacije",
+    "acceptOrderTitle": "Prihvati narudžbu",
+    "confirmScheduledTitle": "Potvrdi zakazanu narudžbu",
+    "scheduledForLabel": "Zakazano za",
+    "scheduledConfirmNote": "Kupac je odabrao ovo vrijeme pri narudžbi. Potvrda ga fiksira za kuhinju.",
+    "prepTimeLabel": "Vrijeme pripreme (minute)",
+    "prepTimeNote": "Kupac će na temelju toga vidjeti procijenjeno vrijeme spremnosti.",
+    "autoPrintNote": "Račun će se ispisati automatski.",
+    "addPrepTimeDelay": "Dodaj vrijeme pripreme / kašnjenje",
+    "addPrepTimeTitle": "Dodaj vrijeme pripreme",
+    "addPrepTimeNote": "Pomiče procijenjeno vrijeme spremnosti narudžbe. Kupac dobiva e-poštu s novim vremenom.",
+    "customMinutes": "Prilagođeno (1–240 min)",
+    "delayReasonLabel": "Razlog (nije obavezno — vidi ga kupac)",
+    "delayReasonPlaceholder": "Kuhinja je zauzeta, nestalo je sastojka itd.",
+    "savingEllipsis": "Spremanje…",
+    "delayByMin": "Odgodi za {n} min"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

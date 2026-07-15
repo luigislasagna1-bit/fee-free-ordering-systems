@@ -796,7 +796,22 @@
     "filterAll": "Tümü",
     "filterTakeaway": "Gel-Al",
     "filterDelivery": "Teslimat",
-    "filterReservations": "Rezervasyonlar"
+    "filterReservations": "Rezervasyonlar",
+    "acceptOrderTitle": "Siparişi kabul et",
+    "confirmScheduledTitle": "Planlanmış siparişi onayla",
+    "scheduledForLabel": "Şu saate planlandı",
+    "scheduledConfirmNote": "Müşteri bu saati sipariş sırasında seçti. Onaylamak saati mutfak için sabitler.",
+    "prepTimeLabel": "Hazırlama süresi (dakika)",
+    "prepTimeNote": "Müşteri buna göre tahmini hazır olma saatini görecek.",
+    "autoPrintNote": "Fiş otomatik olarak yazdırılacak.",
+    "addPrepTimeDelay": "Hazırlama süresi / gecikme ekle",
+    "addPrepTimeTitle": "Hazırlama süresi ekle",
+    "addPrepTimeNote": "Bu siparişin tahmini hazır olma saatini erteler. Müşteriye yeni saatle e-posta gider.",
+    "customMinutes": "Özel (1–240 dk)",
+    "delayReasonLabel": "Sebep (isteğe bağlı — müşteriye gösterilir)",
+    "delayReasonPlaceholder": "Mutfak yoğun, bir malzeme bitti vb.",
+    "savingEllipsis": "Kaydediliyor…",
+    "delayByMin": "{n} dk ertele"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

@@ -796,7 +796,22 @@
     "filterAll": "Kõik",
     "filterTakeaway": "Järeletulek",
     "filterDelivery": "Kojuvedu",
-    "filterReservations": "Broneeringud"
+    "filterReservations": "Broneeringud",
+    "acceptOrderTitle": "Võta tellimus vastu",
+    "confirmScheduledTitle": "Kinnita planeeritud tellimus",
+    "scheduledForLabel": "Planeeritud",
+    "scheduledConfirmNote": "Klient valis selle aja tellimisel. Kinnitamine fikseerib selle köögi jaoks.",
+    "prepTimeLabel": "Valmistusaeg (minutit)",
+    "prepTimeNote": "Klient näeb selle põhjal eeldatavat valmimisaega.",
+    "autoPrintNote": "Kviitung prinditakse automaatselt.",
+    "addPrepTimeDelay": "Lisa valmistusaega / viivitust",
+    "addPrepTimeTitle": "Lisa valmistusaega",
+    "addPrepTimeNote": "Lükkab tellimuse eeldatavat valmimisaega edasi. Klient saab e-kirja uue ajaga.",
+    "customMinutes": "Kohandatud (1–240 min)",
+    "delayReasonLabel": "Põhjus (valikuline — kuvatakse kliendile)",
+    "delayReasonPlaceholder": "Köögis on kiire, koostisosa sai otsa jne.",
+    "savingEllipsis": "Salvestamine…",
+    "delayByMin": "Lükka {n} min edasi"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

@@ -796,7 +796,22 @@
     "filterAll": "전체",
     "filterTakeaway": "픽업",
     "filterDelivery": "배달",
-    "filterReservations": "예약"
+    "filterReservations": "예약",
+    "acceptOrderTitle": "주문 수락",
+    "confirmScheduledTitle": "예약 주문 확인",
+    "scheduledForLabel": "예약 시간",
+    "scheduledConfirmNote": "고객이 주문 시 이 시간을 선택했습니다. 확인하면 주방에 확정됩니다.",
+    "prepTimeLabel": "준비 시간(분)",
+    "prepTimeNote": "고객에게 이를 기준으로 예상 완료 시간이 표시됩니다.",
+    "autoPrintNote": "영수증이 자동으로 인쇄됩니다.",
+    "addPrepTimeDelay": "준비 시간 / 지연 추가",
+    "addPrepTimeTitle": "준비 시간 추가",
+    "addPrepTimeNote": "이 주문의 예상 완료 시간을 미룹니다. 고객에게 새 시간이 이메일로 발송됩니다.",
+    "customMinutes": "직접 입력 (1–240분)",
+    "delayReasonLabel": "사유 (선택 — 고객에게 표시됨)",
+    "delayReasonPlaceholder": "주방이 바쁨, 재료 소진 등",
+    "savingEllipsis": "저장 중…",
+    "delayByMin": "{n}분 지연"
   },
   "admin": {
     "welcomeBack": "환영합니다",
