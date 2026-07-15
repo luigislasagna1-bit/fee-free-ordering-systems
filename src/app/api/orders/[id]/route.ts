@@ -193,6 +193,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // Scheduled slot — on accept we set estimatedReady to this (not now+prep)
       // so a future pickup/delivery shows its real ready time, not "20 min".
       scheduledFor: true,
+      // Needed by the same-status guard below: an order the auto-complete sweep
+      // already flipped to "completed" still needs its manual-clear recorded
+      // when staff tap Mark Complete (Fabrizio cmrlvvg7d).
+      manuallyClearedAt: true,
       // ShipDay tracking — used by the dispatch path on accept and the
       // cancel path on reject/cancel.
       type: true,
@@ -230,6 +234,25 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   //      auto-reject .then in KitchenDisplay). Refusing an order at a later
   //      stage must go through "cancelled", which carries the refund flow.
   if (newStatus === existing.status) {
+    // EXCEPTION — "Mark Complete" on an order the AUTO-COMPLETE sweep already
+    // flipped to "completed" (Fabrizio cmrlvvg7d). The sweep uses updateMany, so
+    // it bypasses this route and never sets manuallyClearedAt; a plain no-op here
+    // then swallowed the staff's manual clear and the order stayed stuck in
+    // In Progress forever (Simple mode hides an order only when that flag is
+    // set). A future-scheduled order still read "accepted", so its status
+    // differed and it completed fine — which is exactly the split he reported.
+    //
+    // We still return WITHOUT running the update block below, so the no-op's
+    // real purpose is preserved: no duplicate customer/staff emails or other
+    // side-effects re-fire on a double-tap. We only record the clear.
+    if ((newStatus === "completed" || newStatus === "ready") && !existing.manuallyClearedAt) {
+      const cleared = await prisma.order.update({
+        where: { id },
+        data: { manuallyClearedAt: new Date() },
+        include: { restaurant: { select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } } },
+      });
+      return NextResponse.json(cleared);
+    }
     const current = await prisma.order.findUnique({
       where: { id },
       include: { restaurant: { select: { id: true, name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } } },
