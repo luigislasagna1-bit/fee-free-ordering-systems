@@ -474,6 +474,20 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   })();
   const readyCountdown = (!now || !Number.isFinite(dueTs)) ? null : formatDueLabel(dueTs, now, locale);
   const countdownIsPast = readyCountdown?.kind === "due";
+  // Is the RIGHT-column "ready in" countdown/day-label actually on screen for
+  // this row? (Same predicate the right column renders on, kept in one place.)
+  // When it is, the identical under-icon chip is a DUPLICATE — Fabrizio
+  // cmrldhwep: "a countdown appears under the Takeaway/Delivery icon, but it's
+  // already present on the right; the same for the scheduled day-of-week." So
+  // the under-icon dayChip is suppressed whenever the right column shows it,
+  // and only survives as a FALLBACK when the right column is empty (e.g. an
+  // order with no scheduledFor/estimatedReady, or a completed row whose status
+  // hides the right timer) — so a row is never left with no time cue at all.
+  const rightCountdownVisible =
+    !!readyCountdown &&
+    !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) &&
+    !(order as any).manuallyClearedAt &&
+    !(hideZeroCountdown && countdownIsPast);
 
   const isTest = order.customerName.startsWith("[TEST]");
   // Show the address as the lead line ONLY for address-bearing order types.
@@ -555,7 +569,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               </div>
             );
           })()}
-          {dayChip && (
+          {dayChip && !rightCountdownVisible && (
             <span
               className={`text-[9px] mt-0.5 font-semibold tabular-nums whitespace-nowrap leading-none ${
                 /^\d/.test(dayChip)
@@ -625,7 +639,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               "overdue" label is dropped — when the digits hit 00:00
               the "ready in" caption also disappears so the row is
               quiet, not loud. */}
-          {readyCountdown && !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) && !(order as any).manuallyClearedAt && !(hideZeroCountdown && countdownIsPast) && (
+          {rightCountdownVisible && (
             <div className="mt-1 text-right">
               <div
                 // ALL countdowns — minute timers included — render in the same
