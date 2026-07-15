@@ -37,7 +37,7 @@ export async function handleAccountEvent(event: Stripe.Event) {
     const account = event.data.object as Stripe.Account;
     const restaurant = await prisma.restaurant.findFirst({
       where: { stripeAccountId: account.id },
-      select: { id: true, name: true, slug: true },
+      select: { id: true, name: true, slug: true, currency: true },
     });
     if (!restaurant) return;
     // Derive status from Stripe's capability flags.
@@ -46,14 +46,30 @@ export async function handleAccountEvent(event: Stripe.Event) {
       : account.details_submitted
         ? "pending"
         : "action_required";
+    // Auto-default the restaurant's display/charge currency from its connected
+    // Stripe account so a European (or any non-USD) merchant never sees "$"
+    // where their Stripe account is in "€" (Fabrizio cmrkmtva). SAFE RULE: we
+    // ONLY promote the untouched "usd" schema default — if the owner has
+    // deliberately set ANY currency (incl. usd), we never touch it; and we only
+    // change when Stripe's default_currency is present and actually differs.
+    // Stripe returns default_currency lowercase (e.g. "eur"), matching our
+    // ISO-4217-lowercase convention. Never a schema change; idempotent (once
+    // promoted, currency !== "usd" so it won't re-run).
+    const stripeCcy = (account.default_currency ?? "").toLowerCase();
+    const shouldPromoteCurrency =
+      restaurant.currency === "usd" && !!stripeCcy && stripeCcy !== "usd";
     await prisma.restaurant.update({
       where: { id: restaurant.id },
       data: {
         stripeAccountStatus: status,
         stripeChargesEnabled: account.charges_enabled ?? false,
         stripePayoutsEnabled: account.payouts_enabled ?? false,
+        ...(shouldPromoteCurrency ? { currency: stripeCcy } : {}),
       },
     });
+    if (shouldPromoteCurrency) {
+      console.log(`[stripe/account.updated] auto-set currency for ${restaurant.slug}: usd → ${stripeCcy} (from connected Stripe account)`);
+    }
 
     // Lock Connect-side business_profile to our canonical values. Stripe
     // Express onboarding lets the owner type any business name and URL
