@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Bike, MapPin, Radio } from "lucide-react";
+import { Bike, MapPin, Radio, Star } from "lucide-react";
 
 type Tracking = {
   active: boolean;
@@ -10,6 +10,7 @@ type Tracking = {
   enRoute?: boolean;
   findingDriver?: boolean;
   driverName?: string | null;
+  driverRating?: number | null;
   driver?: { lat: number; lng: number; at: string | null } | null;
   destination?: { lat: number; lng: number } | null;
   etaMinutes?: number | null;
@@ -82,6 +83,11 @@ export function DriverTrackingCard({ orderId, themeColor }: { orderId: string; t
             : data.enRoute
               ? t("onTheWayGeneric")
               : t("headingToStoreGeneric")}
+        {data.driverName && data.driverRating != null && (
+          <span className="ml-1.5 inline-flex items-center gap-0.5 text-xs font-semibold text-amber-600 align-middle">
+            <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {Math.round(data.driverRating)}%
+          </span>
+        )}
       </p>
 
       {data.enRoute && data.etaMinutes != null && (

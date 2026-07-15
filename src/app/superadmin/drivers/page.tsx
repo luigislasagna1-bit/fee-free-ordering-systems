@@ -21,7 +21,8 @@ export default async function SuperadminDriversPage() {
       orderBy: { createdAt: "desc" },
       select: {
         id: true, name: true, email: true, phone: true, isActive: true,
-        hourlyRateCents: true, homeRestaurantId: true, ratingAvg: true, ratingCount: true,
+        hourlyRateCents: true, homeRestaurantId: true, ratingAvg: true, ratingCount: true, ratingPct: true,
+        deliveredCount: true, cancelledCount: true,
         lastLocationAt: true, lastLat: true, lastLng: true, createdAt: true,
         homeRestaurant: { select: { name: true } },
         _count: { select: { assignments: { where: { status: { notIn: ["delivered", "failed", "returned", "cancelled"] } } } } },
@@ -41,6 +42,7 @@ export default async function SuperadminDriversPage() {
         hourlyRateCents: d.hourlyRateCents, homeRestaurantId: d.homeRestaurantId,
         homeRestaurantName: d.homeRestaurant?.name ?? null,
         ratingAvg: d.ratingAvg, ratingCount: d.ratingCount,
+        ratingPct: d.ratingPct, deliveredCount: d.deliveredCount, cancelledCount: d.cancelledCount,
         activeJobs: d._count.assignments,
         hasLocation: d.lastLat != null && d.lastLng != null,
         lastLocationAt: d.lastLocationAt ? d.lastLocationAt.toISOString() : null,

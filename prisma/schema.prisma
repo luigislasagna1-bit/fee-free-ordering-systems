@@ -3478,8 +3478,22 @@ model Driver {
   homeRestaurant     Restaurant? @relation("DriverHomeRestaurant", fields: [homeRestaurantId], references: [id], onDelete: SetNull)
   isActive           Boolean     @default(true)
   hourlyRateCents    Int         @default(0)
+  /// Average of the star feedback (1–5) this driver has received across all
+  /// sources; feeds the feedback component of ratingPct. ratingCount = how many.
   ratingAvg          Float?
   ratingCount        Int         @default(0)
+  /// Blended performance score 0–100 (%). Starts at 100 for a new driver and
+  /// moves with reliability (completions vs cancellations), on-time deliveries,
+  /// and the average of restaurant/platform/customer feedback. Denormalized —
+  /// recomputed by recomputeDriverRating() on each delivered/cancelled/feedback
+  /// event so every read surface (superadmin, driver app, dispatch, customer)
+  /// reads one cheap number. Luigi 2026-07-15.
+  ratingPct          Float       @default(100)
+  deliveredCount     Int         @default(0)
+  cancelledCount     Int         @default(0)
+  /// Deliveries completed AFTER their promised time (subset of deliveredCount).
+  lateCount          Int         @default(0)
+  feedback           DriverFeedback[]
   /// Single-active-session token (mirrors Restaurant.kitchenSessionToken) —
   /// rotated on each login so the last login owns the session.
   driverSessionToken String?
@@ -3495,6 +3509,29 @@ model Driver {
   locations          DriverLocation[]
 
   @@index([isActive])
+}
+
+/// Individual driver feedback — one star rating (1–5) from a restaurant, the
+/// platform (superadmin), or a customer about a single delivery. Averaged into
+/// Driver.ratingAvg/ratingCount and blended into ratingPct. One row per rater
+/// per delivery (enforced in the write path, not the DB, since the rater
+/// identity differs by source). Luigi 2026-07-15.
+model DriverFeedback {
+  id           String   @id @default(cuid())
+  driverId     String
+  driver       Driver   @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  orderId      String?
+  assignmentId String?
+  restaurantId String?
+  /// restaurant | platform | customer
+  source       String
+  /// 1..5 stars.
+  stars        Int
+  comment      String?
+  createdAt    DateTime @default(now())
+
+  @@index([driverId, createdAt])
+  @@index([orderId])
 }
 
 /// One in-house delivery job: an Order ⇄ a Driver + its lifecycle + the frozen

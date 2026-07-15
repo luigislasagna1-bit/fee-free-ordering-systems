@@ -28,7 +28,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       deliveryAssignment: {
         select: {
           status: true,
-          driver: { select: { name: true, lastLat: true, lastLng: true, lastLocationAt: true } },
+          driver: { select: { name: true, ratingPct: true, lastLat: true, lastLng: true, lastLocationAt: true } },
         },
       },
     },
@@ -71,6 +71,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     // A driver who's been re-offered a job isn't "coming" — only surface the
     // name once someone actually owns the delivery (never while findingDriver).
     driverName: findingDriver ? null : a.driver?.name ?? null,
+    driverRating: findingDriver ? null : a.driver?.ratingPct ?? null,
     // Coordinates only while en route (privacy).
     driver: hasDriverLoc
       ? { lat: a.driver!.lastLat, lng: a.driver!.lastLng, at: a.driver!.lastLocationAt }
