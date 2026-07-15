@@ -5,7 +5,28 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-14 by Claude (A15 added — native Fee Free Delivery driver apps are built: Android APK ready to sideload now, iOS ready for a Codemagic → TestFlight build).
+**Last updated:** 2026-07-15 by Claude (overnight session — shipped currency auto-default, driver-cancel fix, distance display, dispatch logout, desktop-checkout fix; driver rating BUILT + parked on branch `rating-wip` awaiting your prod-schema OK; installed both apps on the tablet; replied to 2 Fabrizio reports).
+
+---
+
+## ⭐ TOMORROW — the short list (do these WITH Claude / report results)
+
+**Together (5–15 min each):**
+- **T-A. Deploy the driver rating** → just say **"push the rating schema"**. Claude pushes the safe additive schema to prod, merges the parked `rating-wip` branch (clean, no conflicts), deploys. Then drivers/dispatch/customers see "★ %".
+- **T-B. iOS TestFlight under the org** → when Apple's verification email arrives (A17), we set up the org's App Store Connect key + Codemagic + build "Fee Free Delivery (iOS)".
+
+**You test on real devices (tell Claude what breaks):**
+- **T-C. Tablet apps** — both are installed. Sign into the **Fee Free Delivery** app with your driver login (`support@feefreeordering.com`) → Allow location **"Always"** → take a short test delivery (accept → picked up → delivered, watch background GPS). Open the **Kitchen** app too.
+- **T-D. This session's live changes** — (1) checkout now shows **"X km from store"** next to the zone on your store; (2) **desktop checkout** bottom no longer flush against the edge (Fabrizio's fix); (3) driver "**Can't complete**" now asks to confirm, re-offers the order to the pool, and the customer sees "**Finding you a driver**" (not a stuck driver name).
+
+**Unblock Fabrizio's open reports (Claude needs from you):**
+- **T-E. iOS report (`cmrkvs5r`)** — on the iPhone Kitchen app, open the **3-dot menu** and read out the **"web `<build>`"** value (tells us if his app has the current code). His ring fixes need a fresh iOS build (T-B).
+- **T-F. Invoices report (`cmr1ty0lc`)** — confirm the exact symptom, or confirm it's the known "non-VIES restaurants can't buy paid plans yet" (blocked on the EU OSS registration, not code).
+
+**Decision (no clicking — just tell Claude):**
+- **T-G. What Claude builds next** in the delivery backlog: **#5** driver order-history + shift-earnings dashboard, **#6** dispatch-view enrichment (history, driver info, settings), and the rating **feedback buttons** (customer/restaurant/you rate a driver). Pick an order or say "your call."
+
+*(Everything below is the standing backlog; the items above are the fresh ones from tonight.)*
 
 ---
 
