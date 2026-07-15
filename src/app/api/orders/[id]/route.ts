@@ -28,6 +28,51 @@ import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
 
+/**
+ * The ONE restaurant projection this route returns — shared by BOTH the
+ * signed-in branch and the public branch.
+ *
+ * WHY SHARED (Fabrizio cmrkmtva, 2026-07-15): these two branches used to carry
+ * separate selects, and the signed-in one silently lacked `currency` (plus the
+ * reward labels). The payment/status pages are CUSTOMER surfaces but are very
+ * often opened by the restaurant owner while they're signed into their own
+ * admin — so they hit the signed-in branch, got no currency, fell back to USD,
+ * and a Euro store saw "$67.20" on the pay screen. Keeping one select means a
+ * branch can never drift and drop a field the customer UI needs again. It's a
+ * strict superset of what the signed-in branch selected before, so admin
+ * consumers only gain fields.
+ */
+const ORDER_RESTAURANT_SELECT = {
+  // kitchenWorkflowMode lets the customer status page render the RIGHT step
+  // count: "simple" mode just shows Received → Confirmed → Complete (the
+  // kitchen never transitions through Preparing / Ready), while "tracking"
+  // mode shows the full 5-step flow.
+  //
+  // phone + email + address: surface on the status page's "Need help?" panel so
+  // customers can call/email the restaurant directly about their order.
+  name: true, slug: true, phone: true, email: true,
+  address: true, city: true, state: true, zip: true,
+  estimatedPickup: true, estimatedDelivery: true,
+  kitchenWorkflowMode: true,
+  // Reward Dollars: feature flag + customer-facing name so the receipt can
+  // label "Paid with {name}" / "You earned {name}". Luigi 2026-06-29.
+  rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
+  // Timezone so the status page renders a scheduled order's date/time in the
+  // restaurant's local clock, not the viewer's browser zone.
+  timezone: true,
+  // 12h/24h preference so the status page renders scheduled times + step
+  // timestamps in the restaurant's chosen format.
+  hoursFormat: true,
+  // The restaurant's chosen currency so every money surface formats $/€/£ to
+  // match what the customer actually pays. Without this a European customer who
+  // paid €20 sees "$20.00" — confusing and wrong.
+  currency: true,
+  // Reseller white-label fields — let the status page gate the "Powered by Fee
+  // Free Ordering" credit (shown for every restaurant EXCEPT reseller
+  // white-label accounts). Luigi 2026-06-22.
+  resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
+} as const;
+
 const PUBLIC_ORDER_SELECT = {
   id: true, orderNumber: true, status: true, type: true,
   customerName: true, notes: true, subtotal: true, taxAmount: true,
@@ -64,40 +109,7 @@ const PUBLIC_ORDER_SELECT = {
   // Bundle children — receipts + status page need this to render the
   // parent-bundle line with its child picks (Promo Type 8 / 13).
   // Selected as Json since it's stored as Json on OrderItem.
-  restaurant: {
-    // kitchenWorkflowMode lets the customer status page render the
-    // RIGHT step count: "simple" mode just shows Received → Confirmed →
-    // Complete (the kitchen never transitions through Preparing / Ready),
-    // while "tracking" mode shows the full 5-step flow.
-    //
-    // phone + email + address: surface on the status page's "Need help?"
-    // panel so customers can call/email the restaurant directly about
-    // their order without leaving the page.
-    select: {
-      name: true, slug: true, phone: true, email: true,
-      address: true, city: true, state: true, zip: true,
-      estimatedPickup: true, estimatedDelivery: true,
-      kitchenWorkflowMode: true,
-      // Reward Dollars: feature flag + customer-facing name so the receipt
-      // can label "Paid with {name}" / "You earned {name}". Luigi 2026-06-29.
-      rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
-      // Timezone so the status page renders a scheduled order's date/time in
-      // the restaurant's local clock, not the viewer's browser zone.
-      timezone: true,
-      // 12h/24h preference so the status page renders scheduled times +
-      // step timestamps in the restaurant's chosen format.
-      hoursFormat: true,
-      // Surface the restaurant's chosen currency so the customer
-      // status page formats $/€/£ to match what they paid in. Without
-      // this, a European customer who paid €20 would see "$20.00" on
-      // the receipt — confusing and wrong.
-      currency: true,
-      // Reseller white-label fields — let the status page gate the
-      // "Powered by Fee Free Ordering" credit (shown for every restaurant
-      // EXCEPT reseller white-label accounts). Luigi 2026-06-22.
-      resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
-    },
-  },
+  restaurant: { select: ORDER_RESTAURANT_SELECT },
   items: {
     select: {
       id: true, menuItemId: true, variantId: true,
@@ -119,7 +131,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        restaurant: { select: { name: true, slug: true, phone: true, estimatedPickup: true, estimatedDelivery: true, kitchenWorkflowMode: true } },
+        // Same projection as the public branch — see ORDER_RESTAURANT_SELECT.
+        // This branch previously carried its own smaller select that lacked
+        // `currency`, which is what made a Euro store's pay screen read "$".
+        restaurant: { select: ORDER_RESTAURANT_SELECT },
         items: { include: { modifiers: true } },
       },
     });
