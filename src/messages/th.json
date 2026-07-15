@@ -90,7 +90,8 @@
     "free": "ฟรี",
     "menu": "เมนู",
     "loadingDots": "กำลังโหลด…",
-    "previous": "ก่อนหน้า"
+    "previous": "ก่อนหน้า",
+    "kmFromStore": "ห่างจากร้าน {km} กม."
   },
   "auth": {
     "signIn": "เข้าสู่ระบบ",

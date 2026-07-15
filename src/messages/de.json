@@ -90,7 +90,8 @@
     "free": "Kostenlos",
     "menu": "Speisekarte",
     "loadingDots": "Laden…",
-    "previous": "Zurück"
+    "previous": "Zurück",
+    "kmFromStore": "{km} km vom Geschäft entfernt"
   },
   "auth": {
     "signIn": "Anmelden",

@@ -90,7 +90,8 @@
     "free": "Ilmainen",
     "menu": "Menu",
     "loadingDots": "Ladataan…",
-    "previous": "Edellinen"
+    "previous": "Edellinen",
+    "kmFromStore": "{km} km liikkeestä"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",

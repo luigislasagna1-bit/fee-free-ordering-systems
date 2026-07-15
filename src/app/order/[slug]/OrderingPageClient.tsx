@@ -38,7 +38,7 @@ import {
   PizzaBuilder, parsePizzaConfig, pizzaCustomizationToModifiers,
   PizzaCustomization, PizzaAddResult, PizzaConfig,
 } from "./PizzaBuilder";
-import { geocodeAddress, findZoneForPoint, type ZoneLike } from "@/lib/geocode";
+import { geocodeAddress, findZoneForPoint, haversineKm, type ZoneLike } from "@/lib/geocode";
 import {
   resolveDeliveryAddressConfig,
   DELIVERY_FIELD_KEYS,
@@ -2552,6 +2552,13 @@ export function OrderingPageClient({
   const resolvedZone = hasZones && customerCoords
     ? findZoneForPoint(deliveryZones, restaurant.lat, restaurant.lng, customerCoords.lat, customerCoords.lng)
     : null;
+  // Straight-line distance from the store to the typed delivery address, shown
+  // on the checkout zone line so the customer sees how far they are (Luigi
+  // 2026-07-15). Null until the address geocodes / when the store has no coords.
+  const distanceFromStoreKm =
+    customerCoords && restaurant.lat != null && restaurant.lng != null
+      ? Math.round(haversineKm(restaurant.lat, restaurant.lng, customerCoords.lat, customerCoords.lng) * 10) / 10
+      : null;
 
   // Auto-apply promos when cart changes (or when the resolved delivery
   // zone changes — a delivery-area-restricted promo only activates once
@@ -6844,6 +6851,7 @@ export function OrderingPageClient({
           geocoding={geocoding}
           geocodeError={geocodeError}
           resolvedZone={resolvedZone}
+          distanceFromStoreKm={distanceFromStoreKm}
           acceptOutsideZoneOrders={!!(restaurant as any).acceptOutsideZoneOrders}
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}

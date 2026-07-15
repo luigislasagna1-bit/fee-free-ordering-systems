@@ -90,7 +90,8 @@
     "free": "Gratuit",
     "menu": "Meniu",
     "loadingDots": "Se încarcă…",
-    "previous": "Înapoi"
+    "previous": "Înapoi",
+    "kmFromStore": "la {km} km de local"
   },
   "auth": {
     "signIn": "Conectare",

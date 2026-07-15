@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { getTranslations } from "next-intl/server";
 import { Bike, DollarSign, CalendarClock, Package } from "lucide-react";
 import { weekStartUtc, weekEndUtc } from "@/lib/feefree-delivery";
+import { haversineKm } from "@/lib/geocode";
 import { SendToDriverButton } from "./SendToDriverButton";
 
 const TERMINAL = ["delivered", "failed", "returned", "cancelled"];
@@ -26,11 +27,12 @@ function usd(cents: number): string {
  */
 export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: string }) {
   const t = await getTranslations("admin.feefreeDelivery");
+  const tCommon = await getTranslations("common");
   const now = new Date();
   const weekStart = weekStartUtc(now);
   const weekEnd = weekEndUtc(now);
 
-  const [owedAgg, deliveredThisWeek, active, heldOrders] = await Promise.all([
+  const [owedAgg, deliveredThisWeek, active, heldOrders, rest] = await Promise.all([
     // Outstanding = frozen fees not yet rolled into a settlement.
     prisma.deliveryAssignment.aggregate({
       _sum: { platformFeeCents: true },
@@ -46,7 +48,7 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
       select: {
         id: true, status: true,
         driver: { select: { name: true } },
-        order: { select: { orderNumber: true, customerName: true } },
+        order: { select: { orderNumber: true, customerName: true, deliveryLat: true, deliveryLng: true } },
       },
     }),
     // Delivery orders in a live status, prepaid-ish, with NO assignment yet
@@ -62,6 +64,9 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
       take: 25,
       select: { id: true, orderNumber: true, customerName: true, paymentStatus: true, total: true, creditApplied: true },
     }),
+    // The store's own coordinates — for the restaurant→customer distance shown
+    // on each active delivery (Luigi 2026-07-15).
+    prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { lat: true, lng: true } }),
   ]);
 
   const owed = owedAgg._sum.platformFeeCents ?? 0;
@@ -116,18 +121,25 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
           <p className="text-sm text-gray-400">{t("noActiveDeliveries")}</p>
         ) : (
           <div className="space-y-2">
-            {active.map((a) => (
+            {active.map((a) => {
+              const distKm =
+                rest?.lat != null && rest?.lng != null && a.order.deliveryLat != null && a.order.deliveryLng != null
+                  ? Math.round(haversineKm(rest.lat, rest.lng, a.order.deliveryLat, a.order.deliveryLng) * 10) / 10
+                  : null;
+              return (
               <div key={a.id} className="flex items-center justify-between gap-3 rounded-xl border border-gray-100 px-3 py-2">
                 <div className="text-sm min-w-0">
                   <span className="font-semibold text-gray-900">#{a.order.orderNumber}</span>
                   <span className="text-gray-500"> · {a.order.customerName}</span>
+                  {distKm != null && <span className="text-gray-400"> · {tCommon("kmFromStore", { km: distKm })}</span>}
                   <div className="text-xs text-gray-400">{a.driver?.name ?? t("unassigned")}</div>
                 </div>
                 <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full px-2.5 py-1 whitespace-nowrap">
                   {opsStatusLabel(a.status, t)}
                 </span>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

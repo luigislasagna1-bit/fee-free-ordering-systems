@@ -90,7 +90,8 @@
     "free": "免费",
     "menu": "菜单",
     "loadingDots": "加载中…",
-    "previous": "上一个"
+    "previous": "上一个",
+    "kmFromStore": "距门店 {km} 公里"
   },
   "auth": {
     "signIn": "登录",

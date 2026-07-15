@@ -90,7 +90,8 @@
     "free": "Gratis",
     "menu": "Menu",
     "loadingDots": "Laden…",
-    "previous": "Vorige"
+    "previous": "Vorige",
+    "kmFromStore": "{km} km van de zaak"
   },
   "auth": {
     "signIn": "Inloggen",

@@ -90,7 +90,8 @@
     "free": "Ücretsiz",
     "menu": "Menü",
     "loadingDots": "Yükleniyor…",
-    "previous": "Önceki"
+    "previous": "Önceki",
+    "kmFromStore": "mağazadan {km} km"
   },
   "auth": {
     "signIn": "Giriş Yap",

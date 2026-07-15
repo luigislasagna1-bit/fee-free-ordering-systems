@@ -90,7 +90,8 @@
     "free": "Ingyenes",
     "menu": "Étlap",
     "loadingDots": "Betöltés…",
-    "previous": "Előző"
+    "previous": "Előző",
+    "kmFromStore": "{km} km-re az üzlettől"
   },
   "auth": {
     "signIn": "Bejelentkezés",

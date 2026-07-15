@@ -90,7 +90,8 @@
     "free": "Gratis",
     "menu": "Meny",
     "loadingDots": "Laddar…",
-    "previous": "Föregående"
+    "previous": "Föregående",
+    "kmFromStore": "{km} km från butiken"
   },
   "auth": {
     "signIn": "Logga in",

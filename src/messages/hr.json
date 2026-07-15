@@ -90,7 +90,8 @@
     "free": "Besplatno",
     "menu": "Jelovnik",
     "loadingDots": "Učitavanje…",
-    "previous": "Prethodno"
+    "previous": "Prethodno",
+    "kmFromStore": "{km} km od lokala"
   },
   "auth": {
     "signIn": "Prijava",

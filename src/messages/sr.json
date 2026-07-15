@@ -90,7 +90,8 @@
     "free": "Besplatno",
     "menu": "Meni",
     "loadingDots": "Učitavanje…",
-    "previous": "Nazad"
+    "previous": "Nazad",
+    "kmFromStore": "{km} km od lokala"
   },
   "auth": {
     "signIn": "Prijavite se",

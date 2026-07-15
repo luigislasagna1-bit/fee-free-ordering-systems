@@ -8,6 +8,7 @@ import {
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { mapsDirectionsUrl } from "@/lib/delivery-eta";
+import { haversineKm } from "@/lib/geocode";
 
 type Assignment = {
   id: string;
@@ -283,9 +284,17 @@ function JobCard({
   onAdvance: (a: Assignment, next: string) => void;
   t: ReturnType<typeof useTranslations>;
 }) {
+  const tCommon = useTranslations("common");
   const o = a.order;
   const toCustomer = HEADING_TO_CUSTOMER.has(a.status);
   const navTarget = toCustomer ? o.customerAddress : o.restaurantAddress;
+  // Straight-line distance restaurant → customer (the trip length / "how far from
+  // the store"), shown so a driver can size up a job before accepting. Only when
+  // both ends are geocoded. Luigi 2026-07-15.
+  const distKm =
+    o.restaurantLat != null && o.restaurantLng != null && o.deliveryLat != null && o.deliveryLng != null
+      ? Math.round(haversineKm(o.restaurantLat, o.restaurantLng, o.deliveryLat, o.deliveryLng) * 10) / 10
+      : null;
   // "Can't complete this delivery" is destructive (it hands the order back to
   // the pool) and the button is a small tap target — guard it with a confirm so
   // an accidental tap never drops a live delivery (Luigi 2026-07-15).
@@ -303,7 +312,10 @@ function JobCard({
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <div className="text-sm font-bold">#{o.orderNumber}</div>
-          <div className="text-xs text-gray-400">{statusLabel(a.status, t)}</div>
+          <div className="text-xs text-gray-400">
+            {statusLabel(a.status, t)}
+            {distKm != null && <span className="text-gray-500"> · {tCommon("kmFromStore", { km: distKm })}</span>}
+          </div>
         </div>
         <div className="text-right flex-shrink-0">
           <div className="text-sm font-bold text-emerald-400">{money(o.total, o.currency)}</div>

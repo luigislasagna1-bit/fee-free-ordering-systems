@@ -90,7 +90,8 @@
     "free": "मुफ़्त",
     "menu": "मेनू",
     "loadingDots": "लोड हो रहा है…",
-    "previous": "पिछला"
+    "previous": "पिछला",
+    "kmFromStore": "स्टोर से {km} किमी"
   },
   "auth": {
     "signIn": "साइन इन करें",

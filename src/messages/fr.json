@@ -90,7 +90,8 @@
     "free": "Gratuit",
     "menu": "Menu",
     "loadingDots": "Chargement…",
-    "previous": "Précédent"
+    "previous": "Précédent",
+    "kmFromStore": "à {km} km du magasin"
   },
   "auth": {
     "signIn": "Se connecter",

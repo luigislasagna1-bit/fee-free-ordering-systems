@@ -90,7 +90,8 @@
     "free": "Bezmaksas",
     "menu": "Izvēlne",
     "loadingDots": "Ielādē…",
-    "previous": "Atpakaļ"
+    "previous": "Atpakaļ",
+    "kmFromStore": "{km} km no veikala"
   },
   "auth": {
     "signIn": "Pierakstīties",

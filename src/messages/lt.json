@@ -90,7 +90,8 @@
     "free": "Nemokama",
     "menu": "Meniu",
     "loadingDots": "Kraunama…",
-    "previous": "Atgal"
+    "previous": "Atgal",
+    "kmFromStore": "{km} km nuo parduotuvės"
   },
   "auth": {
     "signIn": "Prisijungti",

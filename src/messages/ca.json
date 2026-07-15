@@ -90,7 +90,8 @@
     "free": "Gratis",
     "menu": "Carta",
     "loadingDots": "Carregant…",
-    "previous": "Anterior"
+    "previous": "Anterior",
+    "kmFromStore": "a {km} km de la botiga"
   },
   "auth": {
     "signIn": "Inicia sessió",

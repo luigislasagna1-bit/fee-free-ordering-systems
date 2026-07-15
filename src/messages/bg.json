@@ -90,7 +90,8 @@
     "free": "Безплатно",
     "menu": "Меню",
     "loadingDots": "Зареждане…",
-    "previous": "Назад"
+    "previous": "Назад",
+    "kmFromStore": "на {km} км от обекта"
   },
   "auth": {
     "signIn": "Влез",

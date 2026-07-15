@@ -90,7 +90,8 @@
     "free": "Free",
     "menu": "Menu",
     "loadingDots": "Loading…",
-    "previous": "Previous"
+    "previous": "Previous",
+    "kmFromStore": "{km} km from store"
   },
   "auth": {
     "signIn": "Sign in",

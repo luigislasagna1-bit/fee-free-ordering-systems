@@ -90,7 +90,8 @@
     "free": "Zadarmo",
     "menu": "Menu",
     "loadingDots": "Načítavam…",
-    "previous": "Späť"
+    "previous": "Späť",
+    "kmFromStore": "{km} km od podniku"
   },
   "auth": {
     "signIn": "Prihlásiť sa",

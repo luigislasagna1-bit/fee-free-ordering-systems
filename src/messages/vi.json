@@ -90,7 +90,8 @@
     "free": "Miễn phí",
     "menu": "Thực đơn",
     "loadingDots": "Đang tải…",
-    "previous": "Trước"
+    "previous": "Trước",
+    "kmFromStore": "cách cửa hàng {km} km"
   },
   "auth": {
     "signIn": "Đăng nhập",

@@ -90,7 +90,8 @@
     "free": "Gratis",
     "menu": "Menu",
     "loadingDots": "Memuat…",
-    "previous": "Sebelumnya"
+    "previous": "Sebelumnya",
+    "kmFromStore": "{km} km dari toko"
   },
   "auth": {
     "signIn": "Masuk",

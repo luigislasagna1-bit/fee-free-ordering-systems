@@ -90,7 +90,8 @@
     "free": "Zdarma",
     "menu": "Menu",
     "loadingDots": "Načítání…",
-    "previous": "Předchozí"
+    "previous": "Předchozí",
+    "kmFromStore": "{km} km od podniku"
   },
   "auth": {
     "signIn": "Přihlásit se",

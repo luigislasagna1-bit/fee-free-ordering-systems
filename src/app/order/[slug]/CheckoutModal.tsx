@@ -246,6 +246,9 @@ interface Props {
   geocoding: boolean;
   geocodeError: string | null;
   resolvedZone: { zone: { name: string; color: string; deliveryFee: number; estimatedMinutes: number; minimumOrder: number }; inside: boolean } | null;
+  /** Straight-line km from the store to the typed delivery address (null until
+   *  geocoded). Appended to the zone line so the customer sees how far they are. */
+  distanceFromStoreKm?: number | null;
   /** Whether the restaurant accepts orders outside its delivery zones. Drives a
    *  soft "we may not deliver, we'll contact you" note (when on) vs a hard "not
    *  accepted" message (when off) for out-of-zone addresses. Luigi 2026-06-08. */
@@ -406,7 +409,7 @@ export function CheckoutModal({
   paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
-  hasZones, geocoding, geocodeError, resolvedZone, acceptOutsideZoneOrders = false,
+  hasZones, geocoding, geocodeError, resolvedZone, distanceFromStoreKm = null, acceptOutsideZoneOrders = false,
   googleMapsApiKey, geocodeCountry, restaurantLat, restaurantLng,
   deliveryFormConfig,
   reservationContext = null,
@@ -1275,6 +1278,7 @@ export function CheckoutModal({
                         {resolvedZone.zone.minimumOrder > 0 && (
                           <> {tc("zoneMinimum", { min: formatCurrency(resolvedZone.zone.minimumOrder) })}</>
                         )}
+                        {distanceFromStoreKm != null && <> · {tCommon("kmFromStore", { km: distanceFromStoreKm })}</>}
                       </p>
                     )}
                     {hasZones && resolvedZone && !resolvedZone.inside && (
@@ -1286,6 +1290,7 @@ export function CheckoutModal({
                           {resolvedZone.zone.minimumOrder > 0 && (
                             <> {tc("zoneMinimum", { min: formatCurrency(resolvedZone.zone.minimumOrder) })}</>
                           )}
+                          {distanceFromStoreKm != null && <> · {tCommon("kmFromStore", { km: distanceFromStoreKm })}</>}
                           {" "}{tc("outsideMayContact")}
                         </p>
                       ) : (

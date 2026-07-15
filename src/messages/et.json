@@ -90,7 +90,8 @@
     "free": "Tasuta",
     "menu": "Menüü",
     "loadingDots": "Laadimine…",
-    "previous": "Eelmine"
+    "previous": "Eelmine",
+    "kmFromStore": "{km} km poest"
   },
   "auth": {
     "signIn": "Logi sisse",

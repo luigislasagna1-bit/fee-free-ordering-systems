@@ -90,7 +90,8 @@
     "free": "חינם",
     "menu": "תפריט",
     "loadingDots": "טוען…",
-    "previous": "הקודם"
+    "previous": "הקודם",
+    "kmFromStore": "{km} ק\"מ מהחנות"
   },
   "auth": {
     "signIn": "כניסה",

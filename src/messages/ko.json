@@ -90,7 +90,8 @@
     "free": "무료",
     "menu": "메뉴",
     "loadingDots": "로딩 중…",
-    "previous": "이전"
+    "previous": "이전",
+    "kmFromStore": "매장에서 {km} km"
   },
   "auth": {
     "signIn": "로그인",

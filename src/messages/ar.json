@@ -90,7 +90,8 @@
     "free": "مجاني",
     "menu": "القائمة",
     "loadingDots": "جارٍ التحميل…",
-    "previous": "السابق"
+    "previous": "السابق",
+    "kmFromStore": "على بعد {km} كم من المتجر"
   },
   "auth": {
     "signIn": "تسجيل الدخول",
