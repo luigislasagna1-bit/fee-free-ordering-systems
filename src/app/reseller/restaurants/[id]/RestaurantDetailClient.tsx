@@ -6,7 +6,7 @@ import {
   CreditCard, Globe, Link2, Megaphone, Smartphone, Store,
   Calendar, Building2, MapPin, Mail, Phone,
 } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 
 type AddOnRow = {
   id: string;
@@ -167,10 +167,10 @@ export function RestaurantDetailClient({
 
       {/* Commission summary */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-        <SummaryStat label="Lifetime earned" value={formatCurrency(lifetimeEarned / 100)} tone="emerald" />
-        <SummaryStat label="On 7-day hold" value={formatCurrency(pendingHold / 100)} tone="amber" />
-        <SummaryStat label="Available now" value={formatCurrency(availableNow / 100)} tone="blue" />
-        <SummaryStat label="Already paid out" value={formatCurrency(paidOut / 100)} tone="slate" />
+        <SummaryStat label="Lifetime earned" value={formatCurrency(lifetimeEarned / 100, PLATFORM_CURRENCY)} tone="emerald" />
+        <SummaryStat label="On 7-day hold" value={formatCurrency(pendingHold / 100, PLATFORM_CURRENCY)} tone="amber" />
+        <SummaryStat label="Available now" value={formatCurrency(availableNow / 100, PLATFORM_CURRENCY)} tone="blue" />
+        <SummaryStat label="Already paid out" value={formatCurrency(paidOut / 100, PLATFORM_CURRENCY)} tone="slate" />
       </div>
 
       {/* Services / add-ons */}
@@ -198,7 +198,7 @@ export function RestaurantDetailClient({
                     <div className="min-w-0">
                       <div className="text-sm font-semibold text-gray-900 truncate">{row.addOn.name}</div>
                       <div className="text-[11px] text-gray-500">
-                        {formatCurrency(row.addOn.monthlyPriceCents / 100)}/mo · {row.status}
+                        {formatCurrency(row.addOn.monthlyPriceCents / 100, PLATFORM_CURRENCY)}/mo · {row.status}
                       </div>
                     </div>
                   </div>
@@ -246,11 +246,11 @@ export function RestaurantDetailClient({
                   <tr key={c.id} className="border-t border-gray-100">
                     <td className="px-6 py-3 text-gray-700">{dt.toLocaleDateString()}</td>
                     <td className="px-6 py-3 text-right text-gray-700">
-                      {formatCurrency(c.netRevenueCents / 100)}
+                      {formatCurrency(c.netRevenueCents / 100, PLATFORM_CURRENCY)}
                     </td>
                     <td className="px-6 py-3 text-right text-gray-700">{c.ratePercent}%</td>
                     <td className="px-6 py-3 text-right font-bold text-emerald-700">
-                      {formatCurrency(c.commissionCents / 100)}
+                      {formatCurrency(c.commissionCents / 100, PLATFORM_CURRENCY)}
                     </td>
                     <td className="px-6 py-3">
                       <CommissionStatusBadge status={c.status} />

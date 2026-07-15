@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 
 export default async function ResellerCommissionsPage() {
   const user = await getSessionUser();
@@ -74,14 +74,14 @@ export default async function ResellerCommissionsPage() {
                 </td>
                 <td className="px-4 py-3 text-gray-900 font-medium">{c.restaurant.name}</td>
                 <td className="px-4 py-3 text-right text-gray-700">
-                  {formatCurrency(c.netRevenueCents / 100)}
+                  {formatCurrency(c.netRevenueCents / 100, PLATFORM_CURRENCY)}
                 </td>
                 <td className="px-4 py-3 text-right text-gray-700">
                   {c.ratePercent}%
                   <div className="text-[10px] text-gray-400">@ {c.activePayingCount} active</div>
                 </td>
                 <td className="px-4 py-3 text-right font-bold text-gray-900">
-                  {formatCurrency(c.commissionCents / 100)}
+                  {formatCurrency(c.commissionCents / 100, PLATFORM_CURRENCY)}
                 </td>
                 <td className="px-4 py-3">
                   <StatusBadge status={c.status} />
@@ -117,7 +117,7 @@ function Stat({
     >
       <div className="text-[10px] uppercase tracking-wide text-gray-500 mb-1">{label}</div>
       <div className={`text-xl font-bold ${highlight ? "text-emerald-700" : "text-gray-900"}`}>
-        {formatCurrency(cents / 100)}
+        {formatCurrency(cents / 100, PLATFORM_CURRENCY)}
       </div>
       <div className="text-[11px] text-gray-500 mt-1">{note}</div>
     </div>

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { requireSuperadmin } from "@/lib/platform-auth";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import { Sparkles, AlertTriangle, CheckCircle2, Clock, XCircle } from "lucide-react";
 import { RunSettlementButton } from "./RunSettlementButton";
 
@@ -74,7 +74,7 @@ export default async function SettlementsPage() {
               <div className="text-xs text-gray-500 font-bold uppercase tracking-wider">
                 {monthLabel(month)}
               </div>
-              <div className="text-2xl font-bold text-gray-900 mt-1">{formatCurrency(b.cents / 100)}</div>
+              <div className="text-2xl font-bold text-gray-900 mt-1">{formatCurrency(b.cents / 100, PLATFORM_CURRENCY)}</div>
               <div className="text-[10px] uppercase tracking-wider text-gray-400 mt-0.5">pre-tax · USD</div>
               <div className="text-xs text-gray-500 mt-1">{b.total} settlement{b.total === 1 ? "" : "s"}</div>
               <div className="flex flex-wrap gap-1.5 mt-3 text-[10px]">
@@ -117,8 +117,8 @@ export default async function SettlementsPage() {
                       <div className="text-[11px] text-gray-400">{r.restaurant.slug}</div>
                     </td>
                     <td className="px-4 py-3 text-gray-700">{r.ordersInMonth}</td>
-                    <td className="px-4 py-3 text-gray-700">{formatCurrency(r.accruedCents / 100)}</td>
-                    <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(r.invoicedCents / 100)}</td>
+                    <td className="px-4 py-3 text-gray-700">{formatCurrency(r.accruedCents / 100, PLATFORM_CURRENCY)}</td>
+                    <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(r.invoicedCents / 100, PLATFORM_CURRENCY)}</td>
                     <td className="px-4 py-3"><StatusBadge status={r.status} /></td>
                     <td className="px-4 py-3">
                       {r.stripeInvoiceId ? (

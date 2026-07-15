@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { requireSuperadmin } from "@/lib/platform-auth";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import { Settings, Zap, CheckCircle2, XCircle, Sparkles, Users, AlertTriangle } from "lucide-react";
 import { getStripeConfig } from "@/lib/stripe";
 
@@ -107,17 +107,17 @@ export default async function SuperadminBilling() {
       <div className="grid md:grid-cols-3 gap-5 mb-8">
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <div className="text-sm text-gray-500 mb-1">Active MRR</div>
-          <div className="text-3xl font-bold text-green-600">{formatCurrency(activeMrrCents / 100)}</div>
+          <div className="text-3xl font-bold text-green-600">{formatCurrency(activeMrrCents / 100, PLATFORM_CURRENCY)}</div>
           <div className="text-xs text-gray-400 mt-1">Billing right now</div>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <div className="text-sm text-gray-500 mb-1">Trialing MRR</div>
-          <div className="text-3xl font-bold text-amber-600">{formatCurrency(trialingMrrCents / 100)}</div>
+          <div className="text-3xl font-bold text-amber-600">{formatCurrency(trialingMrrCents / 100, PLATFORM_CURRENCY)}</div>
           <div className="text-xs text-gray-400 mt-1">Will convert (or not) on trial end</div>
         </div>
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
           <div className="text-sm text-gray-500 mb-1">Past-due MRR</div>
-          <div className="text-3xl font-bold text-red-600">{formatCurrency(pastDueMrrCents / 100)}</div>
+          <div className="text-3xl font-bold text-red-600">{formatCurrency(pastDueMrrCents / 100, PLATFORM_CURRENCY)}</div>
           <div className="text-xs text-gray-400 mt-1">At-risk — card failed</div>
         </div>
       </div>
@@ -136,11 +136,11 @@ export default async function SuperadminBilling() {
                   <Sparkles className="w-4 h-4 text-amber-500" />
                   <div>
                     <div className="font-bold text-gray-900 text-lg">{addOn.name}</div>
-                    <div className="text-sm text-gray-500">{formatCurrency((addOn.monthlyPriceCents ?? 0) / 100)}/month</div>
+                    <div className="text-sm text-gray-500">{formatCurrency((addOn.monthlyPriceCents ?? 0) / 100, PLATFORM_CURRENCY)}/month</div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-green-600 text-lg">{formatCurrency(mrrFromThis / 100)}/mo</div>
+                  <div className="font-bold text-green-600 text-lg">{formatCurrency(mrrFromThis / 100, PLATFORM_CURRENCY)}/mo</div>
                   <div className="text-xs text-gray-400">
                     {active.length} active · {trialing.length} trial
                     {pastDue.length > 0 && ` · ${pastDue.length} past-due`}
@@ -207,7 +207,7 @@ export default async function SuperadminBilling() {
               <div className="flex items-center gap-2">
                 <Users className="w-3.5 h-3.5 text-gray-400" />
                 <span className="font-medium text-gray-700">{p.name}</span>
-                <span className="text-xs text-gray-500">{formatCurrency(p.price)}/mo</span>
+                <span className="text-xs text-gray-500">{formatCurrency(p.price, PLATFORM_CURRENCY)}/mo</span>
               </div>
               <span className="text-xs text-gray-500">{p._count.restaurants} restaurant{p._count.restaurants === 1 ? "" : "s"}</span>
             </div>

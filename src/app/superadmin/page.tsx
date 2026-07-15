@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatCurrency, formatDate , PLATFORM_CURRENCY } from "@/lib/utils";
 import { Store, DollarSign, TrendingUp, Zap, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { ImpersonateButton } from "./restaurants/ImpersonateButton";
@@ -118,7 +118,7 @@ export default async function SuperadminDashboard() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         {[
           { label: "Total Restaurants", value: totalRestaurants, icon: Store, color: "text-blue-500", bg: "bg-blue-50" },
-          { label: "Monthly MRR", value: formatCurrency(mrrCents / 100), icon: DollarSign, color: "text-green-500", bg: "bg-green-50", hint: "from active add-ons" },
+          { label: "Monthly MRR", value: formatCurrency(mrrCents / 100, PLATFORM_CURRENCY), icon: DollarSign, color: "text-green-500", bg: "bg-green-50", hint: "from active add-ons" },
           { label: "Orders Processed", value: totalOrders, icon: TrendingUp, color: "text-amber-500", bg: "bg-amber-50" },
           { label: "Paid Restaurants", value: paidRestaurants, icon: Zap, color: "text-amber-500", bg: "bg-amber-50", hint: ">= 1 add-on" },
         ].map((s) => (
@@ -156,12 +156,12 @@ export default async function SuperadminDashboard() {
                         {a.name}
                       </span>
                       <span className="text-xs text-gray-500 ml-2">
-                        {formatCurrency((a.monthlyPriceCents ?? 0) / 100)}/mo
+                        {formatCurrency((a.monthlyPriceCents ?? 0) / 100, PLATFORM_CURRENCY)}/mo
                       </span>
                     </div>
                     <div className="text-right">
                       <div className="font-bold text-gray-900">{adopters} restaurant{adopters === 1 ? "" : "s"}</div>
-                      <div className="text-xs text-green-600">{formatCurrency(mrrFromThisAddOn / 100)}/mo MRR</div>
+                      <div className="text-xs text-green-600">{formatCurrency(mrrFromThisAddOn / 100, PLATFORM_CURRENCY)}/mo MRR</div>
                     </div>
                   </div>
                 );
@@ -177,7 +177,7 @@ export default async function SuperadminDashboard() {
             <div className="flex justify-between"><span className="text-gray-600">Published restaurants</span><span className="font-semibold text-emerald-600">{publishedRestaurants}</span></div>
             <div className="flex justify-between"><span className="text-gray-600">Paid restaurants</span><span className="font-semibold text-amber-600">{paidRestaurants}</span></div>
             <div className="flex justify-between"><span className="text-gray-600">Total orders processed</span><span className="font-semibold">{totalOrders}</span></div>
-            <div className="flex justify-between"><span className="text-gray-600">Total order volume</span><span className="font-semibold text-green-600">{formatCurrency(totalRevenue._sum.total || 0)}</span></div>
+            <div className="flex justify-between"><span className="text-gray-600">Total order volume</span><span className="font-semibold text-green-600">{formatCurrency(totalRevenue._sum.total || 0, PLATFORM_CURRENCY)}</span></div>
           </div>
         </div>
       </div>

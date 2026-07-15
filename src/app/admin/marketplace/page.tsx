@@ -50,7 +50,7 @@ export default async function MarketplaceAdminPage() {
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { name: true, slug: true, city: true, cuisineType: true, bannerUrl: true, logoUrl: true },
+    select: { name: true, slug: true, city: true, cuisineType: true, bannerUrl: true, logoUrl: true, currency: true },
   });
 
   // Smart-billing snapshot. We compute what the restaurant would pay
@@ -82,6 +82,9 @@ export default async function MarketplaceAdminPage() {
         cuisineType: restaurant?.cuisineType ?? null,
         bannerUrl: restaurant?.bannerUrl ?? null,
         logoUrl: restaurant?.logoUrl ?? null,
+        // The savings / revenue stats are the RESTAURANT's money — render them
+        // in their currency, not the old silent USD default.
+        currency: restaurant?.currency ?? "usd",
       }}
       stats={{
         currentMonthOrders: listing.currentMonthOrders,

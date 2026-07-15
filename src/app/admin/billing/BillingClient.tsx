@@ -7,7 +7,7 @@ import {
   CreditCard, AlertTriangle, CheckCircle2, Clock, ExternalLink, Loader2,
   ShoppingBag, Plus, XCircle,
 } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import { FiscalDataCard } from "./FiscalDataCard";
 
 type Invoice = {
@@ -354,7 +354,7 @@ export function BillingClient({
                     </div>
                     <div className="text-right flex-shrink-0">
                       <div className="font-bold text-gray-900">
-                        {formatCurrency(inv.amountPaid / 100)}
+                        {formatCurrency(inv.amountPaid / 100, PLATFORM_CURRENCY)}
                       </div>
                       <a
                         href={`/billing-invoice/${inv.id}`}
@@ -387,7 +387,7 @@ export function BillingClient({
                       {new Date(inv.paidAt || inv.createdAt).toLocaleDateString()}
                     </td>
                     <td className="px-4 py-3 font-medium text-gray-900">
-                      {formatCurrency(inv.amountPaid / 100)}
+                      {formatCurrency(inv.amountPaid / 100, PLATFORM_CURRENCY)}
                     </td>
                     <td className="px-4 py-3">
                       <span
@@ -696,7 +696,7 @@ function AddOnRowItem({
           ) : catalog.monthlyPriceCents === 0 ? (
             <span className="text-gray-500">{t("free")}</span>
           ) : (
-            <>{formatCurrency(catalog.monthlyPriceCents / 100)}<span className="text-xs font-normal text-gray-500">/mo</span></>
+            <>{formatCurrency(catalog.monthlyPriceCents / 100, PLATFORM_CURRENCY)}<span className="text-xs font-normal text-gray-500">/mo</span></>
           )}
         </div>
         {includedNote ? (
@@ -880,7 +880,7 @@ function MarketplaceAddOnRow({
               <div>
                 <strong className="text-gray-700 font-semibold">{t("thisPeriod")}:</strong>{" "}
                 {paygOrdersThisPeriod} order{paygOrdersThisPeriod === 1 ? "" : "s"}{" "}
-                · <strong>{formatCurrency(paygChargeCents / 100)}</strong>
+                · <strong>{formatCurrency(paygChargeCents / 100, PLATFORM_CURRENCY)}</strong>
                 {paygChargeCents >= PAYG_MONTHLY_CAP_CENTS && (
                   <span className="text-emerald-700 font-semibold"> {t("paygCapReached")}</span>
                 )}

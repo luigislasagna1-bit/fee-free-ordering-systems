@@ -3,7 +3,7 @@ import Link from "next/link";
 import prisma from "@/lib/db";
 import { requirePlatformStaff } from "@/lib/platform-auth";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { formatCurrency, formatDate , PLATFORM_CURRENCY } from "@/lib/utils";
 import { RestaurantControls } from "./RestaurantControls";
 import { AssignResellerControl } from "./AssignResellerControl";
 import { ImpersonateButton } from "../ImpersonateButton";
@@ -237,7 +237,7 @@ export default async function SuperadminRestaurantDetail({
         <Stat
           icon={<Wallet className="w-4 h-4 text-emerald-600" />}
           label="Revenue today"
-          value={formatCurrency(today._sum.total ?? 0)}
+          value={formatCurrency(today._sum.total ?? 0, restaurant.currency)}
         />
         <Stat
           icon={<Users className="w-4 h-4 text-amber-600" />}
@@ -349,7 +349,7 @@ export default async function SuperadminRestaurantDetail({
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-gray-900 truncate">{sub.addOn.name}</div>
                     <div className="text-xs text-gray-500">
-                      <code>{sub.addOn.slug}</code> · {formatCurrency(sub.addOn.monthlyPriceCents / 100)}/mo
+                      <code>{sub.addOn.slug}</code> · {formatCurrency(sub.addOn.monthlyPriceCents / 100, PLATFORM_CURRENCY)}/mo
                     </div>
                   </div>
                   <span className={`text-xs font-bold uppercase px-2 py-0.5 rounded ${subscriptionTextClass(sub.status)}`}>
@@ -373,10 +373,10 @@ export default async function SuperadminRestaurantDetail({
               />
               <Field label="Featured" value={restaurant.marketplaceListing.marketplaceFeatured ? <span className="text-emerald-600 flex items-center gap-1"><Star className="w-3.5 h-3.5 fill-emerald-600" /> Yes</span> : "No"} />
               <Field label="Orders this month" value={restaurant.marketplaceListing.currentMonthOrders.toString()} />
-              <Field label="Revenue this month" value={formatCurrency(restaurant.marketplaceListing.currentMonthRevenue)} />
+              <Field label="Revenue this month" value={formatCurrency(restaurant.marketplaceListing.currentMonthRevenue, restaurant.currency)} />
               <Field
                 label="Lifetime savings vs UberEats"
-                value={<span className="text-emerald-700 font-bold">{formatCurrency(restaurant.marketplaceListing.lifetimeSavingsVsUberEatsCents / 100)}</span>}
+                value={<span className="text-emerald-700 font-bold">{formatCurrency(restaurant.marketplaceListing.lifetimeSavingsVsUberEatsCents / 100, restaurant.currency)}</span>}
               />
             </>
           ) : (
@@ -394,7 +394,7 @@ export default async function SuperadminRestaurantDetail({
           <Field label="Opening hours rows" value={restaurant._count.openingHours.toString()} />
           <Field label="Notification recipients" value={notificationRecipientCount.toString()} />
           <Field label="Total orders (all-time)" value={restaurant._count.orders.toString()} />
-          <Field label="Last 30d orders / revenue" value={`${last30Days._count} · ${formatCurrency(last30Days._sum.total ?? 0)}`} />
+          <Field label="Last 30d orders / revenue" value={`${last30Days._count} · ${formatCurrency(last30Days._sum.total ?? 0, restaurant.currency)}`} />
         </Card>
 
         {/* ── Kitchen devices ──────────────────────────────────────── */}
@@ -521,7 +521,7 @@ export default async function SuperadminRestaurantDetail({
                   <td className="px-4 py-2.5 font-mono text-xs text-gray-700">{o.orderNumber}</td>
                   <td className="px-4 py-2.5 text-gray-700 truncate max-w-[180px]">{o.customerName}</td>
                   <td className="px-4 py-2.5 text-gray-600">{o.type}</td>
-                  <td className="px-4 py-2.5 text-gray-900 font-semibold">{formatCurrency(o.total)}</td>
+                  <td className="px-4 py-2.5 text-gray-900 font-semibold">{formatCurrency(o.total, restaurant.currency)}</td>
                   <td className="px-4 py-2.5"><StatusBadge label={o.status} tone={orderStatusTone(o.status)} /></td>
                   <td className="px-4 py-2.5 text-gray-600 text-xs">{o.paymentMethod} · {o.paymentStatus}</td>
                   <td className="px-4 py-2.5 text-gray-500 text-xs whitespace-nowrap">{formatDate(o.createdAt)}</td>

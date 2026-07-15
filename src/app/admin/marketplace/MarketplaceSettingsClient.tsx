@@ -39,6 +39,9 @@ type Restaurant = {
   cuisineType: string | null;
   bannerUrl: string | null;
   logoUrl: string | null;
+  /** The store's own currency — the savings/revenue stats below are the
+   *  RESTAURANT's money, so they must render in it (never the USD default). */
+  currency: string;
 };
 
 type Stats = {
@@ -438,7 +441,7 @@ export function MarketplaceSettingsClient({
                 </span>
               </div>
               <div className="text-3xl font-bold tracking-tight">
-                {formatCurrency(stats.lifetimeSavingsVsUberEatsCents / 100)}
+                {formatCurrency(stats.lifetimeSavingsVsUberEatsCents / 100, restaurant.currency)}
               </div>
               <p className="text-xs mt-1.5 opacity-90 leading-relaxed">
                 {t("lifetimeSavingsDetail")}
@@ -466,7 +469,7 @@ export function MarketplaceSettingsClient({
                 <StatCell
                   icon={<DollarSign className="w-3.5 h-3.5" />}
                   label={t("statRevenue")}
-                  value={formatCurrency(stats.currentMonthRevenue, (restaurant as any).currency)}
+                  value={formatCurrency(stats.currentMonthRevenue, restaurant.currency)}
                   color="text-emerald-600"
                   bg="bg-emerald-50"
                 />

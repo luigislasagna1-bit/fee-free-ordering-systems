@@ -8,7 +8,7 @@ import {
   availableBalanceCents,
   TIER_THRESHOLDS,
 } from "@/lib/commission";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import {
   Store, TrendingUp, Wallet, DollarSign, Clock, ArrowRight, Percent, BarChart3, Plus, Sparkles,
 } from "lucide-react";
@@ -213,14 +213,14 @@ export default async function ResellerDashboardPage() {
         <Stat
           icon={<TrendingUp className="w-4 h-4" />}
           label="Projected monthly"
-          value={formatCurrency(projectedMonthlyCommission)}
-          hint={`${formatCurrency(monthlyRecurring)} MRR × ${ratePercent}%`}
+          value={formatCurrency(projectedMonthlyCommission, PLATFORM_CURRENCY)}
+          hint={`${formatCurrency(monthlyRecurring, PLATFORM_CURRENCY)} MRR × ${ratePercent}%`}
         />
         <Stat
           icon={<Wallet className="w-4 h-4" />}
           label="Available payout"
-          value={formatCurrency(availableCents / 100)}
-          hint={`+${formatCurrency(pendingCommission / 100)} on hold`}
+          value={formatCurrency(availableCents / 100, PLATFORM_CURRENCY)}
+          hint={`+${formatCurrency(pendingCommission / 100, PLATFORM_CURRENCY)} on hold`}
         />
       </div>
 
@@ -290,15 +290,15 @@ export default async function ResellerDashboardPage() {
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">Total earned</span>
-              <span className="font-semibold text-gray-900">{formatCurrency(profile.totalEarnedCents / 100)}</span>
+              <span className="font-semibold text-gray-900">{formatCurrency(profile.totalEarnedCents / 100, PLATFORM_CURRENCY)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">Paid out</span>
-              <span className="font-semibold text-gray-900">{formatCurrency(profile.totalPaidCents / 100)}</span>
+              <span className="font-semibold text-gray-900">{formatCurrency(profile.totalPaidCents / 100, PLATFORM_CURRENCY)}</span>
             </div>
             <div className="flex justify-between border-t border-gray-100 pt-2 mt-2">
               <span className="text-gray-700 font-medium">Outstanding</span>
-              <span className="font-bold text-gray-900">{formatCurrency((profile.totalEarnedCents - profile.totalPaidCents) / 100)}</span>
+              <span className="font-bold text-gray-900">{formatCurrency((profile.totalEarnedCents - profile.totalPaidCents) / 100, PLATFORM_CURRENCY)}</span>
             </div>
           </div>
         </div>

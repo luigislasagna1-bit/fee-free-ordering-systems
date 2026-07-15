@@ -211,8 +211,10 @@ function ReservationDetail({
   onPrint: (id: string) => void;
   onClose: () => void;
   hoursFormat?: "12h" | "24h";
-  /** Restaurant currency for the pre-order amount. */
-  currency?: string;
+  /** Restaurant currency for the pre-order amount. REQUIRED — when this was
+   *  optional a caller could omit it and a Euro store's pre-order total would
+   *  silently render "$" via the old formatCurrency default (Fabrizio cmrkmtva). */
+  currency: string;
 }) {
   const tk = useTranslations("kitchen");
   const locale = useLocale();

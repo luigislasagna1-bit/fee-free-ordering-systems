@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, CheckCircle2, AlertTriangle, XCircle, Percent, LogIn } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 
 type Profile = {
   id: string;
@@ -98,8 +98,8 @@ export function ResellerDetailClient({ initial }: { initial: Profile }) {
         <Row label="Country">{profile.country ?? "—"}</Row>
         <Row label="Referral code"><code className="text-xs">{profile.referralCode}</code></Row>
         <Row label="Approved at">{profile.approvedAt ? new Date(profile.approvedAt).toLocaleString() : "—"}</Row>
-        <Row label="Lifetime earned">{formatCurrency(profile.totalEarnedCents / 100)}</Row>
-        <Row label="Lifetime paid">{formatCurrency(profile.totalPaidCents / 100)}</Row>
+        <Row label="Lifetime earned">{formatCurrency(profile.totalEarnedCents / 100, PLATFORM_CURRENCY)}</Row>
+        <Row label="Lifetime paid">{formatCurrency(profile.totalPaidCents / 100, PLATFORM_CURRENCY)}</Row>
       </dl>
 
       {profile.applicationNotes && (

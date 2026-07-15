@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import { CreateTestRestaurantButton } from "./CreateTestRestaurantButton";
 import { RestaurantsTable, type RestaurantRow } from "./RestaurantsTable";
 
@@ -112,7 +112,7 @@ export default async function SuperadminRestaurants() {
         <Stat label="Published"      value={stats.published}                   tone="emerald" />
         <Stat label="Paid"           value={stats.paid}     hint=">= 1 add-on" tone="purple"  />
         <Stat label="Free"           value={stats.free}     hint="no add-ons"  tone="gray"    />
-        <Stat label="MRR"            value={formatCurrency(mrrCents / 100)} hint="active add-ons" tone="blue" />
+        <Stat label="MRR"            value={formatCurrency(mrrCents / 100, PLATFORM_CURRENCY)} hint="active add-ons" tone="blue" />
         <Stat label="Paused"         value={stats.paused}                      tone="yellow"  />
         <Stat label="Test (demo-*)"  value={stats.test}                        tone="purple"  />
         <Stat label="Trials (try-*)" value={stats.trial}    hint="import-to-try" tone="purple" />

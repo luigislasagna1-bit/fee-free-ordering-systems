@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Loader2, Wallet, ExternalLink, AlertCircle } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 
 type Payout = {
   id: string;
@@ -67,7 +67,7 @@ export function PayoutsClient({
               <Wallet className="w-3.5 h-3.5" /> Available balance
             </div>
             <div className="text-3xl font-bold text-gray-900 mt-1">
-              {formatCurrency(availableCents / 100)}
+              {formatCurrency(availableCents / 100, PLATFORM_CURRENCY)}
             </div>
             <div className="text-xs text-gray-500 mt-1">Minimum payout: $50.00</div>
           </div>
@@ -127,7 +127,7 @@ export function PayoutsClient({
                   {new Date(p.requestedAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-3 text-right font-bold text-gray-900">
-                  {formatCurrency(p.amountCents / 100)}
+                  {formatCurrency(p.amountCents / 100, PLATFORM_CURRENCY)}
                 </td>
                 <td className="px-4 py-3 text-gray-700">{p._count.commissions} item(s)</td>
                 <td className="px-4 py-3">

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, CheckCircle2, XCircle, ArrowRight } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 
 type Payout = {
   id: string;
@@ -164,7 +164,7 @@ function PayoutRow({
         </div>
       </div>
       <div className="text-right">
-        <div className="text-lg font-bold text-gray-900">{formatCurrency(p.amountCents / 100)}</div>
+        <div className="text-lg font-bold text-gray-900">{formatCurrency(p.amountCents / 100, PLATFORM_CURRENCY)}</div>
         <div className="text-xs text-gray-500">
           {p._count.commissions} commission{p._count.commissions === 1 ? "" : "s"} ·{" "}
           {new Date(p.requestedAt).toLocaleDateString()}

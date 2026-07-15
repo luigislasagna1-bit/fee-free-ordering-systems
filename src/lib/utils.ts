@@ -5,17 +5,31 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * Format a number as a currency string. Accepts an optional ISO 4217
- * code (e.g. "USD", "EUR", "CAD"). When omitted defaults to USD so
- * legacy call sites that don't have a restaurant in scope (e.g.
- * pure marketing pages) keep their previous behaviour.
+ * The currency FEE FREE ORDERING itself bills in — subscriptions, add-ons,
+ * reseller commissions, payouts, marketplace settlements. Luigi 2026-07-15:
+ * "FeeFree bills everyone in USD no matter what." This is deliberately NOT the
+ * restaurant's currency: a Euro restaurant still pays its platform invoice in
+ * USD. Use this at platform-money call sites so the intent is explicit and
+ * greppable — never rely on a silent default.
+ */
+export const PLATFORM_CURRENCY = "usd";
+
+/**
+ * Format a number as a currency string with an ISO 4217 code ("USD", "EUR", …).
+ *
+ * `currency` is REQUIRED on purpose (Fabrizio cmrkmtva, 2026-07-15). It used to
+ * default to "USD", which meant any call site that forgot it silently rendered
+ * dollars — a Euro restaurant saw "$" and nobody found out until a reseller
+ * complained. Making it required turns that whole class of bug into a compile
+ * error. Pass the RESTAURANT's currency for restaurant money, or
+ * PLATFORM_CURRENCY for Fee Free's own billing.
  *
  * The locale is chosen from the currency itself so the right symbol
  * + thousand/decimal separators appear: EUR → de-DE → "1.234,56 €",
  * GBP → en-GB → "£1,234.56", USD → en-US → "$1,234.56", etc. If you
  * need a specific locale (e.g. French Euros), pass it explicitly.
  */
-export function formatCurrency(amount: number, currency: string = "USD", locale?: string): string {
+export function formatCurrency(amount: number, currency: string, locale?: string): string {
   const code = (currency || "USD").toUpperCase();
   const loc = locale ?? CURRENCY_LOCALE[code] ?? "en-US";
   try {

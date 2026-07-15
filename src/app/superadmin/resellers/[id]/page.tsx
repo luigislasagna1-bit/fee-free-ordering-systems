@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import prisma from "@/lib/db";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import { ResellerDetailClient } from "./ResellerDetailClient";
 
 export default async function ResellerDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -97,7 +97,7 @@ export default async function ResellerDetailPage({ params }: { params: Promise<{
               {profile.payouts.map((p) => (
                 <li key={p.id} className="py-2 flex items-center justify-between">
                   <div>
-                    <div className="font-medium text-gray-900">{formatCurrency(p.amountCents / 100)}</div>
+                    <div className="font-medium text-gray-900">{formatCurrency(p.amountCents / 100, PLATFORM_CURRENCY)}</div>
                     <div className="text-xs text-gray-500">
                       {new Date(p.requestedAt).toLocaleDateString()} · {p.status}
                     </div>

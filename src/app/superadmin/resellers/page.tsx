@@ -1,6 +1,6 @@
 import Link from "next/link";
 import prisma from "@/lib/db";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 
 export default async function SuperadminResellersPage() {
   const profiles = await prisma.resellerProfile.findMany({
@@ -92,7 +92,7 @@ function Section({
                 <td className="px-4 py-3 text-gray-700">{p.companyName ?? "—"}</td>
                 <td className="px-4 py-3 text-right text-gray-900">{p._count.restaurants}</td>
                 <td className="px-4 py-3 text-right text-gray-900">
-                  {formatCurrency(p.totalEarnedCents / 100)}
+                  {formatCurrency(p.totalEarnedCents / 100, PLATFORM_CURRENCY)}
                 </td>
                 <td className="px-4 py-3 text-right">
                   <Link
