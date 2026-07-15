@@ -2455,6 +2455,12 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         // silenced for an earlier order, the kitchen must hear the bell
         // for every new arrival.
         setAcknowledged(false);
+        // A brand-new order must NEVER stay hidden behind a service-type
+        // filter. If the kitchen is narrowed (e.g. to "delivery") and a
+        // pickup order lands, snap back to "All" immediately so it's seen —
+        // don't wait for the 2-min auto-revert (Fabrizio filter follow-up).
+        // setState is a no-op when already "all", so this is free otherwise.
+        setServiceFilter("all");
         toast(`🔔 ${newPending.length} new order${newPending.length > 1 ? "s" : ""}!`, { icon: "🍕", duration: 6000 });
         newPending.forEach(o => seenIdsRef.current.add(o.id));
       }
@@ -2507,6 +2513,10 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
             }
           } catch { /* noop */ }
         }
+        // Same as the pending branch: a new auto-accepted order must not
+        // hide behind a service-type filter — snap back to "All" (no-op when
+        // already "all"). Fabrizio filter follow-up.
+        setServiceFilter("all");
         toast(
           `✅ ${newAutoAccepted.length} new order${newAutoAccepted.length > 1 ? "s" : ""} auto-accepted`,
           { icon: "🍕", duration: 5000 },
