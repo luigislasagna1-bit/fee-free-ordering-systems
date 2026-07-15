@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Twój kurier jest w drodze z Twoim zamówieniem.",
       "headingToStoreGeneric": "Twój kurier jedzie do restauracji, aby odebrać Twoje zamówienie.",
       "etaAway": "Około {minutes} min drogi",
-      "mapTitle": "Lokalizacja kuriera na żywo"
+      "mapTitle": "Lokalizacja kuriera na żywo",
+      "findingDriverTitle": "Szukamy kierowcy",
+      "findingDriverBody": "Przydzielamy kierowcę, który odbierze Twoje zamówienie."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "W trakcie dostawy",
     "status_delivered": "Dostarczono",
     "status_failed": "Niezrealizowana",
-    "gpsBgMessage": "Udostępnianie Twojej lokalizacji na potrzeby aktywnej dostawy."
+    "gpsBgMessage": "Udostępnianie Twojej lokalizacji na potrzeby aktywnej dostawy.",
+    "cantCompleteConfirmTitle": "Nie możesz zrealizować tej dostawy?",
+    "cantCompleteConfirmBody": "Spowoduje to zwrócenie zamówienia do puli, aby inny kierowca mógł je przyjąć.",
+    "cantCompleteConfirmYes": "Tak, zwolnij",
+    "cantCompleteConfirmNo": "Zatrzymaj"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",

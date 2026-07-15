@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Kuryeniz siparişinizle birlikte yolda.",
       "headingToStoreGeneric": "Kuryeniz siparişinizi almak için restorana gidiyor.",
       "etaAway": "Yaklaşık {minutes} dk uzakta",
-      "mapTitle": "Kuryenin canlı konumu"
+      "mapTitle": "Kuryenin canlı konumu",
+      "findingDriverTitle": "Size bir sürücü buluyoruz",
+      "findingDriverBody": "Siparişinizi alması için bir sürücü atıyoruz."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Teslimatta",
     "status_delivered": "Teslim edildi",
     "status_failed": "Tamamlanmadı",
-    "gpsBgMessage": "Etkin teslimat için konumunuz paylaşılıyor."
+    "gpsBgMessage": "Etkin teslimat için konumunuz paylaşılıyor.",
+    "cantCompleteConfirmTitle": "Bu teslimatı tamamlayamıyor musunuz?",
+    "cantCompleteConfirmBody": "Bu, siparişi havuza geri bırakır, böylece başka bir sürücü alabilir.",
+    "cantCompleteConfirmYes": "Evet, bırak",
+    "cantCompleteConfirmNo": "Bende kalsın"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",

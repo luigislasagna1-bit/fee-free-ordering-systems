@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "คนขับกำลังนำออร์เดอร์ของคุณมาส่ง",
       "headingToStoreGeneric": "คนขับกำลังไปที่ร้านเพื่อรับออร์เดอร์ของคุณ",
       "etaAway": "อีกประมาณ {minutes} นาที",
-      "mapTitle": "ตำแหน่งคนขับแบบเรียลไทม์"
+      "mapTitle": "ตำแหน่งคนขับแบบเรียลไทม์",
+      "findingDriverTitle": "กำลังหาคนขับให้คุณ",
+      "findingDriverBody": "เรากำลังมอบหมายคนขับให้มารับคำสั่งซื้อของคุณ"
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "กำลังจัดส่ง",
     "status_delivered": "ส่งแล้ว",
     "status_failed": "ไม่สำเร็จ",
-    "gpsBgMessage": "กำลังแชร์ตำแหน่งของคุณสำหรับการจัดส่งที่กำลังดำเนินอยู่"
+    "gpsBgMessage": "กำลังแชร์ตำแหน่งของคุณสำหรับการจัดส่งที่กำลังดำเนินอยู่",
+    "cantCompleteConfirmTitle": "ไม่สามารถทำการจัดส่งนี้ให้เสร็จได้ใช่ไหม",
+    "cantCompleteConfirmBody": "การทำเช่นนี้จะส่งคำสั่งซื้อกลับเข้าคิวเพื่อให้คนขับคนอื่นรับได้",
+    "cantCompleteConfirmYes": "ใช่ ปล่อยคืน",
+    "cantCompleteConfirmNo": "เก็บไว้"
   },
   "feefreeApp": {
     "dispatchSubtitle": "มอบหมายและติดตามการจัดส่งของคุณ",

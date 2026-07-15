@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Curierul tău este pe drum cu comanda ta.",
       "headingToStoreGeneric": "Curierul tău se îndreaptă spre restaurant pentru a ridica comanda ta.",
       "etaAway": "La aproximativ {minutes} min distanță",
-      "mapTitle": "Locația curierului în timp real"
+      "mapTitle": "Locația curierului în timp real",
+      "findingDriverTitle": "Căutăm un curier",
+      "findingDriverBody": "Atribuim un curier care să preia comanda ta."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "În curs de livrare",
     "status_delivered": "Livrată",
     "status_failed": "Nefinalizată",
-    "gpsBgMessage": "Se partajează locația ta pentru livrarea în curs."
+    "gpsBgMessage": "Se partajează locația ta pentru livrarea în curs.",
+    "cantCompleteConfirmTitle": "Nu poți finaliza această livrare?",
+    "cantCompleteConfirmBody": "Comanda revine în listă, astfel încât alt curier să o poată prelua.",
+    "cantCompleteConfirmYes": "Da, eliberează",
+    "cantCompleteConfirmNo": "Păstrează"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",

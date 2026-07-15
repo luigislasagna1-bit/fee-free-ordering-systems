@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "आपके ड्राइवर आपका ऑर्डर लेकर रास्ते में हैं।",
       "headingToStoreGeneric": "आपके ड्राइवर आपका ऑर्डर लेने के लिए रेस्टोरेंट जा रहे हैं।",
       "etaAway": "लगभग {minutes} मिनट दूर",
-      "mapTitle": "ड्राइवर की लाइव लोकेशन"
+      "mapTitle": "ड्राइवर की लाइव लोकेशन",
+      "findingDriverTitle": "आपके लिए ड्राइवर ढूँढ़ रहे हैं",
+      "findingDriverBody": "हम आपका ऑर्डर लेने के लिए एक ड्राइवर नियुक्त कर रहे हैं।"
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "डिलीवरी के लिए निकला",
     "status_delivered": "डिलीवर किया गया",
     "status_failed": "पूरा नहीं हुआ",
-    "gpsBgMessage": "चालू डिलीवरी के लिए आपका स्थान साझा किया जा रहा है।"
+    "gpsBgMessage": "चालू डिलीवरी के लिए आपका स्थान साझा किया जा रहा है।",
+    "cantCompleteConfirmTitle": "क्या आप यह डिलीवरी पूरी नहीं कर सकते?",
+    "cantCompleteConfirmBody": "इससे ऑर्डर वापस पूल में चला जाएगा ताकि कोई दूसरा ड्राइवर इसे ले सके।",
+    "cantCompleteConfirmYes": "हाँ, छोड़ दें",
+    "cantCompleteConfirmNo": "रखें"
   },
   "feefreeApp": {
     "dispatchSubtitle": "अपनी डिलीवरी असाइन करें और ट्रैक करें",

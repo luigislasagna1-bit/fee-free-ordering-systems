@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Teie kuller on teie tellimusega teel.",
       "headingToStoreGeneric": "Teie kuller suundub restorani teie tellimusele järele.",
       "etaAway": "Umbes {minutes} min kaugusel",
-      "mapTitle": "Kulleri asukoht reaalajas"
+      "mapTitle": "Kulleri asukoht reaalajas",
+      "findingDriverTitle": "Otsime juhti",
+      "findingDriverBody": "Määrame juhi, kes teie tellimuse järele tuleb."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Kohaletoimetamisel",
     "status_delivered": "Kohale toimetatud",
     "status_failed": "Lõpetamata",
-    "gpsBgMessage": "Sinu asukoha jagamine käimasoleva tarne jaoks."
+    "gpsBgMessage": "Sinu asukoha jagamine käimasoleva tarne jaoks.",
+    "cantCompleteConfirmTitle": "Kas te ei saa seda tarnet lõpetada?",
+    "cantCompleteConfirmBody": "See tagastab tellimuse järjekorda, et teine juht saaks selle võtta.",
+    "cantCompleteConfirmYes": "Jah, vabasta",
+    "cantCompleteConfirmNo": "Jäta alles"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",

@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Vaš dostavljavec je na poti z vašim naročilom.",
       "headingToStoreGeneric": "Vaš dostavljavec se odpravlja v restavracijo, da prevzame vaše naročilo.",
       "etaAway": "Približno {minutes} min oddaljen",
-      "mapTitle": "Lokacija dostavljavca v živo"
+      "mapTitle": "Lokacija dostavljavca v živo",
+      "findingDriverTitle": "Iščemo voznika",
+      "findingDriverBody": "Dodeljujemo voznika, ki bo prevzel vaše naročilo."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Na poti za dostavo",
     "status_delivered": "Dostavljeno",
     "status_failed": "Ni dokončano",
-    "gpsBgMessage": "Deljenje vaše lokacije za aktivno dostavo."
+    "gpsBgMessage": "Deljenje vaše lokacije za aktivno dostavo.",
+    "cantCompleteConfirmTitle": "Ne morete dokončati te dostave?",
+    "cantCompleteConfirmBody": "S tem se naročilo vrne v čakalno vrsto, da ga lahko prevzame drug voznik.",
+    "cantCompleteConfirmYes": "Da, sprosti",
+    "cantCompleteConfirmNo": "Obdrži"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodeljujte in spremljajte svoje dostave",

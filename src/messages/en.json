@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Your driver is on the way with your order.",
       "headingToStoreGeneric": "Your driver is heading to the restaurant to pick up your order.",
       "etaAway": "About {minutes} min away",
-      "mapTitle": "Live driver location"
+      "mapTitle": "Live driver location",
+      "findingDriverTitle": "Finding you a driver",
+      "findingDriverBody": "We're assigning a driver to pick up your order."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Out for delivery",
     "status_delivered": "Delivered",
     "status_failed": "Not completed",
-    "gpsBgMessage": "Sharing your location for the active delivery."
+    "gpsBgMessage": "Sharing your location for the active delivery.",
+    "cantCompleteConfirmTitle": "Can't complete this delivery?",
+    "cantCompleteConfirmBody": "This releases the order back to the pool so another driver can pick it up.",
+    "cantCompleteConfirmYes": "Yes, release it",
+    "cantCompleteConfirmNo": "Keep it"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",

@@ -62,6 +62,43 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: "Invalid transition", code: check.code }, { status });
   }
 
+  // "Can't complete this delivery" — a driver bailing must NEVER orphan the
+  // order (the old behaviour marked only the assignment failed, leaving the
+  // customer's live card stuck on "<driver> is heading to the restaurant" and
+  // no driver actually coming). Instead RE-OFFER it to the pool: strip the
+  // driver + every stage stamp so it becomes a fresh `queued` job any driver can
+  // claim, and null unclaimedAlertedAt so the 3-min "no driver accepted" safety
+  // net re-arms (alerts the dispatcher). The customer's tracking card falls back
+  // to "finding you a driver" on its next poll. If the ORDER itself is no longer
+  // live (cancelled/completed elsewhere), don't re-queue a dead order — just
+  // close the assignment out. Luigi 2026-07-15.
+  if (next === "failed") {
+    const orderLive = ["accepted", "preparing", "ready"].includes(assignment.order.status);
+    if (orderLive) {
+      await prisma.deliveryAssignment.update({
+        where: { id },
+        data: {
+          status: "queued",
+          driverId: null,
+          assignedAt: null,
+          acceptedAt: null,
+          startedAt: null,
+          pickedUpAt: null,
+          deliveredAt: null,
+          returnedAt: null,
+          failedAt: null,
+          unclaimedAlertedAt: null,
+        },
+      });
+      return NextResponse.json({ ok: true, status: "reoffered" });
+    }
+    await prisma.deliveryAssignment.update({
+      where: { id },
+      data: { status: "cancelled", failedAt: new Date() },
+    });
+    return NextResponse.json({ ok: true, status: "cancelled" });
+  }
+
   // Build the assignment update. Claim on first action (unowned → mine).
   const data: Record<string, unknown> = { status: next };
   if (!assignment.driverId) data.driverId = driver.driverId;

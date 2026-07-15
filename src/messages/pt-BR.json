@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Seu entregador está a caminho com seu pedido.",
       "headingToStoreGeneric": "Seu entregador está indo ao restaurante para retirar seu pedido.",
       "etaAway": "A cerca de {minutes} min",
-      "mapTitle": "Localização do entregador ao vivo"
+      "mapTitle": "Localização do entregador ao vivo",
+      "findingDriverTitle": "Procurando um entregador",
+      "findingDriverBody": "Estamos atribuindo um entregador para retirar seu pedido."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Saiu para entrega",
     "status_delivered": "Entregue",
     "status_failed": "Não concluída",
-    "gpsBgMessage": "Compartilhando sua localização para a entrega em andamento."
+    "gpsBgMessage": "Compartilhando sua localização para a entrega em andamento.",
+    "cantCompleteConfirmTitle": "Não consegue concluir esta entrega?",
+    "cantCompleteConfirmBody": "Isso devolve o pedido à fila para que outro entregador possa aceitá-lo.",
+    "cantCompleteConfirmYes": "Sim, liberar",
+    "cantCompleteConfirmNo": "Manter"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe suas entregas",

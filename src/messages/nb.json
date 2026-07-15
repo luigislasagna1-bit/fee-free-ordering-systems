@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Sjåføren din er på vei med bestillingen din.",
       "headingToStoreGeneric": "Sjåføren din er på vei til restauranten for å hente bestillingen din.",
       "etaAway": "Omtrent {minutes} min unna",
-      "mapTitle": "Sjåførens live-posisjon"
+      "mapTitle": "Sjåførens live-posisjon",
+      "findingDriverTitle": "Vi finner en sjåfør",
+      "findingDriverBody": "Vi tildeler en sjåfør som henter bestillingen din."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Ute til levering",
     "status_delivered": "Levert",
     "status_failed": "Ikke fullført",
-    "gpsBgMessage": "Deler posisjonen din for den aktive leveringen."
+    "gpsBgMessage": "Deler posisjonen din for den aktive leveringen.",
+    "cantCompleteConfirmTitle": "Kan du ikke fullføre denne leveringen?",
+    "cantCompleteConfirmBody": "Dette legger bestillingen tilbake i køen slik at en annen sjåfør kan ta den.",
+    "cantCompleteConfirmYes": "Ja, frigi den",
+    "cantCompleteConfirmNo": "Behold"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg leveringene dine",

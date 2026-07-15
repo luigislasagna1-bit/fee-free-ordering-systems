@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Vaš vozač je na putu s vašom narudžbom.",
       "headingToStoreGeneric": "Vaš vozač ide u restoran po vašu narudžbu.",
       "etaAway": "Otprilike {minutes} min udaljenosti",
-      "mapTitle": "Lokacija vozača uživo"
+      "mapTitle": "Lokacija vozača uživo",
+      "findingDriverTitle": "Tražimo vozača",
+      "findingDriverBody": "Dodjeljujemo vozača koji će preuzeti vašu narudžbu."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "U dostavi",
     "status_delivered": "Dostavljeno",
     "status_failed": "Nije dovršeno",
-    "gpsBgMessage": "Dijeljenje vaše lokacije za aktivnu dostavu."
+    "gpsBgMessage": "Dijeljenje vaše lokacije za aktivnu dostavu.",
+    "cantCompleteConfirmTitle": "Ne možete dovršiti ovu dostavu?",
+    "cantCompleteConfirmBody": "Time se narudžba vraća u red kako bi je drugi vozač mogao preuzeti.",
+    "cantCompleteConfirmYes": "Da, otpusti",
+    "cantCompleteConfirmNo": "Zadrži"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodijelite i pratite svoje dostave",

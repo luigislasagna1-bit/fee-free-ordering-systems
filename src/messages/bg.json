@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Вашият шофьор е на път с вашата поръчка.",
       "headingToStoreGeneric": "Вашият шофьор се отправя към ресторанта, за да вземе вашата поръчка.",
       "etaAway": "На около {minutes} мин разстояние",
-      "mapTitle": "Местоположение на шофьора на живо"
+      "mapTitle": "Местоположение на шофьора на живо",
+      "findingDriverTitle": "Търсим шофьор",
+      "findingDriverBody": "Определяме шофьор, който да вземе поръчката ви."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "В процес на доставка",
     "status_delivered": "Доставено",
     "status_failed": "Незавършено",
-    "gpsBgMessage": "Споделяне на местоположението ви за активната доставка."
+    "gpsBgMessage": "Споделяне на местоположението ви за активната доставка.",
+    "cantCompleteConfirmTitle": "Не можете ли да завършите тази доставка?",
+    "cantCompleteConfirmBody": "Това връща поръчката в списъка, за да може друг шофьор да я поеме.",
+    "cantCompleteConfirmYes": "Да, освободи я",
+    "cantCompleteConfirmNo": "Запази"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Възлагайте и проследявайте доставките си",

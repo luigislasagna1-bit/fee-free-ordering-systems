@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Din chauffør er på vej med din bestilling.",
       "headingToStoreGeneric": "Din chauffør er på vej til restauranten for at hente din bestilling.",
       "etaAway": "Cirka {minutes} min væk",
-      "mapTitle": "Chaufførens live-placering"
+      "mapTitle": "Chaufførens live-placering",
+      "findingDriverTitle": "Vi finder en chauffør",
+      "findingDriverBody": "Vi tildeler en chauffør til at hente din ordre."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Under levering",
     "status_delivered": "Leveret",
     "status_failed": "Ikke fuldført",
-    "gpsBgMessage": "Deler din placering til den aktive levering."
+    "gpsBgMessage": "Deler din placering til den aktive levering.",
+    "cantCompleteConfirmTitle": "Kan du ikke gennemføre denne levering?",
+    "cantCompleteConfirmBody": "Dette lægger ordren tilbage i puljen, så en anden chauffør kan tage den.",
+    "cantCompleteConfirmYes": "Ja, frigiv den",
+    "cantCompleteConfirmNo": "Behold"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg dine leveringer",

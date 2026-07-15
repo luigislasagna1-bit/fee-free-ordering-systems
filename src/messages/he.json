@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "השליח שלך בדרך אליך עם ההזמנה שלך.",
       "headingToStoreGeneric": "השליח שלך בדרך למסעדה כדי לאסוף את ההזמנה שלך.",
       "etaAway": "בערך {minutes} דקות מכאן",
-      "mapTitle": "מיקום השליח בזמן אמת"
+      "mapTitle": "מיקום השליח בזמן אמת",
+      "findingDriverTitle": "מחפשים לך נהג",
+      "findingDriverBody": "אנחנו משבצים נהג שיאסוף את ההזמנה שלך."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "יצא למשלוח",
     "status_delivered": "נמסר",
     "status_failed": "לא הושלם",
-    "gpsBgMessage": "משתף את המיקום שלך עבור המשלוח הפעיל."
+    "gpsBgMessage": "משתף את המיקום שלך עבור המשלוח הפעיל.",
+    "cantCompleteConfirmTitle": "לא ניתן להשלים את המשלוח הזה?",
+    "cantCompleteConfirmBody": "פעולה זו תחזיר את ההזמנה למאגר כדי שנהג אחר יוכל לקחת אותה.",
+    "cantCompleteConfirmYes": "כן, שחרר",
+    "cantCompleteConfirmNo": "השאר"
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",

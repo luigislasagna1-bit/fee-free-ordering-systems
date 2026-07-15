@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Je bezorger is onderweg met je bestelling.",
       "headingToStoreGeneric": "Je bezorger is op weg naar het restaurant om je bestelling op te halen.",
       "etaAway": "Nog ongeveer {minutes} min",
-      "mapTitle": "Live locatie van bezorger"
+      "mapTitle": "Live locatie van bezorger",
+      "findingDriverTitle": "We zoeken een bezorger",
+      "findingDriverBody": "We wijzen een bezorger toe om je bestelling op te halen."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Onderweg voor bezorging",
     "status_delivered": "Bezorgd",
     "status_failed": "Niet voltooid",
-    "gpsBgMessage": "Je locatie wordt gedeeld voor de actieve bezorging."
+    "gpsBgMessage": "Je locatie wordt gedeeld voor de actieve bezorging.",
+    "cantCompleteConfirmTitle": "Kun je deze bezorging niet voltooien?",
+    "cantCompleteConfirmBody": "Hiermee komt de bestelling weer beschikbaar zodat een andere bezorger hem kan aannemen.",
+    "cantCompleteConfirmYes": "Ja, vrijgeven",
+    "cantCompleteConfirmNo": "Behouden"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",

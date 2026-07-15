@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "A futárod úton van a rendeléseddel.",
       "headingToStoreGeneric": "A futárod az étterembe tart, hogy felvegye a rendelésedet.",
       "etaAway": "Körülbelül {minutes} percre van",
-      "mapTitle": "A futár élő helyzete"
+      "mapTitle": "A futár élő helyzete",
+      "findingDriverTitle": "Futárt keresünk",
+      "findingDriverBody": "Futárt rendelünk a rendelése átvételéhez."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Kiszállítás alatt",
     "status_delivered": "Kézbesítve",
     "status_failed": "Nem teljesült",
-    "gpsBgMessage": "Tartózkodási helyed megosztása az aktív kiszállításhoz."
+    "gpsBgMessage": "Tartózkodási helyed megosztása az aktív kiszállításhoz.",
+    "cantCompleteConfirmTitle": "Nem tudja teljesíteni ezt a kiszállítást?",
+    "cantCompleteConfirmBody": "Ezzel a rendelés visszakerül a listába, hogy egy másik futár átvehesse.",
+    "cantCompleteConfirmYes": "Igen, elengedem",
+    "cantCompleteConfirmNo": "Megtartom"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",

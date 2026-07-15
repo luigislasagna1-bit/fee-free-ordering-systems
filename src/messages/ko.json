@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "기사님이 주문하신 음식을 가지고 오고 있습니다.",
       "headingToStoreGeneric": "기사님이 주문을 픽업하러 매장으로 가고 있습니다.",
       "etaAway": "약 {minutes}분 후 도착",
-      "mapTitle": "실시간 기사 위치"
+      "mapTitle": "실시간 기사 위치",
+      "findingDriverTitle": "기사를 찾는 중",
+      "findingDriverBody": "주문을 픽업할 기사를 배정하고 있습니다."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "배달 중",
     "status_delivered": "배달 완료",
     "status_failed": "미완료",
-    "gpsBgMessage": "진행 중인 배달을 위해 위치를 공유하고 있습니다."
+    "gpsBgMessage": "진행 중인 배달을 위해 위치를 공유하고 있습니다.",
+    "cantCompleteConfirmTitle": "이 배달을 완료할 수 없나요?",
+    "cantCompleteConfirmBody": "주문이 대기열로 돌아가 다른 기사가 받을 수 있게 됩니다.",
+    "cantCompleteConfirmYes": "네, 반환합니다",
+    "cantCompleteConfirmNo": "유지"
   },
   "feefreeApp": {
     "dispatchSubtitle": "배달 배정 및 추적",

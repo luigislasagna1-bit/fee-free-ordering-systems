@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Kuljettajasi on matkalla tilauksesi kanssa.",
       "headingToStoreGeneric": "Kuljettajasi on matkalla ravintolaan noutamaan tilauksesi.",
       "etaAway": "Noin {minutes} min päässä",
-      "mapTitle": "Kuljettajan reaaliaikainen sijainti"
+      "mapTitle": "Kuljettajan reaaliaikainen sijainti",
+      "findingDriverTitle": "Etsimme kuljettajaa",
+      "findingDriverBody": "Osoitamme kuljettajan noutamaan tilauksesi."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Toimituksessa",
     "status_delivered": "Toimitettu",
     "status_failed": "Ei suoritettu",
-    "gpsBgMessage": "Jaetaan sijaintiasi käynnissä olevaa toimitusta varten."
+    "gpsBgMessage": "Jaetaan sijaintiasi käynnissä olevaa toimitusta varten.",
+    "cantCompleteConfirmTitle": "Etkö voi suorittaa tätä toimitusta?",
+    "cantCompleteConfirmBody": "Tämä palauttaa tilauksen jonoon, jotta toinen kuljettaja voi ottaa sen.",
+    "cantCompleteConfirmYes": "Kyllä, vapauta",
+    "cantCompleteConfirmNo": "Pidä"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",

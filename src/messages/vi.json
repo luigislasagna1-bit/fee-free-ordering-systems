@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Tài xế đang trên đường giao đơn hàng của bạn.",
       "headingToStoreGeneric": "Tài xế đang đến nhà hàng để lấy đơn hàng của bạn.",
       "etaAway": "Còn khoảng {minutes} phút nữa",
-      "mapTitle": "Vị trí tài xế trực tiếp"
+      "mapTitle": "Vị trí tài xế trực tiếp",
+      "findingDriverTitle": "Đang tìm tài xế",
+      "findingDriverBody": "Chúng tôi đang chỉ định tài xế đến lấy đơn của bạn."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Đang giao hàng",
     "status_delivered": "Đã giao",
     "status_failed": "Chưa hoàn tất",
-    "gpsBgMessage": "Đang chia sẻ vị trí của bạn cho đơn giao hàng đang thực hiện."
+    "gpsBgMessage": "Đang chia sẻ vị trí của bạn cho đơn giao hàng đang thực hiện.",
+    "cantCompleteConfirmTitle": "Không thể hoàn thành đơn giao này?",
+    "cantCompleteConfirmBody": "Thao tác này trả đơn về hàng chờ để một tài xế khác có thể nhận.",
+    "cantCompleteConfirmYes": "Có, trả đơn",
+    "cantCompleteConfirmNo": "Giữ lại"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",

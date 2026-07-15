@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Kurir Anda sedang dalam perjalanan mengantar pesanan Anda.",
       "headingToStoreGeneric": "Kurir Anda sedang menuju ke restoran untuk mengambil pesanan Anda.",
       "etaAway": "Sekitar {minutes} mnt lagi",
-      "mapTitle": "Lokasi kurir langsung"
+      "mapTitle": "Lokasi kurir langsung",
+      "findingDriverTitle": "Mencari pengemudi",
+      "findingDriverBody": "Kami menugaskan pengemudi untuk mengambil pesanan Anda."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Sedang diantar",
     "status_delivered": "Terkirim",
     "status_failed": "Tidak selesai",
-    "gpsBgMessage": "Membagikan lokasi Anda untuk pengiriman yang sedang berlangsung."
+    "gpsBgMessage": "Membagikan lokasi Anda untuk pengiriman yang sedang berlangsung.",
+    "cantCompleteConfirmTitle": "Tidak dapat menyelesaikan pengiriman ini?",
+    "cantCompleteConfirmBody": "Ini mengembalikan pesanan ke antrean agar pengemudi lain dapat mengambilnya.",
+    "cantCompleteConfirmYes": "Ya, lepaskan",
+    "cantCompleteConfirmNo": "Simpan"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",

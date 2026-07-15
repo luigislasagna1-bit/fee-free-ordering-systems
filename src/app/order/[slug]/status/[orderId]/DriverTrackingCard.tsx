@@ -8,6 +8,7 @@ type Tracking = {
   status?: string;
   delivered?: boolean;
   enRoute?: boolean;
+  findingDriver?: boolean;
   driverName?: string | null;
   driver?: { lat: number; lng: number; at: string | null } | null;
   destination?: { lat: number; lng: number } | null;
@@ -62,7 +63,7 @@ export function DriverTrackingCard({ orderId, themeColor }: { orderId: string; t
           <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg text-white" style={{ backgroundColor: accent }}>
             <Bike className="w-4 h-4" />
           </span>
-          {data.enRoute ? t("onTheWayTitle") : t("headingToStoreTitle")}
+          {data.findingDriver ? t("findingDriverTitle") : data.enRoute ? t("onTheWayTitle") : t("headingToStoreTitle")}
         </div>
         {data.enRoute && (
           <span className="inline-flex items-center gap-1 text-[11px] font-semibold" style={{ color: accent }}>
@@ -72,13 +73,15 @@ export function DriverTrackingCard({ orderId, themeColor }: { orderId: string; t
       </div>
 
       <p className="text-sm text-gray-600 mt-2">
-        {data.driverName
-          ? data.enRoute
-            ? t("onTheWayNamed", { name: data.driverName })
-            : t("headingToStoreNamed", { name: data.driverName })
-          : data.enRoute
-            ? t("onTheWayGeneric")
-            : t("headingToStoreGeneric")}
+        {data.findingDriver
+          ? t("findingDriverBody")
+          : data.driverName
+            ? data.enRoute
+              ? t("onTheWayNamed", { name: data.driverName })
+              : t("headingToStoreNamed", { name: data.driverName })
+            : data.enRoute
+              ? t("onTheWayGeneric")
+              : t("headingToStoreGeneric")}
       </p>
 
       {data.enRoute && data.etaMinutes != null && (

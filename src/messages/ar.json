@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "سائقك في الطريق إليك مع طلبك.",
       "headingToStoreGeneric": "سائقك في طريقه إلى المطعم لاستلام طلبك.",
       "etaAway": "يبعد حوالي {minutes} دقيقة",
-      "mapTitle": "موقع السائق المباشر"
+      "mapTitle": "موقع السائق المباشر",
+      "findingDriverTitle": "نبحث لك عن سائق",
+      "findingDriverBody": "نقوم بتعيين سائق لاستلام طلبك."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "خارج للتوصيل",
     "status_delivered": "تم التوصيل",
     "status_failed": "لم يكتمل",
-    "gpsBgMessage": "يتم مشاركة موقعك من أجل عملية التوصيل الجارية."
+    "gpsBgMessage": "يتم مشاركة موقعك من أجل عملية التوصيل الجارية.",
+    "cantCompleteConfirmTitle": "يتعذر إكمال هذا التوصيل؟",
+    "cantCompleteConfirmBody": "سيؤدي ذلك إلى إعادة الطلب إلى القائمة ليتمكن سائق آخر من استلامه.",
+    "cantCompleteConfirmYes": "نعم، حرّرها",
+    "cantCompleteConfirmNo": "الاحتفاظ بها"
   },
   "feefreeApp": {
     "dispatchSubtitle": "عيّن وتتبّع عمليات التوصيل الخاصة بك",

@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Il tuo corriere è in arrivo con il tuo ordine.",
       "headingToStoreGeneric": "Il tuo corriere si sta dirigendo al ristorante per ritirare il tuo ordine.",
       "etaAway": "A circa {minutes} min",
-      "mapTitle": "Posizione del corriere in diretta"
+      "mapTitle": "Posizione del corriere in diretta",
+      "findingDriverTitle": "Stiamo cercando un corriere",
+      "findingDriverBody": "Stiamo assegnando un corriere per ritirare il tuo ordine."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "In consegna",
     "status_delivered": "Consegnato",
     "status_failed": "Non completata",
-    "gpsBgMessage": "Condivisione della tua posizione per la consegna in corso."
+    "gpsBgMessage": "Condivisione della tua posizione per la consegna in corso.",
+    "cantCompleteConfirmTitle": "Impossibile completare questa consegna?",
+    "cantCompleteConfirmBody": "L'ordine tornerà disponibile nella lista così un altro corriere potrà prenderlo.",
+    "cantCompleteConfirmYes": "Sì, rilascia",
+    "cantCompleteConfirmNo": "Mantieni"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assegna e monitora le tue consegne",

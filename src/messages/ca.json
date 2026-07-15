@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "El teu repartidor està en camí amb la teva comanda.",
       "headingToStoreGeneric": "El teu repartidor es dirigeix al restaurant per recollir la teva comanda.",
       "etaAway": "A uns {minutes} min",
-      "mapTitle": "Ubicació del repartidor en directe"
+      "mapTitle": "Ubicació del repartidor en directe",
+      "findingDriverTitle": "Cercant un repartidor",
+      "findingDriverBody": "Estem assignant un repartidor per recollir la teva comanda."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "En lliurament",
     "status_delivered": "Lliurat",
     "status_failed": "No completat",
-    "gpsBgMessage": "S'està compartint la vostra ubicació per a l'entrega en curs."
+    "gpsBgMessage": "S'està compartint la vostra ubicació per a l'entrega en curs.",
+    "cantCompleteConfirmTitle": "No pots completar aquest lliurament?",
+    "cantCompleteConfirmBody": "Això retorna la comanda a la llista perquè un altre repartidor la pugui agafar.",
+    "cantCompleteConfirmYes": "Sí, allibera-la",
+    "cantCompleteConfirmNo": "Mantén-la"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",

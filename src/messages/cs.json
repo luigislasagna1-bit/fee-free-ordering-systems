@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Váš řidič je na cestě s vaší objednávkou.",
       "headingToStoreGeneric": "Váš řidič míří do restaurace, aby vyzvedl vaši objednávku.",
       "etaAway": "Přibližně {minutes} min cesty",
-      "mapTitle": "Poloha řidiče v reálném čase"
+      "mapTitle": "Poloha řidiče v reálném čase",
+      "findingDriverTitle": "Hledáme řidiče",
+      "findingDriverBody": "Přiřazujeme řidiče, který vyzvedne vaši objednávku."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Na cestě k doručení",
     "status_delivered": "Doručeno",
     "status_failed": "Nedokončeno",
-    "gpsBgMessage": "Sdílení vaší polohy pro aktivní doručení."
+    "gpsBgMessage": "Sdílení vaší polohy pro aktivní doručení.",
+    "cantCompleteConfirmTitle": "Nemůžete dokončit toto doručení?",
+    "cantCompleteConfirmBody": "Objednávka se vrátí do fronty, aby ji mohl převzít jiný řidič.",
+    "cantCompleteConfirmYes": "Ano, uvolnit",
+    "cantCompleteConfirmNo": "Ponechat"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Přiřazujte a sledujte své rozvozy",

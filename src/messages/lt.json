@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Jūsų kurjeris pakeliui su jūsų užsakymu.",
       "headingToStoreGeneric": "Jūsų kurjeris vyksta į restoraną atsiimti jūsų užsakymo.",
       "etaAway": "Maždaug už {minutes} min",
-      "mapTitle": "Kurjerio vieta tiesiogiai"
+      "mapTitle": "Kurjerio vieta tiesiogiai",
+      "findingDriverTitle": "Ieškome vairuotojo",
+      "findingDriverBody": "Priskiriame vairuotoją, kuris paims jūsų užsakymą."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Pristatoma",
     "status_delivered": "Pristatyta",
     "status_failed": "Neužbaigta",
-    "gpsBgMessage": "Bendrinama jūsų vieta vykdomam pristatymui."
+    "gpsBgMessage": "Bendrinama jūsų vieta vykdomam pristatymui.",
+    "cantCompleteConfirmTitle": "Ar negalite užbaigti šio pristatymo?",
+    "cantCompleteConfirmBody": "Taip užsakymas grąžinamas į eilę, kad jį galėtų paimti kitas vairuotojas.",
+    "cantCompleteConfirmYes": "Taip, atlaisvinti",
+    "cantCompleteConfirmNo": "Palikti"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",

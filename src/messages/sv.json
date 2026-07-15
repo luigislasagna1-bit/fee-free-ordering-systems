@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Din förare är på väg med din beställning.",
       "headingToStoreGeneric": "Din förare är på väg till restaurangen för att hämta din beställning.",
       "etaAway": "Cirka {minutes} min bort",
-      "mapTitle": "Förarens liveposition"
+      "mapTitle": "Förarens liveposition",
+      "findingDriverTitle": "Vi letar efter en förare",
+      "findingDriverBody": "Vi tilldelar en förare som hämtar din beställning."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Ute för leverans",
     "status_delivered": "Levererad",
     "status_failed": "Ej slutförd",
-    "gpsBgMessage": "Delar din plats för den pågående leveransen."
+    "gpsBgMessage": "Delar din plats för den pågående leveransen.",
+    "cantCompleteConfirmTitle": "Kan du inte slutföra denna leverans?",
+    "cantCompleteConfirmBody": "Detta lägger tillbaka beställningen i kön så att en annan förare kan ta den.",
+    "cantCompleteConfirmYes": "Ja, släpp den",
+    "cantCompleteConfirmNo": "Behåll"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tilldela och följ dina leveranser",

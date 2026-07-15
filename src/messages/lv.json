@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Jūsu kurjers ir ceļā ar jūsu pasūtījumu.",
       "headingToStoreGeneric": "Jūsu kurjers dodas uz restorānu, lai saņemtu jūsu pasūtījumu.",
       "etaAway": "Aptuveni {minutes} min attālumā",
-      "mapTitle": "Kurjera atrašanās vieta tiešraidē"
+      "mapTitle": "Kurjera atrašanās vieta tiešraidē",
+      "findingDriverTitle": "Meklējam vadītāju",
+      "findingDriverBody": "Piešķiram vadītāju, kas paņems jūsu pasūtījumu."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Piegādes procesā",
     "status_delivered": "Piegādāts",
     "status_failed": "Nav pabeigts",
-    "gpsBgMessage": "Notiek jūsu atrašanās vietas kopīgošana aktīvajai piegādei."
+    "gpsBgMessage": "Notiek jūsu atrašanās vietas kopīgošana aktīvajai piegādei.",
+    "cantCompleteConfirmTitle": "Vai nevarat pabeigt šo piegādi?",
+    "cantCompleteConfirmBody": "Tādējādi pasūtījums tiek atgriezts rindā, lai to varētu paņemt cits vadītājs.",
+    "cantCompleteConfirmYes": "Jā, atbrīvot",
+    "cantCompleteConfirmNo": "Paturēt"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",

@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Ваш кур'єр везе ваше замовлення.",
       "headingToStoreGeneric": "Ваш кур'єр прямує до ресторану, щоб забрати ваше замовлення.",
       "etaAway": "Приблизно {minutes} хв у дорозі",
-      "mapTitle": "Місцезнаходження кур'єра онлайн"
+      "mapTitle": "Місцезнаходження кур'єра онлайн",
+      "findingDriverTitle": "Шукаємо водія",
+      "findingDriverBody": "Призначаємо водія, який забере ваше замовлення."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "У процесі доставки",
     "status_delivered": "Доставлено",
     "status_failed": "Не виконано",
-    "gpsBgMessage": "Надсилання вашого місцезнаходження для активної доставки."
+    "gpsBgMessage": "Надсилання вашого місцезнаходження для активної доставки.",
+    "cantCompleteConfirmTitle": "Не можете завершити цю доставку?",
+    "cantCompleteConfirmBody": "Замовлення повернеться в чергу, щоб його міг прийняти інший водій.",
+    "cantCompleteConfirmYes": "Так, повернути",
+    "cantCompleteConfirmNo": "Залишити"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Призначайте та відстежуйте свої доставки",

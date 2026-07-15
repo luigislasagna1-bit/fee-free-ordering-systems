@@ -40,8 +40,19 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   }
 
   const a = order.deliveryAssignment;
+  // A closed-out assignment (a driver bailed and the order went dead, or it was
+  // cancelled/returned) has nothing to track — hide the card entirely rather
+  // than leave it showing a stale "heading to the restaurant".
+  if (["cancelled", "failed", "returned"].includes(a.status)) {
+    return NextResponse.json({ active: false });
+  }
   const enRoute = EN_ROUTE.has(a.status);
   const delivered = a.status === "delivered";
+  // No driver has this yet (fresh order, or one just re-offered after a driver
+  // couldn't complete it) → the customer sees "finding you a driver", never a
+  // named driver who isn't actually coming. `assigned`/`offered` cover directed
+  // dispatch where a specific driver has been offered but not yet accepted.
+  const findingDriver = !delivered && !enRoute && (!a.driver || ["queued", "assigned", "offered"].includes(a.status));
   const hasDriverLoc = enRoute && a.driver?.lastLat != null && a.driver?.lastLng != null;
 
   let etaMinutes: number | null = null;
@@ -56,7 +67,10 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     status: a.status,
     delivered,
     enRoute,
-    driverName: a.driver?.name ?? null,
+    findingDriver,
+    // A driver who's been re-offered a job isn't "coming" — only surface the
+    // name once someone actually owns the delivery (never while findingDriver).
+    driverName: findingDriver ? null : a.driver?.name ?? null,
     // Coordinates only while en route (privacy).
     driver: hasDriverLoc
       ? { lat: a.driver!.lastLat, lng: a.driver!.lastLng, at: a.driver!.lastLocationAt }

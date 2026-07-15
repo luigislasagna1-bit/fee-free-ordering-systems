@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Váš vodič je na ceste s vašou objednávkou.",
       "headingToStoreGeneric": "Váš vodič mieri do reštaurácie, aby vyzdvihol vašu objednávku.",
       "etaAway": "Približne {minutes} min cesty",
-      "mapTitle": "Poloha vodiča v reálnom čase"
+      "mapTitle": "Poloha vodiča v reálnom čase",
+      "findingDriverTitle": "Hľadáme vodiča",
+      "findingDriverBody": "Priraďujeme vodiča, ktorý vyzdvihne vašu objednávku."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Na ceste k doručeniu",
     "status_delivered": "Doručené",
     "status_failed": "Nedokončené",
-    "gpsBgMessage": "Zdieľanie vašej polohy pre aktívne doručenie."
+    "gpsBgMessage": "Zdieľanie vašej polohy pre aktívne doručenie.",
+    "cantCompleteConfirmTitle": "Nemôžete dokončiť toto doručenie?",
+    "cantCompleteConfirmBody": "Objednávka sa vráti do frontu, aby ju mohol prevziať iný vodič.",
+    "cantCompleteConfirmYes": "Áno, uvoľniť",
+    "cantCompleteConfirmNo": "Ponechať"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priraďujte a sledujte svoje rozvozy",

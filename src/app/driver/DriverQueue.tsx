@@ -286,6 +286,10 @@ function JobCard({
   const o = a.order;
   const toCustomer = HEADING_TO_CUSTOMER.has(a.status);
   const navTarget = toCustomer ? o.customerAddress : o.restaurantAddress;
+  // "Can't complete this delivery" is destructive (it hands the order back to
+  // the pool) and the button is a small tap target — guard it with a confirm so
+  // an accidental tap never drops a live delivery (Luigi 2026-07-15).
+  const [confirmFail, setConfirmFail] = useState(false);
 
   // The single primary action for this stage.
   let primary: { next: string; label: string } | null = null;
@@ -370,7 +374,7 @@ function JobCard({
 
         {a.mine && a.status !== "delivered" && (
           <button
-            onClick={() => onAdvance(a, "failed")}
+            onClick={() => setConfirmFail(true)}
             disabled={acting}
             className="w-full text-xs text-gray-500 hover:text-rose-400 py-1"
           >
@@ -378,6 +382,30 @@ function JobCard({
           </button>
         )}
       </div>
+
+      {/* Confirm before bailing on a delivery — releases it back to the pool. */}
+      {confirmFail && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4" onClick={() => setConfirmFail(false)}>
+          <div className="bg-gray-800 border border-gray-700 rounded-2xl w-full max-w-sm p-5" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-base font-bold text-white">{t("cantCompleteConfirmTitle")}</h3>
+            <p className="text-sm text-gray-400 mt-2">{t("cantCompleteConfirmBody")}</p>
+            <div className="mt-5 flex gap-2">
+              <button
+                onClick={() => setConfirmFail(false)}
+                className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2.5 rounded-xl text-sm"
+              >
+                {t("cantCompleteConfirmNo")}
+              </button>
+              <button
+                onClick={() => { setConfirmFail(false); onAdvance(a, "failed"); }}
+                className="flex-1 bg-rose-600 hover:bg-rose-500 text-white font-bold py-2.5 rounded-xl text-sm"
+              >
+                {t("cantCompleteConfirmYes")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

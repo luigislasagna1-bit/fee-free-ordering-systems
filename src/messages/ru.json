@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Ваш курьер везёт ваш заказ.",
       "headingToStoreGeneric": "Ваш курьер едет в ресторан, чтобы забрать ваш заказ.",
       "etaAway": "Примерно {minutes} мин в пути",
-      "mapTitle": "Местоположение курьера онлайн"
+      "mapTitle": "Местоположение курьера онлайн",
+      "findingDriverTitle": "Ищем курьера",
+      "findingDriverBody": "Назначаем курьера, который заберёт ваш заказ."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "В процессе доставки",
     "status_delivered": "Доставлено",
     "status_failed": "Не выполнено",
-    "gpsBgMessage": "Передача вашего местоположения для текущей доставки."
+    "gpsBgMessage": "Передача вашего местоположения для текущей доставки.",
+    "cantCompleteConfirmTitle": "Не можете завершить эту доставку?",
+    "cantCompleteConfirmBody": "Заказ вернётся в очередь, чтобы его мог принять другой курьер.",
+    "cantCompleteConfirmYes": "Да, вернуть",
+    "cantCompleteConfirmNo": "Оставить"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Назначайте и отслеживайте свои доставки",

@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Dein Fahrer ist mit deiner Bestellung unterwegs.",
       "headingToStoreGeneric": "Dein Fahrer fährt zum Restaurant, um deine Bestellung abzuholen.",
       "etaAway": "Noch etwa {minutes} Min.",
-      "mapTitle": "Live-Standort des Fahrers"
+      "mapTitle": "Live-Standort des Fahrers",
+      "findingDriverTitle": "Wir suchen einen Fahrer",
+      "findingDriverBody": "Wir weisen einen Fahrer zu, der Ihre Bestellung abholt."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "In Zustellung",
     "status_delivered": "Zugestellt",
     "status_failed": "Nicht abgeschlossen",
-    "gpsBgMessage": "Ihr Standort wird für die laufende Lieferung geteilt."
+    "gpsBgMessage": "Ihr Standort wird für die laufende Lieferung geteilt.",
+    "cantCompleteConfirmTitle": "Diese Lieferung nicht abschließen?",
+    "cantCompleteConfirmBody": "Die Bestellung wird wieder freigegeben, damit ein anderer Fahrer sie übernehmen kann.",
+    "cantCompleteConfirmYes": "Ja, freigeben",
+    "cantCompleteConfirmNo": "Behalten"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",

@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "ドライバーがご注文の商品をお届け中です。",
       "headingToStoreGeneric": "ドライバーがご注文を受け取りにレストランへ向かっています。",
       "etaAway": "あと約 {minutes} 分",
-      "mapTitle": "ドライバーのリアルタイム位置"
+      "mapTitle": "ドライバーのリアルタイム位置",
+      "findingDriverTitle": "ドライバーを探しています",
+      "findingDriverBody": "ご注文を受け取るドライバーを手配しています。"
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "配達中",
     "status_delivered": "配達完了",
     "status_failed": "未完了",
-    "gpsBgMessage": "配達中のため位置情報を共有しています。"
+    "gpsBgMessage": "配達中のため位置情報を共有しています。",
+    "cantCompleteConfirmTitle": "この配達を完了できませんか？",
+    "cantCompleteConfirmBody": "注文がプールに戻され、別のドライバーが引き受けられるようになります。",
+    "cantCompleteConfirmYes": "はい、手放す",
+    "cantCompleteConfirmNo": "保持する"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",

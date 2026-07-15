@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Votre livreur est en route avec votre commande.",
       "headingToStoreGeneric": "Votre livreur se dirige vers le restaurant pour récupérer votre commande.",
       "etaAway": "À environ {minutes} min",
-      "mapTitle": "Position du livreur en direct"
+      "mapTitle": "Position du livreur en direct",
+      "findingDriverTitle": "Recherche d'un livreur",
+      "findingDriverBody": "Nous attribuons un livreur pour récupérer votre commande."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "En cours de livraison",
     "status_delivered": "Livrée",
     "status_failed": "Non effectuée",
-    "gpsBgMessage": "Partage de votre position pour la livraison en cours."
+    "gpsBgMessage": "Partage de votre position pour la livraison en cours.",
+    "cantCompleteConfirmTitle": "Impossible de terminer cette livraison ?",
+    "cantCompleteConfirmBody": "Cela remet la commande dans la file pour qu'un autre livreur puisse la prendre.",
+    "cantCompleteConfirmYes": "Oui, la libérer",
+    "cantCompleteConfirmNo": "La garder"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Gérez et suivez vos livraisons",

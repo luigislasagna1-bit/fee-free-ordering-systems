@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "O seu estafeta está a caminho com o seu pedido.",
       "headingToStoreGeneric": "O seu estafeta está a dirigir-se ao restaurante para levantar o seu pedido.",
       "etaAway": "A cerca de {minutes} min",
-      "mapTitle": "Localização do estafeta em direto"
+      "mapTitle": "Localização do estafeta em direto",
+      "findingDriverTitle": "A procurar um estafeta",
+      "findingDriverBody": "Estamos a atribuir um estafeta para recolher o seu pedido."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "Em entrega",
     "status_delivered": "Entregue",
     "status_failed": "Não concluída",
-    "gpsBgMessage": "A partilhar a sua localização para a entrega em curso."
+    "gpsBgMessage": "A partilhar a sua localização para a entrega em curso.",
+    "cantCompleteConfirmTitle": "Não consegue concluir esta entrega?",
+    "cantCompleteConfirmBody": "Isto devolve o pedido à fila para que outro estafeta o possa aceitar.",
+    "cantCompleteConfirmYes": "Sim, libertar",
+    "cantCompleteConfirmNo": "Manter"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe as suas entregas",

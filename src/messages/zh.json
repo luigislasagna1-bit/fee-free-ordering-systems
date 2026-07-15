@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "骑手正带着您的订单赶来。",
       "headingToStoreGeneric": "骑手正前往餐厅取您的订单。",
       "etaAway": "大约还有 {minutes} 分钟",
-      "mapTitle": "骑手实时位置"
+      "mapTitle": "骑手实时位置",
+      "findingDriverTitle": "正在为您寻找骑手",
+      "findingDriverBody": "我们正在安排骑手取您的订单。"
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "配送中",
     "status_delivered": "已送达",
     "status_failed": "未完成",
-    "gpsBgMessage": "正在共享您的位置以用于当前配送。"
+    "gpsBgMessage": "正在共享您的位置以用于当前配送。",
+    "cantCompleteConfirmTitle": "无法完成此配送？",
+    "cantCompleteConfirmBody": "这会将订单退回到队列，让其他骑手接单。",
+    "cantCompleteConfirmYes": "是的，退回",
+    "cantCompleteConfirmNo": "保留"
   },
   "feefreeApp": {
     "dispatchSubtitle": "分配并跟踪您的配送",

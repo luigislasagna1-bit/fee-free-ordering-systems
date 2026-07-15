@@ -6185,7 +6185,9 @@
       "onTheWayGeneric": "Tu repartidor está en camino con tu pedido.",
       "headingToStoreGeneric": "Tu repartidor se dirige al restaurante para recoger tu pedido.",
       "etaAway": "A unos {minutes} min",
-      "mapTitle": "Ubicación del repartidor en vivo"
+      "mapTitle": "Ubicación del repartidor en vivo",
+      "findingDriverTitle": "Buscando un repartidor",
+      "findingDriverBody": "Estamos asignando un repartidor para recoger tu pedido."
     }
   },
   "partnerPeriod": {
@@ -6284,7 +6286,11 @@
     "status_out_for_delivery": "En reparto",
     "status_delivered": "Entregado",
     "status_failed": "No completada",
-    "gpsBgMessage": "Compartiendo tu ubicación para la entrega en curso."
+    "gpsBgMessage": "Compartiendo tu ubicación para la entrega en curso.",
+    "cantCompleteConfirmTitle": "¿No puedes completar esta entrega?",
+    "cantCompleteConfirmBody": "Esto devuelve el pedido a la lista para que otro repartidor pueda tomarlo.",
+    "cantCompleteConfirmYes": "Sí, liberarlo",
+    "cantCompleteConfirmNo": "Mantenerlo"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Asigna y haz seguimiento de tus entregas",
