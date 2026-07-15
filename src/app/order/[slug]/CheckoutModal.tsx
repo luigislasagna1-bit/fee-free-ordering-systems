@@ -751,7 +751,7 @@ export function CheckoutModal({
       className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
     >
       <div
-        className="bg-white sm:rounded-2xl w-full max-w-4xl max-h-[96vh] overflow-hidden flex flex-col"
+        className="bg-white sm:rounded-2xl w-full max-w-4xl max-h-[96vh] sm:max-h-[90vh] overflow-hidden flex flex-col"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
@@ -2139,7 +2139,7 @@ export function CheckoutModal({
           </div>
         )}
         {/* Footer */}
-        <div className="border-t border-gray-100 px-5 py-4 bg-white flex-shrink-0 flex items-center gap-3 safe-bottom">
+        <div className="border-t border-gray-100 px-5 py-4 sm:py-5 bg-white flex-shrink-0 flex items-center gap-3 safe-bottom">
           <div className="flex-1">
             <div className="text-xs text-gray-500 uppercase font-bold">{creditChosen > 0 ? tc("reward.chargeToday") : tc("total")}</div>
             <div className="text-lg font-bold text-gray-900">{formatCurrency(creditChosen > 0 ? chargeToday : total)}</div>

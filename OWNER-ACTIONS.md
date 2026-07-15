@@ -17,12 +17,15 @@ A new safety net texts the Fee Free platform owner when a delivery order sits in
 - (SMS goes through the existing Twilio setup — needs `FFOS_TWILIO_ACCOUNT_SID` / `FFOS_TWILIO_AUTH_TOKEN` / `FFOS_TWILIO_FROM_NUMBER` set too, same as the driver-invite SMS.)
 Until the phone is set, the cron still runs but just logs "no alert phone configured" (no text sent) — nothing breaks. The alert links to `/superadmin/drivers` to assign it manually.
 
-### A17. 🔷 Enrol the Apple Developer ORG account for Fee Free Ordering Inc. (D-U-N-S landed 2026-07-14)
+### A17. ⏳ Apple Developer ORG account for Fee Free Ordering Inc. — ✅ SUBMITTED 2026-07-14, waiting on Apple verification
+**Status:** enrollment SUBMITTED and "being processed." **Enrollment ID `LXARH3QT89`** · Legal entity **Fee Free Ordering Inc.** · **D-U-N-S `243370724`** · account holder **Sameem Nabil**. Apple emails once they verify authority to sign legal agreements (usually **1–5 business days**, sometimes a confirmation phone call). **DECISION LOCKED (2026-07-14): the iOS DRIVER app will be created directly under THIS org — not the current team — so there's no app to transfer later (A15).** While it verifies, test delivering on the **Android** driver APK (already built) so nothing is blocked. When the Apple email arrives, tell Claude → we set up the org's App Store Connect API key + repoint the Codemagic `ios-driver` workflow to it, then register the App ID + app record under the org and run the build.
+<details><summary>original enrol steps (done)</summary>
 Your D-U-N-S number for **Fee Free Ordering Inc.** is in hand — this was the blocker for the company Apple account. Now:
 1. Go to **developer.apple.com/enroll** → choose **Company/Organization** → enter the D-U-N-S + legal entity details (use a *company* Apple Account/email if you have one, not a personal one). Pay the $99/yr. Apple verifies the org — usually **1–5 business days** (they may phone to confirm).
 2. **Keep testing on the current team meanwhile** — nothing is blocked. The Kitchen app stays on TestFlight; create the **driver** app under the current team per A15 (Option A: ship now, transfer later).
 3. **Once the org membership is active:** transfer BOTH apps (`com.feefreeordering.kitchen` + `com.feefreeordering.driver`) to the org (bundle ids survive; TestFlight builds/testers do NOT — you re-invite testers), then repoint Codemagic's `ff-asc-key` + the `IOS_SIGNING_KEY_PEM` signing key to the new team. Tell Claude when the org is live and it'll walk you through the transfer + Codemagic repoint.
 4. **Bonus:** a Google **Play** org account under Fee Free Ordering Inc. is exempt from the 20-tester production gate your personal account hit — worth doing the same company route there (see A on the Android side).
+</details>
 
 ### A16. ☐ TEST this session's shipped work (2026-07-14) — NOT DONE YET (Luigi will do when ready)
 Everything below is built + pushed + preflight-green, but NOT yet verified by you on real devices / real data:
@@ -40,6 +43,7 @@ Tell Claude the results of each and it'll fix anything that surfaces.
 *(NOTE: the customer marketplace is already live + free. The ADMIN/pricing pages that described it as a paid add-on were ALSO fixed 2026-07-14 — the marketplace admin page now shows "Included — free". Done.)*
 
 ### A15. 🔷 Install the Fee Free Delivery DRIVER app on your phone (native builds are ready)
+**✅ 2026-07-15 — Claude verified the iOS driver project is fully build-ready** (Xcode project, bundle id `com.feefreeordering.driver`, descriptive location-permission strings, `UIBackgroundModes: location` + background-geolocation plugin for locked-phone GPS, `ITSAppUsesNonExemptEncryption:false`, and the Codemagic `ios-driver` workflow reuses your working `ff-asc-key` + cert and auto-submits to TestFlight). No code changes needed — the steps below are all on your Apple account. **To actually DELIVER with it you sign in as a DRIVER (driver queue) — that needs a driver account (A13); signing in with your restaurant-owner login gives the DISPATCH view, not the delivery queue.**
 **Why:** you asked for native Android + iOS apps of the `/driver` app so you can take it on real deliveries — including BACKGROUND GPS (location keeps streaming with the phone locked / in your pocket), which a browser/PWA can't do. Both are built as WebView shells of `feefreeordering.com/driver`, bundle id `com.feefreeordering.driver`, name "Fee Free Delivery". Android is ready to sideload right now; iOS needs a few Apple steps (no Mac required — Codemagic builds it in the cloud like the Kitchen app).
 
 **Android (fastest — do this to test today):**
