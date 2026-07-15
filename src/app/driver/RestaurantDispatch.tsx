@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Bike, LayoutDashboard } from "lucide-react";
 import prisma from "@/lib/db";
 import { FeeFreeDeliveryOps } from "@/app/admin/delivery/pool/FeeFreeDeliveryOps";
+import { DispatchLogout } from "./DispatchLogout";
 
 /**
  * Restaurant-facing view of the Fee Free Delivery app (/driver). A restaurant
@@ -41,12 +42,15 @@ export async function RestaurantDispatch({
             <div className="text-[11px] text-emerald-400 leading-tight">{t("dispatchSubtitle")}</div>
           </div>
         </div>
-        <Link
-          href="/admin/delivery/pool"
-          className="inline-flex items-center gap-1 text-xs font-semibold text-gray-300 hover:text-white border border-gray-700 rounded-lg px-2.5 py-1.5 flex-shrink-0"
-        >
-          <LayoutDashboard className="w-3.5 h-3.5" /> {t("openDashboard")}
-        </Link>
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Link
+            href="/admin/delivery/pool"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-gray-300 hover:text-white border border-gray-700 rounded-lg px-2.5 py-1.5"
+          >
+            <LayoutDashboard className="w-3.5 h-3.5" /> {t("openDashboard")}
+          </Link>
+          <DispatchLogout />
+        </div>
       </header>
 
       <main className="p-4 max-w-2xl mx-auto" style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}>
