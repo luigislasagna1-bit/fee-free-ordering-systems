@@ -748,10 +748,10 @@ export function CheckoutModal({
     // the white area was closing it mid-typing and wiping the customer's
     // progress. Checkout closes ONLY via the explicit ✕ button.
     <div
-      className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6"
     >
       <div
-        className="bg-white sm:rounded-2xl w-full max-w-4xl max-h-[96vh] sm:max-h-[90vh] overflow-hidden flex flex-col"
+        className="bg-white sm:rounded-2xl w-full max-w-4xl max-h-[96vh] sm:max-h-[85vh] overflow-hidden flex flex-col"
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
