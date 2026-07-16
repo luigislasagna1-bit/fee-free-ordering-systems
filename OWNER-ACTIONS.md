@@ -12,7 +12,9 @@
 ## ⭐ TOMORROW — the short list (do these WITH Claude / report results)
 
 **Together (5–15 min each):**
-- **T-A. Deploy the driver rating** → just say **"push the rating schema"**. Claude pushes the safe additive schema to prod, merges the parked `rating-wip` branch (clean, no conflicts), deploys. Then drivers/dispatch/customers see "★ %".
+- **T-A. ✅ DONE 2026-07-16 — driver rating DEPLOYED.** Schema pushed to BOTH branches, `rating-wip` merged (commit 25554fdd), preflight green (816 tests), and VERIFIED live on prod: the public tracking API now returns `driverRating`. Drivers see their ★ % in the app; dispatch + superadmin show it; customers see it on the tracking card. (Note: preflight's exit code was masked by a pipe on the first run and hid a stale-Prisma-client failure — caught by the read-bottom-up rule; the tooling gap is noted below as T-H.)
+- **T-B2. 🔷 APPLE ORG IS ACTIVE (2026-07-16!) — do the 7 App-Store-Connect steps** Claude laid out in chat (trader status, agreement, `ff-asc-org` API key → Codemagic, register `com.feefreeordering.driver`, create the app record) → then say **"Apple steps done"** and Claude repoints the Codemagic workflows and you run the first org iOS build → TestFlight. ⚠️ Do NOT touch the OLD team's Kitchen app — Fabrizio's live restaurant runs on its TestFlight build.
+- **T-H. (Claude, small) fix `npm run preflight` ordering** — it runs `tsc` before `prisma generate`, so a fresh schema merge type-checks against a stale client; also document that piping preflight masks its exit code.
 - **T-B. iOS TestFlight under the org** → when Apple's verification email arrives (A17), we set up the org's App Store Connect key + Codemagic + build "Fee Free Delivery (iOS)".
 
 **You test on real devices (tell Claude what breaks):**
