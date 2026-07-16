@@ -4,6 +4,7 @@ import { getDriverSession, checkDriverSessionFresh } from "@/lib/driver-session"
 import { checkDriverTransition, STAGE_TIMESTAMP } from "@/lib/driver-assignment";
 import { applyDeliveryStatus, translateDriverEvent } from "@/lib/delivery-status";
 import { feeCentsForDelivery } from "@/lib/feefree-delivery";
+import { recomputeDriverRating } from "@/lib/driver-rating";
 import { notifyCustomer } from "@/lib/notifications";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         select: {
           id: true, status: true, type: true, orderNumber: true,
           customerName: true, customerEmail: true, customerPhone: true,
-          estimatedReady: true, paymentMethod: true, paymentStatus: true,
+          estimatedReady: true, scheduledFor: true, paymentMethod: true, paymentStatus: true,
           deliveryLat: true, deliveryLng: true,
           restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true } },
         },
@@ -73,30 +74,42 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   // live (cancelled/completed elsewhere), don't re-queue a dead order — just
   // close the assignment out. Luigi 2026-07-15.
   if (next === "failed") {
+    // The driver who is bailing (before we strip it off the assignment) — their
+    // cancellation counts against their reliability score.
+    const bailedDriverId = assignment.driverId;
     const orderLive = ["accepted", "preparing", "ready"].includes(assignment.order.status);
-    if (orderLive) {
-      await prisma.deliveryAssignment.update({
-        where: { id },
-        data: {
-          status: "queued",
-          driverId: null,
-          assignedAt: null,
-          acceptedAt: null,
-          startedAt: null,
-          pickedUpAt: null,
-          deliveredAt: null,
-          returnedAt: null,
-          failedAt: null,
-          unclaimedAlertedAt: null,
-        },
-      });
-      return NextResponse.json({ ok: true, status: "reoffered" });
-    }
     await prisma.deliveryAssignment.update({
       where: { id },
-      data: { status: "cancelled", failedAt: new Date() },
+      data: orderLive
+        ? {
+            status: "queued",
+            driverId: null,
+            assignedAt: null,
+            acceptedAt: null,
+            startedAt: null,
+            pickedUpAt: null,
+            deliveredAt: null,
+            returnedAt: null,
+            failedAt: null,
+            unclaimedAlertedAt: null,
+          }
+        : { status: "cancelled", failedAt: new Date() },
     });
-    return NextResponse.json({ ok: true, status: "cancelled" });
+    // A "can't complete" dings the driver's rating (reliability). Off the hot
+    // path so the driver's tap responds instantly.
+    if (bailedDriverId) {
+      after(
+        (async () => {
+          try {
+            await prisma.driver.update({ where: { id: bailedDriverId }, data: { cancelledCount: { increment: 1 } } });
+            await recomputeDriverRating(prisma, bailedDriverId);
+          } catch (e) {
+            console.error("[driver status] cancel rating update failed", e);
+          }
+        })(),
+      );
+    }
+    return NextResponse.json({ ok: true, status: orderLive ? "reoffered" : "cancelled" });
   }
 
   // Build the assignment update. Claim on first action (unowned → mine).
@@ -124,6 +137,34 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     }
   } else {
     await prisma.deliveryAssignment.update({ where: { id }, data });
+  }
+
+  // On delivery, credit the driver's completion (and flag it late if it landed
+  // after the promised time + a 10-min grace) and recompute their rating. Off
+  // the hot path (after()) so the tap responds instantly. Idempotent-ish: a
+  // re-fired "delivered" would double-count, but the forward-only assignment
+  // guard already blocks re-delivering a terminal assignment.
+  if (next === "delivered") {
+    const o = assignment.order;
+    const promisedTs = o.scheduledFor
+      ? new Date(o.scheduledFor).getTime()
+      : o.estimatedReady
+        ? new Date(o.estimatedReady).getTime()
+        : null;
+    const late = promisedTs != null && Date.now() > promisedTs + 10 * 60 * 1000;
+    after(
+      (async () => {
+        try {
+          await prisma.driver.update({
+            where: { id: driver.driverId },
+            data: { deliveredCount: { increment: 1 }, ...(late ? { lateCount: { increment: 1 } } : {}) },
+          });
+          await recomputeDriverRating(prisma, driver.driverId);
+        } catch (e) {
+          console.error("[driver status] delivered rating update failed", e);
+        }
+      })(),
+    );
   }
 
   // Advance the ORDER through the shared money-path core (forward-only + ledger

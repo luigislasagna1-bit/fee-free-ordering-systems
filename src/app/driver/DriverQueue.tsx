@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { signOut } from "next-auth/react";
 import {
   Bike, Loader2, MapPin, Navigation, Phone, LogOut, Package,
-  CheckCircle2, Clock, DollarSign, Radio, RefreshCw,
+  CheckCircle2, Clock, DollarSign, Radio, RefreshCw, Star,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
@@ -45,7 +45,7 @@ const HEADING_TO_CUSTOMER = new Set(["picked_up", "out_for_delivery"]);
 // dialog again after that (the OS prompt itself only fires once anyway).
 const BG_DISCLOSURE_KEY = "ffd:bg-location-disclosure-ok";
 
-export function DriverQueue({ driverName }: { driverName: string }) {
+export function DriverQueue({ driverName, rating = null }: { driverName: string; rating?: number | null }) {
   const t = useTranslations("driver");
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -232,7 +232,14 @@ export function DriverQueue({ driverName }: { driverName: string }) {
           </div>
           <div>
             <div className="text-sm font-bold leading-tight">{t("appName")}</div>
-            <div className="text-xs text-gray-400 leading-tight">{driverName}</div>
+            <div className="text-xs text-gray-400 leading-tight flex items-center gap-1.5">
+              {driverName}
+              {rating != null && (
+                <span className="inline-flex items-center gap-0.5 font-semibold text-amber-400">
+                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {Math.round(rating)}%
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-3">

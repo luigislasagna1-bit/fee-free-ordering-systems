@@ -15,6 +15,9 @@ type Driver = {
   homeRestaurantName: string | null;
   ratingAvg: number | null;
   ratingCount: number;
+  ratingPct: number;
+  deliveredCount: number;
+  cancelledCount: number;
   activeJobs: number;
   hasLocation: boolean;
   lastLocationAt: string | null;
@@ -227,9 +230,12 @@ export function DriversClient({
                     )}
                   </td>
                   <td className="px-4 py-3 text-gray-600">
-                    {d.ratingCount > 0 ? (
-                      <span className="inline-flex items-center gap-1"><Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /> {d.ratingAvg?.toFixed(1)} ({d.ratingCount})</span>
-                    ) : "—"}
+                    <span className="inline-flex items-center gap-1 font-semibold" title={`${d.deliveredCount} delivered · ${d.cancelledCount} cancelled`}>
+                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /> {Math.round(d.ratingPct)}%
+                    </span>
+                    {d.ratingCount > 0 && (
+                      <span className="ml-2 text-xs text-gray-400">{d.ratingAvg?.toFixed(1)}★ ({d.ratingCount})</span>
+                    )}
                   </td>
                   <td className="px-4 py-3">
                     <span className={`inline-flex items-center gap-1 text-xs font-semibold ${d.isActive ? "text-emerald-700" : "text-gray-400"}`}>

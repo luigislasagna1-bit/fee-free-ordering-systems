@@ -18,7 +18,10 @@ export const dynamic = "force-dynamic";
  */
 export default async function DriverHomePage() {
   const driver = await getDriverSession();
-  if (driver) return <DriverQueue driverName={driver.name} />;
+  if (driver) {
+    const rec = await prisma.driver.findUnique({ where: { id: driver.driverId }, select: { ratingPct: true } });
+    return <DriverQueue driverName={driver.name} rating={rec?.ratingPct ?? null} />;
+  }
 
   const user = await getSessionUser();
   if (user) {

@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
 import { getTranslations } from "next-intl/server";
-import { Bike, DollarSign, CalendarClock, Package } from "lucide-react";
+import { Bike, DollarSign, CalendarClock, Package, Star } from "lucide-react";
 import { weekStartUtc, weekEndUtc } from "@/lib/feefree-delivery";
 import { haversineKm } from "@/lib/geocode";
 import { SendToDriverButton } from "./SendToDriverButton";
@@ -47,7 +47,7 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
       take: 50,
       select: {
         id: true, status: true,
-        driver: { select: { name: true } },
+        driver: { select: { name: true, ratingPct: true } },
         order: { select: { orderNumber: true, customerName: true, deliveryLat: true, deliveryLng: true } },
       },
     }),
@@ -132,7 +132,14 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
                   <span className="font-semibold text-gray-900">#{a.order.orderNumber}</span>
                   <span className="text-gray-500"> · {a.order.customerName}</span>
                   {distKm != null && <span className="text-gray-400"> · {tCommon("kmFromStore", { km: distKm })}</span>}
-                  <div className="text-xs text-gray-400">{a.driver?.name ?? t("unassigned")}</div>
+                  <div className="text-xs text-gray-400">
+                    {a.driver?.name ?? t("unassigned")}
+                    {a.driver && a.driver.ratingPct != null && (
+                      <span className="ml-1.5 inline-flex items-center gap-0.5 font-semibold text-amber-600">
+                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {Math.round(a.driver.ratingPct)}%
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 rounded-full px-2.5 py-1 whitespace-nowrap">
                   {opsStatusLabel(a.status, t)}
