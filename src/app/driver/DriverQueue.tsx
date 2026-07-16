@@ -39,6 +39,11 @@ type Assignment = {
 const ACTIVE = new Set(["accepted", "started", "picked_up", "out_for_delivery"]);
 // After pickup the driver heads to the CUSTOMER; before, to the RESTAURANT.
 const HEADING_TO_CUSTOMER = new Set(["picked_up", "out_for_delivery"]);
+// Google Play "prominent disclosure" policy: on the NATIVE app we must show our
+// own in-app explanation of background location collection BEFORE the OS
+// permission prompt ever appears. Accepting stores this flag; we never show the
+// dialog again after that (the OS prompt itself only fires once anyway).
+const BG_DISCLOSURE_KEY = "ffd:bg-location-disclosure-ok";
 
 export function DriverQueue({ driverName }: { driverName: string }) {
   const t = useTranslations("driver");
@@ -46,6 +51,10 @@ export function DriverQueue({ driverName }: { driverName: string }) {
   const [loading, setLoading] = useState(true);
   const [acting, setActing] = useState<string | null>(null);
   const [gpsOn, setGpsOn] = useState(false);
+  // Prominent-disclosure dialog state (native only). bgDisclosureAck bumps to
+  // re-run the GPS effect after the driver accepts the disclosure.
+  const [showBgDisclosure, setShowBgDisclosure] = useState(false);
+  const [bgDisclosureAck, setBgDisclosureAck] = useState(0);
 
   const load = useCallback(async () => {
     try {
@@ -112,6 +121,16 @@ export function DriverQueue({ driverName }: { driverName: string }) {
       // Dynamic import so @capacitor/core never runs at SSR/module-eval on the server.
       const { Capacitor, registerPlugin } = await import("@capacitor/core");
       if (Capacitor.isNativePlatform()) {
+        // Prominent disclosure MUST precede the OS background-location prompt
+        // (Google Play Location Permissions policy). If the driver hasn't
+        // acknowledged it yet, show the dialog instead of starting the watcher;
+        // accepting bumps bgDisclosureAck which re-runs this effect.
+        let disclosed = false;
+        try { disclosed = !!localStorage.getItem(BG_DISCLOSURE_KEY); } catch {}
+        if (!disclosed) {
+          if (!cancelled) setShowBgDisclosure(true);
+          return;
+        }
         const BG = registerPlugin<{
           addWatcher(opts: Record<string, unknown>, cb: (loc: { latitude: number; longitude: number; accuracy?: number } | null, err?: unknown) => void): Promise<string>;
           removeWatcher(opts: { id: string }): Promise<void>;
@@ -173,7 +192,7 @@ export function DriverQueue({ driverName }: { driverName: string }) {
       cancelled = true;
       cleanup();
     };
-  }, [activeAssignment?.id, t]);
+  }, [activeAssignment?.id, bgDisclosureAck, t]);
 
   async function advance(a: Assignment, next: string) {
     setActing(a.id);
@@ -269,6 +288,39 @@ export function DriverQueue({ driverName }: { driverName: string }) {
           </>
         )}
       </main>
+
+      {/* Prominent disclosure — MUST be seen before the OS asks for
+          background-location permission (Google Play policy; native only —
+          the effect only opens this on Capacitor.isNativePlatform()). */}
+      {showBgDisclosure && activeAssignment && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
+          <div className="bg-gray-800 border border-gray-700 rounded-2xl w-full max-w-sm p-5">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center mb-3">
+              <MapPin className="w-5 h-5 text-emerald-400" />
+            </div>
+            <h3 className="text-base font-bold text-white">{t("bgDisclosureTitle")}</h3>
+            <p className="text-sm text-gray-400 mt-2">{t("bgDisclosureBody")}</p>
+            <div className="mt-5 space-y-2">
+              <button
+                onClick={() => {
+                  try { localStorage.setItem(BG_DISCLOSURE_KEY, "1"); } catch {}
+                  setShowBgDisclosure(false);
+                  setBgDisclosureAck((n) => n + 1);
+                }}
+                className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 rounded-xl text-sm"
+              >
+                {t("bgDisclosureAllow")}
+              </button>
+              <button
+                onClick={() => setShowBgDisclosure(false)}
+                className="w-full text-xs text-gray-500 hover:text-gray-300 py-1"
+              >
+                {t("bgDisclosureLater")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

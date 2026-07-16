@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Không thể hoàn thành đơn giao này?",
     "cantCompleteConfirmBody": "Thao tác này trả đơn về hàng chờ để một tài xế khác có thể nhận.",
     "cantCompleteConfirmYes": "Có, trả đơn",
-    "cantCompleteConfirmNo": "Giữ lại"
+    "cantCompleteConfirmNo": "Giữ lại",
+    "bgDisclosureTitle": "Chia sẻ vị trí của bạn cho các đơn giao hàng",
+    "bgDisclosureBody": "Fee Free Delivery thu thập dữ liệu vị trí khi bạn có đơn giao hàng đang hoạt động, để chia sẻ vị trí trực tiếp của bạn với khách hàng và nhà hàng — ngay cả khi ứng dụng chạy nền, đã đóng hoặc điện thoại bị khóa. Việc theo dõi dừng lại khi đơn giao hàng hoàn tất.",
+    "bgDisclosureAllow": "Tiếp tục",
+    "bgDisclosureLater": "Để sau"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",

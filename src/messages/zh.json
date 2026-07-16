@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "无法完成此配送？",
     "cantCompleteConfirmBody": "这会将订单退回到队列，让其他骑手接单。",
     "cantCompleteConfirmYes": "是的，退回",
-    "cantCompleteConfirmNo": "保留"
+    "cantCompleteConfirmNo": "保留",
+    "bgDisclosureTitle": "共享您的位置信息用于配送",
+    "bgDisclosureBody": "Fee Free Delivery 会在您有进行中的配送时收集位置数据，以便与顾客和餐厅实时共享您的位置——即使应用在后台运行、已关闭或手机已锁定。配送完成后即停止追踪。",
+    "bgDisclosureAllow": "继续",
+    "bgDisclosureLater": "暂不"
   },
   "feefreeApp": {
     "dispatchSubtitle": "分配并跟踪您的配送",

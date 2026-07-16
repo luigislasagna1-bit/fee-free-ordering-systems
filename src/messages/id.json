@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Tidak dapat menyelesaikan pengiriman ini?",
     "cantCompleteConfirmBody": "Ini mengembalikan pesanan ke antrean agar pengemudi lain dapat mengambilnya.",
     "cantCompleteConfirmYes": "Ya, lepaskan",
-    "cantCompleteConfirmNo": "Simpan"
+    "cantCompleteConfirmNo": "Simpan",
+    "bgDisclosureTitle": "Bagikan lokasi Anda untuk pengiriman",
+    "bgDisclosureBody": "Fee Free Delivery mengumpulkan data lokasi saat Anda memiliki pengiriman aktif, untuk membagikan posisi langsung Anda kepada pelanggan dan restoran — bahkan saat aplikasi di latar belakang atau ditutup, atau ponsel terkunci. Pelacakan berhenti saat pengiriman selesai.",
+    "bgDisclosureAllow": "Lanjutkan",
+    "bgDisclosureLater": "Nanti saja"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",

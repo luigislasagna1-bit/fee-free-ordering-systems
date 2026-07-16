@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Diese Lieferung nicht abschließen?",
     "cantCompleteConfirmBody": "Die Bestellung wird wieder freigegeben, damit ein anderer Fahrer sie übernehmen kann.",
     "cantCompleteConfirmYes": "Ja, freigeben",
-    "cantCompleteConfirmNo": "Behalten"
+    "cantCompleteConfirmNo": "Behalten",
+    "bgDisclosureTitle": "Standort für Lieferungen freigeben",
+    "bgDisclosureBody": "Fee Free Delivery erfasst Standortdaten, während du eine aktive Lieferung hast, um deine Live-Position mit dem Kunden und dem Restaurant zu teilen — auch wenn die App im Hintergrund läuft, geschlossen ist oder das Telefon gesperrt ist. Die Ortung endet, sobald die Lieferung abgeschlossen ist.",
+    "bgDisclosureAllow": "Weiter",
+    "bgDisclosureLater": "Nicht jetzt"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",

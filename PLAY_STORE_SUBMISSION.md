@@ -1,13 +1,23 @@
 # Play Store submission — Fee Free Order App (Kitchen Order App)
 
-Package: `com.feefreeordering.kitchen` · versionCode 8 / versionName 1.7
-Signed AAB: `android/app/build/outputs/bundle/release/app-release.aab` (release-signed by "CN=Fee Free Ordering Systems")
-Developer account: FeeFreeOrderingSystems (Personal) · ID 7291944516964290458
+Package: `com.feefreeordering.kitchen` · **versionCode 21 / versionName 3.0**
+Signed AAB: `android/app/build/outputs/bundle/release/app-release.aab` (26.4 MB)
+Release signature — VERIFIED 2026-07-16 (`jarsigner -verify` → "jar verified"):
+- Signer: `CN=Fee Free Ordering Systems, O=Fee Free Ordering Systems, L=Milton, ST=Ontario, C=CA`
+- Cert SHA-256: `20:96:12:86:BB:2F:C9:B0:40:54:8B:10:67:BE:FD:02:B5:86:03:C8:D2:AC:84:11:5E:16:08:51:D6:E5:B0:AF`
+- This is the upload key at `android/app/feefree-release.jks` (NOT a debug cert). Google Play App Signing re-signs with its own key on upload — this is the upload cert Play pins to the app.
 
-> ⚠️ **Personal account → closed-testing requirement.** Because the developer
-> account is *Personal* (created recently), Google requires a **closed test with
-> ≥20 testers for ≥14 days** before production access is granted. So the path is
-> **closed testing first**, then production after the 14-day window.
+Developer account: **Fee Free Ordering Inc. (Organization)** · D-U-N-S `243370724` · account ID `7291944516964290458` · owner luigislasagna1@gmail.com (Sameem Nabil).
+
+> ✅ **Org account = NO closed-testing gate.** The account was converted to an
+> Organization on 2026-07-15, which is **exempt** from the 20-tester / 14-day
+> closed-testing requirement that the old Personal account hit. This app can go
+> **straight to a Production release** — no closed test required.
+>
+> ⚠️ **versionCode must be higher than anything already uploaded.** If Play rejects
+> the upload with "Version code 21 has already been used", bump `versionCode` in
+> `android/app/build.gradle` (→ 22) and rebuild. The prior closed-testing uploads
+> used lower codes, so 21 should be clear — but this is the one thing to watch.
 
 ---
 
@@ -91,14 +101,17 @@ ordering page to watch it ring in).
 
 ---
 
-## Submission steps (closed testing → production)
+## Submission steps (org account → straight to Production)
 1. **Play Console → Create app** — name "Fee Free Order App", language English, type App, Free.
-2. **Set up the app** — fill the dashboard tasks: privacy policy URL, app access (provide a demo login so reviewers can sign in — a test restaurant account), data safety (above), content rating, target audience, store listing (copy above + graphics).
-3. **Testing → Closed testing → create a track** (e.g. "alpha"). Create a tester email list of ~20 people; share the opt-in link.
-4. **Upload the AAB** to that closed track (`app-release.aab`). Roll it out.
-5. **Wait 14 days** with ≥20 testers actually opted-in.
-6. **Apply for production access** (Play prompts once eligible) → fill the form.
-7. **Production → create release → upload the AAB → submit for review.**
+2. **Set up the app** — fill the dashboard tasks: privacy policy URL, app access (provide the demo login so reviewers can sign in), data safety (above), content rating, target audience, store listing (copy above + graphics).
+3. **Production → Create new release.**
+4. **Upload the AAB** (`android/app/build/outputs/bundle/release/app-release.aab`). Play verifies the signature; on the first upload it enrolls this cert in Play App Signing.
+5. **Add release notes → Review release → Start rollout to Production.** First review is typically a few hours to ~2 days.
+
+*(A closed/internal test track is optional now — handy for a last on-device sanity check before the public rollout — but no longer required for production.)*
 
 Rebuild command (bump `versionCode` in `android/app/build.gradle` before each new upload):
 `JAVA_HOME="C:\Program Files\Android\Android Studio1\jbr"  gradlew -p android bundleRelease --no-daemon`
+
+Then re-verify the signature before uploading:
+`"C:\Program Files\Android\Android Studio1\jbr\bin\jarsigner" -verify -certs android/app/build/outputs/bundle/release/app-release.aab`  → must print **"jar verified"** and the `CN=Fee Free Ordering Systems` cert above (never `CN=Android Debug`).

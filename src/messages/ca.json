@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "No pots completar aquest lliurament?",
     "cantCompleteConfirmBody": "Això retorna la comanda a la llista perquè un altre repartidor la pugui agafar.",
     "cantCompleteConfirmYes": "Sí, allibera-la",
-    "cantCompleteConfirmNo": "Mantén-la"
+    "cantCompleteConfirmNo": "Mantén-la",
+    "bgDisclosureTitle": "Comparteix la teva ubicació per als lliuraments",
+    "bgDisclosureBody": "Fee Free Delivery recull dades d'ubicació mentre tens un lliurament actiu, per compartir la teva posició en directe amb el client i el restaurant — fins i tot quan l'aplicació és en segon pla o tancada, o el telèfon està bloquejat. El seguiment s'atura en completar el lliurament.",
+    "bgDisclosureAllow": "Continua",
+    "bgDisclosureLater": "Ara no"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",

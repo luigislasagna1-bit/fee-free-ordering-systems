@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "이 배달을 완료할 수 없나요?",
     "cantCompleteConfirmBody": "주문이 대기열로 돌아가 다른 기사가 받을 수 있게 됩니다.",
     "cantCompleteConfirmYes": "네, 반환합니다",
-    "cantCompleteConfirmNo": "유지"
+    "cantCompleteConfirmNo": "유지",
+    "bgDisclosureTitle": "배달을 위해 위치를 공유하세요",
+    "bgDisclosureBody": "Fee Free Delivery는 진행 중인 배달이 있는 동안 위치 데이터를 수집하여 고객 및 레스토랑과 실시간 위치를 공유합니다. 앱이 백그라운드에 있거나 종료된 경우, 휴대폰이 잠긴 경우에도 마찬가지입니다. 배달이 완료되면 추적이 중지됩니다.",
+    "bgDisclosureAllow": "계속",
+    "bgDisclosureLater": "나중에"
   },
   "feefreeApp": {
     "dispatchSubtitle": "배달 배정 및 추적",

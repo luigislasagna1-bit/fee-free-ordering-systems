@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Nie możesz zrealizować tej dostawy?",
     "cantCompleteConfirmBody": "Spowoduje to zwrócenie zamówienia do puli, aby inny kierowca mógł je przyjąć.",
     "cantCompleteConfirmYes": "Tak, zwolnij",
-    "cantCompleteConfirmNo": "Zatrzymaj"
+    "cantCompleteConfirmNo": "Zatrzymaj",
+    "bgDisclosureTitle": "Udostępnij swoją lokalizację na potrzeby dostaw",
+    "bgDisclosureBody": "Fee Free Delivery zbiera dane o lokalizacji, gdy masz aktywną dostawę, aby udostępniać Twoją pozycję na żywo klientowi i restauracji — nawet gdy aplikacja działa w tle, jest zamknięta lub telefon jest zablokowany. Śledzenie kończy się po zrealizowaniu dostawy.",
+    "bgDisclosureAllow": "Kontynuuj",
+    "bgDisclosureLater": "Nie teraz"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",

@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Kun je deze bezorging niet voltooien?",
     "cantCompleteConfirmBody": "Hiermee komt de bestelling weer beschikbaar zodat een andere bezorger hem kan aannemen.",
     "cantCompleteConfirmYes": "Ja, vrijgeven",
-    "cantCompleteConfirmNo": "Behouden"
+    "cantCompleteConfirmNo": "Behouden",
+    "bgDisclosureTitle": "Deel je locatie voor bezorgingen",
+    "bgDisclosureBody": "Fee Free Delivery verzamelt locatiegegevens terwijl je een actieve bezorging hebt, om je live positie te delen met de klant en het restaurant — ook wanneer de app op de achtergrond staat of gesloten is, of de telefoon vergrendeld is. Het volgen stopt zodra de bezorging is voltooid.",
+    "bgDisclosureAllow": "Doorgaan",
+    "bgDisclosureLater": "Niet nu"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",

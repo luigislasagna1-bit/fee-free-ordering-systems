@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Не можете завершити цю доставку?",
     "cantCompleteConfirmBody": "Замовлення повернеться в чергу, щоб його міг прийняти інший водій.",
     "cantCompleteConfirmYes": "Так, повернути",
-    "cantCompleteConfirmNo": "Залишити"
+    "cantCompleteConfirmNo": "Залишити",
+    "bgDisclosureTitle": "Діліться геопозицією для доставок",
+    "bgDisclosureBody": "Fee Free Delivery збирає дані про місцезнаходження, поки у вас є активна доставка, щоб ділитися вашою позицією наживо з клієнтом і рестораном — навіть коли застосунок у фоновому режимі, закритий або телефон заблоковано. Відстеження припиняється після завершення доставки.",
+    "bgDisclosureAllow": "Продовжити",
+    "bgDisclosureLater": "Не зараз"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Призначайте та відстежуйте свої доставки",

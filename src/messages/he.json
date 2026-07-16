@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "לא ניתן להשלים את המשלוח הזה?",
     "cantCompleteConfirmBody": "פעולה זו תחזיר את ההזמנה למאגר כדי שנהג אחר יוכל לקחת אותה.",
     "cantCompleteConfirmYes": "כן, שחרר",
-    "cantCompleteConfirmNo": "השאר"
+    "cantCompleteConfirmNo": "השאר",
+    "bgDisclosureTitle": "שתפו את המיקום שלכם עבור משלוחים",
+    "bgDisclosureBody": "Fee Free Delivery אוסף נתוני מיקום בזמן שיש לכם משלוח פעיל, כדי לשתף את המיקום החי שלכם עם הלקוח והמסעדה — גם כשהאפליקציה ברקע או סגורה, או כשהטלפון נעול. המעקב נפסק עם השלמת המשלוח.",
+    "bgDisclosureAllow": "המשך",
+    "bgDisclosureLater": "לא עכשיו"
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",

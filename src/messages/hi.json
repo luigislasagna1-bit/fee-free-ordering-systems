@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "क्या आप यह डिलीवरी पूरी नहीं कर सकते?",
     "cantCompleteConfirmBody": "इससे ऑर्डर वापस पूल में चला जाएगा ताकि कोई दूसरा ड्राइवर इसे ले सके।",
     "cantCompleteConfirmYes": "हाँ, छोड़ दें",
-    "cantCompleteConfirmNo": "रखें"
+    "cantCompleteConfirmNo": "रखें",
+    "bgDisclosureTitle": "डिलीवरी के लिए अपना स्थान साझा करें",
+    "bgDisclosureBody": "Fee Free Delivery आपकी सक्रिय डिलीवरी के दौरान स्थान डेटा एकत्र करता है, ताकि आपकी लाइव स्थिति ग्राहक और रेस्तरां के साथ साझा की जा सके — भले ही ऐप बैकग्राउंड में हो या बंद हो, या फ़ोन लॉक हो। डिलीवरी पूरी होने पर ट्रैकिंग बंद हो जाती है।",
+    "bgDisclosureAllow": "जारी रखें",
+    "bgDisclosureLater": "अभी नहीं"
   },
   "feefreeApp": {
     "dispatchSubtitle": "अपनी डिलीवरी असाइन करें और ट्रैक करें",

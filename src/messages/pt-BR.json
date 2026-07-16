@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Não consegue concluir esta entrega?",
     "cantCompleteConfirmBody": "Isso devolve o pedido à fila para que outro entregador possa aceitá-lo.",
     "cantCompleteConfirmYes": "Sim, liberar",
-    "cantCompleteConfirmNo": "Manter"
+    "cantCompleteConfirmNo": "Manter",
+    "bgDisclosureTitle": "Compartilhe sua localização para as entregas",
+    "bgDisclosureBody": "O Fee Free Delivery coleta dados de localização enquanto você tem uma entrega ativa, para compartilhar sua posição ao vivo com o cliente e o restaurante — mesmo com o app em segundo plano ou fechado, ou com o telefone bloqueado. O rastreamento para quando a entrega é concluída.",
+    "bgDisclosureAllow": "Continuar",
+    "bgDisclosureLater": "Agora não"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe suas entregas",

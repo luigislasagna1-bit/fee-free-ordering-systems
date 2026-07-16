@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Nu poți finaliza această livrare?",
     "cantCompleteConfirmBody": "Comanda revine în listă, astfel încât alt curier să o poată prelua.",
     "cantCompleteConfirmYes": "Da, eliberează",
-    "cantCompleteConfirmNo": "Păstrează"
+    "cantCompleteConfirmNo": "Păstrează",
+    "bgDisclosureTitle": "Partajează-ți locația pentru livrări",
+    "bgDisclosureBody": "Fee Free Delivery colectează date de localizare cât timp ai o livrare activă, pentru a partaja poziția ta în timp real cu clientul și restaurantul — chiar și când aplicația este în fundal sau închisă, ori telefonul este blocat. Urmărirea se oprește la finalizarea livrării.",
+    "bgDisclosureAllow": "Continuă",
+    "bgDisclosureLater": "Nu acum"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",

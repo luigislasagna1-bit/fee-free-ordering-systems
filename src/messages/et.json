@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Kas te ei saa seda tarnet lõpetada?",
     "cantCompleteConfirmBody": "See tagastab tellimuse järjekorda, et teine juht saaks selle võtta.",
     "cantCompleteConfirmYes": "Jah, vabasta",
-    "cantCompleteConfirmNo": "Jäta alles"
+    "cantCompleteConfirmNo": "Jäta alles",
+    "bgDisclosureTitle": "Jagage oma asukohta tarnete jaoks",
+    "bgDisclosureBody": "Fee Free Delivery kogub asukohaandmeid, kui teil on aktiivne tarne, et jagada teie reaalajas asukohta kliendi ja restoraniga — ka siis, kui rakendus on taustal või suletud või telefon on lukus. Jälgimine lõpeb tarne lõpetamisel.",
+    "bgDisclosureAllow": "Jätka",
+    "bgDisclosureLater": "Mitte praegu"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",

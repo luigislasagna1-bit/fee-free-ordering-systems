@@ -5,7 +5,7 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-15 by Claude (overnight session — shipped currency auto-default, driver-cancel fix, distance display, dispatch logout, desktop-checkout fix; driver rating BUILT + parked on branch `rating-wip` awaiting your prod-schema OK; installed both apps on the tablet; replied to 2 Fabrizio reports).
+**Last updated:** 2026-07-16 by Claude (Android submission prep — BOTH signed RELEASE .aab files built + cryptographically proven release-signed [Kitchen vc21/v3.0 + Driver vc1/v1.0, same upload key]; Play org conversion confirmed = 20-tester gate GONE; wrote Play listing copy for both apps; generated 4 Play screenshots from the local demo; rewrote IOS_APP_STORE_SUBMISSION.md for the org + added the driver app. Apple org still Pending — decisions logged in A17.)
 
 ---
 
@@ -32,14 +32,31 @@
 
 ## A. DO NOW — this week, in priority order
 
+### A19. 🔷 Upload BOTH Android apps to Play Production (org account = no testing gate)
+**Ready now:** two signed RELEASE `.aab` files are built and PROVEN release-signed (jarsigner "jar verified", signer `CN=Fee Free Ordering Systems`, SHA-256 `20:96:12:86:…B0:AF` — NOT a debug cert). Both use the same upload key (`android/app/feefree-release.jks`).
+- **Kitchen** "Fee Free Order App" — `android/app/build/outputs/bundle/release/app-release.aab` (`com.feefreeordering.kitchen`, versionCode 21 / v3.0). Playbook: `PLAY_STORE_SUBMISSION.md`.
+- **Driver** "Fee Free Delivery" — `android-driver/app/build/outputs/bundle/release/app-release.aab` (`com.feefreeordering.driver`, versionCode 1 / v1.0). Playbook: `PLAY_STORE_SUBMISSION_DRIVER.md`.
+1. `play.google.com/console` → **Create app** for each (names above) → fill listing (copy in the playbooks) + data safety + content rating + app access (demo login).
+2. **Production → Create release → upload the .aab → Review → Start rollout.** (Org account: no closed test required.)
+3. **⚠️ Driver app only:** it requests **background location** → Play **requires** a "Location permissions declaration" + a short **demo video** of the background use, or it's rejected. Steps + the exact wording are at the top of `PLAY_STORE_SUBMISSION_DRIVER.md`.
+4. Play screenshots are generated (4, in `store-assets/play-screenshots/`) — upload the kitchen ones to the Kitchen listing, the driver ones to the Driver listing.
+5. **Reviewers need logins on PROD:** Kitchen = `demo@feefreeordering.com` (set its prod password via `scripts/run-on-prod.ts scripts/_set-demo-password.ts '<pw>'`). Driver = create a demo driver at `/superadmin → Delivery Drivers`. Put both in Play's App-access field.
+6. If Play says "version code N already used", tell Claude → bump versionCode + rebuild (seconds).
+*(NOTE: the driver app launcher icon is still the default Capacitor icon — cosmetic; swap before/after, not a blocker.)*
+
 ### A18. 🔷 Set the Fee Free Delivery "unclaimed order" alert phone (Sameem)
 A new safety net texts the Fee Free platform owner when a delivery order sits in the pool with NO driver accepting for 3 minutes (so it never gets silently dropped). To turn it on, set in Vercel env:
 - `FEEFREE_DISPATCH_ALERT_PHONE` = `+16476690808` (Sameem Nabil)
 - (SMS goes through the existing Twilio setup — needs `FFOS_TWILIO_ACCOUNT_SID` / `FFOS_TWILIO_AUTH_TOKEN` / `FFOS_TWILIO_FROM_NUMBER` set too, same as the driver-invite SMS.)
 Until the phone is set, the cron still runs but just logs "no alert phone configured" (no text sent) — nothing breaks. The alert links to `/superadmin/drivers` to assign it manually.
 
-### A17. ⏳ Apple Developer ORG account for Fee Free Ordering Inc. — ✅ SUBMITTED 2026-07-14, waiting on Apple verification
-**Status:** enrollment SUBMITTED and "being processed." **Enrollment ID `LXARH3QT89`** · Legal entity **Fee Free Ordering Inc.** · **D-U-N-S `243370724`** · account holder **Sameem Nabil**. Apple emails once they verify authority to sign legal agreements (usually **1–5 business days**, sometimes a confirmation phone call). **DECISION LOCKED (2026-07-14): the iOS DRIVER app will be created directly under THIS org — not the current team — so there's no app to transfer later (A15).** While it verifies, test delivering on the **Android** driver APK (already built) so nothing is blocked. When the Apple email arrives, tell Claude → we set up the org's App Store Connect API key + repoint the Codemagic `ios-driver` workflow to it, then register the App ID + app record under the org and run the build.
+### A17. ⏳ Apple Developer ORG account for Fee Free Ordering Inc. — SUBMITTED, still "(Pending)" as of 2026-07-16
+**Status:** enrollment SUBMITTED, Apple says processing can take up to ~48h (sometimes a verification call). **Enrollment ID `LXARH3QT89`** · Legal entity **Fee Free Ordering Inc.** · **D-U-N-S `243370724`** · account holder **Sameem Nabil**. **Nothing on Apple is clickable until it activates — do NOT re-purchase, it's already paid.** Test delivering on the **Android** driver APK meanwhile so nothing is blocked.
+
+**🔑 THREE DECISIONS to make the moment the org activates (full detail in `IOS_APP_STORE_SUBMISSION.md` §D1–D3):**
+- **D1 — Kitchen bundle id is stuck on the OLD team.** `com.feefreeordering.kitchen` lives under the old team (`NT5ZY28ATK`) and is TestFlight-only. Apple's "Transfer App" needs a *publicly released* app, so **a TestFlight-only app generally can't be transferred** — the old "submit now, transfer later" plan is NOT reliable for Kitchen. Pick: **(D1-a, recommended)** remove it from the old team + re-register the same bundle id fresh under the org (lose build-24 TestFlight history, re-upload one build); or **(D1-b)** submit from the old team now (Seller shows "Luigi's Lasagna & Pizzeria Inc." — the name you didn't want public). **Driver app has no iOS App ID yet → register `com.feefreeordering.driver` CLEAN under the org, no transfer ever.**
+- **D2 — Codemagic signing points at the old team.** `ff-asc-key` + `IOS_SIGNING_KEY_PEM` are old-team creds. Once the org is live: create a new App Store Connect API key under the org, add it to Codemagic, and repoint BOTH `ios-kitchen` + `ios-driver` workflows. Until then an org-targeted iOS build fails signing.
+- **D3 — Kitchen iOS ring bugs are UNRESOLVED.** Fabrizio's build stamp (web `de2bbc0`) proved his app is already on CURRENT code, so the earlier "stale build" theory was WRONG — the ring needs a real root-cause, not a rebuild. **Recommendation: do NOT push Kitchen to the PUBLIC App Store until the ring bug is understood** (TestFlight is fine). The Driver app has no such blocker → it's the safer first public iOS app if you want one.
 <details><summary>original enrol steps (done)</summary>
 Your D-U-N-S number for **Fee Free Ordering Inc.** is in hand — this was the blocker for the company Apple account. Now:
 1. Go to **developer.apple.com/enroll** → choose **Company/Organization** → enter the D-U-N-S + legal entity details (use a *company* Apple Account/email if you have one, not a personal one). Pay the $99/yr. Apple verifies the org — usually **1–5 business days** (they may phone to confirm).
@@ -176,6 +193,10 @@ Everything is pre-written in `IOS_APP_STORE_SUBMISSION.md` (listing copy, privac
 
 ## B. YOUR DECISIONS — tell Claude the answer, no clicking needed
 
+### B5. 🤔 Kitchen app "16 KB page size" fix — approve the Star SDK bump + minimum-Android raise
+**Why:** Play flagged the Kitchen .aab ("does not support 16 KB memory page sizes"); you submitted with "Proceed anyway" (2026-07-16), which works for now but Google will eventually enforce it. Root cause is PROVEN: two native libraries inside the Star printer SDK `stario10 1.9.0`. The fix is verified available: upgrade to `stario10 1.12.1` (Claude downloaded + binary-checked it — compliant), BUT it requires raising the app's minimum Android from 7.0 to **8.0** (drops only 9+-year-old devices) and, because the printer pipeline is hardware-verified GOLDEN, a **physical print re-test on your tablet + Star printer** before shipping. The Driver app is unaffected (already compliant).
+Say **"B5 go"** → Claude does the bump + preflight + builds vc22, then we do a 10-min print test together before it goes to Play. No rush — only needed for a future update or if Google's review bounces vc21.
+
 ### B1. 🤔 Test reward wallets cleanup
 Sameem's account holds $13.46 from before the fix; a typo-email guest wallet holds $5.80; your own test account holds $8.21. All test accounts. Say **"B1 yes, clean them"** and Claude zeroes them (or deduct them yourself in Admin → Customers).
 
@@ -223,11 +244,8 @@ The full audit is in `docs/launch-readiness/` — read **00-executive-summary.md
 
 ## C. WAITING — no action until something arrives
 
-### C1. ⏳ D-U-N-S number for Fee Free Ordering Inc. (requested 2026-07-10, expect ~5–8 business days)
-**When the email with the number arrives:**
-1. Tell Claude the number arrived (never need to share it in chat if you prefer — just say it's in).
-2. Then: `play.google.com/console` → **Developer account → About you → Change account type → Organization** → enter *Fee Free Ordering Inc.* + the D-U-N-S → submit (verification takes a few days).
-3. After Google verifies: the 12-tester requirement disappears → Claude preps the signed Android build → you upload → production release.
+### C1. ✅ DONE 2026-07-15 — Google Play account converted to Organization (Fee Free Ordering Inc.)
+D-U-N-S `243370724`, dev account ID `7291944516964290458`, owner luigislasagna1@gmail.com (Sameem Nabil). Organization + authorized representative both VERIFIED by Google. **The 20-tester / 14-day closed-testing production gate is GONE — Android can publish straight to Production.** → see A19 for the upload.
 
 ### C2. ⏳ Fabrizio's re-tests (promo stacking + category features reports)
 When he confirms, tell Claude → reports get marked FIXED + he gets replies.

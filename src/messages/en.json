@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Can't complete this delivery?",
     "cantCompleteConfirmBody": "This releases the order back to the pool so another driver can pick it up.",
     "cantCompleteConfirmYes": "Yes, release it",
-    "cantCompleteConfirmNo": "Keep it"
+    "cantCompleteConfirmNo": "Keep it",
+    "bgDisclosureTitle": "Share your location for deliveries",
+    "bgDisclosureBody": "Fee Free Delivery collects location data while you have an active delivery, to share your live position with the customer and the restaurant — even when the app is in the background or closed, or the phone is locked. Tracking stops when the delivery is completed.",
+    "bgDisclosureAllow": "Continue",
+    "bgDisclosureLater": "Not now"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",

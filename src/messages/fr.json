@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Impossible de terminer cette livraison ?",
     "cantCompleteConfirmBody": "Cela remet la commande dans la file pour qu'un autre livreur puisse la prendre.",
     "cantCompleteConfirmYes": "Oui, la libérer",
-    "cantCompleteConfirmNo": "La garder"
+    "cantCompleteConfirmNo": "La garder",
+    "bgDisclosureTitle": "Partagez votre position pour les livraisons",
+    "bgDisclosureBody": "Fee Free Delivery collecte des données de localisation pendant une livraison active, afin de partager votre position en direct avec le client et le restaurant — même lorsque l'application est en arrière-plan, fermée, ou que le téléphone est verrouillé. Le suivi s'arrête à la fin de la livraison.",
+    "bgDisclosureAllow": "Continuer",
+    "bgDisclosureLater": "Pas maintenant"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Gérez et suivez vos livraisons",

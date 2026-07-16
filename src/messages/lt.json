@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Ar negalite užbaigti šio pristatymo?",
     "cantCompleteConfirmBody": "Taip užsakymas grąžinamas į eilę, kad jį galėtų paimti kitas vairuotojas.",
     "cantCompleteConfirmYes": "Taip, atlaisvinti",
-    "cantCompleteConfirmNo": "Palikti"
+    "cantCompleteConfirmNo": "Palikti",
+    "bgDisclosureTitle": "Bendrinkite savo buvimo vietą pristatymams",
+    "bgDisclosureBody": "„Fee Free Delivery“ renka vietos duomenis, kol turite aktyvų pristatymą, kad jūsų buvimo vieta realiuoju laiku būtų bendrinama su klientu ir restoranu — net kai programa veikia fone, yra uždaryta arba telefonas užrakintas. Sekimas baigiasi užbaigus pristatymą.",
+    "bgDisclosureAllow": "Tęsti",
+    "bgDisclosureLater": "Ne dabar"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",

@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "この配達を完了できませんか？",
     "cantCompleteConfirmBody": "注文がプールに戻され、別のドライバーが引き受けられるようになります。",
     "cantCompleteConfirmYes": "はい、手放す",
-    "cantCompleteConfirmNo": "保持する"
+    "cantCompleteConfirmNo": "保持する",
+    "bgDisclosureTitle": "配達のために位置情報を共有",
+    "bgDisclosureBody": "Fee Free Delivery は、配達中にお客様の現在地をお客様（注文者）とレストランへリアルタイムで共有するため、位置情報データを収集します。アプリがバックグラウンドにある場合や終了している場合、スマートフォンがロックされている場合も同様です。配達が完了すると追跡は停止します。",
+    "bgDisclosureAllow": "続行",
+    "bgDisclosureLater": "今はしない"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",

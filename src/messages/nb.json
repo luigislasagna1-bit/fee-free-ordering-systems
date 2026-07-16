@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Kan du ikke fullføre denne leveringen?",
     "cantCompleteConfirmBody": "Dette legger bestillingen tilbake i køen slik at en annen sjåfør kan ta den.",
     "cantCompleteConfirmYes": "Ja, frigi den",
-    "cantCompleteConfirmNo": "Behold"
+    "cantCompleteConfirmNo": "Behold",
+    "bgDisclosureTitle": "Del posisjonen din for leveringer",
+    "bgDisclosureBody": "Fee Free Delivery samler inn posisjonsdata mens du har en aktiv levering, for å dele posisjonen din direkte med kunden og restauranten — selv når appen er i bakgrunnen eller lukket, eller telefonen er låst. Sporingen stopper når leveringen er fullført.",
+    "bgDisclosureAllow": "Fortsett",
+    "bgDisclosureLater": "Ikke nå"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg leveringene dine",

@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Ne morete dokončati te dostave?",
     "cantCompleteConfirmBody": "S tem se naročilo vrne v čakalno vrsto, da ga lahko prevzame drug voznik.",
     "cantCompleteConfirmYes": "Da, sprosti",
-    "cantCompleteConfirmNo": "Obdrži"
+    "cantCompleteConfirmNo": "Obdrži",
+    "bgDisclosureTitle": "Delite svojo lokacijo za dostave",
+    "bgDisclosureBody": "Fee Free Delivery zbira podatke o lokaciji, ko imate aktivno dostavo, da vašo lokacijo v živo deli s stranko in restavracijo — tudi ko je aplikacija v ozadju ali zaprta oziroma je telefon zaklenjen. Sledenje se ustavi ob zaključku dostave.",
+    "bgDisclosureAllow": "Nadaljuj",
+    "bgDisclosureLater": "Ne zdaj"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodeljujte in spremljajte svoje dostave",

@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Etkö voi suorittaa tätä toimitusta?",
     "cantCompleteConfirmBody": "Tämä palauttaa tilauksen jonoon, jotta toinen kuljettaja voi ottaa sen.",
     "cantCompleteConfirmYes": "Kyllä, vapauta",
-    "cantCompleteConfirmNo": "Pidä"
+    "cantCompleteConfirmNo": "Pidä",
+    "bgDisclosureTitle": "Jaa sijaintisi toimituksia varten",
+    "bgDisclosureBody": "Fee Free Delivery kerää sijaintitietoja, kun sinulla on aktiivinen toimitus, jakaakseen live-sijaintisi asiakkaalle ja ravintolalle — myös kun sovellus on taustalla tai suljettu tai puhelin on lukittu. Seuranta päättyy, kun toimitus on valmis.",
+    "bgDisclosureAllow": "Jatka",
+    "bgDisclosureLater": "Ei nyt"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",

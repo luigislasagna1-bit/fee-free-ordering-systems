@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Nemôžete dokončiť toto doručenie?",
     "cantCompleteConfirmBody": "Objednávka sa vráti do frontu, aby ju mohol prevziať iný vodič.",
     "cantCompleteConfirmYes": "Áno, uvoľniť",
-    "cantCompleteConfirmNo": "Ponechať"
+    "cantCompleteConfirmNo": "Ponechať",
+    "bgDisclosureTitle": "Zdieľajte svoju polohu pre doručovanie",
+    "bgDisclosureBody": "Fee Free Delivery zhromažďuje údaje o polohe, keď máte aktívne doručenie, aby zdieľala vašu polohu naživo so zákazníkom a reštauráciou — aj keď je aplikácia na pozadí, zatvorená, alebo je telefón uzamknutý. Sledovanie sa končí dokončením doručenia.",
+    "bgDisclosureAllow": "Pokračovať",
+    "bgDisclosureLater": "Teraz nie"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priraďujte a sledujte svoje rozvozy",

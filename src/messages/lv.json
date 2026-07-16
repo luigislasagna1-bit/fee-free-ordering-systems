@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Vai nevarat pabeigt šo piegādi?",
     "cantCompleteConfirmBody": "Tādējādi pasūtījums tiek atgriezts rindā, lai to varētu paņemt cits vadītājs.",
     "cantCompleteConfirmYes": "Jā, atbrīvot",
-    "cantCompleteConfirmNo": "Paturēt"
+    "cantCompleteConfirmNo": "Paturēt",
+    "bgDisclosureTitle": "Kopīgojiet savu atrašanās vietu piegādēm",
+    "bgDisclosureBody": "Fee Free Delivery vāc atrašanās vietas datus, kamēr jums ir aktīva piegāde, lai kopīgotu jūsu atrašanās vietu reāllaikā ar klientu un restorānu — arī tad, ja lietotne darbojas fonā vai ir aizvērta, vai tālrunis ir bloķēts. Izsekošana beidzas, kad piegāde ir pabeigta.",
+    "bgDisclosureAllow": "Turpināt",
+    "bgDisclosureLater": "Ne tagad"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",

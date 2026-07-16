@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Nem tudja teljesíteni ezt a kiszállítást?",
     "cantCompleteConfirmBody": "Ezzel a rendelés visszakerül a listába, hogy egy másik futár átvehesse.",
     "cantCompleteConfirmYes": "Igen, elengedem",
-    "cantCompleteConfirmNo": "Megtartom"
+    "cantCompleteConfirmNo": "Megtartom",
+    "bgDisclosureTitle": "Ossza meg helyzetét a kiszállításokhoz",
+    "bgDisclosureBody": "A Fee Free Delivery helyadatokat gyűjt, amíg aktív kiszállítása van, hogy élőben megossza pozícióját az ügyféllel és az étteremmel — akkor is, ha az alkalmazás a háttérben fut vagy be van zárva, illetve a telefon le van zárva. A követés a kiszállítás befejezésekor leáll.",
+    "bgDisclosureAllow": "Folytatás",
+    "bgDisclosureLater": "Most nem"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",

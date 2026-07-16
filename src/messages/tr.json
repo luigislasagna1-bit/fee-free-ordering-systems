@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "Bu teslimatı tamamlayamıyor musunuz?",
     "cantCompleteConfirmBody": "Bu, siparişi havuza geri bırakır, böylece başka bir sürücü alabilir.",
     "cantCompleteConfirmYes": "Evet, bırak",
-    "cantCompleteConfirmNo": "Bende kalsın"
+    "cantCompleteConfirmNo": "Bende kalsın",
+    "bgDisclosureTitle": "Teslimatlar için konumunuzu paylaşın",
+    "bgDisclosureBody": "Fee Free Delivery, aktif bir teslimatınız olduğunda canlı konumunuzu müşteri ve restoranla paylaşmak için konum verisi toplar — uygulama arka planda veya kapalıyken ya da telefon kilitliyken bile. Teslimat tamamlandığında izleme durur.",
+    "bgDisclosureAllow": "Devam",
+    "bgDisclosureLater": "Şimdi değil"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",

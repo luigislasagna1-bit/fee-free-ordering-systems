@@ -6306,7 +6306,11 @@
     "cantCompleteConfirmTitle": "يتعذر إكمال هذا التوصيل؟",
     "cantCompleteConfirmBody": "سيؤدي ذلك إلى إعادة الطلب إلى القائمة ليتمكن سائق آخر من استلامه.",
     "cantCompleteConfirmYes": "نعم، حرّرها",
-    "cantCompleteConfirmNo": "الاحتفاظ بها"
+    "cantCompleteConfirmNo": "الاحتفاظ بها",
+    "bgDisclosureTitle": "شارك موقعك لعمليات التوصيل",
+    "bgDisclosureBody": "يجمع Fee Free Delivery بيانات الموقع أثناء وجود توصيل نشط لديك، لمشاركة موقعك المباشر مع العميل والمطعم — حتى عندما يكون التطبيق في الخلفية أو مغلقًا، أو يكون الهاتف مقفلًا. يتوقف التتبع عند اكتمال التوصيل.",
+    "bgDisclosureAllow": "متابعة",
+    "bgDisclosureLater": "ليس الآن"
   },
   "feefreeApp": {
     "dispatchSubtitle": "عيّن وتتبّع عمليات التوصيل الخاصة بك",
