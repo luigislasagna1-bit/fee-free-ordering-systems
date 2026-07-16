@@ -506,6 +506,11 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
     !["pending", "rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status) &&
     !(order as any).manuallyClearedAt &&
     !(hideZeroCountdown && countdownIsPast);
+  // A DONE/terminal row needs no time cue at all — without this, marking an
+  // order complete flips rightCountdownVisible off and the fallback chip
+  // resurrects a frozen "00:00" under the icon (Fabrizio cmrldhwep #4). The
+  // fallback is for LIVE rows only (e.g. pending, whose right column is hidden).
+  const rowIsTerminal = ["rejected", "cancelled", "completed", "refunded", "no_show"].includes(order.status);
 
   const isTest = order.customerName.startsWith("[TEST]");
   // Show the address as the lead line ONLY for address-bearing order types.
@@ -587,7 +592,7 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               </div>
             );
           })()}
-          {dayChip && !rightCountdownVisible && (
+          {dayChip && !rightCountdownVisible && !rowIsTerminal && (
             <span
               className={`text-[9px] mt-0.5 font-semibold tabular-nums whitespace-nowrap leading-none ${
                 /^\d/.test(dayChip)
