@@ -136,9 +136,13 @@ workflows:
   # ── Fee Free DELIVERY driver app (iOS) ──────────────────────────────────
   # Same pipeline as ios-kitchen, but for the driver app: a WebView shell of
   # feefreeordering.com/driver + background-location capability. Separate bundle
-  # id (com.feefreeordering.driver) → its OWN App Store Connect app record (you
-  # create it once, see OWNER-ACTIONS). Reuses the SAME signing setup (ff-asc-key
-  # integration + the ios_signing group's IOS_SIGNING_KEY_PEM cert-reuse key).
+  # id (com.feefreeordering.driver) → its OWN App Store Connect app record under
+  # the Fee Free Ordering Inc. ORG (2026-07-16) — signs via the ff-asc-org key
+  # integration. The ios_signing group's IOS_SIGNING_KEY_PEM is REUSED: on the
+  # first org build, fetch-signing-files --create mints a NEW distribution cert
+  # under the org from the same private key (one key to back up, zero new PEMs).
+  # The Kitchen workflow deliberately stays on ff-asc-key (old team) until the
+  # Kitchen org migration (see IOS_APP_STORE_SUBMISSION.md D1/D3).
   # The one real difference: `cap sync` must target the DRIVER config, so this
   # workflow syncs via scripts/cap-driver.mjs (Capacitor 8 has no --config flag,
   # so the helper briefly swaps capacitor.config.ts to the driver config).
@@ -147,7 +151,7 @@ workflows:
     instance_type: mac_mini_m2
     max_build_duration: 60
     integrations:
-      app_store_connect: ff-asc-key
+      app_store_connect: ff-asc-org
     environment:
       groups:
         - ios_signing
