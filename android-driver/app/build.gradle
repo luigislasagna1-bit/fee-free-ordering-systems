@@ -1,5 +1,21 @@
 apply plugin: 'com.android.application'
 
+// Release signing — mirrors android/app/build.gradle (the Kitchen app). Without
+// this, `bundleRelease` silently produced a DEBUG-signed .aab, which the Play
+// Console rejects — the exact trap the Kitchen app hit on 2026-06-18.
+//
+// Deliberately REUSES the same upload key as the Kitchen app rather than minting
+// a second one: one keystore = one thing to back up, and losing an upload key
+// means never being able to update that app again. `storeFile` is read from
+// keystore.properties so it can point at the existing android/app/feefree-release.jks
+// (see OWNER-ACTIONS for the exact file to create). Falls back to debug signing
+// when the properties file is absent, so a clean checkout / CI still builds.
+def keystorePropsFile = rootProject.file("keystore.properties")
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystoreProps.load(new FileInputStream(keystorePropsFile))
+}
+
 android {
     namespace = "com.feefreeordering.driver"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -16,10 +32,23 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        release {
+            if (keystorePropsFile.exists()) {
+                // storeFile comes from the properties file so this can reuse the
+                // Kitchen app's existing key without copying the .jks around.
+                storeFile file(keystoreProps['storeFile'] ?: 'feefree-release.jks')
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig keystorePropsFile.exists() ? signingConfigs.release : signingConfigs.debug
         }
     }
 }
