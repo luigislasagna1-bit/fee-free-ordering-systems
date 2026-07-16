@@ -18,8 +18,8 @@ android {
         applicationId "com.feefreeordering.kitchen"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 21
-        versionName "3.0"
+        versionCode 22
+        versionName "3.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -82,7 +82,7 @@ dependencies {
     // for this printer. stario10 uses a different connection mechanism
     // (StarConnectionSettings + StarPrinter) and is what Star's own
     // utilities use under the hood. Kotlin-coroutine-based.
-    implementation 'com.starmicronics:stario10:1.9.0'
+    implementation 'com.starmicronics:stario10:1.12.1'
     // Coroutines runtime — required by stario10. The -android variant
     // provides the Main dispatcher. We use runBlocking from a Kotlin
     // bridge file to expose suspend fns to Java.
