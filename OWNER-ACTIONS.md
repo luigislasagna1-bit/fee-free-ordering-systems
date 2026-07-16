@@ -32,7 +32,10 @@
 
 ## A. DO NOW — this week, in priority order
 
-### A19. 🔷 Upload BOTH Android apps to Play Production (org account = no testing gate)
+### A19. ✅ DONE 2026-07-16 — BOTH Android apps SUBMITTED to Play Production 🎉
+**Kitchen "Fee Free Order App"** (vc21/v3.0) submitted ~02:15, status **In review**. **Driver "Fee Free Delivery"** (vc1/v1.0, new brand icon) submitted ~11:33 after the background-location + foreground-service declarations with the demo video (unlisted YouTube). 16 KB error on Kitchen bypassed via "Proceed anyway" (real fix = **B5**). When the review emails arrive, tell Claude the outcome → if approved, the public links go out (reseller + marketing): Kitchen `https://play.google.com/store/apps/details?id=com.feefreeordering.kitchen`, Driver `...?id=com.feefreeordering.driver`. If rejected, paste the email → same-day fix.
+**Follow-ups parked here:** (1) UK reseller — send the Play link when Kitchen goes live (or add his Gmail to the closed-testing track today); (2) driver-app demo video is on YouTube unlisted — leave it up, Google re-checks it on every update.
+<details><summary>original A19 upload steps (done)</summary>
 **Ready now:** two signed RELEASE `.aab` files are built and PROVEN release-signed (jarsigner "jar verified", signer `CN=Fee Free Ordering Systems`, SHA-256 `20:96:12:86:…B0:AF` — NOT a debug cert). Both use the same upload key (`android/app/feefree-release.jks`).
 - **Kitchen** "Fee Free Order App" — `android/app/build/outputs/bundle/release/app-release.aab` (`com.feefreeordering.kitchen`, versionCode 21 / v3.0). Playbook: `PLAY_STORE_SUBMISSION.md`.
 - **Driver** "Fee Free Delivery" — `android-driver/app/build/outputs/bundle/release/app-release.aab` (`com.feefreeordering.driver`, versionCode 1 / v1.0). Playbook: `PLAY_STORE_SUBMISSION_DRIVER.md`.
@@ -43,6 +46,7 @@
 5. **Reviewers need logins on PROD:** Kitchen = `demo@feefreeordering.com` (set its prod password via `scripts/run-on-prod.ts scripts/_set-demo-password.ts '<pw>'`). Driver = create a demo driver at `/superadmin → Delivery Drivers`. Put both in Play's App-access field.
 6. If Play says "version code N already used", tell Claude → bump versionCode + rebuild (seconds).
 *(NOTE: the driver app launcher icon is still the default Capacitor icon — cosmetic; swap before/after, not a blocker.)*
+</details>
 
 ### A18. 🔷 Set the Fee Free Delivery "unclaimed order" alert phone (Sameem)
 A new safety net texts the Fee Free platform owner when a delivery order sits in the pool with NO driver accepting for 3 minutes (so it never gets silently dropped). To turn it on, set in Vercel env:
