@@ -58,6 +58,20 @@ workflows:
         # NOT CocoaPods — there is no Podfile; Xcode resolves the Swift packages at
         # build time, so no separate install step is needed.
         script: npx cap sync ios
+      - name: Verify SPM manifest + resolve packages (fail loudly, not at Build IPA)
+        # Same guard as the driver workflow: a Windows-generated
+        # CapApp-SPM/Package.swift has invalid backslash paths (exit 74).
+        script: |
+          set -e
+          MANIFEST=ios/App/CapApp-SPM/Package.swift
+          echo "--- $MANIFEST after sync:"
+          cat "$MANIFEST"
+          grep -q 'node_modules/@capacitor' "$MANIFEST"
+          if grep -q '\\' "$MANIFEST"; then
+            echo "ERROR: backslash paths in $MANIFEST (Windows-generated manifest reached CI)"; exit 1
+          fi
+          xcodebuild -resolvePackageDependencies \
+            -project ios/App/App.xcodeproj -scheme App
       - name: Set up code signing (REUSE one cert if stored key is present)
         # CERT REUSE — stops repeat builds from piling up distribution certs
         # against Apple's limit.
@@ -169,6 +183,37 @@ workflows:
         # Syncs the ios-driver project (NOT ios/). The helper swaps the driver
         # config into capacitor.config.ts, runs `cap sync ios`, then restores.
         script: node scripts/cap-driver.mjs sync ios
+      - name: Patch background-geolocation SPM constraint for Capacitor 8
+        # @capacitor-community/background-geolocation 1.2.x pins
+        # capacitor-swift-pm `from: "7.0.0"` (7.x only) while CapApp-SPM pins
+        # exact 8.3.4 — an unsolvable graph (xcodebuild exit 74). No Cap-8
+        # plugin release exists yet, so widen the constraint post-install.
+        # Tolerant: skips silently once the plugin ships a fixed manifest.
+        script: |
+          set -e
+          PKG=node_modules/@capacitor-community/background-geolocation/Package.swift
+          if grep -q 'from: "7.0.0"' "$PKG"; then
+            sed -i '' 's/from: "7.0.0"/from: "8.0.0"/' "$PKG"
+            echo "Patched $PKG constraint 7.0.0 -> 8.0.0"
+          else
+            echo "Constraint already Capacitor-8 compatible, skipping."
+          fi
+      - name: Verify SPM manifest + resolve packages (fail loudly, not at Build IPA)
+        # A cap sync run on WINDOWS writes backslash paths into
+        # CapApp-SPM/Package.swift — invalid Swift string escapes that kill
+        # xcodebuild with a bare exit 74. Assert the manifest is sane and
+        # pre-resolve packages so any SwiftPM error prints HERE in full.
+        script: |
+          set -e
+          MANIFEST=ios-driver/App/CapApp-SPM/Package.swift
+          echo "--- $MANIFEST after sync:"
+          cat "$MANIFEST"
+          grep -q 'node_modules/@capacitor' "$MANIFEST"
+          if grep -q '\\' "$MANIFEST"; then
+            echo "ERROR: backslash paths in $MANIFEST (Windows-generated manifest reached CI)"; exit 1
+          fi
+          xcodebuild -resolvePackageDependencies \
+            -project ios-driver/App/App.xcodeproj -scheme App
       - name: Set up code signing (REUSE one cert if stored key is present)
         script: |
           set -e
