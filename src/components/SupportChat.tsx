@@ -51,7 +51,7 @@ import { usePathname } from "next/navigation";
  * hides the bubble when it lands on the customer page.
  */
 
-const HIDE_PREFIXES = ["/order/", "/site/", "/kitchen/", "/superadmin/", "/embed/"];
+const HIDE_PREFIXES = ["/order/", "/site/", "/kitchen/", "/superadmin/", "/embed/", "/driver/"];
 
 declare global {
   interface Window {
@@ -91,8 +91,28 @@ function isBrandedHost(): boolean {
   );
 }
 
+/**
+ * Inside ANY native app shell (Kitchen / Fee Free Delivery — Capacitor WebViews
+ * of this site) the support chat must NEVER appear, on any route (Luigi
+ * 2026-07-16: the bubble showed up in the iOS driver app, and the in-app
+ * "Restaurant owner?" flow passes through /login where the web rightly shows
+ * it). Capacitor injects window.Capacitor into remote-URL shells, so this is
+ * reliable even though the apps load the live site.
+ */
+function isNativeShell(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const cap = (window as any).Capacitor;
+    return !!cap && (typeof cap.isNativePlatform === "function" ? cap.isNativePlatform() : !!cap.isNative);
+  } catch {
+    return false;
+  }
+}
+
 function shouldHide(pathname: string | null): boolean {
-  // Branded customer hosts first — the proxy rewrites "/" so the path alone
+  // Native app shells never show the chat, regardless of route.
+  if (isNativeShell()) return true;
+  // Branded customer hosts next — the proxy rewrites "/" so the path alone
   // can't tell us we're on a customer page (see isBrandedHost above).
   if (isBrandedHost()) return true;
   if (!pathname) return false;

@@ -223,9 +223,16 @@ export function DriverQueue({ driverName, rating = null }: { driverName: string;
   const myJobs = assignments.filter((a) => a.mine);
 
   return (
-    <div className="min-h-screen [min-height:100dvh] bg-gray-900 text-white" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" }}>
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-gray-900/95 backdrop-blur border-b border-gray-800 px-4 py-3 flex items-center justify-between">
+    <div className="min-h-screen [min-height:100dvh] bg-gray-900 text-white" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+      {/* Header — carries the top safe-area inset ITSELF (not the container):
+          it's sticky top-0, so once the list scrolls it pins to y=0 of the
+          viewport, and container padding can't keep it out from under the
+          iPhone notch/status bar (Luigi 2026-07-16: header buttons were
+          untappable at the top edge). Same pattern as RestaurantDispatch. */}
+      <header
+        className="sticky top-0 z-10 bg-gray-900/95 backdrop-blur border-b border-gray-800 px-4 py-3 flex items-center justify-between"
+        style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
+      >
         <div className="flex items-center gap-2">
           <div className="w-9 h-9 rounded-xl bg-emerald-500 flex items-center justify-center">
             <Bike className="w-5 h-5 text-white" />
