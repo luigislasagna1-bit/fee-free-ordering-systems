@@ -28,7 +28,10 @@ async function main() {
   for (let i = 1; i <= SAMPLES; i++) {
     const [drv, recent] = await Promise.all([
       p.driver.findUnique({ where: { id: d.id }, select: { lastLocationAt: true } }),
-      p.driverLocation.count({ where: { driverId: d.id, createdAt: { gte: new Date(Date.now() - 120000) } } }),
+      // Drive-by fix riding in the Phase 4 (driver History) change: this filter used
+      // `createdAt`, but DriverLocation's timestamp field/index is `recordedAt`
+      // (schema.prisma DriverLocation) — the old field threw a Prisma unknown-argument error.
+      p.driverLocation.count({ where: { driverId: d.id, recordedAt: { gte: new Date(Date.now() - 120000) } } }),
     ]);
     const age = drv?.lastLocationAt ? Math.round((Date.now() - drv.lastLocationAt.getTime()) / 1000) : null;
     const delta = prevCount < 0 ? "" : ` (+${Math.max(0, recent - prevCount)})`;
