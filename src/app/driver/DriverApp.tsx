@@ -123,7 +123,7 @@ export function DriverApp({
 
       {/* Profile — lazily mounted on first visit, then CSS-hidden, never
           unmounted (manual-refresh tab). */}
-      <div className={tab === "profile" ? undefined : "hidden"}>{profileMounted && <DriverProfile />}</div>
+      <div className={tab === "profile" ? undefined : "hidden"}>{profileMounted && <DriverProfile active={tab === "profile"} />}</div>
 
       <BottomNav
         tabs={tabs}

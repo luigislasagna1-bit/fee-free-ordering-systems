@@ -37,7 +37,7 @@ type Me = {
   components: { reliability: number; onTime: number; feedback: number };
 };
 
-export function DriverProfile() {
+export function DriverProfile({ active = true }: { active?: boolean }) {
   const t = useTranslations("driver");
   const locale = useLocale();
   const [me, setMe] = useState<Me | null>(null);
@@ -68,9 +68,14 @@ export function DriverProfile() {
     }
   }, []);
 
+  // Refetch EVERY time the tab becomes active, not just on first mount: the
+  // shell keeps this component mounted forever (Jobs stays mounted too), so a
+  // mount-only fetch showed stale counters — Luigi's gate test delivered an
+  // order and Profile still said "0 delivered" until a full re-login
+  // (2026-07-17). One indexed findUnique per tab-tap is cheap; no polling.
   useEffect(() => {
-    load();
-  }, [load]);
+    if (active) load();
+  }, [active, load]);
 
   if (loading && !me) {
     return (
