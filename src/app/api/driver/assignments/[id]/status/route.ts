@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
 import { getDriverSession, checkDriverSessionFresh } from "@/lib/driver-session";
-import { checkDriverTransition, STAGE_TIMESTAMP } from "@/lib/driver-assignment";
+import { checkDriverTransition, isDeliveryLate, ASSIGNMENT_TERMINAL, STAGE_TIMESTAMP } from "@/lib/driver-assignment";
 import { applyDeliveryStatus, translateDriverEvent } from "@/lib/delivery-status";
 import { feeCentsForDelivery } from "@/lib/feefree-delivery";
 import { recomputeDriverRating } from "@/lib/driver-rating";
@@ -78,8 +78,17 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
     // cancellation counts against their reliability score.
     const bailedDriverId = assignment.driverId;
     const orderLive = ["accepted", "preparing", "ready"].includes(assignment.order.status);
-    await prisma.deliveryAssignment.update({
-      where: { id },
+    const now = new Date();
+    // Terminal-race guard: our findUnique snapshot is stale by now — a
+    // near-simultaneous "delivered" (retry, second device) may have already
+    // committed and stamped completedAt. An unguarded update would flip that
+    // confirmed delivery back to queued (silently reverting a fee-frozen
+    // delivery into a re-claimable job). Guard atomically on non-terminal
+    // status — same pattern as the claim-race updateMany below — and also
+    // null completedAt in the reset so the completedAt-implies-terminal
+    // invariant (v1.1 Phase 2 history keysets) can never break.
+    const bailed = await prisma.deliveryAssignment.updateMany({
+      where: { id, status: { notIn: [...ASSIGNMENT_TERMINAL] } },
       data: orderLive
         ? {
             status: "queued",
@@ -91,10 +100,18 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
             deliveredAt: null,
             returnedAt: null,
             failedAt: null,
+            completedAt: null,
             unclaimedAlertedAt: null,
           }
-        : { status: "cancelled", failedAt: new Date() },
+        : // cancelled is TERMINAL — stamp completedAt so the row shows up in the
+          // restaurant Completed history keyset (v1.1 Phase 2).
+          { status: "cancelled", failedAt: now, completedAt: now },
     });
+    if (bailed.count === 0) {
+      // Already terminal (e.g. the racing "delivered" won). No reset happened,
+      // so don't ding the driver's reliability score either.
+      return NextResponse.json({ error: "Invalid transition", code: "terminal" }, { status: 400 });
+    }
     // A "can't complete" dings the driver's rating (reliability). Off the hot
     // path so the driver's tap responds instantly.
     if (bailedDriverId) {
@@ -113,10 +130,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   }
 
   // Build the assignment update. Claim on first action (unowned → mine).
+  const now = new Date();
   const data: Record<string, unknown> = { status: next };
   if (!assignment.driverId) data.driverId = driver.driverId;
   const stamp = STAGE_TIMESTAMP[next];
-  if (stamp) data[stamp] = new Date();
+  if (stamp) data[stamp] = now;
+  // EVERY terminal write also stamps completedAt — the single date-ordered
+  // keyset column the v1.1 history lists page on (readers guard `not: null`).
+  if (ASSIGNMENT_TERMINAL.has(next)) data.completedAt = now;
   // Freeze the DISTANCE-TIERED platform fee at delivery (7.99/8.99/9.99 by the
   // restaurant→customer distance) — source of truth for the weekly settlement.
   // Only set once (never re-bill a re-fired delivered).
@@ -145,13 +166,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   // re-fired "delivered" would double-count, but the forward-only assignment
   // guard already blocks re-delivering a terminal assignment.
   if (next === "delivered") {
-    const o = assignment.order;
-    const promisedTs = o.scheduledFor
-      ? new Date(o.scheduledFor).getTime()
-      : o.estimatedReady
-        ? new Date(o.estimatedReady).getTime()
-        : null;
-    const late = promisedTs != null && Date.now() > promisedTs + 10 * 60 * 1000;
+    const late = isDeliveryLate(assignment.order);
     after(
       (async () => {
         try {

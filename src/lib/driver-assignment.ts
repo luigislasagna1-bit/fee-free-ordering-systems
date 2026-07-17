@@ -43,6 +43,28 @@ export const STAGE_TIMESTAMP: Record<string, string> = {
   returned: "returnedAt",
 };
 
+/** Grace window past the promised time before a delivery counts as late. */
+export const LATE_GRACE_MS = 10 * 60 * 1000;
+
+/**
+ * The promised-time / late rule, in ONE place so the delivered-counter bump
+ * (status route) and the History "Late" badge can never drift: the promised
+ * time is `scheduledFor` (customer picked a slot) falling back to
+ * `estimatedReady` (kitchen estimate); the delivery is LATE when it lands more
+ * than LATE_GRACE_MS after that. No promised time → never late.
+ */
+export function isDeliveryLate(
+  order: { scheduledFor: Date | string | null; estimatedReady: Date | string | null },
+  completedAtMs: number = Date.now(),
+): boolean {
+  const promisedTs = order.scheduledFor
+    ? new Date(order.scheduledFor).getTime()
+    : order.estimatedReady
+      ? new Date(order.estimatedReady).getTime()
+      : null;
+  return promisedTs != null && completedAtMs > promisedTs + LATE_GRACE_MS;
+}
+
 function rank(status: string): number {
   const i = ASSIGNMENT_STAGES.indexOf(status as AssignmentStage);
   return i === -1 ? -1 : i;

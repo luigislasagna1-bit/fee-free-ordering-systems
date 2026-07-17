@@ -3532,6 +3532,10 @@ model DriverFeedback {
 
   @@index([driverId, createdAt])
   @@index([orderId])
+  /// Race guard for the restaurant rating write path: one row per
+  /// (assignment, source). Postgres treats NULL assignmentId as non-conflicting,
+  /// so customer/platform rows without an assignment are unaffected (v1.1 §4.4).
+  @@unique([assignmentId, source])
 }
 
 /// One in-house delivery job: an Order ⇄ a Driver + its lifecycle + the frozen
@@ -3557,6 +3561,10 @@ model DeliveryAssignment {
   deliveredAt  DateTime?
   returnedAt   DateTime?
   failedAt     DateTime?
+  /// Stamped on EVERY terminal write (delivered | failed | returned | cancelled)
+  /// — the one date-ordered keyset column for driver/restaurant history lists.
+  /// Readers must guard `completedAt: { not: null }` (v1.1 Phase 2).
+  completedAt  DateTime?
   /// Set when the "no driver accepted within 3 min" escalation SMS has been sent
   /// to the Fee Free platform owner, so the per-minute cron alerts exactly once
   /// per stuck order (Luigi 2026-07-14).
@@ -3578,6 +3586,8 @@ model DeliveryAssignment {
   @@index([restaurantId, status])
   @@index([settlementId])
   @@index([status, deliveredAt])
+  @@index([driverId, completedAt])
+  @@index([restaurantId, completedAt])
 }
 
 /// Append-only GPS ping from the driver app (foreground watchPosition). The latest
