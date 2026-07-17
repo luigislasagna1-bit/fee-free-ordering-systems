@@ -9,7 +9,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 config({ path: ".env.local" });
 config({ path: ".env" });
 
-const ID = "cmqtmfp2n000l04i601k71xdc"; // "Promo Get it Now" — categorize + add-to-cart
+const ID = "cmrldhwep00000ahurwghiksj";
 
 async function main() {
   const url = process.env.DATABASE_URL!;
