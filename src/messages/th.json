@@ -811,7 +811,22 @@
     "delayReasonLabel": "เหตุผล (ไม่บังคับ — ลูกค้าจะเห็น)",
     "delayReasonPlaceholder": "ครัวงานยุ่ง วัตถุดิบหมด ฯลฯ",
     "savingEllipsis": "กำลังบันทึก…",
-    "delayByMin": "เลื่อน {n} นาที"
+    "delayByMin": "เลื่อน {n} นาที",
+    "pushHealth": {
+      "title": "การแจ้งเตือนพุช",
+      "permission": "สิทธิ์การแจ้งเตือน",
+      "permGranted": "อนุญาตแล้ว",
+      "permDenied": "ถูกบล็อก — อนุญาตการแจ้งเตือนในการตั้งค่า iPhone",
+      "permUnknown": "ยังไม่ได้ขอสิทธิ์",
+      "receiving": "อุปกรณ์นี้เป็นเครื่องที่รับเสียงเรียกเตือน",
+      "superseded": "อุปกรณ์อื่นรับหน้าที่เสียงเรียกเตือนแทนแล้ว",
+      "failed": "การลงทะเบียนล้มเหลว ({status})",
+      "pending": "ยังไม่ได้ลงทะเบียน",
+      "testRing": "ทดสอบเสียงเรียกเตือน",
+      "testSending": "กำลังส่ง…",
+      "testSent": "ส่งแล้ว — เสียงเรียกเตือนจะดังในอีกสักครู่",
+      "testFailed": "ส่งไม่สำเร็จ"
+    }
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "แชร์ตำแหน่งของคุณสำหรับการจัดส่ง",
     "bgDisclosureBody": "Fee Free Delivery เก็บข้อมูลตำแหน่งขณะที่คุณมีการจัดส่งที่กำลังดำเนินอยู่ เพื่อแชร์ตำแหน่งแบบเรียลไทม์ของคุณกับลูกค้าและร้านอาหาร แม้แอปจะทำงานอยู่เบื้องหลังหรือถูกปิด หรือโทรศัพท์ถูกล็อก การติดตามจะหยุดเมื่อการจัดส่งเสร็จสิ้น",
     "bgDisclosureAllow": "ดำเนินการต่อ",
-    "bgDisclosureLater": "ไว้ทีหลัง"
+    "bgDisclosureLater": "ไว้ทีหลัง",
+    "tabJobs": "งาน",
+    "tabProfile": "โปรไฟล์",
+    "homeStore": "ร้านประจำ",
+    "driverSince": "เป็นคนขับตั้งแต่ {date}",
+    "ratingTitle": "คะแนนของคุณ",
+    "ratingReliability": "ความน่าเชื่อถือ",
+    "ratingOnTime": "ตรงเวลา",
+    "ratingFeedback": "คำติชม",
+    "statDelivered": "ส่งแล้ว",
+    "statReleased": "ปล่อยคืน",
+    "statLate": "ล่าช้า",
+    "hourlyRate": "ค่าจ้างรายชั่วโมง",
+    "profileLoadFailed": "ไม่สามารถโหลดโปรไฟล์ของคุณได้ กรุณาลองอีกครั้ง"
   },
   "feefreeApp": {
     "dispatchSubtitle": "มอบหมายและติดตามการจัดส่งของคุณ",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "เข้าสู่ระบบร้านอาหาร — จัดการและติดตามการจัดส่งของคุณ",
     "switchToDispatch": "สลับไปที่มุมมองร้านอาหาร",
     "switchToDriver": "สลับไปที่มุมมองคนขับ"
+  },
+  "feefreeShared": {
+    "language": "ภาษา"
   }
 }

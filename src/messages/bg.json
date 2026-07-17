@@ -811,7 +811,22 @@
     "delayReasonLabel": "Причина (по избор — показва се на клиента)",
     "delayReasonPlaceholder": "Кухнята е натоварена, свърши съставка и т.н.",
     "savingEllipsis": "Запазване…",
-    "delayByMin": "Забавяне с {n} мин"
+    "delayByMin": "Забавяне с {n} мин",
+    "pushHealth": {
+      "title": "Push известия",
+      "permission": "Разрешение за известия",
+      "permGranted": "Разрешено",
+      "permDenied": "Блокирано — разрешете известията в Настройки на iPhone",
+      "permUnknown": "Още не е поискано",
+      "receiving": "Това устройство получава звъненето",
+      "superseded": "Друго устройство пое звъненето",
+      "failed": "Регистрацията е неуспешна ({status})",
+      "pending": "Още не е регистрирано",
+      "testRing": "Тестово звънене",
+      "testSending": "Изпращане…",
+      "testSent": "Изпратено — звъненето трябва да пристигне всеки момент",
+      "testFailed": "Неуспешно изпращане"
+    }
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Споделяйте местоположението си за доставките",
     "bgDisclosureBody": "Fee Free Delivery събира данни за местоположението, докато имате активна доставка, за да споделя позицията ви на живо с клиента и ресторанта — дори когато приложението е във фонов режим или затворено, или телефонът е заключен. Проследяването спира при завършване на доставката.",
     "bgDisclosureAllow": "Продължи",
-    "bgDisclosureLater": "Не сега"
+    "bgDisclosureLater": "Не сега",
+    "tabJobs": "Задачи",
+    "tabProfile": "Профил",
+    "homeStore": "Основен ресторант",
+    "driverSince": "Шофьор от {date}",
+    "ratingTitle": "Вашият рейтинг",
+    "ratingReliability": "Надеждност",
+    "ratingOnTime": "Навреме",
+    "ratingFeedback": "Отзиви",
+    "statDelivered": "Доставени",
+    "statReleased": "Освободени",
+    "statLate": "Закъснели",
+    "hourlyRate": "Часова ставка",
+    "profileLoadFailed": "Профилът ви не можа да се зареди. Опитайте отново."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Възлагайте и проследявайте доставките си",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Вход за ресторанти — управлявайте и следете доставките си.",
     "switchToDispatch": "Превключи към изглед за ресторант",
     "switchToDriver": "Превключи към изглед за шофьор"
+  },
+  "feefreeShared": {
+    "language": "Език"
   }
 }

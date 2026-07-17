@@ -811,7 +811,22 @@
     "delayReasonLabel": "السبب (اختياري — يظهر للعميل)",
     "delayReasonPlaceholder": "المطبخ مزدحم، نفاد أحد المكونات، إلخ.",
     "savingEllipsis": "جارٍ الحفظ…",
-    "delayByMin": "تأخير {n} دقيقة"
+    "delayByMin": "تأخير {n} دقيقة",
+    "pushHealth": {
+      "title": "التنبيهات الفورية",
+      "permission": "إذن الإشعارات",
+      "permGranted": "مسموح",
+      "permDenied": "محظور — اسمح بالإشعارات في إعدادات iPhone",
+      "permUnknown": "لم يُطلب بعد",
+      "receiving": "هذا الجهاز يستقبل الرنين",
+      "superseded": "تولى جهاز آخر الرنين",
+      "failed": "فشل التسجيل ({status})",
+      "pending": "لم يتم التسجيل بعد",
+      "testRing": "اختبار الرنين",
+      "testSending": "جارٍ الإرسال…",
+      "testSent": "تم الإرسال — سيصل الرنين خلال لحظات",
+      "testFailed": "فشل الإرسال"
+    }
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "شارك موقعك لعمليات التوصيل",
     "bgDisclosureBody": "يجمع Fee Free Delivery بيانات الموقع أثناء وجود توصيل نشط لديك، لمشاركة موقعك المباشر مع العميل والمطعم — حتى عندما يكون التطبيق في الخلفية أو مغلقًا، أو يكون الهاتف مقفلًا. يتوقف التتبع عند اكتمال التوصيل.",
     "bgDisclosureAllow": "متابعة",
-    "bgDisclosureLater": "ليس الآن"
+    "bgDisclosureLater": "ليس الآن",
+    "tabJobs": "المهام",
+    "tabProfile": "الملف الشخصي",
+    "homeStore": "المتجر الرئيسي",
+    "driverSince": "سائق منذ {date}",
+    "ratingTitle": "تقييمك",
+    "ratingReliability": "الموثوقية",
+    "ratingOnTime": "الالتزام بالوقت",
+    "ratingFeedback": "الملاحظات",
+    "statDelivered": "تم توصيلها",
+    "statReleased": "تم تحريرها",
+    "statLate": "متأخرة",
+    "hourlyRate": "الأجر بالساعة",
+    "profileLoadFailed": "تعذّر تحميل ملفك الشخصي. يرجى المحاولة مرة أخرى."
   },
   "feefreeApp": {
     "dispatchSubtitle": "عيّن وتتبّع عمليات التوصيل الخاصة بك",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "تسجيل دخول المطعم — أدر توصيلاتك وتتبّعها.",
     "switchToDispatch": "التبديل إلى عرض المطعم",
     "switchToDriver": "التبديل إلى عرض السائق"
+  },
+  "feefreeShared": {
+    "language": "اللغة"
   }
 }

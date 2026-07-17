@@ -811,7 +811,22 @@
     "delayReasonLabel": "사유 (선택 — 고객에게 표시됨)",
     "delayReasonPlaceholder": "주방이 바쁨, 재료 소진 등",
     "savingEllipsis": "저장 중…",
-    "delayByMin": "{n}분 지연"
+    "delayByMin": "{n}분 지연",
+    "pushHealth": {
+      "title": "푸시 알림",
+      "permission": "알림 권한",
+      "permGranted": "허용됨",
+      "permDenied": "차단됨 — iPhone 설정에서 알림을 허용하세요",
+      "permUnknown": "아직 요청되지 않음",
+      "receiving": "이 기기에서 벨소리를 수신합니다",
+      "superseded": "다른 기기가 벨소리를 넘겨받았습니다",
+      "failed": "등록 실패 ({status})",
+      "pending": "아직 등록되지 않음",
+      "testRing": "벨소리 테스트",
+      "testSending": "전송 중…",
+      "testSent": "전송됨 — 곧 벨소리가 울립니다",
+      "testFailed": "전송 실패"
+    }
   },
   "admin": {
     "welcomeBack": "환영합니다",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "배달을 위해 위치를 공유하세요",
     "bgDisclosureBody": "Fee Free Delivery는 진행 중인 배달이 있는 동안 위치 데이터를 수집하여 고객 및 레스토랑과 실시간 위치를 공유합니다. 앱이 백그라운드에 있거나 종료된 경우, 휴대폰이 잠긴 경우에도 마찬가지입니다. 배달이 완료되면 추적이 중지됩니다.",
     "bgDisclosureAllow": "계속",
-    "bgDisclosureLater": "나중에"
+    "bgDisclosureLater": "나중에",
+    "tabJobs": "배달",
+    "tabProfile": "프로필",
+    "homeStore": "소속 매장",
+    "driverSince": "{date}부터 기사로 활동 중",
+    "ratingTitle": "내 평점",
+    "ratingReliability": "신뢰도",
+    "ratingOnTime": "시간 준수",
+    "ratingFeedback": "피드백",
+    "statDelivered": "배달 완료",
+    "statReleased": "반환",
+    "statLate": "지연",
+    "hourlyRate": "시급",
+    "profileLoadFailed": "프로필을 불러오지 못했습니다. 다시 시도해 주세요."
   },
   "feefreeApp": {
     "dispatchSubtitle": "배달 배정 및 추적",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "레스토랑 로그인 — 배달을 관리하고 추적하세요.",
     "switchToDispatch": "레스토랑 화면으로 전환",
     "switchToDriver": "기사 화면으로 전환"
+  },
+  "feefreeShared": {
+    "language": "언어"
   }
 }

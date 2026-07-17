@@ -811,7 +811,22 @@
     "delayReasonLabel": "סיבה (רשות — מוצגת ללקוח)",
     "delayReasonPlaceholder": "המטבח עמוס, נגמר מצרך וכו'.",
     "savingEllipsis": "שומר…",
-    "delayByMin": "עיכוב ב-{n} דק'"
+    "delayByMin": "עיכוב ב-{n} דק'",
+    "pushHealth": {
+      "title": "התראות פוש",
+      "permission": "הרשאת התראות",
+      "permGranted": "מאושרת",
+      "permDenied": "חסומה — יש לאפשר התראות בהגדרות ה-iPhone",
+      "permUnknown": "טרם התבקשה",
+      "receiving": "מכשיר זה מקבל את הצלצול",
+      "superseded": "הצלצול עבר למכשיר אחר",
+      "failed": "הרישום נכשל ({status})",
+      "pending": "טרם נרשם",
+      "testRing": "בדיקת צלצול",
+      "testSending": "שולח…",
+      "testSent": "נשלח — הצלצול אמור להגיע בעוד רגע",
+      "testFailed": "השליחה נכשלה"
+    }
   },
   "admin": {
     "welcomeBack": "ברוך שובך",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "שתפו את המיקום שלכם עבור משלוחים",
     "bgDisclosureBody": "Fee Free Delivery אוסף נתוני מיקום בזמן שיש לכם משלוח פעיל, כדי לשתף את המיקום החי שלכם עם הלקוח והמסעדה — גם כשהאפליקציה ברקע או סגורה, או כשהטלפון נעול. המעקב נפסק עם השלמת המשלוח.",
     "bgDisclosureAllow": "המשך",
-    "bgDisclosureLater": "לא עכשיו"
+    "bgDisclosureLater": "לא עכשיו",
+    "tabJobs": "משימות",
+    "tabProfile": "פרופיל",
+    "homeStore": "חנות הבית",
+    "driverSince": "נהג מאז {date}",
+    "ratingTitle": "הדירוג שלך",
+    "ratingReliability": "אמינות",
+    "ratingOnTime": "עמידה בזמנים",
+    "ratingFeedback": "משוב",
+    "statDelivered": "נמסרו",
+    "statReleased": "שוחררו",
+    "statLate": "באיחור",
+    "hourlyRate": "תעריף שעתי",
+    "profileLoadFailed": "לא ניתן היה לטעון את הפרופיל שלך. אנא נסה שוב."
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "כניסת מסעדה — נהלו ועקבו אחרי המשלוחים שלכם.",
     "switchToDispatch": "מעבר לתצוגת מסעדה",
     "switchToDriver": "מעבר לתצוגת נהג"
+  },
+  "feefreeShared": {
+    "language": "שפה"
   }
 }

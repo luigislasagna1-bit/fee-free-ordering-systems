@@ -811,7 +811,22 @@
     "delayReasonLabel": "Syy (valinnainen — näytetään asiakkaalle)",
     "delayReasonPlaceholder": "Keittiössä ruuhkaa, ainesosa loppu jne.",
     "savingEllipsis": "Tallennetaan…",
-    "delayByMin": "Viivytä {n} min"
+    "delayByMin": "Viivytä {n} min",
+    "pushHealth": {
+      "title": "Push-hälytykset",
+      "permission": "Ilmoituslupa",
+      "permGranted": "Sallittu",
+      "permDenied": "Estetty — salli ilmoitukset iPhonen asetuksissa",
+      "permUnknown": "Ei vielä pyydetty",
+      "receiving": "Tämä laite vastaanottaa hälytyssoiton",
+      "superseded": "Hälytyssoitto siirtyi toiselle laitteelle",
+      "failed": "Rekisteröinti epäonnistui ({status})",
+      "pending": "Ei vielä rekisteröity",
+      "testRing": "Testisoitto",
+      "testSending": "Lähetetään…",
+      "testSent": "Lähetetty — hälytyssoiton pitäisi kuulua hetken kuluttua",
+      "testFailed": "Lähetys epäonnistui"
+    }
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Jaa sijaintisi toimituksia varten",
     "bgDisclosureBody": "Fee Free Delivery kerää sijaintitietoja, kun sinulla on aktiivinen toimitus, jakaakseen live-sijaintisi asiakkaalle ja ravintolalle — myös kun sovellus on taustalla tai suljettu tai puhelin on lukittu. Seuranta päättyy, kun toimitus on valmis.",
     "bgDisclosureAllow": "Jatka",
-    "bgDisclosureLater": "Ei nyt"
+    "bgDisclosureLater": "Ei nyt",
+    "tabJobs": "Tehtävät",
+    "tabProfile": "Profiili",
+    "homeStore": "Kotimyymälä",
+    "driverSince": "Kuljettajana {date} alkaen",
+    "ratingTitle": "Arvosanasi",
+    "ratingReliability": "Luotettavuus",
+    "ratingOnTime": "Täsmällisyys",
+    "ratingFeedback": "Palaute",
+    "statDelivered": "Toimitetut",
+    "statReleased": "Vapautetut",
+    "statLate": "Myöhästyneet",
+    "hourlyRate": "Tuntipalkka",
+    "profileLoadFailed": "Profiilisi lataaminen epäonnistui. Yritä uudelleen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Ravintolakirjautuminen — hallitse ja seuraa toimituksiasi.",
     "switchToDispatch": "Vaihda ravintolanäkymään",
     "switchToDriver": "Vaihda kuljettajanäkymään"
+  },
+  "feefreeShared": {
+    "language": "Kieli"
   }
 }

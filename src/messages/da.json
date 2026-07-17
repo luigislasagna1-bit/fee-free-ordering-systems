@@ -811,7 +811,22 @@
     "delayReasonLabel": "Årsag (valgfrit — vises til kunden)",
     "delayReasonPlaceholder": "Køkkenet har travlt, en ingrediens er udsolgt osv.",
     "savingEllipsis": "Gemmer…",
-    "delayByMin": "Forsink med {n} min"
+    "delayByMin": "Forsink med {n} min",
+    "pushHealth": {
+      "title": "Push-alarmer",
+      "permission": "Notifikationstilladelse",
+      "permGranted": "Tilladt",
+      "permDenied": "Blokeret — tillad notifikationer i Indstillinger på iPhone",
+      "permUnknown": "Ikke anmodet om endnu",
+      "receiving": "Denne enhed modtager ringesignalet",
+      "superseded": "En anden enhed har overtaget ringesignalet",
+      "failed": "Registrering mislykkedes ({status})",
+      "pending": "Ikke registreret endnu",
+      "testRing": "Test ringesignal",
+      "testSending": "Sender…",
+      "testSent": "Sendt — ringesignalet bør komme om et øjeblik",
+      "testFailed": "Kunne ikke sendes"
+    }
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Del din placering for leveringer",
     "bgDisclosureBody": "Fee Free Delivery indsamler placeringsdata, mens du har en aktiv levering, for at dele din liveposition med kunden og restauranten — også når appen er i baggrunden eller lukket, eller telefonen er låst. Sporingen stopper, når leveringen er gennemført.",
     "bgDisclosureAllow": "Fortsæt",
-    "bgDisclosureLater": "Ikke nu"
+    "bgDisclosureLater": "Ikke nu",
+    "tabJobs": "Job",
+    "tabProfile": "Profil",
+    "homeStore": "Hjemmebutik",
+    "driverSince": "Chauffør siden {date}",
+    "ratingTitle": "Din bedømmelse",
+    "ratingReliability": "Pålidelighed",
+    "ratingOnTime": "Til tiden",
+    "ratingFeedback": "Feedback",
+    "statDelivered": "Leveret",
+    "statReleased": "Frigivet",
+    "statLate": "Forsinket",
+    "hourlyRate": "Timeløn",
+    "profileLoadFailed": "Din profil kunne ikke indlæses. Prøv igen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg dine leveringer",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restaurant-login — administrer og følg dine leveringer.",
     "switchToDispatch": "Skift til restaurantvisning",
     "switchToDriver": "Skift til chaufførvisning"
+  },
+  "feefreeShared": {
+    "language": "Sprog"
   }
 }

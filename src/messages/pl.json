@@ -811,7 +811,22 @@
     "delayReasonLabel": "Powód (opcjonalnie — widoczny dla klienta)",
     "delayReasonPlaceholder": "Duży ruch w kuchni, brak składnika itp.",
     "savingEllipsis": "Zapisywanie…",
-    "delayByMin": "Opóźnij o {n} min"
+    "delayByMin": "Opóźnij o {n} min",
+    "pushHealth": {
+      "title": "Powiadomienia push",
+      "permission": "Uprawnienie do powiadomień",
+      "permGranted": "Zezwolono",
+      "permDenied": "Zablokowano — zezwól na powiadomienia w Ustawieniach iPhone'a",
+      "permUnknown": "Jeszcze nie poproszono",
+      "receiving": "To urządzenie odbiera dzwonek",
+      "superseded": "Inne urządzenie przejęło dzwonek",
+      "failed": "Rejestracja nie powiodła się ({status})",
+      "pending": "Jeszcze nie zarejestrowano",
+      "testRing": "Przetestuj dzwonek",
+      "testSending": "Wysyłanie…",
+      "testSent": "Wysłano — dzwonek powinien dotrzeć za chwilę",
+      "testFailed": "Nie udało się wysłać"
+    }
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Udostępnij swoją lokalizację na potrzeby dostaw",
     "bgDisclosureBody": "Fee Free Delivery zbiera dane o lokalizacji, gdy masz aktywną dostawę, aby udostępniać Twoją pozycję na żywo klientowi i restauracji — nawet gdy aplikacja działa w tle, jest zamknięta lub telefon jest zablokowany. Śledzenie kończy się po zrealizowaniu dostawy.",
     "bgDisclosureAllow": "Kontynuuj",
-    "bgDisclosureLater": "Nie teraz"
+    "bgDisclosureLater": "Nie teraz",
+    "tabJobs": "Zlecenia",
+    "tabProfile": "Profil",
+    "homeStore": "Restauracja macierzysta",
+    "driverSince": "Kierowca od {date}",
+    "ratingTitle": "Twoja ocena",
+    "ratingReliability": "Niezawodność",
+    "ratingOnTime": "Punktualność",
+    "ratingFeedback": "Opinie",
+    "statDelivered": "Dostarczone",
+    "statReleased": "Zwolnione",
+    "statLate": "Spóźnione",
+    "hourlyRate": "Stawka godzinowa",
+    "profileLoadFailed": "Nie udało się wczytać Twojego profilu. Spróbuj ponownie."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Logowanie dla restauracji — zarządzaj dostawami i śledź je.",
     "switchToDispatch": "Przełącz na widok restauracji",
     "switchToDriver": "Przełącz na widok kierowcy"
+  },
+  "feefreeShared": {
+    "language": "Język"
   }
 }

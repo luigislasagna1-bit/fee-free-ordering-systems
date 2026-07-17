@@ -811,7 +811,22 @@
     "delayReasonLabel": "Lý do (không bắt buộc — khách sẽ thấy)",
     "delayReasonPlaceholder": "Bếp đang bận, hết nguyên liệu, v.v.",
     "savingEllipsis": "Đang lưu…",
-    "delayByMin": "Trễ {n} phút"
+    "delayByMin": "Trễ {n} phút",
+    "pushHealth": {
+      "title": "Thông báo đẩy",
+      "permission": "Quyền thông báo",
+      "permGranted": "Đã cho phép",
+      "permDenied": "Bị chặn — hãy cho phép thông báo trong Cài đặt iPhone",
+      "permUnknown": "Chưa yêu cầu",
+      "receiving": "Thiết bị này nhận chuông báo",
+      "superseded": "Thiết bị khác đã tiếp nhận chuông báo",
+      "failed": "Đăng ký thất bại ({status})",
+      "pending": "Chưa đăng ký",
+      "testRing": "Thử chuông",
+      "testSending": "Đang gửi…",
+      "testSent": "Đã gửi — chuông báo sẽ reo trong giây lát",
+      "testFailed": "Gửi thất bại"
+    }
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Chia sẻ vị trí của bạn cho các đơn giao hàng",
     "bgDisclosureBody": "Fee Free Delivery thu thập dữ liệu vị trí khi bạn có đơn giao hàng đang hoạt động, để chia sẻ vị trí trực tiếp của bạn với khách hàng và nhà hàng — ngay cả khi ứng dụng chạy nền, đã đóng hoặc điện thoại bị khóa. Việc theo dõi dừng lại khi đơn giao hàng hoàn tất.",
     "bgDisclosureAllow": "Tiếp tục",
-    "bgDisclosureLater": "Để sau"
+    "bgDisclosureLater": "Để sau",
+    "tabJobs": "Công việc",
+    "tabProfile": "Hồ sơ",
+    "homeStore": "Cửa hàng chính",
+    "driverSince": "Tài xế từ {date}",
+    "ratingTitle": "Đánh giá của bạn",
+    "ratingReliability": "Độ tin cậy",
+    "ratingOnTime": "Đúng giờ",
+    "ratingFeedback": "Phản hồi",
+    "statDelivered": "Đã giao",
+    "statReleased": "Đã trả đơn",
+    "statLate": "Trễ",
+    "hourlyRate": "Lương theo giờ",
+    "profileLoadFailed": "Không thể tải hồ sơ của bạn. Vui lòng thử lại."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Đăng nhập nhà hàng — quản lý và theo dõi đơn giao hàng.",
     "switchToDispatch": "Chuyển sang giao diện nhà hàng",
     "switchToDriver": "Chuyển sang giao diện tài xế"
+  },
+  "feefreeShared": {
+    "language": "Ngôn ngữ"
   }
 }

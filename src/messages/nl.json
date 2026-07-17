@@ -811,7 +811,22 @@
     "delayReasonLabel": "Reden (optioneel — zichtbaar voor de klant)",
     "delayReasonPlaceholder": "Keuken erg druk, ingrediënt op, enz.",
     "savingEllipsis": "Opslaan…",
-    "delayByMin": "{n} min uitstellen"
+    "delayByMin": "{n} min uitstellen",
+    "pushHealth": {
+      "title": "Pushmeldingen",
+      "permission": "Toestemming voor meldingen",
+      "permGranted": "Toegestaan",
+      "permDenied": "Geblokkeerd — sta meldingen toe in de iPhone-instellingen",
+      "permUnknown": "Nog niet aangevraagd",
+      "receiving": "Dit apparaat ontvangt het belsignaal",
+      "superseded": "Een ander apparaat heeft het belsignaal overgenomen",
+      "failed": "Registratie mislukt ({status})",
+      "pending": "Nog niet geregistreerd",
+      "testRing": "Belsignaal testen",
+      "testSending": "Verzenden…",
+      "testSent": "Verzonden — het belsignaal komt zo binnen",
+      "testFailed": "Verzenden mislukt"
+    }
   },
   "admin": {
     "welcomeBack": "Welkom terug",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Deel je locatie voor bezorgingen",
     "bgDisclosureBody": "Fee Free Delivery verzamelt locatiegegevens terwijl je een actieve bezorging hebt, om je live positie te delen met de klant en het restaurant — ook wanneer de app op de achtergrond staat of gesloten is, of de telefoon vergrendeld is. Het volgen stopt zodra de bezorging is voltooid.",
     "bgDisclosureAllow": "Doorgaan",
-    "bgDisclosureLater": "Niet nu"
+    "bgDisclosureLater": "Niet nu",
+    "tabJobs": "Opdrachten",
+    "tabProfile": "Profiel",
+    "homeStore": "Thuisbasis",
+    "driverSince": "Bezorger sinds {date}",
+    "ratingTitle": "Je beoordeling",
+    "ratingReliability": "Betrouwbaarheid",
+    "ratingOnTime": "Stiptheid",
+    "ratingFeedback": "Feedback",
+    "statDelivered": "Bezorgd",
+    "statReleased": "Vrijgegeven",
+    "statLate": "Te laat",
+    "hourlyRate": "Uurtarief",
+    "profileLoadFailed": "Je profiel kon niet worden geladen. Probeer het opnieuw."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restaurant-login — beheer en volg je bezorgingen.",
     "switchToDispatch": "Wisselen naar restaurantweergave",
     "switchToDriver": "Wisselen naar bezorgersweergave"
+  },
+  "feefreeShared": {
+    "language": "Taal"
   }
 }

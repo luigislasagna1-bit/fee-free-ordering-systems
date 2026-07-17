@@ -811,7 +811,22 @@
     "delayReasonLabel": "Důvod (nepovinné — zobrazí se zákazníkovi)",
     "delayReasonPlaceholder": "V kuchyni je rušno, došla surovina apod.",
     "savingEllipsis": "Ukládání…",
-    "delayByMin": "Zpozdit o {n} min"
+    "delayByMin": "Zpozdit o {n} min",
+    "pushHealth": {
+      "title": "Push upozornění",
+      "permission": "Oprávnění k oznámením",
+      "permGranted": "Povoleno",
+      "permDenied": "Blokováno — povolte oznámení v Nastavení iPhonu",
+      "permUnknown": "Zatím nevyžádáno",
+      "receiving": "Toto zařízení přijímá vyzvánění",
+      "superseded": "Vyzvánění převzalo jiné zařízení",
+      "failed": "Registrace selhala ({status})",
+      "pending": "Zatím nezaregistrováno",
+      "testRing": "Otestovat vyzvánění",
+      "testSending": "Odesílání…",
+      "testSent": "Odesláno — vyzvánění by mělo dorazit za okamžik",
+      "testFailed": "Odeslání se nezdařilo"
+    }
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Sdílejte svou polohu pro doručování",
     "bgDisclosureBody": "Fee Free Delivery shromažďuje údaje o poloze, když máte aktivní doručení, aby sdílela vaši polohu naživo se zákazníkem a restaurací — i když je aplikace na pozadí, zavřená, nebo je telefon uzamčen. Sledování končí dokončením doručení.",
     "bgDisclosureAllow": "Pokračovat",
-    "bgDisclosureLater": "Teď ne"
+    "bgDisclosureLater": "Teď ne",
+    "tabJobs": "Zakázky",
+    "tabProfile": "Profil",
+    "homeStore": "Domovská provozovna",
+    "driverSince": "Řidičem od {date}",
+    "ratingTitle": "Vaše hodnocení",
+    "ratingReliability": "Spolehlivost",
+    "ratingOnTime": "Včasnost",
+    "ratingFeedback": "Zpětná vazba",
+    "statDelivered": "Doručeno",
+    "statReleased": "Uvolněno",
+    "statLate": "Pozdě",
+    "hourlyRate": "Hodinová sazba",
+    "profileLoadFailed": "Profil se nepodařilo načíst. Zkuste to prosím znovu."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Přiřazujte a sledujte své rozvozy",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Přihlášení pro restaurace — spravujte a sledujte svá doručení.",
     "switchToDispatch": "Přepnout na zobrazení restaurace",
     "switchToDriver": "Přepnout na zobrazení řidiče"
+  },
+  "feefreeShared": {
+    "language": "Jazyk"
   }
 }

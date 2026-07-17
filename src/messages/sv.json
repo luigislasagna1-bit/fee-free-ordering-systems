@@ -811,7 +811,22 @@
     "delayReasonLabel": "Orsak (valfritt — visas för kunden)",
     "delayReasonPlaceholder": "Köket har mycket att göra, en ingrediens är slut osv.",
     "savingEllipsis": "Sparar…",
-    "delayByMin": "Försena med {n} min"
+    "delayByMin": "Försena med {n} min",
+    "pushHealth": {
+      "title": "Pushnotiser",
+      "permission": "Notisbehörighet",
+      "permGranted": "Tillåtet",
+      "permDenied": "Blockerat — tillåt notiser i iPhone-inställningarna",
+      "permUnknown": "Inte begärd ännu",
+      "receiving": "Den här enheten tar emot ringsignalen",
+      "superseded": "En annan enhet har tagit över ringsignalen",
+      "failed": "Registreringen misslyckades ({status})",
+      "pending": "Inte registrerad ännu",
+      "testRing": "Testa ringsignal",
+      "testSending": "Skickar…",
+      "testSent": "Skickat — ringsignalen bör komma inom kort",
+      "testFailed": "Kunde inte skicka"
+    }
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Dela din plats för leveranser",
     "bgDisclosureBody": "Fee Free Delivery samlar in platsdata medan du har en aktiv leverans, för att dela din liveposition med kunden och restaurangen — även när appen är i bakgrunden eller stängd, eller telefonen är låst. Spårningen upphör när leveransen är slutförd.",
     "bgDisclosureAllow": "Fortsätt",
-    "bgDisclosureLater": "Inte nu"
+    "bgDisclosureLater": "Inte nu",
+    "tabJobs": "Uppdrag",
+    "tabProfile": "Profil",
+    "homeStore": "Hemmabutik",
+    "driverSince": "Förare sedan {date}",
+    "ratingTitle": "Ditt betyg",
+    "ratingReliability": "Pålitlighet",
+    "ratingOnTime": "Punktlighet",
+    "ratingFeedback": "Feedback",
+    "statDelivered": "Levererade",
+    "statReleased": "Släppta",
+    "statLate": "Försenade",
+    "hourlyRate": "Timlön",
+    "profileLoadFailed": "Det gick inte att läsa in din profil. Försök igen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tilldela och följ dina leveranser",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restauranginloggning — hantera och följ dina leveranser.",
     "switchToDispatch": "Byt till restaurangvy",
     "switchToDriver": "Byt till förarvy"
+  },
+  "feefreeShared": {
+    "language": "Språk"
   }
 }

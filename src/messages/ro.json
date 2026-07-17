@@ -811,7 +811,22 @@
     "delayReasonLabel": "Motiv (opțional — vizibil pentru client)",
     "delayReasonPlaceholder": "Bucătărie aglomerată, s-a terminat un ingredient etc.",
     "savingEllipsis": "Se salvează…",
-    "delayByMin": "Întârzie cu {n} min"
+    "delayByMin": "Întârzie cu {n} min",
+    "pushHealth": {
+      "title": "Alerte push",
+      "permission": "Permisiune notificări",
+      "permGranted": "Acordată",
+      "permDenied": "Blocată — permite notificările din Setările iPhone",
+      "permUnknown": "Încă nu a fost solicitată",
+      "receiving": "Acest dispozitiv primește soneria",
+      "superseded": "Alt dispozitiv a preluat soneria",
+      "failed": "Înregistrarea a eșuat ({status})",
+      "pending": "Încă neînregistrat",
+      "testRing": "Testează soneria",
+      "testSending": "Se trimite…",
+      "testSent": "Trimis — soneria ar trebui să sune imediat",
+      "testFailed": "Trimiterea a eșuat"
+    }
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Partajează-ți locația pentru livrări",
     "bgDisclosureBody": "Fee Free Delivery colectează date de localizare cât timp ai o livrare activă, pentru a partaja poziția ta în timp real cu clientul și restaurantul — chiar și când aplicația este în fundal sau închisă, ori telefonul este blocat. Urmărirea se oprește la finalizarea livrării.",
     "bgDisclosureAllow": "Continuă",
-    "bgDisclosureLater": "Nu acum"
+    "bgDisclosureLater": "Nu acum",
+    "tabJobs": "Curse",
+    "tabProfile": "Profil",
+    "homeStore": "Magazin principal",
+    "driverSince": "Livrator din {date}",
+    "ratingTitle": "Evaluarea ta",
+    "ratingReliability": "Seriozitate",
+    "ratingOnTime": "Punctualitate",
+    "ratingFeedback": "Feedback",
+    "statDelivered": "Livrate",
+    "statReleased": "Eliberate",
+    "statLate": "Întârziate",
+    "hourlyRate": "Tarif orar",
+    "profileLoadFailed": "Nu am putut încărca profilul tău. Te rugăm să încerci din nou."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Autentificare restaurant — gestionează și urmărește livrările.",
     "switchToDispatch": "Comută la vizualizarea restaurant",
     "switchToDriver": "Comută la vizualizarea livrator"
+  },
+  "feefreeShared": {
+    "language": "Limbă"
   }
 }

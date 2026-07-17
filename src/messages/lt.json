@@ -811,7 +811,22 @@
     "delayReasonLabel": "Priežastis (nebūtina — matys klientas)",
     "delayReasonPlaceholder": "Virtuvėje daug darbo, baigėsi ingredientas ir pan.",
     "savingEllipsis": "Įrašoma…",
-    "delayByMin": "Atidėti {n} min"
+    "delayByMin": "Atidėti {n} min",
+    "pushHealth": {
+      "title": "Push pranešimai",
+      "permission": "Pranešimų leidimas",
+      "permGranted": "Leista",
+      "permDenied": "Užblokuota — leiskite pranešimus iPhone nustatymuose",
+      "permUnknown": "Dar neprašyta",
+      "receiving": "Šis įrenginys gauna skambutį",
+      "superseded": "Skambutį perėmė kitas įrenginys",
+      "failed": "Registracija nepavyko ({status})",
+      "pending": "Dar neužregistruota",
+      "testRing": "Bandomasis skambutis",
+      "testSending": "Siunčiama…",
+      "testSent": "Išsiųsta — skambutis netrukus turėtų pasigirsti",
+      "testFailed": "Nepavyko išsiųsti"
+    }
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Bendrinkite savo buvimo vietą pristatymams",
     "bgDisclosureBody": "„Fee Free Delivery“ renka vietos duomenis, kol turite aktyvų pristatymą, kad jūsų buvimo vieta realiuoju laiku būtų bendrinama su klientu ir restoranu — net kai programa veikia fone, yra uždaryta arba telefonas užrakintas. Sekimas baigiasi užbaigus pristatymą.",
     "bgDisclosureAllow": "Tęsti",
-    "bgDisclosureLater": "Ne dabar"
+    "bgDisclosureLater": "Ne dabar",
+    "tabJobs": "Darbai",
+    "tabProfile": "Profilis",
+    "homeStore": "Pagrindinė parduotuvė",
+    "driverSince": "Vairuotojas nuo {date}",
+    "ratingTitle": "Jūsų įvertinimas",
+    "ratingReliability": "Patikimumas",
+    "ratingOnTime": "Punktualumas",
+    "ratingFeedback": "Atsiliepimai",
+    "statDelivered": "Pristatyta",
+    "statReleased": "Atlaisvinta",
+    "statLate": "Pavėluota",
+    "hourlyRate": "Valandinis įkainis",
+    "profileLoadFailed": "Nepavyko įkelti jūsų profilio. Bandykite dar kartą."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restorano prisijungimas — valdykite ir sekite pristatymus.",
     "switchToDispatch": "Perjungti į restorano rodinį",
     "switchToDriver": "Perjungti į vairuotojo rodinį"
+  },
+  "feefreeShared": {
+    "language": "Kalba"
   }
 }

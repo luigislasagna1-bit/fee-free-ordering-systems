@@ -811,7 +811,22 @@
     "delayReasonLabel": "Iemesls (neobligāti — redzams klientam)",
     "delayReasonPlaceholder": "Virtuvē ir noslogojums, beigusies sastāvdaļa utt.",
     "savingEllipsis": "Saglabāšana…",
-    "delayByMin": "Aizkavēt par {n} min"
+    "delayByMin": "Aizkavēt par {n} min",
+    "pushHealth": {
+      "title": "Push paziņojumi",
+      "permission": "Paziņojumu atļauja",
+      "permGranted": "Atļauts",
+      "permDenied": "Bloķēts — atļaujiet paziņojumus iPhone iestatījumos",
+      "permUnknown": "Vēl nav pieprasīta",
+      "receiving": "Šī ierīce saņem zvana signālu",
+      "superseded": "Cita ierīce pārņēma zvana signālu",
+      "failed": "Reģistrācija neizdevās ({status})",
+      "pending": "Vēl nav reģistrēta",
+      "testRing": "Testa zvans",
+      "testSending": "Sūta…",
+      "testSent": "Nosūtīts — zvanam vajadzētu atskanēt pēc brīža",
+      "testFailed": "Neizdevās nosūtīt"
+    }
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Kopīgojiet savu atrašanās vietu piegādēm",
     "bgDisclosureBody": "Fee Free Delivery vāc atrašanās vietas datus, kamēr jums ir aktīva piegāde, lai kopīgotu jūsu atrašanās vietu reāllaikā ar klientu un restorānu — arī tad, ja lietotne darbojas fonā vai ir aizvērta, vai tālrunis ir bloķēts. Izsekošana beidzas, kad piegāde ir pabeigta.",
     "bgDisclosureAllow": "Turpināt",
-    "bgDisclosureLater": "Ne tagad"
+    "bgDisclosureLater": "Ne tagad",
+    "tabJobs": "Darbi",
+    "tabProfile": "Profils",
+    "homeStore": "Pamata restorāns",
+    "driverSince": "Vadītājs kopš {date}",
+    "ratingTitle": "Jūsu vērtējums",
+    "ratingReliability": "Uzticamība",
+    "ratingOnTime": "Laikā",
+    "ratingFeedback": "Atsauksmes",
+    "statDelivered": "Piegādāti",
+    "statReleased": "Atbrīvoti",
+    "statLate": "Nokavēti",
+    "hourlyRate": "Stundas likme",
+    "profileLoadFailed": "Neizdevās ielādēt jūsu profilu. Lūdzu, mēģiniet vēlreiz."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restorāna pieteikšanās — pārvaldiet un sekojiet piegādēm.",
     "switchToDispatch": "Pārslēgties uz restorāna skatu",
     "switchToDriver": "Pārslēgties uz kurjera skatu"
+  },
+  "feefreeShared": {
+    "language": "Valoda"
   }
 }

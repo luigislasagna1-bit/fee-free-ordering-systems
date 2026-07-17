@@ -23,7 +23,7 @@ import {
   nativePrint,
   nativePrinterErrorCopy,
 } from "@/lib/native-printer";
-import { registerKitchenPush, unregisterKitchenPush } from "@/lib/native-push";
+import { registerKitchenPush, unregisterKitchenPush, getKitchenPushHealth, type KitchenPushHealth } from "@/lib/native-push";
 import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm, nativeSetCustomSound } from "@/lib/native-order-alarm";
 import { getNativeAppVersion } from "@/lib/native-app-version";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
@@ -35,6 +35,31 @@ import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 // menu next to the native app version + compared against /api/build-id so a
 // stale WebView-cached bundle can auto-refresh when idle. "dev" locally.
 const WEB_BUILD = process.env.NEXT_PUBLIC_WEB_BUILD || "dev";
+
+// iOS Capacitor SHELL detection (Fabrizio cmrkvs5r, 2026-07-17). True ONLY inside
+// the native iOS Kitchen Order App — deliberately Capacitor-based, NOT the broader
+// UA `isIOS` test used by the sound gate (that one also catches iPad Safari in a
+// plain browser, where the media-session release + push-health panel below don't
+// apply). Read loosely off window.Capacitor like native-order-alarm.ts so the web
+// bundle builds without the plugin typings. Cached after the first read — the
+// Capacitor global is injected at document start, before any React code runs.
+let iosShellCache: boolean | null = null;
+function isIOSCapacitorShell(): boolean {
+  if (typeof window === "undefined") return false; // SSR
+  if (iosShellCache === null) {
+    try {
+      iosShellCache = ((window as any).Capacitor?.getPlatform?.() ?? "") === "ios";
+    } catch {
+      iosShellCache = false;
+    }
+  }
+  return iosShellCache;
+}
+
+// The full-length new-order alert track — single source for the lazy element
+// creation AND ensureLongAlertSrc(), which restores it after the iOS-shell
+// stop-release (see the long-alert effect). Keep the two in sync via this const.
+const LONG_ALERT_SRC = "/sounds/gloriafood-alert.mp3";
 
 // useLayoutEffect that stays silent during SSR (React logs a dev warning when
 // useLayoutEffect itself is invoked in a server render; on the server it's a
@@ -1094,6 +1119,12 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
           }
         }
         setReservations(data);
+        // Fresh reservations landed — release the reservation side of the
+        // resume-suspect gate. The gate only reopens once the ORDERS feed is
+        // fresh too (and only while visible): ringAudible derives from
+        // `orders`, so clearing on reservations alone re-ran the ring
+        // starters against a stale thawed orders snapshot (ghost-ring blip).
+        markResumeFresh("reservations");
       } catch {}
     };
     fetchRes();
@@ -1316,12 +1347,28 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const getLongAlert = useCallback(() => {
     if (typeof window === "undefined") return null;
     if (!longAlertRef.current) {
-      const a = new Audio("/sounds/gloriafood-alert.mp3");
+      const a = new Audio(LONG_ALERT_SRC);
       a.preload = "auto";
       a.loop = false; // play once through, then stop ("until the time is up")
       longAlertRef.current = a;
     }
     return longAlertRef.current;
+  }, []);
+
+  // Restore the long-alert track after the iOS-shell STOP branch released it
+  // (removeAttribute('src') + load() — see the long-alert effect). Must run
+  // before EVERY play() of this element; a no-op while src is still set, so
+  // Android/web (which never release) are completely unaffected. We restore the
+  // SAME src on the SAME element — never a new Audio() — because the cached
+  // createMediaElementSource chain (ensureLongAlertRouting) is bound to this
+  // element instance and would go silent if the element were recreated.
+  // Fabrizio cmrkvs5r (iOS "Now Playing" card + replay-on-reopen), 2026-07-17.
+  const ensureLongAlertSrc = useCallback((a: HTMLAudioElement) => {
+    if (a.getAttribute("src")) return;
+    try {
+      a.src = LONG_ALERT_SRC;
+      a.load();
+    } catch { /* best-effort — a failed restore falls back to a silent play() reject */ }
   }, []);
 
   // Route the long alert track through gain + limiter so it can play MUCH louder
@@ -1359,6 +1406,71 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     } catch (e) {
       console.warn("[KDS] loud alert routing unavailable; using plain volume", e);
       return false;
+    }
+  }, []);
+
+  // ── Blocked-takeover rescue (Fabrizio cmrkvs5r, 2026-07-17) ────────────────
+  // When a play() of the long-alert element is REJECTED while the ring should
+  // legitimately be sounding (WebKit revokes the media-playback grant after,
+  // e.g., a phone call / Siri / another app's audio takeover), the old
+  // catch(() => {}) meant silent death: the original audio-unlock listeners are
+  // {once:true} and long consumed, and the sound-gate overlay's onClick only
+  // DISMISSES — nothing ever retried playback. So: reopen the tap-to-enable
+  // gate AND arm a fresh ONE-SHOT pointerdown listener that retries play().
+  // Result: a blocked takeover becomes "one tap anywhere restores the ring".
+  // Re-arming replaces any previously-armed retry so repeated rejections can't
+  // stack listeners.
+  //
+  // GHOST-RING GUARDS on the armed retry (review, 2026-07-17):
+  //   1. The long-alert effect's STOP branch DISARMS it — an armed retry must
+  //      not survive the ring becoming illegitimate (order accepted on another
+  //      device / auto-rejected), or a much-later tap would replay the full
+  //      track with nothing pending. (The stop branch does NOT re-run on the
+  //      tap itself — no effect dep changes — so disarming there is the only
+  //      thing that prevents the replay.)
+  //   2. The retry RE-VALIDATES at tap time via webRingShouldPlayRef (the
+  //      long-alert effect keeps it current): even a not-yet-disarmed retry
+  //      refuses to play unless the ring is still legitimately due.
+  //   3. If the retry's own play() is rejected again (e.g. the tap landed
+  //      during an active phone call), it RE-ARMS itself — otherwise the
+  //      "one tap restores the ring" contract silently degrades to
+  //      zero-taps-work, since nothing else re-attempts while effect deps
+  //      are static.
+  const blockedPlayRetryRef = useRef<(() => void) | null>(null);
+  // Mirrors the long-alert effect's shouldPlay — "the web gloriafood ring is
+  // legitimately due RIGHT NOW". Written by that effect on every re-run.
+  const webRingShouldPlayRef = useRef(false);
+  const disarmBlockedPlayRetry = useCallback(() => {
+    if (blockedPlayRetryRef.current) {
+      window.removeEventListener("pointerdown", blockedPlayRetryRef.current);
+      blockedPlayRetryRef.current = null;
+    }
+  }, []);
+  const armBlockedPlayRetry = useCallback(() => {
+    setSoundGateOpen(true);
+    disarmBlockedPlayRetry();
+    const retry = () => {
+      blockedPlayRetryRef.current = null;
+      // Tap-time re-validation (guard 2): the ring may have become
+      // illegitimate since arming — never resurrect a resolved alarm.
+      if (!webRingShouldPlayRef.current) return;
+      try { audioCtxRef.current?.resume?.().catch?.(() => {}); } catch { /* noop */ }
+      ensureLongAlertRouting();
+      const el = longAlertRef.current;
+      if (!el) return;
+      ensureLongAlertSrc(el);
+      el.volume = 1;
+      if (el.paused) el.play().catch(() => { armBlockedPlayRetry(); }); // guard 3: still blocked — re-arm for the next tap
+    };
+    blockedPlayRetryRef.current = retry;
+    window.addEventListener("pointerdown", retry, { once: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- self-reference for guard 3; the callback is stable (all deps are [])
+  }, [disarmBlockedPlayRetry, ensureLongAlertRouting, ensureLongAlertSrc]);
+  // Unmount hygiene: drop a still-armed retry listener (logout / navigation).
+  useEffect(() => () => {
+    if (blockedPlayRetryRef.current) {
+      window.removeEventListener("pointerdown", blockedPlayRetryRef.current);
+      blockedPlayRetryRef.current = null;
     }
   }, []);
 
@@ -1703,11 +1815,33 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       // on `a.paused` means: idle element → prime it for later; already
       // ringing → it's clearly unlocked, so leave it playing. Luigi 2026-06-09
       // ("clicking the order must NOT stop the ring").
+      //
+      // ALSO skip the prime when a blocked-play RETRY is armed (an order was
+      // already ringing-due before the very first gesture and its play() was
+      // rejected): this unlock listener fires FIRST on that shared gesture
+      // (registered at mount, same target/phase), and the muted prime's
+      // play() would synchronously flip `paused` to false — making the
+      // retry's own `el.paused` check skip real playback, after which the
+      // prime pauses/rewinds the element. Net result: consumed retry, closed
+      // gate, silent ring. Letting the retry OWN that gesture plays the real
+      // alarm unmuted, which unlocks the element just as thoroughly as the
+      // prime would have. (Review, 2026-07-17.)
       try {
         const a = getLongAlert();
-        if (a && a.paused) {
+        if (a && a.paused && !blockedPlayRetryRef.current) {
+          // The iOS-shell stop branch may have released the element's src —
+          // restore it so the priming play() has something to prime.
+          ensureLongAlertSrc(a);
           a.muted = true;
-          a.play().then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; });
+          a.play().then(() => {
+            a.pause(); a.currentTime = 0; a.muted = false;
+            // iOS shell: release again after the muted prime — the prime itself
+            // registers a WebKit media session, and an idle kitchen would
+            // otherwise show the phantom "Now Playing" card before any ring.
+            if (isIOSCapacitorShell()) {
+              try { a.removeAttribute("src"); a.load(); } catch { /* noop */ }
+            }
+          }).catch(() => { a.muted = false; });
         }
       } catch {}
     };
@@ -1884,6 +2018,57 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const autoAcceptTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const alertSoundRef = useRef(alertSound);
   useEffect(() => () => { if (autoAcceptTimerRef.current) clearTimeout(autoAcceptTimerRef.current); }, []);
+  // RESUME-SUSPECT GATE (Fabrizio cmrkvs5r, 2026-07-17). iOS freezes the whole
+  // WebView on background — timers, effects AND the last `orders` snapshot —
+  // then thaws it on reopen with STALE state, so the web ring replayed off
+  // orders that were long accepted/auto-rejected (the "rings again when I
+  // reopen with nothing pending" report). From the moment the page hides until
+  // the first FRESH fetch lands after resume, every derived ring decision is
+  // untrustworthy: resumeSuspect=true marks that window and gates the three
+  // web-ring starters below (cadence chirp, long-alert track, resume-rearm).
+  // MUST be React STATE, not a ref — the flag clearing has to RE-RUN those
+  // effects so a genuinely-still-pending order starts ringing (a ref would
+  // clear silently and the effects would never re-evaluate). The wake listeners
+  // already force an immediate poll on resume, so a real pending order rings
+  // within ~1s of reopen. Android v2.6+ (nativeAlarm) is untouched — its
+  // short-circuits already suppress the web ring entirely.
+  const [resumeSuspect, setResumeSuspect] = useState(false);
+  // The gate reopens ONLY when BOTH feeds behind the ring decision are fresh
+  // (ringAudible derives from `orders` AND `reservations`), and only for
+  // responses that land while the page is VISIBLE (review, 2026-07-17):
+  //   • Per-source: the reservations payload is far lighter than the orders
+  //     payload, so on resume it usually wins the race — clearing on EITHER
+  //     fetch re-ran the ring starters against the still-frozen stale orders
+  //     snapshot for the ~0.5–2s until orders landed (an audible ghost-ring
+  //     blip on reopen; "either fetch proves reachability" conflated
+  //     reachability with snapshot freshness). Both flags must be true.
+  //   • Visibility: the 4s polls + the deliberately visibility-ungated
+  //     pushWake fetches keep resolving during iOS's several-second
+  //     pre-suspend grace, which used to clear the flag seconds AFTER the
+  //     hide handler set it — the WebView then froze for hours with the gate
+  //     already open and rang off the stale snapshot on reopen (the original
+  //     cmrkvs5r ghost ring). Hidden responses still update the lists; they
+  //     just don't touch the gate. The wake fetches re-fire on resume (and
+  //     the 15s failsafe below covers network-down), so nothing stays mute.
+  const resumeFreshRef = useRef({ orders: true, reservations: true });
+  const markResumeFresh = useCallback((source: "orders" | "reservations") => {
+    if (typeof document !== "undefined" && document.visibilityState !== "visible") return;
+    resumeFreshRef.current[source] = true;
+    if (resumeFreshRef.current.orders && resumeFreshRef.current.reservations) {
+      setResumeSuspect(false);
+    }
+  }, []);
+  // FAILSAFE: a network-down resume would otherwise leave resumeSuspect stuck
+  // true (no fetch ever lands) and permanently silence a REAL pending order.
+  // Once the page is visible again, clear the flag after ~15s no matter what —
+  // the ring then trusts whatever snapshot it has, which beats staying mute.
+  // Cleaned up on re-hide so a backgrounded app never runs the timer.
+  useEffect(() => {
+    if (!pageVisible || !resumeSuspect) return;
+    const t = setTimeout(() => setResumeSuspect(false), 15_000);
+    return () => clearTimeout(t);
+  }, [pageVisible, resumeSuspect]);
+
   // GHOST-RING FIX (Luigi, iOS TestFlight 2026-07-13): the auto-accept FYI flag
   // must NEVER survive a background→resume. Its 5s clear-timer FREEZES while the
   // iOS WebView is backgrounded, so without this the flag stays true and the
@@ -1895,6 +2080,11 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     if (!pageVisible) {
       if (autoAcceptTimerRef.current) { clearTimeout(autoAcceptTimerRef.current); autoAcceptTimerRef.current = null; }
       setAutoAcceptRinging(false);
+      // Everything derived from `orders`/`reservations` is now suspect until
+      // BOTH feeds land fresh while visible after resume (see resumeSuspect /
+      // markResumeFresh above).
+      resumeFreshRef.current = { orders: false, reservations: false };
+      setResumeSuspect(true);
     }
   }, [pageVisible]);
 
@@ -2084,7 +2274,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     // !pageVisible → screen off / backgrounded: the NATIVE alarm handles the
     // ring, so the in-app cadence (custom sound) stays silent to avoid a double.
     // nativeAlarm (v2.6 app) → the native engine owns the ring in ALL states.
-    if (nativeAlarm || !ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
+    // resumeSuspect → just resumed off a frozen iOS snapshot; hold fire until a
+    // fresh fetch (or the 15s failsafe) clears it, then this re-runs.
+    if (nativeAlarm || !ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || resumeSuspect) return;
     // "gloriafood" rings via the full-length uploaded alert TRACK (the
     // dedicated long-alert effect below), NOT this short-ding cadence — Luigi
     // wants his exact full-length GloriaFood alert at max volume, not a trimmed
@@ -2115,7 +2307,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       cancelled = true;
       if (timeoutId) clearTimeout(timeoutId);
     };
-  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, pageVisible, ringBellOnce]);
+  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, pageVisible, resumeSuspect, ringBellOnce]);
 
   // Cut any in-flight custom/ding clip the moment the alarm should be silent —
   // the open order was the last pending one, the room was acknowledged, or the
@@ -2138,7 +2330,13 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   useEffect(() => {
     const a = getLongAlert();
     if (!a) return;
-    const shouldPlay = !nativeAlarm && (ringAudible || autoAcceptRinging) && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible;
+    // !resumeSuspect: never start the track off a just-thawed (possibly stale)
+    // iOS snapshot — wait for the first fresh fetch / 15s failsafe (cmrkvs5r).
+    const shouldPlay = !nativeAlarm && (ringAudible || autoAcceptRinging) && alertSound === "gloriafood" && !alertMuted && alertVolume > 0 && pageVisible && !resumeSuspect;
+    // Keep the blocked-play retry's tap-time re-validation current — every
+    // input to shouldPlay is a dep of this effect, so the ref can never go
+    // stale between runs (see armBlockedPlayRetry guard 2).
+    webRingShouldPlayRef.current = shouldPlay;
     if (shouldPlay) {
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
@@ -2155,15 +2353,42 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       a.loop = longRing;
       a.volume = 1;
       if (a.paused) {
+        ensureLongAlertSrc(a); // restore after an iOS-shell stop-release
         try { a.currentTime = 0; } catch {}
-        a.play().catch(() => { /* autoplay blocked until a gesture — unlock effect handles it */ });
+        a.play().catch(() => {
+          // Autoplay blocked before the first gesture → the unlock effect
+          // handles it. But when the ring SHOULD legitimately be sounding and
+          // playback was still rejected (WebKit takeover revoked the grant),
+          // reopen the gate + arm a one-tap retry (cmrkvs5r).
+          if (!nativeAlarm && ringAudible && pageVisible && !resumeSuspect) armBlockedPlayRetry();
+        });
       }
     } else {
+      // The ring is no longer legitimate — a still-armed blocked-play retry
+      // must die WITH it, or the next tap (even hours later, e.g. dismissing
+      // the leftover sound gate) would restore the src and replay the full
+      // track with zero pending orders. This effect does NOT re-run on that
+      // tap (no dep changes), so disarming here is the only reliable kill.
+      // (Review, 2026-07-17.)
+      disarmBlockedPlayRetry();
       a.loop = false;
       if (!a.paused) a.pause();
       try { a.currentTime = 0; } catch {}
+      // iOS SHELL ONLY: release the media resource so WebKit tears down its
+      // media session — otherwise a persistent "Now Playing" card for the alert
+      // track lingers on the lock screen / Control Center after every ring, and
+      // the OS can resume it outside our control (part of the cmrkvs5r ghost
+      // cluster). removeAttribute + load() empties the element WITHOUT
+      // recreating it — the cached createMediaElementSource chain stays bound
+      // to this exact instance; ensureLongAlertSrc() restores the track before
+      // the next play(). Never done in a plain browser / Android (no card
+      // there, and releasing would just cost a re-fetch). src-guarded so idle
+      // re-runs of this branch don't re-invoke load() on an already-empty element.
+      if (isIOSCapacitorShell() && a.getAttribute("src")) {
+        try { a.removeAttribute("src"); a.load(); } catch { /* best-effort */ }
+      }
     }
-  }, [nativeAlarm, ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, getLongAlert, ensureLongAlertRouting]);
+  }, [nativeAlarm, ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, resumeSuspect, getLongAlert, ensureLongAlertRouting, ensureLongAlertSrc, armBlockedPlayRetry, disarmBlockedPlayRetry]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -2186,13 +2411,25 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       // wake) let the NATIVE alarm finish — the pageVisible→true transition re-fires
       // the cadence/long-alert effects to start the in-app sound cleanly. (The
       // AudioContext resume above still runs immediately so it's ready by then.)
-      if (nativeAlarm || !ringAudible || alertMuted || alertVolume <= 0 || !pageVisible) return;
+      // resumeSuspect → the snapshot behind ringAudible may be a frozen iOS
+      // relic; the flag clearing (fresh fetch / 15s failsafe) re-registers this
+      // listener AND re-runs the starter effects, so nothing is lost (cmrkvs5r).
+      if (nativeAlarm || !ringAudible || alertMuted || alertVolume <= 0 || !pageVisible || resumeSuspect) return;
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
         ensureLongAlertRouting();
         const a = longAlertRef.current;
-        if (a) { a.volume = 1; if (a.paused) a.play().catch(() => {}); }
+        if (a) {
+          ensureLongAlertSrc(a); // restore after an iOS-shell stop-release
+          a.volume = 1;
+          if (a.paused) a.play().catch(() => {
+            // Legitimate ring blocked by a WebKit takeover → one tap anywhere
+            // restores it (see armBlockedPlayRetry). Guard mirrors the
+            // long-alert effect's rejection handler (cmrkvs5r).
+            if (!nativeAlarm && ringAudible && pageVisible && !resumeSuspect) armBlockedPlayRetry();
+          });
+        }
       } else {
         ringBellOnce();
       }
@@ -2205,7 +2442,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, alertSound, pageVisible, ringBellOnce, ensureLongAlertRouting]);
+  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, alertSound, pageVisible, resumeSuspect, ringBellOnce, ensureLongAlertRouting, ensureLongAlertSrc, armBlockedPlayRetry]);
 
   // v2.6 single-engine HUSH driver (Luigi 2026-06-23): when the native engine owns the ring,
   // replicate the verified v2.4 hush behaviours. PAUSE the native ring when foreground AND
@@ -2298,6 +2535,30 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // Clear current tab, Language, Log out — declutters the header. Full settings
   // live on the bottom bar's gear.
   const [showQuickMenu, setShowQuickMenu] = useState(false);
+  // iOS push-health panel (Fabrizio cmrkvs5r, 2026-07-17). The iOS shell has no
+  // native alarm plugin — the closed/locked ring depends ENTIRELY on APNs
+  // pushes reaching THIS device — so the 3-dot menu shows the registration
+  // outcome native-push.ts persisted (permission / token / register-device
+  // status, incl. the 401 session_superseded "another device took over") plus
+  // a Test-ring button through the real send path. Snapshot refreshed each
+  // time the menu opens; iOS shell only (Android's native engine owns its ring).
+  const [pushHealthInfo, setPushHealthInfo] = useState<KitchenPushHealth | null>(null);
+  const [testRingState, setTestRingState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
+  useEffect(() => {
+    if (!showQuickMenu || !isIOSCapacitorShell()) return;
+    setPushHealthInfo(getKitchenPushHealth());
+    setTestRingState("idle");
+  }, [showQuickMenu]);
+  const runTestRing = useCallback(async () => {
+    setTestRingState("sending");
+    try {
+      const res = await fetch("/api/kitchen/test-push", { method: "POST" });
+      const data = (await res.json().catch(() => null)) as { sent?: number } | null;
+      setTestRingState(res.ok && (data?.sent ?? 0) > 0 ? "sent" : "failed");
+    } catch {
+      setTestRingState("failed");
+    }
+  }, []);
 
   const seenIdsRef = useRef<Set<string>>(new Set(initialOrders.map(o => o.id)));
   // Stable ref to ringBellOnce so fetchOrders (deps=[]) can call the
@@ -2636,6 +2897,11 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       }
 
       setOrders(fresh);
+      // Fresh orders landed — release the order side of the resume-suspect
+      // gate. Only counts while VISIBLE (a response resolving in the iOS
+      // pre-suspend grace must not reopen the gate for the whole frozen
+      // stretch) and only reopens once the reservations feed is fresh too.
+      markResumeFresh("orders");
       setWorkflowMode(mode);
       setPrintNodeEnabled(pnEnabled);
       setDeliveryShowName(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowName);
@@ -3600,6 +3866,51 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                     <div className="px-4 py-1.5 text-[11px] text-center text-gray-400">
                       {appVersion ? `v${appVersion} · ` : ""}web {WEB_BUILD}
                     </div>
+                    {/* iOS push-health (Fabrizio cmrkvs5r): on the iOS shell the
+                        closed/locked ring is 100% APNs-dependent, so surface
+                        whether THIS device can receive it + a one-tap Test ring
+                        (real send path via /api/kitchen/test-push). Purely
+                        additive — the rows above are untouched. iOS shell only:
+                        Android's native alarm engine owns the ring there, and a
+                        plain browser has no push registration at all. */}
+                    {isIOSCapacitorShell() && (
+                      <div className={`mx-3 mt-1 mb-1.5 rounded-lg border ${t.border} px-3 py-2`}>
+                        <div className={`text-xs font-semibold ${t.text} mb-1`}>{tk("pushHealth.title")}</div>
+                        <div className={`text-[11px] ${t.muted}`}>
+                          {tk("pushHealth.permission")}:{" "}
+                          {pushHealthInfo?.permission === "granted"
+                            ? tk("pushHealth.permGranted")
+                            : pushHealthInfo?.permission === "denied"
+                            ? tk("pushHealth.permDenied")
+                            : tk("pushHealth.permUnknown")}
+                        </div>
+                        <div className={`text-[11px] ${t.muted}`}>
+                          {pushHealthInfo?.registerCode === "session_superseded"
+                            ? tk("pushHealth.superseded")
+                            : pushHealthInfo?.registerStatus != null && pushHealthInfo.registerStatus >= 200 && pushHealthInfo.registerStatus < 300
+                            ? tk("pushHealth.receiving")
+                            : pushHealthInfo?.registerStatus != null
+                            ? tk("pushHealth.failed", { status: pushHealthInfo.registerStatus })
+                            : tk("pushHealth.pending")}
+                        </div>
+                        <div className="mt-1.5 flex items-center gap-2 flex-wrap">
+                          <button
+                            type="button"
+                            onClick={runTestRing}
+                            disabled={testRingState === "sending"}
+                            className={`px-2.5 py-1 rounded-md text-[11px] font-semibold ${t.btn} ${t.text} disabled:opacity-60`}
+                          >
+                            {testRingState === "sending" ? tk("pushHealth.testSending") : tk("pushHealth.testRing")}
+                          </button>
+                          {testRingState === "sent" && (
+                            <span className="text-[11px] font-medium text-emerald-500">{tk("pushHealth.testSent")}</span>
+                          )}
+                          {testRingState === "failed" && (
+                            <span className="text-[11px] font-medium text-red-500">{tk("pushHealth.testFailed")}</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </>
                 </div>
               </>

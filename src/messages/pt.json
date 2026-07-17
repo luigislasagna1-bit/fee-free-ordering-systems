@@ -811,7 +811,22 @@
     "delayReasonLabel": "Motivo (opcional — mostrado ao cliente)",
     "delayReasonPlaceholder": "Cozinha muito ocupada, falta de um ingrediente, etc.",
     "savingEllipsis": "A guardar…",
-    "delayByMin": "Atrasar {n} min"
+    "delayByMin": "Atrasar {n} min",
+    "pushHealth": {
+      "title": "Alertas push",
+      "permission": "Permissão de notificações",
+      "permGranted": "Permitida",
+      "permDenied": "Bloqueada — permita as notificações nos Ajustes do iPhone",
+      "permUnknown": "Ainda não solicitada",
+      "receiving": "Este dispositivo recebe o toque",
+      "superseded": "Outro dispositivo assumiu o toque",
+      "failed": "Falha no registro ({status})",
+      "pending": "Ainda não registrado",
+      "testRing": "Testar toque",
+      "testSending": "Enviando…",
+      "testSent": "Enviado — o toque deve chegar em instantes",
+      "testFailed": "Falha ao enviar"
+    }
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Partilhe a sua localização para as entregas",
     "bgDisclosureBody": "A Fee Free Delivery recolhe dados de localização enquanto tem uma entrega ativa, para partilhar a sua posição em direto com o cliente e o restaurante — mesmo com a aplicação em segundo plano ou fechada, ou com o telemóvel bloqueado. O rastreio para quando a entrega é concluída.",
     "bgDisclosureAllow": "Continuar",
-    "bgDisclosureLater": "Agora não"
+    "bgDisclosureLater": "Agora não",
+    "tabJobs": "Trabalhos",
+    "tabProfile": "Perfil",
+    "homeStore": "Restaurante principal",
+    "driverSince": "Estafeta desde {date}",
+    "ratingTitle": "A sua avaliação",
+    "ratingReliability": "Fiabilidade",
+    "ratingOnTime": "Pontualidade",
+    "ratingFeedback": "Feedback",
+    "statDelivered": "Entregues",
+    "statReleased": "Libertadas",
+    "statLate": "Atrasadas",
+    "hourlyRate": "Valor por hora",
+    "profileLoadFailed": "Não foi possível carregar o seu perfil. Tente novamente."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe as suas entregas",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Acesso de restaurante — faça a gestão e acompanhe as suas entregas.",
     "switchToDispatch": "Mudar para a vista de restaurante",
     "switchToDriver": "Mudar para a vista de estafeta"
+  },
+  "feefreeShared": {
+    "language": "Idioma"
   }
 }

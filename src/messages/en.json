@@ -811,7 +811,22 @@
     "delayReasonLabel": "Reason (optional — shown to customer)",
     "delayReasonPlaceholder": "Kitchen running busy, out of an ingredient, etc.",
     "savingEllipsis": "Saving…",
-    "delayByMin": "Delay by {n} min"
+    "delayByMin": "Delay by {n} min",
+    "pushHealth": {
+      "title": "Push alerts",
+      "permission": "Notification permission",
+      "permGranted": "Allowed",
+      "permDenied": "Blocked — allow notifications in iPhone Settings",
+      "permUnknown": "Not requested yet",
+      "receiving": "This device receives the ring",
+      "superseded": "Another device took over the ring",
+      "failed": "Registration failed ({status})",
+      "pending": "Not registered yet",
+      "testRing": "Test ring",
+      "testSending": "Sending…",
+      "testSent": "Sent — the ring should arrive in a moment",
+      "testFailed": "Failed to send"
+    }
   },
   "admin": {
     "comingSoonPlaceholder": {
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Share your location for deliveries",
     "bgDisclosureBody": "Fee Free Delivery collects location data while you have an active delivery, to share your live position with the customer and the restaurant — even when the app is in the background or closed, or the phone is locked. Tracking stops when the delivery is completed.",
     "bgDisclosureAllow": "Continue",
-    "bgDisclosureLater": "Not now"
+    "bgDisclosureLater": "Not now",
+    "tabJobs": "Jobs",
+    "tabProfile": "Profile",
+    "homeStore": "Home store",
+    "driverSince": "Driver since {date}",
+    "ratingTitle": "Your rating",
+    "ratingReliability": "Reliability",
+    "ratingOnTime": "On-time",
+    "ratingFeedback": "Feedback",
+    "statDelivered": "Delivered",
+    "statReleased": "Released",
+    "statLate": "Late",
+    "hourlyRate": "Hourly rate",
+    "profileLoadFailed": "Couldn't load your profile. Please try again."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restaurant sign-in — manage and track your deliveries.",
     "switchToDispatch": "Switch to restaurant view",
     "switchToDriver": "Switch to driver view"
+  },
+  "feefreeShared": {
+    "language": "Language"
   }
 }

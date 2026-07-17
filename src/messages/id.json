@@ -811,7 +811,22 @@
     "delayReasonLabel": "Alasan (opsional — ditampilkan ke pelanggan)",
     "delayReasonPlaceholder": "Dapur sedang sibuk, bahan habis, dll.",
     "savingEllipsis": "Menyimpan…",
-    "delayByMin": "Tunda {n} mnt"
+    "delayByMin": "Tunda {n} mnt",
+    "pushHealth": {
+      "title": "Notifikasi push",
+      "permission": "Izin notifikasi",
+      "permGranted": "Diizinkan",
+      "permDenied": "Diblokir — izinkan notifikasi di Pengaturan iPhone",
+      "permUnknown": "Belum diminta",
+      "receiving": "Perangkat ini menerima dering",
+      "superseded": "Perangkat lain mengambil alih dering",
+      "failed": "Pendaftaran gagal ({status})",
+      "pending": "Belum terdaftar",
+      "testRing": "Tes dering",
+      "testSending": "Mengirim…",
+      "testSent": "Terkirim — dering akan tiba sebentar lagi",
+      "testFailed": "Gagal mengirim"
+    }
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Bagikan lokasi Anda untuk pengiriman",
     "bgDisclosureBody": "Fee Free Delivery mengumpulkan data lokasi saat Anda memiliki pengiriman aktif, untuk membagikan posisi langsung Anda kepada pelanggan dan restoran — bahkan saat aplikasi di latar belakang atau ditutup, atau ponsel terkunci. Pelacakan berhenti saat pengiriman selesai.",
     "bgDisclosureAllow": "Lanjutkan",
-    "bgDisclosureLater": "Nanti saja"
+    "bgDisclosureLater": "Nanti saja",
+    "tabJobs": "Pekerjaan",
+    "tabProfile": "Profil",
+    "homeStore": "Toko asal",
+    "driverSince": "Pengemudi sejak {date}",
+    "ratingTitle": "Rating Anda",
+    "ratingReliability": "Keandalan",
+    "ratingOnTime": "Tepat waktu",
+    "ratingFeedback": "Masukan",
+    "statDelivered": "Terkirim",
+    "statReleased": "Dilepas",
+    "statLate": "Terlambat",
+    "hourlyRate": "Tarif per jam",
+    "profileLoadFailed": "Tidak dapat memuat profil Anda. Silakan coba lagi."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Login restoran — kelola dan lacak pengiriman Anda.",
     "switchToDispatch": "Beralih ke tampilan restoran",
     "switchToDriver": "Beralih ke tampilan pengemudi"
+  },
+  "feefreeShared": {
+    "language": "Bahasa"
   }
 }

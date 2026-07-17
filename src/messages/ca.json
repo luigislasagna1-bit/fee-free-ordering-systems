@@ -811,7 +811,22 @@
     "delayReasonLabel": "Motiu (opcional — visible per al client)",
     "delayReasonPlaceholder": "Cuina molt ocupada, falta un ingredient, etc.",
     "savingEllipsis": "S'està desant…",
-    "delayByMin": "Retarda {n} min"
+    "delayByMin": "Retarda {n} min",
+    "pushHealth": {
+      "title": "Alertes push",
+      "permission": "Permís de notificacions",
+      "permGranted": "Permès",
+      "permDenied": "Bloquejat — permet les notificacions a la Configuració de l'iPhone",
+      "permUnknown": "Encara no s'ha sol·licitat",
+      "receiving": "Aquest dispositiu rep el timbre",
+      "superseded": "Un altre dispositiu ha pres el control del timbre",
+      "failed": "El registre ha fallat ({status})",
+      "pending": "Encara no s'ha registrat",
+      "testRing": "Prova de timbre",
+      "testSending": "S'està enviant…",
+      "testSent": "Enviat — el timbre hauria d'arribar en un moment",
+      "testFailed": "No s'ha pogut enviar"
+    }
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Comparteix la teva ubicació per als lliuraments",
     "bgDisclosureBody": "Fee Free Delivery recull dades d'ubicació mentre tens un lliurament actiu, per compartir la teva posició en directe amb el client i el restaurant — fins i tot quan l'aplicació és en segon pla o tancada, o el telèfon està bloquejat. El seguiment s'atura en completar el lliurament.",
     "bgDisclosureAllow": "Continua",
-    "bgDisclosureLater": "Ara no"
+    "bgDisclosureLater": "Ara no",
+    "tabJobs": "Feines",
+    "tabProfile": "Perfil",
+    "homeStore": "Establiment base",
+    "driverSince": "Repartidor des de {date}",
+    "ratingTitle": "La teva valoració",
+    "ratingReliability": "Fiabilitat",
+    "ratingOnTime": "Puntualitat",
+    "ratingFeedback": "Comentaris",
+    "statDelivered": "Lliurats",
+    "statReleased": "Alliberats",
+    "statLate": "Amb retard",
+    "hourlyRate": "Tarifa per hora",
+    "profileLoadFailed": "No s'ha pogut carregar el teu perfil. Torna-ho a provar."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Accés per a restaurants — gestiona i segueix els teus lliuraments.",
     "switchToDispatch": "Canvia a la vista de restaurant",
     "switchToDriver": "Canvia a la vista de repartidor"
+  },
+  "feefreeShared": {
+    "language": "Idioma"
   }
 }

@@ -40,8 +40,23 @@ import { sendKitchenPush } from "@/lib/push";
 const RING_WINDOW_MS = 10 * 60_000;
 const MAX_ROWS = 300;
 // Second fire inside the same invocation ≈ when the first sound finishes, so
-// the ring is continuous across the whole minute.
+// the ring is continuous across the whole minute. Scheduled relative to the
+// INVOCATION START (fire at start+29s), NOT round-1 completion — a slow round 1
+// (cold DB / slow FCM) used to push the second sound late enough to overlap the
+// NEXT minute's t=0 fire, stacking two alarm segments (Fabrizio cmrkvs5r).
 const SECOND_FIRE_DELAY_MS = 29_000;
+// …and SKIP round 2 entirely unless its ~29s audio segment can END inside
+// this minute. Round 2's own query+send latency can't be measured before
+// deciding, so round 1's elapsed time is the proxy (same cold-DB / slow-FCM
+// conditions): the second segment starts device-side ≈ start + 29s (wait) +
+// elapsed2 and plays SEGMENT_MS, so we require
+//   SECOND_FIRE_DELAY_MS + elapsed1 + SEGMENT_MS <= 60s  (i.e. elapsed1 ≲ 2s).
+// The earlier check bounded only elapsed1 (<= 10s), which still let a passing
+// 9.9s round 1 project a segment end of ~68s — overlapping the NEXT minute's
+// t=0 fire whenever that minute's round 1 was fast (the same Fabrizio
+// cmrkvs5r stacked-alarm overlap, just narrower). A brief gap in slow minutes
+// beats overlapping alarms.
+const MINUTE_MS = 60_000;
 
 // ── Official 4-minute GloriaFood alarm, segmented (Luigi 2026-07-05) ────────
 // The locked-in alarm ESCALATES (louder/faster toward the end), but Apple caps
@@ -74,11 +89,21 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  const invocationStart = Date.now();
   const first = await ringPendingOnce();
   // Nothing ringing → don't hold the lambda open for the second fire.
   if (first.sent === 0) return NextResponse.json({ rounds: [first] });
 
-  await new Promise((r) => setTimeout(r, SECOND_FIRE_DELAY_MS));
+  // Anchor the second fire on the invocation START: wait only what's left of
+  // the 29s segment after round 1's elapsed time — and unless round 2's
+  // PROJECTED segment end (29s wait + its own latency, proxied by round 1's
+  // elapsed, + the 29s segment itself) fits inside the minute, skip round 2
+  // rather than overlap the next invocation's audio.
+  const round1ElapsedMs = Date.now() - invocationStart;
+  if (SECOND_FIRE_DELAY_MS + round1ElapsedMs + SEGMENT_MS > MINUTE_MS) {
+    return NextResponse.json({ rounds: [first] });
+  }
+  await new Promise((r) => setTimeout(r, Math.max(0, SECOND_FIRE_DELAY_MS - round1ElapsedMs)));
   // Re-query so an order accepted during the delay goes silent immediately.
   const second = await ringPendingOnce();
   return NextResponse.json({ rounds: [first, second] });

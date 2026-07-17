@@ -811,7 +811,22 @@
     "delayReasonLabel": "Причина (необов'язково — бачить клієнт)",
     "delayReasonPlaceholder": "Кухня завантажена, закінчився інгредієнт тощо.",
     "savingEllipsis": "Збереження…",
-    "delayByMin": "Затримати на {n} хв"
+    "delayByMin": "Затримати на {n} хв",
+    "pushHealth": {
+      "title": "Push-сповіщення",
+      "permission": "Дозвіл на сповіщення",
+      "permGranted": "Дозволено",
+      "permDenied": "Заблоковано — дозвольте сповіщення в Параметрах iPhone",
+      "permUnknown": "Ще не запитано",
+      "receiving": "Цей пристрій отримує дзвінок",
+      "superseded": "Дзвінок перехопив інший пристрій",
+      "failed": "Помилка реєстрації ({status})",
+      "pending": "Ще не зареєстровано",
+      "testRing": "Тестовий дзвінок",
+      "testSending": "Надсилання…",
+      "testSent": "Надіслано — дзвінок має пролунати за мить",
+      "testFailed": "Не вдалося надіслати"
+    }
   },
   "admin": {
     "welcomeBack": "З поверненням",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Діліться геопозицією для доставок",
     "bgDisclosureBody": "Fee Free Delivery збирає дані про місцезнаходження, поки у вас є активна доставка, щоб ділитися вашою позицією наживо з клієнтом і рестораном — навіть коли застосунок у фоновому режимі, закритий або телефон заблоковано. Відстеження припиняється після завершення доставки.",
     "bgDisclosureAllow": "Продовжити",
-    "bgDisclosureLater": "Не зараз"
+    "bgDisclosureLater": "Не зараз",
+    "tabJobs": "Завдання",
+    "tabProfile": "Профіль",
+    "homeStore": "Основний заклад",
+    "driverSince": "Водій з {date}",
+    "ratingTitle": "Ваш рейтинг",
+    "ratingReliability": "Надійність",
+    "ratingOnTime": "Вчасність",
+    "ratingFeedback": "Відгуки",
+    "statDelivered": "Доставлено",
+    "statReleased": "Повернено",
+    "statLate": "Із запізненням",
+    "hourlyRate": "Погодинна ставка",
+    "profileLoadFailed": "Не вдалося завантажити ваш профіль. Спробуйте ще раз."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Призначайте та відстежуйте свої доставки",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Вхід для ресторанів — керуйте доставками та відстежуйте їх.",
     "switchToDispatch": "Перейти до вигляду ресторану",
     "switchToDriver": "Перейти до вигляду водія"
+  },
+  "feefreeShared": {
+    "language": "Мова"
   }
 }

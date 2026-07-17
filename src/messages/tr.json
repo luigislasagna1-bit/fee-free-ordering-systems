@@ -811,7 +811,22 @@
     "delayReasonLabel": "Sebep (isteğe bağlı — müşteriye gösterilir)",
     "delayReasonPlaceholder": "Mutfak yoğun, bir malzeme bitti vb.",
     "savingEllipsis": "Kaydediliyor…",
-    "delayByMin": "{n} dk ertele"
+    "delayByMin": "{n} dk ertele",
+    "pushHealth": {
+      "title": "Push uyarıları",
+      "permission": "Bildirim izni",
+      "permGranted": "İzin verildi",
+      "permDenied": "Engellendi — iPhone Ayarları'ndan bildirimlere izin verin",
+      "permUnknown": "Henüz istenmedi",
+      "receiving": "Zili bu cihaz alıyor",
+      "superseded": "Zili başka bir cihaz devraldı",
+      "failed": "Kayıt başarısız ({status})",
+      "pending": "Henüz kayıtlı değil",
+      "testRing": "Zili test et",
+      "testSending": "Gönderiliyor…",
+      "testSent": "Gönderildi — zil birazdan çalacak",
+      "testFailed": "Gönderilemedi"
+    }
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Teslimatlar için konumunuzu paylaşın",
     "bgDisclosureBody": "Fee Free Delivery, aktif bir teslimatınız olduğunda canlı konumunuzu müşteri ve restoranla paylaşmak için konum verisi toplar — uygulama arka planda veya kapalıyken ya da telefon kilitliyken bile. Teslimat tamamlandığında izleme durur.",
     "bgDisclosureAllow": "Devam",
-    "bgDisclosureLater": "Şimdi değil"
+    "bgDisclosureLater": "Şimdi değil",
+    "tabJobs": "İşler",
+    "tabProfile": "Profil",
+    "homeStore": "Ana mağaza",
+    "driverSince": "{date} tarihinden beri sürücü",
+    "ratingTitle": "Puanınız",
+    "ratingReliability": "Güvenilirlik",
+    "ratingOnTime": "Zamanında",
+    "ratingFeedback": "Geri bildirim",
+    "statDelivered": "Teslim edildi",
+    "statReleased": "Bırakıldı",
+    "statLate": "Geç",
+    "hourlyRate": "Saatlik ücret",
+    "profileLoadFailed": "Profiliniz yüklenemedi. Lütfen tekrar deneyin."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restoran girişi — teslimatlarınızı yönetin ve takip edin.",
     "switchToDispatch": "Restoran görünümüne geç",
     "switchToDriver": "Sürücü görünümüne geç"
+  },
+  "feefreeShared": {
+    "language": "Dil"
   }
 }

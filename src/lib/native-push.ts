@@ -44,6 +44,68 @@ function getPlatform(): string {
 // (the DELETE is token-scoped → other kitchen devices keep ringing). Luigi 2026-06-23 (L1).
 const KITCHEN_PUSH_TOKEN_KEY = "ffo_kitchen_push_token";
 
+// ── Push-health telemetry (Fabrizio cmrkvs5r, 2026-07-17) ────────────────────
+// The iOS shell has NO native alarm plugin — its closed/locked ring depends
+// entirely on APNs pushes reaching this device — so the kitchen 3-dot menu
+// (iOS only) shows whether THIS device can actually receive the ring. We
+// persist the registration outcome here: permission state, whether FCM/APNs
+// issued a token, and how the register-device POST landed (incl. the 401
+// session_superseded "another device took over the ring" case). Module state
+// for the current run + localStorage so the panel still reads the last known
+// outcome after a WebView reload. Pure telemetry: never changes registration
+// behavior, all writes are best-effort.
+export interface KitchenPushHealth {
+  /** PushNotifications permission ("granted" / "denied" / "prompt" / …); null = not requested yet. */
+  permission: string | null;
+  /** True once FCM/APNs delivered a registration token this device shipped to the server. */
+  tokenObtained: boolean;
+  /** HTTP status of the last /api/kitchen/register-device POST (0 = network error); null = never attempted. */
+  registerStatus: number | null;
+  /** Server error code from a failed POST — "session_superseded" means another device owns the ring. */
+  registerCode: string | null;
+  /** ms timestamp of the last update (0 = never). */
+  updatedAt: number;
+}
+
+const KITCHEN_PUSH_HEALTH_KEY = "ffo_kitchen_push_health";
+const DEFAULT_PUSH_HEALTH: KitchenPushHealth = {
+  permission: null,
+  tokenObtained: false,
+  registerStatus: null,
+  registerCode: null,
+  updatedAt: 0,
+};
+let pushHealth: KitchenPushHealth | null = null; // lazily hydrated from localStorage
+
+function readStoredPushHealth(): KitchenPushHealth {
+  try {
+    const raw = localStorage.getItem(KITCHEN_PUSH_HEALTH_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") return { ...DEFAULT_PUSH_HEALTH, ...parsed };
+    }
+  } catch {
+    /* SSR / private mode / corrupt JSON — fall through to defaults */
+  }
+  return { ...DEFAULT_PUSH_HEALTH };
+}
+
+function updatePushHealth(patch: Partial<KitchenPushHealth>): void {
+  const current = pushHealth ?? readStoredPushHealth();
+  pushHealth = { ...current, ...patch, updatedAt: Date.now() };
+  try {
+    localStorage.setItem(KITCHEN_PUSH_HEALTH_KEY, JSON.stringify(pushHealth));
+  } catch {
+    /* storage disabled — module state still serves the current run */
+  }
+}
+
+/** Latest push-registration health for THIS device (see KitchenPushHealth docs). */
+export function getKitchenPushHealth(): KitchenPushHealth {
+  if (!pushHealth) pushHealth = readStoredPushHealth();
+  return pushHealth;
+}
+
 async function postToken(token: string): Promise<void> {
   try {
     localStorage.setItem(KITCHEN_PUSH_TOKEN_KEY, token);
@@ -51,12 +113,23 @@ async function postToken(token: string): Promise<void> {
     /* private mode / storage disabled — unregister-on-logout falls back to a no-op */
   }
   try {
-    await fetch("/api/kitchen/register-device", {
+    const res = await fetch("/api/kitchen/register-device", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, platform: getPlatform() }),
     });
+    // Record how registration landed — 200 = this device owns the ring; 401 +
+    // code "session_superseded" = another device took it over (the server
+    // refuses stale sessions; see register-device route). Body read is
+    // best-effort: a non-JSON error body just leaves code null.
+    let code: string | null = null;
+    if (!res.ok) {
+      const body = (await res.json().catch(() => null)) as { code?: unknown } | null;
+      code = typeof body?.code === "string" ? body.code : null;
+    }
+    updatePushHealth({ registerStatus: res.status, registerCode: code });
   } catch (e) {
+    updatePushHealth({ registerStatus: 0, registerCode: null }); // 0 = network error
     console.error("[native-push] register-device POST failed", e);
   }
 }
@@ -98,9 +171,22 @@ export async function registerKitchenPush(): Promise<void> {
   started = true;
   try {
     await push.addListener("registration", (info: { value?: string }) => {
-      if (info?.value) void postToken(info.value);
+      if (info?.value) {
+        updatePushHealth({ tokenObtained: true }); // FCM/APNs issued a token
+        void postToken(info.value);
+      }
     });
     await push.addListener("registrationError", (err: unknown) => {
+      // APNs/FCM refused to issue a token (aps-environment entitlement
+      // problem, no network to the push gateway at launch, …) — one of the
+      // PRIMARY failures the iOS push-health panel exists to diagnose.
+      // Record it (-1 = registration error; distinct from real HTTP statuses
+      // and from 0 = register-device network error) so the panel shows a
+      // FAILURE instead of the neutral "Not registered yet" forever.
+      // tokenObtained:false also overwrites a stale earlier success, so a
+      // previously-working device that breaks stops claiming it receives the
+      // ring. (Review, 2026-07-17.)
+      updatePushHealth({ tokenObtained: false, registerStatus: -1, registerCode: "registration_error" });
       console.error("[native-push] registration error", err);
     });
     // A push landing is the strongest "there's a new order RIGHT NOW" signal —
@@ -124,6 +210,7 @@ export async function registerKitchenPush(): Promise<void> {
     });
 
     const perm = await push.requestPermissions();
+    updatePushHealth({ permission: perm?.receive ?? null });
     if (perm?.receive === "granted") {
       await push.register();
     } else {
@@ -131,6 +218,13 @@ export async function registerKitchenPush(): Promise<void> {
       started = false; // let a later mount retry (user may grant in Settings)
     }
   } catch (e) {
+    // A throw from push.register() (or the permission request) is a
+    // registration failure too — surface it in push health the same way the
+    // registrationError listener does, or the panel would read the neutral
+    // "Not registered yet" forever. tokenObtained is left alone here: this
+    // catch can also fire after a token already landed (listener wiring
+    // issues), and postToken's own status write is the fresher signal then.
+    updatePushHealth({ registerStatus: -1, registerCode: "registration_error" });
     console.error("[native-push] registerKitchenPush failed", e);
     started = false;
   }

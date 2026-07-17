@@ -811,7 +811,22 @@
     "delayReasonLabel": "Dôvod (nepovinné — zobrazí sa zákazníkovi)",
     "delayReasonPlaceholder": "V kuchyni je rušno, minula sa surovina a pod.",
     "savingEllipsis": "Ukladanie…",
-    "delayByMin": "Oneskoriť o {n} min"
+    "delayByMin": "Oneskoriť o {n} min",
+    "pushHealth": {
+      "title": "Push upozornenia",
+      "permission": "Povolenie upozornení",
+      "permGranted": "Povolené",
+      "permDenied": "Zablokované — povoľte upozornenia v Nastaveniach iPhonu",
+      "permUnknown": "Zatiaľ nevyžiadané",
+      "receiving": "Toto zariadenie prijíma zvonenie",
+      "superseded": "Zvonenie prevzalo iné zariadenie",
+      "failed": "Registrácia zlyhala ({status})",
+      "pending": "Zatiaľ nezaregistrované",
+      "testRing": "Testovacie zvonenie",
+      "testSending": "Odosiela sa…",
+      "testSent": "Odoslané — zvonenie by malo doraziť o chvíľu",
+      "testFailed": "Odoslanie zlyhalo"
+    }
   },
   "admin": {
     "welcomeBack": "Vitajte späť",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Zdieľajte svoju polohu pre doručovanie",
     "bgDisclosureBody": "Fee Free Delivery zhromažďuje údaje o polohe, keď máte aktívne doručenie, aby zdieľala vašu polohu naživo so zákazníkom a reštauráciou — aj keď je aplikácia na pozadí, zatvorená, alebo je telefón uzamknutý. Sledovanie sa končí dokončením doručenia.",
     "bgDisclosureAllow": "Pokračovať",
-    "bgDisclosureLater": "Teraz nie"
+    "bgDisclosureLater": "Teraz nie",
+    "tabJobs": "Zákazky",
+    "tabProfile": "Profil",
+    "homeStore": "Domovská prevádzka",
+    "driverSince": "Vodičom od {date}",
+    "ratingTitle": "Vaše hodnotenie",
+    "ratingReliability": "Spoľahlivosť",
+    "ratingOnTime": "Dochvíľnosť",
+    "ratingFeedback": "Spätná väzba",
+    "statDelivered": "Doručené",
+    "statReleased": "Uvoľnené",
+    "statLate": "Oneskorené",
+    "hourlyRate": "Hodinová sadzba",
+    "profileLoadFailed": "Profil sa nepodarilo načítať. Skúste to znova."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priraďujte a sledujte svoje rozvozy",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Prihlásenie pre reštaurácie — spravujte a sledujte svoje doručenia.",
     "switchToDispatch": "Prepnúť na zobrazenie reštaurácie",
     "switchToDriver": "Prepnúť na zobrazenie vodiča"
+  },
+  "feefreeShared": {
+    "language": "Jazyk"
   }
 }

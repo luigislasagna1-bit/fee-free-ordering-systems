@@ -811,7 +811,22 @@
     "delayReasonLabel": "理由（任意・お客様に表示されます）",
     "delayReasonPlaceholder": "厨房が混雑、材料切れ など",
     "savingEllipsis": "保存中…",
-    "delayByMin": "{n}分遅らせる"
+    "delayByMin": "{n}分遅らせる",
+    "pushHealth": {
+      "title": "プッシュ通知",
+      "permission": "通知の許可",
+      "permGranted": "許可済み",
+      "permDenied": "ブロックされています。iPhoneの設定で通知を許可してください",
+      "permUnknown": "まだリクエストされていません",
+      "receiving": "この端末で着信音が鳴ります",
+      "superseded": "別の端末が着信音を引き継ぎました",
+      "failed": "登録に失敗しました（{status}）",
+      "pending": "まだ登録されていません",
+      "testRing": "着信音をテスト",
+      "testSending": "送信中…",
+      "testSent": "送信しました。まもなく着信音が鳴ります",
+      "testFailed": "送信に失敗しました"
+    }
   },
   "admin": {
     "welcomeBack": "おかえりなさい",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "配達のために位置情報を共有",
     "bgDisclosureBody": "Fee Free Delivery は、配達中にお客様の現在地をお客様（注文者）とレストランへリアルタイムで共有するため、位置情報データを収集します。アプリがバックグラウンドにある場合や終了している場合、スマートフォンがロックされている場合も同様です。配達が完了すると追跡は停止します。",
     "bgDisclosureAllow": "続行",
-    "bgDisclosureLater": "今はしない"
+    "bgDisclosureLater": "今はしない",
+    "tabJobs": "仕事",
+    "tabProfile": "プロフィール",
+    "homeStore": "所属店舗",
+    "driverSince": "{date} からドライバー",
+    "ratingTitle": "あなたの評価",
+    "ratingReliability": "信頼性",
+    "ratingOnTime": "時間厳守",
+    "ratingFeedback": "フィードバック",
+    "statDelivered": "配達完了",
+    "statReleased": "手放した配達",
+    "statLate": "遅延",
+    "hourlyRate": "時給",
+    "profileLoadFailed": "プロフィールを読み込めませんでした。もう一度お試しください。"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "レストランログイン — 配達の管理と追跡ができます。",
     "switchToDispatch": "レストラン表示に切り替え",
     "switchToDriver": "ドライバー表示に切り替え"
+  },
+  "feefreeShared": {
+    "language": "言語"
   }
 }

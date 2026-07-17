@@ -811,7 +811,22 @@
     "delayReasonLabel": "Indok (nem kötelező — a vásárló látja)",
     "delayReasonPlaceholder": "A konyha leterhelt, elfogyott egy hozzávaló stb.",
     "savingEllipsis": "Mentés…",
-    "delayByMin": "Késleltetés {n} perccel"
+    "delayByMin": "Késleltetés {n} perccel",
+    "pushHealth": {
+      "title": "Push-értesítések",
+      "permission": "Értesítési engedély",
+      "permGranted": "Engedélyezve",
+      "permDenied": "Letiltva — engedélyezze az értesítéseket az iPhone Beállításaiban",
+      "permUnknown": "Még nem lett kérve",
+      "receiving": "Ez az eszköz kapja a csengetést",
+      "superseded": "Egy másik eszköz vette át a csengetést",
+      "failed": "A regisztráció sikertelen ({status})",
+      "pending": "Még nincs regisztrálva",
+      "testRing": "Tesztcsengetés",
+      "testSending": "Küldés…",
+      "testSent": "Elküldve — a csengetés hamarosan megérkezik",
+      "testFailed": "Nem sikerült elküldeni"
+    }
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Ossza meg helyzetét a kiszállításokhoz",
     "bgDisclosureBody": "A Fee Free Delivery helyadatokat gyűjt, amíg aktív kiszállítása van, hogy élőben megossza pozícióját az ügyféllel és az étteremmel — akkor is, ha az alkalmazás a háttérben fut vagy be van zárva, illetve a telefon le van zárva. A követés a kiszállítás befejezésekor leáll.",
     "bgDisclosureAllow": "Folytatás",
-    "bgDisclosureLater": "Most nem"
+    "bgDisclosureLater": "Most nem",
+    "tabJobs": "Feladatok",
+    "tabProfile": "Profil",
+    "homeStore": "Saját étterem",
+    "driverSince": "Futár {date} óta",
+    "ratingTitle": "Értékelésed",
+    "ratingReliability": "Megbízhatóság",
+    "ratingOnTime": "Pontosság",
+    "ratingFeedback": "Visszajelzés",
+    "statDelivered": "Kézbesítve",
+    "statReleased": "Elengedve",
+    "statLate": "Késve",
+    "hourlyRate": "Órabér",
+    "profileLoadFailed": "Nem sikerült betölteni a profilod. Próbáld újra."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Éttermi bejelentkezés — kezelje és kövesse kiszállításait.",
     "switchToDispatch": "Váltás éttermi nézetre",
     "switchToDriver": "Váltás futárnézetre"
+  },
+  "feefreeShared": {
+    "language": "Nyelv"
   }
 }

@@ -811,7 +811,22 @@
     "delayReasonLabel": "कारण (वैकल्पिक — ग्राहक को दिखेगा)",
     "delayReasonPlaceholder": "रसोई व्यस्त है, कोई सामग्री खत्म, आदि।",
     "savingEllipsis": "सहेजा जा रहा है…",
-    "delayByMin": "{n} मिनट देरी करें"
+    "delayByMin": "{n} मिनट देरी करें",
+    "pushHealth": {
+      "title": "पुश अलर्ट",
+      "permission": "नोटिफ़िकेशन अनुमति",
+      "permGranted": "अनुमति है",
+      "permDenied": "ब्लॉक है — iPhone सेटिंग्स में नोटिफ़िकेशन की अनुमति दें",
+      "permUnknown": "अभी तक अनुरोध नहीं किया गया",
+      "receiving": "रिंग इसी डिवाइस पर आती है",
+      "superseded": "दूसरे डिवाइस ने रिंग संभाल ली",
+      "failed": "रजिस्ट्रेशन विफल रहा ({status})",
+      "pending": "अभी रजिस्टर नहीं हुआ",
+      "testRing": "टेस्ट रिंग",
+      "testSending": "भेजा जा रहा है…",
+      "testSent": "भेज दिया गया — रिंग कुछ ही पल में आएगी",
+      "testFailed": "भेजने में विफल"
+    }
   },
   "admin": {
     "comingSoonPlaceholder": {
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "डिलीवरी के लिए अपना स्थान साझा करें",
     "bgDisclosureBody": "Fee Free Delivery आपकी सक्रिय डिलीवरी के दौरान स्थान डेटा एकत्र करता है, ताकि आपकी लाइव स्थिति ग्राहक और रेस्तरां के साथ साझा की जा सके — भले ही ऐप बैकग्राउंड में हो या बंद हो, या फ़ोन लॉक हो। डिलीवरी पूरी होने पर ट्रैकिंग बंद हो जाती है।",
     "bgDisclosureAllow": "जारी रखें",
-    "bgDisclosureLater": "अभी नहीं"
+    "bgDisclosureLater": "अभी नहीं",
+    "tabJobs": "जॉब्स",
+    "tabProfile": "प्रोफ़ाइल",
+    "homeStore": "होम स्टोर",
+    "driverSince": "{date} से ड्राइवर",
+    "ratingTitle": "आपकी रेटिंग",
+    "ratingReliability": "विश्वसनीयता",
+    "ratingOnTime": "समय पर",
+    "ratingFeedback": "फ़ीडबैक",
+    "statDelivered": "डिलीवर किए",
+    "statReleased": "छोड़े गए",
+    "statLate": "देरी से",
+    "hourlyRate": "प्रति घंटा दर",
+    "profileLoadFailed": "आपकी प्रोफ़ाइल लोड नहीं हो सकी। कृपया फिर से प्रयास करें।"
   },
   "feefreeApp": {
     "dispatchSubtitle": "अपनी डिलीवरी असाइन करें और ट्रैक करें",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "रेस्टोरेंट साइन-इन — अपनी डिलीवरी प्रबंधित करें और ट्रैक करें।",
     "switchToDispatch": "रेस्टोरेंट व्यू पर स्विच करें",
     "switchToDriver": "ड्राइवर व्यू पर स्विच करें"
+  },
+  "feefreeShared": {
+    "language": "भाषा"
   }
 }

@@ -811,7 +811,22 @@
     "delayReasonLabel": "Razlog (neobvezno — vidi ga stranka)",
     "delayReasonPlaceholder": "Kuhinja je zasedena, zmanjkalo je sestavine ipd.",
     "savingEllipsis": "Shranjevanje…",
-    "delayByMin": "Zamakni za {n} min"
+    "delayByMin": "Zamakni za {n} min",
+    "pushHealth": {
+      "title": "Potisna opozorila",
+      "permission": "Dovoljenje za obvestila",
+      "permGranted": "Dovoljeno",
+      "permDenied": "Blokirano — dovolite obvestila v nastavitvah iPhona",
+      "permUnknown": "Še ni zahtevano",
+      "receiving": "Ta naprava prejema zvonjenje",
+      "superseded": "Zvonjenje je prevzela druga naprava",
+      "failed": "Registracija ni uspela ({status})",
+      "pending": "Še ni registrirano",
+      "testRing": "Preizkusi zvonjenje",
+      "testSending": "Pošiljanje…",
+      "testSent": "Poslano — zvonjenje bi moralo prispeti vsak trenutek",
+      "testFailed": "Pošiljanje ni uspelo"
+    }
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Delite svojo lokacijo za dostave",
     "bgDisclosureBody": "Fee Free Delivery zbira podatke o lokaciji, ko imate aktivno dostavo, da vašo lokacijo v živo deli s stranko in restavracijo — tudi ko je aplikacija v ozadju ali zaprta oziroma je telefon zaklenjen. Sledenje se ustavi ob zaključku dostave.",
     "bgDisclosureAllow": "Nadaljuj",
-    "bgDisclosureLater": "Ne zdaj"
+    "bgDisclosureLater": "Ne zdaj",
+    "tabJobs": "Dostave",
+    "tabProfile": "Profil",
+    "homeStore": "Matična trgovina",
+    "driverSince": "Voznik od {date}",
+    "ratingTitle": "Vaša ocena",
+    "ratingReliability": "Zanesljivost",
+    "ratingOnTime": "Točnost",
+    "ratingFeedback": "Povratne informacije",
+    "statDelivered": "Dostavljeno",
+    "statReleased": "Sproščeno",
+    "statLate": "Z zamudo",
+    "hourlyRate": "Urna postavka",
+    "profileLoadFailed": "Profila ni bilo mogoče naložiti. Poskusite znova."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodeljujte in spremljajte svoje dostave",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Prijava za restavracije — upravljajte in spremljajte dostave.",
     "switchToDispatch": "Preklopi na pogled restavracije",
     "switchToDriver": "Preklopi na voznikov pogled"
+  },
+  "feefreeShared": {
+    "language": "Jezik"
   }
 }

@@ -811,7 +811,22 @@
     "delayReasonLabel": "Motif (facultatif — visible par le client)",
     "delayReasonPlaceholder": "Cuisine très chargée, ingrédient manquant, etc.",
     "savingEllipsis": "Enregistrement…",
-    "delayByMin": "Retarder de {n} min"
+    "delayByMin": "Retarder de {n} min",
+    "pushHealth": {
+      "title": "Alertes push",
+      "permission": "Autorisation de notifications",
+      "permGranted": "Autorisée",
+      "permDenied": "Bloquée — autorisez les notifications dans les Réglages de l'iPhone",
+      "permUnknown": "Pas encore demandée",
+      "receiving": "Cet appareil reçoit la sonnerie",
+      "superseded": "Un autre appareil a pris le relais de la sonnerie",
+      "failed": "Échec de l'enregistrement ({status})",
+      "pending": "Pas encore enregistré",
+      "testRing": "Tester la sonnerie",
+      "testSending": "Envoi…",
+      "testSent": "Envoyé — la sonnerie devrait arriver dans un instant",
+      "testFailed": "Échec de l'envoi"
+    }
   },
   "admin": {
     "welcomeBack": "Bon retour",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Partagez votre position pour les livraisons",
     "bgDisclosureBody": "Fee Free Delivery collecte des données de localisation pendant une livraison active, afin de partager votre position en direct avec le client et le restaurant — même lorsque l'application est en arrière-plan, fermée, ou que le téléphone est verrouillé. Le suivi s'arrête à la fin de la livraison.",
     "bgDisclosureAllow": "Continuer",
-    "bgDisclosureLater": "Pas maintenant"
+    "bgDisclosureLater": "Pas maintenant",
+    "tabJobs": "Livraisons",
+    "tabProfile": "Profil",
+    "homeStore": "Restaurant d'attache",
+    "driverSince": "Livreur depuis {date}",
+    "ratingTitle": "Votre note",
+    "ratingReliability": "Fiabilité",
+    "ratingOnTime": "Ponctualité",
+    "ratingFeedback": "Avis",
+    "statDelivered": "Livrées",
+    "statReleased": "Libérées",
+    "statLate": "En retard",
+    "hourlyRate": "Taux horaire",
+    "profileLoadFailed": "Impossible de charger votre profil. Veuillez réessayer."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Gérez et suivez vos livraisons",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Connexion restaurant — gérez et suivez vos livraisons.",
     "switchToDispatch": "Passer à la vue restaurant",
     "switchToDriver": "Passer à la vue livreur"
+  },
+  "feefreeShared": {
+    "language": "Langue"
   }
 }

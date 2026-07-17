@@ -811,7 +811,22 @@
     "delayReasonLabel": "Grund (optional — für den Kunden sichtbar)",
     "delayReasonPlaceholder": "Küche stark ausgelastet, Zutat ausgegangen usw.",
     "savingEllipsis": "Wird gespeichert…",
-    "delayByMin": "Um {n} Min. verzögern"
+    "delayByMin": "Um {n} Min. verzögern",
+    "pushHealth": {
+      "title": "Push-Benachrichtigungen",
+      "permission": "Benachrichtigungsberechtigung",
+      "permGranted": "Erlaubt",
+      "permDenied": "Blockiert — Benachrichtigungen in den iPhone-Einstellungen erlauben",
+      "permUnknown": "Noch nicht angefragt",
+      "receiving": "Dieses Gerät empfängt den Klingelton",
+      "superseded": "Ein anderes Gerät hat den Klingelton übernommen",
+      "failed": "Registrierung fehlgeschlagen ({status})",
+      "pending": "Noch nicht registriert",
+      "testRing": "Test-Klingelton",
+      "testSending": "Wird gesendet…",
+      "testSent": "Gesendet — der Klingelton sollte gleich eintreffen",
+      "testFailed": "Senden fehlgeschlagen"
+    }
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Standort für Lieferungen freigeben",
     "bgDisclosureBody": "Fee Free Delivery erfasst Standortdaten, während du eine aktive Lieferung hast, um deine Live-Position mit dem Kunden und dem Restaurant zu teilen — auch wenn die App im Hintergrund läuft, geschlossen ist oder das Telefon gesperrt ist. Die Ortung endet, sobald die Lieferung abgeschlossen ist.",
     "bgDisclosureAllow": "Weiter",
-    "bgDisclosureLater": "Nicht jetzt"
+    "bgDisclosureLater": "Nicht jetzt",
+    "tabJobs": "Aufträge",
+    "tabProfile": "Profil",
+    "homeStore": "Stammrestaurant",
+    "driverSince": "Fahrer seit {date}",
+    "ratingTitle": "Deine Bewertung",
+    "ratingReliability": "Zuverlässigkeit",
+    "ratingOnTime": "Pünktlichkeit",
+    "ratingFeedback": "Feedback",
+    "statDelivered": "Zugestellt",
+    "statReleased": "Freigegeben",
+    "statLate": "Verspätet",
+    "hourlyRate": "Stundensatz",
+    "profileLoadFailed": "Dein Profil konnte nicht geladen werden. Bitte versuche es erneut."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restaurant-Anmeldung — verwalten und verfolgen Sie Ihre Lieferungen.",
     "switchToDispatch": "Zur Restaurantansicht wechseln",
     "switchToDriver": "Zur Fahreransicht wechseln"
+  },
+  "feefreeShared": {
+    "language": "Sprache"
   }
 }

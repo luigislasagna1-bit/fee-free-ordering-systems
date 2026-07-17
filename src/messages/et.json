@@ -811,7 +811,22 @@
     "delayReasonLabel": "Põhjus (valikuline — kuvatakse kliendile)",
     "delayReasonPlaceholder": "Köögis on kiire, koostisosa sai otsa jne.",
     "savingEllipsis": "Salvestamine…",
-    "delayByMin": "Lükka {n} min edasi"
+    "delayByMin": "Lükka {n} min edasi",
+    "pushHealth": {
+      "title": "Tõuketeavitused",
+      "permission": "Teavituste luba",
+      "permGranted": "Lubatud",
+      "permDenied": "Blokeeritud — luba teavitused iPhone'i seadetes",
+      "permUnknown": "Pole veel küsitud",
+      "receiving": "See seade võtab helina vastu",
+      "superseded": "Teine seade võttis helina üle",
+      "failed": "Registreerimine ebaõnnestus ({status})",
+      "pending": "Pole veel registreeritud",
+      "testRing": "Testhelin",
+      "testSending": "Saatmine…",
+      "testSent": "Saadetud — helin peaks kohe saabuma",
+      "testFailed": "Saatmine ebaõnnestus"
+    }
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
@@ -6310,7 +6325,20 @@
     "bgDisclosureTitle": "Jagage oma asukohta tarnete jaoks",
     "bgDisclosureBody": "Fee Free Delivery kogub asukohaandmeid, kui teil on aktiivne tarne, et jagada teie reaalajas asukohta kliendi ja restoraniga — ka siis, kui rakendus on taustal või suletud või telefon on lukus. Jälgimine lõpeb tarne lõpetamisel.",
     "bgDisclosureAllow": "Jätka",
-    "bgDisclosureLater": "Mitte praegu"
+    "bgDisclosureLater": "Mitte praegu",
+    "tabJobs": "Tööd",
+    "tabProfile": "Profiil",
+    "homeStore": "Kodurestoran",
+    "driverSince": "Juht alates {date}",
+    "ratingTitle": "Sinu reiting",
+    "ratingReliability": "Usaldusväärsus",
+    "ratingOnTime": "Õigeaegsus",
+    "ratingFeedback": "Tagasiside",
+    "statDelivered": "Kohale toimetatud",
+    "statReleased": "Vabastatud",
+    "statLate": "Hilinenud",
+    "hourlyRate": "Tunnitasu",
+    "profileLoadFailed": "Profiili laadimine ebaõnnestus. Palun proovi uuesti."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",
@@ -6325,5 +6353,8 @@
     "restaurantModeBadge": "Restorani sisselogimine — hallake ja jälgige oma tarneid.",
     "switchToDispatch": "Lülitu restoranivaatele",
     "switchToDriver": "Lülitu juhivaatele"
+  },
+  "feefreeShared": {
+    "language": "Keel"
   }
 }

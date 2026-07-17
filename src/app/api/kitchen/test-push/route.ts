@@ -57,3 +57,11 @@ export async function GET(req: NextRequest) {
     ...result,
   });
 }
+
+// The kitchen 3-dot menu's push-health "Test ring" button (iOS shell, Fabrizio
+// cmrkvs5r) POSTs — a button that SENDS a push is an action, not a read. Same
+// auth, same single-active-device targeting, same response shape. GET stays
+// for the open-URL-in-a-browser-tab diagnosis flow above.
+export async function POST(req: NextRequest) {
+  return GET(req);
+}
