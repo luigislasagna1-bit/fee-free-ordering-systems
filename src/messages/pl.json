@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Udostępnij swoją lokalizację na potrzeby dostaw",
     "bgDisclosureBody": "Fee Free Delivery zbiera dane o lokalizacji, gdy masz aktywną dostawę, aby udostępniać Twoją pozycję na żywo klientowi i restauracji — nawet gdy aplikacja działa w tle, jest zamknięta lub telefon jest zablokowany. Śledzenie kończy się po zrealizowaniu dostawy.",
     "bgDisclosureAllow": "Kontynuuj",
-    "bgDisclosureLater": "Nie teraz"
+    "bgDisclosureLater": "Nie teraz",
+    "invalidDriverLogin": "Brak konta kierowcy pasującego do tych danych. Właściciel lub pracownik restauracji? Użyj logowania dla restauracji poniżej."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",
     "openDashboard": "Otwórz panel",
     "notEnabledTitle": "Fee Free Delivery nie jest włączone dla tego sklepu",
     "notEnabledBody": "Włącz je w panelu, aby zacząć wysyłać zamówienia do swoich kierowców.",
-    "restaurantLoginCta": "Właściciel restauracji? Zaloguj się danymi do panelu"
+    "restaurantLoginCta": "Restauracja? Zaloguj się tutaj, aby zarządzać dostawami"
   }
 }

@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Ossza meg helyzetét a kiszállításokhoz",
     "bgDisclosureBody": "A Fee Free Delivery helyadatokat gyűjt, amíg aktív kiszállítása van, hogy élőben megossza pozícióját az ügyféllel és az étteremmel — akkor is, ha az alkalmazás a háttérben fut vagy be van zárva, illetve a telefon le van zárva. A követés a kiszállítás befejezésekor leáll.",
     "bgDisclosureAllow": "Folytatás",
-    "bgDisclosureLater": "Most nem"
+    "bgDisclosureLater": "Most nem",
+    "invalidDriverLogin": "Ezekkel az adatokkal nem található futárfiók. Étterem-tulajdonos vagy alkalmazott? Használja az alábbi éttermi bejelentkezést."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",
     "openDashboard": "Vezérlőpult megnyitása",
     "notEnabledTitle": "A Fee Free Delivery nincs bekapcsolva ehhez az üzlethez",
     "notEnabledBody": "Kapcsold be a vezérlőpulton, hogy elkezdhesd a rendelések küldését a sofőrjeidnek.",
-    "restaurantLoginCta": "Éttermtulajdonos vagy? Jelentkezz be a vezérlőpult belépési adataiddal"
+    "restaurantLoginCta": "Étterem? Jelentkezzen be itt a kiszállítások kezeléséhez"
   }
 }

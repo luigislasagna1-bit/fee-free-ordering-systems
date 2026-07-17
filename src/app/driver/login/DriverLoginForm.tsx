@@ -28,7 +28,10 @@ function DriverLoginFormInner({ locale }: { locale: string }) {
       if (!result || result.error) {
         // Distinct message when the login rate-limiter (not a bad password) blocked us.
         if (result?.error === "login-rate-limited") throw new Error(tAuth("tooManyAttempts"));
-        throw new Error(tAuth("invalidCredentials"));
+        // This form checks DRIVER accounts only — restaurant owners keep landing
+        // here with their dashboard credentials and reading "invalid password" as
+        // a bug (Luigi himself hit it, 2026-07-16). Point them at the right door.
+        throw new Error(t("invalidDriverLogin"));
       }
       // Hard navigation so the driver session cookie is read on the next server
       // render (soft-nav can race the cookie write on some mobile browsers).

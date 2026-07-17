@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Teslimatlar için konumunuzu paylaşın",
     "bgDisclosureBody": "Fee Free Delivery, aktif bir teslimatınız olduğunda canlı konumunuzu müşteri ve restoranla paylaşmak için konum verisi toplar — uygulama arka planda veya kapalıyken ya da telefon kilitliyken bile. Teslimat tamamlandığında izleme durur.",
     "bgDisclosureAllow": "Devam",
-    "bgDisclosureLater": "Şimdi değil"
+    "bgDisclosureLater": "Şimdi değil",
+    "invalidDriverLogin": "Bu bilgilerle eşleşen sürücü hesabı yok. Restoran sahibi veya çalışanı mısınız? Aşağıdaki restoran girişini kullanın."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",
     "openDashboard": "Kontrol panelini aç",
     "notEnabledTitle": "Fee Free Delivery bu mağaza için etkin değil",
     "notEnabledBody": "Sürücülerinize sipariş göndermeye başlamak için kontrol panelinizden etkinleştirin.",
-    "restaurantLoginCta": "Restoran sahibi misiniz? Kontrol paneli girişinizle oturum açın"
+    "restaurantLoginCta": "Restoran mı? Teslimatlarınızı yönetmek için buradan giriş yapın"
   }
 }

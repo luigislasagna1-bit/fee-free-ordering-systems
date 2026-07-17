@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Kopīgojiet savu atrašanās vietu piegādēm",
     "bgDisclosureBody": "Fee Free Delivery vāc atrašanās vietas datus, kamēr jums ir aktīva piegāde, lai kopīgotu jūsu atrašanās vietu reāllaikā ar klientu un restorānu — arī tad, ja lietotne darbojas fonā vai ir aizvērta, vai tālrunis ir bloķēts. Izsekošana beidzas, kad piegāde ir pabeigta.",
     "bgDisclosureAllow": "Turpināt",
-    "bgDisclosureLater": "Ne tagad"
+    "bgDisclosureLater": "Ne tagad",
+    "invalidDriverLogin": "Neviens kurjera konts neatbilst šiem datiem. Restorāna īpašnieks vai darbinieks? Izmantojiet restorāna pieteikšanos zemāk."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",
     "openDashboard": "Atvērt vadības paneli",
     "notEnabledTitle": "Fee Free Delivery šai veikalam nav ieslēgts",
     "notEnabledBody": "Ieslēdziet to vadības panelī, lai sāktu nosūtīt pasūtījumus saviem vadītājiem.",
-    "restaurantLoginCta": "Restorāna īpašnieks? Pierakstieties ar vadības paneļa pieteikumvārdu"
+    "restaurantLoginCta": "Restorāns? Piesakieties šeit, lai pārvaldītu piegādes"
   }
 }

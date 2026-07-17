@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Sdílejte svou polohu pro doručování",
     "bgDisclosureBody": "Fee Free Delivery shromažďuje údaje o poloze, když máte aktivní doručení, aby sdílela vaši polohu naživo se zákazníkem a restaurací — i když je aplikace na pozadí, zavřená, nebo je telefon uzamčen. Sledování končí dokončením doručení.",
     "bgDisclosureAllow": "Pokračovat",
-    "bgDisclosureLater": "Teď ne"
+    "bgDisclosureLater": "Teď ne",
+    "invalidDriverLogin": "Těmto údajům neodpovídá žádný účet řidiče. Majitel nebo personál restaurace? Použijte přihlášení pro restaurace níže."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Přiřazujte a sledujte své rozvozy",
     "openDashboard": "Otevřít nástěnku",
     "notEnabledTitle": "Fee Free Delivery není pro tuto provozovnu zapnuté",
     "notEnabledBody": "Zapněte ho na nástěnce a začněte odesílat objednávky svým řidičům.",
-    "restaurantLoginCta": "Jste majitel restaurace? Přihlaste se přihlašovacími údaji k nástěnce"
+    "restaurantLoginCta": "Restaurace? Přihlaste se zde a spravujte svá doručení"
   }
 }

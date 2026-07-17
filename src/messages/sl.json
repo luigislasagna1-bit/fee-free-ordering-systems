@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Delite svojo lokacijo za dostave",
     "bgDisclosureBody": "Fee Free Delivery zbira podatke o lokaciji, ko imate aktivno dostavo, da vašo lokacijo v živo deli s stranko in restavracijo — tudi ko je aplikacija v ozadju ali zaprta oziroma je telefon zaklenjen. Sledenje se ustavi ob zaključku dostave.",
     "bgDisclosureAllow": "Nadaljuj",
-    "bgDisclosureLater": "Ne zdaj"
+    "bgDisclosureLater": "Ne zdaj",
+    "invalidDriverLogin": "Noben voznikov račun ne ustreza tem podatkom. Lastnik ali osebje restavracije? Uporabite prijavo za restavracije spodaj."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodeljujte in spremljajte svoje dostave",
     "openDashboard": "Odpri nadzorno ploščo",
     "notEnabledTitle": "Fee Free Delivery ni vklopljen za to trgovino",
     "notEnabledBody": "Vklopite ga v nadzorni plošči, da začnete pošiljati naročila svojim voznikom.",
-    "restaurantLoginCta": "Ste lastnik restavracije? Prijavite se s podatki za nadzorno ploščo"
+    "restaurantLoginCta": "Restavracija? Prijavite se tukaj za upravljanje dostav"
   }
 }

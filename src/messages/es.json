@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Comparte tu ubicación para las entregas",
     "bgDisclosureBody": "Fee Free Delivery recopila datos de ubicación mientras tienes una entrega activa, para compartir tu posición en vivo con el cliente y el restaurante, incluso cuando la app está en segundo plano o cerrada, o el teléfono está bloqueado. El seguimiento se detiene al completar la entrega.",
     "bgDisclosureAllow": "Continuar",
-    "bgDisclosureLater": "Ahora no"
+    "bgDisclosureLater": "Ahora no",
+    "invalidDriverLogin": "Ningún repartidor coincide con estos datos. ¿Dueño o personal de un restaurante? Usa el acceso para restaurantes más abajo."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Asigna y haz seguimiento de tus entregas",
     "openDashboard": "Abrir panel",
     "notEnabledTitle": "Fee Free Delivery no está activado para este local",
     "notEnabledBody": "Actívalo en tu panel para empezar a enviar pedidos a tus repartidores.",
-    "restaurantLoginCta": "¿Eres el propietario del restaurante? Inicia sesión con los datos de tu panel"
+    "restaurantLoginCta": "¿Restaurante? Inicia sesión aquí para gestionar tus entregas"
   }
 }

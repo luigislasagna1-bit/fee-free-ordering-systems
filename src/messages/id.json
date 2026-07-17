@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Bagikan lokasi Anda untuk pengiriman",
     "bgDisclosureBody": "Fee Free Delivery mengumpulkan data lokasi saat Anda memiliki pengiriman aktif, untuk membagikan posisi langsung Anda kepada pelanggan dan restoran — bahkan saat aplikasi di latar belakang atau ditutup, atau ponsel terkunci. Pelacakan berhenti saat pengiriman selesai.",
     "bgDisclosureAllow": "Lanjutkan",
-    "bgDisclosureLater": "Nanti saja"
+    "bgDisclosureLater": "Nanti saja",
+    "invalidDriverLogin": "Tidak ada akun pengemudi yang cocok dengan data ini. Pemilik atau staf restoran? Gunakan login restoran di bawah."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",
     "openDashboard": "Buka dasbor",
     "notEnabledTitle": "Fee Free Delivery tidak aktif untuk toko ini",
     "notEnabledBody": "Aktifkan di dasbor Anda untuk mulai mengirim pesanan ke pengemudi Anda.",
-    "restaurantLoginCta": "Pemilik restoran? Masuk dengan login dasbor Anda"
+    "restaurantLoginCta": "Restoran? Masuk di sini untuk mengelola pengiriman Anda"
   }
 }

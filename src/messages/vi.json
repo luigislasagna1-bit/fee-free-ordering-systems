@@ -6310,13 +6310,14 @@
     "bgDisclosureTitle": "Chia sẻ vị trí của bạn cho các đơn giao hàng",
     "bgDisclosureBody": "Fee Free Delivery thu thập dữ liệu vị trí khi bạn có đơn giao hàng đang hoạt động, để chia sẻ vị trí trực tiếp của bạn với khách hàng và nhà hàng — ngay cả khi ứng dụng chạy nền, đã đóng hoặc điện thoại bị khóa. Việc theo dõi dừng lại khi đơn giao hàng hoàn tất.",
     "bgDisclosureAllow": "Tiếp tục",
-    "bgDisclosureLater": "Để sau"
+    "bgDisclosureLater": "Để sau",
+    "invalidDriverLogin": "Không có tài khoản tài xế nào khớp với thông tin này. Chủ hoặc nhân viên nhà hàng? Hãy dùng đăng nhập nhà hàng bên dưới."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",
     "openDashboard": "Mở bảng điều khiển",
     "notEnabledTitle": "Fee Free Delivery chưa được bật cho cửa hàng này",
     "notEnabledBody": "Hãy bật tính năng này trong bảng điều khiển để bắt đầu gửi đơn cho tài xế của bạn.",
-    "restaurantLoginCta": "Chủ nhà hàng? Đăng nhập bằng tài khoản bảng điều khiển của bạn"
+    "restaurantLoginCta": "Nhà hàng? Đăng nhập tại đây để quản lý đơn giao hàng"
   }
 }
