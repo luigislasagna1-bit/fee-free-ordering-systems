@@ -2,6 +2,7 @@ import UIKit
 import Capacitor
 import FirebaseCore
 import FirebaseMessaging
+import UserNotifications
 
 /**
  * AppDelegate — mostly the stock Capacitor template PLUS the native-push
@@ -51,6 +52,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        // The moment the app comes on-screen, dismiss every delivered ring
+        // notification so the APNs alarm chain stops and the WEB engine owns
+        // the ring alone (Fabrizio cmrkvs5r: waking into the app overlapped /
+        // then silenced the .caf mid-play; the web ring now takes over on the
+        // order list). Delivered-notification removal is the documented way to
+        // end a notification's presentation; whether it also cuts an in-flight
+        // .caf mid-second is verified on the TestFlight device gate for this
+        // build — if it does not, the fallback is raising the web engine's
+        // wake grace (KitchenDisplay WAKE_AUDIO_GRACE_MS) under the iOS shell.
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
