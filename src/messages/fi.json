@@ -825,7 +825,13 @@
       "testRing": "Testisoitto",
       "testSending": "Lähetetään…",
       "testSent": "Lähetetty — hälytyssoiton pitäisi kuulua hetken kuluttua",
-      "testFailed": "Lähetys epäonnistui"
+      "testFailed": "Lähetys epäonnistui",
+      "testCountdown": "Lukitse puhelimesi nyt — testisoitto käynnistyy {seconds} s kuluttua",
+      "testSentLocked": "Lähetetty — hälytyssoitto soi lukitussa puhelimessa muutaman sekunnin kuluessa",
+      "testNoDevice": "Ei rekisteröityä keittiölaitetta — avaa sovellus kerran keittiöpuhelimessa ja yritä sitten uudelleen",
+      "testOtherDevice": "Hälytyssoitto on toisen laitteen hallussa — testi lähetettiin sille laitteelle, ei tälle",
+      "testErrorDetail": "Lähetys epäonnistui: {error}",
+      "testUnconfirmed": "Vahvistusta ei saapunut tähän puhelimeen — jos lukittu puhelin soi, testi onnistui; jos se pysyi hiljaa, yritä uudelleen"
     }
   },
   "admin": {

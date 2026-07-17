@@ -825,7 +825,13 @@
       "testRing": "Test-Klingelton",
       "testSending": "Wird gesendet…",
       "testSent": "Gesendet — der Klingelton sollte gleich eintreffen",
-      "testFailed": "Senden fehlgeschlagen"
+      "testFailed": "Senden fehlgeschlagen",
+      "testCountdown": "Handy jetzt sperren — der Test-Klingelton ertönt in {seconds} s",
+      "testSentLocked": "Gesendet — der Klingelton ertönt innerhalb weniger Sekunden auf dem gesperrten Handy",
+      "testNoDevice": "Kein registriertes Küchengerät — die App einmal auf dem Küchen-Handy öffnen und dann erneut versuchen",
+      "testOtherDevice": "Ein anderes Gerät ist für den Klingelton zuständig — der Test wurde an jenes Gerät gesendet, nicht an dieses",
+      "testErrorDetail": "Senden fehlgeschlagen: {error}",
+      "testUnconfirmed": "Keine Bestätigung auf diesem Telefon angekommen — hat das gesperrte Telefon geklingelt, war der Test erfolgreich; blieb es stumm, erneut versuchen"
     }
   },
   "admin": {

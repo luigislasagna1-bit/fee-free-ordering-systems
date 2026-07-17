@@ -825,7 +825,13 @@
       "testRing": "Zili test et",
       "testSending": "Gönderiliyor…",
       "testSent": "Gönderildi — zil birazdan çalacak",
-      "testFailed": "Gönderilemedi"
+      "testFailed": "Gönderilemedi",
+      "testCountdown": "Telefonunuzu şimdi kilitleyin — test zili {seconds} sn içinde çalacak",
+      "testSentLocked": "Gönderildi — zil birkaç saniye içinde kilitli telefonda çalar",
+      "testNoDevice": "Kayıtlı mutfak cihazı yok — uygulamayı mutfak telefonunda bir kez açın, sonra tekrar deneyin",
+      "testOtherDevice": "Zilin sahibi başka bir cihaz — test bu cihaza değil, o cihaza gönderildi",
+      "testErrorDetail": "Gönderim başarısız: {error}",
+      "testUnconfirmed": "Bu telefona onay ulaşmadı — kilitli telefon çaldıysa test başarılı olmuştur; sessiz kaldıysa yeniden deneyin"
     }
   },
   "admin": {

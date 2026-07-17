@@ -825,7 +825,13 @@
       "testRing": "Otestovat vyzvánění",
       "testSending": "Odesílání…",
       "testSent": "Odesláno — vyzvánění by mělo dorazit za okamžik",
-      "testFailed": "Odeslání se nezdařilo"
+      "testFailed": "Odeslání se nezdařilo",
+      "testCountdown": "Nyní zamkněte telefon — testovací vyzvánění se spustí za {seconds} s",
+      "testSentLocked": "Odesláno — vyzvánění se na zamčeném telefonu přehraje během několika sekund",
+      "testNoDevice": "Žádné zaregistrované kuchyňské zařízení — otevřete jednou aplikaci na kuchyňském telefonu a zkuste to znovu",
+      "testOtherDevice": "Vyzvánění vlastní jiné zařízení — test byl odeslán na dané zařízení, ne na toto",
+      "testErrorDetail": "Odeslání selhalo: {error}",
+      "testUnconfirmed": "Na tento telefon nedorazilo potvrzení — pokud uzamčený telefon zazvonil, test uspěl; pokud zůstal potichu, zkuste to znovu"
     }
   },
   "admin": {

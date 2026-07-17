@@ -825,7 +825,13 @@
       "testRing": "Tes dering",
       "testSending": "Mengirim…",
       "testSent": "Terkirim — dering akan tiba sebentar lagi",
-      "testFailed": "Gagal mengirim"
+      "testFailed": "Gagal mengirim",
+      "testCountdown": "Kunci ponsel Anda sekarang — dering tes akan berbunyi dalam {seconds} detik",
+      "testSentLocked": "Terkirim — dering akan berbunyi di ponsel yang terkunci dalam beberapa detik",
+      "testNoDevice": "Tidak ada perangkat dapur yang terdaftar — buka aplikasi di ponsel dapur sekali, lalu coba lagi",
+      "testOtherDevice": "Perangkat lain memegang dering — tes dikirim ke perangkat itu, bukan ke perangkat ini",
+      "testErrorDetail": "Gagal mengirim: {error}",
+      "testUnconfirmed": "Tidak ada konfirmasi yang sampai ke ponsel ini — jika ponsel yang terkunci berdering, tesnya berhasil; jika tetap sunyi, coba lagi"
     }
   },
   "admin": {

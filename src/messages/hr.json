@@ -825,7 +825,13 @@
       "testRing": "Probno zvono",
       "testSending": "Slanje…",
       "testSent": "Poslano — zvono bi trebalo stići za trenutak",
-      "testFailed": "Slanje nije uspjelo"
+      "testFailed": "Slanje nije uspjelo",
+      "testCountdown": "Zaključajte telefon sada — probno zvono se oglašava za {seconds} s",
+      "testSentLocked": "Poslano — zvono će se oglasiti na zaključanom telefonu za nekoliko sekundi",
+      "testNoDevice": "Nema registriranog kuhinjskog uređaja — jednom otvorite aplikaciju na kuhinjskom telefonu, pa pokušajte ponovno",
+      "testOtherDevice": "Zvono drži drugi uređaj — probno zvono je poslano na taj uređaj, a ne na ovaj",
+      "testErrorDetail": "Slanje nije uspjelo: {error}",
+      "testUnconfirmed": "Potvrda nije stigla na ovaj telefon — ako je zaključani telefon zazvonio, test je uspio; ako je ostao tih, pokušajte ponovno"
     }
   },
   "admin": {

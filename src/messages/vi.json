@@ -825,7 +825,13 @@
       "testRing": "Thử chuông",
       "testSending": "Đang gửi…",
       "testSent": "Đã gửi — chuông báo sẽ reo trong giây lát",
-      "testFailed": "Gửi thất bại"
+      "testFailed": "Gửi thất bại",
+      "testCountdown": "Khóa điện thoại ngay — chuông thử sẽ reo sau {seconds} giây",
+      "testSentLocked": "Đã gửi — chuông sẽ reo trên điện thoại đang khóa trong vài giây",
+      "testNoDevice": "Chưa có thiết bị bếp nào được đăng ký — hãy mở ứng dụng trên điện thoại bếp một lần rồi thử lại",
+      "testOtherDevice": "Thiết bị khác đang giữ chuông báo — chuông thử đã được gửi đến thiết bị đó, không phải thiết bị này",
+      "testErrorDetail": "Gửi thất bại: {error}",
+      "testUnconfirmed": "Không có xác nhận nào đến điện thoại này — nếu điện thoại đang khóa đã đổ chuông, thử nghiệm đã thành công; nếu vẫn im lặng, hãy thử lại"
     }
   },
   "admin": {

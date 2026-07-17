@@ -825,7 +825,13 @@
       "testRing": "Przetestuj dzwonek",
       "testSending": "Wysyłanie…",
       "testSent": "Wysłano — dzwonek powinien dotrzeć za chwilę",
-      "testFailed": "Nie udało się wysłać"
+      "testFailed": "Nie udało się wysłać",
+      "testCountdown": "Zablokuj teraz telefon — testowy dzwonek zadzwoni za {seconds} s",
+      "testSentLocked": "Wysłano — dzwonek zadzwoni na zablokowanym telefonie w ciągu kilku sekund",
+      "testNoDevice": "Brak zarejestrowanego urządzenia kuchennego — otwórz raz aplikację na telefonie kuchennym i spróbuj ponownie",
+      "testOtherDevice": "Dzwonek należy do innego urządzenia — test został wysłany na tamto urządzenie, nie na to",
+      "testErrorDetail": "Wysyłanie nie powiodło się: {error}",
+      "testUnconfirmed": "Na ten telefon nie dotarło potwierdzenie — jeśli zablokowany telefon zadzwonił, test się powiódł; jeśli pozostał cichy, spróbuj ponownie"
     }
   },
   "admin": {

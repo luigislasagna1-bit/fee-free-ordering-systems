@@ -825,7 +825,13 @@
       "testRing": "Testează soneria",
       "testSending": "Se trimite…",
       "testSent": "Trimis — soneria ar trebui să sune imediat",
-      "testFailed": "Trimiterea a eșuat"
+      "testFailed": "Trimiterea a eșuat",
+      "testCountdown": "Blochează-ți telefonul acum — soneria de test pornește în {seconds}s",
+      "testSentLocked": "Trimis — soneria sună pe telefonul blocat în câteva secunde",
+      "testNoDevice": "Niciun dispozitiv de bucătărie înregistrat — deschide aplicația o dată pe telefonul din bucătărie, apoi reîncearcă",
+      "testOtherDevice": "Alt dispozitiv deține soneria — testul a fost trimis către acel dispozitiv, nu către acesta",
+      "testErrorDetail": "Trimiterea a eșuat: {error}",
+      "testUnconfirmed": "Nicio confirmare nu a ajuns pe acest telefon — dacă telefonul blocat a sunat, testul a reușit; dacă a rămas silențios, reîncearcă"
     }
   },
   "admin": {

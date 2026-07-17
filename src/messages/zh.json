@@ -825,7 +825,13 @@
       "testRing": "测试响铃",
       "testSending": "发送中…",
       "testSent": "已发送 — 响铃马上就到",
-      "testFailed": "发送失败"
+      "testFailed": "发送失败",
+      "testCountdown": "请立即锁定手机 — 测试响铃将在 {seconds} 秒后响起",
+      "testSentLocked": "已发送 — 响铃将在几秒内在锁屏的手机上响起",
+      "testNoDevice": "没有已注册的厨房设备 — 请先在厨房手机上打开一次应用，然后重试",
+      "testOtherDevice": "响铃由另一台设备接管 — 测试已发送到那台设备，而不是本机",
+      "testErrorDetail": "发送失败：{error}",
+      "testUnconfirmed": "本机未收到确认 — 如果锁定的手机响铃了，说明测试成功；如果一直没响，请重试"
     }
   },
   "admin": {

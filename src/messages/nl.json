@@ -825,7 +825,13 @@
       "testRing": "Belsignaal testen",
       "testSending": "Verzenden…",
       "testSent": "Verzonden — het belsignaal komt zo binnen",
-      "testFailed": "Verzenden mislukt"
+      "testFailed": "Verzenden mislukt",
+      "testCountdown": "Vergrendel nu je telefoon — het testbelsignaal gaat over {seconds}s af",
+      "testSentLocked": "Verzonden — het belsignaal klinkt binnen enkele seconden op de vergrendelde telefoon",
+      "testNoDevice": "Geen geregistreerd keukenapparaat — open de app één keer op de keukentelefoon en probeer het daarna opnieuw",
+      "testOtherDevice": "Een ander apparaat beheert het belsignaal — de test is naar dat apparaat gestuurd, niet naar dit apparaat",
+      "testErrorDetail": "Verzenden mislukt: {error}",
+      "testUnconfirmed": "Geen bevestiging op deze telefoon ontvangen — als de vergrendelde telefoon rinkelde, is de test geslaagd; bleef hij stil, probeer het dan opnieuw"
     }
   },
   "admin": {

@@ -825,7 +825,13 @@
       "testRing": "Suoneria di prova",
       "testSending": "Invio…",
       "testSent": "Inviato — la suoneria dovrebbe arrivare a momenti",
-      "testFailed": "Invio non riuscito"
+      "testFailed": "Invio non riuscito",
+      "testCountdown": "Blocca il telefono ora — la suoneria di prova parte tra {seconds}s",
+      "testSentLocked": "Inviato — la suoneria suona sul telefono bloccato entro pochi secondi",
+      "testNoDevice": "Nessun dispositivo cucina registrato — apri l'app una volta sul telefono della cucina, poi riprova",
+      "testOtherDevice": "Un altro dispositivo controlla la suoneria — il test è stato inviato a quel dispositivo, non a questo",
+      "testErrorDetail": "Invio non riuscito: {error}",
+      "testUnconfirmed": "Nessuna conferma è arrivata a questo telefono — se il telefono bloccato ha squillato, il test è riuscito; se è rimasto muto, riprova"
     }
   },
   "admin": {

@@ -23,7 +23,7 @@ import {
   nativePrint,
   nativePrinterErrorCopy,
 } from "@/lib/native-printer";
-import { registerKitchenPush, unregisterKitchenPush, getKitchenPushHealth, type KitchenPushHealth } from "@/lib/native-push";
+import { registerKitchenPush, unregisterKitchenPush, getKitchenPushHealth, getStoredKitchenPushToken, type KitchenPushHealth } from "@/lib/native-push";
 import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm, nativeSetCustomSound } from "@/lib/native-order-alarm";
 import { getNativeAppVersion } from "@/lib/native-app-version";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
@@ -56,10 +56,36 @@ function isIOSCapacitorShell(): boolean {
   return iosShellCache;
 }
 
+// Media-session hygiene for the iOS shell (Fabrizio cmrkvs5r round 2,
+// 2026-07-17). Releasing an element's src ends ITS session, but WebKit can
+// keep the app's Now-Playing / Control-Center entry ("Kitchen Order Ap" +
+// bare play triangle = a metadata-less paused session) pinned anyway —
+// Fabrizio filmed the card ~50s into a session BEFORE any ring. So after
+// every teardown we also null out whatever navigator.mediaSession state
+// WebKit synthesized. Best-effort: no-op off the shell, on SSR, and on
+// WebKits that don't expose the API. Deliberately NOT typed against
+// lib.dom's MediaSession so older TS lib configs can't break the build.
+function clearIOSMediaSession(): void {
+  if (!isIOSCapacitorShell()) return;
+  try {
+    const ms = typeof navigator !== "undefined" ? (navigator as any).mediaSession : null;
+    if (!ms) return;
+    ms.metadata = null;
+    ms.playbackState = "none";
+    for (const action of ["play", "pause", "stop", "seekbackward", "seekforward"]) {
+      try { ms.setActionHandler(action, null); } catch { /* action unsupported on this WebKit */ }
+    }
+  } catch { /* hygiene is best-effort */ }
+}
+
 // The full-length new-order alert track — single source for the lazy element
 // creation AND ensureLongAlertSrc(), which restores it after the iOS-shell
 // stop-release (see the long-alert effect). Keep the two in sync via this const.
 const LONG_ALERT_SRC = "/sounds/gloriafood-alert.mp3";
+
+// Server-side delay the Test-ring button asks /api/kitchen/test-push for —
+// long enough to lock the phone, short of the route's 15s clamp / 30s cap.
+const TEST_RING_DELAY_S = 8;
 
 // useLayoutEffect that stays silent during SSR (React logs a dev warning when
 // useLayoutEffect itself is invoked in a server render; on the server it's a
@@ -1383,7 +1409,25 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const ensureLongAlertRouting = useCallback((): boolean => {
     const a = longAlertRef.current;
     if (!a) return false;
-    if (longAlertSourceRef.current) return true; // already routed
+    if (longAlertSourceRef.current) {
+      // Already routed — but on the iOS shell the context may be PARKED
+      // (suspended while the kitchen was fully idle, cmrkvs5r round 2), and a
+      // media element routed through a suspended context plays SILENCE. The
+      // long-alert effect reaches play() through here without any other
+      // resume, so wake the context on this path too. Checked as
+      // `!== "running"` (NOT `=== "suspended"`): after an OS audio takeover
+      // (phone call, Siri) iOS WebKit reports the non-standard "interrupted"
+      // state — with no visibilitychange/focus/pageshow to fire the rearm
+      // listener's resume — and a media element routed through a non-running
+      // context plays SILENCE while play() still resolves, so the
+      // blocked-play retry never arms. Resuming a running context is a
+      // no-op; Android/web never park, branch skipped entirely.
+      if (isIOSCapacitorShell()) {
+        const ctx = audioCtxRef.current;
+        if (ctx && ctx.state !== "running") ctx.resume().catch(() => {});
+      }
+      return true;
+    }
     try {
       const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
       if (!Ctx) return false;
@@ -1828,7 +1872,16 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       // prime would have. (Review, 2026-07-17.)
       try {
         const a = getLongAlert();
-        if (a && a.paused && !blockedPlayRetryRef.current) {
+        // iOS SHELL: skip the muted prime ENTIRELY (cmrkvs5r round 2). Autoplay
+        // there is gesture-ungated (device-proven: the old login ghost-ring
+        // played with zero taps), so the play→pause dance unlocks nothing — it
+        // was the ONE pre-ring play() of a media element, i.e. the act that
+        // registered the phantom "Now Playing" card Fabrizio filmed in Control
+        // Center BEFORE any ring that session. Releasing src after the fact
+        // demonstrably didn't make WebKit forget the app; never playing the
+        // element outside a real ring does. Android/web keep the prime — they
+        // genuinely gate HTMLAudio playback on a first gesture.
+        if (a && a.paused && !blockedPlayRetryRef.current && !isIOSCapacitorShell()) {
           // The iOS-shell stop branch may have released the element's src —
           // restore it so the priming play() has something to prime.
           ensureLongAlertSrc(a);
@@ -1838,10 +1891,22 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
             // iOS shell: release again after the muted prime — the prime itself
             // registers a WebKit media session, and an idle kitchen would
             // otherwise show the phantom "Now Playing" card before any ring.
+            // (Unreachable while the shell skips the prime above; kept so a
+            // future conditional re-enable stays session-clean.)
             if (isIOSCapacitorShell()) {
               try { a.removeAttribute("src"); a.load(); } catch { /* noop */ }
+              clearIOSMediaSession();
             }
-          }).catch(() => { a.muted = false; });
+          }).catch(() => {
+            a.muted = false;
+            // Same invariant on the reject path (was missing in round 1): a
+            // rejected prime must not leave the idle element holding a loaded
+            // src on the shell. Skipped if a ring became legitimately due
+            // mid-flight — the play paths restore src themselves anyway.
+            if (isIOSCapacitorShell() && !webRingShouldPlayRef.current) {
+              try { a.removeAttribute("src"); a.load(); } catch { /* noop */ }
+            }
+          });
         }
       } catch {}
     };
@@ -2386,6 +2451,23 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       // re-runs of this branch don't re-invoke load() on an already-empty element.
       if (isIOSCapacitorShell() && a.getAttribute("src")) {
         try { a.removeAttribute("src"); a.load(); } catch { /* best-effort */ }
+        // Round 2: releasing the src alone provably didn't clear the phantom
+        // card — also null out the mediaSession state WebKit synthesized.
+        clearIOSMediaSession();
+      }
+      // iOS SHELL ONLY (cmrkvs5r round 2): with NO ring due at all, park the
+      // AudioContext too. A perpetually-RUNNING context is the remaining
+      // suspected owner of the pre-ring Now-Playing card (newer WebKit can
+      // surface Web-Audio-holding pages in Control Center), and the bell /
+      // cadence chirps are pure Web Audio with no element to release. Guarded
+      // on !ringAudible && !autoAcceptRinging so a live custom/synth CADENCE
+      // (which also lands in this else-branch, alertSound !== "gloriafood") is
+      // never strangled. Every play path resumes first (ensureLongAlertRouting,
+      // playBufferOnce, synthBellOnce, the rearm listener, the blocked-play
+      // retry, the first-gesture unlock), so parking while idle costs nothing.
+      // Never done on Android/web.
+      if (isIOSCapacitorShell() && !ringAudible && !autoAcceptRinging) {
+        try { audioCtxRef.current?.suspend?.().catch?.(() => {}); } catch { /* best-effort */ }
       }
     }
   }, [nativeAlarm, ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, resumeSuspect, getLongAlert, ensureLongAlertRouting, ensureLongAlertSrc, armBlockedPlayRetry, disarmBlockedPlayRetry]);
@@ -2461,6 +2543,27 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     else nativeRearmAlarm();
   }, [nativeAlarm, pageVisible, acknowledged, ringAudible, openOrderIsPending, openReservationIsPending]);
 
+  // ── Ring-notification tap lands on the LIST (Android parity, cmrkvs5r round 2) ──
+  // native-push.ts dispatches this when a tapped push is a RING push —
+  // data.orderId (initial order push), data.reservationId (reservation ring)
+  // or type "pending_reminder" (the iOS cron re-ring, which is restaurant-
+  // aggregated and carries no orderId). Android's tap intent opens MainActivity with NO order extra —
+  // staff land on the LIST with the alarm still sounding, and it stops only
+  // when they open the pending order themselves. Mirror that here by closing
+  // any open detail: the per-order hush subtracts the OPEN pending order from
+  // ringAudible, so with the list showing, the tapped order stays IN the ring
+  // set and the web engine keeps ringing until the operator opens it.
+  // Deliberately touches NOTHING else — no `acknowledged`, no hush call — the
+  // tap only navigates. Non-ring pushes never dispatch this event.
+  useEffect(() => {
+    const onRingTap = () => {
+      setSelectedId(null);
+      setSelectedReservationId(null);
+    };
+    window.addEventListener("ffo:kitchen-ring-tap", onRingTap);
+    return () => window.removeEventListener("ffo:kitchen-ring-tap", onRingTap);
+  }, []);
+
   // ── Auto-refresh a stale WebView bundle (Fabrizio iOS report, 2026-07-14) ──
   // Installed apps load the LIVE /kitchen, but the long-lived WebView session
   // never reloads on its own, so a web fix (e.g. the ghost-ring fix) can fail to
@@ -2502,20 +2605,61 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     }
   }, [ringAudible, autoAcceptRinging, pageVisible, selectedId, selectedReservationId]);
 
+  // Persistent preview element for the sound-settings "Test sound" button
+  // (cmrkvs5r round 2). The old per-click throwaway `new Audio(...)` PLAYED and
+  // was then abandoned with its src still loaded — on the iOS shell that's a
+  // leaked WebKit media session per press, one of the feeders of the phantom
+  // Now-Playing card, and nothing ever tore it down. One reused element +
+  // pause + iOS-shell src-release after every preview keeps the shell clean.
+  // NOT routed through createMediaElementSource (unlike the long-alert
+  // element), so re-pointing its src per press is safe.
+  const previewRef = useRef<HTMLAudioElement | null>(null);
+  const previewStopTimerRef = useRef<number | null>(null);
+  const stopPreview = useCallback(() => {
+    if (previewStopTimerRef.current !== null) {
+      window.clearTimeout(previewStopTimerRef.current);
+      previewStopTimerRef.current = null;
+    }
+    const p = previewRef.current;
+    if (!p) return;
+    try { p.pause(); p.currentTime = 0; } catch { /* noop */ }
+    // iOS shell: same teardown discipline as the ring track — an idle element
+    // must hold no src, and the synthesized mediaSession state goes with it.
+    if (isIOSCapacitorShell()) {
+      try { p.removeAttribute("src"); p.load(); } catch { /* noop */ }
+      clearIOSMediaSession();
+    }
+  }, []);
+  // Unmount hygiene: a preview cut off by logout/navigation must not stay
+  // parked with a loaded src (and its timer must die with the component).
+  useEffect(() => () => { stopPreview(); }, [stopPreview]);
   const testAlertSound = useCallback(() => {
     // Preview the ONE official sound — a short snippet of the liked GloriaFood
-    // alert track (NOT the old short ding). A separate one-off Audio so it never
+    // alert track (NOT the old short ding). A separate element so it never
     // touches the live ringing track; it stops itself after ~2.5s. (Luigi
     // 2026-06-20: a single new-order sound for the whole system.)
     const vol = alertVolume || 1.0;
     if (vol <= 0) return;
     try {
-      const preview = new Audio(customSoundUrl || "/sounds/gloriafood-alert.mp3");
-      preview.volume = vol;
-      preview.play().catch(() => {});
-      window.setTimeout(() => { try { preview.pause(); preview.currentTime = 0; } catch { /* noop */ } }, 2500);
+      let p = previewRef.current;
+      if (!p) {
+        p = new Audio();
+        p.preload = "auto";
+        previewRef.current = p;
+      }
+      stopPreview(); // cut a still-running preview (also clears its stop timer)
+      const src = customSoundUrl || "/sounds/gloriafood-alert.mp3";
+      // Restore/repoint every press: the iOS release above empties the src,
+      // and the owner may have uploaded a different custom sound since.
+      if (p.getAttribute("src") !== src) {
+        p.src = src;
+        try { p.load(); } catch { /* noop */ }
+      }
+      p.volume = vol;
+      p.play().catch(() => {});
+      previewStopTimerRef.current = window.setTimeout(stopPreview, 2500);
     } catch { /* Audio unavailable — preview is best-effort */ }
-  }, [alertVolume, customSoundUrl]);
+  }, [alertVolume, customSoundUrl, stopPreview]);
 
   // Clear history sets (localStorage-persisted).
   // Start empty on both server and client so hydration matches, then load
@@ -2543,22 +2687,130 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // a Test-ring button through the real send path. Snapshot refreshed each
   // time the menu opens; iOS shell only (Android's native engine owns its ring).
   const [pushHealthInfo, setPushHealthInfo] = useState<KitchenPushHealth | null>(null);
-  const [testRingState, setTestRingState] = useState<"idle" | "sending" | "sent" | "failed">("idle");
+  // Test-ring state machine (cmrkvs5r round 2). The old immediate send looked
+  // BROKEN when pressed with the app foreground: presentationOptions: [] means
+  // iOS presents nothing for a foreground push (by design — the web engine owns
+  // the on-screen ring) and a test_push creates no order for the web engine to
+  // ring about, so nothing audible or visible ever happened. Now the route
+  // sleeps server-side (delaySeconds) before sending, the panel counts down and
+  // tells the operator to LOCK THE PHONE — the push then lands on the locked
+  // phone as a full banner + alarm .caf, the exact path the button exists to
+  // prove — and afterwards shows the route's TRUE verdict (sent / sent to the
+  // other ring-owning device / no device registered / FCM error).
+  const [testRingState, setTestRingState] = useState<
+    "idle" | "countdown" | "sent" | "sent_other_device" | "no_device" | "error" | "failed" | "unconfirmed"
+  >("idle");
+  const [testRingSecondsLeft, setTestRingSecondsLeft] = useState(0);
+  const [testRingError, setTestRingError] = useState<string | null>(null);
+  const testRingTimerRef = useRef<number | null>(null);
+  // Monotonic run id — each Test-ring press (and each menu-reopen reset)
+  // bumps it, and every async settle path checks it first, so a stale fetch
+  // from an earlier/abandoned run can never stomp the current run's
+  // countdown or verdict.
+  const testRingRunRef = useRef(0);
+  // Watchdog so a fetch that NEVER settles (iOS can tear the connection down
+  // during lock/suspend without ever rejecting) can't leave the panel stuck
+  // on "Sending…" with the button disabled forever.
+  const testRingWatchdogRef = useRef<number | null>(null);
+  const clearTestRingTimer = useCallback(() => {
+    if (testRingTimerRef.current !== null) {
+      window.clearInterval(testRingTimerRef.current);
+      testRingTimerRef.current = null;
+    }
+    if (testRingWatchdogRef.current !== null) {
+      window.clearTimeout(testRingWatchdogRef.current);
+      testRingWatchdogRef.current = null;
+    }
+  }, []);
+  useEffect(() => () => { clearTestRingTimer(); }, [clearTestRingTimer]); // unmount hygiene
   useEffect(() => {
     if (!showQuickMenu || !isIOSCapacitorShell()) return;
     setPushHealthInfo(getKitchenPushHealth());
+    // A countdown is still running → a POST is in flight. Do NOT reset to
+    // idle here: re-enabling the button mid-flight allowed a second
+    // unthrottled send (two pushes, two rings) whose state the first run's
+    // settle then stomped. Keep the countdown + disabled button; the settle
+    // or the watchdog will produce the verdict.
+    if (testRingTimerRef.current !== null) return;
+    testRingRunRef.current += 1; // orphan any still-pending fetch — a late settle must not repaint a fresh idle panel
+    clearTestRingTimer();
     setTestRingState("idle");
-  }, [showQuickMenu]);
+    setTestRingSecondsLeft(0);
+    setTestRingError(null);
+  }, [showQuickMenu, clearTestRingTimer]);
   const runTestRing = useCallback(async () => {
-    setTestRingState("sending");
+    if (testRingTimerRef.current !== null) return; // countdown already running — never double-send
+    // Local countdown starts immediately; it keeps ticking whether or not the
+    // fetch settles (the WebView freezes once the phone locks, so the response
+    // often only arrives after unlock — nothing depends on it until then).
+    const run = ++testRingRunRef.current;
+    const startedAt = Date.now();
+    setTestRingError(null);
+    setTestRingSecondsLeft(TEST_RING_DELAY_S);
+    setTestRingState("countdown");
+    clearTestRingTimer();
+    testRingTimerRef.current = window.setInterval(() => {
+      setTestRingSecondsLeft((s) => (s <= 1 ? 0 : s - 1));
+    }, 1000);
+    // Watchdog: iOS can suspend the WebView with the fetch in flight and the
+    // connection may then die WITHOUT the promise ever settling. Timers are
+    // frozen while locked too, so this fires shortly after resume: if no
+    // verdict has landed by then, show the neutral "did it ring?" outcome and
+    // re-enable the button instead of "Sending…" forever. A real settle that
+    // arrives later (same run) simply overwrites the neutral verdict.
+    testRingWatchdogRef.current = window.setTimeout(() => {
+      testRingWatchdogRef.current = null;
+      if (testRingRunRef.current !== run) return;
+      if (testRingTimerRef.current !== null) {
+        window.clearInterval(testRingTimerRef.current);
+        testRingTimerRef.current = null;
+      }
+      setTestRingSecondsLeft(0);
+      setTestRingState((s) => (s === "countdown" ? "unconfirmed" : s));
+    }, (TEST_RING_DELAY_S + 15) * 1000);
     try {
-      const res = await fetch("/api/kitchen/test-push", { method: "POST" });
-      const data = (await res.json().catch(() => null)) as { sent?: number } | null;
-      setTestRingState(res.ok && (data?.sent ?? 0) > 0 ? "sent" : "failed");
+      const res = await fetch("/api/kitchen/test-push", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        // deviceToken lets the server tell THIS phone from the ring-owning one
+        // (single-active-device rule) — the test always goes to the owner.
+        body: JSON.stringify({ delaySeconds: TEST_RING_DELAY_S, deviceToken: getStoredKitchenPushToken() }),
+      });
+      const data = (await res.json().catch(() => null)) as
+        | { state?: string; sent?: number; error?: string }
+        | null;
+      if (testRingRunRef.current !== run) return; // superseded/abandoned run — don't stomp the current one
+      clearTestRingTimer();
+      setTestRingSecondsLeft(0);
+      if (!res.ok || !data) {
+        setTestRingState("failed");
+      } else if (data.state === "sent") {
+        setTestRingState("sent");
+      } else if (data.state === "sent_other_device") {
+        setTestRingState("sent_other_device");
+      } else if (data.state === "no_device") {
+        setTestRingState("no_device");
+      } else if (data.state === "error") {
+        setTestRingError(typeof data.error === "string" ? data.error : null);
+        setTestRingState("error");
+      } else {
+        // Deploy-skew fallback: an older route without `state` answered.
+        setTestRingState((data.sent ?? 0) > 0 ? "sent" : "failed");
+      }
     } catch {
-      setTestRingState("failed");
+      if (testRingRunRef.current !== run) return;
+      clearTestRingTimer();
+      setTestRingSecondsLeft(0);
+      // A rejection AFTER the send moment is almost always iOS tearing the
+      // suspended connection down on lock/resume (NSURLErrorNetworkConnectionLost)
+      // — the server already slept out the delay and sent the push, and the
+      // locked phone very likely RANG. Reporting "Failed to send" here
+      // manufactured false bug reports from the diagnostic button, so show
+      // the neutral "did it ring?" verdict instead. A rejection BEFORE the
+      // send moment (offline, DNS, refused) is a genuine failure.
+      setTestRingState(Date.now() - startedAt >= TEST_RING_DELAY_S * 1000 ? "unconfirmed" : "failed");
     }
-  }, []);
+  }, [clearTestRingTimer]);
 
   const seenIdsRef = useRef<Set<string>>(new Set(initialOrders.map(o => o.id)));
   // Stable ref to ringBellOnce so fetchOrders (deps=[]) can call the
@@ -3897,16 +4149,46 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                           <button
                             type="button"
                             onClick={runTestRing}
-                            disabled={testRingState === "sending"}
+                            disabled={testRingState === "countdown"}
                             className={`px-2.5 py-1 rounded-md text-[11px] font-semibold ${t.btn} ${t.text} disabled:opacity-60`}
                           >
-                            {testRingState === "sending" ? tk("pushHealth.testSending") : tk("pushHealth.testRing")}
+                            {testRingState === "countdown" ? tk("pushHealth.testSending") : tk("pushHealth.testRing")}
                           </button>
+                          {/* Live countdown — the operator must LOCK the phone before
+                              the server-side delayed send fires (foreground pushes
+                              present nothing by design). Once it hits 0 the fetch is
+                              usually still in flight (WebView frozen while locked), so
+                              show "Sending…" until the real verdict lands on resume. */}
+                          {testRingState === "countdown" && testRingSecondsLeft > 0 && (
+                            <span className="text-[11px] font-semibold text-amber-500">
+                              {tk("pushHealth.testCountdown", { seconds: testRingSecondsLeft })}
+                            </span>
+                          )}
+                          {testRingState === "countdown" && testRingSecondsLeft <= 0 && (
+                            <span className={`text-[11px] font-medium ${t.muted}`}>{tk("pushHealth.testSending")}</span>
+                          )}
                           {testRingState === "sent" && (
-                            <span className="text-[11px] font-medium text-emerald-500">{tk("pushHealth.testSent")}</span>
+                            <span className="text-[11px] font-medium text-emerald-500">{tk("pushHealth.testSentLocked")}</span>
+                          )}
+                          {testRingState === "sent_other_device" && (
+                            <span className="text-[11px] font-medium text-amber-500">{tk("pushHealth.testOtherDevice")}</span>
+                          )}
+                          {testRingState === "no_device" && (
+                            <span className="text-[11px] font-medium text-red-500">{tk("pushHealth.testNoDevice")}</span>
+                          )}
+                          {testRingState === "error" && (
+                            <span className="text-[11px] font-medium text-red-500">
+                              {tk("pushHealth.testErrorDetail", { error: testRingError ?? "?" })}
+                            </span>
                           )}
                           {testRingState === "failed" && (
                             <span className="text-[11px] font-medium text-red-500">{tk("pushHealth.testFailed")}</span>
+                          )}
+                          {/* Neutral verdict: the request died mid-lock (or never settled)
+                              AFTER the server-side send moment — the push most likely went
+                              out and the locked phone rang. Never claim failure here. */}
+                          {testRingState === "unconfirmed" && (
+                            <span className="text-[11px] font-medium text-amber-500">{tk("pushHealth.testUnconfirmed")}</span>
                           )}
                         </div>
                       </div>

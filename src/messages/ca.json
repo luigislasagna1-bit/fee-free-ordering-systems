@@ -825,7 +825,13 @@
       "testRing": "Prova de timbre",
       "testSending": "S'està enviant…",
       "testSent": "Enviat — el timbre hauria d'arribar en un moment",
-      "testFailed": "No s'ha pogut enviar"
+      "testFailed": "No s'ha pogut enviar",
+      "testCountdown": "Bloqueja el telèfon ara — el timbre de prova sonarà d'aquí a {seconds}s",
+      "testSentLocked": "Enviat — el timbre sona al telèfon bloquejat en pocs segons",
+      "testNoDevice": "No hi ha cap dispositiu de cuina registrat — obre l'app al telèfon de la cuina un cop i torna-ho a provar",
+      "testOtherDevice": "Un altre dispositiu és el propietari del timbre — la prova s'ha enviat a aquell dispositiu, no a aquest",
+      "testErrorDetail": "L'enviament ha fallat: {error}",
+      "testUnconfirmed": "No ha arribat cap confirmació a aquest telèfon — si el telèfon bloquejat ha sonat, la prova ha funcionat; si s'ha mantingut en silenci, torna-ho a provar"
     }
   },
   "admin": {

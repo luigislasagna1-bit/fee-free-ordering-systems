@@ -825,7 +825,13 @@
       "testRing": "Testhelin",
       "testSending": "Saatmine…",
       "testSent": "Saadetud — helin peaks kohe saabuma",
-      "testFailed": "Saatmine ebaõnnestus"
+      "testFailed": "Saatmine ebaõnnestus",
+      "testCountdown": "Lukusta telefon kohe — testhelin käivitub {seconds} s pärast",
+      "testSentLocked": "Saadetud — helin kõlab lukustatud telefonis mõne sekundi jooksul",
+      "testNoDevice": "Registreeritud köögiseadet pole — ava rakendus köögitelefonis üks kord ja proovi siis uuesti",
+      "testOtherDevice": "Helin kuulub teisele seadmele — test saadeti sellele seadmele, mitte siia",
+      "testErrorDetail": "Saatmine ebaõnnestus: {error}",
+      "testUnconfirmed": "Sellele telefonile kinnitust ei jõudnud — kui lukustatud telefon helises, test õnnestus; kui see jäi vaikseks, proovi uuesti"
     }
   },
   "admin": {

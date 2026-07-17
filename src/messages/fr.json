@@ -825,7 +825,13 @@
       "testRing": "Tester la sonnerie",
       "testSending": "Envoi…",
       "testSent": "Envoyé — la sonnerie devrait arriver dans un instant",
-      "testFailed": "Échec de l'envoi"
+      "testFailed": "Échec de l'envoi",
+      "testCountdown": "Verrouillez votre téléphone maintenant — la sonnerie de test se déclenche dans {seconds} s",
+      "testSentLocked": "Envoyé — la sonnerie retentit sur le téléphone verrouillé d'ici quelques secondes",
+      "testNoDevice": "Aucun appareil de cuisine enregistré — ouvrez l'application une fois sur le téléphone de la cuisine, puis réessayez",
+      "testOtherDevice": "Un autre appareil détient la sonnerie — le test a été envoyé à cet appareil-là, pas à celui-ci",
+      "testErrorDetail": "Échec de l'envoi : {error}",
+      "testUnconfirmed": "Aucune confirmation n'est parvenue à ce téléphone — si le téléphone verrouillé a sonné, le test a réussi ; s'il est resté silencieux, réessayez"
     }
   },
   "admin": {

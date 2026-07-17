@@ -825,7 +825,13 @@
       "testRing": "Test ringesignal",
       "testSending": "Sender…",
       "testSent": "Sendt — ringesignalet bør komme om et øyeblikk",
-      "testFailed": "Kunne ikke sende"
+      "testFailed": "Kunne ikke sende",
+      "testCountdown": "Lås telefonen nå — testringesignalet utløses om {seconds} s",
+      "testSentLocked": "Sendt — ringesignalet spilles av på den låste telefonen i løpet av noen sekunder",
+      "testNoDevice": "Ingen registrert kjøkkenenhet — åpne appen på kjøkkentelefonen én gang, og prøv deretter på nytt",
+      "testOtherDevice": "En annen enhet eier ringesignalet — testen ble sendt til den enheten, ikke denne",
+      "testErrorDetail": "Sending mislyktes: {error}",
+      "testUnconfirmed": "Ingen bekreftelse nådde denne telefonen — hvis den låste telefonen ringte, fungerte testen; hvis den forble stille, prøv på nytt"
     }
   },
   "admin": {

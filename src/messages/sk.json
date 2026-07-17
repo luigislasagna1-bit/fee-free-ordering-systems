@@ -825,7 +825,13 @@
       "testRing": "Testovacie zvonenie",
       "testSending": "Odosiela sa…",
       "testSent": "Odoslané — zvonenie by malo doraziť o chvíľu",
-      "testFailed": "Odoslanie zlyhalo"
+      "testFailed": "Odoslanie zlyhalo",
+      "testCountdown": "Teraz zamknite telefón — testovacie zvonenie sa spustí o {seconds} s",
+      "testSentLocked": "Odoslané — zvonenie zaznie na zamknutom telefóne do niekoľkých sekúnd",
+      "testNoDevice": "Žiadne zaregistrované kuchynské zariadenie — otvorte raz aplikáciu na kuchynskom telefóne a skúste znova",
+      "testOtherDevice": "Zvonenie vlastní iné zariadenie — test bol odoslaný na to zariadenie, nie na toto",
+      "testErrorDetail": "Odoslanie zlyhalo: {error}",
+      "testUnconfirmed": "Na tento telefón neprišlo potvrdenie — ak uzamknutý telefón zazvonil, test uspel; ak zostal ticho, skúste to znova"
     }
   },
   "admin": {

@@ -825,7 +825,13 @@
       "testRing": "Bandomasis skambutis",
       "testSending": "Siunčiama…",
       "testSent": "Išsiųsta — skambutis netrukus turėtų pasigirsti",
-      "testFailed": "Nepavyko išsiųsti"
+      "testFailed": "Nepavyko išsiųsti",
+      "testCountdown": "Užrakinkite telefoną dabar — bandomasis skambutis suskambės po {seconds} s",
+      "testSentLocked": "Išsiųsta — skambutis užrakintame telefone pasigirs per kelias sekundes",
+      "testNoDevice": "Nėra užregistruoto virtuvės įrenginio — kartą atidarykite programą virtuvės telefone ir bandykite dar kartą",
+      "testOtherDevice": "Skambutis priklauso kitam įrenginiui — bandymas išsiųstas į tą įrenginį, o ne į šį",
+      "testErrorDetail": "Siuntimas nepavyko: {error}",
+      "testUnconfirmed": "Į šį telefoną patvirtinimas neatėjo — jei užrakintas telefonas suskambo, bandymas pavyko; jei liko tylus, bandykite dar kartą"
     }
   },
   "admin": {

@@ -825,7 +825,13 @@
       "testRing": "Testa zvans",
       "testSending": "Sūta…",
       "testSent": "Nosūtīts — zvanam vajadzētu atskanēt pēc brīža",
-      "testFailed": "Neizdevās nosūtīt"
+      "testFailed": "Neizdevās nosūtīt",
+      "testCountdown": "Bloķējiet tālruni tagad — testa zvans atskanēs pēc {seconds} s",
+      "testSentLocked": "Nosūtīts — zvana signāls bloķētajā tālrunī atskanēs dažu sekunžu laikā",
+      "testNoDevice": "Nav reģistrētas virtuves ierīces — vienreiz atveriet lietotni virtuves tālrunī un mēģiniet vēlreiz",
+      "testOtherDevice": "Zvana signāls pieder citai ierīcei — tests tika nosūtīts uz to ierīci, nevis šo",
+      "testErrorDetail": "Sūtīšana neizdevās: {error}",
+      "testUnconfirmed": "Šajā tālrunī apstiprinājums nepienāca — ja bloķētais tālrunis zvanīja, tests izdevās; ja tas palika kluss, mēģiniet vēlreiz"
     }
   },
   "admin": {

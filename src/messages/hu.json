@@ -825,7 +825,13 @@
       "testRing": "Tesztcsengetés",
       "testSending": "Küldés…",
       "testSent": "Elküldve — a csengetés hamarosan megérkezik",
-      "testFailed": "Nem sikerült elküldeni"
+      "testFailed": "Nem sikerült elküldeni",
+      "testCountdown": "Zárolja most a telefont — a tesztcsengetés {seconds} mp múlva indul",
+      "testSentLocked": "Elküldve — a csengetés néhány másodpercen belül megszólal a zárolt telefonon",
+      "testNoDevice": "Nincs regisztrált konyhai eszköz — nyissa meg egyszer az alkalmazást a konyhai telefonon, majd próbálja újra",
+      "testOtherDevice": "A csengetés egy másik eszközhöz tartozik — a teszt arra az eszközre lett elküldve, nem erre",
+      "testErrorDetail": "A küldés sikertelen: {error}",
+      "testUnconfirmed": "Erre a telefonra nem érkezett visszaigazolás — ha a lezárt telefon csörgött, a teszt sikerült; ha néma maradt, próbálja újra"
     }
   },
   "admin": {

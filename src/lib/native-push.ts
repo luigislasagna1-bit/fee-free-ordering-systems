@@ -44,6 +44,19 @@ function getPlatform(): string {
 // (the DELETE is token-scoped → other kitchen devices keep ringing). Luigi 2026-06-23 (L1).
 const KITCHEN_PUSH_TOKEN_KEY = "ffo_kitchen_push_token";
 
+/** The FCM/APNs token THIS device registered (null when none is stored —
+ *  plain browser, storage disabled, or logged out). The kitchen Test-ring
+ *  button ships it to /api/kitchen/test-push so the server can tell the
+ *  presser when ANOTHER device owns the ring (single-active-device rule).
+ *  Kept here so the storage key lives in exactly one file. */
+export function getStoredKitchenPushToken(): string | null {
+  try {
+    return localStorage.getItem(KITCHEN_PUSH_TOKEN_KEY);
+  } catch {
+    return null; // SSR / private mode / storage disabled
+  }
+}
+
 // ── Push-health telemetry (Fabrizio cmrkvs5r, 2026-07-17) ────────────────────
 // The iOS shell has NO native alarm plugin — its closed/locked ring depends
 // entirely on APNs pushes reaching this device — so the kitchen 3-dot menu
@@ -204,8 +217,31 @@ export async function registerKitchenPush(): Promise<void> {
     });
     await push.addListener("pushNotificationActionPerformed", (action: any) => {
       // User tapped the notification banner (app was backgrounded/locked).
-      const orderId = action?.notification?.data?.orderId;
+      const data = action?.notification?.data ?? {};
+      const orderId = data?.orderId;
       if (orderId) console.log("[native-push] opened from order", orderId);
+      // Ring-notification tap → land on the LIST (Android parity, cmrkvs5r
+      // round 2). Android's tap intent opens MainActivity with NO order
+      // extra (OrderAlarmService openPi): staff land on the list still
+      // ringing, and the ring stops only when they open the pending order
+      // themselves. The kitchen display listens for this event and closes
+      // any open detail — the per-order hush subtracts an OPEN pending
+      // order from the ring set, so landing on the list keeps the web ring
+      // alive until the operator opens the order.
+      //
+      // A ring push is NOT only the initial per-order push (data.orderId):
+      // the iOS cron re-ring carries only { type: "pending_reminder" } (it is
+      // restaurant-aggregated, so it can never name one order), and the
+      // reservation ring carries only { reservationId }. After ~29s the
+      // reminder REPLACES the original banner (collapseId), so keying this on
+      // orderId alone left every reminder/reservation tap resuming into the
+      // open-detail-hushed kitchen — the exact silence this event exists to
+      // end. Non-ring pushes (test_push, …) keep the refresh-only behavior.
+      const isRingPush =
+        Boolean(orderId) || Boolean(data?.reservationId) || data?.type === "pending_reminder";
+      if (isRingPush) {
+        try { window.dispatchEvent(new CustomEvent("ffo:kitchen-ring-tap")); } catch { /* SSR-safe */ }
+      }
       broadcastRefresh();
     });
 

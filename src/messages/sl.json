@@ -825,7 +825,13 @@
       "testRing": "Preizkusi zvonjenje",
       "testSending": "Pošiljanje…",
       "testSent": "Poslano — zvonjenje bi moralo prispeti vsak trenutek",
-      "testFailed": "Pošiljanje ni uspelo"
+      "testFailed": "Pošiljanje ni uspelo",
+      "testCountdown": "Zdaj zaklenite telefon — preizkusno zvonjenje se sproži čez {seconds} s",
+      "testSentLocked": "Poslano — zvonjenje se na zaklenjenem telefonu predvaja v nekaj sekundah",
+      "testNoDevice": "Ni registrirane kuhinjske naprave — enkrat odprite aplikacijo na kuhinjskem telefonu, nato poskusite znova",
+      "testOtherDevice": "Zvonjenje ima druga naprava — preizkus je bil poslan na tisto napravo, ne na to",
+      "testErrorDetail": "Pošiljanje ni uspelo: {error}",
+      "testUnconfirmed": "Potrditev ni prispela na ta telefon — če je zaklenjeni telefon zazvonil, je preizkus uspel; če je ostal tih, poskusite znova"
     }
   },
   "admin": {

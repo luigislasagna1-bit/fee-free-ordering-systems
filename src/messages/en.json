@@ -825,7 +825,13 @@
       "testRing": "Test ring",
       "testSending": "Sending…",
       "testSent": "Sent — the ring should arrive in a moment",
-      "testFailed": "Failed to send"
+      "testFailed": "Failed to send",
+      "testCountdown": "Lock your phone now — the test ring fires in {seconds}s",
+      "testSentLocked": "Sent — the ring plays on the locked phone within a few seconds",
+      "testNoDevice": "No registered kitchen device — open the app on the kitchen phone once, then retry",
+      "testOtherDevice": "Another device owns the ring — the test was sent to that device, not this one",
+      "testErrorDetail": "Send failed: {error}",
+      "testUnconfirmed": "No confirmation reached this phone — if the locked phone rang, the test worked; if it stayed silent, retry"
     }
   },
   "admin": {

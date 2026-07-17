@@ -825,7 +825,13 @@
       "testRing": "벨소리 테스트",
       "testSending": "전송 중…",
       "testSent": "전송됨 — 곧 벨소리가 울립니다",
-      "testFailed": "전송 실패"
+      "testFailed": "전송 실패",
+      "testCountdown": "지금 휴대폰을 잠그세요 — {seconds}초 후 테스트 벨소리가 울립니다",
+      "testSentLocked": "전송됨 — 잠긴 휴대폰에서 몇 초 안에 벨소리가 울립니다",
+      "testNoDevice": "등록된 주방 기기가 없습니다 — 주방 휴대폰에서 앱을 한 번 연 다음 다시 시도하세요",
+      "testOtherDevice": "다른 기기가 벨소리를 담당하고 있습니다 — 테스트가 이 기기가 아닌 해당 기기로 전송되었습니다",
+      "testErrorDetail": "전송 실패: {error}",
+      "testUnconfirmed": "이 휴대폰으로 확인이 도착하지 않았습니다 — 잠긴 휴대폰이 울렸다면 테스트는 성공한 것입니다. 계속 조용했다면 다시 시도하세요"
     }
   },
   "admin": {

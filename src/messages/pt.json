@@ -825,7 +825,13 @@
       "testRing": "Testar toque",
       "testSending": "Enviando…",
       "testSent": "Enviado — o toque deve chegar em instantes",
-      "testFailed": "Falha ao enviar"
+      "testFailed": "Falha ao enviar",
+      "testCountdown": "Bloqueie o telefone agora — o toque de teste dispara em {seconds}s",
+      "testSentLocked": "Enviado — o toque toca no telefone bloqueado dentro de poucos segundos",
+      "testNoDevice": "Nenhum dispositivo de cozinha registrado — abra o app no telefone da cozinha uma vez e tente novamente",
+      "testOtherDevice": "Outro dispositivo é dono do toque — o teste foi enviado para esse dispositivo, não para este",
+      "testErrorDetail": "Falha no envio: {error}",
+      "testUnconfirmed": "Nenhuma confirmação chegou a este telefone — se o telefone bloqueado tocou, o teste funcionou; se ficou em silêncio, tente novamente"
     }
   },
   "admin": {

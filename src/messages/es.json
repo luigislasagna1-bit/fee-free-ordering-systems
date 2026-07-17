@@ -825,7 +825,13 @@
       "testRing": "Probar campana",
       "testSending": "Enviando…",
       "testSent": "Enviado — la campana debería sonar en un momento",
-      "testFailed": "Error al enviar"
+      "testFailed": "Error al enviar",
+      "testCountdown": "Bloquea tu teléfono ahora — la campana de prueba sonará en {seconds}s",
+      "testSentLocked": "Enviado — la campana sonará en el teléfono bloqueado en unos segundos",
+      "testNoDevice": "No hay ningún dispositivo de cocina registrado — abre la app una vez en el teléfono de la cocina y vuelve a intentarlo",
+      "testOtherDevice": "Otro dispositivo controla la campana — la prueba se envió a ese dispositivo, no a este",
+      "testErrorDetail": "Error al enviar: {error}",
+      "testUnconfirmed": "No llegó ninguna confirmación a este teléfono — si el teléfono bloqueado sonó, la prueba funcionó; si se quedó en silencio, vuelve a intentarlo"
     }
   },
   "admin": {
