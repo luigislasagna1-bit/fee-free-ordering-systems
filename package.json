@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "preflight": "prisma generate && tsc --noEmit && vitest run && next build",
+    "preflight": "prisma generate && node scripts/check-role-pref-not-authz.mjs && tsc --noEmit && vitest run && next build",
     "seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",

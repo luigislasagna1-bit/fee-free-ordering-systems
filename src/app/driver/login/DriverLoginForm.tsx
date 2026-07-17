@@ -18,8 +18,11 @@ function DriverLoginFormInner({ locale }: { locale: string }) {
     e.preventDefault();
     setLoading(true);
     try {
-      // Clear any stale session cookies before authenticating (same as /kitchen).
-      await fetch("/api/auth/clear-session", { method: "POST" }).catch(() => {});
+      // v1.1 Phase 0: the pre-login clear-session call is GONE — it cleared the
+      // ADMIN and KITCHEN cookies (never the driver one), so a mistyped driver
+      // login on a restaurant device silently signed the restaurant out of its
+      // other surfaces. The driver credentials provider rotates its own
+      // single-active-session token on success; no pre-clear is needed here.
       const result = await signIn("credentials", {
         email: form.email,
         password: form.password,
@@ -33,6 +36,11 @@ function DriverLoginFormInner({ locale }: { locale: string }) {
         // a bug (Luigi himself hit it, 2026-07-16). Point them at the right door.
         throw new Error(t("invalidDriverLogin"));
       }
+      // Remember this device prefers the DRIVER shell (rendering preference
+      // only — never read by any API; see the ffd-role-pref gate in preflight).
+      document.cookie = `ffd-role-pref=driver; path=/; max-age=34560000; SameSite=Lax${
+        window.location.protocol === "https:" ? "; Secure" : ""
+      }`;
       // Hard navigation so the driver session cookie is read on the next server
       // render (soft-nav can race the cookie write on some mobile browsers).
       window.location.assign("/driver");

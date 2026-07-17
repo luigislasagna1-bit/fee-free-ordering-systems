@@ -132,6 +132,15 @@ function LoginFormInner({
         role === "superadmin" || role === "platform_support" ? "/superadmin"
         : role === "reseller_partner" || role === "pending_reseller" ? "/reseller"
         : safeCallback ?? "/admin";
+      // v1.1 Phase 0: a restaurant signing in on the Fee Free Delivery app
+      // (callbackUrl into /driver) marks this device as preferring the
+      // RESTAURANT shell — so a stale driver session on the same device can't
+      // mask the dispatch view. Rendering preference only, never authz.
+      if (dest.startsWith("/driver")) {
+        document.cookie = `ffd-role-pref=restaurant; path=/; max-age=34560000; SameSite=Lax${
+          window.location.protocol === "https:" ? "; Secure" : ""
+        }`;
+      }
       window.location.assign(dest);
     } catch (err: any) {
       toast.error(err.message);

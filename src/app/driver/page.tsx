@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { getDriverSession } from "@/lib/driver-session";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
@@ -13,12 +14,23 @@ export const dynamic = "force-dynamic";
  *   • a DRIVER session  → the job queue (accept / pick up / deliver).
  *   • an admin session with a restaurantId → the restaurant DISPATCH view
  *     (assign & track deliveries), reusing the admin ops panel.
- * The driver session wins if both are present (this is the drivers' app first).
- * A signed-in superadmin (no restaurantId) is sent to the drivers roster.
+ *
+ * ffd-role-pref (v1.1 Phase 0) — a RENDERING PREFERENCE cookie, never an authz
+ * input (a CI grep gate keeps it out of src/app/api): on dual-session devices
+ * (an owner who also drives, or a shared tablet) it decides which shell renders;
+ * with a single session it changes nothing. Unset keeps today's behavior:
+ * the driver session wins if both are present (this is the drivers' app first).
+ * No restaurantId tie-breaking, ever (see AGENTS.md session rule) — a superadmin
+ * (no restaurantId) is sent to the drivers roster.
  */
 export default async function DriverHomePage() {
+  const pref = (await cookies()).get("ffd-role-pref")?.value;
+
   const driver = await getDriverSession();
-  if (driver) {
+  // Dual-role tie-break: only a driver session + an explicit restaurant
+  // preference looks at the admin session first. Everything else keeps the
+  // driver-first behavior verbatim.
+  if (driver && pref !== "restaurant") {
     const rec = await prisma.driver.findUnique({ where: { id: driver.driverId }, select: { ratingPct: true } });
     return <DriverQueue driverName={driver.name} rating={rec?.ratingPct ?? null} />;
   }
@@ -31,6 +43,13 @@ export default async function DriverHomePage() {
       select: { name: true },
     });
     return <RestaurantDispatch restaurantId={user.restaurantId} restaurantName={restaurant?.name ?? ""} />;
+  }
+
+  // pref said "restaurant" but there is no admin session — fall back to the
+  // driver session rather than bouncing a signed-in driver to the login page.
+  if (driver) {
+    const rec = await prisma.driver.findUnique({ where: { id: driver.driverId }, select: { ratingPct: true } });
+    return <DriverQueue driverName={driver.name} rating={rec?.ratingPct ?? null} />;
   }
 
   redirect("/driver/login");
