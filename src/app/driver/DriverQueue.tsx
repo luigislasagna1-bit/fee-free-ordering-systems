@@ -1,14 +1,14 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { signOut } from "next-auth/react";
 import {
-  Bike, Loader2, MapPin, Navigation, Phone, LogOut, Package,
+  Bike, Loader2, MapPin, Navigation, Phone, Package,
   CheckCircle2, Clock, DollarSign, Radio, RefreshCw, Star,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { mapsDirectionsUrl } from "@/lib/delivery-eta";
 import { haversineKm } from "@/lib/geocode";
+import { formatPct } from "./shared/format-pct";
 
 type Assignment = {
   id: string;
@@ -45,8 +45,34 @@ const HEADING_TO_CUSTOMER = new Set(["picked_up", "out_for_delivery"]);
 // dialog again after that (the OS prompt itself only fires once anyway).
 const BG_DISCLOSURE_KEY = "ffd:bg-location-disclosure-ok";
 
-export function DriverQueue({ driverName, rating = null }: { driverName: string; rating?: number | null }) {
+export function DriverQueue({
+  driverName,
+  rating = null,
+  onAssignmentsChange,
+  hideHeader = false,
+  onGpsChange,
+  refreshToken = 0,
+}: {
+  driverName: string;
+  rating?: number | null;
+  /** v1.1 shell wiring: mirrors the already-polled queue up to DriverApp so
+   *  the Jobs tab badge can count my open jobs WITHOUT a second poll. */
+  onAssignmentsChange?: (assignments: Assignment[]) => void;
+  /** v1.1 shell wiring (plan §3.1): the shell owns the ONE header shared
+   *  across tabs (ShellHeader in DriverApp — RoleSwitch mounts there exactly
+   *  once), so it suppresses this component's internal header. Visual only:
+   *  GPS/poll/heartbeat behavior is untouched. */
+  hideHeader?: boolean;
+  /** Mirrors the GPS-streaming flag up to the shell header's live chip.
+   *  Standalone reporting effect — the GPS effect itself is untouched. */
+  onGpsChange?: (gpsOn: boolean) => void;
+  /** Bumped by the shell header's refresh button → one manual load(), same
+   *  as the old in-header refresh. 0 = initial value, never fetches (the
+   *  poll effect already loads on mount). Cadences untouched. */
+  refreshToken?: number;
+}) {
   const t = useTranslations("driver");
+  const locale = useLocale();
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [loading, setLoading] = useState(true);
   const [acting, setActing] = useState<string | null>(null);
@@ -85,6 +111,25 @@ export function DriverQueue({ driverName, rating = null }: { driverName: string;
       clearInterval(beat);
     };
   }, [load]);
+
+  // v1.1 shell wiring (Phase 3): report the queue to the parent shell (Jobs
+  // badge). Standalone effect — poll cadence, GPS and 401 handling untouched.
+  useEffect(() => {
+    onAssignmentsChange?.(assignments);
+  }, [assignments, onAssignmentsChange]);
+
+  // v1.1 shell wiring: mirror the GPS flag up to the shared header's chip.
+  // Standalone reporting effect — the GPS streaming effect is untouched.
+  useEffect(() => {
+    onGpsChange?.(gpsOn);
+  }, [gpsOn, onGpsChange]);
+
+  // v1.1 shell wiring: shared-header refresh button. Only bumps trigger a
+  // fetch (mount is covered by the poll effect above); one-shot, no cadence
+  // change — identical to a tap on the old in-header refresh button.
+  useEffect(() => {
+    if (refreshToken) void load();
+  }, [refreshToken, load]);
 
   // The one active job we're streaming GPS for (first mine + active).
   const activeAssignment = assignments.find((a) => a.mine && ACTIVE.has(a.status));
@@ -228,7 +273,10 @@ export function DriverQueue({ driverName, rating = null }: { driverName: string;
           it's sticky top-0, so once the list scrolls it pins to y=0 of the
           viewport, and container padding can't keep it out from under the
           iPhone notch/status bar (Luigi 2026-07-16: header buttons were
-          untappable at the top edge). Same pattern as RestaurantDispatch. */}
+          untappable at the top edge). Same pattern as RestaurantDispatch.
+          Suppressed inside the v1.1 shell (hideHeader) — DriverApp renders
+          the ONE ShellHeader shared across tabs instead (plan §3.1). */}
+      {!hideHeader && (
       <header
         className="sticky top-0 z-10 bg-gray-900/95 backdrop-blur border-b border-gray-800 px-4 py-3 flex items-center justify-between"
         style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
@@ -243,7 +291,7 @@ export function DriverQueue({ driverName, rating = null }: { driverName: string;
               {driverName}
               {rating != null && (
                 <span className="inline-flex items-center gap-0.5 font-semibold text-amber-400">
-                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {Math.round(rating)}%
+                  <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {formatPct(rating / 100, locale)}
                 </span>
               )}
             </div>
@@ -258,17 +306,13 @@ export function DriverQueue({ driverName, rating = null }: { driverName: string;
           <button onClick={() => load()} className="text-gray-400 hover:text-white" title={t("refresh")}>
             <RefreshCw className="w-4 h-4" />
           </button>
-          <button
-            onClick={() => signOut({ callbackUrl: "/driver/login" })}
-            className="text-gray-400 hover:text-white"
-            title={t("signOut")}
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
+          {/* Sign-out moved to the Profile tab (v1.1 plan §2.4/§3.5). */}
         </div>
       </header>
+      )}
 
-      <main className="px-4 py-4 space-y-6 max-w-lg mx-auto">
+      {/* pb-24 keeps the last card clear of the shell's fixed bottom nav. */}
+      <main className="px-4 py-4 pb-24 space-y-6 max-w-lg mx-auto">
         {loading ? (
           <div className="flex justify-center py-16">
             <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />

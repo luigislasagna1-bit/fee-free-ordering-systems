@@ -40,22 +40,37 @@ export type DriverRatingStats = {
 };
 
 /**
+ * The three component scores (each 0–1) that blend into ratingPct — extracted
+ * (v1.1 Phase 3) so the math has ONE home: computeRatingPct derives from this,
+ * and the driver-app Profile tab renders the same components as bars. Never
+ * duplicate these formulas at a call site.
+ */
+export function ratingComponents(s: DriverRatingStats): {
+  reliability: number;
+  onTime: number;
+  feedback: number;
+} {
+  const K = SMOOTHING_PRIOR;
+  const reliability = (s.deliveredCount + K) / (s.deliveredCount + s.cancelledCount + K);
+  const onTimeDeliveries = Math.max(0, s.deliveredCount - s.lateCount);
+  const onTime = (onTimeDeliveries + K) / (s.deliveredCount + K);
+  const feedback = s.feedbackCount > 0 && s.feedbackAvgStars != null ? s.feedbackAvgStars / 5 : 1;
+  return { reliability, onTime, feedback };
+}
+
+/**
  * Blended 0–100 score. Reliability + on-time carry a smoothing prior (see
  * SMOOTHING_PRIOR) so a new driver sits at 100% and single events nudge rather
  * than lurch the score. Feedback defaults to a perfect 1.0 until any star rating
  * lands.
  */
 export function computeRatingPct(s: DriverRatingStats): number {
-  const K = SMOOTHING_PRIOR;
-  const reliability = (s.deliveredCount + K) / (s.deliveredCount + s.cancelledCount + K);
-  const onTimeDeliveries = Math.max(0, s.deliveredCount - s.lateCount);
-  const onTime = (onTimeDeliveries + K) / (s.deliveredCount + K);
-  const feedback = s.feedbackCount > 0 && s.feedbackAvgStars != null ? s.feedbackAvgStars / 5 : 1;
+  const c = ratingComponents(s);
 
   const blended =
-    RATING_WEIGHTS.reliability * reliability +
-    RATING_WEIGHTS.onTime * onTime +
-    RATING_WEIGHTS.feedback * feedback;
+    RATING_WEIGHTS.reliability * c.reliability +
+    RATING_WEIGHTS.onTime * c.onTime +
+    RATING_WEIGHTS.feedback * c.feedback;
 
   // Clamp + round to a whole percent. Never below 0 or above 100.
   return Math.max(0, Math.min(100, Math.round(blended * 100)));

@@ -7,6 +7,7 @@ import { Bike, Loader2, Store } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
+import { readPrefCookie, setPrefCookie } from "../shared/role-pref";
 
 /**
  * UNIFIED login for the Fee Free Delivery app (v1.1 Phase 1, plan §2.2).
@@ -30,18 +31,6 @@ import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
  * either leg shows the shared "too many attempts" copy. There is no
  * "which table is this email in" preflight endpoint, by design.
  */
-
-function readPrefCookie(): string | null {
-  if (typeof document === "undefined") return null;
-  const m = document.cookie.match(/(?:^|;\s*)ffd-role-pref=([^;]+)/);
-  return m ? decodeURIComponent(m[1]) : null;
-}
-
-function setPrefCookie(role: "driver" | "restaurant") {
-  document.cookie = `ffd-role-pref=${role}; path=/; max-age=34560000; SameSite=Lax${
-    window.location.protocol === "https:" ? "; Secure" : ""
-  }`;
-}
 
 type LegResult = "ok" | "invalid" | "rate-limited";
 

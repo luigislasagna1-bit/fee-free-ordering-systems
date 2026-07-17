@@ -1,9 +1,11 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { getServerSession } from "next-auth";
 import { getDriverSession } from "@/lib/driver-session";
 import { getSessionUser } from "@/lib/session";
+import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db";
-import { DriverQueue } from "./DriverQueue";
+import { DriverApp } from "./DriverApp";
 import { RestaurantDispatch } from "./RestaurantDispatch";
 
 export const dynamic = "force-dynamic";
@@ -31,8 +33,27 @@ export default async function DriverHomePage() {
   // preference looks at the admin session first. Everything else keeps the
   // driver-first behavior verbatim.
   if (driver && pref !== "restaurant") {
-    const rec = await prisma.driver.findUnique({ where: { id: driver.driverId }, select: { ratingPct: true } });
-    return <DriverQueue driverName={driver.name} rating={rec?.ratingPct ?? null} />;
+    // hasOtherRole feeds RoleSwitch ONLY (does the switch flip in-app or
+    // deep-link the login?). It is never a tie-break input — the driver
+    // session already won this branch per the truth table above.
+    //
+    // It must mean "an ADMIN session is also present" (plan §2.3's truth
+    // table + the RoleSwitch prop contract), so read the admin session
+    // directly. A bare getSessionUser() would FALL BACK to the kitchen
+    // session (session.ts: primary=admin, fallback=kitchen; the kitchen
+    // cookie is path=/ so it rides along on /driver) — and a kitchen-staff
+    // login on a shared tablet would then advertise "Switch to restaurant
+    // view", one-tap-setting the sticky ffd-role-pref and pinning the tablet
+    // on the dispatch surface a kitchen login is designed not to grant
+    // (admin/layout.tsx bounces kitchen_staff for the same reason). With no
+    // admin session, the switch deep-links /driver/login?as=restaurant and
+    // real admin credentials are required. Read-only presence check —
+    // session.ts itself stays untouched (plan §8).
+    const [rec, adminSession] = await Promise.all([
+      prisma.driver.findUnique({ where: { id: driver.driverId }, select: { ratingPct: true } }),
+      getServerSession(authOptions),
+    ]);
+    return <DriverApp driverName={driver.name} rating={rec?.ratingPct ?? null} hasOtherRole={!!adminSession?.user} />;
   }
 
   const user = await getSessionUser();
@@ -47,9 +68,11 @@ export default async function DriverHomePage() {
 
   // pref said "restaurant" but there is no admin session — fall back to the
   // driver session rather than bouncing a signed-in driver to the login page.
+  // (getSessionUser() returned null above, which implies the admin session is
+  // absent too, so hasOtherRole is false.)
   if (driver) {
     const rec = await prisma.driver.findUnique({ where: { id: driver.driverId }, select: { ratingPct: true } });
-    return <DriverQueue driverName={driver.name} rating={rec?.ratingPct ?? null} />;
+    return <DriverApp driverName={driver.name} rating={rec?.ratingPct ?? null} hasOtherRole={false} />;
   }
 
   redirect("/driver/login");
