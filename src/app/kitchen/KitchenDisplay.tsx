@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import { formatCurrency, capitalizeName } from "@/lib/utils";
 import { formatTime, formatDueLabel, formatDateCapitalized } from "@/lib/format-time";
 import {
@@ -35,6 +35,14 @@ import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 // menu next to the native app version + compared against /api/build-id so a
 // stale WebView-cached bundle can auto-refresh when idle. "dev" locally.
 const WEB_BUILD = process.env.NEXT_PUBLIC_WEB_BUILD || "dev";
+
+// useLayoutEffect that stays silent during SSR (React logs a dev warning when
+// useLayoutEffect itself is invoked in a server render; on the server it's a
+// no-op either way). Used to apply the saved night-mode theme synchronously
+// after hydration but BEFORE the browser paints, so a night-mode kitchen never
+// flashes light on relaunch.
+const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 // ── Countdown hook ────────────────────────────────────────────────────────────
 // Returns 0 until the client mounts so SSR and the first client render match
@@ -867,10 +875,29 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     localStorage.setItem("kds-zoom", String(kitchenZoom));
   }, [kitchenZoom]);
 
-  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
-    if (typeof window === "undefined") return "light";
-    return (localStorage.getItem("kds-theme") as ThemeMode) ?? "light";
-  });
+  // Night mode (Fabrizio cmrmbgtd1, 2026-07-16: "after relaunch only the table
+  // reservation tiles come back dark"). ROOT CAUSE: this initializer used to
+  // read localStorage directly, so on relaunch the client's very FIRST render
+  // was "dark" while the server HTML was "light" (the server can't see
+  // localStorage). React's production hydration ADOPTS the existing server DOM
+  // without patching attribute mismatches, and every later re-render diffs
+  // against the already-dark virtual DOM — className "never changed", so every
+  // surface present in the SSR HTML (header, tabs, order tiles) stayed light
+  // forever. Only DOM created AFTER hydration got dark classes — and
+  // reservation tiles are exactly that (`reservations` starts [] and fills
+  // from the client-side poll). FIX: start at "light" exactly like the server
+  // so hydration matches, then apply the saved theme in a layout effect — a
+  // real light→dark state transition React commits to the WHOLE tree,
+  // synchronously before the first paint (no light flash on a dark kitchen).
+  const [themeMode, setThemeMode] = useState<ThemeMode>("light");
+  useIsomorphicLayoutEffect(() => {
+    const saved = localStorage.getItem("kds-theme");
+    if (saved === "dark") setThemeMode("dark");
+  }, []);
+  // Skips the mount run (which still closes over the pre-hydration "light"
+  // default) so relaunching can never clobber a saved "dark" in storage; the
+  // persist effect below only writes on real changes after that.
+  const themePersistReadyRef = useRef(false);
   const t = THEMES[themeMode];
 
   const [orders, setOrders] = useState<Order[]>(initialOrders);
@@ -2304,7 +2331,13 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const autoRejectingRef = useRef<Set<string>>(new Set());
   const now = useNow();
 
-  useEffect(() => { localStorage.setItem("kds-theme", themeMode); }, [themeMode]);
+  // Persist theme changes — but skip the very first run: it fires with the
+  // pre-hydration "light" default and would overwrite a saved "dark" before
+  // the hydration layout effect's re-render lands (see themeMode above).
+  useEffect(() => {
+    if (!themePersistReadyRef.current) { themePersistReadyRef.current = true; return; }
+    localStorage.setItem("kds-theme", themeMode);
+  }, [themeMode]);
 
   // ── Client-side auto-reject when the 4-min countdown elapses ──────────
   // The cron (auto-reject-stale-orders) is the server-side safety net but

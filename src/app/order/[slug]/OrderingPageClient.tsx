@@ -2040,19 +2040,37 @@ export function OrderingPageClient({
     const body = document.body;
     const scrollY = window.scrollY;
     // Compensate for the vanishing scrollbar so DESKTOP content doesn't jump
-    // ~15px when we fix the body (mobile is touch → 0, a no-op there).
+    // ~15px when we lock the body (mobile is touch → 0, a no-op there).
     const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+    // TWO lock techniques, by pointer type (Fabrizio cmrj664ru round 2):
+    // - TOUCH (pointer: coarse): position:fixed + top:-scrollY on <body> — the
+    //   only lock iOS Safari reliably honors. Verified by Fabrizio on mobile;
+    //   unchanged.
+    // - DESKTOP (fine pointer): overflow:hidden on <html>. The fixed technique
+    //   took the body out of flow, collapsed the document, and clamped scrollY
+    //   to 0 — the background visibly blanked/jumped when the cart opened on a
+    //   scrolled page ("background disappears", his 2026-07-16 screenshots).
+    //   NOTE it must be <html>, NOT <body>: this page's <html> is h-full, and
+    //   body-level overflow:hidden ALSO collapses the document and loses the
+    //   scroll (measured live 2026-07-17: html-lock keeps scrollY+docH intact;
+    //   body-lock clamps both).
+    const useFixedLock = window.matchMedia("(pointer: coarse)").matches;
+    const html = document.documentElement;
     const prev = {
       position: body.style.position, top: body.style.top, left: body.style.left,
       right: body.style.right, width: body.style.width, overflow: body.style.overflow,
-      paddingRight: body.style.paddingRight,
+      htmlOverflow: html.style.overflow, paddingRight: body.style.paddingRight,
     };
-    body.style.position = "fixed";
-    body.style.top = `-${scrollY}px`;
-    body.style.left = "0";
-    body.style.right = "0";
-    body.style.width = "100%";
-    body.style.overflow = "hidden";
+    if (useFixedLock) {
+      body.style.position = "fixed";
+      body.style.top = `-${scrollY}px`;
+      body.style.left = "0";
+      body.style.right = "0";
+      body.style.width = "100%";
+      body.style.overflow = "hidden";
+    } else {
+      html.style.overflow = "hidden";
+    }
     if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
     return () => {
       body.style.position = prev.position;
@@ -2061,8 +2079,10 @@ export function OrderingPageClient({
       body.style.right = prev.right;
       body.style.width = prev.width;
       body.style.overflow = prev.overflow;
+      html.style.overflow = prev.htmlOverflow;
       body.style.paddingRight = prev.paddingRight;
-      window.scrollTo(0, scrollY);
+      // Only the fixed technique loses the scroll position; restore it there.
+      if (useFixedLock) window.scrollTo(0, scrollY);
     };
   }, [cartOpen, checkoutOpen]);
 

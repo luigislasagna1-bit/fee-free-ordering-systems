@@ -2138,8 +2138,17 @@ export function CheckoutModal({
             {tOrd("toasts.scheduledInPast")}
           </div>
         )}
-        {/* Footer */}
-        <div className="border-t border-gray-100 px-5 py-4 sm:py-5 bg-white flex-shrink-0 flex items-center gap-3 safe-bottom">
+        {/* Footer — padding + button height deliberately MATCH the item modal's
+            add-to-cart footer (p-5 container, py-4 button): Fabrizio's cmrj664ru
+            "stuck to the bottom edge" was the footer hugging the modal's own
+            bottom border, and his stated spec is "the same distance as when
+            opening any dish". Keep these two footers in visual parity.
+            ⚠️ Do NOT put the .safe-bottom class here: it sets padding-bottom to
+            env(safe-area-inset-bottom), which is 0px on desktop and SILENTLY
+            REPLACES the Tailwind bottom padding — that override was the actual
+            three-round root cause of the flush footer. The calc() below COMPOSES
+            the inset with the real padding instead. */}
+        <div className="border-t border-gray-100 p-5 sm:py-6 pb-[calc(1.25rem+env(safe-area-inset-bottom))] sm:pb-[calc(1.5rem+env(safe-area-inset-bottom))] bg-white flex-shrink-0 flex items-center gap-3">
           <div className="flex-1">
             <div className="text-xs text-gray-500 uppercase font-bold">{creditChosen > 0 ? tc("reward.chargeToday") : tc("total")}</div>
             <div className="text-lg font-bold text-gray-900">{formatCurrency(creditChosen > 0 ? chargeToday : total)}</div>
@@ -2147,7 +2156,7 @@ export function CheckoutModal({
           <button
             onClick={placeOrder}
             disabled={orderLoading || cart.length === 0 || scheduledTooEarly || !!serviceConflictText}
-            className="flex-1 sm:flex-none text-white font-bold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 text-base"
+            className="flex-1 sm:flex-none text-white font-bold py-4 px-6 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 text-base"
             style={{ backgroundColor: theme.primaryColor }}
           >
             {orderLoading && <Loader2 className="w-5 h-5 animate-spin" />}
