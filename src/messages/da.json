@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Del din placering for leveringer",
     "bgDisclosureBody": "Fee Free Delivery indsamler placeringsdata, mens du har en aktiv levering, for at dele din liveposition med kunden og restauranten — også når appen er i baggrunden eller lukket, eller telefonen er låst. Sporingen stopper, når leveringen er gennemført.",
     "bgDisclosureAllow": "Fortsæt",
-    "bgDisclosureLater": "Ikke nu",
-    "invalidDriverLogin": "Ingen chaufførkonto matcher disse oplysninger. Restaurantejer eller personale? Brug restaurant-login nedenfor."
+    "bgDisclosureLater": "Ikke nu"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg dine leveringer",
     "openDashboard": "Åbn dashboardet",
     "notEnabledTitle": "Fee Free Delivery er ikke aktiveret for denne butik",
     "notEnabledBody": "Aktivér det i dit dashboard for at begynde at sende ordrer til dine chauffører.",
-    "restaurantLoginCta": "Restaurant? Log ind her for at administrere dine leveringer"
+    "restaurantLoginCta": "Restaurant? Log ind her for at administrere dine leveringer",
+    "loginHelpUnified": "Log ind med din chauffør- eller restaurantkonto.",
+    "loginFailed": "Vi kunne ikke logge dig ind med disse oplysninger. Tjek din e-mail og adgangskode, og prøv igen.",
+    "signInAsRestaurant": "Restaurant-login",
+    "signInAsDriver": "Chauffør-login",
+    "restaurantModeBadge": "Restaurant-login — administrer og følg dine leveringer.",
+    "switchToDispatch": "Skift til restaurantvisning",
+    "switchToDriver": "Skift til chaufførvisning"
   }
 }

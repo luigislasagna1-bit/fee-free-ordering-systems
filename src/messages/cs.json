@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Sdílejte svou polohu pro doručování",
     "bgDisclosureBody": "Fee Free Delivery shromažďuje údaje o poloze, když máte aktivní doručení, aby sdílela vaši polohu naživo se zákazníkem a restaurací — i když je aplikace na pozadí, zavřená, nebo je telefon uzamčen. Sledování končí dokončením doručení.",
     "bgDisclosureAllow": "Pokračovat",
-    "bgDisclosureLater": "Teď ne",
-    "invalidDriverLogin": "Těmto údajům neodpovídá žádný účet řidiče. Majitel nebo personál restaurace? Použijte přihlášení pro restaurace níže."
+    "bgDisclosureLater": "Teď ne"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Přiřazujte a sledujte své rozvozy",
     "openDashboard": "Otevřít nástěnku",
     "notEnabledTitle": "Fee Free Delivery není pro tuto provozovnu zapnuté",
     "notEnabledBody": "Zapněte ho na nástěnce a začněte odesílat objednávky svým řidičům.",
-    "restaurantLoginCta": "Restaurace? Přihlaste se zde a spravujte svá doručení"
+    "restaurantLoginCta": "Restaurace? Přihlaste se zde a spravujte svá doručení",
+    "loginHelpUnified": "Přihlaste se účtem řidiče nebo restaurace.",
+    "loginFailed": "S těmito údaji se nepodařilo přihlásit. Zkontrolujte e-mail a heslo a zkuste to znovu.",
+    "signInAsRestaurant": "Přihlášení pro restaurace",
+    "signInAsDriver": "Přihlášení pro řidiče",
+    "restaurantModeBadge": "Přihlášení pro restaurace — spravujte a sledujte svá doručení.",
+    "switchToDispatch": "Přepnout na zobrazení restaurace",
+    "switchToDriver": "Přepnout na zobrazení řidiče"
   }
 }

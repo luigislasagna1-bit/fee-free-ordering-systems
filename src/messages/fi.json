@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Jaa sijaintisi toimituksia varten",
     "bgDisclosureBody": "Fee Free Delivery kerää sijaintitietoja, kun sinulla on aktiivinen toimitus, jakaakseen live-sijaintisi asiakkaalle ja ravintolalle — myös kun sovellus on taustalla tai suljettu tai puhelin on lukittu. Seuranta päättyy, kun toimitus on valmis.",
     "bgDisclosureAllow": "Jatka",
-    "bgDisclosureLater": "Ei nyt",
-    "invalidDriverLogin": "Näillä tiedoilla ei löytynyt kuljettajatiliä. Ravintolan omistaja tai työntekijä? Käytä alla olevaa ravintolakirjautumista."
+    "bgDisclosureLater": "Ei nyt"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",
     "openDashboard": "Avaa hallintapaneeli",
     "notEnabledTitle": "Fee Free Delivery ei ole käytössä tässä myymälässä",
     "notEnabledBody": "Ota se käyttöön hallintapaneelissa, niin voit alkaa lähettää tilauksia kuljettajillesi.",
-    "restaurantLoginCta": "Ravintola? Kirjaudu tästä hallitaksesi toimituksiasi"
+    "restaurantLoginCta": "Ravintola? Kirjaudu tästä hallitaksesi toimituksiasi",
+    "loginHelpUnified": "Kirjaudu kuljettaja- tai ravintolatililläsi.",
+    "loginFailed": "Kirjautuminen ei onnistunut näillä tiedoilla. Tarkista sähköposti ja salasana ja yritä uudelleen.",
+    "signInAsRestaurant": "Ravintolakirjautuminen",
+    "signInAsDriver": "Kuljettajakirjautuminen",
+    "restaurantModeBadge": "Ravintolakirjautuminen — hallitse ja seuraa toimituksiasi.",
+    "switchToDispatch": "Vaihda ravintolanäkymään",
+    "switchToDriver": "Vaihda kuljettajanäkymään"
   }
 }

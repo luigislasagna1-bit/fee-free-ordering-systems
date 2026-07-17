@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "배달을 위해 위치를 공유하세요",
     "bgDisclosureBody": "Fee Free Delivery는 진행 중인 배달이 있는 동안 위치 데이터를 수집하여 고객 및 레스토랑과 실시간 위치를 공유합니다. 앱이 백그라운드에 있거나 종료된 경우, 휴대폰이 잠긴 경우에도 마찬가지입니다. 배달이 완료되면 추적이 중지됩니다.",
     "bgDisclosureAllow": "계속",
-    "bgDisclosureLater": "나중에",
-    "invalidDriverLogin": "이 정보와 일치하는 기사 계정이 없습니다. 레스토랑 사장님 또는 직원이신가요? 아래의 레스토랑 로그인을 이용하세요."
+    "bgDisclosureLater": "나중에"
   },
   "feefreeApp": {
     "dispatchSubtitle": "배달 배정 및 추적",
     "openDashboard": "대시보드 열기",
     "notEnabledTitle": "이 매장에는 Fee Free Delivery가 켜져 있지 않습니다",
     "notEnabledBody": "대시보드에서 켜면 기사에게 주문 배차를 시작할 수 있습니다.",
-    "restaurantLoginCta": "레스토랑이신가요? 여기에서 로그인하여 배달을 관리하세요"
+    "restaurantLoginCta": "레스토랑이신가요? 여기에서 로그인하여 배달을 관리하세요",
+    "loginHelpUnified": "기사 또는 레스토랑 계정으로 로그인하세요.",
+    "loginFailed": "해당 정보로 로그인할 수 없습니다. 이메일과 비밀번호를 확인한 후 다시 시도하세요.",
+    "signInAsRestaurant": "레스토랑 로그인",
+    "signInAsDriver": "기사 로그인",
+    "restaurantModeBadge": "레스토랑 로그인 — 배달을 관리하고 추적하세요.",
+    "switchToDispatch": "레스토랑 화면으로 전환",
+    "switchToDriver": "기사 화면으로 전환"
   }
 }

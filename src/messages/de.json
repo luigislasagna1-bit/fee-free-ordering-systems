@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Standort für Lieferungen freigeben",
     "bgDisclosureBody": "Fee Free Delivery erfasst Standortdaten, während du eine aktive Lieferung hast, um deine Live-Position mit dem Kunden und dem Restaurant zu teilen — auch wenn die App im Hintergrund läuft, geschlossen ist oder das Telefon gesperrt ist. Die Ortung endet, sobald die Lieferung abgeschlossen ist.",
     "bgDisclosureAllow": "Weiter",
-    "bgDisclosureLater": "Nicht jetzt",
-    "invalidDriverLogin": "Kein Fahrerkonto passt zu diesen Angaben. Restaurantinhaber oder -personal? Nutzen Sie die Restaurant-Anmeldung unten."
+    "bgDisclosureLater": "Nicht jetzt"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",
     "openDashboard": "Dashboard öffnen",
     "notEnabledTitle": "Fee Free Delivery ist für dieses Geschäft nicht aktiviert",
     "notEnabledBody": "Aktiviere es in deinem Dashboard, um Bestellungen an deine Fahrer zu senden.",
-    "restaurantLoginCta": "Restaurant? Hier anmelden, um Ihre Lieferungen zu verwalten"
+    "restaurantLoginCta": "Restaurant? Hier anmelden, um Ihre Lieferungen zu verwalten",
+    "loginHelpUnified": "Melden Sie sich mit Ihrem Fahrer- oder Restaurantkonto an.",
+    "loginFailed": "Anmeldung mit diesen Angaben nicht möglich. Prüfen Sie E-Mail und Passwort und versuchen Sie es erneut.",
+    "signInAsRestaurant": "Restaurant-Anmeldung",
+    "signInAsDriver": "Fahrer-Anmeldung",
+    "restaurantModeBadge": "Restaurant-Anmeldung — verwalten und verfolgen Sie Ihre Lieferungen.",
+    "switchToDispatch": "Zur Restaurantansicht wechseln",
+    "switchToDriver": "Zur Fahreransicht wechseln"
   }
 }

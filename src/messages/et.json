@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Jagage oma asukohta tarnete jaoks",
     "bgDisclosureBody": "Fee Free Delivery kogub asukohaandmeid, kui teil on aktiivne tarne, et jagada teie reaalajas asukohta kliendi ja restoraniga — ka siis, kui rakendus on taustal või suletud või telefon on lukus. Jälgimine lõpeb tarne lõpetamisel.",
     "bgDisclosureAllow": "Jätka",
-    "bgDisclosureLater": "Mitte praegu",
-    "invalidDriverLogin": "Nendele andmetele ei vasta ükski juhikonto. Restorani omanik või töötaja? Kasutage allolevat restorani sisselogimist."
+    "bgDisclosureLater": "Mitte praegu"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",
     "openDashboard": "Ava juhtpaneel",
     "notEnabledTitle": "Fee Free Delivery pole selle poe jaoks sisse lülitatud",
     "notEnabledBody": "Lülita see juhtpaneelil sisse, et hakata tellimusi oma juhtidele saatma.",
-    "restaurantLoginCta": "Restoran? Logi siia sisse, et hallata oma tarneid"
+    "restaurantLoginCta": "Restoran? Logi siia sisse, et hallata oma tarneid",
+    "loginHelpUnified": "Logige sisse juhi- või restoranikontoga.",
+    "loginFailed": "Nende andmetega ei õnnestunud sisse logida. Kontrollige e-posti ja parooli ning proovige uuesti.",
+    "signInAsRestaurant": "Restorani sisselogimine",
+    "signInAsDriver": "Juhi sisselogimine",
+    "restaurantModeBadge": "Restorani sisselogimine — hallake ja jälgige oma tarneid.",
+    "switchToDispatch": "Lülitu restoranivaatele",
+    "switchToDriver": "Lülitu juhivaatele"
   }
 }

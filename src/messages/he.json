@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "שתפו את המיקום שלכם עבור משלוחים",
     "bgDisclosureBody": "Fee Free Delivery אוסף נתוני מיקום בזמן שיש לכם משלוח פעיל, כדי לשתף את המיקום החי שלכם עם הלקוח והמסעדה — גם כשהאפליקציה ברקע או סגורה, או כשהטלפון נעול. המעקב נפסק עם השלמת המשלוח.",
     "bgDisclosureAllow": "המשך",
-    "bgDisclosureLater": "לא עכשיו",
-    "invalidDriverLogin": "לא נמצא חשבון נהג התואם לפרטים אלה. בעלים או צוות של מסעדה? השתמשו בכניסת המסעדה למטה."
+    "bgDisclosureLater": "לא עכשיו"
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",
     "openDashboard": "פתיחת לוח הבקרה",
     "notEnabledTitle": "Fee Free Delivery אינו מופעל עבור חנות זו",
     "notEnabledBody": "הפעל אותו בלוח הבקרה שלך כדי להתחיל לשלוח הזמנות לנהגים שלך.",
-    "restaurantLoginCta": "מסעדה? התחברו כאן לניהול המשלוחים שלכם"
+    "restaurantLoginCta": "מסעדה? התחברו כאן לניהול המשלוחים שלכם",
+    "loginHelpUnified": "התחברו עם חשבון הנהג או חשבון המסעדה שלכם.",
+    "loginFailed": "לא הצלחנו לחבר אתכם עם הפרטים האלה. בדקו את האימייל והסיסמה ונסו שוב.",
+    "signInAsRestaurant": "כניסת מסעדה",
+    "signInAsDriver": "כניסת נהג",
+    "restaurantModeBadge": "כניסת מסעדה — נהלו ועקבו אחרי המשלוחים שלכם.",
+    "switchToDispatch": "מעבר לתצוגת מסעדה",
+    "switchToDriver": "מעבר לתצוגת נהג"
   }
 }

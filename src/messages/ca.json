@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Comparteix la teva ubicació per als lliuraments",
     "bgDisclosureBody": "Fee Free Delivery recull dades d'ubicació mentre tens un lliurament actiu, per compartir la teva posició en directe amb el client i el restaurant — fins i tot quan l'aplicació és en segon pla o tancada, o el telèfon està bloquejat. El seguiment s'atura en completar el lliurament.",
     "bgDisclosureAllow": "Continua",
-    "bgDisclosureLater": "Ara no",
-    "invalidDriverLogin": "Cap compte de repartidor coincideix amb aquestes dades. Propietari o personal d'un restaurant? Fes servir l'accés per a restaurants de sota."
+    "bgDisclosureLater": "Ara no"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",
     "openDashboard": "Obre el tauler",
     "notEnabledTitle": "Fee Free Delivery no està activat per a aquest establiment",
     "notEnabledBody": "Activa'l al teu tauler per començar a enviar comandes als teus repartidors.",
-    "restaurantLoginCta": "Restaurant? Inicia sessió aquí per gestionar els teus lliuraments"
+    "restaurantLoginCta": "Restaurant? Inicia sessió aquí per gestionar els teus lliuraments",
+    "loginHelpUnified": "Inicia sessió amb el teu compte de repartidor o de restaurant.",
+    "loginFailed": "No hem pogut iniciar la teva sessió amb aquestes dades. Revisa el correu i la contrasenya i torna-ho a provar.",
+    "signInAsRestaurant": "Accés per a restaurants",
+    "signInAsDriver": "Accés per a repartidors",
+    "restaurantModeBadge": "Accés per a restaurants — gestiona i segueix els teus lliuraments.",
+    "switchToDispatch": "Canvia a la vista de restaurant",
+    "switchToDriver": "Canvia a la vista de repartidor"
   }
 }

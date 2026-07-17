@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Partilhe a sua localização para as entregas",
     "bgDisclosureBody": "A Fee Free Delivery recolhe dados de localização enquanto tem uma entrega ativa, para partilhar a sua posição em direto com o cliente e o restaurante — mesmo com a aplicação em segundo plano ou fechada, ou com o telemóvel bloqueado. O rastreio para quando a entrega é concluída.",
     "bgDisclosureAllow": "Continuar",
-    "bgDisclosureLater": "Agora não",
-    "invalidDriverLogin": "Nenhuma conta de estafeta corresponde a estes dados. Dono ou funcionário de restaurante? Use o acesso de restaurante abaixo."
+    "bgDisclosureLater": "Agora não"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe as suas entregas",
     "openDashboard": "Abrir painel",
     "notEnabledTitle": "O Fee Free Delivery não está ativado para este estabelecimento",
     "notEnabledBody": "Ative-o no seu painel para começar a enviar pedidos aos seus estafetas.",
-    "restaurantLoginCta": "Restaurante? Inicie sessão aqui para gerir as suas entregas"
+    "restaurantLoginCta": "Restaurante? Inicie sessão aqui para gerir as suas entregas",
+    "loginHelpUnified": "Inicie sessão com a sua conta de estafeta ou de restaurante.",
+    "loginFailed": "Não foi possível iniciar sessão com esses dados. Verifique o e-mail e a palavra-passe e tente novamente.",
+    "signInAsRestaurant": "Acesso de restaurante",
+    "signInAsDriver": "Acesso de estafeta",
+    "restaurantModeBadge": "Acesso de restaurante — faça a gestão e acompanhe as suas entregas.",
+    "switchToDispatch": "Mudar para a vista de restaurante",
+    "switchToDriver": "Mudar para a vista de estafeta"
   }
 }

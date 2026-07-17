@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Share your location for deliveries",
     "bgDisclosureBody": "Fee Free Delivery collects location data while you have an active delivery, to share your live position with the customer and the restaurant — even when the app is in the background or closed, or the phone is locked. Tracking stops when the delivery is completed.",
     "bgDisclosureAllow": "Continue",
-    "bgDisclosureLater": "Not now",
-    "invalidDriverLogin": "No driver account matches these details. Restaurant owner or staff? Use the restaurant sign-in below."
+    "bgDisclosureLater": "Not now"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",
     "openDashboard": "Open dashboard",
     "notEnabledTitle": "Fee Free Delivery isn’t on for this store",
     "notEnabledBody": "Turn it on in your dashboard to start dispatching orders to your drivers.",
-    "restaurantLoginCta": "Restaurant? Sign in here to manage your deliveries"
+    "restaurantLoginCta": "Restaurant? Sign in here to manage your deliveries",
+    "loginHelpUnified": "Sign in with your driver or restaurant account.",
+    "loginFailed": "We couldn't sign you in with those details. Check your email and password and try again.",
+    "signInAsRestaurant": "Restaurant sign-in",
+    "signInAsDriver": "Driver sign-in",
+    "restaurantModeBadge": "Restaurant sign-in — manage and track your deliveries.",
+    "switchToDispatch": "Switch to restaurant view",
+    "switchToDriver": "Switch to driver view"
   }
 }

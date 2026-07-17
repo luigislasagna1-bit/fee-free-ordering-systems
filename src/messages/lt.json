@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Bendrinkite savo buvimo vietą pristatymams",
     "bgDisclosureBody": "„Fee Free Delivery“ renka vietos duomenis, kol turite aktyvų pristatymą, kad jūsų buvimo vieta realiuoju laiku būtų bendrinama su klientu ir restoranu — net kai programa veikia fone, yra uždaryta arba telefonas užrakintas. Sekimas baigiasi užbaigus pristatymą.",
     "bgDisclosureAllow": "Tęsti",
-    "bgDisclosureLater": "Ne dabar",
-    "invalidDriverLogin": "Šių duomenų neatitinka jokia vairuotojo paskyra. Restorano savininkas ar darbuotojas? Naudokitės restorano prisijungimu žemiau."
+    "bgDisclosureLater": "Ne dabar"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",
     "openDashboard": "Atidaryti valdymo skydelį",
     "notEnabledTitle": "Fee Free Delivery šiai parduotuvei neįjungtas",
     "notEnabledBody": "Įjunkite jį valdymo skydelyje, kad galėtumėte pradėti siųsti užsakymus savo vairuotojams.",
-    "restaurantLoginCta": "Restoranas? Prisijunkite čia ir valdykite pristatymus"
+    "restaurantLoginCta": "Restoranas? Prisijunkite čia ir valdykite pristatymus",
+    "loginHelpUnified": "Prisijunkite vairuotojo arba restorano paskyra.",
+    "loginFailed": "Nepavyko prisijungti su šiais duomenimis. Patikrinkite el. paštą bei slaptažodį ir bandykite dar kartą.",
+    "signInAsRestaurant": "Restorano prisijungimas",
+    "signInAsDriver": "Vairuotojo prisijungimas",
+    "restaurantModeBadge": "Restorano prisijungimas — valdykite ir sekite pristatymus.",
+    "switchToDispatch": "Perjungti į restorano rodinį",
+    "switchToDriver": "Perjungti į vairuotojo rodinį"
   }
 }

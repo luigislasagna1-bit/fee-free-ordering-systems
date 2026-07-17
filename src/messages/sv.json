@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Dela din plats för leveranser",
     "bgDisclosureBody": "Fee Free Delivery samlar in platsdata medan du har en aktiv leverans, för att dela din liveposition med kunden och restaurangen — även när appen är i bakgrunden eller stängd, eller telefonen är låst. Spårningen upphör när leveransen är slutförd.",
     "bgDisclosureAllow": "Fortsätt",
-    "bgDisclosureLater": "Inte nu",
-    "invalidDriverLogin": "Inget förarkonto matchar dessa uppgifter. Restaurangägare eller personal? Använd restauranginloggningen nedan."
+    "bgDisclosureLater": "Inte nu"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tilldela och följ dina leveranser",
     "openDashboard": "Öppna instrumentpanelen",
     "notEnabledTitle": "Fee Free Delivery är inte aktiverat för den här butiken",
     "notEnabledBody": "Aktivera det i din instrumentpanel för att börja skicka beställningar till dina förare.",
-    "restaurantLoginCta": "Restaurang? Logga in här för att hantera dina leveranser"
+    "restaurantLoginCta": "Restaurang? Logga in här för att hantera dina leveranser",
+    "loginHelpUnified": "Logga in med ditt förar- eller restaurangkonto.",
+    "loginFailed": "Vi kunde inte logga in dig med de uppgifterna. Kontrollera e-post och lösenord och försök igen.",
+    "signInAsRestaurant": "Restauranginloggning",
+    "signInAsDriver": "Förarinloggning",
+    "restaurantModeBadge": "Restauranginloggning — hantera och följ dina leveranser.",
+    "switchToDispatch": "Byt till restaurangvy",
+    "switchToDriver": "Byt till förarvy"
   }
 }

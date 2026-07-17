@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "共享您的位置信息用于配送",
     "bgDisclosureBody": "Fee Free Delivery 会在您有进行中的配送时收集位置数据，以便与顾客和餐厅实时共享您的位置——即使应用在后台运行、已关闭或手机已锁定。配送完成后即停止追踪。",
     "bgDisclosureAllow": "继续",
-    "bgDisclosureLater": "暂不",
-    "invalidDriverLogin": "没有与这些信息匹配的骑手账号。餐厅老板或员工？请使用下方的餐厅登录。"
+    "bgDisclosureLater": "暂不"
   },
   "feefreeApp": {
     "dispatchSubtitle": "分配并跟踪您的配送",
     "openDashboard": "打开仪表板",
     "notEnabledTitle": "本店尚未启用 Fee Free Delivery",
     "notEnabledBody": "在您的仪表板中启用它，即可开始向您的配送员派发订单。",
-    "restaurantLoginCta": "餐厅？在此登录以管理您的配送"
+    "restaurantLoginCta": "餐厅？在此登录以管理您的配送",
+    "loginHelpUnified": "使用您的骑手或餐厅账号登录。",
+    "loginFailed": "无法使用这些信息登录。请检查您的邮箱和密码后重试。",
+    "signInAsRestaurant": "餐厅登录",
+    "signInAsDriver": "骑手登录",
+    "restaurantModeBadge": "餐厅登录——管理并跟踪您的配送。",
+    "switchToDispatch": "切换到餐厅视图",
+    "switchToDriver": "切换到骑手视图"
   }
 }

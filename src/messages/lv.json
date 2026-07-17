@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Kopīgojiet savu atrašanās vietu piegādēm",
     "bgDisclosureBody": "Fee Free Delivery vāc atrašanās vietas datus, kamēr jums ir aktīva piegāde, lai kopīgotu jūsu atrašanās vietu reāllaikā ar klientu un restorānu — arī tad, ja lietotne darbojas fonā vai ir aizvērta, vai tālrunis ir bloķēts. Izsekošana beidzas, kad piegāde ir pabeigta.",
     "bgDisclosureAllow": "Turpināt",
-    "bgDisclosureLater": "Ne tagad",
-    "invalidDriverLogin": "Neviens kurjera konts neatbilst šiem datiem. Restorāna īpašnieks vai darbinieks? Izmantojiet restorāna pieteikšanos zemāk."
+    "bgDisclosureLater": "Ne tagad"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",
     "openDashboard": "Atvērt vadības paneli",
     "notEnabledTitle": "Fee Free Delivery šai veikalam nav ieslēgts",
     "notEnabledBody": "Ieslēdziet to vadības panelī, lai sāktu nosūtīt pasūtījumus saviem vadītājiem.",
-    "restaurantLoginCta": "Restorāns? Piesakieties šeit, lai pārvaldītu piegādes"
+    "restaurantLoginCta": "Restorāns? Piesakieties šeit, lai pārvaldītu piegādes",
+    "loginHelpUnified": "Piesakieties ar kurjera vai restorāna kontu.",
+    "loginFailed": "Ar šiem datiem neizdevās pieteikties. Pārbaudiet e-pastu un paroli un mēģiniet vēlreiz.",
+    "signInAsRestaurant": "Restorāna pieteikšanās",
+    "signInAsDriver": "Kurjera pieteikšanās",
+    "restaurantModeBadge": "Restorāna pieteikšanās — pārvaldiet un sekojiet piegādēm.",
+    "switchToDispatch": "Pārslēgties uz restorāna skatu",
+    "switchToDriver": "Pārslēgties uz kurjera skatu"
   }
 }

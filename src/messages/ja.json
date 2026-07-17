@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "配達のために位置情報を共有",
     "bgDisclosureBody": "Fee Free Delivery は、配達中にお客様の現在地をお客様（注文者）とレストランへリアルタイムで共有するため、位置情報データを収集します。アプリがバックグラウンドにある場合や終了している場合、スマートフォンがロックされている場合も同様です。配達が完了すると追跡は停止します。",
     "bgDisclosureAllow": "続行",
-    "bgDisclosureLater": "今はしない",
-    "invalidDriverLogin": "この情報に一致するドライバーアカウントがありません。レストランのオーナー・スタッフの方は下のレストランログインをご利用ください。"
+    "bgDisclosureLater": "今はしない"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",
     "openDashboard": "ダッシュボードを開く",
     "notEnabledTitle": "この店舗では Fee Free Delivery が有効になっていません",
     "notEnabledBody": "ダッシュボードで有効にすると、ドライバーへの注文の割り当てを開始できます。",
-    "restaurantLoginCta": "レストランの方はこちらからログインして配達を管理"
+    "restaurantLoginCta": "レストランの方はこちらからログインして配達を管理",
+    "loginHelpUnified": "ドライバーまたはレストランのアカウントでログインしてください。",
+    "loginFailed": "この情報ではログインできませんでした。メールアドレスとパスワードを確認して、もう一度お試しください。",
+    "signInAsRestaurant": "レストランログイン",
+    "signInAsDriver": "ドライバーログイン",
+    "restaurantModeBadge": "レストランログイン — 配達の管理と追跡ができます。",
+    "switchToDispatch": "レストラン表示に切り替え",
+    "switchToDriver": "ドライバー表示に切り替え"
   }
 }

@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Partajează-ți locația pentru livrări",
     "bgDisclosureBody": "Fee Free Delivery colectează date de localizare cât timp ai o livrare activă, pentru a partaja poziția ta în timp real cu clientul și restaurantul — chiar și când aplicația este în fundal sau închisă, ori telefonul este blocat. Urmărirea se oprește la finalizarea livrării.",
     "bgDisclosureAllow": "Continuă",
-    "bgDisclosureLater": "Nu acum",
-    "invalidDriverLogin": "Niciun cont de livrator nu corespunde acestor date. Proprietar sau angajat de restaurant? Folosește autentificarea pentru restaurante de mai jos."
+    "bgDisclosureLater": "Nu acum"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",
     "openDashboard": "Deschide panoul de control",
     "notEnabledTitle": "Fee Free Delivery nu este activat pentru acest magazin",
     "notEnabledBody": "Activează-l în panoul de control pentru a începe să trimiți comenzile către șoferii tăi.",
-    "restaurantLoginCta": "Restaurant? Autentifică-te aici pentru a-ți gestiona livrările"
+    "restaurantLoginCta": "Restaurant? Autentifică-te aici pentru a-ți gestiona livrările",
+    "loginHelpUnified": "Autentifică-te cu contul de livrator sau de restaurant.",
+    "loginFailed": "Nu te-am putut autentifica cu aceste date. Verifică emailul și parola și încearcă din nou.",
+    "signInAsRestaurant": "Autentificare restaurant",
+    "signInAsDriver": "Autentificare livrator",
+    "restaurantModeBadge": "Autentificare restaurant — gestionează și urmărește livrările.",
+    "switchToDispatch": "Comută la vizualizarea restaurant",
+    "switchToDriver": "Comută la vizualizarea livrator"
   }
 }

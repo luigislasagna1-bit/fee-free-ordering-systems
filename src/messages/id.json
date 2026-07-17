@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Bagikan lokasi Anda untuk pengiriman",
     "bgDisclosureBody": "Fee Free Delivery mengumpulkan data lokasi saat Anda memiliki pengiriman aktif, untuk membagikan posisi langsung Anda kepada pelanggan dan restoran — bahkan saat aplikasi di latar belakang atau ditutup, atau ponsel terkunci. Pelacakan berhenti saat pengiriman selesai.",
     "bgDisclosureAllow": "Lanjutkan",
-    "bgDisclosureLater": "Nanti saja",
-    "invalidDriverLogin": "Tidak ada akun pengemudi yang cocok dengan data ini. Pemilik atau staf restoran? Gunakan login restoran di bawah."
+    "bgDisclosureLater": "Nanti saja"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",
     "openDashboard": "Buka dasbor",
     "notEnabledTitle": "Fee Free Delivery tidak aktif untuk toko ini",
     "notEnabledBody": "Aktifkan di dasbor Anda untuk mulai mengirim pesanan ke pengemudi Anda.",
-    "restaurantLoginCta": "Restoran? Masuk di sini untuk mengelola pengiriman Anda"
+    "restaurantLoginCta": "Restoran? Masuk di sini untuk mengelola pengiriman Anda",
+    "loginHelpUnified": "Masuk dengan akun pengemudi atau restoran Anda.",
+    "loginFailed": "Kami tidak dapat memasukkan Anda dengan data tersebut. Periksa email dan kata sandi Anda, lalu coba lagi.",
+    "signInAsRestaurant": "Login restoran",
+    "signInAsDriver": "Login pengemudi",
+    "restaurantModeBadge": "Login restoran — kelola dan lacak pengiriman Anda.",
+    "switchToDispatch": "Beralih ke tampilan restoran",
+    "switchToDriver": "Beralih ke tampilan pengemudi"
   }
 }

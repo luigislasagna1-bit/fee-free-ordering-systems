@@ -6310,14 +6310,20 @@
     "bgDisclosureTitle": "Deel je locatie voor bezorgingen",
     "bgDisclosureBody": "Fee Free Delivery verzamelt locatiegegevens terwijl je een actieve bezorging hebt, om je live positie te delen met de klant en het restaurant — ook wanneer de app op de achtergrond staat of gesloten is, of de telefoon vergrendeld is. Het volgen stopt zodra de bezorging is voltooid.",
     "bgDisclosureAllow": "Doorgaan",
-    "bgDisclosureLater": "Niet nu",
-    "invalidDriverLogin": "Geen bezorgersaccount komt overeen met deze gegevens. Restauranteigenaar of -medewerker? Gebruik de restaurant-login hieronder."
+    "bgDisclosureLater": "Niet nu"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",
     "openDashboard": "Dashboard openen",
     "notEnabledTitle": "Fee Free Delivery is niet ingeschakeld voor deze vestiging",
     "notEnabledBody": "Schakel het in je dashboard in om bestellingen naar je bezorgers te sturen.",
-    "restaurantLoginCta": "Restaurant? Log hier in om je bezorgingen te beheren"
+    "restaurantLoginCta": "Restaurant? Log hier in om je bezorgingen te beheren",
+    "loginHelpUnified": "Log in met je bezorgers- of restaurantaccount.",
+    "loginFailed": "Inloggen met deze gegevens is niet gelukt. Controleer je e-mail en wachtwoord en probeer opnieuw.",
+    "signInAsRestaurant": "Restaurant-login",
+    "signInAsDriver": "Bezorgers-login",
+    "restaurantModeBadge": "Restaurant-login — beheer en volg je bezorgingen.",
+    "switchToDispatch": "Wisselen naar restaurantweergave",
+    "switchToDriver": "Wisselen naar bezorgersweergave"
   }
 }
