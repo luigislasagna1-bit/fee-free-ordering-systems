@@ -6344,7 +6344,12 @@
     "statReleased": "Vrijgegeven",
     "statLate": "Te laat",
     "hourlyRate": "Uurtarief",
-    "profileLoadFailed": "Je profiel kon niet worden geladen. Probeer het opnieuw."
+    "profileLoadFailed": "Je profiel kon niet worden geladen. Probeer het opnieuw.",
+    "tabHistory": "Geschiedenis",
+    "historyEmpty": "Nog geen voltooide bezorgingen.",
+    "historyLoadFailed": "Je geschiedenis kon niet worden geladen. Probeer het opnieuw.",
+    "ratingReceivedTitle": "Beoordeling ontvangen",
+    "noRatingYet": "Nog geen beoordeling voor deze bezorging."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Wisselen naar bezorgersweergave"
   },
   "feefreeShared": {
-    "language": "Taal"
+    "language": "Taal",
+    "loadMore": "Meer laden",
+    "deliveryFee": "Bezorgkosten",
+    "timelineAccepted": "Geaccepteerd",
+    "timelineStarted": "Begonnen met rijden",
+    "timelinePickedUp": "Opgehaald",
+    "timelineDelivered": "Bezorgd",
+    "timelineFailed": "Mislukt",
+    "timelineReturned": "Teruggebracht",
+    "onTimeBadge": "Op tijd",
+    "lateBadge": "Te laat",
+    "hoursMinutes": "{h}u {m}m",
+    "minutesOnly": "{m} min"
   }
 }

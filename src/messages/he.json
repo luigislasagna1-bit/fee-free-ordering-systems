@@ -6344,7 +6344,12 @@
     "statReleased": "שוחררו",
     "statLate": "באיחור",
     "hourlyRate": "תעריף שעתי",
-    "profileLoadFailed": "לא ניתן היה לטעון את הפרופיל שלך. אנא נסה שוב."
+    "profileLoadFailed": "לא ניתן היה לטעון את הפרופיל שלך. אנא נסה שוב.",
+    "tabHistory": "היסטוריה",
+    "historyEmpty": "אין עדיין משלוחים שהושלמו.",
+    "historyLoadFailed": "לא ניתן היה לטעון את ההיסטוריה שלך. אנא נסה שוב.",
+    "ratingReceivedTitle": "דירוג שהתקבל",
+    "noRatingYet": "אין עדיין דירוג למשלוח זה."
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "מעבר לתצוגת נהג"
   },
   "feefreeShared": {
-    "language": "שפה"
+    "language": "שפה",
+    "loadMore": "טען עוד",
+    "deliveryFee": "דמי משלוח",
+    "timelineAccepted": "התקבל",
+    "timelineStarted": "יצא לדרך",
+    "timelinePickedUp": "נאסף",
+    "timelineDelivered": "נמסר",
+    "timelineFailed": "לא הושלם",
+    "timelineReturned": "הוחזר",
+    "onTimeBadge": "בזמן",
+    "lateBadge": "באיחור",
+    "hoursMinutes": "{h} שע׳ {m} דק׳",
+    "minutesOnly": "{m} דק׳"
   }
 }

@@ -6344,7 +6344,12 @@
     "statReleased": "Bırakıldı",
     "statLate": "Geç",
     "hourlyRate": "Saatlik ücret",
-    "profileLoadFailed": "Profiliniz yüklenemedi. Lütfen tekrar deneyin."
+    "profileLoadFailed": "Profiliniz yüklenemedi. Lütfen tekrar deneyin.",
+    "tabHistory": "Geçmiş",
+    "historyEmpty": "Henüz tamamlanmış teslimat yok.",
+    "historyLoadFailed": "Geçmişiniz yüklenemedi. Lütfen tekrar deneyin.",
+    "ratingReceivedTitle": "Alınan puan",
+    "noRatingYet": "Bu teslimat için henüz puan yok."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Sürücü görünümüne geç"
   },
   "feefreeShared": {
-    "language": "Dil"
+    "language": "Dil",
+    "loadMore": "Daha fazla yükle",
+    "deliveryFee": "Teslimat ücreti",
+    "timelineAccepted": "Kabul edildi",
+    "timelineStarted": "Sürüşe başlandı",
+    "timelinePickedUp": "Alındı",
+    "timelineDelivered": "Teslim edildi",
+    "timelineFailed": "Başarısız",
+    "timelineReturned": "İade edildi",
+    "onTimeBadge": "Zamanında",
+    "lateBadge": "Geç",
+    "hoursMinutes": "{h} sa {m} dk",
+    "minutesOnly": "{m} dk"
   }
 }

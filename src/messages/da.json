@@ -6344,7 +6344,12 @@
     "statReleased": "Frigivet",
     "statLate": "Forsinket",
     "hourlyRate": "Timeløn",
-    "profileLoadFailed": "Din profil kunne ikke indlæses. Prøv igen."
+    "profileLoadFailed": "Din profil kunne ikke indlæses. Prøv igen.",
+    "tabHistory": "Historik",
+    "historyEmpty": "Ingen gennemførte leveringer endnu.",
+    "historyLoadFailed": "Din historik kunne ikke indlæses. Prøv igen.",
+    "ratingReceivedTitle": "Bedømmelse modtaget",
+    "noRatingYet": "Ingen bedømmelse for denne levering endnu."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg dine leveringer",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Skift til chaufførvisning"
   },
   "feefreeShared": {
-    "language": "Sprog"
+    "language": "Sprog",
+    "loadMore": "Indlæs flere",
+    "deliveryFee": "Leveringsgebyr",
+    "timelineAccepted": "Accepteret",
+    "timelineStarted": "Begyndte at køre",
+    "timelinePickedUp": "Afhentet",
+    "timelineDelivered": "Leveret",
+    "timelineFailed": "Mislykket",
+    "timelineReturned": "Returneret",
+    "onTimeBadge": "Til tiden",
+    "lateBadge": "Forsinket",
+    "hoursMinutes": "{h}t {m}m",
+    "minutesOnly": "{m} min"
   }
 }

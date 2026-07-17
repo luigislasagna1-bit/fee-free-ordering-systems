@@ -6344,7 +6344,12 @@
     "statReleased": "Elengedve",
     "statLate": "Késve",
     "hourlyRate": "Órabér",
-    "profileLoadFailed": "Nem sikerült betölteni a profilod. Próbáld újra."
+    "profileLoadFailed": "Nem sikerült betölteni a profilod. Próbáld újra.",
+    "tabHistory": "Előzmények",
+    "historyEmpty": "Még nincs teljesített kiszállításod.",
+    "historyLoadFailed": "Nem sikerült betölteni az előzményeket. Próbáld újra.",
+    "ratingReceivedTitle": "Kapott értékelés",
+    "noRatingYet": "Ehhez a kiszállításhoz még nincs értékelés."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Váltás futárnézetre"
   },
   "feefreeShared": {
-    "language": "Nyelv"
+    "language": "Nyelv",
+    "loadMore": "Továbbiak betöltése",
+    "deliveryFee": "Szállítási díj",
+    "timelineAccepted": "Elfogadva",
+    "timelineStarted": "Elindult",
+    "timelinePickedUp": "Átvéve",
+    "timelineDelivered": "Kézbesítve",
+    "timelineFailed": "Sikertelen",
+    "timelineReturned": "Visszaszállítva",
+    "onTimeBadge": "Időben",
+    "lateBadge": "Késve",
+    "hoursMinutes": "{h} ó {m} p",
+    "minutesOnly": "{m} perc"
   }
 }

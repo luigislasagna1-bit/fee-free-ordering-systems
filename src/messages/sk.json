@@ -6344,7 +6344,12 @@
     "statReleased": "Uvoľnené",
     "statLate": "Oneskorené",
     "hourlyRate": "Hodinová sadzba",
-    "profileLoadFailed": "Profil sa nepodarilo načítať. Skúste to znova."
+    "profileLoadFailed": "Profil sa nepodarilo načítať. Skúste to znova.",
+    "tabHistory": "História",
+    "historyEmpty": "Zatiaľ žiadne dokončené doručenia.",
+    "historyLoadFailed": "Históriu sa nepodarilo načítať. Skúste to znova.",
+    "ratingReceivedTitle": "Hodnotenie prijaté",
+    "noRatingYet": "Toto doručenie zatiaľ nemá hodnotenie."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priraďujte a sledujte svoje rozvozy",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Prepnúť na zobrazenie vodiča"
   },
   "feefreeShared": {
-    "language": "Jazyk"
+    "language": "Jazyk",
+    "loadMore": "Načítať viac",
+    "deliveryFee": "Poplatok za doručenie",
+    "timelineAccepted": "Prijaté",
+    "timelineStarted": "Začiatok jazdy",
+    "timelinePickedUp": "Vyzdvihnuté",
+    "timelineDelivered": "Doručené",
+    "timelineFailed": "Nedokončené",
+    "timelineReturned": "Vrátené",
+    "onTimeBadge": "Načas",
+    "lateBadge": "Oneskorené",
+    "hoursMinutes": "{h} h {m} min",
+    "minutesOnly": "{m} min"
   }
 }

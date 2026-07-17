@@ -6344,7 +6344,12 @@
     "statReleased": "Vabastatud",
     "statLate": "Hilinenud",
     "hourlyRate": "Tunnitasu",
-    "profileLoadFailed": "Profiili laadimine ebaõnnestus. Palun proovi uuesti."
+    "profileLoadFailed": "Profiili laadimine ebaõnnestus. Palun proovi uuesti.",
+    "tabHistory": "Ajalugu",
+    "historyEmpty": "Veel pole ühtegi lõpetatud tarnet.",
+    "historyLoadFailed": "Ajaloo laadimine ebaõnnestus. Palun proovi uuesti.",
+    "ratingReceivedTitle": "Saadud hinnang",
+    "noRatingYet": "Sellel tarnel pole veel hinnangut."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Lülitu juhivaatele"
   },
   "feefreeShared": {
-    "language": "Keel"
+    "language": "Keel",
+    "loadMore": "Laadi rohkem",
+    "deliveryFee": "Tarnetasu",
+    "timelineAccepted": "Vastu võetud",
+    "timelineStarted": "Sõitu alustatud",
+    "timelinePickedUp": "Kätte võetud",
+    "timelineDelivered": "Kohale toimetatud",
+    "timelineFailed": "Ebaõnnestunud",
+    "timelineReturned": "Tagastatud",
+    "onTimeBadge": "Õigel ajal",
+    "lateBadge": "Hilinenud",
+    "hoursMinutes": "{h} t {m} min",
+    "minutesOnly": "{m} min"
   }
 }

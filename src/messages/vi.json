@@ -6344,7 +6344,12 @@
     "statReleased": "Đã trả đơn",
     "statLate": "Trễ",
     "hourlyRate": "Lương theo giờ",
-    "profileLoadFailed": "Không thể tải hồ sơ của bạn. Vui lòng thử lại."
+    "profileLoadFailed": "Không thể tải hồ sơ của bạn. Vui lòng thử lại.",
+    "tabHistory": "Lịch sử",
+    "historyEmpty": "Chưa có đơn giao nào hoàn tất.",
+    "historyLoadFailed": "Không thể tải lịch sử của bạn. Vui lòng thử lại.",
+    "ratingReceivedTitle": "Đánh giá đã nhận",
+    "noRatingYet": "Đơn giao này chưa có đánh giá."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Chuyển sang giao diện tài xế"
   },
   "feefreeShared": {
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "loadMore": "Tải thêm",
+    "deliveryFee": "Phí giao hàng",
+    "timelineAccepted": "Đã nhận",
+    "timelineStarted": "Bắt đầu di chuyển",
+    "timelinePickedUp": "Đã lấy hàng",
+    "timelineDelivered": "Đã giao",
+    "timelineFailed": "Không thành công",
+    "timelineReturned": "Đã hoàn trả",
+    "onTimeBadge": "Đúng giờ",
+    "lateBadge": "Trễ",
+    "hoursMinutes": "{h}g {m}p",
+    "minutesOnly": "{m} phút"
   }
 }

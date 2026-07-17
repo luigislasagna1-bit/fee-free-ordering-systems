@@ -6344,7 +6344,12 @@
     "statReleased": "Otpušteno",
     "statLate": "Kasno",
     "hourlyRate": "Satnica",
-    "profileLoadFailed": "Nije moguće učitati vaš profil. Pokušajte ponovno."
+    "profileLoadFailed": "Nije moguće učitati vaš profil. Pokušajte ponovno.",
+    "tabHistory": "Povijest",
+    "historyEmpty": "Još nema dovršenih dostava.",
+    "historyLoadFailed": "Nije moguće učitati vašu povijest. Pokušajte ponovno.",
+    "ratingReceivedTitle": "Primljena ocjena",
+    "noRatingYet": "Za ovu dostavu još nema ocjene."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodijelite i pratite svoje dostave",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Prebaci na prikaz vozača"
   },
   "feefreeShared": {
-    "language": "Jezik"
+    "language": "Jezik",
+    "loadMore": "Učitaj više",
+    "deliveryFee": "Naknada za dostavu",
+    "timelineAccepted": "Prihvaćeno",
+    "timelineStarted": "Vožnja započeta",
+    "timelinePickedUp": "Preuzeto",
+    "timelineDelivered": "Dostavljeno",
+    "timelineFailed": "Neuspjelo",
+    "timelineReturned": "Vraćeno",
+    "onTimeBadge": "Na vrijeme",
+    "lateBadge": "Kasno",
+    "hoursMinutes": "{h} h {m} min",
+    "minutesOnly": "{m} min"
   }
 }

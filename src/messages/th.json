@@ -6344,7 +6344,12 @@
     "statReleased": "ปล่อยคืน",
     "statLate": "ล่าช้า",
     "hourlyRate": "ค่าจ้างรายชั่วโมง",
-    "profileLoadFailed": "ไม่สามารถโหลดโปรไฟล์ของคุณได้ กรุณาลองอีกครั้ง"
+    "profileLoadFailed": "ไม่สามารถโหลดโปรไฟล์ของคุณได้ กรุณาลองอีกครั้ง",
+    "tabHistory": "ประวัติ",
+    "historyEmpty": "ยังไม่มีการจัดส่งที่เสร็จสิ้น",
+    "historyLoadFailed": "ไม่สามารถโหลดประวัติของคุณได้ กรุณาลองอีกครั้ง",
+    "ratingReceivedTitle": "คะแนนที่ได้รับ",
+    "noRatingYet": "ยังไม่มีคะแนนสำหรับการจัดส่งนี้"
   },
   "feefreeApp": {
     "dispatchSubtitle": "มอบหมายและติดตามการจัดส่งของคุณ",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "สลับไปที่มุมมองคนขับ"
   },
   "feefreeShared": {
-    "language": "ภาษา"
+    "language": "ภาษา",
+    "loadMore": "โหลดเพิ่มเติม",
+    "deliveryFee": "ค่าจัดส่ง",
+    "timelineAccepted": "รับงานแล้ว",
+    "timelineStarted": "เริ่มขับแล้ว",
+    "timelinePickedUp": "รับอาหารแล้ว",
+    "timelineDelivered": "ส่งแล้ว",
+    "timelineFailed": "ไม่สำเร็จ",
+    "timelineReturned": "ส่งคืนแล้ว",
+    "onTimeBadge": "ตรงเวลา",
+    "lateBadge": "ล่าช้า",
+    "hoursMinutes": "{h} ชม. {m} นาที",
+    "minutesOnly": "{m} นาที"
   }
 }

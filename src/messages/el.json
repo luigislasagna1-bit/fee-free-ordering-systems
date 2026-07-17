@@ -6344,7 +6344,12 @@
     "statReleased": "Απελευθερώθηκαν",
     "statLate": "Καθυστέρησαν",
     "hourlyRate": "Ωριαία αμοιβή",
-    "profileLoadFailed": "Δεν ήταν δυνατή η φόρτωση του προφίλ σας. Δοκιμάστε ξανά."
+    "profileLoadFailed": "Δεν ήταν δυνατή η φόρτωση του προφίλ σας. Δοκιμάστε ξανά.",
+    "tabHistory": "Ιστορικό",
+    "historyEmpty": "Καμία ολοκληρωμένη παράδοση ακόμη.",
+    "historyLoadFailed": "Δεν ήταν δυνατή η φόρτωση του ιστορικού σας. Δοκιμάστε ξανά.",
+    "ratingReceivedTitle": "Λήφθηκε αξιολόγηση",
+    "noRatingYet": "Δεν υπάρχει ακόμη αξιολόγηση για αυτήν την παράδοση."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Αναθέστε και παρακολουθήστε τις παραδόσεις σας",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Εναλλαγή σε προβολή οδηγού"
   },
   "feefreeShared": {
-    "language": "Γλώσσα"
+    "language": "Γλώσσα",
+    "loadMore": "Φόρτωση περισσότερων",
+    "deliveryFee": "Χρέωση παράδοσης",
+    "timelineAccepted": "Έγινε αποδοχή",
+    "timelineStarted": "Έναρξη διαδρομής",
+    "timelinePickedUp": "Παραλήφθηκε",
+    "timelineDelivered": "Παραδόθηκε",
+    "timelineFailed": "Απέτυχε",
+    "timelineReturned": "Επιστράφηκε",
+    "onTimeBadge": "Στην ώρα",
+    "lateBadge": "Καθυστέρησε",
+    "hoursMinutes": "{h} ώ {m} λ",
+    "minutesOnly": "{m} λεπ."
   }
 }

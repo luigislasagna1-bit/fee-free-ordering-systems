@@ -6344,7 +6344,12 @@
     "statReleased": "Atlaisvinta",
     "statLate": "Pavėluota",
     "hourlyRate": "Valandinis įkainis",
-    "profileLoadFailed": "Nepavyko įkelti jūsų profilio. Bandykite dar kartą."
+    "profileLoadFailed": "Nepavyko įkelti jūsų profilio. Bandykite dar kartą.",
+    "tabHistory": "Istorija",
+    "historyEmpty": "Dar nėra užbaigtų pristatymų.",
+    "historyLoadFailed": "Nepavyko įkelti jūsų istorijos. Bandykite dar kartą.",
+    "ratingReceivedTitle": "Gautas įvertinimas",
+    "noRatingYet": "Šis pristatymas dar neįvertintas."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Perjungti į vairuotojo rodinį"
   },
   "feefreeShared": {
-    "language": "Kalba"
+    "language": "Kalba",
+    "loadMore": "Rodyti daugiau",
+    "deliveryFee": "Pristatymo mokestis",
+    "timelineAccepted": "Priimta",
+    "timelineStarted": "Pradėta kelionė",
+    "timelinePickedUp": "Paimta",
+    "timelineDelivered": "Pristatyta",
+    "timelineFailed": "Nepavyko",
+    "timelineReturned": "Grąžinta",
+    "onTimeBadge": "Laiku",
+    "lateBadge": "Pavėluota",
+    "hoursMinutes": "{h} val. {m} min.",
+    "minutesOnly": "{m} min."
   }
 }

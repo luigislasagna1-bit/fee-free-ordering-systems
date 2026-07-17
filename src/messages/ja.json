@@ -6344,7 +6344,12 @@
     "statReleased": "手放した配達",
     "statLate": "遅延",
     "hourlyRate": "時給",
-    "profileLoadFailed": "プロフィールを読み込めませんでした。もう一度お試しください。"
+    "profileLoadFailed": "プロフィールを読み込めませんでした。もう一度お試しください。",
+    "tabHistory": "履歴",
+    "historyEmpty": "完了した配達はまだありません。",
+    "historyLoadFailed": "履歴を読み込めませんでした。もう一度お試しください。",
+    "ratingReceivedTitle": "評価を受け取りました",
+    "noRatingYet": "この配達の評価はまだありません。"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "ドライバー表示に切り替え"
   },
   "feefreeShared": {
-    "language": "言語"
+    "language": "言語",
+    "loadMore": "さらに表示",
+    "deliveryFee": "配達料",
+    "timelineAccepted": "受付済み",
+    "timelineStarted": "運転開始",
+    "timelinePickedUp": "受け取り済み",
+    "timelineDelivered": "配達完了",
+    "timelineFailed": "未完了",
+    "timelineReturned": "返却済み",
+    "onTimeBadge": "時間どおり",
+    "lateBadge": "遅延",
+    "hoursMinutes": "{h}時間{m}分",
+    "minutesOnly": "{m}分"
   }
 }

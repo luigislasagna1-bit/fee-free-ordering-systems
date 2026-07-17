@@ -6344,7 +6344,12 @@
     "statReleased": "Rilasciate",
     "statLate": "In ritardo",
     "hourlyRate": "Tariffa oraria",
-    "profileLoadFailed": "Impossibile caricare il tuo profilo. Riprova."
+    "profileLoadFailed": "Impossibile caricare il tuo profilo. Riprova.",
+    "tabHistory": "Cronologia",
+    "historyEmpty": "Ancora nessuna consegna completata.",
+    "historyLoadFailed": "Impossibile caricare la cronologia. Riprova.",
+    "ratingReceivedTitle": "Valutazione ricevuta",
+    "noRatingYet": "Ancora nessuna valutazione per questa consegna."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assegna e monitora le tue consegne",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Passa alla vista autista"
   },
   "feefreeShared": {
-    "language": "Lingua"
+    "language": "Lingua",
+    "loadMore": "Carica altro",
+    "deliveryFee": "Costo di consegna",
+    "timelineAccepted": "Accettata",
+    "timelineStarted": "Partito verso il ristorante",
+    "timelinePickedUp": "Ritirato",
+    "timelineDelivered": "Consegnato",
+    "timelineFailed": "Non riuscita",
+    "timelineReturned": "Restituito",
+    "onTimeBadge": "In orario",
+    "lateBadge": "In ritardo",
+    "hoursMinutes": "{h}h {m}min",
+    "minutesOnly": "{m} min"
   }
 }

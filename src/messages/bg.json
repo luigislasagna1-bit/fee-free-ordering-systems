@@ -6344,7 +6344,12 @@
     "statReleased": "Освободени",
     "statLate": "Закъснели",
     "hourlyRate": "Часова ставка",
-    "profileLoadFailed": "Профилът ви не можа да се зареди. Опитайте отново."
+    "profileLoadFailed": "Профилът ви не можа да се зареди. Опитайте отново.",
+    "tabHistory": "История",
+    "historyEmpty": "Все още няма завършени доставки.",
+    "historyLoadFailed": "Историята не можа да се зареди. Моля, опитайте отново.",
+    "ratingReceivedTitle": "Получена оценка",
+    "noRatingYet": "Все още няма оценка за тази доставка."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Възлагайте и проследявайте доставките си",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Превключи към изглед за шофьор"
   },
   "feefreeShared": {
-    "language": "Език"
+    "language": "Език",
+    "loadMore": "Зареди още",
+    "deliveryFee": "Такса за доставка",
+    "timelineAccepted": "Приета",
+    "timelineStarted": "Шофьорът потегли",
+    "timelinePickedUp": "Взета",
+    "timelineDelivered": "Доставена",
+    "timelineFailed": "Неуспешна",
+    "timelineReturned": "Върната",
+    "onTimeBadge": "Навреме",
+    "lateBadge": "Закъсняла",
+    "hoursMinutes": "{h} ч {m} мин",
+    "minutesOnly": "{m} мин"
   }
 }

@@ -6344,7 +6344,12 @@
     "statReleased": "Alliberats",
     "statLate": "Amb retard",
     "hourlyRate": "Tarifa per hora",
-    "profileLoadFailed": "No s'ha pogut carregar el teu perfil. Torna-ho a provar."
+    "profileLoadFailed": "No s'ha pogut carregar el teu perfil. Torna-ho a provar.",
+    "tabHistory": "Historial",
+    "historyEmpty": "Encara no hi ha lliuraments completats.",
+    "historyLoadFailed": "No s'ha pogut carregar el teu historial. Torna-ho a provar.",
+    "ratingReceivedTitle": "Valoració rebuda",
+    "noRatingYet": "Aquest lliurament encara no té cap valoració."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Canvia a la vista de repartidor"
   },
   "feefreeShared": {
-    "language": "Idioma"
+    "language": "Idioma",
+    "loadMore": "Carrega'n més",
+    "deliveryFee": "Tarifa de lliurament",
+    "timelineAccepted": "Acceptat",
+    "timelineStarted": "Trajecte iniciat",
+    "timelinePickedUp": "Recollit",
+    "timelineDelivered": "Lliurat",
+    "timelineFailed": "No completat",
+    "timelineReturned": "Retornat",
+    "onTimeBadge": "Puntual",
+    "lateBadge": "Amb retard",
+    "hoursMinutes": "{h} h {m} min",
+    "minutesOnly": "{m} min"
   }
 }

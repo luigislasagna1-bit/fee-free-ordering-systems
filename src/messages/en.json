@@ -6344,7 +6344,12 @@
     "statReleased": "Released",
     "statLate": "Late",
     "hourlyRate": "Hourly rate",
-    "profileLoadFailed": "Couldn't load your profile. Please try again."
+    "profileLoadFailed": "Couldn't load your profile. Please try again.",
+    "tabHistory": "History",
+    "historyEmpty": "No completed deliveries yet.",
+    "historyLoadFailed": "Couldn't load your history. Please try again.",
+    "ratingReceivedTitle": "Rating received",
+    "noRatingYet": "No rating for this delivery yet."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Switch to driver view"
   },
   "feefreeShared": {
-    "language": "Language"
+    "language": "Language",
+    "loadMore": "Load more",
+    "deliveryFee": "Delivery fee",
+    "timelineAccepted": "Accepted",
+    "timelineStarted": "Started driving",
+    "timelinePickedUp": "Picked up",
+    "timelineDelivered": "Delivered",
+    "timelineFailed": "Failed",
+    "timelineReturned": "Returned",
+    "onTimeBadge": "On time",
+    "lateBadge": "Late",
+    "hoursMinutes": "{h}h {m}m",
+    "minutesOnly": "{m} min"
   }
 }

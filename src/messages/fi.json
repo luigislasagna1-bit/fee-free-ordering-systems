@@ -6344,7 +6344,12 @@
     "statReleased": "Vapautetut",
     "statLate": "Myöhästyneet",
     "hourlyRate": "Tuntipalkka",
-    "profileLoadFailed": "Profiilisi lataaminen epäonnistui. Yritä uudelleen."
+    "profileLoadFailed": "Profiilisi lataaminen epäonnistui. Yritä uudelleen.",
+    "tabHistory": "Historia",
+    "historyEmpty": "Ei vielä valmistuneita toimituksia.",
+    "historyLoadFailed": "Historiasi lataaminen epäonnistui. Yritä uudelleen.",
+    "ratingReceivedTitle": "Saatu arvosana",
+    "noRatingYet": "Tälle toimitukselle ei ole vielä arvosanaa."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Vaihda kuljettajanäkymään"
   },
   "feefreeShared": {
-    "language": "Kieli"
+    "language": "Kieli",
+    "loadMore": "Näytä lisää",
+    "deliveryFee": "Toimitusmaksu",
+    "timelineAccepted": "Hyväksytty",
+    "timelineStarted": "Ajo aloitettu",
+    "timelinePickedUp": "Noudettu",
+    "timelineDelivered": "Toimitettu",
+    "timelineFailed": "Epäonnistui",
+    "timelineReturned": "Palautettu",
+    "onTimeBadge": "Ajoissa",
+    "lateBadge": "Myöhässä",
+    "hoursMinutes": "{h} h {m} min",
+    "minutesOnly": "{m} min"
   }
 }

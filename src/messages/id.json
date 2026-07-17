@@ -6344,7 +6344,12 @@
     "statReleased": "Dilepas",
     "statLate": "Terlambat",
     "hourlyRate": "Tarif per jam",
-    "profileLoadFailed": "Tidak dapat memuat profil Anda. Silakan coba lagi."
+    "profileLoadFailed": "Tidak dapat memuat profil Anda. Silakan coba lagi.",
+    "tabHistory": "Riwayat",
+    "historyEmpty": "Belum ada pengantaran yang selesai.",
+    "historyLoadFailed": "Tidak dapat memuat riwayat Anda. Silakan coba lagi.",
+    "ratingReceivedTitle": "Rating diterima",
+    "noRatingYet": "Belum ada rating untuk pengantaran ini."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Beralih ke tampilan pengemudi"
   },
   "feefreeShared": {
-    "language": "Bahasa"
+    "language": "Bahasa",
+    "loadMore": "Muat lebih banyak",
+    "deliveryFee": "Biaya pengiriman",
+    "timelineAccepted": "Diterima",
+    "timelineStarted": "Mulai berkendara",
+    "timelinePickedUp": "Sudah diambil",
+    "timelineDelivered": "Terkirim",
+    "timelineFailed": "Gagal",
+    "timelineReturned": "Dikembalikan",
+    "onTimeBadge": "Tepat waktu",
+    "lateBadge": "Terlambat",
+    "hoursMinutes": "{h} jam {m} mnt",
+    "minutesOnly": "{m} mnt"
   }
 }

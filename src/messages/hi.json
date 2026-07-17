@@ -6344,7 +6344,12 @@
     "statReleased": "छोड़े गए",
     "statLate": "देरी से",
     "hourlyRate": "प्रति घंटा दर",
-    "profileLoadFailed": "आपकी प्रोफ़ाइल लोड नहीं हो सकी। कृपया फिर से प्रयास करें।"
+    "profileLoadFailed": "आपकी प्रोफ़ाइल लोड नहीं हो सकी। कृपया फिर से प्रयास करें।",
+    "tabHistory": "इतिहास",
+    "historyEmpty": "अभी तक कोई पूरी की गई डिलीवरी नहीं।",
+    "historyLoadFailed": "आपका इतिहास लोड नहीं हो सका। कृपया फिर से प्रयास करें।",
+    "ratingReceivedTitle": "रेटिंग मिली",
+    "noRatingYet": "इस डिलीवरी के लिए अभी कोई रेटिंग नहीं।"
   },
   "feefreeApp": {
     "dispatchSubtitle": "अपनी डिलीवरी असाइन करें और ट्रैक करें",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "ड्राइवर व्यू पर स्विच करें"
   },
   "feefreeShared": {
-    "language": "भाषा"
+    "language": "भाषा",
+    "loadMore": "और लोड करें",
+    "deliveryFee": "डिलीवरी शुल्क",
+    "timelineAccepted": "स्वीकृत",
+    "timelineStarted": "ड्राइविंग शुरू की",
+    "timelinePickedUp": "उठा लिया",
+    "timelineDelivered": "डिलीवर किया गया",
+    "timelineFailed": "विफल",
+    "timelineReturned": "लौटाया गया",
+    "onTimeBadge": "समय पर",
+    "lateBadge": "देरी से",
+    "hoursMinutes": "{h} घं {m} मि",
+    "minutesOnly": "{m} मिनट"
   }
 }

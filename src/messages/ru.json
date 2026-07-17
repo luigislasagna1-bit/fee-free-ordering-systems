@@ -6344,7 +6344,12 @@
     "statReleased": "Возвращено",
     "statLate": "С опозданием",
     "hourlyRate": "Почасовая ставка",
-    "profileLoadFailed": "Не удалось загрузить ваш профиль. Попробуйте ещё раз."
+    "profileLoadFailed": "Не удалось загрузить ваш профиль. Попробуйте ещё раз.",
+    "tabHistory": "История",
+    "historyEmpty": "Завершённых доставок пока нет.",
+    "historyLoadFailed": "Не удалось загрузить историю. Попробуйте ещё раз.",
+    "ratingReceivedTitle": "Оценка получена",
+    "noRatingYet": "Для этой доставки пока нет оценки."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Назначайте и отслеживайте свои доставки",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Переключиться на вид водителя"
   },
   "feefreeShared": {
-    "language": "Язык"
+    "language": "Язык",
+    "loadMore": "Показать ещё",
+    "deliveryFee": "Стоимость доставки",
+    "timelineAccepted": "Принято",
+    "timelineStarted": "Поездка начата",
+    "timelinePickedUp": "Забрано",
+    "timelineDelivered": "Доставлено",
+    "timelineFailed": "Не выполнено",
+    "timelineReturned": "Возвращено",
+    "onTimeBadge": "Вовремя",
+    "lateBadge": "С опозданием",
+    "hoursMinutes": "{h} ч {m} мин",
+    "minutesOnly": "{m} мин"
   }
 }

@@ -6344,7 +6344,12 @@
     "statReleased": "已退回",
     "statLate": "超时",
     "hourlyRate": "时薪",
-    "profileLoadFailed": "无法加载您的个人资料，请重试。"
+    "profileLoadFailed": "无法加载您的个人资料，请重试。",
+    "tabHistory": "历史",
+    "historyEmpty": "暂无已完成的配送。",
+    "historyLoadFailed": "无法加载您的历史记录，请重试。",
+    "ratingReceivedTitle": "收到的评价",
+    "noRatingYet": "此次配送暂无评价。"
   },
   "feefreeApp": {
     "dispatchSubtitle": "分配并跟踪您的配送",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "切换到骑手视图"
   },
   "feefreeShared": {
-    "language": "语言"
+    "language": "语言",
+    "loadMore": "加载更多",
+    "deliveryFee": "配送费",
+    "timelineAccepted": "已接单",
+    "timelineStarted": "开始配送",
+    "timelinePickedUp": "已取餐",
+    "timelineDelivered": "已送达",
+    "timelineFailed": "配送失败",
+    "timelineReturned": "已退回",
+    "onTimeBadge": "准时",
+    "lateBadge": "超时",
+    "hoursMinutes": "{h}小时{m}分钟",
+    "minutesOnly": "{m}分钟"
   }
 }

@@ -6344,7 +6344,12 @@
     "statReleased": "Zwolnione",
     "statLate": "Spóźnione",
     "hourlyRate": "Stawka godzinowa",
-    "profileLoadFailed": "Nie udało się wczytać Twojego profilu. Spróbuj ponownie."
+    "profileLoadFailed": "Nie udało się wczytać Twojego profilu. Spróbuj ponownie.",
+    "tabHistory": "Historia",
+    "historyEmpty": "Brak zrealizowanych dostaw.",
+    "historyLoadFailed": "Nie udało się wczytać historii. Spróbuj ponownie.",
+    "ratingReceivedTitle": "Otrzymana ocena",
+    "noRatingYet": "Brak oceny dla tej dostawy."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Przełącz na widok kierowcy"
   },
   "feefreeShared": {
-    "language": "Język"
+    "language": "Język",
+    "loadMore": "Załaduj więcej",
+    "deliveryFee": "Opłata za dostawę",
+    "timelineAccepted": "Przyjęto",
+    "timelineStarted": "Rozpoczęto jazdę",
+    "timelinePickedUp": "Odebrano",
+    "timelineDelivered": "Dostarczono",
+    "timelineFailed": "Niezrealizowana",
+    "timelineReturned": "Zwrócona",
+    "onTimeBadge": "Na czas",
+    "lateBadge": "Spóźniona",
+    "hoursMinutes": "{h} godz. {m} min",
+    "minutesOnly": "{m} min"
   }
 }

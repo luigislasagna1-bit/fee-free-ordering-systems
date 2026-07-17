@@ -6344,7 +6344,12 @@
     "statReleased": "Atbrīvoti",
     "statLate": "Nokavēti",
     "hourlyRate": "Stundas likme",
-    "profileLoadFailed": "Neizdevās ielādēt jūsu profilu. Lūdzu, mēģiniet vēlreiz."
+    "profileLoadFailed": "Neizdevās ielādēt jūsu profilu. Lūdzu, mēģiniet vēlreiz.",
+    "tabHistory": "Vēsture",
+    "historyEmpty": "Vēl nav pabeigtu piegāžu.",
+    "historyLoadFailed": "Neizdevās ielādēt jūsu vēsturi. Lūdzu, mēģiniet vēlreiz.",
+    "ratingReceivedTitle": "Saņemts vērtējums",
+    "noRatingYet": "Šai piegādei vēl nav vērtējuma."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Pārslēgties uz kurjera skatu"
   },
   "feefreeShared": {
-    "language": "Valoda"
+    "language": "Valoda",
+    "loadMore": "Ielādēt vairāk",
+    "deliveryFee": "Piegādes maksa",
+    "timelineAccepted": "Pieņemts",
+    "timelineStarted": "Brauciens sākts",
+    "timelinePickedUp": "Paņemts",
+    "timelineDelivered": "Piegādāts",
+    "timelineFailed": "Neizdevās",
+    "timelineReturned": "Atgriezts",
+    "onTimeBadge": "Laikā",
+    "lateBadge": "Nokavēts",
+    "hoursMinutes": "{h} st. {m} min",
+    "minutesOnly": "{m} min"
   }
 }

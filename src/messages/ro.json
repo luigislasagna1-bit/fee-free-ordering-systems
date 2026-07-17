@@ -6344,7 +6344,12 @@
     "statReleased": "Eliberate",
     "statLate": "Întârziate",
     "hourlyRate": "Tarif orar",
-    "profileLoadFailed": "Nu am putut încărca profilul tău. Te rugăm să încerci din nou."
+    "profileLoadFailed": "Nu am putut încărca profilul tău. Te rugăm să încerci din nou.",
+    "tabHistory": "Istoric",
+    "historyEmpty": "Nicio livrare finalizată încă.",
+    "historyLoadFailed": "Nu am putut încărca istoricul tău. Te rugăm să încerci din nou.",
+    "ratingReceivedTitle": "Evaluare primită",
+    "noRatingYet": "Nicio evaluare pentru această livrare încă."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Comută la vizualizarea livrator"
   },
   "feefreeShared": {
-    "language": "Limbă"
+    "language": "Limbă",
+    "loadMore": "Încarcă mai multe",
+    "deliveryFee": "Taxă de livrare",
+    "timelineAccepted": "Acceptată",
+    "timelineStarted": "Pornit la drum",
+    "timelinePickedUp": "Ridicată",
+    "timelineDelivered": "Livrată",
+    "timelineFailed": "Eșuată",
+    "timelineReturned": "Returnată",
+    "onTimeBadge": "La timp",
+    "lateBadge": "Cu întârziere",
+    "hoursMinutes": "{h} h {m} min",
+    "minutesOnly": "{m} min"
   }
 }

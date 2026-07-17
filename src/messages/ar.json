@@ -6344,7 +6344,12 @@
     "statReleased": "تم تحريرها",
     "statLate": "متأخرة",
     "hourlyRate": "الأجر بالساعة",
-    "profileLoadFailed": "تعذّر تحميل ملفك الشخصي. يرجى المحاولة مرة أخرى."
+    "profileLoadFailed": "تعذّر تحميل ملفك الشخصي. يرجى المحاولة مرة أخرى.",
+    "tabHistory": "السجل",
+    "historyEmpty": "لا توجد توصيلات مكتملة بعد.",
+    "historyLoadFailed": "تعذّر تحميل سجلك. يرجى المحاولة مرة أخرى.",
+    "ratingReceivedTitle": "التقييم المستلم",
+    "noRatingYet": "لا يوجد تقييم لهذا التوصيل بعد."
   },
   "feefreeApp": {
     "dispatchSubtitle": "عيّن وتتبّع عمليات التوصيل الخاصة بك",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "التبديل إلى عرض السائق"
   },
   "feefreeShared": {
-    "language": "اللغة"
+    "language": "اللغة",
+    "loadMore": "تحميل المزيد",
+    "deliveryFee": "رسوم التوصيل",
+    "timelineAccepted": "تم القبول",
+    "timelineStarted": "بدأ القيادة",
+    "timelinePickedUp": "تم الاستلام",
+    "timelineDelivered": "تم التوصيل",
+    "timelineFailed": "فشل التوصيل",
+    "timelineReturned": "تم الإرجاع",
+    "onTimeBadge": "في الوقت المحدد",
+    "lateBadge": "متأخرة",
+    "hoursMinutes": "{h} س {m} د",
+    "minutesOnly": "{m} د"
   }
 }

@@ -6344,7 +6344,12 @@
     "statReleased": "Libérées",
     "statLate": "En retard",
     "hourlyRate": "Taux horaire",
-    "profileLoadFailed": "Impossible de charger votre profil. Veuillez réessayer."
+    "profileLoadFailed": "Impossible de charger votre profil. Veuillez réessayer.",
+    "tabHistory": "Historique",
+    "historyEmpty": "Aucune livraison terminée pour le moment.",
+    "historyLoadFailed": "Impossible de charger votre historique. Veuillez réessayer.",
+    "ratingReceivedTitle": "Note reçue",
+    "noRatingYet": "Pas encore de note pour cette livraison."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Gérez et suivez vos livraisons",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Passer à la vue livreur"
   },
   "feefreeShared": {
-    "language": "Langue"
+    "language": "Langue",
+    "loadMore": "Afficher plus",
+    "deliveryFee": "Frais de livraison",
+    "timelineAccepted": "Acceptée",
+    "timelineStarted": "Trajet démarré",
+    "timelinePickedUp": "Récupérée",
+    "timelineDelivered": "Livrée",
+    "timelineFailed": "Échouée",
+    "timelineReturned": "Retournée",
+    "onTimeBadge": "À l'heure",
+    "lateBadge": "En retard",
+    "hoursMinutes": "{h} h {m} min",
+    "minutesOnly": "{m} min"
   }
 }

@@ -6344,7 +6344,12 @@
     "statReleased": "Släppta",
     "statLate": "Försenade",
     "hourlyRate": "Timlön",
-    "profileLoadFailed": "Det gick inte att läsa in din profil. Försök igen."
+    "profileLoadFailed": "Det gick inte att läsa in din profil. Försök igen.",
+    "tabHistory": "Historik",
+    "historyEmpty": "Inga slutförda leveranser ännu.",
+    "historyLoadFailed": "Det gick inte att läsa in din historik. Försök igen.",
+    "ratingReceivedTitle": "Betyg mottaget",
+    "noRatingYet": "Inget betyg för den här leveransen ännu."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tilldela och följ dina leveranser",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Byt till förarvy"
   },
   "feefreeShared": {
-    "language": "Språk"
+    "language": "Språk",
+    "loadMore": "Visa fler",
+    "deliveryFee": "Leveransavgift",
+    "timelineAccepted": "Accepterad",
+    "timelineStarted": "Började köra",
+    "timelinePickedUp": "Upphämtad",
+    "timelineDelivered": "Levererad",
+    "timelineFailed": "Misslyckades",
+    "timelineReturned": "Returnerad",
+    "onTimeBadge": "I tid",
+    "lateBadge": "Försenad",
+    "hoursMinutes": "{h} h {m} min",
+    "minutesOnly": "{m} min"
   }
 }

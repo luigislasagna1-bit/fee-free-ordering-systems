@@ -6344,7 +6344,12 @@
     "statReleased": "Повернено",
     "statLate": "Із запізненням",
     "hourlyRate": "Погодинна ставка",
-    "profileLoadFailed": "Не вдалося завантажити ваш профіль. Спробуйте ще раз."
+    "profileLoadFailed": "Не вдалося завантажити ваш профіль. Спробуйте ще раз.",
+    "tabHistory": "Історія",
+    "historyEmpty": "Завершених доставок поки немає.",
+    "historyLoadFailed": "Не вдалося завантажити вашу історію. Спробуйте ще раз.",
+    "ratingReceivedTitle": "Отримано оцінку",
+    "noRatingYet": "Для цієї доставки поки немає оцінки."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Призначайте та відстежуйте свої доставки",
@@ -6361,6 +6366,18 @@
     "switchToDriver": "Перейти до вигляду водія"
   },
   "feefreeShared": {
-    "language": "Мова"
+    "language": "Мова",
+    "loadMore": "Завантажити ще",
+    "deliveryFee": "Вартість доставки",
+    "timelineAccepted": "Прийнято",
+    "timelineStarted": "Розпочато поїздку",
+    "timelinePickedUp": "Забрано",
+    "timelineDelivered": "Доставлено",
+    "timelineFailed": "Не виконано",
+    "timelineReturned": "Повернено",
+    "onTimeBadge": "Вчасно",
+    "lateBadge": "Із запізненням",
+    "hoursMinutes": "{h} год {m} хв",
+    "minutesOnly": "{m} хв"
   }
 }
