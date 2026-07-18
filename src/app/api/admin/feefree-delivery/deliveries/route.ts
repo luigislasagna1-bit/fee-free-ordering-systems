@@ -149,10 +149,12 @@ export async function GET(req: NextRequest) {
       restaurant: {
         select: { currency: true },
       },
-      // Driver name + ratingPct for the list row; phone excluded (Phase 8).
+      // Driver name + ratingPct for the list row; phone for tap-to-call
+      // (Phase 8 — Luigi's 2026-07-16 decision: restaurants see their
+      // drivers' numbers; never exposed customer-side).
       // Prisma batches this as a single IN query — no N+1.
       driver: {
-        select: { name: true, ratingPct: true },
+        select: { name: true, phone: true, ratingPct: true },
       },
     },
   });
@@ -186,7 +188,11 @@ export async function GET(req: NextRequest) {
         currency: r.restaurant.currency,
       },
       driver: r.driver
-        ? { name: r.driver.name, ratingPct: r.driver.ratingPct }
+        ? {
+            name: r.driver.name,
+            phone: r.driver.phone,
+            ratingPct: r.driver.ratingPct,
+          }
         : null,
     })),
     nextCursor,

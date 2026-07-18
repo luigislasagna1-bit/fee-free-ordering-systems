@@ -15,7 +15,8 @@
  *   5. Detail overlay: status chip, stage timeline with correct terminal
  *      styling, driver name + ratingPct, order customerName + address +
  *      formatted total + tip, billing line in PLATFORM_CURRENCY
- *   6. Driver.phone NOT present in the detail overlay text or API response
+ *   6. Driver.phone IS present in the detail API driver object (Phase 8 —
+ *      Luigi's 2026-07-16 decision: restaurants see their drivers' numbers)
  *   7. No second parallel interval beyond the single 10 s ops poll
  *
  * Seeding (idempotent, tagged playseed@deliveries.local, wipes own rows on start):
@@ -607,15 +608,15 @@ async function main() {
     "deliveredAt", "failedAt", "returnedAt", "completedAt",
     "driver", "order",
     "billingCents", "billingCurrency", "settled",
+    "canRate", "myFeedback",
   ];
   const missingDetailKeys = EXPECTED_DETAIL_KEYS.filter(
     (k) => !detailApiResult.keys.includes(k),
   );
-  // Driver.phone must never appear: not as a top-level key and not inside the
-  // driver sub-object (Phase 8 adds the call button — not shipped yet).
+  // Phase 8: Driver.phone is EXPECTED inside the driver sub-object — the
+  // tap-to-call button. (Restaurant-facing only; never customer-facing.)
   const phoneInApiBody =
-    "phone" in (detailApiResult.body ?? {}) ||
-    (detailApiResult.body?.driver != null && "phone" in detailApiResult.body.driver);
+    detailApiResult.body?.driver != null && "phone" in detailApiResult.body.driver;
 
   // ── Check 5: Detail overlay content ───────────────────────────────────────
   const ov = overlayElement ?? "";
@@ -654,11 +655,10 @@ async function main() {
     hasTipValue &&
     hasBillingLine;
 
-  // ── Check 6: Driver.phone NOT in overlay text or API response ─────────────
-  // Phone patterns: +1 xxx, (nnn), or nnn-nnn-nnnn.
-  const phonePattern = /(\+1[\s.\-]?\d{3}|\(\d{3}\)|\b\d{3}[\s.\-]\d{3}[\s.\-]\d{4}\b)/;
-  const phoneInOverlayText = phonePattern.test(ov);
-  const check6Pass = !phoneInOverlayText && !phoneInApiBody && missingDetailKeys.length === 0;
+  // ── Check 6: Driver.phone present in API driver object + all keys ─────────
+  // Phase 8 flipped this check: the phone now SHIPS to restaurants
+  // (tap-to-call). canRate/myFeedback join the expected key set.
+  const check6Pass = phoneInApiBody && missingDetailKeys.length === 0;
 
   // ── Check 7: No second parallel interval beyond the single ops poll ────────
   // Close the overlay first (click the ArrowLeft back button).
@@ -724,9 +724,9 @@ async function main() {
       note: `chip=${hasStatusChip} timeline=${hasTimeline} terminal=${hasTerminalNode} driverName=${hasDriverName} rating=${hasDriverRating} customer=${hasCustomerName} address=${hasAddress} total=${hasTotalValue} tip=${hasTipValue} billing=${hasBillingLine}`,
     },
     {
-      name: "6. Driver.phone NOT in overlay text or API response",
+      name: "6. Driver.phone present in detail API driver object (Phase 8) + all keys",
       pass: check6Pass,
-      note: `phoneInOverlay=${phoneInOverlayText} phoneInApi=${phoneInApiBody} missingApiKeys=[${missingDetailKeys.join(",") || "none"}]`,
+      note: `phoneInApi=${phoneInApiBody} missingApiKeys=[${missingDetailKeys.join(",") || "none"}]`,
     },
     {
       name: "7. No second parallel interval beyond the single 10 s ops poll",

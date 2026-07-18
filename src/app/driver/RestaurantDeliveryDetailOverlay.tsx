@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Loader2, MapPin, RefreshCw, Star } from "lucide-react";
+import { Loader2, MapPin, Phone, RefreshCw, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { formatCurrency, PLATFORM_CURRENCY } from "@/lib/utils";
 import { DetailOverlay } from "./shared/DetailOverlay";
@@ -20,12 +20,14 @@ import { StageTimeline, type TimelineNode } from "./shared/StageTimeline";
  *  - Status chip (all statuses via admin.feefreeDelivery st_* keys)
  *  - Stage timeline: Assigned → Accepted → Heading to store → Picked up
  *    → terminal node (Delivered/Failed/Returned/Cancelled)
- *  - Driver card: name + ratingPct star, "last seen {n} min ago" from
- *    denormalized Driver.lastLocationAt (NO phone — Phase 8).
+ *  - Driver card: name + ratingPct star, tap-to-call phone (Phase 8),
+ *    "last seen {n} min ago" from denormalized Driver.lastLocationAt
  *  - Order card: customerName, street + city, total + tip
  *  - Billing line: platformFeeCents + Settled/Unsettled flag
- *  - Rate-this-driver: PLACEHOLDER only this phase — no write path
- *    (Phase 8 ships the upsert). The block is absent if driver is null.
+ *  - Rate-this-driver (Phase 8): 5 tappable stars + optional comment →
+ *    POST .../feedback (upsert — re-submitting EDITS the same rating).
+ *    Rendered only when canRate (terminal + driver, server-computed);
+ *    prefilled from myFeedback so an existing rating reads as editable.
  *
  * Money split (plan §8 / the Fabrizio euro/$ rule):
  *   order money → formatCurrency(amount, detail.order.currency)
@@ -47,6 +49,7 @@ type DeliveryDetail = {
   completedAt: string | null;
   driver: {
     name: string;
+    phone: string | null;
     ratingPct: number | null;
     lastLocationAt: string | null;
   } | null;
@@ -62,6 +65,10 @@ type DeliveryDetail = {
   billingCents: number | null;
   billingCurrency: string;
   settled: boolean;
+  /** Terminal + driver present — server-computed gate for the rate block. */
+  canRate: boolean;
+  /** This restaurant's existing rating for this delivery (prefill). */
+  myFeedback: { stars: number; comment: string | null } | null;
 };
 
 // ── Timeline builder ─────────────────────────────────────────────────────────
@@ -228,21 +235,32 @@ export function RestaurantDeliveryDetailOverlay({
             />
           </section>
 
-          {/* Driver card — name + ratingPct + "last seen N min ago".
-              Phone is NOT shown here — Phase 8 adds the call button.
-              Absent when no driver was ever assigned (driver === null). */}
+          {/* Driver card — name + ratingPct + tap-to-call + "last seen N min
+              ago". Absent when no driver was ever assigned (driver === null). */}
           {detail.driver && (
             <section className="bg-gray-800 border border-gray-700 rounded-2xl p-4 space-y-2">
               <div className="flex items-center justify-between gap-3">
                 <div className="font-semibold text-sm text-white">
                   {detail.driver.name}
                 </div>
-                {detail.driver.ratingPct != null && (
-                  <div className="inline-flex items-center gap-1 text-amber-400 text-sm font-semibold">
-                    <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                    {Math.round(detail.driver.ratingPct)}%
-                  </div>
-                )}
+                <div className="flex items-center gap-2.5">
+                  {detail.driver.ratingPct != null && (
+                    <div className="inline-flex items-center gap-1 text-amber-400 text-sm font-semibold">
+                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      {Math.round(detail.driver.ratingPct)}%
+                    </div>
+                  )}
+                  {detail.driver.phone && (
+                    <a
+                      href={`tel:${detail.driver.phone}`}
+                      aria-label={tApp("callDriver")}
+                      title={tApp("callDriver")}
+                      className="w-9 h-9 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 flex items-center justify-center"
+                    >
+                      <Phone className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
               </div>
               {detail.driver.lastLocationAt != null && (() => {
                 // Clamp at 0 — client/server clock skew can put a fresh ping
@@ -331,17 +349,141 @@ export function RestaurantDeliveryDetailOverlay({
             </section>
           )}
 
-          {/* Rate this driver — PLACEHOLDER only this phase (Phase 8 ships
-              the feedback POST + upsert). Shown only when a driver exists so
-              there is someone to rate. The block is visually greyed out to
-              communicate "not yet available" without a dead submit button. */}
-          {detail.driver && (
-            <section className="bg-gray-800/50 border border-gray-700/50 rounded-2xl p-4 text-center">
-              <p className="text-xs text-gray-600">{tApp("rateComingSoon")}</p>
-            </section>
+          {/* Rate this driver (Phase 8) — only when terminal + driver
+              (server-computed canRate). key= remounts the block when the
+              overlay is reused for a different assignment, so prefill state
+              never bleeds across deliveries. */}
+          {detail.canRate && detail.driver && (
+            <RateDriverSection
+              key={detail.id}
+              assignmentId={detail.id}
+              initial={detail.myFeedback}
+            />
           )}
         </>
       )}
     </DetailOverlay>
+  );
+}
+
+// ── Rate this driver ─────────────────────────────────────────────────────────
+//
+// POST /api/admin/feefree-delivery/feedback — upsert on
+// [assignmentId, source="restaurant"], so re-submitting edits the same row
+// (one restaurant rating per delivery, ever). driverId is derived
+// server-side from the assignment; the client only ever sends
+// { assignmentId, stars, comment }.
+
+const MAX_COMMENT_LEN = 500;
+
+function RateDriverSection({
+  assignmentId,
+  initial,
+}: {
+  assignmentId: string;
+  initial: { stars: number; comment: string | null } | null;
+}) {
+  const tApp = useTranslations("feefreeApp");
+
+  const [stars, setStars] = useState(initial?.stars ?? 0);
+  const [comment, setComment] = useState(initial?.comment ?? "");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState(false);
+  // Whether a rating already exists server-side (submit reads as "update").
+  const [hasExisting, setHasExisting] = useState(initial != null);
+
+  async function submit() {
+    if (stars < 1 || saving) return;
+    setSaving(true);
+    setSaved(false);
+    setError(false);
+    try {
+      const res = await fetch("/api/admin/feefree-delivery/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          assignmentId,
+          stars,
+          comment: comment.trim() || null,
+        }),
+      });
+      if (res.status === 401) {
+        window.location.assign("/driver/login");
+        return;
+      }
+      if (!res.ok) {
+        setError(true);
+        return;
+      }
+      setSaved(true);
+      setHasExisting(true);
+    } catch {
+      setError(true);
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <section className="bg-gray-800 border border-gray-700 rounded-2xl p-4 space-y-3">
+      <h3 className="text-sm font-semibold text-white">
+        {tApp("rateDriver")}
+      </h3>
+      <div className="flex items-center justify-center gap-1.5">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button
+            key={n}
+            type="button"
+            onClick={() => {
+              setStars(n);
+              // A new pick invalidates the previous "saved" confirmation.
+              setSaved(false);
+            }}
+            aria-label={tApp("rateStarsAria", { n })}
+            aria-pressed={n <= stars}
+            className="p-1"
+          >
+            <Star
+              className={`w-8 h-8 transition-colors ${
+                n <= stars
+                  ? "fill-amber-400 text-amber-400"
+                  : "text-gray-600"
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+      <textarea
+        value={comment}
+        onChange={(e) => {
+          setComment(e.target.value.slice(0, MAX_COMMENT_LEN));
+          setSaved(false);
+        }}
+        maxLength={MAX_COMMENT_LEN}
+        rows={2}
+        placeholder={tApp("rateCommentPlaceholder")}
+        className="w-full bg-gray-900 border border-gray-700 rounded-xl px-3 py-2 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-emerald-500 resize-none"
+      />
+      <button
+        type="button"
+        onClick={submit}
+        disabled={stars < 1 || saving}
+        className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-xl"
+      >
+        {saving && <Loader2 className="w-4 h-4 animate-spin" />}
+        {hasExisting ? tApp("rateUpdate") : tApp("rateSubmit")}
+      </button>
+      {saved && (
+        <p className="text-xs text-emerald-400 text-center">
+          {tApp("rateSaved")}
+        </p>
+      )}
+      {error && (
+        <p className="text-xs text-rose-400 text-center">
+          {tApp("rateFailed")}
+        </p>
+      )}
+    </section>
   );
 }

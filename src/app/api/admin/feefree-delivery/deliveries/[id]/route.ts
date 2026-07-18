@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { PLATFORM_CURRENCY } from "@/lib/utils";
+import { ASSIGNMENT_TERMINAL } from "@/lib/driver-assignment";
 
 export const dynamic = "force-dynamic";
 
@@ -22,9 +23,17 @@ export const dynamic = "force-dynamic";
  * from active Dispatch rows (non-terminal) as well as Completed rows
  * (terminal). No status filter here.
  *
- * Driver.phone NOT selected — Phase 8 adds it with the call button.
+ * Driver.phone IS selected (Phase 8) — the driver card's tap-to-call
+ * button. Luigi's 2026-07-16 decision: restaurants see their drivers'
+ * numbers; never exposed on customer-facing surfaces.
  * DriverLocation trail NOT selected — denormalized lastLocationAt is enough
  * for the "last seen N min ago" display (plan §4.3 / §8 do-not-touch list).
+ *
+ * Phase 8 additions to the payload:
+ *   canRate    — terminal status AND a driver exists (the rate block gate).
+ *   myFeedback — THIS restaurant's existing rating for this delivery
+ *                (source="restaurant"), so the rate block prefills and
+ *                re-submitting reads as an edit, not a duplicate.
  *
  * Money split (plan §8):
  *   order money → formatCurrency(amount, order.restaurant.currency)
@@ -84,11 +93,11 @@ export async function GET(
       restaurant: {
         select: { currency: true },
       },
-      // Driver card: name + ratingPct + lastLocationAt for "last seen".
-      // phone: NOT selected — Phase 8 adds the call button.
+      // Driver card: name + phone (tap-to-call) + ratingPct +
+      // lastLocationAt for "last seen".
       // DriverLocation trail: NOT selected — denormalized field is enough.
       driver: {
-        select: { name: true, ratingPct: true, lastLocationAt: true },
+        select: { name: true, phone: true, ratingPct: true, lastLocationAt: true },
       },
     },
   });
@@ -96,6 +105,18 @@ export async function GET(
   if (!row) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
+
+  // The restaurant's own existing rating (unique on [assignmentId, source])
+  // — only worth a lookup when a rate block can render at all.
+  const canRate = row.driver !== null && ASSIGNMENT_TERMINAL.has(row.status);
+  const myFeedback = canRate
+    ? await prisma.driverFeedback.findUnique({
+        where: {
+          assignmentId_source: { assignmentId: row.id, source: "restaurant" },
+        },
+        select: { stars: true, comment: true },
+      })
+    : null;
 
   return NextResponse.json({
     id: row.id,
@@ -113,6 +134,7 @@ export async function GET(
     driver: row.driver
       ? {
           name: row.driver.name,
+          phone: row.driver.phone,
           ratingPct: row.driver.ratingPct,
           // Denormalized last-ping time — the "last seen N min ago" label.
           // No DriverLocation trail reads (plan §4.3 / do-not-touch list).
@@ -135,5 +157,11 @@ export async function GET(
     billingCurrency: PLATFORM_CURRENCY,
     /** True once this assignment is rolled into a weekly settlement invoice. */
     settled: row.settlementId !== null,
+    /** Terminal + driver present — gates the Rate-this-driver block (Phase 8). */
+    canRate,
+    /** This restaurant's existing rating for THIS delivery, for prefill. */
+    myFeedback: myFeedback
+      ? { stars: myFeedback.stars, comment: myFeedback.comment }
+      : null,
   });
 }

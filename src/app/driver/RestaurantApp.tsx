@@ -20,6 +20,7 @@ import {
   Settings,
   Star,
   Store,
+  Users,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { formatCurrency, PLATFORM_CURRENCY } from "@/lib/utils";
@@ -30,6 +31,7 @@ import { ShellHeader } from "./shared/ShellHeader";
 import { RoleSwitch } from "./RoleSwitch";
 import { clearPrefCookie } from "./shared/role-pref";
 import { RestaurantDeliveriesTab } from "./RestaurantDeliveriesTab";
+import { RestaurantDriversTab } from "./RestaurantDriversTab";
 import { RestaurantDeliveryDetailOverlay } from "./RestaurantDeliveryDetailOverlay";
 import { DeliveryStatusChip } from "./shared/DeliveryStatusChip";
 
@@ -46,9 +48,8 @@ import { DeliveryStatusChip } from "./shared/DeliveryStatusChip";
  * impersonation ended). No auth-dependent server redirects (tab state is
  * React state, plan §4.1 / AGENTS.md).
  *
- * Tabs (Phase 6 R1): Dispatch (default) + Account. Deliveries and Drivers
- * are Phase 7/8 — they are absent from the nav in this phase (hidden, never
- * dead, plan §7 "your call" clause).
+ * Tabs: Dispatch (default) + Deliveries (Phase 7) + Drivers (Phase 8) +
+ * Account.
  *
  * Visual language: same dark-native shell as DriverApp (bg-gray-900, emerald
  * active state, safe-area header + bottom nav) — kills the light-panel-in-
@@ -88,7 +89,7 @@ type OpsPayload = {
   restLng: number | null;
 };
 
-type TabId = "dispatch" | "deliveries" | "account";
+type TabId = "dispatch" | "deliveries" | "drivers" | "account";
 
 // ── Context ──────────────────────────────────────────────────────────────────
 //
@@ -672,6 +673,7 @@ export function RestaurantApp({
   const [tab, setTab] = useState<TabId>("dispatch");
   const [accountMounted, setAccountMounted] = useState(false);
   const [deliveriesMounted, setDeliveriesMounted] = useState(false);
+  const [driversMounted, setDriversMounted] = useState(false);
   // Shell-level detail overlay: tracks the assignment id being shown.
   // Both the Dispatch active rows and the Deliveries tab rows open this.
   const [detailId, setDetailId] = useState<string | null>(null);
@@ -734,7 +736,6 @@ export function RestaurantApp({
 
   const heldCount = ops?.held.length ?? 0;
 
-  // Phase 7: Dispatch + Deliveries + Account. Drivers is Phase 8.
   const tabs: BottomNavTab<TabId>[] = [
     {
       id: "dispatch",
@@ -746,6 +747,11 @@ export function RestaurantApp({
       id: "deliveries",
       label: tApp("tabDeliveries"),
       icon: Package,
+    },
+    {
+      id: "drivers",
+      label: tApp("tabDrivers"),
+      icon: Users,
     },
     {
       id: "account",
@@ -799,6 +805,18 @@ export function RestaurantApp({
           )}
         </div>
 
+        {/* Drivers (Phase 8) — lazily mounted on first activation, stays
+            mounted thereafter. Own fetch on activation (no polling); a
+            recent-delivery tap in its sheet opens the shell overlay. */}
+        <div className={tab === "drivers" ? undefined : "hidden"}>
+          {driversMounted && (
+            <RestaurantDriversTab
+              active={tab === "drivers"}
+              onOpenDelivery={openDetail}
+            />
+          )}
+        </div>
+
         {/* Account — lazily mounted on first activation, stays mounted
             afterwards. Reads from OpsCtx — no own fetch. */}
         <div className={tab === "account" ? undefined : "hidden"}>
@@ -817,6 +835,7 @@ export function RestaurantApp({
           onSelect={(id) => {
             if (id === "account") setAccountMounted(true);
             if (id === "deliveries") setDeliveriesMounted(true);
+            if (id === "drivers") setDriversMounted(true);
             setTab(id);
           }}
         />
