@@ -67,8 +67,15 @@ export default async function KickstarterPage() {
       <div className="max-w-3xl mx-auto px-4 pt-4">
         <AddOnBillingNotice state={billingState} addOnSlug="kickstarter" />
       </div>
+      {/* First Buy toggle shows the EFFECTIVE state, not just the
+          KickstarterState flag: the promo row can be paused from
+          /admin/promotions, which knows nothing about KickstarterState.
+          Showing the stale flag as ON while the promo was inactive is how
+          the 2026-07 FIRSTBUY incident went unnoticed for a month. Flipping
+          the toggle ON always calls enableFirstBuyPromo, which reactivates
+          an existing paused row. */}
       <KickstarterClient
-      initialFirstBuyEnabled={state.firstBuyPromoEnabled}
+      initialFirstBuyEnabled={state.firstBuyPromoEnabled && (firstBuyPromo?.isActive ?? false)}
       initialInviteEnabled={state.inviteProspectsEnabled}
       initialFirstBuyPromoId={firstBuyPromo?.id ?? null}
       initialImports={imports.map((i) => ({

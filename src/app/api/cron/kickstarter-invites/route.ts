@@ -25,7 +25,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
-import { sendInviteEmail } from "@/lib/kickstarter";
+import { KICKSTARTER_FIRST_BUY_REF, sendInviteEmail } from "@/lib/kickstarter";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -45,6 +45,7 @@ async function handle(req: NextRequest) {
 
   const start = Date.now();
   let restaurantsConsidered = 0;
+  let restaurantsSkippedInactivePromo = 0;
   let importsConsidered = 0;
   let totalSent = 0;
   let totalErrors = 0;
@@ -76,6 +77,31 @@ async function handle(req: NextRequest) {
     restaurantsConsidered++;
     const restaurant = state.restaurant;
     if (!restaurant) continue;
+
+    // FAIL-SAFE: the invite email unconditionally promises "10% off your
+    // first order — it'll auto-apply". If the backing First Buy promo has
+    // been paused (possible via /admin/promotions, which doesn't know about
+    // KickstarterState), sending would promise a discount checkout can never
+    // apply — the 2026-07 FIRSTBUY incident sent ~3,600 such emails. Skip
+    // this restaurant until the promo is active again; the drip resumes
+    // automatically on the next hourly run after reactivation.
+    const activeFirstBuy = await prisma.promotion.findFirst({
+      where: {
+        restaurantId: restaurant.id,
+        campaignRef: KICKSTARTER_FIRST_BUY_REF,
+        isActive: true,
+      },
+      select: { id: true },
+    });
+    if (!activeFirstBuy) {
+      restaurantsSkippedInactivePromo++;
+      console.error(
+        `[kickstarter-invites] SKIPPING restaurant ${restaurant.id} (${restaurant.slug}): ` +
+          `invite emails promise the First Buy discount but no ACTIVE kickstarter_first_buy ` +
+          `promotion exists — turn First Buy back on in /admin/kickstarter to resume sending`,
+      );
+      continue;
+    }
 
     const imprint =
       restaurant.resellerProfile?.status === "approved" &&
@@ -184,11 +210,12 @@ async function handle(req: NextRequest) {
 
   const elapsedMs = Date.now() - start;
   console.log(
-    `[kickstarter-invites] restaurants=${restaurantsConsidered} imports=${importsConsidered} sent=${totalSent} errors=${totalErrors} elapsedMs=${elapsedMs}`,
+    `[kickstarter-invites] restaurants=${restaurantsConsidered} skippedInactivePromo=${restaurantsSkippedInactivePromo} imports=${importsConsidered} sent=${totalSent} errors=${totalErrors} elapsedMs=${elapsedMs}`,
   );
 
   return NextResponse.json({
     restaurantsConsidered,
+    restaurantsSkippedInactivePromo,
     importsConsidered,
     sent: totalSent,
     errors: totalErrors,

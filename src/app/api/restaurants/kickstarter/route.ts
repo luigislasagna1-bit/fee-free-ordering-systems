@@ -31,7 +31,7 @@ async function loadPayload(restaurantId: string) {
     getOrCreateKickstarterState(restaurantId),
     prisma.promotion.findFirst({
       where: { restaurantId, campaignRef: KICKSTARTER_FIRST_BUY_REF },
-      select: { id: true },
+      select: { id: true, isActive: true },
     }),
     // Recent 5 imports — small index-backed lookup so the kickstarter
     // page render stays cheap even when a restaurant has dozens of past
@@ -44,7 +44,11 @@ async function loadPayload(restaurantId: string) {
   ]);
 
   return {
-    firstBuyPromoEnabled: state.firstBuyPromoEnabled,
+    // Effective state: the promo row can be paused from /admin/promotions
+    // (which doesn't touch KickstarterState), and reporting the stale flag
+    // as ON is how the 2026-07 FIRSTBUY incident stayed invisible. Keep in
+    // sync with the same rule in src/app/admin/kickstarter/page.tsx.
+    firstBuyPromoEnabled: state.firstBuyPromoEnabled && (promo?.isActive ?? false),
     inviteProspectsEnabled: state.inviteProspectsEnabled,
     firstBuyPromoId: promo?.id ?? null,
     imports,
