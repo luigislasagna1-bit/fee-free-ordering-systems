@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-17 by Claude (🎉 driver iOS SUBMITTED to App Review 1:22 AM — Waiting for Review; prod test deliveries cleaned; v1.1 Phase 2 deployed. Earlier: Android submission prep — BOTH signed RELEASE .aab files built + cryptographically proven release-signed [Kitchen vc21/v3.0 + Driver vc1/v1.0, same upload key]; Play org conversion confirmed = 20-tester gate GONE; wrote Play listing copy for both apps; generated 4 Play screenshots from the local demo; rewrote IOS_APP_STORE_SUBMISSION.md for the org + added the driver app. Apple org still Pending — decisions logged in A17.)
+**Last updated:** 2026-07-18 by Claude (🚨 A20 is the one that matters: the Kickstarter FIRSTBUY 10% promo has been sitting DEACTIVATED since June 20 while ~3,600 invite emails promised it — root cause found, guards shipped, one toggle-flip from you reactivates it AND resumes the paused email drip. Also: "Mark all read" built for /reseller-reports; driver v1.1 Phases 3–7 built + device-gated; A21 = one schema push to run together.)
+**Previous update:** 2026-07-17 by Claude (🎉 driver iOS SUBMITTED to App Review 1:22 AM — Waiting for Review; prod test deliveries cleaned; v1.1 Phase 2 deployed. Earlier: Android submission prep — BOTH signed RELEASE .aab files built + cryptographically proven release-signed [Kitchen vc21/v3.0 + Driver vc1/v1.0, same upload key]; Play org conversion confirmed = 20-tester gate GONE; wrote Play listing copy for both apps; generated 4 Play screenshots from the local demo; rewrote IOS_APP_STORE_SUBMISSION.md for the org + added the driver app. Apple org still Pending — decisions logged in A17.)
 
 ---
 
@@ -34,6 +35,17 @@
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A20. 🚨 FIRST — turn the Kickstarter "First Buy" 10% promo back ON (2 clicks, after Claude's deploy)
+**What happened:** your Invite Prospects emails promise "10% off your first order — code FIRSTBUY", but the promo row behind it has been **deactivated since June 20** (flipped off through the Promotions editor, which the Kickstarter page didn't know about — the Kickstarter toggle kept showing ON). Every order from the campaign (~3,600 emails sent) got **no discount** — that's exactly what you reported on the 17th.
+**Do this once the deploy is live (Claude will confirm):**
+1. Open **`/admin/kickstarter`** → the First Buy toggle will now show **OFF**. That's correct — it now shows the truth.
+2. **Flip it ON.** That reactivates the 10% promo immediately AND automatically resumes the paused invite-email drip (Claude added a guard: invites stop sending whenever the promo is off, so the remaining ~11,979 emails can't promise a dead discount).
+3. Then tell Claude "A20 flipped" → Claude places a fresh-identity test order on your live store and proves the 10% lands on a real charged order.
+**Your call (no rush):** the customer `eri***` ordered $12.79 from the email and got no discount — want Claude to set up a comp/credit for them? (They now count as "returning", so the promo will never fire for them on its own.)
+
+### A21. 🔷 Run one schema push WITH Claude (2 min) — two new delivery indexes
+This week's driver-app work added two indexes to `DriverAssignment` (faster restaurant Deliveries tab + settlements at scale). The push tool writes to BOTH Neon branches, so Claude's autonomous mode blocks it — it needs you present. In a live session say "run A21" and Claude runs `npx tsx scripts/push-schema-to-both.ts` while you watch. Additive-only (no data touched); until then everything works, just without the new indexes.
 
 ### A19. ✅ DONE 2026-07-16 — BOTH Android apps SUBMITTED to Play Production 🎉
 **Kitchen "Fee Free Order App"** (vc21/v3.0) submitted ~02:15, status **In review**. **Driver "Fee Free Delivery"** (vc1/v1.0, new brand icon) submitted ~11:33 after the background-location + foreground-service declarations with the demo video (unlisted YouTube). 16 KB error on Kitchen bypassed via "Proceed anyway" (real fix = **B5**). When the review emails arrive, tell Claude the outcome → if approved, the public links go out (reseller + marketing): Kitchen `https://play.google.com/store/apps/details?id=com.feefreeordering.kitchen`, Driver `...?id=com.feefreeordering.driver`. If rejected, paste the email → same-day fix.
