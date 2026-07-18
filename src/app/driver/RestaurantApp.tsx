@@ -29,6 +29,9 @@ import { BottomNav, type BottomNavTab } from "./shared/BottomNav";
 import { ShellHeader } from "./shared/ShellHeader";
 import { RoleSwitch } from "./RoleSwitch";
 import { clearPrefCookie } from "./shared/role-pref";
+import { RestaurantDeliveriesTab } from "./RestaurantDeliveriesTab";
+import { RestaurantDeliveryDetailOverlay } from "./RestaurantDeliveryDetailOverlay";
+import { DeliveryStatusChip } from "./shared/DeliveryStatusChip";
 
 /**
  * RestaurantApp — the restaurant-role app shell (v1.1 plan §4.1). Serves
@@ -85,7 +88,7 @@ type OpsPayload = {
   restLng: number | null;
 };
 
-type TabId = "dispatch" | "account";
+type TabId = "dispatch" | "deliveries" | "account";
 
 // ── Context ──────────────────────────────────────────────────────────────────
 //
@@ -106,53 +109,6 @@ const OpsCtx = createContext<OpsCtxValue>({
 
 function useOps(): OpsCtxValue {
   return useContext(OpsCtx);
-}
-
-// ── Active-delivery status chip ──────────────────────────────────────────────
-//
-// Reads admin.feefreeDelivery st_* keys — the same namespace as the desktop
-// panel (plan §6: "st_delivered/failed/returned/cancelled usable by desktop
-// too"). The new terminal st_* keys shipped in en.json this phase.
-
-const STATUS_COLORS: Record<string, string> = {
-  queued: "bg-gray-600/40 text-gray-300",
-  assigned: "bg-blue-500/15 text-blue-400",
-  accepted: "bg-amber-500/15 text-amber-400",
-  started: "bg-amber-500/15 text-amber-400",
-  picked_up: "bg-emerald-500/15 text-emerald-400",
-  out_for_delivery: "bg-emerald-500/15 text-emerald-400",
-  delivered: "bg-emerald-500/15 text-emerald-400",
-  failed: "bg-rose-500/15 text-rose-400",
-  returned: "bg-gray-600/40 text-gray-300",
-  cancelled: "bg-gray-600/40 text-gray-300",
-};
-
-function ActiveStatusChip({ status }: { status: string }) {
-  const t = useTranslations("admin.feefreeDelivery");
-  // Map to the st_* translation keys that live in admin.feefreeDelivery.
-  const KEY: Record<string, string> = {
-    queued: "st_queued",
-    assigned: "st_assigned",
-    accepted: "st_accepted",
-    started: "st_started",
-    picked_up: "st_enroute",
-    out_for_delivery: "st_enroute",
-    delivered: "st_delivered",
-    failed: "st_failed",
-    returned: "st_returned",
-    cancelled: "st_cancelled",
-  };
-  const key = KEY[status];
-  const label = key ? t(key) : status;
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold whitespace-nowrap ${
-        STATUS_COLORS[status] ?? "bg-gray-600/40 text-gray-300"
-      }`}
-    >
-      {label}
-    </span>
-  );
 }
 
 // ── Toggle switch ────────────────────────────────────────────────────────────
@@ -191,7 +147,14 @@ function Toggle({
 
 // ── Dispatch tab ─────────────────────────────────────────────────────────────
 
-function DispatchTab({ onGoToAccount }: { onGoToAccount: () => void }) {
+function DispatchTab({
+  onGoToAccount,
+  onOpenDetail,
+}: {
+  onGoToAccount: () => void;
+  /** Open the delivery detail overlay for an active assignment (plan §4.2). */
+  onOpenDetail: (id: string) => void;
+}) {
   const { data, loading, refetch } = useOps();
   const t = useTranslations("admin.feefreeDelivery");
   const tApp = useTranslations("feefreeApp");
@@ -335,9 +298,11 @@ function DispatchTab({ onGoToAccount }: { onGoToAccount: () => void }) {
                     ) / 10
                   : null;
               return (
-                <div
+                <button
                   key={a.id}
-                  className="bg-gray-800 border border-gray-700 rounded-xl px-3 py-2.5 flex items-start justify-between gap-3"
+                  type="button"
+                  onClick={() => onOpenDetail(a.id)}
+                  className="w-full text-left bg-gray-800 border border-gray-700 hover:border-gray-600 rounded-xl px-3 py-2.5 flex items-start justify-between gap-3"
                 >
                   <div className="text-sm min-w-0 space-y-0.5">
                     <div>
@@ -370,8 +335,8 @@ function DispatchTab({ onGoToAccount }: { onGoToAccount: () => void }) {
                       )}
                     </div>
                   </div>
-                  <ActiveStatusChip status={a.status} />
-                </div>
+                  <DeliveryStatusChip status={a.status} />
+                </button>
               );
             })}
           </div>
@@ -706,14 +671,23 @@ export function RestaurantApp({
 
   const [tab, setTab] = useState<TabId>("dispatch");
   const [accountMounted, setAccountMounted] = useState(false);
+  const [deliveriesMounted, setDeliveriesMounted] = useState(false);
+  // Shell-level detail overlay: tracks the assignment id being shown.
+  // Both the Dispatch active rows and the Deliveries tab rows open this.
+  const [detailId, setDetailId] = useState<string | null>(null);
 
   // ONE ops poll at the shell level — tabs read via useOps(), never create
   // their own intervals (plan §4.1).
   const [ops, setOps] = useState<OpsPayload | null>(null);
   const [opsLoading, setOpsLoading] = useState(true);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // Monotonic fetch counter — a slow response that lost the race to a newer
+  // fetch (10 s tick + focus refetch + manual refetch can overlap) must not
+  // clobber fresher data or flags (same seqRef pattern as the tabs' loaders).
+  const opsSeqRef = useRef(0);
 
   const fetchOps = useCallback(async () => {
+    const seq = ++opsSeqRef.current;
     try {
       const res = await fetch("/api/admin/feefree-delivery/ops", {
         cache: "no-store",
@@ -726,9 +700,14 @@ export function RestaurantApp({
       }
       if (!res.ok) return;
       const data: OpsPayload = await res.json();
-      setOps(data);
+      if (seq === opsSeqRef.current) setOps(data);
+    } catch {
+      // Swallow transient poll failures (network blip, tab wake-up): the 10 s
+      // interval + focus listener retry on their own, and fetchOps is called
+      // un-awaited from the interval/focus paths — an uncaught rejection here
+      // would surface as an unhandled-promise error instead of a retry.
     } finally {
-      setOpsLoading(false);
+      if (seq === opsSeqRef.current) setOpsLoading(false);
     }
   }, []);
 
@@ -755,14 +734,18 @@ export function RestaurantApp({
 
   const heldCount = ops?.held.length ?? 0;
 
-  // Phase 6 R1: Dispatch + Account only. Deliveries and Drivers are Phases 7/8
-  // — they are absent from the nav (hidden), never dead placeholders (plan §7).
+  // Phase 7: Dispatch + Deliveries + Account. Drivers is Phase 8.
   const tabs: BottomNavTab<TabId>[] = [
     {
       id: "dispatch",
       label: tApp("tabDispatch"),
       icon: Bike,
       badge: heldCount,
+    },
+    {
+      id: "deliveries",
+      label: tApp("tabDeliveries"),
+      icon: Package,
     },
     {
       id: "account",
@@ -774,6 +757,10 @@ export function RestaurantApp({
   function goToAccount() {
     setAccountMounted(true);
     setTab("account");
+  }
+
+  function openDetail(id: string) {
+    setDetailId(id);
   }
 
   return (
@@ -788,12 +775,28 @@ export function RestaurantApp({
           right={<RoleSwitch role="restaurant" hasOtherRole={hasOtherRole} />}
         />
 
-        {/* Dispatch — always mounted, CSS-hidden when Account is active.
-            No persistent background process on this tab, but consistent with
-            the driver shell's mount-always pattern for future Deliveries tab
-            (which may carry a poller of its own in Phase 7). */}
+        {/* Dispatch — always mounted, CSS-hidden when off active.
+            Active rows tap → detail overlay via openDetail (plan §4.2). */}
         <div className={tab === "dispatch" ? undefined : "hidden"}>
-          <DispatchTab onGoToAccount={goToAccount} />
+          <DispatchTab onGoToAccount={goToAccount} onOpenDetail={openDetail} />
+        </div>
+
+        {/* Deliveries (Phase 7) — lazily mounted on first activation, stays
+            mounted thereafter. Reads in-progress data from OpsCtx (zero extra
+            queries); completed data from the deliveries endpoint (plan §4.3).
+            The `active` prop gates the refetch-on-activation contract. */}
+        <div className={tab === "deliveries" ? undefined : "hidden"}>
+          {deliveriesMounted && (
+            <RestaurantDeliveriesTab
+              active={tab === "deliveries"}
+              // null (NOT []) until the first ops payload lands, so the tab
+              // can tell "not loaded yet / failed" apart from a real empty
+              // list and doesn't flash a definitive empty state.
+              activeDeliveries={ops ? ops.active : null}
+              activeLoading={opsLoading}
+              onOpenDetail={openDetail}
+            />
+          )}
         </div>
 
         {/* Account — lazily mounted on first activation, stays mounted
@@ -813,9 +816,21 @@ export function RestaurantApp({
           active={tab}
           onSelect={(id) => {
             if (id === "account") setAccountMounted(true);
+            if (id === "deliveries") setDeliveriesMounted(true);
             setTab(id);
           }}
         />
+
+        {/* Delivery detail overlay — z-40 sits above the bottom nav (z-20)
+            and shell header (z-10). Opened from Dispatch active rows AND
+            Deliveries tab rows (plan §4.2/§4.3). Unmounts on close so the
+            next open always fetches fresh data. */}
+        {detailId && (
+          <RestaurantDeliveryDetailOverlay
+            assignmentId={detailId}
+            onClose={() => setDetailId(null)}
+          />
+        )}
       </div>
     </OpsCtx.Provider>
   );

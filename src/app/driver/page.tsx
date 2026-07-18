@@ -57,7 +57,14 @@ export default async function DriverHomePage() {
   }
 
   const user = await getSessionUser();
-  if (user) {
+  // Kitchen logins never grant the dispatch surface (the same rule that
+  // bounces kitchen_staff from /admin — admin/layout.tsx). getSessionUser()
+  // falls back to the kitchen session (path=/ cookie), so without this gate a
+  // kitchen-staff-only tablet would render the full RestaurantApp dispatch +
+  // billing shell. Gate on `role` — NOT effectiveRole — so impersonating
+  // superadmins/resellers still pass. A kitchen_staff session falls through
+  // to the driver session (if any) below, else bounces to /kitchen.
+  if (user && user.role !== "kitchen_staff") {
     if (!user.restaurantId) redirect("/superadmin/drivers");
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: user.restaurantId },
@@ -79,14 +86,18 @@ export default async function DriverHomePage() {
     );
   }
 
-  // pref said "restaurant" but there is no admin session — fall back to the
-  // driver session rather than bouncing a signed-in driver to the login page.
-  // (getSessionUser() returned null above, which implies the admin session is
-  // absent too, so hasOtherRole is false.)
+  // pref said "restaurant" but there is no admin session (none at all, or
+  // only a kitchen-staff fallback, which never grants dispatch) — fall back
+  // to the driver session rather than bouncing a signed-in driver to the
+  // login page. hasOtherRole is false: no admin dispatch role is present.
   if (driver) {
     const rec = await prisma.driver.findUnique({ where: { id: driver.driverId }, select: { ratingPct: true } });
     return <DriverApp driverName={driver.name} rating={rec?.ratingPct ?? null} hasOtherRole={false} />;
   }
+
+  // Only a kitchen-staff session on this device (no driver, no admin): that
+  // login belongs on the kitchen display, not the dispatch surface.
+  if (user) redirect("/kitchen");
 
   redirect("/driver/login");
 }

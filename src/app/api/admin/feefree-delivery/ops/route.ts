@@ -31,7 +31,13 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  if (!restaurantId) {
+  // Role gate: getSessionUser() FALLS BACK to the kitchen session (path=/
+  // cookie), and a kitchen login is designed not to grant the dispatch/
+  // billing surface (the same reason /driver/page.tsx reads the admin
+  // session directly for hasOtherRole, and admin/layout.tsx bounces
+  // kitchen_staff). Gate on `role` — NOT effectiveRole — so impersonating
+  // superadmins/resellers still pass (session.ts keeps their real role).
+  if (!restaurantId || user?.role === "kitchen_staff") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

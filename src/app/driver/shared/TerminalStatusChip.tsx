@@ -3,10 +3,11 @@ import { useTranslations } from "next-intl";
 
 /**
  * Terminal status chip (v1.1 plan §3.1 shared building block / §3.3):
- * Delivered emerald · Failed rose · Returned gray. Shared by the driver
- * History list + detail (Phase 4) and reusable by the restaurant Deliveries
- * tab (Phase 7 — its extra `cancelled` status falls through to the gray
- * style with the raw status until its admin-side label ships there).
+ * Delivered emerald · Failed rose · Returned gray. DRIVER-side only: the
+ * History list + detail (Phase 4), whose route never returns `cancelled`.
+ * The restaurant shell uses DeliveryStatusChip.tsx instead (full status
+ * vocabulary incl. st_cancelled ×38) — do not point restaurant surfaces
+ * back here or `cancelled` regresses to the raw enum string.
  *
  * Labels come from the shared feefreeShared timeline keys so the chip and
  * the StageTimeline terminal node can never disagree (plan §6 dedup rule).

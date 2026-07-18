@@ -3588,6 +3588,14 @@ model DeliveryAssignment {
   @@index([status, deliveredAt])
   @@index([driverId, completedAt])
   @@index([restaurantId, completedAt])
+  /// Restaurant-shell 10 s ops poll (getFeeFreeDeliveryOpsData): owed
+  /// aggregate = (restaurantId, status:"delivered", settlementId:null) —
+  /// status in the key beats a plain (restaurantId, settlementId) because it
+  /// also excludes never-settled failed/cancelled rows at the index level.
+  @@index([restaurantId, status, settlementId])
+  /// Same poll: delivered-this-week count = (restaurantId,
+  /// status:"delivered", deliveredAt >= weekStart) — range column last.
+  @@index([restaurantId, status, deliveredAt])
 }
 
 /// Append-only GPS ping from the driver app (foreground watchPosition). The latest

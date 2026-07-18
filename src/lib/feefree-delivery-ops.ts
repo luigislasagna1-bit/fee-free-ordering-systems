@@ -23,9 +23,7 @@
  */
 import prisma from "@/lib/db";
 import { weekStartUtc, weekEndUtc } from "@/lib/feefree-delivery";
-
-/** Statuses that take a delivery OUT of the "active" list. */
-const TERMINAL = ["delivered", "failed", "returned", "cancelled"];
+import { ASSIGNMENT_LIVE } from "@/lib/driver-assignment";
 
 /** Next Monday 00:10 UTC — when the weekly settlement cron charges the card. */
 function nextChargeDate(now: Date): Date {
@@ -90,8 +88,12 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
     prisma.deliveryAssignment.count({
       where: { restaurantId, status: "delivered", deliveredAt: { gte: weekStart, lt: weekEnd } },
     }),
+    // Positive live-status list (shared ASSIGNMENT_LIVE, complement of
+    // ASSIGNMENT_TERMINAL) — `in` lets Postgres run tight (restaurantId,
+    // status) index probes over only the live rows instead of walking the
+    // restaurant's whole assignment history the way `notIn` terminal did.
     prisma.deliveryAssignment.findMany({
-      where: { restaurantId, status: { notIn: TERMINAL } },
+      where: { restaurantId, status: { in: [...ASSIGNMENT_LIVE] } },
       orderBy: { createdAt: "asc" },
       take: 50,
       select: {

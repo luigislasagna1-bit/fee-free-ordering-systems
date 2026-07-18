@@ -21,6 +21,29 @@ export type AssignmentStage = (typeof ASSIGNMENT_STAGES)[number];
 /** A terminal assignment never advances again. */
 export const ASSIGNMENT_TERMINAL = new Set(["delivered", "failed", "returned", "cancelled"]);
 
+/**
+ * Statuses that keep a delivery LIVE (in active/dispatch lists) — the exact
+ * complement of ASSIGNMENT_TERMINAL over the full status vocabulary
+ * (schema.prisma DeliveryAssignment.status + the defensively-read
+ * "offered"/"assigned" pre-claim states used by the unclaimed-alert cron and
+ * public delivery-tracking). Kept HERE, next to ASSIGNMENT_TERMINAL, so the
+ * two lists can never drift (v1.1 Phase 7 review finding K1).
+ *
+ * Prefer `status: { in: [...ASSIGNMENT_LIVE] }` over `notIn` terminal for hot
+ * queries: Postgres turns the positive list into tight (restaurantId, status)
+ * b-tree probes touching only live rows, while `notIn` walks the restaurant's
+ * entire assignment history (AGENTS.md 100→10k scale rule).
+ */
+export const ASSIGNMENT_LIVE = [
+  "queued",
+  "offered",
+  "assigned",
+  "accepted",
+  "started",
+  "picked_up",
+  "out_for_delivery",
+] as const;
+
 /** Statuses a driver may set from the app. "failed" is a bail-out from any
  *  active stage; the rest are forward steps. */
 export const DRIVER_SETTABLE = new Set([
