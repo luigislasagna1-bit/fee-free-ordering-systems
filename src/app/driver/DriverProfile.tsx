@@ -1,9 +1,10 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
 import { signOut } from "next-auth/react";
-import { Calendar, Loader2, LogOut, RefreshCw, Star, Store } from "lucide-react";
+import { Calendar, Loader2, LogOut, RefreshCw, Star, Store, Volume2, VolumeX } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { formatCurrency, PLATFORM_CURRENCY } from "@/lib/utils";
+import { isSoundsMuted, setSoundsMuted } from "./shared/driver-sounds";
 import { LanguageRow } from "./shared/LanguageRow";
 import { clearPrefCookie } from "./shared/role-pref";
 import { formatPct } from "./shared/format-pct";
@@ -39,10 +40,18 @@ type Me = {
 
 export function DriverProfile({ active = true }: { active?: boolean }) {
   const t = useTranslations("driver");
+  const tCommon = useTranslations("common");
   const locale = useLocale();
   const [me, setMe] = useState<Me | null>(null);
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
+  // Mirrors the driver-sounds mute flag (localStorage). Read in an EFFECT,
+  // never during render — SSR pre-renders this client component and a render
+  // read would mismatch hydration (the 2026-07-17 localStorage gotcha).
+  const [muted, setMuted] = useState(false);
+  useEffect(() => {
+    setMuted(isSoundsMuted());
+  }, []);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -181,6 +190,37 @@ export function DriverProfile({ active = true }: { active?: boolean }) {
           </span>
         </section>
       )}
+
+      {/* Sounds on/off — writes the driver-sounds module's persisted mute
+          flag; the play functions read it at play time, so no event plumbing.
+          Row styling matches LanguageRow (icon + label left, control right). */}
+      <div className="bg-gray-800 border border-gray-700 rounded-2xl px-4 py-3 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-sm text-gray-300">
+          {muted ? <VolumeX className="w-4 h-4 text-gray-500" /> : <Volume2 className="w-4 h-4 text-gray-500" />}
+          {t("soundsLabel")}
+        </div>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={!muted}
+          aria-label={t("soundsLabel")}
+          onClick={() => {
+            const nextMuted = !muted;
+            setMuted(nextMuted);
+            setSoundsMuted(nextMuted);
+          }}
+          className="flex items-center gap-2"
+        >
+          <span className="text-xs font-semibold text-gray-400">{muted ? tCommon("off") : tCommon("on")}</span>
+          <span
+            className={`relative inline-block w-11 h-6 rounded-full transition-colors ${muted ? "bg-gray-600" : "bg-emerald-500"}`}
+          >
+            <span
+              className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform ${muted ? "" : "translate-x-5"}`}
+            />
+          </span>
+        </button>
+      </div>
 
       <LanguageRow />
 

@@ -6349,7 +6349,8 @@
     "historyEmpty": "Aún no tienes entregas completadas.",
     "historyLoadFailed": "No se pudo cargar tu historial. Inténtalo de nuevo.",
     "ratingReceivedTitle": "Valoración recibida",
-    "noRatingYet": "Esta entrega aún no tiene valoración."
+    "noRatingYet": "Esta entrega aún no tiene valoración.",
+    "soundsLabel": "Sonidos"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Asigna y haz seguimiento de tus entregas",

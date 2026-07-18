@@ -6349,7 +6349,8 @@
     "historyEmpty": "Vēl nav pabeigtu piegāžu.",
     "historyLoadFailed": "Neizdevās ielādēt jūsu vēsturi. Lūdzu, mēģiniet vēlreiz.",
     "ratingReceivedTitle": "Saņemts vērtējums",
-    "noRatingYet": "Šai piegādei vēl nav vērtējuma."
+    "noRatingYet": "Šai piegādei vēl nav vērtējuma.",
+    "soundsLabel": "Skaņas"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",

@@ -6349,7 +6349,8 @@
     "historyEmpty": "Belum ada pengantaran yang selesai.",
     "historyLoadFailed": "Tidak dapat memuat riwayat Anda. Silakan coba lagi.",
     "ratingReceivedTitle": "Rating diterima",
-    "noRatingYet": "Belum ada rating untuk pengantaran ini."
+    "noRatingYet": "Belum ada rating untuk pengantaran ini.",
+    "soundsLabel": "Suara"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",

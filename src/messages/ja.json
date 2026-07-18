@@ -6349,7 +6349,8 @@
     "historyEmpty": "完了した配達はまだありません。",
     "historyLoadFailed": "履歴を読み込めませんでした。もう一度お試しください。",
     "ratingReceivedTitle": "評価を受け取りました",
-    "noRatingYet": "この配達の評価はまだありません。"
+    "noRatingYet": "この配達の評価はまだありません。",
+    "soundsLabel": "サウンド"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",

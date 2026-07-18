@@ -6349,7 +6349,8 @@
     "historyEmpty": "Aucune livraison terminée pour le moment.",
     "historyLoadFailed": "Impossible de charger votre historique. Veuillez réessayer.",
     "ratingReceivedTitle": "Note reçue",
-    "noRatingYet": "Pas encore de note pour cette livraison."
+    "noRatingYet": "Pas encore de note pour cette livraison.",
+    "soundsLabel": "Sons"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Gérez et suivez vos livraisons",

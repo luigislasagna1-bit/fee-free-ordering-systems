@@ -6349,7 +6349,8 @@
     "historyEmpty": "Nog geen voltooide bezorgingen.",
     "historyLoadFailed": "Je geschiedenis kon niet worden geladen. Probeer het opnieuw.",
     "ratingReceivedTitle": "Beoordeling ontvangen",
-    "noRatingYet": "Nog geen beoordeling voor deze bezorging."
+    "noRatingYet": "Nog geen beoordeling voor deze bezorging.",
+    "soundsLabel": "Geluiden"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",

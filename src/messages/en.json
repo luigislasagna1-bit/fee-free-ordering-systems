@@ -6349,7 +6349,8 @@
     "historyEmpty": "No completed deliveries yet.",
     "historyLoadFailed": "Couldn't load your history. Please try again.",
     "ratingReceivedTitle": "Rating received",
-    "noRatingYet": "No rating for this delivery yet."
+    "noRatingYet": "No rating for this delivery yet.",
+    "soundsLabel": "Sounds"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",

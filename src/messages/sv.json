@@ -6349,7 +6349,8 @@
     "historyEmpty": "Inga slutförda leveranser ännu.",
     "historyLoadFailed": "Det gick inte att läsa in din historik. Försök igen.",
     "ratingReceivedTitle": "Betyg mottaget",
-    "noRatingYet": "Inget betyg för den här leveransen ännu."
+    "noRatingYet": "Inget betyg för den här leveransen ännu.",
+    "soundsLabel": "Ljud"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tilldela och följ dina leveranser",

@@ -6349,7 +6349,8 @@
     "historyEmpty": "Ancora nessuna consegna completata.",
     "historyLoadFailed": "Impossibile caricare la cronologia. Riprova.",
     "ratingReceivedTitle": "Valutazione ricevuta",
-    "noRatingYet": "Ancora nessuna valutazione per questa consegna."
+    "noRatingYet": "Ancora nessuna valutazione per questa consegna.",
+    "soundsLabel": "Suoni"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assegna e monitora le tue consegne",

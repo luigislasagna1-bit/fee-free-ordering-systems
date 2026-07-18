@@ -6349,7 +6349,8 @@
     "historyEmpty": "Brak zrealizowanych dostaw.",
     "historyLoadFailed": "Nie udało się wczytać historii. Spróbuj ponownie.",
     "ratingReceivedTitle": "Otrzymana ocena",
-    "noRatingYet": "Brak oceny dla tej dostawy."
+    "noRatingYet": "Brak oceny dla tej dostawy.",
+    "soundsLabel": "Dźwięki"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",

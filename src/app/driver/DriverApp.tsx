@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Bike, History, Radio, RefreshCw, Star, User } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { ASSIGNMENT_TERMINAL } from "@/lib/driver-assignment";
@@ -9,6 +9,7 @@ import { DriverProfile } from "./DriverProfile";
 import { RoleSwitch } from "./RoleSwitch";
 import { BottomNav, type BottomNavTab } from "./shared/BottomNav";
 import { ShellHeader } from "./shared/ShellHeader";
+import { armAudioUnlock, playNewOrderChime, playTick } from "./shared/driver-sounds";
 import { formatPct } from "./shared/format-pct";
 
 /**
@@ -35,6 +36,19 @@ import { formatPct } from "./shared/format-pct";
 
 type TabId = "jobs" | "history" | "profile";
 
+// Forward order of the driver stage machine — used ONLY to detect "my job
+// advanced" for the confirmation tick (driver-sounds). picked_up and
+// out_for_delivery are the same leg (JobCard treats them identically), so
+// they share a rank and no tick fires between them.
+const STAGE_RANK: Record<string, number> = {
+  queued: 0,
+  accepted: 1,
+  started: 2,
+  picked_up: 3,
+  out_for_delivery: 3,
+  delivered: 4,
+};
+
 export function DriverApp({
   driverName,
   rating,
@@ -53,8 +67,11 @@ export function DriverApp({
   const [historyMounted, setHistoryMounted] = useState(false);
   const [profileMounted, setProfileMounted] = useState(false);
   // Mirror of DriverQueue's already-polled queue (via onAssignmentsChange) —
-  // the Jobs badge derives from it. NO second poll exists for this.
-  const [queue, setQueue] = useState<{ mine: boolean; status: string }[]>([]);
+  // the Jobs badge AND the sound diffs derive from it. NO second poll exists
+  // for this. DriverQueue already passes its full Assignment objects into the
+  // callback, so widening this STATE type to include `id` is purely a
+  // DriverApp-side change — zero DriverQueue edits.
+  const [queue, setQueue] = useState<{ id: string; mine: boolean; status: string }[]>([]);
   // Mirror of DriverQueue's GPS-streaming flag (via onGpsChange) — feeds the
   // shared header's live chip. Streaming continues across tabs (the queue
   // stays mounted), so the chip stays truthful on every tab.
@@ -63,6 +80,67 @@ export function DriverApp({
   const [jobsRefreshToken, setJobsRefreshToken] = useState(0);
 
   const myOpenJobs = queue.filter((a) => a.mine && !ASSIGNMENT_TERMINAL.has(a.status)).length;
+
+  // ── Sounds (Luigi 2026-07-17) — all derived from the queue mirror above;
+  // no extra polls, no DriverQueue edits, pure WebAudio (driver-sounds.ts). ──
+
+  // One-time audio unlock gesture listener. Until the first tap, a requested
+  // chime is queued inside the module and plays right after unlock — so a
+  // driver opening the app to waiting jobs still hears there is work.
+  useEffect(() => armAudioUnlock(), []);
+
+  // Diff the mirror between updates. Chime when a NEW unaccepted job appears
+  // (the very first data mirror counts — open-the-app-to-work should sound);
+  // tick when one of MY jobs advances a stage. Never sound while hidden —
+  // a backgrounded device is the push notification's job, and jobs that
+  // arrived while hidden are baselined here so returning doesn't ring for
+  // them (the 20s repeat below covers any still-unaccepted work).
+  const prevQueueRef = useRef<Map<string, { mine: boolean; status: string }> | null>(null);
+  useEffect(() => {
+    const prev = prevQueueRef.current;
+    const next = new Map(queue.map((a) => [a.id, { mine: a.mine, status: a.status }]));
+    prevQueueRef.current = next;
+    if (typeof document === "undefined" || document.visibilityState !== "visible") return;
+
+    let newUnaccepted = false;
+    let mineAdvanced = false;
+    for (const a of queue) {
+      const before = prev?.get(a.id);
+      if (!a.mine) {
+        if (!ASSIGNMENT_TERMINAL.has(a.status) && !before) newUnaccepted = true;
+      } else if (before) {
+        // Newly-mine = I just accepted it out of the pool; otherwise a
+        // forward stage move (started, picked_up) of an already-mine job.
+        if (!before.mine) mineAdvanced = true;
+        else if ((STAGE_RANK[a.status] ?? -1) > (STAGE_RANK[before.status] ?? -1)) mineAdvanced = true;
+      }
+    }
+    // Terminal stamps (delivered/failed) drop OUT of the assignments feed
+    // entirely (route excludes ASSIGNMENT_TERMINAL), so "my job disappeared
+    // from the mirror" IS the delivered/released confirmation.
+    if (!mineAdvanced && prev) {
+      for (const [id, was] of prev) {
+        if (was.mine && !next.has(id)) mineAdvanced = true;
+      }
+    }
+    // Pre-existing MINE jobs on the first data mirror have no `before` entry
+    // → no tick on app open; only genuine advances sound.
+    if (newUnaccepted) playNewOrderChime();
+    else if (mineAdvanced) playTick();
+  }, [queue]);
+
+  // Repeat the chime every ~20s while at least one unaccepted job remains and
+  // the app is visible (boolean dep — the 8s mirror refreshes don't reset the
+  // interval; it starts 20s after the appearance chime and is cleaned up the
+  // moment the pool empties).
+  const hasUnaccepted = queue.some((a) => !a.mine && !ASSIGNMENT_TERMINAL.has(a.status));
+  useEffect(() => {
+    if (!hasUnaccepted) return;
+    const id = setInterval(() => {
+      if (typeof document !== "undefined" && document.visibilityState === "visible") playNewOrderChime();
+    }, 20000);
+    return () => clearInterval(id);
+  }, [hasUnaccepted]);
 
   const tabs: BottomNavTab<TabId>[] = [
     { id: "jobs", label: t("tabJobs"), icon: Bike, badge: myOpenJobs },

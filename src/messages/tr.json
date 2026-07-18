@@ -6349,7 +6349,8 @@
     "historyEmpty": "Henüz tamamlanmış teslimat yok.",
     "historyLoadFailed": "Geçmişiniz yüklenemedi. Lütfen tekrar deneyin.",
     "ratingReceivedTitle": "Alınan puan",
-    "noRatingYet": "Bu teslimat için henüz puan yok."
+    "noRatingYet": "Bu teslimat için henüz puan yok.",
+    "soundsLabel": "Sesler"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",

@@ -6349,7 +6349,8 @@
     "historyEmpty": "Ingen gennemførte leveringer endnu.",
     "historyLoadFailed": "Din historik kunne ikke indlæses. Prøv igen.",
     "ratingReceivedTitle": "Bedømmelse modtaget",
-    "noRatingYet": "Ingen bedømmelse for denne levering endnu."
+    "noRatingYet": "Ingen bedømmelse for denne levering endnu.",
+    "soundsLabel": "Lyde"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg dine leveringer",

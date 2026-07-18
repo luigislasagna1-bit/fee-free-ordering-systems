@@ -6349,7 +6349,8 @@
     "historyEmpty": "Nicio livrare finalizată încă.",
     "historyLoadFailed": "Nu am putut încărca istoricul tău. Te rugăm să încerci din nou.",
     "ratingReceivedTitle": "Evaluare primită",
-    "noRatingYet": "Nicio evaluare pentru această livrare încă."
+    "noRatingYet": "Nicio evaluare pentru această livrare încă.",
+    "soundsLabel": "Sunete"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",

@@ -6349,7 +6349,8 @@
     "historyEmpty": "Još nema završenih dostava.",
     "historyLoadFailed": "Učitavanje istorije nije uspelo. Pokušajte ponovo.",
     "ratingReceivedTitle": "Dobijena ocena",
-    "noRatingYet": "Još nema ocene za ovu dostavu."
+    "noRatingYet": "Još nema ocene za ovu dostavu.",
+    "soundsLabel": "Zvukovi"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodelite i pratite svoje dostave",

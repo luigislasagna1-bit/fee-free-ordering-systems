@@ -6349,7 +6349,8 @@
     "historyEmpty": "Dar nėra užbaigtų pristatymų.",
     "historyLoadFailed": "Nepavyko įkelti jūsų istorijos. Bandykite dar kartą.",
     "ratingReceivedTitle": "Gautas įvertinimas",
-    "noRatingYet": "Šis pristatymas dar neįvertintas."
+    "noRatingYet": "Šis pristatymas dar neįvertintas.",
+    "soundsLabel": "Garsai"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",

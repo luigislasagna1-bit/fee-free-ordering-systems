@@ -6349,7 +6349,8 @@
     "historyEmpty": "Ei vielä valmistuneita toimituksia.",
     "historyLoadFailed": "Historiasi lataaminen epäonnistui. Yritä uudelleen.",
     "ratingReceivedTitle": "Saatu arvosana",
-    "noRatingYet": "Tälle toimitukselle ei ole vielä arvosanaa."
+    "noRatingYet": "Tälle toimitukselle ei ole vielä arvosanaa.",
+    "soundsLabel": "Äänet"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",

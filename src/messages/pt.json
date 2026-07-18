@@ -6349,7 +6349,8 @@
     "historyEmpty": "Ainda não há entregas concluídas.",
     "historyLoadFailed": "Não foi possível carregar o seu histórico. Tente novamente.",
     "ratingReceivedTitle": "Avaliação recebida",
-    "noRatingYet": "Ainda sem avaliação para esta entrega."
+    "noRatingYet": "Ainda sem avaliação para esta entrega.",
+    "soundsLabel": "Sons"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe as suas entregas",

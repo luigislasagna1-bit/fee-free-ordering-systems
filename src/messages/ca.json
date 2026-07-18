@@ -6349,7 +6349,8 @@
     "historyEmpty": "Encara no hi ha lliuraments completats.",
     "historyLoadFailed": "No s'ha pogut carregar el teu historial. Torna-ho a provar.",
     "ratingReceivedTitle": "Valoració rebuda",
-    "noRatingYet": "Aquest lliurament encara no té cap valoració."
+    "noRatingYet": "Aquest lliurament encara no té cap valoració.",
+    "soundsLabel": "Sons"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",

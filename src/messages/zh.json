@@ -6349,7 +6349,8 @@
     "historyEmpty": "暂无已完成的配送。",
     "historyLoadFailed": "无法加载您的历史记录，请重试。",
     "ratingReceivedTitle": "收到的评价",
-    "noRatingYet": "此次配送暂无评价。"
+    "noRatingYet": "此次配送暂无评价。",
+    "soundsLabel": "声音"
   },
   "feefreeApp": {
     "dispatchSubtitle": "分配并跟踪您的配送",

@@ -6349,7 +6349,8 @@
     "historyEmpty": "لا توجد توصيلات مكتملة بعد.",
     "historyLoadFailed": "تعذّر تحميل سجلك. يرجى المحاولة مرة أخرى.",
     "ratingReceivedTitle": "التقييم المستلم",
-    "noRatingYet": "لا يوجد تقييم لهذا التوصيل بعد."
+    "noRatingYet": "لا يوجد تقييم لهذا التوصيل بعد.",
+    "soundsLabel": "الأصوات"
   },
   "feefreeApp": {
     "dispatchSubtitle": "عيّن وتتبّع عمليات التوصيل الخاصة بك",

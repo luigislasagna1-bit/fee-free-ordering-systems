@@ -6349,7 +6349,8 @@
     "historyEmpty": "Még nincs teljesített kiszállításod.",
     "historyLoadFailed": "Nem sikerült betölteni az előzményeket. Próbáld újra.",
     "ratingReceivedTitle": "Kapott értékelés",
-    "noRatingYet": "Ehhez a kiszállításhoz még nincs értékelés."
+    "noRatingYet": "Ehhez a kiszállításhoz még nincs értékelés.",
+    "soundsLabel": "Hangok"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",

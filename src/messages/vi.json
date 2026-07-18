@@ -6349,7 +6349,8 @@
     "historyEmpty": "Chưa có đơn giao nào hoàn tất.",
     "historyLoadFailed": "Không thể tải lịch sử của bạn. Vui lòng thử lại.",
     "ratingReceivedTitle": "Đánh giá đã nhận",
-    "noRatingYet": "Đơn giao này chưa có đánh giá."
+    "noRatingYet": "Đơn giao này chưa có đánh giá.",
+    "soundsLabel": "Âm thanh"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",

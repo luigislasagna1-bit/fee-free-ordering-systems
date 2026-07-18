@@ -6349,7 +6349,8 @@
     "historyEmpty": "אין עדיין משלוחים שהושלמו.",
     "historyLoadFailed": "לא ניתן היה לטעון את ההיסטוריה שלך. אנא נסה שוב.",
     "ratingReceivedTitle": "דירוג שהתקבל",
-    "noRatingYet": "אין עדיין דירוג למשלוח זה."
+    "noRatingYet": "אין עדיין דירוג למשלוח זה.",
+    "soundsLabel": "צלילים"
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",

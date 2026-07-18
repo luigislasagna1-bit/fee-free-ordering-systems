@@ -6349,7 +6349,8 @@
     "historyEmpty": "Noch keine abgeschlossenen Lieferungen.",
     "historyLoadFailed": "Dein Verlauf konnte nicht geladen werden. Bitte versuche es erneut.",
     "ratingReceivedTitle": "Bewertung erhalten",
-    "noRatingYet": "Für diese Lieferung liegt noch keine Bewertung vor."
+    "noRatingYet": "Für diese Lieferung liegt noch keine Bewertung vor.",
+    "soundsLabel": "Töne"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",

@@ -6349,7 +6349,8 @@
     "historyEmpty": "Veel pole ühtegi lõpetatud tarnet.",
     "historyLoadFailed": "Ajaloo laadimine ebaõnnestus. Palun proovi uuesti.",
     "ratingReceivedTitle": "Saadud hinnang",
-    "noRatingYet": "Sellel tarnel pole veel hinnangut."
+    "noRatingYet": "Sellel tarnel pole veel hinnangut.",
+    "soundsLabel": "Helid"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",

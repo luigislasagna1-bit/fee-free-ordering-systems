@@ -6349,7 +6349,8 @@
     "historyEmpty": "Zatím žádné dokončené rozvozy.",
     "historyLoadFailed": "Historii se nepodařilo načíst. Zkuste to prosím znovu.",
     "ratingReceivedTitle": "Obdržené hodnocení",
-    "noRatingYet": "Toto doručení zatím nemá hodnocení."
+    "noRatingYet": "Toto doručení zatím nemá hodnocení.",
+    "soundsLabel": "Zvuky"
   },
   "feefreeApp": {
     "dispatchSubtitle": "Přiřazujte a sledujte své rozvozy",
