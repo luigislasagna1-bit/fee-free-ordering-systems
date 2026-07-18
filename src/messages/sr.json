@@ -4699,7 +4699,11 @@
       "st_assigned": "Dodeljeno",
       "st_accepted": "Prihvaćeno",
       "st_started": "Ide u prodavnicu",
-      "st_enroute": "Na putu"
+      "st_enroute": "Na putu",
+      "st_delivered": "Испоручено",
+      "st_failed": "Није успело",
+      "st_returned": "Враћено",
+      "st_cancelled": "Отказано"
     },
     "deliveryProvider": {
       "title": "Način dostave",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Prijava za vozače",
     "restaurantModeBadge": "Prijava za restorane — upravljajte dostavama i pratite ih.",
     "switchToDispatch": "Prebaci na prikaz restorana",
-    "switchToDriver": "Prebaci na prikaz vozača"
+    "switchToDriver": "Prebaci na prikaz vozača",
+    "tabDispatch": "Отпрема",
+    "tabAccount": "Налог",
+    "noHeldOrders": "Нема наруџби које чекају слање.",
+    "notEnabledTurnOn": "Укључи у Налогу",
+    "billingTitle": "Наплата",
+    "moreDeliverySettings": "Више поставки испоруке",
+    "appSectionTitle": "Апликација",
+    "openFullDashboard": "Отвори пуну контролну таблу"
   },
   "feefreeShared": {
     "language": "Jezik",

@@ -4699,7 +4699,11 @@
       "st_assigned": "Ανατέθηκε",
       "st_accepted": "Έγινε αποδεκτή",
       "st_started": "Προς κατάστημα",
-      "st_enroute": "Καθ' οδόν"
+      "st_enroute": "Καθ' οδόν",
+      "st_delivered": "Παραδόθηκε",
+      "st_failed": "Απέτυχε",
+      "st_returned": "Επεστράφη",
+      "st_cancelled": "Ακυρώθηκε"
     },
     "deliveryProvider": {
       "title": "Μέθοδος παράδοσης",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Σύνδεση οδηγού",
     "restaurantModeBadge": "Σύνδεση εστιατορίου — διαχειριστείτε και παρακολουθήστε τις παραδόσεις σας.",
     "switchToDispatch": "Εναλλαγή σε προβολή εστιατορίου",
-    "switchToDriver": "Εναλλαγή σε προβολή οδηγού"
+    "switchToDriver": "Εναλλαγή σε προβολή οδηγού",
+    "tabDispatch": "Αποστολή",
+    "tabAccount": "Λογαριασμός",
+    "noHeldOrders": "Δεν υπάρχουν παραγγελίες σε αναμονή αποστολής.",
+    "notEnabledTurnOn": "Ενεργοποίηση στον Λογαριασμό",
+    "billingTitle": "Χρέωση",
+    "moreDeliverySettings": "Περισσότερες ρυθμίσεις παράδοσης",
+    "appSectionTitle": "Εφαρμογή",
+    "openFullDashboard": "Άνοιγμα πλήρους πίνακα ελέγχου"
   },
   "feefreeShared": {
     "language": "Γλώσσα",

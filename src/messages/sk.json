@@ -4699,7 +4699,11 @@
       "st_assigned": "Priradené",
       "st_accepted": "Prijaté",
       "st_started": "Mieri do reštaurácie",
-      "st_enroute": "Na ceste"
+      "st_enroute": "Na ceste",
+      "st_delivered": "Doručené",
+      "st_failed": "Zlyhalo",
+      "st_returned": "Vrátené",
+      "st_cancelled": "Zrušené"
     },
     "deliveryProvider": {
       "title": "Spôsob doručenia",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Prihlásenie pre vodičov",
     "restaurantModeBadge": "Prihlásenie pre reštaurácie — spravujte a sledujte svoje doručenia.",
     "switchToDispatch": "Prepnúť na zobrazenie reštaurácie",
-    "switchToDriver": "Prepnúť na zobrazenie vodiča"
+    "switchToDriver": "Prepnúť na zobrazenie vodiča",
+    "tabDispatch": "Odosielanie",
+    "tabAccount": "Účet",
+    "noHeldOrders": "Žiadne objednávky nečakajú na odoslanie.",
+    "notEnabledTurnOn": "Zapnúť v Účte",
+    "billingTitle": "Fakturácia",
+    "moreDeliverySettings": "Viac nastavení doručenia",
+    "appSectionTitle": "Aplikácia",
+    "openFullDashboard": "Otvoriť celý prehľad"
   },
   "feefreeShared": {
     "language": "Jazyk",

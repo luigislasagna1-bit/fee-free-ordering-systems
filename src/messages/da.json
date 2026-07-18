@@ -4699,7 +4699,11 @@
       "st_assigned": "Tildelt",
       "st_accepted": "Accepteret",
       "st_started": "På vej til butik",
-      "st_enroute": "På vej"
+      "st_enroute": "På vej",
+      "st_delivered": "Leveret",
+      "st_failed": "Mislykkedes",
+      "st_returned": "Returneret",
+      "st_cancelled": "Annulleret"
     },
     "deliveryProvider": {
       "title": "Leveringsmetode",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Chauffør-login",
     "restaurantModeBadge": "Restaurant-login — administrer og følg dine leveringer.",
     "switchToDispatch": "Skift til restaurantvisning",
-    "switchToDriver": "Skift til chaufførvisning"
+    "switchToDriver": "Skift til chaufførvisning",
+    "tabDispatch": "Afsendelse",
+    "tabAccount": "Konto",
+    "noHeldOrders": "Ingen ordrer venter på at blive sendt.",
+    "notEnabledTurnOn": "Aktivér i Konto",
+    "billingTitle": "Fakturering",
+    "moreDeliverySettings": "Flere leveringsindstillinger",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Åbn fuldt dashboard"
   },
   "feefreeShared": {
     "language": "Sprog",

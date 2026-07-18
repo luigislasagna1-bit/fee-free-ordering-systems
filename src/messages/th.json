@@ -4699,7 +4699,11 @@
       "st_assigned": "มอบหมายแล้ว",
       "st_accepted": "รับแล้ว",
       "st_started": "กำลังไปที่ร้าน",
-      "st_enroute": "กำลังเดินทาง"
+      "st_enroute": "กำลังเดินทาง",
+      "st_delivered": "จัดส่งแล้ว",
+      "st_failed": "ล้มเหลว",
+      "st_returned": "คืนแล้ว",
+      "st_cancelled": "ยกเลิกแล้ว"
     },
     "deliveryProvider": {
       "title": "วิธีจัดส่ง",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "เข้าสู่ระบบคนขับ",
     "restaurantModeBadge": "เข้าสู่ระบบร้านอาหาร — จัดการและติดตามการจัดส่งของคุณ",
     "switchToDispatch": "สลับไปที่มุมมองร้านอาหาร",
-    "switchToDriver": "สลับไปที่มุมมองคนขับ"
+    "switchToDriver": "สลับไปที่มุมมองคนขับ",
+    "tabDispatch": "การจัดส่ง",
+    "tabAccount": "บัญชี",
+    "noHeldOrders": "ไม่มีคำสั่งซื้อที่รอการส่ง",
+    "notEnabledTurnOn": "เปิดใช้งานในบัญชี",
+    "billingTitle": "การเรียกเก็บเงิน",
+    "moreDeliverySettings": "การตั้งค่าการจัดส่งเพิ่มเติม",
+    "appSectionTitle": "แอป",
+    "openFullDashboard": "เปิดแดชบอร์ดแบบเต็ม"
   },
   "feefreeShared": {
     "language": "ภาษา",

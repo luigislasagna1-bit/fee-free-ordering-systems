@@ -4699,7 +4699,11 @@
       "st_assigned": "Assigned",
       "st_accepted": "Accepted",
       "st_started": "Heading to store",
-      "st_enroute": "On the way"
+      "st_enroute": "On the way",
+      "st_delivered": "Delivered",
+      "st_failed": "Failed",
+      "st_returned": "Returned",
+      "st_cancelled": "Cancelled"
     },
     "deliveryProvider": {
       "title": "Delivery method",
@@ -6370,12 +6374,20 @@
     "notEnabledBody": "Turn it on in your dashboard to start dispatching orders to your drivers.",
     "restaurantLoginCta": "Restaurant? Sign in here to manage your deliveries",
     "loginHelpUnified": "Sign in with your driver or restaurant account.",
-    "loginFailed": "We couldn't sign you in with those details. Check your email and password and try again.",
+    "loginFailed": "We couldn’t sign you in with those details. Check your email and password and try again.",
     "signInAsRestaurant": "Restaurant sign-in",
     "signInAsDriver": "Driver sign-in",
     "restaurantModeBadge": "Restaurant sign-in — manage and track your deliveries.",
     "switchToDispatch": "Switch to restaurant view",
-    "switchToDriver": "Switch to driver view"
+    "switchToDriver": "Switch to driver view",
+    "tabDispatch": "Dispatch",
+    "tabAccount": "Account",
+    "noHeldOrders": "No orders waiting to send.",
+    "notEnabledTurnOn": "Turn it on in Account",
+    "billingTitle": "Billing",
+    "moreDeliverySettings": "More delivery settings",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Open full dashboard"
   },
   "feefreeShared": {
     "language": "Language",

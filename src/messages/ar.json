@@ -4699,7 +4699,11 @@
       "st_assigned": "تم التعيين",
       "st_accepted": "تم القبول",
       "st_started": "في الطريق إلى المتجر",
-      "st_enroute": "في الطريق"
+      "st_enroute": "في الطريق",
+      "st_delivered": "تم التوصيل",
+      "st_failed": "فشل",
+      "st_returned": "مُعاد",
+      "st_cancelled": "ملغى"
     },
     "deliveryProvider": {
       "title": "طريقة التوصيل",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "تسجيل دخول السائق",
     "restaurantModeBadge": "تسجيل دخول المطعم — أدر توصيلاتك وتتبّعها.",
     "switchToDispatch": "التبديل إلى عرض المطعم",
-    "switchToDriver": "التبديل إلى عرض السائق"
+    "switchToDriver": "التبديل إلى عرض السائق",
+    "tabDispatch": "الإرسال",
+    "tabAccount": "الحساب",
+    "noHeldOrders": "لا توجد طلبات في انتظار الإرسال.",
+    "notEnabledTurnOn": "تفعيل في الحساب",
+    "billingTitle": "الفواتير",
+    "moreDeliverySettings": "المزيد من إعدادات التوصيل",
+    "appSectionTitle": "التطبيق",
+    "openFullDashboard": "فتح لوحة التحكم الكاملة"
   },
   "feefreeShared": {
     "language": "اللغة",

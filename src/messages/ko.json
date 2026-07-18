@@ -4699,7 +4699,11 @@
       "st_assigned": "배정됨",
       "st_accepted": "수락됨",
       "st_started": "매장으로 이동 중",
-      "st_enroute": "배달 중"
+      "st_enroute": "배달 중",
+      "st_delivered": "배달 완료",
+      "st_failed": "실패",
+      "st_returned": "반송됨",
+      "st_cancelled": "취소됨"
     },
     "deliveryProvider": {
       "title": "배달 방법",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "기사 로그인",
     "restaurantModeBadge": "레스토랑 로그인 — 배달을 관리하고 추적하세요.",
     "switchToDispatch": "레스토랑 화면으로 전환",
-    "switchToDriver": "기사 화면으로 전환"
+    "switchToDriver": "기사 화면으로 전환",
+    "tabDispatch": "배송 관리",
+    "tabAccount": "계정",
+    "noHeldOrders": "전송 대기 중인 주문이 없습니다.",
+    "notEnabledTurnOn": "계정에서 활성화",
+    "billingTitle": "청구",
+    "moreDeliverySettings": "더 많은 배송 설정",
+    "appSectionTitle": "앱",
+    "openFullDashboard": "전체 대시보드 열기"
   },
   "feefreeShared": {
     "language": "언어",

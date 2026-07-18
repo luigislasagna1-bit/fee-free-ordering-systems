@@ -4699,7 +4699,11 @@
       "st_assigned": "Osoitettu",
       "st_accepted": "Hyväksytty",
       "st_started": "Matkalla myymälään",
-      "st_enroute": "Matkalla"
+      "st_enroute": "Matkalla",
+      "st_delivered": "Toimitettu",
+      "st_failed": "Epäonnistui",
+      "st_returned": "Palautettu",
+      "st_cancelled": "Peruutettu"
     },
     "deliveryProvider": {
       "title": "Toimitustapa",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Kuljettajakirjautuminen",
     "restaurantModeBadge": "Ravintolakirjautuminen — hallitse ja seuraa toimituksiasi.",
     "switchToDispatch": "Vaihda ravintolanäkymään",
-    "switchToDriver": "Vaihda kuljettajanäkymään"
+    "switchToDriver": "Vaihda kuljettajanäkymään",
+    "tabDispatch": "Lähetys",
+    "tabAccount": "Tili",
+    "noHeldOrders": "Ei tilauksia odottamassa lähettämistä.",
+    "notEnabledTurnOn": "Ota käyttöön Tilissä",
+    "billingTitle": "Laskutus",
+    "moreDeliverySettings": "Lisää toimitusasetuksia",
+    "appSectionTitle": "Sovellus",
+    "openFullDashboard": "Avaa koko kojelauta"
   },
   "feefreeShared": {
     "language": "Kieli",

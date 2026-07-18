@@ -4699,7 +4699,11 @@
       "st_assigned": "已指派",
       "st_accepted": "已接单",
       "st_started": "前往餐厅",
-      "st_enroute": "配送途中"
+      "st_enroute": "配送途中",
+      "st_delivered": "已送达",
+      "st_failed": "失败",
+      "st_returned": "已退回",
+      "st_cancelled": "已取消"
     },
     "deliveryProvider": {
       "title": "配送方式",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "骑手登录",
     "restaurantModeBadge": "餐厅登录——管理并跟踪您的配送。",
     "switchToDispatch": "切换到餐厅视图",
-    "switchToDriver": "切换到骑手视图"
+    "switchToDriver": "切换到骑手视图",
+    "tabDispatch": "调度",
+    "tabAccount": "账户",
+    "noHeldOrders": "没有等待发送的订单。",
+    "notEnabledTurnOn": "在账户中开启",
+    "billingTitle": "账单",
+    "moreDeliverySettings": "更多配送设置",
+    "appSectionTitle": "应用",
+    "openFullDashboard": "打开完整仪表板"
   },
   "feefreeShared": {
     "language": "语言",

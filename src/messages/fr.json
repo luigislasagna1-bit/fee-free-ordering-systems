@@ -4699,7 +4699,11 @@
       "st_assigned": "Attribuée",
       "st_accepted": "Acceptée",
       "st_started": "En route vers le resto",
-      "st_enroute": "En route"
+      "st_enroute": "En route",
+      "st_delivered": "Livré",
+      "st_failed": "Échoué",
+      "st_returned": "Retourné",
+      "st_cancelled": "Annulé"
     },
     "deliveryProvider": {
       "title": "Mode de livraison",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Connexion livreur",
     "restaurantModeBadge": "Connexion restaurant — gérez et suivez vos livraisons.",
     "switchToDispatch": "Passer à la vue restaurant",
-    "switchToDriver": "Passer à la vue livreur"
+    "switchToDriver": "Passer à la vue livreur",
+    "tabDispatch": "Expédition",
+    "tabAccount": "Compte",
+    "noHeldOrders": "Aucune commande en attente d'envoi.",
+    "notEnabledTurnOn": "Activer dans Compte",
+    "billingTitle": "Facturation",
+    "moreDeliverySettings": "Plus de paramètres de livraison",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Ouvrir le tableau de bord complet"
   },
   "feefreeShared": {
     "language": "Langue",

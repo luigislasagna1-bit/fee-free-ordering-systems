@@ -4699,7 +4699,11 @@
       "st_assigned": "Toegewezen",
       "st_accepted": "Geaccepteerd",
       "st_started": "Op weg naar winkel",
-      "st_enroute": "Onderweg"
+      "st_enroute": "Onderweg",
+      "st_delivered": "Bezorgd",
+      "st_failed": "Mislukt",
+      "st_returned": "Teruggestuurd",
+      "st_cancelled": "Geannuleerd"
     },
     "deliveryProvider": {
       "title": "Bezorgmethode",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Bezorgers-login",
     "restaurantModeBadge": "Restaurant-login — beheer en volg je bezorgingen.",
     "switchToDispatch": "Wisselen naar restaurantweergave",
-    "switchToDriver": "Wisselen naar bezorgersweergave"
+    "switchToDriver": "Wisselen naar bezorgersweergave",
+    "tabDispatch": "Verzending",
+    "tabAccount": "Account",
+    "noHeldOrders": "Geen bestellingen wachtend op verzending.",
+    "notEnabledTurnOn": "Inschakelen in Account",
+    "billingTitle": "Facturering",
+    "moreDeliverySettings": "Meer bezorginstellingen",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Volledig dashboard openen"
   },
   "feefreeShared": {
     "language": "Taal",

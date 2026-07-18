@@ -4699,7 +4699,11 @@
       "st_assigned": "Възложено",
       "st_accepted": "Прието",
       "st_started": "Към магазина",
-      "st_enroute": "На път"
+      "st_enroute": "На път",
+      "st_delivered": "Доставено",
+      "st_failed": "Неуспешно",
+      "st_returned": "Върнато",
+      "st_cancelled": "Отказано"
     },
     "deliveryProvider": {
       "title": "Метод на доставка",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Вход за шофьори",
     "restaurantModeBadge": "Вход за ресторанти — управлявайте и следете доставките си.",
     "switchToDispatch": "Превключи към изглед за ресторант",
-    "switchToDriver": "Превключи към изглед за шофьор"
+    "switchToDriver": "Превключи към изглед за шофьор",
+    "tabDispatch": "Изпращане",
+    "tabAccount": "Акаунт",
+    "noHeldOrders": "Няма поръчки, чакащи за изпращане.",
+    "notEnabledTurnOn": "Включете в Акаунт",
+    "billingTitle": "Фактуриране",
+    "moreDeliverySettings": "Още настройки за доставка",
+    "appSectionTitle": "Приложение",
+    "openFullDashboard": "Отворете пълното табло"
   },
   "feefreeShared": {
     "language": "Език",

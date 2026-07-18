@@ -4699,7 +4699,11 @@
       "st_assigned": "Đã phân công",
       "st_accepted": "Đã nhận",
       "st_started": "Đang đến cửa hàng",
-      "st_enroute": "Đang trên đường"
+      "st_enroute": "Đang trên đường",
+      "st_delivered": "Đã giao",
+      "st_failed": "Thất bại",
+      "st_returned": "Đã trả lại",
+      "st_cancelled": "Đã hủy"
     },
     "deliveryProvider": {
       "title": "Phương thức giao hàng",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Đăng nhập tài xế",
     "restaurantModeBadge": "Đăng nhập nhà hàng — quản lý và theo dõi đơn giao hàng.",
     "switchToDispatch": "Chuyển sang giao diện nhà hàng",
-    "switchToDriver": "Chuyển sang giao diện tài xế"
+    "switchToDriver": "Chuyển sang giao diện tài xế",
+    "tabDispatch": "Điều phối",
+    "tabAccount": "Tài khoản",
+    "noHeldOrders": "Không có đơn hàng nào đang chờ gửi.",
+    "notEnabledTurnOn": "Bật trong Tài khoản",
+    "billingTitle": "Thanh toán",
+    "moreDeliverySettings": "Thêm cài đặt giao hàng",
+    "appSectionTitle": "Ứng dụng",
+    "openFullDashboard": "Mở toàn bộ bảng điều khiển"
   },
   "feefreeShared": {
     "language": "Ngôn ngữ",

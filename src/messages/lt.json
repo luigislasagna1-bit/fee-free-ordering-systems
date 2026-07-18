@@ -4699,7 +4699,11 @@
       "st_assigned": "Priskirta",
       "st_accepted": "Priimta",
       "st_started": "Vyksta į parduotuvę",
-      "st_enroute": "Pakeliui"
+      "st_enroute": "Pakeliui",
+      "st_delivered": "Pristatyta",
+      "st_failed": "Nepavyko",
+      "st_returned": "Grąžinta",
+      "st_cancelled": "Atšaukta"
     },
     "deliveryProvider": {
       "title": "Pristatymo būdas",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Vairuotojo prisijungimas",
     "restaurantModeBadge": "Restorano prisijungimas — valdykite ir sekite pristatymus.",
     "switchToDispatch": "Perjungti į restorano rodinį",
-    "switchToDriver": "Perjungti į vairuotojo rodinį"
+    "switchToDriver": "Perjungti į vairuotojo rodinį",
+    "tabDispatch": "Siuntimas",
+    "tabAccount": "Paskyra",
+    "noHeldOrders": "Nėra užsakymų, laukiančių siuntimo.",
+    "notEnabledTurnOn": "Įjungti Paskyroje",
+    "billingTitle": "Atsiskaitymas",
+    "moreDeliverySettings": "Daugiau pristatymo nustatymų",
+    "appSectionTitle": "Programa",
+    "openFullDashboard": "Atidaryti visą prietaisų skydelį"
   },
   "feefreeShared": {
     "language": "Kalba",

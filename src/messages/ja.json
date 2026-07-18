@@ -4699,7 +4699,11 @@
       "st_assigned": "割り当て済み",
       "st_accepted": "受諾済み",
       "st_started": "店舗へ移動中",
-      "st_enroute": "配達中"
+      "st_enroute": "配達中",
+      "st_delivered": "配達済み",
+      "st_failed": "失敗",
+      "st_returned": "返却済み",
+      "st_cancelled": "キャンセル済み"
     },
     "deliveryProvider": {
       "title": "配達方法",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "ドライバーログイン",
     "restaurantModeBadge": "レストランログイン — 配達の管理と追跡ができます。",
     "switchToDispatch": "レストラン表示に切り替え",
-    "switchToDriver": "ドライバー表示に切り替え"
+    "switchToDriver": "ドライバー表示に切り替え",
+    "tabDispatch": "配送管理",
+    "tabAccount": "アカウント",
+    "noHeldOrders": "送信待ちの注文はありません。",
+    "notEnabledTurnOn": "アカウントで有効にする",
+    "billingTitle": "請求",
+    "moreDeliverySettings": "配送設定をもっと見る",
+    "appSectionTitle": "アプリ",
+    "openFullDashboard": "フルダッシュボードを開く"
   },
   "feefreeShared": {
     "language": "言語",

@@ -4699,7 +4699,11 @@
       "st_assigned": "Assignada",
       "st_accepted": "Acceptada",
       "st_started": "Cap al restaurant",
-      "st_enroute": "En camí"
+      "st_enroute": "En camí",
+      "st_delivered": "Lliurat",
+      "st_failed": "Fallat",
+      "st_returned": "Retornat",
+      "st_cancelled": "Cancel·lat"
     },
     "deliveryProvider": {
       "title": "Mètode de lliurament",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Accés per a repartidors",
     "restaurantModeBadge": "Accés per a restaurants — gestiona i segueix els teus lliuraments.",
     "switchToDispatch": "Canvia a la vista de restaurant",
-    "switchToDriver": "Canvia a la vista de repartidor"
+    "switchToDriver": "Canvia a la vista de repartidor",
+    "tabDispatch": "Enviament",
+    "tabAccount": "Compte",
+    "noHeldOrders": "No hi ha comandes esperant enviar-se.",
+    "notEnabledTurnOn": "Activar a Compte",
+    "billingTitle": "Facturació",
+    "moreDeliverySettings": "Més configuració de lliurament",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Obrir el tauler complet"
   },
   "feefreeShared": {
     "language": "Idioma",

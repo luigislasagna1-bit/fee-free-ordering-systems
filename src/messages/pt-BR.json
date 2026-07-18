@@ -4699,7 +4699,11 @@
       "st_assigned": "Atribuída",
       "st_accepted": "Aceita",
       "st_started": "Indo ao restaurante",
-      "st_enroute": "A caminho"
+      "st_enroute": "A caminho",
+      "st_delivered": "Entregue",
+      "st_failed": "Falhou",
+      "st_returned": "Devolvido",
+      "st_cancelled": "Cancelado"
     },
     "deliveryProvider": {
       "title": "Método de entrega",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Acesso de entregador",
     "restaurantModeBadge": "Acesso de restaurante — gerencie e acompanhe suas entregas.",
     "switchToDispatch": "Mudar para a visão de restaurante",
-    "switchToDriver": "Mudar para a visão de entregador"
+    "switchToDriver": "Mudar para a visão de entregador",
+    "tabDispatch": "Despacho",
+    "tabAccount": "Conta",
+    "noHeldOrders": "Nenhum pedido aguardando envio.",
+    "notEnabledTurnOn": "Ativar em Conta",
+    "billingTitle": "Faturamento",
+    "moreDeliverySettings": "Mais configurações de entrega",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Abrir painel completo"
   },
   "feefreeShared": {
     "language": "Idioma",

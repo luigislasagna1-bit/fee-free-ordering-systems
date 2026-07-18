@@ -4699,7 +4699,11 @@
       "st_assigned": "Dodeljeno",
       "st_accepted": "Sprejeto",
       "st_started": "Na poti v restavracijo",
-      "st_enroute": "Na poti"
+      "st_enroute": "Na poti",
+      "st_delivered": "Dostavljeno",
+      "st_failed": "Ni uspelo",
+      "st_returned": "Vrnjeno",
+      "st_cancelled": "Preklicano"
     },
     "deliveryProvider": {
       "title": "Način dostave",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Prijava za voznike",
     "restaurantModeBadge": "Prijava za restavracije — upravljajte in spremljajte dostave.",
     "switchToDispatch": "Preklopi na pogled restavracije",
-    "switchToDriver": "Preklopi na voznikov pogled"
+    "switchToDriver": "Preklopi na voznikov pogled",
+    "tabDispatch": "Odpošiljanje",
+    "tabAccount": "Račun",
+    "noHeldOrders": "Ni naročil, ki čakajo na pošiljanje.",
+    "notEnabledTurnOn": "Vklopi v Računu",
+    "billingTitle": "Obračun",
+    "moreDeliverySettings": "Več nastavitev dostave",
+    "appSectionTitle": "Aplikacija",
+    "openFullDashboard": "Odpri celotno nadzorno ploščo"
   },
   "feefreeShared": {
     "language": "Jezik",

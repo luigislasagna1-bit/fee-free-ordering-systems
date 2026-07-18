@@ -4699,7 +4699,11 @@
       "st_assigned": "Kiosztva",
       "st_accepted": "Elfogadva",
       "st_started": "Az üzletbe tart",
-      "st_enroute": "Úton"
+      "st_enroute": "Úton",
+      "st_delivered": "Kézbesítve",
+      "st_failed": "Sikertelen",
+      "st_returned": "Visszaküldve",
+      "st_cancelled": "Törölve"
     },
     "deliveryProvider": {
       "title": "Kézbesítési mód",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Futár bejelentkezés",
     "restaurantModeBadge": "Éttermi bejelentkezés — kezelje és kövesse kiszállításait.",
     "switchToDispatch": "Váltás éttermi nézetre",
-    "switchToDriver": "Váltás futárnézetre"
+    "switchToDriver": "Váltás futárnézetre",
+    "tabDispatch": "Küldés",
+    "tabAccount": "Fiók",
+    "noHeldOrders": "Nincs küldésre váró rendelés.",
+    "notEnabledTurnOn": "Bekapcsolás a Fiókban",
+    "billingTitle": "Számlázás",
+    "moreDeliverySettings": "További szállítási beállítások",
+    "appSectionTitle": "Alkalmazás",
+    "openFullDashboard": "Teljes irányítópult megnyitása"
   },
   "feefreeShared": {
     "language": "Nyelv",

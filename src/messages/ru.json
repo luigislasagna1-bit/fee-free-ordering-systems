@@ -4699,7 +4699,11 @@
       "st_assigned": "Назначен",
       "st_accepted": "Принят",
       "st_started": "Едет в магазин",
-      "st_enroute": "В пути"
+      "st_enroute": "В пути",
+      "st_delivered": "Доставлено",
+      "st_failed": "Не удалось",
+      "st_returned": "Возвращено",
+      "st_cancelled": "Отменено"
     },
     "deliveryProvider": {
       "title": "Способ доставки",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Вход для водителей",
     "restaurantModeBadge": "Вход для ресторанов — управляйте доставками и отслеживайте их.",
     "switchToDispatch": "Переключиться на вид ресторана",
-    "switchToDriver": "Переключиться на вид водителя"
+    "switchToDriver": "Переключиться на вид водителя",
+    "tabDispatch": "Отправка",
+    "tabAccount": "Аккаунт",
+    "noHeldOrders": "Нет заказов, ожидающих отправки.",
+    "notEnabledTurnOn": "Включить в Аккаунте",
+    "billingTitle": "Выставление счетов",
+    "moreDeliverySettings": "Больше настроек доставки",
+    "appSectionTitle": "Приложение",
+    "openFullDashboard": "Открыть полную панель"
   },
   "feefreeShared": {
     "language": "Язык",

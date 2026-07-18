@@ -4699,7 +4699,11 @@
       "st_assigned": "Määratud",
       "st_accepted": "Vastu võetud",
       "st_started": "Teel poodi",
-      "st_enroute": "Teel"
+      "st_enroute": "Teel",
+      "st_delivered": "Kohale toimetatud",
+      "st_failed": "Ebaõnnestus",
+      "st_returned": "Tagastatud",
+      "st_cancelled": "Tühistatud"
     },
     "deliveryProvider": {
       "title": "Tarneviis",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Juhi sisselogimine",
     "restaurantModeBadge": "Restorani sisselogimine — hallake ja jälgige oma tarneid.",
     "switchToDispatch": "Lülitu restoranivaatele",
-    "switchToDriver": "Lülitu juhivaatele"
+    "switchToDriver": "Lülitu juhivaatele",
+    "tabDispatch": "Saatmine",
+    "tabAccount": "Konto",
+    "noHeldOrders": "Ühtegi saatmist ootavat tellimust pole.",
+    "notEnabledTurnOn": "Lülita sisse Kontos",
+    "billingTitle": "Arved",
+    "moreDeliverySettings": "Rohkem tarneseadeid",
+    "appSectionTitle": "Rakendus",
+    "openFullDashboard": "Ava täielik armatuurlaud"
   },
   "feefreeShared": {
     "language": "Keel",

@@ -4699,7 +4699,11 @@
       "st_assigned": "Piešķirts",
       "st_accepted": "Pieņemts",
       "st_started": "Ceļā uz veikalu",
-      "st_enroute": "Ceļā"
+      "st_enroute": "Ceļā",
+      "st_delivered": "Piegādāts",
+      "st_failed": "Neizdevās",
+      "st_returned": "Atgriezts",
+      "st_cancelled": "Atcelts"
     },
     "deliveryProvider": {
       "title": "Piegādes metode",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Kurjera pieteikšanās",
     "restaurantModeBadge": "Restorāna pieteikšanās — pārvaldiet un sekojiet piegādēm.",
     "switchToDispatch": "Pārslēgties uz restorāna skatu",
-    "switchToDriver": "Pārslēgties uz kurjera skatu"
+    "switchToDriver": "Pārslēgties uz kurjera skatu",
+    "tabDispatch": "Nosūtīšana",
+    "tabAccount": "Konts",
+    "noHeldOrders": "Nav pasūtījumu, kas gaida nosūtīšanu.",
+    "notEnabledTurnOn": "Ieslēgt Kontā",
+    "billingTitle": "Norēķini",
+    "moreDeliverySettings": "Vairāk piegādes iestatījumu",
+    "appSectionTitle": "Lietotne",
+    "openFullDashboard": "Atvērt pilno informācijas paneli"
   },
   "feefreeShared": {
     "language": "Valoda",

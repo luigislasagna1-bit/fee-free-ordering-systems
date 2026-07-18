@@ -4699,7 +4699,11 @@
       "st_assigned": "Atandı",
       "st_accepted": "Kabul edildi",
       "st_started": "Mağazaya gidiyor",
-      "st_enroute": "Yolda"
+      "st_enroute": "Yolda",
+      "st_delivered": "Teslim Edildi",
+      "st_failed": "Başarısız",
+      "st_returned": "İade Edildi",
+      "st_cancelled": "İptal Edildi"
     },
     "deliveryProvider": {
       "title": "Teslimat yöntemi",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Sürücü girişi",
     "restaurantModeBadge": "Restoran girişi — teslimatlarınızı yönetin ve takip edin.",
     "switchToDispatch": "Restoran görünümüne geç",
-    "switchToDriver": "Sürücü görünümüne geç"
+    "switchToDriver": "Sürücü görünümüne geç",
+    "tabDispatch": "Sevkiyat",
+    "tabAccount": "Hesap",
+    "noHeldOrders": "Gönderilmeyi bekleyen sipariş yok.",
+    "notEnabledTurnOn": "Hesapta Etkinleştir",
+    "billingTitle": "Faturalandırma",
+    "moreDeliverySettings": "Daha fazla teslimat ayarı",
+    "appSectionTitle": "Uygulama",
+    "openFullDashboard": "Tam gösterge panelini aç"
   },
   "feefreeShared": {
     "language": "Dil",

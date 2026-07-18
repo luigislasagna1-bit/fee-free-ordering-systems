@@ -4699,7 +4699,11 @@
       "st_assigned": "הוקצה",
       "st_accepted": "אושר",
       "st_started": "בדרך לחנות",
-      "st_enroute": "בדרך"
+      "st_enroute": "בדרך",
+      "st_delivered": "נמסר",
+      "st_failed": "נכשל",
+      "st_returned": "הוחזר",
+      "st_cancelled": "בוטל"
     },
     "deliveryProvider": {
       "title": "שיטת משלוח",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "כניסת נהג",
     "restaurantModeBadge": "כניסת מסעדה — נהלו ועקבו אחרי המשלוחים שלכם.",
     "switchToDispatch": "מעבר לתצוגת מסעדה",
-    "switchToDriver": "מעבר לתצוגת נהג"
+    "switchToDriver": "מעבר לתצוגת נהג",
+    "tabDispatch": "שיגור",
+    "tabAccount": "חשבון",
+    "noHeldOrders": "אין הזמנות ממתינות לשליחה.",
+    "notEnabledTurnOn": "הפעל בחשבון",
+    "billingTitle": "חיוב",
+    "moreDeliverySettings": "הגדרות משלוח נוספות",
+    "appSectionTitle": "אפליקציה",
+    "openFullDashboard": "פתח לוח בקרה מלא"
   },
   "feefreeShared": {
     "language": "שפה",

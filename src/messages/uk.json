@@ -4699,7 +4699,11 @@
       "st_assigned": "Призначено",
       "st_accepted": "Прийнято",
       "st_started": "Прямує до магазину",
-      "st_enroute": "У дорозі"
+      "st_enroute": "У дорозі",
+      "st_delivered": "Доставлено",
+      "st_failed": "Не вдалося",
+      "st_returned": "Повернуто",
+      "st_cancelled": "Скасовано"
     },
     "deliveryProvider": {
       "title": "Спосіб доставки",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Вхід для водіїв",
     "restaurantModeBadge": "Вхід для ресторанів — керуйте доставками та відстежуйте їх.",
     "switchToDispatch": "Перейти до вигляду ресторану",
-    "switchToDriver": "Перейти до вигляду водія"
+    "switchToDriver": "Перейти до вигляду водія",
+    "tabDispatch": "Відправка",
+    "tabAccount": "Обліковий запис",
+    "noHeldOrders": "Немає замовлень, які очікують відправки.",
+    "notEnabledTurnOn": "Увімкнути в Обліковому записі",
+    "billingTitle": "Виставлення рахунків",
+    "moreDeliverySettings": "Більше налаштувань доставки",
+    "appSectionTitle": "Додаток",
+    "openFullDashboard": "Відкрити повну панель"
   },
   "feefreeShared": {
     "language": "Мова",

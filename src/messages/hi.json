@@ -4699,7 +4699,11 @@
       "st_assigned": "असाइन किया गया",
       "st_accepted": "स्वीकृत",
       "st_started": "स्टोर की ओर जा रहा है",
-      "st_enroute": "रास्ते में"
+      "st_enroute": "रास्ते में",
+      "st_delivered": "वितरित",
+      "st_failed": "विफल",
+      "st_returned": "वापस किया",
+      "st_cancelled": "रद्द किया"
     },
     "deliveryProvider": {
       "title": "डिलीवरी का तरीका",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "ड्राइवर साइन-इन",
     "restaurantModeBadge": "रेस्टोरेंट साइन-इन — अपनी डिलीवरी प्रबंधित करें और ट्रैक करें।",
     "switchToDispatch": "रेस्टोरेंट व्यू पर स्विच करें",
-    "switchToDriver": "ड्राइवर व्यू पर स्विच करें"
+    "switchToDriver": "ड्राइवर व्यू पर स्विच करें",
+    "tabDispatch": "डिस्पैच",
+    "tabAccount": "खाता",
+    "noHeldOrders": "भेजने की प्रतीक्षा में कोई ऑर्डर नहीं।",
+    "notEnabledTurnOn": "खाते में चालू करें",
+    "billingTitle": "बिलिंग",
+    "moreDeliverySettings": "अधिक डिलीवरी सेटिंग्स",
+    "appSectionTitle": "ऐप",
+    "openFullDashboard": "पूरा डैशबोर्ड खोलें"
   },
   "feefreeShared": {
     "language": "भाषा",

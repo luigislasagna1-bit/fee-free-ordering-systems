@@ -4699,7 +4699,11 @@
       "st_assigned": "Přiřazeno",
       "st_accepted": "Přijato",
       "st_started": "Míří do restaurace",
-      "st_enroute": "Na cestě"
+      "st_enroute": "Na cestě",
+      "st_delivered": "Doručeno",
+      "st_failed": "Selhalo",
+      "st_returned": "Vráceno",
+      "st_cancelled": "Zrušeno"
     },
     "deliveryProvider": {
       "title": "Způsob doručení",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Přihlášení pro řidiče",
     "restaurantModeBadge": "Přihlášení pro restaurace — spravujte a sledujte svá doručení.",
     "switchToDispatch": "Přepnout na zobrazení restaurace",
-    "switchToDriver": "Přepnout na zobrazení řidiče"
+    "switchToDriver": "Přepnout na zobrazení řidiče",
+    "tabDispatch": "Odesílání",
+    "tabAccount": "Účet",
+    "noHeldOrders": "Žádné objednávky nečekají na odeslání.",
+    "notEnabledTurnOn": "Zapnout v Účtu",
+    "billingTitle": "Fakturace",
+    "moreDeliverySettings": "Více nastavení doručení",
+    "appSectionTitle": "Aplikace",
+    "openFullDashboard": "Otevřít celý přehled"
   },
   "feefreeShared": {
     "language": "Jazyk",

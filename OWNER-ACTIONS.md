@@ -143,11 +143,8 @@ Tell Claude how the on-device test goes (does it load, sign in, stream GPS on a 
 4. Tell Claude "done A5".
 *(This doubles as the live test of the new wizard with your ShipDay account — Claude will walk you through placing one test delivery.)*
 
-### A6. ☐ Change the superadmin password (it appeared in a chat screenshot)
-1. Log out of `feefreeordering.com/admin`.
-2. On the login page click **Forgot password** → enter `admin@feefreeordering.com`.
-3. Open the reset email → set a NEW password (from your password manager, never reused).
-4. Tell Claude "done A6".
+### A6. ✅ DONE 2026-07-17 — Superadmin password rotated
+Luigi confirmed via chat. New password set via Forgot Password flow on `admin@feefreeordering.com`.
 
 ### A7. 🔷 Rotate the database password — do WITH Claude live
 **Why:** the Neon database password was visible in an old debugging screenshot. Rotating it is important but touchy — done wrong, the live site loses its database. Claude will drive; you'll click.

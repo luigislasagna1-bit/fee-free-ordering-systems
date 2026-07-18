@@ -4699,7 +4699,11 @@
       "st_assigned": "Alocat",
       "st_accepted": "Acceptat",
       "st_started": "Se îndreaptă spre magazin",
-      "st_enroute": "Pe drum"
+      "st_enroute": "Pe drum",
+      "st_delivered": "Livrat",
+      "st_failed": "Eșuat",
+      "st_returned": "Returnat",
+      "st_cancelled": "Anulat"
     },
     "deliveryProvider": {
       "title": "Metodă de livrare",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Autentificare livrator",
     "restaurantModeBadge": "Autentificare restaurant — gestionează și urmărește livrările.",
     "switchToDispatch": "Comută la vizualizarea restaurant",
-    "switchToDriver": "Comută la vizualizarea livrator"
+    "switchToDriver": "Comută la vizualizarea livrator",
+    "tabDispatch": "Expediere",
+    "tabAccount": "Cont",
+    "noHeldOrders": "Nicio comandă în așteptare pentru trimitere.",
+    "notEnabledTurnOn": "Activează în Cont",
+    "billingTitle": "Facturare",
+    "moreDeliverySettings": "Mai multe setări de livrare",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Deschide tabloul de bord complet"
   },
   "feefreeShared": {
     "language": "Limbă",

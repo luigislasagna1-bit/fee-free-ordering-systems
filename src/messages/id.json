@@ -4699,7 +4699,11 @@
       "st_assigned": "Ditugaskan",
       "st_accepted": "Diterima",
       "st_started": "Menuju toko",
-      "st_enroute": "Dalam perjalanan"
+      "st_enroute": "Dalam perjalanan",
+      "st_delivered": "Terkirim",
+      "st_failed": "Gagal",
+      "st_returned": "Dikembalikan",
+      "st_cancelled": "Dibatalkan"
     },
     "deliveryProvider": {
       "title": "Metode pengiriman",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Login pengemudi",
     "restaurantModeBadge": "Login restoran — kelola dan lacak pengiriman Anda.",
     "switchToDispatch": "Beralih ke tampilan restoran",
-    "switchToDriver": "Beralih ke tampilan pengemudi"
+    "switchToDriver": "Beralih ke tampilan pengemudi",
+    "tabDispatch": "Pengiriman",
+    "tabAccount": "Akun",
+    "noHeldOrders": "Tidak ada pesanan yang menunggu untuk dikirim.",
+    "notEnabledTurnOn": "Aktifkan di Akun",
+    "billingTitle": "Tagihan",
+    "moreDeliverySettings": "Pengaturan pengiriman lainnya",
+    "appSectionTitle": "Aplikasi",
+    "openFullDashboard": "Buka dasbor lengkap"
   },
   "feefreeShared": {
     "language": "Bahasa",

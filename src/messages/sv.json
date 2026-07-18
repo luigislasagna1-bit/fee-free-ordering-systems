@@ -4699,7 +4699,11 @@
       "st_assigned": "Tilldelad",
       "st_accepted": "Accepterad",
       "st_started": "På väg till butik",
-      "st_enroute": "På väg"
+      "st_enroute": "På väg",
+      "st_delivered": "Levererad",
+      "st_failed": "Misslyckad",
+      "st_returned": "Returnerad",
+      "st_cancelled": "Avbruten"
     },
     "deliveryProvider": {
       "title": "Leveransmetod",
@@ -6375,7 +6379,15 @@
     "signInAsDriver": "Förarinloggning",
     "restaurantModeBadge": "Restauranginloggning — hantera och följ dina leveranser.",
     "switchToDispatch": "Byt till restaurangvy",
-    "switchToDriver": "Byt till förarvy"
+    "switchToDriver": "Byt till förarvy",
+    "tabDispatch": "Avsändning",
+    "tabAccount": "Konto",
+    "noHeldOrders": "Inga beställningar väntar på att skickas.",
+    "notEnabledTurnOn": "Aktivera i Konto",
+    "billingTitle": "Fakturering",
+    "moreDeliverySettings": "Fler leveransinställningar",
+    "appSectionTitle": "App",
+    "openFullDashboard": "Öppna hela instrumentpanelen"
   },
   "feefreeShared": {
     "language": "Språk",

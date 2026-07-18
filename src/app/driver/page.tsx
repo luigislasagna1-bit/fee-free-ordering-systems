@@ -6,7 +6,7 @@ import { getSessionUser } from "@/lib/session";
 import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { DriverApp } from "./DriverApp";
-import { RestaurantDispatch } from "./RestaurantDispatch";
+import { RestaurantApp } from "./RestaurantApp";
 
 export const dynamic = "force-dynamic";
 
@@ -63,7 +63,20 @@ export default async function DriverHomePage() {
       where: { id: user.restaurantId },
       select: { name: true },
     });
-    return <RestaurantDispatch restaurantId={user.restaurantId} restaurantName={restaurant?.name ?? ""} />;
+    // Phase 6: render the dark-native RestaurantApp shell instead of the
+    // legacy RSC RestaurantDispatch. Truth-table outcomes (driver/superadmin/
+    // login branches) are byte-equivalent — only this render target changes.
+    // hasOtherRole = !!driver (driver is in scope from getDriverSession() above
+    // — truthy when pref="restaurant" AND both sessions present, falsy when
+    // admin-only). Never derived from restaurantId (AGENTS.md session rule).
+    return (
+      <RestaurantApp
+        restaurantName={restaurant?.name ?? ""}
+        userName={user.name}
+        userEmail={user.email}
+        hasOtherRole={!!driver}
+      />
+    );
   }
 
   // pref said "restaurant" but there is no admin session — fall back to the
