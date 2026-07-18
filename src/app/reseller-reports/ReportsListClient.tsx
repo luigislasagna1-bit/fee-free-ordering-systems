@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   Plus, Search, Bug, Lightbulb, Sliders, ArrowUpRight, MessageSquare,
   UserPlus, Trash2, X, Loader2, Inbox, ThumbsUp, CheckCircle2,
-  ImagePlus, Paperclip, ArrowLeft,
+  ImagePlus, Paperclip, ArrowLeft, CheckCheck,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import {
@@ -60,13 +60,37 @@ export function ReportsListClient({
   invites: InviteRow[];
 }) {
   const router = useRouter();
-  const [reports] = useState(initialReports);
+  const [reports, setReports] = useState(initialReports);
   const [invites, setInvites] = useState(initialInvites);
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<"ALL" | ReportStatus>("ALL");
   const [typeFilter, setTypeFilter] = useState<"ALL" | ReportType>("ALL");
   const [showCreate, setShowCreate] = useState(false);
   const [showInvites, setShowInvites] = useState(false);
+  const [markingAllRead, setMarkingAllRead] = useState(false);
+
+  // How many rows currently carry the NEW badge — drives the "Mark all read"
+  // button's visibility + count. Counted over ALL reports, not the filtered
+  // view, because the server-side action clears every badge regardless of
+  // whatever filter happens to be active.
+  const newCount = useMemo(() => reports.filter((r) => r.isNew).length, [reports]);
+
+  const markAllRead = async () => {
+    setMarkingAllRead(true);
+    try {
+      const r = await fetch("/api/reseller-reports/mark-all-seen", { method: "POST" });
+      if (!r.ok) throw new Error("Failed");
+      // Optimistically clear the badges, then refresh so the layout's nav
+      // badge (countNewReportsForViewer) re-derives from the server too.
+      setReports((prev) => prev.map((row) => (row.isNew ? { ...row, isNew: false } : row)));
+      toast.success("All reports marked as read");
+      router.refresh();
+    } catch {
+      toast.error("Couldn't mark reports as read");
+    } finally {
+      setMarkingAllRead(false);
+    }
+  };
 
   // Buckets keyed by status. The page renders one section per status
   // with a coloured heading + the matching rows underneath. This is the
@@ -116,6 +140,20 @@ export function ReportsListClient({
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            {newCount > 0 && (
+              <button
+                type="button"
+                onClick={markAllRead}
+                disabled={markingAllRead}
+                title="Clear the NEW badge on every report for you (doesn't affect anyone else)"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-60 transition"
+              >
+                {markingAllRead
+                  ? <Loader2 className="w-4 h-4 animate-spin" />
+                  : <CheckCheck className="w-4 h-4" />}
+                Mark all read ({newCount})
+              </button>
+            )}
             {access.canInvite && (
               <button
                 type="button"

@@ -113,6 +113,36 @@ export async function markReportSeen(reportId: string, viewerEmail: string): Pro
 }
 
 /**
+ * Mark EVERY report as "seen" by a viewer right now — the "Mark all read"
+ * button on the list page. Two-step instead of N upserts: bump seenAt on the
+ * viewer's existing rows, then insert rows for reports they've never opened
+ * (skipDuplicates makes the race with a concurrent single markReportSeen
+ * harmless). Fine to ship all report ids at our scale (<1k, same note as
+ * countNewReportsForViewer); revisit both together if the tracker ever grows.
+ * Returns the number of reports now covered. Best-effort; returns 0 on error.
+ */
+export async function markAllReportsSeen(viewerEmail: string): Promise<number> {
+  const email = (viewerEmail || "").trim().toLowerCase();
+  if (!email) return 0;
+  try {
+    const now = new Date();
+    const reports = await prisma.resellerReport.findMany({ select: { id: true } });
+    await prisma.resellerReportSeen.updateMany({
+      where: { viewerEmail: email },
+      data: { seenAt: now },
+    });
+    await prisma.resellerReportSeen.createMany({
+      data: reports.map((r) => ({ reportId: r.id, viewerEmail: email, seenAt: now })),
+      skipDuplicates: true,
+    });
+    return reports.length;
+  } catch (e) {
+    console.error("[reseller-reports] markAllReportsSeen failed", e);
+    return 0;
+  }
+}
+
+/**
  * Count reports that have NEW activity for a viewer (for the nav badge) —
  * i.e. updatedAt newer than their seenAt, or never seen. Best-effort; returns
  * 0 on error. Fine to scan all reports at our scale (<1k); revisit with a
