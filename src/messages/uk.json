@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Не вдалося завантажити вашу історію. Спробуйте ще раз.",
     "ratingReceivedTitle": "Отримано оцінку",
     "noRatingYet": "Для цієї доставки поки немає оцінки.",
-    "soundsLabel": "Звуки"
+    "soundsLabel": "Звуки",
+    "tabEarnings": "Заробіток",
+    "earnThisWeek": "Цього тижня",
+    "earnLastWeek": "Минулого тижня",
+    "earnDeliveries": "Доставки",
+    "earnDeliveriesCount": "{n, plural, one {# доставка} few {# доставки} many {# доставок} other {# доставки}}",
+    "earnTips": "Чайові",
+    "earnActiveTime": "Активний час",
+    "earnActiveTimeHelp": "Час від прийняття замовлення до його доставки — не всі години вашої зміни.",
+    "earnTipsFootnote": "Чайові — це те, що клієнти додали під час оформлення замовлення.",
+    "earningsEmpty": "У цей період немає доставок.",
+    "earningsLoadFailed": "Не вдалося завантажити ваш заробіток. Спробуйте ще раз."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Призначайте та відстежуйте свої доставки",

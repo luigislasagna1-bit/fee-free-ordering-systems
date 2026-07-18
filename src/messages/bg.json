@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Историята не можа да се зареди. Моля, опитайте отново.",
     "ratingReceivedTitle": "Получена оценка",
     "noRatingYet": "Все още няма оценка за тази доставка.",
-    "soundsLabel": "Звуци"
+    "soundsLabel": "Звуци",
+    "tabEarnings": "Печалби",
+    "earnThisWeek": "Тази седмица",
+    "earnLastWeek": "Миналата седмица",
+    "earnDeliveries": "Доставки",
+    "earnDeliveriesCount": "{n, plural, one {# доставка} other {# доставки}}",
+    "earnTips": "Бакшиши",
+    "earnActiveTime": "Активно време",
+    "earnActiveTimeHelp": "Времето между приемането на задача и доставянето ѝ — не пълните часове на смяната ви.",
+    "earnTipsFootnote": "Бакшишите са това, което клиентите добавят при плащане.",
+    "earningsEmpty": "Няма доставки за този период.",
+    "earningsLoadFailed": "Печалбите ви не можаха да се заредят. Опитайте отново."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Възлагайте и проследявайте доставките си",

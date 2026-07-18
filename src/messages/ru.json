@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Не удалось загрузить историю. Попробуйте ещё раз.",
     "ratingReceivedTitle": "Оценка получена",
     "noRatingYet": "Для этой доставки пока нет оценки.",
-    "soundsLabel": "Звуки"
+    "soundsLabel": "Звуки",
+    "tabEarnings": "Заработок",
+    "earnThisWeek": "На этой неделе",
+    "earnLastWeek": "На прошлой неделе",
+    "earnDeliveries": "Доставки",
+    "earnDeliveriesCount": "{n, plural, one {# доставка} few {# доставки} many {# доставок} other {# доставки}}",
+    "earnTips": "Чаевые",
+    "earnActiveTime": "Активное время",
+    "earnActiveTimeHelp": "Время между принятием заказа и его доставкой — не все часы вашей смены.",
+    "earnTipsFootnote": "Чаевые — это то, что клиенты добавили при оформлении заказа.",
+    "earningsEmpty": "За этот период нет доставок.",
+    "earningsLoadFailed": "Не удалось загрузить ваш заработок. Попробуйте ещё раз."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Назначайте и отслеживайте свои доставки",

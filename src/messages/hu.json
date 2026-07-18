@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Nem sikerült betölteni az előzményeket. Próbáld újra.",
     "ratingReceivedTitle": "Kapott értékelés",
     "noRatingYet": "Ehhez a kiszállításhoz még nincs értékelés.",
-    "soundsLabel": "Hangok"
+    "soundsLabel": "Hangok",
+    "tabEarnings": "Kereset",
+    "earnThisWeek": "Ezen a héten",
+    "earnLastWeek": "Múlt héten",
+    "earnDeliveries": "Kiszállítások",
+    "earnDeliveriesCount": "{n, plural, one {# kiszállítás} other {# kiszállítás}}",
+    "earnTips": "Borravaló",
+    "earnActiveTime": "Aktív idő",
+    "earnActiveTimeHelp": "A munka elfogadása és a kiszállítása közötti idő – nem a teljes műszakod hossza.",
+    "earnTipsFootnote": "A borravaló az, amit a vásárlók a fizetésnél hozzáadtak.",
+    "earningsEmpty": "Nincs kiszállítás ebben az időszakban.",
+    "earningsLoadFailed": "Nem sikerült betölteni a keresetedet. Próbáld újra."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Rendeld hozzá és kövesd nyomon a kiszállításaidat",

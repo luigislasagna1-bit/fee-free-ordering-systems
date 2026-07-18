@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Historiasi lataaminen epäonnistui. Yritä uudelleen.",
     "ratingReceivedTitle": "Saatu arvosana",
     "noRatingYet": "Tälle toimitukselle ei ole vielä arvosanaa.",
-    "soundsLabel": "Äänet"
+    "soundsLabel": "Äänet",
+    "tabEarnings": "Ansiot",
+    "earnThisWeek": "Tällä viikolla",
+    "earnLastWeek": "Viime viikolla",
+    "earnDeliveries": "Toimitukset",
+    "earnDeliveriesCount": "{n, plural, one {# toimitus} other {# toimitusta}}",
+    "earnTips": "Tipit",
+    "earnActiveTime": "Aktiivinen aika",
+    "earnActiveTimeHelp": "Aika tehtävän hyväksymisestä sen toimittamiseen — ei koko työvuorosi tunnit.",
+    "earnTipsFootnote": "Tipit ovat summia, jotka asiakkaat lisäsivät kassalla.",
+    "earningsEmpty": "Ei toimituksia tällä jaksolla.",
+    "earningsLoadFailed": "Ansioidesi lataaminen epäonnistui. Yritä uudelleen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määritä ja seuraa toimituksiasi",

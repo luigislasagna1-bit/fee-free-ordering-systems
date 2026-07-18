@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "ไม่สามารถโหลดประวัติของคุณได้ กรุณาลองอีกครั้ง",
     "ratingReceivedTitle": "คะแนนที่ได้รับ",
     "noRatingYet": "ยังไม่มีคะแนนสำหรับการจัดส่งนี้",
-    "soundsLabel": "เสียง"
+    "soundsLabel": "เสียง",
+    "tabEarnings": "รายได้",
+    "earnThisWeek": "สัปดาห์นี้",
+    "earnLastWeek": "สัปดาห์ที่แล้ว",
+    "earnDeliveries": "การจัดส่ง",
+    "earnDeliveriesCount": "{n, plural, one {# การจัดส่ง} other {# การจัดส่ง}}",
+    "earnTips": "ทิป",
+    "earnActiveTime": "เวลาทำงาน",
+    "earnActiveTimeHelp": "เวลาระหว่างการรับงานจนถึงการจัดส่งเสร็จ — ไม่ใช่ชั่วโมงทำงานทั้งกะของคุณ",
+    "earnTipsFootnote": "ทิปคือจำนวนเงินที่ลูกค้าเพิ่มให้ตอนชำระเงิน",
+    "earningsEmpty": "ไม่มีการจัดส่งในช่วงเวลานี้",
+    "earningsLoadFailed": "ไม่สามารถโหลดรายได้ของคุณได้ กรุณาลองอีกครั้ง"
   },
   "feefreeApp": {
     "dispatchSubtitle": "มอบหมายและติดตามการจัดส่งของคุณ",

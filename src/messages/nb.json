@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Kunne ikke laste historikken din. Prøv igjen.",
     "ratingReceivedTitle": "Vurdering mottatt",
     "noRatingYet": "Ingen vurdering for denne leveringen ennå.",
-    "soundsLabel": "Lyder"
+    "soundsLabel": "Lyder",
+    "tabEarnings": "Inntjening",
+    "earnThisWeek": "Denne uken",
+    "earnLastWeek": "Forrige uke",
+    "earnDeliveries": "Leveringer",
+    "earnDeliveriesCount": "{n, plural, one {# levering} other {# leveringer}}",
+    "earnTips": "Tips",
+    "earnActiveTime": "Aktiv tid",
+    "earnActiveTimeHelp": "Tiden mellom at du aksepterer et oppdrag og leverer det — ikke hele vakttiden din.",
+    "earnTipsFootnote": "Tips er det kundene la til i kassen.",
+    "earningsEmpty": "Ingen leveringer i denne perioden.",
+    "earningsLoadFailed": "Kunne ikke laste inntjeningen din. Prøv igjen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg leveringene dine",

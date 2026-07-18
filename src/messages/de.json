@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Dein Verlauf konnte nicht geladen werden. Bitte versuche es erneut.",
     "ratingReceivedTitle": "Bewertung erhalten",
     "noRatingYet": "Für diese Lieferung liegt noch keine Bewertung vor.",
-    "soundsLabel": "Töne"
+    "soundsLabel": "Töne",
+    "tabEarnings": "Verdienst",
+    "earnThisWeek": "Diese Woche",
+    "earnLastWeek": "Letzte Woche",
+    "earnDeliveries": "Lieferungen",
+    "earnDeliveriesCount": "{n, plural, one {# Lieferung} other {# Lieferungen}}",
+    "earnTips": "Trinkgeld",
+    "earnActiveTime": "Aktive Zeit",
+    "earnActiveTimeHelp": "Zeit zwischen der Annahme eines Auftrags und der Zustellung — nicht deine gesamte Schichtzeit.",
+    "earnTipsFootnote": "Trinkgelder sind die Beträge, die Kunden beim Bezahlen hinzugefügt haben.",
+    "earningsEmpty": "Keine Lieferungen in diesem Zeitraum.",
+    "earningsLoadFailed": "Dein Verdienst konnte nicht geladen werden. Bitte versuche es erneut."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Lieferungen zuweisen und verfolgen",

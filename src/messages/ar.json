@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "تعذّر تحميل سجلك. يرجى المحاولة مرة أخرى.",
     "ratingReceivedTitle": "التقييم المستلم",
     "noRatingYet": "لا يوجد تقييم لهذا التوصيل بعد.",
-    "soundsLabel": "الأصوات"
+    "soundsLabel": "الأصوات",
+    "tabEarnings": "الأرباح",
+    "earnThisWeek": "هذا الأسبوع",
+    "earnLastWeek": "الأسبوع الماضي",
+    "earnDeliveries": "التوصيلات",
+    "earnDeliveriesCount": "{n, plural, zero {# توصيلة} one {توصيلة واحدة} two {توصيلتان} few {# توصيلات} many {# توصيلة} other {# توصيلة}}",
+    "earnTips": "الإكراميات",
+    "earnActiveTime": "الوقت النشط",
+    "earnActiveTimeHelp": "الوقت بين قبول المهمة وتسليمها — وليس إجمالي ساعات ورديتك.",
+    "earnTipsFootnote": "الإكراميات هي ما أضافه العملاء عند الدفع.",
+    "earningsEmpty": "لا توجد توصيلات في هذه الفترة.",
+    "earningsLoadFailed": "تعذّر تحميل أرباحك. يرجى المحاولة مرة أخرى."
   },
   "feefreeApp": {
     "dispatchSubtitle": "عيّن وتتبّع عمليات التوصيل الخاصة بك",

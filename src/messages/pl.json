@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Nie udało się wczytać historii. Spróbuj ponownie.",
     "ratingReceivedTitle": "Otrzymana ocena",
     "noRatingYet": "Brak oceny dla tej dostawy.",
-    "soundsLabel": "Dźwięki"
+    "soundsLabel": "Dźwięki",
+    "tabEarnings": "Zarobki",
+    "earnThisWeek": "W tym tygodniu",
+    "earnLastWeek": "W zeszłym tygodniu",
+    "earnDeliveries": "Dostawy",
+    "earnDeliveriesCount": "{n, plural, one {# dostawa} few {# dostawy} many {# dostaw} other {# dostawy}}",
+    "earnTips": "Napiwki",
+    "earnActiveTime": "Czas aktywności",
+    "earnActiveTimeHelp": "Czas między przyjęciem zlecenia a jego dostarczeniem — nie pełne godziny Twojej zmiany.",
+    "earnTipsFootnote": "Napiwki to kwoty dodane przez klientów przy zamówieniu.",
+    "earningsEmpty": "Brak dostaw w tym okresie.",
+    "earningsLoadFailed": "Nie udało się wczytać Twoich zarobków. Spróbuj ponownie."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Przydzielaj i śledź swoje dostawy",

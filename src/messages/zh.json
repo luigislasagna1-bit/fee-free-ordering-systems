@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "无法加载您的历史记录，请重试。",
     "ratingReceivedTitle": "收到的评价",
     "noRatingYet": "此次配送暂无评价。",
-    "soundsLabel": "声音"
+    "soundsLabel": "声音",
+    "tabEarnings": "收入",
+    "earnThisWeek": "本周",
+    "earnLastWeek": "上周",
+    "earnDeliveries": "配送单数",
+    "earnDeliveriesCount": "{n, plural, one {# 单配送} other {# 单配送}}",
+    "earnTips": "小费",
+    "earnActiveTime": "活跃时长",
+    "earnActiveTimeHelp": "从接单到送达之间的时长——并非您的整个班次时长。",
+    "earnTipsFootnote": "小费是顾客在结账时添加的金额。",
+    "earningsEmpty": "此期间暂无配送。",
+    "earningsLoadFailed": "无法加载您的收入，请重试。"
   },
   "feefreeApp": {
     "dispatchSubtitle": "分配并跟踪您的配送",

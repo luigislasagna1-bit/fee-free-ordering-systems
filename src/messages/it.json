@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Impossibile caricare la cronologia. Riprova.",
     "ratingReceivedTitle": "Valutazione ricevuta",
     "noRatingYet": "Ancora nessuna valutazione per questa consegna.",
-    "soundsLabel": "Suoni"
+    "soundsLabel": "Suoni",
+    "tabEarnings": "Guadagni",
+    "earnThisWeek": "Questa settimana",
+    "earnLastWeek": "Settimana scorsa",
+    "earnDeliveries": "Consegne",
+    "earnDeliveriesCount": "{n, plural, one {# consegna} other {# consegne}}",
+    "earnTips": "Mance",
+    "earnActiveTime": "Tempo attivo",
+    "earnActiveTimeHelp": "Il tempo tra l'accettazione di un incarico e la consegna — non le ore complete del tuo turno.",
+    "earnTipsFootnote": "Le mance sono quelle aggiunte dai clienti al momento del pagamento.",
+    "earningsEmpty": "Nessuna consegna in questo periodo.",
+    "earningsLoadFailed": "Impossibile caricare i tuoi guadagni. Riprova."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assegna e monitora le tue consegne",

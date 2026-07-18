@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Impossible de charger votre historique. Veuillez réessayer.",
     "ratingReceivedTitle": "Note reçue",
     "noRatingYet": "Pas encore de note pour cette livraison.",
-    "soundsLabel": "Sons"
+    "soundsLabel": "Sons",
+    "tabEarnings": "Gains",
+    "earnThisWeek": "Cette semaine",
+    "earnLastWeek": "La semaine dernière",
+    "earnDeliveries": "Livraisons",
+    "earnDeliveriesCount": "{n, plural, one {# livraison} other {# livraisons}}",
+    "earnTips": "Pourboires",
+    "earnActiveTime": "Temps actif",
+    "earnActiveTimeHelp": "Temps écoulé entre l'acceptation d'une course et sa livraison — pas la durée totale de votre service.",
+    "earnTipsFootnote": "Les pourboires sont les montants ajoutés par les clients au moment du paiement.",
+    "earningsEmpty": "Aucune livraison sur cette période.",
+    "earningsLoadFailed": "Impossible de charger vos gains. Veuillez réessayer."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Gérez et suivez vos livraisons",

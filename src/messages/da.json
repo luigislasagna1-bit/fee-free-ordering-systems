@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Din historik kunne ikke indlæses. Prøv igen.",
     "ratingReceivedTitle": "Bedømmelse modtaget",
     "noRatingYet": "Ingen bedømmelse for denne levering endnu.",
-    "soundsLabel": "Lyde"
+    "soundsLabel": "Lyde",
+    "tabEarnings": "Indtjening",
+    "earnThisWeek": "Denne uge",
+    "earnLastWeek": "Sidste uge",
+    "earnDeliveries": "Leveringer",
+    "earnDeliveriesCount": "{n, plural, one {# levering} other {# leveringer}}",
+    "earnTips": "Drikkepenge",
+    "earnActiveTime": "Aktiv tid",
+    "earnActiveTimeHelp": "Tiden fra du accepterer en opgave, til du leverer den — ikke dine samlede vagttimer.",
+    "earnTipsFootnote": "Drikkepenge er det, kunderne tilføjede ved kassen.",
+    "earningsEmpty": "Ingen leveringer i denne periode.",
+    "earningsLoadFailed": "Din indtjening kunne ikke indlæses. Prøv igen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tildel og følg dine leveringer",

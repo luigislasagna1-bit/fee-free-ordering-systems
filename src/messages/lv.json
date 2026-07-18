@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Neizdevās ielādēt jūsu vēsturi. Lūdzu, mēģiniet vēlreiz.",
     "ratingReceivedTitle": "Saņemts vērtējums",
     "noRatingYet": "Šai piegādei vēl nav vērtējuma.",
-    "soundsLabel": "Skaņas"
+    "soundsLabel": "Skaņas",
+    "tabEarnings": "Ieņēmumi",
+    "earnThisWeek": "Šonedēļ",
+    "earnLastWeek": "Pagājušajā nedēļā",
+    "earnDeliveries": "Piegādes",
+    "earnDeliveriesCount": "{n, plural, one {# piegāde} other {# piegādes}}",
+    "earnTips": "Dzeramnauda",
+    "earnActiveTime": "Aktīvais laiks",
+    "earnActiveTimeHelp": "Laiks no darba pieņemšanas līdz tā piegādei — nevis visas jūsu maiņas stundas.",
+    "earnTipsFootnote": "Dzeramnauda ir tas, ko klienti pievienoja apmaksas laikā.",
+    "earningsEmpty": "Šajā periodā nav piegāžu.",
+    "earningsLoadFailed": "Neizdevās ielādēt jūsu ieņēmumus. Lūdzu, mēģiniet vēlreiz."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Piešķiriet un sekojiet līdzi savām piegādēm",

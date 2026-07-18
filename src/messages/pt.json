@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Não foi possível carregar o seu histórico. Tente novamente.",
     "ratingReceivedTitle": "Avaliação recebida",
     "noRatingYet": "Ainda sem avaliação para esta entrega.",
-    "soundsLabel": "Sons"
+    "soundsLabel": "Sons",
+    "tabEarnings": "Ganhos",
+    "earnThisWeek": "Esta semana",
+    "earnLastWeek": "Semana passada",
+    "earnDeliveries": "Entregas",
+    "earnDeliveriesCount": "{n, plural, one {# entrega} other {# entregas}}",
+    "earnTips": "Gorjetas",
+    "earnActiveTime": "Tempo ativo",
+    "earnActiveTimeHelp": "Tempo entre aceitar um trabalho e concluir a entrega — não as horas totais do seu turno.",
+    "earnTipsFootnote": "As gorjetas são o que os clientes adicionaram ao finalizar o pedido.",
+    "earningsEmpty": "Sem entregas neste período.",
+    "earningsLoadFailed": "Não foi possível carregar os seus ganhos. Tente novamente."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribua e acompanhe as suas entregas",

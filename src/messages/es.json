@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "No se pudo cargar tu historial. Inténtalo de nuevo.",
     "ratingReceivedTitle": "Valoración recibida",
     "noRatingYet": "Esta entrega aún no tiene valoración.",
-    "soundsLabel": "Sonidos"
+    "soundsLabel": "Sonidos",
+    "tabEarnings": "Ganancias",
+    "earnThisWeek": "Esta semana",
+    "earnLastWeek": "Semana pasada",
+    "earnDeliveries": "Entregas",
+    "earnDeliveriesCount": "{n, plural, one {# entrega} other {# entregas}}",
+    "earnTips": "Propinas",
+    "earnActiveTime": "Tiempo activo",
+    "earnActiveTimeHelp": "El tiempo entre aceptar un trabajo y entregarlo — no las horas totales de tu turno.",
+    "earnTipsFootnote": "Las propinas son lo que los clientes añadieron al pagar.",
+    "earningsEmpty": "No hay entregas en este período.",
+    "earningsLoadFailed": "No se pudieron cargar tus ganancias. Inténtalo de nuevo."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Asigna y haz seguimiento de tus entregas",

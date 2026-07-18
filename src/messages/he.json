@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "לא ניתן היה לטעון את ההיסטוריה שלך. אנא נסה שוב.",
     "ratingReceivedTitle": "דירוג שהתקבל",
     "noRatingYet": "אין עדיין דירוג למשלוח זה.",
-    "soundsLabel": "צלילים"
+    "soundsLabel": "צלילים",
+    "tabEarnings": "רווחים",
+    "earnThisWeek": "השבוע",
+    "earnLastWeek": "שבוע שעבר",
+    "earnDeliveries": "משלוחים",
+    "earnDeliveriesCount": "{n, plural, one {# משלוח} other {# משלוחים}}",
+    "earnTips": "טיפים",
+    "earnActiveTime": "זמן פעיל",
+    "earnActiveTimeHelp": "הזמן בין קבלת משימה למסירתה — לא כל שעות המשמרת שלך.",
+    "earnTipsFootnote": "טיפים הם מה שהלקוחות הוסיפו בתשלום.",
+    "earningsEmpty": "אין משלוחים בתקופה זו.",
+    "earningsLoadFailed": "לא ניתן היה לטעון את הרווחים שלך. אנא נסה שוב."
   },
   "feefreeApp": {
     "dispatchSubtitle": "הקצה ועקוב אחר המשלוחים שלך",

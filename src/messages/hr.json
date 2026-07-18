@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Nije moguće učitati vašu povijest. Pokušajte ponovno.",
     "ratingReceivedTitle": "Primljena ocjena",
     "noRatingYet": "Za ovu dostavu još nema ocjene.",
-    "soundsLabel": "Zvukovi"
+    "soundsLabel": "Zvukovi",
+    "tabEarnings": "Zarada",
+    "earnThisWeek": "Ovaj tjedan",
+    "earnLastWeek": "Prošli tjedan",
+    "earnDeliveries": "Dostave",
+    "earnDeliveriesCount": "{n, plural, one {# dostava} few {# dostave} other {# dostava}}",
+    "earnTips": "Napojnice",
+    "earnActiveTime": "Aktivno vrijeme",
+    "earnActiveTimeHelp": "Vrijeme između prihvaćanja posla i njegove dostave — ne cijelo vrijeme vaše smjene.",
+    "earnTipsFootnote": "Napojnice su ono što su kupci dodali na naplati.",
+    "earningsEmpty": "Nema dostava u ovom razdoblju.",
+    "earningsLoadFailed": "Nije moguće učitati vašu zaradu. Pokušajte ponovno."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodijelite i pratite svoje dostave",

@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Tidak dapat memuat riwayat Anda. Silakan coba lagi.",
     "ratingReceivedTitle": "Rating diterima",
     "noRatingYet": "Belum ada rating untuk pengantaran ini.",
-    "soundsLabel": "Suara"
+    "soundsLabel": "Suara",
+    "tabEarnings": "Penghasilan",
+    "earnThisWeek": "Minggu ini",
+    "earnLastWeek": "Minggu lalu",
+    "earnDeliveries": "Pengantaran",
+    "earnDeliveriesCount": "{n, plural, one {# pengantaran} other {# pengantaran}}",
+    "earnTips": "Tip",
+    "earnActiveTime": "Waktu aktif",
+    "earnActiveTimeHelp": "Waktu antara menerima tugas dan mengantarkannya — bukan seluruh jam kerja Anda.",
+    "earnTipsFootnote": "Tip adalah yang ditambahkan pelanggan saat pembayaran.",
+    "earningsEmpty": "Tidak ada pengantaran dalam periode ini.",
+    "earningsLoadFailed": "Tidak dapat memuat penghasilan Anda. Silakan coba lagi."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tetapkan & lacak pengiriman Anda",

@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Không thể tải lịch sử của bạn. Vui lòng thử lại.",
     "ratingReceivedTitle": "Đánh giá đã nhận",
     "noRatingYet": "Đơn giao này chưa có đánh giá.",
-    "soundsLabel": "Âm thanh"
+    "soundsLabel": "Âm thanh",
+    "tabEarnings": "Thu nhập",
+    "earnThisWeek": "Tuần này",
+    "earnLastWeek": "Tuần trước",
+    "earnDeliveries": "Số đơn giao",
+    "earnDeliveriesCount": "{n, plural, one {# đơn giao} other {# đơn giao}}",
+    "earnTips": "Tiền tip",
+    "earnActiveTime": "Thời gian hoạt động",
+    "earnActiveTimeHelp": "Thời gian từ khi nhận đơn đến khi giao xong — không phải toàn bộ giờ trong ca làm của bạn.",
+    "earnTipsFootnote": "Tiền tip là khoản khách hàng thêm khi thanh toán.",
+    "earningsEmpty": "Không có đơn giao nào trong khoảng thời gian này.",
+    "earningsLoadFailed": "Không thể tải thu nhập của bạn. Vui lòng thử lại."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Phân công & theo dõi đơn giao hàng",

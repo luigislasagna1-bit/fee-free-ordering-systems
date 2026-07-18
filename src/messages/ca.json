@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "No s'ha pogut carregar el teu historial. Torna-ho a provar.",
     "ratingReceivedTitle": "Valoració rebuda",
     "noRatingYet": "Aquest lliurament encara no té cap valoració.",
-    "soundsLabel": "Sons"
+    "soundsLabel": "Sons",
+    "tabEarnings": "Guanys",
+    "earnThisWeek": "Aquesta setmana",
+    "earnLastWeek": "La setmana passada",
+    "earnDeliveries": "Lliuraments",
+    "earnDeliveriesCount": "{n, plural, one {# lliurament} other {# lliuraments}}",
+    "earnTips": "Propines",
+    "earnActiveTime": "Temps actiu",
+    "earnActiveTimeHelp": "Temps entre acceptar una feina i lliurar-la, no les hores completes del teu torn.",
+    "earnTipsFootnote": "Les propines són el que els clients han afegit en pagar.",
+    "earningsEmpty": "No hi ha lliuraments en aquest període.",
+    "earningsLoadFailed": "No s'han pogut carregar els teus guanys. Torna-ho a provar."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assigna i fes el seguiment de les teves entregues",

@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Couldn't load your history. Please try again.",
     "ratingReceivedTitle": "Rating received",
     "noRatingYet": "No rating for this delivery yet.",
-    "soundsLabel": "Sounds"
+    "soundsLabel": "Sounds",
+    "tabEarnings": "Earnings",
+    "earnThisWeek": "This week",
+    "earnLastWeek": "Last week",
+    "earnDeliveries": "Deliveries",
+    "earnDeliveriesCount": "{n, plural, one {# delivery} other {# deliveries}}",
+    "earnTips": "Tips",
+    "earnActiveTime": "Active time",
+    "earnActiveTimeHelp": "Time between accepting a job and delivering it — not your full shift hours.",
+    "earnTipsFootnote": "Tips are what customers added at checkout.",
+    "earningsEmpty": "No deliveries in this period.",
+    "earningsLoadFailed": "Couldn't load your earnings. Please try again."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Assign & track your deliveries",

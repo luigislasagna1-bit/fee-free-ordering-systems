@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Nu am putut încărca istoricul tău. Te rugăm să încerci din nou.",
     "ratingReceivedTitle": "Evaluare primită",
     "noRatingYet": "Nicio evaluare pentru această livrare încă.",
-    "soundsLabel": "Sunete"
+    "soundsLabel": "Sunete",
+    "tabEarnings": "Câștiguri",
+    "earnThisWeek": "Săptămâna aceasta",
+    "earnLastWeek": "Săptămâna trecută",
+    "earnDeliveries": "Livrări",
+    "earnDeliveriesCount": "{n, plural, one {# livrare} few {# livrări} other {# de livrări}}",
+    "earnTips": "Bacșișuri",
+    "earnActiveTime": "Timp activ",
+    "earnActiveTimeHelp": "Timpul dintre acceptarea unei curse și livrarea ei — nu orele întregi ale turei tale.",
+    "earnTipsFootnote": "Bacșișurile sunt sumele adăugate de clienți la finalizarea comenzii.",
+    "earningsEmpty": "Nicio livrare în această perioadă.",
+    "earningsLoadFailed": "Nu am putut încărca câștigurile tale. Te rugăm să încerci din nou."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Atribuie și urmărește livrările tale",

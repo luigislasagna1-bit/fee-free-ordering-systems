@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Det gick inte att läsa in din historik. Försök igen.",
     "ratingReceivedTitle": "Betyg mottaget",
     "noRatingYet": "Inget betyg för den här leveransen ännu.",
-    "soundsLabel": "Ljud"
+    "soundsLabel": "Ljud",
+    "tabEarnings": "Intäkter",
+    "earnThisWeek": "Den här veckan",
+    "earnLastWeek": "Förra veckan",
+    "earnDeliveries": "Leveranser",
+    "earnDeliveriesCount": "{n, plural, one {# leverans} other {# leveranser}}",
+    "earnTips": "Dricks",
+    "earnActiveTime": "Aktiv tid",
+    "earnActiveTimeHelp": "Tiden mellan att du accepterar ett uppdrag och levererar det — inte hela ditt arbetspass.",
+    "earnTipsFootnote": "Dricks är det som kunderna lade till i kassan.",
+    "earningsEmpty": "Inga leveranser under den här perioden.",
+    "earningsLoadFailed": "Det gick inte att läsa in dina intäkter. Försök igen."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Tilldela och följ dina leveranser",

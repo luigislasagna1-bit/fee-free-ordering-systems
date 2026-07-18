@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Ajaloo laadimine ebaõnnestus. Palun proovi uuesti.",
     "ratingReceivedTitle": "Saadud hinnang",
     "noRatingYet": "Sellel tarnel pole veel hinnangut.",
-    "soundsLabel": "Helid"
+    "soundsLabel": "Helid",
+    "tabEarnings": "Teenistus",
+    "earnThisWeek": "See nädal",
+    "earnLastWeek": "Eelmine nädal",
+    "earnDeliveries": "Tarned",
+    "earnDeliveriesCount": "{n, plural, one {# tarne} other {# tarnet}}",
+    "earnTips": "Jootraha",
+    "earnActiveTime": "Aktiivne aeg",
+    "earnActiveTimeHelp": "Aeg töö vastuvõtmise ja selle kohaletoimetamise vahel — mitte kogu vahetuse tunnid.",
+    "earnTipsFootnote": "Jootraha on see, mille kliendid kassas lisasid.",
+    "earningsEmpty": "Sellel perioodil pole ühtegi tarnet.",
+    "earningsLoadFailed": "Teenistuse laadimine ebaõnnestus. Palun proovi uuesti."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Määra ja jälgi oma tarneid",

@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "आपका इतिहास लोड नहीं हो सका। कृपया फिर से प्रयास करें।",
     "ratingReceivedTitle": "रेटिंग मिली",
     "noRatingYet": "इस डिलीवरी के लिए अभी कोई रेटिंग नहीं।",
-    "soundsLabel": "ध्वनियाँ"
+    "soundsLabel": "ध्वनियाँ",
+    "tabEarnings": "कमाई",
+    "earnThisWeek": "इस सप्ताह",
+    "earnLastWeek": "पिछला सप्ताह",
+    "earnDeliveries": "डिलीवरी",
+    "earnDeliveriesCount": "{n, plural, one {# डिलीवरी} other {# डिलीवरी}}",
+    "earnTips": "टिप्स",
+    "earnActiveTime": "सक्रिय समय",
+    "earnActiveTimeHelp": "कोई जॉब स्वीकार करने और उसे डिलीवर करने के बीच का समय — आपकी पूरी शिफ्ट के घंटे नहीं।",
+    "earnTipsFootnote": "टिप्स वे हैं जो ग्राहकों ने चेकआउट पर जोड़े।",
+    "earningsEmpty": "इस अवधि में कोई डिलीवरी नहीं।",
+    "earningsLoadFailed": "आपकी कमाई लोड नहीं हो सकी। कृपया फिर से प्रयास करें।"
   },
   "feefreeApp": {
     "dispatchSubtitle": "अपनी डिलीवरी असाइन करें और ट्रैक करें",

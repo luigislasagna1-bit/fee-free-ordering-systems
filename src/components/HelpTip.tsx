@@ -20,10 +20,18 @@ export function HelpTip({
   text,
   className,
   placement = "bottom",
+  tone = "light",
 }: {
   text: string;
   className?: string;
   placement?: "top" | "bottom";
+  /**
+   * Trigger palette. "light" (default) suits pale admin/customer pages;
+   * "dark" brightens the idle→hover cue so it stays visible on a dark shell
+   * (e.g. the driver app's gray-800 tiles) instead of fading toward the
+   * background. The tooltip bubble is dark-on-white in both tones.
+   */
+  tone?: "light" | "dark";
 }) {
   const [open, setOpen] = useState(false);
   const id = useId();
@@ -31,13 +39,17 @@ export function HelpTip({
     placement === "top"
       ? "bottom-full mb-1.5"
       : "top-full mt-1.5";
+  const triggerTone =
+    tone === "dark"
+      ? "text-gray-400 hover:text-white focus:text-white"
+      : "text-gray-400 hover:text-gray-600 focus:text-gray-600";
   return (
     <span className={`relative inline-flex align-middle ${className ?? ""}`}>
       <button
         type="button"
         aria-label={text}
         aria-describedby={open ? id : undefined}
-        className="text-gray-400 hover:text-gray-600 focus:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded-full"
+        className={`${triggerTone} focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 rounded-full`}
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
         onFocus={() => setOpen(true)}

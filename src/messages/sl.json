@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Zgodovine ni bilo mogoče naložiti. Poskusite znova.",
     "ratingReceivedTitle": "Prejeta ocena",
     "noRatingYet": "Za to dostavo še ni ocene.",
-    "soundsLabel": "Zvoki"
+    "soundsLabel": "Zvoki",
+    "tabEarnings": "Zaslužek",
+    "earnThisWeek": "Ta teden",
+    "earnLastWeek": "Prejšnji teden",
+    "earnDeliveries": "Dostave",
+    "earnDeliveriesCount": "{n, plural, one {# dostava} two {# dostavi} few {# dostave} other {# dostav}}",
+    "earnTips": "Napitnine",
+    "earnActiveTime": "Aktivni čas",
+    "earnActiveTimeHelp": "Čas med sprejemom naročila in dostavo — ne celotne ure vaše izmene.",
+    "earnTipsFootnote": "Napitnine so tisto, kar so stranke dodale ob plačilu.",
+    "earningsEmpty": "V tem obdobju ni dostav.",
+    "earningsLoadFailed": "Zaslužka ni bilo mogoče naložiti. Poskusite znova."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Dodeljujte in spremljajte svoje dostave",

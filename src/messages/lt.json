@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Nepavyko įkelti jūsų istorijos. Bandykite dar kartą.",
     "ratingReceivedTitle": "Gautas įvertinimas",
     "noRatingYet": "Šis pristatymas dar neįvertintas.",
-    "soundsLabel": "Garsai"
+    "soundsLabel": "Garsai",
+    "tabEarnings": "Uždarbis",
+    "earnThisWeek": "Ši savaitė",
+    "earnLastWeek": "Praėjusi savaitė",
+    "earnDeliveries": "Pristatymai",
+    "earnDeliveriesCount": "{n, plural, one {# pristatymas} few {# pristatymai} many {# pristatymo} other {# pristatymų}}",
+    "earnTips": "Arbatpinigiai",
+    "earnActiveTime": "Aktyvus laikas",
+    "earnActiveTimeHelp": "Laikas nuo užsakymo priėmimo iki jo pristatymo — ne visos jūsų pamainos valandos.",
+    "earnTipsFootnote": "Arbatpinigiai — tai suma, kurią klientai pridėjo atsiskaitydami.",
+    "earningsEmpty": "Šiuo laikotarpiu pristatymų nėra.",
+    "earningsLoadFailed": "Nepavyko įkelti jūsų uždarbio. Bandykite dar kartą."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priskirkite ir stebėkite savo pristatymus",

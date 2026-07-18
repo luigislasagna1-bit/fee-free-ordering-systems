@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Bike, History, Radio, RefreshCw, Star, User } from "lucide-react";
+import { Bike, DollarSign, History, Radio, RefreshCw, Star, User } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { ASSIGNMENT_TERMINAL } from "@/lib/driver-assignment";
 import { DriverQueue } from "./DriverQueue";
 import { DriverHistory } from "./DriverHistory";
+import { DriverEarnings } from "./DriverEarnings";
 import { DriverProfile } from "./DriverProfile";
 import { RoleSwitch } from "./RoleSwitch";
 import { BottomNav, type BottomNavTab } from "./shared/BottomNav";
@@ -16,8 +17,8 @@ import { formatPct } from "./shared/format-pct";
  * DriverApp — the driver-role app shell (v1.1 plan §3.1). Tabs are React
  * STATE, never routes: no new auth-dependent server redirects → no
  * redirect-cache surface (kitchen precedent). Phase 3 shipped Jobs +
- * Profile; Phase 4 adds History. The remaining future tab (Earnings)
- * appears when its phase ships, never as a dead placeholder.
+ * Profile; Phase 4 added History; Phase 5 added Earnings — all four tabs
+ * (Jobs / History / Earnings / Profile, plan §3.1) are live.
  *
  * LOAD-BEARING: DriverQueue stays MOUNTED AT ALL TIMES and is hidden with
  * CSS when another tab is active — NEVER unmounted. Its GPS streaming
@@ -34,7 +35,7 @@ import { formatPct } from "./shared/format-pct";
  * queue's behavior (poll/GPS/heartbeat) is untouched (§3.2).
  */
 
-type TabId = "jobs" | "history" | "profile";
+type TabId = "jobs" | "history" | "earnings" | "profile";
 
 // Forward order of the driver stage machine — used ONLY to detect "my job
 // advanced" for the confirmation tick (driver-sounds). picked_up and
@@ -62,9 +63,11 @@ export function DriverApp({
   const t = useTranslations("driver");
   const locale = useLocale();
   const [tab, setTab] = useState<TabId>("jobs");
-  // History/Profile mount lazily on first visit, then STAY mounted (their
-  // active-prop effect refetches on every activation — 5a0d9860 gate rule).
+  // History/Earnings/Profile mount lazily on first visit, then STAY mounted
+  // (their active-prop effect refetches on every activation — 5a0d9860 gate
+  // rule).
   const [historyMounted, setHistoryMounted] = useState(false);
+  const [earningsMounted, setEarningsMounted] = useState(false);
   const [profileMounted, setProfileMounted] = useState(false);
   // Mirror of DriverQueue's already-polled queue (via onAssignmentsChange) —
   // the Jobs badge AND the sound diffs derive from it. NO second poll exists
@@ -145,6 +148,7 @@ export function DriverApp({
   const tabs: BottomNavTab<TabId>[] = [
     { id: "jobs", label: t("tabJobs"), icon: Bike, badge: myOpenJobs },
     { id: "history", label: t("tabHistory"), icon: History },
+    { id: "earnings", label: t("tabEarnings"), icon: DollarSign },
     { id: "profile", label: t("tabProfile"), icon: User },
   ];
 
@@ -206,6 +210,10 @@ export function DriverApp({
           unmounted; refetches on every activation via the active prop. */}
       <div className={tab === "history" ? undefined : "hidden"}>{historyMounted && <DriverHistory active={tab === "history"} />}</div>
 
+      {/* Earnings — lazily mounted on first visit, then CSS-hidden, never
+          unmounted; refetches on every activation via the active prop. */}
+      <div className={tab === "earnings" ? undefined : "hidden"}>{earningsMounted && <DriverEarnings active={tab === "earnings"} />}</div>
+
       {/* Profile — lazily mounted on first visit, then CSS-hidden, never
           unmounted (manual-refresh tab). */}
       <div className={tab === "profile" ? undefined : "hidden"}>{profileMounted && <DriverProfile active={tab === "profile"} />}</div>
@@ -215,6 +223,7 @@ export function DriverApp({
         active={tab}
         onSelect={(id) => {
           if (id === "history") setHistoryMounted(true);
+          if (id === "earnings") setEarningsMounted(true);
           if (id === "profile") setProfileMounted(true);
           setTab(id);
         }}

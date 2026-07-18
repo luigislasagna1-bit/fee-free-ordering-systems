@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "履歴を読み込めませんでした。もう一度お試しください。",
     "ratingReceivedTitle": "評価を受け取りました",
     "noRatingYet": "この配達の評価はまだありません。",
-    "soundsLabel": "サウンド"
+    "soundsLabel": "サウンド",
+    "tabEarnings": "収入",
+    "earnThisWeek": "今週",
+    "earnLastWeek": "先週",
+    "earnDeliveries": "配達件数",
+    "earnDeliveriesCount": "{n, plural, other {#件の配達}}",
+    "earnTips": "チップ",
+    "earnActiveTime": "稼働時間",
+    "earnActiveTimeHelp": "仕事を受けてから配達を完了するまでの時間です — シフト全体の時間ではありません。",
+    "earnTipsFootnote": "チップはお客様がお会計時に追加した金額です。",
+    "earningsEmpty": "この期間の配達はありません。",
+    "earningsLoadFailed": "収入を読み込めませんでした。もう一度お試しください。"
   },
   "feefreeApp": {
     "dispatchSubtitle": "配達の割り当てと追跡",

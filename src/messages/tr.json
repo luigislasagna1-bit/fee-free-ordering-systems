@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Geçmişiniz yüklenemedi. Lütfen tekrar deneyin.",
     "ratingReceivedTitle": "Alınan puan",
     "noRatingYet": "Bu teslimat için henüz puan yok.",
-    "soundsLabel": "Sesler"
+    "soundsLabel": "Sesler",
+    "tabEarnings": "Kazançlar",
+    "earnThisWeek": "Bu hafta",
+    "earnLastWeek": "Geçen hafta",
+    "earnDeliveries": "Teslimatlar",
+    "earnDeliveriesCount": "{n, plural, one {# teslimat} other {# teslimat}}",
+    "earnTips": "Bahşişler",
+    "earnActiveTime": "Aktif süre",
+    "earnActiveTimeHelp": "Bir işi kabul etmekle onu teslim etmek arasındaki süre — tüm vardiya saatleriniz değil.",
+    "earnTipsFootnote": "Bahşişler, müşterilerin ödeme sırasında eklediği tutarlardır.",
+    "earningsEmpty": "Bu dönemde teslimat yok.",
+    "earningsLoadFailed": "Kazançlarınız yüklenemedi. Lütfen tekrar deneyin."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Teslimatlarınızı atayın ve takip edin",

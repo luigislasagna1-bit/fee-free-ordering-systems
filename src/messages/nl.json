@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Je geschiedenis kon niet worden geladen. Probeer het opnieuw.",
     "ratingReceivedTitle": "Beoordeling ontvangen",
     "noRatingYet": "Nog geen beoordeling voor deze bezorging.",
-    "soundsLabel": "Geluiden"
+    "soundsLabel": "Geluiden",
+    "tabEarnings": "Verdiensten",
+    "earnThisWeek": "Deze week",
+    "earnLastWeek": "Vorige week",
+    "earnDeliveries": "Bezorgingen",
+    "earnDeliveriesCount": "{n, plural, one {# bezorging} other {# bezorgingen}}",
+    "earnTips": "Fooien",
+    "earnActiveTime": "Actieve tijd",
+    "earnActiveTimeHelp": "De tijd tussen het accepteren van een opdracht en de bezorging — niet je volledige diensturen.",
+    "earnTipsFootnote": "Fooien zijn wat klanten bij het afrekenen hebben toegevoegd.",
+    "earningsEmpty": "Geen bezorgingen in deze periode.",
+    "earningsLoadFailed": "Je verdiensten konden niet worden geladen. Probeer het opnieuw."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Wijs je bezorgingen toe en volg ze",

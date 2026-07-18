@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "기록을 불러오지 못했습니다. 다시 시도해 주세요.",
     "ratingReceivedTitle": "받은 평가",
     "noRatingYet": "이 배달에 대한 평가가 아직 없습니다.",
-    "soundsLabel": "소리"
+    "soundsLabel": "소리",
+    "tabEarnings": "수입",
+    "earnThisWeek": "이번 주",
+    "earnLastWeek": "지난주",
+    "earnDeliveries": "배달",
+    "earnDeliveriesCount": "{n, plural, one {배달 #건} other {배달 #건}}",
+    "earnTips": "팁",
+    "earnActiveTime": "활동 시간",
+    "earnActiveTimeHelp": "전체 근무 시간이 아니라 작업을 수락한 시점부터 배달을 완료한 시점까지의 시간입니다.",
+    "earnTipsFootnote": "팁은 고객이 결제 시 추가한 금액입니다.",
+    "earningsEmpty": "이 기간에는 배달이 없습니다.",
+    "earningsLoadFailed": "수입을 불러오지 못했습니다. 다시 시도해 주세요."
   },
   "feefreeApp": {
     "dispatchSubtitle": "배달 배정 및 추적",

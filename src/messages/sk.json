@@ -6350,7 +6350,18 @@
     "historyLoadFailed": "Históriu sa nepodarilo načítať. Skúste to znova.",
     "ratingReceivedTitle": "Hodnotenie prijaté",
     "noRatingYet": "Toto doručenie zatiaľ nemá hodnotenie.",
-    "soundsLabel": "Zvuky"
+    "soundsLabel": "Zvuky",
+    "tabEarnings": "Zárobky",
+    "earnThisWeek": "Tento týždeň",
+    "earnLastWeek": "Minulý týždeň",
+    "earnDeliveries": "Doručenia",
+    "earnDeliveriesCount": "{n, plural, one {# doručenie} few {# doručenia} many {# doručenia} other {# doručení}}",
+    "earnTips": "Prepitné",
+    "earnActiveTime": "Aktívny čas",
+    "earnActiveTimeHelp": "Čas medzi prijatím zákazky a jej doručením — nie celé hodiny vašej zmeny.",
+    "earnTipsFootnote": "Prepitné je to, čo zákazníci pridali pri platbe.",
+    "earningsEmpty": "V tomto období žiadne doručenia.",
+    "earningsLoadFailed": "Vaše zárobky sa nepodarilo načítať. Skúste to znova."
   },
   "feefreeApp": {
     "dispatchSubtitle": "Priraďujte a sledujte svoje rozvozy",
