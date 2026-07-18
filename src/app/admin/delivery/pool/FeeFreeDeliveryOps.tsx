@@ -1,19 +1,8 @@
-import prisma from "@/lib/db";
 import { getTranslations } from "next-intl/server";
 import { Bike, DollarSign, CalendarClock, Package, Star } from "lucide-react";
-import { weekStartUtc, weekEndUtc } from "@/lib/feefree-delivery";
 import { haversineKm } from "@/lib/geocode";
+import { getFeeFreeDeliveryOpsData } from "@/lib/feefree-delivery-ops";
 import { SendToDriverButton } from "./SendToDriverButton";
-
-const TERMINAL = ["delivered", "failed", "returned", "cancelled"];
-
-/** Next Monday 00:10 UTC — when the weekly settlement cron charges the card. */
-function nextChargeDate(now: Date): Date {
-  const start = weekStartUtc(now);
-  const nextMon = weekEndUtc(start); // next Monday 00:00
-  nextMon.setUTCMinutes(10);
-  return nextMon;
-}
 
 function usd(cents: number): string {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(cents / 100);
@@ -28,51 +17,11 @@ function usd(cents: number): string {
 export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: string }) {
   const t = await getTranslations("admin.feefreeDelivery");
   const tCommon = await getTranslations("common");
-  const now = new Date();
-  const weekStart = weekStartUtc(now);
-  const weekEnd = weekEndUtc(now);
 
-  const [owedAgg, deliveredThisWeek, active, heldOrders, rest] = await Promise.all([
-    // Outstanding = frozen fees not yet rolled into a settlement.
-    prisma.deliveryAssignment.aggregate({
-      _sum: { platformFeeCents: true },
-      where: { restaurantId, status: "delivered", settlementId: null },
-    }),
-    prisma.deliveryAssignment.count({
-      where: { restaurantId, status: "delivered", deliveredAt: { gte: weekStart, lt: weekEnd } },
-    }),
-    prisma.deliveryAssignment.findMany({
-      where: { restaurantId, status: { notIn: TERMINAL } },
-      orderBy: { createdAt: "asc" },
-      take: 50,
-      select: {
-        id: true, status: true,
-        driver: { select: { name: true, ratingPct: true } },
-        order: { select: { orderNumber: true, customerName: true, deliveryLat: true, deliveryLng: true } },
-      },
-    }),
-    // Delivery orders in a live status, prepaid-ish, with NO assignment yet
-    // (autoSend off holds them here for manual send).
-    prisma.order.findMany({
-      where: {
-        restaurantId,
-        type: "delivery",
-        status: { in: ["accepted", "preparing", "ready"] },
-        deliveryAssignment: null,
-      },
-      orderBy: { createdAt: "desc" },
-      take: 25,
-      select: { id: true, orderNumber: true, customerName: true, paymentStatus: true, total: true, creditApplied: true },
-    }),
-    // The store's own coordinates — for the restaurant→customer distance shown
-    // on each active delivery (Luigi 2026-07-15).
-    prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { lat: true, lng: true } }),
-  ]);
-
-  const owed = owedAgg._sum.platformFeeCents ?? 0;
-  const charge = nextChargeDate(now);
-  // Only surface holds that would actually dispatch (prepaid).
-  const held = heldOrders.filter((o) => o.paymentStatus === "paid" || o.total - (o.creditApplied ?? 0) <= 0.009);
+  // Query source-of-truth moved to the shared lib (v1.1 Phase 6, plan §4.6) so the
+  // desktop panel and the app `/ops` route can never drift. Rendering below is
+  // unchanged — owed stays PLATFORM money (usd() = PLATFORM_CURRENCY).
+  const { owed, deliveredThisWeek, charge, held, active, rest } = await getFeeFreeDeliveryOpsData(restaurantId);
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-5">
