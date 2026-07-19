@@ -5,7 +5,7 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-19 by Claude (✅ **A20 confirmed working**: you flipped First Buy ON on the 18th, and Claude preview-proved the live 10% — a fresh identity on your store now gets FIRSTBUY auto-applied ($0.60 off a $5.99 test cart, real prod API). One optional last step in A20: a small fresh-identity test order from you, or Claude just watches for the next organic new customer. Everything else unchanged: driver v1.1 Phases 3–8 all shipped/deployed `c73ead43`; A21 = one schema push to run together; awaiting Apple ×1 + Google ×2 review emails.)
+**Last updated:** 2026-07-19 by Claude (🎉 **A20 + A21 both CLOSED in tonight's live session**: your real test order `ORD-067045266` carried the FIRSTBUY 10% all the way to the charged payment — incident fully resolved; and the two delivery indexes were pushed to both databases and prod-verified. Remaining opens: A20's `eri***` comp decision, awaiting Apple ×1 + Google ×2 review emails, B5 Kitchen 16 KB real fix.)
 **Previous update:** 2026-07-17 by Claude (🎉 driver iOS SUBMITTED to App Review 1:22 AM — Waiting for Review; prod test deliveries cleaned; v1.1 Phase 2 deployed. Earlier: Android submission prep — BOTH signed RELEASE .aab files built + cryptographically proven release-signed [Kitchen vc21/v3.0 + Driver vc1/v1.0, same upload key]; Play org conversion confirmed = 20-tester gate GONE; wrote Play listing copy for both apps; generated 4 Play screenshots from the local demo; rewrote IOS_APP_STORE_SUBMISSION.md for the org + added the driver app. Apple org still Pending — decisions logged in A17.)
 
 ---
@@ -36,12 +36,8 @@
 
 ## A. DO NOW — this week, in priority order
 
-### A20. ✅ FLIPPED 2026-07-18 — Kickstarter "First Buy" 10% promo is back ON, preview-proven live
-**You flipped it 2026-07-18 ~06:05 UTC** — toggle-truth sync confirmed on prod: `firstBuyPromoEnabled=true`, promo row `isActive=true`, and the promo is back in the active pool. The invite-email drip auto-resumed with it.
-**Proof so far (2026-07-19, no charge involved):** Claude called the live store's promo-preview API (`/api/public/apply-promos`, the exact engine the charge path uses) with a brand-new identity → response applied **"First-time customer special" / FIRSTBUY, 10%, discount $0.60 on a $5.99 cart** with `newCustomerOfferUnavailable=false`. The 12 pre-flip orders correctly show no discount (promo was off then).
-**Last step — see the 10% on a real charged order.** Claude can't place one autonomously (card entry is off-limits for it). Either:
-1. **You place a small test order** with a fresh email+phone (never used to order before) on your live store — you should see "10% off" in the cart, and Claude then verifies `promoDiscount>0` + FIRSTBUY in `appliedPromos` on the charged row; or
-2. **Wait for the next organic new customer** — Claude is watching prod each cycle and will report the first post-flip new-customer order either way.
+### A20. ✅ DONE 2026-07-19 — First Buy PROVEN end-to-end on a real charged order 🎉
+**You flipped the toggle 2026-07-18** (toggle-truth sync confirmed: promo active, email drip resumed), Claude preview-proved it 2026-07-19 (fresh identity → 10% via the live `apply-promos` API), and then **you placed the real test order `ORD-067045266`** (Dipping Sauce $1.49, fresh `+firstbuy` identity): the charged row shows `promoDiscount=$0.15`, FIRSTBUY in `appliedPromos`, card authorized for the discounted $1.51, PromotionUsage row written, `usedCount` 0→1. The campaign's promise now reaches the payment. (Order left pending — accept or cancel it in the kitchen as you like; the proof stands either way.)
 **Still your call (no rush):** the customer `eri***` ordered $12.79 from the email and got no discount — want Claude to set up a comp/credit for them? (They now count as "returning", so the promo will never fire for them on its own.)
 
 ### A21. ✅ DONE 2026-07-19 — delivery indexes pushed to BOTH databases (run live with Luigi)
