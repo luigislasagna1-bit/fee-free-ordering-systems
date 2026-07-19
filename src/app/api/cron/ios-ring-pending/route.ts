@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { sendKitchenPush } from "@/lib/push";
+import {
+  SECOND_FIRE_DELAY_MS,
+  SEGMENT_MS,
+  arrivalSoundMayStillPlay,
+  roundTwoFits,
+  roundTwoSendDeadline,
+} from "@/lib/ios-ring-timing";
 
 /**
  * POST/GET /api/cron/ios-ring-pending  (Vercel cron, every minute)
@@ -44,19 +51,8 @@ const MAX_ROWS = 300;
 // INVOCATION START (fire at start+29s), NOT round-1 completion — a slow round 1
 // (cold DB / slow FCM) used to push the second sound late enough to overlap the
 // NEXT minute's t=0 fire, stacking two alarm segments (Fabrizio cmrkvs5r).
-const SECOND_FIRE_DELAY_MS = 29_000;
-// …and SKIP round 2 entirely unless its ~29s audio segment can END inside
-// this minute. Round 2's own query+send latency can't be measured before
-// deciding, so round 1's elapsed time is the proxy (same cold-DB / slow-FCM
-// conditions): the second segment starts device-side ≈ start + 29s (wait) +
-// elapsed2 and plays SEGMENT_MS, so we require
-//   SECOND_FIRE_DELAY_MS + elapsed1 + SEGMENT_MS <= 60s  (i.e. elapsed1 ≲ 2s).
-// The earlier check bounded only elapsed1 (<= 10s), which still let a passing
-// 9.9s round 1 project a segment end of ~68s — overlapping the NEXT minute's
-// t=0 fire whenever that minute's round 1 was fast (the same Fabrizio
-// cmrkvs5r stacked-alarm overlap, just narrower). A brief gap in slow minutes
-// beats overlapping alarms.
-const MINUTE_MS = 60_000;
+// The round-2 go/no-go rule itself (fa1328ad, relaxed 2026-07-19) lives in
+// ios-ring-timing.ts roundTwoFits() with its full rationale + tests.
 
 // ── Official 4-minute GloriaFood alarm, segmented (Luigi 2026-07-05) ────────
 // The locked-in alarm ESCALATES (louder/faster toward the end), but Apple caps
@@ -68,7 +64,6 @@ const MINUTE_MS = 60_000;
 // bundled would play the DEFAULT iOS ding for a missing sound file — worse
 // than looping the calm 29s opener. Flip the flag once the segmented build is
 // installed on the kitchen devices.
-const SEGMENT_MS = 29_000;
 const LAST_SEGMENT = 8;
 function alarmSoundFor(oldestAnchorMs: number, nowMs: number): string {
   if (process.env.IOS_ALARM_SEGMENTS !== "1") return "order_alarm.caf";
@@ -91,21 +86,32 @@ export async function POST(req: NextRequest) {
 
   const invocationStart = Date.now();
   const first = await ringPendingOnce();
-  // Nothing ringing → don't hold the lambda open for the second fire.
-  if (first.sent === 0) return NextResponse.json({ rounds: [first] });
+  // Nothing ringing AND nothing freshly-gated → don't hold the lambda open.
+  // A round-1 that only GATED a just-arrived item (its arrival .caf still
+  // playing — Fabrizio's double-ring, 2026-07-18) must still hold for round 2:
+  // by t≈29s the arrival sound has finished and round 2 is exactly the
+  // seamless hand-off from the arrival sound to the first re-ring.
+  if (first.sent === 0 && first.gatedYoung === 0) {
+    return NextResponse.json({ rounds: [first] });
+  }
 
   // Anchor the second fire on the invocation START: wait only what's left of
   // the 29s segment after round 1's elapsed time — and unless round 2's
-  // PROJECTED segment end (29s wait + its own latency, proxied by round 1's
-  // elapsed, + the 29s segment itself) fits inside the minute, skip round 2
-  // rather than overlap the next invocation's audio.
+  // PROJECTED segment end fits inside the minute (+ the small bleed tolerance
+  // documented in ios-ring-timing.ts), skip round 2 rather than stack alarms
+  // over the next invocation's audio. The projection may only VETO when round
+  // 1 actually started audio (sent > 0): on a pure young-gate hold, round 2 is
+  // the item's ONLY ring this minute and there is no round-1 segment to stack
+  // on — a slow round 1 must not cost the order its whole minute of ringing
+  // (review, 2026-07-19). A genuinely late round 2 is still capped by the
+  // send deadline passed below.
   const round1ElapsedMs = Date.now() - invocationStart;
-  if (SECOND_FIRE_DELAY_MS + round1ElapsedMs + SEGMENT_MS > MINUTE_MS) {
+  if (first.sent > 0 && !roundTwoFits(round1ElapsedMs)) {
     return NextResponse.json({ rounds: [first] });
   }
   await new Promise((r) => setTimeout(r, Math.max(0, SECOND_FIRE_DELAY_MS - round1ElapsedMs)));
   // Re-query so an order accepted during the delay goes silent immediately.
-  const second = await ringPendingOnce();
+  const second = await ringPendingOnce(roundTwoSendDeadline(invocationStart));
   return NextResponse.json({ rounds: [first, second] });
 }
 
@@ -113,7 +119,7 @@ export async function GET(req: NextRequest) {
   return POST(req);
 }
 
-async function ringPendingOnce(): Promise<{ restaurants: number; sent: number; skippedNonIos: number }> {
+async function ringPendingOnce(sendDeadlineMs?: number): Promise<{ restaurants: number; sent: number; skippedNonIos: number; gatedYoung: number }> {
   const now = Date.now();
   const floor = new Date(now - RING_WINDOW_MS);
   const nowDate = new Date(now);
@@ -159,7 +165,26 @@ async function ringPendingOnce(): Promise<{ restaurants: number; sent: number; s
   // the list in the app says what. oldestAnchorMs drives which ramp segment of
   // the 4-minute alarm plays (the longest-waiting item sets the urgency).
   const byRestaurant = new Map<string, { name: string; orderCount: number; resCount: number; newestOrder?: string; oldestAnchorMs: number }>();
+  // NEVER re-ring an item whose ARRIVAL push sound may still be playing —
+  // layering the re-ring's 29s alarm over the arrival's made one order sound
+  // like two (Fabrizio's 2026-07-18 video: pushes 2.6s apart, both .cafs
+  // overlapping). Deferred (alertAt) items are exempt — they had no arrival
+  // push, the cron IS their first ring. Young items are tracked per
+  // restaurant (not dropped): a restaurant that rings anyway for OLDER items
+  // must still COUNT them in its banner, and a young-ONLY restaurant decides
+  // whether the lambda holds for round 2 (checked against its device platform
+  // below — holding for an Android-only restaurant would be pure waste).
+  const youngByRestaurant = new Map<string, { orders: number; res: number }>();
+  const noteYoung = (restaurantId: string, kind: "orders" | "res") => {
+    const y = youngByRestaurant.get(restaurantId) ?? { orders: 0, res: 0 };
+    y[kind]++;
+    youngByRestaurant.set(restaurantId, y);
+  };
   for (const o of orders) {
+    if (arrivalSoundMayStillPlay(o.alertAt, o.notifiedAt, now)) {
+      noteYoung(o.restaurantId, "orders");
+      continue;
+    }
     const anchor = (o.alertAt ?? o.notifiedAt)!.getTime();
     const e = byRestaurant.get(o.restaurantId) ?? { name: o.restaurant.name, orderCount: 0, resCount: 0, newestOrder: undefined as string | undefined, oldestAnchorMs: anchor };
     e.orderCount++;
@@ -168,6 +193,10 @@ async function ringPendingOnce(): Promise<{ restaurants: number; sent: number; s
     byRestaurant.set(o.restaurantId, e);
   }
   for (const b of reservations) {
+    if (arrivalSoundMayStillPlay(b.alertAt, b.createdAt, now)) {
+      noteYoung(b.restaurantId, "res");
+      continue;
+    }
     const anchor = (b.alertAt ?? b.createdAt).getTime();
     const e = byRestaurant.get(b.restaurantId) ?? { name: b.restaurant.name, orderCount: 0, resCount: 0, newestOrder: undefined as string | undefined, oldestAnchorMs: anchor };
     e.resCount++;
@@ -175,8 +204,17 @@ async function ringPendingOnce(): Promise<{ restaurants: number; sent: number; s
     byRestaurant.set(b.restaurantId, e);
   }
 
+  // Round 2's hard send cap (roundTwoSendDeadline): the fits-projection uses
+  // round 1's elapsed as a latency proxy, but only the clock HERE knows round
+  // 2's real lateness. Past the deadline, a bounded gap beats stacking audio
+  // into the next minute's round 1.
+  if (sendDeadlineMs !== undefined && Date.now() > sendDeadlineMs) {
+    return { restaurants: byRestaurant.size, sent: 0, skippedNonIos: 0, gatedYoung: 0 };
+  }
+
   let sent = 0;
   let skippedNonIos = 0;
+  let gatedYoung = 0;
   await Promise.allSettled(
     Array.from(byRestaurant.entries()).map(async ([restaurantId, info]) => {
       // Active device = most recent token (identical rule to sendKitchenPush).
@@ -190,7 +228,11 @@ async function ringPendingOnce(): Promise<{ restaurants: number; sent: number; s
         skippedNonIos++;
         return;
       }
-      const total = info.orderCount + info.resCount;
+      // Young items don't make a restaurant ring on their own, but when it
+      // rings anyway they belong in the count — "1 waiting" on a 2-pending
+      // lock screen was a lie (review, 2026-07-19).
+      const young = youngByRestaurant.get(restaurantId);
+      const total = info.orderCount + info.resCount + (young ? young.orders + young.res : 0);
       // Body stays order-data-shaped like the placement push; staff-facing
       // English-min by the same rule as staff email bodies.
       const body = total === 1 && info.newestOrder ? info.newestOrder : `${total} waiting to be accepted`;
@@ -210,5 +252,24 @@ async function ringPendingOnce(): Promise<{ restaurants: number; sent: number; s
     }),
   );
 
-  return { restaurants: byRestaurant.size, sent, skippedNonIos };
+  // Young-ONLY restaurants get no push this round (that IS the double-ring
+  // fix) — but they decide whether POST holds the lambda for round 2, and
+  // holding is pointless when the device can't receive iOS re-rings. One
+  // bounded findFirst per young-only restaurant, only in minutes where an
+  // order just arrived.
+  await Promise.allSettled(
+    Array.from(youngByRestaurant.keys())
+      .filter((id) => !byRestaurant.has(id))
+      .map(async (restaurantId) => {
+        const device = await prisma.kitchenPushToken.findFirst({
+          where: { restaurantId },
+          orderBy: { lastSeenAt: "desc" },
+          select: { platform: true },
+        });
+        if (device?.platform === "ios") gatedYoung++;
+        else skippedNonIos++;
+      }),
+  );
+
+  return { restaurants: byRestaurant.size, sent, skippedNonIos, gatedYoung };
 }

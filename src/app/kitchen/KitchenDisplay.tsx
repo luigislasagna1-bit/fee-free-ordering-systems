@@ -1484,6 +1484,20 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // Mirrors the long-alert effect's shouldPlay — "the web gloriafood ring is
   // legitimately due RIGHT NOW". Written by that effect on every re-run.
   const webRingShouldPlayRef = useRef(false);
+  // Latest longRing (closed-placed → loop the track) for play paths that run
+  // outside the long-alert effect (the rearm listener + the blocked-play
+  // retry). Synced in the render body right after longRing is derived.
+  const longRingRef = useRef(false);
+  // Indirection for the iOS buffer sink (defined below armBlockedPlayRetry —
+  // the retry body reaches it through this ref to avoid a forward reference).
+  const startIosRingTrackRef = useRef<((loop: boolean) => boolean) | null>(null);
+  // Set once if the iOS ring buffer can't be fetched/decoded this session —
+  // every play path then falls back to the HTMLAudio element permanently
+  // (functional, but the Control-Center card may reappear). State + ref pair:
+  // the state re-runs the long-alert effect so the fallback actually plays;
+  // the ref gives the stable callbacks a non-stale read.
+  const iosRingSinkBrokenRef = useRef(false);
+  const [iosRingSinkBroken, setIosRingSinkBroken] = useState(false);
   const disarmBlockedPlayRetry = useCallback(() => {
     if (blockedPlayRetryRef.current) {
       window.removeEventListener("pointerdown", blockedPlayRetryRef.current);
@@ -1499,6 +1513,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       // illegitimate since arming — never resurrect a resolved alarm.
       if (!webRingShouldPlayRef.current) return;
       try { audioCtxRef.current?.resume?.().catch?.(() => {}); } catch { /* noop */ }
+      // iOS shell: restore through the buffer sink, never the media element
+      // (the element is what pins the Control-Center card — cmrkvs5r round 3).
+      if (isIOSCapacitorShell() && !iosRingSinkBrokenRef.current && startIosRingTrackRef.current?.(longRingRef.current)) return;
       ensureLongAlertRouting();
       const el = longAlertRef.current;
       if (!el) return;
@@ -1517,6 +1534,191 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       blockedPlayRetryRef.current = null;
     }
   }, []);
+
+  // ── iOS-shell ring sink: the gloriafood track as a decoded buffer ─────────
+  // (Fabrizio cmrkvs5r round 3, from his 2026-07-18 video.) WebKit registers a
+  // MediaRemote "Now Playing" entry for ANY HTMLAudio playback in the shell,
+  // and provably keeps a paused Control-Center / lock-screen card around even
+  // after removeAttribute("src") + load() + navigator.mediaSession clearing
+  // (the round-2 fixes) — his video shows the paused card at "0:01 / −4:04" on
+  // the lock screen with the ring long stopped. Pure Web Audio playback never
+  // registers with MediaRemote (device-proven by the driver app's sounds), so
+  // on the iOS shell the ring plays a DECODED copy of the same track through
+  // an AudioBufferSourceNode instead of the media element. The element path
+  // stays: Android/web are completely untouched (they never show a card and
+  // genuinely need the element), and the shell falls back to it if the
+  // one-time decode fails (card may reappear, but the ring always works).
+  //
+  // Memory: the raw decode of the 245s track (~90 MB float32) is TRANSIENT —
+  // it is immediately downmixed/resampled to mono 22050 Hz via an
+  // OfflineAudioContext (the native order_alarm.caf fidelity) and cached at
+  // ~21.6 MB for the session, so repeat rings are instant. Primed at mount
+  // (fetch/decode need no gesture; shell autoplay is gesture-ungated anyway).
+  const iosRingBufferRef = useRef<AudioBuffer | null>(null);
+  const iosRingPromiseRef = useRef<Promise<AudioBuffer | null> | null>(null);
+  const iosRingSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const iosRingChainRef = useRef<{ ctx: AudioContext; input: GainNode } | null>(null);
+  const primeIosRingBuffer = useCallback((): Promise<AudioBuffer | null> => {
+    if (!isIOSCapacitorShell()) return Promise.resolve(null);
+    if (iosRingBufferRef.current) return Promise.resolve(iosRingBufferRef.current);
+    if (iosRingPromiseRef.current) return iosRingPromiseRef.current;
+    // WATCHDOG (review, 2026-07-19): iOS can tear a WebView fetch down during
+    // lock/suspend WITHOUT ever settling it (same failure mode the test-ring
+    // fetch watchdogs below). An unsettled prime would wedge the sink: the
+    // claim path would re-attach to the dead promise forever, returning true
+    // ("sink owns the ring") while nothing ever plays and the broken-flag
+    // fallback never engages — a silent kitchen all session. Abort at 15s so
+    // the promise ALWAYS settles: abort → catch → null → broken flag → the
+    // element fallback rings (and the finally clears the promise so a later
+    // ring retries a merely-transient stall).
+    const ac = new AbortController();
+    const watchdog = window.setTimeout(() => { try { ac.abort(); } catch { /* noop */ } }, 15_000);
+    const p = (async (): Promise<AudioBuffer | null> => {
+      try {
+        const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
+        if (!Ctx) return null;
+        let ctx = audioCtxRef.current;
+        if (!ctx) { ctx = new Ctx(); audioCtxRef.current = ctx; }
+        const res = await fetch(LONG_ALERT_SRC, { signal: ac.signal });
+        if (!res.ok) return null;
+        const raw = await res.arrayBuffer();
+        // decodeAudioData is the old callback API in Safari — wrap (same
+        // pattern as the sample loader below).
+        const decoded: AudioBuffer = await new Promise((resolve, reject) => {
+          try {
+            const pr = ctx!.decodeAudioData(raw.slice(0), resolve, reject);
+            if (pr && typeof (pr as Promise<AudioBuffer>).then === "function") {
+              (pr as Promise<AudioBuffer>).then(resolve, reject);
+            }
+          } catch (e) { reject(e); }
+        });
+        try {
+          const Offline = (window.OfflineAudioContext || (window as any).webkitOfflineAudioContext);
+          if (Offline) {
+            const off = new Offline(1, Math.ceil(decoded.duration * 22050), 22050);
+            const src = off.createBufferSource();
+            src.buffer = decoded;
+            src.connect(off.destination);
+            src.start();
+            const rendered: AudioBuffer = await off.startRendering();
+            iosRingBufferRef.current = rendered;
+            return rendered;
+          }
+        } catch { /* offline render unavailable — cache the full-rate decode */ }
+        iosRingBufferRef.current = decoded;
+        return decoded;
+      } catch (e) {
+        console.warn("[KDS ring] iOS track decode failed — element fallback", e);
+        return null;
+      } finally {
+        window.clearTimeout(watchdog);
+        // Success short-circuits on iosRingBufferRef next call; failure clears
+        // the promise so a later ring can retry a transient fetch error.
+        iosRingPromiseRef.current = null;
+      }
+    })();
+    iosRingPromiseRef.current = p;
+    return p;
+  }, []);
+  // Stop = stop this ring's source; the decoded buffer stays cached.
+  const stopIosRingTrack = useCallback(() => {
+    const s = iosRingSourceRef.current;
+    iosRingSourceRef.current = null;
+    if (s) {
+      try { s.onended = null; s.stop(); } catch { /* already ended */ }
+      try { s.disconnect(); } catch { /* noop */ }
+    }
+  }, []);
+  // Start (or keep) the buffer ring. Returns true when the sink OWNS the ring:
+  // playing now, or armed to start the moment the one-time decode lands (the
+  // completion re-validates against webRingShouldPlayRef, mirroring the
+  // blocked-play retry's guard). Returns false only when Web Audio itself is
+  // unavailable — the caller then uses the element path.
+  const startIosRingTrack = useCallback((loop: boolean): boolean => {
+    if (!isIOSCapacitorShell()) return false;
+    let ctx: AudioContext;
+    try {
+      const Ctx = (window.AudioContext || (window as any).webkitAudioContext);
+      if (!Ctx) return false;
+      ctx = audioCtxRef.current ?? new Ctx();
+      audioCtxRef.current = ctx;
+      // `!== "running"` (not `=== "suspended"`): after an OS audio takeover
+      // WebKit reports the non-standard "interrupted" state (see
+      // ensureLongAlertRouting). A source started against a non-running
+      // context is not lost — the context freezes its clock, so playback
+      // begins from the track start when a later resume lands.
+      if (ctx.state !== "running") ctx.resume().catch(() => {});
+    } catch { return false; }
+    const existing = iosRingSourceRef.current;
+    if (existing) {
+      // Already ringing — just keep the loop mode current (longRing can flip
+      // while the same alerting period continues).
+      try { existing.loop = loop; } catch { /* noop */ }
+      return true;
+    }
+    const buf = iosRingBufferRef.current;
+    if (!buf) {
+      // Decode still in flight (or first ring beat the mount prime): claim
+      // the ring, start as soon as the buffer lands — IF the ring is still
+      // legitimately due. A failed decode flips the broken flag, which
+      // re-runs the long-alert effect into the element fallback.
+      // Loop mode is read FRESH at completion (longRingRef), never captured:
+      // several claims can queue on the one decode promise, and a stale
+      // captured loop from claim #1 would stick (review, 2026-07-19 — a
+      // closed-placed order's 15-min ring would end ~11 min early). The
+      // recursive call is idempotent: an already-started source just gets its
+      // loop mode refreshed by the existing-source branch above.
+      primeIosRingBuffer().then((b) => {
+        if (!b) {
+          iosRingSinkBrokenRef.current = true;
+          setIosRingSinkBroken(true);
+          return;
+        }
+        if (!webRingShouldPlayRef.current) return;
+        startIosRingTrack(longRingRef.current);
+      });
+      return true;
+    }
+    try {
+      // Same loudness design as the element chain: boost past unity, then a
+      // brick-wall limiter pins peaks just under 0 dBFS (Luigi 2026-06-09).
+      let chain = iosRingChainRef.current;
+      if (!chain || chain.ctx !== ctx) {
+        const gain = ctx.createGain();
+        gain.gain.value = LONG_ALERT_BOOST;
+        const limiter = ctx.createDynamicsCompressor();
+        const t = ctx.currentTime;
+        limiter.threshold.setValueAtTime(-1.5, t);
+        limiter.knee.setValueAtTime(0, t);
+        limiter.ratio.setValueAtTime(20, t);
+        limiter.attack.setValueAtTime(0.002, t);
+        limiter.release.setValueAtTime(0.12, t);
+        gain.connect(limiter).connect(ctx.destination);
+        chain = { ctx, input: gain };
+        iosRingChainRef.current = chain;
+      }
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = loop;
+      src.onended = () => {
+        // Natural 4-min end (loop=false) — clear so a later legitimate
+        // trigger starts fresh. Manual stops null the ref first.
+        if (iosRingSourceRef.current === src) iosRingSourceRef.current = null;
+      };
+      src.connect(chain.input);
+      src.start();
+      iosRingSourceRef.current = src;
+      return true;
+    } catch (e) {
+      console.warn("[KDS ring] iOS buffer sink failed — element fallback", e);
+      return false;
+    }
+  }, [primeIosRingBuffer]);
+  startIosRingTrackRef.current = startIosRingTrack;
+  // Prime the decode at mount (iOS shell only — no-op elsewhere), and never
+  // leave a buffer source ringing past unmount (logout/navigation).
+  useEffect(() => { primeIosRingBuffer(); }, [primeIosRingBuffer]);
+  useEffect(() => () => { stopIosRingTrack(); }, [stopIosRingTrack]);
 
   // Decoded GloriaFood sample as a Web Audio buffer. We use the
   // AudioContext + decodeAudioData path instead of an HTMLAudioElement
@@ -2242,6 +2444,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       && o.placedWhileClosed
       && !(o.alertAt && new Date(o.alertAt).getTime() > nowMs),
   );
+  // Latest-value mirror for the rearm listener + blocked-play retry (their
+  // callbacks are stable; a stale closure here would loop/unloop wrongly).
+  longRingRef.current = longRing;
   // Today / tomorrow as YYYY-MM-DD (restaurant-local via the tablet clock) —
   // used to tell "actionable" bookings apart from the ~30 days of history the
   // feed now carries for the persistent Reservations tab. Luigi 2026-06-08.
@@ -2403,6 +2608,16 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     // stale between runs (see armBlockedPlayRetry guard 2).
     webRingShouldPlayRef.current = shouldPlay;
     if (shouldPlay) {
+      // iOS SHELL: play through the decoded-buffer sink, never the media
+      // element — element playback is what pins the unremovable Control-Center
+      // / lock-screen card (cmrkvs5r round 3, Fabrizio's 2026-07-18 video).
+      // startIosRingTrack() returning true = it owns this ring (playing now,
+      // or starting the moment the one-time decode lands). False (Web Audio
+      // unavailable) or a broken decode → the element path below, exactly as
+      // before. Android/web never enter this branch.
+      if (isIOSCapacitorShell() && !iosRingSinkBroken && startIosRingTrack(longRing)) {
+        return;
+      }
       // Route through the gain+limiter chain so the track plays WAY louder than
       // the file's own level (without clipping). volume = 1 feeds the chain at
       // full input; the gain does the loudness. Falls back to plain volume = 1
@@ -2429,6 +2644,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         });
       }
     } else {
+      // Buffer-sink half of the stop: silence the iOS ring source (no-op off
+      // the shell / when the element path was in use).
+      stopIosRingTrack();
       // The ring is no longer legitimate — a still-armed blocked-play retry
       // must die WITH it, or the next tap (even hours later, e.g. dismissing
       // the leftover sound gate) would restore the src and replay the full
@@ -2470,7 +2688,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         try { audioCtxRef.current?.suspend?.().catch?.(() => {}); } catch { /* best-effort */ }
       }
     }
-  }, [nativeAlarm, ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, resumeSuspect, getLongAlert, ensureLongAlertRouting, ensureLongAlertSrc, armBlockedPlayRetry, disarmBlockedPlayRetry]);
+  }, [nativeAlarm, ringAudible, autoAcceptRinging, longRing, alertSound, alertMuted, alertVolume, pageVisible, resumeSuspect, iosRingSinkBroken, getLongAlert, ensureLongAlertRouting, ensureLongAlertSrc, armBlockedPlayRetry, disarmBlockedPlayRetry, startIosRingTrack, stopIosRingTrack]);
 
   // ── Re-arm audio when the app returns to the foreground (Luigi 2026-06-07) ──
   // Android (and backgrounded browser tabs) SUSPEND the AudioContext and pause
@@ -2500,6 +2718,10 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       // gloriafood resumes its full-length track; other sounds fire one ding
       // (the cadence effect keeps them going). Luigi 2026-06-09.
       if (alertSound === "gloriafood") {
+        // iOS shell: resume through the buffer sink (no media element, no
+        // Control-Center card — cmrkvs5r round 3). Falls through to the
+        // element only when the sink is broken/unavailable.
+        if (isIOSCapacitorShell() && !iosRingSinkBrokenRef.current && startIosRingTrack(longRingRef.current)) return;
         ensureLongAlertRouting();
         const a = longAlertRef.current;
         if (a) {
@@ -2524,7 +2746,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       window.removeEventListener("focus", rearm);
       window.removeEventListener("pageshow", rearm);
     };
-  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, alertSound, pageVisible, resumeSuspect, ringBellOnce, ensureLongAlertRouting, ensureLongAlertSrc, armBlockedPlayRetry]);
+  }, [nativeAlarm, ringAudible, alertMuted, alertVolume, alertSound, pageVisible, resumeSuspect, ringBellOnce, ensureLongAlertRouting, ensureLongAlertSrc, armBlockedPlayRetry, startIosRingTrack]);
 
   // v2.6 single-engine HUSH driver (Luigi 2026-06-23): when the native engine owns the ring,
   // replicate the verified v2.4 hush behaviours. PAUSE the native ring when foreground AND
@@ -2615,11 +2837,27 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // element), so re-pointing its src per press is safe.
   const previewRef = useRef<HTMLAudioElement | null>(null);
   const previewStopTimerRef = useRef<number | null>(null);
+  // iOS-shell preview of the DEFAULT sound plays the decoded ring buffer (see
+  // the ring sink above) so pressing "test sound" never registers a media
+  // session — the element preview is kept for custom uploads + fallback.
+  const previewBufferSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const previewGainRef = useRef<GainNode | null>(null);
   const stopPreview = useCallback(() => {
     if (previewStopTimerRef.current !== null) {
       window.clearTimeout(previewStopTimerRef.current);
       previewStopTimerRef.current = null;
     }
+    const bs = previewBufferSourceRef.current;
+    previewBufferSourceRef.current = null;
+    if (bs) {
+      try { bs.onended = null; bs.stop(); } catch { /* already ended */ }
+      try { bs.disconnect(); } catch { /* noop */ }
+    }
+    // The per-press gain node too — stopPreview clears onended before stop(),
+    // so the onended backstop below never runs on the normal timer path.
+    const pg = previewGainRef.current;
+    previewGainRef.current = null;
+    if (pg) { try { pg.disconnect(); } catch { /* noop */ } }
     const p = previewRef.current;
     if (!p) return;
     try { p.pause(); p.currentTime = 0; } catch { /* noop */ }
@@ -2640,6 +2878,33 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     // 2026-06-20: a single new-order sound for the whole system.)
     const vol = alertVolume || 1.0;
     if (vol <= 0) return;
+    // iOS shell + default sound + buffer decoded → snippet via Web Audio (no
+    // media element, no Control-Center card). Custom uploads and a not-yet-
+    // decoded buffer fall through to the element (released after, as before).
+    if (isIOSCapacitorShell() && !customSoundUrl && iosRingBufferRef.current) {
+      stopPreview();
+      try {
+        const c = audioCtxRef.current;
+        if (c) {
+          if (c.state !== "running") c.resume().catch(() => {});
+          const src = c.createBufferSource();
+          src.buffer = iosRingBufferRef.current;
+          const g = c.createGain();
+          g.gain.value = vol;
+          src.onended = () => {
+            if (previewBufferSourceRef.current === src) previewBufferSourceRef.current = null;
+            if (previewGainRef.current === g) previewGainRef.current = null;
+            try { g.disconnect(); } catch { /* noop */ }
+          };
+          src.connect(g).connect(c.destination);
+          src.start();
+          previewBufferSourceRef.current = src;
+          previewGainRef.current = g;
+          previewStopTimerRef.current = window.setTimeout(stopPreview, 2500);
+          return;
+        }
+      } catch { /* fall through to the element preview */ }
+    }
     try {
       let p = previewRef.current;
       if (!p) {
