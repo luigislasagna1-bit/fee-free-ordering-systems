@@ -1,11 +1,10 @@
 "use client";
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import {
   X, User, Truck, ShoppingBag, Clock, CreditCard, Heart, Edit2, Tag,
   AlertCircle, Loader2, ChevronDown, Utensils, Package, Trash2,
 } from "lucide-react";
-import { Autocomplete } from "@react-google-maps/api";
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { computeApplied } from "@/lib/reward-math";
 import { childBuildLines } from "@/lib/bundle-child-lines";
@@ -28,6 +27,22 @@ import {
 // Leaflet pin is dynamically imported (ssr:false) — Leaflet touches `window`,
 // so it must never be in the server bundle. Google's pin loads statically above.
 const CheckoutLeafletPin = dynamic(() => import("./CheckoutLeafletPin"), { ssr: false });
+
+/** Places predictions via the callback form so statuses keep their meaning:
+ *  no matches = an empty list (normal), anything else = reject, which flips
+ *  the session to the OSM proxy fallback. */
+function svcGetPredictions(
+  svc: google.maps.places.AutocompleteService,
+  req: google.maps.places.AutocompletionRequest,
+): Promise<google.maps.places.AutocompletePrediction[]> {
+  return new Promise((resolve, reject) => {
+    svc.getPlacePredictions(req, (preds, status) => {
+      const S = google.maps.places.PlacesServiceStatus;
+      if (status === S.OK || status === S.ZERO_RESULTS) resolve(preds ?? []);
+      else reject(new Error(String(status)));
+    });
+  });
+}
 
 type Theme = ReturnType<typeof parseTheme>;
 type SectionKey = null | "contact" | "ordering" | "time" | "payment" | "tips" | "notes";
@@ -451,25 +466,27 @@ export function CheckoutModal({
   const mapsKey = resolveMapsBrowserKey(googleMapsApiKey);
   const googleEnabled = !!mapsKey;
   const { isLoaded: gmapsLoaded } = useGoogleMaps(mapsKey);
-  // Bias Google Places autocomplete toward the restaurant's area so nearby
-  // addresses rank first (Luigi 2026-06-13: "shows far areas until I type the
-  // city"). A ~±0.5° box (≈50 km) around the restaurant; soft bias, not a hard
-  // restrict, so out-of-area addresses still appear if typed.
-  const autocompleteOptions = useMemo<google.maps.places.AutocompleteOptions>(() => {
-    const opts: google.maps.places.AutocompleteOptions = {
-      fields: ["address_components", "formatted_address", "geometry"],
-      types: ["address"],
-    };
-    if (geocodeCountry) opts.componentRestrictions = { country: geocodeCountry.toLowerCase() };
-    if (restaurantLat != null && restaurantLng != null) {
-      opts.bounds = {
-        north: restaurantLat + 0.5, south: restaurantLat - 0.5,
-        east: restaurantLng + 0.5, west: restaurantLng - 0.5,
-      };
-    }
-    return opts;
-  }, [geocodeCountry, restaurantLat, restaurantLng]);
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
+  // Google Places suggestions are fetched via AutocompleteService and rendered
+  // in OUR in-modal dropdown (the same UI the OSM lane uses) instead of the
+  // google.maps.places.Autocomplete widget. The widget's .pac-container is
+  // body-appended and anchored to LAYOUT-viewport coordinates: inside the
+  // checkout's inner-scrolling fixed sheet on a phone, the on-screen keyboard
+  // scrolls the field while the widget's list stays put (or opens under the
+  // keyboard) — Fabrizio report cmrrkdif9, "autofill no longer available".
+  // An in-flow list scrolls WITH the field, so that whole failure class is gone.
+  // Session token spans the keystrokes + the final getDetails (per-session
+  // billing, same as the widget did internally).
+  const placesSessionTokenRef = useRef<google.maps.places.AutocompleteSessionToken | null>(null);
+  const placesServiceRef = useRef<google.maps.places.PlacesService | null>(null);
+  const placesAutoSvcRef = useRef<google.maps.places.AutocompleteService | null>(null);
+  // A hard Places denial (dead key/quota) sticks for the session: later
+  // keystrokes skip the doomed Google call and go straight to the OSM proxy.
+  const googleDeniedRef = useRef(false);
+  // Latest customerInfo for ASYNC callbacks (getDetails): spreading a captured
+  // snapshot would revert fields the customer edited while the lookup was in
+  // flight (review 2026-07-19 — apartment text vanishing, pin drag snapping back).
+  const ciRef = useRef(customerInfo);
+  ciRef.current = customerInfo;
   // Map center is set when an address is picked, but NOT updated while the
   // customer drags the pin — so the map doesn't snap back mid-drag.
   const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(
@@ -478,40 +495,114 @@ export function CheckoutModal({
       : null,
   );
 
-  // ── Free address autocomplete (Leaflet / non-Google restaurants) ────────
-  // Google restaurants use Places Autocomplete; everyone else now gets
-  // OpenStreetMap suggestions via our proxy route, so the delivery address
-  // field is just as helpful (Fabrizio report cmpxdxhxi — Leaflet had none).
-  type OsmSuggestion = { label: string; lat: number; lng: number; line1: string; city: string; postcode: string };
-  const [addrSuggestions, setAddrSuggestions] = useState<OsmSuggestion[]>([]);
+  // ── Address autocomplete — ONE in-modal dropdown for every restaurant ───
+  // Google-keyed restaurants get Places predictions; everyone else gets
+  // OpenStreetMap suggestions via our proxy route (Fabrizio report cmpxdxhxi —
+  // Leaflet had none). If the Google script hasn't loaded (still in flight, or
+  // blocked), the OSM proxy answers instead — the field is never suggestion-dead.
+  type AddrSuggestion =
+    | { kind: "google"; label: string; secondary: string; placeId: string }
+    | { kind: "osm"; label: string; lat: number; lng: number; line1: string; city: string; postcode: string };
+  const [addrSuggestions, setAddrSuggestions] = useState<AddrSuggestion[]>([]);
   const [addrSuggestOpen, setAddrSuggestOpen] = useState(false);
+  const [addrHighlightIdx, setAddrHighlightIdx] = useState(-1);
   const addrJustPickedRef = useRef(false);
+  // Query only after the CUSTOMER typed in the field. A prefilled address
+  // (saved guest info, saved-address chip, pickup→delivery switch) must not
+  // fire a billed Places call + pop the dropdown over the form unasked
+  // (review 2026-07-19).
+  const addrUserTypedRef = useRef(false);
+  // The pending debounce timer, so a pick can cancel it — otherwise the
+  // leftover timer re-queries the abandoned text after the pick and reopens
+  // a stale dropdown (review 2026-07-19).
+  const addrDebounceRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (googleEnabled || orderType !== "delivery") { setAddrSuggestions([]); return; }
+    if (orderType !== "delivery") { setAddrSuggestions([]); return; }
     // Don't re-query the value we just filled in from a chosen suggestion.
     if (addrJustPickedRef.current) { addrJustPickedRef.current = false; return; }
+    if (!addrUserTypedRef.current) return;
     const q = (customerInfo.address || "").trim();
-    if (q.length < 3) { setAddrSuggestions([]); setAddrSuggestOpen(false); return; }
+    if (q.length < 3) { setAddrSuggestions([]); setAddrSuggestOpen(false); setAddrHighlightIdx(-1); return; }
     const ctrl = new AbortController();
-    const id = setTimeout(async () => {
+    const showList = (next: AddrSuggestion[]) => {
+      setAddrSuggestions(next);
+      setAddrHighlightIdx(-1);
+      // Open only while the customer is still IN the field — a late response
+      // must not pop the list over city/zip after focus moved on. onFocus
+      // reopens from the stored suggestions.
+      setAddrSuggestOpen(document.activeElement?.id === "checkout-delivery-address");
+    };
+    const id = window.setTimeout(async () => {
+      const googleReady = !googleDeniedRef.current && googleEnabled && gmapsLoaded
+        && typeof google !== "undefined" && !!google.maps?.places;
+      if (googleReady) {
+        try {
+          if (!placesAutoSvcRef.current) {
+            placesAutoSvcRef.current = new google.maps.places.AutocompleteService();
+          }
+          if (!placesSessionTokenRef.current) {
+            placesSessionTokenRef.current = new google.maps.places.AutocompleteSessionToken();
+          }
+          const req: google.maps.places.AutocompletionRequest = {
+            input: q,
+            sessionToken: placesSessionTokenRef.current,
+            types: ["address"],
+          };
+          if (geocodeCountry) req.componentRestrictions = { country: geocodeCountry.toLowerCase() };
+          // Bias toward the restaurant's area so nearby addresses rank first
+          // (Luigi 2026-06-13: "shows far areas until I type the city"). A
+          // ~±0.5° box (≈50 km); soft bias, not a hard restrict.
+          if (restaurantLat != null && restaurantLng != null) {
+            req.locationBias = {
+              north: restaurantLat + 0.5, south: restaurantLat - 0.5,
+              east: restaurantLng + 0.5, west: restaurantLng - 0.5,
+            };
+          }
+          const res = await svcGetPredictions(placesAutoSvcRef.current, req);
+          if (ctrl.signal.aborted) return;
+          showList(res.map((p): AddrSuggestion => ({
+            kind: "google",
+            label: p.structured_formatting?.main_text || p.description,
+            secondary: p.structured_formatting?.secondary_text || "",
+            placeId: p.place_id,
+          })));
+          return;
+        } catch {
+          // Hard rejection (key denied / quota dead) — remember it so we stop
+          // paying the doomed round-trip on every keystroke; OSM takes over.
+          googleDeniedRef.current = true;
+        }
+      }
       try {
         const params = new URLSearchParams({ q });
         if (geocodeCountry) params.set("country", geocodeCountry);
         const res = await fetch(`/api/public/geocode/search?${params.toString()}`, { signal: ctrl.signal });
         const data = await res.json().catch(() => ({}));
-        setAddrSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
-        setAddrSuggestOpen(true);
+        showList(Array.isArray(data.suggestions)
+          ? data.suggestions.map((s: { label: string; lat: number; lng: number; line1: string; city: string; postcode: string }): AddrSuggestion => ({ kind: "osm", ...s }))
+          : []);
       } catch { /* aborted / network — leave list as-is */ }
     }, 400);
-    return () => { clearTimeout(id); ctrl.abort(); };
+    addrDebounceRef.current = id;
+    return () => { window.clearTimeout(id); ctrl.abort(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerInfo.address, googleEnabled, orderType, geocodeCountry]);
+  }, [customerInfo.address, googleEnabled, gmapsLoaded, orderType, geocodeCountry, restaurantLat, restaurantLng]);
 
-  const pickAddrSuggestion = (sug: OsmSuggestion) => {
+  /** Shared pick teardown: cancel any pending debounce query (its leftover
+   *  timer would re-query the abandoned text and reopen a stale list), close,
+   *  and mark the coming address change as programmatic. */
+  const beginPick = () => {
+    if (addrDebounceRef.current !== null) { window.clearTimeout(addrDebounceRef.current); addrDebounceRef.current = null; }
     addrJustPickedRef.current = true;
+    addrUserTypedRef.current = false;
     setAddrSuggestOpen(false);
     setAddrSuggestions([]);
+    setAddrHighlightIdx(-1);
+  };
+
+  const pickAddrSuggestion = (sug: Extract<AddrSuggestion, { kind: "osm" }>) => {
+    beginPick();
     setMapCenter({ lat: sug.lat, lng: sug.lng });
     setCustomerInfo({
       ...customerInfo,
@@ -523,9 +614,11 @@ export function CheckoutModal({
     });
   };
 
-  const handlePlaceChanged = () => {
-    const place = autocompleteRef.current?.getPlace();
-    if (!place || !place.address_components) return;
+  // Runs in getDetails' ASYNC callback — always spread ciRef.current (the
+  // live state), never a captured customerInfo, or edits made while the
+  // lookup was in flight get reverted.
+  const applyGooglePlace = (place: google.maps.places.PlaceResult) => {
+    if (!place.address_components) return;
 
     const get = (type: string, short = false) =>
       place.address_components!.find((c) => c.types.includes(type))?.[short ? "short_name" : "long_name"] ?? "";
@@ -545,13 +638,68 @@ export function CheckoutModal({
     const lng = loc ? loc.lng() : null;
     if (lat != null && lng != null) setMapCenter({ lat, lng });
 
+    const live = ciRef.current;
     setCustomerInfo({
-      ...customerInfo,
-      address: street || place.formatted_address || customerInfo.address,
-      city: city || customerInfo.city,
-      zip: zip || customerInfo.zip,
+      ...live,
+      address: street || place.formatted_address || live.address,
+      city: city || live.city,
+      zip: zip || live.zip,
       ...(lat != null && lng != null ? { lat, lng } : {}),
     });
+  };
+
+  const pickGoogleSuggestion = (sug: Extract<AddrSuggestion, { kind: "google" }>) => {
+    beginPick();
+    if (typeof google === "undefined" || !google.maps?.places) return;
+    if (!placesServiceRef.current) {
+      // PlacesService needs a host node; a detached div is the documented
+      // pattern when results aren't rendered on a Google map.
+      placesServiceRef.current = new google.maps.places.PlacesService(document.createElement("div"));
+    }
+    // getDetails closes the per-session billing window the token opened.
+    const sessionToken = placesSessionTokenRef.current ?? undefined;
+    placesSessionTokenRef.current = null;
+    placesServiceRef.current.getDetails(
+      { placeId: sug.placeId, fields: ["address_components", "formatted_address", "geometry"], sessionToken },
+      (place, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+          applyGooglePlace(place);
+        } else {
+          // Details unavailable (quota/transient): keep the fullest picked
+          // label so the choice isn't lost, and DROP any stale coords from a
+          // previous pick — the server's text geocode must own the location.
+          setCustomerInfo({
+            ...ciRef.current,
+            address: sug.secondary ? `${sug.label}, ${sug.secondary}` : sug.label,
+            lat: null,
+            lng: null,
+          });
+        }
+      },
+    );
+  };
+
+  // Minimal combobox keyboard support for the suggestion list (both lanes):
+  // ArrowUp/Down move the highlight, Enter picks it, Escape closes. Enter
+  // without a highlight falls through untouched.
+  const onAddrKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!addrSuggestOpen || addrSuggestions.length === 0) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setAddrHighlightIdx((i) => (i + 1) % addrSuggestions.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setAddrHighlightIdx((i) => (i <= 0 ? addrSuggestions.length - 1 : i - 1));
+    } else if (e.key === "Enter") {
+      if (addrHighlightIdx >= 0 && addrHighlightIdx < addrSuggestions.length) {
+        e.preventDefault();
+        const sug = addrSuggestions[addrHighlightIdx];
+        if (sug.kind === "google") pickGoogleSuggestion(sug); else pickAddrSuggestion(sug);
+      }
+    } else if (e.key === "Escape") {
+      setAddrSuggestOpen(false);
+      setAddrHighlightIdx(-1);
+    }
   };
 
   const toggleEdit = (s: Exclude<SectionKey, null>) =>
@@ -1116,7 +1264,7 @@ export function CheckoutModal({
                             <button
                               key={a.id}
                               type="button"
-                              onClick={() => setCustomerInfo({ ...customerInfo, address: a.street, city: a.city, zip: a.zip ?? "", lat: a.lat ?? null, lng: a.lng ?? null })}
+                              onClick={() => { addrUserTypedRef.current = false; setCustomerInfo({ ...customerInfo, address: a.street, city: a.city, zip: a.zip ?? "", lat: a.lat ?? null, lng: a.lng ?? null }); }}
                               className="px-2.5 py-1 rounded-full text-xs font-medium border transition"
                               style={active
                                 ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
@@ -1129,7 +1277,7 @@ export function CheckoutModal({
                         })}
                         <button
                           type="button"
-                          onClick={() => setCustomerInfo({ ...customerInfo, address: "", city: "", zip: "", unit: "", buzzer: "", lat: null, lng: null })}
+                          onClick={() => { addrUserTypedRef.current = false; setCustomerInfo({ ...customerInfo, address: "", city: "", zip: "", unit: "", buzzer: "", lat: null, lng: null }); }}
                           className="px-2.5 py-1 rounded-full text-xs font-medium border border-dashed border-gray-300 text-gray-500 hover:border-gray-400 transition"
                         >
                           + {tc("enterNewAddress")}
@@ -1138,54 +1286,61 @@ export function CheckoutModal({
                     )}
                     {/* Street address — primary field; drives autocomplete +
                         map pin + zone resolution. Rendered only when the
-                        restaurant's form config shows it. */}
+                        restaurant's form config shows it. ONE input for both
+                        providers; the suggestion list renders IN the modal so
+                        it scrolls with the field (the Google widget's body-
+                        anchored dropdown detached / hid under the phone
+                        keyboard — Fabrizio cmrrkdif9). */}
                     {deliveryFormConfig.street.show && (
-                      googleEnabled && gmapsLoaded ? (
-                        <Autocomplete
-                          onLoad={(ac) => { autocompleteRef.current = ac; }}
-                          onPlaceChanged={handlePlaceChanged}
-                          options={autocompleteOptions}
-                        >
-                          <input
-                            id="checkout-delivery-address"
-                            type="text" placeholder={`${tc("startTypingAddress")}${deliveryFormConfig.street.required ? " *" : ""}`}
-                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                            value={customerInfo.address}
-                            onChange={e => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-                          />
-                        </Autocomplete>
-                      ) : (
-                        <div className="relative">
-                          <input
-                            id="checkout-delivery-address"
-                            type="text" autoComplete="off"
-                            placeholder={`${tc("startTypingAddress")}${deliveryFormConfig.street.required ? " *" : ""}`}
-                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
-                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                            value={customerInfo.address}
-                            onChange={e => setCustomerInfo({ ...customerInfo, address: e.target.value })}
-                            onFocus={() => { if (addrSuggestions.length) setAddrSuggestOpen(true); }}
-                            onBlur={() => setTimeout(() => setAddrSuggestOpen(false), 150)}
-                          />
-                          {addrSuggestOpen && addrSuggestions.length > 0 && (
-                            <ul className="absolute z-30 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-56 overflow-y-auto">
-                              {addrSuggestions.map((sug, i) => (
-                                <li key={`${sug.lat}-${sug.lng}-${i}`}>
-                                  <button
-                                    type="button"
-                                    onMouseDown={(e) => { e.preventDefault(); pickAddrSuggestion(sug); }}
-                                    className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 border-b border-gray-50 last:border-0"
-                                  >
-                                    <span className="font-medium text-gray-800">{sug.line1 || sug.label}</span>
-                                    {sug.city && <span className="text-gray-500"> · {sug.city}{sug.postcode ? ` ${sug.postcode}` : ""}</span>}
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      )
+                      <div className="relative">
+                        <input
+                          id="checkout-delivery-address"
+                          type="text" autoComplete="off"
+                          role="combobox" aria-autocomplete="list"
+                          aria-expanded={addrSuggestOpen && addrSuggestions.length > 0}
+                          aria-controls="checkout-addr-suggestions"
+                          placeholder={`${tc("startTypingAddress")}${deliveryFormConfig.street.required ? " *" : ""}`}
+                          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                          style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                          value={customerInfo.address}
+                          onChange={e => { addrUserTypedRef.current = true; setCustomerInfo({ ...customerInfo, address: e.target.value }); }}
+                          onKeyDown={onAddrKeyDown}
+                          onFocus={() => { if (addrSuggestions.length) setAddrSuggestOpen(true); }}
+                          onBlur={() => setTimeout(() => setAddrSuggestOpen(false), 150)}
+                        />
+                        {addrSuggestOpen && addrSuggestions.length > 0 && (
+                          <ul id="checkout-addr-suggestions" role="listbox" className="absolute z-30 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-56 overflow-y-auto">
+                            {addrSuggestions.map((sug, i) => (
+                              <li key={sug.kind === "google" ? sug.placeId : `${sug.lat}-${sug.lng}-${i}`} role="option" aria-selected={i === addrHighlightIdx}>
+                                <button
+                                  type="button"
+                                  onMouseDown={(e) => { e.preventDefault(); sug.kind === "google" ? pickGoogleSuggestion(sug) : pickAddrSuggestion(sug); }}
+                                  className={`w-full text-start px-3 py-2 text-sm border-b border-gray-50 last:border-0 ${i === addrHighlightIdx ? "bg-gray-100" : "hover:bg-gray-50"}`}
+                                >
+                                  {sug.kind === "google" ? (
+                                    <>
+                                      <span className="font-medium text-gray-800">{sug.label}</span>
+                                      {sug.secondary && <span className="text-gray-500"> · {sug.secondary}</span>}
+                                    </>
+                                  ) : (
+                                    <>
+                                      <span className="font-medium text-gray-800">{sug.line1 || sug.label}</span>
+                                      {sug.city && <span className="text-gray-500"> · {sug.city}{sug.postcode ? ` ${sug.postcode}` : ""}</span>}
+                                    </>
+                                  )}
+                                </button>
+                              </li>
+                            ))}
+                            {addrSuggestions[0]?.kind === "google" && (
+                              /* Places TOS: attribution is required when predictions
+                                 render off-map (our pin map is Leaflet/OSM). */
+                              <li aria-hidden className="px-3 py-1 text-end text-[10px] text-gray-400 select-none">
+                                powered by Google
+                              </li>
+                            )}
+                          </ul>
+                        )}
+                      </div>
                     )}
                     {(deliveryFormConfig.city.show || deliveryFormConfig.postcode.show) && (
                       <div className="grid grid-cols-2 gap-2">
@@ -1219,7 +1374,11 @@ export function CheckoutModal({
                         click to set the exact door, coords ride along with the
                         order. Google autocomplete above still fills the address. */}
                     {deliveryFormConfig.street.show && mapCenter && (
-                      <div className="rounded-lg overflow-hidden border border-gray-200">
+                      /* relative z-0 flattens Leaflet's internal z-indexes into
+                         one stacking context BELOW the suggestion list — without
+                         it the map paints over the list and steals its taps
+                         (review 2026-07-19, high). */
+                      <div className="rounded-lg overflow-hidden border border-gray-200 relative z-0">
                         <CheckoutLeafletPin
                           center={mapCenter}
                           lat={customerInfo.lat ?? null}
@@ -2184,7 +2343,10 @@ function SectionCard({
 }) {
   const tc = useTranslations("common");
   return (
-    <div className="border border-gray-200 rounded-xl bg-white overflow-hidden">
+    /* overflow-visible so the address suggestion list can extend past the
+       card edge (it was clipped mid-list on short sections — review
+       2026-07-19); the expanded body carries its own bottom rounding. */
+    <div className="border border-gray-200 rounded-xl bg-white overflow-visible">
       <div className="flex items-center gap-3 px-4 py-3">
         <span className="text-gray-400 flex-shrink-0">{icon}</span>
         <div className="flex-1 min-w-0">
@@ -2202,7 +2364,7 @@ function SectionCard({
         )}
       </div>
       {expanded && children && (
-        <div className="px-4 pb-3 border-t border-gray-100" style={{ backgroundColor: `${primary}06` }}>
+        <div className="px-4 pb-3 border-t border-gray-100 rounded-b-xl" style={{ backgroundColor: `${primary}06` }}>
           {children}
         </div>
       )}

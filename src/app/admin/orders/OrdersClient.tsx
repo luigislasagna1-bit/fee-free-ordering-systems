@@ -342,7 +342,7 @@ export function OrdersClient({
                     {order.notes && (
                       <div className="mt-3 text-sm bg-yellow-50 border border-yellow-200 rounded-lg p-3">
                         <span className="font-medium text-yellow-800">{tCommon("notes")}: </span>
-                        <span className="text-yellow-700">{order.notes}</span>
+                        <span className="text-yellow-700 whitespace-pre-line">{order.notes}</span>
                       </div>
                     )}
                   </div>

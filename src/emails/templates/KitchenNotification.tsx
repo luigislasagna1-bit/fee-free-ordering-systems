@@ -157,7 +157,12 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
 
         {customerNotes && (
           <InfoCard label="Customer notes" accent="amber">
-            {customerNotes}
+            {/* Structural <br/> split, not white-space CSS: Outlook desktop's
+                Word engine ignores white-space and would glue the delivery
+                instructions + order note onto one line. */}
+            {customerNotes.split("\n").map((ln, i) => (
+              <span key={i}>{i > 0 && <br />}{ln}</span>
+            ))}
           </InfoCard>
         )}
 

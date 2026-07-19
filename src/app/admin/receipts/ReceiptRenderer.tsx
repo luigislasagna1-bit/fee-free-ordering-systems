@@ -303,7 +303,7 @@ function renderCustomer(
     case "notes":
       if (!order.notes) return null;
       return (
-        <span style={{ display: "block", border: "1px dashed #888", padding: "4px 6px", borderRadius: 2 }}>
+        <span style={{ display: "block", border: "1px dashed #888", padding: "4px 6px", borderRadius: 2, whiteSpace: "pre-line" }}>
           <b>{t("noteLabel")}: </b>{order.notes}
         </span>
       );
@@ -432,7 +432,7 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
     case "k_notes":
       if (!order.notes) return <span style={{ color: dim, fontStyle: "italic", fontWeight: "normal", fontSize: `${s.fontSize - 2}px` }}>{t("noSpecialNotes")}</span>;
       return (
-        <span style={{ display: "block", border: `2px solid ${s.highlight ? "#fff" : "#000"}`, padding: "6px 8px" }}>
+        <span style={{ display: "block", border: `2px solid ${s.highlight ? "#fff" : "#000"}`, padding: "6px 8px", whiteSpace: "pre-line" }}>
           <span style={{ display: "block", fontWeight: "bold", marginBottom: "2px" }}>⚠ {t("kitchenNoteHeading")}:</span>
           {order.notes}
         </span>

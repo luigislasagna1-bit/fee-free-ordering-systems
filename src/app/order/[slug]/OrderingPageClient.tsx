@@ -3999,7 +3999,11 @@ export function OrderingPageClient({
     }
     // Combine delivery instructions with order notes — both flow into
     // `notes`. Delivery notes go FIRST so drivers see them at the top.
-    const deliveryNotesPart = customerInfo.deliveryNotes?.trim();
+    // DELIVERY ONLY: deliveryNotes persists across visits like the address
+    // does, so without this gate a pickup placed after an earlier delivery
+    // carried the stale "Delivery: …" text into its notes (Fabrizio report
+    // cmrrjwclc — same class as the 2026-06-13 address-on-pickup bug above).
+    const deliveryNotesPart = orderType === "delivery" ? customerInfo.deliveryNotes?.trim() : "";
     const combinedNotes = [
       deliveryNotesPart ? `Delivery: ${deliveryNotesPart}` : null,
       customerInfo.notes?.trim() || null,

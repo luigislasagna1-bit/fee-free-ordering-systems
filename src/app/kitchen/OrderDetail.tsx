@@ -521,10 +521,12 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             </Section>
           )}
 
-          {/* Notes */}
+          {/* Notes — pre-line so the "Delivery: …" instructions and the
+              customer's order note keep their line break (Fabrizio cmrrjwclc:
+              they rendered glued together on one line). */}
           {order.notes && (
             <Section title={tCommon("notes")} t={t}>
-              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-sm text-yellow-700 dark:text-yellow-300">
+              <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-sm text-yellow-700 dark:text-yellow-300 whitespace-pre-line">
                 {order.notes}
               </div>
             </Section>

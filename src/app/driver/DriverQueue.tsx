@@ -453,7 +453,7 @@ function JobCard({
           <div className="min-w-0">
             <div className="text-gray-300 font-medium">{o.customerName}</div>
             <div className="text-xs text-gray-500">{o.customerAddress}</div>
-            {o.notes && <div className="text-xs text-amber-300/80 mt-0.5">{o.notes}</div>}
+            {o.notes && <div className="text-xs text-amber-300/80 mt-0.5 whitespace-pre-line">{o.notes}</div>}
           </div>
         </div>
       </div>

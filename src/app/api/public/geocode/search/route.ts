@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { composeStreetLine } from "@/lib/delivery-address-fields";
+import { rateLimit } from "@/lib/rate-limit";
 
 /**
  * Free address autocomplete for Leaflet (non-Google) restaurants. Proxies
@@ -25,6 +26,16 @@ export async function GET(req: NextRequest) {
   const q = (req.nextUrl.searchParams.get("q") || "").trim();
   const country = (req.nextUrl.searchParams.get("country") || "").trim().toLowerCase();
   if (q.length < 3) return NextResponse.json({ suggestions: [] });
+
+  // Cost/politeness cap: this proxy is now also the fallback when Google
+  // Places is down for a Google-keyed store, so a Places outage would
+  // otherwise redirect every typing customer here at once. A human behind
+  // the client's 400ms debounce stays far under 20/min; in-memory (per
+  // isolate) is fine — it's Nominatim-politeness, not a security boundary.
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  if (!rateLimit(`geocode:${ip}`, 20, 60_000)) {
+    return NextResponse.json({ suggestions: [] }, { status: 429 });
+  }
 
   const key = `${country}|${q.toLowerCase()}`;
   const cached = CACHE.get(key);
