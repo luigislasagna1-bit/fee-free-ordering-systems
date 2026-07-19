@@ -33,16 +33,29 @@ type CustomerRow = {
   totalOrders: number;
   totalSpent: number;
   createdAt: string;
+  /** When the customer created their ACCOUNT — null for guests. Distinct
+   *  from createdAt (row creation = first order). Luigi 2026-07-19. */
+  signedUpAt: string | null;
   hasAccount: boolean;
   /** Customer.marketingConsent — drives the "Marketing" column badge
    *  and the matching CSV column. True = opted in (default-checked at
    *  checkout was left ticked, OR toggled on from /account). */
   marketingConsent: boolean;
+  /** RewardAccount.balance for this restaurant (0 = no wallet). */
+  rewardBalance: number;
 };
 
 type FilterKey = "all" | "signed_up" | "guests";
 
-export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
+export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
+  customers: CustomerRow[];
+  /** Master rewards toggle — the balance column only renders when ON
+   *  (feature-gated visibility standing rule). */
+  rewardsEnabled: boolean;
+  /** The restaurant's own label ("Luigi Bucks", "Pizza Bucks", …) — a
+   *  configured business value, shown verbatim as the column header. */
+  rewardLabel: string;
+}) {
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.customersList");
   const [filter, setFilter] = useState<FilterKey>("all");
@@ -81,7 +94,11 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
       // RFC 4180: wrap in quotes if contains comma, quote, or newline; double up any internal quotes.
       return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
     };
-    const header = ["Name", "Email", "Phone", "Total orders", "Total spent", "Signup date", "Has account", "Marketing consent"];
+    // "First order date" = row creation (the old "Signup date" column was
+    // mislabeled — it always held createdAt); "Signed up date" = the real
+    // account-creation date, blank for guests. The wallet column always
+    // exports (stable CSV shape) under the restaurant's own reward label.
+    const header = ["Name", "Email", "Phone", "Total orders", "Total spent", `${rewardLabel} balance`, "First order date", "Signed up date", "Has account", "Marketing consent"];
     const lines = [header.join(",")];
     for (const c of visible) {
       lines.push([
@@ -90,7 +107,9 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
         esc(c.phone),
         esc(c.totalOrders),
         esc(c.totalSpent.toFixed(2)),
+        esc(c.rewardBalance.toFixed(2)),
         esc(c.createdAt.slice(0, 10)),
+        esc(c.signedUpAt ? c.signedUpAt.slice(0, 10) : ""),
         esc(c.hasAccount ? "yes" : "no"),
         esc(c.marketingConsent ? "yes" : "no"),
       ].join(","));
@@ -211,6 +230,12 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                       <div className="text-right flex-shrink-0">
                         <div className="font-bold text-gray-900">{formatCurrency(c.totalSpent)}</div>
                         <div className="text-[10px] text-gray-400 uppercase tracking-wider">{t("totalSpentLabel")}</div>
+                        {rewardsEnabled && c.rewardBalance > 0 && (
+                          <>
+                            <div className="font-semibold text-violet-700 text-sm mt-1">{formatCurrency(c.rewardBalance)}</div>
+                            <div className="text-[10px] text-gray-400 uppercase tracking-wider">{rewardLabel}</div>
+                          </>
+                        )}
                       </div>
                     </div>
                     {(c.email || c.phone) && (
@@ -245,8 +270,14 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                       { key: "colPhone", label: t("colPhone") },
                       { key: "colOrders", label: t("colOrders") },
                       { key: "colTotalSpent", label: t("colTotalSpent") },
+                      // The restaurant's own wallet label ("Luigi Bucks") —
+                      // configured value, shown verbatim; column hidden when
+                      // the rewards master toggle is off.
+                      ...(rewardsEnabled ? [{ key: "colRewards", label: rewardLabel }] : []),
                       { key: "colMarketing", label: t("colMarketing") },
                       { key: "colFirstOrder", label: t("colFirstOrder") },
+                      // Reuses the already-translated "Signed up" chip string.
+                      { key: "colSignedUp", label: t("filterSignedUp") },
                       { key: "colActions", label: "" },
                     ].map((h) => (
                       <th key={h.key} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h.label}</th>
@@ -270,6 +301,15 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                       <td className="px-4 py-3 text-gray-600">{c.phone || "—"}</td>
                       <td className="px-4 py-3 text-gray-600">{c.totalOrders}</td>
                       <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(c.totalSpent)}</td>
+                      {rewardsEnabled && (
+                        <td className="px-4 py-3">
+                          {c.rewardBalance > 0 ? (
+                            <span className="font-semibold text-violet-700">{formatCurrency(c.rewardBalance)}</span>
+                          ) : (
+                            <span className="text-gray-400">—</span>
+                          )}
+                        </td>
+                      )}
                       <td className="px-4 py-3">
                         {c.marketingConsent ? (
                           <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded">
@@ -282,6 +322,7 @@ export function CustomersClient({ customers }: { customers: CustomerRow[] }) {
                         )}
                       </td>
                       <td className="px-4 py-3 text-gray-500">{formatDate(c.createdAt)}</td>
+                      <td className="px-4 py-3 text-gray-500">{c.signedUpAt ? formatDate(c.signedUpAt) : "—"}</td>
                       <td className="px-4 py-3 text-right">
                         <Link href={`/admin/customers/${c.id}`} className="text-emerald-600 hover:text-emerald-700">
                           <ChevronRight className="w-4 h-4" />
