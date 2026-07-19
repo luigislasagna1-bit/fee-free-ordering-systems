@@ -44,8 +44,8 @@
 2. **Wait for the next organic new customer** — Claude is watching prod each cycle and will report the first post-flip new-customer order either way.
 **Still your call (no rush):** the customer `eri***` ordered $12.79 from the email and got no discount — want Claude to set up a comp/credit for them? (They now count as "returning", so the promo will never fire for them on its own.)
 
-### A21. 🔷 Run one schema push WITH Claude (2 min) — two new delivery indexes
-This week's driver-app work added two indexes to `DriverAssignment` (faster restaurant Deliveries tab + settlements at scale). The push tool writes to BOTH Neon branches, so Claude's autonomous mode blocks it — it needs you present. In a live session say "run A21" and Claude runs `npx tsx scripts/push-schema-to-both.ts` while you watch. Additive-only (no data touched); until then everything works, just without the new indexes.
+### A21. ✅ DONE 2026-07-19 — delivery indexes pushed to BOTH databases (run live with Luigi)
+`push-schema-to-both.ts` ran with you present; both branches reported "in sync". Verified read-only on prod: `DeliveryAssignment_restaurantId_status_settlementId_idx` + `DeliveryAssignment_restaurantId_status_deliveredAt_idx` both exist. Additive-only, no data touched.
 
 ### A19. ✅ DONE 2026-07-16 — BOTH Android apps SUBMITTED to Play Production 🎉
 **Kitchen "Fee Free Order App"** (vc21/v3.0) submitted ~02:15, status **In review**. **Driver "Fee Free Delivery"** (vc1/v1.0, new brand icon) submitted ~11:33 after the background-location + foreground-service declarations with the demo video (unlisted YouTube). 16 KB error on Kitchen bypassed via "Proceed anyway" (real fix = **B5**). When the review emails arrive, tell Claude the outcome → if approved, the public links go out (reseller + marketing): Kitchen `https://play.google.com/store/apps/details?id=com.feefreeordering.kitchen`, Driver `...?id=com.feefreeordering.driver`. If rejected, paste the email → same-day fix.
