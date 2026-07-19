@@ -2547,6 +2547,17 @@ export function OrderingPageClient({
       setGeocodeError(null);
       return;
     }
+    // EXACT coords win (picked suggestion / dragged pin / saved address):
+    // no text re-geocode — which could fail on a perfectly good pick and
+    // flash "couldn't locate" (Luigi 2026-07-19), or contradict the pin.
+    // Manual street/city/zip edits clear lat/lng in CheckoutModal, so stale
+    // coords never shadow a corrected address.
+    if (customerInfo.lat != null && customerInfo.lng != null) {
+      setCustomerCoords({ lat: customerInfo.lat, lng: customerInfo.lng });
+      setGeocodeError(null);
+      setGeocoding(false);
+      return;
+    }
     const addressParts = [customerInfo.address, customerInfo.city, customerInfo.zip].filter(Boolean);
     if (addressParts.length === 0) {
       setCustomerCoords(null);
@@ -2561,13 +2572,14 @@ export function OrderingPageClient({
       setGeocoding(false);
       if (!coords) {
         setCustomerCoords(null);
-        setGeocodeError("We couldn't locate that address — please double-check the spelling.");
+        setGeocodeError(tT("addressLookupFailed"));
         return;
       }
       setCustomerCoords(coords);
     }, 700);
     return () => clearTimeout(handle);
-  }, [customerInfo.address, customerInfo.city, customerInfo.zip, orderType, hasZones]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [customerInfo.address, customerInfo.city, customerInfo.zip, customerInfo.lat, customerInfo.lng, orderType, hasZones]);
 
   const resolvedZone = hasZones && customerCoords
     ? findZoneForPoint(deliveryZones, restaurant.lat, restaurant.lng, customerCoords.lat, customerCoords.lng)
@@ -6880,6 +6892,7 @@ export function OrderingPageClient({
           mapProvider={restaurant.mapProvider ?? "leaflet"}
           googleMapsApiKey={restaurant.googleMapsApiKey ?? null}
           geocodeCountry={(restaurant as any).country ?? null}
+          restaurantCity={(restaurant as any).city ?? null}
           restaurantLat={restaurant.lat ?? null}
           restaurantLng={restaurant.lng ?? null}
           cateringMode={scheduleRequired}

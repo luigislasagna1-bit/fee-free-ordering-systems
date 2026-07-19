@@ -277,6 +277,10 @@ interface Props {
    *  restaurant's area so nearby addresses rank first (Luigi 2026-06-13). */
   restaurantLat?: number | null;
   restaurantLng?: number | null;
+  /** Restaurant's town — anchors a parallel "<query> <town>" prediction so
+   *  the store's OWN town surfaces even when 5 neighboring towns share the
+   *  street name (Luigi 2026-07-19: Varedo lost to Milan/Desio/Limbiate). */
+  restaurantCity?: string | null;
   onClose: () => void;
   /** Empty the whole cart from the checkout screen (Luigi 2026-06-30). */
   onClearCart?: () => void;
@@ -425,7 +429,7 @@ export function CheckoutModal({
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
   hasZones, geocoding, geocodeError, resolvedZone, distanceFromStoreKm = null, acceptOutsideZoneOrders = false,
-  googleMapsApiKey, geocodeCountry, restaurantLat, restaurantLng,
+  googleMapsApiKey, geocodeCountry, restaurantLat, restaurantLng, restaurantCity,
   deliveryFormConfig,
   reservationContext = null,
   onClose,
@@ -550,18 +554,40 @@ export function CheckoutModal({
             types: ["address"],
           };
           if (geocodeCountry) req.componentRestrictions = { country: geocodeCountry.toLowerCase() };
-          // Bias toward the restaurant's area so nearby addresses rank first
-          // (Luigi 2026-06-13: "shows far areas until I type the city"). A
-          // ~±0.5° box (≈50 km); soft bias, not a hard restrict.
+          // Bias toward the restaurant (Luigi 2026-06-13 + 2026-07-19). A
+          // tight CIRCLE (location+radius), not a 0.5° box: measured on prod,
+          // the box barely moved rankings (Torino 125 km away still ranked)
+          // while a 5 km circle surfaces the immediate neighbor towns.
+          // `origin` adds distance_meters so we can sort nearest-first.
           if (restaurantLat != null && restaurantLng != null) {
-            req.locationBias = {
-              north: restaurantLat + 0.5, south: restaurantLat - 0.5,
-              east: restaurantLng + 0.5, west: restaurantLng - 0.5,
-            };
+            req.location = new google.maps.LatLng(restaurantLat, restaurantLng);
+            req.radius = 5_000;
+            req.origin = new google.maps.LatLng(restaurantLat, restaurantLng);
           }
-          const res = await svcGetPredictions(placesAutoSvcRef.current, req);
+          // Parallel town-anchored query: every Lombard town has a "Via
+          // Mazzini", and prominence outranks proximity even inside the
+          // circle — the store's OWN town only reliably surfaces by naming
+          // it. TOWN-FIRST ("Varedo Via Gi"): measured on prod, a trailing
+          // town returns nothing for short partials while town-first
+          // completes them (and full streets + house numbers). Same session
+          // token, so predictions stay per-session billed. Its failure must
+          // NOT flip googleDeniedRef (pre-caught to []).
+          const town = (restaurantCity || "").trim();
+          const townQuery = town && !q.toLowerCase().includes(town.toLowerCase())
+            ? svcGetPredictions(placesAutoSvcRef.current, { ...req, input: `${town} ${q}` }).catch(() => [])
+            : Promise.resolve([] as google.maps.places.AutocompletePrediction[]);
+          const [near, inTown] = await Promise.all([
+            svcGetPredictions(placesAutoSvcRef.current, req),
+            townQuery,
+          ]);
           if (ctrl.signal.aborted) return;
-          showList(res.map((p): AddrSuggestion => ({
+          // Town hits lead, then everything nearest-first; dedupe on place_id.
+          const seenIds = new Set<string>();
+          const merged = [...inTown, ...near].filter((p) => !seenIds.has(p.place_id) && !!seenIds.add(p.place_id));
+          merged.sort((a, b) =>
+            ((a as { distance_meters?: number }).distance_meters ?? Infinity)
+            - ((b as { distance_meters?: number }).distance_meters ?? Infinity));
+          showList(merged.slice(0, 6).map((p): AddrSuggestion => ({
             kind: "google",
             label: p.structured_formatting?.main_text || p.description,
             secondary: p.structured_formatting?.secondary_text || "",
@@ -587,7 +613,7 @@ export function CheckoutModal({
     addrDebounceRef.current = id;
     return () => { window.clearTimeout(id); ctrl.abort(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customerInfo.address, googleEnabled, gmapsLoaded, orderType, geocodeCountry, restaurantLat, restaurantLng]);
+  }, [customerInfo.address, googleEnabled, gmapsLoaded, orderType, geocodeCountry, restaurantLat, restaurantLng, restaurantCity]);
 
   /** Shared pick teardown: cancel any pending debounce query (its leftover
    *  timer would re-query the abandoned text and reopen a stale list), close,
@@ -1303,7 +1329,13 @@ export function CheckoutModal({
                           className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                           style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                           value={customerInfo.address}
-                          onChange={e => { addrUserTypedRef.current = true; setCustomerInfo({ ...customerInfo, address: e.target.value }); }}
+                          onChange={e => {
+                            addrUserTypedRef.current = true;
+                            // Manual typing invalidates picked/dragged coords —
+                            // zone + payload must fall back to the text geocode,
+                            // not a stale pin (Luigi 2026-07-19).
+                            setCustomerInfo({ ...customerInfo, address: e.target.value, lat: null, lng: null });
+                          }}
                           onKeyDown={onAddrKeyDown}
                           onFocus={() => { if (addrSuggestions.length) setAddrSuggestOpen(true); }}
                           onBlur={() => setTimeout(() => setAddrSuggestOpen(false), 150)}
@@ -1351,7 +1383,7 @@ export function CheckoutModal({
                             className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                             style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                             value={customerInfo.city}
-                            onChange={e => setCustomerInfo({ ...customerInfo, city: e.target.value })}
+                            onChange={e => setCustomerInfo({ ...customerInfo, city: e.target.value, lat: null, lng: null })}
                           />
                         )}
                         {deliveryFormConfig.postcode.show && (
@@ -1361,7 +1393,7 @@ export function CheckoutModal({
                             className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
                             style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                             value={customerInfo.zip}
-                            onChange={e => setCustomerInfo({ ...customerInfo, zip: e.target.value })}
+                            onChange={e => setCustomerInfo({ ...customerInfo, zip: e.target.value, lat: null, lng: null })}
                           />
                         )}
                       </div>
