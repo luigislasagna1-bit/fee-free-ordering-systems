@@ -5,7 +5,7 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-18 by Claude (🚨 A20 is the one that matters: the Kickstarter FIRSTBUY 10% promo has been sitting DEACTIVATED since June 20 while ~3,600 invite emails promised it — root cause found, guards shipped, one toggle-flip from you reactivates it AND resumes the paused email drip. Also: "Mark all read" built for /reseller-reports; **driver v1.1 Phases 3–8 ALL SHIPPED** — Phase 8 (Drivers tab + rate-a-driver, phone visible per your call) deployed `c73ead43`, 13/13 E2E checks pass; A21 = one schema push to run together.)
+**Last updated:** 2026-07-19 by Claude (✅ **A20 confirmed working**: you flipped First Buy ON on the 18th, and Claude preview-proved the live 10% — a fresh identity on your store now gets FIRSTBUY auto-applied ($0.60 off a $5.99 test cart, real prod API). One optional last step in A20: a small fresh-identity test order from you, or Claude just watches for the next organic new customer. Everything else unchanged: driver v1.1 Phases 3–8 all shipped/deployed `c73ead43`; A21 = one schema push to run together; awaiting Apple ×1 + Google ×2 review emails.)
 **Previous update:** 2026-07-17 by Claude (🎉 driver iOS SUBMITTED to App Review 1:22 AM — Waiting for Review; prod test deliveries cleaned; v1.1 Phase 2 deployed. Earlier: Android submission prep — BOTH signed RELEASE .aab files built + cryptographically proven release-signed [Kitchen vc21/v3.0 + Driver vc1/v1.0, same upload key]; Play org conversion confirmed = 20-tester gate GONE; wrote Play listing copy for both apps; generated 4 Play screenshots from the local demo; rewrote IOS_APP_STORE_SUBMISSION.md for the org + added the driver app. Apple org still Pending — decisions logged in A17.)
 
 ---
@@ -36,13 +36,13 @@
 
 ## A. DO NOW — this week, in priority order
 
-### A20. 🚨 FIRST — turn the Kickstarter "First Buy" 10% promo back ON (2 clicks, after Claude's deploy)
-**What happened:** your Invite Prospects emails promise "10% off your first order — code FIRSTBUY", but the promo row behind it has been **deactivated since June 20** (flipped off through the Promotions editor, which the Kickstarter page didn't know about — the Kickstarter toggle kept showing ON). Every order from the campaign (~3,600 emails sent) got **no discount** — that's exactly what you reported on the 17th.
-**Do this once the deploy is live (Claude will confirm):**
-1. Open **`/admin/kickstarter`** → the First Buy toggle will now show **OFF**. That's correct — it now shows the truth.
-2. **Flip it ON.** That reactivates the 10% promo immediately AND automatically resumes the paused invite-email drip (Claude added a guard: invites stop sending whenever the promo is off, so the remaining ~11,979 emails can't promise a dead discount).
-3. Then tell Claude "A20 flipped" → Claude places a fresh-identity test order on your live store and proves the 10% lands on a real charged order.
-**Your call (no rush):** the customer `eri***` ordered $12.79 from the email and got no discount — want Claude to set up a comp/credit for them? (They now count as "returning", so the promo will never fire for them on its own.)
+### A20. ✅ FLIPPED 2026-07-18 — Kickstarter "First Buy" 10% promo is back ON, preview-proven live
+**You flipped it 2026-07-18 ~06:05 UTC** — toggle-truth sync confirmed on prod: `firstBuyPromoEnabled=true`, promo row `isActive=true`, and the promo is back in the active pool. The invite-email drip auto-resumed with it.
+**Proof so far (2026-07-19, no charge involved):** Claude called the live store's promo-preview API (`/api/public/apply-promos`, the exact engine the charge path uses) with a brand-new identity → response applied **"First-time customer special" / FIRSTBUY, 10%, discount $0.60 on a $5.99 cart** with `newCustomerOfferUnavailable=false`. The 12 pre-flip orders correctly show no discount (promo was off then).
+**Last step — see the 10% on a real charged order.** Claude can't place one autonomously (card entry is off-limits for it). Either:
+1. **You place a small test order** with a fresh email+phone (never used to order before) on your live store — you should see "10% off" in the cart, and Claude then verifies `promoDiscount>0` + FIRSTBUY in `appliedPromos` on the charged row; or
+2. **Wait for the next organic new customer** — Claude is watching prod each cycle and will report the first post-flip new-customer order either way.
+**Still your call (no rush):** the customer `eri***` ordered $12.79 from the email and got no discount — want Claude to set up a comp/credit for them? (They now count as "returning", so the promo will never fire for them on its own.)
 
 ### A21. 🔷 Run one schema push WITH Claude (2 min) — two new delivery indexes
 This week's driver-app work added two indexes to `DriverAssignment` (faster restaurant Deliveries tab + settlements at scale). The push tool writes to BOTH Neon branches, so Claude's autonomous mode blocks it — it needs you present. In a live session say "run A21" and Claude runs `npx tsx scripts/push-schema-to-both.ts` while you watch. Additive-only (no data touched); until then everything works, just without the new indexes.
