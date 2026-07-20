@@ -4242,9 +4242,27 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     // (verified: 100dvh rendered at 1.5× the screen), so the root height is
     // compensated with calc(100dvh / zoom) — the app then fits the screen
     // exactly and the inner lists just scroll more.
+    // iOS EXCEPTION (Fabrizio's iPad video, 2026-07-20): iOS WebKit's `zoom`
+    // scales the BOXES but not the GLYPHS — his frames measure rows 1.5×
+    // taller with byte-identical text size ("le proporzioni del testo non
+    // cambiano"). The iOS shell therefore uses a paint-level transform
+    // (glyphs provably scale on every engine) with width/height compensated
+    // so the scaled canvas exactly fills the screen; fixed-position children
+    // (modals, nav) anchor to the compensated root box, which IS the visual
+    // viewport after scaling. Android/web keep the hardware-verified `zoom`
+    // path byte-identical — DO NOT unify these branches.
     <div
       className={`h-[100dvh] flex flex-col overflow-hidden ${t.base}`}
-      style={kitchenZoom !== 1 ? { zoom: kitchenZoom, height: `calc(100dvh / ${kitchenZoom})` } : undefined}
+      style={kitchenZoom !== 1
+        ? (isIOSCapacitorShell()
+            ? {
+                transform: `scale(${kitchenZoom})`,
+                transformOrigin: "top left",
+                width: `calc(100% / ${kitchenZoom})`,
+                height: `calc(100dvh / ${kitchenZoom})`,
+              }
+            : { zoom: kitchenZoom, height: `calc(100dvh / ${kitchenZoom})` })
+        : undefined}
     >
       {/* iOS "tap to enable sound" gate. iOS blocks audio until a user gesture,
           so an order arriving before staff tap anything would be SILENT. Tapping
