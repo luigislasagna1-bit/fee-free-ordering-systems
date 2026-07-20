@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Správa rezervací a nastavení rezervací",
       "tabReservations": "Rezervace",
       "tabSettings": "Nastavení",
-      "depositsSoonDesc": "Vyberte zálohu při rezervaci a omezte neúčast hostů. Brzy jako placený doplněk."
+      "depositsSoonDesc": "Vyberte zálohu při rezervaci a omezte neúčast hostů. Brzy jako placený doplněk.",
+      "status": {
+        "pending": "Čeká",
+        "confirmed": "Potvrzená",
+        "seated": "U stolu",
+        "completed": "Dokončená",
+        "cancelled": "Zrušená",
+        "no_show": "Nedostavil se"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

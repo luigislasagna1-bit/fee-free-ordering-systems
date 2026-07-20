@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Pārvaldīt rezervācijas un to iestatījumus",
       "tabReservations": "Rezervācijas",
       "tabSettings": "Iestatījumi",
-      "depositsSoonDesc": "Iekasējiet depozītu rezervēšanas laikā, lai samazinātu neierašanos. Drīzumā kā maksas papildinājums."
+      "depositsSoonDesc": "Iekasējiet depozītu rezervēšanas laikā, lai samazinātu neierašanos. Drīzumā kā maksas papildinājums.",
+      "status": {
+        "pending": "Gaida",
+        "confirmed": "Apstiprināta",
+        "seated": "Pie galda",
+        "completed": "Pabeigta",
+        "cancelled": "Atcelta",
+        "no_show": "Neieradās"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilots",

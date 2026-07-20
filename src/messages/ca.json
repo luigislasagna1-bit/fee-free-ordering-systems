@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Gestiona les reserves i la configuració",
       "tabReservations": "Reserves",
       "tabSettings": "Configuració",
-      "depositsSoonDesc": "Cobra un dipòsit en reservar per reduir les absències. Aviat com a complement de pagament."
+      "depositsSoonDesc": "Cobra un dipòsit en reservar per reduir les absències. Aviat com a complement de pagament.",
+      "status": {
+        "pending": "Pendent",
+        "confirmed": "Confirmada",
+        "seated": "A taula",
+        "completed": "Completada",
+        "cancelled": "Cancel·lada",
+        "no_show": "No presentada"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

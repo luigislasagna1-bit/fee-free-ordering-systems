@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Gestiona reservas y su configuración",
       "tabReservations": "Reservas",
       "tabSettings": "Configuración",
-      "depositsSoonDesc": "Cobra un depósito al reservar para reducir las ausencias. Próximamente como complemento de pago."
+      "depositsSoonDesc": "Cobra un depósito al reservar para reducir las ausencias. Próximamente como complemento de pago.",
+      "status": {
+        "pending": "Pendiente",
+        "confirmed": "Confirmada",
+        "seated": "En mesa",
+        "completed": "Completada",
+        "cancelled": "Cancelada",
+        "no_show": "No presentada"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

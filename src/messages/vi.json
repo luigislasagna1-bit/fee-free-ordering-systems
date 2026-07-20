@@ -2498,7 +2498,15 @@
       "pageSubtitle": "Quản lý đặt chỗ và cài đặt đặt bàn",
       "tabReservations": "Đặt bàn",
       "tabSettings": "Cài đặt",
-      "depositsSoonDesc": "Thu đặt cọc khi khách đặt bàn để giảm tình trạng không đến. Sắp ra mắt dưới dạng tiện ích trả phí."
+      "depositsSoonDesc": "Thu đặt cọc khi khách đặt bàn để giảm tình trạng không đến. Sắp ra mắt dưới dạng tiện ích trả phí.",
+      "status": {
+        "pending": "Chờ xác nhận",
+        "confirmed": "Đã xác nhận",
+        "seated": "Đã vào bàn",
+        "completed": "Hoàn tất",
+        "cancelled": "Đã hủy",
+        "no_show": "Không đến"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

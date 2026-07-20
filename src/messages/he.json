@@ -2555,7 +2555,15 @@
       "pageSubtitle": "נהל הזמנות והגדרות הזמנות שולחן",
       "tabReservations": "הזמנות",
       "tabSettings": "הגדרות",
-      "depositsSoonDesc": "גבה פיקדון בעת ההזמנה כדי לצמצם אי-הגעות. בקרוב כתוסף בתשלום."
+      "depositsSoonDesc": "גבה פיקדון בעת ההזמנה כדי לצמצם אי-הגעות. בקרוב כתוסף בתשלום.",
+      "status": {
+        "pending": "ממתין",
+        "confirmed": "מאושר",
+        "seated": "הושבו",
+        "completed": "הושלם",
+        "cancelled": "בוטל",
+        "no_show": "לא הגיע"
+      }
     },
     "autopilotClient": {
       "pageTitle": "אוטופיילוט",

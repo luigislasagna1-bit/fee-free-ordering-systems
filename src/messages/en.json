@@ -2977,7 +2977,15 @@
       "pageSubtitle": "Manage bookings and reservation settings",
       "tabReservations": "Reservations",
       "tabSettings": "Settings",
-      "depositsSoonDesc": "Collect a deposit when guests book to cut down on no-shows. Coming soon as a paid add-on."
+      "depositsSoonDesc": "Collect a deposit when guests book to cut down on no-shows. Coming soon as a paid add-on.",
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "seated": "Seated",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "no_show": "No-show"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

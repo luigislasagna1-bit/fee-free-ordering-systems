@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Halda broneeringuid ja seadeid",
       "tabReservations": "Broneeringud",
       "tabSettings": "Seaded",
-      "depositsSoonDesc": "Võtke broneerimisel tagatisraha, et vähendada kohale ilmumata jätmisi. Peagi tasulise lisamoodulina."
+      "depositsSoonDesc": "Võtke broneerimisel tagatisraha, et vähendada kohale ilmumata jätmisi. Peagi tasulise lisamoodulina.",
+      "status": {
+        "pending": "Ootel",
+        "confirmed": "Kinnitatud",
+        "seated": "Lauas",
+        "completed": "Lõpetatud",
+        "cancelled": "Tühistatud",
+        "no_show": "Ei ilmunud"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopiloot",

@@ -298,7 +298,7 @@ export function ItemGroupPicker({
         onScroll={(e) => e.stopPropagation()}
       >
         {cats.length === 0 ? (
-          <div className="px-3 py-4 text-sm text-gray-400 text-center">No categories found</div>
+          <div className="px-3 py-4 text-sm text-gray-400 text-center">{t("noCategoriesYet")}</div>
         ) : visibleCats.length === 0 ? (
           <div className="px-3 py-4 text-sm text-gray-400 text-center">{t("noMatchesFor", { query: query.trim() })}</div>
         ) : (

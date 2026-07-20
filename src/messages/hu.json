@@ -2498,7 +2498,15 @@
       "pageSubtitle": "Foglalások és foglalási beállítások kezelése",
       "tabReservations": "Foglalások",
       "tabSettings": "Beállítások",
-      "depositsSoonDesc": "Kérjen előleget foglaláskor a meg nem jelenések csökkentésére. Hamarosan fizetős kiegészítőként."
+      "depositsSoonDesc": "Kérjen előleget foglaláskor a meg nem jelenések csökkentésére. Hamarosan fizetős kiegészítőként.",
+      "status": {
+        "pending": "Függőben",
+        "confirmed": "Megerősítve",
+        "seated": "Asztalnál",
+        "completed": "Lezárva",
+        "cancelled": "Lemondva",
+        "no_show": "Nem jelent meg"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

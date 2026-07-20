@@ -2555,7 +2555,15 @@
       "pageSubtitle": "إدارة الحجوزات وإعداداتها",
       "tabReservations": "الحجوزات",
       "tabSettings": "الإعدادات",
-      "depositsSoonDesc": "حصّل عربونًا عند الحجز لتقليل حالات عدم الحضور. قريبًا كإضافة مدفوعة."
+      "depositsSoonDesc": "حصّل عربونًا عند الحجز لتقليل حالات عدم الحضور. قريبًا كإضافة مدفوعة.",
+      "status": {
+        "pending": "قيد الانتظار",
+        "confirmed": "مؤكد",
+        "seated": "تم الجلوس",
+        "completed": "مكتمل",
+        "cancelled": "ملغى",
+        "no_show": "لم يحضر"
+      }
     },
     "autopilotClient": {
       "pageTitle": "الطيار الآلي",

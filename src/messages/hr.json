@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Upravljajte rezervacijama i postavkama rezervacija",
       "tabReservations": "Rezervacije",
       "tabSettings": "Postavke",
-      "depositsSoonDesc": "Naplatite polog pri rezervaciji kako biste smanjili nedolaske. Uskoro kao plaćeni dodatak."
+      "depositsSoonDesc": "Naplatite polog pri rezervaciji kako biste smanjili nedolaske. Uskoro kao plaćeni dodatak.",
+      "status": {
+        "pending": "Na čekanju",
+        "confirmed": "Potvrđena",
+        "seated": "Za stolom",
+        "completed": "Završena",
+        "cancelled": "Otkazana",
+        "no_show": "Nedolazak"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

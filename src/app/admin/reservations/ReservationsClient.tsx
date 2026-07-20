@@ -37,10 +37,8 @@ const STATUS_COLORS: Record<string, string> = {
   no_show:   "bg-emerald-100 text-emerald-700 border-emerald-200",
 };
 
-const STATUS_LABELS: Record<string, string> = {
-  pending: "Pending", confirmed: "Confirmed", seated: "Seated",
-  completed: "Completed", cancelled: "Cancelled", no_show: "No-show",
-};
+/** Statuses render via t(`status.${key}`) — labels live in admin.reservationsList.status. */
+const STATUS_KEYS = ["pending", "confirmed", "seated", "completed", "cancelled", "no_show"] as const;
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -167,6 +165,10 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
   const [detailId, setDetailId] = useState<string | null>(null);
   const [staffNoteEditing, setStaffNoteEditing] = useState<{ id: string; note: string } | null>(null);
 
+  // Translated status label with a raw-value fallback for unknown statuses.
+  const statusLabel = (s: string) =>
+    (STATUS_KEYS as readonly string[]).includes(s) ? t(`status.${s}`) : s;
+
   const load = useCallback(async () => {
     setLoading(true);
     const params = new URLSearchParams();
@@ -185,7 +187,7 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
     });
-    toast.success(t("toastStatusUpdated", { status: STATUS_LABELS[status] ?? status }));
+    toast.success(t("toastStatusUpdated", { status: statusLabel(status) }));
     load();
   };
 
@@ -231,7 +233,7 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
         escCsv(r.partySize),
         escCsv(`${r.date} ${formatTime(r.time, hoursFormat)}`),
         escCsv(r.table ? `${r.table.name}${r.table.section ? ` (${r.table.section})` : ""}` : ""),
-        escCsv(STATUS_LABELS[r.status] ?? r.status),
+        escCsv(statusLabel(r.status)),
         escCsv(r.notes),
       ].join(","));
     }
@@ -261,7 +263,7 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
           <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
             value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
             <option value="all">{t("filterAllStatuses")}</option>
-            {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+            {STATUS_KEYS.map(k => <option key={k} value={k}>{statusLabel(k)}</option>)}
           </select>
           <div className="relative">
             <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
@@ -298,7 +300,7 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-gray-900">{r.customerName}</span>
                       <span className={`text-xs px-2 py-0.5 rounded-full border font-medium ${STATUS_COLORS[r.status] ?? "bg-gray-100 text-gray-600"}`}>
-                        {STATUS_LABELS[r.status] ?? r.status}
+                        {statusLabel(r.status)}
                       </span>
                       <span className="text-xs text-gray-400 font-mono">#{r.confirmationCode}</span>
                     </div>
@@ -375,7 +377,7 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
                 <button key={s} onClick={() => updateStatus(detail.id, s)}
                   disabled={detail.status === s}
                   className={`px-2 py-1.5 rounded-lg text-xs font-medium border transition disabled:opacity-40 ${detail.status === s ? STATUS_COLORS[s] : "border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50"}`}>
-                  {STATUS_LABELS[s]}
+                  {statusLabel(s)}
                 </button>
               ))}
             </div>

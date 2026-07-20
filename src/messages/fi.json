@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Hallinnoi varauksia ja varausasetuksia",
       "tabReservations": "Varaukset",
       "tabSettings": "Asetukset",
-      "depositsSoonDesc": "Peri varausmaksu varauksen yhteydessä vähentääksesi peruuttamatta jättämisiä. Tulossa pian maksullisena lisäosana."
+      "depositsSoonDesc": "Peri varausmaksu varauksen yhteydessä vähentääksesi peruuttamatta jättämisiä. Tulossa pian maksullisena lisäosana.",
+      "status": {
+        "pending": "Odottaa",
+        "confirmed": "Vahvistettu",
+        "seated": "Pöydässä",
+        "completed": "Valmis",
+        "cancelled": "Peruttu",
+        "no_show": "Ei saapunut"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilotti",

@@ -2555,7 +2555,15 @@
       "pageSubtitle": "予約と予約設定を管理",
       "tabReservations": "予約",
       "tabSettings": "設定",
-      "depositsSoonDesc": "予約時にデポジットを受け取り、ノーショーを減らします。有料アドオンとして近日提供予定。"
+      "depositsSoonDesc": "予約時にデポジットを受け取り、ノーショーを減らします。有料アドオンとして近日提供予定。",
+      "status": {
+        "pending": "確認待ち",
+        "confirmed": "確認済み",
+        "seated": "着席済み",
+        "completed": "完了",
+        "cancelled": "キャンセル済み",
+        "no_show": "無断キャンセル"
+      }
     },
     "autopilotClient": {
       "pageTitle": "自動化",

@@ -3272,7 +3272,15 @@
       "pageSubtitle": "Tvarkykite rezervacijas ir rezervacijų nustatymus",
       "tabReservations": "Rezervacijos",
       "tabSettings": "Nustatymai",
-      "depositsSoonDesc": "Imkite užstatą rezervuojant, kad sumažintumėte neatvykimus. Netrukus kaip mokamas priedas."
+      "depositsSoonDesc": "Imkite užstatą rezervuojant, kad sumažintumėte neatvykimus. Netrukus kaip mokamas priedas.",
+      "status": {
+        "pending": "Laukiama",
+        "confirmed": "Patvirtinta",
+        "seated": "Prie stalo",
+        "completed": "Užbaigta",
+        "cancelled": "Atšaukta",
+        "no_show": "Neatvyko"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilotas",

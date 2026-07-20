@@ -2555,7 +2555,15 @@
       "pageSubtitle": "管理预订及相关设置",
       "tabReservations": "预订",
       "tabSettings": "设置",
-      "depositsSoonDesc": "在客人预订时收取押金，减少爽约。即将作为付费附加功能推出。"
+      "depositsSoonDesc": "在客人预订时收取押金，减少爽约。即将作为付费附加功能推出。",
+      "status": {
+        "pending": "待确认",
+        "confirmed": "已确认",
+        "seated": "已入座",
+        "completed": "已完成",
+        "cancelled": "已取消",
+        "no_show": "未到店"
+      }
     },
     "autopilotClient": {
       "pageTitle": "自动营销",

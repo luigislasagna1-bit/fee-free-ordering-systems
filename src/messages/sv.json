@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Hantera bokningar och reservationsinställningar",
       "tabReservations": "Reservationer",
       "tabSettings": "Inställningar",
-      "depositsSoonDesc": "Ta en deposition vid bokning för att minska uteblivna besök. Kommer snart som ett betaltillägg."
+      "depositsSoonDesc": "Ta en deposition vid bokning för att minska uteblivna besök. Kommer snart som ett betaltillägg.",
+      "status": {
+        "pending": "Väntande",
+        "confirmed": "Bekräftad",
+        "seated": "Vid bordet",
+        "completed": "Avslutad",
+        "cancelled": "Avbokad",
+        "no_show": "Utebliven"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

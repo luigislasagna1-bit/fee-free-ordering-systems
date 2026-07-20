@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Kelola pemesanan dan pengaturan reservasi",
       "tabReservations": "Reservasi",
       "tabSettings": "Pengaturan",
-      "depositsSoonDesc": "Tarik deposit saat tamu memesan untuk mengurangi no-show. Segera hadir sebagai add-on berbayar."
+      "depositsSoonDesc": "Tarik deposit saat tamu memesan untuk mengurangi no-show. Segera hadir sebagai add-on berbayar.",
+      "status": {
+        "pending": "Menunggu",
+        "confirmed": "Dikonfirmasi",
+        "seated": "Sudah duduk",
+        "completed": "Selesai",
+        "cancelled": "Dibatalkan",
+        "no_show": "Tidak hadir"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

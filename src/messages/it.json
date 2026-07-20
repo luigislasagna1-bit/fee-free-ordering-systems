@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Gestisci prenotazioni e impostazioni",
       "tabReservations": "Prenotazioni",
       "tabSettings": "Impostazioni",
-      "depositsSoonDesc": "Incassa una caparra al momento della prenotazione per ridurre le mancate presentazioni. Presto come componente aggiuntivo a pagamento."
+      "depositsSoonDesc": "Incassa una caparra al momento della prenotazione per ridurre le mancate presentazioni. Presto come componente aggiuntivo a pagamento.",
+      "status": {
+        "pending": "In attesa",
+        "confirmed": "Confermata",
+        "seated": "Al tavolo",
+        "completed": "Completata",
+        "cancelled": "Annullata",
+        "no_show": "No-show"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

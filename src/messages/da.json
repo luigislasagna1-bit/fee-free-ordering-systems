@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Administrer bookinger og reservationsindstillinger",
       "tabReservations": "Reservationer",
       "tabSettings": "Indstillinger",
-      "depositsSoonDesc": "Opkræv et depositum ved booking for at reducere udeblivelser. Kommer snart som et betalt tilføjelsesprogram."
+      "depositsSoonDesc": "Opkræv et depositum ved booking for at reducere udeblivelser. Kommer snart som et betalt tilføjelsesprogram.",
+      "status": {
+        "pending": "Afventer",
+        "confirmed": "Bekræftet",
+        "seated": "Ved bordet",
+        "completed": "Afsluttet",
+        "cancelled": "Annulleret",
+        "no_show": "Udeblevet"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

@@ -2498,7 +2498,15 @@
       "pageSubtitle": "Rezervasyonları ve rezervasyon ayarlarını yönetin",
       "tabReservations": "Rezervasyonlar",
       "tabSettings": "Ayarlar",
-      "depositsSoonDesc": "Gelmeme durumlarını azaltmak için rezervasyonda kapora alın. Yakında ücretli eklenti olarak."
+      "depositsSoonDesc": "Gelmeme durumlarını azaltmak için rezervasyonda kapora alın. Yakında ücretli eklenti olarak.",
+      "status": {
+        "pending": "Beklemede",
+        "confirmed": "Onaylandı",
+        "seated": "Masada",
+        "completed": "Tamamlandı",
+        "cancelled": "İptal edildi",
+        "no_show": "Gelmedi"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Otomatik Pilot",

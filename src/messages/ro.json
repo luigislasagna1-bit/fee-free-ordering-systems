@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Gestionează rezervările și setările de rezervare",
       "tabReservations": "Rezervări",
       "tabSettings": "Setări",
-      "depositsSoonDesc": "Încasează un avans la rezervare pentru a reduce neprezentările. În curând ca supliment plătit."
+      "depositsSoonDesc": "Încasează un avans la rezervare pentru a reduce neprezentările. În curând ca supliment plătit.",
+      "status": {
+        "pending": "În așteptare",
+        "confirmed": "Confirmată",
+        "seated": "La masă",
+        "completed": "Finalizată",
+        "cancelled": "Anulată",
+        "no_show": "Neprezentare"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

@@ -3272,7 +3272,15 @@
       "pageSubtitle": "Spravujte rezervácie a nastavenia rezervácií",
       "tabReservations": "Rezervácie",
       "tabSettings": "Nastavenia",
-      "depositsSoonDesc": "Vyberte zálohu pri rezervácii a obmedzte neúčasť hostí. Čoskoro ako platený doplnok."
+      "depositsSoonDesc": "Vyberte zálohu pri rezervácii a obmedzte neúčasť hostí. Čoskoro ako platený doplnok.",
+      "status": {
+        "pending": "Čaká",
+        "confirmed": "Potvrdená",
+        "seated": "Pri stole",
+        "completed": "Dokončená",
+        "cancelled": "Zrušená",
+        "no_show": "Nedostavil sa"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

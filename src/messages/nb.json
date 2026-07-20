@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Administrer bestillinger og reservasjonsinnstillinger",
       "tabReservations": "Reservasjoner",
       "tabSettings": "Innstillinger",
-      "depositsSoonDesc": "Ta et depositum ved booking for å redusere no-shows. Kommer snart som et betalt tillegg."
+      "depositsSoonDesc": "Ta et depositum ved booking for å redusere no-shows. Kommer snart som et betalt tillegg.",
+      "status": {
+        "pending": "Venter",
+        "confirmed": "Bekreftet",
+        "seated": "Ved bordet",
+        "completed": "Fullført",
+        "cancelled": "Kansellert",
+        "no_show": "Ikke møtt"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

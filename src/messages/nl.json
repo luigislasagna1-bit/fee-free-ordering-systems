@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Boekingen en reserveringsinstellingen beheren",
       "tabReservations": "Reserveringen",
       "tabSettings": "Instellingen",
-      "depositsSoonDesc": "Vraag een aanbetaling bij het boeken om no-shows te verminderen. Binnenkort als betaalde add-on."
+      "depositsSoonDesc": "Vraag een aanbetaling bij het boeken om no-shows te verminderen. Binnenkort als betaalde add-on.",
+      "status": {
+        "pending": "In afwachting",
+        "confirmed": "Bevestigd",
+        "seated": "Aan tafel",
+        "completed": "Afgerond",
+        "cancelled": "Geannuleerd",
+        "no_show": "Niet verschenen"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

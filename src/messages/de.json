@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Buchungen und Reservierungseinstellungen verwalten",
       "tabReservations": "Reservierungen",
       "tabSettings": "Einstellungen",
-      "depositsSoonDesc": "Erheben Sie eine Anzahlung bei der Buchung, um No-Shows zu reduzieren. Bald als kostenpflichtiges Add-on verfügbar."
+      "depositsSoonDesc": "Erheben Sie eine Anzahlung bei der Buchung, um No-Shows zu reduzieren. Bald als kostenpflichtiges Add-on verfügbar.",
+      "status": {
+        "pending": "Ausstehend",
+        "confirmed": "Bestätigt",
+        "seated": "Am Tisch",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert",
+        "no_show": "Nicht erschienen"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

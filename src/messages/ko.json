@@ -2555,7 +2555,15 @@
       "pageSubtitle": "예약 및 예약 설정 관리",
       "tabReservations": "예약",
       "tabSettings": "설정",
-      "depositsSoonDesc": "예약 시 보증금을 받아 노쇼를 줄이세요. 유료 애드온으로 곧 제공됩니다."
+      "depositsSoonDesc": "예약 시 보증금을 받아 노쇼를 줄이세요. 유료 애드온으로 곧 제공됩니다.",
+      "status": {
+        "pending": "대기 중",
+        "confirmed": "확정됨",
+        "seated": "착석 완료",
+        "completed": "완료됨",
+        "cancelled": "취소됨",
+        "no_show": "노쇼"
+      }
     },
     "autopilotClient": {
       "pageTitle": "자동화",

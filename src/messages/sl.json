@@ -2555,7 +2555,15 @@
       "pageSubtitle": "Upravljajte rezervacije in nastavitve rezervacij",
       "tabReservations": "Rezervacije",
       "tabSettings": "Nastavitve",
-      "depositsSoonDesc": "Zaračunajte polog ob rezervaciji za zmanjšanje neprihodov. Kmalu kot plačljiv dodatek."
+      "depositsSoonDesc": "Zaračunajte polog ob rezervaciji za zmanjšanje neprihodov. Kmalu kot plačljiv dodatek.",
+      "status": {
+        "pending": "V čakanju",
+        "confirmed": "Potrjena",
+        "seated": "Za mizo",
+        "completed": "Zaključena",
+        "cancelled": "Preklicana",
+        "no_show": "Neprihod"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
