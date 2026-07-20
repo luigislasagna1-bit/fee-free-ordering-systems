@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Stranke ne morejo porabiti {label} za izključene izdelke ali kategorije (npr. darilne kartice — dobroimetje naj ne kupuje dobroimetja). Blagajna samodejno zniža uporabni znesek {label}. Ločeno od izključitve pridobivanja zgoraj in izključitve popustov na strani Promocije.",
       "redeemExcludeDesc": "Izberite kategorije ali izdelke, ki jih stranke ne morejo plačati z {label}.",
       "redeemExcludeOn": "Plačljivo",
-      "redeemExcludeOff": "Ni plačljivo"
+      "redeemExcludeOff": "Ni plačljivo",
+      "groupRatesTitle": "Stopnje zaslužka za VIP skupine",
+      "groupRatesSubtitle": "Člani skupine z določeno stopnjo zaslužijo ta odstotek namesto osnovne stopnje.",
+      "groupRatesExplainer": "Če je nekdo v več skupinah, velja najvišja stopnja. Osebna stopnja, nastavljena na strani stranke, prevlada nad vsako skupinsko stopnjo.",
+      "groupRateCardTitle": "Stopnja zaslužka za to skupino",
+      "groupRateCardDesc": "Člani te skupine pri vsakem naročilu zaslužijo ta odstotek v {label} namesto osnovne stopnje.",
+      "personalRateTitle": "Stopnja zaslužka po meri",
+      "personalRateDesc": "Ta stranka pri vsakem naročilu zasluži ta odstotek v {label} — namesto osnovne stopnje in vsake stopnje VIP skupine.",
+      "ratePlaceholder": "Osnovna stopnja",
+      "rateClear": "Odstrani stopnjo po meri"
     },
     "imageCrop": {
       "title": "Prilagodite fotografijo",

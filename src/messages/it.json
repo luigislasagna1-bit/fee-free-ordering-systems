@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "I clienti non possono spendere {label} su articoli o categorie esclusi (es. buoni regalo — il credito non deve comprare credito). Il checkout riduce automaticamente l'importo di {label} applicabile. Indipendente dall'esclusione dei guadagni sopra e dall'esclusione sconti della pagina Promozioni.",
       "redeemExcludeDesc": "Scegli categorie o articoli che i clienti non possono pagare con {label}.",
       "redeemExcludeOn": "Pagabile",
-      "redeemExcludeOff": "Non pagabile"
+      "redeemExcludeOff": "Non pagabile",
+      "groupRatesTitle": "Tassi di guadagno dei gruppi VIP",
+      "groupRatesSubtitle": "I membri di un gruppo con un tasso guadagnano quella percentuale invece del tasso base.",
+      "groupRatesExplainer": "Se qualcuno appartiene a più gruppi, vince il tasso più alto. Un tasso personale impostato nella pagina del cliente prevale su qualsiasi tasso di gruppo.",
+      "groupRateCardTitle": "Tasso di guadagno per questo gruppo",
+      "groupRateCardDesc": "I membri di questo gruppo guadagnano questa percentuale in {label} su ogni ordine, invece del tasso base.",
+      "personalRateTitle": "Tasso di guadagno personalizzato",
+      "personalRateDesc": "Questo cliente guadagna questa percentuale in {label} su ogni ordine — al posto del tasso base e di qualsiasi tasso di gruppo VIP.",
+      "ratePlaceholder": "Tasso base",
+      "rateClear": "Rimuovi il tasso personalizzato"
     },
     "imageCrop": {
       "title": "Regola la foto",

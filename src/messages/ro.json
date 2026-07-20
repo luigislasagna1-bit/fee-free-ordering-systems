@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Clienții nu pot cheltui {label} pe articolele sau categoriile excluse (ex. carduri cadou — creditul nu trebuie să cumpere credit). Checkout-ul reduce automat suma de {label} aplicabilă. Separată de excluderea acumulării de mai sus și de excluderea reducerilor din pagina Promoții.",
       "redeemExcludeDesc": "Alegeți categoriile sau articolele pe care clienții nu le pot plăti cu {label}.",
       "redeemExcludeOn": "Plătibil",
-      "redeemExcludeOff": "Nu se plătește"
+      "redeemExcludeOff": "Nu se plătește",
+      "groupRatesTitle": "Rate de câștig pentru grupurile VIP",
+      "groupRatesSubtitle": "Membrii unui grup cu o rată câștigă acel procent în locul ratei de bază.",
+      "groupRatesExplainer": "Dacă cineva face parte din mai multe grupuri, câștigă rata cea mai mare. O rată personală setată pe pagina clientului are prioritate față de orice rată de grup.",
+      "groupRateCardTitle": "Rata de câștig pentru acest grup",
+      "groupRateCardDesc": "Membrii acestui grup câștigă acest procent în {label} la fiecare comandă, în locul ratei de bază.",
+      "personalRateTitle": "Rată de câștig personalizată",
+      "personalRateDesc": "Acest client câștigă acest procent în {label} la fiecare comandă — în locul ratei de bază și al oricărei rate de grup VIP.",
+      "ratePlaceholder": "Rata de bază",
+      "rateClear": "Elimină rata personalizată"
     },
     "imageCrop": {
       "title": "Ajustați fotografia",

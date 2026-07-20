@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Zákazníci nemôžu míňať {label} na vylúčené položky alebo kategórie (napr. darčekové karty — kredit nemá kupovať kredit). Pokladňa automaticky zníži uplatniteľnú sumu {label}. Nezávislé od vylúčenia získavania vyššie aj od vylúčenia zliav na stránke Akcie.",
       "redeemExcludeDesc": "Vyberte kategórie alebo položky, ktoré zákazníci nemôžu platiť {label}.",
       "redeemExcludeOn": "Možno platiť",
-      "redeemExcludeOff": "Nemožno platiť"
+      "redeemExcludeOff": "Nemožno platiť",
+      "groupRatesTitle": "Sadzby získavania pre VIP skupiny",
+      "groupRatesSubtitle": "Členovia skupiny so sadzbou získavajú toto percento namiesto základnej sadzby.",
+      "groupRatesExplainer": "Ak je niekto vo viacerých skupinách, platí najvyššia sadzba. Osobná sadzba nastavená na stránke zákazníka má prednosť pred akoukoľvek skupinovou sadzbou.",
+      "groupRateCardTitle": "Sadzba získavania pre túto skupinu",
+      "groupRateCardDesc": "Členovia tejto skupiny získavajú toto percento v {label} z každej objednávky namiesto základnej sadzby.",
+      "personalRateTitle": "Vlastná sadzba získavania",
+      "personalRateDesc": "Tento zákazník získava toto percento v {label} z každej objednávky — namiesto základnej sadzby aj akejkoľvek sadzby VIP skupiny.",
+      "ratePlaceholder": "Základná sadzba",
+      "rateClear": "Odstrániť vlastnú sadzbu"
     },
     "imageCrop": {
       "title": "Upravte fotografiu",

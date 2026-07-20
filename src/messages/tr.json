@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Müşteriler hariç tutulan ürün veya kategorilerde {label} harcayamaz (ör. hediye kartları — bakiye bakiye satın almamalı). Ödeme adımı uygulanabilir {label} tutarını otomatik düşürür. Yukarıdaki kazanma hariç tutmasından ve Promosyonlar sayfasındaki indirim hariç tutmasından bağımsızdır.",
       "redeemExcludeDesc": "Müşterilerin {label} ile ödeyemeyeceği kategorileri veya ürünleri seçin.",
       "redeemExcludeOn": "Ödenebilir",
-      "redeemExcludeOff": "Ödenemez"
+      "redeemExcludeOff": "Ödenemez",
+      "groupRatesTitle": "VIP grubu kazanım oranları",
+      "groupRatesSubtitle": "Oranı olan bir grubun üyeleri, taban oran yerine bu yüzdeyi kazanır.",
+      "groupRatesExplainer": "Biri birden fazla gruptaysa en yüksek oran geçerlidir. Müşterinin kendi sayfasında ayarlanan kişisel oran her grup oranının önüne geçer.",
+      "groupRateCardTitle": "Bu grup için kazanım oranı",
+      "groupRateCardDesc": "Bu grubun üyeleri her siparişte taban oran yerine bu yüzdeyi {label} olarak kazanır.",
+      "personalRateTitle": "Özel kazanım oranı",
+      "personalRateDesc": "Bu müşteri her siparişte bu yüzdeyi {label} olarak kazanır — taban oranın ve tüm VIP grubu oranlarının yerine geçer.",
+      "ratePlaceholder": "Taban oran",
+      "rateClear": "Özel oranı kaldır"
     },
     "imageCrop": {
       "title": "Fotoğrafınızı ayarlayın",

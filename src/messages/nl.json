@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Klanten kunnen geen {label} uitgeven aan uitgesloten items of categorieën (bijv. cadeaubonnen — tegoed hoort geen tegoed te kopen). De checkout verlaagt automatisch het toepasbare {label}-bedrag. Los van de verdien-uitsluiting hierboven en de kortingsuitsluiting op de Promotiepagina.",
       "redeemExcludeDesc": "Kies categorieën of items die klanten niet met {label} kunnen betalen.",
       "redeemExcludeOn": "Betaalbaar",
-      "redeemExcludeOff": "Niet betaalbaar"
+      "redeemExcludeOff": "Niet betaalbaar",
+      "groupRatesTitle": "Spaarpercentages per VIP-groep",
+      "groupRatesSubtitle": "Leden van een groep met een percentage sparen dat percentage in plaats van het basispercentage.",
+      "groupRatesExplainer": "Zit iemand in meerdere groepen, dan geldt het hoogste percentage. Een persoonlijk percentage op de klantpagina gaat boven elk groepspercentage.",
+      "groupRateCardTitle": "Spaarpercentage voor deze groep",
+      "groupRateCardDesc": "Leden van deze groep sparen dit percentage aan {label} bij elke bestelling, in plaats van het basispercentage.",
+      "personalRateTitle": "Aangepast spaarpercentage",
+      "personalRateDesc": "Deze klant spaart dit percentage aan {label} bij elke bestelling — in plaats van het basispercentage en elk VIP-groepspercentage.",
+      "ratePlaceholder": "Basispercentage",
+      "rateClear": "Aangepast percentage verwijderen"
     },
     "imageCrop": {
       "title": "Pas je foto aan",

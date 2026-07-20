@@ -1611,6 +1611,11 @@ model Customer {
   /// guests must not silently accrue a wallet that signing up later hands
   /// over retroactively (Luigi 2026-07-09). Null = still a guest row.
   signedUpAt             DateTime?
+  /// Personal standing earn-rate override, as a PERCENT of the earn basis
+  /// (12 = 12% back) regardless of the restaurant's earn MODE. Beats any
+  /// group rate; null = fall through to groups → restaurant base. Set from
+  /// the admin customer page. Luigi 2026-07-19.
+  rewardEarnPercent      Float?
   emailVerifiedAt        DateTime?
   emailVerifyToken       String?
   passwordResetToken     String?
@@ -2093,6 +2098,13 @@ model CustomerGroup {
   /// vs "VIP Pizza Club"). Null → the restaurant-level Restaurant.vipMemberLabel
   /// default. Used in the VIP email/special copy for this group. Luigi 2026-06-30.
   memberLabel  String?
+  /// Standing earn-rate override for this group's members, as a PERCENT of the
+  /// earn basis (10 = 10% back) regardless of the restaurant's earn MODE
+  /// (per_dollar converts: pct/100 per $1). Resolution: a customer's personal
+  /// Customer.rewardEarnPercent wins, else the HIGHEST rate among their groups,
+  /// else the restaurant base rate. Null = no override. Luigi 2026-07-19
+  /// ("VIP members earn double").
+  rewardEarnPercent Float?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

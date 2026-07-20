@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Kunder kan inte spendera {label} på undantagna varor eller kategorier (t.ex. presentkort — saldo ska inte köpa saldo). Kassan sänker automatiskt beloppet {label} som kan användas. Separat från intjänings-undantaget ovan och rabatt-undantaget på kampanjsidan.",
       "redeemExcludeDesc": "Välj kategorier eller varor som kunder inte kan betala med {label}.",
       "redeemExcludeOn": "Betalbar",
-      "redeemExcludeOff": "Ej betalbar"
+      "redeemExcludeOff": "Ej betalbar",
+      "groupRatesTitle": "Intjäningsnivåer för VIP-grupper",
+      "groupRatesSubtitle": "Medlemmar i en grupp med en nivå tjänar den procenten i stället för basnivån.",
+      "groupRatesExplainer": "Om någon är med i flera grupper gäller den högsta nivån. En personlig nivå på kundens sida går före alla gruppnivåer.",
+      "groupRateCardTitle": "Intjäningsnivå för den här gruppen",
+      "groupRateCardDesc": "Medlemmar i den här gruppen tjänar den här procenten i {label} på varje beställning, i stället för basnivån.",
+      "personalRateTitle": "Anpassad intjäningsnivå",
+      "personalRateDesc": "Den här kunden tjänar den här procenten i {label} på varje beställning — i stället för basnivån och alla VIP-gruppnivåer.",
+      "ratePlaceholder": "Basnivå",
+      "rateClear": "Ta bort anpassad nivå"
     },
     "imageCrop": {
       "title": "Justera ditt foto",

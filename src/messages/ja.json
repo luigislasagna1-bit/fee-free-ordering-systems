@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "対象外の商品やカテゴリ（ギフトカードなど — 残高で残高を買わせない）には{label}を使えません。チェックアウトで利用可能な{label}額が自動的に下がります。上の獲得除外やプロモーションページの割引除外とは別の設定です。",
       "redeemExcludeDesc": "顧客が{label}で支払えないカテゴリや商品を選びます。",
       "redeemExcludeOn": "支払い可",
-      "redeemExcludeOff": "支払い不可"
+      "redeemExcludeOff": "支払い不可",
+      "groupRatesTitle": "VIPグループの還元率",
+      "groupRatesSubtitle": "率が設定されたグループのメンバーは、基本率の代わりにその率で還元を受け取ります。",
+      "groupRatesExplainer": "複数のグループに属している場合は、最も高い率が適用されます。顧客ページで設定した個人別の率は、どのグループの率よりも優先されます。",
+      "groupRateCardTitle": "このグループの還元率",
+      "groupRateCardDesc": "このグループのメンバーは、基本率の代わりに毎回の注文でこの率の{label}を受け取ります。",
+      "personalRateTitle": "カスタム還元率",
+      "personalRateDesc": "この顧客は毎回の注文でこの率の{label}を受け取ります — 基本率やVIPグループの率よりも優先されます。",
+      "ratePlaceholder": "基本率",
+      "rateClear": "カスタム率を解除"
     },
     "imageCrop": {
       "title": "写真を調整",

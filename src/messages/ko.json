@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "제외된 항목이나 카테고리(예: 기프트 카드 — 크레딧으로 크레딧을 사면 안 됨)에는 {label}을(를) 사용할 수 없습니다. 결제 시 적용 가능한 {label} 금액이 자동으로 줄어듭니다. 위의 적립 제외 및 프로모션 페이지의 할인 제외와는 별개입니다.",
       "redeemExcludeDesc": "고객이 {label}(으)로 결제할 수 없는 카테고리나 항목을 선택하세요.",
       "redeemExcludeOn": "결제 가능",
-      "redeemExcludeOff": "결제 불가"
+      "redeemExcludeOff": "결제 불가",
+      "groupRatesTitle": "VIP 그룹 적립률",
+      "groupRatesSubtitle": "적립률이 설정된 그룹의 구성원은 기본 적립률 대신 해당 비율로 적립합니다.",
+      "groupRatesExplainer": "여러 그룹에 속한 경우 가장 높은 적립률이 적용됩니다. 고객 페이지에서 설정한 개인 적립률은 모든 그룹 적립률보다 우선합니다.",
+      "groupRateCardTitle": "이 그룹의 적립률",
+      "groupRateCardDesc": "이 그룹의 구성원은 기본 적립률 대신 모든 주문에서 이 비율만큼 {label}을(를) 적립합니다.",
+      "personalRateTitle": "맞춤 적립률",
+      "personalRateDesc": "이 고객은 모든 주문에서 이 비율만큼 {label}을(를) 적립합니다 — 기본 적립률과 모든 VIP 그룹 적립률보다 우선합니다.",
+      "ratePlaceholder": "기본 적립률",
+      "rateClear": "맞춤 적립률 지우기"
     },
     "imageCrop": {
       "title": "사진 조정",

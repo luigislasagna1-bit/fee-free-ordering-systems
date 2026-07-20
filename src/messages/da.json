@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Kunder kan ikke bruge {label} på undtagne varer eller kategorier (f.eks. gavekort — kredit skal ikke købe kredit). Kassen sænker automatisk det anvendelige {label}-beløb. Adskilt fra optjenings-undtagelsen ovenfor og rabat-undtagelsen på kampagnesiden.",
       "redeemExcludeDesc": "Vælg kategorier eller varer, som kunder ikke kan betale med {label}.",
       "redeemExcludeOn": "Kan betales",
-      "redeemExcludeOff": "Kan ikke betales"
+      "redeemExcludeOff": "Kan ikke betales",
+      "groupRatesTitle": "Optjeningssatser for VIP-grupper",
+      "groupRatesSubtitle": "Medlemmer af en gruppe med en sats optjener den procent i stedet for basissatsen.",
+      "groupRatesExplainer": "Er nogen med i flere grupper, gælder den højeste sats. En personlig sats på kundens side går forud for enhver gruppesats.",
+      "groupRateCardTitle": "Optjeningssats for denne gruppe",
+      "groupRateCardDesc": "Medlemmer af denne gruppe optjener denne procent i {label} på hver ordre i stedet for basissatsen.",
+      "personalRateTitle": "Tilpasset optjeningssats",
+      "personalRateDesc": "Denne kunde optjener denne procent i {label} på hver ordre — i stedet for basissatsen og enhver VIP-gruppesats.",
+      "ratePlaceholder": "Basissats",
+      "rateClear": "Fjern tilpasset sats"
     },
     "imageCrop": {
       "title": "Tilpas dit foto",

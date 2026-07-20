@@ -10,7 +10,7 @@ import { getSessionUser } from "@/lib/session";
 async function ownGroup(id: string, restaurantId: string) {
   const g = await prisma.customerGroup.findUnique({
     where: { id },
-    select: { id: true, restaurantId: true, name: true, description: true, memberLabel: true, createdAt: true, updatedAt: true },
+    select: { id: true, restaurantId: true, name: true, description: true, memberLabel: true, rewardEarnPercent: true, createdAt: true, updatedAt: true },
   });
   if (!g || g.restaurantId !== restaurantId) return null;
   return g;
@@ -86,7 +86,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 
   let body: any;
   try { body = await req.json(); } catch { return NextResponse.json({ error: "Invalid JSON" }, { status: 400 }); }
-  const data: { name?: string; description?: string | null; memberLabel?: string | null } = {};
+  const data: { name?: string; description?: string | null; memberLabel?: string | null; rewardEarnPercent?: number | null } = {};
   if (typeof body.name === "string") {
     const name = body.name.trim().slice(0, 80);
     if (!name) return NextResponse.json({ error: "Group name is required" }, { status: 400 });
@@ -95,6 +95,20 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   if (body.description !== undefined) data.description = body.description?.toString().slice(0, 500) || null;
   // Per-group "what do you call your members" override (null → restaurant default).
   if (body.memberLabel !== undefined) data.memberLabel = body.memberLabel?.toString().trim().slice(0, 40) || null;
+  // Standing earn-rate override for this group's members (percent of the earn
+  // basis; 10 = 10% back). null OR ≤ 0 CLEARS (review 2026-07-19: clamping 0
+  // up to 0.01% silently downgraded members below the base rate); a positive
+  // finite number is clamped to ≤100 and rounded to 2dp; anything else is a
+  // 400 — never a silent no-op behind a "Saved" toast.
+  if (body.rewardEarnPercent !== undefined) {
+    if (body.rewardEarnPercent === null || (typeof body.rewardEarnPercent === "number" && Number.isFinite(body.rewardEarnPercent) && body.rewardEarnPercent <= 0)) {
+      data.rewardEarnPercent = null;
+    } else if (typeof body.rewardEarnPercent === "number" && Number.isFinite(body.rewardEarnPercent)) {
+      data.rewardEarnPercent = Math.round(Math.min(100, body.rewardEarnPercent) * 100) / 100;
+    } else {
+      return NextResponse.json({ error: "rewardEarnPercent must be a number or null" }, { status: 400 });
+    }
+  }
 
   try {
     await prisma.customerGroup.update({ where: { id }, data });

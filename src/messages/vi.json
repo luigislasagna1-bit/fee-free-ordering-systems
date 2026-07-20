@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Khách không thể dùng {label} cho các mặt hàng hoặc danh mục bị loại trừ (vd. thẻ quà tặng — tín dụng không nên mua tín dụng). Thanh toán tự động giảm số {label} có thể áp dụng. Tách biệt với loại trừ tích lũy ở trên và loại trừ giảm giá ở trang Khuyến mãi.",
       "redeemExcludeDesc": "Chọn danh mục hoặc mặt hàng khách không thể thanh toán bằng {label}.",
       "redeemExcludeOn": "Thanh toán được",
-      "redeemExcludeOff": "Không thanh toán được"
+      "redeemExcludeOff": "Không thanh toán được",
+      "groupRatesTitle": "Tỷ lệ tích lũy theo nhóm VIP",
+      "groupRatesSubtitle": "Thành viên của nhóm có tỷ lệ sẽ tích lũy theo tỷ lệ đó thay vì tỷ lệ cơ bản.",
+      "groupRatesExplainer": "Nếu một người thuộc nhiều nhóm, tỷ lệ cao nhất sẽ được áp dụng. Tỷ lệ cá nhân đặt trên trang của khách hàng sẽ được ưu tiên hơn mọi tỷ lệ nhóm.",
+      "groupRateCardTitle": "Tỷ lệ tích lũy cho nhóm này",
+      "groupRateCardDesc": "Thành viên của nhóm này tích lũy phần trăm này bằng {label} trên mỗi đơn hàng, thay vì tỷ lệ cơ bản.",
+      "personalRateTitle": "Tỷ lệ tích lũy tùy chỉnh",
+      "personalRateDesc": "Khách hàng này tích lũy phần trăm này bằng {label} trên mỗi đơn hàng — thay cho tỷ lệ cơ bản và mọi tỷ lệ nhóm VIP.",
+      "ratePlaceholder": "Tỷ lệ cơ bản",
+      "rateClear": "Xóa tỷ lệ tùy chỉnh"
     },
     "imageCrop": {
       "title": "Điều chỉnh ảnh của bạn",

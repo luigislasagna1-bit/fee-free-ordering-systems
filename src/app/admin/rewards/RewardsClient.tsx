@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Gift, ToggleLeft, ToggleRight, Loader2, CreditCard } from "lucide-react";
+import { Gift, ToggleLeft, ToggleRight, Loader2, CreditCard, Users, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
@@ -22,6 +22,14 @@ interface Initial {
   rewardSignupBannerEnabled: boolean;
 }
 
+/** A VIP group row for the per-group earn-rate card. */
+export interface GroupRateRow {
+  id: string;
+  name: string;
+  rewardEarnPercent: number | null;
+  memberCount: number;
+}
+
 /**
  * Reward Dollars (store-credit wallet) settings. A restaurant turns it on, names
  * it (default "Reward Dollars", renameable), and configures how customers EARN
@@ -30,13 +38,48 @@ interface Initial {
  * with numeric inputs). Persists via PATCH /api/admin/rewards/settings.
  * Luigi 2026-06-27.
  */
-export function RewardsClient({ currency, initial }: { currency: string; initial: Initial }) {
+export function RewardsClient({ currency, initial, groups = [] }: { currency: string; initial: Initial; groups?: GroupRateRow[] }) {
   const t = useTranslations("admin.rewards");
   const tToasts = useTranslations("admin.toasts");
+  // Reused strings: VIP Groups' member-count plural + generic "Save".
+  const tGroups = useTranslations("admin.customerGroups");
 
   const [s, setS] = useState<Initial>(initial);
   const [saving, setSaving] = useState(false);
   const set = <K extends keyof Initial>(k: K, v: Initial[K]) => setS((p) => ({ ...p, [k]: v }));
+
+  // ── Per-VIP-group earn-rate overrides ("VIP members earn double") ──────────
+  // Draft strings so a half-typed value never fights the number parser; each
+  // row saves on its own via PATCH /api/admin/customer-groups/[id] (the page's
+  // master Save only covers the restaurant-level settings).
+  const [groupRates, setGroupRates] = useState(() =>
+    groups.map((g) => ({ ...g, draft: g.rewardEarnPercent != null ? String(g.rewardEarnPercent) : "", savingRate: false })),
+  );
+  const setGroupRow = (id: string, patch: Partial<(typeof groupRates)[number]>) =>
+    setGroupRates((rows) => rows.map((r) => (r.id === id ? { ...r, ...patch } : r)));
+
+  // Mirror of the server clamp (0.01–100, 2dp) so what's shown after save is
+  // exactly what was stored.
+  // ≤0 CLEARS (never a 0.01% downgrade below base); else ≤100 at 2dp —
+  // mirrors the server rule exactly (review 2026-07-19).
+  const clampPct = (n: number) => (n <= 0 ? null : Math.round(Math.min(100, n) * 100) / 100);
+
+  const saveGroupRate = async (id: string, value: number | null) => {
+    setGroupRow(id, { savingRate: true });
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rewardEarnPercent: value }),
+      });
+      if (!res.ok) throw new Error();
+      setGroupRow(id, { savingRate: false, rewardEarnPercent: value, draft: value != null ? String(value) : "" });
+      toast.success(tToasts("saved"));
+    } catch {
+      setGroupRow(id, { savingRate: false });
+      toast.error(tToasts("saveFailed"));
+    }
+  };
 
   // Plural shown live in the on-page examples so the owner sees their name in use.
   const pluralPreview = s.rewardLabelPlural.trim() || t("defaultPlural");
@@ -156,6 +199,74 @@ export function RewardsClient({ currency, initial }: { currency: string; initial
               </div>
             )}
           </div>
+
+          {/* VIP group earn rates — per-group overrides of the base earn rate
+              (e.g. "VIP members earn double"). Personal > highest group > base;
+              resolution lives in reward-earn-rate.ts. Luigi 2026-07-19.
+              Gated on the EARNING master toggle too — with earning off the
+              ledger never pays these, so the editor must not pretend
+              otherwise (review 2026-07-19). */}
+          {s.rewardEarnEnabled && groupRates.length > 0 && (
+            <div className="rounded-2xl border border-gray-200 bg-white p-5 space-y-3">
+              <div className="flex items-center gap-1.5">
+                <Users className="w-5 h-5 text-emerald-600" />
+                <h2 className="font-semibold text-gray-900">{t("groupRatesTitle")}</h2>
+                <HelpTip text={t("groupRatesExplainer")} />
+              </div>
+              <p className="text-sm text-gray-500">{t("groupRatesSubtitle")}</p>
+              <div className="divide-y divide-gray-100">
+                {groupRates.map((g) => {
+                  const trimmed = g.draft.trim();
+                  const parsed = trimmed === "" ? null : parseFloat(trimmed);
+                  const valid = parsed === null || Number.isFinite(parsed);
+                  const dirty = valid && (parsed === null ? g.rewardEarnPercent != null : parsed !== g.rewardEarnPercent);
+                  return (
+                    <div key={g.id} className="flex items-center justify-between gap-3 flex-wrap py-2">
+                      <div className="min-w-0">
+                        <span className="text-sm font-medium text-gray-800">{g.name}</span>
+                        <span className="text-xs text-gray-400 ml-2">{tGroups("memberCount", { count: g.memberCount })}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <div className="inline-flex items-stretch rounded-lg border border-gray-300 overflow-hidden">
+                          <input
+                            type="number" min={0.01} max={100} step="0.01"
+                            value={g.draft}
+                            placeholder={t("ratePlaceholder")}
+                            onChange={(e) => setGroupRow(g.id, { draft: e.target.value })}
+                            className="w-24 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+                          />
+                          <span className="px-2.5 flex items-center bg-gray-50 text-gray-500 text-sm border-l border-gray-300">%</span>
+                        </div>
+                        {dirty && (
+                          <button
+                            type="button"
+                            onClick={() => saveGroupRate(g.id, parsed === null ? null : clampPct(parsed))}
+                            disabled={g.savingRate}
+                            className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-bold text-white hover:bg-emerald-700 disabled:opacity-50"
+                          >
+                            {g.savingRate && <Loader2 className="w-4 h-4 animate-spin" />}
+                            {tGroups("memberLabelSave")}
+                          </button>
+                        )}
+                        {!dirty && g.rewardEarnPercent != null && (
+                          <button
+                            type="button"
+                            onClick={() => saveGroupRate(g.id, null)}
+                            disabled={g.savingRate}
+                            title={t("rateClear")}
+                            aria-label={t("rateClear")}
+                            className="p-1.5 text-gray-400 hover:text-red-500 rounded disabled:opacity-50"
+                          >
+                            {g.savingRate ? <Loader2 className="w-4 h-4 animate-spin" /> : <X className="w-4 h-4" />}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Ways to earn — configurable rules/campaigns on top of the base rate */}
           <EarnRulesEditor currency={currency} rewardLabelPlural={pluralPreview} signupBonus={s.rewardSignupBonus} />

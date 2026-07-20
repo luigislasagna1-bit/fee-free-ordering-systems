@@ -1711,7 +1711,9 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
         </div>
 
         {/* ── Sticky footer ── */}
-        <div className="flex-shrink-0 border-t border-gray-100 p-4 bg-white safe-bottom">
+        {/* No .safe-bottom — it zeroes the bottom padding on desktop (flush-
+            footer bug); calc() composes the inset instead. Luigi 2026-07-19. */}
+        <div className="flex-shrink-0 border-t border-gray-100 p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] bg-white">
           {!canAdd && (
             <button
               type="button"

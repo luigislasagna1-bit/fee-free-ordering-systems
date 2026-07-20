@@ -5,26 +5,36 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil, Loader2, Search, Download } from "lucide-react";
+import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil, Loader2, Search, Download, Percent, X } from "lucide-react";
 import { HelpTip } from "@/components/HelpTip";
 import { escCsv } from "@/lib/csv";
 import { ScheduleEditor } from "../ScheduleEditor";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
-type Group = { id: string; name: string; description: string | null; memberLabel: string | null };
+type Group = { id: string; name: string; description: string | null; memberLabel: string | null; rewardEarnPercent: number | null };
 type Promo = { id: string; name: string; promotionType: string; isActive: boolean; displayMode: string; couponCode: string | null; ruleConfig: any; minimumOrder: number };
 type Special = Promo & { linkId: string };
 type Pickable = Promo & { groupCount: number };
 
 export default function GroupDetailClient({ group, initialMembers, initialSpecials, initialPickable, currency, rewardsEnabled, rewardLabelPlural }: {
   group: Group; initialMembers: Member[]; initialSpecials: Special[]; initialPickable: Pickable[]; currency: string;
-  rewardsEnabled: boolean; rewardLabelPlural: string;
+  /** Already earn-gated by the page: rewardsEnabled && rewardEarnEnabled —
+   *  with earning off the ledger never pays a group rate, so the card must
+   *  not render (review 2026-07-19). */
+  rewardsEnabled: boolean;
+  /** RAW nullable label — the translated default resolves HERE, not as a
+   *  hardcoded-English page fallback (review 2026-07-19). */
+  rewardLabelPlural: string | null;
 }) {
   const t = useTranslations("admin.customerGroups");
   // Reused strings: Customers list search placeholder + Export CSV label,
   // menu editor's generic "No matches for {query}".
   const tCust = useTranslations("admin.customersList");
   const tMenu = useTranslations("admin.menuEditor");
+  // Earn-rate card strings live with the rest of the rewards copy; toasts are
+  // the shared admin saved/saveFailed pair.
+  const tRewards = useTranslations("admin.rewards");
+  const tToasts = useTranslations("admin.toasts");
   const router = useRouter();
   const [members, setMembers] = useState<Member[]>(initialMembers);
   const [specials, setSpecials] = useState<Special[]>(initialSpecials);
@@ -53,6 +63,33 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
       setEditing(false);
       router.refresh();
     } finally { setSavingInfo(false); }
+  }
+
+  // ── Group earn-rate override ("VIP members earn double") — % of the earn
+  //    basis for this group's members instead of the restaurant base rate.
+  //    Personal > highest group > base (resolution in reward-earn-rate.ts). ───
+  const [ratePct, setRatePct] = useState<number | null>(group.rewardEarnPercent);
+  const [rateDraft, setRateDraft] = useState(group.rewardEarnPercent != null ? String(group.rewardEarnPercent) : "");
+  const [savingRate, setSavingRate] = useState(false);
+  // Mirror of the server clamp (≤0 clears, else ≤100 at 2dp) so the input
+  // shows what stuck — a typed 0 must CLEAR, never become a 0.01% downgrade.
+  const clampPct = (n: number) => (n <= 0 ? null : Math.round(Math.min(100, n) * 100) / 100);
+  const rateParsed = rateDraft.trim() === "" ? null : parseFloat(rateDraft);
+  const rateValid = rateParsed === null || Number.isFinite(rateParsed);
+  const rateDirty = rateValid && (rateParsed === null ? ratePct != null : rateParsed !== ratePct);
+  async function saveRate(value: number | null) {
+    setSavingRate(true);
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${group.id}`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rewardEarnPercent: value }),
+      });
+      if (!res.ok) { toast.error(tToasts("saveFailed")); return; }
+      setRatePct(value);
+      setRateDraft(value != null ? String(value) : "");
+      toast.success(tToasts("saved"));
+      router.refresh();
+    } finally { setSavingRate(false); }
   }
 
   // ── Add members (paste emails — auto-links to existing accounts) ──────────
@@ -359,8 +396,54 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
         </Link>
       </section>
 
+      {/* ── Earn-rate override for this group's members ──────────────────── */}
+      {rewardsEnabled && (
+        <section className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mt-5">
+          <div className="flex items-center gap-2 mb-1">
+            <Percent className="w-5 h-5 text-emerald-600" />
+            <h2 className="font-bold text-gray-900">{tRewards("groupRateCardTitle")}</h2>
+            <HelpTip text={tRewards("groupRatesExplainer")} />
+          </div>
+          <p className="text-sm text-gray-500 mb-3">{tRewards("groupRateCardDesc", { label: rewardLabelPlural?.trim() || tRewards("defaultPlural") })}</p>
+          <div className="flex items-center gap-2 flex-wrap">
+            <div className="inline-flex items-stretch rounded-lg border border-gray-300 overflow-hidden">
+              <input
+                type="number" min={0.01} max={100} step="0.01"
+                value={rateDraft}
+                placeholder={tRewards("ratePlaceholder")}
+                onChange={(e) => setRateDraft(e.target.value)}
+                className="w-24 px-3 py-2 text-sm text-gray-900 focus:outline-none"
+              />
+              <span className="px-2.5 flex items-center bg-gray-50 text-gray-500 text-sm border-l border-gray-300">%</span>
+            </div>
+            {rateDirty && (
+              <button
+                type="button"
+                onClick={() => saveRate(rateParsed === null ? null : clampPct(rateParsed))}
+                disabled={savingRate}
+                className="inline-flex items-center gap-1.5 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-emerald-600 transition disabled:opacity-50"
+              >
+                {savingRate ? <Loader2 className="w-4 h-4 animate-spin" /> : t("memberLabelSave")}
+              </button>
+            )}
+            {!rateDirty && ratePct != null && (
+              <button
+                type="button"
+                onClick={() => saveRate(null)}
+                disabled={savingRate}
+                title={tRewards("rateClear")}
+                aria-label={tRewards("rateClear")}
+                className="p-1.5 text-gray-400 hover:text-red-500 rounded disabled:opacity-50"
+              >
+                {savingRate ? <Loader2 className="w-4 h-4 animate-spin" /> : <X className="w-4 h-4" />}
+              </button>
+            )}
+          </div>
+        </section>
+      )}
+
       {/* ── Automations: recurring credit grants / scheduled re-sends ──────── */}
-      <ScheduleEditor target={{ groupId: group.id }} rewardsEnabled={rewardsEnabled} currency={currency} rewardLabelPlural={rewardLabelPlural} />
+      <ScheduleEditor target={{ groupId: group.id }} rewardsEnabled={rewardsEnabled} currency={currency} rewardLabelPlural={rewardLabelPlural?.trim() || tRewards("defaultPlural")} />
     </div>
   );
 }

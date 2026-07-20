@@ -316,7 +316,7 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
           )}
         </div>
 
-        <div className="p-4 border-t bg-gray-50 rounded-b-2xl safe-bottom">
+        <div className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t bg-gray-50 rounded-b-2xl">
           <button onClick={submit} disabled={!slotsSatisfied}
             className="w-full py-3 rounded-xl text-white font-semibold disabled:opacity-50"
             style={{ backgroundColor: primaryColor }}>
@@ -634,7 +634,7 @@ function ChildCustomizer({
           })}
         </div>
 
-        <div className="p-4 border-t bg-gray-50 rounded-b-2xl safe-bottom">
+        <div className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t bg-gray-50 rounded-b-2xl">
           <button onClick={confirm} disabled={!canAdd}
             className="w-full py-3 rounded-xl text-white font-semibold disabled:opacity-50"
             style={{ backgroundColor: primaryColor }}>

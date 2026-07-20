@@ -202,7 +202,9 @@ export function FreebiePromptModal({
         </div>
 
         {/* Footer */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex justify-end safe-bottom">
+        {/* No .safe-bottom — it zeroes the bottom padding on desktop (flush-
+            footer bug); calc() composes the inset instead. Luigi 2026-07-19. */}
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex justify-end">
           <button
             onClick={onClose}
             className="font-semibold px-4 py-2.5 rounded-xl text-sm border border-gray-200 text-gray-700 hover:bg-gray-50"

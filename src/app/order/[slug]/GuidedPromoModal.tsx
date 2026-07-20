@@ -641,7 +641,9 @@ export function GuidedPromoModal({
         {/* Footer — wizard controls. Single-pick steps auto-advance (and the
             last missing pick auto-completes), so Next / Add-to-cart mostly
             matter for multi-pick steps and for revisits via the chips. */}
-        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 flex items-center justify-between gap-3 safe-bottom">
+        {/* No .safe-bottom — it zeroes the bottom padding on desktop (flush-
+            footer bug); calc() composes the inset instead. Luigi 2026-07-19. */}
+        <div className="sticky bottom-0 bg-white border-t border-gray-100 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             {step > 0 && (
               <button

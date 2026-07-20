@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Kunden können {label} nicht für ausgeschlossene Artikel oder Kategorien ausgeben (z. B. Geschenkkarten — Guthaben soll kein Guthaben kaufen). Der Checkout senkt automatisch den einsetzbaren {label}-Betrag. Unabhängig vom Verdienst-Ausschluss oben und vom Rabatt-Ausschluss auf der Aktionsseite.",
       "redeemExcludeDesc": "Wählen Sie Kategorien oder Artikel, die Kunden nicht mit {label} bezahlen können.",
       "redeemExcludeOn": "Bezahlbar",
-      "redeemExcludeOff": "Nicht bezahlbar"
+      "redeemExcludeOff": "Nicht bezahlbar",
+      "groupRatesTitle": "Sammelraten für VIP-Gruppen",
+      "groupRatesSubtitle": "Mitglieder einer Gruppe mit eigener Rate erhalten diesen Prozentsatz statt der Basisrate.",
+      "groupRatesExplainer": "Ist jemand in mehreren Gruppen, gilt die höchste Rate. Eine persönliche Rate auf der Kundenseite hat Vorrang vor jeder Gruppenrate.",
+      "groupRateCardTitle": "Sammelrate für diese Gruppe",
+      "groupRateCardDesc": "Mitglieder dieser Gruppe erhalten bei jeder Bestellung diesen Prozentsatz in {label} zurück – statt der Basisrate.",
+      "personalRateTitle": "Individuelle Sammelrate",
+      "personalRateDesc": "Dieser Kunde erhält bei jeder Bestellung diesen Prozentsatz in {label} zurück – anstelle der Basisrate und jeder VIP-Gruppenrate.",
+      "ratePlaceholder": "Basisrate",
+      "rateClear": "Individuelle Rate entfernen"
     },
     "imageCrop": {
       "title": "Foto anpassen",

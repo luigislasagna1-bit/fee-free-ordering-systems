@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Les clients ne peuvent pas dépenser de {label} sur les articles ou catégories exclus (ex. cartes-cadeaux — le crédit ne doit pas acheter du crédit). Le paiement réduit automatiquement le montant de {label} applicable. Indépendant de l'exclusion de gains ci-dessus et de l'exclusion de remises de la page Promotions.",
       "redeemExcludeDesc": "Choisissez les catégories ou articles que les clients ne peuvent pas payer en {label}.",
       "redeemExcludeOn": "Payable",
-      "redeemExcludeOff": "Non payable"
+      "redeemExcludeOff": "Non payable",
+      "groupRatesTitle": "Taux de gain des groupes VIP",
+      "groupRatesSubtitle": "Les membres d'un groupe avec un taux gagnent ce pourcentage au lieu du taux de base.",
+      "groupRatesExplainer": "Si quelqu'un appartient à plusieurs groupes, le taux le plus élevé l'emporte. Un taux personnel défini sur la fiche du client prime sur tout taux de groupe.",
+      "groupRateCardTitle": "Taux de gain pour ce groupe",
+      "groupRateCardDesc": "Les membres de ce groupe gagnent ce pourcentage en {label} sur chaque commande, au lieu du taux de base.",
+      "personalRateTitle": "Taux de gain personnalisé",
+      "personalRateDesc": "Ce client gagne ce pourcentage en {label} sur chaque commande — au lieu du taux de base et de tout taux de groupe VIP.",
+      "ratePlaceholder": "Taux de base",
+      "rateClear": "Supprimer le taux personnalisé"
     },
     "imageCrop": {
       "title": "Ajustez votre photo",

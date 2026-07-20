@@ -1028,6 +1028,7 @@ export function OrderingPageClient({
   marketplaceAccount = null,
   customerIsReturning = false,
   currentCustomer = null,
+  customerEarnPct = null,
   todayHolidayName = null,
   todayHolidayMessage = null,
   todayHolidayIntervals = null,
@@ -1170,6 +1171,12 @@ export function OrderingPageClient({
    *  passed in so the header can render the right Sign-in vs. Hi-name
    *  state without a client-side fetch flash. Null = guest visitor. */
   currentCustomer?: { id: string; name: string; email: string | null; phone: string | null; marketingConsent?: boolean | null } | null;
+  /** The signed-in customer's EFFECTIVE earn rate as a percent, when a VIP
+   *  group / personal override applies (server-resolved in page.tsx via the
+   *  same loadEarnOverridePct the wallet grant uses — display can never
+   *  promise a rate the ledger won't pay). Null = no override → the tile
+   *  shows the restaurant base rate as always. Luigi 2026-07-19. */
+  customerEarnPct?: number | null;
   /** True when the restaurant has connected PayPal AND has the
    *  card_payments entitlement. Drives whether PayPal works at
    *  checkout vs. shows a "not yet ready" notice. */
@@ -1283,6 +1290,17 @@ export function OrderingPageClient({
    *  in the cart drawer. Resets to 1 when a new item opens; preserved
    *  when editing an existing cart line. */
   const [itemQuantity, setItemQuantity] = useState(1);
+  // Section id being flashed after a greyed-Add tap guided the customer to a
+  // missing required choice (Luigi 2026-07-19). Null = no flash. The timer
+  // rides a ref so re-taps restart it and closing the modal cancels it.
+  const [itemModalFlashId, setItemModalFlashId] = useState<string | null>(null);
+  const itemModalFlashTimerRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (!selectedItem) {
+      if (itemModalFlashTimerRef.current !== null) { window.clearTimeout(itemModalFlashTimerRef.current); itemModalFlashTimerRef.current = null; }
+      setItemModalFlashId(null);
+    }
+  }, [selectedItem]);
   const [orderType, setOrderType] = useState<"pickup" | "delivery" | "dine_in" | "take_out">(
     restaurant.acceptsPickup ? "pickup"
       : restaurant.acceptsDelivery ? "delivery"
@@ -3814,6 +3832,48 @@ export function OrderingPageClient({
     return Number.isFinite(amt) ? Math.max(0, Math.round(amt * 100) / 100) : 0;
   })();
 
+  /** First unmet requirement in the item modal — SAME rules as addToCart's
+   *  validation, so the greyed button + guided scroll can never disagree with
+   *  what addToCart would reject (Luigi 2026-07-19: keep Add visible, grey it,
+   *  and take the customer to what's missing). Checks ALL groups (hidden
+   *  included) to stay in lockstep with addToCart. */
+  const firstMissingRequirement = (): { kind: "size" } | { kind: "group"; id: string; name: string; min: number; via: "required" | "minSelect" } | null => {
+    if (!selectedItem) return null;
+    if (selectedItem.hasVariants && !selectedVariant) return { kind: "size" };
+    for (const g of selectedItem.modifierGroups) {
+      const selected = mods[g.id] || [];
+      // Rule ORDER mirrors addToCart exactly, and `via` records WHICH rule
+      // tripped so the guide toast wording matches addToCart's to the letter
+      // (review 2026-07-19: an optional minSelect-1 group must say
+      // chooseAtLeast, not pleaseSelect).
+      if (g.required && selected.length === 0) return { kind: "group", id: g.id, name: g.name, min: 1, via: "required" };
+      if (g.minSelect > 0 && selected.length < g.minSelect) return { kind: "group", id: g.id, name: g.name, min: g.minSelect, via: "minSelect" };
+    }
+    return null;
+  };
+
+  /** Greyed-button tap: toast the same message addToCart would, jump the
+   *  modal body to the missing section, and flash it. Instant scroll (not
+   *  smooth) — embedded webviews silently no-op smooth scrolling. */
+  const guideToMissingRequirement = (missing: NonNullable<ReturnType<typeof firstMissingRequirement>>) => {
+    const anchorId = missing.kind === "size" ? "itemmodal-size" : `itemmodal-group-${missing.id}`;
+    const anchor = document.getElementById(anchorId);
+    if (!anchor && missing.kind === "group") {
+      // The tripping group isn't rendered (hidden group with unmet minimum —
+      // a misconfigured item that can never be added). Don't point at a
+      // section the customer can't see; say the item isn't available.
+      toast.error(tT("itemUnavailable"));
+      return;
+    }
+    if (missing.kind === "size") toast.error(tT("chooseSize"));
+    else if (missing.via === "minSelect") toast.error(tT("chooseAtLeast", { name: missing.name, n: missing.min }));
+    else toast.error(tT("pleaseSelect", { name: missing.name }));
+    anchor?.scrollIntoView({ block: "start" });
+    setItemModalFlashId(anchorId);
+    if (itemModalFlashTimerRef.current !== null) window.clearTimeout(itemModalFlashTimerRef.current);
+    itemModalFlashTimerRef.current = window.setTimeout(() => setItemModalFlashId(null), 1600);
+  };
+
   const addToCart = () => {
     if (!selectedItem) return;
     // Visible-but-purchase-restricted (reseller report cmpxec829): the cards
@@ -5745,17 +5805,27 @@ export function OrderingPageClient({
               // reward tile showing the restaurant's "% back on every order"
               // setting, so the ongoing benefit is visible next to the one-off
               // bonus. per_dollar mode ($ per $1) converts to the equivalent %.
+              // A signed-in VIP/personal override wins (server-resolved
+              // customerEarnPct prop — Luigi 2026-07-19: the member should SEE
+              // their doubled rate, same resolution the wallet grant uses).
               const baseEarnPct = restaurant.rewardEarnEnabled
-                ? Math.round(
+                ? customerEarnPct ?? (Math.round(
                     ((restaurant.rewardEarnMode === "per_dollar"
                       ? (restaurant.rewardEarnPerDollar ?? 0) * 100
                       : restaurant.rewardEarnPercent ?? 0) + Number.EPSILON) * 100,
-                  ) / 100
+                  ) / 100)
                 : 0;
               return (
-                <div
+                /* Clickable (Luigi 2026-07-19): the earn tile takes you to
+                   sign-up/sign-in (or your account once signed in) — the tile
+                   advertises the program, the tap starts it. */
+                <button
                   key={rule.id}
-                  className="flex-shrink-0 w-[230px] h-32 rounded-xl text-white shadow-md relative overflow-hidden"
+                  type="button"
+                  onClick={() => router.push(currentCustomer
+                    ? `/order/${restaurant.slug}/account`
+                    : `/order/${restaurant.slug}/account/login`)}
+                  className="flex-shrink-0 w-[230px] h-32 rounded-xl text-white shadow-md relative overflow-hidden text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-300"
                   style={{ background: "linear-gradient(135deg, #059669, #047857)" }}
                 >
                   {/* Owner-uploaded tile image (Luigi 2026-07-09) — sits over the
@@ -5781,7 +5851,7 @@ export function OrderingPageClient({
                       </div>
                     )}
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>
@@ -5959,7 +6029,11 @@ export function OrderingPageClient({
       {/* ── Item modal ────────────────────────────────────────────────── */}
       {selectedItem && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4" onClick={() => { setSelectedItem(null); if (editingCartIndex !== null) cancelEdit(); }}>
-          <div className="bg-white rounded-2xl w-full max-w-lg modal-vh overflow-y-auto safe-bottom" onClick={e => e.stopPropagation()}>
+          {/* flex-col + inner scroller: the BODY scrolls, the Add-to-Cart
+              footer stays visible at ALL times (Luigi 2026-07-19 — on long
+              items the button only appeared after scrolling to the end). */}
+          <div className="bg-white rounded-2xl w-full max-w-lg modal-vh flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
+          <div className="flex-1 min-h-0 overflow-y-auto">
             {selectedItem.imageUrl && (
               <div className="h-48 overflow-hidden rounded-t-2xl">
                 <img src={selectedItem.imageUrl} alt={selectedItem.name} className="w-full h-full object-cover" />
@@ -5980,7 +6054,7 @@ export function OrderingPageClient({
 
             {/* Variants */}
             {selectedItem.hasVariants && selectedItem.variants?.length > 0 && (
-              <div className="p-5 border-b border-gray-100">
+              <div id="itemmodal-size" className={`p-5 border-b border-gray-100 transition ${itemModalFlashId === "itemmodal-size" ? "bg-red-50" : ""}`}>
                 <div className="flex items-center gap-2 mb-3">
                   <span className="font-semibold text-gray-900">{t("size")}</span>
                   <span className="text-xs bg-red-100 text-red-600 px-2 py-0.5 rounded-full">{t("required")}</span>
@@ -6011,7 +6085,7 @@ export function OrderingPageClient({
               const selectedCount = (mods[group.id] || []).length;
               const atMax = group.maxSelect > 1 && selectedCount >= group.maxSelect;
               return (
-                <div key={group.id} className="p-5 border-b border-gray-100">
+                <div key={group.id} id={`itemmodal-group-${group.id}`} className={`p-5 border-b border-gray-100 transition ${itemModalFlashId === `itemmodal-group-${group.id}` ? "bg-red-50" : ""}`}>
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-semibold text-gray-900">{group.name}</span>
@@ -6141,16 +6215,21 @@ export function OrderingPageClient({
                 2026-07-08). Inline (not a blocking modal) — disclosure, not a
                 decision. */}
             {currentItemDeposit > 0 && (
-              <div className="px-5 pb-1">
+              <div className="px-5 py-2">
                 <div className="flex items-start gap-2 text-sm text-violet-700 bg-violet-50 border border-violet-100 rounded-xl px-3 py-2.5">
                   <PiggyBank className="w-4 h-4 mt-0.5 flex-shrink-0" />
                   <span>{t("refundableDepositNotice", { amount: fmt(currentItemDeposit) })}</span>
                 </div>
               </div>
             )}
+          </div>
 
-            {/* Quantity stepper + Add to Cart */}
-            <div className="p-5">
+            {/* Quantity stepper + Add to Cart — ALWAYS-VISIBLE footer outside
+                the scroller. When a required choice is missing the button is
+                greyed (not hidden) and a tap scrolls the customer to the first
+                missing section (Luigi 2026-07-19). Composed safe-area padding,
+                never .safe-bottom (it zeroes desktop padding). */}
+            <div className="flex-shrink-0 border-t border-gray-100 p-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
               <div className="flex items-center gap-3">
                 {/* Stepper */}
                 <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden shrink-0">
@@ -6175,12 +6254,21 @@ export function OrderingPageClient({
                 </div>
                 {/* Add to Cart — shows base + deposit so the button reflects the
                     full charge for this item (deposit is stored/summed
-                    separately; this is display only). */}
-                <button onClick={addToCart}
-                  className="flex-1 text-white font-bold py-4 rounded-xl transition"
-                  style={{ backgroundColor: theme.primaryColor }}>
-                  {t("addToCart")} · {fmt((currentItemPrice + currentItemDeposit) * itemQuantity)}
-                </button>
+                    separately; this is display only). Greyed (never hidden)
+                    while a required choice is missing; tapping it then GUIDES
+                    to the first missing section instead of adding. */}
+                {(() => {
+                  const missing = firstMissingRequirement();
+                  return (
+                    <button
+                      onClick={() => (missing ? guideToMissingRequirement(missing) : addToCart())}
+                      aria-disabled={!!missing}
+                      className={`flex-1 text-white font-bold py-4 rounded-xl transition ${missing ? "opacity-40" : ""}`}
+                      style={{ backgroundColor: theme.primaryColor }}>
+                      {t("addToCart")} · {fmt((currentItemPrice + currentItemDeposit) * itemQuantity)}
+                    </button>
+                  );
+                })()}
               </div>
             </div>
           </div>

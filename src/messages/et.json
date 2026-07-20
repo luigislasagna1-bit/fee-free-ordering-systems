@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Kliendid ei saa kulutada {label} välistatud toodetele või kategooriatele (nt kinkekaardid — krediit ei tohiks osta krediiti). Kassa vähendab automaatselt rakendatavat {label} summat. Eraldi ülaltoodud teenimise välistusest ja Promotsioonide lehe allahindluse välistusest.",
       "redeemExcludeDesc": "Valige kategooriad või tooted, mida kliendid ei saa maksta {label}.",
       "redeemExcludeOn": "Makstav",
-      "redeemExcludeOff": "Ei ole makstav"
+      "redeemExcludeOff": "Ei ole makstav",
+      "groupRatesTitle": "VIP-rühmade teenimismäärad",
+      "groupRatesSubtitle": "Rühma liikmed, kellel on määr, teenivad selle protsendi baasmäära asemel.",
+      "groupRatesExplainer": "Kui keegi kuulub mitmesse rühma, kehtib kõrgeim määr. Kliendi enda lehel määratud isiklik määr on ülimuslik iga rühmamäära suhtes.",
+      "groupRateCardTitle": "Selle rühma teenimismäär",
+      "groupRateCardDesc": "Selle rühma liikmed teenivad igalt tellimuselt selle protsendi {label} kujul baasmäära asemel.",
+      "personalRateTitle": "Kohandatud teenimismäär",
+      "personalRateDesc": "See klient teenib igalt tellimuselt selle protsendi {label} kujul — baasmäära ja iga VIP-rühma määra asemel.",
+      "ratePlaceholder": "Baasmäär",
+      "rateClear": "Eemalda kohandatud määr"
     },
     "imageCrop": {
       "title": "Kohanda fotot",

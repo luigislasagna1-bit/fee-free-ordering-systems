@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Els clients no poden gastar {label} en articles o categories exclosos (p. ex. targetes regal — el crèdit no ha de comprar crèdit). El pagament redueix automàticament l'import de {label} aplicable. Independent de l'exclusió de guanys de dalt i de l'exclusió de descomptes de la pàgina de Promocions.",
       "redeemExcludeDesc": "Tria les categories o articles que els clients no poden pagar amb {label}.",
       "redeemExcludeOn": "Pagable",
-      "redeemExcludeOff": "No pagable"
+      "redeemExcludeOff": "No pagable",
+      "groupRatesTitle": "Taxes d'acumulació per grup VIP",
+      "groupRatesSubtitle": "Els membres d'un grup amb una taxa acumulen aquest percentatge en lloc de la taxa base.",
+      "groupRatesExplainer": "Si algú és en diversos grups, guanya la taxa més alta. Una taxa personal fixada a la pàgina del client preval sobre qualsevol taxa de grup.",
+      "groupRateCardTitle": "Taxa d'acumulació d'aquest grup",
+      "groupRateCardDesc": "Els membres d'aquest grup acumulen aquest percentatge en {label} a cada comanda, en lloc de la taxa base.",
+      "personalRateTitle": "Taxa d'acumulació personalitzada",
+      "personalRateDesc": "Aquest client acumula aquest percentatge en {label} a cada comanda — en lloc de la taxa base i de qualsevol taxa de grup VIP.",
+      "ratePlaceholder": "Taxa base",
+      "rateClear": "Treu la taxa personalitzada"
     },
     "imageCrop": {
       "title": "Ajusta la foto",

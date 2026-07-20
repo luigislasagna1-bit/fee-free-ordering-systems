@@ -408,6 +408,22 @@ export default async function OrderingPage({
     expectedRestaurantId: restaurant.id,
   });
 
+  // Signed-in VIP/personal earn-rate override for the reward tile (Luigi
+  // 2026-07-19) — resolved through the SAME function the wallet grant uses,
+  // so the tile can never advertise a rate the ledger won't pay. Anonymous
+  // visitors (most traffic on this per-request page) skip the lookup
+  // entirely; signed-in cost is ≤4 indexed point queries. CACHE SEAM: if the
+  // order page ever gets a per-restaurant cache, key this per-customer.
+  // ACCEPTED UNDERSELL (review 2026-07-19): a MARKETPLACE-signed-in VIP has
+  // no per-restaurant session here, so the tile shows the base rate while
+  // the wallet still grants their override — wrong in the safe direction
+  // only; wire the marketplace→Customer linkage here if it ever matters.
+  let customerEarnPct: number | null = null;
+  if (currentCustomer && (restaurant as any).rewardsEnabled && (restaurant as any).rewardEarnEnabled) {
+    const { loadEarnOverridePct } = await import("@/lib/reward-earn-rate");
+    customerEarnPct = await loadEarnOverridePct(restaurant.id, currentCustomer.id);
+  }
+
   // Marketplace-wide account (CustomerAccount) — only looked up on the
   // marketplace view, where its sign-in replaces the per-restaurant one. The
   // marketplace customer base is distinct, so a marketplace visitor signs into
@@ -522,6 +538,7 @@ export default async function OrderingPage({
               marketingConsent: currentCustomer.marketingConsent,
             }
           : null}
+        customerEarnPct={customerEarnPct}
       />
     </NextIntlClientProvider>
   );

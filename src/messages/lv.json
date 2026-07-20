@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Klienti nevar tērēt {label} izslēgtām precēm vai kategorijām (piem., dāvanu kartēm — kredītam nevajadzētu pirkt kredītu). Norēķins automātiski samazina piemērojamo {label} summu. Atsevišķi no pelnīšanas izslēgšanas augstāk un atlaižu izslēgšanas lapā Akcijas.",
       "redeemExcludeDesc": "Izvēlieties kategorijas vai preces, ko klienti nevar apmaksāt ar {label}.",
       "redeemExcludeOn": "Apmaksājams",
-      "redeemExcludeOff": "Nav apmaksājams"
+      "redeemExcludeOff": "Nav apmaksājams",
+      "groupRatesTitle": "VIP grupu uzkrāšanas likmes",
+      "groupRatesSubtitle": "Grupas dalībnieki ar likmi saņem šo procentu bāzes likmes vietā.",
+      "groupRatesExplainer": "Ja kāds ir vairākās grupās, uzvar augstākā likme. Klienta lapā iestatīta personiskā likme ir pārāka par jebkuru grupas likmi.",
+      "groupRateCardTitle": "Šīs grupas uzkrāšanas likme",
+      "groupRateCardDesc": "Šīs grupas dalībnieki par katru pasūtījumu saņem šo procentu {label} veidā bāzes likmes vietā.",
+      "personalRateTitle": "Pielāgota uzkrāšanas likme",
+      "personalRateDesc": "Šis klients par katru pasūtījumu saņem šo procentu {label} veidā — bāzes likmes un jebkuras VIP grupas likmes vietā.",
+      "ratePlaceholder": "Bāzes likme",
+      "rateClear": "Noņemt pielāgoto likmi"
     },
     "imageCrop": {
       "title": "Pielāgojiet foto",

@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Pelanggan tidak bisa membelanjakan {label} untuk item atau kategori yang dikecualikan (mis. kartu hadiah — kredit tidak boleh membeli kredit). Checkout otomatis menurunkan jumlah {label} yang bisa dipakai. Terpisah dari pengecualian perolehan di atas dan pengecualian diskon di halaman Promosi.",
       "redeemExcludeDesc": "Pilih kategori atau item yang tidak bisa dibayar pelanggan dengan {label}.",
       "redeemExcludeOn": "Bisa dibayar",
-      "redeemExcludeOff": "Tidak bisa dibayar"
+      "redeemExcludeOff": "Tidak bisa dibayar",
+      "groupRatesTitle": "Tarif perolehan grup VIP",
+      "groupRatesSubtitle": "Anggota grup yang memiliki tarif memperoleh persentase itu, bukan tarif dasar.",
+      "groupRatesExplainer": "Jika seseorang berada di beberapa grup, tarif tertinggi yang berlaku. Tarif pribadi yang diatur di halaman pelanggan mengalahkan tarif grup mana pun.",
+      "groupRateCardTitle": "Tarif perolehan untuk grup ini",
+      "groupRateCardDesc": "Anggota grup ini memperoleh persentase ini dalam {label} pada setiap pesanan, bukan tarif dasar.",
+      "personalRateTitle": "Tarif perolehan khusus",
+      "personalRateDesc": "Pelanggan ini memperoleh persentase ini dalam {label} pada setiap pesanan — menggantikan tarif dasar dan tarif grup VIP mana pun.",
+      "ratePlaceholder": "Tarif dasar",
+      "rateClear": "Hapus tarif khusus"
     },
     "imageCrop": {
       "title": "Sesuaikan foto Anda",

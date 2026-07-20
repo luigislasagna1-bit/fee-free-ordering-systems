@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "顾客不能用{label}购买被排除的商品或类别（如礼品卡——余额不应购买余额）。结账时会自动降低可使用的{label}金额。与上方的赚取排除和促销页的折扣排除相互独立。",
       "redeemExcludeDesc": "选择顾客不能用{label}支付的类别或商品。",
       "redeemExcludeOn": "可支付",
-      "redeemExcludeOff": "不可支付"
+      "redeemExcludeOff": "不可支付",
+      "groupRatesTitle": "VIP 群组返还比例",
+      "groupRatesSubtitle": "设置了比例的群组成员按该比例返还，而不是基础比例。",
+      "groupRatesExplainer": "如果某人属于多个群组，则采用最高比例。在顾客个人页面设置的个人比例优先于任何群组比例。",
+      "groupRateCardTitle": "此群组的返还比例",
+      "groupRateCardDesc": "此群组成员每笔订单按该比例返还 {label}，而不是基础比例。",
+      "personalRateTitle": "自定义返还比例",
+      "personalRateDesc": "该顾客每笔订单按此比例返还 {label} —— 优先于基础比例和任何 VIP 群组比例。",
+      "ratePlaceholder": "基础比例",
+      "rateClear": "清除自定义比例"
     },
     "imageCrop": {
       "title": "调整您的照片",

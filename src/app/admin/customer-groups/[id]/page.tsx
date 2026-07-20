@@ -1,4 +1,4 @@
-import { redirect, notFound } from "next/navigation";
+﻿import { redirect, notFound } from "next/navigation";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import GroupDetailClient from "./GroupDetailClient";
@@ -13,7 +13,7 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
 
   const group = await prisma.customerGroup.findUnique({
     where: { id },
-    select: { id: true, restaurantId: true, name: true, description: true, memberLabel: true },
+    select: { id: true, restaurantId: true, name: true, description: true, memberLabel: true, rewardEarnPercent: true },
   });
   if (!group || group.restaurantId !== user.restaurantId) notFound();
 
@@ -32,14 +32,14 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
         customer: { select: { name: true, email: true, phone: true, passwordHash: true } },
       },
     }),
-    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { currency: true, rewardsEnabled: true, rewardLabelPlural: true } }),
+    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { currency: true, rewardsEnabled: true, rewardEarnEnabled: true, rewardLabelPlural: true } }),
     prisma.customerGroupPromotion.findMany({
       where: { groupId: id },
       orderBy: { createdAt: "desc" },
       select: { id: true, promotion: { select: promoSelect } },
     }),
     prisma.promotion.findMany({
-      // Active only — an inactive promo can't auto-apply, so it isn't pickable.
+      // Active only â€” an inactive promo can't auto-apply, so it isn't pickable.
       where: { restaurantId: user.restaurantId, isActive: true },
       orderBy: { createdAt: "desc" },
       take: 200,
@@ -63,13 +63,13 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
 
   return (
     <GroupDetailClient
-      group={{ id: group.id, name: group.name, description: group.description, memberLabel: group.memberLabel }}
+      group={{ id: group.id, name: group.name, description: group.description, memberLabel: group.memberLabel, rewardEarnPercent: group.rewardEarnPercent }}
       initialMembers={members}
       initialSpecials={specials}
       initialPickable={pickable}
       currency={restaurant?.currency ?? "usd"}
-      rewardsEnabled={restaurant?.rewardsEnabled ?? false}
-      rewardLabelPlural={restaurant?.rewardLabelPlural?.trim() || "Reward Dollars"}
+      rewardsEnabled={(restaurant?.rewardsEnabled ?? false) && (restaurant?.rewardEarnEnabled ?? false)}
+      rewardLabelPlural={restaurant?.rewardLabelPlural ?? null}
     />
   );
 }

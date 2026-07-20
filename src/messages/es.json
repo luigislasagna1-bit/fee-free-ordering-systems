@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Los clientes no pueden gastar {label} en artículos o categorías excluidos (p. ej. tarjetas regalo — el crédito no debe comprar crédito). El pago reduce automáticamente la cantidad de {label} aplicable. Es independiente de la exclusión de ganancia de arriba y de la exclusión de descuentos de la página de Promociones.",
       "redeemExcludeDesc": "Elige las categorías o artículos que los clientes no pueden pagar con {label}.",
       "redeemExcludeOn": "Pagable",
-      "redeemExcludeOff": "No pagable"
+      "redeemExcludeOff": "No pagable",
+      "groupRatesTitle": "Tasas de acumulación por grupo VIP",
+      "groupRatesSubtitle": "Los miembros de un grupo con una tasa acumulan ese porcentaje en lugar de la tasa base.",
+      "groupRatesExplainer": "Si alguien pertenece a varios grupos, gana la tasa más alta. Una tasa personal fijada en la página del cliente prevalece sobre cualquier tasa de grupo.",
+      "groupRateCardTitle": "Tasa de acumulación de este grupo",
+      "groupRateCardDesc": "Los miembros de este grupo acumulan este porcentaje en {label} en cada pedido, en lugar de la tasa base.",
+      "personalRateTitle": "Tasa de acumulación personalizada",
+      "personalRateDesc": "Este cliente acumula este porcentaje en {label} en cada pedido — por encima de la tasa base y de cualquier tasa de grupo VIP.",
+      "ratePlaceholder": "Tasa base",
+      "rateClear": "Quitar la tasa personalizada"
     },
     "imageCrop": {
       "title": "Ajusta tu foto",

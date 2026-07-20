@@ -421,7 +421,16 @@ export async function awardForOrder(opts: { orderId: string }): Promise<void> {
     if (!(await orderEligibleToEarn(order.customerId, order.createdAt))) return; // guest at order time → no earn
     const basis = await earnBasisForOrder(opts.orderId, order); // excludes gift-card-style items; reuses this load
     if (basis <= 0) return;
-    const earned = round2(r.rewardEarnMode === "per_dollar" ? basis * (r.rewardEarnPerDollar ?? 0) : basis * ((r.rewardEarnPercent ?? 0) / 100));
+    // Standing VIP/personal earn-rate override (person > highest group > base;
+    // Luigi 2026-07-19). No override → the ORIGINAL branch, byte-identical.
+    // MUST mirror projectOrderEarn exactly — preview == granted, to the cent.
+    const { loadEarnOverridePct, earnAtPct } = await import("@/lib/reward-earn-rate");
+    const overridePct = await loadEarnOverridePct(order.restaurantId, order.customerId);
+    const earned = round2(
+      overridePct != null
+        ? earnAtPct(basis, overridePct)
+        : r.rewardEarnMode === "per_dollar" ? basis * (r.rewardEarnPerDollar ?? 0) : basis * ((r.rewardEarnPercent ?? 0) / 100),
+    );
     if (earned <= 0) return;
     await grant({ restaurantId: order.restaurantId, customerId: order.customerId, amount: earned, reason: "earn", orderId: opts.orderId });
   } catch (e) { console.error("[reward awardForOrder]", e); }

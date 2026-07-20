@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Купци не могу трошити {label} на искључене ставке или категорије (нпр. поклон картице — кредит не треба да купује кредит). Наплата аутоматски смањује применљив износ {label}. Одвојено од искључења зараде изнад и искључења попуста на страници Промоције.",
       "redeemExcludeDesc": "Изаберите категорије или ставке које купци не могу платити са {label}.",
       "redeemExcludeOn": "Плативо",
-      "redeemExcludeOff": "Није плативо"
+      "redeemExcludeOff": "Није плативо",
+      "groupRatesTitle": "Stope zarade za VIP grupe",
+      "groupRatesSubtitle": "Članovi grupe sa stopom zarađuju taj procenat umesto osnovne stope.",
+      "groupRatesExplainer": "Ako je neko u više grupa, važi najviša stopa. Lična stopa podešena na stranici kupca ima prednost nad svakom grupnom stopom.",
+      "groupRateCardTitle": "Stopa zarade za ovu grupu",
+      "groupRateCardDesc": "Članovi ove grupe zarađuju ovaj procenat u {label} na svakoj porudžbini, umesto osnovne stope.",
+      "personalRateTitle": "Prilagođena stopa zarade",
+      "personalRateDesc": "Ovaj kupac zarađuje ovaj procenat u {label} na svakoj porudžbini — umesto osnovne stope i svake stope VIP grupe.",
+      "ratePlaceholder": "Osnovna stopa",
+      "rateClear": "Ukloni prilagođenu stopu"
     },
     "imageCrop": {
       "title": "Prilagodite fotografiju",

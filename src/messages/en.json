@@ -4534,7 +4534,16 @@
       "redeemExcludeHelp": "Customers can't spend {label} on excluded items or categories (e.g. gift cards — store credit shouldn't buy store credit). The checkout automatically lowers the amount of {label} they can apply. This is separate from the earning exclusion above and from the promo-discount exclusion on the Promotions page.",
       "redeemExcludeDesc": "Pick categories or items customers can't pay for with {label}.",
       "redeemExcludeOn": "Payable",
-      "redeemExcludeOff": "Not payable"
+      "redeemExcludeOff": "Not payable",
+      "groupRatesTitle": "VIP group earn rates",
+      "groupRatesSubtitle": "Members of a group with a rate earn that percent back instead of the base rate.",
+      "groupRatesExplainer": "If someone is in several groups, the highest rate wins. A personal rate set on the customer's own page beats any group rate.",
+      "groupRateCardTitle": "Earn rate for this group",
+      "groupRateCardDesc": "Members of this group earn this percent back in {label} on every order, instead of the base rate.",
+      "personalRateTitle": "Custom earn rate",
+      "personalRateDesc": "This customer earns this percent back in {label} on every order — overriding the base rate and any VIP group rate.",
+      "ratePlaceholder": "Base rate",
+      "rateClear": "Clear override"
     },
     "customerGroups": {
       "title": "VIP Groups",

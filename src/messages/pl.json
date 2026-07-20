@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Klienci nie mogą wydawać {label} na wykluczone produkty lub kategorie (np. karty podarunkowe — środki nie powinny kupować środków). Kasa automatycznie obniża kwotę {label} do wykorzystania. Niezależne od wykluczenia zdobywania powyżej i wykluczenia zniżek na stronie Promocje.",
       "redeemExcludeDesc": "Wybierz kategorie lub produkty, za które klienci nie mogą płacić {label}.",
       "redeemExcludeOn": "Płatne",
-      "redeemExcludeOff": "Nie do zapłaty"
+      "redeemExcludeOff": "Nie do zapłaty",
+      "groupRatesTitle": "Stawki naliczania dla grup VIP",
+      "groupRatesSubtitle": "Członkowie grupy ze stawką otrzymują ten procent zamiast stawki podstawowej.",
+      "groupRatesExplainer": "Jeśli ktoś należy do kilku grup, obowiązuje najwyższa stawka. Stawka osobista ustawiona na stronie klienta ma pierwszeństwo przed każdą stawką grupową.",
+      "groupRateCardTitle": "Stawka naliczania dla tej grupy",
+      "groupRateCardDesc": "Członkowie tej grupy otrzymują ten procent w {label} przy każdym zamówieniu zamiast stawki podstawowej.",
+      "personalRateTitle": "Niestandardowa stawka naliczania",
+      "personalRateDesc": "Ten klient otrzymuje ten procent w {label} przy każdym zamówieniu — zamiast stawki podstawowej i każdej stawki grupy VIP.",
+      "ratePlaceholder": "Stawka podstawowa",
+      "rateClear": "Usuń stawkę niestandardową"
     },
     "imageCrop": {
       "title": "Dopasuj zdjęcie",

@@ -1,15 +1,15 @@
-/**
+﻿/**
  * /admin/customers/[id]
  *
  * Restaurant-admin view of a single customer. Surfaces:
  *   - Profile (name, email, phone, signed-up-or-guest status)
  *   - Order history with totals
  *   - Coupons currently assigned to this customer
- *   - "Assign new coupon" form — creates a personal coupon redeemable
+ *   - "Assign new coupon" form â€” creates a personal coupon redeemable
  *     ONLY by this customer (see POST /api/admin/customers/[id]/assign-coupon)
  *
  * Restaurant-scoped: enforces the [id] Customer belongs to the session's
- * restaurantId before rendering — a tampered URL pointing at someone
+ * restaurantId before rendering â€” a tampered URL pointing at someone
  * else's customer 404s.
  */
 
@@ -23,6 +23,7 @@ import { formatDate, formatCurrency as fmtCurrency } from "@/lib/utils";
 import { getRestaurantCurrency } from "@/lib/restaurant-currency";
 import { GiveVipSpecial } from "./GiveVipSpecial";
 import { GrantRewardCredit } from "./GrantRewardCredit";
+import { CustomEarnRate } from "./CustomEarnRate";
 import { CustomerActionsCard } from "./CustomerActionsCard";
 import { RevokeGrantButton } from "./RevokeGrantButton";
 
@@ -46,19 +47,19 @@ export default async function CustomerDetailPage({
     where: { id },
     select: {
       id: true, restaurantId: true, name: true, email: true, phone: true,
-      address: true, notes: true, totalOrders: true, totalSpent: true,
+      address: true, notes: true, rewardEarnPercent: true, totalOrders: true, totalSpent: true,
       createdAt: true, lastOrderAt: true, passwordHash: true,
       emailVerifiedAt: true, lastLoginAt: true, chainCustomerId: true,
     },
   });
   if (!customer || customer.restaurantId !== restaurantId) notFound();
 
-  // Restaurant name — needed for the mailto template subject. Plus the Reward
+  // Restaurant name â€” needed for the mailto template subject. Plus the Reward
   // Dollars config so the manual-grant card knows whether to show + what to call
   // the wallet. Luigi 2026-06-27.
   const restaurantRow = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { name: true, timezone: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
+    select: { name: true, timezone: true, rewardsEnabled: true, rewardEarnEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
   });
   // Dates render in the restaurant's timezone (this is a server component, so a
   // naked toLocale* would use the server's UTC clock). Luigi 2026-06-30.
@@ -69,7 +70,7 @@ export default async function CustomerDetailPage({
 
   // Headline Orders/Spent are RECOMPUTED from the order table with the same
   // canonical filter every report uses (drops rejected/cancelled + TEST-),
-  // instead of trusting the stored totalOrders/totalSpent counters — those
+  // instead of trusting the stored totalOrders/totalSpent counters â€” those
   // are bumped at order-create and never adjusted when an order is later
   // rejected, so they drift high. One indexed aggregate on a detail page is
   // cheap; the customers LIST keeps the counters (recompute there = N+1).
@@ -86,7 +87,7 @@ export default async function CustomerDetailPage({
   const spentTotal = liveStats._sum.total ?? 0;
 
   // Reward Dollars wallet for this customer (balance + recent ledger), only when
-  // the restaurant has the feature on. Best-effort — never blocks the page.
+  // the restaurant has the feature on. Best-effort â€” never blocks the page.
   let rewardWallet: { balance: number; ledger: Array<{ id: string; amount: number; reason: string; note: string | null; createdAt: Date }> } | null = null;
   if (restaurantRow?.rewardsEnabled) {
     const acct = await prisma.rewardAccount.findUnique({
@@ -109,7 +110,7 @@ export default async function CustomerDetailPage({
         createdAt: true, type: true,
       },
     }),
-    // Promotions assigned to THIS customer (CustomerCoupon grants — the new
+    // Promotions assigned to THIS customer (CustomerCoupon grants â€” the new
     // model that replaced standalone personal coupons). Matched by customerId
     // OR email so an email-keyed grant (created before they had an account)
     // still shows. Luigi 2026-06-26.
@@ -213,7 +214,7 @@ export default async function CustomerDetailPage({
         initialNotes={customer.notes ?? ""}
       />
 
-      {/* Coupons this customer already has (code-based grants — historical +
+      {/* Coupons this customer already has (code-based grants â€” historical +
           migrated). The old "assign a personal coupon" CREATE form was removed
           (Luigi 2026-06-27): give a customer a deal via "Give a VIP special"
           below instead. This card only shows when there's something to show. */}
@@ -229,8 +230,8 @@ export default async function CustomerDetailPage({
                 const rc = (g.promotion?.ruleConfig ?? {}) as { discountPercent?: number; discountAmount?: number };
                 const pt = g.promotion?.promotionType;
                 // Only %/fixed types have a meaningful $ figure here; every other
-                // type (free_delivery, bogo, free_item, bundles…) showed a bogus
-                // "$0.00 off" — fall back to the promo name instead (audit #20).
+                // type (free_delivery, bogo, free_item, bundlesâ€¦) showed a bogus
+                // "$0.00 off" â€” fall back to the promo name instead (audit #20).
                 const discount = pt === "percentage_off"
                   ? t("discountPercent", { value: rc.discountPercent ?? 0 })
                   : (pt === "fixed_cart" || pt === "fixed_combo")
@@ -248,19 +249,19 @@ export default async function CustomerDetailPage({
                   <li key={g.id} className="flex items-center justify-between gap-3 py-2 px-3 rounded-lg border border-gray-100 flex-wrap">
                     <div className="min-w-0">
                       <div className="text-sm font-bold text-gray-900">
-                        <code className="font-mono">{g.code}</code> — {discount}
+                        <code className="font-mono">{g.code}</code> â€” {discount}
                       </div>
                       <div className="text-[11px] text-gray-500 mt-0.5">
                         {g.promotion?.name}
-                        {(g.promotion?.minimumOrder ?? 0) > 0 && <> · {t("couponMin", { amount: formatCurrency(g.promotion!.minimumOrder) })}</>}
-                        {expired && <> · {t("couponExpires", { date: new Date(g.promotion!.endsAt!).toLocaleDateString(undefined, tzOpts) })}</>}
+                        {(g.promotion?.minimumOrder ?? 0) > 0 && <> Â· {t("couponMin", { amount: formatCurrency(g.promotion!.minimumOrder) })}</>}
+                        {expired && <> Â· {t("couponExpires", { date: new Date(g.promotion!.endsAt!).toLocaleDateString(undefined, tzOpts) })}</>}
                       </div>
                     </div>
                     <span className="flex items-center gap-2 flex-shrink-0">
                       <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${statusClass}`}>
                         {status}
                       </span>
-                      {/* Revocable while merely granted — applied is pinned to an
+                      {/* Revocable while merely granted â€” applied is pinned to an
                           in-flight order, redeemed is history (server enforces
                           the same rule). Fabrizio 2026-07-02. */}
                       {g.status === "granted" && <RevokeGrantButton grantId={g.id} />}
@@ -273,7 +274,7 @@ export default async function CustomerDetailPage({
         </div>
       )}
 
-      {/* Give a VIP special (member-only, no code, auto-applies) — also shows the
+      {/* Give a VIP special (member-only, no code, auto-applies) â€” also shows the
           specials this customer already has, including via group membership. */}
       <GiveVipSpecial
         customerId={customer.id}
@@ -283,7 +284,7 @@ export default async function CustomerDetailPage({
         rewardLabelPlural={restaurantRow?.rewardLabelPlural?.trim() || "Reward Dollars"}
       />
 
-      {/* Reward Dollars wallet — balance + manual grant/adjust + recent ledger.
+      {/* Reward Dollars wallet â€” balance + manual grant/adjust + recent ledger.
           Only when the restaurant has the feature on. */}
       {rewardWallet && (
         <GrantRewardCredit
@@ -295,6 +296,16 @@ export default async function CustomerDetailPage({
             id: l.id, amount: l.amount, reason: l.reason, note: l.note,
             createdAt: l.createdAt.toISOString(),
           }))}
+        />
+      )}
+
+      {/* Personal earn-rate override â€” beats the base rate AND any VIP group
+          rate, for this customer only. Same rewards gate as the wallet card. */}
+      {restaurantRow?.rewardsEnabled && (
+        <CustomEarnRate
+          customerId={customer.id}
+          labelPlural={restaurantRow?.rewardLabelPlural ?? null}
+          initialPercent={customer.rewardEarnPercent}
         />
       )}
 
@@ -325,7 +336,7 @@ export default async function CustomerDetailPage({
                         month: "short", day: "numeric", year: "numeric",
                         hour: "numeric", minute: "2-digit", ...tzOpts,
                       })}
-                      {" · "}{o.type}
+                      {" Â· "}{o.type}
                     </div>
                   </div>
                   <div className="text-right">

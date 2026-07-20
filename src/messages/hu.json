@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Az ügyfelek nem költhetnek {label} egyenleget a kizárt termékekre vagy kategóriákra (pl. ajándékkártyák — egyenleg ne vásároljon egyenleget). A pénztár automatikusan csökkenti a felhasználható {label} összegét. Független a fenti gyűjtési kizárástól és a Promóciók oldal kedvezmény-kizárásától.",
       "redeemExcludeDesc": "Válassza ki a kategóriákat vagy termékeket, amelyeket az ügyfelek nem fizethetnek {label} egyenleggel.",
       "redeemExcludeOn": "Fizethető",
-      "redeemExcludeOff": "Nem fizethető"
+      "redeemExcludeOff": "Nem fizethető",
+      "groupRatesTitle": "VIP-csoportok gyűjtési arányai",
+      "groupRatesSubtitle": "A saját aránnyal rendelkező csoport tagjai ezt a százalékot kapják az alapérték helyett.",
+      "groupRatesExplainer": "Ha valaki több csoport tagja, a legmagasabb arány érvényes. Az ügyfél saját oldalán beállított személyes arány minden csoportarányt felülír.",
+      "groupRateCardTitle": "Gyűjtési arány ehhez a csoporthoz",
+      "groupRateCardDesc": "A csoport tagjai minden rendelés után ennyi százalékot kapnak {label} formájában az alapérték helyett.",
+      "personalRateTitle": "Egyéni gyűjtési arány",
+      "personalRateDesc": "Ez az ügyfél minden rendelés után ennyi százalékot kap {label} formájában — az alapérték és minden VIP-csoportarány helyett.",
+      "ratePlaceholder": "Alapérték",
+      "rateClear": "Egyéni arány törlése"
     },
     "imageCrop": {
       "title": "Fotó igazítása",

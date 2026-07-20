@@ -4662,7 +4662,16 @@
       "redeemExcludeHelp": "Asiakkaat eivät voi käyttää {label} suljettuihin tuotteisiin tai luokkiin (esim. lahjakortit — saldolla ei pidä ostaa saldoa). Kassa pienentää automaattisesti käytettävissä olevaa {label}-määrää. Erillinen yllä olevasta kerryttämisen poissulusta ja Kampanjat-sivun alennuspoissulusta.",
       "redeemExcludeDesc": "Valitse luokat tai tuotteet, joita asiakkaat eivät voi maksaa {label}.",
       "redeemExcludeOn": "Maksettavissa",
-      "redeemExcludeOff": "Ei maksettavissa"
+      "redeemExcludeOff": "Ei maksettavissa",
+      "groupRatesTitle": "VIP-ryhmien ansaintaprosentit",
+      "groupRatesSubtitle": "Ryhmän jäsenet, joilla on oma prosentti, ansaitsevat sen perusprosentin sijaan.",
+      "groupRatesExplainer": "Jos joku kuuluu useaan ryhmään, korkein prosentti voittaa. Asiakkaan omalla sivulla asetettu henkilökohtainen prosentti ohittaa kaikki ryhmäprosentit.",
+      "groupRateCardTitle": "Tämän ryhmän ansaintaprosentti",
+      "groupRateCardDesc": "Tämän ryhmän jäsenet saavat jokaisesta tilauksesta tämän prosentin takaisin ({label}) perusprosentin sijaan.",
+      "personalRateTitle": "Mukautettu ansaintaprosentti",
+      "personalRateDesc": "Tämä asiakas saa jokaisesta tilauksesta tämän prosentin takaisin ({label}) — perusprosentin ja kaikkien VIP-ryhmäprosenttien sijaan.",
+      "ratePlaceholder": "Perusprosentti",
+      "rateClear": "Poista mukautettu prosentti"
     },
     "imageCrop": {
       "title": "Säädä kuvaa",

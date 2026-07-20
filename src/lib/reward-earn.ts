@@ -138,9 +138,16 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
 
     const r = order.restaurant;
     let total = 0;
-    // Base %-back (mirrors awardForOrder).
+    // Base %-back (mirrors awardForOrder EXACTLY, including the standing
+    // VIP/personal override — person > highest group > base; Luigi 2026-07-19).
     if (r.rewardEarnEnabled) {
-      total += round2(r.rewardEarnMode === "per_dollar" ? basis * (r.rewardEarnPerDollar ?? 0) : basis * ((r.rewardEarnPercent ?? 0) / 100));
+      const { loadEarnOverridePct, earnAtPct } = await import("@/lib/reward-earn-rate");
+      const overridePct = await loadEarnOverridePct(order.restaurantId, order.customerId);
+      total += round2(
+        overridePct != null
+          ? earnAtPct(basis, overridePct)
+          : r.rewardEarnMode === "per_dollar" ? basis * (r.rewardEarnPerDollar ?? 0) : basis * ((r.rewardEarnPercent ?? 0) / 100),
+      );
     }
     // Rule bonuses (first/order_over/nth) — same rank logic as awardEarnRulesForOrder.
     const rules = await activeRules(order.restaurantId);
