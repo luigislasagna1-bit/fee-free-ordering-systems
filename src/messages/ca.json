@@ -4718,7 +4718,8 @@
       "st_delivered": "Lliurat",
       "st_failed": "Fallat",
       "st_returned": "Retornat",
-      "st_cancelled": "Cancel·lat"
+      "st_cancelled": "Cancel·lat",
+      "showingFirstN": "Es mostren els primers {count} — n'hi ha més; la llista s'actualitza automàticament."
     },
     "deliveryProvider": {
       "title": "Mètode de lliurament",

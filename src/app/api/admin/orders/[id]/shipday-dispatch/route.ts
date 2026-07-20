@@ -21,7 +21,11 @@ import { dispatchOrderNow } from "@/lib/shipday-dispatch";
 export async function POST(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const user = await getSessionUser();
-  if (!user?.restaurantId) {
+  // Role gate (LR-SEC-02): manual dispatch is a dispatch-surface action —
+  // kitchen_staff accept/ready orders but must not fling one to ShipDay
+  // (sibling of the FeeFree dispatch/config gates). Gate on `role`, not
+  // effectiveRole, so impersonating superadmins/resellers still pass.
+  if (!user?.restaurantId || user.role === "kitchen_staff") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   // Scope check BEFORE any work: the order must belong to this restaurant.

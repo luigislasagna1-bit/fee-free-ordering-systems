@@ -4718,7 +4718,8 @@
       "st_delivered": "Doručeno",
       "st_failed": "Selhalo",
       "st_returned": "Vráceno",
-      "st_cancelled": "Zrušeno"
+      "st_cancelled": "Zrušeno",
+      "showingFirstN": "Zobrazeno prvních {count} — je jich více; seznam se aktualizuje automaticky."
     },
     "deliveryProvider": {
       "title": "Způsob doručení",

@@ -25,7 +25,9 @@ import { claimPartnerIntro, unclaimPartnerIntro, buildAndSendPartnerIntro } from
 export async function POST() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  if (!restaurantId) {
+  // Role gate (LR-SEC-02): fires an outbound partner-intro EMAIL — owner-only,
+  // never kitchen_staff. Gate on `role`, not effectiveRole.
+  if (!restaurantId || user?.role === "kitchen_staff") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   if (!(await hasFeature(restaurantId, "driver_pool"))) {

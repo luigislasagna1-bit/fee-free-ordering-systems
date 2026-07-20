@@ -4718,7 +4718,8 @@
       "st_delivered": "Delivered",
       "st_failed": "Failed",
       "st_returned": "Returned",
-      "st_cancelled": "Cancelled"
+      "st_cancelled": "Cancelled",
+      "showingFirstN": "Showing the first {count} — more exist; the list refreshes automatically."
     },
     "deliveryProvider": {
       "title": "Delivery method",

@@ -45,7 +45,13 @@ export async function GET() {
 export async function PUT(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Role gate (LR-SEC-02): getSessionUser() FALLS BACK to the kitchen session,
+  // and a kitchen login must be read-only on the dispatch surface — it must
+  // never flip the provider/enable or change fee settings. Gate on `role` —
+  // NOT effectiveRole — so impersonating superadmins/resellers still pass.
+  if (!restaurantId || user?.role === "kitchen_staff") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const body = await req.json().catch(() => null);
   if (!body || typeof body !== "object") {

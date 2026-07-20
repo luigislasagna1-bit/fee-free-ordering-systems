@@ -4718,7 +4718,8 @@
       "st_delivered": "Испоручено",
       "st_failed": "Није успело",
       "st_returned": "Враћено",
-      "st_cancelled": "Отказано"
+      "st_cancelled": "Отказано",
+      "showingFirstN": "Prikazano prvih {count} — ima ih više; lista se automatski osvežava."
     },
     "deliveryProvider": {
       "title": "Način dostave",

@@ -4718,7 +4718,8 @@
       "st_delivered": "Toimitettu",
       "st_failed": "Epäonnistui",
       "st_returned": "Palautettu",
-      "st_cancelled": "Peruutettu"
+      "st_cancelled": "Peruutettu",
+      "showingFirstN": "Näytetään ensimmäiset {count} — niitä on enemmän; luettelo päivittyy automaattisesti."
     },
     "deliveryProvider": {
       "title": "Toimitustapa",

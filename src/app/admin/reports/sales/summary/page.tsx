@@ -4,7 +4,7 @@ import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildSummaryRows, isSummaryDim, type SummaryDim } from "@/lib/reports/summary-rows";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { SummaryTable } from "./SummaryTable";
 
 /**
@@ -34,6 +34,9 @@ export default async function SalesSummaryPage({
   const dim = pickDim(sp.by);
 
   const t = await getTranslations("admin.reportSalesSummary");
+  // Date row labels in the admin's ACTIVE locale, not hardcoded en-US (an
+  // Italian owner saw "Sun, Jul 19" instead of "dom 19 lug"). Luigi 2026-07-20.
+  const locale = await getLocale();
 
   if (!restaurantId) return <p className="text-sm text-gray-500">{t("noRestaurantContext")}</p>;
   const scope = await resolveReportScope(restaurantId);
@@ -65,7 +68,7 @@ export default async function SalesSummaryPage({
           are click-sortable (shared sortable primitive). The bold TOTAL row
           stays pinned in <tfoot>, excluded from sorting. */}
       <SummaryTable
-        rows={rows.map((r) => ({ ...r, label: rowLabel(dim, r.key, t) }))}
+        rows={rows.map((r) => ({ ...r, label: rowLabel(dim, r.key, t, locale) }))}
         totals={totals}
         currency={scope.currency}
         showCredit={showCredit}
@@ -114,20 +117,20 @@ function prettify(raw: string): string {
   return raw.split(/[_\s]+/).map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : w)).join(" ");
 }
 
-function rowLabel(d: SummaryDim, key: string, t: TFn): string {
+function rowLabel(d: SummaryDim, key: string, t: TFn, locale: string): string {
   if (key === "—" || !key) return "—";
   if (d === "day") {
-    return new Date(`${key}T12:00:00`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+    return new Date(`${key}T12:00:00`).toLocaleDateString(locale, { weekday: "short", month: "short", day: "numeric", year: "numeric" });
   }
   if (d === "month") {
-    return new Date(`${key}-01T12:00:00`).toLocaleDateString("en-US", { month: "long", year: "numeric" });
+    return new Date(`${key}-01T12:00:00`).toLocaleDateString(locale, { month: "long", year: "numeric" });
   }
   if (d === "week") {
     const start = new Date(`${key}T12:00:00`);
     const end = new Date(start);
     end.setDate(end.getDate() + 6);
     const f = (dt: Date, withYear: boolean) =>
-      dt.toLocaleDateString("en-US", { month: "short", day: "numeric", ...(withYear ? { year: "numeric" } : {}) });
+      dt.toLocaleDateString(locale, { month: "short", day: "numeric", ...(withYear ? { year: "numeric" } : {}) });
     return `${f(start, false)} – ${f(end, true)}`;
   }
   if (d === "type") return key === "dine_in" ? t("labelDineIn") : prettify(key);

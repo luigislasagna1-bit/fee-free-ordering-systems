@@ -17,7 +17,11 @@ import { testShipdayKey } from "@/lib/shipday";
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  if (!restaurantId) return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  // Role gate (LR-SEC-02): testing/probing the ShipDay credential is a config
+  // action — owner-only, like the save route. Gate on `role`, not effectiveRole.
+  if (!restaurantId || user?.role === "kitchen_staff") {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
 
   if (!(await hasFeature(restaurantId, "driver_pool"))) {
     return NextResponse.json(

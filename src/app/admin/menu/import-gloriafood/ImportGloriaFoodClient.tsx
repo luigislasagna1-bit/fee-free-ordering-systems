@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { useCurrencyFormat } from "@/lib/currency-context";
 
 /**
  * GloriaFood import wizard — 3 steps.
@@ -28,6 +29,9 @@ import { useTranslations } from "next-intl";
 export function ImportGloriaFoodClient({ menuId }: { menuId?: string }) {
   const router = useRouter();
   const t = useTranslations("admin.importGloriaFood");
+  // Preview prices in the RESTAURANT's currency (admin CurrencyProvider), not a
+  // hardcoded "$" — a Euro store importing showed dollars (Luigi 2026-07-20).
+  const fmtCurrency = useCurrencyFormat();
 
   // Wizard state
   const [step, setStep] = useState<"input" | "preview" | "committing" | "done">("input");
@@ -240,7 +244,7 @@ export function ImportGloriaFoodClient({ menuId }: { menuId?: string }) {
                             )}
                           </span>
                           <span className="text-gray-500 text-xs flex-shrink-0">
-                            ${it.basePrice.toFixed(2)}
+                            {fmtCurrency(it.basePrice)}
                           </span>
                         </li>
                       ))}

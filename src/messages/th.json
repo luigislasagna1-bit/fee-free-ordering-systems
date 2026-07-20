@@ -4718,7 +4718,8 @@
       "st_delivered": "จัดส่งแล้ว",
       "st_failed": "ล้มเหลว",
       "st_returned": "คืนแล้ว",
-      "st_cancelled": "ยกเลิกแล้ว"
+      "st_cancelled": "ยกเลิกแล้ว",
+      "showingFirstN": "กำลังแสดง {count} รายการแรก — ยังมีอีก รายการจะรีเฟรชอัตโนมัติ"
     },
     "deliveryProvider": {
       "title": "วิธีจัดส่ง",

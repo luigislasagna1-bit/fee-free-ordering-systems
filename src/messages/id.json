@@ -4718,7 +4718,8 @@
       "st_delivered": "Terkirim",
       "st_failed": "Gagal",
       "st_returned": "Dikembalikan",
-      "st_cancelled": "Dibatalkan"
+      "st_cancelled": "Dibatalkan",
+      "showingFirstN": "Menampilkan {count} pertama — masih ada lagi; daftar diperbarui otomatis."
     },
     "deliveryProvider": {
       "title": "Metode pengiriman",

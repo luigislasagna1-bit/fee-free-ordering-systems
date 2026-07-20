@@ -34,7 +34,10 @@ const FEE_MODE_OK = new Set(["pass_through", "flat", "tiered"]);
 export async function PUT(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  if (!restaurantId) {
+  // Role gate (LR-SEC-02): this saves the delivery PROVIDER chooser + ShipDay
+  // config — owner-only, the ShipDay-side sibling of the FeeFree config PUT.
+  // Gate on `role`, not effectiveRole (impersonating superadmins still pass).
+  if (!restaurantId || user?.role === "kitchen_staff") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

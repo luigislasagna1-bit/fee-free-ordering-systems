@@ -4718,7 +4718,8 @@
       "st_delivered": "נמסר",
       "st_failed": "נכשל",
       "st_returned": "הוחזר",
-      "st_cancelled": "בוטל"
+      "st_cancelled": "בוטל",
+      "showingFirstN": "מוצגים {count} הראשונים — יש עוד; הרשימה מתרעננת אוטומטית."
     },
     "deliveryProvider": {
       "title": "שיטת משלוח",

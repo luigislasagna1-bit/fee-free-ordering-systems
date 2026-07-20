@@ -4718,7 +4718,8 @@
       "st_delivered": "Bezorgd",
       "st_failed": "Mislukt",
       "st_returned": "Teruggestuurd",
-      "st_cancelled": "Geannuleerd"
+      "st_cancelled": "Geannuleerd",
+      "showingFirstN": "Eerste {count} worden getoond — er zijn er meer; de lijst ververst automatisch."
     },
     "deliveryProvider": {
       "title": "Bezorgmethode",

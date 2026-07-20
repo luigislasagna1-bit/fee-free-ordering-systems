@@ -4718,7 +4718,8 @@
       "st_delivered": "Levererad",
       "st_failed": "Misslyckad",
       "st_returned": "Returnerad",
-      "st_cancelled": "Avbruten"
+      "st_cancelled": "Avbruten",
+      "showingFirstN": "Visar de första {count} — det finns fler; listan uppdateras automatiskt."
     },
     "deliveryProvider": {
       "title": "Leveransmetod",

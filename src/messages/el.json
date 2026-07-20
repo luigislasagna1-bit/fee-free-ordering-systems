@@ -4718,7 +4718,8 @@
       "st_delivered": "Παραδόθηκε",
       "st_failed": "Απέτυχε",
       "st_returned": "Επεστράφη",
-      "st_cancelled": "Ακυρώθηκε"
+      "st_cancelled": "Ακυρώθηκε",
+      "showingFirstN": "Εμφανίζονται τα πρώτα {count} — υπάρχουν περισσότερα· η λίστα ανανεώνεται αυτόματα."
     },
     "deliveryProvider": {
       "title": "Μέθοδος παράδοσης",

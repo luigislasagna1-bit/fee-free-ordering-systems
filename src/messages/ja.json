@@ -4718,7 +4718,8 @@
       "st_delivered": "配達済み",
       "st_failed": "失敗",
       "st_returned": "返却済み",
-      "st_cancelled": "キャンセル済み"
+      "st_cancelled": "キャンセル済み",
+      "showingFirstN": "最初の{count}件を表示中 — 他にもあります。リストは自動更新されます。"
     },
     "deliveryProvider": {
       "title": "配達方法",

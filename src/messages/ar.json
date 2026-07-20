@@ -4718,7 +4718,8 @@
       "st_delivered": "تم التوصيل",
       "st_failed": "فشل",
       "st_returned": "مُعاد",
-      "st_cancelled": "ملغى"
+      "st_cancelled": "ملغى",
+      "showingFirstN": "عرض أول {count} — هناك المزيد؛ يتم تحديث القائمة تلقائيًا."
     },
     "deliveryProvider": {
       "title": "طريقة التوصيل",

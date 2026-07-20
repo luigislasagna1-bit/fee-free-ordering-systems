@@ -4718,7 +4718,8 @@
       "st_delivered": "Kohale toimetatud",
       "st_failed": "Ebaõnnestus",
       "st_returned": "Tagastatud",
-      "st_cancelled": "Tühistatud"
+      "st_cancelled": "Tühistatud",
+      "showingFirstN": "Kuvatakse esimesed {count} — neid on rohkem; loend värskendub automaatselt."
     },
     "deliveryProvider": {
       "title": "Tarneviis",

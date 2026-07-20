@@ -14,7 +14,12 @@ import { assignToFeeFreeDriver } from "@/lib/delivery-dispatch";
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
-  if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  // Role gate (LR-SEC-02): kitchen_staff sees the dispatch queue read-only —
+  // it must not manually fling an order to a driver. Gate on `role`, not
+  // effectiveRole, so impersonating superadmins/resellers still pass.
+  if (!restaurantId || user?.role === "kitchen_staff") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const body = await req.json().catch(() => null);
   const orderId = typeof body?.orderId === "string" ? body.orderId : "";

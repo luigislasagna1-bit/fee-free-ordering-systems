@@ -4718,7 +4718,8 @@
       "st_delivered": "已送达",
       "st_failed": "失败",
       "st_returned": "已退回",
-      "st_cancelled": "已取消"
+      "st_cancelled": "已取消",
+      "showingFirstN": "显示前 {count} 条 — 还有更多；列表会自动刷新。"
     },
     "deliveryProvider": {
       "title": "配送方式",

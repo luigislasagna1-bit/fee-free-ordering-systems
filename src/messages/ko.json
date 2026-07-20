@@ -4718,7 +4718,8 @@
       "st_delivered": "배달 완료",
       "st_failed": "실패",
       "st_returned": "반송됨",
-      "st_cancelled": "취소됨"
+      "st_cancelled": "취소됨",
+      "showingFirstN": "처음 {count}개 표시 중 — 더 있습니다. 목록은 자동으로 새로고침됩니다."
     },
     "deliveryProvider": {
       "title": "배달 방법",

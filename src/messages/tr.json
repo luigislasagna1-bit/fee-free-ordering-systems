@@ -4718,7 +4718,8 @@
       "st_delivered": "Teslim Edildi",
       "st_failed": "Başarısız",
       "st_returned": "İade Edildi",
-      "st_cancelled": "İptal Edildi"
+      "st_cancelled": "İptal Edildi",
+      "showingFirstN": "İlk {count} gösteriliyor — daha fazlası var; liste otomatik olarak yenilenir."
     },
     "deliveryProvider": {
       "title": "Teslimat yöntemi",

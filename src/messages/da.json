@@ -4718,7 +4718,8 @@
       "st_delivered": "Leveret",
       "st_failed": "Mislykkedes",
       "st_returned": "Returneret",
-      "st_cancelled": "Annulleret"
+      "st_cancelled": "Annulleret",
+      "showingFirstN": "Viser de første {count} — der er flere; listen opdateres automatisk."
     },
     "deliveryProvider": {
       "title": "Leveringsmetode",

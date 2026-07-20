@@ -65,6 +65,9 @@ export type FeeFreeDeliveryOpsData = {
   held: FeeFreeDeliveryOpsHeld[];
   /** Live (non-terminal) deliveries with their assigned driver + order, ≤50. */
   active: FeeFreeDeliveryOpsActive[];
+  /** True when the active list hit its ≤50 cap (more live deliveries exist).
+   *  active is never post-filtered, so length===50 ⇒ the note's count is exact. */
+  activeCapped: boolean;
   /** The store's own coordinates — for the restaurant→customer distance on each active delivery. */
   rest: { lat: number | null; lng: number | null } | null;
 };
@@ -125,5 +128,8 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
   // Only surface holds that would actually dispatch (prepaid).
   const held = heldOrders.filter((o) => o.paymentStatus === "paid" || o.total - (o.creditApplied ?? 0) <= 0.009);
 
-  return { owed, deliveredThisWeek, charge, held, active, rest };
+  return {
+    owed, deliveredThisWeek, charge, held, active, rest,
+    activeCapped: active.length >= 50,
+  };
 }

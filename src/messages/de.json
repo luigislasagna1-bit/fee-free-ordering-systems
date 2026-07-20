@@ -4718,7 +4718,8 @@
       "st_delivered": "Zugestellt",
       "st_failed": "Fehlgeschlagen",
       "st_returned": "Zurückgebracht",
-      "st_cancelled": "Storniert"
+      "st_cancelled": "Storniert",
+      "showingFirstN": "Erste {count} werden angezeigt — es gibt mehr; die Liste aktualisiert sich automatisch."
     },
     "deliveryProvider": {
       "title": "Liefermethode",

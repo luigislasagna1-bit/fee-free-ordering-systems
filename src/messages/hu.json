@@ -4718,7 +4718,8 @@
       "st_delivered": "Kézbesítve",
       "st_failed": "Sikertelen",
       "st_returned": "Visszaküldve",
-      "st_cancelled": "Törölve"
+      "st_cancelled": "Törölve",
+      "showingFirstN": "Az első {count} látható — több is van; a lista automatikusan frissül."
     },
     "deliveryProvider": {
       "title": "Kézbesítési mód",

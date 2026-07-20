@@ -4718,7 +4718,8 @@
       "st_delivered": "Livrat",
       "st_failed": "Eșuat",
       "st_returned": "Returnat",
-      "st_cancelled": "Anulat"
+      "st_cancelled": "Anulat",
+      "showingFirstN": "Se afișează primele {count} — există mai multe; lista se actualizează automat."
     },
     "deliveryProvider": {
       "title": "Metodă de livrare",

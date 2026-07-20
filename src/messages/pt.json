@@ -4718,7 +4718,8 @@
       "st_delivered": "Entregue",
       "st_failed": "Falhado",
       "st_returned": "Devolvido",
-      "st_cancelled": "Cancelado"
+      "st_cancelled": "Cancelado",
+      "showingFirstN": "A mostrar os primeiros {count} — existem mais; a lista atualiza automaticamente."
     },
     "deliveryProvider": {
       "title": "Método de entrega",

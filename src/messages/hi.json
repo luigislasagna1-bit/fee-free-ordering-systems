@@ -4718,7 +4718,8 @@
       "st_delivered": "वितरित",
       "st_failed": "विफल",
       "st_returned": "वापस किया",
-      "st_cancelled": "रद्द किया"
+      "st_cancelled": "रद्द किया",
+      "showingFirstN": "पहले {count} दिखाए जा रहे हैं — और भी हैं; सूची स्वतः रीफ्रेश होती है।"
     },
     "deliveryProvider": {
       "title": "डिलीवरी का तरीका",

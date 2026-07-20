@@ -4718,7 +4718,8 @@
       "st_delivered": "Levert",
       "st_failed": "Mislyktes",
       "st_returned": "Returnert",
-      "st_cancelled": "Avbrutt"
+      "st_cancelled": "Avbrutt",
+      "showingFirstN": "Viser de første {count} — det finnes flere; listen oppdateres automatisk."
     },
     "deliveryProvider": {
       "title": "Leveringsmetode",

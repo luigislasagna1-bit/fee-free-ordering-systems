@@ -4718,7 +4718,8 @@
       "st_delivered": "Pristatyta",
       "st_failed": "Nepavyko",
       "st_returned": "Grąžinta",
-      "st_cancelled": "Atšaukta"
+      "st_cancelled": "Atšaukta",
+      "showingFirstN": "Rodoma pirmieji {count} — jų yra daugiau; sąrašas atnaujinamas automatiškai."
     },
     "deliveryProvider": {
       "title": "Pristatymo būdas",

@@ -4718,7 +4718,8 @@
       "st_delivered": "Đã giao",
       "st_failed": "Thất bại",
       "st_returned": "Đã trả lại",
-      "st_cancelled": "Đã hủy"
+      "st_cancelled": "Đã hủy",
+      "showingFirstN": "Đang hiển thị {count} mục đầu — còn nữa; danh sách tự động làm mới."
     },
     "deliveryProvider": {
       "title": "Phương thức giao hàng",

@@ -4718,7 +4718,8 @@
       "st_delivered": "Dostavljeno",
       "st_failed": "Ni uspelo",
       "st_returned": "Vrnjeno",
-      "st_cancelled": "Preklicano"
+      "st_cancelled": "Preklicano",
+      "showingFirstN": "Prikazanih prvih {count} — obstaja jih več; seznam se samodejno osveži."
     },
     "deliveryProvider": {
       "title": "Način dostave",

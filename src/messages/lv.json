@@ -4718,7 +4718,8 @@
       "st_delivered": "Piegādāts",
       "st_failed": "Neizdevās",
       "st_returned": "Atgriezts",
-      "st_cancelled": "Atcelts"
+      "st_cancelled": "Atcelts",
+      "showingFirstN": "Rāda pirmos {count} — to ir vairāk; saraksts atjauninās automātiski."
     },
     "deliveryProvider": {
       "title": "Piegādes metode",

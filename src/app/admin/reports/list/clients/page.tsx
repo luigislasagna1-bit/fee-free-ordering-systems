@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
@@ -54,6 +54,7 @@ export default async function ListClientsPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const t = await getTranslations("admin.reportClientsList");
+  const locale = await getLocale(); // last-order dates in the admin's locale, not en-US
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
@@ -206,7 +207,7 @@ export default async function ListClientsPage({
                     {c.email && <div>{c.email}</div>}
                     {c.phone && <div>{c.phone}</div>}
                   </td>
-                  <td className="py-2.5 px-4 text-gray-600 text-xs">{formatLastOrder(lifetimeById.get(c.id)?.lastOrder, scope.timezone ?? undefined)}</td>
+                  <td className="py-2.5 px-4 text-gray-600 text-xs">{formatLastOrder(lifetimeById.get(c.id)?.lastOrder, locale, scope.timezone ?? undefined)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-700">{g._count.toLocaleString()}</td>
                   <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(g._sum.total ?? 0)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-500">{(lifetimeById.get(c.id)?.orders ?? c.totalOrders).toLocaleString()}</td>
@@ -260,11 +261,12 @@ function SortHeader({ id, label, sort, sp, align }: {
   );
 }
 
-function formatLastOrder(d: Date | null | undefined, timeZone?: string): string {
+function formatLastOrder(d: Date | null | undefined, locale: string, timeZone?: string): string {
   // Render in the restaurant's tz — server component, so a naked
   // toLocaleDateString() uses the server's UTC clock and a late-night order can
-  // show the wrong calendar day. Luigi 2026-07-01.
-  return d ? new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric", ...(timeZone ? { timeZone } : {}) }) : "—";
+  // show the wrong calendar day. Luigi 2026-07-01. Locale = the admin's active
+  // language, not hardcoded en-US (Luigi 2026-07-20).
+  return d ? new Date(d).toLocaleDateString(locale, { year: "numeric", month: "short", day: "numeric", ...(timeZone ? { timeZone } : {}) }) : "—";
 }
 
 function Pagination({ current, total, sp, t }: { current: number; total: number; sp: Record<string, string | string[] | undefined>; t: Awaited<ReturnType<typeof getTranslations>> }) {

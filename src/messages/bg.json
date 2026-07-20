@@ -4718,7 +4718,8 @@
       "st_delivered": "Доставено",
       "st_failed": "Неуспешно",
       "st_returned": "Върнато",
-      "st_cancelled": "Отказано"
+      "st_cancelled": "Отказано",
+      "showingFirstN": "Показани са първите {count} — има още; списъкът се обновява автоматично."
     },
     "deliveryProvider": {
       "title": "Метод на доставка",
