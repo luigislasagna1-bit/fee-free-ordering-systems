@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Merkbeheer",
       "lockedByBrand": "Beheerd door uw merk",
       "lockHelp": "Vergrendel een instelling zodat deze locatie die niet zelf kan wijzigen — u beheert die vanuit het merk.",
-      "brandManagedEditNotice": "Om dit hier te bewerken, schakelt u eerst deze instelling uit zodat uw merk die niet meer beheert."
+      "brandManagedEditNotice": "Om dit hier te bewerken, schakelt u eerst deze instelling uit zodat uw merk die niet meer beheert.",
+      "searchPlaceholder": "Zoeken op naam of stad…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Maatkeuze",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Toegewezen",
       "labelAssigned": "Toegewezen",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Geen actieve gerechten — opnieuw selecteren"
+      "badgeDeadTargets": "Geen actieve gerechten — opnieuw selecteren",
+      "searchPlaceholder": "Zoeken op naam of couponcode…"
     },
     "promoWizard": {
       "errorPickType": "Kies een promotietype om door te gaan.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Dit lid uit de groep verwijderen?",
       "confirmRemoveSpecial": "Deze aanbieding verwijderen?",
       "confirmRemoveFromGroup": "{name} uit “{group}” verwijderen? Deze persoon verliest alle aan die groep gekoppelde aanbiedingen. Voor de rest blijft de groep ongewijzigd.",
-      "removeFromGroupTitle": "Verwijderen uit {group}"
+      "removeFromGroupTitle": "Verwijderen uit {group}",
+      "membersCsvCapNote": "Let op: alleen de eerste 1000 leden worden geëxporteerd (serverlimiet)."
     },
     "rewards": {
       "title": "Spaartegoed",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery is nog niet beschikbaar in jouw gebied.",
       "lockedNotice": "ShipDay en Fee Free Delivery vereisen de Driver Pool-add-on. Je eigen bezorgers kun je altijd gratis gebruiken.",
       "getDriverPool": "Driver Pool aanschaffen"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Zoek items en categorieën…"
     }
   },
   "impersonation": {

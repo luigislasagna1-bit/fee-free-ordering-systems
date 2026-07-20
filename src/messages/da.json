@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Mærkestyring",
       "lockedByBrand": "Administreres af dit mærke",
       "lockHelp": "Lås en indstilling, så denne lokation ikke selv kan ændre den — du styrer den fra mærket.",
-      "brandManagedEditNotice": "For at redigere her skal du først slå denne indstilling fra, så dit mærke ikke længere styrer den."
+      "brandManagedEditNotice": "For at redigere her skal du først slå denne indstilling fra, så dit mærke ikke længere styrer den.",
+      "searchPlaceholder": "Søg på navn eller by…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Størrelsesvalg",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Tildelt",
       "labelAssigned": "Tildelt",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Ingen aktive retter — vælg igen"
+      "badgeDeadTargets": "Ingen aktive retter — vælg igen",
+      "searchPlaceholder": "Søg på navn eller kuponkode…"
     },
     "promoWizard": {
       "errorPickType": "Vælg en kampagnetype for at fortsætte.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Fjern dette medlem fra gruppen?",
       "confirmRemoveSpecial": "Fjern dette tilbud?",
       "confirmRemoveFromGroup": "Fjern {name} fra ”{group}”? Personen mister alle tilbud knyttet til gruppen. Gruppen og dens tilbud er uændrede for alle andre.",
-      "removeFromGroupTitle": "Fjern fra {group}"
+      "removeFromGroupTitle": "Fjern fra {group}",
+      "membersCsvCapNote": "Bemærk: kun de første 1000 medlemmer eksporteres (servergrænse)."
     },
     "rewards": {
       "title": "Bonuskroner",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery er endnu ikke tilgængeligt i dit område.",
       "lockedNotice": "ShipDay og Fee Free Delivery kræver Driver Pool-tilføjelsen. Dine egne chauffører kan du altid bruge gratis.",
       "getDriverPool": "Få Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Søg i varer og kategorier…"
     }
   },
   "impersonation": {

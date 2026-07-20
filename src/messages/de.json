@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Markensteuerung",
       "lockedByBrand": "Von Ihrer Marke verwaltet",
       "lockHelp": "Sperren Sie eine Einstellung, damit dieser Standort sie nicht selbst ändern kann — Sie steuern sie über die Marke.",
-      "brandManagedEditNotice": "Um es hier zu bearbeiten, deaktivieren Sie zuerst diese Einstellung, damit Ihre Marke sie nicht mehr verwaltet."
+      "brandManagedEditNotice": "Um es hier zu bearbeiten, deaktivieren Sie zuerst diese Einstellung, damit Ihre Marke sie nicht mehr verwaltet.",
+      "searchPlaceholder": "Nach Name oder Stadt suchen…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Größenauswahl",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Zugewiesen",
       "labelAssigned": "Zugewiesen",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Keine aktiven Gerichte — neu auswählen"
+      "badgeDeadTargets": "Keine aktiven Gerichte — neu auswählen",
+      "searchPlaceholder": "Nach Name oder Gutscheincode suchen…"
     },
     "promoWizard": {
       "errorPickType": "Wählen Sie einen Aktionstyp, um fortzufahren.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Dieses Mitglied aus der Gruppe entfernen?",
       "confirmRemoveSpecial": "Dieses Special entfernen?",
       "confirmRemoveFromGroup": "{name} aus „{group}“ entfernen? Diese Person verliert alle mit der Gruppe verknüpften Angebote. Für alle anderen bleiben Gruppe und Angebote unverändert.",
-      "removeFromGroupTitle": "Aus {group} entfernen"
+      "removeFromGroupTitle": "Aus {group} entfernen",
+      "membersCsvCapNote": "Hinweis: Es werden nur die ersten 1000 Mitglieder exportiert (Serverlimit)."
     },
     "rewards": {
       "title": "Bonusguthaben",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery ist in Ihrer Region noch nicht verfügbar.",
       "lockedNotice": "ShipDay und Fee Free Delivery erfordern das Driver-Pool-Add-on. Ihre eigenen Fahrer können Sie immer kostenlos nutzen.",
       "getDriverPool": "Driver Pool holen"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Artikel und Kategorien durchsuchen…"
     }
   },
   "impersonation": {

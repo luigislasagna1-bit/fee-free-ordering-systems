@@ -2216,7 +2216,8 @@
       "brandControlsLabel": "ब्रांड नियंत्रण",
       "lockedByBrand": "आपके ब्रांड द्वारा प्रबंधित",
       "lockHelp": "किसी सेटिंग को लॉक करें ताकि यह स्थान उसे न बदल सके — आप इसे ब्रांड से नियंत्रित करते हैं।",
-      "brandManagedEditNotice": "इसे यहाँ संपादित करने के लिए, पहले इस सेटिंग को बंद करें ताकि आपका ब्रांड इसे प्रबंधित न करे।"
+      "brandManagedEditNotice": "इसे यहाँ संपादित करने के लिए, पहले इस सेटिंग को बंद करें ताकि आपका ब्रांड इसे प्रबंधित न करे।",
+      "searchPlaceholder": "नाम या शहर से खोजें…"
     },
     "menuEditor": {
       "sectionSizeLabel": "आकार चयन",
@@ -2623,7 +2624,8 @@
       "tabAssigned": "असाइन किया गया",
       "labelAssigned": "असाइन किया गया",
       "labelVip": "VIP",
-      "badgeDeadTargets": "कोई सक्रिय व्यंजन नहीं — फिर से चुनें"
+      "badgeDeadTargets": "कोई सक्रिय व्यंजन नहीं — फिर से चुनें",
+      "searchPlaceholder": "नाम या कूपन कोड से खोजें…"
     },
     "promoWizard": {
       "errorPickType": "जारी रखने के लिए एक प्रमोशन प्रकार चुनें।",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "इस सदस्य को समूह से हटाएँ?",
       "confirmRemoveSpecial": "इस विशेष ऑफ़र को हटाएँ?",
       "confirmRemoveFromGroup": "{name} को “{group}” से हटाएँ? उसे इस समूह से जुड़े सभी ऑफ़र नहीं मिलेंगे। समूह और उसके ऑफ़र बाकी लोगों के लिए वैसे ही रहेंगे।",
-      "removeFromGroupTitle": "{group} से हटाएँ"
+      "removeFromGroupTitle": "{group} से हटाएँ",
+      "membersCsvCapNote": "नोट: केवल पहले 1000 सदस्य ही निर्यात किए जाते हैं (सर्वर सीमा)।"
     },
     "rewards": {
       "title": "रिवॉर्ड डॉलर",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery अभी आपके क्षेत्र में उपलब्ध नहीं है।",
       "lockedNotice": "ShipDay और Fee Free Delivery के लिए Driver Pool ऐड-ऑन आवश्यक है। अपने खुद के ड्राइवरों का उपयोग हमेशा मुफ़्त है।",
       "getDriverPool": "Driver Pool प्राप्त करें"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "आइटम और श्रेणियाँ खोजें…"
     }
   },
   "impersonation": {

@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "בקרות מותג",
       "lockedByBrand": "מנוהל על ידי המותג שלך",
       "lockHelp": "נעל הגדרה כך שמיקום זה לא יוכל לשנות אותה — אתה שולט בה מהמותג.",
-      "brandManagedEditNotice": "כדי לערוך כאן, כבה תחילה הגדרה זו כך שהמותג שלך לא ינהל אותה יותר."
+      "brandManagedEditNotice": "כדי לערוך כאן, כבה תחילה הגדרה זו כך שהמותג שלך לא ינהל אותה יותר.",
+      "searchPlaceholder": "חיפוש לפי שם או עיר…"
     },
     "menuEditor": {
       "sectionSizeLabel": "בחירת גודל",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "הוקצה",
       "labelAssigned": "הוקצה",
       "labelVip": "VIP",
-      "badgeDeadTargets": "אין מנות פעילות — בחרו מחדש"
+      "badgeDeadTargets": "אין מנות פעילות — בחרו מחדש",
+      "searchPlaceholder": "חיפוש לפי שם או קוד קופון…"
     },
     "promoWizard": {
       "errorPickType": "בחר סוג מבצע להמשך.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "להסיר את החבר הזה מהקבוצה?",
       "confirmRemoveSpecial": "להסיר את המבצע הזה?",
       "confirmRemoveFromGroup": "להסיר את {name} מ-“{group}”? הוא יאבד את כל ההטבות המשויכות לקבוצה. הקבוצה וההטבות נשארות ללא שינוי עבור השאר.",
-      "removeFromGroupTitle": "הסרה מ-{group}"
+      "removeFromGroupTitle": "הסרה מ-{group}",
+      "membersCsvCapNote": "הערה: מיוצאים רק 1000 החברים הראשונים (מגבלת השרת)."
     },
     "rewards": {
       "title": "דולרים של תגמולים",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery עדיין לא זמין באזור שלך.",
       "lockedNotice": "ShipDay ו-Fee Free Delivery דורשים את תוסף Driver Pool. את הנהגים שלך תמיד אפשר להשתמש בחינם.",
       "getDriverPool": "קבל Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "חיפוש פריטים וקטגוריות…"
     }
   },
   "impersonation": {

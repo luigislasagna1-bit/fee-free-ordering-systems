@@ -2559,7 +2559,8 @@
       "brandControlsLabel": "Nastavenia značky",
       "lockedByBrand": "Spravované vašou značkou",
       "lockHelp": "Uzamknite nastavenie, aby ho táto prevádzka nemohla meniť — riadite ho zo značky.",
-      "brandManagedEditNotice": "Ak to chcete upraviť tu, najprv toto nastavenie vypnite, aby ho vaša značka už nespravovala."
+      "brandManagedEditNotice": "Ak to chcete upraviť tu, najprv toto nastavenie vypnite, aby ho vaša značka už nespravovala.",
+      "searchPlaceholder": "Hľadať podľa názvu alebo mesta…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Výber veľkosti",
@@ -2966,7 +2967,8 @@
       "tabAssigned": "Priradené",
       "labelAssigned": "Priradené",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Žiadne aktívne jedlá — vyberte znova"
+      "badgeDeadTargets": "Žiadne aktívne jedlá — vyberte znova",
+      "searchPlaceholder": "Hľadať podľa názvu alebo kódu kupónu…"
     },
     "promoWizard": {
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Odstrániť tohto člena zo skupiny?",
       "confirmRemoveSpecial": "Odstrániť túto špeciálnu ponuku?",
       "confirmRemoveFromGroup": "Odstrániť {name} zo skupiny „{group}“? Príde o všetky ponuky spojené s touto skupinou. Skupina a jej ponuky zostávajú pre ostatných bez zmeny.",
-      "removeFromGroupTitle": "Odstrániť zo skupiny {group}"
+      "removeFromGroupTitle": "Odstrániť zo skupiny {group}",
+      "membersCsvCapNote": "Poznámka: exportuje sa iba prvých 1000 členov (limit servera)."
     },
     "rewards": {
       "title": "Vernostný kredit",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery zatiaľ nie je vo vašej oblasti dostupné.",
       "lockedNotice": "ShipDay a Fee Free Delivery vyžadujú doplnok Driver Pool. Vašich vlastných vodičov môžete vždy využívať zadarmo.",
       "getDriverPool": "Získať Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Hľadať položky a kategórie…"
     }
   },
   "impersonation": {

@@ -6,6 +6,7 @@ import { buildPromoStatRows } from "@/lib/reports/promo-rows";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
+import { PromotionsTable } from "./PromotionsTable";
 
 /**
  * /admin/reports/online-ordering/promotions
@@ -51,40 +52,22 @@ export default async function PromotionsReportPage({
         </div>
       </header>
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-        <table className="w-full text-sm min-w-[760px]">
-          <thead>
-            <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
-              <th className="py-2.5 px-4 font-semibold">{t("colCoupon")}</th>
-              <th className="py-2.5 px-4 font-semibold">{t("colDescription")}</th>
-              <th className="py-2.5 px-4 font-semibold text-right">{t("colRedemptions")}</th>
-              <th className="py-2.5 px-4 font-semibold text-right">{t("colDiscountGiven")}</th>
-              <th className="py-2.5 px-4 font-semibold text-right">{t("colRevenueGenerated")}</th>
-              <th className="py-2.5 px-4 font-semibold text-right">{t("colPercentOfRevenue")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.length === 0 && (
-              <tr><td colSpan={6} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
-            )}
-            {rows.map((r) => {
-              const pct = totalRevenue > 0 ? (r.revenue / totalRevenue) * 100 : 0;
-              return (
-                <tr key={`${r.name}|${r.code}`} className="border-b border-gray-50 hover:bg-gray-50/50">
-                  <td className="py-2.5 px-4 font-mono text-xs text-gray-800">{r.code || "—"}</td>
-                  <td className="py-2.5 px-4 text-gray-600 max-w-xs truncate">{r.name}</td>
-                  <td className="py-2.5 px-4 text-right text-gray-700">{r.redemptions.toLocaleString()}</td>
-                  <td className="py-2.5 px-4 text-right text-red-600">{formatCurrency(r.discount)}</td>
-                  <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(r.revenue)}</td>
-                  <td className="py-2.5 px-4 text-right text-gray-500">{pct.toFixed(1)}%</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        </div>
-      </div>
+      {/* Table extracted to a client component so name / redemptions /
+          discount / revenue are click-sortable (shared sortable primitive). */}
+      <PromotionsTable
+        rows={rows}
+        totalRevenue={totalRevenue}
+        currency={scope.currency}
+        labels={{
+          coupon: t("colCoupon"),
+          name: t("colDescription"),
+          redemptions: t("colRedemptions"),
+          discount: t("colDiscountGiven"),
+          revenue: t("colRevenueGenerated"),
+          pctOfRevenue: t("colPercentOfRevenue"),
+          emptyState: t("emptyState"),
+        }}
+      />
 
       <p className="text-xs text-gray-400 italic mt-3">
         {t("footerNote")}

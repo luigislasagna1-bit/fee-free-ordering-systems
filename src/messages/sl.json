@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Nastavitve znamke",
       "lockedByBrand": "Upravlja vaša znamka",
       "lockHelp": "Zaklenite nastavitev, da je ta lokacija ne more spremeniti — nadzorujete jo iz znamke.",
-      "brandManagedEditNotice": "Če želite to urediti tukaj, najprej izklopite to nastavitev, da je vaša znamka ne upravlja več."
+      "brandManagedEditNotice": "Če želite to urediti tukaj, najprej izklopite to nastavitev, da je vaša znamka ne upravlja več.",
+      "searchPlaceholder": "Išči po imenu ali mestu…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Izbira velikosti",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Dodeljeno",
       "labelAssigned": "Dodeljeno",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Ni aktivnih jedi — znova izberite"
+      "badgeDeadTargets": "Ni aktivnih jedi — znova izberite",
+      "searchPlaceholder": "Išči po imenu ali kodi kupona…"
     },
     "promoWizard": {
       "errorPickType": "Za nadaljevanje izberite vrsto promocije.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Odstranim tega člana iz skupine?",
       "confirmRemoveSpecial": "Odstranim to posebno ponudbo?",
       "confirmRemoveFromGroup": "Odstranim {name} iz »{group}«? Izgubil bo vse ugodnosti, vezane na to skupino. Skupina in njene ugodnosti ostanejo za druge nespremenjene.",
-      "removeFromGroupTitle": "Odstrani iz {group}"
+      "removeFromGroupTitle": "Odstrani iz {group}",
+      "membersCsvCapNote": "Opomba: izvozi se samo prvih 1000 članov (omejitev strežnika)."
     },
     "rewards": {
       "title": "Nagradni dobropis",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery na vašem območju še ni na voljo.",
       "lockedNotice": "ShipDay in Fee Free Delivery potrebujeta dodatek Driver Pool. Svoje lastne voznike lahko vedno uporabljate brezplačno.",
       "getDriverPool": "Pridobi Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Išči artikle in kategorije…"
     }
   },
   "impersonation": {

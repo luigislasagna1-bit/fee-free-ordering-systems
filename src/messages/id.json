@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Kontrol merek",
       "lockedByBrand": "Dikelola oleh merek Anda",
       "lockHelp": "Kunci pengaturan agar lokasi ini tidak dapat mengubahnya — Anda mengontrolnya dari merek.",
-      "brandManagedEditNotice": "Untuk mengeditnya di sini, nonaktifkan dulu pengaturan ini agar merek Anda tidak lagi mengelolanya."
+      "brandManagedEditNotice": "Untuk mengeditnya di sini, nonaktifkan dulu pengaturan ini agar merek Anda tidak lagi mengelolanya.",
+      "searchPlaceholder": "Cari berdasarkan nama atau kota…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Pilihan ukuran",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Ditugaskan",
       "labelAssigned": "Ditugaskan",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Tidak ada hidangan aktif — pilih ulang"
+      "badgeDeadTargets": "Tidak ada hidangan aktif — pilih ulang",
+      "searchPlaceholder": "Cari berdasarkan nama atau kode kupon…"
     },
     "promoWizard": {
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Hapus anggota ini dari grup?",
       "confirmRemoveSpecial": "Hapus penawaran spesial ini?",
       "confirmRemoveFromGroup": "Hapus {name} dari “{group}”? Ia akan kehilangan semua penawaran yang terkait grup itu. Grup dan penawarannya tetap sama untuk yang lain.",
-      "removeFromGroupTitle": "Hapus dari {group}"
+      "removeFromGroupTitle": "Hapus dari {group}",
+      "membersCsvCapNote": "Catatan: hanya 1000 anggota pertama yang diekspor (batas server)."
     },
     "rewards": {
       "title": "Dolar Hadiah",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery belum tersedia di area Anda.",
       "lockedNotice": "ShipDay dan Fee Free Delivery memerlukan add-on Driver Pool. Pengemudi Anda sendiri selalu gratis digunakan.",
       "getDriverPool": "Dapatkan Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Cari item dan kategori…"
     }
   },
   "impersonation": {

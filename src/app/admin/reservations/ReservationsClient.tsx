@@ -3,11 +3,12 @@ import { useState, useEffect, useCallback } from "react";
 import {
   CalendarDays, Plus, X, Edit2, Trash2, Settings,
   Users, Clock, Phone, Mail, Table2, Loader2, Save,
-  RefreshCw, Search, Wallet, Lock,
+  RefreshCw, Search, Wallet, Lock, Download,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { formatTime, type HoursFormat } from "@/lib/format-time";
+import { escCsv } from "@/lib/csv";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -155,6 +156,8 @@ function ReservationFormModal({ reservation, onClose, onSaved }: {
 
 function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
   const t = useTranslations("admin.reservationsList");
+  // Reuse the existing "Export CSV" label — same key CustomersClient uses.
+  const tCsv = useTranslations("admin.customersList");
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState(new Date().toISOString().slice(0, 10));
@@ -212,6 +215,40 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
 
   const detail = detailId ? filtered.find(r => r.id === detailId) : null;
 
+  /**
+   * Host-stand day sheet: CSV of the CURRENTLY VISIBLE reservation set
+   * (date + status filters + search applied). RFC-4180 escaping + UTF-8
+   * BOM per the CustomersClient.exportCsv pattern. Time honours the
+   * restaurant's 12h/24h format, same as the on-screen list.
+   */
+  const exportCsv = () => {
+    const header = ["Name", "Phone", "Party size", "Date / time", "Table", "Status", "Notes"];
+    const lines = [header.join(",")];
+    for (const r of filtered) {
+      lines.push([
+        escCsv(r.customerName),
+        escCsv(r.customerPhone),
+        escCsv(r.partySize),
+        escCsv(`${r.date} ${formatTime(r.time, hoursFormat)}`),
+        escCsv(r.table ? `${r.table.name}${r.table.section ? ` (${r.table.section})` : ""}` : ""),
+        escCsv(STATUS_LABELS[r.status] ?? r.status),
+        escCsv(r.notes),
+      ].join(","));
+    }
+    // UTF-8 BOM so Excel reads accented names correctly.
+    const csv = "﻿" + lines.join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `reservations-${stamp}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="flex gap-4 h-full">
       {/* List */}
@@ -232,8 +269,13 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
               placeholder={t("placeholderSearch")} value={search} onChange={e => setSearch(e.target.value)} />
           </div>
           <button onClick={load} className="p-2 text-gray-400 hover:text-gray-700 rounded-lg hover:bg-gray-100"><RefreshCw className="w-4 h-4" /></button>
+          {/* Day-sheet export of the visible (date/status/search) set. */}
+          <button onClick={exportCsv} disabled={filtered.length === 0}
+            className="ml-auto flex items-center gap-1.5 bg-white border border-gray-300 text-gray-700 text-sm font-semibold px-3 py-2 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+            <Download className="w-4 h-4" /> {tCsv("exportCsv")}
+          </button>
           <button onClick={() => setModal({})}
-            className="ml-auto flex items-center gap-1.5 bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600">
+            className="flex items-center gap-1.5 bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600">
             <Plus className="w-4 h-4" /> {t("buttonNewReservation")}
           </button>
         </div>

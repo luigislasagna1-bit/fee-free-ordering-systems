@@ -2193,7 +2193,8 @@
       "tabAssigned": "Atandı",
       "labelAssigned": "Atandı",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Aktif yemek yok — yeniden seçin"
+      "badgeDeadTargets": "Aktif yemek yok — yeniden seçin",
+      "searchPlaceholder": "Ada veya kupon koduna göre ara…"
     },
     "promoWizard": {
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",
@@ -2719,7 +2720,8 @@
       "brandControlsLabel": "Marka kontrolleri",
       "lockedByBrand": "Markanız tarafından yönetiliyor",
       "lockHelp": "Bir ayarı kilitleyin, böylece bu konum onu değiştiremez — markadan siz kontrol edersiniz.",
-      "brandManagedEditNotice": "Burada düzenlemek için önce bu ayarı kapatın, böylece markanız artık onu yönetmez."
+      "brandManagedEditNotice": "Burada düzenlemek için önce bu ayarı kapatın, böylece markanız artık onu yönetmez.",
+      "searchPlaceholder": "Ada veya şehre göre ara…"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Marka paneli",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Bu üye gruptan çıkarılsın mı?",
       "confirmRemoveSpecial": "Bu özel teklif kaldırılsın mı?",
       "confirmRemoveFromGroup": "{name} “{group}” grubundan çıkarılsın mı? Bu gruba bağlı tüm ayrıcalıkları kaybeder. Grup ve ayrıcalıkları diğerleri için aynı kalır.",
-      "removeFromGroupTitle": "{group} grubundan çıkar"
+      "removeFromGroupTitle": "{group} grubundan çıkar",
+      "membersCsvCapNote": "Not: yalnızca ilk 1000 üye dışa aktarılır (sunucu sınırı)."
     },
     "rewards": {
       "title": "Ödül Dolarları",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery henüz bölgenizde kullanılamıyor.",
       "lockedNotice": "ShipDay ve Fee Free Delivery için Driver Pool eklentisi gerekir. Kendi sürücülerinizi her zaman ücretsiz kullanabilirsiniz.",
       "getDriverPool": "Driver Pool edinin"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Ürün ve kategorilerde ara…"
     }
   },
   "impersonation": {

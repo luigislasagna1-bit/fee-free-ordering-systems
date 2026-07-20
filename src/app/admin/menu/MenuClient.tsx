@@ -1834,6 +1834,7 @@ function serviceOnlyKind(x: { forPickup?: boolean; forDelivery?: boolean }): "pi
 
 function SortableItemRow({
   item, categoryModGroups, onEdit, onDelete, onDuplicate, onCopySettings, onToggle, onAttach, onDetach, onReorderGroups,
+  dragDisabled = false,
 }: {
   item: MenuItem;
   categoryModGroups: ModifierGroup[];
@@ -1845,12 +1846,15 @@ function SortableItemRow({
   onAttach: (libraryGroupId: string, menuItemId: string) => void;
   onDetach: (groupId: string) => void;
   onReorderGroups: (itemId: string, orderedIds: string[]) => void;
+  /** See SortableCategoryBlock — reordering a FILTERED subset would persist
+   *  a partial order, so drags are off while a status filter is active. */
+  dragDisabled?: boolean;
 }) {
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.menuEditor");
   const itemHoursFormat = useContext(MenuHoursFormatCtx);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: item.id });
+    useSortable({ id: item.id, disabled: dragDisabled });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   const [dragOver, setDragOver] = useState(false);
   // Nested DnD context for the modifier-group chip strip. Uses its own
@@ -1889,8 +1893,9 @@ function SortableItemRow({
       // dnd-kit: within-category reordering stays on the grip handle (pointer
       // events), so we cancel the native drag when it starts from the grip or
       // from the modifier-chip strip (both have their own dnd-kit drags).
-      draggable
+      draggable={!dragDisabled}
       onDragStart={e => {
+        if (dragDisabled) { e.preventDefault(); return; }
         const src = e.target as HTMLElement;
         if (src.closest?.("[data-dnd-grip],[data-chip-strip]")) { e.preventDefault(); return; }
         e.dataTransfer.setData("menuItemId", item.id);
@@ -1900,7 +1905,8 @@ function SortableItemRow({
       onDragLeave={() => setDragOver(false)}
       onDrop={handleDrop}
       className={`flex items-start gap-3 px-4 py-3 hover:bg-gray-50 border-b border-gray-50 last:border-0 group transition ${item.isHidden ? "opacity-50" : ""} ${dragOver ? "bg-emerald-50 outline outline-2 outline-emerald-400 outline-dashed" : ""}`}>
-      <button data-dnd-grip {...attributes} {...listeners} suppressHydrationWarning className="cursor-grab text-gray-300 hover:text-gray-400 touch-none mt-1">
+      <button data-dnd-grip {...attributes} {...(dragDisabled ? {} : listeners)} suppressHydrationWarning
+        className={`${dragDisabled ? "cursor-not-allowed opacity-30" : "cursor-grab hover:text-gray-400"} text-gray-300 touch-none mt-1`}>
         <GripVertical className="w-4 h-4" />
       </button>
       {item.imageUrl ? (
@@ -2135,7 +2141,7 @@ function SortableCategoryBlock({
   cat, expanded, onToggleExpand, onAddItem, onEditItem, onDeleteItem, onDuplicateItem, onCopyItemSettings,
   onToggleItem, onEditCategory, onDeleteCategory, onDuplicateCategory, onItemsReordered, categories,
   onAttach, onDetach, onReorderGroups, onMoveItemHere,
-  selectMode, isSelected, onToggleSelect,
+  selectMode, isSelected, onToggleSelect, dragDisabled = false,
 }: {
   cat: Category; expanded: boolean;
   onToggleExpand: () => void; onAddItem: () => void;
@@ -2159,11 +2165,17 @@ function SortableCategoryBlock({
   selectMode?: boolean;
   isSelected?: boolean;
   onToggleSelect?: () => void;
+  /** True while a status filter chip other than "All" is active. The visible
+   *  list is a filtered SUBSET, so a drag-drop would persist a partial id
+   *  order (dropping the invisible rows from local state). Disables the
+   *  category sortable, every item-row sortable inside, AND the native
+   *  HTML5 move-item-to-category drag. Luigi 2026-07-19. */
+  dragDisabled?: boolean;
 }) {
   const t = useTranslations("admin.menuEditor");
   const catHoursFormat = useContext(MenuHoursFormatCtx);
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: cat.id });
+    useSortable({ id: cat.id, disabled: dragDisabled });
   const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.5 : 1 };
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
   // Slightly bigger activation for chip drags so X-button clicks register
@@ -2225,7 +2237,9 @@ function SortableCategoryBlock({
             className="w-4 h-4 accent-emerald-500 flex-shrink-0 mt-1"
           />
         ) : (
-          <button {...attributes} {...listeners} suppressHydrationWarning className="cursor-grab text-gray-300 hover:text-gray-400 touch-none mt-1" onClick={e => e.stopPropagation()}>
+          <button {...attributes} {...(dragDisabled ? {} : listeners)} suppressHydrationWarning
+            className={`${dragDisabled ? "cursor-not-allowed opacity-30" : "cursor-grab hover:text-gray-400"} text-gray-300 touch-none mt-1`}
+            onClick={e => e.stopPropagation()}>
             <GripVertical className="w-4 h-4" />
           </button>
         )}
@@ -2320,6 +2334,7 @@ function SortableCategoryBlock({
               <SortableContext items={cat.menuItems.map(i => i.id)} strategy={verticalListSortingStrategy}>
                 {cat.menuItems.map(item => (
                   <SortableItemRow key={item.id} item={item}
+                    dragDisabled={dragDisabled}
                     categoryModGroups={cat.modifierGroups}
                     onEdit={() => onEditItem(item)}
                     onDelete={() => onDeleteItem(item.id)}
@@ -3408,6 +3423,7 @@ interface Props { categories: Category[]; libraryGroups: ModifierGroup[]; restau
 
 export function MenuClient({ categories: initial, libraryGroups: initialGroups, hoursFormat = "24h", menuId, canUseCombos = false }: Props) {
   const t = useTranslations("admin.menuEditor");
+  const tCommon = useTranslations("common");
   const [categories, setCategories] = useState(initial);
   const [libraryGroups, setLibraryGroups] = useState(initialGroups);
   // Menu search query for the admin menu builder. Filters the visible
@@ -3416,6 +3432,15 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
   // is rendered inside each SortableCategoryBlock via the same query.
   // Luigi 2026-05-31 (GloriaFood parity).
   const [menuSearchQuery, setMenuSearchQuery] = useState("");
+  // Status filter chips (Luigi 2026-07-19): All / Hidden / Sold out. Filters
+  // ITEMS; categories with zero matching items drop from view (data
+  // untouched — it's a pure view filter). While a non-"all" filter is active
+  // dragging is DISABLED end-to-end: the item DndContext inside each
+  // category block would otherwise see only the filtered subset and a drop
+  // would persist a partial id list, silently dropping the invisible items
+  // from the category's local order (same class of bug dnd-kit + filtered
+  // SortableContext always has). Simplest safe rule = no drag while filtered.
+  const [statusFilter, setStatusFilter] = useState<"all" | "hidden" | "soldout">("all");
   const [expandedCats, setExpandedCats] = useState<Record<string, boolean>>(
     Object.fromEntries(initial.map(c => [c.id, true]))
   );
@@ -3920,6 +3945,33 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
               )}
             </div>
           )}
+          {/* Status filter chips (Luigi 2026-07-19) — quick view of everything
+              Hidden or Sold out across the whole menu without opening each
+              category. Reuses the existing translated labels. Reordering is
+              disabled while a filter is active (see statusFilter docs). */}
+          {categories.length > 0 && (
+            <div className="flex items-center gap-1.5 flex-wrap" role="group">
+              {([
+                ["all", tCommon("all")],
+                ["hidden", t("hidden")],
+                ["soldout", t("soldOut")],
+              ] as const).map(([key, label]) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setStatusFilter(key)}
+                  aria-pressed={statusFilter === key}
+                  className={`px-3 py-1 rounded-full border text-xs font-semibold transition ${
+                    statusFilter === key
+                      ? "bg-emerald-500 border-emerald-500 text-white"
+                      : "bg-white border-gray-200 text-gray-600 hover:border-gray-300"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
           {categories.length > 0 && (
             <div className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-lg px-3 py-2 sticky top-0 z-10">
               {!categorySelectMode ? (
@@ -3997,11 +4049,22 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
             // here (not via useMemo above the JSX) so the search field
             // stays accurate even mid-drag without re-arranging hooks.
             const q = menuSearchQuery.trim().toLowerCase();
+            // Status chips first (Luigi 2026-07-19): narrow each category to
+            // just its Hidden / Sold-out items; categories left with zero
+            // matching items drop from VIEW only — their data is untouched.
+            const byStatus = statusFilter === "all" ? categories : categories
+              .map((c: any) => {
+                const items = (c.menuItems ?? []).filter((i: any) =>
+                  statusFilter === "hidden" ? i.isHidden : i.isSoldOut,
+                );
+                return items.length ? { ...c, menuItems: items } : null;
+              })
+              .filter(Boolean);
             // When searching, ALSO narrow each category to just its matching
             // items (unless the category name itself matches → keep all) so the
             // result actually surfaces the item, not the whole category buried
             // among others. Categories with no match drop out entirely.
-            const filteredCategories = !q ? categories : categories
+            const filteredCategories = !q ? byStatus : byStatus
               .map((c: any) => {
                 if (c.name.toLowerCase().includes(q)) return c; // whole category matches
                 const items = (c.menuItems ?? []).filter((i: any) =>
@@ -4011,15 +4074,28 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
               })
               .filter(Boolean);
             if (filteredCategories.length === 0) {
+              // With no search text the empty state came from a status chip —
+              // name the chip in the message; the "All" chip above resets it.
+              const emptyQuery = q
+                ? menuSearchQuery
+                : (statusFilter === "hidden" ? t("hidden") : t("soldOut"));
               return (
                 <div className="py-12 text-center text-gray-400">
                   <Search className="w-10 h-10 mx-auto mb-2 opacity-40" />
-                  <p className="font-medium">{t("noMatchesFor", { query: menuSearchQuery })}</p>
-                  <button
-                    type="button"
-                    onClick={() => setMenuSearchQuery("")}
-                    className="mt-2 text-sm text-emerald-600 hover:underline"
-                  >{t("clearSearch")}</button>
+                  <p className="font-medium">{t("noMatchesFor", { query: emptyQuery })}</p>
+                  {q ? (
+                    <button
+                      type="button"
+                      onClick={() => setMenuSearchQuery("")}
+                      className="mt-2 text-sm text-emerald-600 hover:underline"
+                    >{t("clearSearch")}</button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setStatusFilter("all")}
+                      className="mt-2 text-sm text-emerald-600 hover:underline"
+                    >{tCommon("all")}</button>
+                  )}
                 </div>
               );
             }
@@ -4027,9 +4103,21 @@ export function MenuClient({ categories: initial, libraryGroups: initialGroups, 
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleCatDragEnd}>
               <SortableContext items={filteredCategories.map((c: any) => c.id)} strategy={verticalListSortingStrategy}>
                 {filteredCategories.map((cat: any) => (
+                  /* Dragging is disabled whenever ANY filter narrows the tree —
+                     status chip OR text search. A drop over a filtered view
+                     persists only the VISIBLE ids, silently dropping the hidden
+                     ones from local order state (pre-existing search bug,
+                     fixed 2026-07-19). */
                   <SortableCategoryBlock key={cat.id} cat={cat}
-                    expanded={q ? true : (expandedCats[cat.id] ?? true)}
-                    onToggleExpand={() => setExpandedCats(e => ({ ...e, [cat.id]: !e[cat.id] }))}
+                    dragDisabled={statusFilter !== "all" || !!q}
+                    expanded={(q || statusFilter !== "all") ? true : (expandedCats[cat.id] ?? true)}
+                    onToggleExpand={() => {
+                      // While a filter forces everything expanded, the chevron
+                      // must NO-OP — otherwise it silently flips saved state
+                      // that only shows after clearing the filter.
+                      if (q || statusFilter !== "all") return;
+                      setExpandedCats(e => ({ ...e, [cat.id]: !e[cat.id] }));
+                    }}
                     onAddItem={() => setItemModal({ catId: cat.id })}
                     onEditItem={item => setItemModal({ catId: cat.id, item })}
                     onDeleteItem={deleteItem}

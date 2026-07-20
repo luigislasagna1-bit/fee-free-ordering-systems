@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil, Loader2 } from "lucide-react";
+import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil, Loader2, Search, Download } from "lucide-react";
 import { HelpTip } from "@/components/HelpTip";
+import { escCsv } from "@/lib/csv";
 import { ScheduleEditor } from "../ScheduleEditor";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
@@ -20,6 +21,10 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   rewardsEnabled: boolean; rewardLabelPlural: string;
 }) {
   const t = useTranslations("admin.customerGroups");
+  // Reused strings: Customers list search placeholder + Export CSV label,
+  // menu editor's generic "No matches for {query}".
+  const tCust = useTranslations("admin.customersList");
+  const tMenu = useTranslations("admin.menuEditor");
   const router = useRouter();
   const [members, setMembers] = useState<Member[]>(initialMembers);
   const [specials, setSpecials] = useState<Special[]>(initialSpecials);
@@ -86,6 +91,42 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
     if (!res.ok) { toast.error(t("removeFailed")); return; }
     setMembers((m) => m.filter((x) => x.id !== id));
     router.refresh();
+  }
+
+  // ── Member search + CSV export (Luigi 2026-07-19) ──────────────────────────
+  const [memberQuery, setMemberQuery] = useState("");
+  const mq = memberQuery.trim().toLowerCase();
+  const visibleMembers = mq
+    ? members.filter((m) => `${m.name ?? ""} ${m.email ?? ""} ${m.phone ?? ""}`.toLowerCase().includes(mq))
+    : members;
+  // The server fetch is capped at 1000 rows (page.tsx take: 1000) — exactly
+  // 1000 means the list is (almost certainly) truncated, so show "1000+".
+  // Frozen at mount: client-side add/remove must not flip truncation state.
+  const capped = useRef(initialMembers.length === 1000).current;
+
+  /** RFC-4180 CSV of the currently VISIBLE (search-filtered) members — same
+   *  esc()/BOM/filename pattern as the Customers export. */
+  function exportCsv() {
+    const lines = [["Name", "Email", "Phone", "Has account"].join(",")];
+    for (const m of visibleMembers) {
+      lines.push([escCsv(m.name), escCsv(m.email), escCsv(m.phone), escCsv(m.hasAccount ? "yes" : "no")].join(","));
+    }
+    // Flag the server-side truncation inside the file itself so an exported
+    // list is never silently mistaken for the complete membership. Padded to
+    // the full column count so parsers keep a rectangular table.
+    if (capped) lines.push([escCsv(`# ${t("membersCsvCapNote")}`), "", "", ""].join(","));
+    // UTF-8 BOM so Excel reads accented characters correctly.
+    const csv = "﻿" + lines.join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `group-members-${stamp}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
 
   // ── Member specials: attach an existing promotion to the whole group ──────
@@ -189,15 +230,42 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
 
       {/* ── Members ─────────────────────────────────────────────────────── */}
       <section className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mt-5">
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
           <Users className="w-5 h-5 text-gray-400" />
-          <h2 className="font-bold text-gray-900">{t("membersHeading", { count: members.length })}</h2>
+          {/* "1000+" when the server cap was hit — the true count may be higher. */}
+          <h2 className="font-bold text-gray-900">{t("membersHeading", { count: capped ? "1000+" : members.length })}</h2>
+          {members.length > 0 && (
+            <button
+              type="button"
+              onClick={exportCsv}
+              disabled={visibleMembers.length === 0}
+              className="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white text-xs font-semibold transition"
+            >
+              <Download className="w-3.5 h-3.5" /> {tCust("exportCsv")}
+            </button>
+          )}
         </div>
+
+        {/* Member search (name / email / phone) — the export follows it. */}
+        {members.length > 0 && (
+          <div className="relative max-w-xs mb-3">
+            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="search"
+              value={memberQuery}
+              onChange={(e) => setMemberQuery(e.target.value)}
+              placeholder={tCust("searchPlaceholder")}
+              className="w-full bg-gray-50 border border-gray-200 rounded-full pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+        )}
 
         <div className="space-y-1.5 mb-4">
           {members.length === 0 ? (
             <p className="text-sm text-gray-400">{t("noMembers")}</p>
-          ) : members.map((m) => (
+          ) : visibleMembers.length === 0 ? (
+            <p className="text-sm text-gray-400">{tMenu("noMatchesFor", { query: memberQuery.trim() })}</p>
+          ) : visibleMembers.map((m) => (
             <div key={m.id} className="flex items-center justify-between gap-2 py-1.5 px-2 rounded-lg hover:bg-gray-50">
               <div className="min-w-0">
                 <span className="text-sm text-gray-800">{m.name || m.email || m.phone}</span>

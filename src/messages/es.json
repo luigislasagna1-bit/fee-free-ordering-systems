@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Controles de la marca",
       "lockedByBrand": "Gestionado por tu marca",
       "lockHelp": "Bloquea un ajuste para que esta ubicación no pueda cambiarlo — tú lo controlas desde la marca.",
-      "brandManagedEditNotice": "Para editarlo aquí, primero desactiva este ajuste para que tu marca deje de gestionarlo."
+      "brandManagedEditNotice": "Para editarlo aquí, primero desactiva este ajuste para que tu marca deje de gestionarlo.",
+      "searchPlaceholder": "Buscar por nombre o ciudad…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Selección de tamaño",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Asignado",
       "labelAssigned": "Asignado",
       "labelVip": "VIP",
-      "badgeDeadTargets": "No apunta a platos activos — vuelve a seleccionar"
+      "badgeDeadTargets": "No apunta a platos activos — vuelve a seleccionar",
+      "searchPlaceholder": "Buscar por nombre o código de cupón…"
     },
     "promoWizard": {
       "errorPickType": "Elige un tipo de promoción para continuar.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "¿Quitar a este miembro del grupo?",
       "confirmRemoveSpecial": "¿Quitar esta oferta especial?",
       "confirmRemoveFromGroup": "¿Quitar a {name} de «{group}»? Perderá todas las ofertas vinculadas a ese grupo. El grupo y sus ofertas no cambian para los demás.",
-      "removeFromGroupTitle": "Quitar de {group}"
+      "removeFromGroupTitle": "Quitar de {group}",
+      "membersCsvCapNote": "Nota: solo se exportan los primeros 1000 miembros (límite del servidor)."
     },
     "rewards": {
       "title": "Saldo de recompensa",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery aún no está disponible en tu zona.",
       "lockedNotice": "ShipDay y Fee Free Delivery necesitan el complemento Driver Pool. Tus propios repartidores siempre son gratis de usar.",
       "getDriverPool": "Obtener Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Buscar artículos y categorías…"
     }
   },
   "impersonation": {

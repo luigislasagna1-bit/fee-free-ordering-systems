@@ -2193,7 +2193,8 @@
       "tabAssigned": "Hozzárendelve",
       "labelAssigned": "Hozzárendelve",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Nincs aktív étel — válasszon újra"
+      "badgeDeadTargets": "Nincs aktív étel — válasszon újra",
+      "searchPlaceholder": "Keresés név vagy kuponkód alapján…"
     },
     "promoWizard": {
       "errorPickType": "Válasszon promóciótípust a folytatáshoz.",
@@ -2719,7 +2720,8 @@
       "brandControlsLabel": "Márkabeállítások",
       "lockedByBrand": "A márkája kezeli",
       "lockHelp": "Zárolja a beállítást, hogy ez a hely ne módosíthassa — a márkából vezérli.",
-      "brandManagedEditNotice": "Az itteni szerkesztéshez először kapcsolja ki ezt a beállítást, hogy a márkája már ne kezelje."
+      "brandManagedEditNotice": "Az itteni szerkesztéshez először kapcsolja ki ezt a beállítást, hogy a márkája már ne kezelje.",
+      "searchPlaceholder": "Keresés név vagy város alapján…"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Márka irányítópult",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Eltávolítja ezt a tagot a csoportból?",
       "confirmRemoveSpecial": "Eltávolítja ezt az ajánlatot?",
       "confirmRemoveFromGroup": "Eltávolítja {name} tagot a(z) „{group}” csoportból? Elveszíti a csoporthoz kapcsolt összes kedvezményt. A csoport és kedvezményei a többieknek változatlanok maradnak.",
-      "removeFromGroupTitle": "Eltávolítás innen: {group}"
+      "removeFromGroupTitle": "Eltávolítás innen: {group}",
+      "membersCsvCapNote": "Megjegyzés: csak az első 1000 tag kerül exportálásra (szerverkorlát)."
     },
     "rewards": {
       "title": "Jutalomdollár",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "A Fee Free Delivery még nem érhető el a te területeden.",
       "lockedNotice": "A ShipDay és a Fee Free Delivery a Driver Pool kiegészítőt igényli. Saját sofőrjeidet mindig ingyen használhatod.",
       "getDriverPool": "Driver Pool beszerzése"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Tételek és kategóriák keresése…"
     }
   },
   "impersonation": {

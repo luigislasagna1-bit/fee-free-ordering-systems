@@ -21,7 +21,9 @@ export async function GET(req: NextRequest) {
 
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
-  url.searchParams.forEach((v, k) => { sp[k] = v; });
+  // FIRST value per key — matches the pages' `Array.isArray(x) ? x[0] : x`
+  // handling of repeated query params (forEach alone would keep the LAST).
+  url.searchParams.forEach((v, k) => { if (!(k in sp)) sp[k] = v; });
   const format = pickFormat(url);
 
   const scope = await resolveReportScope(user.restaurantId);
@@ -33,7 +35,22 @@ export async function GET(req: NextRequest) {
     _count: true,
     _sum: { total: true },
   });
-  grouped.sort((a, b) => (b._sum.total ?? 0) - (a._sum.total ?? 0));
+  // ?sort=orders|spend&dir=asc|desc — the SAME strict allowlist + comparator
+  // as the page (pickSort in list/clients/page.tsx), incl. the deterministic
+  // customerId tiebreak, so a sorted table exports in the on-screen order.
+  // Absent/invalid params → today's default: spend descending.
+  const rawSort = sp.sort?.trim();
+  const sortKey = (["orders", "spend"] as const).find((k) => k === rawSort);
+  const dir = sp.dir?.trim() === "desc" ? "desc" : "asc";
+  const value = (g: (typeof grouped)[number]) =>
+    sortKey === "orders" ? g._count : (g._sum.total ?? 0);
+  grouped.sort((a, b) => {
+    if (sortKey) {
+      const d = (value(a) - value(b)) * (dir === "asc" ? 1 : -1);
+      return d !== 0 ? d : (a.customerId ?? "").localeCompare(b.customerId ?? "");
+    }
+    return (b._sum.total ?? 0) - (a._sum.total ?? 0); // default: spend desc, exactly as before
+  });
 
   const customerIds = grouped.map((g) => g.customerId!).filter(Boolean);
   const customers = customerIds.length > 0

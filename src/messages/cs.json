@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Nastavení značky",
       "lockedByBrand": "Spravováno vaší značkou",
       "lockHelp": "Uzamkněte nastavení, aby ho tato pobočka nemohla měnit — řídíte ho ze značky.",
-      "brandManagedEditNotice": "Chcete-li to upravit zde, nejprve toto nastavení vypněte, aby ho vaše značka už nespravovala."
+      "brandManagedEditNotice": "Chcete-li to upravit zde, nejprve toto nastavení vypněte, aby ho vaše značka už nespravovala.",
+      "searchPlaceholder": "Hledat podle názvu nebo města…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Výběr velikosti",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Přiřazené",
       "labelAssigned": "Přiřazené",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Žádná aktivní jídla — vyberte znovu"
+      "badgeDeadTargets": "Žádná aktivní jídla — vyberte znovu",
+      "searchPlaceholder": "Hledat podle názvu nebo kódu kuponu…"
     },
     "promoWizard": {
       "errorPickType": "Pro pokračování vyberte typ akce.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Odebrat tohoto člena ze skupiny?",
       "confirmRemoveSpecial": "Odebrat tuto speciální nabídku?",
       "confirmRemoveFromGroup": "Odebrat {name} ze skupiny „{group}“? Přijde o všechny nabídky spojené s touto skupinou. Skupina a její nabídky zůstávají pro ostatní beze změny.",
-      "removeFromGroupTitle": "Odebrat ze skupiny {group}"
+      "removeFromGroupTitle": "Odebrat ze skupiny {group}",
+      "membersCsvCapNote": "Poznámka: exportuje se pouze prvních 1000 členů (limit serveru)."
     },
     "rewards": {
       "title": "Věrnostní kredit",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery zatím není ve vaší oblasti dostupné.",
       "lockedNotice": "ShipDay a Fee Free Delivery vyžadují doplněk Driver Pool. Vaše vlastní řidiče můžete vždy využívat zdarma.",
       "getDriverPool": "Získat Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Hledat položky a kategorie…"
     }
   },
   "impersonation": {

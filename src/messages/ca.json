@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Controls de la marca",
       "lockedByBrand": "Gestionat per la teva marca",
       "lockHelp": "Bloqueja una opció perquè aquesta ubicació no la pugui canviar — la controles des de la marca.",
-      "brandManagedEditNotice": "Per editar-ho aquí, primer desactiva aquesta opció perquè la teva marca deixi de gestionar-la."
+      "brandManagedEditNotice": "Per editar-ho aquí, primer desactiva aquesta opció perquè la teva marca deixi de gestionar-la.",
+      "searchPlaceholder": "Cerca per nom o ciutat…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecció de mida",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Assignat",
       "labelAssigned": "Assignat",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Cap plat actiu — torneu a seleccionar"
+      "badgeDeadTargets": "Cap plat actiu — torneu a seleccionar",
+      "searchPlaceholder": "Cerca per nom o codi de cupó…"
     },
     "promoWizard": {
       "errorPickType": "Trieu un tipus de promoció per continuar.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Voleu treure aquest membre del grup?",
       "confirmRemoveSpecial": "Voleu treure aquesta oferta especial?",
       "confirmRemoveFromGroup": "Vols treure {name} de «{group}»? Perdrà totes les ofertes vinculades a aquest grup. El grup i les seves ofertes no canvien per a la resta.",
-      "removeFromGroupTitle": "Treu de {group}"
+      "removeFromGroupTitle": "Treu de {group}",
+      "membersCsvCapNote": "Nota: només s'exporten els primers 1000 membres (límit del servidor)."
     },
     "rewards": {
       "title": "Dòlars de Recompensa",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery encara no està disponible a la teva zona.",
       "lockedNotice": "ShipDay i Fee Free Delivery necessiten el complement Driver Pool. Els teus propis repartidors sempre són gratuïts d'utilitzar.",
       "getDriverPool": "Obtén Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Cerca articles i categories…"
     }
   },
   "impersonation": {

@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Brändi sätted",
       "lockedByBrand": "Haldab teie bränd",
       "lockHelp": "Lukusta säte, et see asukoht ei saaks seda muuta — haldate seda brändist.",
-      "brandManagedEditNotice": "Selle muutmiseks siin lülitage esmalt see säte välja, et teie bränd seda enam ei halda."
+      "brandManagedEditNotice": "Selle muutmiseks siin lülitage esmalt see säte välja, et teie bränd seda enam ei halda.",
+      "searchPlaceholder": "Otsi nime või linna järgi…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Suuruse valik",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Määratud",
       "labelAssigned": "Määratud",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Aktiivseid roogi pole — valige uuesti"
+      "badgeDeadTargets": "Aktiivseid roogi pole — valige uuesti",
+      "searchPlaceholder": "Otsi nime või kupongikoodi järgi…"
     },
     "promoWizard": {
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Eemaldada see liige rühmast?",
       "confirmRemoveSpecial": "Eemaldada see pakkumine?",
       "confirmRemoveFromGroup": "Kas eemaldada {name} rühmast „{group}”? Ta kaotab kõik selle rühmaga seotud pakkumised. Rühm ja selle pakkumised jäävad teistele samaks.",
-      "removeFromGroupTitle": "Eemalda rühmast {group}"
+      "removeFromGroupTitle": "Eemalda rühmast {group}",
+      "membersCsvCapNote": "Märkus: eksporditakse ainult esimesed 1000 liiget (serveri piirang)."
     },
     "rewards": {
       "title": "Boonusraha",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery pole teie piirkonnas veel saadaval.",
       "lockedNotice": "ShipDay ja Fee Free Delivery vajavad Driver Pool lisandmoodulit. Teie enda kullerite kasutamine on alati tasuta.",
       "getDriverPool": "Hankige Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Otsi tooteid ja kategooriaid…"
     }
   },
   "impersonation": {

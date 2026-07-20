@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "品牌控制",
       "lockedByBrand": "由您的品牌管理",
       "lockHelp": "锁定某项设置，使该门店无法自行更改——由您从品牌端控制。",
-      "brandManagedEditNotice": "若要在此处编辑，请先关闭此设置，使其不再由您的品牌管理。"
+      "brandManagedEditNotice": "若要在此处编辑，请先关闭此设置，使其不再由您的品牌管理。",
+      "searchPlaceholder": "按名称或城市搜索…"
     },
     "menuEditor": {
       "sectionSizeLabel": "尺寸选择",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "已分配",
       "labelAssigned": "已分配",
       "labelVip": "VIP",
-      "badgeDeadTargets": "没有可用菜品 — 请重新选择"
+      "badgeDeadTargets": "没有可用菜品 — 请重新选择",
+      "searchPlaceholder": "按名称或优惠码搜索…"
     },
     "promoWizard": {
       "errorPickType": "请选择促销类型以继续。",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "将此成员从该组中移除？",
       "confirmRemoveSpecial": "移除此特别优惠？",
       "confirmRemoveFromGroup": "将 {name} 从“{group}”中移除？该顾客将失去该组的所有专属优惠。组及其优惠对其他人保持不变。",
-      "removeFromGroupTitle": "从{group}中移除"
+      "removeFromGroupTitle": "从{group}中移除",
+      "membersCsvCapNote": "注意：仅导出前 1000 名会员（服务器上限）。"
     },
     "rewards": {
       "title": "奖励金",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery 尚未在你的区域提供服务。",
       "lockedNotice": "ShipDay 和 Fee Free Delivery 需要 Driver Pool 附加功能。你自己的司机始终可免费使用。",
       "getDriverPool": "获取 Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "搜索菜品和分类…"
     }
   },
   "impersonation": {

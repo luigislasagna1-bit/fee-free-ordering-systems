@@ -2264,7 +2264,8 @@
       "brandControlsLabel": "Brand controls",
       "lockedByBrand": "Managed by your brand",
       "lockHelp": "Lock a setting so this location can't change it themselves — you control it from the brand.",
-      "brandManagedEditNotice": "To edit it here, first turn this setting off so your brand no longer manages it."
+      "brandManagedEditNotice": "To edit it here, first turn this setting off so your brand no longer manages it.",
+      "searchPlaceholder": "Search by name or city…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Size selection",
@@ -2671,7 +2672,8 @@
       "tabAssigned": "Assigned",
       "labelAssigned": "Assigned",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Targets no live dishes — re-select"
+      "badgeDeadTargets": "Targets no live dishes — re-select",
+      "searchPlaceholder": "Search by name or coupon code…"
     },
     "promoWizard": {
       "errorPickType": "Pick a promotion type to continue.",
@@ -4656,7 +4658,8 @@
       "confirmRemoveMember": "Remove this member from the group?",
       "confirmRemoveSpecial": "Remove this special?",
       "confirmRemoveFromGroup": "Remove {name} from “{group}”? They will lose every special attached to that group. The group and its specials stay unchanged for everyone else.",
-      "removeFromGroupTitle": "Remove from {group}"
+      "removeFromGroupTitle": "Remove from {group}",
+      "membersCsvCapNote": "Note: only the first 1000 members are exported (server limit)."
     },
     "imageCrop": {
       "title": "Adjust your photo",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery isn't available in your area yet.",
       "lockedNotice": "ShipDay and Fee Free Delivery need the Driver Pool add-on. Your own drivers are always free to use.",
       "getDriverPool": "Get Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Search items and categories…"
     }
   },
   "impersonation": {

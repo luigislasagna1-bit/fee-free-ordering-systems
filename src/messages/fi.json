@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Brändihallinta",
       "lockedByBrand": "Brändisi hallinnoi",
       "lockHelp": "Lukitse asetus, jotta tämä toimipiste ei voi muuttaa sitä — hallitset sitä brändistä.",
-      "brandManagedEditNotice": "Muokataksesi tätä täällä, poista ensin tämä asetus käytöstä, jotta brändisi ei enää hallitse sitä."
+      "brandManagedEditNotice": "Muokataksesi tätä täällä, poista ensin tämä asetus käytöstä, jotta brändisi ei enää hallitse sitä.",
+      "searchPlaceholder": "Hae nimellä tai kaupungilla…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Koon valinta",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Määritetty",
       "labelAssigned": "Määritetty",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Ei aktiivisia annoksia — valitse uudelleen"
+      "badgeDeadTargets": "Ei aktiivisia annoksia — valitse uudelleen",
+      "searchPlaceholder": "Hae nimellä tai kuponkikoodilla…"
     },
     "promoWizard": {
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Poistetaanko tämä jäsen ryhmästä?",
       "confirmRemoveSpecial": "Poistetaanko tämä tarjous?",
       "confirmRemoveFromGroup": "Poistetaanko {name} ryhmästä ”{group}”? Hän menettää kaikki ryhmään liitetyt edut. Ryhmä ja sen edut säilyvät muille ennallaan.",
-      "removeFromGroupTitle": "Poista ryhmästä {group}"
+      "removeFromGroupTitle": "Poista ryhmästä {group}",
+      "membersCsvCapNote": "Huom: vain ensimmäiset 1000 jäsentä viedään (palvelinraja)."
     },
     "rewards": {
       "title": "Bonusrahat",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery ei ole vielä saatavilla alueellasi.",
       "lockedNotice": "ShipDay ja Fee Free Delivery vaativat Driver Pool -lisäosan. Omia kuljettajiasi voit aina käyttää maksutta.",
       "getDriverPool": "Hanki Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Hae tuotteita ja kategorioita…"
     }
   },
   "impersonation": {

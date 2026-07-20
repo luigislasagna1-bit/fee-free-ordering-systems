@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Contrôles de la marque",
       "lockedByBrand": "Géré par votre marque",
       "lockHelp": "Verrouillez un paramètre pour que cet établissement ne puisse pas le modifier — vous le contrôlez depuis la marque.",
-      "brandManagedEditNotice": "Pour le modifier ici, désactivez d'abord ce paramètre afin que votre marque ne le gère plus."
+      "brandManagedEditNotice": "Pour le modifier ici, désactivez d'abord ce paramètre afin que votre marque ne le gère plus.",
+      "searchPlaceholder": "Rechercher par nom ou ville…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Sélection de la taille",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Attribué",
       "labelAssigned": "Attribué",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Ne cible aucun plat actif — resélectionnez"
+      "badgeDeadTargets": "Ne cible aucun plat actif — resélectionnez",
+      "searchPlaceholder": "Rechercher par nom ou code promo…"
     },
     "promoWizard": {
       "errorPickType": "Sélectionnez un type de promotion pour continuer.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Retirer ce membre du groupe ?",
       "confirmRemoveSpecial": "Supprimer cette offre spéciale ?",
       "confirmRemoveFromGroup": "Retirer {name} de « {group} » ? Cette personne perdra toutes les offres liées à ce groupe. Le groupe et ses offres restent inchangés pour les autres.",
-      "removeFromGroupTitle": "Retirer de {group}"
+      "removeFromGroupTitle": "Retirer de {group}",
+      "membersCsvCapNote": "Remarque : seuls les 1000 premiers membres sont exportés (limite du serveur)."
     },
     "rewards": {
       "title": "Crédits fidélité",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery n'est pas encore disponible dans votre zone.",
       "lockedNotice": "ShipDay et Fee Free Delivery nécessitent le module Driver Pool. Vos propres livreurs sont toujours gratuits à utiliser.",
       "getDriverPool": "Obtenir Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Rechercher des articles et catégories…"
     }
   },
   "impersonation": {

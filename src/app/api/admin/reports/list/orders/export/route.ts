@@ -24,7 +24,9 @@ export async function GET(req: NextRequest) {
 
   const url = new URL(req.url);
   const sp: Record<string, string> = {};
-  url.searchParams.forEach((v, k) => { sp[k] = v; });
+  // FIRST value per key — matches the pages' `Array.isArray(x) ? x[0] : x`
+  // handling of repeated query params (forEach alone would keep the LAST).
+  url.searchParams.forEach((v, k) => { if (!(k in sp)) sp[k] = v; });
   const format = pickFormat(url);
 
   const scope = await resolveReportScope(user.restaurantId);
@@ -34,6 +36,20 @@ export async function GET(req: NextRequest) {
   // rejected/cancelled), matching the page's filter.
   const statusParam = sp.status?.trim();
   const allowedStatus = (["completed", "pending", "accepted"] as const).find((s) => s === statusParam);
+
+  // ?sort=date|total&dir=asc|desc — the SAME strict allowlist + static
+  // compound literals as the page (pickSort in list/orders/page.tsx), so a
+  // sorted table exports in the on-screen order. Absent/invalid params →
+  // today's byte-identical default (newest first).
+  const rawSort = sp.sort?.trim();
+  const sortKey = (["date", "total"] as const).find((k) => k === rawSort);
+  const dir = sp.dir?.trim() === "desc" ? ("desc" as const) : ("asc" as const);
+  const orderBy =
+    sortKey === "total"
+      ? [{ total: dir }, { id: "asc" as const }]
+      : sortKey === "date"
+        ? [{ createdAt: dir }, { id: "asc" as const }]
+        : { createdAt: "desc" as const };
 
   const orders = await prisma.order.findMany({
     where: { ...reportOrderWhere(scope.ids, range), ...(allowedStatus ? { status: allowedStatus } : {}) },
@@ -58,7 +74,7 @@ export async function GET(req: NextRequest) {
       refundedAmount: true,
       appliedServiceFees: true,
     },
-    orderBy: { createdAt: "desc" },
+    orderBy,
   });
 
   // Money-accounting columns (after Total). Mirrors the Sales-Summary export:

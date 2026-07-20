@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "ブランド設定",
       "lockedByBrand": "ブランドが管理",
       "lockHelp": "設定をロックすると、この店舗は変更できなくなり、ブランド側で管理します。",
-      "brandManagedEditNotice": "ここで編集するには、まずこの設定をオフにして、ブランドの管理から外してください。"
+      "brandManagedEditNotice": "ここで編集するには、まずこの設定をオフにして、ブランドの管理から外してください。",
+      "searchPlaceholder": "名前または都市で検索…"
     },
     "menuEditor": {
       "sectionSizeLabel": "サイズ選択",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "割り当て済み",
       "labelAssigned": "割り当て済み",
       "labelVip": "VIP",
-      "badgeDeadTargets": "対象の料理がありません — 再選択してください"
+      "badgeDeadTargets": "対象の料理がありません — 再選択してください",
+      "searchPlaceholder": "名前またはクーポンコードで検索…"
     },
     "promoWizard": {
       "errorPickType": "続けるにはプロモーションタイプを選択してください。",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "このメンバーをグループから削除しますか？",
       "confirmRemoveSpecial": "この特典を削除しますか？",
       "confirmRemoveFromGroup": "{name} を「{group}」から削除しますか？このグループに紐づく特典をすべて失います。グループと特典は他のメンバーには影響しません。",
-      "removeFromGroupTitle": "{group}から削除"
+      "removeFromGroupTitle": "{group}から削除",
+      "membersCsvCapNote": "注：エクスポートされるのは最初の1000名のメンバーのみです（サーバー上限）。"
     },
     "rewards": {
       "title": "リワードドル",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery はまだお住まいのエリアで利用できません。",
       "lockedNotice": "ShipDay と Fee Free Delivery には Driver Pool アドオンが必要です。自社のドライバーは常に無料で利用できます。",
       "getDriverPool": "Driver Pool を入手"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "商品・カテゴリを検索…"
     }
   },
   "impersonation": {

@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "브랜드 설정",
       "lockedByBrand": "브랜드에서 관리",
       "lockHelp": "설정을 잠그면 이 지점에서 변경할 수 없으며, 브랜드에서 관리합니다.",
-      "brandManagedEditNotice": "여기서 편집하려면 먼저 이 설정을 꺼서 브랜드가 더 이상 관리하지 않도록 하세요."
+      "brandManagedEditNotice": "여기서 편집하려면 먼저 이 설정을 꺼서 브랜드가 더 이상 관리하지 않도록 하세요.",
+      "searchPlaceholder": "이름 또는 도시로 검색…"
     },
     "menuEditor": {
       "sectionSizeLabel": "크기 선택",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "할당됨",
       "labelAssigned": "할당됨",
       "labelVip": "VIP",
-      "badgeDeadTargets": "활성 메뉴가 없습니다 — 다시 선택하세요"
+      "badgeDeadTargets": "활성 메뉴가 없습니다 — 다시 선택하세요",
+      "searchPlaceholder": "이름 또는 쿠폰 코드로 검색…"
     },
     "promoWizard": {
       "errorPickType": "계속하려면 프로모션 유형을 선택하세요.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "이 회원을 그룹에서 제거할까요?",
       "confirmRemoveSpecial": "이 특별 혜택을 제거할까요?",
       "confirmRemoveFromGroup": "{name}을(를) “{group}”에서 제거할까요? 해당 그룹에 연결된 모든 혜택을 잃게 됩니다. 그룹과 혜택은 다른 사람에게는 그대로 유지됩니다.",
-      "removeFromGroupTitle": "{group}에서 제거"
+      "removeFromGroupTitle": "{group}에서 제거",
+      "membersCsvCapNote": "참고: 처음 1000명의 회원만 내보내집니다(서버 제한)."
     },
     "rewards": {
       "title": "리워드 달러",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery는 아직 내 지역에서 이용할 수 없습니다.",
       "lockedNotice": "ShipDay와 Fee Free Delivery에는 Driver Pool 부가기능이 필요합니다. 자체 기사는 항상 무료로 사용할 수 있습니다.",
       "getDriverPool": "Driver Pool 받기"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "메뉴와 카테고리 검색…"
     }
   },
   "impersonation": {

@@ -6,7 +6,8 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, ChevronRight, Edit2, Plus, X } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { ChevronDown, ChevronRight, Edit2, Plus, Search, X } from "lucide-react";
 
 // ─── HH:MM ↔ minutes-since-midnight ──────────────────────────────────────────
 
@@ -174,6 +175,24 @@ export function ItemGroupPicker({
     variantIds: [...(group.variantIds ?? [])],
   }));
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  // Type-to-find (Luigi 2026-07-19): filters ITEMS by name (a category whose
+  // own name matches keeps all its items). Categories with matches auto-
+  // expand; categories without any match hide while typing. Pure client-side
+  // view filter — the draft selection state is never touched, so previously
+  // ticked items outside the current query survive Apply. The searchable
+  // strings reuse the admin menu editor's existing translated keys.
+  const t = useTranslations("admin.menuEditor");
+  const [query, setQuery] = useState("");
+  const q = query.trim().toLowerCase();
+  const visibleCats: CatEntry[] = !q
+    ? cats
+    : cats
+        .map((c) => {
+          if (c.name.toLowerCase().includes(q)) return c; // whole category matches
+          const items = c.items.filter((i) => i.name.toLowerCase().includes(q));
+          return items.length > 0 ? { ...c, items } : null;
+        })
+        .filter((c): c is CatEntry => c !== null);
 
   const toggleVariant = (variantId: string) =>
     setDraft((d) => ({
@@ -249,20 +268,52 @@ export function ItemGroupPicker({
           <X className="w-4 h-4" />
         </button>
       </div>
+      {/* Type-to-find box — big menus (100+ categories) made picking a single
+          dish a scroll marathon. Fixes /admin/promotions/new AND /[id]/edit
+          since both render this picker. Luigi 2026-07-19. */}
+      {cats.length > 0 && (
+        <div className="px-3 py-2 border-b bg-white flex-shrink-0 relative">
+          <Search className="w-3.5 h-3.5 text-gray-400 absolute top-1/2 -translate-y-1/2 pointer-events-none" style={{ left: "1.375rem" }} />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("searchCategoriesItems")}
+            className="w-full pl-8 pr-8 py-1.5 rounded-lg border border-gray-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              aria-label={t("clearSearch")}
+              className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-400"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          )}
+        </div>
+      )}
       <div
         className="flex-1 overflow-y-auto"
         onScroll={(e) => e.stopPropagation()}
       >
         {cats.length === 0 ? (
           <div className="px-3 py-4 text-sm text-gray-400 text-center">No categories found</div>
+        ) : visibleCats.length === 0 ? (
+          <div className="px-3 py-4 text-sm text-gray-400 text-center">{t("noMatchesFor", { query: query.trim() })}</div>
         ) : (
-          cats.map((cat, _i) => {
+          visibleCats.map((cat, _i) => {
             const catChecked = draft.categoryIds.includes(cat.id);
-            const isExpanded = expanded.has(cat.id);
-            const catItemIds = cat.items.map((i) => i.id);
-            const selectedInCat = catItemIds.filter((id) => draft.itemIds.includes(id)).length;
+            // While typing, every visible category auto-expands so the matched
+            // items are immediately on screen (type-to-find, Luigi 2026-07-19).
+            const isExpanded = q ? true : expanded.has(cat.id);
+            // Count selections against the FULL (unfiltered) item list — while
+            // a query narrows cat.items, counting the filtered view would
+            // understate how many items are actually ticked in this category.
+            const fullCatItems = (cats.find((c) => c.id === cat.id) ?? cat).items;
+            const selectedInCat = fullCatItems.filter((i) => draft.itemIds.includes(i.id)).length;
             // Menu sub-header when this category starts a new menu group.
-            const menuHeader = showMenuHeaders && (_i === 0 || cats[_i - 1].menuName !== cat.menuName)
+            const menuHeader = showMenuHeaders && (_i === 0 || visibleCats[_i - 1].menuName !== cat.menuName)
               ? (cat.menuName || "—")
               : null;
 
@@ -293,7 +344,13 @@ export function ItemGroupPicker({
                   )}
                   {cat.items.length > 0 && (
                     <button
-                      onClick={() => toggleExpand(cat.id)}
+                      onClick={() => {
+                        // While the query forces every category expanded, the
+                        // chevron must NO-OP — flipping the saved set would
+                        // only show up after the search is cleared.
+                        if (q) return;
+                        toggleExpand(cat.id);
+                      }}
                       className="p-0.5 text-gray-400 hover:text-gray-600 flex-shrink-0"
                     >
                       {isExpanded ? (

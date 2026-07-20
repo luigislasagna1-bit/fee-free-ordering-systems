@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import {
   CreditCard, AlertTriangle, CheckCircle2, Clock, ExternalLink, Loader2,
-  ShoppingBag, Plus, XCircle,
+  ShoppingBag, Plus, XCircle, Download,
 } from "lucide-react";
 import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
+import { escCsv } from "@/lib/csv";
 import { FiscalDataCard } from "./FiscalDataCard";
 
 type Invoice = {
@@ -87,9 +88,45 @@ export function BillingClient({
   };
 }) {
   const t = useTranslations("admin.billing");
+  // Reuse the existing "Export CSV" label — same key CustomersClient uses.
+  const tCsv = useTranslations("admin.customersList");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [cardSaved, setCardSaved] = useState(false);
+
+  /**
+   * CSV of the visible invoice rows (the page fetches the newest 10 —
+   * export exactly those, no wider fetch). RFC-4180 escaping + UTF-8 BOM
+   * per the CustomersClient.exportCsv pattern. "Number" is the Stripe
+   * invoice id — the stable reference the owner can quote to support.
+   */
+  const exportCsv = () => {
+    const header = ["Date", "Invoice number", "Amount", "Currency", "Status"];
+    const lines = [header.join(",")];
+    for (const inv of invoices) {
+      lines.push([
+        // Viewer-local date, matching what the on-screen table shows
+        // (en-CA locale = YYYY-MM-DD).
+        escCsv(new Date(inv.paidAt || inv.createdAt).toLocaleDateString("en-CA")),
+        escCsv(inv.stripeInvoiceId),
+        escCsv((inv.amountPaid / 100).toFixed(2)),
+        escCsv((inv.currency || PLATFORM_CURRENCY).toUpperCase()),
+        escCsv(inv.status),
+      ].join(","));
+    }
+    // UTF-8 BOM so Excel opens the file with the right encoding.
+    const csv = "﻿" + lines.join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `invoices-${stamp}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   // Show a one-time success note after returning from the Stripe card-setup
   // Checkout (?card_saved=1), then strip the param so a refresh doesn't repeat it.
@@ -327,7 +364,16 @@ export function BillingClient({
 
       {invoices.length > 0 && (
         <div className="mt-10">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">{t("recentInvoices")}</h2>
+          <div className="flex items-center justify-between mb-4 gap-3">
+            <h2 className="text-lg font-bold text-gray-900">{t("recentInvoices")}</h2>
+            <button
+              type="button"
+              onClick={exportCsv}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-xs font-semibold transition"
+            >
+              <Download className="w-3.5 h-3.5" /> {tCsv("exportCsv")}
+            </button>
+          </div>
           <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
             {/* Mobile: card layout */}
             <ul className="divide-y divide-gray-100 sm:hidden">

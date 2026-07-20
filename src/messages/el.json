@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Ρυθμίσεις επωνυμίας",
       "lockedByBrand": "Διαχειρίζεται από την επωνυμία σας",
       "lockHelp": "Κλειδώστε μια ρύθμιση ώστε αυτή η τοποθεσία να μην μπορεί να την αλλάξει — την ελέγχετε από την επωνυμία.",
-      "brandManagedEditNotice": "Για να το επεξεργαστείτε εδώ, απενεργοποιήστε πρώτα αυτήν τη ρύθμιση ώστε να μην τη διαχειρίζεται πλέον η επωνυμία σας."
+      "brandManagedEditNotice": "Για να το επεξεργαστείτε εδώ, απενεργοποιήστε πρώτα αυτήν τη ρύθμιση ώστε να μην τη διαχειρίζεται πλέον η επωνυμία σας.",
+      "searchPlaceholder": "Αναζήτηση με όνομα ή πόλη…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Επιλογή μεγέθους",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Αποδόθηκε",
       "labelAssigned": "Αποδόθηκε",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Κανένα ενεργό πιάτο — επιλέξτε ξανά"
+      "badgeDeadTargets": "Κανένα ενεργό πιάτο — επιλέξτε ξανά",
+      "searchPlaceholder": "Αναζήτηση με όνομα ή κωδικό κουπονιού…"
     },
     "promoWizard": {
       "errorPickType": "Επιλέξτε τύπο προσφοράς για να συνεχίσετε.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Να αφαιρεθεί αυτό το μέλος από την ομάδα;",
       "confirmRemoveSpecial": "Να αφαιρεθεί αυτή η προσφορά;",
       "confirmRemoveFromGroup": "Αφαίρεση του/της {name} από «{group}»; Θα χάσει όλες τις προσφορές της ομάδας. Η ομάδα και οι προσφορές της μένουν ίδιες για τους υπόλοιπους.",
-      "removeFromGroupTitle": "Αφαίρεση από {group}"
+      "removeFromGroupTitle": "Αφαίρεση από {group}",
+      "membersCsvCapNote": "Σημείωση: εξάγονται μόνο τα πρώτα 1000 μέλη (όριο διακομιστή)."
     },
     "rewards": {
       "title": "Δολάρια Επιβράβευσης",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Το Fee Free Delivery δεν είναι ακόμη διαθέσιμο στην περιοχή σας.",
       "lockedNotice": "Το ShipDay και το Fee Free Delivery χρειάζονται το πρόσθετο Driver Pool. Οι δικοί σας διανομείς είναι πάντα δωρεάν στη χρήση.",
       "getDriverPool": "Αποκτήστε το Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Αναζήτηση προϊόντων και κατηγοριών…"
     }
   },
   "impersonation": {

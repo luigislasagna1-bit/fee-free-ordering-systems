@@ -8,6 +8,8 @@ import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { TableControls } from "@/components/admin/reports/TableControls";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
+import Link from "next/link";
+import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
 
 /**
  * /admin/reports/list/clients
@@ -26,6 +28,24 @@ const PAGE_SIZES = [20, 50, 100];
 function pickSize(raw: string | string[] | undefined): number {
   const n = Number(Array.isArray(raw) ? raw[0] : raw);
   return PAGE_SIZES.includes(n) ? n : 20;
+}
+
+// Server-side header-click sorting for the two in-range aggregate columns.
+// STRICT allowlist — only these keys are ever honored; the sort is applied to
+// the FULL in-range aggregation BEFORE pagination slicing, so it covers the
+// whole range, not just the visible page. (Lifetime columns are computed only
+// for the visible page, so they can't be range-sorted — intentionally not
+// offered.) Absent / unknown params → today's default: spend descending.
+const SORT_KEYS = ["orders", "spend"] as const;
+type SortKey = (typeof SORT_KEYS)[number];
+type SortState = { key: SortKey; dir: "asc" | "desc" } | null;
+
+function pickSort(sp: Record<string, string | string[] | undefined>): SortState {
+  const rawSort = (Array.isArray(sp.sort) ? sp.sort[0] : sp.sort)?.trim();
+  const key = SORT_KEYS.find((k) => k === rawSort);
+  if (!key) return null;
+  const rawDir = (Array.isArray(sp.dir) ? sp.dir[0] : sp.dir)?.trim();
+  return { key, dir: rawDir === "desc" ? "desc" : "asc" };
 }
 
 export default async function ListClientsPage({
@@ -83,8 +103,23 @@ export default async function ListClientsPage({
   });
   // Sort + paginate the grouped rows in-process (cheap — typically
   // a few hundred to a few thousand distinct customers per range).
+  // The requested sort is applied to the ENTIRE grouped set before the
+  // slice, so header-click sorting covers the whole range.
+  const sort = pickSort(sp);
+  const value = (g: (typeof groupedAll)[number]) =>
+    sort?.key === "orders" ? g._count : (g._sum.total ?? 0);
   const grouped = groupedAll
-    .sort((a, b) => (b._sum.total ?? 0) - (a._sum.total ?? 0))
+    .sort((a, b) => {
+      if (sort) {
+        const d = (value(a) - value(b)) * (sort.dir === "asc" ? 1 : -1);
+        // Deterministic tiebreak: order-count ties are pervasive (every
+        // 1-order customer), the groupBy arrival order is unspecified, and
+        // each PAGE re-runs the query — without this, tied customers can
+        // repeat or vanish across page boundaries (review 2026-07-19).
+        return d !== 0 ? d : (a.customerId ?? "").localeCompare(b.customerId ?? "");
+      }
+      return (b._sum.total ?? 0) - (a._sum.total ?? 0); // default: spend desc, exactly as before
+    })
     .slice((page - 1) * size, page * size);
 
   const customerIds = grouped.map((g) => g.customerId!).filter(Boolean);
@@ -139,8 +174,8 @@ export default async function ListClientsPage({
               <th className="py-2.5 px-4 font-semibold">{t("colCustomer")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colContact")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colLastOrder")}</th>
-              <th className="py-2.5 px-4 font-semibold text-right">{t("colOrdersInRange")}</th>
-              <th className="py-2.5 px-4 font-semibold text-right">{t("colSpendInRange")}</th>
+              <SortHeader id="orders" label={t("colOrdersInRange")} sort={sort} sp={sp} align="right" />
+              <SortHeader id="spend" label={t("colSpendInRange")} sort={sort} sp={sp} align="right" />
               <th className="py-2.5 px-4 font-semibold text-right">{t("colLifetimeOrders")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colLifetimeSpend")}</th>
             </tr>
@@ -186,6 +221,42 @@ export default async function ListClientsPage({
 
       {pageCount > 1 && <Pagination current={page} total={pageCount} sp={sp} t={t} />}
     </div>
+  );
+}
+
+/** Sortable column header rendered as a link (server-side sorting — the full
+ *  in-range aggregation is sorted before slicing). Click cycle mirrors
+ *  SortableTh: asc → desc → clear. Preserves every other query param; page
+ *  resets to 1. */
+function SortHeader({ id, label, sort, sp, align }: {
+  id: SortKey;
+  label: string;
+  sort: SortState;
+  sp: Record<string, string | string[] | undefined>;
+  align?: "right";
+}) {
+  const active = sort?.key === id;
+  const u = new URLSearchParams(buildQuery(sp));
+  u.delete("sort");
+  u.delete("dir");
+  if (!active) { u.set("sort", id); u.set("dir", "asc"); }
+  else if (sort!.dir === "asc") { u.set("sort", id); u.set("dir", "desc"); }
+  // active desc → third click clears back to the default order
+  return (
+    <th
+      aria-sort={active ? (sort!.dir === "asc" ? "ascending" : "descending") : "none"}
+      className={`py-2.5 px-4 font-semibold ${align === "right" ? "text-right" : ""}`}
+    >
+      <Link
+        href={`?${u.toString()}`}
+        className={`inline-flex items-center gap-1 uppercase transition ${active ? "text-gray-900" : "hover:text-gray-700"}`}
+      >
+        {label}
+        {active
+          ? (sort!.dir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />)
+          : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+      </Link>
+    </th>
   );
 }
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { Crown, Plus, Users, Trash2, Pencil, Tag, Gift, Loader2, Check, X } from "lucide-react";
+import { Crown, Plus, Users, Trash2, Pencil, Tag, Gift, Loader2, Check, X, Search } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
 type Group = { id: string; name: string; description: string | null; memberCount: number; updatedAt: string };
@@ -14,6 +14,10 @@ type Target = { id: string; promotionId: string; promoName: string; promotionTyp
 
 export default function CustomerGroupsClient({ initialGroups, initialMemberLabel, currency }: { initialGroups: Group[]; initialMemberLabel: string; currency: string }) {
   const t = useTranslations("admin.customerGroups");
+  // Reuse the Customers list's "Search name, email, phone…" placeholder and
+  // the menu editor's "No matches for {query}" — no new strings needed.
+  const tCust = useTranslations("admin.customersList");
+  const tMenu = useTranslations("admin.menuEditor");
   const router = useRouter();
   const [groups, setGroups] = useState<Group[]>(initialGroups);
 
@@ -48,6 +52,9 @@ export default function CustomerGroupsClient({ initialGroups, initialMemberLabel
   const [notify, setNotify] = useState(true);
   const [giving, setGiving] = useState(false);
   const [loadingTargets, setLoadingTargets] = useState(true);
+  // Search scoped to the Individual specials section (name/email/phone) —
+  // the 1:1 gift list grows fast. Luigi 2026-07-19.
+  const [targetQuery, setTargetQuery] = useState("");
 
   const reloadIndividuals = useCallback(async () => {
     try {
@@ -86,6 +93,12 @@ export default function CustomerGroupsClient({ initialGroups, initialMemberLabel
     if (!res.ok) { toast.error(t("detachFailed")); return; }
     setTargets((s) => s.filter((x) => x.id !== id));
   }
+
+  // Individual-specials search: name / email / phone, case-insensitive.
+  const tq = targetQuery.trim().toLowerCase();
+  const visibleTargets = tq
+    ? targets.filter((x) => `${x.name ?? ""} ${x.email ?? ""} ${x.phone ?? ""}`.toLowerCase().includes(tq))
+    : targets;
 
   function discChip(rc: any): string | null {
     if (typeof rc?.discountPercent === "number" && rc.discountPercent > 0) return `${rc.discountPercent}%`;
@@ -267,13 +280,30 @@ export default function CustomerGroupsClient({ initialGroups, initialMemberLabel
         </div>
         <p className="text-sm text-gray-500 mb-3">{t("individualsSubtitle")}</p>
 
+        {/* Search the individual specials by recipient name/email/phone. */}
+        {targets.length > 0 && (
+          <div className="relative max-w-xs mb-3">
+            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="search"
+              value={targetQuery}
+              onChange={(e) => setTargetQuery(e.target.value)}
+              placeholder={tCust("searchPlaceholder")}
+              className="w-full bg-gray-50 border border-gray-200 rounded-full pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+        )}
+
         {/* Existing individual specials, grouped by promotion */}
         {loadingTargets && (
           <div className="mb-4 flex justify-center"><Loader2 className="w-5 h-5 animate-spin text-gray-300" /></div>
         )}
-        {targets.length > 0 && (
+        {tq !== "" && targets.length > 0 && visibleTargets.length === 0 && (
+          <p className="text-sm text-gray-400 mb-4">{tMenu("noMatchesFor", { query: targetQuery.trim() })}</p>
+        )}
+        {visibleTargets.length > 0 && (
           <div className="space-y-3 mb-4">
-            {Object.values(targets.reduce((acc, tg) => {
+            {Object.values(visibleTargets.reduce((acc, tg) => {
               (acc[tg.promotionId] ??= { promo: tg, people: [] }).people.push(tg);
               return acc;
             }, {} as Record<string, { promo: Target; people: Target[] }>)).map(({ promo, people }) => {

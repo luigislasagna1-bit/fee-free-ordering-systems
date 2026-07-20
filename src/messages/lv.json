@@ -1764,7 +1764,8 @@
       "brandControlsLabel": "Zīmola iestatījumi",
       "lockedByBrand": "Pārvalda jūsu zīmols",
       "lockHelp": "Bloķējiet iestatījumu, lai šī atrašanās vieta to nevarētu mainīt — jūs to kontrolējat no zīmola.",
-      "brandManagedEditNotice": "Lai to rediģētu šeit, vispirms izslēdziet šo iestatījumu, lai jūsu zīmols to vairs nepārvalda."
+      "brandManagedEditNotice": "Lai to rediģētu šeit, vispirms izslēdziet šo iestatījumu, lai jūsu zīmols to vairs nepārvalda.",
+      "searchPlaceholder": "Meklēt pēc nosaukuma vai pilsētas…"
     },
     "toasts": {
       "saved": "Izmaiņas saglabātas",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Piešķirts",
       "labelAssigned": "Piešķirts",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Nav aktīvu ēdienu — izvēlieties vēlreiz"
+      "badgeDeadTargets": "Nav aktīvu ēdienu — izvēlieties vēlreiz",
+      "searchPlaceholder": "Meklēt pēc nosaukuma vai kupona koda…"
     },
     "promoWizard": {
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Noņemt šo dalībnieku no grupas?",
       "confirmRemoveSpecial": "Noņemt šo īpašo piedāvājumu?",
       "confirmRemoveFromGroup": "Vai izņemt {name} no “{group}”? Viņš zaudēs visus grupai piesaistītos piedāvājumus. Grupa un tās piedāvājumi pārējiem paliek nemainīgi.",
-      "removeFromGroupTitle": "Izņemt no {group}"
+      "removeFromGroupTitle": "Izņemt no {group}",
+      "membersCsvCapNote": "Piezīme: tiek eksportēti tikai pirmie 1000 dalībnieki (servera ierobežojums)."
     },
     "rewards": {
       "title": "Bonusa dolāri",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery jūsu apgabalā vēl nav pieejams.",
       "lockedNotice": "ShipDay un Fee Free Delivery ir nepieciešams Driver Pool papildinājums. Jūsu pašu kurjeri vienmēr ir bez maksas.",
       "getDriverPool": "Iegūt Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Meklēt produktus un kategorijas…"
     }
   },
   "impersonation": {

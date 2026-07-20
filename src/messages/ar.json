@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "عناصر تحكم العلامة التجارية",
       "lockedByBrand": "تتم إدارته بواسطة علامتك التجارية",
       "lockHelp": "اقفل إعدادًا حتى لا يتمكن هذا الموقع من تغييره — أنت تتحكم به من العلامة التجارية.",
-      "brandManagedEditNotice": "لتحريره هنا، أوقف هذا الإعداد أولاً حتى لا تعود علامتك التجارية تديره."
+      "brandManagedEditNotice": "لتحريره هنا، أوقف هذا الإعداد أولاً حتى لا تعود علامتك التجارية تديره.",
+      "searchPlaceholder": "ابحث بالاسم أو المدينة…"
     },
     "menuEditor": {
       "sectionSizeLabel": "اختيار الحجم",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "مُخصّص",
       "labelAssigned": "مُخصّص",
       "labelVip": "VIP",
-      "badgeDeadTargets": "لا توجد أطباق نشطة — أعد الاختيار"
+      "badgeDeadTargets": "لا توجد أطباق نشطة — أعد الاختيار",
+      "searchPlaceholder": "ابحث بالاسم أو رمز القسيمة…"
     },
     "promoWizard": {
       "errorPickType": "اختر نوع العرض للمتابعة.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "إزالة هذا العضو من المجموعة؟",
       "confirmRemoveSpecial": "إزالة هذا العرض الخاص؟",
       "confirmRemoveFromGroup": "إزالة {name} من «{group}»؟ سيفقد جميع العروض المرتبطة بهذه المجموعة. تبقى المجموعة وعروضها كما هي للبقية.",
-      "removeFromGroupTitle": "إزالة من {group}"
+      "removeFromGroupTitle": "إزالة من {group}",
+      "membersCsvCapNote": "ملاحظة: يتم تصدير أول 1000 عضو فقط (حد الخادم)."
     },
     "rewards": {
       "title": "دولارات المكافآت",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery غير متاح في منطقتك بعد.",
       "lockedNotice": "يتطلب ShipDay وFee Free Delivery إضافة Driver Pool. يمكنك دائمًا استخدام سائقيك الخاصين مجانًا.",
       "getDriverPool": "احصل على Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "ابحث في الأصناف والفئات…"
     }
   },
   "impersonation": {

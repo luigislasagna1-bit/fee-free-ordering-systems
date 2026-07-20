@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Controlli del marchio",
       "lockedByBrand": "Gestito dal tuo marchio",
       "lockHelp": "Blocca un'impostazione così questa sede non può modificarla — la controlli dal marchio.",
-      "brandManagedEditNotice": "Per modificarlo qui, disattiva prima questa impostazione così il tuo marchio non la gestisce più."
+      "brandManagedEditNotice": "Per modificarlo qui, disattiva prima questa impostazione così il tuo marchio non la gestisce più.",
+      "searchPlaceholder": "Cerca per nome o città…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Selezione taglia",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Assegnato",
       "labelAssigned": "Assegnato",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Nessun piatto attivo — riseleziona"
+      "badgeDeadTargets": "Nessun piatto attivo — riseleziona",
+      "searchPlaceholder": "Cerca per nome o codice coupon…"
     },
     "promoWizard": {
       "errorPickType": "Scegli un tipo di promozione per continuare.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Rimuovere questo membro dal gruppo?",
       "confirmRemoveSpecial": "Rimuovere questa offerta speciale?",
       "confirmRemoveFromGroup": "Rimuovere {name} da “{group}”? Perderà tutte le offerte collegate a quel gruppo. Il gruppo e le sue offerte restano invariati per gli altri.",
-      "removeFromGroupTitle": "Rimuovi da {group}"
+      "removeFromGroupTitle": "Rimuovi da {group}",
+      "membersCsvCapNote": "Nota: vengono esportati solo i primi 1000 membri (limite del server)."
     },
     "rewards": {
       "title": "Credito fedeltà",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery non è ancora disponibile nella tua zona.",
       "lockedNotice": "ShipDay e Fee Free Delivery richiedono il componente Driver Pool. I tuoi corrieri sono sempre gratuiti da usare.",
       "getDriverPool": "Ottieni Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Cerca piatti e categorie…"
     }
   },
   "impersonation": {

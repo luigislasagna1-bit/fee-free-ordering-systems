@@ -2193,7 +2193,8 @@
       "tabAssigned": "Đã gán",
       "labelAssigned": "Đã gán",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Không còn món hoạt động — chọn lại"
+      "badgeDeadTargets": "Không còn món hoạt động — chọn lại",
+      "searchPlaceholder": "Tìm theo tên hoặc mã giảm giá…"
     },
     "promoWizard": {
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",
@@ -2719,7 +2720,8 @@
       "brandControlsLabel": "Kiểm soát thương hiệu",
       "lockedByBrand": "Được quản lý bởi thương hiệu của bạn",
       "lockHelp": "Khóa một cài đặt để địa điểm này không thể tự thay đổi — bạn kiểm soát nó từ thương hiệu.",
-      "brandManagedEditNotice": "Để chỉnh sửa tại đây, trước tiên hãy tắt cài đặt này để thương hiệu của bạn không còn quản lý nó."
+      "brandManagedEditNotice": "Để chỉnh sửa tại đây, trước tiên hãy tắt cài đặt này để thương hiệu của bạn không còn quản lý nó.",
+      "searchPlaceholder": "Tìm theo tên hoặc thành phố…"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Bảng điều khiển thương hiệu",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Xóa thành viên này khỏi nhóm?",
       "confirmRemoveSpecial": "Xóa ưu đãi đặc biệt này?",
       "confirmRemoveFromGroup": "Xóa {name} khỏi “{group}”? Họ sẽ mất mọi ưu đãi gắn với nhóm đó. Nhóm và các ưu đãi vẫn giữ nguyên cho những người khác.",
-      "removeFromGroupTitle": "Xóa khỏi {group}"
+      "removeFromGroupTitle": "Xóa khỏi {group}",
+      "membersCsvCapNote": "Lưu ý: chỉ 1000 thành viên đầu tiên được xuất (giới hạn máy chủ)."
     },
     "rewards": {
       "title": "Đô-la Thưởng",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery chưa có sẵn trong khu vực của bạn.",
       "lockedNotice": "ShipDay và Fee Free Delivery cần tiện ích bổ sung Driver Pool. Tài xế của riêng bạn luôn được sử dụng miễn phí.",
       "getDriverPool": "Nhận Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Tìm món và danh mục…"
     }
   },
   "impersonation": {

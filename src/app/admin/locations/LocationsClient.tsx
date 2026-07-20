@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Loader2, Plus, MapPin, X, ExternalLink, ArrowRight } from "lucide-react";
+import { Loader2, Plus, MapPin, X, ExternalLink, ArrowRight, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { InheritancePanel } from "./InheritancePanel";
 import { ParentLocationInheritance } from "./ParentLocationInheritance";
@@ -31,7 +31,11 @@ export function LocationsClient({
   isBrandParent?: boolean;
 }) {
   const t = useTranslations("admin.locations");
+  // Generic "No matches for {query}" reused from the menu editor.
+  const tMenu = useTranslations("admin.menuEditor");
   const [showAdd, setShowAdd] = useState(false);
+  // Name/city search over the location cards (brands with many locations).
+  const [query, setQuery] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
@@ -94,6 +98,12 @@ export function LocationsClient({
 
   const allLocations = [{ ...parent, isParent: true }, ...children.map((c) => ({ ...c, isParent: false }))];
 
+  // Search matches location NAME and CITY (case-insensitive substring).
+  const q = query.trim().toLowerCase();
+  const visibleLocations = q
+    ? allLocations.filter((loc) => `${loc.name} ${loc.city ?? ""}`.toLowerCase().includes(q))
+    : allLocations;
+
   return (
     <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-6">
@@ -134,8 +144,27 @@ export function LocationsClient({
           The panel re-confirms child status via its own API call. */}
       {!isBrandParent && <InheritancePanel />}
 
+      {/* Name/city search over the cards — only shown once there's more than
+          one location, so single-store owners never see it. */}
+      {allLocations.length > 1 && (
+        <div className="relative max-w-xs mb-4">
+          <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("searchPlaceholder")}
+            className="w-full bg-gray-50 border border-gray-200 rounded-full pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+        </div>
+      )}
+
+      {q !== "" && visibleLocations.length === 0 && (
+        <p className="text-sm text-gray-400 mb-3">{tMenu("noMatchesFor", { query: query.trim() })}</p>
+      )}
+
       <div className="space-y-3">
-        {allLocations.map((loc) => {
+        {visibleLocations.map((loc) => {
           const isActive = loc.id === activeId;
           return (
             <div

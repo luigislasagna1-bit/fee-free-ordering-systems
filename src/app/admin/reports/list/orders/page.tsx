@@ -10,6 +10,7 @@ import { ExportMenu } from "@/components/admin/reports/ExportMenu";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
+import { ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react";
 
 /**
  * /admin/reports/list/orders
@@ -28,6 +29,26 @@ function pickSize(raw: string | string[] | undefined): number {
   const n = Number(Array.isArray(raw) ? raw[0] : raw);
   return PAGE_SIZES.includes(n) ? n : 20;
 }
+
+// Server-side header-click sorting. STRICT allowlist — the sort key is only
+// ever used to pick one of these two static Prisma orderBy objects; user
+// input is never interpolated into the query.
+const SORT_KEYS = ["date", "total"] as const;
+type SortKey = (typeof SORT_KEYS)[number];
+type SortState = { key: SortKey; dir: "asc" | "desc" } | null;
+
+function pickSort(sp: Record<string, string | string[] | undefined>): SortState {
+  const rawSort = (Array.isArray(sp.sort) ? sp.sort[0] : sp.sort)?.trim();
+  const key = SORT_KEYS.find((k) => k === rawSort);
+  if (!key) return null; // absent / unknown → today's default order
+  const rawDir = (Array.isArray(sp.dir) ? sp.dir[0] : sp.dir)?.trim();
+  return { key, dir: rawDir === "desc" ? "desc" : "asc" };
+}
+
+// Allowed ?status= drill-down values (see comment at the query below) —
+// surfaced as filter chips. Labels reuse the already-translated
+// admin.orders.* strings so no new i18n keys are needed.
+const STATUS_CHIP_VALUES = ["completed", "pending", "accepted"] as const;
 
 export default async function ListOrdersPage({
   searchParams,
@@ -54,7 +75,22 @@ export default async function ListOrdersPage({
   // so the spread override below can't bring back excluded orders. Absent /
   // unknown status → chain-wide, all real orders.
   const statusParam = (Array.isArray(sp.status) ? sp.status[0] : sp.status)?.trim();
-  const allowedStatus = (["completed", "pending", "accepted"] as const).find((s) => s === statusParam);
+  const allowedStatus = STATUS_CHIP_VALUES.find((s) => s === statusParam);
+
+  // ?sort=date|total&dir=asc|desc — allowlisted above; anything else falls
+  // back to today's default (newest first). The orderBy objects are static
+  // literals, chosen by comparison, never built from user input.
+  const sort = pickSort(sp);
+  // Explicit sorts carry a unique id tiebreaker: totals tie constantly and
+  // Postgres gives no deterministic within-tie order, so skip/take pages
+  // could duplicate/drop rows at page boundaries (review 2026-07-19). The
+  // no-param default stays the byte-identical single literal.
+  const orderBy =
+    sort?.key === "total"
+      ? [{ total: sort.dir }, { id: "asc" as const }]
+      : sort?.key === "date"
+        ? [{ createdAt: sort.dir }, { id: "asc" as const }]
+        : { createdAt: "desc" as const };
 
   // Run count + page query in parallel. count is cheap (uses the composite
   // index). Same canonical predicate as the rest of Reports so the count
@@ -88,7 +124,7 @@ export default async function ListOrdersPage({
         paymentMethod: true,
         createdAt: true,
       },
-      orderBy: { createdAt: "desc" },
+      orderBy,
       take: size,
       skip: (page - 1) * size,
     }),
@@ -110,18 +146,28 @@ export default async function ListOrdersPage({
         </div>
       </header>
 
+      {/* Status filter chips — the same allowlisted ?status= values the query
+          accepts (Dashboard KPI drill-downs land here with one preset). "All"
+          clears in one click; labels reuse the translated admin.orders.* set. */}
+      <div className="flex items-center gap-1.5 flex-wrap mb-4">
+        <StatusChip label={tRoot("admin.orders.all")} active={!allowedStatus} status={null} sp={sp} />
+        {STATUS_CHIP_VALUES.map((s) => (
+          <StatusChip key={s} label={tRoot(`admin.orders.${s}`)} active={allowedStatus === s} status={s} sp={sp} />
+        ))}
+      </div>
+
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[720px]">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-gray-500 border-b border-gray-100 bg-gray-50">
               <th className="py-2.5 px-4 font-semibold">{t("colNumber")}</th>
-              <th className="py-2.5 px-4 font-semibold">{t("colDate")}</th>
+              <SortHeader id="date" label={t("colDate")} sort={sort} sp={sp} />
               <th className="py-2.5 px-4 font-semibold">{t("colCustomer")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colType")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colPayment")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colStatus")}</th>
-              <th className="py-2.5 px-4 font-semibold text-right">{t("colTotal")}</th>
+              <SortHeader id="total" label={t("colTotal")} sort={sort} sp={sp} align="right" />
             </tr>
           </thead>
           <tbody>
@@ -159,6 +205,67 @@ export default async function ListOrdersPage({
         <Pagination current={page} total={pageCount} sp={sp} labelPage={t("paginationPage", { current: page, total: pageCount })} labelPrevious={t("paginationPrevious")} labelNext={t("paginationNext")} />
       )}
     </div>
+  );
+}
+
+/** Sortable column header rendered as a link (server-paged list — sorting is a
+ *  query param, not client state). Click cycle mirrors SortableTh:
+ *  asc → desc → clear. Preserves every other query param; page resets to 1. */
+function SortHeader({ id, label, sort, sp, align }: {
+  id: SortKey;
+  label: string;
+  sort: SortState;
+  sp: Record<string, string | string[] | undefined>;
+  align?: "right";
+}) {
+  const active = sort?.key === id;
+  const u = new URLSearchParams(buildQuery(sp));
+  u.delete("sort");
+  u.delete("dir");
+  if (!active) { u.set("sort", id); u.set("dir", "asc"); }
+  else if (sort!.dir === "asc") { u.set("sort", id); u.set("dir", "desc"); }
+  // active desc → third click clears back to the default order
+  return (
+    <th
+      aria-sort={active ? (sort!.dir === "asc" ? "ascending" : "descending") : "none"}
+      className={`py-2.5 px-4 font-semibold ${align === "right" ? "text-right" : ""}`}
+    >
+      <Link
+        href={`?${u.toString()}`}
+        className={`inline-flex items-center gap-1 uppercase transition ${active ? "text-gray-900" : "hover:text-gray-700"}`}
+      >
+        {label}
+        {active
+          ? (sort!.dir === "asc" ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />)
+          : <ArrowUpDown className="w-3 h-3 opacity-40" />}
+      </Link>
+    </th>
+  );
+}
+
+/** One-click status filter chip. Clicking the active chip (or "All") clears
+ *  the filter; every other query param is preserved, page resets to 1. */
+function StatusChip({ label, active, status, sp }: {
+  label: string;
+  active: boolean;
+  status: string | null;
+  sp: Record<string, string | string[] | undefined>;
+}) {
+  const u = new URLSearchParams(buildQuery(sp));
+  u.delete("status");
+  if (status && !active) u.set("status", status);
+  return (
+    <Link
+      href={`?${u.toString()}`}
+      aria-pressed={active}
+      className={`px-2.5 py-1 rounded-full text-xs font-medium border transition ${
+        active
+          ? "bg-emerald-600 border-emerald-600 text-white"
+          : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
+      }`}
+    >
+      {label}
+    </Link>
   );
 }
 

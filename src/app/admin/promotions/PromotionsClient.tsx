@@ -18,7 +18,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
   Tag, Edit2, Trash2, Copy, EyeOff, Power, PowerOff,
-  Star, Crown, Shield, Percent, Gift, Package, Zap, Truck,
+  Star, Crown, Shield, Percent, Gift, Package, Zap, Truck, Search,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -274,8 +274,13 @@ export function PromotionsClient({
   deadPromoIds?: string[];
 }) {
   const t = useTranslations("admin.promotionsList");
+  // Generic "No matches for {query}" already exists in the menu editor — reuse it.
+  const tMenu = useTranslations("admin.menuEditor");
   const [promotions, setPromotions] = useState(initial);
   const [tab, setTab] = useState<TabFilter>("all");
+  // Name/coupon-code search — 1:1 assigned gift promos make this list long
+  // (Luigi 2026-07-19). Client-side, same as the Customers list.
+  const [query, setQuery] = useState("");
   const router = useRouter();
   const now = new Date();
 
@@ -321,7 +326,10 @@ export function PromotionsClient({
     }
   };
 
+  const q = query.trim().toLowerCase();
   const filteredPromos = promotions.filter((p) => {
+    // Search matches promo NAME and COUPON CODE (case-insensitive substring).
+    if (q && !`${p.name ?? ""} ${p.couponCode ?? ""}`.toLowerCase().includes(q)) return false;
     if (tab === "promotions") return true;
     if (tab === "active") return p.isActive;
     if (tab === "inactive") return !p.isActive;
@@ -393,17 +401,35 @@ export function PromotionsClient({
             </span>
           </button>
         ))}
+        {/* Name / coupon-code search (matches the Customers list styling). */}
+        <div className="ml-auto relative flex-1 max-w-xs min-w-[180px]">
+          <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={t("searchPlaceholder")}
+            className="w-full bg-gray-50 border border-gray-200 rounded-full pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          />
+        </div>
       </div>
 
       {isEmpty ? (
         <div className="bg-white rounded-2xl p-16 text-center border border-gray-100 shadow-sm">
           <Tag className="w-12 h-12 mx-auto mb-3 text-gray-200" />
-          <p className="text-gray-500 font-medium">{t("emptyStateTitle")}</p>
-          <p className="text-sm text-gray-400 mt-1">
-            {t.rich("emptyStateBody", {
-              newPromo: (c) => <span className="font-semibold text-emerald-600">{c}</span>,
-            })}
-          </p>
+          {q ? (
+            /* Empty because of the search box, not because there are no promos. */
+            <p className="text-gray-500 font-medium">{tMenu("noMatchesFor", { query: query.trim() })}</p>
+          ) : (
+            <>
+              <p className="text-gray-500 font-medium">{t("emptyStateTitle")}</p>
+              <p className="text-sm text-gray-400 mt-1">
+                {t.rich("emptyStateBody", {
+                  newPromo: (c) => <span className="font-semibold text-emerald-600">{c}</span>,
+                })}
+              </p>
+            </>
+          )}
         </div>
       ) : (
         <div className="space-y-3">

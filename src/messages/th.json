@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "การควบคุมแบรนด์",
       "lockedByBrand": "จัดการโดยแบรนด์ของคุณ",
       "lockHelp": "ล็อกการตั้งค่าเพื่อไม่ให้สาขานี้เปลี่ยนเอง — คุณควบคุมจากแบรนด์",
-      "brandManagedEditNotice": "หากต้องการแก้ไขที่นี่ ให้ปิดการตั้งค่านี้ก่อนเพื่อให้แบรนด์ของคุณไม่จัดการอีกต่อไป"
+      "brandManagedEditNotice": "หากต้องการแก้ไขที่นี่ ให้ปิดการตั้งค่านี้ก่อนเพื่อให้แบรนด์ของคุณไม่จัดการอีกต่อไป",
+      "searchPlaceholder": "ค้นหาตามชื่อหรือเมือง…"
     },
     "menuEditor": {
       "sectionSizeLabel": "การเลือกขนาด",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "กำหนดแล้ว",
       "labelAssigned": "กำหนดแล้ว",
       "labelVip": "VIP",
-      "badgeDeadTargets": "ไม่มีเมนูที่ใช้งานอยู่ — โปรดเลือกใหม่"
+      "badgeDeadTargets": "ไม่มีเมนูที่ใช้งานอยู่ — โปรดเลือกใหม่",
+      "searchPlaceholder": "ค้นหาตามชื่อหรือรหัสคูปอง…"
     },
     "promoWizard": {
       "errorPickType": "เลือกประเภทโปรโมชั่นเพื่อดำเนินการต่อ",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "นำสมาชิกนี้ออกจากกลุ่มหรือไม่?",
       "confirmRemoveSpecial": "นำข้อเสนอพิเศษนี้ออกหรือไม่?",
       "confirmRemoveFromGroup": "นำ {name} ออกจาก “{group}” หรือไม่ เขาจะเสียสิทธิพิเศษทั้งหมดของกลุ่มนี้ ส่วนกลุ่มและสิทธิพิเศษยังคงเดิมสำหรับคนอื่น",
-      "removeFromGroupTitle": "นำออกจาก {group}"
+      "removeFromGroupTitle": "นำออกจาก {group}",
+      "membersCsvCapNote": "หมายเหตุ: ส่งออกได้เฉพาะสมาชิก 1000 คนแรกเท่านั้น (ขีดจำกัดของเซิร์ฟเวอร์)"
     },
     "rewards": {
       "title": "เงินรางวัล",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery ยังไม่พร้อมให้บริการในพื้นที่ของคุณ",
       "lockedNotice": "ShipDay และ Fee Free Delivery ต้องใช้ส่วนเสริม Driver Pool คนขับของคุณเองใช้งานได้ฟรีเสมอ",
       "getDriverPool": "รับ Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "ค้นหาเมนูและหมวดหมู่…"
     }
   },
   "impersonation": {

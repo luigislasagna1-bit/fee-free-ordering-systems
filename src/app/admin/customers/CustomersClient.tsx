@@ -4,7 +4,9 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { formatDate } from "@/lib/utils";
+import { escCsv } from "@/lib/csv";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { useSortableRows, SortableTh } from "@/components/admin/sortable";
 import { Users, Mail, Phone, KeyRound, ChevronRight, Search, Download } from "lucide-react";
 
 /**
@@ -80,6 +82,21 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
     });
   }, [customers, filter, query]);
 
+  // Click-to-sort on every column (Luigi 2026-07-19); no sort = the page's
+  // natural biggest-spender-first order. Applies to the CSV export too, so
+  // what you see is what you download.
+  const { sorted, sortKey, sortDir, toggleSort } = useSortableRows(visible, {
+    name: (c) => c.name,
+    email: (c) => c.email,
+    phone: (c) => c.phone,
+    orders: (c) => c.totalOrders,
+    spent: (c) => c.totalSpent,
+    rewards: (c) => c.rewardBalance,
+    marketing: (c) => c.marketingConsent,
+    firstOrder: (c) => c.createdAt,
+    signedUp: (c) => c.signedUpAt,
+  });
+
   /**
    * Build a CSV from the CURRENTLY visible rows and trigger a browser
    * download. Includes name / email / phone / orders / spend / signup
@@ -88,30 +105,24 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
    * or commas in the source data via standard RFC 4180.
    */
   const exportCsv = () => {
-    const esc = (v: string | number | null | undefined) => {
-      if (v == null) return "";
-      const s = String(v);
-      // RFC 4180: wrap in quotes if contains comma, quote, or newline; double up any internal quotes.
-      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-    };
     // "First order date" = row creation (the old "Signup date" column was
     // mislabeled — it always held createdAt); "Signed up date" = the real
     // account-creation date, blank for guests. The wallet column always
     // exports (stable CSV shape) under the restaurant's own reward label.
     const header = ["Name", "Email", "Phone", "Total orders", "Total spent", `${rewardLabel} balance`, "First order date", "Signed up date", "Has account", "Marketing consent"];
     const lines = [header.join(",")];
-    for (const c of visible) {
+    for (const c of sorted) {
       lines.push([
-        esc(c.name),
-        esc(c.email),
-        esc(c.phone),
-        esc(c.totalOrders),
-        esc(c.totalSpent.toFixed(2)),
-        esc(c.rewardBalance.toFixed(2)),
-        esc(c.createdAt.slice(0, 10)),
-        esc(c.signedUpAt ? c.signedUpAt.slice(0, 10) : ""),
-        esc(c.hasAccount ? "yes" : "no"),
-        esc(c.marketingConsent ? "yes" : "no"),
+        escCsv(c.name),
+        escCsv(c.email),
+        escCsv(c.phone),
+        escCsv(c.totalOrders),
+        escCsv(c.totalSpent.toFixed(2)),
+        escCsv(c.rewardBalance.toFixed(2)),
+        escCsv(c.createdAt.slice(0, 10)),
+        escCsv(c.signedUpAt ? c.signedUpAt.slice(0, 10) : ""),
+        escCsv(c.hasAccount ? "yes" : "no"),
+        escCsv(c.marketingConsent ? "yes" : "no"),
       ].join(","));
     }
     // Prefix with UTF-8 BOM so Excel reads accented characters correctly
@@ -201,7 +212,7 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
           <>
             {/* Mobile: card layout */}
             <ul className="divide-y divide-gray-100 md:hidden">
-              {visible.map((c) => (
+              {sorted.map((c) => (
                 <li key={c.id}>
                   <Link href={`/admin/customers/${c.id}`} className="block p-4 hover:bg-gray-50 transition">
                     <div className="flex items-start justify-between gap-3">
@@ -265,27 +276,27 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
                 <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
                     {[
-                      { key: "colName", label: t("colName") },
-                      { key: "colEmail", label: t("colEmail") },
-                      { key: "colPhone", label: t("colPhone") },
-                      { key: "colOrders", label: t("colOrders") },
-                      { key: "colTotalSpent", label: t("colTotalSpent") },
+                      { id: "name", label: t("colName") },
+                      { id: "email", label: t("colEmail") },
+                      { id: "phone", label: t("colPhone") },
+                      { id: "orders", label: t("colOrders") },
+                      { id: "spent", label: t("colTotalSpent") },
                       // The restaurant's own wallet label ("Luigi Bucks") —
                       // configured value, shown verbatim; column hidden when
                       // the rewards master toggle is off.
-                      ...(rewardsEnabled ? [{ key: "colRewards", label: rewardLabel }] : []),
-                      { key: "colMarketing", label: t("colMarketing") },
-                      { key: "colFirstOrder", label: t("colFirstOrder") },
+                      ...(rewardsEnabled ? [{ id: "rewards", label: rewardLabel }] : []),
+                      { id: "marketing", label: t("colMarketing") },
+                      { id: "firstOrder", label: t("colFirstOrder") },
                       // Reuses the already-translated "Signed up" chip string.
-                      { key: "colSignedUp", label: t("filterSignedUp") },
-                      { key: "colActions", label: "" },
+                      { id: "signedUp", label: t("filterSignedUp") },
                     ].map((h) => (
-                      <th key={h.key} className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase">{h.label}</th>
+                      <SortableTh key={h.id} sortId={h.id} label={h.label} sortKey={sortKey} sortDir={sortDir} onToggle={toggleSort} />
                     ))}
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase" />
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {visible.map((c) => (
+                  {sorted.map((c) => (
                     <tr key={c.id} className="hover:bg-gray-50">
                       <td className="px-4 py-3 font-medium text-gray-900">
                         <Link href={`/admin/customers/${c.id}`} className="flex items-center gap-2 hover:text-emerald-700">

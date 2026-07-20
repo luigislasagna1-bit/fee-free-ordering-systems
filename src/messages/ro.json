@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Controale de brand",
       "lockedByBrand": "Gestionat de marca dvs.",
       "lockHelp": "Blocați o setare astfel încât această locație să nu o poată schimba — o controlați de la marcă.",
-      "brandManagedEditNotice": "Pentru a edita aici, dezactivează mai întâi această setare astfel încât marca să nu o mai gestioneze."
+      "brandManagedEditNotice": "Pentru a edita aici, dezactivează mai întâi această setare astfel încât marca să nu o mai gestioneze.",
+      "searchPlaceholder": "Caută după nume sau oraș…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Selecție mărime",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Atribuit",
       "labelAssigned": "Atribuit",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Niciun fel activ — reselectați"
+      "badgeDeadTargets": "Niciun fel activ — reselectați",
+      "searchPlaceholder": "Caută după nume sau cod cupon…"
     },
     "promoWizard": {
       "errorPickType": "Alege un tip de promoție pentru a continua.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Eliminați acest membru din grup?",
       "confirmRemoveSpecial": "Eliminați această ofertă specială?",
       "confirmRemoveFromGroup": "Eliminați {name} din „{group}”? Va pierde toate ofertele atașate acelui grup. Grupul și ofertele lui rămân neschimbate pentru ceilalți.",
-      "removeFromGroupTitle": "Elimină din {group}"
+      "removeFromGroupTitle": "Elimină din {group}",
+      "membersCsvCapNote": "Notă: doar primii 1000 de membri sunt exportați (limita serverului)."
     },
     "rewards": {
       "title": "Dolari de recompensă",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery nu este încă disponibil în zona ta.",
       "lockedNotice": "ShipDay și Fee Free Delivery necesită suplimentul Driver Pool. Propriii tăi șoferi pot fi folosiți întotdeauna gratuit.",
       "getDriverPool": "Obține Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Caută produse și categorii…"
     }
   },
   "impersonation": {

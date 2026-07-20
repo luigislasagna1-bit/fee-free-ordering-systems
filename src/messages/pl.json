@@ -2193,7 +2193,8 @@
       "tabAssigned": "Przypisane",
       "labelAssigned": "Przypisane",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Brak aktywnych dań — wybierz ponownie"
+      "badgeDeadTargets": "Brak aktywnych dań — wybierz ponownie",
+      "searchPlaceholder": "Szukaj po nazwie lub kodzie kuponu…"
     },
     "promoWizard": {
       "errorPickType": "Wybierz typ promocji, aby kontynuować.",
@@ -2719,7 +2720,8 @@
       "brandControlsLabel": "Ustawienia marki",
       "lockedByBrand": "Zarządzane przez Twoją markę",
       "lockHelp": "Zablokuj ustawienie, aby ta lokalizacja nie mogła go zmienić — kontrolujesz je z poziomu marki.",
-      "brandManagedEditNotice": "Aby edytować to tutaj, najpierw wyłącz to ustawienie, aby Twoja marka już nim nie zarządzała."
+      "brandManagedEditNotice": "Aby edytować to tutaj, najpierw wyłącz to ustawienie, aby Twoja marka już nim nie zarządzała.",
+      "searchPlaceholder": "Szukaj po nazwie lub mieście…"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Panel marki",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Usunąć tego członka z grupy?",
       "confirmRemoveSpecial": "Usunąć tę ofertę specjalną?",
       "confirmRemoveFromGroup": "Usunąć {name} z grupy „{group}”? Straci wszystkie oferty powiązane z tą grupą. Grupa i jej oferty pozostają bez zmian dla pozostałych.",
-      "removeFromGroupTitle": "Usuń z {group}"
+      "removeFromGroupTitle": "Usuń z {group}",
+      "membersCsvCapNote": "Uwaga: eksportowanych jest tylko pierwszych 1000 członków (limit serwera)."
     },
     "rewards": {
       "title": "Złotówki za zakupy",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery nie jest jeszcze dostępne w Twojej okolicy.",
       "lockedNotice": "ShipDay i Fee Free Delivery wymagają dodatku Driver Pool. Twoi właśni kierowcy zawsze są dostępni za darmo.",
       "getDriverPool": "Uzyskaj Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Szukaj pozycji i kategorii…"
     }
   },
   "impersonation": {

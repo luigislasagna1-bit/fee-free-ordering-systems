@@ -1842,7 +1842,8 @@
       "brandControlsLabel": "Налаштування бренду",
       "lockedByBrand": "Керується вашим брендом",
       "lockHelp": "Заблокуйте налаштування, щоб ця локація не могла його змінити — ви керуєте ним із бренду.",
-      "brandManagedEditNotice": "Щоб редагувати це тут, спершу вимкніть це налаштування, щоб ваш бренд більше ним не керував."
+      "brandManagedEditNotice": "Щоб редагувати це тут, спершу вимкніть це налаштування, щоб ваш бренд більше ним не керував.",
+      "searchPlaceholder": "Пошук за назвою або містом…"
     },
     "menuEditor": {
       "sectionSizeLabel": "Вибір розміру",
@@ -2249,7 +2250,8 @@
       "tabAssigned": "Призначено",
       "labelAssigned": "Призначено",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Немає активних страв — виберіть знову"
+      "badgeDeadTargets": "Немає активних страв — виберіть знову",
+      "searchPlaceholder": "Пошук за назвою або кодом купона…"
     },
     "promoWizard": {
       "errorPickType": "Виберіть тип акції, щоб продовжити.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Вилучити цього учасника з групи?",
       "confirmRemoveSpecial": "Вилучити цю спецпропозицію?",
       "confirmRemoveFromGroup": "Вилучити {name} з групи «{group}»? Він втратить усі пов'язані з групою пропозиції. Для інших група та її пропозиції не зміняться.",
-      "removeFromGroupTitle": "Вилучити з {group}"
+      "removeFromGroupTitle": "Вилучити з {group}",
+      "membersCsvCapNote": "Примітка: експортуються лише перші 1000 учасників (обмеження сервера)."
     },
     "rewards": {
       "title": "Бонусні долари",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery поки недоступна у вашому районі.",
       "lockedNotice": "Для ShipDay і Fee Free Delivery потрібне доповнення Driver Pool. Ваших власних кур'єрів завжди можна використовувати безкоштовно.",
       "getDriverPool": "Отримати Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Пошук страв і категорій…"
     }
   },
   "impersonation": {

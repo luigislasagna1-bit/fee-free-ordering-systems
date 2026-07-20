@@ -1764,7 +1764,8 @@
       "brandControlsLabel": "Prekės ženklo valdymas",
       "lockedByBrand": "Valdo jūsų prekės ženklas",
       "lockHelp": "Užrakinkite nustatymą, kad ši vieta negalėtų jo keisti — valdote jį iš prekės ženklo.",
-      "brandManagedEditNotice": "Norėdami tai redaguoti čia, pirmiausia išjunkite šį nustatymą, kad jūsų prekės ženklas jo nebevaldytų."
+      "brandManagedEditNotice": "Norėdami tai redaguoti čia, pirmiausia išjunkite šį nustatymą, kad jūsų prekės ženklas jo nebevaldytų.",
+      "searchPlaceholder": "Ieškoti pagal pavadinimą ar miestą…"
     },
     "toasts": {
       "saved": "Pakeitimai išsaugoti",
@@ -2966,7 +2967,8 @@
       "tabAssigned": "Priskirta",
       "labelAssigned": "Priskirta",
       "labelVip": "VIP",
-      "badgeDeadTargets": "Nėra aktyvių patiekalų — pasirinkite iš naujo"
+      "badgeDeadTargets": "Nėra aktyvių patiekalų — pasirinkite iš naujo",
+      "searchPlaceholder": "Ieškoti pagal pavadinimą ar kupono kodą…"
     },
     "promoWizard": {
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",
@@ -4537,7 +4539,8 @@
       "confirmRemoveMember": "Pašalinti šį narį iš grupės?",
       "confirmRemoveSpecial": "Pašalinti šį specialų pasiūlymą?",
       "confirmRemoveFromGroup": "Pašalinti {name} iš „{group}“? Jis neteks visų su grupe susietų pasiūlymų. Grupė ir jos pasiūlymai kitiems lieka nepakitę.",
-      "removeFromGroupTitle": "Pašalinti iš {group}"
+      "removeFromGroupTitle": "Pašalinti iš {group}",
+      "membersCsvCapNote": "Pastaba: eksportuojama tik pirmųjų 1000 narių (serverio riba)."
     },
     "rewards": {
       "title": "Premijų doleriai",
@@ -4725,6 +4728,9 @@
       "notInAreaToast": "Fee Free Delivery jūsų vietovėje dar nepasiekiama.",
       "lockedNotice": "ShipDay ir Fee Free Delivery reikia Driver Pool priedo. Jūsų pačių kurjeriais naudotis visada nemokama.",
       "getDriverPool": "Gauti Driver Pool"
+    },
+    "menuExclusions": {
+      "searchPlaceholder": "Ieškoti patiekalų ir kategorijų…"
     }
   },
   "impersonation": {
