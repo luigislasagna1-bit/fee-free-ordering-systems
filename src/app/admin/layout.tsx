@@ -231,9 +231,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
     // Coming-soon FEATURES — granted by an add-on flagged comingSoon in
     // /superadmin/add-ons, EXCEPT any feature an active, purchasable add-on also
-    // grants. e.g. driver_pool ships via the standalone Driver Pool add-on even
-    // though the comingSoon Marketplace bundle includes it — so it's purchasable
-    // NOW, not "Soon". DB-driven; non-fatal on failure. Luigi 2026-06-14.
+    // grants (so a feature that also ships via a live, sellable add-on is never
+    // mislabeled "Soon"). DB-driven; non-fatal on failure. Luigi 2026-06-14.
     try {
       const [soon, sellable] = await Promise.all([
         prisma.addOn.findMany({ where: { comingSoon: true }, select: { enabledFeatures: true } }),

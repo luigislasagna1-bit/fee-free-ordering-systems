@@ -32,7 +32,7 @@ export async function POST() {
   }
   if (!(await hasFeature(restaurantId, "driver_pool"))) {
     return NextResponse.json(
-      { error: "Subscribe to Driver Pool or Marketplace Monthly first.", code: "addon_required" },
+      { error: "Subscribe to the Driver Pool add-on first.", code: "addon_required" },
       { status: 412 },
     );
   }

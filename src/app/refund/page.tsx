@@ -71,13 +71,8 @@ export default async function RefundPolicyPage() {
       <h3>Down-grades</h3>
       <p>If you downgrade or remove an add-on, the change takes effect at the end of the current billing period. No partial-month refund is automatic, but again — email us if there&rsquo;s a fairness issue.</p>
 
-      <h2>3. Marketplace per-order fees</h2>
-      <p>Restaurants on the marketplace pay up to $3 per marketplace order (or a $199.99/month unlimited plan, whichever they chose).</p>
-      <ul>
-        <li><strong>If the order is cancelled or refunded</strong> (by the restaurant, automatically by the platform, or via chargeback), the platform automatically reverses the marketplace per-order fee. The restaurant is not charged for orders that didn&rsquo;t complete.</li>
-        <li>The reversal appears as a credit on the restaurant&rsquo;s next monthly marketplace invoice (or as a direct Stripe credit, depending on when the cancellation happens).</li>
-        <li>Monthly cap ($249.99) is enforced after refunds — if your billed-and-not-refunded marketplace orders for the month sum below the cap, you pay that lower amount. If they sum above, you pay $249.99 max.</li>
-      </ul>
+      <h2>3. Marketplace listings</h2>
+      <p>Listing your restaurant on the Fee Free Marketplace is <strong>free and included</strong> — there is no per-order fee, no monthly plan, and no commission on marketplace orders. There is nothing to refund for a marketplace listing.</p>
 
       <h2>4. What we cannot refund</h2>
       <ul>

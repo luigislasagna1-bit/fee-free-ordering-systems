@@ -40,7 +40,7 @@ const ADDON_DEFS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
   { icon: CreditCard, key: "payments" },
   { icon: Globe, key: "website" },
   { icon: Building2, key: "multiLocation" },
-  { icon: Store, key: "marketplace", comingSoon: true },
+  { icon: Store, key: "marketplace" },
   { icon: InfinityIcon, key: "unlimited" },
   { icon: Link2, key: "domain" },
   { icon: Truck, key: "driver" },

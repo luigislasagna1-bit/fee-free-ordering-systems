@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, ArrowRight, Settings, Rocket } from "lucide-react";
+import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, ArrowRight, Settings, Rocket } from "lucide-react";
 
 /**
  * Where each add-on's settings/config live. Used to render an "Open settings"
@@ -57,20 +57,10 @@ type AddOnView = {
   } | null;
 };
 
-/** Marketplace listing data (only needed for the "marketplace" slug,
- *  but plumbed through here so the card can render dual-plan info). */
-type MarketplaceListingHint = {
-  billingMode: string;          // "monthly" | "payg"
-  isListed: boolean;
-  switchToPaygOnCancel: boolean;
-} | null;
-
 export function AddOnsClient({
   addOns,
-  marketplaceListing = null,
 }: {
   addOns: AddOnView[];
-  marketplaceListing?: MarketplaceListingHint;
 }) {
   const router = useRouter();
   const t = useTranslations("admin.addOns");
@@ -175,29 +165,6 @@ export function AddOnsClient({
             x.isSubscribed &&
             ["active", "trialing"].includes(x.subscription?.status || "")
           );
-          // Marketplace Monthly bundles driver_pool (see seed-addons.ts).
-          // PAYG does NOT — PAYG users don't have a RestaurantAddOn row
-          // so the isSubscribed flag is false for them here.
-          const hasMarketplaceMonthly = addOns.some((x) =>
-            x.slug === "marketplace" &&
-            x.isSubscribed &&
-            ["active", "trialing"].includes(x.subscription?.status || "")
-          );
-          // Is Marketplace mid-switch from Monthly to PAYG? When yes
-          // the bundled Driver Pool inclusion has an expiration date —
-          // we surface that on BOTH the Marketplace tile (extending
-          // the existing "Switching to PAYG" notice) AND the Driver
-          // Pool tile (so owners know to subscribe to driver_pool
-          // separately before the monthly period ends, or they'll
-          // lose access to drivers AND to fulfilling marketplace
-          // orders entirely). Luigi 2026-05-31.
-          const marketplaceRow = addOns.find((x) => x.slug === "marketplace");
-          const marketplaceSwitchingToPayg =
-            !!marketplaceRow?.subscription?.cancelAtPeriodEnd &&
-            !!marketplaceListing?.switchToPaygOnCancel;
-          const marketplaceSwitchEnd = marketplaceSwitchingToPayg && marketplaceRow?.subscription?.currentPeriodEnd
-            ? new Date(marketplaceRow.subscription.currentPeriodEnd)
-            : null;
           return addOns.map((a) => {
           const dollars = (a.monthlyPriceCents / 100).toFixed(2);
           const active =
@@ -212,36 +179,9 @@ export function AddOnsClient({
           // have ANY other paid add-on (they're already cap-exempt).
           const unlimitedRedundant =
             a.slug === "unlimited_orders" && !active && hasOtherPaidAddOn;
-          // Driver Pool is redundant when Marketplace Monthly is active
-          // (Marketplace bundles driver_pool via enabledFeatures).
-          // EXCEPTION: when the owner has scheduled the Monthly → PAYG
-          // switch, the bundled inclusion ends at the period boundary.
-          // We then surface the Subscribe button (NOT "already
-          // included") so they can lock in driver_pool before the
-          // switch lands. Without this, they'd hit the PAYG date with
-          // no drivers and a still-open Marketplace listing → bad UX.
-          const driverPoolRedundant =
-            a.slug === "driver_pool" && !active && hasMarketplaceMonthly && !marketplaceSwitchingToPayg;
           const includedNote = unlimitedRedundant
             ? t("includedNoteUnlimited")
-            : driverPoolRedundant
-              ? t("includedNoteDriverPool")
-              : null;
-          // Special pre-cancellation banner on the Driver Pool tile —
-          // rendered as a warning ABOVE the Subscribe button when the
-          // user is mid-switch from Marketplace Monthly to PAYG.
-          const driverPoolEndingWithMarketplace =
-            a.slug === "driver_pool" && !active && hasMarketplaceMonthly && marketplaceSwitchingToPayg;
-          // Marketplace-specific: is the user mid-switch from Monthly to
-          // PAYG? When both Stripe's cancel_at_period_end AND our local
-          // switchToPaygOnCancel flag are set, the "scheduled cancellation"
-          // UI below is actually a "switching to PAYG" event — different
-          // labels, different undo button copy. See
-          // /admin/marketplace/payg-opt-in for the full switch flow.
-          const isMarketplaceSwitch =
-            a.slug === "marketplace" &&
-            !!scheduled &&
-            !!marketplaceListing?.switchToPaygOnCancel;
+            : null;
 
           return (
             <div
@@ -316,84 +256,45 @@ export function AddOnsClient({
 
               <div className="mt-4 pt-4 border-t border-gray-100">
                 {scheduled ? (
-                  // Scheduled-cancellation state. Two flavors:
-                  //   1. Marketplace switching to PAYG → friendlier copy
-                  //      ("Switching to Pay-As-You-Go") + the undo button
-                  //      goes to the dedicated switch flow page (which
-                  //      lets them click "Stay on Monthly" — clearer than
-                  //      "Keep this service" for a switch context).
-                  //   2. Everything else → existing "Cancellation
-                  //      scheduled" + "Keep this service" flow.
+                  // Scheduled-cancellation state: the add-on stays live until
+                  // the period ends; "Keep this service" resumes it.
                   <div className="space-y-3">
                     <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2.5 text-sm">
                       <div className="font-semibold text-amber-900 flex items-center gap-1.5">
                         <Clock className="w-4 h-4" />
-                        {isMarketplaceSwitch ? t("switchingToPayg") : t("cancellationScheduled")}
+                        {t("cancellationScheduled")}
                       </div>
                       <div className="text-amber-800 mt-0.5">
                         {periodEnd ? (
-                          isMarketplaceSwitch ? (
-                            <>
-                              {t("marketplaceSwitchMonthlyEnds")}{" "}
-                              <strong>
-                                {periodEnd.toLocaleDateString(undefined, {
-                                  weekday: "long",
-                                  month: "long",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}
-                              </strong>
-                              . {t("marketplaceSwitchPaygKicksIn")}
-                              {/* Driver Pool was bundled with Monthly; PAYG does NOT
-                                  include it. Without an explicit subscribe-now nudge
-                                  the owner loses ShipDay dispatch on the switch date
-                                  and can't deliver marketplace orders either. */}
-                              <span className="block mt-2 text-amber-900 font-medium">
-                                {t("marketplaceSwitchDriverPoolWarning")}
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              {t("accessEnds")}{" "}
-                              <strong>
-                                {periodEnd.toLocaleDateString(undefined, {
-                                  weekday: "long",
-                                  month: "long",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}
-                              </strong>
-                              . {t("accessEndsUntilThen")}
-                            </>
-                          )
+                          <>
+                            {t("accessEnds")}{" "}
+                            <strong>
+                              {periodEnd.toLocaleDateString(undefined, {
+                                weekday: "long",
+                                month: "long",
+                                day: "numeric",
+                                year: "numeric",
+                              })}
+                            </strong>
+                            . {t("accessEndsUntilThen")}
+                          </>
                         ) : (
-                          isMarketplaceSwitch
-                            ? t("paygKicksInAtPeriodEnd")
-                            : t("accessEndsAtPeriodEnd")
+                          t("accessEndsAtPeriodEnd")
                         )}
                       </div>
                     </div>
-                    {isMarketplaceSwitch ? (
-                      <Link
-                        href="/admin/marketplace/payg-opt-in"
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 transition"
-                      >
-                        <RefreshCw className="w-4 h-4" /> {t("reviewSwitchUndo")}
-                      </Link>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => resume(a.slug)}
-                        disabled={busy}
-                        className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                      >
-                        {busy ? (
-                          <><Loader2 className="w-4 h-4 animate-spin" /> {t("restoring")}</>
-                        ) : (
-                          <><RefreshCw className="w-4 h-4" /> {t("keepThisService")}</>
-                        )}
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => resume(a.slug)}
+                      disabled={busy}
+                      className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {busy ? (
+                        <><Loader2 className="w-4 h-4 animate-spin" /> {t("restoring")}</>
+                      ) : (
+                        <><RefreshCw className="w-4 h-4" /> {t("keepThisService")}</>
+                      )}
+                    </button>
                   </div>
                 ) : active ? (
                   <div className="space-y-2.5">
@@ -409,24 +310,6 @@ export function AddOnsClient({
                         {tRoot(ADDON_SETTINGS_PATH[a.slug].labelKey as any)}
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
-                    )}
-                    {/* Marketplace-specific: surface the active plan + a
-                        Switch link. A RestaurantAddOn row in "active" state
-                        means they're on the Monthly $199.99/mo plan — PAYG
-                        doesn't create a row (it bills via the settlement
-                        cron, no Stripe sub). */}
-                    {a.slug === "marketplace" && (
-                      <div className="rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2 flex items-center justify-between gap-2 flex-wrap">
-                        <div className="text-xs text-emerald-900">
-                          <strong>{t("currentlyOnMonthlyPlan")}</strong> · $199.99{tRoot("admin.settings.perMonth")} · {t("unlimitedOrders")}
-                        </div>
-                        <Link
-                          href="/admin/marketplace/payg-opt-in"
-                          className="text-xs font-semibold text-emerald-700 hover:underline whitespace-nowrap"
-                        >
-                          {t("switchToPayg")}
-                        </Link>
-                      </div>
                     )}
                     {a.subscription?.isComplimentary ? (
                       /* Free partner period: this row is comped and UNBILLED —
@@ -523,35 +406,6 @@ export function AddOnsClient({
                   </div>
                 ) : (
                   <div className="space-y-2">
-                    {/* Pre-cancellation nudge on the Driver Pool tile when
-                        Marketplace Monthly is scheduled to switch to PAYG.
-                        Without this banner the owner sees a normal blue
-                        Subscribe button and could easily miss that their
-                        bundled access is about to end. */}
-                    {driverPoolEndingWithMarketplace && (
-                      <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2.5 text-xs text-amber-900">
-                        <div className="font-semibold flex items-center gap-1.5 mb-0.5">
-                          <Clock className="w-3.5 h-3.5" />
-                          {t("bundledAccessEnding")}
-                        </div>
-                        <span>
-                          {t("marketplaceSwitchingToPayg")}
-                          {marketplaceSwitchEnd && (
-                            <>
-                              {" "}{t("on")}{" "}
-                              <strong>
-                                {marketplaceSwitchEnd.toLocaleDateString(undefined, {
-                                  month: "long",
-                                  day: "numeric",
-                                  year: "numeric",
-                                })}
-                              </strong>
-                            </>
-                          )}
-                          . {t("paygNoDriverPool")}
-                        </span>
-                      </div>
-                    )}
                     <button
                       type="button"
                       onClick={() => subscribe(a.slug)}
@@ -570,30 +424,8 @@ export function AddOnsClient({
                         ? t("comingSoon")
                         : busy
                           ? t("loading")
-                          : a.slug === "marketplace"
-                            ? t("subscribeToMonthly")
-                            : t("subscribe")}
+                          : t("subscribe")}
                     </button>
-                    {/* The Marketplace add-on has a SECOND signup path —
-                        Pay-As-You-Go ($3/order, capped at $249.99/month,
-                        no subscription). Make it visible right under
-                        the Monthly subscribe button so owners see the
-                        choice without having to hunt for it. */}
-                    {a.slug === "marketplace" && !notSynced && (
-                      <>
-                        <Link
-                          href="/admin/marketplace/payg-opt-in"
-                          className="w-full px-4 py-2 text-sm font-semibold rounded-lg bg-white text-emerald-600 border border-emerald-300 hover:bg-emerald-50 flex items-center justify-center gap-1.5 transition"
-                        >
-                          <Sparkles className="w-3.5 h-3.5" />
-                          {t("orStartPayg")}
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
-                        <p className="text-[11px] text-gray-600 leading-snug bg-blue-50 border border-blue-100 rounded px-2 py-1.5">
-                          {t("paygTip")}
-                        </p>
-                      </>
-                    )}
                   </div>
                 )}
               </div>

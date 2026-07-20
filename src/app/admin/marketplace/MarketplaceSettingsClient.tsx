@@ -49,17 +49,6 @@ type Stats = {
   currentMonthRevenue: number;
   lifetimeSavingsVsUberEatsCents: number;
   currentMonthStartedAt: string;
-  billing: {
-    /** $249.99 hard cap — once accruedCents hits this, the rest of the
-     *  month's orders are pure margin for the restaurant. */
-    capCents: number;
-    /** Uncapped per-order accrual: $3 × month-to-date order count. */
-    accruedCents: number;
-    /** What we'll actually bill: min(accruedCents, capCents). */
-    effectiveCents: number;
-    /** True once the cap has been reached. */
-    capHit: boolean;
-  };
 };
 
 export function MarketplaceSettingsClient({

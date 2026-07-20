@@ -61,11 +61,11 @@ export default async function MarketplaceRestaurantPage({
     redirect("/marketplace");
   }
 
-  // Use isOnMarketplace() — accepts BOTH monthly subscribers (add-on
-  // entitlement) and PAYG opt-ins (MarketplaceListing.billingMode="payg"
-  // + isListed=true). The old code used hasFeature("marketplace_listing")
-  // which only returned true for monthly subscribers, so PAYG restaurants'
-  // tiles would bounce back to /marketplace when clicked.
+  // Use isOnMarketplace() — the marketplace is FREE + INCLUDED for every
+  // restaurant (Luigi 2026-07-14), so this is true unless the owner explicitly
+  // opted OUT (MarketplaceListing.isListed=false). NOT gated on any paid
+  // entitlement — that would wrongly bounce free restaurants' tiles back to
+  // /marketplace when clicked.
   const onMarketplace = await isOnMarketplace(restaurant.id);
   if (!onMarketplace) {
     redirect("/marketplace");

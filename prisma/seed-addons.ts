@@ -95,10 +95,10 @@ async function main() {
       // discounted price. Subscribing grants the union of features across
       // all add-ons flagged inGrowthNet (dynamic — see entitlements.ts), so
       // the bundle automatically grows as we ship new growth tools.
-      // Marketplace stays OUTSIDE the bundle (its $199.99 / PAYG per-order
-      // billing doesn't fit a flat bundle); flip its inGrowthNet flag if
-      // that call ever changes. Price below is a placeholder — superadmin
-      // sets the real discounted price + syncs Stripe. Luigi 2026-06-11.
+      // Marketplace stays OUTSIDE the bundle — it's FREE + included for
+      // every restaurant now (Luigi 2026-07-14), so there's nothing to
+      // bundle. Price below is a placeholder — superadmin sets the real
+      // discounted price + syncs Stripe. Luigi 2026-06-11.
       slug: "growthnet",
       name: "GrowthNet",
       description:

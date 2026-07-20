@@ -101,9 +101,9 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
       where: { restaurantId },
       select: { deliverySource: true },
     }),
-    // Driver Pool entitlement (active Driver Pool standalone OR bundled
-    // via Marketplace Monthly). Required for "shipday"/"both" sources
-    // to count as a complete delivery management setup.
+    // Driver Pool entitlement (active standalone Driver Pool add-on).
+    // Required for "shipday"/"both" sources to count as a complete
+    // delivery management setup.
     hasFeature(restaurantId, "driver_pool"),
     // Most-recent kitchen device (any freshness) for setup-step display.
     // Freshness is judged separately by kitchenDeviceLive — this is for

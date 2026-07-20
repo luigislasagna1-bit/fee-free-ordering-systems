@@ -27,7 +27,7 @@ const RUN: { icon: LucideIcon; key: string }[] = [
 ];
 const ADDONS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
   { icon: CreditCard, key: "payments" }, { icon: Globe, key: "website" }, { icon: Building2, key: "multiLocation" },
-  { icon: Store, key: "marketplace", comingSoon: true }, { icon: InfinityIcon, key: "unlimited" }, { icon: Link2, key: "domain" },
+  { icon: Store, key: "marketplace" }, { icon: InfinityIcon, key: "unlimited" }, { icon: Link2, key: "domain" },
   { icon: Truck, key: "driver" }, { icon: Smartphone, key: "brandedApp", comingSoon: true },
   { icon: Monitor, key: "pos", comingSoon: true }, { icon: Phone, key: "aiPhone", comingSoon: true },
   { icon: CalendarCheck, key: "deposits", comingSoon: true },

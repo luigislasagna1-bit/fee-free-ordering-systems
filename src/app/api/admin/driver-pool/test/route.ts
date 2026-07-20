@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
 
   if (!(await hasFeature(restaurantId, "driver_pool"))) {
     return NextResponse.json(
-      { ok: false, error: "Subscribe to Driver Pool or Marketplace Monthly to use ShipDay.", code: "addon_required" },
+      { ok: false, error: "Subscribe to the Driver Pool add-on to use ShipDay.", code: "addon_required" },
       { status: 412 },
     );
   }

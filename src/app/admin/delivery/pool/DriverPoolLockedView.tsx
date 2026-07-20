@@ -4,9 +4,9 @@ import { useTranslations } from "next-intl";
 
 /**
  * Shown on /admin/delivery/pool when the restaurant doesn't have the
- * `driver_pool` entitlement. Two ways to unlock: the standalone
- * Driver Pool add-on ($19.99/mo) OR the Marketplace add-on (free to
- * join, includes Driver Pool).
+ * `driver_pool` entitlement. Unlocked by the standalone Driver Pool add-on
+ * (the Marketplace no longer bundles it — the Marketplace is free + included
+ * and grants only marketplace_listing).
  */
 export function DriverPoolLockedView() {
   const t = useTranslations("admin.driverPoolLocked");
@@ -24,33 +24,12 @@ export function DriverPoolLockedView() {
           {t("heroDescription")}
         </p>
 
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="bg-white/15 backdrop-blur rounded-xl p-4">
-            <div className="text-xs uppercase tracking-wider opacity-80">{t("standaloneCardTitle")}</div>
-            <div className="text-3xl font-bold mt-1">$19.99<span className="text-lg">{t("perMonth")}</span></div>
-            <div className="text-sm opacity-90">{t("standaloneCardSubtitle")}</div>
-            <div className="text-[10px] opacity-70 mt-1">{t("standaloneCardNote")}</div>
-          </div>
-          <div className="bg-white/15 backdrop-blur rounded-xl p-4 border-2 border-white/40">
-            <div className="text-xs uppercase tracking-wider opacity-80">{t("freeCardTitle")}</div>
-            <div className="text-3xl font-bold mt-1">$0</div>
-            <div className="text-sm opacity-90">{t("freeCardSubtitle")}</div>
-            <div className="text-[10px] opacity-70 mt-1">{t("freeCardNote")}</div>
-          </div>
-        </div>
-
         <div className="mt-6 flex gap-3 flex-wrap">
           <Link
             href="/admin/billing/add-ons"
             className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-blue-50 font-bold px-5 py-2.5 rounded-xl text-sm shadow-md transition"
           >
             <Lock className="w-4 h-4" /> {t("ctaGetDriverPool")}
-          </Link>
-          <Link
-            href="/admin/marketplace"
-            className="inline-flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 backdrop-blur text-white font-bold px-5 py-2.5 rounded-xl text-sm transition border border-white/30"
-          >
-            <Sparkles className="w-4 h-4" /> {t("ctaGetMarketplace")}
           </Link>
         </div>
       </div>

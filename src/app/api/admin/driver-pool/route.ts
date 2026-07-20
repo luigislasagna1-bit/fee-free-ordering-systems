@@ -57,15 +57,14 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json({ error: "Invalid deliverySource" }, { status: 400 });
     }
     // Only "own" is allowed without the driver_pool entitlement.
-    // "shipday" and "both" both require an active Driver Pool subscription
-    // (standalone or bundled via Marketplace Monthly). Tamper-resistant:
-    // the UI hides those tiles for non-entitled users but a direct PUT
-    // would otherwise let them save an invalid state that the kitchen
-    // can't actually dispatch.
+    // "shipday" and "both" both require an active standalone Driver Pool
+    // subscription. Tamper-resistant: the UI hides those tiles for
+    // non-entitled users but a direct PUT would otherwise let them save an
+    // invalid state that the kitchen can't actually dispatch.
     if (body.deliverySource !== "own" && !entitled) {
       return NextResponse.json(
         {
-          error: "Subscribe to Driver Pool or Marketplace Monthly to dispatch via ShipDay.",
+          error: "Subscribe to the Driver Pool add-on to dispatch via ShipDay.",
           code: "addon_required",
         },
         { status: 412 },
@@ -98,7 +97,7 @@ export async function PUT(req: NextRequest) {
   if (wantsShipday && !entitled) {
     return NextResponse.json(
       {
-        error: "Subscribe to Driver Pool or Marketplace Monthly to configure ShipDay dispatch.",
+        error: "Subscribe to the Driver Pool add-on to configure ShipDay dispatch.",
         code: "addon_required",
       },
       { status: 412 },

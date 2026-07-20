@@ -1,10 +1,12 @@
 /**
- * Marketplace helpers — list public restaurants, ensure a listing
- * exists for a subscribed restaurant, compute "vs UberEats" savings.
+ * Marketplace helpers — list public restaurants, ensure a listing row
+ * exists, compute "vs UberEats" savings.
  *
- * The public /marketplace page reads from listPublicMarketplaceListings().
- * The subscription webhook calls ensureMarketplaceListing() the moment
- * a restaurant's `marketplace` add-on flips to active.
+ * The marketplace is FREE + INCLUDED for every pickup/delivery restaurant
+ * (Luigi 2026-07-14) — there is no subscription or add-on to buy. The public
+ * /marketplace page reads from listPublicMarketplaceListings(); the optional
+ * MarketplaceListing row only carries per-restaurant customization + the
+ * isListed opt-out toggle, created lazily by ensureMarketplaceListing().
  */
 
 import prisma from "@/lib/db";
@@ -207,10 +209,10 @@ export async function listPublicMarketplaceListings(opts?: {
 }
 
 /**
- * Create or update the MarketplaceListing for a restaurant. Called
- * from the subscription webhook the moment the `marketplace` add-on
- * activates. Idempotent — running it twice (Stripe sometimes retries)
- * is a safe no-op past the create.
+ * Create the MarketplaceListing row for a restaurant if it doesn't exist
+ * yet. Called lazily from /admin/marketplace (+ its GET/PATCH API) so the
+ * owner always has a row to edit the listing / flip the isListed opt-out.
+ * Idempotent — running it twice is a safe no-op past the create.
  *
  * Defaults are pulled from the Restaurant row so the first listing
  * isn't empty — we lift slogan → tagline, description → short desc,
@@ -251,13 +253,13 @@ export async function ensureMarketplaceListing(restaurantId: string): Promise<{ 
 }
 
 /**
- * Returns true if this restaurant is currently surfaceable on the
- * public marketplace. Used by /admin/marketplace and the brand
- * dashboard to show subscription state.
+ * Returns true if this restaurant is currently surfaceable on the public
+ * marketplace. Used by /admin/marketplace, the order route (to stamp the
+ * order channel) and the brand dashboard.
  *
- * Either billing mode counts: monthly subscribers (via the add-on
- * entitlement) AND PAYG opt-ins (via the listing existing) both
- * appear publicly the same way.
+ * FREE + INCLUDED (Luigi 2026-07-14): there are no billing modes anymore.
+ * Every restaurant is included unless it explicitly opted OUT — a
+ * MarketplaceListing row with isListed=false. A missing row = included.
  */
 export async function isOnMarketplace(restaurantId: string): Promise<boolean> {
   // FREE + INCLUDED (Luigi 2026-07-14): every restaurant is on the marketplace
@@ -268,33 +270,6 @@ export async function isOnMarketplace(restaurantId: string): Promise<boolean> {
     select: { isListed: true },
   });
   return listing?.isListed !== false;
-}
-
-/**
- * Returns the marketplace "membership" state for an admin-facing page.
- * Used by /admin/marketplace to decide which view to render:
- *   - "none"    → restaurant hasn't opted in OR was previously listed
- *                 but is now hidden (post-cancellation). Show the
- *                 two-plan upsell (MarketplaceLockedView).
- *   - "payg"    → opted into pay-as-you-go AND currently listed; show
- *                 the listing editor.
- *   - "monthly" → on the $199.99/mo subscription; show the listing editor.
- *
- * A hidden (isListed=false) listing returns "none" so the owner sees
- * the plan-choice screen again — they have to re-confirm which way they
- * want to be billed before being re-listed. Avoids the post-cancel
- * silent-PAYG surprise.
- */
-export async function getMarketplaceMembership(restaurantId: string): Promise<"none" | "payg" | "monthly"> {
-  // FREE + INCLUDED (Luigi 2026-07-14): every restaurant is on the marketplace
-  // for free; only an explicit opt-out (listing row with isListed=false) removes
-  // them. Mapped onto the legacy union: "included" → "payg" (admin shows the
-  // listing editor), opted-out → "none". The $/plan framing is gone (copy pass).
-  const listing = await prisma.marketplaceListing.findUnique({
-    where: { restaurantId },
-    select: { isListed: true },
-  });
-  return listing?.isListed === false ? "none" : "payg";
 }
 
 /** Included on the marketplace unless explicitly opted out. Free for everyone. */
@@ -314,43 +289,6 @@ export async function isMarketplaceIncluded(restaurantId: string): Promise<boole
  */
 export function computeUberEatsEquivalentCents(orderSubtotalCents: number): number {
   return Math.round(orderSubtotalCents * (UBER_EATS_COMMISSION_PCT / 100));
-}
-
-/**
- * Compute what the restaurant owes the platform THIS billing cycle.
- *
- * New free-base model:
- *   - Joining the marketplace is $0/month
- *   - Each marketplace order accrues $3.00 toward this month's bill
- *   - Once the running total hits $249.99 (~83 orders), the cap kicks
- *     in and every additional order this month is free
- *
- * Returns:
- *   - capCents: hard monthly cap ($249.99)
- *   - accruedCents: per-order × month-to-date count (uncapped)
- *   - effectiveCents: min(accruedCents, capCents) — what we actually bill
- *   - capHit: true when month-to-date has reached the cap (great UX
- *     signal: "no more fees this month, every order is pure margin")
- *
- * Phase M2 EXPOSES this number on /admin/marketplace; the actual
- * monthly settlement (Stripe invoice or ACH debit) lives in the
- * monthly billing cron — M2.5 work.
- */
-export function computeMonthlyChargeCents(monthToDateOrders: number): {
-  capCents: number;
-  accruedCents: number;
-  effectiveCents: number;
-  capHit: boolean;
-} {
-  const cap = MARKETPLACE_MONTHLY_CAP_CENTS;
-  const accrued = MARKETPLACE_PER_ORDER_CENTS * monthToDateOrders;
-  const effective = Math.min(accrued, cap);
-  return {
-    capCents: cap,
-    accruedCents: accrued,
-    effectiveCents: effective,
-    capHit: accrued >= cap,
-  };
 }
 
 /**

@@ -1,7 +1,6 @@
 import type Stripe from "stripe";
 import prisma from "@/lib/db";
 import { getStripe } from "@/lib/stripe";
-import { ensureMarketplaceListing } from "@/lib/marketplace";
 import { notifyAddOnChange } from "@/lib/platform-notifications";
 import { graceDeadline, startRestaurantGrace, clearRestaurantGraceIfHealthy } from "@/lib/dunning";
 import { ensureResellerGenericSubdomain } from "@/lib/reseller-subdomain";
@@ -334,66 +333,17 @@ async function handleAddOnSubscriptionEvent(
     }
   }
 
-  if (addOn.slug === "marketplace") {
-    if (isActive) {
-      // Marketplace listing auto-creation: the moment the customer's
-      // marketplace subscription activates, they appear on /marketplace
-      // with sensible defaults (tagline = restaurant slogan, banner =
-      // restaurant banner, etc.). They can fine-tune in /admin/marketplace.
-      // Also flip billingMode to "monthly" — restaurants on the flat
-      // plan are NOT settled per-order by the monthly settlement cron.
-      try {
-        await ensureMarketplaceListing(restaurantId);
-        await prisma.marketplaceListing.update({
-          where: { restaurantId },
-          data: { billingMode: "monthly" },
-        });
-      } catch (e) {
-        console.error("[stripe] marketplace activation side-effects failed:", e);
-      }
-    } else {
-      // Monthly subscription ended. TWO paths:
-      //
-      //   1. switchToPaygOnCancel=true — the restaurant explicitly
-      //      clicked "Switch to PAYG" via /admin/marketplace/payg-opt-in
-      //      (which sets the flag + Stripe cancel_at_period_end). At
-      //      cycle end Stripe fires this event; we PRESERVE the listing
-      //      (isListed stays true), flip billingMode to "payg", and
-      //      reset the flag. PAYG settlement takes over with no gap.
-      //
-      //   2. switchToPaygOnCancel=false (default) — cancellation due
-      //      to a real exit (card declined, manual unsubscribe without
-      //      a switch intent, etc.). HIDE the listing (isListed=false)
-      //      so it disappears from /marketplace immediately, and reset
-      //      billingMode to "payg" as a safe default. The restaurant
-      //      has to re-visit /admin/marketplace to re-list — prevents
-      //      the silent "I cancelled but I'm still being billed per
-      //      order" surprise.
-      try {
-        const listing = await prisma.marketplaceListing.findUnique({
-          where: { restaurantId },
-          select: { switchToPaygOnCancel: true },
-        });
-        if (listing?.switchToPaygOnCancel) {
-          await prisma.marketplaceListing.update({
-            where: { restaurantId },
-            data: {
-              billingMode: "payg",
-              switchToPaygOnCancel: false, // reset — the switch has happened
-              // isListed left as-is (stays true)
-            },
-          });
-        } else {
-          await prisma.marketplaceListing.updateMany({
-            where: { restaurantId },
-            data: { billingMode: "payg", isListed: false },
-          });
-        }
-      } catch (e) {
-        console.error("[stripe] marketplace deactivation failed:", e);
-      }
-    }
-  }
+  // Marketplace is FREE + INCLUDED for every restaurant (Luigi 2026-07-14):
+  // it is no longer a paid add-on, so a (legacy) marketplace subscription
+  // activating or ending must have NO effect on the free public listing.
+  // Listing visibility is controlled solely by the isListed opt-out toggle
+  // on /admin/marketplace.
+  //
+  // The old side-effects here HID the listing (isListed=false) whenever a
+  // marketplace sub ended — which would wrongly opt EVERY legacy subscriber
+  // OUT of the (now free) marketplace the moment the retirement migration
+  // (scripts/retire-marketplace-addon.ts) cancels their Stripe subs. Removed
+  // to prevent that regression; billingMode is a vestigial field left as-is.
 }
 
 /**

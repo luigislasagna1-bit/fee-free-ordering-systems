@@ -2,10 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
-import {
-  ensureMarketplaceListing,
-  computeMonthlyChargeCents,
-} from "@/lib/marketplace";
+import { ensureMarketplaceListing } from "@/lib/marketplace";
 import { getAddOnBillingState } from "@/lib/dunning";
 import { AddOnBillingNotice } from "@/components/admin/AddOnBillingNotice";
 import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
@@ -14,12 +11,10 @@ import { MarketplaceSettingsClient } from "./MarketplaceSettingsClient";
  * /admin/marketplace — restaurant owner configures how they appear on
  * the public marketplace.
  *
- * Renders three different states:
- *   1. Not subscribed → upsell card with the value prop and a link to
- *      /admin/billing/add-ons
- *   2. Subscribed but listing doesn't exist yet (race) → create + show editor
- *   3. Subscribed and listing exists → full editor with isListed toggle,
- *      tagline, categories, tags, banner override
+ * The marketplace is FREE + INCLUDED for every restaurant (Luigi 2026-07-14),
+ * so there is no upsell wall: everyone gets the listing editor. The isListed
+ * toggle inside it is the opt-out ("don't list my restaurant"). We ensure a
+ * listing row exists (lazily) and render the editor + savings stats.
  */
 export default async function MarketplaceAdminPage() {
   const t = await getTranslations("admin.marketplacePage");
@@ -53,12 +48,6 @@ export default async function MarketplaceAdminPage() {
     select: { name: true, slug: true, city: true, cuisineType: true, bannerUrl: true, logoUrl: true, currency: true },
   });
 
-  // Smart-billing snapshot. We compute what the restaurant would pay
-  // THIS cycle under both pricing models so the UI can show "you're
-  // currently on the per-order rate" or "you've crossed into the flat
-  // cap — every additional order this month is free".
-  const billing = computeMonthlyChargeCents(listing.currentMonthOrders);
-
   return (
     <>
       <div className="max-w-5xl mx-auto px-4 pt-4">
@@ -91,12 +80,6 @@ export default async function MarketplaceAdminPage() {
         currentMonthRevenue: listing.currentMonthRevenue,
         lifetimeSavingsVsUberEatsCents: listing.lifetimeSavingsVsUberEatsCents,
         currentMonthStartedAt: listing.currentMonthStartedAt.toISOString(),
-        billing: {
-          capCents: billing.capCents,
-          accruedCents: billing.accruedCents,
-          effectiveCents: billing.effectiveCents,
-          capHit: billing.capHit,
-        },
       }}
       isSuperadmin={user.role === "superadmin"}
     />

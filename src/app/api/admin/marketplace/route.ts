@@ -2,14 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { ensureMarketplaceListing } from "@/lib/marketplace";
-import { hasFeature } from "@/lib/entitlements";
 
 /**
  * GET /api/admin/marketplace
- * Returns the restaurant's marketplace listing config + computed
- * entitlement state. Creates the listing row if missing (defensive —
- * the subscription webhook should have done it, but a race condition
- * during sign-up could leave it absent).
+ * Returns the restaurant's marketplace listing config. The marketplace is
+ * FREE + INCLUDED for every restaurant (Luigi 2026-07-14) — there is no
+ * entitlement to check, so we always ensure a row exists (it holds the
+ * isListed opt-out toggle + optional customization).
+ *
+ * Authz: session must own a restaurant; every read/write below is scoped
+ * to the session's own restaurantId — a restaurant can only ever touch
+ * its own listing.
  */
 export async function GET() {
   const user = await getSessionUser();
@@ -17,23 +20,13 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const entitled = await hasFeature(user.restaurantId, "marketplace_listing");
-
-  let listing = await prisma.marketplaceListing.findUnique({
+  await ensureMarketplaceListing(user.restaurantId);
+  const listing = await prisma.marketplaceListing.findUnique({
     where: { restaurantId: user.restaurantId },
   });
 
-  // If they're entitled but the listing row doesn't exist (rare —
-  // webhook race), create one now.
-  if (entitled && !listing) {
-    await ensureMarketplaceListing(user.restaurantId);
-    listing = await prisma.marketplaceListing.findUnique({
-      where: { restaurantId: user.restaurantId },
-    });
-  }
-
   return NextResponse.json({
-    entitled,
+    included: true,
     listing: listing
       ? {
           ...listing,
@@ -46,25 +39,18 @@ export async function GET() {
 
 /**
  * PATCH /api/admin/marketplace
- * Update the restaurant's marketplace listing config. Restaurant
- * admins can edit their own listing; superadmins can also flip the
- * `marketplaceFeatured` flag (gated server-side — restaurant_admin
- * sees the field rejected if they try).
+ * Update the restaurant's marketplace listing config (incl. the isListed
+ * opt-out toggle). The marketplace is free + included, so there is NO paid
+ * entitlement gate — authorization is ownership: the session must own a
+ * restaurant, and the update is scoped to `restaurantId: user.restaurantId`,
+ * so an owner can only edit their own listing. Superadmins can additionally
+ * flip `marketplaceFeatured` (gated below — restaurant_admin's attempt is
+ * silently dropped).
  */
 export async function PATCH(req: NextRequest) {
   const user = await getSessionUser();
   if (!user?.restaurantId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-  if (!(await hasFeature(user.restaurantId, "marketplace_listing"))) {
-    return NextResponse.json(
-      {
-        error: "Marketplace add-on is required to edit your listing.",
-        code: "feature_locked",
-        feature: "marketplace_listing",
-      },
-      { status: 402 },
-    );
   }
 
   const body = await req.json().catch(() => ({}));

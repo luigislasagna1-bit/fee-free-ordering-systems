@@ -36,13 +36,15 @@ export type Feature =
   | "take_reservation_deposit"
   | "multi_location_management"
   /** Listed on the public Fee Free Ordering Marketplace at /marketplace.
-   *  Granted by the "marketplace" add-on. Auto-creates a MarketplaceListing
-   *  row on activation. */
+   *  The marketplace is FREE + INCLUDED for every restaurant (Luigi
+   *  2026-07-14) — listing is controlled by the isListed opt-out on
+   *  MarketplaceListing, not by this entitlement. This slug is retained
+   *  only for legacy marketplace add-on rows; the add-on is no longer sold. */
   | "marketplace_listing"
-  /** Access to the ShipDay third-party driver pool. Granted by EITHER
-   *  the "marketplace" add-on (included) or the standalone "driver_pool"
-   *  add-on. Surfaces the per-order "send to driver pool" option in
-   *  the kitchen display. */
+  /** Access to the ShipDay third-party driver pool. Granted by the
+   *  standalone "driver_pool" add-on. (The Marketplace no longer bundles
+   *  it — it grants only marketplace_listing now.) Surfaces the per-order
+   *  "send to driver pool" option in the kitchen display. */
   | "driver_pool"
   /** Unlocks promo types 6-13 in the admin promotion wizard
    *  (Payment method reward, Free item, Meal bundle, Buy N get free,

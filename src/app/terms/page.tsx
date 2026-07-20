@@ -61,9 +61,9 @@ export default async function TermsPage() {
       </ul>
 
       <h2>5. Marketplace listings</h2>
-      <p>Restaurant Owners may opt in to list their restaurant on our public marketplace at feefreefood.com. Marketplace listings are subject to additional terms:</p>
+      <p>Restaurants that offer pickup or delivery are listed on our public marketplace at feefreefood.com free of charge. You can opt out at any time from /admin/marketplace. Marketplace listings are subject to additional terms:</p>
       <ul>
-        <li>Marketplace orders incur a per-order fee of up to <strong>$3.00 CAD per order</strong>, billed monthly, capped at <strong>$249.99 CAD per restaurant per month</strong>. Or you can choose a flat <strong>$199.99 CAD per month</strong> for unlimited marketplace orders — whichever is cheaper for your volume.</li>
+        <li>Listing on the marketplace is <strong>free and included</strong> — there is no per-order fee, no monthly plan, and no commission on marketplace orders.</li>
         <li>Marketplace customers must use online payment; cash-only restaurants cannot be listed on the marketplace.</li>
         <li>We reserve the right to remove or suspend any marketplace listing that violates these Terms, our acceptable-use policy, or applicable law.</li>
         <li>Customers acquired through the marketplace can be re-targeted by you through your own customer database after the order completes — they become your customer too.</li>
