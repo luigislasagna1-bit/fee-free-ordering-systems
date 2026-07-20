@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { priceToppingLines, toppingBaseAdjust, isHalfToppingName } from "./pizza-topping-pricing";
+import { priceToppingLines, priceToppingLinesForDisplay, toppingBaseAdjust, isHalfToppingName } from "./pizza-topping-pricing";
 
 const line = (optionId: string, over: Partial<{ optionPrice: number; isHalf: boolean }> = {}) => ({
   optionId, optionPrice: over.optionPrice ?? 2.5, isHalf: over.isHalf ?? false,
@@ -97,6 +97,43 @@ describe("per-option model (extraToppingPrice = 0)", () => {
   });
   it("includedToppings grants nothing in this model (matches the builder)", () => {
     expect(priceToppingLines({ ...cfg, includedToppings: 3 }, [line("a", { optionPrice: 2 })])).toEqual([2]);
+  });
+});
+
+// DISPLAY charges — the per-line "(+price)" shown on receipts/emails. Free
+// included toppings must NOT print a surcharge (Luigi 2026-07-20); the money
+// (item subtotal) is unchanged — it's base + toppingBaseAdjust + Σ priceToppingLines.
+describe("priceToppingLinesForDisplay — receipt/email '(+price)' labels", () => {
+  it("SYMMETRIC: the free included topping shows $0 even though the money-path charges it", () => {
+    // Monday Medium Special: $flat 2.50, 1 included, default (symmetric).
+    const cfg = { extraToppingPrice: 2.5, includedToppings: 1, halfToppingMultiplier: 0.5 };
+    // Money path charges the 1 topping flat (offset by the base credit)…
+    expect(priceToppingLines(cfg, [line("chicken")])).toEqual([2.5]);
+    expect(toppingBaseAdjust(cfg)).toBe(-2.5);
+    // …but the receipt/display shows it FREE (no "(+$2.50)").
+    expect(priceToppingLinesForDisplay(cfg, [line("chicken")])).toEqual([0]);
+    // A 2nd topping is beyond the 1 included → it DOES show the charge.
+    expect(priceToppingLinesForDisplay(cfg, [line("chicken"), line("pepperoni")])).toEqual([0, 2.5]);
+  });
+
+  it("SYMMETRIC reconciles: list price + Σ(display) === subtotal when count ≥ included", () => {
+    const cfg = { extraToppingPrice: 2, includedToppings: 5, halfToppingMultiplier: 0.5 };
+    const wholes = (n: number) => Array.from({ length: n }, (_, i) => line(`t${i}`, { optionPrice: 2 }));
+    // 5 included → all free on the receipt (item stays its $20 list price).
+    expect(priceToppingLinesForDisplay(cfg, wholes(5))).toEqual([0, 0, 0, 0, 0]);
+    // 6th topping → +$2; Σ(display) === the amount the subtotal rises above list.
+    expect(priceToppingLinesForDisplay(cfg, wholes(6))).toEqual([0, 0, 0, 0, 0, 2]);
+    const dispSum = priceToppingLinesForDisplay(cfg, wholes(6)).reduce((s, c) => s + c, 0);
+    expect(round2(dispSum)).toBe(round2(contribution(cfg, wholes(6)))); // both = +$2
+  });
+
+  it("LEGACY + per-option: identical to priceToppingLines (no behavior change)", () => {
+    const legacy = { extraToppingPrice: 2.5, includedToppings: 1, halfToppingMultiplier: 0.5, reduceOnRemove: false };
+    expect(priceToppingLinesForDisplay(legacy, [line("a"), line("b")]))
+      .toEqual(priceToppingLines(legacy, [line("a"), line("b")]));
+    const perOption = { extraToppingPrice: 0, includedToppings: 3, halfToppingMultiplier: 0.5 };
+    expect(priceToppingLinesForDisplay(perOption, [line("a", { optionPrice: 4 }), line("b", { optionPrice: 0 })]))
+      .toEqual([4, 0]); // $0 option already shows no "(+price)"
   });
 });
 

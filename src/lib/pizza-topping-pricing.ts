@@ -132,6 +132,34 @@ export function toppingBaseAdjust(cfg: ToppingPricingConfig): number {
   return -round2(included * flat);
 }
 
+/**
+ * Per-line DISPLAY charges — the "(+price)" each topping line should SHOW on a
+ * receipt / order email / confirmation / status page.
+ *
+ * In SYMMETRIC mode `priceToppingLines` charges the flat price to EVERY topping
+ * (the free allowance is applied as a one-time BASE credit via toppingBaseAdjust),
+ * so an "included/free" topping would print a misleading "(+$2.50)" surcharge even
+ * though the item's list price already covers it. This applies the
+ * `includedToppings` allowance PER LINE instead: the first `includedToppings`
+ * (in half-units) show $0, and only toppings BEYOND the allowance show a charge.
+ * Luigi 2026-07-20 ("if a pizza has FREE included toppings, those shouldn't show
+ * a (+XXX) sign — only show it if there is actually a charge").
+ *
+ * DISPLAY ONLY — the money is unchanged: the item subtotal is still
+ * `base + toppingBaseAdjust(cfg) + Σ priceToppingLines(cfg, lines)`; these numbers
+ * only drive the per-line label. When the pizza carries at least `includedToppings`
+ * toppings, `Σ(display charges) === (subtotal − list price)`, so the receipt
+ * reconciles as "list price + Σ line prices = subtotal".
+ */
+export function priceToppingLinesForDisplay(cfg: ToppingPricingConfig, lines: ToppingChargeLine[]): number[] {
+  // The legacy free-credit allocation (first `includedToppings` free, flat beyond)
+  // IS the desired per-line display — force it regardless of the pizza's
+  // reduceOnRemove (which only governs the money/base-credit path). For the
+  // per-option model (extraToppingPrice = 0) this is a no-op: each line keeps its
+  // own option price, so a $0 option already shows no "(+price)".
+  return priceToppingLines({ ...cfg, reduceOnRemove: false }, lines);
+}
+
 /** Half-placement detector shared with the orders route: the serializer marks
  *  left/right-half lines with "(L.H) "/"(R.H) " prefixes (see
  *  pizzaCustomizationToModifiers). The ", Light" suffix is a kitchen label

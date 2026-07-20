@@ -9,7 +9,7 @@ import { resolveServiceHours } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { blockingServiceKind } from "@/lib/service-restriction";
-import { priceToppingLines, toppingBaseAdjust, isHalfToppingName } from "@/lib/pizza-topping-pricing";
+import { priceToppingLines, priceToppingLinesForDisplay, toppingBaseAdjust, isHalfToppingName } from "@/lib/pizza-topping-pricing";
 import { reportError } from "@/lib/report-error";
 import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
 import {
@@ -1242,9 +1242,17 @@ export async function POST(req: NextRequest) {
       }
       if (toppingEngine && toppingLines.length > 0) {
         const charges = priceToppingLines(toppingEngine, toppingLines);
+        // Per-line DISPLAY charges for the receipt/email/confirmation "(+price)"
+        // labels. In symmetric mode the free `includedToppings` are covered by the
+        // item's list price (a base credit), so they must NOT print a misleading
+        // "(+$2.50)" surcharge; only toppings BEYOND the allowance show a charge.
+        // modTotal below still uses the real `charges` — the item subtotal / money
+        // is unchanged. Luigi 2026-07-20. (Persisted priceAdjustment is display-only;
+        // the subtotal is basePrice + toppingBaseAdj + modTotal, not a re-sum of mods.)
+        const displayCharges = priceToppingLinesForDisplay(toppingEngine, toppingLines);
         charges.forEach((charge, i) => {
-          validatedMods[toppingModIndexes[i]].priceAdjustment = charge; // receipts reconcile per line
-          modTotal += charge;
+          validatedMods[toppingModIndexes[i]].priceAdjustment = displayCharges[i]; // free/included toppings show no surcharge
+          modTotal += charge; // item subtotal unchanged (symmetric charge + base credit)
         });
       }
       // Symmetric pay-per-topping base credit (Luigi 2026-07-09): the included
