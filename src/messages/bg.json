@@ -1458,7 +1458,10 @@
       "shipdaySending": "Изпращане…",
       "shipdaySendSuccess": "Поръчката е в ShipDay — проверете диспечерското си табло.",
       "shipdaySendError": "ShipDay отказа поръчката: {error}",
-      "shipdaySkipped": "Не е изпратена — {reason}"
+      "shipdaySkipped": "Не е изпратена — {reason}",
+      "latestOfTotal": "Последните {shown} от {total}",
+      "fullHistoryLink": "Вижте пълната история на поръчките — по-стари поръчки, периоди и експорт",
+      "searchAllHistory": "Търсене на „{query}“ в цялата история на поръчките"
     },
     "customers": {
       "title": "Клиенти",

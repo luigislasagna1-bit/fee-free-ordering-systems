@@ -1458,7 +1458,10 @@
       "shipdaySending": "שולח…",
       "shipdaySendSuccess": "ההזמנה נמצאת ב-ShipDay — בדוק את לוח השילוח שלך.",
       "shipdaySendError": "ShipDay דחה את ההזמנה: {error}",
-      "shipdaySkipped": "לא נשלח — {reason}"
+      "shipdaySkipped": "לא נשלח — {reason}",
+      "latestOfTotal": "{shown} האחרונות מתוך {total}",
+      "fullHistoryLink": "צפייה בהיסטוריית ההזמנות המלאה — הזמנות ישנות, טווחי תאריכים וייצוא",
+      "searchAllHistory": "חיפוש ”{query}“ בכל היסטוריית ההזמנות"
     },
     "customers": {
       "title": "לקוחות",

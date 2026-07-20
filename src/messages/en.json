@@ -1578,7 +1578,10 @@
       "shipdaySending": "Sending…",
       "shipdaySendSuccess": "Order is on ShipDay — check your dispatch dashboard.",
       "shipdaySendError": "ShipDay refused the order: {error}",
-      "shipdaySkipped": "Not sent — {reason}"
+      "shipdaySkipped": "Not sent — {reason}",
+      "latestOfTotal": "Latest {shown} of {total}",
+      "fullHistoryLink": "See the full order history — older orders, date ranges & export",
+      "searchAllHistory": "Search all order history for “{query}”"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kitchen workflow",

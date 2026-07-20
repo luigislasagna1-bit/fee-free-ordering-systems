@@ -1458,7 +1458,10 @@
       "shipdaySending": "جاري الإرسال…",
       "shipdaySendSuccess": "الطلب موجود على ShipDay — تحقّق من لوحة الإرسال الخاصة بك.",
       "shipdaySendError": "رفض ShipDay الطلب: {error}",
-      "shipdaySkipped": "لم يُرسل — {reason}"
+      "shipdaySkipped": "لم يُرسل — {reason}",
+      "latestOfTotal": "أحدث {shown} من أصل {total}",
+      "fullHistoryLink": "عرض سجل الطلبات الكامل — الطلبات الأقدم ونطاقات التواريخ والتصدير",
+      "searchAllHistory": "البحث عن ”{query}“ في كامل سجل الطلبات"
     },
     "customers": {
       "title": "العملاء",

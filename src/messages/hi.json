@@ -1530,7 +1530,10 @@
       "shipdaySending": "भेजा जा रहा है…",
       "shipdaySendSuccess": "ऑर्डर ShipDay पर है — अपना डिस्पैच डैशबोर्ड देखें।",
       "shipdaySendError": "ShipDay ने ऑर्डर अस्वीकार कर दिया: {error}",
-      "shipdaySkipped": "नहीं भेजा गया — {reason}"
+      "shipdaySkipped": "नहीं भेजा गया — {reason}",
+      "latestOfTotal": "{total} में से नवीनतम {shown}",
+      "fullHistoryLink": "पूरा ऑर्डर इतिहास देखें — पुराने ऑर्डर, तिथि सीमाएँ और निर्यात",
+      "searchAllHistory": "पूरे ऑर्डर इतिहास में “{query}” खोजें"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "किचन वर्कफ़्लो",

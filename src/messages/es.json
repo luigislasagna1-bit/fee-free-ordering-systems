@@ -1447,7 +1447,10 @@
       "shipdaySending": "Enviando…",
       "shipdaySendSuccess": "El pedido está en ShipDay — revisa tu panel de despacho.",
       "shipdaySendError": "ShipDay rechazó el pedido: {error}",
-      "shipdaySkipped": "No enviado — {reason}"
+      "shipdaySkipped": "No enviado — {reason}",
+      "latestOfTotal": "Últimas {shown} de {total}",
+      "fullHistoryLink": "Ver el historial completo de pedidos — pedidos antiguos, rangos de fechas y exportación",
+      "searchAllHistory": "Buscar “{query}” en todo el historial de pedidos"
     },
     "customers": {
       "title": "Clientes",

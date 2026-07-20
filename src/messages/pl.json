@@ -1458,7 +1458,10 @@
       "shipdaySending": "Wysyłanie…",
       "shipdaySendSuccess": "Zamówienie jest w ShipDay — sprawdź swój panel dyspozytorski.",
       "shipdaySendError": "ShipDay odrzucił zamówienie: {error}",
-      "shipdaySkipped": "Nie wysłano — {reason}"
+      "shipdaySkipped": "Nie wysłano — {reason}",
+      "latestOfTotal": "Ostatnie {shown} z {total}",
+      "fullHistoryLink": "Zobacz pełną historię zamówień — starsze zamówienia, zakresy dat i eksport",
+      "searchAllHistory": "Szukaj „{query}” w całej historii zamówień"
     },
     "customers": {
       "title": "Klienci",

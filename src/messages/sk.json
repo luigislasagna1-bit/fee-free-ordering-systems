@@ -1458,7 +1458,10 @@
       "shipdaySending": "Odosielam…",
       "shipdaySendSuccess": "Objednávka je v ShipDay — skontrolujte svoj dispečerský panel.",
       "shipdaySendError": "ShipDay objednávku odmietol: {error}",
-      "shipdaySkipped": "Neodoslané — {reason}"
+      "shipdaySkipped": "Neodoslané — {reason}",
+      "latestOfTotal": "Posledných {shown} z {total}",
+      "fullHistoryLink": "Zobraziť celú históriu objednávok — staršie objednávky, obdobia a export",
+      "searchAllHistory": "Hľadať „{query}“ v celej histórii objednávok"
     },
     "customers": {
       "title": "Zákazníci",

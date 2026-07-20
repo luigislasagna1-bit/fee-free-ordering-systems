@@ -1458,7 +1458,10 @@
       "shipdaySending": "Enviant…",
       "shipdaySendSuccess": "La comanda és a ShipDay — reviseu el vostre tauler de repartiment.",
       "shipdaySendError": "ShipDay ha rebutjat la comanda: {error}",
-      "shipdaySkipped": "No enviada — {reason}"
+      "shipdaySkipped": "No enviada — {reason}",
+      "latestOfTotal": "Últimes {shown} de {total}",
+      "fullHistoryLink": "Veure tot l'historial de comandes — comandes antigues, rangs de dates i exportació",
+      "searchAllHistory": "Cerca «{query}» a tot l'historial de comandes"
     },
     "customers": {
       "title": "Clients",

@@ -1458,7 +1458,10 @@
       "shipdaySending": "Sender…",
       "shipdaySendSuccess": "Bestillingen er hos ShipDay — sjekk dispatch-dashbordet ditt.",
       "shipdaySendError": "ShipDay avviste bestillingen: {error}",
-      "shipdaySkipped": "Ikke sendt — {reason}"
+      "shipdaySkipped": "Ikke sendt — {reason}",
+      "latestOfTotal": "Siste {shown} av {total}",
+      "fullHistoryLink": "Se hele ordrehistorikken — eldre ordrer, datoperioder og eksport",
+      "searchAllHistory": "Søk etter «{query}» i hele ordrehistorikken"
     },
     "customers": {
       "title": "Kunder",

@@ -1458,7 +1458,10 @@
       "shipdaySending": "Gönderiliyor…",
       "shipdaySendSuccess": "Sipariş ShipDay'de — sevkiyat panelinizi kontrol edin.",
       "shipdaySendError": "ShipDay siparişi reddetti: {error}",
-      "shipdaySkipped": "Gönderilmedi — {reason}"
+      "shipdaySkipped": "Gönderilmedi — {reason}",
+      "latestOfTotal": "Son {shown}/{total}",
+      "fullHistoryLink": "Tüm sipariş geçmişini gör — eski siparişler, tarih aralıkları ve dışa aktarma",
+      "searchAllHistory": "Tüm sipariş geçmişinde “{query}” ara"
     },
     "customers": {
       "title": "Müşteriler",

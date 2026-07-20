@@ -1458,7 +1458,10 @@
       "shipdaySending": "Slanje…",
       "shipdaySendSuccess": "Narudžba je na ShipDayu — provjerite svoju dispečersku ploču.",
       "shipdaySendError": "ShipDay je odbio narudžbu: {error}",
-      "shipdaySkipped": "Nije poslana — {reason}"
+      "shipdaySkipped": "Nije poslana — {reason}",
+      "latestOfTotal": "Zadnjih {shown} od {total}",
+      "fullHistoryLink": "Pogledaj cijelu povijest narudžbi — starije narudžbe, rasponi datuma i izvoz",
+      "searchAllHistory": "Pretraži „{query}” u cijeloj povijesti narudžbi"
     },
     "customers": {
       "title": "Kupci",

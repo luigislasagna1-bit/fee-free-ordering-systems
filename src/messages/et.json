@@ -1458,7 +1458,10 @@
       "shipdaySending": "Saatmine…",
       "shipdaySendSuccess": "Tellimus on ShipDays — kontrollige oma lähetuste juhtpaneeli.",
       "shipdaySendError": "ShipDay lükkas tellimuse tagasi: {error}",
-      "shipdaySkipped": "Pole saadetud — {reason}"
+      "shipdaySkipped": "Pole saadetud — {reason}",
+      "latestOfTotal": "Viimased {shown}/{total}",
+      "fullHistoryLink": "Vaata kogu tellimuste ajalugu — vanemad tellimused, kuupäevavahemikud ja eksport",
+      "searchAllHistory": "Otsi „{query}” kogu tellimuste ajaloost"
     },
     "customers": {
       "title": "Kliendid",

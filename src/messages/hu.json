@@ -1458,7 +1458,10 @@
       "shipdaySending": "Küldés…",
       "shipdaySendSuccess": "A rendelés a ShipDay-nél van — ellenőrizze a diszpécser-irányítópultot.",
       "shipdaySendError": "A ShipDay elutasította a rendelést: {error}",
-      "shipdaySkipped": "Nincs elküldve — {reason}"
+      "shipdaySkipped": "Nincs elküldve — {reason}",
+      "latestOfTotal": "Legutóbbi {shown} / {total}",
+      "fullHistoryLink": "Teljes rendelési előzmények — régebbi rendelések, dátumtartományok és exportálás",
+      "searchAllHistory": "„{query}” keresése a teljes rendelési előzményekben"
     },
     "customers": {
       "title": "Ügyfelek",

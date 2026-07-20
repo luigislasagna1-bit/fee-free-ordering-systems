@@ -1458,7 +1458,10 @@
       "shipdaySending": "กำลังส่ง…",
       "shipdaySendSuccess": "ออเดอร์อยู่บน ShipDay แล้ว — ตรวจสอบแดชบอร์ดการจัดส่งของคุณ",
       "shipdaySendError": "ShipDay ปฏิเสธออเดอร์: {error}",
-      "shipdaySkipped": "ไม่ได้ส่ง — {reason}"
+      "shipdaySkipped": "ไม่ได้ส่ง — {reason}",
+      "latestOfTotal": "ล่าสุด {shown} จาก {total}",
+      "fullHistoryLink": "ดูประวัติคำสั่งซื้อทั้งหมด — คำสั่งซื้อเก่า ช่วงวันที่ และการส่งออก",
+      "searchAllHistory": "ค้นหา “{query}” ในประวัติคำสั่งซื้อทั้งหมด"
     },
     "customers": {
       "title": "ลูกค้า",

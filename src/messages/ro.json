@@ -1458,7 +1458,10 @@
       "shipdaySending": "Se trimite…",
       "shipdaySendSuccess": "Comanda este pe ShipDay — verificați panoul dvs. de dispecerat.",
       "shipdaySendError": "ShipDay a refuzat comanda: {error}",
-      "shipdaySkipped": "Netrimisă — {reason}"
+      "shipdaySkipped": "Netrimisă — {reason}",
+      "latestOfTotal": "Ultimele {shown} din {total}",
+      "fullHistoryLink": "Vezi istoricul complet al comenzilor — comenzi mai vechi, intervale de date și export",
+      "searchAllHistory": "Caută „{query}” în tot istoricul comenzilor"
     },
     "customers": {
       "title": "Clienți",

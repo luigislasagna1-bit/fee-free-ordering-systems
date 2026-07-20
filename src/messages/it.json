@@ -1447,7 +1447,10 @@
       "shipdaySending": "Invio in corso…",
       "shipdaySendSuccess": "L'ordine è su ShipDay — controlla il tuo pannello di spedizione.",
       "shipdaySendError": "ShipDay ha rifiutato l'ordine: {error}",
-      "shipdaySkipped": "Non inviato — {reason}"
+      "shipdaySkipped": "Non inviato — {reason}",
+      "latestOfTotal": "Ultime {shown} di {total}",
+      "fullHistoryLink": "Vedi lo storico completo degli ordini — ordini più vecchi, intervalli di date ed esportazione",
+      "searchAllHistory": "Cerca “{query}” in tutto lo storico degli ordini"
     },
     "customers": {
       "title": "Clienti",

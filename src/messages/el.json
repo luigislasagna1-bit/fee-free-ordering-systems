@@ -1458,7 +1458,10 @@
       "shipdaySending": "Αποστολή…",
       "shipdaySendSuccess": "Η παραγγελία είναι στο ShipDay — ελέγξτε τον πίνακα αποστολών σας.",
       "shipdaySendError": "Το ShipDay απέρριψε την παραγγελία: {error}",
-      "shipdaySkipped": "Δεν στάλθηκε — {reason}"
+      "shipdaySkipped": "Δεν στάλθηκε — {reason}",
+      "latestOfTotal": "Τελευταίες {shown} από {total}",
+      "fullHistoryLink": "Δείτε το πλήρες ιστορικό παραγγελιών — παλαιότερες παραγγελίες, εύρη ημερομηνιών και εξαγωγή",
+      "searchAllHistory": "Αναζήτηση «{query}» σε όλο το ιστορικό παραγγελιών"
     },
     "customers": {
       "title": "Πελάτες",

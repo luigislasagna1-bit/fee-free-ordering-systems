@@ -1458,7 +1458,10 @@
       "shipdaySending": "Siunčiama…",
       "shipdaySendSuccess": "Užsakymas jau ShipDay sistemoje — patikrinkite savo dispečerio skydelį.",
       "shipdaySendError": "ShipDay atmetė užsakymą: {error}",
-      "shipdaySkipped": "Neišsiųsta — {reason}"
+      "shipdaySkipped": "Neišsiųsta — {reason}",
+      "latestOfTotal": "Naujausi {shown} iš {total}",
+      "fullHistoryLink": "Peržiūrėti visą užsakymų istoriją — senesni užsakymai, datų intervalai ir eksportas",
+      "searchAllHistory": "Ieškoti „{query}“ visoje užsakymų istorijoje"
     },
     "customers": {
       "title": "Klientai",

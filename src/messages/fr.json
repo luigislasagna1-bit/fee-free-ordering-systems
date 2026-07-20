@@ -1447,7 +1447,10 @@
       "shipdaySending": "Envoi…",
       "shipdaySendSuccess": "La commande est sur ShipDay — consultez votre tableau de bord d'expédition.",
       "shipdaySendError": "ShipDay a refusé la commande : {error}",
-      "shipdaySkipped": "Non envoyée — {reason}"
+      "shipdaySkipped": "Non envoyée — {reason}",
+      "latestOfTotal": "Les {shown} dernières sur {total}",
+      "fullHistoryLink": "Voir tout l'historique des commandes — commandes plus anciennes, périodes et export",
+      "searchAllHistory": "Rechercher « {query} » dans tout l'historique des commandes"
     },
     "customers": {
       "title": "Clients",

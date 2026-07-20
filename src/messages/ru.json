@@ -1458,7 +1458,10 @@
       "shipdaySending": "Отправка…",
       "shipdaySendSuccess": "Заказ в ShipDay — проверьте свою диспетчерскую панель.",
       "shipdaySendError": "ShipDay отклонил заказ: {error}",
-      "shipdaySkipped": "Не отправлено — {reason}"
+      "shipdaySkipped": "Не отправлено — {reason}",
+      "latestOfTotal": "Последние {shown} из {total}",
+      "fullHistoryLink": "Смотреть всю историю заказов — старые заказы, диапазоны дат и экспорт",
+      "searchAllHistory": "Искать «{query}» во всей истории заказов"
     },
     "customers": {
       "title": "Клиенты",

@@ -1458,7 +1458,10 @@
       "shipdaySending": "Wird gesendet…",
       "shipdaySendSuccess": "Die Bestellung ist bei ShipDay — prüfen Sie Ihr Dispatch-Dashboard.",
       "shipdaySendError": "ShipDay hat die Bestellung abgelehnt: {error}",
-      "shipdaySkipped": "Nicht gesendet — {reason}"
+      "shipdaySkipped": "Nicht gesendet — {reason}",
+      "latestOfTotal": "Neueste {shown} von {total}",
+      "fullHistoryLink": "Vollständigen Bestellverlauf ansehen — ältere Bestellungen, Zeiträume & Export",
+      "searchAllHistory": "Im gesamten Bestellverlauf nach „{query}“ suchen"
     },
     "customers": {
       "title": "Kunden",

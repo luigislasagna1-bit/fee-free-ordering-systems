@@ -1458,7 +1458,10 @@
       "shipdaySending": "Mengirim…",
       "shipdaySendSuccess": "Pesanan sudah ada di ShipDay — periksa dasbor pengiriman Anda.",
       "shipdaySendError": "ShipDay menolak pesanan: {error}",
-      "shipdaySkipped": "Tidak dikirim — {reason}"
+      "shipdaySkipped": "Tidak dikirim — {reason}",
+      "latestOfTotal": "{shown} terbaru dari {total}",
+      "fullHistoryLink": "Lihat riwayat pesanan lengkap — pesanan lama, rentang tanggal & ekspor",
+      "searchAllHistory": "Cari “{query}” di seluruh riwayat pesanan"
     },
     "customers": {
       "title": "Pelanggan",

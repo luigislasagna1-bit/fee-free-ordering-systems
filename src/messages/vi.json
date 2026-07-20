@@ -1458,7 +1458,10 @@
       "shipdaySending": "Đang gửi…",
       "shipdaySendSuccess": "Đơn hàng đã có trên ShipDay — hãy kiểm tra bảng điều khiển điều phối của bạn.",
       "shipdaySendError": "ShipDay đã từ chối đơn hàng: {error}",
-      "shipdaySkipped": "Chưa gửi — {reason}"
+      "shipdaySkipped": "Chưa gửi — {reason}",
+      "latestOfTotal": "{shown} đơn mới nhất trong {total}",
+      "fullHistoryLink": "Xem toàn bộ lịch sử đơn hàng — đơn cũ hơn, khoảng ngày & xuất dữ liệu",
+      "searchAllHistory": "Tìm “{query}” trong toàn bộ lịch sử đơn hàng"
     },
     "customers": {
       "title": "Khách hàng",

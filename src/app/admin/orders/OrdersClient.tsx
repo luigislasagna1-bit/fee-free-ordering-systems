@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import { useCurrencyFormat } from "@/lib/currency-context";
@@ -22,11 +23,15 @@ const statusColors: Record<string, string> = {
 
 export function OrdersClient({
   orders,
+  totalCount = null,
   rewardsEnabled = false,
   rewardLabelSingular = null,
   rewardLabelPlural = null,
 }: {
   orders: any[];
+  /** Restaurant's ALL-TIME order count — the list itself holds only the
+   *  latest 100, and pretending otherwise hid history (Luigi 2026-07-19). */
+  totalCount?: number | null;
   rewardsEnabled?: boolean;
   rewardLabelSingular?: string | null;
   rewardLabelPlural?: string | null;
@@ -117,7 +122,11 @@ export function OrdersClient({
               {pendingCount} {t("pending")}
             </div>
           )}
-          <span className="text-sm text-gray-500">{orders.length} {tCommon("total")}</span>
+          <span className="text-sm text-gray-500">
+            {totalCount != null && totalCount > orders.length
+              ? t("latestOfTotal", { shown: orders.length, total: totalCount })
+              : `${orders.length} ${tCommon("total")}`}
+          </span>
         </div>
       </div>
 
@@ -155,6 +164,17 @@ export function OrdersClient({
           <div className="p-12 text-center text-gray-400">
             <ShoppingBag className="w-10 h-10 mx-auto mb-3 opacity-40" />
             <p>{t("noOrders")}</p>
+            {/* This list only holds the latest 100 — a search miss here may
+                still exist in history. Hand the query to the full reports
+                list, which searches server-side. Luigi 2026-07-19. */}
+            {search.trim() && (
+              <Link
+                href={`/admin/reports/list/orders?q=${encodeURIComponent(search.trim())}`}
+                className="inline-block mt-3 text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline"
+              >
+                {t("searchAllHistory", { query: search.trim() })}
+              </Link>
+            )}
           </div>
         ) : (
           <div className="divide-y divide-gray-100">
@@ -345,6 +365,14 @@ export function OrdersClient({
                         <span className="text-yellow-700 whitespace-pre-line">{order.notes}</span>
                       </div>
                     )}
+                    <div className="mt-3 text-right">
+                      <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline"
+                      >
+                        {t("viewDetails")} →
+                      </Link>
+                    </div>
                   </div>
                 )}
               </div>
@@ -352,6 +380,18 @@ export function OrdersClient({
             })}
           </div>
         )}
+      </div>
+
+      {/* The list above holds only the LATEST 100 orders — the full history
+          (any date range, sorting, export) lives in Reports. Always offer
+          the road there; carry the current search along. Luigi 2026-07-19. */}
+      <div className="mt-4 text-center">
+        <Link
+          href={`/admin/reports/list/orders${search.trim() ? `?q=${encodeURIComponent(search.trim())}` : ""}`}
+          className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline"
+        >
+          {t("fullHistoryLink")} →
+        </Link>
       </div>
     </div>
   );

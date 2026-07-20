@@ -1458,7 +1458,10 @@
       "shipdaySending": "Slanje…",
       "shipdaySendSuccess": "Porudžbina je na ShipDayu — proverite svoju dispečersku tablu.",
       "shipdaySendError": "ShipDay je odbio porudžbinu: {error}",
-      "shipdaySkipped": "Nije poslata — {reason}"
+      "shipdaySkipped": "Nije poslata — {reason}",
+      "latestOfTotal": "Poslednjih {shown} od {total}",
+      "fullHistoryLink": "Pogledaj celu istoriju porudžbina — starije porudžbine, opsezi datuma i izvoz",
+      "searchAllHistory": "Pretraži „{query}” u celoj istoriji porudžbina"
     },
     "customers": {
       "title": "Kupci",

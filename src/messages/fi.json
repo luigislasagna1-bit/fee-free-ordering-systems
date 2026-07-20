@@ -1458,7 +1458,10 @@
       "shipdaySending": "Lähetetään…",
       "shipdaySendSuccess": "Tilaus on ShipDay-palvelussa — tarkista toimitusten kojelauta.",
       "shipdaySendError": "ShipDay hylkäsi tilauksen: {error}",
-      "shipdaySkipped": "Ei lähetetty — {reason}"
+      "shipdaySkipped": "Ei lähetetty — {reason}",
+      "latestOfTotal": "Viimeisimmät {shown}/{total}",
+      "fullHistoryLink": "Näytä koko tilaushistoria — vanhemmat tilaukset, aikavälit ja vienti",
+      "searchAllHistory": "Hae ”{query}” koko tilaushistoriasta"
     },
     "customers": {
       "title": "Asiakkaat",

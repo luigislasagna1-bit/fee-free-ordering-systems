@@ -1458,7 +1458,10 @@
       "shipdaySending": "발송 중…",
       "shipdaySendSuccess": "주문이 ShipDay에 등록되었습니다 — 배차 대시보드를 확인하세요.",
       "shipdaySendError": "ShipDay가 주문을 거부했습니다: {error}",
-      "shipdaySkipped": "전송되지 않음 — {reason}"
+      "shipdaySkipped": "전송되지 않음 — {reason}",
+      "latestOfTotal": "최신 {shown}개 / 전체 {total}개",
+      "fullHistoryLink": "전체 주문 내역 보기 — 이전 주문, 기간 지정 및 내보내기",
+      "searchAllHistory": "전체 주문 내역에서 “{query}” 검색"
     },
     "customers": {
       "title": "고객",

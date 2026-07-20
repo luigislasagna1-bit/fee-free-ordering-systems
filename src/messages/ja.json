@@ -1458,7 +1458,10 @@
       "shipdaySending": "送信中…",
       "shipdaySendSuccess": "注文は ShipDay に登録されました — 配車ダッシュボードをご確認ください。",
       "shipdaySendError": "ShipDay が注文を拒否しました：{error}",
-      "shipdaySkipped": "未送信 — {reason}"
+      "shipdaySkipped": "未送信 — {reason}",
+      "latestOfTotal": "最新{shown}件（全{total}件）",
+      "fullHistoryLink": "全注文履歴を見る — 過去の注文・期間指定・エクスポート",
+      "searchAllHistory": "全注文履歴から「{query}」を検索"
     },
     "customers": {
       "title": "顧客",

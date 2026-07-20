@@ -1458,7 +1458,10 @@
       "shipdaySending": "发送中…",
       "shipdaySendSuccess": "订单已在 ShipDay 上 — 请查看您的调度仪表盘。",
       "shipdaySendError": "ShipDay 拒绝了该订单：{error}",
-      "shipdaySkipped": "未发送 — {reason}"
+      "shipdaySkipped": "未发送 — {reason}",
+      "latestOfTotal": "最新 {shown} 条，共 {total} 条",
+      "fullHistoryLink": "查看完整订单历史 — 更早的订单、日期范围和导出",
+      "searchAllHistory": "在全部订单历史中搜索“{query}”"
     },
     "customers": {
       "title": "顾客",

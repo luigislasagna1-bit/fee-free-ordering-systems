@@ -1458,7 +1458,10 @@
       "shipdaySending": "Verzenden…",
       "shipdaySendSuccess": "De bestelling staat in ShipDay — bekijk uw dispatch-dashboard.",
       "shipdaySendError": "ShipDay heeft de bestelling geweigerd: {error}",
-      "shipdaySkipped": "Niet verzonden — {reason}"
+      "shipdaySkipped": "Niet verzonden — {reason}",
+      "latestOfTotal": "Laatste {shown} van {total}",
+      "fullHistoryLink": "Bekijk de volledige bestelgeschiedenis — oudere bestellingen, datumbereiken & export",
+      "searchAllHistory": "Zoek “{query}” in de volledige bestelgeschiedenis"
     },
     "customers": {
       "title": "Klanten",

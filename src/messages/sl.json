@@ -1458,7 +1458,10 @@
       "shipdaySending": "Pošiljanje…",
       "shipdaySendSuccess": "Naročilo je v ShipDayu — preverite nadzorno ploščo za odpremo.",
       "shipdaySendError": "ShipDay je zavrnil naročilo: {error}",
-      "shipdaySkipped": "Ni poslano — {reason}"
+      "shipdaySkipped": "Ni poslano — {reason}",
+      "latestOfTotal": "Zadnjih {shown} od {total}",
+      "fullHistoryLink": "Ogled celotne zgodovine naročil — starejša naročila, datumska obdobja in izvoz",
+      "searchAllHistory": "Išči »{query}« po celotni zgodovini naročil"
     },
     "customers": {
       "title": "Stranke",

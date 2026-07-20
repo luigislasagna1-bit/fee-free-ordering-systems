@@ -11,7 +11,10 @@ export default async function OrdersPage() {
   // live orders list. Luigi 2026-06-16.
   // Reward fields gate + label the expanded row's credit lines (standing rule:
   // a disabled feature must not show anywhere). Luigi 2026-07-11.
-  const [orders, restaurant] = await Promise.all([
+  // totalCount powers the "Latest 100 of N" honesty line + the full-history
+  // link (Luigi 2026-07-19) — the count query is cheap (restaurantId index)
+  // and rides the same parallel batch as the page's 5s auto-refresh.
+  const [orders, totalCount, restaurant] = await Promise.all([
     prisma.order.findMany({
       where: { restaurantId },
       orderBy: { createdAt: "desc" },
@@ -21,6 +24,7 @@ export default async function OrdersPage() {
         customer: true,
       },
     }),
+    prisma.order.count({ where: { restaurantId } }),
     restaurantId
       ? prisma.restaurant.findUnique({
           where: { id: restaurantId },
@@ -32,6 +36,7 @@ export default async function OrdersPage() {
   return (
     <OrdersClient
       orders={orders as any}
+      totalCount={totalCount}
       rewardsEnabled={restaurant?.rewardsEnabled === true}
       rewardLabelSingular={restaurant?.rewardLabelSingular ?? null}
       rewardLabelPlural={restaurant?.rewardLabelPlural ?? null}

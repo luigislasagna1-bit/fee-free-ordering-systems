@@ -1458,7 +1458,10 @@
       "shipdaySending": "Sūta…",
       "shipdaySendSuccess": "Pasūtījums ir ShipDay sistēmā — pārbaudiet savu dispečera paneli.",
       "shipdaySendError": "ShipDay noraidīja pasūtījumu: {error}",
-      "shipdaySkipped": "Nav nosūtīts — {reason}"
+      "shipdaySkipped": "Nav nosūtīts — {reason}",
+      "latestOfTotal": "Pēdējie {shown} no {total}",
+      "fullHistoryLink": "Skatīt visu pasūtījumu vēsturi — vecāki pasūtījumi, datumu diapazoni un eksports",
+      "searchAllHistory": "Meklēt “{query}” visā pasūtījumu vēsturē"
     },
     "customers": {
       "title": "Klienti",
