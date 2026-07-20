@@ -303,6 +303,7 @@ When you have the iPad handy, tell Claude "let's do C3": print a real test order
 | 2026-07-17 | v1.1 Phase 4 (d990d8f0): driver History tab — day-grouped keyset list + detail overlay + On-time/Late badge | E2E 28/28 (pagination no-dup/no-gap, chips, null-city, currency); parity 5706 x38; preflight green |
 | 2026-07-17 | Driver app SOUNDS (89984bfb): new-order chime until accepted + stage ticks + mute toggle | Pure WebAudio (no iOS media card); ZERO DriverQueue edits; E2E 9/9; both of Luigi's gate-day asks shipped same day |
 | 2026-07-17 | v1.1 Phase 5 (cdb13eb2): Earnings tab — Today/This week/Last week, per-currency tip stacking, hardened bound-tz aggregate | E2E 35/35 (usd+eur tips proven separate, exact period counts, >35d invisible, range-clamp 400); parity 5718 x38; preflight green. Resumed from a Fable-5 usage-limit mid-run on Opus |
+| 2026-07-20 | Fabrizio's ristorante-test made PERMANENTLY FREE (Luigi's call — thanks for his testing/feedback; his CLIENT accounts stay paid) | All 5 comped add-ons (hosted_website, online_payments, custom_domain, reservation_deposits, advanced_promos) + plan trial pushed from Aug 24 to 2126-01-01; no Stripe subs touched (none existed); dunning clear; prod re-verified read-only. Reversible: set real dates back anytime (scripts/_fabrizio-free-account.ts) |
 
 ---
 
