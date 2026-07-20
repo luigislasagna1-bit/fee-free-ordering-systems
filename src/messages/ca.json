@@ -91,7 +91,8 @@
     "menu": "Carta",
     "loadingDots": "Carregant…",
     "previous": "Anterior",
-    "kmFromStore": "a {km} km de la botiga"
+    "kmFromStore": "a {km} km de la botiga",
+    "apply": "Aplica"
   },
   "auth": {
     "signIn": "Inicia sessió",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Elimina la franja horària",
       "closesNextDay": "Tanca l'endemà (p. ex. obert després de mitjanit)",
       "holidayNeedsDate": "Primer trieu una data d'inici.",
-      "holidayWindowOutsideService": "{window} està fora de l'horari de {service} per a aquell dia. Els horaris excepcionals han d'estar dins de l'horari normal del servei."
+      "holidayWindowOutsideService": "{window} està fora de l'horari de {service} per a aquell dia. Els horaris excepcionals han d'estar dins de l'horari normal del servei.",
+      "copiedDayToAll": "{day} copiat a tots els altres dies",
+      "copiedDayToClosed": "{day} copiat als dies tancats",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Per defecte (tots els serveis)",
+      "tabReservation": "Reserva",
+      "tabAddSuffix": "+ Afegeix",
+      "removeOverrideAria": "Elimina la substitució de {service}",
+      "removeOverrideTitle": "Elimina la substitució (les files obsoletes es mantenen a la base de dades fins que desis amb la pestanya reactivada)",
+      "hoursForServiceOnly": "Horari només per a {service}",
+      "markClosed": "Marca com a tancat",
+      "markOpen": "Marca com a obert",
+      "copyHoursTitle": "Copia aquest horari a altres dies",
+      "applyTo": "Aplica a…",
+      "applyToAllDays": "Aplica a <strong>tots els altres dies</strong>",
+      "applyToClosedDays": "Aplica només als <strong>dies actualment tancats</strong>",
+      "dayAbbrev": "dg, dl, dt, dc, dj, dv, ds"
     },
     "services": {
       "title": "Serveis del restaurant",
@@ -1205,7 +1225,42 @@
         "colRequired": "Obligatori",
         "saved": "Formulari d'adreça de lliurament actualitzat"
       },
-      "estimatedMinutesHint": "Temps TOTAL estimat de lliurament (preparació + trajecte) per a les adreces d'aquesta zona. Els clients veuen aquest número en pagar i fixa la primera franja \"per a més tard\" — substitueix el temps estimat per defecte del servei. Un valor realista és 30–60 min, no només el trajecte."
+      "estimatedMinutesHint": "Temps TOTAL estimat de lliurament (preparació + trajecte) per a les adreces d'aquesta zona. Els clients veuen aquest número en pagar i fixa la primera franja \"per a més tard\" — substitueix el temps estimat per defecte del servei. Un valor realista és 30–60 min, no només el trajecte.",
+      "toastNoAddress": "No hi ha cap adreça configurada. Completa primer el perfil del restaurant.",
+      "toastAddressNotFound": "No s'ha pogut trobar aquesta adreça. Actualitza l'adreça al perfil del restaurant i torna-ho a provar.",
+      "toastLocationPinned": "Ubicació del restaurant fixada al mapa!",
+      "toastGeocodeFailed": "La geocodificació ha fallat. Comprova la connexió a Internet.",
+      "toastLocationUpdated": "Ubicació del restaurant actualitzada!",
+      "toastZoneNameRequired": "El nom de la zona és obligatori",
+      "toastSetLocationFirst": "Primer estableix la ubicació del teu restaurant (les zones són cercles concèntrics al seu voltant).",
+      "toastSaveZoneFailed": "No s'ha pogut desar la zona",
+      "toastZoneAdded": "Zona «{name}» afegida!",
+      "toastUpdateZoneFailed": "No s'ha pogut actualitzar la zona",
+      "confirmDeleteZone": "Vols eliminar la zona de repartiment «{name}»? Aquesta acció no es pot desfer.",
+      "toastZoneDeleted": "Zona eliminada",
+      "locationNotSetTitle": "Ubicació del restaurant no configurada",
+      "locationNotSetDesc": "Les zones de repartiment necessiten les coordenades del teu restaurant com a origen. <link>Configura-les al perfil del restaurant</link> o fes servir el botó de sota per geocodificar la teva adreça actual.",
+      "locateRestaurant": "Localitza el restaurant",
+      "locating": "Localitzant…",
+      "relocate": "Reubica",
+      "legendActiveZone": "Zona activa",
+      "legendInactiveZone": "Zona inactiva",
+      "rowFee": "{amount} de tarifa",
+      "rowMin": "mín. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Temps est.",
+      "editFee": "Tarifa ({sym})",
+      "editMin": "Mín. ({sym})",
+      "editStdTime": "Temps est. (min)",
+      "mapRestaurantTitle": "Restaurant (arrossega per ajustar)",
+      "mapResizeHandleTitle": "{km} km — arrossega per canviar la mida",
+      "mapFeeLabel": "Tarifa:",
+      "mapMinLabel": "Mín.:",
+      "mapRadiusLabel": "Radi:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Arrossega el control per canviar la mida",
+      "mapDragHintShort": "arrossega per canviar la mida"
     },
     "reservations": {
       "title": "Reserves",
@@ -1286,7 +1341,38 @@
       "amount": "Import",
       "schedule": "Programació",
       "status": "Estat",
-      "confirmDelete": "Elimineu \"{name}\"?"
+      "confirmDelete": "Elimineu \"{name}\"?",
+      "taxRateRangeError": "El tipus impositiu ha d'estar entre 0 i 100",
+      "salesTaxTitle": "Tipus d'impost sobre vendes",
+      "salesTaxHelp": "S'aplica al subtotal imposable de cada comanda. Posa 0 si no cobres impost sobre vendes. (p. ex. 13 per al 13% de HST.)",
+      "rateLabel": "Tipus (%)",
+      "savingLabel": "Desant…",
+      "saveTaxRate": "Desa el tipus",
+      "currencyTitle": "Moneda",
+      "currencyHelp": "Determina cada preu que veu el client, a més dels càrrecs de Stripe/PayPal, els rebuts i els informes. Canviar de moneda NO converteix els preus existents: actualitza els preus del menú si passes d'USD a EUR (etc.).",
+      "currencyLabel": "Moneda",
+      "currencySample": "Exemple: <strong>{value}</strong>",
+      "tipsTitle": "Propines de clients",
+      "tipsHelp": "Quan està DESACTIVAT, el carretó del client amaga completament el selector de propina i el servidor fixa a 0 qualsevol valor manipulat del client. Alguns restaurants (p. ex. en països on la propina no és habitual) prefereixen no mostrar sol·licituds de propina.",
+      "tipsAriaDisable": "Desactiva les propines",
+      "tipsAriaEnable": "Activa les propines",
+      "menuSearchTitle": "Cerca al menú del client",
+      "menuSearchHelp": "Quan està ACTIVADA, la pàgina de comandes del client mostra una barra de cerca amb lupa perquè els visitants trobin articles ràpidament escrivint. DESACTIVA-la si prefereixes que naveguin només amb els botons de categories.",
+      "menuSearchAriaHide": "Amaga la cerca del menú a la pàgina del client",
+      "menuSearchAriaShow": "Mostra la cerca del menú a la pàgina del client",
+      "itemNotesTitle": "Instruccions especials per article",
+      "itemNotesHelp": "Quan està ACTIVADA, els clients poden afegir una nota a <each>cada article</each> (p. ex. «extra cruixent», «sense ceba en aquest») — s'imprimeix al tiquet de cuina d'aquest article. DESACTIVADA, encara poden deixar una nota per a la <whole>comanda sencera</whole> en pagar.",
+      "itemNotesAriaOff": "Desactiva les notes per article",
+      "itemNotesAriaOn": "Activa les notes per article",
+      "schedulingTitle": "Programació i formulari de pagament",
+      "schedulingHelp": "Controla per a quines franges horàries poden programar els clients i quins camps de contacte són obligatoris en pagar.",
+      "slotIntervalLabel": "Interval de franges (minuts)",
+      "slotIntervalHelp": "Els clients només poden programar comandes amb aquesta cadència (com GloriaFood). Per defecte 15 — canvia a 30 per a cuines més lentes.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Exigeix el telèfon del client",
+      "requirePhoneHelp": "Quan està ACTIVAT, el formulari de pagament rebutja les comandes sense número de telèfon. Recomanat per a lliurament perquè la cuina pugui trucar sobre l'entrega.",
+      "requirePhoneAriaOptional": "Fes el telèfon opcional",
+      "requirePhoneAriaRequired": "Fes el telèfon obligatori"
     },
     "mapSettings": {
       "title": "Configuració del mapa",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Popular",
       "addOnEnableCta": "Activa",
       "perMonth": "/mes",
-      "kitchenAlertsSection": "Cuina i alertes de comandes"
+      "kitchenAlertsSection": "Cuina i alertes de comandes",
+      "currentPlanWithAddOns": "Pla actual: FREE + {count, plural, one {# complement} other {# complements}}",
+      "currentPlanFree": "Pla actual: FREE",
+      "freePlanDescription": "Widget de comandes, admin, menú, app de cuina — sense targeta. Accepta fins a 100 comandes/mes per sempre. Afegeix funcions de pagament quan vulguis des de la pàgina de Facturació.",
+      "feature100Orders": "100 comandes/mes",
+      "featureUnlimitedMenu": "Articles de menú il·limitats",
+      "featureCustomerAccounts": "Comptes de clients",
+      "activeAddOnsHeading": "Complements actius",
+      "trialBadge": "Prova",
+      "manageSubscriptionsHeading": "Gestiona les teves subscripcions",
+      "upgradeWithAddOnsHeading": "Millora amb complements de pagament",
+      "manageBillingCta": "Gestiona la facturació",
+      "browseAddOnsCta": "Explora els complements"
     },
     "coupons": {
       "title": "Cupons",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Encara no verificat a VIES",
       "viesVerifyNow": "Verifica ara",
       "viesUnreachable": "El servei VIES no està disponible temporalment — torna-ho a provar d'aquí a uns minuts.",
-      "euVatNote": "Empreses de la UE: cal un número d'IVA registrat a VIES per a subscripcions de pagament. Els números validats es facturen amb IVA del 0% (inversió del subjecte passiu)."
+      "euVatNote": "Empreses de la UE: cal un número d'IVA registrat a VIES per a subscripcions de pagament. Els números validats es facturen amb IVA del 0% (inversió del subjecte passiu).",
+      "perOrder": "/comanda",
+      "paygOrderCount": "{count, plural, one {# comanda} other {# comandes}}"
     },
     "addOns": {
       "errorCheckout": "No s'ha pogut iniciar la compra",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Sí, cancel·la",
       "compFreeUntil": "Gratuït fins al {date}",
       "compExplainer": "Aquest complement és de cortesia fins llavors — no es renova sol. Subscriu-t'hi ara per conservar-lo: la targeta es desa avui i el cobrament només comença quan acabi el període gratuït.",
-      "compSubscribeCta": "Subscriu-t'hi per conservar-lo"
+      "compSubscribeCta": "Subscriu-t'hi per conservar-lo",
+      "pageIntro": "El producte principal és gratuït per sempre. Desbloqueja funcions individuals a continuació subscrivint-te al complement corresponent. Cancel·la quan vulguis — mantens l'accés fins al final del període de facturació.",
+      "subscribedBanner": "<strong>Fet!</strong> La teva subscripció s'està activant. El desbloqueig de la funció pot trigar fins a un minut.",
+      "settingsLinks": {
+        "hostedWebsite": "Obre l'editor del lloc web",
+        "onlinePayments": "Gestiona Stripe Connect",
+        "driverPool": "Configura el grup de conductors",
+        "multiLocation": "Gestiona les ubicacions",
+        "customDomain": "Connecta el teu domini",
+        "advancedPromoMarketing": "Executa promocions",
+        "reservationDeposits": "Configura les reserves",
+        "brandedMobileApp": "Configura l'aplicació"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "En directe",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Assignat",
       "labelVip": "VIP",
       "badgeDeadTargets": "Cap plat actiu — torneu a seleccionar",
-      "searchPlaceholder": "Cerca per nom o codi de cupó…"
+      "searchPlaceholder": "Cerca per nom o codi de cupó…",
+      "typeLabels": {
+        "percentage_off": "% de descompte en articles seleccionats",
+        "fixed_cart": "Descompte fix al carretó",
+        "free_delivery": "Enviament gratis",
+        "bogo": "Compra un i emporta't un altre gratis",
+        "buy_n_get_free": "Compra N i emporta't un gratis",
+        "free_item": "Aconsegueix un article GRATIS",
+        "meal_bundle": "Menú combinat",
+        "meal_bundle_speciality": "Menú combinat amb especialitat",
+        "fixed_combo": "Descompte fix a l'oferta combo",
+        "percentage_combo": "% de descompte a l'oferta combo",
+        "payment_reward": "Recompensa per mètode de pagament",
+        "free_dish_meal": "Plat gratis com a part d'un àpat"
+      },
+      "campaignFallback": "Campanya"
     },
     "promoWizard": {
       "errorPickType": "Trieu un tipus de promoció per continuar.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Descomptes progressius compra-N-obté-gratis",
       "featureFreeDish": "Plat gratuït com a part d'un menú",
       "maybeLater": "Potser més tard",
-      "subscribe": "Subscriu-te"
+      "subscribe": "Subscriu-te",
+      "types": {
+        "percentage_off": {
+          "name": "% de descompte al carretó",
+          "desc": "Descompta un percentatge de tota la comanda (o d'articles concrets)."
+        },
+        "free_delivery": {
+          "name": "Enviament gratis",
+          "desc": "Elimina la tarifa d'enviament per a les comandes elegibles."
+        },
+        "bogo": {
+          "name": "Compra un i emporta't un altre gratis",
+          "desc": "Combina un article de pagament amb un de gratis (o amb descompte)."
+        },
+        "fixed_cart": {
+          "name": "Descompte fix al carretó",
+          "desc": "Descompta una quantitat fixa de la comanda."
+        },
+        "payment_reward": {
+          "name": "Recompensa per mètode de pagament",
+          "desc": "Descompte per pagar amb un mètode concret (p. ex. efectiu)."
+        },
+        "free_item": {
+          "name": "Aconsegueix un article GRATIS",
+          "desc": "Gasta X i aconsegueix un article gratis d'una llista seleccionada."
+        },
+        "meal_bundle": {
+          "name": "Menú combinat",
+          "desc": "Combina ranures a un preu de paquet fix."
+        },
+        "buy_n_get_free": {
+          "name": "Compra N i emporta't un gratis",
+          "desc": "Afegeix N articles, el següent (el més barat o l'escollit) és gratis."
+        },
+        "free_dish_meal": {
+          "name": "Plat gratis com a part d'un àpat",
+          "desc": "Demana un plat principal + guarnició i emporta't unes postres (o qualsevol extra) gratis."
+        },
+        "fixed_combo": {
+          "name": "Descompte fix al combo",
+          "desc": "Combina articles concrets i descompta una quantitat fixa."
+        },
+        "percentage_combo": {
+          "name": "% de descompte al combo",
+          "desc": "Combina articles concrets i descompta un percentatge."
+        },
+        "meal_bundle_speciality": {
+          "name": "Menú combinat amb especialitat",
+          "desc": "Menú combinat amb recàrrecs opcionals (p. ex. llagosta +5 $)."
+        },
+        "reward_credit": {
+          "name": "Atorgar Reward Dollars",
+          "desc": "Recompensa el client amb crèdit de botiga en aquesta comanda en lloc d'un descompte."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Configura la vostra promoció",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Quan està marcat, aquesta oferta s'aplica només un cop per comanda, fins i tot si el carret hi té dret més d'una vegada (p. ex. una promoció Compra'n un i emporta't l'altre que, altrament, es repetiria).",
       "rewardCreditLabel": "Reward Dollars a atorgar",
       "rewardCreditHint": "S'afegeixen al saldo del client quan es completa aquesta comanda — sense descompte al carretó. Cal que els Reward Dollars estiguin activats.",
-      "oncePerOrderHintPercent": "Si està marcat, el descompte % s'aplica només a UN article — el més car dels articles elegibles del cistell (p. ex. «20% en un plat principal»). Desmarca-ho per descomptar TOTS els articles elegibles."
+      "oncePerOrderHintPercent": "Si està marcat, el descompte % s'aplica només a UN article — el més car dels articles elegibles del cistell (p. ex. «20% en un plat principal»). Desmarca-ho per descomptar TOTS els articles elegibles.",
+      "groupNoItems": "Cap article seleccionat — fes clic per editar",
+      "groupMoreCategories": "+{n} més",
+      "pickerHeading": "Selecciona categories o articles",
+      "pickerNoCategories": "No s'han trobat categories",
+      "allSizesSuffix": " · totes les mides",
+      "groupSpecificItems": "{count, plural, one {# article específic} other {# articles específics}}",
+      "groupSizes": "{count, plural, one {# mida} other {# mides}}",
+      "specialityFeeTitle": "Cobra el càrrec només per a aquestes mides",
+      "specialityFeeDesc": "Marca les mides premium que afegeixen el càrrec — les mides base queden gratis. Deixa-ho tot sense marcar per cobrar el càrrec a cada elecció.",
+      "specialityFeeEmpty": "Tria primer els articles d'aquesta ranura i després selecciona quines mides costen un extra.",
+      "wholeItemAllSizesSuffix": " · article sencer (totes les mides)",
+      "roleLabelPaid": "(De pagament)",
+      "roleLabelFree": "(Gratis)",
+      "roleLabelTrigger": "(Activador)",
+      "roleLabelRequired": "(Obligatori)",
+      "itemsGroupN": "Grup d'articles {n}",
+      "slotPickAtLeast": "Tria com a mínim",
+      "slotUpTo": "fins a",
+      "slotItems": "articles",
+      "specialityFeeInlineLabel": "Càrrec d'especialitat +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {per a # mida} other {per a # mides}}",
+      "specialityFeeForAll": "per a totes les mides — tria quines costen un extra",
+      "extraChargeLabel": "Càrrecs a l'article gratis",
+      "extraChargeNone": "Sense càrrecs extra (l'article gratis és totalment gratis)",
+      "extraChargeAddons": "Cobrar extra per opcions / complements (els ingredients es continuen facturant)",
+      "extraChargeAddonsSizes": "Cobrar extra per opcions / complements i mides (ingredients + millora de mida facturats)",
+      "extraChargeHint": "Si els ingredients i la millora de mida de l'article gratis es continuen cobrant — igual que a GloriaFood.",
+      "discountStrategyNoteFreed": "L'article del grup «gratis» és el que rep el descompte — independentment del preu. El % de dalt és el descompte que rep (100% = gratis).",
+      "discountStrategyNoteMostExpensive": "El BOGO descompta el MÉS CAR dels dos articles elegibles. Per descomptar sempre un article concret, fes servir l'oferta «Compra N, emporta't gratis».",
+      "discountStrategyNoteFixedPercent": "Cada article amb descompte rep aquest % — el més barat quan una parella és elegible. Per descomptar sempre un article concret, fes servir l'oferta «Compra N, emporta't gratis».",
+      "discountStrategyNoteCheapest": "El BOGO descompta el MÉS BARAT dels dos articles elegibles — així que si l'article «gratis» costa més, es descompta el més barat (un client no pot endur-se l'article més car barat). Per descomptar sempre un article concret (p. ex. una pasta), fes servir l'oferta «Compra N, emporta't gratis».",
+      "discountStrategyLabel": "Estratègia de descompte",
+      "strategyCheapest": "Estableix els descomptes automàticament (l'article més barat gratis)",
+      "strategyMostExpensive": "Estableix els descomptes automàticament (l'article més car gratis)",
+      "strategyFixedPercent": "Percentatge de descompte fix",
+      "pctOffCheapest": "% de descompte a l'article més barat",
+      "pctOffMostExpensive": "% de descompte a l'article més car"
     },
     "promoStepRestrictions": {
       "pageTitle": "Restriccions i visualització",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Tots dos",
       "hiddenCodeInfo": "Les promocions amagades només s'apliquen quan el client introdueix aquest codi en pagar.",
       "vipLockedTitle": "Només VIP — vinculat a: {groups}",
-      "vipLockedDesc": "Aquesta promoció s'aplica automàticament només per a aquests membres VIP al pagament. Mai no apareix al menú públic, al bàner ni al web — cap interruptor de visibilitat ho pot canviar. Per fer-la pública, primer desvincula-la a la pàgina Grups VIP."
+      "vipLockedDesc": "Aquesta promoció s'aplica automàticament només per a aquests membres VIP al pagament. Mai no apareix al menú públic, al bàner ni al web — cap interruptor de visibilitat ho pot canviar. Per fer-la pública, primer desvincula-la a la pàgina Grups VIP.",
+      "bundleBuildInfo": "💡 Els clients creen aquest paquet des d'una targeta «Crea la teva oferta» al teu menú. Fixa'l al bàner de sota perquè sigui fàcil de trobar. (Un paquet no es pot aplicar automàticament ni desbloquejar amb un codi.)"
     },
     "customersList": {
       "heading": "Clients",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Deseu la configuració un cop (amb una font ShipDay seleccionada) i el vostre enllaç de webhook personal apareixerà aquí.",
       "feeFromZonesTitle": "Tarifes de lliurament per als clients",
       "feeFromZonesBody": "El que els vostres clients paguen pel lliurament es configura a la pàgina Zones de lliurament — igual que amb els vostres propis conductors. ShipDay factura el vostre restaurant per separat per cada lliurament; pregunteu al vostre contacte de ShipDay quina és la vostra tarifa per lliurament.",
-      "feeFromZonesLink": "Obre la pàgina Zones de lliurament"
+      "feeFromZonesLink": "Obre la pàgina Zones de lliurament",
+      "errorUnknown": "Error desconegut",
+      "errorNetwork": "Error de xarxa"
     },
     "driverPoolLocked": {
       "addonBadge": "Complement",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Vosaltres fixeu el preu per al client",
       "feature2Body": "Transferència total (el client paga tota la tarifa de ShipDay), plana (vosaltres absorbiu la diferència) o per nivells (p. ex. gratuït per sobre de 50 €). Control total.",
       "feature3Title": "Trieu per comanda",
-      "feature3Body": "Combineu els vostres propis conductors amb ShipDay. La cuina veu un selector per a cada lliurament: intern o pool. La vostra decisió, cada cop."
+      "feature3Body": "Combineu els vostres propis conductors amb ShipDay. La cuina veu un selector per a cada lliurament: intern o pool. La vostra decisió, cada cop.",
+      "perMonth": "/mes"
     },
     "marketplaceLocked": {
       "addonBadge": "Complement",

@@ -656,6 +656,7 @@ function AddOnRowItem({
   hasMarketplaceMonthly: boolean;
 }) {
   const t = useTranslations("admin.billing");
+  const tSettings = useTranslations("admin.settings");
   // Normalize legacy "trialing" status to "active" — trial concept is dead.
   const status = mine && mine.status === "trialing" ? "active" : mine?.status ?? null;
   const isActive = status === "active";
@@ -742,7 +743,7 @@ function AddOnRowItem({
           ) : catalog.monthlyPriceCents === 0 ? (
             <span className="text-gray-500">{t("free")}</span>
           ) : (
-            <>{formatCurrency(catalog.monthlyPriceCents / 100, PLATFORM_CURRENCY)}<span className="text-xs font-normal text-gray-500">/mo</span></>
+            <>{formatCurrency(catalog.monthlyPriceCents / 100, PLATFORM_CURRENCY)}<span className="text-xs font-normal text-gray-500">{tSettings("perMonth")}</span></>
           )}
         </div>
         {includedNote ? (
@@ -794,6 +795,7 @@ function MarketplaceAddOnRow({
   listing: MarketplaceListing | null;
 }) {
   const t = useTranslations("admin.billing");
+  const tSettings = useTranslations("admin.settings");
   const monthlyActive = !!mine && (mine.status === "active" || mine.status === "trialing");
   const paygActive = !monthlyActive && listing?.billingMode === "payg" && !!listing;
   const subscribedAnyMode = monthlyActive || paygActive;
@@ -867,7 +869,7 @@ function MarketplaceAddOnRow({
             )}
           </div>
           <div className="text-lg font-bold text-gray-900">
-            $199.99<span className="text-xs font-normal text-gray-500">/mo</span>
+            $199.99<span className="text-xs font-normal text-gray-500">{tSettings("perMonth")}</span>
           </div>
           <p className="text-[11px] text-gray-600 mt-1 leading-snug">
             {t("monthlyUnlimitedDesc")}
@@ -916,7 +918,7 @@ function MarketplaceAddOnRow({
             )}
           </div>
           <div className="text-lg font-bold text-gray-900">
-            $3<span className="text-xs font-normal text-gray-500">/order</span>
+            $3<span className="text-xs font-normal text-gray-500">{t("perOrder")}</span>
           </div>
           <p className="text-[11px] text-gray-600 mt-1 leading-snug">
             {t("paygDesc")}
@@ -925,7 +927,7 @@ function MarketplaceAddOnRow({
             <div className="mt-2 space-y-1 text-[11px] text-gray-600">
               <div>
                 <strong className="text-gray-700 font-semibold">{t("thisPeriod")}:</strong>{" "}
-                {paygOrdersThisPeriod} order{paygOrdersThisPeriod === 1 ? "" : "s"}{" "}
+                {t("paygOrderCount", { count: paygOrdersThisPeriod })}{" "}
                 · <strong>{formatCurrency(paygChargeCents / 100, PLATFORM_CURRENCY)}</strong>
                 {paygChargeCents >= PAYG_MONTHLY_CAP_CENTS && (
                   <span className="text-emerald-700 font-semibold"> {t("paygCapReached")}</span>

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getSessionUser } from "@/lib/session";
 import { listAddOnsForRestaurant } from "@/lib/addons";
 import prisma from "@/lib/db";
@@ -29,6 +30,12 @@ export default async function AddOnsPage({
   // whether a Monthly→PAYG switch is currently scheduled, and surface
   // the correct "Switch to" CTAs. AddOnsClient ignores this prop for
   // every other slug; marketplace is the only one with two billing modes.
+  const [t, tBilling, tBack] = await Promise.all([
+    getTranslations("admin.addOns"),
+    getTranslations("admin.billing"),
+    getTranslations("admin.paygOptInPage.switch"),
+  ]);
+
   const [addOns, marketplaceListing] = await Promise.all([
     listAddOnsForRestaurant(user.restaurantId),
     prisma.marketplaceListing.findUnique({
@@ -48,20 +55,19 @@ export default async function AddOnsPage({
           href="/admin/billing"
           className="text-sm text-gray-600 hover:text-gray-900"
         >
-          &larr; Back to billing
+          &larr; {tBack("backToBilling")}
         </Link>
-        <h1 className="text-2xl font-bold text-gray-900 mt-2">Add-ons</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mt-2">{tBilling("addOnsTitle")}</h1>
         <p className="text-sm text-gray-600 mt-1">
-          The core product is free forever. Unlock individual features below by
-          subscribing to the matching add-on. Cancel anytime — you keep access
-          until the end of the billing period.
+          {t("pageIntro")}
         </p>
       </div>
 
       {params.subscribed && (
         <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
-          <strong>Success!</strong> Your subscription is being activated. It can
-          take up to a minute for the feature to unlock.
+          {t.rich("subscribedBanner", {
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
         </div>
       )}
 

@@ -135,21 +135,25 @@ export function initRulesForType(type: string): PromoRules {
   }
 }
 
-export function groupSummary(g: IG, cats: CatEntry[]): string {
+export function groupSummary(
+  g: IG,
+  cats: CatEntry[],
+  t: ReturnType<typeof useTranslations>,
+): string {
   const cc = g.categoryIds.length;
   const ic = g.itemIds.length;
   const vc = (g.variantIds ?? []).length;
-  if (!cc && !ic && !vc) return "No items selected — click to edit";
+  if (!cc && !ic && !vc) return t("groupNoItems");
   const parts: string[] = [];
   if (cc) {
     const names = g.categoryIds
       .slice(0, 2)
       .map((id) => cats.find((c) => c.id === id)?.name ?? id)
       .join(", ");
-    parts.push(`${names}${cc > 2 ? ` +${cc - 2} more` : ""}`);
+    parts.push(`${names}${cc > 2 ? ` ${t("groupMoreCategories", { n: cc - 2 })}` : ""}`);
   }
-  if (ic) parts.push(`${ic} specific item${ic > 1 ? "s" : ""}`);
-  if (vc) parts.push(`${vc} size${vc > 1 ? "s" : ""}`);
+  if (ic) parts.push(t("groupSpecificItems", { count: ic }));
+  if (vc) parts.push(t("groupSizes", { count: vc }));
   return parts.join(" + ");
 }
 
@@ -182,6 +186,8 @@ export function ItemGroupPicker({
   // ticked items outside the current query survive Apply. The searchable
   // strings reuse the admin menu editor's existing translated keys.
   const t = useTranslations("admin.menuEditor");
+  const tc = useTranslations("admin.promoStepConfig");
+  const tCommon = useTranslations("common");
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
   const visibleCats: CatEntry[] = !q
@@ -254,7 +260,7 @@ export function ItemGroupPicker({
       >
       <div className="px-3 py-2 bg-gray-50 border-b flex items-center justify-between flex-shrink-0">
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-          Select categories or items
+          {tc("pickerHeading")}
         </span>
         {/* Explicit close button — easier to dismiss than relying on the
             invisible-outside-click behavior, especially on mobile where
@@ -263,7 +269,7 @@ export function ItemGroupPicker({
           type="button"
           onClick={onCancel}
           className="p-1 -mr-1 text-gray-400 hover:text-gray-600 transition rounded"
-          aria-label="Close"
+          aria-label={tCommon("close")}
         >
           <X className="w-4 h-4" />
         </button>
@@ -298,7 +304,7 @@ export function ItemGroupPicker({
         onScroll={(e) => e.stopPropagation()}
       >
         {cats.length === 0 ? (
-          <div className="px-3 py-4 text-sm text-gray-400 text-center">No categories found</div>
+          <div className="px-3 py-4 text-sm text-gray-400 text-center">{tc("pickerNoCategories")}</div>
         ) : visibleCats.length === 0 ? (
           <div className="px-3 py-4 text-sm text-gray-400 text-center">{t("noMatchesFor", { query: query.trim() })}</div>
         ) : (
@@ -383,7 +389,7 @@ export function ItemGroupPicker({
                             />
                             <span className="flex-1 text-gray-700">
                               {item.name}
-                              {hasVariants && <span className="text-gray-400"> · all sizes</span>}
+                              {hasVariants && <span className="text-gray-400">{tc("allSizesSuffix")}</span>}
                             </span>
                             <span className="text-xs text-gray-400">
                               {currencySymbol}{item.price.toFixed(2)}
@@ -433,13 +439,13 @@ export function ItemGroupPicker({
           onClick={() => onApply(draft)}
           className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-600 transition"
         >
-          Apply
+          {tCommon("apply")}
         </button>
         <button
           onClick={onCancel}
           className="px-4 text-sm text-gray-600 rounded-lg border border-gray-200 hover:bg-gray-100 transition"
         >
-          Cancel
+          {tCommon("cancel")}
         </button>
       </div>
       </div>
@@ -461,6 +467,8 @@ function SpecialityFeePicker({
   onApply: (partial: { specialityVariantIds: string[]; specialityItemIds: string[] }) => void;
   onCancel: () => void;
 }) {
+  const t = useTranslations("admin.promoStepConfig");
+  const tCommon = useTranslations("common");
   const [vIds, setVIds] = useState<string[]>([...(group.specialityVariantIds ?? [])]);
   const [iIds, setIIds] = useState<string[]>([...(group.specialityItemIds ?? [])]);
   const toggleV = (id: string) => setVIds((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
@@ -483,14 +491,14 @@ function SpecialityFeePicker({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onMouseDown={onCancel}>
       <div className="bg-white rounded-xl shadow-xl w-full max-w-md max-h-[80vh] flex flex-col" onMouseDown={(e) => e.stopPropagation()}>
         <div className="px-4 py-3 border-b">
-          <div className="text-sm font-semibold text-gray-800">Charge the fee only for these sizes</div>
+          <div className="text-sm font-semibold text-gray-800">{t("specialityFeeTitle")}</div>
           <div className="text-xs text-gray-500 mt-0.5">
-            Tick the premium sizes that add the fee — base sizes stay free. Leave all unticked to charge the fee on every pick.
+            {t("specialityFeeDesc")}
           </div>
         </div>
         <div className="flex-1 overflow-y-auto px-3 py-2 space-y-1" onScroll={(e) => e.stopPropagation()}>
           {eligible.length === 0 ? (
-            <div className="text-xs text-gray-400 py-6 text-center">Pick this slot&apos;s items first, then choose which sizes cost extra.</div>
+            <div className="text-xs text-gray-400 py-6 text-center">{t("specialityFeeEmpty")}</div>
           ) : (
             eligible.map((item) => {
               const variants = item.variants ?? [];
@@ -505,7 +513,7 @@ function SpecialityFeePicker({
                       <input type="checkbox" checked={itemChecked} onChange={() => toggleI(item.id)}
                         className="rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
                       <span className="flex-1 font-medium text-gray-700">
-                        {item.name}<span className="text-xs text-gray-400 font-normal"> · whole item (all sizes)</span>
+                        {item.name}<span className="text-xs text-gray-400 font-normal">{t("wholeItemAllSizesSuffix")}</span>
                       </span>
                     </label>
                     <div className="pl-6 space-y-0.5">
@@ -538,9 +546,9 @@ function SpecialityFeePicker({
         </div>
         <div className="flex gap-2 px-3 py-2 border-t bg-gray-50">
           <button onClick={() => onApply({ specialityVariantIds: vIds, specialityItemIds: iIds })}
-            className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-600 transition">Apply</button>
+            className="flex-1 bg-emerald-500 text-white text-sm font-semibold py-2 rounded-lg hover:bg-emerald-600 transition">{tCommon("apply")}</button>
           <button onClick={onCancel}
-            className="px-4 text-sm text-gray-600 rounded-lg border border-gray-200 hover:bg-gray-100 transition">Cancel</button>
+            className="px-4 text-sm text-gray-600 rounded-lg border border-gray-200 hover:bg-gray-100 transition">{tCommon("cancel")}</button>
         </div>
       </div>
     </div>
@@ -576,6 +584,7 @@ function ItemGroupRow({
    *  base price. */
   showSpecialityFee?: boolean;
 }) {
+  const t = useTranslations("admin.promoStepConfig");
   const [open, setOpen] = useState(false);
   const [feeOpen, setFeeOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -605,11 +614,11 @@ function ItemGroupRow({
     };
   }, [open]);
 
-  const roleLabel: Record<string, string> = {
-    paid: " (Paid)",
-    free: " (Free)",
-    trigger: " (Trigger)",
-    required: " (Required)",
+  const roleLabelKey: Record<string, string> = {
+    paid: "roleLabelPaid",
+    free: "roleLabelFree",
+    trigger: "roleLabelTrigger",
+    required: "roleLabelRequired",
   };
 
   return (
@@ -622,11 +631,11 @@ function ItemGroupRow({
           >
             <div className="flex-1 min-w-0">
               <div className="text-xs font-semibold text-gray-400 mb-0.5">
-                Items Group {index + 1}
-                {group.role ? roleLabel[group.role] ?? "" : ""}
+                {t("itemsGroupN", { n: index + 1 })}
+                {group.role && roleLabelKey[group.role] ? ` ${t(roleLabelKey[group.role])}` : ""}
               </div>
               <div className="text-sm text-gray-700 truncate">
-                {groupSummary(group, cats)}
+                {groupSummary(group, cats, t)}
               </div>
             </div>
             <Edit2 className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
@@ -658,7 +667,7 @@ function ItemGroupRow({
           {showSlotConfig && (
             <>
               <label className="flex items-center gap-1.5 text-xs text-gray-500">
-                <span>Pick at least</span>
+                <span>{t("slotPickAtLeast")}</span>
                 <input
                   type="number"
                   min={0}
@@ -672,7 +681,7 @@ function ItemGroupRow({
                 />
               </label>
               <label className="flex items-center gap-1.5 text-xs text-gray-500">
-                <span>up to</span>
+                <span>{t("slotUpTo")}</span>
                 <input
                   type="number"
                   min={1}
@@ -684,14 +693,14 @@ function ItemGroupRow({
                   }}
                   className="w-14 border border-gray-200 rounded px-2 py-1 text-xs text-gray-700"
                 />
-                <span>items</span>
+                <span>{t("slotItems")}</span>
               </label>
             </>
           )}
           {showSpecialityFee && (
             <div className="flex items-center gap-2 flex-wrap">
               <label className="flex items-center gap-1.5 text-xs text-gray-500">
-                <span>Speciality fee +{currencySymbol}</span>
+                <span>{t("specialityFeeInlineLabel", { currencySymbol })}</span>
                 <input
                   type="number"
                   min={0}
@@ -715,7 +724,7 @@ function ItemGroupRow({
                     onClick={() => setFeeOpen(true)}
                     className="text-xs text-emerald-600 hover:text-emerald-700 font-medium underline decoration-dotted"
                   >
-                    {nSel > 0 ? `for ${nSel} size${nSel === 1 ? "" : "s"}` : "for all sizes — pick which cost extra"}
+                    {nSel > 0 ? t("specialityFeeForSizes", { count: nSel }) : t("specialityFeeForAll")}
                   </button>
                 );
               })()}
@@ -746,7 +755,7 @@ export function GroupsEditor({
   onChange,
   cats,
   defaultRole,
-  addLabel = "Add Group",
+  addLabel,
   minGroups = 0,
   showSlotConfig = false,
   showSpecialityFee = false,
@@ -763,6 +772,7 @@ export function GroupsEditor({
   showSpecialityFee?: boolean;
   currencySymbol?: string;
 }) {
+  const tMenu = useTranslations("admin.menuEditor");
   return (
     <div>
       {groups.map((g, i) => (
@@ -785,7 +795,7 @@ export function GroupsEditor({
         onClick={() => onChange([...groups, newGroup(defaultRole)])}
         className="mt-1 flex items-center gap-1.5 text-sm text-emerald-600 hover:text-emerald-700 font-medium"
       >
-        <Plus className="w-3.5 h-3.5" /> {addLabel}
+        <Plus className="w-3.5 h-3.5" /> {addLabel ?? tMenu("addGroup")}
       </button>
     </div>
   );
@@ -803,20 +813,21 @@ export function ExtraChargeModeSelect({
   rules: PromoRules;
   onChange: (r: Partial<PromoRules>) => void;
 }) {
+  const t = useTranslations("admin.promoStepConfig");
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">Charges on the free item</label>
+      <label className="block text-sm font-medium text-gray-700 mb-1">{t("extraChargeLabel")}</label>
       <select
         value={rules.freeItemExtraChargeMode ?? "none"}
         onChange={(e) => onChange({ freeItemExtraChargeMode: e.target.value as PromoRules["freeItemExtraChargeMode"] })}
         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
       >
-        <option value="none">No extra charges (whole free item is free)</option>
-        <option value="addons">Charge extra for Choices / Add-ons (toppings still billed)</option>
-        <option value="addons_sizes">Charge extra for Choices / Add-ons &amp; Sizes (toppings + size upgrade billed)</option>
+        <option value="none">{t("extraChargeNone")}</option>
+        <option value="addons">{t("extraChargeAddons")}</option>
+        <option value="addons_sizes">{t("extraChargeAddonsSizes")}</option>
       </select>
       <p className="text-[11px] text-gray-400 mt-1">
-        Whether the freed item&rsquo;s toppings and size upgrade are still charged — matches GloriaFood.
+        {t("extraChargeHint")}
       </p>
     </div>
   );
@@ -835,21 +846,21 @@ export function DiscountStrategySection({
    *  discounts the free-group item). Luigi 2026-06-26. */
   promotionType?: string;
 }) {
+  const t = useTranslations("admin.promoStepConfig");
   const strategy = rules.discountStrategy ?? "cheapest";
   // Plain-language note so the owner knows WHICH item gets discounted — Luigi's
   // ask after "buy pizza get pasta" surprised him by discounting the pizza.
-  // NOTE: this whole section is still English-only (pre-existing) — i18n TODO.
   const note =
     promotionType === "buy_n_get_free"
-      ? "The item from the “free” group is the one discounted — regardless of price. The % above is how much off it gets (100% = free)."
+      ? t("discountStrategyNoteFreed")
       : strategy === "most_expensive"
-        ? "BOGO discounts the MORE EXPENSIVE of the two qualifying items. To always discount one specific item instead, use the “Buy N, Get Free” deal."
+        ? t("discountStrategyNoteMostExpensive")
         : strategy === "fixed_percent"
-          ? "Each discounted item gets this % off — the cheaper item when a pair qualifies. To always discount one specific item, use the “Buy N, Get Free” deal."
-          : "BOGO discounts the CHEAPER of the two qualifying items — so if the “free” item costs more, the cheaper one is discounted instead (a customer can’t get the pricier item cheap). To always discount one specific item (e.g. a pasta), use the “Buy N, Get Free” deal.";
+          ? t("discountStrategyNoteFixedPercent")
+          : t("discountStrategyNoteCheapest");
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700">Discount Strategy</label>
+      <label className="block text-sm font-medium text-gray-700">{t("discountStrategyLabel")}</label>
       <select
         value={strategy}
         onChange={(e) =>
@@ -859,13 +870,13 @@ export function DiscountStrategySection({
         }
         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
       >
-        <option value="cheapest">Automatically set discounts (cheapest item free)</option>
-        <option value="most_expensive">Automatically set discounts (most expensive item free)</option>
-        <option value="fixed_percent">Fixed discount percentage</option>
+        <option value="cheapest">{t("strategyCheapest")}</option>
+        <option value="most_expensive">{t("strategyMostExpensive")}</option>
+        <option value="fixed_percent">{t("strategyFixedPercent")}</option>
       </select>
       {strategy === "cheapest" && (
         <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-500 flex-1">% off cheapest item</span>
+          <span className="text-xs text-gray-500 flex-1">{t("pctOffCheapest")}</span>
           <input
             type="number"
             min="0"
@@ -882,7 +893,7 @@ export function DiscountStrategySection({
       )}
       {strategy === "most_expensive" && (
         <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-500 flex-1">% off most expensive item</span>
+          <span className="text-xs text-gray-500 flex-1">{t("pctOffMostExpensive")}</span>
           <input
             type="number"
             min="0"
@@ -899,7 +910,7 @@ export function DiscountStrategySection({
       )}
       {strategy === "fixed_percent" && (
         <div className="flex items-center gap-3">
-          <span className="text-xs text-gray-500 flex-1">Discount %</span>
+          <span className="text-xs text-gray-500 flex-1">{t("discountPctLabel")}</span>
           <input
             type="number"
             min="0"

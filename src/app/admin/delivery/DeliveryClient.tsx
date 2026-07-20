@@ -193,7 +193,7 @@ export function DeliveryClient({
       .filter(Boolean)
       .join(", ");
     if (!addr) {
-      toast.error("No address set. Please complete your Restaurant Profile first.");
+      toast.error(t("toastNoAddress"));
       return;
     }
     setGeolocating(true);
@@ -205,7 +205,7 @@ export function DeliveryClient({
       );
       const data = await res.json();
       if (!data.length) {
-        toast.error("Could not find this address. Update your address in Restaurant Profile and try again.");
+        toast.error(t("toastAddressNotFound"));
         return;
       }
       const lat = parseFloat(data[0].lat);
@@ -219,9 +219,9 @@ export function DeliveryClient({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lat, lng }),
       });
-      toast.success("Restaurant location pinned on map!");
+      toast.success(t("toastLocationPinned"));
     } catch {
-      toast.error("Geocoding failed. Check your internet connection.");
+      toast.error(t("toastGeocodeFailed"));
     }
     setGeolocating(false);
   };
@@ -236,13 +236,13 @@ export function DeliveryClient({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ lat, lng }),
     });
-    toast.success("Restaurant location updated!");
+    toast.success(t("toastLocationUpdated"));
   };
 
   const save = async () => {
-    if (!form.name.trim()) { toast.error("Zone name is required"); return; }
+    if (!form.name.trim()) { toast.error(t("toastZoneNameRequired")); return; }
     if (!locationSet) {
-      toast.error("Set your restaurant location first (zones are concentric circles around it).");
+      toast.error(t("toastSetLocationFirst"));
       return;
     }
     setSaving(true);
@@ -259,8 +259,8 @@ export function DeliveryClient({
           estimatedMinutes: parseInt(String(form.estimatedMinutes)) || 30,
         }),
       });
-      if (!res.ok) { const d = await res.json(); throw new Error(d.error || "Failed"); }
-      toast.success(`Zone "${form.name}" added!`);
+      if (!res.ok) { const d = await res.json(); throw new Error(d.error || t("toastSaveZoneFailed")); }
+      toast.success(t("toastZoneAdded", { name: form.name }));
       setForm({ ...emptyForm, color: ZONE_COLORS[zones.length % ZONE_COLORS.length] });
       setShowAddForm(false);
       await reload();
@@ -269,7 +269,7 @@ export function DeliveryClient({
       // from "Working on: Delivery zones" to "Next: <whatever's next>"
       // the moment the first zone is saved.
       router.refresh();
-    } catch (e: any) { toast.error(e.message || "Failed to save zone"); }
+    } catch (e: any) { toast.error(e.message || t("toastSaveZoneFailed")); }
     setSaving(false);
   };
 
@@ -279,14 +279,14 @@ export function DeliveryClient({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!res.ok) { toast.error("Failed to update zone"); return; }
+    if (!res.ok) { toast.error(t("toastUpdateZoneFailed")); return; }
     await reload();
   };
 
   const deleteZone = async (id: string, name: string) => {
-    if (!confirm(`Delete delivery zone "${name}"? This cannot be undone.`)) return;
+    if (!confirm(t("confirmDeleteZone", { name }))) return;
     await fetch(`/api/restaurants/delivery/${id}`, { method: "DELETE" });
-    toast.success("Zone deleted");
+    toast.success(t("toastZoneDeleted"));
     if (expandedZone === id) setExpandedZone(null);
     await reload();
   };
@@ -308,13 +308,15 @@ export function DeliveryClient({
             <div className="m-3 bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2.5 shadow-md pointer-events-auto">
               <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-amber-800">Restaurant location not set</p>
+                <p className="text-sm font-semibold text-amber-800">{t("locationNotSetTitle")}</p>
                 <p className="text-xs text-amber-700 mt-0.5">
-                  Delivery zones need your restaurant's coordinates as their origin.{" "}
-                  <NextLink href="/admin/profile" className="underline font-medium hover:text-amber-900">
-                    Set it in Restaurant Profile
-                  </NextLink>{" "}
-                  or use the button below to geocode your current address.
+                  {t.rich("locationNotSetDesc", {
+                    link: (chunks) => (
+                      <NextLink href="/admin/profile" className="underline font-medium hover:text-amber-900">
+                        {chunks}
+                      </NextLink>
+                    ),
+                  })}
                 </p>
               </div>
             </div>
@@ -333,7 +335,7 @@ export function DeliveryClient({
               {geolocating
                 ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
                 : <MapPin className="w-3.5 h-3.5 text-emerald-500" />}
-              {geolocating ? "Locating…" : "Locate Restaurant"}
+              {geolocating ? t("locating") : t("locateRestaurant")}
             </button>
           )}
 
@@ -347,7 +349,7 @@ export function DeliveryClient({
               {geolocating
                 ? <Loader2 className="w-3 h-3 animate-spin" />
                 : <MapPin className="w-3 h-3" />}
-              Re-locate
+              {t("relocate")}
             </button>
           )}
 
@@ -629,10 +631,10 @@ export function DeliveryClient({
           <div className="border-t border-gray-100 px-4 py-3 text-xs text-gray-400 bg-gray-50">
             <div className="flex items-center gap-3 flex-wrap">
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> Active zone
+                <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" /> {t("legendActiveZone")}
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-gray-400 inline-block" /> Inactive zone
+                <span className="w-2 h-2 rounded-full bg-gray-400 inline-block" /> {t("legendInactiveZone")}
               </span>
             </div>
           </div>
@@ -655,7 +657,13 @@ function ZoneRow({
   onUpdate: (data: Partial<Zone>) => void;
 }) {
   const fmt = useCurrencyFormat();
+  const curSym = useCurrencySymbol();
   const t = useTranslations("admin.delivery");
+  const tCommon = useTranslations("common");
+  const tPromo = useTranslations("admin.promotionsList");
+  const tHeat = useTranslations("admin.reportHeatmapPage");
+  const tProfile = useTranslations("admin.profile");
+  const tKitchen = useTranslations("kitchen");
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState({
     name: zone.name,
@@ -693,16 +701,16 @@ function ZoneRow({
             {zone.name}
           </div>
           <div className="text-xs text-gray-400 flex items-center gap-3 mt-0.5">
-            <span>{fmt(zone.deliveryFee)} fee</span>
-            {zone.minimumOrder > 0 && <span>min {fmt(zone.minimumOrder)}</span>}
-            <span>{zone.radiusKm} km</span>
-            <span>~{zone.estimatedMinutes} min</span>
+            <span>{t("rowFee", { amount: fmt(zone.deliveryFee) })}</span>
+            {zone.minimumOrder > 0 && <span>{t("rowMin", { amount: fmt(zone.minimumOrder) })}</span>}
+            <span>{zone.radiusKm} {t("unitKm")}</span>
+            <span>~{zone.estimatedMinutes} {t("unitMinutes")}</span>
           </div>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
           <button
             onClick={(e) => { e.stopPropagation(); onToggle(); }}
-            title={zone.isActive ? "Deactivate" : "Activate"}
+            title={zone.isActive ? tPromo("titleDeactivate") : tPromo("titleActivate")}
             className={`p-1 rounded transition ${zone.isActive ? "text-green-500 hover:text-green-700" : "text-gray-300 hover:text-green-500"}`}
           >
             {zone.isActive ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
@@ -720,25 +728,25 @@ function ZoneRow({
             <div className="pt-3 space-y-2">
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div className="bg-white rounded-lg p-2 border border-gray-100">
-                  <div className="text-gray-400">Radius</div>
-                  <div className="font-semibold text-gray-900">{zone.radiusKm} km</div>
+                  <div className="text-gray-400">{tHeat("colRadius")}</div>
+                  <div className="font-semibold text-gray-900">{zone.radiusKm} {t("unitKm")}</div>
                 </div>
                 <div className="bg-white rounded-lg p-2 border border-gray-100">
-                  <div className="text-gray-400">Delivery Fee</div>
+                  <div className="text-gray-400">{tProfile("deliveryFee")}</div>
                   <div className="font-semibold text-gray-900">{fmt(zone.deliveryFee)}</div>
                 </div>
                 <div className="bg-white rounded-lg p-2 border border-gray-100">
-                  <div className="text-gray-400">Min. Order</div>
+                  <div className="text-gray-400">{tPromo("labelMinOrder")}</div>
                   <div className="font-semibold text-gray-900">{fmt(zone.minimumOrder)}</div>
                 </div>
                 <div className="bg-white rounded-lg p-2 border border-gray-100">
-                  <div className="text-gray-400">Std. Time</div>
-                  <div className="font-semibold text-gray-900">~{zone.estimatedMinutes} min</div>
+                  <div className="text-gray-400">{t("detailStdTime")}</div>
+                  <div className="font-semibold text-gray-900">~{zone.estimatedMinutes} {t("unitMinutes")}</div>
                 </div>
                 <div className="bg-white rounded-lg p-2 border border-gray-100 col-span-2">
-                  <div className="text-gray-400">Status</div>
+                  <div className="text-gray-400">{tCommon("status")}</div>
                   <div className={`font-semibold ${zone.isActive ? "text-green-600" : "text-gray-400"}`}>
-                    {zone.isActive ? "Active" : "Inactive"}
+                    {zone.isActive ? tCommon("active") : tCommon("inactive")}
                   </div>
                 </div>
               </div>
@@ -750,21 +758,21 @@ function ZoneRow({
                   }}
                   className="flex items-center gap-1.5 text-xs text-blue-600 hover:text-blue-700 font-medium"
                 >
-                  <Edit2 className="w-3.5 h-3.5" /> Edit
+                  <Edit2 className="w-3.5 h-3.5" /> {tCommon("edit")}
                 </button>
                 <button
                   onClick={onToggle}
                   className="flex items-center gap-1.5 text-xs text-gray-500 hover:text-gray-700 font-medium"
                 >
                   {zone.isActive
-                    ? <><EyeOff className="w-3.5 h-3.5" /> Deactivate</>
-                    : <><Eye className="w-3.5 h-3.5" /> Activate</>}
+                    ? <><EyeOff className="w-3.5 h-3.5" /> {tPromo("titleDeactivate")}</>
+                    : <><Eye className="w-3.5 h-3.5" /> {tPromo("titleActivate")}</>}
                 </button>
                 <button
                   onClick={onDelete}
                   className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-600 font-medium ml-auto"
                 >
-                  <Trash2 className="w-3.5 h-3.5" /> Delete
+                  <Trash2 className="w-3.5 h-3.5" /> {tCommon("delete")}
                 </button>
               </div>
             </div>
@@ -774,11 +782,11 @@ function ZoneRow({
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 value={draft.name}
                 onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
-                placeholder="Zone name"
+                placeholder={t("zoneName")}
               />
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-xs text-gray-500">Radius (km)</label>
+                  <label className="text-xs text-gray-500">{t("radius")}</label>
                   <input
                     type="number" min="0.5" step="0.5"
                     className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -787,7 +795,7 @@ function ZoneRow({
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500">Fee ($)</label>
+                  <label className="text-xs text-gray-500">{t("editFee", { sym: curSym })}</label>
                   <input
                     type="number" min="0" step="0.50"
                     className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -796,7 +804,7 @@ function ZoneRow({
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500">Min ($)</label>
+                  <label className="text-xs text-gray-500">{t("editMin", { sym: curSym })}</label>
                   <input
                     type="number" min="0" step="1"
                     className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -805,7 +813,7 @@ function ZoneRow({
                   />
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500">Std. Time (min)</label>
+                  <label className="text-xs text-gray-500">{t("editStdTime")}</label>
                   <input
                     type="number" min="0" step="5"
                     className="w-full border border-gray-300 rounded-lg px-2 py-1.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
@@ -824,13 +832,13 @@ function ZoneRow({
                   className="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500 text-white text-xs font-semibold py-1.5 rounded-lg hover:bg-emerald-600 transition disabled:opacity-60"
                 >
                   {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
-                  {saving ? "Saving…" : "Save"}
+                  {saving ? tKitchen("savingEllipsis") : tCommon("save")}
                 </button>
                 <button
                   onClick={() => setEditing(false)}
                   className="px-3 text-xs text-gray-500 hover:text-gray-700"
                 >
-                  Cancel
+                  {tCommon("cancel")}
                 </button>
               </div>
             </div>

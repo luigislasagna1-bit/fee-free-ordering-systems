@@ -91,7 +91,8 @@
     "menu": "メニュー",
     "loadingDots": "読み込み中…",
     "previous": "前へ",
-    "kmFromStore": "店舗から {km} km"
+    "kmFromStore": "店舗から {km} km",
+    "apply": "適用"
   },
   "auth": {
     "signIn": "サインイン",
@@ -1105,7 +1106,26 @@
       "removeSlot": "時間帯を削除",
       "closesNextDay": "翌日に閉店（例：深夜0時を過ぎて営業）",
       "holidayNeedsDate": "まず開始日を選択してください。",
-      "holidayWindowOutsideService": "{window} はその日の{service}の営業時間外です。例外的な時間はサービスの通常の営業時間内である必要があります。"
+      "holidayWindowOutsideService": "{window} はその日の{service}の営業時間外です。例外的な時間はサービスの通常の営業時間内である必要があります。",
+      "copiedDayToAll": "{day}を他のすべての曜日にコピーしました",
+      "copiedDayToClosed": "{day}を休業日にコピーしました",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "デフォルト（すべてのサービス）",
+      "tabReservation": "予約",
+      "tabAddSuffix": "+ 追加",
+      "removeOverrideAria": "{service}のオーバーライドを削除",
+      "removeOverrideTitle": "オーバーライドを削除（古い行は、タブを再度有効にして保存するまでデータベースに残ります）",
+      "hoursForServiceOnly": "{service}のみの営業時間",
+      "markClosed": "休業に設定",
+      "markOpen": "営業に設定",
+      "copyHoursTitle": "この時間を他の曜日にコピー",
+      "applyTo": "適用先…",
+      "applyToAllDays": "<strong>他のすべての曜日</strong>に適用",
+      "applyToClosedDays": "<strong>現在休業の曜日</strong>にのみ適用",
+      "dayAbbrev": "日, 月, 火, 水, 木, 金, 土"
     },
     "services": {
       "title": "レストランサービス",
@@ -1205,7 +1225,42 @@
         "colRequired": "必須",
         "saved": "配達先住所フォームを更新しました"
       },
-      "estimatedMinutesHint": "このゾーンの住所への合計配達予測時間（調理＋移動）。お客様は会計時にこの数字を目にし、「後で注文」の最も早い時間枠を決めます。配達サービスの既定の予測時間より優先されます。現実的な値は 30–60 分で、移動時間だけではありません。"
+      "estimatedMinutesHint": "このゾーンの住所への合計配達予測時間（調理＋移動）。お客様は会計時にこの数字を目にし、「後で注文」の最も早い時間枠を決めます。配達サービスの既定の予測時間より優先されます。現実的な値は 30–60 分で、移動時間だけではありません。",
+      "toastNoAddress": "住所が設定されていません。まずレストランのプロフィールを入力してください。",
+      "toastAddressNotFound": "この住所が見つかりませんでした。レストランのプロフィールで住所を更新して、もう一度お試しください。",
+      "toastLocationPinned": "レストランの位置を地図に固定しました！",
+      "toastGeocodeFailed": "ジオコーディングに失敗しました。インターネット接続を確認してください。",
+      "toastLocationUpdated": "レストランの位置を更新しました！",
+      "toastZoneNameRequired": "ゾーン名は必須です",
+      "toastSetLocationFirst": "まずレストランの位置を設定してください（ゾーンはその周りの同心円です）。",
+      "toastSaveZoneFailed": "ゾーンを保存できませんでした",
+      "toastZoneAdded": "ゾーン「{name}」を追加しました！",
+      "toastUpdateZoneFailed": "ゾーンを更新できませんでした",
+      "confirmDeleteZone": "配達ゾーン「{name}」を削除しますか？この操作は元に戻せません。",
+      "toastZoneDeleted": "ゾーンを削除しました",
+      "locationNotSetTitle": "レストランの位置が未設定です",
+      "locationNotSetDesc": "配達ゾーンには起点としてレストランの座標が必要です。<link>レストランのプロフィールで設定する</link>か、下のボタンで現在の住所をジオコーディングしてください。",
+      "locateRestaurant": "レストランを検索",
+      "locating": "検索中…",
+      "relocate": "再検索",
+      "legendActiveZone": "有効なゾーン",
+      "legendInactiveZone": "無効なゾーン",
+      "rowFee": "{amount} の手数料",
+      "rowMin": "最低 {amount}",
+      "unitKm": "km",
+      "unitMinutes": "分",
+      "detailStdTime": "標準時間",
+      "editFee": "手数料 ({sym})",
+      "editMin": "最低 ({sym})",
+      "editStdTime": "標準時間（分）",
+      "mapRestaurantTitle": "レストラン（ドラッグして調整）",
+      "mapResizeHandleTitle": "{km} km — ドラッグしてサイズ変更",
+      "mapFeeLabel": "手数料：",
+      "mapMinLabel": "最低：",
+      "mapRadiusLabel": "半径：",
+      "mapEtaLabel": "予定：",
+      "mapDragHint": "ハンドルをドラッグしてサイズ変更",
+      "mapDragHintShort": "ドラッグしてサイズ変更"
     },
     "reservations": {
       "title": "予約",
@@ -1286,7 +1341,38 @@
       "amount": "金額",
       "schedule": "スケジュール",
       "status": "ステータス",
-      "confirmDelete": "「{name}」を削除しますか？"
+      "confirmDelete": "「{name}」を削除しますか？",
+      "taxRateRangeError": "税率は0〜100の範囲で入力してください",
+      "salesTaxTitle": "売上税率",
+      "salesTaxHelp": "各注文の課税対象小計に適用されます。売上税を徴収しない場合は0に設定してください。（例：13% HSTなら13）",
+      "rateLabel": "税率 (%)",
+      "savingLabel": "保存中…",
+      "saveTaxRate": "税率を保存",
+      "currencyTitle": "通貨",
+      "currencyHelp": "顧客が見るすべての価格に加え、Stripe/PayPalの請求、レシート、レポートに反映されます。通貨を変更しても既存の価格は換算されません。USDからEUR（など）に切り替える場合は、メニュー価格を合わせて更新してください。",
+      "currencyLabel": "通貨",
+      "currencySample": "例：<strong>{value}</strong>",
+      "tipsTitle": "顧客チップ",
+      "tipsHelp": "オフにすると、顧客のカートからチップ選択が完全に非表示になり、改ざんされたクライアント値はサーバー側で0に固定されます。一部のレストラン（例：チップの習慣がない国）ではチップの表示を望みません。",
+      "tipsAriaDisable": "チップを無効にする",
+      "tipsAriaEnable": "チップを有効にする",
+      "menuSearchTitle": "顧客向けメニュー検索",
+      "menuSearchHelp": "オンにすると、顧客の注文ページに虫めがねの検索バーが表示され、入力して素早く商品を見つけられます。カテゴリボタンのみで閲覧させたい場合はオフにしてください。",
+      "menuSearchAriaHide": "顧客ページのメニュー検索を非表示にする",
+      "menuSearchAriaShow": "顧客ページのメニュー検索を表示する",
+      "itemNotesTitle": "商品ごとの特別指示",
+      "itemNotesHelp": "オンにすると、顧客は<each>各商品</each>にメモを追加できます（例：「もっとカリカリに」「これは玉ねぎ抜き」）— その商品のキッチン伝票に印刷されます。オフでも、会計時に<whole>注文全体</whole>へのメモを1件残せます。",
+      "itemNotesAriaOff": "商品ごとのメモをオフにする",
+      "itemNotesAriaOn": "商品ごとのメモをオンにする",
+      "schedulingTitle": "予約とチェックアウトフォーム",
+      "schedulingHelp": "顧客が予約できる時間帯と、チェックアウト時に必須となる連絡先項目を管理します。",
+      "slotIntervalLabel": "スロット間隔（分）",
+      "slotIntervalHelp": "顧客はこの間隔でのみ注文を予約できます（GloriaFoodと同じ）。既定は15で、厨房が遅い場合は30に変更してください。",
+      "minutesOption": "{n}分",
+      "requirePhoneLabel": "顧客の電話番号を必須にする",
+      "requirePhoneHelp": "オンにすると、チェックアウトフォームは電話番号のない注文を拒否します。受け渡しについて厨房から連絡できるよう、配達では推奨されます。",
+      "requirePhoneAriaOptional": "電話番号を任意にする",
+      "requirePhoneAriaRequired": "電話番号を必須にする"
     },
     "mapSettings": {
       "title": "マップ設定",
@@ -1502,7 +1588,19 @@
       "popularBadge": "人気",
       "addOnEnableCta": "有効化",
       "perMonth": "/月",
-      "kitchenAlertsSection": "キッチンと注文アラート"
+      "kitchenAlertsSection": "キッチンと注文アラート",
+      "currentPlanWithAddOns": "現在のプラン：FREE + アドオン{count}件",
+      "currentPlanFree": "現在のプラン：FREE",
+      "freePlanDescription": "注文ウィジェット、管理画面、メニュー、キッチンアプリ — カード不要。月100件までの注文を永久に受付。有料機能は請求ページからいつでも追加できます。",
+      "feature100Orders": "月100件の注文",
+      "featureUnlimitedMenu": "メニュー項目無制限",
+      "featureCustomerAccounts": "顧客アカウント",
+      "activeAddOnsHeading": "有効なアドオン",
+      "trialBadge": "トライアル",
+      "manageSubscriptionsHeading": "サブスクリプションの管理",
+      "upgradeWithAddOnsHeading": "有料アドオンでアップグレード",
+      "manageBillingCta": "請求の管理",
+      "browseAddOnsCta": "アドオンを見る"
     },
     "coupons": {
       "title": "クーポン",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "まだVIESで未確認です",
       "viesVerifyNow": "今すぐ確認",
       "viesUnreachable": "VIESサービスが一時的に利用できません — 数分後にもう一度お試しください。",
-      "euVatNote": "EU企業の方へ：有料サブスクリプションにはVIES登録済みのVAT番号が必要です。検証済み番号はVAT 0%（リバースチャージ）で請求されます。"
+      "euVatNote": "EU企業の方へ：有料サブスクリプションにはVIES登録済みのVAT番号が必要です。検証済み番号はVAT 0%（リバースチャージ）で請求されます。",
+      "perOrder": "/件",
+      "paygOrderCount": "{count} 件の注文"
     },
     "addOns": {
       "errorCheckout": "チェックアウトを開始できませんでした",
@@ -1757,7 +1857,19 @@
       "yesCancel": "はい、キャンセルする",
       "compFreeUntil": "{date}まで無料",
       "compExplainer": "このアドオンはその日まで無料です（自動更新はされません）。今すぐ購読すると継続できます。カードは本日保存され、請求は無料期間の終了後に始まります。",
-      "compSubscribeCta": "購読して継続する"
+      "compSubscribeCta": "購読して継続する",
+      "pageIntro": "コア製品は永久に無料です。対応するアドオンに登録すると、下記の各機能を利用できます。いつでも解約可能 — 請求期間の終了までアクセスは維持されます。",
+      "subscribedBanner": "<strong>完了！</strong>サブスクリプションを有効化しています。機能が利用できるようになるまで最大1分ほどかかることがあります。",
+      "settingsLinks": {
+        "hostedWebsite": "ウェブサイトエディターを開く",
+        "onlinePayments": "Stripe Connect を管理",
+        "driverPool": "ドライバープールを設定",
+        "multiLocation": "店舗を管理",
+        "customDomain": "ドメインを接続",
+        "advancedPromoMarketing": "プロモーションを実施",
+        "reservationDeposits": "予約を設定",
+        "brandedMobileApp": "アプリを設定"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "公開中",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "割り当て済み",
       "labelVip": "VIP",
       "badgeDeadTargets": "対象の料理がありません — 再選択してください",
-      "searchPlaceholder": "名前またはクーポンコードで検索…"
+      "searchPlaceholder": "名前またはクーポンコードで検索…",
+      "typeLabels": {
+        "percentage_off": "選択商品の割引（%）",
+        "fixed_cart": "カートの固定割引",
+        "free_delivery": "送料無料",
+        "bogo": "1つ買うと1つ無料",
+        "buy_n_get_free": "N個買うと1つ無料",
+        "free_item": "無料商品をゲット",
+        "meal_bundle": "ミールセット",
+        "meal_bundle_speciality": "スペシャリティ付きミールセット",
+        "fixed_combo": "コンボの固定割引",
+        "percentage_combo": "コンボの割引（%）",
+        "payment_reward": "支払い方法リワード",
+        "free_dish_meal": "食事の一部として無料の一品"
+      },
+      "campaignFallback": "キャンペーン"
     },
     "promoWizard": {
       "errorPickType": "続けるにはプロモーションタイプを選択してください。",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "N個購入で無料の段階割引",
       "featureFreeDish": "食事の一部として1品無料",
       "maybeLater": "後で",
-      "subscribe": "サブスクライブ"
+      "subscribe": "サブスクライブ",
+      "types": {
+        "percentage_off": {
+          "name": "カートの割引（%）",
+          "desc": "注文全体（または特定商品）から一定の％を割引します。"
+        },
+        "free_delivery": {
+          "name": "送料無料",
+          "desc": "対象注文の配送料を無料にします。"
+        },
+        "bogo": {
+          "name": "1つ買うと1つ無料",
+          "desc": "有料商品と無料（または割引）商品を組み合わせます。"
+        },
+        "fixed_cart": {
+          "name": "カートの固定割引",
+          "desc": "注文から一定額を割引します。"
+        },
+        "payment_reward": {
+          "name": "支払い方法リワード",
+          "desc": "特定の方法（例：現金）での支払いで割引します。"
+        },
+        "free_item": {
+          "name": "無料商品をゲット",
+          "desc": "Xを利用すると、厳選リストから無料商品を1つ進呈します。"
+        },
+        "meal_bundle": {
+          "name": "ミールセット",
+          "desc": "固定バンドル価格で枠を自由に組み合わせます。"
+        },
+        "buy_n_get_free": {
+          "name": "N個買うと1つ無料",
+          "desc": "N個追加すると、次の1つ（最安値または選択品）が無料になります。"
+        },
+        "free_dish_meal": {
+          "name": "食事の一部として無料の一品",
+          "desc": "メイン＋サイドを注文すると、デザート（または任意の追加品）が無料になります。"
+        },
+        "fixed_combo": {
+          "name": "コンボの固定割引",
+          "desc": "特定の商品を組み合わせ、一定額を割引します。"
+        },
+        "percentage_combo": {
+          "name": "コンボの割引（%）",
+          "desc": "特定の商品を組み合わせ、一定の％を割引します。"
+        },
+        "meal_bundle_speciality": {
+          "name": "スペシャリティ付きミールセット",
+          "desc": "任意のアップセル追加料金付きミールセット（例：ロブスター +$5）。"
+        },
+        "reward_credit": {
+          "name": "Reward Dollars を付与",
+          "desc": "この注文では割引の代わりにストアクレジットで顧客に還元します。"
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "プロモーションを設定",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "チェックすると、カート内で複数回条件を満たす場合でも（繰り返し適用されうる「1つ買うともう1つ無料」など）、この特典は1注文につき1回のみ適用されます。",
       "rewardCreditLabel": "付与するリワードドル",
       "rewardCreditHint": "この注文の完了時にお客様の残高へ加算されます——カート割引はありません。リワードドルの有効化が必要です。",
-      "oncePerOrderHintPercent": "チェックすると、％割引はカート内で対象となる最も高い1品のみに適用されます（例：“メイン1品20%オフ”）。チェックを外すと対象商品すべてが割引されます。"
+      "oncePerOrderHintPercent": "チェックすると、％割引はカート内で対象となる最も高い1品のみに適用されます（例：“メイン1品20%オフ”）。チェックを外すと対象商品すべてが割引されます。",
+      "groupNoItems": "商品が選択されていません — クリックして編集",
+      "groupMoreCategories": "他{n}件",
+      "pickerHeading": "カテゴリまたは商品を選択",
+      "pickerNoCategories": "カテゴリが見つかりません",
+      "allSizesSuffix": " · 全サイズ",
+      "groupSpecificItems": "指定商品{count}件",
+      "groupSizes": "{count}サイズ",
+      "specialityFeeTitle": "これらのサイズにのみ料金を請求",
+      "specialityFeeDesc": "料金が加算されるプレミアムサイズにチェックを入れてください — 基本サイズは無料のままです。すべて未チェックにすると、選択ごとに料金が加算されます。",
+      "specialityFeeEmpty": "先にこの枠の商品を選び、次にどのサイズが追加料金かを選んでください。",
+      "wholeItemAllSizesSuffix": " · 商品全体（全サイズ）",
+      "roleLabelPaid": "（有料）",
+      "roleLabelFree": "（無料）",
+      "roleLabelTrigger": "（トリガー）",
+      "roleLabelRequired": "（必須）",
+      "itemsGroupN": "商品グループ {n}",
+      "slotPickAtLeast": "最少で選択",
+      "slotUpTo": "最大",
+      "slotItems": "点",
+      "specialityFeeInlineLabel": "スペシャリティ料金 +{currencySymbol}",
+      "specialityFeeForSizes": "{count}サイズに適用",
+      "specialityFeeForAll": "全サイズ対象 — 追加料金がかかるサイズを選択",
+      "extraChargeLabel": "無料商品の料金",
+      "extraChargeNone": "追加料金なし（無料商品全体が無料）",
+      "extraChargeAddons": "選択肢／アドオンに追加料金（トッピングは引き続き課金）",
+      "extraChargeAddonsSizes": "選択肢／アドオン＆サイズに追加料金（トッピング＋サイズアップを課金）",
+      "extraChargeHint": "無料商品のトッピングとサイズアップを引き続き課金するかどうか — GloriaFood と同じです。",
+      "discountStrategyNoteFreed": "割引されるのは「無料」グループの商品です — 価格に関係なく。上記の％が割引率です（100% = 無料）。",
+      "discountStrategyNoteMostExpensive": "BOGO は対象2商品のうち高い方を割引します。特定の1商品を常に割引したい場合は「N個買うと1個無料」を使用してください。",
+      "discountStrategyNoteFixedPercent": "割引対象の各商品はこの％の割引を受けます — ペアが条件を満たす場合は安い方。特定の1商品を常に割引したい場合は「N個買うと1個無料」を使用してください。",
+      "discountStrategyNoteCheapest": "BOGO は対象2商品のうち安い方を割引します — したがって「無料」商品の方が高い場合は、代わりに安い方が割引されます（顧客が高い商品を安く入手することはできません）。特定の1商品（例：パスタ）を常に割引したい場合は「N個買うと1個無料」を使用してください。",
+      "discountStrategyLabel": "割引戦略",
+      "strategyCheapest": "割引を自動設定（最も安い商品が無料）",
+      "strategyMostExpensive": "割引を自動設定（最も高い商品が無料）",
+      "strategyFixedPercent": "固定割引率",
+      "pctOffCheapest": "最も安い商品の割引率（%）",
+      "pctOffMostExpensive": "最も高い商品の割引率（%）"
     },
     "promoStepRestrictions": {
       "pageTitle": "制限＆表示",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "両方",
       "hiddenCodeInfo": "非表示のプロモは、お客様が会計時にこのコードを入力した場合にのみ適用されます。",
       "vipLockedTitle": "VIP限定 — 紐づけ先：{groups}",
-      "vipLockedDesc": "このプロモーションは、対象のVIPメンバーにのみチェックアウト時に自動適用されます。公開メニュー・バナー・ウェブサイトには一切表示されず、表示設定では変更できません。公開するには、先にVIPグループページで紐づけを解除してください。"
+      "vipLockedDesc": "このプロモーションは、対象のVIPメンバーにのみチェックアウト時に自動適用されます。公開メニュー・バナー・ウェブサイトには一切表示されず、表示設定では変更できません。公開するには、先にVIPグループページで紐づけを解除してください。",
+      "bundleBuildInfo": "💡 お客様はメニューの「ディールを作成」カードからこのバンドルを組み立てます。見つけやすいよう下のバナーに固定してください。（バンドルは自動適用やコードでの解除はできません。）"
     },
     "customersList": {
       "heading": "顧客",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "（ShipDay のソースを選択した状態で）設定を一度保存すると、あなた専用の Webhook リンクがここに表示されます。",
       "feeFromZonesTitle": "顧客が支払う配達料金",
       "feeFromZonesBody": "顧客が配達に支払う金額は「デリバリーエリア」ページで設定します — 自社ドライバーの場合と同じです。ShipDay は配達ごとに別途レストランに請求します。配達ごとの料金については ShipDay の担当者にお問い合わせください。",
-      "feeFromZonesLink": "デリバリーエリアを開く"
+      "feeFromZonesLink": "デリバリーエリアを開く",
+      "errorUnknown": "不明なエラー",
+      "errorNetwork": "ネットワークエラー"
     },
     "driverPoolLocked": {
       "addonBadge": "アドオン",
@@ -3191,7 +3412,8 @@
       "feature2Title": "顧客料金はあなたが設定",
       "feature2Body": "パススルー（顧客が ShipDay 全額を支払い）、定額（差額をあなたが負担）、段階制（例：$50以上で無料）。完全にコントロールできます。",
       "feature3Title": "注文ごとに切り替え",
-      "feature3Body": "自社ドライバーと ShipDay を組み合わせられます。各配達でキッチンが選択できます：社内またはプール。毎回あなたの判断で決められます。"
+      "feature3Body": "自社ドライバーと ShipDay を組み合わせられます。各配達でキッチンが選択できます：社内またはプール。毎回あなたの判断で決められます。",
+      "perMonth": "/月"
     },
     "marketplaceLocked": {
       "addonBadge": "アドオン",

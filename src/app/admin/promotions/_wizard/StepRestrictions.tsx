@@ -502,7 +502,7 @@ export function StepRestrictions({
                 those controls are hidden for bundle types (Luigi 2026-06-27). */}
             {isBundle ? (
               <p className="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 leading-snug">
-                💡 Customers build this bundle from a “Build your deal” card on your menu. Pin it to the banner below so it’s easy to find. (A bundle can’t be auto-applied or unlocked by a code.)
+                {t("bundleBuildInfo")}
               </p>
             ) : (
               <Toggle

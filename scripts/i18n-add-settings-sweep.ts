@@ -1,0 +1,227 @@
+/** i18n ×38 for the /admin/settings plan card (admin i18n sweep, Luigi 2026-07-20).
+ *  12 new keys under admin.settings. "FREE" kept literal (product tier name);
+ *  Stripe reused via admin.featureLocked.footerNote (not added here).
+ *  Run: npx tsx scripts/i18n-add-settings-sweep.ts */
+import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+const DIR = join(process.cwd(), "src", "messages");
+
+const K: Record<string, Record<string, string>> = {
+  "admin.settings.currentPlanWithAddOns": {
+    en: "Current Plan: FREE + {count, plural, one {# add-on} other {# add-ons}}",
+    fr: "Forfait actuel : FREE + {count, plural, one {# option} other {# options}}",
+    es: "Plan actual: FREE + {count, plural, one {# complemento} other {# complementos}}",
+    it: "Piano attuale: FREE + {count, plural, one {# componente aggiuntivo} other {# componenti aggiuntivi}}",
+    pt: "Plano atual: FREE + {count, plural, one {# extra} other {# extras}}",
+    "pt-BR": "Plano atual: FREE + {count, plural, one {# complemento} other {# complementos}}",
+    de: "Aktueller Tarif: FREE + {count, plural, one {# Add-on} other {# Add-ons}}",
+    nl: "Huidig abonnement: FREE + {count, plural, one {# add-on} other {# add-ons}}",
+    ro: "Plan curent: FREE + {count, plural, one {# supliment} other {# suplimente}}",
+    sv: "Nuvarande plan: FREE + {count, plural, one {# tillägg} other {# tillägg}}",
+    da: "Nuværende plan: FREE + {count, plural, one {# tilføjelse} other {# tilføjelser}}",
+    nb: "Gjeldende plan: FREE + {count, plural, one {# tillegg} other {# tillegg}}",
+    fi: "Nykyinen tilaus: FREE + {count, plural, one {# lisäosa} other {# lisäosaa}}",
+    pl: "Bieżący plan: FREE + {count, plural, one {# dodatek} few {# dodatki} many {# dodatków} other {# dodatku}}",
+    cs: "Aktuální plán: FREE + {count, plural, one {# doplněk} few {# doplňky} many {# doplňku} other {# doplňků}}",
+    sk: "Aktuálny plán: FREE + {count, plural, one {# doplnok} few {# doplnky} many {# doplnku} other {# doplnkov}}",
+    hu: "Jelenlegi csomag: FREE + {count, plural, one {# kiegészítő} other {# kiegészítő}}",
+    el: "Τρέχον πλάνο: FREE + {count, plural, one {# πρόσθετο} other {# πρόσθετα}}",
+    bg: "Текущ план: FREE + {count, plural, one {# добавка} other {# добавки}}",
+    hr: "Trenutni plan: FREE + {count, plural, one {# dodatak} few {# dodatka} other {# dodataka}}",
+    sr: "Trenutni plan: FREE + {count, plural, one {# dodatak} few {# dodatka} other {# dodataka}}",
+    sl: "Trenutni paket: FREE + {count, plural, one {# dodatek} two {# dodatka} few {# dodatki} other {# dodatkov}}",
+    et: "Praegune pakett: FREE + {count, plural, one {# lisamoodul} other {# lisamoodulit}}",
+    lv: "Pašreizējais plāns: FREE + {count, plural, zero {# papildinājumu} one {# papildinājums} other {# papildinājumi}}",
+    lt: "Dabartinis planas: FREE + {count, plural, one {# priedas} few {# priedai} many {# priedo} other {# priedų}}",
+    tr: "Mevcut plan: FREE + {count, plural, one {# eklenti} other {# eklenti}}",
+    ru: "Текущий план: FREE + {count, plural, one {# дополнение} few {# дополнения} many {# дополнений} other {# дополнения}}",
+    uk: "Поточний план: FREE + {count, plural, one {# доповнення} few {# доповнення} many {# доповнень} other {# доповнення}}",
+    ca: "Pla actual: FREE + {count, plural, one {# complement} other {# complements}}",
+    id: "Paket saat ini: FREE + {count} add-on",
+    vi: "Gói hiện tại: FREE + {count} tiện ích bổ sung",
+    th: "แพ็กเกจปัจจุบัน: FREE + ส่วนเสริม {count} รายการ",
+    zh: "当前套餐：FREE + {count} 个附加功能",
+    ja: "現在のプラン：FREE + アドオン{count}件",
+    ko: "현재 요금제: FREE + 부가기능 {count}개",
+    ar: "الخطة الحالية: FREE + {count, plural, zero {# إضافة} one {إضافة واحدة} two {إضافتان} few {# إضافات} many {# إضافة} other {# إضافة}}",
+    he: "התוכנית הנוכחית: FREE + {count, plural, one {תוסף אחד} two {# תוספים} other {# תוספים}}",
+    hi: "वर्तमान प्लान: FREE + {count, plural, one {# ऐड-ऑन} other {# ऐड-ऑन}}",
+  },
+  "admin.settings.currentPlanFree": {
+    en: "Current Plan: FREE", fr: "Forfait actuel : FREE", es: "Plan actual: FREE", it: "Piano attuale: FREE",
+    pt: "Plano atual: FREE", "pt-BR": "Plano atual: FREE", de: "Aktueller Tarif: FREE", nl: "Huidig abonnement: FREE",
+    ro: "Plan curent: FREE", sv: "Nuvarande plan: FREE", da: "Nuværende plan: FREE", nb: "Gjeldende plan: FREE",
+    fi: "Nykyinen tilaus: FREE", pl: "Bieżący plan: FREE", cs: "Aktuální plán: FREE", sk: "Aktuálny plán: FREE",
+    hu: "Jelenlegi csomag: FREE", el: "Τρέχον πλάνο: FREE", bg: "Текущ план: FREE", hr: "Trenutni plan: FREE",
+    sr: "Trenutni plan: FREE", sl: "Trenutni paket: FREE", et: "Praegune pakett: FREE", lv: "Pašreizējais plāns: FREE",
+    lt: "Dabartinis planas: FREE", tr: "Mevcut plan: FREE", ru: "Текущий план: FREE", uk: "Поточний план: FREE",
+    ca: "Pla actual: FREE", id: "Paket saat ini: FREE", vi: "Gói hiện tại: FREE", th: "แพ็กเกจปัจจุบัน: FREE",
+    zh: "当前套餐：FREE", ja: "現在のプラン：FREE", ko: "현재 요금제: FREE", ar: "الخطة الحالية: FREE",
+    he: "התוכנית הנוכחית: FREE", hi: "वर्तमान प्लान: FREE",
+  },
+  "admin.settings.freePlanDescription": {
+    en: "Ordering widget, admin, menu, kitchen app — no card required. Accept up to 100 orders/month forever. Add paid features any time from the Billing page.",
+    fr: "Widget de commande, admin, menu, application cuisine — sans carte bancaire. Acceptez jusqu'à 100 commandes/mois pour toujours. Ajoutez des fonctionnalités payantes à tout moment depuis la page Facturation.",
+    es: "Widget de pedidos, admin, menú, app de cocina — sin tarjeta. Acepta hasta 100 pedidos/mes para siempre. Añade funciones de pago cuando quieras desde la página de Facturación.",
+    it: "Widget ordini, admin, menu, app cucina — senza carta. Accetta fino a 100 ordini/mese per sempre. Aggiungi funzioni a pagamento quando vuoi dalla pagina Fatturazione.",
+    pt: "Widget de pedidos, admin, menu, app de cozinha — sem cartão. Aceite até 100 pedidos/mês para sempre. Adicione funcionalidades pagas a qualquer momento na página de Faturação.",
+    "pt-BR": "Widget de pedidos, admin, cardápio, app de cozinha — sem cartão. Aceite até 100 pedidos/mês para sempre. Adicione recursos pagos quando quiser na página de Cobrança.",
+    de: "Bestell-Widget, Admin, Menü, Küchen-App — ohne Karte. Nimm dauerhaft bis zu 100 Bestellungen/Monat an. Füge kostenpflichtige Funktionen jederzeit über die Abrechnungsseite hinzu.",
+    nl: "Bestelwidget, beheer, menu, keuken-app — geen kaart nodig. Accepteer voor altijd tot 100 bestellingen/maand. Voeg betaalde functies op elk moment toe via de Facturatiepagina.",
+    ro: "Widget de comenzi, admin, meniu, aplicație de bucătărie — fără card. Acceptă până la 100 de comenzi/lună pentru totdeauna. Adaugă funcții plătite oricând din pagina de Facturare.",
+    sv: "Beställningswidget, admin, meny, köksapp — inget kort krävs. Ta emot upp till 100 beställningar/månad för alltid. Lägg till betalfunktioner när som helst från Fakturering.",
+    da: "Bestillingswidget, admin, menu, køkken-app — intet kort krævet. Modtag op til 100 bestillinger/måned for altid. Tilføj betalte funktioner når som helst fra Fakturering.",
+    nb: "Bestillingswidget, admin, meny, kjøkkenapp — uten kort. Ta imot opptil 100 bestillinger/måned for alltid. Legg til betalte funksjoner når som helst fra Fakturering.",
+    fi: "Tilauswidget, hallinta, menu, keittiösovellus — ilman korttia. Vastaanota jopa 100 tilausta/kk ikuisesti. Lisää maksullisia ominaisuuksia milloin tahansa Laskutus-sivulta.",
+    pl: "Widget zamówień, panel, menu, aplikacja kuchenna — bez karty. Przyjmuj do 100 zamówień/miesiąc na zawsze. Dodaj płatne funkcje w każdej chwili na stronie Rozliczenia.",
+    cs: "Widget objednávek, administrace, menu, kuchyňská aplikace — bez karty. Přijímejte až 100 objednávek/měsíc navždy. Placené funkce přidejte kdykoli na stránce Fakturace.",
+    sk: "Widget objednávok, administrácia, menu, kuchynská aplikácia — bez karty. Prijímajte až 100 objednávok/mesiac navždy. Platené funkcie pridajte kedykoľvek na stránke Fakturácia.",
+    hu: "Rendelési widget, admin, étlap, konyhai app — kártya nélkül. Fogadj örökre havi 100 rendelést. Fizetős funkciókat bármikor hozzáadhatsz a Számlázás oldalon.",
+    el: "Widget παραγγελιών, διαχείριση, μενού, εφαρμογή κουζίνας — χωρίς κάρτα. Δεχτείτε έως 100 παραγγελίες/μήνα για πάντα. Προσθέστε επί πληρωμή λειτουργίες οποτεδήποτε από τη σελίδα Χρέωσης.",
+    bg: "Уиджет за поръчки, админ, меню, кухненско приложение — без карта. Приемайте до 100 поръчки/месец завинаги. Добавяйте платени функции по всяко време от страницата Плащания.",
+    hr: "Widget za narudžbe, administracija, jelovnik, kuhinjska aplikacija — bez kartice. Primajte do 100 narudžbi/mjesec zauvijek. Plaćene značajke dodajte bilo kada na stranici Naplata.",
+    sr: "Vidžet za porudžbine, administracija, meni, kuhinjska aplikacija — bez kartice. Primajte do 100 porudžbina/mesec zauvek. Plaćene funkcije dodajte bilo kada na stranici Naplata.",
+    sl: "Gradnik za naročila, skrbništvo, meni, kuhinjska aplikacija — brez kartice. Sprejemajte do 100 naročil/mesec za vedno. Plačljive funkcije dodajte kadar koli na strani Obračun.",
+    et: "Tellimiswidget, haldus, menüü, kööginäpp — kaarti pole vaja. Võta igavesti vastu kuni 100 tellimust/kuus. Lisa tasulisi funktsioone igal ajal Arvelduse lehelt.",
+    lv: "Pasūtījumu logrīks, administrācija, ēdienkarte, virtuves lietotne — bez kartes. Pieņem līdz 100 pasūtījumiem/mēnesī mūžīgi. Pievieno maksas funkcijas jebkurā laikā Norēķinu lapā.",
+    lt: "Užsakymų valdiklis, administravimas, meniu, virtuvės programėlė — be kortelės. Priimkite iki 100 užsakymų/mėn. amžinai. Mokamas funkcijas pridėkite bet kada Atsiskaitymų puslapyje.",
+    tr: "Sipariş widget'ı, yönetim, menü, mutfak uygulaması — kart gerekmez. Sonsuza kadar ayda 100 siparişe kadar kabul edin. Ücretli özellikleri istediğiniz zaman Faturalandırma sayfasından ekleyin.",
+    ru: "Виджет заказов, админка, меню, кухонное приложение — без карты. Принимайте до 100 заказов/месяц навсегда. Добавляйте платные функции в любое время на странице Оплаты.",
+    uk: "Віджет замовлень, адмінка, меню, кухонний застосунок — без картки. Приймайте до 100 замовлень/місяць назавжди. Додавайте платні функції будь-коли на сторінці Оплати.",
+    ca: "Widget de comandes, admin, menú, app de cuina — sense targeta. Accepta fins a 100 comandes/mes per sempre. Afegeix funcions de pagament quan vulguis des de la pàgina de Facturació.",
+    id: "Widget pemesanan, admin, menu, aplikasi dapur — tanpa kartu. Terima hingga 100 pesanan/bulan selamanya. Tambahkan fitur berbayar kapan saja dari halaman Penagihan.",
+    vi: "Tiện ích đặt hàng, quản trị, thực đơn, ứng dụng bếp — không cần thẻ. Nhận tối đa 100 đơn/tháng mãi mãi. Thêm tính năng trả phí bất cứ lúc nào từ trang Thanh toán.",
+    th: "วิดเจ็ตสั่งอาหาร แอดมิน เมนู แอปครัว — ไม่ต้องใช้บัตร รับได้สูงสุด 100 ออร์เดอร์/เดือนตลอดไป เพิ่มฟีเจอร์แบบชำระเงินได้ทุกเมื่อจากหน้าการเรียกเก็บเงิน",
+    zh: "点餐组件、后台、菜单、厨房应用 — 无需银行卡。永久每月最多接受 100 个订单。随时可在账单页面添加付费功能。",
+    ja: "注文ウィジェット、管理画面、メニュー、キッチンアプリ — カード不要。月100件までの注文を永久に受付。有料機能は請求ページからいつでも追加できます。",
+    ko: "주문 위젯, 관리자, 메뉴, 주방 앱 — 카드 불필요. 매월 최대 100건 주문을 영구히 접수. 유료 기능은 결제 페이지에서 언제든지 추가할 수 있습니다.",
+    ar: "أداة الطلبات، لوحة الإدارة، القائمة، تطبيق المطبخ — دون بطاقة. اقبل حتى 100 طلب/شهر إلى الأبد. أضف الميزات المدفوعة في أي وقت من صفحة الفوترة.",
+    he: "וידג'ט הזמנות, ניהול, תפריט, אפליקציית מטבח — ללא כרטיס. קבל עד 100 הזמנות/חודש לתמיד. הוסף תכונות בתשלום בכל עת מעמוד החיוב.",
+    hi: "ऑर्डरिंग विजेट, एडमिन, मेन्यू, किचन ऐप — कार्ड की जरूरत नहीं। हमेशा के लिए हर महीने 100 ऑर्डर तक स्वीकारें। बिलिंग पेज से कभी भी सशुल्क सुविधाएं जोड़ें।",
+  },
+  "admin.settings.feature100Orders": {
+    en: "100 orders/month", fr: "100 commandes/mois", es: "100 pedidos/mes", it: "100 ordini/mese",
+    pt: "100 pedidos/mês", "pt-BR": "100 pedidos/mês", de: "100 Bestellungen/Monat", nl: "100 bestellingen/maand",
+    ro: "100 de comenzi/lună", sv: "100 beställningar/månad", da: "100 bestillinger/måned", nb: "100 bestillinger/måned",
+    fi: "100 tilausta/kk", pl: "100 zamówień/miesiąc", cs: "100 objednávek/měsíc", sk: "100 objednávok/mesiac",
+    hu: "100 rendelés/hónap", el: "100 παραγγελίες/μήνα", bg: "100 поръчки/месец", hr: "100 narudžbi/mjesec",
+    sr: "100 porudžbina/mesec", sl: "100 naročil/mesec", et: "100 tellimust/kuus", lv: "100 pasūtījumi/mēnesī",
+    lt: "100 užsakymų/mėn.", tr: "Ayda 100 sipariş", ru: "100 заказов/месяц", uk: "100 замовлень/місяць",
+    ca: "100 comandes/mes", id: "100 pesanan/bulan", vi: "100 đơn/tháng", th: "100 ออร์เดอร์/เดือน",
+    zh: "每月 100 个订单", ja: "月100件の注文", ko: "월 100건 주문", ar: "100 طلب/شهر",
+    he: "100 הזמנות/חודש", hi: "100 ऑर्डर/माह",
+  },
+  "admin.settings.featureUnlimitedMenu": {
+    en: "Unlimited menu items", fr: "Articles de menu illimités", es: "Artículos de menú ilimitados", it: "Voci di menu illimitate",
+    pt: "Itens de menu ilimitados", "pt-BR": "Itens de cardápio ilimitados", de: "Unbegrenzte Menüartikel", nl: "Onbeperkte menu-items",
+    ro: "Articole de meniu nelimitate", sv: "Obegränsade menyalternativ", da: "Ubegrænsede menupunkter", nb: "Ubegrensede menyelementer",
+    fi: "Rajattomasti menukohteita", pl: "Nieograniczone pozycje menu", cs: "Neomezené položky menu", sk: "Neobmedzené položky menu",
+    hu: "Korlátlan étlaptétel", el: "Απεριόριστα είδη μενού", bg: "Неограничени артикули в менюто", hr: "Neograničene stavke jelovnika",
+    sr: "Neograničene stavke menija", sl: "Neomejeni artikli menija", et: "Piiramatud menüüelemendid", lv: "Neierobežoti ēdienkartes ieraksti",
+    lt: "Neriboti meniu elementai", tr: "Sınırsız menü öğesi", ru: "Неограниченные позиции меню", uk: "Необмежені позиції меню",
+    ca: "Articles de menú il·limitats", id: "Item menu tanpa batas", vi: "Món trong thực đơn không giới hạn", th: "รายการเมนูไม่จำกัด",
+    zh: "无限菜单项", ja: "メニュー項目無制限", ko: "무제한 메뉴 항목", ar: "عناصر قائمة غير محدودة",
+    he: "פריטי תפריט ללא הגבלה", hi: "असीमित मेन्यू आइटम",
+  },
+  "admin.settings.featureCustomerAccounts": {
+    en: "Customer accounts", fr: "Comptes clients", es: "Cuentas de clientes", it: "Account clienti",
+    pt: "Contas de clientes", "pt-BR": "Contas de clientes", de: "Kundenkonten", nl: "Klantaccounts",
+    ro: "Conturi de clienți", sv: "Kundkonton", da: "Kundekonti", nb: "Kundekontoer",
+    fi: "Asiakastilit", pl: "Konta klientów", cs: "Zákaznické účty", sk: "Zákaznícke účty",
+    hu: "Ügyfélfiókok", el: "Λογαριασμοί πελατών", bg: "Клиентски акаунти", hr: "Korisnički računi",
+    sr: "Korisnički nalozi", sl: "Računi strank", et: "Kliendikontod", lv: "Klientu konti",
+    lt: "Klientų paskyros", tr: "Müşteri hesapları", ru: "Аккаунты клиентов", uk: "Облікові записи клієнтів",
+    ca: "Comptes de clients", id: "Akun pelanggan", vi: "Tài khoản khách hàng", th: "บัญชีลูกค้า",
+    zh: "客户账户", ja: "顧客アカウント", ko: "고객 계정", ar: "حسابات العملاء",
+    he: "חשבונות לקוחות", hi: "ग्राहक खाते",
+  },
+  "admin.settings.activeAddOnsHeading": {
+    en: "Active add-ons", fr: "Options actives", es: "Complementos activos", it: "Componenti aggiuntivi attivi",
+    pt: "Extras ativos", "pt-BR": "Complementos ativos", de: "Aktive Add-ons", nl: "Actieve add-ons",
+    ro: "Suplimente active", sv: "Aktiva tillägg", da: "Aktive tilføjelser", nb: "Aktive tillegg",
+    fi: "Aktiiviset lisäosat", pl: "Aktywne dodatki", cs: "Aktivní doplňky", sk: "Aktívne doplnky",
+    hu: "Aktív kiegészítők", el: "Ενεργά πρόσθετα", bg: "Активни добавки", hr: "Aktivni dodaci",
+    sr: "Aktivni dodaci", sl: "Aktivni dodatki", et: "Aktiivsed lisamoodulid", lv: "Aktīvie papildinājumi",
+    lt: "Aktyvūs priedai", tr: "Etkin eklentiler", ru: "Активные дополнения", uk: "Активні доповнення",
+    ca: "Complements actius", id: "Add-on aktif", vi: "Tiện ích đang bật", th: "ส่วนเสริมที่ใช้งานอยู่",
+    zh: "已启用的附加功能", ja: "有効なアドオン", ko: "활성 부가기능", ar: "الإضافات النشطة",
+    he: "תוספים פעילים", hi: "सक्रिय ऐड-ऑन",
+  },
+  "admin.settings.trialBadge": {
+    en: "Trial", fr: "Essai", es: "Prueba", it: "Prova", pt: "Teste", "pt-BR": "Teste", de: "Test", nl: "Proef",
+    ro: "Probă", sv: "Prov", da: "Prøve", nb: "Prøve", fi: "Kokeilu", pl: "Wersja próbna", cs: "Zkušební", sk: "Skúšobné",
+    hu: "Próba", el: "Δοκιμή", bg: "Пробен", hr: "Probno", sr: "Probno", sl: "Preizkus", et: "Prooviperiood", lv: "Izmēģinājums",
+    lt: "Bandomasis", tr: "Deneme", ru: "Пробный", uk: "Пробний", ca: "Prova", id: "Uji coba", vi: "Dùng thử", th: "ทดลอง",
+    zh: "试用", ja: "トライアル", ko: "체험", ar: "تجريبي", he: "ניסיון", hi: "ट्रायल",
+  },
+  "admin.settings.manageSubscriptionsHeading": {
+    en: "Manage your subscriptions", fr: "Gérer vos abonnements", es: "Gestiona tus suscripciones", it: "Gestisci i tuoi abbonamenti",
+    pt: "Faça a gestão das suas subscrições", "pt-BR": "Gerencie suas assinaturas", de: "Abonnements verwalten", nl: "Beheer je abonnementen",
+    ro: "Gestionează-ți abonamentele", sv: "Hantera dina prenumerationer", da: "Administrer dine abonnementer", nb: "Administrer abonnementene dine",
+    fi: "Hallitse tilauksiasi", pl: "Zarządzaj subskrypcjami", cs: "Spravovat předplatná", sk: "Spravovať predplatné",
+    hu: "Előfizetések kezelése", el: "Διαχείριση συνδρομών", bg: "Управление на абонаментите", hr: "Upravljanje pretplatama",
+    sr: "Upravljanje pretplatama", sl: "Upravljanje naročnin", et: "Halda oma tellimusi", lv: "Pārvaldīt abonementus",
+    lt: "Tvarkyti prenumeratas", tr: "Aboneliklerinizi yönetin", ru: "Управление подписками", uk: "Керування підписками",
+    ca: "Gestiona les teves subscripcions", id: "Kelola langganan Anda", vi: "Quản lý gói đăng ký của bạn", th: "จัดการการสมัครสมาชิกของคุณ",
+    zh: "管理您的订阅", ja: "サブスクリプションの管理", ko: "구독 관리", ar: "إدارة اشتراكاتك",
+    he: "ניהול המנויים שלך", hi: "अपनी सदस्यताएं प्रबंधित करें",
+  },
+  "admin.settings.upgradeWithAddOnsHeading": {
+    en: "Upgrade with paid add-ons", fr: "Améliorez avec des options payantes", es: "Mejora con complementos de pago", it: "Passa a componenti aggiuntivi a pagamento",
+    pt: "Atualize com extras pagos", "pt-BR": "Faça upgrade com complementos pagos", de: "Mit kostenpflichtigen Add-ons upgraden", nl: "Upgrade met betaalde add-ons",
+    ro: "Fă upgrade cu suplimente plătite", sv: "Uppgradera med betalda tillägg", da: "Opgrader med betalte tilføjelser", nb: "Oppgrader med betalte tillegg",
+    fi: "Päivitä maksullisilla lisäosilla", pl: "Ulepsz płatnymi dodatkami", cs: "Vylepšit s placenými doplňky", sk: "Vylepšiť platenými doplnkami",
+    hu: "Bővíts fizetős kiegészítőkkel", el: "Αναβαθμίστε με επί πληρωμή πρόσθετα", bg: "Надградете с платени добавки", hr: "Nadogradite s plaćenim dodacima",
+    sr: "Nadogradite s plaćenim dodacima", sl: "Nadgradite s plačljivimi dodatki", et: "Uuenda tasuliste lisamoodulitega", lv: "Jaunini ar maksas papildinājumiem",
+    lt: "Atnaujinkite mokamais priedais", tr: "Ücretli eklentilerle yükseltin", ru: "Улучшить с платными дополнениями", uk: "Покращити платними доповненнями",
+    ca: "Millora amb complements de pagament", id: "Tingkatkan dengan add-on berbayar", vi: "Nâng cấp với tiện ích trả phí", th: "อัปเกรดด้วยส่วนเสริมแบบชำระเงิน",
+    zh: "使用付费附加功能升级", ja: "有料アドオンでアップグレード", ko: "유료 부가기능으로 업그레이드", ar: "الترقية بإضافات مدفوعة",
+    he: "שדרוג עם תוספים בתשלום", hi: "सशुल्क ऐड-ऑन के साथ अपग्रेड करें",
+  },
+  "admin.settings.manageBillingCta": {
+    en: "Manage Billing", fr: "Gérer la facturation", es: "Gestionar facturación", it: "Gestisci fatturazione",
+    pt: "Gerir faturação", "pt-BR": "Gerenciar cobrança", de: "Abrechnung verwalten", nl: "Facturatie beheren",
+    ro: "Gestionează facturarea", sv: "Hantera fakturering", da: "Administrer fakturering", nb: "Administrer fakturering",
+    fi: "Hallitse laskutusta", pl: "Zarządzaj rozliczeniami", cs: "Spravovat fakturaci", sk: "Spravovať fakturáciu",
+    hu: "Számlázás kezelése", el: "Διαχείριση χρέωσης", bg: "Управление на плащанията", hr: "Upravljaj naplatom",
+    sr: "Upravljaj naplatom", sl: "Upravljaj obračun", et: "Halda arveldust", lv: "Pārvaldīt norēķinus",
+    lt: "Tvarkyti atsiskaitymus", tr: "Faturalandırmayı yönet", ru: "Управление оплатой", uk: "Керувати оплатою",
+    ca: "Gestiona la facturació", id: "Kelola penagihan", vi: "Quản lý thanh toán", th: "จัดการการเรียกเก็บเงิน",
+    zh: "管理账单", ja: "請求の管理", ko: "결제 관리", ar: "إدارة الفوترة",
+    he: "ניהול חיוב", hi: "बिलिंग प्रबंधित करें",
+  },
+  "admin.settings.browseAddOnsCta": {
+    en: "Browse Add-ons", fr: "Parcourir les options", es: "Explorar complementos", it: "Sfoglia i componenti aggiuntivi",
+    pt: "Explorar extras", "pt-BR": "Ver complementos", de: "Add-ons durchsuchen", nl: "Add-ons bekijken",
+    ro: "Răsfoiește suplimentele", sv: "Bläddra bland tillägg", da: "Gennemse tilføjelser", nb: "Bla i tillegg",
+    fi: "Selaa lisäosia", pl: "Przeglądaj dodatki", cs: "Procházet doplňky", sk: "Prehľadávať doplnky",
+    hu: "Kiegészítők böngészése", el: "Περιήγηση προσθέτων", bg: "Разгледай добавките", hr: "Pregledaj dodatke",
+    sr: "Pregledaj dodatke", sl: "Prebrskaj dodatke", et: "Sirvi lisamooduleid", lv: "Pārlūkot papildinājumus",
+    lt: "Naršyti priedus", tr: "Eklentilere göz at", ru: "Просмотреть дополнения", uk: "Переглянути доповнення",
+    ca: "Explora els complements", id: "Jelajahi add-on", vi: "Duyệt tiện ích", th: "เรียกดูส่วนเสริม",
+    zh: "浏览附加功能", ja: "アドオンを見る", ko: "부가기능 둘러보기", ar: "تصفح الإضافات",
+    he: "עיון בתוספים", hi: "ऐड-ऑन ब्राउज़ करें",
+  },
+};
+
+function setDeep(obj: Record<string, unknown>, key: string, value: string) {
+  const parts = key.split(".");
+  let cur: Record<string, unknown> = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const p = parts[i];
+    if (typeof cur[p] !== "object" || cur[p] === null || Array.isArray(cur[p])) cur[p] = {};
+    cur = cur[p] as Record<string, unknown>;
+  }
+  cur[parts[parts.length - 1]] = value;
+}
+
+let n = 0;
+for (const f of readdirSync(DIR).filter((x) => x.endsWith(".json"))) {
+  const loc = f.replace(".json", "");
+  const path = join(DIR, f);
+  const data = JSON.parse(readFileSync(path, "utf8")) as Record<string, unknown>;
+  for (const [key, byLoc] of Object.entries(K)) setDeep(data, key, byLoc[loc] ?? byLoc.en);
+  writeFileSync(path, JSON.stringify(data, null, 2) + "\n", "utf8");
+  n++;
+}
+console.log(`✓ settings sweep strings added to ${n} locale(s).`);

@@ -15,16 +15,20 @@ import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, Sparkles, Arro
  * no admin-side settings (e.g. a passive "unlock this feature" add-on),
  * leave it out.
  */
-const ADDON_SETTINGS_PATH: Record<string, { href: string; label: string }> = {
-  hosted_website:           { href: "/admin/website/editor",      label: "Open website editor" },
-  online_payments:          { href: "/admin/payments/providers",  label: "Manage Stripe Connect" },
-  marketplace:              { href: "/admin/marketplace",         label: "Manage marketplace listing" },
-  driver_pool:              { href: "/admin/delivery/pool",       label: "Configure driver pool" },
-  multi_location:           { href: "/admin/locations",           label: "Manage locations" },
-  custom_domain:            { href: "/admin/website/domain",      label: "Connect your domain" },
-  advanced_promo_marketing: { href: "/admin/promotions",          label: "Run promotions" },
-  reservation_deposits:     { href: "/admin/reservations",        label: "Configure reservations" },
-  branded_mobile_app:       { href: "/admin/publishing",          label: "Configure app" },
+// `labelKey` is a FULL (root-relative) i18n key resolved at render time via
+// the root useTranslations() hook — these constants live outside the
+// component so they can't call t() inline. `marketplace` deliberately reuses
+// the existing admin.billing.manageMarketplaceListing key (no duplicate).
+const ADDON_SETTINGS_PATH: Record<string, { href: string; labelKey: string }> = {
+  hosted_website:           { href: "/admin/website/editor",      labelKey: "admin.addOns.settingsLinks.hostedWebsite" },
+  online_payments:          { href: "/admin/payments/providers",  labelKey: "admin.addOns.settingsLinks.onlinePayments" },
+  marketplace:              { href: "/admin/marketplace",         labelKey: "admin.billing.manageMarketplaceListing" },
+  driver_pool:              { href: "/admin/delivery/pool",       labelKey: "admin.addOns.settingsLinks.driverPool" },
+  multi_location:           { href: "/admin/locations",           labelKey: "admin.addOns.settingsLinks.multiLocation" },
+  custom_domain:            { href: "/admin/website/domain",      labelKey: "admin.addOns.settingsLinks.customDomain" },
+  advanced_promo_marketing: { href: "/admin/promotions",          labelKey: "admin.addOns.settingsLinks.advancedPromoMarketing" },
+  reservation_deposits:     { href: "/admin/reservations",        labelKey: "admin.addOns.settingsLinks.reservationDeposits" },
+  branded_mobile_app:       { href: "/admin/publishing",          labelKey: "admin.addOns.settingsLinks.brandedMobileApp" },
 };
 
 type AddOnView = {
@@ -70,6 +74,9 @@ export function AddOnsClient({
 }) {
   const router = useRouter();
   const t = useTranslations("admin.addOns");
+  // Root hook to resolve the full-path labelKey values in ADDON_SETTINGS_PATH
+  // (some point into admin.billing, so a namespaced hook can't reach them).
+  const tRoot = useTranslations();
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Slug currently in the cancel-confirmation modal. Replaces the old
@@ -399,7 +406,7 @@ export function AddOnsClient({
                         className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold bg-gray-900 text-white hover:bg-gray-800 transition"
                       >
                         <Settings className="w-3.5 h-3.5" />
-                        {ADDON_SETTINGS_PATH[a.slug].label}
+                        {tRoot(ADDON_SETTINGS_PATH[a.slug].labelKey as any)}
                         <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
                     )}
@@ -411,7 +418,7 @@ export function AddOnsClient({
                     {a.slug === "marketplace" && (
                       <div className="rounded-lg bg-emerald-50 border border-emerald-100 px-3 py-2 flex items-center justify-between gap-2 flex-wrap">
                         <div className="text-xs text-emerald-900">
-                          <strong>{t("currentlyOnMonthlyPlan")}</strong> · $199.99/mo · {t("unlimitedOrders")}
+                          <strong>{t("currentlyOnMonthlyPlan")}</strong> · $199.99{tRoot("admin.settings.perMonth")} · {t("unlimitedOrders")}
                         </div>
                         <Link
                           href="/admin/marketplace/payg-opt-in"

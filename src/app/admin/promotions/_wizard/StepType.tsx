@@ -113,14 +113,14 @@ export function StepType({
                       gated ? "text-gray-500" : "text-gray-900"
                     }`}
                   >
-                    {promo.name}
+                    {t(`types.${promo.slug}.name`)}
                   </div>
                   <div
                     className={`text-xs mt-0.5 ${
                       gated ? "text-gray-400" : "text-gray-500"
                     }`}
                   >
-                    {promo.description}
+                    {t(`types.${promo.slug}.desc`)}
                   </div>
                   {gated && (
                     <div className="text-[11px] text-amber-700 mt-1.5 font-medium">

@@ -33,6 +33,7 @@ function TimeTextInput({
   format: "12h" | "24h";
   onChange: (next: string) => void;
 }) {
+  const t = useTranslations("admin.hours");
   // Local draft so the user can type freely without us re-normalizing
   // their keystroke. Normalized on blur via parseToHHMM.
   const [draft, setDraft] = useState<string>(() => display(value, format));
@@ -58,7 +59,7 @@ function TimeTextInput({
       type="text"
       inputMode="numeric"
       value={draft}
-      placeholder={format === "24h" ? "HH:MM" : "9:00 AM"}
+      placeholder={format === "24h" ? t("timePlaceholder24h") : t("timePlaceholder12h")}
       onChange={(e) => setDraft(e.target.value)}
       onBlur={commit}
       onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }}
@@ -341,8 +342,8 @@ export function HoursClient({
     setBulkMenuOpen(null);
     toast.success(
       scope === "all"
-        ? `Copied ${dayLabel(sourceDay)} to all other days`
-        : `Copied ${dayLabel(sourceDay)} to closed days`,
+        ? tHours("copiedDayToAll", { day: dayLabel(sourceDay) })
+        : tHours("copiedDayToClosed", { day: dayLabel(sourceDay) }),
     );
   }
 
@@ -350,7 +351,18 @@ export function HoursClient({
     try {
       return tInfo(`days.${dow}` as never);
     } catch {
-      return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dow];
+      return tHours("dayAbbrev").split(",").map((s) => s.trim())[dow] ?? "";
+    }
+  }
+
+  // Localised tab label for a service key. Reuses the singular service
+  // labels; interpolated into headings / aria strings so they localise too.
+  function serviceTabLabel(key: ServiceKey): string {
+    switch (key) {
+      case "pickup": return tHours("svcPickup");
+      case "delivery": return tHours("svcDelivery");
+      case "reservation": return tHours("tabReservation");
+      default: return tHours("tabDefault");
     }
   }
 
@@ -528,7 +540,7 @@ export function HoursClient({
       if (!res.ok) throw new Error("Failed");
       setHolidays((prev) => prev.filter((h) => h.id !== id));
     } catch {
-      toast.error("Failed to delete");
+      toast.error(tToasts("deleteFailed"));
     }
   }
 
@@ -555,7 +567,7 @@ export function HoursClient({
                   : "px-3 py-1.5 text-gray-700 hover:bg-gray-50"
               }
             >
-              12h (1:00 PM)
+              {tHours("format12h")}
             </button>
             <button
               type="button"
@@ -566,7 +578,7 @@ export function HoursClient({
                   : "px-3 py-1.5 text-gray-700 hover:bg-gray-50"
               }
             >
-              24h (13:00)
+              {tHours("format24h")}
             </button>
           </div>
           <button
@@ -590,10 +602,10 @@ export function HoursClient({
           const enabled = enabledTabs.has(key);
           const isActive = activeTab === key;
           const labels: Record<ServiceKey, string> = {
-            default: "Default (all services)",
-            pickup: "Pickup",
-            delivery: "Delivery",
-            reservation: "Reservation",
+            default: tHours("tabDefault"),
+            pickup: tHours("svcPickup"),
+            delivery: tHours("svcDelivery"),
+            reservation: tHours("tabReservation"),
           };
           return (
             <div key={key} className="flex items-center">
@@ -612,7 +624,7 @@ export function HoursClient({
                 }`}
               >
                 {labels[key]}
-                {!enabled && <span className="ml-1.5 opacity-70">+ Add</span>}
+                {!enabled && <span className="ml-1.5 opacity-70">{tHours("tabAddSuffix")}</span>}
               </button>
               {/* Allow removing an override tab (but not default). */}
               {enabled && key !== "default" && (
@@ -626,9 +638,9 @@ export function HoursClient({
                     });
                     if (activeTab === key) setActiveTab("default");
                   }}
-                  aria-label={`Remove ${labels[key]} override`}
+                  aria-label={tHours("removeOverrideAria", { service: labels[key] })}
                   className="ml-1 text-gray-400 hover:text-gray-700 text-xs"
-                  title="Remove override (stale rows stay in the DB until you Save with the tab re-enabled)"
+                  title={tHours("removeOverrideTitle")}
                 >
                   ×
                 </button>
@@ -644,7 +656,7 @@ export function HoursClient({
           <Clock className="w-4 h-4" />
           {activeTab === "default"
             ? tInfo("openingHours")
-            : `Hours for ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} only`}
+            : tHours("hoursForServiceOnly", { service: serviceTabLabel(activeTab) })}
         </div>
         {hours.map((h) => (
           <div
@@ -655,7 +667,7 @@ export function HoursClient({
               <div className="w-20 sm:w-28 font-medium text-gray-900">{dayLabel(h.dayOfWeek)}</div>
               <button
                 onClick={() => update(h.dayOfWeek, "isOpen", !h.isOpen)}
-                aria-label={h.isOpen ? "Mark closed" : "Mark open"}
+                aria-label={h.isOpen ? tHours("markClosed") : tHours("markOpen")}
                 className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
                   h.isOpen ? "bg-emerald-500" : "bg-gray-300"
                 }`}
@@ -712,9 +724,9 @@ export function HoursClient({
                   type="button"
                   onClick={() => setBulkMenuOpen(bulkMenuOpen === h.dayOfWeek ? null : h.dayOfWeek)}
                   className="text-gray-500 hover:text-emerald-700 text-xs font-medium inline-flex items-center gap-1 px-2 py-1 rounded hover:bg-emerald-50 transition"
-                  title="Copy these hours to other days"
+                  title={tHours("copyHoursTitle")}
                 >
-                  <Copy className="w-3.5 h-3.5" /> Apply to…
+                  <Copy className="w-3.5 h-3.5" /> {tHours("applyTo")}
                 </button>
                 {bulkMenuOpen === h.dayOfWeek && (
                   <div className="absolute top-full right-0 mt-1 z-10 bg-white border border-gray-200 rounded-lg shadow-lg min-w-[200px] overflow-hidden">
@@ -723,14 +735,14 @@ export function HoursClient({
                       onClick={() => copyFromDay(h.dayOfWeek, "all")}
                       className="block w-full text-left px-3 py-2 text-xs hover:bg-emerald-50 text-gray-800"
                     >
-                      Apply to <strong>all other days</strong>
+                      {tHours.rich("applyToAllDays", { strong: (c) => <strong>{c}</strong> })}
                     </button>
                     <button
                       type="button"
                       onClick={() => copyFromDay(h.dayOfWeek, "closed_only")}
                       className="block w-full text-left px-3 py-2 text-xs hover:bg-emerald-50 text-gray-800 border-t border-gray-100"
                     >
-                      Apply only to <strong>currently-closed days</strong>
+                      {tHours.rich("applyToClosedDays", { strong: (c) => <strong>{c}</strong> })}
                     </button>
                   </div>
                 )}

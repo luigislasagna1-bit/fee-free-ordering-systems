@@ -91,7 +91,8 @@
     "menu": "Étlap",
     "loadingDots": "Betöltés…",
     "previous": "Előző",
-    "kmFromStore": "{km} km-re az üzlettől"
+    "kmFromStore": "{km} km-re az üzlettől",
+    "apply": "Alkalmaz"
   },
   "auth": {
     "signIn": "Bejelentkezés",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Idősáv eltávolítása",
       "closesNextDay": "Másnap zár (pl. éjfél után is nyitva)",
       "holidayNeedsDate": "Először válasszon kezdő dátumot.",
-      "holidayWindowOutsideService": "{window} kívül esik a(z) {service} aznapi nyitvatartásán. A rendkívüli időpontoknak a szolgáltatás szokásos nyitvatartásán belül kell lenniük."
+      "holidayWindowOutsideService": "{window} kívül esik a(z) {service} aznapi nyitvatartásán. A rendkívüli időpontoknak a szolgáltatás szokásos nyitvatartásán belül kell lenniük.",
+      "copiedDayToAll": "{day} átmásolva az összes többi napra",
+      "copiedDayToClosed": "{day} átmásolva a zárva tartó napokra",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Alapértelmezett (minden szolgáltatás)",
+      "tabReservation": "Foglalás",
+      "tabAddSuffix": "+ Hozzáadás",
+      "removeOverrideAria": "{service} felülbírálás eltávolítása",
+      "removeOverrideTitle": "Felülbírálás eltávolítása (az elavult sorok az adatbázisban maradnak, amíg újra engedélyezett füllel nem mentesz)",
+      "hoursForServiceOnly": "Nyitvatartás csak ehhez: {service}",
+      "markClosed": "Megjelölés zárvaként",
+      "markOpen": "Megjelölés nyitvaként",
+      "copyHoursTitle": "Ezen időpontok másolása más napokra",
+      "applyTo": "Alkalmazás erre…",
+      "applyToAllDays": "Alkalmazás <strong>az összes többi napra</strong>",
+      "applyToClosedDays": "Alkalmazás csak <strong>a jelenleg zárva tartó napokra</strong>",
+      "dayAbbrev": "V, H, K, Sze, Cs, P, Szo"
     },
     "services": {
       "title": "Éttermi szolgáltatások",
@@ -1205,7 +1225,42 @@
         "colRequired": "Kötelező",
         "saved": "Szállítási cím űrlap frissítve"
       },
-      "estimatedMinutesHint": "TELJES becsült kiszállítási idő (elkészítés + út) a zóna címeire. A vásárlók ezt látják a pénztárnál, és ez adja a legkorábbi \"későbbre rendelés\" idősávot — felülírja a kiszállítási szolgáltatás alapértelmezett becslését. Reális érték 30–60 perc, nem csak az út."
+      "estimatedMinutesHint": "TELJES becsült kiszállítási idő (elkészítés + út) a zóna címeire. A vásárlók ezt látják a pénztárnál, és ez adja a legkorábbi \"későbbre rendelés\" idősávot — felülírja a kiszállítási szolgáltatás alapértelmezett becslését. Reális érték 30–60 perc, nem csak az út.",
+      "toastNoAddress": "Nincs beállítva cím. Előbb töltsd ki az étterem profilját.",
+      "toastAddressNotFound": "Ez a cím nem található. Frissítsd a címet az étterem profiljában, és próbáld újra.",
+      "toastLocationPinned": "Az étterem helye rögzítve a térképen!",
+      "toastGeocodeFailed": "A geokódolás sikertelen. Ellenőrizd az internetkapcsolatot.",
+      "toastLocationUpdated": "Az étterem helye frissítve!",
+      "toastZoneNameRequired": "A zóna neve kötelező",
+      "toastSetLocationFirst": "Előbb add meg az étterem helyét (a zónák körülötte lévő koncentrikus körök).",
+      "toastSaveZoneFailed": "Nem sikerült menteni a zónát",
+      "toastZoneAdded": "A(z) „{name}” zóna hozzáadva!",
+      "toastUpdateZoneFailed": "Nem sikerült frissíteni a zónát",
+      "confirmDeleteZone": "Törlöd a(z) „{name}” kiszállítási zónát? Ez nem vonható vissza.",
+      "toastZoneDeleted": "Zóna törölve",
+      "locationNotSetTitle": "Az étterem helye nincs beállítva",
+      "locationNotSetDesc": "A kiszállítási zónáknak az étterem koordinátái kellenek kiindulópontként. <link>Állítsd be az étterem profiljában</link>, vagy használd az alábbi gombot a jelenlegi cím geokódolásához.",
+      "locateRestaurant": "Étterem megkeresése",
+      "locating": "Keresés…",
+      "relocate": "Újrakeresés",
+      "legendActiveZone": "Aktív zóna",
+      "legendInactiveZone": "Inaktív zóna",
+      "rowFee": "{amount} díj",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "perc",
+      "detailStdTime": "Std. idő",
+      "editFee": "Díj ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. idő (perc)",
+      "mapRestaurantTitle": "Étterem (húzd az igazításhoz)",
+      "mapResizeHandleTitle": "{km} km — húzd az átméretezéshez",
+      "mapFeeLabel": "Díj:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Sugár:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Húzd a fogantyút az átméretezéshez",
+      "mapDragHintShort": "húzd az átméretezéshez"
     },
     "reservations": {
       "title": "Foglalások",
@@ -1286,7 +1341,38 @@
       "amount": "Összeg",
       "schedule": "Ütemezés",
       "status": "Állapot",
-      "confirmDelete": "Törli: \"{name}\"?"
+      "confirmDelete": "Törli: \"{name}\"?",
+      "taxRateRangeError": "Az adókulcsnak 0 és 100 között kell lennie",
+      "salesTaxTitle": "Forgalmi adó kulcsa",
+      "salesTaxHelp": "Minden rendelés adóköteles részösszegére vonatkozik. Állítsd 0-ra, ha nem szedsz forgalmi adót. (pl. 13 a 13%-os HST-hez.)",
+      "rateLabel": "Kulcs (%)",
+      "savingLabel": "Mentés…",
+      "saveTaxRate": "Adókulcs mentése",
+      "currencyTitle": "Pénznem",
+      "currencyHelp": "Meghatározza a vásárló által látott minden árat, valamint a Stripe/PayPal terheléseket, a nyugtákat és a jelentéseket. A pénznem módosítása NEM váltja át a meglévő árakat — frissítsd az étlap árait, ha USD-ről EUR-ra (stb.) váltasz.",
+      "currencyLabel": "Pénznem",
+      "currencySample": "Példa: <strong>{value}</strong>",
+      "tipsTitle": "Vásárlói borravaló",
+      "tipsHelp": "KIKAPCSOLVA a vásárló kosara teljesen elrejti a borravaló-választót, és a szerver 0-ra állít minden manipulált kliensértéket. Egyes éttermek (pl. olyan országokban, ahol a borravaló nem szokás) inkább nem jelenítenek meg borravaló-felszólítást.",
+      "tipsAriaDisable": "Borravaló kikapcsolása",
+      "tipsAriaEnable": "Borravaló bekapcsolása",
+      "menuSearchTitle": "Vásárlói étlapkeresés",
+      "menuSearchHelp": "BEKAPCSOLVA a vásárló rendelési oldalán nagyítós keresősáv jelenik meg, hogy a látogatók gépeléssel gyorsan megtalálják a tételeket. KAPCSOLD KI, ha inkább csak a kategóriagombokkal böngésznének.",
+      "menuSearchAriaHide": "Étlapkeresés elrejtése a vásárlói oldalon",
+      "menuSearchAriaShow": "Étlapkeresés megjelenítése a vásárlói oldalon",
+      "itemNotesTitle": "Tételenkénti különleges utasítások",
+      "itemNotesHelp": "BEKAPCSOLVA a vásárlók megjegyzést fűzhetnek <each>minden tételhez</each> (pl. „extra ropogós”, „erre ne kerüljön hagyma”) — az kinyomtatódik az adott tétel konyhai bizonylatára. KIKAPCSOLVA a fizetésnél még mindig hagyhatnak egy megjegyzést az <whole>egész rendeléshez</whole>.",
+      "itemNotesAriaOff": "Tételenkénti jegyzetek kikapcsolása",
+      "itemNotesAriaOn": "Tételenkénti jegyzetek bekapcsolása",
+      "schedulingTitle": "Ütemezés és fizetési űrlap",
+      "schedulingHelp": "Szabályozd, mely időpontokra ütemezhetnek a vásárlók, és mely kapcsolattartási mezők kötelezők a fizetésnél.",
+      "slotIntervalLabel": "Idősáv-intervallum (perc)",
+      "slotIntervalHelp": "A vásárlók csak ebben az ütemben ütemezhetnek rendeléseket (mint a GloriaFood). Alapértelmezett 15 — lassabb konyháknál állítsd 30-ra.",
+      "minutesOption": "{n} perc",
+      "requirePhoneLabel": "Vásárlói telefonszám kötelező",
+      "requirePhoneHelp": "BEKAPCSOLVA a fizetési űrlap elutasítja a telefonszám nélküli rendeléseket. Kiszállításnál ajánlott, hogy a konyha fel tudja hívni az átadás miatt.",
+      "requirePhoneAriaOptional": "Telefon legyen opcionális",
+      "requirePhoneAriaRequired": "Telefon legyen kötelező"
     },
     "mapSettings": {
       "title": "Térkép beállítások",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Népszerű",
       "addOnEnableCta": "Aktiválás",
       "perMonth": "/hó",
-      "kitchenAlertsSection": "Konyha és rendelési értesítések"
+      "kitchenAlertsSection": "Konyha és rendelési értesítések",
+      "currentPlanWithAddOns": "Jelenlegi csomag: FREE + {count, plural, one {# kiegészítő} other {# kiegészítő}}",
+      "currentPlanFree": "Jelenlegi csomag: FREE",
+      "freePlanDescription": "Rendelési widget, admin, étlap, konyhai app — kártya nélkül. Fogadj örökre havi 100 rendelést. Fizetős funkciókat bármikor hozzáadhatsz a Számlázás oldalon.",
+      "feature100Orders": "100 rendelés/hónap",
+      "featureUnlimitedMenu": "Korlátlan étlaptétel",
+      "featureCustomerAccounts": "Ügyfélfiókok",
+      "activeAddOnsHeading": "Aktív kiegészítők",
+      "trialBadge": "Próba",
+      "manageSubscriptionsHeading": "Előfizetések kezelése",
+      "upgradeWithAddOnsHeading": "Bővíts fizetős kiegészítőkkel",
+      "manageBillingCta": "Számlázás kezelése",
+      "browseAddOnsCta": "Kiegészítők böngészése"
     },
     "coupons": {
       "title": "Kuponok",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Még nincs ellenőrizve a VIES-ben",
       "viesVerifyNow": "Ellenőrzés most",
       "viesUnreachable": "A VIES szolgáltatás átmenetileg nem érhető el — próbálja újra néhány perc múlva.",
-      "euVatNote": "EU-s vállalkozások: a fizetős előfizetésekhez VIES-ben regisztrált adószám szükséges. Az érvényesített számokat 0% áfával számlázzuk (fordított adózás)."
+      "euVatNote": "EU-s vállalkozások: a fizetős előfizetésekhez VIES-ben regisztrált adószám szükséges. Az érvényesített számokat 0% áfával számlázzuk (fordított adózás).",
+      "perOrder": "/rendelés",
+      "paygOrderCount": "{count, plural, one {# rendelés} other {# rendelés}}"
     },
     "addOns": {
       "errorCheckout": "Nem sikerült elindítani a fizetést",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Igen, lemondás",
       "compFreeUntil": "Ingyenes eddig: {date}",
       "compExplainer": "Ez a bővítmény addig ingyenes — magától nem újul meg. Fizessen elő most, hogy megtartsa: a kártyáját ma elmentjük, a számlázás pedig csak az ingyenes időszak végén indul.",
-      "compSubscribeCta": "Előfizetés a megtartáshoz"
+      "compSubscribeCta": "Előfizetés a megtartáshoz",
+      "pageIntro": "Az alaptermék örökre ingyenes. Az egyes funkciókat alább oldhatod fel a megfelelő kiegészítő előfizetésével. Bármikor lemondható — a hozzáférés a számlázási időszak végéig megmarad.",
+      "subscribedBanner": "<strong>Sikerült!</strong> Az előfizetésed aktiválása folyamatban van. A funkció feloldása akár egy percig is eltarthat.",
+      "settingsLinks": {
+        "hostedWebsite": "Webhelyszerkesztő megnyitása",
+        "onlinePayments": "Stripe Connect kezelése",
+        "driverPool": "Sofőrállomány beállítása",
+        "multiLocation": "Helyszínek kezelése",
+        "customDomain": "Domain csatlakoztatása",
+        "advancedPromoMarketing": "Promóciók indítása",
+        "reservationDeposits": "Foglalások beállítása",
+        "brandedMobileApp": "Alkalmazás beállítása"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Élő",
@@ -2197,7 +2309,22 @@
       "labelAssigned": "Hozzárendelve",
       "labelVip": "VIP",
       "badgeDeadTargets": "Nincs aktív étel — válasszon újra",
-      "searchPlaceholder": "Keresés név vagy kuponkód alapján…"
+      "searchPlaceholder": "Keresés név vagy kuponkód alapján…",
+      "typeLabels": {
+        "percentage_off": "% kedvezmény a kiválasztott tételekre",
+        "fixed_cart": "Fix kedvezmény a kosárra",
+        "free_delivery": "Ingyenes kiszállítás",
+        "bogo": "Egyet fizet, kettőt kap",
+        "buy_n_get_free": "Vegyél N-et, egyet ingyen",
+        "free_item": "Kapj egy INGYENES tételt",
+        "meal_bundle": "Menücsomag",
+        "meal_bundle_speciality": "Menücsomag specialitással",
+        "fixed_combo": "Fix kedvezmény a combo ajánlatra",
+        "percentage_combo": "% kedvezmény a combo ajánlatra",
+        "payment_reward": "Jutalom fizetési módért",
+        "free_dish_meal": "Ingyenes fogás egy étkezés részeként"
+      },
+      "campaignFallback": "Kampány"
     },
     "promoWizard": {
       "errorPickType": "Válasszon promóciótípust a folytatáshoz.",
@@ -2236,7 +2363,61 @@
       "featureBuyNGetFree": "Vegyél N-et-kapsz-ingyent típusú progresszív kedvezmények",
       "featureFreeDish": "Ingyenes étel egy ételmező részeként",
       "maybeLater": "Majd később",
-      "subscribe": "Feliratkozás"
+      "subscribe": "Feliratkozás",
+      "types": {
+        "percentage_off": {
+          "name": "% kedvezmény a kosárra",
+          "desc": "Vonj le egy százalékot a teljes rendelésből (vagy adott tételekből)."
+        },
+        "free_delivery": {
+          "name": "Ingyenes kiszállítás",
+          "desc": "Engedd el a kiszállítási díjat a jogosult rendeléseknél."
+        },
+        "bogo": {
+          "name": "Egyet fizet, kettőt kap",
+          "desc": "Párosíts egy fizetős tételt egy ingyenes (vagy kedvezményes) tétellel."
+        },
+        "fixed_cart": {
+          "name": "Fix kedvezmény a kosárra",
+          "desc": "Vonj le egy fix összeget a rendelésből."
+        },
+        "payment_reward": {
+          "name": "Jutalom fizetési módért",
+          "desc": "Kedvezmény adott fizetési móddal fizetésért (pl. készpénz)."
+        },
+        "free_item": {
+          "name": "Kapj egy INGYENES tételt",
+          "desc": "Költs X-et, és kapj egy ingyenes tételt egy válogatott listáról."
+        },
+        "meal_bundle": {
+          "name": "Menücsomag",
+          "desc": "Állíts össze helyeket fix csomagáron."
+        },
+        "buy_n_get_free": {
+          "name": "Vegyél N-et, egyet ingyen",
+          "desc": "Adj hozzá N tételt, a következő (a legolcsóbb vagy választott) ingyen van."
+        },
+        "free_dish_meal": {
+          "name": "Ingyenes fogás egy étkezés részeként",
+          "desc": "Rendelj főételt + köretet, és kapj egy desszertet (vagy bármi extrát) ingyen."
+        },
+        "fixed_combo": {
+          "name": "Fix kedvezmény a combóra",
+          "desc": "Párosíts adott tételeket, és vonj le egy fix összeget."
+        },
+        "percentage_combo": {
+          "name": "% kedvezmény a combóra",
+          "desc": "Párosíts adott tételeket, és vonj le egy százalékot."
+        },
+        "meal_bundle_speciality": {
+          "name": "Menücsomag specialitással",
+          "desc": "Menücsomag opcionális felárakkal (pl. homár +5 $)."
+        },
+        "reward_credit": {
+          "name": "Reward Dollars adása",
+          "desc": "Jutalmazd a vásárlót boltkredittel ezen a rendelésen kedvezmény helyett."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Promóció konfigurálása",
@@ -2291,7 +2472,44 @@
       "oncePerOrderHint": "Ha be van jelölve, ez az ajánlat rendelésenként csak egyszer érvényesül, még akkor is, ha a kosár többször is jogosult rá (pl. egy egyet-fizet-kettőt-kap ajánlat, amely egyébként ismétlődne).",
       "rewardCreditLabel": "Jóváírandó Reward Dollars",
       "rewardCreditHint": "A rendelés teljesítésekor a vásárló egyenlegéhez adódik — nincs kosárkedvezmény. A Reward Dollars bekapcsolása szükséges.",
-      "oncePerOrderHintPercent": "Ha be van jelölve, a %-os kedvezmény csak EGY tételre vonatkozik — a kosár legdrágább jogosult tételére (pl. „20% egy főételre”). Vegye ki a pipát, hogy MINDEN jogosult tétel kedvezményt kapjon."
+      "oncePerOrderHintPercent": "Ha be van jelölve, a %-os kedvezmény csak EGY tételre vonatkozik — a kosár legdrágább jogosult tételére (pl. „20% egy főételre”). Vegye ki a pipát, hogy MINDEN jogosult tétel kedvezményt kapjon.",
+      "groupNoItems": "Nincs kiválasztott tétel — kattints a szerkesztéshez",
+      "groupMoreCategories": "+{n} további",
+      "pickerHeading": "Válassz kategóriákat vagy tételeket",
+      "pickerNoCategories": "Nincs találat a kategóriákra",
+      "allSizesSuffix": " · minden méret",
+      "groupSpecificItems": "{count, plural, one {# konkrét tétel} other {# konkrét tétel}}",
+      "groupSizes": "{count, plural, one {# méret} other {# méret}}",
+      "specialityFeeTitle": "A díjat csak ezekre a méretekre számítsd fel",
+      "specialityFeeDesc": "Jelöld be a prémium méreteket, amelyek hozzáadják a díjat — az alapméretek ingyenesek maradnak. Hagyj mindent bejelöletlenül, hogy a díjat minden választásnál felszámítsd.",
+      "specialityFeeEmpty": "Először válaszd ki ennek a helynek a tételeit, majd válaszd ki, mely méretek kerülnek többe.",
+      "wholeItemAllSizesSuffix": " · teljes tétel (minden méret)",
+      "roleLabelPaid": "(Fizetős)",
+      "roleLabelFree": "(Ingyenes)",
+      "roleLabelTrigger": "(Kiváltó)",
+      "roleLabelRequired": "(Kötelező)",
+      "itemsGroupN": "{n}. tételcsoport",
+      "slotPickAtLeast": "Válassz legalább",
+      "slotUpTo": "legfeljebb",
+      "slotItems": "tétel",
+      "specialityFeeInlineLabel": "Specialitás díja +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {# mérethez} other {# mérethez}}",
+      "specialityFeeForAll": "minden mérethez — válaszd ki, melyek kerülnek többe",
+      "extraChargeLabel": "Az ingyenes tétel díjai",
+      "extraChargeNone": "Nincs plusz díj (a teljes ingyenes tétel ingyenes)",
+      "extraChargeAddons": "Extra díj a választásokért / kiegészítőkért (a feltétek továbbra is számlázva)",
+      "extraChargeAddonsSizes": "Extra díj a választásokért / kiegészítőkért és méretekért (feltétek + méretnövelés számlázva)",
+      "extraChargeHint": "Hogy az ingyenes tétel feltétei és méretnövelése továbbra is felszámításra kerülnek-e — mint a GloriaFoodban.",
+      "discountStrategyNoteFreed": "A „ingyenes” csoport tétele az, amelyik kedvezményt kap — az ártól függetlenül. A fenti % a kapott kedvezmény (100% = ingyenes).",
+      "discountStrategyNoteMostExpensive": "A BOGO a két jogosult tétel közül a DRÁGÁBBAT kedvezményezi. Ha mindig egy adott tételt szeretnél kedvezményezni, használd a „Vegyél N-et, egyet ingyen” ajánlatot.",
+      "discountStrategyNoteFixedPercent": "Minden kedvezményes tétel ezt a %-ot kapja — az olcsóbbat, ha egy pár jogosult. Ha mindig egy adott tételt szeretnél kedvezményezni, használd a „Vegyél N-et, egyet ingyen” ajánlatot.",
+      "discountStrategyNoteCheapest": "A BOGO a két jogosult tétel közül az OLCSÓBBAT kedvezményezi — így ha az „ingyenes” tétel többe kerül, az olcsóbb kap kedvezményt (a vásárló nem kaphatja olcsón a drágább tételt). Ha mindig egy adott tételt (pl. egy tésztát) szeretnél kedvezményezni, használd a „Vegyél N-et, egyet ingyen” ajánlatot.",
+      "discountStrategyLabel": "Kedvezménystratégia",
+      "strategyCheapest": "Kedvezmények automatikus beállítása (a legolcsóbb tétel ingyen)",
+      "strategyMostExpensive": "Kedvezmények automatikus beállítása (a legdrágább tétel ingyen)",
+      "strategyFixedPercent": "Fix kedvezményszázalék",
+      "pctOffCheapest": "% kedvezmény a legolcsóbb tételre",
+      "pctOffMostExpensive": "% kedvezmény a legdrágább tételre"
     },
     "promoStepRestrictions": {
       "pageTitle": "Korlátozások & megjelenítés",
@@ -2382,7 +2600,8 @@
       "channelBothLabel": "Mindkettő",
       "hiddenCodeInfo": "A rejtett ajánlatok csak akkor érvényesülnek, ha a vásárló megadja ezt a kódot a fizetésnél.",
       "vipLockedTitle": "Csak VIP — hozzárendelve: {groups}",
-      "vipLockedDesc": "Ez a promóció automatikusan csak azoknak a VIP-tagoknak érvényes a pénztárnál. Soha nem jelenik meg a nyilvános étlapon, a bannerben vagy a weboldalon — ezt semmilyen láthatósági kapcsoló nem változtatja meg. Nyilvánossá tételéhez először válassza le a VIP-csoportok oldalon."
+      "vipLockedDesc": "Ez a promóció automatikusan csak azoknak a VIP-tagoknak érvényes a pénztárnál. Soha nem jelenik meg a nyilvános étlapon, a bannerben vagy a weboldalon — ezt semmilyen láthatósági kapcsoló nem változtatja meg. Nyilvánossá tételéhez először válassza le a VIP-csoportok oldalon.",
+      "bundleBuildInfo": "💡 A vásárlók ezt a csomagot egy „Állítsd össze az ajánlatod” kártyából állítják össze az étlapodon. Rögzítsd az alábbi bannerhez, hogy könnyen megtalálható legyen. (Egy csomag nem alkalmazható automatikusan és nem oldható fel kóddal.)"
     },
     "customersList": {
       "heading": "Ügyfelek",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Mentse el egyszer a beállításokat (kiválasztott ShipDay-forrással), és itt megjelenik a személyes webhook-linkje.",
       "feeFromZonesTitle": "Az ügyfelek szállítási díjai",
       "feeFromZonesBody": "Azt, hogy az ügyfelei mennyit fizetnek a szállításért, a Szállítási zónák oldalon állíthatja be — ugyanúgy, mint a saját sofőrök esetében. A ShipDay minden szállítást külön számláz az éttermének; a szállításonkénti díjáról érdeklődjön a ShipDay-kapcsolattartójánál.",
-      "feeFromZonesLink": "Szállítási zónák megnyitása"
+      "feeFromZonesLink": "Szállítási zónák megnyitása",
+      "errorUnknown": "Ismeretlen hiba",
+      "errorNetwork": "Hálózati hiba"
     },
     "driverPoolLocked": {
       "addonBadge": "Bővítmény",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Ön határozza meg az ügyfél árát",
       "feature2Body": "Áthárítás (ügyfél fizeti a teljes ShipDay-díjat), fix (Ön viseli a különbséget) vagy sávos (pl. $50 felett ingyenes). Teljes irányítás.",
       "feature3Title": "Rendelésenként válthat",
-      "feature3Body": "Keverje saját sofőrjeit a ShipDay-jel. A konyha minden szállításnál választót lát: házon belüli vagy pool. Az Ön döntése, minden alkalommal."
+      "feature3Body": "Keverje saját sofőrjeit a ShipDay-jel. A konyha minden szállításnál választót lát: házon belüli vagy pool. Az Ön döntése, minden alkalommal.",
+      "perMonth": "/hó"
     },
     "marketplaceLocked": {
       "addonBadge": "Bővítmény",

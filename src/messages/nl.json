@@ -91,7 +91,8 @@
     "menu": "Menu",
     "loadingDots": "Laden…",
     "previous": "Vorige",
-    "kmFromStore": "{km} km van de zaak"
+    "kmFromStore": "{km} km van de zaak",
+    "apply": "Toepassen"
   },
   "auth": {
     "signIn": "Inloggen",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Tijdslot verwijderen",
       "closesNextDay": "Sluit de volgende dag (bijv. open na middernacht)",
       "holidayNeedsDate": "Kies eerst een startdatum.",
-      "holidayWindowOutsideService": "{window} valt buiten de {service}-tijden voor die dag. Uitzonderlijke tijden moeten binnen de normale openingstijden van de service vallen."
+      "holidayWindowOutsideService": "{window} valt buiten de {service}-tijden voor die dag. Uitzonderlijke tijden moeten binnen de normale openingstijden van de service vallen.",
+      "copiedDayToAll": "{day} naar alle andere dagen gekopieerd",
+      "copiedDayToClosed": "{day} naar de gesloten dagen gekopieerd",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Standaard (alle services)",
+      "tabReservation": "Reservering",
+      "tabAddSuffix": "+ Toevoegen",
+      "removeOverrideAria": "Overschrijving voor {service} verwijderen",
+      "removeOverrideTitle": "Overschrijving verwijderen (verouderde rijen blijven in de database staan totdat je opslaat met het tabblad opnieuw ingeschakeld)",
+      "hoursForServiceOnly": "Openingstijden alleen voor {service}",
+      "markClosed": "Als gesloten markeren",
+      "markOpen": "Als geopend markeren",
+      "copyHoursTitle": "Deze tijden naar andere dagen kopiëren",
+      "applyTo": "Toepassen op…",
+      "applyToAllDays": "Toepassen op <strong>alle andere dagen</strong>",
+      "applyToClosedDays": "Alleen toepassen op <strong>momenteel gesloten dagen</strong>",
+      "dayAbbrev": "zo, ma, di, wo, do, vr, za"
     },
     "services": {
       "title": "Restaurantdiensten",
@@ -1205,7 +1225,42 @@
         "colRequired": "Verplicht",
         "saved": "Formulier voor bezorgadres bijgewerkt"
       },
-      "estimatedMinutesHint": "TOTALE geschatte bezorgtijd (bereiding + rit) voor adressen in deze zone. Klanten zien dit getal bij het afrekenen en het bepaalt het vroegste \"later bestellen\"-tijdstip — het vervangt de standaard geschatte tijd van de bezorgservice. Realistisch is 30–60 min, niet alleen de rijtijd."
+      "estimatedMinutesHint": "TOTALE geschatte bezorgtijd (bereiding + rit) voor adressen in deze zone. Klanten zien dit getal bij het afrekenen en het bepaalt het vroegste \"later bestellen\"-tijdstip — het vervangt de standaard geschatte tijd van de bezorgservice. Realistisch is 30–60 min, niet alleen de rijtijd.",
+      "toastNoAddress": "Geen adres ingesteld. Vul eerst je restaurantprofiel in.",
+      "toastAddressNotFound": "Dit adres kon niet worden gevonden. Werk je adres bij in het restaurantprofiel en probeer het opnieuw.",
+      "toastLocationPinned": "Restaurantlocatie op de kaart vastgezet!",
+      "toastGeocodeFailed": "Geocoderen mislukt. Controleer je internetverbinding.",
+      "toastLocationUpdated": "Restaurantlocatie bijgewerkt!",
+      "toastZoneNameRequired": "Zonenaam is verplicht",
+      "toastSetLocationFirst": "Stel eerst de locatie van je restaurant in (zones zijn concentrische cirkels eromheen).",
+      "toastSaveZoneFailed": "Zone opslaan mislukt",
+      "toastZoneAdded": "Zone \"{name}\" toegevoegd!",
+      "toastUpdateZoneFailed": "Zone bijwerken mislukt",
+      "confirmDeleteZone": "Bezorgzone \"{name}\" verwijderen? Dit kan niet ongedaan worden gemaakt.",
+      "toastZoneDeleted": "Zone verwijderd",
+      "locationNotSetTitle": "Restaurantlocatie niet ingesteld",
+      "locationNotSetDesc": "Bezorgzones hebben de coördinaten van je restaurant als oorsprong nodig. <link>Stel ze in bij het restaurantprofiel</link> of gebruik de knop hieronder om je huidige adres te geocoderen.",
+      "locateRestaurant": "Restaurant lokaliseren",
+      "locating": "Lokaliseren…",
+      "relocate": "Opnieuw lokaliseren",
+      "legendActiveZone": "Actieve zone",
+      "legendInactiveZone": "Inactieve zone",
+      "rowFee": "{amount} kosten",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. tijd",
+      "editFee": "Kosten ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. tijd (min)",
+      "mapRestaurantTitle": "Restaurant (sleep om aan te passen)",
+      "mapResizeHandleTitle": "{km} km — sleep om formaat te wijzigen",
+      "mapFeeLabel": "Kosten:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Straal:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Sleep de handgreep om het formaat te wijzigen",
+      "mapDragHintShort": "sleep om formaat te wijzigen"
     },
     "reservations": {
       "title": "Reserveringen",
@@ -1286,7 +1341,38 @@
       "amount": "Bedrag",
       "schedule": "Schema",
       "status": "Status",
-      "confirmDelete": "\"{name}\" verwijderen?"
+      "confirmDelete": "\"{name}\" verwijderen?",
+      "taxRateRangeError": "Het belastingtarief moet tussen 0 en 100 liggen",
+      "salesTaxTitle": "Btw-tarief",
+      "salesTaxHelp": "Toegepast op het belastbare subtotaal van elke bestelling. Zet op 0 als je geen btw int. (bijv. 13 voor 13% HST.)",
+      "rateLabel": "Tarief (%)",
+      "savingLabel": "Opslaan…",
+      "saveTaxRate": "Tarief opslaan",
+      "currencyTitle": "Valuta",
+      "currencyHelp": "Bepaalt elke prijs die de klant ziet, plus Stripe/PayPal-kosten, bonnen en rapporten. Van valuta wisselen converteert bestaande prijzen NIET — werk de menuprijzen bij als je van USD naar EUR (enz.) overschakelt.",
+      "currencyLabel": "Valuta",
+      "currencySample": "Voorbeeld: <strong>{value}</strong>",
+      "tipsTitle": "Fooien van klanten",
+      "tipsHelp": "Wanneer UIT, verbergt de winkelwagen van de klant de fooikiezer volledig en zet de server elke gemanipuleerde clientwaarde op 0. Sommige restaurants (bijv. in landen waar fooien ongebruikelijk is) tonen liever geen fooiverzoeken.",
+      "tipsAriaDisable": "Fooien uitschakelen",
+      "tipsAriaEnable": "Fooien inschakelen",
+      "menuSearchTitle": "Menuzoekfunctie voor klanten",
+      "menuSearchHelp": "Wanneer AAN toont de bestelpagina van de klant een zoekbalk met vergrootglas zodat bezoekers snel items kunnen vinden door te typen. Zet UIT als je liever hebt dat ze alleen via de categorieknoppen bladeren.",
+      "menuSearchAriaHide": "Menuzoekfunctie op klantpagina verbergen",
+      "menuSearchAriaShow": "Menuzoekfunctie op klantpagina tonen",
+      "itemNotesTitle": "Speciale instructies per item",
+      "itemNotesHelp": "Wanneer AAN kunnen klanten een notitie toevoegen aan <each>elk item</each> (bijv. „extra krokant”, „geen uien op deze”) — die wordt op de keukenbon voor dat item afgedrukt. UIT kunnen ze bij het afrekenen nog steeds één notitie voor de <whole>hele bestelling</whole> achterlaten.",
+      "itemNotesAriaOff": "Notities per item uitschakelen",
+      "itemNotesAriaOn": "Notities per item inschakelen",
+      "schedulingTitle": "Planning & afrekenformulier",
+      "schedulingHelp": "Bepaal voor welke tijdvakken klanten kunnen plannen en welke contactvelden verplicht zijn bij het afrekenen.",
+      "slotIntervalLabel": "Tijdslotinterval (minuten)",
+      "slotIntervalHelp": "Klanten kunnen bestellingen alleen in deze cadans plannen (net als GloriaFood). Standaard is 15 — zet op 30 voor tragere keukens.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Telefoonnummer van klant verplichten",
+      "requirePhoneHelp": "Wanneer AAN weigert het afrekenformulier bestellingen zonder telefoonnummer. Aanbevolen voor bezorging, zodat de keuken kan bellen over de overdracht.",
+      "requirePhoneAriaOptional": "Telefoon optioneel maken",
+      "requirePhoneAriaRequired": "Telefoon verplicht maken"
     },
     "mapSettings": {
       "title": "Kaartinstellingen",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Populair",
       "addOnEnableCta": "Activeren",
       "perMonth": "/mnd",
-      "kitchenAlertsSection": "Keuken en bestelmeldingen"
+      "kitchenAlertsSection": "Keuken en bestelmeldingen",
+      "currentPlanWithAddOns": "Huidig abonnement: FREE + {count, plural, one {# add-on} other {# add-ons}}",
+      "currentPlanFree": "Huidig abonnement: FREE",
+      "freePlanDescription": "Bestelwidget, beheer, menu, keuken-app — geen kaart nodig. Accepteer voor altijd tot 100 bestellingen/maand. Voeg betaalde functies op elk moment toe via de Facturatiepagina.",
+      "feature100Orders": "100 bestellingen/maand",
+      "featureUnlimitedMenu": "Onbeperkte menu-items",
+      "featureCustomerAccounts": "Klantaccounts",
+      "activeAddOnsHeading": "Actieve add-ons",
+      "trialBadge": "Proef",
+      "manageSubscriptionsHeading": "Beheer je abonnementen",
+      "upgradeWithAddOnsHeading": "Upgrade met betaalde add-ons",
+      "manageBillingCta": "Facturatie beheren",
+      "browseAddOnsCta": "Add-ons bekijken"
     },
     "coupons": {
       "title": "Coupons",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Nog niet via VIES gecontroleerd",
       "viesVerifyNow": "Nu controleren",
       "viesUnreachable": "De VIES-dienst is tijdelijk niet beschikbaar — probeer het over enkele minuten opnieuw.",
-      "euVatNote": "EU-bedrijven: voor betaalde abonnementen is een in VIES geregistreerd btw-nummer vereist. Gevalideerde nummers worden gefactureerd met 0% btw (verleggingsregeling)."
+      "euVatNote": "EU-bedrijven: voor betaalde abonnementen is een in VIES geregistreerd btw-nummer vereist. Gevalideerde nummers worden gefactureerd met 0% btw (verleggingsregeling).",
+      "perOrder": "/best.",
+      "paygOrderCount": "{count, plural, one {# bestelling} other {# bestellingen}}"
     },
     "addOns": {
       "errorCheckout": "Afrekenen kon niet worden gestart",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Ja, annuleren",
       "compFreeUntil": "Gratis tot {date}",
       "compExplainer": "Deze add-on is tot die datum gratis — hij verlengt zichzelf niet. Abonneer nu om hem te houden: je kaart wordt vandaag opgeslagen en de facturering begint pas als de gratis periode afloopt.",
-      "compSubscribeCta": "Abonneer en behoud"
+      "compSubscribeCta": "Abonneer en behoud",
+      "pageIntro": "Het kernproduct is voor altijd gratis. Ontgrendel afzonderlijke functies hieronder door je te abonneren op de bijbehorende add-on. Op elk moment opzegbaar — je houdt toegang tot het einde van de factureringsperiode.",
+      "subscribedBanner": "<strong>Gelukt!</strong> Je abonnement wordt geactiveerd. Het kan tot een minuut duren voordat de functie wordt ontgrendeld.",
+      "settingsLinks": {
+        "hostedWebsite": "Website-editor openen",
+        "onlinePayments": "Stripe Connect beheren",
+        "driverPool": "Chauffeurspool configureren",
+        "multiLocation": "Locaties beheren",
+        "customDomain": "Je domein koppelen",
+        "advancedPromoMarketing": "Promoties uitvoeren",
+        "reservationDeposits": "Reserveringen configureren",
+        "brandedMobileApp": "App configureren"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Live",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Toegewezen",
       "labelVip": "VIP",
       "badgeDeadTargets": "Geen actieve gerechten — opnieuw selecteren",
-      "searchPlaceholder": "Zoeken op naam of couponcode…"
+      "searchPlaceholder": "Zoeken op naam of couponcode…",
+      "typeLabels": {
+        "percentage_off": "% korting op geselecteerde items",
+        "fixed_cart": "Vaste korting op winkelwagen",
+        "free_delivery": "Gratis bezorging",
+        "bogo": "Eén kopen, één gratis",
+        "buy_n_get_free": "Koop N, één gratis",
+        "free_item": "Ontvang een GRATIS item",
+        "meal_bundle": "Maaltijdpakket",
+        "meal_bundle_speciality": "Maaltijdpakket met specialiteit",
+        "fixed_combo": "Vaste korting op combodeal",
+        "percentage_combo": "% korting op combodeal",
+        "payment_reward": "Beloning voor betaalmethode",
+        "free_dish_meal": "Gratis gerecht als onderdeel van een maaltijd"
+      },
+      "campaignFallback": "Campagne"
     },
     "promoWizard": {
       "errorPickType": "Kies een promotietype om door te gaan.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Koop-N-krijg-gratis progressieve kortingen",
       "featureFreeDish": "Gratis gerecht als onderdeel van een maaltijd",
       "maybeLater": "Misschien later",
-      "subscribe": "Abonneren"
+      "subscribe": "Abonneren",
+      "types": {
+        "percentage_off": {
+          "name": "% korting op winkelwagen",
+          "desc": "Haal een percentage van de hele bestelling af (of van specifieke items)."
+        },
+        "free_delivery": {
+          "name": "Gratis bezorging",
+          "desc": "Scheld de bezorgkosten kwijt voor kwalificerende bestellingen."
+        },
+        "bogo": {
+          "name": "Eén kopen, één gratis",
+          "desc": "Combineer een betaald item met een gratis (of gekort) item."
+        },
+        "fixed_cart": {
+          "name": "Vaste korting op winkelwagen",
+          "desc": "Haal een vast bedrag van de bestelling af."
+        },
+        "payment_reward": {
+          "name": "Beloning voor betaalmethode",
+          "desc": "Korting bij betalen met een specifieke methode (bijv. contant)."
+        },
+        "free_item": {
+          "name": "Ontvang een GRATIS item",
+          "desc": "Besteed X en ontvang een gratis item uit een samengestelde lijst."
+        },
+        "meal_bundle": {
+          "name": "Maaltijdpakket",
+          "desc": "Combineer vakken tegen een vaste bundelprijs."
+        },
+        "buy_n_get_free": {
+          "name": "Koop N, één gratis",
+          "desc": "Voeg N items toe, het volgende (goedkoopste of gekozen) is gratis."
+        },
+        "free_dish_meal": {
+          "name": "Gratis gerecht als onderdeel van een maaltijd",
+          "desc": "Bestel een hoofdgerecht + bijgerecht en krijg een dessert (of elke extra) gratis."
+        },
+        "fixed_combo": {
+          "name": "Vaste korting op combo",
+          "desc": "Combineer specifieke items en haal een vast bedrag af."
+        },
+        "percentage_combo": {
+          "name": "% korting op combo",
+          "desc": "Combineer specifieke items en haal een percentage af."
+        },
+        "meal_bundle_speciality": {
+          "name": "Maaltijdpakket met specialiteit",
+          "desc": "Maaltijdpakket met optionele meerprijzen (bijv. kreeft +$5)."
+        },
+        "reward_credit": {
+          "name": "Reward Dollars toekennen",
+          "desc": "Beloon de klant met winkeltegoed op deze bestelling in plaats van een korting."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Uw promotie configureren",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Indien aangevinkt geldt deze actie slechts één keer per bestelling, zelfs als het winkelmandje er meerdere keren voor in aanmerking komt (bijvoorbeeld een 1+1-gratis die anders zou worden herhaald).",
       "rewardCreditLabel": "Toe te kennen Reward Dollars",
       "rewardCreditHint": "Wordt toegevoegd aan het saldo van de klant zodra deze bestelling is voltooid — geen winkelwagenkorting. Vereist dat Reward Dollars is ingeschakeld.",
-      "oncePerOrderHintPercent": "Indien aangevinkt geldt de %-korting voor slechts ÉÉN item — het duurste in aanmerking komende item in de winkelwagen (bijv. “20% op één hoofdgerecht”). Vink uit om ALLE in aanmerking komende items te korten."
+      "oncePerOrderHintPercent": "Indien aangevinkt geldt de %-korting voor slechts ÉÉN item — het duurste in aanmerking komende item in de winkelwagen (bijv. “20% op één hoofdgerecht”). Vink uit om ALLE in aanmerking komende items te korten.",
+      "groupNoItems": "Geen items geselecteerd — klik om te bewerken",
+      "groupMoreCategories": "+{n} meer",
+      "pickerHeading": "Selecteer categorieën of items",
+      "pickerNoCategories": "Geen categorieën gevonden",
+      "allSizesSuffix": " · alle maten",
+      "groupSpecificItems": "{count, plural, one {# specifiek item} other {# specifieke items}}",
+      "groupSizes": "{count, plural, one {# maat} other {# maten}}",
+      "specialityFeeTitle": "Bereken de toeslag alleen voor deze maten",
+      "specialityFeeDesc": "Vink de premium maten aan die de toeslag toevoegen — basismaten blijven gratis. Laat alles uitgevinkt om de toeslag bij elke keuze te rekenen.",
+      "specialityFeeEmpty": "Kies eerst de items van dit vak en selecteer daarna welke maten extra kosten.",
+      "wholeItemAllSizesSuffix": " · heel item (alle maten)",
+      "roleLabelPaid": "(Betaald)",
+      "roleLabelFree": "(Gratis)",
+      "roleLabelTrigger": "(Trigger)",
+      "roleLabelRequired": "(Vereist)",
+      "itemsGroupN": "Itemgroep {n}",
+      "slotPickAtLeast": "Kies minstens",
+      "slotUpTo": "tot",
+      "slotItems": "items",
+      "specialityFeeInlineLabel": "Specialiteitstoeslag +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {voor # maat} other {voor # maten}}",
+      "specialityFeeForAll": "voor alle maten — kies welke extra kosten",
+      "extraChargeLabel": "Kosten voor het gratis item",
+      "extraChargeNone": "Geen extra kosten (het gratis item is volledig gratis)",
+      "extraChargeAddons": "Extra kosten voor keuzes / add-ons (toppings worden nog berekend)",
+      "extraChargeAddonsSizes": "Extra kosten voor keuzes / add-ons & maten (toppings + maat-upgrade berekend)",
+      "extraChargeHint": "Of de toppings en maat-upgrade van het gratis item nog worden berekend — net als bij GloriaFood.",
+      "discountStrategyNoteFreed": "Het item uit de groep ‘gratis’ krijgt de korting — ongeacht de prijs. Het % hierboven is hoeveel korting het krijgt (100% = gratis).",
+      "discountStrategyNoteMostExpensive": "BOGO geeft korting op de DUURSTE van de twee in aanmerking komende items. Wil je altijd één specifiek item korten, gebruik dan de deal ‘Koop N, krijg gratis’.",
+      "discountStrategyNoteFixedPercent": "Elk gekort item krijgt dit % — het goedkopere wanneer een paar in aanmerking komt. Wil je altijd één specifiek item korten, gebruik dan de deal ‘Koop N, krijg gratis’.",
+      "discountStrategyNoteCheapest": "BOGO geeft korting op de GOEDKOPERE van de twee in aanmerking komende items — dus als het ‘gratis’ item duurder is, krijgt het goedkopere de korting (een klant kan het duurdere item niet goedkoop krijgen). Wil je altijd één specifiek item (bijv. een pasta) korten, gebruik dan de deal ‘Koop N, krijg gratis’.",
+      "discountStrategyLabel": "Kortingsstrategie",
+      "strategyCheapest": "Kortingen automatisch instellen (goedkoopste item gratis)",
+      "strategyMostExpensive": "Kortingen automatisch instellen (duurste item gratis)",
+      "strategyFixedPercent": "Vast kortingspercentage",
+      "pctOffCheapest": "% korting op goedkoopste item",
+      "pctOffMostExpensive": "% korting op duurste item"
     },
     "promoStepRestrictions": {
       "pageTitle": "Beperkingen en weergave",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Beide",
       "hiddenCodeInfo": "Verborgen acties gelden alleen wanneer de klant deze code bij het afrekenen invoert.",
       "vipLockedTitle": "Alleen VIP — gekoppeld aan: {groups}",
-      "vipLockedDesc": "Deze promotie geldt automatisch alleen voor die VIP-leden bij het afrekenen. Ze verschijnt nooit op je openbare menu, banner of website — geen zichtbaarheidsschakelaar verandert dat. Koppel haar eerst los op de pagina VIP-groepen om haar openbaar te maken."
+      "vipLockedDesc": "Deze promotie geldt automatisch alleen voor die VIP-leden bij het afrekenen. Ze verschijnt nooit op je openbare menu, banner of website — geen zichtbaarheidsschakelaar verandert dat. Koppel haar eerst los op de pagina VIP-groepen om haar openbaar te maken.",
+      "bundleBuildInfo": "💡 Klanten stellen dit bundel samen via een kaart ‘Stel je deal samen’ op je menu. Zet het vast op de banner hieronder zodat het makkelijk te vinden is. (Een bundel kan niet automatisch worden toegepast of met een code worden ontgrendeld.)"
     },
     "customersList": {
       "heading": "Klanten",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Sla uw instellingen één keer op (met een ShipDay-bron geselecteerd) en uw persoonlijke webhook-link verschijnt hier.",
       "feeFromZonesTitle": "Bezorgkosten voor klanten",
       "feeFromZonesBody": "Wat uw klanten voor bezorging betalen, stelt u in op de pagina Bezorgzones — net als bij uw eigen chauffeurs. ShipDay factureert uw restaurant apart voor elke bezorging; vraag uw ShipDay-contactpersoon naar uw tarief per bezorging.",
-      "feeFromZonesLink": "Bezorgzones openen"
+      "feeFromZonesLink": "Bezorgzones openen",
+      "errorUnknown": "Onbekende fout",
+      "errorNetwork": "Netwerkfout"
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",
@@ -3191,7 +3412,8 @@
       "feature2Title": "U bepaalt de klantprijs",
       "feature2Body": "Doorberekenen (klant betaalt volledige ShipDay-kosten), vast (u absorbeert het verschil) of trapsgewijs (bijv. gratis boven $50). Volledige controle.",
       "feature3Title": "Per bestelling kiezen",
-      "feature3Body": "Combineer uw eigen chauffeurs met ShipDay. De keuken ziet een kiezer voor elke bezorging: intern of pool. Uw keuze, elke keer."
+      "feature3Body": "Combineer uw eigen chauffeurs met ShipDay. De keuken ziet een kiezer voor elke bezorging: intern of pool. Uw keuze, elke keer.",
+      "perMonth": "/mnd"
     },
     "marketplaceLocked": {
       "addonBadge": "Add-on",

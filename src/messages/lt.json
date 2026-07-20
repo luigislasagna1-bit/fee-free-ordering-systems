@@ -91,7 +91,8 @@
     "menu": "Meniu",
     "loadingDots": "Kraunama…",
     "previous": "Atgal",
-    "kmFromStore": "{km} km nuo parduotuvės"
+    "kmFromStore": "{km} km nuo parduotuvės",
+    "apply": "Taikyti"
   },
   "auth": {
     "signIn": "Prisijungti",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Pašalinti laiko intervalą",
       "closesNextDay": "Užsidaro kitą dieną (pvz., dirba po vidurnakčio)",
       "holidayNeedsDate": "Pirmiausia pasirinkite pradžios datą.",
-      "holidayWindowOutsideService": "{window} yra už tos dienos {service} darbo laiko ribų. Išskirtinis laikas turi būti įprasto paslaugos darbo laiko ribose."
+      "holidayWindowOutsideService": "{window} yra už tos dienos {service} darbo laiko ribų. Išskirtinis laikas turi būti įprasto paslaugos darbo laiko ribose.",
+      "copiedDayToAll": "{day} nukopijuota į visas kitas dienas",
+      "copiedDayToClosed": "{day} nukopijuota į uždarytas dienas",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Numatytasis (visos paslaugos)",
+      "tabReservation": "Rezervacija",
+      "tabAddSuffix": "+ Pridėti",
+      "removeOverrideAria": "Pašalinti {service} nepaisymą",
+      "removeOverrideTitle": "Pašalinti nepaisymą (pasenusios eilutės lieka duomenų bazėje, kol išsaugosite iš naujo įjungę skirtuką)",
+      "hoursForServiceOnly": "Darbo laikas tik paslaugai {service}",
+      "markClosed": "Pažymėti kaip uždaryta",
+      "markOpen": "Pažymėti kaip atidaryta",
+      "copyHoursTitle": "Kopijuoti šias valandas į kitas dienas",
+      "applyTo": "Taikyti…",
+      "applyToAllDays": "Taikyti <strong>visoms kitoms dienoms</strong>",
+      "applyToClosedDays": "Taikyti tik <strong>šiuo metu uždarytoms dienoms</strong>",
+      "dayAbbrev": "sk, pr, an, tr, kt, pn, št"
     },
     "services": {
       "title": "Restorano paslaugos",
@@ -1205,7 +1225,42 @@
         "colRequired": "Privaloma",
         "saved": "Pristatymo adreso forma atnaujinta"
       },
-      "estimatedMinutesHint": "BENDRAS numatomas pristatymo laikas (paruošimas + kelias) šios zonos adresams. Klientai šį skaičių mato atsiskaitydami, jis nustato anksčiausią \"užsakyti vėliau\" laiką — jis pakeičia numatytą pristatymo paslaugos įvertį. Reali reikšmė — 30–60 min., ne vien kelionė."
+      "estimatedMinutesHint": "BENDRAS numatomas pristatymo laikas (paruošimas + kelias) šios zonos adresams. Klientai šį skaičių mato atsiskaitydami, jis nustato anksčiausią \"užsakyti vėliau\" laiką — jis pakeičia numatytą pristatymo paslaugos įvertį. Reali reikšmė — 30–60 min., ne vien kelionė.",
+      "toastNoAddress": "Adresas nenustatytas. Pirmiausia užpildykite restorano profilį.",
+      "toastAddressNotFound": "Šio adreso rasti nepavyko. Atnaujinkite adresą restorano profilyje ir bandykite dar kartą.",
+      "toastLocationPinned": "Restorano vieta prisegta žemėlapyje!",
+      "toastGeocodeFailed": "Geokodavimas nepavyko. Patikrinkite interneto ryšį.",
+      "toastLocationUpdated": "Restorano vieta atnaujinta!",
+      "toastZoneNameRequired": "Zonos pavadinimas yra privalomas",
+      "toastSetLocationFirst": "Pirmiausia nustatykite restorano vietą (zonos yra koncentriniai apskritimai aplink ją).",
+      "toastSaveZoneFailed": "Nepavyko išsaugoti zonos",
+      "toastZoneAdded": "Zona „{name}“ pridėta!",
+      "toastUpdateZoneFailed": "Nepavyko atnaujinti zonos",
+      "confirmDeleteZone": "Ištrinti pristatymo zoną „{name}“? Šio veiksmo anuliuoti negalima.",
+      "toastZoneDeleted": "Zona ištrinta",
+      "locationNotSetTitle": "Restorano vieta nenustatyta",
+      "locationNotSetDesc": "Pristatymo zonoms kaip pradžios taškas reikalingos jūsų restorano koordinatės. <link>Nustatykite jas restorano profilyje</link> arba naudokite žemiau esantį mygtuką dabartiniam adresui geokoduoti.",
+      "locateRestaurant": "Rasti restoraną",
+      "locating": "Ieškoma…",
+      "relocate": "Rasti iš naujo",
+      "legendActiveZone": "Aktyvi zona",
+      "legendInactiveZone": "Neaktyvi zona",
+      "rowFee": "mokestis {amount}",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. laikas",
+      "editFee": "Mokestis ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. laikas (min)",
+      "mapRestaurantTitle": "Restoranas (vilkite, kad pakoreguotumėte)",
+      "mapResizeHandleTitle": "{km} km — vilkite, kad pakeistumėte dydį",
+      "mapFeeLabel": "Mokestis:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Spindulys:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Vilkite rankenėlę, kad pakeistumėte dydį",
+      "mapDragHintShort": "vilkite, kad pakeistumėte dydį"
     },
     "reservations": {
       "title": "Rezervacijos",
@@ -1286,7 +1341,38 @@
       "amount": "Suma",
       "schedule": "Grafikas",
       "status": "Būsena",
-      "confirmDelete": "Ištrinti „{name}”?"
+      "confirmDelete": "Ištrinti „{name}”?",
+      "taxRateRangeError": "Mokesčio tarifas turi būti nuo 0 iki 100",
+      "salesTaxTitle": "Pardavimo mokesčio tarifas",
+      "salesTaxHelp": "Taikoma kiekvieno užsakymo apmokestinamajai tarpinei sumai. Nustatykite 0, jei pardavimo mokesčio nerenkate. (pvz., 13 = 13% HST.)",
+      "rateLabel": "Tarifas (%)",
+      "savingLabel": "Įrašoma…",
+      "saveTaxRate": "Įrašyti tarifą",
+      "currencyTitle": "Valiuta",
+      "currencyHelp": "Nustato kiekvieną kliento matomą kainą bei Stripe/PayPal mokesčius, kvitus ir ataskaitas. Valiutos keitimas NEKONVERTUOJA esamų kainų — atnaujinkite meniu kainas, jei pereinate iš USD į EUR (ir pan.).",
+      "currencyLabel": "Valiuta",
+      "currencySample": "Pavyzdys: <strong>{value}</strong>",
+      "tipsTitle": "Klientų arbatpinigiai",
+      "tipsHelp": "Kai IŠJUNGTA, kliento krepšelis visiškai paslepia arbatpinigių pasirinkimą, o serveris bet kokią pakeistą kliento reikšmę nustato į 0. Kai kurie restoranai (pvz., šalyse, kur arbatpinigiai neįprasti) mieliau nerodo arbatpinigių raginimų.",
+      "tipsAriaDisable": "Išjungti arbatpinigius",
+      "tipsAriaEnable": "Įjungti arbatpinigius",
+      "menuSearchTitle": "Kliento meniu paieška",
+      "menuSearchHelp": "Kai ĮJUNGTA, kliento užsakymo puslapyje rodoma paieškos juosta su padidinamuoju stiklu, kad lankytojai galėtų greitai rasti prekes rašydami. IŠJUNKITE, jei norite, kad jie naršytų tik per kategorijų mygtukus.",
+      "menuSearchAriaHide": "Slėpti meniu paiešką kliento puslapyje",
+      "menuSearchAriaShow": "Rodyti meniu paiešką kliento puslapyje",
+      "itemNotesTitle": "Specialūs nurodymai prekei",
+      "itemNotesHelp": "Kai ĮJUNGTA, klientai gali pridėti pastabą <each>kiekvienai prekei</each> (pvz., „ypač traškus“, „šitam be svogūnų“) — ji spausdinama tos prekės virtuvės kvite. IŠJUNGTA jie vis tiek gali palikti vieną pastabą <whole>visam užsakymui</whole> atsiskaitydami.",
+      "itemNotesAriaOff": "Išjungti prekių pastabas",
+      "itemNotesAriaOn": "Įjungti prekių pastabas",
+      "schedulingTitle": "Planavimas ir atsiskaitymo forma",
+      "schedulingHelp": "Valdykite, kuriems laiko intervalams klientai gali planuoti ir kurie kontaktų laukai atsiskaitant privalomi.",
+      "slotIntervalLabel": "Laiko intervalas (minutės)",
+      "slotIntervalHelp": "Klientai gali planuoti užsakymus tik šiuo ritmu (kaip GloriaFood). Numatytasis yra 15 — lėtesnėms virtuvėms pakeiskite į 30.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Reikalauti kliento telefono",
+      "requirePhoneHelp": "Kai ĮJUNGTA, atsiskaitymo forma atmeta užsakymus be telefono numerio. Rekomenduojama pristatymui, kad virtuvė galėtų paskambinti dėl perdavimo.",
+      "requirePhoneAriaOptional": "Padaryti telefoną neprivalomu",
+      "requirePhoneAriaRequired": "Padaryti telefoną privalomu"
     },
     "mapSettings": {
       "title": "Žemėlapio nustatymai",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Populiaru",
       "addOnEnableCta": "Įjungti",
       "perMonth": "/mėn.",
-      "kitchenAlertsSection": "Virtuvė ir užsakymų įspėjimai"
+      "kitchenAlertsSection": "Virtuvė ir užsakymų įspėjimai",
+      "currentPlanWithAddOns": "Dabartinis planas: FREE + {count, plural, one {# priedas} few {# priedai} many {# priedo} other {# priedų}}",
+      "currentPlanFree": "Dabartinis planas: FREE",
+      "freePlanDescription": "Užsakymų valdiklis, administravimas, meniu, virtuvės programėlė — be kortelės. Priimkite iki 100 užsakymų/mėn. amžinai. Mokamas funkcijas pridėkite bet kada Atsiskaitymų puslapyje.",
+      "feature100Orders": "100 užsakymų/mėn.",
+      "featureUnlimitedMenu": "Neriboti meniu elementai",
+      "featureCustomerAccounts": "Klientų paskyros",
+      "activeAddOnsHeading": "Aktyvūs priedai",
+      "trialBadge": "Bandomasis",
+      "manageSubscriptionsHeading": "Tvarkyti prenumeratas",
+      "upgradeWithAddOnsHeading": "Atnaujinkite mokamais priedais",
+      "manageBillingCta": "Tvarkyti atsiskaitymus",
+      "browseAddOnsCta": "Naršyti priedus"
     },
     "coupons": {
       "title": "Kuponai",
@@ -1622,7 +1720,9 @@
       "viesUnverified": "Dar nepatikrinta VIES",
       "viesVerifyNow": "Patikrinti dabar",
       "viesUnreachable": "VIES paslauga laikinai nepasiekiama — bandykite dar kartą po kelių minučių.",
-      "euVatNote": "ES įmonės: mokamoms prenumeratoms reikalingas VIES registruotas PVM numeris. Patvirtinti numeriai apmokestinami 0% PVM (atvirkštinis apmokestinimas)."
+      "euVatNote": "ES įmonės: mokamoms prenumeratoms reikalingas VIES registruotas PVM numeris. Patvirtinti numeriai apmokestinami 0% PVM (atvirkštinis apmokestinimas).",
+      "perOrder": "/užsak.",
+      "paygOrderCount": "{count, plural, one {# užsakymas} few {# užsakymai} many {# užsakymo} other {# užsakymų}}"
     },
     "addOns": {
       "errorCheckout": "Nepavyko pradėti apmokėjimo",
@@ -1679,7 +1779,19 @@
       "yesCancel": "Taip, atšaukti",
       "compFreeUntil": "Nemokamai iki {date}",
       "compExplainer": "Šis priedas iki tol nemokamas — jis savaime neatsinaujina. Užsiprenumeruokite dabar, kad jį išlaikytumėte: kortelė išsaugoma šiandien, o mokestis pradedamas skaičiuoti tik pasibaigus nemokamam laikotarpiui.",
-      "compSubscribeCta": "Prenumeruoti ir išlaikyti"
+      "compSubscribeCta": "Prenumeruoti ir išlaikyti",
+      "pageIntro": "Pagrindinis produktas nemokamas visam laikui. Atrakinkite atskiras funkcijas žemiau užsiprenumeruodami atitinkamą priedą. Atšaukite bet kada — prieigą išsaugote iki atsiskaitymo laikotarpio pabaigos.",
+      "subscribedBanner": "<strong>Pavyko!</strong> Jūsų prenumerata aktyvinama. Funkcijos atrakinimas gali užtrukti iki minutės.",
+      "settingsLinks": {
+        "hostedWebsite": "Atidaryti svetainės rengyklę",
+        "onlinePayments": "Tvarkyti Stripe Connect",
+        "driverPool": "Konfigūruoti vairuotojų grupę",
+        "multiLocation": "Tvarkyti vietas",
+        "customDomain": "Prijunkite savo domeną",
+        "advancedPromoMarketing": "Vykdyti akcijas",
+        "reservationDeposits": "Konfigūruoti rezervacijas",
+        "brandedMobileApp": "Konfigūruoti programėlę"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Aktyvus",
@@ -2229,7 +2341,9 @@
       "webhookSaveFirst": "Vieną kartą išsaugokite nustatymus (pasirinkę ShipDay šaltinį) ir čia atsiras jūsų asmeninė webhook nuoroda.",
       "feeFromZonesTitle": "Klientų pristatymo mokesčiai",
       "feeFromZonesBody": "Tai, kiek jūsų klientai moka už pristatymą, nustatoma puslapyje Pristatymo zonos — lygiai taip pat kaip ir su savais vairuotojais. ShipDay jūsų restoranui už kiekvieną pristatymą išrašo atskirą sąskaitą; savo įkainio už pristatymą teiraukitės savo ShipDay kontaktinio asmens.",
-      "feeFromZonesLink": "Atidaryti puslapį „Pristatymo zonos“"
+      "feeFromZonesLink": "Atidaryti puslapį „Pristatymo zonos“",
+      "errorUnknown": "Nežinoma klaida",
+      "errorNetwork": "Tinklo klaida"
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinys",
@@ -2248,7 +2362,8 @@
       "feature2Title": "Jūs nustatote klientų kainas",
       "feature2Body": "Perduoti (klientas moka visą ShipDay mokestį), fiksuotas (jūs absorbuojate skirtumą) arba pakopinis (pvz. nemokamai viršijus $50). Visiškas valdymas.",
       "feature3Title": "Perjungti kiekvienam užsakymui",
-      "feature3Body": "Derinite savo vairuotojus su ShipDay. Virtuvė mato kiekvieno pristatymo parinkiklį: vidinis arba telkinio. Jūsų pasirinkimas kiekvieną kartą."
+      "feature3Body": "Derinite savo vairuotojus su ShipDay. Virtuvė mato kiekvieno pristatymo parinkiklį: vidinis arba telkinio. Jūsų pasirinkimas kiekvieną kartą.",
+      "perMonth": "/mėn."
     },
     "marketplaceLocked": {
       "addonBadge": "Papildinys",
@@ -2971,7 +3086,22 @@
       "labelAssigned": "Priskirta",
       "labelVip": "VIP",
       "badgeDeadTargets": "Nėra aktyvių patiekalų — pasirinkite iš naujo",
-      "searchPlaceholder": "Ieškoti pagal pavadinimą ar kupono kodą…"
+      "searchPlaceholder": "Ieškoti pagal pavadinimą ar kupono kodą…",
+      "typeLabels": {
+        "percentage_off": "% nuolaida pasirinktoms prekėms",
+        "fixed_cart": "Fiksuota nuolaida krepšeliui",
+        "free_delivery": "Nemokamas pristatymas",
+        "bogo": "Pirk vieną, gauk kitą nemokamai",
+        "buy_n_get_free": "Pirk N, gauk vieną nemokamai",
+        "free_item": "Gauk NEMOKAMĄ prekę",
+        "meal_bundle": "Patiekalų rinkinys",
+        "meal_bundle_speciality": "Patiekalų rinkinys su specialybe",
+        "fixed_combo": "Fiksuota nuolaida combo pasiūlymui",
+        "percentage_combo": "% nuolaida combo pasiūlymui",
+        "payment_reward": "Atlygis už mokėjimo būdą",
+        "free_dish_meal": "Nemokamas patiekalas kaip valgio dalis"
+      },
+      "campaignFallback": "Kampanija"
     },
     "promoWizard": {
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",
@@ -3010,7 +3140,61 @@
       "featureBuyNGetFree": "Pirk-N-gauk-nemokamai laipsniškos nuolaidos",
       "featureFreeDish": "Nemokamas patiekalas kaip dalis valgio",
       "maybeLater": "Galbūt vėliau",
-      "subscribe": "Prenumeruoti"
+      "subscribe": "Prenumeruoti",
+      "types": {
+        "percentage_off": {
+          "name": "% nuolaida krepšeliui",
+          "desc": "Nuimkite procentą nuo viso užsakymo (ar konkrečių prekių)."
+        },
+        "free_delivery": {
+          "name": "Nemokamas pristatymas",
+          "desc": "Panaikinkite pristatymo mokestį tinkamiems užsakymams."
+        },
+        "bogo": {
+          "name": "Pirk vieną, gauk kitą nemokamai",
+          "desc": "Susiek mokamą prekę su nemokama (ar su nuolaida) preke."
+        },
+        "fixed_cart": {
+          "name": "Fiksuota nuolaida krepšeliui",
+          "desc": "Nuimkite fiksuotą sumą nuo užsakymo."
+        },
+        "payment_reward": {
+          "name": "Atlygis už mokėjimo būdą",
+          "desc": "Nuolaida už mokėjimą tam tikru būdu (pvz., grynaisiais)."
+        },
+        "free_item": {
+          "name": "Gauk NEMOKAMĄ prekę",
+          "desc": "Išleisk X ir gauk nemokamą prekę iš atrinkto sąrašo."
+        },
+        "meal_bundle": {
+          "name": "Patiekalų rinkinys",
+          "desc": "Derink laukelius fiksuota rinkinio kaina."
+        },
+        "buy_n_get_free": {
+          "name": "Pirk N, gauk vieną nemokamai",
+          "desc": "Pridėk N prekių, kita (pigiausia ar pasirinkta) nemokama."
+        },
+        "free_dish_meal": {
+          "name": "Nemokamas patiekalas kaip valgio dalis",
+          "desc": "Užsisakyk pagrindinį patiekalą + garnyrą ir gauk desertą (ar bet kokį priedą) nemokamai."
+        },
+        "fixed_combo": {
+          "name": "Fiksuota nuolaida combo",
+          "desc": "Susiek konkrečias prekes ir nuimk fiksuotą sumą."
+        },
+        "percentage_combo": {
+          "name": "% nuolaida combo",
+          "desc": "Susiek konkrečias prekes ir nuimk procentą."
+        },
+        "meal_bundle_speciality": {
+          "name": "Patiekalų rinkinys su specialybe",
+          "desc": "Patiekalų rinkinys su pasirenkamais priedais (pvz., omaras +5 $)."
+        },
+        "reward_credit": {
+          "name": "Skirti Reward Dollars",
+          "desc": "Apdovanok klientą parduotuvės kreditu už šį užsakymą vietoje nuolaidos."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Konfigūruokite savo akciją",
@@ -3065,7 +3249,44 @@
       "oncePerOrderHint": "Pažymėjus, šis pasiūlymas taikomas tik kartą užsakymui, net jei krepšelis atitinka jo sąlygas daugiau nei vieną kartą (pvz., „Perki vieną – gauni vieną“ akcija, kuri kitu atveju kartotųsi).",
       "rewardCreditLabel": "Skirtini Reward Dollars",
       "rewardCreditHint": "Pridedama prie kliento likučio, kai šis užsakymas įvykdomas — be krepšelio nuolaidos. Reikia įjungti Reward Dollars.",
-      "oncePerOrderHintPercent": "Jei pažymėta, % nuolaida taikoma tik VIENAI prekei — brangiausiai tinkamai prekei krepšelyje (pvz., „20 % vienam pagrindiniam patiekalui“). Nuimkite žymę, kad nuolaida būtų taikoma VISOMS tinkamoms prekėms."
+      "oncePerOrderHintPercent": "Jei pažymėta, % nuolaida taikoma tik VIENAI prekei — brangiausiai tinkamai prekei krepšelyje (pvz., „20 % vienam pagrindiniam patiekalui“). Nuimkite žymę, kad nuolaida būtų taikoma VISOMS tinkamoms prekėms.",
+      "groupNoItems": "Nepasirinkta prekių — spustelėkite norėdami redaguoti",
+      "groupMoreCategories": "+{n} daugiau",
+      "pickerHeading": "Pasirinkite kategorijas arba prekes",
+      "pickerNoCategories": "Kategorijų nerasta",
+      "allSizesSuffix": " · visi dydžiai",
+      "groupSpecificItems": "{count, plural, one {# konkreti prekė} few {# konkrečios prekės} many {# konkrečios prekės} other {# konkrečių prekių}}",
+      "groupSizes": "{count, plural, one {# dydis} few {# dydžiai} many {# dydžio} other {# dydžių}}",
+      "specialityFeeTitle": "Imti mokestį tik už šiuos dydžius",
+      "specialityFeeDesc": "Pažymėk premium dydžius, kurie prideda mokestį — baziniai dydžiai lieka nemokami. Palik viską nepažymėta, kad mokestis būtų imamas už kiekvieną pasirinkimą.",
+      "specialityFeeEmpty": "Pirmiausia pasirink šio lizdo prekes, tada pasirink, kurie dydžiai kainuoja papildomai.",
+      "wholeItemAllSizesSuffix": " · visa prekė (visi dydžiai)",
+      "roleLabelPaid": "(Mokama)",
+      "roleLabelFree": "(Nemokama)",
+      "roleLabelTrigger": "(Aktyviklis)",
+      "roleLabelRequired": "(Privaloma)",
+      "itemsGroupN": "Prekių grupė {n}",
+      "slotPickAtLeast": "Pasirink bent",
+      "slotUpTo": "iki",
+      "slotItems": "prekių",
+      "specialityFeeInlineLabel": "Specialybės mokestis +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {# dydžiui} few {# dydžiams} many {# dydžio} other {# dydžių}}",
+      "specialityFeeForAll": "visiems dydžiams — pasirink, kurie kainuoja papildomai",
+      "extraChargeLabel": "Mokesčiai už nemokamą prekę",
+      "extraChargeNone": "Jokių papildomų mokesčių (visa nemokama prekė yra nemokama)",
+      "extraChargeAddons": "Papildomas mokestis už pasirinkimus / priedus (užpilai vis tiek apmokestinami)",
+      "extraChargeAddonsSizes": "Papildomas mokestis už pasirinkimus / priedus ir dydžius (užpilai + dydžio pakeitimas apmokestinami)",
+      "extraChargeHint": "Ar nemokamos prekės užpilai ir dydžio pakeitimas vis dar apmokestinami — kaip GloriaFood.",
+      "discountStrategyNoteFreed": "Grupės „nemokama“ prekė yra ta, kuriai taikoma nuolaida — nepriklausomai nuo kainos. % viršuje yra suteikiama nuolaida (100% = nemokama).",
+      "discountStrategyNoteMostExpensive": "BOGO nuolaidą taiko BRANGESNEI iš dviejų tinkamų prekių. Kad visada būtų nuolaida vienai konkrečiai prekei, naudokite pasiūlymą „Pirk N, gauk nemokamai“.",
+      "discountStrategyNoteFixedPercent": "Kiekvienai prekei su nuolaida taikomas šis % — pigesnei, kai pora atitinka sąlygas. Kad visada būtų nuolaida vienai konkrečiai prekei, naudokite pasiūlymą „Pirk N, gauk nemokamai“.",
+      "discountStrategyNoteCheapest": "BOGO nuolaidą taiko PIGESNEI iš dviejų tinkamų prekių — tad jei „nemokama“ prekė kainuoja daugiau, nuolaida taikoma pigesnei (klientas negali pigiai gauti brangesnės prekės). Kad visada būtų nuolaida vienai konkrečiai prekei (pvz., makaronams), naudokite pasiūlymą „Pirk N, gauk nemokamai“.",
+      "discountStrategyLabel": "Nuolaidos strategija",
+      "strategyCheapest": "Nustatyti nuolaidas automatiškai (pigiausia prekė nemokamai)",
+      "strategyMostExpensive": "Nustatyti nuolaidas automatiškai (brangiausia prekė nemokamai)",
+      "strategyFixedPercent": "Fiksuotas nuolaidos procentas",
+      "pctOffCheapest": "% nuolaida pigiausiai prekei",
+      "pctOffMostExpensive": "% nuolaida brangiausiai prekei"
     },
     "promoStepRestrictions": {
       "pageTitle": "Apribojimai ir rodymas",
@@ -3156,7 +3377,8 @@
       "channelBothLabel": "Abu",
       "hiddenCodeInfo": "Paslėptos akcijos taikomos tik tada, kai klientas atsiskaitydamas įveda šį kodą.",
       "vipLockedTitle": "Tik VIP — susieta su: {groups}",
-      "vipLockedDesc": "Ši akcija automatiškai taikoma tik tiems VIP nariams atsiskaitant. Ji niekada nerodoma viešame meniu, reklamjuostėje ar svetainėje — joks matomumo jungiklis to nepakeis. Norėdami ją paviešinti, pirmiausia atjunkite ją VIP grupių puslapyje."
+      "vipLockedDesc": "Ši akcija automatiškai taikoma tik tiems VIP nariams atsiskaitant. Ji niekada nerodoma viešame meniu, reklamjuostėje ar svetainėje — joks matomumo jungiklis to nepakeis. Norėdami ją paviešinti, pirmiausia atjunkite ją VIP grupių puslapyje.",
+      "bundleBuildInfo": "💡 Klientai šį rinkinį sudaro iš kortelės „Sudaryk savo pasiūlymą“ jūsų meniu. Prisekite jį prie žemiau esančio reklaminio skydelio, kad būtų lengva rasti. (Rinkinio negalima pritaikyti automatiškai ar atrakinti kodu.)"
     },
     "customersList": {
       "heading": "Klientai",

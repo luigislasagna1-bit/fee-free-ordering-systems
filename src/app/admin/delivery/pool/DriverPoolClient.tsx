@@ -182,10 +182,10 @@ export function DriverPoolClient({
       if (data?.ok) {
         setTestResult({ ok: true, msg: t("testSuccess") });
       } else {
-        setTestResult({ ok: false, msg: t("testFailed", { error: data?.error || "Unknown error" }) });
+        setTestResult({ ok: false, msg: t("testFailed", { error: data?.error || t("errorUnknown") }) });
       }
     } catch (e: any) {
-      setTestResult({ ok: false, msg: t("testFailed", { error: e?.message || "Network error" }) });
+      setTestResult({ ok: false, msg: t("testFailed", { error: e?.message || t("errorNetwork") }) });
     } finally {
       setTesting(false);
     }

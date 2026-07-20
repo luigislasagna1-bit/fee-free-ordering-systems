@@ -91,7 +91,8 @@
     "menu": "菜单",
     "loadingDots": "加载中…",
     "previous": "上一个",
-    "kmFromStore": "距门店 {km} 公里"
+    "kmFromStore": "距门店 {km} 公里",
+    "apply": "应用"
   },
   "auth": {
     "signIn": "登录",
@@ -1105,7 +1106,26 @@
       "removeSlot": "删除时间段",
       "closesNextDay": "次日关闭（例如营业至午夜后）",
       "holidayNeedsDate": "请先选择开始日期。",
-      "holidayWindowOutsideService": "{window} 不在当天的{service}营业时间内。特殊时段必须在该服务的正常营业时间之内。"
+      "holidayWindowOutsideService": "{window} 不在当天的{service}营业时间内。特殊时段必须在该服务的正常营业时间之内。",
+      "copiedDayToAll": "已将{day}复制到所有其他日期",
+      "copiedDayToClosed": "已将{day}复制到休息日",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "默认（所有服务）",
+      "tabReservation": "预订",
+      "tabAddSuffix": "+ 添加",
+      "removeOverrideAria": "移除{service}的覆盖设置",
+      "removeOverrideTitle": "移除覆盖设置（过时的行会保留在数据库中，直到你重新启用该标签页并保存）",
+      "hoursForServiceOnly": "仅适用于{service}的营业时间",
+      "markClosed": "标记为休息",
+      "markOpen": "标记为营业",
+      "copyHoursTitle": "将此营业时间复制到其他日期",
+      "applyTo": "应用到…",
+      "applyToAllDays": "应用到<strong>所有其他日期</strong>",
+      "applyToClosedDays": "仅应用到<strong>当前休息的日期</strong>",
+      "dayAbbrev": "周日, 周一, 周二, 周三, 周四, 周五, 周六"
     },
     "services": {
       "title": "餐厅服务",
@@ -1205,7 +1225,42 @@
         "colRequired": "必填",
         "saved": "配送地址表单已更新"
       },
-      "estimatedMinutesHint": "该区域地址的总预计送达时间（备餐 + 路程）。顾客在结账时看到这个数字，它决定“稍后配送”的最早时段——它会覆盖配送服务的默认预计时间。合理值为 30–60 分钟，而非仅路程时间。"
+      "estimatedMinutesHint": "该区域地址的总预计送达时间（备餐 + 路程）。顾客在结账时看到这个数字，它决定“稍后配送”的最早时段——它会覆盖配送服务的默认预计时间。合理值为 30–60 分钟，而非仅路程时间。",
+      "toastNoAddress": "未设置地址。请先完善您的餐厅资料。",
+      "toastAddressNotFound": "找不到此地址。请在餐厅资料中更新地址后重试。",
+      "toastLocationPinned": "餐厅位置已固定在地图上！",
+      "toastGeocodeFailed": "地理编码失败。请检查您的网络连接。",
+      "toastLocationUpdated": "餐厅位置已更新！",
+      "toastZoneNameRequired": "区域名称为必填项",
+      "toastSetLocationFirst": "请先设置餐厅位置（区域是围绕它的同心圆）。",
+      "toastSaveZoneFailed": "保存区域失败",
+      "toastZoneAdded": "已添加区域“{name}”！",
+      "toastUpdateZoneFailed": "更新区域失败",
+      "confirmDeleteZone": "删除配送区域“{name}”？此操作无法撤销。",
+      "toastZoneDeleted": "区域已删除",
+      "locationNotSetTitle": "未设置餐厅位置",
+      "locationNotSetDesc": "配送区域需要以您餐厅的坐标作为原点。<link>在餐厅资料中进行设置</link>，或使用下方按钮对您当前的地址进行地理编码。",
+      "locateRestaurant": "定位餐厅",
+      "locating": "定位中…",
+      "relocate": "重新定位",
+      "legendActiveZone": "启用的区域",
+      "legendInactiveZone": "停用的区域",
+      "rowFee": "{amount} 费用",
+      "rowMin": "最低 {amount}",
+      "unitKm": "公里",
+      "unitMinutes": "分钟",
+      "detailStdTime": "标准时间",
+      "editFee": "费用 ({sym})",
+      "editMin": "最低 ({sym})",
+      "editStdTime": "标准时间（分钟）",
+      "mapRestaurantTitle": "餐厅（拖动以调整）",
+      "mapResizeHandleTitle": "{km} 公里 — 拖动以调整大小",
+      "mapFeeLabel": "费用：",
+      "mapMinLabel": "最低：",
+      "mapRadiusLabel": "半径：",
+      "mapEtaLabel": "预计：",
+      "mapDragHint": "拖动手柄以调整大小",
+      "mapDragHintShort": "拖动以调整大小"
     },
     "reservations": {
       "title": "预订",
@@ -1286,7 +1341,38 @@
       "amount": "金额",
       "schedule": "时间安排",
       "status": "状态",
-      "confirmDelete": "确认删除\"{name}\"？"
+      "confirmDelete": "确认删除\"{name}\"？",
+      "taxRateRangeError": "税率必须介于 0 和 100 之间",
+      "salesTaxTitle": "销售税率",
+      "salesTaxHelp": "适用于每笔订单的应税小计。如不收取销售税，请设为 0。（例如 13 表示 13% 的 HST。）",
+      "rateLabel": "税率 (%)",
+      "savingLabel": "保存中…",
+      "saveTaxRate": "保存税率",
+      "currencyTitle": "货币",
+      "currencyHelp": "决定顾客看到的每个价格，以及 Stripe/PayPal 收费、收据和报告。更改货币不会转换现有价格——如果从 USD 切换到 EUR（等），请相应更新菜单价格。",
+      "currencyLabel": "货币",
+      "currencySample": "示例：<strong>{value}</strong>",
+      "tipsTitle": "顾客小费",
+      "tipsHelp": "关闭时，顾客购物车会完全隐藏小费选择器，服务器会将任何被篡改的客户端数值归零。一些餐厅（例如在没有小费习惯的国家）倾向于不显示小费提示。",
+      "tipsAriaDisable": "关闭小费",
+      "tipsAriaEnable": "开启小费",
+      "menuSearchTitle": "顾客菜单搜索",
+      "menuSearchHelp": "开启时，顾客点餐页面会显示一个放大镜搜索栏，方便访客输入以快速查找项目。如果您希望他们只通过分类按钮浏览，请关闭。",
+      "menuSearchAriaHide": "在顾客页面隐藏菜单搜索",
+      "menuSearchAriaShow": "在顾客页面显示菜单搜索",
+      "itemNotesTitle": "单项特殊说明",
+      "itemNotesHelp": "开启时，顾客可以为<each>每个项目</each>添加备注（例如“更酥脆”“这个不要洋葱”）— 它会打印在该项目的厨房小票上。关闭时，他们在结账时仍可为<whole>整个订单</whole>留一条备注。",
+      "itemNotesAriaOff": "关闭单项备注",
+      "itemNotesAriaOn": "开启单项备注",
+      "schedulingTitle": "预约与结账表单",
+      "schedulingHelp": "控制顾客可以预约哪些时段，以及结账时哪些联系字段为必填。",
+      "slotIntervalLabel": "时段间隔（分钟）",
+      "slotIntervalHelp": "顾客只能按此节奏预约订单（与 GloriaFood 一致）。默认值为 15——较慢的厨房可改为 30。",
+      "minutesOption": "{n} 分钟",
+      "requirePhoneLabel": "要求顾客电话",
+      "requirePhoneHelp": "开启时，结账表单会拒绝没有电话号码的订单。建议用于配送，以便厨房可就交接来电。",
+      "requirePhoneAriaOptional": "将电话设为可选",
+      "requirePhoneAriaRequired": "将电话设为必填"
     },
     "mapSettings": {
       "title": "地图设置",
@@ -1502,7 +1588,19 @@
       "popularBadge": "热门",
       "addOnEnableCta": "启用",
       "perMonth": "/月",
-      "kitchenAlertsSection": "厨房与订单提醒"
+      "kitchenAlertsSection": "厨房与订单提醒",
+      "currentPlanWithAddOns": "当前套餐：FREE + {count} 个附加功能",
+      "currentPlanFree": "当前套餐：FREE",
+      "freePlanDescription": "点餐组件、后台、菜单、厨房应用 — 无需银行卡。永久每月最多接受 100 个订单。随时可在账单页面添加付费功能。",
+      "feature100Orders": "每月 100 个订单",
+      "featureUnlimitedMenu": "无限菜单项",
+      "featureCustomerAccounts": "客户账户",
+      "activeAddOnsHeading": "已启用的附加功能",
+      "trialBadge": "试用",
+      "manageSubscriptionsHeading": "管理您的订阅",
+      "upgradeWithAddOnsHeading": "使用付费附加功能升级",
+      "manageBillingCta": "管理账单",
+      "browseAddOnsCta": "浏览附加功能"
     },
     "coupons": {
       "title": "优惠券",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "尚未通过 VIES 核验",
       "viesVerifyNow": "立即核验",
       "viesUnreachable": "VIES 服务暂时不可用——请几分钟后重试。",
-      "euVatNote": "欧盟企业：付费订阅需要在 VIES 注册的增值税号。已验证的税号按 0% 增值税开票（反向征收）。"
+      "euVatNote": "欧盟企业：付费订阅需要在 VIES 注册的增值税号。已验证的税号按 0% 增值税开票（反向征收）。",
+      "perOrder": "/单",
+      "paygOrderCount": "{count} 个订单"
     },
     "addOns": {
       "errorCheckout": "启动结账失败",
@@ -1757,7 +1857,19 @@
       "yesCancel": "确认取消",
       "compFreeUntil": "免费至 {date}",
       "compExplainer": "此附加功能在该日期前免费——不会自动续订。立即订阅即可保留：您的卡今天保存，免费期结束后才开始计费。",
-      "compSubscribeCta": "订阅以保留"
+      "compSubscribeCta": "订阅以保留",
+      "pageIntro": "核心产品永久免费。通过订阅相应的附加功能来解锁下方的各项功能。随时可取消 — 在计费周期结束前您都可继续使用。",
+      "subscribedBanner": "<strong>成功！</strong>您的订阅正在激活。功能解锁最多可能需要一分钟。",
+      "settingsLinks": {
+        "hostedWebsite": "打开网站编辑器",
+        "onlinePayments": "管理 Stripe Connect",
+        "driverPool": "配置司机池",
+        "multiLocation": "管理门店",
+        "customDomain": "连接您的域名",
+        "advancedPromoMarketing": "开展促销活动",
+        "reservationDeposits": "配置预订",
+        "brandedMobileApp": "配置应用"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "已上线",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "已分配",
       "labelVip": "VIP",
       "badgeDeadTargets": "没有可用菜品 — 请重新选择",
-      "searchPlaceholder": "按名称或优惠码搜索…"
+      "searchPlaceholder": "按名称或优惠码搜索…",
+      "typeLabels": {
+        "percentage_off": "指定商品 % 折扣",
+        "fixed_cart": "购物车固定折扣",
+        "free_delivery": "免费配送",
+        "bogo": "买一送一",
+        "buy_n_get_free": "买 N 送一",
+        "free_item": "获得免费商品",
+        "meal_bundle": "套餐组合",
+        "meal_bundle_speciality": "含特色菜的套餐组合",
+        "fixed_combo": "套餐组合固定折扣",
+        "percentage_combo": "套餐组合 % 折扣",
+        "payment_reward": "支付方式奖励",
+        "free_dish_meal": "作为套餐一部分的免费菜品"
+      },
+      "campaignFallback": "营销活动"
     },
     "promoWizard": {
       "errorPickType": "请选择促销类型以继续。",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "买N赠免阶梯折扣",
       "featureFreeDish": "套餐中含免费菜品",
       "maybeLater": "稍后再说",
-      "subscribe": "立即订阅"
+      "subscribe": "立即订阅",
+      "types": {
+        "percentage_off": {
+          "name": "购物车 % 折扣",
+          "desc": "对整个订单（或特定商品）打百分比折扣。"
+        },
+        "free_delivery": {
+          "name": "免费配送",
+          "desc": "为符合条件的订单免除配送费。"
+        },
+        "bogo": {
+          "name": "买一送一",
+          "desc": "将一件付费商品与一件免费（或打折）商品搭配。"
+        },
+        "fixed_cart": {
+          "name": "购物车固定折扣",
+          "desc": "从订单中扣除固定金额。"
+        },
+        "payment_reward": {
+          "name": "支付方式奖励",
+          "desc": "使用特定方式（如现金）支付可享折扣。"
+        },
+        "free_item": {
+          "name": "获得免费商品",
+          "desc": "消费 X，从精选清单中获得一件免费商品。"
+        },
+        "meal_bundle": {
+          "name": "套餐组合",
+          "desc": "以固定套餐价格自由搭配各栏位。"
+        },
+        "buy_n_get_free": {
+          "name": "买 N 送一",
+          "desc": "添加 N 件商品，下一件（最便宜或所选）免费。"
+        },
+        "free_dish_meal": {
+          "name": "作为套餐一部分的免费菜品",
+          "desc": "点一份主菜 + 配菜，获得一份甜点（或任意附加品）免费。"
+        },
+        "fixed_combo": {
+          "name": "套餐固定折扣",
+          "desc": "搭配特定商品，扣除固定金额。"
+        },
+        "percentage_combo": {
+          "name": "套餐 % 折扣",
+          "desc": "搭配特定商品，扣除百分比折扣。"
+        },
+        "meal_bundle_speciality": {
+          "name": "含特色菜的套餐组合",
+          "desc": "含可选加价升级的套餐组合（例如龙虾 +$5）。"
+        },
+        "reward_credit": {
+          "name": "赠送 Reward Dollars",
+          "desc": "在此订单中以店铺积分奖励顾客，而非折扣。"
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "配置您的促销活动",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "勾选后，此优惠每笔订单仅适用一次，即使购物车满足多次适用条件也是如此（例如本可重复触发的\"买一送一\"优惠）。",
       "rewardCreditLabel": "要赠送的奖励美元",
       "rewardCreditHint": "此订单完成时计入顾客余额——不抵扣购物车金额。需启用奖励美元。",
-      "oncePerOrderHintPercent": "勾选后，百分比折扣仅适用于一件商品——购物车中符合条件的最贵商品（例如“一份主菜八折”）。取消勾选则对所有符合条件的商品打折。"
+      "oncePerOrderHintPercent": "勾选后，百分比折扣仅适用于一件商品——购物车中符合条件的最贵商品（例如“一份主菜八折”）。取消勾选则对所有符合条件的商品打折。",
+      "groupNoItems": "未选择商品 — 点击编辑",
+      "groupMoreCategories": "+{n} 项",
+      "pickerHeading": "选择分类或商品",
+      "pickerNoCategories": "未找到分类",
+      "allSizesSuffix": " · 所有尺寸",
+      "groupSpecificItems": "{count} 个指定商品",
+      "groupSizes": "{count} 种尺寸",
+      "specialityFeeTitle": "仅对这些尺寸收取费用",
+      "specialityFeeDesc": "勾选需加收费用的高级尺寸 — 基础尺寸保持免费。全部不勾选则每次选择都收费。",
+      "specialityFeeEmpty": "先选择此位置的商品，再选择哪些尺寸额外收费。",
+      "wholeItemAllSizesSuffix": " · 整个商品（所有尺寸）",
+      "roleLabelPaid": "（付费）",
+      "roleLabelFree": "（免费）",
+      "roleLabelTrigger": "（触发）",
+      "roleLabelRequired": "（必选）",
+      "itemsGroupN": "商品组 {n}",
+      "slotPickAtLeast": "至少选择",
+      "slotUpTo": "最多",
+      "slotItems": "件商品",
+      "specialityFeeInlineLabel": "特色费用 +{currencySymbol}",
+      "specialityFeeForSizes": "适用于 {count} 种尺寸",
+      "specialityFeeForAll": "适用于所有尺寸 — 选择哪些额外收费",
+      "extraChargeLabel": "免费商品的费用",
+      "extraChargeNone": "无额外费用（整个免费商品完全免费）",
+      "extraChargeAddons": "对选项 / 附加项额外收费（配料仍计费）",
+      "extraChargeAddonsSizes": "对选项 / 附加项和尺寸额外收费（配料 + 尺寸升级计费）",
+      "extraChargeHint": "免费商品的配料和尺寸升级是否仍然收费 — 与 GloriaFood 一致。",
+      "discountStrategyNoteFreed": "获得折扣的是“免费”组中的商品 — 无论价格如何。上方的百分比即为折扣幅度（100% = 免费）。",
+      "discountStrategyNoteMostExpensive": "BOGO 对两件符合条件的商品中较贵的一件打折。若要始终对某一特定商品打折，请使用“买 N 件送一件”优惠。",
+      "discountStrategyNoteFixedPercent": "每件打折商品获得此百分比折扣 — 当一对符合条件时为较便宜的一件。若要始终对某一特定商品打折，请使用“买 N 件送一件”优惠。",
+      "discountStrategyNoteCheapest": "BOGO 对两件符合条件的商品中较便宜的一件打折 — 因此如果“免费”商品更贵，则改为较便宜的一件打折（顾客无法低价买到更贵的商品）。若要始终对某一特定商品（例如意面）打折，请使用“买 N 件送一件”优惠。",
+      "discountStrategyLabel": "折扣策略",
+      "strategyCheapest": "自动设置折扣（最便宜的商品免费）",
+      "strategyMostExpensive": "自动设置折扣（最贵的商品免费）",
+      "strategyFixedPercent": "固定折扣百分比",
+      "pctOffCheapest": "最便宜商品的折扣百分比",
+      "pctOffMostExpensive": "最贵商品的折扣百分比"
     },
     "promoStepRestrictions": {
       "pageTitle": "限制条件与展示",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "两者",
       "hiddenCodeInfo": "隐藏的促销仅在顾客结账时输入此代码后才会生效。",
       "vipLockedTitle": "仅限 VIP — 关联：{groups}",
-      "vipLockedDesc": "此促销仅对这些 VIP 会员在结账时自动生效。它永远不会出现在公开菜单、横幅或网站上——任何可见性开关都无法改变这一点。要公开它，请先在 VIP 组页面解除关联。"
+      "vipLockedDesc": "此促销仅对这些 VIP 会员在结账时自动生效。它永远不会出现在公开菜单、横幅或网站上——任何可见性开关都无法改变这一点。要公开它，请先在 VIP 组页面解除关联。",
+      "bundleBuildInfo": "💡 顾客通过菜单上的“自选套餐”卡片来搭配此套餐。将其固定到下方横幅，方便查找。（套餐无法自动应用或通过优惠码解锁。）"
     },
     "customersList": {
       "heading": "顾客",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "保存一次设置（选择 ShipDay 作为配送来源），您的专属 Webhook 链接就会显示在这里。",
       "feeFromZonesTitle": "顾客配送费用",
       "feeFromZonesBody": "顾客支付的配送费用在“配送区域”页面设置——与使用自有司机时相同。ShipDay 会就每笔配送单独向您的餐厅收费；请向您的 ShipDay 联系人询问您的每单配送费率。",
-      "feeFromZonesLink": "打开配送区域"
+      "feeFromZonesLink": "打开配送区域",
+      "errorUnknown": "未知错误",
+      "errorNetwork": "网络错误"
     },
     "driverPoolLocked": {
       "addonBadge": "附加功能",
@@ -3191,7 +3412,8 @@
       "feature2Title": "由您定价",
       "feature2Body": "透传（顾客支付全额 ShipDay 费用）、固定费（您承担差额）或分档（如满 $50 免费）。完全掌控。",
       "feature3Title": "按订单切换",
-      "feature3Body": "混合使用自有司机和 ShipDay。厨房在每个配送订单上可选择：内部司机或司机池。每次由您决定。"
+      "feature3Body": "混合使用自有司机和 ShipDay。厨房在每个配送订单上可选择：内部司机或司机池。每次由您决定。",
+      "perMonth": "/月"
     },
     "marketplaceLocked": {
       "addonBadge": "附加功能",

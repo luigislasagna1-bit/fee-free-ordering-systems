@@ -3,7 +3,7 @@ import {
   CreditCard, Zap, CheckCircle2,
   ChevronRight, Shield, ArrowUpRight, ExternalLink, Sparkles,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useCurrencyFormat } from "@/lib/currency-context";
 // Kitchen workflow / backup printer / auto phone-call / new-order vibration —
 // moved here from the Orders screen (Luigi 2026-06-16). The component still
@@ -52,6 +52,9 @@ export function SettingsClient({
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.settings");
   const tSidebar = useTranslations("admin.sidebar");
+  const tPromo = useTranslations("admin.promotionsList");
+  const tLocked = useTranslations("admin.featureLocked");
+  const locale = useLocale();
 
   const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -141,24 +144,22 @@ export function SettingsClient({
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <h3 className="font-semibold text-gray-900">
                         {hasPaid
-                          ? `Current Plan: FREE + ${activeAddOns.length} add-on${activeAddOns.length === 1 ? "" : "s"}`
-                          : "Current Plan: FREE"}
+                          ? t("currentPlanWithAddOns", { count: activeAddOns.length })
+                          : t("currentPlanFree")}
                       </h3>
                       <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
                         {formatCurrency(monthlyTotalCents / 100)}{t("perMonth")}
                       </span>
                     </div>
                     <p className="text-sm text-gray-500">
-                      Ordering widget, admin, menu, kitchen app — no card
-                      required. Accept up to 100 orders/month forever. Add
-                      paid features any time from the Billing page.
+                      {t("freePlanDescription")}
                     </p>
                     <div className="flex flex-wrap gap-2 mt-3">
                       {[
-                        "100 orders/month",
-                        "Unlimited menu items",
-                        "Kitchen Order App",
-                        "Customer accounts",
+                        t("feature100Orders"),
+                        t("featureUnlimitedMenu"),
+                        tSidebar("kitchenOrderApp"),
+                        t("featureCustomerAccounts"),
                       ].map((f) => (
                         <div key={f} className="flex items-center gap-1 text-xs text-gray-600 bg-green-50 border border-green-100 rounded-full px-2.5 py-1">
                           <CheckCircle2 className="w-3 h-3 text-green-500" />
@@ -178,7 +179,7 @@ export function SettingsClient({
                 {hasPaid && (
                   <div className="border-t border-gray-100 pt-5 mb-5">
                     <div className="text-sm font-medium text-gray-700 mb-3 flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-amber-500" /> Active add-ons
+                      <Sparkles className="w-4 h-4 text-amber-500" /> {t("activeAddOnsHeading")}
                     </div>
                     <div className="space-y-2">
                       {activeAddOns.map((a) => {
@@ -193,12 +194,12 @@ export function SettingsClient({
                                 <span className="font-semibold text-gray-900 text-sm">{a.name}</span>
                                 {a.status === "trialing" && (
                                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 uppercase tracking-wide">
-                                    Trial
+                                    {t("trialBadge")}
                                   </span>
                                 )}
                                 {endingSoon && (
                                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-orange-100 text-orange-700 uppercase tracking-wide">
-                                    Ends {new Date(a.currentPeriodEnd!).toLocaleDateString()}
+                                    {tPromo("endsOn", { date: new Date(a.currentPeriodEnd!).toLocaleDateString(locale) })}
                                   </span>
                                 )}
                               </div>
@@ -218,25 +219,25 @@ export function SettingsClient({
 
                 <div className="border-t border-gray-100 pt-5">
                   <div className="text-sm font-medium text-gray-700 mb-3">
-                    {hasPaid ? "Manage your subscriptions" : "Upgrade with paid add-ons"}
+                    {hasPaid ? t("manageSubscriptionsHeading") : t("upgradeWithAddOnsHeading")}
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <a
                       href="/admin/billing"
                       className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
                     >
-                      Manage Billing <ArrowUpRight className="w-3.5 h-3.5" />
+                      {t("manageBillingCta")} <ArrowUpRight className="w-3.5 h-3.5" />
                     </a>
                     <a
                       href="/admin/billing/add-ons"
                       className="inline-flex items-center gap-2 border border-emerald-300 text-emerald-600 hover:bg-emerald-50 font-semibold px-4 py-2 rounded-lg text-sm transition"
                     >
-                      Browse Add-ons <ExternalLink className="w-3.5 h-3.5" />
+                      {t("browseAddOnsCta")} <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   </div>
                   <p className="text-xs text-gray-400 mt-3 flex items-center gap-1">
                     <Shield className="w-3.5 h-3.5" />
-                    Billing is handled securely through Stripe. Cancel anytime.
+                    {tLocked("footerNote")}
                   </p>
                 </div>
               </>

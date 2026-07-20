@@ -91,7 +91,8 @@
     "menu": "Menu",
     "loadingDots": "Načítavam…",
     "previous": "Späť",
-    "kmFromStore": "{km} km od podniku"
+    "kmFromStore": "{km} km od podniku",
+    "apply": "Použiť"
   },
   "auth": {
     "signIn": "Prihlásiť sa",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Odstrániť časový úsek",
       "closesNextDay": "Zatvára nasledujúci deň (napr. otvorené po polnoci)",
       "holidayNeedsDate": "Najprv vyberte dátum začiatku.",
-      "holidayWindowOutsideService": "{window} je mimo hodín služby {service} v daný deň. Výnimočné hodiny musia byť v rámci bežných hodín služby."
+      "holidayWindowOutsideService": "{window} je mimo hodín služby {service} v daný deň. Výnimočné hodiny musia byť v rámci bežných hodín služby.",
+      "copiedDayToAll": "{day} skopírované do všetkých ostatných dní",
+      "copiedDayToClosed": "{day} skopírované do zatvorených dní",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Predvolené (všetky služby)",
+      "tabReservation": "Rezervácia",
+      "tabAddSuffix": "+ Pridať",
+      "removeOverrideAria": "Odstrániť výnimku pre {service}",
+      "removeOverrideTitle": "Odstrániť výnimku (zastarané riadky zostanú v databáze, kým neuložíte so znovu povolenou kartou)",
+      "hoursForServiceOnly": "Otváracie hodiny len pre {service}",
+      "markClosed": "Označiť ako zatvorené",
+      "markOpen": "Označiť ako otvorené",
+      "copyHoursTitle": "Skopírovať tieto hodiny do iných dní",
+      "applyTo": "Použiť na…",
+      "applyToAllDays": "Použiť na <strong>všetky ostatné dni</strong>",
+      "applyToClosedDays": "Použiť len na <strong>aktuálne zatvorené dni</strong>",
+      "dayAbbrev": "ne, po, ut, st, št, pi, so"
     },
     "services": {
       "title": "Služby reštaurácie",
@@ -1205,7 +1225,42 @@
         "colRequired": "Povinné",
         "saved": "Formulár doručovacej adresy bol aktualizovaný"
       },
-      "estimatedMinutesHint": "CELKOVÝ odhad času doručenia (príprava + cesta) pre adresy v tejto zóne. Zákazníci toto číslo vidia pri pokladni a určuje najskorší slot \"na neskôr\" — prepisuje predvolený odhad doručovacej služby. Realistická hodnota je 30–60 min, nie iba cesta."
+      "estimatedMinutesHint": "CELKOVÝ odhad času doručenia (príprava + cesta) pre adresy v tejto zóne. Zákazníci toto číslo vidia pri pokladni a určuje najskorší slot \"na neskôr\" — prepisuje predvolený odhad doručovacej služby. Realistická hodnota je 30–60 min, nie iba cesta.",
+      "toastNoAddress": "Nie je nastavená adresa. Najprv doplňte profil reštaurácie.",
+      "toastAddressNotFound": "Túto adresu sa nepodarilo nájsť. Aktualizujte adresu v profile reštaurácie a skúste to znova.",
+      "toastLocationPinned": "Poloha reštaurácie pripnutá na mape!",
+      "toastGeocodeFailed": "Geokódovanie zlyhalo. Skontrolujte pripojenie na internet.",
+      "toastLocationUpdated": "Poloha reštaurácie aktualizovaná!",
+      "toastZoneNameRequired": "Názov zóny je povinný",
+      "toastSetLocationFirst": "Najprv nastavte polohu reštaurácie (zóny sú sústredné kruhy okolo nej).",
+      "toastSaveZoneFailed": "Zónu sa nepodarilo uložiť",
+      "toastZoneAdded": "Zóna „{name}“ pridaná!",
+      "toastUpdateZoneFailed": "Zónu sa nepodarilo aktualizovať",
+      "confirmDeleteZone": "Odstrániť doručovaciu zónu „{name}“? Túto akciu nie je možné vrátiť späť.",
+      "toastZoneDeleted": "Zóna odstránená",
+      "locationNotSetTitle": "Poloha reštaurácie nie je nastavená",
+      "locationNotSetDesc": "Doručovacie zóny potrebujú ako počiatok súradnice vašej reštaurácie. <link>Nastavte ich v profile reštaurácie</link> alebo použite tlačidlo nižšie na geokódovanie aktuálnej adresy.",
+      "locateRestaurant": "Nájsť reštauráciu",
+      "locating": "Vyhľadávanie…",
+      "relocate": "Nájsť znova",
+      "legendActiveZone": "Aktívna zóna",
+      "legendInactiveZone": "Neaktívna zóna",
+      "rowFee": "poplatok {amount}",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Štd. čas",
+      "editFee": "Poplatok ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Štd. čas (min)",
+      "mapRestaurantTitle": "Reštaurácia (potiahnutím upravíte)",
+      "mapResizeHandleTitle": "{km} km — potiahnutím zmeníte veľkosť",
+      "mapFeeLabel": "Poplatok:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Polomer:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Potiahnutím úchytu zmeníte veľkosť",
+      "mapDragHintShort": "potiahnutím zmeníte veľkosť"
     },
     "reservations": {
       "title": "Rezervácie",
@@ -1286,7 +1341,38 @@
       "amount": "Suma",
       "schedule": "Plán",
       "status": "Stav",
-      "confirmDelete": "Odstrániť \"{name}\"?"
+      "confirmDelete": "Odstrániť \"{name}\"?",
+      "taxRateRangeError": "Sadzba dane musí byť medzi 0 a 100",
+      "salesTaxTitle": "Sadzba dane z predaja",
+      "salesTaxHelp": "Uplatňuje sa na zdaniteľný medzisúčet každej objednávky. Nastavte 0, ak daň z predaja nevyberáte. (napr. 13 pre 13% HST.)",
+      "rateLabel": "Sadzba (%)",
+      "savingLabel": "Ukladá sa…",
+      "saveTaxRate": "Uložiť sadzbu",
+      "currencyTitle": "Mena",
+      "currencyHelp": "Určuje každú cenu, ktorú zákazník vidí, aj platby Stripe/PayPal, účtenky a prehľady. Zmena meny NEPREPOČÍTAVA existujúce ceny — ak prejdete z USD na EUR (atď.), upravte ceny v menu.",
+      "currencyLabel": "Mena",
+      "currencySample": "Príklad: <strong>{value}</strong>",
+      "tipsTitle": "Prepitné od zákazníkov",
+      "tipsHelp": "Keď je VYPNUTÉ, košík zákazníka úplne skryje výber prepitného a server akúkoľvek pozmenenú hodnotu klienta nastaví na 0. Niektoré reštaurácie (napr. v krajinách, kde prepitné nie je zvykom) radšej výzvy na prepitné nezobrazujú.",
+      "tipsAriaDisable": "Zakázať prepitné",
+      "tipsAriaEnable": "Povoliť prepitné",
+      "menuSearchTitle": "Vyhľadávanie v menu pre zákazníka",
+      "menuSearchHelp": "Keď je ZAPNUTÉ, objednávková stránka zákazníka zobrazuje vyhľadávacie pole s lupou, aby návštevníci rýchlo našli položky písaním. VYPNITE, ak chcete, aby prechádzali len cez tlačidlá kategórií.",
+      "menuSearchAriaHide": "Skryť vyhľadávanie v menu na stránke zákazníka",
+      "menuSearchAriaShow": "Zobraziť vyhľadávanie v menu na stránke zákazníka",
+      "itemNotesTitle": "Špeciálne pokyny k položke",
+      "itemNotesHelp": "Keď je ZAPNUTÉ, zákazníci môžu pridať poznámku ku <each>každej položke</each> (napr. „extra chrumkavé“, „bez cibule na tejto“) — vytlačí sa na kuchynskej účtenke pre danú položku. VYPNUTÉ stále môžu pri platbe nechať jednu poznámku k <whole>celej objednávke</whole>.",
+      "itemNotesAriaOff": "Vypnúť poznámky k položkám",
+      "itemNotesAriaOn": "Zapnúť poznámky k položkám",
+      "schedulingTitle": "Plánovanie a formulár pokladne",
+      "schedulingHelp": "Určte, na aké časové sloty si zákazníci môžu naplánovať, a ktoré kontaktné polia sú pri platbe povinné.",
+      "slotIntervalLabel": "Interval slotov (minúty)",
+      "slotIntervalHelp": "Zákazníci si môžu objednávky naplánovať len v tejto kadencii (ako GloriaFood). Predvolené je 15 — pre pomalšie kuchyne zmeňte na 30.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Vyžadovať telefón zákazníka",
+      "requirePhoneHelp": "Keď je ZAPNUTÉ, formulár pokladne odmietne objednávky bez telefónneho čísla. Odporúča sa pri rozvoze, aby kuchyňa mohla zavolať ohľadom odovzdania.",
+      "requirePhoneAriaOptional": "Nastaviť telefón ako voliteľný",
+      "requirePhoneAriaRequired": "Nastaviť telefón ako povinný"
     },
     "mapSettings": {
       "title": "Nastavenia mapy",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Obľúbené",
       "addOnEnableCta": "Aktivovať",
       "perMonth": "/mes.",
-      "kitchenAlertsSection": "Kuchyňa a upozornenia na objednávky"
+      "kitchenAlertsSection": "Kuchyňa a upozornenia na objednávky",
+      "currentPlanWithAddOns": "Aktuálny plán: FREE + {count, plural, one {# doplnok} few {# doplnky} many {# doplnku} other {# doplnkov}}",
+      "currentPlanFree": "Aktuálny plán: FREE",
+      "freePlanDescription": "Widget objednávok, administrácia, menu, kuchynská aplikácia — bez karty. Prijímajte až 100 objednávok/mesiac navždy. Platené funkcie pridajte kedykoľvek na stránke Fakturácia.",
+      "feature100Orders": "100 objednávok/mesiac",
+      "featureUnlimitedMenu": "Neobmedzené položky menu",
+      "featureCustomerAccounts": "Zákaznícke účty",
+      "activeAddOnsHeading": "Aktívne doplnky",
+      "trialBadge": "Skúšobné",
+      "manageSubscriptionsHeading": "Spravovať predplatné",
+      "upgradeWithAddOnsHeading": "Vylepšiť platenými doplnkami",
+      "manageBillingCta": "Spravovať fakturáciu",
+      "browseAddOnsCta": "Prehľadávať doplnky"
     },
     "coupons": {
       "title": "Kupóny",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Zatiaľ neoverené vo VIES",
       "viesVerifyNow": "Overiť teraz",
       "viesUnreachable": "Služba VIES je dočasne nedostupná — skúste o pár minút.",
-      "euVatNote": "Firmy z EÚ: pre platené predplatné je potrebné IČ DPH registrované vo VIES. Overené čísla fakturujeme s 0 % DPH (prenesenie daňovej povinnosti)."
+      "euVatNote": "Firmy z EÚ: pre platené predplatné je potrebné IČ DPH registrované vo VIES. Overené čísla fakturujeme s 0 % DPH (prenesenie daňovej povinnosti).",
+      "perOrder": "/obj.",
+      "paygOrderCount": "{count, plural, one {# objednávka} few {# objednávky} many {# objednávky} other {# objednávok}}"
     },
     "addOns": {
       "errorCheckout": "Nepodarilo sa spustiť platbu",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Áno, zrušiť",
       "compFreeUntil": "Zadarmo do {date}",
       "compExplainer": "Tento doplnok je dovtedy zadarmo — sám sa neobnovuje. Predplaťte si ho teraz, aby ste oň neprišli: karta sa uloží dnes a účtovanie začne až po skončení bezplatného obdobia.",
-      "compSubscribeCta": "Predplatiť a ponechať"
+      "compSubscribeCta": "Predplatiť a ponechať",
+      "pageIntro": "Základný produkt je zadarmo navždy. Odomknite jednotlivé funkcie nižšie predplatením zodpovedajúceho doplnku. Zrušte kedykoľvek — prístup si ponecháte do konca fakturačného obdobia.",
+      "subscribedBanner": "<strong>Hotovo!</strong> Vaše predplatné sa aktivuje. Odomknutie funkcie môže trvať až minútu.",
+      "settingsLinks": {
+        "hostedWebsite": "Otvoriť editor webu",
+        "onlinePayments": "Spravovať Stripe Connect",
+        "driverPool": "Nakonfigurovať fond vodičov",
+        "multiLocation": "Spravovať prevádzky",
+        "customDomain": "Pripojiť vašu doménu",
+        "advancedPromoMarketing": "Spustiť promoakcie",
+        "reservationDeposits": "Nakonfigurovať rezervácie",
+        "brandedMobileApp": "Nakonfigurovať aplikáciu"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Živé",
@@ -2237,7 +2349,9 @@
       "webhookSaveFirst": "Raz uložte nastavenia (s vybraným zdrojom ShipDay) a tu sa objaví váš osobný webhook odkaz.",
       "feeFromZonesTitle": "Poplatky za doručenie pre zákazníkov",
       "feeFromZonesBody": "Koľko vaši zákazníci platia za doručenie, sa nastavuje na stránke Zóny doručenia — rovnako ako pri vašich vlastných vodičoch. ShipDay účtuje vašej reštaurácii každé doručenie zvlášť; na svoju sadzbu za doručenie sa opýtajte svojho kontaktu v ShipDay.",
-      "feeFromZonesLink": "Otvoriť Zóny doručenia"
+      "feeFromZonesLink": "Otvoriť Zóny doručenia",
+      "errorUnknown": "Neznáma chyba",
+      "errorNetwork": "Chyba siete"
     },
     "driverPoolLocked": {
       "addonBadge": "Doplnok",
@@ -2256,7 +2370,8 @@
       "feature2Title": "Vy nastavujete ceny pre zákazníkov",
       "feature2Body": "Presun (zákazník platí celý poplatok ShipDay), paušál (vy absorbujete rozdiel), alebo stupňovitý (napr. zadarmo nad 50 €). Plná kontrola.",
       "feature3Title": "Prepínanie podľa objednávky",
-      "feature3Body": "Kombinujte vlastných vodičov so ShipDay. Kuchyňa vidí pre každé doručenie výber: interný alebo združenie. Vaše rozhodnutie, vždy."
+      "feature3Body": "Kombinujte vlastných vodičov so ShipDay. Kuchyňa vidí pre každé doručenie výber: interný alebo združenie. Vaše rozhodnutie, vždy.",
+      "perMonth": "/mes."
     },
     "marketplaceLocked": {
       "addonBadge": "Doplnok",
@@ -2971,7 +3086,22 @@
       "labelAssigned": "Priradené",
       "labelVip": "VIP",
       "badgeDeadTargets": "Žiadne aktívne jedlá — vyberte znova",
-      "searchPlaceholder": "Hľadať podľa názvu alebo kódu kupónu…"
+      "searchPlaceholder": "Hľadať podľa názvu alebo kódu kupónu…",
+      "typeLabels": {
+        "percentage_off": "% zľava na vybrané položky",
+        "fixed_cart": "Pevná zľava na košík",
+        "free_delivery": "Doprava zadarmo",
+        "bogo": "Kúp jeden, druhý zadarmo",
+        "buy_n_get_free": "Kúp N, jeden zadarmo",
+        "free_item": "Získaj položku ZADARMO",
+        "meal_bundle": "Jedálny balík",
+        "meal_bundle_speciality": "Jedálny balík so špecialitou",
+        "fixed_combo": "Pevná zľava na combo ponuku",
+        "percentage_combo": "% zľava na combo ponuku",
+        "payment_reward": "Odmena za spôsob platby",
+        "free_dish_meal": "Jedlo zadarmo ako súčasť menu"
+      },
+      "campaignFallback": "Kampaň"
     },
     "promoWizard": {
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",
@@ -3010,7 +3140,61 @@
       "featureBuyNGetFree": "Progresívne zľavy kúp-N-získaj-zdarma",
       "featureFreeDish": "Jedlo zdarma ako súčasť menu",
       "maybeLater": "Možno neskôr",
-      "subscribe": "Predplatiť"
+      "subscribe": "Predplatiť",
+      "types": {
+        "percentage_off": {
+          "name": "% zľava na košík",
+          "desc": "Odpočítajte percento z celej objednávky (alebo konkrétnych položiek)."
+        },
+        "free_delivery": {
+          "name": "Doprava zadarmo",
+          "desc": "Odpustite poplatok za doručenie pri oprávnených objednávkach."
+        },
+        "bogo": {
+          "name": "Kúp jeden, druhý zadarmo",
+          "desc": "Spárujte platenú položku s položkou zadarmo (alebo zľavnenou)."
+        },
+        "fixed_cart": {
+          "name": "Pevná zľava na košík",
+          "desc": "Odpočítajte pevnú sumu z objednávky."
+        },
+        "payment_reward": {
+          "name": "Odmena za spôsob platby",
+          "desc": "Zľava za platbu konkrétnou metódou (napr. hotovosť)."
+        },
+        "free_item": {
+          "name": "Získaj položku ZADARMO",
+          "desc": "Minieť X a získaj položku zadarmo z vybraného zoznamu."
+        },
+        "meal_bundle": {
+          "name": "Jedálny balík",
+          "desc": "Kombinuj sloty za pevnú cenu balíka."
+        },
+        "buy_n_get_free": {
+          "name": "Kúp N, jeden zadarmo",
+          "desc": "Pridaj N položiek, ďalšia (najlacnejšia alebo zvolená) je zadarmo."
+        },
+        "free_dish_meal": {
+          "name": "Jedlo zadarmo ako súčasť menu",
+          "desc": "Objednaj hlavné jedlo + prílohu a získaj dezert (alebo akékoľvek extra) zadarmo."
+        },
+        "fixed_combo": {
+          "name": "Pevná zľava na combo",
+          "desc": "Spároj konkrétne položky a odpočítaj pevnú sumu."
+        },
+        "percentage_combo": {
+          "name": "% zľava na combo",
+          "desc": "Spároj konkrétne položky a odpočítaj percento."
+        },
+        "meal_bundle_speciality": {
+          "name": "Jedálny balík so špecialitou",
+          "desc": "Jedálny balík s voliteľnými príplatkami (napr. homár +5 $)."
+        },
+        "reward_credit": {
+          "name": "Udeliť Reward Dollars",
+          "desc": "Odmeň zákazníka kreditom obchodu za túto objednávku namiesto zľavy."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Nakonfigurujte svoju promo akciu",
@@ -3065,7 +3249,44 @@
       "oncePerOrderHint": "Po zaškrtnutí sa táto ponuka uplatní iba raz na objednávku, aj keď košík spĺňa podmienky viackrát (napr. ponuka „kúp jeden, druhý zdarma“, ktorá by sa inak opakovala).",
       "rewardCreditLabel": "Reward Dollars na udelenie",
       "rewardCreditHint": "Pridá sa k zostatku zákazníka po dokončení tejto objednávky — bez zľavy v košíku. Vyžaduje zapnuté Reward Dollars.",
-      "oncePerOrderHintPercent": "Ak je začiarknuté, % zľava platí len pre JEDNU položku — najdrahšiu kvalifikovanú položku v košíku (napr. „20 % na jedno hlavné jedlo“). Zrušte začiarknutie pre zľavu na VŠETKY kvalifikované položky."
+      "oncePerOrderHintPercent": "Ak je začiarknuté, % zľava platí len pre JEDNU položku — najdrahšiu kvalifikovanú položku v košíku (napr. „20 % na jedno hlavné jedlo“). Zrušte začiarknutie pre zľavu na VŠETKY kvalifikované položky.",
+      "groupNoItems": "Nevybrané žiadne položky — upravte kliknutím",
+      "groupMoreCategories": "+{n} ďalšie",
+      "pickerHeading": "Vyberte kategórie alebo položky",
+      "pickerNoCategories": "Nenašli sa žiadne kategórie",
+      "allSizesSuffix": " · všetky veľkosti",
+      "groupSpecificItems": "{count, plural, one {# konkrétna položka} few {# konkrétne položky} many {# konkrétnej položky} other {# konkrétnych položiek}}",
+      "groupSizes": "{count, plural, one {# veľkosť} few {# veľkosti} many {# veľkosti} other {# veľkostí}}",
+      "specialityFeeTitle": "Účtovať poplatok len za tieto veľkosti",
+      "specialityFeeDesc": "Začiarkni prémiové veľkosti, ktoré pridávajú poplatok — základné veľkosti zostávajú zadarmo. Nechaj všetko nezačiarknuté, aby sa poplatok účtoval pri každom výbere.",
+      "specialityFeeEmpty": "Najprv vyberte položky tohto slotu a potom zvoľte, ktoré veľkosti stoja navyše.",
+      "wholeItemAllSizesSuffix": " · celá položka (všetky veľkosti)",
+      "roleLabelPaid": "(Platené)",
+      "roleLabelFree": "(Zadarmo)",
+      "roleLabelTrigger": "(Spúšťač)",
+      "roleLabelRequired": "(Povinné)",
+      "itemsGroupN": "Skupina položiek {n}",
+      "slotPickAtLeast": "Vyberte aspoň",
+      "slotUpTo": "až",
+      "slotItems": "položiek",
+      "specialityFeeInlineLabel": "Poplatok za špecialitu +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {pre # veľkosť} few {pre # veľkosti} many {pre # veľkosti} other {pre # veľkostí}}",
+      "specialityFeeForAll": "pre všetky veľkosti — vyberte, ktoré stoja navyše",
+      "extraChargeLabel": "Poplatky za položku zadarmo",
+      "extraChargeNone": "Bez príplatkov (celá položka zadarmo je zadarmo)",
+      "extraChargeAddons": "Príplatok za voľby / doplnky (topping sa stále účtuje)",
+      "extraChargeAddonsSizes": "Príplatok za voľby / doplnky a veľkosti (topping + upgrade veľkosti účtované)",
+      "extraChargeHint": "Či sa topping a upgrade veľkosti položky zadarmo stále účtujú — rovnako ako v GloriaFood.",
+      "discountStrategyNoteFreed": "Položka zo skupiny „zadarmo“ je tá, na ktorú sa vzťahuje zľava — bez ohľadu na cenu. % vyššie je výška zľavy (100% = zadarmo).",
+      "discountStrategyNoteMostExpensive": "BOGO zlacňuje DRAHŠIU z dvoch oprávnených položiek. Ak chcete vždy zľavniť jednu konkrétnu položku, použite ponuku „Kúp N, získaj zadarmo“.",
+      "discountStrategyNoteFixedPercent": "Každá zľavnená položka získa toto % — lacnejšia, keď sa kvalifikuje pár. Ak chcete vždy zľavniť jednu konkrétnu položku, použite ponuku „Kúp N, získaj zadarmo“.",
+      "discountStrategyNoteCheapest": "BOGO zlacňuje LACNEJŠIU z dvoch oprávnených položiek — takže ak položka „zadarmo“ stojí viac, zľavní sa lacnejšia (zákazník nezíska drahšiu položku lacno). Ak chcete vždy zľavniť jednu konkrétnu položku (napr. cestoviny), použite ponuku „Kúp N, získaj zadarmo“.",
+      "discountStrategyLabel": "Stratégia zľavy",
+      "strategyCheapest": "Nastaviť zľavy automaticky (najlacnejšia položka zadarmo)",
+      "strategyMostExpensive": "Nastaviť zľavy automaticky (najdrahšia položka zadarmo)",
+      "strategyFixedPercent": "Pevné percento zľavy",
+      "pctOffCheapest": "% zľava na najlacnejšiu položku",
+      "pctOffMostExpensive": "% zľava na najdrahšiu položku"
     },
     "promoStepRestrictions": {
       "pageTitle": "Obmedzenia a zobrazenie",
@@ -3156,7 +3377,8 @@
       "channelBothLabel": "Oboje",
       "hiddenCodeInfo": "Skryté akcie sa uplatnia iba vtedy, keď zákazník pri platbe zadá tento kód.",
       "vipLockedTitle": "Len VIP — pripojené k: {groups}",
-      "vipLockedDesc": "Táto akcia sa automaticky uplatní len pre týchto VIP členov pri pokladni. Nikdy sa nezobrazí vo verejnom menu, banneri ani na webe — žiadny prepínač viditeľnosti to nezmení. Ak ju chcete zverejniť, najprv ju odpojte na stránke VIP skupiny."
+      "vipLockedDesc": "Táto akcia sa automaticky uplatní len pre týchto VIP členov pri pokladni. Nikdy sa nezobrazí vo verejnom menu, banneri ani na webe — žiadny prepínač viditeľnosti to nezmení. Ak ju chcete zverejniť, najprv ju odpojte na stránke VIP skupiny.",
+      "bundleBuildInfo": "💡 Zákazníci si tento balík zostavujú z karty „Zostav si ponuku“ vo vašom menu. Pripnite ho k banneru nižšie, aby sa ľahko našiel. (Balík nemožno použiť automaticky ani odomknúť kódom.)"
     },
     "customersList": {
       "heading": "Zákazníci",

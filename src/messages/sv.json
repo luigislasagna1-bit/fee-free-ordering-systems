@@ -91,7 +91,8 @@
     "menu": "Meny",
     "loadingDots": "Laddar…",
     "previous": "Föregående",
-    "kmFromStore": "{km} km från butiken"
+    "kmFromStore": "{km} km från butiken",
+    "apply": "Tillämpa"
   },
   "auth": {
     "signIn": "Logga in",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Ta bort tidslucka",
       "closesNextDay": "Stänger nästa dag (t.ex. öppet efter midnatt)",
       "holidayNeedsDate": "Välj ett startdatum först.",
-      "holidayWindowOutsideService": "{window} ligger utanför {service}-tiderna den dagen. Undantagstider måste ligga inom tjänstens normala öppettider."
+      "holidayWindowOutsideService": "{window} ligger utanför {service}-tiderna den dagen. Undantagstider måste ligga inom tjänstens normala öppettider.",
+      "copiedDayToAll": "{day} kopierades till alla andra dagar",
+      "copiedDayToClosed": "{day} kopierades till stängda dagar",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Standard (alla tjänster)",
+      "tabReservation": "Bokning",
+      "tabAddSuffix": "+ Lägg till",
+      "removeOverrideAria": "Ta bort åsidosättning för {service}",
+      "removeOverrideTitle": "Ta bort åsidosättning (inaktuella rader ligger kvar i databasen tills du sparar med fliken återaktiverad)",
+      "hoursForServiceOnly": "Öppettider endast för {service}",
+      "markClosed": "Markera som stängt",
+      "markOpen": "Markera som öppet",
+      "copyHoursTitle": "Kopiera dessa tider till andra dagar",
+      "applyTo": "Tillämpa på…",
+      "applyToAllDays": "Tillämpa på <strong>alla andra dagar</strong>",
+      "applyToClosedDays": "Tillämpa endast på <strong>dagar som är stängda nu</strong>",
+      "dayAbbrev": "sön, mån, tis, ons, tor, fre, lör"
     },
     "services": {
       "title": "Restaurangtjänster",
@@ -1205,7 +1225,42 @@
         "colRequired": "Obligatoriskt",
         "saved": "Formuläret för leveransadress har uppdaterats"
       },
-      "estimatedMinutesHint": "TOTAL beräknad leveranstid (tillagning + resa) för adresser i denna zon. Kunder ser detta värde i kassan och det styr den tidigaste \"beställ till senare\"-tiden — det ersätter leveranstjänstens standardtid. Ett realistiskt värde är 30–60 min, inte bara körtiden."
+      "estimatedMinutesHint": "TOTAL beräknad leveranstid (tillagning + resa) för adresser i denna zon. Kunder ser detta värde i kassan och det styr den tidigaste \"beställ till senare\"-tiden — det ersätter leveranstjänstens standardtid. Ett realistiskt värde är 30–60 min, inte bara körtiden.",
+      "toastNoAddress": "Ingen adress angiven. Slutför först din restaurangprofil.",
+      "toastAddressNotFound": "Adressen kunde inte hittas. Uppdatera din adress i restaurangprofilen och försök igen.",
+      "toastLocationPinned": "Restaurangens plats fäst på kartan!",
+      "toastGeocodeFailed": "Geokodningen misslyckades. Kontrollera din internetanslutning.",
+      "toastLocationUpdated": "Restaurangens plats uppdaterad!",
+      "toastZoneNameRequired": "Zonnamn krävs",
+      "toastSetLocationFirst": "Ange först restaurangens plats (zonerna är koncentriska cirklar runt den).",
+      "toastSaveZoneFailed": "Det gick inte att spara zonen",
+      "toastZoneAdded": "Zonen \"{name}\" har lagts till!",
+      "toastUpdateZoneFailed": "Det gick inte att uppdatera zonen",
+      "confirmDeleteZone": "Ta bort leveranszonen \"{name}\"? Detta kan inte ångras.",
+      "toastZoneDeleted": "Zonen har tagits bort",
+      "locationNotSetTitle": "Restaurangens plats är inte angiven",
+      "locationNotSetDesc": "Leveranszoner behöver din restaurangs koordinater som utgångspunkt. <link>Ange dem i restaurangprofilen</link> eller använd knappen nedan för att geokoda din nuvarande adress.",
+      "locateRestaurant": "Hitta restaurang",
+      "locating": "Söker…",
+      "relocate": "Hitta igen",
+      "legendActiveZone": "Aktiv zon",
+      "legendInactiveZone": "Inaktiv zon",
+      "rowFee": "{amount} avgift",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. tid",
+      "editFee": "Avgift ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. tid (min)",
+      "mapRestaurantTitle": "Restaurang (dra för att justera)",
+      "mapResizeHandleTitle": "{km} km — dra för att ändra storlek",
+      "mapFeeLabel": "Avgift:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Radie:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Dra i handtaget för att ändra storlek",
+      "mapDragHintShort": "dra för att ändra storlek"
     },
     "reservations": {
       "title": "Reservationer",
@@ -1286,7 +1341,38 @@
       "amount": "Belopp",
       "schedule": "Schema",
       "status": "Status",
-      "confirmDelete": "Ta bort \"{name}\"?"
+      "confirmDelete": "Ta bort \"{name}\"?",
+      "taxRateRangeError": "Skattesatsen måste vara mellan 0 och 100",
+      "salesTaxTitle": "Momssats",
+      "salesTaxHelp": "Tillämpas på det skattepliktiga delsummet för varje beställning. Ställ in 0 om du inte tar ut moms. (t.ex. 13 för 13 % HST.)",
+      "rateLabel": "Sats (%)",
+      "savingLabel": "Sparar…",
+      "saveTaxRate": "Spara sats",
+      "currencyTitle": "Valuta",
+      "currencyHelp": "Styr varje pris kunden ser plus Stripe/PayPal-avgifter, kvitton och rapporter. Att byta valuta konverterar INTE befintliga priser — uppdatera menypriserna om du byter från USD till EUR (osv.).",
+      "currencyLabel": "Valuta",
+      "currencySample": "Exempel: <strong>{value}</strong>",
+      "tipsTitle": "Dricks från kunder",
+      "tipsHelp": "När AV döljer kundens varukorg dricksväljaren helt och servern nollställer varje manipulerat klientvärde. Vissa restauranger (t.ex. i länder där dricks inte är brukligt) föredrar att inte visa dricksförfrågningar.",
+      "tipsAriaDisable": "Inaktivera dricks",
+      "tipsAriaEnable": "Aktivera dricks",
+      "menuSearchTitle": "Menysökning för kunder",
+      "menuSearchHelp": "När PÅ visar kundens beställningssida ett sökfält med förstoringsglas så att besökare snabbt kan hitta objekt genom att skriva. Stäng AV om du föredrar att de bläddrar endast via kategoriknapparna.",
+      "menuSearchAriaHide": "Dölj menysökning på kundsidan",
+      "menuSearchAriaShow": "Visa menysökning på kundsidan",
+      "itemNotesTitle": "Särskilda instruktioner per artikel",
+      "itemNotesHelp": "När PÅ kan kunder lägga till en notering på <each>varje artikel</each> (t.ex. ”extra krispig”, ”ingen lök på denna”) — den skrivs ut på kökskvittot för den artikeln. AV kan de fortfarande lämna en notering för <whole>hela beställningen</whole> i kassan.",
+      "itemNotesAriaOff": "Stäng av noteringar per artikel",
+      "itemNotesAriaOn": "Slå på noteringar per artikel",
+      "schedulingTitle": "Schemaläggning och kassaformulär",
+      "schedulingHelp": "Styr vilka tidsluckor kunder kan boka och vilka kontaktfält som är obligatoriska i kassan.",
+      "slotIntervalLabel": "Tidsluckeintervall (minuter)",
+      "slotIntervalHelp": "Kunder kan bara boka beställningar i denna takt (som GloriaFood). Standard är 15 — ändra till 30 för långsammare kök.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Kräv kundens telefon",
+      "requirePhoneHelp": "När PÅ avvisar kassaformuläret beställningar utan telefonnummer. Rekommenderas för leverans så att köket kan ringa om överlämningen.",
+      "requirePhoneAriaOptional": "Gör telefon valfri",
+      "requirePhoneAriaRequired": "Gör telefon obligatorisk"
     },
     "mapSettings": {
       "title": "Kartinställningar",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Populär",
       "addOnEnableCta": "Aktivera",
       "perMonth": "/mån",
-      "kitchenAlertsSection": "Kök och orderaviseringar"
+      "kitchenAlertsSection": "Kök och orderaviseringar",
+      "currentPlanWithAddOns": "Nuvarande plan: FREE + {count, plural, one {# tillägg} other {# tillägg}}",
+      "currentPlanFree": "Nuvarande plan: FREE",
+      "freePlanDescription": "Beställningswidget, admin, meny, köksapp — inget kort krävs. Ta emot upp till 100 beställningar/månad för alltid. Lägg till betalfunktioner när som helst från Fakturering.",
+      "feature100Orders": "100 beställningar/månad",
+      "featureUnlimitedMenu": "Obegränsade menyalternativ",
+      "featureCustomerAccounts": "Kundkonton",
+      "activeAddOnsHeading": "Aktiva tillägg",
+      "trialBadge": "Prov",
+      "manageSubscriptionsHeading": "Hantera dina prenumerationer",
+      "upgradeWithAddOnsHeading": "Uppgradera med betalda tillägg",
+      "manageBillingCta": "Hantera fakturering",
+      "browseAddOnsCta": "Bläddra bland tillägg"
     },
     "coupons": {
       "title": "Kuponger",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Ännu inte kontrollerat i VIES",
       "viesVerifyNow": "Kontrollera nu",
       "viesUnreachable": "VIES-tjänsten är tillfälligt otillgänglig — försök igen om några minuter.",
-      "euVatNote": "EU-företag: ett VIES-registrerat momsnummer krävs för betalda prenumerationer. Validerade nummer faktureras med 0 % moms (omvänd skattskyldighet)."
+      "euVatNote": "EU-företag: ett VIES-registrerat momsnummer krävs för betalda prenumerationer. Validerade nummer faktureras med 0 % moms (omvänd skattskyldighet).",
+      "perOrder": "/beställning",
+      "paygOrderCount": "{count, plural, one {# beställning} other {# beställningar}}"
     },
     "addOns": {
       "errorCheckout": "Det gick inte att starta kassan",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Ja, avbryt",
       "compFreeUntil": "Gratis till {date}",
       "compExplainer": "Det här tillägget är gratis fram till dess — det förnyas inte av sig självt. Prenumerera nu för att behålla det: kortet sparas idag och debiteringen börjar först när gratisperioden tar slut.",
-      "compSubscribeCta": "Prenumerera för att behålla"
+      "compSubscribeCta": "Prenumerera för att behålla",
+      "pageIntro": "Kärnprodukten är gratis för alltid. Lås upp enskilda funktioner nedan genom att prenumerera på motsvarande tillägg. Avbryt när som helst — du behåller åtkomsten till slutet av faktureringsperioden.",
+      "subscribedBanner": "<strong>Klart!</strong> Din prenumeration aktiveras. Det kan ta upp till en minut innan funktionen låses upp.",
+      "settingsLinks": {
+        "hostedWebsite": "Öppna webbplatsredigeraren",
+        "onlinePayments": "Hantera Stripe Connect",
+        "driverPool": "Konfigurera förarpool",
+        "multiLocation": "Hantera platser",
+        "customDomain": "Anslut din domän",
+        "advancedPromoMarketing": "Kör kampanjer",
+        "reservationDeposits": "Konfigurera bokningar",
+        "brandedMobileApp": "Konfigurera appen"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Live",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Tilldelad",
       "labelVip": "VIP",
       "badgeDeadTargets": "Inga aktiva rätter — välj igen",
-      "searchPlaceholder": "Sök på namn eller kupongkod…"
+      "searchPlaceholder": "Sök på namn eller kupongkod…",
+      "typeLabels": {
+        "percentage_off": "% rabatt på valda artiklar",
+        "fixed_cart": "Fast rabatt på varukorgen",
+        "free_delivery": "Gratis leverans",
+        "bogo": "Köp en, få en gratis",
+        "buy_n_get_free": "Köp N, få en gratis",
+        "free_item": "Få en GRATIS artikel",
+        "meal_bundle": "Måltidspaket",
+        "meal_bundle_speciality": "Måltidspaket med specialitet",
+        "fixed_combo": "Fast rabatt på comboerbjudande",
+        "percentage_combo": "% rabatt på comboerbjudande",
+        "payment_reward": "Belöning för betalningsmetod",
+        "free_dish_meal": "Gratis rätt som del av en måltid"
+      },
+      "campaignFallback": "Kampanj"
     },
     "promoWizard": {
       "errorPickType": "Välj en kampanjtyp för att fortsätta.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Köp-N-få-gratis, progressiva rabatter",
       "featureFreeDish": "Gratis rätt som del av en måltid",
       "maybeLater": "Kanske senare",
-      "subscribe": "Prenumerera"
+      "subscribe": "Prenumerera",
+      "types": {
+        "percentage_off": {
+          "name": "% rabatt på varukorgen",
+          "desc": "Dra av en procentsats från hela beställningen (eller specifika artiklar)."
+        },
+        "free_delivery": {
+          "name": "Gratis leverans",
+          "desc": "Slopa leveransavgiften för kvalificerande beställningar."
+        },
+        "bogo": {
+          "name": "Köp en, få en gratis",
+          "desc": "Kombinera en betald artikel med en gratis (eller rabatterad) artikel."
+        },
+        "fixed_cart": {
+          "name": "Fast rabatt på varukorgen",
+          "desc": "Dra av ett fast belopp från beställningen."
+        },
+        "payment_reward": {
+          "name": "Belöning för betalningsmetod",
+          "desc": "Rabatt för betalning med en viss metod (t.ex. kontant)."
+        },
+        "free_item": {
+          "name": "Få en GRATIS artikel",
+          "desc": "Spendera X och få en gratis artikel från en utvald lista."
+        },
+        "meal_bundle": {
+          "name": "Måltidspaket",
+          "desc": "Blanda platser till ett fast paketpris."
+        },
+        "buy_n_get_free": {
+          "name": "Köp N, få en gratis",
+          "desc": "Lägg till N artiklar, nästa (billigast eller vald) är gratis."
+        },
+        "free_dish_meal": {
+          "name": "Gratis rätt som del av en måltid",
+          "desc": "Beställ en huvudrätt + tillbehör och få en efterrätt (eller valfri extra) gratis."
+        },
+        "fixed_combo": {
+          "name": "Fast rabatt på combo",
+          "desc": "Kombinera specifika artiklar och dra av ett fast belopp."
+        },
+        "percentage_combo": {
+          "name": "% rabatt på combo",
+          "desc": "Kombinera specifika artiklar och dra av en procentsats."
+        },
+        "meal_bundle_speciality": {
+          "name": "Måltidspaket med specialitet",
+          "desc": "Måltidspaket med valfria tilläggsavgifter (t.ex. hummer +5 $)."
+        },
+        "reward_credit": {
+          "name": "Ge Reward Dollars",
+          "desc": "Belöna kunden med butikskredit på denna beställning istället för en rabatt."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Konfigurera din kampanj",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "När detta är markerat gäller erbjudandet endast en gång per beställning, även om kundvagnen kvalificerar för det flera gånger (t.ex. ett Köp-en-få-en som annars skulle upprepas).",
       "rewardCreditLabel": "Reward Dollars att ge",
       "rewardCreditHint": "Läggs till kundens saldo när den här beställningen slutförs — ingen rabatt i varukorgen. Kräver att Reward Dollars är aktiverat.",
-      "oncePerOrderHintPercent": "Om ikryssad gäller %-rabatten endast ETT objekt — den dyraste kvalificerade varan i varukorgen (t.ex. ”20 % på en huvudrätt”). Avmarkera för att rabattera ALLA kvalificerade varor."
+      "oncePerOrderHintPercent": "Om ikryssad gäller %-rabatten endast ETT objekt — den dyraste kvalificerade varan i varukorgen (t.ex. ”20 % på en huvudrätt”). Avmarkera för att rabattera ALLA kvalificerade varor.",
+      "groupNoItems": "Inga artiklar valda — klicka för att redigera",
+      "groupMoreCategories": "+{n} till",
+      "pickerHeading": "Välj kategorier eller artiklar",
+      "pickerNoCategories": "Inga kategorier hittades",
+      "allSizesSuffix": " · alla storlekar",
+      "groupSpecificItems": "{count, plural, one {# specifik artikel} other {# specifika artiklar}}",
+      "groupSizes": "{count, plural, one {# storlek} other {# storlekar}}",
+      "specialityFeeTitle": "Ta bara ut avgiften för dessa storlekar",
+      "specialityFeeDesc": "Kryssa i premiumstorlekarna som lägger till avgiften — basstorlekar förblir gratis. Lämna allt omarkerat för att ta ut avgiften vid varje val.",
+      "specialityFeeEmpty": "Välj först den här platsens artiklar och välj sedan vilka storlekar som kostar extra.",
+      "wholeItemAllSizesSuffix": " · hel artikel (alla storlekar)",
+      "roleLabelPaid": "(Betald)",
+      "roleLabelFree": "(Gratis)",
+      "roleLabelTrigger": "(Utlösare)",
+      "roleLabelRequired": "(Obligatorisk)",
+      "itemsGroupN": "Artikelgrupp {n}",
+      "slotPickAtLeast": "Välj minst",
+      "slotUpTo": "upp till",
+      "slotItems": "artiklar",
+      "specialityFeeInlineLabel": "Specialitetsavgift +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {för # storlek} other {för # storlekar}}",
+      "specialityFeeForAll": "för alla storlekar — välj vilka som kostar extra",
+      "extraChargeLabel": "Avgifter på gratisartikeln",
+      "extraChargeNone": "Inga extra avgifter (hela gratisartikeln är gratis)",
+      "extraChargeAddons": "Extra avgift för val / tillägg (toppings debiteras fortfarande)",
+      "extraChargeAddonsSizes": "Extra avgift för val / tillägg & storlekar (toppings + storleksuppgradering debiteras)",
+      "extraChargeHint": "Om toppings och storleksuppgradering på gratisartikeln fortfarande debiteras — som i GloriaFood.",
+      "discountStrategyNoteFreed": "Artikeln från gruppen ”gratis” är den som får rabatt — oavsett pris. Procenten ovan är hur mycket rabatt den får (100% = gratis).",
+      "discountStrategyNoteMostExpensive": "BOGO rabatterar den DYRASTE av de två kvalificerande artiklarna. För att alltid rabattera en specifik artikel, använd erbjudandet ”Köp N, få gratis”.",
+      "discountStrategyNoteFixedPercent": "Varje rabatterad artikel får denna % — den billigare när ett par kvalificerar sig. För att alltid rabattera en specifik artikel, använd erbjudandet ”Köp N, få gratis”.",
+      "discountStrategyNoteCheapest": "BOGO rabatterar den BILLIGARE av de två kvalificerande artiklarna — så om den ”gratis” artikeln kostar mer, rabatteras den billigare istället (en kund kan inte få den dyrare billigt). För att alltid rabattera en specifik artikel (t.ex. en pasta), använd erbjudandet ”Köp N, få gratis”.",
+      "discountStrategyLabel": "Rabattstrategi",
+      "strategyCheapest": "Ställ in rabatter automatiskt (billigaste artikeln gratis)",
+      "strategyMostExpensive": "Ställ in rabatter automatiskt (dyraste artikeln gratis)",
+      "strategyFixedPercent": "Fast rabattprocent",
+      "pctOffCheapest": "% rabatt på billigaste artikeln",
+      "pctOffMostExpensive": "% rabatt på dyraste artikeln"
     },
     "promoStepRestrictions": {
       "pageTitle": "Begränsningar och visning",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Båda",
       "hiddenCodeInfo": "Dolda erbjudanden tillämpas bara när kunden anger den här koden i kassan.",
       "vipLockedTitle": "Endast VIP — kopplad till: {groups}",
-      "vipLockedDesc": "Den här kampanjen gäller automatiskt endast för dessa VIP-medlemmar i kassan. Den visas aldrig på din offentliga meny, banner eller webbplats — ingen synlighetsinställning ändrar det. Koppla först bort den på sidan VIP-grupper för att göra den offentlig."
+      "vipLockedDesc": "Den här kampanjen gäller automatiskt endast för dessa VIP-medlemmar i kassan. Den visas aldrig på din offentliga meny, banner eller webbplats — ingen synlighetsinställning ändrar det. Koppla först bort den på sidan VIP-grupper för att göra den offentlig.",
+      "bundleBuildInfo": "💡 Kunder bygger detta paket från ett ”Skapa ditt erbjudande”-kort på din meny. Fäst det på bannern nedan så att det är lätt att hitta. (Ett paket kan inte tillämpas automatiskt eller låsas upp med en kod.)"
     },
     "customersList": {
       "heading": "Kunder",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Spara dina inställningar en gång (med en ShipDay-källa vald) så visas din personliga webhook-länk här.",
       "feeFromZonesTitle": "Leveransavgifter för kunder",
       "feeFromZonesBody": "Vad dina kunder betalar för leverans ställs in på sidan Leveranszoner — precis som med dina egna chaufförer. ShipDay fakturerar din restaurang separat för varje leverans; fråga din ShipDay-kontakt om ditt pris per leverans.",
-      "feeFromZonesLink": "Öppna Leveranszoner"
+      "feeFromZonesLink": "Öppna Leveranszoner",
+      "errorUnknown": "Okänt fel",
+      "errorNetwork": "Nätverksfel"
     },
     "driverPoolLocked": {
       "addonBadge": "Tillägg",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Du styr kundpriserna",
       "feature2Body": "Vidarebefodring (kunden betalar hela ShipDay-avgiften), fast (du absorberar mellanskillnaden) eller stegvis (t.ex. gratis över 500 kr). Full kontroll.",
       "feature3Title": "Välj per beställning",
-      "feature3Body": "Blanda dina egna chaufförer med ShipDay. Köket ser en väljare för varje leverans: egna eller pool. Du bestämmer varje gång."
+      "feature3Body": "Blanda dina egna chaufförer med ShipDay. Köket ser en väljare för varje leverans: egna eller pool. Du bestämmer varje gång.",
+      "perMonth": "/mån"
     },
     "marketplaceLocked": {
       "addonBadge": "Tillägg",

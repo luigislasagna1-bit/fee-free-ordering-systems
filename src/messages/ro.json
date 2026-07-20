@@ -91,7 +91,8 @@
     "menu": "Meniu",
     "loadingDots": "Se încarcă…",
     "previous": "Înapoi",
-    "kmFromStore": "la {km} km de local"
+    "kmFromStore": "la {km} km de local",
+    "apply": "Aplică"
   },
   "auth": {
     "signIn": "Conectare",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Elimină intervalul orar",
       "closesNextDay": "Se închide a doua zi (ex.: deschis după miezul nopții)",
       "holidayNeedsDate": "Alege mai întâi o dată de început.",
-      "holidayWindowOutsideService": "{window} este în afara orelor de {service} pentru acea zi. Orele excepționale trebuie să fie în intervalul orelor normale ale serviciului."
+      "holidayWindowOutsideService": "{window} este în afara orelor de {service} pentru acea zi. Orele excepționale trebuie să fie în intervalul orelor normale ale serviciului.",
+      "copiedDayToAll": "{day} copiat în toate celelalte zile",
+      "copiedDayToClosed": "{day} copiat în zilele închise",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Implicit (toate serviciile)",
+      "tabReservation": "Rezervare",
+      "tabAddSuffix": "+ Adaugă",
+      "removeOverrideAria": "Elimină excepția pentru {service}",
+      "removeOverrideTitle": "Elimină excepția (rândurile învechite rămân în baza de date până când salvezi cu fila reactivată)",
+      "hoursForServiceOnly": "Program doar pentru {service}",
+      "markClosed": "Marchează ca închis",
+      "markOpen": "Marchează ca deschis",
+      "copyHoursTitle": "Copiază acest program în alte zile",
+      "applyTo": "Aplică la…",
+      "applyToAllDays": "Aplică la <strong>toate celelalte zile</strong>",
+      "applyToClosedDays": "Aplică doar la <strong>zilele închise în prezent</strong>",
+      "dayAbbrev": "dum, lun, mar, mie, joi, vin, sâm"
     },
     "services": {
       "title": "Servicii restaurant",
@@ -1205,7 +1225,42 @@
         "colRequired": "Obligatoriu",
         "saved": "Formularul pentru adresa de livrare a fost actualizat"
       },
-      "estimatedMinutesHint": "Timpul TOTAL estimat de livrare (preparare + drum) pentru adresele din această zonă. Clienții văd acest număr la finalizare și el stabilește primul interval \"pentru mai târziu\" — înlocuiește timpul estimat implicit al serviciului de livrare. O valoare realistă este 30–60 min, nu doar drumul."
+      "estimatedMinutesHint": "Timpul TOTAL estimat de livrare (preparare + drum) pentru adresele din această zonă. Clienții văd acest număr la finalizare și el stabilește primul interval \"pentru mai târziu\" — înlocuiește timpul estimat implicit al serviciului de livrare. O valoare realistă este 30–60 min, nu doar drumul.",
+      "toastNoAddress": "Nicio adresă setată. Completează mai întâi profilul restaurantului.",
+      "toastAddressNotFound": "Această adresă nu a fost găsită. Actualizează adresa în profilul restaurantului și încearcă din nou.",
+      "toastLocationPinned": "Locația restaurantului a fost fixată pe hartă!",
+      "toastGeocodeFailed": "Geocodificarea a eșuat. Verifică conexiunea la internet.",
+      "toastLocationUpdated": "Locația restaurantului a fost actualizată!",
+      "toastZoneNameRequired": "Numele zonei este obligatoriu",
+      "toastSetLocationFirst": "Setează mai întâi locația restaurantului (zonele sunt cercuri concentrice în jurul ei).",
+      "toastSaveZoneFailed": "Salvarea zonei a eșuat",
+      "toastZoneAdded": "Zona „{name}” a fost adăugată!",
+      "toastUpdateZoneFailed": "Actualizarea zonei a eșuat",
+      "confirmDeleteZone": "Ștergi zona de livrare „{name}”? Această acțiune nu poate fi anulată.",
+      "toastZoneDeleted": "Zonă ștearsă",
+      "locationNotSetTitle": "Locația restaurantului nu este setată",
+      "locationNotSetDesc": "Zonele de livrare au nevoie de coordonatele restaurantului tău ca origine. <link>Setează-le în profilul restaurantului</link> sau folosește butonul de mai jos pentru a geocodifica adresa curentă.",
+      "locateRestaurant": "Localizează restaurantul",
+      "locating": "Se localizează…",
+      "relocate": "Relocalizează",
+      "legendActiveZone": "Zonă activă",
+      "legendInactiveZone": "Zonă inactivă",
+      "rowFee": "taxă {amount}",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Timp std.",
+      "editFee": "Taxă ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Timp std. (min)",
+      "mapRestaurantTitle": "Restaurant (trage pentru a ajusta)",
+      "mapResizeHandleTitle": "{km} km — trage pentru a redimensiona",
+      "mapFeeLabel": "Taxă:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Rază:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Trage de mâner pentru a redimensiona",
+      "mapDragHintShort": "trage pentru a redimensiona"
     },
     "reservations": {
       "title": "Rezervări",
@@ -1286,7 +1341,38 @@
       "amount": "Sumă",
       "schedule": "Program",
       "status": "Stare",
-      "confirmDelete": "Ștergi \"{name}\"?"
+      "confirmDelete": "Ștergi \"{name}\"?",
+      "taxRateRangeError": "Cota de impozit trebuie să fie între 0 și 100",
+      "salesTaxTitle": "Cota de impozit pe vânzări",
+      "salesTaxHelp": "Se aplică la subtotalul impozabil al fiecărei comenzi. Setează 0 dacă nu colectezi impozit pe vânzări. (de ex. 13 pentru 13% HST.)",
+      "rateLabel": "Cotă (%)",
+      "savingLabel": "Se salvează…",
+      "saveTaxRate": "Salvează cota",
+      "currencyTitle": "Monedă",
+      "currencyHelp": "Determină fiecare preț văzut de client, plus taxele Stripe/PayPal, bonurile și rapoartele. Schimbarea monedei NU convertește prețurile existente — actualizează prețurile din meniu dacă treci de la USD la EUR (etc.).",
+      "currencyLabel": "Monedă",
+      "currencySample": "Exemplu: <strong>{value}</strong>",
+      "tipsTitle": "Bacșișuri de la clienți",
+      "tipsHelp": "Când este OPRIT, coșul clientului ascunde complet selectorul de bacșiș, iar serverul reduce la 0 orice valoare modificată de client. Unele restaurante (de ex. în țări unde bacșișul nu este obișnuit) preferă să nu afișeze solicitări de bacșiș.",
+      "tipsAriaDisable": "Dezactivează bacșișurile",
+      "tipsAriaEnable": "Activează bacșișurile",
+      "menuSearchTitle": "Căutare în meniul clientului",
+      "menuSearchHelp": "Când este PORNITĂ, pagina de comandă a clientului afișează o bară de căutare cu lupă, ca vizitatorii să găsească rapid produse tastând. OPREȘTE-o dacă preferi să navigheze doar prin butoanele de categorii.",
+      "menuSearchAriaHide": "Ascunde căutarea în meniu pe pagina clientului",
+      "menuSearchAriaShow": "Afișează căutarea în meniu pe pagina clientului",
+      "itemNotesTitle": "Instrucțiuni speciale per produs",
+      "itemNotesHelp": "Când este PORNITĂ, clienții pot adăuga o notă la <each>fiecare produs</each> (de ex. „extra crocant”, „fără ceapă la acesta”) — se tipărește pe bonul de bucătărie al acelui produs. OPRITĂ, pot lăsa totuși o notă pentru <whole>toată comanda</whole> la finalizare.",
+      "itemNotesAriaOff": "Dezactivează notele per produs",
+      "itemNotesAriaOn": "Activează notele per produs",
+      "schedulingTitle": "Programare și formular de finalizare",
+      "schedulingHelp": "Controlează pentru ce intervale orare pot programa clienții și ce câmpuri de contact sunt obligatorii la finalizare.",
+      "slotIntervalLabel": "Interval al sloturilor (minute)",
+      "slotIntervalHelp": "Clienții pot programa comenzi doar la această cadență (ca GloriaFood). Implicit 15 — schimbă la 30 pentru bucătării mai lente.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Solicită telefonul clientului",
+      "requirePhoneHelp": "Când este PORNIT, formularul de finalizare respinge comenzile fără număr de telefon. Recomandat pentru livrare, ca bucătăria să poată suna despre predare.",
+      "requirePhoneAriaOptional": "Fă telefonul opțional",
+      "requirePhoneAriaRequired": "Fă telefonul obligatoriu"
     },
     "mapSettings": {
       "title": "Setări hartă",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Popular",
       "addOnEnableCta": "Activează",
       "perMonth": "/lună",
-      "kitchenAlertsSection": "Bucătărie și alerte comenzi"
+      "kitchenAlertsSection": "Bucătărie și alerte comenzi",
+      "currentPlanWithAddOns": "Plan curent: FREE + {count, plural, one {# supliment} other {# suplimente}}",
+      "currentPlanFree": "Plan curent: FREE",
+      "freePlanDescription": "Widget de comenzi, admin, meniu, aplicație de bucătărie — fără card. Acceptă până la 100 de comenzi/lună pentru totdeauna. Adaugă funcții plătite oricând din pagina de Facturare.",
+      "feature100Orders": "100 de comenzi/lună",
+      "featureUnlimitedMenu": "Articole de meniu nelimitate",
+      "featureCustomerAccounts": "Conturi de clienți",
+      "activeAddOnsHeading": "Suplimente active",
+      "trialBadge": "Probă",
+      "manageSubscriptionsHeading": "Gestionează-ți abonamentele",
+      "upgradeWithAddOnsHeading": "Fă upgrade cu suplimente plătite",
+      "manageBillingCta": "Gestionează facturarea",
+      "browseAddOnsCta": "Răsfoiește suplimentele"
     },
     "coupons": {
       "title": "Cupoane",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Încă neverificat în VIES",
       "viesVerifyNow": "Verifică acum",
       "viesUnreachable": "Serviciul VIES este temporar indisponibil — încercați din nou peste câteva minute.",
-      "euVatNote": "Companii din UE: pentru abonamente plătite este necesar un număr de TVA înregistrat în VIES. Numerele validate sunt facturate cu TVA 0% (taxare inversă)."
+      "euVatNote": "Companii din UE: pentru abonamente plătite este necesar un număr de TVA înregistrat în VIES. Numerele validate sunt facturate cu TVA 0% (taxare inversă).",
+      "perOrder": "/comandă",
+      "paygOrderCount": "{count, plural, one {# comandă} few {# comenzi} other {# de comenzi}}"
     },
     "addOns": {
       "errorCheckout": "Nu s-a putut iniția plata",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Da, anulează",
       "compFreeUntil": "Gratuit până la {date}",
       "compExplainer": "Acest supliment este gratuit până atunci — nu se reînnoiește singur. Abonează-te acum ca să îl păstrezi: cardul este salvat azi, iar facturarea începe doar când se încheie perioada gratuită.",
-      "compSubscribeCta": "Abonează-te ca să îl păstrezi"
+      "compSubscribeCta": "Abonează-te ca să îl păstrezi",
+      "pageIntro": "Produsul de bază este gratuit pentru totdeauna. Deblochează funcții individuale mai jos abonându-te la suplimentul corespunzător. Anulează oricând — păstrezi accesul până la sfârșitul perioadei de facturare.",
+      "subscribedBanner": "<strong>Succes!</strong> Abonamentul tău se activează. Deblocarea funcției poate dura până la un minut.",
+      "settingsLinks": {
+        "hostedWebsite": "Deschide editorul site-ului",
+        "onlinePayments": "Gestionează Stripe Connect",
+        "driverPool": "Configurează grupul de șoferi",
+        "multiLocation": "Gestionează locațiile",
+        "customDomain": "Conectează-ți domeniul",
+        "advancedPromoMarketing": "Rulează promoții",
+        "reservationDeposits": "Configurează rezervările",
+        "brandedMobileApp": "Configurează aplicația"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Activ",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Atribuit",
       "labelVip": "VIP",
       "badgeDeadTargets": "Niciun fel activ — reselectați",
-      "searchPlaceholder": "Caută după nume sau cod cupon…"
+      "searchPlaceholder": "Caută după nume sau cod cupon…",
+      "typeLabels": {
+        "percentage_off": "% reducere la articolele selectate",
+        "fixed_cart": "Reducere fixă la coș",
+        "free_delivery": "Livrare gratuită",
+        "bogo": "Cumperi unul, primești unul gratis",
+        "buy_n_get_free": "Cumperi N, primești unul gratis",
+        "free_item": "Primești un articol GRATUIT",
+        "meal_bundle": "Pachet de masă",
+        "meal_bundle_speciality": "Pachet de masă cu specialitate",
+        "fixed_combo": "Reducere fixă la oferta combo",
+        "percentage_combo": "% reducere la oferta combo",
+        "payment_reward": "Recompensă pentru metoda de plată",
+        "free_dish_meal": "Fel gratuit ca parte a unei mese"
+      },
+      "campaignFallback": "Campanie"
     },
     "promoWizard": {
       "errorPickType": "Alege un tip de promoție pentru a continua.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Reduceri progresive cumpără-N-primești-gratuit",
       "featureFreeDish": "Fel de mâncare gratuit ca parte dintr-o masă",
       "maybeLater": "Mai târziu",
-      "subscribe": "Abonează-te"
+      "subscribe": "Abonează-te",
+      "types": {
+        "percentage_off": {
+          "name": "% reducere la coș",
+          "desc": "Scade un procent din întreaga comandă (sau din articole specifice)."
+        },
+        "free_delivery": {
+          "name": "Livrare gratuită",
+          "desc": "Renunță la taxa de livrare pentru comenzile eligibile."
+        },
+        "bogo": {
+          "name": "Cumperi unul, primești unul gratis",
+          "desc": "Asociază un articol plătit cu unul gratuit (sau redus)."
+        },
+        "fixed_cart": {
+          "name": "Reducere fixă la coș",
+          "desc": "Scade o sumă fixă din comandă."
+        },
+        "payment_reward": {
+          "name": "Recompensă pentru metoda de plată",
+          "desc": "Reducere pentru plata cu o metodă anume (ex. numerar)."
+        },
+        "free_item": {
+          "name": "Primești un articol GRATUIT",
+          "desc": "Cheltuiește X și primești un articol gratuit dintr-o listă selectată."
+        },
+        "meal_bundle": {
+          "name": "Pachet de masă",
+          "desc": "Combină sloturi la un preț de pachet fix."
+        },
+        "buy_n_get_free": {
+          "name": "Cumperi N, primești unul gratis",
+          "desc": "Adaugă N articole, următorul (cel mai ieftin sau ales) este gratuit."
+        },
+        "free_dish_meal": {
+          "name": "Fel gratuit ca parte a unei mese",
+          "desc": "Comandă un fel principal + garnitură și primești un desert (sau orice extra) gratis."
+        },
+        "fixed_combo": {
+          "name": "Reducere fixă la combo",
+          "desc": "Asociază articole specifice și scade o sumă fixă."
+        },
+        "percentage_combo": {
+          "name": "% reducere la combo",
+          "desc": "Asociază articole specifice și scade un procent."
+        },
+        "meal_bundle_speciality": {
+          "name": "Pachet de masă cu specialitate",
+          "desc": "Pachet de masă cu suprataxe opționale (ex. homar +5 $)."
+        },
+        "reward_credit": {
+          "name": "Acordă Reward Dollars",
+          "desc": "Recompensează clientul cu credit de magazin la această comandă în loc de o reducere."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Configurează promoția",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Când este bifat, această ofertă se aplică o singură dată per comandă, chiar dacă coșul se califică pentru ea de mai multe ori (de ex. un Cumperi-Unul-Primești-Unul care altfel s-ar repeta).",
       "rewardCreditLabel": "Reward Dollars de acordat",
       "rewardCreditHint": "Se adaugă în soldul clientului la finalizarea acestei comenzi — fără reducere în coș. Necesită ca Reward Dollars să fie activat.",
-      "oncePerOrderHintPercent": "Dacă este bifat, reducerea % se aplică unui SINGUR articol — cel mai scump articol eligibil din coș (ex. „20% la un fel principal”). Debifați pentru a reduce TOATE articolele eligibile."
+      "oncePerOrderHintPercent": "Dacă este bifat, reducerea % se aplică unui SINGUR articol — cel mai scump articol eligibil din coș (ex. „20% la un fel principal”). Debifați pentru a reduce TOATE articolele eligibile.",
+      "groupNoItems": "Niciun articol selectat — apasă pentru a edita",
+      "groupMoreCategories": "+{n} altele",
+      "pickerHeading": "Selectează categorii sau articole",
+      "pickerNoCategories": "Nicio categorie găsită",
+      "allSizesSuffix": " · toate mărimile",
+      "groupSpecificItems": "{count, plural, one {# articol specific} few {# articole specifice} other {# de articole specifice}}",
+      "groupSizes": "{count, plural, one {# mărime} few {# mărimi} other {# de mărimi}}",
+      "specialityFeeTitle": "Percepe taxa doar pentru aceste mărimi",
+      "specialityFeeDesc": "Bifează mărimile premium care adaugă taxa — mărimile de bază rămân gratuite. Lasă totul nebifat pentru a percepe taxa la fiecare alegere.",
+      "specialityFeeEmpty": "Alege mai întâi articolele acestui slot, apoi selectează ce mărimi costă în plus.",
+      "wholeItemAllSizesSuffix": " · articol întreg (toate mărimile)",
+      "roleLabelPaid": "(Plătit)",
+      "roleLabelFree": "(Gratuit)",
+      "roleLabelTrigger": "(Declanșator)",
+      "roleLabelRequired": "(Obligatoriu)",
+      "itemsGroupN": "Grup de articole {n}",
+      "slotPickAtLeast": "Alege cel puțin",
+      "slotUpTo": "până la",
+      "slotItems": "articole",
+      "specialityFeeInlineLabel": "Taxă specialitate +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {pentru # mărime} few {pentru # mărimi} other {pentru # de mărimi}}",
+      "specialityFeeForAll": "pentru toate mărimile — alege care costă în plus",
+      "extraChargeLabel": "Costuri pentru articolul gratuit",
+      "extraChargeNone": "Fără costuri suplimentare (articolul gratuit este complet gratuit)",
+      "extraChargeAddons": "Taxă suplimentară pentru opțiuni / suplimente (toppingurile se facturează în continuare)",
+      "extraChargeAddonsSizes": "Taxă suplimentară pentru opțiuni / suplimente și mărimi (toppinguri + upgrade de mărime facturate)",
+      "extraChargeHint": "Dacă toppingurile și upgrade-ul de mărime al articolului oferit sunt în continuare taxate — la fel ca GloriaFood.",
+      "discountStrategyNoteFreed": "Articolul din grupul „gratuit” este cel redus — indiferent de preț. Procentul de mai sus este reducerea aplicată (100% = gratuit).",
+      "discountStrategyNoteMostExpensive": "BOGO reduce cel MAI SCUMP dintre cele două articole eligibile. Pentru a reduce mereu un articol anume, folosește oferta „Cumpără N, primești gratis”.",
+      "discountStrategyNoteFixedPercent": "Fiecare articol redus primește acest % — cel mai ieftin când o pereche este eligibilă. Pentru a reduce mereu un articol anume, folosește oferta „Cumpără N, primești gratis”.",
+      "discountStrategyNoteCheapest": "BOGO reduce cel MAI IEFTIN dintre cele două articole eligibile — deci dacă articolul „gratuit” costă mai mult, se reduce cel mai ieftin (un client nu poate obține ieftin articolul mai scump). Pentru a reduce mereu un articol anume (ex. o paste), folosește oferta „Cumpără N, primești gratis”.",
+      "discountStrategyLabel": "Strategie de reducere",
+      "strategyCheapest": "Setează reducerile automat (cel mai ieftin articol gratuit)",
+      "strategyMostExpensive": "Setează reducerile automat (cel mai scump articol gratuit)",
+      "strategyFixedPercent": "Procent de reducere fix",
+      "pctOffCheapest": "% reducere la cel mai ieftin articol",
+      "pctOffMostExpensive": "% reducere la cel mai scump articol"
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricții & afișare",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Ambele",
       "hiddenCodeInfo": "Promoțiile ascunse se aplică doar când clientul introduce acest cod la plată.",
       "vipLockedTitle": "Doar VIP — atașat la: {groups}",
-      "vipLockedDesc": "Această promoție se aplică automat doar pentru acei membri VIP la checkout. Nu apare niciodată în meniul public, pe banner sau pe site — nicio setare de vizibilitate nu poate schimba asta. Pentru a o face publică, detașați-o mai întâi din pagina Grupuri VIP."
+      "vipLockedDesc": "Această promoție se aplică automat doar pentru acei membri VIP la checkout. Nu apare niciodată în meniul public, pe banner sau pe site — nicio setare de vizibilitate nu poate schimba asta. Pentru a o face publică, detașați-o mai întâi din pagina Grupuri VIP.",
+      "bundleBuildInfo": "💡 Clienții creează acest pachet dintr-un card „Creează-ți oferta” din meniul tău. Fixează-l pe bannerul de mai jos ca să fie ușor de găsit. (Un pachet nu poate fi aplicat automat sau deblocat printr-un cod.)"
     },
     "customersList": {
       "heading": "Clienți",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Salvați setările o dată (cu o sursă ShipDay selectată) și linkul dvs. personal de webhook va apărea aici.",
       "feeFromZonesTitle": "Taxele de livrare pentru clienți",
       "feeFromZonesBody": "Cât plătesc clienții tăi pentru livrare se setează pe pagina Zone de livrare — la fel ca în cazul propriilor șoferi. ShipDay îți facturează restaurantul separat pentru fiecare livrare; întreabă-ți contactul ShipDay care este tariful tău per livrare.",
-      "feeFromZonesLink": "Deschide pagina Zone de livrare"
+      "feeFromZonesLink": "Deschide pagina Zone de livrare",
+      "errorUnknown": "Eroare necunoscută",
+      "errorNetwork": "Eroare de rețea"
     },
     "driverPoolLocked": {
       "addonBadge": "Supliment",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Tu setezi prețul pentru clienți",
       "feature2Body": "Transfer integral (clientul plătește toată taxa ShipDay), fix (tu absorbi diferența) sau niveluri (ex. gratuit peste $50). Control total.",
       "feature3Title": "Alege per comandă",
-      "feature3Body": "Combină proprii șoferi cu ShipDay. Bucătăria vede un selector pentru fiecare livrare: intern sau pool. Decizia ta, de fiecare dată."
+      "feature3Body": "Combină proprii șoferi cu ShipDay. Bucătăria vede un selector pentru fiecare livrare: intern sau pool. Decizia ta, de fiecare dată.",
+      "perMonth": "/lună"
     },
     "marketplaceLocked": {
       "addonBadge": "Supliment",

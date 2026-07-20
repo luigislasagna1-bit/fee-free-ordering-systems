@@ -119,7 +119,7 @@ export function ServiceFeesClient() {
   const saveTaxRate = async () => {
     const parsed = parseFloat(taxRate);
     if (Number.isNaN(parsed) || parsed < 0 || parsed > 100) {
-      toast.error("Tax rate must be between 0 and 100");
+      toast.error(t("taxRateRangeError"));
       return;
     }
     setSavingTax(true);
@@ -296,7 +296,7 @@ export function ServiceFeesClient() {
   };
 
   const remove = async (fee: ServiceFee) => {
-    if (!confirm(`Delete "${fee.name}"?`)) return;
+    if (!confirm(t("confirmDelete", { name: fee.name }))) return;
     try {
       const res = await fetch(`/api/admin/service-fees/${fee.id}`, { method: "DELETE" });
       if (!res.ok) throw new Error();
@@ -364,16 +364,13 @@ export function ServiceFeesClient() {
             <Receipt className="w-5 h-5 text-emerald-600" />
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="font-semibold text-gray-900">Sales tax rate</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Applied to every order&apos;s taxable subtotal. Set to 0 if you
-              don&apos;t collect sales tax. (e.g. 13 for 13% HST.)
-            </p>
+            <h2 className="font-semibold text-gray-900">{t("salesTaxTitle")}</h2>
+            <p className="text-xs text-gray-500 mt-0.5">{t("salesTaxHelp")}</p>
           </div>
         </div>
         <div className="flex flex-wrap items-end gap-3">
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Rate (%)</label>
+            <label className="block text-xs font-medium text-gray-600 mb-1">{t("rateLabel")}</label>
             <div className="relative">
               <input
                 type="number"
@@ -392,7 +389,7 @@ export function ServiceFeesClient() {
             disabled={savingTax}
             className="bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-emerald-600 transition text-sm shadow-sm disabled:opacity-50"
           >
-            {savingTax ? "Saving…" : "Save tax rate"}
+            {savingTax ? t("savingLabel") : t("saveTaxRate")}
           </button>
         </div>
       </div>
@@ -404,16 +401,13 @@ export function ServiceFeesClient() {
             <Wallet className="w-5 h-5 text-emerald-600" />
           </div>
           <div className="flex-1 min-w-0">
-            <h2 className="font-semibold text-gray-900">Currency</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Drives every price the customer sees plus Stripe/PayPal charges, receipts and reports. Changing currency does NOT
-              convert existing prices — update menu prices to match if you switch from USD to EUR (etc.).
-            </p>
+            <h2 className="font-semibold text-gray-900">{t("currencyTitle")}</h2>
+            <p className="text-xs text-gray-500 mt-0.5">{t("currencyHelp")}</p>
           </div>
         </div>
         <div className="flex flex-wrap items-end gap-3">
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Currency</label>
+            <label className="block text-xs font-medium text-gray-600 mb-1">{t("currencyLabel")}</label>
             <select
               value={currency.toUpperCase()}
               onChange={(e) => saveCurrency(e.target.value)}
@@ -426,7 +420,10 @@ export function ServiceFeesClient() {
             </select>
           </div>
           <p className="text-xs text-gray-500 pb-2">
-            Sample: <strong>{(new Intl.NumberFormat(undefined, { style: "currency", currency: currency.toUpperCase() })).format(12.34)}</strong>
+            {t.rich("currencySample", {
+              value: (new Intl.NumberFormat(undefined, { style: "currency", currency: currency.toUpperCase() })).format(12.34),
+              strong: (c) => <strong>{c}</strong>,
+            })}
           </p>
         </div>
       </div>
@@ -439,11 +436,8 @@ export function ServiceFeesClient() {
               <Receipt className="w-5 h-5 text-emerald-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="font-semibold text-gray-900">Customer tips</h2>
-              <p className="text-xs text-gray-500 mt-0.5">
-                When OFF, the customer cart hides the tip selector entirely and the server clamps any tampered client value to 0.
-                Some restaurants (e.g. in countries where tipping isn&apos;t customary) prefer no tip prompts.
-              </p>
+              <h2 className="font-semibold text-gray-900">{t("tipsTitle")}</h2>
+              <p className="text-xs text-gray-500 mt-0.5">{t("tipsHelp")}</p>
             </div>
           </div>
           <button
@@ -451,7 +445,7 @@ export function ServiceFeesClient() {
             onClick={() => saveTips(!tipsEnabled)}
             disabled={savingTips}
             className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${tipsEnabled ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
-            aria-label={tipsEnabled ? "Disable tips" : "Enable tips"}
+            aria-label={tipsEnabled ? t("tipsAriaDisable") : t("tipsAriaEnable")}
           >
             <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${tipsEnabled ? "left-[22px]" : "left-0.5"}`} />
           </button>
@@ -470,12 +464,8 @@ export function ServiceFeesClient() {
               <Search className="w-5 h-5 text-sky-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="font-semibold text-gray-900">Customer menu search</h2>
-              <p className="text-xs text-gray-500 mt-0.5">
-                When ON, the customer ordering page shows a magnifying-glass search
-                bar so visitors can type to find items quickly. Turn OFF if you prefer
-                they browse only via the category pills.
-              </p>
+              <h2 className="font-semibold text-gray-900">{t("menuSearchTitle")}</h2>
+              <p className="text-xs text-gray-500 mt-0.5">{t("menuSearchHelp")}</p>
             </div>
           </div>
           <button
@@ -483,7 +473,7 @@ export function ServiceFeesClient() {
             onClick={() => saveMenuSearch(!showCustomerMenuSearch)}
             disabled={savingMenuSearch}
             className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${showCustomerMenuSearch ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
-            aria-label={showCustomerMenuSearch ? "Hide menu search on customer page" : "Show menu search on customer page"}
+            aria-label={showCustomerMenuSearch ? t("menuSearchAriaHide") : t("menuSearchAriaShow")}
           >
             <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${showCustomerMenuSearch ? "left-[22px]" : "left-0.5"}`} />
           </button>
@@ -503,12 +493,12 @@ export function ServiceFeesClient() {
               <StickyNote className="w-5 h-5 text-violet-600" />
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="font-semibold text-gray-900">Per-item special instructions</h2>
+              <h2 className="font-semibold text-gray-900">{t("itemNotesTitle")}</h2>
               <p className="text-xs text-gray-500 mt-0.5">
-                When ON, customers can add a note to <span className="font-medium">each item</span>{" "}
-                (e.g. &ldquo;extra crispy&rdquo;, &ldquo;no onions on this one&rdquo;) — it prints on the
-                kitchen ticket for that item. When OFF, they can still leave one note for the{" "}
-                <span className="font-medium">whole order</span> at checkout.
+                {t.rich("itemNotesHelp", {
+                  each: (c) => <span className="font-medium">{c}</span>,
+                  whole: (c) => <span className="font-medium">{c}</span>,
+                })}
               </p>
             </div>
           </div>
@@ -517,7 +507,7 @@ export function ServiceFeesClient() {
             onClick={() => saveItemNotes(!allowItemNotes)}
             disabled={savingItemNotes}
             className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${allowItemNotes ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
-            aria-label={allowItemNotes ? "Turn off per-item notes" : "Turn on per-item notes"}
+            aria-label={allowItemNotes ? t("itemNotesAriaOff") : t("itemNotesAriaOn")}
           >
             <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${allowItemNotes ? "left-[22px]" : "left-0.5"}`} />
           </button>
@@ -534,20 +524,16 @@ export function ServiceFeesClient() {
             <Receipt className="w-5 h-5 text-amber-600" />
           </div>
           <div className="flex-1">
-            <h2 className="font-semibold text-gray-900">Scheduling &amp; checkout form</h2>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Control which time slots customers can schedule for, and which contact fields are mandatory at checkout.
-            </p>
+            <h2 className="font-semibold text-gray-900">{t("schedulingTitle")}</h2>
+            <p className="text-xs text-gray-500 mt-0.5">{t("schedulingHelp")}</p>
           </div>
         </div>
 
         {/* Scheduling interval */}
         <div className="flex items-center justify-between gap-3 pt-2 border-t border-gray-100">
           <div className="flex-1 min-w-0">
-            <div className="font-medium text-sm text-gray-800">Slot interval (minutes)</div>
-            <div className="text-xs text-gray-500 mt-0.5">
-              Customers can only schedule orders at this cadence (matches GloriaFood). Default is 15 — change to 30 for slower kitchens.
-            </div>
+            <div className="font-medium text-sm text-gray-800">{t("slotIntervalLabel")}</div>
+            <div className="text-xs text-gray-500 mt-0.5">{t("slotIntervalHelp")}</div>
           </div>
           <select
             value={String(scheduledOrderInterval)}
@@ -565,7 +551,7 @@ export function ServiceFeesClient() {
             className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 disabled:opacity-60"
           >
             {[10, 15, 20, 30, 60].map((n) => (
-              <option key={n} value={n}>{n} min</option>
+              <option key={n} value={n}>{t("minutesOption", { n })}</option>
             ))}
           </select>
         </div>
@@ -577,10 +563,8 @@ export function ServiceFeesClient() {
         {/* Require phone */}
         <div className="flex items-center justify-between gap-3 pt-2 border-t border-gray-100">
           <div className="flex-1 min-w-0">
-            <div className="font-medium text-sm text-gray-800">Require customer phone</div>
-            <div className="text-xs text-gray-500 mt-0.5">
-              When ON, the checkout form rejects orders without a phone number. Recommended for delivery so the kitchen can call about hand-off.
-            </div>
+            <div className="font-medium text-sm text-gray-800">{t("requirePhoneLabel")}</div>
+            <div className="text-xs text-gray-500 mt-0.5">{t("requirePhoneHelp")}</div>
           </div>
           <button
             type="button"
@@ -595,7 +579,7 @@ export function ServiceFeesClient() {
             }
             disabled={savingReqPhone}
             className={`relative w-12 h-7 rounded-full transition-colors flex-shrink-0 ${requireCustomerPhone ? "bg-emerald-500" : "bg-gray-300"} disabled:opacity-60`}
-            aria-label={requireCustomerPhone ? "Make phone optional" : "Make phone required"}
+            aria-label={requireCustomerPhone ? t("requirePhoneAriaOptional") : t("requirePhoneAriaRequired")}
           >
             <span className={`absolute top-0.5 w-6 h-6 bg-white rounded-full shadow transition-all ${requireCustomerPhone ? "left-[22px]" : "left-0.5"}`} />
           </button>

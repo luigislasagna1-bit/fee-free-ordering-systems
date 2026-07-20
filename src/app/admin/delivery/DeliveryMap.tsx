@@ -4,6 +4,7 @@ import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
 import { MapContainer, TileLayer, Marker as LMarker, Circle as LCircle, Tooltip as LTooltip } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useTranslations } from "next-intl";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 
 export type Zone = {
@@ -69,6 +70,7 @@ function GoogleVariant(props: Props & { apiKey: string }) {
   const {
     restaurantLat, restaurantLng, zones, selectedZoneId, onZoneClick, onRestaurantMove, onZoneResize, apiKey,
   } = props;
+  const t = useTranslations("admin.delivery");
   const { isLoaded, loadError } = useGoogleMaps(apiKey);
   const mapRef = useRef<google.maps.Map | null>(null);
   const hasLocation = isValidCoord(restaurantLat, restaurantLng);
@@ -100,7 +102,7 @@ function GoogleVariant(props: Props & { apiKey: string }) {
         <Marker
           position={center}
           draggable={!!onRestaurantMove}
-          title="Restaurant (drag to adjust)"
+          title={t("mapRestaurantTitle")}
           // Same green white-ringed dot the Leaflet variant uses, so the
           // provider swap doesn't change what owners recognise as "my store".
           icon={{
@@ -137,7 +139,7 @@ function GoogleVariant(props: Props & { apiKey: string }) {
             lng: restaurantLng! + lngOffsetForKm(restaurantLat!, selectedZone.radiusKm),
           }}
           draggable
-          title={`${selectedZone.radiusKm} km — drag to resize`}
+          title={t("mapResizeHandleTitle", { km: selectedZone.radiusKm })}
           icon={{
             path: google.maps.SymbolPath.CIRCLE,
             scale: 8,
@@ -187,6 +189,7 @@ function lngOffsetForKm(latDeg: number, km: number): number {
 function LeafletVariant({
   restaurantLat, restaurantLng, zones, selectedZoneId, onZoneClick, onRestaurantMove, onZoneResize, currencySym = "$",
 }: Props) {
+  const t = useTranslations("admin.delivery");
   const hasLocation = isValidCoord(restaurantLat, restaurantLng);
   const initCenter: [number, number] = hasLocation
     ? [restaurantLat!, restaurantLng!]
@@ -220,7 +223,7 @@ function LeafletVariant({
             },
           }}
         >
-          <LTooltip>Restaurant (drag to adjust)</LTooltip>
+          <LTooltip>{t("mapRestaurantTitle")}</LTooltip>
         </LMarker>
       )}
       {hasLocation && sortedZones.map((zone) => {
@@ -241,11 +244,11 @@ function LeafletVariant({
           >
             <LTooltip sticky>
               <strong>{zone.name}</strong>
-              <br />Fee: {currencySym}{zone.deliveryFee.toFixed(2)}
-              <br />Min: {currencySym}{zone.minimumOrder.toFixed(2)}
-              <br />Radius: {zone.radiusKm} km
-              <br />ETA: ~{zone.estimatedMinutes} min
-              {onZoneResize && isSelected && <><br /><em>Drag the handle to resize</em></>}
+              <br />{t("mapFeeLabel")} {currencySym}{zone.deliveryFee.toFixed(2)}
+              <br />{t("mapMinLabel")} {currencySym}{zone.minimumOrder.toFixed(2)}
+              <br />{t("mapRadiusLabel")} {zone.radiusKm} {t("unitKm")}
+              <br />{t("mapEtaLabel")} ~{zone.estimatedMinutes} {t("unitMinutes")}
+              {onZoneResize && isSelected && <><br /><em>{t("mapDragHint")}</em></>}
             </LTooltip>
           </LCircle>
         );
@@ -282,8 +285,8 @@ function LeafletVariant({
           }}
         >
           <LTooltip permanent direction="right" offset={[10, 0]}>
-            <strong>{selectedZone.radiusKm} km</strong>
-            <br /><em>drag to resize</em>
+            <strong>{selectedZone.radiusKm} {t("unitKm")}</strong>
+            <br /><em>{t("mapDragHintShort")}</em>
           </LTooltip>
         </LMarker>
       )}

@@ -91,7 +91,8 @@
     "menu": "Menu",
     "loadingDots": "Memuat…",
     "previous": "Sebelumnya",
-    "kmFromStore": "{km} km dari toko"
+    "kmFromStore": "{km} km dari toko",
+    "apply": "Terapkan"
   },
   "auth": {
     "signIn": "Masuk",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Hapus slot waktu",
       "closesNextDay": "Tutup keesokan hari (mis. buka melewati tengah malam)",
       "holidayNeedsDate": "Pilih tanggal mulai terlebih dahulu.",
-      "holidayWindowOutsideService": "{window} berada di luar jam {service} untuk hari itu. Jam pengecualian harus berada dalam jam layanan normal."
+      "holidayWindowOutsideService": "{window} berada di luar jam {service} untuk hari itu. Jam pengecualian harus berada dalam jam layanan normal.",
+      "copiedDayToAll": "{day} disalin ke semua hari lainnya",
+      "copiedDayToClosed": "{day} disalin ke hari tutup",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Default (semua layanan)",
+      "tabReservation": "Reservasi",
+      "tabAddSuffix": "+ Tambah",
+      "removeOverrideAria": "Hapus penggantian {service}",
+      "removeOverrideTitle": "Hapus penggantian (baris usang tetap ada di basis data sampai Anda menyimpan dengan tab diaktifkan kembali)",
+      "hoursForServiceOnly": "Jam hanya untuk {service}",
+      "markClosed": "Tandai sebagai tutup",
+      "markOpen": "Tandai sebagai buka",
+      "copyHoursTitle": "Salin jam ini ke hari lain",
+      "applyTo": "Terapkan ke…",
+      "applyToAllDays": "Terapkan ke <strong>semua hari lainnya</strong>",
+      "applyToClosedDays": "Terapkan hanya ke <strong>hari yang saat ini tutup</strong>",
+      "dayAbbrev": "Min, Sen, Sel, Rab, Kam, Jum, Sab"
     },
     "services": {
       "title": "Layanan Restoran",
@@ -1205,7 +1225,42 @@
         "colRequired": "Wajib",
         "saved": "Formulir alamat pengiriman diperbarui"
       },
-      "estimatedMinutesHint": "TOTAL perkiraan waktu pengantaran (persiapan + perjalanan) untuk alamat di zona ini. Pelanggan melihat angka ini saat checkout dan menentukan slot \"pesan untuk nanti\" paling awal — menggantikan perkiraan bawaan layanan antar. Nilai realistis 30–60 mnt, bukan hanya perjalanan."
+      "estimatedMinutesHint": "TOTAL perkiraan waktu pengantaran (persiapan + perjalanan) untuk alamat di zona ini. Pelanggan melihat angka ini saat checkout dan menentukan slot \"pesan untuk nanti\" paling awal — menggantikan perkiraan bawaan layanan antar. Nilai realistis 30–60 mnt, bukan hanya perjalanan.",
+      "toastNoAddress": "Alamat belum diatur. Lengkapi dulu profil restoran Anda.",
+      "toastAddressNotFound": "Alamat ini tidak ditemukan. Perbarui alamat Anda di profil restoran dan coba lagi.",
+      "toastLocationPinned": "Lokasi restoran disematkan di peta!",
+      "toastGeocodeFailed": "Geocoding gagal. Periksa koneksi internet Anda.",
+      "toastLocationUpdated": "Lokasi restoran diperbarui!",
+      "toastZoneNameRequired": "Nama zona wajib diisi",
+      "toastSetLocationFirst": "Atur dulu lokasi restoran Anda (zona adalah lingkaran konsentris di sekitarnya).",
+      "toastSaveZoneFailed": "Gagal menyimpan zona",
+      "toastZoneAdded": "Zona \"{name}\" ditambahkan!",
+      "toastUpdateZoneFailed": "Gagal memperbarui zona",
+      "confirmDeleteZone": "Hapus zona pengiriman \"{name}\"? Tindakan ini tidak dapat dibatalkan.",
+      "toastZoneDeleted": "Zona dihapus",
+      "locationNotSetTitle": "Lokasi restoran belum diatur",
+      "locationNotSetDesc": "Zona pengiriman memerlukan koordinat restoran Anda sebagai titik asal. <link>Atur di profil restoran</link> atau gunakan tombol di bawah untuk melakukan geocoding alamat Anda saat ini.",
+      "locateRestaurant": "Temukan restoran",
+      "locating": "Menemukan…",
+      "relocate": "Temukan ulang",
+      "legendActiveZone": "Zona aktif",
+      "legendInactiveZone": "Zona nonaktif",
+      "rowFee": "biaya {amount}",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "mnt",
+      "detailStdTime": "Waktu std.",
+      "editFee": "Biaya ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Waktu std. (mnt)",
+      "mapRestaurantTitle": "Restoran (seret untuk menyesuaikan)",
+      "mapResizeHandleTitle": "{km} km — seret untuk mengubah ukuran",
+      "mapFeeLabel": "Biaya:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Radius:",
+      "mapEtaLabel": "Estimasi:",
+      "mapDragHint": "Seret pegangan untuk mengubah ukuran",
+      "mapDragHintShort": "seret untuk mengubah ukuran"
     },
     "reservations": {
       "title": "Reservasi",
@@ -1286,7 +1341,38 @@
       "amount": "Jumlah",
       "schedule": "Jadwal",
       "status": "Status",
-      "confirmDelete": "Hapus \"{name}\"?"
+      "confirmDelete": "Hapus \"{name}\"?",
+      "taxRateRangeError": "Tarif pajak harus antara 0 dan 100",
+      "salesTaxTitle": "Tarif pajak penjualan",
+      "salesTaxHelp": "Diterapkan pada subtotal kena pajak setiap pesanan. Setel 0 jika Anda tidak memungut pajak penjualan. (mis. 13 untuk HST 13%.)",
+      "rateLabel": "Tarif (%)",
+      "savingLabel": "Menyimpan…",
+      "saveTaxRate": "Simpan tarif",
+      "currencyTitle": "Mata uang",
+      "currencyHelp": "Menentukan setiap harga yang dilihat pelanggan serta tagihan Stripe/PayPal, tanda terima, dan laporan. Mengubah mata uang TIDAK mengonversi harga yang ada — perbarui harga menu agar sesuai jika Anda beralih dari USD ke EUR (dll.).",
+      "currencyLabel": "Mata uang",
+      "currencySample": "Contoh: <strong>{value}</strong>",
+      "tipsTitle": "Tip pelanggan",
+      "tipsHelp": "Saat MATI, keranjang pelanggan menyembunyikan pemilih tip sepenuhnya dan server menetapkan nilai klien yang diubah menjadi 0. Beberapa restoran (mis. di negara yang tidak biasa memberi tip) memilih untuk tidak menampilkan permintaan tip.",
+      "tipsAriaDisable": "Nonaktifkan tip",
+      "tipsAriaEnable": "Aktifkan tip",
+      "menuSearchTitle": "Pencarian menu pelanggan",
+      "menuSearchHelp": "Saat AKTIF, halaman pemesanan pelanggan menampilkan bilah pencarian berikon kaca pembesar agar pengunjung cepat menemukan item dengan mengetik. NONAKTIFKAN jika Anda lebih suka mereka menjelajah hanya lewat tombol kategori.",
+      "menuSearchAriaHide": "Sembunyikan pencarian menu di halaman pelanggan",
+      "menuSearchAriaShow": "Tampilkan pencarian menu di halaman pelanggan",
+      "itemNotesTitle": "Instruksi khusus per item",
+      "itemNotesHelp": "Saat AKTIF, pelanggan dapat menambahkan catatan ke <each>setiap item</each> (mis. “ekstra renyah”, “tanpa bawang di yang ini”) — dicetak pada tiket dapur untuk item tersebut. NONAKTIF, mereka tetap bisa meninggalkan satu catatan untuk <whole>seluruh pesanan</whole> saat checkout.",
+      "itemNotesAriaOff": "Matikan catatan per item",
+      "itemNotesAriaOn": "Aktifkan catatan per item",
+      "schedulingTitle": "Penjadwalan & formulir checkout",
+      "schedulingHelp": "Kontrol slot waktu mana yang bisa dijadwalkan pelanggan, dan kolom kontak mana yang wajib saat checkout.",
+      "slotIntervalLabel": "Interval slot (menit)",
+      "slotIntervalHelp": "Pelanggan hanya bisa menjadwalkan pesanan pada irama ini (sama seperti GloriaFood). Default 15 — ubah ke 30 untuk dapur yang lebih lambat.",
+      "minutesOption": "{n} mnt",
+      "requirePhoneLabel": "Wajibkan telepon pelanggan",
+      "requirePhoneHelp": "Saat AKTIF, formulir checkout menolak pesanan tanpa nomor telepon. Direkomendasikan untuk pengiriman agar dapur bisa menelepon soal serah terima.",
+      "requirePhoneAriaOptional": "Jadikan telepon opsional",
+      "requirePhoneAriaRequired": "Jadikan telepon wajib"
     },
     "mapSettings": {
       "title": "Pengaturan Peta",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Populer",
       "addOnEnableCta": "Aktifkan",
       "perMonth": "/bln",
-      "kitchenAlertsSection": "Dapur & peringatan pesanan"
+      "kitchenAlertsSection": "Dapur & peringatan pesanan",
+      "currentPlanWithAddOns": "Paket saat ini: FREE + {count} add-on",
+      "currentPlanFree": "Paket saat ini: FREE",
+      "freePlanDescription": "Widget pemesanan, admin, menu, aplikasi dapur — tanpa kartu. Terima hingga 100 pesanan/bulan selamanya. Tambahkan fitur berbayar kapan saja dari halaman Penagihan.",
+      "feature100Orders": "100 pesanan/bulan",
+      "featureUnlimitedMenu": "Item menu tanpa batas",
+      "featureCustomerAccounts": "Akun pelanggan",
+      "activeAddOnsHeading": "Add-on aktif",
+      "trialBadge": "Uji coba",
+      "manageSubscriptionsHeading": "Kelola langganan Anda",
+      "upgradeWithAddOnsHeading": "Tingkatkan dengan add-on berbayar",
+      "manageBillingCta": "Kelola penagihan",
+      "browseAddOnsCta": "Jelajahi add-on"
     },
     "coupons": {
       "title": "Kupon",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Belum diverifikasi dengan VIES",
       "viesVerifyNow": "Verifikasi sekarang",
       "viesUnreachable": "Layanan VIES sementara tidak tersedia — coba lagi dalam beberapa menit.",
-      "euVatNote": "Bisnis UE: nomor PPN terdaftar VIES diperlukan untuk langganan berbayar. Nomor tervalidasi ditagih dengan PPN 0% (reverse charge)."
+      "euVatNote": "Bisnis UE: nomor PPN terdaftar VIES diperlukan untuk langganan berbayar. Nomor tervalidasi ditagih dengan PPN 0% (reverse charge).",
+      "perOrder": "/pesanan",
+      "paygOrderCount": "{count} pesanan"
     },
     "addOns": {
       "errorCheckout": "Gagal memulai checkout",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Ya, batalkan",
       "compFreeUntil": "Gratis hingga {date}",
       "compExplainer": "Add-on ini gratis sampai saat itu — tidak diperpanjang otomatis. Berlangganan sekarang untuk mempertahankannya: kartu Anda disimpan hari ini dan penagihan baru dimulai saat periode gratis berakhir.",
-      "compSubscribeCta": "Berlangganan untuk mempertahankan"
+      "compSubscribeCta": "Berlangganan untuk mempertahankan",
+      "pageIntro": "Produk inti gratis selamanya. Buka fitur individual di bawah dengan berlangganan add-on yang sesuai. Batalkan kapan saja — Anda tetap memiliki akses hingga akhir periode penagihan.",
+      "subscribedBanner": "<strong>Berhasil!</strong> Langganan Anda sedang diaktifkan. Membuka fitur bisa memakan waktu hingga satu menit.",
+      "settingsLinks": {
+        "hostedWebsite": "Buka editor situs web",
+        "onlinePayments": "Kelola Stripe Connect",
+        "driverPool": "Konfigurasi kumpulan pengemudi",
+        "multiLocation": "Kelola lokasi",
+        "customDomain": "Hubungkan domain Anda",
+        "advancedPromoMarketing": "Jalankan promosi",
+        "reservationDeposits": "Konfigurasi reservasi",
+        "brandedMobileApp": "Konfigurasi aplikasi"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Aktif",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Ditugaskan",
       "labelVip": "VIP",
       "badgeDeadTargets": "Tidak ada hidangan aktif — pilih ulang",
-      "searchPlaceholder": "Cari berdasarkan nama atau kode kupon…"
+      "searchPlaceholder": "Cari berdasarkan nama atau kode kupon…",
+      "typeLabels": {
+        "percentage_off": "% Diskon untuk Item Terpilih",
+        "fixed_cart": "Diskon Tetap pada Keranjang",
+        "free_delivery": "Pengiriman Gratis",
+        "bogo": "Beli Satu Gratis Satu",
+        "buy_n_get_free": "Beli N Gratis Satu",
+        "free_item": "Dapatkan Item GRATIS",
+        "meal_bundle": "Paket Makanan",
+        "meal_bundle_speciality": "Paket Makanan dengan Spesial",
+        "fixed_combo": "Diskon Tetap pada Combo",
+        "percentage_combo": "% Diskon pada Combo",
+        "payment_reward": "Hadiah Metode Pembayaran",
+        "free_dish_meal": "Hidangan Gratis sebagai Bagian dari Makanan"
+      },
+      "campaignFallback": "Kampanye"
     },
     "promoWizard": {
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Diskon progresif beli-N-gratis",
       "featureFreeDish": "Menu gratis sebagai bagian dari paket",
       "maybeLater": "Mungkin nanti",
-      "subscribe": "Berlangganan"
+      "subscribe": "Berlangganan",
+      "types": {
+        "percentage_off": {
+          "name": "% diskon pada keranjang",
+          "desc": "Kurangi persentase dari seluruh pesanan (atau item tertentu)."
+        },
+        "free_delivery": {
+          "name": "Pengiriman gratis",
+          "desc": "Bebaskan biaya pengiriman untuk pesanan yang memenuhi syarat."
+        },
+        "bogo": {
+          "name": "Beli satu gratis satu",
+          "desc": "Pasangkan item berbayar dengan item gratis (atau berdiskon)."
+        },
+        "fixed_cart": {
+          "name": "Diskon tetap pada keranjang",
+          "desc": "Kurangi jumlah tetap dari pesanan."
+        },
+        "payment_reward": {
+          "name": "Hadiah metode pembayaran",
+          "desc": "Diskon untuk pembayaran dengan metode tertentu (mis. tunai)."
+        },
+        "free_item": {
+          "name": "Dapatkan item GRATIS",
+          "desc": "Belanja X, dapatkan item gratis dari daftar pilihan."
+        },
+        "meal_bundle": {
+          "name": "Paket makanan",
+          "desc": "Campur dan cocokkan slot dengan harga paket tetap."
+        },
+        "buy_n_get_free": {
+          "name": "Beli N gratis satu",
+          "desc": "Tambahkan N item, berikutnya (termurah atau pilihan) gratis."
+        },
+        "free_dish_meal": {
+          "name": "Hidangan gratis sebagai bagian dari makanan",
+          "desc": "Pesan hidangan utama + pendamping, dapatkan pencuci mulut (atau ekstra apa pun) gratis."
+        },
+        "fixed_combo": {
+          "name": "Diskon tetap pada combo",
+          "desc": "Pasangkan item tertentu, potong jumlah tetap."
+        },
+        "percentage_combo": {
+          "name": "% diskon pada combo",
+          "desc": "Pasangkan item tertentu, potong persentase."
+        },
+        "meal_bundle_speciality": {
+          "name": "Paket makanan dengan spesial",
+          "desc": "Paket makanan dengan biaya tambahan opsional (mis. lobster +$5)."
+        },
+        "reward_credit": {
+          "name": "Berikan Reward Dollars",
+          "desc": "Beri pelanggan kredit toko pada pesanan ini alih-alih diskon."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Konfigurasi promosi Anda",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Jika dicentang, penawaran ini hanya berlaku satu kali per pesanan, meskipun keranjang memenuhi syarat lebih dari sekali (misalnya Beli Satu Gratis Satu yang seharusnya berulang).",
       "rewardCreditLabel": "Reward Dollars yang diberikan",
       "rewardCreditHint": "Ditambahkan ke saldo pelanggan saat pesanan ini selesai — tanpa diskon keranjang. Memerlukan Reward Dollars diaktifkan.",
-      "oncePerOrderHintPercent": "Jika dicentang, diskon % hanya berlaku untuk SATU item — item memenuhi syarat termahal di keranjang (mis. “diskon 20% untuk satu hidangan utama”). Hapus centang untuk mendiskon SEMUA item yang memenuhi syarat."
+      "oncePerOrderHintPercent": "Jika dicentang, diskon % hanya berlaku untuk SATU item — item memenuhi syarat termahal di keranjang (mis. “diskon 20% untuk satu hidangan utama”). Hapus centang untuk mendiskon SEMUA item yang memenuhi syarat.",
+      "groupNoItems": "Tidak ada item dipilih — klik untuk mengedit",
+      "groupMoreCategories": "+{n} lainnya",
+      "pickerHeading": "Pilih kategori atau item",
+      "pickerNoCategories": "Tidak ada kategori ditemukan",
+      "allSizesSuffix": " · semua ukuran",
+      "groupSpecificItems": "{count} item spesifik",
+      "groupSizes": "{count} ukuran",
+      "specialityFeeTitle": "Kenakan biaya hanya untuk ukuran ini",
+      "specialityFeeDesc": "Centang ukuran premium yang menambahkan biaya — ukuran dasar tetap gratis. Biarkan semua tidak dicentang untuk mengenakan biaya di setiap pilihan.",
+      "specialityFeeEmpty": "Pilih dulu item slot ini, lalu tentukan ukuran mana yang dikenai biaya tambahan.",
+      "wholeItemAllSizesSuffix": " · seluruh item (semua ukuran)",
+      "roleLabelPaid": "(Berbayar)",
+      "roleLabelFree": "(Gratis)",
+      "roleLabelTrigger": "(Pemicu)",
+      "roleLabelRequired": "(Wajib)",
+      "itemsGroupN": "Grup Item {n}",
+      "slotPickAtLeast": "Pilih minimal",
+      "slotUpTo": "hingga",
+      "slotItems": "item",
+      "specialityFeeInlineLabel": "Biaya spesial +{currencySymbol}",
+      "specialityFeeForSizes": "untuk {count} ukuran",
+      "specialityFeeForAll": "untuk semua ukuran — pilih mana yang dikenai biaya tambahan",
+      "extraChargeLabel": "Biaya pada item gratis",
+      "extraChargeNone": "Tanpa biaya tambahan (seluruh item gratis benar-benar gratis)",
+      "extraChargeAddons": "Biaya tambahan untuk pilihan / add-on (topping tetap ditagih)",
+      "extraChargeAddonsSizes": "Biaya tambahan untuk pilihan / add-on & ukuran (topping + peningkatan ukuran ditagih)",
+      "extraChargeHint": "Apakah topping dan peningkatan ukuran item gratis tetap ditagih — sama seperti GloriaFood.",
+      "discountStrategyNoteFreed": "Item dari grup “gratis” adalah yang didiskon — tanpa memandang harga. % di atas adalah besar diskonnya (100% = gratis).",
+      "discountStrategyNoteMostExpensive": "BOGO mendiskon yang LEBIH MAHAL dari dua item yang memenuhi syarat. Untuk selalu mendiskon satu item tertentu, gunakan penawaran “Beli N, Dapat Gratis”.",
+      "discountStrategyNoteFixedPercent": "Setiap item yang didiskon mendapat % ini — yang lebih murah saat sepasang memenuhi syarat. Untuk selalu mendiskon satu item tertentu, gunakan penawaran “Beli N, Dapat Gratis”.",
+      "discountStrategyNoteCheapest": "BOGO mendiskon yang LEBIH MURAH dari dua item yang memenuhi syarat — jadi jika item “gratis” lebih mahal, yang lebih murah yang didiskon (pelanggan tidak bisa mendapatkan item lebih mahal dengan murah). Untuk selalu mendiskon satu item tertentu (mis. pasta), gunakan penawaran “Beli N, Dapat Gratis”.",
+      "discountStrategyLabel": "Strategi diskon",
+      "strategyCheapest": "Atur diskon otomatis (item termurah gratis)",
+      "strategyMostExpensive": "Atur diskon otomatis (item termahal gratis)",
+      "strategyFixedPercent": "Persentase diskon tetap",
+      "pctOffCheapest": "% diskon item termurah",
+      "pctOffMostExpensive": "% diskon item termahal"
     },
     "promoStepRestrictions": {
       "pageTitle": "Batasan & tampilan",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Keduanya",
       "hiddenCodeInfo": "Promo tersembunyi hanya berlaku saat pelanggan memasukkan kode ini saat checkout.",
       "vipLockedTitle": "Khusus VIP — terhubung ke: {groups}",
-      "vipLockedDesc": "Promosi ini otomatis berlaku hanya untuk anggota VIP tersebut saat checkout. Tidak pernah tampil di menu publik, banner, atau situs — tidak ada sakelar visibilitas yang bisa mengubahnya. Untuk menjadikannya publik, lepaskan dulu di halaman Grup VIP."
+      "vipLockedDesc": "Promosi ini otomatis berlaku hanya untuk anggota VIP tersebut saat checkout. Tidak pernah tampil di menu publik, banner, atau situs — tidak ada sakelar visibilitas yang bisa mengubahnya. Untuk menjadikannya publik, lepaskan dulu di halaman Grup VIP.",
+      "bundleBuildInfo": "💡 Pelanggan membuat paket ini dari kartu “Buat penawaranmu” di menu Anda. Sematkan ke banner di bawah agar mudah ditemukan. (Paket tidak bisa diterapkan otomatis atau dibuka dengan kode.)"
     },
     "customersList": {
       "heading": "Pelanggan",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Simpan pengaturan Anda sekali (dengan sumber ShipDay dipilih) dan tautan webhook pribadi Anda akan muncul di sini.",
       "feeFromZonesTitle": "Biaya pengiriman pelanggan",
       "feeFromZonesBody": "Jumlah yang dibayar pelanggan Anda untuk pengiriman diatur di halaman Zona Pengiriman — sama seperti dengan driver Anda sendiri. ShipDay menagih restoran Anda secara terpisah untuk setiap pengiriman; tanyakan tarif per pengiriman Anda kepada kontak ShipDay Anda.",
-      "feeFromZonesLink": "Buka Zona Pengiriman"
+      "feeFromZonesLink": "Buka Zona Pengiriman",
+      "errorUnknown": "Kesalahan tidak diketahui",
+      "errorNetwork": "Kesalahan jaringan"
     },
     "driverPoolLocked": {
       "addonBadge": "Add-on",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Anda menentukan harga pelanggan",
       "feature2Body": "Teruskan (pelanggan membayar biaya ShipDay penuh), tetap (Anda menanggung selisih), atau bertingkat (mis. gratis di atas $50). Kendali penuh.",
       "feature3Title": "Pilih per pesanan",
-      "feature3Body": "Kombinasikan driver Anda sendiri dengan ShipDay. Dapur melihat picker untuk setiap pengiriman: in-house atau pool. Pilihan Anda, setiap saat."
+      "feature3Body": "Kombinasikan driver Anda sendiri dengan ShipDay. Dapur melihat picker untuk setiap pengiriman: in-house atau pool. Pilihan Anda, setiap saat.",
+      "perMonth": "/bln"
     },
     "marketplaceLocked": {
       "addonBadge": "Add-on",

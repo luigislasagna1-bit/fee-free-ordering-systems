@@ -91,7 +91,8 @@
     "menu": "Menu",
     "loadingDots": "Chargement…",
     "previous": "Précédent",
-    "kmFromStore": "à {km} km du magasin"
+    "kmFromStore": "à {km} km du magasin",
+    "apply": "Appliquer"
   },
   "auth": {
     "signIn": "Se connecter",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Supprimer le créneau horaire",
       "closesNextDay": "Ferme le lendemain (p. ex. ouvert après minuit)",
       "holidayNeedsDate": "Choisissez d'abord une date de début.",
-      "holidayWindowOutsideService": "{window} est en dehors des horaires {service} ce jour-là. Les horaires exceptionnels doivent être compris dans les horaires normaux du service."
+      "holidayWindowOutsideService": "{window} est en dehors des horaires {service} ce jour-là. Les horaires exceptionnels doivent être compris dans les horaires normaux du service.",
+      "copiedDayToAll": "{day} copié sur tous les autres jours",
+      "copiedDayToClosed": "{day} copié sur les jours fermés",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Par défaut (tous les services)",
+      "tabReservation": "Réservation",
+      "tabAddSuffix": "+ Ajouter",
+      "removeOverrideAria": "Supprimer la dérogation {service}",
+      "removeOverrideTitle": "Supprimer la dérogation (les lignes obsolètes restent dans la base de données jusqu'à ce que vous enregistriez avec l'onglet réactivé)",
+      "hoursForServiceOnly": "Horaires pour {service} uniquement",
+      "markClosed": "Marquer comme fermé",
+      "markOpen": "Marquer comme ouvert",
+      "copyHoursTitle": "Copier ces horaires sur d'autres jours",
+      "applyTo": "Appliquer à…",
+      "applyToAllDays": "Appliquer à <strong>tous les autres jours</strong>",
+      "applyToClosedDays": "Appliquer uniquement aux <strong>jours actuellement fermés</strong>",
+      "dayAbbrev": "dim, lun, mar, mer, jeu, ven, sam"
     },
     "services": {
       "title": "Services du restaurant",
@@ -1205,7 +1225,42 @@
         "colRequired": "Obligatoire",
         "saved": "Formulaire d'adresse de livraison mis à jour"
       },
-      "estimatedMinutesHint": "Temps de livraison TOTAL estimé (préparation + trajet) pour les adresses de cette zone. Les clients voient ce chiffre au paiement et il fixe le premier créneau « pour plus tard » — il remplace le temps estimé par défaut du service de livraison. Une valeur réaliste est de 30 à 60 min, pas seulement le trajet."
+      "estimatedMinutesHint": "Temps de livraison TOTAL estimé (préparation + trajet) pour les adresses de cette zone. Les clients voient ce chiffre au paiement et il fixe le premier créneau « pour plus tard » — il remplace le temps estimé par défaut du service de livraison. Une valeur réaliste est de 30 à 60 min, pas seulement le trajet.",
+      "toastNoAddress": "Aucune adresse définie. Veuillez d'abord compléter votre profil de restaurant.",
+      "toastAddressNotFound": "Impossible de trouver cette adresse. Mettez à jour votre adresse dans le profil du restaurant et réessayez.",
+      "toastLocationPinned": "Emplacement du restaurant épinglé sur la carte !",
+      "toastGeocodeFailed": "Le géocodage a échoué. Vérifiez votre connexion Internet.",
+      "toastLocationUpdated": "Emplacement du restaurant mis à jour !",
+      "toastZoneNameRequired": "Le nom de la zone est requis",
+      "toastSetLocationFirst": "Définissez d'abord l'emplacement de votre restaurant (les zones sont des cercles concentriques autour).",
+      "toastSaveZoneFailed": "Échec de l'enregistrement de la zone",
+      "toastZoneAdded": "Zone « {name} » ajoutée !",
+      "toastUpdateZoneFailed": "Échec de la mise à jour de la zone",
+      "confirmDeleteZone": "Supprimer la zone de livraison « {name} » ? Cette action est irréversible.",
+      "toastZoneDeleted": "Zone supprimée",
+      "locationNotSetTitle": "Emplacement du restaurant non défini",
+      "locationNotSetDesc": "Les zones de livraison ont besoin des coordonnées de votre restaurant comme origine. <link>Définissez-les dans le profil du restaurant</link> ou utilisez le bouton ci-dessous pour géocoder votre adresse actuelle.",
+      "locateRestaurant": "Localiser le restaurant",
+      "locating": "Localisation…",
+      "relocate": "Relocaliser",
+      "legendActiveZone": "Zone active",
+      "legendInactiveZone": "Zone inactive",
+      "rowFee": "{amount} de frais",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Temps std.",
+      "editFee": "Frais ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Temps std. (min)",
+      "mapRestaurantTitle": "Restaurant (glissez pour ajuster)",
+      "mapResizeHandleTitle": "{km} km — glissez pour redimensionner",
+      "mapFeeLabel": "Frais :",
+      "mapMinLabel": "Min. :",
+      "mapRadiusLabel": "Rayon :",
+      "mapEtaLabel": "ETA :",
+      "mapDragHint": "Glissez la poignée pour redimensionner",
+      "mapDragHintShort": "glissez pour redimensionner"
     },
     "reservations": {
       "title": "Réservations",
@@ -1286,7 +1341,38 @@
       "amount": "Montant",
       "schedule": "Horaire",
       "status": "Statut",
-      "confirmDelete": "Supprimer « {name} » ?"
+      "confirmDelete": "Supprimer « {name} » ?",
+      "taxRateRangeError": "Le taux de taxe doit être compris entre 0 et 100",
+      "salesTaxTitle": "Taux de taxe de vente",
+      "salesTaxHelp": "Appliqué au sous-total imposable de chaque commande. Mettez 0 si vous ne percevez pas de taxe de vente. (par ex. 13 pour 13 % de HST.)",
+      "rateLabel": "Taux (%)",
+      "savingLabel": "Enregistrement…",
+      "saveTaxRate": "Enregistrer le taux",
+      "currencyTitle": "Devise",
+      "currencyHelp": "Détermine chaque prix vu par le client ainsi que les frais Stripe/PayPal, les reçus et les rapports. Changer de devise ne convertit PAS les prix existants — mettez à jour les prix du menu si vous passez de USD à EUR (etc.).",
+      "currencyLabel": "Devise",
+      "currencySample": "Exemple : <strong>{value}</strong>",
+      "tipsTitle": "Pourboires des clients",
+      "tipsHelp": "Lorsqu'il est DÉSACTIVÉ, le panier du client masque entièrement le sélecteur de pourboire et le serveur ramène à 0 toute valeur client falsifiée. Certains restaurants (par ex. dans les pays où le pourboire n'est pas d'usage) préfèrent ne pas afficher d'invite de pourboire.",
+      "tipsAriaDisable": "Désactiver les pourboires",
+      "tipsAriaEnable": "Activer les pourboires",
+      "menuSearchTitle": "Recherche dans le menu client",
+      "menuSearchHelp": "Lorsqu'elle est ACTIVÉE, la page de commande du client affiche une barre de recherche (loupe) pour que les visiteurs trouvent rapidement des articles en tapant. DÉSACTIVEZ-la si vous préférez qu'ils naviguent uniquement via les puces de catégories.",
+      "menuSearchAriaHide": "Masquer la recherche du menu sur la page client",
+      "menuSearchAriaShow": "Afficher la recherche du menu sur la page client",
+      "itemNotesTitle": "Instructions spéciales par article",
+      "itemNotesHelp": "Lorsqu'elle est ACTIVÉE, les clients peuvent ajouter une note à <each>chaque article</each> (par ex. « bien croustillant », « sans oignons sur celui-ci ») — elle s'imprime sur le ticket de cuisine de cet article. DÉSACTIVÉE, ils peuvent toujours laisser une note pour la <whole>commande entière</whole> au paiement.",
+      "itemNotesAriaOff": "Désactiver les notes par article",
+      "itemNotesAriaOn": "Activer les notes par article",
+      "schedulingTitle": "Planification et formulaire de paiement",
+      "schedulingHelp": "Contrôlez les créneaux horaires que les clients peuvent réserver et les champs de contact obligatoires au paiement.",
+      "slotIntervalLabel": "Intervalle des créneaux (minutes)",
+      "slotIntervalHelp": "Les clients ne peuvent programmer des commandes qu'à cette cadence (comme GloriaFood). Par défaut 15 — passez à 30 pour les cuisines plus lentes.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Exiger le téléphone du client",
+      "requirePhoneHelp": "Lorsqu'il est ACTIVÉ, le formulaire de paiement refuse les commandes sans numéro de téléphone. Recommandé pour la livraison afin que la cuisine puisse appeler au sujet de la remise.",
+      "requirePhoneAriaOptional": "Rendre le téléphone facultatif",
+      "requirePhoneAriaRequired": "Rendre le téléphone obligatoire"
     },
     "mapSettings": {
       "title": "Paramètres de carte",
@@ -1491,7 +1577,19 @@
       "popularBadge": "Populaire",
       "addOnEnableCta": "Activer",
       "perMonth": "/mois",
-      "kitchenAlertsSection": "Cuisine et alertes de commande"
+      "kitchenAlertsSection": "Cuisine et alertes de commande",
+      "currentPlanWithAddOns": "Forfait actuel : FREE + {count, plural, one {# option} other {# options}}",
+      "currentPlanFree": "Forfait actuel : FREE",
+      "freePlanDescription": "Widget de commande, admin, menu, application cuisine — sans carte bancaire. Acceptez jusqu'à 100 commandes/mois pour toujours. Ajoutez des fonctionnalités payantes à tout moment depuis la page Facturation.",
+      "feature100Orders": "100 commandes/mois",
+      "featureUnlimitedMenu": "Articles de menu illimités",
+      "featureCustomerAccounts": "Comptes clients",
+      "activeAddOnsHeading": "Options actives",
+      "trialBadge": "Essai",
+      "manageSubscriptionsHeading": "Gérer vos abonnements",
+      "upgradeWithAddOnsHeading": "Améliorez avec des options payantes",
+      "manageBillingCta": "Gérer la facturation",
+      "browseAddOnsCta": "Parcourir les options"
     },
     "coupons": {
       "title": "Coupons",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Pas encore vérifié dans VIES",
       "viesVerifyNow": "Vérifier maintenant",
       "viesUnreachable": "Le service VIES est temporairement indisponible — réessayez dans quelques minutes.",
-      "euVatNote": "Entreprises de l'UE : un numéro de TVA enregistré dans VIES est requis pour les abonnements payants. Les numéros validés sont facturés à 0 % de TVA (autoliquidation)."
+      "euVatNote": "Entreprises de l'UE : un numéro de TVA enregistré dans VIES est requis pour les abonnements payants. Les numéros validés sont facturés à 0 % de TVA (autoliquidation).",
+      "perOrder": "/commande",
+      "paygOrderCount": "{count, plural, one {# commande} other {# commandes}}"
     },
     "addOns": {
       "errorCheckout": "Impossible de démarrer le paiement",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Oui, annuler",
       "compFreeUntil": "Gratuit jusqu'au {date}",
       "compExplainer": "Ce module est offert jusqu'à cette date — il ne se renouvelle pas tout seul. Abonnez-vous dès maintenant pour le conserver : votre carte est enregistrée aujourd'hui et la facturation ne commence qu'à la fin de la période gratuite.",
-      "compSubscribeCta": "S'abonner pour le conserver"
+      "compSubscribeCta": "S'abonner pour le conserver",
+      "pageIntro": "Le produit de base est gratuit pour toujours. Débloquez des fonctionnalités individuelles ci-dessous en vous abonnant à l'option correspondante. Annulez à tout moment — vous gardez l'accès jusqu'à la fin de la période de facturation.",
+      "subscribedBanner": "<strong>Réussi !</strong> Votre abonnement est en cours d'activation. Le déblocage de la fonctionnalité peut prendre jusqu'à une minute.",
+      "settingsLinks": {
+        "hostedWebsite": "Ouvrir l'éditeur de site",
+        "onlinePayments": "Gérer Stripe Connect",
+        "driverPool": "Configurer le pool de chauffeurs",
+        "multiLocation": "Gérer les établissements",
+        "customDomain": "Connecter votre domaine",
+        "advancedPromoMarketing": "Lancer des promotions",
+        "reservationDeposits": "Configurer les réservations",
+        "brandedMobileApp": "Configurer l'application"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "En ligne",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Attribué",
       "labelVip": "VIP",
       "badgeDeadTargets": "Ne cible aucun plat actif — resélectionnez",
-      "searchPlaceholder": "Rechercher par nom ou code promo…"
+      "searchPlaceholder": "Rechercher par nom ou code promo…",
+      "typeLabels": {
+        "percentage_off": "% de remise sur les articles sélectionnés",
+        "fixed_cart": "Remise fixe sur le panier",
+        "free_delivery": "Livraison gratuite",
+        "bogo": "Un acheté, un offert",
+        "buy_n_get_free": "Achetez N, obtenez-en un gratuit",
+        "free_item": "Obtenez un article GRATUIT",
+        "meal_bundle": "Menu groupé",
+        "meal_bundle_speciality": "Menu groupé avec spécialité",
+        "fixed_combo": "Remise fixe sur l'offre combinée",
+        "percentage_combo": "% de remise sur l'offre combinée",
+        "payment_reward": "Récompense selon le mode de paiement",
+        "free_dish_meal": "Plat gratuit dans le cadre d'un repas"
+      },
+      "campaignFallback": "Campagne"
     },
     "promoWizard": {
       "errorPickType": "Sélectionnez un type de promotion pour continuer.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Remises progressives achetez-N-obtenez-gratuit",
       "featureFreeDish": "Plat offert dans le cadre d'un repas",
       "maybeLater": "Peut-être plus tard",
-      "subscribe": "S'abonner"
+      "subscribe": "S'abonner",
+      "types": {
+        "percentage_off": {
+          "name": "% de remise sur le panier",
+          "desc": "Réduisez un pourcentage sur toute la commande (ou des articles précis)."
+        },
+        "free_delivery": {
+          "name": "Livraison gratuite",
+          "desc": "Supprimez les frais de livraison pour les commandes éligibles."
+        },
+        "bogo": {
+          "name": "Un acheté, un offert",
+          "desc": "Associez un article payant à un article gratuit (ou remisé)."
+        },
+        "fixed_cart": {
+          "name": "Remise fixe sur le panier",
+          "desc": "Réduisez un montant fixe sur la commande."
+        },
+        "payment_reward": {
+          "name": "Récompense selon le mode de paiement",
+          "desc": "Remise pour un paiement avec un mode précis (p. ex. espèces)."
+        },
+        "free_item": {
+          "name": "Obtenez un article GRATUIT",
+          "desc": "Dépensez X, obtenez un article gratuit d'une liste sélectionnée."
+        },
+        "meal_bundle": {
+          "name": "Menu groupé",
+          "desc": "Composez des emplacements à un prix de menu fixe."
+        },
+        "buy_n_get_free": {
+          "name": "Achetez N, obtenez-en un gratuit",
+          "desc": "Ajoutez N articles, le suivant (le moins cher ou choisi) est gratuit."
+        },
+        "free_dish_meal": {
+          "name": "Plat gratuit dans le cadre d'un repas",
+          "desc": "Commandez un plat + un accompagnement, un dessert (ou tout extra) est offert."
+        },
+        "fixed_combo": {
+          "name": "Remise fixe sur le combo",
+          "desc": "Associez des articles précis et réduisez un montant fixe."
+        },
+        "percentage_combo": {
+          "name": "% de remise sur le combo",
+          "desc": "Associez des articles précis et réduisez un pourcentage."
+        },
+        "meal_bundle_speciality": {
+          "name": "Menu groupé avec spécialité",
+          "desc": "Menu groupé avec suppléments optionnels (p. ex. homard +5 $)."
+        },
+        "reward_credit": {
+          "name": "Accorder des Reward Dollars",
+          "desc": "Récompensez le client avec un avoir sur cette commande au lieu d'une remise."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Configurez votre promotion",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Lorsque cette option est cochée, cette offre ne s'applique qu'une seule fois par commande, même si le panier y est éligible plusieurs fois (par exemple un « Un acheté, un offert » qui se répéterait sinon).",
       "rewardCreditLabel": "Reward Dollars à accorder",
       "rewardCreditHint": "Ajoutés au solde du client une fois cette commande terminée — aucune remise sur le panier. Nécessite l'activation des Reward Dollars.",
-      "oncePerOrderHintPercent": "Si coché, la remise en % ne s'applique qu'à UN seul article — le plus cher des articles éligibles du panier (ex. « 20 % sur un plat »). Décochez pour remiser TOUS les articles éligibles."
+      "oncePerOrderHintPercent": "Si coché, la remise en % ne s'applique qu'à UN seul article — le plus cher des articles éligibles du panier (ex. « 20 % sur un plat »). Décochez pour remiser TOUS les articles éligibles.",
+      "groupNoItems": "Aucun article sélectionné — cliquez pour modifier",
+      "groupMoreCategories": "+{n} de plus",
+      "pickerHeading": "Sélectionnez des catégories ou des articles",
+      "pickerNoCategories": "Aucune catégorie trouvée",
+      "allSizesSuffix": " · toutes les tailles",
+      "groupSpecificItems": "{count, plural, one {# article spécifique} other {# articles spécifiques}}",
+      "groupSizes": "{count, plural, one {# taille} other {# tailles}}",
+      "specialityFeeTitle": "Facturer le supplément uniquement pour ces tailles",
+      "specialityFeeDesc": "Cochez les tailles premium qui ajoutent le supplément — les tailles de base restent gratuites. Ne cochez rien pour appliquer le supplément à chaque choix.",
+      "specialityFeeEmpty": "Choisissez d'abord les articles de cet emplacement, puis sélectionnez les tailles qui coûtent un supplément.",
+      "wholeItemAllSizesSuffix": " · article entier (toutes les tailles)",
+      "roleLabelPaid": "(Payant)",
+      "roleLabelFree": "(Gratuit)",
+      "roleLabelTrigger": "(Déclencheur)",
+      "roleLabelRequired": "(Requis)",
+      "itemsGroupN": "Groupe d'articles {n}",
+      "slotPickAtLeast": "Choisir au moins",
+      "slotUpTo": "jusqu'à",
+      "slotItems": "articles",
+      "specialityFeeInlineLabel": "Supplément spécialité +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {pour # taille} other {pour # tailles}}",
+      "specialityFeeForAll": "pour toutes les tailles — choisissez celles qui coûtent un supplément",
+      "extraChargeLabel": "Frais sur l'article gratuit",
+      "extraChargeNone": "Aucun frais supplémentaire (l'article gratuit est entièrement gratuit)",
+      "extraChargeAddons": "Facturer un supplément pour les choix / suppléments (les garnitures restent facturées)",
+      "extraChargeAddonsSizes": "Facturer un supplément pour les choix / suppléments & tailles (garnitures + surclassement de taille facturés)",
+      "extraChargeHint": "Indique si les garnitures et le surclassement de taille de l'article offert restent facturés — comme sur GloriaFood.",
+      "discountStrategyNoteFreed": "L'article du groupe « gratuit » est celui qui bénéficie de la remise — quel que soit le prix. Le % ci-dessus correspond à la remise appliquée (100 % = gratuit).",
+      "discountStrategyNoteMostExpensive": "Le BOGO applique la remise à l'article le PLUS CHER des deux articles éligibles. Pour toujours réduire un article précis, utilisez l'offre « Achetez N, obtenez gratuit ».",
+      "discountStrategyNoteFixedPercent": "Chaque article remisé bénéficie de ce % — l'article le moins cher lorsqu'une paire est éligible. Pour toujours réduire un article précis, utilisez l'offre « Achetez N, obtenez gratuit ».",
+      "discountStrategyNoteCheapest": "Le BOGO applique la remise à l'article le MOINS CHER des deux articles éligibles — donc si l'article « gratuit » coûte plus cher, c'est le moins cher qui est remisé (un client ne peut pas obtenir l'article le plus cher à bas prix). Pour toujours réduire un article précis (p. ex. une pâte), utilisez l'offre « Achetez N, obtenez gratuit ».",
+      "discountStrategyLabel": "Stratégie de remise",
+      "strategyCheapest": "Définir les remises automatiquement (l'article le moins cher gratuit)",
+      "strategyMostExpensive": "Définir les remises automatiquement (l'article le plus cher gratuit)",
+      "strategyFixedPercent": "Pourcentage de remise fixe",
+      "pctOffCheapest": "% de remise sur l'article le moins cher",
+      "pctOffMostExpensive": "% de remise sur l'article le plus cher"
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & affichage",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Les deux",
       "hiddenCodeInfo": "Les promos masquées ne s'appliquent que lorsque le client saisit ce code au paiement.",
       "vipLockedTitle": "VIP uniquement — attaché à : {groups}",
-      "vipLockedDesc": "Cette promotion s'applique automatiquement uniquement pour ces membres VIP au paiement. Elle n'apparaît jamais sur votre menu public, votre bannière ou votre site — aucun réglage de visibilité ne peut changer cela. Pour la rendre publique, détachez-la d'abord sur la page Groupes VIP."
+      "vipLockedDesc": "Cette promotion s'applique automatiquement uniquement pour ces membres VIP au paiement. Elle n'apparaît jamais sur votre menu public, votre bannière ou votre site — aucun réglage de visibilité ne peut changer cela. Pour la rendre publique, détachez-la d'abord sur la page Groupes VIP.",
+      "bundleBuildInfo": "💡 Les clients composent ce menu à partir d'une carte « Composez votre offre » sur votre menu. Épinglez-la à la bannière ci-dessous pour la retrouver facilement. (Un menu ne peut pas être appliqué automatiquement ni débloqué par un code.)"
     },
     "customersList": {
       "heading": "Clients",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Enregistrez vos paramètres une première fois (avec une source ShipDay sélectionnée) et votre lien webhook personnel apparaîtra ici.",
       "feeFromZonesTitle": "Frais de livraison des clients",
       "feeFromZonesBody": "Ce que vos clients paient pour la livraison se définit sur la page Zones de livraison — comme avec vos propres livreurs. ShipDay facture votre restaurant séparément pour chaque livraison ; demandez à votre contact ShipDay quel est votre tarif par livraison.",
-      "feeFromZonesLink": "Ouvrir la page Zones de livraison"
+      "feeFromZonesLink": "Ouvrir la page Zones de livraison",
+      "errorUnknown": "Erreur inconnue",
+      "errorNetwork": "Erreur réseau"
     },
     "driverPoolLocked": {
       "addonBadge": "Module",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Vous fixez le prix client",
       "feature2Body": "Transfert intégral (le client paie les frais ShipDay), fixe (vous absorbez la différence) ou par paliers (ex. gratuit au-dessus de 50 $). Contrôle total.",
       "feature3Title": "Choisissez par commande",
-      "feature3Body": "Mélangez vos propres livreurs avec ShipDay. La cuisine voit un sélecteur pour chaque livraison : interne ou pool. Votre choix, à chaque fois."
+      "feature3Body": "Mélangez vos propres livreurs avec ShipDay. La cuisine voit un sélecteur pour chaque livraison : interne ou pool. Votre choix, à chaque fois.",
+      "perMonth": "/mois"
     },
     "marketplaceLocked": {
       "addonBadge": "Module",

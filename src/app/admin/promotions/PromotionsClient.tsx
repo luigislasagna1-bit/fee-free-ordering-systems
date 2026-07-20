@@ -25,19 +25,19 @@ import toast from "react-hot-toast";
 // ─── Promo type → display meta (label + icon) ───────────────────────────────
 // Kept for the list-card display only — the wizard's source of truth is
 // src/lib/promo-types.ts.
-const PROMO_TYPE_DISPLAY: { value: string; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-  { value: "percentage_off",         label: "% Discount on Selected Items", icon: Percent },
-  { value: "fixed_cart",             label: "Fixed Discount on Cart",       icon: Tag     },
-  { value: "free_delivery",          label: "Free Delivery",                icon: Truck   },
-  { value: "bogo",                   label: "Buy One Get One Free",         icon: Gift    },
-  { value: "buy_n_get_free",         label: "Buy N Get One Free",           icon: Package },
-  { value: "free_item",              label: "Get a FREE Item",              icon: Gift    },
-  { value: "meal_bundle",            label: "Meal Bundle",                  icon: Package },
-  { value: "meal_bundle_speciality", label: "Meal Bundle with Speciality",  icon: Star    },
-  { value: "fixed_combo",            label: "Fixed Discount on Combo Deal", icon: Tag     },
-  { value: "percentage_combo",       label: "% Discount on Combo Deal",     icon: Percent },
-  { value: "payment_reward",         label: "Payment Method Reward",        icon: Zap     },
-  { value: "free_dish_meal",         label: "Free Dish as Part of a Meal",  icon: Gift    },
+const PROMO_TYPE_DISPLAY: { value: string; labelKey: string; icon: React.ComponentType<{ className?: string }> }[] = [
+  { value: "percentage_off",         labelKey: "typeLabels.percentage_off",         icon: Percent },
+  { value: "fixed_cart",             labelKey: "typeLabels.fixed_cart",             icon: Tag     },
+  { value: "free_delivery",          labelKey: "typeLabels.free_delivery",          icon: Truck   },
+  { value: "bogo",                   labelKey: "typeLabels.bogo",                   icon: Gift    },
+  { value: "buy_n_get_free",         labelKey: "typeLabels.buy_n_get_free",         icon: Package },
+  { value: "free_item",              labelKey: "typeLabels.free_item",              icon: Gift    },
+  { value: "meal_bundle",            labelKey: "typeLabels.meal_bundle",            icon: Package },
+  { value: "meal_bundle_speciality", labelKey: "typeLabels.meal_bundle_speciality", icon: Star    },
+  { value: "fixed_combo",            labelKey: "typeLabels.fixed_combo",            icon: Tag     },
+  { value: "percentage_combo",       labelKey: "typeLabels.percentage_combo",       icon: Percent },
+  { value: "payment_reward",         labelKey: "typeLabels.payment_reward",         icon: Zap     },
+  { value: "free_dish_meal",         labelKey: "typeLabels.free_dish_meal",         icon: Gift    },
 ];
 
 function StackingBadge({ rule }: { rule: string }) {
@@ -156,7 +156,7 @@ function PromoCard({
               ) : null
             )}
           </div>
-          <div className="text-sm text-gray-500">{typeInfo.label}</div>
+          <div className="text-sm text-gray-500">{t(typeInfo.labelKey)}</div>
           {promo.description && (
             <div className="text-xs text-gray-400 truncate mt-0.5">
               {promo.description}
@@ -174,7 +174,7 @@ function PromoCard({
                 promo has no usage limit. Luigi 2026-06-09. */}
             {promo.campaignRef && (
               <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold">
-                {isGroupRef(promo.campaignRef) ? t("labelVip") : isAssignedRef(promo.campaignRef) ? t("labelAssigned") : campaignLabel(promo.campaignRef)}
+                {isGroupRef(promo.campaignRef) ? t("labelVip") : isAssignedRef(promo.campaignRef) ? t("labelAssigned") : (campaignLabel(promo.campaignRef) ?? t("campaignFallback"))}
               </span>
             )}
             {promo.campaignRef && !promo.usageLimit && (
@@ -257,7 +257,8 @@ function campaignLabel(ref: string | null | undefined): string | null {
   // "Assigned" is handled at the call site with t() so it localizes.
   if (ref.startsWith("kickstarter")) return "Kickstarter";
   if (ref.startsWith("autopilot")) return "Autopilot";
-  return "Campaign";
+  // Generic fallback is localized at the call site (t("campaignFallback")).
+  return null;
 }
 
 export function PromotionsClient({

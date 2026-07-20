@@ -179,6 +179,7 @@ export function PromoWizard(props: WizardProps) {
     props;
   const router = useRouter();
   const t = useTranslations("admin.promoWizard");
+  const tType = useTranslations("admin.promoStepType");
 
   const [step, setStep] = useState<1 | 2 | 3>(mode === "edit" ? 2 : 1);
   const [saving, setSaving] = useState(false);
@@ -387,7 +388,7 @@ export function PromoWizard(props: WizardProps) {
           <h1 className="text-xl font-bold text-gray-900">{headerTitle}</h1>
           {meta && (
             <p className="text-xs text-gray-500 mt-0.5">
-              #{meta.catalogNumber} — {meta.name}
+              #{meta.catalogNumber} — {tType(`types.${meta.slug}.name`)}
             </p>
           )}
           <StepIndicator step={step} />

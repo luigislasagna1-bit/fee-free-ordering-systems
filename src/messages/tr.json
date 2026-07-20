@@ -91,7 +91,8 @@
     "menu": "Menü",
     "loadingDots": "Yükleniyor…",
     "previous": "Önceki",
-    "kmFromStore": "mağazadan {km} km"
+    "kmFromStore": "mağazadan {km} km",
+    "apply": "Uygula"
   },
   "auth": {
     "signIn": "Giriş Yap",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Saat aralığını kaldır",
       "closesNextDay": "Ertesi gün kapanır (örn. gece yarısından sonra açık)",
       "holidayNeedsDate": "Önce bir başlangıç tarihi seçin.",
-      "holidayWindowOutsideService": "{window}, o gün için {service} saatlerinin dışında. İstisnai saatler hizmetin normal saatleri içinde olmalıdır."
+      "holidayWindowOutsideService": "{window}, o gün için {service} saatlerinin dışında. İstisnai saatler hizmetin normal saatleri içinde olmalıdır.",
+      "copiedDayToAll": "{day} diğer tüm günlere kopyalandı",
+      "copiedDayToClosed": "{day} kapalı günlere kopyalandı",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Varsayılan (tüm hizmetler)",
+      "tabReservation": "Rezervasyon",
+      "tabAddSuffix": "+ Ekle",
+      "removeOverrideAria": "{service} geçersiz kılmasını kaldır",
+      "removeOverrideTitle": "Geçersiz kılmayı kaldır (eski satırlar, sekmeyi yeniden etkinleştirip kaydedene kadar veritabanında kalır)",
+      "hoursForServiceOnly": "Yalnızca {service} için saatler",
+      "markClosed": "Kapalı olarak işaretle",
+      "markOpen": "Açık olarak işaretle",
+      "copyHoursTitle": "Bu saatleri diğer günlere kopyala",
+      "applyTo": "Şuna uygula…",
+      "applyToAllDays": "<strong>Diğer tüm günlere</strong> uygula",
+      "applyToClosedDays": "Yalnızca <strong>şu anda kapalı olan günlere</strong> uygula",
+      "dayAbbrev": "Paz, Pzt, Sal, Çar, Per, Cum, Cmt"
     },
     "services": {
       "title": "Restoran Hizmetleri",
@@ -1205,7 +1225,42 @@
         "colRequired": "Zorunlu",
         "saved": "Teslimat adresi formu güncellendi"
       },
-      "estimatedMinutesHint": "Bu bölgedeki adresler için TOPLAM tahmini teslimat süresi (hazırlık + yol). Müşteriler bu sayıyı ödeme sırasında görür ve en erken \"sonrası için sipariş\" saatini belirler — teslimat hizmetinin varsayılan tahminini geçersiz kılar. Gerçekçi değer 30–60 dk'dır, yalnızca yol süresi değil."
+      "estimatedMinutesHint": "Bu bölgedeki adresler için TOPLAM tahmini teslimat süresi (hazırlık + yol). Müşteriler bu sayıyı ödeme sırasında görür ve en erken \"sonrası için sipariş\" saatini belirler — teslimat hizmetinin varsayılan tahminini geçersiz kılar. Gerçekçi değer 30–60 dk'dır, yalnızca yol süresi değil.",
+      "toastNoAddress": "Adres ayarlanmadı. Lütfen önce restoran profilinizi tamamlayın.",
+      "toastAddressNotFound": "Bu adres bulunamadı. Restoran profilinizdeki adresi güncelleyip tekrar deneyin.",
+      "toastLocationPinned": "Restoran konumu haritaya sabitlendi!",
+      "toastGeocodeFailed": "Coğrafi kodlama başarısız oldu. İnternet bağlantınızı kontrol edin.",
+      "toastLocationUpdated": "Restoran konumu güncellendi!",
+      "toastZoneNameRequired": "Bölge adı gereklidir",
+      "toastSetLocationFirst": "Önce restoranınızın konumunu belirleyin (bölgeler çevresindeki iç içe dairelerdir).",
+      "toastSaveZoneFailed": "Bölge kaydedilemedi",
+      "toastZoneAdded": "\"{name}\" bölgesi eklendi!",
+      "toastUpdateZoneFailed": "Bölge güncellenemedi",
+      "confirmDeleteZone": "\"{name}\" teslimat bölgesi silinsin mi? Bu geri alınamaz.",
+      "toastZoneDeleted": "Bölge silindi",
+      "locationNotSetTitle": "Restoran konumu ayarlanmadı",
+      "locationNotSetDesc": "Teslimat bölgeleri, başlangıç noktası olarak restoranınızın koordinatlarına ihtiyaç duyar. <link>Bunları restoran profilinde ayarlayın</link> veya mevcut adresinizi coğrafi olarak kodlamak için aşağıdaki düğmeyi kullanın.",
+      "locateRestaurant": "Restoranı bul",
+      "locating": "Bulunuyor…",
+      "relocate": "Yeniden bul",
+      "legendActiveZone": "Etkin bölge",
+      "legendInactiveZone": "Etkin olmayan bölge",
+      "rowFee": "{amount} ücret",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "dk",
+      "detailStdTime": "Std. süre",
+      "editFee": "Ücret ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. süre (dk)",
+      "mapRestaurantTitle": "Restoran (ayarlamak için sürükleyin)",
+      "mapResizeHandleTitle": "{km} km — yeniden boyutlandırmak için sürükleyin",
+      "mapFeeLabel": "Ücret:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Yarıçap:",
+      "mapEtaLabel": "Tahmini:",
+      "mapDragHint": "Yeniden boyutlandırmak için tutamacı sürükleyin",
+      "mapDragHintShort": "yeniden boyutlandırmak için sürükleyin"
     },
     "reservations": {
       "title": "Rezervasyonlar",
@@ -1286,7 +1341,38 @@
       "amount": "Tutar",
       "schedule": "Program",
       "status": "Durum",
-      "confirmDelete": "\"{name}\" silinsin mi?"
+      "confirmDelete": "\"{name}\" silinsin mi?",
+      "taxRateRangeError": "Vergi oranı 0 ile 100 arasında olmalıdır",
+      "salesTaxTitle": "Satış vergisi oranı",
+      "salesTaxHelp": "Her siparişin vergilendirilebilir ara toplamına uygulanır. Satış vergisi almıyorsanız 0 girin. (ör. %13 HST için 13.)",
+      "rateLabel": "Oran (%)",
+      "savingLabel": "Kaydediliyor…",
+      "saveTaxRate": "Oranı kaydet",
+      "currencyTitle": "Para birimi",
+      "currencyHelp": "Müşterinin gördüğü her fiyatı ayrıca Stripe/PayPal tahsilatlarını, makbuzları ve raporları belirler. Para birimini değiştirmek mevcut fiyatları DÖNÜŞTÜRMEZ — USD'den EUR'ya (vb.) geçerseniz menü fiyatlarını güncelleyin.",
+      "currencyLabel": "Para birimi",
+      "currencySample": "Örnek: <strong>{value}</strong>",
+      "tipsTitle": "Müşteri bahşişleri",
+      "tipsHelp": "KAPALI olduğunda müşteri sepeti bahşiş seçiciyi tamamen gizler ve sunucu, kurcalanmış herhangi bir istemci değerini 0'a sabitler. Bazı restoranlar (ör. bahşişin yaygın olmadığı ülkelerde) bahşiş istemlerini göstermemeyi tercih eder.",
+      "tipsAriaDisable": "Bahşişleri devre dışı bırak",
+      "tipsAriaEnable": "Bahşişleri etkinleştir",
+      "menuSearchTitle": "Müşteri menü araması",
+      "menuSearchHelp": "AÇIK olduğunda müşteri sipariş sayfası, ziyaretçilerin yazarak öğeleri hızlıca bulabilmesi için büyüteçli bir arama çubuğu gösterir. Yalnızca kategori düğmeleriyle göz atmalarını tercih ediyorsanız KAPATIN.",
+      "menuSearchAriaHide": "Müşteri sayfasında menü aramasını gizle",
+      "menuSearchAriaShow": "Müşteri sayfasında menü aramasını göster",
+      "itemNotesTitle": "Öğe başına özel talimatlar",
+      "itemNotesHelp": "AÇIK olduğunda müşteriler <each>her öğeye</each> bir not ekleyebilir (ör. „ekstra çıtır“, „bunda soğan olmasın“) — bu, ilgili öğenin mutfak fişine yazdırılır. KAPALIYKEN, ödeme sırasında yine de <whole>tüm sipariş</whole> için bir not bırakabilirler.",
+      "itemNotesAriaOff": "Öğe başına notları kapat",
+      "itemNotesAriaOn": "Öğe başına notları aç",
+      "schedulingTitle": "Zamanlama ve ödeme formu",
+      "schedulingHelp": "Müşterilerin hangi zaman aralıkları için planlama yapabileceğini ve ödeme sırasında hangi iletişim alanlarının zorunlu olduğunu belirleyin.",
+      "slotIntervalLabel": "Zaman aralığı (dakika)",
+      "slotIntervalHelp": "Müşteriler siparişleri yalnızca bu aralıkta planlayabilir (GloriaFood ile aynı). Varsayılan 15 — daha yavaş mutfaklar için 30 yapın.",
+      "minutesOption": "{n} dk",
+      "requirePhoneLabel": "Müşteri telefonunu zorunlu kıl",
+      "requirePhoneHelp": "AÇIK olduğunda ödeme formu telefon numarası olmayan siparişleri reddeder. Teslimat için önerilir; böylece mutfak teslim hakkında arayabilir.",
+      "requirePhoneAriaOptional": "Telefonu isteğe bağlı yap",
+      "requirePhoneAriaRequired": "Telefonu zorunlu yap"
     },
     "mapSettings": {
       "title": "Harita Ayarları",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Popüler",
       "addOnEnableCta": "Etkinleştir",
       "perMonth": "/ay",
-      "kitchenAlertsSection": "Mutfak ve sipariş uyarıları"
+      "kitchenAlertsSection": "Mutfak ve sipariş uyarıları",
+      "currentPlanWithAddOns": "Mevcut plan: FREE + {count, plural, one {# eklenti} other {# eklenti}}",
+      "currentPlanFree": "Mevcut plan: FREE",
+      "freePlanDescription": "Sipariş widget'ı, yönetim, menü, mutfak uygulaması — kart gerekmez. Sonsuza kadar ayda 100 siparişe kadar kabul edin. Ücretli özellikleri istediğiniz zaman Faturalandırma sayfasından ekleyin.",
+      "feature100Orders": "Ayda 100 sipariş",
+      "featureUnlimitedMenu": "Sınırsız menü öğesi",
+      "featureCustomerAccounts": "Müşteri hesapları",
+      "activeAddOnsHeading": "Etkin eklentiler",
+      "trialBadge": "Deneme",
+      "manageSubscriptionsHeading": "Aboneliklerinizi yönetin",
+      "upgradeWithAddOnsHeading": "Ücretli eklentilerle yükseltin",
+      "manageBillingCta": "Faturalandırmayı yönet",
+      "browseAddOnsCta": "Eklentilere göz at"
     },
     "coupons": {
       "title": "Kuponlar",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Henüz VIES ile doğrulanmadı",
       "viesVerifyNow": "Şimdi doğrula",
       "viesUnreachable": "VIES hizmeti geçici olarak kullanılamıyor — birkaç dakika sonra tekrar deneyin.",
-      "euVatNote": "AB işletmeleri: ücretli abonelikler için VIES'te kayıtlı bir KDV numarası gerekir. Doğrulanmış numaralar %0 KDV ile faturalandırılır (ters vergilendirme)."
+      "euVatNote": "AB işletmeleri: ücretli abonelikler için VIES'te kayıtlı bir KDV numarası gerekir. Doğrulanmış numaralar %0 KDV ile faturalandırılır (ters vergilendirme).",
+      "perOrder": "/sipariş",
+      "paygOrderCount": "{count, plural, one {# sipariş} other {# sipariş}}"
     },
     "addOns": {
       "errorCheckout": "Ödeme başlatılamadı",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Evet, iptal et",
       "compFreeUntil": "{date} tarihine kadar ücretsiz",
       "compExplainer": "Bu eklenti o tarihe kadar ücretsizdir — kendiliğinden yenilenmez. Elde tutmak için şimdi abone olun: kartınız bugün kaydedilir, ücretlendirme yalnızca ücretsiz dönem bitince başlar.",
-      "compSubscribeCta": "Devam ettirmek için abone olun"
+      "compSubscribeCta": "Devam ettirmek için abone olun",
+      "pageIntro": "Temel ürün sonsuza dek ücretsizdir. Aşağıdaki özellikleri ilgili eklentiye abone olarak tek tek açın. İstediğiniz zaman iptal edin — faturalandırma döneminin sonuna kadar erişiminiz devam eder.",
+      "subscribedBanner": "<strong>Başarılı!</strong> Aboneliğiniz etkinleştiriliyor. Özelliğin açılması bir dakika kadar sürebilir.",
+      "settingsLinks": {
+        "hostedWebsite": "Web sitesi düzenleyicisini aç",
+        "onlinePayments": "Stripe Connect'i yönet",
+        "driverPool": "Sürücü havuzunu yapılandır",
+        "multiLocation": "Konumları yönet",
+        "customDomain": "Alan adınızı bağlayın",
+        "advancedPromoMarketing": "Promosyon başlat",
+        "reservationDeposits": "Rezervasyonları yapılandır",
+        "brandedMobileApp": "Uygulamayı yapılandır"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Yayında",
@@ -2197,7 +2309,22 @@
       "labelAssigned": "Atandı",
       "labelVip": "VIP",
       "badgeDeadTargets": "Aktif yemek yok — yeniden seçin",
-      "searchPlaceholder": "Ada veya kupon koduna göre ara…"
+      "searchPlaceholder": "Ada veya kupon koduna göre ara…",
+      "typeLabels": {
+        "percentage_off": "Seçili ürünlerde % indirim",
+        "fixed_cart": "Sepette sabit indirim",
+        "free_delivery": "Ücretsiz teslimat",
+        "bogo": "Bir Al, Bir Bedava",
+        "buy_n_get_free": "N Al, Bir Bedava",
+        "free_item": "ÜCRETSİZ Bir Ürün Kazan",
+        "meal_bundle": "Yemek Paketi",
+        "meal_bundle_speciality": "Spesiyalli Yemek Paketi",
+        "fixed_combo": "Combo Fırsatında Sabit İndirim",
+        "percentage_combo": "Combo Fırsatında % İndirim",
+        "payment_reward": "Ödeme Yöntemi Ödülü",
+        "free_dish_meal": "Öğünün Parçası Olarak Ücretsiz Yemek"
+      },
+      "campaignFallback": "Kampanya"
     },
     "promoWizard": {
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",
@@ -2236,7 +2363,61 @@
       "featureBuyNGetFree": "N tane al ücretsiz kazan aşamalı indirimleri",
       "featureFreeDish": "Yemekle birlikte ücretsiz tabak",
       "maybeLater": "Belki daha sonra",
-      "subscribe": "Abone ol"
+      "subscribe": "Abone ol",
+      "types": {
+        "percentage_off": {
+          "name": "Sepette % indirim",
+          "desc": "Tüm siparişten (veya belirli ürünlerden) bir yüzde düşün."
+        },
+        "free_delivery": {
+          "name": "Ücretsiz teslimat",
+          "desc": "Uygun siparişler için teslimat ücretini kaldırın."
+        },
+        "bogo": {
+          "name": "Bir al, bir bedava",
+          "desc": "Ücretli bir ürünü ücretsiz (veya indirimli) bir ürünle eşleştirin."
+        },
+        "fixed_cart": {
+          "name": "Sepette sabit indirim",
+          "desc": "Siparişten sabit bir tutar düşün."
+        },
+        "payment_reward": {
+          "name": "Ödeme yöntemi ödülü",
+          "desc": "Belirli bir yöntemle ödeme için indirim (ör. nakit)."
+        },
+        "free_item": {
+          "name": "ÜCRETSİZ bir ürün kazan",
+          "desc": "X harcayın, seçili bir listeden ücretsiz ürün kazanın."
+        },
+        "meal_bundle": {
+          "name": "Yemek paketi",
+          "desc": "Yuvaları sabit paket fiyatıyla karıştırıp eşleştirin."
+        },
+        "buy_n_get_free": {
+          "name": "N al, bir bedava",
+          "desc": "N ürün ekleyin, sonraki (en ucuz veya seçilen) ücretsiz."
+        },
+        "free_dish_meal": {
+          "name": "Öğünün parçası olarak ücretsiz yemek",
+          "desc": "Bir ana yemek + garnitür sipariş edin, bir tatlı (veya herhangi bir ekstra) ücretsiz."
+        },
+        "fixed_combo": {
+          "name": "Comboda sabit indirim",
+          "desc": "Belirli ürünleri eşleştirin, sabit bir tutar düşün."
+        },
+        "percentage_combo": {
+          "name": "Comboda % indirim",
+          "desc": "Belirli ürünleri eşleştirin, bir yüzde düşün."
+        },
+        "meal_bundle_speciality": {
+          "name": "Spesiyalli yemek paketi",
+          "desc": "İsteğe bağlı ek ücretli yemek paketi (ör. ıstakoz +5 $)."
+        },
+        "reward_credit": {
+          "name": "Reward Dollars ver",
+          "desc": "Bu siparişte müşteriyi indirim yerine mağaza kredisiyle ödüllendirin."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Promosyonunuzu yapılandırın",
@@ -2291,7 +2472,44 @@
       "oncePerOrderHint": "İşaretlendiğinde, sepet birden fazla kez uygun olsa bile bu kampanya sipariş başına yalnızca bir kez uygulanır (örneğin, aksi takdirde tekrarlanacak bir Bir Alana Bir Bedava kampanyası).",
       "rewardCreditLabel": "Verilecek Ödül Dolarları",
       "rewardCreditHint": "Bu sipariş tamamlandığında müşterinin bakiyesine eklenir — sepet indirimi yok. Ödül Dolarlarının etkin olmasını gerektirir.",
-      "oncePerOrderHintPercent": "İşaretliyse % indirim yalnızca TEK bir ürüne uygulanır — sepetteki en pahalı uygun ürüne (ör. “bir ana yemekte %20”). Tüm uygun ürünleri indirmek için işareti kaldırın."
+      "oncePerOrderHintPercent": "İşaretliyse % indirim yalnızca TEK bir ürüne uygulanır — sepetteki en pahalı uygun ürüne (ör. “bir ana yemekte %20”). Tüm uygun ürünleri indirmek için işareti kaldırın.",
+      "groupNoItems": "Ürün seçilmedi — düzenlemek için tıklayın",
+      "groupMoreCategories": "+{n} daha",
+      "pickerHeading": "Kategorileri veya ürünleri seçin",
+      "pickerNoCategories": "Kategori bulunamadı",
+      "allSizesSuffix": " · tüm boyutlar",
+      "groupSpecificItems": "{count, plural, one {# belirli ürün} other {# belirli ürün}}",
+      "groupSizes": "{count, plural, one {# boyut} other {# boyut}}",
+      "specialityFeeTitle": "Ücreti yalnızca bu boyutlar için al",
+      "specialityFeeDesc": "Ücreti ekleyen premium boyutları işaretle — temel boyutlar ücretsiz kalır. Her seçimde ücret almak için hiçbirini işaretleme.",
+      "specialityFeeEmpty": "Önce bu yuvanın ürünlerini seçin, ardından hangi boyutların ekstra ücretli olduğunu seçin.",
+      "wholeItemAllSizesSuffix": " · tüm ürün (tüm boyutlar)",
+      "roleLabelPaid": "(Ücretli)",
+      "roleLabelFree": "(Ücretsiz)",
+      "roleLabelTrigger": "(Tetikleyici)",
+      "roleLabelRequired": "(Zorunlu)",
+      "itemsGroupN": "Ürün Grubu {n}",
+      "slotPickAtLeast": "En az seç",
+      "slotUpTo": "en fazla",
+      "slotItems": "ürün",
+      "specialityFeeInlineLabel": "Spesiyal ücreti +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {# boyut için} other {# boyut için}}",
+      "specialityFeeForAll": "tüm boyutlar için — hangilerinin ekstra ücretli olduğunu seçin",
+      "extraChargeLabel": "Ücretsiz üründeki ücretler",
+      "extraChargeNone": "Ek ücret yok (ücretsiz ürünün tamamı ücretsiz)",
+      "extraChargeAddons": "Seçimler / eklentiler için ek ücret (malzemeler yine de faturalanır)",
+      "extraChargeAddonsSizes": "Seçimler / eklentiler ve boyutlar için ek ücret (malzemeler + boyut yükseltmesi faturalanır)",
+      "extraChargeHint": "Ücretsiz ürünün malzemeleri ve boyut yükseltmesinin hâlâ faturalanıp faturalanmadığı — GloriaFood ile aynı.",
+      "discountStrategyNoteFreed": "İndirim uygulanan ürün, fiyattan bağımsız olarak „ücretsiz” grubundaki üründür. Yukarıdaki %, ne kadar indirim aldığıdır (100% = ücretsiz).",
+      "discountStrategyNoteMostExpensive": "BOGO, uygun iki üründen DAHA PAHALI olanına indirim uygular. Her zaman belirli bir ürüne indirim uygulamak için „N Al, Bedava Al” kampanyasını kullanın.",
+      "discountStrategyNoteFixedPercent": "İndirimli her ürün bu %'yi alır — bir çift uygun olduğunda daha ucuz olanı. Her zaman belirli bir ürüne indirim uygulamak için „N Al, Bedava Al” kampanyasını kullanın.",
+      "discountStrategyNoteCheapest": "BOGO, uygun iki üründen DAHA UCUZ olanına indirim uygular — yani „ücretsiz” ürün daha pahalıysa, bunun yerine ucuz olanına indirim uygulanır (müşteri pahalı ürünü ucuza alamaz). Her zaman belirli bir ürüne (ör. makarna) indirim uygulamak için „N Al, Bedava Al” kampanyasını kullanın.",
+      "discountStrategyLabel": "İndirim stratejisi",
+      "strategyCheapest": "İndirimleri otomatik ayarla (en ucuz ürün ücretsiz)",
+      "strategyMostExpensive": "İndirimleri otomatik ayarla (en pahalı ürün ücretsiz)",
+      "strategyFixedPercent": "Sabit indirim yüzdesi",
+      "pctOffCheapest": "en ucuz üründe % indirim",
+      "pctOffMostExpensive": "en pahalı üründe % indirim"
     },
     "promoStepRestrictions": {
       "pageTitle": "Kısıtlamalar & görüntüleme",
@@ -2382,7 +2600,8 @@
       "channelBothLabel": "Her ikisi",
       "hiddenCodeInfo": "Gizli promosyonlar yalnızca müşteri ödeme sırasında bu kodu girdiğinde uygulanır.",
       "vipLockedTitle": "Yalnızca VIP — bağlı olduğu: {groups}",
-      "vipLockedDesc": "Bu promosyon ödeme sırasında otomatik olarak yalnızca o VIP üyeler için geçerlidir. Genel menünüzde, banner'da veya web sitenizde asla görünmez — hiçbir görünürlük anahtarı bunu değiştiremez. Herkese açmak için önce VIP Grupları sayfasından bağlantısını kaldırın."
+      "vipLockedDesc": "Bu promosyon ödeme sırasında otomatik olarak yalnızca o VIP üyeler için geçerlidir. Genel menünüzde, banner'da veya web sitenizde asla görünmez — hiçbir görünürlük anahtarı bunu değiştiremez. Herkese açmak için önce VIP Grupları sayfasından bağlantısını kaldırın.",
+      "bundleBuildInfo": "💡 Müşteriler bu paketi menünüzdeki bir „Fırsatını oluştur” kartından oluşturur. Kolayca bulunması için aşağıdaki afişe sabitleyin. (Bir paket otomatik uygulanamaz veya bir kodla açılamaz.)"
     },
     "customersList": {
       "heading": "Müşteriler",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Ayarlarınızı bir kez kaydedin (bir ShipDay kaynağı seçiliyken), kişisel webhook bağlantınız burada görünür.",
       "feeFromZonesTitle": "Müşteri teslimat ücretleri",
       "feeFromZonesBody": "Müşterilerinizin teslimat için ödediği tutar Teslimat Bölgeleri sayfasında ayarlanır — kendi sürücülerinizde olduğu gibi. ShipDay her teslimat için restoranınıza ayrıca fatura keser; teslimat başına ücretinizi ShipDay yetkilinize sorun.",
-      "feeFromZonesLink": "Teslimat Bölgeleri'ni aç"
+      "feeFromZonesLink": "Teslimat Bölgeleri'ni aç",
+      "errorUnknown": "Bilinmeyen hata",
+      "errorNetwork": "Ağ hatası"
     },
     "driverPoolLocked": {
       "addonBadge": "Eklenti",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Müşteri fiyatlandırmasını siz belirlersiniz",
       "feature2Body": "Aynen yansıt (müşteri ShipDay ücretinin tamamını öder), sabit (aradaki farkı siz karşılarsınız) veya kademeli (örn. 50 dolar üzerinde ücretsiz). Tam kontrol.",
       "feature3Title": "Sipariş bazında seçin",
-      "feature3Body": "Kendi sürücülerinizle ShipDay'i karıştırın. Mutfak her teslimat için bir seçici görür: bünyemi veya havuz. Her seferinde sizin kararınız."
+      "feature3Body": "Kendi sürücülerinizle ShipDay'i karıştırın. Mutfak her teslimat için bir seçici görür: bünyemi veya havuz. Her seferinde sizin kararınız.",
+      "perMonth": "/ay"
     },
     "marketplaceLocked": {
       "addonBadge": "Eklenti",

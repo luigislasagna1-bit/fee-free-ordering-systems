@@ -27,7 +27,7 @@ export function DriverPoolLockedView() {
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="bg-white/15 backdrop-blur rounded-xl p-4">
             <div className="text-xs uppercase tracking-wider opacity-80">{t("standaloneCardTitle")}</div>
-            <div className="text-3xl font-bold mt-1">$19.99<span className="text-lg">/mo</span></div>
+            <div className="text-3xl font-bold mt-1">$19.99<span className="text-lg">{t("perMonth")}</span></div>
             <div className="text-sm opacity-90">{t("standaloneCardSubtitle")}</div>
             <div className="text-[10px] opacity-70 mt-1">{t("standaloneCardNote")}</div>
           </div>

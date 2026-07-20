@@ -91,7 +91,8 @@
     "menu": "Menu",
     "loadingDots": "Loading…",
     "previous": "Previous",
-    "kmFromStore": "{km} km from store"
+    "kmFromStore": "{km} km from store",
+    "apply": "Apply"
   },
   "auth": {
     "signIn": "Sign in",
@@ -1176,7 +1177,26 @@
       "holidaySaveFailed": "Failed to save",
       "holidayNeedsDate": "Pick a start date first.",
       "holidayWindowOutsideService": "{window} is outside the {service} hours for that day. Exceptional hours must be within the service's normal hours.",
-      "between": "between"
+      "between": "between",
+      "copiedDayToAll": "Copied {day} to all other days",
+      "copiedDayToClosed": "Copied {day} to closed days",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Default (all services)",
+      "tabReservation": "Reservation",
+      "tabAddSuffix": "+ Add",
+      "removeOverrideAria": "Remove {service} override",
+      "removeOverrideTitle": "Remove override (stale rows stay in the DB until you Save with the tab re-enabled)",
+      "hoursForServiceOnly": "Hours for {service} only",
+      "markClosed": "Mark closed",
+      "markOpen": "Mark open",
+      "copyHoursTitle": "Copy these hours to other days",
+      "applyTo": "Apply to…",
+      "applyToAllDays": "Apply to <strong>all other days</strong>",
+      "applyToClosedDays": "Apply only to <strong>currently-closed days</strong>",
+      "dayAbbrev": "Sun, Mon, Tue, Wed, Thu, Fri, Sat"
     },
     "services": {
       "title": "Restaurant Services",
@@ -1276,7 +1296,42 @@
         "colRequired": "Required",
         "saved": "Delivery address form updated"
       },
-      "estimatedMinutesHint": "TOTAL estimated delivery time (preparation + travel) for addresses in this zone. Customers here see this number at checkout and it sets the earliest \"order for later\" slot — it overrides the delivery service's default Estimated time. A realistic value is 30–60 min, not the drive time alone."
+      "estimatedMinutesHint": "TOTAL estimated delivery time (preparation + travel) for addresses in this zone. Customers here see this number at checkout and it sets the earliest \"order for later\" slot — it overrides the delivery service's default Estimated time. A realistic value is 30–60 min, not the drive time alone.",
+      "toastNoAddress": "No address set. Please complete your Restaurant Profile first.",
+      "toastAddressNotFound": "Could not find this address. Update your address in Restaurant Profile and try again.",
+      "toastLocationPinned": "Restaurant location pinned on map!",
+      "toastGeocodeFailed": "Geocoding failed. Check your internet connection.",
+      "toastLocationUpdated": "Restaurant location updated!",
+      "toastZoneNameRequired": "Zone name is required",
+      "toastSetLocationFirst": "Set your restaurant location first (zones are concentric circles around it).",
+      "toastSaveZoneFailed": "Failed to save zone",
+      "toastZoneAdded": "Zone \"{name}\" added!",
+      "toastUpdateZoneFailed": "Failed to update zone",
+      "confirmDeleteZone": "Delete delivery zone \"{name}\"? This cannot be undone.",
+      "toastZoneDeleted": "Zone deleted",
+      "locationNotSetTitle": "Restaurant location not set",
+      "locationNotSetDesc": "Delivery zones need your restaurant's coordinates as their origin. <link>Set it in Restaurant Profile</link> or use the button below to geocode your current address.",
+      "locateRestaurant": "Locate Restaurant",
+      "locating": "Locating…",
+      "relocate": "Re-locate",
+      "legendActiveZone": "Active zone",
+      "legendInactiveZone": "Inactive zone",
+      "rowFee": "{amount} fee",
+      "rowMin": "min {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. Time",
+      "editFee": "Fee ({sym})",
+      "editMin": "Min ({sym})",
+      "editStdTime": "Std. Time (min)",
+      "mapRestaurantTitle": "Restaurant (drag to adjust)",
+      "mapResizeHandleTitle": "{km} km — drag to resize",
+      "mapFeeLabel": "Fee:",
+      "mapMinLabel": "Min:",
+      "mapRadiusLabel": "Radius:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Drag the handle to resize",
+      "mapDragHintShort": "drag to resize"
     },
     "reservations": {
       "title": "Reservations",
@@ -1357,7 +1412,38 @@
       "amount": "Amount",
       "schedule": "Schedule",
       "status": "Status",
-      "confirmDelete": "Delete \"{name}\"?"
+      "confirmDelete": "Delete \"{name}\"?",
+      "taxRateRangeError": "Tax rate must be between 0 and 100",
+      "salesTaxTitle": "Sales tax rate",
+      "salesTaxHelp": "Applied to every order's taxable subtotal. Set to 0 if you don't collect sales tax. (e.g. 13 for 13% HST.)",
+      "rateLabel": "Rate (%)",
+      "savingLabel": "Saving…",
+      "saveTaxRate": "Save tax rate",
+      "currencyTitle": "Currency",
+      "currencyHelp": "Drives every price the customer sees plus Stripe/PayPal charges, receipts and reports. Changing currency does NOT convert existing prices — update menu prices to match if you switch from USD to EUR (etc.).",
+      "currencyLabel": "Currency",
+      "currencySample": "Sample: <strong>{value}</strong>",
+      "tipsTitle": "Customer tips",
+      "tipsHelp": "When OFF, the customer cart hides the tip selector entirely and the server clamps any tampered client value to 0. Some restaurants (e.g. in countries where tipping isn't customary) prefer no tip prompts.",
+      "tipsAriaDisable": "Disable tips",
+      "tipsAriaEnable": "Enable tips",
+      "menuSearchTitle": "Customer menu search",
+      "menuSearchHelp": "When ON, the customer ordering page shows a magnifying-glass search bar so visitors can type to find items quickly. Turn OFF if you prefer they browse only via the category pills.",
+      "menuSearchAriaHide": "Hide menu search on customer page",
+      "menuSearchAriaShow": "Show menu search on customer page",
+      "itemNotesTitle": "Per-item special instructions",
+      "itemNotesHelp": "When ON, customers can add a note to <each>each item</each> (e.g. “extra crispy”, “no onions on this one”) — it prints on the kitchen ticket for that item. When OFF, they can still leave one note for the <whole>whole order</whole> at checkout.",
+      "itemNotesAriaOff": "Turn off per-item notes",
+      "itemNotesAriaOn": "Turn on per-item notes",
+      "schedulingTitle": "Scheduling & checkout form",
+      "schedulingHelp": "Control which time slots customers can schedule for, and which contact fields are mandatory at checkout.",
+      "slotIntervalLabel": "Slot interval (minutes)",
+      "slotIntervalHelp": "Customers can only schedule orders at this cadence (matches GloriaFood). Default is 15 — change to 30 for slower kitchens.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Require customer phone",
+      "requirePhoneHelp": "When ON, the checkout form rejects orders without a phone number. Recommended for delivery so the kitchen can call about hand-off.",
+      "requirePhoneAriaOptional": "Make phone optional",
+      "requirePhoneAriaRequired": "Make phone required"
     },
     "mapSettings": {
       "title": "Map Settings",
@@ -1831,7 +1917,19 @@
       "popularBadge": "Popular",
       "addOnEnableCta": "Enable",
       "perMonth": "/mo",
-      "kitchenAlertsSection": "Kitchen & order alerts"
+      "kitchenAlertsSection": "Kitchen & order alerts",
+      "currentPlanWithAddOns": "Current Plan: FREE + {count, plural, one {# add-on} other {# add-ons}}",
+      "currentPlanFree": "Current Plan: FREE",
+      "freePlanDescription": "Ordering widget, admin, menu, kitchen app — no card required. Accept up to 100 orders/month forever. Add paid features any time from the Billing page.",
+      "feature100Orders": "100 orders/month",
+      "featureUnlimitedMenu": "Unlimited menu items",
+      "featureCustomerAccounts": "Customer accounts",
+      "activeAddOnsHeading": "Active add-ons",
+      "trialBadge": "Trial",
+      "manageSubscriptionsHeading": "Manage your subscriptions",
+      "upgradeWithAddOnsHeading": "Upgrade with paid add-ons",
+      "manageBillingCta": "Manage Billing",
+      "browseAddOnsCta": "Browse Add-ons"
     },
     "coupons": {
       "title": "Coupons",
@@ -2122,7 +2220,9 @@
       "viesUnverified": "Not verified with VIES yet",
       "viesVerifyNow": "Verify now",
       "viesUnreachable": "The VIES service is temporarily unavailable — try again in a few minutes.",
-      "euVatNote": "EU businesses: a VIES-registered VAT number is required for paid subscriptions. Validated numbers are invoiced at 0% VAT (reverse charge)."
+      "euVatNote": "EU businesses: a VIES-registered VAT number is required for paid subscriptions. Validated numbers are invoiced at 0% VAT (reverse charge).",
+      "perOrder": "/order",
+      "paygOrderCount": "{count, plural, one {# order} other {# orders}}"
     },
     "addOns": {
       "errorCheckout": "Failed to start checkout",
@@ -2179,7 +2279,19 @@
       "modalAfterThatOff": "After that, the add-on turns off — you can re-subscribe any time.",
       "willBeLocked": "will be locked",
       "dontCancel": "Don't cancel — keep this service",
-      "yesCancel": "Yes, cancel"
+      "yesCancel": "Yes, cancel",
+      "pageIntro": "The core product is free forever. Unlock individual features below by subscribing to the matching add-on. Cancel anytime — you keep access until the end of the billing period.",
+      "subscribedBanner": "<strong>Success!</strong> Your subscription is being activated. It can take up to a minute for the feature to unlock.",
+      "settingsLinks": {
+        "hostedWebsite": "Open website editor",
+        "onlinePayments": "Manage Stripe Connect",
+        "driverPool": "Configure driver pool",
+        "multiLocation": "Manage locations",
+        "customDomain": "Connect your domain",
+        "advancedPromoMarketing": "Run promotions",
+        "reservationDeposits": "Configure reservations",
+        "brandedMobileApp": "Configure app"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Live",
@@ -2676,7 +2788,22 @@
       "labelAssigned": "Assigned",
       "labelVip": "VIP",
       "badgeDeadTargets": "Targets no live dishes — re-select",
-      "searchPlaceholder": "Search by name or coupon code…"
+      "searchPlaceholder": "Search by name or coupon code…",
+      "typeLabels": {
+        "percentage_off": "% Discount on Selected Items",
+        "fixed_cart": "Fixed Discount on Cart",
+        "free_delivery": "Free Delivery",
+        "bogo": "Buy One Get One Free",
+        "buy_n_get_free": "Buy N Get One Free",
+        "free_item": "Get a FREE Item",
+        "meal_bundle": "Meal Bundle",
+        "meal_bundle_speciality": "Meal Bundle with Speciality",
+        "fixed_combo": "Fixed Discount on Combo Deal",
+        "percentage_combo": "% Discount on Combo Deal",
+        "payment_reward": "Payment Method Reward",
+        "free_dish_meal": "Free Dish as Part of a Meal"
+      },
+      "campaignFallback": "Campaign"
     },
     "promoWizard": {
       "errorPickType": "Pick a promotion type to continue.",
@@ -2715,7 +2842,61 @@
       "featureBuyNGetFree": "Buy-N-get-free progressive discounts",
       "featureFreeDish": "Free dish as part of a meal",
       "maybeLater": "Maybe later",
-      "subscribe": "Subscribe"
+      "subscribe": "Subscribe",
+      "types": {
+        "percentage_off": {
+          "name": "% discount on cart",
+          "desc": "Knock a percentage off the whole order (or specific items)."
+        },
+        "free_delivery": {
+          "name": "Free delivery",
+          "desc": "Waive the delivery fee for qualifying orders."
+        },
+        "bogo": {
+          "name": "Buy one, get one free",
+          "desc": "Pair a paid item with a free (or discounted) item."
+        },
+        "fixed_cart": {
+          "name": "Fixed discount on cart",
+          "desc": "Knock a flat dollar amount off the order."
+        },
+        "payment_reward": {
+          "name": "Payment method reward",
+          "desc": "Discount for paying with a specific method (e.g. cash)."
+        },
+        "free_item": {
+          "name": "Get a FREE item",
+          "desc": "Spend $X, get a free item from a curated list."
+        },
+        "meal_bundle": {
+          "name": "Meal bundle",
+          "desc": "Mix-and-match slots at a fixed bundle price."
+        },
+        "buy_n_get_free": {
+          "name": "Buy N, get one free",
+          "desc": "Add N items, get the next one (cheapest or chosen) free."
+        },
+        "free_dish_meal": {
+          "name": "Free dish as part of meal",
+          "desc": "Order a main + side, get a dessert (or any extra) free."
+        },
+        "fixed_combo": {
+          "name": "Fixed discount on combo",
+          "desc": "Pair specific items together, knock a flat $ off."
+        },
+        "percentage_combo": {
+          "name": "% discount on combo",
+          "desc": "Pair specific items together, knock a percentage off."
+        },
+        "meal_bundle_speciality": {
+          "name": "Meal bundle with speciality",
+          "desc": "Meal bundle with optional upsell upcharges (e.g. lobster +$5)."
+        },
+        "reward_credit": {
+          "name": "Grant Reward Dollars",
+          "desc": "Reward the customer with store credit on this order instead of a discount."
+        }
+      }
     },
     "promoStepConfig": {
       "oncePerOrderLabel": "Only allowed once per order",
@@ -2770,7 +2951,44 @@
       "freeDishPoolLabel": "Free dish pool",
       "freeDishDiscountLabel": "Discount on free dish (100 = fully free)",
       "pickTypePrompt": "Pick a promotion type on Step 1 to configure the details here.",
-      "oncePerOrderHintPercent": "When checked, the % discount applies to ONE item only — the single most expensive qualifying item in the cart (e.g. “20% off one main course”). Leave unchecked to discount EVERY qualifying item."
+      "oncePerOrderHintPercent": "When checked, the % discount applies to ONE item only — the single most expensive qualifying item in the cart (e.g. “20% off one main course”). Leave unchecked to discount EVERY qualifying item.",
+      "groupNoItems": "No items selected — click to edit",
+      "groupMoreCategories": "+{n} more",
+      "pickerHeading": "Select categories or items",
+      "pickerNoCategories": "No categories found",
+      "allSizesSuffix": " · all sizes",
+      "groupSpecificItems": "{count, plural, one {# specific item} other {# specific items}}",
+      "groupSizes": "{count, plural, one {# size} other {# sizes}}",
+      "specialityFeeTitle": "Charge the fee only for these sizes",
+      "specialityFeeDesc": "Tick the premium sizes that add the fee — base sizes stay free. Leave all unticked to charge the fee on every pick.",
+      "specialityFeeEmpty": "Pick this slot's items first, then choose which sizes cost extra.",
+      "wholeItemAllSizesSuffix": " · whole item (all sizes)",
+      "roleLabelPaid": "(Paid)",
+      "roleLabelFree": "(Free)",
+      "roleLabelTrigger": "(Trigger)",
+      "roleLabelRequired": "(Required)",
+      "itemsGroupN": "Items Group {n}",
+      "slotPickAtLeast": "Pick at least",
+      "slotUpTo": "up to",
+      "slotItems": "items",
+      "specialityFeeInlineLabel": "Speciality fee +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {for # size} other {for # sizes}}",
+      "specialityFeeForAll": "for all sizes — pick which cost extra",
+      "extraChargeLabel": "Charges on the free item",
+      "extraChargeNone": "No extra charges (whole free item is free)",
+      "extraChargeAddons": "Charge extra for Choices / Add-ons (toppings still billed)",
+      "extraChargeAddonsSizes": "Charge extra for Choices / Add-ons & Sizes (toppings + size upgrade billed)",
+      "extraChargeHint": "Whether the freed item's toppings and size upgrade are still charged — matches GloriaFood.",
+      "discountStrategyNoteFreed": "The item from the “free” group is the one discounted — regardless of price. The % above is how much off it gets (100% = free).",
+      "discountStrategyNoteMostExpensive": "BOGO discounts the MORE EXPENSIVE of the two qualifying items. To always discount one specific item instead, use the “Buy N, Get Free” deal.",
+      "discountStrategyNoteFixedPercent": "Each discounted item gets this % off — the cheaper item when a pair qualifies. To always discount one specific item, use the “Buy N, Get Free” deal.",
+      "discountStrategyNoteCheapest": "BOGO discounts the CHEAPER of the two qualifying items — so if the “free” item costs more, the cheaper one is discounted instead (a customer can’t get the pricier item cheap). To always discount one specific item (e.g. a pasta), use the “Buy N, Get Free” deal.",
+      "discountStrategyLabel": "Discount Strategy",
+      "strategyCheapest": "Automatically set discounts (cheapest item free)",
+      "strategyMostExpensive": "Automatically set discounts (most expensive item free)",
+      "strategyFixedPercent": "Fixed discount percentage",
+      "pctOffCheapest": "% off cheapest item",
+      "pctOffMostExpensive": "% off most expensive item"
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & display",
@@ -2861,7 +3079,8 @@
       "channelBothLabel": "Both",
       "hiddenCodeInfo": "Hidden promotions only apply when the customer enters this code at checkout.",
       "vipLockedTitle": "VIP only — attached to: {groups}",
-      "vipLockedDesc": "This promotion auto-applies only for those VIP members at checkout. It never shows on your public menu, banner, or website — no visibility switch can change that. To make it public, detach it on the VIP Groups page first."
+      "vipLockedDesc": "This promotion auto-applies only for those VIP members at checkout. It never shows on your public menu, banner, or website — no visibility switch can change that. To make it public, detach it on the VIP Groups page first.",
+      "bundleBuildInfo": "💡 Customers build this bundle from a “Build your deal” card on your menu. Pin it to the banner below so it’s easy to find. (A bundle can’t be auto-applied or unlocked by a code.)"
     },
     "customersList": {
       "heading": "Customers",
@@ -3233,7 +3452,9 @@
       "webhookSaveFirst": "Save your settings once (with a ShipDay source selected) and your personal webhook link appears here.",
       "feeFromZonesTitle": "Customer delivery fees",
       "feeFromZonesBody": "What your customers pay for delivery is set on the Delivery Zones page — same as with your own drivers. ShipDay bills your restaurant separately for each delivery; ask your ShipDay contact about your per-delivery rate.",
-      "feeFromZonesLink": "Open Delivery Zones"
+      "feeFromZonesLink": "Open Delivery Zones",
+      "errorUnknown": "Unknown error",
+      "errorNetwork": "Network error"
     },
     "brandDashboard": {
       "brandDashboardBadge": "Brand dashboard",
@@ -3552,7 +3773,8 @@
       "feature2Title": "You set customer pricing",
       "feature2Body": "Pass-through (customer pays full ShipDay fee), flat (you absorb the gap), or tiered (e.g. free over $50). Total control.",
       "feature3Title": "Switch per order",
-      "feature3Body": "Mix your own drivers with ShipDay. The kitchen sees a picker for each delivery: in-house or pool. Your call, every time."
+      "feature3Body": "Mix your own drivers with ShipDay. The kitchen sees a picker for each delivery: in-house or pool. Your call, every time.",
+      "perMonth": "/mo"
     },
     "marketplaceLocked": {
       "addonBadge": "Add-on",

@@ -91,7 +91,8 @@
     "menu": "תפריט",
     "loadingDots": "טוען…",
     "previous": "הקודם",
-    "kmFromStore": "{km} ק\"מ מהחנות"
+    "kmFromStore": "{km} ק\"מ מהחנות",
+    "apply": "החל"
   },
   "auth": {
     "signIn": "כניסה",
@@ -1105,7 +1106,26 @@
       "removeSlot": "הסרת חלון הזמן",
       "closesNextDay": "נסגר ביום למחרת (למשל פתוח אחרי חצות)",
       "holidayNeedsDate": "בחר תחילה תאריך התחלה.",
-      "holidayWindowOutsideService": "{window} מחוץ לשעות {service} ביום זה. שעות חריגות חייבות להיות בתוך שעות הפעילות הרגילות של השירות."
+      "holidayWindowOutsideService": "{window} מחוץ לשעות {service} ביום זה. שעות חריגות חייבות להיות בתוך שעות הפעילות הרגילות של השירות.",
+      "copiedDayToAll": "{day} הועתק לכל שאר הימים",
+      "copiedDayToClosed": "{day} הועתק לימים הסגורים",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "ברירת מחדל (כל השירותים)",
+      "tabReservation": "הזמנה",
+      "tabAddSuffix": "+ הוספה",
+      "removeOverrideAria": "הסרת העקיפה של {service}",
+      "removeOverrideTitle": "הסרת העקיפה (שורות מיושנות נשארות במסד הנתונים עד שתשמור עם הכרטיסייה מופעלת מחדש)",
+      "hoursForServiceOnly": "שעות עבור {service} בלבד",
+      "markClosed": "סמן כסגור",
+      "markOpen": "סמן כפתוח",
+      "copyHoursTitle": "העתק שעות אלה לימים אחרים",
+      "applyTo": "החל על…",
+      "applyToAllDays": "החל על <strong>כל שאר הימים</strong>",
+      "applyToClosedDays": "החל רק על <strong>הימים הסגורים כעת</strong>",
+      "dayAbbrev": "א, ב, ג, ד, ה, ו, ש"
     },
     "services": {
       "title": "שירותי המסעדה",
@@ -1205,7 +1225,42 @@
         "colRequired": "חובה",
         "saved": "טופס כתובת המשלוח עודכן"
       },
-      "estimatedMinutesHint": "זמן המשלוח הכולל המשוער (הכנה + נסיעה) לכתובות באזור זה. לקוחות רואים את המספר בקופה והוא קובע את חלון \"הזמנה למועד מאוחר\" המוקדם ביותר — הוא גובר על ההערכה שבברירת המחדל של שירות המשלוחים. ערך מציאותי הוא 30–60 דק', לא זמן הנסיעה בלבד."
+      "estimatedMinutesHint": "זמן המשלוח הכולל המשוער (הכנה + נסיעה) לכתובות באזור זה. לקוחות רואים את המספר בקופה והוא קובע את חלון \"הזמנה למועד מאוחר\" המוקדם ביותר — הוא גובר על ההערכה שבברירת המחדל של שירות המשלוחים. ערך מציאותי הוא 30–60 דק', לא זמן הנסיעה בלבד.",
+      "toastNoAddress": "לא הוגדרה כתובת. השלם תחילה את פרופיל המסעדה.",
+      "toastAddressNotFound": "לא ניתן היה למצוא כתובת זו. עדכן את הכתובת בפרופיל המסעדה ונסה שוב.",
+      "toastLocationPinned": "מיקום המסעדה נעוץ על המפה!",
+      "toastGeocodeFailed": "הקידוד הגיאוגרפי נכשל. בדוק את חיבור האינטרנט שלך.",
+      "toastLocationUpdated": "מיקום המסעדה עודכן!",
+      "toastZoneNameRequired": "שם האזור נדרש",
+      "toastSetLocationFirst": "הגדר תחילה את מיקום המסעדה (האזורים הם מעגלים קונצנטריים סביבו).",
+      "toastSaveZoneFailed": "שמירת האזור נכשלה",
+      "toastZoneAdded": "האזור \"{name}\" נוסף!",
+      "toastUpdateZoneFailed": "עדכון האזור נכשל",
+      "confirmDeleteZone": "למחוק את אזור המשלוח \"{name}\"? לא ניתן לבטל פעולה זו.",
+      "toastZoneDeleted": "האזור נמחק",
+      "locationNotSetTitle": "מיקום המסעדה לא הוגדר",
+      "locationNotSetDesc": "אזורי משלוח זקוקים לקואורדינטות של המסעדה שלך כנקודת מוצא. <link>הגדר אותן בפרופיל המסעדה</link> או השתמש בכפתור למטה כדי לקודד גיאוגרפית את הכתובת הנוכחית שלך.",
+      "locateRestaurant": "אתר את המסעדה",
+      "locating": "מאתר…",
+      "relocate": "אתר מחדש",
+      "legendActiveZone": "אזור פעיל",
+      "legendInactiveZone": "אזור לא פעיל",
+      "rowFee": "עמלה {amount}",
+      "rowMin": "מינ׳ {amount}",
+      "unitKm": "ק״מ",
+      "unitMinutes": "דק׳",
+      "detailStdTime": "זמן סטנד׳",
+      "editFee": "עמלה ({sym})",
+      "editMin": "מינ׳ ({sym})",
+      "editStdTime": "זמן סטנד׳ (דק׳)",
+      "mapRestaurantTitle": "מסעדה (גרור להתאמה)",
+      "mapResizeHandleTitle": "{km} ק״מ — גרור לשינוי גודל",
+      "mapFeeLabel": "עמלה:",
+      "mapMinLabel": "מינ׳:",
+      "mapRadiusLabel": "רדיוס:",
+      "mapEtaLabel": "זמן משוער:",
+      "mapDragHint": "גרור את הידית לשינוי גודל",
+      "mapDragHintShort": "גרור לשינוי גודל"
     },
     "reservations": {
       "title": "הזמנות שולחנות",
@@ -1286,7 +1341,38 @@
       "amount": "סכום",
       "schedule": "לוח זמנים",
       "status": "סטטוס",
-      "confirmDelete": "למחוק \"{name}\"?"
+      "confirmDelete": "למחוק \"{name}\"?",
+      "taxRateRangeError": "שיעור המס חייב להיות בין 0 ל-100",
+      "salesTaxTitle": "שיעור מס מכירה",
+      "salesTaxHelp": "חל על סכום הביניים החייב במס של כל הזמנה. הגדר 0 אם אינך גובה מס מכירה. (למשל 13 עבור 13% HST.)",
+      "rateLabel": "שיעור (%)",
+      "savingLabel": "שומר…",
+      "saveTaxRate": "שמור שיעור מס",
+      "currencyTitle": "מטבע",
+      "currencyHelp": "קובע כל מחיר שהלקוח רואה וכן חיובי Stripe/PayPal, קבלות ודוחות. שינוי המטבע אינו ממיר מחירים קיימים — עדכן את מחירי התפריט בהתאם אם אתה עובר מ-USD ל-EUR (וכו').",
+      "currencyLabel": "מטבע",
+      "currencySample": "דוגמה: <strong>{value}</strong>",
+      "tipsTitle": "טיפים מלקוחות",
+      "tipsHelp": "כאשר כבוי, עגלת הלקוח מסתירה לחלוטין את בורר הטיפ והשרת מאפס כל ערך לקוח שעבר מניפולציה. חלק מהמסעדות (למשל במדינות שבהן טיפ אינו מקובל) מעדיפות לא להציג בקשות טיפ.",
+      "tipsAriaDisable": "השבתת טיפים",
+      "tipsAriaEnable": "הפעלת טיפים",
+      "menuSearchTitle": "חיפוש בתפריט הלקוח",
+      "menuSearchHelp": "כאשר מופעל, עמוד ההזמנות של הלקוח מציג שורת חיפוש עם זכוכית מגדלת כדי שהמבקרים ימצאו פריטים במהירות בהקלדה. כבה אם אתה מעדיף שיעיינו רק דרך כפתורי הקטגוריות.",
+      "menuSearchAriaHide": "הסתר את חיפוש התפריט בעמוד הלקוח",
+      "menuSearchAriaShow": "הצג את חיפוש התפריט בעמוד הלקוח",
+      "itemNotesTitle": "הוראות מיוחדות לכל פריט",
+      "itemNotesHelp": "כאשר מופעל, לקוחות יכולים להוסיף הערה ל<each>כל פריט</each> (למשל „פריך במיוחד“, „בלי בצל על זה“) — היא מודפסת על פתק המטבח של אותו פריט. כאשר כבוי, הם עדיין יכולים להשאיר הערה אחת ל<whole>ההזמנה כולה</whole> בקופה.",
+      "itemNotesAriaOff": "כבה הערות לכל פריט",
+      "itemNotesAriaOn": "הפעל הערות לכל פריט",
+      "schedulingTitle": "תזמון וטופס תשלום",
+      "schedulingHelp": "שלוט באילו חלונות זמן לקוחות יכולים לתזמן, ואילו שדות יצירת קשר הם חובה בקופה.",
+      "slotIntervalLabel": "מרווח החלונות (דקות)",
+      "slotIntervalHelp": "לקוחות יכולים לתזמן הזמנות רק בקצב הזה (כמו GloriaFood). ברירת המחדל היא 15 — שנה ל-30 עבור מטבחים איטיים יותר.",
+      "minutesOption": "{n} דק'",
+      "requirePhoneLabel": "דרוש טלפון של הלקוח",
+      "requirePhoneHelp": "כאשר מופעל, טופס התשלום דוחה הזמנות ללא מספר טלפון. מומלץ למשלוח כדי שהמטבח יוכל להתקשר לגבי המסירה.",
+      "requirePhoneAriaOptional": "הפוך את הטלפון לאופציונלי",
+      "requirePhoneAriaRequired": "הפוך את הטלפון לחובה"
     },
     "mapSettings": {
       "title": "הגדרות מפה",
@@ -1502,7 +1588,19 @@
       "popularBadge": "פופולרי",
       "addOnEnableCta": "הפעל",
       "perMonth": "/לחודש",
-      "kitchenAlertsSection": "מטבח והתראות הזמנות"
+      "kitchenAlertsSection": "מטבח והתראות הזמנות",
+      "currentPlanWithAddOns": "התוכנית הנוכחית: FREE + {count, plural, one {תוסף אחד} two {# תוספים} other {# תוספים}}",
+      "currentPlanFree": "התוכנית הנוכחית: FREE",
+      "freePlanDescription": "וידג'ט הזמנות, ניהול, תפריט, אפליקציית מטבח — ללא כרטיס. קבל עד 100 הזמנות/חודש לתמיד. הוסף תכונות בתשלום בכל עת מעמוד החיוב.",
+      "feature100Orders": "100 הזמנות/חודש",
+      "featureUnlimitedMenu": "פריטי תפריט ללא הגבלה",
+      "featureCustomerAccounts": "חשבונות לקוחות",
+      "activeAddOnsHeading": "תוספים פעילים",
+      "trialBadge": "ניסיון",
+      "manageSubscriptionsHeading": "ניהול המנויים שלך",
+      "upgradeWithAddOnsHeading": "שדרוג עם תוספים בתשלום",
+      "manageBillingCta": "ניהול חיוב",
+      "browseAddOnsCta": "עיון בתוספים"
     },
     "coupons": {
       "title": "קופונים",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "טרם אומת מול VIES",
       "viesVerifyNow": "אמתו עכשיו",
       "viesUnreachable": "שירות VIES אינו זמין זמנית — נסו שוב בעוד כמה דקות.",
-      "euVatNote": "עסקים באיחוד האירופי: נדרש מספר מע\"מ רשום ב-VIES למינויים בתשלום. מספרים מאומתים מחויבים במע\"מ 0% (חיוב הפוך)."
+      "euVatNote": "עסקים באיחוד האירופי: נדרש מספר מע\"מ רשום ב-VIES למינויים בתשלום. מספרים מאומתים מחויבים במע\"מ 0% (חיוב הפוך).",
+      "perOrder": "/הזמנה",
+      "paygOrderCount": "{count, plural, one {הזמנה אחת} two {# הזמנות} other {# הזמנות}}"
     },
     "addOns": {
       "errorCheckout": "ההתחברות לתשלום נכשלה",
@@ -1757,7 +1857,19 @@
       "yesCancel": "כן, בטל",
       "compFreeUntil": "חינם עד {date}",
       "compExplainer": "התוסף הזה חינמי עד אז — הוא לא מתחדש מעצמו. הירשמו עכשיו כדי לשמור עליו: הכרטיס נשמר היום והחיוב מתחיל רק בתום התקופה החינמית.",
-      "compSubscribeCta": "הירשמו כדי לשמור עליו"
+      "compSubscribeCta": "הירשמו כדי לשמור עליו",
+      "pageIntro": "המוצר הבסיסי חינמי לתמיד. פתחו תכונות בודדות למטה על ידי הרשמה לתוסף המתאים. בטלו בכל עת — הגישה נשמרת עד סוף תקופת החיוב.",
+      "subscribedBanner": "<strong>הצלחה!</strong> המנוי שלך מופעל. שחרור התכונה עשוי להימשך עד דקה.",
+      "settingsLinks": {
+        "hostedWebsite": "פתיחת עורך האתר",
+        "onlinePayments": "ניהול Stripe Connect",
+        "driverPool": "הגדרת מאגר נהגים",
+        "multiLocation": "ניהול מיקומים",
+        "customDomain": "חיבור הדומיין שלך",
+        "advancedPromoMarketing": "הפעלת מבצעים",
+        "reservationDeposits": "הגדרת הזמנות",
+        "brandedMobileApp": "הגדרת האפליקציה"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "פעיל",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "הוקצה",
       "labelVip": "VIP",
       "badgeDeadTargets": "אין מנות פעילות — בחרו מחדש",
-      "searchPlaceholder": "חיפוש לפי שם או קוד קופון…"
+      "searchPlaceholder": "חיפוש לפי שם או קוד קופון…",
+      "typeLabels": {
+        "percentage_off": "% הנחה על פריטים נבחרים",
+        "fixed_cart": "הנחה קבועה על העגלה",
+        "free_delivery": "משלוח חינם",
+        "bogo": "קנה אחד קבל אחד חינם",
+        "buy_n_get_free": "קנה N קבל אחד חינם",
+        "free_item": "קבל פריט חינם",
+        "meal_bundle": "חבילת ארוחה",
+        "meal_bundle_speciality": "חבילת ארוחה עם מנה מיוחדת",
+        "fixed_combo": "הנחה קבועה על מבצע קומבו",
+        "percentage_combo": "% הנחה על מבצע קומבו",
+        "payment_reward": "תגמול לפי אמצעי תשלום",
+        "free_dish_meal": "מנה חינם כחלק מארוחה"
+      },
+      "campaignFallback": "קמפיין"
     },
     "promoWizard": {
       "errorPickType": "בחר סוג מבצע להמשך.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "הנחות פרוגרסיביות קנה-N-קבל-חינם",
       "featureFreeDish": "מנה חינם כחלק מארוחה",
       "maybeLater": "אולי מאוחר יותר",
-      "subscribe": "הירשם"
+      "subscribe": "הירשם",
+      "types": {
+        "percentage_off": {
+          "name": "% הנחה על העגלה",
+          "desc": "הורד אחוז מכל ההזמנה (או מפריטים מסוימים)."
+        },
+        "free_delivery": {
+          "name": "משלוח חינם",
+          "desc": "בטל את דמי המשלוח עבור הזמנות מזכות."
+        },
+        "bogo": {
+          "name": "קנה אחד קבל אחד חינם",
+          "desc": "שלב פריט בתשלום עם פריט חינם (או מוזל)."
+        },
+        "fixed_cart": {
+          "name": "הנחה קבועה על העגלה",
+          "desc": "הורד סכום קבוע מההזמנה."
+        },
+        "payment_reward": {
+          "name": "תגמול לפי אמצעי תשלום",
+          "desc": "הנחה עבור תשלום באמצעי מסוים (למשל מזומן)."
+        },
+        "free_item": {
+          "name": "קבל פריט חינם",
+          "desc": "הוצא X וקבל פריט חינם מרשימה נבחרת."
+        },
+        "meal_bundle": {
+          "name": "חבילת ארוחה",
+          "desc": "שלב משבצות במחיר חבילה קבוע."
+        },
+        "buy_n_get_free": {
+          "name": "קנה N קבל אחד חינם",
+          "desc": "הוסף N פריטים, והבא (הזול ביותר או הנבחר) חינם."
+        },
+        "free_dish_meal": {
+          "name": "מנה חינם כחלק מארוחה",
+          "desc": "הזמן מנה עיקרית + תוספת, וקבל קינוח (או כל תוספת) חינם."
+        },
+        "fixed_combo": {
+          "name": "הנחה קבועה על קומבו",
+          "desc": "שלב פריטים מסוימים והורד סכום קבוע."
+        },
+        "percentage_combo": {
+          "name": "% הנחה על קומבו",
+          "desc": "שלב פריטים מסוימים והורד אחוז."
+        },
+        "meal_bundle_speciality": {
+          "name": "חבילת ארוחה עם מנה מיוחדת",
+          "desc": "חבילת ארוחה עם תוספות תשלום אופציונליות (למשל לובסטר +5$)."
+        },
+        "reward_credit": {
+          "name": "הענקת Reward Dollars",
+          "desc": "תגמל את הלקוח בזיכוי חנות בהזמנה זו במקום הנחה."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "הגדר את המבצע שלך",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "כשהאפשרות מסומנת, ההטבה תחול פעם אחת בלבד לכל הזמנה, גם אם העגלה זכאית לה יותר מפעם אחת (למשל מבצע \"קנה אחד קבל אחד\" שאחרת היה חוזר על עצמו).",
       "rewardCreditLabel": "דולרי תגמול להענקה",
       "rewardCreditHint": "נוספים ליתרת הלקוח עם השלמת ההזמנה הזו — ללא הנחה בעגלה. דורש שדולרי תגמול יהיו מופעלים.",
-      "oncePerOrderHintPercent": "כאשר מסומן, הנחת ה-% חלה על פריט אחד בלבד — הפריט הזכאי היקר ביותר בעגלה (למשל “20% הנחה על מנה עיקרית אחת”). בטלו את הסימון כדי להנחות את כל הפריטים הזכאים."
+      "oncePerOrderHintPercent": "כאשר מסומן, הנחת ה-% חלה על פריט אחד בלבד — הפריט הזכאי היקר ביותר בעגלה (למשל “20% הנחה על מנה עיקרית אחת”). בטלו את הסימון כדי להנחות את כל הפריטים הזכאים.",
+      "groupNoItems": "לא נבחרו פריטים — לחץ לעריכה",
+      "groupMoreCategories": "+{n} נוספים",
+      "pickerHeading": "בחר קטגוריות או פריטים",
+      "pickerNoCategories": "לא נמצאו קטגוריות",
+      "allSizesSuffix": " · כל הגדלים",
+      "groupSpecificItems": "{count, plural, one {פריט ספציפי אחד} two {# פריטים ספציפיים} other {# פריטים ספציפיים}}",
+      "groupSizes": "{count, plural, one {גודל אחד} two {# גדלים} other {# גדלים}}",
+      "specialityFeeTitle": "חייב את התוספת רק עבור גדלים אלה",
+      "specialityFeeDesc": "סמן את הגדלים הפרימיום שמוסיפים את התוספת — גדלים בסיסיים נשארים חינם. השאר הכול לא מסומן כדי לחייב את התוספת בכל בחירה.",
+      "specialityFeeEmpty": "בחר תחילה את הפריטים של משבצת זו, ולאחר מכן בחר אילו גדלים עולים יותר.",
+      "wholeItemAllSizesSuffix": " · פריט שלם (כל הגדלים)",
+      "roleLabelPaid": "(בתשלום)",
+      "roleLabelFree": "(חינם)",
+      "roleLabelTrigger": "(טריגר)",
+      "roleLabelRequired": "(חובה)",
+      "itemsGroupN": "קבוצת פריטים {n}",
+      "slotPickAtLeast": "בחר לפחות",
+      "slotUpTo": "עד",
+      "slotItems": "פריטים",
+      "specialityFeeInlineLabel": "תוספת מומחיות +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {לגודל אחד} two {ל-# גדלים} other {ל-# גדלים}}",
+      "specialityFeeForAll": "לכל הגדלים — בחר אילו עולים יותר",
+      "extraChargeLabel": "חיובים על הפריט החינמי",
+      "extraChargeNone": "ללא חיובים נוספים (כל הפריט החינמי חינם)",
+      "extraChargeAddons": "חיוב נוסף עבור בחירות / תוספות (התוספות עדיין מחויבות)",
+      "extraChargeAddonsSizes": "חיוב נוסף עבור בחירות / תוספות וגדלים (תוספות + שדרוג גודל מחויבים)",
+      "extraChargeHint": "האם התוספות ושדרוג הגודל של הפריט החינמי עדיין מחויבים — כמו ב-GloriaFood.",
+      "discountStrategyNoteFreed": "הפריט מקבוצת «חינם» הוא זה שמקבל את ההנחה — ללא קשר למחיר. האחוז למעלה הוא גובה ההנחה (100% = חינם).",
+      "discountStrategyNoteMostExpensive": "מבצע BOGO מנכה את הפריט היקר יותר מבין שני הפריטים הזכאים. כדי להנחות תמיד פריט מסוים, השתמש במבצע «קנה N, קבל חינם».",
+      "discountStrategyNoteFixedPercent": "כל פריט מוזל מקבל את האחוז הזה — הזול יותר כאשר זוג זכאי. כדי להנחות תמיד פריט מסוים, השתמש במבצע «קנה N, קבל חינם».",
+      "discountStrategyNoteCheapest": "מבצע BOGO מנכה את הפריט הזול יותר מבין שני הפריטים הזכאים — כך שאם הפריט «חינם» עולה יותר, הזול יותר מונחה במקומו (לקוח אינו יכול לקבל את הפריט היקר בזול). כדי להנחות תמיד פריט מסוים (למשל פסטה), השתמש במבצע «קנה N, קבל חינם».",
+      "discountStrategyLabel": "אסטרטגיית הנחה",
+      "strategyCheapest": "הגדר הנחות אוטומטית (הפריט הזול ביותר חינם)",
+      "strategyMostExpensive": "הגדר הנחות אוטומטית (הפריט היקר ביותר חינם)",
+      "strategyFixedPercent": "אחוז הנחה קבוע",
+      "pctOffCheapest": "% הנחה על הפריט הזול ביותר",
+      "pctOffMostExpensive": "% הנחה על הפריט היקר ביותר"
     },
     "promoStepRestrictions": {
       "pageTitle": "הגבלות ותצוגה",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "שניהם",
       "hiddenCodeInfo": "מבצעים מוסתרים חלים רק כאשר הלקוח מזין קוד זה בקופה.",
       "vipLockedTitle": "‏VIP בלבד — משויך אל: {groups}",
-      "vipLockedDesc": "המבצע חל אוטומטית רק על חברי ה-VIP האלה בקופה. הוא לעולם לא מוצג בתפריט הציבורי, בבאנר או באתר — שום מתג נראות לא ישנה זאת. כדי להפוך אותו לציבורי, נתקו אותו קודם בעמוד קבוצות VIP."
+      "vipLockedDesc": "המבצע חל אוטומטית רק על חברי ה-VIP האלה בקופה. הוא לעולם לא מוצג בתפריט הציבורי, בבאנר או באתר — שום מתג נראות לא ישנה זאת. כדי להפוך אותו לציבורי, נתקו אותו קודם בעמוד קבוצות VIP.",
+      "bundleBuildInfo": "💡 לקוחות בונים חבילה זו מכרטיס «בנה את המבצע שלך» בתפריט שלך. הצמד אותה לבאנר למטה כדי שיהיה קל למצוא אותה. (לא ניתן להחיל חבילה אוטומטית או לפתוח אותה בעזרת קוד.)"
     },
     "customersList": {
       "heading": "לקוחות",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "שמרו את ההגדרות פעם אחת (עם מקור ShipDay שנבחר) וקישור ה-webhook האישי שלכם יופיע כאן.",
       "feeFromZonesTitle": "דמי משלוח ללקוחות",
       "feeFromZonesBody": "מה שהלקוחות שלכם משלמים על משלוח נקבע בעמוד אזורי משלוח — בדיוק כמו עם הנהגים שלכם. ShipDay מחייב את המסעדה שלכם בנפרד על כל משלוח; שאלו את איש הקשר שלכם ב-ShipDay מה התעריף שלכם למשלוח.",
-      "feeFromZonesLink": "פתיחת אזורי משלוח"
+      "feeFromZonesLink": "פתיחת אזורי משלוח",
+      "errorUnknown": "שגיאה לא ידועה",
+      "errorNetwork": "שגיאת רשת"
     },
     "driverPoolLocked": {
       "addonBadge": "תוסף",
@@ -3191,7 +3412,8 @@
       "feature2Title": "אתם קובעים את התמחור ללקוח",
       "feature2Body": "העברה מלאה (הלקוח משלם את עמלת ShipDay המלאה), קבועה (אתם סופגים את ההפרש), או מדורגת (לדוגמה חינם מעל $50). שליטה מלאה.",
       "feature3Title": "מעבר לפי הזמנה",
-      "feature3Body": "שלבו את הנהגים שלכם עם ShipDay. המטבח רואה בורר לכל משלוח: פנימי או מאגר. ההחלטה שלכם, בכל פעם."
+      "feature3Body": "שלבו את הנהגים שלכם עם ShipDay. המטבח רואה בורר לכל משלוח: פנימי או מאגר. ההחלטה שלכם, בכל פעם.",
+      "perMonth": "/חודש"
     },
     "marketplaceLocked": {
       "addonBadge": "תוסף",

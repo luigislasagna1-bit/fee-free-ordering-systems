@@ -91,7 +91,8 @@
     "menu": "Thực đơn",
     "loadingDots": "Đang tải…",
     "previous": "Trước",
-    "kmFromStore": "cách cửa hàng {km} km"
+    "kmFromStore": "cách cửa hàng {km} km",
+    "apply": "Áp dụng"
   },
   "auth": {
     "signIn": "Đăng nhập",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Xóa khung giờ",
       "closesNextDay": "Đóng cửa vào ngày hôm sau (vd: mở quá nửa đêm)",
       "holidayNeedsDate": "Trước tiên hãy chọn ngày bắt đầu.",
-      "holidayWindowOutsideService": "{window} nằm ngoài giờ {service} của ngày đó. Giờ ngoại lệ phải nằm trong giờ phục vụ thông thường."
+      "holidayWindowOutsideService": "{window} nằm ngoài giờ {service} của ngày đó. Giờ ngoại lệ phải nằm trong giờ phục vụ thông thường.",
+      "copiedDayToAll": "Đã sao chép {day} sang tất cả các ngày khác",
+      "copiedDayToClosed": "Đã sao chép {day} sang các ngày đóng cửa",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Mặc định (tất cả dịch vụ)",
+      "tabReservation": "Đặt chỗ",
+      "tabAddSuffix": "+ Thêm",
+      "removeOverrideAria": "Xóa ghi đè {service}",
+      "removeOverrideTitle": "Xóa ghi đè (các hàng cũ vẫn nằm trong cơ sở dữ liệu cho đến khi bạn lưu với tab được bật lại)",
+      "hoursForServiceOnly": "Giờ chỉ dành cho {service}",
+      "markClosed": "Đánh dấu là đóng cửa",
+      "markOpen": "Đánh dấu là mở cửa",
+      "copyHoursTitle": "Sao chép giờ này sang các ngày khác",
+      "applyTo": "Áp dụng cho…",
+      "applyToAllDays": "Áp dụng cho <strong>tất cả các ngày khác</strong>",
+      "applyToClosedDays": "Chỉ áp dụng cho <strong>các ngày hiện đang đóng cửa</strong>",
+      "dayAbbrev": "CN, T2, T3, T4, T5, T6, T7"
     },
     "services": {
       "title": "Dịch vụ nhà hàng",
@@ -1205,7 +1225,42 @@
         "colRequired": "Bắt buộc",
         "saved": "Đã cập nhật biểu mẫu địa chỉ giao hàng"
       },
-      "estimatedMinutesHint": "TỔNG thời gian giao hàng ước tính (chuẩn bị + di chuyển) cho địa chỉ trong khu vực này. Khách hàng thấy con số này khi thanh toán và nó quyết định khung \"đặt cho sau\" sớm nhất — nó thay thế ước tính mặc định của dịch vụ giao hàng. Giá trị hợp lý là 30–60 phút, không chỉ thời gian di chuyển."
+      "estimatedMinutesHint": "TỔNG thời gian giao hàng ước tính (chuẩn bị + di chuyển) cho địa chỉ trong khu vực này. Khách hàng thấy con số này khi thanh toán và nó quyết định khung \"đặt cho sau\" sớm nhất — nó thay thế ước tính mặc định của dịch vụ giao hàng. Giá trị hợp lý là 30–60 phút, không chỉ thời gian di chuyển.",
+      "toastNoAddress": "Chưa đặt địa chỉ. Vui lòng hoàn tất hồ sơ nhà hàng trước.",
+      "toastAddressNotFound": "Không tìm thấy địa chỉ này. Cập nhật địa chỉ trong hồ sơ nhà hàng và thử lại.",
+      "toastLocationPinned": "Đã ghim vị trí nhà hàng trên bản đồ!",
+      "toastGeocodeFailed": "Mã hóa địa lý thất bại. Kiểm tra kết nối internet của bạn.",
+      "toastLocationUpdated": "Đã cập nhật vị trí nhà hàng!",
+      "toastZoneNameRequired": "Tên khu vực là bắt buộc",
+      "toastSetLocationFirst": "Đặt vị trí nhà hàng của bạn trước (các khu vực là những vòng tròn đồng tâm quanh nó).",
+      "toastSaveZoneFailed": "Không thể lưu khu vực",
+      "toastZoneAdded": "Đã thêm khu vực \"{name}\"!",
+      "toastUpdateZoneFailed": "Không thể cập nhật khu vực",
+      "confirmDeleteZone": "Xóa khu vực giao hàng \"{name}\"? Không thể hoàn tác.",
+      "toastZoneDeleted": "Đã xóa khu vực",
+      "locationNotSetTitle": "Chưa đặt vị trí nhà hàng",
+      "locationNotSetDesc": "Các khu vực giao hàng cần tọa độ nhà hàng của bạn làm điểm gốc. <link>Đặt tọa độ trong hồ sơ nhà hàng</link> hoặc dùng nút bên dưới để mã hóa địa lý địa chỉ hiện tại của bạn.",
+      "locateRestaurant": "Định vị nhà hàng",
+      "locating": "Đang định vị…",
+      "relocate": "Định vị lại",
+      "legendActiveZone": "Khu vực đang bật",
+      "legendInactiveZone": "Khu vực đang tắt",
+      "rowFee": "phí {amount}",
+      "rowMin": "tối thiểu {amount}",
+      "unitKm": "km",
+      "unitMinutes": "phút",
+      "detailStdTime": "Thời gian TC",
+      "editFee": "Phí ({sym})",
+      "editMin": "Tối thiểu ({sym})",
+      "editStdTime": "Thời gian TC (phút)",
+      "mapRestaurantTitle": "Nhà hàng (kéo để điều chỉnh)",
+      "mapResizeHandleTitle": "{km} km — kéo để đổi kích thước",
+      "mapFeeLabel": "Phí:",
+      "mapMinLabel": "Tối thiểu:",
+      "mapRadiusLabel": "Bán kính:",
+      "mapEtaLabel": "Dự kiến:",
+      "mapDragHint": "Kéo tay cầm để đổi kích thước",
+      "mapDragHintShort": "kéo để đổi kích thước"
     },
     "reservations": {
       "title": "Đặt bàn",
@@ -1286,7 +1341,38 @@
       "amount": "Số tiền",
       "schedule": "Lịch",
       "status": "Trạng thái",
-      "confirmDelete": "Xóa \"{name}\"?"
+      "confirmDelete": "Xóa \"{name}\"?",
+      "taxRateRangeError": "Thuế suất phải nằm trong khoảng từ 0 đến 100",
+      "salesTaxTitle": "Thuế suất thuế bán hàng",
+      "salesTaxHelp": "Áp dụng cho tổng phụ chịu thuế của mỗi đơn hàng. Đặt 0 nếu bạn không thu thuế bán hàng. (ví dụ 13 cho HST 13%.)",
+      "rateLabel": "Tỷ lệ (%)",
+      "savingLabel": "Đang lưu…",
+      "saveTaxRate": "Lưu tỷ lệ",
+      "currencyTitle": "Tiền tệ",
+      "currencyHelp": "Quyết định mọi mức giá khách hàng thấy cùng các khoản phí Stripe/PayPal, biên nhận và báo cáo. Đổi tiền tệ KHÔNG chuyển đổi giá hiện có — hãy cập nhật giá thực đơn nếu bạn chuyển từ USD sang EUR (v.v.).",
+      "currencyLabel": "Tiền tệ",
+      "currencySample": "Ví dụ: <strong>{value}</strong>",
+      "tipsTitle": "Tiền tip của khách",
+      "tipsHelp": "Khi TẮT, giỏ hàng của khách ẩn hoàn toàn bộ chọn tiền tip và máy chủ đưa mọi giá trị bị sửa đổi phía client về 0. Một số nhà hàng (ví dụ ở những nước không có thói quen tip) không muốn hiển thị lời nhắc tip.",
+      "tipsAriaDisable": "Tắt tiền tip",
+      "tipsAriaEnable": "Bật tiền tip",
+      "menuSearchTitle": "Tìm kiếm thực đơn cho khách",
+      "menuSearchHelp": "Khi BẬT, trang đặt hàng của khách hiển thị thanh tìm kiếm hình kính lúp để khách nhanh chóng tìm món bằng cách gõ. TẮT nếu bạn muốn họ chỉ duyệt qua các nút danh mục.",
+      "menuSearchAriaHide": "Ẩn tìm kiếm thực đơn trên trang khách",
+      "menuSearchAriaShow": "Hiện tìm kiếm thực đơn trên trang khách",
+      "itemNotesTitle": "Hướng dẫn đặc biệt cho từng món",
+      "itemNotesHelp": "Khi BẬT, khách có thể thêm ghi chú cho <each>từng món</each> (ví dụ “giòn hơn”, “món này không hành”) — nó được in trên phiếu bếp cho món đó. Khi TẮT, họ vẫn có thể để lại một ghi chú cho <whole>toàn bộ đơn hàng</whole> khi thanh toán.",
+      "itemNotesAriaOff": "Tắt ghi chú cho từng món",
+      "itemNotesAriaOn": "Bật ghi chú cho từng món",
+      "schedulingTitle": "Lên lịch & biểu mẫu thanh toán",
+      "schedulingHelp": "Kiểm soát các khung giờ khách có thể đặt lịch và những trường liên hệ bắt buộc khi thanh toán.",
+      "slotIntervalLabel": "Khoảng thời gian khung giờ (phút)",
+      "slotIntervalHelp": "Khách chỉ có thể đặt lịch đơn theo nhịp này (giống GloriaFood). Mặc định là 15 — đổi sang 30 cho bếp chậm hơn.",
+      "minutesOption": "{n} phút",
+      "requirePhoneLabel": "Bắt buộc số điện thoại của khách",
+      "requirePhoneHelp": "Khi BẬT, biểu mẫu thanh toán từ chối đơn hàng không có số điện thoại. Khuyến nghị cho giao hàng để bếp có thể gọi về việc bàn giao.",
+      "requirePhoneAriaOptional": "Đặt số điện thoại là tùy chọn",
+      "requirePhoneAriaRequired": "Đặt số điện thoại là bắt buộc"
     },
     "mapSettings": {
       "title": "Cài đặt bản đồ",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Phổ biến",
       "addOnEnableCta": "Bật",
       "perMonth": "/tháng",
-      "kitchenAlertsSection": "Bếp & cảnh báo đơn hàng"
+      "kitchenAlertsSection": "Bếp & cảnh báo đơn hàng",
+      "currentPlanWithAddOns": "Gói hiện tại: FREE + {count} tiện ích bổ sung",
+      "currentPlanFree": "Gói hiện tại: FREE",
+      "freePlanDescription": "Tiện ích đặt hàng, quản trị, thực đơn, ứng dụng bếp — không cần thẻ. Nhận tối đa 100 đơn/tháng mãi mãi. Thêm tính năng trả phí bất cứ lúc nào từ trang Thanh toán.",
+      "feature100Orders": "100 đơn/tháng",
+      "featureUnlimitedMenu": "Món trong thực đơn không giới hạn",
+      "featureCustomerAccounts": "Tài khoản khách hàng",
+      "activeAddOnsHeading": "Tiện ích đang bật",
+      "trialBadge": "Dùng thử",
+      "manageSubscriptionsHeading": "Quản lý gói đăng ký của bạn",
+      "upgradeWithAddOnsHeading": "Nâng cấp với tiện ích trả phí",
+      "manageBillingCta": "Quản lý thanh toán",
+      "browseAddOnsCta": "Duyệt tiện ích"
     },
     "coupons": {
       "title": "Phiếu giảm giá",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Chưa xác minh với VIES",
       "viesVerifyNow": "Xác minh ngay",
       "viesUnreachable": "Dịch vụ VIES tạm thời không khả dụng — thử lại sau vài phút.",
-      "euVatNote": "Doanh nghiệp EU: cần mã số VAT đăng ký VIES cho gói trả phí. Mã hợp lệ được xuất hóa đơn 0% VAT (thuế đảo chiều)."
+      "euVatNote": "Doanh nghiệp EU: cần mã số VAT đăng ký VIES cho gói trả phí. Mã hợp lệ được xuất hóa đơn 0% VAT (thuế đảo chiều).",
+      "perOrder": "/đơn",
+      "paygOrderCount": "{count} đơn hàng"
     },
     "addOns": {
       "errorCheckout": "Không thể bắt đầu thanh toán",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Có, hủy",
       "compFreeUntil": "Miễn phí đến {date}",
       "compExplainer": "Tiện ích này miễn phí đến lúc đó — nó không tự gia hạn. Đăng ký ngay để giữ lại: thẻ của bạn được lưu hôm nay và chỉ bắt đầu tính phí khi hết thời gian miễn phí.",
-      "compSubscribeCta": "Đăng ký để giữ lại"
+      "compSubscribeCta": "Đăng ký để giữ lại",
+      "pageIntro": "Sản phẩm cốt lõi miễn phí vĩnh viễn. Mở khóa từng tính năng bên dưới bằng cách đăng ký tiện ích bổ sung tương ứng. Hủy bất cứ lúc nào — bạn vẫn giữ quyền truy cập đến hết kỳ thanh toán.",
+      "subscribedBanner": "<strong>Thành công!</strong> Gói đăng ký của bạn đang được kích hoạt. Việc mở khóa tính năng có thể mất đến một phút.",
+      "settingsLinks": {
+        "hostedWebsite": "Mở trình chỉnh sửa trang web",
+        "onlinePayments": "Quản lý Stripe Connect",
+        "driverPool": "Cấu hình nhóm tài xế",
+        "multiLocation": "Quản lý địa điểm",
+        "customDomain": "Kết nối tên miền của bạn",
+        "advancedPromoMarketing": "Chạy khuyến mãi",
+        "reservationDeposits": "Cấu hình đặt chỗ",
+        "brandedMobileApp": "Cấu hình ứng dụng"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Đang hoạt động",
@@ -2197,7 +2309,22 @@
       "labelAssigned": "Đã gán",
       "labelVip": "VIP",
       "badgeDeadTargets": "Không còn món hoạt động — chọn lại",
-      "searchPlaceholder": "Tìm theo tên hoặc mã giảm giá…"
+      "searchPlaceholder": "Tìm theo tên hoặc mã giảm giá…",
+      "typeLabels": {
+        "percentage_off": "% giảm cho món đã chọn",
+        "fixed_cart": "Giảm giá cố định trên giỏ hàng",
+        "free_delivery": "Giao hàng miễn phí",
+        "bogo": "Mua một tặng một",
+        "buy_n_get_free": "Mua N tặng một",
+        "free_item": "Nhận một món MIỄN PHÍ",
+        "meal_bundle": "Combo bữa ăn",
+        "meal_bundle_speciality": "Combo bữa ăn kèm món đặc biệt",
+        "fixed_combo": "Giảm giá cố định cho combo",
+        "percentage_combo": "% giảm cho combo",
+        "payment_reward": "Thưởng theo phương thức thanh toán",
+        "free_dish_meal": "Món miễn phí trong bữa ăn"
+      },
+      "campaignFallback": "Chiến dịch"
     },
     "promoWizard": {
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",
@@ -2236,7 +2363,61 @@
       "featureBuyNGetFree": "Mua N tặng miễn phí, giảm dần",
       "featureFreeDish": "Món miễn phí trong bữa ăn",
       "maybeLater": "Để sau",
-      "subscribe": "Đăng ký"
+      "subscribe": "Đăng ký",
+      "types": {
+        "percentage_off": {
+          "name": "% giảm trên giỏ hàng",
+          "desc": "Giảm một phần trăm cho toàn bộ đơn hàng (hoặc các món cụ thể)."
+        },
+        "free_delivery": {
+          "name": "Giao hàng miễn phí",
+          "desc": "Miễn phí giao hàng cho các đơn đủ điều kiện."
+        },
+        "bogo": {
+          "name": "Mua một tặng một",
+          "desc": "Ghép một món trả phí với một món miễn phí (hoặc giảm giá)."
+        },
+        "fixed_cart": {
+          "name": "Giảm giá cố định trên giỏ hàng",
+          "desc": "Giảm một số tiền cố định khỏi đơn hàng."
+        },
+        "payment_reward": {
+          "name": "Thưởng theo phương thức thanh toán",
+          "desc": "Giảm giá khi thanh toán bằng phương thức cụ thể (vd. tiền mặt)."
+        },
+        "free_item": {
+          "name": "Nhận một món MIỄN PHÍ",
+          "desc": "Chi tiêu X, nhận một món miễn phí từ danh sách chọn lọc."
+        },
+        "meal_bundle": {
+          "name": "Combo bữa ăn",
+          "desc": "Kết hợp các vị trí với giá combo cố định."
+        },
+        "buy_n_get_free": {
+          "name": "Mua N tặng một",
+          "desc": "Thêm N món, món tiếp theo (rẻ nhất hoặc đã chọn) miễn phí."
+        },
+        "free_dish_meal": {
+          "name": "Món miễn phí trong bữa ăn",
+          "desc": "Đặt món chính + món phụ, nhận tráng miệng (hoặc bất kỳ món thêm nào) miễn phí."
+        },
+        "fixed_combo": {
+          "name": "Giảm giá cố định cho combo",
+          "desc": "Ghép các món cụ thể, giảm một số tiền cố định."
+        },
+        "percentage_combo": {
+          "name": "% giảm cho combo",
+          "desc": "Ghép các món cụ thể, giảm một phần trăm."
+        },
+        "meal_bundle_speciality": {
+          "name": "Combo bữa ăn kèm món đặc biệt",
+          "desc": "Combo bữa ăn với phụ phí tùy chọn (vd. tôm hùm +$5)."
+        },
+        "reward_credit": {
+          "name": "Cấp Reward Dollars",
+          "desc": "Thưởng cho khách hàng tín dụng cửa hàng cho đơn này thay vì giảm giá."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Cấu hình khuyến mãi",
@@ -2291,7 +2472,44 @@
       "oncePerOrderHint": "Khi được chọn, ưu đãi này chỉ áp dụng một lần cho mỗi đơn hàng, ngay cả khi giỏ hàng đủ điều kiện nhiều lần (ví dụ: chương trình Mua một tặng một mà nếu không sẽ lặp lại).",
       "rewardCreditLabel": "Reward Dollars để tặng",
       "rewardCreditHint": "Được cộng vào số dư của khách khi đơn này hoàn tất — không giảm giá giỏ hàng. Cần bật Reward Dollars.",
-      "oncePerOrderHintPercent": "Khi được chọn, giảm giá % chỉ áp dụng cho MỘT món — món đủ điều kiện đắt nhất trong giỏ (vd. “giảm 20% một món chính”). Bỏ chọn để giảm giá TẤT CẢ các món đủ điều kiện."
+      "oncePerOrderHintPercent": "Khi được chọn, giảm giá % chỉ áp dụng cho MỘT món — món đủ điều kiện đắt nhất trong giỏ (vd. “giảm 20% một món chính”). Bỏ chọn để giảm giá TẤT CẢ các món đủ điều kiện.",
+      "groupNoItems": "Chưa chọn món nào — nhấp để chỉnh sửa",
+      "groupMoreCategories": "+{n} nữa",
+      "pickerHeading": "Chọn danh mục hoặc món",
+      "pickerNoCategories": "Không tìm thấy danh mục",
+      "allSizesSuffix": " · tất cả kích cỡ",
+      "groupSpecificItems": "{count} món cụ thể",
+      "groupSizes": "{count} kích cỡ",
+      "specialityFeeTitle": "Chỉ tính phí cho các kích cỡ này",
+      "specialityFeeDesc": "Đánh dấu các kích cỡ cao cấp thêm phí — kích cỡ cơ bản vẫn miễn phí. Bỏ trống tất cả để tính phí cho mỗi lựa chọn.",
+      "specialityFeeEmpty": "Chọn các món của vị trí này trước, rồi chọn kích cỡ nào tính thêm phí.",
+      "wholeItemAllSizesSuffix": " · cả món (tất cả kích cỡ)",
+      "roleLabelPaid": "(Trả phí)",
+      "roleLabelFree": "(Miễn phí)",
+      "roleLabelTrigger": "(Kích hoạt)",
+      "roleLabelRequired": "(Bắt buộc)",
+      "itemsGroupN": "Nhóm món {n}",
+      "slotPickAtLeast": "Chọn ít nhất",
+      "slotUpTo": "tối đa",
+      "slotItems": "món",
+      "specialityFeeInlineLabel": "Phí đặc biệt +{currencySymbol}",
+      "specialityFeeForSizes": "cho {count} kích cỡ",
+      "specialityFeeForAll": "cho tất cả kích cỡ — chọn kích cỡ nào tính thêm phí",
+      "extraChargeLabel": "Phí trên món miễn phí",
+      "extraChargeNone": "Không phí thêm (toàn bộ món miễn phí là miễn phí)",
+      "extraChargeAddons": "Tính thêm cho lựa chọn / tiện ích (topping vẫn bị tính phí)",
+      "extraChargeAddonsSizes": "Tính thêm cho lựa chọn / tiện ích & kích cỡ (topping + nâng kích cỡ bị tính phí)",
+      "extraChargeHint": "Liệu topping và nâng kích cỡ của món miễn phí có còn bị tính phí — giống GloriaFood.",
+      "discountStrategyNoteFreed": "Món trong nhóm “miễn phí” là món được giảm giá — bất kể giá. % ở trên là mức giảm nó nhận được (100% = miễn phí).",
+      "discountStrategyNoteMostExpensive": "BOGO giảm giá món ĐẮT HƠN trong hai món đủ điều kiện. Để luôn giảm giá một món cụ thể, hãy dùng ưu đãi “Mua N, Tặng miễn phí”.",
+      "discountStrategyNoteFixedPercent": "Mỗi món được giảm nhận % này — món rẻ hơn khi một cặp đủ điều kiện. Để luôn giảm giá một món cụ thể, hãy dùng ưu đãi “Mua N, Tặng miễn phí”.",
+      "discountStrategyNoteCheapest": "BOGO giảm giá món RẺ HƠN trong hai món đủ điều kiện — vì vậy nếu món “miễn phí” đắt hơn, món rẻ hơn sẽ được giảm (khách không thể mua món đắt hơn với giá rẻ). Để luôn giảm giá một món cụ thể (ví dụ mì Ý), hãy dùng ưu đãi “Mua N, Tặng miễn phí”.",
+      "discountStrategyLabel": "Chiến lược giảm giá",
+      "strategyCheapest": "Tự động đặt giảm giá (món rẻ nhất miễn phí)",
+      "strategyMostExpensive": "Tự động đặt giảm giá (món đắt nhất miễn phí)",
+      "strategyFixedPercent": "Phần trăm giảm giá cố định",
+      "pctOffCheapest": "% giảm cho món rẻ nhất",
+      "pctOffMostExpensive": "% giảm cho món đắt nhất"
     },
     "promoStepRestrictions": {
       "pageTitle": "Giới hạn & hiển thị",
@@ -2382,7 +2600,8 @@
       "channelBothLabel": "Cả hai",
       "hiddenCodeInfo": "Khuyến mãi ẩn chỉ áp dụng khi khách hàng nhập mã này lúc thanh toán.",
       "vipLockedTitle": "Chỉ VIP — gắn với: {groups}",
-      "vipLockedDesc": "Khuyến mãi này chỉ tự động áp dụng cho các thành viên VIP đó khi thanh toán. Nó không bao giờ hiển thị trên thực đơn công khai, banner hay website — không công tắc hiển thị nào thay đổi được điều đó. Để công khai, trước tiên hãy gỡ nó ở trang Nhóm VIP."
+      "vipLockedDesc": "Khuyến mãi này chỉ tự động áp dụng cho các thành viên VIP đó khi thanh toán. Nó không bao giờ hiển thị trên thực đơn công khai, banner hay website — không công tắc hiển thị nào thay đổi được điều đó. Để công khai, trước tiên hãy gỡ nó ở trang Nhóm VIP.",
+      "bundleBuildInfo": "💡 Khách hàng tạo gói này từ thẻ “Tạo ưu đãi của bạn” trên thực đơn của bạn. Ghim nó vào biểu ngữ bên dưới để dễ tìm. (Không thể tự động áp dụng hoặc mở khóa gói bằng mã.)"
     },
     "customersList": {
       "heading": "Khách Hàng",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Lưu cài đặt của bạn một lần (với nguồn ShipDay đã chọn) và liên kết webhook cá nhân của bạn sẽ xuất hiện ở đây.",
       "feeFromZonesTitle": "Phí giao hàng của khách hàng",
       "feeFromZonesBody": "Số tiền khách hàng của bạn trả cho việc giao hàng được thiết lập trên trang Khu vực giao hàng — giống như với tài xế của nhà hàng. ShipDay tính phí nhà hàng của bạn riêng cho mỗi lần giao; hãy hỏi đầu mối liên hệ ShipDay của bạn về mức phí mỗi lần giao.",
-      "feeFromZonesLink": "Mở Khu vực giao hàng"
+      "feeFromZonesLink": "Mở Khu vực giao hàng",
+      "errorUnknown": "Lỗi không xác định",
+      "errorNetwork": "Lỗi mạng"
     },
     "driverPoolLocked": {
       "addonBadge": "Tiện ích bổ sung",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Bạn đặt giá cho khách",
       "feature2Body": "Chuyển tiếp (khách trả toàn bộ phí ShipDay), cố định (bạn bù chênh lệch), hoặc theo bậc (ví dụ: miễn phí trên $50). Toàn quyền kiểm soát.",
       "feature3Title": "Chuyển đổi theo từng đơn",
-      "feature3Body": "Kết hợp tài xế của bạn với ShipDay. Bếp thấy lựa chọn cho mỗi giao hàng: nội bộ hoặc pool. Quyết định của bạn, mỗi lần."
+      "feature3Body": "Kết hợp tài xế của bạn với ShipDay. Bếp thấy lựa chọn cho mỗi giao hàng: nội bộ hoặc pool. Quyết định của bạn, mỗi lần.",
+      "perMonth": "/tháng"
     },
     "marketplaceLocked": {
       "addonBadge": "Tiện ích bổ sung",

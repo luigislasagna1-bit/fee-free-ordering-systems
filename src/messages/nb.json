@@ -91,7 +91,8 @@
     "menu": "Meny",
     "loadingDots": "Laster…",
     "previous": "Forrige",
-    "kmFromStore": "{km} km fra butikken"
+    "kmFromStore": "{km} km fra butikken",
+    "apply": "Bruk"
   },
   "auth": {
     "signIn": "Logg inn",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Fjern tidsrom",
       "closesNextDay": "Stenger neste dag (f.eks. åpent etter midnatt)",
       "holidayNeedsDate": "Velg en startdato først.",
-      "holidayWindowOutsideService": "{window} er utenfor {service}-tidene den dagen. Unntakstider må være innenfor tjenestens normale åpningstider."
+      "holidayWindowOutsideService": "{window} er utenfor {service}-tidene den dagen. Unntakstider må være innenfor tjenestens normale åpningstider.",
+      "copiedDayToAll": "{day} kopiert til alle andre dager",
+      "copiedDayToClosed": "{day} kopiert til stengte dager",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Standard (alle tjenester)",
+      "tabReservation": "Reservasjon",
+      "tabAddSuffix": "+ Legg til",
+      "removeOverrideAria": "Fjern overstyring for {service}",
+      "removeOverrideTitle": "Fjern overstyring (utdaterte rader blir liggende i databasen til du lagrer med fanen aktivert igjen)",
+      "hoursForServiceOnly": "Åpningstider kun for {service}",
+      "markClosed": "Merk som stengt",
+      "markOpen": "Merk som åpen",
+      "copyHoursTitle": "Kopier disse tidene til andre dager",
+      "applyTo": "Bruk på…",
+      "applyToAllDays": "Bruk på <strong>alle andre dager</strong>",
+      "applyToClosedDays": "Bruk kun på <strong>dager som er stengt nå</strong>",
+      "dayAbbrev": "søn, man, tir, ons, tor, fre, lør"
     },
     "services": {
       "title": "Restauranttjenester",
@@ -1205,7 +1225,42 @@
         "colRequired": "Påkrevd",
         "saved": "Skjema for leveringsadresse oppdatert"
       },
-      "estimatedMinutesHint": "TOTAL estimert leveringstid (tilberedning + kjøring) for adresser i denne sonen. Kundene ser dette tallet i kassen, og det setter tidligste \"bestill til senere\"-tidspunkt — det overstyrer leveringstjenestens standardtid. En realistisk verdi er 30–60 min, ikke bare kjøretiden."
+      "estimatedMinutesHint": "TOTAL estimert leveringstid (tilberedning + kjøring) for adresser i denne sonen. Kundene ser dette tallet i kassen, og det setter tidligste \"bestill til senere\"-tidspunkt — det overstyrer leveringstjenestens standardtid. En realistisk verdi er 30–60 min, ikke bare kjøretiden.",
+      "toastNoAddress": "Ingen adresse angitt. Fullfør restaurantprofilen din først.",
+      "toastAddressNotFound": "Fant ikke denne adressen. Oppdater adressen i restaurantprofilen og prøv igjen.",
+      "toastLocationPinned": "Restaurantens plassering festet på kartet!",
+      "toastGeocodeFailed": "Geokoding mislyktes. Sjekk internettforbindelsen din.",
+      "toastLocationUpdated": "Restaurantens plassering oppdatert!",
+      "toastZoneNameRequired": "Sonenavn er påkrevd",
+      "toastSetLocationFirst": "Angi restaurantens plassering først (soner er konsentriske sirkler rundt den).",
+      "toastSaveZoneFailed": "Kunne ikke lagre sonen",
+      "toastZoneAdded": "Sonen «{name}» er lagt til!",
+      "toastUpdateZoneFailed": "Kunne ikke oppdatere sonen",
+      "confirmDeleteZone": "Slette leveringssonen «{name}»? Dette kan ikke angres.",
+      "toastZoneDeleted": "Sone slettet",
+      "locationNotSetTitle": "Restaurantens plassering er ikke angitt",
+      "locationNotSetDesc": "Leveringssoner trenger restaurantens koordinater som utgangspunkt. <link>Angi dem i restaurantprofilen</link> eller bruk knappen nedenfor for å geokode den nåværende adressen din.",
+      "locateRestaurant": "Finn restaurant",
+      "locating": "Finner…",
+      "relocate": "Finn på nytt",
+      "legendActiveZone": "Aktiv sone",
+      "legendInactiveZone": "Inaktiv sone",
+      "rowFee": "{amount} gebyr",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. tid",
+      "editFee": "Gebyr ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. tid (min)",
+      "mapRestaurantTitle": "Restaurant (dra for å justere)",
+      "mapResizeHandleTitle": "{km} km — dra for å endre størrelse",
+      "mapFeeLabel": "Gebyr:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Radius:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Dra i håndtaket for å endre størrelse",
+      "mapDragHintShort": "dra for å endre størrelse"
     },
     "reservations": {
       "title": "Reservasjoner",
@@ -1286,7 +1341,38 @@
       "amount": "Beløp",
       "schedule": "Tidsplan",
       "status": "Status",
-      "confirmDelete": "Slett «{name}»?"
+      "confirmDelete": "Slett «{name}»?",
+      "taxRateRangeError": "Skattesatsen må være mellom 0 og 100",
+      "salesTaxTitle": "Mva-sats",
+      "salesTaxHelp": "Brukes på den avgiftspliktige delsummen for hver bestilling. Sett til 0 hvis du ikke krever inn moms. (f.eks. 13 for 13 % HST.)",
+      "rateLabel": "Sats (%)",
+      "savingLabel": "Lagrer…",
+      "saveTaxRate": "Lagre sats",
+      "currencyTitle": "Valuta",
+      "currencyHelp": "Styrer hver pris kunden ser pluss Stripe/PayPal-gebyrer, kvitteringer og rapporter. Å bytte valuta konverterer IKKE eksisterende priser — oppdater menyprisene hvis du bytter fra USD til EUR (osv.).",
+      "currencyLabel": "Valuta",
+      "currencySample": "Eksempel: <strong>{value}</strong>",
+      "tipsTitle": "Tips fra kunder",
+      "tipsHelp": "Når AV skjuler kundens handlekurv tipsvelgeren helt, og serveren nullstiller enhver manipulert klientverdi. Noen restauranter (f.eks. i land der tips ikke er vanlig) foretrekker ingen tipsforespørsler.",
+      "tipsAriaDisable": "Deaktiver tips",
+      "tipsAriaEnable": "Aktiver tips",
+      "menuSearchTitle": "Menysøk for kunder",
+      "menuSearchHelp": "Når PÅ viser kundens bestillingsside et søkefelt med forstørrelsesglass slik at besøkende raskt kan finne varer ved å skrive. Slå AV hvis du foretrekker at de kun blar via kategoriknappene.",
+      "menuSearchAriaHide": "Skjul menysøk på kundesiden",
+      "menuSearchAriaShow": "Vis menysøk på kundesiden",
+      "itemNotesTitle": "Spesielle instruksjoner per vare",
+      "itemNotesHelp": "Når PÅ kan kunder legge til en merknad på <each>hver vare</each> (f.eks. «ekstra sprø», «ingen løk på denne») — den skrives ut på kjøkkenkvitteringen for den varen. AV kan de fortsatt legge igjen én merknad for <whole>hele bestillingen</whole> i kassen.",
+      "itemNotesAriaOff": "Slå av merknader per vare",
+      "itemNotesAriaOn": "Slå på merknader per vare",
+      "schedulingTitle": "Planlegging og kasseskjema",
+      "schedulingHelp": "Bestem hvilke tidsluker kunder kan planlegge for, og hvilke kontaktfelter som er obligatoriske i kassen.",
+      "slotIntervalLabel": "Tidslukeintervall (minutter)",
+      "slotIntervalHelp": "Kunder kan bare planlegge bestillinger i denne takten (som GloriaFood). Standard er 15 — endre til 30 for tregere kjøkken.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Krev kundens telefon",
+      "requirePhoneHelp": "Når PÅ avviser kasseskjemaet bestillinger uten telefonnummer. Anbefales for levering slik at kjøkkenet kan ringe om overleveringen.",
+      "requirePhoneAriaOptional": "Gjør telefon valgfri",
+      "requirePhoneAriaRequired": "Gjør telefon obligatorisk"
     },
     "mapSettings": {
       "title": "Kartinnstillinger",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Populær",
       "addOnEnableCta": "Aktiver",
       "perMonth": "/md",
-      "kitchenAlertsSection": "Kjøkken og ordrevarsler"
+      "kitchenAlertsSection": "Kjøkken og ordrevarsler",
+      "currentPlanWithAddOns": "Gjeldende plan: FREE + {count, plural, one {# tillegg} other {# tillegg}}",
+      "currentPlanFree": "Gjeldende plan: FREE",
+      "freePlanDescription": "Bestillingswidget, admin, meny, kjøkkenapp — uten kort. Ta imot opptil 100 bestillinger/måned for alltid. Legg til betalte funksjoner når som helst fra Fakturering.",
+      "feature100Orders": "100 bestillinger/måned",
+      "featureUnlimitedMenu": "Ubegrensede menyelementer",
+      "featureCustomerAccounts": "Kundekontoer",
+      "activeAddOnsHeading": "Aktive tillegg",
+      "trialBadge": "Prøve",
+      "manageSubscriptionsHeading": "Administrer abonnementene dine",
+      "upgradeWithAddOnsHeading": "Oppgrader med betalte tillegg",
+      "manageBillingCta": "Administrer fakturering",
+      "browseAddOnsCta": "Bla i tillegg"
     },
     "coupons": {
       "title": "Kuponger",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Ennå ikke kontrollert i VIES",
       "viesVerifyNow": "Kontroller nå",
       "viesUnreachable": "VIES-tjenesten er midlertidig utilgjengelig — prøv igjen om noen minutter.",
-      "euVatNote": "EU-bedrifter: et VIES-registrert MVA-nummer kreves for betalte abonnementer. Validerte numre faktureres med 0 % MVA (omvendt avgiftsplikt)."
+      "euVatNote": "EU-bedrifter: et VIES-registrert MVA-nummer kreves for betalte abonnementer. Validerte numre faktureres med 0 % MVA (omvendt avgiftsplikt).",
+      "perOrder": "/bestilling",
+      "paygOrderCount": "{count, plural, one {# bestilling} other {# bestillinger}}"
     },
     "addOns": {
       "errorCheckout": "Kunne ikke starte betaling",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Ja, kanseller",
       "compFreeUntil": "Gratis til {date}",
       "compExplainer": "Dette tillegget er gratis frem til da — det fornyes ikke av seg selv. Abonner nå for å beholde det: kortet lagres i dag, og fakturering starter først når gratisperioden er over.",
-      "compSubscribeCta": "Abonner for å beholde"
+      "compSubscribeCta": "Abonner for å beholde",
+      "pageIntro": "Kjerneproduktet er gratis for alltid. Lås opp enkeltfunksjoner nedenfor ved å abonnere på det tilhørende tillegget. Si opp når som helst — du beholder tilgangen til slutten av faktureringsperioden.",
+      "subscribedBanner": "<strong>Fullført!</strong> Abonnementet ditt aktiveres. Det kan ta opptil ett minutt før funksjonen låses opp.",
+      "settingsLinks": {
+        "hostedWebsite": "Åpne nettstedsredigering",
+        "onlinePayments": "Administrer Stripe Connect",
+        "driverPool": "Konfigurer sjåførpool",
+        "multiLocation": "Administrer lokasjoner",
+        "customDomain": "Koble til domenet ditt",
+        "advancedPromoMarketing": "Kjør kampanjer",
+        "reservationDeposits": "Konfigurer reservasjoner",
+        "brandedMobileApp": "Konfigurer appen"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Live",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Tildelt",
       "labelVip": "VIP",
       "badgeDeadTargets": "Ingen aktive retter — velg på nytt",
-      "searchPlaceholder": "Søk på navn eller kupongkode…"
+      "searchPlaceholder": "Søk på navn eller kupongkode…",
+      "typeLabels": {
+        "percentage_off": "% rabatt på utvalgte varer",
+        "fixed_cart": "Fast rabatt på handlekurven",
+        "free_delivery": "Gratis levering",
+        "bogo": "Kjøp en, få en gratis",
+        "buy_n_get_free": "Kjøp N, få en gratis",
+        "free_item": "Få en GRATIS vare",
+        "meal_bundle": "Måltidspakke",
+        "meal_bundle_speciality": "Måltidspakke med spesialitet",
+        "fixed_combo": "Fast rabatt på combo-tilbud",
+        "percentage_combo": "% rabatt på combo-tilbud",
+        "payment_reward": "Belønning for betalingsmetode",
+        "free_dish_meal": "Gratis rett som del av et måltid"
+      },
+      "campaignFallback": "Kampanje"
     },
     "promoWizard": {
       "errorPickType": "Velg en tilbudstype for å fortsette.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Kjøp-N-få-gratis progressive rabatter",
       "featureFreeDish": "Gratis rett som del av et måltid",
       "maybeLater": "Kanskje senere",
-      "subscribe": "Abonner"
+      "subscribe": "Abonner",
+      "types": {
+        "percentage_off": {
+          "name": "% rabatt på handlekurven",
+          "desc": "Trekk en prosentandel fra hele bestillingen (eller bestemte varer)."
+        },
+        "free_delivery": {
+          "name": "Gratis levering",
+          "desc": "Frafall leveringsgebyret for kvalifiserende bestillinger."
+        },
+        "bogo": {
+          "name": "Kjøp en, få en gratis",
+          "desc": "Kombiner en betalt vare med en gratis (eller rabattert) vare."
+        },
+        "fixed_cart": {
+          "name": "Fast rabatt på handlekurven",
+          "desc": "Trekk et fast beløp fra bestillingen."
+        },
+        "payment_reward": {
+          "name": "Belønning for betalingsmetode",
+          "desc": "Rabatt for å betale med en bestemt metode (f.eks. kontant)."
+        },
+        "free_item": {
+          "name": "Få en GRATIS vare",
+          "desc": "Bruk X og få en gratis vare fra en utvalgt liste."
+        },
+        "meal_bundle": {
+          "name": "Måltidspakke",
+          "desc": "Kombiner plasser til en fast pakkepris."
+        },
+        "buy_n_get_free": {
+          "name": "Kjøp N, få en gratis",
+          "desc": "Legg til N varer, den neste (billigste eller valgte) er gratis."
+        },
+        "free_dish_meal": {
+          "name": "Gratis rett som del av et måltid",
+          "desc": "Bestill en hovedrett + tilbehør og få en dessert (eller ekstra) gratis."
+        },
+        "fixed_combo": {
+          "name": "Fast rabatt på combo",
+          "desc": "Kombiner bestemte varer og trekk fra et fast beløp."
+        },
+        "percentage_combo": {
+          "name": "% rabatt på combo",
+          "desc": "Kombiner bestemte varer og trekk fra en prosentandel."
+        },
+        "meal_bundle_speciality": {
+          "name": "Måltidspakke med spesialitet",
+          "desc": "Måltidspakke med valgfrie tillegg (f.eks. hummer +5 $)."
+        },
+        "reward_credit": {
+          "name": "Gi Reward Dollars",
+          "desc": "Beløn kunden med butikkreditt på denne bestillingen i stedet for en rabatt."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Konfigurer tilbudet ditt",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Når dette er avkrysset, gjelder tilbudet bare én gang per bestilling, selv om handlekurven kvalifiserer for det flere ganger (f.eks. en kjøp-én-få-én som ellers ville blitt gjentatt).",
       "rewardCreditLabel": "Reward Dollars som skal gis",
       "rewardCreditHint": "Legges til kundens saldo når denne bestillingen fullføres — ingen rabatt i handlekurven. Krever at Reward Dollars er aktivert.",
-      "oncePerOrderHintPercent": "Når avkrysset gjelder %-rabatten kun ÉN vare — den dyreste kvalifiserte varen i handlekurven (f.eks. ”20 % på én hovedrett”). Fjern avkrysningen for å rabattere ALLE kvalifiserte varer."
+      "oncePerOrderHintPercent": "Når avkrysset gjelder %-rabatten kun ÉN vare — den dyreste kvalifiserte varen i handlekurven (f.eks. ”20 % på én hovedrett”). Fjern avkrysningen for å rabattere ALLE kvalifiserte varer.",
+      "groupNoItems": "Ingen varer valgt — klikk for å redigere",
+      "groupMoreCategories": "+{n} til",
+      "pickerHeading": "Velg kategorier eller varer",
+      "pickerNoCategories": "Ingen kategorier funnet",
+      "allSizesSuffix": " · alle størrelser",
+      "groupSpecificItems": "{count, plural, one {# spesifikk vare} other {# spesifikke varer}}",
+      "groupSizes": "{count, plural, one {# størrelse} other {# størrelser}}",
+      "specialityFeeTitle": "Krev bare gebyret for disse størrelsene",
+      "specialityFeeDesc": "Kryss av premium-størrelsene som legger til gebyret — basisstørrelser forblir gratis. La alt være uavkrysset for å kreve gebyret ved hvert valg.",
+      "specialityFeeEmpty": "Velg først varene i denne plassen, og velg deretter hvilke størrelser som koster ekstra.",
+      "wholeItemAllSizesSuffix": " · hel vare (alle størrelser)",
+      "roleLabelPaid": "(Betalt)",
+      "roleLabelFree": "(Gratis)",
+      "roleLabelTrigger": "(Utløser)",
+      "roleLabelRequired": "(Påkrevd)",
+      "itemsGroupN": "Varegruppe {n}",
+      "slotPickAtLeast": "Velg minst",
+      "slotUpTo": "opptil",
+      "slotItems": "varer",
+      "specialityFeeInlineLabel": "Spesialitetsgebyr +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {for # størrelse} other {for # størrelser}}",
+      "specialityFeeForAll": "for alle størrelser — velg hvilke som koster ekstra",
+      "extraChargeLabel": "Kostnader for gratisvaren",
+      "extraChargeNone": "Ingen ekstra kostnader (hele gratisvaren er gratis)",
+      "extraChargeAddons": "Ekstra gebyr for valg / tillegg (toppings faktureres fortsatt)",
+      "extraChargeAddonsSizes": "Ekstra gebyr for valg / tillegg & størrelser (toppings + størrelsesoppgradering faktureres)",
+      "extraChargeHint": "Om toppings og størrelsesoppgradering på gratisvaren fortsatt belastes — som i GloriaFood.",
+      "discountStrategyNoteFreed": "Varen fra gruppen «gratis» er den som får rabatt — uansett pris. Prosenten over er hvor mye rabatt den får (100% = gratis).",
+      "discountStrategyNoteMostExpensive": "BOGO gir rabatt på den DYRESTE av de to kvalifiserende varene. For alltid å gi rabatt på én bestemt vare, bruk tilbudet «Kjøp N, få gratis».",
+      "discountStrategyNoteFixedPercent": "Hver rabattert vare får denne % — den billigste når et par kvalifiserer. For alltid å gi rabatt på én bestemt vare, bruk tilbudet «Kjøp N, få gratis».",
+      "discountStrategyNoteCheapest": "BOGO gir rabatt på den BILLIGSTE av de to kvalifiserende varene — så hvis den «gratis» varen koster mer, rabatteres den billigste i stedet (en kunde kan ikke få den dyrere varen billig). For alltid å gi rabatt på én bestemt vare (f.eks. en pasta), bruk tilbudet «Kjøp N, få gratis».",
+      "discountStrategyLabel": "Rabattstrategi",
+      "strategyCheapest": "Angi rabatter automatisk (billigste vare gratis)",
+      "strategyMostExpensive": "Angi rabatter automatisk (dyreste vare gratis)",
+      "strategyFixedPercent": "Fast rabattprosent",
+      "pctOffCheapest": "% rabatt på billigste vare",
+      "pctOffMostExpensive": "% rabatt på dyreste vare"
     },
     "promoStepRestrictions": {
       "pageTitle": "Begrensninger og visning",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Begge",
       "hiddenCodeInfo": "Skjulte tilbud brukes bare når kunden taster inn denne koden i kassen.",
       "vipLockedTitle": "Kun VIP — knyttet til: {groups}",
-      "vipLockedDesc": "Denne kampanjen gjelder automatisk kun for disse VIP-medlemmene i kassen. Den vises aldri på din offentlige meny, banner eller nettside — ingen synlighetsbryter endrer det. Koble den først fra på siden VIP-grupper for å gjøre den offentlig."
+      "vipLockedDesc": "Denne kampanjen gjelder automatisk kun for disse VIP-medlemmene i kassen. Den vises aldri på din offentlige meny, banner eller nettside — ingen synlighetsbryter endrer det. Koble den først fra på siden VIP-grupper for å gjøre den offentlig.",
+      "bundleBuildInfo": "💡 Kunder bygger denne pakken fra et «Bygg tilbudet ditt»-kort på menyen din. Fest den til banneret nedenfor så den er lett å finne. (En pakke kan ikke brukes automatisk eller låses opp med en kode.)"
     },
     "customersList": {
       "heading": "Kunder",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Lagre innstillingene dine én gang (med en ShipDay-kilde valgt), så vises din personlige webhook-lenke her.",
       "feeFromZonesTitle": "Leveringsgebyrer for kunder",
       "feeFromZonesBody": "Hva kundene dine betaler for levering, settes på siden Leveringssoner — akkurat som med dine egne sjåfører. ShipDay fakturerer restauranten din separat for hver levering; spør ShipDay-kontakten din om prisen din per levering.",
-      "feeFromZonesLink": "Åpne Leveringssoner"
+      "feeFromZonesLink": "Åpne Leveringssoner",
+      "errorUnknown": "Ukjent feil",
+      "errorNetwork": "Nettverksfeil"
     },
     "driverPoolLocked": {
       "addonBadge": "Tillegg",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Du setter kundeprising",
       "feature2Body": "Gjennomfakturering (kunden betaler fullt ShipDay-gebyr), fast (du absorberer mellomlegget), eller trinnvis (f.eks. gratis over $50). Full kontroll.",
       "feature3Title": "Bytt per bestilling",
-      "feature3Body": "Bland egne sjåfører med ShipDay. Kjøkkenet ser et valg for hver levering: intern eller pool. Ditt valg, hver gang."
+      "feature3Body": "Bland egne sjåfører med ShipDay. Kjøkkenet ser et valg for hver levering: intern eller pool. Ditt valg, hver gang.",
+      "perMonth": "/mnd"
     },
     "marketplaceLocked": {
       "addonBadge": "Tillegg",

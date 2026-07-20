@@ -91,7 +91,8 @@
     "menu": "Menüü",
     "loadingDots": "Laadimine…",
     "previous": "Eelmine",
-    "kmFromStore": "{km} km poest"
+    "kmFromStore": "{km} km poest",
+    "apply": "Rakenda"
   },
   "auth": {
     "signIn": "Logi sisse",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Eemalda ajavahemik",
       "closesNextDay": "Sulgub järgmisel päeval (nt avatud üle kesköö)",
       "holidayNeedsDate": "Vali esmalt alguskuupäev.",
-      "holidayWindowOutsideService": "{window} jääb selle päeva {service} lahtiolekuaegadest välja. Erandlikud ajad peavad jääma teenuse tavapärase lahtiolekuaja sisse."
+      "holidayWindowOutsideService": "{window} jääb selle päeva {service} lahtiolekuaegadest välja. Erandlikud ajad peavad jääma teenuse tavapärase lahtiolekuaja sisse.",
+      "copiedDayToAll": "{day} kopeeritud kõikidele teistele päevadele",
+      "copiedDayToClosed": "{day} kopeeritud suletud päevadele",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Vaikimisi (kõik teenused)",
+      "tabReservation": "Broneering",
+      "tabAddSuffix": "+ Lisa",
+      "removeOverrideAria": "Eemalda {service} alistus",
+      "removeOverrideTitle": "Eemalda alistus (aegunud read jäävad andmebaasi, kuni salvestad uuesti lubatud vahekaardiga)",
+      "hoursForServiceOnly": "Lahtiolekuajad ainult teenusele {service}",
+      "markClosed": "Märgi suletuks",
+      "markOpen": "Märgi avatuks",
+      "copyHoursTitle": "Kopeeri need ajad teistele päevadele",
+      "applyTo": "Rakenda…",
+      "applyToAllDays": "Rakenda <strong>kõikidele teistele päevadele</strong>",
+      "applyToClosedDays": "Rakenda ainult <strong>praegu suletud päevadele</strong>",
+      "dayAbbrev": "P, E, T, K, N, R, L"
     },
     "services": {
       "title": "Restorani teenused",
@@ -1205,7 +1225,42 @@
         "colRequired": "Kohustuslik",
         "saved": "Tarneaadressi vorm on uuendatud"
       },
-      "estimatedMinutesHint": "KOGU hinnanguline tarneaeg (valmistamine + sõit) selle tsooni aadressidele. Kliendid näevad seda numbrit kassas ja see määrab varaseima \"telli hiljemaks\" aja — see asendab tarneteenuse vaikimisi hinnangu. Realistlik väärtus on 30–60 min, mitte ainult sõiduaeg."
+      "estimatedMinutesHint": "KOGU hinnanguline tarneaeg (valmistamine + sõit) selle tsooni aadressidele. Kliendid näevad seda numbrit kassas ja see määrab varaseima \"telli hiljemaks\" aja — see asendab tarneteenuse vaikimisi hinnangu. Realistlik väärtus on 30–60 min, mitte ainult sõiduaeg.",
+      "toastNoAddress": "Aadressi pole määratud. Täitke esmalt restorani profiil.",
+      "toastAddressNotFound": "Seda aadressi ei leitud. Uuendage aadressi restorani profiilis ja proovige uuesti.",
+      "toastLocationPinned": "Restorani asukoht kaardile kinnitatud!",
+      "toastGeocodeFailed": "Geokodeerimine ebaõnnestus. Kontrollige internetiühendust.",
+      "toastLocationUpdated": "Restorani asukoht uuendatud!",
+      "toastZoneNameRequired": "Tsooni nimi on kohustuslik",
+      "toastSetLocationFirst": "Määrake esmalt restorani asukoht (tsoonid on selle ümber kontsentrilised ringid).",
+      "toastSaveZoneFailed": "Tsooni salvestamine ebaõnnestus",
+      "toastZoneAdded": "Tsoon \"{name}\" lisatud!",
+      "toastUpdateZoneFailed": "Tsooni uuendamine ebaõnnestus",
+      "confirmDeleteZone": "Kustutada tarnetsoon \"{name}\"? Seda ei saa tagasi võtta.",
+      "toastZoneDeleted": "Tsoon kustutatud",
+      "locationNotSetTitle": "Restorani asukoht pole määratud",
+      "locationNotSetDesc": "Tarnetsoonid vajavad lähtepunktina teie restorani koordinaate. <link>Määrake need restorani profiilis</link> või kasutage allolevat nuppu praeguse aadressi geokodeerimiseks.",
+      "locateRestaurant": "Leia restoran",
+      "locating": "Otsimine…",
+      "relocate": "Leia uuesti",
+      "legendActiveZone": "Aktiivne tsoon",
+      "legendInactiveZone": "Mitteaktiivne tsoon",
+      "rowFee": "tasu {amount}",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. aeg",
+      "editFee": "Tasu ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. aeg (min)",
+      "mapRestaurantTitle": "Restoran (lohistage kohandamiseks)",
+      "mapResizeHandleTitle": "{km} km — lohistage suuruse muutmiseks",
+      "mapFeeLabel": "Tasu:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Raadius:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Lohistage pidet suuruse muutmiseks",
+      "mapDragHintShort": "lohistage suuruse muutmiseks"
     },
     "reservations": {
       "title": "Broneeringud",
@@ -1286,7 +1341,38 @@
       "amount": "Summa",
       "schedule": "Ajakava",
       "status": "Olek",
-      "confirmDelete": "Kustuta \"{name}\"?"
+      "confirmDelete": "Kustuta \"{name}\"?",
+      "taxRateRangeError": "Maksumäär peab olema vahemikus 0 kuni 100",
+      "salesTaxTitle": "Käibemaksumäär",
+      "salesTaxHelp": "Rakendatakse iga tellimuse maksustatavale vahesummale. Määra 0, kui sa müügimaksu ei kogu. (nt 13 = 13% HST.)",
+      "rateLabel": "Määr (%)",
+      "savingLabel": "Salvestamine…",
+      "saveTaxRate": "Salvesta määr",
+      "currencyTitle": "Valuuta",
+      "currencyHelp": "Määrab iga hinna, mida klient näeb, samuti Stripe/PayPal tasud, kviitungid ja aruanded. Valuuta vahetamine EI teisenda olemasolevaid hindu — uuenda menüü hinnad, kui vahetad USD-lt EUR-ile (jne).",
+      "currencyLabel": "Valuuta",
+      "currencySample": "Näide: <strong>{value}</strong>",
+      "tipsTitle": "Klientide jootraha",
+      "tipsHelp": "Kui VÄLJAS, peidab kliendi ostukorv jootrahavalija täielikult ja server määrab iga rikutud kliendiväärtuse nulliks. Mõned restoranid (nt riikides, kus jootraha pole tavaks) eelistavad jootrahaküsimusi mitte kuvada.",
+      "tipsAriaDisable": "Keela jootraha",
+      "tipsAriaEnable": "Luba jootraha",
+      "menuSearchTitle": "Kliendi menüü otsing",
+      "menuSearchHelp": "Kui SEES, kuvab kliendi tellimusleht luubiga otsinguriba, et külastajad leiaksid tooteid kiiresti trükkides. Lülita VÄLJA, kui eelistad, et nad sirvivad ainult kategooriate nuppude kaudu.",
+      "menuSearchAriaHide": "Peida menüü otsing kliendilehel",
+      "menuSearchAriaShow": "Näita menüü otsingut kliendilehel",
+      "itemNotesTitle": "Toote-põhised erijuhised",
+      "itemNotesHelp": "Kui SEES, saavad kliendid lisada märkuse <each>igale tootele</each> (nt „eriti krõbe“, „selle peale sibulat ei pane“) — see prinditakse selle toote köögitšekile. VÄLJAS saavad nad kassas ikkagi jätta ühe märkuse <whole>kogu tellimuse</whole> kohta.",
+      "itemNotesAriaOff": "Lülita toote-põhised märkused välja",
+      "itemNotesAriaOn": "Lülita toote-põhised märkused sisse",
+      "schedulingTitle": "Ajastamine ja kassavorm",
+      "schedulingHelp": "Määra, milliseid ajavahemikke kliendid saavad broneerida ja millised kontaktväljad on kassas kohustuslikud.",
+      "slotIntervalLabel": "Ajaintervall (minutites)",
+      "slotIntervalHelp": "Kliendid saavad tellimusi ajastada ainult selle sammuga (nagu GloriaFood). Vaikimisi on 15 — aeglasemate köökide puhul muuda 30-ks.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Nõua kliendi telefoninumbrit",
+      "requirePhoneHelp": "Kui SEES, lükkab kassavorm tagasi tellimused ilma telefoninumbrita. Soovitatav kohaletoimetamiseks, et köök saaks üleandmise osas helistada.",
+      "requirePhoneAriaOptional": "Muuda telefon valikuliseks",
+      "requirePhoneAriaRequired": "Muuda telefon kohustuslikuks"
     },
     "mapSettings": {
       "title": "Kaardi seaded",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Populaarne",
       "addOnEnableCta": "Aktiveeri",
       "perMonth": "/kuus",
-      "kitchenAlertsSection": "Köök ja tellimuste teavitused"
+      "kitchenAlertsSection": "Köök ja tellimuste teavitused",
+      "currentPlanWithAddOns": "Praegune pakett: FREE + {count, plural, one {# lisamoodul} other {# lisamoodulit}}",
+      "currentPlanFree": "Praegune pakett: FREE",
+      "freePlanDescription": "Tellimiswidget, haldus, menüü, kööginäpp — kaarti pole vaja. Võta igavesti vastu kuni 100 tellimust/kuus. Lisa tasulisi funktsioone igal ajal Arvelduse lehelt.",
+      "feature100Orders": "100 tellimust/kuus",
+      "featureUnlimitedMenu": "Piiramatud menüüelemendid",
+      "featureCustomerAccounts": "Kliendikontod",
+      "activeAddOnsHeading": "Aktiivsed lisamoodulid",
+      "trialBadge": "Prooviperiood",
+      "manageSubscriptionsHeading": "Halda oma tellimusi",
+      "upgradeWithAddOnsHeading": "Uuenda tasuliste lisamoodulitega",
+      "manageBillingCta": "Halda arveldust",
+      "browseAddOnsCta": "Sirvi lisamooduleid"
     },
     "coupons": {
       "title": "Kupongid",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "VIES-is veel kontrollimata",
       "viesVerifyNow": "Kontrolli kohe",
       "viesUnreachable": "VIES-teenus pole ajutiselt kättesaadav — proovige mõne minuti pärast uuesti.",
-      "euVatNote": "EL-i ettevõtted: tasuliste tellimuste jaoks on vajalik VIES-is registreeritud KMKR number. Kinnitatud numbrid arveldatakse 0% käibemaksuga (pöördmaksustamine)."
+      "euVatNote": "EL-i ettevõtted: tasuliste tellimuste jaoks on vajalik VIES-is registreeritud KMKR number. Kinnitatud numbrid arveldatakse 0% käibemaksuga (pöördmaksustamine).",
+      "perOrder": "/tellimus",
+      "paygOrderCount": "{count, plural, one {# tellimus} other {# tellimust}}"
     },
     "addOns": {
       "errorCheckout": "Makse alustamine ebaõnnestus",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Jah, tühista",
       "compFreeUntil": "Tasuta kuni {date}",
       "compExplainer": "See lisamoodul on seni tasuta — see ei pikene ise. Telli kohe, et see alles jääks: kaart salvestatakse täna ja arveldus algab alles tasuta perioodi lõppedes.",
-      "compSubscribeCta": "Telli, et alles hoida"
+      "compSubscribeCta": "Telli, et alles hoida",
+      "pageIntro": "Põhitoode on igavesti tasuta. Ava üksikud funktsioonid allpool, tellides vastava lisamooduli. Tühista igal ajal — säilitad juurdepääsu arveldusperioodi lõpuni.",
+      "subscribedBanner": "<strong>Õnnestus!</strong> Sinu tellimust aktiveeritakse. Funktsiooni avanemine võib võtta kuni minuti.",
+      "settingsLinks": {
+        "hostedWebsite": "Ava veebisaidi redaktor",
+        "onlinePayments": "Halda Stripe Connecti",
+        "driverPool": "Seadista juhtide reserv",
+        "multiLocation": "Halda asukohti",
+        "customDomain": "Ühenda oma domeen",
+        "advancedPromoMarketing": "Käivita kampaaniad",
+        "reservationDeposits": "Seadista broneeringud",
+        "brandedMobileApp": "Seadista rakendus"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Elus",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Määratud",
       "labelVip": "VIP",
       "badgeDeadTargets": "Aktiivseid roogi pole — valige uuesti",
-      "searchPlaceholder": "Otsi nime või kupongikoodi järgi…"
+      "searchPlaceholder": "Otsi nime või kupongikoodi järgi…",
+      "typeLabels": {
+        "percentage_off": "% allahindlust valitud toodetelt",
+        "fixed_cart": "Fikseeritud allahindlus ostukorvile",
+        "free_delivery": "Tasuta kohaletoimetamine",
+        "bogo": "Osta üks, saad teise tasuta",
+        "buy_n_get_free": "Osta N, saad ühe tasuta",
+        "free_item": "Saad TASUTA toote",
+        "meal_bundle": "Toidupakett",
+        "meal_bundle_speciality": "Toidupakett eritoiduga",
+        "fixed_combo": "Fikseeritud allahindlus combo-pakkumiselt",
+        "percentage_combo": "% allahindlust combo-pakkumiselt",
+        "payment_reward": "Tasu makseviisi eest",
+        "free_dish_meal": "Tasuta roog eine osana"
+      },
+      "campaignFallback": "Kampaania"
     },
     "promoWizard": {
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Osta-N-saa-tasuta progressiivsed soodustused",
       "featureFreeDish": "Tasuta roog eine osana",
       "maybeLater": "Võib-olla hiljem",
-      "subscribe": "Telli"
+      "subscribe": "Telli",
+      "types": {
+        "percentage_off": {
+          "name": "% allahindlust ostukorvile",
+          "desc": "Võta protsent kogu tellimuselt (või kindlatelt toodetelt)."
+        },
+        "free_delivery": {
+          "name": "Tasuta kohaletoimetamine",
+          "desc": "Loobu kohaletoimetamise tasust sobivate tellimuste puhul."
+        },
+        "bogo": {
+          "name": "Osta üks, saad teise tasuta",
+          "desc": "Seo tasuline toode tasuta (või soodus)tootega."
+        },
+        "fixed_cart": {
+          "name": "Fikseeritud allahindlus ostukorvile",
+          "desc": "Võta tellimuselt kindel summa."
+        },
+        "payment_reward": {
+          "name": "Tasu makseviisi eest",
+          "desc": "Allahindlus kindla makseviisiga tasumise eest (nt sularaha)."
+        },
+        "free_item": {
+          "name": "Saad TASUTA toote",
+          "desc": "Kuluta X ja saad tasuta toote valitud loendist."
+        },
+        "meal_bundle": {
+          "name": "Toidupakett",
+          "desc": "Kombineeri pesad kindla paketihinnaga."
+        },
+        "buy_n_get_free": {
+          "name": "Osta N, saad ühe tasuta",
+          "desc": "Lisa N toodet, järgmine (odavaim või valitud) on tasuta."
+        },
+        "free_dish_meal": {
+          "name": "Tasuta roog eine osana",
+          "desc": "Telli praad + lisand ja saad magustoidu (või mis tahes lisa) tasuta."
+        },
+        "fixed_combo": {
+          "name": "Fikseeritud allahindlus combole",
+          "desc": "Seo kindlad tooted ja võta kindel summa maha."
+        },
+        "percentage_combo": {
+          "name": "% allahindlust combole",
+          "desc": "Seo kindlad tooted ja võta protsent maha."
+        },
+        "meal_bundle_speciality": {
+          "name": "Toidupakett eritoiduga",
+          "desc": "Toidupakett valikuliste lisatasudega (nt homaar +5 $)."
+        },
+        "reward_credit": {
+          "name": "Anna Reward Dollars",
+          "desc": "Premeeri klienti selle tellimuse eest poe krediidiga allahindluse asemel."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Seadista oma kampaania",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Märgituna kehtib see pakkumine ainult üks kord tellimuse kohta, isegi kui ostukorv vastab sellele mitu korda (nt \"Osta üks, saad teise\" pakkumine, mis muidu korduks).",
       "rewardCreditLabel": "Antavad Reward Dollars",
       "rewardCreditHint": "Lisatakse kliendi saldole, kui see tellimus on lõpetatud — ostukorvis allahindlust ei ole. Nõuab, et Reward Dollars oleks sisse lülitatud.",
-      "oncePerOrderHintPercent": "Kui märgitud, kehtib % allahindlus ainult ÜHELE tootele — ostukorvi kalleimale sobivale tootele (nt „20% ühelt pearoalt”). Eemaldage märge, et alandada KÕIKI sobivaid tooteid."
+      "oncePerOrderHintPercent": "Kui märgitud, kehtib % allahindlus ainult ÜHELE tootele — ostukorvi kalleimale sobivale tootele (nt „20% ühelt pearoalt”). Eemaldage märge, et alandada KÕIKI sobivaid tooteid.",
+      "groupNoItems": "Ühtegi toodet pole valitud — klõpsa muutmiseks",
+      "groupMoreCategories": "+{n} veel",
+      "pickerHeading": "Vali kategooriad või tooted",
+      "pickerNoCategories": "Kategooriaid ei leitud",
+      "allSizesSuffix": " · kõik suurused",
+      "groupSpecificItems": "{count, plural, one {# kindel toode} other {# kindlat toodet}}",
+      "groupSizes": "{count, plural, one {# suurus} other {# suurust}}",
+      "specialityFeeTitle": "Nõua tasu ainult nende suuruste eest",
+      "specialityFeeDesc": "Märgi premium-suurused, mis lisavad tasu — põhisuurused jäävad tasuta. Jäta kõik märkimata, et tasu võetaks iga valiku eest.",
+      "specialityFeeEmpty": "Vali kõigepealt selle pesa tooted ja seejärel, millised suurused maksavad lisa.",
+      "wholeItemAllSizesSuffix": " · terve toode (kõik suurused)",
+      "roleLabelPaid": "(Tasuline)",
+      "roleLabelFree": "(Tasuta)",
+      "roleLabelTrigger": "(Käivitaja)",
+      "roleLabelRequired": "(Kohustuslik)",
+      "itemsGroupN": "Toodete rühm {n}",
+      "slotPickAtLeast": "Vali vähemalt",
+      "slotUpTo": "kuni",
+      "slotItems": "toodet",
+      "specialityFeeInlineLabel": "Eritasu +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {# suurusele} other {# suurusele}}",
+      "specialityFeeForAll": "kõikidele suurustele — vali, millised maksavad lisa",
+      "extraChargeLabel": "Tasud tasuta toote eest",
+      "extraChargeNone": "Lisatasudeta (kogu tasuta toode on tasuta)",
+      "extraChargeAddons": "Lisatasu valikute / lisandite eest (katted arveldatakse endiselt)",
+      "extraChargeAddonsSizes": "Lisatasu valikute / lisandite ja suuruste eest (katted + suuruse uuendus arveldatakse)",
+      "extraChargeHint": "Kas tasuta toote katted ja suuruse uuendus arveldatakse endiselt — nagu GloriaFoodis.",
+      "discountStrategyNoteFreed": "„Tasuta” rühma toode on see, mida allahinnatakse — hinnast sõltumata. Ülal olev % on saadav allahindlus (100% = tasuta).",
+      "discountStrategyNoteMostExpensive": "BOGO teeb allahindluse kahest sobivast tootest KALLIMALE. Et alati allahindlust teha ühele kindlale tootele, kasuta pakkumist „Osta N, saad tasuta”.",
+      "discountStrategyNoteFixedPercent": "Iga allahinnatud toode saab selle % — odavam, kui paar vastab tingimustele. Et alati allahindlust teha ühele kindlale tootele, kasuta pakkumist „Osta N, saad tasuta”.",
+      "discountStrategyNoteCheapest": "BOGO teeb allahindluse kahest sobivast tootest ODAVAMALE — seega kui „tasuta” toode maksab rohkem, allahinnatakse odavam (klient ei saa kallimat toodet odavalt). Et alati allahindlust teha ühele kindlale tootele (nt pasta), kasuta pakkumist „Osta N, saad tasuta”.",
+      "discountStrategyLabel": "Allahindluse strateegia",
+      "strategyCheapest": "Määra allahindlused automaatselt (odavaim toode tasuta)",
+      "strategyMostExpensive": "Määra allahindlused automaatselt (kalleim toode tasuta)",
+      "strategyFixedPercent": "Fikseeritud allahindlusprotsent",
+      "pctOffCheapest": "% allahindlust odavaimalt tootelt",
+      "pctOffMostExpensive": "% allahindlust kalleimalt tootelt"
     },
     "promoStepRestrictions": {
       "pageTitle": "Piirangud ja kuvamine",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Mõlemad",
       "hiddenCodeInfo": "Peidetud pakkumised rakenduvad ainult siis, kui klient sisestab selle koodi maksmisel.",
       "vipLockedTitle": "Ainult VIP — seotud: {groups}",
-      "vipLockedDesc": "See kampaania rakendub automaatselt ainult neile VIP-liikmetele kassas. See ei ilmu kunagi avalikus menüüs, bänneril ega veebilehel — ükski nähtavuse lüliti seda ei muuda. Avalikuks tegemiseks eemaldage see esmalt VIP-rühmade lehel."
+      "vipLockedDesc": "See kampaania rakendub automaatselt ainult neile VIP-liikmetele kassas. See ei ilmu kunagi avalikus menüüs, bänneril ega veebilehel — ükski nähtavuse lüliti seda ei muuda. Avalikuks tegemiseks eemaldage see esmalt VIP-rühmade lehel.",
+      "bundleBuildInfo": "💡 Kliendid koostavad selle paketi menüü kaardilt „Koosta oma pakkumine”. Kinnita see alloleva banneri külge, et seda oleks lihtne leida. (Paketti ei saa automaatselt rakendada ega koodiga avada.)"
     },
     "customersList": {
       "heading": "Kliendid",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Salvestage seaded üks kord (valitud ShipDay allikaga) ja siia ilmub teie isiklik webhooki link.",
       "feeFromZonesTitle": "Kliendi kojuveotasud",
       "feeFromZonesBody": "See, mida sinu kliendid kojuveo eest maksavad, määratakse lehel Tarnepiirkonnad — täpselt nagu oma juhtide puhul. ShipDay esitab sinu restoranile iga kojuveo eest eraldi arve; küsi oma ShipDay kontaktilt oma kojuveopõhist hinda.",
-      "feeFromZonesLink": "Ava Tarnepiirkonnad"
+      "feeFromZonesLink": "Ava Tarnepiirkonnad",
+      "errorUnknown": "Tundmatu viga",
+      "errorNetwork": "Võrguviga"
     },
     "driverPoolLocked": {
       "addonBadge": "Lisandmoodul",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Sina määrad kliendi hinnad",
       "feature2Body": "Edasikandmine (klient maksab kogu ShipDay tasu), fikseeritud (sa kannad vahe) või tasemeline (nt tasuta üle $50). Täielik kontroll.",
       "feature3Title": "Vaheta tellimuse kaupa",
-      "feature3Body": "Kombineeri oma juhte ShipDay'iga. Köök näeb iga kojuveotellimuse juures valikut: majasisene või kogum. Sinu otsustada, igal korral."
+      "feature3Body": "Kombineeri oma juhte ShipDay'iga. Köök näeb iga kojuveotellimuse juures valikut: majasisene või kogum. Sinu otsustada, igal korral.",
+      "perMonth": "/kuus"
     },
     "marketplaceLocked": {
       "addonBadge": "Lisandmoodul",

@@ -91,7 +91,8 @@
     "menu": "Izvēlne",
     "loadingDots": "Ielādē…",
     "previous": "Atpakaļ",
-    "kmFromStore": "{km} km no veikala"
+    "kmFromStore": "{km} km no veikala",
+    "apply": "Lietot"
   },
   "auth": {
     "signIn": "Pierakstīties",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Noņemt laika intervālu",
       "closesNextDay": "Aizveras nākamajā dienā (piem., atvērts pēc pusnakts)",
       "holidayNeedsDate": "Vispirms izvēlieties sākuma datumu.",
-      "holidayWindowOutsideService": "{window} ir ārpus {service} darba laika tajā dienā. Ārkārtas laikiem jābūt pakalpojuma parastā darba laika ietvaros."
+      "holidayWindowOutsideService": "{window} ir ārpus {service} darba laika tajā dienā. Ārkārtas laikiem jābūt pakalpojuma parastā darba laika ietvaros.",
+      "copiedDayToAll": "{day} kopēts uz visām pārējām dienām",
+      "copiedDayToClosed": "{day} kopēts uz slēgtajām dienām",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Noklusējums (visi pakalpojumi)",
+      "tabReservation": "Rezervācija",
+      "tabAddSuffix": "+ Pievienot",
+      "removeOverrideAria": "Noņemt {service} aizstājumu",
+      "removeOverrideTitle": "Noņemt aizstājumu (novecojušās rindas paliek datubāzē, līdz saglabāsit ar atkārtoti iespējotu cilni)",
+      "hoursForServiceOnly": "Darba laiks tikai pakalpojumam {service}",
+      "markClosed": "Atzīmēt kā slēgtu",
+      "markOpen": "Atzīmēt kā atvērtu",
+      "copyHoursTitle": "Kopēt šīs stundas uz citām dienām",
+      "applyTo": "Piemērot…",
+      "applyToAllDays": "Piemērot <strong>visām pārējām dienām</strong>",
+      "applyToClosedDays": "Piemērot tikai <strong>pašlaik slēgtajām dienām</strong>",
+      "dayAbbrev": "sv, pr, ot, tr, ce, pk, se"
     },
     "services": {
       "title": "Restorāna pakalpojumi",
@@ -1205,7 +1225,42 @@
         "colRequired": "Obligāts",
         "saved": "Piegādes adreses forma atjaunināta"
       },
-      "estimatedMinutesHint": "KOPĒJAIS aplēstais piegādes laiks (gatavošana + ceļš) šīs zonas adresēm. Klienti šo skaitli redz norēķinos, un tas nosaka agrāko \"pasūtīt vēlāk\" laiku — tas aizstāj piegādes pakalpojuma noklusējuma aplēsi. Reāla vērtība ir 30–60 min, ne tikai ceļš."
+      "estimatedMinutesHint": "KOPĒJAIS aplēstais piegādes laiks (gatavošana + ceļš) šīs zonas adresēm. Klienti šo skaitli redz norēķinos, un tas nosaka agrāko \"pasūtīt vēlāk\" laiku — tas aizstāj piegādes pakalpojuma noklusējuma aplēsi. Reāla vērtība ir 30–60 min, ne tikai ceļš.",
+      "toastNoAddress": "Adrese nav iestatīta. Vispirms aizpildiet restorāna profilu.",
+      "toastAddressNotFound": "Šo adresi neizdevās atrast. Atjauniniet adresi restorāna profilā un mēģiniet vēlreiz.",
+      "toastLocationPinned": "Restorāna atrašanās vieta piesprausta kartē!",
+      "toastGeocodeFailed": "Ģeokodēšana neizdevās. Pārbaudiet interneta savienojumu.",
+      "toastLocationUpdated": "Restorāna atrašanās vieta atjaunināta!",
+      "toastZoneNameRequired": "Zonas nosaukums ir obligāts",
+      "toastSetLocationFirst": "Vispirms iestatiet restorāna atrašanās vietu (zonas ir koncentriski apļi ap to).",
+      "toastSaveZoneFailed": "Neizdevās saglabāt zonu",
+      "toastZoneAdded": "Zona “{name}” pievienota!",
+      "toastUpdateZoneFailed": "Neizdevās atjaunināt zonu",
+      "confirmDeleteZone": "Dzēst piegādes zonu “{name}”? Šo darbību nevar atsaukt.",
+      "toastZoneDeleted": "Zona dzēsta",
+      "locationNotSetTitle": "Restorāna atrašanās vieta nav iestatīta",
+      "locationNotSetDesc": "Piegādes zonām kā sākumpunkts nepieciešamas jūsu restorāna koordinātas. <link>Iestatiet tās restorāna profilā</link> vai izmantojiet zemāk esošo pogu, lai ģeokodētu pašreizējo adresi.",
+      "locateRestaurant": "Atrast restorānu",
+      "locating": "Meklē…",
+      "relocate": "Atrast atkārtoti",
+      "legendActiveZone": "Aktīva zona",
+      "legendInactiveZone": "Neaktīva zona",
+      "rowFee": "maksa {amount}",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. laiks",
+      "editFee": "Maksa ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. laiks (min)",
+      "mapRestaurantTitle": "Restorāns (velciet, lai pielāgotu)",
+      "mapResizeHandleTitle": "{km} km — velciet, lai mainītu izmēru",
+      "mapFeeLabel": "Maksa:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Rādiuss:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Velciet turi, lai mainītu izmēru",
+      "mapDragHintShort": "velciet, lai mainītu izmēru"
     },
     "reservations": {
       "title": "Rezervācijas",
@@ -1286,7 +1341,38 @@
       "amount": "Summa",
       "schedule": "Grafiks",
       "status": "Statuss",
-      "confirmDelete": "Dzēst \"{name}\"?"
+      "confirmDelete": "Dzēst \"{name}\"?",
+      "taxRateRangeError": "Nodokļa likmei jābūt no 0 līdz 100",
+      "salesTaxTitle": "Pārdošanas nodokļa likme",
+      "salesTaxHelp": "Tiek piemērota katra pasūtījuma ar nodokli apliekamajai starpsummai. Iestatiet 0, ja neiekasējat pārdošanas nodokli. (piem., 13 = 13% HST.)",
+      "rateLabel": "Likme (%)",
+      "savingLabel": "Notiek saglabāšana…",
+      "saveTaxRate": "Saglabāt likmi",
+      "currencyTitle": "Valūta",
+      "currencyHelp": "Nosaka katru cenu, ko redz klients, kā arī Stripe/PayPal maksājumus, čekus un pārskatus. Valūtas maiņa NEPĀRRĒĶINA esošās cenas — atjaunini ēdienkartes cenas, ja pārej no USD uz EUR (utt.).",
+      "currencyLabel": "Valūta",
+      "currencySample": "Piemērs: <strong>{value}</strong>",
+      "tipsTitle": "Klientu dzeramnauda",
+      "tipsHelp": "Kad IZSLĒGTS, klienta grozs pilnībā slēpj dzeramnaudas izvēli, un serveris jebkuru mainītu klienta vērtību iestata uz 0. Daži restorāni (piem., valstīs, kur dzeramnauda nav ierasta) dod priekšroku nerādīt dzeramnaudas uzaicinājumus.",
+      "tipsAriaDisable": "Atspējot dzeramnaudu",
+      "tipsAriaEnable": "Iespējot dzeramnaudu",
+      "menuSearchTitle": "Klienta ēdienkartes meklēšana",
+      "menuSearchHelp": "Kad IESLĒGTS, klienta pasūtījumu lapā tiek rādīta meklēšanas josla ar palielināmo stiklu, lai apmeklētāji ātri atrastu preces, rakstot. IZSLĒDZIET, ja vēlaties, lai viņi pārlūko tikai ar kategoriju pogām.",
+      "menuSearchAriaHide": "Slēpt ēdienkartes meklēšanu klienta lapā",
+      "menuSearchAriaShow": "Rādīt ēdienkartes meklēšanu klienta lapā",
+      "itemNotesTitle": "Īpaši norādījumi katrai precei",
+      "itemNotesHelp": "Kad IESLĒGTS, klienti var pievienot piezīmi <each>katrai precei</each> (piem., „īpaši kraukšķīgs“, „šim bez sīpoliem“) — tā tiek izdrukāta uz šīs preces virtuves čeka. IZSLĒGTS viņi joprojām var atstāt vienu piezīmi <whole>visam pasūtījumam</whole> apmaksas laikā.",
+      "itemNotesAriaOff": "Izslēgt piezīmes katrai precei",
+      "itemNotesAriaOn": "Ieslēgt piezīmes katrai precei",
+      "schedulingTitle": "Plānošana un norēķinu veidlapa",
+      "schedulingHelp": "Kontrolējiet, kuriem laika logiem klienti var pieteikties un kuri kontaktinformācijas lauki apmaksā ir obligāti.",
+      "slotIntervalLabel": "Laika logu intervāls (minūtes)",
+      "slotIntervalHelp": "Klienti var plānot pasūtījumus tikai šādā ritmā (tāpat kā GloriaFood). Noklusējums ir 15 — lēnākām virtuvēm mainiet uz 30.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Pieprasīt klienta tālruni",
+      "requirePhoneHelp": "Kad IESLĒGTS, norēķinu veidlapa noraida pasūtījumus bez tālruņa numura. Ieteicams piegādei, lai virtuve varētu piezvanīt par nodošanu.",
+      "requirePhoneAriaOptional": "Padarīt tālruni neobligātu",
+      "requirePhoneAriaRequired": "Padarīt tālruni obligātu"
     },
     "mapSettings": {
       "title": "Kartes iestatījumi",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Populārs",
       "addOnEnableCta": "Aktivizēt",
       "perMonth": "/mēn.",
-      "kitchenAlertsSection": "Virtuve un pasūtījumu brīdinājumi"
+      "kitchenAlertsSection": "Virtuve un pasūtījumu brīdinājumi",
+      "currentPlanWithAddOns": "Pašreizējais plāns: FREE + {count, plural, zero {# papildinājumu} one {# papildinājums} other {# papildinājumi}}",
+      "currentPlanFree": "Pašreizējais plāns: FREE",
+      "freePlanDescription": "Pasūtījumu logrīks, administrācija, ēdienkarte, virtuves lietotne — bez kartes. Pieņem līdz 100 pasūtījumiem/mēnesī mūžīgi. Pievieno maksas funkcijas jebkurā laikā Norēķinu lapā.",
+      "feature100Orders": "100 pasūtījumi/mēnesī",
+      "featureUnlimitedMenu": "Neierobežoti ēdienkartes ieraksti",
+      "featureCustomerAccounts": "Klientu konti",
+      "activeAddOnsHeading": "Aktīvie papildinājumi",
+      "trialBadge": "Izmēģinājums",
+      "manageSubscriptionsHeading": "Pārvaldīt abonementus",
+      "upgradeWithAddOnsHeading": "Jaunini ar maksas papildinājumiem",
+      "manageBillingCta": "Pārvaldīt norēķinus",
+      "browseAddOnsCta": "Pārlūkot papildinājumus"
     },
     "coupons": {
       "title": "Kuponi",
@@ -1622,7 +1720,9 @@
       "viesUnverified": "Vēl nav pārbaudīts VIES",
       "viesVerifyNow": "Pārbaudīt tagad",
       "viesUnreachable": "VIES pakalpojums īslaicīgi nav pieejams — mēģiniet vēlreiz pēc dažām minūtēm.",
-      "euVatNote": "ES uzņēmumi: maksas abonementiem nepieciešams VIES reģistrēts PVN numurs. Apstiprināti numuri tiek rēķināti ar 0% PVN (apgrieztā maksāšana)."
+      "euVatNote": "ES uzņēmumi: maksas abonementiem nepieciešams VIES reģistrēts PVN numurs. Apstiprināti numuri tiek rēķināti ar 0% PVN (apgrieztā maksāšana).",
+      "perOrder": "/pasūt.",
+      "paygOrderCount": "{count, plural, zero {# pasūtījumu} one {# pasūtījums} other {# pasūtījumi}}"
     },
     "addOns": {
       "errorCheckout": "Neizdevās sākt norēķinu",
@@ -1679,7 +1779,19 @@
       "yesCancel": "Jā, atcelt",
       "compFreeUntil": "Bez maksas līdz {date}",
       "compExplainer": "Šis papildinājums līdz tam ir bez maksas — tas neatjaunojas pats. Abonējiet tagad, lai to paturētu: karte tiek saglabāta šodien, un maksa sākas tikai pēc bezmaksas perioda beigām.",
-      "compSubscribeCta": "Abonēt, lai paturētu"
+      "compSubscribeCta": "Abonēt, lai paturētu",
+      "pageIntro": "Pamatprodukts ir bezmaksas mūžīgi. Atbloķējiet atsevišķas funkcijas zemāk, abonējot atbilstošo papildinājumu. Atceliet jebkurā laikā — piekļuvi saglabājat līdz norēķinu perioda beigām.",
+      "subscribedBanner": "<strong>Izdevās!</strong> Jūsu abonements tiek aktivizēts. Funkcijas atbloķēšana var aizņemt līdz minūtei.",
+      "settingsLinks": {
+        "hostedWebsite": "Atvērt vietnes redaktoru",
+        "onlinePayments": "Pārvaldīt Stripe Connect",
+        "driverPool": "Konfigurēt vadītāju grupu",
+        "multiLocation": "Pārvaldīt atrašanās vietas",
+        "customDomain": "Savienot savu domēnu",
+        "advancedPromoMarketing": "Palaist akcijas",
+        "reservationDeposits": "Konfigurēt rezervācijas",
+        "brandedMobileApp": "Konfigurēt lietotni"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Aktīvs",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Piešķirts",
       "labelVip": "VIP",
       "badgeDeadTargets": "Nav aktīvu ēdienu — izvēlieties vēlreiz",
-      "searchPlaceholder": "Meklēt pēc nosaukuma vai kupona koda…"
+      "searchPlaceholder": "Meklēt pēc nosaukuma vai kupona koda…",
+      "typeLabels": {
+        "percentage_off": "% atlaide izvēlētajiem vienumiem",
+        "fixed_cart": "Fiksēta atlaide grozam",
+        "free_delivery": "Bezmaksas piegāde",
+        "bogo": "Pērc vienu, saņem otru bez maksas",
+        "buy_n_get_free": "Pērc N, saņem vienu bez maksas",
+        "free_item": "Saņem BEZMAKSAS vienumu",
+        "meal_bundle": "Maltīšu komplekts",
+        "meal_bundle_speciality": "Maltīšu komplekts ar īpašo ēdienu",
+        "fixed_combo": "Fiksēta atlaide combo piedāvājumam",
+        "percentage_combo": "% atlaide combo piedāvājumam",
+        "payment_reward": "Atlīdzība par maksājuma veidu",
+        "free_dish_meal": "Bezmaksas ēdiens kā maltītes daļa"
+      },
+      "campaignFallback": "Kampaņa"
     },
     "promoWizard": {
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Pērc-N-saņem-bezmaksas progresīvās atlaides",
       "featureFreeDish": "Bezmaksas ēdiens kā daļa no ēdienreizes",
       "maybeLater": "Varbūt vēlāk",
-      "subscribe": "Abonēt"
+      "subscribe": "Abonēt",
+      "types": {
+        "percentage_off": {
+          "name": "% atlaide grozam",
+          "desc": "Noņem procentu no visa pasūtījuma (vai konkrētiem vienumiem)."
+        },
+        "free_delivery": {
+          "name": "Bezmaksas piegāde",
+          "desc": "Atcel piegādes maksu atbilstošiem pasūtījumiem."
+        },
+        "bogo": {
+          "name": "Pērc vienu, saņem otru bez maksas",
+          "desc": "Savieno maksas vienumu ar bezmaksas (vai atlaides) vienumu."
+        },
+        "fixed_cart": {
+          "name": "Fiksēta atlaide grozam",
+          "desc": "Noņem fiksētu summu no pasūtījuma."
+        },
+        "payment_reward": {
+          "name": "Atlīdzība par maksājuma veidu",
+          "desc": "Atlaide par maksāšanu ar noteiktu metodi (piem., skaidra nauda)."
+        },
+        "free_item": {
+          "name": "Saņem BEZMAKSAS vienumu",
+          "desc": "Iztērē X un saņem bezmaksas vienumu no atlasīta saraksta."
+        },
+        "meal_bundle": {
+          "name": "Maltīšu komplekts",
+          "desc": "Kombinē slotus par fiksētu komplekta cenu."
+        },
+        "buy_n_get_free": {
+          "name": "Pērc N, saņem vienu bez maksas",
+          "desc": "Pievieno N vienumus, nākamais (lētākais vai izvēlētais) ir bez maksas."
+        },
+        "free_dish_meal": {
+          "name": "Bezmaksas ēdiens kā maltītes daļa",
+          "desc": "Pasūti pamatēdienu + piedevu un saņem desertu (vai jebkuru papildinājumu) bez maksas."
+        },
+        "fixed_combo": {
+          "name": "Fiksēta atlaide combo",
+          "desc": "Savieno konkrētus vienumus un noņem fiksētu summu."
+        },
+        "percentage_combo": {
+          "name": "% atlaide combo",
+          "desc": "Savieno konkrētus vienumus un noņem procentu."
+        },
+        "meal_bundle_speciality": {
+          "name": "Maltīšu komplekts ar īpašo ēdienu",
+          "desc": "Maltīšu komplekts ar izvēles piemaksām (piem., omārs +5 $)."
+        },
+        "reward_credit": {
+          "name": "Piešķirt Reward Dollars",
+          "desc": "Apbalvo klientu ar veikala kredītu šajā pasūtījumā atlaides vietā."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Konfigurējiet savu akciju",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Ja atzīmēts, šī akcija tiek piemērota tikai vienu reizi vienā pasūtījumā, pat ja grozs tai atbilst vairāk nekā vienu reizi (piemēram, \"Pērc vienu, saņem vienu\", kas citādi atkārtotos).",
       "rewardCreditLabel": "Piešķiramie Reward Dollars",
       "rewardCreditHint": "Tiek pievienots klienta atlikumam, kad šis pasūtījums tiek izpildīts — bez atlaides grozam. Nepieciešams ieslēgts Reward Dollars.",
-      "oncePerOrderHintPercent": "Ja atzīmēts, % atlaide attiecas tikai uz VIENU preci — dārgāko atbilstošo preci grozā (piem., „20 % vienam pamatēdienam”). Noņemiet atzīmi, lai atlaidi piemērotu VISĀM atbilstošajām precēm."
+      "oncePerOrderHintPercent": "Ja atzīmēts, % atlaide attiecas tikai uz VIENU preci — dārgāko atbilstošo preci grozā (piem., „20 % vienam pamatēdienam”). Noņemiet atzīmi, lai atlaidi piemērotu VISĀM atbilstošajām precēm.",
+      "groupNoItems": "Nav atlasītu vienumu — noklikšķiniet, lai rediģētu",
+      "groupMoreCategories": "+{n} vēl",
+      "pickerHeading": "Atlasiet kategorijas vai vienumus",
+      "pickerNoCategories": "Kategorijas nav atrastas",
+      "allSizesSuffix": " · visi izmēri",
+      "groupSpecificItems": "{count, plural, zero {# konkrētu vienumu} one {# konkrēts vienums} other {# konkrēti vienumi}}",
+      "groupSizes": "{count, plural, zero {# izmēru} one {# izmērs} other {# izmēri}}",
+      "specialityFeeTitle": "Iekasēt maksu tikai par šiem izmēriem",
+      "specialityFeeDesc": "Atzīmē premium izmērus, kas pievieno maksu — pamata izmēri paliek bez maksas. Atstāj visu neatzīmētu, lai maksu iekasētu par katru izvēli.",
+      "specialityFeeEmpty": "Vispirms izvēlies šī slota vienumus, tad izvēlies, kuri izmēri maksā papildus.",
+      "wholeItemAllSizesSuffix": " · viss vienums (visi izmēri)",
+      "roleLabelPaid": "(Maksas)",
+      "roleLabelFree": "(Bezmaksas)",
+      "roleLabelTrigger": "(Aktivizētājs)",
+      "roleLabelRequired": "(Obligāts)",
+      "itemsGroupN": "Vienumu grupa {n}",
+      "slotPickAtLeast": "Izvēlies vismaz",
+      "slotUpTo": "līdz",
+      "slotItems": "vienumi",
+      "specialityFeeInlineLabel": "Īpašā maksa +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, zero {# izmēriem} one {# izmēram} other {# izmēriem}}",
+      "specialityFeeForAll": "visiem izmēriem — izvēlies, kuri maksā papildus",
+      "extraChargeLabel": "Maksa par bezmaksas vienumu",
+      "extraChargeNone": "Bez papildu maksas (viss bezmaksas vienums ir bez maksas)",
+      "extraChargeAddons": "Papildu maksa par izvēlēm / papildinājumiem (piedevas joprojām tiek iekasētas)",
+      "extraChargeAddonsSizes": "Papildu maksa par izvēlēm / papildinājumiem un izmēriem (piedevas + izmēra uzlabojums tiek iekasēti)",
+      "extraChargeHint": "Vai bezmaksas vienuma piedevas un izmēra uzlabojums joprojām tiek iekasēti — tāpat kā GloriaFood.",
+      "discountStrategyNoteFreed": "Grupas “bezmaksas” vienums ir tas, kam piemēro atlaidi — neatkarīgi no cenas. Iepriekš norādītais % ir piešķirtā atlaide (100% = bez maksas).",
+      "discountStrategyNoteMostExpensive": "BOGO piemēro atlaidi DĀRGĀKAJAM no diviem atbilstošajiem vienumiem. Lai vienmēr atlaistu vienu konkrētu vienumu, izmantojiet piedāvājumu “Pērc N, saņem bez maksas”.",
+      "discountStrategyNoteFixedPercent": "Katrs vienums ar atlaidi saņem šo % — lētākais, kad pāris atbilst nosacījumiem. Lai vienmēr atlaistu vienu konkrētu vienumu, izmantojiet piedāvājumu “Pērc N, saņem bez maksas”.",
+      "discountStrategyNoteCheapest": "BOGO piemēro atlaidi LĒTĀKAJAM no diviem atbilstošajiem vienumiem — tāpēc, ja “bezmaksas” vienums maksā vairāk, atlaidi piemēro lētākajam (klients nevar iegūt dārgāko vienumu lēti). Lai vienmēr atlaistu vienu konkrētu vienumu (piem., makaronus), izmantojiet piedāvājumu “Pērc N, saņem bez maksas”.",
+      "discountStrategyLabel": "Atlaides stratēģija",
+      "strategyCheapest": "Iestatīt atlaides automātiski (lētākais vienums bez maksas)",
+      "strategyMostExpensive": "Iestatīt atlaides automātiski (dārgākais vienums bez maksas)",
+      "strategyFixedPercent": "Fiksēts atlaides procents",
+      "pctOffCheapest": "% atlaide lētākajam vienumam",
+      "pctOffMostExpensive": "% atlaide dārgākajam vienumam"
     },
     "promoStepRestrictions": {
       "pageTitle": "Ierobežojumi un displejs",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Abi",
       "hiddenCodeInfo": "Slēptās akcijas tiek piemērotas tikai tad, kad klients norēķinoties ievada šo kodu.",
       "vipLockedTitle": "Tikai VIP — piesaistīts: {groups}",
-      "vipLockedDesc": "Šī akcija automātiski attiecas tikai uz šiem VIP biedriem norēķinos. Tā nekad neparādās publiskajā ēdienkartē, banerī vai vietnē — neviens redzamības slēdzis to nemaina. Lai to padarītu publisku, vispirms atvienojiet to lapā VIP grupas."
+      "vipLockedDesc": "Šī akcija automātiski attiecas tikai uz šiem VIP biedriem norēķinos. Tā nekad neparādās publiskajā ēdienkartē, banerī vai vietnē — neviens redzamības slēdzis to nemaina. Lai to padarītu publisku, vispirms atvienojiet to lapā VIP grupas.",
+      "bundleBuildInfo": "💡 Klienti veido šo komplektu no kartītes “Izveido savu piedāvājumu” tavā ēdienkartē. Piespraud to zemāk esošajam reklāmkarogam, lai to būtu viegli atrast. (Komplektu nevar piemērot automātiski vai atbloķēt ar kodu.)"
     },
     "customersList": {
       "heading": "Klienti",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Vienreiz saglabājiet iestatījumus (ar izvēlētu ShipDay avotu), un šeit parādīsies jūsu personīgā webhook saite.",
       "feeFromZonesTitle": "Klientu piegādes maksas",
       "feeFromZonesBody": "Tas, ko jūsu klienti maksā par piegādi, tiek iestatīts lapā Piegādes zonas — tāpat kā ar saviem vadītājiem. ShipDay izraksta jūsu restorānam atsevišķu rēķinu par katru piegādi; jautājiet savai ShipDay kontaktpersonai par savu likmi par piegādi.",
-      "feeFromZonesLink": "Atvērt Piegādes zonas"
+      "feeFromZonesLink": "Atvērt Piegādes zonas",
+      "errorUnknown": "Nezināma kļūda",
+      "errorNetwork": "Tīkla kļūda"
     },
     "driverPoolLocked": {
       "addonBadge": "Papildinājums",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Jūs nosakāt klientu cenas",
       "feature2Body": "Pārnešana (klients maksā pilnu ShipDay maksu), fiksēta (jūs absorbējat starpību) vai pakāpeniski (piem., bezmaksas virs $50). Pilnīga kontrole.",
       "feature3Title": "Izvēlēties katram pasūtījumam",
-      "feature3Body": "Kombinējiet savus vadītājus ar ShipDay. Virtuve redz izvēles rīku katrai piegādei: iekšējais vai kopa. Jūsu izvēle katru reizi."
+      "feature3Body": "Kombinējiet savus vadītājus ar ShipDay. Virtuve redz izvēles rīku katrai piegādei: iekšējais vai kopa. Jūsu izvēle katru reizi.",
+      "perMonth": "/mēn."
     },
     "marketplaceLocked": {
       "addonBadge": "Papildinājums",

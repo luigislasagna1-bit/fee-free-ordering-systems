@@ -91,7 +91,8 @@
     "menu": "Meni",
     "loadingDots": "Učitavanje…",
     "previous": "Nazad",
-    "kmFromStore": "{km} km od lokala"
+    "kmFromStore": "{km} km od lokala",
+    "apply": "Primeni"
   },
   "auth": {
     "signIn": "Prijavite se",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Ukloni termin",
       "closesNextDay": "Zatvara se sledećeg dana (npr. otvoreno posle ponoći)",
       "holidayNeedsDate": "Прво изаберите датум почетка.",
-      "holidayWindowOutsideService": "{window} је изван радног времена услуге {service} за тај дан. Изузетно радно време мора бити унутар уобичајеног радног времена услуге."
+      "holidayWindowOutsideService": "{window} је изван радног времена услуге {service} за тај дан. Изузетно радно време мора бити унутар уобичајеног радног времена услуге.",
+      "copiedDayToAll": "{day} kopiran na sve ostale dane",
+      "copiedDayToClosed": "{day} kopiran na zatvorene dane",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Podrazumevano (sve usluge)",
+      "tabReservation": "Rezervacija",
+      "tabAddSuffix": "+ Dodaj",
+      "removeOverrideAria": "Ukloni nadjačavanje za {service}",
+      "removeOverrideTitle": "Ukloni nadjačavanje (zastareli redovi ostaju u bazi podataka dok ne sačuvate sa ponovo omogućenom karticom)",
+      "hoursForServiceOnly": "Radno vreme samo za {service}",
+      "markClosed": "Označi kao zatvoreno",
+      "markOpen": "Označi kao otvoreno",
+      "copyHoursTitle": "Kopiraj ovo radno vreme na druge dane",
+      "applyTo": "Primeni na…",
+      "applyToAllDays": "Primeni na <strong>sve ostale dane</strong>",
+      "applyToClosedDays": "Primeni samo na <strong>trenutno zatvorene dane</strong>",
+      "dayAbbrev": "ned, pon, uto, sre, čet, pet, sub"
     },
     "services": {
       "title": "Usluge restorana",
@@ -1205,7 +1225,42 @@
         "colRequired": "Obavezno",
         "saved": "Obrazac adrese za dostavu je ažuriran"
       },
-      "estimatedMinutesHint": "УКУПНО процењено време доставе (припрема + пут) за адресе у овој зони. Купци виде овај број при плаћању и он одређује најранији термин \"за касније\" — замењује подразумевану процену услуге доставе. Реална вредност је 30–60 мин, не само вожња."
+      "estimatedMinutesHint": "УКУПНО процењено време доставе (припрема + пут) за адресе у овој зони. Купци виде овај број при плаћању и он одређује најранији термин \"за касније\" — замењује подразумевану процену услуге доставе. Реална вредност је 30–60 мин, не само вожња.",
+      "toastNoAddress": "Adresa nije postavljena. Prvo dovršite profil restorana.",
+      "toastAddressNotFound": "Ovu adresu nije moguće pronaći. Ažurirajte adresu u profilu restorana i pokušajte ponovo.",
+      "toastLocationPinned": "Lokacija restorana zakačena na mapu!",
+      "toastGeocodeFailed": "Geokodiranje nije uspelo. Proverite internet vezu.",
+      "toastLocationUpdated": "Lokacija restorana ažurirana!",
+      "toastZoneNameRequired": "Naziv zone je obavezan",
+      "toastSetLocationFirst": "Prvo postavite lokaciju restorana (zone su koncentrični krugovi oko nje).",
+      "toastSaveZoneFailed": "Čuvanje zone nije uspelo",
+      "toastZoneAdded": "Zona „{name}” dodata!",
+      "toastUpdateZoneFailed": "Ažuriranje zone nije uspelo",
+      "confirmDeleteZone": "Izbrisati dostavnu zonu „{name}”? Ovo se ne može poništiti.",
+      "toastZoneDeleted": "Zona izbrisana",
+      "locationNotSetTitle": "Lokacija restorana nije postavljena",
+      "locationNotSetDesc": "Dostavne zone kao ishodište trebaju koordinate vašeg restorana. <link>Postavite ih u profilu restorana</link> ili upotrebite dugme ispod da geokodirate trenutnu adresu.",
+      "locateRestaurant": "Pronađi restoran",
+      "locating": "Pronalaženje…",
+      "relocate": "Ponovo pronađi",
+      "legendActiveZone": "Aktivna zona",
+      "legendInactiveZone": "Neaktivna zona",
+      "rowFee": "naknada {amount}",
+      "rowMin": "min. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Std. vreme",
+      "editFee": "Naknada ({sym})",
+      "editMin": "Min. ({sym})",
+      "editStdTime": "Std. vreme (min)",
+      "mapRestaurantTitle": "Restoran (prevucite za podešavanje)",
+      "mapResizeHandleTitle": "{km} km — prevucite za promenu veličine",
+      "mapFeeLabel": "Naknada:",
+      "mapMinLabel": "Min.:",
+      "mapRadiusLabel": "Radijus:",
+      "mapEtaLabel": "ETA:",
+      "mapDragHint": "Prevucite ručicu za promenu veličine",
+      "mapDragHintShort": "prevucite za promenu veličine"
     },
     "reservations": {
       "title": "Rezervacije",
@@ -1286,7 +1341,38 @@
       "amount": "Iznos",
       "schedule": "Raspored",
       "status": "Status",
-      "confirmDelete": "Obrisati \"{name}\"?"
+      "confirmDelete": "Obrisati \"{name}\"?",
+      "taxRateRangeError": "Poreska stopa mora biti između 0 i 100",
+      "salesTaxTitle": "Stopa poreza na promet",
+      "salesTaxHelp": "Primenjuje se na oporezivi međuzbir svake porudžbine. Postavite 0 ako ne naplaćujete porez na promet. (npr. 13 za 13% HST.)",
+      "rateLabel": "Stopa (%)",
+      "savingLabel": "Čuvanje…",
+      "saveTaxRate": "Sačuvaj stopu",
+      "currencyTitle": "Valuta",
+      "currencyHelp": "Određuje svaku cenu koju kupac vidi, kao i naplate Stripe/PayPal, račune i izveštaje. Promena valute NE pretvara postojeće cene — ažurirajte cene u meniju ako pređete sa USD na EUR (itd.).",
+      "currencyLabel": "Valuta",
+      "currencySample": "Primer: <strong>{value}</strong>",
+      "tipsTitle": "Napojnice kupaca",
+      "tipsHelp": "Kada je ISKLJUČENO, korpa kupca u potpunosti skriva izbor napojnice, a server svaku izmenjenu vrednost klijenta postavlja na 0. Neki restorani (npr. u zemljama gde napojnica nije uobičajena) radije ne prikazuju upite za napojnicu.",
+      "tipsAriaDisable": "Onemogući napojnice",
+      "tipsAriaEnable": "Omogući napojnice",
+      "menuSearchTitle": "Pretraga menija za kupca",
+      "menuSearchHelp": "Kada je UKLJUČENO, stranica za porudžbine kupca prikazuje traku za pretragu sa lupom kako bi posetioci brzo pronašli stavke kucanjem. ISKLJUČITE ako želite da pregledaju samo putem dugmadi kategorija.",
+      "menuSearchAriaHide": "Sakrij pretragu menija na stranici kupca",
+      "menuSearchAriaShow": "Prikaži pretragu menija na stranici kupca",
+      "itemNotesTitle": "Posebne instrukcije po stavci",
+      "itemNotesHelp": "Kada je UKLJUČENO, kupci mogu dodati napomenu <each>svakoj stavci</each> (npr. „ekstra hrskavo“, „bez luka na ovoj“) — štampa se na kuhinjskom računu za tu stavku. ISKLJUČENO, i dalje mogu ostaviti jednu napomenu za <whole>celu porudžbinu</whole> pri naplati.",
+      "itemNotesAriaOff": "Isključi napomene po stavci",
+      "itemNotesAriaOn": "Uključi napomene po stavci",
+      "schedulingTitle": "Zakazivanje i obrazac naplate",
+      "schedulingHelp": "Kontrolišite za koje termine kupci mogu da zakazuju i koja su kontakt polja obavezna pri naplati.",
+      "slotIntervalLabel": "Interval termina (minuti)",
+      "slotIntervalHelp": "Kupci mogu zakazivati porudžbine samo u ovom ritmu (kao GloriaFood). Podrazumevano je 15 — promenite na 30 za sporije kuhinje.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Zahtevaj telefon kupca",
+      "requirePhoneHelp": "Kada je UKLJUČENO, obrazac naplate odbija porudžbine bez broja telefona. Preporučuje se za dostavu kako bi kuhinja mogla da pozove oko predaje.",
+      "requirePhoneAriaOptional": "Učini telefon opcionalnim",
+      "requirePhoneAriaRequired": "Učini telefon obaveznim"
     },
     "mapSettings": {
       "title": "Podešavanja mape",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Популарно",
       "addOnEnableCta": "Активирај",
       "perMonth": "/мес.",
-      "kitchenAlertsSection": "Кухиња и обавештења о поруџбинама"
+      "kitchenAlertsSection": "Кухиња и обавештења о поруџбинама",
+      "currentPlanWithAddOns": "Trenutni plan: FREE + {count, plural, one {# dodatak} few {# dodatka} other {# dodataka}}",
+      "currentPlanFree": "Trenutni plan: FREE",
+      "freePlanDescription": "Vidžet za porudžbine, administracija, meni, kuhinjska aplikacija — bez kartice. Primajte do 100 porudžbina/mesec zauvek. Plaćene funkcije dodajte bilo kada na stranici Naplata.",
+      "feature100Orders": "100 porudžbina/mesec",
+      "featureUnlimitedMenu": "Neograničene stavke menija",
+      "featureCustomerAccounts": "Korisnički nalozi",
+      "activeAddOnsHeading": "Aktivni dodaci",
+      "trialBadge": "Probno",
+      "manageSubscriptionsHeading": "Upravljanje pretplatama",
+      "upgradeWithAddOnsHeading": "Nadogradite s plaćenim dodacima",
+      "manageBillingCta": "Upravljaj naplatom",
+      "browseAddOnsCta": "Pregledaj dodatke"
     },
     "coupons": {
       "title": "Kuponi",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Још није проверено у VIES-у",
       "viesVerifyNow": "Провери одмах",
       "viesUnreachable": "VIES услуга је привремено недоступна — покушајте поново за неколико минута.",
-      "euVatNote": "Фирме из ЕУ: за плаћене претплате потребан је ПДВ број регистрован у VIES-у. Потврђени бројеви се фактуришу са 0% ПДВ-а (обрнута наплата)."
+      "euVatNote": "Фирме из ЕУ: за плаћене претплате потребан је ПДВ број регистрован у VIES-у. Потврђени бројеви се фактуришу са 0% ПДВ-а (обрнута наплата).",
+      "perOrder": "/porudžbina",
+      "paygOrderCount": "{count, plural, one {# porudžbina} few {# porudžbine} other {# porudžbina}}"
     },
     "addOns": {
       "errorCheckout": "Nije uspelo pokretanje naplate",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Da, otkaži",
       "compFreeUntil": "Besplatno do {date}",
       "compExplainer": "Ovaj dodatak je besplatan do tada — ne obnavlja se sam. Pretplatite se sada da ga zadržite: kartica se čuva danas, a naplata počinje tek kad se završi besplatni period.",
-      "compSubscribeCta": "Pretplatite se da ga zadržite"
+      "compSubscribeCta": "Pretplatite se da ga zadržite",
+      "pageIntro": "Osnovni proizvod je besplatan zauvek. Otključajte pojedinačne funkcije ispod pretplatom na odgovarajući dodatak. Otkažite bilo kada — pristup zadržavate do kraja obračunskog perioda.",
+      "subscribedBanner": "<strong>Uspeh!</strong> Vaša pretplata se aktivira. Otključavanje funkcije može potrajati do jednog minuta.",
+      "settingsLinks": {
+        "hostedWebsite": "Otvori uređivač sajta",
+        "onlinePayments": "Upravljaj Stripe Connect",
+        "driverPool": "Konfiguriši grupu vozača",
+        "multiLocation": "Upravljaj lokacijama",
+        "customDomain": "Poveži svoj domen",
+        "advancedPromoMarketing": "Pokreni promocije",
+        "reservationDeposits": "Konfiguriši rezervacije",
+        "brandedMobileApp": "Konfiguriši aplikaciju"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Aktivno",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Додељено",
       "labelVip": "VIP",
       "badgeDeadTargets": "Нема активних јела — изаберите поново",
-      "searchPlaceholder": "Pretraži po nazivu ili kodu kupona…"
+      "searchPlaceholder": "Pretraži po nazivu ili kodu kupona…",
+      "typeLabels": {
+        "percentage_off": "% popusta na izabrane stavke",
+        "fixed_cart": "Fiksni popust na korpu",
+        "free_delivery": "Besplatna dostava",
+        "bogo": "Kupi jedan, dobij jedan gratis",
+        "buy_n_get_free": "Kupi N, dobij jedan gratis",
+        "free_item": "Dobij BESPLATNU stavku",
+        "meal_bundle": "Paket obroka",
+        "meal_bundle_speciality": "Paket obroka sa specijalitetom",
+        "fixed_combo": "Fiksni popust na combo ponudu",
+        "percentage_combo": "% popusta na combo ponudu",
+        "payment_reward": "Nagrada za način plaćanja",
+        "free_dish_meal": "Besplatno jelo kao deo obroka"
+      },
+      "campaignFallback": "Kampanja"
     },
     "promoWizard": {
       "errorPickType": "Odaberite vrstu promocije za nastavak.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Progresivni popusti kupi-N-dobij-besplatno",
       "featureFreeDish": "Besplatno jelo kao deo obroka",
       "maybeLater": "Možda kasnije",
-      "subscribe": "Pretplati se"
+      "subscribe": "Pretplati se",
+      "types": {
+        "percentage_off": {
+          "name": "% popusta na korpu",
+          "desc": "Skini procenat sa cele porudžbine (ili određenih stavki)."
+        },
+        "free_delivery": {
+          "name": "Besplatna dostava",
+          "desc": "Otpišite naknadu za dostavu za prihvatljive porudžbine."
+        },
+        "bogo": {
+          "name": "Kupi jedan, dobij jedan gratis",
+          "desc": "Upari plaćenu stavku sa besplatnom (ili sniženom) stavkom."
+        },
+        "fixed_cart": {
+          "name": "Fiksni popust na korpu",
+          "desc": "Skini fiksni iznos sa porudžbine."
+        },
+        "payment_reward": {
+          "name": "Nagrada za način plaćanja",
+          "desc": "Popust za plaćanje određenom metodom (npr. gotovina)."
+        },
+        "free_item": {
+          "name": "Dobij BESPLATNU stavku",
+          "desc": "Potroši X i dobij besplatnu stavku sa odabrane liste."
+        },
+        "meal_bundle": {
+          "name": "Paket obroka",
+          "desc": "Kombinuj mesta po fiksnoj ceni paketa."
+        },
+        "buy_n_get_free": {
+          "name": "Kupi N, dobij jedan gratis",
+          "desc": "Dodaj N stavki, sledeća (najjeftinija ili odabrana) je besplatna."
+        },
+        "free_dish_meal": {
+          "name": "Besplatno jelo kao deo obroka",
+          "desc": "Naruči glavno jelo + prilog i dobij desert (ili bilo koji dodatak) besplatno."
+        },
+        "fixed_combo": {
+          "name": "Fiksni popust na combo",
+          "desc": "Upari određene stavke i skini fiksni iznos."
+        },
+        "percentage_combo": {
+          "name": "% popusta na combo",
+          "desc": "Upari određene stavke i skini procenat."
+        },
+        "meal_bundle_speciality": {
+          "name": "Paket obroka sa specijalitetom",
+          "desc": "Paket obroka sa opcionalnim doplatama (npr. jastog +5 $)."
+        },
+        "reward_credit": {
+          "name": "Dodeli Reward Dollars",
+          "desc": "Nagradi kupca kreditom prodavnice na ovoj porudžbini umesto popusta."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Konfiguriši svoju promociju",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Kada je označeno, ova ponuda se primenjuje samo jednom po porudžbini, čak i ako korpa ispunjava uslove više puta (npr. „Kupi jedno, dobij jedno” koja bi se inače ponovila).",
       "rewardCreditLabel": "Reward Dollars za dodelu",
       "rewardCreditHint": "Dodaje se na saldo kupca kada se ova porudžbina završi — bez popusta u korpi. Zahteva uključen Reward Dollars.",
-      "oncePerOrderHintPercent": "Ако је означено, % попуст важи само за ЈЕДНУ ставку — најскупљу квалификовану ставку у корпи (нпр. „20% на једно главно јело“). Уклоните ознаку за попуст на СВЕ квалификоване ставке."
+      "oncePerOrderHintPercent": "Ако је означено, % попуст важи само за ЈЕДНУ ставку — најскупљу квалификовану ставку у корпи (нпр. „20% на једно главно јело“). Уклоните ознаку за попуст на СВЕ квалификоване ставке.",
+      "groupNoItems": "Nema izabranih stavki — kliknite za uređivanje",
+      "groupMoreCategories": "+{n} više",
+      "pickerHeading": "Izaberite kategorije ili stavke",
+      "pickerNoCategories": "Nema pronađenih kategorija",
+      "allSizesSuffix": " · sve veličine",
+      "groupSpecificItems": "{count, plural, one {# određena stavka} few {# određene stavke} other {# određenih stavki}}",
+      "groupSizes": "{count, plural, one {# veličina} few {# veličine} other {# veličina}}",
+      "specialityFeeTitle": "Naplati naknadu samo za ove veličine",
+      "specialityFeeDesc": "Označi premium veličine koje dodaju naknadu — osnovne veličine ostaju besplatne. Ostavi sve neoznačeno da se naknada naplaćuje pri svakom izboru.",
+      "specialityFeeEmpty": "Prvo izaberi stavke ovog mesta, a zatim izaberi koje veličine koštaju dodatno.",
+      "wholeItemAllSizesSuffix": " · cela stavka (sve veličine)",
+      "roleLabelPaid": "(Plaćeno)",
+      "roleLabelFree": "(Besplatno)",
+      "roleLabelTrigger": "(Okidač)",
+      "roleLabelRequired": "(Obavezno)",
+      "itemsGroupN": "Grupa stavki {n}",
+      "slotPickAtLeast": "Izaberi najmanje",
+      "slotUpTo": "do",
+      "slotItems": "stavki",
+      "specialityFeeInlineLabel": "Naknada za specijalitet +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {za # veličinu} few {za # veličine} other {za # veličina}}",
+      "specialityFeeForAll": "za sve veličine — izaberi koje koštaju dodatno",
+      "extraChargeLabel": "Naplata na besplatnoj stavci",
+      "extraChargeNone": "Bez dodatnih naknada (cela besplatna stavka je besplatna)",
+      "extraChargeAddons": "Dodatna naplata za izbore / dodatke (prilozi se i dalje naplaćuju)",
+      "extraChargeAddonsSizes": "Dodatna naplata za izbore / dodatke i veličine (prilozi + nadogradnja veličine naplaćuju se)",
+      "extraChargeHint": "Da li se i dalje naplaćuju prilozi i nadogradnja veličine besplatne stavke — kao u GloriaFoodu.",
+      "discountStrategyNoteFreed": "Stavka iz grupe „besplatno” je ona koja dobija popust — bez obzira na cenu. % iznad je koliki popust dobija (100% = besplatno).",
+      "discountStrategyNoteMostExpensive": "BOGO snižava SKUPLJU od dve prihvatljive stavke. Za uvek sniženje jedne određene stavke koristite ponudu „Kupi N, dobij besplatno”.",
+      "discountStrategyNoteFixedPercent": "Svaka snižena stavka dobija ovaj % — jeftinija kad par ispunjava uslove. Za uvek sniženje jedne određene stavke koristite ponudu „Kupi N, dobij besplatno”.",
+      "discountStrategyNoteCheapest": "BOGO snižava JEFTINIJU od dve prihvatljive stavke — pa ako „besplatna” stavka košta više, snižava se jeftinija (kupac ne može jeftino dobiti skuplju stavku). Za uvek sniženje jedne određene stavke (npr. testenine) koristite ponudu „Kupi N, dobij besplatno”.",
+      "discountStrategyLabel": "Strategija popusta",
+      "strategyCheapest": "Automatski postavi popuste (najjeftinija stavka besplatno)",
+      "strategyMostExpensive": "Automatski postavi popuste (najskuplja stavka besplatno)",
+      "strategyFixedPercent": "Fiksni procenat popusta",
+      "pctOffCheapest": "% popusta na najjeftiniju stavku",
+      "pctOffMostExpensive": "% popusta na najskuplju stavku"
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograničenja i prikaz",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Оба",
       "hiddenCodeInfo": "Сакривене промоције важе само када купац унесе овај код при плаћању.",
       "vipLockedTitle": "Само VIP — повезано са: {groups}",
-      "vipLockedDesc": "Ова промоција се аутоматски примењује само за те VIP чланове при плаћању. Никада се не приказује на јавном менију, банеру или сајту — ниједан прекидач видљивости то не мења. Да бисте је учинили јавном, прво је одвојте на страници VIP групе."
+      "vipLockedDesc": "Ова промоција се аутоматски примењује само за те VIP чланове при плаћању. Никада се не приказује на јавном менију, банеру или сајту — ниједан прекидач видљивости то не мења. Да бисте је учинили јавном, прво је одвојте на страници VIP групе.",
+      "bundleBuildInfo": "💡 Kupci slažu ovaj paket iz kartice „Složi svoju ponudu” na vašem meniju. Prikačite ga na baner ispod kako bi se lako pronašao. (Paket se ne može automatski primeniti ni otključati kodom.)"
     },
     "customersList": {
       "heading": "Kupci",
@@ -3172,7 +3391,9 @@
       "webhookSaveFirst": "Sačuvajte podešavanja jednom (sa izabranim ShipDay izvorom) i ovde će se pojaviti vaš lični webhook link.",
       "feeFromZonesTitle": "Naknade za dostavu za kupce",
       "feeFromZonesBody": "Ono što vaši kupci plaćaju za dostavu podešava se na stranici Zone dostave — isto kao i sa sopstvenim vozačima. ShipDay vašem restoranu zasebno naplaćuje svaku dostavu; pitajte svoj ShipDay kontakt kolika je vaša cena po dostavi.",
-      "feeFromZonesLink": "Otvori Zone dostave"
+      "feeFromZonesLink": "Otvori Zone dostave",
+      "errorUnknown": "Nepoznata greška",
+      "errorNetwork": "Mrežna greška"
     },
     "driverPoolLocked": {
       "addonBadge": "Dodatak",
@@ -3191,7 +3412,8 @@
       "feature2Title": "Vi postavljate cene za kupce",
       "feature2Body": "Prenos troška (kupac plaća punu ShipDay naknadu), fiksno (vi apsorujete razliku) ili stepenovano (npr. besplatno iznad 50 $). Potpuna kontrola.",
       "feature3Title": "Bira se po porudžbini",
-      "feature3Body": "Kombinujte sopstvene vozače sa ShipDay-om. Kuhinja vidi birač za svaku dostavu: interni ili skup. Vaša odluka, svaki put."
+      "feature3Body": "Kombinujte sopstvene vozače sa ShipDay-om. Kuhinja vidi birač za svaku dostavu: interni ili skup. Vaša odluka, svaki put.",
+      "perMonth": "/mes."
     },
     "marketplaceLocked": {
       "addonBadge": "Dodatak",

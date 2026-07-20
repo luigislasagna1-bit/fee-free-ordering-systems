@@ -91,7 +91,8 @@
     "menu": "Menu",
     "loadingDots": "Ladataan…",
     "previous": "Edellinen",
-    "kmFromStore": "{km} km liikkeestä"
+    "kmFromStore": "{km} km liikkeestä",
+    "apply": "Käytä"
   },
   "auth": {
     "signIn": "Kirjaudu sisään",
@@ -1105,7 +1106,26 @@
       "removeSlot": "Poista aikaväli",
       "closesNextDay": "Sulkeutuu seuraavana päivänä (esim. auki keskiyön yli)",
       "holidayNeedsDate": "Valitse ensin aloituspäivä.",
-      "holidayWindowOutsideService": "{window} on kyseisen päivän {service}-aikojen ulkopuolella. Poikkeusaikojen on oltava palvelun normaalien aukioloaikojen sisällä."
+      "holidayWindowOutsideService": "{window} on kyseisen päivän {service}-aikojen ulkopuolella. Poikkeusaikojen on oltava palvelun normaalien aukioloaikojen sisällä.",
+      "copiedDayToAll": "{day} kopioitu kaikille muille päiville",
+      "copiedDayToClosed": "{day} kopioitu suljetuille päiville",
+      "format12h": "12h (1:00 PM)",
+      "format24h": "24h (13:00)",
+      "timePlaceholder12h": "9:00 AM",
+      "timePlaceholder24h": "HH:MM",
+      "tabDefault": "Oletus (kaikki palvelut)",
+      "tabReservation": "Varaus",
+      "tabAddSuffix": "+ Lisää",
+      "removeOverrideAria": "Poista palvelun {service} ohitus",
+      "removeOverrideTitle": "Poista ohitus (vanhentuneet rivit jäävät tietokantaan, kunnes tallennat välilehti uudelleen käytössä)",
+      "hoursForServiceOnly": "Aukioloajat vain palvelulle {service}",
+      "markClosed": "Merkitse suljetuksi",
+      "markOpen": "Merkitse avoimeksi",
+      "copyHoursTitle": "Kopioi nämä ajat muille päiville",
+      "applyTo": "Käytä kohteeseen…",
+      "applyToAllDays": "Käytä <strong>kaikille muille päiville</strong>",
+      "applyToClosedDays": "Käytä vain <strong>nyt suljetuille päiville</strong>",
+      "dayAbbrev": "su, ma, ti, ke, to, pe, la"
     },
     "services": {
       "title": "Ravintolan palvelut",
@@ -1205,7 +1225,42 @@
         "colRequired": "Pakollinen",
         "saved": "Toimitusosoitelomake päivitetty"
       },
-      "estimatedMinutesHint": "Alueen osoitteiden KOKONAISarvio toimitusajasta (valmistus + matka). Asiakkaat näkevät tämän kassalla ja se määrää varhaisimman \"tilaa myöhemmäksi\" -ajan — se ohittaa toimituspalvelun oletusarvion. Realistinen arvo on 30–60 min, ei pelkkä ajomatka."
+      "estimatedMinutesHint": "Alueen osoitteiden KOKONAISarvio toimitusajasta (valmistus + matka). Asiakkaat näkevät tämän kassalla ja se määrää varhaisimman \"tilaa myöhemmäksi\" -ajan — se ohittaa toimituspalvelun oletusarvion. Realistinen arvo on 30–60 min, ei pelkkä ajomatka.",
+      "toastNoAddress": "Osoitetta ei ole asetettu. Täydennä ensin ravintolasi profiili.",
+      "toastAddressNotFound": "Osoitetta ei löytynyt. Päivitä osoitteesi ravintolan profiiliin ja yritä uudelleen.",
+      "toastLocationPinned": "Ravintolan sijainti kiinnitetty kartalle!",
+      "toastGeocodeFailed": "Geokoodaus epäonnistui. Tarkista internetyhteytesi.",
+      "toastLocationUpdated": "Ravintolan sijainti päivitetty!",
+      "toastZoneNameRequired": "Vyöhykkeen nimi vaaditaan",
+      "toastSetLocationFirst": "Aseta ensin ravintolasi sijainti (vyöhykkeet ovat samankeskisiä ympyröitä sen ympärillä).",
+      "toastSaveZoneFailed": "Vyöhykkeen tallennus epäonnistui",
+      "toastZoneAdded": "Vyöhyke \"{name}\" lisätty!",
+      "toastUpdateZoneFailed": "Vyöhykkeen päivitys epäonnistui",
+      "confirmDeleteZone": "Poistetaanko toimitusvyöhyke \"{name}\"? Tätä ei voi kumota.",
+      "toastZoneDeleted": "Vyöhyke poistettu",
+      "locationNotSetTitle": "Ravintolan sijaintia ei ole asetettu",
+      "locationNotSetDesc": "Toimitusvyöhykkeet tarvitsevat ravintolasi koordinaatit lähtöpisteeksi. <link>Aseta ne ravintolan profiiliin</link> tai käytä alla olevaa painiketta nykyisen osoitteesi geokoodaamiseen.",
+      "locateRestaurant": "Paikanna ravintola",
+      "locating": "Paikannetaan…",
+      "relocate": "Paikanna uudelleen",
+      "legendActiveZone": "Aktiivinen vyöhyke",
+      "legendInactiveZone": "Passiivinen vyöhyke",
+      "rowFee": "{amount} maksu",
+      "rowMin": "väh. {amount}",
+      "unitKm": "km",
+      "unitMinutes": "min",
+      "detailStdTime": "Vakioaika",
+      "editFee": "Maksu ({sym})",
+      "editMin": "Väh. ({sym})",
+      "editStdTime": "Vakioaika (min)",
+      "mapRestaurantTitle": "Ravintola (säädä vetämällä)",
+      "mapResizeHandleTitle": "{km} km — muuta kokoa vetämällä",
+      "mapFeeLabel": "Maksu:",
+      "mapMinLabel": "Väh.:",
+      "mapRadiusLabel": "Säde:",
+      "mapEtaLabel": "Arvioitu:",
+      "mapDragHint": "Muuta kokoa vetämällä kahvasta",
+      "mapDragHintShort": "muuta kokoa vetämällä"
     },
     "reservations": {
       "title": "Varaukset",
@@ -1286,7 +1341,38 @@
       "amount": "Summa",
       "schedule": "Aikataulu",
       "status": "Tila",
-      "confirmDelete": "Poistetaanko \"{name}\"?"
+      "confirmDelete": "Poistetaanko \"{name}\"?",
+      "taxRateRangeError": "Veroprosentin on oltava välillä 0–100",
+      "salesTaxTitle": "Myyntiveroprosentti",
+      "salesTaxHelp": "Sovelletaan jokaisen tilauksen verolliseen välisummaan. Aseta 0, jos et peri myyntiveroa. (esim. 13 = 13 % HST.)",
+      "rateLabel": "Prosentti (%)",
+      "savingLabel": "Tallennetaan…",
+      "saveTaxRate": "Tallenna prosentti",
+      "currencyTitle": "Valuutta",
+      "currencyHelp": "Määrittää jokaisen asiakkaan näkemän hinnan sekä Stripe/PayPal-veloitukset, kuitit ja raportit. Valuutan vaihto EI muunna nykyisiä hintoja — päivitä menun hinnat, jos vaihdat USD:stä EUR:oon (jne.).",
+      "currencyLabel": "Valuutta",
+      "currencySample": "Esimerkki: <strong>{value}</strong>",
+      "tipsTitle": "Asiakkaiden tipit",
+      "tipsHelp": "Kun POIS, asiakkaan ostoskori piilottaa tippivalitsimen kokonaan ja palvelin pakottaa peukaloidun asiakasarvon nollaan. Jotkin ravintolat (esim. maissa, joissa tippaaminen ei ole tapana) eivät halua näyttää tippikehotteita.",
+      "tipsAriaDisable": "Poista tipit käytöstä",
+      "tipsAriaEnable": "Ota tipit käyttöön",
+      "menuSearchTitle": "Asiakkaan menuhaku",
+      "menuSearchHelp": "Kun PÄÄLLÄ, asiakkaan tilaussivulla näkyy suurennuslasi-hakupalkki, jotta kävijät löytävät tuotteet nopeasti kirjoittamalla. Kytke POIS, jos haluat heidän selaavan vain kategorianappien kautta.",
+      "menuSearchAriaHide": "Piilota menuhaku asiakassivulla",
+      "menuSearchAriaShow": "Näytä menuhaku asiakassivulla",
+      "itemNotesTitle": "Kohdekohtaiset erikoisohjeet",
+      "itemNotesHelp": "Kun PÄÄLLÄ, asiakkaat voivat lisätä muistiinpanon <each>jokaiseen tuotteeseen</each> (esim. ”erittäin rapea”, ”ei sipulia tähän”) — se tulostuu kyseisen tuotteen keittiökuittiin. POIS he voivat silti jättää yhden muistiinpanon <whole>koko tilaukselle</whole> kassalla.",
+      "itemNotesAriaOff": "Poista kohdekohtaiset muistiinpanot käytöstä",
+      "itemNotesAriaOn": "Ota kohdekohtaiset muistiinpanot käyttöön",
+      "schedulingTitle": "Ajastus ja kassalomake",
+      "schedulingHelp": "Määritä, mille aikaväleille asiakkaat voivat varata ja mitkä yhteystietokentät ovat pakollisia kassalla.",
+      "slotIntervalLabel": "Aikavälin pituus (minuuttia)",
+      "slotIntervalHelp": "Asiakkaat voivat ajoittaa tilauksia vain tällä tahdilla (kuten GloriaFood). Oletus on 15 — vaihda 30:een hitaammille keittiöille.",
+      "minutesOption": "{n} min",
+      "requirePhoneLabel": "Vaadi asiakkaan puhelinnumero",
+      "requirePhoneHelp": "Kun PÄÄLLÄ, kassalomake hylkää tilaukset ilman puhelinnumeroa. Suositellaan toimituksiin, jotta keittiö voi soittaa luovutuksesta.",
+      "requirePhoneAriaOptional": "Tee puhelin valinnaiseksi",
+      "requirePhoneAriaRequired": "Tee puhelin pakolliseksi"
     },
     "mapSettings": {
       "title": "Kartta-asetukset",
@@ -1502,7 +1588,19 @@
       "popularBadge": "Suosittu",
       "addOnEnableCta": "Ota käyttöön",
       "perMonth": "/kk",
-      "kitchenAlertsSection": "Keittiö ja tilaushälytykset"
+      "kitchenAlertsSection": "Keittiö ja tilaushälytykset",
+      "currentPlanWithAddOns": "Nykyinen tilaus: FREE + {count, plural, one {# lisäosa} other {# lisäosaa}}",
+      "currentPlanFree": "Nykyinen tilaus: FREE",
+      "freePlanDescription": "Tilauswidget, hallinta, menu, keittiösovellus — ilman korttia. Vastaanota jopa 100 tilausta/kk ikuisesti. Lisää maksullisia ominaisuuksia milloin tahansa Laskutus-sivulta.",
+      "feature100Orders": "100 tilausta/kk",
+      "featureUnlimitedMenu": "Rajattomasti menukohteita",
+      "featureCustomerAccounts": "Asiakastilit",
+      "activeAddOnsHeading": "Aktiiviset lisäosat",
+      "trialBadge": "Kokeilu",
+      "manageSubscriptionsHeading": "Hallitse tilauksiasi",
+      "upgradeWithAddOnsHeading": "Päivitä maksullisilla lisäosilla",
+      "manageBillingCta": "Hallitse laskutusta",
+      "browseAddOnsCta": "Selaa lisäosia"
     },
     "coupons": {
       "title": "Kupongit",
@@ -1700,7 +1798,9 @@
       "viesUnverified": "Ei vielä tarkistettu VIES-järjestelmästä",
       "viesVerifyNow": "Tarkista nyt",
       "viesUnreachable": "VIES-palvelu on tilapäisesti poissa käytöstä — yritä uudelleen muutaman minuutin kuluttua.",
-      "euVatNote": "EU-yritykset: maksullisiin tilauksiin vaaditaan VIES-rekisteröity ALV-numero. Vahvistetut numerot laskutetaan 0 %:n ALV:lla (käännetty verovelvollisuus)."
+      "euVatNote": "EU-yritykset: maksullisiin tilauksiin vaaditaan VIES-rekisteröity ALV-numero. Vahvistetut numerot laskutetaan 0 %:n ALV:lla (käännetty verovelvollisuus).",
+      "perOrder": "/tilaus",
+      "paygOrderCount": "{count, plural, one {# tilaus} other {# tilausta}}"
     },
     "addOns": {
       "errorCheckout": "Kassalle siirtyminen epäonnistui",
@@ -1757,7 +1857,19 @@
       "yesCancel": "Kyllä, peruuta",
       "compFreeUntil": "Ilmainen {date} asti",
       "compExplainer": "Tämä lisäosa on maksuton siihen asti — se ei uusiudu itsestään. Tilaa nyt pitääksesi sen: kortti tallennetaan tänään ja laskutus alkaa vasta ilmaisjakson päätyttyä.",
-      "compSubscribeCta": "Tilaa säilyttääksesi"
+      "compSubscribeCta": "Tilaa säilyttääksesi",
+      "pageIntro": "Ydintuote on ilmainen ikuisesti. Avaa yksittäisiä ominaisuuksia alta tilaamalla vastaava lisäosa. Peru milloin tahansa — säilytät käyttöoikeuden laskutuskauden loppuun asti.",
+      "subscribedBanner": "<strong>Valmis!</strong> Tilaustasi aktivoidaan. Ominaisuuden avautuminen voi kestää enintään minuutin.",
+      "settingsLinks": {
+        "hostedWebsite": "Avaa sivustoeditori",
+        "onlinePayments": "Hallitse Stripe Connectia",
+        "driverPool": "Määritä kuljettajapooli",
+        "multiLocation": "Hallitse toimipisteitä",
+        "customDomain": "Yhdistä verkkotunnuksesi",
+        "advancedPromoMarketing": "Käynnistä kampanjoita",
+        "reservationDeposits": "Määritä varaukset",
+        "brandedMobileApp": "Määritä sovellus"
+      }
     },
     "setupWizard": {
       "heroBadgeLive": "Live",
@@ -2254,7 +2366,22 @@
       "labelAssigned": "Määritetty",
       "labelVip": "VIP",
       "badgeDeadTargets": "Ei aktiivisia annoksia — valitse uudelleen",
-      "searchPlaceholder": "Hae nimellä tai kuponkikoodilla…"
+      "searchPlaceholder": "Hae nimellä tai kuponkikoodilla…",
+      "typeLabels": {
+        "percentage_off": "% alennus valituista tuotteista",
+        "fixed_cart": "Kiinteä alennus ostoskorista",
+        "free_delivery": "Ilmainen toimitus",
+        "bogo": "Osta yksi, saat toisen ilmaiseksi",
+        "buy_n_get_free": "Osta N, saat yhden ilmaiseksi",
+        "free_item": "Saat ILMAISEN tuotteen",
+        "meal_bundle": "Ateriapaketti",
+        "meal_bundle_speciality": "Ateriapaketti erikoisuudella",
+        "fixed_combo": "Kiinteä alennus combo-tarjouksesta",
+        "percentage_combo": "% alennus combo-tarjouksesta",
+        "payment_reward": "Palkkio maksutavasta",
+        "free_dish_meal": "Ilmainen annos aterian osana"
+      },
+      "campaignFallback": "Kampanja"
     },
     "promoWizard": {
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",
@@ -2293,7 +2420,61 @@
       "featureBuyNGetFree": "Osta N saat ilmaisen -progressiiviset alennukset",
       "featureFreeDish": "Ilmainen annos osana ateriaa",
       "maybeLater": "Ehkä myöhemmin",
-      "subscribe": "Tilaa"
+      "subscribe": "Tilaa",
+      "types": {
+        "percentage_off": {
+          "name": "% alennus ostoskorista",
+          "desc": "Vähennä prosentti koko tilauksesta (tai tietyistä tuotteista)."
+        },
+        "free_delivery": {
+          "name": "Ilmainen toimitus",
+          "desc": "Poista toimitusmaksu ehdot täyttäviltä tilauksilta."
+        },
+        "bogo": {
+          "name": "Osta yksi, saat toisen ilmaiseksi",
+          "desc": "Yhdistä maksullinen tuote ilmaiseen (tai alennettuun) tuotteeseen."
+        },
+        "fixed_cart": {
+          "name": "Kiinteä alennus ostoskorista",
+          "desc": "Vähennä kiinteä summa tilauksesta."
+        },
+        "payment_reward": {
+          "name": "Palkkio maksutavasta",
+          "desc": "Alennus tietyllä maksutavalla maksamisesta (esim. käteinen)."
+        },
+        "free_item": {
+          "name": "Saat ILMAISEN tuotteen",
+          "desc": "Käytä X ja saat ilmaisen tuotteen valikoidusta listasta."
+        },
+        "meal_bundle": {
+          "name": "Ateriapaketti",
+          "desc": "Yhdistele paikkoja kiinteään pakettihintaan."
+        },
+        "buy_n_get_free": {
+          "name": "Osta N, saat yhden ilmaiseksi",
+          "desc": "Lisää N tuotetta, seuraava (halvin tai valittu) on ilmainen."
+        },
+        "free_dish_meal": {
+          "name": "Ilmainen annos aterian osana",
+          "desc": "Tilaa pääruoka + lisuke ja saat jälkiruoan (tai minkä tahansa lisän) ilmaiseksi."
+        },
+        "fixed_combo": {
+          "name": "Kiinteä alennus combosta",
+          "desc": "Yhdistä tietyt tuotteet ja vähennä kiinteä summa."
+        },
+        "percentage_combo": {
+          "name": "% alennus combosta",
+          "desc": "Yhdistä tietyt tuotteet ja vähennä prosentti."
+        },
+        "meal_bundle_speciality": {
+          "name": "Ateriapaketti erikoisuudella",
+          "desc": "Ateriapaketti valinnaisilla lisämaksuilla (esim. hummeri +5 $)."
+        },
+        "reward_credit": {
+          "name": "Myönnä Reward Dollars",
+          "desc": "Palkitse asiakas kauppahyvityksellä tässä tilauksessa alennuksen sijaan."
+        }
+      }
     },
     "promoStepConfig": {
       "configureHeading": "Konfiguroi tarjouksesi",
@@ -2348,7 +2529,44 @@
       "oncePerOrderHint": "Kun tämä on valittuna, tarjous kohdistuu tilaukseen vain kerran, vaikka ostoskori täyttäisi sen ehdot useammin kuin kerran (esim. kaksi yhden hinnalla -tarjous, joka muuten toistuisi).",
       "rewardCreditLabel": "Myönnettävät Reward Dollars",
       "rewardCreditHint": "Lisätään asiakkaan saldoon, kun tämä tilaus on valmis — ei ostoskorialennusta. Edellyttää, että Reward Dollars on käytössä.",
-      "oncePerOrderHintPercent": "Kun valittu, %-alennus koskee vain YHTÄ tuotetta — ostoskorin kalleinta alennukseen oikeutettua tuotetta (esim. ”20 % yhdestä pääruoasta”). Poista valinta, jos haluat alentaa KAIKKI oikeutetut tuotteet."
+      "oncePerOrderHintPercent": "Kun valittu, %-alennus koskee vain YHTÄ tuotetta — ostoskorin kalleinta alennukseen oikeutettua tuotetta (esim. ”20 % yhdestä pääruoasta”). Poista valinta, jos haluat alentaa KAIKKI oikeutetut tuotteet.",
+      "groupNoItems": "Ei valittuja tuotteita — muokkaa napsauttamalla",
+      "groupMoreCategories": "+{n} lisää",
+      "pickerHeading": "Valitse kategoriat tai tuotteet",
+      "pickerNoCategories": "Kategorioita ei löytynyt",
+      "allSizesSuffix": " · kaikki koot",
+      "groupSpecificItems": "{count, plural, one {# tietty tuote} other {# tiettyä tuotetta}}",
+      "groupSizes": "{count, plural, one {# koko} other {# kokoa}}",
+      "specialityFeeTitle": "Veloita maksu vain näistä kooista",
+      "specialityFeeDesc": "Rastita premium-koot, jotka lisäävät maksun — peruskoot pysyvät ilmaisina. Jätä kaikki rastittamatta veloittaaksesi maksun jokaisesta valinnasta.",
+      "specialityFeeEmpty": "Valitse ensin tämän paikan tuotteet ja sitten mitkä koot maksavat lisää.",
+      "wholeItemAllSizesSuffix": " · koko tuote (kaikki koot)",
+      "roleLabelPaid": "(Maksullinen)",
+      "roleLabelFree": "(Ilmainen)",
+      "roleLabelTrigger": "(Laukaisin)",
+      "roleLabelRequired": "(Pakollinen)",
+      "itemsGroupN": "Tuoteryhmä {n}",
+      "slotPickAtLeast": "Valitse vähintään",
+      "slotUpTo": "enintään",
+      "slotItems": "tuotetta",
+      "specialityFeeInlineLabel": "Erikoismaksu +{currencySymbol}",
+      "specialityFeeForSizes": "{count, plural, one {# koolle} other {# koolle}}",
+      "specialityFeeForAll": "kaikille koille — valitse, mitkä maksavat lisää",
+      "extraChargeLabel": "Ilmaistuotteen maksut",
+      "extraChargeNone": "Ei lisämaksuja (ilmaistuote on kokonaan ilmainen)",
+      "extraChargeAddons": "Lisämaksu valinnoista / lisukkeista (täytteet laskutetaan edelleen)",
+      "extraChargeAddonsSizes": "Lisämaksu valinnoista / lisukkeista & kooista (täytteet + koon päivitys laskutetaan)",
+      "extraChargeHint": "Laskutetaanko ilmaistuotteen täytteet ja koon päivitys edelleen — kuten GloriaFoodissa.",
+      "discountStrategyNoteFreed": "Ryhmän ”ilmainen” tuote on se, joka saa alennuksen — hinnasta riippumatta. Yllä oleva % on annettava alennus (100% = ilmainen).",
+      "discountStrategyNoteMostExpensive": "BOGO alentaa kahdesta ehdot täyttävästä tuotteesta KALLIIMPAA. Jos haluat aina alentaa tiettyä tuotetta, käytä tarjousta ”Osta N, saat ilmaiseksi”.",
+      "discountStrategyNoteFixedPercent": "Jokainen alennettu tuote saa tämän % — halvempi, kun pari täyttää ehdot. Jos haluat aina alentaa tiettyä tuotetta, käytä tarjousta ”Osta N, saat ilmaiseksi”.",
+      "discountStrategyNoteCheapest": "BOGO alentaa kahdesta ehdot täyttävästä tuotteesta HALVEMPAA — joten jos ”ilmainen” tuote maksaa enemmän, alennetaan halvempaa (asiakas ei saa kalliimpaa tuotetta halvalla). Jos haluat aina alentaa tiettyä tuotetta (esim. pastaa), käytä tarjousta ”Osta N, saat ilmaiseksi”.",
+      "discountStrategyLabel": "Alennusstrategia",
+      "strategyCheapest": "Aseta alennukset automaattisesti (halvin tuote ilmaiseksi)",
+      "strategyMostExpensive": "Aseta alennukset automaattisesti (kallein tuote ilmaiseksi)",
+      "strategyFixedPercent": "Kiinteä alennusprosentti",
+      "pctOffCheapest": "% alennus halvimmasta tuotteesta",
+      "pctOffMostExpensive": "% alennus kalleimmasta tuotteesta"
     },
     "promoStepRestrictions": {
       "pageTitle": "Rajoitukset & näyttö",
@@ -2439,7 +2657,8 @@
       "channelBothLabel": "Molemmat",
       "hiddenCodeInfo": "Piilotetut tarjoukset käytetään vain, kun asiakas syöttää tämän koodin kassalla.",
       "vipLockedTitle": "Vain VIP — liitetty: {groups}",
-      "vipLockedDesc": "Tämä kampanja koskee automaattisesti vain näitä VIP-jäseniä kassalla. Se ei koskaan näy julkisessa ruokalistassa, bannerissa tai sivustolla — mikään näkyvyysasetus ei muuta sitä. Julkiseksi saat sen irrottamalla sen ensin VIP-ryhmät-sivulla."
+      "vipLockedDesc": "Tämä kampanja koskee automaattisesti vain näitä VIP-jäseniä kassalla. Se ei koskaan näy julkisessa ruokalistassa, bannerissa tai sivustolla — mikään näkyvyysasetus ei muuta sitä. Julkiseksi saat sen irrottamalla sen ensin VIP-ryhmät-sivulla.",
+      "bundleBuildInfo": "💡 Asiakkaat kokoavat tämän paketin menusi ”Kokoa tarjouksesi” -kortista. Kiinnitä se alla olevaan banneriin, jotta se on helppo löytää. (Pakettia ei voi ottaa käyttöön automaattisesti eikä avata koodilla.)"
     },
     "customersList": {
       "heading": "Asiakkaat",
@@ -3137,7 +3356,9 @@
       "webhookSaveFirst": "Tallenna asetuksesi kerran (ShipDay-lähde valittuna), niin henkilökohtainen webhook-linkkisi ilmestyy tähän.",
       "feeFromZonesTitle": "Asiakkaan toimitusmaksut",
       "feeFromZonesBody": "Se, mitä asiakkaasi maksavat toimituksesta, määritetään Toimitusalueet-sivulla — aivan kuten omien kuljettajiesi kanssa. ShipDay laskuttaa ravintolaasi erikseen jokaisesta toimituksesta; kysy toimituskohtaista hintaasi ShipDay-yhteyshenkilöltäsi.",
-      "feeFromZonesLink": "Avaa Toimitusalueet"
+      "feeFromZonesLink": "Avaa Toimitusalueet",
+      "errorUnknown": "Tuntematon virhe",
+      "errorNetwork": "Verkkovirhe"
     },
     "driverPoolLocked": {
       "addonBadge": "Lisäosa",
@@ -3156,7 +3377,8 @@
       "feature2Title": "Sinä asetat asiakashinnoittelun",
       "feature2Body": "Läpilasku (asiakas maksaa täyden ShipDay-maksun), kiinteä (painat erotuksen) tai porrastettu (esim. ilmainen yli 50 dollarin tilauksille). Täysi hallinta.",
       "feature3Title": "Vaihda per tilaus",
-      "feature3Body": "Yhdistä omat kuljettajat ShipDayn kanssa. Keittiö näkee valitsimen jokaiselle toimitukselle: oma tai pooli. Sinun päätöksesi, joka kerta."
+      "feature3Body": "Yhdistä omat kuljettajat ShipDayn kanssa. Keittiö näkee valitsimen jokaiselle toimitukselle: oma tai pooli. Sinun päätöksesi, joka kerta.",
+      "perMonth": "/kk"
     },
     "marketplaceLocked": {
       "addonBadge": "Lisäosa",
