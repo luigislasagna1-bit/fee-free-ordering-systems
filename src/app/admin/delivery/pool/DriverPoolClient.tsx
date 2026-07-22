@@ -105,11 +105,17 @@ export function DriverPoolClient({
     try {
       const payload: Record<string, unknown> = {
         enabled,
-        deliverySource,
         deliveryFeeMode,
         flatDeliveryFee,
         tieredRules,
       };
+      // The provider chooser owns deliverySource when this panel is embedded
+      // (hideSourceSelector) — including it here would silently rewrite a
+      // legacy "both" store to "shipday" on a mere settings save, killing the
+      // kitchen's mid-shift toggle without an explicit provider choice. The
+      // route accepts partial bodies; the enable/entitlement gates still fire
+      // on `enabled: true` alone. Standalone mode keeps saving the user's pick.
+      if (!hideSourceSelector) payload.deliverySource = deliverySource;
       // Only send the API key when the user actually typed a new one.
       // Sending an empty string would clobber the saved key.
       if (replacingKey && apiKey.trim()) {

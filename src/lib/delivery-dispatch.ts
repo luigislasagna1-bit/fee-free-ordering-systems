@@ -13,6 +13,26 @@ import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
 export type DeliveryProvider = "own" | "shipday" | "feefree";
 
 /**
+ * Which provider the admin chooser should DISPLAY as active, from already-loaded
+ * config values. Pure — mirrors the runtime precedence (feefree > shipday > own)
+ * including the legacy `deliverySource="both"` case, where the kitchen's
+ * mid-shift toggle (`activeDispatchMode`) decides whether orders actually go to
+ * ShipDay: "both"+"own" must display OWN, not ShipDay (fixed 2026-07-22 — the
+ * chooser previously showed any non-"own" source as ShipDay-active even when
+ * nothing was dispatching there).
+ */
+export function displayDeliveryProvider(
+  feefreeEnabled: boolean,
+  deliverySource: string,
+  activeDispatchMode: string,
+): DeliveryProvider {
+  if (feefreeEnabled) return "feefree";
+  if (deliverySource === "shipday") return "shipday";
+  if (deliverySource === "both" && activeDispatchMode === "shipday") return "shipday";
+  return "own";
+}
+
+/**
  * Which provider handles this restaurant's delivery dispatch. FeeFree (our own
  * driver pool) takes precedence when its config is enabled; else ShipDay when
  * configured; else "own" (the restaurant handles delivery off-platform, as today

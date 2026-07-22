@@ -17,7 +17,7 @@ vi.mock("@/lib/db", () => ({ default: prismaMock }));
 vi.mock("@/lib/shipday-dispatch", () => ({ dispatchOrderNow: dispatchOrderNowMock }));
 vi.mock("@/lib/shipday", () => ({ shouldDispatchToShipday: shouldDispatchToShipdayMock }));
 
-import { assertDispatchable, resolveDeliveryProvider, assignToFeeFreeDriver, dispatchDeliveryNow, type DispatchableOrder } from "./delivery-dispatch";
+import { assertDispatchable, resolveDeliveryProvider, assignToFeeFreeDriver, dispatchDeliveryNow, displayDeliveryProvider, type DispatchableOrder } from "./delivery-dispatch";
 
 const base = (over: Partial<DispatchableOrder> = {}): DispatchableOrder => ({
   type: "delivery",
@@ -70,6 +70,25 @@ describe("assertDispatchable (shared ShipDay + FeeFree guards)", () => {
   });
   it("accepts an unpaid order fully covered by store credit", () => {
     expect(assertDispatchable(base({ paymentStatus: "pending", total: 20, creditApplied: 20 })).ok).toBe(true);
+  });
+});
+
+describe("displayDeliveryProvider (chooser display, incl. legacy 'both')", () => {
+  it("feefree enabled wins regardless of source", () => {
+    expect(displayDeliveryProvider(true, "shipday", "shipday")).toBe("feefree");
+    expect(displayDeliveryProvider(true, "own", "own")).toBe("feefree");
+  });
+  it("source=shipday displays shipday", () => {
+    expect(displayDeliveryProvider(false, "shipday", "own")).toBe("shipday");
+  });
+  it("legacy both follows the kitchen mid-shift toggle", () => {
+    // both+own: nothing dispatches to ShipDay → must display OWN (the
+    // pre-fix chooser showed ShipDay-active here — display/behavior mismatch).
+    expect(displayDeliveryProvider(false, "both", "own")).toBe("own");
+    expect(displayDeliveryProvider(false, "both", "shipday")).toBe("shipday");
+  });
+  it("source=own displays own", () => {
+    expect(displayDeliveryProvider(false, "own", "own")).toBe("own");
   });
 });
 

@@ -3,6 +3,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
+import { displayDeliveryProvider } from "@/lib/delivery-dispatch";
 import { DriverPoolClient } from "./DriverPoolClient";
 import { FeeFreeDeliverySection } from "./FeeFreeDeliverySection";
 import { FeeFreeDeliveryOps } from "./FeeFreeDeliveryOps";
@@ -57,7 +58,10 @@ export default async function DriverPoolConfigPage() {
   // Only touched/read when FeeFree is available in this restaurant's area.
   const feefree = feefreeAvailable
     ? ((await prisma.feeFreeDeliveryConfig.findUnique({ where: { restaurantId: user.restaurantId } })) ??
-       (await prisma.feeFreeDeliveryConfig.create({ data: { restaurantId: user.restaurantId } })))
+       // autoSend:false matches the API's manual-by-default creates (Luigi
+       // 2026-07-14) — the bare create previously inherited the schema default
+       // (true), so the row's autoSend depended on WHICH surface created it.
+       (await prisma.feeFreeDeliveryConfig.create({ data: { restaurantId: user.restaurantId, autoSend: false } })))
     : null;
 
   // Never send the encrypted API key blob to the client — just whether
@@ -74,13 +78,15 @@ export default async function DriverPoolConfigPage() {
     ? `${base}/api/webhooks/shipday?token=${config.webhookToken}`
     : null;
 
-  // The single active provider: FeeFree (if enabled + in area) wins, else ShipDay
-  // (any non-"own" source), else own — mirrors resolveDeliveryProvider's precedence.
-  const initialProvider: DeliveryProvider = feefree?.enabled
-    ? "feefree"
-    : config.deliverySource !== "own"
-      ? "shipday"
-      : "own";
+  // The single active provider — mirrors resolveDeliveryProvider's precedence,
+  // INCLUDING legacy "both" stores where the kitchen's mid-shift toggle
+  // (activeDispatchMode) decides: "both"+"own" displays OWN (nothing dispatches
+  // to ShipDay), "both"+"shipday" displays ShipDay. Pure helper, test-locked.
+  const initialProvider: DeliveryProvider = displayDeliveryProvider(
+    !!feefree?.enabled,
+    config.deliverySource,
+    config.activeDispatchMode,
+  );
 
   const shipdayPanel = (
     <DriverPoolClient
