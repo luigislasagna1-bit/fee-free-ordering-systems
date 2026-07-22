@@ -141,11 +141,14 @@ export default async function MarketplacePage() {
         </div>
       </section>
 
-      {/* ─── Native apps Coming Soon notice ───────────────────────────────
-          PWA install works on iOS Safari + Android Chrome today (Add to
-          Home Screen). Native wrappers via Capacitor are scaffolded but
-          not yet in either store — call that out honestly so visitors
-          aren't searching the App Store and coming up empty. */}
+      {/* ─── Marketplace app Coming Soon notice ───────────────────────────
+          This is about the CONSUMER marketplace ordering app — still not in
+          any store. NOTE (2026-07-22): the restaurant-STAFF Kitchen app is
+          now live on Google Play, so the copy (nativeAppsTitle/Body ×38)
+          must say "marketplace app" explicitly — a visitor searching Play
+          finds "Fee Free Order App" (the staff app) and must not install
+          the wrong thing. PWA install (Add to Home Screen) works today on
+          iOS Safari + Android Chrome for ordering. */}
       <section className="bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
           <div className="flex items-start gap-3 rounded-xl bg-amber-50 border border-amber-200 p-4 sm:p-5 max-w-3xl mx-auto">

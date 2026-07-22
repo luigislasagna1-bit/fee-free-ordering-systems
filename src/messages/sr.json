@@ -129,7 +129,8 @@
     "thisPartner": "ovaj partner",
     "signingUpUnder": "Registrujete se putem {brand}",
     "restaurantLogin": "Пријава ресторана",
-    "tooManyAttempts": "Превише покушаја. Сачекајте неколико минута, па покушајте једном."
+    "tooManyAttempts": "Превише покушаја. Сачекајте неколико минута, па покушајте једном.",
+    "kitchenGetAppHint": "Preuzmite besplatnu Android aplikaciju na Google Play prodavnici"
   },
   "ordering": {
     "viewCart": "Pogledaj korpu",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Hosiraćemo marketinšku stranicu na <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Nadogradite za otključavanje →",
       "brandedAppTitle": "Brendirana mobilna aplikacija",
-      "brandedAppDescription": "Objavite svoju aplikaciju u iOS i Android prodavnicama sa vašim brendiranjem."
+      "brandedAppDescription": "Objavite svoju aplikaciju u iOS i Android prodavnicama sa vašim brendiranjem.",
+      "getAppTitle": "Preuzmite Kitchen Order App",
+      "getAppBody": "Besplatno na Google Play prodavnici. Nove porudžbine zvone odmah — čak i kada je ekran isključen — a računi se štampaju preko WiFi mreže.",
+      "getAppScanHint": "Skenirajte kuhinjskim tabletom ili telefonom da biste otvorili Google Play",
+      "getAppIosSoon": "Verzija za iPhone/iPad uskoro stiže u App Store — do tada, iPad uređaji mogu da vode kuhinju u pregledaču."
     },
     "endOfDayPage": {
       "heading": "Izveštaj kraja dana",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Pretraži stavke i kategorije…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Naziv i adresa",
+        "mapPin": "Oznaka lokacije na mapi",
+        "cuisine": "Tip kuhinje",
+        "accountConfirmation": "Imejl potvrđen"
+      },
+      "services": {
+        "atLeastOne": "Bar jedna usluga omogućena",
+        "openingHours": "Radno vreme",
+        "deliveryZones": "Zone dostave",
+        "deliveryManagement": "Izabrano upravljanje dostavom"
+      },
+      "payments": {
+        "methodsSelected": "Prihvaćeni načini plaćanja",
+        "taxation": "Porezi podešeni",
+        "currency": "Valuta",
+        "methodConfigured": "Onlajn plaćanja karticom podešena"
+      },
+      "orders": {
+        "appConnected": "Aplikacija za prijem porudžbina povezana",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · nativna aplikacija",
+          "browser": "{device} · {ago} · radi u pregledaču — instalirajte besplatnu Android aplikaciju za pouzdana zvučna obaveštenja",
+          "install": "Instalirajte besplatnu aplikaciju Kitchen Order App (Google Play) da bi nove porudžbine odmah zazvonile. Do tada ćete i dalje dobijati imejl/SMS obaveštenja."
+        },
+        "notificationRecipient": "Bar jedan primalac obaveštenja"
+      },
+      "menu": {
+        "categoryExists": "Bar jedna kategorija menija",
+        "itemExists": "Bar jedna aktivna stavka menija"
+      },
+      "publish": {
+        "officialDetails": "Zvanični podaci i pravila",
+        "widgetReady": "Dodajte dugme za naručivanje na svoj veb-sajt",
+        "widgetReadyDetail": {
+          "sow": "Vaš Prodajno optimizovani veb-sajt je vaša stranica za naručivanje — vidžet je opcionalan.",
+          "optional": "Opcionalno — dodajte dugme za naručivanje na svoj postojeći veb-sajt. Kupci takođe mogu naručiti preko vašeg QR koda, linka za deljenje ili listinga na marketplace-u."
+        }
+      },
+      "sections": {
+        "basics": "Osnove restorana",
+        "services": "Usluge i radno vreme",
+        "payments": "Plaćanja / Porezi",
+        "orders": "Primanje porudžbina",
+        "menu": "Podešavanje menija",
+        "publishing": "Objavljivanje"
+      },
+      "ago": {
+        "seconds": "pre {n} s",
+        "minutes": "pre {n} min",
+        "hours": "pre {n} č",
+        "days": "pre {n} d"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Nalog",
       "copyright": "© {year} Fee Free Ordering. Sva prava zadržana.",
       "tagline": "Platforma za naručivanje bez naknada za nezavisne restorane.",
-      "support24_7": "Kanadska podrška od pravih ljudi"
+      "support24_7": "Kanadska podrška od pravih ljudi",
+      "getTheApp": "Preuzmite aplikaciju"
     },
     "home": {
       "heroBadge": "0% provizije na porudžbine",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "u dodatnim naknadama za kupce",
     "statCommissionLabel": "provizija restoranima",
     "statIndependentLabel": "nezavisnih lokalnih restorana",
-    "nativeAppsTitle": "Izvorne iOS & Android aplikacije",
+    "nativeAppsTitle": "Marketplace aplikacija za iOS i Android",
     "comingSoon": "Uskoro",
-    "nativeAppsBody": "Pune izvorne aplikacije su u izradi. Za sada, dodirnite <b>meni za deljenje</b> u svom pregledaču i odaberite <b>„Add to Home Screen“</b> — dobićete marketplace kao pravu ikonu aplikacije, uvodni ekran i prikaz na ceo ekran. App Store nije potreban.",
+    "nativeAppsBody": "Namenska marketplace aplikacija za naručivanje je u izradi (aplikacija koja je danas na Google Play prodavnici namenjena je osoblju restorana). U međuvremenu, dodirnite <b>meni za deljenje</b> u svom pregledaču i odaberite <b>„Add to Home Screen“</b> — dobićete marketplace kao pravu ikonu aplikacije, uvodni ekran i prikaz na ceo ekran. Prodavnica aplikacija nije potrebna.",
     "ownerTitle": "Vlasnik restorana? Prijavite se.",
     "ownerBody": "Imate restoran? <b>Uvrštavanje na Fee Free Marketplace je besplatno</b> — bez mesečne naknade, bez provizije po porudžbini, nikada. Ponudite preuzimanje ili dostavu i doprite do novih kupaca u blizini, zadržavajući svoj brend, svoje kupce i 100% svojih cena.",
     "getListedFree": "Počnite besplatno",

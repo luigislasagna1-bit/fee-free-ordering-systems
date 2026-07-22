@@ -129,7 +129,8 @@
     "thisPartner": "mitra ini",
     "signingUpUnder": "Anda mendaftar melalui {brand}",
     "restaurantLogin": "Masuk Restoran",
-    "tooManyAttempts": "Terlalu banyak percobaan. Harap tunggu beberapa menit, lalu coba sekali lagi."
+    "tooManyAttempts": "Terlalu banyak percobaan. Harap tunggu beberapa menit, lalu coba sekali lagi.",
+    "kitchenGetAppHint": "Dapatkan aplikasi Android gratis di Google Play"
   },
   "ordering": {
     "viewCart": "Lihat Keranjang",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Kami akan menghosting halaman marketing di <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Upgrade untuk membuka →",
       "brandedAppTitle": "Aplikasi Mobile Bermerek",
-      "brandedAppDescription": "Kirimkan aplikasi Anda sendiri ke toko aplikasi iOS & Android dengan merek Anda."
+      "brandedAppDescription": "Kirimkan aplikasi Anda sendiri ke toko aplikasi iOS & Android dengan merek Anda.",
+      "getAppTitle": "Dapatkan Kitchen Order App",
+      "getAppBody": "Gratis di Google Play. Pesanan baru langsung berdering — bahkan saat layar mati — dan struk dicetak lewat WiFi.",
+      "getAppScanHint": "Pindai dengan tablet atau ponsel dapur untuk membuka Google Play",
+      "getAppIosSoon": "Versi iPhone/iPad segera hadir di App Store — sementara itu, iPad dapat menjalankan dapur lewat browser."
     },
     "endOfDayPage": {
       "heading": "Laporan akhir hari",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Cari item dan kategori…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Nama & alamat",
+        "mapPin": "Pin lokasi di peta",
+        "cuisine": "Jenis masakan",
+        "accountConfirmation": "Email terverifikasi"
+      },
+      "services": {
+        "atLeastOne": "Minimal satu layanan aktif",
+        "openingHours": "Jam buka",
+        "deliveryZones": "Zona pengiriman",
+        "deliveryManagement": "Pengelolaan pengiriman dipilih"
+      },
+      "payments": {
+        "methodsSelected": "Metode pembayaran yang diterima",
+        "taxation": "Pajak dikonfigurasi",
+        "currency": "Mata uang",
+        "methodConfigured": "Pembayaran kartu online dikonfigurasi"
+      },
+      "orders": {
+        "appConnected": "Aplikasi penerima pesanan terhubung",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · aplikasi native",
+          "browser": "{device} · {ago} · berjalan di browser — instal aplikasi Android gratis untuk notifikasi dering yang andal",
+          "install": "Instal Kitchen Order App gratis (Google Play) agar pesanan baru langsung berdering. Sebelum itu, Anda tetap menerima notifikasi email/SMS."
+        },
+        "notificationRecipient": "Minimal satu penerima notifikasi"
+      },
+      "menu": {
+        "categoryExists": "Minimal satu kategori menu",
+        "itemExists": "Minimal satu item menu aktif"
+      },
+      "publish": {
+        "officialDetails": "Detail resmi & kebijakan",
+        "widgetReady": "Tambahkan tombol pesan ke situs web Anda",
+        "widgetReadyDetail": {
+          "sow": "Situs Web yang Dioptimalkan untuk Penjualan Anda adalah halaman pemesanan Anda — widget bersifat opsional.",
+          "optional": "Opsional — tambahkan tombol pesan ke situs web Anda yang sudah ada. Pelanggan juga dapat memesan lewat kode QR, tautan berbagi, atau listing marketplace Anda."
+        }
+      },
+      "sections": {
+        "basics": "Dasar-Dasar Restoran",
+        "services": "Layanan & Jam Buka",
+        "payments": "Pembayaran / Pajak",
+        "orders": "Menerima Pesanan",
+        "menu": "Pengaturan Menu",
+        "publishing": "Publikasi"
+      },
+      "ago": {
+        "seconds": "{n} dtk lalu",
+        "minutes": "{n} mnt lalu",
+        "hours": "{n} jam lalu",
+        "days": "{n} hr lalu"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Akun",
       "copyright": "© {year} Fee Free Ordering. Hak cipta dilindungi.",
       "tagline": "Platform pemesanan bebas biaya untuk restoran independen.",
-      "support24_7": "Dukungan Kanada dari manusia sungguhan"
+      "support24_7": "Dukungan Kanada dari manusia sungguhan",
+      "getTheApp": "Dapatkan aplikasinya"
     },
     "home": {
       "heroBadge": "0% komisi pesanan",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "biaya ekstra untuk pelanggan",
     "statCommissionLabel": "komisi ke restoran",
     "statIndependentLabel": "restoran lokal independen",
-    "nativeAppsTitle": "Aplikasi native iOS & Android",
+    "nativeAppsTitle": "Aplikasi marketplace untuk iOS & Android",
     "comingSoon": "Segera Hadir",
-    "nativeAppsBody": "Aplikasi native lengkap sedang dalam pengembangan. Sementara itu, ketuk <b>menu berbagi</b> di browser Anda dan pilih <b>“Add to Home Screen”</b> — marketplace akan tampil sebagai ikon aplikasi sungguhan, lengkap dengan splash screen dan tampilan layar penuh. Tanpa perlu App Store.",
+    "nativeAppsBody": "Aplikasi pemesanan marketplace khusus sedang dalam pengembangan (aplikasi yang ada di Google Play saat ini ditujukan untuk staf restoran). Sementara itu, ketuk <b>menu bagikan</b> di browser Anda dan pilih <b>“Tambahkan ke Layar Utama”</b> — Anda akan mendapatkan marketplace sebagai ikon aplikasi sungguhan, dengan layar pembuka dan pengalaman layar penuh. Tanpa perlu toko aplikasi.",
     "ownerTitle": "Pemilik restoran? Daftarkan diri Anda.",
     "ownerBody": "Punya restoran? <b>Terdaftar di Fee Free Marketplace itu gratis</b> — tanpa biaya bulanan, tanpa komisi per pesanan, selamanya. Tawarkan ambil sendiri atau pengantaran dan jangkau pelanggan baru di sekitar sambil mempertahankan merek Anda, pelanggan Anda, dan 100% harga Anda.",
     "getListedFree": "Mulai gratis",

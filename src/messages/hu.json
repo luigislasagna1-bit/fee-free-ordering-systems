@@ -129,7 +129,8 @@
     "thisPartner": "ez a partner",
     "signingUpUnder": "A(z) {brand} partneren keresztül regisztrál",
     "restaurantLogin": "Étterem bejelentkezés",
-    "tooManyAttempts": "Túl sok próbálkozás. Várj néhány percet, majd próbáld meg egyszer."
+    "tooManyAttempts": "Túl sok próbálkozás. Várj néhány percet, majd próbáld meg egyszer.",
+    "kitchenGetAppHint": "Töltse le az ingyenes Android-alkalmazást a Google Play-en"
   },
   "ordering": {
     "viewCart": "Kosár megtekintése",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Marketing oldalt tárolunk a <code>your-slug.feefreeordering.com</code> címen.",
       "upgradeToUnlock": "Frissítés a feloldáshoz →",
       "brandedAppTitle": "Márkás mobilalkalmazás",
-      "brandedAppDescription": "Saját alkalmazás benyújtása az iOS és Android áruházakba a saját márkájával."
+      "brandedAppDescription": "Saját alkalmazás benyújtása az iOS és Android áruházakba a saját márkájával.",
+      "getAppTitle": "Töltse le a Kitchen Order App alkalmazást",
+      "getAppBody": "Ingyenes a Google Play-en. Az új rendelések azonnal csörögnek — kikapcsolt képernyő mellett is —, a nyugták pedig WiFi-n keresztül nyomtatódnak.",
+      "getAppScanHint": "Olvassa be a konyhai tablettel vagy telefonnal a Google Play megnyitásához",
+      "getAppIosSoon": "Az iPhone/iPad verzió hamarosan érkezik az App Store-ba — addig az iPadek böngészőben futtathatják a konyhát."
     },
     "endOfDayPage": {
       "heading": "Nap végi jelentés",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Tételek és kategóriák keresése…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Név és cím",
+        "mapPin": "Helyjelölő a térképen",
+        "cuisine": "Konyha típusa",
+        "accountConfirmation": "E-mail megerősítve"
+      },
+      "services": {
+        "atLeastOne": "Legalább egy szolgáltatás engedélyezve",
+        "openingHours": "Nyitvatartás",
+        "deliveryZones": "Kiszállítási zónák",
+        "deliveryManagement": "Kiszállításkezelés kiválasztva"
+      },
+      "payments": {
+        "methodsSelected": "Elfogadott fizetési módok",
+        "taxation": "Adózás beállítva",
+        "currency": "Pénznem",
+        "methodConfigured": "Online kártyás fizetés beállítva"
+      },
+      "orders": {
+        "appConnected": "Rendelésfogadó alkalmazás csatlakoztatva",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · natív alkalmazás",
+          "browser": "{device} · {ago} · böngészőben fut — telepítse az ingyenes Android-alkalmazást a megbízható csörgő értesítésekhez",
+          "install": "Telepítse az ingyenes Kitchen Order App alkalmazást (Google Play), hogy az új rendelések azonnal csörögjenek. Addig is kap e-mail/SMS értesítéseket."
+        },
+        "notificationRecipient": "Legalább egy értesítési címzett"
+      },
+      "menu": {
+        "categoryExists": "Legalább egy étlapkategória",
+        "itemExists": "Legalább egy aktív étlaptétel"
+      },
+      "publish": {
+        "officialDetails": "Hivatalos adatok és szabályzat",
+        "widgetReady": "Rendelésgomb hozzáadása a weboldalához",
+        "widgetReadyDetail": {
+          "sow": "Az Ön Értékesítés-optimalizált weboldala a rendelési oldala — a widget opcionális.",
+          "optional": "Opcionális — adjon rendelésgombot meglévő weboldalához. Az ügyfelek a QR-kódról, a megosztási linkről vagy a piactéri hirdetésből is rendelhetnek."
+        }
+      },
+      "sections": {
+        "basics": "Éttermi alapadatok",
+        "services": "Szolgáltatások és nyitvatartás",
+        "payments": "Fizetések / adók",
+        "orders": "Rendelésfogadás",
+        "menu": "Étlap beállítása",
+        "publishing": "Közzététel"
+      },
+      "ago": {
+        "seconds": "{n} másodperce",
+        "minutes": "{n} perce",
+        "hours": "{n} órája",
+        "days": "{n} napja"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Fiók",
       "copyright": "© {year} Fee Free Ordering. Minden jog fenntartva.",
       "tagline": "A díjmentes rendelési platform független éttermeknek.",
-      "support24_7": "Kanadai támogatás valódi emberektől"
+      "support24_7": "Kanadai támogatás valódi emberektől",
+      "getTheApp": "Alkalmazás letöltése"
     },
     "home": {
       "heroBadge": "0% jutalék a rendeléseken",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "extra ügyfélköltség",
     "statCommissionLabel": "jutalék az éttermeknek",
     "statIndependentLabel": "független helyi étterem",
-    "nativeAppsTitle": "Natív iOS & Android alkalmazások",
+    "nativeAppsTitle": "Piactér-alkalmazás iOS-re és Androidra",
     "comingSoon": "Hamarosan",
-    "nativeAppsBody": "A teljes értékű natív appok fejlesztés alatt állnak. Addig is koppints a böngésző <b>megosztás menüjére</b>, és válaszd a <b>„Add to Home Screen”</b> lehetőséget — így a piactér valódi app ikonként, betöltőképernyővel és teljes képernyős élménnyel jelenik meg. App Store nem szükséges.",
+    "nativeAppsBody": "Készül egy dedikált piactéri rendelési alkalmazás (a ma a Google Play-en elérhető alkalmazás az éttermi személyzetnek szól). Addig is koppintson a böngésző <b>megosztás menüjére</b>, és válassza a <b>„Hozzáadás a kezdőképernyőhöz”</b> lehetőséget — így a piacteret valódi alkalmazásikonnal, indítóképernyővel és teljes képernyős élménnyel kapja meg. Nincs szükség alkalmazásboltra.",
     "ownerTitle": "Étteremtulajdonos? Kerülj fel a listára.",
     "ownerBody": "Van éttermed? <b>A Fee Free Marketplace-en való megjelenés ingyenes</b> — nincs havidíj, nincs rendelésenkénti jutalék, soha. Kínálj elvitelt vagy kiszállítást, és érj el új vásárlókat a közelben, miközben megtartod a márkádat, a vásárlóidat és az áraid 100%-át.",
     "getListedFree": "Kezdd el ingyen",

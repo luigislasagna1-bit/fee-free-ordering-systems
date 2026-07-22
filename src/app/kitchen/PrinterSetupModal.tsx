@@ -435,7 +435,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <ul className="text-xs text-gray-400 space-y-1.5 leading-relaxed">
                             <li className="flex gap-2">
                               <Tablet className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span><strong className="text-gray-200">Kitchen Order App</strong> — a web app. Runs in any browser on <em>any</em> device: iPad, Android tablet, iPhone, Windows tablet, laptop, desktop, even a TV with a Chromecast. Just open the site and log in. On a tablet, use <strong>Add to Home Screen</strong> to launch it like an app.</span>
+                              <span><strong className="text-gray-200">Kitchen Order App</strong> — a free Android app on <strong>Google Play</strong> (search &ldquo;Fee Free Order App&rdquo;), with WiFi/LAN printing built in. It also runs in any browser on <em>any</em> device: iPad, Android tablet, iPhone, Windows tablet, laptop, desktop, even a TV with a Chromecast — just open the site and log in, and use <strong>Add to Home Screen</strong> on a tablet.</span>
                             </li>
                             <li className="flex gap-2">
                               <Printer className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />

@@ -129,7 +129,8 @@
     "thisPartner": "此合作伙伴",
     "signingUpUnder": "您正在通过 {brand} 注册",
     "restaurantLogin": "餐厅登录",
-    "tooManyAttempts": "尝试次数过多。请稍等几分钟，然后再试一次。"
+    "tooManyAttempts": "尝试次数过多。请稍等几分钟，然后再试一次。",
+    "kitchenGetAppHint": "在 Google Play 免费获取 Android 应用"
   },
   "ordering": {
     "viewCart": "查看购物车",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "我们将在 <code>your-slug.feefreeordering.com</code> 托管一个营销页面。",
       "upgradeToUnlock": "升级以解锁 →",
       "brandedAppTitle": "品牌移动应用",
-      "brandedAppDescription": "使用您的品牌形象将专属应用提交至 iOS 和 Android 应用商店。"
+      "brandedAppDescription": "使用您的品牌形象将专属应用提交至 iOS 和 Android 应用商店。",
+      "getAppTitle": "获取 Kitchen Order App",
+      "getAppBody": "在 Google Play 免费下载。新订单即时响铃——即使屏幕关闭也一样——小票通过 WiFi 打印。",
+      "getAppScanHint": "用厨房平板或手机扫码即可打开 Google Play",
+      "getAppIosSoon": "iPhone/iPad 版即将登陆 App Store——在此之前，iPad 可在浏览器中运行厨房端。"
     },
     "endOfDayPage": {
       "heading": "每日结算报告",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "搜索菜品和分类…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "名称与地址",
+        "mapPin": "地图位置标记",
+        "cuisine": "菜系类型",
+        "accountConfirmation": "邮箱已验证"
+      },
+      "services": {
+        "atLeastOne": "至少启用一项服务",
+        "openingHours": "营业时间",
+        "deliveryZones": "配送范围",
+        "deliveryManagement": "已选择配送管理方式"
+      },
+      "payments": {
+        "methodsSelected": "接受的付款方式",
+        "taxation": "税务已配置",
+        "currency": "货币",
+        "methodConfigured": "在线银行卡支付已配置"
+      },
+      "orders": {
+        "appConnected": "接单应用已连接",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · 原生应用",
+          "browser": "{device} · {ago} · 正在浏览器中运行——安装免费 Android 应用以获得可靠的响铃提醒",
+          "install": "安装免费的 Kitchen Order App（Google Play），让新订单即时响铃。在此之前，您仍会收到邮件/SMS 提醒。"
+        },
+        "notificationRecipient": "至少一位通知接收人"
+      },
+      "menu": {
+        "categoryExists": "至少一个菜单分类",
+        "itemExists": "至少一个已启用的菜品"
+      },
+      "publish": {
+        "officialDetails": "官方信息与政策",
+        "widgetReady": "为您的网站添加下单按钮",
+        "widgetReadyDetail": {
+          "sow": "您的销售优化网站就是您的点餐页面——小组件为可选项。",
+          "optional": "可选——为您现有的网站添加下单按钮。顾客也可以通过您的 QR 码、分享链接或 Marketplace 上架页面下单。"
+        }
+      },
+      "sections": {
+        "basics": "餐厅基本信息",
+        "services": "服务与营业时间",
+        "payments": "支付 / 税务",
+        "orders": "接单",
+        "menu": "菜单设置",
+        "publishing": "发布"
+      },
+      "ago": {
+        "seconds": "{n} 秒前",
+        "minutes": "{n} 分钟前",
+        "hours": "{n} 小时前",
+        "days": "{n} 天前"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "账户",
       "copyright": "© {year} Fee Free Ordering。保留所有权利。",
       "tagline": "专为独立餐厅打造的零佣金点餐平台。",
-      "support24_7": "加拿大真人客服支持"
+      "support24_7": "加拿大真人客服支持",
+      "getTheApp": "获取应用"
     },
     "home": {
       "heroBadge": "订单零佣金",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "额外收取的顾客费用",
     "statCommissionLabel": "向餐厅收取的佣金",
     "statIndependentLabel": "本地独立餐厅",
-    "nativeAppsTitle": "iOS & Android 原生应用",
+    "nativeAppsTitle": "iOS & Android 版 Marketplace 应用",
     "comingSoon": "即将推出",
-    "nativeAppsBody": "完整原生应用正在研发中。现在，您可以点击浏览器的<b>分享菜单</b>，选择<b>“Add to Home Screen”</b>——即可将平台添加为真正的应用图标，享受启动画面与全屏体验。无需 App Store。",
+    "nativeAppsBody": "专门的 Marketplace 点餐应用正在开发中（目前 Google Play 上的应用是供餐厅员工使用的）。在此期间，您可以点击浏览器的<b>分享菜单</b>，选择<b>“Add to Home Screen”</b>——即可将 Marketplace 添加为真正的应用图标，享受启动画面与全屏体验。无需应用商店。",
     "ownerTitle": "您是餐厅老板？立即上架。",
     "ownerBody": "拥有一家餐厅吗？<b>在 Fee Free Marketplace 上架完全免费</b>——永远没有月费，没有按单佣金。提供自取或配送服务，触达附近的新顾客，同时保留您的品牌、您的顾客以及 100% 的定价权。",
     "getListedFree": "免费开始",

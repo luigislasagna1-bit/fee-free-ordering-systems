@@ -59,8 +59,18 @@ export interface SetupStep {
   complete: boolean;
   /** Optional dynamic detail rendered under the step label. Used to
    *  surface live state, e.g. "iPhone 13 · 12s ago" for the kitchen
-   *  device step. Optional — most steps don't need this. */
+   *  device step. Optional — most steps don't need this.
+   *  ENGLISH FALLBACK ONLY since the i18n retrofit (2026-07-22): renderers
+   *  resolve `detailKey`/`detailArgs` through admin.setupSteps.* first (see
+   *  src/lib/setup-step-i18n.ts) and only fall back to this string. */
   detail?: string;
+  /** i18n key for the detail, relative to the admin.setupSteps namespace
+   *  (e.g. "orders.appConnectedDetail.native"). This lib stays PURE — it
+   *  never translates; renderers do (setup-step-i18n.ts helpers). */
+  detailKey?: string;
+  /** ICU args for detailKey. `lastSeenAtMs` is special-cased by the
+   *  renderer helper into a localized relative-"ago" string. */
+  detailArgs?: Record<string, string | number>;
   /** When true, the step shows a prominent "Recommended" badge even though it
    *  does NOT block publishing. For steps we strongly nudge (e.g. connecting the
    *  Kitchen Order App) but won't trap an owner on. */
@@ -101,6 +111,13 @@ export interface ChecklistInput {
   menuItems: Pick<MenuItem, "id" | "isAvailable">[];
   hasPaymentProvider: boolean;
   hasKitchenDevice: boolean;
+  /** True iff a KitchenPushToken row exists — those are written ONLY by the
+   *  NATIVE Kitchen Order App on launch (register-device), so this is the
+   *  "installed the real app" signal, unlike hasKitchenDevice which any
+   *  /kitchen browser tab satisfies. Display-only enrichment for the
+   *  orders.appConnected step's detail (completion stays hasKitchenDevice —
+   *  browser kitchens are a supported setup). 2026-07-22, Play launch. */
+  hasNativeApp?: boolean;
   notificationRecipientCount: number;
   /** Count of active delivery zones for the restaurant. Required to publish
    *  ONLY when acceptsDelivery is enabled — pickup-only restaurants don't
@@ -143,7 +160,7 @@ export interface ChecklistInput {
 
 /** Single source of truth for what "ready to publish" means. */
 export function computeSetupProgress(input: ChecklistInput): SetupProgress {
-  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement, deliverySource, hasDriverPoolEntitlement, kitchenDeviceDetail, hasSalesOptimizedWebsite } = input;
+  const { restaurant, hours, categories, menuItems, hasPaymentProvider, hasKitchenDevice, hasNativeApp, notificationRecipientCount, deliveryZoneCount, paymentMethods, hasOnlinePaymentsEntitlement, deliverySource, hasDriverPoolEntitlement, kitchenDeviceDetail, hasSalesOptimizedWebsite } = input;
   // online_card is only meaningful when BOTH the owner ticked it AND they
   // have the online_payments add-on. Without the add-on, the option is
   // locked in the UI and the Stripe step shouldn't surface at all. This
@@ -314,9 +331,24 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       recommended: true,
       href: "/admin/publishing",
       complete: hasKitchenDevice,
+      // Three detail variants since the Play launch (2026-07-22): the native
+      // app is registered (push token present) → confirm it; a device exists
+      // but it's browser-only → nudge toward the free Android app (reliable
+      // ring with the screen off); nothing yet → install nudge. Completion
+      // deliberately unchanged — browser kitchens stay a supported setup.
       detail: kitchenDeviceDetail
-        ? `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)}`
-        : "Connect the Kitchen Order App so new orders ring instantly. Until then you'll still get email/SMS alerts.",
+        ? hasNativeApp
+          ? `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)} · native app`
+          : `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)} · running in a browser — install the free Android app for reliable ring alerts`
+        : "Install the free Kitchen Order App (Google Play) so new orders ring instantly. Until then you'll still get email/SMS alerts.",
+      detailKey: kitchenDeviceDetail
+        ? hasNativeApp
+          ? "orders.appConnectedDetail.native"
+          : "orders.appConnectedDetail.browser"
+        : "orders.appConnectedDetail.install",
+      detailArgs: kitchenDeviceDetail
+        ? { device: kitchenDeviceDetail.label, lastSeenAtMs: kitchenDeviceDetail.lastSeenAt.getTime() }
+        : undefined,
     },
     {
       id: "orders.notificationRecipient",
@@ -373,6 +405,7 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       detail: hasSalesOptimizedWebsite
         ? "Your Sales Optimized Website is your ordering page — the widget is optional."
         : "Optional — add an order button to your existing website. Customers can also order from your QR code, share link, or marketplace listing.",
+      detailKey: hasSalesOptimizedWebsite ? "publish.widgetReadyDetail.sow" : "publish.widgetReadyDetail.optional",
     },
   ];
 

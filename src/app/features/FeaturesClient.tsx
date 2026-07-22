@@ -14,6 +14,7 @@ import {
 } from "@/components/marketing/sections";
 import { GrowthNetShowcase } from "@/components/marketing/GrowthNetShowcase";
 import { PizzaSplitGraphic } from "@/components/marketing/PizzaSplitGraphic";
+import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
 
 /* Reuse the homepage's translated feature content (marketing.home.v2.*) so the
    features page is exhaustive + cohesive with zero new translation. */
@@ -109,6 +110,13 @@ export function FeaturesClient({ locale }: { locale: string }) {
         <MarketingSection tone="light">
           <div className="mb-12"><SectionHeading center eyebrow={h("kitchen.eyebrow")} title={h("kitchen.title")} subtitle={h("kitchen.subtitle")} /></div>
           <IconFeatureGrid items={reliability} soonLabel={soon} />
+          {/* Store badges — availability-driven via app-links.ts (Play live
+              2026-07-22, iOS "Soon"). Lead-in reuses the homepage's existing
+              kitchen.getApp key — no new i18n. */}
+          <div className="mt-10 text-center">
+            <p className="text-sm font-medium text-gray-700 mb-3">{h("kitchen.getApp")}</p>
+            <AppDownloadBadges className="justify-center" />
+          </div>
         </MarketingSection>
 
         {/* Run the business */}

@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Dapatkan aplikasi Android gratis di Google Play",
+  "publishingPage": {
+    "getAppTitle": "Dapatkan Kitchen Order App",
+    "getAppBody": "Gratis di Google Play. Pesanan baru langsung berdering — bahkan saat layar mati — dan struk dicetak lewat WiFi.",
+    "getAppScanHint": "Pindai dengan tablet atau ponsel dapur untuk membuka Google Play",
+    "getAppIosSoon": "Versi iPhone/iPad segera hadir di App Store — sementara itu, iPad dapat menjalankan dapur lewat browser."
+  },
+  "footerGetTheApp": "Dapatkan aplikasinya",
+  "nativeAppsTitle": "Aplikasi marketplace untuk iOS & Android",
+  "nativeAppsBody": "Aplikasi pemesanan marketplace khusus sedang dalam pengembangan (aplikasi yang ada di Google Play saat ini ditujukan untuk staf restoran). Sementara itu, ketuk <b>menu bagikan</b> di browser Anda dan pilih <b>“Tambahkan ke Layar Utama”</b> — Anda akan mendapatkan marketplace sebagai ikon aplikasi sungguhan, dengan layar pembuka dan pengalaman layar penuh. Tanpa perlu toko aplikasi.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Nama & alamat",
+      "mapPin": "Pin lokasi di peta",
+      "cuisine": "Jenis masakan",
+      "accountConfirmation": "Email terverifikasi"
+    },
+    "services": {
+      "atLeastOne": "Minimal satu layanan aktif",
+      "openingHours": "Jam buka",
+      "deliveryZones": "Zona pengiriman",
+      "deliveryManagement": "Pengelolaan pengiriman dipilih"
+    },
+    "payments": {
+      "methodsSelected": "Metode pembayaran yang diterima",
+      "taxation": "Pajak dikonfigurasi",
+      "currency": "Mata uang",
+      "methodConfigured": "Pembayaran kartu online dikonfigurasi"
+    },
+    "orders": {
+      "appConnected": "Aplikasi penerima pesanan terhubung",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · aplikasi native",
+        "browser": "{device} · {ago} · berjalan di browser — instal aplikasi Android gratis untuk notifikasi dering yang andal",
+        "install": "Instal Kitchen Order App gratis (Google Play) agar pesanan baru langsung berdering. Sebelum itu, Anda tetap menerima notifikasi email/SMS."
+      },
+      "notificationRecipient": "Minimal satu penerima notifikasi"
+    },
+    "menu": {
+      "categoryExists": "Minimal satu kategori menu",
+      "itemExists": "Minimal satu item menu aktif"
+    },
+    "publish": {
+      "officialDetails": "Detail resmi & kebijakan",
+      "widgetReady": "Tambahkan tombol pesan ke situs web Anda",
+      "widgetReadyDetail": {
+        "sow": "Situs Web yang Dioptimalkan untuk Penjualan Anda adalah halaman pemesanan Anda — widget bersifat opsional.",
+        "optional": "Opsional — tambahkan tombol pesan ke situs web Anda yang sudah ada. Pelanggan juga dapat memesan lewat kode QR, tautan berbagi, atau listing marketplace Anda."
+      }
+    },
+    "sections": {
+      "basics": "Dasar-Dasar Restoran",
+      "services": "Layanan & Jam Buka",
+      "payments": "Pembayaran / Pajak",
+      "orders": "Menerima Pesanan",
+      "menu": "Pengaturan Menu",
+      "publishing": "Publikasi"
+    },
+    "ago": {
+      "seconds": "{n} dtk lalu",
+      "minutes": "{n} mnt lalu",
+      "hours": "{n} jam lalu",
+      "days": "{n} hr lalu"
+    }
+  }
+}

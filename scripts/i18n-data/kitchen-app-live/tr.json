@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Ücretsiz Android uygulamasını Google Play'den edinin",
+  "publishingPage": {
+    "getAppTitle": "Kitchen Order App'i edinin",
+    "getAppBody": "Google Play'de ücretsiz. Yeni siparişler anında zil çalar — ekran kapalıyken bile — ve fişler WiFi üzerinden yazdırılır.",
+    "getAppScanHint": "Google Play'i açmak için mutfak tableti veya telefonla tarayın",
+    "getAppIosSoon": "iPhone/iPad sürümü App Store'a geliyor — o zamana kadar iPad'ler mutfağı tarayıcıda çalıştırabilir."
+  },
+  "footerGetTheApp": "Uygulamayı edinin",
+  "nativeAppsTitle": "iOS ve Android için bir marketplace uygulaması",
+  "nativeAppsBody": "Özel bir marketplace sipariş uygulaması hazırlık aşamasında (bugün Google Play'deki uygulama restoran personeli içindir). Bu arada tarayıcınızın <b>paylaş menüsüne</b> dokunun ve <b>“Ana Ekrana Ekle”</b> seçeneğini seçin — marketplace'i gerçek bir uygulama simgesi, açılış ekranı ve tam ekran deneyimiyle kullanırsınız. Uygulama mağazası gerekmez.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Ad ve adres",
+      "mapPin": "Haritada konum işareti",
+      "cuisine": "Mutfak türü",
+      "accountConfirmation": "E-posta doğrulandı"
+    },
+    "services": {
+      "atLeastOne": "En az bir hizmet etkin",
+      "openingHours": "Çalışma saatleri",
+      "deliveryZones": "Teslimat bölgeleri",
+      "deliveryManagement": "Teslimat yönetimi seçildi"
+    },
+    "payments": {
+      "methodsSelected": "Kabul edilen ödeme yöntemleri",
+      "taxation": "Vergilendirme yapılandırıldı",
+      "currency": "Para birimi",
+      "methodConfigured": "Online kart ödemeleri yapılandırıldı"
+    },
+    "orders": {
+      "appConnected": "Sipariş alma uygulaması bağlandı",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · yerel uygulama",
+        "browser": "{device} · {ago} · tarayıcıda çalışıyor — güvenilir zil uyarıları için ücretsiz Android uygulamasını yükleyin",
+        "install": "Yeni siparişler anında zil çalsın diye ücretsiz Kitchen Order App'i (Google Play) yükleyin. O zamana kadar e-posta/SMS uyarıları almaya devam edersiniz."
+      },
+      "notificationRecipient": "En az bir bildirim alıcısı"
+    },
+    "menu": {
+      "categoryExists": "En az bir menü kategorisi",
+      "itemExists": "En az bir aktif menü ürünü"
+    },
+    "publish": {
+      "officialDetails": "Resmi bilgiler ve politika",
+      "widgetReady": "Web sitenize sipariş düğmesi ekleyin",
+      "widgetReadyDetail": {
+        "sow": "Satış Odaklı Web Siteniz sipariş sayfanızdır — widget isteğe bağlıdır.",
+        "optional": "İsteğe bağlı — mevcut web sitenize bir sipariş düğmesi ekleyin. Müşteriler QR kodunuzdan, paylaşım bağlantınızdan veya marketplace listenizden de sipariş verebilir."
+      }
+    },
+    "sections": {
+      "basics": "Restoran Temelleri",
+      "services": "Hizmetler ve Saatler",
+      "payments": "Ödemeler / Vergiler",
+      "orders": "Sipariş Alma",
+      "menu": "Menü Kurulumu",
+      "publishing": "Yayınlama"
+    },
+    "ago": {
+      "seconds": "{n} sn önce",
+      "minutes": "{n} dk önce",
+      "hours": "{n} sa önce",
+      "days": "{n} g önce"
+    }
+  }
+}

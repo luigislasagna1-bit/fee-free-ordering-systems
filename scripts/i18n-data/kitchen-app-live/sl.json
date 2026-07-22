@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Prenesite brezplačno aplikacijo za Android v trgovini Google Play",
+  "publishingPage": {
+    "getAppTitle": "Prenesite aplikacijo Kitchen Order App",
+    "getAppBody": "Brezplačno v trgovini Google Play. Nova naročila zazvonijo takoj — tudi ob izklopljenem zaslonu — računi pa se tiskajo prek omrežja WiFi.",
+    "getAppScanHint": "Skenirajte s kuhinjsko tablico ali telefonom, da odprete Google Play",
+    "getAppIosSoon": "Različica za iPhone/iPad prihaja v App Store — do takrat lahko iPadi kuhinjo poganjajo v brskalniku."
+  },
+  "footerGetTheApp": "Prenesite aplikacijo",
+  "nativeAppsTitle": "Aplikacija tržnice za iOS in Android",
+  "nativeAppsBody": "Namenska aplikacija za naročanje prek tržnice je v pripravi (aplikacija, ki je danes na voljo v Google Play, je namenjena osebju restavracij). Do takrat tapnite <b>meni za deljenje</b> v brskalniku in izberite <b>»Dodaj na začetni zaslon«</b> — tržnico boste dobili kot pravo ikono aplikacije, z uvodnim zaslonom in celozaslonsko izkušnjo. Trgovina z aplikacijami ni potrebna.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Ime in naslov",
+      "mapPin": "Oznaka lokacije na zemljevidu",
+      "cuisine": "Vrsta kuhinje",
+      "accountConfirmation": "E-pošta potrjena"
+    },
+    "services": {
+      "atLeastOne": "Vsaj ena storitev omogočena",
+      "openingHours": "Delovni čas",
+      "deliveryZones": "Območja dostave",
+      "deliveryManagement": "Upravljanje dostave izbrano"
+    },
+    "payments": {
+      "methodsSelected": "Sprejeti načini plačila",
+      "taxation": "Obdavčitev nastavljena",
+      "currency": "Valuta",
+      "methodConfigured": "Spletna plačila s kartico nastavljena"
+    },
+    "orders": {
+      "appConnected": "Aplikacija za sprejem naročil povezana",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · izvorna aplikacija",
+        "browser": "{device} · {ago} · deluje v brskalniku — namestite brezplačno aplikacijo za Android za zanesljivo zvonjenje ob naročilih",
+        "install": "Namestite brezplačno aplikacijo Kitchen Order App (Google Play), da nova naročila zazvonijo takoj. Do takrat boste še vedno prejemali opozorila po e-pošti/SMS."
+      },
+      "notificationRecipient": "Vsaj en prejemnik obvestil"
+    },
+    "menu": {
+      "categoryExists": "Vsaj ena kategorija menija",
+      "itemExists": "Vsaj en aktiven artikel na meniju"
+    },
+    "publish": {
+      "officialDetails": "Uradni podatki in pravilnik",
+      "widgetReady": "Dodajte gumb za naročanje na svojo spletno stran",
+      "widgetReadyDetail": {
+        "sow": "Vaša Prodajno optimizirana spletna stran je vaša stran za naročanje — vtičnik je neobvezen.",
+        "optional": "Neobvezno — dodajte gumb za naročanje na svojo obstoječo spletno stran. Stranke lahko naročajo tudi prek vaše kode QR, povezave za deljenje ali uvrstitve na tržnici."
+      }
+    },
+    "sections": {
+      "basics": "Osnove restavracije",
+      "services": "Storitve in delovni čas",
+      "payments": "Plačila / davki",
+      "orders": "Sprejemanje naročil",
+      "menu": "Nastavitev menija",
+      "publishing": "Objava"
+    },
+    "ago": {
+      "seconds": "pred {n} s",
+      "minutes": "pred {n} min",
+      "hours": "pred {n} h",
+      "days": "pred {n} d"
+    }
+  }
+}

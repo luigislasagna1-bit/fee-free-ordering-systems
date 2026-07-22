@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Hämta den kostnadsfria Android-appen på Google Play",
+  "publishingPage": {
+    "getAppTitle": "Hämta Kitchen Order App",
+    "getAppBody": "Gratis på Google Play. Nya beställningar ringer omedelbart — även när skärmen är av — och kvitton skrivs ut via WiFi.",
+    "getAppScanHint": "Skanna med kökets surfplatta eller telefon för att öppna Google Play",
+    "getAppIosSoon": "Versionen för iPhone/iPad är på väg till App Store — tills dess kan iPads köra köket i webbläsaren."
+  },
+  "footerGetTheApp": "Hämta appen",
+  "nativeAppsTitle": "En marketplace-app för iOS och Android",
+  "nativeAppsBody": "En dedikerad beställningsapp för marketplace är på väg (appen som finns på Google Play idag är för restaurangpersonal). Under tiden kan du öppna webbläsarens <b>delningsmeny</b> och välja <b>”Lägg till på hemskärmen”</b> — då får du marketplace som en riktig appikon, med startskärm och helskärmsupplevelse. Ingen appbutik behövs.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Namn & adress",
+      "mapPin": "Platsnål på kartan",
+      "cuisine": "Typ av kök",
+      "accountConfirmation": "E-post verifierad"
+    },
+    "services": {
+      "atLeastOne": "Minst en tjänst aktiverad",
+      "openingHours": "Öppettider",
+      "deliveryZones": "Leveranszoner",
+      "deliveryManagement": "Leveranshantering vald"
+    },
+    "payments": {
+      "methodsSelected": "Accepterade betalningsmetoder",
+      "taxation": "Skatter konfigurerade",
+      "currency": "Valuta",
+      "methodConfigured": "Kortbetalningar online konfigurerade"
+    },
+    "orders": {
+      "appConnected": "Beställningsapp ansluten",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · native-app",
+        "browser": "{device} · {ago} · körs i webbläsare — installera den kostnadsfria Android-appen för tillförlitliga ringsignaler",
+        "install": "Installera den kostnadsfria Kitchen Order App (Google Play) så att nya beställningar ringer omedelbart. Tills dess får du fortfarande aviseringar via e-post/SMS."
+      },
+      "notificationRecipient": "Minst en aviseringsmottagare"
+    },
+    "menu": {
+      "categoryExists": "Minst en menykategori",
+      "itemExists": "Minst en aktiv menyartikel"
+    },
+    "publish": {
+      "officialDetails": "Officiella uppgifter & policy",
+      "widgetReady": "Lägg till en beställningsknapp på din webbplats",
+      "widgetReadyDetail": {
+        "sow": "Din Försäljningsoptimerade webbplats är din beställningssida — widgeten är valfri.",
+        "optional": "Valfritt — lägg till en beställningsknapp på din befintliga webbplats. Kunder kan också beställa via din QR-kod, delningslänk eller marketplace-annons."
+      }
+    },
+    "sections": {
+      "basics": "Grunduppgifter",
+      "services": "Tjänster & öppettider",
+      "payments": "Betalningar / skatter",
+      "orders": "Ta emot beställningar",
+      "menu": "Menyinställning",
+      "publishing": "Publicering"
+    },
+    "ago": {
+      "seconds": "för {n} s sen",
+      "minutes": "för {n} min sen",
+      "hours": "för {n} h sen",
+      "days": "för {n} d sen"
+    }
+  }
+}

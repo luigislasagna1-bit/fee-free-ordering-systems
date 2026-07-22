@@ -129,7 +129,8 @@
     "thisPartner": "šis partneris",
     "signingUpUnder": "Registruojatės per {brand}",
     "restaurantLogin": "Restorano prisijungimas",
-    "tooManyAttempts": "Per daug bandymų. Palaukite kelias minutes ir pabandykite dar kartą."
+    "tooManyAttempts": "Per daug bandymų. Palaukite kelias minutes ir pabandykite dar kartą.",
+    "kitchenGetAppHint": "Atsisiųskite nemokamą Android programėlę iš Google Play"
   },
   "ordering": {
     "viewCart": "Peržiūrėti krepšelį",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Priegloboje laikysime rinkodaros puslapį adresu <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Atnaujinti, kad atrakintumėte →",
       "brandedAppTitle": "Pažymėta mobilioji programa",
-      "brandedAppDescription": "Pateikite savo programą į iOS ir Android parduotuves su savo prekės ženklu."
+      "brandedAppDescription": "Pateikite savo programą į iOS ir Android parduotuves su savo prekės ženklu.",
+      "getAppTitle": "Atsisiųskite programėlę „Kitchen Order App“",
+      "getAppBody": "Nemokama Google Play parduotuvėje. Nauji užsakymai suskamba akimirksniu — net išjungus ekraną — o kvitai spausdinami per WiFi.",
+      "getAppScanHint": "Nuskenuokite virtuvės planšete arba telefonu, kad atsidarytų Google Play",
+      "getAppIosSoon": "iPhone/iPad versija netrukus pasirodys App Store — iki tol virtuvę iPad planšetėje galima naudoti naršyklėje."
     },
     "endOfDayPage": {
       "heading": "Dienos pabaigos ataskaita",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Ieškoti patiekalų ir kategorijų…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Pavadinimas ir adresas",
+        "mapPin": "Vietos žymeklis žemėlapyje",
+        "cuisine": "Virtuvės tipas",
+        "accountConfirmation": "El. paštas patvirtintas"
+      },
+      "services": {
+        "atLeastOne": "Įjungta bent viena paslauga",
+        "openingHours": "Darbo laikas",
+        "deliveryZones": "Pristatymo zonos",
+        "deliveryManagement": "Pasirinktas pristatymo valdymas"
+      },
+      "payments": {
+        "methodsSelected": "Priimami mokėjimo būdai",
+        "taxation": "Sukonfigūruoti mokesčiai",
+        "currency": "Valiuta",
+        "methodConfigured": "Sukonfigūruoti mokėjimai kortele internetu"
+      },
+      "orders": {
+        "appConnected": "Prijungta užsakymų priėmimo programėlė",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · įdiegta programėlė",
+          "browser": "{device} · {ago} · veikia naršyklėje — įdiekite nemokamą Android programėlę, kad skambėjimo įspėjimai būtų patikimi",
+          "install": "Įdiekite nemokamą „Kitchen Order App“ (Google Play), kad nauji užsakymai suskambėtų akimirksniu. Iki tol vis tiek gausite įspėjimus el. paštu / SMS."
+        },
+        "notificationRecipient": "Bent vienas pranešimų gavėjas"
+      },
+      "menu": {
+        "categoryExists": "Bent viena meniu kategorija",
+        "itemExists": "Bent viena aktyvi meniu prekė"
+      },
+      "publish": {
+        "officialDetails": "Oficialūs duomenys ir politika",
+        "widgetReady": "Pridėkite užsakymo mygtuką į savo svetainę",
+        "widgetReadyDetail": {
+          "sow": "Jūsų „Pardavimams optimizuota svetainė“ ir yra jūsų užsakymų puslapis — valdiklis neprivalomas.",
+          "optional": "Neprivaloma — pridėkite užsakymo mygtuką į savo esamą svetainę. Klientai taip pat gali užsisakyti per jūsų QR kodą, bendrinimo nuorodą ar Marketplace įrašą."
+        }
+      },
+      "sections": {
+        "basics": "Restorano pagrindai",
+        "services": "Paslaugos ir darbo laikas",
+        "payments": "Mokėjimai / mokesčiai",
+        "orders": "Užsakymų priėmimas",
+        "menu": "Meniu sąranka",
+        "publishing": "Skelbimas"
+      },
+      "ago": {
+        "seconds": "prieš {n} s",
+        "minutes": "prieš {n} min.",
+        "hours": "prieš {n} val.",
+        "days": "prieš {n} d."
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Paskyra",
       "copyright": "© {year} Fee Free Ordering. Visos teisės saugomos.",
       "tagline": "Mokesčio neimanti užsakymų platforma nepriklausomiems restoranams.",
-      "support24_7": "Kanadietiškas tikrų žmonių palaikymas"
+      "support24_7": "Kanadietiškas tikrų žmonių palaikymas",
+      "getTheApp": "Atsisiųskite programėlę"
     },
     "home": {
       "heroBadge": "0% komisinių nuo užsakymų",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "papildomų mokesčių klientams",
     "statCommissionLabel": "komisinių restoranuose",
     "statIndependentLabel": "nepriklausomi vietiniai restoranai",
-    "nativeAppsTitle": "Natyvios iOS ir Android programėlės",
+    "nativeAppsTitle": "Marketplace programėlė iOS ir Android įrenginiams",
     "comingSoon": "Netrukus",
-    "nativeAppsBody": "Pilnavertės natyvios programėlės jau kuriamos. Tuo tarpu naršyklėje bakstelėkite <b>dalinimosi meniu</b> ir pasirinkite <b>„Add to Home Screen“</b> — gausite rinkos vietą kaip tikrą programėlės ikoną, paleidimo ekraną ir viso ekrano patirtį. App Store nereikalingas.",
+    "nativeAppsBody": "Speciali Marketplace užsakymų programėlė jau kuriama (šiuo metu Google Play esanti programėlė skirta restoranų darbuotojams). Kol kas palieskite naršyklės <b>bendrinimo meniu</b> ir pasirinkite <b>„Pridėti prie pagrindinio ekrano“</b> — gausite Marketplace kaip tikrą programėlės piktogramą su paleidimo ekranu ir viso ekrano patirtimi. Programėlių parduotuvės nereikia.",
     "ownerTitle": "Restorano savininkas? Prisijunkite.",
     "ownerBody": "Turite restoraną? <b>Įtraukimas į Fee Free Marketplace yra nemokamas</b> — jokio mėnesinio mokesčio, jokių komisinių už užsakymą, niekada. Siūlykite atsiėmimą arba pristatymą ir pasiekite naujų klientų netoliese, išsaugodami savo prekės ženklą, savo klientus ir 100% savo kainų.",
     "getListedFree": "Pradėkite nemokamai",

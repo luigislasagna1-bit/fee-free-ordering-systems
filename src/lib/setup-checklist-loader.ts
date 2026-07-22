@@ -65,7 +65,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
   });
   if (!restaurant) return null;
 
-  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement, shipdayConfig, hasDriverPoolEntitlement, kitchenDeviceDetail, hasSalesOptimizedWebsite] = await Promise.all([
+  const [hours, categories, menuItems, paymentProvider, notificationCount, kitchenDeviceLive, deliveryZoneCount, hasOnlinePaymentsEntitlement, shipdayConfig, hasDriverPoolEntitlement, kitchenDeviceDetail, hasSalesOptimizedWebsite, nativePushToken] = await Promise.all([
     prisma.openingHours.findMany({
       where: { restaurantId },
       select: { isOpen: true },
@@ -116,6 +116,14 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     // When FALSE, the widget install becomes the only ordering surface
     // and is required-to-publish. See computeSetupProgress publish.widgetReady.
     hasFeature(restaurantId, "hosted_marketing_page"),
+    // NATIVE app signal: KitchenPushToken rows are written only by the native
+    // Kitchen Order App on launch (register-device) — 0-or-1 per restaurant.
+    // Display-only enrichment for the orders.appConnected step detail
+    // (browser vs native); completion stays hasKitchenDevice. 2026-07-22.
+    prisma.kitchenPushToken.findFirst({
+      where: { restaurantId },
+      select: { id: true },
+    }),
   ]);
 
   const hasKitchenDevice = kitchenDeviceLive;
@@ -175,6 +183,7 @@ export async function loadSetupProgress(restaurantId: string): Promise<SetupProg
     menuItems,
     hasPaymentProvider: hasOnlineCardPayments,
     hasKitchenDevice,
+    hasNativeApp: !!nativePushToken,
     notificationRecipientCount: notificationCount,
     deliveryZoneCount,
     paymentMethods,

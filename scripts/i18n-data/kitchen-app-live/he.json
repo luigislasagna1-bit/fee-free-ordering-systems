@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "הורד את אפליקציית האנדרואיד החינמית ב-Google Play",
+  "publishingPage": {
+    "getAppTitle": "הורד את אפליקציית Kitchen Order App",
+    "getAppBody": "חינם ב-Google Play. הזמנות חדשות מצלצלות מיידית — גם כשהמסך כבוי — והקבלות מודפסות דרך WiFi.",
+    "getAppScanHint": "סרוק עם הטאבלט או הטלפון של המטבח כדי לפתוח את Google Play",
+    "getAppIosSoon": "גרסת ה-iPhone/iPad בדרך ל-App Store — עד אז, מכשירי iPad יכולים להפעיל את המטבח בדפדפן."
+  },
+  "footerGetTheApp": "הורד את האפליקציה",
+  "nativeAppsTitle": "אפליקציית מרקטפלייס ל-iOS ולאנדרואיד",
+  "nativeAppsBody": "אפליקציית הזמנות ייעודית למרקטפלייס נמצאת בפיתוח (האפליקציה שנמצאת היום ב-Google Play מיועדת לצוות המסעדה). בינתיים, הקש על <b>תפריט השיתוף</b> בדפדפן ובחר <b>\"הוסף למסך הבית\"</b> — תקבל את המרקטפלייס כאייקון אפליקציה אמיתי, עם מסך פתיחה וחוויית מסך מלא. ללא צורך בחנות אפליקציות.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "שם וכתובת",
+      "mapPin": "סימון מיקום במפה",
+      "cuisine": "סוג מטבח",
+      "accountConfirmation": "אימייל אומת"
+    },
+    "services": {
+      "atLeastOne": "לפחות שירות אחד מופעל",
+      "openingHours": "שעות פתיחה",
+      "deliveryZones": "אזורי משלוח",
+      "deliveryManagement": "ניהול משלוחים נבחר"
+    },
+    "payments": {
+      "methodsSelected": "אמצעי תשלום מתקבלים",
+      "taxation": "מיסוי הוגדר",
+      "currency": "מטבע",
+      "methodConfigured": "תשלומים בכרטיס אונליין הוגדרו"
+    },
+    "orders": {
+      "appConnected": "אפליקציית קבלת ההזמנות מחוברת",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · אפליקציה מקורית",
+        "browser": "{device} · {ago} · פועל בדפדפן — התקן את אפליקציית האנדרואיד החינמית להתראות צלצול אמינות",
+        "install": "התקן את אפליקציית Kitchen Order App החינמית (Google Play) כדי שהזמנות חדשות יצלצלו מיידית. עד אז עדיין תקבל התראות באימייל/SMS."
+      },
+      "notificationRecipient": "לפחות נמען התראות אחד"
+    },
+    "menu": {
+      "categoryExists": "לפחות קטגוריית תפריט אחת",
+      "itemExists": "לפחות פריט תפריט פעיל אחד"
+    },
+    "publish": {
+      "officialDetails": "פרטים רשמיים ומדיניות",
+      "widgetReady": "הוסף כפתור הזמנה לאתר שלך",
+      "widgetReadyDetail": {
+        "sow": "האתר המותאם למכירות שלך הוא עמוד ההזמנות שלך — הווידג'ט אופציונלי.",
+        "optional": "אופציונלי — הוסף כפתור הזמנה לאתר הקיים שלך. לקוחות יכולים להזמין גם דרך קוד ה-QR שלך, קישור השיתוף או הרישום במרקטפלייס."
+      }
+    },
+    "sections": {
+      "basics": "יסודות המסעדה",
+      "services": "שירותים ושעות",
+      "payments": "תשלומים / מיסים",
+      "orders": "קבלת הזמנות",
+      "menu": "הגדרת תפריט",
+      "publishing": "פרסום"
+    },
+    "ago": {
+      "seconds": "לפני {n} שנ׳",
+      "minutes": "לפני {n} דק׳",
+      "hours": "לפני {n} שע׳",
+      "days": "לפני {n} ימ׳"
+    }
+  }
+}

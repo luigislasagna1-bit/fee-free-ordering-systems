@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Hanki ilmainen Android-sovellus Google Playsta",
+  "publishingPage": {
+    "getAppTitle": "Hanki Kitchen Order App",
+    "getAppBody": "Ilmainen Google Playssa. Uudet tilaukset hälyttävät heti — myös näytön ollessa sammutettuna — ja kuitit tulostuvat WiFin kautta.",
+    "getAppScanHint": "Skannaa keittiön tabletilla tai puhelimella avataksesi Google Playn",
+    "getAppIosSoon": "iPhone-/iPad-versio on tulossa App Storeen — siihen asti iPadit voivat pyörittää keittiötä selaimessa."
+  },
+  "footerGetTheApp": "Hanki sovellus",
+  "nativeAppsTitle": "Markkinapaikkasovellus iOS:lle ja Androidille",
+  "nativeAppsBody": "Erillinen markkinapaikan tilaussovellus on työn alla (Google Playssa tänään oleva sovellus on tarkoitettu ravintolahenkilökunnalle). Sillä välin napauta selaimesi <b>jakamisvalikkoa</b> ja valitse <b>”Add to Home Screen”</b> — saat markkinapaikan oikeana sovelluskuvakkeena, käynnistysnäyttöineen ja koko näytön kokemuksena. Sovelluskauppaa ei tarvita.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Nimi ja osoite",
+      "mapPin": "Sijaintimerkki kartalla",
+      "cuisine": "Keittiötyyppi",
+      "accountConfirmation": "Sähköposti vahvistettu"
+    },
+    "services": {
+      "atLeastOne": "Vähintään yksi palvelu käytössä",
+      "openingHours": "Aukioloajat",
+      "deliveryZones": "Toimitusalueet",
+      "deliveryManagement": "Toimitusten hallinta valittu"
+    },
+    "payments": {
+      "methodsSelected": "Hyväksytyt maksutavat",
+      "taxation": "Verotus määritetty",
+      "currency": "Valuutta",
+      "methodConfigured": "Verkkokorttimaksut määritetty"
+    },
+    "orders": {
+      "appConnected": "Tilaussovellus yhdistetty",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · natiivisovellus",
+        "browser": "{device} · {ago} · toimii selaimessa — asenna ilmainen Android-sovellus, jotta hälytykset soivat luotettavasti",
+        "install": "Asenna ilmainen Kitchen Order App (Google Play), jotta uudet tilaukset hälyttävät heti. Siihen asti saat silti sähköposti-/SMS-ilmoitukset."
+      },
+      "notificationRecipient": "Vähintään yksi ilmoitusten vastaanottaja"
+    },
+    "menu": {
+      "categoryExists": "Vähintään yksi menukategoria",
+      "itemExists": "Vähintään yksi aktiivinen menukohde"
+    },
+    "publish": {
+      "officialDetails": "Viralliset tiedot ja käytännöt",
+      "widgetReady": "Lisää tilauspainike verkkosivustollesi",
+      "widgetReadyDetail": {
+        "sow": "Myyntioptimoitu verkkosivustosi on tilaussivusi — widget on valinnainen.",
+        "optional": "Valinnainen — lisää tilauspainike olemassa olevalle verkkosivustollesi. Asiakkaat voivat tilata myös QR-koodistasi, jakolinkistäsi tai Marketplace-listauksestasi."
+      }
+    },
+    "sections": {
+      "basics": "Ravintolan perustiedot",
+      "services": "Palvelut ja aukioloajat",
+      "payments": "Maksut / verot",
+      "orders": "Tilausten vastaanotto",
+      "menu": "Ruokalistan määritys",
+      "publishing": "Julkaisu"
+    },
+    "ago": {
+      "seconds": "{n} s sitten",
+      "minutes": "{n} min sitten",
+      "hours": "{n} h sitten",
+      "days": "{n} pv sitten"
+    }
+  }
+}

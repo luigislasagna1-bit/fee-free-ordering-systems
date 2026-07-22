@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Google Play에서 무료 Android 앱을 받으세요",
+  "publishingPage": {
+    "getAppTitle": "Kitchen Order App 받기",
+    "getAppBody": "Google Play에서 무료로 제공됩니다. 화면이 꺼져 있어도 새 주문이 즉시 울리고, 영수증은 WiFi로 인쇄됩니다.",
+    "getAppScanHint": "주방 태블릿이나 휴대폰으로 스캔하면 Google Play가 열립니다",
+    "getAppIosSoon": "iPhone/iPad 버전은 App Store 출시를 준비 중입니다 — 그때까지 iPad에서는 브라우저로 주방을 운영할 수 있습니다."
+  },
+  "footerGetTheApp": "앱 받기",
+  "nativeAppsTitle": "iOS 및 Android용 마켓플레이스 앱",
+  "nativeAppsBody": "전용 마켓플레이스 주문 앱을 준비하고 있습니다(현재 Google Play에 있는 앱은 레스토랑 직원용입니다). 그때까지는 브라우저의 <b>공유 메뉴</b>를 열고 <b>“홈 화면에 추가”</b>를 선택하세요 — 마켓플레이스를 실제 앱 아이콘, 스플래시 화면, 전체 화면 경험으로 사용할 수 있습니다. 앱 스토어가 필요 없습니다.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "이름 및 주소",
+      "mapPin": "지도 위치 핀",
+      "cuisine": "요리 종류",
+      "accountConfirmation": "이메일 인증 완료"
+    },
+    "services": {
+      "atLeastOne": "서비스 1개 이상 활성화",
+      "openingHours": "영업시간",
+      "deliveryZones": "배달 구역",
+      "deliveryManagement": "배달 관리 방식 선택"
+    },
+    "payments": {
+      "methodsSelected": "허용 결제 수단",
+      "taxation": "세금 설정",
+      "currency": "통화",
+      "methodConfigured": "온라인 카드 결제 설정"
+    },
+    "orders": {
+      "appConnected": "주문 접수 앱 연결",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · 네이티브 앱",
+        "browser": "{device} · {ago} · 브라우저에서 실행 중 — 안정적인 벨 알림을 위해 무료 Android 앱을 설치하세요",
+        "install": "새 주문이 즉시 울리도록 무료 Kitchen Order App(Google Play)을 설치하세요. 설치 전에도 이메일/SMS 알림은 계속 받을 수 있습니다."
+      },
+      "notificationRecipient": "알림 수신자 1명 이상"
+    },
+    "menu": {
+      "categoryExists": "메뉴 카테고리 1개 이상",
+      "itemExists": "활성 메뉴 항목 1개 이상"
+    },
+    "publish": {
+      "officialDetails": "공식 정보 및 정책",
+      "widgetReady": "웹사이트에 주문 버튼 추가",
+      "widgetReadyDetail": {
+        "sow": "판매 최적화 웹사이트가 곧 주문 페이지입니다 — 위젯은 선택사항입니다.",
+        "optional": "선택사항 — 기존 웹사이트에 주문 버튼을 추가하세요. 고객은 QR 코드, 공유 링크 또는 마켓플레이스 등록을 통해서도 주문할 수 있습니다."
+      }
+    },
+    "sections": {
+      "basics": "레스토랑 기본 정보",
+      "services": "서비스 및 영업시간",
+      "payments": "결제 / 세금",
+      "orders": "주문 접수",
+      "menu": "메뉴 설정",
+      "publishing": "게시"
+    },
+    "ago": {
+      "seconds": "{n}초 전",
+      "minutes": "{n}분 전",
+      "hours": "{n}시간 전",
+      "days": "{n}일 전"
+    }
+  }
+}

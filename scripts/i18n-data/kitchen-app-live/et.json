@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Hangi tasuta Androidi rakendus Google Playst",
+  "publishingPage": {
+    "getAppTitle": "Hangi Kitchen Order App",
+    "getAppBody": "Tasuta Google Plays. Uued tellimused helisevad kohe — isegi väljalülitatud ekraaniga — ja kviitungid prinditakse WiFi kaudu.",
+    "getAppScanHint": "Skanni köögi tahvelarvuti või telefoniga, et avada Google Play",
+    "getAppIosSoon": "iPhone'i/iPadi versioon on tulemas App Store'i — seni saab iPadidel kööki pidada brauseris."
+  },
+  "footerGetTheApp": "Hangi rakendus",
+  "nativeAppsTitle": "Marketplace'i rakendus iOS-ile ja Androidile",
+  "nativeAppsBody": "Spetsiaalne marketplace'i tellimisrakendus on väljatöötamisel (praegu Google Plays olev rakendus on mõeldud restorani personalile). Seni ava oma brauseri <b>jagamismenüü</b> ja vali <b>„Lisa avakuvale“</b> — saad marketplace'i päris rakenduseikoni, avaekraani ja täisekraanikogemusega. Rakenduste poodi pole vaja.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Nimi ja aadress",
+      "mapPin": "Asukoht kaardil",
+      "cuisine": "Köögi tüüp",
+      "accountConfirmation": "E-post kinnitatud"
+    },
+    "services": {
+      "atLeastOne": "Vähemalt üks teenus lubatud",
+      "openingHours": "Lahtiolekuajad",
+      "deliveryZones": "Tarnetsoonid",
+      "deliveryManagement": "Tarnehaldus valitud"
+    },
+    "payments": {
+      "methodsSelected": "Aktsepteeritavad makseviisid",
+      "taxation": "Maksustamine seadistatud",
+      "currency": "Valuuta",
+      "methodConfigured": "Kaardimaksed veebis seadistatud"
+    },
+    "orders": {
+      "appConnected": "Tellimuste vastuvõtu rakendus ühendatud",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · natiivrakendus",
+        "browser": "{device} · {ago} · töötab brauseris — paigalda tasuta Androidi rakendus töökindlate helinateavituste jaoks",
+        "install": "Paigalda tasuta Kitchen Order App (Google Play), et uued tellimused heliseksid kohe. Seni saad ikkagi e-posti/SMS-i teavitusi."
+      },
+      "notificationRecipient": "Vähemalt üks teavituste saaja"
+    },
+    "menu": {
+      "categoryExists": "Vähemalt üks menüükategooria",
+      "itemExists": "Vähemalt üks aktiivne menüütoode"
+    },
+    "publish": {
+      "officialDetails": "Ametlikud andmed ja tingimused",
+      "widgetReady": "Lisa tellimisnupp oma veebisaidile",
+      "widgetReadyDetail": {
+        "sow": "Sinu Müügioptimeeritud Veebisait ongi sinu tellimisleht — vidin on valikuline.",
+        "optional": "Valikuline — lisa tellimisnupp oma olemasolevale veebisaidile. Kliendid saavad tellida ka sinu QR-koodi, jagamislingi või marketplace'i kirje kaudu."
+      }
+    },
+    "sections": {
+      "basics": "Restorani põhiandmed",
+      "services": "Teenused ja lahtiolekuajad",
+      "payments": "Maksed / maksud",
+      "orders": "Tellimuste vastuvõtt",
+      "menu": "Menüü seadistus",
+      "publishing": "Avaldamine"
+    },
+    "ago": {
+      "seconds": "{n}s tagasi",
+      "minutes": "{n}min tagasi",
+      "hours": "{n}t tagasi",
+      "days": "{n}p tagasi"
+    }
+  }
+}

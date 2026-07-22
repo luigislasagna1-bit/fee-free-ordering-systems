@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChefHat, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
+import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
 import { LANDING_PAGES } from "@/data/landing-pages";
 import { SOLUTION_PAGES } from "@/data/solution-pages";
 import { SEGMENT_PAGES } from "@/data/segment-pages";
@@ -37,6 +38,11 @@ export function PublicFooter() {
               <Phone className="w-4 h-4" /> {SUPPORT_PHONE_DISPLAY}
             </a>
             <p className="text-xs text-gray-500 mt-0.5">{tF("support24_7")}</p>
+            {/* Kitchen app store badges — availability-driven via app-links.ts
+                (Play live 2026-07-22, iOS shows "Soon" until approved). Marketing
+                pages never render on white-label domains, so no branding leak. */}
+            <div className="font-semibold text-white mt-5 mb-2 text-sm">{tF("getTheApp")}</div>
+            <AppDownloadBadges onDark className="gap-2" />
           </div>
           <div>
             <div className="font-semibold text-white mb-3">{tF("product")}</div>

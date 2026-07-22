@@ -113,6 +113,7 @@
     "invalidCredentials": "Invalid email or password",
     "kitchenLogin": "Kitchen Login",
     "kitchenLoginHelp": "Sign in to view incoming orders.",
+    "kitchenGetAppHint": "Get the free Android app on Google Play",
     "adminLogin": "Admin Login",
     "adminLoginHelp": "Sign in to your restaurant dashboard.",
     "restaurantSignup": "Create your restaurant account",
@@ -2325,6 +2326,61 @@
       "publishSuccessToast": "You're live! Customers can now place orders.",
       "publishFailedGeneric": "Couldn't publish your restaurant. Please try again."
     },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Name & address",
+        "mapPin": "Location pin on map",
+        "cuisine": "Cuisine type",
+        "accountConfirmation": "Email verified"
+      },
+      "services": {
+        "atLeastOne": "At least one service enabled",
+        "openingHours": "Opening hours",
+        "deliveryZones": "Delivery zones",
+        "deliveryManagement": "Delivery management chosen"
+      },
+      "payments": {
+        "methodsSelected": "Accepted payment methods",
+        "taxation": "Taxation configured",
+        "currency": "Currency",
+        "methodConfigured": "Online card payments configured"
+      },
+      "orders": {
+        "appConnected": "Order-taking app connected",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · native app",
+          "browser": "{device} · {ago} · running in a browser — install the free Android app for reliable ring alerts",
+          "install": "Install the free Kitchen Order App (Google Play) so new orders ring instantly. Until then you'll still get email/SMS alerts."
+        },
+        "notificationRecipient": "At least one notification recipient"
+      },
+      "menu": {
+        "categoryExists": "At least one menu category",
+        "itemExists": "At least one active menu item"
+      },
+      "publish": {
+        "officialDetails": "Official details & policy",
+        "widgetReady": "Add an order button to your website",
+        "widgetReadyDetail": {
+          "sow": "Your Sales Optimized Website is your ordering page — the widget is optional.",
+          "optional": "Optional — add an order button to your existing website. Customers can also order from your QR code, share link, or marketplace listing."
+        }
+      },
+      "sections": {
+        "basics": "Restaurant Basics",
+        "services": "Services & Hours",
+        "payments": "Payments / Taxes",
+        "orders": "Taking Orders",
+        "menu": "Menu Setup",
+        "publishing": "Publishing"
+      },
+      "ago": {
+        "seconds": "{n}s ago",
+        "minutes": "{n}m ago",
+        "hours": "{n}h ago",
+        "days": "{n}d ago"
+      }
+    },
     "locations": {
       "pageTitle": "Locations",
       "pageSubtitle": "Add and switch between the locations of your restaurant brand.",
@@ -3819,6 +3875,10 @@
       "statusReadyDetail": "Click Publish to make your ordering widget live.",
       "statusStepsRemaining": "{count, plural, one {# required step remaining.} other {# required steps remaining.}}",
       "orderTakingAppTitle": "Order-taking app",
+      "getAppTitle": "Get the Kitchen Order App",
+      "getAppBody": "Free on Google Play. New orders ring instantly — even with the screen off — and receipts print over WiFi.",
+      "getAppScanHint": "Scan with the kitchen tablet or phone to open Google Play",
+      "getAppIosSoon": "The iPhone/iPad version is coming to the App Store — until then, iPads can run the kitchen in the browser.",
       "devicesConnected": "{count, plural, one {# device connected} other {# devices connected}}",
       "presenceRefreshes": "presence refreshes every minute",
       "noDevicesOnline": "No devices online right now. Last seen {mins} min ago.",
@@ -5256,6 +5316,7 @@
       "product": "Product",
       "support": "Support",
       "account": "Account",
+      "getTheApp": "Get the app",
       "copyright": "© {year} Fee Free Ordering. All rights reserved.",
       "tagline": "The fee-free ordering platform for independent restaurants.",
       "support24_7": "Real human Canadian support"
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "in extra customer fees",
     "statCommissionLabel": "commission to restaurants",
     "statIndependentLabel": "independent local restaurants",
-    "nativeAppsTitle": "Native iOS & Android apps",
+    "nativeAppsTitle": "A marketplace app for iOS & Android",
     "comingSoon": "Coming Soon",
-    "nativeAppsBody": "The full-fat native apps are in the pipeline. In the meantime, tap your browser’s <b>share menu</b> and choose <b>“Add to Home Screen”</b> — you’ll get the marketplace as a real app icon, splash screen and full-screen experience. No App Store required.",
+    "nativeAppsBody": "A dedicated marketplace ordering app is in the pipeline (the app on Google Play today is for restaurant staff). In the meantime, tap your browser’s <b>share menu</b> and choose <b>“Add to Home Screen”</b> — you’ll get the marketplace as a real app icon, splash screen and full-screen experience. No app store required.",
     "ownerTitle": "Restaurant owner? Get listed.",
     "ownerBody": "Own a restaurant? <b>Getting listed on the Fee Free Marketplace is free</b> — no monthly fee, no per-order commission, ever. Offer pickup or delivery and reach new customers nearby while keeping your brand, your customers, and 100% of your prices.",
     "getListedFree": "Get started free",

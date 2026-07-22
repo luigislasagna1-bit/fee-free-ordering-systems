@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Consigue la app gratuita para Android en Google Play",
+  "publishingPage": {
+    "getAppTitle": "Consigue la Kitchen Order App",
+    "getAppBody": "Gratis en Google Play. Los nuevos pedidos suenan al instante — incluso con la pantalla apagada — y los recibos se imprimen por WiFi.",
+    "getAppScanHint": "Escanéalo con la tablet o el teléfono de la cocina para abrir Google Play",
+    "getAppIosSoon": "La versión para iPhone/iPad llegará al App Store — mientras tanto, los iPad pueden gestionar la cocina desde el navegador."
+  },
+  "footerGetTheApp": "Descarga la app",
+  "nativeAppsTitle": "Una app del marketplace para iOS y Android",
+  "nativeAppsBody": "Una app de pedidos dedicada al marketplace está en camino (la app que hoy está en Google Play es para el personal del restaurante). Mientras tanto, toca el <b>menú de compartir</b> de tu navegador y elige <b>«Añadir a pantalla de inicio»</b> — tendrás el marketplace como un icono de app real, con pantalla de bienvenida y experiencia a pantalla completa. Sin necesidad de tienda de aplicaciones.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Nombre y dirección",
+      "mapPin": "Pin de ubicación en el mapa",
+      "cuisine": "Tipo de cocina",
+      "accountConfirmation": "Correo verificado"
+    },
+    "services": {
+      "atLeastOne": "Al menos un servicio activado",
+      "openingHours": "Horario de apertura",
+      "deliveryZones": "Zonas de entrega",
+      "deliveryManagement": "Gestión de entregas elegida"
+    },
+    "payments": {
+      "methodsSelected": "Métodos de pago aceptados",
+      "taxation": "Impuestos configurados",
+      "currency": "Moneda",
+      "methodConfigured": "Pagos con tarjeta online configurados"
+    },
+    "orders": {
+      "appConnected": "App de recepción de pedidos conectada",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · app nativa",
+        "browser": "{device} · {ago} · funcionando en un navegador — instala la app gratuita para Android para recibir alertas sonoras fiables",
+        "install": "Instala la Kitchen Order App gratuita (Google Play) para que los nuevos pedidos suenen al instante. Hasta entonces seguirás recibiendo alertas por correo/SMS."
+      },
+      "notificationRecipient": "Al menos un destinatario de notificaciones"
+    },
+    "menu": {
+      "categoryExists": "Al menos una categoría en el menú",
+      "itemExists": "Al menos un artículo activo en el menú"
+    },
+    "publish": {
+      "officialDetails": "Datos oficiales y política",
+      "widgetReady": "Añade un botón de pedidos a tu sitio web",
+      "widgetReadyDetail": {
+        "sow": "Tu Sitio web optimizado para ventas es tu página de pedidos — el widget es opcional.",
+        "optional": "Opcional — añade un botón de pedidos a tu sitio web actual. Los clientes también pueden pedir desde tu código QR, tu enlace para compartir o tu ficha en el marketplace."
+      }
+    },
+    "sections": {
+      "basics": "Datos básicos del restaurante",
+      "services": "Servicios y horarios",
+      "payments": "Pagos / Impuestos",
+      "orders": "Recepción de pedidos",
+      "menu": "Configuración del menú",
+      "publishing": "Publicación"
+    },
+    "ago": {
+      "seconds": "hace {n}s",
+      "minutes": "hace {n}m",
+      "hours": "hace {n}h",
+      "days": "hace {n}d"
+    }
+  }
+}

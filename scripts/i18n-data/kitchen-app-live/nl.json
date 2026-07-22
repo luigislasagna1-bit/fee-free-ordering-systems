@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Download de gratis Android-app op Google Play",
+  "publishingPage": {
+    "getAppTitle": "Download de Kitchen Order App",
+    "getAppBody": "Gratis op Google Play. Nieuwe bestellingen rinkelen direct — zelfs met het scherm uit — en bonnen worden via WiFi geprint.",
+    "getAppScanHint": "Scan met de keukentablet of -telefoon om Google Play te openen",
+    "getAppIosSoon": "De iPhone/iPad-versie komt naar de App Store — tot die tijd kan de keuken op iPads in de browser draaien."
+  },
+  "footerGetTheApp": "Download de app",
+  "nativeAppsTitle": "Een marketplace-app voor iOS & Android",
+  "nativeAppsBody": "Een speciale marketplace-bestelapp is in de maak (de app die vandaag op Google Play staat, is voor restaurantpersoneel). Tik in de tussentijd op het <b>deelmenu</b> van je browser en kies <b>“Zet op beginscherm”</b> — je krijgt de marketplace als een echt app-icoon, met splashscreen en volledige schermweergave. Geen appstore nodig.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Naam & adres",
+      "mapPin": "Locatiepin op de kaart",
+      "cuisine": "Type keuken",
+      "accountConfirmation": "E-mail geverifieerd"
+    },
+    "services": {
+      "atLeastOne": "Minstens één service ingeschakeld",
+      "openingHours": "Openingstijden",
+      "deliveryZones": "Bezorgzones",
+      "deliveryManagement": "Bezorgbeheer gekozen"
+    },
+    "payments": {
+      "methodsSelected": "Geaccepteerde betaalmethoden",
+      "taxation": "Belastingen ingesteld",
+      "currency": "Valuta",
+      "methodConfigured": "Online kaartbetalingen ingesteld"
+    },
+    "orders": {
+      "appConnected": "Bestellingen-app verbonden",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · native app",
+        "browser": "{device} · {ago} · draait in een browser — installeer de gratis Android-app voor betrouwbare belmeldingen",
+        "install": "Installeer de gratis Kitchen Order App (Google Play) zodat nieuwe bestellingen direct rinkelen. Tot die tijd ontvangt u nog steeds meldingen via e-mail/SMS."
+      },
+      "notificationRecipient": "Minstens één meldingsontvanger"
+    },
+    "menu": {
+      "categoryExists": "Minstens één menucategorie",
+      "itemExists": "Minstens één actief menu-item"
+    },
+    "publish": {
+      "officialDetails": "Officiële gegevens & beleid",
+      "widgetReady": "Bestelknop op uw website",
+      "widgetReadyDetail": {
+        "sow": "Uw Verkoopgeoptimaliseerde website is uw bestelpagina — de widget is optioneel.",
+        "optional": "Optioneel — voeg een bestelknop toe aan uw bestaande website. Klanten kunnen ook bestellen via uw QR-code, deellink of marketplace-vermelding."
+      }
+    },
+    "sections": {
+      "basics": "Restaurantbasis",
+      "services": "Services & openingstijden",
+      "payments": "Betalingen / belastingen",
+      "orders": "Bestellingen ontvangen",
+      "menu": "Menu-instelling",
+      "publishing": "Publiceren"
+    },
+    "ago": {
+      "seconds": "{n}s geleden",
+      "minutes": "{n}m geleden",
+      "hours": "{n}u geleden",
+      "days": "{n}d geleden"
+    }
+  }
+}

@@ -129,7 +129,8 @@
     "thisPartner": "acest partener",
     "signingUpUnder": "Vă înregistrați prin {brand}",
     "restaurantLogin": "Autentificare restaurant",
-    "tooManyAttempts": "Prea multe încercări. Așteaptă câteva minute, apoi încearcă din nou o dată."
+    "tooManyAttempts": "Prea multe încercări. Așteaptă câteva minute, apoi încearcă din nou o dată.",
+    "kitchenGetAppHint": "Descarcă gratuit aplicația Android de pe Google Play"
   },
   "ordering": {
     "viewCart": "Vezi coșul",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Vom găzdui o pagină de marketing la <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Fă upgrade pentru a debloca →",
       "brandedAppTitle": "Aplicație mobilă cu brand propriu",
-      "brandedAppDescription": "Trimite propria aplicație în App Store-urile iOS & Android cu brandul tău."
+      "brandedAppDescription": "Trimite propria aplicație în App Store-urile iOS & Android cu brandul tău.",
+      "getAppTitle": "Descarcă Kitchen Order App",
+      "getAppBody": "Gratuit pe Google Play. Comenzile noi sună instantaneu — chiar și cu ecranul stins — iar bonurile se imprimă prin WiFi.",
+      "getAppScanHint": "Scanează cu tableta sau telefonul din bucătărie pentru a deschide Google Play",
+      "getAppIosSoon": "Versiunea pentru iPhone/iPad urmează să apară în App Store — până atunci, iPad-urile pot rula bucătăria în browser."
     },
     "endOfDayPage": {
       "heading": "Raport de sfârșit de zi",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Caută produse și categorii…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Nume și adresă",
+        "mapPin": "Pin de locație pe hartă",
+        "cuisine": "Tip de bucătărie",
+        "accountConfirmation": "Email verificat"
+      },
+      "services": {
+        "atLeastOne": "Cel puțin un serviciu activat",
+        "openingHours": "Program de funcționare",
+        "deliveryZones": "Zone de livrare",
+        "deliveryManagement": "Gestionarea livrării aleasă"
+      },
+      "payments": {
+        "methodsSelected": "Metode de plată acceptate",
+        "taxation": "Taxe configurate",
+        "currency": "Monedă",
+        "methodConfigured": "Plăți online cu cardul configurate"
+      },
+      "orders": {
+        "appConnected": "Aplicația de preluare a comenzilor conectată",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · aplicație nativă",
+          "browser": "{device} · {ago} · rulează în browser — instalează aplicația Android gratuită pentru alerte sonore fiabile",
+          "install": "Instalează gratuit Kitchen Order App (Google Play) ca noile comenzi să sune instantaneu. Până atunci vei primi în continuare alerte prin email/SMS."
+        },
+        "notificationRecipient": "Cel puțin un destinatar de notificări"
+      },
+      "menu": {
+        "categoryExists": "Cel puțin o categorie de meniu",
+        "itemExists": "Cel puțin un produs activ în meniu"
+      },
+      "publish": {
+        "officialDetails": "Date oficiale și politică",
+        "widgetReady": "Adaugă un buton de comandă pe site-ul tău",
+        "widgetReadyDetail": {
+          "sow": "Website-ul tău optimizat pentru vânzări este pagina ta de comenzi — widgetul este opțional.",
+          "optional": "Opțional — adaugă un buton de comandă pe site-ul tău existent. Clienții pot comanda și din codul QR, linkul de distribuit sau listarea din marketplace."
+        }
+      },
+      "sections": {
+        "basics": "Date de bază ale restaurantului",
+        "services": "Servicii și program",
+        "payments": "Plăți / Taxe",
+        "orders": "Preluarea comenzilor",
+        "menu": "Configurare meniu",
+        "publishing": "Publicare"
+      },
+      "ago": {
+        "seconds": "acum {n}s",
+        "minutes": "acum {n}m",
+        "hours": "acum {n}h",
+        "days": "acum {n}z"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Cont",
       "copyright": "© {year} Fee Free Ordering. Toate drepturile rezervate.",
       "tagline": "Platforma de comenzi fără comision pentru restaurante independente.",
-      "support24_7": "Asistență canadiană de la oameni reali"
+      "support24_7": "Asistență canadiană de la oameni reali",
+      "getTheApp": "Descarcă aplicația"
     },
     "home": {
       "heroBadge": "0% comision pe comenzi",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "în taxe suplimentare pentru clienți",
     "statCommissionLabel": "comision către restaurante",
     "statIndependentLabel": "restaurante locale independente",
-    "nativeAppsTitle": "Aplicații native iOS & Android",
+    "nativeAppsTitle": "O aplicație de marketplace pentru iOS și Android",
     "comingSoon": "În curând",
-    "nativeAppsBody": "Aplicațiile native complete sunt în pregătire. Între timp, apasă pe <b>meniul de partajare</b> al browserului tău şi alege <b>„Add to Home Screen”</b> — vei obține marketplace-ul ca o pictogramă reală de aplicație, ecran de pornire şi experiență pe tot ecranul. Nu este necesar App Store.",
+    "nativeAppsBody": "O aplicație dedicată de comenzi pentru marketplace este în pregătire (aplicația disponibilă azi pe Google Play este pentru personalul restaurantelor). Între timp, atinge <b>meniul de partajare</b> al browserului și alege <b>„Adaugă la ecranul de pornire”</b> — vei avea marketplace-ul ca aplicație reală, cu pictogramă proprie, ecran de deschidere și experiență pe tot ecranul. Nu este nevoie de niciun magazin de aplicații.",
     "ownerTitle": "Eşti proprietar de restaurant? Încrie-te.",
     "ownerBody": "Ai un restaurant? <b>Înscrierea în Fee Free Marketplace este gratuită</b> — fără abonament lunar, fără comision per comandă, niciodată. Oferă ridicare sau livrare și ajunge la clienți noi din apropiere, păstrându-ți brandul, clienții și 100% din prețuri.",
     "getListedFree": "Începe gratuit",

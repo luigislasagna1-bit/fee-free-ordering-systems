@@ -7,9 +7,15 @@ import { hasFeature } from "@/lib/entitlements";
 import { Globe, Code2, Smartphone, CheckCircle2, AlertCircle, Lock, Tablet } from "lucide-react";
 import { PublishToggleClient } from "./PublishToggleClient";
 import { getTranslations } from "next-intl/server";
+import QRCode from "qrcode";
+import { APP_LINKS } from "@/lib/app-links";
+import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
+import { setupStepLabel } from "@/lib/setup-step-i18n";
 
 export default async function PublishingHubPage() {
   const t = await getTranslations("admin.publishingPage");
+  // Localized setup-step labels (2026-07-22 retrofit) — English fallback.
+  const tSteps = await getTranslations("admin.setupSteps");
   const user = await getSessionUser();
   // See add-ons/page.tsx for the rationale on this two-step. Superadmins
   // hit /login → re-auth → bounce here → loop. Sending them to /superadmin
@@ -27,6 +33,12 @@ export default async function PublishingHubPage() {
   const publishReady = !!progress?.publishReady;
   const liveDevices = devices.filter((d) => d.isLive);
   const hostedUrl = hasHostedSite ? `/site/${user.restaurantSlug ?? ""}` : null;
+  // QR to the Play listing — the owner reads this page on desktop while the
+  // TABLET needs the app; scanning beats typing. Server-side SVG via the
+  // existing `qrcode` dep (same opts as smart-links QR), no client JS.
+  const playQrSvg = APP_LINKS.kitchen.play
+    ? await QRCode.toString(APP_LINKS.kitchen.play, { type: "svg", margin: 1, width: 140, errorCorrectionLevel: "M" })
+    : null;
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -76,7 +88,7 @@ export default async function PublishingHubPage() {
               {progress.requiredStepsRemaining.slice(0, 5).map((s) => (
                 <li key={s.id}>
                   <Link href={s.href} className="text-emerald-700 hover:underline">
-                    &rarr; {s.label}
+                    &rarr; {setupStepLabel(tSteps, s)}
                   </Link>
                 </li>
               ))}
@@ -123,6 +135,33 @@ export default async function PublishingHubPage() {
             {t("openKitchen")}
           </Link>
         </div>
+        {/* Install hub — the Kitchen Order App is on Google Play (2026-07-22).
+            Availability-driven: the whole block hides if app-links.ts ever
+            nulls the Play URL; the iOS line drops when iOS goes live. This is
+            the target of the "Order-taking app connected" setup step. */}
+        {APP_LINKS.kitchen.play && (
+          <div className="mt-4 rounded-lg bg-emerald-50/60 border border-emerald-100 p-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-gray-900 text-sm">{t("getAppTitle")}</h3>
+                <p className="text-xs text-gray-600 mt-0.5">{t("getAppBody")}</p>
+                <div className="mt-3"><AppDownloadBadges /></div>
+                {!APP_LINKS.kitchen.ios && (
+                  <p className="text-[11px] text-gray-500 mt-2">{t("getAppIosSoon")}</p>
+                )}
+              </div>
+              {playQrSvg && (
+                <div className="flex-shrink-0 text-center">
+                  <div
+                    className="inline-block rounded-lg bg-white border border-gray-200 p-2 [&_svg]:block"
+                    dangerouslySetInnerHTML={{ __html: playQrSvg }}
+                  />
+                  <p className="text-[11px] text-gray-500 mt-1 max-w-[150px]">{t("getAppScanHint")}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
         {devices.length > 0 && (
           <ul className="mt-3 divide-y divide-gray-100 border-t border-gray-100">
             {devices.slice(0, 5).map((d) => {

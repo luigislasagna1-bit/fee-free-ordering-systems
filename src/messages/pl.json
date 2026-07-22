@@ -129,7 +129,8 @@
     "thisPartner": "ten partner",
     "signingUpUnder": "Rejestrujesz się przez {brand}",
     "restaurantLogin": "Logowanie restauracji",
-    "tooManyAttempts": "Zbyt wiele prób. Odczekaj kilka minut, a potem spróbuj raz."
+    "tooManyAttempts": "Zbyt wiele prób. Odczekaj kilka minut, a potem spróbuj raz.",
+    "kitchenGetAppHint": "Pobierz bezpłatną aplikację na Androida w Google Play"
   },
   "ordering": {
     "viewCart": "Zobacz koszyk",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Będziemy hostować stronę marketingową pod adresem <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Ulepsz, aby odblokować →",
       "brandedAppTitle": "Markowa aplikacja mobilna",
-      "brandedAppDescription": "Prześlij własną aplikację do sklepów iOS i Android ze swoją marką."
+      "brandedAppDescription": "Prześlij własną aplikację do sklepów iOS i Android ze swoją marką.",
+      "getAppTitle": "Pobierz aplikację Kitchen Order App",
+      "getAppBody": "Bezpłatna w Google Play. Nowe zamówienia dzwonią natychmiast — nawet przy wyłączonym ekranie — a paragony drukują się przez WiFi.",
+      "getAppScanHint": "Zeskanuj tabletem kuchennym lub telefonem, aby otworzyć Google Play",
+      "getAppIosSoon": "Wersja na iPhone'a/iPada trafi wkrótce do App Store — do tego czasu iPady mogą obsługiwać kuchnię w przeglądarce."
     },
     "endOfDayPage": {
       "heading": "Raport końca dnia",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Szukaj pozycji i kategorii…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Nazwa i adres",
+        "mapPin": "Pinezka lokalizacji na mapie",
+        "cuisine": "Typ kuchni",
+        "accountConfirmation": "E-mail zweryfikowany"
+      },
+      "services": {
+        "atLeastOne": "Co najmniej jedna usługa włączona",
+        "openingHours": "Godziny otwarcia",
+        "deliveryZones": "Strefy dostawy",
+        "deliveryManagement": "Wybrano zarządzanie dostawą"
+      },
+      "payments": {
+        "methodsSelected": "Akceptowane metody płatności",
+        "taxation": "Podatki skonfigurowane",
+        "currency": "Waluta",
+        "methodConfigured": "Płatności kartą online skonfigurowane"
+      },
+      "orders": {
+        "appConnected": "Aplikacja do przyjmowania zamówień połączona",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · aplikacja natywna",
+          "browser": "{device} · {ago} · działa w przeglądarce — zainstaluj bezpłatną aplikację na Androida, aby dzwonki o zamówieniach działały niezawodnie",
+          "install": "Zainstaluj bezpłatną aplikację Kitchen Order App (Google Play), aby nowe zamówienia dzwoniły natychmiast. Do tego czasu nadal będziesz otrzymywać alerty e-mail/SMS."
+        },
+        "notificationRecipient": "Co najmniej jeden odbiorca powiadomień"
+      },
+      "menu": {
+        "categoryExists": "Co najmniej jedna kategoria menu",
+        "itemExists": "Co najmniej jedna aktywna pozycja menu"
+      },
+      "publish": {
+        "officialDetails": "Oficjalne dane i polityka",
+        "widgetReady": "Dodaj przycisk zamawiania do swojej strony",
+        "widgetReadyDetail": {
+          "sow": "Twoja Strona zoptymalizowana pod sprzedaż to Twoja strona zamówień — widżet jest opcjonalny.",
+          "optional": "Opcjonalne — dodaj przycisk zamawiania do swojej istniejącej strony. Klienci mogą też zamawiać przez Twój kod QR, link do udostępniania lub wpis w marketplace."
+        }
+      },
+      "sections": {
+        "basics": "Podstawy restauracji",
+        "services": "Usługi i godziny",
+        "payments": "Płatności / podatki",
+        "orders": "Przyjmowanie zamówień",
+        "menu": "Konfiguracja menu",
+        "publishing": "Publikacja"
+      },
+      "ago": {
+        "seconds": "{n} s temu",
+        "minutes": "{n} min temu",
+        "hours": "{n} godz. temu",
+        "days": "{n} dn. temu"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Konto",
       "copyright": "© {year} Fee Free Ordering. Wszelkie prawa zastrzeżone.",
       "tagline": "Platforma zamówień bez prowizji dla niezależnych restauracji.",
-      "support24_7": "Kanadyjskie wsparcie prawdziwych ludzi"
+      "support24_7": "Kanadyjskie wsparcie prawdziwych ludzi",
+      "getTheApp": "Pobierz aplikację"
     },
     "home": {
       "heroBadge": "0% prowizji od zamówień",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "w dodatkowych opłatach dla klientów",
     "statCommissionLabel": "prowizji dla restauracji",
     "statIndependentLabel": "niezależnych lokalnych restauracji",
-    "nativeAppsTitle": "Natywne aplikacje iOS i Android",
+    "nativeAppsTitle": "Aplikacja marketplace na iOS i Androida",
     "comingSoon": "Już wkrótce",
-    "nativeAppsBody": "Pełnoprawne aplikacje natywne są w trakcie tworzenia. W międzyczasie stuknij <b>menu udostępniania</b> w przeglądarce i wybierz <b>„Add to Home Screen”</b> — marketplace pojawi się jako prawdziwa ikona aplikacji z ekranem powitalnym i trybem pełnoekranowym. Bez App Store.",
+    "nativeAppsBody": "Dedykowana aplikacja marketplace do zamawiania jest w przygotowaniu (aplikacja dostępna dziś w Google Play jest przeznaczona dla personelu restauracji). W międzyczasie dotknij <b>menu udostępniania</b> w przeglądarce i wybierz <b>„Dodaj do ekranu głównego”</b> — otrzymasz marketplace jako prawdziwą ikonę aplikacji, z ekranem powitalnym i widokiem pełnoekranowym. Bez sklepu z aplikacjami.",
     "ownerTitle": "Prowadzisz restaurację? Dołącz do nas.",
     "ownerBody": "Masz restaurację? <b>Dodanie do Fee Free Marketplace jest bezpłatne</b> — bez miesięcznej opłaty, bez prowizji od zamówienia, nigdy. Oferuj odbiór lub dostawę i docieraj do nowych klientów w pobliżu, zachowując swoją markę, swoich klientów i 100% swoich cen.",
     "getListedFree": "Zacznij za darmo",

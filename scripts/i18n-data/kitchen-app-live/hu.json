@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Töltse le az ingyenes Android-alkalmazást a Google Play-en",
+  "publishingPage": {
+    "getAppTitle": "Töltse le a Kitchen Order App alkalmazást",
+    "getAppBody": "Ingyenes a Google Play-en. Az új rendelések azonnal csörögnek — kikapcsolt képernyő mellett is —, a nyugták pedig WiFi-n keresztül nyomtatódnak.",
+    "getAppScanHint": "Olvassa be a konyhai tablettel vagy telefonnal a Google Play megnyitásához",
+    "getAppIosSoon": "Az iPhone/iPad verzió hamarosan érkezik az App Store-ba — addig az iPadek böngészőben futtathatják a konyhát."
+  },
+  "footerGetTheApp": "Alkalmazás letöltése",
+  "nativeAppsTitle": "Piactér-alkalmazás iOS-re és Androidra",
+  "nativeAppsBody": "Készül egy dedikált piactéri rendelési alkalmazás (a ma a Google Play-en elérhető alkalmazás az éttermi személyzetnek szól). Addig is koppintson a böngésző <b>megosztás menüjére</b>, és válassza a <b>„Hozzáadás a kezdőképernyőhöz”</b> lehetőséget — így a piacteret valódi alkalmazásikonnal, indítóképernyővel és teljes képernyős élménnyel kapja meg. Nincs szükség alkalmazásboltra.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Név és cím",
+      "mapPin": "Helyjelölő a térképen",
+      "cuisine": "Konyha típusa",
+      "accountConfirmation": "E-mail megerősítve"
+    },
+    "services": {
+      "atLeastOne": "Legalább egy szolgáltatás engedélyezve",
+      "openingHours": "Nyitvatartás",
+      "deliveryZones": "Kiszállítási zónák",
+      "deliveryManagement": "Kiszállításkezelés kiválasztva"
+    },
+    "payments": {
+      "methodsSelected": "Elfogadott fizetési módok",
+      "taxation": "Adózás beállítva",
+      "currency": "Pénznem",
+      "methodConfigured": "Online kártyás fizetés beállítva"
+    },
+    "orders": {
+      "appConnected": "Rendelésfogadó alkalmazás csatlakoztatva",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · natív alkalmazás",
+        "browser": "{device} · {ago} · böngészőben fut — telepítse az ingyenes Android-alkalmazást a megbízható csörgő értesítésekhez",
+        "install": "Telepítse az ingyenes Kitchen Order App alkalmazást (Google Play), hogy az új rendelések azonnal csörögjenek. Addig is kap e-mail/SMS értesítéseket."
+      },
+      "notificationRecipient": "Legalább egy értesítési címzett"
+    },
+    "menu": {
+      "categoryExists": "Legalább egy étlapkategória",
+      "itemExists": "Legalább egy aktív étlaptétel"
+    },
+    "publish": {
+      "officialDetails": "Hivatalos adatok és szabályzat",
+      "widgetReady": "Rendelésgomb hozzáadása a weboldalához",
+      "widgetReadyDetail": {
+        "sow": "Az Ön Értékesítés-optimalizált weboldala a rendelési oldala — a widget opcionális.",
+        "optional": "Opcionális — adjon rendelésgombot meglévő weboldalához. Az ügyfelek a QR-kódról, a megosztási linkről vagy a piactéri hirdetésből is rendelhetnek."
+      }
+    },
+    "sections": {
+      "basics": "Éttermi alapadatok",
+      "services": "Szolgáltatások és nyitvatartás",
+      "payments": "Fizetések / adók",
+      "orders": "Rendelésfogadás",
+      "menu": "Étlap beállítása",
+      "publishing": "Közzététel"
+    },
+    "ago": {
+      "seconds": "{n} másodperce",
+      "minutes": "{n} perce",
+      "hours": "{n} órája",
+      "days": "{n} napja"
+    }
+  }
+}

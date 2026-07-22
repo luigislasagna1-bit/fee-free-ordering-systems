@@ -52,6 +52,32 @@ const allSteps = (input: ChecklistInput) =>
 const requiredOpen = (input: ChecklistInput) =>
   computeSetupProgress(input).requiredStepsRemaining.map((s) => s.id);
 
+describe("orders.appConnected — install-hub detail variants (Play launch 2026-07-22)", () => {
+  const appStep = (input: ChecklistInput) => allSteps(input).find((s) => s.id === "orders.appConnected")!;
+  const device = { label: "Kitchen Tablet", lastSeenAt: new Date() };
+
+  it("native app registered → native variant, args carry the device", () => {
+    const s = appStep(makeInput({ kitchenDeviceDetail: device, hasNativeApp: true }));
+    expect(s.detailKey).toBe("orders.appConnectedDetail.native");
+    expect(s.detailArgs?.device).toBe("Kitchen Tablet");
+    expect(typeof s.detailArgs?.lastSeenAtMs).toBe("number");
+  });
+
+  it("browser-only device → browser nudge variant", () => {
+    const s = appStep(makeInput({ kitchenDeviceDetail: device, hasNativeApp: false }));
+    expect(s.detailKey).toBe("orders.appConnectedDetail.browser");
+    expect(s.detail).toContain("install the free Android app");
+  });
+
+  it("no device at all → install nudge; completion semantics UNCHANGED", () => {
+    const s = appStep(makeInput({ hasKitchenDevice: false, kitchenDeviceDetail: null }));
+    expect(s.detailKey).toBe("orders.appConnectedDetail.install");
+    expect(s.complete).toBe(false);
+    // Browser kitchens still count as connected — hasNativeApp is display-only.
+    expect(appStep(makeInput({ hasNativeApp: false })).complete).toBe(true);
+  });
+});
+
 describe("computeSetupProgress — publish readiness", () => {
   it("a fully set-up pickup-only restaurant is publish-ready", () => {
     expect(computeSetupProgress(makeInput()).publishReady).toBe(true);

@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Google Play पर मुफ़्त Android ऐप पाएँ",
+  "publishingPage": {
+    "getAppTitle": "Kitchen Order App पाएँ",
+    "getAppBody": "Google Play पर मुफ़्त। नए ऑर्डर तुरंत रिंग करते हैं — स्क्रीन बंद होने पर भी — और रसीदें WiFi पर प्रिंट होती हैं।",
+    "getAppScanHint": "Google Play खोलने के लिए किचन टैबलेट या फ़ोन से स्कैन करें",
+    "getAppIosSoon": "iPhone/iPad संस्करण App Store पर जल्द आ रहा है — तब तक iPad ब्राउज़र में किचन चला सकते हैं।"
+  },
+  "footerGetTheApp": "ऐप पाएँ",
+  "nativeAppsTitle": "iOS और Android के लिए एक मार्केटप्लेस ऐप",
+  "nativeAppsBody": "एक समर्पित मार्केटप्लेस ऑर्डरिंग ऐप तैयारी में है (Google Play पर आज जो ऐप है वह रेस्तराँ स्टाफ़ के लिए है)। तब तक, अपने ब्राउज़र के <b>शेयर मेन्यू</b> पर टैप करें और <b>“होम स्क्रीन पर जोड़ें”</b> चुनें — आपको मार्केटप्लेस एक असली ऐप आइकन, स्प्लैश स्क्रीन और फ़ुल-स्क्रीन अनुभव के रूप में मिलेगा। किसी ऐप स्टोर की ज़रूरत नहीं।",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "नाम और पता",
+      "mapPin": "मैप पर लोकेशन पिन",
+      "cuisine": "व्यंजन का प्रकार",
+      "accountConfirmation": "ईमेल सत्यापित"
+    },
+    "services": {
+      "atLeastOne": "कम से कम एक सेवा सक्षम",
+      "openingHours": "खुलने का समय",
+      "deliveryZones": "डिलीवरी क्षेत्र",
+      "deliveryManagement": "डिलीवरी प्रबंधन चुना गया"
+    },
+    "payments": {
+      "methodsSelected": "स्वीकृत भुगतान तरीके",
+      "taxation": "कराधान कॉन्फ़िगर किया गया",
+      "currency": "मुद्रा",
+      "methodConfigured": "ऑनलाइन कार्ड भुगतान कॉन्फ़िगर किया गया"
+    },
+    "orders": {
+      "appConnected": "ऑर्डर लेने वाला ऐप कनेक्टेड",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · नेटिव ऐप",
+        "browser": "{device} · {ago} · ब्राउज़र में चल रहा है — भरोसेमंद रिंग अलर्ट के लिए मुफ़्त Android ऐप इंस्टॉल करें",
+        "install": "मुफ़्त Kitchen Order App (Google Play) इंस्टॉल करें ताकि नए ऑर्डर तुरंत रिंग करें। तब तक आपको ईमेल/SMS अलर्ट मिलते रहेंगे।"
+      },
+      "notificationRecipient": "कम से कम एक सूचना प्राप्तकर्ता"
+    },
+    "menu": {
+      "categoryExists": "कम से कम एक मेन्यू श्रेणी",
+      "itemExists": "कम से कम एक सक्रिय मेन्यू आइटम"
+    },
+    "publish": {
+      "officialDetails": "आधिकारिक विवरण और नीति",
+      "widgetReady": "अपनी वेबसाइट पर ऑर्डर बटन जोड़ें",
+      "widgetReadyDetail": {
+        "sow": "आपकी बिक्री-अनुकूलित वेबसाइट ही आपका ऑर्डरिंग पेज है — विजेट वैकल्पिक है।",
+        "optional": "वैकल्पिक — अपनी मौजूदा वेबसाइट पर ऑर्डर बटन जोड़ें। ग्राहक आपके QR कोड, शेयर लिंक या मार्केटप्लेस लिस्टिंग से भी ऑर्डर कर सकते हैं।"
+      }
+    },
+    "sections": {
+      "basics": "रेस्तराँ की बुनियादी जानकारी",
+      "services": "सेवाएँ और समय",
+      "payments": "भुगतान / कर",
+      "orders": "ऑर्डर लेना",
+      "menu": "मेन्यू सेटअप",
+      "publishing": "प्रकाशन"
+    },
+    "ago": {
+      "seconds": "{n} से. पहले",
+      "minutes": "{n} मि. पहले",
+      "hours": "{n} घं. पहले",
+      "days": "{n} दिन पहले"
+    }
+  }
+}

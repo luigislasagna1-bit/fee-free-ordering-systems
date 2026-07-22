@@ -129,7 +129,8 @@
     "thisPartner": "đối tác này",
     "signingUpUnder": "Bạn đang đăng ký qua {brand}",
     "restaurantLogin": "Đăng nhập nhà hàng",
-    "tooManyAttempts": "Quá nhiều lần thử. Vui lòng đợi vài phút, rồi thử lại một lần."
+    "tooManyAttempts": "Quá nhiều lần thử. Vui lòng đợi vài phút, rồi thử lại một lần.",
+    "kitchenGetAppHint": "Tải ứng dụng Android miễn phí trên Google Play"
   },
   "ordering": {
     "viewCart": "Xem giỏ hàng",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Chúng tôi sẽ lưu trữ trang marketing tại <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Nâng cấp để mở khóa →",
       "brandedAppTitle": "Ứng dụng di động có thương hiệu",
-      "brandedAppDescription": "Gửi ứng dụng của bạn lên App Store iOS & Android với thương hiệu riêng."
+      "brandedAppDescription": "Gửi ứng dụng của bạn lên App Store iOS & Android với thương hiệu riêng.",
+      "getAppTitle": "Tải Kitchen Order App",
+      "getAppBody": "Miễn phí trên Google Play. Đơn hàng mới đổ chuông ngay lập tức — kể cả khi màn hình tắt — và hóa đơn in qua WiFi.",
+      "getAppScanHint": "Quét bằng máy tính bảng hoặc điện thoại của bếp để mở Google Play",
+      "getAppIosSoon": "Phiên bản iPhone/iPad sắp có mặt trên App Store — trong lúc chờ, iPad có thể chạy màn hình bếp trên trình duyệt."
     },
     "endOfDayPage": {
       "heading": "Báo cáo cuối ngày",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Tìm món và danh mục…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Tên & địa chỉ",
+        "mapPin": "Ghim vị trí trên bản đồ",
+        "cuisine": "Loại ẩm thực",
+        "accountConfirmation": "Email đã xác minh"
+      },
+      "services": {
+        "atLeastOne": "Bật ít nhất một dịch vụ",
+        "openingHours": "Giờ mở cửa",
+        "deliveryZones": "Khu vực giao hàng",
+        "deliveryManagement": "Đã chọn cách quản lý giao hàng"
+      },
+      "payments": {
+        "methodsSelected": "Phương thức thanh toán được chấp nhận",
+        "taxation": "Đã cấu hình thuế",
+        "currency": "Tiền tệ",
+        "methodConfigured": "Đã cấu hình thanh toán thẻ trực tuyến"
+      },
+      "orders": {
+        "appConnected": "Đã kết nối ứng dụng nhận đơn",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · ứng dụng gốc",
+          "browser": "{device} · {ago} · đang chạy trên trình duyệt — cài ứng dụng Android miễn phí để chuông báo hoạt động ổn định",
+          "install": "Cài Kitchen Order App miễn phí (Google Play) để đơn hàng mới đổ chuông ngay lập tức. Trước đó, bạn vẫn nhận được cảnh báo qua email/SMS."
+        },
+        "notificationRecipient": "Ít nhất một người nhận thông báo"
+      },
+      "menu": {
+        "categoryExists": "Ít nhất một danh mục thực đơn",
+        "itemExists": "Ít nhất một món đang hoạt động"
+      },
+      "publish": {
+        "officialDetails": "Thông tin chính thức & chính sách",
+        "widgetReady": "Thêm nút đặt hàng vào trang web của bạn",
+        "widgetReadyDetail": {
+          "sow": "Website tối ưu doanh số của bạn chính là trang đặt hàng — widget là tùy chọn.",
+          "optional": "Tùy chọn — thêm nút đặt hàng vào trang web hiện có của bạn. Khách hàng cũng có thể đặt hàng từ mã QR, liên kết chia sẻ hoặc trang marketplace của bạn."
+        }
+      },
+      "sections": {
+        "basics": "Thông tin cơ bản",
+        "services": "Dịch vụ & giờ mở cửa",
+        "payments": "Thanh toán / Thuế",
+        "orders": "Nhận đơn hàng",
+        "menu": "Thiết lập thực đơn",
+        "publishing": "Xuất bản"
+      },
+      "ago": {
+        "seconds": "{n} giây trước",
+        "minutes": "{n} phút trước",
+        "hours": "{n} giờ trước",
+        "days": "{n} ngày trước"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Tài khoản",
       "copyright": "© {year} Fee Free Ordering. Bảo lưu mọi quyền.",
       "tagline": "Nền tảng đặt hàng không phí cho nhà hàng độc lập.",
-      "support24_7": "Hỗ trợ từ Canada bởi người thật"
+      "support24_7": "Hỗ trợ từ Canada bởi người thật",
+      "getTheApp": "Tải ứng dụng"
     },
     "home": {
       "heroBadge": "0% hoa hồng đơn hàng",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "phí phụ thu từ khách hàng",
     "statCommissionLabel": "hoa hồng áp lên nhà hàng",
     "statIndependentLabel": "nhà hàng địa phương độc lập",
-    "nativeAppsTitle": "Ứng dụng iOS & Android chính thức",
+    "nativeAppsTitle": "Ứng dụng marketplace cho iOS & Android",
     "comingSoon": "Sắp ra mắt",
-    "nativeAppsBody": "Ứng dụng di động chính thức đang trong quá trình phát triển. Trong thời gian chờ đợi, hãy nhấn vào <b>menu chia sẻ</b> của trình duyệt và chọn <b>“Add to Home Screen”</b> — bạn sẽ có marketplace như một ứng dụng thực sự với icon, màn hình chào và trải nghiệm toàn màn hình. Không cần App Store.",
+    "nativeAppsBody": "Một ứng dụng đặt hàng riêng cho marketplace đang được phát triển (ứng dụng hiện có trên Google Play là dành cho nhân viên nhà hàng). Trong lúc chờ, hãy nhấn vào <b>menu chia sẻ</b> của trình duyệt và chọn <b>“Thêm vào Màn hình chính”</b> — bạn sẽ có marketplace dưới dạng biểu tượng ứng dụng thật sự, với màn hình chào và trải nghiệm toàn màn hình. Không cần cửa hàng ứng dụng.",
     "ownerTitle": "Bạn là chủ nhà hàng? Đăng ký ngay.",
     "ownerBody": "Bạn có nhà hàng? <b>Đăng ký trên Fee Free Marketplace là miễn phí</b> — không phí hàng tháng, không hoa hồng trên mỗi đơn, mãi mãi. Cung cấp dịch vụ tự đến lấy hoặc giao hàng và tiếp cận khách hàng mới ở gần trong khi vẫn giữ thương hiệu, khách hàng và 100% giá của bạn.",
     "getListedFree": "Bắt đầu miễn phí",

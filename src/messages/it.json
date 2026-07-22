@@ -129,7 +129,8 @@
     "thisPartner": "questo partner",
     "signingUpUnder": "Ti stai registrando tramite {brand}",
     "restaurantLogin": "Accesso ristorante",
-    "tooManyAttempts": "Troppi tentativi. Attendi qualche minuto, poi riprova una volta."
+    "tooManyAttempts": "Troppi tentativi. Attendi qualche minuto, poi riprova una volta.",
+    "kitchenGetAppHint": "Scarica l'app Android gratuita su Google Play"
   },
   "ordering": {
     "viewCart": "Vedi carrello",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Ospiteremo una pagina marketing su <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Aggiorna per sbloccare →",
       "brandedAppTitle": "App Mobile con Brand",
-      "brandedAppDescription": "Pubblica la tua app su iOS e Android con il tuo brand."
+      "brandedAppDescription": "Pubblica la tua app su iOS e Android con il tuo brand.",
+      "getAppTitle": "Scarica la Kitchen Order App",
+      "getAppBody": "Gratuita su Google Play. I nuovi ordini squillano all'istante — anche a schermo spento — e le ricevute si stampano via WiFi.",
+      "getAppScanHint": "Scansiona con il tablet o il telefono della cucina per aprire Google Play",
+      "getAppIosSoon": "La versione per iPhone/iPad è in arrivo sull'App Store — fino ad allora, gli iPad possono gestire la cucina dal browser."
     },
     "endOfDayPage": {
       "heading": "Report di fine giornata",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Cerca piatti e categorie…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Nome e indirizzo",
+        "mapPin": "Segnaposto sulla mappa",
+        "cuisine": "Tipo di cucina",
+        "accountConfirmation": "Email verificata"
+      },
+      "services": {
+        "atLeastOne": "Almeno un servizio attivo",
+        "openingHours": "Orari di apertura",
+        "deliveryZones": "Zone di consegna",
+        "deliveryManagement": "Gestione delle consegne scelta"
+      },
+      "payments": {
+        "methodsSelected": "Metodi di pagamento accettati",
+        "taxation": "Tassazione configurata",
+        "currency": "Valuta",
+        "methodConfigured": "Pagamenti online con carta configurati"
+      },
+      "orders": {
+        "appConnected": "App di ricezione ordini collegata",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · app nativa",
+          "browser": "{device} · {ago} · in esecuzione nel browser — installa l'app Android gratuita per avvisi sonori affidabili",
+          "install": "Installa la Kitchen Order App gratuita (Google Play) così i nuovi ordini squillano all'istante. Fino ad allora riceverai comunque avvisi via email/SMS."
+        },
+        "notificationRecipient": "Almeno un destinatario delle notifiche"
+      },
+      "menu": {
+        "categoryExists": "Almeno una categoria del menu",
+        "itemExists": "Almeno un articolo del menu attivo"
+      },
+      "publish": {
+        "officialDetails": "Dati ufficiali e informativa",
+        "widgetReady": "Aggiungi un pulsante d'ordine al tuo sito web",
+        "widgetReadyDetail": {
+          "sow": "Il tuo Sito web ottimizzato per le vendite è la tua pagina degli ordini — il widget è facoltativo.",
+          "optional": "Facoltativo — aggiungi un pulsante d'ordine al tuo sito web esistente. I clienti possono ordinare anche dal tuo codice QR, dal link di condivisione o dalla tua scheda sul marketplace."
+        }
+      },
+      "sections": {
+        "basics": "Informazioni di base",
+        "services": "Servizi e orari",
+        "payments": "Pagamenti / Tasse",
+        "orders": "Ricezione degli ordini",
+        "menu": "Configurazione del menu",
+        "publishing": "Pubblicazione"
+      },
+      "ago": {
+        "seconds": "{n}s fa",
+        "minutes": "{n}m fa",
+        "hours": "{n}h fa",
+        "days": "{n}g fa"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Account",
       "copyright": "© {year} Fee Free Ordering. Tutti i diritti riservati.",
       "tagline": "La piattaforma di ordinazione senza commissioni per ristoranti indipendenti.",
-      "support24_7": "Assistenza canadese da persone vere"
+      "support24_7": "Assistenza canadese da persone vere",
+      "getTheApp": "Scarica l'app"
     },
     "home": {
       "heroBadge": "0% di commissione sugli ordini",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "in costi extra per i clienti",
     "statCommissionLabel": "di commissione ai ristoranti",
     "statIndependentLabel": "ristoranti locali indipendenti",
-    "nativeAppsTitle": "App native iOS & Android",
+    "nativeAppsTitle": "Un'app marketplace per iOS e Android",
     "comingSoon": "Prossimamente",
-    "nativeAppsBody": "Le app native complete sono in arrivo. Nel frattempo, tocca il <b>menu di condivisione</b> del tuo browser e scegli <b>\"Aggiungi a schermata Home\"</b> — otterrai il marketplace come vera icona app, schermata di avvio ed esperienza a schermo intero. App Store non richiesto.",
+    "nativeAppsBody": "Un'app dedicata per ordinare dal marketplace è in fase di sviluppo (l'app oggi su Google Play è per il personale del ristorante). Nel frattempo, tocca il <b>menu di condivisione</b> del tuo browser e scegli <b>“Aggiungi alla schermata Home”</b> — avrai il marketplace come una vera icona app, con schermata iniziale ed esperienza a schermo intero. Nessun app store necessario.",
     "ownerTitle": "Sei un ristoratore? Fatti trovare.",
     "ownerBody": "Hai un ristorante? <b>Comparire sul Fee Free Marketplace è gratis</b> — mai un canone mensile né una commissione per ordine. Offri ritiro o consegna e raggiungi nuovi clienti nelle vicinanze mantenendo il tuo marchio, i tuoi clienti e il 100 % dei tuoi prezzi.",
     "getListedFree": "Inizia gratis",

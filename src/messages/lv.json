@@ -129,7 +129,8 @@
     "thisPartner": "šis partneris",
     "signingUpUnder": "Jūs reģistrējaties caur {brand}",
     "restaurantLogin": "Restorāna pieteikšanās",
-    "tooManyAttempts": "Pārāk daudz mēģinājumu. Lūdzu, uzgaidi dažas minūtes un pēc tam mēģini vēlreiz."
+    "tooManyAttempts": "Pārāk daudz mēģinājumu. Lūdzu, uzgaidi dažas minūtes un pēc tam mēģini vēlreiz.",
+    "kitchenGetAppHint": "Iegūstiet bezmaksas Android lietotni Google Play veikalā"
   },
   "ordering": {
     "viewCart": "Skatīt grozu",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Izmitināsim mārketinga lapu vietnē <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Jaunināt, lai atbloķētu →",
       "brandedAppTitle": "Branded mobilā lietotne",
-      "brandedAppDescription": "Iesniedziet savu lietotni iOS un Android lietotnēs ar savu zīmolu."
+      "brandedAppDescription": "Iesniedziet savu lietotni iOS un Android lietotnēs ar savu zīmolu.",
+      "getAppTitle": "Iegūstiet lietotni Kitchen Order App",
+      "getAppBody": "Bez maksas Google Play veikalā. Par jauniem pasūtījumiem uzreiz atskan zvans — pat ar izslēgtu ekrānu — un čeki tiek drukāti caur WiFi.",
+      "getAppScanHint": "Skenējiet ar virtuves planšetdatoru vai tālruni, lai atvērtu Google Play",
+      "getAppIosSoon": "iPhone/iPad versija drīzumā būs pieejama App Store — līdz tam iPad ierīcēs virtuvi var darbināt pārlūkprogrammā."
     },
     "endOfDayPage": {
       "heading": "Dienas beigu atskaite",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Meklēt produktus un kategorijas…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Nosaukums un adrese",
+        "mapPin": "Atrašanās vietas atzīme kartē",
+        "cuisine": "Virtuves veids",
+        "accountConfirmation": "E-pasts apstiprināts"
+      },
+      "services": {
+        "atLeastOne": "Iespējots vismaz viens pakalpojums",
+        "openingHours": "Darba laiks",
+        "deliveryZones": "Piegādes zonas",
+        "deliveryManagement": "Izvēlēta piegādes pārvaldība"
+      },
+      "payments": {
+        "methodsSelected": "Pieņemtās maksājumu metodes",
+        "taxation": "Nodokļi konfigurēti",
+        "currency": "Valūta",
+        "methodConfigured": "Tiešsaistes karšu maksājumi konfigurēti"
+      },
+      "orders": {
+        "appConnected": "Pasūtījumu pieņemšanas lietotne pievienota",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · natīvā lietotne",
+          "browser": "{device} · {ago} · darbojas pārlūkprogrammā — instalējiet bezmaksas Android lietotni uzticamiem zvana signāliem",
+          "install": "Instalējiet bezmaksas lietotni Kitchen Order App (Google Play), lai par jauniem pasūtījumiem uzreiz atskanētu zvans. Līdz tam jūs joprojām saņemsiet e-pasta/SMS brīdinājumus."
+        },
+        "notificationRecipient": "Vismaz viens paziņojumu saņēmējs"
+      },
+      "menu": {
+        "categoryExists": "Vismaz viena ēdienkartes kategorija",
+        "itemExists": "Vismaz viena aktīva ēdienkartes vienība"
+      },
+      "publish": {
+        "officialDetails": "Oficiālā informācija un politika",
+        "widgetReady": "Pievienojiet pasūtīšanas pogu savai vietnei",
+        "widgetReadyDetail": {
+          "sow": "Jūsu Pārdošanai optimizētā vietne ir jūsu pasūtīšanas lapa — logrīks nav obligāts.",
+          "optional": "Neobligāti — pievienojiet pasūtīšanas pogu savai esošajai vietnei. Klienti var pasūtīt arī no jūsu QR koda, kopīgošanas saites vai Marketplace ieraksta."
+        }
+      },
+      "sections": {
+        "basics": "Restorāna pamatinformācija",
+        "services": "Pakalpojumi un darba laiks",
+        "payments": "Maksājumi / nodokļi",
+        "orders": "Pasūtījumu pieņemšana",
+        "menu": "Ēdienkartes iestatīšana",
+        "publishing": "Publicēšana"
+      },
+      "ago": {
+        "seconds": "pirms {n} s",
+        "minutes": "pirms {n} min",
+        "hours": "pirms {n} h",
+        "days": "pirms {n} d"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Konts",
       "copyright": "© {year} Fee Free Ordering. Visas tiesības aizsargātas.",
       "tagline": "Bez komisijas pasūtīšanas platforma neatkarīgiem restorāniem.",
-      "support24_7": "Kanādas atbalsts no īstiem cilvēkiem"
+      "support24_7": "Kanādas atbalsts no īstiem cilvēkiem",
+      "getTheApp": "Iegūt lietotni"
     },
     "home": {
       "heroBadge": "0% komisija par pasūtījumiem",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "papildu maksa klientiem",
     "statCommissionLabel": "komisija restorāniem",
     "statIndependentLabel": "neatkarīgi vietējie restorāni",
-    "nativeAppsTitle": "Natīvās iOS un Android aplikācijas",
+    "nativeAppsTitle": "Marketplace lietotne iOS un Android ierīcēm",
     "comingSoon": "Drīzumā",
-    "nativeAppsBody": "Pilnvērtīgās natīvās aplikācijas ir izstrādes procesā. Pa to laiku pieskarieties pārlūka <b>kopīgošanas izvēlnei</b> un izvēlieties <b>„Add to Home Screen“</b> — jūs iegūsiet tirgus vietu kā īstu aplikācijas ikonu, ielādes ekrānu un pilnekrāna pieredzi. App Store nav nepieciešams.",
+    "nativeAppsBody": "Īpaša Marketplace pasūtīšanas lietotne ir izstrādē (lietotne, kas šodien pieejama Google Play, ir paredzēta restorāna personālam). Pa to laiku pieskarieties pārlūkprogrammas <b>kopīgošanas izvēlnei</b> un izvēlieties <b>“Pievienot sākuma ekrānam”</b> — jūs iegūsiet Marketplace kā īstu lietotni ar ikonu, ielādes ekrānu un pilnekrāna pieredzi. Lietotņu veikals nav nepieciešams.",
     "ownerTitle": "Restorāna īpašnieks? Reģistrējieties.",
     "ownerBody": "Vai jums pieder restorāns? <b>Reģistrācija Fee Free Marketplace ir bez maksas</b> — nekādas ikmēneša maksas, nekādas komisijas par pasūtījumu, nekad. Piedāvājiet izņemšanu vai piegādi un sasniedziet jaunus klientus tuvumā, saglabājot savu zīmolu, savus klientus un 100% savu cenu.",
     "getListedFree": "Sāciet bez maksas",

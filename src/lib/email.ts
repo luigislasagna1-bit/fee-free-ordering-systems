@@ -21,6 +21,7 @@ const IS_PROD = process.env.NODE_ENV === "production" || process.env.VERCEL_ENV 
 import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { getDict, type Translator } from "@/lib/i18n-dict";
+import { APP_LINKS } from "@/lib/app-links";
 import { formatTime } from "@/lib/format-time";
 import { renderEmail } from "@/emails/render";
 import OrderConfirmation         from "@/emails/templates/OrderConfirmation";
@@ -460,11 +461,21 @@ export async function sendDriverInviteEmail(params: {
     <p style="font-size:15px;line-height:1.6">You've been added as a driver on <strong>Fee Free Delivery</strong>. Sign in on your phone to see and accept delivery jobs.</p>
     <p style="margin:18px 0"><a href="${esc(params.appUrl)}" style="background:#059669;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;display:inline-block">Open Fee Free Delivery</a></p>
     <table style="font-size:14px;line-height:1.7;border-collapse:collapse;margin:8px 0">
-      <tr><td style="color:#6b7280;padding-right:12px">App link</td><td><a href="${esc(params.appUrl)}" style="color:#059669">${esc(params.appUrl)}</a></td></tr>
+      <tr><td style="color:#6b7280;padding-right:12px">App link</td><td><a href="${esc(params.appUrl)}" style="color:#059669">${esc(params.appUrl)}</a></td></tr>${
+        // Availability-driven (app-links.ts): the Android-app row appears the
+        // day the driver app's Play listing goes live — dormant until then.
+        APP_LINKS.driver.play
+          ? `\n      <tr><td style="color:#6b7280;padding-right:12px">Android app</td><td><a href="${esc(APP_LINKS.driver.play)}" style="color:#059669">Get it on Google Play</a></td></tr>`
+          : ""
+      }
       <tr><td style="color:#6b7280;padding-right:12px">Login (email)</td><td><strong>${esc(params.loginEmail)}</strong></td></tr>
       <tr><td style="color:#6b7280;padding-right:12px">Temporary password</td><td><strong>${esc(params.tempPassword)}</strong></td></tr>
     </table>
-    <p style="font-size:13px;color:#6b7280;line-height:1.6">Tip: after opening the link, use "Add to Home Screen" so it installs like a normal app. Keep this password private — ask your manager if you ever need it reset.</p>
+    <p style="font-size:13px;color:#6b7280;line-height:1.6">${
+      APP_LINKS.driver.play
+        ? `Tip: install the Android app from Google Play for the most reliable experience — or open the link above and use "Add to Home Screen". Keep this password private — ask your manager if you ever need it reset.`
+        : `Tip: after opening the link, use "Add to Home Screen" so it installs like a normal app. Keep this password private — ask your manager if you ever need it reset.`
+    }</p>
     <p style="font-size:12px;color:#9ca3af;margin-top:20px">If you weren't expecting this, you can ignore this email.</p>
   </div>`;
   return send({

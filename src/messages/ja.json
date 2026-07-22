@@ -129,7 +129,8 @@
     "thisPartner": "このパートナー",
     "signingUpUnder": "{brand} を通じて登録しています",
     "restaurantLogin": "レストランログイン",
-    "tooManyAttempts": "試行回数が多すぎます。数分待ってから、もう一度お試しください。"
+    "tooManyAttempts": "試行回数が多すぎます。数分待ってから、もう一度お試しください。",
+    "kitchenGetAppHint": "無料の Android アプリを Google Play で入手"
   },
   "ordering": {
     "viewCart": "カートを見る",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "<code>your-slug.feefreeordering.com</code> にマーケティングページをホストします。",
       "upgradeToUnlock": "アップグレードして解除 →",
       "brandedAppTitle": "ブランドモバイルアプリ",
-      "brandedAppDescription": "自社ブランドで iOS・Android アプリストアにアプリを申請。"
+      "brandedAppDescription": "自社ブランドで iOS・Android アプリストアにアプリを申請。",
+      "getAppTitle": "Kitchen Order App を入手",
+      "getAppBody": "Google Play で無料。新しい注文は画面がオフでも即座に着信音でお知らせし、レシートは WiFi 経由で印刷されます。",
+      "getAppScanHint": "キッチンのタブレットまたはスマートフォンでスキャンすると Google Play が開きます",
+      "getAppIosSoon": "iPhone/iPad 版は App Store に近日登場予定です。それまでの間、iPad ではブラウザでキッチン画面をご利用いただけます。"
     },
     "endOfDayPage": {
       "heading": "日次レポート",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "商品・カテゴリを検索…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "店名と住所",
+        "mapPin": "地図上の位置ピン",
+        "cuisine": "料理ジャンル",
+        "accountConfirmation": "メールアドレス確認済み"
+      },
+      "services": {
+        "atLeastOne": "サービスを1つ以上有効化",
+        "openingHours": "営業時間",
+        "deliveryZones": "配達ゾーン",
+        "deliveryManagement": "配達管理方法の選択"
+      },
+      "payments": {
+        "methodsSelected": "受け付ける支払い方法",
+        "taxation": "税の設定",
+        "currency": "通貨",
+        "methodConfigured": "オンラインカード決済の設定"
+      },
+      "orders": {
+        "appConnected": "注文受付アプリの接続",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · ネイティブアプリ",
+          "browser": "{device} · {ago} · ブラウザで動作中 — 確実な着信音通知のため、無料の Android アプリをインストールしてください",
+          "install": "無料の Kitchen Order App（Google Play）をインストールすると、新しい注文が即座に着信音でお知らせされます。それまでの間もメール／SMS の通知は届きます。"
+        },
+        "notificationRecipient": "通知の受信者を1名以上"
+      },
+      "menu": {
+        "categoryExists": "メニューカテゴリーを1つ以上",
+        "itemExists": "有効なメニュー商品を1つ以上"
+      },
+      "publish": {
+        "officialDetails": "正式な店舗情報とポリシー",
+        "widgetReady": "ウェブサイトに注文ボタンを追加",
+        "widgetReadyDetail": {
+          "sow": "売上最適化ウェブサイトが注文ページそのものなので、ウィジェットは任意です。",
+          "optional": "任意 — 既存のウェブサイトに注文ボタンを追加できます。お客様は QR コード、共有リンク、マーケットプレイス掲載からも注文できます。"
+        }
+      },
+      "sections": {
+        "basics": "レストランの基本情報",
+        "services": "サービスと営業時間",
+        "payments": "決済／税",
+        "orders": "注文の受付",
+        "menu": "メニュー設定",
+        "publishing": "公開"
+      },
+      "ago": {
+        "seconds": "{n}秒前",
+        "minutes": "{n}分前",
+        "hours": "{n}時間前",
+        "days": "{n}日前"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "アカウント",
       "copyright": "© {year} Fee Free Ordering. All rights reserved.",
       "tagline": "独立系レストランのための手数料無料注文プラットフォーム。",
-      "support24_7": "本物の人間が対応するカナダのサポート"
+      "support24_7": "本物の人間が対応するカナダのサポート",
+      "getTheApp": "アプリを入手"
     },
     "home": {
       "heroBadge": "注文手数料 0%",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "余分な顧客手数料",
     "statCommissionLabel": "レストランへの手数料",
     "statIndependentLabel": "地元の独立系レストラン",
-    "nativeAppsTitle": "iOS & Android ネイティブアプリ",
+    "nativeAppsTitle": "iOS & Android 向けマーケットプレイスアプリ",
     "comingSoon": "近日公開",
-    "nativeAppsBody": "フル機能のネイティブアプリは開発中です。その間は、ブラウザの<b>共有メニュー</b>から<b>「Add to Home Screen」</b>を選ぶだけで、マーケットプレイスをリアルなアプリアイコン・スプラッシュ画面・全画面表示で使えます。App Store不要。",
+    "nativeAppsBody": "マーケットプレイス専用の注文アプリを現在開発中です（現在 Google Play にあるアプリはレストランのスタッフ向けです）。それまでの間は、ブラウザの<b>共有メニュー</b>から<b>「ホーム画面に追加」</b>を選択してください。マーケットプレイスが本物のアプリのようにアイコン、スプラッシュ画面、フルスクリーン表示で利用できます。アプリストアは不要です。",
     "ownerTitle": "レストランオーナーの方へ。掲載しませんか。",
     "ownerBody": "レストランを経営されていますか？<b>Fee Free Marketplace への掲載は無料です</b> — 月額料金も、注文ごとの手数料も、一切かかりません。テイクアウトやデリバリーを提供して近隣の新規顧客にリーチしながら、あなたのブランド、顧客、そして価格の 100% を守り続けられます。",
     "getListedFree": "無料で始める",

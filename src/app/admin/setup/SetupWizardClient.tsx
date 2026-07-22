@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import type { SetupProgress, SetupSection, SetupStep } from "@/lib/setup-checklist";
+import { setupStepLabel, setupStepDetail, setupSectionLabel } from "@/lib/setup-step-i18n";
 
 /**
  * Step-by-step onboarding wizard for new restaurants.
@@ -41,6 +42,8 @@ export function SetupWizardClient({
 }) {
   const router = useRouter();
   const t = useTranslations("admin.setupWizard");
+  // Localized step labels for the publish-block lists (2026-07-22 retrofit).
+  const tSteps = useTranslations("admin.setupSteps");
   const [publishing, setPublishing] = useState(false);
   /**
    * Race-condition guard: the Publish button only renders when
@@ -213,7 +216,7 @@ export function SetupWizardClient({
                           className="inline-flex items-center gap-1.5 text-sm text-amber-900 hover:underline font-medium"
                         >
                           <Circle className="w-3.5 h-3.5" />
-                          {step.label}
+                          {setupStepLabel(tSteps, step)}
                           <ArrowRight className="w-3 h-3" />
                         </Link>
                       </li>
@@ -256,7 +259,7 @@ export function SetupWizardClient({
                           className="inline-flex items-center gap-1.5 text-sm text-red-900 hover:underline font-medium"
                         >
                           <Circle className="w-3.5 h-3.5" />
-                          {step.label}
+                          {setupStepLabel(tSteps, step)}
                           <ArrowRight className="w-3 h-3" />
                         </Link>
                       </li>
@@ -308,6 +311,8 @@ function SectionCard({
   onToggle: () => void;
 }) {
   const t = useTranslations("admin.setupWizard");
+  // Localized section/step labels (2026-07-22 retrofit) — English fallback.
+  const tSteps = useTranslations("admin.setupSteps");
   const allDone = section.complete;
   const sectionPercent = section.totalCount > 0
     ? Math.round((section.completedCount / section.totalCount) * 100)
@@ -327,7 +332,7 @@ function SectionCard({
           {allDone ? <CheckCircle2 className="w-5 h-5" /> : <Circle className="w-4 h-4" />}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-bold text-gray-900 text-sm sm:text-base">{section.label}</div>
+          <div className="font-bold text-gray-900 text-sm sm:text-base">{setupSectionLabel(tSteps, section)}</div>
           <div className="text-xs text-gray-500 mt-0.5">
             {t("sectionStepCount", { completed: section.completedCount, total: section.totalCount, count: section.totalCount })}
             {allDone ? " ✓" : ""}
@@ -363,6 +368,9 @@ function SectionCard({
 
 function StepRow({ step }: { step: SetupStep }) {
   const t = useTranslations("admin.setupWizard");
+  // Localized step label/detail (2026-07-22 retrofit) — English fallback.
+  const tSteps = useTranslations("admin.setupSteps");
+  const detail = setupStepDetail(tSteps, step);
   return (
     <Link
       href={step.href}
@@ -377,11 +385,11 @@ function StepRow({ step }: { step: SetupStep }) {
       )}
       <div className="flex-1 min-w-0">
         <div className={`text-sm ${step.complete ? "text-gray-500 line-through" : "text-gray-900 font-medium"}`}>
-          {step.label}
+          {setupStepLabel(tSteps, step)}
         </div>
-        {step.detail && (
+        {detail && (
           <div className="text-[11px] text-gray-500 mt-0.5 truncate">
-            {step.detail}
+            {detail}
           </div>
         )}
         {step.required && !step.complete && (

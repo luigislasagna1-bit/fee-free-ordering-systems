@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Tải ứng dụng Android miễn phí trên Google Play",
+  "publishingPage": {
+    "getAppTitle": "Tải Kitchen Order App",
+    "getAppBody": "Miễn phí trên Google Play. Đơn hàng mới đổ chuông ngay lập tức — kể cả khi màn hình tắt — và hóa đơn in qua WiFi.",
+    "getAppScanHint": "Quét bằng máy tính bảng hoặc điện thoại của bếp để mở Google Play",
+    "getAppIosSoon": "Phiên bản iPhone/iPad sắp có mặt trên App Store — trong lúc chờ, iPad có thể chạy màn hình bếp trên trình duyệt."
+  },
+  "footerGetTheApp": "Tải ứng dụng",
+  "nativeAppsTitle": "Ứng dụng marketplace cho iOS & Android",
+  "nativeAppsBody": "Một ứng dụng đặt hàng riêng cho marketplace đang được phát triển (ứng dụng hiện có trên Google Play là dành cho nhân viên nhà hàng). Trong lúc chờ, hãy nhấn vào <b>menu chia sẻ</b> của trình duyệt và chọn <b>“Thêm vào Màn hình chính”</b> — bạn sẽ có marketplace dưới dạng biểu tượng ứng dụng thật sự, với màn hình chào và trải nghiệm toàn màn hình. Không cần cửa hàng ứng dụng.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Tên & địa chỉ",
+      "mapPin": "Ghim vị trí trên bản đồ",
+      "cuisine": "Loại ẩm thực",
+      "accountConfirmation": "Email đã xác minh"
+    },
+    "services": {
+      "atLeastOne": "Bật ít nhất một dịch vụ",
+      "openingHours": "Giờ mở cửa",
+      "deliveryZones": "Khu vực giao hàng",
+      "deliveryManagement": "Đã chọn cách quản lý giao hàng"
+    },
+    "payments": {
+      "methodsSelected": "Phương thức thanh toán được chấp nhận",
+      "taxation": "Đã cấu hình thuế",
+      "currency": "Tiền tệ",
+      "methodConfigured": "Đã cấu hình thanh toán thẻ trực tuyến"
+    },
+    "orders": {
+      "appConnected": "Đã kết nối ứng dụng nhận đơn",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · ứng dụng gốc",
+        "browser": "{device} · {ago} · đang chạy trên trình duyệt — cài ứng dụng Android miễn phí để chuông báo hoạt động ổn định",
+        "install": "Cài Kitchen Order App miễn phí (Google Play) để đơn hàng mới đổ chuông ngay lập tức. Trước đó, bạn vẫn nhận được cảnh báo qua email/SMS."
+      },
+      "notificationRecipient": "Ít nhất một người nhận thông báo"
+    },
+    "menu": {
+      "categoryExists": "Ít nhất một danh mục thực đơn",
+      "itemExists": "Ít nhất một món đang hoạt động"
+    },
+    "publish": {
+      "officialDetails": "Thông tin chính thức & chính sách",
+      "widgetReady": "Thêm nút đặt hàng vào trang web của bạn",
+      "widgetReadyDetail": {
+        "sow": "Website tối ưu doanh số của bạn chính là trang đặt hàng — widget là tùy chọn.",
+        "optional": "Tùy chọn — thêm nút đặt hàng vào trang web hiện có của bạn. Khách hàng cũng có thể đặt hàng từ mã QR, liên kết chia sẻ hoặc trang marketplace của bạn."
+      }
+    },
+    "sections": {
+      "basics": "Thông tin cơ bản",
+      "services": "Dịch vụ & giờ mở cửa",
+      "payments": "Thanh toán / Thuế",
+      "orders": "Nhận đơn hàng",
+      "menu": "Thiết lập thực đơn",
+      "publishing": "Xuất bản"
+    },
+    "ago": {
+      "seconds": "{n} giây trước",
+      "minutes": "{n} phút trước",
+      "hours": "{n} giờ trước",
+      "days": "{n} ngày trước"
+    }
+  }
+}

@@ -2,19 +2,21 @@
 import { useState, useEffect, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ChefHat, Loader2, Monitor } from "lucide-react";
+import { ChefHat, Loader2, Monitor, Smartphone } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 import { getNativeAppVersion } from "@/lib/native-app-version";
 
-function KitchenLoginFormInner({ locale }: { locale: string }) {
+function KitchenLoginFormInner({ locale, getAppUrl }: { locale: string; getAppUrl?: string | null }) {
   const tAuth = useTranslations("auth");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
-  // App version (e.g. "2.7") shown at the bottom — null in a browser / on a pre-v2.7 app. A1.
-  const [appVersion, setAppVersion] = useState<string | null>(null);
+  // App version (e.g. "2.7") shown at the bottom — null in a browser / on a
+  // pre-v2.7 app. `undefined` = still checking, so the "get the app" hint
+  // can't flash for native users before the bridge answers. A1.
+  const [appVersion, setAppVersion] = useState<string | null | undefined>(undefined);
   useEffect(() => { getNativeAppVersion().then(setAppVersion); }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -103,6 +105,19 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
           </form>
         </div>
 
+        {/* "Get the app" — only in a plain browser (native check resolved to
+            null), never on the neutral reseller host (getAppUrl null from the
+            server), never while the native bridge is still answering. */}
+        {getAppUrl && appVersion === null && (
+          <a
+            href={getAppUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 flex items-center justify-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition"
+          >
+            <Smartphone className="w-3.5 h-3.5" /> {tAuth("kitchenGetAppHint")}
+          </a>
+        )}
         {appVersion && (
           <p className="mt-4 text-center text-[11px] text-gray-600">v{appVersion}</p>
         )}
@@ -111,14 +126,14 @@ function KitchenLoginFormInner({ locale }: { locale: string }) {
   );
 }
 
-export function KitchenLoginForm({ locale }: { locale: string }) {
+export function KitchenLoginForm({ locale, getAppUrl }: { locale: string; getAppUrl?: string | null }) {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
       </div>
     }>
-      <KitchenLoginFormInner locale={locale} />
+      <KitchenLoginFormInner locale={locale} getAppUrl={getAppUrl} />
     </Suspense>
   );
 }

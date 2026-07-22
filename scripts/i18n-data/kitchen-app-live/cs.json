@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Stáhněte si bezplatnou aplikaci pro Android na Google Play",
+  "publishingPage": {
+    "getAppTitle": "Získejte Kitchen Order App",
+    "getAppBody": "Zdarma na Google Play. Nové objednávky okamžitě zazvoní — i při vypnuté obrazovce — a účtenky se tisknou přes WiFi.",
+    "getAppScanHint": "Naskenujte kuchyňským tabletem nebo telefonem a otevřete Google Play",
+    "getAppIosSoon": "Verze pro iPhone/iPad míří do App Store — do té doby mohou iPady provozovat kuchyni v prohlížeči."
+  },
+  "footerGetTheApp": "Stáhnout aplikaci",
+  "nativeAppsTitle": "Marketplace aplikace pro iOS a Android",
+  "nativeAppsBody": "Samostatná objednávková aplikace pro marketplace se připravuje (aplikace, která je dnes na Google Play, je určena pro personál restaurací). Mezitím klepněte v prohlížeči na <b>nabídku sdílení</b> a zvolte <b>„Přidat na plochu“</b> — marketplace získáte jako skutečnou ikonu aplikace, s úvodní obrazovkou a zobrazením na celou obrazovku. Bez nutnosti obchodu s aplikacemi.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Název a adresa",
+      "mapPin": "Poloha na mapě",
+      "cuisine": "Typ kuchyně",
+      "accountConfirmation": "E-mail ověřen"
+    },
+    "services": {
+      "atLeastOne": "Alespoň jedna zapnutá služba",
+      "openingHours": "Otevírací doba",
+      "deliveryZones": "Zóny rozvozu",
+      "deliveryManagement": "Zvolena správa rozvozu"
+    },
+    "payments": {
+      "methodsSelected": "Přijímané platební metody",
+      "taxation": "Daně nastaveny",
+      "currency": "Měna",
+      "methodConfigured": "Online platby kartou nastaveny"
+    },
+    "orders": {
+      "appConnected": "Aplikace pro příjem objednávek připojena",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · nativní aplikace",
+        "browser": "{device} · {ago} · běží v prohlížeči — nainstalujte bezplatnou aplikaci pro Android pro spolehlivé zvonění při nových objednávkách",
+        "install": "Nainstalujte si bezplatnou Kitchen Order App (Google Play), aby nové objednávky okamžitě zazvonily. Do té doby budete dál dostávat upozornění e-mailem/SMS."
+      },
+      "notificationRecipient": "Alespoň jeden příjemce upozornění"
+    },
+    "menu": {
+      "categoryExists": "Alespoň jedna kategorie menu",
+      "itemExists": "Alespoň jedna aktivní položka menu"
+    },
+    "publish": {
+      "officialDetails": "Oficiální údaje a zásady",
+      "widgetReady": "Přidejte objednávkové tlačítko na svůj web",
+      "widgetReadyDetail": {
+        "sow": "Váš Prodejně optimalizovaný web je vaší objednávkovou stránkou — widget je volitelný.",
+        "optional": "Volitelné — přidejte objednávkové tlačítko na svůj stávající web. Zákazníci mohou objednávat i přes váš QR kód, odkaz ke sdílení nebo záznam na marketplace."
+      }
+    },
+    "sections": {
+      "basics": "Základy restaurace",
+      "services": "Služby a otevírací doba",
+      "payments": "Platby / daně",
+      "orders": "Příjem objednávek",
+      "menu": "Nastavení menu",
+      "publishing": "Publikování"
+    },
+    "ago": {
+      "seconds": "před {n} s",
+      "minutes": "před {n} min",
+      "hours": "před {n} h",
+      "days": "před {n} d"
+    }
+  }
+}

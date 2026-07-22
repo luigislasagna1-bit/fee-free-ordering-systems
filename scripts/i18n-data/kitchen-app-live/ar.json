@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "احصل على تطبيق Android المجاني من Google Play",
+  "publishingPage": {
+    "getAppTitle": "احصل على تطبيق Kitchen Order App",
+    "getAppBody": "مجاني على Google Play. الطلبات الجديدة ترنّ فوراً — حتى مع إيقاف الشاشة — وتُطبع الإيصالات عبر WiFi.",
+    "getAppScanHint": "امسح الرمز بجهاز المطبخ اللوحي أو الهاتف لفتح Google Play",
+    "getAppIosSoon": "نسخة iPhone/iPad قادمة إلى App Store — حتى ذلك الحين، يمكن لأجهزة iPad تشغيل المطبخ في المتصفح."
+  },
+  "footerGetTheApp": "احصل على التطبيق",
+  "nativeAppsTitle": "تطبيق Marketplace لنظامي iOS وAndroid",
+  "nativeAppsBody": "تطبيق طلب مخصّص لـ Marketplace قيد التطوير (التطبيق الموجود على Google Play اليوم مخصّص لطاقم المطعم). في هذه الأثناء، اضغط على <b>قائمة المشاركة</b> في متصفحك واختر <b>«إضافة إلى الشاشة الرئيسية»</b> — ستحصل على الـ Marketplace كأيقونة تطبيق حقيقية وشاشة بداية وتجربة ملء الشاشة. دون الحاجة إلى متجر تطبيقات.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "الاسم والعنوان",
+      "mapPin": "تحديد الموقع على الخريطة",
+      "cuisine": "نوع المطبخ",
+      "accountConfirmation": "تم التحقق من البريد الإلكتروني"
+    },
+    "services": {
+      "atLeastOne": "تفعيل خدمة واحدة على الأقل",
+      "openingHours": "ساعات العمل",
+      "deliveryZones": "مناطق التوصيل",
+      "deliveryManagement": "تم اختيار إدارة التوصيل"
+    },
+    "payments": {
+      "methodsSelected": "طرق الدفع المقبولة",
+      "taxation": "تم ضبط الضرائب",
+      "currency": "العملة",
+      "methodConfigured": "تم ضبط الدفع بالبطاقة عبر الإنترنت"
+    },
+    "orders": {
+      "appConnected": "تم ربط تطبيق استقبال الطلبات",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · تطبيق أصلي",
+        "browser": "{device} · {ago} · يعمل في المتصفح — ثبّت تطبيق Android المجاني لتنبيهات رنين موثوقة",
+        "install": "ثبّت تطبيق Kitchen Order App المجاني (Google Play) لترنّ الطلبات الجديدة فوراً. حتى ذلك الحين ستستمر في تلقي تنبيهات البريد الإلكتروني/SMS."
+      },
+      "notificationRecipient": "مستلم إشعارات واحد على الأقل"
+    },
+    "menu": {
+      "categoryExists": "فئة قائمة واحدة على الأقل",
+      "itemExists": "صنف قائمة نشط واحد على الأقل"
+    },
+    "publish": {
+      "officialDetails": "البيانات الرسمية والسياسة",
+      "widgetReady": "أضف زر طلب إلى موقعك الإلكتروني",
+      "widgetReadyDetail": {
+        "sow": "موقعك المحسّن للمبيعات هو صفحة الطلب الخاصة بك — الودجت اختياري.",
+        "optional": "اختياري — أضف زر طلب إلى موقعك الإلكتروني الحالي. يمكن للعملاء أيضاً الطلب عبر رمز QR الخاص بك أو رابط المشاركة أو قائمتك على Marketplace."
+      }
+    },
+    "sections": {
+      "basics": "أساسيات المطعم",
+      "services": "الخدمات وساعات العمل",
+      "payments": "المدفوعات / الضرائب",
+      "orders": "استقبال الطلبات",
+      "menu": "إعداد القائمة",
+      "publishing": "النشر"
+    },
+    "ago": {
+      "seconds": "قبل {n} ث",
+      "minutes": "قبل {n} د",
+      "hours": "قبل {n} س",
+      "days": "قبل {n} ي"
+    }
+  }
+}

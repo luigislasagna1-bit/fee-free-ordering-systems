@@ -1,22 +1,31 @@
 "use client";
 import { useTranslations } from "next-intl";
+import { APP_LINKS } from "@/lib/app-links";
 
 /**
- * App Store + Google Play download badges (Kitchen Order App).
+ * App Store + Google Play download badges, availability-driven (2026-07-22).
  *
- * The apps are not on the PUBLIC stores yet (iOS = TestFlight, Android = Play
- * closed testing as of 2026-06-20), so `comingSoon` defaults to true → the
- * badges render but don't link (no broken links). The moment the public store
- * URLs exist, pass `iosUrl` / `androidUrl` and set `comingSoon={false}` and
- * they become live links. Self-contained styled badges (Apple + Google Play
- * marks inline) — swap for the official badge artwork before launch if desired.
- * "App Store" / "Google Play" are brand names → never translated; the prefix
- * lines + "Soon" badge translate via marketing.home.v2.*.
+ * Store URLs come from src/lib/app-links.ts (the single switch): a badge is a
+ * live link iff its URL is non-null, else it renders with a "Soon" pill —
+ * PER BADGE, so the live Kitchen Play listing links while iOS still shows
+ * Soon. Flipping a link live in app-links.ts activates every consumer with
+ * zero prop changes (the old all-or-nothing `comingSoon` prop is gone).
+ *
+ * `app` picks which app's links to show (default: the Kitchen Order App);
+ * `iosUrl`/`androidUrl` remain as explicit overrides. `onDark` restyles the
+ * badge frame for dark backgrounds (PublicFooter). Self-contained styled
+ * badges (Apple + Google Play marks inline). "App Store" / "Google Play"
+ * are brand names → never translated; the prefix lines + "Soon" pill
+ * translate via marketing.home.v2.*.
  */
 type Props = {
-  iosUrl?: string;
-  androidUrl?: string;
-  comingSoon?: boolean;
+  /** Which app's store links to render. Default: kitchen. */
+  app?: keyof typeof APP_LINKS;
+  /** Explicit overrides — default to APP_LINKS[app]. */
+  iosUrl?: string | null;
+  androidUrl?: string | null;
+  /** Dark-background variant (e.g. the gray-900 footer). */
+  onDark?: boolean;
   className?: string;
 };
 
@@ -38,9 +47,27 @@ function PlayMark() {
   );
 }
 
-function Badge({ href, comingSoon, soonLabel, mark, line1, line2 }: { href?: string; comingSoon: boolean; soonLabel: string; mark: React.ReactNode; line1: string; line2: string }) {
+function Badge({
+  href,
+  soonLabel,
+  mark,
+  line1,
+  line2,
+  onDark,
+}: {
+  href: string | null;
+  soonLabel: string;
+  mark: React.ReactNode;
+  line1: string;
+  line2: string;
+  onDark: boolean;
+}) {
   const inner = (
-    <span className="inline-flex items-center gap-2.5 rounded-xl bg-gray-900 text-white px-4 py-2.5 border border-gray-900 shadow-sm hover:bg-gray-800 transition">
+    <span
+      className={`inline-flex items-center gap-2.5 rounded-xl bg-gray-900 text-white px-4 py-2.5 border shadow-sm hover:bg-gray-800 transition ${
+        onDark ? "border-gray-700" : "border-gray-900"
+      }`}
+    >
       {mark}
       <span className="text-left leading-tight">
         <span className="block text-[10px] text-gray-300">{line1}</span>
@@ -48,7 +75,7 @@ function Badge({ href, comingSoon, soonLabel, mark, line1, line2 }: { href?: str
       </span>
     </span>
   );
-  if (comingSoon || !href) {
+  if (!href) {
     return (
       <span className="relative inline-block opacity-90">
         {inner}
@@ -56,16 +83,22 @@ function Badge({ href, comingSoon, soonLabel, mark, line1, line2 }: { href?: str
       </span>
     );
   }
-  return <a href={href} target="_blank" rel="noopener noreferrer">{inner}</a>;
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer">
+      {inner}
+    </a>
+  );
 }
 
-export function AppDownloadBadges({ iosUrl, androidUrl, comingSoon = true, className = "" }: Props) {
+export function AppDownloadBadges({ app = "kitchen", iosUrl, androidUrl, onDark = false, className = "" }: Props) {
   const t = useTranslations("marketing.home.v2");
   const soonLabel = t("soon");
+  const ios = iosUrl !== undefined ? iosUrl : APP_LINKS[app].ios;
+  const android = androidUrl !== undefined ? androidUrl : APP_LINKS[app].play;
   return (
     <div className={`flex flex-wrap items-center gap-3 ${className}`}>
-      <Badge href={iosUrl} comingSoon={comingSoon} soonLabel={soonLabel} mark={<AppleMark />} line1={t("appBadges.iosLine1")} line2="App Store" />
-      <Badge href={androidUrl} comingSoon={comingSoon} soonLabel={soonLabel} mark={<PlayMark />} line1={t("appBadges.androidLine1")} line2="Google Play" />
+      <Badge href={ios} soonLabel={soonLabel} mark={<AppleMark />} line1={t("appBadges.iosLine1")} line2="App Store" onDark={onDark} />
+      <Badge href={android} soonLabel={soonLabel} mark={<PlayMark />} line1={t("appBadges.androidLine1")} line2="Google Play" onDark={onDark} />
     </div>
   );
 }

@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Získajte bezplatnú aplikáciu pre Android na Google Play",
+  "publishingPage": {
+    "getAppTitle": "Získajte aplikáciu Kitchen Order App",
+    "getAppBody": "Zadarmo na Google Play. Nové objednávky okamžite zazvonia — aj pri vypnutej obrazovke — a účtenky sa tlačia cez WiFi.",
+    "getAppScanHint": "Naskenujte kuchynským tabletom alebo telefónom a otvorí sa Google Play",
+    "getAppIosSoon": "Verzia pre iPhone/iPad prichádza do App Store — dovtedy môžu iPady spúšťať kuchyňu v prehliadači."
+  },
+  "footerGetTheApp": "Stiahnite si aplikáciu",
+  "nativeAppsTitle": "Aplikácia marketplace pre iOS a Android",
+  "nativeAppsBody": "Samostatná objednávková aplikácia pre marketplace je vo vývoji (aplikácia, ktorá je dnes na Google Play, je určená pre personál reštaurácií). Medzitým ťuknite na <b>ponuku zdieľania</b> vo svojom prehliadači a vyberte <b>„Pridať na plochu“</b> — marketplace získate ako skutočnú ikonu aplikácie, s úvodnou obrazovkou a v režime celej obrazovky. Nie je potrebný žiadny obchod s aplikáciami.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Názov a adresa",
+      "mapPin": "Špendlík polohy na mape",
+      "cuisine": "Typ kuchyne",
+      "accountConfirmation": "E-mail overený"
+    },
+    "services": {
+      "atLeastOne": "Aspoň jedna zapnutá služba",
+      "openingHours": "Otváracie hodiny",
+      "deliveryZones": "Zóny doručenia",
+      "deliveryManagement": "Zvolená správa doručenia"
+    },
+    "payments": {
+      "methodsSelected": "Akceptované platobné metódy",
+      "taxation": "Dane nastavené",
+      "currency": "Mena",
+      "methodConfigured": "Online platby kartou nastavené"
+    },
+    "orders": {
+      "appConnected": "Aplikácia na prijímanie objednávok pripojená",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · natívna aplikácia",
+        "browser": "{device} · {ago} · beží v prehliadači — pre spoľahlivé zvonenie upozornení nainštalujte bezplatnú aplikáciu pre Android",
+        "install": "Nainštalujte si bezplatnú aplikáciu Kitchen Order App (Google Play), aby nové objednávky okamžite zazvonili. Dovtedy budete naďalej dostávať upozornenia e-mailom/SMS."
+      },
+      "notificationRecipient": "Aspoň jeden príjemca upozornení"
+    },
+    "menu": {
+      "categoryExists": "Aspoň jedna kategória menu",
+      "itemExists": "Aspoň jedna aktívna položka menu"
+    },
+    "publish": {
+      "officialDetails": "Oficiálne údaje a zásady",
+      "widgetReady": "Pridajte tlačidlo objednávky na svoj web",
+      "widgetReadyDetail": {
+        "sow": "Váš Predajne optimalizovaný web je vašou objednávkovou stránkou — widget je voliteľný.",
+        "optional": "Voliteľné — pridajte tlačidlo objednávky na svoj existujúci web. Zákazníci môžu objednávať aj cez váš QR kód, zdieľaný odkaz alebo záznam na marketplace."
+      }
+    },
+    "sections": {
+      "basics": "Základy reštaurácie",
+      "services": "Služby a hodiny",
+      "payments": "Platby / Dane",
+      "orders": "Prijímanie objednávok",
+      "menu": "Nastavenie menu",
+      "publishing": "Zverejnenie"
+    },
+    "ago": {
+      "seconds": "pred {n} s",
+      "minutes": "pred {n} min",
+      "hours": "pred {n} h",
+      "days": "pred {n} d"
+    }
+  }
+}

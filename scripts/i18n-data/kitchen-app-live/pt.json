@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Obtenha a aplicação Android gratuita no Google Play",
+  "publishingPage": {
+    "getAppTitle": "Obtenha a Kitchen Order App",
+    "getAppBody": "Gratuita no Google Play. As novas encomendas tocam instantaneamente — mesmo com o ecrã desligado — e os recibos são impressos por WiFi.",
+    "getAppScanHint": "Digitalize com o tablet ou telemóvel da cozinha para abrir o Google Play",
+    "getAppIosSoon": "A versão para iPhone/iPad está a chegar à App Store — até lá, os iPads podem executar a cozinha no navegador."
+  },
+  "footerGetTheApp": "Obtenha a aplicação",
+  "nativeAppsTitle": "Uma app de marketplace para iOS & Android",
+  "nativeAppsBody": "Uma app dedicada de encomendas do marketplace está a caminho (a app disponível hoje no Google Play destina-se ao pessoal dos restaurantes). Entretanto, toque no <b>menu de partilha</b> do seu browser e escolha <b>“Add to Home Screen”</b> — terá o marketplace como um ícone de app real, ecrã de abertura e experiência em ecrã inteiro. Sem precisar de loja de aplicações.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Nome e endereço",
+      "mapPin": "Marcador de localização no mapa",
+      "cuisine": "Tipo de cozinha",
+      "accountConfirmation": "E-mail verificado"
+    },
+    "services": {
+      "atLeastOne": "Pelo menos um serviço ativado",
+      "openingHours": "Horário de funcionamento",
+      "deliveryZones": "Zonas de entrega",
+      "deliveryManagement": "Gestão de entregas escolhida"
+    },
+    "payments": {
+      "methodsSelected": "Métodos de pagamento aceites",
+      "taxation": "Impostos configurados",
+      "currency": "Moeda",
+      "methodConfigured": "Pagamentos com cartão online configurados"
+    },
+    "orders": {
+      "appConnected": "Aplicação de pedidos conectada",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · aplicação nativa",
+        "browser": "{device} · {ago} · a funcionar num navegador — instale a aplicação Android gratuita para alertas de toque fiáveis",
+        "install": "Instale a Kitchen Order App gratuita (Google Play) para que os novos pedidos toquem instantaneamente. Até lá, continuará a receber alertas por e-mail/SMS."
+      },
+      "notificationRecipient": "Pelo menos um destinatário de notificações"
+    },
+    "menu": {
+      "categoryExists": "Pelo menos uma categoria no menu",
+      "itemExists": "Pelo menos um item de menu ativo"
+    },
+    "publish": {
+      "officialDetails": "Dados oficiais e política",
+      "widgetReady": "Adicione um botão de pedidos ao seu site",
+      "widgetReadyDetail": {
+        "sow": "O seu Site Otimizado para Vendas é a sua página de pedidos — o widget é opcional.",
+        "optional": "Opcional — adicione um botão de pedidos ao seu site existente. Os clientes também podem pedir através do seu código QR, link de partilha ou listagem no marketplace."
+      }
+    },
+    "sections": {
+      "basics": "Dados básicos do restaurante",
+      "services": "Serviços e horários",
+      "payments": "Pagamentos / Impostos",
+      "orders": "Receber pedidos",
+      "menu": "Configuração do menu",
+      "publishing": "Publicação"
+    },
+    "ago": {
+      "seconds": "há {n}s",
+      "minutes": "há {n}min",
+      "hours": "há {n}h",
+      "days": "há {n}d"
+    }
+  }
+}

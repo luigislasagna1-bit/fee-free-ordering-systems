@@ -52,6 +52,14 @@
 ### A21. ✅ DONE 2026-07-19 — delivery indexes pushed to BOTH databases (run live with Luigi)
 `push-schema-to-both.ts` ran with you present; both branches reported "in sync". Verified read-only on prod: `DeliveryAssignment_restaurantId_status_settlementId_idx` + `DeliveryAssignment_restaurantId_status_deliveredAt_idx` both exist. Additive-only, no data touched.
 
+### A19b. 🎉 KITCHEN APP **LIVE ON GOOGLE PLAY** (confirmed by Luigi's screenshot, 2026-07-22)
+`https://play.google.com/store/apps/details?id=com.feefreeordering.kitchen` — public, installable ("Install on more devices" showing, 1+ downloads). Luigi's calls (2026-07-22):
+1. **UK reseller link** — ☐ PARKED (Luigi picked "skip for now"; say "draft the reseller note" or send it yourself anytime).
+2. **Marketing + reseller Play-link sweep** — ✅ DONE 2026-07-22 (superseded by the app-distribution project Luigi commissioned + approved same day: `app-links.ts` single switch, badges live on home//features/footer/reseller, admin install hub + QR, welcome-email step, kitchen-login hint, setup-wizard step. Future store approvals = flip one URL in src/lib/app-links.ts).
+3. **Driver app** ("Fee Free Delivery", com.feefreeordering.driver) — ⏳ still in Play review as of Kitchen going live ("only Kitchen so far"). Paste the email when it arrives (approved OR rejected → same-day fix).
+4. **iOS driver app** — ⏳ still nothing from Apple (Waiting for Review since 2026-07-17).
+5. **B5** (16 KB page-size fix, Star SDK bump + print re-test) still stands for a FUTURE Kitchen update — not urgent now that vc21 is live.
+
 ### A19. ✅ DONE 2026-07-16 — BOTH Android apps SUBMITTED to Play Production 🎉
 **Kitchen "Fee Free Order App"** (vc21/v3.0) submitted ~02:15, status **In review**. **Driver "Fee Free Delivery"** (vc1/v1.0, new brand icon) submitted ~11:33 after the background-location + foreground-service declarations with the demo video (unlisted YouTube). 16 KB error on Kitchen bypassed via "Proceed anyway" (real fix = **B5**). When the review emails arrive, tell Claude the outcome → if approved, the public links go out (reseller + marketing): Kitchen `https://play.google.com/store/apps/details?id=com.feefreeordering.kitchen`, Driver `...?id=com.feefreeordering.driver`. If rejected, paste the email → same-day fix.
 **Follow-ups parked here:** (1) UK reseller — send the Play link when Kitchen goes live (or add his Gmail to the closed-testing track today); (2) driver-app demo video is on YouTube unlisted — leave it up, Google re-checks it on every update.

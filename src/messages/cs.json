@@ -129,7 +129,8 @@
     "thisPartner": "tento partner",
     "signingUpUnder": "Registrujete se prostřednictvím {brand}",
     "restaurantLogin": "Přihlášení restaurace",
-    "tooManyAttempts": "Příliš mnoho pokusů. Počkejte několik minut a pak to zkuste jednou."
+    "tooManyAttempts": "Příliš mnoho pokusů. Počkejte několik minut a pak to zkuste jednou.",
+    "kitchenGetAppHint": "Stáhněte si bezplatnou aplikaci pro Android na Google Play"
   },
   "ordering": {
     "viewCart": "Zobrazit košík",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "Hostujeme marketingovou stránku na <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "Upgradovat pro odemčení →",
       "brandedAppTitle": "Mobilní aplikace s vaší značkou",
-      "brandedAppDescription": "Odešlete vlastní aplikaci do obchodů iOS a Android se svou značkou."
+      "brandedAppDescription": "Odešlete vlastní aplikaci do obchodů iOS a Android se svou značkou.",
+      "getAppTitle": "Získejte Kitchen Order App",
+      "getAppBody": "Zdarma na Google Play. Nové objednávky okamžitě zazvoní — i při vypnuté obrazovce — a účtenky se tisknou přes WiFi.",
+      "getAppScanHint": "Naskenujte kuchyňským tabletem nebo telefonem a otevřete Google Play",
+      "getAppIosSoon": "Verze pro iPhone/iPad míří do App Store — do té doby mohou iPady provozovat kuchyni v prohlížeči."
     },
     "endOfDayPage": {
       "heading": "Závěrečná denní zpráva",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "Hledat položky a kategorie…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "Název a adresa",
+        "mapPin": "Poloha na mapě",
+        "cuisine": "Typ kuchyně",
+        "accountConfirmation": "E-mail ověřen"
+      },
+      "services": {
+        "atLeastOne": "Alespoň jedna zapnutá služba",
+        "openingHours": "Otevírací doba",
+        "deliveryZones": "Zóny rozvozu",
+        "deliveryManagement": "Zvolena správa rozvozu"
+      },
+      "payments": {
+        "methodsSelected": "Přijímané platební metody",
+        "taxation": "Daně nastaveny",
+        "currency": "Měna",
+        "methodConfigured": "Online platby kartou nastaveny"
+      },
+      "orders": {
+        "appConnected": "Aplikace pro příjem objednávek připojena",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · nativní aplikace",
+          "browser": "{device} · {ago} · běží v prohlížeči — nainstalujte bezplatnou aplikaci pro Android pro spolehlivé zvonění při nových objednávkách",
+          "install": "Nainstalujte si bezplatnou Kitchen Order App (Google Play), aby nové objednávky okamžitě zazvonily. Do té doby budete dál dostávat upozornění e-mailem/SMS."
+        },
+        "notificationRecipient": "Alespoň jeden příjemce upozornění"
+      },
+      "menu": {
+        "categoryExists": "Alespoň jedna kategorie menu",
+        "itemExists": "Alespoň jedna aktivní položka menu"
+      },
+      "publish": {
+        "officialDetails": "Oficiální údaje a zásady",
+        "widgetReady": "Přidejte objednávkové tlačítko na svůj web",
+        "widgetReadyDetail": {
+          "sow": "Váš Prodejně optimalizovaný web je vaší objednávkovou stránkou — widget je volitelný.",
+          "optional": "Volitelné — přidejte objednávkové tlačítko na svůj stávající web. Zákazníci mohou objednávat i přes váš QR kód, odkaz ke sdílení nebo záznam na marketplace."
+        }
+      },
+      "sections": {
+        "basics": "Základy restaurace",
+        "services": "Služby a otevírací doba",
+        "payments": "Platby / daně",
+        "orders": "Příjem objednávek",
+        "menu": "Nastavení menu",
+        "publishing": "Publikování"
+      },
+      "ago": {
+        "seconds": "před {n} s",
+        "minutes": "před {n} min",
+        "hours": "před {n} h",
+        "days": "před {n} d"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "Účet",
       "copyright": "© {year} Fee Free Ordering. Všechna práva vyhrazena.",
       "tagline": "Platforma pro objednávání bez poplatků pro nezávislé restaurace.",
-      "support24_7": "Kanadská podpora od skutečných lidí"
+      "support24_7": "Kanadská podpora od skutečných lidí",
+      "getTheApp": "Stáhnout aplikaci"
     },
     "home": {
       "heroBadge": "0% provize z objednávek",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "v extra poplatcích pro zákazníky",
     "statCommissionLabel": "provize restauracím",
     "statIndependentLabel": "nezávislých místních restaurací",
-    "nativeAppsTitle": "Nativní aplikace pro iOS & Android",
+    "nativeAppsTitle": "Marketplace aplikace pro iOS a Android",
     "comingSoon": "Již brzy",
-    "nativeAppsBody": "Plnohodnotné nativní aplikace jsou v přípravě. Mezitím klepněte na <b>nabídku sdílení</b> v prohlížeči a zvolte <b>„Add to Home Screen“</b> — marketplace se vám zobrazí jako skutečná ikona aplikace se splash obrazovkou a zobrazením na celou obrazovku. App Store není potřeba.",
+    "nativeAppsBody": "Samostatná objednávková aplikace pro marketplace se připravuje (aplikace, která je dnes na Google Play, je určena pro personál restaurací). Mezitím klepněte v prohlížeči na <b>nabídku sdílení</b> a zvolte <b>„Přidat na plochu“</b> — marketplace získáte jako skutečnou ikonu aplikace, s úvodní obrazovkou a zobrazením na celou obrazovku. Bez nutnosti obchodu s aplikacemi.",
     "ownerTitle": "Jste majitel restaurace? Nechte se zapsat.",
     "ownerBody": "Máte restauraci? <b>Zařazení na Fee Free Marketplace je zdarma</b> — žádný měsíční poplatek, žádná provize za objednávku, nikdy. Nabídněte vyzvednutí nebo doručení a oslovte nové zákazníky ve svém okolí, přičemž si zachováte svou značku, své zákazníky a 100 % svých cen.",
     "getListedFree": "Začněte zdarma",

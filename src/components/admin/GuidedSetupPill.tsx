@@ -6,6 +6,7 @@ import { ArrowRight, CheckCircle2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { SetupProgress } from "@/lib/setup-checklist";
 import { useSetupProgress } from "@/components/admin/SetupProgressProvider";
+import { setupStepLabel } from "@/lib/setup-step-i18n";
 
 /**
  * Floating bottom-right pill that turns the admin into a true step-by-step
@@ -49,6 +50,8 @@ const DISMISS_KEY = "ffo:guided-setup-pill-dismissed-at";
 
 export function GuidedSetupPill({ progress: progressProp }: { progress: SetupProgress }) {
   const t = useTranslations("admin.guidedSetupPill");
+  // Localized step labels (2026-07-22 retrofit) — English fallback.
+  const tSteps = useTranslations("admin.setupSteps");
   // Prefer the live SetupProgressProvider value (polls + refetches on
   // route change) so the pill auto-advances to the next incomplete step
   // the moment the owner saves the current one. Falls back to the prop
@@ -128,7 +131,7 @@ export function GuidedSetupPill({ progress: progressProp }: { progress: SetupPro
               {onCurrentStep ? (
                 <>
                   <div className="text-sm text-gray-900 font-bold mt-0.5">
-                    {t("workingOn", { label: nextStep.label })}
+                    {t("workingOn", { label: setupStepLabel(tSteps, nextStep) })}
                   </div>
                   <div className="text-xs text-gray-600 mt-0.5">
                     {t("saveAndContinue")}
@@ -137,7 +140,7 @@ export function GuidedSetupPill({ progress: progressProp }: { progress: SetupPro
               ) : (
                 <>
                   <div className="text-sm text-gray-900 font-bold mt-0.5">
-                    {t("next", { label: nextStep.label })}
+                    {t("next", { label: setupStepLabel(tSteps, nextStep) })}
                   </div>
                   <div className="text-xs text-gray-600 mt-0.5">
                     {t("stepsLeft", { n: requiredLeft })}

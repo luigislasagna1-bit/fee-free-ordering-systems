@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Obteniu l'aplicació gratuïta per a Android a Google Play",
+  "publishingPage": {
+    "getAppTitle": "Obteniu la Kitchen Order App",
+    "getAppBody": "Gratuïta a Google Play. Les comandes noves sonen a l'instant — fins i tot amb la pantalla apagada — i els tiquets s'imprimeixen per WiFi.",
+    "getAppScanHint": "Escanegeu-lo amb la tauleta o el telèfon de la cuina per obrir Google Play",
+    "getAppIosSoon": "La versió per a iPhone/iPad arribarà aviat a l'App Store — mentrestant, els iPads poden fer funcionar la cuina al navegador."
+  },
+  "footerGetTheApp": "Obteniu l'app",
+  "nativeAppsTitle": "Una app de marketplace per a iOS i Android",
+  "nativeAppsBody": "Hi ha en preparació una app dedicada per fer comandes al marketplace (l'app que hi ha avui a Google Play és per al personal del restaurant). Mentrestant, toqueu el <b>menú de compartir</b> del navegador i trieu <b>«Afegeix a la pantalla d'inici»</b> — obtindreu el marketplace com una icona d'app real, amb pantalla de presentació i experiència a pantalla completa. No cal cap botiga d'aplicacions.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Nom i adreça",
+      "mapPin": "Marcador d'ubicació al mapa",
+      "cuisine": "Tipus de cuina",
+      "accountConfirmation": "Correu electrònic verificat"
+    },
+    "services": {
+      "atLeastOne": "Almenys un servei activat",
+      "openingHours": "Horari d'obertura",
+      "deliveryZones": "Zones de lliurament",
+      "deliveryManagement": "Gestió del lliurament triada"
+    },
+    "payments": {
+      "methodsSelected": "Mètodes de pagament acceptats",
+      "taxation": "Impostos configurats",
+      "currency": "Moneda",
+      "methodConfigured": "Pagaments amb targeta en línia configurats"
+    },
+    "orders": {
+      "appConnected": "App de recepció de comandes connectada",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · app nativa",
+        "browser": "{device} · {ago} · funcionant en un navegador — instal·leu l'app gratuïta per a Android per tenir alertes sonores fiables",
+        "install": "Instal·leu la Kitchen Order App gratuïta (Google Play) perquè les comandes noves sonin a l'instant. Mentrestant, continuareu rebent alertes per correu electrònic/SMS."
+      },
+      "notificationRecipient": "Almenys un destinatari de notificacions"
+    },
+    "menu": {
+      "categoryExists": "Almenys una categoria a la carta",
+      "itemExists": "Almenys un article actiu a la carta"
+    },
+    "publish": {
+      "officialDetails": "Dades oficials i política",
+      "widgetReady": "Afegiu un botó de comandes al vostre lloc web",
+      "widgetReadyDetail": {
+        "sow": "El vostre Lloc web optimitzat per a vendes és la vostra pàgina de comandes — el giny és opcional.",
+        "optional": "Opcional — afegiu un botó de comandes al vostre lloc web actual. Els clients també poden fer comandes des del vostre codi QR, l'enllaç per compartir o la fitxa del marketplace."
+      }
+    },
+    "sections": {
+      "basics": "Informació bàsica del restaurant",
+      "services": "Serveis i horaris",
+      "payments": "Pagaments / Impostos",
+      "orders": "Recepció de comandes",
+      "menu": "Configuració de la carta",
+      "publishing": "Publicació"
+    },
+    "ago": {
+      "seconds": "fa {n}s",
+      "minutes": "fa {n}min",
+      "hours": "fa {n}h",
+      "days": "fa {n}d"
+    }
+  }
+}

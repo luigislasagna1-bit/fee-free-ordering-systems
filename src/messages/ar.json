@@ -129,7 +129,8 @@
     "thisPartner": "هذا الشريك",
     "signingUpUnder": "أنت تسجّل عبر {brand}",
     "restaurantLogin": "تسجيل دخول المطعم",
-    "tooManyAttempts": "محاولات كثيرة جدًا. يرجى الانتظار بضع دقائق ثم المحاولة مرة أخرى."
+    "tooManyAttempts": "محاولات كثيرة جدًا. يرجى الانتظار بضع دقائق ثم المحاولة مرة أخرى.",
+    "kitchenGetAppHint": "احصل على تطبيق Android المجاني من Google Play"
   },
   "ordering": {
     "viewCart": "عرض السلة",
@@ -3950,7 +3951,11 @@
       "hostedSiteLockedDescription": "سنستضيف صفحة تسويقية على <code>your-slug.feefreeordering.com</code>.",
       "upgradeToUnlock": "ترقية لفتح الميزة →",
       "brandedAppTitle": "تطبيق جوال مُخصَّص",
-      "brandedAppDescription": "أرسل تطبيقك الخاص إلى متاجر iOS وAndroid بعلامتك التجارية."
+      "brandedAppDescription": "أرسل تطبيقك الخاص إلى متاجر iOS وAndroid بعلامتك التجارية.",
+      "getAppTitle": "احصل على تطبيق Kitchen Order App",
+      "getAppBody": "مجاني على Google Play. الطلبات الجديدة ترنّ فوراً — حتى مع إيقاف الشاشة — وتُطبع الإيصالات عبر WiFi.",
+      "getAppScanHint": "امسح الرمز بجهاز المطبخ اللوحي أو الهاتف لفتح Google Play",
+      "getAppIosSoon": "نسخة iPhone/iPad قادمة إلى App Store — حتى ذلك الحين، يمكن لأجهزة iPad تشغيل المطبخ في المتصفح."
     },
     "endOfDayPage": {
       "heading": "تقرير نهاية اليوم",
@@ -4854,6 +4859,61 @@
     },
     "menuExclusions": {
       "searchPlaceholder": "ابحث في الأصناف والفئات…"
+    },
+    "setupSteps": {
+      "basics": {
+        "nameAddress": "الاسم والعنوان",
+        "mapPin": "تحديد الموقع على الخريطة",
+        "cuisine": "نوع المطبخ",
+        "accountConfirmation": "تم التحقق من البريد الإلكتروني"
+      },
+      "services": {
+        "atLeastOne": "تفعيل خدمة واحدة على الأقل",
+        "openingHours": "ساعات العمل",
+        "deliveryZones": "مناطق التوصيل",
+        "deliveryManagement": "تم اختيار إدارة التوصيل"
+      },
+      "payments": {
+        "methodsSelected": "طرق الدفع المقبولة",
+        "taxation": "تم ضبط الضرائب",
+        "currency": "العملة",
+        "methodConfigured": "تم ضبط الدفع بالبطاقة عبر الإنترنت"
+      },
+      "orders": {
+        "appConnected": "تم ربط تطبيق استقبال الطلبات",
+        "appConnectedDetail": {
+          "native": "{device} · {ago} · تطبيق أصلي",
+          "browser": "{device} · {ago} · يعمل في المتصفح — ثبّت تطبيق Android المجاني لتنبيهات رنين موثوقة",
+          "install": "ثبّت تطبيق Kitchen Order App المجاني (Google Play) لترنّ الطلبات الجديدة فوراً. حتى ذلك الحين ستستمر في تلقي تنبيهات البريد الإلكتروني/SMS."
+        },
+        "notificationRecipient": "مستلم إشعارات واحد على الأقل"
+      },
+      "menu": {
+        "categoryExists": "فئة قائمة واحدة على الأقل",
+        "itemExists": "صنف قائمة نشط واحد على الأقل"
+      },
+      "publish": {
+        "officialDetails": "البيانات الرسمية والسياسة",
+        "widgetReady": "أضف زر طلب إلى موقعك الإلكتروني",
+        "widgetReadyDetail": {
+          "sow": "موقعك المحسّن للمبيعات هو صفحة الطلب الخاصة بك — الودجت اختياري.",
+          "optional": "اختياري — أضف زر طلب إلى موقعك الإلكتروني الحالي. يمكن للعملاء أيضاً الطلب عبر رمز QR الخاص بك أو رابط المشاركة أو قائمتك على Marketplace."
+        }
+      },
+      "sections": {
+        "basics": "أساسيات المطعم",
+        "services": "الخدمات وساعات العمل",
+        "payments": "المدفوعات / الضرائب",
+        "orders": "استقبال الطلبات",
+        "menu": "إعداد القائمة",
+        "publishing": "النشر"
+      },
+      "ago": {
+        "seconds": "قبل {n} ث",
+        "minutes": "قبل {n} د",
+        "hours": "قبل {n} س",
+        "days": "قبل {n} ي"
+      }
     }
   },
   "receipt": {
@@ -5258,7 +5318,8 @@
       "account": "الحساب",
       "copyright": "© {year} Fee Free Ordering. جميع الحقوق محفوظة.",
       "tagline": "منصة الطلبات بدون عمولة للمطاعم المستقلة.",
-      "support24_7": "دعم كندي من أشخاص حقيقيين"
+      "support24_7": "دعم كندي من أشخاص حقيقيين",
+      "getTheApp": "احصل على التطبيق"
     },
     "home": {
       "heroBadge": "0% عمولة على الطلبات",
@@ -5814,9 +5875,9 @@
     "statFeesLabel": "رسوم إضافية على العميل",
     "statCommissionLabel": "عمولة تُقتطع من المطاعم",
     "statIndependentLabel": "مطعم محلي مستقل",
-    "nativeAppsTitle": "تطبيقات iOS و Android الأصلية",
+    "nativeAppsTitle": "تطبيق Marketplace لنظامي iOS وAndroid",
     "comingSoon": "قريباً",
-    "nativeAppsBody": "التطبيقات الأصلية الكاملة قادمة قريباً. في الوقت الحالي، اضغط على <b>قائمة المشاركة</b> في متصفحك واختر <b>\"Add to Home Screen\"</b> — ستحصل على السوق كأيقونة تطبيق حقيقية مع شاشة افتتاحية وتجربة ملء الشاشة. لا حاجة لـ App Store.",
+    "nativeAppsBody": "تطبيق طلب مخصّص لـ Marketplace قيد التطوير (التطبيق الموجود على Google Play اليوم مخصّص لطاقم المطعم). في هذه الأثناء، اضغط على <b>قائمة المشاركة</b> في متصفحك واختر <b>«إضافة إلى الشاشة الرئيسية»</b> — ستحصل على الـ Marketplace كأيقونة تطبيق حقيقية وشاشة بداية وتجربة ملء الشاشة. دون الحاجة إلى متجر تطبيقات.",
     "ownerTitle": "هل تملك مطعماً؟ سجّل نفسك الآن.",
     "ownerBody": "هل تملك مطعمًا؟ <b>الإدراج في Fee Free Marketplace مجاني</b> — بدون رسوم شهرية، وبدون عمولة على كل طلب، إطلاقًا. قدّم الاستلام أو التوصيل ووصّل إلى عملاء جدد قريبين منك مع الحفاظ على علامتك التجارية وعملائك و100% من أسعارك.",
     "getListedFree": "ابدأ مجاناً",

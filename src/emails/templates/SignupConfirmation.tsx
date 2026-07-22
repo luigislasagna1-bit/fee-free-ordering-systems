@@ -13,6 +13,7 @@
  */
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard } from "../components/EmailParts";
+import { APP_LINKS } from "@/lib/app-links";
 
 export type SignupConfirmationProps = {
   name: string;
@@ -64,6 +65,18 @@ export default function SignupConfirmation({
             <li>Add your menu items (or import them from a screenshot — we can help)</li>
             <li>Set your opening hours + delivery zones</li>
             <li>Choose which services you offer (delivery, pickup, dine-in, reservations)</li>
+            {/* Availability-driven (app-links.ts): the item disappears if the
+                Play listing is ever nulled; text link, not badge artwork —
+                email clients block images too often. */}
+            {APP_LINKS.kitchen.play && (
+              <li>
+                Install the free{" "}
+                <a href={APP_LINKS.kitchen.play} style={{ color: "#059669", fontWeight: 600 }}>
+                  Kitchen Order App for Android
+                </a>{" "}
+                on your tablet or phone — new orders ring instantly
+              </li>
+            )}
             <li>Publish — your restaurant goes live and starts taking orders</li>
           </ol>
         </div>

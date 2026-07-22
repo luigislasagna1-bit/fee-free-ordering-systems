@@ -1,0 +1,67 @@
+{
+  "kitchenGetAppHint": "Last ned den gratis Android-appen på Google Play",
+  "publishingPage": {
+    "getAppTitle": "Hent Kitchen Order App",
+    "getAppBody": "Gratis på Google Play. Nye bestillinger ringer umiddelbart — selv med skjermen av — og kvitteringer skrives ut over WiFi.",
+    "getAppScanHint": "Skann med kjøkkennettbrettet eller telefonen for å åpne Google Play",
+    "getAppIosSoon": "iPhone/iPad-versjonen kommer til App Store — inntil da kan iPader kjøre kjøkkenet i nettleseren."
+  },
+  "footerGetTheApp": "Last ned appen",
+  "nativeAppsTitle": "En marketplace-app for iOS og Android",
+  "nativeAppsBody": "En egen bestillingsapp for marketplace er på vei (appen som ligger på Google Play i dag, er for restaurantpersonale). I mellomtiden kan du trykke på nettleserens <b>delemeny</b> og velge <b>«Legg til på Hjem-skjerm»</b> — da får du marketplace som et ekte appikon, med oppstartsskjerm og fullskjermopplevelse. Ingen appbutikk nødvendig.",
+  "setupSteps": {
+    "basics": {
+      "nameAddress": "Navn og adresse",
+      "mapPin": "Plassering på kartet",
+      "cuisine": "Kjøkkentype",
+      "accountConfirmation": "E-post bekreftet"
+    },
+    "services": {
+      "atLeastOne": "Minst én tjeneste aktivert",
+      "openingHours": "Åpningstider",
+      "deliveryZones": "Leveringssoner",
+      "deliveryManagement": "Leveringshåndtering valgt"
+    },
+    "payments": {
+      "methodsSelected": "Aksepterte betalingsmetoder",
+      "taxation": "MVA konfigurert",
+      "currency": "Valuta",
+      "methodConfigured": "Kortbetaling på nett konfigurert"
+    },
+    "orders": {
+      "appConnected": "Ordremottaksapp tilkoblet",
+      "appConnectedDetail": {
+        "native": "{device} · {ago} · native app",
+        "browser": "{device} · {ago} · kjører i nettleser — installer den gratis Android-appen for pålitelige ringevarsler",
+        "install": "Installer den gratis Kitchen Order App (Google Play) så nye bestillinger ringer umiddelbart. Inntil da får du fortsatt varsler på e-post/SMS."
+      },
+      "notificationRecipient": "Minst én varselmottaker"
+    },
+    "menu": {
+      "categoryExists": "Minst én menykategori",
+      "itemExists": "Minst én aktiv menyvare"
+    },
+    "publish": {
+      "officialDetails": "Offisielle detaljer og retningslinjer",
+      "widgetReady": "Legg til en bestillingsknapp på nettsiden din",
+      "widgetReadyDetail": {
+        "sow": "Den salgsoptimaliserte nettsiden din er bestillingssiden din — widgeten er valgfri.",
+        "optional": "Valgfritt — legg til en bestillingsknapp på din eksisterende nettside. Kunder kan også bestille via QR-koden din, delingslenken eller marketplace-oppføringen."
+      }
+    },
+    "sections": {
+      "basics": "Grunnleggende om restauranten",
+      "services": "Tjenester og åpningstider",
+      "payments": "Betaling / MVA",
+      "orders": "Ta imot bestillinger",
+      "menu": "Menyoppsett",
+      "publishing": "Publisering"
+    },
+    "ago": {
+      "seconds": "{n}s siden",
+      "minutes": "{n}m siden",
+      "hours": "{n}t siden",
+      "days": "{n}d siden"
+    }
+  }
+}
