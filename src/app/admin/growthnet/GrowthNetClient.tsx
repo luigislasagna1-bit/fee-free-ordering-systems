@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Check, ChevronRight, Network, Rocket, Sparkles, Store } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 
 /**
  * GrowthNet tab UI. Add-on names/descriptions come from the catalog (English,
@@ -42,6 +43,8 @@ export function GrowthNetClient({
   const tCommon = useTranslations("common");
   const tSettings = useTranslations("admin.settings");
   const tAddOns = useTranslations("admin.addOns");
+  // Localized catalog name/description by slug, DB-English fallback.
+  const tCatalog = useTranslations("addOnCatalog");
   const formatCurrency = useCurrencyFormat();
 
   const active = new Set(activeSlugs);
@@ -115,14 +118,14 @@ export function GrowthNetClient({
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-semibold text-gray-900 text-sm">{m.name}</span>
+                  <span className="font-semibold text-gray-900 text-sm">{localizedAddOnName(tCatalog, m.slug, m.name)}</span>
                   {isActive && (
                     <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
                       <Check className="w-3 h-3" /> {bundleActive && !active.has(m.slug) ? t("includedViaBundle") : tCommon("active")}
                     </span>
                   )}
                 </div>
-                {m.description && <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{m.description}</div>}
+                {(() => { const d = localizedAddOnDescription(tCatalog, m.slug, m.description); return d && <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{d}</div>; })()}
               </div>
               {!isActive && m.comingSoon && (
                 <span className="text-[10px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-1 rounded-full flex-shrink-0">
@@ -158,7 +161,7 @@ export function GrowthNetClient({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-semibold text-gray-900 text-sm">{marketplace.name}</span>
+                <span className="font-semibold text-gray-900 text-sm">{localizedAddOnName(tCatalog, marketplace.slug, marketplace.name)}</span>
                 {active.has("marketplace") ? (
                   <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
                     <Check className="w-3 h-3" /> {tCommon("active")}
@@ -169,9 +172,9 @@ export function GrowthNetClient({
                   </span>
                 )}
               </div>
-              {marketplace.description && (
-                <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{marketplace.description}</div>
-              )}
+              {(() => { const d = localizedAddOnDescription(tCatalog, marketplace.slug, marketplace.description); return d && (
+                <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{d}</div>
+              ); })()}
             </div>
             <Link
               href="/admin/marketplace"

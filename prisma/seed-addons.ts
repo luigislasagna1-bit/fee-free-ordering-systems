@@ -7,6 +7,13 @@
  *
  * Idempotent — uses upsert by slug. Re-running is safe and only updates
  * non-Stripe fields (so superadmin-set Stripe Price IDs aren't clobbered).
+ *
+ * i18n: name/description below are the ENGLISH source + DB fallback. Owner-
+ * facing surfaces + /pricing localize them via addOnCatalog.<slug>.{name,
+ * description} in src/messages/*.json (all 38 locales, parity-audited) — see
+ * src/lib/addon-catalog-i18n.ts. When adding or rewording an add-on here,
+ * update those keys in the same change (missing keys fall back to this
+ * English, never a broken key path). Luigi 2026-07-21.
  */
 import { config as dotenvConfig } from "dotenv";
 import { PrismaClient } from "../src/generated/prisma/client";

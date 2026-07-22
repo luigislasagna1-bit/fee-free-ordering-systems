@@ -15,6 +15,7 @@ import prisma from "@/lib/db";
 import { getTranslations } from "next-intl/server";
 import { Bot, Sparkles, Calendar, MessageSquare, Rocket, Network } from "lucide-react";
 import Link from "next/link";
+import { localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 
 export default async function ContentPilotPage() {
   const user = await getSessionUser();
@@ -22,6 +23,7 @@ export default async function ContentPilotPage() {
 
   const t = await getTranslations("admin.contentpilot");
   const tAddOns = await getTranslations("admin.addOns");
+  const tCatalog = await getTranslations("addOnCatalog");
 
   // Pull live catalog copy so the description stays in one place (the AddOn
   // row), same as every other add-on surface.
@@ -45,7 +47,7 @@ export default async function ContentPilotPage() {
           </span>
         </h1>
         <p className="mt-2 text-white/90 text-sm sm:text-base max-w-2xl leading-relaxed">
-          {addOn?.description ?? t("heroBody")}
+          {localizedAddOnDescription(tCatalog, "contentpilot", addOn?.description ?? null) ?? t("heroBody")}
         </p>
         <p className="mt-4 text-xs text-white/75 leading-relaxed max-w-2xl flex items-center gap-1.5">
           <Network className="w-3.5 h-3.5 flex-shrink-0" />

@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Tillegg",
       "addOnsSubtitle": "Lås opp betalte funksjoner individuelt. Avbryt når som helst — ingen kontrakter.",
       "addOnPriceComingSoon": "Priser annonseres ved lansering",
-      "addOns": {
-        "online_payments": {
-          "name": "Online betalinger",
-          "desc": "Godta kredittkort via Stripe Connect. Pengene går rett til kontoen din, ikke vår."
-        },
-        "hosted_website": {
-          "name": "Salgsoptimert nettsted",
-          "desc": "En polert markedsføringsside på ditt-navn.feefreeordering.com — automatisk generert fra menyen din."
-        },
-        "custom_domain": {
-          "name": "Eget domene",
-          "desc": "Ta med ditt eget domene (f.eks. bestillmyrestaurant.no) og vi hoster nettstedet der."
-        },
-        "advanced_promos": {
-          "name": "Avansert kampanjemarkedsføring",
-          "desc": "Kundesegmentering, automatiserte e-postkampanjer, tilbakevinnelse av inaktive kunder."
-        },
-        "branded_mobile_app": {
-          "name": "Branded mobilapp",
-          "desc": "Send inn din egen iOS + Android-app til appbutikkene med din merkevare."
-        },
-        "pos_module": {
-          "name": "POS-modul",
-          "desc": "Internt salgssted for ansatte som registrerer inngangsbestillinger ved siden av nettbestillinger."
-        },
-        "reservation_deposits": {
-          "name": "Reservasjonsdepositum",
-          "desc": "Ta et refunderbart depositum når gjester bestiller bord for å redusere antall uteblivelser."
-        },
-        "multi_location": {
-          "name": "Flere steder",
-          "desc": "Drift flere restaurantsteder under én konto. Hvert sted har sin egen meny, bestillinger og Stripe-utbetalinger — bytt mellom dem fra overordnet admin."
-        }
-      },
       "compareTitle": "Alle restauranter får",
       "compareItems": [
         "0 % provisjon på direktebestillinger",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Forsinket",
     "hoursMinutes": "{h}t {m}m",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Fee Frees vekstsystem for restauranter — alle betalte tillegg for markedsføring, kundelojalitet og kundeanskaffelse samlet i én rabattert pakke: Avanserte kampanjer (inkl. Autopilot), Marketing Studio, Kickstarter og Kunde-SMS. Nye vekstverktøy legges til i GrowthNet etter hvert som vi lanserer dem — abonnenter får dem automatisk uten ekstra kostnad."
+    },
+    "unlimited_orders": {
+      "name": "GRATIS Ubegrensede bestillinger",
+      "description": "Fjerner GRATIS-planens grense på 100 bestillinger/måned. Inkluderer ubegrenset månedlig bestillingsvolum — ingen gebyr per bestilling. Hopp over dette hvis du allerede har et annet betalt tillegg (de inkluderer ubegrensede bestillinger)."
+    },
+    "online_payments": {
+      "name": "Nettbetaling",
+      "description": "Ta imot kortbetaling på nett. Pengene går rett inn på din egen Stripe Connect-konto."
+    },
+    "hosted_website": {
+      "name": "Salgsoptimalisert nettside",
+      "description": "Få en hostet markedsførings- og bestillingsside på et feefreeordering-subdomene, automatisk generert fra menyen din."
+    },
+    "custom_domain": {
+      "name": "Eget domene",
+      "description": "Pek ditt eget domene mot din hostede Fee Free Ordering-side."
+    },
+    "advanced_promos": {
+      "name": "Avanserte kampanjer",
+      "description": "Låser opp 8 avanserte kampanjetyper: belønning for betalingsmetode, gratis vare, måltidspakke, kjøp N og få gratis, gratis rett som del av et måltid, fast eller prosentvis rabatt på kombo, måltidspakke med spesialitet. I tillegg får du kundesegmentering og automatiserte markedsføringskampanjer (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Profilert mobilapp",
+      "description": "En native iOS- og Android-app med din egen profil, oppført i App Store og Play Store."
+    },
+    "pos_module": {
+      "name": "POS-modul",
+      "description": "Internt POS som lar de ansatte ta imot bestillinger for servering og takeaway fra samme administrasjon."
+    },
+    "phone_ordering": {
+      "name": "Automatisert telefonbestilling",
+      "description": "En AI-drevet telefonagent tar imot kundebestillinger 24/7 og sender dem rett til kjøkkenet ditt — ingen bruk av personalets tid, ingen tapte anrop i rushtiden."
+    },
+    "reservation_deposits": {
+      "name": "Reservasjonsdepositum",
+      "description": "Krev et refunderbart depositum når kundene reserverer bord — beskytter mot at folk ikke møter opp."
+    },
+    "multi_location": {
+      "name": "Flere avdelinger",
+      "description": "Administrer flere restaurantavdelinger under én konto. Hver avdeling har sin egen meny, sine egne bestillinger og sin egen Stripe Connect — bytt mellom dem fra hovedadministrasjonen."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Gratis og inkludert for alle restauranter — ingen månedsavgift og ingen gebyr per bestilling. Alle publiserte restauranter med henting eller levering blir oppført på Fee Free Marketplace for lokal synlighet. Ingen 30 % provisjon og ingen ekstra gebyrer for kundene."
+    },
+    "customer_sms": {
+      "name": "Kunde-SMS-varsler",
+      "description": "Send tekstmeldinger til kundene etter hvert som bestillingen beveger seg gjennom kjøkkenet — bekreftet, godtatt, klar for henting, fullført. Gir bedre oppmøte ved henting og økt kundetillit. Bruker vårt delte Twilio-nummer — ingen oppsett fra din side."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Generer sporbare QR-koder og smarte lenker, design profilerte flyere og plakater som automatisk henter inn profilen din, og se nøyaktig hvor mange skanninger som ble til faktiske bestillinger og omsetning."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Lanser restauranten din med ferdige kampanjer klare til utsending — førstekjøpsinsentiver og tilbakevinningstilbud som henter inn kunder fra dag én."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Din AI-ansvarlige for sosiale medier — fyll ut et raskt ukentlig skjema (dagens tilbud, arrangementer, kampanjer), så lager ContentPilot polerte utkast til innlegg som du godkjenner med ett klikk, automatisk planlagt til Instagram, Facebook, X og TikTok."
+    },
+    "driver_pool": {
+      "name": "Sjåførnettverk",
+      "description": "Få tilgang til vårt ShipDay-nettverk av tredjepartssjåfører når dine egne sjåfører er opptatt eller utilgjengelige. Kun gebyr per levering — ingen månedlige minimumsbeløp utover dette abonnementet. Sett dine egne leveringspriser for kundene og bestem hvor mye du dekker selv og hvor mye du sender videre."
+    },
+    "kds_screen": {
+      "name": "KDS-skjerm",
+      "description": "En dedikert KDS-skjerm (Kitchen Display System) for linjen din — bestillinger strømmer inn i sanntid og kan kvitteres ut per stasjon, ingen papirbonger. Kommer snart."
+    }
   }
 }

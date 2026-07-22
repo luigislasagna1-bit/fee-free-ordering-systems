@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "A Fee Free éttermi növekedési rendszere — minden fizetős marketing-, ügyfélmegtartó és ügyfélszerző kiegészítő egyetlen kedvezményes csomagban: Speciális promóciós marketing (az Autopilottal együtt), Marketing Studio, Kickstarter és Ügyfél-SMS. Az új növekedési eszközök megjelenésükkor bekerülnek a GrowthNetbe — az előfizetők automatikusan, felár nélkül megkapják őket."
+  },
+  "unlimited_orders": {
+    "name": "Korlátlan rendelések a FREE csomaghoz",
+    "description": "Megszünteti a FREE csomag havi 100 rendeléses korlátját. Korlátlan havi rendelésmennyiséget tartalmaz — rendelésenkénti díjak nélkül. Hagyja ki, ha már rendelkezik bármely más fizetős kiegészítővel (azok tartalmazzák a korlátlan rendelést)."
+  },
+  "online_payments": {
+    "name": "Online fizetések",
+    "description": "Fogadjon kártyás fizetéseket online. A pénz közvetlenül az Ön Stripe Connect fiókjába érkezik."
+  },
+  "hosted_website": {
+    "name": "Értékesítés-optimalizált weboldal",
+    "description": "Hosztolt marketing- és rendelési oldal egy feefreeordering aldomainen, automatikusan létrehozva az étlapjából."
+  },
+  "custom_domain": {
+    "name": "Saját domain",
+    "description": "Irányítsa saját domainjét a Fee Free Ordering által hosztolt oldalára."
+  },
+  "advanced_promos": {
+    "name": "Speciális promóciós marketing",
+    "description": "Feloldja a 8 speciális promóciótípust: fizetési módhoz kötött jutalom, ingyenes tétel, menücsomag, N vásárlása után ingyenes, ingyenes fogás a menü részeként, fix vagy százalékos kedvezmény kombóra, menücsomag különlegességgel. Ezenfelül ügyfélszegmentálás és automatizált marketingkampányok (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "Márkás mobilalkalmazás",
+    "description": "Natív iOS + Android alkalmazás az Ön arculatával, elérhető az App Store-ban és a Play Store-ban."
+  },
+  "pos_module": {
+    "name": "POS modul",
+    "description": "Házon belüli POS, amellyel a személyzet ugyanabból az adminfelületből veheti fel a helyben fogyasztott és elviteles rendeléseket."
+  },
+  "phone_ordering": {
+    "name": "Automatizált telefonos rendelés",
+    "description": "AI-alapú telefonos asszisztens veszi fel az ügyfelek rendeléseit 24/7, és továbbítja őket közvetlenül a konyhájába — nem köti le a személyzetet, és csúcsidőben sem marad le egyetlen hívásról sem."
+  },
+  "reservation_deposits": {
+    "name": "Foglalási előleg",
+    "description": "Számítson fel visszatéríthető előleget, amikor a vendégek asztalt foglalnak — véd a meg nem jelenések ellen."
+  },
+  "multi_location": {
+    "name": "Több telephely",
+    "description": "Kezeljen több éttermi telephelyet egyetlen fiókból. Minden telephely saját étlappal, rendelésekkel és Stripe Connect fiókkal működik — a központi adminból válthat közöttük."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Ingyenes és minden étteremnek jár — nincs havidíj és rendelésenkénti díj sem. Minden közzétett, elvitelt vagy kiszállítást kínáló étterem felkerül a Fee Free Marketplace-re, hogy a helyi vendégek felfedezhessék. Nincs 30%-os jutalék, és az ügyfeleknek sincs többletköltsége."
+  },
+  "customer_sms": {
+    "name": "Ügyfél-SMS-értesítések",
+    "description": "SMS-ben értesíti az ügyfeleket, ahogy rendelésük halad a konyhában — visszaigazolva, elfogadva, átvételre kész, teljesítve. Segíti az időben történő átvételt, és növeli az ügyfelek bizalmát. Közös Twilio számunkat használja; az Ön részéről nincs beállítási teendő."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Készítsen követhető QR-kódokat és okos linkeket, tervezzen márkájához illő szórólapokat és plakátokat, amelyek automatikusan átveszik az arculatát, és lássa pontosan, hány beolvasásból lett valódi rendelés és bevétel."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Indítsa be éttermét azonnal küldhető kampányokkal — első rendelést ösztönző ajánlatok és visszacsábító akciók, amelyek már az első naptól vendégeket hoznak."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "Az Ön AI közösségimédia-menedzsere — töltsön ki egy gyors heti űrlapot (ajánlatok, események, akciók), és a ContentPilot csiszolt posztokat fogalmaz, amelyeket egy kattintással jóváhagyhat, automatikusan ütemezve az Instagramra, a Facebookra, az X-re és a TikTokra."
+  },
+  "driver_pool": {
+    "name": "Driver Pool",
+    "description": "Vegye igénybe a ShipDay külső futárhálózatunkat, amikor saját futárai foglaltak vagy nem elérhetők. Csak kiszállításonkénti díjak — ezen az előfizetésen felül nincs havi minimum. Állítsa be saját kiszállítási árait az ügyfelek felé, és döntse el, mennyit vállal át belőlük, és mennyit hárít tovább."
+  },
+  "kds_screen": {
+    "name": "KDS képernyő",
+    "description": "Dedikált Kitchen Display System (KDS) képernyő a konyhasorhoz — a rendelések élőben érkeznek, és állomásonként levehetők a képernyőről, papírcédulák nélkül. Hamarosan érkezik."
+  }
+}

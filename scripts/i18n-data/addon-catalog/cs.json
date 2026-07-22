@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "Systém růstu restaurací od Fee Free — všechny placené doplňky pro marketing, udržení a získávání zákazníků v jednom zvýhodněném balíčku: Pokročilý promo marketing (včetně nástroje Autopilot), Marketing Studio, Kickstarter a Zákaznické SMS. Nové růstové nástroje přidáváme do GrowthNet průběžně — předplatitelé je dostávají automaticky a bez příplatku."
+  },
+  "unlimited_orders": {
+    "name": "ZDARMA Neomezené objednávky",
+    "description": "Odstraňuje limit 100 objednávek/měsíc plánu FREE. Zahrnuje neomezený měsíční objem objednávek — žádné poplatky za objednávku. Přeskočte jej, pokud už máte jakýkoli jiný placený doplněk (neomezené objednávky jsou v nich zahrnuty)."
+  },
+  "online_payments": {
+    "name": "Online platby",
+    "description": "Přijímejte platby kartou online. Peníze putují přímo na váš účet Stripe Connect."
+  },
+  "hosted_website": {
+    "name": "Prodejně optimalizovaný web",
+    "description": "Získejte hostovanou marketingovou a objednávkovou stránku na subdoméně feefreeordering, automaticky vygenerovanou z vašeho menu."
+  },
+  "custom_domain": {
+    "name": "Vlastní doména",
+    "description": "Nasměrujte vlastní doménu na svůj web hostovaný u Fee Free Ordering."
+  },
+  "advanced_promos": {
+    "name": "Pokročilý promo marketing",
+    "description": "Odemyká 8 pokročilých typů akcí: odměna za platební metodu, položka zdarma, zvýhodněné menu, kupte N a získejte zdarma, jídlo zdarma jako součást menu, pevná/procentní sleva na kombo, zvýhodněné menu se specialitou. Navíc segmentace zákazníků a automatizované marketingové kampaně (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "Mobilní aplikace s brandingem",
+    "description": "Nativní aplikace pro iOS + Android s vaším brandingem, dostupná v App Store a Play Store."
+  },
+  "pos_module": {
+    "name": "POS modul",
+    "description": "Interní POS systém, přes který personál přijímá objednávky ke konzumaci v restauraci i s sebou — vše ze stejné administrace."
+  },
+  "phone_ordering": {
+    "name": "Automatizované telefonické objednávání",
+    "description": "Telefonní agent poháněný AI přijímá objednávky zákazníků 24/7 a posílá je rovnou do vaší kuchyně — bez času personálu a bez zmeškaných hovorů ve špičce."
+  },
+  "reservation_deposits": {
+    "name": "Zálohy za rezervace",
+    "description": "Účtujte vratnou zálohu při rezervaci stolu — chrání vás před zákazníky, kteří nedorazí."
+  },
+  "multi_location": {
+    "name": "Více poboček",
+    "description": "Spravujte více poboček restaurace pod jedním účtem. Každá pobočka má vlastní menu, objednávky a Stripe Connect — přepínáte mezi nimi z rodičovské administrace."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Zdarma a v ceně pro každou restauraci — bez měsíčního poplatku i poplatku za objednávku. Každá zveřejněná restaurace s vyzvednutím nebo rozvozem je uvedena na Fee Free Marketplace, kde ji objeví místní zákazníci. Žádná 30% provize, žádné příplatky pro zákazníky."
+  },
+  "customer_sms": {
+    "name": "Zákaznická SMS oznámení",
+    "description": "Posílejte zákazníkům SMS, jak jejich objednávka postupuje kuchyní — potvrzeno, přijato, připraveno k vyzvednutí, dokončeno. Zvyšuje včasná vyzvednutí i důvěru zákazníků. Používá naše sdílené číslo Twilio; z vaší strany není potřeba žádné nastavení."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Generujte sledovatelné QR kódy a chytré odkazy, navrhujte letáky a plakáty, které automaticky přebírají váš branding, a přesně sledujte, kolik naskenování se proměnilo ve skutečné objednávky a tržby."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Odstartujte svou restauraci s kampaněmi připravenými k odeslání — pobídky k první objednávce a nabídky na znovuzískání zákazníků, které přivedou hosty od prvního dne."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "Váš AI správce sociálních sítí — vyplňte krátký týdenní formulář (speciality, události, akce) a ContentPilot připraví vybroušené příspěvky, které schválíte jedním kliknutím, s automatickým plánováním na Instagram, Facebook, X a TikTok."
+  },
+  "driver_pool": {
+    "name": "Driver Pool",
+    "description": "Využijte naši síť externích řidičů ShipDay, když jsou vaši vlastní řidiči vytížení nebo nedostupní. Platíte jen za jednotlivá doručení — žádná měsíční minima nad rámec tohoto předplatného. Nastavte si vlastní ceny rozvozu pro zákazníky a rozhodněte, kolik uhradíte sami a kolik přenesete na zákazníka."
+  },
+  "kds_screen": {
+    "name": "KDS obrazovka",
+    "description": "Vyhrazená obrazovka kuchyňského displeje (KDS) pro vaši výdejní linku — objednávky naskakují živě a lze je odbavovat po jednotlivých stanovištích, žádné papírové lístky. Již brzy."
+  }
+}

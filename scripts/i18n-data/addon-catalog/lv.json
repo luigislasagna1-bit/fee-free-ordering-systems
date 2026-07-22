@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "Fee Free restorānu izaugsmes sistēma — visi maksas mārketinga, klientu noturēšanas un piesaistes papildinājumi vienā komplektā ar atlaidi: Uzlaboto akciju mārketings (t. sk. Autopilot), Marketing Studio, Kickstarter un Klientu SMS. Jaunie izaugsmes rīki tiek pievienoti GrowthNet, tiklīdz mēs tos izlaižam — abonenti tos saņem automātiski bez papildu maksas."
+  },
+  "unlimited_orders": {
+    "name": "FREE Neierobežoti pasūtījumi",
+    "description": "Noņem FREE plāna ierobežojumu — 100 pasūtījumi mēnesī. Ietver neierobežotu ikmēneša pasūtījumu apjomu — bez maksas par katru pasūtījumu. Izlaidiet šo, ja jums jau ir kāds cits maksas papildinājums (tie ietver neierobežotus pasūtījumus)."
+  },
+  "online_payments": {
+    "name": "Tiešsaistes maksājumi",
+    "description": "Pieņemiet karšu maksājumus tiešsaistē. Nauda nonāk tieši jūsu Stripe Connect kontā."
+  },
+  "hosted_website": {
+    "name": "Pārdošanai optimizēta vietne",
+    "description": "Iegūstiet mitinātu mārketinga un pasūtīšanas lapu feefreeordering apakšdomēnā, kas tiek automātiski ģenerēta no jūsu ēdienkartes."
+  },
+  "custom_domain": {
+    "name": "Pielāgots domēns",
+    "description": "Norādiet savu domēnu uz jūsu Fee Free Ordering mitināto vietni."
+  },
+  "advanced_promos": {
+    "name": "Uzlaboto akciju mārketings",
+    "description": "Atbloķē 8 uzlabotos akciju veidus: atlīdzība par maksājuma metodi, bezmaksas prece, maltītes komplekts, pērc N — saņem bez maksas, bezmaksas ēdiens maltītes sastāvā, fiksēta vai procentuāla atlaide komplektam, maltītes komplekts ar specialitāti. Papildus — klientu segmentācija un automatizētas mārketinga kampaņas (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "Zīmola mobilā lietotne",
+    "description": "Natīva iOS + Android lietotne ar jūsu zīmolu, publicēta App Store un Play Store."
+  },
+  "pos_module": {
+    "name": "POS modulis",
+    "description": "Iekšējais POS, ar kuru personāls var pieņemt pasūtījumus uz vietas vai līdzņemšanai no tā paša administrēšanas paneļa."
+  },
+  "phone_ordering": {
+    "name": "Automatizēti telefona pasūtījumi",
+    "description": "AI darbināts telefona aģents pieņem klientu pasūtījumus 24/7 un nosūta tos tieši uz jūsu virtuvi — bez personāla laika patēriņa un bez neatbildētiem zvaniem pīķa stundās."
+  },
+  "reservation_deposits": {
+    "name": "Rezervācijas depozīti",
+    "description": "Iekasējiet atmaksājamu depozītu, kad klienti rezervē galdiņu — aizsargā pret neierašanos."
+  },
+  "multi_location": {
+    "name": "Vairākas atrašanās vietas",
+    "description": "Pārvaldiet vairākas restorāna atrašanās vietas vienā kontā. Katrai atrašanās vietai ir sava ēdienkarte, pasūtījumi un Stripe Connect — pārslēdzieties starp tām no galvenā administrēšanas paneļa."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Bez maksas un iekļauts katram restorānam — bez mēneša maksas vai maksas par pasūtījumu. Katrs publicētais restorāns ar saņemšanu uz vietas vai piegādi tiek iekļauts Fee Free Marketplace, lai to atrastu vietējie klienti. Bez 30% komisijas un bez papildu maksām klientiem."
+  },
+  "customer_sms": {
+    "name": "Klientu SMS paziņojumi",
+    "description": "Sūtiet klientiem īsziņas, pasūtījumam virzoties cauri virtuvei — apstiprināts, pieņemts, gatavs saņemšanai, pabeigts. Veicina savlaicīgu pasūtījumu saņemšanu un klientu uzticēšanos. Tiek izmantots mūsu kopīgais Twilio numurs — no jūsu puses nekas nav jāiestata."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Ģenerējiet izsekojamus QR kodus un viedās saites, veidojiet skrejlapas un plakātus, kas automātiski pārņem jūsu zīmola elementus, un redziet, tieši cik skenējumu pārvērtās reālos pasūtījumos un ieņēmumos."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Palaidiet savu restorānu ar nosūtīšanai gatavām kampaņām — pirmā pasūtījuma stimuliem un klientu atgriešanas piedāvājumiem, kas piesaista klientus jau no pirmās dienas."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "Jūsu AI sociālo tīklu menedžeris — aizpildiet īsu iknedēļas formu (īpašie piedāvājumi, pasākumi, akcijas), un ContentPilot sagatavos noslīpētas publikācijas, ko apstiprināt ar vienu klikšķi; tās automātiski tiek ieplānotas Instagram, Facebook, X un TikTok."
+  },
+  "driver_pool": {
+    "name": "Kurjeru tīkls",
+    "description": "Izmantojiet mūsu ShipDay trešo pušu kurjeru tīklu, kad jūsu paša kurjeri ir aizņemti vai nav pieejami. Maksa tikai par katru piegādi — bez mēneša minimuma papildus šim abonementam. Nosakiet paši piegādes cenu klientiem un izlemiet, cik lielu daļu sedzat paši un cik nododat klientiem."
+  },
+  "kds_screen": {
+    "name": "KDS ekrāns",
+    "description": "Atsevišķs virtuves displeja sistēmas (KDS) ekrāns jūsu virtuves līnijai — pasūtījumi ienāk reāllaikā, un tos var atzīmēt kā izpildītus pa stacijām, bez papīra čekiem. Drīzumā."
+  }
+}

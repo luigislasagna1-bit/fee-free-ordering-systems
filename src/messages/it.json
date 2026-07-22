@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Componenti aggiuntivi",
       "addOnsSubtitle": "Attiva le funzioni a pagamento singolarmente. Annulla quando vuoi — senza contratti.",
       "addOnPriceComingSoon": "Prezzo annunciato al lancio",
-      "addOns": {
-        "online_payments": {
-          "name": "Pagamenti online",
-          "desc": "Accetta carte di credito tramite Stripe Connect. I soldi arrivano sul tuo conto, non sul nostro."
-        },
-        "hosted_website": {
-          "name": "Sito web ottimizzato",
-          "desc": "Una pagina marketing curata su tuo-nome.feefreeordering.com — generata automaticamente."
-        },
-        "custom_domain": {
-          "name": "Dominio personalizzato",
-          "desc": "Porta il tuo dominio (es. ilmioristorante.com) e ospiteremo lì il sito."
-        },
-        "advanced_promos": {
-          "name": "Marketing promozionale avanzato",
-          "desc": "Segmentazione clienti, campagne e-mail automatizzate, riconquista clienti inattivi."
-        },
-        "branded_mobile_app": {
-          "name": "App mobile brandizzata",
-          "desc": "Pubblica la tua app iOS + Android negli store con il tuo brand."
-        },
-        "pos_module": {
-          "name": "Modulo POS",
-          "desc": "Cassa interna per il personale che registra ordini in sede insieme a quelli online."
-        },
-        "reservation_deposits": {
-          "name": "Acconti prenotazione",
-          "desc": "Richiedi un acconto rimborsabile alla prenotazione per ridurre i no-show."
-        },
-        "multi_location": {
-          "name": "Multi-Sede",
-          "desc": "Gestisci più ristoranti da un unico account. Ogni sede ha il proprio menu, ordini e pagamenti Stripe — passa tra di esse dall'admin principale."
-        }
-      },
       "compareTitle": "Ogni ristorante riceve",
       "compareItems": [
         "0% di commissioni sugli ordini diretti",
@@ -6524,5 +6490,79 @@
     "lateBadge": "In ritardo",
     "hoursMinutes": "{h}h {m}min",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Il sistema di crescita per ristoranti di Fee Free — tutti i componenti aggiuntivi a pagamento per marketing, fidelizzazione e acquisizione clienti in un unico pacchetto scontato: Marketing promozionale avanzato (incl. Autopilot), Marketing Studio, Kickstarter e SMS ai clienti. I nuovi strumenti di crescita vengono aggiunti a GrowthNet man mano che li rilasciamo — gli abbonati li ricevono automaticamente senza costi aggiuntivi."
+    },
+    "unlimited_orders": {
+      "name": "Ordini illimitati (piano gratuito)",
+      "description": "Elimina il limite di 100 ordini/mese del piano gratuito. Include un volume di ordini mensile illimitato — nessuna commissione per ordine. Non ti serve se hai già un altro componente aggiuntivo a pagamento (tutti includono ordini illimitati)."
+    },
+    "online_payments": {
+      "name": "Pagamenti online",
+      "description": "Accetta pagamenti con carta online. Il denaro arriva direttamente sul tuo account Stripe Connect."
+    },
+    "hosted_website": {
+      "name": "Sito web ottimizzato per le vendite",
+      "description": "Ottieni una pagina di marketing e ordinazione in hosting su un sottodominio feefreeordering, generata automaticamente dal tuo menù."
+    },
+    "custom_domain": {
+      "name": "Dominio personalizzato",
+      "description": "Punta il tuo dominio sul tuo sito Fee Free Ordering in hosting."
+    },
+    "advanced_promos": {
+      "name": "Marketing promozionale avanzato",
+      "description": "Sblocca 8 tipi di promozioni avanzate: premio per metodo di pagamento, articolo gratuito, menù combinato, prendi N e ricevi uno in omaggio, piatto gratuito incluso nel menù, sconto fisso o percentuale sul combo, menù combinato con specialità. In più segmentazione dei clienti e campagne di marketing automatizzate (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "App mobile brandizzata",
+      "description": "Un'app nativa iOS + Android con il tuo brand, pubblicata sull'App Store e sul Play Store."
+    },
+    "pos_module": {
+      "name": "Modulo POS",
+      "description": "POS interno per consentire al personale di registrare ordini al tavolo e da asporto dalla stessa area amministrativa."
+    },
+    "phone_ordering": {
+      "name": "Ordini telefonici automatizzati",
+      "description": "Un agente telefonico basato su AI prende gli ordini dei clienti 24/7 e li invia direttamente alla tua cucina — nessun impegno per il personale, nessuna chiamata persa nelle ore di punta."
+    },
+    "reservation_deposits": {
+      "name": "Caparre per le prenotazioni",
+      "description": "Addebita una caparra rimborsabile quando i clienti prenotano un tavolo — ti protegge dalle mancate presentazioni."
+    },
+    "multi_location": {
+      "name": "Multi-sede",
+      "description": "Gestisci più sedi del tuo ristorante da un unico account. Ogni sede ha il proprio menù, i propri ordini e il proprio Stripe Connect — passa dall'una all'altra dall'admin principale."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Gratuito e incluso per ogni ristorante — nessun canone mensile né commissione per ordine. Ogni ristorante pubblicato con ritiro o consegna è presente sul Fee Free Marketplace per farsi scoprire dai clienti locali. Nessuna commissione del 30%, nessun costo extra per i clienti."
+    },
+    "customer_sms": {
+      "name": "Notifiche SMS ai clienti",
+      "description": "Invia SMS ai clienti mentre l'ordine avanza in cucina — confermato, accettato, pronto per il ritiro, completato. Favorisce la puntualità nei ritiri e la fiducia dei clienti. Usa il nostro numero Twilio condiviso; nessuna configurazione da parte tua."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Genera codici QR tracciabili e smart link, crea volantini e poster brandizzati che riprendono automaticamente il tuo brand e scopri esattamente quante scansioni si sono trasformate in ordini e ricavi reali."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Lancia il tuo ristorante con campagne pronte all'invio — incentivi sul primo ordine e offerte di riconquista che portano clienti fin dal primo giorno."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Il tuo social media manager AI — compila un rapido modulo settimanale (piatti speciali, eventi, promozioni) e ContentPilot prepara post curati che approvi con un clic, programmati automaticamente su Instagram, Facebook, X e TikTok."
+    },
+    "driver_pool": {
+      "name": "Pool di fattorini",
+      "description": "Attingi alla nostra rete di fattorini di terze parti ShipDay quando i tuoi fattorini interni sono occupati o non disponibili. Solo tariffe per consegna — nessun minimo mensile oltre a questo abbonamento. Imposta i tuoi prezzi di consegna per i clienti e decidi quanto assorbire e quanto addebitare loro."
+    },
+    "kds_screen": {
+      "name": "Schermo KDS",
+      "description": "Uno schermo Kitchen Display System dedicato per la tua linea — gli ordini arrivano in tempo reale e possono essere smarcati per postazione, senza scontrini cartacei. In arrivo."
+    }
   }
 }

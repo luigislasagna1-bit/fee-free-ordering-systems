@@ -8,6 +8,7 @@ import {
   ShoppingBag, Plus, XCircle, Download,
 } from "lucide-react";
 import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
+import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 import { escCsv } from "@/lib/csv";
 import { FiscalDataCard } from "./FiscalDataCard";
 
@@ -616,6 +617,10 @@ function AddOnRowItem({
 }) {
   const t = useTranslations("admin.billing");
   const tSettings = useTranslations("admin.settings");
+  // Localized catalog name/description by slug, DB-English fallback.
+  const tCatalog = useTranslations("addOnCatalog");
+  const name = localizedAddOnName(tCatalog, catalog.slug, catalog.name);
+  const description = localizedAddOnDescription(tCatalog, catalog.slug, catalog.description);
   // Normalize legacy "trialing" status to "active" — trial concept is dead.
   const status = mine && mine.status === "trialing" ? "active" : mine?.status ?? null;
   const isActive = status === "active";
@@ -648,15 +653,15 @@ function AddOnRowItem({
       {/* Middle: name + description + status pills */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
-          <div className="font-bold text-gray-900">{catalog.name}</div>
+          <div className="font-bold text-gray-900">{name}</div>
           <StatusPill
             status={status}
             comingSoon={catalog.comingSoon}
             cancelsAtPeriodEnd={cancelsAtPeriodEnd}
           />
         </div>
-        {catalog.description && (
-          <p className="text-xs text-gray-600 mt-1 leading-snug">{catalog.description}</p>
+        {description && (
+          <p className="text-xs text-gray-600 mt-1 leading-snug">{description}</p>
         )}
 
         {/* Activation + renewal dates — only render when there's a subscription */}

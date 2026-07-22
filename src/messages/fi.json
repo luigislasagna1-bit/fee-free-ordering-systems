@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Lisäominaisuudet",
       "addOnsSubtitle": "Avaa maksulliset ominaisuudet yksitellen. Peruuta milloin tahansa — ei sopimuksia.",
       "addOnPriceComingSoon": "Hinnoittelu ilmoitetaan julkaisussa",
-      "addOns": {
-        "online_payments": {
-          "name": "Verkkomaksut",
-          "desc": "Hyväksy luottokortit Stripe Connectin kautta. Rahat tulevat suoraan tilillesi, ei meille."
-        },
-        "hosted_website": {
-          "name": "Myyntioptimioitu verkkosivusto",
-          "desc": "Viimeistelty markkinointisivu osoitteessa your-name.feefreeordering.com — luotu automaattisesti menustasi."
-        },
-        "custom_domain": {
-          "name": "Oma verkkotunnus",
-          "desc": "Tuo oma verkkotunnuksesi (esim. ordermyrestaurant.com) ja me hostaamme sivuston siellä."
-        },
-        "advanced_promos": {
-          "name": "Edistynyt promootiomarkkinointi",
-          "desc": "Asiakassegmentointi, automaattiset sähköpostikampanjat, menetettyjen asiakkaiden takaisinsaaminen."
-        },
-        "branded_mobile_app": {
-          "name": "Brändätty mobiilisovellus",
-          "desc": "Lähetä oma iOS- ja Android-sovelluksesi myymälöihin omalla brändilläsi."
-        },
-        "pos_module": {
-          "name": "Kassajärjestelmämoduuli",
-          "desc": "Sisäinen kassajärjestelmä henkilökunnalle kävelevien asiakkaiden tilausten kirjaamiseen verkko-tilausten rinnalla."
-        },
-        "reservation_deposits": {
-          "name": "Varauksen käsirahakset",
-          "desc": "Veloita palautettava käsiraha kun vieraat varaavat pöydän vähentääksesi poisjäämisiä."
-        },
-        "multi_location": {
-          "name": "Useita toimipisteitä",
-          "desc": "Hallinnoi useita ravintolatoimipisteitä yhdellä tilillä. Jokaisella toimipisteellä on oma menu, tilaukset ja Stripe-maksut — vaihda niiden välillä ylätason hallintapaneelista."
-        }
-      },
       "compareTitle": "Jokainen ravintola saa",
       "compareItems": [
         "0 % komissiota suorista tilauksista",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Myöhässä",
     "hoursMinutes": "{h} h {m} min",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Fee Freen kasvujärjestelmä ravintoloille — kaikki maksulliset markkinoinnin, asiakaspysyvyyden ja asiakashankinnan lisäosat yhdessä alennushintaisessa paketissa: Edistynyt promootiomarkkinointi (ml. Autopilot), Marketing Studio, Kickstarter ja Asiakas-SMS. Uudet kasvutyökalut lisätään GrowthNetiin sitä mukaa kuin julkaisemme niitä — tilaajat saavat ne automaattisesti ilman lisämaksua."
+    },
+    "unlimited_orders": {
+      "name": "FREE-suunnitelman rajattomat tilaukset",
+      "description": "Poistaa FREE-suunnitelman 100 tilauksen/kk rajan. Sisältää rajattoman kuukausittaisen tilausmäärän — ei tilauskohtaisia maksuja. Ohita tämä, jos sinulla on jo jokin muu maksullinen lisäosa (ne sisältävät rajattomat tilaukset)."
+    },
+    "online_payments": {
+      "name": "Verkkomaksut",
+      "description": "Hyväksy korttimaksut verkossa. Rahat tilittyvät suoraan omalle Stripe Connect -tilillesi."
+    },
+    "hosted_website": {
+      "name": "Myyntioptimoitu verkkosivusto",
+      "description": "Saat hostatun markkinointi- ja tilaussivun feefreeordering-aliverkkotunnuksella — luodaan automaattisesti ruokalistasi pohjalta."
+    },
+    "custom_domain": {
+      "name": "Oma verkkotunnus",
+      "description": "Ohjaa oma verkkotunnuksesi Fee Free Ordering -palvelun hostaamalle sivustollesi."
+    },
+    "advanced_promos": {
+      "name": "Edistynyt promootiomarkkinointi",
+      "description": "Avaa 8 edistynyttä tarjoustyyppiä: palkkio maksutavasta, ilmainen tuote, ateriapaketti, osta N saat yhden ilmaiseksi, ilmainen annos aterian osana, kiinteä tai prosenttialennus combo-tarjouksesta sekä ateriapaketti erikoisuudella. Lisäksi asiakassegmentointi ja automatisoidut markkinointikampanjat (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Brändätty mobiilisovellus",
+      "description": "Natiivi iOS- ja Android-sovellus omalla brändilläsi, julkaistuna App Storessa ja Play Storessa."
+    },
+    "pos_module": {
+      "name": "POS-moduuli",
+      "description": "Ravintolan oma POS, jolla henkilökunta ottaa vastaan paikan päällä syötävät ja noutotilaukset samasta hallintapaneelista."
+    },
+    "phone_ordering": {
+      "name": "Automaattinen puhelintilaus",
+      "description": "AI-pohjainen puhelinagentti ottaa asiakkaiden tilaukset vastaan 24/7 ja välittää ne suoraan keittiöösi — ei henkilökunnan työaikaa eikä vastaamattomia puheluita ruuhkan aikana."
+    },
+    "reservation_deposits": {
+      "name": "Varausten käsirahat",
+      "description": "Veloita palautettava käsiraha, kun asiakkaat varaavat pöydän — suojaa saapumatta jättämisiltä."
+    },
+    "multi_location": {
+      "name": "Useita toimipisteitä",
+      "description": "Hallinnoi useita ravintolatoimipisteitä yhdellä tilillä. Jokaisella toimipisteellä on oma ruokalistansa, tilauksensa ja Stripe Connect -tilinsä — vaihda niiden välillä päätason hallintapaneelista."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Ilmainen ja sisältyy jokaiselle ravintolalle — ei kuukausi- eikä tilauskohtaisia maksuja. Jokainen julkaistu nouto- tai toimitusravintola listataan Fee Free Marketplacessa paikallista löydettävyyttä varten. Ei 30 %:n komissiota eikä lisämaksuja asiakkaille."
+    },
+    "customer_sms": {
+      "name": "Asiakkaiden SMS-ilmoitukset",
+      "description": "Lähetä asiakkaille tekstiviesti, kun tilaus etenee keittiössä — vahvistettu, hyväksytty, valmis noudettavaksi, valmis. Parantaa noutojen täsmällisyyttä ja asiakkaiden luottamusta. Käyttää jaettua Twilio-numeroamme — ei vaadi asennusta sinulta."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Luo seurattavia QR-koodeja ja älylinkkejä, suunnittele brändättyjä flyereita ja julisteita, jotka hakevat brändisi automaattisesti, ja näe tarkalleen, kuinka moni skannaus muuttui oikeiksi tilauksiksi ja myynniksi."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Lanseeraa ravintolasi valmiilla lähetettävillä kampanjoilla — ensitilauksen kannustimet ja takaisinvoittotarjoukset tuovat asiakkaita heti ensimmäisestä päivästä."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "AI-pohjainen somevastaavasi — täytä nopea viikoittainen lomake (erikoisuudet, tapahtumat, tarjoukset), ja ContentPilot luonnostelee viimeistellyt julkaisut, jotka hyväksyt yhdellä klikkauksella — ajastettu automaattisesti Instagramiin, Facebookiin, X:ään ja TikTokiin."
+    },
+    "driver_pool": {
+      "name": "Kuljettajaverkosto",
+      "description": "Hyödynnä ShipDayn kolmannen osapuolen kuljettajaverkostoa, kun omat kuljettajasi ovat varattuja tai eivät ole käytettävissä. Vain toimituskohtaiset maksut — ei kuukausittaisia vähimmäisveloituksia tämän tilauksen lisäksi. Määritä oma toimitushinnoittelusi asiakkaille ja päätä, kuinka paljon katat itse ja kuinka paljon siirrät asiakkaan maksettavaksi."
+    },
+    "kds_screen": {
+      "name": "KDS-näyttö",
+      "description": "Erillinen KDS-keittiönäyttö (Kitchen Display System) linjastollesi — tilaukset virtaavat näytölle reaaliajassa ja ne voi kuitata asemakohtaisesti, ei paperitikettejä. Tulossa pian."
+    }
   }
 }

@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 // Kitchen workflow / backup printer / auto phone-call / new-order vibration —
 // moved here from the Orders screen (Luigi 2026-06-16). The component still
 // lives in ../orders for now; it's purely a settings panel.
@@ -54,6 +55,8 @@ export function SettingsClient({
   const tSidebar = useTranslations("admin.sidebar");
   const tPromo = useTranslations("admin.promotionsList");
   const tLocked = useTranslations("admin.featureLocked");
+  // Localized catalog name/description by slug, DB-English fallback.
+  const tCatalog = useTranslations("addOnCatalog");
   const locale = useLocale();
 
   const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
@@ -191,7 +194,7 @@ export function SettingsClient({
                           >
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <span className="font-semibold text-gray-900 text-sm">{a.name}</span>
+                                <span className="font-semibold text-gray-900 text-sm">{localizedAddOnName(tCatalog, a.slug, a.name)}</span>
                                 {a.status === "trialing" && (
                                   <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 uppercase tracking-wide">
                                     {t("trialBadge")}
@@ -203,9 +206,9 @@ export function SettingsClient({
                                   </span>
                                 )}
                               </div>
-                              {a.description && (
-                                <div className="text-xs text-gray-500 mt-0.5 line-clamp-1">{a.description}</div>
-                              )}
+                              {(() => { const d = localizedAddOnDescription(tCatalog, a.slug, a.description); return d && (
+                                <div className="text-xs text-gray-500 mt-0.5 line-clamp-1">{d}</div>
+                              ); })()}
                             </div>
                             <div className="text-sm font-semibold text-gray-700 whitespace-nowrap">
                               {formatCurrency(a.monthlyPriceCents / 100)}{t("perMonth")}
@@ -271,14 +274,14 @@ export function SettingsClient({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-semibold text-gray-900 text-sm">{item.name}</span>
+                      <span className="font-semibold text-gray-900 text-sm">{localizedAddOnName(tCatalog, item.slug, item.name)}</span>
                       {i === 0 && (
                         <span className="text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
                           {t("popularBadge")}
                         </span>
                       )}
                     </div>
-                    {item.description && <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{item.description}</div>}
+                    {(() => { const d = localizedAddOnDescription(tCatalog, item.slug, item.description); return d && <div className="text-xs text-gray-500 mt-0.5 line-clamp-2">{d}</div>; })()}
                   </div>
                   <div className="flex flex-col items-end flex-shrink-0 gap-1.5">
                     <div className="text-sm font-bold text-gray-900 whitespace-nowrap">

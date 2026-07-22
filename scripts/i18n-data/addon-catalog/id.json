@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "Sistem Pertumbuhan Restoran dari Fee Free — semua add-on berbayar untuk pemasaran, retensi, dan akuisisi pelanggan dalam satu paket berdiskon: Pemasaran Promo Lanjutan (termasuk Autopilot), Marketing Studio, Kickstarter, dan SMS Pelanggan. Perangkat pertumbuhan baru akan ditambahkan ke GrowthNet begitu kami merilisnya — pelanggan mendapatkannya secara otomatis tanpa biaya tambahan."
+  },
+  "unlimited_orders": {
+    "name": "Pesanan Tak Terbatas GRATIS",
+    "description": "Menghapus batas 100 pesanan/bulan pada paket GRATIS. Termasuk volume pesanan bulanan tak terbatas — tanpa biaya per pesanan. Lewati ini jika Anda sudah memiliki add-on berbayar lain (semuanya sudah mencakup pesanan tak terbatas)."
+  },
+  "online_payments": {
+    "name": "Pembayaran Online",
+    "description": "Terima pembayaran kartu secara online. Dana langsung masuk ke akun Stripe Connect Anda."
+  },
+  "hosted_website": {
+    "name": "Situs Web yang Dioptimalkan untuk Penjualan",
+    "description": "Dapatkan halaman pemasaran + pemesanan yang di-hosting pada subdomain feefreeordering, dibuat otomatis dari menu Anda."
+  },
+  "custom_domain": {
+    "name": "Domain Kustom",
+    "description": "Arahkan domain Anda sendiri ke situs Fee Free Ordering Anda yang di-hosting."
+  },
+  "advanced_promos": {
+    "name": "Pemasaran Promo Lanjutan",
+    "description": "Membuka 8 jenis promo lanjutan: hadiah metode pembayaran, item gratis, paket makanan, beli-N-dapat-gratis, hidangan gratis sebagai bagian dari paket, diskon tetap/persentase untuk combo, paket makanan dengan hidangan spesial. Ditambah segmentasi pelanggan dan kampanye pemasaran otomatis (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "Aplikasi Mobile dengan Merek Anda",
+    "description": "Aplikasi native iOS + Android dengan merek Anda, terdaftar di App Store dan Play Store."
+  },
+  "pos_module": {
+    "name": "Modul POS",
+    "description": "POS internal bagi staf untuk menerima pesanan makan di tempat / bawa pulang dari admin yang sama."
+  },
+  "phone_ordering": {
+    "name": "Pemesanan Telepon Otomatis",
+    "description": "Agen telepon bertenaga AI menerima pesanan pelanggan 24/7 dan langsung meneruskannya ke dapur Anda — tanpa menyita waktu staf, tanpa panggilan terlewat saat jam sibuk."
+  },
+  "reservation_deposits": {
+    "name": "Deposit Reservasi",
+    "description": "Tagih deposit yang dapat dikembalikan saat pelanggan memesan meja — melindungi Anda dari pelanggan yang tidak datang."
+  },
+  "multi_location": {
+    "name": "Multi-Lokasi",
+    "description": "Kelola beberapa lokasi restoran dalam satu akun. Setiap lokasi menjalankan menu, pesanan, dan Stripe Connect-nya sendiri — beralih antar lokasi dari admin induk."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Gratis dan sudah termasuk untuk setiap restoran — tanpa biaya bulanan maupun per pesanan. Setiap restoran ambil-sendiri atau pesan-antar yang dipublikasikan tercantum di Fee Free Marketplace agar mudah ditemukan pelanggan lokal. Tanpa komisi 30%, tanpa biaya tambahan bagi pelanggan."
+  },
+  "customer_sms": {
+    "name": "Notifikasi SMS Pelanggan",
+    "description": "Kirim SMS ke pelanggan seiring pesanan mereka diproses di dapur — dikonfirmasi, diterima, siap diambil, selesai. Meningkatkan ketepatan pengambilan + kepercayaan pelanggan. Menggunakan nomor Twilio bersama milik kami; tanpa penyiapan apa pun di pihak Anda."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Buat kode QR dan tautan pintar yang dapat dilacak, rancang flyer dan poster bermerek yang otomatis mengambil branding Anda, dan lihat persis berapa banyak pemindaian yang berubah menjadi pesanan dan pendapatan nyata."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Luncurkan restoran Anda dengan kampanye siap kirim — insentif pesanan pertama dan penawaran win-back yang mendatangkan pelanggan sejak hari pertama."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "Manajer media sosial AI Anda — isi formulir mingguan singkat (menu spesial, acara, promosi) dan ContentPilot menyusun draf postingan rapi yang Anda setujui dalam satu klik, dijadwalkan otomatis ke Instagram, Facebook, X, dan TikTok."
+  },
+  "driver_pool": {
+    "name": "Armada Pengemudi",
+    "description": "Manfaatkan jaringan pengemudi pihak ketiga ShipDay kami saat pengemudi internal Anda sibuk atau tidak tersedia. Hanya biaya per pengantaran — tanpa minimum bulanan di luar langganan ini. Tetapkan sendiri tarif pengiriman untuk pelanggan Anda dan tentukan berapa yang Anda tanggung vs yang diteruskan ke pelanggan."
+  },
+  "kds_screen": {
+    "name": "Layar KDS",
+    "description": "Layar Kitchen Display System khusus untuk lini dapur Anda — pesanan masuk secara langsung dan dapat di-bump per stasiun, tanpa tiket kertas. Segera hadir."
+  }
+}

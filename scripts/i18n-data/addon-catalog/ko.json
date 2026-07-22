@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "Fee Free의 레스토랑 성장 시스템 — 유료 마케팅, 재방문 유도, 고객 확보 추가 기능을 모두 하나의 할인 번들로 제공합니다: 고급 프로모션 마케팅(Autopilot 포함), Marketing Studio, Kickstarter, 고객 SMS. 새로운 성장 도구는 출시되는 대로 GrowthNet에 추가되며, 구독자는 추가 비용 없이 자동으로 받습니다."
+  },
+  "unlimited_orders": {
+    "name": "FREE 무제한 주문",
+    "description": "FREE 플랜의 월 100건 주문 한도를 해제합니다. 월간 주문량 무제한 — 주문당 수수료가 없습니다. 다른 유료 추가 기능을 이미 구독 중이라면 필요하지 않습니다(무제한 주문이 포함되어 있습니다)."
+  },
+  "online_payments": {
+    "name": "온라인 결제",
+    "description": "온라인 카드 결제를 받으세요. 대금이 귀하의 Stripe Connect 계정으로 직접 입금됩니다."
+  },
+  "hosted_website": {
+    "name": "판매 최적화 웹사이트",
+    "description": "feefreeordering 서브도메인에서 메뉴로 자동 생성되는 마케팅 + 주문 페이지를 호스팅해 드립니다."
+  },
+  "custom_domain": {
+    "name": "사용자 정의 도메인",
+    "description": "보유한 도메인을 Fee Free Ordering 호스팅 사이트에 연결하세요."
+  },
+  "advanced_promos": {
+    "name": "고급 프로모션 마케팅",
+    "description": "8가지 고급 프로모션 유형을 잠금 해제합니다: 결제 수단 리워드, 무료 아이템, 식사 번들, N개 구매 시 무료, 식사에 포함된 무료 요리, 콤보 정액/정률 할인, 스페셜티 포함 식사 번들. 고객 세분화와 자동화 마케팅 캠페인(Autopilot)도 포함됩니다."
+  },
+  "branded_mobile_app": {
+    "name": "브랜드 모바일 앱",
+    "description": "귀하의 브랜딩이 적용된 네이티브 iOS + Android 앱을 App Store와 Play Store에 등록합니다."
+  },
+  "pos_module": {
+    "name": "POS 모듈",
+    "description": "직원이 동일한 관리자 화면에서 매장 식사 / 포장 주문을 받을 수 있는 매장 내 POS입니다."
+  },
+  "phone_ordering": {
+    "name": "자동화 전화 주문",
+    "description": "AI 기반 전화 에이전트가 24/7 고객 주문을 받아 주방으로 바로 전달합니다 — 직원 시간이 들지 않고, 바쁜 시간대에 놓치는 전화도 없습니다."
+  },
+  "reservation_deposits": {
+    "name": "예약 보증금",
+    "description": "고객이 테이블을 예약할 때 환불 가능한 보증금을 청구하세요 — 노쇼를 방지합니다."
+  },
+  "multi_location": {
+    "name": "다지점 관리",
+    "description": "하나의 계정으로 여러 레스토랑 지점을 관리하세요. 각 지점은 자체 메뉴, 주문, Stripe Connect를 운영하며 상위 관리자에서 지점 간 전환이 가능합니다."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "모든 레스토랑에 무료로 포함됩니다 — 월정액도, 주문당 수수료도 없습니다. 게시된 모든 픽업 또는 배달 레스토랑이 지역 고객에게 발견되도록 Fee Free Marketplace에 등록됩니다. 30% 수수료도, 고객 추가 비용도 없습니다."
+  },
+  "customer_sms": {
+    "name": "고객 SMS 알림",
+    "description": "주문이 주방에서 진행되는 단계마다 고객에게 문자를 보냅니다 — 확인됨, 수락됨, 픽업 준비 완료, 완료. 픽업 이행률과 고객 신뢰를 높입니다. 공용 Twilio 번호를 사용하므로 별도 설정이 필요 없습니다."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "추적 가능한 QR 코드와 스마트 링크를 생성하고, 브랜딩이 자동 적용되는 전단지와 포스터를 디자인하며, 스캔이 실제 주문과 매출로 얼마나 이어졌는지 정확히 확인하세요."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "바로 보낼 수 있는 캠페인으로 레스토랑을 런칭하세요 — 첫 주문 혜택과 재방문 유도 오퍼로 첫날부터 고객을 불러옵니다."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "귀하의 AI 소셜 미디어 매니저 — 매주 간단한 양식(스페셜, 이벤트, 프로모션)만 작성하면 ContentPilot이 완성도 높은 게시물 초안을 만들고, 클릭 한 번으로 승인하면 Instagram, Facebook, X, TikTok에 자동 예약 게시됩니다."
+  },
+  "driver_pool": {
+    "name": "Driver Pool",
+    "description": "자체 기사가 바쁘거나 없을 때 ShipDay 외부 기사 네트워크를 활용하세요. 배달 건당 요금만 부과되며, 이 구독료 외에 월 최소 금액은 없습니다. 고객에게 적용할 배달 요금을 직접 설정하고, 얼마를 부담하고 얼마를 고객에게 전가할지 결정하세요."
+  },
+  "kds_screen": {
+    "name": "KDS 화면",
+    "description": "주방 라인을 위한 전용 Kitchen Display System 화면 — 주문이 실시간으로 표시되고 작업대별로 처리 완료할 수 있으며, 종이 전표가 필요 없습니다. 곧 출시됩니다."
+  }
+}

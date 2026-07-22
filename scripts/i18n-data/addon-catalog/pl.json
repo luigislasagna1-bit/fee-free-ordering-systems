@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "System rozwoju restauracji od Fee Free — wszystkie płatne dodatki do marketingu, utrzymania i pozyskiwania klientów w jednym pakiecie z rabatem: Zaawansowany marketing promocyjny (w tym Autopilot), Marketing Studio, Kickstarter i Powiadomienia SMS dla klientów. Nowe narzędzia rozwoju dodajemy do GrowthNet zaraz po ich wydaniu — subskrybenci otrzymują je automatycznie bez dodatkowych opłat."
+  },
+  "unlimited_orders": {
+    "name": "FREE Nieograniczone Zamówienia",
+    "description": "Znosi limit 100 zamówień/miesiąc w planie FREE. Obejmuje nieograniczony miesięczny wolumen zamówień — bez opłat za pojedyncze zamówienie. Pomiń ten dodatek, jeśli masz już dowolny inny płatny dodatek (każdy z nich obejmuje nieograniczone zamówienia)."
+  },
+  "online_payments": {
+    "name": "Płatności online",
+    "description": "Przyjmuj płatności kartą online. Pieniądze trafiają bezpośrednio na Twoje konto Stripe Connect."
+  },
+  "hosted_website": {
+    "name": "Strona zoptymalizowana pod sprzedaż",
+    "description": "Otrzymaj hostowaną stronę marketingową i zamówieniową w subdomenie feefreeordering, generowaną automatycznie z Twojego menu."
+  },
+  "custom_domain": {
+    "name": "Własna domena",
+    "description": "Skieruj własną domenę na swoją hostowaną stronę Fee Free Ordering."
+  },
+  "advanced_promos": {
+    "name": "Zaawansowany marketing promocyjny",
+    "description": "Odblokowuje 8 zaawansowanych typów promocji: nagroda za metodę płatności, darmowa pozycja, zestaw posiłków, kup N i odbierz gratis, darmowe danie w ramach posiłku, rabat kwotowy/procentowy na zestaw, zestaw posiłków ze specjalnością. Do tego segmentacja klientów i zautomatyzowane kampanie marketingowe (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "Markowa aplikacja mobilna",
+    "description": "Natywna aplikacja na iOS i Android z Twoją marką, dostępna w App Store i Play Store."
+  },
+  "pos_module": {
+    "name": "Moduł POS",
+    "description": "Wewnętrzny POS, dzięki któremu obsługa przyjmuje zamówienia na miejscu i na wynos z tego samego panelu administracyjnego."
+  },
+  "phone_ordering": {
+    "name": "Automatyczne zamówienia telefoniczne",
+    "description": "Agent telefoniczny oparty na AI przyjmuje zamówienia klientów 24/7 i przekazuje je prosto do Twojej kuchni — bez angażowania personelu i bez utraconych połączeń w godzinach szczytu."
+  },
+  "reservation_deposits": {
+    "name": "Kaucje za rezerwacje",
+    "description": "Pobieraj zwrotną kaucję, gdy klienci rezerwują stolik — chroni przed niepojawieniem się gości."
+  },
+  "multi_location": {
+    "name": "Wiele lokalizacji",
+    "description": "Zarządzaj wieloma lokalizacjami restauracji z jednego konta. Każda lokalizacja ma własne menu, zamówienia i Stripe Connect — przełączaj się między nimi z nadrzędnego panelu administracyjnego."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Bezpłatnie i w cenie dla każdej restauracji — bez opłat miesięcznych ani opłat za zamówienie. Każda opublikowana restauracja z odbiorem lub dostawą trafia na Fee Free Marketplace, gdzie mogą ją odkryć lokalni klienci. Bez 30% prowizji i bez dodatkowych opłat dla klientów."
+  },
+  "customer_sms": {
+    "name": "Powiadomienia SMS dla klientów",
+    "description": "Wysyłaj klientom SMS-y na każdym etapie realizacji zamówienia — potwierdzone, przyjęte, gotowe do odbioru, zrealizowane. Zwiększa terminowość odbiorów i zaufanie klientów. Korzysta z naszego wspólnego numeru Twilio — bez żadnej konfiguracji po Twojej stronie."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Generuj śledzone kody QR i inteligentne linki, projektuj markowe ulotki i plakaty automatycznie pobierające Twoją identyfikację wizualną i sprawdzaj dokładnie, ile skanów zamieniło się w prawdziwe zamówienia i przychody."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Wystartuj z restauracją dzięki gotowym do wysyłki kampaniom — zachęty do pierwszego zamówienia i oferty odzyskujące klientów, które przyciągają gości od pierwszego dnia."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "Twój menedżer mediów społecznościowych oparty na AI — wypełnij krótki cotygodniowy formularz (dania dnia, wydarzenia, promocje), a ContentPilot przygotuje dopracowane posty, które zatwierdzasz jednym kliknięciem, automatycznie zaplanowane na Instagram, Facebook, X i TikTok."
+  },
+  "driver_pool": {
+    "name": "Pula kierowców",
+    "description": "Korzystaj z naszej zewnętrznej sieci kierowców ShipDay, gdy Twoi własni kierowcy są zajęci lub niedostępni. Płacisz tylko za pojedyncze dostawy — poza tą subskrypcją nie ma żadnych miesięcznych minimów. Ustal własne ceny dostawy dla klientów i zdecyduj, ile pokrywasz sam, a ile przenosisz na klienta."
+  },
+  "kds_screen": {
+    "name": "Ekran KDS",
+    "description": "Dedykowany ekran systemu KDS (Kitchen Display System) dla Twojej linii — zamówienia spływają na żywo i można je zatwierdzać osobno na każdym stanowisku, bez papierowych bonów. Już wkrótce."
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "Fee Free 的餐厅增长系统——将每一项付费的营销、留存和获客附加功能汇入一个优惠套装：高级促销营销（含 Autopilot）、Marketing Studio、Kickstarter 和客户短信。我们每推出新的增长工具都会加入 GrowthNet——订阅者自动获得，无需额外付费。"
+  },
+  "unlimited_orders": {
+    "name": "免费套餐无限订单",
+    "description": "解除免费套餐每月 100 笔订单的上限。包含无限的每月订单量——没有按单费用。如果您已订阅任何其他付费附加功能，则无需此项（它们均已包含无限订单）。"
+  },
+  "online_payments": {
+    "name": "在线支付",
+    "description": "在线接受银行卡付款。款项直接进入您自己的 Stripe Connect 账户。"
+  },
+  "hosted_website": {
+    "name": "销售优化网站",
+    "description": "获得一个托管的营销 + 点餐页面，位于 feefreeordering 子域名上，依据您的菜单自动生成。"
+  },
+  "custom_domain": {
+    "name": "自定义域名",
+    "description": "将您自己的域名指向您的 Fee Free Ordering 托管网站。"
+  },
+  "advanced_promos": {
+    "name": "高级促销营销",
+    "description": "解锁 8 种高级促销类型：支付方式奖励、免费商品、套餐组合、买 N 送一、套餐内免费菜品、组合套餐的固定金额/百分比折扣、含特色菜的套餐组合。另含客户分群和自动化营销活动（Autopilot）。"
+  },
+  "branded_mobile_app": {
+    "name": "品牌移动应用",
+    "description": "带有您品牌形象的原生 iOS + Android 应用，上架 App Store 和 Play Store。"
+  },
+  "pos_module": {
+    "name": "POS 模块",
+    "description": "店内 POS，员工可在同一后台录入堂食/外带订单。"
+  },
+  "phone_ordering": {
+    "name": "自动电话点餐",
+    "description": "AI 驱动的电话客服 24/7 接听顾客点单，并直接推送到您的厨房——不占用员工时间，高峰时段也不会漏接来电。"
+  },
+  "reservation_deposits": {
+    "name": "预订押金",
+    "description": "顾客订座时收取一笔可退押金——有效防范爽约。"
+  },
+  "multi_location": {
+    "name": "多门店",
+    "description": "用一个账户管理多家餐厅门店。每家门店拥有独立的菜单、订单和 Stripe Connect——可从品牌主后台在各门店之间切换。"
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "对每家餐厅免费且默认包含——没有月费，也没有按单费用。每家已发布的自取或外送餐厅都会展示在 Fee Free Marketplace 上，便于本地顾客发现。没有 30% 佣金，顾客也无需支付额外费用。"
+  },
+  "customer_sms": {
+    "name": "客户短信通知",
+    "description": "在订单流经厨房的各个环节向顾客发送短信——已确认、已接单、可取餐、已完成。提升按时取餐率和顾客信任度。使用我们的共享 Twilio 号码，您无需任何设置。"
+  },
+  "marketing_studio": {
+    "name": "营销工作室",
+    "description": "生成可追踪的 QR 码和智能链接，设计自动套用您品牌元素的宣传单和海报，并精确了解有多少次扫码转化为真实订单和营收。"
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "用即发即用的营销活动启动您的餐厅——首单激励和挽回优惠，从第一天起就把顾客带进门。"
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "您的 AI 社交媒体经理——每周填写一份简短表单（特色菜、活动、促销），ContentPilot 即为您起草精致的帖子，一键批准后自动排期发布到 Instagram、Facebook、X 和 TikTok。"
+  },
+  "driver_pool": {
+    "name": "骑手调度池",
+    "description": "当您的自有骑手繁忙或无法接单时，调用我们的 ShipDay 第三方骑手网络。仅按每次配送收费——除本订阅外没有任何月度最低消费。您可自行设定向顾客收取的配送费，并决定自行承担与转嫁给顾客的比例。"
+  },
+  "kds_screen": {
+    "name": "KDS 屏幕",
+    "description": "为您的出餐线配备专属的厨房显示系统（KDS）屏幕——订单实时进入，可按工位逐一划掉，无需纸质单据。即将推出。"
+  }
+}

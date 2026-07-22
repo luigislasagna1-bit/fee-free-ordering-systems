@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Suplimente",
       "addOnsSubtitle": "Deblochează funcționalitățile plătite individual. Anulează oricând — fără contracte.",
       "addOnPriceComingSoon": "Prețuri anunțate la lansare",
-      "addOns": {
-        "online_payments": {
-          "name": "Plăți online",
-          "desc": "Acceptă carduri de credit prin Stripe Connect. Banii ajung în contul tău, nu al nostru."
-        },
-        "hosted_website": {
-          "name": "Website optimizat pentru vânzări",
-          "desc": "O pagină de marketing elegantă la your-name.feefreeordering.com — generată automat din meniul tău."
-        },
-        "custom_domain": {
-          "name": "Domeniu personalizat",
-          "desc": "Aduce propriul domeniu (ex. comandamyrestaurant.com) și noi vom găzdui site-ul acolo."
-        },
-        "advanced_promos": {
-          "name": "Marketing avansat promoțional",
-          "desc": "Segmentare clienți, campanii automate de email, recuperare clienți inactivi."
-        },
-        "branded_mobile_app": {
-          "name": "Aplicație mobilă cu branding propriu",
-          "desc": "Publică propria aplicație iOS + Android în magazine cu brandul tău."
-        },
-        "pos_module": {
-          "name": "Modul POS",
-          "desc": "Punct de vânzare intern pentru personal pentru a înregistra comenzi walk-in alături de cele online."
-        },
-        "reservation_deposits": {
-          "name": "Depozite rezervare",
-          "desc": "Percepe un depozit rambursabil când oaspeții rezervă o masă pentru a reduce neprezentările."
-        },
-        "multi_location": {
-          "name": "Multi-locație",
-          "desc": "Gestionează mai multe locații de restaurant dintr-un singur cont. Fiecare locație are propriul meniu, comenzi și plăți Stripe — comută între ele din adminul principal."
-        }
-      },
       "compareTitle": "Fiecare restaurant primește",
       "compareItems": [
         "0% comision la comenzile directe",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Cu întârziere",
     "hoursMinutes": "{h} h {m} min",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Sistemul de creștere pentru restaurante de la Fee Free — toate suplimentele plătite de marketing, fidelizare și atragere de clienți într-un singur pachet cu preț redus: Marketing avansat promoțional (incl. Autopilot), Marketing Studio, Kickstarter și SMS pentru clienți. Noile instrumente de creștere sunt adăugate în GrowthNet pe măsură ce le lansăm — abonații le primesc automat, fără costuri suplimentare."
+    },
+    "unlimited_orders": {
+      "name": "Comenzi nelimitate pe planul FREE",
+      "description": "Elimină limita de 100 de comenzi/lună a planului FREE. Include volum lunar nelimitat de comenzi — fără taxe per comandă. Nu ai nevoie de acest supliment dacă ai deja orice alt supliment plătit (toate includ comenzi nelimitate)."
+    },
+    "online_payments": {
+      "name": "Plăți online",
+      "description": "Acceptă plăți cu cardul online. Banii ajung direct în contul tău Stripe Connect."
+    },
+    "hosted_website": {
+      "name": "Website optimizat pentru vânzări",
+      "description": "Primești o pagină găzduită de marketing + comenzi pe un subdomeniu feefreeordering, generată automat din meniul tău."
+    },
+    "custom_domain": {
+      "name": "Domeniu personalizat",
+      "description": "Direcționează propriul tău domeniu către site-ul tău găzduit Fee Free Ordering."
+    },
+    "advanced_promos": {
+      "name": "Marketing avansat promoțional",
+      "description": "Deblochează 8 tipuri avansate de promoții: recompensă pentru metoda de plată, produs gratuit, meniu combinat, cumperi N și primești gratuit, fel de mâncare gratuit inclus în meniu, reducere fixă/procentuală la combo, meniu combinat cu specialitate. În plus, segmentare a clienților și campanii de marketing automatizate (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Aplicație mobilă cu branding propriu",
+      "description": "O aplicație nativă iOS + Android cu brandingul tău, publicată în App Store și Play Store."
+    },
+    "pos_module": {
+      "name": "Modul POS",
+      "description": "POS intern cu care personalul preia comenzi cu servire în local / la pachet din același panou de administrare."
+    },
+    "phone_ordering": {
+      "name": "Comenzi telefonice automatizate",
+      "description": "Un agent telefonic bazat pe AI preia comenzile clienților 24/7 și le trimite direct în bucătăria ta — fără timp consumat de personal, fără apeluri pierdute la orele de vârf."
+    },
+    "reservation_deposits": {
+      "name": "Depozite pentru rezervări",
+      "description": "Percepe un depozit rambursabil când clienții rezervă o masă — te protejează împotriva neprezentărilor."
+    },
+    "multi_location": {
+      "name": "Multi-locație",
+      "description": "Gestionează mai multe locații de restaurant dintr-un singur cont. Fiecare locație are propriul meniu, propriile comenzi și propriul cont Stripe Connect — comută între ele din adminul principal."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Gratuit și inclus pentru fiecare restaurant — fără taxă lunară sau per comandă. Fiecare restaurant publicat cu ridicare sau livrare este listat în Fee Free Marketplace pentru a fi descoperit de clienții locali. Fără comision de 30%, fără taxe suplimentare pentru clienți."
+    },
+    "customer_sms": {
+      "name": "Notificări SMS pentru clienți",
+      "description": "Trimite SMS-uri clienților pe măsură ce comanda lor avansează în bucătărie — confirmată, acceptată, gata de ridicare, finalizată. Crește punctualitatea la ridicare și încrederea clienților. Folosește numărul nostru Twilio partajat; nicio configurare din partea ta."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Generează coduri QR urmăribile și linkuri inteligente, creează fluturași și postere personalizate care îți preiau automat brandingul și vezi exact câte scanări s-au transformat în comenzi și venituri reale."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Lansează-ți restaurantul cu campanii gata de trimis — stimulente pentru prima comandă și oferte de recâștigare care îți aduc clienți din prima zi."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Managerul tău AI de social media — completezi un formular rapid săptămânal (specialități, evenimente, promoții), iar ContentPilot redactează postări îngrijite pe care le aprobi cu un singur clic, programate automat pe Instagram, Facebook, X și TikTok."
+    },
+    "driver_pool": {
+      "name": "Driver Pool",
+      "description": "Apelează la rețeaua noastră de livratori terți ShipDay atunci când livratorii tăi proprii sunt ocupați sau indisponibili. Doar taxe per livrare — fără minimuri lunare dincolo de acest abonament. Stabilește propriile prețuri de livrare pentru clienți și decide cât absorbi tu și cât transferi clienților."
+    },
+    "kds_screen": {
+      "name": "Ecran KDS",
+      "description": "Un ecran dedicat Kitchen Display System pentru linia ta de preparare — comenzile apar în timp real și pot fi marcate ca finalizate pe fiecare stație, fără bonuri de hârtie. În curând."
+    }
   }
 }

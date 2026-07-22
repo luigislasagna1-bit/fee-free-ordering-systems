@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Lisad",
       "addOnsSubtitle": "Ava tasulised funktsioonid eraldi. Tühista millal tahes — lepinguid pole.",
       "addOnPriceComingSoon": "Hind teatatakse käivitamisel",
-      "addOns": {
-        "online_payments": {
-          "name": "Veebimaksed",
-          "desc": "Võta krediitkaarte vastu Stripe Connecti kaudu. Raha laekub sinu kontole, mitte meile."
-        },
-        "hosted_website": {
-          "name": "Müügioptimeeritud veebisait",
-          "desc": "Viimistletud turundusleht aadressil sinu-nimi.feefreeordering.com — automaatselt genereeritud sinu menüüst."
-        },
-        "custom_domain": {
-          "name": "Kohandatud domeen",
-          "desc": "Too oma domeen (nt tellimused.minu-restoran.ee) ja me hostame saidi seal."
-        },
-        "advanced_promos": {
-          "name": "Täpsem promo-turundus",
-          "desc": "Klientide segmenteerimine, automatiseeritud meiliturunduskampaaniad, passiivsete klientide tagasivõitmine."
-        },
-        "branded_mobile_app": {
-          "name": "Bränditud mobiilirakendus",
-          "desc": "Esita oma iOS + Android rakendus poodidesse oma brändinguga."
-        },
-        "pos_module": {
-          "name": "Kassasüsteem",
-          "desc": "Sisemine müügipunkt töötajatele, et registreerida jalutustelgemustesse kõrvuti veebitellimustest."
-        },
-        "reservation_deposits": {
-          "name": "Broneeringute deposiidid",
-          "desc": "Nõua tagastatavat deposiiti, kui külalised broneerivad laua, et vähendada ilmumata jätmisi."
-        },
-        "multi_location": {
-          "name": "Mitu asukohta",
-          "desc": "Halda mitut restorani asukohta ühe konto all. Igal asukohal on oma menüü, tellimused ja Stripe väljamaksed — vaheta nende vahel vanema administraatorist."
-        }
-      },
       "compareTitle": "Iga restoran saab",
       "compareItems": [
         "0% vahendustasu otsetellimustelt",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Hilinenud",
     "hoursMinutes": "{h} t {m} min",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Fee Free restoranide kasvusüsteem — kõik tasulised turunduse, klientide hoidmise ja uute klientide võitmise lisandmoodulid ühes soodushinnaga komplektis: Täpsem Promo Turundus (sh Autopilot), Marketing Studio, Kickstarter ja klientide SMS-teavitused. Uusi kasvutööriistu lisatakse GrowthNetti jooksvalt — tellijad saavad need automaatselt, lisatasuta."
+    },
+    "unlimited_orders": {
+      "name": "FREE Piiramatud Tellimused",
+      "description": "Eemaldab FREE plaani 100 tellimuse kuulimiidi. Sisaldab piiramatut igakuist tellimuste mahtu — ilma tellimusepõhiste tasudeta. Jätke see vahele, kui teil on juba mõni muu tasuline lisandmoodul (need sisaldavad piiramatuid tellimusi)."
+    },
+    "online_payments": {
+      "name": "Veebimaksed",
+      "description": "Võtke kaardimakseid vastu veebis. Raha laekub otse teie Stripe Connect kontole."
+    },
+    "hosted_website": {
+      "name": "Müügioptimeeritud Veebisait",
+      "description": "Saate hostitud turundus- ja tellimislehe feefreeordering alamdomeenil, mis genereeritakse automaatselt teie menüü põhjal."
+    },
+    "custom_domain": {
+      "name": "Oma domeen",
+      "description": "Suunake oma domeen enda Fee Free Ordering hostitud saidile."
+    },
+    "advanced_promos": {
+      "name": "Täpsem Promo Turundus",
+      "description": "Avab 8 täpsemat kampaaniatüüpi: makseviisi preemia, tasuta toode, einekomplekt, osta-N-saa-tasuta, tasuta roog eine osana, fikseeritud/protsentuaalne soodustus kombole, einekomplekt eriroaga. Lisaks kliendisegmentimine ja automatiseeritud turunduskampaaniad (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Brändiga mobiilirakendus",
+      "description": "Natiivne iOS + Android rakendus teie brändiga, saadaval App Store'is ja Play Store'is."
+    },
+    "pos_module": {
+      "name": "POS-moodul",
+      "description": "Sisemine POS, et töötajad saaksid samast halduskeskkonnast vastu võtta kohapeal söömise ja kaasamüügi tellimusi."
+    },
+    "phone_ordering": {
+      "name": "Automaatne telefonitellimine",
+      "description": "AI-põhine telefoniagent võtab klientide tellimusi vastu 24/7 ja saadab need otse teie kööki — ei kuluta töötajate aega ega jäta tipptunnil ühtegi kõnet vastamata."
+    },
+    "reservation_deposits": {
+      "name": "Broneeringute deposiidid",
+      "description": "Võtke klientidelt laua broneerimisel tagastatav deposiit — kaitseb tulemata jätmiste eest."
+    },
+    "multi_location": {
+      "name": "Mitu asukohta",
+      "description": "Hallake mitut restorani asukohta ühe konto alt. Igal asukohal on oma menüü, tellimused ja Stripe Connect — vahetage nende vahel peakonto halduskeskkonnast."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Tasuta ja kaasas igal restoranil — ei mingit kuutasu ega tellimusepõhist tasu. Iga avaldatud järeletulemise või kohaletoimetamisega restoran on kohalikuks avastamiseks kirjas Fee Free Marketplace'il. Ei 30% komisjonitasu ega lisatasusid klientidele."
+    },
+    "customer_sms": {
+      "name": "Klientide SMS-teavitused",
+      "description": "Saatke klientidele SMS-e, kui nende tellimus köögis edeneb — kinnitatud, vastu võetud, järeletulemiseks valmis, lõpetatud. Suurendab õigeaegset järeletulekut ja klientide usaldust. Kasutab meie jagatud Twilio numbrit; teie poolt seadistust ei nõuta."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Looge jälgitavaid QR-koode ja nutikaid linke, kujundage brändiga flaiereid ja plakateid, mis võtavad teie brändingu automaatselt üle, ning nähke täpselt, mitu skaneeringut muutus päris tellimusteks ja tuluks."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Käivitage oma restoran saatmisvalmis kampaaniatega — esimese tellimuse stiimulid ja tagasivõitmispakkumised, mis toovad kliente kohale esimesest päevast."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Teie AI sotsiaalmeediahaldur — täitke kiire nädalavorm (eripakkumised, üritused, sooduskampaaniad) ja ContentPilot koostab viimistletud postitused, mille kinnitate ühe klikiga ning mis ajastatakse automaatselt Instagrami, Facebooki, X-i ja TikToki."
+    },
+    "driver_pool": {
+      "name": "Juhtide kogum",
+      "description": "Kasutage meie ShipDay kolmanda osapoole juhtide võrgustikku, kui teie oma kullerid on hõivatud või pole saadaval. Ainult tarnepõhised tasud — peale selle tellimuse pole kuupõhiseid miinimume. Määrake klientidele oma tarnehinnad ja otsustage, kui palju katate ise ja kui palju kannate edasi kliendile."
+    },
+    "kds_screen": {
+      "name": "KDS ekraan",
+      "description": "Spetsiaalne köögikuvasüsteemi (KDS) ekraan teie köögiliinile — tellimused saabuvad reaalajas ja neid saab jaamade kaupa valmis märkida, ilma paberitšekkideta. Tuleb peagi."
+    }
   }
 }

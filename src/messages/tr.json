@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Eklentiler",
       "addOnsSubtitle": "Ücretli özelliklerin kilidini tek tek açın. İstediğiniz zaman iptal edin — sözleşme yok.",
       "addOnPriceComingSoon": "Fiyatlandırma lansmanda açıklanacak",
-      "addOns": {
-        "online_payments": {
-          "name": "Online Ödemeler",
-          "desc": "Stripe Connect aracılığıyla kredi kartı ödemesi kabul edin. Para bizim değil, sizin hesabınıza geçer."
-        },
-        "hosted_website": {
-          "name": "Satış Optimizasyonlu Web Sitesi",
-          "desc": "your-name.feefreeordering.com adresinde menünüzden otomatik oluşturulan cilalı bir pazarlama sayfası."
-        },
-        "custom_domain": {
-          "name": "Özel Alan Adı",
-          "desc": "Kendi alan adınızı getirin (örn. siparismrestoranim.com) ve siteyi orada barındıralım."
-        },
-        "advanced_promos": {
-          "name": "Gelişmiş Promosyon Pazarlaması",
-          "desc": "Müşteri segmentasyonu, otomatik e-posta kampanyaları, kayıp müşteri geri kazanımı."
-        },
-        "branded_mobile_app": {
-          "name": "Markalı Mobil Uygulama",
-          "desc": "Kendi markanızla iOS + Android uygulamanızı mağazalara gönderin."
-        },
-        "pos_module": {
-          "name": "POS Modülü",
-          "desc": "Personelin online siparişlerle birlikte yüz yüze müşteri siparişlerini girebileceği dahili satış noktası."
-        },
-        "reservation_deposits": {
-          "name": "Rezervasyon Depozito",
-          "desc": "Gelmemeleri azaltmak için masa rezervasyonlarında iade edilebilir depozito alın."
-        },
-        "multi_location": {
-          "name": "Çoklu Şube",
-          "desc": "Tek hesap altında birden fazla restoran şubesi yönetin. Her şubenin kendi menüsü, siparişleri ve Stripe ödemeleri var — üst yönetimden geçiş yapın."
-        }
-      },
       "compareTitle": "Her restoran şunları alır",
       "compareItems": [
         "Doğrudan siparişlerde 0% komisyon",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Geç",
     "hoursMinutes": "{h} sa {m} dk",
     "minutesOnly": "{m} dk"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Fee Free'nin Restoran Büyüme Sistemi — ücretli tüm pazarlama, müşteri tutma ve müşteri kazanma eklentileri tek bir indirimli pakette: Gelişmiş Promosyon Pazarlaması (Autopilot dahil), Marketing Studio, Kickstarter ve Müşteri SMS. Yeni büyüme araçları yayınlandıkça GrowthNet'e eklenir — aboneler bunlara ek ücret ödemeden otomatik olarak sahip olur."
+    },
+    "unlimited_orders": {
+      "name": "ÜCRETSİZ Sınırsız Sipariş",
+      "description": "ÜCRETSİZ planın aylık 100 sipariş sınırını kaldırır. Sınırsız aylık sipariş hacmi içerir — sipariş başına ücret yok. Zaten başka bir ücretli eklentiniz varsa buna gerek yok (ücretli eklentiler sınırsız sipariş içerir)."
+    },
+    "online_payments": {
+      "name": "Online Ödemeler",
+      "description": "Online kart ödemelerini kabul edin. Para doğrudan kendi Stripe Connect hesabınıza geçer."
+    },
+    "hosted_website": {
+      "name": "Satış Odaklı Web Sitesi",
+      "description": "Menünüzden otomatik oluşturulan, feefreeordering alt alan adında barındırılan bir pazarlama + sipariş sayfası edinin."
+    },
+    "custom_domain": {
+      "name": "Özel Alan Adı",
+      "description": "Kendi alan adınızı, barındırılan Fee Free Ordering sitenize yönlendirin."
+    },
+    "advanced_promos": {
+      "name": "Gelişmiş Promosyon Pazarlaması",
+      "description": "8 gelişmiş promosyon türünün kilidini açar: ödeme yöntemine göre ödül, ücretsiz ürün, yemek paketi, N al – bedava kazan, menünün parçası olarak ücretsiz yemek, komboda sabit/yüzdesel indirim, spesiyalli yemek paketi. Ayrıca müşteri segmentasyonu ve otomatik pazarlama kampanyaları (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Markalı Mobil Uygulama",
+      "description": "App Store ve Play Store'da yayınlanan, kendi markanızı taşıyan yerel bir iOS + Android uygulaması."
+    },
+    "pos_module": {
+      "name": "POS Modülü",
+      "description": "Personelin restoran içi / gel-al siparişlerini aynı yönetim panelinden almasını sağlayan kurum içi POS."
+    },
+    "phone_ordering": {
+      "name": "Otomatik Telefonla Sipariş",
+      "description": "AI destekli telefon asistanı, müşteri siparişlerini 7/24 alır ve doğrudan mutfağınıza iletir — personel mesaisi gerekmez, yoğun saatlerde kaçırılan çağrı olmaz."
+    },
+    "reservation_deposits": {
+      "name": "Rezervasyon Depozitoları",
+      "description": "Müşteriler bir masa ayırttığında iade edilebilir bir depozito alın — gelmeyenlere karşı sizi korur."
+    },
+    "multi_location": {
+      "name": "Çoklu Şube",
+      "description": "Birden fazla restoran şubesini tek hesap altında yönetin. Her şube kendi menüsünü, siparişlerini ve Stripe Connect hesabını çalıştırır — ana yönetim panelinden şubeler arasında geçiş yapın."
+    },
+    "marketplace": {
+      "name": "Pazar Yeri",
+      "description": "Her restoran için ücretsiz ve dahildir — aylık ya da sipariş başına ücret yok. Yayında olan her gel-al veya teslimat restoranı, yerel keşif için Fee Free Marketplace'te listelenir. %30 komisyon yok, müşteriler için ek ücret yok."
+    },
+    "customer_sms": {
+      "name": "Müşteri SMS Bildirimleri",
+      "description": "Siparişleri mutfakta ilerledikçe müşterilere SMS gönderin — onaylandı, kabul edildi, teslim almaya hazır, tamamlandı. Teslim alma uyumunu ve müşteri güvenini artırır. Ortak Twilio numaramızı kullanır; sizin tarafınızda kurulum gerekmez."
+    },
+    "marketing_studio": {
+      "name": "Pazarlama Stüdyosu",
+      "description": "İzlenebilir QR kodları ve akıllı bağlantılar oluşturun, markanızı otomatik çeken markalı el ilanları ve posterler tasarlayın ve kaç taramanın gerçek siparişe ve ciroya dönüştüğünü tam olarak görün."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Restoranınızı göndermeye hazır kampanyalarla başlatın — ilk günden itibaren müşteri getiren ilk sipariş teşvikleri ve geri kazanma teklifleri."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "AI sosyal medya yöneticiniz — haftalık kısa bir form doldurun (spesiyaller, etkinlikler, promosyonlar), ContentPilot tek tıkla onaylayacağınız özenli gönderiler hazırlasın; gönderiler Instagram, Facebook, X ve TikTok'a otomatik planlanır."
+    },
+    "driver_pool": {
+      "name": "Kurye Havuzu",
+      "description": "Kendi kuryeleriniz meşgul veya müsait olmadığında ShipDay üçüncü taraf kurye ağımızdan yararlanın. Yalnızca teslimat başına ücret — bu abonelik dışında aylık asgari tutar yok. Müşterileriniz için kendi teslimat fiyatınızı belirleyin ve ne kadarını üstlenip ne kadarını yansıtacağınıza karar verin."
+    },
+    "kds_screen": {
+      "name": "KDS Ekranı",
+      "description": "Hattınız için özel bir Mutfak Ekran Sistemi (KDS) ekranı — siparişler canlı olarak akar ve istasyon bazında ekrandan düşürülebilir, kağıt fiş yok. Çok yakında."
+    }
   }
 }

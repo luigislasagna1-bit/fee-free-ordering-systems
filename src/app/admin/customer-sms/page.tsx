@@ -13,6 +13,7 @@ import { featureGate } from "@/lib/feature-gate";
 import { getTranslations } from "next-intl/server";
 import { MessageSquare, CheckCircle2, Bell, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { localizedAddOnName } from "@/lib/addon-catalog-i18n";
 
 export default async function CustomerSmsPage() {
   const user = await getSessionUser();
@@ -25,6 +26,7 @@ export default async function CustomerSmsPage() {
 
   const t = await getTranslations("admin.customerSms");
   const tCommon = await getTranslations("common");
+  const tCatalog = await getTranslations("addOnCatalog");
 
   const addOn = await prisma.addOn.findUnique({
     where: { slug: "customer_sms" },
@@ -39,7 +41,7 @@ export default async function CustomerSmsPage() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2 flex-wrap">
-            {addOn?.name ?? "Customer SMS"}
+            {localizedAddOnName(tCatalog, "customer_sms", addOn?.name ?? "Customer SMS")}
             <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded">
               <CheckCircle2 className="w-3 h-3" /> {tCommon("active")}
             </span>

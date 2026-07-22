@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Tilføjelser",
       "addOnsSubtitle": "Lås betalte funktioner op enkeltvis. Annullér når som helst — ingen kontrakter.",
       "addOnPriceComingSoon": "Priser annonceres ved lancering",
-      "addOns": {
-        "online_payments": {
-          "name": "Online betalinger",
-          "desc": "Acceptér kreditkort via Stripe Connect. Pengene lander på din konto, ikke vores."
-        },
-        "hosted_website": {
-          "name": "Salgsoptimeret hjemmeside",
-          "desc": "En poleret marketingside på dit-navn.feefreeordering.com — auto-genereret fra din menu."
-        },
-        "custom_domain": {
-          "name": "Eget domæne",
-          "desc": "Brug dit eget domæne (f.eks. bestilminrestaurant.dk), og vi hoster siden der."
-        },
-        "advanced_promos": {
-          "name": "Avanceret kampagnemarketing",
-          "desc": "Kundesegmentering, automatiserede e-mailkampagner og genvinding af inaktive kunder."
-        },
-        "branded_mobile_app": {
-          "name": "Branded mobilapp",
-          "desc": "Indsend din egen iOS + Android-app til butikkerne med dit branding."
-        },
-        "pos_module": {
-          "name": "POS-modul",
-          "desc": "Internt salgssted til personale til at taste walk-in ordrer ind ved siden af online ordrer."
-        },
-        "reservation_deposits": {
-          "name": "Reservationsdepositum",
-          "desc": "Opkræv et refunderbart depositum, når gæster booker et bord, for at reducere udeblivelser."
-        },
-        "multi_location": {
-          "name": "Flere lokationer",
-          "desc": "Kør flere restaurantlokationer under én konto. Hver lokation har sin egen menu, ordrer og Stripe-udbetalinger — skift imellem dem fra overordnet admin."
-        }
-      },
       "compareTitle": "Alle restauranter får",
       "compareItems": [
         "0 % kommission på direkte bestillinger",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Forsinket",
     "hoursMinutes": "{h}t {m}m",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Fee Frees vækstsystem til restauranter — alle betalte tilkøb til markedsføring, fastholdelse og kundetilgang i ét samlet bundt til nedsat pris: Avancerede kampagner (inkl. Autopilot), Marketing Studio, Kickstarter og Kunde-SMS. Nye vækstværktøjer føjes til GrowthNet, efterhånden som vi udgiver dem — abonnenter får dem automatisk uden ekstra omkostninger."
+    },
+    "unlimited_orders": {
+      "name": "FREE Ubegrænsede Ordrer",
+      "description": "Fjerner FREE-planens grænse på 100 ordrer/måned. Inkluderer ubegrænset månedligt ordrevolumen — ingen gebyrer pr. ordre. Spring dette over, hvis du allerede har et andet betalt tilkøb (de inkluderer ubegrænsede ordrer)."
+    },
+    "online_payments": {
+      "name": "Onlinebetalinger",
+      "description": "Tag imod kortbetalinger online. Pengene lander direkte på din Stripe Connect-konto."
+    },
+    "hosted_website": {
+      "name": "Salgsoptimeret hjemmeside",
+      "description": "Få en hostet markedsførings- og bestillingsside på et feefreeordering-underdomæne, genereret automatisk ud fra din menu."
+    },
+    "custom_domain": {
+      "name": "Eget domæne",
+      "description": "Peg dit eget domæne mod din hostede Fee Free Ordering-side."
+    },
+    "advanced_promos": {
+      "name": "Avancerede kampagner",
+      "description": "Låser op for 8 avancerede kampagnetyper: belønning for betalingsmetode, gratis vare, måltidspakke, køb N og få gratis, gratis ret som del af en menu, fast/procentvis rabat på combo, måltidspakke med specialitet. Plus kundesegmentering og automatiserede marketingkampagner (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Brandet mobilapp",
+      "description": "En native iOS- og Android-app med dit brand, tilgængelig i App Store og Play Store."
+    },
+    "pos_module": {
+      "name": "POS-modul",
+      "description": "Intern POS, så personalet kan slå dine-in- og takeaway-ordrer ind fra samme administration."
+    },
+    "phone_ordering": {
+      "name": "Automatiseret telefonbestilling",
+      "description": "En AI-drevet telefonagent tager imod kundernes ordrer 24/7 og sender dem direkte til dit køkken — ingen personaletid, ingen mistede opkald, når der er travlt."
+    },
+    "reservation_deposits": {
+      "name": "Depositum ved reservation",
+      "description": "Opkræv et refunderbart depositum, når kunder reserverer et bord — beskytter mod udeblivelser."
+    },
+    "multi_location": {
+      "name": "Flere lokationer",
+      "description": "Administrer flere restaurantlokationer under én konto. Hver lokation kører sin egen menu, sine egne ordrer og sin egen Stripe Connect — skift mellem dem fra hovedadministrationen."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Gratis og inkluderet for alle restauranter — intet månedligt gebyr og intet gebyr pr. ordre. Alle publicerede afhentnings- og leveringsrestauranter vises på Fee Free Marketplace, så lokale kunder kan finde dem. Ingen 30% kommission, ingen ekstra gebyrer for kunderne."
+    },
+    "customer_sms": {
+      "name": "Kunde-SMS-notifikationer",
+      "description": "Send SMS til kunderne, mens deres ordre bevæger sig gennem køkkenet — bekræftet, accepteret, klar til afhentning, afsluttet. Styrker rettidig afhentning og kundernes tillid. Bruger vores delte Twilio-nummer; ingen opsætning fra din side."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Generér QR-koder og smart links, der kan spores, design flyers og plakater med dit brand, der automatisk henter din branding, og se præcis, hvor mange scanninger der blev til reelle ordrer og omsætning."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Lancér din restaurant med kampagner, der er klar til afsendelse — tilbud på første ordre og tilbagevindingstilbud, der bringer kunder ind fra dag ét."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Din AI-manager til sociale medier — udfyld en hurtig ugentlig formular (tilbud, events, kampagner), og ContentPilot udarbejder polerede opslag, du godkender med ét klik, planlagt automatisk til Instagram, Facebook, X og TikTok."
+    },
+    "driver_pool": {
+      "name": "Chaufførpulje",
+      "description": "Træk på vores eksterne ShipDay-chaufførnetværk, når dine egne chauffører har travlt eller er utilgængelige. Kun gebyr pr. levering — ingen månedlige minimumsbeløb ud over dette abonnement. Fastsæt dine egne leveringspriser for kunderne, og bestem, hvor meget du selv dækker, og hvor meget du sender videre."
+    },
+    "kds_screen": {
+      "name": "KDS-skærm",
+      "description": "En dedikeret Kitchen Display System-skærm til din køkkenlinje — ordrer strømmer ind live og kan afsluttes pr. station, ingen papirsedler. Kommer snart."
+    }
   }
 }

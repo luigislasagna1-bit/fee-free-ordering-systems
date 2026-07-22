@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Tiện ích bổ sung",
       "addOnsSubtitle": "Mở khóa tính năng trả phí từng cái. Hủy bất kỳ lúc nào — không hợp đồng.",
       "addOnPriceComingSoon": "Giá sẽ công bố khi ra mắt",
-      "addOns": {
-        "online_payments": {
-          "name": "Thanh toán online",
-          "desc": "Chấp nhận thẻ tín dụng qua Stripe Connect. Tiền về tài khoản bạn, không qua chúng tôi."
-        },
-        "hosted_website": {
-          "name": "Website tối ưu doanh số",
-          "desc": "Trang marketing hoàn chỉnh tại your-name.feefreeordering.com — tự tạo từ thực đơn của bạn."
-        },
-        "custom_domain": {
-          "name": "Tên miền riêng",
-          "desc": "Mang tên miền riêng (ví dụ: ordermyrestaurant.com) và chúng tôi sẽ host tại đó."
-        },
-        "advanced_promos": {
-          "name": "Marketing khuyến mãi nâng cao",
-          "desc": "Phân khúc khách hàng, chiến dịch email tự động, kéo lại khách lâu ngày không đặt."
-        },
-        "branded_mobile_app": {
-          "name": "Ứng dụng di động có thương hiệu",
-          "desc": "Đưa ứng dụng iOS + Android của riêng bạn lên store với thương hiệu của bạn."
-        },
-        "pos_module": {
-          "name": "Module POS",
-          "desc": "Điểm bán hàng nội bộ để nhân viên tính tiền đơn khách đến trực tiếp bên cạnh đơn online."
-        },
-        "reservation_deposits": {
-          "name": "Đặt cọc đặt bàn",
-          "desc": "Thu đặt cọc hoàn lại khi khách đặt bàn để giảm tình trạng không đến."
-        },
-        "multi_location": {
-          "name": "Nhiều chi nhánh",
-          "desc": "Vận hành nhiều chi nhánh nhà hàng trong một tài khoản. Mỗi chi nhánh có thực đơn, đơn hàng và thanh toán Stripe riêng — chuyển đổi giữa các chi nhánh từ quản trị tổng."
-        }
-      },
       "compareTitle": "Mọi nhà hàng đều có",
       "compareItems": [
         "0% hoa hồng trên đơn hàng trực tiếp",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Trễ",
     "hoursMinutes": "{h}g {m}p",
     "minutesOnly": "{m} phút"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Hệ thống Tăng trưởng Nhà hàng của Fee Free — mọi tiện ích bổ sung trả phí về tiếp thị, giữ chân và thu hút khách hàng trong một gói ưu đãi: Marketing khuyến mãi nâng cao (bao gồm Autopilot), Marketing Studio, Kickstarter và SMS khách hàng. Các công cụ tăng trưởng mới sẽ được thêm vào GrowthNet ngay khi chúng tôi ra mắt — người đăng ký tự động nhận được mà không mất thêm chi phí."
+    },
+    "unlimited_orders": {
+      "name": "Đơn hàng không giới hạn cho gói FREE",
+      "description": "Gỡ bỏ giới hạn 100 đơn/tháng của gói FREE. Bao gồm số lượng đơn hàng hàng tháng không giới hạn — không có phí theo đơn. Bỏ qua tiện ích này nếu bạn đã có bất kỳ tiện ích bổ sung trả phí nào khác (chúng đều đã bao gồm đơn hàng không giới hạn)."
+    },
+    "online_payments": {
+      "name": "Thanh toán online",
+      "description": "Chấp nhận thanh toán thẻ trực tuyến. Tiền về thẳng tài khoản Stripe Connect của bạn."
+    },
+    "hosted_website": {
+      "name": "Website tối ưu doanh số",
+      "description": "Nhận một trang tiếp thị + đặt hàng được host trên tên miền phụ feefreeordering, tự động tạo từ thực đơn của bạn."
+    },
+    "custom_domain": {
+      "name": "Tên miền riêng",
+      "description": "Trỏ tên miền riêng của bạn về trang web Fee Free Ordering được host cho bạn."
+    },
+    "advanced_promos": {
+      "name": "Marketing khuyến mãi nâng cao",
+      "description": "Mở khóa 8 loại khuyến mãi nâng cao: thưởng theo phương thức thanh toán, món miễn phí, combo bữa ăn, mua N tặng miễn phí, món tặng kèm trong bữa ăn, giảm giá cố định/theo phần trăm cho combo, combo bữa ăn kèm món đặc biệt. Cùng với phân khúc khách hàng và chiến dịch tiếp thị tự động (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Ứng dụng di động có thương hiệu",
+      "description": "Ứng dụng iOS + Android gốc mang thương hiệu của bạn, được đăng trên App Store và Play Store."
+    },
+    "pos_module": {
+      "name": "Module POS",
+      "description": "POS nội bộ để nhân viên nhận đơn ăn tại quán / mang đi ngay trong cùng trang quản trị."
+    },
+    "phone_ordering": {
+      "name": "Đặt hàng qua điện thoại tự động",
+      "description": "Trợ lý điện thoại chạy bằng AI nhận đơn của khách 24/7 và đẩy thẳng vào bếp của bạn — không tốn thời gian nhân viên, không bỏ lỡ cuộc gọi trong giờ cao điểm."
+    },
+    "reservation_deposits": {
+      "name": "Đặt cọc đặt bàn",
+      "description": "Thu khoản đặt cọc hoàn lại khi khách đặt bàn — bảo vệ bạn trước tình trạng khách không đến."
+    },
+    "multi_location": {
+      "name": "Nhiều chi nhánh",
+      "description": "Quản lý nhiều chi nhánh nhà hàng trong một tài khoản. Mỗi chi nhánh có thực đơn, đơn hàng và Stripe Connect riêng — chuyển đổi giữa các chi nhánh từ trang quản trị tổng."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Miễn phí và có sẵn cho mọi nhà hàng — không phí hàng tháng hay phí theo đơn. Mọi nhà hàng đã xuất bản có dịch vụ lấy hàng hoặc giao hàng đều được hiển thị trên Fee Free Marketplace để khách địa phương khám phá. Không hoa hồng 30%, không phụ phí cho khách hàng."
+    },
+    "customer_sms": {
+      "name": "Thông báo SMS cho khách hàng",
+      "description": "Nhắn tin cho khách khi đơn hàng đi qua các bước trong bếp — đã xác nhận, đã tiếp nhận, sẵn sàng để lấy, hoàn tất. Tăng tỷ lệ khách đến lấy đúng hẹn + niềm tin của khách hàng. Dùng số Twilio dùng chung của chúng tôi; bạn không cần thiết lập gì."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Tạo mã QR và liên kết thông minh có thể theo dõi, thiết kế tờ rơi và áp phích tự động lấy nhận diện thương hiệu của bạn, và xem chính xác bao nhiêu lượt quét đã chuyển thành đơn hàng và doanh thu thực."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Ra mắt nhà hàng của bạn với các chiến dịch soạn sẵn chỉ việc gửi — ưu đãi cho đơn đầu tiên và ưu đãi kéo khách quay lại, mang khách hàng đến ngay từ ngày đầu."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Người quản lý mạng xã hội AI của bạn — điền một biểu mẫu nhanh mỗi tuần (món đặc biệt, sự kiện, khuyến mãi) và ContentPilot soạn sẵn các bài đăng chỉn chu để bạn duyệt trong một cú nhấp, tự động lên lịch đăng lên Instagram, Facebook, X và TikTok."
+    },
+    "driver_pool": {
+      "name": "Mạng lưới tài xế",
+      "description": "Tận dụng mạng lưới tài xế bên thứ ba ShipDay của chúng tôi khi tài xế nội bộ của bạn bận hoặc không rảnh. Chỉ trả phí theo từng chuyến giao — không có mức tối thiểu hàng tháng nào ngoài gói đăng ký này. Tự đặt giá giao hàng cho khách và quyết định phần bạn chịu so với phần tính cho khách."
+    },
+    "kds_screen": {
+      "name": "Màn hình KDS",
+      "description": "Một màn hình Hệ thống Hiển thị Bếp (KDS) chuyên dụng cho khu bếp của bạn — đơn hàng đổ về trực tiếp theo thời gian thực và có thể đánh dấu hoàn tất theo từng trạm, không cần phiếu giấy. Sắp ra mắt."
+    }
   }
 }

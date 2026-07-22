@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "O Sistema de Crescimento para Restaurantes da Fee Free — todos os extras pagos de marketing, retenção e angariação de clientes num único pacote com desconto: Marketing de Promoções Avançadas (incl. Autopilot), Marketing Studio, Kickstarter e SMS para Clientes. As novas ferramentas de crescimento são adicionadas ao GrowthNet à medida que as lançamos — os subscritores recebem-nas automaticamente, sem custo adicional."
+  },
+  "unlimited_orders": {
+    "name": "Encomendas Ilimitadas no plano FREE",
+    "description": "Remove o limite de 100 encomendas/mês do plano FREE. Inclui volume mensal de encomendas ilimitado — sem taxas por encomenda. Dispense este extra se já tiver qualquer outro extra pago (todos incluem encomendas ilimitadas)."
+  },
+  "online_payments": {
+    "name": "Pagamentos Online",
+    "description": "Aceite pagamentos com cartão online. O dinheiro entra diretamente na sua conta Stripe Connect."
+  },
+  "hosted_website": {
+    "name": "Site Otimizado para Vendas",
+    "description": "Tenha uma página de marketing e encomendas alojada num subdomínio feefreeordering, gerada automaticamente a partir do seu menu."
+  },
+  "custom_domain": {
+    "name": "Domínio Personalizado",
+    "description": "Aponte o seu próprio domínio para o seu site alojado Fee Free Ordering."
+  },
+  "advanced_promos": {
+    "name": "Marketing de Promoções Avançadas",
+    "description": "Desbloqueia 8 tipos de promoção avançados: recompensa por método de pagamento, artigo grátis, pacote de refeição, compra N e leva um grátis, prato grátis como parte de uma refeição, desconto fixo ou percentual no combo, pacote de refeição com especialidade. Inclui ainda segmentação de clientes e campanhas de marketing automatizadas (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "App Móvel com a Sua Marca",
+    "description": "Uma app nativa iOS + Android com a sua marca, publicada na App Store e na Play Store."
+  },
+  "pos_module": {
+    "name": "Módulo POS",
+    "description": "POS interno para a equipa registar pedidos na mesa e takeaway a partir do mesmo painel de administração."
+  },
+  "phone_ordering": {
+    "name": "Encomendas Telefónicas Automatizadas",
+    "description": "Um agente telefónico com AI atende as encomendas dos clientes 24/7 e envia-as diretamente para a sua cozinha — sem ocupar a equipa, sem chamadas perdidas nas horas de ponta."
+  },
+  "reservation_deposits": {
+    "name": "Depósitos de Reserva",
+    "description": "Cobre um depósito reembolsável quando os clientes reservam mesa — protege contra faltas de comparência."
+  },
+  "multi_location": {
+    "name": "Multilocalização",
+    "description": "Faça a gestão de vários estabelecimentos numa única conta. Cada estabelecimento tem o seu próprio menu, encomendas e Stripe Connect — alterne entre eles a partir do painel de administração principal."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Gratuito e incluído para todos os restaurantes — sem mensalidade nem taxa por encomenda. Todos os restaurantes publicados com recolha ou entrega são listados no Fee Free Marketplace para descoberta local. Sem comissão de 30%, sem taxas adicionais para os clientes."
+  },
+  "customer_sms": {
+    "name": "Notificações SMS para Clientes",
+    "description": "Envie SMS aos clientes à medida que a encomenda avança na cozinha — confirmada, aceite, pronta para recolha, concluída. Aumenta a pontualidade nas recolhas e a confiança dos clientes. Usa o nosso número Twilio partilhado; sem qualquer configuração da sua parte."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Gere códigos QR e links inteligentes com rastreio, crie flyers e cartazes que aplicam automaticamente a sua marca e veja exatamente quantas leituras se converteram em encomendas e receita reais."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Lance o seu restaurante com campanhas prontas a enviar — incentivos à primeira encomenda e ofertas de reconquista que trazem clientes desde o primeiro dia."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "O seu gestor de redes sociais com AI — preencha um breve formulário semanal (especialidades, eventos, promoções) e o ContentPilot redige publicações profissionais que aprova com um clique, agendadas automaticamente para o Instagram, Facebook, X e TikTok."
+  },
+  "driver_pool": {
+    "name": "Pool de Estafetas",
+    "description": "Recorra à nossa rede de estafetas externos ShipDay quando os seus próprios estafetas estiverem ocupados ou indisponíveis. Apenas taxas por entrega — sem mínimos mensais além desta subscrição. Defina os seus próprios preços de entrega para os clientes e decida quanto absorve e quanto repercute no cliente."
+  },
+  "kds_screen": {
+    "name": "Ecrã KDS",
+    "description": "Um ecrã dedicado de Kitchen Display System (KDS) para a sua linha — as encomendas chegam em tempo real e podem ser marcadas como concluídas por estação, sem talões em papel. Em breve."
+  }
+}

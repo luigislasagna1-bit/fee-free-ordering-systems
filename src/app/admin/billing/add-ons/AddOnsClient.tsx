@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { CheckCircle2, Loader2, AlertCircle, X, Clock, RefreshCw, ArrowRight, Settings, Rocket } from "lucide-react";
+import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 
 /**
  * Where each add-on's settings/config live. Used to render an "Open settings"
@@ -67,6 +68,8 @@ export function AddOnsClient({
   // Root hook to resolve the full-path labelKey values in ADDON_SETTINGS_PATH
   // (some point into admin.billing, so a namespaced hook can't reach them).
   const tRoot = useTranslations();
+  // Localized catalog name/description by slug, DB-English fallback.
+  const tCatalog = useTranslations("addOnCatalog");
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Slug currently in the cancel-confirmation modal. Replaces the old
@@ -166,6 +169,8 @@ export function AddOnsClient({
             ["active", "trialing"].includes(x.subscription?.status || "")
           );
           return addOns.map((a) => {
+          const name = localizedAddOnName(tCatalog, a.slug, a.name);
+          const description = localizedAddOnDescription(tCatalog, a.slug, a.description);
           const dollars = (a.monthlyPriceCents / 100).toFixed(2);
           const active =
             a.isSubscribed && ["active", "trialing"].includes(a.subscription?.status || "");
@@ -199,7 +204,7 @@ export function AddOnsClient({
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-semibold text-gray-900">{a.name}</h3>
+                    <h3 className="font-semibold text-gray-900">{name}</h3>
                     {a.comingSoon && !active && (
                       <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">
                         <Rocket className="w-2.5 h-2.5" />
@@ -207,7 +212,7 @@ export function AddOnsClient({
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">{a.description}</p>
+                  <p className="text-sm text-gray-600 mt-1">{description}</p>
                 </div>
                 {active && !scheduled && (
                   <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
@@ -459,6 +464,7 @@ function CancelModal({
   onConfirm: () => void;
 }) {
   const t = useTranslations("admin.addOns");
+  const tCatalog = useTranslations("addOnCatalog");
   const periodEnd = addOn.subscription?.currentPeriodEnd
     ? new Date(addOn.subscription.currentPeriodEnd)
     : null;
@@ -477,7 +483,7 @@ function CancelModal({
               <AlertCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-gray-900">{t("modalCancelTitle", { name: addOn.name })}</h3>
+              <h3 className="font-bold text-gray-900">{t("modalCancelTitle", { name: localizedAddOnName(tCatalog, addOn.slug, addOn.name) })}</h3>
             </div>
           </div>
           <button

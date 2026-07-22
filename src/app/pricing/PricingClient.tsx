@@ -10,6 +10,7 @@ import {
   Rocket, Sparkles, Network,
 } from "lucide-react";
 import { MarketingSection, SectionHeading, PrimaryButton, CTASection } from "@/components/marketing/sections";
+import { localizedAddOnName } from "@/lib/addon-catalog-i18n";
 
 export type PricingAddOn = {
   slug: string;
@@ -45,6 +46,9 @@ export function PricingClient({ locale, addOns }: { locale: string; addOns: Pric
   const t = useTranslations("marketing.pricing");
   const tHome = useTranslations("marketing.home.v2");
   const tNav = useTranslations("marketing.nav");
+  // Localized catalog names by slug, DB-English fallback (descriptions on
+  // this page already come from marketing.home.v2 via META above).
+  const tCatalog = useTranslations("addOnCatalog");
 
   const freeIncludes = (t.raw("freeIncludes") as string[]) ?? [];
   const compareItems = (t.raw("compareItems") as string[]) ?? [];
@@ -139,7 +143,7 @@ export function PricingClient({ locale, addOns }: { locale: string; addOns: Pric
                           <span className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100 flex items-center justify-center flex-shrink-0">
                             <Icon className="w-4 h-4" />
                           </span>
-                          <h3 className="font-bold text-gray-900 leading-tight text-sm">{m.name}</h3>
+                          <h3 className="font-bold text-gray-900 leading-tight text-sm">{localizedAddOnName(tCatalog, m.slug, m.name)}</h3>
                         </div>
                         <span className="text-xs font-semibold text-gray-400 whitespace-nowrap">{price ?? t("addOnPriceComingSoon")}</span>
                       </div>
@@ -176,7 +180,7 @@ export function PricingClient({ locale, addOns }: { locale: string; addOns: Pric
                       </div>
                     ) : null}
                   </div>
-                  <h3 className="font-bold text-gray-900">{a.name}</h3>
+                  <h3 className="font-bold text-gray-900">{localizedAddOnName(tCatalog, a.slug, a.name)}</h3>
                   <p className="text-sm text-gray-600 mt-1.5 leading-relaxed">{descFor(a.slug)}</p>
                   {a.comingSoon && <p className="text-xs text-gray-400 mt-3">{t("addOnPriceComingSoon")}</p>}
                 </div>

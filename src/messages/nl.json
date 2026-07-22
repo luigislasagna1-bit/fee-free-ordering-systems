@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Add-ons",
       "addOnsSubtitle": "Ontgrendel betaalde functies afzonderlijk. Op elk moment opzeggen — geen contracten.",
       "addOnPriceComingSoon": "Prijzen worden bij de lancering aangekondigd",
-      "addOns": {
-        "online_payments": {
-          "name": "Online betalingen",
-          "desc": "Accepteer creditcards via Stripe Connect. Geld komt direct op uw rekening, niet de onze."
-        },
-        "hosted_website": {
-          "name": "Verkoopgeoptimaliseerde website",
-          "desc": "Een verzorgde marketingpagina op uw-naam.feefreeordering.com — automatisch gegenereerd vanuit uw menu."
-        },
-        "custom_domain": {
-          "name": "Eigen domein",
-          "desc": "Gebruik uw eigen domein (bijv. bestellijnemijnrestaurant.com) en wij hosten de site daar."
-        },
-        "advanced_promos": {
-          "name": "Geavanceerde promomarketing",
-          "desc": "Klantsegmentatie, geautomatiseerde e-mailcampagnes en terugwinacties voor inactieve klanten."
-        },
-        "branded_mobile_app": {
-          "name": "Gepersonaliseerde mobiele app",
-          "desc": "Dien uw eigen iOS- en Android-app in bij de stores met uw huisstijl."
-        },
-        "pos_module": {
-          "name": "POS-module",
-          "desc": "Intern kassasysteem voor personeel om loopaankopen naast online bestellingen te verwerken."
-        },
-        "reservation_deposits": {
-          "name": "Reserveringsaanbetalingen",
-          "desc": "Vraag een restitueerbare aanbetaling bij tafelboekingen om no-shows te verminderen."
-        },
-        "multi_location": {
-          "name": "Meerdere locaties",
-          "desc": "Beheer meerdere restaurantlocaties onder één account. Elke locatie heeft zijn eigen menu, bestellingen en Stripe-uitbetalingen — wissel ertussen vanuit het hoofdbeheer."
-        }
-      },
       "compareTitle": "Elk restaurant krijgt",
       "compareItems": [
         "0% commissie op directe bestellingen",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Te laat",
     "hoursMinutes": "{h}u {m}m",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Het Restaurant Growth System van Fee Free — elke betaalde add-on voor marketing, klantbehoud en klantenwerving in één bundel met korting: Geavanceerde promomarketing (incl. Autopilot), Marketing Studio, Kickstarter en SMS-meldingen voor klanten. Nieuwe groeitools worden aan GrowthNet toegevoegd zodra we ze uitbrengen — abonnees krijgen ze automatisch zonder extra kosten."
+    },
+    "unlimited_orders": {
+      "name": "FREE Onbeperkte Bestellingen",
+      "description": "Heft de limiet van 100 bestellingen/maand van het FREE plan op. Inclusief onbeperkt maandelijks bestelvolume — geen kosten per bestelling. Sla deze over als je al een andere betaalde add-on hebt (die bevatten al onbeperkte bestellingen)."
+    },
+    "online_payments": {
+      "name": "Online betalingen",
+      "description": "Accepteer online kaartbetalingen. Het geld komt rechtstreeks binnen op je Stripe Connect-account."
+    },
+    "hosted_website": {
+      "name": "Verkoopgeoptimaliseerde website",
+      "description": "Krijg een gehoste marketing- + bestelpagina op een feefreeordering-subdomein, automatisch gegenereerd vanuit je menu."
+    },
+    "custom_domain": {
+      "name": "Eigen domein",
+      "description": "Koppel je eigen domein aan je gehoste Fee Free Ordering-site."
+    },
+    "advanced_promos": {
+      "name": "Geavanceerde promomarketing",
+      "description": "Ontgrendelt 8 geavanceerde promotietypen: betalingsmethodebeloning, gratis artikel, maaltijdbundel, koop-N-krijg-gratis, gratis gerecht als onderdeel van een maaltijd, vaste/procentuele korting op een combo, maaltijdbundel met specialiteit. Plus klantsegmentatie en geautomatiseerde marketingcampagnes (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Gepersonaliseerde mobiele app",
+      "description": "Een native iOS- + Android-app in jouw huisstijl, vermeld in de App Store en Play Store."
+    },
+    "pos_module": {
+      "name": "POS-module",
+      "description": "Interne POS waarmee je personeel bestellingen voor ter plaatse eten / afhalen aanneemt vanuit hetzelfde beheer."
+    },
+    "phone_ordering": {
+      "name": "Geautomatiseerd telefonisch bestellen",
+      "description": "Een AI-telefoonagent neemt 24/7 bestellingen van klanten aan en stuurt ze rechtstreeks naar je keuken — geen personeelstijd, geen gemiste oproepen tijdens de drukte."
+    },
+    "reservation_deposits": {
+      "name": "Reserveringsaanbetalingen",
+      "description": "Vraag een terugbetaalbare aanbetaling wanneer klanten een tafel boeken — beschermt tegen no-shows."
+    },
+    "multi_location": {
+      "name": "Meerdere locaties",
+      "description": "Beheer meerdere restaurantlocaties onder één account. Elke locatie heeft zijn eigen menu, bestellingen en Stripe Connect — wissel ertussen vanuit het hoofdbeheer."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Gratis en inbegrepen voor elk restaurant — geen maandelijkse kosten of kosten per bestelling. Elk gepubliceerd afhaal- of bezorgrestaurant wordt vermeld op de Fee Free Marketplace voor lokale vindbaarheid. Geen 30% commissie, geen extra kosten voor klanten."
+    },
+    "customer_sms": {
+      "name": "SMS-meldingen voor klanten",
+      "description": "Stuur klanten een SMS terwijl hun bestelling door de keuken gaat — bevestigd, geaccepteerd, klaar om af te halen, voltooid. Zorgt voor stipter afhalen en meer klantvertrouwen. Gebruikt ons gedeelde Twilio-nummer; geen installatie aan jouw kant."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Genereer trackbare QR-codes en slimme links, ontwerp flyers en posters in je eigen huisstijl die automatisch je branding overnemen, en zie precies hoeveel scans zijn omgezet in echte bestellingen en omzet."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Lanceer je restaurant met kant-en-klare campagnes — incentives voor de eerste bestelling en win-backaanbiedingen die vanaf dag één klanten binnenbrengen."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Je AI-socialmediamanager — vul wekelijks een kort formulier in (specials, evenementen, promoties) en ContentPilot stelt verzorgde posts op die je met één klik goedkeurt, automatisch ingepland op Instagram, Facebook, X en TikTok."
+    },
+    "driver_pool": {
+      "name": "Driver Pool",
+      "description": "Maak gebruik van ons externe ShipDay-bezorgersnetwerk wanneer je eigen bezorgers bezet of niet beschikbaar zijn. Alleen kosten per bezorging — geen maandelijkse minima naast dit abonnement. Bepaal zelf je bezorgtarieven voor klanten en beslis hoeveel je zelf draagt en hoeveel je doorberekent."
+    },
+    "kds_screen": {
+      "name": "KDS-scherm",
+      "description": "Een speciaal Kitchen Display System-scherm voor je keukenlijn — bestellingen stromen live binnen en kunnen per station worden afgemeld, zonder papieren bonnen. Binnenkort beschikbaar."
+    }
   }
 }

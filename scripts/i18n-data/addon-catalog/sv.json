@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "Fee Frees tillväxtsystem för restauranger — alla betalda tillägg för marknadsföring, kundlojalitet och kundanskaffning i ett rabatterat paket: Avancerad kampanjmarknadsföring (inkl. Autopilot), Marketing Studio, Kickstarter och SMS till kunder. Nya tillväxtverktyg läggs till i GrowthNet allteftersom vi lanserar dem — prenumeranter får dem automatiskt utan extra kostnad."
+  },
+  "unlimited_orders": {
+    "name": "Obegränsade beställningar (FREE-plan)",
+    "description": "Tar bort FREE-planens tak på 100 beställningar/månad. Ger obegränsad månatlig beställningsvolym — inga avgifter per beställning. Hoppa över detta om du redan har något annat betalt tillägg (de inkluderar obegränsade beställningar)."
+  },
+  "online_payments": {
+    "name": "Onlinebetalningar",
+    "description": "Ta emot kortbetalningar online. Pengarna landar direkt på ditt Stripe Connect-konto."
+  },
+  "hosted_website": {
+    "name": "Försäljningsoptimerad webbplats",
+    "description": "Få en hostad marknadsförings- och beställningssida på en feefreeordering-underdomän, automatiskt genererad från din meny."
+  },
+  "custom_domain": {
+    "name": "Anpassad domän",
+    "description": "Peka din egen domän mot din hostade Fee Free Ordering-webbplats."
+  },
+  "advanced_promos": {
+    "name": "Avancerad kampanjmarknadsföring",
+    "description": "Låser upp 8 avancerade kampanjtyper: betalmetodbelöning, gratis artikel, måltidspaket, köp-N-få-gratis, gratis rätt som del av måltid, fast eller procentuell rabatt på kombination, måltidspaket med specialitet. Plus kundsegmentering och automatiserade marknadsföringskampanjer (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "Varumärkesapp",
+    "description": "En inbyggd iOS- och Android-app med ditt varumärke, publicerad i App Store och Play Store."
+  },
+  "pos_module": {
+    "name": "POS-modul",
+    "description": "Internt POS-system där personalen tar emot beställningar för servering på plats och avhämtning från samma adminpanel."
+  },
+  "phone_ordering": {
+    "name": "Automatiserad telefonbeställning",
+    "description": "En AI-driven telefonagent tar emot kundbeställningar 24/7 och skickar dem direkt till ditt kök — ingen personaltid krävs, inga missade samtal när det är som mest att göra."
+  },
+  "reservation_deposits": {
+    "name": "Reservationsdepositioner",
+    "description": "Ta ut en återbetalningsbar deposition när kunder bokar bord — skyddar mot uteblivna besök."
+  },
+  "multi_location": {
+    "name": "Flera platser",
+    "description": "Hantera flera restaurangplatser under ett konto. Varje plats har sin egen meny, sina egna beställningar och eget Stripe Connect — byt mellan dem från den överordnade adminpanelen."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Gratis och ingår för varje restaurang — ingen månadsavgift eller avgift per beställning. Varje publicerad restaurang med avhämtning eller leverans listas på Fee Free Marketplace så att lokala kunder kan hitta dig. Ingen provision på 30%, inga extra avgifter för kunderna."
+  },
+  "customer_sms": {
+    "name": "SMS-aviseringar till kunder",
+    "description": "Skicka SMS till kunder medan deras beställning går genom köket — bekräftad, accepterad, redo för avhämtning, klar. Ökar andelen avhämtningar i tid och kundernas förtroende. Använder vårt delade Twilio-nummer; ingen konfiguration krävs från din sida."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Skapa spårbara QR-koder och smarta länkar, designa flyers och affischer som automatiskt hämtar ditt varumärke, och se exakt hur många skanningar som blev riktiga beställningar och intäkter."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Lansera din restaurang med färdiga kampanjer redo att skickas — incitament för första beställningen och återvinningserbjudanden som lockar kunder från dag ett."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "Din AI-manager för sociala medier — fyll i ett snabbt veckoformulär (specialerbjudanden, evenemang, kampanjer) så skriver ContentPilot polerade inlägg som du godkänner med ett klick — automatiskt schemalagda till Instagram, Facebook, X och TikTok."
+  },
+  "driver_pool": {
+    "name": "Förarpool",
+    "description": "Använd vårt ShipDay-nätverk av externa förare när dina egna förare är upptagna eller otillgängliga. Endast avgifter per leverans — inga månatliga minimibelopp utöver denna prenumeration. Sätt din egen leveransprissättning för kunderna och bestäm hur mycket du står för själv respektive skickar vidare."
+  },
+  "kds_screen": {
+    "name": "KDS-skärm",
+    "description": "En dedikerad Kitchen Display System-skärm för ditt kök — beställningar strömmar in live och kan kvitteras per station, inga pappersbongar. Kommer snart."
+  }
+}

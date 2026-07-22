@@ -141,6 +141,13 @@ export function SuperadminAddOnsClient({ initial }: { initial: AddOnRow[] }) {
         <strong>Save</strong>. After Save shows the new price, click{" "}
         <strong>Sync</strong> to create the Stripe Product + Price.
       </p>
+      <p className="text-xs text-gray-500">
+        Name/description here are the <strong>English fallback</strong> + what Stripe checkout,
+        emails and this superadmin area show. Owner-facing pages and /pricing display the
+        translated <code className="bg-gray-100 px-1 rounded">addOnCatalog.&lt;slug&gt;</code>{" "}
+        messages (all 38 locales) when they exist — editing a name here won&apos;t change those.
+        Keep seed-addons.ts + the i18n keys in sync when renaming an add-on.
+      </p>
 
       <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white">
         <table className="w-full text-sm">

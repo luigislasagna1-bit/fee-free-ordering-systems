@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "Fee Free sistem za rast restorana — svi plaćeni dodaci za marketing, zadržavanje i pridobijanje kupaca u jednom paketu po sniženoj ceni: Napredni promo marketing (uklj. Autopilot), Marketing Studio, Kickstarter i SMS za kupce. Novi alati za rast dodaju se u GrowthNet kako ih objavljujemo — pretplatnici ih dobijaju automatski, bez dodatnih troškova."
+  },
+  "unlimited_orders": {
+    "name": "FREE Neograničene porudžbine",
+    "description": "Uklanja ograničenje FREE plana od 100 porudžbina mesečno. Uključuje neograničen mesečni obim porudžbina — bez naknada po porudžbini. Preskočite ovo ako već imate bilo koji drugi plaćeni dodatak (oni uključuju neograničene porudžbine)."
+  },
+  "online_payments": {
+    "name": "Onlajn plaćanja",
+    "description": "Primajte plaćanja karticom onlajn. Novac stiže direktno na vaš Stripe Connect nalog."
+  },
+  "hosted_website": {
+    "name": "Prodajno optimizovani veb-sajt",
+    "description": "Dobijte hostovanu marketinšku stranicu i stranicu za naručivanje na feefreeordering poddomenu, automatski generisanu iz vašeg menija."
+  },
+  "custom_domain": {
+    "name": "Prilagođeni domen",
+    "description": "Usmerite svoj sopstveni domen na vaš hostovani Fee Free Ordering sajt."
+  },
+  "advanced_promos": {
+    "name": "Napredni promo marketing",
+    "description": "Otključava 8 naprednih tipova promocija: nagrada za način plaćanja, besplatan artikal, paket obroka, kupi N — dobij gratis, besplatno jelo u okviru obroka, fiksni/procentualni popust na kombinaciju, paket obroka sa specijalitetom. Uz to i segmentacija kupaca i automatizovane marketinške kampanje (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "Brendirana mobilna aplikacija",
+    "description": "Nativna iOS + Android aplikacija sa vašim brendiranjem, objavljena u App Store-u i Play Store-u."
+  },
+  "pos_module": {
+    "name": "POS modul",
+    "description": "Interni POS pomoću kojeg osoblje prima porudžbine za obedovanje u restoranu / za poneti iz istog admin panela."
+  },
+  "phone_ordering": {
+    "name": "Automatizovano telefonsko naručivanje",
+    "description": "Telefonski agent pokretan AI-jem prima porudžbine kupaca 24/7 i šalje ih pravo u vašu kuhinju — bez angažovanja osoblja i bez propuštenih poziva u špicu."
+  },
+  "reservation_deposits": {
+    "name": "Depoziti za rezervacije",
+    "description": "Naplatite povratni depozit kada kupci rezervišu sto — štiti vas od onih koji se ne pojave."
+  },
+  "multi_location": {
+    "name": "Više lokacija",
+    "description": "Upravljajte sa više lokacija restorana pod jednim nalogom. Svaka lokacija ima sopstveni meni, porudžbine i Stripe Connect — prebacujte se između njih iz glavnog admin panela."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Besplatno i uključeno za svaki restoran — bez mesečne naknade i naknade po porudžbini. Svaki objavljeni restoran sa preuzimanjem ili dostavom prikazuje se na Fee Free Marketplace-u radi lokalnog otkrivanja. Bez provizije od 30%, bez dodatnih naknada za kupce."
+  },
+  "customer_sms": {
+    "name": "SMS obaveštenja za kupce",
+    "description": "Šaljite kupcima SMS poruke dok njihova porudžbina prolazi kroz kuhinju — potvrđena, prihvaćena, spremna za preuzimanje, završena. Podstiče preuzimanje na vreme i poverenje kupaca. Koristi naš zajednički Twilio broj; bez ikakvog podešavanja sa vaše strane."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Generišite QR kodove i pametne linkove koji se mogu pratiti, dizajnirajte brendirane flajere i postere koji automatski preuzimaju vaše brendiranje, i vidite tačno koliko se skeniranja pretvorilo u stvarne porudžbine i prihod."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Lansirajte svoj restoran uz kampanje spremne za slanje — podsticaji za prvu porudžbinu i ponude za vraćanje kupaca koje dovode goste od prvog dana."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "Vaš AI menadžer društvenih mreža — popunite kratak nedeljni obrazac (specijaliteti, događaji, promocije), a ContentPilot sastavlja doterane objave koje odobravate jednim klikom, automatski zakazane za Instagram, Facebook, X i TikTok."
+  },
+  "driver_pool": {
+    "name": "Driver Pool",
+    "description": "Iskoristite našu ShipDay mrežu spoljnih vozača kada su vaši sopstveni vozači zauzeti ili nedostupni. Naplaćuje se samo po dostavi — bez mesečnih minimuma osim ove pretplate. Sami odredite cenu dostave za kupce i odlučite koliko troška preuzimate na sebe, a koliko prenosite na kupca."
+  },
+  "kds_screen": {
+    "name": "KDS ekran",
+    "description": "Namenski KDS (Kitchen Display System) ekran za vašu kuhinjsku liniju — porudžbine pristižu uživo i mogu se potvrđivati po stanici, bez papirnih listića. Uskoro dostupno."
+  }
+}

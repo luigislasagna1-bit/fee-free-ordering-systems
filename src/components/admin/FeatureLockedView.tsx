@@ -3,14 +3,15 @@ import Link from "next/link";
 import { Sparkles, Lock, ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCurrencyFormat } from "@/lib/currency-context";
+import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 
 /**
  * Generic "this is a paid add-on" upsell wall. Rendered by a marketing page
  * (Autopilot, Marketing Studio, Kickstarter, …) when the restaurant lacks the
- * feature entitlement. The add-on `name` + `description` come straight from the
- * AddOn catalog row (English, like everywhere else add-ons are shown); only the
- * framing strings are translated. The CTA deep-links to the add-on on the
- * billing page. Luigi 2026-06-11.
+ * feature entitlement. The add-on `name` + `description` from the AddOn
+ * catalog row are localized via addOnCatalog.<slug> keys (DB-English
+ * fallback — Luigi 2026-07-21); the framing strings are translated too. The
+ * CTA deep-links to the add-on on the billing page. Luigi 2026-06-11.
  */
 export function FeatureLockedView({
   name,
@@ -25,7 +26,10 @@ export function FeatureLockedView({
 }) {
   const t = useTranslations("admin.featureLocked");
   const tSettings = useTranslations("admin.settings");
+  const tCatalog = useTranslations("addOnCatalog");
   const formatCurrency = useCurrencyFormat();
+  const displayName = localizedAddOnName(tCatalog, slug, name);
+  const displayDescription = localizedAddOnDescription(tCatalog, slug, description);
 
   return (
     <div className="max-w-2xl mx-auto p-4 sm:p-6">
@@ -34,9 +38,9 @@ export function FeatureLockedView({
           <Sparkles className="w-5 h-5" />
           <span className="text-sm font-bold uppercase tracking-wider opacity-90">{t("badge")}</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{name}</h1>
-        {description && (
-          <p className="mt-2 text-white/90 text-sm sm:text-base max-w-xl leading-relaxed">{description}</p>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{displayName}</h1>
+        {displayDescription && (
+          <p className="mt-2 text-white/90 text-sm sm:text-base max-w-xl leading-relaxed">{displayDescription}</p>
         )}
 
         {monthlyPriceCents > 0 && (

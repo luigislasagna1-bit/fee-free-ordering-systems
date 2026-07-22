@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Add-ons",
       "addOnsSubtitle": "Unlock paid features individually. Cancel anytime — no contracts.",
       "addOnPriceComingSoon": "Pricing announced at launch",
-      "addOns": {
-        "online_payments": {
-          "name": "Online Payments",
-          "desc": "Accept credit cards through Stripe Connect. Money lands in your account, not ours."
-        },
-        "hosted_website": {
-          "name": "Sales Optimized Website",
-          "desc": "A polished marketing page at your-name.feefreeordering.com — auto-generated from your menu."
-        },
-        "custom_domain": {
-          "name": "Custom Domain",
-          "desc": "Bring your own domain (e.g. ordermyrestaurant.com) and we'll host the site there."
-        },
-        "advanced_promos": {
-          "name": "Advanced Promo Marketing",
-          "desc": "Customer segmentation, automated email campaigns, lapsed-customer win-backs."
-        },
-        "branded_mobile_app": {
-          "name": "Branded Mobile App",
-          "desc": "Submit your own iOS + Android app to the stores with your branding."
-        },
-        "pos_module": {
-          "name": "POS Module",
-          "desc": "In-house point-of-sale for staff to ring up walk-in orders alongside online ones."
-        },
-        "reservation_deposits": {
-          "name": "Reservation Deposits",
-          "desc": "Charge a refundable deposit when guests book a table to reduce no-shows."
-        },
-        "multi_location": {
-          "name": "Multi-Location",
-          "desc": "Run multiple restaurant locations under one account. Each location has its own menu, orders, and Stripe payouts — switch between them from the parent admin."
-        }
-      },
       "compareTitle": "Every restaurant gets",
       "compareItems": [
         "0% commission on direct orders",
@@ -6370,6 +6336,80 @@
       "marketplace": "Your public Marketplace listing is hidden, so new customers won't discover you there; your own ordering page and direct orders are unaffected.",
       "kickstarter": "Your launch and win-back campaign tools are locked; any campaigns you already sent are unaffected.",
       "growthnet": "Your GrowthNet bundle is paused, so all its tools (Advanced Promos, Marketing Studio, Kickstarter, Customer SMS) switch off together — re-subscribe to restore the whole bundle."
+    }
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Fee Free's Restaurant Growth System — every paid marketing, retention and customer-acquisition add-on in one discounted bundle: Advanced Promo Marketing (incl. Autopilot), Marketing Studio, Kickstarter and Customer SMS. New growth tools are added to GrowthNet as we ship them — subscribers get them automatically at no extra cost."
+    },
+    "unlimited_orders": {
+      "name": "FREE Unlimited Orders",
+      "description": "Removes the 100-orders/month FREE-plan cap. Includes unlimited monthly order volume — no per-order fees. Skip this if you already have any other paid add-on (they include unlimited orders)."
+    },
+    "online_payments": {
+      "name": "Online Payments",
+      "description": "Accept card payments online. Money lands directly in your Stripe Connect account."
+    },
+    "hosted_website": {
+      "name": "Sales Optimized Website",
+      "description": "Get a hosted marketing + ordering page on a feefreeordering subdomain, auto-generated from your menu."
+    },
+    "custom_domain": {
+      "name": "Custom Domain",
+      "description": "Point your own domain at your Fee Free Ordering hosted site."
+    },
+    "advanced_promos": {
+      "name": "Advanced Promo Marketing",
+      "description": "Unlocks 8 advanced promo types: payment-method reward, free item, meal bundle, buy-N-get-free, free dish as part of meal, fixed/percentage discount on combo, meal bundle with speciality. Plus customer segmentation and automated marketing campaigns (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Branded Mobile App",
+      "description": "A native iOS + Android app with your branding, listed in the App Store and Play Store."
+    },
+    "pos_module": {
+      "name": "POS Module",
+      "description": "In-house POS for staff to take dine-in / takeaway orders from the same admin."
+    },
+    "phone_ordering": {
+      "name": "Automated Phone Ordering",
+      "description": "AI-powered phone agent takes customer orders 24/7 and pushes them straight to your kitchen — no staff time, no missed calls during the rush."
+    },
+    "reservation_deposits": {
+      "name": "Reservation Deposits",
+      "description": "Charge a refundable deposit when customers book a table — protects against no-shows."
+    },
+    "multi_location": {
+      "name": "Multi-Location",
+      "description": "Manage multiple restaurant locations under one account. Each location runs its own menu, orders, and Stripe Connect — switch between them from the parent admin."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Free and included for every restaurant — no monthly or per-order fee. Every published pickup or delivery restaurant is listed on the Fee Free Marketplace for local discovery. No 30% commission, no extra fees for customers."
+    },
+    "customer_sms": {
+      "name": "Customer SMS Notifications",
+      "description": "Text customers as their order moves through the kitchen — confirmed, accepted, ready for pickup, complete. Drives pickup compliance + customer trust. Uses our shared Twilio number; no setup on your side."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Generate trackable QR codes and smart links, design branded flyers and posters that auto-pull your branding, and see exactly how many scans turned into real orders and revenue."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Launch your restaurant with ready-to-send campaigns — first-order incentives and win-back offers that bring customers in from day one."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Your AI social media manager — fill in a quick weekly form (specials, events, promotions) and ContentPilot drafts polished posts you approve in one click, auto-scheduled to Instagram, Facebook, X and TikTok."
+    },
+    "driver_pool": {
+      "name": "Driver Pool",
+      "description": "Tap into our ShipDay third-party driver network when your in-house drivers are busy or unavailable. Per-delivery fees only — no monthly minimums beyond this subscription. Set your own delivery pricing for customers and decide how much you absorb vs pass through."
+    },
+    "kds_screen": {
+      "name": "KDS Screen",
+      "description": "A dedicated Kitchen Display System screen for your line — orders stream in live and can be bumped per station, no paper tickets. Coming soon."
     }
   },
   "orderCapNotify": {

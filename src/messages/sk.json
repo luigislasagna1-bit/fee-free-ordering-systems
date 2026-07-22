@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Doplnky",
       "addOnsSubtitle": "Odomknite platené funkcie jednotlivo. Zrušte kedykoľvek — bez zmluvy.",
       "addOnPriceComingSoon": "Cenník bude zverejnený pri spustení",
-      "addOns": {
-        "online_payments": {
-          "name": "Online platby",
-          "desc": "Prijímajte kreditné karty cez Stripe Connect. Peniaze idú priamo na váš účet, nie k nám."
-        },
-        "hosted_website": {
-          "name": "Predajne optimalizovaný web",
-          "desc": "Prepracovaná marketingová stránka na your-name.feefreeordering.com — automaticky vygenerovaná z vášho menu."
-        },
-        "custom_domain": {
-          "name": "Vlastná doména",
-          "desc": "Priveďte vlastnú doménu (napr. objednajtesi.sk) a my tam budeme hostiť stránku."
-        },
-        "advanced_promos": {
-          "name": "Pokročilý promo marketing",
-          "desc": "Segmentácia zákazníkov, automatizované e-mailové kampane, opätovné oslovenie neaktívnych zákazníkov."
-        },
-        "branded_mobile_app": {
-          "name": "Brandovaná mobilná aplikácia",
-          "desc": "Zverejnite vlastnú iOS + Android aplikáciu v obchodoch s vaším brandingom."
-        },
-        "pos_module": {
-          "name": "POS modul",
-          "desc": "Interný pokladničný systém pre personál na zadávanie walk-in objednávok spolu s online objednávkami."
-        },
-        "reservation_deposits": {
-          "name": "Zálohy za rezervácie",
-          "desc": "Účtujte refundovateľnú zálohu pri rezervácii stola pre zníženie počtu neprítomností."
-        },
-        "multi_location": {
-          "name": "Viac prevádzok",
-          "desc": "Spravujte viacero prevádzok reštaurácie pod jedným účtom. Každá prevádzka má vlastné menu, objednávky a Stripe výplaty — prepínajte medzi nimi z rodičovského admina."
-        }
-      },
       "compareTitle": "Každá reštaurácia dostane",
       "compareItems": [
         "0% provízia z priamych objednávok",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Oneskorené",
     "hoursMinutes": "{h} h {m} min",
     "minutesOnly": "{m} min"
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "Systém rastu reštaurácií od Fee Free — všetky platené doplnky pre marketing, udržanie a získavanie zákazníkov v jednom zvýhodnenom balíku: Pokročilý promo marketing (vrátane funkcie Autopilot), Marketing Studio, Kickstarter a Zákaznícke SMS. Nové nástroje rastu pridávame do GrowthNet hneď po ich vydaní — predplatitelia ich získavajú automaticky bez príplatku."
+    },
+    "unlimited_orders": {
+      "name": "FREE Neobmedzené objednávky",
+      "description": "Odstraňuje limit 100 objednávok mesačne na FREE pláne. Zahŕňa neobmedzený mesačný objem objednávok — žiadne poplatky za objednávku. Tento doplnok nepotrebujete, ak už máte akýkoľvek iný platený doplnok (všetky už zahŕňajú neobmedzené objednávky)."
+    },
+    "online_payments": {
+      "name": "Online platby",
+      "description": "Prijímajte platby kartou online. Peniaze idú priamo na váš účet Stripe Connect."
+    },
+    "hosted_website": {
+      "name": "Predajne optimalizovaný web",
+      "description": "Získajte hostovanú marketingovú a objednávkovú stránku na subdoméne feefreeordering, automaticky vygenerovanú z vášho menu."
+    },
+    "custom_domain": {
+      "name": "Vlastná doména",
+      "description": "Nasmerujte vlastnú doménu na svoju stránku hostovanú u Fee Free Ordering."
+    },
+    "advanced_promos": {
+      "name": "Pokročilý promo marketing",
+      "description": "Odomkne 8 pokročilých typov propagácií: odmena za platobnú metódu, položka zadarmo, balík jedál, kúpte N a získajte zadarmo, jedlo zadarmo ako súčasť menu, pevná/percentuálna zľava na kombo, balík jedál so špecialitou. Navyše segmentácia zákazníkov a automatizované marketingové kampane (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Brandovaná mobilná aplikácia",
+      "description": "Natívna iOS + Android aplikácia s vaším brandingom, zverejnená v App Store a Play Store."
+    },
+    "pos_module": {
+      "name": "POS modul",
+      "description": "Interný POS systém, cez ktorý personál zadáva objednávky na mieste aj so sebou z toho istého administračného rozhrania."
+    },
+    "phone_ordering": {
+      "name": "Automatizované telefonické objednávky",
+      "description": "Telefonický agent poháňaný AI prijíma objednávky zákazníkov 24/7 a posiela ich priamo do vašej kuchyne — bez času personálu a bez zmeškaných hovorov počas špičky."
+    },
+    "reservation_deposits": {
+      "name": "Zálohy za rezervácie",
+      "description": "Účtujte refundovateľnú zálohu, keď si zákazníci rezervujú stôl — chráni vás pred zákazníkmi, ktorí neprídu."
+    },
+    "multi_location": {
+      "name": "Viac prevádzok",
+      "description": "Spravujte viacero prevádzok reštaurácie pod jedným účtom. Každá prevádzka má vlastné menu, objednávky a Stripe Connect — prepínajte medzi nimi z rodičovského admina."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Zadarmo a v cene pre každú reštauráciu — bez mesačného poplatku aj bez poplatku za objednávku. Každá zverejnená reštaurácia s vyzdvihnutím alebo doručením je uvedená na Fee Free Marketplace, kde ju objavia miestni zákazníci. Žiadna 30% provízia, žiadne poplatky navyše pre zákazníkov."
+    },
+    "customer_sms": {
+      "name": "Zákaznícke SMS notifikácie",
+      "description": "Posielajte zákazníkom SMS, ako ich objednávka postupuje kuchyňou — potvrdená, prijatá, pripravená na vyzdvihnutie, dokončená. Zvyšuje včasné vyzdvihnutia aj dôveru zákazníkov. Používa naše zdieľané číslo Twilio; z vašej strany nie je potrebné žiadne nastavenie."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Generujte sledovateľné QR kódy a inteligentné odkazy, navrhujte brandované letáky a plagáty, ktoré si automaticky prevezmú váš branding, a presne sledujte, koľko skenov sa premenilo na skutočné objednávky a tržby."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Naštartujte svoju reštauráciu s kampaňami pripravenými na odoslanie — stimuly za prvú objednávku a ponuky na opätovné získanie zákazníkov, ktoré ich privedú od prvého dňa."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Váš AI manažér sociálnych sietí — vyplňte krátky týždenný formulár (špeciality, udalosti, akcie) a ContentPilot pripraví vycibrené príspevky, ktoré schválite jedným kliknutím, automaticky naplánované na Instagram, Facebook, X a TikTok."
+    },
+    "driver_pool": {
+      "name": "Driver Pool",
+      "description": "Využite našu sieť externých kuriérov ShipDay, keď sú vaši vlastní kuriéri zaneprázdnení alebo nedostupní. Platíte len za jednotlivé doručenia — žiadne mesačné minimá nad rámec tohto predplatného. Nastavte si vlastné ceny doručenia pre zákazníkov a rozhodnite, koľko znášate vy a koľko prenesiete na zákazníka."
+    },
+    "kds_screen": {
+      "name": "KDS obrazovka",
+      "description": "Vyhradená obrazovka Kitchen Display System (KDS) pre vašu linku — objednávky prichádzajú naživo a dajú sa odbavovať po jednotlivých stanovištiach, bez papierových bonov. Už čoskoro."
+    }
   }
 }

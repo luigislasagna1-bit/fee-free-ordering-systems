@@ -1,0 +1,74 @@
+{
+  "growthnet": {
+    "name": "GrowthNet",
+    "description": "El sistema de creixement per a restaurants de Fee Free — tots els complements de pagament de màrqueting, retenció i captació de clients en un sol paquet amb descompte: Màrqueting de promocions avançades (incl. Autopilot), Marketing Studio, Kickstarter i SMS a clients. Les noves eines de creixement s'afegeixen a GrowthNet a mesura que les llancem — els subscriptors les reben automàticament sense cap cost addicional."
+  },
+  "unlimited_orders": {
+    "name": "Comandes il·limitades al pla gratuït",
+    "description": "Elimina el límit de 100 comandes/mes del pla gratuït. Inclou un volum mensual de comandes il·limitat — sense càrrecs per comanda. No el necessiteu si ja teniu qualsevol altre complement de pagament (tots inclouen comandes il·limitades)."
+  },
+  "online_payments": {
+    "name": "Pagaments en línia",
+    "description": "Accepteu pagaments amb targeta en línia. Els diners arriben directament al vostre compte de Stripe Connect."
+  },
+  "hosted_website": {
+    "name": "Lloc web optimitzat per a vendes",
+    "description": "Obteniu una pàgina allotjada de màrqueting i comandes en un subdomini de feefreeordering, generada automàticament a partir de la vostra carta."
+  },
+  "custom_domain": {
+    "name": "Domini personalitzat",
+    "description": "Apunteu el vostre propi domini al vostre lloc allotjat de Fee Free Ordering."
+  },
+  "advanced_promos": {
+    "name": "Màrqueting de promocions avançades",
+    "description": "Desbloqueja 8 tipus de promoció avançats: recompensa per mètode de pagament, article gratuït, menú combinat, compreu-ne N i obteniu-ne un de gratuït, plat gratuït com a part d'un menú, descompte fix o percentual en combos, menú combinat amb especialitat. A més, segmentació de clients i campanyes de màrqueting automatitzades (Autopilot)."
+  },
+  "branded_mobile_app": {
+    "name": "App mòbil amb marca pròpia",
+    "description": "Una app nativa per a iOS i Android amb la vostra marca, publicada a l'App Store i a la Play Store."
+  },
+  "pos_module": {
+    "name": "Mòdul POS",
+    "description": "POS intern perquè el personal prengui comandes de consum al local i per emportar des del mateix tauler d'administració."
+  },
+  "phone_ordering": {
+    "name": "Comandes telefòniques automatitzades",
+    "description": "Un agent telefònic amb AI pren les comandes dels clients 24/7 i les envia directament a la vostra cuina — sense dedicar-hi temps del personal ni perdre trucades durant les hores punta."
+  },
+  "reservation_deposits": {
+    "name": "Dipòsits de reserva",
+    "description": "Cobreu un dipòsit reemborsable quan els clients reserven taula — us protegeix contra les no-presentacions."
+  },
+  "multi_location": {
+    "name": "Multiubicació",
+    "description": "Gestioneu múltiples ubicacions de restaurant amb un sol compte. Cada ubicació té la seva pròpia carta, comandes i Stripe Connect — canvieu entre elles des de l'administrador principal."
+  },
+  "marketplace": {
+    "name": "Marketplace",
+    "description": "Gratuït i inclòs per a tots els restaurants — sense quota mensual ni per comanda. Tots els restaurants publicats amb recollida o lliurament apareixen al Fee Free Marketplace perquè els clients locals els descobreixin. Sense comissions del 30% ni costos addicionals per als clients."
+  },
+  "customer_sms": {
+    "name": "Notificacions per SMS als clients",
+    "description": "Envieu missatges de text als clients a mesura que la seva comanda avança per la cuina — confirmada, acceptada, a punt per recollir, completada. Millora el compliment de les recollides i la confiança dels clients. Utilitza el nostre número compartit de Twilio; sense cap configuració per la vostra part."
+  },
+  "marketing_studio": {
+    "name": "Marketing Studio",
+    "description": "Genereu codis QR i enllaços intel·ligents amb seguiment, dissenyeu fulletons i cartells que incorporen automàticament la vostra marca, i vegeu exactament quants escanejos s'han convertit en comandes i ingressos reals."
+  },
+  "kickstarter": {
+    "name": "Kickstarter",
+    "description": "Llanceu el vostre restaurant amb campanyes a punt per enviar — incentius per a la primera comanda i ofertes de recuperació que atrauen clients des del primer dia."
+  },
+  "contentpilot": {
+    "name": "ContentPilot",
+    "description": "El vostre gestor de xarxes socials amb AI — ompliu un formulari setmanal ràpid (especialitats, esdeveniments, promocions) i ContentPilot redacta publicacions polides que aproveu amb un sol clic, programades automàticament a Instagram, Facebook, X i TikTok."
+  },
+  "driver_pool": {
+    "name": "Pool de repartidors",
+    "description": "Accediu a la nostra xarxa de repartidors externs de ShipDay quan els vostres repartidors propis estiguin ocupats o no disponibles. Només tarifes per lliurament — sense mínims mensuals més enllà d'aquesta subscripció. Establiu els vostres propis preus de lliurament per als clients i decidiu quina part assumiu i quina repercutiu."
+  },
+  "kds_screen": {
+    "name": "Pantalla KDS",
+    "description": "Una pantalla dedicada de Kitchen Display System per a la vostra línia — les comandes arriben en directe i es poden marcar com a llestes per estació, sense tiquets de paper. Properament."
+  }
+}

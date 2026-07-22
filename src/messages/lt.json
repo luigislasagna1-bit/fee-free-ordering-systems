@@ -5605,40 +5605,6 @@
       "addOnsTitle": "Papildiniai",
       "addOnsSubtitle": "Atrakinkite mokamus funkcionalumus atskirai. Galima atsisakyti bet kada — jokių sutarčių.",
       "addOnPriceComingSoon": "Kainos bus paskelbtos paleidimo metu",
-      "addOns": {
-        "online_payments": {
-          "name": "Internetiniai mokėjimai",
-          "desc": "Priimkite kredito korteles per Stripe Connect. Pinigai patenka į jūsų sąskaitą, ne mūsų."
-        },
-        "hosted_website": {
-          "name": "Pardavimui optimizuota svetainė",
-          "desc": "Stilinga rinkodaros svetainė adresu jūsų-vardas.feefreeordering.com — automatiškai sugeneruota iš jūsų meniu."
-        },
-        "custom_domain": {
-          "name": "Pasirinktinis domenas",
-          "desc": "Prijunkite savo domeną (pvz. uzsakykitemano.lt) ir mes patalpinsime svetainę ten."
-        },
-        "advanced_promos": {
-          "name": "Išplėstinė rinkodaros akcija",
-          "desc": "Klientų segmentavimas, automatizuotos el. pašto kampanijos, neaktyvių klientų susigrąžinimas."
-        },
-        "branded_mobile_app": {
-          "name": "Paženklintas mobilioji programėlė",
-          "desc": "Pateikite savo iOS + Android programėlę į parduotuves su jūsų prekės ženklu."
-        },
-        "pos_module": {
-          "name": "POS modulis",
-          "desc": "Vietinė pardavimo vieta personalui, kad galėtų užregistruoti lankomų klientų užsakymus kartu su internetiniais."
-        },
-        "reservation_deposits": {
-          "name": "Rezervacijos užstatai",
-          "desc": "Imkite grąžinamą užstatą, kai svečiai rezervuoja stalą, kad sumažintumėte neatvykimų skaičių."
-        },
-        "multi_location": {
-          "name": "Kelios vietos",
-          "desc": "Valdykite kelias restorano vietas viena paskyra. Kiekviena vieta turi savo meniu, užsakymus ir Stripe išmokas — persijunkite tarp jų iš pagrindinės administravimo paskyros."
-        }
-      },
       "compareTitle": "Kiekvienas restoranas gauna",
       "compareItems": [
         "0 % komisinių už tiesioginius užsakymus",
@@ -6524,5 +6490,79 @@
     "lateBadge": "Pavėluota",
     "hoursMinutes": "{h} val. {m} min.",
     "minutesOnly": "{m} min."
+  },
+  "addOnCatalog": {
+    "growthnet": {
+      "name": "GrowthNet",
+      "description": "„Fee Free“ restoranų augimo sistema — visi mokami rinkodaros, klientų išlaikymo ir pritraukimo papildiniai viename rinkinyje su nuolaida: Išplėstinė akcijų rinkodara (įsk. Autopilot), „Marketing Studio“, „Kickstarter“ ir klientų SMS. Nauji augimo įrankiai pridedami prie GrowthNet iškart, kai juos išleidžiame — prenumeratoriai juos gauna automatiškai be papildomo mokesčio."
+    },
+    "unlimited_orders": {
+      "name": "Neriboti užsakymai FREE plane",
+      "description": "Pašalina FREE plano 100 užsakymų per mėnesį limitą. Suteikia neribotą mėnesinį užsakymų kiekį — jokių mokesčių už atskirą užsakymą. Šio papildinio nereikia, jei jau turite bet kurį kitą mokamą papildinį (į juos neriboti užsakymai jau įtraukti)."
+    },
+    "online_payments": {
+      "name": "Mokėjimai internetu",
+      "description": "Priimkite mokėjimus kortele internetu. Pinigai patenka tiesiai į jūsų Stripe Connect paskyrą."
+    },
+    "hosted_website": {
+      "name": "Pardavimams optimizuota svetainė",
+      "description": "Gaukite talpinamą rinkodaros ir užsakymų puslapį feefreeordering subdomene, automatiškai sugeneruotą pagal jūsų meniu."
+    },
+    "custom_domain": {
+      "name": "Nuosavas domenas",
+      "description": "Nukreipkite savo domeną į jūsų „Fee Free Ordering“ talpinamą svetainę."
+    },
+    "advanced_promos": {
+      "name": "Išplėstinė akcijų rinkodara",
+      "description": "Atrakina 8 išplėstinius akcijų tipus: atlygis už mokėjimo būdą, nemokama prekė, patiekalų rinkinys, „pirk N — gauk nemokamai“, nemokamas patiekalas kaip valgio dalis, fiksuota arba procentinė nuolaida rinkiniui, patiekalų rinkinys su firminiu patiekalu. Taip pat klientų segmentavimas ir automatinės rinkodaros kampanijos (Autopilot)."
+    },
+    "branded_mobile_app": {
+      "name": "Prekės ženklo mobilioji programėlė",
+      "description": "Natyvi iOS ir Android programėlė su jūsų prekės ženklu, skelbiama App Store ir Play Store parduotuvėse."
+    },
+    "pos_module": {
+      "name": "POS modulis",
+      "description": "Vidinis POS, leidžiantis personalui priimti užsakymus vietoje ir išsinešti tame pačiame administravimo skydelyje."
+    },
+    "phone_ordering": {
+      "name": "Automatizuotas užsakymų priėmimas telefonu",
+      "description": "AI valdomas telefono agentas priima klientų užsakymus 24/7 ir perduoda juos tiesiai į jūsų virtuvę — nereikia personalo laiko, jokių praleistų skambučių piko metu."
+    },
+    "reservation_deposits": {
+      "name": "Rezervacijų užstatai",
+      "description": "Imkite grąžinamą užstatą, kai klientai rezervuoja staliuką — apsauga nuo neatvykstančių klientų."
+    },
+    "multi_location": {
+      "name": "Kelių vietų valdymas",
+      "description": "Valdykite kelias restorano vietas vienoje paskyroje. Kiekviena vieta turi savo meniu, užsakymus ir Stripe Connect — perjunkite tarp jų iš pagrindinio administravimo skydelio."
+    },
+    "marketplace": {
+      "name": "Marketplace",
+      "description": "Nemokama ir įtraukta kiekvienam restoranui — jokio mėnesinio ar užsakymo mokesčio. Kiekvienas paskelbtas atsiėmimo ar pristatymo restoranas rodomas „Fee Free Marketplace“, kad jį atrastų vietiniai klientai. Jokių 30% komisinių, jokių papildomų mokesčių klientams."
+    },
+    "customer_sms": {
+      "name": "Klientų SMS pranešimai",
+      "description": "Siųskite klientams SMS žinutes, kai jų užsakymas juda per virtuvę — patvirtintas, priimtas, paruoštas atsiimti, įvykdytas. Skatina laiku atsiimti užsakymus ir didina klientų pasitikėjimą. Naudojamas mūsų bendras Twilio numeris — jums nieko konfigūruoti nereikia."
+    },
+    "marketing_studio": {
+      "name": "Marketing Studio",
+      "description": "Generuokite sekamus QR kodus ir išmaniąsias nuorodas, kurkite firminius lankstinukus bei plakatus, automatiškai pritaikančius jūsų prekės ženklą, ir tiksliai matykite, kiek nuskaitymų virto tikrais užsakymais ir pajamomis."
+    },
+    "kickstarter": {
+      "name": "Kickstarter",
+      "description": "Paleiskite savo restoraną su paruoštomis siųsti kampanijomis — pirmojo užsakymo paskatos ir klientų susigrąžinimo pasiūlymai, pritraukiantys klientus nuo pirmos dienos."
+    },
+    "contentpilot": {
+      "name": "ContentPilot",
+      "description": "Jūsų AI socialinių tinklų vadybininkas — užpildykite trumpą savaitinę formą (pasiūlymai, renginiai, akcijos), o ContentPilot parengia nugludintus įrašus, kuriuos patvirtinate vienu paspaudimu; jie automatiškai suplanuojami Instagram, Facebook, X ir TikTok."
+    },
+    "driver_pool": {
+      "name": "Vairuotojų tinklas",
+      "description": "Pasinaudokite mūsų ShipDay trečiųjų šalių vairuotojų tinklu, kai jūsų vairuotojai užimti arba nepasiekiami. Mokama tik už kiekvieną pristatymą — jokių mėnesinių minimumų, išskyrus šią prenumeratą. Nustatykite savo pristatymo kainas klientams ir nuspręskite, kokią dalį padengiate patys, o kokią perkeliate klientui."
+    },
+    "kds_screen": {
+      "name": "KDS ekranas",
+      "description": "Specialus virtuvės ekranų sistemos (KDS) ekranas jūsų linijai — užsakymai atkeliauja realiuoju laiku ir gali būti užbaigiami pagal atskirą stotį, jokių popierinių čekių. Jau netrukus."
+    }
   }
 }
