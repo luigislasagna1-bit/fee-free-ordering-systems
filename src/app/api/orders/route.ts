@@ -2446,6 +2446,25 @@ export async function POST(req: NextRequest) {
     // Reward Dollars cover the whole order → no online charge needed.
     const fullyCovered = creditApplied > 0 && creditApplied >= serverTotal - 0.001;
 
+    // ── Earn-rate snapshot (2026-07-22) ─────────────────────────────────────
+    // Resolve the customer's VIP/personal earn override ONCE, here at
+    // placement, and freeze it onto the order row. The projection leg
+    // (projectOrderEarn → receipt/email "you'll earn X") and the grant leg
+    // (awardForOrder at completion) both read the stamp, so a rate edit or a
+    // transient DB failure between the two legs can never make promised ≠
+    // granted. Semantics: >0 = frozen override pct; 0 = resolved-with-no-
+    // override (legs use the base rate); null = guest / rewards off / legacy
+    // order (legs keep their live-resolution path). loadEarnOverridePct never
+    // throws — a degraded lookup stamps 0, so both legs consistently promise
+    // AND pay base (today's failure mode, still attributably logged inside
+    // the loader). The restaurant BASE rate is deliberately not snapshotted
+    // (the known, accepted base-rate race — TODO 2026-07-19).
+    let rewardEarnOverridePct: number | null = null;
+    if (customer?.id && restaurant.rewardsEnabled) {
+      const { loadEarnOverridePct } = await import("@/lib/reward-earn-rate");
+      rewardEarnOverridePct = (await loadEarnOverridePct(restaurant.id, customer.id)) ?? 0;
+    }
+
     // ── Create order ────────────────────────────────────────────────────────
     let order;
     try {
@@ -2463,6 +2482,9 @@ export async function POST(req: NextRequest) {
       data: {
         restaurantId: restaurant.id,
         customerId: customer?.id || null,
+        // Frozen VIP/personal earn override (or 0 = none) — see the snapshot
+        // block above; both earn legs read this instead of re-resolving live.
+        rewardEarnOverridePct,
         // Verified owner test orders take the kitchen-test TEST- prefix so the
         // kitchen badges them and the report aggregators exclude them (random
         // tail so two same-ms test orders can't collide on the constraint).

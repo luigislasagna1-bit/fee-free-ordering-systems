@@ -38,6 +38,24 @@ export function earnAtPct(basis: number, pct: number): number {
 }
 
 /**
+ * Effective override for an ORDER: prefer the placement-time snapshot
+ * (Order.rewardEarnOverridePct, stamped at create — 2026-07-22) and only
+ * fall back to live resolution for legacy/pre-field orders. Semantics of
+ * the stamp: >0 = frozen override pct; 0 = resolved-at-placement "no
+ * override" (use the base rate); null/undefined = no stamp → resolve live.
+ * BOTH earn legs (awardForOrder + projectOrderEarn) MUST go through this
+ * single function so promised == granted by construction.
+ */
+export async function effectiveOverridePct(
+  stamp: number | null | undefined,
+  restaurantId: string,
+  customerId: string,
+): Promise<number | null> {
+  if (typeof stamp === "number") return stamp > 0 ? stamp : null;
+  return loadEarnOverridePct(restaurantId, customerId);
+}
+
+/**
  * Load the customer's effective override for this restaurant, or null.
  * Membership resolves through the SAME canonical function the VIP promo
  * engine uses (resolveIdentityTargets: signed-in customerId + exact email,
