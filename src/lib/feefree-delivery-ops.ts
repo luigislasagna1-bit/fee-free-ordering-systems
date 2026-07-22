@@ -61,13 +61,16 @@ export type FeeFreeDeliveryOpsData = {
   deliveredThisWeek: number;
   /** When the weekly settlement cron next charges the card (next Monday 00:10 UTC). */
   charge: Date;
-  /** Delivery orders held for manual dispatch (autoSend off), already narrowed to prepaid. */
+  /** Delivery orders held for manual dispatch (autoSend off), already narrowed to prepaid — the first 25 (see heldCapped). */
   held: FeeFreeDeliveryOpsHeld[];
-  /** Live (non-terminal) deliveries with their assigned driver + order, ≤50. */
+  /** Live (non-terminal) deliveries with their assigned driver + order — the first 50 (see activeCapped). */
   active: FeeFreeDeliveryOpsActive[];
-  /** True when the active list hit its ≤50 cap (more live deliveries exist).
-   *  active is never post-filtered, so length===50 ⇒ the note's count is exact. */
+  /** True only when a genuine 51st live delivery exists beyond the 50 in `active`
+   *  (over-fetch-by-1 — never fires at exactly 50). */
   activeCapped: boolean;
+  /** True only when a genuine 26th prepaid hold exists beyond the 25 in `held`
+   *  (over-fetch-by-1, judged post prepaid-filter — never fires at exactly 25). */
+  heldCapped: boolean;
   /** The store's own coordinates — for the restaurant→customer distance on each active delivery. */
   rest: { lat: number | null; lng: number | null } | null;
 };
@@ -82,7 +85,7 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
   const weekStart = weekStartUtc(now);
   const weekEnd = weekEndUtc(now);
 
-  const [owedAgg, deliveredThisWeek, active, heldOrders, rest] = await Promise.all([
+  const [owedAgg, deliveredThisWeek, activeRows, heldOrders, rest] = await Promise.all([
     // Outstanding = frozen fees not yet rolled into a settlement.
     prisma.deliveryAssignment.aggregate({
       _sum: { platformFeeCents: true },
@@ -98,7 +101,7 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
     prisma.deliveryAssignment.findMany({
       where: { restaurantId, status: { in: [...ASSIGNMENT_LIVE] } },
       orderBy: { createdAt: "asc" },
-      take: 50,
+      take: 51, // over-fetch by 1 → cap flag detects a genuine 51st (no exact-50 false "more exist")
       select: {
         id: true, status: true,
         driver: { select: { name: true, ratingPct: true } },
@@ -115,7 +118,7 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
         deliveryAssignment: null,
       },
       orderBy: { createdAt: "desc" },
-      take: 25,
+      take: 26, // over-fetch by 1 (pre-filter) → cap flag detects a genuine 26th prepaid hold
       select: { id: true, orderNumber: true, customerName: true, paymentStatus: true, total: true, creditApplied: true },
     }),
     // The store's own coordinates — for the restaurant→customer distance shown
@@ -125,11 +128,23 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
 
   const owed = owedAgg._sum.platformFeeCents ?? 0;
   const charge = nextChargeDate(now);
-  // Only surface holds that would actually dispatch (prepaid).
-  const held = heldOrders.filter((o) => o.paymentStatus === "paid" || o.total - (o.creditApplied ?? 0) <= 0.009);
+
+  // Over-fetch-by-1 + slice so a "showing the first N" note fires ONLY when an
+  // (N+1)th row genuinely exists. With the old `length >= N` on a take:N query,
+  // EXACTLY N rows (no N+1) still read "more exist" — the exact-N off-by-one
+  // flagged in the 2026-07-20 review. Now length===N with no N+1 ⇒ not capped.
+  const activeCapped = activeRows.length > 50;
+  const active = activeRows.slice(0, 50);
+
+  // Held is prepaid-FILTERED, so the cap is judged on the DISPLAYED (post-filter)
+  // count from a take:26 scan: >25 prepaid holds ⇒ a real 26th exists → slice to
+  // 25 and flag. (The 26-row scan still bounds it, same as before.)
+  const heldAll = heldOrders.filter((o) => o.paymentStatus === "paid" || o.total - (o.creditApplied ?? 0) <= 0.009);
+  const heldCapped = heldAll.length > 25;
+  const held = heldAll.slice(0, 25);
 
   return {
     owed, deliveredThisWeek, charge, held, active, rest,
-    activeCapped: active.length >= 50,
+    activeCapped, heldCapped,
   };
 }

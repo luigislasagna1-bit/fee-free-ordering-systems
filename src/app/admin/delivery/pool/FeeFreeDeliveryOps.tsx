@@ -22,12 +22,7 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
   // Query source-of-truth moved to the shared lib (v1.1 Phase 6, plan §4.6) so the
   // desktop panel and the app `/ops` route can never drift. Rendering below is
   // unchanged — owed stays PLATFORM money (usd() = PLATFORM_CURRENCY).
-  const { owed, deliveredThisWeek, charge, held, active, activeCapped, rest } = await getFeeFreeDeliveryOpsData(restaurantId);
-  // held is prepaid-FILTERED from a ≤25 scan, so a pre-filter cap flag would
-  // overstate ("first 25" over 3 visible cards — review 2026-07-19). Gate the
-  // note on the DISPLAYED count: it fires only when a full 25 prepaid holds
-  // actually render, keeping "showing the first 25" truthful.
-  const heldNote = held.length >= 25;
+  const { owed, deliveredThisWeek, charge, held, active, activeCapped, heldCapped, rest } = await getFeeFreeDeliveryOpsData(restaurantId);
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-5">
@@ -69,7 +64,7 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
               </div>
             ))}
           </div>
-          {heldNote && <p className="mt-2 text-xs text-gray-400">{t("showingFirstN", { count: 25 })}</p>}
+          {heldCapped && <p className="mt-2 text-xs text-gray-400">{t("showingFirstN", { count: 25 })}</p>}
         </div>
       )}
 
