@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Ieškoti patiekalų ir kategorijų…"
     }
   },
-  "impersonation": {
-    "banner": "Superadministratoriaus peržiūra — valdoma {restaurant}",
-    "backToSuperadmin": "Grįžti į superadministratorių"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "ATSIĖMIMAS",

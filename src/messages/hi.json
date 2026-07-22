@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "आइटम और श्रेणियाँ खोजें…"
     }
   },
-  "impersonation": {
-    "banner": "सुपरएडमिन दृश्य — {restaurant} का प्रबंधन किया जा रहा है",
-    "backToSuperadmin": "सुपरएडमिन पर वापस जाएं"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "पिकअप",

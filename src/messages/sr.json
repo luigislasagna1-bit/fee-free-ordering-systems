@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Pretraži stavke i kategorije…"
     }
   },
-  "impersonation": {
-    "banner": "Superadmin pregled — upravljanje sa {restaurant}",
-    "backToSuperadmin": "Nazad na Superadmin"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "PREUZIMANJE",

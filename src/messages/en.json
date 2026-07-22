@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Search items and categories…"
     }
   },
-  "impersonation": {
-    "banner": "Superadmin view — managing {restaurant}",
-    "backToSuperadmin": "Back to Superadmin"
-  },
   "receipt": {
     "scheduling": {
       "asap": "ASAP",

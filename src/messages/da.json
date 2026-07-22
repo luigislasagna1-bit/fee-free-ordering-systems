@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Søg i varer og kategorier…"
     }
   },
-  "impersonation": {
-    "banner": "Superadmin-visning — administrerer {restaurant}",
-    "backToSuperadmin": "Tilbage til Superadmin"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "AFHENTNING",

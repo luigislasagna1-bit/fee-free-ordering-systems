@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "商品・カテゴリを検索…"
     }
   },
-  "impersonation": {
-    "banner": "スーパー管理者ビュー — {restaurant} を管理中",
-    "backToSuperadmin": "スーパー管理者に戻る"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "テイクアウト",

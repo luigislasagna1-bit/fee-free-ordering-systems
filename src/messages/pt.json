@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Pesquisar itens e categorias…"
     }
   },
-  "impersonation": {
-    "banner": "Visão superadmin — gerenciando {restaurant}",
-    "backToSuperadmin": "Voltar a Superadmin"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "RETIRADA",

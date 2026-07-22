@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "메뉴와 카테고리 검색…"
     }
   },
-  "impersonation": {
-    "banner": "슈퍼관리자 보기 — {restaurant} 관리 중",
-    "backToSuperadmin": "슈퍼관리자로 돌아가기"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "픽업",

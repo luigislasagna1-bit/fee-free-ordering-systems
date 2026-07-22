@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Ürün ve kategorilerde ara…"
     }
   },
-  "impersonation": {
-    "banner": "Süper yönetici görünümü — {restaurant} yönetiliyor",
-    "backToSuperadmin": "Süper Yönetime Dön"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "GEL AL",

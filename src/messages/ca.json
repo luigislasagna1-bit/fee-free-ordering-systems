@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Cerca articles i categories…"
     }
   },
-  "impersonation": {
-    "banner": "Vista de superadministrador — gestionant {restaurant}",
-    "backToSuperadmin": "Tornar al superadministrador"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "RECOLLIDA",

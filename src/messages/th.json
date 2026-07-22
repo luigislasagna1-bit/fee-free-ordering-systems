@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "ค้นหาเมนูและหมวดหมู่…"
     }
   },
-  "impersonation": {
-    "banner": "มุมมองซูเปอร์แอดมิน — จัดการ {restaurant}",
-    "backToSuperadmin": "กลับไปซูเปอร์แอดมิน"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "รับที่ร้าน",

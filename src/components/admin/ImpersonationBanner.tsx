@@ -2,7 +2,6 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowLeft, Eye, Users, ShieldAlert } from "lucide-react";
-import { useTranslations } from "next-intl";
 
 /**
  * Banner shown across the top of /admin/* when the caller is acting as a
@@ -27,7 +26,6 @@ export function ImpersonationBanner({
   restaurantName: string;
   mode?: Mode;
 }) {
-  const t = useTranslations("impersonation");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -47,12 +45,17 @@ export function ImpersonationBanner({
   };
 
   const config: Record<Mode, { bg: string; badge: string; icon: React.ReactNode; back: string; message: string }> = {
+    // Operator-only chrome — kept in ENGLISH like the reseller modes below,
+    // NOT the impersonated restaurant's locale (this banner only ever shows to
+    // the superadmin, and the admin page renders in the store's language). It
+    // used to pull translated keys, so it wrongly appeared in e.g. Italian when
+    // impersonating an Italian store (Luigi 2026-07-21).
     superadmin: {
       bg: "bg-amber-600",
       badge: "Superadmin",
       icon: <Eye className="w-4 h-4" />,
-      back: t("backToSuperadmin"),
-      message: t("banner", { restaurant: restaurantName }),
+      back: "Back to Superadmin",
+      message: `Superadmin view — managing ${restaurantName}`,
     },
     reseller: {
       bg: "bg-amber-600",

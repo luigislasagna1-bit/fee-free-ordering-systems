@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "搜索菜品和分类…"
     }
   },
-  "impersonation": {
-    "banner": "超级管理员视图——正在管理 {restaurant}",
-    "backToSuperadmin": "返回超级管理员"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "自取",

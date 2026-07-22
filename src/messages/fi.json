@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Hae tuotteita ja kategorioita…"
     }
   },
-  "impersonation": {
-    "banner": "Superadmin-näkymä — hallinnoidaan {restaurant}",
-    "backToSuperadmin": "Takaisin Superadminiin"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "NOUTO",

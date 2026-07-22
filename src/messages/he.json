@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "חיפוש פריטים וקטגוריות…"
     }
   },
-  "impersonation": {
-    "banner": "תצוגת סופר-מנהל — מנהל {restaurant}",
-    "backToSuperadmin": "חזרה לסופר-מנהל"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "איסוף עצמי",

@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Hľadať položky a kategórie…"
     }
   },
-  "impersonation": {
-    "banner": "Zobrazenie superadmina — spravuje {restaurant}",
-    "backToSuperadmin": "Späť na Superadmin"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "VYZDVIHNUTIE",

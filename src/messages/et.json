@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Otsi tooteid ja kategooriaid…"
     }
   },
-  "impersonation": {
-    "banner": "Superadministraatori vaade — hallatakse {restaurant}",
-    "backToSuperadmin": "Tagasi superadministraatori juurde"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "JÄRELTULEK",

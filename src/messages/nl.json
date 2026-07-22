@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Zoek items en categorieën…"
     }
   },
-  "impersonation": {
-    "banner": "Superadmin-weergave — beheer van {restaurant}",
-    "backToSuperadmin": "Terug naar Superadmin"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "AFHALEN",

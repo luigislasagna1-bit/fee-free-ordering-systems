@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Поиск блюд и категорий…"
     }
   },
-  "impersonation": {
-    "banner": "Просмотр суперадмина — управление {restaurant}",
-    "backToSuperadmin": "Назад к суперадмину"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "САМОВЫВОЗ",

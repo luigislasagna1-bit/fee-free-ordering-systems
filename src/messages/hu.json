@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Tételek és kategóriák keresése…"
     }
   },
-  "impersonation": {
-    "banner": "Szuperadmin nézet — kezelt étterem: {restaurant}",
-    "backToSuperadmin": "Vissza a szuperadminhoz"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "ELVITEL",

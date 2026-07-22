@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Szukaj pozycji i kategorii…"
     }
   },
-  "impersonation": {
-    "banner": "Widok superadmina — zarządzanie {restaurant}",
-    "backToSuperadmin": "Powrót do Superadmina"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "ODBIÓR",

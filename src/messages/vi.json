@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Tìm món và danh mục…"
     }
   },
-  "impersonation": {
-    "banner": "Chế độ Superadmin — đang quản lý {restaurant}",
-    "backToSuperadmin": "Quay lại Superadmin"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "LẤY HÀNG",

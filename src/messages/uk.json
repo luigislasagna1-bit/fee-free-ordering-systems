@@ -4823,10 +4823,6 @@
       "searchPlaceholder": "Пошук страв і категорій…"
     }
   },
-  "impersonation": {
-    "banner": "Перегляд суперадміна — керування {restaurant}",
-    "backToSuperadmin": "Повернутися до суперадміна"
-  },
   "receipt": {
     "orderTypes": {
       "pickup": "САМОВИВІЗ",
