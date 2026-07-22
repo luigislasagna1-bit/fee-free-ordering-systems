@@ -82,6 +82,7 @@ export function EndOfDayModal({
   activeCurrency = currency;
   const t = useTranslations("admin.endOfDayPage");
   const tMoney = useTranslations("money");
+  const tk = useTranslations("kitchen");
   const locale = useLocale();
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState<Stats | null>(null);
@@ -104,7 +105,7 @@ export function EndOfDayModal({
       setLinesPayload({ lines: body.lines, width: body.width });
       setBounds({ dayKey: body.dayKey, todayKey: body.todayKey, minDayKey: body.minDayKey });
     } catch (e: any) {
-      toast.error(e?.message ?? "Could not load the day's totals");
+      toast.error(e?.message ?? tk("eodLoadFailed"));
     } finally {
       setLoading(false);
     }
@@ -125,13 +126,13 @@ export function EndOfDayModal({
   if (!open) return null;
 
   const handlePrint = async () => {
-    if (!linesPayload) { toast.error("Nothing to print — try refresh"); return; }
+    if (!linesPayload) { toast.error(tk("eodNothingToPrint")); return; }
     setPrinting(true);
     try {
       await onPrint({ lines: linesPayload.lines, bytes: null, width: linesPayload.width });
-      toast.success("End-of-day report printed ✓");
+      toast.success(tk("eodPrinted"));
     } catch (e: any) {
-      toast.error(e?.message ?? "Print failed");
+      toast.error(e?.message ?? tk("eodPrintFailed"));
     } finally {
       setPrinting(false);
     }
@@ -157,7 +158,7 @@ export function EndOfDayModal({
           <h2 className="text-lg font-bold">{t("heading")}</h2>
           <div className="flex items-center gap-2">
             <button type="button" onClick={() => fetchSnapshot(viewDate)} disabled={loading}
-              className={`p-2 rounded-lg ${isDark ? "hover:bg-gray-700" : "hover:bg-gray-100"} disabled:opacity-50`} title="Refresh">
+              className={`p-2 rounded-lg ${isDark ? "hover:bg-gray-700" : "hover:bg-gray-100"} disabled:opacity-50`} title={tk("eodRefresh")}>
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             </button>
             <button type="button" onClick={onClose} className={`p-2 rounded-lg ${isDark ? "hover:bg-gray-700" : "hover:bg-gray-100"}`}>
@@ -188,7 +189,7 @@ export function EndOfDayModal({
 
         <div className="flex-1 overflow-y-auto p-5 space-y-4">
           {loading && !stats && (
-            <div className={`text-center text-sm py-10 ${sub}`}>Loading…</div>
+            <div className={`text-center text-sm py-10 ${sub}`}>{tk("eodLoading")}</div>
           )}
           {stats && (
             <>
@@ -262,12 +263,12 @@ export function EndOfDayModal({
         <div className={`px-5 py-4 border-t ${isDark ? "border-gray-700" : "border-gray-100"} flex items-center justify-end gap-2`}>
           <button type="button" onClick={onClose}
             className={`px-4 py-2 rounded-lg text-sm font-medium ${isDark ? "bg-gray-700 hover:bg-gray-600" : "bg-gray-100 hover:bg-gray-200"}`}>
-            Close
+            {tk("eodClose")}
           </button>
           <button type="button" onClick={handlePrint} disabled={!stats || printing}
             className="px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-50 flex items-center gap-2">
             <Printer className="w-4 h-4" />
-            {printing ? "Printing…" : "Print to printer"}
+            {printing ? tk("eodPrinting") : tk("eodPrintButton")}
           </button>
         </div>
       </div>

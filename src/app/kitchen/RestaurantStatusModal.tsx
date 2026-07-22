@@ -76,19 +76,19 @@ interface StatusModalProps {
   currency?: string;
 }
 
-const SERVICE_LABELS: Record<ServiceKey, string> = {
-  pickup: "Pickup",
-  delivery: "Delivery",
-  dineIn: "Dine-in",
-  catering: "Catering",
-  takeOut: "Take & Bake",
-  reservations: "Reservations",
+const SERVICE_LABEL_KEYS: Record<ServiceKey, string> = {
+  pickup: "svcPickup",
+  delivery: "svcDelivery",
+  dineIn: "svcDineIn",
+  catering: "svcCatering",
+  takeOut: "svcTakeBake",
+  reservations: "svcReservations",
 };
 
-const DURATION_PRESETS: { label: string; minutes: number }[] = [
-  { label: "30 min", minutes: 30 },
-  { label: "1 hour", minutes: 60 },
-  { label: "2 hours", minutes: 120 },
+const DURATION_PRESETS: { labelKey: string; minutes: number }[] = [
+  { labelKey: "dur30m", minutes: 30 },
+  { labelKey: "dur1h", minutes: 60 },
+  { labelKey: "dur2h", minutes: 120 },
 ];
 
 export function RestaurantStatusModal({
@@ -102,6 +102,7 @@ export function RestaurantStatusModal({
   onRefresh, onOpenSound, onOpenPrinter, onOpenDayReport,
   alertMuted, alertVolume, printerReady, printerLabel, currency,
 }: StatusModalProps) {
+  const t = useTranslations("kitchen");
   const curSym = currencySymbol(currency ?? "usd");
   const [tab, setTab] = useState<"pause" | "stock" | "prefs" | "report">("pause");
   const [selectedServices, setSelectedServices] = useState<Set<ServiceKey>>(new Set());
@@ -135,7 +136,7 @@ export function RestaurantStatusModal({
 
   const submitPause = useCallback(async (mode: "duration" | "restOfDay" | "resume", durationMinutes?: number) => {
     if (selectedServices.size === 0) {
-      toast.error("Pick at least one service first.");
+      toast.error(t("pausePickFirst"));
       return;
     }
     setPauseBusy(true);
@@ -153,18 +154,19 @@ export function RestaurantStatusModal({
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
-        throw new Error(d.error || `Failed (${res.status})`);
+        throw new Error(d.error || t("pauseFailedStatus", { status: res.status }));
       }
-      const verb = mode === "resume" ? "resumed" : "paused";
-      toast.success(`${selectedServices.size} service${selectedServices.size > 1 ? "s" : ""} ${verb}`);
+      toast.success(mode === "resume"
+        ? t("pauseToastResumed", { n: selectedServices.size })
+        : t("pauseToastPaused", { n: selectedServices.size }));
       setSelectedServices(new Set());
       onChange?.();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed");
+      toast.error(e instanceof Error ? e.message : t("genericFailed"));
     } finally {
       setPauseBusy(false);
     }
-  }, [selectedServices, onChange]);
+  }, [selectedServices, onChange, t]);
 
   if (!open) return null;
   return (
@@ -176,7 +178,7 @@ export function RestaurantStatusModal({
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 flex-shrink-0">
           <h2 className="text-lg font-bold flex items-center gap-2">
             <AlertTriangle className="w-5 h-5 text-amber-500" />
-            Restaurant settings
+            {t("rsTitle")}
           </h2>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100">
             <X className="w-5 h-5" />
@@ -191,7 +193,7 @@ export function RestaurantStatusModal({
               tab === "pause" ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
-            <Pause className="w-4 h-4 inline mr-1.5" /> Pause services
+            <Pause className="w-4 h-4 inline mr-1.5" /> {t("rsTabPause")}
           </button>
           <button
             type="button"
@@ -200,7 +202,7 @@ export function RestaurantStatusModal({
               tab === "stock" ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
-            <Package className="w-4 h-4 inline mr-1.5" /> Item availability / pricing
+            <Package className="w-4 h-4 inline mr-1.5" /> {t("rsTabStock")}
           </button>
           <button
             type="button"
@@ -209,7 +211,7 @@ export function RestaurantStatusModal({
               tab === "prefs" ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
-            <Sliders className="w-4 h-4 inline mr-1.5" /> Preferences
+            <Sliders className="w-4 h-4 inline mr-1.5" /> {t("rsTabPrefs")}
           </button>
           <button
             type="button"
@@ -218,25 +220,24 @@ export function RestaurantStatusModal({
               tab === "report" ? "border-emerald-500 text-emerald-700" : "border-transparent text-gray-500 hover:text-gray-800"
             }`}
           >
-            <BarChart3 className="w-4 h-4 inline mr-1.5" /> Day report
+            <BarChart3 className="w-4 h-4 inline mr-1.5" /> {t("rsTabDayReport")}
           </button>
         </div>
 
         {tab === "pause" && (
           <div className="flex-1 overflow-y-auto p-5 space-y-4">
             <p className="text-xs text-gray-600 leading-relaxed">
-              Pause one or more services when the kitchen is slammed. Customers will see a notice
-              and can&apos;t place new orders for the paused service until the time passes (or you tap Resume).
+              {t("pauseIntro")}
             </p>
 
             <div>
               <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">
-                Pick services
+                {t("pausePickServices")}
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {availableServices.length === 0 ? (
                   <div className="col-span-full text-sm text-gray-500 py-4">
-                    No services are enabled for this restaurant.
+                    {t("pauseNoServices")}
                   </div>
                 ) : availableServices.map((s) => {
                   const paused = isPaused(s);
@@ -254,10 +255,10 @@ export function RestaurantStatusModal({
                             : "border-gray-200 bg-white text-gray-800 hover:border-emerald-300"
                       }`}
                     >
-                      {SERVICE_LABELS[s]}
+                      {t(SERVICE_LABEL_KEYS[s])}
                       {paused && (
                         <span className="block text-[10px] mt-0.5 opacity-70">
-                          paused until {new Date(pausedUntilByService[s]!).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
+                          {t("pausedUntil", { time: new Date(pausedUntilByService[s]!).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) })}
                         </span>
                       )}
                       {picked && (
@@ -271,18 +272,18 @@ export function RestaurantStatusModal({
 
             <div>
               <div className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">
-                For how long?
+                {t("pauseHowLong")}
               </div>
               <div className="flex flex-wrap gap-2">
                 {DURATION_PRESETS.map((d) => (
                   <button
-                    key={d.label}
+                    key={d.labelKey}
                     type="button"
                     disabled={pauseBusy || selectedServices.size === 0}
                     onClick={() => submitPause("duration", d.minutes)}
                     className="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold transition"
                   >
-                    Pause {d.label}
+                    {t("pauseFor", { duration: t(d.labelKey) })}
                   </button>
                 ))}
                 <button
@@ -291,7 +292,7 @@ export function RestaurantStatusModal({
                   onClick={() => submitPause("restOfDay")}
                   className="px-3 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 disabled:opacity-40 text-white text-sm font-semibold transition"
                 >
-                  Rest of day
+                  {t("pauseRestOfDay")}
                 </button>
                 <button
                   type="button"
@@ -299,12 +300,12 @@ export function RestaurantStatusModal({
                   onClick={() => submitPause("resume")}
                   className="px-3 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 text-white text-sm font-semibold transition inline-flex items-center gap-1.5"
                 >
-                  <Play className="w-3.5 h-3.5" /> Resume now
+                  <Play className="w-3.5 h-3.5" /> {t("pauseResumeNow")}
                 </button>
               </div>
               {pauseBusy && (
                 <div className="mt-2 text-xs text-gray-500 inline-flex items-center gap-1.5">
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" /> Saving…
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" /> {t("pauseSaving")}
                 </div>
               )}
             </div>
@@ -336,15 +337,14 @@ export function RestaurantStatusModal({
         {tab === "report" && (
           <div className="flex-1 overflow-y-auto p-5 space-y-3">
             <p className="text-xs text-gray-600 leading-relaxed">
-              Today&apos;s sales totals — order count, revenue, and a breakdown you
-              can view on screen or print for your records.
+              {t("eodIntroPanel")}
             </p>
             <PrefRow
               icon={<BarChart3 className="w-5 h-5" />}
               iconBg="bg-amber-50"
               iconColor="text-amber-600"
-              title="End-of-day report"
-              subtitle="Today's totals — view + print"
+              title={t("eodRowTitle")}
+              subtitle={t("eodRowSubtitle")}
               onClick={() => { onOpenDayReport(); onClose(); }}
             />
           </div>
@@ -379,10 +379,10 @@ function PreferencesPanel({
 }) {
   const tk = useTranslations("kitchen");
   const soundSubtitle = alertMuted || alertVolume === 0
-    ? "Muted — kitchen won't hear new orders"
+    ? tk("prefsSoundMuted")
     : alertVolume < 0.5
-      ? `Volume ${Math.round(alertVolume * 100)}% — turn it up`
-      : `Volume ${Math.round(alertVolume * 100)}%`;
+      ? tk("prefsSoundVolumeLow", { n: Math.round(alertVolume * 100) })
+      : tk("prefsSoundVolume", { n: Math.round(alertVolume * 100) });
   const soundTone = alertMuted || alertVolume === 0
     ? "text-red-600"
     : alertVolume < 0.5
@@ -392,8 +392,7 @@ function PreferencesPanel({
   return (
     <div className="flex-1 overflow-y-auto p-5 space-y-2">
       <p className="text-xs text-gray-600 leading-relaxed mb-3">
-        Everything that used to live on the kitchen header lives here
-        now — sound, day/night, printer setup, and refresh. Tap a row to open it.
+        {tk("prefsIntro")}
       </p>
 
       {/* Sound */}
@@ -401,7 +400,7 @@ function PreferencesPanel({
         icon={alertMuted || alertVolume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
         iconBg="bg-emerald-50"
         iconColor={soundTone}
-        title="Alert sound"
+        title={tk("prefsSoundTitle")}
         subtitle={soundSubtitle}
         onClick={onOpenSound}
       />
@@ -418,9 +417,11 @@ function PreferencesPanel({
             : <Moon className="w-5 h-5 text-indigo-500" />}
         </div>
         <div className="flex-1 min-w-0">
-          <div className="text-sm font-semibold text-gray-900">Day / Night mode</div>
+          <div className="text-sm font-semibold text-gray-900">{tk("prefsDayNight")}</div>
           <div className="text-xs text-gray-500 truncate">
-            Currently <strong>{themeMode === "light" ? "Day" : "Night"}</strong> — tap to switch
+            {/* Two plain keys instead of an ICU select — the parity audit's
+                stripper can't handle custom select branch names (day {…}). */}
+            {tk(themeMode === "light" ? "prefsDayNightNowDay" : "prefsDayNightNowNight")}
           </div>
         </div>
         <div className={`text-xs font-bold px-2 py-1 rounded-full ${
@@ -428,7 +429,7 @@ function PreferencesPanel({
             ? "bg-amber-100 text-amber-700"
             : "bg-indigo-100 text-indigo-700"
         }`}>
-          {themeMode === "light" ? "DAY" : "NIGHT"}
+          {themeMode === "light" ? tk("prefsBadgeDay") : tk("prefsBadgeNight")}
         </div>
       </button>
 
@@ -466,8 +467,8 @@ function PreferencesPanel({
         icon={<Printer className="w-5 h-5" />}
         iconBg="bg-emerald-50"
         iconColor={printerReady ? "text-emerald-600" : "text-gray-400"}
-        title="Printer setup"
-        subtitle={printerLabel ?? "No printer connected — tap to set up"}
+        title={tk("prefsPrinterTitle")}
+        subtitle={printerLabel ?? tk("prefsPrinterNone")}
         onClick={onOpenPrinter}
       />
 
@@ -476,8 +477,8 @@ function PreferencesPanel({
         icon={<RefreshCw className="w-5 h-5" />}
         iconBg="bg-sky-50"
         iconColor="text-sky-600"
-        title="Refresh orders"
-        subtitle="Re-poll the server now (auto-polls every 4 s)"
+        title={tk("prefsRefreshTitle")}
+        subtitle={tk("prefsRefreshSubtitle")}
         onClick={onRefresh}
       />
     </div>
@@ -523,6 +524,7 @@ interface StockItem {
 }
 
 function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: string }) {
+  const t = useTranslations("kitchen");
   const [items, setItems] = useState<StockItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -555,11 +557,11 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isSoldOut: !it.isSoldOut }),
       });
-      if (!r.ok) throw new Error("Failed");
+      if (!r.ok) throw new Error(t("genericFailed"));
       setItems((cur) => cur.map((i) => i.id === it.id ? { ...i, isSoldOut: !it.isSoldOut } : i));
       onChange?.();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed");
+      toast.error(e instanceof Error ? e.message : t("genericFailed"));
     } finally {
       setBusyIds((s) => {
         const next = new Set(s);
@@ -579,7 +581,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
     const trimmed = raw.trim();
     const next = Number(trimmed);
     if (trimmed === "" || !Number.isFinite(next) || next < 0 || next > 9999) {
-      toast.error("Enter a valid price (0 – 9999).");
+      toast.error(t("stockPriceInvalid"));
       setPriceDrafts((d) => {
         const cp = { ...d };
         delete cp[v.id];
@@ -605,7 +607,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
       });
       if (!r.ok) {
         const d = await r.json().catch(() => ({}));
-        throw new Error(d.error || "Failed");
+        throw new Error(d.error || t("genericFailed"));
       }
       setItems((cur) => cur.map((i) => i.id === it.id
         ? { ...i, variants: i.variants.map((vv) => vv.id === v.id ? { ...vv, price: rounded } : vv) }
@@ -619,7 +621,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
       toast.success(`${it.name} · ${v.name}: ${curSym}${rounded.toFixed(2)}`);
       onChange?.();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed to save price");
+      toast.error(e instanceof Error ? e.message : t("stockPriceSaveFailed"));
     } finally {
       setPriceBusyIds((s) => {
         const cp = new Set(s);
@@ -641,7 +643,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
     // No change → quietly clear the draft.
     const next = Number(trimmed);
     if (trimmed === "" || !Number.isFinite(next) || next < 0 || next > 9999) {
-      toast.error("Enter a valid price (0 – 9999).");
+      toast.error(t("stockPriceInvalid"));
       // Revert by clearing the draft so the canonical price renders.
       setPriceDrafts((d) => {
         const cp = { ...d };
@@ -668,7 +670,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
       });
       if (!r.ok) {
         const d = await r.json().catch(() => ({}));
-        throw new Error(d.error || "Failed");
+        throw new Error(d.error || t("genericFailed"));
       }
       setItems((cur) => cur.map((i) => i.id === it.id ? { ...i, price: rounded } : i));
       setPriceDrafts((d) => {
@@ -676,10 +678,10 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
         delete cp[it.id];
         return cp;
       });
-      toast.success(`Price updated to ${curSym}${rounded.toFixed(2)}`);
+      toast.success(t("stockPriceUpdated", { price: `${curSym}${rounded.toFixed(2)}` }));
       onChange?.();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Failed to save price");
+      toast.error(e instanceof Error ? e.message : t("stockPriceSaveFailed"));
     } finally {
       setPriceBusyIds((s) => {
         const cp = new Set(s);
@@ -703,18 +705,18 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search items or categories…"
+          placeholder={t("stockSearchPlaceholder")}
           className="w-full pl-9 pr-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300"
         />
       </div>
 
       {loading ? (
         <div className="py-10 text-center text-gray-500 inline-flex items-center justify-center gap-2 w-full">
-          <Loader2 className="w-4 h-4 animate-spin" /> Loading menu…
+          <Loader2 className="w-4 h-4 animate-spin" /> {t("stockLoading")}
         </div>
       ) : filtered.length === 0 ? (
         <div className="py-10 text-center text-sm text-gray-500">
-          {query.trim() ? "No items match that search." : "No menu items yet."}
+          {query.trim() ? t("stockNoMatch") : t("stockNoItems")}
         </div>
       ) : (
         <ul className="divide-y divide-gray-100 border border-gray-100 rounded-xl overflow-hidden">
@@ -740,7 +742,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
                       <div className="text-[11px] text-gray-500 truncate">
                         {it.category?.name ?? ""}
                         {it.category && " · "}
-                        <span className="italic">Priced by size below</span>
+                        <span className="italic">{t("stockPricedBySize")}</span>
                       </div>
                     </div>
                     <button
@@ -755,7 +757,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
                     >
                       {busyIds.has(it.id)
                         ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                        : it.isSoldOut ? "Restock" : "Mark out"}
+                        : it.isSoldOut ? t("stockRestock") : t("stockMarkOut")}
                     </button>
                   </div>
                   <ul className="mt-2 ml-4 border-l border-gray-200 pl-3 space-y-1.5">
@@ -791,7 +793,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
                                 }
                               }}
                               className="w-20 px-2 py-1 rounded-lg border border-gray-200 text-xs font-semibold text-right tabular-nums focus:outline-none focus:ring-2 focus:ring-emerald-300 disabled:opacity-60"
-                              aria-label={`Price for ${it.name} — ${v.name}`}
+                              aria-label={t("stockPriceAriaVariant", { item: it.name, variant: v.name })}
                             />
                             {vBusy && <Loader2 className="w-3 h-3 animate-spin text-gray-400" />}
                           </div>
@@ -847,7 +849,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
                       }
                     }}
                     className="w-20 px-2 py-1.5 rounded-lg border border-gray-200 text-sm font-semibold text-right tabular-nums focus:outline-none focus:ring-2 focus:ring-emerald-300 disabled:opacity-60"
-                    aria-label={`Price for ${it.name}`}
+                    aria-label={t("stockPriceAria", { item: it.name })}
                   />
                   {priceBusy && <Loader2 className="w-3 h-3 animate-spin text-gray-400" />}
                 </div>
@@ -863,7 +865,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
                 >
                   {busyIds.has(it.id)
                     ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    : it.isSoldOut ? "Restock" : "Mark out"}
+                    : it.isSoldOut ? t("stockRestock") : t("stockMarkOut")}
                 </button>
               </li>
             );
@@ -872,11 +874,7 @@ function StockPanel({ onChange, curSym }: { onChange?: () => void; curSym: strin
       )}
 
       <p className="text-[11px] text-gray-500 leading-relaxed">
-        Edit any price (item or size) then tap outside (or press Enter) to save. Items
-        with sizes are priced per-size below — the base item has no editable price.
-        Marking an item out of stock greys it out on the customer ordering page and
-        blocks new orders. All changes appear on the customer site and admin menu
-        immediately. Modifier (add-on) pricing still lives in /admin/menu.
+        {t("stockFooterHint")}
       </p>
     </div>
   );

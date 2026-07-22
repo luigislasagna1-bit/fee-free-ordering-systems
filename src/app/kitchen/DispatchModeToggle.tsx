@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 import { Truck, User, Loader2, X, Check } from "lucide-react";
 
 type DispatchState = {
@@ -22,6 +23,7 @@ type DispatchState = {
  * entirely (those are admin-controlled choices, not staff-controlled).
  */
 export function DispatchModeToggle({ themeBtnClass }: { themeBtnClass: string }) {
+  const t = useTranslations("kitchen");
   const [state, setState] = useState<DispatchState | null>(null);
   const [open, setOpen] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -53,18 +55,18 @@ export function DispatchModeToggle({ themeBtnClass }: { themeBtnClass: string })
       });
       const data = await res.json();
       if (!res.ok) {
-        toast.error(data?.error || "Failed to switch dispatch mode");
+        toast.error(data?.error || t("dispatchSwitchFailed"));
         return;
       }
       toast.success(
         next === "own"
-          ? "New delivery orders → your in-house drivers"
-          : "New delivery orders → ShipDay driver pool",
+          ? t("dispatchToastInhouse")
+          : t("dispatchToastShipday"),
       );
       setState((s) => (s ? { ...s, activeDispatchMode: next } : s));
       setOpen(false);
     } catch (e: any) {
-      toast.error(e?.message || "Failed to switch dispatch mode");
+      toast.error(e?.message || t("dispatchSwitchFailed"));
     } finally {
       setSaving(false);
     }
@@ -74,17 +76,17 @@ export function DispatchModeToggle({ themeBtnClass }: { themeBtnClass: string })
 
   const active = state.activeDispatchMode;
   const Icon = active === "own" ? User : Truck;
-  const label = active === "own" ? "In-house" : "ShipDay pool";
+  const label = active === "own" ? t("dispatchInhouseShort") : t("dispatchShipdayShort");
 
   return (
     <>
       <button
         onClick={() => setOpen(true)}
         className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition border-blue-500/40 text-blue-600 ${themeBtnClass}`}
-        title="Delivery dispatch settings"
+        title={t("dispatchTooltip")}
       >
         <Icon className="w-3.5 h-3.5" />
-        <span className="hidden sm:inline">Delivery: {label}</span>
+        <span className="hidden sm:inline">{t("dispatchButtonLabel", { label })}</span>
       </button>
 
       {open && (
@@ -98,18 +100,16 @@ export function DispatchModeToggle({ themeBtnClass }: { themeBtnClass: string })
           >
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-bold text-gray-900">Delivery dispatch</h3>
+                <h3 className="font-bold text-gray-900">{t("dispatchTitle")}</h3>
                 <p className="text-xs text-gray-600 mt-1 leading-relaxed">
-                  Pick where NEW delivery orders go from this moment on. Existing
-                  in-flight orders aren&apos;t affected. Toggle any time as staff
-                  availability changes.
+                  {t("dispatchIntro")}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
                 disabled={saving}
-                aria-label="Close"
+                aria-label={t("dispatchClose")}
                 className="w-8 h-8 rounded-lg hover:bg-gray-100 text-gray-500 flex items-center justify-center disabled:opacity-40"
               >
                 <X className="w-4 h-4" />
@@ -134,16 +134,15 @@ export function DispatchModeToggle({ themeBtnClass }: { themeBtnClass: string })
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <div className="font-bold text-gray-900 text-sm">In-house drivers</div>
+                    <div className="font-bold text-gray-900 text-sm">{t("dispatchInhouseOption")}</div>
                     {active === "own" && (
                       <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-500 text-white inline-flex items-center gap-1">
-                        <Check className="w-2.5 h-2.5" /> ACTIVE
+                        <Check className="w-2.5 h-2.5" /> {t("dispatchActiveBadge")}
                       </span>
                     )}
                   </div>
                   <p className="text-xs text-gray-600 mt-1 leading-snug">
-                    New delivery orders dispatch to your own drivers. ShipDay is
-                    NOT charged. You handle every delivery yourself.
+                    {t("dispatchInhouseDesc")}
                   </p>
                 </div>
               </button>
@@ -165,31 +164,27 @@ export function DispatchModeToggle({ themeBtnClass }: { themeBtnClass: string })
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <div className="font-bold text-gray-900 text-sm">ShipDay driver pool</div>
+                    <div className="font-bold text-gray-900 text-sm">{t("dispatchShipdayOption")}</div>
                     {active === "shipday" && (
                       <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-500 text-white inline-flex items-center gap-1">
-                        <Check className="w-2.5 h-2.5" /> ACTIVE
+                        <Check className="w-2.5 h-2.5" /> {t("dispatchActiveBadge")}
                       </span>
                     )}
                   </div>
                   <p className="text-xs text-gray-600 mt-1 leading-snug">
-                    New delivery orders route to the ShipDay third-party pool.
-                    Per-delivery ShipDay fees apply. Use when your own drivers
-                    are slammed or unavailable.
+                    {t("dispatchShipdayDesc")}
                   </p>
                 </div>
               </button>
             </div>
 
             <div className="mt-5 text-[11px] text-gray-500 leading-relaxed bg-gray-50 rounded-lg p-3">
-              💡 This toggle changes where NEW orders go. Any delivery order
-              that&apos;s already been accepted continues with whichever driver
-              was picked at acceptance time.
+              {t("dispatchFooterHint")}
             </div>
 
             {saving && (
               <div className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-500">
-                <Loader2 className="w-3.5 h-3.5 animate-spin" /> Switching…
+                <Loader2 className="w-3.5 h-3.5 animate-spin" /> {t("dispatchSwitching")}
               </div>
             )}
           </div>

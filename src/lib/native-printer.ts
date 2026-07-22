@@ -156,21 +156,23 @@ export type NativePrinterReason =
   | "unreachable"
   | "io_error";
 
-/** Caller-friendly mapping of reason codes to actionable copy. Used
- *  by the kitchen settings page's test-print button + by the order
- *  acceptance handler when an auto-print fails. */
-export function nativePrinterErrorCopy(reason: NativePrinterReason | string): string {
+/** Maps plugin reason codes to i18n message KEYS in the "kitchen"
+ *  namespace — callers translate via their kitchen translator, e.g.
+ *  `tk(nativePrinterErrorKey(reason))`. Used by the kitchen settings
+ *  page's test-print button + by the order acceptance handler when an
+ *  auto-print fails. This lib stays React-free, so no t() here. */
+export function nativePrinterErrorKey(reason: NativePrinterReason | string): string {
   switch (reason) {
     case "timeout":
-      return "Printer didn't respond — check that it's powered on and connected to the same Wi-Fi.";
+      return "printerErrTimeout";
     case "refused":
-      return "Printer reachable but the print port (9100) isn't open. Check the printer's web admin to enable RAW print, or restart the printer.";
+      return "printerErrRefused";
     case "unreachable":
-      return "Can't reach printer. Double-check the IP address and that this tablet is on the same network as the printer.";
+      return "printerErrUnreachable";
     case "io_error":
-      return "Print failed mid-job. Try again, and if it keeps happening, restart the printer.";
+      return "printerErrIo";
     default:
-      return "Print failed. Check printer connection and try again.";
+      return "printerErrGeneric";
   }
 }
 

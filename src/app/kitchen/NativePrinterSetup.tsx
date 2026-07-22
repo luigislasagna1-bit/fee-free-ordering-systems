@@ -34,7 +34,7 @@ import {
   nativePrint,
   nativeDiscover,
   nativeSavePrinterConfig,
-  nativePrinterErrorCopy,
+  nativePrinterErrorKey,
   type NativePrinterReason,
   type DiscoveredPrinter,
 } from "@/lib/native-printer";
@@ -224,7 +224,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
       setTestState({ kind: "success", message: tk("printerReachable", { addr: `${testIp}:${testPort}` }) });
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as NativePrinterReason | string;
-      setTestState({ kind: "error", message: nativePrinterErrorCopy(reason) });
+      setTestState({ kind: "error", message: tk(nativePrinterErrorKey(reason)) });
     }
   }
 
@@ -309,7 +309,7 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
       });
     } catch (err: any) {
       const reason = (err?.code || err?.message || "") as NativePrinterReason | string;
-      setTestState({ kind: "error", message: nativePrinterErrorCopy(reason) });
+      setTestState({ kind: "error", message: tk(nativePrinterErrorKey(reason)) });
     }
   }
 

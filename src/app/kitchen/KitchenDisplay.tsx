@@ -21,7 +21,7 @@ import { KitchenFirstRunTour } from "./KitchenFirstRunTour";
 import {
   isNativePrinterAvailable,
   nativePrint,
-  nativePrinterErrorCopy,
+  nativePrinterErrorKey,
 } from "@/lib/native-printer";
 import { registerKitchenPush, unregisterKitchenPush, getKitchenPushHealth, getStoredKitchenPushToken, type KitchenPushHealth } from "@/lib/native-push";
 import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm, nativeSetCustomSound } from "@/lib/native-order-alarm";
@@ -1209,7 +1209,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         console.warn("[reservation print] direct printer failed, trying PrintNode", err);
         if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
           const reason = (err as any)?.code || (err as any)?.message || "";
-          toast.error(nativePrinterErrorCopy(reason));
+          toast.error(tk(nativePrinterErrorKey(reason)));
           return;
         }
       }
@@ -3706,7 +3706,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
    *  printer via native plugin. Used when the kitchen operator
    *  configured a Direct LAN printer in NativePrinterSetup.
    *
-   *  Errors get user-friendly copy via nativePrinterErrorCopy() so
+   *  Errors get user-friendly copy via tk(nativePrinterErrorKey()) so
    *  the kitchen staff sees "Printer didn't respond — check Wi-Fi"
    *  rather than a stack trace. */
   /** Fetch + print a single receipt type (kitchen OR customer) via
@@ -3808,7 +3808,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     } catch (err: any) {
       if (!opts?.silentError) {
         const reason = (err?.code || err?.message || "") as string;
-        toast.error(nativePrinterErrorCopy(reason));
+        toast.error(tk(nativePrinterErrorKey(reason)));
       }
       throw err;
     }
@@ -4231,9 +4231,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const printNodeReady = !!(printerSettings?.printNodeConnected && printerSettings.selectedPrinterId);
   const printerReady = directReady || printNodeReady;
   const printerLabel = directReady
-    ? `Direct: ${directCfg!.ip}`
+    ? tk("printerDirectLabel", { ip: directCfg!.ip })
     : printNodeReady
-    ? (printerSettings!.selectedPrinterName ?? "Connected")
+    ? (printerSettings!.selectedPrinterName ?? tk("printerConnectedLabel"))
     : null;
 
   return (
@@ -4867,8 +4867,8 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
           type="button"
           onClick={() => { setSelectedId(null); setSelectedReservationId(null); }}
           className="flex flex-col items-center gap-0.5 px-8 py-2 text-orange-500"
-          aria-label="Orders"
-          title="Orders"
+          aria-label={tk("navOrdersLabel")}
+          title={tk("navOrdersLabel")}
         >
           <ClipboardList className="w-6 h-6" />
         </button>
@@ -4876,8 +4876,8 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
           type="button"
           onClick={() => setShowStatusModal(true)}
           className={`relative flex flex-col items-center gap-0.5 px-8 py-2 ${anyServicePaused ? "text-amber-500" : t.muted}`}
-          aria-label="Settings"
-          title="Pause services, item availability, sound, day/night, printer, end-of-day"
+          aria-label={tk("navSettingsLabel")}
+          title={tk("navSettingsTooltip")}
         >
           <Settings className="w-6 h-6" />
           {anyServicePaused && <span className="absolute top-1 right-6 w-2 h-2 rounded-full bg-amber-500" />}
@@ -5144,7 +5144,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                     if (v > 0) setAlertMuted(false);
                   }}
                   className="flex-1 accent-emerald-500 cursor-pointer"
-                  aria-label="Alert volume"
+                  aria-label={tk("soundVolumeAria")}
                 />
                 <Volume2 className={`w-4 h-4 flex-shrink-0 ${t.muted}`} />
               </div>
@@ -5309,9 +5309,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
           // /admin/reports/end-of-day in the browser.
           const direct = getDirectPrinterConfig();
           if (!direct) {
-            throw new Error(
-              "Direct LAN printer not configured. Open Printer Setup on the kitchen tablet to connect.",
-            );
+            throw new Error(tk("printerLanNotConfigured"));
           }
           const paperWidthDots = width === 58 ? 384 : 576;
           await nativePrint({
