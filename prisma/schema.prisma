@@ -1411,6 +1411,19 @@ model Order {
   /// Null on orders created before this field shipped (back-compat).
   appliedPromos             String? // JSON
 
+  /// Earn-rate SNAPSHOT, resolved once at placement (2026-07-22). The
+  /// customer's effective VIP/personal earn override (person > highest group,
+  /// via loadEarnOverridePct) frozen onto the order so the projected
+  /// "you'll earn X" (receipt/email) and the completion grant read the SAME
+  /// number — a rate edit or DB hiccup between the two legs can no longer
+  /// make promised ≠ granted. Semantics:
+  ///   > 0  → resolved override percent, both legs use it as-is
+  ///   0    → resolved at placement: NO override → both legs use the base rate
+  ///   null → legacy order (pre-field) or guest → legs resolve live (old path)
+  /// The restaurant BASE rate is deliberately NOT snapshotted (the known,
+  /// accepted base-rate race — see TODO 2026-07-19).
+  rewardEarnOverridePct     Float?
+
   /// ShipDay dispatch tracking. Set when an order is dispatched to the
   /// ShipDay third-party driver pool — populated by the dispatch call
   /// in PATCH /api/orders/[id] (order acceptance). Status is updated

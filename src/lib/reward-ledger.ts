@@ -411,7 +411,7 @@ export async function awardForOrder(opts: { orderId: string }): Promise<void> {
     const order = await prisma.order.findUnique({
       where: { id: opts.orderId },
       select: {
-        restaurantId: true, customerId: true, createdAt: true, ...EARN_BASIS_ORDER_SELECT,
+        restaurantId: true, customerId: true, createdAt: true, rewardEarnOverridePct: true, ...EARN_BASIS_ORDER_SELECT,
         restaurant: { select: { rewardsEnabled: true, rewardEarnEnabled: true, rewardEarnMode: true, rewardEarnPercent: true, rewardEarnPerDollar: true } },
       },
     });
@@ -424,8 +424,12 @@ export async function awardForOrder(opts: { orderId: string }): Promise<void> {
     // Standing VIP/personal earn-rate override (person > highest group > base;
     // Luigi 2026-07-19). No override → the ORIGINAL branch, byte-identical.
     // MUST mirror projectOrderEarn exactly — preview == granted, to the cent.
-    const { loadEarnOverridePct, earnAtPct } = await import("@/lib/reward-earn-rate");
-    const overridePct = await loadEarnOverridePct(order.restaurantId, order.customerId);
+    // 2026-07-22: the override now comes from the PLACEMENT SNAPSHOT on the
+    // order (stamped in POST /api/orders) via effectiveOverridePct — live
+    // resolution only for legacy pre-field orders — so a rate edit between
+    // projection and completion can no longer change what's granted.
+    const { effectiveOverridePct, earnAtPct } = await import("@/lib/reward-earn-rate");
+    const overridePct = await effectiveOverridePct(order.rewardEarnOverridePct, order.restaurantId, order.customerId);
     const earned = round2(
       overridePct != null
         ? earnAtPct(basis, overridePct)

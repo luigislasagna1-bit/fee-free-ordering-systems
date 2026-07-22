@@ -1,5 +1,14 @@
-import { describe, expect, it } from "vitest";
-import { pickOverridePct, earnAtPct } from "./reward-earn-rate";
+import { describe, expect, it, vi } from "vitest";
+import { pickOverridePct, earnAtPct, effectiveOverridePct } from "./reward-earn-rate";
+
+// The null-stamp fallback path lazily imports @/lib/db inside
+// loadEarnOverridePct — mock it so the legacy-order test needs no DATABASE_URL.
+vi.mock("@/lib/db", () => ({
+  default: {
+    customer: { findUnique: vi.fn(async () => ({ rewardEarnPercent: 7, email: "legacy@example.com" })) },
+    customerGroup: { findMany: vi.fn(async () => []) },
+  },
+}));
 
 /** Standing VIP/personal earn-rate overrides (Luigi 2026-07-19).
  *  The resolution + math rules the grant AND every preview rely on. */
@@ -28,6 +37,25 @@ describe("pickOverridePct", () => {
 
   it("mixed nulls among groups don't disturb the max", () => {
     expect(pickOverridePct(null, [null, 6, undefined, 4])).toBe(6);
+  });
+});
+
+describe("effectiveOverridePct (placement snapshot, 2026-07-22)", () => {
+  it("stamp > 0 → the frozen pct, no live resolution", async () => {
+    // A rate edit AFTER placement must not change what this order pays out.
+    expect(await effectiveOverridePct(12, "r1", "c1")).toBe(12);
+  });
+
+  it("stamp 0 → resolved-at-placement 'no override' → null (base branch)", async () => {
+    // 0 means placement resolution RAN and found nothing — the legs must use
+    // the base rate, NOT re-resolve (a group added later must not apply).
+    expect(await effectiveOverridePct(0, "r1", "c1")).toBeNull();
+  });
+
+  it("null/undefined stamp (legacy pre-field order) → live resolution", async () => {
+    // The mocked live path resolves a 7% personal rate.
+    expect(await effectiveOverridePct(null, "r1", "c1")).toBe(7);
+    expect(await effectiveOverridePct(undefined, "r1", "c1")).toBe(7);
   });
 });
 

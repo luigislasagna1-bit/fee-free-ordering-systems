@@ -41,6 +41,10 @@
 
 ## A. DO NOW — this week, in priority order
 
+### A22. 🤔 GO/NO-GO: earn-rate snapshot schema push (branch `feat/earn-rate-snapshot`, built 2026-07-22)
+**What:** one new nullable column `Order.rewardEarnOverridePct` — freezes a VIP customer's earn rate onto each order at placement so the "you'll earn X" on the receipt and the actual grant at completion can never disagree (today a rate edit between the two can make them differ). Code + tests are done and preflight-green on the branch; nothing deploys until the column exists on BOTH Neon branches.
+**Say "A22 go"** → Claude runs `scripts/push-schema-to-both.ts` (additive, safe), merges the branch, preflights, deploys, and E2E-verifies with a VIP test order. No rush — this is the "not urgent" item from the 2026-07-19 review.
+
 ### A20. ✅ DONE 2026-07-19 — First Buy PROVEN end-to-end on a real charged order 🎉
 **You flipped the toggle 2026-07-18** (toggle-truth sync confirmed: promo active, email drip resumed), Claude preview-proved it 2026-07-19 (fresh identity → 10% via the live `apply-promos` API), and then **you placed the real test order `ORD-067045266`** (Dipping Sauce $1.49, fresh `+firstbuy` identity): the charged row shows `promoDiscount=$0.15`, FIRSTBUY in `appliedPromos`, card authorized for the discounted $1.51, PromotionUsage row written, `usedCount` 0→1. The campaign's promise now reaches the payment. (Order left pending — accept or cancel it in the kitchen as you like; the proof stands either way.)
 **Decision made 2026-07-19:** no comp. Instead: a **$10 one-time credit locked to his email**, auto-applied on his next order — done through the existing "Give a VIP special" flow (no new code). Exact steps = **T-J** above. (His literal "add 10 Luigi Bucks" idea won't work: reward dollars can only be SPENT by a signed-in account — your own 2026-06-27 anti-drain rule — and he's a guest.)

@@ -120,7 +120,7 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
       select: {
-        restaurantId: true, customerId: true, createdAt: true, completedAt: true,
+        restaurantId: true, customerId: true, createdAt: true, completedAt: true, rewardEarnOverridePct: true,
         ...EARN_BASIS_ORDER_SELECT,
         restaurant: {
           select: {
@@ -140,9 +140,13 @@ export async function projectOrderEarn(orderId: string): Promise<number> {
     let total = 0;
     // Base %-back (mirrors awardForOrder EXACTLY, including the standing
     // VIP/personal override — person > highest group > base; Luigi 2026-07-19).
+    // 2026-07-22: the override comes from the PLACEMENT SNAPSHOT on the order
+    // via effectiveOverridePct (live resolution only for legacy pre-field
+    // orders) — same single function as awardForOrder, so promised == granted
+    // by construction.
     if (r.rewardEarnEnabled) {
-      const { loadEarnOverridePct, earnAtPct } = await import("@/lib/reward-earn-rate");
-      const overridePct = await loadEarnOverridePct(order.restaurantId, order.customerId);
+      const { effectiveOverridePct, earnAtPct } = await import("@/lib/reward-earn-rate");
+      const overridePct = await effectiveOverridePct(order.rewardEarnOverridePct, order.restaurantId, order.customerId);
       total += round2(
         overridePct != null
           ? earnAtPct(basis, overridePct)
