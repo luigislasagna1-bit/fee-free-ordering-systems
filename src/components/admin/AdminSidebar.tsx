@@ -242,8 +242,10 @@ const navGroups: NavGroup[] = [
       // member tools as sub-headings (Luigi 2026-06-11 — "Kickstarter,
       // Autopilot and Marketing Studio as sub-headings, only seen when we click
       // GrowthNet"). Each member keeps its own lock + upsell wall for free
-      // accounts. "GrowthNet" is a brand name → untranslated (tr falls back to
-      // the label). New growth tools get added here as the bundle grows.
+      // accounts. "GrowthNet" is a brand name → its admin.sidebar key holds the
+      // same value in all 38 locales (scripts/i18n-add-sidebar-labels.ts; the
+      // hardcoded `label` stays as the useSafeT fallback). New growth tools get
+      // added here as the bundle grows — add the sidebar key ×38 with them.
       {
         key: "marketing.growthnet",
         labelKey: "growthNet",
