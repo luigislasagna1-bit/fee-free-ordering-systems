@@ -344,7 +344,17 @@ export async function POST(req: NextRequest) {
     // Best-effort inside; a notification failure never affects signup.
     after(() => notifyRestaurantSignup(restaurant.id));
 
-    return NextResponse.json({ success: true, slug });
+    const res = NextResponse.json({ success: true, slug });
+    // Attribution has been consumed for THIS signup — clear the referral cookie
+    // so a completed attribution can't leak into the NEXT signup in the same
+    // browser. This is the exact scenario Luigi hit (reseller-link testing left
+    // a code in the browser, then a genuinely-DIRECT signup was credited to that
+    // reseller): the cookie is already session-scoped (SignupForm.tsx), and now
+    // it's also dropped the moment a signup completes. A fresh referral still
+    // works — the next visit re-sets the cookie from ?ref= / the branded host.
+    // Luigi 2026-07-21.
+    res.cookies.set("feefree_ref", "", { path: "/", maxAge: 0 });
+    return res;
   } catch (err) {
     console.error("[register]", err);
     return NextResponse.json({ error: "Registration failed" }, { status: 500 });
