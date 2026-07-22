@@ -6,6 +6,8 @@ import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import { formatCurrency, formatDate , PLATFORM_CURRENCY } from "@/lib/utils";
 import { RestaurantControls } from "./RestaurantControls";
 import { AssignResellerControl } from "./AssignResellerControl";
+import { FeeFreeFeeControl } from "./FeeFreeFeeControl";
+import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
 import { ImpersonateButton } from "../ImpersonateButton";
 import {
   Store, Globe, Calendar, CreditCard, ShoppingBag, Users, UtensilsCrossed,
@@ -59,6 +61,7 @@ export default async function SuperadminRestaurantDetail({
         subscriptionPlan: true,
         marketplaceListing: true,
         shipdayConfig: true,
+        feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true, enabled: true } },
         resellerProfile: { select: { id: true, companyName: true, status: true } },
         users: { select: { id: true, email: true, role: true, emailVerifiedAt: true, createdAt: true } },
         _count: {
@@ -467,6 +470,32 @@ export default async function SuperadminRestaurantDetail({
             currentResellerProfileId={restaurant.resellerProfile?.id ?? null}
             resellers={resellerOptions}
           />
+        </Card>
+
+        {/* ── Fee Free Delivery (platform per-delivery fee) ────────────── */}
+        {/* Superadmin-only pricing lever — the flat per-delivery fee FeeFree bills
+            THIS store (blank = automatic distance tiers). Platform revenue; never
+            restaurant-editable. Frozen at delivery, so it never re-bills the past. */}
+        <Card title="Fee Free Delivery (platform fee)" icon={<Truck className="w-4 h-4" />}>
+          <Field
+            label="Enabled by store"
+            value={restaurant.feefreeDeliveryConfig?.enabled
+              ? <span className="text-emerald-700 font-semibold">Yes</span>
+              : <span className="text-gray-400 italic">No</span>}
+          />
+          <Field
+            label="Current fee mode"
+            value={restaurant.feefreeDeliveryConfig?.perDeliveryFeeCents != null
+              ? <span className="font-semibold">Flat {formatCurrency(restaurant.feefreeDeliveryConfig.perDeliveryFeeCents / 100, PLATFORM_CURRENCY)}/delivery</span>
+              : <span className="text-gray-600">Auto distance tiers</span>}
+          />
+          <div className="mt-3 border-t border-gray-100 pt-3">
+            <FeeFreeFeeControl
+              restaurantId={restaurant.id}
+              currentFeeCents={restaurant.feefreeDeliveryConfig?.perDeliveryFeeCents ?? null}
+              inServiceArea={isFeeFreeServiceArea(restaurant.lat, restaurant.lng)}
+            />
+          </div>
         </Card>
 
         {/* ── Domain + widget ──────────────────────────────────────── */}

@@ -50,6 +50,27 @@ export function feeCentsForDelivery(
 }
 
 /**
+ * The platform fee (cents) to FREEZE onto a delivered order, honoring an optional
+ * SUPERADMIN per-store flat override (FeeFreeDeliveryConfig.perDeliveryFeeCents).
+ * When the override is a valid non-negative number it WINS — a flat per-store fee
+ * (0 = a comped store) that replaces the distance tiers; otherwise the automatic
+ * distance tiers apply (base fee when coords are missing). Frozen at delivery, so
+ * a later change never re-bills past deliveries. Luigi 2026-07-21.
+ */
+export function resolveFrozenFeeCents(
+  overrideCents: number | null | undefined,
+  restaurantLat: number | null | undefined,
+  restaurantLng: number | null | undefined,
+  customerLat: number | null | undefined,
+  customerLng: number | null | undefined,
+): number {
+  if (typeof overrideCents === "number" && Number.isFinite(overrideCents) && overrideCents >= 0) {
+    return Math.round(overrideCents);
+  }
+  return feeCentsForDelivery(restaurantLat, restaurantLng, customerLat, customerLng);
+}
+
+/**
  * FeeFreeDelivery SERVICE AREA (Luigi 2026-07-14) — the in-house driver pool is
  * only offered to restaurants near the operation's home base (Milton / L9T, the
  * Greater Toronto Area), within 100 km. Restaurants outside this radius never see

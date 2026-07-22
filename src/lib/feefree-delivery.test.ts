@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   weekStartUtc, previousWeekStartUtc, weekEndUtc, FEEFREE_DELIVERY_PER_ORDER_CENTS,
-  feeCentsForDistanceKm, feeCentsForDelivery, isFeeFreeServiceArea, FEEFREE_SERVICE_ANCHOR,
+  feeCentsForDistanceKm, feeCentsForDelivery, resolveFrozenFeeCents, isFeeFreeServiceArea, FEEFREE_SERVICE_ANCHOR,
 } from "./feefree-delivery";
 
 describe("FeeFreeDelivery week boundaries (Monday-anchored, UTC)", () => {
@@ -47,6 +47,29 @@ describe("FeeFree distance-tiered fee (7.99 / 8.99 / 9.99)", () => {
     // ~8km apart → third tier.
     const far = feeCentsForDelivery(43.5183, -79.8774, 43.5183, -79.7780);
     expect(far).toBe(999);
+  });
+
+  describe("resolveFrozenFeeCents — superadmin per-store flat override", () => {
+    // ~8km apart (third tier, $9.99) so we can see the override beat the tiers.
+    const r = { rLat: 43.5183, rLng: -79.8774, cLat: 43.5183, cLng: -79.7780 };
+    it("a valid override wins over the distance tiers", () => {
+      expect(resolveFrozenFeeCents(650, r.rLat, r.rLng, r.cLat, r.cLng)).toBe(650); // flat $6.50 beats the $9.99 tier
+      expect(resolveFrozenFeeCents(1500, r.rLat, r.rLng, r.cLat, r.cLng)).toBe(1500);
+    });
+    it("a $0 override is honored (comped store) — not treated as 'unset'", () => {
+      expect(resolveFrozenFeeCents(0, r.rLat, r.rLng, r.cLat, r.cLng)).toBe(0);
+    });
+    it("null / undefined override falls back to the distance tiers", () => {
+      expect(resolveFrozenFeeCents(null, r.rLat, r.rLng, r.cLat, r.cLng)).toBe(999);
+      expect(resolveFrozenFeeCents(undefined, r.rLat, r.rLng, r.cLat, r.cLng)).toBe(999);
+    });
+    it("an invalid override (negative / NaN) falls back to the tiers", () => {
+      expect(resolveFrozenFeeCents(-100, r.rLat, r.rLng, r.cLat, r.cLng)).toBe(999);
+      expect(resolveFrozenFeeCents(NaN, r.rLat, r.rLng, r.cLat, r.cLng)).toBe(999);
+    });
+    it("no override + missing coords → base fee (the tiers' own fallback)", () => {
+      expect(resolveFrozenFeeCents(null, null, null, r.cLat, r.cLng)).toBe(799);
+    });
   });
 });
 

@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import { getDriverSession, checkDriverSessionFresh } from "@/lib/driver-session";
 import { checkDriverTransition, isDeliveryLate, ASSIGNMENT_TERMINAL, STAGE_TIMESTAMP } from "@/lib/driver-assignment";
 import { applyDeliveryStatus, translateDriverEvent } from "@/lib/delivery-status";
-import { feeCentsForDelivery } from "@/lib/feefree-delivery";
+import { resolveFrozenFeeCents } from "@/lib/feefree-delivery";
 import { recomputeDriverRating } from "@/lib/driver-rating";
 import { notifyCustomer } from "@/lib/notifications";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
           customerName: true, customerEmail: true, customerPhone: true,
           estimatedReady: true, scheduledFor: true, paymentMethod: true, paymentStatus: true,
           deliveryLat: true, deliveryLng: true,
-          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true } },
+          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true, feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true } } } },
         },
       },
     },
@@ -138,12 +138,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   // EVERY terminal write also stamps completedAt — the single date-ordered
   // keyset column the v1.1 history lists page on (readers guard `not: null`).
   if (ASSIGNMENT_TERMINAL.has(next)) data.completedAt = now;
-  // Freeze the DISTANCE-TIERED platform fee at delivery (7.99/8.99/9.99 by the
-  // restaurant→customer distance) — source of truth for the weekly settlement.
-  // Only set once (never re-bill a re-fired delivered).
+  // Freeze the platform fee at delivery — source of truth for the weekly
+  // settlement. A superadmin per-store flat override (perDeliveryFeeCents) wins;
+  // otherwise the DISTANCE-TIERED fee (7.99/8.99/9.99 by restaurant→customer
+  // distance). Only set once (never re-bill a re-fired delivered).
   if (next === "delivered" && assignment.platformFeeCents == null) {
     const o = assignment.order;
-    data.platformFeeCents = feeCentsForDelivery(o.restaurant.lat, o.restaurant.lng, o.deliveryLat, o.deliveryLng);
+    data.platformFeeCents = resolveFrozenFeeCents(
+      o.restaurant.feefreeDeliveryConfig?.perDeliveryFeeCents,
+      o.restaurant.lat, o.restaurant.lng, o.deliveryLat, o.deliveryLng,
+    );
   }
 
   // Claim race guard: when accepting a still-unowned assignment, do it

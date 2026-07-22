@@ -3665,6 +3665,14 @@ model FeeFreeDeliveryConfig {
   /// pass_through | flat | absorb
   customerFeeMode String     @default("pass_through")
   customerFee     Float?
+  /// SUPERADMIN-set flat per-delivery platform fee override, in CENTS — what
+  /// FeeFree bills THIS restaurant per delivered order. When set, it REPLACES the
+  /// automatic distance tiers ($7.99/$8.99/$9.99) for this store; NULL (default)
+  /// keeps the tiers. Frozen onto DeliveryAssignment.platformFeeCents at delivery,
+  /// so changing it never re-bills past deliveries. Set per-store on the superadmin
+  /// restaurant page based on unit economics; never advertised as a fixed public
+  /// number. (Luigi 2026-07-21.)
+  perDeliveryFeeCents Int?
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 
