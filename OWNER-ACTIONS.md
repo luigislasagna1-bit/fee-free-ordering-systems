@@ -84,13 +84,14 @@ Until the phone is set, the cron still runs but just logs "no alert phone config
 ### A17. ⏳ Apple Developer ORG account for Fee Free Ordering Inc. — SUBMITTED, still "(Pending)" as of 2026-07-16
 **Status:** enrollment SUBMITTED, Apple says processing can take up to ~48h (sometimes a verification call). **Enrollment ID `LXARH3QT89`** · Legal entity **Fee Free Ordering Inc.** · **D-U-N-S `243370724`** · account holder **Sameem Nabil**. **Nothing on Apple is clickable until it activates — do NOT re-purchase, it's already paid.** Test delivering on the **Android** driver APK meanwhile so nothing is blocked.
 
-**🔑 UPDATE 2026-07-23 — D1 DECIDED: D1-a (re-register Kitchen fresh under the org).** Luigi picked it after the Driver app was APPROVED publicly under the org (proving org signing + Codemagic work). Execution checklist (Luigi's clicks, Claude preps metadata + flips app-links):
-1. ☐ Old team App Store Connect → Fee Free Order App → delete the APP RECORD (TestFlight-only, deletable). Then old-team Developer portal → Identifiers → delete the `com.feefreeordering.kitchen` App ID to release the bundle id.
-2. ☐ Org Developer portal → register `com.feefreeordering.kitchen` → Org ASC → New App "Fee Free Order App". ⚠️ KNOWN APPLE QUIRK: a bundle id that had uploaded builds sometimes CANNOT be re-registered even after deletion. If Apple refuses → PLAN B: a fresh iOS-only bundle id (e.g. `com.feefreeordering.kitchenapp`; Android keeps its id — they don't need to match; Claude adjusts the iOS project/capacitor config + APNs setup).
-3. ☐ Codemagic → point the `ios-kitchen` workflow at the ORG App Store Connect API key + signing (the same creds the driver workflow already used successfully). (This is D2, half-done via driver.)
-4. ☐ Build → org TestFlight → verify the ring INCLUDING the wake-handoff fix 006c669d (its first native build — this also clears D3).
-5. ☐ Submit for App Store review (Claude preps name/subtitle/description/keywords/privacy from IOS_APP_STORE_SUBMISSION.md + store-assets; screenshots exist for driver — kitchen iOS screenshots to capture during step 4).
-6. When approved → tell Claude → `APP_LINKS.kitchen.ios` flip = iOS badges live everywhere.
+**🔑 IN PROGRESS 2026-07-23 — D1-a → PLAN B (fresh iOS bundle id under the org).** Apple refused to free the old `com.feefreeordering.kitchen` App ID ("in use by the App Store" — build-24 history lock, may take 30-90d or never), so Luigi picked Plan B: new iOS-only id. **Org team = `N537SW2VG2` (Fee Free Ordering Inc.).** Android keeps `com.feefreeordering.kitchen` (unchanged). Live checklist:
+1. ✅ DONE — old-team app record removed (Jul 23).
+2. ✅ DONE — iOS App ID `com.feefreeordering.kitchenapp` registered under the org with Push Notifications (name "Fee Free Order App").
+3. ⏳ NOW — App Store Connect (org) → New App record on that bundle id.
+4. ☐ Claude edits (paired with the build): codemagic.yaml `ios-kitchen` BUNDLE_ID + ios/App/App.xcodeproj PRODUCT_BUNDLE_IDENTIFIER → `.kitchenapp` (NOT capacitor.config.ts — Android must stay `.kitchen`); repoint `ios-kitchen` to the ORG ASC API key (same creds the driver workflow used).
+5. ☐ Codemagic build → org TestFlight → verify the ring incl. wake-handoff 006c669d (first native build with it = also clears D3). Capture iOS kitchen screenshots here.
+6. ☐ Submit for App Store review (Claude preps metadata from IOS_APP_STORE_SUBMISSION.md + store-assets).
+7. When approved → tell Claude → flip `APP_LINKS.kitchen.ios` = iOS badges live everywhere.
 
 **🔑 THREE DECISIONS (original, for the record — full detail in `IOS_APP_STORE_SUBMISSION.md` §D1–D3):**
 - **D1 — Kitchen bundle id is stuck on the OLD team.** `com.feefreeordering.kitchen` lives under the old team (`NT5ZY28ATK`) and is TestFlight-only. Apple's "Transfer App" needs a *publicly released* app, so **a TestFlight-only app generally can't be transferred** — the old "submit now, transfer later" plan is NOT reliable for Kitchen. Pick: **(D1-a, recommended)** remove it from the old team + re-register the same bundle id fresh under the org (lose build-24 TestFlight history, re-upload one build); or **(D1-b)** submit from the old team now (Seller shows "Luigi's Lasagna & Pizzeria Inc." — the name you didn't want public). **Driver app has no iOS App ID yet → register `com.feefreeordering.driver` CLEAN under the org, no transfer ever.**

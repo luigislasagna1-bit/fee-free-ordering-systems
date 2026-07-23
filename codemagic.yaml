@@ -26,8 +26,14 @@ workflows:
     name: Fee Free Order App (iOS)
     instance_type: mac_mini_m2
     max_build_duration: 60
+    # 2026-07-23 — Kitchen migrated to the Fee Free Ordering Inc. ORG (team
+    # N537SW2VG2). Apple wouldn't free the old `com.feefreeordering.kitchen`
+    # App ID ("in use by the App Store" — build-24 lock), so iOS uses a fresh
+    # id `com.feefreeordering.kitchenapp` (Plan B). Android keeps `.kitchen`
+    # (unchanged in capacitor.config.ts / android project). Signs via the
+    # SAME `ff-asc-org` integration the driver app already ships under.
     integrations:
-      app_store_connect: ff-asc-key
+      app_store_connect: ff-asc-org
     environment:
       groups:
         # Secure variable group holding IOS_SIGNING_KEY_PEM — the stored iOS
@@ -41,7 +47,7 @@ workflows:
       vars:
         XCODE_PROJECT: "ios/App/App.xcodeproj"
         XCODE_SCHEME: "App"
-        BUNDLE_ID: "com.feefreeordering.kitchen"
+        BUNDLE_ID: "com.feefreeordering.kitchenapp"
       node: 22
     triggering:
       # Manual builds only for now (we trigger from the Codemagic UI). We can
