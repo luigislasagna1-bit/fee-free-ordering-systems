@@ -23,6 +23,7 @@
  * See ROADMAP.md Phase G for the full plan.
  */
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
   X, Printer, Key, Loader2, CheckCircle, XCircle, RefreshCw,
   Settings, List, Eye, EyeOff, AlertCircle, ExternalLink,
@@ -39,11 +40,12 @@ import {
  * these desktop OSes.)
  */
 type PNDeviceOS = "windows" | "macos" | "linux" | "rpi";
-const PN_OS_OPTIONS: { id: PNDeviceOS; label: string; icon: typeof Monitor; href: string; note: string }[] = [
-  { id: "windows", label: "Windows",      icon: Monitor,    href: "https://www.printnode.com/en/download/client/windows", note: "Win 10 / 11. Cheapest option: a $150 mini-PC stays on permanently next to the printer." },
-  { id: "macos",   label: "macOS",        icon: Apple,      href: "https://www.printnode.com/en/download/client/macos",   note: "macOS 11+. Use an old Mac mini or any spare Mac." },
-  { id: "linux",   label: "Linux",        icon: Server,     href: "https://www.printnode.com/en/download/client/linux",   note: "Debian/Ubuntu/RHEL. Headless install on a small server works fine." },
-  { id: "rpi",     label: "Raspberry Pi", icon: Cpu,        href: "https://www.printnode.com/en/download/client/raspbian", note: "Pre-built Raspbian image. ~$60 hardware, lowest-cost dedicated print bridge." },
+/** Labels/notes are i18n keys in the "kitchen" namespace (resolved via tk() inside the component). */
+const PN_OS_OPTIONS: { id: PNDeviceOS; labelKey: string; icon: typeof Monitor; href: string; noteKey: string }[] = [
+  { id: "windows", labelKey: "pnOsWindows", icon: Monitor,    href: "https://www.printnode.com/en/download/client/windows",  noteKey: "pnOsWindowsNote" },
+  { id: "macos",   labelKey: "pnOsMacos",   icon: Apple,      href: "https://www.printnode.com/en/download/client/macos",    noteKey: "pnOsMacosNote" },
+  { id: "linux",   labelKey: "pnOsLinux",   icon: Server,     href: "https://www.printnode.com/en/download/client/linux",    noteKey: "pnOsLinuxNote" },
+  { id: "rpi",     labelKey: "pnOsRpi",     icon: Cpu,        href: "https://www.printnode.com/en/download/client/raspbian", noteKey: "pnOsRpiNote" },
 ];
 import { THEMES, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 
@@ -120,6 +122,7 @@ const DEFAULT_SETTINGS: PrinterSettings = {
 
 export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark" }: Props) {
   const t = THEMES[themeMode];
+  const tk = useTranslations("kitchen");
   const [tab, setTab] = useState<Tab>("connection");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -156,7 +159,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
         const res = await fetch("/api/kitchen/printnode/settings");
         const data = await safeJson(res);
         if (!res.ok || !data) {
-          setLoadError(data?.error ?? "Failed to load settings");
+          setLoadError(data?.error ?? tk("pnLoadFailed"));
           setLoading(false);
           return;
         }
@@ -164,7 +167,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
         setEncryptionConfigured(data.encryptionConfigured ?? true);
         if (data.settings?.printNodeConnected) fetchPrinters();
       } catch (err: any) {
-        setLoadError(err.message ?? "Network error");
+        setLoadError(err.message ?? tk("pnNetworkError"));
       } finally {
         setLoading(false);
       }
@@ -204,7 +207,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
       });
       const saveData = await safeJson(saveRes);
       if (!saveRes.ok) {
-        setTestResult({ ok: false, msg: saveData?.error ?? "Failed to save API key" });
+        setTestResult({ ok: false, msg: saveData?.error ?? tk("pnSaveKeyFailed") });
         return;
       }
     }
@@ -215,20 +218,20 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
       const res = await fetch("/api/kitchen/printnode/test", { method: "POST" });
       const data = await safeJson(res);
       if (!data) {
-        setTestResult({ ok: false, msg: "No response from server" });
+        setTestResult({ ok: false, msg: tk("pnNoResponse") });
         return;
       }
       if (res.ok) {
-        setTestResult({ ok: true, msg: `Connected as ${data.accountName}` });
+        setTestResult({ ok: true, msg: tk("pnConnectedAs", { name: data.accountName }) });
         setSettings((s) => ({ ...s, printNodeConnected: true, printNodeAccountName: data.accountName, hasApiKey: true }));
         setPrinters(data.printers ?? []);
         setApiKey("");
       } else {
-        setTestResult({ ok: false, msg: data.error ?? "Connection failed" });
+        setTestResult({ ok: false, msg: data.error ?? tk("pnConnectionFailed") });
         setSettings((s) => ({ ...s, printNodeConnected: false }));
       }
     } catch (err: any) {
-      setTestResult({ ok: false, msg: err.message ?? "Network error" });
+      setTestResult({ ok: false, msg: err.message ?? tk("pnNetworkError") });
     } finally {
       setTesting(false);
     }
@@ -257,13 +260,13 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
       });
       const data = await safeJson(res);
       if (!res.ok) {
-        setTestResult({ ok: false, msg: data?.error ?? "Failed to save" });
+        setTestResult({ ok: false, msg: data?.error ?? tk("pnSaveFailed") });
         return;
       }
       onSettingsSaved(settings);
       onClose();
     } catch (err: any) {
-      setTestResult({ ok: false, msg: err.message ?? "Network error" });
+      setTestResult({ ok: false, msg: err.message ?? tk("pnNetworkError") });
     } finally {
       setSaving(false);
     }
@@ -280,12 +283,12 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
       });
       const data = await safeJson(res);
       if (res.ok) {
-        setTestResult({ ok: true, msg: "Test print sent! Check your printer." });
+        setTestResult({ ok: true, msg: tk("pnTestPrintSent") });
       } else {
-        setTestResult({ ok: false, msg: data?.error ?? "Test print failed" });
+        setTestResult({ ok: false, msg: data?.error ?? tk("pnTestPrintFailed") });
       }
     } catch (err: any) {
-      setTestResult({ ok: false, msg: err.message ?? "Network error" });
+      setTestResult({ ok: false, msg: err.message ?? tk("pnNetworkError") });
     } finally {
       setSendingTest(false);
     }
@@ -302,21 +305,21 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
       });
       const data = await safeJson(res);
       if (res.ok) {
-        setTestResult({ ok: true, msg: `Diagnostic sent (${data?.payloadBytes ?? "?"} bytes, job #${data?.jobId ?? "?"}). Check printer.` });
+        setTestResult({ ok: true, msg: tk("pnDiagSent", { n: data?.payloadBytes ?? "?", id: data?.jobId ?? "?" }) });
       } else {
-        setTestResult({ ok: false, msg: data?.error ?? "Diagnostic failed" });
+        setTestResult({ ok: false, msg: data?.error ?? tk("pnDiagFailed") });
       }
     } catch (err: any) {
-      setTestResult({ ok: false, msg: err.message ?? "Network error" });
+      setTestResult({ ok: false, msg: err.message ?? tk("pnNetworkError") });
     } finally {
       setSendingDiag(null);
     }
   }
 
   const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
-    { key: "connection", label: "Connection", icon: <Key className="w-4 h-4" /> },
-    { key: "settings", label: "Settings", icon: <Settings className="w-4 h-4" /> },
-    { key: "logs", label: "Print Logs", icon: <List className="w-4 h-4" /> },
+    { key: "connection", label: tk("pnTabConnection"), icon: <Key className="w-4 h-4" /> },
+    { key: "settings", label: tk("pnTabSettings"), icon: <Settings className="w-4 h-4" /> },
+    { key: "logs", label: tk("pnTabLogs"), icon: <List className="w-4 h-4" /> },
   ];
 
   // Force dark styling for the modal regardless of theme (kitchen display modal)
@@ -329,10 +332,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700 flex-shrink-0">
           <div className="flex items-center gap-2">
             <Printer className="w-5 h-5 text-emerald-400" />
-            <h3 className="text-lg font-bold text-white">Printer Setup</h3>
+            <h3 className="text-lg font-bold text-white">{tk("pnTitle")}</h3>
             {settings.printNodeConnected && (
               <span className="ml-2 text-xs bg-green-500/20 text-green-400 border border-green-500/30 px-2 py-0.5 rounded-full flex items-center gap-1">
-                <CheckCircle className="w-3 h-3" /> Connected
+                <CheckCircle className="w-3 h-3" /> {tk("pnConnected")}
               </span>
             )}
           </div>
@@ -358,16 +361,16 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
           {loading ? (
             <div className="flex items-center justify-center py-12 gap-3 text-gray-400">
               <Loader2 className="w-5 h-5 animate-spin" />
-              <span className="text-sm">Loading settings...</span>
+              <span className="text-sm">{tk("pnLoadingSettings")}</span>
             </div>
           ) : loadError ? (
             <div className="bg-red-900/30 border border-red-600/40 rounded-xl p-4 flex gap-3">
               <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold text-red-300">Failed to load settings</p>
+                <p className="text-sm font-semibold text-red-300">{tk("pnLoadFailed")}</p>
                 <p className="text-xs text-red-400 mt-0.5">{loadError}</p>
                 <button onClick={() => window.location.reload()} className="mt-2 text-xs text-red-300 underline">
-                  Reload page
+                  {tk("pnReloadPage")}
                 </button>
               </div>
             </div>
@@ -380,7 +383,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                     <div className="bg-amber-900/30 border border-amber-600/40 rounded-xl p-4 flex gap-3">
                       <AlertCircle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
                       <p className="text-sm text-amber-300">
-                        Secure key storage is not configured. Contact your system administrator to enable PrintNode integration.
+                        {tk("pnEncryptionWarning")}
                       </p>
                     </div>
                   )}
@@ -403,10 +406,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                         <BookOpen className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                         <div>
                           <div className="text-sm font-semibold text-emerald-300">
-                            First time setting up? Read this first
+                            {tk("pnGuideTitle")}
                           </div>
                           <div className="text-xs text-emerald-200/70 mt-0.5">
-                            Create a PrintNode account, install the desktop app, get your API key — 5 minute walkthrough
+                            {tk("pnGuideSubtitle")}
                           </div>
                         </div>
                       </div>
@@ -427,27 +430,27 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                             network. */}
                         <div className="mt-3 bg-gray-900/40 border border-gray-700 rounded-lg p-3">
                           <div className="text-xs font-semibold text-emerald-300 mb-1.5">
-                            How the kitchen printer works
+                            {tk("pnHowItWorksTitle")}
                           </div>
                           <p className="text-xs text-gray-300 leading-relaxed mb-2">
-                            There are <strong>two</strong> pieces. They can live on the same device or on two devices that share a network — your call.
+                            {tk.rich("pnHowItWorksBody", { strong: (c) => <strong>{c}</strong> })}
                           </p>
                           <ul className="text-xs text-gray-400 space-y-1.5 leading-relaxed">
                             <li className="flex gap-2">
                               <Tablet className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span><strong className="text-gray-200">Kitchen Order App</strong> — a free Android app on <strong>Google Play</strong> (search &ldquo;Fee Free Order App&rdquo;), with WiFi/LAN printing built in. It also runs in any browser on <em>any</em> device: iPad, Android tablet, iPhone, Windows tablet, laptop, desktop, even a TV with a Chromecast — just open the site and log in, and use <strong>Add to Home Screen</strong> on a tablet.</span>
+                              <span>{tk.rich("pnPieceKitchenApp", { b: (c) => <strong className="text-gray-200">{c}</strong>, strong: (c) => <strong>{c}</strong>, em: (c) => <em>{c}</em> })}</span>
                             </li>
                             <li className="flex gap-2">
                               <Printer className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                              <span><strong className="text-gray-200">PrintNode</strong> — the bridge that talks to your physical receipt printer. <strong className="text-amber-300">Only runs on Windows, macOS, Linux, or Raspberry Pi.</strong> No iOS or Android version exists. Must be on a device on the same network as the printer (USB connection is fine — usually the same device).</span>
+                              <span>{tk.rich("pnPiecePrintNode", { b: (c) => <strong className="text-gray-200">{c}</strong>, warn: (c) => <strong className="text-amber-300">{c}</strong> })}</span>
                             </li>
                           </ul>
                           <div className="mt-3 pt-3 border-t border-gray-700">
-                            <div className="text-xs font-semibold text-gray-300 mb-1.5">Common setups</div>
+                            <div className="text-xs font-semibold text-gray-300 mb-1.5">{tk("pnCommonSetups")}</div>
                             <ul className="text-xs text-gray-400 space-y-1 leading-relaxed list-disc list-inside ml-1">
-                              <li><strong className="text-gray-200">Cheapest / simplest:</strong> One Windows mini-PC (~$150) runs both — kitchen display in a browser and PrintNode + USB printer.</li>
-                              <li><strong className="text-gray-200">Tablet kitchen:</strong> iPad or Android tablet for the display + a separate Raspberry Pi (~$60) or any spare PC for PrintNode + printer on the same Wi-Fi.</li>
-                              <li><strong className="text-gray-200">Already have a Mac/PC:</strong> Use it. PrintNode runs alongside whatever else is on it. The browser can be on the same machine or a separate tablet.</li>
+                              <li>{tk.rich("pnSetupCheapest", { b: (c) => <strong className="text-gray-200">{c}</strong> })}</li>
+                              <li>{tk.rich("pnSetupTablet", { b: (c) => <strong className="text-gray-200">{c}</strong> })}</li>
+                              <li>{tk.rich("pnSetupExisting", { b: (c) => <strong className="text-gray-200">{c}</strong> })}</li>
                             </ul>
                           </div>
                         </div>
@@ -458,10 +461,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <UserPlus className="w-3.5 h-3.5 text-emerald-400" />
-                              Create your own PrintNode account
+                              {tk("pnStep1Title")}
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-                              Sign up with the email you want PrintNode notifications to go to. <strong className="text-amber-300">Each restaurant (and each location, if you have multiple) needs its own PrintNode account + paid plan.</strong> You can&apos;t share one account across locations because the API key only points to one set of installed printers. The free tier includes 50 prints / month for testing; production plans start around $5/mo for 500 prints.
+                              {tk.rich("pnStep1Body", { warn: (c) => <strong className="text-amber-300">{c}</strong> })}
                             </p>
                             <a
                               href="https://app.printnode.com/app/signup"
@@ -469,7 +472,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
                             >
-                              Open PrintNode signup
+                              {tk("pnOpenSignup")}
                               <ExternalLink className="w-3 h-3" />
                             </a>
                           </div>
@@ -481,10 +484,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
-                              Open the Kitchen Order App on the device you want to view orders on
+                              {tk("pnStep2Title")}
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-                              No install needed — it&apos;s a web app. Open your browser, navigate to <span className="font-mono bg-gray-700 px-1 rounded text-[11px]">/kitchen</span> on this site, sign in with the kitchen-staff account. On iPad / Android, use the browser&apos;s <strong>Add to Home Screen</strong> menu to pin the page — it then launches full-screen like a native app. On Windows you can do the same via Chrome / Edge → Install App.
+                              {tk.rich("pnStep2Body", { mono: (c) => <span className="font-mono bg-gray-700 px-1 rounded text-[11px]">{c}</span>, strong: (c) => <strong>{c}</strong> })}
                             </p>
                           </div>
                         </div>
@@ -495,10 +498,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <Download className="w-3.5 h-3.5 text-emerald-400" />
-                              Install PrintNode on the device connected to your printer
+                              {tk("pnStep3Title")}
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-                              This device must be Windows, macOS, Linux, or Raspberry Pi (PrintNode doesn&apos;t ship for iOS or Android). It must stay powered on with PrintNode running — it&apos;s the bridge between us and your printer. Once installed, sign in with the account from step 1. PrintNode auto-detects any printer your operating system already recognizes — USB Star TSP143, Epson TM, network thermal, regular office printers, all work.
+                              {tk("pnStep3Body")}
                             </p>
 
                             {/* OS picker */}
@@ -518,7 +521,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                                     }`}
                                   >
                                     <Icon className="w-3.5 h-3.5 flex-shrink-0" />
-                                    {opt.label}
+                                    {tk(opt.labelKey)}
                                   </button>
                                 );
                               })}
@@ -532,16 +535,16 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                                 <div className="mt-2.5 bg-gray-900/40 border border-gray-700 rounded-lg p-2.5">
                                   <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-200">
                                     <SelIcon className="w-3.5 h-3.5 text-emerald-400" />
-                                    {sel.label}
+                                    {tk(sel.labelKey)}
                                   </div>
-                                  <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">{sel.note}</p>
+                                  <p className="text-[11px] text-gray-400 mt-1 leading-relaxed">{tk(sel.noteKey)}</p>
                                   <a
                                     href={sel.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
                                   >
-                                    Download PrintNode for {sel.label}
+                                    {tk("pnDownloadFor", { os: tk(sel.labelKey) })}
                                     <ExternalLink className="w-3 h-3" />
                                   </a>
                                 </div>
@@ -556,10 +559,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <Key className="w-3.5 h-3.5 text-emerald-400" />
-                              Generate an API key
+                              {tk("pnStep4Title")}
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-                              In the PrintNode dashboard, go to <span className="font-mono bg-gray-700 px-1 rounded text-[11px]">Account → API Keys</span>, click <strong>Create API Key</strong>, give it any name (e.g. "Fee Free Ordering"), and copy the long string that appears. <span className="text-amber-300">You only see it once</span> — save it somewhere safe before navigating away.
+                              {tk.rich("pnStep4Body", { mono: (c) => <span className="font-mono bg-gray-700 px-1 rounded text-[11px]">{c}</span>, strong: (c) => <strong>{c}</strong>, warn: (c) => <span className="text-amber-300">{c}</span> })}
                             </p>
                             <a
                               href="https://app.printnode.com/app/apikeys"
@@ -567,7 +570,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1.5 mt-1.5 text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:underline"
                             >
-                              Open PrintNode API Keys page
+                              {tk("pnOpenApiKeys")}
                               <ExternalLink className="w-3 h-3" />
                             </a>
                           </div>
@@ -579,10 +582,10 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="flex-1 min-w-0">
                             <div className="text-sm font-semibold text-white flex items-center gap-1.5">
                               <Printer className="w-3.5 h-3.5 text-emerald-400" />
-                              Paste the key below, click Test Connection
+                              {tk("pnStep5Title")}
                             </div>
                             <p className="text-xs text-gray-400 mt-0.5 leading-relaxed">
-                              Paste the API key into the field below. Click <strong>Test Connection</strong>. If your account name shows up + your printer appears in the list, you&apos;re done. Pick the printer, save settings, fire a test print.
+                              {tk.rich("pnStep5Body", { strong: (c) => <strong>{c}</strong> })}
                             </p>
                           </div>
                         </div>
@@ -590,7 +593,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                         <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2.5 flex gap-2 mt-2">
                           <AlertCircle className="w-3.5 h-3.5 text-amber-400 flex-shrink-0 mt-0.5" />
                           <p className="text-xs text-amber-200/90 leading-relaxed">
-                            <strong>Heads up:</strong> the PrintNode app must stay running on the device with the printer for receipts to print. If that device goes offline or PrintNode is closed, jobs queue up until it&apos;s back online. Most owners leave the PrintNode device powered on 24/7 (it sips electricity).
+                            {tk.rich("pnHeadsUp", { strong: (c) => <strong>{c}</strong> })}
                           </p>
                         </div>
                       </div>
@@ -598,13 +601,13 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-1">PrintNode API Key</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-1">{tk("pnApiKeyLabel")}</label>
                     <div className="relative">
                       <input
                         type={showApiKey ? "text" : "password"}
                         value={apiKey}
                         onChange={(e) => setApiKey(e.target.value)}
-                        placeholder={settings.hasApiKey ? "API key saved — enter new value to replace" : "Your PrintNode API key"}
+                        placeholder={settings.hasApiKey ? tk("pnApiKeyPlaceholderSaved") : tk("pnApiKeyPlaceholder")}
                         className="w-full bg-gray-700 border border-gray-600 rounded-xl px-4 py-2.5 pr-10 text-white text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500"
                         autoComplete="off"
                         disabled={!encryptionConfigured}
@@ -619,19 +622,23 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                     </div>
                     {settings.hasApiKey && !apiKey && (
                       <p className="mt-1 text-xs text-green-400 flex items-center gap-1">
-                        <CheckCircle className="w-3 h-3" /> API key is saved. Leave blank to keep it.
+                        <CheckCircle className="w-3 h-3" /> {tk("pnApiKeySaved")}
                       </p>
                     )}
                     <p className="mt-1.5 text-xs text-gray-500">
-                      Find your API key at <a
-                        href="https://app.printnode.com/app/apikeys"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-mono bg-gray-700 px-1 rounded text-gray-300 hover:text-emerald-400 transition inline-flex items-center gap-1"
-                      >
-                        app.printnode.com → Account → API Keys
-                        <ExternalLink className="w-3 h-3" />
-                      </a>
+                      {tk.rich("pnFindKey", {
+                        link: (c) => (
+                          <a
+                            href="https://app.printnode.com/app/apikeys"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-mono bg-gray-700 px-1 rounded text-gray-300 hover:text-emerald-400 transition inline-flex items-center gap-1"
+                          >
+                            {c}
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        ),
+                      })}
                       {!showGuide && (
                         <>
                           {" · "}
@@ -640,7 +647,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                             onClick={() => setShowGuide(true)}
                             className="text-emerald-400 hover:text-emerald-300 hover:underline"
                           >
-                            Show full setup guide
+                            {tk("pnShowGuide")}
                           </button>
                         </>
                       )}
@@ -660,21 +667,21 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                     className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition"
                   >
                     {testing ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCw className="w-4 h-4" />}
-                    {testing ? "Testing..." : "Test Connection"}
+                    {testing ? tk("pnTesting") : tk("pnTestConnection")}
                   </button>
 
                   {/* Printer selection */}
                   {settings.printNodeConnected && (
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <label className="text-sm font-semibold text-gray-300">Select Printer</label>
+                        <label className="text-sm font-semibold text-gray-300">{tk("pnSelectPrinter")}</label>
                         <button onClick={fetchPrinters} className="text-xs text-gray-400 hover:text-white flex items-center gap-1">
-                          <RefreshCw className="w-3 h-3" /> Refresh
+                          <RefreshCw className="w-3 h-3" /> {tk("pnRefresh")}
                         </button>
                       </div>
                       {printers.length === 0 ? (
                         <div className="bg-gray-700/50 rounded-xl p-4 text-sm text-gray-400 text-center">
-                          No printers found. Make sure <strong>PrintNode Desktop</strong> is running on the computer with your printer.
+                          {tk.rich("pnNoPrinters", { strong: (c) => <strong>{c}</strong> })}
                         </div>
                       ) : (
                         <div className="space-y-2">
@@ -701,8 +708,8 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                     <div className="pt-3 border-t border-gray-700 space-y-4">
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="text-sm font-semibold text-gray-300">Send Test Print</div>
-                          <div className="text-xs text-gray-500">Sends to: <span className="text-gray-400">{settings.selectedPrinterName}</span></div>
+                          <div className="text-sm font-semibold text-gray-300">{tk("pnSendTestPrint")}</div>
+                          <div className="text-xs text-gray-500">{tk("pnSendsTo")} <span className="text-gray-400">{settings.selectedPrinterName}</span></div>
                         </div>
                         <button
                           onClick={handleTestPrint}
@@ -710,20 +717,20 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-gray-200 px-4 py-2 rounded-xl text-sm font-medium transition disabled:opacity-50"
                         >
                           {sendingTest ? <Loader2 className="w-4 h-4 animate-spin" /> : <Printer className="w-4 h-4" />}
-                          {sendingTest ? "Sending..." : "Test Print"}
+                          {sendingTest ? tk("pnSending") : tk("pnTestPrint")}
                         </button>
                       </div>
 
                       <div>
-                        <div className="text-sm font-semibold text-gray-300 mb-1">Printer Diagnostics</div>
-                        <div className="text-xs text-gray-500 mb-2">Use these to identify the right protocol for your printer. Start with Plain Text — if that works, try ESC/POS or StarPRNT.</div>
+                        <div className="text-sm font-semibold text-gray-300 mb-1">{tk("pnDiagnosticsTitle")}</div>
+                        <div className="text-xs text-gray-500 mb-2">{tk("pnDiagnosticsHint")}</div>
                         <div className="flex flex-col gap-2">
                           {([
-                            { type: "plaintext" as const,      label: "Plain Text Test",        desc: "No control codes — just readable text" },
-                            { type: "escpos_basic" as const,   label: "ESC/POS Basic Test",     desc: "Bold, center, large text, cut (Epson/generic protocol)" },
-                            { type: "starprnt_basic" as const, label: "StarPRNT Basic Test",    desc: "Bold, sizes, inverse, black bars, alignment — each with PASS/FAIL label (Star StarPRNT mode)" },
-                            { type: "star_bold_test" as const, label: "STAR BOLD TEST",         desc: "Tests ESC E (StarPRNT), ESC F/H (Star Line), and ESC ! (ESC/POS) side-by-side — print to see which bold command works on your printer" },
-                          ]).map(({ type, label, desc }) => (
+                            { type: "plaintext" as const,      labelKey: "pnDiagPlainLabel",    descKey: "pnDiagPlainDesc" },
+                            { type: "escpos_basic" as const,   labelKey: "pnDiagEscposLabel",   descKey: "pnDiagEscposDesc" },
+                            { type: "starprnt_basic" as const, labelKey: "pnDiagStarprntLabel", descKey: "pnDiagStarprntDesc" },
+                            { type: "star_bold_test" as const, labelKey: "pnDiagStarBoldLabel", descKey: "pnDiagStarBoldDesc" },
+                          ]).map(({ type, labelKey, descKey }) => (
                             <button
                               key={type}
                               onClick={() => handleDiagnostic(type)}
@@ -731,8 +738,8 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                               className="flex items-center justify-between w-full bg-gray-700/60 hover:bg-gray-700 border border-gray-600 text-left px-4 py-2.5 rounded-xl transition disabled:opacity-50"
                             >
                               <div>
-                                <div className="text-sm font-medium text-gray-200">{label}</div>
-                                <div className="text-xs text-gray-500">{desc}</div>
+                                <div className="text-sm font-medium text-gray-200">{tk(labelKey)}</div>
+                                <div className="text-xs text-gray-500">{tk(descKey)}</div>
                               </div>
                               {sendingDiag === type
                                 ? <Loader2 className="w-4 h-4 animate-spin text-emerald-400 flex-shrink-0" />
@@ -750,28 +757,28 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
               {tab === "settings" && (
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Printer Language</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">{tk("pnPrinterLanguage")}</label>
                     <div className="flex flex-col gap-2">
                       {([
-                        { val: "escpos",    label: "ESC/POS (Epson / Generic)",               desc: "Epson ESC/POS — for Epson, Bixolon, and most generic thermal printers" },
-                        { val: "starprnt",  label: "StarPRNT — Star TSP143 (StarPRNT mode)",  desc: "Star Micronics StarPRNT protocol — uses ESC E n for bold. Run 'STAR BOLD TEST' to verify." },
-                        { val: "star_line", label: "Star Line Mode — Star TSP143 (Star Line)", desc: "Star Micronics Star Line mode — uses ESC F/H for bold. Try this if StarPRNT bold is not visible." },
-                        { val: "plaintext", label: "Plain Text (debug only)",                  desc: "No formatting codes — fallback only" },
-                      ]).map(({ val, label, desc }) => (
+                        { val: "escpos",    labelKey: "pnLangEscpos",   descKey: "pnLangEscposDesc" },
+                        { val: "starprnt",  labelKey: "pnLangStarprnt", descKey: "pnLangStarprntDesc" },
+                        { val: "star_line", labelKey: "pnLangStarLine", descKey: "pnLangStarLineDesc" },
+                        { val: "plaintext", labelKey: "pnLangPlain",    descKey: "pnLangPlainDesc" },
+                      ]).map(({ val, labelKey, descKey }) => (
                         <button
                           key={val}
                           onClick={() => setSettings((s) => ({ ...s, printerLanguage: val }))}
                           className={`w-full text-left px-4 py-3 rounded-xl border-2 transition ${settings.printerLanguage === val ? "border-emerald-500 bg-emerald-500/10" : "border-gray-600 hover:border-gray-500"}`}
                         >
-                          <div className="text-sm font-semibold text-white">{label}</div>
-                          <div className="text-xs text-gray-400 mt-0.5">{desc}</div>
+                          <div className="text-sm font-semibold text-white">{tk(labelKey)}</div>
+                          <div className="text-xs text-gray-400 mt-0.5">{tk(descKey)}</div>
                         </button>
                       ))}
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Paper Width</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">{tk("pnPaperWidth")}</label>
                     <div className="flex gap-2">
                       {(["58mm", "80mm"] as const).map((w) => (
                         <button
@@ -783,33 +790,33 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                         </button>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-500 mt-1.5">58mm = 32 chars/line · 80mm = 48 chars/line</p>
+                    <p className="text-xs text-gray-500 mt-1.5">{tk("pnPaperWidthHint")}</p>
                   </div>
 
                   <div className="space-y-4">
-                    <div className="text-sm font-semibold text-gray-300">Print Copies</div>
-                    <Toggle label="Kitchen copy" sub="Items, modifiers, and notes for kitchen staff" val={settings.printKitchen} onChange={(v) => setSettings((s) => ({ ...s, printKitchen: v }))} t={mt} />
+                    <div className="text-sm font-semibold text-gray-300">{tk("pnPrintCopies")}</div>
+                    <Toggle label={tk("pnKitchenCopy")} sub={tk("pnKitchenCopySub")} val={settings.printKitchen} onChange={(v) => setSettings((s) => ({ ...s, printKitchen: v }))} t={mt} />
                     {settings.printKitchen && (
                       <div className="pl-4 border-l-2 border-gray-700">
-                        <NumSel label="Kitchen copies per order" value={settings.kitchenCopies} onChange={(v) => setSettings((s) => ({ ...s, kitchenCopies: v }))} />
+                        <NumSel label={tk("pnKitchenCopiesPerOrder")} value={settings.kitchenCopies} onChange={(v) => setSettings((s) => ({ ...s, kitchenCopies: v }))} />
                       </div>
                     )}
-                    <Toggle label="Customer copy" sub="Full receipt with prices for the customer" val={settings.printCustomer} onChange={(v) => setSettings((s) => ({ ...s, printCustomer: v }))} t={mt} />
+                    <Toggle label={tk("pnCustomerCopy")} sub={tk("pnCustomerCopySub")} val={settings.printCustomer} onChange={(v) => setSettings((s) => ({ ...s, printCustomer: v }))} t={mt} />
                     {settings.printCustomer && (
                       <div className="pl-4 border-l-2 border-gray-700">
-                        <NumSel label="Customer copies per order" value={settings.customerCopies} onChange={(v) => setSettings((s) => ({ ...s, customerCopies: v }))} />
+                        <NumSel label={tk("pnCustomerCopiesPerOrder")} value={settings.customerCopies} onChange={(v) => setSettings((s) => ({ ...s, customerCopies: v }))} />
                       </div>
                     )}
                   </div>
 
                   <div className="space-y-3">
-                    <div className="text-sm font-semibold text-gray-300">Receipt Style</div>
-                    <Toggle label="Large order number" sub="Double-height order # at top of kitchen copy" val={settings.showLargeOrderNumber} onChange={(v) => setSettings((s) => ({ ...s, showLargeOrderNumber: v }))} t={mt} />
+                    <div className="text-sm font-semibold text-gray-300">{tk("pnReceiptStyle")}</div>
+                    <Toggle label={tk("pnLargeOrderNumber")} sub={tk("pnLargeOrderNumberSub")} val={settings.showLargeOrderNumber} onChange={(v) => setSettings((s) => ({ ...s, showLargeOrderNumber: v }))} t={mt} />
                   </div>
 
                   <div className="space-y-3">
-                    <div className="text-sm font-semibold text-gray-300">Auto-Print</div>
-                    <Toggle label="Print automatically on accept" sub="Sends receipt to printer when order is accepted" val={settings.autoPrint} onChange={(v) => setSettings((s) => ({ ...s, autoPrint: v }))} t={mt} />
+                    <div className="text-sm font-semibold text-gray-300">{tk("pnAutoPrint")}</div>
+                    <Toggle label={tk("pnAutoPrintLabel")} sub={tk("pnAutoPrintSub")} val={settings.autoPrint} onChange={(v) => setSettings((s) => ({ ...s, autoPrint: v }))} t={mt} />
                   </div>
                 </div>
               )}
@@ -818,15 +825,15 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
               {tab === "logs" && (
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-sm font-semibold text-gray-300">Recent Print Jobs</div>
+                    <div className="text-sm font-semibold text-gray-300">{tk("pnRecentJobs")}</div>
                     <button onClick={loadLogs} className="text-xs text-gray-400 hover:text-white flex items-center gap-1">
-                      <RefreshCw className="w-3 h-3" /> Refresh
+                      <RefreshCw className="w-3 h-3" /> {tk("pnRefresh")}
                     </button>
                   </div>
                   {loadingLogs ? (
                     <div className="flex justify-center py-8"><Loader2 className="w-5 h-5 animate-spin text-emerald-400" /></div>
                   ) : logs.length === 0 ? (
-                    <div className="text-center py-10 text-gray-500 text-sm">No print jobs yet.</div>
+                    <div className="text-center py-10 text-gray-500 text-sm">{tk("pnNoJobs")}</div>
                   ) : (
                     <div className="space-y-2">
                       {logs.map((log) => (
@@ -834,17 +841,17 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
                               <span className="text-sm font-semibold text-white">
-                                {log.orderNumber ? `#${log.orderNumber}` : "Test"}
+                                {log.orderNumber ? `#${log.orderNumber}` : tk("pnLogTest")}
                               </span>
                               <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                                 log.receiptType === "kitchen" ? "bg-emerald-500/20 text-emerald-300" :
                                 log.receiptType === "customer" ? "bg-blue-500/20 text-blue-300" :
                                 "bg-gray-600 text-gray-300"
                               }`}>{log.receiptType}</span>
-                              {log.printNodeJobId && <span className="text-xs text-gray-500">Job #{log.printNodeJobId}</span>}
+                              {log.printNodeJobId && <span className="text-xs text-gray-500">{tk("pnJobId", { id: log.printNodeJobId })}</span>}
                             </div>
                             <div className="text-xs text-gray-400 mt-0.5">
-                              {log.printerName ?? "Unknown printer"} · {new Date(log.createdAt).toLocaleString()}
+                              {log.printerName ?? tk("pnUnknownPrinter")} · {new Date(log.createdAt).toLocaleString()}
                             </div>
                             {log.errorMessage && <div className="text-xs text-red-400 mt-1">{log.errorMessage}</div>}
                           </div>
@@ -866,7 +873,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
         {/* Footer */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-gray-700 flex-shrink-0">
           <button onClick={onClose} className="text-sm text-gray-400 hover:text-white transition px-4 py-2 rounded-xl hover:bg-gray-700">
-            {tab === "logs" ? "Close" : "Cancel"}
+            {tab === "logs" ? tk("pnClose") : tk("pnCancel")}
           </button>
           {tab !== "logs" && (
             <button
@@ -875,7 +882,7 @@ export function PrinterSetupModal({ onClose, onSettingsSaved, themeMode = "dark"
               className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition"
             >
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-              {saving ? "Saving..." : "Save Settings"}
+              {saving ? tk("pnSaving") : tk("pnSaveSettings")}
             </button>
           )}
         </div>
