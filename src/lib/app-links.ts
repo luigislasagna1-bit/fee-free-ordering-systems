@@ -13,8 +13,11 @@
  * (URL shape + package id) so a typo can't ship a broken link.
  *
  * History: kitchen.play LIVE 2026-07-22 (first public listing).
- * kitchen.ios = TestFlight-only on the old Apple team (OWNER-ACTIONS D1).
- * driver.play + driver.ios = in store review as of 2026-07-22.
+ * driver.ios LIVE 2026-07-23 (first public iOS app — seller Fee Free
+ * Ordering Inc., approved under the org). driver.play LIVE 2026-07-23
+ * (Play Console shows Production; public listing verified).
+ * kitchen.ios = still TestFlight-only on the old Apple team — D1-a
+ * migration to the org in progress (OWNER-ACTIONS A17).
  */
 
 export type StoreLinks = { play: string | null; ios: string | null };
@@ -25,7 +28,7 @@ export const APP_LINKS: Record<"kitchen" | "driver", StoreLinks> = {
     ios: null,
   },
   driver: {
-    play: null,
-    ios: null,
+    play: "https://play.google.com/store/apps/details?id=com.feefreeordering.driver",
+    ios: "https://apps.apple.com/us/app/fee-free-delivery/id6791709145",
   },
 };
