@@ -64,6 +64,25 @@ workflows:
         # NOT CocoaPods — there is no Podfile; Xcode resolves the Swift packages at
         # build time, so no separate install step is needed.
         script: npx cap sync ios
+      - name: Patch background-geolocation SPM constraint for Capacitor 8
+        # `cap sync` regenerates CapApp-SPM/Package.swift from EVERY installed
+        # @capacitor* plugin in the shared node_modules — including the driver-
+        # only @capacitor-community/background-geolocation, which pins
+        # capacitor-swift-pm 7.x while the rest need 8.x → unsolvable graph
+        # (xcodebuild exit 74). Same fix the ios-driver workflow uses: widen
+        # the plugin's own constraint post-install. Tolerant: skips once the
+        # plugin ships a Cap-8 manifest. (Kitchen doesn't USE this plugin; it's
+        # just linked because node_modules is shared — inert without Info.plist
+        # location strings.)
+        script: |
+          set -e
+          PKG=node_modules/@capacitor-community/background-geolocation/Package.swift
+          if grep -q 'from: "7.0.0"' "$PKG"; then
+            sed -i '' 's/from: "7.0.0"/from: "8.0.0"/' "$PKG"
+            echo "Patched $PKG constraint 7.0.0 -> 8.0.0"
+          else
+            echo "Constraint already Capacitor-8 compatible, skipping."
+          fi
       - name: Verify SPM manifest + resolve packages (fail loudly, not at Build IPA)
         # Same guard as the driver workflow: a Windows-generated
         # CapApp-SPM/Package.swift has invalid backslash paths (exit 74).
