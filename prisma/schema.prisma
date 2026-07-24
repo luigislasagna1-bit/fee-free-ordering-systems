@@ -3640,13 +3640,17 @@ model DriverLocation {
 }
 
 /// Weekly per-restaurant delivery bill — mirror of MarketplaceSettlement. Accrues
-/// $7.99 per delivered assignment, invoiced once against the card on file, then
-/// reconciled from the Stripe webhook (metadata.type = "delivery_settlement").
+/// the frozen per-delivery platform fee ($7.99/8.99/9.99 tiers, or a superadmin
+/// per-store override) across the Saturday→Friday America/Toronto week, invoiced
+/// once against the card on file, then reconciled from the Stripe webhook
+/// (metadata.type = "delivery_settlement"). NOTE: billing is currently PAUSED
+/// (src/lib/delivery-billing-switch.ts). Driver-tip pass-through (feesCents/
+/// tipsCents split) is planned — see docs/plans/feefree-delivery-money-model-plan.md.
 model DeliverySettlement {
   id               String     @id @default(cuid())
   restaurantId     String
   restaurant       Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
-  /// Monday 00:00 UTC of the billed week.
+  /// Saturday 00:00 America/Toronto of the billed week (from deliveryWeekStart()).
   weekStart        DateTime
   deliveriesInWeek Int        @default(0)
   accruedCents     Int        @default(0)
