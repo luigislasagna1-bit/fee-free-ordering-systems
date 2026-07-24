@@ -64,25 +64,38 @@ workflows:
         # NOT CocoaPods — there is no Podfile; Xcode resolves the Swift packages at
         # build time, so no separate install step is needed.
         script: npx cap sync ios
-      - name: Patch background-geolocation SPM constraint for Capacitor 8
+      - name: Strip driver-only background-geolocation from the kitchen SPM manifest
         # `cap sync` regenerates CapApp-SPM/Package.swift from EVERY installed
-        # @capacitor* plugin in the shared node_modules — including the driver-
-        # only @capacitor-community/background-geolocation, which pins
-        # capacitor-swift-pm 7.x while the rest need 8.x → unsolvable graph
-        # (xcodebuild exit 74). Same fix the ios-driver workflow uses: widen
-        # the plugin's own constraint post-install. Tolerant: skips once the
-        # plugin ships a Cap-8 manifest. (Kitchen doesn't USE this plugin; it's
-        # just linked because node_modules is shared — inert without Info.plist
-        # location strings.)
+        # @capacitor* plugin in the SHARED node_modules — including the DRIVER's
+        # @capacitor-community/background-geolocation. The kitchen app never
+        # calls location, and linking it caused two real problems:
+        #   1. capacitor-swift-pm 7.x pin vs 8.x elsewhere → unsolvable graph
+        #      (xcodebuild exit 74, build 26).
+        #   2. Apple ITMS-90683 on upload: the linked binary references location
+        #      APIs, so App Store scanning demands NSLocation*UsageDescription
+        #      purpose strings (build 29 email, 2026-07-23).
+        # Adding fake location purpose strings to a kitchen app would be
+        # dishonest and invites a reviewer question, so we REMOVE the plugin
+        # from this app's manifest instead — fixing both at once. The App target
+        # depends only on the CapApp-SPM umbrella package, so dropping a plugin
+        # here simply leaves it unlinked; nothing in /kitchen references it.
+        # (The driver workflow keeps it — that app genuinely needs GPS.)
         script: |
           set -e
-          PKG=node_modules/@capacitor-community/background-geolocation/Package.swift
-          if grep -q 'from: "7.0.0"' "$PKG"; then
-            sed -i '' 's/from: "7.0.0"/from: "8.0.0"/' "$PKG"
-            echo "Patched $PKG constraint 7.0.0 -> 8.0.0"
-          else
-            echo "Constraint already Capacitor-8 compatible, skipping."
-          fi
+          node -e '
+            const fs = require("fs");
+            const p = "ios/App/CapApp-SPM/Package.swift";
+            const before = fs.readFileSync(p, "utf8");
+            let out = before
+              .split("\n")
+              .filter((l) => !/BackgroundGeolocation/i.test(l))
+              .join("\n")
+              // a stripped last-entry would leave a dangling comma before ]
+              .replace(/,(\s*\])/g, "$1");
+            fs.writeFileSync(p, out);
+            console.log(before === out ? "No background-geolocation entries found (nothing to strip)." : "Stripped background-geolocation from the kitchen SPM manifest.");
+            console.log("--- resulting manifest:\n" + out);
+          '
       - name: Verify SPM manifest + resolve packages (fail loudly, not at Build IPA)
         # Same guard as the driver workflow: a Windows-generated
         # CapApp-SPM/Package.swift has invalid backslash paths (exit 74).
