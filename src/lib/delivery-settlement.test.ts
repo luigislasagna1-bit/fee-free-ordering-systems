@@ -31,7 +31,7 @@ vi.mock("@/lib/delivery-billing-switch", () => ({ DELIVERY_BILLING_ENABLED: true
 
 import { settleDeliveryWeek } from "./delivery-settlement";
 
-const WEEK = new Date(Date.UTC(2026, 6, 6)); // Mon 2026-07-06
+const WEEK = new Date("2026-07-11T04:00:00.000Z"); // Sat 2026-07-11 00:00 America/Toronto (EDT)
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -60,7 +60,7 @@ describe("settleDeliveryWeek", () => {
     // Invoice line item carries the delivery_settlement metadata + amount in cents.
     expect(stripeMock.invoiceItems.create).toHaveBeenCalledWith(
       expect.objectContaining({ amount: 1598, currency: "cad", metadata: expect.objectContaining({ type: "delivery_settlement", settlementId: "settle_1" }) }),
-      expect.objectContaining({ idempotencyKey: expect.stringContaining("delivery-settle-r1-2026-07-06") }),
+      expect.objectContaining({ idempotencyKey: expect.stringContaining("delivery-settle-r1-2026-07-11") }),
     );
     // Consumes the assignments (marks them billed).
     expect(prismaMock.deliveryAssignment.updateMany).toHaveBeenCalledWith({
@@ -107,10 +107,11 @@ describe("settleDeliveryWeek", () => {
     expect(prismaMock.deliverySettlement.create).not.toHaveBeenCalled();
   });
 
-  it("defaults to the previously-closed week when weekStart is omitted", async () => {
+  it("defaults to the previously-closed Sat→Fri week when weekStart is omitted", async () => {
     prismaMock.deliveryAssignment.findMany.mockResolvedValue([]);
-    // now = Wed 2026-07-15 → previous week Mon = 2026-07-06
-    const { weekStart } = await settleDeliveryWeek({ now: new Date(Date.UTC(2026, 6, 15)) });
-    expect(weekStart.toISOString().slice(0, 10)).toBe("2026-07-06");
+    // now = Wed 2026-07-15 13:00Z (Toronto week opened Sat 2026-07-11) → prior
+    // closed week opened Sat 2026-07-04 (04:00Z, EDT).
+    const { weekStart } = await settleDeliveryWeek({ now: new Date("2026-07-15T13:00:00Z") });
+    expect(weekStart.toISOString()).toBe("2026-07-04T04:00:00.000Z");
   });
 });

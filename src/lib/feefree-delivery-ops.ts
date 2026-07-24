@@ -22,15 +22,14 @@
  * the `/ops` payload is noted in plan §5.4.
  */
 import prisma from "@/lib/db";
-import { weekStartUtc, weekEndUtc } from "@/lib/feefree-delivery";
+import { deliveryWeekStart, deliveryWeekEnd } from "@/lib/feefree-delivery";
 import { ASSIGNMENT_LIVE } from "@/lib/driver-assignment";
 
-/** Next Monday 00:10 UTC — when the weekly settlement cron charges the card. */
+/** Close of the current Sat→Fri Toronto week — the next Saturday 00:00, when the
+ *  weekly settlement runs (once billing is un-paused). Rendered as the projected
+ *  charge date in the ops panel. */
 function nextChargeDate(now: Date): Date {
-  const start = weekStartUtc(now);
-  const nextMon = weekEndUtc(start); // next Monday 00:00
-  nextMon.setUTCMinutes(10);
-  return nextMon;
+  return deliveryWeekEnd(deliveryWeekStart(now)); // next Saturday 00:00 Toronto
 }
 
 export type FeeFreeDeliveryOpsActive = {
@@ -57,9 +56,9 @@ export type FeeFreeDeliveryOpsHeld = {
 export type FeeFreeDeliveryOpsData = {
   /** Outstanding platform fee this cycle, in CENTS (PLATFORM money — render with PLATFORM_CURRENCY). */
   owed: number;
-  /** Count of deliveries completed in the current Monday→Monday billing week. */
+  /** Count of deliveries completed in the current Saturday→Friday billing week. */
   deliveredThisWeek: number;
-  /** When the weekly settlement cron next charges the card (next Monday 00:10 UTC). */
+  /** Close of the current Sat→Fri Toronto week (next Saturday 00:00) — projected charge date. */
   charge: Date;
   /** Delivery orders held for manual dispatch (autoSend off), already narrowed to prepaid — the first 25 (see heldCapped). */
   held: FeeFreeDeliveryOpsHeld[];
@@ -82,8 +81,8 @@ export type FeeFreeDeliveryOpsData = {
  */
 export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<FeeFreeDeliveryOpsData> {
   const now = new Date();
-  const weekStart = weekStartUtc(now);
-  const weekEnd = weekEndUtc(now);
+  const weekStart = deliveryWeekStart(now);
+  const weekEnd = deliveryWeekEnd(weekStart); // FIX: was deliveryWeekEnd(now) → up to a 14-day window
 
   const [owedAgg, deliveredThisWeek, activeRows, heldOrders, rest] = await Promise.all([
     // Outstanding = frozen fees not yet rolled into a settlement.

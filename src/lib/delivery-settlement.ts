@@ -19,10 +19,11 @@
 
 import prisma from "@/lib/db";
 import { DELIVERY_BILLING_ENABLED } from "@/lib/delivery-billing-switch";
+import { DELIVERY_WEEK_TZ } from "@/lib/feefree-delivery";
 import { PLATFORM_CURRENCY } from "@/lib/marketplace";
 import { getPlatformTax, stripeTaxRateDisplayName, type PlatformTax } from "@/lib/platform-tax";
 import { getStripe, stripeReady } from "@/lib/stripe";
-import { FEEFREE_DELIVERY_PER_ORDER_CENTS, previousWeekStartUtc, weekEndUtc } from "@/lib/feefree-delivery";
+import { FEEFREE_DELIVERY_PER_ORDER_CENTS, previousDeliveryWeekStart, deliveryWeekEnd } from "@/lib/feefree-delivery";
 
 type Stripe = Awaited<ReturnType<typeof getStripe>>;
 
@@ -69,11 +70,13 @@ export type DeliverySettlementResult = {
 };
 
 function weekLabel(weekStart: Date): string {
-  const end = weekEndUtc(weekStart);
-  const endInclusive = new Date(end);
-  endInclusive.setUTCDate(endInclusive.getUTCDate() - 1);
-  const fmt = (d: Date) => d.toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
-  return `${fmt(weekStart)}–${fmt(endInclusive)}, ${weekStart.getUTCFullYear()}`;
+  // The Sat→Fri window rendered on the restaurant's invoice. Format in the
+  // delivery timezone so the dates read as Saturday…Friday, not UTC-shifted.
+  const end = deliveryWeekEnd(weekStart);
+  const endInclusive = new Date(end.getTime() - 24 * 60 * 60 * 1000); // the Friday
+  const fmt = (d: Date) => d.toLocaleString("en-US", { month: "short", day: "numeric", timeZone: DELIVERY_WEEK_TZ });
+  const year = new Intl.DateTimeFormat("en-US", { year: "numeric", timeZone: DELIVERY_WEEK_TZ }).format(weekStart);
+  return `${fmt(weekStart)}–${fmt(endInclusive)}, ${year}`;
 }
 
 /**
@@ -85,8 +88,8 @@ export async function settleDeliveryWeek(
   opts: { now?: Date; weekStart?: Date } = {},
 ): Promise<{ weekStart: Date; results: DeliverySettlementResult[] }> {
   const now = opts.now ?? new Date();
-  const targetWeek = opts.weekStart ?? previousWeekStartUtc(now);
-  const weekEnd = weekEndUtc(targetWeek);
+  const targetWeek = opts.weekStart ?? previousDeliveryWeekStart(now);
+  const weekEnd = deliveryWeekEnd(targetWeek);
 
   // Kill-switch checked HERE (not just in the cron route) so a superadmin manual
   // re-run, a script, or any future caller also cannot charge a restaurant.

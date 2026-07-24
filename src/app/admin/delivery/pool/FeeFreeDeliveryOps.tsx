@@ -45,7 +45,7 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
         </div>
         <div className="rounded-xl border border-gray-200 p-3">
           <div className="text-xs text-gray-500 flex items-center gap-1"><CalendarClock className="w-3.5 h-3.5" /> {t("nextCharge")}</div>
-          <div className="text-sm font-semibold text-gray-900 mt-1">{charge.toLocaleDateString(undefined, { month: "short", day: "numeric", timeZone: "UTC" })}</div>
+          <div className="text-sm font-semibold text-gray-900 mt-1">{charge.toLocaleDateString(undefined, { month: "short", day: "numeric", timeZone: "America/Toronto" })}</div>
         </div>
       </div>
 

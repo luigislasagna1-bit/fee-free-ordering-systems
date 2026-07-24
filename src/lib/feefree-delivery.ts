@@ -1,7 +1,7 @@
 /**
- * FeeFreeDelivery constants + weekly settlement boundaries (2026-07-13).
- * The billing week runs Monday 00:00 UTC → next Monday, mirroring the monthly
- * boundary helpers in marketplace-settlement.ts.
+ * FeeFreeDelivery constants + weekly settlement boundaries.
+ * The billing week runs Saturday 00:00 → Friday 23:59:59.999 America/Toronto
+ * (Luigi 2026-07-24; was Monday 00:00 UTC until then). See the week helpers below.
  */
 import { haversineKm } from "@/lib/geocode";
 
@@ -88,24 +88,79 @@ export function isFeeFreeServiceArea(lat: number | null | undefined, lng: number
   return haversineKm(FEEFREE_SERVICE_ANCHOR.lat, FEEFREE_SERVICE_ANCHOR.lng, lat, lng) <= FEEFREE_SERVICE_RADIUS_KM;
 }
 
-/** First moment (UTC) of the Monday-anchored week that contains `d`. */
-export function weekStartUtc(d: Date): Date {
-  const daysSinceMonday = (d.getUTCDay() + 6) % 7; // Mon→0 … Sun→6
-  const base = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
-  base.setUTCDate(base.getUTCDate() - daysSinceMonday);
-  return base;
+/**
+ * FeeFreeDelivery BILLING WEEK (Luigi 2026-07-24): Saturday 00:00 → Friday
+ * 23:59:59.999, anchored to **America/Toronto** wall-clock (the whole operation
+ * is Milton, ON). DST-aware — a week is 167h in spring, 169h in fall — computed
+ * from the IANA zone via Intl, no external tz library. The old model was Monday
+ * 00:00 *UTC*; every delivery reader now shares this Sat→Fri Toronto window so
+ * driver earnings, restaurant statements, and payouts all date against one clock.
+ */
+export const DELIVERY_WEEK_TZ = "America/Toronto";
+
+/** Local calendar date (in the delivery timezone) of an instant. */
+function torontoCalendarDate(d: Date): { year: number; month: number; day: number } {
+  const dtf = new Intl.DateTimeFormat("en-CA", {
+    timeZone: DELIVERY_WEEK_TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  const p = Object.fromEntries(dtf.formatToParts(d).map((x) => [x.type, x.value])) as Record<string, string>;
+  return { year: Number(p.year), month: Number(p.month), day: Number(p.day) };
 }
 
-/** First moment (UTC) of the week BEFORE the one that contains `d`. */
-export function previousWeekStartUtc(d: Date): Date {
-  const ws = weekStartUtc(d);
-  ws.setUTCDate(ws.getUTCDate() - 7);
-  return ws;
+/** Offset in minutes of America/Toronto at instant `d` (local = UTC + offset; Toronto is negative). */
+function torontoOffsetMinutes(d: Date): number {
+  const dtf = new Intl.DateTimeFormat("en-US", {
+    timeZone: DELIVERY_WEEK_TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+  const p = Object.fromEntries(dtf.formatToParts(d).map((x) => [x.type, x.value])) as Record<string, string>;
+  const hour = Number(p.hour) % 24; // "24" (midnight) → 0
+  const localAsUtc = Date.UTC(Number(p.year), Number(p.month) - 1, Number(p.day), hour, Number(p.minute), Number(p.second));
+  return (localAsUtc - d.getTime()) / 60_000;
 }
 
-/** Exclusive end of the week that starts at `weekStart` (the next Monday). */
-export function weekEndUtc(weekStart: Date): Date {
-  const end = new Date(weekStart);
-  end.setUTCDate(end.getUTCDate() + 7);
-  return end;
+/** The UTC instant for a Toronto wall-clock time. Two-pass so DST edges resolve. */
+function torontoWallClockToUtc(year: number, month: number, day: number, hh = 0, mm = 0, ss = 0): Date {
+  const localAsUtc = Date.UTC(year, month - 1, day, hh, mm, ss);
+  const off1 = torontoOffsetMinutes(new Date(localAsUtc));
+  let utc = localAsUtc - off1 * 60_000;
+  const off2 = torontoOffsetMinutes(new Date(utc));
+  if (off2 !== off1) utc = localAsUtc - off2 * 60_000;
+  return new Date(utc);
+}
+
+/** First instant (UTC) of the Saturday→Friday Toronto week that contains `d`. */
+export function deliveryWeekStart(d: Date): Date {
+  const { year, month, day } = torontoCalendarDate(d);
+  // Day-of-week of a calendar date is timezone-independent when built from its parts.
+  const dow = new Date(Date.UTC(year, month - 1, day)).getUTCDay(); // 0=Sun … 6=Sat
+  const daysSinceSat = (dow + 1) % 7; // Sat→0, Sun→1 … Fri→6
+  const cal = new Date(Date.UTC(year, month - 1, day));
+  cal.setUTCDate(cal.getUTCDate() - daysSinceSat);
+  return torontoWallClockToUtc(cal.getUTCFullYear(), cal.getUTCMonth() + 1, cal.getUTCDate());
+}
+
+/** First instant (UTC) of the delivery week BEFORE the one that contains `d`. */
+export function previousDeliveryWeekStart(d: Date): Date {
+  const { year, month, day } = torontoCalendarDate(deliveryWeekStart(d));
+  const cal = new Date(Date.UTC(year, month - 1, day));
+  cal.setUTCDate(cal.getUTCDate() - 7);
+  return torontoWallClockToUtc(cal.getUTCFullYear(), cal.getUTCMonth() + 1, cal.getUTCDate());
+}
+
+/** Exclusive end (UTC) of the delivery week starting at `weekStart` — next Saturday 00:00 Toronto. */
+export function deliveryWeekEnd(weekStart: Date): Date {
+  const { year, month, day } = torontoCalendarDate(weekStart);
+  const cal = new Date(Date.UTC(year, month - 1, day));
+  cal.setUTCDate(cal.getUTCDate() + 7);
+  return torontoWallClockToUtc(cal.getUTCFullYear(), cal.getUTCMonth() + 1, cal.getUTCDate());
 }
