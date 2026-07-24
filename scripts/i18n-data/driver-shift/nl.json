@@ -1,0 +1,11 @@
+{
+  "earnHours": "Uren",
+  "earnHoursHelp": "Geklokte diensturen × je uurtarief — betaald door Fee Free.",
+  "earnPay": "Loon",
+  "startShift": "Dienst starten",
+  "endShift": "Dienst beëindigen",
+  "onShift": "In dienst",
+  "endShiftConfirm": "Tik nogmaals om te stoppen",
+  "clockInFailed": "Je dienst kon niet worden gestart. Probeer opnieuw.",
+  "clockOutFailed": "Je dienst kon niet worden beëindigd. Probeer opnieuw."
+}

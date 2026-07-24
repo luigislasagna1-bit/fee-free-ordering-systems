@@ -51,17 +51,19 @@ export async function GET() {
     getFeeFreeDeliveryOpsData(restaurantId),
   ]);
 
-  const { owed, deliveredThisWeek, charge, held, active, rest } = opsData;
+  const { owed, deliveredThisWeek, charge, held, active, rest, currency } = opsData;
 
   return NextResponse.json({
     enabled: cfg?.enabled ?? false,
     autoSend: cfg?.autoSend ?? false,
-    /** Outstanding platform fee this cycle — render with PLATFORM_CURRENCY (plan §8). */
+    /** Outstanding delivery bill this cycle (fees + driver tips) — render with
+     *  `currency` below (the restaurant's own currency, B4). */
     owedCents: owed,
     deliveredThisWeek,
     nextChargeAt: charge.toISOString(),
-    /** Always PLATFORM_CURRENCY — settlement money is never restaurant money. */
-    currency: PLATFORM_CURRENCY,
+    /** The restaurant's OWN billing currency — delivery bills in it, not the
+     *  global USD PLATFORM_CURRENCY (B4, Luigi 2026-07-24). */
+    currency: currency ?? PLATFORM_CURRENCY,
     // Held orders: only id/orderNumber/customerName needed by the Dispatch tab
     // (no prices — the tab dispatches, it does not show payment summaries).
     held: held.map((o) => ({

@@ -1,0 +1,11 @@
+{
+  "earnHours": "Godziny",
+  "earnHoursHelp": "Godziny zmiany × Twoja stawka godzinowa — wypłaca Fee Free.",
+  "earnPay": "Wypłata",
+  "startShift": "Rozpocznij zmianę",
+  "endShift": "Zakończ zmianę",
+  "onShift": "Na zmianie",
+  "endShiftConfirm": "Naciśnij ponownie, aby zakończyć",
+  "clockInFailed": "Nie udało się rozpocząć zmiany. Spróbuj ponownie.",
+  "clockOutFailed": "Nie udało się zakończyć zmiany. Spróbuj ponownie."
+}

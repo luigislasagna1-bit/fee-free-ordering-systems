@@ -1,0 +1,11 @@
+{
+  "earnHours": "Valandos",
+  "earnHoursHelp": "Pamainos valandos × jūsų valandinis įkainis — moka Fee Free.",
+  "earnPay": "Užmokestis",
+  "startShift": "Pradėti pamainą",
+  "endShift": "Baigti pamainą",
+  "onShift": "Pamainoje",
+  "endShiftConfirm": "Bakstelėkite dar kartą",
+  "clockInFailed": "Nepavyko pradėti pamainos. Bandykite dar kartą.",
+  "clockOutFailed": "Nepavyko baigti pamainos. Bandykite dar kartą."
+}

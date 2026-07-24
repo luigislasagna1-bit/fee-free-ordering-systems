@@ -1,0 +1,11 @@
+{
+  "earnHours": "Tunnid",
+  "earnHoursHelp": "Registreeritud töötunnid × sinu tunnitasu — maksab Fee Free.",
+  "earnPay": "Tasu",
+  "startShift": "Alusta vahetust",
+  "endShift": "Lõpeta vahetus",
+  "onShift": "Vahetuses",
+  "endShiftConfirm": "Vajuta uuesti lõpetamiseks",
+  "clockInFailed": "Vahetuse alustamine ebaõnnestus. Proovi uuesti.",
+  "clockOutFailed": "Vahetuse lõpetamine ebaõnnestus. Proovi uuesti."
+}

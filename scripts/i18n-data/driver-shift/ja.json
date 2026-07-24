@@ -1,0 +1,11 @@
+{
+  "earnHours": "勤務時間",
+  "earnHoursHelp": "打刻した勤務時間 × 時給 — お支払いは Fee Free。",
+  "earnPay": "報酬",
+  "startShift": "シフト開始",
+  "endShift": "シフト終了",
+  "onShift": "勤務中",
+  "endShiftConfirm": "もう一度タップで終了",
+  "clockInFailed": "シフトを開始できませんでした。もう一度お試しください。",
+  "clockOutFailed": "シフトを終了できませんでした。もう一度お試しください。"
+}

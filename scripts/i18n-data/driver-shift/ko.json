@@ -1,0 +1,11 @@
+{
+  "earnHours": "근무 시간",
+  "earnHoursHelp": "기록된 근무 시간 × 시급 — Fee Free가 지급합니다.",
+  "earnPay": "급여",
+  "startShift": "근무 시작",
+  "endShift": "근무 종료",
+  "onShift": "근무 중",
+  "endShiftConfirm": "다시 탭하면 종료",
+  "clockInFailed": "근무를 시작하지 못했습니다. 다시 시도해 주세요.",
+  "clockOutFailed": "근무를 종료하지 못했습니다. 다시 시도해 주세요."
+}

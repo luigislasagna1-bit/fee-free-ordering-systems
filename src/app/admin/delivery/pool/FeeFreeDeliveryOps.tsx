@@ -2,12 +2,9 @@ import { getTranslations } from "next-intl/server";
 import { Bike, DollarSign, CalendarClock, Package, Star } from "lucide-react";
 import { haversineKm } from "@/lib/geocode";
 import { getFeeFreeDeliveryOpsData } from "@/lib/feefree-delivery-ops";
+import { formatCurrency } from "@/lib/utils";
 import { SendToDriverButton } from "./SendToDriverButton";
 import { PollRefresh } from "@/components/admin/PollRefresh";
-
-function usd(cents: number): string {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(cents / 100);
-}
 
 /**
  * Restaurant-facing FeeFreeDelivery operations panel (server). Shows the
@@ -20,9 +17,10 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
   const tCommon = await getTranslations("common");
 
   // Query source-of-truth moved to the shared lib (v1.1 Phase 6, plan §4.6) so the
-  // desktop panel and the app `/ops` route can never drift. Rendering below is
-  // unchanged — owed stays PLATFORM money (usd() = PLATFORM_CURRENCY).
-  const { owed, deliveredThisWeek, charge, held, active, activeCapped, heldCapped, rest } = await getFeeFreeDeliveryOpsData(restaurantId);
+  // desktop panel and the app `/ops` route can never drift. `owed` (fees + driver
+  // tips) is billed in the restaurant's OWN currency (B4), so format it in that.
+  const { owed, deliveredThisWeek, charge, held, active, activeCapped, heldCapped, rest, currency } = await getFeeFreeDeliveryOpsData(restaurantId);
+  const money = (cents: number) => formatCurrency(cents / 100, currency ?? "cad");
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-6 space-y-5">
@@ -37,7 +35,7 @@ export async function FeeFreeDeliveryOps({ restaurantId }: { restaurantId: strin
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div className="rounded-xl border border-gray-200 p-3">
           <div className="text-xs text-gray-500 flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" /> {t("amountOwed")}</div>
-          <div className="text-xl font-bold text-gray-900 mt-1">{usd(owed)}</div>
+          <div className="text-xl font-bold text-gray-900 mt-1">{money(owed)}</div>
         </div>
         <div className="rounded-xl border border-gray-200 p-3">
           <div className="text-xs text-gray-500 flex items-center gap-1"><Package className="w-3.5 h-3.5" /> {t("deliveriesThisWeek")}</div>

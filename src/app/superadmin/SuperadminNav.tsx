@@ -15,6 +15,7 @@ const items = [
   { href: "/superadmin/add-ons", label: "Add-Ons", icon: Zap, adminOnly: true },
   { href: "/superadmin/marketplace-settlements", label: "Marketplace Settlements", icon: Sparkles, adminOnly: true },
   { href: "/superadmin/drivers", label: "Delivery Drivers", icon: Bike, adminOnly: true },
+  { href: "/superadmin/driver-payouts", label: "Driver Payouts", icon: Wallet, adminOnly: true },
   { href: "/superadmin/resellers", label: "Resellers", icon: Users },
   { href: "/reseller-reports", label: "Reseller Reports", icon: Bug },
   { href: "/reseller-reports/notifications", label: "Notifications", icon: Bell },

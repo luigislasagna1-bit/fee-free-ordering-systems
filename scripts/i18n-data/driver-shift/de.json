@@ -1,0 +1,11 @@
+{
+  "earnHours": "Stunden",
+  "earnHoursHelp": "Erfasste Schichtstunden × dein Stundenlohn — bezahlt von Fee Free.",
+  "earnPay": "Lohn",
+  "startShift": "Schicht starten",
+  "endShift": "Schicht beenden",
+  "onShift": "Im Dienst",
+  "endShiftConfirm": "Zum Beenden erneut tippen",
+  "clockInFailed": "Schicht konnte nicht gestartet werden. Versuch es erneut.",
+  "clockOutFailed": "Schicht konnte nicht beendet werden. Versuch es erneut."
+}

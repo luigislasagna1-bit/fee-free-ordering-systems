@@ -1,0 +1,11 @@
+{
+  "earnHours": "Hodiny",
+  "earnHoursHelp": "Odpracované hodiny zmeny × vaša hodinová sadzba — platí Fee Free.",
+  "earnPay": "Mzda",
+  "startShift": "Začať zmenu",
+  "endShift": "Ukončiť zmenu",
+  "onShift": "V zmene",
+  "endShiftConfirm": "Ukončíte ďalším ťuknutím",
+  "clockInFailed": "Zmenu sa nepodarilo začať. Skúste znova.",
+  "clockOutFailed": "Zmenu sa nepodarilo ukončiť. Skúste znova."
+}

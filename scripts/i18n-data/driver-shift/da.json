@@ -1,0 +1,11 @@
+{
+  "earnHours": "Timer",
+  "earnHoursHelp": "Stemplede vagttimer × din timeløn — betalt af Fee Free.",
+  "earnPay": "Løn",
+  "startShift": "Start vagt",
+  "endShift": "Afslut vagt",
+  "onShift": "På vagt",
+  "endShiftConfirm": "Tryk igen for at afslutte",
+  "clockInFailed": "Kunne ikke starte din vagt. Prøv igen.",
+  "clockOutFailed": "Kunne ikke afslutte din vagt. Prøv igen."
+}

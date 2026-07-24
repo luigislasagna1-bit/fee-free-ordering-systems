@@ -8,6 +8,7 @@ import { DriverHistory } from "./DriverHistory";
 import { DriverEarnings } from "./DriverEarnings";
 import { DriverProfile } from "./DriverProfile";
 import { RoleSwitch } from "./RoleSwitch";
+import { ShiftToggle } from "./ShiftToggle";
 import { BottomNav, type BottomNavTab } from "./shared/BottomNav";
 import { ShellHeader } from "./shared/ShellHeader";
 import { armAudioUnlock, playNewOrderChime, playTick } from "./shared/driver-sounds";
@@ -172,6 +173,8 @@ export function DriverApp({
         }
         right={
           <>
+            {/* Shift clock (B0) — always visible, every tab; independent of GPS. */}
+            <ShiftToggle />
             {gpsOn && (
               <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
                 <Radio className="w-3.5 h-3.5 animate-pulse" /> {t("gpsLive")}

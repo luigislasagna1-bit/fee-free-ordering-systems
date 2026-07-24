@@ -512,6 +512,7 @@ model Restaurant {
   homeDrivers            Driver[]             @relation("DriverHomeRestaurant")
   deliveryAssignments    DeliveryAssignment[]
   deliverySettlements    DeliverySettlement[]
+  driverShifts           DriverShift[]        @relation("DriverShiftStore")
 
   // Reports — see "REPORTS" section at bottom of file. 4-year retention.
   reportDailySnapshots ReportDailySnapshot[]
@@ -3532,6 +3533,8 @@ model Driver {
 
   assignments        DeliveryAssignment[]
   locations          DriverLocation[]
+  shifts             DriverShift[]
+  payouts            DriverPayout[]
 
   @@index([isActive])
 }
@@ -3599,6 +3602,16 @@ model DeliveryAssignment {
   platformFeeCents        Int?
   /// What the customer was charged toward delivery (cents) — reporting only.
   customerFeeChargedCents Int?
+  /// Driver's tip for THIS delivery, in the restaurant's currency, frozen in
+  /// MINOR UNITS (cents) at the "delivered" write — mirrors platformFeeCents.
+  /// Null until delivered; a $0 tip freezes 0 (never null-after-delivered).
+  /// Never re-billed after freeze. Source of truth for the restaurant statement
+  /// tips line (B4) and the driver payout (B5). FeeFree-only by construction
+  /// (only assignToFeeFreeDriver creates a DeliveryAssignment). Luigi 2026-07-24.
+  driverTipCents          Int?
+  /// Currency of driverTipCents, frozen alongside it (= restaurant.currency at
+  /// delivery). Guards the Fabrizio euro/$ bug class so B4/B5 never guess.
+  tipCurrency             String?
   /// Set once this row is rolled into a weekly DeliverySettlement invoice.
   settlementId String?
   settlement   DeliverySettlement? @relation(fields: [settlementId], references: [id], onDelete: SetNull)
@@ -3621,6 +3634,10 @@ model DeliveryAssignment {
   /// Same poll: delivered-this-week count = (restaurantId,
   /// status:"delivered", deliveredAt >= weekStart) — range column last.
   @@index([restaurantId, status, deliveredAt])
+  /// B5 driver-payout weekly rollup: per-driver delivered-in-week scan
+  /// (driverId, status:"delivered", deliveredAt ∈ week) — mirrors the
+  /// restaurant-scoped index above, driver-scoped.
+  @@index([driverId, status, deliveredAt])
 }
 
 /// Append-only GPS ping from the driver app (foreground watchPosition). The latest
@@ -3655,6 +3672,18 @@ model DeliverySettlement {
   deliveriesInWeek Int        @default(0)
   accruedCents     Int        @default(0)
   invoicedCents    Int        @default(0)
+  /// B4 split of accruedCents: per-delivery platform fees (taxable supply).
+  /// feesCents + tipsCents == accruedCents. accrued/invoiced stay the TOTAL so
+  /// the Stripe webhook reconciliation (metadata.type="delivery_settlement") is
+  /// unaffected by the second line item. Luigi 2026-07-24.
+  feesCents        Int        @default(0)
+  /// B4: driver tips collected on drivers' behalf this week (pass-through,
+  /// NON-taxable). Same currency as `currency`.
+  tipsCents        Int        @default(0)
+  /// Invoice denomination = the restaurant's OWN currency (Milton = "cad"), NOT
+  /// the global USD PLATFORM_CURRENCY. Written explicitly from restaurant.currency;
+  /// null on legacy rows. See docs/plans/feefree-delivery-money-model-plan.md §4.
+  currency         String?
   /// pending | invoiced | paid | void | failed
   status           String     @default("pending")
   stripeInvoiceId  String?    @unique
@@ -3666,6 +3695,73 @@ model DeliverySettlement {
 
   @@unique([restaurantId, weekStart])
   @@index([status])
+}
+
+/// B0 — driver clock-in/out; the hours source for hourly pay (B5). Driver-GLOBAL
+/// (one clock across every store a driver serves); restaurantId only records
+/// where they clocked in. Single-open-shift-per-driver is enforced in the write
+/// path (Prisma can't express a partial-unique index — same as DriverFeedback).
+/// Weekly hours = Σ (clockOutAt − clockInAt) over closed shifts whose clockOutAt
+/// falls in the Sat→Fri America/Toronto week. Luigi 2026-07-24.
+model DriverShift {
+  id           String      @id @default(cuid())
+  driverId     String
+  driver       Driver      @relation(fields: [driverId], references: [id], onDelete: Cascade)
+  restaurantId String?
+  restaurant   Restaurant? @relation("DriverShiftStore", fields: [restaurantId], references: [id], onDelete: SetNull)
+  clockInAt    DateTime    @default(now())
+  clockOutAt   DateTime?
+  /// Set by the max-shift auto-close cron when a driver forgets to clock out
+  /// (threshold is an owner setting, not a hardcoded constant).
+  autoClosedAt DateTime?
+  /// "app" | "manual"
+  source       String?
+  note         String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  @@index([driverId, clockInAt])  // history list + weekly hours SUM (equality + range)
+  @@index([driverId, clockOutAt]) // cheap "find the one OPEN shift" probe (clockOutAt IS NULL)
+}
+
+/// B5 — driver weekly payout ledger. One row per driver per week; snapshot at
+/// build time and frozen once `paid`. Idempotent on (driverId, weekStart).
+/// onDelete: Restrict preserves the pay audit trail (diverges from the reseller
+/// PayoutRequest's Cascade BY DESIGN — never silently erase what a driver was
+/// paid). Fee Free pays drivers MANUALLY; the `paid` flag is the only guard
+/// against paying twice. Luigi 2026-07-24.
+model DriverPayout {
+  id              String    @id @default(cuid())
+  driverId        String
+  driver          Driver    @relation(fields: [driverId], references: [id], onDelete: Restrict)
+  /// Saturday 00:00 America/Toronto of the paid week (from deliveryWeekStart()).
+  weekStart       DateTime
+  deliveries      Int       @default(0)
+  workedSeconds   Int       @default(0)
+  /// Snapshot of Driver.hourlyRateCents at build (the rate is editable on the
+  /// roster, so freeze it — mirrors the earn-rate-snapshot convention).
+  hourlyRateCents Int       @default(0)
+  hourlyPayCents  Int       @default(0)
+  /// Σ frozen driverTipCents for the week (cash tips excluded by construction).
+  tipsCents       Int       @default(0)
+  /// Carry-in for a post-paid tip clawback (Q6): a negative value reduces this
+  /// week's total to recover a tip refunded after a prior week was marked paid.
+  adjustmentCents Int       @default(0)
+  /// hourlyPayCents + tipsCents + adjustmentCents.
+  totalCents      Int       @default(0)
+  currency        String?
+  /// pending | paid
+  status          String    @default("pending")
+  paidAt          DateTime?
+  paidBy          String?
+  payoutReference String?
+  notes           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@unique([driverId, weekStart]) // idempotency key for the weekly rollup
+  @@index([status])               // superadmin "pending to mark paid" list
+  @@index([weekStart])            // "all payouts for week W" view
 }
 
 /// Per-restaurant FeeFreeDelivery dispatch settings — sibling to ShipdayConfig

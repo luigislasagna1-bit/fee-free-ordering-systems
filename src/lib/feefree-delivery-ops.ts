@@ -72,6 +72,8 @@ export type FeeFreeDeliveryOpsData = {
   heldCapped: boolean;
   /** The store's own coordinates — for the restaurant→customer distance on each active delivery. */
   rest: { lat: number | null; lng: number | null } | null;
+  /** The restaurant's billing currency — delivery bills (fees + tips) in it, not USD (B4). */
+  currency: string | null;
 };
 
 /**
@@ -85,9 +87,10 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
   const weekEnd = deliveryWeekEnd(weekStart); // FIX: was deliveryWeekEnd(now) → up to a 14-day window
 
   const [owedAgg, deliveredThisWeek, activeRows, heldOrders, rest] = await Promise.all([
-    // Outstanding = frozen fees not yet rolled into a settlement.
+    // Outstanding = frozen fees + driver tips not yet rolled into a settlement
+    // (one aggregate — matches the future invoice's fee + tips total, B4).
     prisma.deliveryAssignment.aggregate({
-      _sum: { platformFeeCents: true },
+      _sum: { platformFeeCents: true, driverTipCents: true },
       where: { restaurantId, status: "delivered", settlementId: null },
     }),
     prisma.deliveryAssignment.count({
@@ -121,11 +124,12 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
       select: { id: true, orderNumber: true, customerName: true, paymentStatus: true, total: true, creditApplied: true },
     }),
     // The store's own coordinates — for the restaurant→customer distance shown
-    // on each active delivery (Luigi 2026-07-15).
-    prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { lat: true, lng: true } }),
+    // on each active delivery (Luigi 2026-07-15) — plus its billing currency
+    // (delivery bills in the restaurant's own currency, B4).
+    prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { lat: true, lng: true, currency: true } }),
   ]);
 
-  const owed = owedAgg._sum.platformFeeCents ?? 0;
+  const owed = (owedAgg._sum.platformFeeCents ?? 0) + (owedAgg._sum.driverTipCents ?? 0);
   const charge = nextChargeDate(now);
 
   // Over-fetch-by-1 + slice so a "showing the first N" note fires ONLY when an
@@ -143,7 +147,9 @@ export async function getFeeFreeDeliveryOpsData(restaurantId: string): Promise<F
   const held = heldAll.slice(0, 25);
 
   return {
-    owed, deliveredThisWeek, charge, held, active, rest,
+    owed, deliveredThisWeek, charge, held, active,
+    rest: rest ? { lat: rest.lat, lng: rest.lng } : null,
+    currency: rest?.currency ?? null,
     activeCapped, heldCapped,
   };
 }

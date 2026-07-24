@@ -1,0 +1,11 @@
+{
+  "earnHours": "ชั่วโมง",
+  "earnHoursHelp": "ชั่วโมงกะที่ลงเวลา × ค่าจ้างต่อชั่วโมง — จ่ายโดย Fee Free",
+  "earnPay": "ค่าจ้าง",
+  "startShift": "เริ่มกะ",
+  "endShift": "จบกะ",
+  "onShift": "กำลังเข้ากะ",
+  "endShiftConfirm": "แตะอีกครั้งเพื่อจบ",
+  "clockInFailed": "เริ่มกะไม่สำเร็จ ลองอีกครั้ง",
+  "clockOutFailed": "จบกะไม่สำเร็จ ลองอีกครั้ง"
+}

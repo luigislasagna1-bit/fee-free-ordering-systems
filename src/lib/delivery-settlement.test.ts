@@ -69,6 +69,40 @@ describe("settleDeliveryWeek", () => {
     });
   });
 
+  it("splits fees (taxed) from driver tips (untaxed) into two line items, billed in CAD (B4)", async () => {
+    prismaMock.deliveryAssignment.findMany.mockResolvedValue([
+      { id: "a1", restaurantId: "r1", platformFeeCents: 799, driverTipCents: 300, tipCurrency: "cad" },
+      { id: "a2", restaurantId: "r1", platformFeeCents: 799, driverTipCents: 300, tipCurrency: "cad" },
+    ]);
+    prismaMock.restaurant.findUnique.mockResolvedValue({ name: "Pizza", stripeCustomerId: "cus_1", country: "CA", state: "ON", currency: "cad" });
+
+    const { results } = await settleDeliveryWeek({ weekStart: WEEK });
+
+    // accrued = fees(1598) + tips(600); the settlement row carries the split.
+    expect(results[0]).toMatchObject({ status: "invoiced", accruedCents: 2198 });
+    expect(prismaMock.deliverySettlement.create).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ feesCents: 1598, tipsCents: 600, currency: "cad", accruedCents: 2198 }) }),
+    );
+    // Two invoice items: fees (taxable) + tips (NO tax_rates), both in CAD.
+    const feeItem = stripeMock.invoiceItems.create.mock.calls.find((c: any[]) => c[0].metadata?.subtype === "fees");
+    const tipItem = stripeMock.invoiceItems.create.mock.calls.find((c: any[]) => c[0].metadata?.subtype === "tips");
+    expect(feeItem?.[0]).toMatchObject({ amount: 1598, currency: "cad" });
+    expect(tipItem?.[0]).toMatchObject({ amount: 600, currency: "cad" });
+    expect(tipItem?.[0].tax_rates).toBeUndefined(); // tips are pass-through, non-taxable
+  });
+
+  it("fails closed (no invoice) when a frozen tip currency ≠ the billing currency", async () => {
+    prismaMock.deliveryAssignment.findMany.mockResolvedValue([
+      { id: "a1", restaurantId: "r1", platformFeeCents: 799, driverTipCents: 300, tipCurrency: "usd" },
+    ]);
+    prismaMock.restaurant.findUnique.mockResolvedValue({ name: "Pizza", stripeCustomerId: "cus_1", country: "CA", state: "ON", currency: "cad" });
+
+    const { results } = await settleDeliveryWeek({ weekStart: WEEK });
+
+    expect(results[0].status).toBe("failed");
+    expect(stripeMock.invoices.create).not.toHaveBeenCalled();
+  });
+
   it("is idempotent — an existing settlement is skipped (and strays get stamped)", async () => {
     prismaMock.deliveryAssignment.findMany.mockResolvedValue([{ id: "a1", restaurantId: "r1", platformFeeCents: 799 }]);
     prismaMock.restaurant.findUnique.mockResolvedValue({ name: "Pizza", stripeCustomerId: "cus_1", country: "CA", state: "ON" });

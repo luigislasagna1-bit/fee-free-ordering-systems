@@ -1,0 +1,11 @@
+{
+  "earnHours": "Órák",
+  "earnHoursHelp": "Ledolgozott műszakórák × órabéred – a Fee Free fizeti.",
+  "earnPay": "Fizetés",
+  "startShift": "Műszak indítása",
+  "endShift": "Műszak vége",
+  "onShift": "Műszakban",
+  "endShiftConfirm": "Koppints újra a befejezéshez",
+  "clockInFailed": "Nem sikerült elindítani a műszakot. Próbáld újra.",
+  "clockOutFailed": "Nem sikerült befejezni a műszakot. Próbáld újra."
+}

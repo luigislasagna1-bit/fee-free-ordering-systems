@@ -1,0 +1,11 @@
+{
+  "earnHours": "שעות",
+  "earnHoursHelp": "שעות משמרת מתועדות × התעריף השעתי שלך — בתשלום Fee Free.",
+  "earnPay": "תשלום",
+  "startShift": "התחל משמרת",
+  "endShift": "סיים משמרת",
+  "onShift": "במשמרת",
+  "endShiftConfirm": "הקש שוב לסיום",
+  "clockInFailed": "לא הצלחנו להתחיל את המשמרת. נסה שוב.",
+  "clockOutFailed": "לא הצלחנו לסיים את המשמרת. נסה שוב."
+}

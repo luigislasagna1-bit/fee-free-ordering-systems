@@ -1,0 +1,11 @@
+{
+  "earnHours": "Timmar",
+  "earnHoursHelp": "Instämplade arbetstimmar × din timlön – betalas av Fee Free.",
+  "earnPay": "Lön",
+  "startShift": "Starta pass",
+  "endShift": "Avsluta pass",
+  "onShift": "På pass",
+  "endShiftConfirm": "Tryck igen för att avsluta",
+  "clockInFailed": "Kunde inte starta passet. Försök igen.",
+  "clockOutFailed": "Kunde inte avsluta passet. Försök igen."
+}

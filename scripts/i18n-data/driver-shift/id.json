@@ -1,0 +1,11 @@
+{
+  "earnHours": "Jam",
+  "earnHoursHelp": "Jam shift tercatat × tarif per jam Anda — dibayar oleh Fee Free.",
+  "earnPay": "Bayaran",
+  "startShift": "Mulai shift",
+  "endShift": "Akhiri shift",
+  "onShift": "Sedang shift",
+  "endShiftConfirm": "Ketuk lagi untuk mengakhiri",
+  "clockInFailed": "Gagal memulai shift. Coba lagi.",
+  "clockOutFailed": "Gagal mengakhiri shift. Coba lagi."
+}

@@ -24,9 +24,10 @@ import { HelpTip } from "@/components/HelpTip";
  * fake payroll; "Active time" is honestly accepted→delivered time (HelpTip
  * says so) because no DriverShift clock model exists (plan §9).
  *
- * Periods are DEVICE-LOCAL day boundaries. Weeks start MONDAY (the platform
- * convention — settlement weeks are Mon→Sun) but on the device's clock, not
- * UTC. The tz offset sent is the raw `new Date().getTimezoneOffset()` (JS
+ * Periods are DEVICE-LOCAL day boundaries. Weeks run SATURDAY→FRIDAY — the
+ * FeeFreeDelivery billing/payout week (Luigi 2026-07-24) — on the device's clock
+ * (all drivers are Milton/America-Toronto, so device-local ≈ the Toronto payout
+ * week). The tz offset sent is the raw `new Date().getTimezoneOffset()` (JS
  * convention: UTC − local, positive WEST of UTC — Toronto EDT +240, Tokyo
  * −540); the server consumes the raw value, so nothing is negated on either
  * end. It is the device's CURRENT offset applied to the whole range — across
@@ -56,9 +57,9 @@ function localDateStr(d: Date): string {
 }
 
 /**
- * Inclusive local-date range for a pill. Monday-start weeks (Mon→Sun, the
- * settlement-week convention, on the device's clock). "This week" ends at
- * today — no empty future days in the breakdown. Date component arithmetic
+ * Inclusive local-date range for a pill. Saturday-start weeks (Sat→Fri, the
+ * FeeFreeDelivery billing/payout week, on the device's clock). "This week" ends
+ * at today — no empty future days in the breakdown. Date component arithmetic
  * (new Date(y, m, d±n)) normalizes across month/DST boundaries safely.
  */
 function rangeFor(period: Period): { from: string; to: string } {
@@ -67,14 +68,14 @@ function rangeFor(period: Period): { from: string; to: string } {
     const s = localDateStr(now);
     return { from: s, to: s };
   }
-  const dowFromMonday = (now.getDay() + 6) % 7; // 0 = Monday
-  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dowFromMonday);
+  const dowFromSaturday = (now.getDay() + 1) % 7; // Sat=0, Sun=1 … Fri=6
+  const saturday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dowFromSaturday);
   if (period === "thisWeek") {
-    return { from: localDateStr(monday), to: localDateStr(now) };
+    return { from: localDateStr(saturday), to: localDateStr(now) };
   }
-  const lastMonday = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() - 7);
-  const lastSunday = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() - 1);
-  return { from: localDateStr(lastMonday), to: localDateStr(lastSunday) };
+  const lastSaturday = new Date(saturday.getFullYear(), saturday.getMonth(), saturday.getDate() - 7);
+  const lastFriday = new Date(saturday.getFullYear(), saturday.getMonth(), saturday.getDate() - 1);
+  return { from: localDateStr(lastSaturday), to: localDateStr(lastFriday) };
 }
 
 /** "YYYY-MM-DD" → localized weekday label, parsed as LOCAL components (a
@@ -92,6 +93,10 @@ export function DriverEarnings({ active = true }: { active?: boolean }) {
   const locale = useLocale();
   const [period, setPeriod] = useState<Period>("today");
   const [rows, setRows] = useState<EarningsRow[]>([]);
+  // Clocked hours + hourly pay for the period (B0/B3). Paid by Fee Free, in the
+  // platform operating currency (Milton = CAD), distinct from per-currency tips.
+  const [workedSeconds, setWorkedSeconds] = useState(0);
+  const [payCents, setPayCents] = useState(0);
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
   // Bumps on every load so a slow response for an old period/refresh can't
@@ -118,8 +123,11 @@ export function DriverEarnings({ active = true }: { active?: boolean }) {
       }
       const data = await res.json();
       if (seq !== seqRef.current) return;
-      if (Array.isArray(data?.rows)) setRows(data.rows as EarningsRow[]);
-      else setFailed(true);
+      if (Array.isArray(data?.rows)) {
+        setRows(data.rows as EarningsRow[]);
+        setWorkedSeconds(typeof data.workedSeconds === "number" ? data.workedSeconds : 0);
+        setPayCents(typeof data.payCents === "number" ? data.payCents : 0);
+      } else setFailed(true);
     } catch {
       if (seq === seqRef.current) setFailed(true);
     } finally {
@@ -148,6 +156,16 @@ export function DriverEarnings({ active = true }: { active?: boolean }) {
     activeMinutes < 60
       ? tShared("minutesOnly", { m: activeMinutes })
       : tShared("hoursMinutes", { h: Math.floor(activeMinutes / 60), m: activeMinutes % 60 });
+
+  // Clocked hours (shift time) — the hourly-pay basis, and the pay itself.
+  const workedMinutes = Math.round(workedSeconds / 60);
+  const workedLabel =
+    workedMinutes < 60
+      ? tShared("minutesOnly", { m: workedMinutes })
+      : tShared("hoursMinutes", { h: Math.floor(workedMinutes / 60), m: workedMinutes % 60 });
+  // Hourly pay is in the platform operating currency (Milton = CAD) — separate
+  // from per-currency tips (never blended).
+  const payLabel = formatCurrency(payCents / 100, "cad");
 
   // Daily breakdown for the week views — newest day first (the app's list
   // convention), tips per currency inside each day.
@@ -183,6 +201,8 @@ export function DriverEarnings({ active = true }: { active?: boolean }) {
                 // sit under the newly-selected pill while the fetch runs.
                 setPeriod(p);
                 setRows([]);
+                setWorkedSeconds(0);
+                setPayCents(0);
               }}
               className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors ${
                 period === p
@@ -223,11 +243,23 @@ export function DriverEarnings({ active = true }: { active?: boolean }) {
         </div>
       ) : (
         <>
-          {/* Stat tiles: Deliveries · Active time · Tips (plan §3.4) */}
+          {/* Stat tiles: Deliveries · Hours · Pay · Active time · Tips */}
           <section className="grid grid-cols-2 gap-2">
             <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4">
               <div className="text-2xl font-bold text-white">{totalDeliveries}</div>
               <div className="text-[11px] text-gray-500 mt-0.5">{t("earnDeliveries")}</div>
+            </div>
+            <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4">
+              <div className="text-2xl font-bold text-white">{workedLabel}</div>
+              <div className="text-[11px] text-gray-500 mt-0.5 flex items-center gap-1">
+                {t("earnHours")}
+                {/* Clocked shift hours — the hourly-pay basis (paid by Fee Free). */}
+                <HelpTip text={t("earnHoursHelp")} tone="dark" />
+              </div>
+            </div>
+            <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4">
+              <div className="text-2xl font-bold text-emerald-400">{payLabel}</div>
+              <div className="text-[11px] text-gray-500 mt-0.5">{t("earnPay")}</div>
             </div>
             <div className="bg-gray-800 border border-gray-700 rounded-2xl p-4">
               <div className="text-2xl font-bold text-white">{activeLabel}</div>

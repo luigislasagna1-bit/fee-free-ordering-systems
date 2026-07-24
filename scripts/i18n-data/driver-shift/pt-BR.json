@@ -1,0 +1,11 @@
+{
+  "earnHours": "Horas",
+  "earnHoursHelp": "Horas de turno registradas × seu valor por hora — pago pela Fee Free.",
+  "earnPay": "Ganhos",
+  "startShift": "Iniciar turno",
+  "endShift": "Encerrar turno",
+  "onShift": "Em turno",
+  "endShiftConfirm": "Toque de novo p/ encerrar",
+  "clockInFailed": "Não foi possível iniciar seu turno. Tente de novo.",
+  "clockOutFailed": "Não foi possível encerrar seu turno. Tente de novo."
+}

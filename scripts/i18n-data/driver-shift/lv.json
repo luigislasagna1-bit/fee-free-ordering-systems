@@ -1,0 +1,11 @@
+{
+  "earnHours": "Stundas",
+  "earnHoursHelp": "Nostrādātās maiņas stundas × tava stundas likme — apmaksā Fee Free.",
+  "earnPay": "Samaksa",
+  "startShift": "Sākt maiņu",
+  "endShift": "Beigt maiņu",
+  "onShift": "Maiņā",
+  "endShiftConfirm": "Piespied vēlreiz, lai beigtu",
+  "clockInFailed": "Neizdevās sākt maiņu. Mēģini vēlreiz.",
+  "clockOutFailed": "Neizdevās beigt maiņu. Mēģini vēlreiz."
+}

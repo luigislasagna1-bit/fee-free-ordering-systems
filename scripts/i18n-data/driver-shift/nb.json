@@ -1,0 +1,11 @@
+{
+  "earnHours": "Timer",
+  "earnHoursHelp": "Registrerte skifttimer × timelønnen din — betales av Fee Free.",
+  "earnPay": "Lønn",
+  "startShift": "Start skift",
+  "endShift": "Avslutt skift",
+  "onShift": "På skift",
+  "endShiftConfirm": "Trykk igjen for å avslutte",
+  "clockInFailed": "Kunne ikke starte skiftet. Prøv igjen.",
+  "clockOutFailed": "Kunne ikke avslutte skiftet. Prøv igjen."
+}

@@ -38,14 +38,14 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   const assignment = await prisma.deliveryAssignment.findUnique({
     where: { id },
     select: {
-      id: true, status: true, driverId: true, platformFeeCents: true,
+      id: true, status: true, driverId: true, platformFeeCents: true, driverTipCents: true,
       order: {
         select: {
-          id: true, status: true, type: true, orderNumber: true,
+          id: true, status: true, type: true, orderNumber: true, tip: true,
           customerName: true, customerEmail: true, customerPhone: true,
           estimatedReady: true, scheduledFor: true, paymentMethod: true, paymentStatus: true,
           deliveryLat: true, deliveryLng: true,
-          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true, feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true } } } },
+          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true, currency: true, feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true } } } },
         },
       },
     },
@@ -148,6 +148,13 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       o.restaurant.feefreeDeliveryConfig?.perDeliveryFeeCents,
       o.restaurant.lat, o.restaurant.lng, o.deliveryLat, o.deliveryLng,
     );
+    // Freeze the driver's tip alongside the fee (B2), in the restaurant's
+    // currency, in cents — the immutable number the restaurant statement (B4)
+    // bills and the driver payout (B5) pays. `== null` guard (NOT falsy) so a
+    // legitimate $0 tip freezes 0 and a re-fired delivered never re-freezes.
+    // FeeFree-only by construction (only assignToFeeFreeDriver makes this row).
+    data.driverTipCents = Math.round((o.tip ?? 0) * 100);
+    data.tipCurrency = o.restaurant.currency;
   }
 
   // Claim race guard: when accepting a still-unowned assignment, do it

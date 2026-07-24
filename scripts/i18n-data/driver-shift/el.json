@@ -1,0 +1,11 @@
+{
+  "earnHours": "Ώρες",
+  "earnHoursHelp": "Ώρες βάρδιας × ωριαία αμοιβή — πληρωμή από Fee Free.",
+  "earnPay": "Αμοιβή",
+  "startShift": "Έναρξη βάρδιας",
+  "endShift": "Λήξη βάρδιας",
+  "onShift": "Σε βάρδια",
+  "endShiftConfirm": "Πατήστε ξανά για λήξη",
+  "clockInFailed": "Δεν ξεκίνησε η βάρδια. Δοκιμάστε ξανά.",
+  "clockOutFailed": "Δεν έληξε η βάρδια. Δοκιμάστε ξανά."
+}

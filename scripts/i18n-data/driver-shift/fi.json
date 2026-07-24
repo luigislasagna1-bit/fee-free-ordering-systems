@@ -1,0 +1,11 @@
+{
+  "earnHours": "Tunnit",
+  "earnHoursHelp": "Kirjatut työvuorotunnit × tuntipalkkasi – maksaja Fee Free.",
+  "earnPay": "Palkka",
+  "startShift": "Aloita vuoro",
+  "endShift": "Lopeta vuoro",
+  "onShift": "Vuorossa",
+  "endShiftConfirm": "Napauta uudelleen",
+  "clockInFailed": "Vuoron aloitus epäonnistui. Yritä uudelleen.",
+  "clockOutFailed": "Vuoron lopetus epäonnistui. Yritä uudelleen."
+}

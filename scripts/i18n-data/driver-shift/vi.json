@@ -1,0 +1,11 @@
+{
+  "earnHours": "Giờ",
+  "earnHoursHelp": "Số giờ ca đã chấm công × mức lương theo giờ — do Fee Free chi trả.",
+  "earnPay": "Lương",
+  "startShift": "Bắt đầu ca",
+  "endShift": "Kết thúc ca",
+  "onShift": "Đang trong ca",
+  "endShiftConfirm": "Chạm lần nữa để kết thúc",
+  "clockInFailed": "Không bắt đầu được ca. Thử lại.",
+  "clockOutFailed": "Không kết thúc được ca. Thử lại."
+}

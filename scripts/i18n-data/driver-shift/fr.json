@@ -1,0 +1,11 @@
+{
+  "earnHours": "Heures",
+  "earnHoursHelp": "Heures de service pointées × votre taux horaire — payées par Fee Free.",
+  "earnPay": "Paie",
+  "startShift": "Démarrer le service",
+  "endShift": "Terminer le service",
+  "onShift": "En service",
+  "endShiftConfirm": "Appuyez encore pour terminer",
+  "clockInFailed": "Impossible de démarrer votre service. Réessayez.",
+  "clockOutFailed": "Impossible de terminer votre service. Réessayez."
+}

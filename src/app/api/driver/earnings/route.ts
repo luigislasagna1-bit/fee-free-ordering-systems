@@ -146,7 +146,11 @@ export async function GET(req: NextRequest) {
       to_char((a."deliveredAt" - make_interval(mins => ${tz}::int))::date, 'YYYY-MM-DD') AS day,
       r."currency" AS currency,
       COUNT(*)::int AS deliveries,
-      COALESCE(SUM(o."tip"), 0)::float8 AS tips,
+      -- Prefer the FROZEN per-delivery tip (driverTipCents, B2); fall back to the
+      -- live Order.tip for any not-yet-frozen row so historical earnings never
+      -- read $0 (critique Blocker B1). All delivered rows were backfilled, so this
+      -- reads the frozen value in practice; COALESCE is the belt-and-suspenders.
+      COALESCE(SUM(COALESCE(a."driverTipCents"::float8 / 100.0, o."tip")), 0)::float8 AS tips,
       COALESCE(SUM(
         CASE WHEN a."acceptedAt" IS NOT NULL
           THEN EXTRACT(EPOCH FROM (a."deliveredAt" - a."acceptedAt"))
@@ -174,6 +178,27 @@ export async function GET(req: NextRequest) {
     ORDER BY 1 ASC, 2 ASC
   `;
 
+  // Clocked HOURS for the same window (B0/B3) — CLOSED shifts only, split at the
+  // window edges so a shift straddling the range boundary isn't over-counted.
+  // This is the pay basis (hours × rate), distinct from "active time" above.
+  const [shiftAgg] = await prisma.$queryRaw<{ worked_seconds: number }[]>`
+    SELECT COALESCE(SUM(EXTRACT(EPOCH FROM (
+      LEAST("clockOutAt", ${utcTo}) - GREATEST("clockInAt", ${utcFrom})
+    ))), 0)::float8 AS worked_seconds
+    FROM "DriverShift"
+    WHERE "driverId" = ${driver.driverId}
+      AND "clockOutAt" IS NOT NULL
+      AND "clockInAt" < ${utcTo}
+      AND "clockOutAt" > ${utcFrom}
+  `;
+  const workedSeconds = Math.max(0, Math.round(shiftAgg?.worked_seconds ?? 0));
+  const driverRow = await prisma.driver.findUnique({
+    where: { id: driver.driverId },
+    select: { hourlyRateCents: true },
+  });
+  const hourlyRateCents = driverRow?.hourlyRateCents ?? 0;
+  const payCents = Math.round((workedSeconds / 3600) * hourlyRateCents);
+
   return NextResponse.json({
     rows: rows.map((r) => ({
       /** Local day "YYYY-MM-DD" (per the bound tz offset). */
@@ -181,11 +206,16 @@ export async function GET(req: NextRequest) {
       /** Restaurant order-money currency for this group — render per group, never sum across. */
       currency: r.currency,
       deliveries: r.deliveries,
-      /** SUM(Order.tip) in `currency` dollars — what customers added at checkout. */
+      /** Frozen driverTipCents (fallback Order.tip) in `currency` dollars — the driver's tips. */
       tips: r.tips,
       /** SUM(deliveredAt − acceptedAt) in seconds — active time, not shift hours. */
       activeSeconds: r.active_seconds,
       late: r.late,
     })),
+    /** Clocked seconds this period (closed shifts) — the hourly-pay basis. */
+    workedSeconds,
+    /** Driver's hourly rate (cents) and the resulting pay (cents), platform/CAD currency. */
+    hourlyRateCents,
+    payCents,
   });
 }

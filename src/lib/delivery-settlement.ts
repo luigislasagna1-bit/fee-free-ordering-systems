@@ -109,15 +109,21 @@ export async function settleDeliveryWeek(
       settlementId: null,
       deliveredAt: { gte: targetWeek, lt: weekEnd },
     },
-    select: { id: true, restaurantId: true, platformFeeCents: true },
+    select: { id: true, restaurantId: true, platformFeeCents: true, driverTipCents: true, tipCurrency: true },
   });
 
-  // Group assignment ids + accrual by restaurant.
-  const byRestaurant = new Map<string, { ids: string[]; accrued: number }>();
+  // Group assignment ids + accrual by restaurant, splitting fees (taxable) from
+  // driver tips (pass-through, non-taxable). accrued = fees + tips (B4).
+  const byRestaurant = new Map<
+    string,
+    { ids: string[]; fees: number; tips: number; tipCurrencies: Set<string> }
+  >();
   for (const a of pending) {
-    const g = byRestaurant.get(a.restaurantId) ?? { ids: [], accrued: 0 };
+    const g = byRestaurant.get(a.restaurantId) ?? { ids: [], fees: 0, tips: 0, tipCurrencies: new Set<string>() };
     g.ids.push(a.id);
-    g.accrued += a.platformFeeCents ?? FEEFREE_DELIVERY_PER_ORDER_CENTS;
+    g.fees += a.platformFeeCents ?? FEEFREE_DELIVERY_PER_ORDER_CENTS;
+    g.tips += a.driverTipCents ?? 0;
+    if (a.tipCurrency) g.tipCurrencies.add(a.tipCurrency);
     byRestaurant.set(a.restaurantId, g);
   }
 
@@ -127,12 +133,20 @@ export async function settleDeliveryWeek(
   for (const [restaurantId, group] of byRestaurant) {
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { name: true, stripeCustomerId: true, country: true, state: true },
+      select: { name: true, stripeCustomerId: true, country: true, state: true, currency: true },
     });
     if (!restaurant) continue;
 
     const deliveries = group.ids.length;
-    const accrued = group.accrued;
+    const fees = group.fees;
+    const tips = group.tips;
+    const accrued = fees + tips;
+    // Delivery bills in the RESTAURANT's own currency (Milton = "cad"), not the
+    // global USD PLATFORM_CURRENCY (plan §4). Stripe wants a lowercase code.
+    const currency = (restaurant.currency || PLATFORM_CURRENCY).toLowerCase();
+    // Currency-integrity guard (N6): every frozen tip must match the restaurant's
+    // billing currency, or we'd bill a CAD tip as USD. Fail closed if they diverge.
+    const foreignTip = [...group.tipCurrencies].find((c) => c.toLowerCase() !== currency);
 
     // Idempotency guard — already settled this week? (Also the crash-recovery
     // seam: a prior run may have created the row but died before stamping the
@@ -170,13 +184,19 @@ export async function settleDeliveryWeek(
         deliveriesInWeek: deliveries,
         accruedCents: accrued,
         invoicedCents: accrued,
+        feesCents: fees,
+        tipsCents: tips,
+        currency,
         status: "pending",
       },
     });
 
     let invoiceId: string | undefined;
     let failureReason: string | undefined;
-    if (!stripe) {
+    if (foreignTip) {
+      // Never mis-denominate a driver's tip. Left unsettled + flagged for a human.
+      failureReason = `Tip currency ${foreignTip} ≠ billing currency ${currency}; not billed`;
+    } else if (!stripe) {
       failureReason = "Stripe not configured on platform";
     } else if (!restaurant.stripeCustomerId) {
       failureReason = "Restaurant has no Stripe customer ID (no card on file)";
@@ -188,26 +208,49 @@ export async function settleDeliveryWeek(
         // server-side at Stripe (same key → original response).
         const idemPrefix = `delivery-settle-${restaurantId}-${targetWeek.toISOString().slice(0, 10)}`;
 
+        // Line item 1 — per-delivery platform fees (TAXABLE).
         await stripe.invoiceItems.create(
           {
             customer: restaurant.stripeCustomerId,
-            amount: accrued,
-            currency: PLATFORM_CURRENCY,
+            amount: fees,
+            currency,
             description: `Fee Free Delivery — ${deliveries} deliver${deliveries === 1 ? "y" : "ies"} (${weekLabel(targetWeek)})`,
             ...(taxRateId ? { tax_rates: [taxRateId] } : {}),
             metadata: {
               type: "delivery_settlement",
+              subtype: "fees",
               restaurantId,
               weekStart: targetWeek.toISOString(),
               deliveriesInWeek: String(deliveries),
               settlementId: settlement.id,
-              preTaxCents: String(accrued),
+              preTaxCents: String(fees),
               taxRatePct: String(tax.ratePct),
               taxLabel: tax.label,
             },
           },
           { idempotencyKey: `${idemPrefix}-item` },
         );
+        // Line item 2 — driver tips collected on the drivers' behalf (pass-through,
+        // NON-taxable → no tax_rates). Only when there's a tip to forward.
+        if (tips > 0) {
+          await stripe.invoiceItems.create(
+            {
+              customer: restaurant.stripeCustomerId,
+              amount: tips,
+              currency,
+              description: `Driver tips collected (${weekLabel(targetWeek)})`,
+              metadata: {
+                type: "delivery_settlement",
+                subtype: "tips",
+                restaurantId,
+                weekStart: targetWeek.toISOString(),
+                settlementId: settlement.id,
+                tipsCents: String(tips),
+              },
+            },
+            { idempotencyKey: `${idemPrefix}-tips-item` },
+          );
+        }
         const invoice = await stripe.invoices.create(
           {
             customer: restaurant.stripeCustomerId,

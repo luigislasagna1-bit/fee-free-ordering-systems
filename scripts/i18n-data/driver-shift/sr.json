@@ -1,0 +1,11 @@
+{
+  "earnHours": "Сати",
+  "earnHoursHelp": "Евидентирани сати смене × сатница — плаћа Fee Free.",
+  "earnPay": "Зарада",
+  "startShift": "Почни смену",
+  "endShift": "Заврши смену",
+  "onShift": "У смени",
+  "endShiftConfirm": "Додирни поново за крај",
+  "clockInFailed": "Смена није покренута. Покушај поново.",
+  "clockOutFailed": "Смена није завршена. Покушај поново."
+}

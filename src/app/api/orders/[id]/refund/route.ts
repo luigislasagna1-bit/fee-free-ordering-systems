@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { refundDirectPayment, toStripeMinorUnits } from "@/lib/stripe";
 import { refundForOrder as refundRewardForOrder } from "@/lib/reward-ledger";
+import { reconcileTipRefund } from "@/lib/driver-payout";
 import { sendOrderRefundEmail } from "@/lib/email";
 import { formatCurrency } from "@/lib/utils";
 
@@ -43,12 +44,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       paymentStatus: true,
       paymentIntentId: true,
       total: true,
+      tip: true,
       creditApplied: true,
       refundedAmount: true,
       orderNumber: true,
       customerName: true,
       customerEmail: true,
       restaurant: { select: { currency: true, name: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
+      // FeeFree delivery only — used to reverse the driver's frozen tip on refund (B2).
+      deliveryAssignment: { select: { id: true, status: true, driverId: true, deliveredAt: true } },
     },
   });
   if (!order) return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -151,6 +155,26 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
   // Partial refunds leave credit untouched. Luigi 2026-06-30.
   if (isFull) {
     after(refundRewardForOrder(id).catch((e) => console.error("[refund reward-to-wallet]", e instanceof Error ? e.message : e)));
+  }
+
+  // FeeFree delivery tip pass-through (B2): when the refunded order was delivered
+  // by a FeeFree driver, reduce the driver's FROZEN tip proportionally so the
+  // restaurant statement (B4) and driver payout (B5) don't bill/pay a tip the
+  // customer got back. Runs on PARTIAL and FULL, recomputed from the cumulative
+  // refunded total (idempotent). Off the hot path; best-effort.
+  const da = order.deliveryAssignment;
+  if (da && da.status === "delivered") {
+    after(
+      reconcileTipRefund({
+        assignmentId: da.id,
+        driverId: da.driverId,
+        deliveredAt: da.deliveredAt,
+        originalTipCents: Math.round((order.tip ?? 0) * 100),
+        chargedTotal: total,
+        refundedTotal: newRefundedTotal,
+        now: new Date(),
+      }).catch((e) => console.error("[refund driver-tip reversal]", e instanceof Error ? e.message : e)),
+    );
   }
 
   // Transactional email — the customer always gets a written record of the

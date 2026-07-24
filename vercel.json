@@ -30,6 +30,14 @@
       "schedule": "10 6 * * 6"
     },
     {
+      "path": "/api/cron/driver-shift-autoclose",
+      "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/superadmin/driver-payouts/build",
+      "schedule": "20 6 * * 6"
+    },
+    {
       "path": "/api/cron/auto-reject-stale-orders",
       "schedule": "*/5 * * * *"
     },

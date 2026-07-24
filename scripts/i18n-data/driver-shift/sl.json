@@ -1,0 +1,11 @@
+{
+  "earnHours": "Ure",
+  "earnHoursHelp": "Zabeležene ure izmene × tvoja urna postavka — plača Fee Free.",
+  "earnPay": "Plačilo",
+  "startShift": "Začni izmeno",
+  "endShift": "Končaj izmeno",
+  "onShift": "V izmeni",
+  "endShiftConfirm": "Znova tapni za konec",
+  "clockInFailed": "Izmene ni bilo mogoče začeti. Poskusi znova.",
+  "clockOutFailed": "Izmene ni bilo mogoče končati. Poskusi znova."
+}

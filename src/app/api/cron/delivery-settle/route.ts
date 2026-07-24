@@ -23,7 +23,7 @@ import { getSessionUser } from "@/lib/session";
  * Idempotent — settleDeliveryWeek() guards on (restaurantId, weekStart) and marks
  * consumed assignments via settlementId.
  */
-export async function POST(req: NextRequest) {
+async function handle(req: NextRequest) {
   const authHeader = req.headers.get("authorization") ?? "";
   const cronSecret = process.env.CRON_SECRET;
   const isCron = !!cronSecret && authHeader === `Bearer ${cronSecret}`;
@@ -94,3 +94,7 @@ export async function POST(req: NextRequest) {
     })),
   });
 }
+
+// Vercel Cron issues GET; keep POST for the superadmin manual re-run. Both share `handle`.
+export const GET = handle;
+export const POST = handle;
