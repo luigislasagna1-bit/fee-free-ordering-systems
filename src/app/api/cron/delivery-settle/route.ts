@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { DELIVERY_BILLING_ENABLED } from "@/lib/delivery-billing-switch";
 import { settleDeliveryWeek } from "@/lib/delivery-settlement";
 import { previousWeekStartUtc, weekStartUtc } from "@/lib/feefree-delivery";
 import { getSessionUser } from "@/lib/session";
@@ -46,6 +47,19 @@ export async function POST(req: NextRequest) {
     targetWeek = weekStartUtc(d);
   } else {
     targetWeek = previousWeekStartUtc(new Date());
+  }
+
+  // Paused (Luigi 2026-07-23) — answer explicitly rather than returning an empty
+  // run that reads like "nothing was owed".
+  if (!DELIVERY_BILLING_ENABLED) {
+    return NextResponse.json({
+      paused: true,
+      reason:
+        "FeeFreeDelivery billing is paused — no restaurant is charged. Deliveries keep accruing unsettled. " +
+        "Re-enable via DELIVERY_BILLING_ENABLED in src/lib/delivery-settlement.ts once the Sat→Fri week " +
+        "and driver-tip pass-through are live.",
+      weekStart: targetWeek.toISOString(),
+    });
   }
 
   const result = await settleDeliveryWeek({ weekStart: targetWeek });

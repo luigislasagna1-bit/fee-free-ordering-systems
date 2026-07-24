@@ -24,6 +24,10 @@ vi.mock("@/lib/stripe", () => ({
   getStripe: () => Promise.resolve(stripeMock),
   stripeReady: stripeReadyMock,
 }));
+// Billing is PAUSED in production (see delivery-billing-switch.ts). These tests
+// exercise the engine as it will behave once re-enabled, so they force it on.
+// The paused behaviour is covered by its own suite at the bottom of this file.
+vi.mock("@/lib/delivery-billing-switch", () => ({ DELIVERY_BILLING_ENABLED: true }));
 
 import { settleDeliveryWeek } from "./delivery-settlement";
 

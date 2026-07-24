@@ -13,9 +13,12 @@
  * (src/lib/stripe/events/invoice.ts, metadata.type = "delivery_settlement").
  *
  * Triggered by the weekly cron (Mon 00:10 UTC) or a superadmin manual re-run.
+ *
+ * ⚠️ CURRENTLY PAUSED — see DELIVERY_BILLING_ENABLED below.
  */
 
 import prisma from "@/lib/db";
+import { DELIVERY_BILLING_ENABLED } from "@/lib/delivery-billing-switch";
 import { PLATFORM_CURRENCY } from "@/lib/marketplace";
 import { getPlatformTax, stripeTaxRateDisplayName, type PlatformTax } from "@/lib/platform-tax";
 import { getStripe, stripeReady } from "@/lib/stripe";
@@ -84,6 +87,16 @@ export async function settleDeliveryWeek(
   const now = opts.now ?? new Date();
   const targetWeek = opts.weekStart ?? previousWeekStartUtc(now);
   const weekEnd = weekEndUtc(targetWeek);
+
+  // Kill-switch checked HERE (not just in the cron route) so a superadmin manual
+  // re-run, a script, or any future caller also cannot charge a restaurant.
+  if (!DELIVERY_BILLING_ENABLED) {
+    console.warn(
+      `[delivery-settlement] SKIPPED week ${targetWeek.toISOString().slice(0, 10)} — ` +
+        `billing is paused (DELIVERY_BILLING_ENABLED = false). No restaurant was charged.`,
+    );
+    return { weekStart: targetWeek, results: [] };
+  }
 
   // Source of truth: delivered, not-yet-settled FeeFree assignments whose
   // deliveredAt falls in the target week.
