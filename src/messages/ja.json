@@ -4160,7 +4160,18 @@
       "getAppTitle": "Kitchen Order App を入手",
       "getAppBody": "Google Play で無料。新しい注文は画面がオフでも即座に着信音でお知らせし、レシートは WiFi 経由で印刷されます。",
       "getAppScanHint": "キッチンのタブレットまたはスマートフォンでスキャンすると Google Play が開きます",
-      "getAppIosSoon": "iPhone/iPad 版は App Store に近日登場予定です。それまでの間、iPad ではブラウザでキッチン画面をご利用いただけます。"
+      "getAppIosSoon": "iPhone/iPad 版は App Store に近日登場予定です。それまでの間、iPad ではブラウザでキッチン画面をご利用いただけます。",
+      "sendLinkTitle": "スマホにリンクを送信",
+      "sendLinkBody": "キッチンで使う端末にアプリをインストールしましょう。ダウンロードリンクをメールまたはSMSでお送りします。",
+      "sendLinkEmailOption": "メール",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "you@example.com",
+      "sendLinkTextPlaceholder": "電話番号",
+      "sendLinkSend": "送信",
+      "sendLinkSending": "送信中…",
+      "sendLinkDone": "送信しました。端末をご確認ください。",
+      "sendLinkError": "送信できませんでした。宛先を確認して、もう一度お試しください。",
+      "sendLinkRateLimited": "試行回数が多すぎます。1分ほどお待ちください。"
     },
     "endOfDayPage": {
       "heading": "日次レポート",

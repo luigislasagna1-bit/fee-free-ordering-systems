@@ -4160,7 +4160,18 @@
       "getAppTitle": "הורד את אפליקציית Kitchen Order App",
       "getAppBody": "חינם ב-Google Play. הזמנות חדשות מצלצלות מיידית — גם כשהמסך כבוי — והקבלות מודפסות דרך WiFi.",
       "getAppScanHint": "סרוק עם הטאבלט או הטלפון של המטבח כדי לפתוח את Google Play",
-      "getAppIosSoon": "גרסת ה-iPhone/iPad בדרך ל-App Store — עד אז, מכשירי iPad יכולים להפעיל את המטבח בדפדפן."
+      "getAppIosSoon": "גרסת ה-iPhone/iPad בדרך ל-App Store — עד אז, מכשירי iPad יכולים להפעיל את המטבח בדפדפן.",
+      "sendLinkTitle": "שליחת הקישור לטלפון שלך",
+      "sendLinkBody": "התקינו את האפליקציה במכשיר שתשתמשו בו במטבח — נשלח לכם את קישור ההורדה במייל או ב-SMS.",
+      "sendLinkEmailOption": "מייל",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "you@example.com",
+      "sendLinkTextPlaceholder": "מספר הטלפון שלך",
+      "sendLinkSend": "שליחה",
+      "sendLinkSending": "שולח…",
+      "sendLinkDone": "נשלח! בדקו את המכשיר שלכם.",
+      "sendLinkError": "השליחה נכשלה. בדקו את הכתובת ונסו שוב.",
+      "sendLinkRateLimited": "יותר מדי ניסיונות — המתינו רגע ונסו שוב."
     },
     "endOfDayPage": {
       "heading": "דוח סוף יום",

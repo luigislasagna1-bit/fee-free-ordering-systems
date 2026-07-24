@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Изпратете връзката на телефона си",
+  "sendLinkBody": "Изтеглете приложението на устройството, което ще ползвате в кухнята — ще ви пратим връзката за изтегляне по имейл или SMS.",
+  "sendLinkEmailOption": "Имейл",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "vie@primer.com",
+  "sendLinkTextPlaceholder": "Вашият телефонен номер",
+  "sendLinkSend": "Изпрати",
+  "sendLinkSending": "Изпраща се…",
+  "sendLinkDone": "Изпратено! Проверете устройството си.",
+  "sendLinkError": "Изпращането е неуспешно. Проверете адреса и опитайте отново.",
+  "sendLinkRateLimited": "Твърде много опити — изчакайте минута."
+}

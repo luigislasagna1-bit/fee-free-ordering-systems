@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "लिंक अपने फ़ोन पर भेजें",
+  "sendLinkBody": "किचन में जिस डिवाइस का इस्तेमाल करेंगे, उस पर ऐप पाएँ — हम आपको ईमेल या टेक्स्ट से डाउनलोड लिंक भेज देंगे।",
+  "sendLinkEmailOption": "ईमेल",
+  "sendLinkTextOption": "टेक्स्ट",
+  "sendLinkEmailPlaceholder": "aap@example.com",
+  "sendLinkTextPlaceholder": "आपका फ़ोन नंबर",
+  "sendLinkSend": "भेजें",
+  "sendLinkSending": "भेजा जा रहा है…",
+  "sendLinkDone": "भेज दिया! अपना डिवाइस देखें।",
+  "sendLinkError": "भेज नहीं सके। पता जाँचें और फिर कोशिश करें।",
+  "sendLinkRateLimited": "बहुत ज़्यादा कोशिशें — कृपया एक मिनट रुकें।"
+}

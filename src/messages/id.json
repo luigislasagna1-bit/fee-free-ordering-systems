@@ -4160,7 +4160,18 @@
       "getAppTitle": "Dapatkan Kitchen Order App",
       "getAppBody": "Gratis di Google Play. Pesanan baru langsung berdering — bahkan saat layar mati — dan struk dicetak lewat WiFi.",
       "getAppScanHint": "Pindai dengan tablet atau ponsel dapur untuk membuka Google Play",
-      "getAppIosSoon": "Versi iPhone/iPad segera hadir di App Store — sementara itu, iPad dapat menjalankan dapur lewat browser."
+      "getAppIosSoon": "Versi iPhone/iPad segera hadir di App Store — sementara itu, iPad dapat menjalankan dapur lewat browser.",
+      "sendLinkTitle": "Kirim tautan ke ponsel Anda",
+      "sendLinkBody": "Dapatkan aplikasi di perangkat yang akan Anda pakai di dapur — kami akan mengirimkan tautan unduhan lewat email atau SMS.",
+      "sendLinkEmailOption": "Email",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "anda@contoh.com",
+      "sendLinkTextPlaceholder": "Nomor ponsel Anda",
+      "sendLinkSend": "Kirim",
+      "sendLinkSending": "Mengirim…",
+      "sendLinkDone": "Terkirim! Periksa perangkat Anda.",
+      "sendLinkError": "Gagal mengirim. Periksa alamatnya lalu coba lagi.",
+      "sendLinkRateLimited": "Terlalu banyak percobaan — mohon tunggu sebentar."
     },
     "endOfDayPage": {
       "heading": "Laporan akhir hari",

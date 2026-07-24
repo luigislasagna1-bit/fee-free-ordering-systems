@@ -4160,7 +4160,18 @@
       "getAppTitle": "Töltse le a Kitchen Order App alkalmazást",
       "getAppBody": "Ingyenes a Google Play-en. Az új rendelések azonnal csörögnek — kikapcsolt képernyő mellett is —, a nyugták pedig WiFi-n keresztül nyomtatódnak.",
       "getAppScanHint": "Olvassa be a konyhai tablettel vagy telefonnal a Google Play megnyitásához",
-      "getAppIosSoon": "Az iPhone/iPad verzió hamarosan érkezik az App Store-ba — addig az iPadek böngészőben futtathatják a konyhát."
+      "getAppIosSoon": "Az iPhone/iPad verzió hamarosan érkezik az App Store-ba — addig az iPadek böngészőben futtathatják a konyhát.",
+      "sendLinkTitle": "Küldje el a linket a telefonjára",
+      "sendLinkBody": "Töltse le az alkalmazást arra az eszközre, amelyet a konyhában használ – e-mailben vagy SMS-ben elküldjük a letöltési linket.",
+      "sendLinkEmailOption": "E-mail",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "on@pelda.hu",
+      "sendLinkTextPlaceholder": "Telefonszáma",
+      "sendLinkSend": "Küldés",
+      "sendLinkSending": "Küldés…",
+      "sendLinkDone": "Elküldve! Nézze meg az eszközét.",
+      "sendLinkError": "Nem sikerült elküldeni. Ellenőrizze a címet, és próbálja újra.",
+      "sendLinkRateLimited": "Túl sok próbálkozás – kérjük, várjon egy percet."
     },
     "endOfDayPage": {
       "heading": "Nap végi jelentés",

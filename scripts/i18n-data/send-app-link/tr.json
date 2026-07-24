@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Bağlantıyı telefonuna gönder",
+  "sendLinkBody": "Uygulamayı mutfakta kullanacağın cihaza indir — indirme bağlantısını sana e-postayla ya da SMS ile gönderelim.",
+  "sendLinkEmailOption": "E-posta",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "ornek@ornek.com",
+  "sendLinkTextPlaceholder": "Telefon numaran",
+  "sendLinkSend": "Gönder",
+  "sendLinkSending": "Gönderiliyor…",
+  "sendLinkDone": "Gönderildi! Cihazını kontrol et.",
+  "sendLinkError": "Gönderilemedi. Adresi kontrol edip tekrar dene.",
+  "sendLinkRateLimited": "Çok fazla deneme — lütfen bir dakika bekle."
+}

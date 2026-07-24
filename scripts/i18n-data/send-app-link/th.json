@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "ส่งลิงก์ไปที่โทรศัพท์ของคุณ",
+  "sendLinkBody": "ติดตั้งแอปบนอุปกรณ์ที่จะใช้ในครัว — เราจะส่งลิงก์ดาวน์โหลดให้ทางอีเมลหรือ SMS",
+  "sendLinkEmailOption": "อีเมล",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "you@example.com",
+  "sendLinkTextPlaceholder": "หมายเลขโทรศัพท์ของคุณ",
+  "sendLinkSend": "ส่ง",
+  "sendLinkSending": "กำลังส่ง…",
+  "sendLinkDone": "ส่งแล้ว! ตรวจสอบที่อุปกรณ์ของคุณ",
+  "sendLinkError": "ส่งไม่สำเร็จ ตรวจสอบที่อยู่แล้วลองอีกครั้ง",
+  "sendLinkRateLimited": "ลองบ่อยเกินไป — โปรดรอสักครู่"
+}

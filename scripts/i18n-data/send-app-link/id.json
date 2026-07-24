@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Kirim tautan ke ponsel Anda",
+  "sendLinkBody": "Dapatkan aplikasi di perangkat yang akan Anda pakai di dapur — kami akan mengirimkan tautan unduhan lewat email atau SMS.",
+  "sendLinkEmailOption": "Email",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "anda@contoh.com",
+  "sendLinkTextPlaceholder": "Nomor ponsel Anda",
+  "sendLinkSend": "Kirim",
+  "sendLinkSending": "Mengirim…",
+  "sendLinkDone": "Terkirim! Periksa perangkat Anda.",
+  "sendLinkError": "Gagal mengirim. Periksa alamatnya lalu coba lagi.",
+  "sendLinkRateLimited": "Terlalu banyak percobaan — mohon tunggu sebentar."
+}

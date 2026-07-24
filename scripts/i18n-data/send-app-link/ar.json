@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "أرسل الرابط إلى هاتفك",
+  "sendLinkBody": "احصل على التطبيق على الجهاز الذي ستستخدمه في المطبخ — سنرسل لك رابط التنزيل عبر البريد الإلكتروني أو رسالة نصية.",
+  "sendLinkEmailOption": "بريد إلكتروني",
+  "sendLinkTextOption": "رسالة نصية",
+  "sendLinkEmailPlaceholder": "you@example.com",
+  "sendLinkTextPlaceholder": "رقم هاتفك",
+  "sendLinkSend": "إرسال",
+  "sendLinkSending": "جارٍ الإرسال…",
+  "sendLinkDone": "تم الإرسال! تحقّق من جهازك.",
+  "sendLinkError": "تعذّر الإرسال. تحقّق من العنوان وحاول مرة أخرى.",
+  "sendLinkRateLimited": "محاولات كثيرة جدًا — يُرجى الانتظار دقيقة."
+}

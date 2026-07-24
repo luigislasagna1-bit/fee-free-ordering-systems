@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Envia't l'enllaç al telèfon",
+  "sendLinkBody": "Instal·la l'app al dispositiu que faràs servir a la cuina: t'enviarem l'enllaç de descàrrega per correu o SMS.",
+  "sendLinkEmailOption": "Correu",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "tu@exemple.com",
+  "sendLinkTextPlaceholder": "El teu número de telèfon",
+  "sendLinkSend": "Envia",
+  "sendLinkSending": "S'està enviant…",
+  "sendLinkDone": "Enviat! Comprova el dispositiu.",
+  "sendLinkError": "No s'ha pogut enviar. Comprova l'adreça i torna-ho a provar.",
+  "sendLinkRateLimited": "Massa intents: espera un minut."
+}

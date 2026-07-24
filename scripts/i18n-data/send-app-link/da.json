@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Send linket til din telefon",
+  "sendLinkBody": "Hent appen på den enhed, du skal bruge i køkkenet — vi sender dig downloadlinket på mail eller sms.",
+  "sendLinkEmailOption": "E-mail",
+  "sendLinkTextOption": "Sms",
+  "sendLinkEmailPlaceholder": "dig@eksempel.dk",
+  "sendLinkTextPlaceholder": "Dit telefonnummer",
+  "sendLinkSend": "Send",
+  "sendLinkSending": "Sender…",
+  "sendLinkDone": "Sendt! Tjek din enhed.",
+  "sendLinkError": "Kunne ikke sende. Tjek adressen, og prøv igen.",
+  "sendLinkRateLimited": "For mange forsøg — vent et øjeblik."
+}

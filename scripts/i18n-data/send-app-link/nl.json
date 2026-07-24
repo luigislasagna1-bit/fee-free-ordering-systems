@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Stuur de link naar je telefoon",
+  "sendLinkBody": "Installeer de app op het apparaat dat je in de keuken gebruikt — we mailen of sms'en je de downloadlink.",
+  "sendLinkEmailOption": "E-mail",
+  "sendLinkTextOption": "Sms",
+  "sendLinkEmailPlaceholder": "jij@voorbeeld.nl",
+  "sendLinkTextPlaceholder": "Je telefoonnummer",
+  "sendLinkSend": "Verzenden",
+  "sendLinkSending": "Verzenden…",
+  "sendLinkDone": "Verzonden! Check je apparaat.",
+  "sendLinkError": "Verzenden mislukt. Controleer het adres en probeer het opnieuw.",
+  "sendLinkRateLimited": "Te veel pogingen — wacht even een minuutje."
+}

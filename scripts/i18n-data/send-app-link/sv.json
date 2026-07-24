@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Skicka länken till din telefon",
+  "sendLinkBody": "Hämta appen på enheten du ska använda i köket – vi mejlar eller sms:ar dig nedladdningslänken.",
+  "sendLinkEmailOption": "E-post",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "du@exempel.se",
+  "sendLinkTextPlaceholder": "Ditt telefonnummer",
+  "sendLinkSend": "Skicka",
+  "sendLinkSending": "Skickar…",
+  "sendLinkDone": "Skickat! Kolla din enhet.",
+  "sendLinkError": "Kunde inte skicka. Kontrollera adressen och försök igen.",
+  "sendLinkRateLimited": "För många försök – vänta en minut."
+}

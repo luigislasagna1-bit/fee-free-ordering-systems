@@ -11,6 +11,8 @@ import QRCode from "qrcode";
 import { APP_LINKS } from "@/lib/app-links";
 import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
 import { setupStepLabel } from "@/lib/setup-step-i18n";
+import { SendAppLinkForm } from "./SendAppLinkForm";
+import prisma from "@/lib/db";
 
 export default async function PublishingHubPage() {
   const t = await getTranslations("admin.publishingPage");
@@ -23,10 +25,12 @@ export default async function PublishingHubPage() {
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
 
-  const [state, devices, hasHostedSite] = await Promise.all([
+  const [state, devices, hasHostedSite, restaurant] = await Promise.all([
     getPublishState(user.restaurantId),
     listKitchenDevices(user.restaurantId),
     hasFeature(user.restaurantId, "hosted_marketing_page"),
+    // Prefill the "send me the link" form with the owner's own contact.
+    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { phone: true, email: true } }),
   ]);
   const progress = state.progress;
   const isPublished = !!state.publishedAt;
@@ -160,6 +164,9 @@ export default async function PublishingHubPage() {
                 </div>
               )}
             </div>
+            {/* Send the download link to the owner's own phone/email so they can
+                install on the kitchen device without hunting the store. */}
+            <SendAppLinkForm defaultEmail={user.email ?? restaurant?.email ?? ""} defaultPhone={restaurant?.phone ?? ""} />
           </div>
         )}
         {devices.length > 0 && (

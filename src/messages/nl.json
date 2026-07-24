@@ -4160,7 +4160,18 @@
       "getAppTitle": "Download de Kitchen Order App",
       "getAppBody": "Gratis op Google Play. Nieuwe bestellingen rinkelen direct — zelfs met het scherm uit — en bonnen worden via WiFi geprint.",
       "getAppScanHint": "Scan met de keukentablet of -telefoon om Google Play te openen",
-      "getAppIosSoon": "De iPhone/iPad-versie komt naar de App Store — tot die tijd kan de keuken op iPads in de browser draaien."
+      "getAppIosSoon": "De iPhone/iPad-versie komt naar de App Store — tot die tijd kan de keuken op iPads in de browser draaien.",
+      "sendLinkTitle": "Stuur de link naar je telefoon",
+      "sendLinkBody": "Installeer de app op het apparaat dat je in de keuken gebruikt — we mailen of sms'en je de downloadlink.",
+      "sendLinkEmailOption": "E-mail",
+      "sendLinkTextOption": "Sms",
+      "sendLinkEmailPlaceholder": "jij@voorbeeld.nl",
+      "sendLinkTextPlaceholder": "Je telefoonnummer",
+      "sendLinkSend": "Verzenden",
+      "sendLinkSending": "Verzenden…",
+      "sendLinkDone": "Verzonden! Check je apparaat.",
+      "sendLinkError": "Verzenden mislukt. Controleer het adres en probeer het opnieuw.",
+      "sendLinkRateLimited": "Te veel pogingen — wacht even een minuutje."
     },
     "endOfDayPage": {
       "heading": "Einderapport van de dag",

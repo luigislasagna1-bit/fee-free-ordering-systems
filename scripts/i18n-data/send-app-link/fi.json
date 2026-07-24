@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Lähetä linkki puhelimeesi",
+  "sendLinkBody": "Hae sovellus laitteeseen, jota käytät keittiössä – lähetämme latauslinkin sähköpostitse tai tekstiviestillä.",
+  "sendLinkEmailOption": "Sähköposti",
+  "sendLinkTextOption": "Tekstiviesti",
+  "sendLinkEmailPlaceholder": "nimi@esimerkki.fi",
+  "sendLinkTextPlaceholder": "Puhelinnumerosi",
+  "sendLinkSend": "Lähetä",
+  "sendLinkSending": "Lähetetään…",
+  "sendLinkDone": "Lähetetty! Tarkista laitteesi.",
+  "sendLinkError": "Lähetys epäonnistui. Tarkista osoite ja yritä uudelleen.",
+  "sendLinkRateLimited": "Liian monta yritystä – odota hetki."
+}

@@ -4160,7 +4160,18 @@
       "getAppTitle": "Hent Kitchen Order App",
       "getAppBody": "Gratis på Google Play. Nye bestillinger ringer umiddelbart — selv med skjermen av — og kvitteringer skrives ut over WiFi.",
       "getAppScanHint": "Skann med kjøkkennettbrettet eller telefonen for å åpne Google Play",
-      "getAppIosSoon": "iPhone/iPad-versjonen kommer til App Store — inntil da kan iPader kjøre kjøkkenet i nettleseren."
+      "getAppIosSoon": "iPhone/iPad-versjonen kommer til App Store — inntil da kan iPader kjøre kjøkkenet i nettleseren.",
+      "sendLinkTitle": "Send lenken til telefonen din",
+      "sendLinkBody": "Få appen på enheten du skal bruke på kjøkkenet – vi sender deg nedlastingslenken på e-post eller SMS.",
+      "sendLinkEmailOption": "E-post",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "deg@eksempel.no",
+      "sendLinkTextPlaceholder": "Telefonnummeret ditt",
+      "sendLinkSend": "Send",
+      "sendLinkSending": "Sender …",
+      "sendLinkDone": "Sendt! Sjekk enheten din.",
+      "sendLinkError": "Kunne ikke sende. Sjekk adressen og prøv igjen.",
+      "sendLinkRateLimited": "For mange forsøk – vent litt."
     },
     "endOfDayPage": {
       "heading": "Daglig avslutningsrapport",

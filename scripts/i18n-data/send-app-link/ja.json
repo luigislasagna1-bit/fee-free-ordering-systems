@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "スマホにリンクを送信",
+  "sendLinkBody": "キッチンで使う端末にアプリをインストールしましょう。ダウンロードリンクをメールまたはSMSでお送りします。",
+  "sendLinkEmailOption": "メール",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "you@example.com",
+  "sendLinkTextPlaceholder": "電話番号",
+  "sendLinkSend": "送信",
+  "sendLinkSending": "送信中…",
+  "sendLinkDone": "送信しました。端末をご確認ください。",
+  "sendLinkError": "送信できませんでした。宛先を確認して、もう一度お試しください。",
+  "sendLinkRateLimited": "試行回数が多すぎます。1分ほどお待ちください。"
+}

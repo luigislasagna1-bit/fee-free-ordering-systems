@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Saada link oma telefoni",
+  "sendLinkBody": "Laadi rakendus seadmesse, mida köögis kasutad — saadame allalaadimislingi meili või sõnumiga.",
+  "sendLinkEmailOption": "Meil",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "sina@näidis.ee",
+  "sendLinkTextPlaceholder": "Sinu telefoninumber",
+  "sendLinkSend": "Saada",
+  "sendLinkSending": "Saadan…",
+  "sendLinkDone": "Saadetud! Vaata oma seadet.",
+  "sendLinkError": "Saatmine ebaõnnestus. Kontrolli aadressi ja proovi uuesti.",
+  "sendLinkRateLimited": "Liiga palju katseid — palun oota hetk."
+}

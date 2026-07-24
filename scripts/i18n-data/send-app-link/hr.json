@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Pošaljite poveznicu na svoj telefon",
+  "sendLinkBody": "Preuzmite aplikaciju na uređaj koji ćete koristiti u kuhinji — poslat ćemo vam poveznicu za preuzimanje e-poštom ili SMS-om.",
+  "sendLinkEmailOption": "E-pošta",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "vi@primjer.com",
+  "sendLinkTextPlaceholder": "Vaš broj telefona",
+  "sendLinkSend": "Pošalji",
+  "sendLinkSending": "Slanje…",
+  "sendLinkDone": "Poslano! Provjerite svoj uređaj.",
+  "sendLinkError": "Slanje nije uspjelo. Provjerite adresu i pokušajte ponovno.",
+  "sendLinkRateLimited": "Previše pokušaja — pričekajte trenutak."
+}

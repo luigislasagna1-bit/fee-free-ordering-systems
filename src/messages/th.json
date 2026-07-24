@@ -4160,7 +4160,18 @@
       "getAppTitle": "ดาวน์โหลด Kitchen Order App",
       "getAppBody": "ฟรีบน Google Play ออเดอร์ใหม่ส่งเสียงเตือนทันที — แม้หน้าจอปิดอยู่ — และพิมพ์ใบเสร็จผ่าน WiFi",
       "getAppScanHint": "สแกนด้วยแท็บเล็ตหรือโทรศัพท์ในครัวเพื่อเปิด Google Play",
-      "getAppIosSoon": "เวอร์ชัน iPhone/iPad กำลังจะมาบน App Store — ระหว่างนี้ iPad สามารถใช้งานระบบครัวผ่านเบราว์เซอร์ได้"
+      "getAppIosSoon": "เวอร์ชัน iPhone/iPad กำลังจะมาบน App Store — ระหว่างนี้ iPad สามารถใช้งานระบบครัวผ่านเบราว์เซอร์ได้",
+      "sendLinkTitle": "ส่งลิงก์ไปที่โทรศัพท์ของคุณ",
+      "sendLinkBody": "ติดตั้งแอปบนอุปกรณ์ที่จะใช้ในครัว — เราจะส่งลิงก์ดาวน์โหลดให้ทางอีเมลหรือ SMS",
+      "sendLinkEmailOption": "อีเมล",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "you@example.com",
+      "sendLinkTextPlaceholder": "หมายเลขโทรศัพท์ของคุณ",
+      "sendLinkSend": "ส่ง",
+      "sendLinkSending": "กำลังส่ง…",
+      "sendLinkDone": "ส่งแล้ว! ตรวจสอบที่อุปกรณ์ของคุณ",
+      "sendLinkError": "ส่งไม่สำเร็จ ตรวจสอบที่อยู่แล้วลองอีกครั้ง",
+      "sendLinkRateLimited": "ลองบ่อยเกินไป — โปรดรอสักครู่"
     },
     "endOfDayPage": {
       "heading": "รายงานสิ้นวัน",

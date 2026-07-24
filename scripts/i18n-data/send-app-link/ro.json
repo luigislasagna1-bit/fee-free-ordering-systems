@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Trimite linkul pe telefon",
+  "sendLinkBody": "Instalează aplicația pe dispozitivul pe care îl vei folosi în bucătărie — îți trimitem linkul de descărcare pe e-mail sau prin SMS.",
+  "sendLinkEmailOption": "E-mail",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "nume@exemplu.com",
+  "sendLinkTextPlaceholder": "Numărul tău de telefon",
+  "sendLinkSend": "Trimite",
+  "sendLinkSending": "Se trimite…",
+  "sendLinkDone": "Trimis! Verifică-ți dispozitivul.",
+  "sendLinkError": "Nu s-a putut trimite. Verifică adresa și încearcă din nou.",
+  "sendLinkRateLimited": "Prea multe încercări — așteaptă un minut."
+}

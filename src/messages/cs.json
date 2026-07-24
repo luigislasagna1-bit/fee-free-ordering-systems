@@ -4160,7 +4160,18 @@
       "getAppTitle": "Získejte Kitchen Order App",
       "getAppBody": "Zdarma na Google Play. Nové objednávky okamžitě zazvoní — i při vypnuté obrazovce — a účtenky se tisknou přes WiFi.",
       "getAppScanHint": "Naskenujte kuchyňským tabletem nebo telefonem a otevřete Google Play",
-      "getAppIosSoon": "Verze pro iPhone/iPad míří do App Store — do té doby mohou iPady provozovat kuchyni v prohlížeči."
+      "getAppIosSoon": "Verze pro iPhone/iPad míří do App Store — do té doby mohou iPady provozovat kuchyni v prohlížeči.",
+      "sendLinkTitle": "Pošlete si odkaz do telefonu",
+      "sendLinkBody": "Nainstalujte aplikaci na zařízení, které budete používat v kuchyni — odkaz ke stažení vám pošleme e-mailem nebo SMS.",
+      "sendLinkEmailOption": "E-mail",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "vy@example.com",
+      "sendLinkTextPlaceholder": "Vaše telefonní číslo",
+      "sendLinkSend": "Odeslat",
+      "sendLinkSending": "Odesílání…",
+      "sendLinkDone": "Odesláno! Zkontrolujte zařízení.",
+      "sendLinkError": "Odeslání se nezdařilo. Zkontrolujte adresu a zkuste to znovu.",
+      "sendLinkRateLimited": "Příliš mnoho pokusů — počkejte chvíli."
     },
     "endOfDayPage": {
       "heading": "Závěrečná denní zpráva",

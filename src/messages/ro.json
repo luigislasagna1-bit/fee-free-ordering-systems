@@ -4160,7 +4160,18 @@
       "getAppTitle": "Descarcă Kitchen Order App",
       "getAppBody": "Gratuit pe Google Play. Comenzile noi sună instantaneu — chiar și cu ecranul stins — iar bonurile se imprimă prin WiFi.",
       "getAppScanHint": "Scanează cu tableta sau telefonul din bucătărie pentru a deschide Google Play",
-      "getAppIosSoon": "Versiunea pentru iPhone/iPad urmează să apară în App Store — până atunci, iPad-urile pot rula bucătăria în browser."
+      "getAppIosSoon": "Versiunea pentru iPhone/iPad urmează să apară în App Store — până atunci, iPad-urile pot rula bucătăria în browser.",
+      "sendLinkTitle": "Trimite linkul pe telefon",
+      "sendLinkBody": "Instalează aplicația pe dispozitivul pe care îl vei folosi în bucătărie — îți trimitem linkul de descărcare pe e-mail sau prin SMS.",
+      "sendLinkEmailOption": "E-mail",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "nume@exemplu.com",
+      "sendLinkTextPlaceholder": "Numărul tău de telefon",
+      "sendLinkSend": "Trimite",
+      "sendLinkSending": "Se trimite…",
+      "sendLinkDone": "Trimis! Verifică-ți dispozitivul.",
+      "sendLinkError": "Nu s-a putut trimite. Verifică adresa și încearcă din nou.",
+      "sendLinkRateLimited": "Prea multe încercări — așteaptă un minut."
     },
     "endOfDayPage": {
       "heading": "Raport de sfârșit de zi",

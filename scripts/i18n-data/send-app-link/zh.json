@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "把链接发送到你的手机",
+  "sendLinkBody": "在你厨房要使用的设备上装好这款应用——我们会通过邮件或短信把下载链接发给你。",
+  "sendLinkEmailOption": "邮件",
+  "sendLinkTextOption": "短信",
+  "sendLinkEmailPlaceholder": "you@example.com",
+  "sendLinkTextPlaceholder": "你的手机号码",
+  "sendLinkSend": "发送",
+  "sendLinkSending": "发送中…",
+  "sendLinkDone": "已发送！请查看你的设备。",
+  "sendLinkError": "发送失败，请检查地址后重试。",
+  "sendLinkRateLimited": "尝试次数过多，请稍等一分钟。"
+}

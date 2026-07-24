@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "휴대폰으로 링크 받기",
+  "sendLinkBody": "주방에서 사용할 기기로 앱을 받으세요. 다운로드 링크를 이메일이나 문자로 보내드립니다.",
+  "sendLinkEmailOption": "이메일",
+  "sendLinkTextOption": "문자",
+  "sendLinkEmailPlaceholder": "you@example.com",
+  "sendLinkTextPlaceholder": "휴대폰 번호",
+  "sendLinkSend": "보내기",
+  "sendLinkSending": "보내는 중…",
+  "sendLinkDone": "전송 완료! 기기를 확인하세요.",
+  "sendLinkError": "전송하지 못했습니다. 주소를 확인하고 다시 시도하세요.",
+  "sendLinkRateLimited": "시도가 너무 많습니다. 잠시 후 다시 시도하세요."
+}

@@ -4160,7 +4160,18 @@
       "getAppTitle": "Preuzmite aplikaciju Kitchen Order App",
       "getAppBody": "Besplatno na usluzi Google Play. Nove narudžbe zvone odmah — čak i kad je zaslon isključen — a računi se ispisuju putem WiFi veze.",
       "getAppScanHint": "Skenirajte kuhinjskim tabletom ili telefonom kako biste otvorili Google Play",
-      "getAppIosSoon": "Verzija za iPhone/iPad stiže u App Store — do tada iPadi mogu voditi kuhinju u pregledniku."
+      "getAppIosSoon": "Verzija za iPhone/iPad stiže u App Store — do tada iPadi mogu voditi kuhinju u pregledniku.",
+      "sendLinkTitle": "Pošaljite poveznicu na svoj telefon",
+      "sendLinkBody": "Preuzmite aplikaciju na uređaj koji ćete koristiti u kuhinji — poslat ćemo vam poveznicu za preuzimanje e-poštom ili SMS-om.",
+      "sendLinkEmailOption": "E-pošta",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "vi@primjer.com",
+      "sendLinkTextPlaceholder": "Vaš broj telefona",
+      "sendLinkSend": "Pošalji",
+      "sendLinkSending": "Slanje…",
+      "sendLinkDone": "Poslano! Provjerite svoj uređaj.",
+      "sendLinkError": "Slanje nije uspjelo. Provjerite adresu i pokušajte ponovno.",
+      "sendLinkRateLimited": "Previše pokušaja — pričekajte trenutak."
     },
     "endOfDayPage": {
       "heading": "Izvještaj o kraju dana",

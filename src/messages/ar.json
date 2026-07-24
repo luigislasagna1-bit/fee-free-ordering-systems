@@ -4160,7 +4160,18 @@
       "getAppTitle": "احصل على تطبيق Kitchen Order App",
       "getAppBody": "مجاني على Google Play. الطلبات الجديدة ترنّ فوراً — حتى مع إيقاف الشاشة — وتُطبع الإيصالات عبر WiFi.",
       "getAppScanHint": "امسح الرمز بجهاز المطبخ اللوحي أو الهاتف لفتح Google Play",
-      "getAppIosSoon": "نسخة iPhone/iPad قادمة إلى App Store — حتى ذلك الحين، يمكن لأجهزة iPad تشغيل المطبخ في المتصفح."
+      "getAppIosSoon": "نسخة iPhone/iPad قادمة إلى App Store — حتى ذلك الحين، يمكن لأجهزة iPad تشغيل المطبخ في المتصفح.",
+      "sendLinkTitle": "أرسل الرابط إلى هاتفك",
+      "sendLinkBody": "احصل على التطبيق على الجهاز الذي ستستخدمه في المطبخ — سنرسل لك رابط التنزيل عبر البريد الإلكتروني أو رسالة نصية.",
+      "sendLinkEmailOption": "بريد إلكتروني",
+      "sendLinkTextOption": "رسالة نصية",
+      "sendLinkEmailPlaceholder": "you@example.com",
+      "sendLinkTextPlaceholder": "رقم هاتفك",
+      "sendLinkSend": "إرسال",
+      "sendLinkSending": "جارٍ الإرسال…",
+      "sendLinkDone": "تم الإرسال! تحقّق من جهازك.",
+      "sendLinkError": "تعذّر الإرسال. تحقّق من العنوان وحاول مرة أخرى.",
+      "sendLinkRateLimited": "محاولات كثيرة جدًا — يُرجى الانتظار دقيقة."
     },
     "endOfDayPage": {
       "heading": "تقرير نهاية اليوم",

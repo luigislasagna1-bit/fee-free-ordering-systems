@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Odošlite si odkaz do telefónu",
+  "sendLinkBody": "Nainštalujte si aplikáciu do zariadenia, ktoré budete používať v kuchyni — odkaz na stiahnutie vám pošleme e-mailom alebo SMS-kou.",
+  "sendLinkEmailOption": "E-mail",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "vy@priklad.sk",
+  "sendLinkTextPlaceholder": "Vaše telefónne číslo",
+  "sendLinkSend": "Odoslať",
+  "sendLinkSending": "Odosiela sa…",
+  "sendLinkDone": "Odoslané! Skontrolujte si zariadenie.",
+  "sendLinkError": "Nepodarilo sa odoslať. Skontrolujte údaje a skúste to znova.",
+  "sendLinkRateLimited": "Priveľa pokusov — počkajte chvíľu."
+}

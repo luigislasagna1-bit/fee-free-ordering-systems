@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Link an dein Handy senden",
+  "sendLinkBody": "Installiere die App auf dem Gerät, das du in der Küche nutzt – wir schicken dir den Download-Link per E-Mail oder SMS.",
+  "sendLinkEmailOption": "E-Mail",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "du@beispiel.de",
+  "sendLinkTextPlaceholder": "Deine Telefonnummer",
+  "sendLinkSend": "Senden",
+  "sendLinkSending": "Wird gesendet …",
+  "sendLinkDone": "Gesendet! Sieh auf deinem Gerät nach.",
+  "sendLinkError": "Konnte nicht gesendet werden. Prüfe die Adresse und versuch es erneut.",
+  "sendLinkRateLimited": "Zu viele Versuche – bitte warte eine Minute."
+}

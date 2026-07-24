@@ -489,6 +489,42 @@ export async function sendDriverInviteEmail(params: {
   });
 }
 
+/**
+ * "Text/email me the Kitchen app link" — the restaurant owner requests the
+ * download link on their preferred device from /admin/publishing (send-app-link
+ * API). Availability-driven via APP_LINKS.kitchen: the Android (Play) row shows
+ * while it's live, the iPhone/iPad (App Store) row appears the day iOS goes live.
+ * English body (same convention as the driver-invite email).
+ */
+export async function sendKitchenAppLinkEmail(params: { to: string; restaurantName: string }) {
+  const esc = (s: string) =>
+    s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] ?? c);
+  const name = esc(params.restaurantName || "your restaurant");
+  const rows = [
+    APP_LINKS.kitchen.play
+      ? `<tr><td style="color:#6b7280;padding:6px 12px 6px 0">Android</td><td style="padding:6px 0"><a href="${esc(APP_LINKS.kitchen.play)}" style="color:#059669;font-weight:600">Get it on Google Play</a></td></tr>`
+      : "",
+    APP_LINKS.kitchen.ios
+      ? `<tr><td style="color:#6b7280;padding:6px 12px 6px 0">iPhone / iPad</td><td style="padding:6px 0"><a href="${esc(APP_LINKS.kitchen.ios)}" style="color:#059669;font-weight:600">Download on the App Store</a></td></tr>`
+      : "",
+  ].join("");
+  const iosSoon = !APP_LINKS.kitchen.ios
+    ? `<p style="font-size:13px;color:#6b7280;line-height:1.6">The iPhone/iPad version is coming to the App Store soon — in the meantime an iPad can run the kitchen in any web browser.</p>`
+    : "";
+  const html = `<div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#111827">
+    <p style="font-size:15px">Here's the download link for the <strong>Kitchen Order App</strong> for ${name}.</p>
+    <p style="font-size:15px;line-height:1.6">Install it on the tablet or phone you'll use in the kitchen — new orders ring instantly, even with the screen off, and receipts print over WiFi.</p>
+    <table style="font-size:14px;line-height:1.7;border-collapse:collapse;margin:12px 0">${rows}</table>
+    ${iosSoon}
+    <p style="font-size:12px;color:#9ca3af;margin-top:20px">You asked us to send you this link from your Fee Free Ordering dashboard. If that wasn't you, you can ignore this email.</p>
+  </div>`;
+  return send({
+    to: params.to,
+    subject: "Your Kitchen Order App download link",
+    html,
+  });
+}
+
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const t = await getDict(params.locale);
   const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });

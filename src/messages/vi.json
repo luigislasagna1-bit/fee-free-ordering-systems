@@ -4160,7 +4160,18 @@
       "getAppTitle": "Tải Kitchen Order App",
       "getAppBody": "Miễn phí trên Google Play. Đơn hàng mới đổ chuông ngay lập tức — kể cả khi màn hình tắt — và hóa đơn in qua WiFi.",
       "getAppScanHint": "Quét bằng máy tính bảng hoặc điện thoại của bếp để mở Google Play",
-      "getAppIosSoon": "Phiên bản iPhone/iPad sắp có mặt trên App Store — trong lúc chờ, iPad có thể chạy màn hình bếp trên trình duyệt."
+      "getAppIosSoon": "Phiên bản iPhone/iPad sắp có mặt trên App Store — trong lúc chờ, iPad có thể chạy màn hình bếp trên trình duyệt.",
+      "sendLinkTitle": "Gửi liên kết đến điện thoại của bạn",
+      "sendLinkBody": "Cài ứng dụng trên thiết bị bạn sẽ dùng trong bếp — chúng tôi sẽ gửi liên kết tải về qua email hoặc tin nhắn.",
+      "sendLinkEmailOption": "Email",
+      "sendLinkTextOption": "Tin nhắn",
+      "sendLinkEmailPlaceholder": "ban@vidu.com",
+      "sendLinkTextPlaceholder": "Số điện thoại của bạn",
+      "sendLinkSend": "Gửi",
+      "sendLinkSending": "Đang gửi…",
+      "sendLinkDone": "Đã gửi! Hãy kiểm tra thiết bị của bạn.",
+      "sendLinkError": "Không gửi được. Hãy kiểm tra lại địa chỉ và thử lại.",
+      "sendLinkRateLimited": "Thử quá nhiều lần — vui lòng đợi một phút."
     },
     "endOfDayPage": {
       "heading": "Báo cáo cuối ngày",

@@ -4160,7 +4160,18 @@
       "getAppTitle": "Holen Sie sich die Kitchen Order App",
       "getAppBody": "Kostenlos bei Google Play. Neue Bestellungen klingeln sofort — auch bei ausgeschaltetem Bildschirm — und Bons werden über WiFi gedruckt.",
       "getAppScanHint": "Mit dem Küchen-Tablet oder Handy scannen, um Google Play zu öffnen",
-      "getAppIosSoon": "Die iPhone/iPad-Version kommt in den App Store — bis dahin kann die Küche auf iPads im Browser laufen."
+      "getAppIosSoon": "Die iPhone/iPad-Version kommt in den App Store — bis dahin kann die Küche auf iPads im Browser laufen.",
+      "sendLinkTitle": "Link an dein Handy senden",
+      "sendLinkBody": "Installiere die App auf dem Gerät, das du in der Küche nutzt – wir schicken dir den Download-Link per E-Mail oder SMS.",
+      "sendLinkEmailOption": "E-Mail",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "du@beispiel.de",
+      "sendLinkTextPlaceholder": "Deine Telefonnummer",
+      "sendLinkSend": "Senden",
+      "sendLinkSending": "Wird gesendet …",
+      "sendLinkDone": "Gesendet! Sieh auf deinem Gerät nach.",
+      "sendLinkError": "Konnte nicht gesendet werden. Prüfe die Adresse und versuch es erneut.",
+      "sendLinkRateLimited": "Zu viele Versuche – bitte warte eine Minute."
     },
     "endOfDayPage": {
       "heading": "Tagesabschlussbericht",

@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Στείλτε τον σύνδεσμο στο τηλέφωνό σας",
+  "sendLinkBody": "Αποκτήστε την εφαρμογή στη συσκευή που θα χρησιμοποιείτε στην κουζίνα — θα σας στείλουμε τον σύνδεσμο λήψης με email ή SMS.",
+  "sendLinkEmailOption": "Email",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "eseis@paradeigma.gr",
+  "sendLinkTextPlaceholder": "Ο αριθμός τηλεφώνου σας",
+  "sendLinkSend": "Αποστολή",
+  "sendLinkSending": "Αποστολή…",
+  "sendLinkDone": "Στάλθηκε! Ελέγξτε τη συσκευή σας.",
+  "sendLinkError": "Δεν στάλθηκε. Ελέγξτε τη διεύθυνση και δοκιμάστε ξανά.",
+  "sendLinkRateLimited": "Πάρα πολλές προσπάθειες — περιμένετε ένα λεπτό."
+}

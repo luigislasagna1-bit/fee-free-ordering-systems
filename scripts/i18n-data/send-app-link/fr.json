@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Envoyez le lien sur votre téléphone",
+  "sendLinkBody": "Installez l'application sur l'appareil que vous utiliserez en cuisine — nous vous enverrons le lien de téléchargement par courriel ou par texto.",
+  "sendLinkEmailOption": "Courriel",
+  "sendLinkTextOption": "Texto",
+  "sendLinkEmailPlaceholder": "vous@exemple.com",
+  "sendLinkTextPlaceholder": "Votre numéro de téléphone",
+  "sendLinkSend": "Envoyer",
+  "sendLinkSending": "Envoi en cours…",
+  "sendLinkDone": "Envoyé ! Vérifiez votre appareil.",
+  "sendLinkError": "Échec de l'envoi. Vérifiez l'adresse et réessayez.",
+  "sendLinkRateLimited": "Trop de tentatives — veuillez patienter une minute."
+}

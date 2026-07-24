@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Enviar o link para o seu telemóvel",
+  "sendLinkBody": "Instale a app no dispositivo que vai usar na cozinha — enviamos-lhe o link de transferência por email ou SMS.",
+  "sendLinkEmailOption": "Email",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "utilizador@exemplo.com",
+  "sendLinkTextPlaceholder": "O seu número de telemóvel",
+  "sendLinkSend": "Enviar",
+  "sendLinkSending": "A enviar…",
+  "sendLinkDone": "Enviado! Verifique o seu dispositivo.",
+  "sendLinkError": "Não foi possível enviar. Verifique o endereço e tente novamente.",
+  "sendLinkRateLimited": "Demasiadas tentativas — aguarde um minuto."
+}

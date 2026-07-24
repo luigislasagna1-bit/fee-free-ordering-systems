@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Pošaljite link na telefon",
+  "sendLinkBody": "Preuzmite aplikaciju na uređaju koji ćete koristiti u kuhinji — poslaćemo vam link za preuzimanje mejlom ili SMS-om.",
+  "sendLinkEmailOption": "Mejl",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "vi@primer.com",
+  "sendLinkTextPlaceholder": "Vaš broj telefona",
+  "sendLinkSend": "Pošalji",
+  "sendLinkSending": "Slanje…",
+  "sendLinkDone": "Poslato! Proverite uređaj.",
+  "sendLinkError": "Slanje nije uspelo. Proverite adresu i pokušajte ponovo.",
+  "sendLinkRateLimited": "Previše pokušaja — sačekajte minut."
+}

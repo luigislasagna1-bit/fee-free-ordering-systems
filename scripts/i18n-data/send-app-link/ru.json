@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Отправьте ссылку на телефон",
+  "sendLinkBody": "Установите приложение на устройство, которое будете использовать на кухне — мы пришлём ссылку для скачивания по email или SMS.",
+  "sendLinkEmailOption": "Email",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "you@example.com",
+  "sendLinkTextPlaceholder": "Ваш номер телефона",
+  "sendLinkSend": "Отправить",
+  "sendLinkSending": "Отправка…",
+  "sendLinkDone": "Отправлено! Проверьте устройство.",
+  "sendLinkError": "Не удалось отправить. Проверьте адрес и попробуйте снова.",
+  "sendLinkRateLimited": "Слишком много попыток — подождите минуту."
+}

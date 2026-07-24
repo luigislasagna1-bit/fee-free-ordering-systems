@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Gửi liên kết đến điện thoại của bạn",
+  "sendLinkBody": "Cài ứng dụng trên thiết bị bạn sẽ dùng trong bếp — chúng tôi sẽ gửi liên kết tải về qua email hoặc tin nhắn.",
+  "sendLinkEmailOption": "Email",
+  "sendLinkTextOption": "Tin nhắn",
+  "sendLinkEmailPlaceholder": "ban@vidu.com",
+  "sendLinkTextPlaceholder": "Số điện thoại của bạn",
+  "sendLinkSend": "Gửi",
+  "sendLinkSending": "Đang gửi…",
+  "sendLinkDone": "Đã gửi! Hãy kiểm tra thiết bị của bạn.",
+  "sendLinkError": "Không gửi được. Hãy kiểm tra lại địa chỉ và thử lại.",
+  "sendLinkRateLimited": "Thử quá nhiều lần — vui lòng đợi một phút."
+}

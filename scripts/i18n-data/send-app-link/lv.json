@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Nosūtīt saiti uz tālruni",
+  "sendLinkBody": "Iegūstiet lietotni ierīcē, ko izmantosiet virtuvē — nosūtīsim lejupielādes saiti e-pastā vai īsziņā.",
+  "sendLinkEmailOption": "E-pasts",
+  "sendLinkTextOption": "Īsziņa",
+  "sendLinkEmailPlaceholder": "jusu@piemers.lv",
+  "sendLinkTextPlaceholder": "Jūsu tālruņa numurs",
+  "sendLinkSend": "Sūtīt",
+  "sendLinkSending": "Sūta…",
+  "sendLinkDone": "Nosūtīts! Pārbaudiet ierīci.",
+  "sendLinkError": "Neizdevās nosūtīt. Pārbaudiet adresi un mēģiniet vēlreiz.",
+  "sendLinkRateLimited": "Pārāk daudz mēģinājumu — lūdzu, uzgaidiet minūti."
+}

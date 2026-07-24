@@ -4160,7 +4160,18 @@
       "getAppTitle": "Iegūstiet lietotni Kitchen Order App",
       "getAppBody": "Bez maksas Google Play veikalā. Par jauniem pasūtījumiem uzreiz atskan zvans — pat ar izslēgtu ekrānu — un čeki tiek drukāti caur WiFi.",
       "getAppScanHint": "Skenējiet ar virtuves planšetdatoru vai tālruni, lai atvērtu Google Play",
-      "getAppIosSoon": "iPhone/iPad versija drīzumā būs pieejama App Store — līdz tam iPad ierīcēs virtuvi var darbināt pārlūkprogrammā."
+      "getAppIosSoon": "iPhone/iPad versija drīzumā būs pieejama App Store — līdz tam iPad ierīcēs virtuvi var darbināt pārlūkprogrammā.",
+      "sendLinkTitle": "Nosūtīt saiti uz tālruni",
+      "sendLinkBody": "Iegūstiet lietotni ierīcē, ko izmantosiet virtuvē — nosūtīsim lejupielādes saiti e-pastā vai īsziņā.",
+      "sendLinkEmailOption": "E-pasts",
+      "sendLinkTextOption": "Īsziņa",
+      "sendLinkEmailPlaceholder": "jusu@piemers.lv",
+      "sendLinkTextPlaceholder": "Jūsu tālruņa numurs",
+      "sendLinkSend": "Sūtīt",
+      "sendLinkSending": "Sūta…",
+      "sendLinkDone": "Nosūtīts! Pārbaudiet ierīci.",
+      "sendLinkError": "Neizdevās nosūtīt. Pārbaudiet adresi un mēģiniet vēlreiz.",
+      "sendLinkRateLimited": "Pārāk daudz mēģinājumu — lūdzu, uzgaidiet minūti."
     },
     "endOfDayPage": {
       "heading": "Dienas beigu atskaite",

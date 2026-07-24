@@ -4160,7 +4160,18 @@
       "getAppTitle": "Hanki Kitchen Order App",
       "getAppBody": "Ilmainen Google Playssa. Uudet tilaukset hälyttävät heti — myös näytön ollessa sammutettuna — ja kuitit tulostuvat WiFin kautta.",
       "getAppScanHint": "Skannaa keittiön tabletilla tai puhelimella avataksesi Google Playn",
-      "getAppIosSoon": "iPhone-/iPad-versio on tulossa App Storeen — siihen asti iPadit voivat pyörittää keittiötä selaimessa."
+      "getAppIosSoon": "iPhone-/iPad-versio on tulossa App Storeen — siihen asti iPadit voivat pyörittää keittiötä selaimessa.",
+      "sendLinkTitle": "Lähetä linkki puhelimeesi",
+      "sendLinkBody": "Hae sovellus laitteeseen, jota käytät keittiössä – lähetämme latauslinkin sähköpostitse tai tekstiviestillä.",
+      "sendLinkEmailOption": "Sähköposti",
+      "sendLinkTextOption": "Tekstiviesti",
+      "sendLinkEmailPlaceholder": "nimi@esimerkki.fi",
+      "sendLinkTextPlaceholder": "Puhelinnumerosi",
+      "sendLinkSend": "Lähetä",
+      "sendLinkSending": "Lähetetään…",
+      "sendLinkDone": "Lähetetty! Tarkista laitteesi.",
+      "sendLinkError": "Lähetys epäonnistui. Tarkista osoite ja yritä uudelleen.",
+      "sendLinkRateLimited": "Liian monta yritystä – odota hetki."
     },
     "endOfDayPage": {
       "heading": "Päivän lopun raportti",

@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Envie o link para o seu celular",
+  "sendLinkBody": "Baixe o app no aparelho que você vai usar na cozinha — enviamos o link por e-mail ou SMS.",
+  "sendLinkEmailOption": "E-mail",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "voce@exemplo.com",
+  "sendLinkTextPlaceholder": "Seu número de telefone",
+  "sendLinkSend": "Enviar",
+  "sendLinkSending": "Enviando…",
+  "sendLinkDone": "Enviado! Confira o seu aparelho.",
+  "sendLinkError": "Não foi possível enviar. Verifique o endereço e tente de novo.",
+  "sendLinkRateLimited": "Muitas tentativas — aguarde um minuto."
+}

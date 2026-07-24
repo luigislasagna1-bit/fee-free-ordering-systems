@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Надішліть посилання на телефон",
+  "sendLinkBody": "Установіть застосунок на пристрій, який використовуватимете на кухні, — ми надішлемо посилання для завантаження на email або SMS.",
+  "sendLinkEmailOption": "Email",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "you@example.com",
+  "sendLinkTextPlaceholder": "Ваш номер телефону",
+  "sendLinkSend": "Надіслати",
+  "sendLinkSending": "Надсилання…",
+  "sendLinkDone": "Надіслано! Перевірте свій пристрій.",
+  "sendLinkError": "Не вдалося надіслати. Перевірте адресу й спробуйте ще раз.",
+  "sendLinkRateLimited": "Забагато спроб — зачекайте хвилинку."
+}

@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Atsiųskite nuorodą į savo telefoną",
+  "sendLinkBody": "Įsidiekite programėlę įrenginyje, kurį naudosite virtuvėje – atsiųsime atsisiuntimo nuorodą el. paštu arba SMS žinute.",
+  "sendLinkEmailOption": "El. paštu",
+  "sendLinkTextOption": "SMS žinute",
+  "sendLinkEmailPlaceholder": "jus@pavyzdys.lt",
+  "sendLinkTextPlaceholder": "Jūsų telefono numeris",
+  "sendLinkSend": "Siųsti",
+  "sendLinkSending": "Siunčiama…",
+  "sendLinkDone": "Išsiųsta! Patikrinkite savo įrenginį.",
+  "sendLinkError": "Nepavyko išsiųsti. Patikrinkite adresą ir bandykite dar kartą.",
+  "sendLinkRateLimited": "Per daug bandymų – palaukite minutę."
+}

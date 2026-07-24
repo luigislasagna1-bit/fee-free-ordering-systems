@@ -4160,7 +4160,18 @@
       "getAppTitle": "Отримайте Kitchen Order App",
       "getAppBody": "Безкоштовно в Google Play. Нові замовлення дзвонять миттєво — навіть з вимкненим екраном — а чеки друкуються через WiFi.",
       "getAppScanHint": "Відскануйте кухонним планшетом або телефоном, щоб відкрити Google Play",
-      "getAppIosSoon": "Версія для iPhone/iPad незабаром з'явиться в App Store — а доти iPad може працювати на кухні через браузер."
+      "getAppIosSoon": "Версія для iPhone/iPad незабаром з'явиться в App Store — а доти iPad може працювати на кухні через браузер.",
+      "sendLinkTitle": "Надішліть посилання на телефон",
+      "sendLinkBody": "Установіть застосунок на пристрій, який використовуватимете на кухні, — ми надішлемо посилання для завантаження на email або SMS.",
+      "sendLinkEmailOption": "Email",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "you@example.com",
+      "sendLinkTextPlaceholder": "Ваш номер телефону",
+      "sendLinkSend": "Надіслати",
+      "sendLinkSending": "Надсилання…",
+      "sendLinkDone": "Надіслано! Перевірте свій пристрій.",
+      "sendLinkError": "Не вдалося надіслати. Перевірте адресу й спробуйте ще раз.",
+      "sendLinkRateLimited": "Забагато спроб — зачекайте хвилинку."
     },
     "endOfDayPage": {
       "heading": "Звіт кінця дня",

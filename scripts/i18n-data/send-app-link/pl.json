@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Wyślij link na telefon",
+  "sendLinkBody": "Pobierz aplikację na urządzeniu, którego użyjesz w kuchni — wyślemy Ci link do pobrania e-mailem lub SMS-em.",
+  "sendLinkEmailOption": "E-mail",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "ty@przyklad.com",
+  "sendLinkTextPlaceholder": "Twój numer telefonu",
+  "sendLinkSend": "Wyślij",
+  "sendLinkSending": "Wysyłanie…",
+  "sendLinkDone": "Wysłano! Sprawdź swoje urządzenie.",
+  "sendLinkError": "Nie udało się wysłać. Sprawdź adres i spróbuj ponownie.",
+  "sendLinkRateLimited": "Zbyt wiele prób — odczekaj chwilę."
+}

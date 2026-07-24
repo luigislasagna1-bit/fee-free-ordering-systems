@@ -4160,7 +4160,18 @@
       "getAppTitle": "Kitchen Order App'i edinin",
       "getAppBody": "Google Play'de ücretsiz. Yeni siparişler anında zil çalar — ekran kapalıyken bile — ve fişler WiFi üzerinden yazdırılır.",
       "getAppScanHint": "Google Play'i açmak için mutfak tableti veya telefonla tarayın",
-      "getAppIosSoon": "iPhone/iPad sürümü App Store'a geliyor — o zamana kadar iPad'ler mutfağı tarayıcıda çalıştırabilir."
+      "getAppIosSoon": "iPhone/iPad sürümü App Store'a geliyor — o zamana kadar iPad'ler mutfağı tarayıcıda çalıştırabilir.",
+      "sendLinkTitle": "Bağlantıyı telefonuna gönder",
+      "sendLinkBody": "Uygulamayı mutfakta kullanacağın cihaza indir — indirme bağlantısını sana e-postayla ya da SMS ile gönderelim.",
+      "sendLinkEmailOption": "E-posta",
+      "sendLinkTextOption": "SMS",
+      "sendLinkEmailPlaceholder": "ornek@ornek.com",
+      "sendLinkTextPlaceholder": "Telefon numaran",
+      "sendLinkSend": "Gönder",
+      "sendLinkSending": "Gönderiliyor…",
+      "sendLinkDone": "Gönderildi! Cihazını kontrol et.",
+      "sendLinkError": "Gönderilemedi. Adresi kontrol edip tekrar dene.",
+      "sendLinkRateLimited": "Çok fazla deneme — lütfen bir dakika bekle."
     },
     "endOfDayPage": {
       "heading": "Günlük rapor",

@@ -1,0 +1,13 @@
+{
+  "sendLinkTitle": "Küldje el a linket a telefonjára",
+  "sendLinkBody": "Töltse le az alkalmazást arra az eszközre, amelyet a konyhában használ – e-mailben vagy SMS-ben elküldjük a letöltési linket.",
+  "sendLinkEmailOption": "E-mail",
+  "sendLinkTextOption": "SMS",
+  "sendLinkEmailPlaceholder": "on@pelda.hu",
+  "sendLinkTextPlaceholder": "Telefonszáma",
+  "sendLinkSend": "Küldés",
+  "sendLinkSending": "Küldés…",
+  "sendLinkDone": "Elküldve! Nézze meg az eszközét.",
+  "sendLinkError": "Nem sikerült elküldeni. Ellenőrizze a címet, és próbálja újra.",
+  "sendLinkRateLimited": "Túl sok próbálkozás – kérjük, várjon egy percet."
+}
