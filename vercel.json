@@ -1,5 +1,12 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/kitchen-test.apk",
+      "destination": "https://1onxkssoxjxfkvnp.public.blob.vercel-storage.com/kitchen-3.0.1-bandfix-Y387VXwOth2MzDO8K2clcxMitTWHWE.apk",
+      "permanent": false
+    }
+  ],
   "crons": [
     {
       "path": "/api/cron/feefree-unclaimed-alert",

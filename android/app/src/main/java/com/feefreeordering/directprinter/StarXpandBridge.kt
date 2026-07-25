@@ -88,9 +88,22 @@ object StarXpandBridge {
     /**
      * Print a structured receipt. Lines are a JSON array string with
      * the same shape as the server-side ReceiptLine type. We render
-     * everything to a single bitmap (with bold/double-size/alignment
-     * styling preserved) and send via actionPrintImage. This is the
-     * production print path for real orders.
+     * everything to a bitmap (with bold/double-size/alignment styling
+     * preserved) and send via actionPrintImage. This is the production
+     * print path for real orders.
+     *
+     * MEMORY SAFETY (Luigi 2026-07-25, ORD-336535031): a very large order
+     * (2× six-pizza combos → a ~6,600-char ticket) rendered as ONE tall
+     * ARGB bitmap ran the old Samsung kitchen tablet out of memory — the
+     * app froze then crashed ("Fee Free Order App has stopped") every time
+     * that order printed, while small orders printed fine. Receipts up to
+     * SINGLE_RENDER_MAX_HEIGHT_PX keep the proven single-bitmap path,
+     * byte-for-byte unchanged. Taller receipts switch to the BANDED path:
+     * the same layout is drawn band-by-band into a small reusable-size
+     * bitmap (translate + canvas clipping), each band printed in ONE open
+     * printer session and freed before the next — peak memory stays at one
+     * band (~5.5 MB) no matter how huge the order. The paper output is
+     * identical: consecutive raster bands butt together seamlessly.
      *
      * widthDots: 576 for 80mm paper, 384 for 58mm.
      */
@@ -101,12 +114,8 @@ object StarXpandBridge {
         } catch (e: Throwable) {
             return "JSONParseError: ${e.message}"
         }
-        // Build the bitmap from structured lines BEFORE opening the
-        // printer, so any rendering failure is reported cleanly without
-        // tying up the printer connection.
-        val bitmap = renderReceiptBitmap(lines, widthDots)
         // Some lines (e.g., {"kind":"cut"}) become SDK actions instead
-        // of being drawn on the bitmap. Scan for those after rendering.
+        // of being drawn on the bitmap. Scan for those up front.
         var shouldCut = false
         var trailingFeed = 0
         for (i in 0 until lines.length()) {
@@ -124,14 +133,124 @@ object StarXpandBridge {
                 }
             }
         }
-        return runPrint(context, ip, timeoutMs) { builder ->
-            builder.actionPrintImage(ImageParameter(bitmap, widthDots))
-            // Always feed enough to clear cutter (~6 lines = ~14mm).
-            builder.actionFeedLine(maxOf(trailingFeed, 5))
-            if (shouldCut) {
-                builder.actionCut(CutType.Partial)
+
+        // Height pre-pass (cheap — no bitmap). Decides which path we take.
+        val totalHeight = computeReceiptHeight(lines, widthDots)
+        if (totalHeight > MAX_RECEIPT_HEIGHT_PX) {
+            // ~5 metres of paper — a runaway template, not a real order.
+            return "ReceiptTooTall: ${totalHeight}px"
+        }
+
+        if (totalHeight <= SINGLE_RENDER_MAX_HEIGHT_PX) {
+            // The original, proven path — unchanged for every normal order.
+            val bitmap = renderReceiptBitmap(lines, widthDots)
+            return runPrint(context, ip, timeoutMs) { builder ->
+                builder.actionPrintImage(ImageParameter(bitmap, widthDots))
+                // Always feed enough to clear cutter (~6 lines = ~14mm).
+                builder.actionFeedLine(maxOf(trailingFeed, 5))
+                if (shouldCut) {
+                    builder.actionCut(CutType.Partial)
+                }
+                builder // explicit return — lambda must yield PrinterBuilder
             }
-            builder // explicit return — lambda must yield PrinterBuilder
+        }
+
+        Log.i(TAG, "StarXpand: large receipt (${totalHeight}px) — printing in bands of $BAND_HEIGHT_PX")
+        return printLinesBanded(context, ip, lines, widthDots, totalHeight, timeoutMs, shouldCut, trailingFeed)
+    }
+
+    /**
+     * Banded print for oversized receipts: ONE open→[print band]×N→feed/cut→close
+     * session. Each band re-runs the same deterministic layout with the canvas
+     * translated so only that band's slice lands on a small bitmap (everything
+     * outside is clipped by the canvas — cheap no-ops). The band bitmap is
+     * recycled as soon as its raster commands are built, so peak memory is one
+     * band regardless of receipt size. A failed band is retried once on the same
+     * session; a second failure aborts with a clear error (the printer may hold
+     * a partial receipt — the app surfaces the failure so staff reprints).
+     */
+    private fun printLinesBanded(
+        context: Context,
+        ip: String,
+        lines: org.json.JSONArray,
+        widthDots: Int,
+        totalHeight: Int,
+        timeoutMs: Long,
+        shouldCut: Boolean,
+        trailingFeed: Int,
+    ): String {
+        val settings = StarConnectionSettings(InterfaceType.Lan, ip)
+        val printer = StarPrinter(settings, context)
+        try {
+            try {
+                runBlocking { withTimeout(OPEN_TIMEOUT_MS) { printer.openAsync().await() } }
+            } catch (e: Throwable) {
+                return "OpenError: ${e.javaClass.simpleName}: ${e.message}"
+            }
+            Log.i(TAG, "StarXpand banded: printer opened; ${totalHeight}px in bands")
+
+            var bandTop = 0
+            while (bandTop < totalHeight) {
+                val bandH = minOf(BAND_HEIGHT_PX, totalHeight - bandTop)
+                var bandResult = "unknown"
+                for (attempt in 1..2) {
+                    bandResult = try {
+                        // Build this band's raster commands with the bitmap alive
+                        // only inside this block.
+                        val commands = run {
+                            val bitmap = Bitmap.createBitmap(widthDots, bandH, Bitmap.Config.ARGB_8888)
+                            try {
+                                val canvas = Canvas(bitmap)
+                                canvas.drawColor(Color.WHITE)
+                                canvas.translate(0f, -bandTop.toFloat())
+                                drawReceiptInto(canvas, lines, widthDots)
+                                val pb = PrinterBuilder()
+                                pb.actionPrintImage(ImageParameter(bitmap, widthDots))
+                                StarXpandCommandBuilder()
+                                    .addDocument(DocumentBuilder().addPrinter(pb))
+                                    .getCommands()
+                            } finally {
+                                bitmap.recycle()
+                            }
+                        }
+                        runBlocking { withTimeout(timeoutMs) { printer.printAsync(commands).await() } }
+                        "ok"
+                    } catch (e: Throwable) {
+                        "${e.javaClass.simpleName}: ${e.message}"
+                    }
+                    if (bandResult == "ok") break
+                    Log.w(TAG, "StarXpand banded: band@$bandTop attempt $attempt failed: $bandResult")
+                    if (attempt < 2) {
+                        try { Thread.sleep(RETRY_DELAY_MS) } catch (ignore: InterruptedException) {}
+                    }
+                }
+                if (bandResult != "ok") {
+                    return "BandError@${bandTop}px: $bandResult"
+                }
+                bandTop += bandH
+            }
+
+            // Trailing feed + cut as a final tiny job on the same session.
+            return try {
+                val pb = PrinterBuilder()
+                pb.actionFeedLine(maxOf(trailingFeed, 5))
+                if (shouldCut) pb.actionCut(CutType.Partial)
+                val commands = StarXpandCommandBuilder()
+                    .addDocument(DocumentBuilder().addPrinter(pb))
+                    .getCommands()
+                runBlocking { withTimeout(timeoutMs) { printer.printAsync(commands).await() } }
+                Log.i(TAG, "StarXpand banded: print returned SUCCESS")
+                "ok"
+            } catch (e: Throwable) {
+                "FeedCutError: ${e.javaClass.simpleName}: ${e.message}"
+            }
+        } finally {
+            // ALWAYS close, with its own timeout — same guarantee as sendOnce.
+            try {
+                runBlocking { withTimeout(CLOSE_TIMEOUT_MS) { printer.closeAsync().await() } }
+            } catch (ignore: Throwable) {
+                Log.w(TAG, "StarXpand banded: close failed/timed out (continuing): ${ignore.message}")
+            }
         }
     }
 
@@ -146,15 +265,14 @@ object StarXpandBridge {
      * spanning the full paper width — matches the HTML preview style
      * for the kitchen ORDER TYPE badge.
      */
-    private fun renderReceiptBitmap(lines: org.json.JSONArray, widthDots: Int): Bitmap {
+    /** Pre-compute the full receipt height by walking lines once — no bitmap is
+     *  allocated. Must stay in lockstep with drawReceiptInto (same wrap + line-
+     *  height math), exactly as the old inline pre-pass did. */
+    private fun computeReceiptHeight(lines: org.json.JSONArray, widthDots: Int): Int {
         val defaultLineHeight = lineHeightForFont(12)
         val leftMargin = 8f
         val rightMargin = 8f
         val drawableWidth = widthDots - leftMargin - rightMargin
-        // Section-box geometry (GloriaFood-style boxes). ADDITIVE: with no
-        // boxStart/boxEnd lines present, boxActive stays false and every other
-        // line renders exactly as before; old app builds skip the two unknown
-        // kinds and just print the plain lines. Luigi 2026-06-13.
         val boxPadX = 12f
         val boxPadY = 8f
         val boxBorder = 2f
@@ -207,10 +325,35 @@ object StarXpandBridge {
             }
         }
         totalHeight += 16 // bottom margin
+        return totalHeight
+    }
 
+    private fun renderReceiptBitmap(lines: org.json.JSONArray, widthDots: Int): Bitmap {
+        val totalHeight = computeReceiptHeight(lines, widthDots)
         val bitmap = Bitmap.createBitmap(widthDots, maxOf(totalHeight, 50), Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         canvas.drawColor(Color.WHITE)
+        drawReceiptInto(canvas, lines, widthDots)
+        return bitmap
+    }
+
+    /** Draw the whole receipt onto the given canvas at absolute coordinates
+     *  (y starts at 16). The banded path pre-translates the canvas so only the
+     *  current band's slice lands on its small bitmap — everything outside is
+     *  clipped by the canvas at negligible cost. Drawing logic is the original
+     *  loop, verbatim. */
+    private fun drawReceiptInto(canvas: Canvas, lines: org.json.JSONArray, widthDots: Int) {
+        val defaultLineHeight = lineHeightForFont(12)
+        val leftMargin = 8f
+        val rightMargin = 8f
+        // Section-box geometry (GloriaFood-style boxes). ADDITIVE: with no
+        // boxStart/boxEnd lines present, boxActive stays false and every other
+        // line renders exactly as before; old app builds skip the two unknown
+        // kinds and just print the plain lines. Luigi 2026-06-13.
+        val boxPadX = 12f
+        val boxPadY = 8f
+        val boxBorder = 2f
+        val boxGap = 6f
 
         var y = 16f
         var boxActive = false
@@ -352,7 +495,6 @@ object StarXpandBridge {
                 }
             }
         }
-        return bitmap
     }
 
     /**
@@ -488,6 +630,15 @@ object StarXpandBridge {
     private const val OPEN_TIMEOUT_MS = 10_000L
     private const val CLOSE_TIMEOUT_MS = 6_000L
     private const val RETRY_DELAY_MS = 1_200L
+
+    // Banded-print thresholds (Luigi 2026-07-25 — the 12-pizza-combo OOM).
+    // ≤ SINGLE_RENDER: the original one-bitmap path, unchanged (covers every
+    // normal receipt; 576×4000 ARGB ≈ 9 MB, proven fine in production).
+    // Above it: bands of BAND_HEIGHT (576×2400 ARGB ≈ 5.5 MB peak, constant).
+    // MAX_RECEIPT: hard sanity cap (~5 m of paper) against runaway templates.
+    private const val SINGLE_RENDER_MAX_HEIGHT_PX = 4_000
+    private const val BAND_HEIGHT_PX = 2_400
+    private const val MAX_RECEIPT_HEIGHT_PX = 60_000
 
     private inline fun runPrint(
         context: Context,
