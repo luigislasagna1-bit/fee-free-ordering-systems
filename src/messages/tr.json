@@ -6735,6 +6735,7 @@
     "earnHours": "Saat",
     "earnHoursHelp": "Kaydedilen vardiya saatleri × saatlik ücretin — Fee Free tarafından ödenir.",
     "earnPay": "Ödeme",
+    "earnPayDisclosure": "Gösterilen saatlik ücret brüttür. Vergiler ve diğer kesintiler kaynağında kesilir; kalan bakiyeniz ve bahşişleriniz iki haftada bir çekle ödenir.",
     "startShift": "Vardiyayı başlat",
     "endShift": "Vardiyayı bitir",
     "onShift": "Vardiyada",

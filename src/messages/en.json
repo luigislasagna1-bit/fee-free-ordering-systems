@@ -6809,6 +6809,7 @@
     "earnHours": "Hours",
     "earnHoursHelp": "Clocked shift hours × your hourly rate — paid by Fee Free.",
     "earnPay": "Pay",
+    "earnPayDisclosure": "The hourly pay shown is gross. Taxes and other deductions are withheld — your remaining balance plus tips are paid every two weeks by cheque.",
     "startShift": "Start shift",
     "endShift": "End shift",
     "onShift": "On shift",

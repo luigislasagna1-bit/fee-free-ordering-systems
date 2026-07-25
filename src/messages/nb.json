@@ -6735,6 +6735,7 @@
     "earnHours": "Timer",
     "earnHoursHelp": "Registrerte skifttimer × timelønnen din — betales av Fee Free.",
     "earnPay": "Lønn",
+    "earnPayDisclosure": "Timelønnen som vises, er brutto. Skatt og andre trekk holdes tilbake – det gjenstående beløpet ditt pluss tips utbetales hver fjortende dag med sjekk.",
     "startShift": "Start skift",
     "endShift": "Avslutt skift",
     "onShift": "På skift",

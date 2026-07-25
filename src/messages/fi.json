@@ -6735,6 +6735,7 @@
     "earnHours": "Tunnit",
     "earnHoursHelp": "Kirjatut työvuorotunnit × tuntipalkkasi – maksaja Fee Free.",
     "earnPay": "Palkka",
+    "earnPayDisclosure": "Näytetty tuntipalkka on bruttopalkka. Verot ja muut vähennykset pidätetään – jäljelle jäävä nettosumma ja tipit maksetaan joka toinen viikko shekillä.",
     "startShift": "Aloita vuoro",
     "endShift": "Lopeta vuoro",
     "onShift": "Vuorossa",

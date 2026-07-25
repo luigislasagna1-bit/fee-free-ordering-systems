@@ -6735,6 +6735,7 @@
     "earnHours": "Ore",
     "earnHoursHelp": "Ore di turno registrate × la tua paga oraria — pagate da Fee Free.",
     "earnPay": "Paga",
+    "earnPayDisclosure": "La paga oraria indicata è al lordo. Imposte e altre trattenute vengono detratte; il saldo residuo più le mance ti viene pagato ogni due settimane tramite assegno.",
     "startShift": "Inizia turno",
     "endShift": "Termina turno",
     "onShift": "In turno",

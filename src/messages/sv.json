@@ -6735,6 +6735,7 @@
     "earnHours": "Timmar",
     "earnHoursHelp": "Instämplade arbetstimmar × din timlön – betalas av Fee Free.",
     "earnPay": "Lön",
+    "earnPayDisclosure": "Den timlön som visas är bruttolön. Skatt och andra avdrag dras av – ditt återstående belopp plus dricks betalas ut varannan vecka med check.",
     "startShift": "Starta pass",
     "endShift": "Avsluta pass",
     "onShift": "På pass",

@@ -6735,6 +6735,7 @@
     "earnHours": "Hodiny",
     "earnHoursHelp": "Odpracované hodiny zmeny × vaša hodinová sadzba — platí Fee Free.",
     "earnPay": "Mzda",
+    "earnPayDisclosure": "Zobrazená hodinová mzda je hrubá. Dane a ďalšie zrážky sa strhávajú – zvyšná suma spolu s prepitným sa vypláca každé dva týždne šekom.",
     "startShift": "Začať zmenu",
     "endShift": "Ukončiť zmenu",
     "onShift": "V zmene",

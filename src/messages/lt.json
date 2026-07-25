@@ -6735,6 +6735,7 @@
     "earnHours": "Valandos",
     "earnHoursHelp": "Pamainos valandos × jūsų valandinis įkainis — moka Fee Free.",
     "earnPay": "Užmokestis",
+    "earnPayDisclosure": "Rodomas valandinis užmokestis yra bruto (neatskaičius mokesčių). Mokesčiai ir kiti atskaitymai yra išskaičiuojami — likusi suma kartu su arbatpinigiais išmokama kas dvi savaites čekiu.",
     "startShift": "Pradėti pamainą",
     "endShift": "Baigti pamainą",
     "onShift": "Pamainoje",

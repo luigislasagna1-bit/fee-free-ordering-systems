@@ -6735,6 +6735,7 @@
     "earnHours": "Horas",
     "earnHoursHelp": "Horas de turno fichadas × tu tarifa por hora — pagado por Fee Free.",
     "earnPay": "Pago",
+    "earnPayDisclosure": "El pago por hora que se muestra es bruto. Se retienen impuestos y otras deducciones; el saldo restante más las propinas se pagan cada dos semanas mediante cheque.",
     "startShift": "Iniciar turno",
     "endShift": "Finalizar turno",
     "onShift": "En turno",

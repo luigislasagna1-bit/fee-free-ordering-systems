@@ -6735,6 +6735,7 @@
     "earnHours": "Godziny",
     "earnHoursHelp": "Godziny zmiany × Twoja stawka godzinowa — wypłaca Fee Free.",
     "earnPay": "Wypłata",
+    "earnPayDisclosure": "Podane wynagrodzenie godzinowe jest kwotą brutto. Podatki i inne potrącenia są odliczane, a pozostałe saldo wraz z napiwkami jest wypłacane co dwa tygodnie czekiem.",
     "startShift": "Rozpocznij zmianę",
     "endShift": "Zakończ zmianę",
     "onShift": "Na zmianie",

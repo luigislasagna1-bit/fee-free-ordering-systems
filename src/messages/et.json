@@ -6735,6 +6735,7 @@
     "earnHours": "Tunnid",
     "earnHoursHelp": "Registreeritud töötunnid × sinu tunnitasu — maksab Fee Free.",
     "earnPay": "Tasu",
+    "earnPayDisclosure": "Näidatud tunnitasu on brutosumma. Maksud ja muud mahaarvamised peetakse kinni – ülejäänud summa koos jootrahaga makstakse iga kahe nädala tagant välja pangatšekiga.",
     "startShift": "Alusta vahetust",
     "endShift": "Lõpeta vahetus",
     "onShift": "Vahetuses",

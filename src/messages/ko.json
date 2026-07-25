@@ -6735,6 +6735,7 @@
     "earnHours": "근무 시간",
     "earnHoursHelp": "기록된 근무 시간 × 시급 — Fee Free가 지급합니다.",
     "earnPay": "급여",
+    "earnPayDisclosure": "표시된 시급은 세전(총) 금액입니다. 세금 및 기타 공제액이 원천징수되며, 남은 잔액과 팁은 2주마다 수표로 지급됩니다.",
     "startShift": "근무 시작",
     "endShift": "근무 종료",
     "onShift": "근무 중",

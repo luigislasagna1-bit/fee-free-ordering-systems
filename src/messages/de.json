@@ -6735,6 +6735,7 @@
     "earnHours": "Stunden",
     "earnHoursHelp": "Erfasste Schichtstunden × dein Stundenlohn — bezahlt von Fee Free.",
     "earnPay": "Lohn",
+    "earnPayDisclosure": "Der angezeigte Stundenlohn ist ein Bruttobetrag. Steuern und sonstige Abzüge werden einbehalten – Ihr verbleibendes Guthaben zuzüglich Trinkgeld wird alle zwei Wochen per Scheck ausgezahlt.",
     "startShift": "Schicht starten",
     "endShift": "Schicht beenden",
     "onShift": "Im Dienst",

@@ -6735,6 +6735,7 @@
     "earnHours": "勤務時間",
     "earnHoursHelp": "打刻した勤務時間 × 時給 — お支払いは Fee Free。",
     "earnPay": "報酬",
+    "earnPayDisclosure": "表示されている時給は総支給額（税引き前）です。税金やその他の控除が差し引かれ、残りの手取り額とチップは、2週間ごとに小切手でお支払いします。",
     "startShift": "シフト開始",
     "endShift": "シフト終了",
     "onShift": "勤務中",

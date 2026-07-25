@@ -6735,6 +6735,7 @@
     "earnHours": "工时",
     "earnHoursHelp": "打卡工时 × 你的时薪，由 Fee Free 支付。",
     "earnPay": "工资",
+    "earnPayDisclosure": "所示时薪为税前金额。税款及其他款项将从中扣除，扣除后的余额连同小费每两周以支票形式支付一次。",
     "startShift": "开始上班",
     "endShift": "结束上班",
     "onShift": "上班中",

@@ -6735,6 +6735,7 @@
     "earnHours": "Jam",
     "earnHoursHelp": "Jam shift tercatat × tarif per jam Anda — dibayar oleh Fee Free.",
     "earnPay": "Bayaran",
+    "earnPayDisclosure": "Upah per jam yang ditampilkan adalah jumlah kotor (bruto). Pajak dan potongan lainnya dipotong — sisa saldo Anda beserta tip dibayarkan setiap dua minggu sekali melalui cek.",
     "startShift": "Mulai shift",
     "endShift": "Akhiri shift",
     "onShift": "Sedang shift",

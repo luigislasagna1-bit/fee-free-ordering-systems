@@ -6735,6 +6735,7 @@
     "earnHours": "Ore",
     "earnHoursHelp": "Orele de tură pontate × tariful tău orar — plătite de Fee Free.",
     "earnPay": "Plată",
+    "earnPayDisclosure": "Plata orară afișată este brută. Impozitele și alte deduceri sunt reținute — soldul rămas plus bacșișurile se plătesc din două în două săptămâni prin cec.",
     "startShift": "Începe tura",
     "endShift": "Încheie tura",
     "onShift": "În tură",

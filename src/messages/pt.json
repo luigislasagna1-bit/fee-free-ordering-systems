@@ -6735,6 +6735,7 @@
     "earnHours": "Horas",
     "earnHoursHelp": "Horas de turno registadas × a tua tarifa horária — pago pela Fee Free.",
     "earnPay": "Pagamento",
+    "earnPayDisclosure": "O valor por hora indicado é ilíquido. São retidos impostos e outras deduções — o saldo restante, acrescido das gorjetas, é pago de duas em duas semanas por cheque.",
     "startShift": "Iniciar turno",
     "endShift": "Terminar turno",
     "onShift": "Em turno",

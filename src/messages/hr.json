@@ -6735,6 +6735,7 @@
     "earnHours": "Sati",
     "earnHoursHelp": "Evidentirani sati smjene × tvoja satnica — plaća Fee Free.",
     "earnPay": "Zarada",
+    "earnPayDisclosure": "Prikazana satnica je bruto iznos. Porezi i ostali odbici se zadržavaju, a preostali iznos zajedno s napojnicama isplaćuje se svaka dva tjedna čekom.",
     "startShift": "Započni smjenu",
     "endShift": "Završi smjenu",
     "onShift": "U smjeni",

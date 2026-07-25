@@ -6735,6 +6735,7 @@
     "earnHours": "Heures",
     "earnHoursHelp": "Heures de service pointées × votre taux horaire — payées par Fee Free.",
     "earnPay": "Paie",
+    "earnPayDisclosure": "Le salaire horaire affiché est brut. Les impôts et autres retenues sont déduits — votre solde restant, plus les pourboires, vous est versé toutes les deux semaines par chèque.",
     "startShift": "Démarrer le service",
     "endShift": "Terminer le service",
     "onShift": "En service",

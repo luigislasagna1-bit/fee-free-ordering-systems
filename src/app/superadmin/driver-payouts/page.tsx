@@ -57,6 +57,11 @@ export default async function DriverPayoutsPage() {
             (America/Toronto). Fee Free pays drivers directly; this ledger is the
             record. Restaurants are billed separately for the fees + tips.
           </p>
+          <p className="text-xs text-gray-400 mt-1">
+            Amounts shown are <strong>gross</strong> (before tax and other
+            deductions). Drivers are paid <strong>bi-weekly by cheque</strong> —
+            net balance plus tips.
+          </p>
         </div>
         <BuildWeekButton />
       </div>
@@ -121,7 +126,7 @@ export default async function DriverPayoutsPage() {
                         <MarkPaidButton id={r.id} />
                       ) : (
                         <span className="text-[11px] text-gray-400 whitespace-nowrap">
-                          {r.paidAt ? r.paidAt.toLocaleDateString() : ""}
+                          {r.paidAt ? r.paidAt.toLocaleDateString("en-US", { timeZone: DELIVERY_WEEK_TZ }) : ""}
                           {r.payoutReference ? ` · ${r.payoutReference}` : ""}
                         </span>
                       )}

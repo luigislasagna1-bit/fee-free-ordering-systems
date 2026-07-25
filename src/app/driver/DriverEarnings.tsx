@@ -289,6 +289,13 @@ export function DriverEarnings({ active = true }: { active?: boolean }) {
             </div>
           </section>
 
+          {/* Pay disclosure (Luigi 2026-07-24): the pay figure is GROSS; taxes +
+              deductions are withheld; net balance + tips are paid bi-weekly by
+              cheque. Shown under the tiles on every period. */}
+          <p className="text-[11px] leading-relaxed text-gray-400 bg-gray-800/60 border border-gray-700 rounded-xl px-3 py-2">
+            {t("earnPayDisclosure")}
+          </p>
+
           {rows.length === 0 && (
             <div className="text-center py-8 text-gray-500">
               <DollarSign className="w-10 h-10 mx-auto mb-3 opacity-30" />

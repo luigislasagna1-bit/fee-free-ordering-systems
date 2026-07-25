@@ -6735,6 +6735,7 @@
     "earnHours": "Giờ",
     "earnHoursHelp": "Số giờ ca đã chấm công × mức lương theo giờ — do Fee Free chi trả.",
     "earnPay": "Lương",
+    "earnPayDisclosure": "Mức lương theo giờ hiển thị là lương gộp (trước khấu trừ). Thuế và các khoản khấu trừ khác sẽ được giữ lại — số dư còn lại của bạn cộng với tiền boa sẽ được thanh toán hai tuần một lần bằng chi phiếu.",
     "startShift": "Bắt đầu ca",
     "endShift": "Kết thúc ca",
     "onShift": "Đang trong ca",

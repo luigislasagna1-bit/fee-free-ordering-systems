@@ -6735,6 +6735,7 @@
     "earnHours": "Stundas",
     "earnHoursHelp": "Nostrādātās maiņas stundas × tava stundas likme — apmaksā Fee Free.",
     "earnPay": "Samaksa",
+    "earnPayDisclosure": "Norādītā stundas likme ir bruto. Nodokļi un citi atskaitījumi tiek ieturēti — atlikušo summu kopā ar dzeramnaudu izmaksā reizi divās nedēļās ar čeku.",
     "startShift": "Sākt maiņu",
     "endShift": "Beigt maiņu",
     "onShift": "Maiņā",
