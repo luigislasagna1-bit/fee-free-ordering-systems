@@ -60,10 +60,13 @@ export function StepType({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {PROMO_TYPES.filter(
-          // Grant Reward Dollars only exists while the program is ON. Kept
-          // visible when it's the CURRENT type so editing an existing
-          // reward-credit promo doesn't lose its card.
-          (p) => p.slug !== "reward_credit" || rewardsEnabled || selectedType === "reward_credit",
+          // Grant Reward Dollars (#14) is RETIRED from the picker (Luigi
+          // 2026-07-28): direct gifting lives on the Reward Dollars page
+          // ("Gift {label}" card + PendingRewardGrant), and this order-triggered
+          // variant only confused the flow. Existing reward-credit promos keep
+          // working (award engine untouched) and keep their card while being
+          // EDITED — the type just can't be picked for new promotions.
+          (p) => p.slug !== "reward_credit" || selectedType === "reward_credit",
         ).map((promo) => {
           const Icon = resolveIcon(promo.icon);
           const locked = promo.tier === "locked";
