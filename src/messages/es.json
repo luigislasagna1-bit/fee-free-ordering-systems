@@ -742,6 +742,7 @@
     "printerClose": "Cerrar",
     "printerNativeOnlyTitle": "Solo en la app nativa",
     "printerNativeOnlyDesc": "La impresión directa por LAN requiere la app nativa Fee Free Kitchen para Android o iOS. En un navegador web normal, usa en su lugar la configuración de PrintNode.",
+    "printerNativeOnlyDescLanOnly": "La impresión LAN directa requiere la aplicación Fee Free Kitchen para Android o iOS: instálala en el dispositivo conectado a tu impresora.",
     "printerUseDirect": "Usar impresora LAN directa",
     "printerUseDirectDesc": "Imprime directamente desde esta tablet a tu impresora de recibos por Wi-Fi. Sin cuenta de PrintNode ni cuota mensual.",
     "printerFindLabel": "Encuentra tu impresora",

@@ -742,6 +742,7 @@
     "printerClose": "Tanca",
     "printerNativeOnlyTitle": "Només a l'aplicació nativa",
     "printerNativeOnlyDesc": "La impressió directa per LAN requereix l'aplicació nativa Fee Free Kitchen per a Android o iOS. En un navegador web normal, utilitza la configuració de PrintNode.",
+    "printerNativeOnlyDescLanOnly": "La impressió directa per LAN requereix l'aplicació Fee Free Kitchen per a Android o iOS — instal·la-la al dispositiu connectat a la impressora.",
     "printerUseDirect": "Utilitza la impressora directa per LAN",
     "printerUseDirectDesc": "Imprimeix directament des d'aquesta tauleta a la teva impressora de tiquets per Wi-Fi. Sense compte de PrintNode, sense quota mensual.",
     "printerFindLabel": "Troba la teva impressora",

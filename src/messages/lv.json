@@ -742,6 +742,7 @@
     "printerClose": "Aizvērt",
     "printerNativeOnlyTitle": "Tikai vietējā lietotnē",
     "printerNativeOnlyDesc": "Tiešajai LAN drukāšanai nepieciešama Fee Free Kitchen vietējā lietotne Android vai iOS ierīcēm. Parastā tīmekļa pārlūkprogrammā izmantojiet PrintNode iestatīšanu.",
+    "printerNativeOnlyDescLanOnly": "Tiešai LAN drukāšanai ir nepieciešama lietotne Fee Free Kitchen operētājsistēmai Android vai iOS — instalējiet to ierīcē, kas savienota ar jūsu printeri.",
     "printerUseDirect": "Izmantot tiešo LAN printeri",
     "printerUseDirectDesc": "Drukājiet tieši no šī planšetdatora uz savu čeku printeri caur Wi-Fi. Nav nepieciešams PrintNode konts, nav ikmēneša maksas.",
     "printerFindLabel": "Atrodiet savu printeri",

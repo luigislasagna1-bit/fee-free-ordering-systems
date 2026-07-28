@@ -742,6 +742,7 @@
     "printerClose": "Lukk",
     "printerNativeOnlyTitle": "Kun i appen",
     "printerNativeOnlyDesc": "Direkte LAN-utskrift krever Fee Free Kitchen-appen for Android eller iOS. I en vanlig nettleser bruker du PrintNode-oppsettet i stedet.",
+    "printerNativeOnlyDescLanOnly": "Direkte LAN-utskrift krever Fee Free Kitchen-appen for Android eller iOS – installer den på enheten som er koblet til skriveren.",
     "printerUseDirect": "Bruk direkte LAN-skriver",
     "printerUseDirectDesc": "Skriv ut direkte fra dette nettbrettet til kvitteringsskriveren over Wi-Fi. Ingen PrintNode-konto, ingen månedsavgift.",
     "printerFindLabel": "Finn skriveren din",

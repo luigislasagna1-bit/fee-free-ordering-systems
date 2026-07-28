@@ -742,6 +742,7 @@
     "printerClose": "إغلاق",
     "printerNativeOnlyTitle": "التطبيق الأصلي فقط",
     "printerNativeOnlyDesc": "تتطلب الطباعة المباشرة عبر LAN تطبيق Fee Free Kitchen الأصلي لنظام Android أو iOS. في متصفح ويب عادي، استخدم إعداد PrintNode بدلاً من ذلك.",
+    "printerNativeOnlyDescLanOnly": "تتطلب الطباعة المباشرة عبر LAN تطبيق Fee Free Kitchen لنظام Android أو iOS — ثبّته على الجهاز المتصل بطابعتك.",
     "printerUseDirect": "استخدام طابعة LAN المباشرة",
     "printerUseDirectDesc": "اطبع مباشرةً من هذا الجهاز اللوحي إلى طابعة الإيصالات عبر Wi-Fi. بدون حساب PrintNode، وبدون رسوم شهرية.",
     "printerFindLabel": "ابحث عن طابعتك",

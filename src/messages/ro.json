@@ -742,6 +742,7 @@
     "printerClose": "Închide",
     "printerNativeOnlyTitle": "Doar aplicația nativă",
     "printerNativeOnlyDesc": "Imprimarea directă prin LAN necesită aplicația nativă Fee Free Kitchen pentru Android sau iOS. Într-un browser web obișnuit, folosiți în schimb configurarea PrintNode.",
+    "printerNativeOnlyDescLanOnly": "Imprimarea directă prin LAN necesită aplicația Fee Free Kitchen pentru Android sau iOS — instalați-o pe dispozitivul conectat la imprimantă.",
     "printerUseDirect": "Folosește imprimanta directă LAN",
     "printerUseDirectDesc": "Imprimă direct de pe această tabletă pe imprimanta de bonuri prin Wi-Fi. Fără cont PrintNode, fără abonament lunar.",
     "printerFindLabel": "Găsește-ți imprimanta",

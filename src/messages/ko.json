@@ -742,6 +742,7 @@
     "printerClose": "닫기",
     "printerNativeOnlyTitle": "네이티브 앱 전용",
     "printerNativeOnlyDesc": "직접 LAN 인쇄는 Android 또는 iOS용 Fee Free Kitchen 네이티브 앱이 필요합니다. 일반 웹 브라우저에서는 대신 PrintNode 설정을 사용하세요.",
+    "printerNativeOnlyDescLanOnly": "LAN 직접 인쇄를 사용하려면 Android 또는 iOS용 Fee Free Kitchen 앱이 필요합니다. 프린터에 연결된 기기에 앱을 설치하세요.",
     "printerUseDirect": "직접 LAN 프린터 사용",
     "printerUseDirectDesc": "이 태블릿에서 Wi-Fi를 통해 영수증 프린터로 바로 인쇄합니다. PrintNode 계정도, 월 요금도 필요 없습니다.",
     "printerFindLabel": "프린터 찾기",

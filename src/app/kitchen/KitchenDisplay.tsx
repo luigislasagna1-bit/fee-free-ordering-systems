@@ -1118,14 +1118,18 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
             continue;
           }
           autoPrintedReservationsRef.current.add(r.id);
+          // PrintNode backup is HARD-GATED on the printNodeEnabled master
+          // switch (Luigi 2026-07-28) — off (default) means LAN-only, and a
+          // stale printNodeConnected row never reroutes a reservation print.
+          const pnBackup = () =>
+            printNodeEnabledRef.current &&
+            printerSettingsRef.current?.printNodeConnected &&
+            printerSettingsRef.current.selectedPrinterId;
           const directCfg = getDirectPrinterConfig();
           if (directCfg) {
             doPrintDirectReservation(r.id).catch((err) => {
-              console.warn("[kds reservation auto-print direct] failed, trying PrintNode", err);
-              if (
-                printerSettingsRef.current?.printNodeConnected &&
-                printerSettingsRef.current.selectedPrinterId
-              ) {
+              console.warn("[kds reservation auto-print direct] failed", err);
+              if (pnBackup()) {
                 fetch("/api/kitchen/printnode/print", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
@@ -1133,10 +1137,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                 }).catch((e) => console.warn("[kds reservation auto-print printnode]", e));
               }
             });
-          } else if (
-            printerSettingsRef.current?.printNodeConnected &&
-            printerSettingsRef.current.selectedPrinterId
-          ) {
+          } else if (pnBackup()) {
             fetch("/api/kitchen/printnode/print", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -1198,23 +1199,27 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
    *  setup as orders. */
   const printReservation = async (id: string) => {
     const direct = getDirectPrinterConfig();
+    // PrintNode backup only exists while the master switch is ON (opt-in
+    // browser printing) — off (default) = LAN-only, no PrintNode reroutes or
+    // PrintNode-worded errors. Luigi 2026-07-28. Mirrors doPrint().
+    const pnBackup = !!(printNodeEnabled && printerSettings?.printNodeConnected && printerSettings.selectedPrinterId);
     if (direct) {
       try {
         await doPrintDirectReservation(id);
         toast.success("Reservation printed ✓");
         return;
       } catch (err) {
-        // Fall through to PrintNode if available, else surface a
-        // user-friendly error and stop. Mirrors doPrint().
-        console.warn("[reservation print] direct printer failed, trying PrintNode", err);
-        if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
+        // Fall through to PrintNode if the backup is enabled, else surface
+        // the DIRECT printer's user-friendly error and stop.
+        console.warn("[reservation print] direct printer failed", err);
+        if (!pnBackup) {
           const reason = (err as any)?.code || (err as any)?.message || "";
           toast.error(tk(nativePrinterErrorKey(reason)));
           return;
         }
       }
     }
-    if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
+    if (!pnBackup) {
       toast.error("No printer configured. Open Printer Setup to connect.");
       if (printNodeEnabled) setShowPrinterSetup(true);
       return;
@@ -3096,6 +3101,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   // confirmed reservation without retearing-down the 4s interval
   // every time settings load. Luigi 2026-06-01.
   const printerSettingsRef = useRef<PrinterSettings | null>(null);
+  // Live mirror of the printNodeEnabled master switch for long-lived closures
+  // (reservation auto-print). Synced by the effect next to printerSettingsRef.
+  const printNodeEnabledRef = useRef<boolean>(false);
   // Orders already auto-printed, PERSISTED to localStorage so a cold reload
   // (Android killing the backgrounded WebView) or an order that arrived while the
   // tablet was locked still prints exactly once and never re-prints. Map of
@@ -3661,12 +3669,17 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         return; // printed ✓
       } catch (err) {
         if (!silentError) lastPrintErrToastRef.current = now0;
-        console.warn("[kitchen/autoPrint] direct printer failed, trying PrintNode", err);
+        console.warn("[kitchen/autoPrint] direct printer failed", err);
       }
     }
 
-    // PrintNode path (legacy / backup).
+    // PrintNode path (opt-in backup). HARD-GATED on the restaurant's
+    // printNodeEnabled master switch (Luigi 2026-07-28): with the switch OFF
+    // (the default), a stale printNodeConnected row — e.g. credentials left
+    // over from pre-LAN setup — must never reroute a print or surface a
+    // PrintNode-worded error. LAN is simply THE printing when the switch is off.
     const printNodeWanted = !!(
+      printNodeEnabled &&
       printerSettings?.printNodeConnected &&
       printerSettings.selectedPrinterId &&
       (opts?.force || printerSettings.autoPrint)
@@ -3687,7 +3700,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     if (directWanted || printNodeWanted) {
       await releaseForRetry();
     }
-  }, [printerSettings]);
+  }, [printerSettings, printNodeEnabled]);
 
   // Keep autoPrintRef pointed at the latest autoPrint so fetchOrders
   // (deps=[]) can fire it without tearing down the 4s poll interval
@@ -3701,6 +3714,11 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   useEffect(() => {
     printerSettingsRef.current = printerSettings;
   }, [printerSettings]);
+  // Same pattern for the printNodeEnabled master switch — the reservation
+  // auto-print closure must see the LIVE value, not a stale capture.
+  useEffect(() => {
+    printNodeEnabledRef.current = printNodeEnabled;
+  }, [printNodeEnabled]);
 
   /** Direct-printer path: fetch ESC/POS bytes from server, send to
    *  printer via native plugin. Used when the kitchen operator
@@ -3815,18 +3833,26 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   };
 
   const doPrint = async (orderId: string, type: "kitchen" | "customer" | "both", opts?: { single?: boolean }) => {
-    // Direct LAN printer takes precedence when configured. Falls back
-    // to PrintNode only when direct printing isn't set up or fails.
+    // Direct LAN printer takes precedence when configured. Falls back to
+    // PrintNode ONLY when the restaurant's printNodeEnabled master switch is
+    // ON (opt-in browser printing) — with it OFF (the default), a stale
+    // printNodeConnected row must never reroute a print or surface a
+    // PrintNode-worded error (Luigi 2026-07-28). LAN is THE path when off.
     const direct = getDirectPrinterConfig();
     if (direct) {
       try {
         await doPrintDirect(orderId, type, opts);
         return;
-      } catch {
-        // fall through to PrintNode if also configured
+      } catch (err) {
+        // Fall through to PrintNode only when the backup is enabled below. With
+        // the backup OFF, surface the DIRECT printer's real failure — not a
+        // misleading "no printer configured" for a kitchen that has one.
+        if (!printNodeEnabled || !printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
+          throw err instanceof Error ? err : new Error("Print failed — check the printer");
+        }
       }
     }
-    if (!printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
+    if (!printNodeEnabled || !printerSettings?.printNodeConnected || !printerSettings.selectedPrinterId) {
       toast.error("No printer configured. Open Printer Setup to connect.");
       if (printNodeEnabled) setShowPrinterSetup(true);
       throw new Error("No printer");
@@ -5244,7 +5270,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
 
       {/* ── Printer Setup: Direct LAN (primary, native app only) ── */}
       {showDirectPrinterSetup && (
-        <NativePrinterSetup onClose={() => setShowDirectPrinterSetup(false)} />
+        <NativePrinterSetup onClose={() => setShowDirectPrinterSetup(false)} printNodeEnabled={printNodeEnabled} />
       )}
 
       {/* ── Printer Setup: PrintNode (legacy / browser / Windows bridge) ──

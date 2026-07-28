@@ -83,7 +83,7 @@ export function getDirectPrinterConfig(): {
   }
 }
 
-export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
+export function NativePrinterSetup({ onClose, printNodeEnabled = false }: { onClose: () => void; printNodeEnabled?: boolean }) {
   const tk = useTranslations("kitchen");
   const [enabled, setEnabled] = useState(false);
   const [ip, setIp] = useState("");
@@ -345,7 +345,10 @@ export function NativePrinterSetup({ onClose }: { onClose: () => void }) {
               <div>
                 <p className="font-semibold">{tk("printerNativeOnlyTitle")}</p>
                 <p className="mt-1 leading-relaxed">
-                  {tk("printerNativeOnlyDesc")}
+                  {/* Only suggest PrintNode when the restaurant's opt-in switch
+                      is ON — with it off (default) that path is hidden, so the
+                      guidance is "install the app", not a dead-end pointer. */}
+                  {tk(printNodeEnabled ? "printerNativeOnlyDesc" : "printerNativeOnlyDescLanOnly")}
                 </p>
               </div>
             </div>

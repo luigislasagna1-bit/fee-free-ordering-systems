@@ -742,6 +742,7 @@
     "printerClose": "Sulge",
     "printerNativeOnlyTitle": "Ainult natiivrakenduses",
     "printerNativeOnlyDesc": "Otse LAN-i kaudu printimiseks on vaja Fee Free Kitchen natiivrakendust Androidi või iOS-i jaoks. Tavalises veebibrauseris kasuta selle asemel PrintNode'i seadistust.",
+    "printerNativeOnlyDescLanOnly": "Otsene LAN-printimine nõuab Fee Free Kitchen rakendust Androidile või iOS-ile — installi see oma printeriga ühendatud seadmesse.",
     "printerUseDirect": "Kasuta otse LAN-printerit",
     "printerUseDirectDesc": "Prindi otse sellest tahvelarvutist tšekiprinterisse Wi-Fi kaudu. Pole PrintNode'i kontot ega kuutasu.",
     "printerFindLabel": "Leia oma printer",

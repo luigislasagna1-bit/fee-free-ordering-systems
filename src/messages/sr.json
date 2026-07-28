@@ -742,6 +742,7 @@
     "printerClose": "Zatvori",
     "printerNativeOnlyTitle": "Samo u nativnoj aplikaciji",
     "printerNativeOnlyDesc": "Direktno LAN štampanje zahteva nativnu aplikaciju Fee Free Kitchen za Android ili iOS. U običnom veb pregledaču umesto toga koristite podešavanje preko PrintNode.",
+    "printerNativeOnlyDescLanOnly": "Direktno LAN štampanje zahteva aplikaciju Fee Free Kitchen za Android ili iOS — instalirajte je na uređaju povezanom sa vašim štampačem.",
     "printerUseDirect": "Koristi direktni LAN štampač",
     "printerUseDirectDesc": "Štampajte direktno sa ovog tableta na štampač računa preko Wi-Fi mreže. Bez PrintNode naloga, bez mesečne naknade.",
     "printerFindLabel": "Pronađite svoj štampač",

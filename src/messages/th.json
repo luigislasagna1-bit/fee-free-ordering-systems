@@ -742,6 +742,7 @@
     "printerClose": "ปิด",
     "printerNativeOnlyTitle": "เฉพาะแอปเนทีฟเท่านั้น",
     "printerNativeOnlyDesc": "การพิมพ์ผ่าน LAN โดยตรงต้องใช้แอปเนทีฟ Fee Free Kitchen สำหรับ Android หรือ iOS หากใช้เว็บเบราว์เซอร์ทั่วไป ให้ใช้การตั้งค่า PrintNode แทน",
+    "printerNativeOnlyDescLanOnly": "การพิมพ์ผ่าน LAN โดยตรงต้องใช้แอป Fee Free Kitchen สำหรับ Android หรือ iOS — โปรดติดตั้งแอปบนอุปกรณ์ที่เชื่อมต่อกับเครื่องพิมพ์ของคุณ",
     "printerUseDirect": "ใช้เครื่องพิมพ์ LAN โดยตรง",
     "printerUseDirectDesc": "พิมพ์จากแท็บเล็ตนี้ไปยังเครื่องพิมพ์ใบเสร็จของคุณโดยตรงผ่าน Wi-Fi ไม่ต้องมีบัญชี PrintNode ไม่มีค่าบริการรายเดือน",
     "printerFindLabel": "ค้นหาเครื่องพิมพ์ของคุณ",

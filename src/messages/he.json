@@ -742,6 +742,7 @@
     "printerClose": "סגירה",
     "printerNativeOnlyTitle": "אפליקציה ייעודית בלבד",
     "printerNativeOnlyDesc": "הדפסה ישירה ב-LAN דורשת את האפליקציה הייעודית Fee Free Kitchen ל-Android או ל-iOS. בדפדפן רגיל, השתמשו בהגדרת PrintNode במקום זאת.",
+    "printerNativeOnlyDescLanOnly": "הדפסת LAN ישירה דורשת את אפליקציית Fee Free Kitchen לאנדרואיד או ל-iOS — התקינו אותה במכשיר המחובר למדפסת שלכם.",
     "printerUseDirect": "שימוש במדפסת LAN ישירה",
     "printerUseDirectDesc": "הדפיסו ישירות מהטאבלט הזה למדפסת הקבלות שלכם דרך Wi-Fi. ללא חשבון PrintNode, ללא תשלום חודשי.",
     "printerFindLabel": "מציאת המדפסת שלכם",

@@ -742,6 +742,7 @@
     "printerClose": "Zatvori",
     "printerNativeOnlyTitle": "Samo izvorna aplikacija",
     "printerNativeOnlyDesc": "Izravni ispis preko LAN-a zahtijeva izvornu aplikaciju Fee Free Kitchen za Android ili iOS. U običnom web-pregledniku umjesto toga upotrijebite postavljanje za PrintNode.",
+    "printerNativeOnlyDescLanOnly": "Izravni LAN ispis zahtijeva aplikaciju Fee Free Kitchen za Android ili iOS — instalirajte je na uređaj povezan s vašim pisačem.",
     "printerUseDirect": "Upotrijebi izravni LAN pisač",
     "printerUseDirectDesc": "Ispisujte izravno s ovog tableta na svoj pisač računa putem Wi-Fi mreže. Bez PrintNode računa, bez mjesečne naknade.",
     "printerFindLabel": "Pronađite svoj pisač",

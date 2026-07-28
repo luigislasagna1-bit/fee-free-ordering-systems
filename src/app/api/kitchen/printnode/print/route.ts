@@ -238,6 +238,21 @@ export async function POST(req: NextRequest) {
       customerTemplate?: unknown;
     };
 
+    // MASTER SWITCH backstop (Luigi 2026-07-28): with Restaurant.printNodeEnabled
+    // OFF (the default), PrintNode must never print or error — even for a stale
+    // client or a legacy stored-credentials row. Client branches are gated too;
+    // this is defense in depth. Neutral wording by design (no "PrintNode").
+    const gate = await prisma.restaurant.findUnique({
+      where: { id: user.restaurantId },
+      select: { printNodeEnabled: true },
+    });
+    if (!gate?.printNodeEnabled) {
+      return NextResponse.json(
+        { error: "Cloud printing is not enabled for this restaurant." },
+        { status: 400 },
+      );
+    }
+
     const ctx = await getKeyAndSettings(user.restaurantId);
     if (!ctx) {
       return NextResponse.json(

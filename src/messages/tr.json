@@ -742,6 +742,7 @@
     "printerClose": "Kapat",
     "printerNativeOnlyTitle": "Yalnızca yerel uygulama",
     "printerNativeOnlyDesc": "Doğrudan LAN yazdırma, Android veya iOS için Fee Free Kitchen yerel uygulamasını gerektirir. Normal bir web tarayıcısında bunun yerine PrintNode kurulumunu kullanın.",
+    "printerNativeOnlyDescLanOnly": "Doğrudan LAN yazdırma için Android veya iOS sürümü Fee Free Kitchen uygulaması gereklidir — uygulamayı yazıcınıza bağlı olan cihaza yükleyin.",
     "printerUseDirect": "Doğrudan LAN yazıcısı kullan",
     "printerUseDirectDesc": "Bu tabletten fiş yazıcınıza Wi-Fi üzerinden doğrudan yazdırın. PrintNode hesabı yok, aylık ücret yok.",
     "printerFindLabel": "Yazıcınızı bulun",

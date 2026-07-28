@@ -742,6 +742,7 @@
     "printerClose": "Закрыть",
     "printerNativeOnlyTitle": "Только в нативном приложении",
     "printerNativeOnlyDesc": "Для прямой печати по LAN требуется нативное приложение Fee Free Kitchen для Android или iOS. В обычном веб-браузере используйте настройку PrintNode.",
+    "printerNativeOnlyDescLanOnly": "Для прямой печати по LAN требуется приложение Fee Free Kitchen для Android или iOS — установите его на устройство, подключённое к вашему принтеру.",
     "printerUseDirect": "Использовать прямое подключение принтера по LAN",
     "printerUseDirectDesc": "Печатайте напрямую с этого планшета на чековый принтер по Wi-Fi. Без аккаунта PrintNode и без ежемесячной платы.",
     "printerFindLabel": "Найти принтер",

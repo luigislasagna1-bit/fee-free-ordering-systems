@@ -742,6 +742,7 @@
     "printerClose": "बंद करें",
     "printerNativeOnlyTitle": "केवल नेटिव ऐप",
     "printerNativeOnlyDesc": "डायरेक्ट LAN प्रिंटिंग के लिए Android या iOS हेतु Fee Free Kitchen नेटिव ऐप आवश्यक है। सामान्य वेब ब्राउज़र में, इसके बजाय PrintNode सेटअप का उपयोग करें।",
+    "printerNativeOnlyDescLanOnly": "डायरेक्ट LAN प्रिंटिंग के लिए Android या iOS वाला Fee Free Kitchen ऐप ज़रूरी है — इसे उस डिवाइस पर इंस्टॉल करें जो आपके प्रिंटर से जुड़ा है।",
     "printerUseDirect": "डायरेक्ट LAN प्रिंटर का उपयोग करें",
     "printerUseDirectDesc": "इस टैबलेट से सीधे अपने रसीद प्रिंटर पर Wi-Fi के ज़रिए प्रिंट करें। कोई PrintNode खाता नहीं, कोई मासिक शुल्क नहीं।",
     "printerFindLabel": "अपना प्रिंटर खोजें",

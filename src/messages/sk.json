@@ -742,6 +742,7 @@
     "printerClose": "Zavrieť",
     "printerNativeOnlyTitle": "Len natívna aplikácia",
     "printerNativeOnlyDesc": "Priama tlač cez LAN vyžaduje natívnu aplikáciu Fee Free Kitchen pre Android alebo iOS. V bežnom webovom prehliadači použite namiesto toho nastavenie PrintNode.",
+    "printerNativeOnlyDescLanOnly": "Priama tlač cez LAN vyžaduje aplikáciu Fee Free Kitchen pre Android alebo iOS — nainštalujte si ju do zariadenia pripojeného k tlačiarni.",
     "printerUseDirect": "Použiť priamu tlačiareň cez LAN",
     "printerUseDirectDesc": "Tlačte priamo z tohto tabletu na vašu tlačiareň účteniek cez Wi-Fi. Bez účtu PrintNode, bez mesačného poplatku.",
     "printerFindLabel": "Nájdite svoju tlačiareň",

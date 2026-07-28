@@ -742,6 +742,7 @@
     "printerClose": "Sulje",
     "printerNativeOnlyTitle": "Vain natiivisovellus",
     "printerNativeOnlyDesc": "Suora LAN-tulostus edellyttää Fee Free Kitchen -natiivisovellusta Androidille tai iOS:lle. Tavallisessa verkkoselaimessa käytä sen sijaan PrintNode-asennusta.",
+    "printerNativeOnlyDescLanOnly": "Suora LAN-tulostus edellyttää Fee Free Kitchen -sovellusta Androidille tai iOS:lle — asenna se tulostimeesi yhdistettyyn laitteeseen.",
     "printerUseDirect": "Käytä suoraa LAN-tulostinta",
     "printerUseDirectDesc": "Tulosta suoraan tältä tabletilta kuittitulostimellesi Wi-Fi-yhteydellä. Ei PrintNode-tiliä, ei kuukausimaksua.",
     "printerFindLabel": "Etsi tulostimesi",

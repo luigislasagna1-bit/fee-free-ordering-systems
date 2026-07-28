@@ -742,6 +742,7 @@
     "printerClose": "Κλείσιμο",
     "printerNativeOnlyTitle": "Μόνο στην εφαρμογή",
     "printerNativeOnlyDesc": "Η απευθείας εκτύπωση μέσω LAN απαιτεί τη φυσική εφαρμογή Fee Free Kitchen για Android ή iOS. Σε ένα κανονικό πρόγραμμα περιήγησης, χρησιμοποιήστε αντ' αυτού τη ρύθμιση PrintNode.",
+    "printerNativeOnlyDescLanOnly": "Η απευθείας εκτύπωση μέσω LAN απαιτεί την εφαρμογή Fee Free Kitchen για Android ή iOS — εγκαταστήστε την στη συσκευή που είναι συνδεδεμένη με τον εκτυπωτή σας.",
     "printerUseDirect": "Χρήση απευθείας εκτυπωτή LAN",
     "printerUseDirectDesc": "Εκτυπώστε απευθείας από αυτό το tablet στον εκτυπωτή αποδείξεων μέσω Wi-Fi. Χωρίς λογαριασμό PrintNode, χωρίς μηνιαία χρέωση.",
     "printerFindLabel": "Βρείτε τον εκτυπωτή σας",

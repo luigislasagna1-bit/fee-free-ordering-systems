@@ -742,6 +742,7 @@
     "printerClose": "Uždaryti",
     "printerNativeOnlyTitle": "Tik vietinė programa",
     "printerNativeOnlyDesc": "Tiesioginiam spausdinimui per LAN reikalinga „Fee Free Kitchen“ vietinė programa, skirta „Android“ arba „iOS“. Įprastoje interneto naršyklėje naudokite PrintNode sąranką.",
+    "printerNativeOnlyDescLanOnly": "Tiesioginiam spausdinimui per LAN reikalinga „Fee Free Kitchen“ programėlė, skirta „Android“ arba „iOS“ — įdiekite ją įrenginyje, prijungtame prie spausdintuvo.",
     "printerUseDirect": "Naudoti tiesioginį LAN spausdintuvą",
     "printerUseDirectDesc": "Spausdinkite tiesiai iš šio planšetinio kompiuterio į kvitų spausdintuvą per Wi-Fi. Nereikia PrintNode paskyros, jokio mėnesinio mokesčio.",
     "printerFindLabel": "Raskite savo spausdintuvą",

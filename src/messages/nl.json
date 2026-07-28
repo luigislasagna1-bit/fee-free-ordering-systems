@@ -742,6 +742,7 @@
     "printerClose": "Sluiten",
     "printerNativeOnlyTitle": "Alleen native app",
     "printerNativeOnlyDesc": "Direct afdrukken via LAN vereist de Fee Free Kitchen native app voor Android of iOS. Gebruik in een gewone webbrowser de PrintNode-installatie.",
+    "printerNativeOnlyDescLanOnly": "Direct afdrukken via LAN vereist de Fee Free Kitchen-app voor Android of iOS — installeer deze op het apparaat dat met je printer is verbonden.",
     "printerUseDirect": "Directe LAN-printer gebruiken",
     "printerUseDirectDesc": "Print rechtstreeks vanaf deze tablet naar je bonprinter via Wi-Fi. Geen PrintNode-account, geen maandelijkse kosten.",
     "printerFindLabel": "Vind je printer",

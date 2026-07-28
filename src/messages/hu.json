@@ -742,6 +742,7 @@
     "printerClose": "Bezárás",
     "printerNativeOnlyTitle": "Csak natív alkalmazásban",
     "printerNativeOnlyDesc": "A közvetlen LAN-nyomtatáshoz a Fee Free Kitchen natív Android- vagy iOS-alkalmazás szükséges. Normál webböngészőben használja helyette a PrintNode beállítást.",
+    "printerNativeOnlyDescLanOnly": "A közvetlen LAN-nyomtatáshoz a Fee Free Kitchen alkalmazás szükséges Androidra vagy iOS-re – telepítse azt a nyomtatóhoz csatlakoztatott eszközre.",
     "printerUseDirect": "Közvetlen LAN-nyomtató használata",
     "printerUseDirectDesc": "Nyomtasson közvetlenül erről a táblagépről a blokknyomtatóra Wi-Fi-n keresztül. Nincs szükség PrintNode-fiókra, nincs havidíj.",
     "printerFindLabel": "Nyomtató keresése",

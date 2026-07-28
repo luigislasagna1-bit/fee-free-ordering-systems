@@ -742,6 +742,7 @@
     "printerClose": "关闭",
     "printerNativeOnlyTitle": "仅限原生应用",
     "printerNativeOnlyDesc": "直连 LAN 打印需要安装适用于 Android 或 iOS 的 Fee Free Kitchen 原生应用。在普通网页浏览器中，请改用 PrintNode 设置。",
+    "printerNativeOnlyDescLanOnly": "LAN 直连打印需要使用 Android 或 iOS 版的 Fee Free Kitchen 应用——请将其安装在连接打印机的设备上。",
     "printerUseDirect": "使用直连 LAN 打印机",
     "printerUseDirectDesc": "通过 Wi-Fi 直接从本平板打印到您的小票打印机。无需 PrintNode 账户，也没有月费。",
     "printerFindLabel": "查找您的打印机",

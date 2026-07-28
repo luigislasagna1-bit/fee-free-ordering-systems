@@ -742,6 +742,7 @@
     "printerClose": "Đóng",
     "printerNativeOnlyTitle": "Chỉ dành cho ứng dụng gốc",
     "printerNativeOnlyDesc": "In trực tiếp qua LAN cần ứng dụng gốc Fee Free Kitchen cho Android hoặc iOS. Trên trình duyệt web thông thường, hãy dùng thiết lập PrintNode thay thế.",
+    "printerNativeOnlyDescLanOnly": "In trực tiếp qua LAN yêu cầu ứng dụng Fee Free Kitchen cho Android hoặc iOS — hãy cài đặt ứng dụng trên thiết bị đang kết nối với máy in của bạn.",
     "printerUseDirect": "Dùng máy in LAN trực tiếp",
     "printerUseDirectDesc": "In thẳng từ máy tính bảng này tới máy in hóa đơn qua Wi-Fi. Không cần tài khoản PrintNode, không phí hàng tháng.",
     "printerFindLabel": "Tìm máy in của bạn",

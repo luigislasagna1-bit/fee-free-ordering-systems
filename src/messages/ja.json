@@ -742,6 +742,7 @@
     "printerClose": "閉じる",
     "printerNativeOnlyTitle": "ネイティブアプリ専用",
     "printerNativeOnlyDesc": "ダイレクトLAN印刷には、Android または iOS 用の Fee Free Kitchen ネイティブアプリが必要です。通常のウェブブラウザでは、代わりに PrintNode のセットアップをご利用ください。",
+    "printerNativeOnlyDescLanOnly": "LANダイレクト印刷には、Android版またはiOS版のFee Free Kitchenアプリが必要です。プリンターに接続されている端末にアプリをインストールしてください。",
     "printerUseDirect": "ダイレクトLANプリンターを使用",
     "printerUseDirectDesc": "このタブレットからレシートプリンターへ Wi-Fi 経由で直接印刷します。PrintNode のアカウントも月額料金も不要です。",
     "printerFindLabel": "プリンターを検索",

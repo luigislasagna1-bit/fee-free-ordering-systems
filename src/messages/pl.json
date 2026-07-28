@@ -742,6 +742,7 @@
     "printerClose": "Zamknij",
     "printerNativeOnlyTitle": "Tylko aplikacja natywna",
     "printerNativeOnlyDesc": "Drukowanie bezpośrednie przez LAN wymaga natywnej aplikacji Fee Free Kitchen na Androida lub iOS. W zwykłej przeglądarce internetowej użyj zamiast tego konfiguracji PrintNode.",
+    "printerNativeOnlyDescLanOnly": "Bezpośrednie drukowanie przez sieć LAN wymaga aplikacji Fee Free Kitchen na Androida lub iOS — zainstaluj ją na urządzeniu podłączonym do drukarki.",
     "printerUseDirect": "Użyj drukarki bezpośredniej LAN",
     "printerUseDirectDesc": "Drukuj bezpośrednio z tego tabletu na drukarkę paragonów przez Wi-Fi. Bez konta PrintNode, bez miesięcznej opłaty.",
     "printerFindLabel": "Znajdź swoją drukarkę",

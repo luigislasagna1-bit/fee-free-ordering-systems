@@ -742,6 +742,7 @@
     "printerClose": "Tutup",
     "printerNativeOnlyTitle": "Hanya aplikasi native",
     "printerNativeOnlyDesc": "Pencetakan LAN langsung memerlukan aplikasi native Fee Free Kitchen untuk Android atau iOS. Di peramban web biasa, gunakan pengaturan PrintNode sebagai gantinya.",
+    "printerNativeOnlyDescLanOnly": "Pencetakan langsung melalui LAN memerlukan aplikasi Fee Free Kitchen untuk Android atau iOS — instal aplikasinya di perangkat yang terhubung ke printer Anda.",
     "printerUseDirect": "Gunakan printer LAN langsung",
     "printerUseDirectDesc": "Cetak langsung dari tablet ini ke printer struk Anda melalui Wi-Fi. Tanpa akun PrintNode, tanpa biaya bulanan.",
     "printerFindLabel": "Temukan printer Anda",
