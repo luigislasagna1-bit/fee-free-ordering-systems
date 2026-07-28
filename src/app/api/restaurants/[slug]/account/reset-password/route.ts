@@ -105,6 +105,22 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
     });
   }
 
+  // Pending REWARD GIFTS (Luigi 2026-07-28): this flow is also a guest's
+  // first ACTIVATION (see the signedUpAt stamp above) — if the owner gifted
+  // dollars to this email before the account existed, credit them now.
+  // Idempotent + never throws; a plain password reset with no pending gifts
+  // is a no-op.
+  if (customer.email) {
+    try {
+      const { claimPendingGiftsFor } = await import("@/lib/reward-gifts");
+      await claimPendingGiftsFor({
+        restaurantId: restaurant.id,
+        customerId: customer.id,
+        email: customer.email,
+      });
+    } catch (e) { console.error("[reset-password reward gifts]", e); }
+  }
+
   // Auto-sign-in: issue the same session cookie the login endpoint
   // issues so the customer lands on /account already signed in. UX
   // parity with Toast/Uber/DoorDash — they don't bounce you back to

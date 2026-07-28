@@ -225,6 +225,16 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
       await grantSignupRules({ restaurantId: restaurant.id, customerId: here.id, rewardsEnabled: true });
     } catch (e) { console.error("[signup reward rules]", e); }
   }
+  // Pending REWARD GIFTS (Luigi 2026-07-28): the owner may have gifted dollars
+  // to this email before the account existed — credit them now, at every chain
+  // location this signup created a row for. claimPendingGiftsFor never throws
+  // and is idempotent (atomic pending→claimed flip + gift:<id> ledger key).
+  try {
+    const { claimPendingGiftsFor } = await import("@/lib/reward-gifts");
+    await Promise.all(
+      customers.map((c) => claimPendingGiftsFor({ restaurantId: c.restaurantId, customerId: c.id, email })),
+    );
+  } catch (e) { console.error("[signup reward gifts]", e); }
 
   // Fire-and-forget verification email. Signup completes regardless of
   // mail-delivery success — customers can request a resend later.

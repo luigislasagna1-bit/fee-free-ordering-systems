@@ -33,6 +33,7 @@ import OrderCanceled             from "@/emails/templates/OrderCanceled";
 import OrderRefund               from "@/emails/templates/OrderRefund";
 import CustomerSignupNotification from "@/emails/templates/CustomerSignupNotification";
 import RewardGift                from "@/emails/templates/RewardGift";
+import RewardGiftInvite          from "@/emails/templates/RewardGiftInvite";
 import ReservationConfirmation   from "@/emails/templates/ReservationConfirmation";
 import NewReservationNotification from "@/emails/templates/NewReservationNotification";
 import PasswordReset             from "@/emails/templates/PasswordReset";
@@ -1061,6 +1062,42 @@ export async function sendRewardGiftEmail(params: {
   return send({
     to: params.to,
     subject: t("email.rewardGift.subject", { restaurant: params.restaurantName, amount: params.amountLabel, label: params.rewardLabel }),
+    html,
+    fromName: params.restaurantName,
+  });
+}
+
+/** CUSTOMER email: gifted reward dollars to an email with NO account yet
+ *  (Luigi 2026-07-28) — "create your account with this email to claim". The
+ *  PendingRewardGrant waits server-side; the signup hook credits it
+ *  automatically. 1:1, owner-initiated (Gift form carries the CASL reminder). */
+export async function sendRewardGiftInviteEmail(params: {
+  to: string;
+  customerName: string;
+  restaurantName: string;
+  amountLabel: string;
+  rewardLabel: string;
+  note?: string | null;
+  orderUrl: string;
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const html = await renderEmail(
+    RewardGiftInvite({
+      t,
+      customerName: params.customerName,
+      restaurantName: params.restaurantName,
+      amountLabel: params.amountLabel,
+      rewardLabel: params.rewardLabel,
+      note: params.note,
+      orderUrl: params.orderUrl,
+      giftEmail: params.to,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to,
+    subject: t("email.rewardGiftInvite.subject", { restaurant: params.restaurantName, amount: params.amountLabel, label: params.rewardLabel }),
     html,
     fromName: params.restaurantName,
   });

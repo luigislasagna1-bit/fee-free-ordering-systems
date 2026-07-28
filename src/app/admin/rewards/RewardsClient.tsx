@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
 import { EarnRulesEditor } from "./EarnRulesEditor";
 import { EarnExclusions, RedeemExclusions } from "./EarnExclusions";
+import { GiftRewardDollars } from "./GiftRewardDollars";
 
 interface Initial {
   rewardsEnabled: boolean;
@@ -323,6 +324,10 @@ export function RewardsClient({ currency, initial, groups = [] }: { currency: st
             />
             <p className="mt-1.5 ml-11 text-sm text-gray-500">{t("signupBannerDesc", { label: pluralPreview })}</p>
           </div>
+
+          {/* Gift Reward Dollars by email — incl. people with no account yet
+              (pending grant claims itself at signup). Luigi 2026-07-28. */}
+          <GiftRewardDollars currency={currency} rewardLabel={pluralPreview} />
         </>
       )}
 

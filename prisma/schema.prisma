@@ -425,6 +425,7 @@ model Restaurant {
   rewardAccounts         RewardAccount[]
   vipSchedules           VipSchedule[]
   rewardEarnRules        RewardEarnRule[]
+  pendingRewardGrants    PendingRewardGrant[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -2317,6 +2318,43 @@ model RewardLedger {
   @@unique([accountId, orderId, reason])
   @@index([accountId, createdAt])
   @@index([orderId])
+}
+
+/// "Gift Reward Dollars" to a person by EMAIL — including people with no account
+/// yet (Luigi 2026-07-28). Created from the admin Reward Dollars page; the
+/// recipient gets a branded email. If an account with that email already exists
+/// the wallet is credited immediately and the row is born `claimed`; otherwise it
+/// waits `pending` and the customer-signup hook claims it automatically on account
+/// creation. NO expiry by design. Idempotency: the atomic pending→claimed status
+/// flip is the gate (the ledger's [accountId, orderId, reason] unique can't dedupe
+/// null-orderId rows under Postgres NULLS DISTINCT). email is stored LOWERCASE.
+model PendingRewardGrant {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  /// Recipient email, ALWAYS lowercased at write.
+  email        String
+  name         String
+  /// Gift amount in reward DOLLARS (wallet units, matches RewardAccount.balance).
+  amount       Float
+  /// Optional personal note included in the gift email.
+  note         String?
+  /// pending | claimed | revoked
+  status       String     @default("pending")
+  /// User id of the admin who created the gift (audit).
+  createdBy    String?
+  emailSentAt  DateTime?
+  claimedAt    DateTime?
+  /// Set on claim — which customer received the credit.
+  customerId   String?
+  revokedAt    DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  /// Signup-hook lookup: pending gifts for this email at this restaurant.
+  @@index([restaurantId, email, status])
+  /// Admin list, newest first.
+  @@index([restaurantId, createdAt])
 }
 
 // ─── Configurable earning rules / campaigns (Reward Dollars, 2026-06-27) ──
