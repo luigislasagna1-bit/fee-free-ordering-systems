@@ -18,7 +18,9 @@ android {
         applicationId "com.feefreeordering.kitchen"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 22
+        // vc22 was consumed by the 16 KB-blocked Play upload (2026-07-28) —
+        // Play reserves every uploaded versionCode, so the compliant build is 23.
+        versionCode 23
         versionName "3.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -82,7 +84,13 @@ dependencies {
     // for this printer. stario10 uses a different connection mechanism
     // (StarConnectionSettings + StarPrinter) and is what Star's own
     // utilities use under the hood. Kotlin-coroutine-based.
-    implementation 'com.starmicronics:stario10:1.9.0'
+    //
+    // 1.11.2 (2026-07-28): minimum version whose native libs are 16 KB-page
+    // aligned (added in 1.10.0) — Google Play now HARD-BLOCKS uploads without
+    // it. Deliberately NOT 1.12+/1.13: 1.12.0 raises the SDK's minimum
+    // supported OS to Android 11 and 1.13.0 makes openAsync() throw on
+    // missing LAN permissions — both are golden-pipeline risk we don't need.
+    implementation 'com.starmicronics:stario10:1.11.2'
     // Coroutines runtime — required by stario10. The -android variant
     // provides the Main dispatcher. We use runBlocking from a Kotlin
     // bridge file to expose suspend fns to Java.

@@ -1,5 +1,10 @@
 ext {
-    minSdkVersion = 24
+    // 26 (Android 8.0) — required by stario10 1.11.2, the minimum 16 KB-page-
+    // aligned StarXpand SDK that Google Play now mandates (2026-07-28). Android
+    // 7 devices (e.g. Luigi's SM-T3 tablet) can't take Play updates past vc21
+    // but keep working on their installed build; the sideloaded vc22 banded-
+    // print build covers Luigi's tablet.
+    minSdkVersion = 26
     compileSdkVersion = 36
     targetSdkVersion = 36
     androidxActivityVersion = '1.11.0'
