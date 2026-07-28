@@ -41,8 +41,39 @@
 
 ## A. DO NOW — this week, in priority order
 
-### A23. 🤔 FeeFreeDelivery money model — auto-billing PAUSED; driver-pay build needs your design-OK
+### A25. ✅ Gift Reward Dollars SHIPPED + PROD-VERIFIED by Luigi 2026-07-28 🎉
+Your ask, built + proven live the same day (599515fd): **Marketing Tools → Reward Dollars → "Gift
+Pizza Bucks"** — name + email + amount → Send. Existing account = instant credit; no account = the
+gift waits (never expires) and lands automatically at signup. **Luigi ran the full loop on prod:**
+$1 gift → invite email arrived → signed up with that email → the dollars appeared by themselves.
+Papercut found + fixed in follow-up: the email's "Create my account" button landed on the hosted
+MARKETING site (branded-host root, by proxy design) — now points straight at the sign-up form
+(/account/signup). CASL reminder baked into the form.
+
+### A24. 🖨️ Kitchen print incident RESOLVED — v3.0.1 (vc23) **LIVE ON GOOGLE PLAY 2026-07-28** 🎉
+A giant real order (2× Double X-Large Combo = 12 pizzas) crashed the Android tablet on print (out of
+memory rendering one huge receipt image). **Fixed + proven on your tablet same day** (banded printing,
+sideloaded build — big order printed, no crash). Google then **hard-blocked** the Play upload with the
+16 KB rule (was a warning at v3.0) → printer SDK bumped + minimum Android is now 8.0 → vc23 uploaded
+clean → **approved + in Production** (Play Console screenshot: "Fee Free Order App · Production ·
+Jul 28, 2026"). Sideload link (/kitchen-test.apk) removed.
+- **☐ ONE remaining check — a test print on an Android 8+ device running the Play version** (the
+  updated printer SDK inside vc23 hasn't touched paper yet; your tablet is Android 7 so it runs the
+  proven sideload instead). Easiest: ask Fabrizio (Android 16 tablet) to update + print one order —
+  or any modern Android device on your printer's WiFi.
+- **FYI:** your kitchen tablet (Android 7, ~2017) keeps working on the fixed sideloaded build forever,
+  but can never take Play updates again (Google+Star retired Android 7 — verified, no way around it).
+  Whenever you replace it, any modern Android tablet goes back to automatic updates. If the old tablet
+  ever needs another fix, Claude can hand-build + sideload one (proven path).
+
+### A23. ✅ BUILT + verified live — but ⚠️ DO NOT PAY A REAL DRIVER until payroll + a lawyer sign off
 **Context (2026-07-24):** you defined how FeeFreeDelivery money should work — restaurant pays Fee Free weekly (per-delivery fee **+** the driver's tips), Fee Free pays drivers **hourly** + 100% tips, **Sat→Fri Toronto** week, **don't auto-bill anyone yet**. Cash tips ignored.
+
+- **✅ BUILT (2026-07-24, "go with recommendations"):** B0/B2/B3/B4/B5 all shipped (commits bca9e39b + a4f4a0b4 + d5334479). Schema pushed to BOTH branches. **Verified live on prod by Luigi:** superadmin Driver Payouts page → **Build week** produced a real pending payout (week **Jul 11–17**, driver Sameem, 2 deliveries, tips **$8.40**, total $8.40) → **Mark paid** flipped it to paid. Driver **shift clock** device-tested on Luigi's phone (start/end + survives close/reopen). Publishing **"send app link by email/text"** verified in prod (text actually arrived). **Pay disclosure** added ×38 (gross / deductions withheld / net balance + tips paid **bi-weekly by cheque**).
+- **🛑 CRITICAL GATE before any REAL driver pay OR un-pausing billing (Luigi asked "is this legal?" 2026-07-24):** the app is a timekeeping + tip-tracking front-end, **NOT a payroll system** — it does not withhold/remit CPP/EI/income tax, produce compliant pay stubs, or handle T4s/WSIB/vacation/OT/holiday pay. Luigi MUST, before paying a real driver: (a) set up **CRA payroll (RP) account + real payroll** (accountant or Wagepoint/QuickBooks/ADP) for deductions/remittances/pay-stubs/T4s; (b) confirm **tip tax treatment** (controlled vs direct tips → CPP/EI) with accountant; (c) **Ontario employment lawyer** on employee-vs-contractor classification, ESA (min wage/OT/vacation/holiday/records/pay-statements), ESA **tip protection** (100% to driver), who is the legal employer; (d) **WSIB** registration; (e) **commercial/business-use auto insurance** for drivers (personal policies often exclude delivery). I am not a lawyer/accountant — this needs professional sign-off. Offered a **CSV/print export of weekly hours+tips per driver** for the accountant hand-off — Luigi said **"hold off for now."**
+- **PARKED (Step 7, Luigi's quiet moment):** iPhone kitchen-ring test — diagnostic shows Luigi's DAILY kitchen = the Samsung Android tablet (registers correctly, rings fine); the reported ring bug was on his **iPhone** Kitchen app. To diagnose: log into Kitchen on the iPhone (retires the tablet's ring — do it off-service, log back into the tablet after) → re-run `scripts/_check-kitchen-tokens-both.ts` → see if it registers **ios** (correct) or **android** (the silent-payload bug).
+
+**Original context (superseded — kept for the record):**
 - **✅ DONE + DEPLOYED (commit d7a7230e):** auto-billing **PAUSED**. A live cron was already Stripe-charging restaurants every Monday — now disabled by a one-line master switch (`src/lib/delivery-billing-switch.ts`), guarded so nothing (cron, manual re-run, script) can charge. Re-enable only after the model is correct **and you preview a real invoice**.
 - **✅ DONE (B1, this session):** billing week switched to **Saturday→Friday America/Toronto** (was Monday-UTC), DST-correct; fixed a bug that made the ops "this week" figure span up to 14 days.
 - **✅ FULL DESIGN DONE (2026-07-24):** a 7-agent map→synthesize→adversarial-critique pass produced a turnkey, source-verified build plan — **`docs/plans/feefree-delivery-money-model-plan.md`**. Critique verdict GO-WITH-FIXES; the three blockers it found (don't zero drivers' historical tips; idempotent partial-refund tip reversal; verify no prior USD settlement rows) are already folded into the plan. It caught a real bug: delivery must bill in **CAD** (the restaurant's currency), not the platform's USD default.

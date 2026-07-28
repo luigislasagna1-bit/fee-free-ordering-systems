@@ -81,7 +81,13 @@ export async function POST(req: Request) {
   }
 
   const rewardLabel = r.rewardLabelPlural?.trim() || r.rewardLabelSingular?.trim() || "Reward Dollars";
+  // Storefront root — the instant-path "Order now" CTA (existing RewardGift email).
   const orderUrl = restaurantOrderUrl(r as any, "");
+  // The INVITE's CTA must land on the SIGN-UP FORM itself, not the storefront
+  // root: on a branded host with the hosted-site add-on the root serves the
+  // MARKETING page (proxy design), which stranded Luigi's first test recipient.
+  // /account/signup is the dedicated signup page in the order tree.
+  const signupUrl = restaurantOrderUrl(r as any, "/account/signup");
   const locale = r.defaultLanguage || "en";
   const amountLabel = formatCurrency(amount, r.currency);
 
@@ -144,7 +150,7 @@ export async function POST(req: Request) {
     amountLabel,
     rewardLabel,
     note,
-    orderUrl,
+    orderUrl: signupUrl,
     locale,
   })
     .then((res2) => prisma.pendingRewardGrant.update({ where: { id: gift.id }, data: { emailSentAt: res2.success ? new Date() : null } }).catch(() => {}))
