@@ -17,6 +17,8 @@
     "discounts": "Giảm giá"
   },
   "common": {
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu",
     "save": "Lưu",
     "saveChanges": "Lưu thay đổi",
     "cancel": "Hủy",
@@ -621,6 +623,7 @@
     "emailRequired": "Email là bắt buộc"
   },
   "kitchen": {
+    "opensIn": "Mở cửa sau {time}",
     "cancelledByCustomer": "Khách hàng tự hủy",
     "title": "Kitchen Order App",
     "newOrders": "Đơn mới",
@@ -5165,6 +5168,7 @@
       "take_out": "MANG VỀ"
     },
     "orderTypesLower": {
+      "take_out": "mang đi",
       "pickup": "lấy hàng",
       "delivery": "giao hàng",
       "dine_in": "ăn tại quán",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Trân trọng,",
+      "poweredBy": "Được cung cấp bởi"
+    },
     "common": {
       "viewInAdmin": "Mở trong quản trị",
       "trackOrder": "Theo dõi đơn hàng",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Nếu bạn không yêu cầu điều này, bạn có thể bỏ qua email này."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Nhà hàng hiện đang đóng cửa — đơn của bạn đã vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa. Hãy kiểm tra email của bạn vào {openingTime}.",
       "closedNote": "Nhà hàng hiện đang đóng cửa — đơn hàng của bạn đã được xếp vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa.",
       "cancelNote": "Nếu có việc đột xuất, bạn vẫn có thể hủy đơn hàng tại đây.",
       "subject": "Đơn #{orderNumber} đã nhận — đang chờ xác nhận",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Đã đặt bàn cho {n} người — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Đơn hàng #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Đơn hàng #{orderNumber}",
+      "badgeNew": "Đơn hàng mới",
+      "minShort": "phút",
+      "badgePaidOnline": "Đã thanh toán online",
+      "badgeCollectCard": "Cần thu — thẻ",
+      "badgeCollectCash": "Cần thu — tiền mặt",
+      "badgePayAtStore": "Thanh toán tại quán",
+      "tablePreorder": "Đặt bàn + đặt món trước — {partySize} khách, {time}",
+      "tablePreorderOne": "Đặt bàn + đặt món trước — 1 khách, {time}",
+      "labelDeliveryAddress": "Địa chỉ giao hàng",
+      "labelCustomerNotes": "Ghi chú của khách",
+      "labelOrderDetails": "Chi tiết đơn hàng",
+      "labelOrderTotal": "Tổng đơn hàng",
+      "collected": "Đã thu",
+      "toCollect": "Cần thu",
+      "creditFallback": "số dư",
+      "paidWith": "Đã thanh toán bằng {label}",
+      "totalMinusCredit": "Tổng đơn {total} − {credit} đã thanh toán bằng {label}",
+      "seeBreakdown": "Xem chi tiết từng mục trong trang quản trị.",
+      "openKitchenApp": "Mở Kitchen Order App",
+      "acceptHint": "Hãy nhận đơn này từ Kitchen Order App hoặc trang quản trị. Đơn sẽ tự động bị từ chối nếu không có thao tác nào trong thời gian chờ bạn đã cài đặt.",
       "subject": "Đơn mới #{orderNumber} — {restaurant}",
       "title": "Đã nhận đơn mới",
       "body": "{customer} vừa đặt đơn #{orderNumber} với tổng {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Gửi hằng tháng"
     },
     "reservationConfirmed": {
+      "previewRequested": "Đã nhận yêu cầu đặt bàn — {dateTime} cho {partySize} khách",
+      "previewDeclined": "Cập nhật đặt bàn — {dateTime} cho {partySize} khách",
+      "previewCancelled": "Đặt bàn đã hủy — {dateTime} cho {partySize} khách",
       "subjectCancelled": "Đặt bàn của bạn đã được hủy",
       "headerTitleCancelled": "Đã hủy đặt bàn",
       "introCancelled": "Bạn đã hủy đặt bàn tại {restaurantName} — nhà hàng đã được thông báo và bàn của bạn đã được trả lại.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Bị bỏ lỡ"
     },
     "newReservation": {
+      "preview": "Đặt bàn mới — {dateTime} · {partySize} khách",
+      "previewCancelled": "Đặt bàn đã hủy — {dateTime} · {partySize} khách",
+      "headerTitle": "{restaurant} — Đặt bàn #{reservationNumber}",
+      "subtitleNew": "Yêu cầu đặt bàn mới",
+      "subtitleCancelled": "Khách đã hủy đặt bàn",
+      "badgeNew": "Mới",
+      "badgeCancelled": "Khách đã hủy",
+      "badgeParty": "{partySize} khách",
+      "labelTime": "Thời gian đặt bàn",
+      "cancelledNote": "Khách đã hủy lượt đặt bàn này từ email xác nhận — có thể giải phóng bàn. Không cần thao tác gì thêm.",
+      "labelSpecialRequests": "Yêu cầu đặc biệt",
+      "manageButton": "Quản lý đặt bàn",
       "subjectCancelled": "Khách hàng đã hủy đặt bàn — {restaurant}",
       "subject": "Đặt bàn mới — {restaurant}",
       "title": "Đặt bàn mới {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Mã xác nhận"
     },
     "passwordReset": {
+      "preview": "Đặt lại mật khẩu {brand} của bạn",
+      "subtitle": "Hãy dùng nút bên dưới để tạo mật khẩu mới",
+      "greeting": "Xin chào {name},",
+      "greetingNoName": "Xin chào,",
+      "expiryOneHour": "1 giờ",
+      "linkFallback": "Nếu nút không hoạt động, hãy sao chép và dán URL này vào trình duyệt của bạn:",
+      "ignoreHeading": "Không phải bạn yêu cầu?",
+      "ignoreBody": "Bạn có thể yên tâm bỏ qua email này — mật khẩu của bạn sẽ không thay đổi trừ khi bạn nhấp vào liên kết ở trên. Nếu bạn lo có ai đó đang cố truy cập tài khoản của mình, hãy trả lời email này và chúng tôi sẽ kiểm tra.",
       "subject": "Đặt lại mật khẩu",
       "title": "Đặt lại mật khẩu",
-      "body": "Nhấn vào nút bên dưới để đặt mật khẩu mới. Link hết hạn sau 1 giờ.",
+      "body": "Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu cho tài khoản {account} của bạn. Nhấp vào nút bên dưới để chọn mật khẩu mới — liên kết có hiệu lực trong {expiresIn}.",
       "button": "Đặt lại mật khẩu"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "Thành viên VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — tài khoản khách hàng mới: {customer}",
+      "headerTitle": "{restaurant} — tài khoản khách hàng mới",
+      "badge": "Đăng ký mới",
+      "body": "Một khách hàng vừa tạo tài khoản tại nhà hàng của bạn.",
+      "labelCustomer": "Khách hàng",
+      "viewCustomersButton": "Xem khách hàng trong trang quản trị",
       "subject": "{restaurant}: tài khoản khách hàng mới — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Đã có lỗi xảy ra. Vui lòng thử lại."
     },
     "accountPage": {
+      "status": {
+        "pending": "Chờ xử lý",
+        "accepted": "Đã nhận",
+        "preparing": "Đang chuẩn bị",
+        "ready": "Sẵn sàng",
+        "completed": "Hoàn tất",
+        "cancelled": "Đã hủy",
+        "rejected": "Bị từ chối"
+      },
       "backTo": "Quay lại {name}",
       "greeting": "Xin chào, {name}",
       "noEmailOnFile": "Chưa có email",

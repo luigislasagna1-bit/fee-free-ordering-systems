@@ -265,7 +265,10 @@ export type StaffEventPayload =
   | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
-  | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending" | "cancelled"; dashboardUrl: string }
+  | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending" | "cancelled"; dashboardUrl: string;
+      // Guest contact + special requests — GloriaFood parity (cms0gyexp #1):
+      // the template renders tel:/mailto: links + an amber requests card.
+      customerPhone?: string | null; customerEmail?: string | null; notes?: string | null }
   | { event: "endOfDayReport" | "endOfMonthReport"; reportHtml: string; subject: string };
 
 /**
@@ -451,6 +454,11 @@ async function dispatchStaffEvent(
         confirmationCode: payload.confirmationCode,
         status: payload.status,
         dashboardUrl: payload.dashboardUrl,
+        // Guest contacts + special requests (cms0gyexp #1 — GloriaFood parity)
+        customerPhone: payload.customerPhone,
+        customerEmail: payload.customerEmail,
+        specialRequests: payload.notes,
+        hoursFormat,
         locale,
       });
       return;
@@ -517,7 +525,12 @@ export type CustomerEventPayload =
       cancelUrl?: string;
       /** Order landed while the restaurant was CLOSED — the email adds the
        *  GloriaFood-parity "you'll get an update as soon as they open" note. */
-      placedWhileClosed?: boolean }
+      placedWhileClosed?: boolean;
+      /** The deferred kitchen-alert instant (Order.alertAt) = the restaurant's
+       *  next opening. When set with placedWhileClosed, the closed note names
+       *  the concrete time — "Check your email on Saturday, 25 Jul, 20:15"
+       *  (GloriaFood parity, Fabrizio cms0gyexp #8). */
+      opensAt?: Date | string | null }
   | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string;
       /** Store credit the reject/cancel path returned to the wallet — caller
        *  gates on rewardsEnabled; the email adds the "returned to your wallet"
@@ -683,6 +696,13 @@ export async function notifyCustomer(args: {
           paidOnline: payload.paidOnline,
           cancelUrl: payload.cancelUrl,
           placedWhileClosed: payload.placedWhileClosed,
+          opensAt: payload.opensAt ?? null,
+          // Restaurant contacts for the footer (cms0gyexp #4) — the receipt
+          // email promised "details below" but never passed them; this also
+          // revives the Reply-To → restaurant routing in the sender.
+          restaurantUrl: restaurantOrderUrl(restaurant as any, ""),
+          restaurantEmail: (restaurant as any).email ?? undefined,
+          restaurantPhone: (restaurant as any).phone ?? undefined,
         });
       });
       await fireSms();
@@ -803,6 +823,12 @@ export async function notifyCustomer(args: {
           preOrderTotal: payload.preOrderTotal,
           cancelUrl,
           hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
+          // Restaurant contacts (cms0gyexp #4): the closing line says "contact
+          // us using the details below" — these make the footer actually
+          // carry them (clickable tel:/mailto:), plus Reply-To routing.
+          restaurantUrl: restaurantOrderUrl(restaurant as any, ""),
+          restaurantEmail: (restaurant as any).email ?? undefined,
+          restaurantPhone: (restaurant as any).phone ?? undefined,
           locale,
         });
       });

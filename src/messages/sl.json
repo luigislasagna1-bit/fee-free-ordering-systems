@@ -17,6 +17,8 @@
     "discounts": "Popusti"
   },
   "common": {
+    "showPassword": "Pokaži geslo",
+    "hidePassword": "Skrij geslo",
     "save": "Shrani",
     "saveChanges": "Shrani spremembe",
     "cancel": "Prekliči",
@@ -621,6 +623,7 @@
     "emailRequired": "E-pošta je obvezna"
   },
   "kitchen": {
+    "opensIn": "Odpre čez {time}",
     "cancelledByCustomer": "Preklicala stranka",
     "title": "Kitchen Order App",
     "newOrders": "Nova naročila",
@@ -5165,6 +5168,7 @@
       "take_out": "ZA S SEBOJ"
     },
     "orderTypesLower": {
+      "take_out": "za s seboj",
       "pickup": "prevzem",
       "delivery": "dostava",
       "dine_in": "v restavraciji",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Lep pozdrav,",
+      "poweredBy": "Omogoča"
+    },
     "common": {
       "viewInAdmin": "Odpri v adminu",
       "trackOrder": "Sledite svojemu naročilu",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Če tega niste zahtevali, lahko to e-pošto varno prezrete."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restavracija je trenutno zaprta — vaše naročilo čaka v vrsti in obvestilo prejmete takoj, ko odprejo. Preverite e-pošto ob {openingTime}.",
       "closedNote": "Restavracija je trenutno zaprta — tvoje naročilo čaka v vrsti in obvestilo prejmeš takoj, ko odprejo.",
       "cancelNote": "Če se zgodi kaj nepričakovanega, lahko naročilo še vedno prekličeš tukaj.",
       "subject": "Naročilo #{orderNumber} prejeto — čaka na potrditev",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Miza rezervirana za {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Naročilo #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Naročilo #{orderNumber}",
+      "badgeNew": "Novo naročilo",
+      "minShort": "min",
+      "badgePaidOnline": "Plačano prek spleta",
+      "badgeCollectCard": "Za plačilo — kartica",
+      "badgeCollectCash": "Za plačilo — gotovina",
+      "badgePayAtStore": "Plačilo v restavraciji",
+      "tablePreorder": "Rezervacija mize + prednaročilo — število gostov: {partySize}, {time}",
+      "tablePreorderOne": "Rezervacija mize + prednaročilo — 1 gost, {time}",
+      "labelDeliveryAddress": "Naslov za dostavo",
+      "labelCustomerNotes": "Opombe stranke",
+      "labelOrderDetails": "Podrobnosti naročila",
+      "labelOrderTotal": "Skupni znesek naročila",
+      "collected": "Plačano",
+      "toCollect": "Za plačilo",
+      "creditFallback": "dobroimetje",
+      "paidWith": "Plačano: {label}",
+      "totalMinusCredit": "Skupni znesek naročila {total} − {credit} plačano ({label})",
+      "seeBreakdown": "Podrobno razčlenitev si oglejte v skrbniški nadzorni plošči.",
+      "openKitchenApp": "Odpri Kitchen Order App",
+      "acceptHint": "To naročilo sprejmite v aplikaciji Kitchen Order App ali v skrbniški nadzorni plošči. Če v nastavljenem roku ne ukrepate, se naročilo samodejno zavrne.",
       "subject": "Novo naročilo #{orderNumber} — {restaurant}",
       "title": "Novo naročilo prejeto",
       "body": "{customer} je pravkar oddal naročilo #{orderNumber} za {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Pošlje se mesečno"
     },
     "reservationConfirmed": {
+      "previewRequested": "Zahteva za rezervacijo prejeta — {dateTime} za {partySize}",
+      "previewDeclined": "Posodobitev rezervacije — {dateTime} za {partySize}",
+      "previewCancelled": "Rezervacija preklicana — {dateTime} za {partySize}",
       "subjectCancelled": "Tvoja rezervacija je preklicana",
       "headerTitleCancelled": "Rezervacija preklicana",
       "introCancelled": "Tvoja rezervacija v restavraciji {restaurantName} je preklicana — restavracija je obveščena in miza je spet na voljo.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Zamujeno"
     },
     "newReservation": {
+      "preview": "Nova rezervacija — {dateTime} · število gostov: {partySize}",
+      "previewCancelled": "Rezervacija preklicana — {dateTime} · število gostov: {partySize}",
+      "headerTitle": "{restaurant} — Rezervacija #{reservationNumber}",
+      "subtitleNew": "Nova zahteva za rezervacijo",
+      "subtitleCancelled": "Gost je preklical rezervacijo",
+      "badgeNew": "Nova",
+      "badgeCancelled": "Preklical gost",
+      "badgeParty": "Število gostov: {partySize}",
+      "labelTime": "Čas rezervacije",
+      "cancelledNote": "Gost je to rezervacijo preklical prek potrditvenega e-poštnega sporočila — mizo lahko sprostite. Ukrepanje ni potrebno.",
+      "labelSpecialRequests": "Posebne želje",
+      "manageButton": "Upravljanje rezervacije",
       "subjectCancelled": "Gost je preklical rezervacijo — {restaurant}",
       "subject": "Nova rezervacija — {restaurant}",
       "title": "Nova rezervacija {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Koda potrditve"
     },
     "passwordReset": {
+      "preview": "Ponastavite geslo za {brand}",
+      "subtitle": "Z gumbom spodaj nastavite novo",
+      "greeting": "Pozdravljeni, {name},",
+      "greetingNoName": "Pozdravljeni,",
+      "expiryOneHour": "1 ura",
+      "linkFallback": "Če gumb ne deluje, kopirajte in prilepite ta URL v svoj brskalnik:",
+      "ignoreHeading": "Niste zahtevali tega?",
+      "ignoreBody": "To e-poštno sporočilo lahko mirno prezrete — vaše geslo se ne bo spremenilo, razen če kliknete zgornjo povezavo. Če vas skrbi, da nekdo drug poskuša dostopati do vašega računa, odgovorite na to sporočilo in bomo preverili.",
       "subject": "Ponastavite geslo",
       "title": "Ponastavite geslo",
-      "body": "Kliknite spodnji gumb za nastavitev novega gesla. Ta povezava poteče v 1 uri.",
+      "body": "Prejeli smo zahtevo za ponastavitev gesla za vaš račun {account}. Kliknite spodnji gumb in izberite novo geslo — veljavnost povezave: {expiresIn}.",
       "button": "Ponastavi geslo"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP član"
     },
     "customerSignup": {
+      "preview": "{restaurant} — nov račun stranke: {customer}",
+      "headerTitle": "{restaurant} — nov račun stranke",
+      "badge": "Nova registracija",
+      "body": "Nova stranka je pravkar ustvarila račun v vaši restavraciji.",
+      "labelCustomer": "Stranka",
+      "viewCustomersButton": "Prikaži stranke v skrbniškem vmesniku",
       "subject": "{restaurant}: nov račun stranke — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Nekaj je šlo narobe. Poskusi znova."
     },
     "accountPage": {
+      "status": {
+        "pending": "Na čakanju",
+        "accepted": "Sprejeto",
+        "preparing": "V pripravi",
+        "ready": "Pripravljeno",
+        "completed": "Zaključeno",
+        "cancelled": "Preklicano",
+        "rejected": "Zavrnjeno"
+      },
       "backTo": "Nazaj na {name}",
       "greeting": "Zdravo, {name}",
       "noEmailOnFile": "E-poštni naslov ni shranjen",

@@ -17,6 +17,8 @@
     "discounts": "İndirimler"
   },
   "common": {
+    "showPassword": "Şifreyi göster",
+    "hidePassword": "Şifreyi gizle",
     "save": "Kaydet",
     "saveChanges": "Değişiklikleri Kaydet",
     "cancel": "İptal",
@@ -621,6 +623,7 @@
     "emailRequired": "E-posta zorunludur"
   },
   "kitchen": {
+    "opensIn": "{time} sonra açılır",
     "cancelledByCustomer": "Müşteri iptal etti",
     "title": "Kitchen Order App",
     "newOrders": "Yeni Siparişler",
@@ -5165,6 +5168,7 @@
       "take_out": "PAKET"
     },
     "orderTypesLower": {
+      "take_out": "paket",
       "pickup": "gel al",
       "delivery": "teslimat",
       "dine_in": "yerinde ye",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Saygılarımızla,",
+      "poweredBy": "Altyapı:"
+    },
     "common": {
       "viewInAdmin": "Yönetici panelinde aç",
       "trackOrder": "Siparişini takip et",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Bunu siz istemediyseniz bu e-postayı güvenle görmezden gelebilirsiniz."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restoran şu anda kapalı — siparişiniz sıraya alındı ve restoran açılır açılmaz size güncelleme göndereceğiz. {openingTime} itibarıyla e-postanızı kontrol edin.",
       "closedNote": "Restoran şu anda kapalı — siparişin sırada, restoran açılır açılmaz sana haber vereceğiz.",
       "cancelNote": "Beklenmedik bir şey olursa siparişini buradan iptal edebilirsin.",
       "subject": "#{orderNumber} numaralı sipariş alındı — onay bekleniyor",
@@ -5274,6 +5283,28 @@
       "tableReservation": "{n} kişilik masa ayrıldı — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Sipariş No. {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Sipariş No. {orderNumber}",
+      "badgeNew": "Yeni sipariş",
+      "minShort": "dk",
+      "badgePaidOnline": "Online ödendi",
+      "badgeCollectCard": "Tahsil edilecek — kart",
+      "badgeCollectCash": "Tahsil edilecek — nakit",
+      "badgePayAtStore": "Restoranda ödeme",
+      "tablePreorder": "Masa rezervasyonu + ön sipariş — {partySize} kişi, {time}",
+      "tablePreorderOne": "Masa rezervasyonu + ön sipariş — 1 kişi, {time}",
+      "labelDeliveryAddress": "Teslimat adresi",
+      "labelCustomerNotes": "Müşteri notları",
+      "labelOrderDetails": "Sipariş detayları",
+      "labelOrderTotal": "Sipariş toplamı",
+      "collected": "Tahsil edildi",
+      "toCollect": "Tahsil edilecek",
+      "creditFallback": "kredi",
+      "paidWith": "{label} ile ödendi",
+      "totalMinusCredit": "Sipariş toplamı {total} − {credit} {label} ile ödendi",
+      "seeBreakdown": "Ayrıntılı dökümü yönetici panelinde görebilirsiniz.",
+      "openKitchenApp": "Kitchen Order App uygulamasını aç",
+      "acceptHint": "Bu siparişi Kitchen Order App uygulamasından veya yönetici panelinden kabul edin. Belirlediğiniz süre içinde işlem yapılmazsa sipariş otomatik olarak reddedilir.",
       "subject": "Yeni #{orderNumber} numaralı sipariş — {restaurant}",
       "title": "Yeni sipariş alındı",
       "body": "{customer} az önce {total} tutarında #{orderNumber} numaralı siparişi verdi.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Aylık gönderilir"
     },
     "reservationConfirmed": {
+      "previewRequested": "Rezervasyon talebi alındı — {dateTime}, {partySize} kişi",
+      "previewDeclined": "Rezervasyon güncellemesi — {dateTime}, {partySize} kişi",
+      "previewCancelled": "Rezervasyon iptal edildi — {dateTime}, {partySize} kişi",
       "subjectCancelled": "Rezervasyonun iptal edildi",
       "headerTitleCancelled": "Rezervasyon iptal edildi",
       "introCancelled": "{restaurantName} restoranındaki rezervasyonunu iptal ettin — restorana bildirildi ve masan serbest bırakıldı.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Kaçırıldı"
     },
     "newReservation": {
+      "preview": "Yeni rezervasyon — {dateTime} · {partySize} kişi",
+      "previewCancelled": "Rezervasyon iptal edildi — {dateTime} · {partySize} kişi",
+      "headerTitle": "{restaurant} — Rezervasyon No. {reservationNumber}",
+      "subtitleNew": "Yeni rezervasyon talebi",
+      "subtitleCancelled": "Rezervasyon müşteri tarafından iptal edildi",
+      "badgeNew": "Yeni",
+      "badgeCancelled": "Müşteri iptal etti",
+      "badgeParty": "{partySize} kişi",
+      "labelTime": "Rezervasyon saati",
+      "cancelledNote": "Müşteri bu rezervasyonu onay e-postasından iptal etti — masa serbest bırakılabilir. Herhangi bir işlem yapmanız gerekmiyor.",
+      "labelSpecialRequests": "Özel istekler",
+      "manageButton": "Rezervasyonu yönet",
       "subjectCancelled": "Rezervasyon müşteri tarafından iptal edildi — {restaurant}",
       "subject": "Yeni rezervasyon — {restaurant}",
       "title": "Yeni rezervasyon {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Onay kodu"
     },
     "passwordReset": {
+      "preview": "{brand} şifrenizi sıfırlayın",
+      "subtitle": "Yeni bir şifre belirlemek için aşağıdaki düğmeyi kullanın",
+      "greeting": "Merhaba {name},",
+      "greetingNoName": "Merhaba,",
+      "expiryOneHour": "1 saat",
+      "linkFallback": "Düğme çalışmıyorsa bu URL'yi kopyalayıp tarayıcınıza yapıştırın:",
+      "ignoreHeading": "Bu isteği siz yapmadınız mı?",
+      "ignoreBody": "Bu e-postayı güvenle yok sayabilirsiniz — yukarıdaki bağlantıya tıklamadığınız sürece şifreniz değişmez. Başka birinin hesabınıza erişmeye çalıştığından endişeleniyorsanız bu e-postayı yanıtlayın, konuyu inceleyelim.",
       "subject": "Şifrenizi sıfırlayın",
       "title": "Şifrenizi Sıfırlayın",
-      "body": "Yeni bir şifre belirlemek için aşağıdaki düğmeye tıklayın. Bu bağlantı 1 saat içinde sona erer.",
+      "body": "{account} hesabınızın şifresini sıfırlama talebi aldık. Yeni bir şifre seçmek için aşağıdaki düğmeye tıklayın — bağlantı {expiresIn} boyunca geçerlidir.",
       "button": "Şifreyi sıfırla"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP üye"
     },
     "customerSignup": {
+      "preview": "{restaurant} — yeni müşteri hesabı: {customer}",
+      "headerTitle": "{restaurant} — yeni müşteri hesabı",
+      "badge": "Yeni kayıt",
+      "body": "Restoranınızda az önce yeni bir müşteri hesap oluşturdu.",
+      "labelCustomer": "Müşteri",
+      "viewCustomersButton": "Müşterileri yönetici panelinde görüntüle",
       "subject": "{restaurant}: yeni müşteri hesabı — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Bir şeyler ters gitti. Lütfen tekrar dene."
     },
     "accountPage": {
+      "status": {
+        "pending": "Beklemede",
+        "accepted": "Kabul edildi",
+        "preparing": "Hazırlanıyor",
+        "ready": "Hazır",
+        "completed": "Tamamlandı",
+        "cancelled": "İptal edildi",
+        "rejected": "Reddedildi"
+      },
       "backTo": "{name} sayfasına geri dön",
       "greeting": "Merhaba, {name}",
       "noEmailOnFile": "Kayıtlı e-posta yok",

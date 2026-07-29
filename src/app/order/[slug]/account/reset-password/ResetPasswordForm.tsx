@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, CheckCircle2, Lock } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { PasswordInput } from "@/components/PasswordInput";
 
 /**
  * New-password form. Submits to
@@ -74,17 +75,17 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
           {t("newPasswordLabel")} <span className="text-red-500">*</span>
         </span>
-        <div className="mt-1 relative">
-          <Lock className="w-4 h-4 absolute left-3 top-3.5 text-gray-400" />
-          <input
-            type="password"
+        <div className="mt-1">
+          {/* Shared eye-toggle input incl. the Lock icon (cms0gyexp #6). */}
+          <PasswordInput
+            withLockIcon
             required
             autoFocus
             minLength={8}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t("newPasswordPlaceholder")}
-            className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
+            className="w-full py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </div>
       </label>
@@ -93,16 +94,15 @@ export function ResetPasswordForm({ slug, token }: { slug: string; token: string
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
           {t("confirmPasswordLabel")} <span className="text-red-500">*</span>
         </span>
-        <div className="mt-1 relative">
-          <Lock className="w-4 h-4 absolute left-3 top-3.5 text-gray-400" />
-          <input
-            type="password"
+        <div className="mt-1">
+          <PasswordInput
+            withLockIcon
             required
             minLength={8}
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
             placeholder={t("confirmPasswordPlaceholder")}
-            className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
+            className="w-full py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </div>
       </label>

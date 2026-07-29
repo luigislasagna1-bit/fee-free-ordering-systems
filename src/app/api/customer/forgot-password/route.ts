@@ -18,6 +18,7 @@ import crypto from "crypto";
 import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendPasswordResetEmail } from "@/lib/email";
+import { resolveCustomerLocale } from "@/lib/i18n-server";
 
 export async function POST(req: NextRequest) {
   const ip = getClientIp(req);
@@ -64,6 +65,9 @@ export async function POST(req: NextRequest) {
       to: account.email,
       name: account.name,
       resetUrl,
+      // Marketplace account → PLATFORM branding, but the body still follows
+      // the language the visitor was browsing in (cookie → en). cms0gyexp #5.
+      locale: await resolveCustomerLocale(null),
     });
 
     return NextResponse.json({ ok: true });

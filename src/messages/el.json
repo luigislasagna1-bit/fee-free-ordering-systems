@@ -17,6 +17,8 @@
     "discounts": "Εκπτώσεις"
   },
   "common": {
+    "showPassword": "Εμφάνιση κωδικού πρόσβασης",
+    "hidePassword": "Απόκρυψη κωδικού πρόσβασης",
     "save": "Αποθήκευση",
     "saveChanges": "Αποθήκευση αλλαγών",
     "cancel": "Άκυρο",
@@ -621,6 +623,7 @@
     "emailRequired": "Η διεύθυνση email είναι υποχρεωτική"
   },
   "kitchen": {
+    "opensIn": "Ανοίγει σε {time}",
     "cancelledByCustomer": "Ακυρώθηκε από τον πελάτη",
     "title": "Kitchen Order App",
     "newOrders": "Νέες παραγγελίες",
@@ -5165,6 +5168,7 @@
       "take_out": "TAKE AWAY"
     },
     "orderTypesLower": {
+      "take_out": "πακέτο",
       "pickup": "παραλαβή",
       "delivery": "παράδοση",
       "dine_in": "φαγητό εντός",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Με εκτίμηση,",
+      "poweredBy": "Με την υποστήριξη του"
+    },
     "common": {
       "viewInAdmin": "Άνοιγμα στη διαχείριση",
       "trackOrder": "Παρακολουθήστε την παραγγελία σας",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Εάν δεν ζητήσατε αυτό, μπορείτε να αγνοήσετε αυτό το email."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Το εστιατόριο είναι αυτήν τη στιγμή κλειστό — η παραγγελία σας έχει μπει σε αναμονή και θα λάβετε ενημέρωση μόλις ανοίξει. Ελέγξτε το email σας στις {openingTime}.",
       "closedNote": "Το εστιατόριο είναι αυτή τη στιγμή κλειστό — η παραγγελία σου έχει μπει στη σειρά και θα λάβεις ενημέρωση μόλις ανοίξει.",
       "cancelNote": "Αν προκύψει κάτι απρόοπτο, μπορείς ακόμα να ακυρώσεις την παραγγελία σου εδώ.",
       "subject": "Παραγγελία #{orderNumber} ελήφθη — αναμονή επιβεβαίωσης",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Κρατημένο τραπέζι για {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Παραγγελία #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Παραγγελία #{orderNumber}",
+      "badgeNew": "Νέα παραγγελία",
+      "minShort": "λεπ.",
+      "badgePaidOnline": "Πληρώθηκε online",
+      "badgeCollectCard": "Προς είσπραξη — κάρτα",
+      "badgeCollectCash": "Προς είσπραξη — μετρητά",
+      "badgePayAtStore": "Πληρωμή στο κατάστημα",
+      "tablePreorder": "Κράτηση τραπεζιού + προπαραγγελία — {partySize} άτομα, {time}",
+      "tablePreorderOne": "Κράτηση τραπεζιού + προπαραγγελία — 1 άτομο, {time}",
+      "labelDeliveryAddress": "Διεύθυνση παράδοσης",
+      "labelCustomerNotes": "Σημειώσεις πελάτη",
+      "labelOrderDetails": "Στοιχεία παραγγελίας",
+      "labelOrderTotal": "Σύνολο παραγγελίας",
+      "collected": "Εισπράχθηκε",
+      "toCollect": "Προς είσπραξη",
+      "creditFallback": "πίστωση",
+      "paidWith": "Πληρώθηκε με {label}",
+      "totalMinusCredit": "Σύνολο παραγγελίας {total} − {credit} πληρώθηκε με {label}",
+      "seeBreakdown": "Δείτε την αναλυτική κατάσταση στον πίνακα διαχείρισης.",
+      "openKitchenApp": "Άνοιγμα του Kitchen Order App",
+      "acceptHint": "Αποδεχθείτε αυτήν την παραγγελία από το Kitchen Order App ή τον πίνακα διαχείρισης. Αν δεν γίνει καμία ενέργεια εντός του χρονικού ορίου που έχετε ορίσει, η παραγγελία απορρίπτεται αυτόματα.",
       "subject": "Νέα παραγγελία #{orderNumber} — {restaurant}",
       "title": "Νέα παραγγελία ελήφθη",
       "body": "Ο/Η {customer} μόλις έκανε παραγγελία #{orderNumber} για {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Αποστέλλεται μηνιαία"
     },
     "reservationConfirmed": {
+      "previewRequested": "Λάβαμε το αίτημα κράτησης — {dateTime} για {partySize}",
+      "previewDeclined": "Ενημέρωση κράτησης — {dateTime} για {partySize}",
+      "previewCancelled": "Η κράτηση ακυρώθηκε — {dateTime} για {partySize}",
       "subjectCancelled": "Η κράτησή σου ακυρώθηκε",
       "headerTitleCancelled": "Η κράτηση ακυρώθηκε",
       "introCancelled": "Ακύρωσες την κράτησή σου στο {restaurantName} — το εστιατόριο ενημερώθηκε και το τραπέζι σου αποδεσμεύτηκε.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Χαμένη"
     },
     "newReservation": {
+      "preview": "Νέα κράτηση — {dateTime} · άτομα: {partySize}",
+      "previewCancelled": "Η κράτηση ακυρώθηκε — {dateTime} · άτομα: {partySize}",
+      "headerTitle": "{restaurant} — Κράτηση #{reservationNumber}",
+      "subtitleNew": "Νέο αίτημα κράτησης",
+      "subtitleCancelled": "Η κράτηση ακυρώθηκε από τον πελάτη",
+      "badgeNew": "Νέα",
+      "badgeCancelled": "Ακυρώθηκε από τον πελάτη",
+      "badgeParty": "Άτομα: {partySize}",
+      "labelTime": "Ώρα κράτησης",
+      "cancelledNote": "Ο πελάτης ακύρωσε αυτήν την κράτηση μέσω του email επιβεβαίωσης — το τραπέζι μπορεί να ελευθερωθεί. Δεν απαιτείται καμία ενέργεια.",
+      "labelSpecialRequests": "Ειδικά αιτήματα",
+      "manageButton": "Διαχείριση κράτησης",
       "subjectCancelled": "Ακύρωση κράτησης από τον πελάτη — {restaurant}",
       "subject": "Νέα κράτηση — {restaurant}",
       "title": "Νέα κράτηση {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Κωδικός επιβεβαίωσης"
     },
     "passwordReset": {
+      "preview": "Επαναφορά κωδικού πρόσβασης για το {brand}",
+      "subtitle": "Χρησιμοποιήστε το παρακάτω κουμπί για να ορίσετε νέο κωδικό",
+      "greeting": "Γεια σας {name},",
+      "greetingNoName": "Γεια σας,",
+      "expiryOneHour": "1 ώρα",
+      "linkFallback": "Αν το κουμπί δεν λειτουργεί, αντιγράψτε και επικολλήστε αυτό το URL στο πρόγραμμα περιήγησής σας:",
+      "ignoreHeading": "Δεν το ζητήσατε εσείς;",
+      "ignoreBody": "Μπορείτε να αγνοήσετε με ασφάλεια αυτό το email — ο κωδικός πρόσβασής σας δεν θα αλλάξει αν δεν πατήσετε τον παραπάνω σύνδεσμο. Αν ανησυχείτε ότι κάποιος άλλος προσπαθεί να αποκτήσει πρόσβαση στον λογαριασμό σας, απαντήστε σε αυτό το email και θα το εξετάσουμε.",
       "subject": "Επαναφορά κωδικού πρόσβασης",
       "title": "Επαναφορά κωδικού πρόσβασης",
-      "body": "Κάντε κλικ στο κουμπί παρακάτω για να ορίσετε νέο κωδικό. Ο σύνδεσμος λήγει σε 1 ώρα.",
+      "body": "Λάβαμε αίτημα επαναφοράς του κωδικού πρόσβασης για τον λογαριασμό σας στο {account}. Πατήστε το παρακάτω κουμπί για να επιλέξετε νέο κωδικό — ο σύνδεσμος ισχύει για {expiresIn}.",
       "button": "Επαναφορά κωδικού"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "μέλος VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — νέος λογαριασμός πελάτη: {customer}",
+      "headerTitle": "{restaurant} — νέος λογαριασμός πελάτη",
+      "badge": "Νέα εγγραφή",
+      "body": "Ένας νέος πελάτης μόλις δημιούργησε λογαριασμό στο εστιατόριό σας.",
+      "labelCustomer": "Πελάτης",
+      "viewCustomersButton": "Προβολή πελατών στη διαχείριση",
       "subject": "{restaurant}: νέος λογαριασμός πελάτη — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Κάτι πήγε στραβά. Προσπάθησε ξανά."
     },
     "accountPage": {
+      "status": {
+        "pending": "Σε εκκρεμότητα",
+        "accepted": "Αποδεκτή",
+        "preparing": "Ετοιμάζεται",
+        "ready": "Έτοιμη",
+        "completed": "Ολοκληρώθηκε",
+        "cancelled": "Ακυρώθηκε",
+        "rejected": "Απορρίφθηκε"
+      },
       "backTo": "Επιστροφή στο {name}",
       "greeting": "Γεια, {name}",
       "noEmailOnFile": "Δεν υπάρχει email καταχωρημένο",

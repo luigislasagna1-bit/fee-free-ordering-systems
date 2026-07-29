@@ -17,6 +17,8 @@
     "discounts": "Zľavy"
   },
   "common": {
+    "showPassword": "Zobraziť heslo",
+    "hidePassword": "Skryť heslo",
     "save": "Uložiť",
     "saveChanges": "Uložiť zmeny",
     "cancel": "Zrušiť",
@@ -621,6 +623,7 @@
     "emailRequired": "E-mail je povinný"
   },
   "kitchen": {
+    "opensIn": "Otvára za {time}",
     "cancelledByCustomer": "Zrušené zákazníkom",
     "title": "Kitchen Order App",
     "newOrders": "Nové objednávky",
@@ -5165,6 +5168,7 @@
       "take_out": "SO SEBOU"
     },
     "orderTypesLower": {
+      "take_out": "so sebou",
       "pickup": "vyzdvihnutie",
       "delivery": "doručenie",
       "dine_in": "jedenie na mieste",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "S pozdravom,",
+      "poweredBy": "Zabezpečuje"
+    },
     "common": {
       "viewInAdmin": "Otvoriť v admin paneli",
       "trackOrder": "Sledovať objednávku",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Ak ste túto žiadosť nepodali, môžete tento e-mail bezpečne ignorovať."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Reštaurácia je práve zatvorená — vaša objednávka čaká v poradí a hneď, ako otvoria, pošleme vám aktualizáciu. Pozrite si e-mail: {openingTime}.",
       "closedNote": "Reštaurácia má momentálne zatvorené — vaša objednávka čaká v poradí a hneď, ako reštaurácia otvorí, dáme vám vedieť.",
       "cancelNote": "Ak by sa prihodilo niečo nečakané, objednávku môžete stále zrušiť tu.",
       "subject": "Objednávka č. {orderNumber} prijatá — čaká na potvrdenie",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Stôl rezervovaný pre {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Objednávka č. {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Objednávka č. {orderNumber}",
+      "badgeNew": "Nová objednávka",
+      "minShort": "min",
+      "badgePaidOnline": "Zaplatené online",
+      "badgeCollectCard": "Na úhradu — karta",
+      "badgeCollectCash": "Na úhradu — hotovosť",
+      "badgePayAtStore": "Platba na mieste",
+      "tablePreorder": "Rezervácia stola + predobjednávka — {partySize} os., {time}",
+      "tablePreorderOne": "Rezervácia stola + predobjednávka — 1 hosť, {time}",
+      "labelDeliveryAddress": "Adresa doručenia",
+      "labelCustomerNotes": "Poznámky zákazníka",
+      "labelOrderDetails": "Podrobnosti objednávky",
+      "labelOrderTotal": "Suma objednávky",
+      "collected": "Uhradené",
+      "toCollect": "Na úhradu",
+      "creditFallback": "kredit",
+      "paidWith": "Zaplatené: {label}",
+      "totalMinusCredit": "Suma objednávky {total} − {credit} zaplatené ({label})",
+      "seeBreakdown": "Podrobný rozpis položiek nájdete v administrácii.",
+      "openKitchenApp": "Otvoriť Kitchen Order App",
+      "acceptHint": "Objednávku prijmite v aplikácii Kitchen Order App alebo v administrácii. Ak v nastavenom časovom limite nevykonáte žiadnu akciu, objednávka sa automaticky odmietne.",
       "subject": "Nová objednávka č. {orderNumber} — {restaurant}",
       "title": "Nová objednávka prijatá",
       "body": "{customer} práve zadal objednávku č. {orderNumber} za {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Odosielané mesačne"
     },
     "reservationConfirmed": {
+      "previewRequested": "Žiadosť o rezerváciu prijatá — {dateTime}, {partySize} os.",
+      "previewDeclined": "Aktualizácia rezervácie — {dateTime}, {partySize} os.",
+      "previewCancelled": "Rezervácia zrušená — {dateTime}, {partySize} os.",
       "subjectCancelled": "Vaša rezervácia bola zrušená",
       "headerTitleCancelled": "Rezervácia zrušená",
       "introCancelled": "Zrušili ste svoju rezerváciu v reštaurácii {restaurantName} — reštaurácia bola informovaná a váš stôl je opäť voľný.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Zmeškané"
     },
     "newReservation": {
+      "preview": "Nová rezervácia — {dateTime} · {partySize} os.",
+      "previewCancelled": "Rezervácia zrušená — {dateTime} · {partySize} os.",
+      "headerTitle": "{restaurant} — Rezervácia č. {reservationNumber}",
+      "subtitleNew": "Nová žiadosť o rezerváciu",
+      "subtitleCancelled": "Rezervácia zrušená zákazníkom",
+      "badgeNew": "Nová",
+      "badgeCancelled": "Zrušené zákazníkom",
+      "badgeParty": "{partySize} os.",
+      "labelTime": "Čas rezervácie",
+      "cancelledNote": "Zákazník túto rezerváciu zrušil z potvrdzovacieho e-mailu — stôl je možné uvoľniť. Nie je potrebná žiadna akcia.",
+      "labelSpecialRequests": "Špeciálne požiadavky",
+      "manageButton": "Spravovať rezerváciu",
       "subjectCancelled": "Rezervácia zrušená zákazníkom — {restaurant}",
       "subject": "Nová rezervácia — {restaurant}",
       "title": "Nová rezervácia {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Potvrdzovací kód"
     },
     "passwordReset": {
+      "preview": "Obnovte si heslo k účtu {brand}",
+      "subtitle": "Nové heslo si nastavíte tlačidlom nižšie",
+      "greeting": "Dobrý deň, {name},",
+      "greetingNoName": "Dobrý deň,",
+      "expiryOneHour": "1 hodina",
+      "linkFallback": "Ak tlačidlo nefunguje, skopírujte túto URL adresu do svojho prehliadača:",
+      "ignoreHeading": "Nežiadali ste o to?",
+      "ignoreBody": "Tento e-mail môžete pokojne ignorovať — vaše heslo sa nezmení, kým nekliknete na odkaz vyššie. Ak máte obavy, že sa k vášmu účtu pokúša dostať niekto iný, odpovedzte na tento e-mail a preveríme to.",
       "subject": "Obnovenie hesla",
       "title": "Obnovte svoje heslo",
-      "body": "Kliknite na tlačidlo nižšie pre nastavenie nového hesla. Tento odkaz vyprší za 1 hodinu.",
+      "body": "Dostali sme žiadosť o obnovenie hesla k vášmu účtu {account}. Kliknutím na tlačidlo nižšie si zvoľte nové heslo — platnosť odkazu je {expiresIn}.",
       "button": "Obnoviť heslo"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP člen"
     },
     "customerSignup": {
+      "preview": "{restaurant} — nový zákaznícky účet: {customer}",
+      "headerTitle": "{restaurant} — nový zákaznícky účet",
+      "badge": "Nová registrácia",
+      "body": "Nový zákazník si práve vytvoril účet vo vašej reštaurácii.",
+      "labelCustomer": "Zákazník",
+      "viewCustomersButton": "Zobraziť zákazníkov v administrácii",
       "subject": "{restaurant}: nový zákaznícky účet — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Niečo sa pokazilo. Skúste to, prosím, znova."
     },
     "accountPage": {
+      "status": {
+        "pending": "Čaká",
+        "accepted": "Prijatá",
+        "preparing": "Pripravuje sa",
+        "ready": "Pripravená",
+        "completed": "Dokončená",
+        "cancelled": "Zrušená",
+        "rejected": "Odmietnutá"
+      },
       "backTo": "Späť na {name}",
       "greeting": "Ahoj, {name}",
       "noEmailOnFile": "Žiadny e-mail nie je uložený",

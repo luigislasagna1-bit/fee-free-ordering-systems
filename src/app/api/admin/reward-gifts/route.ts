@@ -60,7 +60,7 @@ export async function POST(req: Request) {
     where: { id: restaurantId },
     select: {
       rewardsEnabled: true,
-      name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true,
+      name: true, email: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true,
       defaultLanguage: true, currency: true, rewardLabelSingular: true, rewardLabelPlural: true,
     },
   });
@@ -128,6 +128,7 @@ export async function POST(req: Request) {
       balanceLabel: formatCurrency(balance, r.currency),
       note,
       orderUrl,
+      restaurantEmail: r.email,
       locale,
     })
       .then((res2) => prisma.pendingRewardGrant.update({ where: { id: gift.id }, data: { emailSentAt: res2.success ? new Date() : null } }).catch(() => {}))
@@ -151,6 +152,7 @@ export async function POST(req: Request) {
     rewardLabel,
     note,
     orderUrl: signupUrl,
+    restaurantEmail: r.email,
     locale,
   })
     .then((res2) => prisma.pendingRewardGrant.update({ where: { id: gift.id }, data: { emailSentAt: res2.success ? new Date() : null } }).catch(() => {}))

@@ -1350,6 +1350,13 @@ model Order {
   /// powers the kitchen's "Cancelled by the customer" label (Fabrizio
   /// cms0idtz7, Luigi 2026-07-28). Null = legacy/unattributed.
   cancelledBy       String?
+  /// The CUSTOMER's storefront language at order time (fee-free-locale
+  /// cookie, falling back to the restaurant's defaultLanguage). Every later
+  /// customer email (accept/reject/delay/cancel/refund — often fired from
+  /// webhooks/crons that have no request cookie) reads THIS, so the customer
+  /// who ordered in English gets English emails from an Italian restaurant
+  /// (Fabrizio cms0gyexp #2). Null = legacy row → restaurant default.
+  customerLocale    String?
 
   /// Marketplace channel attribution. True when the customer came from
   /// our /marketplace browse page (detected via ?from=marketplace at
@@ -2870,6 +2877,10 @@ model Reservation {
   /// "auto" — mirrors Order.cancelledBy. Powers the kitchen's "Cancelled by
   /// the customer" label (Fabrizio cms0idtz7, Luigi 2026-07-28). Null = legacy.
   cancelledBy               String?
+  /// Mirrors Order.customerLocale — the guest's storefront language at
+  /// booking time, read by every later reservation email (confirm/decline/
+  /// missed/cancel). Null = legacy row → restaurant default (cms0gyexp #2).
+  customerLocale            String?
   /// Per-tab kitchen "Clear" flags — a walk-up booking shows in the All and
   /// Complete tabs just like an order, so it needs the SAME independent per-tab
   /// clear flags an Order has, plus its own Reservations-tab flag. Clearing one

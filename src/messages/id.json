@@ -17,6 +17,8 @@
     "discounts": "Diskon"
   },
   "common": {
+    "showPassword": "Tampilkan kata sandi",
+    "hidePassword": "Sembunyikan kata sandi",
     "save": "Simpan",
     "saveChanges": "Simpan Perubahan",
     "cancel": "Batal",
@@ -621,6 +623,7 @@
     "emailRequired": "Email wajib diisi"
   },
   "kitchen": {
+    "opensIn": "Buka dalam {time}",
     "cancelledByCustomer": "Dibatalkan oleh pelanggan",
     "title": "Kitchen Order App",
     "newOrders": "Pesanan Baru",
@@ -5165,6 +5168,7 @@
       "take_out": "BAWA PULANG"
     },
     "orderTypesLower": {
+      "take_out": "bawa pulang",
       "pickup": "pengambilan",
       "delivery": "pengiriman",
       "dine_in": "makan di tempat",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Hormat kami,",
+      "poweredBy": "Didukung oleh"
+    },
     "common": {
       "viewInAdmin": "Buka di admin",
       "trackOrder": "Lacak pesanan Anda",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Jika Anda tidak meminta ini, Anda bisa mengabaikan email ini."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restoran saat ini tutup — pesanan Anda sudah masuk antrean dan Anda akan menerima kabar begitu restoran buka. Cek email Anda pada {openingTime}.",
       "closedNote": "Restoran sedang tutup — pesananmu sudah masuk antrean dan kamu akan mendapat kabar begitu restoran buka.",
       "cancelNote": "Kalau ada hal tak terduga, kamu masih bisa membatalkan pesananmu di sini.",
       "subject": "Pesanan #{orderNumber} diterima — menunggu konfirmasi",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Meja dipesan untuk {n} orang — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Pesanan #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Pesanan #{orderNumber}",
+      "badgeNew": "Pesanan baru",
+      "minShort": "mnt",
+      "badgePaidOnline": "Dibayar online",
+      "badgeCollectCard": "Perlu ditagih — kartu",
+      "badgeCollectCash": "Perlu ditagih — tunai",
+      "badgePayAtStore": "Bayar di tempat",
+      "tablePreorder": "Reservasi meja + prapesan — {partySize} tamu, {time}",
+      "tablePreorderOne": "Reservasi meja + prapesan — 1 tamu, {time}",
+      "labelDeliveryAddress": "Alamat pengantaran",
+      "labelCustomerNotes": "Catatan pelanggan",
+      "labelOrderDetails": "Detail pesanan",
+      "labelOrderTotal": "Total pesanan",
+      "collected": "Sudah diterima",
+      "toCollect": "Perlu ditagih",
+      "creditFallback": "saldo",
+      "paidWith": "Dibayar dengan {label}",
+      "totalMinusCredit": "Total pesanan {total} − {credit} dibayar dengan {label}",
+      "seeBreakdown": "Lihat rincian lengkapnya di dasbor admin.",
+      "openKitchenApp": "Buka Kitchen Order App",
+      "acceptHint": "Terima pesanan ini dari Kitchen Order App atau dasbor admin. Pesanan akan otomatis ditolak jika tidak ada tindakan dalam batas waktu yang Anda atur.",
       "subject": "Pesanan baru #{orderNumber} — {restaurant}",
       "title": "Pesanan baru diterima",
       "body": "{customer} baru saja menempatkan pesanan #{orderNumber} senilai {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Dikirim setiap bulan"
     },
     "reservationConfirmed": {
+      "previewRequested": "Permintaan reservasi diterima — {dateTime} untuk {partySize} orang",
+      "previewDeclined": "Pembaruan reservasi — {dateTime} untuk {partySize} orang",
+      "previewCancelled": "Reservasi dibatalkan — {dateTime} untuk {partySize} orang",
       "subjectCancelled": "Reservasimu dibatalkan",
       "headerTitleCancelled": "Reservasi dibatalkan",
       "introCancelled": "Kamu membatalkan reservasimu di {restaurantName} — restoran sudah diberi tahu dan mejamu sudah tersedia kembali.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Terlewat"
     },
     "newReservation": {
+      "preview": "Reservasi baru — {dateTime} · {partySize} orang",
+      "previewCancelled": "Reservasi dibatalkan — {dateTime} · {partySize} orang",
+      "headerTitle": "{restaurant} — Reservasi #{reservationNumber}",
+      "subtitleNew": "Permintaan reservasi baru",
+      "subtitleCancelled": "Reservasi dibatalkan oleh pelanggan",
+      "badgeNew": "Baru",
+      "badgeCancelled": "Dibatalkan pelanggan",
+      "badgeParty": "{partySize} orang",
+      "labelTime": "Waktu reservasi",
+      "cancelledNote": "Pelanggan membatalkan reservasi ini dari email konfirmasinya — meja bisa dilepaskan kembali. Tidak perlu tindakan apa pun.",
+      "labelSpecialRequests": "Permintaan khusus",
+      "manageButton": "Kelola reservasi",
       "subjectCancelled": "Reservasi dibatalkan oleh pelanggan — {restaurant}",
       "subject": "Reservasi baru — {restaurant}",
       "title": "Reservasi baru {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Kode konfirmasi"
     },
     "passwordReset": {
+      "preview": "Atur ulang kata sandi {brand} Anda",
+      "subtitle": "Gunakan tombol di bawah untuk membuat yang baru",
+      "greeting": "Halo {name},",
+      "greetingNoName": "Halo,",
+      "expiryOneHour": "1 jam",
+      "linkFallback": "Jika tombolnya tidak berfungsi, salin dan tempel URL ini ke browser Anda:",
+      "ignoreHeading": "Tidak merasa meminta ini?",
+      "ignoreBody": "Anda bisa mengabaikan email ini dengan aman — kata sandi Anda tidak akan berubah kecuali Anda mengeklik tautan di atas. Jika Anda khawatir ada orang lain yang mencoba mengakses akun Anda, balas email ini dan kami akan memeriksanya.",
       "subject": "Reset kata sandi Anda",
       "title": "Reset kata sandi Anda",
-      "body": "Klik tombol di bawah untuk menetapkan kata sandi baru. Tautan ini kadaluarsa dalam 1 jam.",
+      "body": "Kami menerima permintaan untuk mengatur ulang kata sandi akun {account} Anda. Klik tombol di bawah untuk memilih kata sandi baru — tautan ini berlaku selama {expiresIn}.",
       "button": "Reset kata sandi"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "Member VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — akun pelanggan baru: {customer}",
+      "headerTitle": "{restaurant} — akun pelanggan baru",
+      "badge": "Pendaftaran baru",
+      "body": "Seorang pelanggan baru saja membuat akun di restoran Anda.",
+      "labelCustomer": "Pelanggan",
+      "viewCustomersButton": "Lihat pelanggan di admin",
       "subject": "{restaurant}: akun pelanggan baru — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Ada yang salah. Silakan coba lagi."
     },
     "accountPage": {
+      "status": {
+        "pending": "Menunggu",
+        "accepted": "Diterima",
+        "preparing": "Sedang disiapkan",
+        "ready": "Siap",
+        "completed": "Selesai",
+        "cancelled": "Dibatalkan",
+        "rejected": "Ditolak"
+      },
       "backTo": "Kembali ke {name}",
       "greeting": "Hai, {name}",
       "noEmailOnFile": "Tidak ada email yang tersimpan",

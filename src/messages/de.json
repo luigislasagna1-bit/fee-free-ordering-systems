@@ -17,6 +17,8 @@
     "discounts": "Rabatte"
   },
   "common": {
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen",
     "save": "Speichern",
     "saveChanges": "Änderungen speichern",
     "cancel": "Abbrechen",
@@ -621,6 +623,7 @@
     "emailRequired": "E-Mail-Adresse ist erforderlich"
   },
   "kitchen": {
+    "opensIn": "Öffnet in {time}",
     "cancelledByCustomer": "Vom Gast storniert",
     "title": "Kitchen Order App",
     "newOrders": "Neue Bestellungen",
@@ -5165,6 +5168,7 @@
       "take_out": "MITNEHMEN"
     },
     "orderTypesLower": {
+      "take_out": "zum Mitnehmen",
       "pickup": "Abholung",
       "delivery": "Lieferung",
       "dine_in": "vor Ort",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Mit freundlichen Grüßen,",
+      "poweredBy": "Bereitgestellt von"
+    },
     "common": {
       "viewInAdmin": "Im Admin öffnen",
       "trackOrder": "Bestellung verfolgen",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Wenn Sie diese Anfrage nicht gestellt haben, können Sie diese E-Mail ignorieren."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Das Restaurant ist gerade geschlossen — deine Bestellung ist vorgemerkt und du bekommst ein Update, sobald es wieder öffnet. Wirf ab {openingTime} einen Blick in dein E-Mail-Postfach.",
       "closedNote": "Das Restaurant ist gerade geschlossen — deine Bestellung ist in der Warteschlange und du bekommst ein Update, sobald es öffnet.",
       "cancelNote": "Falls etwas Unerwartetes dazwischenkommt, kannst du deine Bestellung hier noch stornieren.",
       "subject": "Bestellung #{orderNumber} eingegangen — warten auf Bestätigung",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Tisch reserviert für {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Bestellung #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Bestellung #{orderNumber}",
+      "badgeNew": "Neue Bestellung",
+      "minShort": "Min.",
+      "badgePaidOnline": "Online bezahlt",
+      "badgeCollectCard": "Zu kassieren — Karte",
+      "badgeCollectCash": "Zu kassieren — bar",
+      "badgePayAtStore": "Zahlung vor Ort",
+      "tablePreorder": "Tischreservierung + Vorbestellung — {partySize} Gäste, {time}",
+      "tablePreorderOne": "Tischreservierung + Vorbestellung — 1 Gast, {time}",
+      "labelDeliveryAddress": "Lieferadresse",
+      "labelCustomerNotes": "Anmerkungen des Kunden",
+      "labelOrderDetails": "Bestelldetails",
+      "labelOrderTotal": "Bestellsumme",
+      "collected": "Kassiert",
+      "toCollect": "Zu kassieren",
+      "creditFallback": "Guthaben",
+      "paidWith": "Bezahlt mit {label}",
+      "totalMinusCredit": "Bestellsumme {total} − {credit} bezahlt mit {label}",
+      "seeBreakdown": "Die detaillierte Aufstellung finden Sie im Admin-Dashboard.",
+      "openKitchenApp": "Kitchen Order App öffnen",
+      "acceptHint": "Nehmen Sie diese Bestellung über die Kitchen Order App oder das Admin-Dashboard an. Erfolgt innerhalb des konfigurierten Zeitlimits keine Aktion, wird sie automatisch abgelehnt.",
       "subject": "Neue Bestellung #{orderNumber} — {restaurant}",
       "title": "Neue Bestellung eingegangen",
       "body": "{customer} hat gerade Bestellung #{orderNumber} über {total} aufgegeben.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Monatlich gesendet"
     },
     "reservationConfirmed": {
+      "previewRequested": "Reservierungsanfrage eingegangen — {dateTime} für {partySize}",
+      "previewDeclined": "Update zu deiner Reservierung — {dateTime} für {partySize}",
+      "previewCancelled": "Reservierung storniert — {dateTime} für {partySize}",
       "subjectCancelled": "Deine Reservierung ist storniert",
       "headerTitleCancelled": "Reservierung storniert",
       "introCancelled": "Du hast deine Reservierung bei {restaurantName} storniert — das Restaurant wurde benachrichtigt und dein Tisch wurde freigegeben.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Verpasst"
     },
     "newReservation": {
+      "preview": "Neue Reservierung — {dateTime} · {partySize} Pers.",
+      "previewCancelled": "Reservierung storniert — {dateTime} · {partySize} Pers.",
+      "headerTitle": "{restaurant} — Reservierung #{reservationNumber}",
+      "subtitleNew": "Neue Reservierungsanfrage",
+      "subtitleCancelled": "Reservierung vom Kunden storniert",
+      "badgeNew": "Neu",
+      "badgeCancelled": "Vom Kunden storniert",
+      "badgeParty": "{partySize} Pers.",
+      "labelTime": "Reservierungszeit",
+      "cancelledNote": "Der Kunde hat diese Reservierung über seine Bestätigungs-E-Mail storniert — der Tisch kann freigegeben werden. Es ist nichts weiter zu tun.",
+      "labelSpecialRequests": "Besondere Wünsche",
+      "manageButton": "Reservierung verwalten",
       "subjectCancelled": "Reservierung vom Gast storniert — {restaurant}",
       "subject": "Neue Reservierung — {restaurant}",
       "title": "Neue Reservierung {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Bestätigungscode"
     },
     "passwordReset": {
+      "preview": "Setze dein {brand}-Passwort zurück",
+      "subtitle": "Mit dem Button unten legst du ein neues fest",
+      "greeting": "Hallo {name},",
+      "greetingNoName": "Hallo,",
+      "expiryOneHour": "1 Stunde",
+      "linkFallback": "Falls der Button nicht funktioniert, kopiere diese URL und füge sie in deinen Browser ein:",
+      "ignoreHeading": "Nicht von dir angefordert?",
+      "ignoreBody": "Du kannst diese E-Mail einfach ignorieren — dein Passwort ändert sich nur, wenn du auf den Link oben klickst. Falls du befürchtest, dass jemand anderes versucht, auf dein Konto zuzugreifen, antworte auf diese E-Mail und wir kümmern uns darum.",
       "subject": "Passwort zurücksetzen",
       "title": "Passwort zurücksetzen",
-      "body": "Klicken Sie auf den Button unten, um ein neues Passwort festzulegen. Dieser Link läuft in 1 Stunde ab.",
+      "body": "Wir haben eine Anfrage erhalten, das Passwort deines {account}-Kontos zurückzusetzen. Klicke auf den Button unten, um ein neues zu wählen — der Link ist {expiresIn} gültig.",
       "button": "Passwort zurücksetzen"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-Mitglied"
     },
     "customerSignup": {
+      "preview": "{restaurant} — neues Kundenkonto: {customer}",
+      "headerTitle": "{restaurant} — neues Kundenkonto",
+      "badge": "Neue Registrierung",
+      "body": "Ein neuer Kunde hat soeben ein Konto bei Ihrem Restaurant erstellt.",
+      "labelCustomer": "Kunde",
+      "viewCustomersButton": "Kunden im Admin-Bereich ansehen",
       "subject": "{restaurant}: neues Kundenkonto — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
     },
     "accountPage": {
+      "status": {
+        "pending": "Ausstehend",
+        "accepted": "Angenommen",
+        "preparing": "In Zubereitung",
+        "ready": "Fertig",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert",
+        "rejected": "Abgelehnt"
+      },
       "backTo": "Zurück zu {name}",
       "greeting": "Hallo, {name}",
       "noEmailOnFile": "Keine E-Mail-Adresse hinterlegt",

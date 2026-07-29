@@ -1,5 +1,5 @@
 "use client";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { formatDueLabel } from "@/lib/format-time";
 
 // Accept-window length the live countdown ticks down — matches the GloriaFood alert track
@@ -24,12 +24,15 @@ export function Countdown({
   now: number;
 }) {
   const locale = useLocale();
+  const tk = useTranslations("kitchen");
   if (!now) return <span className="text-xs font-mono text-gray-400">--:--</span>;
   if (alertAt) {
     const alertMs = new Date(alertAt).getTime();
     if (alertMs > now) {
       const label = formatDueLabel(alertMs, now, locale);
-      const badge = label.kind === "day" ? label.text.toUpperCase() : `OPENS IN ${label.text.toUpperCase()}`;
+      // Localized ×38 (spotted during cms0gyexp — "OPENS IN" was hardcoded
+      // English on otherwise-translated kitchens).
+      const badge = label.kind === "day" ? label.text.toUpperCase() : tk("opensIn", { time: label.text }).toUpperCase();
       return (
         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300 whitespace-nowrap"
           title={`Alert at ${new Date(alertAt).toLocaleString(locale || undefined, { weekday: "short", hour: "numeric", minute: "2-digit" })}`}

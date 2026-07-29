@@ -17,6 +17,8 @@
     "discounts": "הנחות"
   },
   "common": {
+    "showPassword": "הצגת סיסמה",
+    "hidePassword": "הסתרת סיסמה",
     "save": "שמור",
     "saveChanges": "שמור שינויים",
     "cancel": "ביטול",
@@ -621,6 +623,7 @@
     "emailRequired": "נדרשת כתובת אימייל"
   },
   "kitchen": {
+    "opensIn": "נפתח בעוד {time}",
     "cancelledByCustomer": "בוטלה על ידי הלקוח",
     "title": "Kitchen Order App",
     "newOrders": "הזמנות חדשות",
@@ -5165,6 +5168,7 @@
       "take_out": "לקחת"
     },
     "orderTypesLower": {
+      "take_out": "איסוף עצמי",
       "pickup": "איסוף עצמי",
       "delivery": "משלוח",
       "dine_in": "אכילה במקום",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "בברכה,",
+      "poweredBy": "מופעל על ידי"
+    },
     "common": {
       "viewInAdmin": "פתח בניהול",
       "trackOrder": "עקוב אחר ההזמנה",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "אם לא ביקשת זאת, תוכל להתעלם בבטחה מאימייל זה."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "המסעדה סגורה כרגע — ההזמנה שלך שמורה בתור, ועדכון יישלח אליך ברגע שהמסעדה תיפתח. כדאי לבדוק את המייל ב-{openingTime}.",
       "closedNote": "המסעדה סגורה כרגע — ההזמנה שלך ממתינה בתור ותקבלו עדכון ברגע שהמסעדה תיפתח.",
       "cancelNote": "אם קורה משהו לא צפוי, עדיין אפשר לבטל את ההזמנה כאן.",
       "subject": "הזמנה #{orderNumber} התקבלה — ממתינה לאישור",
@@ -5274,6 +5283,28 @@
       "tableReservation": "שולחן הוזמן עבור {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — הזמנה מס׳ {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — הזמנה מס׳ {orderNumber}",
+      "badgeNew": "הזמנה חדשה",
+      "minShort": "דק׳",
+      "badgePaidOnline": "שולם אונליין",
+      "badgeCollectCard": "לגבייה — כרטיס",
+      "badgeCollectCash": "לגבייה — מזומן",
+      "badgePayAtStore": "תשלום במקום",
+      "tablePreorder": "הזמנת שולחן + הזמנה מראש — {partySize} סועדים, {time}",
+      "tablePreorderOne": "הזמנת שולחן + הזמנה מראש — סועד אחד, {time}",
+      "labelDeliveryAddress": "כתובת למשלוח",
+      "labelCustomerNotes": "הערות הלקוח",
+      "labelOrderDetails": "פרטי ההזמנה",
+      "labelOrderTotal": "סה״כ ההזמנה",
+      "collected": "נגבה",
+      "toCollect": "לגבייה",
+      "creditFallback": "קרדיט",
+      "paidWith": "שולם באמצעות {label}",
+      "totalMinusCredit": "סה״כ ההזמנה {total} − {credit} שולמו באמצעות {label}",
+      "seeBreakdown": "את הפירוט המלא של הפריטים אפשר לראות בלוח הניהול.",
+      "openKitchenApp": "פתיחת אפליקציית Kitchen Order App",
+      "acceptHint": "אשרו את ההזמנה דרך אפליקציית Kitchen Order App או מלוח הניהול. אם לא תתבצע פעולה בתוך פרק הזמן שהגדרתם, ההזמנה תידחה אוטומטית.",
       "subject": "הזמנה חדשה #{orderNumber} — {restaurant}",
       "title": "הזמנה חדשה התקבלה",
       "body": "{customer} הזמין הרגע הזמנה #{orderNumber} בסכום {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "נשלח מדי חודש"
     },
     "reservationConfirmed": {
+      "previewRequested": "בקשת ההזמנה התקבלה — {dateTime} ל-{partySize} סועדים",
+      "previewDeclined": "עדכון לגבי ההזמנה — {dateTime} ל-{partySize} סועדים",
+      "previewCancelled": "ההזמנה בוטלה — {dateTime} ל-{partySize} סועדים",
       "subjectCancelled": "הזמנת השולחן שלך בוטלה",
       "headerTitleCancelled": "הזמנת השולחן בוטלה",
       "introCancelled": "ביטלת את הזמנת השולחן שלך ב-{restaurantName} — המסעדה קיבלה עדכון והשולחן שלך שוחרר.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "הוחמצה"
     },
     "newReservation": {
+      "preview": "הזמנת שולחן חדשה — {dateTime} · {partySize} סועדים",
+      "previewCancelled": "הזמנת השולחן בוטלה — {dateTime} · {partySize} סועדים",
+      "headerTitle": "{restaurant} — הזמנת שולחן מס׳ {reservationNumber}",
+      "subtitleNew": "בקשה חדשה להזמנת שולחן",
+      "subtitleCancelled": "הזמנת השולחן בוטלה על ידי הלקוח",
+      "badgeNew": "חדש",
+      "badgeCancelled": "בוטל על ידי הלקוח",
+      "badgeParty": "{partySize} סועדים",
+      "labelTime": "מועד ההזמנה",
+      "cancelledNote": "הלקוח ביטל את ההזמנה דרך מייל האישור שקיבל — אפשר לפנות את השולחן. אין צורך בפעולה נוספת.",
+      "labelSpecialRequests": "בקשות מיוחדות",
+      "manageButton": "ניהול ההזמנה",
       "subjectCancelled": "הזמנת שולחן בוטלה על ידי הלקוח — {restaurant}",
       "subject": "הזמנת שולחן חדשה — {restaurant}",
       "title": "הזמנת שולחן חדשה {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "קוד אישור"
     },
     "passwordReset": {
+      "preview": "איפוס הסיסמה שלך ב-{brand}",
+      "subtitle": "אפשר להגדיר סיסמה חדשה בעזרת הכפתור למטה",
+      "greeting": "שלום {name},",
+      "greetingNoName": "שלום,",
+      "expiryOneHour": "שעה אחת",
+      "linkFallback": "אם הכפתור לא עובד, העתיקו והדביקו את הקישור הזה בדפדפן:",
+      "ignoreHeading": "לא ביקשת את זה?",
+      "ignoreBody": "אפשר להתעלם מהמייל הזה בבטחה — הסיסמה שלך לא תשתנה כל עוד לא לוחצים על הקישור למעלה. אם יש חשש שמישהו אחר מנסה לגשת לחשבון שלך, אפשר פשוט להשיב למייל הזה ואנחנו נבדוק.",
       "subject": "אפס את הסיסמה שלך",
       "title": "אפס את הסיסמה שלך",
-      "body": "לחץ על הכפתור למטה להגדרת סיסמה חדשה. הקישור פג תוקפו תוך שעה.",
+      "body": "קיבלנו בקשה לאיפוס הסיסמה של חשבון {account} שלך. יש ללחוץ על הכפתור למטה כדי לבחור סיסמה חדשה — הקישור תקף למשך {expiresIn}.",
       "button": "אפס סיסמה"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "חבר VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — חשבון לקוח חדש: {customer}",
+      "headerTitle": "{restaurant} — חשבון לקוח חדש",
+      "badge": "הרשמה חדשה",
+      "body": "לקוח חדש יצר הרגע חשבון במסעדה שלך.",
+      "labelCustomer": "לקוח",
+      "viewCustomersButton": "צפייה בלקוחות בלוח הניהול",
       "subject": "{restaurant}: חשבון לקוח חדש — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "משהו השתבש. יש לנסות שוב."
     },
     "accountPage": {
+      "status": {
+        "pending": "ממתינה",
+        "accepted": "אושרה",
+        "preparing": "בהכנה",
+        "ready": "מוכנה",
+        "completed": "הושלמה",
+        "cancelled": "בוטלה",
+        "rejected": "נדחתה"
+      },
       "backTo": "חזרה אל {name}",
       "greeting": "שלום, {name}",
       "noEmailOnFile": "אין כתובת אימייל שמורה",

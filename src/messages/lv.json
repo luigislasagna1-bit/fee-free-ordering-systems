@@ -17,6 +17,8 @@
     "discounts": "Atlaides"
   },
   "common": {
+    "showPassword": "Rādīt paroli",
+    "hidePassword": "Slēpt paroli",
     "save": "Saglabāt",
     "saveChanges": "Saglabāt izmaiņas",
     "cancel": "Atcelt",
@@ -621,6 +623,7 @@
     "emailRequired": "E-pasts ir obligāts"
   },
   "kitchen": {
+    "opensIn": "Atvērsies pēc {time}",
     "cancelledByCustomer": "Atcēla klients",
     "title": "Kitchen Order App",
     "newOrders": "Jauni pasūtījumi",
@@ -5165,6 +5168,7 @@
       "take_out": "LĪDZŅEMŠANA"
     },
     "orderTypesLower": {
+      "take_out": "līdzņemšanai",
       "pickup": "paņemšana",
       "delivery": "piegāde",
       "dine_in": "ēšana uz vietas",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Ar cieņu",
+      "poweredBy": "Nodrošina"
+    },
     "common": {
       "viewInAdmin": "Atvērt administratorā",
       "trackOrder": "Izsekot pasūtījumu",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Ja jūs to neprasījāt, varat droši ignorēt šo e-pastu."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restorāns šobrīd ir slēgts — jūsu pasūtījums ir rindā, un jūs saņemsiet ziņu, tiklīdz restorāns atvērsies. Pārbaudiet savu e-pastu: {openingTime}.",
       "closedNote": "Restorāns šobrīd ir slēgts — tavs pasūtījums ir rindā, un saņemsi ziņu, tiklīdz restorāns atvērsies.",
       "cancelNote": "Ja gadās kas neparedzēts, savu pasūtījumu vari atcelt šeit.",
       "subject": "Pasūtījums #{orderNumber} saņemts — gaida apstiprinājumu",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Galdiņš rezervēts {n} personām — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — pasūtījums Nr. {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — pasūtījums Nr. {orderNumber}",
+      "badgeNew": "Jauns pasūtījums",
+      "minShort": "min",
+      "badgePaidOnline": "Apmaksāts tiešsaistē",
+      "badgeCollectCard": "Jāiekasē — karte",
+      "badgeCollectCash": "Jāiekasē — skaidra nauda",
+      "badgePayAtStore": "Apmaksa uz vietas",
+      "tablePreorder": "Galdiņa rezervācija + iepriekšpasūtījums — viesu skaits: {partySize}, {time}",
+      "tablePreorderOne": "Galdiņa rezervācija + iepriekšpasūtījums — 1 viesis, {time}",
+      "labelDeliveryAddress": "Piegādes adrese",
+      "labelCustomerNotes": "Klienta piezīmes",
+      "labelOrderDetails": "Pasūtījuma informācija",
+      "labelOrderTotal": "Pasūtījuma kopsumma",
+      "collected": "Iekasēts",
+      "toCollect": "Jāiekasē",
+      "creditFallback": "kredīts",
+      "paidWith": "Apmaksāts: {label}",
+      "totalMinusCredit": "Pasūtījuma kopsumma {total} − {credit} apmaksāts: {label}",
+      "seeBreakdown": "Detalizētu atšifrējumu skatiet administrācijas panelī.",
+      "openKitchenApp": "Atvērt Kitchen Order App",
+      "acceptHint": "Pieņemiet šo pasūtījumu lietotnē Kitchen Order App vai administrācijas panelī. Ja iestatītajā laikā netiek veikta neviena darbība, pasūtījums tiek automātiski noraidīts.",
       "subject": "Jauns pasūtījums #{orderNumber} — {restaurant}",
       "title": "Jauns pasūtījums saņemts",
       "body": "{customer} tikko veica pasūtījumu #{orderNumber} par {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Tiek sūtīts katru mēnesi"
     },
     "reservationConfirmed": {
+      "previewRequested": "Rezervācijas pieprasījums saņemts — {dateTime}, viesu skaits: {partySize}",
+      "previewDeclined": "Rezervācijas atjauninājums — {dateTime}, viesu skaits: {partySize}",
+      "previewCancelled": "Rezervācija atcelta — {dateTime}, viesu skaits: {partySize}",
       "subjectCancelled": "Tava rezervācija ir atcelta",
       "headerTitleCancelled": "Rezervācija atcelta",
       "introCancelled": "Tu atcēli savu rezervāciju restorānā {restaurantName} — restorānam ir paziņots, un tavs galdiņš ir atbrīvots.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Nokavēts"
     },
     "newReservation": {
+      "preview": "Jauna rezervācija — {dateTime} · viesu skaits: {partySize}",
+      "previewCancelled": "Rezervācija atcelta — {dateTime} · viesu skaits: {partySize}",
+      "headerTitle": "{restaurant} — rezervācija Nr. {reservationNumber}",
+      "subtitleNew": "Jauns rezervācijas pieprasījums",
+      "subtitleCancelled": "Klients atcēla rezervāciju",
+      "badgeNew": "Jauna",
+      "badgeCancelled": "Klients atcēla",
+      "badgeParty": "Viesu skaits: {partySize}",
+      "labelTime": "Rezervācijas laiks",
+      "cancelledNote": "Klients atcēla šo rezervāciju no sava apstiprinājuma e-pasta — galdiņu var atbrīvot. Nekāda darbība nav nepieciešama.",
+      "labelSpecialRequests": "Īpašas vēlmes",
+      "manageButton": "Pārvaldīt rezervāciju",
       "subjectCancelled": "Klients atcēla rezervāciju — {restaurant}",
       "subject": "Jauna rezervācija — {restaurant}",
       "title": "Jauna rezervācija {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Apstiprinājuma kods"
     },
     "passwordReset": {
+      "preview": "Atiestatiet savu {brand} paroli",
+      "subtitle": "Lai iestatītu jaunu paroli, izmantojiet zemāk esošo pogu",
+      "greeting": "Sveiki, {name}!",
+      "greetingNoName": "Sveiki!",
+      "expiryOneHour": "1 stundu",
+      "linkFallback": "Ja poga nedarbojas, nokopējiet šo URL un ielīmējiet to savā pārlūkprogrammā:",
+      "ignoreHeading": "Vai šo nepieprasījāt?",
+      "ignoreBody": "Varat droši ignorēt šo e-pastu — jūsu parole nemainīsies, kamēr nenoklikšķināsiet uz iepriekš norādītās saites. Ja uztraucaties, ka kāds cits mēģina piekļūt jūsu kontam, atbildiet uz šo e-pastu, un mēs to izpētīsim.",
       "subject": "Atiestatīt jūsu paroli",
       "title": "Atiestatīt jūsu paroli",
-      "body": "Noklikšķiniet uz pogas zemāk, lai iestatītu jaunu paroli. Šī saite darbojas 1 stundu.",
+      "body": "Saņēmām pieprasījumu atiestatīt jūsu {account} konta paroli. Noklikšķiniet uz zemāk esošās pogas, lai izvēlētos jaunu paroli — saite ir derīga {expiresIn}.",
       "button": "Atiestatīt paroli"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP dalībnieks"
     },
     "customerSignup": {
+      "preview": "{restaurant} — jauns klienta konts: {customer}",
+      "headerTitle": "{restaurant} — jauns klienta konts",
+      "badge": "Jauna reģistrācija",
+      "body": "Jauns klients tikko izveidoja kontu jūsu restorānā.",
+      "labelCustomer": "Klients",
+      "viewCustomersButton": "Skatīt klientus administrācijas panelī",
       "subject": "{restaurant}: jauns klienta konts — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Kaut kas nogāja greizi. Lūdzu, mēģini vēlreiz."
     },
     "accountPage": {
+      "status": {
+        "pending": "Gaida",
+        "accepted": "Pieņemts",
+        "preparing": "Tiek gatavots",
+        "ready": "Gatavs",
+        "completed": "Pabeigts",
+        "cancelled": "Atcelts",
+        "rejected": "Noraidīts"
+      },
       "backTo": "Atpakaļ uz {name}",
       "greeting": "Sveiks, {name}",
       "noEmailOnFile": "E-pasts nav norādīts",

@@ -17,6 +17,8 @@
     "discounts": "Descuentos"
   },
   "common": {
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
     "save": "Guardar",
     "saveChanges": "Guardar cambios",
     "cancel": "Cancelar",
@@ -621,6 +623,7 @@
     "emailRequired": "El correo electrónico es obligatorio"
   },
   "kitchen": {
+    "opensIn": "Abre en {time}",
     "cancelledByCustomer": "Cancelado por el cliente",
     "title": "Kitchen Order App",
     "newOrders": "Nuevos pedidos",
@@ -5165,6 +5168,7 @@
       "take_out": "PARA LLEVAR"
     },
     "orderTypesLower": {
+      "take_out": "para llevar",
       "pickup": "recogida",
       "delivery": "entrega",
       "dine_in": "en local",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Un cordial saludo,",
+      "poweredBy": "Con tecnología de"
+    },
     "common": {
       "viewInAdmin": "Abrir en el admin",
       "trackOrder": "Seguir el pedido",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Si no hiciste esta solicitud, puedes ignorar este correo."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "El restaurante está cerrado en este momento — tu pedido queda en cola y recibirás una actualización en cuanto abran. Revisa tu correo a partir de {openingTime}.",
       "closedNote": "El restaurante está cerrado en este momento: tu pedido queda en espera y recibirás una actualización en cuanto abran.",
       "cancelNote": "Si surge algún imprevisto, todavía puedes cancelar tu pedido aquí.",
       "subject": "Pedido #{orderNumber} recibido — pendiente de confirmación",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Mesa reservada para {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Pedido n.º {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Pedido n.º {orderNumber}",
+      "badgeNew": "Pedido nuevo",
+      "minShort": "min",
+      "badgePaidOnline": "Pagado en línea",
+      "badgeCollectCard": "Por cobrar — tarjeta",
+      "badgeCollectCash": "Por cobrar — efectivo",
+      "badgePayAtStore": "Pago en el local",
+      "tablePreorder": "Reserva de mesa + pedido anticipado — {partySize} comensales, {time}",
+      "tablePreorderOne": "Reserva de mesa + pedido anticipado — 1 comensal, {time}",
+      "labelDeliveryAddress": "Dirección de entrega",
+      "labelCustomerNotes": "Notas del cliente",
+      "labelOrderDetails": "Detalle del pedido",
+      "labelOrderTotal": "Total del pedido",
+      "collected": "Cobrado",
+      "toCollect": "Por cobrar",
+      "creditFallback": "crédito",
+      "paidWith": "Pagado con {label}",
+      "totalMinusCredit": "Total del pedido {total} − {credit} pagado con {label}",
+      "seeBreakdown": "Consulta el desglose por artículos en el panel de administración.",
+      "openKitchenApp": "Abrir la Kitchen Order App",
+      "acceptHint": "Acepta este pedido desde la Kitchen Order App o el panel de administración. El rechazo automático se activa si no se realiza ninguna acción dentro del tiempo límite configurado.",
       "subject": "Nuevo pedido #{orderNumber} — {restaurant}",
       "title": "Nuevo pedido recibido",
       "body": "{customer} acaba de hacer el pedido #{orderNumber} por {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Se envía cada mes"
     },
     "reservationConfirmed": {
+      "previewRequested": "Solicitud de reserva recibida — {dateTime} para {partySize}",
+      "previewDeclined": "Actualización de reserva — {dateTime} para {partySize}",
+      "previewCancelled": "Reserva cancelada — {dateTime} para {partySize}",
       "subjectCancelled": "Tu reserva está cancelada",
       "headerTitleCancelled": "Reserva cancelada",
       "introCancelled": "Has cancelado tu reserva en {restaurantName}: el restaurante ha sido avisado y tu mesa ha quedado libre.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Perdido"
     },
     "newReservation": {
+      "preview": "Nueva reserva — {dateTime} · grupo de {partySize}",
+      "previewCancelled": "Reserva cancelada — {dateTime} · grupo de {partySize}",
+      "headerTitle": "{restaurant} — Reserva n.º {reservationNumber}",
+      "subtitleNew": "Nueva solicitud de reserva",
+      "subtitleCancelled": "Reserva cancelada por el cliente",
+      "badgeNew": "Nueva",
+      "badgeCancelled": "Cancelada por el cliente",
+      "badgeParty": "Grupo de {partySize}",
+      "labelTime": "Hora de la reserva",
+      "cancelledNote": "El cliente canceló esta reserva desde su correo de confirmación — la mesa puede liberarse. No se requiere ninguna acción.",
+      "labelSpecialRequests": "Peticiones especiales",
+      "manageButton": "Gestionar reserva",
       "subjectCancelled": "Reserva cancelada por el cliente — {restaurant}",
       "subject": "Nueva reserva — {restaurant}",
       "title": "Nueva reserva {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Código de confirmación"
     },
     "passwordReset": {
+      "preview": "Restablece tu contraseña de {brand}",
+      "subtitle": "Usa el botón de abajo para crear una nueva",
+      "greeting": "Hola, {name},",
+      "greetingNoName": "Hola,",
+      "expiryOneHour": "1 hora",
+      "linkFallback": "Si el botón no funciona, copia y pega esta URL en tu navegador:",
+      "ignoreHeading": "¿No solicitaste esto?",
+      "ignoreBody": "Puedes ignorar este correo con tranquilidad — tu contraseña no cambiará a menos que hagas clic en el enlace de arriba. Si te preocupa que otra persona esté intentando acceder a tu cuenta, responde a este correo y lo investigaremos.",
       "subject": "Restablecer tu contraseña",
       "title": "Restablecer tu contraseña",
-      "body": "Pulsa el botón para establecer una nueva contraseña. Este enlace caduca en 1 hora.",
+      "body": "Recibimos una solicitud para restablecer la contraseña de tu cuenta {account}. Haz clic en el botón de abajo para elegir una nueva — el enlace es válido durante {expiresIn}.",
       "button": "Restablecer contraseña"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "miembro VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — nueva cuenta de cliente: {customer}",
+      "headerTitle": "{restaurant} — nueva cuenta de cliente",
+      "badge": "Nuevo registro",
+      "body": "Un nuevo cliente acaba de crear una cuenta en tu restaurante.",
+      "labelCustomer": "Cliente",
+      "viewCustomersButton": "Ver clientes en el panel de administración",
       "subject": "{restaurant}: nueva cuenta de cliente — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Algo ha ido mal. Vuelve a intentarlo."
     },
     "accountPage": {
+      "status": {
+        "pending": "Pendiente",
+        "accepted": "Aceptado",
+        "preparing": "En preparación",
+        "ready": "Listo",
+        "completed": "Completado",
+        "cancelled": "Cancelado",
+        "rejected": "Rechazado"
+      },
       "backTo": "Volver a {name}",
       "greeting": "Hola, {name}",
       "noEmailOnFile": "Sin correo registrado",

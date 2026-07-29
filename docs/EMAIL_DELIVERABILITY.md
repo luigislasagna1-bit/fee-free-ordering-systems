@@ -99,8 +99,15 @@ The platform sends emails with the right headers to maximize deliverability:
 - **`List-Unsubscribe` + `List-Unsubscribe-Post`** on bulk emails (daily /
   monthly digests, marketplace settlement summaries). RFC 8058 one-click
   unsubscribe — required by Gmail / Yahoo's Feb 2024 bulk-sender rules.
-- All emails render through React Email components (proper HTML structure,
-  matching plain-text fallback would be a future improvement).
+- All emails render through React Email components (proper HTML structure).
+- **Plain-text alternative on EVERY email** (2026-07-29, cms0gyexp #3):
+  `send()` derives a `text/plain` part from the rendered HTML automatically
+  (`toPlainText`), killing the standing "HTML-only" Mail-Tester deduction.
+- **Marketing (autopilot/kickstarter) hardening** (2026-07-29): restaurant
+  `fromName` (consistent sender identity with receipts), a VISIBLE footer
+  unsubscribe link (CAN-SPAM — the RFC-8058 header alone isn't enough), and
+  the platform postal address from Superadmin → Settings → Company in the
+  footer of commercial mail.
 - Light-only `color-scheme` meta tag prevents Gmail dark-mode from inverting
   our brand colors.
 
@@ -154,13 +161,46 @@ verify it's one continuous string. Re-paste into GoDaddy.
 
 **"Mail Tester gives a low score even after verification"**
 Run through their report — usually one of:
-- HTML/plain-text mismatch (we don't ship plain text yet — a known minor hit)
 - DMARC alignment failure → make sure From address matches the verified
   domain exactly (`@feefreeordering.com`, not `@send.feefreeordering.com`)
-- Suspicious link in the body (Resend's tracking URL — usually fine but
-  Mail Tester flags it. Not actionable.)
+- Suspicious link in the body (Resend's tracking URL — turn click/open
+  tracking OFF in the Resend dashboard; the rewritten tracker links hurt
+  trust and Mail-Tester flags them.)
+(Plain-text is shipped automatically since 2026-07-29 — no longer a hit.)
 
 **"My emails go to Gmail spam but Outlook inbox (or vice versa)"**
 Normal early in domain warmup. Gmail wants to see a few weeks of good sending
 behavior + low spam complaints before they fully trust a new domain. Send
 volume should ramp gradually — don't blast 10K emails on day 1.
+
+---
+
+## Verify & tighten checklist (2026-07-29 — spam reports from Fabrizio, cms0gyexp #3)
+
+Production already sends from `Fee Free Ordering <support@feefreeordering.com>`,
+so the Resend domain is almost certainly verified — this is a CHECK-AND-HARDEN
+pass, not a setup.
+
+1. **Verify DNS** (any terminal, ~2 min):
+   ```
+   dig +short TXT send.feefreeordering.com          # v=spf1 include:amazonses.com ~all
+   dig +short TXT resend._domainkey.feefreeordering.com   # long DKIM key (one string)
+   dig +short MX  send.feefreeordering.com          # feedback-smtp...amazonses.com
+   dig +short TXT _dmarc.feefreeordering.com        # v=DMARC1; p=...
+   ```
+   Also confirm resend.com/domains shows the domain **Verified**. If a record
+   is missing, follow Step 2 above.
+2. **Add DMARC reporting** — edit the `_dmarc` TXT to
+   `v=DMARC1; p=none; rua=mailto:<report inbox>` (free tier at dmarcian /
+   EasyDMARC / Postmark DMARC). After 2–4 weeks of clean reports tighten to
+   `p=quarantine`; later `p=reject`.
+3. **Gmail Postmaster Tools** — register feefreeordering.com at
+   postmaster.google.com. Spam rate must stay under 0.1% (0.3% = Gmail's
+   enforcement line).
+4. **Resend dashboard** — turn OFF click + open tracking for the domain.
+5. **Mail-Tester** — send the superadmin test email to a fresh
+   mail-tester.com address; target ≥ 9/10.
+6. **Company postal address** — Superadmin → Settings → Company → Address.
+   Marketing emails print it in the footer (CAN-SPAM).
+7. **Volume discipline** — keep kickstarter/autopilot ramped; marketing-
+   subdomain isolation stays deferred until >5K marketing sends/day.

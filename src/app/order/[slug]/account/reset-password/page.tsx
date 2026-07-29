@@ -10,7 +10,8 @@
 
 import prisma from "@/lib/db";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { NextIntlClientProvider, createTranslator } from "next-intl";
+import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { ResetPasswordForm } from "./ResetPasswordForm";
 
 export const dynamic = "force-dynamic";
@@ -24,7 +25,6 @@ export default async function RestaurantResetPasswordPage({
 }) {
   const { slug } = await params;
   const { token } = await searchParams;
-  const t = await getTranslations("customer.resetPage");
 
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
@@ -32,24 +32,32 @@ export default async function RestaurantResetPasswordPage({
   });
   if (!restaurant || !restaurant.isActive) notFound();
 
+  // Locale: cookie → restaurant default → en (cms0gyexp #7). Critical HERE —
+  // customers land straight from the reset email with no cookie set.
+  const locale = await resolveLocale({ restaurantId: restaurant.id });
+  const messages = await loadMessages(locale);
+  const t = createTranslator({ locale, messages, namespace: "customer.resetPage" });
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 max-w-md w-full">
-        <h1 className="text-2xl font-bold text-gray-900">{t("heading")}</h1>
-        <p className="text-sm text-gray-500 mt-1">
-          {t("subheading", { name: restaurant.name })}
-        </p>
-        {token ? (
-          <ResetPasswordForm slug={slug} token={token} />
-        ) : (
-          <div className="mt-6 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">
-            {t("missingTokenPrefix")}{" "}
-            <a href={`/order/${slug}/account/forgot-password`} className="font-semibold underline">
-              {t("forgotPasswordLink")}
-            </a>.
-          </div>
-        )}
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 max-w-md w-full">
+          <h1 className="text-2xl font-bold text-gray-900">{t("heading")}</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            {t("subheading", { name: restaurant.name })}
+          </p>
+          {token ? (
+            <ResetPasswordForm slug={slug} token={token} />
+          ) : (
+            <div className="mt-6 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">
+              {t("missingTokenPrefix")}{" "}
+              <a href={`/order/${slug}/account/forgot-password`} className="font-semibold underline">
+                {t("forgotPasswordLink")}
+              </a>.
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </NextIntlClientProvider>
   );
 }

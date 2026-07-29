@@ -24,6 +24,7 @@ import {
   restaurantCustomerCookieOptions,
 } from "@/lib/restaurant-customer-session";
 import { sendPasswordResetEmail } from "@/lib/email";
+import { resolveCustomerLocale } from "@/lib/i18n-server";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { getClientIp } from "@/lib/rate-limit";
 import { loginAttemptAllowed, recordLoginFailure } from "@/lib/login-protection";
@@ -37,6 +38,8 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
       id: true,
       isActive: true,
       name: true,
+      email: true,
+      phone: true,
       defaultLanguage: true,
       slug: true,
       subdomain: true,
@@ -127,7 +130,13 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
         to: customer.email ?? email,
         name: customer.name,
         resetUrl,
-        locale: restaurant.defaultLanguage || "en",
+        // White-label branding + customer's own storefront language
+        // (cms0gyexp #5/#2) — same treatment as the forgot-password route.
+        restaurantName: restaurant.name,
+        restaurantUrl: restaurantOrderUrl(restaurant, ""),
+        restaurantEmail: restaurant.email,
+        restaurantPhone: restaurant.phone,
+        locale: await resolveCustomerLocale(restaurant.defaultLanguage),
       });
     } catch (e) {
       // Don't block the friendly response on email-send failure —

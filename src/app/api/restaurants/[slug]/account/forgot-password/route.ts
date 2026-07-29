@@ -25,6 +25,7 @@ import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { sendPasswordResetEmail } from "@/lib/email";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { resolveCustomerLocale } from "@/lib/i18n-server";
 
 export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: string }> }) {
   const { slug } = await ctx.params;
@@ -39,6 +40,8 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
       id: true,
       isActive: true,
       name: true,
+      email: true,
+      phone: true,
       defaultLanguage: true,
       slug: true,
       subdomain: true,
@@ -112,7 +115,14 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
       to: customer.email,
       name: customer.name,
       resetUrl,
-      locale: restaurant.defaultLanguage || "en",
+      // White-label branding (cms0gyexp #5): this is the RESTAURANT's
+      // customer — the email speaks as the restaurant, not the platform.
+      restaurantName: restaurant.name,
+      restaurantUrl: restaurantOrderUrl(restaurant, ""),
+      restaurantEmail: restaurant.email,
+      restaurantPhone: restaurant.phone,
+      // The customer's own storefront language (cookie) → restaurant default.
+      locale: await resolveCustomerLocale(restaurant.defaultLanguage),
     });
 
     return NextResponse.json({ ok: true });

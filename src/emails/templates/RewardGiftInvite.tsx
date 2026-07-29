@@ -57,7 +57,9 @@ export default function RewardGiftInvite(props: RewardGiftInviteProps) {
         <EmailButton href={orderUrl}>{t("email.rewardGiftInvite.cta")}</EmailButton>
         <P muted size="sm">{t("email.rewardGiftInvite.ignoreLine")}</P>
       </EmailBody>
-      <EmailFooter restaurantName={restaurantName} restaurantUrl={orderUrl} imprint={imprint} />
+      <EmailFooter restaurantName={restaurantName} restaurantUrl={orderUrl} imprint={imprint}
+        signOff={t("email.footer.signOff")}
+        poweredByLabel={t("email.footer.poweredBy")} />
     </EmailLayout>
   );
 }

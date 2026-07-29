@@ -95,6 +95,8 @@ export default function CouponAssigned(props: CouponAssignedProps) {
         restaurantEmail={restaurantEmail}
         restaurantPhone={restaurantPhone}
         imprint={imprint}
+        signOff={t("email.footer.signOff")}
+        poweredByLabel={t("email.footer.poweredBy")}
       />
     </EmailLayout>
   );

@@ -290,6 +290,14 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // Pick up the signup-form locale from the cookie FIRST — it drives the
+    // welcome email, the restaurant's defaultLanguage AND the owner's own
+    // notification-recipient language (cms0gyexp #1: the recipient used to be
+    // created before this read, landing on the "en" schema default forever).
+    const cookieStore = await cookies();
+    const signupLocale = cookieStore.get("fee-free-locale")?.value || "en";
+    const signupLocaleSupported = isSupportedLocale(signupLocale) ? signupLocale : "en";
+
     // Store the owner's email on the restaurant so notifications & receipts have a default,
     // and auto-create a NotificationRecipient row with all toggles defaulting on.
     await prisma.restaurant.update({
@@ -301,23 +309,21 @@ export async function POST(req: NextRequest) {
         restaurantId: restaurant.id,
         email: emailClean,
         name: ownerNameClean,
+        emailLanguage: signupLocaleSupported,
       },
     });
 
     // Stripe Customer is created lazily on first add-on subscription (Phase 5).
     // Signup no longer touches Stripe — the core product is free, no card needed.
 
-    // Pick up the signup-form locale from the cookie so the welcome email is
-    // in the same language they were just browsing in.
-    const cookieStore = await cookies();
-    const signupLocale = cookieStore.get("fee-free-locale")?.value || "en";
-
     // Persist the locale on the freshly-created restaurant so subsequent
-    // notifications and surfaces follow the owner's chosen language.
-    if (["fr", "es", "it", "pt"].includes(signupLocale)) {
+    // notifications and surfaces follow the owner's chosen language. Any of
+    // the 38 supported locales counts — the old ["fr","es","it","pt"]
+    // allowlist silently dropped every other language (cms0gyexp fix).
+    if (signupLocaleSupported !== "en") {
       await prisma.restaurant.update({
         where: { id: restaurant.id },
-        data: { defaultLanguage: signupLocale },
+        data: { defaultLanguage: signupLocaleSupported },
       });
     }
 

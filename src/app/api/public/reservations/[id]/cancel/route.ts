@@ -47,7 +47,8 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     where: { id },
     select: {
       id: true, restaurantId: true, orderId: true, status: true,
-      customerName: true, customerEmail: true, confirmationCode: true,
+      customerName: true, customerEmail: true, customerPhone: true, notes: true,
+      customerLocale: true, confirmationCode: true,
       partySize: true, date: true, time: true,
       depositPaid: true, depositAmount: true, preOrderTotal: true,
       restaurant: { select: { id: true, name: true, defaultLanguage: true, timezone: true } },
@@ -111,7 +112,9 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
       notifyCustomer({
         restaurantId: resv.restaurant.id,
         customerEmail: resv.customerEmail,
-        customerLocale: resv.restaurant.defaultLanguage || "en",
+        // The guest's own storefront language, persisted at booking time
+        // (cms0gyexp #2); legacy rows fall back to the restaurant default.
+        customerLocale: resv.customerLocale || resv.restaurant.defaultLanguage || "en",
         payload: {
           event: "reservationConfirmation",
           customerName: resv.customerName,
@@ -142,6 +145,11 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
           time: resv.time,
           confirmationCode: resv.confirmationCode,
           status: "cancelled",
+          // Guest contacts (cms0gyexp #1) — so staff can reach out about
+          // the freed table without opening the app.
+          customerPhone: resv.customerPhone,
+          customerEmail: resv.customerEmail,
+          notes: resv.notes,
           dashboardUrl: `${baseUrl}/admin/reservations`,
         },
       }).catch((e: unknown) => console.error("[reservation cancel notifyStaff]", e)),

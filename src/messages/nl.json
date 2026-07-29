@@ -17,6 +17,8 @@
     "discounts": "Kortingen"
   },
   "common": {
+    "showPassword": "Wachtwoord tonen",
+    "hidePassword": "Wachtwoord verbergen",
     "save": "Opslaan",
     "saveChanges": "Wijzigingen opslaan",
     "cancel": "Annuleren",
@@ -621,6 +623,7 @@
     "emailRequired": "E-mailadres is verplicht"
   },
   "kitchen": {
+    "opensIn": "Opent over {time}",
     "cancelledByCustomer": "Geannuleerd door de klant",
     "title": "Kitchen Order App",
     "newOrders": "Nieuwe bestellingen",
@@ -5165,6 +5168,7 @@
       "take_out": "MEENEMEN"
     },
     "orderTypesLower": {
+      "take_out": "afhalen",
       "pickup": "afhalen",
       "delivery": "bezorging",
       "dine_in": "ter plaatse",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Met vriendelijke groet,",
+      "poweredBy": "Mogelijk gemaakt door"
+    },
     "common": {
       "viewInAdmin": "Openen in beheer",
       "trackOrder": "Bestelling volgen",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Als u dit niet hebt aangevraagd, kunt u deze e-mail veilig negeren."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Het restaurant is momenteel gesloten — je bestelling staat in de wachtrij en je krijgt een update zodra ze weer opengaan. Houd vanaf {openingTime} je e-mail in de gaten.",
       "closedNote": "Het restaurant is momenteel gesloten — je bestelling staat in de wachtrij en je krijgt een update zodra ze weer open zijn.",
       "cancelNote": "Komt er onverwacht iets tussen? Dan kun je je bestelling hier nog annuleren.",
       "subject": "Bestelling #{orderNumber} ontvangen — wacht op bevestiging",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Tafel gereserveerd voor {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Bestelling #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Bestelling #{orderNumber}",
+      "badgeNew": "Nieuwe bestelling",
+      "minShort": "min",
+      "badgePaidOnline": "Online betaald",
+      "badgeCollectCard": "Te innen — kaart",
+      "badgeCollectCash": "Te innen — contant",
+      "badgePayAtStore": "Betaling ter plaatse",
+      "tablePreorder": "Tafelreservering + voorbestelling — {partySize} gasten, {time}",
+      "tablePreorderOne": "Tafelreservering + voorbestelling — 1 gast, {time}",
+      "labelDeliveryAddress": "Bezorgadres",
+      "labelCustomerNotes": "Opmerkingen van de klant",
+      "labelOrderDetails": "Bestelgegevens",
+      "labelOrderTotal": "Totaalbedrag",
+      "collected": "Geïnd",
+      "toCollect": "Te innen",
+      "creditFallback": "tegoed",
+      "paidWith": "Betaald met {label}",
+      "totalMinusCredit": "Totaalbedrag {total} − {credit} betaald met {label}",
+      "seeBreakdown": "Bekijk de gespecificeerde uitsplitsing in het admin-dashboard.",
+      "openKitchenApp": "Kitchen Order App openen",
+      "acceptHint": "Accepteer deze bestelling via de Kitchen Order App of het admin-dashboard. Als er binnen de ingestelde termijn geen actie wordt ondernomen, wordt de bestelling automatisch geweigerd.",
       "subject": "Nieuwe bestelling #{orderNumber} — {restaurant}",
       "title": "Nieuwe bestelling ontvangen",
       "body": "{customer} heeft zojuist bestelling #{orderNumber} geplaatst voor {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Maandelijks verzonden"
     },
     "reservationConfirmed": {
+      "previewRequested": "Reserveringsaanvraag ontvangen — {dateTime} voor {partySize}",
+      "previewDeclined": "Update over je reservering — {dateTime} voor {partySize}",
+      "previewCancelled": "Reservering geannuleerd — {dateTime} voor {partySize}",
       "subjectCancelled": "Je reservering is geannuleerd",
       "headerTitleCancelled": "Reservering geannuleerd",
       "introCancelled": "Je hebt je reservering bij {restaurantName} geannuleerd — het restaurant is op de hoogte gebracht en je tafel is weer vrijgegeven.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Gemist"
     },
     "newReservation": {
+      "preview": "Nieuwe reservering — {dateTime} · gezelschap van {partySize}",
+      "previewCancelled": "Reservering geannuleerd — {dateTime} · gezelschap van {partySize}",
+      "headerTitle": "{restaurant} — Reservering #{reservationNumber}",
+      "subtitleNew": "Nieuwe reserveringsaanvraag",
+      "subtitleCancelled": "Reservering geannuleerd door de klant",
+      "badgeNew": "Nieuw",
+      "badgeCancelled": "Geannuleerd door klant",
+      "badgeParty": "Gezelschap van {partySize}",
+      "labelTime": "Reserveringstijd",
+      "cancelledNote": "De klant heeft deze reservering via de bevestigingsmail geannuleerd — de tafel kan worden vrijgegeven. Er is geen actie nodig.",
+      "labelSpecialRequests": "Speciale verzoeken",
+      "manageButton": "Reservering beheren",
       "subjectCancelled": "Reservering geannuleerd door de gast — {restaurant}",
       "subject": "Nieuwe reservering — {restaurant}",
       "title": "Nieuwe reservering {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Bevestigingscode"
     },
     "passwordReset": {
+      "preview": "Stel je {brand}-wachtwoord opnieuw in",
+      "subtitle": "Gebruik de knop hieronder om een nieuw wachtwoord in te stellen",
+      "greeting": "Hallo {name},",
+      "greetingNoName": "Hallo,",
+      "expiryOneHour": "1 uur",
+      "linkFallback": "Werkt de knop niet? Kopieer en plak deze URL dan in je browser:",
+      "ignoreHeading": "Niet aangevraagd?",
+      "ignoreBody": "Je kunt deze e-mail gerust negeren — je wachtwoord verandert alleen als je op de link hierboven klikt. Denk je dat iemand anders toegang tot je account probeert te krijgen? Beantwoord dan deze e-mail en we zoeken het voor je uit.",
       "subject": "Wachtwoord opnieuw instellen",
       "title": "Wachtwoord opnieuw instellen",
-      "body": "Klik op de onderstaande knop om een nieuw wachtwoord in te stellen. Deze link verloopt over 1 uur.",
+      "body": "We hebben een verzoek ontvangen om het wachtwoord van je {account}-account opnieuw in te stellen. Klik op de knop hieronder om een nieuw wachtwoord te kiezen — de link is {expiresIn} geldig.",
       "button": "Wachtwoord opnieuw instellen"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-lid"
     },
     "customerSignup": {
+      "preview": "{restaurant} — nieuw klantaccount: {customer}",
+      "headerTitle": "{restaurant} — nieuw klantaccount",
+      "badge": "Nieuwe aanmelding",
+      "body": "Een nieuwe klant heeft zojuist een account aangemaakt bij uw restaurant.",
+      "labelCustomer": "Klant",
+      "viewCustomersButton": "Klanten bekijken in admin",
       "subject": "{restaurant}: nieuw klantaccount — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Er is iets misgegaan. Probeer het opnieuw."
     },
     "accountPage": {
+      "status": {
+        "pending": "In afwachting",
+        "accepted": "Geaccepteerd",
+        "preparing": "In bereiding",
+        "ready": "Klaar",
+        "completed": "Afgerond",
+        "cancelled": "Geannuleerd",
+        "rejected": "Geweigerd"
+      },
       "backTo": "Terug naar {name}",
       "greeting": "Hoi, {name}",
       "noEmailOnFile": "Geen e-mailadres bekend",

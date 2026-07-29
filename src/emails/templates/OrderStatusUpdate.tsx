@@ -219,6 +219,8 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
         restaurantEmail={restaurantEmail}
         restaurantPhone={restaurantPhone}
         imprint={imprint}
+        signOff={t("email.footer.signOff")}
+        poweredByLabel={t("email.footer.poweredBy")}
       />
     </EmailLayout>
   );

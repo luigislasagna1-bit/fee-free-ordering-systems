@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
+import { isSupportedLocale } from "@/lib/locales";
 
 export async function GET() {
   const user = await getSessionUser();
@@ -48,11 +49,20 @@ export async function POST(req: NextRequest) {
   });
   if (existing) return NextResponse.json({ error: "This email is already a recipient." }, { status: 409 });
 
+  // New recipients inherit the restaurant's backend language, NOT the schema's
+  // "en" default — Fabrizio's Italian store was getting English staff emails
+  // purely because this create never set emailLanguage (cms0gyexp #1). The
+  // per-recipient select in the admin UI remains the override.
+  const restaurant = await prisma.restaurant.findUnique({
+    where: { id: restaurantId },
+    select: { defaultLanguage: true },
+  });
   const created = await prisma.notificationRecipient.create({
     data: {
       restaurantId,
       email: cleanEmail,
       name: name ? String(name).trim().slice(0, 100) : null,
+      emailLanguage: isSupportedLocale(restaurant?.defaultLanguage) ? restaurant!.defaultLanguage : "en",
     },
   });
   return NextResponse.json(created, { status: 201 });

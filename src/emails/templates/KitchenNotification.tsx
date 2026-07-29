@@ -12,7 +12,13 @@
  * Sent to: restaurant's notification recipients
  * Triggered by: new order placed (BEFORE acceptance) — this is the "you
  * have a new order" ping to the kitchen.
+ *
+ * FULLY LOCALIZED ×38 (Fabrizio cms0gyexp #1 — policy flip, Luigi 2026-07-29):
+ * staff bodies now follow the recipient's emailLanguage. Keys under
+ * email.newOrder; totals rows reuse receipt.customer.* exactly like the
+ * customer OrderConfirmation template.
  */
+import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { formatCurrency } from "@/lib/utils";
 import {
@@ -21,6 +27,7 @@ import {
 } from "../components/EmailParts";
 
 export type KitchenNotificationProps = {
+  t: Translator;
   restaurantName: string;
   orderNumber: string;
   customerName: string;
@@ -64,44 +71,38 @@ export type KitchenNotificationProps = {
   creditApplied?: number;
   rewardLabel?: string | null;
   /** Headline shown in the header subtitle + the lead badge. Defaults to
-   *  "New order" (the placement ping). The acceptance/confirmation email
-   *  passes a localized "Order confirmed" so staff can tell a confirmation
-   *  apart from a brand-new order at a glance. */
+   *  the localized "New order" (the placement ping). The acceptance/
+   *  confirmation email passes a localized "Order confirmed" so staff can
+   *  tell a confirmation apart from a brand-new order at a glance. */
   headline?: string;
-};
-
-const ORDER_TYPE_LABEL: Record<string, string> = {
-  delivery: "Delivery",
-  pickup: "Pickup",
-  dine_in: "Dine-In",
-  takeout: "Pickup",
-  curbside: "Curbside",
 };
 
 export default function KitchenNotification(props: KitchenNotificationProps) {
   const {
-    restaurantName, orderNumber, customerName, customerPhone, customerEmail,
+    t, restaurantName, orderNumber, customerName, customerPhone, customerEmail,
     orderType, estimatedMinutes, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, tip, depositTotal, discount, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
     creditApplied, rewardLabel,
   } = props;
-  const leadLabel = headline ?? "New order";
-  const orderTypeLabel = orderType ? (ORDER_TYPE_LABEL[orderType] ?? orderType) : null;
+  const leadLabel = headline ?? t("email.newOrder.badgeNew");
+  // Localized order-type chip — keyed by the raw DB value; unknown values
+  // (e.g. legacy "curbside") degrade to the raw slug rather than crashing.
+  const typeKeyed = orderType ? t(`receipt.orderTypes.${orderType}`) : null;
+  const orderTypeLabel = typeKeyed && !typeKeyed.startsWith("receipt.") ? typeKeyed : orderType ?? null;
   const hasItems = items && items.length > 0;
-  // Store-credit part-payment → what staff actually collect. Staff email
-  // bodies are English-only by design (subjects are localized).
   const rewardUsed = Math.max(0, Number(creditApplied ?? 0));
   const toCollect = Math.round(Math.max(0, total - rewardUsed) * 100) / 100;
-  const rewardName = rewardLabel?.trim() || "credit";
-  const collectLabel = paidOnline ? "Collected" : "To collect";
+  const rewardName = rewardLabel?.trim() || t("email.newOrder.creditFallback");
+  const collectLabel = paidOnline ? t("email.newOrder.collected") : t("email.newOrder.toCollect");
+  const totalFmt = formatCurrency(total, currency ?? "usd");
 
   return (
-    <EmailLayout preview={`${restaurantName} — Order #${orderNumber} — ${formatCurrency(total, currency ?? "usd")}`}>
+    <EmailLayout preview={t("email.newOrder.preview", { restaurant: restaurantName, orderNumber, total: totalFmt })}>
       <EmailHeader
         variant="transactional"
-        title={`${restaurantName} — Order #${orderNumber}`}
-        subtitle={`${leadLabel}${orderTypeLabel ? ` · ${orderTypeLabel}` : ""}${estimatedMinutes ? ` · ${estimatedMinutes} min` : ""}`}
+        title={t("email.newOrder.headerTitle", { restaurant: restaurantName, orderNumber })}
+        subtitle={`${leadLabel}${orderTypeLabel ? ` · ${orderTypeLabel}` : ""}${estimatedMinutes ? ` · ${estimatedMinutes} ${t("email.newOrder.minShort")}` : ""}`}
       />
       <EmailBody>
         <div style={{ margin: "8px 0 16px" }}>
@@ -110,12 +111,12 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
           {typeof paidOnline === "boolean" && (
             <Badge color={paidOnline ? "sky" : "amber"}>
               {paidOnline
-                ? "Paid online"
+                ? t("email.newOrder.badgePaidOnline")
                 : paymentMethod === "card_in_person"
-                  ? "To collect — card"
+                  ? t("email.newOrder.badgeCollectCard")
                   : paymentMethod === "cash"
-                    ? "To collect — cash"
-                    : "Pay at store"}
+                    ? t("email.newOrder.badgeCollectCash")
+                    : t("email.newOrder.badgePayAtStore")}
             </Badge>
           )}
         </div>
@@ -125,7 +126,9 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
         {reservationLabel && reservationPartySize != null && (
           <div style={{ margin: "0 0 16px", padding: "10px 14px", borderRadius: 8, background: "#f3e8ff", border: "1px solid #e9d5ff" }}>
             <strong style={{ color: "#6b21a8" }}>
-              🪑 Table reservation + pre-order — {reservationPartySize} {reservationPartySize === 1 ? "guest" : "guests"}, {reservationLabel}
+              🪑 {reservationPartySize === 1
+                ? t("email.newOrder.tablePreorderOne", { time: reservationLabel })
+                : t("email.newOrder.tablePreorder", { partySize: String(reservationPartySize), time: reservationLabel })}
             </strong>
           </div>
         )}
@@ -150,13 +153,13 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
         )}
 
         {orderType === "delivery" && deliveryAddress && (
-          <InfoCard label="Delivery address" accent="emerald">
+          <InfoCard label={t("email.newOrder.labelDeliveryAddress")} accent="emerald">
             {deliveryAddress}
           </InfoCard>
         )}
 
         {customerNotes && (
-          <InfoCard label="Customer notes" accent="amber">
+          <InfoCard label={t("email.newOrder.labelCustomerNotes")} accent="amber">
             {/* Structural <br/> split, not white-space CSS: Outlook desktop's
                 Word engine ignores white-space and would glue the delivery
                 instructions + order note onto one line. */}
@@ -169,13 +172,13 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
         {hasItems ? (
           <>
             <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#6b7280", marginTop: 20, marginBottom: 4 }}>
-              Order details
+              {t("email.newOrder.labelOrderDetails")}
             </div>
             <OrderItemsTable items={items!} currency={currency ?? "usd"} />
             <OrderTotals
               subtotal={subtotal ?? total}
               taxAmount={taxAmount}
-              taxLabel={taxLabel}
+              taxLabel={taxLabel ?? t("receipt.customer.tax")}
               deliveryFee={deliveryFee}
               tip={tip}
               depositTotal={depositTotal}
@@ -183,8 +186,13 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
               serviceFees={serviceFees}
               total={total}
               currency={currency ?? "usd"}
+              subtotalLabel={t("receipt.customer.subtotal")}
+              deliveryFeeLabel={t("receipt.customer.deliveryFee")}
+              tipLabel={t("receipt.customer.tip")}
+              discountLabel={t("receipt.customer.promoDiscount")}
+              totalLabel={t("receipt.customer.total")}
               rewardUsed={rewardUsed}
-              rewardUsedLabel={`Paid with ${rewardName}`}
+              rewardUsedLabel={t("email.newOrder.paidWith", { label: rewardName })}
               balanceDue={toCollect}
               balanceDueLabel={collectLabel}
             />
@@ -194,26 +202,30 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
           // acceptance/confirmation email). Show the total — and when store
           // credit part-paid, the amount actually collected — then direct
           // them to the admin for the full breakdown.
-          <InfoCard label={rewardUsed > 0 ? collectLabel : "Order total"} accent="slate">
+          <InfoCard label={rewardUsed > 0 ? collectLabel : t("email.newOrder.labelOrderTotal")} accent="slate">
             <strong style={{ fontSize: 18 }}>{formatCurrency(rewardUsed > 0 ? toCollect : total, currency ?? "usd")}</strong>
             {rewardUsed > 0 && (
               <div style={{ fontSize: 13, color: "#047857", marginTop: 4, fontWeight: 600 }}>
-                Order total {formatCurrency(total, currency ?? "usd")} − {formatCurrency(rewardUsed, currency ?? "usd")} paid with {rewardName}
+                {t("email.newOrder.totalMinusCredit", {
+                  total: totalFmt,
+                  credit: formatCurrency(rewardUsed, currency ?? "usd"),
+                  label: rewardName,
+                })}
               </div>
             )}
             <div style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>
-              See itemized breakdown in the admin dashboard.
+              {t("email.newOrder.seeBreakdown")}
             </div>
           </InfoCard>
         )}
 
-        <EmailButton href={dashboardUrl}>Open Kitchen Order App</EmailButton>
+        <EmailButton href={dashboardUrl}>{t("email.newOrder.openKitchenApp")}</EmailButton>
 
         <P size="sm" muted>
-          Accept this order from the Kitchen Order App or the admin dashboard. Auto-reject runs if no action is taken within your configured timeout.
+          {t("email.newOrder.acceptHint")}
         </P>
       </EmailBody>
-      <EmailFooter imprint={imprint} />
+      <EmailFooter imprint={imprint} signOff={t("email.footer.signOff")} poweredByLabel={t("email.footer.poweredBy")} />
     </EmailLayout>
   );
 }

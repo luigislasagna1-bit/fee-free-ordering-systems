@@ -17,6 +17,8 @@
     "discounts": "Remises"
   },
   "common": {
+    "showPassword": "Afficher le mot de passe",
+    "hidePassword": "Masquer le mot de passe",
     "save": "Enregistrer",
     "saveChanges": "Enregistrer les modifications",
     "cancel": "Annuler",
@@ -621,6 +623,7 @@
     "emailRequired": "L'e-mail est obligatoire"
   },
   "kitchen": {
+    "opensIn": "Ouvre dans {time}",
     "cancelledByCustomer": "Annulée par le client",
     "title": "Kitchen Order App",
     "newOrders": "Nouvelles commandes",
@@ -5165,6 +5168,7 @@
       "take_out": "EMPORTER"
     },
     "orderTypesLower": {
+      "take_out": "à emporter",
       "pickup": "retrait",
       "delivery": "livraison",
       "dine_in": "sur place",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Cordialement,",
+      "poweredBy": "Propulsé par"
+    },
     "common": {
       "viewInAdmin": "Ouvrir dans l'admin",
       "trackOrder": "Suivre la commande",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Si vous n'avez pas fait cette demande, vous pouvez ignorer cet e-mail."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Le restaurant est actuellement fermé — votre commande est en file d'attente et vous recevrez une mise à jour dès l'ouverture. Consultez vos e-mails à partir de {openingTime}.",
       "closedNote": "Le restaurant est actuellement fermé — votre commande est mise en attente et vous recevrez une mise à jour dès son ouverture.",
       "cancelNote": "En cas d'imprévu, vous pouvez toujours annuler votre commande ici.",
       "subject": "Commande #{orderNumber} reçue — en attente de confirmation",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Table réservée pour {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Commande n°{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Commande n°{orderNumber}",
+      "badgeNew": "Nouvelle commande",
+      "minShort": "min",
+      "badgePaidOnline": "Payé en ligne",
+      "badgeCollectCard": "À encaisser — carte",
+      "badgeCollectCash": "À encaisser — espèces",
+      "badgePayAtStore": "Paiement sur place",
+      "tablePreorder": "Réservation de table + précommande — {partySize} convives, {time}",
+      "tablePreorderOne": "Réservation de table + précommande — 1 convive, {time}",
+      "labelDeliveryAddress": "Adresse de livraison",
+      "labelCustomerNotes": "Notes du client",
+      "labelOrderDetails": "Détail de la commande",
+      "labelOrderTotal": "Total de la commande",
+      "collected": "Encaissé",
+      "toCollect": "À encaisser",
+      "creditFallback": "crédit",
+      "paidWith": "Payé avec {label}",
+      "totalMinusCredit": "Total de la commande {total} − {credit} payé avec {label}",
+      "seeBreakdown": "Consultez le détail article par article dans le tableau de bord d'administration.",
+      "openKitchenApp": "Ouvrir la Kitchen Order App",
+      "acceptHint": "Acceptez cette commande depuis la Kitchen Order App ou le tableau de bord d'administration. Le rejet automatique se déclenche si aucune action n'est effectuée dans le délai configuré.",
       "subject": "Nouvelle commande #{orderNumber} — {restaurant}",
       "title": "Nouvelle commande reçue",
       "body": "{customer} vient de passer la commande #{orderNumber} pour {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Envoyé chaque mois"
     },
     "reservationConfirmed": {
+      "previewRequested": "Demande de réservation reçue — {dateTime} pour {partySize}",
+      "previewDeclined": "Mise à jour de réservation — {dateTime} pour {partySize}",
+      "previewCancelled": "Réservation annulée — {dateTime} pour {partySize}",
       "subjectCancelled": "Votre réservation est annulée",
       "headerTitleCancelled": "Réservation annulée",
       "introCancelled": "Vous avez annulé votre réservation chez {restaurantName} — le restaurant a été prévenu et votre table a été libérée.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Manquée"
     },
     "newReservation": {
+      "preview": "Nouvelle réservation — {dateTime} · table de {partySize}",
+      "previewCancelled": "Réservation annulée — {dateTime} · table de {partySize}",
+      "headerTitle": "{restaurant} — Réservation n°{reservationNumber}",
+      "subtitleNew": "Nouvelle demande de réservation",
+      "subtitleCancelled": "Réservation annulée par le client",
+      "badgeNew": "Nouvelle",
+      "badgeCancelled": "Annulée par le client",
+      "badgeParty": "Table de {partySize}",
+      "labelTime": "Heure de la réservation",
+      "cancelledNote": "Le client a annulé cette réservation depuis son e-mail de confirmation — la table peut être libérée. Aucune action n'est requise.",
+      "labelSpecialRequests": "Demandes particulières",
+      "manageButton": "Gérer la réservation",
       "subjectCancelled": "Réservation annulée par le client — {restaurant}",
       "subject": "Nouvelle réservation — {restaurant}",
       "title": "Nouvelle réservation {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Code de confirmation"
     },
     "passwordReset": {
+      "preview": "Réinitialisez votre mot de passe {brand}",
+      "subtitle": "Utilisez le bouton ci-dessous pour en définir un nouveau",
+      "greeting": "Bonjour {name},",
+      "greetingNoName": "Bonjour,",
+      "expiryOneHour": "1 heure",
+      "linkFallback": "Si le bouton ne fonctionne pas, copiez-collez cette URL dans votre navigateur :",
+      "ignoreHeading": "Vous n'êtes pas à l'origine de cette demande ?",
+      "ignoreBody": "Vous pouvez ignorer cet e-mail en toute sécurité — votre mot de passe ne changera pas tant que vous ne cliquez pas sur le lien ci-dessus. Si vous craignez que quelqu'un d'autre tente d'accéder à votre compte, répondez à cet e-mail et nous vérifierons.",
       "subject": "Réinitialiser votre mot de passe",
       "title": "Réinitialiser votre mot de passe",
-      "body": "Cliquez sur le bouton ci-dessous pour définir un nouveau mot de passe. Ce lien expire dans 1 heure.",
+      "body": "Nous avons reçu une demande de réinitialisation du mot de passe de votre compte {account}. Cliquez sur le bouton ci-dessous pour en choisir un nouveau — le lien est valable {expiresIn}.",
       "button": "Réinitialiser le mot de passe"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "membre VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — nouveau compte client : {customer}",
+      "headerTitle": "{restaurant} — nouveau compte client",
+      "badge": "Nouvelle inscription",
+      "body": "Un nouveau client vient de créer un compte auprès de votre restaurant.",
+      "labelCustomer": "Client",
+      "viewCustomersButton": "Voir les clients dans l'administration",
       "subject": "{restaurant} : nouveau compte client — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Une erreur s'est produite. Veuillez réessayer."
     },
     "accountPage": {
+      "status": {
+        "pending": "En attente",
+        "accepted": "Acceptée",
+        "preparing": "En préparation",
+        "ready": "Prête",
+        "completed": "Terminée",
+        "cancelled": "Annulée",
+        "rejected": "Refusée"
+      },
       "backTo": "Retour à {name}",
       "greeting": "Bonjour, {name}",
       "noEmailOnFile": "Aucune adresse e-mail enregistrée",

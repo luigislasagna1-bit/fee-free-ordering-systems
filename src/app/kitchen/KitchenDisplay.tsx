@@ -177,13 +177,17 @@ function ReservationCard({
     if (label.kind === "due") return null;
     return label.text;
   })();
-  // Parked = booking placed while CLOSED; its kitchen alert is deferred to the
-  // next opening. The tile still shows (highlighted) but stays calm — no flash,
-  // and it's excluded from the ring counts — until alertAt passes, exactly like
-  // a closed-placed order. Luigi 2026-06-14.
-  const parked = !!(r.alertAt && now && new Date(r.alertAt).getTime() > now);
+  // Parked = PENDING booking placed while CLOSED; its kitchen alert is deferred
+  // to the next opening. The tile still shows (highlighted) but stays calm — no
+  // flash, and it's excluded from the ring counts — until alertAt passes,
+  // exactly like a closed-placed order. Luigi 2026-06-14.
+  // Pending-only (Fabrizio cms0gyexp #9): once staff CONFIRM the booking the
+  // deferred alert is meaningless, so the "OPENS IN …" chip must disappear —
+  // it used to persist on confirmed/seated tiles because this flag ignored
+  // status. A pending deposit-owed booking (no accept clock) keeps the chip.
+  const parked = !!(r.status === "pending" && r.alertAt && now && new Date(r.alertAt).getTime() > now);
   const opensLabel = parked && now
-    ? (() => { const l = formatDueLabel(new Date(r.alertAt!).getTime(), now, locale); return l.kind === "day" ? l.text.toUpperCase() : `OPENS IN ${l.text.toUpperCase()}`; })()
+    ? (() => { const l = formatDueLabel(new Date(r.alertAt!).getTime(), now, locale); return l.kind === "day" ? l.text.toUpperCase() : tk("opensIn", { time: l.text }).toUpperCase(); })()
     : null;
   // Pending booking with no deposit owed → show the SAME accept countdown an
   // order uses (Luigi 2026-06-15 chose full order parity — it auto-declines when
@@ -452,6 +456,7 @@ function Countdown({
   now: number;
 }) {
   const locale = useLocale();
+  const tkCd = useTranslations("kitchen");
   // Stable placeholder until the client mounts (now === 0) to avoid hydration mismatch.
   if (!now) return <span className="text-xs font-mono text-gray-400">--:--</span>;
   // If alertAt is set AND still in the future, the order is parked —
@@ -461,8 +466,9 @@ function Countdown({
     if (alertMs > now) {
       // Cap at 24h → weekday name (e.g. "OPENS THURSDAY") so a scheduled order
       // days out never shows "OPENS IN 158H 0M". Luigi 2026-06-05.
+      // Localized ×38 (cms0gyexp follow-through — was hardcoded English).
       const label = formatDueLabel(alertMs, now, locale);
-      const badge = label.kind === "day" ? label.text.toUpperCase() : `OPENS IN ${label.text.toUpperCase()}`;
+      const badge = label.kind === "day" ? label.text.toUpperCase() : tkCd("opensIn", { time: label.text }).toUpperCase();
       return (
         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-600 dark:text-blue-300 whitespace-nowrap"
           title={`Alert at ${new Date(alertAt).toLocaleString(locale || undefined, { weekday: "short", hour: "numeric", minute: "2-digit" })}`}

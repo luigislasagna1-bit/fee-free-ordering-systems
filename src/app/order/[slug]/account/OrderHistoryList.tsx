@@ -23,6 +23,12 @@ export function OrderHistoryList({
   initialHasMore: boolean;
 }) {
   const t = useTranslations("customer.accountPage");
+  // Localized order-type + status labels (cms0gyexp #7 — the raw DB values
+  // "pickup"/"PENDING" leaked into an otherwise-Italian page). t.has()-guarded
+  // so an unexpected/legacy value degrades to the raw slug, never a
+  // MISSING_MESSAGE crash (same contract as tOrderTypeLower in receipt.ts).
+  const tType = useTranslations("receipt.orderTypesLower");
+  const tStatus = useTranslations("customer.accountPage.status");
   const [page, setPage] = useState(1);
   const [rows, setRows] = useState<OrderRow[]>(initialRows);
   const [hasMore, setHasMore] = useState(initialHasMore);
@@ -53,7 +59,15 @@ export function OrderHistoryList({
       <ul className={`divide-y divide-gray-100 transition-opacity ${loading ? "opacity-60" : ""}`}>
         {rows.map((o) => (
           <li key={o.id}>
-            <Link href={`/order/${slug}/status/${o.id}`} className="flex items-center justify-between gap-3 p-4 hover:bg-gray-50 transition">
+            {/* PENDING rows get the amber tint Fabrizio asked for (cms0gyexp
+                #7) — the hover swaps with it so the highlight never vanishes
+                under the cursor. Card overflow-hidden clips to the corners. */}
+            <Link
+              href={`/order/${slug}/status/${o.id}`}
+              className={`flex items-center justify-between gap-3 p-4 transition ${
+                o.status === "pending" ? "bg-amber-50 hover:bg-amber-100" : "hover:bg-gray-50"
+              }`}
+            >
               <div className="min-w-0">
                 <div className="text-sm font-bold text-gray-900">#{o.orderNumber}</div>
                 <div className="text-[11px] text-gray-500 mt-0.5">
@@ -61,12 +75,14 @@ export function OrderHistoryList({
                     month: "short", day: "numeric", year: "numeric",
                     hour: "numeric", minute: "2-digit", ...tzOpts,
                   })}
-                  {" · "}{o.type}
+                  {" · "}{tType.has(o.type) ? tType(o.type) : o.type}
                 </div>
               </div>
               <div className="text-right flex-shrink-0">
                 <div className="text-sm font-bold text-gray-900">{formatCurrency(o.total, currency)}</div>
-                <div className="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-0.5">{o.status}</div>
+                <div className={`text-[10px] uppercase tracking-wider font-bold mt-0.5 ${
+                  o.status === "pending" ? "text-amber-700" : "text-gray-500"
+                }`}>{tStatus.has(o.status) ? tStatus(o.status) : o.status}</div>
               </div>
             </Link>
           </li>

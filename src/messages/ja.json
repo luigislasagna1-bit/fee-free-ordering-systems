@@ -17,6 +17,8 @@
     "discounts": "割引"
   },
   "common": {
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを非表示",
     "save": "保存",
     "saveChanges": "変更を保存",
     "cancel": "キャンセル",
@@ -621,6 +623,7 @@
     "emailRequired": "メールアドレスは必須です"
   },
   "kitchen": {
+    "opensIn": "あと{time}で開店",
     "cancelledByCustomer": "お客様によるキャンセル",
     "title": "Kitchen Order App",
     "newOrders": "新規注文",
@@ -5165,6 +5168,7 @@
       "take_out": "持ち帰り"
     },
     "orderTypesLower": {
+      "take_out": "テイクアウト",
       "pickup": "テイクアウト",
       "delivery": "デリバリー",
       "dine_in": "店内飲食",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "よろしくお願いいたします。",
+      "poweredBy": "Powered by"
+    },
     "common": {
       "viewInAdmin": "管理パネルで開く",
       "trackOrder": "注文を確認する",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "このリクエストに心当たりがない場合は、このメールを無視してください。"
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "ただいま店舗は営業時間外です。ご注文は受付済みで、開店しだいすぐにお知らせします。{openingTime}にメールをご確認ください。",
       "closedNote": "現在レストランは営業時間外です。ご注文は受付待ちの状態で、開店し次第すぐに最新情報をお知らせします。",
       "cancelNote": "急なご都合の変更があった場合は、こちらからご注文をキャンセルできます。",
       "subject": "注文 #{orderNumber} を受け付けました — 確認待ち",
@@ -5274,6 +5283,28 @@
       "tableReservation": "{n} 名様でテーブルを予約しました — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — 注文 #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — 注文 #{orderNumber}",
+      "badgeNew": "新規注文",
+      "minShort": "分",
+      "badgePaidOnline": "オンライン決済済み",
+      "badgeCollectCard": "代金受取 — カード",
+      "badgeCollectCash": "代金受取 — 現金",
+      "badgePayAtStore": "店頭払い",
+      "tablePreorder": "テーブル予約 + 事前注文 — {partySize}名様、{time}",
+      "tablePreorderOne": "テーブル予約 + 事前注文 — 1名様、{time}",
+      "labelDeliveryAddress": "配達先住所",
+      "labelCustomerNotes": "お客様からの備考",
+      "labelOrderDetails": "注文内容",
+      "labelOrderTotal": "注文合計",
+      "collected": "受取済み",
+      "toCollect": "受取待ち",
+      "creditFallback": "クレジット",
+      "paidWith": "{label}で支払い済み",
+      "totalMinusCredit": "注文合計 {total} − {credit}（{label}で支払い済み）",
+      "seeBreakdown": "明細は管理ダッシュボードでご確認ください。",
+      "openKitchenApp": "Kitchen Order Appを開く",
+      "acceptHint": "この注文はKitchen Order Appまたは管理ダッシュボードから受け付けてください。設定した制限時間内に操作がない場合、自動的に拒否されます。",
       "subject": "新規注文 #{orderNumber} — {restaurant}",
       "title": "新しい注文が入りました",
       "body": "{customer} 様が {total} の注文 #{orderNumber} を行いました。",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "毎月送信"
     },
     "reservationConfirmed": {
+      "previewRequested": "予約リクエストを受け付けました — {dateTime}・{partySize}名様",
+      "previewDeclined": "ご予約の更新 — {dateTime}・{partySize}名様",
+      "previewCancelled": "ご予約のキャンセル — {dateTime}・{partySize}名様",
       "subjectCancelled": "ご予約はキャンセルされました",
       "headerTitleCancelled": "ご予約をキャンセルしました",
       "introCancelled": "{restaurantName} のご予約をキャンセルされました。レストランに通知済みで、お席の確保は解除されました。",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "見逃し"
     },
     "newReservation": {
+      "preview": "新規予約 — {dateTime} · {partySize}名",
+      "previewCancelled": "予約キャンセル — {dateTime} · {partySize}名",
+      "headerTitle": "{restaurant} — 予約 #{reservationNumber}",
+      "subtitleNew": "新しい予約リクエスト",
+      "subtitleCancelled": "お客様が予約をキャンセルしました",
+      "badgeNew": "新規",
+      "badgeCancelled": "お客様によるキャンセル",
+      "badgeParty": "{partySize}名",
+      "labelTime": "予約時間",
+      "cancelledNote": "お客様が確認メールからこの予約をキャンセルしました。テーブルを開放できます。対応は不要です。",
+      "labelSpecialRequests": "特別なご要望",
+      "manageButton": "予約を管理",
       "subjectCancelled": "お客様が予約をキャンセルしました — {restaurant}",
       "subject": "新しい予約 — {restaurant}",
       "title": "新しい予約 {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "確認コード"
     },
     "passwordReset": {
+      "preview": "{brand}のパスワードをリセット",
+      "subtitle": "下のボタンから新しいパスワードを設定してください",
+      "greeting": "こんにちは、{name}さん",
+      "greetingNoName": "こんにちは",
+      "expiryOneHour": "1時間",
+      "linkFallback": "ボタンが機能しない場合は、次のURLをコピーしてブラウザに貼り付けてください：",
+      "ignoreHeading": "心当たりがない場合",
+      "ignoreBody": "このメールは無視していただいて問題ありません。上のリンクをクリックしない限り、パスワードは変更されません。第三者がアカウントにアクセスしようとしている心配がある場合は、このメールに返信してください。確認いたします。",
       "subject": "パスワードをリセット",
       "title": "パスワードをリセット",
-      "body": "下のボタンをクリックして新しいパスワードを設定してください。このリンクは1時間で期限切れになります。",
+      "body": "{account}アカウントのパスワードリセットのリクエストを受け付けました。下のボタンをクリックして新しいパスワードを設定してください。リンクの有効期限は{expiresIn}です。",
       "button": "パスワードをリセット"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP会員"
     },
     "customerSignup": {
+      "preview": "{restaurant} — 新規顧客アカウント：{customer}",
+      "headerTitle": "{restaurant} — 新規顧客アカウント",
+      "badge": "新規登録",
+      "body": "新しいお客様がお店にアカウントを作成しました。",
+      "labelCustomer": "お客様",
+      "viewCustomersButton": "管理画面で顧客を見る",
       "subject": "{restaurant}：新規顧客アカウント — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "問題が発生しました。もう一度お試しください。"
     },
     "accountPage": {
+      "status": {
+        "pending": "確認待ち",
+        "accepted": "受付済み",
+        "preparing": "調理中",
+        "ready": "準備完了",
+        "completed": "完了",
+        "cancelled": "キャンセル",
+        "rejected": "拒否"
+      },
       "backTo": "{name}に戻る",
       "greeting": "こんにちは、{name}さん",
       "noEmailOnFile": "メールアドレスが登録されていません",

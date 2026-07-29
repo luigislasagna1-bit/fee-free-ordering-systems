@@ -17,6 +17,8 @@
     "discounts": "Kedvezmények"
   },
   "common": {
+    "showPassword": "Jelszó megjelenítése",
+    "hidePassword": "Jelszó elrejtése",
     "save": "Mentés",
     "saveChanges": "Változtatások mentése",
     "cancel": "Mégse",
@@ -621,6 +623,7 @@
     "emailRequired": "Az e-mail cím megadása kötelező"
   },
   "kitchen": {
+    "opensIn": "Nyitás {time} múlva",
     "cancelledByCustomer": "A vendég mondta le",
     "title": "Kitchen Order App",
     "newOrders": "Új rendelések",
@@ -5165,6 +5168,7 @@
       "take_out": "ELVITEL"
     },
     "orderTypesLower": {
+      "take_out": "elvitel",
       "pickup": "elvitel",
       "delivery": "szállítás",
       "dine_in": "helyben fogyasztás",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Üdvözlettel,",
+      "poweredBy": "Üzemelteti:"
+    },
     "common": {
       "viewInAdmin": "Megnyitás az adminban",
       "trackOrder": "Rendelés nyomon követése",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Ha nem Ön kezdeményezte ezt, nyugodtan hagyja figyelmen kívül ezt az e-mailt."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Az étterem jelenleg zárva tart — a rendelésed sorban áll, és amint kinyitnak, azonnal értesítést kapsz. Nézd meg az e-mailedet ekkor: {openingTime}.",
       "closedNote": "Az étterem jelenleg zárva van — a rendelésed sorban áll, és amint kinyitnak, azonnal értesítünk.",
       "cancelNote": "Ha közbejönne valami, a rendelésedet itt bármikor lemondhatod.",
       "subject": "#{orderNumber}. rendelés beérkezett — visszaigazolásra vár",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Asztal lefoglalva {n} főre — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Rendelés #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Rendelés #{orderNumber}",
+      "badgeNew": "Új rendelés",
+      "minShort": "perc",
+      "badgePaidOnline": "Online fizetve",
+      "badgeCollectCard": "Beszedendő — kártya",
+      "badgeCollectCash": "Beszedendő — készpénz",
+      "badgePayAtStore": "Fizetés a helyszínen",
+      "tablePreorder": "Asztalfoglalás + előrendelés — {partySize} fő, {time}",
+      "tablePreorderOne": "Asztalfoglalás + előrendelés — 1 fő, {time}",
+      "labelDeliveryAddress": "Szállítási cím",
+      "labelCustomerNotes": "Vásárlói megjegyzések",
+      "labelOrderDetails": "Rendelés részletei",
+      "labelOrderTotal": "Rendelés végösszege",
+      "collected": "Beszedve",
+      "toCollect": "Beszedendő",
+      "creditFallback": "kredit",
+      "paidWith": "Fizetve: {label}",
+      "totalMinusCredit": "Rendelés végösszege {total} − {credit} fizetve ({label})",
+      "seeBreakdown": "A tételes bontás az adminfelületen érhető el.",
+      "openKitchenApp": "Kitchen Order App megnyitása",
+      "acceptHint": "A rendelést a Kitchen Order App alkalmazásban vagy az adminfelületen fogadhatja el. Ha a beállított időkorláton belül nem történik semmilyen művelet, a rendszer automatikusan elutasítja a rendelést.",
       "subject": "Új #{orderNumber}. rendelés — {restaurant}",
       "title": "Új rendelés érkezett",
       "body": "{customer} éppen leadta a #{orderNumber}. rendelést, összege: {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Havonta küldve"
     },
     "reservationConfirmed": {
+      "previewRequested": "Foglalási kérésedet megkaptuk — {dateTime}, {partySize} fő",
+      "previewDeclined": "Frissítés a foglalásodról — {dateTime}, {partySize} fő",
+      "previewCancelled": "Foglalás lemondva — {dateTime}, {partySize} fő",
       "subjectCancelled": "Foglalásod lemondva",
       "headerTitleCancelled": "Foglalás lemondva",
       "introCancelled": "Lemondtad a foglalásodat a(z) {restaurantName} étteremben — az éttermet értesítettük, és az asztalodat felszabadítottuk.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Elmulasztott"
     },
     "newReservation": {
+      "preview": "Új foglalás — {dateTime} · {partySize} fő",
+      "previewCancelled": "Foglalás lemondva — {dateTime} · {partySize} fő",
+      "headerTitle": "{restaurant} — Foglalás #{reservationNumber}",
+      "subtitleNew": "Új foglalási kérelem",
+      "subtitleCancelled": "A vendég lemondta a foglalást",
+      "badgeNew": "Új",
+      "badgeCancelled": "Vendég által lemondva",
+      "badgeParty": "{partySize} fő",
+      "labelTime": "Foglalás időpontja",
+      "cancelledNote": "A vendég a visszaigazoló e-mailből mondta le ezt a foglalást — az asztal felszabadítható. Nincs szükség további teendőre.",
+      "labelSpecialRequests": "Különleges kérések",
+      "manageButton": "Foglalás kezelése",
       "subjectCancelled": "A vendég lemondta a foglalást — {restaurant}",
       "subject": "Új foglalás — {restaurant}",
       "title": "Új foglalás {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Visszaigazolási kód"
     },
     "passwordReset": {
+      "preview": "Jelszó-visszaállítás a(z) {brand} fiókodhoz",
+      "subtitle": "Az alábbi gombbal állíthatsz be újat",
+      "greeting": "Szia {name}!",
+      "greetingNoName": "Szia!",
+      "expiryOneHour": "1 óra",
+      "linkFallback": "Ha a gomb nem működik, másold be ezt az URL-t a böngésződbe:",
+      "ignoreHeading": "Nem te kérted?",
+      "ignoreBody": "Nyugodtan hagyd figyelmen kívül ezt az e-mailt — a jelszavad nem változik meg, amíg nem kattintasz a fenti linkre. Ha attól tartasz, hogy valaki más próbál hozzáférni a fiókodhoz, válaszolj erre az e-mailre, és utánanézünk.",
       "subject": "Jelszó visszaállítása",
       "title": "Jelszó visszaállítása",
-      "body": "Kattintson az alábbi gombra az új jelszó beállításához. Ez a link 1 óra múlva lejár.",
+      "body": "Jelszó-visszaállítási kérelmet kaptunk a(z) {account} fiókodhoz. Kattints az alábbi gombra, és adj meg egy új jelszót — a link érvényessége: {expiresIn}.",
       "button": "Jelszó visszaállítása"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP tag"
     },
     "customerSignup": {
+      "preview": "{restaurant} — új vásárlói fiók: {customer}",
+      "headerTitle": "{restaurant} — új vásárlói fiók",
+      "badge": "Új regisztráció",
+      "body": "Egy új vásárló épp most hozott létre fiókot az Ön éttermében.",
+      "labelCustomer": "Vásárló",
+      "viewCustomersButton": "Vásárlók megtekintése az adminfelületen",
       "subject": "{restaurant}: új ügyfélfiók — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Hiba történt. Próbáld újra."
     },
     "accountPage": {
+      "status": {
+        "pending": "Függőben",
+        "accepted": "Elfogadva",
+        "preparing": "Készül",
+        "ready": "Elkészült",
+        "completed": "Teljesítve",
+        "cancelled": "Lemondva",
+        "rejected": "Elutasítva"
+      },
       "backTo": "Vissza: {name}",
       "greeting": "Szia, {name}",
       "noEmailOnFile": "Nincs e-mail-cím megadva",

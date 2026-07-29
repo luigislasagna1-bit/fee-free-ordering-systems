@@ -17,6 +17,8 @@
     "discounts": "Reduceri"
   },
   "common": {
+    "showPassword": "Afișează parola",
+    "hidePassword": "Ascunde parola",
     "save": "Salvează",
     "saveChanges": "Salvează modificările",
     "cancel": "Anulează",
@@ -621,6 +623,7 @@
     "emailRequired": "E-mailul este obligatoriu"
   },
   "kitchen": {
+    "opensIn": "Se deschide în {time}",
     "cancelledByCustomer": "Anulată de client",
     "title": "Kitchen Order App",
     "newOrders": "Comenzi noi",
@@ -5165,6 +5168,7 @@
       "take_out": "DE LUA"
     },
     "orderTypesLower": {
+      "take_out": "la pachet",
       "pickup": "ridicare",
       "delivery": "livrare",
       "dine_in": "la restaurant",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Cu stimă,",
+      "poweredBy": "Oferit de"
+    },
     "common": {
       "viewInAdmin": "Deschide în admin",
       "trackOrder": "Urmărește comanda",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Dacă nu ai solicitat aceasta, poți ignora în siguranță acest email."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restaurantul este momentan închis — comanda ta este în așteptare și vei primi vești imediat ce se deschide. Verifică-ți e-mailul la {openingTime}.",
       "closedNote": "Restaurantul este momentan închis — comanda ta este în așteptare și vei primi vești imediat ce se deschide.",
       "cancelNote": "Dacă apare ceva neprevăzut, îți poți anula comanda aici.",
       "subject": "Comanda #{orderNumber} primită — în așteptarea confirmării",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Masă rezervată pentru {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Comanda nr. {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Comanda nr. {orderNumber}",
+      "badgeNew": "Comandă nouă",
+      "minShort": "min",
+      "badgePaidOnline": "Plătită online",
+      "badgeCollectCard": "De încasat — card",
+      "badgeCollectCash": "De încasat — numerar",
+      "badgePayAtStore": "Plata la restaurant",
+      "tablePreorder": "Rezervare de masă + precomandă — {partySize} persoane, {time}",
+      "tablePreorderOne": "Rezervare de masă + precomandă — 1 persoană, {time}",
+      "labelDeliveryAddress": "Adresa de livrare",
+      "labelCustomerNotes": "Observațiile clientului",
+      "labelOrderDetails": "Detaliile comenzii",
+      "labelOrderTotal": "Totalul comenzii",
+      "collected": "Încasat",
+      "toCollect": "De încasat",
+      "creditFallback": "credit",
+      "paidWith": "Plătit cu {label}",
+      "totalMinusCredit": "Totalul comenzii {total} − {credit} plătit cu {label}",
+      "seeBreakdown": "Vezi detalierea completă în panoul de administrare.",
+      "openKitchenApp": "Deschide Kitchen Order App",
+      "acceptHint": "Acceptă această comandă din Kitchen Order App sau din panoul de administrare. Dacă nu se ia nicio măsură în intervalul configurat, comanda este respinsă automat.",
       "subject": "Comandă nouă #{orderNumber} — {restaurant}",
       "title": "Comandă nouă primită",
       "body": "{customer} tocmai a plasat comanda #{orderNumber} pentru {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Trimis lunar"
     },
     "reservationConfirmed": {
+      "previewRequested": "Cerere de rezervare primită — {dateTime}, {partySize} persoane",
+      "previewDeclined": "Actualizare rezervare — {dateTime}, {partySize} persoane",
+      "previewCancelled": "Rezervare anulată — {dateTime}, {partySize} persoane",
       "subjectCancelled": "Rezervarea ta a fost anulată",
       "headerTitleCancelled": "Rezervare anulată",
       "introCancelled": "Ți-ai anulat rezervarea la {restaurantName} — restaurantul a fost anunțat, iar masa ta a fost eliberată.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Ratată"
     },
     "newReservation": {
+      "preview": "Rezervare nouă — {dateTime} · {partySize} persoane",
+      "previewCancelled": "Rezervare anulată — {dateTime} · {partySize} persoane",
+      "headerTitle": "{restaurant} — Rezervarea nr. {reservationNumber}",
+      "subtitleNew": "Cerere nouă de rezervare",
+      "subtitleCancelled": "Rezervare anulată de client",
+      "badgeNew": "Nouă",
+      "badgeCancelled": "Anulată de client",
+      "badgeParty": "{partySize} persoane",
+      "labelTime": "Ora rezervării",
+      "cancelledNote": "Clientul a anulat această rezervare din e-mailul de confirmare — masa poate fi eliberată. Nu este nevoie de nicio acțiune.",
+      "labelSpecialRequests": "Cerințe speciale",
+      "manageButton": "Gestionează rezervarea",
       "subjectCancelled": "Rezervare anulată de client — {restaurant}",
       "subject": "Rezervare nouă — {restaurant}",
       "title": "Rezervare nouă {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Cod de confirmare"
     },
     "passwordReset": {
+      "preview": "Resetează-ți parola {brand}",
+      "subtitle": "Folosește butonul de mai jos pentru a seta una nouă",
+      "greeting": "Bună, {name},",
+      "greetingNoName": "Bună,",
+      "expiryOneHour": "1 oră",
+      "linkFallback": "Dacă butonul nu funcționează, copiază și lipește acest URL în browserul tău:",
+      "ignoreHeading": "Nu ai cerut această resetare?",
+      "ignoreBody": "Poți ignora liniștit acest e-mail — parola ta nu se va schimba decât dacă apeși pe linkul de mai sus. Dacă te temi că altcineva încearcă să îți acceseze contul, răspunde la acest e-mail și vom investiga.",
       "subject": "Resetează-ți parola",
       "title": "Resetează-ți parola",
-      "body": "Apasă butonul de mai jos pentru a seta o nouă parolă. Acest link expiră în 1 oră.",
+      "body": "Am primit o cerere de resetare a parolei pentru contul tău {account}. Apasă pe butonul de mai jos pentru a alege una nouă — linkul este valabil {expiresIn}.",
       "button": "Resetează parola"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "membru VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — cont nou de client: {customer}",
+      "headerTitle": "{restaurant} — cont nou de client",
+      "badge": "Înscriere nouă",
+      "body": "Un client nou tocmai și-a creat un cont la restaurantul tău.",
+      "labelCustomer": "Client",
+      "viewCustomersButton": "Vezi clienții în panoul de administrare",
       "subject": "{restaurant}: cont nou de client — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Ceva n-a mers bine. Te rugăm să încerci din nou."
     },
     "accountPage": {
+      "status": {
+        "pending": "În așteptare",
+        "accepted": "Acceptată",
+        "preparing": "În pregătire",
+        "ready": "Gata",
+        "completed": "Finalizată",
+        "cancelled": "Anulată",
+        "rejected": "Respinsă"
+      },
       "backTo": "Înapoi la {name}",
       "greeting": "Bună, {name}",
       "noEmailOnFile": "Nicio adresă de e-mail înregistrată",

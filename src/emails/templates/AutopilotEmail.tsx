@@ -30,12 +30,20 @@ export type AutopilotEmailProps = {
   restaurantEmail?: string;
   restaurantPhone?: string;
   imprint?: string;
+  /** Visible footer opt-out link (CAN-SPAM requires a clear opt-out in the
+   *  BODY of commercial mail — the RFC-8058 header alone isn't enough).
+   *  Same URL the sender puts in the List-Unsubscribe header. */
+  unsubscribeUrl?: string;
+  /** Platform legal postal address — CAN-SPAM requirement on commercial
+   *  mail. From PlatformSettings.companyAddress. */
+  postalAddress?: string | null;
 };
 
 export default function AutopilotEmail(props: AutopilotEmailProps) {
   const {
     restaurantName, subject, body, couponCode, couponLabel,
     ctaUrl, ctaLabel, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
+    unsubscribeUrl, postalAddress,
   } = props;
 
   return (
@@ -75,6 +83,8 @@ export default function AutopilotEmail(props: AutopilotEmailProps) {
         restaurantEmail={restaurantEmail}
         restaurantPhone={restaurantPhone}
         imprint={imprint}
+        unsubscribeUrl={unsubscribeUrl}
+        postalAddress={postalAddress}
       />
     </EmailLayout>
   );

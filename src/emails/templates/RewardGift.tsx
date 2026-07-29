@@ -54,7 +54,9 @@ export default function RewardGift(props: RewardGiftProps) {
         <P>{t("email.rewardGift.spendHint", { label: rewardLabel })}</P>
         <EmailButton href={orderUrl}>{t("email.rewardGift.cta")}</EmailButton>
       </EmailBody>
-      <EmailFooter restaurantName={restaurantName} restaurantUrl={orderUrl} imprint={imprint} />
+      <EmailFooter restaurantName={restaurantName} restaurantUrl={orderUrl} imprint={imprint}
+        signOff={t("email.footer.signOff")}
+        poweredByLabel={t("email.footer.poweredBy")} />
     </EmailLayout>
   );
 }

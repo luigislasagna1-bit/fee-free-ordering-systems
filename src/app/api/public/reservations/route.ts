@@ -8,6 +8,7 @@ import { hasFeature } from "@/lib/entitlements";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import { notifyCapWarning80, notifyCapReached100 } from "@/lib/cap-notify";
 import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
+import { resolveCustomerLocale } from "@/lib/i18n-server";
 import { holidayEffectToday, holidayEffectForDay, hhmmInsideIntervals } from "@/lib/holiday-rules";
 
 function sanitize(s: unknown, max = 500): string {
@@ -229,6 +230,12 @@ export async function POST(req: NextRequest) {
       (await hasFeature(restaurant.id, "take_reservation_deposit"));
     const initialStatus = wantsDeposit ? "pending" : (settings.autoConfirm ? "confirmed" : "pending");
 
+    // Guest's storefront language at booking time (fee-free-locale cookie →
+    // restaurant default) — later reservation emails (confirm/decline/missed/
+    // cancel) fire from admin/cron contexts with no request cookie, so it must
+    // be persisted here. Fabrizio cms0gyexp #2.
+    const customerLocale = await resolveCustomerLocale(restaurant.defaultLanguage);
+
     const reservation = await prisma.reservation.create({
       data: {
         restaurantId: restaurant.id,
@@ -245,6 +252,7 @@ export async function POST(req: NextRequest) {
         depositPaid: false,
         preOrderTotal,
         alertAt: reservationAlertAt,
+        customerLocale,
       },
     });
 
@@ -309,7 +317,9 @@ export async function POST(req: NextRequest) {
     notifyCustomer({
       restaurantId: restaurant.id,
       customerEmail: reservation.customerEmail,
-      customerLocale: restaurant.defaultLanguage || "en",
+      // The guest's OWN storefront language (just persisted) — not the
+      // restaurant default (Fabrizio cms0gyexp #2).
+      customerLocale: reservation.customerLocale || restaurant.defaultLanguage || "en",
       payload: {
         event: "reservationConfirmation",
         customerName: reservation.customerName,
@@ -334,6 +344,11 @@ export async function POST(req: NextRequest) {
         time: reservation.time,
         confirmationCode: reservation.confirmationCode,
         status: staffStatus,
+        // Contact details + special requests — GloriaFood parity (Fabrizio
+        // cms0gyexp #1): staff must reach the guest without opening the app.
+        customerPhone: reservation.customerPhone,
+        customerEmail: reservation.customerEmail,
+        notes: reservation.notes,
         dashboardUrl: `${baseUrl}/admin/reservations`,
       },
     }).catch((e) => console.error("[notifyStaff reservation]", e));

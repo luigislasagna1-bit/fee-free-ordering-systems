@@ -62,6 +62,9 @@ export type OrderConfirmationProps = {
   /** Order landed while the restaurant was CLOSED — adds the "you'll get an
    *  update as soon as they open" note above the CTA. */
   placedWhileClosed?: boolean;
+  /** Localized next-opening label ("Saturday, 25 Jul, 8:15 PM") — upgrades
+   *  the closed note to name the concrete time (cms0gyexp #8). */
+  opensAtLabel?: string | null;
   // Restaurant signature
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -103,7 +106,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
   const {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
     estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
-    depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, cancelUrl, placedWhileClosed, restaurantUrl,
+    depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, cancelUrl, placedWhileClosed, opensAtLabel, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
     appliedPromos, creditApplied, rewardLabel, rewardEarned, paymentValue, paidStatus, t,
   } = props;
@@ -303,9 +306,17 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         />
 
         {/* GloriaFood-parity closed-hours note — the restaurant is closed, the
-            order is queued; reassure the customer an update comes at opening. */}
+            order is queued; reassure the customer an update comes at opening.
+            With a resolved next-opening label the note names the concrete
+            time ("Check your email on Saturday, 25 Jul, 20:15" — cms0gyexp
+            #8); without one (legacy rows / no hours configured) it stays
+            generic. */}
         {placedWhileClosed && (
-          <P size="sm">{t("email.orderConfirmed.closedNote")}</P>
+          <P size="sm">
+            {opensAtLabel
+              ? t("email.orderConfirmed.closedNoteWithTime", { openingTime: opensAtLabel })
+              : t("email.orderConfirmed.closedNote")}
+          </P>
         )}
 
         <EmailButton href={trackingUrl}>{t("email.orderConfirmed.trackOrderButton")}</EmailButton>
@@ -334,6 +345,8 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         restaurantEmail={restaurantEmail}
         restaurantPhone={restaurantPhone}
         imprint={imprint}
+        signOff={t("email.footer.signOff")}
+        poweredByLabel={t("email.footer.poweredBy")}
       />
     </EmailLayout>
   );

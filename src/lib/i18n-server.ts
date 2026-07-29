@@ -43,6 +43,26 @@ export async function resolveLocale(opts?: { restaurantId?: string | null }): Pr
   return DEFAULT_LOCALE;
 }
 
+/**
+ * The CUSTOMER's language to PERSIST on an order/reservation at create time
+ * (Order.customerLocale / Reservation.customerLocale — Fabrizio cms0gyexp #2).
+ *
+ * cookie fee-free-locale → restaurantDefault (when supported) → "en".
+ *
+ * Deliberately thinner than resolveLocale(): the create routes already hold
+ * the restaurant row (no second query), and Accept-Language must NOT enter a
+ * persisted value — a stored locale should only ever reflect an explicit
+ * choice (cookie) or the restaurant's own setting, never a transient browser
+ * header that would pin future emails to whatever device placed the order.
+ */
+export async function resolveCustomerLocale(restaurantDefault?: string | null): Promise<string> {
+  const cookieStore = await cookies();
+  const cookieLocale = cookieStore.get("fee-free-locale")?.value;
+  if (isSupportedLocale(cookieLocale)) return cookieLocale;
+  if (isSupportedLocale(restaurantDefault)) return restaurantDefault;
+  return DEFAULT_LOCALE;
+}
+
 /** Cookie that stores a STAFF member's own UI-language choice (admin + kitchen).
  *  Deliberately SEPARATE from the customer `fee-free-locale` cookie so that
  *  changing the customer-facing language (or a customer/owner previewing the

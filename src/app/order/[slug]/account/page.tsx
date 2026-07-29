@@ -24,7 +24,8 @@ import { AddressBook } from "./AddressBook";
 import { RewardActivityList } from "./RewardActivityList";
 import { OrderHistoryList } from "./OrderHistoryList";
 import { REWARD_PAGE_SIZE, ORDERS_PAGE_SIZE } from "@/app/api/order/[slug]/account/history/route";
-import { getTranslations } from "next-intl/server";
+import { NextIntlClientProvider, createTranslator } from "next-intl";
+import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { HelpTip } from "@/components/HelpTip";
 import { qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
@@ -36,7 +37,6 @@ export default async function RestaurantAccountDashboard({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const t = await getTranslations("customer.accountPage");
   const { slug } = await params;
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
@@ -46,6 +46,14 @@ export default async function RestaurantAccountDashboard({
     },
   });
   if (!restaurant || !restaurant.isActive) notFound();
+
+  // Locale: cookie → restaurant default → en (cms0gyexp #7 — matches the
+  // storefront; bare getTranslations() gave a cookieless Italian-store
+  // customer an English dashboard). The nested provider carries the SAME
+  // locale to every client child (order history, pager, profile, addresses…).
+  const locale = await resolveLocale({ restaurantId: restaurant.id });
+  const messages = await loadMessages(locale);
+  const t = createTranslator({ locale, messages, namespace: "customer.accountPage" });
 
   // Money on this dashboard renders in the restaurant's chosen currency.
   const formatCurrency = (amount: number) => fmtCurrency(amount, restaurant.currency);
@@ -231,6 +239,7 @@ export default async function RestaurantAccountDashboard({
   const usableOffers = [...vipOffers, ...couponOffers].sort((a, b) => Number(a.used) - Number(b.used));
 
   return (
+    <NextIntlClientProvider locale={locale} messages={messages}>
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-3xl mx-auto px-4 py-6 sm:py-8">
         <Link
@@ -428,5 +437,6 @@ export default async function RestaurantAccountDashboard({
         </div>
       </div>
     </div>
+    </NextIntlClientProvider>
   );
 }

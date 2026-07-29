@@ -42,7 +42,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       order: {
         select: {
           id: true, status: true, type: true, orderNumber: true, tip: true,
-          customerName: true, customerEmail: true, customerPhone: true,
+          customerName: true, customerEmail: true, customerPhone: true, customerLocale: true,
           estimatedReady: true, scheduledFor: true, paymentMethod: true, paymentStatus: true,
           deliveryLat: true, deliveryLng: true,
           restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true, currency: true, feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true } } } },
@@ -211,7 +211,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
             customerEmail: o.customerEmail,
             customerPhone: o.customerPhone,
             orderType: o.type,
-            customerLocale: o.restaurant.defaultLanguage || "en",
+            customerLocale: o.customerLocale || o.restaurant.defaultLanguage || "en",
             payload: {
               event: "orderStatusUpdate",
               customerName: o.customerName,

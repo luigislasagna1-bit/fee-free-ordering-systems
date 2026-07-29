@@ -89,6 +89,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
       id: true, orderNumber: true, status: true, customerId: true,
       restaurantId: true, createdAt: true, type: true,
       customerName: true, customerEmail: true, customerPhone: true,
+      customerLocale: true,
       creditApplied: true,
       paymentMethod: true, paymentStatus: true, paymentIntentId: true,
       paypalAuthorizationId: true,
@@ -272,7 +273,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
       restaurantId: order.restaurant.id,
       customerEmail: order.customerEmail,
       orderType: order.type,
-      customerLocale: order.restaurant.defaultLanguage || "en",
+      customerLocale: order.customerLocale || order.restaurant.defaultLanguage || "en",
       payload: {
         event: "orderStatusUpdate",
         customerName: order.customerName,

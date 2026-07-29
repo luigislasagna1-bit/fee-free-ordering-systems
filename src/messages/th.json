@@ -17,6 +17,8 @@
     "discounts": "ส่วนลด"
   },
   "common": {
+    "showPassword": "แสดงรหัสผ่าน",
+    "hidePassword": "ซ่อนรหัสผ่าน",
     "save": "บันทึก",
     "saveChanges": "บันทึกการเปลี่ยนแปลง",
     "cancel": "ยกเลิก",
@@ -621,6 +623,7 @@
     "emailRequired": "จำเป็นต้องกรอกอีเมล"
   },
   "kitchen": {
+    "opensIn": "เปิดในอีก {time}",
     "cancelledByCustomer": "ลูกค้ายกเลิกเอง",
     "title": "Kitchen Order App",
     "newOrders": "ออเดอร์ใหม่",
@@ -5165,6 +5168,7 @@
       "take_out": "ซื้อกลับบ้าน"
     },
     "orderTypesLower": {
+      "take_out": "กลับบ้าน",
       "pickup": "รับที่ร้าน",
       "delivery": "จัดส่ง",
       "dine_in": "ทานที่ร้าน",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "ขอแสดงความนับถือ",
+      "poweredBy": "ขับเคลื่อนโดย"
+    },
     "common": {
       "viewInAdmin": "เปิดในผู้ดูแล",
       "trackOrder": "ติดตามออเดอร์ของคุณ",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "หากคุณไม่ได้ขอสิ่งนี้ คุณสามารถเพิกเฉยต่ออีเมลนี้ได้"
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "ขณะนี้ร้านปิดอยู่ — ออเดอร์ของคุณเข้าคิวไว้แล้ว และคุณจะได้รับข่าวทันทีที่ร้านเปิด โปรดตรวจสอบอีเมลของคุณเมื่อถึงเวลา {openingTime}",
       "closedNote": "ขณะนี้ร้านปิดอยู่ — ออเดอร์ของคุณอยู่ในคิวแล้ว และคุณจะได้รับการอัปเดตทันทีที่ร้านเปิด",
       "cancelNote": "หากมีเหตุไม่คาดคิด คุณยังสามารถยกเลิกออเดอร์ได้ที่นี่",
       "subject": "ออเดอร์ #{orderNumber} ได้รับแล้ว — รอยืนยัน",
@@ -5274,6 +5283,28 @@
       "tableReservation": "จองโต๊ะสำหรับ {n} ท่าน — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — ออเดอร์ #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — ออเดอร์ #{orderNumber}",
+      "badgeNew": "ออเดอร์ใหม่",
+      "minShort": "นาที",
+      "badgePaidOnline": "ชำระออนไลน์แล้ว",
+      "badgeCollectCard": "รอเก็บเงิน — บัตร",
+      "badgeCollectCash": "รอเก็บเงิน — เงินสด",
+      "badgePayAtStore": "ชำระที่ร้าน",
+      "tablePreorder": "จองโต๊ะ + สั่งอาหารล่วงหน้า — {partySize} ท่าน, {time}",
+      "tablePreorderOne": "จองโต๊ะ + สั่งอาหารล่วงหน้า — 1 ท่าน, {time}",
+      "labelDeliveryAddress": "ที่อยู่จัดส่ง",
+      "labelCustomerNotes": "หมายเหตุจากลูกค้า",
+      "labelOrderDetails": "รายละเอียดออเดอร์",
+      "labelOrderTotal": "ยอดรวมออเดอร์",
+      "collected": "เก็บเงินแล้ว",
+      "toCollect": "รอเก็บเงิน",
+      "creditFallback": "เครดิต",
+      "paidWith": "ชำระด้วย {label}",
+      "totalMinusCredit": "ยอดรวมออเดอร์ {total} − {credit} ชำระด้วย {label}",
+      "seeBreakdown": "ดูรายละเอียดแยกตามรายการได้ในแดชบอร์ดแอดมิน",
+      "openKitchenApp": "เปิด Kitchen Order App",
+      "acceptHint": "รับออเดอร์นี้ได้จาก Kitchen Order App หรือแดชบอร์ดแอดมิน หากไม่มีการดำเนินการภายในเวลาที่คุณตั้งไว้ ระบบจะปฏิเสธออเดอร์โดยอัตโนมัติ",
       "subject": "ออเดอร์ใหม่ #{orderNumber} — {restaurant}",
       "title": "ได้รับออเดอร์ใหม่",
       "body": "{customer} เพิ่งสั่งออเดอร์ #{orderNumber} มูลค่า {total}",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "ส่งทุกเดือน"
     },
     "reservationConfirmed": {
+      "previewRequested": "ได้รับคำขอจองโต๊ะแล้ว — {dateTime} สำหรับ {partySize} ท่าน",
+      "previewDeclined": "อัปเดตการจอง — {dateTime} สำหรับ {partySize} ท่าน",
+      "previewCancelled": "ยกเลิกการจองแล้ว — {dateTime} สำหรับ {partySize} ท่าน",
       "subjectCancelled": "การจองของคุณถูกยกเลิกแล้ว",
       "headerTitleCancelled": "ยกเลิกการจองแล้ว",
       "introCancelled": "คุณได้ยกเลิกการจองที่ {restaurantName} — ทางร้านได้รับแจ้งแล้ว และโต๊ะของคุณถูกปล่อยว่างเรียบร้อย",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "พลาด"
     },
     "newReservation": {
+      "preview": "การจองใหม่ — {dateTime} · {partySize} ท่าน",
+      "previewCancelled": "ยกเลิกการจองแล้ว — {dateTime} · {partySize} ท่าน",
+      "headerTitle": "{restaurant} — การจอง #{reservationNumber}",
+      "subtitleNew": "คำขอจองใหม่",
+      "subtitleCancelled": "ลูกค้ายกเลิกการจอง",
+      "badgeNew": "ใหม่",
+      "badgeCancelled": "ลูกค้ายกเลิก",
+      "badgeParty": "{partySize} ท่าน",
+      "labelTime": "เวลาจอง",
+      "cancelledNote": "ลูกค้ายกเลิกการจองนี้จากอีเมลยืนยันของตนเอง — สามารถปล่อยโต๊ะได้ ไม่ต้องดำเนินการใด ๆ",
+      "labelSpecialRequests": "คำขอพิเศษ",
+      "manageButton": "จัดการการจอง",
       "subjectCancelled": "ลูกค้ายกเลิกการจอง — {restaurant}",
       "subject": "การจองใหม่ — {restaurant}",
       "title": "การจองใหม่ {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "รหัสยืนยัน"
     },
     "passwordReset": {
+      "preview": "รีเซ็ตรหัสผ่าน {brand} ของคุณ",
+      "subtitle": "กดปุ่มด้านล่างเพื่อตั้งรหัสผ่านใหม่",
+      "greeting": "สวัสดีคุณ {name}",
+      "greetingNoName": "สวัสดี",
+      "expiryOneHour": "1 ชั่วโมง",
+      "linkFallback": "หากปุ่มใช้งานไม่ได้ ให้คัดลอก URL นี้ไปวางในเบราว์เซอร์ของคุณ:",
+      "ignoreHeading": "ไม่ได้ขอรีเซ็ตใช่ไหม?",
+      "ignoreBody": "คุณสามารถละเว้นอีเมลนี้ได้อย่างปลอดภัย — รหัสผ่านของคุณจะไม่เปลี่ยน เว้นแต่คุณจะกดลิงก์ด้านบน หากกังวลว่าอาจมีผู้อื่นพยายามเข้าถึงบัญชีของคุณ ให้ตอบกลับอีเมลนี้แล้วเราจะตรวจสอบให้",
       "subject": "รีเซ็ตรหัสผ่านของคุณ",
       "title": "รีเซ็ตรหัสผ่านของคุณ",
-      "body": "คลิกปุ่มด้านล่างเพื่อตั้งรหัสผ่านใหม่ ลิงก์นี้หมดอายุใน 1 ชั่วโมง",
+      "body": "เราได้รับคำขอรีเซ็ตรหัสผ่านของบัญชี {account} ของคุณ กดปุ่มด้านล่างเพื่อตั้งรหัสผ่านใหม่ — ลิงก์นี้ใช้ได้ภายใน {expiresIn}",
       "button": "รีเซ็ตรหัสผ่าน"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "สมาชิก VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — บัญชีลูกค้าใหม่: {customer}",
+      "headerTitle": "{restaurant} — บัญชีลูกค้าใหม่",
+      "badge": "สมัครใหม่",
+      "body": "มีลูกค้าใหม่เพิ่งสร้างบัญชีที่ร้านของคุณ",
+      "labelCustomer": "ลูกค้า",
+      "viewCustomersButton": "ดูลูกค้าในแอดมิน",
       "subject": "{restaurant}: บัญชีลูกค้าใหม่ — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
     },
     "accountPage": {
+      "status": {
+        "pending": "รอดำเนินการ",
+        "accepted": "รับแล้ว",
+        "preparing": "กำลังเตรียม",
+        "ready": "พร้อมแล้ว",
+        "completed": "เสร็จสิ้น",
+        "cancelled": "ยกเลิกแล้ว",
+        "rejected": "ถูกปฏิเสธ"
+      },
       "backTo": "กลับไปที่ {name}",
       "greeting": "สวัสดี, {name}",
       "noEmailOnFile": "ไม่มีอีเมลในระบบ",

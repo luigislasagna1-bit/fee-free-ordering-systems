@@ -17,6 +17,8 @@
     "discounts": "Allahindlused"
   },
   "common": {
+    "showPassword": "Näita parooli",
+    "hidePassword": "Peida parool",
     "save": "Salvesta",
     "saveChanges": "Salvesta muutused",
     "cancel": "Tühista",
@@ -621,6 +623,7 @@
     "emailRequired": "E-posti aadress on kohustuslik"
   },
   "kitchen": {
+    "opensIn": "Avatakse {time} pärast",
     "cancelledByCustomer": "Klient tühistas",
     "title": "Kitchen Order App",
     "newOrders": "Uued tellimused",
@@ -5165,6 +5168,7 @@
       "take_out": "KAASAVÕTT"
     },
     "orderTypesLower": {
+      "take_out": "kaasa",
       "pickup": "järeltulek",
       "delivery": "kojuvedu",
       "dine_in": "kohapeal",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Parimate soovidega",
+      "poweredBy": "Teenust pakub"
+    },
     "common": {
       "viewInAdmin": "Ava administraatoris",
       "trackOrder": "Jälgi oma tellimust",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Kui sa seda ei soovinud, võid selle meili julgelt ignoreerida."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restoran on praegu suletud — sinu tellimus on järjekorras ja saadame sulle teate kohe, kui restoran avaneb. Vaata oma e-posti: {openingTime}.",
       "closedNote": "Restoran on hetkel suletud — sinu tellimus on ootel ja anname sulle teada kohe, kui restoran avaneb.",
       "cancelNote": "Kui peaks midagi ootamatut ette tulema, saad oma tellimuse siin tühistada.",
       "subject": "Tellimus #{orderNumber} vastu võetud — ootab kinnitust",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Laud broneeritud {n} inimesele — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — tellimus nr {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — tellimus nr {orderNumber}",
+      "badgeNew": "Uus tellimus",
+      "minShort": "min",
+      "badgePaidOnline": "Makstud veebis",
+      "badgeCollectCard": "Kasseerida — kaart",
+      "badgeCollectCash": "Kasseerida — sularaha",
+      "badgePayAtStore": "Makse kohapeal",
+      "tablePreorder": "Lauabroneering + ettetellimus — {partySize} külalist, {time}",
+      "tablePreorderOne": "Lauabroneering + ettetellimus — 1 külaline, {time}",
+      "labelDeliveryAddress": "Tarneaadress",
+      "labelCustomerNotes": "Kliendi märkused",
+      "labelOrderDetails": "Tellimuse üksikasjad",
+      "labelOrderTotal": "Tellimuse kogusumma",
+      "collected": "Kasseeritud",
+      "toCollect": "Kasseerida",
+      "creditFallback": "krediit",
+      "paidWith": "Makstud: {label}",
+      "totalMinusCredit": "Tellimuse kogusumma {total} − {credit} makstud: {label}",
+      "seeBreakdown": "Üksikasjaliku jaotuse leiad halduspaneelist.",
+      "openKitchenApp": "Ava Kitchen Order App",
+      "acceptHint": "Võta see tellimus vastu rakenduses Kitchen Order App või halduspaneelis. Kui määratud aja jooksul midagi ette ei võeta, lükatakse tellimus automaatselt tagasi.",
       "subject": "Uus tellimus #{orderNumber} — {restaurant}",
       "title": "Uus tellimus saadud",
       "body": "{customer} esitas just tellimuse #{orderNumber} summas {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Saadetakse iga kuu"
     },
     "reservationConfirmed": {
+      "previewRequested": "Broneeringusoov on kätte saadud — {dateTime}, külalisi: {partySize}",
+      "previewDeclined": "Broneeringu uuendus — {dateTime}, külalisi: {partySize}",
+      "previewCancelled": "Broneering tühistatud — {dateTime}, külalisi: {partySize}",
       "subjectCancelled": "Sinu broneering on tühistatud",
       "headerTitleCancelled": "Broneering tühistatud",
       "introCancelled": "Tühistasid oma broneeringu restoranis {restaurantName} — restoranile on teada antud ja sinu laud on vabastatud.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Vastamata"
     },
     "newReservation": {
+      "preview": "Uus broneering — {dateTime} · külalisi: {partySize}",
+      "previewCancelled": "Broneering tühistatud — {dateTime} · külalisi: {partySize}",
+      "headerTitle": "{restaurant} — broneering nr {reservationNumber}",
+      "subtitleNew": "Uus broneeringusoov",
+      "subtitleCancelled": "Klient tühistas broneeringu",
+      "badgeNew": "Uus",
+      "badgeCancelled": "Klient tühistas",
+      "badgeParty": "Külalisi: {partySize}",
+      "labelTime": "Broneeringu aeg",
+      "cancelledNote": "Klient tühistas selle broneeringu oma kinnitusmeili kaudu — laua võib vabastada. Midagi pole vaja teha.",
+      "labelSpecialRequests": "Erisoovid",
+      "manageButton": "Halda broneeringut",
       "subjectCancelled": "Klient tühistas broneeringu — {restaurant}",
       "subject": "Uus broneering — {restaurant}",
       "title": "Uus broneering {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Kinnituskood"
     },
     "passwordReset": {
+      "preview": "Lähtesta oma {brand} parool",
+      "subtitle": "Uue parooli määramiseks kasuta allolevat nuppu",
+      "greeting": "Tere, {name}!",
+      "greetingNoName": "Tere!",
+      "expiryOneHour": "1 tund",
+      "linkFallback": "Kui nupp ei tööta, kopeeri see URL ja kleebi oma brauserisse:",
+      "ignoreHeading": "Kas sa seda ei taotlenud?",
+      "ignoreBody": "Võid selle meili rahulikult tähelepanuta jätta — sinu parool ei muutu enne, kui klõpsad üleval oleval lingil. Kui kardad, et keegi teine üritab sinu kontole pääseda, vasta sellele meilile ja me uurime asja.",
       "subject": "Lähtesta oma parool",
       "title": "Lähtesta oma parool",
-      "body": "Klõpsa alloleval nupul uue parooli määramiseks. See link aegub 1 tunni pärast.",
+      "body": "Saime taotluse lähtestada sinu {account} konto parool. Uue parooli valimiseks klõpsa alloleval nupul — link kehtib {expiresIn}.",
       "button": "Lähtesta parool"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-liige"
     },
     "customerSignup": {
+      "preview": "{restaurant} — uus kliendikonto: {customer}",
+      "headerTitle": "{restaurant} — uus kliendikonto",
+      "badge": "Uus registreerumine",
+      "body": "Uus klient lõi just sinu restoranis konto.",
+      "labelCustomer": "Klient",
+      "viewCustomersButton": "Vaata kliente halduspaneelis",
       "subject": "{restaurant}: uus kliendikonto — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Midagi läks valesti. Palun proovi uuesti."
     },
     "accountPage": {
+      "status": {
+        "pending": "Ootel",
+        "accepted": "Vastu võetud",
+        "preparing": "Valmistamisel",
+        "ready": "Valmis",
+        "completed": "Lõpetatud",
+        "cancelled": "Tühistatud",
+        "rejected": "Tagasi lükatud"
+      },
       "backTo": "Tagasi {name} juurde",
       "greeting": "Tere, {name}",
       "noEmailOnFile": "E-posti aadress puudub",

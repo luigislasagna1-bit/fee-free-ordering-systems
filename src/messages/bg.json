@@ -17,6 +17,8 @@
     "discounts": "Отстъпки"
   },
   "common": {
+    "showPassword": "Показване на паролата",
+    "hidePassword": "Скриване на паролата",
     "save": "Запази",
     "saveChanges": "Запази промените",
     "cancel": "Отказ",
@@ -621,6 +623,7 @@
     "emailRequired": "Имейлът е задължителен"
   },
   "kitchen": {
+    "opensIn": "Отваря след {time}",
     "cancelledByCustomer": "Отменена от клиента",
     "title": "Kitchen Order App",
     "newOrders": "Нови поръчки",
@@ -5165,6 +5168,7 @@
       "take_out": "ЗА ВКЪЩИ"
     },
     "orderTypesLower": {
+      "take_out": "за вкъщи",
       "pickup": "вземане",
       "delivery": "доставка",
       "dine_in": "на място",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "С уважение,",
+      "poweredBy": "Осъществено от"
+    },
     "common": {
       "viewInAdmin": "Отвори в администрацията",
       "trackOrder": "Проследи поръчката",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Ако не си поискал/а това, можеш спокойно да игнорираш имейла."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Ресторантът в момента е затворен — поръчката ви е поставена на изчакване и ще получите новини веднага щом отворят. Проверете имейла си в {openingTime}.",
       "closedNote": "В момента ресторантът е затворен — поръчката ти е в изчакване и ще получиш известие веднага щом отворят.",
       "cancelNote": "Ако изникне нещо непредвидено, все още можеш да отмениш поръчката си тук.",
       "subject": "Поръчка #{orderNumber} получена — очаква потвърждение",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Запазена маса за {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Поръчка #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Поръчка #{orderNumber}",
+      "badgeNew": "Нова поръчка",
+      "minShort": "мин",
+      "badgePaidOnline": "Платена онлайн",
+      "badgeCollectCard": "За плащане — с карта",
+      "badgeCollectCash": "За плащане — в брой",
+      "badgePayAtStore": "Плащане на място",
+      "tablePreorder": "Резервация на маса + предварителна поръчка — {partySize} гости, {time}",
+      "tablePreorderOne": "Резервация на маса + предварителна поръчка — 1 гост, {time}",
+      "labelDeliveryAddress": "Адрес за доставка",
+      "labelCustomerNotes": "Бележки от клиента",
+      "labelOrderDetails": "Детайли на поръчката",
+      "labelOrderTotal": "Обща сума на поръчката",
+      "collected": "Платено",
+      "toCollect": "За плащане",
+      "creditFallback": "кредит",
+      "paidWith": "Платено с {label}",
+      "totalMinusCredit": "Обща сума на поръчката {total} − {credit} платено с {label}",
+      "seeBreakdown": "Вижте подробната разбивка в администраторския панел.",
+      "openKitchenApp": "Отворете Kitchen Order App",
+      "acceptHint": "Приемете тази поръчка от Kitchen Order App или от администраторския панел. Ако не бъде предприето действие в рамките на зададеното от вас време, поръчката се отхвърля автоматично.",
       "subject": "Нова поръчка #{orderNumber} — {restaurant}",
       "title": "Нова поръчка получена",
       "body": "{customer} направи поръчка #{orderNumber} на стойност {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Изпраща се месечно"
     },
     "reservationConfirmed": {
+      "previewRequested": "Заявката за резервация е получена — {dateTime} за {partySize}",
+      "previewDeclined": "Актуализация на резервацията — {dateTime} за {partySize}",
+      "previewCancelled": "Резервацията е отменена — {dateTime} за {partySize}",
       "subjectCancelled": "Резервацията ти е отменена",
       "headerTitleCancelled": "Резервацията е отменена",
       "introCancelled": "Ти отмени резервацията си в {restaurantName} — ресторантът е уведомен и масата ти е освободена.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Пропуснато"
     },
     "newReservation": {
+      "preview": "Нова резервация — {dateTime} · гости: {partySize}",
+      "previewCancelled": "Резервацията е отменена — {dateTime} · гости: {partySize}",
+      "headerTitle": "{restaurant} — Резервация #{reservationNumber}",
+      "subtitleNew": "Нова заявка за резервация",
+      "subtitleCancelled": "Резервацията е отменена от клиента",
+      "badgeNew": "Нова",
+      "badgeCancelled": "Отменена от клиента",
+      "badgeParty": "Гости: {partySize}",
+      "labelTime": "Час на резервацията",
+      "cancelledNote": "Клиентът отмени тази резервация от имейла си за потвърждение — масата може да бъде освободена. Не са необходими действия.",
+      "labelSpecialRequests": "Специални желания",
+      "manageButton": "Управление на резервацията",
       "subjectCancelled": "Резервацията е отменена от клиента — {restaurant}",
       "subject": "Нова резервация — {restaurant}",
       "title": "Нова резервация {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Код за потвърждение"
     },
     "passwordReset": {
+      "preview": "Нулирайте паролата си за {brand}",
+      "subtitle": "Използвайте бутона по-долу, за да зададете нова",
+      "greeting": "Здравейте, {name},",
+      "greetingNoName": "Здравейте,",
+      "expiryOneHour": "1 час",
+      "linkFallback": "Ако бутонът не работи, копирайте и поставете този URL адрес в браузъра си:",
+      "ignoreHeading": "Не сте заявили това?",
+      "ignoreBody": "Можете спокойно да игнорирате този имейл — паролата ви няма да бъде променена, освен ако не кликнете върху линка по-горе. Ако се притеснявате, че някой друг се опитва да влезе в акаунта ви, отговорете на този имейл и ние ще проверим.",
       "subject": "Нулиране на паролата",
       "title": "Нулирай паролата си",
-      "body": "Натисни бутона по-долу, за да зададеш нова парола. Линкът изтича след 1 час.",
+      "body": "Получихме заявка за нулиране на паролата на вашия акаунт в {account}. Кликнете върху бутона по-долу, за да изберете нова — линкът е валиден {expiresIn}.",
       "button": "Нулирай паролата"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP член"
     },
     "customerSignup": {
+      "preview": "{restaurant} — нов клиентски акаунт: {customer}",
+      "headerTitle": "{restaurant} — нов клиентски акаунт",
+      "badge": "Нова регистрация",
+      "body": "Нов клиент току-що създаде акаунт във вашия ресторант.",
+      "labelCustomer": "Клиент",
+      "viewCustomersButton": "Преглед на клиентите в админ панела",
       "subject": "{restaurant}: нов клиентски акаунт — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Нещо се обърка. Моля, опитай отново."
     },
     "accountPage": {
+      "status": {
+        "pending": "В изчакване",
+        "accepted": "Приета",
+        "preparing": "Приготвя се",
+        "ready": "Готова",
+        "completed": "Завършена",
+        "cancelled": "Отменена",
+        "rejected": "Отхвърлена"
+      },
       "backTo": "Обратно към {name}",
       "greeting": "Здравей, {name}",
       "noEmailOnFile": "Няма записан имейл",

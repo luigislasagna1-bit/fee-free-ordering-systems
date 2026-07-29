@@ -17,6 +17,8 @@
     "discounts": "Rabatter"
   },
   "common": {
+    "showPassword": "Vis adgangskode",
+    "hidePassword": "Skjul adgangskode",
     "save": "Gem",
     "saveChanges": "Gem ændringer",
     "cancel": "Annuller",
@@ -621,6 +623,7 @@
     "emailRequired": "E-mailadresse er påkrævet"
   },
   "kitchen": {
+    "opensIn": "Åbner om {time}",
     "cancelledByCustomer": "Annulleret af kunden",
     "title": "Kitchen Order App",
     "newOrders": "Nye ordrer",
@@ -5165,6 +5168,7 @@
       "take_out": "TAG MED"
     },
     "orderTypesLower": {
+      "take_out": "takeaway",
       "pickup": "afhentning",
       "delivery": "levering",
       "dine_in": "spis her",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Med venlig hilsen,",
+      "poweredBy": "Leveret af"
+    },
     "common": {
       "viewInAdmin": "Åbn i admin",
       "trackOrder": "Spor din ordre",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Hvis du ikke har anmodet om dette, kan du roligt ignorere denne e-mail."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restauranten er lukket lige nu — din bestilling er sat i kø, og du får en opdatering, så snart de åbner igen. Hold øje med din mail fra {openingTime}.",
       "closedNote": "Restauranten er lukket lige nu — din bestilling er i kø, og du får en opdatering, så snart de åbner.",
       "cancelNote": "Hvis der opstår noget uventet, kan du stadig annullere din bestilling her.",
       "subject": "Ordre #{orderNumber} modtaget — afventer bekræftelse",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Bord reserveret til {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Bestilling #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Bestilling #{orderNumber}",
+      "badgeNew": "Ny bestilling",
+      "minShort": "min.",
+      "badgePaidOnline": "Betalt online",
+      "badgeCollectCard": "Skal opkræves — kort",
+      "badgeCollectCash": "Skal opkræves — kontant",
+      "badgePayAtStore": "Betales på stedet",
+      "tablePreorder": "Bordreservation + forudbestilling — {partySize} gæster, {time}",
+      "tablePreorderOne": "Bordreservation + forudbestilling — 1 gæst, {time}",
+      "labelDeliveryAddress": "Leveringsadresse",
+      "labelCustomerNotes": "Kundens bemærkninger",
+      "labelOrderDetails": "Bestillingsdetaljer",
+      "labelOrderTotal": "Samlet beløb",
+      "collected": "Opkrævet",
+      "toCollect": "Skal opkræves",
+      "creditFallback": "tilgodehavende",
+      "paidWith": "Betalt med {label}",
+      "totalMinusCredit": "Samlet beløb {total} − {credit} betalt med {label}",
+      "seeBreakdown": "Se den specificerede oversigt i admin-dashboardet.",
+      "openKitchenApp": "Åbn Kitchen Order App",
+      "acceptHint": "Acceptér bestillingen i Kitchen Order App eller admin-dashboardet. Hvis der ikke reageres inden for den indstillede tidsfrist, afvises den automatisk.",
       "subject": "Ny ordre #{orderNumber} — {restaurant}",
       "title": "Ny ordre modtaget",
       "body": "{customer} afgav netop ordre #{orderNumber} på {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Sendes månedligt"
     },
     "reservationConfirmed": {
+      "previewRequested": "Reservationsanmodning modtaget — {dateTime} til {partySize}",
+      "previewDeclined": "Opdatering om din reservation — {dateTime} til {partySize}",
+      "previewCancelled": "Reservation annulleret — {dateTime} til {partySize}",
       "subjectCancelled": "Din reservation er annulleret",
       "headerTitleCancelled": "Reservation annulleret",
       "introCancelled": "Du har annulleret din reservation hos {restaurantName} — restauranten har fået besked, og dit bord er frigivet.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Mistet"
     },
     "newReservation": {
+      "preview": "Ny reservation — {dateTime} · selskab på {partySize}",
+      "previewCancelled": "Reservation annulleret — {dateTime} · selskab på {partySize}",
+      "headerTitle": "{restaurant} — Reservation #{reservationNumber}",
+      "subtitleNew": "Ny reservationsanmodning",
+      "subtitleCancelled": "Reservation annulleret af kunden",
+      "badgeNew": "Ny",
+      "badgeCancelled": "Annulleret af kunden",
+      "badgeParty": "Selskab på {partySize}",
+      "labelTime": "Reservationstidspunkt",
+      "cancelledNote": "Kunden har annulleret denne reservation via sin bekræftelsesmail — bordet kan frigives. Der kræves ingen handling.",
+      "labelSpecialRequests": "Særlige ønsker",
+      "manageButton": "Administrér reservation",
       "subjectCancelled": "Reservation annulleret af gæsten — {restaurant}",
       "subject": "Ny reservation — {restaurant}",
       "title": "Ny reservation {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Bekræftelseskode"
     },
     "passwordReset": {
+      "preview": "Nulstil din {brand}-adgangskode",
+      "subtitle": "Brug knappen nedenfor til at vælge en ny",
+      "greeting": "Hej {name},",
+      "greetingNoName": "Hej,",
+      "expiryOneHour": "1 time",
+      "linkFallback": "Hvis knappen ikke virker, kan du kopiere denne URL og indsætte den i din browser:",
+      "ignoreHeading": "Har du ikke anmodet om dette?",
+      "ignoreBody": "Du kan roligt ignorere denne mail — din adgangskode ændres kun, hvis du klikker på linket ovenfor. Er du bekymret for, at en anden prøver at få adgang til din konto, så besvar denne mail, og vi kigger på det.",
       "subject": "Nulstil din adgangskode",
       "title": "Nulstil din adgangskode",
-      "body": "Klik på knappen nedenfor for at angive en ny adgangskode. Dette link udløber om 1 time.",
+      "body": "Vi har modtaget en anmodning om at nulstille adgangskoden til din {account}-konto. Klik på knappen nedenfor for at vælge en ny — linket er gyldigt i {expiresIn}.",
       "button": "Nulstil adgangskode"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-medlem"
     },
     "customerSignup": {
+      "preview": "{restaurant} — ny kundekonto: {customer}",
+      "headerTitle": "{restaurant} — ny kundekonto",
+      "badge": "Ny tilmelding",
+      "body": "En ny kunde har netop oprettet en konto hos din restaurant.",
+      "labelCustomer": "Kunde",
+      "viewCustomersButton": "Se kunder i admin",
       "subject": "{restaurant}: ny kundekonto — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Noget gik galt. Prøv igen."
     },
     "accountPage": {
+      "status": {
+        "pending": "Afventer",
+        "accepted": "Accepteret",
+        "preparing": "Tilberedes",
+        "ready": "Klar",
+        "completed": "Gennemført",
+        "cancelled": "Annulleret",
+        "rejected": "Afvist"
+      },
       "backTo": "Tilbage til {name}",
       "greeting": "Hej, {name}",
       "noEmailOnFile": "Ingen e-mail registreret",

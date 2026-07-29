@@ -22,8 +22,8 @@ import prisma from "@/lib/db";
 import { decrypt } from "@/lib/encrypt";
 import { getDict, type Translator } from "@/lib/i18n-dict";
 import { APP_LINKS } from "@/lib/app-links";
-import { formatTime } from "@/lib/format-time";
-import { renderEmail } from "@/emails/render";
+import { formatTime, formatDateCapitalized } from "@/lib/format-time";
+import { renderEmail, emailHtmlToText } from "@/emails/render";
 import OrderConfirmation         from "@/emails/templates/OrderConfirmation";
 import KitchenNotification       from "@/emails/templates/KitchenNotification";
 import OrderStatusUpdate         from "@/emails/templates/OrderStatusUpdate";
@@ -61,7 +61,7 @@ import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
 // Invalidate by calling `resetEmailTransport()` after the super-admin saves.
-let cached: { client: Resend | null; from: string; loadedAt: number } | null = null;
+let cached: { client: Resend | null; from: string; postalAddress: string | null; loadedAt: number } | null = null;
 const CACHE_TTL_MS = 60_000;
 
 async function getTransport(): Promise<{ client: Resend | null; from: string }> {
@@ -71,6 +71,7 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
 
   let apiKey: string | null = null;
   let from = process.env.EMAIL_FROM || "Fee Free Ordering <onboarding@resend.dev>";
+  let postalAddress: string | null = null;
 
   try {
     const settings = await prisma.platformSettings.findUnique({ where: { id: "singleton" } });
@@ -86,6 +87,9 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
       }
     }
     if (settings?.emailFrom) from = settings.emailFrom;
+    // Legal postal address (superadmin → Settings → Company) — surfaced in
+    // MARKETING email footers only (CAN-SPAM). Rides the same cached query.
+    postalAddress = settings?.companyAddress?.trim() || null;
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : String(e);
     console.error("[Email transport] PlatformSettings query failed:", msg);
@@ -96,8 +100,15 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
   }
 
   const client = apiKey ? new Resend(apiKey) : null;
-  cached = { client, from, loadedAt: Date.now() };
+  cached = { client, from, postalAddress, loadedAt: Date.now() };
   return { client, from };
+}
+
+/** Platform legal postal address for COMMERCIAL email footers (CAN-SPAM).
+ *  Same 60s cache as the transport; null when unset. */
+export async function getPlatformPostalAddress(): Promise<string | null> {
+  await getTransport();
+  return cached?.postalAddress ?? null;
 }
 
 export function resetEmailTransport() {
@@ -208,13 +219,21 @@ async function send({
       headers["List-Unsubscribe-Post"] = "List-Unsubscribe=One-Click";
     }
     const ccList = Array.isArray(cc) ? cc.filter(Boolean) : cc ? [cc] : [];
+    // Plain-text alternative on EVERY email (deliverability — HTML-only mail
+    // is a standing spam-score deduction; Fabrizio cms0gyexp #3). Derived from
+    // the rendered HTML unless the caller supplied its own `text`. A converter
+    // hiccup must never block a send — fall back to HTML-only.
+    let plainText = text;
+    if (!plainText) {
+      try { plainText = emailHtmlToText(html); } catch { plainText = undefined; }
+    }
     const { data, error } = await client.emails.send({
       from,
       to,
       ...(ccList.length > 0 ? { cc: ccList } : {}),
       subject,
       html,
-      text,
+      ...(plainText ? { text: plainText } : {}),
       ...(replyTo ? { replyTo } : {}),
       ...(Object.keys(headers).length > 0 ? { headers } : {}),
     });
@@ -300,6 +319,10 @@ interface OrderEmailParams {
   /** Order landed while the restaurant was CLOSED — adds the "you'll get an
    *  update as soon as they open" note. */
   placedWhileClosed?: boolean;
+  /** The deferred kitchen-alert instant (Order.alertAt = next opening). With
+   *  placedWhileClosed, the closed note names the concrete time — GloriaFood
+   *  parity ("Check your email on Saturday, 25 Jul, 20:15"). cms0gyexp #8. */
+  opensAt?: Date | string | null;
   /** Restaurant defaultLanguage. Defaults to "en". */
   locale?: string;
   /** ISO 4217 currency code (e.g. "usd", "eur"). Drives money formatting
@@ -575,6 +598,19 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
         return `${datePart} ${formatTime(resv.time, params.hoursFormat ?? "24h")}`;
       })()
     : null;
+  // Closed-hours opening time (cms0gyexp #8, GloriaFood parity): alertAt is a
+  // real UTC instant, so unlike the wall-clock reservation label this DOES
+  // format in the restaurant's timezone. Capitalized weekday/month for
+  // Romance locales. Null/past → the generic closedNote fallback renders.
+  const opensDate = params.opensAt ? new Date(params.opensAt) : null;
+  const opensAtLabel = opensDate && Number.isFinite(opensDate.getTime()) && opensDate.getTime() > Date.now()
+    ? formatDateCapitalized(opensDate, params.locale || "en", {
+        timeZone: params.timezone || "UTC",
+        weekday: "long", day: "numeric", month: "short",
+        hour: "numeric", minute: "2-digit",
+        hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
+      })
+    : null;
   const html = await renderEmail(
     OrderConfirmation({
       t,
@@ -600,6 +636,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       trackingUrl: params.trackingUrl,
       cancelUrl: params.cancelUrl,
       placedWhileClosed: params.placedWhileClosed,
+      opensAtLabel,
       restaurantUrl: params.restaurantUrl,
       restaurantEmail: params.restaurantEmail,
       restaurantPhone: params.restaurantPhone,
@@ -691,6 +728,7 @@ export async function sendNewOrderNotificationEmail(params: {
     : null;
   const html = await renderEmail(
     KitchenNotification({
+      t,
       restaurantName: params.restaurantName,
       orderNumber: params.orderNumber,
       customerName: params.customerName,
@@ -783,6 +821,7 @@ export async function sendOrderAcceptedNotificationEmail(params: {
     : null;
   const html = await renderEmail(
     KitchenNotification({
+      t,
       restaurantName: params.restaurantName,
       orderNumber: params.orderNumber,
       customerName: params.customerName,
@@ -1029,6 +1068,7 @@ export async function sendCustomerSignupNotificationEmail(params: {
   const t = await getDict(params.locale);
   const html = await renderEmail(
     CustomerSignupNotification({
+      t,
       restaurantName: params.restaurantName,
       customerName: params.customerName,
       customerEmail: params.customerEmail,
@@ -1056,6 +1096,9 @@ export async function sendRewardGiftEmail(params: {
   balanceLabel: string;
   note?: string | null;
   orderUrl: string;
+  /** Restaurant contact email — Reply-To so a customer's reply reaches the
+   *  restaurant, not the platform inbox (deliverability, cms0gyexp #3). */
+  restaurantEmail?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -1077,6 +1120,7 @@ export async function sendRewardGiftEmail(params: {
     subject: t("email.rewardGift.subject", { restaurant: params.restaurantName, amount: params.amountLabel, label: params.rewardLabel }),
     html,
     fromName: params.restaurantName,
+    replyTo: params.restaurantEmail,
   });
 }
 
@@ -1092,6 +1136,8 @@ export async function sendRewardGiftInviteEmail(params: {
   rewardLabel: string;
   note?: string | null;
   orderUrl: string;
+  /** Restaurant contact email — Reply-To (deliverability, cms0gyexp #3). */
+  restaurantEmail?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -1113,6 +1159,7 @@ export async function sendRewardGiftInviteEmail(params: {
     subject: t("email.rewardGiftInvite.subject", { restaurant: params.restaurantName, amount: params.amountLabel, label: params.rewardLabel }),
     html,
     fromName: params.restaurantName,
+    replyTo: params.restaurantEmail,
   });
 }
 
@@ -1130,6 +1177,8 @@ export async function sendOrderRefundEmail(params: {
    *  Caller gates on rewardsEnabled. */
   creditReturnedLabel?: string;
   rewardLabel?: string | null;
+  /** Restaurant contact email — Reply-To (deliverability, cms0gyexp #3). */
+  restaurantEmail?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -1151,6 +1200,7 @@ export async function sendOrderRefundEmail(params: {
     subject: t("email.orderRefund.subject", { orderNumber: params.orderNumber }),
     html,
     fromName: params.restaurantName,
+    replyTo: params.restaurantEmail,
   });
 }
 
@@ -1337,10 +1387,25 @@ export async function sendReservationConfirmation(params: {
   /** Restaurant 12h/24h preference — formats the reservation time so the email
    *  matches the restaurant's setting (was always 24h). Luigi 2026-06-08. */
   hoursFormat?: "12h" | "24h";
+  /** Restaurant contacts for the footer (cms0gyexp #4) — the closing line
+   *  says "contact us using the details below"; these make it true. */
+  restaurantUrl?: string;
+  restaurantEmail?: string | null;
+  restaurantPhone?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
   const timeLabel = formatTime(params.time, params.hoursFormat ?? "24h");
+  // Localized human date, NOT the raw ISO + English "at" the email used to
+  // show ("2026-07-25 at 19:00" — Fabrizio cms0gyexp). The stored date/time
+  // are the restaurant's LOCAL wall clock, so no timeZone conversion; weekday
+  // + month per the customer's locale, capitalized for Romance locales, then
+  // the time per the restaurant's 12h/24h setting. Comma-joined — no
+  // translatable connector word needed.
+  const dateObj = new Date(`${params.date}T${params.time}:00`);
+  const dateTimeLabel = Number.isFinite(dateObj.getTime())
+    ? `${formatDateCapitalized(dateObj, params.locale || "en", { weekday: "long", day: "numeric", month: "long" })}, ${timeLabel}`
+    : `${params.date}, ${timeLabel}`;
   const html = await renderEmail(
     ReservationConfirmation({
       t,
@@ -1348,10 +1413,13 @@ export async function sendReservationConfirmation(params: {
       customerName: params.customerName,
       reservationNumber: params.confirmationCode,
       restaurantName: params.restaurantName,
-      dateTime: `${params.date} at ${timeLabel}`,
+      dateTime: dateTimeLabel,
       partySize: params.partySize,
       depositPaid: params.depositPaid,
       cancelUrl: params.cancelUrl,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail ?? undefined,
+      restaurantPhone: params.restaurantPhone ?? undefined,
       imprint: currentImprint(),
     })
   );
@@ -1367,6 +1435,8 @@ export async function sendReservationConfirmation(params: {
     // emails — the address stays the platform's verified sender. Fabrizio
     // report cmpxeljn6.
     fromName: params.restaurantName,
+    // Replies go to the restaurant, not the platform inbox (cms0gyexp #3/#4).
+    replyTo: params.restaurantEmail,
   });
 }
 
@@ -1384,18 +1454,31 @@ export async function sendNewReservationNotification(params: {
   dashboardUrl: string;
   customerPhone?: string | null;
   customerEmail?: string | null;
+  /** Guest's special requests / notes — amber card (cms0gyexp #1). */
+  specialRequests?: string | null;
+  /** Restaurant 12h/24h preference for the reservation time. */
+  hoursFormat?: "12h" | "24h";
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  // Localized human date (was "2026-07-25 at 19:00" — raw ISO + English "at",
+  // Fabrizio cms0gyexp). Local wall clock — no timeZone conversion.
+  const dateObj = new Date(`${params.date}T${params.time}:00`);
+  const timeLabel = formatTime(params.time, params.hoursFormat ?? "24h");
+  const dateTimeLabel = Number.isFinite(dateObj.getTime())
+    ? `${formatDateCapitalized(dateObj, params.locale || "en", { weekday: "long", day: "numeric", month: "long" })}, ${timeLabel}`
+    : `${params.date}, ${timeLabel}`;
   const html = await renderEmail(
     NewReservationNotification({
+      t,
       restaurantName: params.restaurantName,
       reservationNumber: params.confirmationCode,
       customerName: params.customerName,
       customerPhone: params.customerPhone,
       customerEmail: params.customerEmail,
-      dateTime: `${params.date} at ${params.time}`,
+      dateTime: dateTimeLabel,
       partySize: params.partySize,
+      specialRequests: params.specialRequests,
       dashboardUrl: params.dashboardUrl,
       cancelled: params.status === "cancelled",
       imprint: currentImprint(),
@@ -1419,13 +1502,27 @@ export async function sendPasswordResetEmail(params: {
   to: string;
   name: string | null;
   resetUrl: string;
+  /** Restaurant branding for STOREFRONT-customer resets (cms0gyexp #5 —
+   *  white-label): brands the body copy ("your {restaurant} account"), the
+   *  From display name, Reply-To, and the footer contacts. Omit for
+   *  platform flows (owner / marketplace), which keep the platform brand. */
+  restaurantName?: string;
+  restaurantUrl?: string;
+  restaurantEmail?: string | null;
+  restaurantPhone?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
   const html = await renderEmail(
     PasswordReset({
+      t,
       name: params.name ?? undefined,
       resetUrl: params.resetUrl,
+      accountName: params.restaurantName,
+      restaurantName: params.restaurantName,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail,
+      restaurantPhone: params.restaurantPhone,
       imprint: currentImprint(),
     })
   );
@@ -1433,6 +1530,10 @@ export async function sendPasswordResetEmail(params: {
     to: params.to,
     subject: t("email.passwordReset.subject"),
     html,
+    // Storefront resets ride the restaurant's identity like every other
+    // customer email; platform flows keep the default sender.
+    fromName: params.restaurantName,
+    replyTo: params.restaurantEmail,
   });
 }
 
@@ -1823,12 +1924,19 @@ export async function sendAutopilotEmail(params: {
       restaurantEmail: params.restaurantEmail,
       restaurantPhone: params.restaurantPhone,
       imprint: currentImprint(),
+      // CAN-SPAM: commercial mail needs a VISIBLE opt-out + the sender's
+      // postal address in the body, not just the RFC-8058 header.
+      unsubscribeUrl: params.unsubscribeUrl,
+      postalAddress: await getPlatformPostalAddress(),
     })
   );
   return send({
     to: params.to,
     subject,
     html,
+    // Marketing rides the RESTAURANT's identity like receipts do — the
+    // inconsistent platform-name sender was a trust/deliverability wart.
+    fromName: params.restaurantName,
     replyTo: params.restaurantEmail,
     listUnsubscribeUrl: params.unsubscribeUrl,
   });

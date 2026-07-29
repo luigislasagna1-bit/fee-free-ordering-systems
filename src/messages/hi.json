@@ -17,6 +17,8 @@
     "discounts": "छूट"
   },
   "common": {
+    "showPassword": "पासवर्ड दिखाएँ",
+    "hidePassword": "पासवर्ड छिपाएँ",
     "save": "सहेजें",
     "saveChanges": "बदलाव सहेजें",
     "cancel": "रद्द करें",
@@ -621,6 +623,7 @@
     "emailRequired": "ईमेल आवश्यक है"
   },
   "kitchen": {
+    "opensIn": "{time} में खुलेगा",
     "cancelledByCustomer": "ग्राहक द्वारा कैंसिल",
     "title": "Kitchen Order App",
     "newOrders": "नए ऑर्डर",
@@ -5165,6 +5168,7 @@
       "take_out": "टेकआउट"
     },
     "orderTypesLower": {
+      "take_out": "टेकअवे",
       "pickup": "पिकअप",
       "delivery": "डिलीवरी",
       "dine_in": "डाइन-इन",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "सादर,",
+      "poweredBy": "पावर्ड बाय"
+    },
     "common": {
       "viewInAdmin": "एडमिन में खोलें",
       "trackOrder": "अपना ऑर्डर ट्रैक करें",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "अगर आपने यह अनुरोध नहीं किया था, तो आप इस ईमेल को अनदेखा कर सकते हैं।"
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "रेस्टोरेंट अभी बंद है — आपका ऑर्डर कतार में है और रेस्टोरेंट खुलते ही आपको अपडेट मिल जाएगा। {openingTime} पर अपना ईमेल देखें।",
       "closedNote": "रेस्टोरेंट अभी बंद है — आपका ऑर्डर कतार में है और रेस्टोरेंट के खुलते ही आपको अपडेट मिल जाएगा।",
       "cancelNote": "अगर कुछ अनपेक्षित हो जाए, तो आप अब भी यहाँ से अपना ऑर्डर कैंसिल कर सकते हैं।",
       "subject": "ऑर्डर #{orderNumber} प्राप्त हुआ — पुष्टि की प्रतीक्षा है",
@@ -5274,6 +5283,28 @@
       "tableReservation": "{n} लोगों के लिए टेबल आरक्षित — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — ऑर्डर #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — ऑर्डर #{orderNumber}",
+      "badgeNew": "नया ऑर्डर",
+      "minShort": "मि.",
+      "badgePaidOnline": "ऑनलाइन भुगतान हुआ",
+      "badgeCollectCard": "लेना बाकी — कार्ड",
+      "badgeCollectCash": "लेना बाकी — नकद",
+      "badgePayAtStore": "स्टोर पर भुगतान",
+      "tablePreorder": "टेबल रिज़र्वेशन + प्री-ऑर्डर — {partySize} मेहमान, {time}",
+      "tablePreorderOne": "टेबल रिज़र्वेशन + प्री-ऑर्डर — 1 मेहमान, {time}",
+      "labelDeliveryAddress": "डिलीवरी पता",
+      "labelCustomerNotes": "ग्राहक के नोट्स",
+      "labelOrderDetails": "ऑर्डर विवरण",
+      "labelOrderTotal": "ऑर्डर की कुल राशि",
+      "collected": "प्राप्त हो गया",
+      "toCollect": "लेना बाकी",
+      "creditFallback": "क्रेडिट",
+      "paidWith": "{label} से भुगतान हुआ",
+      "totalMinusCredit": "ऑर्डर की कुल राशि {total} − {credit} का भुगतान {label} से हुआ",
+      "seeBreakdown": "आइटम-वार पूरा विवरण एडमिन डैशबोर्ड में देखें।",
+      "openKitchenApp": "Kitchen Order App खोलें",
+      "acceptHint": "इस ऑर्डर को Kitchen Order App या एडमिन डैशबोर्ड से स्वीकार करें। आपके निर्धारित समय के भीतर कोई कार्रवाई न होने पर ऑर्डर अपने आप अस्वीकार हो जाएगा।",
       "subject": "नया ऑर्डर #{orderNumber} — {restaurant}",
       "title": "नया ऑर्डर प्राप्त हुआ",
       "body": "{customer} ने अभी {total} का ऑर्डर #{orderNumber} दिया है।",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "मासिक भेजा जाता है"
     },
     "reservationConfirmed": {
+      "previewRequested": "रिज़र्वेशन अनुरोध मिल गया — {dateTime}, {partySize} लोगों के लिए",
+      "previewDeclined": "रिज़र्वेशन अपडेट — {dateTime}, {partySize} लोगों के लिए",
+      "previewCancelled": "रिज़र्वेशन रद्द हुआ — {dateTime}, {partySize} लोगों के लिए",
       "subjectCancelled": "आपका रिज़र्वेशन कैंसिल हो गया है",
       "headerTitleCancelled": "रिज़र्वेशन कैंसिल हो गया",
       "introCancelled": "आपने {restaurantName} में अपना रिज़र्वेशन कैंसिल कर दिया है — रेस्टोरेंट को सूचित कर दिया गया है और आपकी टेबल रिलीज़ कर दी गई है।",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "छूट गया"
     },
     "newReservation": {
+      "preview": "नया रिज़र्वेशन — {dateTime} · {partySize} लोग",
+      "previewCancelled": "रिज़र्वेशन रद्द — {dateTime} · {partySize} लोग",
+      "headerTitle": "{restaurant} — रिज़र्वेशन #{reservationNumber}",
+      "subtitleNew": "नया रिज़र्वेशन अनुरोध",
+      "subtitleCancelled": "ग्राहक ने रिज़र्वेशन रद्द किया",
+      "badgeNew": "नया",
+      "badgeCancelled": "ग्राहक द्वारा रद्द",
+      "badgeParty": "{partySize} लोग",
+      "labelTime": "रिज़र्वेशन समय",
+      "cancelledNote": "ग्राहक ने अपने कन्फ़र्मेशन ईमेल से यह बुकिंग रद्द कर दी है — टेबल खाली की जा सकती है। किसी कार्रवाई की ज़रूरत नहीं है।",
+      "labelSpecialRequests": "विशेष अनुरोध",
+      "manageButton": "रिज़र्वेशन प्रबंधित करें",
       "subjectCancelled": "ग्राहक ने रिज़र्वेशन कैंसिल किया — {restaurant}",
       "subject": "नया आरक्षण — {restaurant}",
       "title": "नया आरक्षण {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "पुष्टि कोड"
     },
     "passwordReset": {
+      "preview": "अपना {brand} पासवर्ड रीसेट करें",
+      "subtitle": "नया पासवर्ड सेट करने के लिए नीचे दिए गए बटन का उपयोग करें",
+      "greeting": "नमस्ते {name},",
+      "greetingNoName": "नमस्ते,",
+      "expiryOneHour": "1 घंटा",
+      "linkFallback": "अगर बटन काम न करे, तो यह URL कॉपी करके अपने ब्राउज़र में पेस्ट करें:",
+      "ignoreHeading": "यह अनुरोध आपने नहीं किया?",
+      "ignoreBody": "आप इस ईमेल को बेझिझक अनदेखा कर सकते हैं — जब तक आप ऊपर दिए गए लिंक पर क्लिक नहीं करते, आपका पासवर्ड नहीं बदलेगा। अगर आपको चिंता है कि कोई और आपके अकाउंट तक पहुँचने की कोशिश कर रहा है, तो इस ईमेल का जवाब दें और हम इसकी जाँच करेंगे।",
       "subject": "अपना पासवर्ड रीसेट करें",
       "title": "अपना पासवर्ड रीसेट करें",
-      "body": "नया पासवर्ड सेट करने के लिए नीचे दिए बटन पर क्लिक करें। यह लिंक 1 घंटे में समाप्त हो जाएगा।",
+      "body": "हमें आपके {account} खाते का पासवर्ड रीसेट करने का अनुरोध मिला है। नया पासवर्ड चुनने के लिए नीचे दिए गए बटन पर क्लिक करें — यह लिंक {expiresIn} के लिए मान्य है।",
       "button": "पासवर्ड रीसेट करें"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP सदस्य"
     },
     "customerSignup": {
+      "preview": "{restaurant} — नया ग्राहक खाता: {customer}",
+      "headerTitle": "{restaurant} — नया ग्राहक खाता",
+      "badge": "नया साइन-अप",
+      "body": "एक नए ग्राहक ने अभी-अभी आपके रेस्टोरेंट में खाता बनाया है।",
+      "labelCustomer": "ग्राहक",
+      "viewCustomersButton": "एडमिन में ग्राहक देखें",
       "subject": "{restaurant}: नया ग्राहक खाता — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "कुछ गड़बड़ हो गई। कृपया फिर से कोशिश करें।"
     },
     "accountPage": {
+      "status": {
+        "pending": "लंबित",
+        "accepted": "स्वीकृत",
+        "preparing": "तैयार हो रहा है",
+        "ready": "तैयार",
+        "completed": "पूर्ण",
+        "cancelled": "रद्द",
+        "rejected": "अस्वीकृत"
+      },
       "backTo": "{name} पर वापस जाएं",
       "greeting": "नमस्ते, {name}",
       "noEmailOnFile": "कोई ईमेल दर्ज नहीं है",

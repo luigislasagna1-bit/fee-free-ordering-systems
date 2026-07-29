@@ -17,6 +17,8 @@
     "discounts": "折扣"
   },
   "common": {
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
     "save": "保存",
     "saveChanges": "保存更改",
     "cancel": "取消",
@@ -621,6 +623,7 @@
     "emailRequired": "电子邮箱为必填项"
   },
   "kitchen": {
+    "opensIn": "{time}后开门",
     "cancelledByCustomer": "顾客自行取消",
     "title": "Kitchen Order App",
     "newOrders": "新订单",
@@ -5165,6 +5168,7 @@
       "take_out": "打包带走"
     },
     "orderTypesLower": {
+      "take_out": "外带",
       "pickup": "自取",
       "delivery": "配送",
       "dine_in": "堂食",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "此致",
+      "poweredBy": "技术支持："
+    },
     "common": {
       "viewInAdmin": "在后台查看",
       "trackOrder": "追踪您的订单",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "如果您未提出此请求，可放心忽略此邮件。"
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "餐厅目前已打烊——您的订单已排入队列，餐厅一开门就会通知您。请在 {openingTime} 查看您的邮箱。",
       "closedNote": "餐厅目前已打烊——您的订单已进入队列，餐厅一开门就会为您更新状态。",
       "cancelNote": "如果有突发情况，您仍可以在这里取消订单。",
       "subject": "订单 #{orderNumber} 已收到——等待确认",
@@ -5274,6 +5283,28 @@
       "tableReservation": "已为 {n} 位预订餐桌 — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — 订单 #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — 订单 #{orderNumber}",
+      "badgeNew": "新订单",
+      "minShort": "分",
+      "badgePaidOnline": "已在线支付",
+      "badgeCollectCard": "待收款 — 刷卡",
+      "badgeCollectCash": "待收款 — 现金",
+      "badgePayAtStore": "到店支付",
+      "tablePreorder": "订座 + 预点餐 — {partySize} 位，{time}",
+      "tablePreorderOne": "订座 + 预点餐 — 1 位，{time}",
+      "labelDeliveryAddress": "配送地址",
+      "labelCustomerNotes": "顾客备注",
+      "labelOrderDetails": "订单详情",
+      "labelOrderTotal": "订单总额",
+      "collected": "已收款",
+      "toCollect": "待收款",
+      "creditFallback": "余额",
+      "paidWith": "已用 {label} 支付",
+      "totalMinusCredit": "订单总额 {total} − {credit}（已用 {label} 支付）",
+      "seeBreakdown": "请在管理后台查看逐项明细。",
+      "openKitchenApp": "打开 Kitchen Order App",
+      "acceptHint": "请通过 Kitchen Order App 或管理后台接单。若在您设定的时限内未处理，系统将自动拒单。",
       "subject": "新订单 #{orderNumber} — {restaurant}",
       "title": "收到新订单",
       "body": "{customer} 刚刚下了订单 #{orderNumber}，金额 {total}。",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "每月发送"
     },
     "reservationConfirmed": {
+      "previewRequested": "已收到订座请求 — {dateTime}，{partySize} 位",
+      "previewDeclined": "订座更新 — {dateTime}，{partySize} 位",
+      "previewCancelled": "订座已取消 — {dateTime}，{partySize} 位",
       "subjectCancelled": "您的预订已取消",
       "headerTitleCancelled": "预订已取消",
       "introCancelled": "您已取消在 {restaurantName} 的预订——餐厅已收到通知，您的餐桌也已释放。",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "已错过"
     },
     "newReservation": {
+      "preview": "新订座 — {dateTime} · {partySize} 位",
+      "previewCancelled": "订座已取消 — {dateTime} · {partySize} 位",
+      "headerTitle": "{restaurant} — 订座 #{reservationNumber}",
+      "subtitleNew": "新的订座请求",
+      "subtitleCancelled": "顾客已取消订座",
+      "badgeNew": "新",
+      "badgeCancelled": "顾客已取消",
+      "badgeParty": "{partySize} 位",
+      "labelTime": "订座时间",
+      "cancelledNote": "顾客已通过确认邮件取消了此次订座——该餐桌可以释放，无需任何操作。",
+      "labelSpecialRequests": "特殊要求",
+      "manageButton": "管理订座",
       "subjectCancelled": "顾客取消了预订 — {restaurant}",
       "subject": "新预订 — {restaurant}",
       "title": "新预订 {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "确认码"
     },
     "passwordReset": {
+      "preview": "重置您的 {brand} 密码",
+      "subtitle": "点击下方按钮设置新密码",
+      "greeting": "您好，{name}：",
+      "greetingNoName": "您好：",
+      "expiryOneHour": "1 小时",
+      "linkFallback": "如果按钮无法使用，请复制以下网址并粘贴到浏览器中打开：",
+      "ignoreHeading": "不是您本人操作？",
+      "ignoreBody": "您可以放心忽略这封邮件——除非您点击上方链接，否则密码不会更改。如果您担心有人试图访问您的账户，请回复此邮件，我们会为您核查。",
       "subject": "重置您的密码",
       "title": "重置您的密码",
-      "body": "点击下方按钮设置新密码，此链接 1 小时内有效。",
+      "body": "我们收到了重置您 {account} 账户密码的请求。点击下方按钮设置新密码——该链接在 {expiresIn} 内有效。",
       "button": "重置密码"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP 会员"
     },
     "customerSignup": {
+      "preview": "{restaurant} — 新顾客账户：{customer}",
+      "headerTitle": "{restaurant} — 新顾客账户",
+      "badge": "新注册",
+      "body": "刚刚有一位新顾客在您的餐厅创建了账户。",
+      "labelCustomer": "顾客",
+      "viewCustomersButton": "在管理后台查看顾客",
       "subject": "{restaurant}：新客户账户 — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "出了点问题，请重试。"
     },
     "accountPage": {
+      "status": {
+        "pending": "待处理",
+        "accepted": "已接单",
+        "preparing": "制作中",
+        "ready": "已备好",
+        "completed": "已完成",
+        "cancelled": "已取消",
+        "rejected": "已拒绝"
+      },
       "backTo": "返回 {name}",
       "greeting": "你好，{name}",
       "noEmailOnFile": "未绑定邮箱",

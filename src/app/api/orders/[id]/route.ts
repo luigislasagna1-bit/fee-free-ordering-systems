@@ -746,7 +746,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           customerEmail: order.customerEmail,
           customerPhone: order.customerPhone,
           orderType: order.type,
-          customerLocale: order.restaurant.defaultLanguage || "en",
+          customerLocale: (order as any).customerLocale || order.restaurant.defaultLanguage || "en",
           payload: {
             event: "orderStatusUpdate",
             customerName: order.customerName,

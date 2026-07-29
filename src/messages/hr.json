@@ -17,6 +17,8 @@
     "discounts": "Popusti"
   },
   "common": {
+    "showPassword": "Prikaži lozinku",
+    "hidePassword": "Sakrij lozinku",
     "save": "Spremi",
     "saveChanges": "Spremi promjene",
     "cancel": "Odustani",
@@ -621,6 +623,7 @@
     "emailRequired": "E-mail je obavezan"
   },
   "kitchen": {
+    "opensIn": "Otvara za {time}",
     "cancelledByCustomer": "Otkazao kupac",
     "title": "Kitchen Order App",
     "newOrders": "Nove narudžbe",
@@ -5165,6 +5168,7 @@
       "take_out": "PONIJETI"
     },
     "orderTypesLower": {
+      "take_out": "za van",
       "pickup": "preuzimanje",
       "delivery": "dostava",
       "dine_in": "konzumacija u lokalu",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Srdačan pozdrav,",
+      "poweredBy": "Pokreće"
+    },
     "common": {
       "viewInAdmin": "Otvori u adminu",
       "trackOrder": "Pratite svoju narudžbu",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Ako niste zatražili ovo, možete sigurno ignorirati ovaj e-mail."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restoran je trenutačno zatvoren — vaša narudžba je u redu čekanja i dobit ćete obavijest čim se otvori. Provjerite e-poštu u {openingTime}.",
       "closedNote": "Restoran je trenutačno zatvoren — tvoja narudžba čeka u redu i dobit ćeš obavijest čim otvore.",
       "cancelNote": "Ako iskrsne nešto neočekivano, narudžbu i dalje možeš otkazati ovdje.",
       "subject": "Narudžba #{orderNumber} primljena — čeka se potvrda",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Stol rezerviran za {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Narudžba #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Narudžba #{orderNumber}",
+      "badgeNew": "Nova narudžba",
+      "minShort": "min",
+      "badgePaidOnline": "Plaćeno online",
+      "badgeCollectCard": "Za naplatu — kartica",
+      "badgeCollectCash": "Za naplatu — gotovina",
+      "badgePayAtStore": "Plaćanje u restoranu",
+      "tablePreorder": "Rezervacija stola + prednarudžba — broj gostiju: {partySize}, {time}",
+      "tablePreorderOne": "Rezervacija stola + prednarudžba — 1 gost, {time}",
+      "labelDeliveryAddress": "Adresa za dostavu",
+      "labelCustomerNotes": "Napomene kupca",
+      "labelOrderDetails": "Detalji narudžbe",
+      "labelOrderTotal": "Ukupan iznos narudžbe",
+      "collected": "Naplaćeno",
+      "toCollect": "Za naplatu",
+      "creditFallback": "kredit",
+      "paidWith": "Plaćeno: {label}",
+      "totalMinusCredit": "Ukupan iznos narudžbe {total} − {credit} plaćeno ({label})",
+      "seeBreakdown": "Pogledajte detaljnu specifikaciju u admin nadzornoj ploči.",
+      "openKitchenApp": "Otvori Kitchen Order App",
+      "acceptHint": "Prihvatite ovu narudžbu u aplikaciji Kitchen Order App ili u admin nadzornoj ploči. Ako se ništa ne poduzme unutar postavljenog vremenskog ograničenja, narudžba se automatski odbija.",
       "subject": "Nova narudžba #{orderNumber} — {restaurant}",
       "title": "Nova narudžba primljena",
       "body": "{customer} je upravo naručio #{orderNumber} u iznosu {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Šalje se mjesečno"
     },
     "reservationConfirmed": {
+      "previewRequested": "Zahtjev za rezervaciju je zaprimljen — {dateTime} za {partySize}",
+      "previewDeclined": "Ažuriranje rezervacije — {dateTime} za {partySize}",
+      "previewCancelled": "Rezervacija je otkazana — {dateTime} za {partySize}",
       "subjectCancelled": "Tvoja rezervacija je otkazana",
       "headerTitleCancelled": "Rezervacija otkazana",
       "introCancelled": "Tvoja rezervacija u restoranu {restaurantName} je otkazana — restoran je obaviješten i tvoj stol je oslobođen.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Propušteno"
     },
     "newReservation": {
+      "preview": "Nova rezervacija — {dateTime} · broj gostiju: {partySize}",
+      "previewCancelled": "Rezervacija otkazana — {dateTime} · broj gostiju: {partySize}",
+      "headerTitle": "{restaurant} — Rezervacija #{reservationNumber}",
+      "subtitleNew": "Novi zahtjev za rezervaciju",
+      "subtitleCancelled": "Gost je otkazao rezervaciju",
+      "badgeNew": "Nova",
+      "badgeCancelled": "Otkazao gost",
+      "badgeParty": "Broj gostiju: {partySize}",
+      "labelTime": "Vrijeme rezervacije",
+      "cancelledNote": "Gost je otkazao ovu rezervaciju putem e-poruke s potvrdom — stol se može osloboditi. Nije potrebna nikakva radnja.",
+      "labelSpecialRequests": "Posebne želje",
+      "manageButton": "Upravljanje rezervacijom",
       "subjectCancelled": "Rezervaciju otkazao gost — {restaurant}",
       "subject": "Nova rezervacija — {restaurant}",
       "title": "Nova rezervacija {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Kod za potvrdu"
     },
     "passwordReset": {
+      "preview": "Ponovno postavite lozinku za {brand}",
+      "subtitle": "Pomoću gumba u nastavku postavite novu",
+      "greeting": "Pozdrav {name},",
+      "greetingNoName": "Pozdrav,",
+      "expiryOneHour": "1 sat",
+      "linkFallback": "Ako gumb ne radi, kopirajte i zalijepite ovaj URL u svoj preglednik:",
+      "ignoreHeading": "Niste to zatražili?",
+      "ignoreBody": "Ovu e-poruku možete slobodno zanemariti — vaša se lozinka neće promijeniti osim ako ne kliknete gornju poveznicu. Ako vas brine da netko drugi pokušava pristupiti vašem računu, odgovorite na ovu e-poruku i istražit ćemo.",
       "subject": "Poništite svoju lozinku",
       "title": "Poništite svoju lozinku",
-      "body": "Kliknite gumb ispod za postavljanje nove lozinke. Ova poveznica ističe za 1 sat.",
+      "body": "Zaprimili smo zahtjev za ponovno postavljanje lozinke za vaš račun {account}. Kliknite gumb u nastavku i odaberite novu — poveznica vrijedi {expiresIn}.",
       "button": "Poništi lozinku"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP član"
     },
     "customerSignup": {
+      "preview": "{restaurant} — novi račun kupca: {customer}",
+      "headerTitle": "{restaurant} — novi račun kupca",
+      "badge": "Nova registracija",
+      "body": "Novi kupac upravo je otvorio račun u vašem restoranu.",
+      "labelCustomer": "Kupac",
+      "viewCustomersButton": "Prikaži kupce u admin sučelju",
       "subject": "{restaurant}: novi korisnički račun — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Nešto je pošlo po zlu. Pokušaj ponovno."
     },
     "accountPage": {
+      "status": {
+        "pending": "Na čekanju",
+        "accepted": "Prihvaćena",
+        "preparing": "U pripremi",
+        "ready": "Spremna",
+        "completed": "Dovršena",
+        "cancelled": "Otkazana",
+        "rejected": "Odbijena"
+      },
       "backTo": "Natrag na {name}",
       "greeting": "Bok, {name}",
       "noEmailOnFile": "Nema e-mail adrese",

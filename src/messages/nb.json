@@ -17,6 +17,8 @@
     "discounts": "Rabatter"
   },
   "common": {
+    "showPassword": "Vis passord",
+    "hidePassword": "Skjul passord",
     "save": "Lagre",
     "saveChanges": "Lagre endringer",
     "cancel": "Avbryt",
@@ -621,6 +623,7 @@
     "emailRequired": "E-postadresse er påkrevd"
   },
   "kitchen": {
+    "opensIn": "Åpner om {time}",
     "cancelledByCustomer": "Kansellert av kunden",
     "title": "Kitchen Order App",
     "newOrders": "Nye bestillinger",
@@ -5165,6 +5168,7 @@
       "take_out": "TA MED"
     },
     "orderTypesLower": {
+      "take_out": "takeaway",
       "pickup": "henting",
       "delivery": "levering",
       "dine_in": "spis her",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Med vennlig hilsen,",
+      "poweredBy": "Levert av"
+    },
     "common": {
       "viewInAdmin": "Åpne i admin",
       "trackOrder": "Spor bestillingen din",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Hvis du ikke ba om dette, kan du trygt ignorere denne e-posten."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restauranten er stengt akkurat nå — bestillingen din ligger i kø, og du får en oppdatering så snart de åpner igjen. Følg med på e-posten din fra {openingTime}.",
       "closedNote": "Restauranten er stengt akkurat nå — bestillingen din ligger i kø, og du får en oppdatering så snart de åpner.",
       "cancelNote": "Hvis noe uventet skulle dukke opp, kan du fortsatt kansellere bestillingen din her.",
       "subject": "Bestilling #{orderNumber} mottatt — venter på bekreftelse",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Bord reservert for {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Bestilling #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Bestilling #{orderNumber}",
+      "badgeNew": "Ny bestilling",
+      "minShort": "min",
+      "badgePaidOnline": "Betalt på nett",
+      "badgeCollectCard": "Skal kreves inn — kort",
+      "badgeCollectCash": "Skal kreves inn — kontant",
+      "badgePayAtStore": "Betales på stedet",
+      "tablePreorder": "Bordreservasjon + forhåndsbestilling — {partySize} gjester, {time}",
+      "tablePreorderOne": "Bordreservasjon + forhåndsbestilling — 1 gjest, {time}",
+      "labelDeliveryAddress": "Leveringsadresse",
+      "labelCustomerNotes": "Kundens merknader",
+      "labelOrderDetails": "Bestillingsdetaljer",
+      "labelOrderTotal": "Totalbeløp",
+      "collected": "Krevd inn",
+      "toCollect": "Skal kreves inn",
+      "creditFallback": "tilgodebeløp",
+      "paidWith": "Betalt med {label}",
+      "totalMinusCredit": "Totalbeløp {total} − {credit} betalt med {label}",
+      "seeBreakdown": "Se den spesifiserte oversikten i admin-dashbordet.",
+      "openKitchenApp": "Åpne Kitchen Order App",
+      "acceptHint": "Godta bestillingen i Kitchen Order App eller admin-dashbordet. Hvis ingenting gjøres innen den konfigurerte tidsfristen, avvises den automatisk.",
       "subject": "Ny bestilling #{orderNumber} — {restaurant}",
       "title": "Ny bestilling mottatt",
       "body": "{customer} la nettopp inn bestilling #{orderNumber} på {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Sendes månedlig"
     },
     "reservationConfirmed": {
+      "previewRequested": "Reservasjonsforespørsel mottatt — {dateTime} for {partySize}",
+      "previewDeclined": "Oppdatering om reservasjonen din — {dateTime} for {partySize}",
+      "previewCancelled": "Reservasjon avbestilt — {dateTime} for {partySize}",
       "subjectCancelled": "Reservasjonen din er kansellert",
       "headerTitleCancelled": "Reservasjon kansellert",
       "introCancelled": "Du kansellerte reservasjonen din hos {restaurantName} — restauranten har fått beskjed, og bordet ditt er frigitt.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Mistet"
     },
     "newReservation": {
+      "preview": "Ny reservasjon — {dateTime} · selskap på {partySize}",
+      "previewCancelled": "Reservasjon avbestilt — {dateTime} · selskap på {partySize}",
+      "headerTitle": "{restaurant} — Reservasjon #{reservationNumber}",
+      "subtitleNew": "Ny reservasjonsforespørsel",
+      "subtitleCancelled": "Reservasjon avbestilt av kunden",
+      "badgeNew": "Ny",
+      "badgeCancelled": "Avbestilt av kunden",
+      "badgeParty": "Selskap på {partySize}",
+      "labelTime": "Reservasjonstidspunkt",
+      "cancelledNote": "Kunden avbestilte denne reservasjonen via bekreftelses-e-posten sin — bordet kan frigjøres. Ingen handling er nødvendig.",
+      "labelSpecialRequests": "Spesielle ønsker",
+      "manageButton": "Administrer reservasjon",
       "subjectCancelled": "Reservasjon kansellert av gjesten — {restaurant}",
       "subject": "Ny reservasjon — {restaurant}",
       "title": "Ny reservasjon {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Bekreftelseskode"
     },
     "passwordReset": {
+      "preview": "Tilbakestill {brand}-passordet ditt",
+      "subtitle": "Bruk knappen nedenfor for å velge et nytt",
+      "greeting": "Hei {name},",
+      "greetingNoName": "Hei,",
+      "expiryOneHour": "1 time",
+      "linkFallback": "Hvis knappen ikke fungerer, kan du kopiere denne URL-en og lime den inn i nettleseren din:",
+      "ignoreHeading": "Har du ikke bedt om dette?",
+      "ignoreBody": "Du kan trygt ignorere denne e-posten — passordet ditt endres bare hvis du klikker på lenken ovenfor. Er du bekymret for at noen andre prøver å få tilgang til kontoen din, kan du svare på denne e-posten, så ser vi på det.",
       "subject": "Tilbakestill passordet ditt",
       "title": "Tilbakestill passordet ditt",
-      "body": "Klikk på knappen nedenfor for å angi et nytt passord. Denne lenken utløper om 1 time.",
+      "body": "Vi har mottatt en forespørsel om å tilbakestille passordet for {account}-kontoen din. Klikk på knappen nedenfor for å velge et nytt — lenken er gyldig i {expiresIn}.",
       "button": "Tilbakestill passord"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-medlem"
     },
     "customerSignup": {
+      "preview": "{restaurant} — ny kundekonto: {customer}",
+      "headerTitle": "{restaurant} — ny kundekonto",
+      "badge": "Ny registrering",
+      "body": "En ny kunde har nettopp opprettet en konto hos restauranten din.",
+      "labelCustomer": "Kunde",
+      "viewCustomersButton": "Se kunder i admin",
       "subject": "{restaurant}: ny kundekonto — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Noe gikk galt. Prøv igjen."
     },
     "accountPage": {
+      "status": {
+        "pending": "Venter",
+        "accepted": "Godtatt",
+        "preparing": "Tilberedes",
+        "ready": "Klar",
+        "completed": "Fullført",
+        "cancelled": "Kansellert",
+        "rejected": "Avvist"
+      },
       "backTo": "Tilbake til {name}",
       "greeting": "Hei, {name}",
       "noEmailOnFile": "Ingen e-post registrert",

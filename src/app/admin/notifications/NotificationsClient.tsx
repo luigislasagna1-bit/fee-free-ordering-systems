@@ -3,6 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { Bell, ChevronDown, Lock, Mail, Plus, Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { LOCALE_OPTIONS } from "@/lib/locales";
 
 type Recipient = {
   id: string;
@@ -256,6 +257,7 @@ function RecipientCard({
 
       {isOpen && (
         <div className="border-t border-gray-100 px-4 py-4 space-y-4">
+          <EmailLanguageSelect recipient={recipient} onUpdate={onUpdate} />
           <ToggleGroup groupKey="confirmations" items={CONFIRMATION_TOGGLES} recipient={recipient} onUpdate={onUpdate} />
           <ToggleGroup groupKey="operational"   items={OPERATIONAL_TOGGLES}  recipient={recipient} onUpdate={onUpdate} />
           <ToggleGroup groupKey="system"        items={SYSTEM_TOGGLES}       recipient={recipient} onUpdate={onUpdate} />
@@ -265,6 +267,33 @@ function RecipientCard({
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+/** Per-recipient email language (cms0gyexp #1). New recipients default to the
+ *  restaurant's backend language; this select is the per-person override. The
+ *  PATCH route already whitelisted emailLanguage — the control simply never
+ *  existed (the admin.notifications.emailLanguage key sat orphaned ×38). */
+function EmailLanguageSelect({
+  recipient, onUpdate,
+}: {
+  recipient: Recipient;
+  onUpdate: (patch: Partial<Recipient>) => void;
+}) {
+  const t = useTranslations("admin.notifications");
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <span className="text-sm text-gray-700">{t("emailLanguage")}</span>
+      <select
+        value={recipient.emailLanguage}
+        onChange={(e) => onUpdate({ emailLanguage: e.target.value })}
+        className="border border-gray-200 rounded-lg px-2.5 py-1.5 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+      >
+        {LOCALE_OPTIONS.map((o) => (
+          <option key={o.code} value={o.code}>{o.label}</option>
+        ))}
+      </select>
     </div>
   );
 }

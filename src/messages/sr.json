@@ -17,6 +17,8 @@
     "discounts": "Popusti"
   },
   "common": {
+    "showPassword": "Прикажи лозинку",
+    "hidePassword": "Сакриј лозинку",
     "save": "Sačuvaj",
     "saveChanges": "Sačuvaj izmene",
     "cancel": "Otkaži",
@@ -621,6 +623,7 @@
     "emailRequired": "Email je obavezan"
   },
   "kitchen": {
+    "opensIn": "Отвара за {time}",
     "cancelledByCustomer": "Отказао купац",
     "title": "Kitchen Order App",
     "newOrders": "Nove porudžbine",
@@ -5165,6 +5168,7 @@
       "take_out": "PONETI"
     },
     "orderTypesLower": {
+      "take_out": "за понети",
       "pickup": "preuzimanje",
       "delivery": "dostava",
       "dine_in": "konzumacija u restoranu",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Срдачан поздрав,",
+      "poweredBy": "Покреће"
+    },
     "common": {
       "viewInAdmin": "Otvori u adminu",
       "trackOrder": "Pratite vašu porudžbinu",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Ako niste zatražili ovo, možete bezbedno ignorisati ovaj email."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Ресторан је тренутно затворен — ваша поруџбина је на чекању и добићете обавештење чим се отвори. Проверите имејл у {openingTime}.",
       "closedNote": "Ресторан је тренутно затворен — твоја поруџбина је на чекању и добићеш обавештење чим се отвори.",
       "cancelNote": "Ако искрсне нешто неочекивано, поруџбину и даље можеш да откажеш овде.",
       "subject": "Porudžbina #{orderNumber} primljena — čeka potvrdu",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Sto rezervisan za {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Поруџбина #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Поруџбина #{orderNumber}",
+      "badgeNew": "Нова поруџбина",
+      "minShort": "мин",
+      "badgePaidOnline": "Плаћено онлајн",
+      "badgeCollectCard": "За наплату — картица",
+      "badgeCollectCash": "За наплату — готовина",
+      "badgePayAtStore": "Плаћање у ресторану",
+      "tablePreorder": "Резервација стола + поруџбина унапред — број гостију: {partySize}, {time}",
+      "tablePreorderOne": "Резервација стола + поруџбина унапред — 1 гост, {time}",
+      "labelDeliveryAddress": "Адреса за доставу",
+      "labelCustomerNotes": "Напомене купца",
+      "labelOrderDetails": "Детаљи поруџбине",
+      "labelOrderTotal": "Укупан износ поруџбине",
+      "collected": "Наплаћено",
+      "toCollect": "За наплату",
+      "creditFallback": "кредит",
+      "paidWith": "Плаћено: {label}",
+      "totalMinusCredit": "Укупан износ поруџбине {total} − {credit} плаћено ({label})",
+      "seeBreakdown": "Погледајте детаљну спецификацију у админ контролној табли.",
+      "openKitchenApp": "Отвори Kitchen Order App",
+      "acceptHint": "Прихватите ову поруџбину у апликацији Kitchen Order App или у админ контролној табли. Ако се ништа не предузме у оквиру подешеног временског ограничења, поруџбина се аутоматски одбија.",
       "subject": "Nova porudžbina #{orderNumber} — {restaurant}",
       "title": "Nova porudžbina primljena",
       "body": "{customer} je upravo naručio #{orderNumber} za {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Шаље се месечно"
     },
     "reservationConfirmed": {
+      "previewRequested": "Захтев за резервацију је примљен — {dateTime} за {partySize}",
+      "previewDeclined": "Ажурирање резервације — {dateTime} за {partySize}",
+      "previewCancelled": "Резервација је отказана — {dateTime} за {partySize}",
       "subjectCancelled": "Твоја резервација је отказана",
       "headerTitleCancelled": "Резервација отказана",
       "introCancelled": "Твоја резервација у ресторану {restaurantName} је отказана — ресторан је обавештен и твој сто је ослобођен.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Пропуштено"
     },
     "newReservation": {
+      "preview": "Нова резервација — {dateTime} · број гостију: {partySize}",
+      "previewCancelled": "Резервација отказана — {dateTime} · број гостију: {partySize}",
+      "headerTitle": "{restaurant} — Резервација #{reservationNumber}",
+      "subtitleNew": "Нови захтев за резервацију",
+      "subtitleCancelled": "Гост је отказао резервацију",
+      "badgeNew": "Нова",
+      "badgeCancelled": "Отказао гост",
+      "badgeParty": "Број гостију: {partySize}",
+      "labelTime": "Време резервације",
+      "cancelledNote": "Гост је отказао ову резервацију путем имејла са потврдом — сто се може ослободити. Није потребна никаква радња.",
+      "labelSpecialRequests": "Посебни захтеви",
+      "manageButton": "Управљање резервацијом",
       "subjectCancelled": "Гост је отказао резервацију — {restaurant}",
       "subject": "Nova rezervacija — {restaurant}",
       "title": "Nova rezervacija {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Kod potvrde"
     },
     "passwordReset": {
+      "preview": "Ресетујте лозинку за {brand}",
+      "subtitle": "Помоћу дугмета испод подесите нову",
+      "greeting": "Здраво {name},",
+      "greetingNoName": "Здраво,",
+      "expiryOneHour": "1 сат",
+      "linkFallback": "Ако дугме не ради, копирајте и налепите овај URL у свој прегледач:",
+      "ignoreHeading": "Нисте ово затражили?",
+      "ignoreBody": "Слободно занемарите овај имејл — ваша лозинка се неће променити осим ако не кликнете на линк изнад. Ако сте забринути да неко други покушава да приступи вашем налогу, одговорите на овај имејл и проверићемо.",
       "subject": "Resetujte lozinku",
       "title": "Resetujte lozinku",
-      "body": "Kliknite na dugme ispod da biste postavili novu lozinku. Ovaj link ističe za 1 sat.",
+      "body": "Примили смо захтев за ресетовање лозинке за ваш налог {account}. Кликните на дугме испод да изаберете нову — линк важи {expiresIn}.",
       "button": "Resetuj lozinku"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP član"
     },
     "customerSignup": {
+      "preview": "{restaurant} — нови налог купца: {customer}",
+      "headerTitle": "{restaurant} — нови налог купца",
+      "badge": "Нова регистрација",
+      "body": "Нови купац је управо направио налог у вашем ресторану.",
+      "labelCustomer": "Купац",
+      "viewCustomersButton": "Прикажи купце у админ панелу",
       "subject": "{restaurant}: novi nalog kupca — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Нешто је пошло наопако. Покушај поново."
     },
     "accountPage": {
+      "status": {
+        "pending": "На чекању",
+        "accepted": "Прихваћена",
+        "preparing": "У припреми",
+        "ready": "Спремна",
+        "completed": "Завршена",
+        "cancelled": "Отказана",
+        "rejected": "Одбијена"
+      },
       "backTo": "Nazad na {name}",
       "greeting": "Zdravo, {name}",
       "noEmailOnFile": "Nema sačuvane e-mail adrese",

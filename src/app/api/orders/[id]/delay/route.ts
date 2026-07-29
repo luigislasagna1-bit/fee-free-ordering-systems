@@ -161,7 +161,7 @@ export async function POST(
       customerEmail: order.customerEmail,
       customerPhone: order.customerPhone,
       orderType: order.type,
-      customerLocale: order.restaurant.defaultLanguage || "en",
+      customerLocale: (order as any).customerLocale || order.restaurant.defaultLanguage || "en",
       payload: {
         event: "orderDelayed",
         customerName: order.customerName,

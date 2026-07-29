@@ -17,6 +17,8 @@
     "discounts": "Rabatter"
   },
   "common": {
+    "showPassword": "Visa lösenord",
+    "hidePassword": "Dölj lösenord",
     "save": "Spara",
     "saveChanges": "Spara ändringar",
     "cancel": "Avbryt",
@@ -621,6 +623,7 @@
     "emailRequired": "E-postadress krävs"
   },
   "kitchen": {
+    "opensIn": "Öppnar om {time}",
     "cancelledByCustomer": "Avbruten av kunden",
     "title": "Kitchen Order App",
     "newOrders": "Nya beställningar",
@@ -5165,6 +5168,7 @@
       "take_out": "TA MED"
     },
     "orderTypesLower": {
+      "take_out": "avhämtning",
       "pickup": "avhämtning",
       "delivery": "leverans",
       "dine_in": "ätas på plats",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Med vänliga hälsningar,",
+      "poweredBy": "Drivs av"
+    },
     "common": {
       "viewInAdmin": "Öppna i admin",
       "trackOrder": "Spåra din beställning",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Om du inte begärde detta kan du lugnt ignorera det här e-postmeddelandet."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restaurangen är stängd just nu — din beställning ligger i kö och du får en uppdatering så snart de öppnar igen. Håll utkik i din mejl från {openingTime}.",
       "closedNote": "Restaurangen är stängd just nu — din beställning ligger i kö och du får en uppdatering så snart de öppnar.",
       "cancelNote": "Om något oväntat dyker upp kan du fortfarande avbryta din beställning här.",
       "subject": "Beställning #{orderNumber} mottagen — väntar på bekräftelse",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Bord bokat för {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Beställning #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Beställning #{orderNumber}",
+      "badgeNew": "Ny beställning",
+      "minShort": "min",
+      "badgePaidOnline": "Betald online",
+      "badgeCollectCard": "Att ta betalt — kort",
+      "badgeCollectCash": "Att ta betalt — kontant",
+      "badgePayAtStore": "Betalas på plats",
+      "tablePreorder": "Bordsreservation + förbeställning — {partySize} gäster, {time}",
+      "tablePreorderOne": "Bordsreservation + förbeställning — 1 gäst, {time}",
+      "labelDeliveryAddress": "Leveransadress",
+      "labelCustomerNotes": "Kundens kommentarer",
+      "labelOrderDetails": "Beställningsdetaljer",
+      "labelOrderTotal": "Totalsumma",
+      "collected": "Mottaget",
+      "toCollect": "Att ta betalt",
+      "creditFallback": "tillgodohavande",
+      "paidWith": "Betalt med {label}",
+      "totalMinusCredit": "Totalsumma {total} − {credit} betalt med {label}",
+      "seeBreakdown": "Se den specificerade uppdelningen i adminpanelen.",
+      "openKitchenApp": "Öppna Kitchen Order App",
+      "acceptHint": "Acceptera beställningen i Kitchen Order App eller adminpanelen. Om ingen åtgärd vidtas inom den inställda tidsgränsen avvisas den automatiskt.",
       "subject": "Ny beställning #{orderNumber} — {restaurant}",
       "title": "Ny beställning mottagen",
       "body": "{customer} lade precis beställning #{orderNumber} på {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Skickas månadsvis"
     },
     "reservationConfirmed": {
+      "previewRequested": "Reservationsförfrågan mottagen — {dateTime} för {partySize}",
+      "previewDeclined": "Uppdatering om din reservation — {dateTime} för {partySize}",
+      "previewCancelled": "Reservation avbokad — {dateTime} för {partySize}",
       "subjectCancelled": "Din bokning är avbokad",
       "headerTitleCancelled": "Bokning avbokad",
       "introCancelled": "Du avbokade din bokning hos {restaurantName} — restaurangen har meddelats och ditt bord har frigjorts.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Missad"
     },
     "newReservation": {
+      "preview": "Ny reservation — {dateTime} · sällskap på {partySize}",
+      "previewCancelled": "Reservation avbokad — {dateTime} · sällskap på {partySize}",
+      "headerTitle": "{restaurant} — Reservation #{reservationNumber}",
+      "subtitleNew": "Ny reservationsförfrågan",
+      "subtitleCancelled": "Reservationen avbokad av kunden",
+      "badgeNew": "Ny",
+      "badgeCancelled": "Avbokad av kunden",
+      "badgeParty": "Sällskap på {partySize}",
+      "labelTime": "Reservationstid",
+      "cancelledNote": "Kunden avbokade denna bokning via sitt bekräftelsemejl — bordet kan släppas. Ingen åtgärd behövs.",
+      "labelSpecialRequests": "Särskilda önskemål",
+      "manageButton": "Hantera reservation",
       "subjectCancelled": "Bokning avbokad av gästen — {restaurant}",
       "subject": "Ny reservation — {restaurant}",
       "title": "Ny reservation {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Bekräftelsekod"
     },
     "passwordReset": {
+      "preview": "Återställ ditt {brand}-lösenord",
+      "subtitle": "Använd knappen nedan för att välja ett nytt",
+      "greeting": "Hej {name},",
+      "greetingNoName": "Hej,",
+      "expiryOneHour": "1 timme",
+      "linkFallback": "Om knappen inte fungerar kan du kopiera och klistra in den här webbadressen i din webbläsare:",
+      "ignoreHeading": "Inte du som bad om detta?",
+      "ignoreBody": "Du kan lugnt ignorera det här mejlet — ditt lösenord ändras bara om du klickar på länken ovan. Om du är orolig att någon annan försöker komma åt ditt konto, svara på det här mejlet så tittar vi på det.",
       "subject": "Återställ ditt lösenord",
       "title": "Återställ ditt lösenord",
-      "body": "Klicka på knappen nedan för att ange ett nytt lösenord. Länken är giltig i 1 timme.",
+      "body": "Vi har fått en begäran om att återställa lösenordet för ditt {account}-konto. Klicka på knappen nedan för att välja ett nytt — länken är giltig i {expiresIn}.",
       "button": "Återställ lösenord"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-medlem"
     },
     "customerSignup": {
+      "preview": "{restaurant} — nytt kundkonto: {customer}",
+      "headerTitle": "{restaurant} — nytt kundkonto",
+      "badge": "Ny registrering",
+      "body": "En ny kund har precis skapat ett konto hos din restaurang.",
+      "labelCustomer": "Kund",
+      "viewCustomersButton": "Visa kunder i admin",
       "subject": "{restaurant}: nytt kundkonto — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Något gick fel. Försök igen."
     },
     "accountPage": {
+      "status": {
+        "pending": "Väntar",
+        "accepted": "Accepterad",
+        "preparing": "Tillagas",
+        "ready": "Klar",
+        "completed": "Slutförd",
+        "cancelled": "Avbruten",
+        "rejected": "Avvisad"
+      },
       "backTo": "Tillbaka till {name}",
       "greeting": "Hej, {name}",
       "noEmailOnFile": "Ingen e-postadress registrerad",

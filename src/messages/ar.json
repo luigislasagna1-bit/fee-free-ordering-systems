@@ -17,6 +17,8 @@
     "discounts": "الخصومات"
   },
   "common": {
+    "showPassword": "إظهار كلمة المرور",
+    "hidePassword": "إخفاء كلمة المرور",
     "save": "حفظ",
     "saveChanges": "حفظ التغييرات",
     "cancel": "إلغاء",
@@ -621,6 +623,7 @@
     "emailRequired": "البريد الإلكتروني مطلوب"
   },
   "kitchen": {
+    "opensIn": "يفتح خلال {time}",
     "cancelledByCustomer": "ألغاه العميل",
     "title": "Kitchen Order App",
     "newOrders": "طلبات جديدة",
@@ -5165,6 +5168,7 @@
       "take_out": "طلب خارجي"
     },
     "orderTypesLower": {
+      "take_out": "سفري",
       "pickup": "استلام",
       "delivery": "توصيل",
       "dine_in": "تناول في المطعم",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "مع أطيب التحيات،",
+      "poweredBy": "مشغّل بواسطة"
+    },
     "common": {
       "viewInAdmin": "فتح في لوحة التحكم",
       "trackOrder": "تتبع طلبك",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "إذا لم تطلب ذلك، يمكنك تجاهل هذا البريد الإلكتروني بأمان."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "المطعم مغلق حاليًا — طلبك في قائمة الانتظار وستصلك رسالة تحديث فور فتح المطعم. تفقّد بريدك الإلكتروني في {openingTime}.",
       "closedNote": "المطعم مغلق حاليًا — طلبك في قائمة الانتظار وستصلك آخر المستجدات فور فتح المطعم.",
       "cancelNote": "إذا طرأ أمر غير متوقع، لا يزال بإمكانك إلغاء طلبك من هنا.",
       "subject": "تم استلام الطلب #{orderNumber} — في انتظار التأكيد",
@@ -5274,6 +5283,28 @@
       "tableReservation": "تم حجز طاولة لـ {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — طلب رقم {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — طلب رقم {orderNumber}",
+      "badgeNew": "طلب جديد",
+      "minShort": "د",
+      "badgePaidOnline": "مدفوع إلكترونيًا",
+      "badgeCollectCard": "للتحصيل — بطاقة",
+      "badgeCollectCash": "للتحصيل — نقدًا",
+      "badgePayAtStore": "الدفع في المتجر",
+      "tablePreorder": "حجز طاولة + طلب مسبق — {partySize} من الضيوف، {time}",
+      "tablePreorderOne": "حجز طاولة + طلب مسبق — ضيف واحد، {time}",
+      "labelDeliveryAddress": "عنوان التوصيل",
+      "labelCustomerNotes": "ملاحظات العميل",
+      "labelOrderDetails": "تفاصيل الطلب",
+      "labelOrderTotal": "إجمالي الطلب",
+      "collected": "تم التحصيل",
+      "toCollect": "للتحصيل",
+      "creditFallback": "رصيد",
+      "paidWith": "مدفوع بواسطة {label}",
+      "totalMinusCredit": "إجمالي الطلب {total} − {credit} مدفوع بواسطة {label}",
+      "seeBreakdown": "اطّلع على التفصيل الكامل للبنود في لوحة التحكم الإدارية.",
+      "openKitchenApp": "فتح تطبيق Kitchen Order App",
+      "acceptHint": "اقبل هذا الطلب من تطبيق Kitchen Order App أو من لوحة التحكم الإدارية. سيتم الرفض التلقائي إذا لم يُتَّخذ أي إجراء خلال المهلة المحددة في إعداداتك.",
       "subject": "طلب جديد #{orderNumber} — {restaurant}",
       "title": "تم استلام طلب جديد",
       "body": "قدّم {customer} الطلب #{orderNumber} بمبلغ {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "يُرسل شهريًا"
     },
     "reservationConfirmed": {
+      "previewRequested": "تم استلام طلب الحجز — {dateTime} لعدد {partySize}",
+      "previewDeclined": "تحديث بشأن الحجز — {dateTime} لعدد {partySize}",
+      "previewCancelled": "تم إلغاء الحجز — {dateTime} لعدد {partySize}",
       "subjectCancelled": "تم إلغاء حجزك",
       "headerTitleCancelled": "تم إلغاء الحجز",
       "introCancelled": "لقد ألغيت حجزك في {restaurantName} — تم إبلاغ المطعم وتحرير طاولتك.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "فائت"
     },
     "newReservation": {
+      "preview": "حجز جديد — {dateTime} · عدد الضيوف {partySize}",
+      "previewCancelled": "تم إلغاء الحجز — {dateTime} · عدد الضيوف {partySize}",
+      "headerTitle": "{restaurant} — حجز رقم {reservationNumber}",
+      "subtitleNew": "طلب حجز جديد",
+      "subtitleCancelled": "تم إلغاء الحجز من قِبل العميل",
+      "badgeNew": "جديد",
+      "badgeCancelled": "ألغاه العميل",
+      "badgeParty": "عدد الضيوف {partySize}",
+      "labelTime": "وقت الحجز",
+      "cancelledNote": "ألغى العميل هذا الحجز من رسالة التأكيد الخاصة به — يمكن تحرير الطاولة. لا حاجة إلى أي إجراء.",
+      "labelSpecialRequests": "طلبات خاصة",
+      "manageButton": "إدارة الحجز",
       "subjectCancelled": "تم إلغاء الحجز من قبل العميل — {restaurant}",
       "subject": "حجز جديد — {restaurant}",
       "title": "حجز جديد {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "رمز التأكيد"
     },
     "passwordReset": {
+      "preview": "إعادة تعيين كلمة المرور الخاصة بك في {brand}",
+      "subtitle": "استخدم الزر أدناه لتعيين كلمة مرور جديدة",
+      "greeting": "مرحبًا {name}،",
+      "greetingNoName": "مرحبًا،",
+      "expiryOneHour": "ساعة واحدة",
+      "linkFallback": "إذا لم يعمل الزر، انسخ هذا الرابط والصقه في متصفحك:",
+      "ignoreHeading": "لم تطلب ذلك؟",
+      "ignoreBody": "يمكنك تجاهل هذه الرسالة بأمان — لن تتغير كلمة مرورك ما لم تضغط على الرابط أعلاه. وإذا كنت قلقًا من أن شخصًا آخر يحاول الوصول إلى حسابك، فما عليك سوى الرد على هذه الرسالة وسنتحقق من الأمر.",
       "subject": "إعادة تعيين كلمة المرور",
       "title": "إعادة تعيين كلمة المرور",
-      "body": "انقر على الزر أدناه لتعيين كلمة مرور جديدة. ينتهي صلاحية هذا الرابط خلال ساعة واحدة.",
+      "body": "تلقّينا طلبًا لإعادة تعيين كلمة المرور لحسابك في {account}. اضغط على الزر أدناه لاختيار كلمة مرور جديدة — الرابط صالح لمدة {expiresIn}.",
       "button": "إعادة تعيين كلمة المرور"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "عضو VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — حساب عميل جديد: {customer}",
+      "headerTitle": "{restaurant} — حساب عميل جديد",
+      "badge": "تسجيل جديد",
+      "body": "أنشأ عميل جديد حسابًا في مطعمك للتو.",
+      "labelCustomer": "العميل",
+      "viewCustomersButton": "عرض العملاء في لوحة الإدارة",
       "subject": "{restaurant}: حساب عميل جديد — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
     },
     "accountPage": {
+      "status": {
+        "pending": "قيد الانتظار",
+        "accepted": "مقبول",
+        "preparing": "قيد التحضير",
+        "ready": "جاهز",
+        "completed": "مكتمل",
+        "cancelled": "ملغي",
+        "rejected": "مرفوض"
+      },
       "backTo": "العودة إلى {name}",
       "greeting": "مرحباً، {name}",
       "noEmailOnFile": "لا يوجد بريد إلكتروني مسجّل",

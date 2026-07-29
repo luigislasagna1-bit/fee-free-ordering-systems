@@ -43,6 +43,7 @@ import { getSessionUser } from "@/lib/session";
 import { validateBooking, resolveDayHours, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
+import { resolveCustomerLocale } from "@/lib/i18n-server";
 import { shouldDispatchToShipday } from "@/lib/shipday";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 
@@ -2296,6 +2297,13 @@ export async function POST(req: NextRequest) {
     // has no opening hours configured), fall back to null — kitchen will
     // alert immediately. Better to over-alert than to silently never alert.
 
+    // ── Customer language snapshot (Fabrizio cms0gyexp #2) ──────────────────
+    // The storefront language the customer was USING when they ordered
+    // (fee-free-locale cookie → restaurant default). Persisted on the order
+    // because most lifecycle emails fire from webhooks/crons where no request
+    // cookie exists. Cookie read only — no extra query on this hot path.
+    const customerLocale = await resolveCustomerLocale(restaurant.defaultLanguage);
+
     // ── Atomic coupon usage claim ───────────────────────────────────────────
     // Previously the coupon usedCount was incremented AFTER order.create
     // outside any transaction (audit 2026-05-30 #74). Two simultaneous
@@ -2552,6 +2560,8 @@ export async function POST(req: NextRequest) {
         // Closed-when-placed routing — see compute block above.
         placedWhileClosed: isClosedNow,
         alertAt: alertAtValue,
+        // Customer's storefront language — drives all lifecycle emails.
+        customerLocale,
         deliveryZoneId: resolvedZoneId,
         deliveryEstimatedMinutes: resolvedZoneMinutes,
         viaMarketplace,

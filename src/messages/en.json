@@ -92,7 +92,9 @@
     "loadingDots": "Loading…",
     "previous": "Previous",
     "kmFromStore": "{km} km from store",
-    "apply": "Apply"
+    "apply": "Apply",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "auth": {
     "signIn": "Sign in",
@@ -621,6 +623,7 @@
     "emailRequired": "Email is required"
   },
   "kitchen": {
+    "opensIn": "Opens in {time}",
     "title": "Kitchen Order App",
     "newOrders": "New Orders",
     "inProgress": "In Progress",
@@ -5173,7 +5176,8 @@
       "delivery": "delivery",
       "dine_in": "dine-in",
       "catering": "catering",
-      "takeout": "takeout"
+      "takeout": "takeout",
+      "take_out": "takeout"
     },
     "kitchen": {
       "title": "KITCHEN ORDER",
@@ -5271,13 +5275,36 @@
       "contactRestaurantNote": "If you have any questions about your order, please contact the restaurant directly using the details below.",
       "closedNote": "The restaurant is currently closed — your order is queued and you’ll get an update as soon as they open.",
       "cancelNote": "If something unexpected comes up, you can still cancel your order here.",
-      "tableReservation": "Table reserved for {n} — {time}"
+      "tableReservation": "Table reserved for {n} — {time}",
+      "closedNoteWithTime": "The restaurant is currently closed — your order is queued and you'll get an update as soon as they open. Check your email on {openingTime}."
     },
     "newOrder": {
       "subject": "New order #{orderNumber} — {restaurant}",
       "title": "New order received",
       "body": "{customer} just placed order #{orderNumber} for {total}.",
-      "openAdmin": "Open admin"
+      "openAdmin": "Open admin",
+      "preview": "{restaurant} — Order #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Order #{orderNumber}",
+      "badgeNew": "New order",
+      "minShort": "min",
+      "badgePaidOnline": "Paid online",
+      "badgeCollectCard": "To collect — card",
+      "badgeCollectCash": "To collect — cash",
+      "badgePayAtStore": "Pay at store",
+      "tablePreorder": "Table reservation + pre-order — {partySize} guests, {time}",
+      "tablePreorderOne": "Table reservation + pre-order — 1 guest, {time}",
+      "labelDeliveryAddress": "Delivery address",
+      "labelCustomerNotes": "Customer notes",
+      "labelOrderDetails": "Order details",
+      "labelOrderTotal": "Order total",
+      "collected": "Collected",
+      "toCollect": "To collect",
+      "creditFallback": "credit",
+      "paidWith": "Paid with {label}",
+      "totalMinusCredit": "Order total {total} − {credit} paid with {label}",
+      "seeBreakdown": "See itemized breakdown in the admin dashboard.",
+      "openKitchenApp": "Open Kitchen Order App",
+      "acceptHint": "Accept this order from the Kitchen Order App or the admin dashboard. Auto-reject runs if no action is taken within your configured timeout."
     },
     "orderAccepted": {
       "badge": "Order confirmed",
@@ -5431,20 +5458,43 @@
       "closingCancelled": "If you change your mind, you're always welcome to book again.",
       "badgeCancelled": "Cancelled",
       "depositContactNote": "You paid a deposit for this booking — please contact the restaurant directly about your deposit.",
-      "cancelNote": "If your plans change, you can cancel your reservation here."
+      "cancelNote": "If your plans change, you can cancel your reservation here.",
+      "previewRequested": "Reservation request received — {dateTime} for {partySize}",
+      "previewDeclined": "Reservation update — {dateTime} for {partySize}",
+      "previewCancelled": "Reservation cancelled — {dateTime} for {partySize}"
     },
     "newReservation": {
       "subject": "New reservation — {restaurant}",
       "subjectCancelled": "Reservation cancelled by the customer — {restaurant}",
       "title": "New reservation {status}",
       "body": "{customer} requested a reservation for {party} guests on {date} at {time}.",
-      "confirmationCode": "Confirmation code"
+      "confirmationCode": "Confirmation code",
+      "preview": "New reservation — {dateTime} · party of {partySize}",
+      "previewCancelled": "Reservation cancelled — {dateTime} · party of {partySize}",
+      "headerTitle": "{restaurant} — Reservation #{reservationNumber}",
+      "subtitleNew": "New reservation request",
+      "subtitleCancelled": "Reservation cancelled by the customer",
+      "badgeNew": "New",
+      "badgeCancelled": "Cancelled by customer",
+      "badgeParty": "Party of {partySize}",
+      "labelTime": "Reservation time",
+      "cancelledNote": "The customer cancelled this booking from their confirmation email — the table can be released. No action is needed.",
+      "labelSpecialRequests": "Special requests",
+      "manageButton": "Manage reservation"
     },
     "passwordReset": {
       "subject": "Reset your password",
       "title": "Reset your password",
-      "body": "Click the button below to set a new password. This link expires in 1 hour.",
-      "button": "Reset password"
+      "body": "We received a request to reset the password on your {account} account. Click the button below to choose a new one — the link is valid for {expiresIn}.",
+      "button": "Reset password",
+      "preview": "Reset your {brand} password",
+      "subtitle": "Use the button below to set a new one",
+      "greeting": "Hello {name},",
+      "greetingNoName": "Hello,",
+      "expiryOneHour": "1 hour",
+      "linkFallback": "If the button doesn't work, copy and paste this URL into your browser:",
+      "ignoreHeading": "Didn't request this?",
+      "ignoreBody": "You can safely ignore this email — your password won't change unless you click the link above. If you're worried someone else may be trying to access your account, reply to this email and we'll look into it."
     },
     "settingsTest": {
       "subject": "Email transport is working ✅",
@@ -5538,7 +5588,13 @@
       "accountTip": "Tip: create a free account with this email to save your details and find all your VIP offers in one place."
     },
     "customerSignup": {
-      "subject": "{restaurant}: new customer account — {customer}"
+      "subject": "{restaurant}: new customer account — {customer}",
+      "preview": "{restaurant} — new customer account: {customer}",
+      "headerTitle": "{restaurant} — new customer account",
+      "badge": "New sign-up",
+      "body": "A new customer just created an account at your restaurant.",
+      "labelCustomer": "Customer",
+      "viewCustomersButton": "View customers in admin"
     },
     "rewardGift": {
       "subject": "{restaurant} gifted you {amount} in {label}!",
@@ -5562,6 +5618,10 @@
       "howTo": "Create your free account at {restaurantName} using this email address, and your {label} will be added to your wallet automatically — ready to spend on your next order.",
       "cta": "Create my account",
       "ignoreLine": "If you weren't expecting this, you can safely ignore this email."
+    },
+    "footer": {
+      "signOff": "Kind regards,",
+      "poweredBy": "Powered by"
     }
   },
   "marketing": {
@@ -6225,6 +6285,15 @@
         "previous": "Previous",
         "next": "Next",
         "page": "Page {page}"
+      },
+      "status": {
+        "pending": "Pending",
+        "accepted": "Accepted",
+        "preparing": "Preparing",
+        "ready": "Ready",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "rejected": "Rejected"
       }
     },
     "bundle": {

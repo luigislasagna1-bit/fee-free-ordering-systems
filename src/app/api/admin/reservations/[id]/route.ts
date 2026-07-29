@@ -86,7 +86,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       notifyCustomer({
         restaurantId,
         customerEmail: existing.customerEmail,
-        customerLocale: r?.defaultLanguage || "en",
+        customerLocale: existing.customerLocale || r?.defaultLanguage || "en",
         payload: {
           event: "reservationConfirmation",
           customerName: existing.customerName,

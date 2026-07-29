@@ -7,6 +7,7 @@ import { isRestaurantAdmin } from "@/lib/roles";
 import { slugify } from "@/lib/utils";
 import { sendLocationWelcomeEmail } from "@/lib/email";
 import { pickInheritedScalars, cloneLocationRelations } from "@/lib/location-inheritance";
+import { isSupportedLocale } from "@/lib/locales";
 import { geocodeAddress } from "@/lib/geocode";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -231,7 +232,12 @@ export async function POST(req: NextRequest) {
   // inboxes; this store's orders should go to this store).
   try {
     await prisma.notificationRecipient.create({
-      data: { restaurantId: newLocation.id, email, name },
+      // Recipient language follows the brand's language (inherited by the new
+      // location), not the "en" schema default — cms0gyexp #1.
+      data: {
+        restaurantId: newLocation.id, email, name,
+        emailLanguage: isSupportedLocale(parent.defaultLanguage) ? parent.defaultLanguage : "en",
+      },
     });
   } catch (err) {
     console.error("[locations] seeding notification recipient failed", err);

@@ -17,6 +17,8 @@
     "discounts": "할인"
   },
   "common": {
+    "showPassword": "비밀번호 표시",
+    "hidePassword": "비밀번호 숨기기",
     "save": "저장",
     "saveChanges": "변경사항 저장",
     "cancel": "취소",
@@ -621,6 +623,7 @@
     "emailRequired": "이메일은 필수입니다"
   },
   "kitchen": {
+    "opensIn": "{time} 후 오픈",
     "cancelledByCustomer": "고객 직접 취소",
     "title": "Kitchen Order App",
     "newOrders": "신규 주문",
@@ -5165,6 +5168,7 @@
       "take_out": "포장"
     },
     "orderTypesLower": {
+      "take_out": "포장",
       "pickup": "픽업",
       "delivery": "배달",
       "dine_in": "매장 식사",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "감사합니다,",
+      "poweredBy": "Powered by"
+    },
     "common": {
       "viewInAdmin": "관리자에서 열기",
       "trackOrder": "주문 추적",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "본인이 요청하지 않은 경우 이 이메일을 무시하셔도 됩니다."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "지금은 매장 영업시간이 아니에요. 주문은 대기열에 등록되었고, 매장이 문을 여는 대로 바로 알려드릴게요. {openingTime}에 이메일을 확인해 주세요.",
       "closedNote": "지금은 매장 영업시간이 아니에요 — 주문은 접수 대기 중이며, 매장이 문을 열면 바로 소식을 알려 드릴게요.",
       "cancelNote": "갑자기 사정이 생기면 여기에서 주문을 취소하실 수 있어요.",
       "subject": "주문 #{orderNumber} 접수 — 확인 대기 중",
@@ -5274,6 +5283,28 @@
       "tableReservation": "{n}명 테이블 예약 완료 — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — 주문 #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — 주문 #{orderNumber}",
+      "badgeNew": "신규 주문",
+      "minShort": "분",
+      "badgePaidOnline": "온라인 결제 완료",
+      "badgeCollectCard": "수금 필요 — 카드",
+      "badgeCollectCash": "수금 필요 — 현금",
+      "badgePayAtStore": "매장에서 결제",
+      "tablePreorder": "테이블 예약 + 선주문 — {partySize}명, {time}",
+      "tablePreorderOne": "테이블 예약 + 선주문 — 1명, {time}",
+      "labelDeliveryAddress": "배달 주소",
+      "labelCustomerNotes": "고객 메모",
+      "labelOrderDetails": "주문 내역",
+      "labelOrderTotal": "주문 합계",
+      "collected": "수금 완료",
+      "toCollect": "수금 필요",
+      "creditFallback": "크레딧",
+      "paidWith": "{label}(으)로 결제 완료",
+      "totalMinusCredit": "주문 합계 {total} − {label}(으)로 결제된 {credit}",
+      "seeBreakdown": "항목별 상세 내역은 관리자 대시보드에서 확인하세요.",
+      "openKitchenApp": "Kitchen Order App 열기",
+      "acceptHint": "이 주문은 Kitchen Order App 또는 관리자 대시보드에서 수락하세요. 설정한 제한 시간 내에 조치가 없으면 자동으로 거절됩니다.",
       "subject": "신규 주문 #{orderNumber} — {restaurant}",
       "title": "신규 주문 접수됨",
       "body": "{customer}님이 {total}의 주문 #{orderNumber}을(를) 접수했습니다.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "매월 발송"
     },
     "reservationConfirmed": {
+      "previewRequested": "예약 요청이 접수되었어요 — {dateTime}, {partySize}명",
+      "previewDeclined": "예약 업데이트 — {dateTime}, {partySize}명",
+      "previewCancelled": "예약이 취소되었어요 — {dateTime}, {partySize}명",
       "subjectCancelled": "예약이 취소되었습니다",
       "headerTitleCancelled": "예약 취소 완료",
       "introCancelled": "{restaurantName} 예약을 취소하셨어요 — 매장에 알림이 전달되었고, 테이블은 다시 예약 가능한 상태가 되었습니다.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "놓침"
     },
     "newReservation": {
+      "preview": "신규 예약 — {dateTime} · {partySize}명",
+      "previewCancelled": "예약 취소 — {dateTime} · {partySize}명",
+      "headerTitle": "{restaurant} — 예약 #{reservationNumber}",
+      "subtitleNew": "새 예약 요청",
+      "subtitleCancelled": "고객이 예약을 취소했습니다",
+      "badgeNew": "신규",
+      "badgeCancelled": "고객 취소",
+      "badgeParty": "{partySize}명",
+      "labelTime": "예약 시간",
+      "cancelledNote": "고객이 확인 이메일에서 이 예약을 취소했습니다. 해당 테이블은 다시 사용할 수 있으며, 별도의 조치는 필요 없습니다.",
+      "labelSpecialRequests": "특별 요청",
+      "manageButton": "예약 관리",
       "subjectCancelled": "고객이 예약을 취소했습니다 — {restaurant}",
       "subject": "새 예약 — {restaurant}",
       "title": "새 예약 {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "확인 코드"
     },
     "passwordReset": {
+      "preview": "{brand} 비밀번호 재설정",
+      "subtitle": "아래 버튼을 눌러 새 비밀번호를 설정하세요",
+      "greeting": "안녕하세요 {name}님,",
+      "greetingNoName": "안녕하세요,",
+      "expiryOneHour": "1시간",
+      "linkFallback": "버튼이 작동하지 않으면 아래 URL을 복사해 브라우저에 붙여넣어 주세요:",
+      "ignoreHeading": "요청하신 적이 없나요?",
+      "ignoreBody": "이 이메일은 무시하셔도 괜찮아요. 위의 링크를 클릭하지 않는 한 비밀번호는 변경되지 않아요. 누군가 내 계정에 접근하려는 것 같아 걱정된다면 이 이메일에 답장해 주세요. 저희가 확인해 드릴게요.",
       "subject": "비밀번호 재설정",
       "title": "비밀번호 재설정",
-      "body": "아래 버튼을 클릭하여 새 비밀번호를 설정하세요. 이 링크는 1시간 후 만료됩니다.",
+      "body": "{account} 계정의 비밀번호 재설정 요청을 받았어요. 아래 버튼을 눌러 새 비밀번호를 설정해 주세요. 링크는 {expiresIn} 동안 유효해요.",
       "button": "비밀번호 재설정"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP 회원"
     },
     "customerSignup": {
+      "preview": "{restaurant} — 신규 고객 계정: {customer}",
+      "headerTitle": "{restaurant} — 신규 고객 계정",
+      "badge": "신규 가입",
+      "body": "새 고객이 방금 매장에 계정을 만들었습니다.",
+      "labelCustomer": "고객",
+      "viewCustomersButton": "관리자에서 고객 보기",
       "subject": "{restaurant}: 신규 고객 계정 — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "문제가 발생했어요. 다시 시도해 주세요."
     },
     "accountPage": {
+      "status": {
+        "pending": "대기 중",
+        "accepted": "접수됨",
+        "preparing": "준비 중",
+        "ready": "준비 완료",
+        "completed": "완료",
+        "cancelled": "취소됨",
+        "rejected": "거절됨"
+      },
       "backTo": "{name}으로 돌아가기",
       "greeting": "안녕하세요, {name}님",
       "noEmailOnFile": "등록된 이메일이 없습니다",

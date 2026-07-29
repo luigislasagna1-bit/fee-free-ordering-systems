@@ -137,7 +137,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ restaurant
         id: true, restaurantId: true, total: true, creditApplied: true, refundedAmount: true,
         paymentIntentId: true, orderNumber: true, customerName: true, customerEmail: true,
         paymentStatus: true, refundStatus: true,
-        restaurant: { select: { name: true, currency: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
+        restaurant: { select: { name: true, email: true, currency: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
       },
     });
     if (!order || order.restaurantId !== restaurantId) {
@@ -219,6 +219,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ restaurant
             creditBack > 0
               ? order.restaurant.rewardLabelPlural?.trim() || order.restaurant.rewardLabelSingular?.trim() || null
               : undefined,
+          restaurantEmail: order.restaurant.email,
           locale: order.restaurant.defaultLanguage || "en",
         }).catch((e) => console.error("[restaurant-stripe webhook email]", e instanceof Error ? e.message : e)),
       );

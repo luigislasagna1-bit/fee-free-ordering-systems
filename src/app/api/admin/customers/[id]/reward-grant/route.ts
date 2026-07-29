@@ -37,7 +37,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
       rewardsEnabled: true,
       // For the gift email (Luigi 2026-07-11): name/labels/currency/locale +
       // the branded order URL fields restaurantOrderUrl() needs.
-      name: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true,
+      name: true, email: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true,
       defaultLanguage: true, currency: true, rewardLabelSingular: true, rewardLabelPlural: true,
     },
   });
@@ -82,6 +82,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
       balanceLabel: formatCurrency(balance, r.currency),
       note,
       orderUrl: restaurantOrderUrl(r as any, ""),
+      restaurantEmail: r.email,
       locale: r.defaultLanguage || "en",
     }).catch((e) => console.error("[reward-grant gift email]", e instanceof Error ? e.message : e));
   }

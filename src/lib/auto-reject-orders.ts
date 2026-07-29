@@ -96,6 +96,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       paymentIntentId: true,
       customerEmail: true,
       customerName: true,
+      customerLocale: true,
       type: true,
       total: true,
       // Reward Dollars part-payment — the card refund only covers what was
@@ -380,7 +381,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
         restaurantId: order.restaurant.id,
         customerEmail: order.customerEmail,
         orderType: order.type,
-        customerLocale: order.restaurant.defaultLanguage || "en",
+        customerLocale: (order as any).customerLocale || order.restaurant.defaultLanguage || "en",
         payload: {
           event: "orderStatusUpdate",
           customerName: order.customerName,
@@ -467,7 +468,7 @@ export async function autoRejectStaleReservations(opts: { now?: Date; restaurant
       ],
     },
     select: {
-      id: true, customerName: true, customerEmail: true, partySize: true,
+      id: true, customerName: true, customerEmail: true, customerLocale: true, partySize: true,
       date: true, time: true, confirmationCode: true, depositAmount: true,
       preOrderTotal: true, restaurantId: true, alertAt: true,
       restaurant: { select: { defaultLanguage: true } },
@@ -498,7 +499,7 @@ export async function autoRejectStaleReservations(opts: { now?: Date; restaurant
         notifyCustomer({
           restaurantId: r.restaurantId,
           customerEmail: r.customerEmail,
-          customerLocale: r.restaurant.defaultLanguage || "en",
+          customerLocale: (r as any).customerLocale || r.restaurant.defaultLanguage || "en",
           payload: {
             event: "reservationConfirmation",
             customerName: r.customerName,

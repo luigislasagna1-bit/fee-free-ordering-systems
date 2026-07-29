@@ -17,6 +17,8 @@
     "discounts": "Descomptes"
   },
   "common": {
+    "showPassword": "Mostra la contrasenya",
+    "hidePassword": "Amaga la contrasenya",
     "save": "Desa",
     "saveChanges": "Desa els canvis",
     "cancel": "Cancel·la",
@@ -621,6 +623,7 @@
     "emailRequired": "El correu electrònic és obligatori"
   },
   "kitchen": {
+    "opensIn": "Obre d'aquí a {time}",
     "cancelledByCustomer": "Cancel·lada pel client",
     "title": "Kitchen Order App",
     "newOrders": "Comandes noves",
@@ -5165,6 +5168,7 @@
       "take_out": "PER EMPORTAR"
     },
     "orderTypesLower": {
+      "take_out": "per emportar",
       "pickup": "recollida",
       "delivery": "lliurament",
       "dine_in": "a la taula",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Cordialment,",
+      "poweredBy": "Amb la tecnologia de"
+    },
     "common": {
       "viewInAdmin": "Obre a l'administrador",
       "trackOrder": "Segueix la vostra comanda",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Si no heu sol·licitat això, podeu ignorar aquest correu."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "El restaurant ara mateix és tancat — la teva comanda ha quedat en cua i rebràs una actualització tan bon punt obrin. Revisa el teu correu: {openingTime}.",
       "closedNote": "El restaurant ara mateix està tancat — la teva comanda ha quedat en cua i rebràs una actualització tan bon punt obrin.",
       "cancelNote": "Si sorgeix cap imprevist, encara pots cancel·lar la comanda aquí.",
       "subject": "Comanda #{orderNumber} rebuda — pendent de confirmació",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Taula reservada per a {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Comanda #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Comanda #{orderNumber}",
+      "badgeNew": "Comanda nova",
+      "minShort": "min",
+      "badgePaidOnline": "Pagat en línia",
+      "badgeCollectCard": "Per cobrar — targeta",
+      "badgeCollectCash": "Per cobrar — efectiu",
+      "badgePayAtStore": "Pagament al local",
+      "tablePreorder": "Reserva de taula + comanda anticipada — {partySize} comensals, {time}",
+      "tablePreorderOne": "Reserva de taula + comanda anticipada — 1 comensal, {time}",
+      "labelDeliveryAddress": "Adreça de lliurament",
+      "labelCustomerNotes": "Notes del client",
+      "labelOrderDetails": "Detall de la comanda",
+      "labelOrderTotal": "Total de la comanda",
+      "collected": "Cobrat",
+      "toCollect": "Per cobrar",
+      "creditFallback": "crèdit",
+      "paidWith": "Pagat amb {label}",
+      "totalMinusCredit": "Total de la comanda {total} − {credit} pagat amb {label}",
+      "seeBreakdown": "Consulta el desglossament detallat al tauler d'administració.",
+      "openKitchenApp": "Obre la Kitchen Order App",
+      "acceptHint": "Accepta aquesta comanda des de la Kitchen Order App o des del tauler d'administració. Si no es fa cap acció dins del temps d'espera configurat, es rebutjarà automàticament.",
       "subject": "Nova comanda #{orderNumber} — {restaurant}",
       "title": "Nova comanda rebuda",
       "body": "{customer} acaba de fer la comanda #{orderNumber} per {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "S'envia cada mes"
     },
     "reservationConfirmed": {
+      "previewRequested": "Sol·licitud de reserva rebuda — {dateTime}, comensals: {partySize}",
+      "previewDeclined": "Actualització de la reserva — {dateTime}, comensals: {partySize}",
+      "previewCancelled": "Reserva cancel·lada — {dateTime}, comensals: {partySize}",
       "subjectCancelled": "La teva reserva s'ha cancel·lat",
       "headerTitleCancelled": "Reserva cancel·lada",
       "introCancelled": "Has cancel·lat la teva reserva a {restaurantName} — hem avisat el restaurant i la teva taula ha quedat alliberada.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Perduda"
     },
     "newReservation": {
+      "preview": "Reserva nova — {dateTime} · grup de {partySize}",
+      "previewCancelled": "Reserva cancel·lada — {dateTime} · grup de {partySize}",
+      "headerTitle": "{restaurant} — Reserva #{reservationNumber}",
+      "subtitleNew": "Nova sol·licitud de reserva",
+      "subtitleCancelled": "Reserva cancel·lada pel client",
+      "badgeNew": "Nova",
+      "badgeCancelled": "Cancel·lada pel client",
+      "badgeParty": "Grup de {partySize}",
+      "labelTime": "Hora de la reserva",
+      "cancelledNote": "El client ha cancel·lat aquesta reserva des del correu de confirmació — la taula es pot alliberar. No cal fer res.",
+      "labelSpecialRequests": "Peticions especials",
+      "manageButton": "Gestiona la reserva",
       "subjectCancelled": "Reserva cancel·lada pel client — {restaurant}",
       "subject": "Nova reserva — {restaurant}",
       "title": "Nova reserva {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Codi de confirmació"
     },
     "passwordReset": {
+      "preview": "Restableix la teva contrasenya de {brand}",
+      "subtitle": "Fes servir el botó de sota per definir-ne una de nova",
+      "greeting": "Hola, {name}:",
+      "greetingNoName": "Hola:",
+      "expiryOneHour": "1 hora",
+      "linkFallback": "Si el botó no funciona, copia i enganxa aquest URL al teu navegador:",
+      "ignoreHeading": "No ho has demanat?",
+      "ignoreBody": "Pots ignorar aquest correu sense cap problema — la contrasenya no canviarà si no fas clic a l'enllaç de dalt. Si et preocupa que algú altre intenti accedir al teu compte, respon a aquest correu i ho investigarem.",
       "subject": "Restabliu la vostra contrasenya",
       "title": "Restabliu la vostra contrasenya",
-      "body": "Feu clic al botó de sota per establir una nova contrasenya. Aquest enllaç caduca en 1 hora.",
+      "body": "Hem rebut una sol·licitud per restablir la contrasenya del teu compte de {account}. Fes clic al botó de sota per triar-ne una de nova — l'enllaç és vàlid durant {expiresIn}.",
       "button": "Restableix la contrasenya"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "membre VIP"
     },
     "customerSignup": {
+      "preview": "{restaurant} — compte de client nou: {customer}",
+      "headerTitle": "{restaurant} — compte de client nou",
+      "badge": "Registre nou",
+      "body": "Un nou client acaba de crear un compte al teu restaurant.",
+      "labelCustomer": "Client",
+      "viewCustomersButton": "Mostra els clients a l'administració",
       "subject": "{restaurant}: nou compte de client — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Alguna cosa ha fallat. Torna-ho a provar."
     },
     "accountPage": {
+      "status": {
+        "pending": "Pendent",
+        "accepted": "Acceptada",
+        "preparing": "En preparació",
+        "ready": "A punt",
+        "completed": "Completada",
+        "cancelled": "Cancel·lada",
+        "rejected": "Rebutjada"
+      },
       "backTo": "Tornar a {name}",
       "greeting": "Hola, {name}",
       "noEmailOnFile": "No hi ha cap correu electrònic registrat",

@@ -17,6 +17,8 @@
     "discounts": "Знижки"
   },
   "common": {
+    "showPassword": "Показати пароль",
+    "hidePassword": "Приховати пароль",
     "save": "Зберегти",
     "saveChanges": "Зберегти зміни",
     "cancel": "Скасувати",
@@ -621,6 +623,7 @@
     "emailRequired": "Електронна пошта обов'язкова"
   },
   "kitchen": {
+    "opensIn": "Відкриється через {time}",
     "cancelledByCustomer": "Скасовано клієнтом",
     "title": "Kitchen Order App",
     "newOrders": "Нові замовлення",
@@ -5165,6 +5168,7 @@
       "take_out": "НА ВИНОС"
     },
     "orderTypesLower": {
+      "take_out": "на виніс",
       "pickup": "самовивіз",
       "delivery": "доставка",
       "dine_in": "в залі",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "З повагою,",
+      "poweredBy": "Працює на платформі"
+    },
     "common": {
       "viewInAdmin": "Відкрити в адмінпанелі",
       "trackOrder": "Відстежити замовлення",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Якщо ви не надсилали цей запит, просто проігноруйте цей лист."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Ресторан зараз зачинений — ваше замовлення поставлено в чергу, і щойно ресторан відкриється, ви отримаєте оновлення. Перевірте пошту: {openingTime}.",
       "closedNote": "Ресторан зараз зачинений — ваше замовлення в черзі, і ми повідомимо вас, щойно ресторан відкриється.",
       "cancelNote": "Якщо щось піде не за планом, ви все ще можете скасувати замовлення тут.",
       "subject": "Замовлення #{orderNumber} отримано — очікує підтвердження",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Столик заброньовано на {n} — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — замовлення №{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — замовлення №{orderNumber}",
+      "badgeNew": "Нове замовлення",
+      "minShort": "хв",
+      "badgePaidOnline": "Оплачено онлайн",
+      "badgeCollectCard": "До оплати — картка",
+      "badgeCollectCash": "До оплати — готівка",
+      "badgePayAtStore": "Оплата на місці",
+      "tablePreorder": "Бронювання столика + передзамовлення — гостей: {partySize}, {time}",
+      "tablePreorderOne": "Бронювання столика + передзамовлення — 1 гість, {time}",
+      "labelDeliveryAddress": "Адреса доставки",
+      "labelCustomerNotes": "Коментар клієнта",
+      "labelOrderDetails": "Склад замовлення",
+      "labelOrderTotal": "Сума замовлення",
+      "collected": "Отримано",
+      "toCollect": "До отримання",
+      "creditFallback": "баланс",
+      "paidWith": "Оплачено: {label}",
+      "totalMinusCredit": "Сума замовлення {total} − {credit} оплачено ({label})",
+      "seeBreakdown": "Детальна розбивка доступна в панелі адміністратора.",
+      "openKitchenApp": "Відкрити Kitchen Order App",
+      "acceptHint": "Прийміть це замовлення в Kitchen Order App або в панелі адміністратора. Якщо протягом налаштованого часу очікування не буде жодної дії, замовлення буде відхилено автоматично.",
       "subject": "Нове замовлення #{orderNumber} — {restaurant}",
       "title": "Отримано нове замовлення",
       "body": "{customer} щойно зробив замовлення #{orderNumber} на суму {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Надсилається щомісяця"
     },
     "reservationConfirmed": {
+      "previewRequested": "Запит на бронювання отримано — {dateTime}, гостей: {partySize}",
+      "previewDeclined": "Оновлення бронювання — {dateTime}, гостей: {partySize}",
+      "previewCancelled": "Бронювання скасовано — {dateTime}, гостей: {partySize}",
       "subjectCancelled": "Ваше бронювання скасовано",
       "headerTitleCancelled": "Бронювання скасовано",
       "introCancelled": "Ви скасували бронювання в ресторані {restaurantName} — ресторан повідомлено, і ваш столик знову вільний.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Пропущено"
     },
     "newReservation": {
+      "preview": "Нове бронювання — {dateTime} · гостей: {partySize}",
+      "previewCancelled": "Бронювання скасовано — {dateTime} · гостей: {partySize}",
+      "headerTitle": "{restaurant} — бронювання №{reservationNumber}",
+      "subtitleNew": "Новий запит на бронювання",
+      "subtitleCancelled": "Бронювання скасовано клієнтом",
+      "badgeNew": "Нове",
+      "badgeCancelled": "Скасовано клієнтом",
+      "badgeParty": "Гостей: {partySize}",
+      "labelTime": "Час бронювання",
+      "cancelledNote": "Клієнт скасував це бронювання з листа з підтвердженням — столик можна звільнити. Жодних дій не потрібно.",
+      "labelSpecialRequests": "Особливі побажання",
+      "manageButton": "Керувати бронюванням",
       "subjectCancelled": "Бронювання скасовано клієнтом — {restaurant}",
       "subject": "Нове бронювання — {restaurant}",
       "title": "Нове бронювання {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Код підтвердження"
     },
     "passwordReset": {
+      "preview": "Скидання пароля для {brand}",
+      "subtitle": "Натисніть кнопку нижче, щоб установити новий",
+      "greeting": "Вітаємо, {name}!",
+      "greetingNoName": "Вітаємо!",
+      "expiryOneHour": "1 година",
+      "linkFallback": "Якщо кнопка не працює, скопіюйте це посилання та вставте його у браузер:",
+      "ignoreHeading": "Не надсилали цей запит?",
+      "ignoreBody": "Можете спокійно проігнорувати цей лист — пароль не зміниться, доки ви не перейдете за посиланням вище. Якщо ви побоюєтеся, що хтось намагається отримати доступ до вашого акаунта, дайте відповідь на цей лист, і ми все перевіримо.",
       "subject": "Скидання паролю",
       "title": "Скинути пароль",
-      "body": "Натисніть кнопку нижче, щоб встановити новий пароль. Посилання дійсне протягом 1 години.",
+      "body": "Ми отримали запит на скидання пароля для вашого акаунта {account}. Натисніть кнопку нижче, щоб вибрати новий — термін дії посилання: {expiresIn}.",
       "button": "Скинути пароль"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-учасник"
     },
     "customerSignup": {
+      "preview": "{restaurant} — новий акаунт клієнта: {customer}",
+      "headerTitle": "{restaurant} — новий акаунт клієнта",
+      "badge": "Нова реєстрація",
+      "body": "Новий клієнт щойно створив акаунт у вашому ресторані.",
+      "labelCustomer": "Клієнт",
+      "viewCustomersButton": "Переглянути клієнтів в адмін-панелі",
       "subject": "{restaurant}: новий обліковий запис клієнта — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Щось пішло не так. Будь ласка, спробуйте ще раз."
     },
     "accountPage": {
+      "status": {
+        "pending": "Очікує",
+        "accepted": "Прийнято",
+        "preparing": "Готується",
+        "ready": "Готово",
+        "completed": "Завершено",
+        "cancelled": "Скасовано",
+        "rejected": "Відхилено"
+      },
       "backTo": "Назад до {name}",
       "greeting": "Привіт, {name}",
       "noEmailOnFile": "Електронна пошта не вказана",

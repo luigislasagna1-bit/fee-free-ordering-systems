@@ -55,7 +55,10 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
     : <Badge color="emerald">{t("email.reservationConfirmed.badgeConfirmed")}</Badge>;
 
   return (
-    <EmailLayout preview={t("email.reservationConfirmed.preview", { dateTime, partySize: String(partySize) })}>
+    // Preview follows the STATUS like every other string here (cms0gyexp #2b —
+    // a pending request's inbox preview used to read "Reservation confirmed",
+    // flatly contradicting its own subject). "" suffix = the confirmed key.
+    <EmailLayout preview={t(k("preview"), { dateTime, partySize: String(partySize) })}>
       <EmailHeader
         variant="status"
         title={t(k("headerTitle"))}
@@ -119,6 +122,8 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
         restaurantEmail={restaurantEmail}
         restaurantPhone={restaurantPhone}
         imprint={imprint}
+        signOff={t("email.footer.signOff")}
+        poweredByLabel={t("email.footer.poweredBy")}
       />
     </EmailLayout>
   );

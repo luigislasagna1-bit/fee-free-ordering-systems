@@ -82,6 +82,8 @@ export default function ScheduledOrderReminder(props: ScheduledOrderReminderProp
         restaurantEmail={restaurantEmail}
         restaurantPhone={restaurantPhone}
         imprint={imprint}
+        signOff={t("email.footer.signOff")}
+        poweredByLabel={t("email.footer.poweredBy")}
       />
     </EmailLayout>
   );

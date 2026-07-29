@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, MailCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export function LoginForm({ slug }: { slug: string }) {
   const t = useTranslations("customer.loginForm");
@@ -62,12 +63,12 @@ export function LoginForm({ slug }: { slug: string }) {
       </div>
       <div>
         <label className="block text-xs font-semibold text-gray-700 mb-1">{t("passwordLabel")}</label>
-        <input
-          type="password"
+        {/* Shared eye-toggle input (cms0gyexp #6). */}
+        <PasswordInput
           required
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+          className="w-full border border-gray-200 rounded-lg ps-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
       </div>
       {error && (

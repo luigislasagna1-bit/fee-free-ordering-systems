@@ -41,6 +41,25 @@
 
 ## A. DO NOW — this week, in priority order
 
+### A27. 🆕 Fabrizio's 9-item batch (cms0gyexp) BUILT — plus a 20-minute email-deliverability session with you
+All nine items are implemented (see the report reply): customer emails now follow the CUSTOMER's
+chosen page language; staff emails fully translated in the backend language (with the customer's
+phone + email included, GloriaFood-style); wrong "Booking confirmed" inbox preview fixed; restaurant
+phone/email now in every customer email footer (clickable); "Kind regards" translated; password-reset
+email translated + restaurant-branded; password eye toggle; account order-history translated with
+amber pending rows; the closed-hours email now names the exact opening time; kitchen "OPENS IN" chip
+clears once you confirm a booking. Every email also now ships a plain-text copy (a known spam-score
+fix) and marketing emails carry the required unsubscribe link + postal address.
+- **☐ SPAM FIX — do together (~20 min):** the code half is shipped, but Gmail trust is mostly DNS.
+  Follow "Verify & tighten checklist" at the END of docs/EMAIL_DELIVERABILITY.md: ① run the 4 dig
+  checks (or ask Claude to run them) ② add `rua=` reporting to the DMARC record in GoDaddy
+  ③ register feefreeordering.com at postmaster.google.com ④ turn OFF click/open tracking in the
+  Resend dashboard ⑤ send a Mail-Tester test (target ≥9/10) ⑥ fill Superadmin → Settings →
+  Company → Address (marketing footer needs a postal address by law).
+- **☐ QUICK PROD CHECK:** place a test order with the storefront language switched to English on
+  your Italian-default store → the confirmation email must arrive in ENGLISH. Fabrizio's report is
+  IN TESTING — he'll bang on the rest.
+
 ### A26. 🆕 Guest self-cancel (Fabrizio cms0idtz7) BUILT — one prod check when you're ready
 Customers can now cancel a **closed-hours order** (and any reservation) straight from their
 confirmation email — no account, no phone call (GloriaFood parity, exactly per the plan you approved).

@@ -218,7 +218,9 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     customerEmail: order.customerEmail,
     customerPhone: order.customerPhone,
     orderType: order.type,
-    customerLocale: order.restaurant.defaultLanguage || "en",
+    // The CUSTOMER's storefront language, persisted at create (cms0gyexp #2).
+    // Legacy rows (null) keep the restaurant-default behavior.
+    customerLocale: (order as any).customerLocale || order.restaurant.defaultLanguage || "en",
     payload: {
       event: "orderConfirmed",
       customerName: order.customerName,
@@ -275,6 +277,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
           }
         : {}),
       placedWhileClosed: !!(order as any).placedWhileClosed,
+      // The deferred kitchen alert = the restaurant's next opening — lets the
+      // closed note say WHEN ("Check your email on Saturday, 25 Jul, 20:15").
+      // GloriaFood parity, Fabrizio cms0gyexp #8.
+      opensAt: (order as any).alertAt ?? null,
       appliedPromos: appliedPromosForEmail,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyCustomer:", e));

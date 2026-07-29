@@ -50,7 +50,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
       orderNumber: true,
       customerName: true,
       customerEmail: true,
-      restaurant: { select: { currency: true, name: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
+      restaurant: { select: { currency: true, name: true, email: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true } },
       // FeeFree delivery only — used to reverse the driver's frozen tip on refund (B2).
       deliveryAssignment: { select: { id: true, status: true, driverId: true, deliveredAt: true } },
     },
@@ -202,6 +202,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
           creditBack > 0
             ? order.restaurant.rewardLabelPlural?.trim() || order.restaurant.rewardLabelSingular?.trim() || null
             : undefined,
+        restaurantEmail: order.restaurant.email,
         locale: order.restaurant.defaultLanguage || "en",
       }).catch((e) => console.error("[refund email]", e instanceof Error ? e.message : e)),
     );

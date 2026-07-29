@@ -17,6 +17,8 @@
     "discounts": "Nuolaidos"
   },
   "common": {
+    "showPassword": "Rodyti slaptažodį",
+    "hidePassword": "Slėpti slaptažodį",
     "save": "Išsaugoti",
     "saveChanges": "Išsaugoti pakeitimus",
     "cancel": "Atšaukti",
@@ -621,6 +623,7 @@
     "emailRequired": "El. paštas yra privalomas"
   },
   "kitchen": {
+    "opensIn": "Atsidarys po {time}",
     "cancelledByCustomer": "Atšaukė klientas",
     "title": "Kitchen Order App",
     "newOrders": "Nauji užsakymai",
@@ -5165,6 +5168,7 @@
       "take_out": "PASIIMTI"
     },
     "orderTypesLower": {
+      "take_out": "išsinešimui",
       "pickup": "atsiėmimas",
       "delivery": "pristatymas",
       "dine_in": "valgymas vietoje",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Pagarbiai",
+      "poweredBy": "Paslaugą teikia"
+    },
     "common": {
       "viewInAdmin": "Atidaryti administravimo skydelyje",
       "trackOrder": "Sekite savo užsakymą",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Jei to neprašėte, galite saugiai nepaisyti šio el. laiško."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Restoranas šiuo metu uždarytas — jūsų užsakymas laukia eilėje, o vos tik restoranas atsidarys, gausite žinutę. Patikrinkite savo el. paštą: {openingTime}.",
       "closedNote": "Restoranas šiuo metu uždarytas — tavo užsakymas laukia eilėje, ir vos tik restoranas atsidarys, gausi žinutę.",
       "cancelNote": "Jei nutiktų kas nors netikėto, užsakymą vis tiek gali atšaukti čia.",
       "subject": "Užsakymas #{orderNumber} gautas — laukiama patvirtinimo",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Staliukas rezervuotas {n} asmenims — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — užsakymas Nr. {orderNumber} — {total}",
+      "headerTitle": "{restaurant} — užsakymas Nr. {orderNumber}",
+      "badgeNew": "Naujas užsakymas",
+      "minShort": "min.",
+      "badgePaidOnline": "Apmokėta internetu",
+      "badgeCollectCard": "Atsiskaitys kortele",
+      "badgeCollectCash": "Atsiskaitys grynaisiais",
+      "badgePayAtStore": "Atsiskaitys vietoje",
+      "tablePreorder": "Staliuko rezervacija + išankstinis užsakymas — svečių: {partySize}, {time}",
+      "tablePreorderOne": "Staliuko rezervacija + išankstinis užsakymas — 1 svečias, {time}",
+      "labelDeliveryAddress": "Pristatymo adresas",
+      "labelCustomerNotes": "Kliento pastabos",
+      "labelOrderDetails": "Užsakymo informacija",
+      "labelOrderTotal": "Bendra užsakymo suma",
+      "collected": "Sumokėta",
+      "toCollect": "Liko sumokėti",
+      "creditFallback": "kreditas",
+      "paidWith": "Apmokėta: {label}",
+      "totalMinusCredit": "Bendra užsakymo suma {total} − {credit} apmokėta: {label}",
+      "seeBreakdown": "Išsamų išskaidymą rasite administravimo skydelyje.",
+      "openKitchenApp": "Atidaryti Kitchen Order App",
+      "acceptHint": "Priimkite šį užsakymą programėlėje Kitchen Order App arba administravimo skydelyje. Jei per nustatytą laiką nesiimama jokių veiksmų, užsakymas atmetamas automatiškai.",
       "subject": "Naujas užsakymas #{orderNumber} — {restaurant}",
       "title": "Gautas naujas užsakymas",
       "body": "{customer} ką tik pateikė užsakymą #{orderNumber} už {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Siunčiama kas mėnesį"
     },
     "reservationConfirmed": {
+      "previewRequested": "Gautas rezervacijos prašymas — {dateTime}, svečių: {partySize}",
+      "previewDeclined": "Rezervacijos atnaujinimas — {dateTime}, svečių: {partySize}",
+      "previewCancelled": "Rezervacija atšaukta — {dateTime}, svečių: {partySize}",
       "subjectCancelled": "Tavo rezervacija atšaukta",
       "headerTitleCancelled": "Rezervacija atšaukta",
       "introCancelled": "Atšaukei savo rezervaciją restorane {restaurantName} — restoranui pranešta, o tavo staliukas atlaisvintas.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Praleista"
     },
     "newReservation": {
+      "preview": "Nauja rezervacija — {dateTime} · svečių: {partySize}",
+      "previewCancelled": "Rezervacija atšaukta — {dateTime} · svečių: {partySize}",
+      "headerTitle": "{restaurant} — rezervacija Nr. {reservationNumber}",
+      "subtitleNew": "Naujas rezervacijos prašymas",
+      "subtitleCancelled": "Klientas atšaukė rezervaciją",
+      "badgeNew": "Nauja",
+      "badgeCancelled": "Klientas atšaukė",
+      "badgeParty": "Svečių: {partySize}",
+      "labelTime": "Rezervacijos laikas",
+      "cancelledNote": "Klientas atšaukė šią rezervaciją iš savo patvirtinimo laiško — staliuką galima atlaisvinti. Jokių veiksmų nereikia.",
+      "labelSpecialRequests": "Ypatingi pageidavimai",
+      "manageButton": "Tvarkyti rezervaciją",
       "subjectCancelled": "Klientas atšaukė rezervaciją — {restaurant}",
       "subject": "Nauja rezervacija — {restaurant}",
       "title": "Nauja rezervacija {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Patvirtinimo kodas"
     },
     "passwordReset": {
+      "preview": "Atkurkite savo {brand} slaptažodį",
+      "subtitle": "Norėdami nustatyti naują slaptažodį, naudokite žemiau esantį mygtuką",
+      "greeting": "Sveiki, {name}!",
+      "greetingNoName": "Sveiki!",
+      "expiryOneHour": "1 valandą",
+      "linkFallback": "Jei mygtukas neveikia, nukopijuokite šį URL ir įklijuokite jį į savo naršyklę:",
+      "ignoreHeading": "Neprašėte slaptažodžio atkūrimo?",
+      "ignoreBody": "Galite drąsiai ignoruoti šį laišką — jūsų slaptažodis nepasikeis, kol nepaspausite aukščiau esančios nuorodos. Jei nerimaujate, kad kažkas kitas bando prisijungti prie jūsų paskyros, atsakykite į šį laišką ir mes viską patikrinsime.",
       "subject": "Atstatyti slaptažodį",
       "title": "Atstatyti slaptažodį",
-      "body": "Paspauskite žemiau esantį mygtuką, kad nustatytumėte naują slaptažodį. Ši nuoroda galioja 1 valandą.",
+      "body": "Gavome prašymą atkurti jūsų {account} paskyros slaptažodį. Spustelėkite žemiau esantį mygtuką ir pasirinkite naują slaptažodį — nuoroda galioja {expiresIn}.",
       "button": "Atstatyti slaptažodį"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP narys"
     },
     "customerSignup": {
+      "preview": "{restaurant} — nauja kliento paskyra: {customer}",
+      "headerTitle": "{restaurant} — nauja kliento paskyra",
+      "badge": "Nauja registracija",
+      "body": "Naujas klientas ką tik susikūrė paskyrą jūsų restorane.",
+      "labelCustomer": "Klientas",
+      "viewCustomersButton": "Peržiūrėti klientus administravimo skydelyje",
       "subject": "{restaurant}: nauja kliento paskyra — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Kažkas nepavyko. Pabandyk dar kartą."
     },
     "accountPage": {
+      "status": {
+        "pending": "Laukiama",
+        "accepted": "Priimtas",
+        "preparing": "Ruošiamas",
+        "ready": "Paruoštas",
+        "completed": "Įvykdytas",
+        "cancelled": "Atšauktas",
+        "rejected": "Atmestas"
+      },
       "backTo": "Grįžti į {name}",
       "greeting": "Sveiki, {name}",
       "noEmailOnFile": "El. paštas nenurodytas",

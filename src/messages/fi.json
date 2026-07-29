@@ -17,6 +17,8 @@
     "discounts": "Alennukset"
   },
   "common": {
+    "showPassword": "Näytä salasana",
+    "hidePassword": "Piilota salasana",
     "save": "Tallenna",
     "saveChanges": "Tallenna muutokset",
     "cancel": "Peruuta",
@@ -621,6 +623,7 @@
     "emailRequired": "Sähköpostiosoite vaaditaan"
   },
   "kitchen": {
+    "opensIn": "Avautuu {time} kuluttua",
     "cancelledByCustomer": "Asiakas peruutti",
     "title": "Kitchen Order App",
     "newOrders": "Uudet tilaukset",
@@ -5165,6 +5168,7 @@
       "take_out": "MUKAAN"
     },
     "orderTypesLower": {
+      "take_out": "nouto",
       "pickup": "nouto",
       "delivery": "toimitus",
       "dine_in": "ravintolassa",
@@ -5232,6 +5236,10 @@
     }
   },
   "email": {
+    "footer": {
+      "signOff": "Ystävällisin terveisin,",
+      "poweredBy": "Palvelun tarjoaa"
+    },
     "common": {
       "viewInAdmin": "Avaa hallintapaneelissa",
       "trackOrder": "Seuraa tilaustasi",
@@ -5240,6 +5248,7 @@
       "ifYouDidntRequest": "Jos et pyytänyt tätä, voit jättää tämän sähköpostin huomiotta."
     },
     "orderConfirmed": {
+      "closedNoteWithTime": "Ravintola on juuri nyt suljettu — tilauksesi on jonossa ja saat päivityksen heti, kun ravintola aukeaa. Tarkista sähköpostisi: {openingTime}.",
       "closedNote": "Ravintola on juuri nyt suljettu — tilauksesi on jonossa ja saat päivityksen heti, kun ravintola aukeaa.",
       "cancelNote": "Jos jotain yllättävää tulee eteen, voit silti peruuttaa tilauksesi täältä.",
       "subject": "Tilaus #{orderNumber} vastaanotettu — odottaa vahvistusta",
@@ -5274,6 +5283,28 @@
       "tableReservation": "Pöytä varattu {n} hengelle — {time}"
     },
     "newOrder": {
+      "preview": "{restaurant} — Tilaus #{orderNumber} — {total}",
+      "headerTitle": "{restaurant} — Tilaus #{orderNumber}",
+      "badgeNew": "Uusi tilaus",
+      "minShort": "min",
+      "badgePaidOnline": "Maksettu verkossa",
+      "badgeCollectCard": "Perittävä — kortti",
+      "badgeCollectCash": "Perittävä — käteinen",
+      "badgePayAtStore": "Maksu paikan päällä",
+      "tablePreorder": "Pöytävaraus + ennakkotilaus — {partySize} vierasta, {time}",
+      "tablePreorderOne": "Pöytävaraus + ennakkotilaus — 1 vieras, {time}",
+      "labelDeliveryAddress": "Toimitusosoite",
+      "labelCustomerNotes": "Asiakkaan huomautukset",
+      "labelOrderDetails": "Tilauksen tiedot",
+      "labelOrderTotal": "Tilauksen summa",
+      "collected": "Peritty",
+      "toCollect": "Perittävä",
+      "creditFallback": "hyvitys",
+      "paidWith": "Maksettu: {label}",
+      "totalMinusCredit": "Tilauksen summa {total} − {credit} maksettu ({label})",
+      "seeBreakdown": "Katso tarkka erittely hallintapaneelista.",
+      "openKitchenApp": "Avaa Kitchen Order App",
+      "acceptHint": "Hyväksy tilaus Kitchen Order App -sovelluksessa tai hallintapaneelissa. Jos mitään ei tehdä määrittämäsi aikarajan kuluessa, tilaus hylätään automaattisesti.",
       "subject": "Uusi tilaus #{orderNumber} — {restaurant}",
       "title": "Uusi tilaus vastaanotettu",
       "body": "{customer} teki tilauksen #{orderNumber} summalla {total}.",
@@ -5387,6 +5418,9 @@
       "sentMonthly": "Lähetetään kuukausittain"
     },
     "reservationConfirmed": {
+      "previewRequested": "Varauspyyntösi on vastaanotettu — {dateTime}, {partySize} henkilöä",
+      "previewDeclined": "Varauksesi päivitys — {dateTime}, {partySize} henkilöä",
+      "previewCancelled": "Varaus peruttu — {dateTime}, {partySize} henkilöä",
       "subjectCancelled": "Varauksesi on peruutettu",
       "headerTitleCancelled": "Varaus peruutettu",
       "introCancelled": "Peruutit varauksesi ravintolassa {restaurantName} — ravintolalle on ilmoitettu ja pöytäsi on vapautettu.",
@@ -5427,6 +5461,18 @@
       "badgeMissed": "Menetetty"
     },
     "newReservation": {
+      "preview": "Uusi varaus — {dateTime} · {partySize} hengen seurue",
+      "previewCancelled": "Varaus peruttu — {dateTime} · {partySize} hengen seurue",
+      "headerTitle": "{restaurant} — Varaus #{reservationNumber}",
+      "subtitleNew": "Uusi varauspyyntö",
+      "subtitleCancelled": "Asiakas perui varauksen",
+      "badgeNew": "Uusi",
+      "badgeCancelled": "Asiakas perui",
+      "badgeParty": "{partySize} hengen seurue",
+      "labelTime": "Varauksen ajankohta",
+      "cancelledNote": "Asiakas perui tämän varauksen vahvistussähköpostinsa kautta — pöydän voi vapauttaa. Toimenpiteitä ei tarvita.",
+      "labelSpecialRequests": "Erityistoiveet",
+      "manageButton": "Hallinnoi varausta",
       "subjectCancelled": "Asiakas peruutti varauksen — {restaurant}",
       "subject": "Uusi varaus — {restaurant}",
       "title": "Uusi varaus {status}",
@@ -5434,9 +5480,17 @@
       "confirmationCode": "Vahvistuskoodi"
     },
     "passwordReset": {
+      "preview": "Nollaa {brand}-salasanasi",
+      "subtitle": "Aseta uusi salasana alla olevalla painikkeella",
+      "greeting": "Hei {name},",
+      "greetingNoName": "Hei,",
+      "expiryOneHour": "1 tunti",
+      "linkFallback": "Jos painike ei toimi, kopioi tämä URL-osoite selaimesi osoiteriville:",
+      "ignoreHeading": "Etkö pyytänyt tätä?",
+      "ignoreBody": "Voit jättää tämän viestin huomiotta — salasanasi ei muutu, ellet napsauta yllä olevaa linkkiä. Jos epäilet, että joku muu yrittää käyttää tiliäsi, vastaa tähän viestiin, niin selvitämme asian.",
       "subject": "Palauta salasanasi",
       "title": "Palauta salasanasi",
-      "body": "Napsauta alla olevaa painiketta asettaaksesi uuden salasanan. Tämä linkki vanhenee 1 tunnissa.",
+      "body": "Saimme pyynnön nollata {account}-tilisi salasanan. Valitse uusi salasana napsauttamalla alla olevaa painiketta — linkin voimassaoloaika on {expiresIn}.",
       "button": "Palauta salasana"
     },
     "settingsTest": {
@@ -5538,6 +5592,12 @@
       "defaultMemberLabel": "VIP-jäsen"
     },
     "customerSignup": {
+      "preview": "{restaurant} — uusi asiakastili: {customer}",
+      "headerTitle": "{restaurant} — uusi asiakastili",
+      "badge": "Uusi rekisteröityminen",
+      "body": "Uusi asiakas loi juuri tilin ravintolaasi.",
+      "labelCustomer": "Asiakas",
+      "viewCustomersButton": "Näytä asiakkaat hallintapaneelissa",
       "subject": "{restaurant}: uusi asiakastili — {customer}"
     },
     "rewardGift": {
@@ -6197,6 +6257,15 @@
       "genericError": "Jotain meni pieleen. Yritä uudelleen."
     },
     "accountPage": {
+      "status": {
+        "pending": "Odottaa",
+        "accepted": "Hyväksytty",
+        "preparing": "Valmisteilla",
+        "ready": "Valmis",
+        "completed": "Suoritettu",
+        "cancelled": "Peruttu",
+        "rejected": "Hylätty"
+      },
       "backTo": "Takaisin: {name}",
       "greeting": "Hei, {name}",
       "noEmailOnFile": "Ei sähköpostiosoitetta tallennettu",

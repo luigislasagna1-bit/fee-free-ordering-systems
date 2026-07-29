@@ -177,25 +177,41 @@ export function EmailFooter({
   restaurantUrl,
   restaurantEmail,
   restaurantPhone,
-  imprint = "Fee Free Ordering Systems",
+  imprint,
   unsubscribeUrl,
+  signOff = "Kind regards,",
+  poweredByLabel = "Powered by",
+  postalAddress,
 }: {
   restaurantName?: string;
   restaurantUrl?: string;
   restaurantEmail?: string;
   restaurantPhone?: string;
   /** Override of the platform line — used when sending under a whitelabel
-   *  reseller (set via setEmailImprint() in src/lib/email.ts). */
+   *  reseller (set via setEmailImprint() in src/lib/email.ts). Reseller
+   *  imprints are FULL SENTENCES ("Supported by X | email") so they render
+   *  VERBATIM — no "Powered by" prefix (Fabrizio cms0gyexp: "Powered by
+   *  Supported by PISU MARKETING" read as a doubled prefix). Only the
+   *  platform default keeps the prefix. */
   imprint?: string;
   /** Optional unsubscribe link — only shown for digest/marketing emails. */
   unsubscribeUrl?: string;
+  /** Localized "Kind regards," — templates with a Translator pass
+   *  t("email.footer.signOff"); default keeps English (cms0gyexp #4b). */
+  signOff?: string;
+  /** Localized "Powered by" prefix for the platform imprint line. */
+  poweredByLabel?: string;
+  /** Platform postal address — CAN-SPAM requires one on COMMERCIAL mail, so
+   *  the marketing senders (autopilot/kickstarter) pass it; transactional
+   *  emails leave it unset. */
+  postalAddress?: string | null;
 }) {
   return (
     <Section style={{ padding: "20px 32px 28px" }}>
       {restaurantName && (
         <>
           <div style={{ fontSize: 13, color: COLORS.text, marginBottom: 2 }}>
-            Kind regards,
+            {signOff}
           </div>
           <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.text, marginBottom: 4 }}>
             {restaurantName}
@@ -255,7 +271,14 @@ export function EmailFooter({
             />
           );
         })()}
-        Powered by <strong style={{ color: COLORS.muted }}>{imprint}</strong>
+        {imprint ? (
+          // Custom (reseller) imprint — a full sentence, rendered verbatim.
+          <span>{imprint}</span>
+        ) : (
+          <>
+            {poweredByLabel} <strong style={{ color: COLORS.muted }}>Fee Free Ordering Systems</strong>
+          </>
+        )}
         {unsubscribeUrl && (
           <>
             {" · "}
@@ -263,6 +286,9 @@ export function EmailFooter({
               Unsubscribe
             </a>
           </>
+        )}
+        {postalAddress && (
+          <div style={{ marginTop: 6 }}>{postalAddress}</div>
         )}
       </div>
     </Section>

@@ -1,11 +1,17 @@
 /**
  * Restaurant-facing new-reservation ping.
  * Navy transactional header like KitchenNotification.
+ *
+ * FULLY LOCALIZED ×38 (Fabrizio cms0gyexp #1 — policy flip, Luigi 2026-07-29):
+ * staff email bodies now follow the recipient's emailLanguage like the
+ * customer templates do. Keys live under email.newReservation.
  */
+import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard, Badge } from "../components/EmailParts";
 
 export type NewReservationNotificationProps = {
+  t: Translator;
   restaurantName: string;
   reservationNumber: string;
   customerName: string;
@@ -16,31 +22,34 @@ export type NewReservationNotificationProps = {
   specialRequests?: string | null;
   dashboardUrl: string;
   /** The CUSTOMER cancelled this booking via their emailed link (cms0idtz7)
-   *  — flips the ping to "cancelled" wording. Staff bodies stay English-only. */
+   *  — flips the ping to "cancelled" wording. */
   cancelled?: boolean;
   imprint?: string;
 };
 
 export default function NewReservationNotification(props: NewReservationNotificationProps) {
-  const { restaurantName, reservationNumber, customerName, customerPhone,
+  const { t, restaurantName, reservationNumber, customerName, customerPhone,
     customerEmail, dateTime, partySize, specialRequests, dashboardUrl,
     cancelled, imprint } = props;
+  const party = String(partySize);
 
   return (
     <EmailLayout preview={cancelled
-      ? `Reservation cancelled — ${dateTime} · party of ${partySize}`
-      : `New reservation — ${dateTime} · party of ${partySize}`}>
+      ? t("email.newReservation.previewCancelled", { dateTime, partySize: party })
+      : t("email.newReservation.preview", { dateTime, partySize: party })}>
       <EmailHeader
         variant="transactional"
-        title={`${restaurantName} — Reservation #${reservationNumber}`}
-        subtitle={cancelled ? "Reservation cancelled by the customer" : "New reservation request"}
+        title={t("email.newReservation.headerTitle", { restaurant: restaurantName, reservationNumber })}
+        subtitle={cancelled
+          ? t("email.newReservation.subtitleCancelled")
+          : t("email.newReservation.subtitleNew")}
       />
       <EmailBody>
         <div style={{ margin: "8px 0 16px" }}>
           {cancelled
-            ? <Badge color="rose">Cancelled by customer</Badge>
-            : <Badge color="emerald">New</Badge>}{" "}
-          <Badge color="slate">Party of {partySize}</Badge>
+            ? <Badge color="rose">{t("email.newReservation.badgeCancelled")}</Badge>
+            : <Badge color="emerald">{t("email.newReservation.badgeNew")}</Badge>}{" "}
+          <Badge color="slate">{t("email.newReservation.badgeParty", { partySize: party })}</Badge>
         </div>
 
         <div style={{ margin: "0 0 6px" }}>
@@ -61,26 +70,25 @@ export default function NewReservationNotification(props: NewReservationNotifica
           </div>
         )}
 
-        <InfoCard label="Reservation time" accent={cancelled ? "rose" : "emerald"}>
+        <InfoCard label={t("email.newReservation.labelTime")} accent={cancelled ? "rose" : "emerald"}>
           <strong>{dateTime}</strong>
         </InfoCard>
 
         {cancelled && (
           <P size="sm" muted>
-            The customer cancelled this booking from their confirmation email —
-            the table can be released. No action is needed.
+            {t("email.newReservation.cancelledNote")}
           </P>
         )}
 
         {specialRequests && (
-          <InfoCard label="Special requests" accent="amber">
+          <InfoCard label={t("email.newReservation.labelSpecialRequests")} accent="amber">
             {specialRequests}
           </InfoCard>
         )}
 
-        <EmailButton href={dashboardUrl}>Manage reservation</EmailButton>
+        <EmailButton href={dashboardUrl}>{t("email.newReservation.manageButton")}</EmailButton>
       </EmailBody>
-      <EmailFooter imprint={imprint} />
+      <EmailFooter imprint={imprint} signOff={t("email.footer.signOff")} poweredByLabel={t("email.footer.poweredBy")} />
     </EmailLayout>
   );
 }
