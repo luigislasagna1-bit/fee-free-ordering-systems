@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ChevronDown, ChevronRight, Loader2, Ban } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { ChevronDown, ChevronRight, Loader2, Ban, Search } from "lucide-react";
 import toast from "react-hot-toast";
 
 /**
@@ -49,10 +50,16 @@ export function MenuExclusionsPanel({
   helpTip?: React.ReactNode;
   defaultOpen?: boolean;
 }) {
+  // Search strings are shared across all three wrappers, so they live in
+  // their own namespace here rather than in each wrapper's resolved strings
+  // (keeps the ExclusionStrings contract untouched). Luigi 2026-07-19.
+  const tSearch = useTranslations("admin.menuExclusions");
+  const tMenu = useTranslations("admin.menuEditor");
   const [cats, setCats] = useState<Cat[] | null>(null);
   const [panelOpen, setPanelOpen] = useState(defaultOpen);
   const [open, setOpen] = useState<Record<string, boolean>>({});
   const [busy, setBusy] = useState<Record<string, boolean>>({});
+  const [q, setQ] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -68,6 +75,19 @@ export function MenuExclusionsPanel({
     (n, c) => n + (excluded(c) ? 1 : 0) + (c.menuItems ?? []).filter((it) => excluded(it)).length,
     0,
   );
+
+  // Name filter over categories + items (Luigi 2026-07-19): a matching
+  // category keeps all its items; otherwise only its matching items show.
+  // No query = the exact list as before (behavior unchanged).
+  const query = q.trim().toLowerCase();
+  const visibleCats = !query
+    ? cats
+    : (cats ?? []).reduce<Cat[]>((out, c) => {
+        if (c.name.toLowerCase().includes(query)) { out.push(c); return out; }
+        const items = (c.menuItems ?? []).filter((it) => it.name.toLowerCase().includes(query));
+        if (items.length > 0) out.push({ ...c, menuItems: items });
+        return out;
+      }, []);
 
   const patch = async (kind: "categories" | "items", id: string, value: boolean) => {
     setBusy((b) => ({ ...b, [id]: true }));
@@ -124,14 +144,37 @@ export function MenuExclusionsPanel({
         ) : cats.length === 0 ? (
           <p className="mt-3 text-sm text-gray-400">{strings.none}</p>
         ) : (
+          <>
+          {/* Filter the checkboxes by item/category name — one box serves the
+              earn / redeem / promo-exclusion surfaces alike. */}
+          <div className="mt-3 relative max-w-xs">
+            <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-gray-400" />
+            <input
+              type="search"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder={tSearch("searchPlaceholder")}
+              className="w-full bg-gray-50 border border-gray-200 rounded-full pl-8 pr-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            />
+          </div>
+          {(visibleCats ?? []).length === 0 ? (
+            <p className="mt-3 text-sm text-gray-400">{tMenu("noMatchesFor", { query: q.trim() })}</p>
+          ) : (
           <ul className="mt-3 divide-y divide-gray-100">
-            {cats.map((c) => {
+            {(visibleCats ?? []).map((c) => {
               const items = c.menuItems ?? [];
-              const isOpen = !!open[c.id];
+              // A live query force-expands so the matching items are visible.
+              const isOpen = query ? true : !!open[c.id];
               return (
                 <li key={c.id} className="py-2">
                   <div className="flex items-center justify-between gap-3">
-                    <button type="button" onClick={() => setOpen((o) => ({ ...o, [c.id]: !o[c.id] }))} className="flex items-center gap-1.5 text-left min-w-0">
+                    <button type="button" onClick={() => {
+                      // While a query force-expands everything, the toggle must
+                      // NO-OP — flipping saved open state would only surface
+                      // after the search is cleared.
+                      if (query) return;
+                      setOpen((o) => ({ ...o, [c.id]: !o[c.id] }));
+                    }} className="flex items-center gap-1.5 text-left min-w-0">
                       {items.length > 0 ? (isOpen ? <ChevronDown className="w-4 h-4 text-gray-400" /> : <ChevronRight className="w-4 h-4 text-gray-400" />) : <span className="w-4" />}
                       <span className="font-medium text-gray-800 truncate">{c.name}</span>
                       {items.length > 0 && <span className="text-xs text-gray-400">({items.length})</span>}
@@ -157,6 +200,8 @@ export function MenuExclusionsPanel({
               );
             })}
           </ul>
+          )}
+          </>
         )
       )}
     </div>
