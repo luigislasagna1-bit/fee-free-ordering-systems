@@ -621,6 +621,7 @@
     "emailRequired": "E-mail je povinný"
   },
   "kitchen": {
+    "cancelledByCustomer": "Zrušené zákazníkom",
     "title": "Kitchen Order App",
     "newOrders": "Nové objednávky",
     "inProgress": "Pripravuje sa",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Ak ste túto žiadosť nepodali, môžete tento e-mail bezpečne ignorovať."
     },
     "orderConfirmed": {
+      "closedNote": "Reštaurácia má momentálne zatvorené — vaša objednávka čaká v poradí a hneď, ako reštaurácia otvorí, dáme vám vedieť.",
+      "cancelNote": "Ak by sa prihodilo niečo nečakané, objednávku môžete stále zrušiť tu.",
       "subject": "Objednávka č. {orderNumber} prijatá — čaká na potvrdenie",
       "title": "Objednávka prijatá",
       "greeting": "Dobrý deň, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Otvoriť admin panel"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Vaša objednávka bola zrušená",
+      "cancelledByCustomerBody": "Objednávku ste zrušili — reštaurácia dostala pokyn, aby ju nepripravovala. Ak si to rozmyslíte, môžete si kedykoľvek vytvoriť novú objednávku.",
       "subject": "Aktualizácia objednávky č. {orderNumber}",
       "title": "Aktualizácia objednávky",
       "body": "Vaša objednávka č. {orderNumber} je teraz {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Odosielané mesačne"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Vaša rezervácia bola zrušená",
+      "headerTitleCancelled": "Rezervácia zrušená",
+      "introCancelled": "Zrušili ste svoju rezerváciu v reštaurácii {restaurantName} — reštaurácia bola informovaná a váš stôl je opäť voľný.",
+      "closingCancelled": "Ak si to rozmyslíte, kedykoľvek si môžete stôl rezervovať znova.",
+      "badgeCancelled": "Zrušená",
+      "depositContactNote": "Za túto rezerváciu ste zaplatili zálohu — ohľadom zálohy sa, prosím, obráťte priamo na reštauráciu.",
+      "cancelNote": "Ak sa vaše plány zmenia, rezerváciu môžete zrušiť tu.",
       "subject": "Rezervácia potvrdená",
       "titleConfirmed": "Vaša rezervácia je potvrdená",
       "titlePending": "Žiadosť o rezerváciu prijatá",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Zmeškané"
     },
     "newReservation": {
+      "subjectCancelled": "Rezervácia zrušená zákazníkom — {restaurant}",
       "subject": "Nová rezervácia — {restaurant}",
       "title": "Nová rezervácia {status}",
       "body": "{customer} požiadal o rezerváciu pre {party} hostí na {date} o {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Doručenie"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Zrušiť rezerváciu?",
+      "intro": "Chystáte sa zrušiť rezerváciu v reštaurácii {restaurantName}. Reštaurácia o tom bude okamžite informovaná.",
+      "partySize": "Počet osôb: {partySize}",
+      "confirmButton": "Áno, zrušiť moju rezerváciu",
+      "keepButton": "Nie, ponechať rezerváciu",
+      "cancelling": "Ruší sa…",
+      "successTitle": "Rezervácia zrušená",
+      "successBody": "Vaša rezervácia v reštaurácii {restaurantName} bola zrušená a reštaurácia bola informovaná. Dúfame, že sa uvidíme inokedy!",
+      "alreadyCancelledTitle": "Už je to vybavené",
+      "alreadyCancelledBody": "Táto rezervácia už bola zrušená alebo ju reštaurácia upravila — nemusíte robiť nič ďalšie.",
+      "invalidLinkTitle": "Tento odkaz nie je platný",
+      "invalidLinkBody": "Tento odkaz na zrušenie je neplatný alebo už nefunguje. Ak potrebujete rezerváciu zmeniť, obráťte sa, prosím, priamo na reštauráciu.",
+      "tooLateBody": "Túto rezerváciu už nie je možné zrušiť online — obráťte sa, prosím, priamo na reštauráciu {restaurantName}.",
+      "linkedOrderBody": "Táto rezervácia je súčasťou objednávky. Ak ju chcete zrušiť, použite odkaz na zrušenie z potvrdzujúceho e-mailu k objednávke alebo sa obráťte na reštauráciu.",
+      "depositNote": "Za túto rezerváciu ste zaplatili zálohu. Zrušením tu sa záloha automaticky nevracia — ohľadom zálohy sa, prosím, obráťte na reštauráciu.",
+      "genericError": "Niečo sa pokazilo. Skúste to, prosím, znova."
+    },
     "accountPage": {
       "backTo": "Späť na {name}",
       "greeting": "Ahoj, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Objednať znova"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Ak chcete túto objednávku zrušiť, prihláste sa alebo zavolajte do reštaurácie.",
+      "cancelErrorInvalidLink": "Tento odkaz na zrušenie nie je platný. Použite, prosím, odkaz z potvrdzujúceho e-mailu alebo zavolajte do reštaurácie.",
+      "cancelErrorAccepted": "Reštaurácia už vašu objednávku prijala. Ak ju chcete zrušiť, zavolajte, prosím, priamo do reštaurácie.",
+      "cancelErrorGone": "Túto objednávku už nie je možné zrušiť.",
       "stepPendingLabel": "Objednávka prijatá",
       "stepPendingDesc": "Vaša objednávka čaká na potvrdenie",
       "stepAcceptedLabel": "Potvrdená",

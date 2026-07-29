@@ -403,6 +403,12 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <Section title={tk("customer")} t={t}>
             <div className="space-y-2">
               <Row icon={<User className="w-4 h-4" />} t={t}>{order.customerName}</Row>
+              {/* WHO cancelled (cms0idtz7): guest self-cancels are new — staff
+                  must see it was the CUSTOMER, not a colleague. Restaurant/auto
+                  cancels render nothing (unchanged). */}
+              {order.status === "cancelled" && (order as any).cancelledBy === "customer" && (
+                <div className={`text-xs ${t.muted}`}>{tk("cancelledByCustomer")}</div>
+              )}
               {order.customerPhone && (
                 <Row icon={<Phone className="w-4 h-4" />} t={t}>
                   {/* Tap-to-call: sanitise to digits/+ for the tel: URI, keep the

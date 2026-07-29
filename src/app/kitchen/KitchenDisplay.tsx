@@ -258,6 +258,12 @@ function ReservationCard({
               </>
             )}
           </div>
+          {/* WHO cancelled (cms0idtz7) — same attribution line as order tiles. */}
+          {r.status === "cancelled" && r.cancelledBy === "customer" && (
+            <div className={`text-[11px] leading-tight mt-0.5 ${t.muted}`}>
+              {tk("cancelledByCustomer")}
+            </div>
+          )}
         </div>
         {/* Cover count on the RIGHT — the same slot an order tile puts its total
             in, so a reservation row reads "who / when … how many" at a glance
@@ -326,6 +332,10 @@ function ReservationDetail({
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <span className={`font-bold ${t.text} truncate`}>{capitalizeName(r.customerName)}</span>
           <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} />
+          {/* WHO cancelled (cms0idtz7) — the guest self-cancel attribution. */}
+          {r.status === "cancelled" && r.cancelledBy === "customer" && (
+            <span className={`text-xs ${t.muted}`}>{tk("cancelledByCustomer")}</span>
+          )}
           {r.depositPaid && (
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
               {tk("depositPaid").toUpperCase()}
@@ -700,6 +710,15 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               />
             )}
           </div>
+          {/* WHO cancelled (cms0idtz7): the guest self-cancel makes "Cancelled"
+              ambiguous — this muted line tells staff it was the CUSTOMER, so
+              nobody phones them or blames a colleague. Restaurant/auto cancels
+              render nothing (today's look, unchanged). */}
+          {order.status === "cancelled" && (order as any).cancelledBy === "customer" && (
+            <div className={`text-[11px] leading-tight mt-0.5 ${t.muted}`}>
+              {tk("cancelledByCustomer")}
+            </div>
+          )}
         </div>
         <div className="flex flex-col items-end flex-shrink-0">
           <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total, currency)}</div>
@@ -829,6 +848,9 @@ type KitchenReservation = {
    *  accepted in time → the badge reads "MISSED" (orange), like a missed order.
    *  Null/absent on a manual staff decline → plain "REJECTED". Luigi 2026-06-16. */
   rejectionReason?: string | null;
+  /** WHO cancelled — "customer" (guest self-cancel link, cms0idtz7),
+   *  "restaurant", or "auto". Drives the muted attribution line. */
+  cancelledBy?: string | null;
   customerName: string;
   customerPhone: string | null;
   customerEmail: string | null;

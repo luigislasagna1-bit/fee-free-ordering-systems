@@ -1,26 +1,32 @@
 /**
- * Lightweight HMAC token used to make the order status page guest-
- * accessible via a signed URL (e.g. the customer forwards their
- * confirmation email to a roommate picking up). No JWT library
- * dependency — just SHA-256 HMAC of the order ID with a server secret,
- * base64url-encoded.
+ * Lightweight PURPOSE-SCOPED HMAC action tokens for guest-accessible links
+ * (Fabrizio cms0idtz7, Luigi 2026-07-28). No JWT dependency — SHA-256 HMAC of
+ * `${purpose}:${subjectId}` with a server secret, base64url-encoded.
  *
- * Token shape:  base64url(  hmac_sha256( ORDER_SIGNING_KEY, orderId )  )
+ * Token shape:  base64url( hmac_sha256( SECRET, `${purpose}:${subjectId}` ) )
  *
- * No expiry in the token itself — the status page is only really useful
- * for ~24 hours and the customer can re-fetch a fresh link from their
- * confirmation email. Adding expiry to the token would require a
- * rotation story we don't need yet.
+ * Purpose scoping is the load-bearing property: a token minted to VIEW an
+ * order's status can never authorize CANCELLING it, and an order-cancel token
+ * can never cancel a reservation (or a different order). Enforced by tests in
+ * order-status-token.test.ts.
+ *
+ * No expiry in the token itself — every consumer gates on a server-side status
+ * precondition (e.g. cancel only while `pending`), which is the real guard.
+ * The token is deterministic, so the link in a months-old email still resolves;
+ * it's just useless once the status moved on.
  *
  * Secret resolution order:
  *   1. process.env.ORDER_STATUS_SIGNING_KEY
  *   2. process.env.NEXTAUTH_SECRET (fallback so dev / preview work
  *      without an extra env var)
  *
- * If neither is set we throw at sign-time so the order route fails
- * loudly during boot rather than silently shipping unsigned tokens.
+ * If neither is set we throw at sign-time so the caller fails loudly rather
+ * than silently shipping unsigned tokens.
  */
 import { createHmac } from "node:crypto";
+
+/** Every guest-link action gets its OWN purpose — never share one. */
+export type ActionTokenPurpose = "order-status" | "order-cancel" | "reservation-cancel";
 
 function getSecret(): string {
   const k = process.env.ORDER_STATUS_SIGNING_KEY || process.env.NEXTAUTH_SECRET;
@@ -32,14 +38,18 @@ function b64url(buf: Buffer): string {
   return buf.toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-export function signOrderToken(orderId: string): string {
-  const sig = createHmac("sha256", getSecret()).update(orderId).digest();
+export function signActionToken(purpose: ActionTokenPurpose, subjectId: string): string {
+  const sig = createHmac("sha256", getSecret()).update(`${purpose}:${subjectId}`).digest();
   return b64url(sig);
 }
 
-export function verifyOrderToken(orderId: string, token: string | null | undefined): boolean {
-  if (!token) return false;
-  const expected = signOrderToken(orderId);
+export function verifyActionToken(
+  purpose: ActionTokenPurpose,
+  subjectId: string,
+  token: string | null | undefined,
+): boolean {
+  if (!token || !subjectId) return false;
+  const expected = signActionToken(purpose, subjectId);
   // Length check first — Buffer.from() with mismatched lengths short-
   // circuits constant-time compare and leaks a tiny timing signal.
   if (expected.length !== token.length) return false;

@@ -246,6 +246,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
           status: "rejected",
           rejectedAt: now,
           rejectionReason: reasonText,
+          cancelledBy: "auto",
         },
       });
       if (claim.count === 0) continue;
@@ -489,7 +490,7 @@ export async function autoRejectStaleReservations(opts: { now?: Date; restaurant
       // just accepted, or the client trigger already declined it).
       const upd = await prisma.reservation.updateMany({
         where: { id: r.id, status: "pending" },
-        data: { status: "rejected", rejectionReason: reasonText },
+        data: { status: "rejected", rejectionReason: reasonText, cancelledBy: "auto" },
       });
       if (upd.count === 0) continue;
       rejected += 1;

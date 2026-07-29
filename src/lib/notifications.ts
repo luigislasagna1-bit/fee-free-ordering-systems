@@ -42,6 +42,7 @@ import type { EmailOrderItem } from "@/emails/components/EmailParts";
 import { sendSms } from "@/lib/sms";
 import { hasFeature } from "@/lib/entitlements";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { signActionToken } from "@/lib/order-status-token";
 
 /**
  * Build a short SMS body for a customer order event. Cap-160 friendly
@@ -264,7 +265,7 @@ export type StaffEventPayload =
   | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
-  | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending"; dashboardUrl: string }
+  | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending" | "cancelled"; dashboardUrl: string }
   | { event: "endOfDayReport" | "endOfMonthReport"; reportHtml: string; subject: string };
 
 /**
@@ -509,18 +510,32 @@ export type CustomerEventPayload =
        *  or fully covered by store credit) — drives the green "Paid online" badge.
        *  Was NEVER passed before 2026-07-11, so every customer receipt email
        *  showed the amber "Pay at store" badge, even on card/PayPal orders. */
-      paidOnline?: boolean }
+      paidOnline?: boolean;
+      /** Guest self-cancel link (Fabrizio cms0idtz7): page URL to the status
+       *  page with the purpose-scoped cancel token. Only set when the cancel
+       *  policy offers it (closed_only default → placedWhileClosed orders). */
+      cancelUrl?: string;
+      /** Order landed while the restaurant was CLOSED — the email adds the
+       *  GloriaFood-parity "you'll get an update as soon as they open" note. */
+      placedWhileClosed?: boolean }
   | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string;
       /** Store credit the reject/cancel path returned to the wallet — caller
        *  gates on rewardsEnabled; the email adds the "returned to your wallet"
        *  card so a bucks-paid customer never reads "nothing to refund". */
-      creditApplied?: number; rewardLabel?: string | null }
+      creditApplied?: number; rewardLabel?: string | null;
+      /** WHO cancelled (for status "cancelled"): "customer" flips the email
+       *  copy to the you-cancelled variant instead of "the restaurant
+       *  cancelled your order". */
+      cancelledBy?: string }
   /** Kitchen pushed back the ready time. Fired from POST /api/orders/[id]/delay
    *  whenever staff hits "+5 / +10 / Custom" on the order detail. Customer
    *  always gets this (no toggle gate) because a delay is the kind of news
    *  a paying customer should hear about regardless of restaurant settings. */
   | { event: "orderDelayed"; customerName: string; orderNumber: string; newEstimatedReady: Date; delayMinutes: number; reason: string | null }
-  | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "requested" | "confirmed" | "declined" | "missed"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number };
+  | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "requested" | "confirmed" | "declined" | "missed" | "cancelled"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number;
+      /** Reservation id — REQUIRED to build the guest cancel link (Fabrizio
+       *  cms0idtz7). Optional for back-compat with older call sites. */
+      reservationId?: string };
 
 /**
  * Send a customer-facing email gated by the matching `Restaurant.customerEmail*`
@@ -666,6 +681,8 @@ export async function notifyCustomer(args: {
           paymentMethod: payload.paymentMethod,
           paidStatus: payload.paidStatus,
           paidOnline: payload.paidOnline,
+          cancelUrl: payload.cancelUrl,
+          placedWhileClosed: payload.placedWhileClosed,
         });
       });
       await fireSms();
@@ -724,6 +741,7 @@ export async function notifyCustomer(args: {
               ? formatCurrency(payload.creditApplied!, restaurant.currency)
               : undefined,
           rewardLabel: payload.rewardLabel,
+          cancelledBy: payload.cancelledBy,
           restaurantPhone: restaurant.phone,
           restaurantEmail: restaurant.email,
           restaurantUrl: restaurantOrderUrl(restaurant, ""),
@@ -760,6 +778,16 @@ export async function notifyCustomer(args: {
     }
     case "reservationConfirmation": {
       // Reservations always send — customer expects this after booking.
+      // Guest self-cancel link (Fabrizio cms0idtz7): only on the live
+      // statuses (requested/confirmed) and only when the caller threaded the
+      // reservation id. PAGE link — branded-host safe via restaurantOrderUrl.
+      const cancelUrl =
+        payload.reservationId && (payload.status === "requested" || payload.status === "confirmed")
+          ? restaurantOrderUrl(
+              restaurant,
+              `/reservation/${payload.reservationId}/cancel?t=${signActionToken("reservation-cancel", payload.reservationId)}`,
+            )
+          : undefined;
       await withImprint(restaurantId, async () => {
         await sendReservationConfirmation({
           to: customerEmail,
@@ -773,6 +801,7 @@ export async function notifyCustomer(args: {
           depositPaid: payload.depositPaid,
           depositAmount: payload.depositAmount,
           preOrderTotal: payload.preOrderTotal,
+          cancelUrl,
           hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
           locale,
         });

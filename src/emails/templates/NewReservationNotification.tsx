@@ -15,24 +15,31 @@ export type NewReservationNotificationProps = {
   partySize: number;
   specialRequests?: string | null;
   dashboardUrl: string;
+  /** The CUSTOMER cancelled this booking via their emailed link (cms0idtz7)
+   *  — flips the ping to "cancelled" wording. Staff bodies stay English-only. */
+  cancelled?: boolean;
   imprint?: string;
 };
 
 export default function NewReservationNotification(props: NewReservationNotificationProps) {
   const { restaurantName, reservationNumber, customerName, customerPhone,
     customerEmail, dateTime, partySize, specialRequests, dashboardUrl,
-    imprint } = props;
+    cancelled, imprint } = props;
 
   return (
-    <EmailLayout preview={`New reservation — ${dateTime} · party of ${partySize}`}>
+    <EmailLayout preview={cancelled
+      ? `Reservation cancelled — ${dateTime} · party of ${partySize}`
+      : `New reservation — ${dateTime} · party of ${partySize}`}>
       <EmailHeader
         variant="transactional"
         title={`${restaurantName} — Reservation #${reservationNumber}`}
-        subtitle="New reservation request"
+        subtitle={cancelled ? "Reservation cancelled by the customer" : "New reservation request"}
       />
       <EmailBody>
         <div style={{ margin: "8px 0 16px" }}>
-          <Badge color="emerald">New</Badge>{" "}
+          {cancelled
+            ? <Badge color="rose">Cancelled by customer</Badge>
+            : <Badge color="emerald">New</Badge>}{" "}
           <Badge color="slate">Party of {partySize}</Badge>
         </div>
 
@@ -54,9 +61,16 @@ export default function NewReservationNotification(props: NewReservationNotifica
           </div>
         )}
 
-        <InfoCard label="Reservation time" accent="emerald">
+        <InfoCard label="Reservation time" accent={cancelled ? "rose" : "emerald"}>
           <strong>{dateTime}</strong>
         </InfoCard>
+
+        {cancelled && (
+          <P size="sm" muted>
+            The customer cancelled this booking from their confirmation email —
+            the table can be released. No action is needed.
+          </P>
+        )}
 
         {specialRequests && (
           <InfoCard label="Special requests" accent="amber">

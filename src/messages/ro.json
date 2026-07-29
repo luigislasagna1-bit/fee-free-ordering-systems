@@ -621,6 +621,7 @@
     "emailRequired": "E-mailul este obligatoriu"
   },
   "kitchen": {
+    "cancelledByCustomer": "Anulată de client",
     "title": "Kitchen Order App",
     "newOrders": "Comenzi noi",
     "inProgress": "În curs",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Dacă nu ai solicitat aceasta, poți ignora în siguranță acest email."
     },
     "orderConfirmed": {
+      "closedNote": "Restaurantul este momentan închis — comanda ta este în așteptare și vei primi vești imediat ce se deschide.",
+      "cancelNote": "Dacă apare ceva neprevăzut, îți poți anula comanda aici.",
       "subject": "Comanda #{orderNumber} primită — în așteptarea confirmării",
       "title": "Comandă primită",
       "greeting": "Bună ziua, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Deschide admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Comanda ta a fost anulată",
+      "cancelledByCustomerBody": "Ți-ai anulat comanda — restaurantul a fost anunțat să nu o mai pregătească. Dacă te răzgândești, poți plasa oricând o comandă nouă.",
       "subject": "Actualizare pentru comanda #{orderNumber}",
       "title": "Actualizare comandă",
       "body": "Comanda ta #{orderNumber} este acum {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Trimis lunar"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Rezervarea ta a fost anulată",
+      "headerTitleCancelled": "Rezervare anulată",
+      "introCancelled": "Ți-ai anulat rezervarea la {restaurantName} — restaurantul a fost anunțat, iar masa ta a fost eliberată.",
+      "closingCancelled": "Dacă te răzgândești, te așteptăm oricând cu o nouă rezervare.",
+      "badgeCancelled": "Anulată",
+      "depositContactNote": "Ai plătit un avans pentru această rezervare — te rugăm să contactezi direct restaurantul în legătură cu avansul.",
+      "cancelNote": "Dacă ți se schimbă planurile, îți poți anula rezervarea aici.",
       "subject": "Rezervare confirmată",
       "titleConfirmed": "Rezervarea ta este confirmată",
       "titlePending": "Solicitare de rezervare primită",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Ratată"
     },
     "newReservation": {
+      "subjectCancelled": "Rezervare anulată de client — {restaurant}",
       "subject": "Rezervare nouă — {restaurant}",
       "title": "Rezervare nouă {status}",
       "body": "{customer} a solicitat o rezervare pentru {party} persoane pe {date} la {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Livrare"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Îți anulezi rezervarea?",
+      "intro": "Ești pe cale să îți anulezi rezervarea la {restaurantName}. Restaurantul va fi anunțat imediat.",
+      "partySize": "Număr de persoane: {partySize}",
+      "confirmButton": "Da, anulează-mi rezervarea",
+      "keepButton": "Nu, păstrează-mi rezervarea",
+      "cancelling": "Se anulează…",
+      "successTitle": "Rezervare anulată",
+      "successBody": "Rezervarea ta la {restaurantName} a fost anulată, iar restaurantul a fost anunțat. Sperăm să te revedem cu altă ocazie!",
+      "alreadyCancelledTitle": "Deja rezolvat",
+      "alreadyCancelledBody": "Această rezervare a fost deja anulată sau modificată de restaurant — nu mai e nevoie de nimic din partea ta.",
+      "invalidLinkTitle": "Acest link nu este valid",
+      "invalidLinkBody": "Acest link de anulare este invalid sau nu mai funcționează. Dacă vrei să modifici o rezervare, te rugăm să contactezi direct restaurantul.",
+      "tooLateBody": "Această rezervare nu mai poate fi anulată online — te rugăm să contactezi direct {restaurantName}.",
+      "linkedOrderBody": "Această rezervare face parte dintr-o comandă. Pentru a o anula, folosește linkul de anulare din e-mailul de confirmare a comenzii sau contactează restaurantul.",
+      "depositNote": "Ai plătit un avans pentru această rezervare. Anularea de aici nu îl rambursează automat — te rugăm să contactezi restaurantul în legătură cu avansul.",
+      "genericError": "Ceva n-a mers bine. Te rugăm să încerci din nou."
+    },
     "accountPage": {
       "backTo": "Înapoi la {name}",
       "greeting": "Bună, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Comandă din nou"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Conectează-te pentru a anula această comandă sau sună la restaurant.",
+      "cancelErrorInvalidLink": "Acest link de anulare nu este valid. Te rugăm să folosești linkul din e-mailul de confirmare sau să suni la restaurant.",
+      "cancelErrorAccepted": "Restaurantul ți-a acceptat deja comanda. Pentru anulare, te rugăm să îi suni direct.",
+      "cancelErrorGone": "Această comandă nu mai poate fi anulată.",
       "stepPendingLabel": "Comandă primită",
       "stepPendingDesc": "Comanda ta așteaptă confirmare",
       "stepAcceptedLabel": "Acceptată",

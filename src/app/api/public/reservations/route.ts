@@ -320,6 +320,8 @@ export async function POST(req: NextRequest) {
         status: customerStatus,
         depositAmount: reservation.depositAmount,
         preOrderTotal: preOrderTotal ?? undefined,
+        // Powers the guest cancel link in the email (cms0idtz7).
+        reservationId: reservation.id,
       },
     }).catch((e) => console.error("[notifyCustomer reservation]", e));
     notifyStaff({

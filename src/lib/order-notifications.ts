@@ -23,6 +23,8 @@ import { recordAppliedCoupons } from "@/lib/coupon-ledger";
 import { sendKitchenPush } from "@/lib/push";
 import { formatCurrency } from "@/lib/utils";
 import { projectOrderEarn } from "@/lib/reward-earn";
+import { signActionToken } from "@/lib/order-status-token";
+import { shouldOfferEmailCancel } from "@/lib/customer-cancel-policy";
 
 // Promo usage give-back on a killed/abandoned order now lives in
 // `releasePromotionUsageForOrder(orderId)` in @/lib/promo-usage — it deletes the
@@ -257,6 +259,22 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
         ? { partySize: linkedReservation.partySize, date: linkedReservation.date, time: linkedReservation.time }
         : undefined,
       trackingUrl: restaurantOrderUrl(order.restaurant, `/status/${order.id}`),
+      // Guest self-cancel (Fabrizio cms0idtz7): PAGE link (branded-host safe)
+      // to the status page with the purpose-scoped cancel token — the page
+      // auto-opens the confirm modal. Policy-gated (closed_only default →
+      // only placedWhileClosed orders carry it) and only while the order is
+      // still pending at send time (it always is here — this fires at
+      // placement — the guard is for future call sites).
+      ...(shouldOfferEmailCancel({ placedWhileClosed: !!(order as any).placedWhileClosed }) &&
+      order.status === "pending"
+        ? {
+            cancelUrl: restaurantOrderUrl(
+              order.restaurant,
+              `/status/${order.id}?cancel=${signActionToken("order-cancel", order.id)}`,
+            ),
+          }
+        : {}),
+      placedWhileClosed: !!(order as any).placedWhileClosed,
       appliedPromos: appliedPromosForEmail,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyCustomer:", e));

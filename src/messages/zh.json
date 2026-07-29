@@ -621,6 +621,7 @@
     "emailRequired": "电子邮箱为必填项"
   },
   "kitchen": {
+    "cancelledByCustomer": "顾客自行取消",
     "title": "Kitchen Order App",
     "newOrders": "新订单",
     "inProgress": "进行中",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "如果您未提出此请求，可放心忽略此邮件。"
     },
     "orderConfirmed": {
+      "closedNote": "餐厅目前已打烊——您的订单已进入队列，餐厅一开门就会为您更新状态。",
+      "cancelNote": "如果有突发情况，您仍可以在这里取消订单。",
       "subject": "订单 #{orderNumber} 已收到——等待确认",
       "title": "已收到订单",
       "greeting": "您好，{customerName}，",
@@ -5277,6 +5280,8 @@
       "openAdmin": "打开后台"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "您的订单已取消",
+      "cancelledByCustomerBody": "您已取消订单——餐厅已收到通知，不会再准备这份订单。如果您改变主意，随时可以重新下单。",
       "subject": "订单 #{orderNumber} 状态更新",
       "title": "订单更新",
       "body": "您的订单 #{orderNumber} 当前状态为 {status}。",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "每月发送"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "您的预订已取消",
+      "headerTitleCancelled": "预订已取消",
+      "introCancelled": "您已取消在 {restaurantName} 的预订——餐厅已收到通知，您的餐桌也已释放。",
+      "closingCancelled": "如果您改变主意，随时欢迎再次预订。",
+      "badgeCancelled": "已取消",
+      "depositContactNote": "您为此次预订支付了定金——有关定金事宜，请直接联系餐厅。",
+      "cancelNote": "如果行程有变，您可以在这里取消预订。",
       "subject": "预订已确认",
       "titleConfirmed": "您的预订已确认",
       "titlePending": "已收到预订请求",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "已错过"
     },
     "newReservation": {
+      "subjectCancelled": "顾客取消了预订 — {restaurant}",
       "subject": "新预订 — {restaurant}",
       "title": "新预订 {status}",
       "body": "{customer} 申请了 {date} {time} {party} 人的预订。",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "配送"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "确定要取消预订吗？",
+      "intro": "您即将取消在 {restaurantName} 的预订。餐厅会立即收到通知。",
+      "partySize": "{partySize} 位用餐",
+      "confirmButton": "是，取消我的预订",
+      "keepButton": "否，保留我的预订",
+      "cancelling": "正在取消…",
+      "successTitle": "预订已取消",
+      "successBody": "您在 {restaurantName} 的预订已取消，餐厅已收到通知。期待下次为您服务！",
+      "alreadyCancelledTitle": "已处理完毕",
+      "alreadyCancelledBody": "此预订已被取消，或已由餐厅更新——无需再进行任何操作。",
+      "invalidLinkTitle": "此链接无效",
+      "invalidLinkBody": "此取消链接无效或已失效。如需更改预订，请直接联系餐厅。",
+      "tooLateBody": "此预订已无法在线取消——请直接联系 {restaurantName}。",
+      "linkedOrderBody": "此预订属于某个订单的一部分。如需取消，请使用订单确认邮件中的取消链接，或联系餐厅。",
+      "depositNote": "您为此次预订支付了定金。在此取消不会自动退还定金——有关定金事宜，请联系餐厅。",
+      "genericError": "出了点问题，请重试。"
+    },
     "accountPage": {
       "backTo": "返回 {name}",
       "greeting": "你好，{name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "再次下单"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "请登录后取消此订单，或致电餐厅。",
+      "cancelErrorInvalidLink": "此取消链接无效。请使用确认邮件中的链接，或致电餐厅。",
+      "cancelErrorAccepted": "餐厅已接单。如需取消，请直接致电餐厅。",
+      "cancelErrorGone": "此订单已无法取消。",
       "stepPendingLabel": "订单已收到",
       "stepPendingDesc": "您的订单正在等待确认",
       "stepAcceptedLabel": "已接单",

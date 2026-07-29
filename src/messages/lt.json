@@ -621,6 +621,7 @@
     "emailRequired": "El. paštas yra privalomas"
   },
   "kitchen": {
+    "cancelledByCustomer": "Atšaukė klientas",
     "title": "Kitchen Order App",
     "newOrders": "Nauji užsakymai",
     "inProgress": "Vykdoma",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Jei to neprašėte, galite saugiai nepaisyti šio el. laiško."
     },
     "orderConfirmed": {
+      "closedNote": "Restoranas šiuo metu uždarytas — tavo užsakymas laukia eilėje, ir vos tik restoranas atsidarys, gausi žinutę.",
+      "cancelNote": "Jei nutiktų kas nors netikėto, užsakymą vis tiek gali atšaukti čia.",
       "subject": "Užsakymas #{orderNumber} gautas — laukiama patvirtinimo",
       "title": "Užsakymas gautas",
       "greeting": "Sveiki, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Atidaryti administravimo skydelį"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Tavo užsakymas atšauktas",
+      "cancelledByCustomerBody": "Atšaukei savo užsakymą — restoranui pranešta jo neruošti. Jei persigalvosi, visada gali pateikti naują užsakymą.",
       "subject": "Atnaujinta informacija apie užsakymą #{orderNumber}",
       "title": "Užsakymo atnaujinimas",
       "body": "Jūsų užsakymo #{orderNumber} būsena: {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Siunčiama kas mėnesį"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Tavo rezervacija atšaukta",
+      "headerTitleCancelled": "Rezervacija atšaukta",
+      "introCancelled": "Atšaukei savo rezervaciją restorane {restaurantName} — restoranui pranešta, o tavo staliukas atlaisvintas.",
+      "closingCancelled": "Jei persigalvosi, visada lauksime naujos rezervacijos.",
+      "badgeCancelled": "Atšaukta",
+      "depositContactNote": "Už šią rezervaciją sumokėjai užstatą — dėl užstato kreipkis tiesiogiai į restoraną.",
+      "cancelNote": "Jei planai pasikeis, rezervaciją gali atšaukti čia.",
       "subject": "Rezervacija patvirtinta",
       "titleConfirmed": "Jūsų rezervacija patvirtinta",
       "titlePending": "Rezervacijos prašymas gautas",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Praleista"
     },
     "newReservation": {
+      "subjectCancelled": "Klientas atšaukė rezervaciją — {restaurant}",
       "subject": "Nauja rezervacija — {restaurant}",
       "title": "Nauja rezervacija {status}",
       "body": "{customer} paprašė rezervacijos {party} svečiams {date} {time} val.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Pristatymas"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Atšaukti rezervaciją?",
+      "intro": "Ketini atšaukti savo rezervaciją restorane {restaurantName}. Restoranas bus informuotas iš karto.",
+      "partySize": "Asmenų skaičius: {partySize}",
+      "confirmButton": "Taip, atšaukti mano rezervaciją",
+      "keepButton": "Ne, palikti rezervaciją",
+      "cancelling": "Atšaukiama…",
+      "successTitle": "Rezervacija atšaukta",
+      "successBody": "Tavo rezervacija restorane {restaurantName} atšaukta, restoranui pranešta. Tikimės pamatyti tave kitą kartą!",
+      "alreadyCancelledTitle": "Jau sutvarkyta",
+      "alreadyCancelledBody": "Ši rezervacija jau atšaukta arba restorano pakeista — nieko daugiau daryti nereikia.",
+      "invalidLinkTitle": "Ši nuoroda negalioja",
+      "invalidLinkBody": "Ši atšaukimo nuoroda negalioja arba nebeveikia. Jei nori pakeisti rezervaciją, kreipkis tiesiogiai į restoraną.",
+      "tooLateBody": "Šios rezervacijos internetu atšaukti nebegalima — susisiek tiesiogiai su {restaurantName}.",
+      "linkedOrderBody": "Ši rezervacija yra užsakymo dalis. Kad ją atšauktum, pasinaudok atšaukimo nuoroda užsakymo patvirtinimo el. laiške arba susisiek su restoranu.",
+      "depositNote": "Už šią rezervaciją sumokėjai užstatą. Atšaukimas čia jo automatiškai negrąžina — dėl užstato kreipkis į restoraną.",
+      "genericError": "Kažkas nepavyko. Pabandyk dar kartą."
+    },
     "accountPage": {
       "backTo": "Grįžti į {name}",
       "greeting": "Sveiki, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Užsakyti vėl"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Kad atšauktum šį užsakymą, prisijunk arba paskambink į restoraną.",
+      "cancelErrorInvalidLink": "Ši atšaukimo nuoroda negalioja. Pasinaudok nuoroda iš patvirtinimo el. laiško arba paskambink į restoraną.",
+      "cancelErrorAccepted": "Restoranas tavo užsakymą jau priėmė. Dėl atšaukimo paskambink jiems tiesiogiai.",
+      "cancelErrorGone": "Šio užsakymo atšaukti nebegalima.",
       "stepPendingLabel": "Užsakymas gautas",
       "stepPendingDesc": "Jūsų užsakymas laukia patvirtinimo",
       "stepAcceptedLabel": "Priimtas",

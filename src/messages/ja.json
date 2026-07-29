@@ -621,6 +621,7 @@
     "emailRequired": "メールアドレスは必須です"
   },
   "kitchen": {
+    "cancelledByCustomer": "お客様によるキャンセル",
     "title": "Kitchen Order App",
     "newOrders": "新規注文",
     "inProgress": "調理中",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "このリクエストに心当たりがない場合は、このメールを無視してください。"
     },
     "orderConfirmed": {
+      "closedNote": "現在レストランは営業時間外です。ご注文は受付待ちの状態で、開店し次第すぐに最新情報をお知らせします。",
+      "cancelNote": "急なご都合の変更があった場合は、こちらからご注文をキャンセルできます。",
       "subject": "注文 #{orderNumber} を受け付けました — 確認待ち",
       "title": "注文を受け付けました",
       "greeting": "{customerName} 様、",
@@ -5277,6 +5280,8 @@
       "openAdmin": "管理パネルを開く"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "ご注文はキャンセルされました",
+      "cancelledByCustomerBody": "ご注文をキャンセルされました。レストランには調理を行わないよう通知済みです。気が変わった場合は、いつでも新しくご注文いただけます。",
       "subject": "注文 #{orderNumber} の状況",
       "title": "注文の更新",
       "body": "注文 #{orderNumber} のステータスが {status} になりました。",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "毎月送信"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "ご予約はキャンセルされました",
+      "headerTitleCancelled": "ご予約をキャンセルしました",
+      "introCancelled": "{restaurantName} のご予約をキャンセルされました。レストランに通知済みで、お席の確保は解除されました。",
+      "closingCancelled": "気が変わった場合は、いつでもまたご予約ください。",
+      "badgeCancelled": "キャンセル済み",
+      "depositContactNote": "このご予約にはデポジット（前払い金）をお支払いいただいています。デポジットについては、レストランへ直接お問い合わせください。",
+      "cancelNote": "ご予定が変わった場合は、こちらからご予約をキャンセルできます。",
       "subject": "予約が確定しました",
       "titleConfirmed": "ご予約が確定しました",
       "titlePending": "予約リクエストを受け付けました",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "見逃し"
     },
     "newReservation": {
+      "subjectCancelled": "お客様が予約をキャンセルしました — {restaurant}",
       "subject": "新しい予約 — {restaurant}",
       "title": "新しい予約 {status}",
       "body": "{customer} 様が {date} {time} に {party} 名でご予約をリクエストされました。",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "デリバリー"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "ご予約をキャンセルしますか？",
+      "intro": "{restaurantName} のご予約をキャンセルしようとしています。レストランにはすぐに通知されます。",
+      "partySize": "{partySize}名様",
+      "confirmButton": "はい、予約をキャンセルする",
+      "keepButton": "いいえ、予約をそのままにする",
+      "cancelling": "キャンセル中…",
+      "successTitle": "ご予約をキャンセルしました",
+      "successBody": "{restaurantName} のご予約はキャンセルされ、レストランに通知済みです。またのご利用をお待ちしております！",
+      "alreadyCancelledTitle": "すでに処理済みです",
+      "alreadyCancelledBody": "このご予約はすでにキャンセルされているか、レストランによって更新されています。これ以上のお手続きは不要です。",
+      "invalidLinkTitle": "このリンクは無効です",
+      "invalidLinkBody": "このキャンセル用リンクは無効か、すでにご利用いただけなくなっています。ご予約の変更が必要な場合は、レストランへ直接お問い合わせください。",
+      "tooLateBody": "このご予約はオンラインではキャンセルできなくなりました。{restaurantName} へ直接お問い合わせください。",
+      "linkedOrderBody": "このご予約はご注文の一部です。キャンセルするには、ご注文確認メールに記載のキャンセル用リンクをご利用いただくか、レストランへお問い合わせください。",
+      "depositNote": "このご予約にはデポジット（前払い金）をお支払いいただいています。こちらでキャンセルしても自動的に返金はされません。デポジットについてはレストランへお問い合わせください。",
+      "genericError": "問題が発生しました。もう一度お試しください。"
+    },
     "accountPage": {
       "backTo": "{name}に戻る",
       "greeting": "こんにちは、{name}さん",
@@ -6316,6 +6347,10 @@
       "orderAgain": "再注文する"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "このご注文をキャンセルするにはサインインするか、レストランへお電話ください。",
+      "cancelErrorInvalidLink": "このキャンセル用リンクは無効です。確認メールに記載のリンクをご利用いただくか、レストランへお電話ください。",
+      "cancelErrorAccepted": "レストランはすでにご注文を受け付けています。キャンセルをご希望の場合は、レストランへ直接お電話ください。",
+      "cancelErrorGone": "このご注文はキャンセルできなくなりました。",
       "stepPendingLabel": "注文受付",
       "stepPendingDesc": "ご注文は確認待ちです",
       "stepAcceptedLabel": "受付済み",

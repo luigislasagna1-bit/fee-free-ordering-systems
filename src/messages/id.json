@@ -621,6 +621,7 @@
     "emailRequired": "Email wajib diisi"
   },
   "kitchen": {
+    "cancelledByCustomer": "Dibatalkan oleh pelanggan",
     "title": "Kitchen Order App",
     "newOrders": "Pesanan Baru",
     "inProgress": "Sedang Diproses",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Jika Anda tidak meminta ini, Anda bisa mengabaikan email ini."
     },
     "orderConfirmed": {
+      "closedNote": "Restoran sedang tutup — pesananmu sudah masuk antrean dan kamu akan mendapat kabar begitu restoran buka.",
+      "cancelNote": "Kalau ada hal tak terduga, kamu masih bisa membatalkan pesananmu di sini.",
       "subject": "Pesanan #{orderNumber} diterima — menunggu konfirmasi",
       "title": "Pesanan diterima",
       "greeting": "Halo {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Buka admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Pesananmu dibatalkan",
+      "cancelledByCustomerBody": "Kamu membatalkan pesananmu — restoran sudah diberi tahu untuk tidak menyiapkannya. Kalau berubah pikiran, kamu selalu bisa membuat pesanan baru.",
       "subject": "Pembaruan pesanan #{orderNumber}",
       "title": "Pembaruan pesanan",
       "body": "Pesanan Anda #{orderNumber} sekarang berstatus {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Dikirim setiap bulan"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Reservasimu dibatalkan",
+      "headerTitleCancelled": "Reservasi dibatalkan",
+      "introCancelled": "Kamu membatalkan reservasimu di {restaurantName} — restoran sudah diberi tahu dan mejamu sudah tersedia kembali.",
+      "closingCancelled": "Kalau berubah pikiran, kamu selalu bisa reservasi lagi kapan saja.",
+      "badgeCancelled": "Dibatalkan",
+      "depositContactNote": "Kamu sudah membayar deposit untuk reservasi ini — silakan hubungi restoran langsung soal depositmu.",
+      "cancelNote": "Kalau rencanamu berubah, kamu bisa membatalkan reservasimu di sini.",
       "subject": "Reservasi dikonfirmasi",
       "titleConfirmed": "Reservasi Anda dikonfirmasi",
       "titlePending": "Permintaan reservasi diterima",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Terlewat"
     },
     "newReservation": {
+      "subjectCancelled": "Reservasi dibatalkan oleh pelanggan — {restaurant}",
       "subject": "Reservasi baru — {restaurant}",
       "title": "Reservasi baru {status}",
       "body": "{customer} meminta reservasi untuk {party} tamu pada {date} pukul {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Pengantaran"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Batalkan reservasimu?",
+      "intro": "Kamu akan membatalkan reservasimu di {restaurantName}. Restoran akan langsung diberi tahu.",
+      "partySize": "Untuk {partySize} orang",
+      "confirmButton": "Ya, batalkan reservasiku",
+      "keepButton": "Tidak, pertahankan reservasiku",
+      "cancelling": "Membatalkan…",
+      "successTitle": "Reservasi dibatalkan",
+      "successBody": "Reservasimu di {restaurantName} sudah dibatalkan dan restoran sudah diberi tahu. Sampai jumpa di lain waktu!",
+      "alreadyCancelledTitle": "Sudah ditangani",
+      "alreadyCancelledBody": "Reservasi ini sudah dibatalkan atau diperbarui oleh restoran — tidak perlu melakukan apa-apa lagi.",
+      "invalidLinkTitle": "Tautan ini tidak valid",
+      "invalidLinkBody": "Tautan pembatalan ini tidak valid atau sudah tidak berlaku. Kalau kamu perlu mengubah reservasi, silakan hubungi restoran langsung.",
+      "tooLateBody": "Reservasi ini sudah tidak bisa dibatalkan secara online — silakan hubungi {restaurantName} langsung.",
+      "linkedOrderBody": "Reservasi ini merupakan bagian dari sebuah pesanan. Untuk membatalkannya, gunakan tautan pembatalan di email konfirmasi pesananmu, atau hubungi restoran.",
+      "depositNote": "Kamu sudah membayar deposit untuk reservasi ini. Membatalkan di sini tidak otomatis mengembalikannya — silakan hubungi restoran soal depositmu.",
+      "genericError": "Ada yang salah. Silakan coba lagi."
+    },
     "accountPage": {
       "backTo": "Kembali ke {name}",
       "greeting": "Hai, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Pesan lagi"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Masuk dulu untuk membatalkan pesanan ini, atau telepon restorannya.",
+      "cancelErrorInvalidLink": "Tautan pembatalan ini tidak valid. Silakan gunakan tautan dari email konfirmasimu, atau telepon restorannya.",
+      "cancelErrorAccepted": "Restoran sudah menerima pesananmu. Silakan hubungi mereka langsung untuk membatalkan.",
+      "cancelErrorGone": "Pesanan ini sudah tidak bisa dibatalkan.",
       "stepPendingLabel": "Pesanan Diterima",
       "stepPendingDesc": "Pesanan Anda menunggu konfirmasi",
       "stepAcceptedLabel": "Diterima",

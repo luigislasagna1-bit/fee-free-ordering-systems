@@ -621,6 +621,7 @@
     "emailRequired": "E-mail je obavezan"
   },
   "kitchen": {
+    "cancelledByCustomer": "Otkazao kupac",
     "title": "Kitchen Order App",
     "newOrders": "Nove narudžbe",
     "inProgress": "U pripremi",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Ako niste zatražili ovo, možete sigurno ignorirati ovaj e-mail."
     },
     "orderConfirmed": {
+      "closedNote": "Restoran je trenutačno zatvoren — tvoja narudžba čeka u redu i dobit ćeš obavijest čim otvore.",
+      "cancelNote": "Ako iskrsne nešto neočekivano, narudžbu i dalje možeš otkazati ovdje.",
       "subject": "Narudžba #{orderNumber} primljena — čeka se potvrda",
       "title": "Narudžba primljena",
       "greeting": "Pozdrav, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Otvori admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Tvoja narudžba je otkazana",
+      "cancelledByCustomerBody": "Tvoja narudžba je otkazana — restoran je obaviješten da je ne priprema. Ako se predomisliš, uvijek možeš poslati novu narudžbu.",
       "subject": "Ažuriranje narudžbe #{orderNumber}",
       "title": "Ažuriranje narudžbe",
       "body": "Vaša narudžba #{orderNumber} je sada {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Šalje se mjesečno"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Tvoja rezervacija je otkazana",
+      "headerTitleCancelled": "Rezervacija otkazana",
+      "introCancelled": "Tvoja rezervacija u restoranu {restaurantName} je otkazana — restoran je obaviješten i tvoj stol je oslobođen.",
+      "closingCancelled": "Ako se predomisliš, uvijek možeš ponovno rezervirati — bit će nam drago vidjeti te.",
+      "badgeCancelled": "Otkazano",
+      "depositContactNote": "Za ovu rezervaciju plaćen je polog — u vezi s pologom obrati se izravno restoranu.",
+      "cancelNote": "Ako se tvoji planovi promijene, rezervaciju možeš otkazati ovdje.",
       "subject": "Rezervacija potvrđena",
       "titleConfirmed": "Vaša rezervacija je potvrđena",
       "titlePending": "Zahtjev za rezervaciju primljen",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Propušteno"
     },
     "newReservation": {
+      "subjectCancelled": "Rezervaciju otkazao gost — {restaurant}",
       "subject": "Nova rezervacija — {restaurant}",
       "title": "Nova rezervacija {status}",
       "body": "{customer} je zatražio rezervaciju za {party} gostiju {date} u {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Dostava"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Otkazati rezervaciju?",
+      "intro": "Upravo ćeš otkazati svoju rezervaciju u restoranu {restaurantName}. Restoran će odmah biti obaviješten.",
+      "partySize": "Broj osoba: {partySize}",
+      "confirmButton": "Da, otkaži moju rezervaciju",
+      "keepButton": "Ne, zadrži moju rezervaciju",
+      "cancelling": "Otkazivanje…",
+      "successTitle": "Rezervacija otkazana",
+      "successBody": "Tvoja rezervacija u restoranu {restaurantName} je otkazana i restoran je obaviješten. Nadamo se da ćemo te vidjeti drugi put!",
+      "alreadyCancelledTitle": "Već je riješeno",
+      "alreadyCancelledBody": "Ova rezervacija je već otkazana ili ju je restoran izmijenio — nije potrebna nikakva daljnja radnja.",
+      "invalidLinkTitle": "Ova poveznica nije važeća",
+      "invalidLinkBody": "Ova poveznica za otkazivanje nije važeća ili više ne radi. Ako trebaš promijeniti rezervaciju, obrati se izravno restoranu.",
+      "tooLateBody": "Ovu rezervaciju više nije moguće otkazati online — obrati se izravno restoranu {restaurantName}.",
+      "linkedOrderBody": "Ova rezervacija dio je narudžbe. Za otkazivanje upotrijebi poveznicu za otkazivanje iz e-maila s potvrdom narudžbe ili se obrati restoranu.",
+      "depositNote": "Za ovu rezervaciju plaćen je polog. Otkazivanjem ovdje polog se ne vraća automatski — u vezi s pologom obrati se restoranu.",
+      "genericError": "Nešto je pošlo po zlu. Pokušaj ponovno."
+    },
     "accountPage": {
       "backTo": "Natrag na {name}",
       "greeting": "Bok, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Naruči ponovo"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Za otkazivanje ove narudžbe prijavi se ili nazovi restoran.",
+      "cancelErrorInvalidLink": "Ova poveznica za otkazivanje nije važeća. Upotrijebi poveznicu iz e-maila s potvrdom ili nazovi restoran.",
+      "cancelErrorAccepted": "Restoran je već prihvatio tvoju narudžbu. Za otkazivanje ga nazovi izravno.",
+      "cancelErrorGone": "Ovu narudžbu više nije moguće otkazati.",
       "stepPendingLabel": "Narudžba primljena",
       "stepPendingDesc": "Vaša narudžba čeka potvrdu",
       "stepAcceptedLabel": "Prihvaćena",

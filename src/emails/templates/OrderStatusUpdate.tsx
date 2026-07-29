@@ -44,6 +44,10 @@ export type OrderStatusUpdateProps = {
   creditReturned?: string;
   /** Restaurant's reward label ("Pizza Bucks") — required with creditReturned. */
   rewardLabel?: string | null;
+  /** WHO cancelled (status "cancelled" only): "customer" switches the title/
+   *  body to the you-cancelled variant — "The restaurant cancelled your
+   *  order" would be wrong for a self-cancel. Fabrizio cms0idtz7. */
+  cancelledBy?: string;
   trackingUrl: string;
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -102,7 +106,7 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   const {
     t,
     customerName, orderNumber, restaurantName, status, statusMessage, rejectionReason,
-    paidOnline, paymentMethod, creditReturned, rewardLabel,
+    paidOnline, paymentMethod, creditReturned, rewardLabel, cancelledBy,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
   const normalized = status.toLowerCase();
@@ -114,12 +118,20 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
   // use the missed wording; the internal reason text stays hidden. Same
   // rule as the kitchen + the status page. Luigi 2026-06-09 / 2026-07-04.
   const isMissed = normalized === "rejected" && (rejectionReason ?? "").trim().startsWith("Auto-rejected");
+  // Customer-initiated cancel (guest email link or signed-in button):
+  // "The restaurant cancelled your order" would be wrong — use the
+  // you-cancelled copy. Fabrizio cms0idtz7.
+  const isSelfCancel = key === "cancelled" && cancelledBy === "customer";
   const copyKeys: StatusCopyKeys | undefined = STATUS_COPY_KEYS[key];
   const title = isMissed
     ? t("email.orderStatus.missedTitle")
+    : isSelfCancel
+    ? t("email.orderStatus.cancelledByCustomerTitle")
     : copyKeys ? t(copyKeys.titleKey) : t("email.orderStatus.fallbackTitle");
   const body = isMissed
     ? t("email.orderStatus.missedBody")
+    : isSelfCancel
+    ? t("email.orderStatus.cancelledByCustomerBody")
     : copyKeys ? t(copyKeys.bodyKey) : t("email.orderStatus.fallbackBody");
   const badge = isMissed ? t("kitchen.missed") : (copyKeys ? t(copyKeys.badgeKey) : status);
   const badgeColor = copyKeys?.badgeColor ?? "sky";
@@ -171,7 +183,9 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
             dispatcher's raw-status sentence overrode this body entirely
             (Fabrizio cmr6meaaq, 2026-07-04). */}
         <P>{body}{!isNegative && statusMessage ? ` ${statusMessage}` : ""}</P>
-        {isNegative && reason && !isMissed && (
+        {/* Self-cancel: the internal "Customer cancelled from the order status
+            page." reason is redundant noise to the person who did it — hide. */}
+        {isNegative && reason && !isMissed && !isSelfCancel && (
           <InfoCard label={t("email.orderStatus.reasonLabel")} accent="rose">
             {reason}
           </InfoCard>

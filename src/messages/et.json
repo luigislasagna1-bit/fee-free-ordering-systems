@@ -621,6 +621,7 @@
     "emailRequired": "E-posti aadress on kohustuslik"
   },
   "kitchen": {
+    "cancelledByCustomer": "Klient tühistas",
     "title": "Kitchen Order App",
     "newOrders": "Uued tellimused",
     "inProgress": "Töös",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Kui sa seda ei soovinud, võid selle meili julgelt ignoreerida."
     },
     "orderConfirmed": {
+      "closedNote": "Restoran on hetkel suletud — sinu tellimus on ootel ja anname sulle teada kohe, kui restoran avaneb.",
+      "cancelNote": "Kui peaks midagi ootamatut ette tulema, saad oma tellimuse siin tühistada.",
       "subject": "Tellimus #{orderNumber} vastu võetud — ootab kinnitust",
       "title": "Tellimus vastu võetud",
       "greeting": "Tere {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Ava administraator"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Sinu tellimus on tühistatud",
+      "cancelledByCustomerBody": "Tühistasid oma tellimuse — restoranile on antud teada, et seda pole vaja valmistada. Kui mõtled ümber, saad alati uue tellimuse esitada.",
       "subject": "Uuendus tellimuse #{orderNumber} kohta",
       "title": "Tellimuse uuendus",
       "body": "Teie tellimus #{orderNumber} on nüüd {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Saadetakse iga kuu"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Sinu broneering on tühistatud",
+      "headerTitleCancelled": "Broneering tühistatud",
+      "introCancelled": "Tühistasid oma broneeringu restoranis {restaurantName} — restoranile on teada antud ja sinu laud on vabastatud.",
+      "closingCancelled": "Kui mõtled ümber, oled alati oodatud uuesti broneerima.",
+      "badgeCancelled": "Tühistatud",
+      "depositContactNote": "Tasusid selle broneeringu eest ettemaksu — ettemaksu osas võta palun otse restoraniga ühendust.",
+      "cancelNote": "Kui plaanid muutuvad, saad broneeringu siin tühistada.",
       "subject": "Broneering kinnitatud",
       "titleConfirmed": "Teie broneering on kinnitatud",
       "titlePending": "Broneeringu taotlus vastu võetud",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Vastamata"
     },
     "newReservation": {
+      "subjectCancelled": "Klient tühistas broneeringu — {restaurant}",
       "subject": "Uus broneering — {restaurant}",
       "title": "Uus broneering {status}",
       "body": "{customer} taotles broneeringut {party} külalisele {date} kell {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Kohaletoimetamine"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Kas soovid broneeringu tühistada?",
+      "intro": "Oled tühistamas oma broneeringut restoranis {restaurantName}. Restoranile antakse kohe teada.",
+      "partySize": "Inimesi: {partySize}",
+      "confirmButton": "Jah, tühista mu broneering",
+      "keepButton": "Ei, jäta broneering alles",
+      "cancelling": "Tühistamine…",
+      "successTitle": "Broneering tühistatud",
+      "successBody": "Sinu broneering restoranis {restaurantName} on tühistatud ja restoranile on teada antud. Loodame sind mõnel teisel korral näha!",
+      "alreadyCancelledTitle": "Juba tehtud",
+      "alreadyCancelledBody": "See broneering on juba tühistatud või restorani poolt muudetud — midagi rohkem pole vaja teha.",
+      "invalidLinkTitle": "See link ei kehti",
+      "invalidLinkBody": "See tühistamislink on vigane või ei tööta enam. Kui soovid broneeringut muuta, võta palun otse restoraniga ühendust.",
+      "tooLateBody": "Seda broneeringut ei saa enam veebis tühistada — võta palun otse ühendust restoraniga {restaurantName}.",
+      "linkedOrderBody": "See broneering kuulub tellimuse juurde. Tühistamiseks kasuta tellimuse kinnitusmeilis olevat tühistamislinki või võta restoraniga ühendust.",
+      "depositNote": "Tasusid selle broneeringu eest ettemaksu. Siin tühistamine ei tagasta seda automaatselt — ettemaksu osas võta palun restoraniga ühendust.",
+      "genericError": "Midagi läks valesti. Palun proovi uuesti."
+    },
     "accountPage": {
       "backTo": "Tagasi {name} juurde",
       "greeting": "Tere, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Telli uuesti"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Selle tellimuse tühistamiseks logi sisse või helista restorani.",
+      "cancelErrorInvalidLink": "See tühistamislink ei kehti. Palun kasuta kinnitusmeilis olevat linki või helista restorani.",
+      "cancelErrorAccepted": "Restoran on sinu tellimuse juba vastu võtnud. Tühistamiseks helista neile palun otse.",
+      "cancelErrorGone": "Seda tellimust ei saa enam tühistada.",
       "stepPendingLabel": "Tellimus vastu võetud",
       "stepPendingDesc": "Sinu tellimus ootab kinnitust",
       "stepAcceptedLabel": "Kinnitatud",

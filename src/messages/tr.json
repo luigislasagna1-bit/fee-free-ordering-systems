@@ -621,6 +621,7 @@
     "emailRequired": "E-posta zorunludur"
   },
   "kitchen": {
+    "cancelledByCustomer": "Müşteri iptal etti",
     "title": "Kitchen Order App",
     "newOrders": "Yeni Siparişler",
     "inProgress": "Hazırlanıyor",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Bunu siz istemediyseniz bu e-postayı güvenle görmezden gelebilirsiniz."
     },
     "orderConfirmed": {
+      "closedNote": "Restoran şu anda kapalı — siparişin sırada, restoran açılır açılmaz sana haber vereceğiz.",
+      "cancelNote": "Beklenmedik bir şey olursa siparişini buradan iptal edebilirsin.",
       "subject": "#{orderNumber} numaralı sipariş alındı — onay bekleniyor",
       "title": "Sipariş alındı",
       "greeting": "Merhaba {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Yönetici panelini aç"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Siparişin iptal edildi",
+      "cancelledByCustomerBody": "Siparişini iptal ettin — restorana hazırlamaması bildirildi. Fikrini değiştirirsen her zaman yeni bir sipariş verebilirsin.",
       "subject": "#{orderNumber} numaralı sipariş güncellemesi",
       "title": "Sipariş güncellemesi",
       "body": "#{orderNumber} numaralı siparişiniz artık {status} durumunda.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Aylık gönderilir"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Rezervasyonun iptal edildi",
+      "headerTitleCancelled": "Rezervasyon iptal edildi",
+      "introCancelled": "{restaurantName} restoranındaki rezervasyonunu iptal ettin — restorana bildirildi ve masan serbest bırakıldı.",
+      "closingCancelled": "Fikrin değişirse her zaman yeniden rezervasyon yapabilirsin — seni bekleriz!",
+      "badgeCancelled": "İptal edildi",
+      "depositContactNote": "Bu rezervasyon için kapora ödedin — kaporanla ilgili lütfen doğrudan restoranla iletişime geç.",
+      "cancelNote": "Planların değişirse rezervasyonunu buradan iptal edebilirsin.",
       "subject": "Rezervasyon onaylandı",
       "titleConfirmed": "Rezervasyonunuz onaylandı",
       "titlePending": "Rezervasyon talebi alındı",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Kaçırıldı"
     },
     "newReservation": {
+      "subjectCancelled": "Rezervasyon müşteri tarafından iptal edildi — {restaurant}",
       "subject": "Yeni rezervasyon — {restaurant}",
       "title": "Yeni rezervasyon {status}",
       "body": "{customer}, {date} tarihinde {time} için {party} kişilik rezervasyon talep etti.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Teslimat"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Rezervasyonunu iptal etmek istiyor musun?",
+      "intro": "{restaurantName} restoranındaki rezervasyonunu iptal etmek üzeresin. Restorana hemen haber verilecek.",
+      "partySize": "{partySize} kişi",
+      "confirmButton": "Evet, rezervasyonumu iptal et",
+      "keepButton": "Hayır, rezervasyonum kalsın",
+      "cancelling": "İptal ediliyor…",
+      "successTitle": "Rezervasyon iptal edildi",
+      "successBody": "{restaurantName} restoranındaki rezervasyonun iptal edildi ve restorana bildirildi. Seni başka bir zaman görmeyi umuyoruz!",
+      "alreadyCancelledTitle": "Zaten halledildi",
+      "alreadyCancelledBody": "Bu rezervasyon zaten iptal edilmiş veya restoran tarafından güncellenmiş — yapman gereken başka bir şey yok.",
+      "invalidLinkTitle": "Bu bağlantı geçerli değil",
+      "invalidLinkBody": "Bu iptal bağlantısı geçersiz veya artık çalışmıyor. Rezervasyonunda değişiklik yapman gerekiyorsa lütfen doğrudan restoranla iletişime geç.",
+      "tooLateBody": "Bu rezervasyon artık çevrimiçi iptal edilemiyor — lütfen doğrudan {restaurantName} ile iletişime geç.",
+      "linkedOrderBody": "Bu rezervasyon bir siparişe bağlı. İptal etmek için sipariş onay e-postandaki iptal bağlantısını kullan veya restoranla iletişime geç.",
+      "depositNote": "Bu rezervasyon için kapora ödedin. Buradan iptal etmek kaporayı otomatik olarak iade etmez — kaporanla ilgili lütfen restoranla iletişime geç.",
+      "genericError": "Bir şeyler ters gitti. Lütfen tekrar dene."
+    },
     "accountPage": {
       "backTo": "{name} sayfasına geri dön",
       "greeting": "Merhaba, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Tekrar sipariş ver"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Bu siparişi iptal etmek için giriş yap veya restoranı ara.",
+      "cancelErrorInvalidLink": "Bu iptal bağlantısı geçerli değil. Lütfen onay e-postandaki bağlantıyı kullan veya restoranı ara.",
+      "cancelErrorAccepted": "Restoran siparişini zaten kabul etti. İptal etmek için lütfen restoranı doğrudan ara.",
+      "cancelErrorGone": "Bu sipariş artık iptal edilemiyor.",
       "stepPendingLabel": "Sipariş Alındı",
       "stepPendingDesc": "Siparişiniz onay bekleniyor",
       "stepAcceptedLabel": "Kabul Edildi",

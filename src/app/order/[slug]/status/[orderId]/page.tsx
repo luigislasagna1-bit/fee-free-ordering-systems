@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
@@ -165,19 +165,54 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
     router.push(`/order/${slug}?reorder=${encodeURIComponent(orderId)}`);
   }, [router, slug, orderId]);
 
-  // Customer cancel — only enabled when:
-  //   • order is pending (not yet accepted by kitchen)
-  //   • createdAt is within the 10-minute self-cancel window
-  // The server enforces both; the button is also gated on the client
-  // so customers don't see it grayed out unhelpfully past the window.
+  // ── Guest cancel token (Fabrizio cms0idtz7) ────────────────────────────
+  // The confirmation email's cancel link lands here as ?cancel=<token> — a
+  // purpose-scoped HMAC that authorizes cancelling THIS order without a
+  // session. Read via window.location (NOT useSearchParams — that would
+  // force a Suspense boundary on this client page). The link only OPENS the
+  // confirm modal; the actual cancel is the explicit POST below, so a mail
+  // scanner prefetching the URL can never cancel an order.
+  const [cancelToken, setCancelToken] = useState<string | null>(null);
+  useEffect(() => {
+    try {
+      const t = new URLSearchParams(window.location.search).get("cancel");
+      if (t) setCancelToken(t);
+    } catch { /* SSR/no-window — nothing to read */ }
+  }, []);
+  // Auto-open the confirm modal ONCE when the emailed link brought us here
+  // and the order is still cancellable. One-shot: closing with "Keep order"
+  // must not reopen it on the next poll tick.
+  const autoOpenedRef = useRef(false);
+  useEffect(() => {
+    if (!cancelToken || autoOpenedRef.current || !order) return;
+    if (order.status === "pending") {
+      autoOpenedRef.current = true;
+      setShowCancelConfirm(true);
+    }
+  }, [cancelToken, order]);
+
+  // Customer cancel — the server enforces the pending-only gate and accepts
+  // either a signed-in owner session OR the emailed cancel token. Errors
+  // come back with stable `code`s mapped to translated strings here (the
+  // server's English text is only a fallback).
   const handleCancel = useCallback(async () => {
     setCancelling(true);
     setCancelError(null);
     try {
-      const res = await fetch(`/api/public/orders/${orderId}/cancel`, { method: "POST" });
+      const res = await fetch(`/api/public/orders/${orderId}/cancel`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cancelToken ? { token: cancelToken } : {}),
+      });
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        throw new Error(body.error || `Cancel failed (${res.status})`);
+        const codeKey =
+          body.code === "not_signed_in_or_not_owner" ? "cancelErrorSignIn"
+          : body.code === "invalid_token" ? "cancelErrorInvalidLink"
+          : body.code === "already_accepted" ? "cancelErrorAccepted"
+          : body.code === "wrong_status" ? "cancelErrorGone"
+          : null;
+        throw new Error(codeKey ? t(codeKey) : body.error || `Cancel failed (${res.status})`);
       }
       // Re-fetch so the cancelled state renders immediately.
       await fetchOrder();
@@ -188,7 +223,7 @@ export default function OrderStatusPage({ params }: { params: Promise<{ slug: st
       setCancelling(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orderId]);
+  }, [orderId, cancelToken]);
 
   const handlePrint = useCallback(() => {
     if (typeof window !== "undefined") window.print();

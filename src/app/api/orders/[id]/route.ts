@@ -19,7 +19,6 @@ import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { cancelShipdayOrder } from "@/lib/shipday";
 import { dispatchDeliveryNow } from "@/lib/delivery-dispatch";
-import { verifyOrderToken } from "@/lib/order-status-token";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
 import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
@@ -422,6 +421,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (newStatus === "rejected") {
     updates.rejectedAt = new Date();
     updates.rejectionReason = String(data.rejectionReason ?? "").slice(0, 500) || null;
+    // This route is staff-only (session-gated above) — structured attribution
+    // for the kitchen's cancelled/rejected provenance (Fabrizio cms0idtz7).
+    // The kitchen client's accept-timeout auto-decline also lands here, marked
+    // by its "Auto-rejected:" reason — that's a MISSED order, tagged "auto"
+    // like the server cron / reservation auto-miss, not a staff action.
+    updates.cancelledBy =
+      (updates.rejectionReason as string | null)?.startsWith("Auto-rejected") ? "auto" : "restaurant";
   }
   if (newStatus === "completed") {
     updates.completedAt = new Date();
@@ -437,6 +443,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (newStatus === "cancelled") {
     updates.rejectedAt = new Date();
     updates.rejectionReason = String(data.rejectionReason ?? "Cancelled by restaurant").slice(0, 500);
+    // Staff-only route → structured attribution (Fabrizio cms0idtz7).
+    updates.cancelledBy = "restaurant";
   }
 
   const order = await prisma.order.update({

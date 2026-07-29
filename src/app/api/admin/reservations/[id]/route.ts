@@ -51,6 +51,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       where: { id },
       data: {
         ...(status      !== undefined && { status }),
+        // Structured attribution (cms0idtz7): staff route → "restaurant";
+        // the auto-miss keeps its rejectionReason marker, tagged "auto".
+        ...((status === "rejected" || status === "cancelled") && {
+          cancelledBy: isAutoMiss ? "auto" : "restaurant",
+        }),
         ...(isAutoMiss && { rejectionReason: missReason }),
         ...(tableId     !== undefined && { tableId: tableId || null }),
         ...(staffNotes  !== undefined && { staffNotes }),
@@ -92,6 +97,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           status: becameConfirmed ? "confirmed" : isAutoMiss ? "missed" : "declined",
           depositAmount: existing.depositAmount,
           preOrderTotal: existing.preOrderTotal ?? undefined,
+          // Powers the guest cancel link on the "confirmed" email (cms0idtz7).
+          reservationId: existing.id,
         },
       }).catch((e) => console.error("[notifyCustomer reservation status]", e));
     }

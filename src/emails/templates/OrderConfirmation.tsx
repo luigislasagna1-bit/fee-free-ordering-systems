@@ -55,6 +55,13 @@ export type OrderConfirmationProps = {
   /** Delivery address — only shown when orderType === "delivery". */
   deliveryAddress?: string | null;
   trackingUrl: string;
+  /** Guest self-cancel link (status page + purpose-scoped token) — renders
+   *  the GloriaFood-parity italic "you can still cancel here" line. Only
+   *  set when the cancel policy offers it. Fabrizio cms0idtz7. */
+  cancelUrl?: string;
+  /** Order landed while the restaurant was CLOSED — adds the "you'll get an
+   *  update as soon as they open" note above the CTA. */
+  placedWhileClosed?: boolean;
   // Restaurant signature
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -96,7 +103,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
   const {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
     estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
-    depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, restaurantUrl,
+    depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, cancelUrl, placedWhileClosed, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
     appliedPromos, creditApplied, rewardLabel, rewardEarned, paymentValue, paidStatus, t,
   } = props;
@@ -295,7 +302,27 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           paymentValue={paymentValue ?? undefined}
         />
 
+        {/* GloriaFood-parity closed-hours note — the restaurant is closed, the
+            order is queued; reassure the customer an update comes at opening. */}
+        {placedWhileClosed && (
+          <P size="sm">{t("email.orderConfirmed.closedNote")}</P>
+        )}
+
         <EmailButton href={trackingUrl}>{t("email.orderConfirmed.trackOrderButton")}</EmailButton>
+
+        {/* Guest self-cancel line (Fabrizio cms0idtz7) — italic, the whole
+            sentence is the link (GloriaFood style). The link only OPENS the
+            confirm page; cancelling is a POST behind an explicit button, so
+            mail-scanner prefetch can never cancel an order. */}
+        {cancelUrl && (
+          <P size="sm" muted>
+            <em>
+              <a href={cancelUrl} style={{ color: "inherit" }}>
+                {t("email.orderConfirmed.cancelNote")}
+              </a>
+            </em>
+          </P>
+        )}
 
         <P size="sm" muted>
           {t("email.orderConfirmed.contactRestaurantNote")}

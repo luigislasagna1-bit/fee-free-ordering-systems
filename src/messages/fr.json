@@ -621,6 +621,7 @@
     "emailRequired": "L'e-mail est obligatoire"
   },
   "kitchen": {
+    "cancelledByCustomer": "Annulée par le client",
     "title": "Kitchen Order App",
     "newOrders": "Nouvelles commandes",
     "inProgress": "En préparation",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Si vous n'avez pas fait cette demande, vous pouvez ignorer cet e-mail."
     },
     "orderConfirmed": {
+      "closedNote": "Le restaurant est actuellement fermé — votre commande est mise en attente et vous recevrez une mise à jour dès son ouverture.",
+      "cancelNote": "En cas d'imprévu, vous pouvez toujours annuler votre commande ici.",
       "subject": "Commande #{orderNumber} reçue — en attente de confirmation",
       "title": "Commande reçue",
       "greeting": "Bonjour {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Ouvrir l'admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Votre commande est annulée",
+      "cancelledByCustomerBody": "Vous avez annulé votre commande — le restaurant a été prévenu de ne pas la préparer. Si vous changez d'avis, vous pouvez toujours passer une nouvelle commande.",
       "subject": "Mise à jour commande #{orderNumber}",
       "title": "Mise à jour de la commande",
       "body": "Votre commande #{orderNumber} est maintenant {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Envoyé chaque mois"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Votre réservation est annulée",
+      "headerTitleCancelled": "Réservation annulée",
+      "introCancelled": "Vous avez annulé votre réservation chez {restaurantName} — le restaurant a été prévenu et votre table a été libérée.",
+      "closingCancelled": "Si vous changez d'avis, vous pouvez bien sûr réserver à nouveau à tout moment.",
+      "badgeCancelled": "Annulée",
+      "depositContactNote": "Vous avez versé un acompte pour cette réservation — veuillez contacter directement le restaurant au sujet de votre acompte.",
+      "cancelNote": "Si vos plans changent, vous pouvez annuler votre réservation ici.",
       "subject": "Réservation confirmée",
       "titleConfirmed": "Votre réservation est confirmée",
       "titlePending": "Demande de réservation reçue",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Manquée"
     },
     "newReservation": {
+      "subjectCancelled": "Réservation annulée par le client — {restaurant}",
       "subject": "Nouvelle réservation — {restaurant}",
       "title": "Nouvelle réservation {status}",
       "body": "{customer} a demandé une réservation pour {party} personnes le {date} à {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Livraison"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Annuler votre réservation ?",
+      "intro": "Vous êtes sur le point d'annuler votre réservation chez {restaurantName}. Le restaurant sera prévenu immédiatement.",
+      "partySize": "Table de {partySize}",
+      "confirmButton": "Oui, annuler ma réservation",
+      "keepButton": "Non, garder ma réservation",
+      "cancelling": "Annulation…",
+      "successTitle": "Réservation annulée",
+      "successBody": "Votre réservation chez {restaurantName} a été annulée et le restaurant a été prévenu. Au plaisir de vous accueillir une prochaine fois !",
+      "alreadyCancelledTitle": "Déjà pris en compte",
+      "alreadyCancelledBody": "Cette réservation a déjà été annulée ou modifiée par le restaurant — vous n'avez rien d'autre à faire.",
+      "invalidLinkTitle": "Ce lien n'est pas valide",
+      "invalidLinkBody": "Ce lien d'annulation est invalide ou ne fonctionne plus. Pour modifier une réservation, veuillez contacter directement le restaurant.",
+      "tooLateBody": "Cette réservation ne peut plus être annulée en ligne — veuillez contacter directement {restaurantName}.",
+      "linkedOrderBody": "Cette réservation fait partie d'une commande. Pour l'annuler, utilisez le lien d'annulation figurant dans l'e-mail de confirmation de votre commande, ou contactez le restaurant.",
+      "depositNote": "Vous avez versé un acompte pour cette réservation. L'annulation ici ne le rembourse pas automatiquement — veuillez contacter le restaurant au sujet de votre acompte.",
+      "genericError": "Une erreur s'est produite. Veuillez réessayer."
+    },
     "accountPage": {
       "backTo": "Retour à {name}",
       "greeting": "Bonjour, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Commander à nouveau"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Connectez-vous pour annuler cette commande, ou appelez le restaurant.",
+      "cancelErrorInvalidLink": "Ce lien d'annulation n'est pas valide. Veuillez utiliser le lien de votre e-mail de confirmation, ou appeler le restaurant.",
+      "cancelErrorAccepted": "Le restaurant a déjà accepté votre commande. Veuillez l'appeler directement pour annuler.",
+      "cancelErrorGone": "Cette commande ne peut plus être annulée.",
       "stepPendingLabel": "Commande reçue",
       "stepPendingDesc": "Votre commande attend la confirmation",
       "stepAcceptedLabel": "Acceptée",

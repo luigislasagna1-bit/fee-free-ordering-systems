@@ -1345,6 +1345,11 @@ model Order {
   /// restaurant (report cmpxeph4l). Set once so the every-minute cron never
   /// double-calls for the same order. Null = no call placed yet.
   alertCallAt       DateTime?
+  /// WHO cancelled a cancelled/rejected order: "customer" | "restaurant" |
+  /// "auto". Structured replacement for sniffing rejectionReason strings —
+  /// powers the kitchen's "Cancelled by the customer" label (Fabrizio
+  /// cms0idtz7, Luigi 2026-07-28). Null = legacy/unattributed.
+  cancelledBy       String?
 
   /// Marketplace channel attribution. True when the customer came from
   /// our /marketplace browse page (detected via ?from=marketplace at
@@ -2861,6 +2866,10 @@ model Reservation {
   /// reads MISSED, never REJECTED/declined. Additive nullable column — cheap.
   /// Luigi 2026-06-16.
   rejectionReason           String?
+  /// WHO cancelled a cancelled/rejected booking: "customer" | "restaurant" |
+  /// "auto" — mirrors Order.cancelledBy. Powers the kitchen's "Cancelled by
+  /// the customer" label (Fabrizio cms0idtz7, Luigi 2026-07-28). Null = legacy.
+  cancelledBy               String?
   /// Per-tab kitchen "Clear" flags — a walk-up booking shows in the All and
   /// Complete tabs just like an order, so it needs the SAME independent per-tab
   /// clear flags an Order has, plus its own Reservations-tab flag. Clearing one

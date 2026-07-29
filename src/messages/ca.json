@@ -621,6 +621,7 @@
     "emailRequired": "El correu electrònic és obligatori"
   },
   "kitchen": {
+    "cancelledByCustomer": "Cancel·lada pel client",
     "title": "Kitchen Order App",
     "newOrders": "Comandes noves",
     "inProgress": "En curs",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Si no heu sol·licitat això, podeu ignorar aquest correu."
     },
     "orderConfirmed": {
+      "closedNote": "El restaurant ara mateix està tancat — la teva comanda ha quedat en cua i rebràs una actualització tan bon punt obrin.",
+      "cancelNote": "Si sorgeix cap imprevist, encara pots cancel·lar la comanda aquí.",
       "subject": "Comanda #{orderNumber} rebuda — pendent de confirmació",
       "title": "Comanda rebuda",
       "greeting": "Hola, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Obre l'administrador"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "La teva comanda s'ha cancel·lat",
+      "cancelledByCustomerBody": "Has cancel·lat la comanda — hem avisat el restaurant perquè no la prepari. Si canvies d'opinió, sempre pots fer una comanda nova.",
       "subject": "Actualització de la comanda #{orderNumber}",
       "title": "Actualització de la comanda",
       "body": "La vostra comanda #{orderNumber} ara és {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "S'envia cada mes"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "La teva reserva s'ha cancel·lat",
+      "headerTitleCancelled": "Reserva cancel·lada",
+      "introCancelled": "Has cancel·lat la teva reserva a {restaurantName} — hem avisat el restaurant i la teva taula ha quedat alliberada.",
+      "closingCancelled": "Si canvies d'opinió, pots tornar a reservar quan vulguis.",
+      "badgeCancelled": "Cancel·lada",
+      "depositContactNote": "Has pagat un dipòsit per aquesta reserva — posa't en contacte directament amb el restaurant pel que fa al teu dipòsit.",
+      "cancelNote": "Si els teus plans canvien, pots cancel·lar la reserva aquí.",
       "subject": "Reserva confirmada",
       "titleConfirmed": "La vostra reserva està confirmada",
       "titlePending": "Sol·licitud de reserva rebuda",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Perduda"
     },
     "newReservation": {
+      "subjectCancelled": "Reserva cancel·lada pel client — {restaurant}",
       "subject": "Nova reserva — {restaurant}",
       "title": "Nova reserva {status}",
       "body": "{customer} ha sol·licitat una reserva per a {party} persones el {date} a les {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Lliurament"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Vols cancel·lar la reserva?",
+      "intro": "Estàs a punt de cancel·lar la teva reserva a {restaurantName}. El restaurant en serà avisat immediatament.",
+      "partySize": "Taula per a {partySize}",
+      "confirmButton": "Sí, cancel·la la meva reserva",
+      "keepButton": "No, mantén la meva reserva",
+      "cancelling": "Cancel·lant…",
+      "successTitle": "Reserva cancel·lada",
+      "successBody": "La teva reserva a {restaurantName} s'ha cancel·lat i hem avisat el restaurant. Esperem veure't en una altra ocasió!",
+      "alreadyCancelledTitle": "Ja s'ha gestionat",
+      "alreadyCancelledBody": "Aquesta reserva ja ha estat cancel·lada o modificada pel restaurant — no cal fer res més.",
+      "invalidLinkTitle": "Aquest enllaç no és vàlid",
+      "invalidLinkBody": "Aquest enllaç de cancel·lació no és vàlid o ja no funciona. Si necessites canviar una reserva, posa't en contacte directament amb el restaurant.",
+      "tooLateBody": "Aquesta reserva ja no es pot cancel·lar en línia — posa't en contacte directament amb {restaurantName}.",
+      "linkedOrderBody": "Aquesta reserva forma part d'una comanda. Per cancel·lar-la, fes servir l'enllaç de cancel·lació del correu de confirmació de la comanda o contacta amb el restaurant.",
+      "depositNote": "Has pagat un dipòsit per aquesta reserva. Cancel·lar-la aquí no el reemborsa automàticament — contacta amb el restaurant pel que fa al teu dipòsit.",
+      "genericError": "Alguna cosa ha fallat. Torna-ho a provar."
+    },
     "accountPage": {
       "backTo": "Tornar a {name}",
       "greeting": "Hola, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Torna a demanar"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Inicia sessió per cancel·lar aquesta comanda o truca al restaurant.",
+      "cancelErrorInvalidLink": "Aquest enllaç de cancel·lació no és vàlid. Fes servir l'enllaç del correu de confirmació o truca al restaurant.",
+      "cancelErrorAccepted": "El restaurant ja ha acceptat la teva comanda. Truca-hi directament per cancel·lar-la.",
+      "cancelErrorGone": "Aquesta comanda ja no es pot cancel·lar.",
       "stepPendingLabel": "Comanda rebuda",
       "stepPendingDesc": "La teva comanda està esperant confirmació",
       "stepAcceptedLabel": "Acceptada",

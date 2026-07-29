@@ -621,6 +621,7 @@
     "emailRequired": "البريد الإلكتروني مطلوب"
   },
   "kitchen": {
+    "cancelledByCustomer": "ألغاه العميل",
     "title": "Kitchen Order App",
     "newOrders": "طلبات جديدة",
     "inProgress": "قيد التحضير",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "إذا لم تطلب ذلك، يمكنك تجاهل هذا البريد الإلكتروني بأمان."
     },
     "orderConfirmed": {
+      "closedNote": "المطعم مغلق حاليًا — طلبك في قائمة الانتظار وستصلك آخر المستجدات فور فتح المطعم.",
+      "cancelNote": "إذا طرأ أمر غير متوقع، لا يزال بإمكانك إلغاء طلبك من هنا.",
       "subject": "تم استلام الطلب #{orderNumber} — في انتظار التأكيد",
       "title": "تم استلام الطلب",
       "greeting": "مرحباً {customerName}،",
@@ -5277,6 +5280,8 @@
       "openAdmin": "فتح لوحة التحكم"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "تم إلغاء طلبك",
+      "cancelledByCustomerBody": "لقد ألغيت طلبك — وتم إبلاغ المطعم بعدم تحضيره. إذا غيّرت رأيك، يمكنك دائمًا تقديم طلب جديد.",
       "subject": "تحديث على الطلب #{orderNumber}",
       "title": "تحديث الطلب",
       "body": "طلبك #{orderNumber} أصبح الآن {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "يُرسل شهريًا"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "تم إلغاء حجزك",
+      "headerTitleCancelled": "تم إلغاء الحجز",
+      "introCancelled": "لقد ألغيت حجزك في {restaurantName} — تم إبلاغ المطعم وتحرير طاولتك.",
+      "closingCancelled": "إذا غيّرت رأيك، يسعدنا دائمًا أن تحجز مرة أخرى.",
+      "badgeCancelled": "ملغى",
+      "depositContactNote": "لقد دفعت عربونًا لهذا الحجز — يرجى التواصل مع المطعم مباشرةً بخصوص العربون.",
+      "cancelNote": "إذا تغيّرت خططك، يمكنك إلغاء حجزك من هنا.",
       "subject": "تم تأكيد الحجز",
       "titleConfirmed": "تم تأكيد حجزك",
       "titlePending": "تم استلام طلب الحجز",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "فائت"
     },
     "newReservation": {
+      "subjectCancelled": "تم إلغاء الحجز من قبل العميل — {restaurant}",
       "subject": "حجز جديد — {restaurant}",
       "title": "حجز جديد {status}",
       "body": "طلب {customer} حجزاً لـ {party} ضيف في {date} الساعة {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "توصيل"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "هل تريد إلغاء حجزك؟",
+      "intro": "أنت على وشك إلغاء حجزك في {restaurantName}. سيتم إبلاغ المطعم على الفور.",
+      "partySize": "عدد الضيوف: {partySize}",
+      "confirmButton": "نعم، ألغِ حجزي",
+      "keepButton": "لا، الاحتفاظ بحجزي",
+      "cancelling": "جارٍ الإلغاء…",
+      "successTitle": "تم إلغاء الحجز",
+      "successBody": "تم إلغاء حجزك في {restaurantName} وتم إبلاغ المطعم بذلك. نأمل أن نراك في مرة قادمة!",
+      "alreadyCancelledTitle": "تمت المعالجة بالفعل",
+      "alreadyCancelledBody": "تم إلغاء هذا الحجز أو تحديثه من قبل المطعم بالفعل — لا حاجة إلى أي إجراء إضافي.",
+      "invalidLinkTitle": "هذا الرابط غير صالح",
+      "invalidLinkBody": "رابط الإلغاء هذا غير صالح أو لم يعد يعمل. إذا كنت بحاجة إلى تعديل حجزك، يرجى التواصل مع المطعم مباشرةً.",
+      "tooLateBody": "لم يعد بالإمكان إلغاء هذا الحجز عبر الإنترنت — يرجى التواصل مع {restaurantName} مباشرةً.",
+      "linkedOrderBody": "هذا الحجز جزء من طلب. لإلغائه، استخدم رابط الإلغاء الموجود في بريد تأكيد الطلب، أو تواصل مع المطعم.",
+      "depositNote": "لقد دفعت عربونًا لهذا الحجز. الإلغاء من هنا لا يعني استرداده تلقائيًا — يرجى التواصل مع المطعم بخصوص العربون.",
+      "genericError": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+    },
     "accountPage": {
       "backTo": "العودة إلى {name}",
       "greeting": "مرحباً، {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "اطلب مجدداً"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "سجّل الدخول لإلغاء هذا الطلب، أو اتصل بالمطعم.",
+      "cancelErrorInvalidLink": "رابط الإلغاء هذا غير صالح. يرجى استخدام الرابط الموجود في بريد التأكيد الإلكتروني، أو الاتصال بالمطعم.",
+      "cancelErrorAccepted": "لقد قبل المطعم طلبك بالفعل. يرجى الاتصال به مباشرةً لإلغائه.",
+      "cancelErrorGone": "لم يعد بالإمكان إلغاء هذا الطلب.",
       "stepPendingLabel": "تم استلام الطلب",
       "stepPendingDesc": "طلبك في انتظار التأكيد",
       "stepAcceptedLabel": "مقبول",

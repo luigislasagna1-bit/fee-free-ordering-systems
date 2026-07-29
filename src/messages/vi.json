@@ -621,6 +621,7 @@
     "emailRequired": "Email là bắt buộc"
   },
   "kitchen": {
+    "cancelledByCustomer": "Khách hàng tự hủy",
     "title": "Kitchen Order App",
     "newOrders": "Đơn mới",
     "inProgress": "Đang làm",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Nếu bạn không yêu cầu điều này, bạn có thể bỏ qua email này."
     },
     "orderConfirmed": {
+      "closedNote": "Nhà hàng hiện đang đóng cửa — đơn hàng của bạn đã được xếp vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa.",
+      "cancelNote": "Nếu có việc đột xuất, bạn vẫn có thể hủy đơn hàng tại đây.",
       "subject": "Đơn #{orderNumber} đã nhận — đang chờ xác nhận",
       "title": "Đã nhận đơn hàng",
       "greeting": "Xin chào {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Mở quản trị"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Đơn hàng của bạn đã được hủy",
+      "cancelledByCustomerBody": "Bạn đã hủy đơn hàng — nhà hàng đã được thông báo để không chuẩn bị món nữa. Nếu đổi ý, bạn luôn có thể đặt một đơn hàng mới.",
       "subject": "Cập nhật đơn #{orderNumber}",
       "title": "Cập nhật đơn hàng",
       "body": "Đơn #{orderNumber} của bạn hiện {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Gửi hằng tháng"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Đặt bàn của bạn đã được hủy",
+      "headerTitleCancelled": "Đã hủy đặt bàn",
+      "introCancelled": "Bạn đã hủy đặt bàn tại {restaurantName} — nhà hàng đã được thông báo và bàn của bạn đã được trả lại.",
+      "closingCancelled": "Nếu bạn đổi ý, chúng tôi luôn hoan nghênh bạn đặt bàn lại bất cứ lúc nào.",
+      "badgeCancelled": "Đã hủy",
+      "depositContactNote": "Bạn đã đặt cọc cho lần đặt bàn này — vui lòng liên hệ trực tiếp với nhà hàng về khoản đặt cọc của bạn.",
+      "cancelNote": "Nếu kế hoạch thay đổi, bạn có thể hủy đặt bàn tại đây.",
       "subject": "Đặt bàn đã xác nhận",
       "titleConfirmed": "Đặt bàn của bạn đã được xác nhận",
       "titlePending": "Đã nhận yêu cầu đặt bàn",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Bị bỏ lỡ"
     },
     "newReservation": {
+      "subjectCancelled": "Khách hàng đã hủy đặt bàn — {restaurant}",
       "subject": "Đặt bàn mới — {restaurant}",
       "title": "Đặt bàn mới {status}",
       "body": "{customer} đã yêu cầu đặt bàn cho {party} khách vào {date} lúc {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Giao hàng"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Hủy đặt bàn của bạn?",
+      "intro": "Bạn sắp hủy đặt bàn tại {restaurantName}. Nhà hàng sẽ được thông báo ngay lập tức.",
+      "partySize": "Nhóm {partySize} người",
+      "confirmButton": "Có, hủy đặt bàn của tôi",
+      "keepButton": "Không, giữ đặt bàn của tôi",
+      "cancelling": "Đang hủy…",
+      "successTitle": "Đã hủy đặt bàn",
+      "successBody": "Đặt bàn của bạn tại {restaurantName} đã được hủy và nhà hàng đã được thông báo. Hẹn gặp bạn vào dịp khác!",
+      "alreadyCancelledTitle": "Đã được xử lý",
+      "alreadyCancelledBody": "Đặt bàn này đã được nhà hàng hủy hoặc cập nhật trước đó — bạn không cần làm gì thêm.",
+      "invalidLinkTitle": "Liên kết không hợp lệ",
+      "invalidLinkBody": "Liên kết hủy này không hợp lệ hoặc không còn hoạt động. Nếu bạn cần thay đổi đặt bàn, vui lòng liên hệ trực tiếp với nhà hàng.",
+      "tooLateBody": "Đặt bàn này không thể hủy trực tuyến được nữa — vui lòng liên hệ trực tiếp với {restaurantName}.",
+      "linkedOrderBody": "Đặt bàn này là một phần của đơn hàng. Để hủy, vui lòng dùng liên kết hủy trong email xác nhận đơn hàng của bạn, hoặc liên hệ với nhà hàng.",
+      "depositNote": "Bạn đã đặt cọc cho lần đặt bàn này. Việc hủy tại đây không tự động hoàn lại tiền cọc — vui lòng liên hệ với nhà hàng về khoản đặt cọc của bạn.",
+      "genericError": "Đã có lỗi xảy ra. Vui lòng thử lại."
+    },
     "accountPage": {
       "backTo": "Quay lại {name}",
       "greeting": "Xin chào, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Đặt lại"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Vui lòng đăng nhập để hủy đơn hàng này, hoặc gọi cho nhà hàng.",
+      "cancelErrorInvalidLink": "Liên kết hủy này không hợp lệ. Vui lòng dùng liên kết trong email xác nhận của bạn, hoặc gọi cho nhà hàng.",
+      "cancelErrorAccepted": "Nhà hàng đã nhận đơn hàng của bạn. Vui lòng gọi trực tiếp cho nhà hàng để hủy.",
+      "cancelErrorGone": "Đơn hàng này không thể hủy được nữa.",
       "stepPendingLabel": "Đã nhận đơn",
       "stepPendingDesc": "Đơn hàng của bạn đang chờ xác nhận",
       "stepAcceptedLabel": "Đã xác nhận",

@@ -621,6 +621,7 @@
     "emailRequired": "E-mailadres is verplicht"
   },
   "kitchen": {
+    "cancelledByCustomer": "Geannuleerd door de klant",
     "title": "Kitchen Order App",
     "newOrders": "Nieuwe bestellingen",
     "inProgress": "In behandeling",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Als u dit niet hebt aangevraagd, kunt u deze e-mail veilig negeren."
     },
     "orderConfirmed": {
+      "closedNote": "Het restaurant is momenteel gesloten — je bestelling staat in de wachtrij en je krijgt een update zodra ze weer open zijn.",
+      "cancelNote": "Komt er onverwacht iets tussen? Dan kun je je bestelling hier nog annuleren.",
       "subject": "Bestelling #{orderNumber} ontvangen — wacht op bevestiging",
       "title": "Bestelling ontvangen",
       "greeting": "Hallo {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Beheer openen"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Je bestelling is geannuleerd",
+      "cancelledByCustomerBody": "Je hebt je bestelling geannuleerd — het restaurant weet dat ze hem niet hoeven te bereiden. Bedenk je je? Dan kun je altijd een nieuwe bestelling plaatsen.",
       "subject": "Update over bestelling #{orderNumber}",
       "title": "Bestelupdate",
       "body": "Uw bestelling #{orderNumber} is nu {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Maandelijks verzonden"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Je reservering is geannuleerd",
+      "headerTitleCancelled": "Reservering geannuleerd",
+      "introCancelled": "Je hebt je reservering bij {restaurantName} geannuleerd — het restaurant is op de hoogte gebracht en je tafel is weer vrijgegeven.",
+      "closingCancelled": "Bedenk je je? Je bent altijd welkom om opnieuw te reserveren.",
+      "badgeCancelled": "Geannuleerd",
+      "depositContactNote": "Je hebt een aanbetaling gedaan voor deze reservering — neem voor je aanbetaling rechtstreeks contact op met het restaurant.",
+      "cancelNote": "Veranderen je plannen? Dan kun je je reservering hier annuleren.",
       "subject": "Reservering bevestigd",
       "titleConfirmed": "Uw reservering is bevestigd",
       "titlePending": "Reserveringsaanvraag ontvangen",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Gemist"
     },
     "newReservation": {
+      "subjectCancelled": "Reservering geannuleerd door de gast — {restaurant}",
       "subject": "Nieuwe reservering — {restaurant}",
       "title": "Nieuwe reservering {status}",
       "body": "{customer} heeft een reservering aangevraagd voor {party} gasten op {date} om {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Bezorgen"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Je reservering annuleren?",
+      "intro": "Je staat op het punt je reservering bij {restaurantName} te annuleren. Het restaurant krijgt hiervan direct bericht.",
+      "partySize": "Tafel voor {partySize}",
+      "confirmButton": "Ja, annuleer mijn reservering",
+      "keepButton": "Nee, behoud mijn reservering",
+      "cancelling": "Bezig met annuleren…",
+      "successTitle": "Reservering geannuleerd",
+      "successBody": "Je reservering bij {restaurantName} is geannuleerd en het restaurant is op de hoogte gebracht. Hopelijk tot een volgende keer!",
+      "alreadyCancelledTitle": "Al afgehandeld",
+      "alreadyCancelledBody": "Deze reservering is al geannuleerd of aangepast door het restaurant — je hoeft verder niets te doen.",
+      "invalidLinkTitle": "Deze link is niet geldig",
+      "invalidLinkBody": "Deze annuleringslink is ongeldig of werkt niet meer. Wil je een reservering wijzigen? Neem dan rechtstreeks contact op met het restaurant.",
+      "tooLateBody": "Deze reservering kan niet meer online worden geannuleerd — neem rechtstreeks contact op met {restaurantName}.",
+      "linkedOrderBody": "Deze reservering hoort bij een bestelling. Gebruik om te annuleren de annuleringslink in je bestelbevestigingsmail, of neem contact op met het restaurant.",
+      "depositNote": "Je hebt een aanbetaling gedaan voor deze reservering. Hier annuleren betekent niet automatisch een terugbetaling — neem voor je aanbetaling contact op met het restaurant.",
+      "genericError": "Er is iets misgegaan. Probeer het opnieuw."
+    },
     "accountPage": {
       "backTo": "Terug naar {name}",
       "greeting": "Hoi, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Opnieuw bestellen"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Log in om deze bestelling te annuleren, of bel het restaurant.",
+      "cancelErrorInvalidLink": "Deze annuleringslink is niet geldig. Gebruik de link uit je bevestigingsmail, of bel het restaurant.",
+      "cancelErrorAccepted": "Het restaurant heeft je bestelling al geaccepteerd. Bel ze direct om te annuleren.",
+      "cancelErrorGone": "Deze bestelling kan niet meer worden geannuleerd.",
       "stepPendingLabel": "Bestelling ontvangen",
       "stepPendingDesc": "Je bestelling wacht op bevestiging",
       "stepAcceptedLabel": "Geaccepteerd",

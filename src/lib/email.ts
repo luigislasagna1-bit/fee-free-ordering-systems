@@ -293,6 +293,13 @@ interface OrderEmailParams {
   /** Restaurant 12h/24h preference — drives clock-time formatting. Luigi 2026-06-08. */
   hoursFormat?: "12h" | "24h";
   trackingUrl: string;
+  /** Guest self-cancel page link (status page + purpose-scoped token) —
+   *  rendered as the GloriaFood-parity italic "you can still cancel here"
+   *  line. Only set when the cancel policy offers it. Fabrizio cms0idtz7. */
+  cancelUrl?: string;
+  /** Order landed while the restaurant was CLOSED — adds the "you'll get an
+   *  update as soon as they open" note. */
+  placedWhileClosed?: boolean;
   /** Restaurant defaultLanguage. Defaults to "en". */
   locale?: string;
   /** ISO 4217 currency code (e.g. "usd", "eur"). Drives money formatting
@@ -591,6 +598,8 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       total: params.total,
       deliveryAddress: params.deliveryAddress,
       trackingUrl: params.trackingUrl,
+      cancelUrl: params.cancelUrl,
+      placedWhileClosed: params.placedWhileClosed,
       restaurantUrl: params.restaurantUrl,
       restaurantEmail: params.restaurantEmail,
       restaurantPhone: params.restaurantPhone,
@@ -815,6 +824,9 @@ export async function sendOrderStatusUpdateEmail(params: {
    *  rejected/cancelled order (caller formats + gates on rewardsEnabled). */
   creditReturned?: string;
   rewardLabel?: string | null;
+  /** WHO cancelled (status "cancelled" only): "customer" switches the copy
+   *  to the you-cancelled variant. Fabrizio cms0idtz7. */
+  cancelledBy?: string;
   /** Restaurant contact info — surfaced in the email footer. Missing
    *  these used to mean the customer got an accepted/rejected email
    *  with no way to call the restaurant. Luigi 2026-05-31. */
@@ -871,6 +883,7 @@ export async function sendOrderStatusUpdateEmail(params: {
       paymentMethod: params.paymentMethod,
       creditReturned: params.creditReturned,
       rewardLabel: params.rewardLabel,
+      cancelledBy: params.cancelledBy,
       restaurantPhone: params.restaurantPhone ?? undefined,
       restaurantEmail: params.restaurantEmail ?? undefined,
       restaurantUrl: params.restaurantUrl ?? undefined,
@@ -1313,10 +1326,14 @@ export async function sendReservationConfirmation(params: {
   // "missed" = auto-declined for not being accepted in time. Reuses the
   // (already-neutral) "declined" copy — header "Reservation update", "was not
   // able to accommodate…" — but renders a "Missed" badge instead of "Declined".
-  status: "requested" | "confirmed" | "declined" | "missed";
+  // "cancelled" = the CUSTOMER cancelled via the emailed link (cms0idtz7).
+  status: "requested" | "confirmed" | "declined" | "missed" | "cancelled";
   depositPaid?: boolean;
   depositAmount?: number;
   preOrderTotal?: number;
+  /** Guest self-cancel page link (purpose-scoped token) — the italic "you can
+   *  still cancel your table reservation here" line on requested/confirmed. */
+  cancelUrl?: string;
   /** Restaurant 12h/24h preference — formats the reservation time so the email
    *  matches the restaurant's setting (was always 24h). Luigi 2026-06-08. */
   hoursFormat?: "12h" | "24h";
@@ -1333,10 +1350,15 @@ export async function sendReservationConfirmation(params: {
       restaurantName: params.restaurantName,
       dateTime: `${params.date} at ${timeLabel}`,
       partySize: params.partySize,
+      depositPaid: params.depositPaid,
+      cancelUrl: params.cancelUrl,
       imprint: currentImprint(),
     })
   );
-  const subjectSuffix = (params.status === "declined" || params.status === "missed") ? "Declined" : params.status === "requested" ? "Requested" : "";
+  const subjectSuffix =
+    params.status === "cancelled" ? "Cancelled"
+    : (params.status === "declined" || params.status === "missed") ? "Declined"
+    : params.status === "requested" ? "Requested" : "";
   return send({
     to: params.to,
     subject: t(`email.reservationConfirmed.subject${subjectSuffix}`),
@@ -1356,7 +1378,9 @@ export async function sendNewReservationNotification(params: {
   date: string;
   time: string;
   confirmationCode: string;
-  status: "pending" | "confirmed";
+  /** "cancelled" = the CUSTOMER cancelled via their emailed link (cms0idtz7)
+   *  — the staff ping flips to the cancelled wording. */
+  status: "pending" | "confirmed" | "cancelled";
   dashboardUrl: string;
   customerPhone?: string | null;
   customerEmail?: string | null;
@@ -1373,12 +1397,18 @@ export async function sendNewReservationNotification(params: {
       dateTime: `${params.date} at ${params.time}`,
       partySize: params.partySize,
       dashboardUrl: params.dashboardUrl,
+      cancelled: params.status === "cancelled",
       imprint: currentImprint(),
     })
   );
   return send({
     to: params.to,
-    subject: t("email.newReservation.subject", { restaurant: params.restaurantName }),
+    subject: t(
+      params.status === "cancelled"
+        ? "email.newReservation.subjectCancelled"
+        : "email.newReservation.subject",
+      { restaurant: params.restaurantName },
+    ),
     html,
   });
 }

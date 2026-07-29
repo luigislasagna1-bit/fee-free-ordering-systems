@@ -636,6 +636,7 @@
     "preparing": "Preparing",
     "rejected": "Rejected",
     "cancelled": "Cancelled",
+    "cancelledByCustomer": "Cancelled by the customer",
     "confirmed": "Confirmed",
     "seated": "Seated",
     "done": "Done",
@@ -5268,6 +5269,8 @@
       "promoFreeLabel": "FREE",
       "trackOrderButton": "Track your order",
       "contactRestaurantNote": "If you have any questions about your order, please contact the restaurant directly using the details below.",
+      "closedNote": "The restaurant is currently closed — your order is queued and you’ll get an update as soon as they open.",
+      "cancelNote": "If something unexpected comes up, you can still cancel your order here.",
       "tableReservation": "Table reserved for {n} — {time}"
     },
     "newOrder": {
@@ -5306,6 +5309,8 @@
       "rejectedBadge": "Not accepted",
       "cancelledTitle": "Order cancelled",
       "cancelledBody": "The restaurant cancelled your order. If you paid online, a refund is on its way and should appear on your statement within a few business days.",
+      "cancelledByCustomerTitle": "Your order is cancelled",
+      "cancelledByCustomerBody": "You cancelled your order — the restaurant has been told not to prepare it. If you change your mind, you can always place a new order.",
       "cancelledBadge": "Cancelled",
       "fallbackTitle": "Order update",
       "fallbackBody": "Your order status has changed.",
@@ -5419,10 +5424,18 @@
       "closingDeclined": "We are sorry for the inconvenience. Please try a different date or time, or contact the restaurant directly.",
       "subjectRequested": "Reservation request received — pending confirmation",
       "subjectDeclined": "Update on your reservation request",
-      "badgeMissed": "Missed"
+      "badgeMissed": "Missed",
+      "subjectCancelled": "Your reservation is cancelled",
+      "headerTitleCancelled": "Reservation cancelled",
+      "introCancelled": "You cancelled your reservation at {restaurantName} — the restaurant has been notified and your table has been released.",
+      "closingCancelled": "If you change your mind, you're always welcome to book again.",
+      "badgeCancelled": "Cancelled",
+      "depositContactNote": "You paid a deposit for this booking — please contact the restaurant directly about your deposit.",
+      "cancelNote": "If your plans change, you can cancel your reservation here."
     },
     "newReservation": {
       "subject": "New reservation — {restaurant}",
+      "subjectCancelled": "Reservation cancelled by the customer — {restaurant}",
       "title": "New reservation {status}",
       "body": "{customer} requested a reservation for {party} guests on {date} at {time}.",
       "confirmationCode": "Confirmation code"
@@ -6439,6 +6452,10 @@
       "cancelModalBody": "This will release the hold on your card and tell {name} not to prepare it. You can always place a new order if you change your mind.",
       "keepOrder": "Keep order",
       "cancellingInProgress": "Cancelling…",
+      "cancelErrorSignIn": "Sign in to cancel this order, or call the restaurant.",
+      "cancelErrorInvalidLink": "This cancellation link isn’t valid. Please use the link from your confirmation email, or call the restaurant.",
+      "cancelErrorAccepted": "The restaurant has already accepted your order. Please call them directly to cancel.",
+      "cancelErrorGone": "This order can no longer be cancelled.",
       "yesCancel": "Yes, cancel",
       "orderNotFound": "Order not found",
       "orderNumber": "Order #{number}",
@@ -6598,6 +6615,24 @@
       "subheading": "For your account at {name}.",
       "missingTokenPrefix": "This reset link is missing its token. Request a new one from the",
       "forgotPasswordLink": "forgot-password page"
+    },
+    "reservationCancel": {
+      "title": "Cancel your reservation?",
+      "intro": "You're about to cancel your reservation at {restaurantName}. The restaurant will be notified right away.",
+      "partySize": "Party of {partySize}",
+      "confirmButton": "Yes, cancel my reservation",
+      "keepButton": "No, keep my reservation",
+      "cancelling": "Cancelling…",
+      "successTitle": "Reservation cancelled",
+      "successBody": "Your reservation at {restaurantName} has been cancelled and the restaurant has been notified. We hope to see you another time!",
+      "alreadyCancelledTitle": "Already handled",
+      "alreadyCancelledBody": "This reservation has already been cancelled or updated by the restaurant — no further action is needed.",
+      "invalidLinkTitle": "This link isn't valid",
+      "invalidLinkBody": "This cancellation link is invalid or no longer works. If you need to change a booking, please contact the restaurant directly.",
+      "tooLateBody": "This reservation can no longer be cancelled online — please contact {restaurantName} directly.",
+      "linkedOrderBody": "This booking is part of an order. To cancel it, use the cancellation link in your order confirmation email, or contact the restaurant.",
+      "depositNote": "You paid a deposit for this booking. Cancelling here does not automatically refund it — please contact the restaurant about your deposit.",
+      "genericError": "Something went wrong. Please try again."
     },
     "signupForm": {
       "labelName": "Your name",

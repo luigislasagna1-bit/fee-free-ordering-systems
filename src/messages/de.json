@@ -621,6 +621,7 @@
     "emailRequired": "E-Mail-Adresse ist erforderlich"
   },
   "kitchen": {
+    "cancelledByCustomer": "Vom Gast storniert",
     "title": "Kitchen Order App",
     "newOrders": "Neue Bestellungen",
     "inProgress": "In Bearbeitung",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Wenn Sie diese Anfrage nicht gestellt haben, können Sie diese E-Mail ignorieren."
     },
     "orderConfirmed": {
+      "closedNote": "Das Restaurant ist gerade geschlossen — deine Bestellung ist in der Warteschlange und du bekommst ein Update, sobald es öffnet.",
+      "cancelNote": "Falls etwas Unerwartetes dazwischenkommt, kannst du deine Bestellung hier noch stornieren.",
       "subject": "Bestellung #{orderNumber} eingegangen — warten auf Bestätigung",
       "title": "Bestellung eingegangen",
       "greeting": "Hallo {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Admin öffnen"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Deine Bestellung ist storniert",
+      "cancelledByCustomerBody": "Du hast deine Bestellung storniert — das Restaurant wurde informiert und bereitet sie nicht zu. Wenn du es dir anders überlegst, kannst du jederzeit neu bestellen.",
       "subject": "Aktualisierung zu Bestellung #{orderNumber}",
       "title": "Bestellungsaktualisierung",
       "body": "Ihre Bestellung #{orderNumber} hat jetzt den Status: {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Monatlich gesendet"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Deine Reservierung ist storniert",
+      "headerTitleCancelled": "Reservierung storniert",
+      "introCancelled": "Du hast deine Reservierung bei {restaurantName} storniert — das Restaurant wurde benachrichtigt und dein Tisch wurde freigegeben.",
+      "closingCancelled": "Wenn du es dir anders überlegst, kannst du jederzeit wieder reservieren.",
+      "badgeCancelled": "Storniert",
+      "depositContactNote": "Du hast für diese Reservierung eine Anzahlung geleistet — bitte wende dich wegen deiner Anzahlung direkt an das Restaurant.",
+      "cancelNote": "Wenn sich deine Pläne ändern, kannst du deine Reservierung hier stornieren.",
       "subject": "Reservierung bestätigt",
       "titleConfirmed": "Ihre Reservierung ist bestätigt",
       "titlePending": "Reservierungsanfrage eingegangen",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Verpasst"
     },
     "newReservation": {
+      "subjectCancelled": "Reservierung vom Gast storniert — {restaurant}",
       "subject": "Neue Reservierung — {restaurant}",
       "title": "Neue Reservierung {status}",
       "body": "{customer} hat eine Reservierung für {party} Personen am {date} um {time} angefragt.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Lieferung"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Deine Reservierung stornieren?",
+      "intro": "Du bist dabei, deine Reservierung bei {restaurantName} zu stornieren. Das Restaurant wird sofort benachrichtigt.",
+      "partySize": "Tisch für {partySize}",
+      "confirmButton": "Ja, meine Reservierung stornieren",
+      "keepButton": "Nein, meine Reservierung behalten",
+      "cancelling": "Wird storniert…",
+      "successTitle": "Reservierung storniert",
+      "successBody": "Deine Reservierung bei {restaurantName} wurde storniert und das Restaurant wurde benachrichtigt. Wir hoffen, dich ein anderes Mal begrüßen zu dürfen!",
+      "alreadyCancelledTitle": "Bereits erledigt",
+      "alreadyCancelledBody": "Diese Reservierung wurde bereits storniert oder vom Restaurant aktualisiert — du musst nichts weiter tun.",
+      "invalidLinkTitle": "Dieser Link ist ungültig",
+      "invalidLinkBody": "Dieser Stornierungslink ist ungültig oder funktioniert nicht mehr. Wenn du eine Reservierung ändern möchtest, wende dich bitte direkt an das Restaurant.",
+      "tooLateBody": "Diese Reservierung kann online nicht mehr storniert werden — bitte wende dich direkt an {restaurantName}.",
+      "linkedOrderBody": "Diese Reservierung gehört zu einer Bestellung. Um sie zu stornieren, nutze den Stornierungslink in deiner Bestellbestätigungs-E-Mail oder kontaktiere das Restaurant.",
+      "depositNote": "Du hast für diese Reservierung eine Anzahlung geleistet. Eine Stornierung hier erstattet sie nicht automatisch — bitte wende dich wegen deiner Anzahlung an das Restaurant.",
+      "genericError": "Etwas ist schiefgelaufen. Bitte versuch es erneut."
+    },
     "accountPage": {
       "backTo": "Zurück zu {name}",
       "greeting": "Hallo, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Erneut bestellen"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Melde dich an, um diese Bestellung zu stornieren, oder ruf das Restaurant an.",
+      "cancelErrorInvalidLink": "Dieser Stornierungslink ist ungültig. Bitte nutze den Link aus deiner Bestätigungs-E-Mail oder ruf das Restaurant an.",
+      "cancelErrorAccepted": "Das Restaurant hat deine Bestellung bereits angenommen. Bitte ruf dort direkt an, um zu stornieren.",
+      "cancelErrorGone": "Diese Bestellung kann nicht mehr storniert werden.",
       "stepPendingLabel": "Bestellung eingegangen",
       "stepPendingDesc": "Deine Bestellung wartet auf Bestätigung",
       "stepAcceptedLabel": "Angenommen",

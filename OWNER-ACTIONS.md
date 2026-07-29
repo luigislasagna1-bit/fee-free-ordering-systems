@@ -41,6 +41,18 @@
 
 ## A. DO NOW — this week, in priority order
 
+### A26. 🆕 Guest self-cancel (Fabrizio cms0idtz7) BUILT — one prod check when you're ready
+Customers can now cancel a **closed-hours order** (and any reservation) straight from their
+confirmation email — no account, no phone call (GloriaFood parity, exactly per the plan you approved).
+The emailed link opens the normal status page / a small confirm page; cancelling releases the card
+hold (void, never a charge), emails the customer, pings staff, and the kitchen tile says
+**"Cancelled by the customer"** so nobody blames a colleague. Dev-verified end-to-end in the browser
+(cancel, double-cancel, forged link, wrong-purpose link all behave; kitchen shows the attribution).
+- **☐ PROD CHECK (5 min, needs the store CLOSED):** place a small real card order while closed →
+  open the confirmation email → tap the cancel line → confirm. Then check Stripe shows the
+  authorization **Canceled** (NOT refunded) and the kitchen tile reads "Cancelled by the customer".
+  Fabrizio's report has been answered + moved to IN TESTING so he can try it on ristorante-test too.
+
 ### A25. ✅ Gift Reward Dollars SHIPPED + PROD-VERIFIED by Luigi 2026-07-28 🎉
 Your ask, built + proven live the same day (599515fd): **Marketing Tools → Reward Dollars → "Gift
 Pizza Bucks"** — name + email + amount → Send. Existing account = instant credit; no account = the
@@ -376,6 +388,7 @@ When you have the iPad handy, tell Claude "let's do C3": print a real test order
 | 2026-07-17 | Driver app SOUNDS (89984bfb): new-order chime until accepted + stage ticks + mute toggle | Pure WebAudio (no iOS media card); ZERO DriverQueue edits; E2E 9/9; both of Luigi's gate-day asks shipped same day |
 | 2026-07-17 | v1.1 Phase 5 (cdb13eb2): Earnings tab — Today/This week/Last week, per-currency tip stacking, hardened bound-tz aggregate | E2E 35/35 (usd+eur tips proven separate, exact period counts, >35d invisible, range-clamp 400); parity 5718 x38; preflight green. Resumed from a Fable-5 usage-limit mid-run on Opus |
 | 2026-07-20 | Fabrizio's ristorante-test made PERMANENTLY FREE (Luigi's call — thanks for his testing/feedback; his CLIENT accounts stay paid) | All 5 comped add-ons (hosted_website, online_payments, custom_domain, reservation_deposits, advanced_promos) + plan trial pushed from Aug 24 to 2126-01-01; no Stripe subs touched (none existed); dunning clear; prod re-verified read-only. Reversible: set real dates back anytime (scripts/_fabrizio-free-account.ts) |
+| 2026-07-28 | Business bank account DEBIT CARD received; platform Stripe (Fee Free Ordering Inc.) payout destination set to the business account | Luigi confirmed in chat. Platform revenue (subscriptions/add-ons + future delivery fees & pass-through tips once billing un-pauses) now lands in the business account — same account driver cheques will be written from |
 
 ---
 

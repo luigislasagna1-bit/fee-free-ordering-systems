@@ -621,6 +621,7 @@
     "emailRequired": "L'email è obbligatoria"
   },
   "kitchen": {
+    "cancelledByCustomer": "Annullato dal cliente",
     "title": "Kitchen Order App",
     "newOrders": "Nuovi ordini",
     "inProgress": "In Corso",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Se non hai richiesto questo, puoi ignorare questa e-mail."
     },
     "orderConfirmed": {
+      "closedNote": "Il ristorante è al momento chiuso: l'ordine resta in coda e arriverà un aggiornamento non appena il locale riaprirà.",
+      "cancelNote": "In caso di imprevisti, è sempre possibile annullare l'ordine qui.",
       "subject": "Ordine #{orderNumber} ricevuto — in attesa di conferma",
       "title": "Ordine ricevuto",
       "greeting": "Salve {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Apri admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "L'ordine è stato annullato",
+      "cancelledByCustomerBody": "L'ordine è stato annullato: il ristorante è stato avvisato di non prepararlo. In caso di ripensamento, è sempre possibile effettuare un nuovo ordine.",
       "subject": "Aggiornamento ordine #{orderNumber}",
       "title": "Aggiornamento ordine",
       "body": "Il tuo ordine #{orderNumber} è ora {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Inviato ogni mese"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "La prenotazione è stata annullata",
+      "headerTitleCancelled": "Prenotazione annullata",
+      "introCancelled": "La prenotazione presso {restaurantName} è stata annullata: il ristorante è stato avvisato e il tavolo è stato liberato.",
+      "closingCancelled": "In caso di ripensamento, una nuova prenotazione sarà sempre benvenuta.",
+      "badgeCancelled": "Annullata",
+      "depositContactNote": "Per questa prenotazione è stato versato un deposito: per qualsiasi informazione al riguardo, contattare direttamente il ristorante.",
+      "cancelNote": "Se i piani cambiano, è possibile annullare la prenotazione qui.",
       "subject": "Prenotazione confermata",
       "titleConfirmed": "La tua prenotazione è confermata",
       "titlePending": "Richiesta di prenotazione ricevuta",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Perso"
     },
     "newReservation": {
+      "subjectCancelled": "Prenotazione annullata dal cliente — {restaurant}",
       "subject": "Nuova prenotazione — {restaurant}",
       "title": "Nuova prenotazione {status}",
       "body": "{customer} ha richiesto una prenotazione per {party} persone il {date} alle {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Consegna"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Annullare la prenotazione?",
+      "intro": "La prenotazione presso {restaurantName} sta per essere annullata. Il ristorante verrà avvisato immediatamente.",
+      "partySize": "Tavolo per {partySize}",
+      "confirmButton": "Sì, annulla la prenotazione",
+      "keepButton": "No, mantieni la prenotazione",
+      "cancelling": "Annullamento in corso…",
+      "successTitle": "Prenotazione annullata",
+      "successBody": "La prenotazione presso {restaurantName} è stata annullata e il ristorante è stato avvisato. Alla prossima occasione!",
+      "alreadyCancelledTitle": "Già gestita",
+      "alreadyCancelledBody": "Questa prenotazione è già stata annullata o aggiornata dal ristorante: non serve fare altro.",
+      "invalidLinkTitle": "Questo link non è valido",
+      "invalidLinkBody": "Questo link di annullamento non è valido o non funziona più. Per modificare una prenotazione, contattare direttamente il ristorante.",
+      "tooLateBody": "Questa prenotazione non può più essere annullata online: contattare direttamente {restaurantName}.",
+      "linkedOrderBody": "Questa prenotazione fa parte di un ordine. Per annullarla, utilizzare il link di annullamento presente nell'email di conferma dell'ordine oppure contattare il ristorante.",
+      "depositNote": "Per questa prenotazione è stato versato un deposito. L'annullamento da qui non ne comporta il rimborso automatico: per il deposito, contattare direttamente il ristorante.",
+      "genericError": "Qualcosa è andato storto. Si prega di riprovare."
+    },
     "accountPage": {
       "backTo": "Torna a {name}",
       "greeting": "Ciao, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Ordina di nuovo"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Per annullare questo ordine, effettuare l'accesso oppure chiamare il ristorante.",
+      "cancelErrorInvalidLink": "Questo link di annullamento non è valido. Utilizzare il link presente nell'email di conferma oppure chiamare il ristorante.",
+      "cancelErrorAccepted": "Il ristorante ha già accettato l'ordine. Per annullarlo, chiamare direttamente il locale.",
+      "cancelErrorGone": "Questo ordine non può più essere annullato.",
       "stepPendingLabel": "Ordine ricevuto",
       "stepPendingDesc": "Il tuo ordine è in attesa di conferma",
       "stepAcceptedLabel": "Accettato",

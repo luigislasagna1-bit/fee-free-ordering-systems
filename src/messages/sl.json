@@ -621,6 +621,7 @@
     "emailRequired": "E-pošta je obvezna"
   },
   "kitchen": {
+    "cancelledByCustomer": "Preklicala stranka",
     "title": "Kitchen Order App",
     "newOrders": "Nova naročila",
     "inProgress": "V pripravi",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Če tega niste zahtevali, lahko to e-pošto varno prezrete."
     },
     "orderConfirmed": {
+      "closedNote": "Restavracija je trenutno zaprta — tvoje naročilo čaka v vrsti in obvestilo prejmeš takoj, ko odprejo.",
+      "cancelNote": "Če se zgodi kaj nepričakovanega, lahko naročilo še vedno prekličeš tukaj.",
       "subject": "Naročilo #{orderNumber} prejeto — čaka na potrditev",
       "title": "Naročilo prejeto",
       "greeting": "Pozdravljeni, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Odpri admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Tvoje naročilo je preklicano",
+      "cancelledByCustomerBody": "Tvoje naročilo je preklicano — restavracija je obveščena, naj ga ne pripravi. Če si premisliš, lahko kadar koli oddaš novo naročilo.",
       "subject": "Posodobitev naročila #{orderNumber}",
       "title": "Posodobitev naročila",
       "body": "Vaše naročilo #{orderNumber} je zdaj {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Pošlje se mesečno"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Tvoja rezervacija je preklicana",
+      "headerTitleCancelled": "Rezervacija preklicana",
+      "introCancelled": "Tvoja rezervacija v restavraciji {restaurantName} je preklicana — restavracija je obveščena in miza je spet na voljo.",
+      "closingCancelled": "Če si premisliš, lahko kadar koli znova rezerviraš — lepo te bomo sprejeli.",
+      "badgeCancelled": "Preklicano",
+      "depositContactNote": "Za to rezervacijo je bila plačana ara — glede are se obrni neposredno na restavracijo.",
+      "cancelNote": "Če se tvoji načrti spremenijo, lahko rezervacijo prekličeš tukaj.",
       "subject": "Rezervacija potrjena",
       "titleConfirmed": "Vaša rezervacija je potrjena",
       "titlePending": "Zahteva za rezervacijo prejeta",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Zamujeno"
     },
     "newReservation": {
+      "subjectCancelled": "Gost je preklical rezervacijo — {restaurant}",
       "subject": "Nova rezervacija — {restaurant}",
       "title": "Nova rezervacija {status}",
       "body": "{customer} je zahteval rezervacijo za {party} gostov dne {date} ob {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Dostava"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Želiš preklicati rezervacijo?",
+      "intro": "Rezervacijo v restavraciji {restaurantName} nameravaš preklicati. Restavracija bo takoj obveščena.",
+      "partySize": "Število oseb: {partySize}",
+      "confirmButton": "Da, prekliči mojo rezervacijo",
+      "keepButton": "Ne, obdrži mojo rezervacijo",
+      "cancelling": "Preklicevanje…",
+      "successTitle": "Rezervacija preklicana",
+      "successBody": "Tvoja rezervacija v restavraciji {restaurantName} je preklicana in restavracija je obveščena. Upamo, da se vidimo kdaj drugič!",
+      "alreadyCancelledTitle": "Že urejeno",
+      "alreadyCancelledBody": "Ta rezervacija je bila že preklicana ali pa jo je restavracija spremenila — nadaljnje ukrepanje ni potrebno.",
+      "invalidLinkTitle": "Ta povezava ni veljavna",
+      "invalidLinkBody": "Ta povezava za preklic je neveljavna ali ne deluje več. Če želiš spremeniti rezervacijo, se obrni neposredno na restavracijo.",
+      "tooLateBody": "Te rezervacije ni več mogoče preklicati prek spleta — obrni se neposredno na restavracijo {restaurantName}.",
+      "linkedOrderBody": "Ta rezervacija je del naročila. Za preklic uporabi povezavo za preklic v e-poštnem sporočilu s potrditvijo naročila ali se obrni na restavracijo.",
+      "depositNote": "Za to rezervacijo je bila plačana ara. Preklic tukaj je ne vrne samodejno — glede are se obrni na restavracijo.",
+      "genericError": "Nekaj je šlo narobe. Poskusi znova."
+    },
     "accountPage": {
       "backTo": "Nazaj na {name}",
       "greeting": "Zdravo, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Naroči ponovno"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Za preklic tega naročila se prijavi ali pokliči restavracijo.",
+      "cancelErrorInvalidLink": "Ta povezava za preklic ni veljavna. Uporabi povezavo iz e-poštnega sporočila s potrditvijo ali pokliči restavracijo.",
+      "cancelErrorAccepted": "Restavracija je tvoje naročilo že sprejela. Za preklic jo pokliči neposredno.",
+      "cancelErrorGone": "Tega naročila ni več mogoče preklicati.",
       "stepPendingLabel": "Naročilo prejeto",
       "stepPendingDesc": "Vaše naročilo čaka na potrditev",
       "stepAcceptedLabel": "Sprejeto",

@@ -621,6 +621,7 @@
     "emailRequired": "이메일은 필수입니다"
   },
   "kitchen": {
+    "cancelledByCustomer": "고객 직접 취소",
     "title": "Kitchen Order App",
     "newOrders": "신규 주문",
     "inProgress": "진행 중",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "본인이 요청하지 않은 경우 이 이메일을 무시하셔도 됩니다."
     },
     "orderConfirmed": {
+      "closedNote": "지금은 매장 영업시간이 아니에요 — 주문은 접수 대기 중이며, 매장이 문을 열면 바로 소식을 알려 드릴게요.",
+      "cancelNote": "갑자기 사정이 생기면 여기에서 주문을 취소하실 수 있어요.",
       "subject": "주문 #{orderNumber} 접수 — 확인 대기 중",
       "title": "주문 접수됨",
       "greeting": "안녕하세요, {customerName}님,",
@@ -5277,6 +5280,8 @@
       "openAdmin": "관리자 열기"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "주문이 취소되었습니다",
+      "cancelledByCustomerBody": "주문을 취소하셨어요 — 매장에는 조리하지 않도록 알려 드렸습니다. 마음이 바뀌면 언제든 새로 주문하실 수 있어요.",
       "subject": "주문 #{orderNumber} 업데이트",
       "title": "주문 업데이트",
       "body": "주문 #{orderNumber}의 상태가 {status}(으)로 변경되었습니다.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "매월 발송"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "예약이 취소되었습니다",
+      "headerTitleCancelled": "예약 취소 완료",
+      "introCancelled": "{restaurantName} 예약을 취소하셨어요 — 매장에 알림이 전달되었고, 테이블은 다시 예약 가능한 상태가 되었습니다.",
+      "closingCancelled": "마음이 바뀌면 언제든 다시 예약해 주세요. 늘 환영합니다.",
+      "badgeCancelled": "취소됨",
+      "depositContactNote": "이 예약에는 보증금을 결제하셨어요 — 보증금 관련 문의는 매장에 직접 연락해 주세요.",
+      "cancelNote": "일정이 바뀌면 여기에서 예약을 취소하실 수 있어요.",
       "subject": "예약 확정",
       "titleConfirmed": "예약이 확정되었습니다",
       "titlePending": "예약 요청이 접수되었습니다",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "놓침"
     },
     "newReservation": {
+      "subjectCancelled": "고객이 예약을 취소했습니다 — {restaurant}",
       "subject": "새 예약 — {restaurant}",
       "title": "새 예약 {status}",
       "body": "{customer}님이 {date} {time}에 {party}인 예약을 요청했습니다.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "배달"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "예약을 취소하시겠어요?",
+      "intro": "{restaurantName} 예약을 취소하려고 합니다. 매장에 바로 알림이 전달됩니다.",
+      "partySize": "{partySize}명",
+      "confirmButton": "네, 예약을 취소할게요",
+      "keepButton": "아니요, 예약을 유지할게요",
+      "cancelling": "취소하는 중…",
+      "successTitle": "예약 취소 완료",
+      "successBody": "{restaurantName} 예약이 취소되었고 매장에 알림이 전달되었습니다. 다음에 꼭 다시 뵙기를 바랄게요!",
+      "alreadyCancelledTitle": "이미 처리되었어요",
+      "alreadyCancelledBody": "이 예약은 이미 취소되었거나 매장에서 변경했어요 — 추가로 하실 일은 없습니다.",
+      "invalidLinkTitle": "유효하지 않은 링크예요",
+      "invalidLinkBody": "이 취소 링크는 유효하지 않거나 더 이상 사용할 수 없어요. 예약을 변경하시려면 매장에 직접 연락해 주세요.",
+      "tooLateBody": "이 예약은 더 이상 온라인으로 취소할 수 없어요 — {restaurantName}에 직접 연락해 주세요.",
+      "linkedOrderBody": "이 예약은 주문에 포함되어 있어요. 취소하시려면 주문 확인 이메일의 취소 링크를 사용하시거나 매장에 연락해 주세요.",
+      "depositNote": "이 예약에는 보증금을 결제하셨어요. 여기에서 취소해도 보증금이 자동으로 환불되지는 않아요 — 보증금 관련 문의는 매장에 연락해 주세요.",
+      "genericError": "문제가 발생했어요. 다시 시도해 주세요."
+    },
     "accountPage": {
       "backTo": "{name}으로 돌아가기",
       "greeting": "안녕하세요, {name}님",
@@ -6316,6 +6347,10 @@
       "orderAgain": "다시 주문하기"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "이 주문을 취소하려면 로그인하시거나 매장에 전화해 주세요.",
+      "cancelErrorInvalidLink": "이 취소 링크는 유효하지 않아요. 확인 이메일에 있는 링크를 사용하시거나 매장에 전화해 주세요.",
+      "cancelErrorAccepted": "매장에서 이미 주문을 접수했어요. 취소하시려면 매장에 직접 전화해 주세요.",
+      "cancelErrorGone": "이 주문은 더 이상 취소할 수 없어요.",
       "stepPendingLabel": "주문 접수",
       "stepPendingDesc": "주문이 확인을 기다리고 있습니다",
       "stepAcceptedLabel": "수락됨",

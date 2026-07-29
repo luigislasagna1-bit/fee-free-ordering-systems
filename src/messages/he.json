@@ -621,6 +621,7 @@
     "emailRequired": "נדרשת כתובת אימייל"
   },
   "kitchen": {
+    "cancelledByCustomer": "בוטלה על ידי הלקוח",
     "title": "Kitchen Order App",
     "newOrders": "הזמנות חדשות",
     "inProgress": "בטיפול",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "אם לא ביקשת זאת, תוכל להתעלם בבטחה מאימייל זה."
     },
     "orderConfirmed": {
+      "closedNote": "המסעדה סגורה כרגע — ההזמנה שלך ממתינה בתור ותקבלו עדכון ברגע שהמסעדה תיפתח.",
+      "cancelNote": "אם קורה משהו לא צפוי, עדיין אפשר לבטל את ההזמנה כאן.",
       "subject": "הזמנה #{orderNumber} התקבלה — ממתינה לאישור",
       "title": "הזמנה התקבלה",
       "greeting": "שלום {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "פתח ניהול"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "ההזמנה שלך בוטלה",
+      "cancelledByCustomerBody": "ביטלת את ההזמנה — המסעדה קיבלה הודעה שלא להכין אותה. אם שינית את דעתך, תמיד אפשר לבצע הזמנה חדשה.",
       "subject": "עדכון על הזמנה #{orderNumber}",
       "title": "עדכון הזמנה",
       "body": "הזמנתך #{orderNumber} כעת {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "נשלח מדי חודש"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "הזמנת השולחן שלך בוטלה",
+      "headerTitleCancelled": "הזמנת השולחן בוטלה",
+      "introCancelled": "ביטלת את הזמנת השולחן שלך ב-{restaurantName} — המסעדה קיבלה עדכון והשולחן שלך שוחרר.",
+      "closingCancelled": "אם שינית את דעתך, אפשר כמובן להזמין שולחן שוב בכל עת.",
+      "badgeCancelled": "בוטלה",
+      "depositContactNote": "שילמת פיקדון עבור ההזמנה הזו — לגבי הפיקדון, יש לפנות ישירות למסעדה.",
+      "cancelNote": "אם התוכניות שלך משתנות, אפשר לבטל את הזמנת השולחן כאן.",
       "subject": "הזמנת שולחן אושרה",
       "titleConfirmed": "הזמנת השולחן שלך אושרה",
       "titlePending": "בקשת הזמנת שולחן התקבלה",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "הוחמצה"
     },
     "newReservation": {
+      "subjectCancelled": "הזמנת שולחן בוטלה על ידי הלקוח — {restaurant}",
       "subject": "הזמנת שולחן חדשה — {restaurant}",
       "title": "הזמנת שולחן חדשה {status}",
       "body": "{customer} ביקש הזמנת שולחן ל-{party} אורחים ב-{date} בשעה {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "משלוח"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "לבטל את הזמנת השולחן שלך?",
+      "intro": "פעולה זו תבטל את הזמנת השולחן שלך ב-{restaurantName}. המסעדה תקבל עדכון באופן מיידי.",
+      "partySize": "{partySize} סועדים",
+      "confirmButton": "כן, לבטל את ההזמנה",
+      "keepButton": "לא, להשאיר את ההזמנה",
+      "cancelling": "מבטלים…",
+      "successTitle": "הזמנת השולחן בוטלה",
+      "successBody": "הזמנת השולחן שלך ב-{restaurantName} בוטלה והמסעדה קיבלה עדכון. נשמח לראותך בפעם אחרת!",
+      "alreadyCancelledTitle": "כבר טופל",
+      "alreadyCancelledBody": "ההזמנה הזו כבר בוטלה או עודכנה על ידי המסעדה — אין צורך בפעולה נוספת.",
+      "invalidLinkTitle": "הקישור אינו תקין",
+      "invalidLinkBody": "קישור הביטול הזה אינו תקין או שכבר אינו פעיל. כדי לשנות הזמנה, יש לפנות ישירות למסעדה.",
+      "tooLateBody": "לא ניתן עוד לבטל את ההזמנה הזו אונליין — יש לפנות ישירות אל {restaurantName}.",
+      "linkedOrderBody": "הזמנת השולחן הזו היא חלק מהזמנת אוכל. כדי לבטל אותה, יש להשתמש בקישור הביטול שבאימייל אישור ההזמנה, או לפנות למסעדה.",
+      "depositNote": "שילמת פיקדון עבור ההזמנה הזו. ביטול כאן אינו מחזיר אותו אוטומטית — לגבי הפיקדון, יש לפנות למסעדה.",
+      "genericError": "משהו השתבש. יש לנסות שוב."
+    },
     "accountPage": {
       "backTo": "חזרה אל {name}",
       "greeting": "שלום, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "הזמן שוב"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "יש להתחבר כדי לבטל את ההזמנה, או להתקשר למסעדה.",
+      "cancelErrorInvalidLink": "קישור הביטול הזה אינו תקין. יש להשתמש בקישור מאימייל האישור, או להתקשר למסעדה.",
+      "cancelErrorAccepted": "המסעדה כבר אישרה את ההזמנה שלך. כדי לבטל, יש להתקשר אליה ישירות.",
+      "cancelErrorGone": "לא ניתן עוד לבטל את ההזמנה הזו.",
       "stepPendingLabel": "ההזמנה התקבלה",
       "stepPendingDesc": "הזמנתך ממתינה לאישור",
       "stepAcceptedLabel": "אושרה",

@@ -621,6 +621,7 @@
     "emailRequired": "E-pasts ir obligāts"
   },
   "kitchen": {
+    "cancelledByCustomer": "Atcēla klients",
     "title": "Kitchen Order App",
     "newOrders": "Jauni pasūtījumi",
     "inProgress": "Gatavošanā",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Ja jūs to neprasījāt, varat droši ignorēt šo e-pastu."
     },
     "orderConfirmed": {
+      "closedNote": "Restorāns šobrīd ir slēgts — tavs pasūtījums ir rindā, un saņemsi ziņu, tiklīdz restorāns atvērsies.",
+      "cancelNote": "Ja gadās kas neparedzēts, savu pasūtījumu vari atcelt šeit.",
       "subject": "Pasūtījums #{orderNumber} saņemts — gaida apstiprinājumu",
       "title": "Pasūtījums saņemts",
       "greeting": "Sveiki, {customerName}!",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Atvērt administratoru"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Tavs pasūtījums ir atcelts",
+      "cancelledByCustomerBody": "Tu atcēli savu pasūtījumu — restorānam ir paziņots to negatavot. Ja pārdomāsi, vienmēr vari veikt jaunu pasūtījumu.",
       "subject": "Atjauninājums par pasūtījumu #{orderNumber}",
       "title": "Pasūtījuma atjauninājums",
       "body": "Jūsu pasūtījums #{orderNumber} tagad ir {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Tiek sūtīts katru mēnesi"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Tava rezervācija ir atcelta",
+      "headerTitleCancelled": "Rezervācija atcelta",
+      "introCancelled": "Tu atcēli savu rezervāciju restorānā {restaurantName} — restorānam ir paziņots, un tavs galdiņš ir atbrīvots.",
+      "closingCancelled": "Ja pārdomāsi, vienmēr laipni aicinām rezervēt vēlreiz.",
+      "badgeCancelled": "Atcelta",
+      "depositContactNote": "Par šo rezervāciju tu iemaksāji depozītu — par depozītu, lūdzu, sazinies tieši ar restorānu.",
+      "cancelNote": "Ja plāni mainās, savu rezervāciju vari atcelt šeit.",
       "subject": "Rezervācija apstiprināta",
       "titleConfirmed": "Jūsu rezervācija ir apstiprināta",
       "titlePending": "Rezervācijas pieprasījums saņemts",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Nokavēts"
     },
     "newReservation": {
+      "subjectCancelled": "Klients atcēla rezervāciju — {restaurant}",
       "subject": "Jauna rezervācija — {restaurant}",
       "title": "Jauna rezervācija {status}",
       "body": "{customer} pieprasīja rezervāciju {party} viesiem {date} plkst. {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Piegāde"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Atcelt rezervāciju?",
+      "intro": "Tu gatavojies atcelt savu rezervāciju restorānā {restaurantName}. Restorāns tiks informēts nekavējoties.",
+      "partySize": "Personu skaits: {partySize}",
+      "confirmButton": "Jā, atcelt manu rezervāciju",
+      "keepButton": "Nē, paturēt rezervāciju",
+      "cancelling": "Atceļam…",
+      "successTitle": "Rezervācija atcelta",
+      "successBody": "Tava rezervācija restorānā {restaurantName} ir atcelta, un restorāns ir informēts. Ceram tevi redzēt citreiz!",
+      "alreadyCancelledTitle": "Jau nokārtots",
+      "alreadyCancelledBody": "Šī rezervācija jau ir atcelta vai restorāns to ir mainījis — nekas vairāk nav jādara.",
+      "invalidLinkTitle": "Šī saite nav derīga",
+      "invalidLinkBody": "Šī atcelšanas saite nav derīga vai vairs nedarbojas. Ja vēlies mainīt rezervāciju, lūdzu, sazinies tieši ar restorānu.",
+      "tooLateBody": "Šo rezervāciju tiešsaistē vairs nevar atcelt — lūdzu, sazinies tieši ar {restaurantName}.",
+      "linkedOrderBody": "Šī rezervācija ir daļa no pasūtījuma. Lai to atceltu, izmanto atcelšanas saiti pasūtījuma apstiprinājuma e-pastā vai sazinies ar restorānu.",
+      "depositNote": "Par šo rezervāciju tu iemaksāji depozītu. Atcelšana šeit to automātiski neatmaksā — par depozītu, lūdzu, sazinies ar restorānu.",
+      "genericError": "Kaut kas nogāja greizi. Lūdzu, mēģini vēlreiz."
+    },
     "accountPage": {
       "backTo": "Atpakaļ uz {name}",
       "greeting": "Sveiks, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Pasūtīt vēlreiz"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Lai atceltu šo pasūtījumu, pieraksties vai piezvani restorānam.",
+      "cancelErrorInvalidLink": "Šī atcelšanas saite nav derīga. Lūdzu, izmanto saiti no apstiprinājuma e-pasta vai piezvani restorānam.",
+      "cancelErrorAccepted": "Restorāns tavu pasūtījumu jau ir pieņēmis. Lai to atceltu, lūdzu, piezvani restorānam tieši.",
+      "cancelErrorGone": "Šo pasūtījumu vairs nevar atcelt.",
       "stepPendingLabel": "Pasūtījums saņemts",
       "stepPendingDesc": "Jūsu pasūtījums gaida apstiprinājumu",
       "stepAcceptedLabel": "Apstiprināts",

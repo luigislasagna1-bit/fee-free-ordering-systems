@@ -621,6 +621,7 @@
     "emailRequired": "E-mailadresse er påkrævet"
   },
   "kitchen": {
+    "cancelledByCustomer": "Annulleret af kunden",
     "title": "Kitchen Order App",
     "newOrders": "Nye ordrer",
     "inProgress": "I gang",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Hvis du ikke har anmodet om dette, kan du roligt ignorere denne e-mail."
     },
     "orderConfirmed": {
+      "closedNote": "Restauranten er lukket lige nu — din bestilling er i kø, og du får en opdatering, så snart de åbner.",
+      "cancelNote": "Hvis der opstår noget uventet, kan du stadig annullere din bestilling her.",
       "subject": "Ordre #{orderNumber} modtaget — afventer bekræftelse",
       "title": "Ordre modtaget",
       "greeting": "Hej {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Åbn admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Din bestilling er annulleret",
+      "cancelledByCustomerBody": "Du har annulleret din bestilling — restauranten har fået besked om ikke at tilberede den. Hvis du ombestemmer dig, kan du altid afgive en ny bestilling.",
       "subject": "Opdatering om ordre #{orderNumber}",
       "title": "Ordreopdatering",
       "body": "Din ordre #{orderNumber} er nu {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Sendes månedligt"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Din reservation er annulleret",
+      "headerTitleCancelled": "Reservation annulleret",
+      "introCancelled": "Du har annulleret din reservation hos {restaurantName} — restauranten har fået besked, og dit bord er frigivet.",
+      "closingCancelled": "Hvis du ombestemmer dig, er du altid velkommen til at booke igen.",
+      "badgeCancelled": "Annulleret",
+      "depositContactNote": "Du har betalt et depositum for denne reservation — kontakt restauranten direkte angående dit depositum.",
+      "cancelNote": "Hvis dine planer ændrer sig, kan du annullere din reservation her.",
       "subject": "Reservation bekræftet",
       "titleConfirmed": "Din reservation er bekræftet",
       "titlePending": "Reservationsanmodning modtaget",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Mistet"
     },
     "newReservation": {
+      "subjectCancelled": "Reservation annulleret af gæsten — {restaurant}",
       "subject": "Ny reservation — {restaurant}",
       "title": "Ny reservation {status}",
       "body": "{customer} anmodede om en reservation til {party} gæster den {date} kl. {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Levering"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Vil du annullere din reservation?",
+      "intro": "Du er ved at annullere din reservation hos {restaurantName}. Restauranten får besked med det samme.",
+      "partySize": "Bord til {partySize}",
+      "confirmButton": "Ja, annuller min reservation",
+      "keepButton": "Nej, behold min reservation",
+      "cancelling": "Annullerer…",
+      "successTitle": "Reservation annulleret",
+      "successBody": "Din reservation hos {restaurantName} er annulleret, og restauranten har fået besked. Vi håber at se dig en anden gang!",
+      "alreadyCancelledTitle": "Allerede håndteret",
+      "alreadyCancelledBody": "Denne reservation er allerede blevet annulleret eller opdateret af restauranten — du behøver ikke gøre mere.",
+      "invalidLinkTitle": "Dette link er ikke gyldigt",
+      "invalidLinkBody": "Dette annulleringslink er ugyldigt eller virker ikke længere. Hvis du vil ændre en reservation, så kontakt restauranten direkte.",
+      "tooLateBody": "Denne reservation kan ikke længere annulleres online — kontakt venligst {restaurantName} direkte.",
+      "linkedOrderBody": "Denne reservation er en del af en bestilling. Brug annulleringslinket i din ordrebekræftelsesmail for at annullere den, eller kontakt restauranten.",
+      "depositNote": "Du har betalt et depositum for denne reservation. Annullering her refunderer det ikke automatisk — kontakt restauranten angående dit depositum.",
+      "genericError": "Noget gik galt. Prøv igen."
+    },
     "accountPage": {
       "backTo": "Tilbage til {name}",
       "greeting": "Hej, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Bestil igen"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Log ind for at annullere bestillingen, eller ring til restauranten.",
+      "cancelErrorInvalidLink": "Dette annulleringslink er ikke gyldigt. Brug linket fra din bekræftelsesmail, eller ring til restauranten.",
+      "cancelErrorAccepted": "Restauranten har allerede accepteret din bestilling. Ring direkte til dem for at annullere.",
+      "cancelErrorGone": "Denne bestilling kan ikke længere annulleres.",
       "stepPendingLabel": "Bestilling modtaget",
       "stepPendingDesc": "Din bestilling afventer bekræftelse",
       "stepAcceptedLabel": "Accepteret",

@@ -621,6 +621,7 @@
     "emailRequired": "Adres e-mail jest wymagany"
   },
   "kitchen": {
+    "cancelledByCustomer": "Anulowane przez klienta",
     "title": "Kitchen Order App",
     "newOrders": "Nowe zamówienia",
     "inProgress": "W przygotowaniu",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Jeśli nie prosiłeś o tę akcję, możesz bezpiecznie zignorować ten e-mail."
     },
     "orderConfirmed": {
+      "closedNote": "Restauracja jest w tej chwili zamknięta — Twoje zamówienie czeka w kolejce i damy Ci znać, gdy tylko restauracja znów będzie otwarta.",
+      "cancelNote": "Jeśli wypadnie Ci coś niespodziewanego, wciąż możesz anulować zamówienie tutaj.",
       "subject": "Zamówienie #{orderNumber} otrzymane — oczekuje na potwierdzenie",
       "title": "Zamówienie otrzymane",
       "greeting": "Witaj, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Otwórz panel admina"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Twoje zamówienie zostało anulowane",
+      "cancelledByCustomerBody": "Twoje zamówienie zostało anulowane — restauracja została poinformowana, żeby go nie przygotowywać. Jeśli zmienisz zdanie, zawsze możesz złożyć nowe zamówienie.",
       "subject": "Aktualizacja zamówienia #{orderNumber}",
       "title": "Aktualizacja zamówienia",
       "body": "Twoje zamówienie #{orderNumber} ma teraz status: {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Wysyłane co miesiąc"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Twoja rezerwacja została anulowana",
+      "headerTitleCancelled": "Rezerwacja anulowana",
+      "introCancelled": "Twoja rezerwacja w restauracji {restaurantName} została anulowana — restauracja została powiadomiona, a stolik zwolniony.",
+      "closingCancelled": "Jeśli zmienisz zdanie, zawsze możesz zarezerwować stolik ponownie.",
+      "badgeCancelled": "Anulowana",
+      "depositContactNote": "Za tę rezerwację wpłacono zadatek — w sprawie zadatku skontaktuj się bezpośrednio z restauracją.",
+      "cancelNote": "Jeśli Twoje plany się zmienią, możesz anulować rezerwację tutaj.",
       "subject": "Rezerwacja potwierdzona",
       "titleConfirmed": "Twoja rezerwacja jest potwierdzona",
       "titlePending": "Prośba o rezerwację przyjęta",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Przegapione"
     },
     "newReservation": {
+      "subjectCancelled": "Rezerwacja anulowana przez klienta — {restaurant}",
       "subject": "Nowa rezerwacja — {restaurant}",
       "title": "Nowa rezerwacja {status}",
       "body": "{customer} poprosił o rezerwację dla {party} gości w dniu {date} o godzinie {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Dostawa"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Anulować rezerwację?",
+      "intro": "Za chwilę anulujesz swoją rezerwację w restauracji {restaurantName}. Restauracja zostanie od razu powiadomiona.",
+      "partySize": "Liczba osób: {partySize}",
+      "confirmButton": "Tak, anuluj moją rezerwację",
+      "keepButton": "Nie, zachowaj moją rezerwację",
+      "cancelling": "Anulowanie…",
+      "successTitle": "Rezerwacja anulowana",
+      "successBody": "Twoja rezerwacja w restauracji {restaurantName} została anulowana, a restauracja powiadomiona. Mamy nadzieję, że zobaczymy się innym razem!",
+      "alreadyCancelledTitle": "Już załatwione",
+      "alreadyCancelledBody": "Ta rezerwacja została już anulowana lub zmieniona przez restaurację — nie musisz nic więcej robić.",
+      "invalidLinkTitle": "Ten link jest nieprawidłowy",
+      "invalidLinkBody": "Ten link do anulowania jest nieprawidłowy lub już nie działa. Jeśli chcesz zmienić rezerwację, skontaktuj się bezpośrednio z restauracją.",
+      "tooLateBody": "Tej rezerwacji nie można już anulować online — skontaktuj się bezpośrednio z restauracją {restaurantName}.",
+      "linkedOrderBody": "Ta rezerwacja jest częścią zamówienia. Aby ją anulować, użyj linku do anulowania z e-maila z potwierdzeniem zamówienia albo skontaktuj się z restauracją.",
+      "depositNote": "Za tę rezerwację wpłacono zadatek. Anulowanie tutaj nie oznacza automatycznego zwrotu — w sprawie zadatku skontaktuj się z restauracją.",
+      "genericError": "Coś poszło nie tak. Spróbuj ponownie."
+    },
     "accountPage": {
       "backTo": "Powrót do {name}",
       "greeting": "Cześć, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Zamów ponownie"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Zaloguj się, aby anulować to zamówienie, albo zadzwoń do restauracji.",
+      "cancelErrorInvalidLink": "Ten link do anulowania jest nieprawidłowy. Użyj linku z e-maila z potwierdzeniem albo zadzwoń do restauracji.",
+      "cancelErrorAccepted": "Restauracja przyjęła już Twoje zamówienie. Aby je anulować, zadzwoń bezpośrednio do restauracji.",
+      "cancelErrorGone": "Tego zamówienia nie można już anulować.",
       "stepPendingLabel": "Zamówienie przyjęte",
       "stepPendingDesc": "Twoje zamówienie czeka na potwierdzenie",
       "stepAcceptedLabel": "Potwierdzone",

@@ -621,6 +621,7 @@
     "emailRequired": "O e-mail é obrigatório"
   },
   "kitchen": {
+    "cancelledByCustomer": "Cancelado pelo cliente",
     "title": "Kitchen Order App",
     "newOrders": "Novos Pedidos",
     "inProgress": "Em Preparo",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Se você não solicitou isso, pode ignorar este e-mail com segurança."
     },
     "orderConfirmed": {
+      "closedNote": "O restaurante está fechado no momento — seu pedido fica na fila e você receberá uma atualização assim que ele abrir.",
+      "cancelNote": "Se acontecer algum imprevisto, você ainda pode cancelar seu pedido aqui.",
       "subject": "Pedido #{orderNumber} recebido — aguardando confirmação",
       "title": "Pedido recebido",
       "greeting": "Olá, {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Abrir painel"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Seu pedido foi cancelado",
+      "cancelledByCustomerBody": "Você cancelou seu pedido — o restaurante foi avisado para não prepará-lo. Se mudar de ideia, é só fazer um novo pedido.",
       "subject": "Atualização do pedido #{orderNumber}",
       "title": "Atualização do pedido",
       "body": "Seu pedido #{orderNumber} está agora {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Enviado mensalmente"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Sua reserva foi cancelada",
+      "headerTitleCancelled": "Reserva cancelada",
+      "introCancelled": "Você cancelou sua reserva em {restaurantName} — o restaurante foi avisado e sua mesa foi liberada.",
+      "closingCancelled": "Se mudar de ideia, você pode reservar de novo quando quiser.",
+      "badgeCancelled": "Cancelada",
+      "depositContactNote": "Você pagou um depósito por esta reserva — entre em contato diretamente com o restaurante para tratar do seu depósito.",
+      "cancelNote": "Se seus planos mudarem, você pode cancelar sua reserva aqui.",
       "subject": "Reserva confirmada",
       "titleConfirmed": "Sua reserva está confirmada",
       "titlePending": "Solicitação de reserva recebida",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Perdido"
     },
     "newReservation": {
+      "subjectCancelled": "Reserva cancelada pelo cliente — {restaurant}",
       "subject": "Nova reserva — {restaurant}",
       "title": "Nova reserva {status}",
       "body": "{customer} solicitou uma reserva para {party} pessoas em {date} às {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Entrega"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Cancelar sua reserva?",
+      "intro": "Você está prestes a cancelar sua reserva em {restaurantName}. O restaurante será avisado imediatamente.",
+      "partySize": "Mesa para {partySize}",
+      "confirmButton": "Sim, cancelar minha reserva",
+      "keepButton": "Não, manter minha reserva",
+      "cancelling": "Cancelando…",
+      "successTitle": "Reserva cancelada",
+      "successBody": "Sua reserva em {restaurantName} foi cancelada e o restaurante foi avisado. Esperamos ver você em uma próxima oportunidade!",
+      "alreadyCancelledTitle": "Já resolvido",
+      "alreadyCancelledBody": "Esta reserva já foi cancelada ou atualizada pelo restaurante — você não precisa fazer mais nada.",
+      "invalidLinkTitle": "Este link não é válido",
+      "invalidLinkBody": "Este link de cancelamento é inválido ou não funciona mais. Se precisar alterar uma reserva, entre em contato diretamente com o restaurante.",
+      "tooLateBody": "Esta reserva não pode mais ser cancelada online — entre em contato diretamente com {restaurantName}.",
+      "linkedOrderBody": "Esta reserva faz parte de um pedido. Para cancelá-la, use o link de cancelamento no e-mail de confirmação do pedido ou entre em contato com o restaurante.",
+      "depositNote": "Você pagou um depósito por esta reserva. Cancelar aqui não gera reembolso automático — entre em contato com o restaurante para tratar do seu depósito.",
+      "genericError": "Algo deu errado. Tente novamente."
+    },
     "accountPage": {
       "backTo": "Voltar para {name}",
       "greeting": "Olá, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Pedir novamente"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Faça login para cancelar este pedido ou ligue para o restaurante.",
+      "cancelErrorInvalidLink": "Este link de cancelamento não é válido. Use o link do seu e-mail de confirmação ou ligue para o restaurante.",
+      "cancelErrorAccepted": "O restaurante já aceitou seu pedido. Ligue diretamente para o restaurante para cancelar.",
+      "cancelErrorGone": "Este pedido não pode mais ser cancelado.",
       "stepPendingLabel": "Pedido Recebido",
       "stepPendingDesc": "Seu pedido está aguardando confirmação",
       "stepAcceptedLabel": "Aceito",

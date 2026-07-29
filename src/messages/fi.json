@@ -621,6 +621,7 @@
     "emailRequired": "Sähköpostiosoite vaaditaan"
   },
   "kitchen": {
+    "cancelledByCustomer": "Asiakas peruutti",
     "title": "Kitchen Order App",
     "newOrders": "Uudet tilaukset",
     "inProgress": "Käynnissä",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Jos et pyytänyt tätä, voit jättää tämän sähköpostin huomiotta."
     },
     "orderConfirmed": {
+      "closedNote": "Ravintola on juuri nyt suljettu — tilauksesi on jonossa ja saat päivityksen heti, kun ravintola aukeaa.",
+      "cancelNote": "Jos jotain yllättävää tulee eteen, voit silti peruuttaa tilauksesi täältä.",
       "subject": "Tilaus #{orderNumber} vastaanotettu — odottaa vahvistusta",
       "title": "Tilaus vastaanotettu",
       "greeting": "Hei {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Avaa hallintapaneeli"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Tilauksesi on peruutettu",
+      "cancelledByCustomerBody": "Peruutit tilauksesi — ravintolalle on ilmoitettu, ettei sitä valmisteta. Jos muutat mielesi, voit aina tehdä uuden tilauksen.",
       "subject": "Päivitys tilaukseen #{orderNumber}",
       "title": "Tilauksen päivitys",
       "body": "Tilauksesi #{orderNumber} on nyt tilassa {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Lähetetään kuukausittain"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Varauksesi on peruutettu",
+      "headerTitleCancelled": "Varaus peruutettu",
+      "introCancelled": "Peruutit varauksesi ravintolassa {restaurantName} — ravintolalle on ilmoitettu ja pöytäsi on vapautettu.",
+      "closingCancelled": "Jos muutat mielesi, olet aina tervetullut varaamaan uudelleen.",
+      "badgeCancelled": "Peruutettu",
+      "depositContactNote": "Maksoit varauksesta ennakkomaksun — olethan ennakkomaksuun liittyen yhteydessä suoraan ravintolaan.",
+      "cancelNote": "Jos suunnitelmasi muuttuvat, voit peruuttaa varauksesi täältä.",
       "subject": "Varaus vahvistettu",
       "titleConfirmed": "Varauksesi on vahvistettu",
       "titlePending": "Varauspyyntö vastaanotettu",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Menetetty"
     },
     "newReservation": {
+      "subjectCancelled": "Asiakas peruutti varauksen — {restaurant}",
       "subject": "Uusi varaus — {restaurant}",
       "title": "Uusi varaus {status}",
       "body": "{customer} pyysi varausta {party} hengelle {date} kello {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Toimitus"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Perutaanko varauksesi?",
+      "intro": "Olet peruuttamassa varaustasi ravintolassa {restaurantName}. Ravintolalle ilmoitetaan heti.",
+      "partySize": "{partySize} hengen seurue",
+      "confirmButton": "Kyllä, peruuta varaukseni",
+      "keepButton": "Ei, säilytä varaukseni",
+      "cancelling": "Peruutetaan…",
+      "successTitle": "Varaus peruutettu",
+      "successBody": "Varauksesi ravintolassa {restaurantName} on peruutettu ja ravintolalle on ilmoitettu. Toivottavasti nähdään toisella kertaa!",
+      "alreadyCancelledTitle": "Jo hoidettu",
+      "alreadyCancelledBody": "Tämä varaus on jo peruutettu tai ravintola on muuttanut sitä — sinun ei tarvitse tehdä mitään.",
+      "invalidLinkTitle": "Tämä linkki ei ole voimassa",
+      "invalidLinkBody": "Tämä peruutuslinkki on virheellinen tai ei enää toimi. Jos haluat muuttaa varausta, ota yhteyttä suoraan ravintolaan.",
+      "tooLateBody": "Tätä varausta ei voi enää peruuttaa verkossa — otathan yhteyttä suoraan ravintolaan {restaurantName}.",
+      "linkedOrderBody": "Tämä varaus on osa tilausta. Peruuta se käyttämällä tilausvahvistussähköpostissa olevaa peruutuslinkkiä tai ota yhteyttä ravintolaan.",
+      "depositNote": "Maksoit varauksesta ennakkomaksun. Peruutus täällä ei palauta sitä automaattisesti — olethan ennakkomaksuun liittyen yhteydessä ravintolaan.",
+      "genericError": "Jotain meni pieleen. Yritä uudelleen."
+    },
     "accountPage": {
       "backTo": "Takaisin: {name}",
       "greeting": "Hei, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Tilaa uudelleen"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Kirjaudu sisään peruuttaaksesi tämän tilauksen tai soita ravintolaan.",
+      "cancelErrorInvalidLink": "Tämä peruutuslinkki ei ole voimassa. Käytä vahvistussähköpostissa olevaa linkkiä tai soita ravintolaan.",
+      "cancelErrorAccepted": "Ravintola on jo hyväksynyt tilauksesi. Soita ravintolaan suoraan, jos haluat peruuttaa sen.",
+      "cancelErrorGone": "Tätä tilausta ei voi enää peruuttaa.",
       "stepPendingLabel": "Tilaus vastaanotettu",
       "stepPendingDesc": "Tilauksesi odottaa vahvistusta",
       "stepAcceptedLabel": "Hyväksytty",

@@ -621,6 +621,7 @@
     "emailRequired": "E-postadress krävs"
   },
   "kitchen": {
+    "cancelledByCustomer": "Avbruten av kunden",
     "title": "Kitchen Order App",
     "newOrders": "Nya beställningar",
     "inProgress": "Pågår",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Om du inte begärde detta kan du lugnt ignorera det här e-postmeddelandet."
     },
     "orderConfirmed": {
+      "closedNote": "Restaurangen är stängd just nu — din beställning ligger i kö och du får en uppdatering så snart de öppnar.",
+      "cancelNote": "Om något oväntat dyker upp kan du fortfarande avbryta din beställning här.",
       "subject": "Beställning #{orderNumber} mottagen — väntar på bekräftelse",
       "title": "Beställning mottagen",
       "greeting": "Hej {customerName},",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Öppna admin"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Din beställning är avbruten",
+      "cancelledByCustomerBody": "Du avbröt din beställning — restaurangen har fått besked om att inte förbereda den. Om du ändrar dig kan du alltid lägga en ny beställning.",
       "subject": "Uppdatering om beställning #{orderNumber}",
       "title": "Orderuppdatering",
       "body": "Din beställning #{orderNumber} är nu {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Skickas månadsvis"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Din bokning är avbokad",
+      "headerTitleCancelled": "Bokning avbokad",
+      "introCancelled": "Du avbokade din bokning hos {restaurantName} — restaurangen har meddelats och ditt bord har frigjorts.",
+      "closingCancelled": "Om du ändrar dig är du alltid välkommen att boka igen.",
+      "badgeCancelled": "Avbokad",
+      "depositContactNote": "Du betalade en deposition för den här bokningen — kontakta restaurangen direkt angående din deposition.",
+      "cancelNote": "Om dina planer ändras kan du avboka din bokning här.",
       "subject": "Reservation bekräftad",
       "titleConfirmed": "Din reservation är bekräftad",
       "titlePending": "Reservationsbegäran mottagen",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Missad"
     },
     "newReservation": {
+      "subjectCancelled": "Bokning avbokad av gästen — {restaurant}",
       "subject": "Ny reservation — {restaurant}",
       "title": "Ny reservation {status}",
       "body": "{customer} begärde en reservation för {party} gäster den {date} kl. {time}.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Leverans"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Avboka din bokning?",
+      "intro": "Du är på väg att avboka din bokning hos {restaurantName}. Restaurangen meddelas direkt.",
+      "partySize": "Bord för {partySize}",
+      "confirmButton": "Ja, avboka min bokning",
+      "keepButton": "Nej, behåll min bokning",
+      "cancelling": "Avbokar…",
+      "successTitle": "Bokning avbokad",
+      "successBody": "Din bokning hos {restaurantName} har avbokats och restaurangen har meddelats. Vi hoppas att vi ses en annan gång!",
+      "alreadyCancelledTitle": "Redan hanterat",
+      "alreadyCancelledBody": "Den här bokningen har redan avbokats eller uppdaterats av restaurangen — du behöver inte göra något mer.",
+      "invalidLinkTitle": "Länken är inte giltig",
+      "invalidLinkBody": "Den här avbokningslänken är ogiltig eller fungerar inte längre. Om du behöver ändra en bokning, kontakta restaurangen direkt.",
+      "tooLateBody": "Den här bokningen kan inte längre avbokas online — kontakta {restaurantName} direkt.",
+      "linkedOrderBody": "Den här bokningen hör till en beställning. För att avboka den, använd avbokningslänken i ditt bekräftelsemejl för beställningen, eller kontakta restaurangen.",
+      "depositNote": "Du betalade en deposition för den här bokningen. Att avboka här ger inte automatiskt pengarna tillbaka — kontakta restaurangen angående din deposition.",
+      "genericError": "Något gick fel. Försök igen."
+    },
     "accountPage": {
       "backTo": "Tillbaka till {name}",
       "greeting": "Hej, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Beställ igen"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "Logga in för att avbryta beställningen, eller ring restaurangen.",
+      "cancelErrorInvalidLink": "Den här avbokningslänken är inte giltig. Använd länken i ditt bekräftelsemejl, eller ring restaurangen.",
+      "cancelErrorAccepted": "Restaurangen har redan accepterat din beställning. Ring dem direkt för att avbryta.",
+      "cancelErrorGone": "Den här beställningen kan inte längre avbrytas.",
       "stepPendingLabel": "Beställning mottagen",
       "stepPendingDesc": "Din beställning väntar på bekräftelse",
       "stepAcceptedLabel": "Accepterad",

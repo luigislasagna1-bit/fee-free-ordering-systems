@@ -621,6 +621,7 @@
     "emailRequired": "Az e-mail cím megadása kötelező"
   },
   "kitchen": {
+    "cancelledByCustomer": "A vendég mondta le",
     "title": "Kitchen Order App",
     "newOrders": "Új rendelések",
     "inProgress": "Folyamatban",
@@ -5239,6 +5240,8 @@
       "ifYouDidntRequest": "Ha nem Ön kezdeményezte ezt, nyugodtan hagyja figyelmen kívül ezt az e-mailt."
     },
     "orderConfirmed": {
+      "closedNote": "Az étterem jelenleg zárva van — a rendelésed sorban áll, és amint kinyitnak, azonnal értesítünk.",
+      "cancelNote": "Ha közbejönne valami, a rendelésedet itt bármikor lemondhatod.",
       "subject": "#{orderNumber}. rendelés beérkezett — visszaigazolásra vár",
       "title": "Rendelés beérkezett",
       "greeting": "Kedves {customerName}!",
@@ -5277,6 +5280,8 @@
       "openAdmin": "Admin megnyitása"
     },
     "orderStatus": {
+      "cancelledByCustomerTitle": "Rendelésed lemondva",
+      "cancelledByCustomerBody": "Lemondtad a rendelésedet — az étterem értesült róla, és nem készíti el. Ha meggondolod magad, bármikor leadhatsz új rendelést.",
       "subject": "Frissítés a #{orderNumber}. rendelésről",
       "title": "Rendelés frissítése",
       "body": "A #{orderNumber}. rendelés állapota: {status}.",
@@ -5382,6 +5387,13 @@
       "sentMonthly": "Havonta küldve"
     },
     "reservationConfirmed": {
+      "subjectCancelled": "Foglalásod lemondva",
+      "headerTitleCancelled": "Foglalás lemondva",
+      "introCancelled": "Lemondtad a foglalásodat a(z) {restaurantName} étteremben — az éttermet értesítettük, és az asztalodat felszabadítottuk.",
+      "closingCancelled": "Ha meggondolod magad, bármikor szeretettel várunk egy új foglalással.",
+      "badgeCancelled": "Lemondva",
+      "depositContactNote": "Ehhez a foglaláshoz előleget fizettél — az előleggel kapcsolatban kérjük, fordulj közvetlenül az étteremhez.",
+      "cancelNote": "Ha változnak a terveid, a foglalásodat itt mondhatod le.",
       "subject": "Foglalás megerősítve",
       "titleConfirmed": "Foglalása megerősítve",
       "titlePending": "Foglalási kérelem beérkezett",
@@ -5415,6 +5427,7 @@
       "badgeMissed": "Elmulasztott"
     },
     "newReservation": {
+      "subjectCancelled": "A vendég lemondta a foglalást — {restaurant}",
       "subject": "Új foglalás — {restaurant}",
       "title": "Új foglalás {status}",
       "body": "{customer} foglalást kért {party} vendég részére, {date}-én {time}-kor.",
@@ -6165,6 +6178,24 @@
     "badgeDelivery": "Kiszállítás"
   },
   "customer": {
+    "reservationCancel": {
+      "title": "Lemondod a foglalásodat?",
+      "intro": "Éppen lemondod a foglalásodat a(z) {restaurantName} étteremben. Az éttermet azonnal értesítjük.",
+      "partySize": "{partySize} fő",
+      "confirmButton": "Igen, lemondom a foglalást",
+      "keepButton": "Nem, megtartom a foglalást",
+      "cancelling": "Lemondás folyamatban…",
+      "successTitle": "Foglalás lemondva",
+      "successBody": "A(z) {restaurantName} étterembe szóló foglalásodat lemondtuk, és az éttermet értesítettük. Reméljük, máskor találkozunk!",
+      "alreadyCancelledTitle": "Már elintézve",
+      "alreadyCancelledBody": "Ezt a foglalást már lemondták, vagy az étterem módosította — nincs több teendőd.",
+      "invalidLinkTitle": "Ez a link nem érvényes",
+      "invalidLinkBody": "Ez a lemondási link érvénytelen vagy már nem működik. Ha módosítanád a foglalásodat, kérjük, fordulj közvetlenül az étteremhez.",
+      "tooLateBody": "Ezt a foglalást online már nem lehet lemondani — kérjük, fordulj közvetlenül a(z) {restaurantName} étteremhez.",
+      "linkedOrderBody": "Ez a foglalás egy rendelés része. A lemondáshoz használd a rendelés-visszaigazoló e-mailben található lemondási linket, vagy fordulj az étteremhez.",
+      "depositNote": "Ehhez a foglaláshoz előleget fizettél. Az itteni lemondás nem jelenti az előleg automatikus visszatérítését — az előleggel kapcsolatban kérjük, fordulj az étteremhez.",
+      "genericError": "Hiba történt. Próbáld újra."
+    },
     "accountPage": {
       "backTo": "Vissza: {name}",
       "greeting": "Szia, {name}",
@@ -6316,6 +6347,10 @@
       "orderAgain": "Újra rendelek"
     },
     "orderStatus": {
+      "cancelErrorSignIn": "A rendelés lemondásához jelentkezz be, vagy hívd fel az éttermet.",
+      "cancelErrorInvalidLink": "Ez a lemondási link nem érvényes. Használd a visszaigazoló e-mailben kapott linket, vagy hívd fel az éttermet.",
+      "cancelErrorAccepted": "Az étterem már elfogadta a rendelésedet. A lemondáshoz kérjük, hívd fel közvetlenül az éttermet.",
+      "cancelErrorGone": "Ezt a rendelést már nem lehet lemondani.",
       "stepPendingLabel": "Rendelés megérkezett",
       "stepPendingDesc": "A rendelésedet várjuk a visszaigazolásra",
       "stepAcceptedLabel": "Elfogadva",

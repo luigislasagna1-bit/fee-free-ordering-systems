@@ -11,8 +11,9 @@ export type ReservationConfirmationProps = {
   /** "requested" = received, awaiting manual confirmation; "confirmed" =
    *  accepted; "declined" = rejected by the restaurant; "missed" = auto-declined
    *  for not being accepted in time. "missed" reuses the (neutral) "declined"
-   *  copy and only swaps the badge word. Drives the copy. */
-  status?: "requested" | "confirmed" | "declined" | "missed";
+   *  copy and only swaps the badge word. "cancelled" = the CUSTOMER cancelled
+   *  via the emailed link (Fabrizio cms0idtz7). Drives the copy. */
+  status?: "requested" | "confirmed" | "declined" | "missed" | "cancelled";
   customerName: string;
   reservationNumber: string;
   restaurantName: string;
@@ -21,6 +22,11 @@ export type ReservationConfirmationProps = {
   partySize: number;
   /** Optional restaurant note shown as a card. */
   specialRequests?: string | null;
+  /** Deposit was paid — the customer-cancelled email adds the "contact the
+   *  restaurant about your deposit" note (v1: no auto-refund). */
+  depositPaid?: boolean;
+  /** Guest self-cancel page link — italic line on requested/confirmed. */
+  cancelUrl?: string;
   restaurantAddress?: string | null;
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -30,15 +36,20 @@ export type ReservationConfirmationProps = {
 
 export default function ReservationConfirmation(props: ReservationConfirmationProps) {
   const { t, status = "confirmed", customerName, reservationNumber, restaurantName, dateTime, partySize,
-    specialRequests, restaurantAddress, restaurantUrl, restaurantEmail,
+    specialRequests, depositPaid, cancelUrl, restaurantAddress, restaurantUrl, restaurantEmail,
     restaurantPhone, imprint } = props;
 
   // "missed" reuses the neutral "Declined" copy (header "Reservation update",
   // "was not able to accommodate…") — only the badge word differs. Luigi 2026-06-16.
-  const suffix = (status === "declined" || status === "missed") ? "Declined" : status === "requested" ? "Requested" : "";
+  // "Cancelled" = customer-initiated (cms0idtz7) — its own copy set.
+  const suffix =
+    status === "cancelled" ? "Cancelled"
+    : (status === "declined" || status === "missed") ? "Declined"
+    : status === "requested" ? "Requested" : "";
   const k = (base: string) => `email.reservationConfirmed.${base}${suffix}`;
   const statusBadge =
-    status === "missed" ? <Badge color="amber">{t("email.reservationConfirmed.badgeMissed")}</Badge>
+    status === "cancelled" ? <Badge color="rose">{t("email.reservationConfirmed.badgeCancelled")}</Badge>
+    : status === "missed" ? <Badge color="amber">{t("email.reservationConfirmed.badgeMissed")}</Badge>
     : status === "declined" ? <Badge color="rose">{t("email.reservationConfirmed.badgeDeclined")}</Badge>
     : status === "requested" ? <Badge color="slate">{t("email.reservationConfirmed.badgeRequested")}</Badge>
     : <Badge color="emerald">{t("email.reservationConfirmed.badgeConfirmed")}</Badge>;
@@ -79,7 +90,28 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
           </InfoCard>
         )}
 
+        {/* Customer-cancelled a deposit-paid booking: no auto-refund in v1 —
+            direct them to the restaurant about the deposit. */}
+        {status === "cancelled" && depositPaid && (
+          <InfoCard label={t("email.reservationConfirmed.deposit")} accent="amber">
+            {t("email.reservationConfirmed.depositContactNote")}
+          </InfoCard>
+        )}
+
         <P>{t(k("closing"))}</P>
+
+        {/* Guest self-cancel line (cms0idtz7) — GloriaFood style, whole
+            sentence hyperlinked; only on live statuses. The link only OPENS
+            the confirm page — cancelling is a POST behind a button. */}
+        {cancelUrl && (status === "requested" || status === "confirmed") && (
+          <P size="sm" muted>
+            <em>
+              <a href={cancelUrl} style={{ color: "inherit" }}>
+                {t("email.reservationConfirmed.cancelNote")}
+              </a>
+            </em>
+          </P>
+        )}
       </EmailBody>
       <EmailFooter
         restaurantName={restaurantName}
