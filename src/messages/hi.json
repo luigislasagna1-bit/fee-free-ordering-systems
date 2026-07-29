@@ -1673,6 +1673,7 @@
       "system": "सिस्टम",
       "deliveryConfirmed": "डिलीवरी की पुष्टि हुई",
       "pickupConfirmed": "पिकअप की पुष्टि हुई",
+      "tableReservationRequested": "नया आरक्षण अनुरोध (लंबित)",
       "tableReservationConfirmed": "टेबल आरक्षण की पुष्टि हुई",
       "orderAheadConfirmed": "अग्रिम ऑर्डर की पुष्टि हुई",
       "dineInConfirmed": "डाइन-इन की पुष्टि हुई",

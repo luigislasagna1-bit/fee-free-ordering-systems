@@ -1650,6 +1650,7 @@
       "system": "Hệ thống",
       "deliveryConfirmed": "Xác nhận giao hàng",
       "pickupConfirmed": "Xác nhận lấy hàng",
+      "tableReservationRequested": "Yêu cầu đặt bàn mới (đang chờ)",
       "tableReservationConfirmed": "Xác nhận đặt bàn",
       "orderAheadConfirmed": "Xác nhận đặt trước",
       "dineInConfirmed": "Xác nhận ăn tại quán",

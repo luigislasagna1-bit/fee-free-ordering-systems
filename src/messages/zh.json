@@ -1650,6 +1650,7 @@
       "system": "系统通知",
       "deliveryConfirmed": "配送已确认",
       "pickupConfirmed": "自取已确认",
+      "tableReservationRequested": "新预订请求（待确认）",
       "tableReservationConfirmed": "餐桌预订已确认",
       "orderAheadConfirmed": "预约订单已确认",
       "dineInConfirmed": "堂食已确认",

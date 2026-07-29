@@ -1650,6 +1650,7 @@
       "system": "Системні",
       "deliveryConfirmed": "Доставка підтверджена",
       "pickupConfirmed": "Самовивіз підтверджено",
+      "tableReservationRequested": "Новий запит на бронювання (в очікуванні)",
       "tableReservationConfirmed": "Бронювання столика підтверджено",
       "orderAheadConfirmed": "Попереднє замовлення підтверджено",
       "dineInConfirmed": "Обід у залі підтверджено",

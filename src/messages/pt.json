@@ -1650,6 +1650,7 @@
       "system": "Sistema",
       "deliveryConfirmed": "Entrega confirmada",
       "pickupConfirmed": "Retirada confirmada",
+      "tableReservationRequested": "Novo pedido de reserva (pendente)",
       "tableReservationConfirmed": "Reserva de mesa confirmada",
       "orderAheadConfirmed": "Pré-pedido confirmado",
       "dineInConfirmed": "No local confirmado",

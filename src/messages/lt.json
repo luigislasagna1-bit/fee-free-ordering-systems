@@ -1650,6 +1650,7 @@
       "system": "Sistema",
       "deliveryConfirmed": "Pristatymas patvirtintas",
       "pickupConfirmed": "Atsiėmimas patvirtintas",
+      "tableReservationRequested": "Naujas rezervacijos prašymas (laukiama)",
       "tableReservationConfirmed": "Stalo rezervacija patvirtinta",
       "orderAheadConfirmed": "Išankstinis užsakymas patvirtintas",
       "dineInConfirmed": "Valgymas vietoje patvirtintas",

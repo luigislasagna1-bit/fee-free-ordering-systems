@@ -1650,6 +1650,7 @@
       "system": "Sistem",
       "deliveryConfirmed": "Dostava potrjena",
       "pickupConfirmed": "Prevzem potrjen",
+      "tableReservationRequested": "Nova zahteva za rezervacijo (v čakanju)",
       "tableReservationConfirmed": "Rezervacija mize potrjena",
       "orderAheadConfirmed": "Prednaročilo potrjeno",
       "dineInConfirmed": "Obrok v restavraciji potrjen",

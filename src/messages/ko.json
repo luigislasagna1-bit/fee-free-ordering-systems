@@ -1650,6 +1650,7 @@
       "system": "시스템",
       "deliveryConfirmed": "배달 확인됨",
       "pickupConfirmed": "픽업 확인됨",
+      "tableReservationRequested": "새 예약 요청 (대기 중)",
       "tableReservationConfirmed": "테이블 예약 확인됨",
       "orderAheadConfirmed": "사전 주문 확인됨",
       "dineInConfirmed": "매장 식사 확인됨",

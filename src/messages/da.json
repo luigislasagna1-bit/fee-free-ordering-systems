@@ -1650,6 +1650,7 @@
       "system": "System",
       "deliveryConfirmed": "Levering bekræftet",
       "pickupConfirmed": "Afhentning bekræftet",
+      "tableReservationRequested": "Ny reservationsanmodning (afventer)",
       "tableReservationConfirmed": "Bordbooking bekræftet",
       "orderAheadConfirmed": "Forudbestilling bekræftet",
       "dineInConfirmed": "Spis-her bekræftet",

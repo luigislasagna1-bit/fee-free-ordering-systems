@@ -1650,6 +1650,7 @@
       "system": "Sistēma",
       "deliveryConfirmed": "Piegāde apstiprināta",
       "pickupConfirmed": "Paņemšana apstiprināta",
+      "tableReservationRequested": "Jauns rezervācijas pieprasījums (gaida)",
       "tableReservationConfirmed": "Galda rezervācija apstiprināta",
       "orderAheadConfirmed": "Iepriekšējs pasūtījums apstiprināts",
       "dineInConfirmed": "Ēšana uz vietas apstiprināta",

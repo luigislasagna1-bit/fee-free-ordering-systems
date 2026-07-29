@@ -1650,6 +1650,7 @@
       "system": "Süsteem",
       "deliveryConfirmed": "Kojuvedu kinnitatud",
       "pickupConfirmed": "Järeltulek kinnitatud",
+      "tableReservationRequested": "Uus broneeringutaotlus (ootel)",
       "tableReservationConfirmed": "Laua broneering kinnitatud",
       "orderAheadConfirmed": "Eeltellimus kinnitatud",
       "dineInConfirmed": "Kohapeal söömine kinnitatud",

@@ -1650,6 +1650,7 @@
       "system": "System",
       "deliveryConfirmed": "Leverans bekräftad",
       "pickupConfirmed": "Avhämtning bekräftad",
+      "tableReservationRequested": "Ny bokningsförfrågan (väntande)",
       "tableReservationConfirmed": "Bordsreservation bekräftad",
       "orderAheadConfirmed": "Förbeställning bekräftad",
       "dineInConfirmed": "Ätandes på plats bekräftad",

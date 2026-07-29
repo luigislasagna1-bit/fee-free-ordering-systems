@@ -1650,6 +1650,7 @@
       "system": "Systeem",
       "deliveryConfirmed": "Bezorging bevestigd",
       "pickupConfirmed": "Afhalen bevestigd",
+      "tableReservationRequested": "Nieuw reserveringsverzoek (in afwachting)",
       "tableReservationConfirmed": "Tafelreservering bevestigd",
       "orderAheadConfirmed": "Vooruitbestelling bevestigd",
       "dineInConfirmed": "Ter plaatse eten bevestigd",

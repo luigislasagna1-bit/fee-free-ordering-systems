@@ -1650,6 +1650,7 @@
       "system": "Sistem",
       "deliveryConfirmed": "Pengiriman dikonfirmasi",
       "pickupConfirmed": "Pengambilan dikonfirmasi",
+      "tableReservationRequested": "Permintaan reservasi baru (menunggu)",
       "tableReservationConfirmed": "Reservasi meja dikonfirmasi",
       "orderAheadConfirmed": "Pesan di muka dikonfirmasi",
       "dineInConfirmed": "Makan di tempat dikonfirmasi",

@@ -1650,6 +1650,7 @@
       "system": "システム",
       "deliveryConfirmed": "デリバリー確認",
       "pickupConfirmed": "テイクアウト確認",
+      "tableReservationRequested": "新しい予約リクエスト（保留中）",
       "tableReservationConfirmed": "テーブル予約確認",
       "orderAheadConfirmed": "事前注文確認",
       "dineInConfirmed": "店内飲食確認",

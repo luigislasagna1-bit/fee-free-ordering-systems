@@ -1650,6 +1650,7 @@
       "system": "Системные",
       "deliveryConfirmed": "Доставка подтверждена",
       "pickupConfirmed": "Самовывоз подтверждён",
+      "tableReservationRequested": "Новый запрос на бронирование (в ожидании)",
       "tableReservationConfirmed": "Бронь столика подтверждена",
       "orderAheadConfirmed": "Предзаказ подтверждён",
       "dineInConfirmed": "Заказ в зале подтверждён",

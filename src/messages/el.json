@@ -1650,6 +1650,7 @@
       "system": "Σύστημα",
       "deliveryConfirmed": "Παράδοση επιβεβαιώθηκε",
       "pickupConfirmed": "Παραλαβή επιβεβαιώθηκε",
+      "tableReservationRequested": "Νέο αίτημα κράτησης (σε εκκρεμότητα)",
       "tableReservationConfirmed": "Κράτηση τραπεζιού επιβεβαιώθηκε",
       "orderAheadConfirmed": "Προπαραγγελία επιβεβαιώθηκε",
       "dineInConfirmed": "Φαγητό εντός επιβεβαιώθηκε",

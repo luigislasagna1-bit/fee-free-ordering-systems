@@ -216,10 +216,27 @@ export function EmailFooter({
           <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.text, marginBottom: 4 }}>
             {restaurantName}
           </div>
-          {restaurantUrl && (
-            <div style={{ fontSize: 13, marginBottom: 2 }}>
-              <a href={restaurantUrl} style={{ color: COLORS.emeraldDk, textDecoration: "none" }}>
-                {restaurantUrl.replace(/^https?:\/\//, "")}
+          {/* PHONE FIRST, boxed with a handset icon (Fabrizio cms0gyexp #4
+              follow-up): customers call when something goes wrong, so the
+              number leads the contact block as a tappable pill. Inline
+              styles + emoji only — email-client-safe (no webfonts/SVG). */}
+          {restaurantPhone && (
+            <div style={{ margin: "6px 0 8px" }}>
+              <a
+                href={`tel:${restaurantPhone.replace(/[^0-9+]/g, "")}`}
+                style={{
+                  display: "inline-block",
+                  border: `1px solid ${COLORS.border}`,
+                  borderRadius: 8,
+                  padding: "6px 12px",
+                  fontSize: 14,
+                  fontWeight: 700,
+                  color: COLORS.emeraldDk,
+                  textDecoration: "none",
+                  backgroundColor: "#f0fdf4",
+                }}
+              >
+                📞 {restaurantPhone}
               </a>
             </div>
           )}
@@ -230,10 +247,10 @@ export function EmailFooter({
               </a>
             </div>
           )}
-          {restaurantPhone && (
+          {restaurantUrl && (
             <div style={{ fontSize: 13, marginBottom: 12 }}>
-              <a href={`tel:${restaurantPhone.replace(/[^0-9+]/g, "")}`} style={{ color: COLORS.emeraldDk, textDecoration: "none" }}>
-                {restaurantPhone}
+              <a href={restaurantUrl} style={{ color: COLORS.emeraldDk, textDecoration: "none" }}>
+                {restaurantUrl.replace(/^https?:\/\//, "")}
               </a>
             </div>
           )}

@@ -1650,6 +1650,7 @@
       "system": "Järjestelmä",
       "deliveryConfirmed": "Toimitus vahvistettu",
       "pickupConfirmed": "Nouto vahvistettu",
+      "tableReservationRequested": "Uusi varauspyyntö (odottaa)",
       "tableReservationConfirmed": "Pöytävaraus vahvistettu",
       "orderAheadConfirmed": "Ennakkotilaus vahvistettu",
       "dineInConfirmed": "Ravintolassa syöminen vahvistettu",

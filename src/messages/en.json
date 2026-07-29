@@ -1721,6 +1721,7 @@
       "system": "System",
       "deliveryConfirmed": "Delivery confirmed",
       "pickupConfirmed": "Pickup confirmed",
+      "tableReservationRequested": "New reservation request (pending)",
       "tableReservationConfirmed": "Table reservation confirmed",
       "orderAheadConfirmed": "Order-ahead confirmed",
       "dineInConfirmed": "Dine-in confirmed",

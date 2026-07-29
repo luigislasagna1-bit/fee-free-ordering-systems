@@ -1650,6 +1650,7 @@
       "system": "ระบบ",
       "deliveryConfirmed": "ยืนยันการจัดส่ง",
       "pickupConfirmed": "ยืนยันการรับที่ร้าน",
+      "tableReservationRequested": "คำขอจองใหม่ (รอดำเนินการ)",
       "tableReservationConfirmed": "ยืนยันการจองโต๊ะ",
       "orderAheadConfirmed": "ยืนยันการสั่งล่วงหน้า",
       "dineInConfirmed": "ยืนยันการทานที่ร้าน",

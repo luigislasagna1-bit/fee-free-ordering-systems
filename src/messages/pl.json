@@ -1650,6 +1650,7 @@
       "system": "System",
       "deliveryConfirmed": "Dostawa potwierdzona",
       "pickupConfirmed": "Odbiór potwierdzony",
+      "tableReservationRequested": "Nowa prośba o rezerwację (oczekująca)",
       "tableReservationConfirmed": "Rezerwacja stolika potwierdzona",
       "orderAheadConfirmed": "Zamówienie z wyprzedzeniem potwierdzone",
       "dineInConfirmed": "Zamówienie na miejscu potwierdzone",

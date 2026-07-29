@@ -620,6 +620,11 @@ model NotificationRecipient {
   deliveryConfirmed         Boolean @default(true)
   pickupConfirmed           Boolean @default(true)
   tableReservationConfirmed Boolean @default(true)
+  /// Staff ping for a NEW booking REQUEST still pending acceptance — split
+  /// from tableReservationConfirmed (Fabrizio cms0gyexp follow-up: the single
+  /// toggle sent pending-request emails under a "confirmed" label). Default
+  /// true = the pings everyone already received keep flowing.
+  tableReservationRequested Boolean @default(true)
   orderAheadConfirmed       Boolean @default(true)
   dineInConfirmed           Boolean @default(true)
 

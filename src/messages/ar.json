@@ -1650,6 +1650,7 @@
       "system": "النظام",
       "deliveryConfirmed": "تم تأكيد التوصيل",
       "pickupConfirmed": "تم تأكيد الاستلام",
+      "tableReservationRequested": "طلب حجز جديد (قيد الانتظار)",
       "tableReservationConfirmed": "تم تأكيد حجز الطاولة",
       "orderAheadConfirmed": "تم تأكيد الطلب المسبق",
       "dineInConfirmed": "تم تأكيد التناول في المطعم",

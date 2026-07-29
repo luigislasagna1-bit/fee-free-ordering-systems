@@ -1650,6 +1650,7 @@
       "system": "Системни",
       "deliveryConfirmed": "Доставката е потвърдена",
       "pickupConfirmed": "Вземането е потвърдено",
+      "tableReservationRequested": "Нова заявка за резервация (чакаща)",
       "tableReservationConfirmed": "Резервацията на маса е потвърдена",
       "orderAheadConfirmed": "Предварителната поръчка е потвърдена",
       "dineInConfirmed": "Поръчката на място е потвърдена",

@@ -1650,6 +1650,7 @@
       "system": "Sistem",
       "deliveryConfirmed": "Teslimat onaylandı",
       "pickupConfirmed": "Gel al onaylandı",
+      "tableReservationRequested": "Yeni rezervasyon talebi (beklemede)",
       "tableReservationConfirmed": "Masa rezervasyonu onaylandı",
       "orderAheadConfirmed": "Önceden sipariş onaylandı",
       "dineInConfirmed": "Yerinde yeme onaylandı",

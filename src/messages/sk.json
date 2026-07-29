@@ -1650,6 +1650,7 @@
       "system": "Systémové",
       "deliveryConfirmed": "Doručenie potvrdené",
       "pickupConfirmed": "Vyzdvihnutie potvrdené",
+      "tableReservationRequested": "Nová žiadosť o rezerváciu (čaká)",
       "tableReservationConfirmed": "Rezervácia stola potvrdená",
       "orderAheadConfirmed": "Predobjednávka potvrdená",
       "dineInConfirmed": "Jedenie na mieste potvrdené",

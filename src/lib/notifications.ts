@@ -226,6 +226,7 @@ type NotificationRecipientToggles = {
   deliveryConfirmed: boolean;
   pickupConfirmed: boolean;
   tableReservationConfirmed: boolean;
+  tableReservationRequested: boolean;
   orderAheadConfirmed: boolean;
   dineInConfirmed: boolean;
   orderPlaced: boolean;
@@ -285,7 +286,14 @@ export async function notifyStaff(args: {
 }): Promise<{ sent: number; skipped: number }> {
   const { restaurantId, payload } = args;
 
-  const toggleField = STAFF_TOGGLE_FOR_EVENT[payload.event];
+  let toggleField = STAFF_TOGGLE_FOR_EVENT[payload.event];
+  // Reservation pings split by status (Fabrizio cms0gyexp follow-up): a NEW
+  // booking REQUEST (still pending acceptance) rides its own toggle — the
+  // single "tableReservationConfirmed" toggle was mislabeled for it. Confirmed
+  // + customer-cancelled updates stay on the confirmed toggle.
+  if (payload.event === "reservationConfirmed" && payload.status === "pending") {
+    toggleField = "tableReservationRequested" as typeof toggleField;
+  }
   if (!toggleField) {
     console.warn(`[notifyStaff] no toggle mapping for event "${payload.event}"`);
     return { sent: 0, skipped: 0 };

@@ -1650,6 +1650,7 @@
       "system": "Sistem",
       "deliveryConfirmed": "Livrare confirmată",
       "pickupConfirmed": "Ridicare confirmată",
+      "tableReservationRequested": "Cerere nouă de rezervare (în așteptare)",
       "tableReservationConfirmed": "Rezervare masă confirmată",
       "orderAheadConfirmed": "Pre-comandă confirmată",
       "dineInConfirmed": "Servire la masă confirmată",

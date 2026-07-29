@@ -14,6 +14,7 @@ type Recipient = {
   deliveryConfirmed: boolean;
   pickupConfirmed: boolean;
   tableReservationConfirmed: boolean;
+  tableReservationRequested: boolean;
   orderAheadConfirmed: boolean;
   dineInConfirmed: boolean;
   orderPlaced: boolean;
@@ -40,6 +41,8 @@ type CustomerToggles = {
 const CONFIRMATION_TOGGLES: { key: keyof Recipient; tk: string }[] = [
   { key: "deliveryConfirmed",         tk: "deliveryConfirmed" },
   { key: "pickupConfirmed",           tk: "pickupConfirmed" },
+  // New booking REQUEST (pending) — split from "confirmed" (cms0gyexp).
+  { key: "tableReservationRequested", tk: "tableReservationRequested" },
   { key: "tableReservationConfirmed", tk: "tableReservationConfirmed" },
   { key: "orderAheadConfirmed",       tk: "orderAheadConfirmed" },
   { key: "dineInConfirmed",           tk: "dineInConfirmed" },

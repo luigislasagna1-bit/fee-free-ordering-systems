@@ -1650,6 +1650,7 @@
       "system": "Sustav",
       "deliveryConfirmed": "Dostava potvrđena",
       "pickupConfirmed": "Preuzimanje potvrđeno",
+      "tableReservationRequested": "Novi zahtjev za rezervaciju (na čekanju)",
       "tableReservationConfirmed": "Rezervacija stola potvrđena",
       "orderAheadConfirmed": "Prethodna narudžba potvrđena",
       "dineInConfirmed": "Konzumacija u lokalu potvrđena",

@@ -1650,6 +1650,7 @@
       "system": "מערכת",
       "deliveryConfirmed": "משלוח אושר",
       "pickupConfirmed": "איסוף אושר",
+      "tableReservationRequested": "בקשת הזמנת שולחן חדשה (ממתינה)",
       "tableReservationConfirmed": "הזמנת שולחן אושרה",
       "orderAheadConfirmed": "הזמנה מוקדמת אושרה",
       "dineInConfirmed": "אכילה במקום אושרה",

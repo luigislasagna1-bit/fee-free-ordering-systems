@@ -1650,6 +1650,7 @@
       "system": "Rendszer",
       "deliveryConfirmed": "Szállítás visszaigazolva",
       "pickupConfirmed": "Elvitel visszaigazolva",
+      "tableReservationRequested": "Új foglalási kérés (függőben)",
       "tableReservationConfirmed": "Asztalfoglalás visszaigazolva",
       "orderAheadConfirmed": "Előrendelés visszaigazolva",
       "dineInConfirmed": "Helyben fogyasztás visszaigazolva",
