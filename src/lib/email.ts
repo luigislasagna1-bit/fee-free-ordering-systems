@@ -825,6 +825,9 @@ export async function sendOrderAcceptedNotificationEmail(params: {
       restaurantName: params.restaurantName,
       orderNumber: params.orderNumber,
       customerName: params.customerName,
+      // Already accepted — the "Accept this order / auto-reject" hint would
+      // be nonsense here (Luigi's live test, cms0gyexp).
+      showAcceptHint: false,
       orderType: badgeType,
       reservationPartySize: resv?.partySize ?? null,
       reservationLabel,

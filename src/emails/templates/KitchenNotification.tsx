@@ -75,6 +75,11 @@ export type KitchenNotificationProps = {
    *  confirmation email passes a localized "Order confirmed" so staff can
    *  tell a confirmation apart from a brand-new order at a glance. */
   headline?: string;
+  /** The "Accept this order… auto-reject runs" hint — true on the placement
+   *  ping only. The acceptance email passes false: telling staff to accept
+   *  an ALREADY-ACCEPTED order was nonsense (spotted on Luigi's live test,
+   *  cms0gyexp). */
+  showAcceptHint?: boolean;
 };
 
 export default function KitchenNotification(props: KitchenNotificationProps) {
@@ -83,7 +88,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
     orderType, estimatedMinutes, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, tip, depositTotal, discount, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
-    creditApplied, rewardLabel,
+    creditApplied, rewardLabel, showAcceptHint = true,
   } = props;
   const leadLabel = headline ?? t("email.newOrder.badgeNew");
   // Localized order-type chip — keyed by the raw DB value; unknown values
@@ -221,9 +226,11 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
 
         <EmailButton href={dashboardUrl}>{t("email.newOrder.openKitchenApp")}</EmailButton>
 
-        <P size="sm" muted>
-          {t("email.newOrder.acceptHint")}
-        </P>
+        {showAcceptHint && (
+          <P size="sm" muted>
+            {t("email.newOrder.acceptHint")}
+          </P>
+        )}
       </EmailBody>
       <EmailFooter imprint={imprint} signOff={t("email.footer.signOff")} poweredByLabel={t("email.footer.poweredBy")} />
     </EmailLayout>
