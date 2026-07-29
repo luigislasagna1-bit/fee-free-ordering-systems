@@ -111,7 +111,7 @@ function useNow(intervalMs = 1000) {
 }
 
 // ── Status badge ──────────────────────────────────────────────────────────────
-function ReservationStatusBadge({ status, t, rejectionReason }: { status: string; t: T; rejectionReason?: string | null }) {
+function ReservationStatusBadge({ status, t, rejectionReason, cancelledBy }: { status: string; t: T; rejectionReason?: string | null; cancelledBy?: string | null }) {
   const tk = useTranslations("kitchen");
   const map: Record<string, { bg: string; key: string }> = {
     pending:   { bg: "bg-yellow-100 text-yellow-800",    key: "pending" },
@@ -127,9 +127,14 @@ function ReservationStatusBadge({ status, t, rejectionReason }: { status: string
   // tile never looks like a staff REJECT. A genuine staff decline (no reason)
   // stays the plain "REJECTED". Same rule as the order StatusBadge. Luigi 2026-06-16.
   const isMissed = status === "rejected" && (rejectionReason?.startsWith("Auto-rejected") ?? false);
+  // Guest self-cancel attribution INSIDE the badge (Fabrizio cms0gyexp
+  // follow-up) — same treatment as the order badge.
+  const isCustomerCancel = status === "cancelled" && cancelledBy === "customer";
   const m = isMissed
     ? { bg: t.badgeMissed, key: "missed" }
-    : (map[status] ?? { bg: "bg-gray-100 text-gray-700", key: "" });
+    : isCustomerCancel
+      ? { bg: map.cancelled.bg, key: "cancelledByCustomer" }
+      : (map[status] ?? { bg: "bg-gray-100 text-gray-700", key: "" });
   const label = m.key ? tk(m.key).toUpperCase() : status.toUpperCase();
   return <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap ${m.bg}`}>{label}</span>;
 }
@@ -223,7 +228,7 @@ function ReservationCard({
               Luigi 2026-06-15). Party size, table, deposit, notes, booking
               code + exact date/time now live in the detail (tap to open). */}
           <div className="mt-1 flex items-center gap-2 flex-wrap">
-            <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} />
+            <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} cancelledBy={r.cancelledBy} />
             {/* The In Progress tab passes its own dayChip; every other tab lets
                 the card compute `autoCountdown`. That split is why the CLOCK was
                 missing only in "In Progress" — this chip had no icon while the
@@ -262,12 +267,6 @@ function ReservationCard({
               </>
             )}
           </div>
-          {/* WHO cancelled (cms0idtz7) — same attribution line as order tiles. */}
-          {r.status === "cancelled" && r.cancelledBy === "customer" && (
-            <div className={`text-[11px] leading-tight mt-0.5 ${t.muted}`}>
-              {tk("cancelledByCustomer")}
-            </div>
-          )}
         </div>
         {/* Cover count on the RIGHT — the same slot an order tile puts its total
             in, so a reservation row reads "who / when … how many" at a glance
@@ -335,11 +334,9 @@ function ReservationDetail({
         </button>
         <div className="flex items-center gap-2 min-w-0 flex-wrap">
           <span className={`font-bold ${t.text} truncate`}>{capitalizeName(r.customerName)}</span>
-          <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} />
-          {/* WHO cancelled (cms0idtz7) — the guest self-cancel attribution. */}
-          {r.status === "cancelled" && r.cancelledBy === "customer" && (
-            <span className={`text-xs ${t.muted}`}>{tk("cancelledByCustomer")}</span>
-          )}
+          {/* Guest self-cancel attribution rides INSIDE the badge (Fabrizio
+              cms0gyexp follow-up). */}
+          <ReservationStatusBadge status={r.status} t={t} rejectionReason={r.rejectionReason} cancelledBy={r.cancelledBy} />
           {r.depositPaid && (
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
               {tk("depositPaid").toUpperCase()}
@@ -404,7 +401,7 @@ function ReservationDetail({
   );
 }
 
-function StatusBadge({ status, t, rejectionReason }: { status: string; t: T; rejectionReason?: string | null }) {
+function StatusBadge({ status, t, rejectionReason, cancelledBy }: { status: string; t: T; rejectionReason?: string | null; cancelledBy?: string | null }) {
   const tk = useTranslations("kitchen");
   const cls: Record<string, string> = {
     pending: t.badgePending, accepted: t.badgeAccepted, preparing: t.badgePreparing,
@@ -423,7 +420,11 @@ function StatusBadge({ status, t, rejectionReason }: { status: string; t: T; rej
   // OrderDetail's badge so the tile and the detail view never disagree.
   // Luigi 2026-06-09.
   const isMissed = status === "rejected" && (rejectionReason?.startsWith("Auto-rejected") ?? false);
-  const k = isMissed ? "missed" : keyMap[status];
+  // Guest self-cancel: the attribution lives INSIDE the red badge — Fabrizio
+  // cms0gyexp follow-up asked for "Cancelled by customer" in the box itself
+  // rather than a separate line under it.
+  const isCustomerCancel = status === "cancelled" && cancelledBy === "customer";
+  const k = isMissed ? "missed" : isCustomerCancel ? "cancelledByCustomer" : keyMap[status];
   const label = k ? tk(k).toUpperCase() : status.toUpperCase();
   // MISSED gets its own (orange) tone so it never looks like a manual REJECT.
   return (
@@ -705,7 +706,10 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               detail view (tap to open), so the tile stays uncluttered. The
               pending accept-countdown is the one time-critical cue we keep. */}
           <div className="mt-1 flex items-center gap-1.5 min-w-0">
-            <StatusBadge status={order.status} t={t} rejectionReason={order.rejectionReason} />
+            {/* WHO cancelled rides INSIDE the badge (Fabrizio cms0gyexp
+                follow-up) — a guest self-cancel reads "CANCELLED BY THE
+                CUSTOMER" in the red box itself, no extra line. */}
+            <StatusBadge status={order.status} t={t} rejectionReason={order.rejectionReason} cancelledBy={(order as any).cancelledBy} />
             {order.status === "pending" && (
               <Countdown
                 notifiedAt={order.notifiedAt}
@@ -716,15 +720,6 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               />
             )}
           </div>
-          {/* WHO cancelled (cms0idtz7): the guest self-cancel makes "Cancelled"
-              ambiguous — this muted line tells staff it was the CUSTOMER, so
-              nobody phones them or blames a colleague. Restaurant/auto cancels
-              render nothing (today's look, unchanged). */}
-          {order.status === "cancelled" && (order as any).cancelledBy === "customer" && (
-            <div className={`text-[11px] leading-tight mt-0.5 ${t.muted}`}>
-              {tk("cancelledByCustomer")}
-            </div>
-          )}
         </div>
         <div className="flex flex-col items-end flex-shrink-0">
           <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total, currency)}</div>

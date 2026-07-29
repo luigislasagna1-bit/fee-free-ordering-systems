@@ -83,6 +83,9 @@ const PUBLIC_ORDER_SELECT = {
   // Fabrizio cmqqxerxs) — status/confirmation pages append the window end.
   paymentStatus: true, scheduledFor: true, scheduledSlotMinutes: true, estimatedReady: true,
   acceptedAt: true, rejectedAt: true, rejectionReason: true,
+  // WHO cancelled — the status page hides the (English, staff-provenance)
+  // rejectionReason line for the customer's OWN self-cancel. cms0gyexp.
+  cancelledBy: true,
   completedAt: true, preparationTime: true, createdAt: true,
   refundStatus: true,
   // Delivery context — the status page renders the "Delivery to" block

@@ -313,7 +313,15 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
     const isMissed =
       order.status === "rejected" &&
       (order.rejectionReason?.startsWith("Auto-rejected") ?? false);
-    const label = isMissed ? tk("missed") : (STATUS_LABEL[order.status] ?? order.status);
+    // Guest self-cancel attribution INSIDE the red badge (Fabrizio cms0gyexp
+    // follow-up) — matches the tile badge.
+    const isCustomerCancel =
+      order.status === "cancelled" && (order as any).cancelledBy === "customer";
+    const label = isMissed
+      ? tk("missed")
+      : isCustomerCancel
+        ? tk("cancelledByCustomer")
+        : (STATUS_LABEL[order.status] ?? order.status);
     return (
       <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${isMissed ? "bg-orange-500 text-white" : (cls[order.status] ?? "bg-gray-500 text-white")}`}>
         {label}
@@ -403,12 +411,6 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           <Section title={tk("customer")} t={t}>
             <div className="space-y-2">
               <Row icon={<User className="w-4 h-4" />} t={t}>{order.customerName}</Row>
-              {/* WHO cancelled (cms0idtz7): guest self-cancels are new — staff
-                  must see it was the CUSTOMER, not a colleague. Restaurant/auto
-                  cancels render nothing (unchanged). */}
-              {order.status === "cancelled" && (order as any).cancelledBy === "customer" && (
-                <div className={`text-xs ${t.muted}`}>{tk("cancelledByCustomer")}</div>
-              )}
               {order.customerPhone && (
                 <Row icon={<Phone className="w-4 h-4" />} t={t}>
                   {/* Tap-to-call: sanitise to digits/+ for the tel: URI, keep the
