@@ -68,11 +68,32 @@ export function getCached(host: string): { hit: true; info: TenantInfo } | { hit
   // Refresh LRU order: re-insert so this entry becomes "most recent".
   cache.delete(host);
   cache.set(host, e);
-  return { hit: true, info: { slug: e.slug, hasHostedSite: e.hasHostedSite, resellerProfileId: e.resellerProfileId ?? null, customDomainActive: e.customDomainActive ?? true, subdomain: e.subdomain ?? null } };
+  // Rebuild from the stored entry field-by-field (never leak `expiresAt` into
+  // TenantInfo). ⚠️ EVERY field of TenantInfo must be listed here — a field
+  // that setCached stores but this getter forgets is silently lost on every
+  // cache HIT, which is a bug that only appears under traffic and looks
+  // intermittent. That is exactly what happened to `redirectToHost` on
+  // 2026-07-30: post-cutover domains 308'd on a cold cache and 404'd on a
+  // warm one. The round-trip test in lru.test.ts guards this.
+  return {
+    hit: true,
+    info: {
+      slug: e.slug,
+      hasHostedSite: e.hasHostedSite,
+      resellerProfileId: e.resellerProfileId ?? null,
+      customDomainActive: e.customDomainActive ?? true,
+      subdomain: e.subdomain ?? null,
+      redirectToHost: e.redirectToHost ?? null,
+    },
+  };
 }
 
 export function setCached(host: string, info: TenantInfo): void {
-  const ttl = info.slug === null ? NEGATIVE_TTL_MS : POSITIVE_TTL_MS;
+  // A redirect answer (previous custom domain → new one) is a REAL resolution,
+  // not a miss, even though it carries no slug — cache it for the positive TTL
+  // so a redirected domain doesn't re-query the resolver every 10 seconds.
+  const resolved = info.slug !== null || !!info.redirectToHost;
+  const ttl = resolved ? POSITIVE_TTL_MS : NEGATIVE_TTL_MS;
   cache.set(host, { ...info, expiresAt: Date.now() + ttl });
   if (cache.size > MAX_ENTRIES) {
     // Evict the oldest (first inserted) entry. Map iteration is insertion-ordered.
