@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Objednávky s rozvozem v této restauraci musí být zaplaceny online — zvolte online platební metodu.",
       "itemSoldOutRemoved": "\"{name}\" se od vaší poslední návštěvy vyprodalo — odebrali jsme ho z košíku.",
       "itemNotForDeliveryError": "\"{name}\" je pouze k vyzvednutí — odeberte ho z košíku a pokračujte.",
-      "itemNotForPickupError": "\"{name}\" je pouze pro rozvoz — odeberte ho z košíku a pokračujte."
+      "itemNotForPickupError": "\"{name}\" je pouze pro rozvoz — odeberte ho z košíku a pokračujte.",
+      "reorderAdded": "{count, plural, one {Přidali jsme # položku z vaší předchozí objednávky.} few {Přidali jsme # položky z vaší předchozí objednávky.} other {Přidali jsme # položek z vaší předchozí objednávky.}}",
+      "reorderDroppedGone": "{count, plural, one {# položku se nepodařilo znovu přidat — už není v nabídce.} few {# položky se nepodařilo znovu přidat — už nejsou v nabídce.} other {# položek se nepodařilo znovu přidat — už nejsou v nabídce.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# položku se nepodařilo znovu přidat — je momentálně vyprodaná.} few {# položky se nepodařilo znovu přidat — jsou momentálně vyprodané.} other {# položek se nepodařilo znovu přidat — jsou momentálně vyprodané.}}",
+      "reorderReviewMods": "Před dokončením objednávky zkontrolujte možnosti.",
+      "reorderFailed": "Omlouváme se — objednávku se nepodařilo obnovit. Zkuste položky přidat ručně."
     },
     "searchMenu": "Hledat v menu…",
     "signIn": "Přihlásit se",

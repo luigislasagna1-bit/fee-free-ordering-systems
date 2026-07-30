@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "本餐厅的外送订单必须在线支付——请选择在线支付方式。",
       "itemSoldOutRemoved": "“{name}”在您上次访问后已售罄——我们已将其从您的购物车中移除。",
       "itemNotForDeliveryError": "“{name}”仅限自取——请从购物车中移除后继续。",
-      "itemNotForPickupError": "“{name}”仅限外送——请从购物车中移除后继续。"
+      "itemNotForPickupError": "“{name}”仅限外送——请从购物车中移除后继续。",
+      "reorderAdded": "{count, plural, other {已从您上次的订单中添加#件商品。}}",
+      "reorderDroppedGone": "{count, plural, other {#件商品无法重新添加——已不在菜单中。}}",
+      "reorderDroppedSoldOut": "{count, plural, other {#件商品无法重新添加——目前已售罄。}}",
+      "reorderReviewMods": "结账前请检查选项。",
+      "reorderFailed": "抱歉——我们无法恢复该订单。请尝试手动添加商品。"
     },
     "searchMenu": "搜索菜单…",
     "signIn": "登录",

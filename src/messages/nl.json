@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Bezorgbestellingen bij dit restaurant moeten online worden betaald — kies een online betaalmethode.",
       "itemSoldOutRemoved": "\"{name}\" is sinds je vorige bezoek uitverkocht — we hebben het uit je winkelwagen verwijderd.",
       "itemNotForDeliveryError": "\"{name}\" is alleen voor afhalen — verwijder het uit je winkelwagen om verder te gaan.",
-      "itemNotForPickupError": "\"{name}\" is alleen voor bezorging — verwijder het uit je winkelwagen om verder te gaan."
+      "itemNotForPickupError": "\"{name}\" is alleen voor bezorging — verwijder het uit je winkelwagen om verder te gaan.",
+      "reorderAdded": "{count, plural, one {# item uit je vorige bestelling toegevoegd.} other {# items uit je vorige bestelling toegevoegd.}}",
+      "reorderDroppedGone": "{count, plural, one {# item kon niet opnieuw worden toegevoegd — het staat niet meer op het menu.} other {# items konden niet opnieuw worden toegevoegd — ze staan niet meer op het menu.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# item kon niet opnieuw worden toegevoegd — het is momenteel uitverkocht.} other {# items konden niet opnieuw worden toegevoegd — ze zijn momenteel uitverkocht.}}",
+      "reorderReviewMods": "Controleer de opties voordat je afrekent.",
+      "reorderFailed": "Sorry — we konden die bestelling niet herstellen. Probeer de items handmatig toe te voegen."
     },
     "searchMenu": "Zoek in het menu…",
     "signIn": "Inloggen",

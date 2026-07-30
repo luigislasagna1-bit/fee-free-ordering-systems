@@ -277,7 +277,12 @@
       "deliveryPrepaidRequired": "Delivery orders must be paid online at this restaurant — please choose an online payment method.",
       "itemSoldOutRemoved": "\"{name}\" sold out while you were away — we removed it from your cart.",
       "itemNotForDeliveryError": "\"{name}\" is only available for pickup — please remove it from your cart to continue.",
-      "itemNotForPickupError": "\"{name}\" is only available for delivery — please remove it from your cart to continue."
+      "itemNotForPickupError": "\"{name}\" is only available for delivery — please remove it from your cart to continue.",
+      "reorderAdded": "{count, plural, one {Added # item from your previous order.} other {Added # items from your previous order.}}",
+      "reorderDroppedGone": "{count, plural, one {# item couldn't be re-added — it's no longer on the menu.} other {# items couldn't be re-added — they're no longer on the menu.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# item couldn't be re-added — it's sold out right now.} other {# items couldn't be re-added — they're sold out right now.}}",
+      "reorderReviewMods": "Please review modifiers before checking out.",
+      "reorderFailed": "Sorry — we couldn't restore that order. Try adding items manually."
     },
     "searchMenu": "Search the menu…",
     "expandAll": "Expand all",

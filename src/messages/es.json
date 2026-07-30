@@ -267,7 +267,12 @@
       "deliveryPrepaidRequired": "Los pedidos a domicilio de este restaurante deben pagarse en línea — elige un método de pago en línea.",
       "itemSoldOutRemoved": "\"{name}\" se agotó desde tu última visita — lo hemos quitado de tu carrito.",
       "itemNotForDeliveryError": "\"{name}\" solo está disponible para recoger — quítalo del carrito para continuar.",
-      "itemNotForPickupError": "\"{name}\" solo está disponible a domicilio — quítalo del carrito para continuar."
+      "itemNotForPickupError": "\"{name}\" solo está disponible a domicilio — quítalo del carrito para continuar.",
+      "reorderAdded": "{count, plural, one {Se añadió # artículo de tu pedido anterior.} other {Se añadieron # artículos de tu pedido anterior.}}",
+      "reorderDroppedGone": "{count, plural, one {# artículo no se pudo volver a añadir — ya no está en el menú.} other {# artículos no se pudieron volver a añadir — ya no están en el menú.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# artículo no se pudo volver a añadir — ahora mismo está agotado.} other {# artículos no se pudieron volver a añadir — ahora mismo están agotados.}}",
+      "reorderReviewMods": "Revisa las opciones antes de finalizar tu pedido.",
+      "reorderFailed": "Lo sentimos — no pudimos recuperar ese pedido. Prueba a añadir los artículos manualmente."
     },
     "followUs": "Síguenos",
     "searchMenu": "Buscar en el menú…",

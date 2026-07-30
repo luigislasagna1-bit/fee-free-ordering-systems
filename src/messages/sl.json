@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Naročila z dostavo v tej restavraciji je treba plačati prek spleta — izberite spletni način plačila.",
       "itemSoldOutRemoved": "\"{name}\" je razprodan od vašega zadnjega obiska — odstranili smo ga iz vaše košarice.",
       "itemNotForDeliveryError": "\"{name}\" je na voljo samo za prevzem — odstranite ga iz košarice za nadaljevanje.",
-      "itemNotForPickupError": "\"{name}\" je na voljo samo za dostavo — odstranite ga iz košarice za nadaljevanje."
+      "itemNotForPickupError": "\"{name}\" je na voljo samo za dostavo — odstranite ga iz košarice za nadaljevanje.",
+      "reorderAdded": "{count, plural, one {Dodali smo # izdelek iz vašega prejšnjega naročila.} two {Dodali smo # izdelka iz vašega prejšnjega naročila.} few {Dodali smo # izdelke iz vašega prejšnjega naročila.} other {Dodali smo # izdelkov iz vašega prejšnjega naročila.}}",
+      "reorderDroppedGone": "{count, plural, one {# izdelka ni bilo mogoče znova dodati — ni ga več na meniju.} two {# izdelkov ni bilo mogoče znova dodati — ni ju več na meniju.} few {# izdelkov ni bilo mogoče znova dodati — ni jih več na meniju.} other {# izdelkov ni bilo mogoče znova dodati — ni jih več na meniju.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# izdelka ni bilo mogoče znova dodati — trenutno je razprodan.} two {# izdelkov ni bilo mogoče znova dodati — trenutno sta razprodana.} few {# izdelkov ni bilo mogoče znova dodati — trenutno so razprodani.} other {# izdelkov ni bilo mogoče znova dodati — trenutno so razprodani.}}",
+      "reorderReviewMods": "Pred zaključkom naročila preverite možnosti.",
+      "reorderFailed": "Oprostite — naročila nismo mogli obnoviti. Poskusite izdelke dodati ročno."
     },
     "searchMenu": "Iskanje po meniju…",
     "signIn": "Prijava",

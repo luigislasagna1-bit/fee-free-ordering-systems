@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Ennél az étteremnél a kiszállításos rendeléseket online kell fizetni — válasszon online fizetési módot.",
       "itemSoldOutRemoved": "A(z) \"{name}\" elfogyott a legutóbbi látogatásod óta — eltávolítottuk a kosaradból.",
       "itemNotForDeliveryError": "A(z) \"{name}\" csak elvitelre kapható — távolítsd el a kosaradból a folytatáshoz.",
-      "itemNotForPickupError": "A(z) \"{name}\" csak kiszállításra kapható — távolítsd el a kosaradból a folytatáshoz."
+      "itemNotForPickupError": "A(z) \"{name}\" csak kiszállításra kapható — távolítsd el a kosaradból a folytatáshoz.",
+      "reorderAdded": "{count, plural, one {# tétel hozzáadva az előző rendelésedből.} other {# tétel hozzáadva az előző rendelésedből.}}",
+      "reorderDroppedGone": "{count, plural, one {# tételt nem lehetett újra hozzáadni — már nincs az étlapon.} other {# tételt nem lehetett újra hozzáadni — már nincs az étlapon.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# tételt nem lehetett újra hozzáadni — jelenleg elfogyott.} other {# tételt nem lehetett újra hozzáadni — jelenleg elfogyott.}}",
+      "reorderReviewMods": "Kérjük, ellenőrizd az opciókat a rendelés leadása előtt.",
+      "reorderFailed": "Sajnáljuk — nem sikerült visszaállítani azt a rendelést. Próbáld meg kézzel hozzáadni a tételeket."
     },
     "searchMenu": "Keresés az étlapon…",
     "signIn": "Bejelentkezés",

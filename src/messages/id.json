@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Pesanan antar di restoran ini harus dibayar online — pilih metode pembayaran online.",
       "itemSoldOutRemoved": "\"{name}\" habis terjual sejak kunjungan terakhir Anda — kami menghapusnya dari keranjang Anda.",
       "itemNotForDeliveryError": "\"{name}\" hanya tersedia untuk ambil sendiri — hapus dari keranjang untuk melanjutkan.",
-      "itemNotForPickupError": "\"{name}\" hanya tersedia untuk pengantaran — hapus dari keranjang untuk melanjutkan."
+      "itemNotForPickupError": "\"{name}\" hanya tersedia untuk pengantaran — hapus dari keranjang untuk melanjutkan.",
+      "reorderAdded": "{count, plural, other {Menambahkan # item dari pesanan Anda sebelumnya.}}",
+      "reorderDroppedGone": "{count, plural, other {# item tidak dapat ditambahkan lagi — sudah tidak ada di menu.}}",
+      "reorderDroppedSoldOut": "{count, plural, other {# item tidak dapat ditambahkan lagi — saat ini habis terjual.}}",
+      "reorderReviewMods": "Harap periksa opsi sebelum menyelesaikan pesanan.",
+      "reorderFailed": "Maaf — kami tidak dapat memulihkan pesanan itu. Coba tambahkan item secara manual."
     },
     "searchMenu": "Cari menu…",
     "signIn": "Masuk",

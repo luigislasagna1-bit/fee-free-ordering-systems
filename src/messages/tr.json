@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Bu restoranda teslimatlı siparişler online ödenmelidir — lütfen bir online ödeme yöntemi seçin.",
       "itemSoldOutRemoved": "\"{name}\" son ziyaretinizden bu yana tükendi — sepetinizden kaldırdık.",
       "itemNotForDeliveryError": "\"{name}\" yalnızca gel-al içindir — devam etmek için sepetinizden çıkarın.",
-      "itemNotForPickupError": "\"{name}\" yalnızca teslimat içindir — devam etmek için sepetinizden çıkarın."
+      "itemNotForPickupError": "\"{name}\" yalnızca teslimat içindir — devam etmek için sepetinizden çıkarın.",
+      "reorderAdded": "{count, plural, one {Önceki siparişinizden # ürün eklendi.} other {Önceki siparişinizden # ürün eklendi.}}",
+      "reorderDroppedGone": "{count, plural, one {# ürün yeniden eklenemedi — artık menüde değil.} other {# ürün yeniden eklenemedi — artık menüde değil.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# ürün yeniden eklenemedi — şu anda tükenmiş durumda.} other {# ürün yeniden eklenemedi — şu anda tükenmiş durumda.}}",
+      "reorderReviewMods": "Lütfen ödeme yapmadan önce seçenekleri gözden geçirin.",
+      "reorderFailed": "Üzgünüz — bu siparişi geri yükleyemedik. Ürünleri elle eklemeyi deneyin."
     },
     "searchMenu": "Menüde ara…",
     "signIn": "Giriş yap",

@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Šio restorano užsakymai su pristatymu turi būti apmokėti internetu — pasirinkite mokėjimo internetu būdą.",
       "itemSoldOutRemoved": "\"{name}\" išparduota nuo paskutinio jūsų apsilankymo — pašalinome ją iš jūsų krepšelio.",
       "itemNotForDeliveryError": "\"{name}\" galima tik atsiimti — pašalinkite iš krepšelio, kad tęstumėte.",
-      "itemNotForPickupError": "\"{name}\" galima tik pristatymui — pašalinkite iš krepšelio, kad tęstumėte."
+      "itemNotForPickupError": "\"{name}\" galima tik pristatymui — pašalinkite iš krepšelio, kad tęstumėte.",
+      "reorderAdded": "{count, plural, one {Pridėta # prekė iš ankstesnio jūsų užsakymo.} few {Pridėtos # prekės iš ankstesnio jūsų užsakymo.} other {Pridėta # prekių iš ankstesnio jūsų užsakymo.}}",
+      "reorderDroppedGone": "{count, plural, one {# prekės nepavyko pridėti iš naujo — jos nebėra meniu.} few {# prekių nepavyko pridėti iš naujo — jų nebėra meniu.} other {# prekių nepavyko pridėti iš naujo — jų nebėra meniu.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# prekės nepavyko pridėti iš naujo — šiuo metu ji išparduota.} few {# prekių nepavyko pridėti iš naujo — šiuo metu jos išparduotos.} other {# prekių nepavyko pridėti iš naujo — šiuo metu jos išparduotos.}}",
+      "reorderReviewMods": "Prieš užsakydami peržiūrėkite parinktis.",
+      "reorderFailed": "Atsiprašome — nepavyko atkurti to užsakymo. Pabandykite prekes pridėti rankiniu būdu."
     },
     "searchMenu": "Ieškoti meniu…",
     "signIn": "Prisijungti",

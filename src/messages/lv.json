@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Šī restorāna piegādes pasūtījumi jāapmaksā tiešsaistē — izvēlieties tiešsaistes maksājuma veidu.",
       "itemSoldOutRemoved": "\"{name}\" ir izpārdots kopš jūsu pēdējā apmeklējuma — mēs to izņēmām no jūsu groza.",
       "itemNotForDeliveryError": "\"{name}\" ir pieejams tikai saņemšanai — izņemiet to no groza, lai turpinātu.",
-      "itemNotForPickupError": "\"{name}\" ir pieejams tikai piegādei — izņemiet to no groza, lai turpinātu."
+      "itemNotForPickupError": "\"{name}\" ir pieejams tikai piegādei — izņemiet to no groza, lai turpinātu.",
+      "reorderAdded": "{count, plural, zero {Pievienotas # preces no jūsu iepriekšējā pasūtījuma.} one {Pievienota # prece no jūsu iepriekšējā pasūtījuma.} other {Pievienotas # preces no jūsu iepriekšējā pasūtījuma.}}",
+      "reorderDroppedGone": "{count, plural, zero {# preces neizdevās pievienot atkārtoti — to vairs nav ēdienkartē.} one {# preci neizdevās pievienot atkārtoti — tās vairs nav ēdienkartē.} other {# preces neizdevās pievienot atkārtoti — to vairs nav ēdienkartē.}}",
+      "reorderDroppedSoldOut": "{count, plural, zero {# preces neizdevās pievienot atkārtoti — tās šobrīd ir izpārdotas.} one {# preci neizdevās pievienot atkārtoti — tā šobrīd ir izpārdota.} other {# preces neizdevās pievienot atkārtoti — tās šobrīd ir izpārdotas.}}",
+      "reorderReviewMods": "Pirms pasūtījuma noformēšanas pārskatiet opcijas.",
+      "reorderFailed": "Diemžēl neizdevās atjaunot šo pasūtījumu. Mēģiniet preces pievienot manuāli."
     },
     "searchMenu": "Meklēt ēdienkartē…",
     "signIn": "Pierakstīties",

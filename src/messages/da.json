@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Leveringsordrer hos denne restaurant skal betales online — vælg en onlinebetalingsmetode.",
       "itemSoldOutRemoved": "\"{name}\" blev udsolgt siden dit sidste besøg — vi har fjernet den fra din kurv.",
       "itemNotForDeliveryError": "\"{name}\" fås kun ved afhentning — fjern den fra kurven for at fortsætte.",
-      "itemNotForPickupError": "\"{name}\" fås kun ved levering — fjern den fra kurven for at fortsætte."
+      "itemNotForPickupError": "\"{name}\" fås kun ved levering — fjern den fra kurven for at fortsætte.",
+      "reorderAdded": "{count, plural, one {Tilføjede # vare fra din tidligere bestilling.} other {Tilføjede # varer fra din tidligere bestilling.}}",
+      "reorderDroppedGone": "{count, plural, one {# vare kunne ikke tilføjes igen — den er ikke længere på menuen.} other {# varer kunne ikke tilføjes igen — de er ikke længere på menuen.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# vare kunne ikke tilføjes igen — den er udsolgt lige nu.} other {# varer kunne ikke tilføjes igen — de er udsolgt lige nu.}}",
+      "reorderReviewMods": "Tjek tilvalgene, før du gennemfører bestillingen.",
+      "reorderFailed": "Beklager — vi kunne ikke gendanne den bestilling. Prøv at tilføje varerne manuelt."
     },
     "searchMenu": "Søg i menuen…",
     "signIn": "Log ind",

@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Les comandes a domicili d'aquest restaurant s'han de pagar en línia — trieu un mètode de pagament en línia.",
       "itemSoldOutRemoved": "\"{name}\" s'ha esgotat des de la teva darrera visita — l'hem tret del teu cistell.",
       "itemNotForDeliveryError": "\"{name}\" només està disponible per recollir — treu-lo del cistell per continuar.",
-      "itemNotForPickupError": "\"{name}\" només està disponible a domicili — treu-lo del cistell per continuar."
+      "itemNotForPickupError": "\"{name}\" només està disponible a domicili — treu-lo del cistell per continuar.",
+      "reorderAdded": "{count, plural, one {S'ha afegit # article de la teva comanda anterior.} other {S'han afegit # articles de la teva comanda anterior.}}",
+      "reorderDroppedGone": "{count, plural, one {# article no s'ha pogut tornar a afegir — ja no és al menú.} other {# articles no s'han pogut tornar a afegir — ja no són al menú.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# article no s'ha pogut tornar a afegir — ara mateix està esgotat.} other {# articles no s'han pogut tornar a afegir — ara mateix estan esgotats.}}",
+      "reorderReviewMods": "Revisa les opcions abans de finalitzar la comanda.",
+      "reorderFailed": "Ho sentim — no hem pogut recuperar aquesta comanda. Prova d'afegir els articles manualment."
     },
     "searchMenu": "Cerca al menú…",
     "signIn": "Inicia sessió",

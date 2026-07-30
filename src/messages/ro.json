@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Comenzile cu livrare la acest restaurant trebuie plătite online — alegeți o metodă de plată online.",
       "itemSoldOutRemoved": "\"{name}\" s-a epuizat de la ultima ta vizită — l-am scos din coșul tău.",
       "itemNotForDeliveryError": "\"{name}\" este disponibil doar pentru ridicare — scoate-l din coș pentru a continua.",
-      "itemNotForPickupError": "\"{name}\" este disponibil doar pentru livrare — scoate-l din coș pentru a continua."
+      "itemNotForPickupError": "\"{name}\" este disponibil doar pentru livrare — scoate-l din coș pentru a continua.",
+      "reorderAdded": "{count, plural, one {Am adăugat # produs din comanda ta anterioară.} few {Am adăugat # produse din comanda ta anterioară.} other {Am adăugat # de produse din comanda ta anterioară.}}",
+      "reorderDroppedGone": "{count, plural, one {# produs nu a putut fi readăugat — nu mai este în meniu.} few {# produse nu au putut fi readăugate — nu mai sunt în meniu.} other {# de produse nu au putut fi readăugate — nu mai sunt în meniu.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# produs nu a putut fi readăugat — momentan este epuizat.} few {# produse nu au putut fi readăugate — momentan sunt epuizate.} other {# de produse nu au putut fi readăugate — momentan sunt epuizate.}}",
+      "reorderReviewMods": "Verifică opțiunile înainte de a finaliza comanda.",
+      "reorderFailed": "Ne pare rău — nu am putut recupera acea comandă. Încearcă să adaugi produsele manual."
     },
     "searchMenu": "Caută în meniu…",
     "signIn": "Autentificare",

@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "이 레스토랑의 배달 주문은 온라인으로 결제해야 합니다 — 온라인 결제 수단을 선택해 주세요.",
       "itemSoldOutRemoved": "\"{name}\"이(가) 지난 방문 이후 품절되어 장바구니에서 제거했습니다.",
       "itemNotForDeliveryError": "\"{name}\"은(는) 픽업 전용입니다 — 계속하려면 장바구니에서 제거해 주세요.",
-      "itemNotForPickupError": "\"{name}\"은(는) 배달 전용입니다 — 계속하려면 장바구니에서 제거해 주세요."
+      "itemNotForPickupError": "\"{name}\"은(는) 배달 전용입니다 — 계속하려면 장바구니에서 제거해 주세요.",
+      "reorderAdded": "{count, plural, other {이전 주문에서 #개 메뉴를 담았습니다.}}",
+      "reorderDroppedGone": "{count, plural, other {#개 메뉴를 다시 담을 수 없었습니다. 더 이상 메뉴에 없습니다.}}",
+      "reorderDroppedSoldOut": "{count, plural, other {#개 메뉴를 다시 담을 수 없었습니다. 현재 품절입니다.}}",
+      "reorderReviewMods": "결제 전에 옵션을 확인해 주세요.",
+      "reorderFailed": "죄송합니다. 해당 주문을 복원하지 못했습니다. 메뉴를 직접 추가해 주세요."
     },
     "searchMenu": "메뉴 검색…",
     "signIn": "로그인",

@@ -1873,6 +1873,7 @@ export function OrderingPageClient({
         for (const c of visibleCategories) for (const mi of c.menuItems) itemIndex.set(mi.id, mi);
         const newCart: CartItem[] = [];
         let dropped = 0;
+        let droppedSoldOut = 0;
         let hadMods = false;
         for (const oi of orderItems) {
           // Bundle wrapper rows have menuItemId === null — skip; we
@@ -1880,6 +1881,11 @@ export function OrderingPageClient({
           if (!oi.menuItemId) { dropped++; continue; }
           const mi = itemIndex.get(oi.menuItemId);
           if (!mi) { dropped++; continue; }
+          // Sold-out items STAY in visibleCategories (rendered greyed with a
+          // badge), so the index lookup above doesn't filter them — without
+          // this check, reorder re-adds a sold-out dish the server only
+          // rejects at checkout, after the customer filled in their details.
+          if (mi.isSoldOut) { droppedSoldOut++; continue; }
           let variant: ItemVariant | undefined;
           if (oi.variantName) {
             variant = mi.variants?.find((v: ItemVariant) => v.name === oi.variantName) ?? undefined;
@@ -1903,20 +1909,23 @@ export function OrderingPageClient({
         }
         const parts: string[] = [];
         if (newCart.length > 0) {
-          parts.push(`Added ${newCart.length} item${newCart.length === 1 ? "" : "s"} from your previous order.`);
+          parts.push(tT("reorderAdded", { count: newCart.length }));
         }
         if (dropped > 0) {
-          parts.push(`${dropped} item${dropped === 1 ? "" : "s"} couldn't be re-added — no longer on the menu.`);
+          parts.push(tT("reorderDroppedGone", { count: dropped }));
+        }
+        if (droppedSoldOut > 0) {
+          parts.push(tT("reorderDroppedSoldOut", { count: droppedSoldOut }));
         }
         if (hadMods) {
-          parts.push("Please review modifiers before checking out.");
+          parts.push(tT("reorderReviewMods"));
         }
         if (parts.length > 0) {
           setReorderBanner(parts.join(" "));
           window.setTimeout(() => setReorderBanner(null), 9000);
         }
       } catch {
-        setReorderBanner("Sorry — we couldn't restore that order. Try adding items manually.");
+        setReorderBanner(tT("reorderFailed"));
         window.setTimeout(() => setReorderBanner(null), 6000);
       } finally {
         // Strip the query param so a refresh doesn't re-trigger.

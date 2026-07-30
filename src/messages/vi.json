@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Đơn giao hàng của nhà hàng này phải được thanh toán trực tuyến — vui lòng chọn phương thức thanh toán trực tuyến.",
       "itemSoldOutRemoved": "\"{name}\" đã hết hàng kể từ lần ghé trước của bạn — chúng tôi đã xóa món này khỏi giỏ hàng.",
       "itemNotForDeliveryError": "\"{name}\" chỉ có khi tự đến lấy — vui lòng xóa khỏi giỏ hàng để tiếp tục.",
-      "itemNotForPickupError": "\"{name}\" chỉ có khi giao hàng — vui lòng xóa khỏi giỏ hàng để tiếp tục."
+      "itemNotForPickupError": "\"{name}\" chỉ có khi giao hàng — vui lòng xóa khỏi giỏ hàng để tiếp tục.",
+      "reorderAdded": "{count, plural, other {Đã thêm # món từ đơn hàng trước của bạn.}}",
+      "reorderDroppedGone": "{count, plural, other {# món không thể thêm lại — không còn trong thực đơn.}}",
+      "reorderDroppedSoldOut": "{count, plural, other {# món không thể thêm lại — hiện đã hết hàng.}}",
+      "reorderReviewMods": "Vui lòng kiểm tra các tùy chọn trước khi thanh toán.",
+      "reorderFailed": "Rất tiếc — chúng tôi không thể khôi phục đơn hàng đó. Hãy thử thêm món theo cách thủ công."
     },
     "searchMenu": "Tìm kiếm thực đơn…",
     "signIn": "Đăng nhập",

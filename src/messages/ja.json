@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "このレストランのデリバリー注文はオンライン決済が必要です — オンライン決済方法を選んでください。",
       "itemSoldOutRemoved": "「{name}」は前回のご利用後に売り切れました。カートから削除しました。",
       "itemNotForDeliveryError": "「{name}」はテイクアウト限定です。続行するにはカートから削除してください。",
-      "itemNotForPickupError": "「{name}」はデリバリー限定です。続行するにはカートから削除してください。"
+      "itemNotForPickupError": "「{name}」はデリバリー限定です。続行するにはカートから削除してください。",
+      "reorderAdded": "{count, plural, other {前回のご注文から#品をカートに追加しました。}}",
+      "reorderDroppedGone": "{count, plural, other {#品は再追加できませんでした。現在メニューにありません。}}",
+      "reorderDroppedSoldOut": "{count, plural, other {#品は再追加できませんでした。現在売り切れです。}}",
+      "reorderReviewMods": "ご注文前にオプションをご確認ください。",
+      "reorderFailed": "申し訳ありません。ご注文を復元できませんでした。お手数ですが手動で商品を追加してください。"
     },
     "searchMenu": "メニューを検索…",
     "signIn": "ログイン",

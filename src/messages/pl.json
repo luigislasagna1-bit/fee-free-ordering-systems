@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Zamówienia z dostawą w tej restauracji muszą być opłacone online — wybierz metodę płatności online.",
       "itemSoldOutRemoved": "\"{name}\" wyprzedało się od Twojej ostatniej wizyty — usunęliśmy tę pozycję z koszyka.",
       "itemNotForDeliveryError": "\"{name}\" jest dostępne tylko na odbiór — usuń je z koszyka, aby kontynuować.",
-      "itemNotForPickupError": "\"{name}\" jest dostępne tylko w dostawie — usuń je z koszyka, aby kontynuować."
+      "itemNotForPickupError": "\"{name}\" jest dostępne tylko w dostawie — usuń je z koszyka, aby kontynuować.",
+      "reorderAdded": "{count, plural, one {Dodano # pozycję z Twojego poprzedniego zamówienia.} few {Dodano # pozycje z Twojego poprzedniego zamówienia.} many {Dodano # pozycji z Twojego poprzedniego zamówienia.} other {Dodano # pozycji z Twojego poprzedniego zamówienia.}}",
+      "reorderDroppedGone": "{count, plural, one {# pozycji nie udało się dodać ponownie — nie ma jej już w menu.} few {# pozycji nie udało się dodać ponownie — nie ma ich już w menu.} many {# pozycji nie udało się dodać ponownie — nie ma ich już w menu.} other {# pozycji nie udało się dodać ponownie — nie ma ich już w menu.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# pozycji nie udało się dodać ponownie — jest obecnie wyprzedana.} few {# pozycji nie udało się dodać ponownie — są obecnie wyprzedane.} many {# pozycji nie udało się dodać ponownie — są obecnie wyprzedane.} other {# pozycji nie udało się dodać ponownie — są obecnie wyprzedane.}}",
+      "reorderReviewMods": "Sprawdź opcje przed złożeniem zamówienia.",
+      "reorderFailed": "Przepraszamy — nie udało się przywrócić tego zamówienia. Spróbuj dodać pozycje ręcznie."
     },
     "searchMenu": "Szukaj w menu…",
     "signIn": "Zaloguj się",

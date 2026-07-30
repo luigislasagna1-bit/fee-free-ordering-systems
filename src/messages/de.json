@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Lieferbestellungen bei diesem Restaurant müssen online bezahlt werden — bitte eine Online-Zahlungsart wählen.",
       "itemSoldOutRemoved": "\"{name}\" ist seit deinem letzten Besuch ausverkauft — wir haben es aus deinem Warenkorb entfernt.",
       "itemNotForDeliveryError": "\"{name}\" ist nur zur Abholung erhältlich — bitte aus dem Warenkorb entfernen, um fortzufahren.",
-      "itemNotForPickupError": "\"{name}\" ist nur bei Lieferung erhältlich — bitte aus dem Warenkorb entfernen, um fortzufahren."
+      "itemNotForPickupError": "\"{name}\" ist nur bei Lieferung erhältlich — bitte aus dem Warenkorb entfernen, um fortzufahren.",
+      "reorderAdded": "{count, plural, one {# Artikel aus deiner letzten Bestellung hinzugefügt.} other {# Artikel aus deiner letzten Bestellung hinzugefügt.}}",
+      "reorderDroppedGone": "{count, plural, one {# Artikel konnte nicht erneut hinzugefügt werden — er steht nicht mehr auf der Speisekarte.} other {# Artikel konnten nicht erneut hinzugefügt werden — sie stehen nicht mehr auf der Speisekarte.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# Artikel konnte nicht erneut hinzugefügt werden — er ist gerade ausverkauft.} other {# Artikel konnten nicht erneut hinzugefügt werden — sie sind gerade ausverkauft.}}",
+      "reorderReviewMods": "Bitte überprüfe die Optionen, bevor du zur Kasse gehst.",
+      "reorderFailed": "Entschuldigung — wir konnten diese Bestellung nicht wiederherstellen. Füge die Artikel bitte manuell hinzu."
     },
     "searchMenu": "Speisekarte durchsuchen…",
     "signIn": "Anmelden",

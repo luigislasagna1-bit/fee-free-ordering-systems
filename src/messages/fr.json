@@ -267,7 +267,12 @@
       "deliveryPrepaidRequired": "Les commandes en livraison de ce restaurant doivent être payées en ligne — choisissez un mode de paiement en ligne.",
       "itemSoldOutRemoved": "« {name} » est en rupture depuis votre dernière visite — nous l'avons retiré de votre panier.",
       "itemNotForDeliveryError": "« {name} » n'est disponible qu'à emporter — retirez-le de votre panier pour continuer.",
-      "itemNotForPickupError": "« {name} » n'est disponible qu'en livraison — retirez-le de votre panier pour continuer."
+      "itemNotForPickupError": "« {name} » n'est disponible qu'en livraison — retirez-le de votre panier pour continuer.",
+      "reorderAdded": "{count, plural, one {# article de votre commande précédente a été ajouté.} other {# articles de votre commande précédente ont été ajoutés.}}",
+      "reorderDroppedGone": "{count, plural, one {# article n'a pas pu être rajouté — il n'est plus au menu.} other {# articles n'ont pas pu être rajoutés — ils ne sont plus au menu.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# article n'a pas pu être rajouté — il est en rupture pour le moment.} other {# articles n'ont pas pu être rajoutés — ils sont en rupture pour le moment.}}",
+      "reorderReviewMods": "Veuillez vérifier les options avant de valider votre commande.",
+      "reorderFailed": "Désolé — nous n'avons pas pu restaurer cette commande. Essayez d'ajouter les articles manuellement."
     },
     "followUs": "Suivez-nous",
     "searchMenu": "Rechercher dans le menu…",

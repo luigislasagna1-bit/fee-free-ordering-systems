@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Selle restorani kohaletoimetamisega tellimused tuleb maksta veebis — valige veebimakseviis.",
       "itemSoldOutRemoved": "\"{name}\" müüdi pärast teie viimast külastust läbi — eemaldasime selle teie ostukorvist.",
       "itemNotForDeliveryError": "\"{name}\" on saadaval ainult kaasa — jätkamiseks eemaldage see ostukorvist.",
-      "itemNotForPickupError": "\"{name}\" on saadaval ainult kulleriga — jätkamiseks eemaldage see ostukorvist."
+      "itemNotForPickupError": "\"{name}\" on saadaval ainult kulleriga — jätkamiseks eemaldage see ostukorvist.",
+      "reorderAdded": "{count, plural, one {Lisasime # toote teie eelmisest tellimusest.} other {Lisasime # toodet teie eelmisest tellimusest.}}",
+      "reorderDroppedGone": "{count, plural, one {# toodet ei õnnestunud uuesti lisada — seda pole enam menüüs.} other {# toodet ei õnnestunud uuesti lisada — neid pole enam menüüs.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# toodet ei õnnestunud uuesti lisada — see on praegu otsas.} other {# toodet ei õnnestunud uuesti lisada — need on praegu otsas.}}",
+      "reorderReviewMods": "Enne tellimuse vormistamist vaadake valikud üle.",
+      "reorderFailed": "Vabandame — seda tellimust ei õnnestunud taastada. Proovige tooted käsitsi lisada."
     },
     "searchMenu": "Otsi menüüst…",
     "signIn": "Logi sisse",

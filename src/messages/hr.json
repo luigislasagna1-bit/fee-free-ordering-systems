@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Narudžbe s dostavom u ovom restoranu moraju se platiti online — odaberite online način plaćanja.",
       "itemSoldOutRemoved": "\"{name}\" je rasprodan od vašeg zadnjeg posjeta — uklonili smo ga iz vaše košarice.",
       "itemNotForDeliveryError": "\"{name}\" je dostupan samo za preuzimanje — uklonite ga iz košarice za nastavak.",
-      "itemNotForPickupError": "\"{name}\" je dostupan samo za dostavu — uklonite ga iz košarice za nastavak."
+      "itemNotForPickupError": "\"{name}\" je dostupan samo za dostavu — uklonite ga iz košarice za nastavak.",
+      "reorderAdded": "{count, plural, one {Dodali smo # stavku iz vaše prethodne narudžbe.} few {Dodali smo # stavke iz vaše prethodne narudžbe.} other {Dodali smo # stavaka iz vaše prethodne narudžbe.}}",
+      "reorderDroppedGone": "{count, plural, one {# stavku nije bilo moguće ponovno dodati — više nije na jelovniku.} few {# stavke nije bilo moguće ponovno dodati — više nisu na jelovniku.} other {# stavaka nije bilo moguće ponovno dodati — više nisu na jelovniku.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# stavku nije bilo moguće ponovno dodati — trenutačno je rasprodana.} few {# stavke nije bilo moguće ponovno dodati — trenutačno su rasprodane.} other {# stavaka nije bilo moguće ponovno dodati — trenutačno su rasprodane.}}",
+      "reorderReviewMods": "Provjerite opcije prije dovršetka narudžbe.",
+      "reorderFailed": "Nažalost, tu narudžbu nismo mogli vratiti. Pokušajte stavke dodati ručno."
     },
     "searchMenu": "Pretraži jelovnik…",
     "signIn": "Prijava",

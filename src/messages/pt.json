@@ -267,7 +267,12 @@
       "deliveryPrepaidRequired": "As encomendas com entrega deste restaurante devem ser pagas online — escolha um método de pagamento online.",
       "itemSoldOutRemoved": "\"{name}\" esgotou desde a sua última visita — retirámo-lo do seu carrinho.",
       "itemNotForDeliveryError": "\"{name}\" só está disponível para levantamento — remova-o do carrinho para continuar.",
-      "itemNotForPickupError": "\"{name}\" só está disponível para entrega — remova-o do carrinho para continuar."
+      "itemNotForPickupError": "\"{name}\" só está disponível para entrega — remova-o do carrinho para continuar.",
+      "reorderAdded": "{count, plural, one {# item do seu pedido anterior foi adicionado.} other {# itens do seu pedido anterior foram adicionados.}}",
+      "reorderDroppedGone": "{count, plural, one {# item não pôde ser adicionado novamente — já não está no menu.} other {# itens não puderam ser adicionados novamente — já não estão no menu.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# item não pôde ser adicionado novamente — está esgotado neste momento.} other {# itens não puderam ser adicionados novamente — estão esgotados neste momento.}}",
+      "reorderReviewMods": "Reveja as opções antes de finalizar o pedido.",
+      "reorderFailed": "Lamentamos — não conseguimos recuperar esse pedido. Tente adicionar os itens manualmente."
     },
     "followUs": "Siga-nos",
     "searchMenu": "Pesquisar no menu…",

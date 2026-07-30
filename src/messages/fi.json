@@ -268,7 +268,12 @@
       "deliveryPrepaidRequired": "Tämän ravintolan toimitustilaukset on maksettava verkossa — valitse verkkomaksutapa.",
       "itemSoldOutRemoved": "\"{name}\" myytiin loppuun edellisen käyntisi jälkeen — poistimme sen ostoskoristasi.",
       "itemNotForDeliveryError": "\"{name}\" on vain noudettavaksi — poista se ostoskorista jatkaaksesi.",
-      "itemNotForPickupError": "\"{name}\" on vain kotiinkuljetukseen — poista se ostoskorista jatkaaksesi."
+      "itemNotForPickupError": "\"{name}\" on vain kotiinkuljetukseen — poista se ostoskorista jatkaaksesi.",
+      "reorderAdded": "{count, plural, one {Lisättiin # tuote edellisestä tilauksestasi.} other {Lisättiin # tuotetta edellisestä tilauksestasi.}}",
+      "reorderDroppedGone": "{count, plural, one {# tuotetta ei voitu lisätä uudelleen — se ei ole enää ruokalistalla.} other {# tuotetta ei voitu lisätä uudelleen — ne eivät ole enää ruokalistalla.}}",
+      "reorderDroppedSoldOut": "{count, plural, one {# tuotetta ei voitu lisätä uudelleen — se on tällä hetkellä loppuunmyyty.} other {# tuotetta ei voitu lisätä uudelleen — ne ovat tällä hetkellä loppuunmyytyjä.}}",
+      "reorderReviewMods": "Tarkista valinnat ennen tilauksen tekemistä.",
+      "reorderFailed": "Pahoittelut — emme voineet palauttaa tilausta. Kokeile lisätä tuotteet käsin."
     },
     "searchMenu": "Hae menuusta…",
     "signIn": "Kirjaudu sisään",
