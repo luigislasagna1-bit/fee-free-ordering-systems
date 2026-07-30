@@ -642,3 +642,5 @@ Luigi: customers ordered from the Invite Prospects email ("10% off your first or
 
 ## FEEFREE DELIVERY - kitchen_staff authz gaps remaining (from the 2026-07-17 Fable recheck; deliveries/ops/detail routes FIXED in that pass)
 The recheck hardened GET deliveries / GET delivery detail / GET ops with kitchen_staff 401s + driverId regex validation. STILL OPEN: the FeeFreeDelivery CONFIG PUT (provider/fee settings) and manual dispatch POST endpoints accept any session with a restaurantId - kitchen_staff should be read-only there too. Same one-line role gate pattern; sweep src/app/api/admin/feefree-delivery/* for every mutating verb and gate each. (LR-SEC-02)
+
+- CORRECTION (2026-07-29): the business bank account is **BMO**, not CIBC (Luigi). SWIFT for the OSS form = **BOFMCAM2**, account name FEE FREE ORDERING INC. Bank account ARRIVED 2026-07-28 (debit card in hand, Stripe payouts pointed at it) → the Ireland non-Union OSS registration is UNBLOCKED; Luigi resuming at ros.ie with the pre-confirmed answers above.
