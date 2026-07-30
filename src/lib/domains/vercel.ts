@@ -87,8 +87,33 @@ class VercelProvider implements DomainProvider {
       headers: authHeaders(),
       body: JSON.stringify({ name: host }),
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.error?.message || `Vercel addDomain failed (${res.status})`);
+    let data = await res.json();
+    if (!res.ok) {
+      // ALREADY-ATTACHED is not a failure — it's a RETRY.
+      //
+      // Any earlier attempt that registered the domain and then rolled back
+      // (our 2026-07-30 incident restored the DB but never released the Vercel
+      // binding) leaves the domain attached. Vercel then answers the next add
+      // with "already in use by one of your projects", which surfaced to the
+      // owner as a dead end they could not clear themselves.
+      //
+      // Distinguish the two cases precisely: GET the domain ON OUR PROJECT.
+      // 200 → it's already ours, carry on exactly as if the add succeeded.
+      // 404 → it really is on a DIFFERENT project; that needs a human, so
+      //        say so in words an owner can act on.
+      const own = await fetch(
+        `${API_BASE}/v9/projects/${projectId()}/domains/${encodeURIComponent(host)}${teamQuery()}`,
+        { headers: authHeaders() },
+      );
+      if (!own.ok) {
+        throw new Error(
+          data?.error?.message
+            ? `${data.error.message} (it is not attached to this app — support must release it first)`
+            : `Vercel addDomain failed (${res.status})`,
+        );
+      }
+      data = await own.json();
+    }
 
     // Vercel returns a `verification` array describing what TXT/CNAME the user
     // needs to add. For most hosts they need a single CNAME pointing at
