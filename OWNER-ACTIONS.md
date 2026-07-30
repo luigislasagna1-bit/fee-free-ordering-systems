@@ -41,6 +41,17 @@
 
 ## A. DO NOW — this week, in priority order
 
+### A28. 🥇 TOMORROW FIRST: point luigislasagna.com at the new system (the big cutover)
+Luigi's call (2026-07-30, ~12:30 AM): the .com is where most real customers land — forward it to the
+new platform like www.luigislasagna.ca already is; once proven, www.luigislasagnamilton.ca follows.
+Recon done tonight (read-only): BOTH domains sit on GoDaddy's domain-forwarding service already, so
+this is a 5-minute edit — GoDaddy → luigislasagna.com → Domain → Forwarding → change the target to
+the hosted site (mirror the .ca's exact forwarding entry; use 301 permanent + include www).
+⚠️ SAFETY: touch ONLY the "Forwarding" setting — NOT nameservers, NOT mail records.
+info@luigislasagna.com runs on Microsoft 365 via this domain's MX and must keep working (verified
+tonight: forwarding edits don't affect it). After the switch: place one test order end-to-end, watch
+a few days of real orders, then repeat for luigislasagnamilton.ca.
+
 ### A27. 🆕 Fabrizio's 9-item batch (cms0gyexp) BUILT — plus a 20-minute email-deliverability session with you
 All nine items are implemented (see the report reply): customer emails now follow the CUSTOMER's
 chosen page language; staff emails fully translated in the backend language (with the customer's
