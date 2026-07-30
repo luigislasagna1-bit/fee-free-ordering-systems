@@ -1347,6 +1347,11 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
   const [acknowledged, setAcknowledged] = useState(false);
   const [prepModal, setPrepModal] = useState<string | null>(null);
   const [prepTime, setPrepTime] = useState("20");
+  // Restaurant per-type prep defaults (admin Services settings) — the accept
+  // popup pre-highlights the RIGHT time for each order's type instead of the
+  // sticky last-used value (Luigi 2026-07-29: accepting a 20-min pickup used
+  // to leave 20 pre-selected on the next 60-min-zone delivery).
+  const [prepDefaults, setPrepDefaults] = useState<{ pickup: number; delivery: number }>({ pickup: 20, delivery: 45 });
   const [testOrdering, setTestOrdering] = useState(false);
   // Order ID being rejected from the Accept Order prep prompt. When non-null,
   // the shared RejectOrderModal opens for that order. Setting this and
@@ -3454,6 +3459,12 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       setPrintNodeEnabled(pnEnabled);
       setDeliveryShowName(Array.isArray(body) ? false : !!body?.kitchenDeliveryShowName);
       setDeliveryLead(!Array.isArray(body) && body?.kitchenDeliveryLead === "address" ? "address" : "name");
+      if (!Array.isArray(body)) {
+        setPrepDefaults({
+          pickup: Number(body?.estimatedPickup) > 0 ? Number(body.estimatedPickup) : 20,
+          delivery: Number(body?.estimatedDelivery) > 0 ? Number(body.estimatedDelivery) : 45,
+        });
+      }
     } catch {}
   }, []);
 
@@ -3901,6 +3912,25 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
     await fetchOrders();
     if (status === "accepted") autoPrint(orderId);
   };
+
+  // When the accept popup OPENS, pre-select the right prep time for THAT
+  // order's type: a delivery starts from the customer's own zone estimate
+  // (resolved from their address at checkout) → the restaurant's delivery
+  // default; everything else (pickup / take-out / dine-in / catering-pickup)
+  // starts from the pickup default. Staff still tap a chip or type to
+  // override — the value just no longer leaks from the previous order.
+  // Luigi 2026-07-29 (mirrors what auto-accept already promised).
+  useEffect(() => {
+    if (!prepModal) return;
+    const o = orders.find((ord) => ord.id === prepModal);
+    if (!o) return;
+    const zoneMinutes = Number((o as any).deliveryEstimatedMinutes);
+    const d = o.type === "delivery"
+      ? (zoneMinutes > 0 ? zoneMinutes : prepDefaults.delivery)
+      : prepDefaults.pickup;
+    setPrepTime(String(d));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prepModal]);
 
   const confirmAccept = async () => {
     if (!prepModal) return;

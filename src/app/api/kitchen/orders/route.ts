@@ -46,7 +46,7 @@ export async function GET() {
     // simple-mode auto-complete sweep below.
     const restaurant = await prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true, kitchenDeliveryShowName: true, kitchenDeliveryShowBoth: true, kitchenDeliveryLead: true, kitchenShowItemCategory: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true },
+      select: { kitchenWorkflowMode: true, printNodeEnabled: true, timezone: true, kitchenDeliveryShowName: true, kitchenDeliveryShowBoth: true, kitchenDeliveryLead: true, kitchenShowItemCategory: true, rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true, estimatedPickup: true, estimatedDelivery: true },
     });
     const resolvedMode = restaurant?.kitchenWorkflowMode === "tracking" ? "tracking" : "simple";
     // Only join each line's menu category when the restaurant enabled the
@@ -249,6 +249,11 @@ export async function GET() {
       kitchenDeliveryShowBoth: !!restaurant?.kitchenDeliveryShowBoth,
       kitchenDeliveryLead: restaurant?.kitchenDeliveryLead === "address" ? "address" : "name",
       kitchenShowItemCategory: showItemCategory,
+      // Per-type prep defaults for the accept popup (Luigi 2026-07-29):
+      // the popup pre-highlights the RIGHT time for each order's type
+      // instead of whatever was picked last.
+      estimatedPickup: restaurant?.estimatedPickup ?? 20,
+      estimatedDelivery: restaurant?.estimatedDelivery ?? 45,
     });
   } catch (err: any) {
     console.error("[kitchen/orders GET]", err);

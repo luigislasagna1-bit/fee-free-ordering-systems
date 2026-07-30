@@ -1985,8 +1985,12 @@ export async function POST(req: NextRequest) {
     // the restaurant's order auto-accept OR its reservation auto-confirm. A
     // normal order respects only order auto-accept. Luigi 2026-06-09.
     const wantsAutoAccept = !!restaurant.autoAcceptOrders || (!!reservationData && reservationAutoConfirm);
+    // Zone-aware (Luigi 2026-07-29): a delivery promises the customer's OWN
+    // zone estimate (resolved from their address above) when one exists — an
+    // auto-accepted order to a 60-minute zone must not promise the flat
+    // 45-minute default. Mirrors the kitchen accept-popup's new default.
     const fulfillmentMinutes = type === "delivery"
-      ? restaurant.estimatedDelivery
+      ? (resolvedZoneMinutes ?? restaurant.estimatedDelivery)
       : restaurant.estimatedPickup;
     const initialStatus = wantsAutoAccept ? "accepted" : "pending";
     const acceptedAtValue: Date | null = wantsAutoAccept ? new Date() : null;
