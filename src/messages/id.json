@@ -5464,7 +5464,9 @@
       "closingDeclined": "Kami mohon maaf atas ketidaknyamanan ini. Silakan coba tanggal atau waktu lain, atau hubungi restoran secara langsung.",
       "subjectRequested": "Permintaan reservasi diterima — menunggu konfirmasi",
       "subjectDeclined": "Pembaruan mengenai permintaan reservasi Anda",
-      "badgeMissed": "Terlewat"
+      "badgeMissed": "Terlewat",
+      "closedNote": "Restoran saat ini tutup — permintaan reservasi Anda sudah masuk antrean dan Anda akan menerima kabar begitu restoran buka.",
+      "closedNoteWithTime": "Restoran saat ini tutup — permintaan reservasi Anda sudah masuk antrean dan Anda akan menerima kabar begitu restoran buka. Cek email Anda pada {openingTime}."
     },
     "newReservation": {
       "preview": "Reservasi baru — {dateTime} · {partySize} orang",

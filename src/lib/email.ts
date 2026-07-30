@@ -1390,6 +1390,12 @@ export async function sendReservationConfirmation(params: {
   /** Restaurant 12h/24h preference — formats the reservation time so the email
    *  matches the restaurant's setting (was always 24h). Luigi 2026-06-08. */
   hoursFormat?: "12h" | "24h";
+  /** Booked while the restaurant was CLOSED — the "requested" email adds the
+   *  closed-hours note; with opensAt (Reservation.alertAt) + timezone it names
+   *  the concrete opening time (orders got this in cms0gyexp #8). */
+  bookedWhileClosed?: boolean;
+  opensAt?: Date | string | null;
+  timezone?: string;
   /** Restaurant contacts for the footer (cms0gyexp #4) — the closing line
    *  says "contact us using the details below"; these make it true. */
   restaurantUrl?: string;
@@ -1399,6 +1405,18 @@ export async function sendReservationConfirmation(params: {
 }) {
   const t = await getDict(params.locale);
   const timeLabel = formatTime(params.time, params.hoursFormat ?? "24h");
+  // Closed-hours opening time — mirrors the order-confirmation label: alertAt
+  // is a real UTC instant, so it formats in the restaurant's timezone.
+  // Null/past → the generic closedNote fallback renders.
+  const opensDate = params.opensAt ? new Date(params.opensAt) : null;
+  const opensAtLabel = opensDate && Number.isFinite(opensDate.getTime()) && opensDate.getTime() > Date.now()
+    ? formatDateCapitalized(opensDate, params.locale || "en", {
+        timeZone: params.timezone || "UTC",
+        weekday: "long", day: "numeric", month: "short",
+        hour: "numeric", minute: "2-digit",
+        hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
+      })
+    : null;
   // Localized human date, NOT the raw ISO + English "at" the email used to
   // show ("2026-07-25 at 19:00" — Fabrizio cms0gyexp). The stored date/time
   // are the restaurant's LOCAL wall clock, so no timeZone conversion; weekday
@@ -1420,6 +1438,8 @@ export async function sendReservationConfirmation(params: {
       partySize: params.partySize,
       depositPaid: params.depositPaid,
       cancelUrl: params.cancelUrl,
+      bookedWhileClosed: params.bookedWhileClosed,
+      opensAtLabel,
       restaurantUrl: params.restaurantUrl,
       restaurantEmail: params.restaurantEmail ?? undefined,
       restaurantPhone: params.restaurantPhone ?? undefined,

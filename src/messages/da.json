@@ -5464,7 +5464,9 @@
       "closingDeclined": "Vi beklager ulejligheden. Prøv gerne en anden dato eller et andet tidspunkt, eller kontakt restauranten direkte.",
       "subjectRequested": "Reservationsanmodning modtaget — afventer bekræftelse",
       "subjectDeclined": "Opdatering om din reservationsanmodning",
-      "badgeMissed": "Mistet"
+      "badgeMissed": "Mistet",
+      "closedNote": "Restauranten er lukket lige nu — din reservationsanmodning er i kø, og du får en opdatering, så snart de åbner igen.",
+      "closedNoteWithTime": "Restauranten er lukket lige nu — din reservationsanmodning er i kø, og du får en opdatering, så snart de åbner igen. Hold øje med din mail fra {openingTime}."
     },
     "newReservation": {
       "preview": "Ny reservation — {dateTime} · selskab på {partySize}",

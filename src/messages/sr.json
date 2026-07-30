@@ -5464,7 +5464,9 @@
       "closingDeclined": "Žao nam je zbog neprijatnosti. Molimo pokušajte sa drugim datumom ili vremenom, ili se direktno obratite restoranu.",
       "subjectRequested": "Zahtev za rezervaciju primljen — čeka potvrdu",
       "subjectDeclined": "Ažuriranje vašeg zahteva za rezervaciju",
-      "badgeMissed": "Пропуштено"
+      "badgeMissed": "Пропуштено",
+      "closedNote": "Ресторан је тренутно затворен — ваш захтев за резервацију је на чекању и добићете обавештење чим се отвори.",
+      "closedNoteWithTime": "Ресторан је тренутно затворен — ваш захтев за резервацију је на чекању и добићете обавештење чим се отвори. Проверите имејл у {openingTime}."
     },
     "newReservation": {
       "preview": "Нова резервација — {dateTime} · број гостију: {partySize}",

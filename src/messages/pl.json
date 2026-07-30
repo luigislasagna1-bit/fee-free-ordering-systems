@@ -5464,7 +5464,9 @@
       "closingDeclined": "Przepraszamy za niedogodności. Spróbuj wybrać inny termin lub skontaktuj się bezpośrednio z restauracją.",
       "subjectRequested": "Prośba o rezerwację przyjęta — oczekuje na potwierdzenie",
       "subjectDeclined": "Aktualizacja dotycząca Twojej prośby o rezerwację",
-      "badgeMissed": "Przegapione"
+      "badgeMissed": "Przegapione",
+      "closedNote": "Restauracja jest w tej chwili zamknięta — Twoja prośba o rezerwację czeka w kolejce i dostaniesz wiadomość, gdy tylko lokal się otworzy.",
+      "closedNoteWithTime": "Restauracja jest w tej chwili zamknięta — Twoja prośba o rezerwację czeka w kolejce i dostaniesz wiadomość, gdy tylko lokal się otworzy. Sprawdź e-mail: {openingTime}."
     },
     "newReservation": {
       "preview": "Nowa rezerwacja — {dateTime} · {partySize} os.",

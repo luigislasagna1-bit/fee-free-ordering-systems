@@ -5464,7 +5464,9 @@
       "closingDeclined": "Pahoittelemme aiheutunutta haittaa. Kokeile toista päivää tai kellonaikaa, tai ota yhteyttä ravintolaan suoraan.",
       "subjectRequested": "Varauspyyntö vastaanotettu — odottaa vahvistusta",
       "subjectDeclined": "Päivitys varauspyyntöösi",
-      "badgeMissed": "Menetetty"
+      "badgeMissed": "Menetetty",
+      "closedNote": "Ravintola on juuri nyt suljettu — varauspyyntösi on jonossa ja saat päivityksen heti, kun ravintola aukeaa.",
+      "closedNoteWithTime": "Ravintola on juuri nyt suljettu — varauspyyntösi on jonossa ja saat päivityksen heti, kun ravintola aukeaa. Tarkista sähköpostisi: {openingTime}."
     },
     "newReservation": {
       "preview": "Uusi varaus — {dateTime} · {partySize} hengen seurue",

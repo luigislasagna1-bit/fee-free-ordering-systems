@@ -5464,7 +5464,9 @@
       "closingDeclined": "Pedimos desculpas pelo transtorno. Por favor, tente uma data ou horário diferente, ou entre em contato diretamente com o restaurante.",
       "subjectRequested": "Solicitação de reserva recebida — aguardando confirmação",
       "subjectDeclined": "Atualização sobre sua solicitação de reserva",
-      "badgeMissed": "Perdido"
+      "badgeMissed": "Perdido",
+      "closedNote": "O restaurante está fechado no momento — sua solicitação de reserva fica na fila e você receberá uma atualização assim que ele abrir.",
+      "closedNoteWithTime": "O restaurante está fechado no momento — sua solicitação de reserva fica na fila e você receberá uma atualização assim que ele abrir. Confira seu e-mail a partir de {openingTime}."
     },
     "newReservation": {
       "preview": "Nova reserva — {dateTime} · grupo de {partySize}",

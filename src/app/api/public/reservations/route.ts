@@ -332,6 +332,11 @@ export async function POST(req: NextRequest) {
         preOrderTotal: preOrderTotal ?? undefined,
         // Powers the guest cancel link in the email (cms0idtz7).
         reservationId: reservation.id,
+        // Closed-hours note with the concrete opening time (polish batch —
+        // orders got this in cms0gyexp #8). alertAt already holds the
+        // holiday-aware next opening computed above.
+        bookedWhileClosed: reservationAlertAt != null,
+        opensAt: reservationAlertAt,
       },
     }).catch((e) => console.error("[notifyCustomer reservation]", e));
     notifyStaff({

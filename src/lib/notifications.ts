@@ -556,7 +556,12 @@ export type CustomerEventPayload =
   | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "requested" | "confirmed" | "declined" | "missed" | "cancelled"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number;
       /** Reservation id — REQUIRED to build the guest cancel link (Fabrizio
        *  cms0idtz7). Optional for back-compat with older call sites. */
-      reservationId?: string };
+      reservationId?: string;
+      /** Booked while the restaurant was CLOSED (Reservation.alertAt set) —
+       *  the "requested" email adds the closed-hours note, naming the next
+       *  opening when opensAt resolves (orders got this in cms0gyexp #8). */
+      bookedWhileClosed?: boolean;
+      opensAt?: Date | string | null };
 
 /**
  * Send a customer-facing email gated by the matching `Restaurant.customerEmail*`
@@ -831,6 +836,13 @@ export async function notifyCustomer(args: {
           preOrderTotal: payload.preOrderTotal,
           cancelUrl,
           hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
+          // Closed-hours note with the concrete opening time (polish batch —
+          // orders got this in cms0gyexp #8). Only the initial booking POST
+          // threads these; the later confirm/decline/missed/cancel resends
+          // fire from admin/cron contexts and correctly omit them.
+          bookedWhileClosed: payload.bookedWhileClosed,
+          opensAt: payload.opensAt ?? null,
+          timezone: restaurant.timezone ?? undefined,
           // Restaurant contacts (cms0gyexp #4): the closing line says "contact
           // us using the details below" — these make the footer actually
           // carry them (clickable tel:/mailto:), plus Reply-To routing.

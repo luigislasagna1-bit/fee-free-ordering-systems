@@ -5464,7 +5464,9 @@
       "closingDeclined": "Chúng tôi xin lỗi vì sự bất tiện này. Vui lòng thử chọn ngày hoặc giờ khác, hoặc liên hệ trực tiếp với nhà hàng.",
       "subjectRequested": "Đã nhận yêu cầu đặt bàn — chờ xác nhận",
       "subjectDeclined": "Cập nhật về yêu cầu đặt bàn của bạn",
-      "badgeMissed": "Bị bỏ lỡ"
+      "badgeMissed": "Bị bỏ lỡ",
+      "closedNote": "Nhà hàng hiện đang đóng cửa — yêu cầu đặt bàn của bạn đã được xếp vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa.",
+      "closedNoteWithTime": "Nhà hàng hiện đang đóng cửa — yêu cầu đặt bàn của bạn đã được xếp vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa. Hãy kiểm tra email của bạn vào {openingTime}."
     },
     "newReservation": {
       "preview": "Đặt bàn mới — {dateTime} · {partySize} khách",

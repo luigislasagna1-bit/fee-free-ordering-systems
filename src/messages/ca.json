@@ -5464,7 +5464,9 @@
       "closingDeclined": "Us demanem disculpes per les molèsties. Si us plau, proveu una data o hora diferent, o contacteu directament amb el restaurant.",
       "subjectRequested": "Sol·licitud de reserva rebuda — pendent de confirmació",
       "subjectDeclined": "Actualització sobre la vostra sol·licitud de reserva",
-      "badgeMissed": "Perduda"
+      "badgeMissed": "Perduda",
+      "closedNote": "El restaurant ara mateix està tancat — la teva sol·licitud de reserva ha quedat en cua i rebràs una actualització tan bon punt obrin.",
+      "closedNoteWithTime": "El restaurant ara mateix està tancat — la teva sol·licitud de reserva ha quedat en cua i rebràs una actualització tan bon punt obrin. Revisa el teu correu: {openingTime}."
     },
     "newReservation": {
       "preview": "Reserva nova — {dateTime} · grup de {partySize}",

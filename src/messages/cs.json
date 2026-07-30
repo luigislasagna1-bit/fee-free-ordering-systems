@@ -5464,7 +5464,9 @@
       "closingDeclined": "Omlouváme se za způsobené nepříjemnosti. Zkuste prosím jiný termín nebo čas, případně se obraťte přímo na restauraci.",
       "subjectRequested": "Žádost o rezervaci přijata — čeká na potvrzení",
       "subjectDeclined": "Aktualizace vaší žádosti o rezervaci",
-      "badgeMissed": "Zmeškáno"
+      "badgeMissed": "Zmeškáno",
+      "closedNote": "Restaurace má právě zavřeno — vaše žádost o rezervaci čeká ve frontě a jakmile restaurace otevře, dáme vám vědět.",
+      "closedNoteWithTime": "Restaurace je právě zavřená — vaše žádost o rezervaci čeká ve frontě a jakmile restaurace otevře, pošleme vám aktualizaci. Podívejte se do e-mailu: {openingTime}."
     },
     "newReservation": {
       "preview": "Nová rezervace — {dateTime} · {partySize} os.",

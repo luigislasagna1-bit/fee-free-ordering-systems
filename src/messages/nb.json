@@ -5464,7 +5464,9 @@
       "closingDeclined": "Vi beklager ulempene dette medfører. Prøv gjerne en annen dato eller et annet tidspunkt, eller ta direkte kontakt med restauranten.",
       "subjectRequested": "Reservasjonsforespørsel mottatt — venter på bekreftelse",
       "subjectDeclined": "Oppdatering om din reservasjonsforespørsel",
-      "badgeMissed": "Mistet"
+      "badgeMissed": "Mistet",
+      "closedNote": "Restauranten er stengt akkurat nå — reservasjonsforespørselen din ligger i kø, og du får en oppdatering så snart de åpner igjen.",
+      "closedNoteWithTime": "Restauranten er stengt akkurat nå — reservasjonsforespørselen din ligger i kø, og du får en oppdatering så snart de åpner igjen. Følg med på e-posten din fra {openingTime}."
     },
     "newReservation": {
       "preview": "Ny reservasjon — {dateTime} · selskap på {partySize}",

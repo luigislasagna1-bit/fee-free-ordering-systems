@@ -5464,7 +5464,9 @@
       "closingDeclined": "Atvainojamies par sagādātajām neērtībām. Lūdzu, mēģiniet izvēlēties citu datumu vai laiku vai sazinieties ar restorānu tieši.",
       "subjectRequested": "Rezervācijas pieprasījums saņemts — gaida apstiprinājumu",
       "subjectDeclined": "Informācija par jūsu rezervācijas pieprasījumu",
-      "badgeMissed": "Nokavēts"
+      "badgeMissed": "Nokavēts",
+      "closedNote": "Restorāns šobrīd ir slēgts — jūsu rezervācijas pieprasījums ir rindā, un jūs saņemsiet ziņu, tiklīdz restorāns atvērsies.",
+      "closedNoteWithTime": "Restorāns šobrīd ir slēgts — jūsu rezervācijas pieprasījums ir rindā, un jūs saņemsiet ziņu, tiklīdz restorāns atvērsies. Pārbaudiet savu e-pastu: {openingTime}."
     },
     "newReservation": {
       "preview": "Jauna rezervācija — {dateTime} · viesu skaits: {partySize}",

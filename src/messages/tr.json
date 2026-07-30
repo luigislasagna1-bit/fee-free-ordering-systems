@@ -5464,7 +5464,9 @@
       "closingDeclined": "Yaşanan aksaklık için özür dileriz. Lütfen farklı bir tarih veya saat deneyin ya da restoranla doğrudan iletişime geçin.",
       "subjectRequested": "Rezervasyon talebiniz alındı — onay bekleniyor",
       "subjectDeclined": "Rezervasyon talebinizle ilgili güncelleme",
-      "badgeMissed": "Kaçırıldı"
+      "badgeMissed": "Kaçırıldı",
+      "closedNote": "Restoran şu anda kapalı — rezervasyon talebiniz sırada, restoran açılır açılmaz size haber vereceğiz.",
+      "closedNoteWithTime": "Restoran şu anda kapalı — rezervasyon talebiniz sıraya alındı ve restoran açılır açılmaz size güncelleme göndereceğiz. {openingTime} itibarıyla e-postanızı kontrol edin."
     },
     "newReservation": {
       "preview": "Yeni rezervasyon — {dateTime} · {partySize} kişi",

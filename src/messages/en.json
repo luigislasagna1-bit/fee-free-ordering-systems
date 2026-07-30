@@ -5467,7 +5467,9 @@
       "cancelNote": "If your plans change, you can cancel your reservation here.",
       "previewRequested": "Reservation request received — {dateTime} for {partySize}",
       "previewDeclined": "Reservation update — {dateTime} for {partySize}",
-      "previewCancelled": "Reservation cancelled — {dateTime} for {partySize}"
+      "previewCancelled": "Reservation cancelled — {dateTime} for {partySize}",
+      "closedNote": "The restaurant is currently closed — your reservation request is queued and you'll get an update as soon as they open.",
+      "closedNoteWithTime": "The restaurant is currently closed — your reservation request is queued and you'll get an update as soon as they open. Check your email on {openingTime}."
     },
     "newReservation": {
       "subject": "New reservation — {restaurant}",

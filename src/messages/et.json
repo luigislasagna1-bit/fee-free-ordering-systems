@@ -5464,7 +5464,9 @@
       "closingDeclined": "Vabandame ebamugavuste pärast. Palun proovige teist kuupäeva või kellaaega või võtke otse restoraniga ühendust.",
       "subjectRequested": "Reserveerimise päring vastu võetud — ootab kinnitamist",
       "subjectDeclined": "Värskendus teie reserveerimise päringu kohta",
-      "badgeMissed": "Vastamata"
+      "badgeMissed": "Vastamata",
+      "closedNote": "Restoran on praegu suletud — sinu broneeringusoov on järjekorras ja saadame sulle teate kohe, kui restoran avaneb.",
+      "closedNoteWithTime": "Restoran on praegu suletud — sinu broneeringusoov on järjekorras ja saadame sulle teate kohe, kui restoran avaneb. Vaata oma e-posti: {openingTime}."
     },
     "newReservation": {
       "preview": "Uus broneering — {dateTime} · külalisi: {partySize}",

@@ -5464,7 +5464,9 @@
       "closingDeclined": "Ne cerem scuze pentru inconveniență. Vă rugăm să încercați o altă dată sau oră, sau să contactați direct restaurantul.",
       "subjectRequested": "Cerere de rezervare primită — în așteptarea confirmării",
       "subjectDeclined": "Actualizare privind cererea dvs. de rezervare",
-      "badgeMissed": "Ratată"
+      "badgeMissed": "Ratată",
+      "closedNote": "Restaurantul este momentan închis — cererea ta de rezervare este în așteptare și vei primi vești imediat ce se deschide.",
+      "closedNoteWithTime": "Restaurantul este momentan închis — cererea ta de rezervare este în așteptare și vei primi vești imediat ce se deschide. Verifică-ți e-mailul la {openingTime}."
     },
     "newReservation": {
       "preview": "Rezervare nouă — {dateTime} · {partySize} persoane",

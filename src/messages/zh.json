@@ -5464,7 +5464,9 @@
       "closingDeclined": "对此带来的不便深感抱歉，您可以尝试选择其他日期或时间，或直接联系餐厅进行安排。",
       "subjectRequested": "预订申请已收到 — 等待确认中",
       "subjectDeclined": "您的预订申请最新状态",
-      "badgeMissed": "已错过"
+      "badgeMissed": "已错过",
+      "closedNote": "餐厅目前已打烊——您的预订请求已进入队列，餐厅一开门就会为您更新状态。",
+      "closedNoteWithTime": "餐厅目前已打烊——您的预订请求已排入队列，餐厅一开门就会通知您。请在 {openingTime} 查看您的邮箱。"
     },
     "newReservation": {
       "preview": "新订座 — {dateTime} · {partySize} 位",

@@ -5464,7 +5464,9 @@
       "closingDeclined": "Opravičujemo se za nevšečnosti. Poskusite z drugim datumom ali uro oziroma se obrnite neposredno na restavracijo.",
       "subjectRequested": "Zahteva za rezervacijo prejeta — čaka na potrditev",
       "subjectDeclined": "Posodobitev vaše zahteve za rezervacijo",
-      "badgeMissed": "Zamujeno"
+      "badgeMissed": "Zamujeno",
+      "closedNote": "Restavracija je trenutno zaprta — vaša zahteva za rezervacijo čaka v vrsti in obvestilo prejmete takoj, ko odprejo.",
+      "closedNoteWithTime": "Restavracija je trenutno zaprta — vaša zahteva za rezervacijo čaka v vrsti in obvestilo prejmete takoj, ko odprejo. Preverite e-pošto ob {openingTime}."
     },
     "newReservation": {
       "preview": "Nova rezervacija — {dateTime} · število gostov: {partySize}",

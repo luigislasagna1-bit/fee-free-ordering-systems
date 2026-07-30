@@ -5464,7 +5464,9 @@
       "closingDeclined": "Atsiprašome už nepatogumus. Pabandykite pasirinkti kitą datą ar laiką arba susisiekite su restoranu tiesiogiai.",
       "subjectRequested": "Rezervacijos užklausa gauta — laukiama patvirtinimo",
       "subjectDeclined": "Informacija apie jūsų rezervacijos užklausą",
-      "badgeMissed": "Praleista"
+      "badgeMissed": "Praleista",
+      "closedNote": "Restoranas šiuo metu uždarytas — jūsų rezervacijos užklausa laukia eilėje, o vos tik restoranas atsidarys, gausite žinutę.",
+      "closedNoteWithTime": "Restoranas šiuo metu uždarytas — jūsų rezervacijos užklausa laukia eilėje, o vos tik restoranas atsidarys, gausite žinutę. Patikrinkite savo el. paštą: {openingTime}."
     },
     "newReservation": {
       "preview": "Nauja rezervacija — {dateTime} · svečių: {partySize}",

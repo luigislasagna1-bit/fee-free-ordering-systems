@@ -5464,7 +5464,9 @@
       "closingDeclined": "Vi beklagar besväret. Prova gärna ett annat datum eller en annan tid, eller kontakta restaurangen direkt.",
       "subjectRequested": "Bokningsförfrågan mottagen — inväntar bekräftelse",
       "subjectDeclined": "Uppdatering om din bokningsförfrågan",
-      "badgeMissed": "Missad"
+      "badgeMissed": "Missad",
+      "closedNote": "Restaurangen är stängd just nu — din bokningsförfrågan ligger i kö och du får en uppdatering så snart de öppnar igen.",
+      "closedNoteWithTime": "Restaurangen är stängd just nu — din bokningsförfrågan ligger i kö och du får en uppdatering så snart de öppnar igen. Håll utkik i din mejl från {openingTime}."
     },
     "newReservation": {
       "preview": "Ny reservation — {dateTime} · sällskap på {partySize}",

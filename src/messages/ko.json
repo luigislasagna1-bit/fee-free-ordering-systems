@@ -5464,7 +5464,9 @@
       "closingDeclined": "불편을 드려 대단히 죄송합니다. 다른 날짜나 시간대로 다시 시도하시거나, 레스토랑에 직접 문의해 주시기 바랍니다.",
       "subjectRequested": "예약 요청이 접수되었습니다 — 확인 대기 중",
       "subjectDeclined": "예약 요청 처리 결과 안내",
-      "badgeMissed": "놓침"
+      "badgeMissed": "놓침",
+      "closedNote": "지금은 매장 영업시간이 아니에요 — 예약 요청은 접수 대기 중이며, 매장이 문을 열면 바로 소식을 알려 드릴게요.",
+      "closedNoteWithTime": "지금은 매장 영업시간이 아니에요. 예약 요청은 대기열에 등록되었고, 매장이 문을 여는 대로 바로 알려드릴게요. {openingTime}에 이메일을 확인해 주세요."
     },
     "newReservation": {
       "preview": "신규 예약 — {dateTime} · {partySize}명",

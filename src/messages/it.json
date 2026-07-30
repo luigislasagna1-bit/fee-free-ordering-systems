@@ -5464,7 +5464,9 @@
       "closingDeclined": "Ci scusiamo per l'inconveniente. Ti invitiamo a provare con una data o un orario diversi, oppure a contattare direttamente il ristorante.",
       "subjectRequested": "Richiesta di prenotazione ricevuta — in attesa di conferma",
       "subjectDeclined": "Aggiornamento sulla tua richiesta di prenotazione",
-      "badgeMissed": "Perso"
+      "badgeMissed": "Perso",
+      "closedNote": "Il ristorante è al momento chiuso — la tua richiesta di prenotazione è in coda e riceverai un aggiornamento non appena il locale riaprirà.",
+      "closedNoteWithTime": "Il ristorante è al momento chiuso — la tua richiesta di prenotazione è in coda e riceverai un aggiornamento non appena il locale riaprirà. Controlla l'email a partire da {openingTime}."
     },
     "newReservation": {
       "preview": "Nuova prenotazione — {dateTime} · tavolo da {partySize}",

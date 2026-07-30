@@ -5464,7 +5464,9 @@
       "closingDeclined": "ご不便をおかけし大変申し訳ございません。別の日時でのご予約をお試しいただくか、直接レストランまでお問い合わせください。",
       "subjectRequested": "ご予約リクエストを受け付けました — 確認待ち",
       "subjectDeclined": "ご予約リクエストに関するご連絡",
-      "badgeMissed": "見逃し"
+      "badgeMissed": "見逃し",
+      "closedNote": "ただいま店舗は営業時間外です。ご予約リクエストは受付待ちの状態で、開店し次第すぐにお知らせします。",
+      "closedNoteWithTime": "ただいま店舗は営業時間外です。ご予約リクエストは受付済みで、開店しだいすぐにお知らせします。{openingTime}にメールをご確認ください。"
     },
     "newReservation": {
       "preview": "新規予約 — {dateTime} · {partySize}名",

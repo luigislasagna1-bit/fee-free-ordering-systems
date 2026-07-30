@@ -5464,7 +5464,9 @@
       "closingDeclined": "Wir entschuldigen uns für die Unannehmlichkeiten. Bitte versuchen Sie es mit einem anderen Datum oder einer anderen Uhrzeit, oder wenden Sie sich direkt an das Restaurant.",
       "subjectRequested": "Reservierungsanfrage eingegangen — Bestätigung ausstehend",
       "subjectDeclined": "Aktualisierung zu Ihrer Reservierungsanfrage",
-      "badgeMissed": "Verpasst"
+      "badgeMissed": "Verpasst",
+      "closedNote": "Das Restaurant ist gerade geschlossen — deine Reservierungsanfrage ist vorgemerkt und du bekommst ein Update, sobald es wieder öffnet.",
+      "closedNoteWithTime": "Das Restaurant ist gerade geschlossen — deine Reservierungsanfrage ist vorgemerkt und du bekommst ein Update, sobald es wieder öffnet. Wirf ab {openingTime} einen Blick in dein E-Mail-Postfach."
     },
     "newReservation": {
       "preview": "Neue Reservierung — {dateTime} · {partySize} Pers.",

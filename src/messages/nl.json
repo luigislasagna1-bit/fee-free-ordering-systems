@@ -5464,7 +5464,9 @@
       "closingDeclined": "Onze excuses voor het ongemak. Probeer een andere datum of tijd, of neem rechtstreeks contact op met het restaurant.",
       "subjectRequested": "Reserveringsverzoek ontvangen — wacht op bevestiging",
       "subjectDeclined": "Update over uw reserveringsverzoek",
-      "badgeMissed": "Gemist"
+      "badgeMissed": "Gemist",
+      "closedNote": "Het restaurant is momenteel gesloten — je reserveringsaanvraag staat in de wachtrij en je krijgt een update zodra ze weer opengaan.",
+      "closedNoteWithTime": "Het restaurant is momenteel gesloten — je reserveringsaanvraag staat in de wachtrij en je krijgt een update zodra ze weer opengaan. Houd vanaf {openingTime} je e-mail in de gaten."
     },
     "newReservation": {
       "preview": "Nieuwe reservering — {dateTime} · gezelschap van {partySize}",

@@ -27,6 +27,10 @@ export type ReservationConfirmationProps = {
   depositPaid?: boolean;
   /** Guest self-cancel page link — italic line on requested/confirmed. */
   cancelUrl?: string;
+  /** Booked while the restaurant was CLOSED — "requested" adds the closed-hours
+   *  note; opensAtLabel (pre-formatted) names the concrete opening time. */
+  bookedWhileClosed?: boolean;
+  opensAtLabel?: string | null;
   restaurantAddress?: string | null;
   restaurantUrl?: string;
   restaurantEmail?: string;
@@ -36,8 +40,8 @@ export type ReservationConfirmationProps = {
 
 export default function ReservationConfirmation(props: ReservationConfirmationProps) {
   const { t, status = "confirmed", customerName, reservationNumber, restaurantName, dateTime, partySize,
-    specialRequests, depositPaid, cancelUrl, restaurantAddress, restaurantUrl, restaurantEmail,
-    restaurantPhone, imprint } = props;
+    specialRequests, depositPaid, cancelUrl, bookedWhileClosed, opensAtLabel, restaurantAddress,
+    restaurantUrl, restaurantEmail, restaurantPhone, imprint } = props;
 
   // "missed" reuses the neutral "Declined" copy (header "Reservation update",
   // "was not able to accommodate…") — only the badge word differs. Luigi 2026-06-16.
@@ -99,6 +103,18 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
           <InfoCard label={t("email.reservationConfirmed.deposit")} accent="amber">
             {t("email.reservationConfirmed.depositContactNote")}
           </InfoCard>
+        )}
+
+        {/* Closed-hours note (polish batch — orders got this in cms0gyexp #8):
+            only on "requested" — the staff can't confirm until they open, so
+            qualify the "we'll be in touch" promise with the concrete time. A
+            booking auto-confirmed while closed needs no such caveat. */}
+        {status === "requested" && bookedWhileClosed && (
+          <P size="sm">
+            {opensAtLabel
+              ? t("email.reservationConfirmed.closedNoteWithTime", { openingTime: opensAtLabel })
+              : t("email.reservationConfirmed.closedNote")}
+          </P>
         )}
 
         <P>{t(k("closing"))}</P>
