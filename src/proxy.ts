@@ -265,6 +265,7 @@ export async function proxy(req: NextRequest) {
   let resellerProfileId: string | null = null;
   let customDomainActive = true;
   let tenantSubdomain: string | null = null;
+  let redirectToHost: string | null = null;
 
   const cached = getCached(cacheKey);
   if (cached.hit) {
@@ -273,6 +274,7 @@ export async function proxy(req: NextRequest) {
     resellerProfileId = cached.info.resellerProfileId ?? null;
     customDomainActive = cached.info.customDomainActive ?? true;
     tenantSubdomain = cached.info.subdomain ?? null;
+    redirectToHost = cached.info.redirectToHost ?? null;
   } else {
     try {
       const resolveUrl = new URL("/api/internal/resolve-host", req.url);
@@ -283,19 +285,39 @@ export async function proxy(req: NextRequest) {
         headers["x-internal-key"] = process.env.INTERNAL_API_SECRET;
       }
       const res = await fetch(resolveUrl, { headers });
-      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean; resellerProfileId?: string | null; customDomainActive?: boolean; subdomain?: string | null };
+      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean; resellerProfileId?: string | null; customDomainActive?: boolean; subdomain?: string | null; redirectToHost?: string | null };
       slug = data.slug ?? null;
       hasHostedSite = !!data.hasHostedSite;
       resellerProfileId = data.resellerProfileId ?? null;
       customDomainActive = data.customDomainActive ?? true;
       tenantSubdomain = data.subdomain ?? null;
-      setCached(cacheKey, { slug, hasHostedSite, resellerProfileId, customDomainActive, subdomain: tenantSubdomain });
+      redirectToHost = data.redirectToHost ?? null;
+      setCached(cacheKey, { slug, hasHostedSite, resellerProfileId, customDomainActive, subdomain: tenantSubdomain, redirectToHost });
     } catch {
       // If the resolver is unreachable, fail open to the marketing page. This
       // matters because a transient resolver outage shouldn't 500 the whole
       // platform — a user landing on the marketing page is recoverable.
       return NextResponse.next();
     }
+  }
+
+  // ── Previous custom domain → permanent redirect to the new one ─────
+  // Post-cutover (zero-downtime domain switch, 2026-07-30): the host was a
+  // restaurant's OLD custom domain. 308 preserves method + path + query, so
+  // printed QR codes, emailed deep links, and bookmarks all land on the same
+  // page of the NEW domain. No-store headers are mandatory on proxy redirects
+  // (AGENTS.md) — and doubly so here: if the restaurant ever switches again,
+  // a browser-cached permanent redirect would be unfixable.
+  if (redirectToHost) {
+    const url = req.nextUrl.clone();
+    url.protocol = "https:";
+    url.host = redirectToHost;
+    url.port = "";
+    const res = NextResponse.redirect(url, 308);
+    res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    res.headers.set("Pragma", "no-cache");
+    res.headers.set("Expires", "0");
+    return res;
   }
 
   // ── Reseller branded domain branch ─────────────────────────────────
@@ -364,7 +386,14 @@ export async function proxy(req: NextRequest) {
     // Host has no matching tenant. Send to a "host not found" page on the
     // marketing tree if we have one, otherwise fall back to the marketing root.
     // For now: rewrite to /not-found so Next renders its default 404.
-    return NextResponse.rewrite(new URL("/not-found", req.url));
+    const res = NextResponse.rewrite(new URL("/not-found", req.url));
+    // Ops breadcrumb: a "why is my domain 404ing?" report is otherwise
+    // un-debuggable from outside — you cannot tell a DNS/binding problem from
+    // a lookup miss. Echo the exact key we looked up (the caller already knows
+    // their own hostname, so this discloses nothing) plus whether a redirect
+    // was on the record. Added while debugging the 2026-07-30 cutover.
+    res.headers.set("x-ffo-host-miss", `${lookupBy}=${value};redirect=${redirectToHost ?? "none"};cache=${cached.hit ? "hit" : "miss"}`);
+    return res;
   }
 
   // ── Lapsed Custom Domain → redirect to the free platform link ──────
