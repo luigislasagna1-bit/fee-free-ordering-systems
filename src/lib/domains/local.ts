@@ -63,6 +63,26 @@ class LocalProvider implements DomainProvider {
     return { verified: true, ssl: "active" };
   }
 
+  async getDomainConfig(host: string): Promise<{ misconfigured: boolean; error?: string }> {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Local domain provider stub is active in production. Set DOMAIN_PROVIDER=vercel.");
+    }
+    console.log(`[domains/local] getDomainConfig ${host} — pretending DNS points here`);
+    return { misconfigured: false };
+  }
+
+  async getDomainSetup(host: string): Promise<DnsRecord[]> {
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Local domain provider stub is active in production. Set DOMAIN_PROVIDER=vercel.");
+    }
+    const isApex = host.split(".").length === 2;
+    const apex = host.split(".").slice(-2).join(".");
+    const relativeName = host === apex ? "@" : host.slice(0, -(apex.length + 1));
+    return isApex
+      ? [{ type: "A", name: "@", value: "76.76.21.21" }]
+      : [{ type: "CNAME", name: relativeName, value: "cname.<your-host-provider>.example" }];
+  }
+
   async removeDomain(host: string): Promise<void> {
     if (process.env.NODE_ENV === "production") {
       // For removal we don't throw — silently no-op is the safer behavior

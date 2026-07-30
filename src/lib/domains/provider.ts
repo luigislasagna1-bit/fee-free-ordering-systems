@@ -32,6 +32,16 @@ export interface DomainProvider {
   getDomainStatus(host: string): Promise<DomainStatus>;
   /** Force a verification check (some providers expose a manual re-check). */
   verifyDomain(host: string): Promise<DomainStatus>;
+  /** Is the domain's DNS actually pointing at the host? Vercel's `verified`
+   *  flag only covers OWNERSHIP (TXT challenge / not claimed elsewhere) —
+   *  a domain can be "verified" while its DNS still points at the old site
+   *  (the 2026-07-30 luigislasagna.com incident). Cutovers must gate on
+   *  `misconfigured === false`, not on `verified` alone. */
+  getDomainConfig(host: string): Promise<{ misconfigured: boolean; error?: string }>;
+  /** The DNS records the registrar needs for this host — recomputable at any
+   *  time so the admin UI can re-show them after a page reload (addDomain's
+   *  records used to live only in component state and vanished on refresh). */
+  getDomainSetup(host: string): Promise<DnsRecord[]>;
   /** Tell the host to stop accepting this domain. */
   removeDomain(host: string): Promise<void>;
 }

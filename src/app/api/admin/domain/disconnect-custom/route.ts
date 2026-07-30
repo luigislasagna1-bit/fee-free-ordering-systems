@@ -14,18 +14,45 @@ export async function DELETE() {
 
   const r = await prisma.restaurant.findUnique({
     where: { id: user.restaurantId },
-    select: { customDomain: true },
+    select: { customDomain: true, pendingCustomDomain: true, previousCustomDomain: true },
   });
-  if (!r?.customDomain) return NextResponse.json({ ok: true });
+  if (!r?.customDomain && !r?.pendingCustomDomain) return NextResponse.json({ ok: true });
 
   const provider = getDomainProvider();
+
+  // A pending domain SWITCH is cancelled first, on its own — the live domain
+  // stays exactly as it is (zero-downtime guarantee). Only a second delete
+  // with no pending switch removes the live domain itself.
+  if (r.pendingCustomDomain) {
+    try {
+      await provider.removeDomain(r.pendingCustomDomain);
+    } catch (e: any) {
+      console.warn("[domain disconnect] provider.removeDomain (pending) failed:", e?.message);
+    }
+    await prisma.restaurant.update({
+      where: { id: user.restaurantId },
+      data: { pendingCustomDomain: null, customDomainError: null },
+    });
+    return NextResponse.json({ ok: true, cancelledPending: true, liveDomain: r.customDomain });
+  }
+
   try {
-    await provider.removeDomain(r.customDomain);
+    await provider.removeDomain(r.customDomain!);
   } catch (e: any) {
     // Don't block the row update on provider errors — the user wants the
     // domain gone from their account. Surface the error so they can manually
     // clean up on the provider side if needed.
     console.warn("[domain disconnect] provider.removeDomain failed:", e?.message);
+  }
+  // The previous-domain redirect target disappears with the live domain, so
+  // clear it too (the resolver only redirects when customDomain is set, but a
+  // stale unique value would also block that domain from being reused).
+  if (r.previousCustomDomain) {
+    try {
+      await provider.removeDomain(r.previousCustomDomain);
+    } catch (e: any) {
+      console.warn("[domain disconnect] provider.removeDomain (previous) failed:", e?.message);
+    }
   }
 
   await prisma.restaurant.update({
@@ -35,6 +62,7 @@ export async function DELETE() {
       customDomainStatus: "none",
       customDomainAddedAt: null,
       customDomainError: null,
+      previousCustomDomain: null,
     },
   });
 

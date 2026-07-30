@@ -156,6 +156,40 @@ class VercelProvider implements DomainProvider {
     };
   }
 
+  async getDomainConfig(host: string): Promise<{ misconfigured: boolean; error?: string }> {
+    // v6 config endpoint is the ONLY authoritative "is DNS pointing at us"
+    // signal — `verified` on the domain object covers ownership, not routing.
+    const url = `${API_BASE}/v6/domains/${encodeURIComponent(host)}/config${teamQuery()}`;
+    const res = await fetch(url, { headers: authHeaders() });
+    const data = await res.json();
+    if (!res.ok) {
+      // Fail CLOSED (misconfigured=true): a cutover must never proceed on an
+      // API error — the old domain would go 404 while the new one may not route.
+      return { misconfigured: true, error: data?.error?.message || `HTTP ${res.status}` };
+    }
+    return { misconfigured: data.misconfigured !== false };
+  }
+
+  async getDomainSetup(host: string): Promise<DnsRecord[]> {
+    // Outstanding ownership challenges first (TXT etc.), then the standard
+    // routing record — same shapes addDomain returns, but recomputable.
+    const url = `${API_BASE}/v9/projects/${projectId()}/domains/${encodeURIComponent(host)}${teamQuery()}`;
+    const res = await fetch(url, { headers: authHeaders() });
+    const data = res.ok ? await res.json() : {};
+    const verification = (data.verification ?? []) as Array<{ type: string; domain: string; value: string }>;
+    const records: DnsRecord[] = verification.map((v) => ({
+      type: (v.type as DnsRecordType) ?? "TXT",
+      name: toRegistrarName(v.domain, host),
+      value: v.value,
+    }));
+    if (isApex(host)) {
+      records.push({ type: "A", name: "@", value: "76.76.21.21" });
+    } else {
+      records.push({ type: "CNAME", name: toRegistrarName(host, host), value: "cname.vercel-dns.com" });
+    }
+    return records;
+  }
+
   async removeDomain(host: string): Promise<void> {
     const url = `${API_BASE}/v9/projects/${projectId()}/domains/${encodeURIComponent(host)}${teamQuery()}`;
     const res = await fetch(url, { method: "DELETE", headers: authHeaders() });

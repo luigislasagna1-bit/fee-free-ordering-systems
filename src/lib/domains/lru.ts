@@ -46,6 +46,10 @@ export type TenantInfo = {
    *  redirect target (`<subdomain>.<platform>`) when a custom domain has
    *  lapsed; null falls back to `<platform>/order/<slug>`. */
   subdomain?: string | null;
+  /** The host was a restaurant's PREVIOUS custom domain (pre-cutover) —
+   *  the proxy 308s to the same path on this new live domain, so printed
+   *  QR codes and old links keep working after a domain switch. */
+  redirectToHost?: string | null;
 };
 
 type Entry = TenantInfo & { expiresAt: number };

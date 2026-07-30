@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-19 by Claude (**iOS ring round 3 shipped** from Fabrizio's 2026-07-18 video — the "two orders at once" double-ring, the "music card with a play button", and the ring-gap cadence all fixed web/server-side (adversarially reviewed, 21-agent workflow; 823 tests); his re-test asks posted on the report (IN_TESTING). The wake-handoff piece still rides the NEXT TestFlight build (006c669d, already committed). Earlier same day: Erik's $10 make-good SENT + verified (T-J closed). Remaining opens: awaiting Apple ×1 + Google ×2 review emails, B5 Kitchen 16 KB real fix.)
+**Last updated:** 2026-07-30 by Claude (**A26 guest self-cancel PASSED on prod** — Luigi ran the closed-store card order + cancel; verified: order `cancelled` / `cancelledBy=customer`, wallet spend row flipped to `released` and the $2.29 credit returned. **A28 upgraded + incident**: the first attempt to connect www.luigislasagna.com briefly 404'd the live store; restored in ~4 min, and the zero-downtime domain-switch fix is built — see A28 for the corrected 6-step plan. Earlier today: polish batch shipped (reorder sold-out gap, reservation closed-hours email, eye-toggle everywhere, marketplace /account i18n ×38).)
+**Previous update:** 2026-07-19 by Claude (**iOS ring round 3 shipped** from Fabrizio's 2026-07-18 video — the "two orders at once" double-ring, the "music card with a play button", and the ring-gap cadence all fixed web/server-side (adversarially reviewed, 21-agent workflow; 823 tests); his re-test asks posted on the report (IN_TESTING). The wake-handoff piece still rides the NEXT TestFlight build (006c669d, already committed). Earlier same day: Erik's $10 make-good SENT + verified (T-J closed). Remaining opens: awaiting Apple ×1 + Google ×2 review emails, B5 Kitchen 16 KB real fix.)
 **Previous update:** 2026-07-17 by Claude (🎉 driver iOS SUBMITTED to App Review 1:22 AM — Waiting for Review; prod test deliveries cleaned; v1.1 Phase 2 deployed. Earlier: Android submission prep — BOTH signed RELEASE .aab files built + cryptographically proven release-signed [Kitchen vc21/v3.0 + Driver vc1/v1.0, same upload key]; Play org conversion confirmed = 20-tester gate GONE; wrote Play listing copy for both apps; generated 4 Play screenshots from the local demo; rewrote IOS_APP_STORE_SUBMISSION.md for the org + added the driver app. Apple org still Pending — decisions logged in A17.)
 
 ---
@@ -41,16 +42,43 @@
 
 ## A. DO NOW — this week, in priority order
 
-### A28. 🥇 TOMORROW FIRST: point luigislasagna.com at the new system (the big cutover)
-Luigi's call (2026-07-30, ~12:30 AM): the .com is where most real customers land — forward it to the
-new platform like www.luigislasagna.ca already is; once proven, www.luigislasagnamilton.ca follows.
-Recon done tonight (read-only): BOTH domains sit on GoDaddy's domain-forwarding service already, so
-this is a 5-minute edit — GoDaddy → luigislasagna.com → Domain → Forwarding → change the target to
-the hosted site (mirror the .ca's exact forwarding entry; use 301 permanent + include www).
-⚠️ SAFETY: touch ONLY the "Forwarding" setting — NOT nameservers, NOT mail records.
-info@luigislasagna.com runs on Microsoft 365 via this domain's MX and must keep working (verified
-tonight: forwarding edits don't affect it). After the switch: place one test order end-to-end, watch
-a few days of real orders, then repeat for luigislasagnamilton.ca.
+### A28. 🥇 Make **www.luigislasagna.com** the store's REAL address (upgraded from "just forward it")
+Luigi's call (2026-07-30, ~12:30 AM): the .com is where most real customers land. Later that day he
+chose the stronger option — not a forward, but making **www.luigislasagna.com the actual store
+domain** (it's on all his branding; it also moves the Google/SEO value onto his brand domain instead
+of luigispizzapastawings.com).
+
+**⚠️ INCIDENT 2026-07-30 ~3 PM — the first attempt took the live store offline (fixed, ~4 min).**
+Luigi connected www.luigislasagna.com in Admin → Website → Domain. The OLD code overwrote
+`Restaurant.customDomain` INSTANTLY, so luigispizzapastawings.com (his live store) started 404ing
+while the new domain's DNS still pointed at the Milton site. The UI also said "Verified" — that was
+Vercel OWNERSHIP verification, not DNS routing — and never showed him the DNS records to add.
+Claude restored `customDomain=luigispizzapastawings.com` (prod verified 200 again) and then built
+the platform fix so this can NEVER happen to any restaurant:
+  • a new domain connected while one is live goes to `pendingCustomDomain` — the live domain keeps
+    serving and keeps powering every link/email;
+  • the DNS records are always shown and now SURVIVE a page reload (recomputed server-side);
+  • cutover happens only when the provider confirms DNS actually routes here (`misconfigured=false`),
+    never on ownership alone;
+  • after cutover the old domain 308-redirects (path preserved) → old QR codes/links keep working.
+
+**The steps (do them in this order, WITH Claude):**
+1. ☐ Claude deploys the zero-downtime fix. (Do nothing at GoDaddy before this.)
+2. ☐ Luigi: Admin → Website → Domain → connect `www.luigislasagna.com` → it shows **"Waiting for DNS"**.
+3. ☐ Luigi at GoDaddy on luigislasagna.com: **DELETE the Forwarding entry covering `www`** (it
+   currently 301s www → www.luigislasagnamilton.ca and would fight the new record), then **add
+   `CNAME` name `www` value `cname.vercel-dns.com`**.
+4. ☐ Automatic: within ~5–30 min the admin flips to the new domain; luigispizzapastawings.com starts
+   redirecting to it.
+5. ☐ Luigi at GoDaddy: point the BARE `luigislasagna.com` forwarding at `https://www.luigislasagna.com`
+   (301, forward only, no masking).
+6. ☐ Together: one live test order end-to-end + MX re-verify. Then repeat for luigislasagnamilton.ca.
+
+⚠️ SAFETY: touch ONLY Forwarding + the new `www` CNAME — NOT nameservers, NOT MX/mail records.
+info@luigislasagna.com runs on Microsoft 365 via this domain's MX. Baseline captured 2026-07-30 and
+stored in `scripts/i18n-data/_mx-baseline.json` (`0 luigislasagna-com.mail.protection.outlook.com`);
+`npx tsx scripts/_verify-domain-cutover.ts luigis-lasagna-pizzeria --mx-host=luigislasagna.com`
+re-checks mail + both domains' routing (incl. a path-preserving deep-link check) after every step.
 
 ### A27. 🆕 Fabrizio's 9-item batch (cms0gyexp) BUILT — plus a 20-minute email-deliverability session with you
 All nine items are implemented (see the report reply): customer emails now follow the CUSTOMER's

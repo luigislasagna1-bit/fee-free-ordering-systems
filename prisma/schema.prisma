@@ -375,6 +375,15 @@ model Restaurant {
   customDomainStatus  String    @default("none") // none | pending | verifying | verified | error
   customDomainAddedAt DateTime?
   customDomainError   String?
+  /// Zero-downtime domain switch (2026-07-30 incident: connecting a new domain
+  /// used to overwrite customDomain instantly, 404ing the live domain before
+  /// the new one's DNS existed). A NEW domain connected while one is already
+  /// live lands here; the resolver serves the store on this host too, and only
+  /// verify-custom's DNS-confirmed cutover promotes it to customDomain.
+  pendingCustomDomain  String?  @unique
+  /// The domain that was live before the last cutover. The resolver 308s it to
+  /// customDomain (path-preserving) so printed QR codes and old links survive.
+  previousCustomDomain String?  @unique
 
   /// LOCAL calendar day (stored as a UTC-midnight @db.Date of the local day
   /// key) the end-of-day digest email was last SENT for. Written by the

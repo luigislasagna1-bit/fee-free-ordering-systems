@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { getDomainProvider } from "@/lib/domains/provider";
+import { hostCandidates } from "@/lib/domains/host-candidates";
 import { hasFeature } from "@/lib/entitlements";
 
 /**
@@ -62,22 +63,51 @@ async function handle(req: NextRequest) {
     return NextResponse.json({ error: "Invalid domain format" }, { status: 400 });
   }
 
-  // Uniqueness across BOTH restaurant + reseller tables. Reseller
-  // custom domains live on ResellerProfile (the White-Label Full tier
-  // feature); double-binding a domain to a restaurant + a reseller
-  // would create ambiguous proxy resolution.
+  // Uniqueness across BOTH restaurant + reseller tables (including domains
+  // parked in another restaurant's pending/previous slots). Reseller custom
+  // domains live on ResellerProfile (the White-Label Full tier feature);
+  // double-binding a domain would create ambiguous proxy resolution.
+  // Compare on the SAME identity the host resolver uses (apex ≡ www) across
+  // every column that binds a domain to a tenant. An exact-match check here
+  // let "www.victim.com" slip past a "victim.com" claim and then answer for
+  // it at the edge — a cross-tenant hijack caught in review (2026-07-30).
+  const claimCandidates = hostCandidates(domain);
   const [restaurantClash, resellerClash] = await Promise.all([
     prisma.restaurant.findFirst({
-      where: { customDomain: domain, NOT: { id: user.restaurantId } },
+      where: {
+        OR: [
+          { customDomain: { in: claimCandidates } },
+          { pendingCustomDomain: { in: claimCandidates } },
+          { previousCustomDomain: { in: claimCandidates } },
+        ],
+        NOT: { id: user.restaurantId },
+      },
       select: { id: true },
     }),
     prisma.resellerProfile.findFirst({
-      where: { customDomain: domain },
+      where: { customDomain: { in: claimCandidates } },
       select: { id: true },
     }),
   ]);
   if (restaurantClash) return NextResponse.json({ error: "Domain is already connected to another restaurant" }, { status: 409 });
   if (resellerClash) return NextResponse.json({ error: "Domain is already in use by a reseller white-label account" }, { status: 409 });
+
+  const current = await prisma.restaurant.findUnique({
+    where: { id: user.restaurantId },
+    select: { customDomain: true, customDomainStatus: true },
+  });
+  if (current?.customDomain === domain) {
+    // Re-connecting the domain that's already live is a no-op, not a switch.
+    return NextResponse.json({ ok: true, domain, dnsRecords: [], mode: "already-live" });
+  }
+
+  // ZERO-DOWNTIME SWITCH (2026-07-30 incident): when a domain is already LIVE,
+  // the new one goes into pendingCustomDomain — the live domain keeps serving
+  // and keeps powering links/emails. The resolver serves the store on the
+  // pending host as soon as its DNS lands, and verify-custom performs the
+  // atomic cutover only once the provider confirms DNS actually routes here
+  // (ownership-"verified" alone is NOT enough — that was the incident).
+  const isSwitch = !!current?.customDomain;
 
   const provider = getDomainProvider();
   let dnsRecords;
@@ -86,25 +116,39 @@ async function handle(req: NextRequest) {
     dnsRecords = result.dnsRecords;
     await prisma.restaurant.update({
       where: { id: user.restaurantId },
-      data: {
-        customDomain: domain,
-        customDomainStatus: result.status.verified ? "verified" : "pending",
-        customDomainAddedAt: new Date(),
-        customDomainError: null,
-      },
+      data: isSwitch
+        ? { pendingCustomDomain: domain, customDomainError: null }
+        : {
+            customDomain: domain,
+            // Even when ownership auto-verifies, DNS may not point at us yet —
+            // verify-custom promotes to "verified" only once routing confirms.
+            customDomainStatus: "pending",
+            customDomainAddedAt: new Date(),
+            customDomainError: null,
+          },
     });
   } catch (e: any) {
+    // A failed SWITCH must not touch the live domain — record the error only.
     await prisma.restaurant.update({
       where: { id: user.restaurantId },
-      data: {
-        customDomain: domain,
-        customDomainStatus: "error",
-        customDomainError: e?.message ?? String(e),
-      },
+      data: isSwitch
+        ? { customDomainError: e?.message ?? String(e) }
+        : {
+            customDomain: domain,
+            customDomainStatus: "error",
+            customDomainError: e?.message ?? String(e),
+          },
     });
     return NextResponse.json({ error: e?.message ?? "Provider error" }, { status: 502 });
   }
 
-  return NextResponse.json({ ok: true, domain, dnsRecords, providerIsDevStub: provider.isDevStub });
+  return NextResponse.json({
+    ok: true,
+    domain,
+    dnsRecords,
+    mode: isSwitch ? "switch-pending" : "first-connect",
+    liveDomain: current?.customDomain ?? null,
+    providerIsDevStub: provider.isDevStub,
+  });
 }
 

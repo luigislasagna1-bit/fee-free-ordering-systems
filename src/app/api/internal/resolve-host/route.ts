@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
+import { hostCandidates } from "@/lib/domains/host-candidates";
 
 // Force Node runtime — Prisma cannot run in edge runtime.
 export const runtime = "nodejs";
@@ -56,10 +57,9 @@ export async function GET(req: NextRequest) {
   // in Restaurant.customDomain (whatever the user typed). Strip
   // the leading "www." before the DB lookup so either hostname
   // resolves to the same restaurant row.
-  const candidates =
-    by === "customDomain"
-      ? Array.from(new Set([value, value.replace(/^www\./, ""), `www.${value.replace(/^www\./, "")}`]))
-      : [value];
+  // Shared with the connect/claim routes via hostCandidates() — the two MUST
+  // agree on what counts as "the same domain" (see host-candidates.ts).
+  const candidates = by === "customDomain" ? hostCandidates(value) : [value];
 
   const where = by === "subdomain"
     ? { subdomain: value, isActive: true }
@@ -69,6 +69,37 @@ export async function GET(req: NextRequest) {
     where: where as any,
     select: { id: true, slug: true, subdomain: true },
   });
+
+  // ── Zero-downtime domain switch (2026-07-30) ───────────────────────
+  // NOTE: we deliberately DO NOT serve `pendingCustomDomain` here.
+  //
+  // An earlier draft did, to make a switched-to domain answer the instant its
+  // DNS landed. That was a cross-tenant HIJACK vector: pendingCustomDomain
+  // carries NO ownership proof (anyone with the add-on can park any string in
+  // it), and this resolver matches apex+www as one identity while the connect
+  // pre-check matched exactly — so tenant A could park "www.victim.com",
+  // and once the real owner pointed victim.com here but before their own
+  // domain reached "verified", A's storefront (and A's Stripe account) would
+  // answer on the victim's domain. Found by adversarial review before ship.
+  //
+  // Zero-downtime does not need this branch: it is guaranteed by never
+  // touching the LIVE customDomain until verify-custom's cutover, which
+  // fires on exactly the same condition that would have made a pending
+  // domain safe to serve (provider-confirmed ownership AND routing).
+
+  // A PREVIOUS domain (pre-cutover) 308s to the new live domain with the
+  // path preserved, so printed QR codes and old links keep working forever.
+  // Safe by construction: previousCustomDomain is only ever written by the
+  // cutover, from a customDomain that was already provider-verified.
+  if (!r && by === "customDomain") {
+    const prev = await prisma.restaurant.findFirst({
+      where: { previousCustomDomain: { in: candidates }, isActive: true, customDomain: { not: null } },
+      select: { customDomain: true },
+    });
+    if (prev?.customDomain) {
+      return NextResponse.json({ slug: null, hasHostedSite: false, redirectToHost: prev.customDomain });
+    }
+  }
 
   if (r) {
     // Resolve hosted-site entitlement so the middleware can branch the

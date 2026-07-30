@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser, isResellerView } from "@/lib/session";
 import prisma from "@/lib/db";
 import { getDomainProvider } from "@/lib/domains/provider";
+import { hostCandidates } from "@/lib/domains/host-candidates";
 
 /**
  * POST /api/reseller/domain/connect { domain: "partner.com" }
@@ -64,13 +65,26 @@ export async function POST(req: NextRequest) {
   // The proxy resolver uses the host header to route, so a domain
   // double-bound to a restaurant AND a reseller would have ambiguous
   // semantics. We forbid it.
+  // All THREE restaurant domain slots count as "claimed" — a domain mid-switch
+  // (pendingCustomDomain) or kept for redirects after a switch
+  // (previousCustomDomain) is still bound to that restaurant, and the host
+  // resolver consults previousCustomDomain BEFORE the reseller fallback.
+  // Compared on the resolver's own apex ≡ www identity via hostCandidates()
+  // so the two sides can never disagree. (Zero-downtime switch, 2026-07-30.)
+  const claimCandidates = hostCandidates(domain);
   const [restaurantClash, resellerClash] = await Promise.all([
     prisma.restaurant.findFirst({
-      where: { customDomain: domain },
+      where: {
+        OR: [
+          { customDomain: { in: claimCandidates } },
+          { pendingCustomDomain: { in: claimCandidates } },
+          { previousCustomDomain: { in: claimCandidates } },
+        ],
+      },
       select: { id: true },
     }),
     prisma.resellerProfile.findFirst({
-      where: { customDomain: domain, NOT: { id: user.resellerProfileId } },
+      where: { customDomain: { in: claimCandidates }, NOT: { id: user.resellerProfileId } },
       select: { id: true },
     }),
   ]);

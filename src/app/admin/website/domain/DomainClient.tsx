@@ -13,6 +13,8 @@ interface InitialState {
   subdomain: string;
   customDomain: string | null;
   customDomainStatus: string;
+  pendingCustomDomain: string | null;
+  previousCustomDomain: string | null;
 }
 
 interface DnsRecord { type: string; name: string; value: string }
@@ -26,34 +28,62 @@ interface Props {
    *  Without it, the custom-domain section shows an upgrade CTA
    *  instead of the connect input. */
   hasCustomDomainAddOn: boolean;
+  /** DNS records computed SERVER-SIDE for whichever domain still needs
+   *  registrar work (the pending switch target, or an unverified live
+   *  domain). Server-provided so the table survives page reloads — the
+   *  old bug was that records lived only in post-connect component
+   *  state and vanished on refresh. */
+  initialDnsRecords: DnsRecord[] | null;
 }
 
 type SubAvailability = { ok: true } | { ok: false; reason: string } | null;
 
-export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCustomDomainAddOn }: Props) {
+/** Outcome of one verify-custom poll:
+ *  - "cutover"  → a pending domain SWITCH just completed (new domain live)
+ *  - "verified" → the live domain is now verified (no switch in progress)
+ *  - "pending"  → still waiting on DNS */
+type VerifyResult = "cutover" | "verified" | "pending";
+
+export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCustomDomainAddOn, initialDnsRecords }: Props) {
   const t = useTranslations("admin.domain");
   const [subdomain, setSubdomain] = useState(initial.subdomain);
   const [subAvail, setSubAvail] = useState<SubAvailability>(null);
   const [savingSub, setSavingSub] = useState(false);
   const subAvailTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const [customDomain, setCustomDomain] = useState(initial.customDomain ?? "");
+  // The domain currently serving the store. Changes client-side on
+  // first-connect and on a zero-downtime switch cutover.
+  const [liveDomain, setLiveDomain] = useState(initial.customDomain);
+  // A domain SWITCH in progress: the new domain waits here while the live
+  // one keeps serving. verify-custom performs the atomic cutover.
+  const [pendingDomain, setPendingDomain] = useState(initial.pendingCustomDomain);
+  // After a cutover, the old domain permanently redirects to the new one.
+  const [previousDomain, setPreviousDomain] = useState(initial.previousCustomDomain);
   const [customStatus, setCustomStatus] = useState(initial.customDomainStatus);
+  // The connect / switch input field (always a NEW domain being typed).
+  const [domainInput, setDomainInput] = useState("");
   const [connecting, setConnecting] = useState(false);
   const [verifying, setVerifying] = useState(false);
-  const [dnsRecords, setDnsRecords] = useState<DnsRecord[] | null>(null);
+  const [dnsRecords, setDnsRecords] = useState<DnsRecord[] | null>(initialDnsRecords);
+  // Ownership confirmed at the provider but DNS not routing to us yet —
+  // surfaced so the owner knows the TXT record worked and only the
+  // A/CNAME change is still propagating.
+  const [dnsPending, setDnsPending] = useState(false);
   const [disconnecting, setDisconnecting] = useState(false);
-  // Pre-flight warning modal. Click "Connect" shows the modal; only
-  // when the user confirms do we actually fire the API call.
+  // Pre-flight warning modal. Click "Connect" / "Switch" shows the modal;
+  // only when the user confirms do we actually fire the API call.
   // Prevents accidental DNS takedowns of the restaurant's existing
   // website. They have to click through a clear warning explaining
   // what's about to happen.
   const [showConfirm, setShowConfirm] = useState(false);
 
   const liveUrl =
-    initial.customDomain && customStatus === "verified"
-      ? `https://${initial.customDomain}`
+    liveDomain && customStatus === "verified"
+      ? `https://${liveDomain}`
       : `https://${subdomain}.${platformDomain}`;
+
+  // The domain still awaiting registrar work (drives the DNS table + mailto).
+  const setupDomain = pendingDomain ?? liveDomain ?? "";
 
   // Debounced availability check while typing the subdomain. Skip if value
   // matches what's already saved.
@@ -74,7 +104,38 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
     return () => { if (subAvailTimer.current) clearTimeout(subAvailTimer.current); };
   }, [subdomain, initial.subdomain, t]);
 
-  // Auto-poll while a custom domain is in transit (pending / verifying).
+  /** Hit /verify-custom ONCE. Used by the manual button + both background
+   *  auto-polls. Handles ALL state transitions centrally (cutover swap,
+   *  verified promotion, dnsPending flag) so no caller can miss the
+   *  zero-downtime switch. The cutover toast fires here — exactly once —
+   *  regardless of which caller happened to catch it. Other toasts are
+   *  left to the caller. */
+  const pollVerifyOnce = async (): Promise<VerifyResult> => {
+    const res = await fetch("/api/admin/domain/verify-custom", { method: "POST" });
+    const raw = await res.text();
+    let data: any = {};
+    try { data = raw ? JSON.parse(raw) : {}; } catch { /* leave empty */ }
+    setDnsPending(!!data?.dnsPending);
+    if (data?.cutover) {
+      // ZERO-DOWNTIME SWITCH just completed: pending → live; the old live
+      // domain now permanently redirects to the new one.
+      setPreviousDomain(data.redirectingFrom ?? null);
+      setLiveDomain(data.liveDomain ?? null);
+      setPendingDomain(null);
+      setCustomStatus("verified");
+      setDnsRecords(null);
+      toast.success(t("switchedLive"));
+      return "cutover";
+    }
+    if (data?.status?.verified) {
+      setCustomStatus("verified");
+      return "verified";
+    }
+    return "pending";
+  };
+
+  // Fast auto-poll right after a connect (pending / verifying): every 5s
+  // for up to 2 minutes, so quick DNS setups verify without any clicking.
   useEffect(() => {
     if (customStatus !== "pending" && customStatus !== "verifying") return;
     let cancelled = false;
@@ -82,11 +143,10 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
     const tick = async () => {
       attempts++;
       try {
-        const res = await fetch("/api/admin/domain/verify-custom", { method: "POST" });
-        const data = await res.json();
+        const result = await pollVerifyOnce();
         if (cancelled) return;
-        if (data?.status?.verified) {
-          setCustomStatus("verified");
+        if (result === "cutover") return; // toast handled centrally
+        if (result === "verified") {
           toast.success(t("verified"));
           return;
         }
@@ -96,6 +156,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
     };
     const handle = setTimeout(tick, 5000);
     return () => { cancelled = true; clearTimeout(handle); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customStatus, t]);
 
   const saveSubdomain = async () => {
@@ -117,12 +178,11 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
 
   const connectCustom = async () => {
     setConnecting(true);
-    setDnsRecords(null);
     try {
       const res = await fetch("/api/admin/domain/connect-custom", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ domain: customDomain }),
+        body: JSON.stringify({ domain: domainInput }),
       });
       // Read as text first so empty-body 5xx responses don't crash with
       // "Unexpected end of JSON input" — we still get an error message,
@@ -137,37 +197,42 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
             || `${t("connectFailed")} (HTTP ${res.status})`,
         );
       }
-      setDnsRecords(data.dnsRecords ?? []);
-      setCustomStatus("pending");
-      toast.success(t("customConnected"));
+      if (data.mode === "already-live") {
+        // Re-connecting the domain that's already live — nothing to do.
+        toast(t("alreadyLive"), { icon: "ℹ️" });
+      } else if (data.mode === "switch-pending") {
+        // ZERO-DOWNTIME SWITCH: live domain untouched — the new one waits
+        // in pending until the provider confirms its DNS actually routes.
+        setPendingDomain(data.domain);
+        setDnsRecords(data.dnsRecords ?? []);
+        setDnsPending(false);
+        setDomainInput("");
+        toast.success(t("customConnected"));
+      } else {
+        // First connect — no domain was live before.
+        setLiveDomain(data.domain);
+        setCustomStatus("pending");
+        setDnsRecords(data.dnsRecords ?? []);
+        setDnsPending(false);
+        setDomainInput("");
+        toast.success(t("customConnected"));
+      }
     } catch (e: any) {
       toast.error(e.message || t("connectFailed"));
     }
     setConnecting(false);
   };
 
-  /** Hit /verify-custom ONCE. Used by both the manual button + the
-   *  background auto-poll. Returns whether the domain is now verified.
-   *  Silent (no toast) — the caller decides whether to toast. */
-  const pollVerifyOnce = async (): Promise<boolean> => {
-    const res = await fetch("/api/admin/domain/verify-custom", { method: "POST" });
-    const raw = await res.text();
-    let data: any = {};
-    try { data = raw ? JSON.parse(raw) : {}; } catch { /* leave empty */ }
-    if (data?.status?.verified) {
-      setCustomStatus("verified");
-      return true;
-    }
-    return false;
-  };
-
-  // Auto-poll while status is pending/verifying so the user doesn't
-  // have to manually click "Re-check" every 30 seconds. Polls every
-  // 20s and stops on verified, on disconnect, or after 20 minutes
-  // (the typical max DNS propagation window we tell people about).
+  // Auto-poll while a domain is in transit (unverified live domain OR a
+  // pending switch) so the user doesn't have to manually click "Re-check"
+  // every 30 seconds. Polls every 20s and stops on verified / cutover, on
+  // disconnect, or after 20 minutes (the typical max DNS propagation
+  // window we tell people about).
   useEffect(() => {
-    if (!initial.customDomain) return;
-    if (customStatus === "verified" || customStatus === "none") return;
+    const needsPolling = pendingDomain
+      ? true
+      : !!liveDomain && customStatus !== "verified" && customStatus !== "none";
+    if (!needsPolling) return;
     const start = Date.now();
     const MAX_MS = 20 * 60_000; // 20 minutes
     const interval = setInterval(async () => {
@@ -176,40 +241,59 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
         return;
       }
       try {
-        const verified = await pollVerifyOnce();
-        if (verified) clearInterval(interval);
+        const result = await pollVerifyOnce();
+        if (result === "cutover" || result === "verified") clearInterval(interval);
       } catch {
         // Swallow transient errors — next tick will retry.
       }
     }, 20_000);
     return () => clearInterval(interval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initial.customDomain, customStatus]);
+  }, [liveDomain, pendingDomain, customStatus]);
 
   /** Manual re-check (button-driven). Toasts the result so the user
    *  knows the click worked. */
   const reverify = async () => {
     setVerifying(true);
     try {
-      const verified = await pollVerifyOnce();
-      if (verified) toast.success(t("verified"));
-      else toast(t("notYetVerified"), { icon: "⏳" });
+      const result = await pollVerifyOnce();
+      // "cutover" already toasted centrally in pollVerifyOnce.
+      if (result === "verified") toast.success(t("verified"));
+      else if (result === "pending") toast(t("notYetVerified"), { icon: "⏳" });
     } catch {
       toast.error(t("verifyFailed"));
     }
     setVerifying(false);
   };
 
+  /** DELETE /disconnect-custom. When a switch is pending the server ONLY
+   *  cancels the pending switch (live domain untouched); with no pending
+   *  it disconnects the live domain fully. The confirm copy + state
+   *  cleanup mirror those two modes. */
   const disconnectCustom = async () => {
-    if (!confirm(t("disconnectConfirm"))) return;
+    const cancellingSwitch = !!pendingDomain;
+    if (!confirm(t(cancellingSwitch ? "cancelSwitchConfirm" : "disconnectConfirm"))) return;
     setDisconnecting(true);
     try {
       const res = await fetch("/api/admin/domain/disconnect-custom", { method: "DELETE" });
-      if (!res.ok) throw new Error((await res.json())?.error || t("disconnectFailed"));
-      setCustomDomain("");
-      setCustomStatus("none");
-      setDnsRecords(null);
-      toast.success(t("disconnected"));
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || t("disconnectFailed"));
+      if (data?.cancelledPending) {
+        // Only the pending switch was cancelled — the live domain stays.
+        setPendingDomain(null);
+        setDnsRecords(null);
+        setDnsPending(false);
+        toast.success(t("switchCancelled"));
+      } else {
+        setLiveDomain(null);
+        setPendingDomain(null);
+        setPreviousDomain(null);
+        setCustomStatus("none");
+        setDnsRecords(null);
+        setDnsPending(false);
+        setDomainInput("");
+        toast.success(t("disconnected"));
+      }
     } catch (e: any) {
       toast.error(e.message || t("disconnectFailed"));
     }
@@ -220,6 +304,74 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
     try { await navigator.clipboard.writeText(text); toast.success(t("copied")); }
     catch { toast.error(t("copyFailed")); }
   };
+
+  // Shared DNS setup block: ETA banner + records table + registrar guide +
+  // support nudge. Rendered for an unverified live domain AND for a pending
+  // switch target. Records come from the server (survive reloads).
+  const dnsSetupBlock = dnsRecords && dnsRecords.length > 0 ? (
+    <>
+      {/* ETA banner — sets the right expectation BEFORE the
+          user starts the DNS dance. Without this, owners
+          panic 90 seconds after adding records when
+          "Re-check" still says pending. */}
+      <div className="mt-3 rounded-lg bg-blue-50 border border-blue-200 p-3 flex items-start gap-2">
+        <Clock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+        <div className="text-xs text-blue-900 leading-relaxed">
+          {t.rich("etaBanner", {
+            strong: (chunks) => <strong>{chunks}</strong>,
+          })}
+        </div>
+      </div>
+
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mt-3">
+        <p className="text-xs font-semibold text-gray-700 mb-2">{t("dnsInstructions")}</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead className="text-left text-gray-500">
+              <tr>
+                <th className="py-1 pr-3 font-medium">{t("dnsType")}</th>
+                <th className="py-1 pr-3 font-medium">{t("dnsName")}</th>
+                <th className="py-1 font-medium">{t("dnsValue")}</th>
+              </tr>
+            </thead>
+            <tbody className="font-mono text-gray-800">
+              {dnsRecords.map((r, i) => (
+                <tr key={i} className="border-t border-gray-200">
+                  <td className="py-1.5 pr-3">{r.type}</td>
+                  <td className="py-1.5 pr-3">{r.name}</td>
+                  <td className="py-1.5 break-all">
+                    {r.value}
+                    <button onClick={() => copy(r.value)} className="ml-2 text-gray-400 hover:text-gray-700">
+                      <Copy className="w-3 h-3 inline" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Per-registrar step-by-step guide. Collapsed by default;
+          expand → pick GoDaddy / Namecheap / Cloudflare / etc.
+          Removes the most common support question we'd get
+          from non-technical restaurant owners. */}
+      <RegistrarGuide />
+
+      {/* Support escalation. If they're stuck, we want them to
+          email us BEFORE they give up + churn. The mailto
+          pre-fills the domain so we have context immediately. */}
+      <div className="mt-3 flex items-center justify-between text-xs">
+        <span className="text-gray-500">{t("supportNudge")}</span>
+        <a
+          href={`mailto:support@feefreeordering.com?subject=Custom%20domain%20help%20for%20${encodeURIComponent(setupDomain)}&body=Hi%20%2D%20I%27m%20trying%20to%20connect%20${encodeURIComponent(setupDomain)}%20but%20%5Bdescribe%20the%20issue%5D.`}
+          className="inline-flex items-center gap-1 text-emerald-600 font-semibold hover:text-emerald-700"
+        >
+          <Mail className="w-3 h-3" /> {t("emailSupport")}
+        </a>
+      </div>
+    </>
+  ) : null;
 
   return (
     <div className="max-w-3xl mx-auto p-6">
@@ -312,7 +464,7 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
             connected (active subscription that later lapsed), we still
             show the existing status so the owner can disconnect — but
             we never let them ADD a new domain without the add-on. */}
-        {!hasCustomDomainAddOn && !initial.customDomain ? (
+        {!hasCustomDomainAddOn && !liveDomain ? (
           <div className="rounded-lg border-2 border-emerald-200 bg-emerald-50/40 p-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
@@ -334,27 +486,70 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
               </div>
             </div>
           </div>
-        ) : !initial.customDomain ? (
+        ) : !liveDomain ? (
           <div className="flex flex-col sm:flex-row gap-2">
             <input
-              value={customDomain}
-              onChange={e => setCustomDomain(e.target.value.toLowerCase().trim())}
+              value={domainInput}
+              onChange={e => setDomainInput(e.target.value.toLowerCase().trim())}
               placeholder="yourrestaurant.com"
               className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
             <button
               onClick={() => setShowConfirm(true)}
-              disabled={connecting || !customDomain}
+              disabled={connecting || !domainInput}
               className="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-50 text-sm flex items-center gap-2 justify-center min-w-[100px]"
             >
               {connecting ? <Loader2 className="w-4 h-4 animate-spin" /> : t("connect")}
             </button>
           </div>
+        ) : pendingDomain ? (
+          <div>
+            {/* ── Zero-downtime switch in progress: BOTH cards ──────────── */}
+            {/* Live domain — keeps serving the store during the switch. */}
+            <div className="rounded-lg border border-emerald-200 bg-emerald-50/40 p-3 mb-3">
+              <p className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider mb-1">{t("liveCardStaysTitle")}</p>
+              <p className="text-sm font-mono font-semibold text-gray-900">{liveDomain}</p>
+              <StatusBadge status={customStatus} t={t} />
+            </div>
+
+            {/* Pending domain — waiting for its DNS to route to us. */}
+            <div className="rounded-lg border border-amber-200 bg-amber-50/40 p-3">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="text-[10px] font-bold text-amber-700 uppercase tracking-wider mb-1">{t("pendingCardTitle")}</p>
+                  <p className="text-sm font-mono font-semibold text-gray-900 truncate">{pendingDomain}</p>
+                  <span className="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full mt-1 bg-amber-100 text-amber-700">
+                    <Loader2 className="w-3 h-3 animate-spin" /> {t("pendingBadge")}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <button
+                    onClick={reverify}
+                    disabled={verifying}
+                    className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 px-3 py-1.5 rounded-lg border border-emerald-200 hover:bg-emerald-50 disabled:opacity-50"
+                  >
+                    {verifying ? <Loader2 className="w-4 h-4 animate-spin inline" /> : t("recheck")}
+                  </button>
+                  <button
+                    onClick={disconnectCustom}
+                    disabled={disconnecting}
+                    className="text-sm font-semibold text-red-600 hover:text-red-700 px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-50 disabled:opacity-50"
+                  >
+                    {disconnecting ? <Loader2 className="w-4 h-4 animate-spin inline" /> : t("cancelSwitch")}
+                  </button>
+                </div>
+              </div>
+              {dnsPending && (
+                <p className="text-xs text-amber-800 mt-2">{t("dnsPendingHint")}</p>
+              )}
+              {dnsSetupBlock}
+            </div>
+          </div>
         ) : (
           <div>
             <div className="flex items-center justify-between gap-3 mb-3">
               <div>
-                <p className="text-sm font-mono font-semibold text-gray-900">{initial.customDomain}</p>
+                <p className="text-sm font-mono font-semibold text-gray-900">{liveDomain}</p>
                 <StatusBadge status={customStatus} t={t} />
               </div>
               <div className="flex items-center gap-2">
@@ -378,81 +573,52 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
               </div>
             </div>
 
-            {dnsRecords && dnsRecords.length > 0 && customStatus !== "verified" && (
-              <>
-                {/* ETA banner — sets the right expectation BEFORE the
-                    user starts the DNS dance. Without this, owners
-                    panic 90 seconds after adding records when
-                    "Re-check" still says pending. */}
-                <div className="mt-3 rounded-lg bg-blue-50 border border-blue-200 p-3 flex items-start gap-2">
-                  <Clock className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <div className="text-xs text-blue-900 leading-relaxed">
-                    {t.rich("etaBanner", {
-                      strong: (chunks) => <strong>{chunks}</strong>,
-                    })}
-                  </div>
-                </div>
+            {/* After a cutover the old domain permanently redirects here. */}
+            {previousDomain && (
+              <p className="text-xs text-gray-500 mb-3">{t("previousRedirectNote", { domain: previousDomain })}</p>
+            )}
 
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mt-3">
-                  <p className="text-xs font-semibold text-gray-700 mb-2">{t("dnsInstructions")}</p>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                      <thead className="text-left text-gray-500">
-                        <tr>
-                          <th className="py-1 pr-3 font-medium">{t("dnsType")}</th>
-                          <th className="py-1 pr-3 font-medium">{t("dnsName")}</th>
-                          <th className="py-1 font-medium">{t("dnsValue")}</th>
-                        </tr>
-                      </thead>
-                      <tbody className="font-mono text-gray-800">
-                        {dnsRecords.map((r, i) => (
-                          <tr key={i} className="border-t border-gray-200">
-                            <td className="py-1.5 pr-3">{r.type}</td>
-                            <td className="py-1.5 pr-3">{r.name}</td>
-                            <td className="py-1.5 break-all">
-                              {r.value}
-                              <button onClick={() => copy(r.value)} className="ml-2 text-gray-400 hover:text-gray-700">
-                                <Copy className="w-3 h-3 inline" />
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+            {customStatus !== "verified" && dnsPending && (
+              <p className="text-xs text-amber-800 mt-2">{t("dnsPendingHint")}</p>
+            )}
+            {customStatus !== "verified" && dnsSetupBlock}
 
-                {/* Per-registrar step-by-step guide. Collapsed by default;
-                    expand → pick GoDaddy / Namecheap / Cloudflare / etc.
-                    Removes the most common support question we'd get
-                    from non-technical restaurant owners. */}
-                <RegistrarGuide />
-
-                {/* Support escalation. If they're stuck, we want them to
-                    email us BEFORE they give up + churn. The mailto
-                    pre-fills the domain so we have context immediately. */}
-                <div className="mt-3 flex items-center justify-between text-xs">
-                  <span className="text-gray-500">{t("supportNudge")}</span>
-                  <a
-                    href={`mailto:support@feefreeordering.com?subject=Custom%20domain%20help%20for%20${encodeURIComponent(initial.customDomain ?? "")}&body=Hi%20%2D%20I%27m%20trying%20to%20connect%20${encodeURIComponent(initial.customDomain ?? "")}%20but%20%5Bdescribe%20the%20issue%5D.`}
-                    className="inline-flex items-center gap-1 text-emerald-600 font-semibold hover:text-emerald-700"
+            {/* Zero-downtime switch: connect a NEW domain while this one
+                keeps serving. Same add-on gate as a first connect. */}
+            {hasCustomDomainAddOn && (
+              <div className="mt-4 pt-4 border-t border-gray-200">
+                <h3 className="text-sm font-bold text-gray-900 mb-1">{t("switchTitle")}</h3>
+                <p className="text-xs text-gray-500 mb-3">{t("switchBody")}</p>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    value={domainInput}
+                    onChange={e => setDomainInput(e.target.value.toLowerCase().trim())}
+                    placeholder="yourrestaurant.com"
+                    className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                  <button
+                    onClick={() => setShowConfirm(true)}
+                    disabled={connecting || !domainInput}
+                    className="bg-emerald-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-600 transition disabled:opacity-50 text-sm flex items-center gap-2 justify-center min-w-[100px]"
                   >
-                    <Mail className="w-3 h-3" /> {t("emailSupport")}
-                  </a>
+                    {connecting ? <Loader2 className="w-4 h-4 animate-spin" /> : t("switchCta")}
+                  </button>
                 </div>
-              </>
+              </div>
             )}
           </div>
         )}
       </section>
 
       {/* Pre-flight confirmation modal — shown after the user clicks
-          Connect but BEFORE we fire the Vercel API call. Restaurant
-          owners often don't realize that pointing a domain at us means
-          the domain stops pointing wherever it currently points (e.g.
-          an existing WordPress / Wix / Square site goes offline). The
-          modal forces an explicit acknowledgment of this trade-off
-          + reassures them that email is unaffected.
+          Connect / Switch but BEFORE we fire the Vercel API call.
+          Restaurant owners often don't realize that pointing a domain at
+          us means the domain stops pointing wherever it currently points
+          (e.g. an existing WordPress / Wix / Square site goes offline).
+          The modal forces an explicit acknowledgment of this trade-off
+          + reassures them that email is unaffected. For a SWITCH it also
+          explains the zero-downtime behavior: the current domain keeps
+          working until the new one is ready, then redirects to it.
 
           Plain fixed-position overlay; no portal lib needed. Backdrop
           click cancels; Esc-to-close handled by the X button only
@@ -465,17 +631,43 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div className="flex-1 min-w-0">
-                <h2 className="text-lg font-bold text-gray-900">{t("confirmTitle")}</h2>
+                <h2 className="text-lg font-bold text-gray-900">{t(liveDomain ? "switchConfirmTitle" : "confirmTitle")}</h2>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  {t.rich("confirmIntro", {
-                    domain: customDomain,
-                    code: (chunks) => <code className="font-mono text-gray-700 bg-gray-100 px-1 rounded">{chunks}</code>,
-                  })}
+                  {liveDomain
+                    ? t.rich("switchConfirmIntro", {
+                        domain: domainInput,
+                        liveDomain,
+                        code: (chunks) => <code className="font-mono text-gray-700 bg-gray-100 px-1 rounded">{chunks}</code>,
+                      })
+                    : t.rich("confirmIntro", {
+                        domain: domainInput,
+                        code: (chunks) => <code className="font-mono text-gray-700 bg-gray-100 px-1 rounded">{chunks}</code>,
+                      })}
                 </p>
               </div>
             </div>
 
             <ul className="space-y-2.5 text-sm text-gray-700 mb-5">
+              {liveDomain && (
+                <>
+                  <li className="flex gap-2">
+                    <span className="text-emerald-500 flex-shrink-0">✓</span>
+                    <span>
+                      {t.rich("switchBulletKeepsWorking", {
+                        strong: (chunks) => <strong>{chunks}</strong>,
+                      })}
+                    </span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-emerald-500 flex-shrink-0">✓</span>
+                    <span>
+                      {t.rich("switchBulletAutoRedirect", {
+                        strong: (chunks) => <strong>{chunks}</strong>,
+                      })}
+                    </span>
+                  </li>
+                </>
+              )}
               <li className="flex gap-2">
                 <span className="text-amber-500 flex-shrink-0">⚠️</span>
                 <span>
@@ -488,26 +680,30 @@ export function DomainClient({ initial, platformDomain, providerIsDevStub, hasCu
                 <span className="text-emerald-500 flex-shrink-0">✓</span>
                 <span>
                   {t.rich("confirmBulletEmail", {
-                    email: `orders@${customDomain || "yourdomain.com"}`,
+                    email: `orders@${domainInput || "yourdomain.com"}`,
                     strong: (chunks) => <strong>{chunks}</strong>,
                     code: (chunks) => <code className="font-mono text-gray-600 bg-gray-100 px-1 rounded">{chunks}</code>,
                   })}
                 </span>
               </li>
-              <li className="flex gap-2">
-                <span className="text-emerald-500 flex-shrink-0">✓</span>
-                <span>
-                  {t.rich("confirmBulletSsl", {
-                    strong: (chunks) => <strong>{chunks}</strong>,
-                  })}
-                </span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-gray-400 flex-shrink-0">ℹ️</span>
-                <span className="text-gray-600">
-                  {t("confirmBulletVercel")}
-                </span>
-              </li>
+              {!liveDomain && (
+                <>
+                  <li className="flex gap-2">
+                    <span className="text-emerald-500 flex-shrink-0">✓</span>
+                    <span>
+                      {t.rich("confirmBulletSsl", {
+                        strong: (chunks) => <strong>{chunks}</strong>,
+                      })}
+                    </span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span className="text-gray-400 flex-shrink-0">ℹ️</span>
+                    <span className="text-gray-600">
+                      {t("confirmBulletVercel")}
+                    </span>
+                  </li>
+                </>
+              )}
             </ul>
 
             <div className="flex gap-2 justify-end">
