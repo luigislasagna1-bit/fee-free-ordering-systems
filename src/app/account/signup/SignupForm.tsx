@@ -2,9 +2,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { PasswordInput } from "@/components/PasswordInput";
 
 export function SignupForm() {
+  const t = useTranslations("marketplaceAccount.auth");
+  const tAuth = useTranslations("auth");
+  const tCommon = useTranslations("common");
+  const tSignupForm = useTranslations("customer.signupForm");
   const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "", name: "", phone: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -23,7 +28,7 @@ export function SignupForm() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data?.error || "Sign-up failed");
+        setError(data?.error || tSignupForm("signUpFailed"));
         setSubmitting(false);
         return;
       }
@@ -31,7 +36,7 @@ export function SignupForm() {
       router.push("/account");
       router.refresh();
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Sign-up failed");
+      setError(e instanceof Error ? e.message : tSignupForm("signUpFailed"));
       setSubmitting(false);
     }
   }
@@ -39,34 +44,34 @@ export function SignupForm() {
   return (
     <form onSubmit={onSubmit} className="mt-6 space-y-3">
       <Field
-        label="Email"
+        label={tCommon("email")}
         type="email"
         required
         value={form.email}
         onChange={(v) => setForm({ ...form, email: v })}
       />
       <Field
-        label="Password"
+        label={tAuth("password")}
         type="password"
         required
         minLength={8}
         value={form.password}
         onChange={(v) => setForm({ ...form, password: v })}
-        helper="At least 8 characters."
+        helper={t("passwordHelper")}
       />
       <Field
-        label="Your name"
+        label={tSignupForm("labelName")}
         type="text"
         value={form.name}
         onChange={(v) => setForm({ ...form, name: v })}
-        helper="Optional — shown to restaurants on your orders."
+        helper={t("nameHelper")}
       />
       <Field
-        label="Phone"
+        label={tCommon("phone")}
         type="tel"
         value={form.phone}
         onChange={(v) => setForm({ ...form, phone: v.replace(/[^\d+()\-.\s]/g, "") })}
-        helper="Optional — restaurants use this if there's an issue with your order."
+        helper={t("phoneHelper")}
       />
 
       {error && (
@@ -81,9 +86,9 @@ export function SignupForm() {
         className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center justify-center gap-2"
       >
         {submitting ? (
-          <><Loader2 className="w-4 h-4 animate-spin" /> Creating account…</>
+          <><Loader2 className="w-4 h-4 animate-spin" /> {t("creatingAccount")}</>
         ) : (
-          "Create account"
+          tAuth("createAccount")
         )}
       </button>
     </form>

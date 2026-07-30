@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Plus, Trash2, Star, Loader2, MapPin, X, Check } from "lucide-react";
 
 export type SavedAddress = {
@@ -23,6 +24,8 @@ export type SavedAddress = {
  * (only one default) honest without us re-implementing them client-side.
  */
 export function AddressesClient({ initial }: { initial: SavedAddress[] }) {
+  const t = useTranslations("marketplaceAccount.addresses");
+  const tAb = useTranslations("addressBook");
   const [addresses, setAddresses] = useState<SavedAddress[]>(initial);
   const [showAddForm, setShowAddForm] = useState(initial.length === 0);
   const [error, setError] = useState<string | null>(null);
@@ -50,14 +53,14 @@ export function AddressesClient({ initial }: { initial: SavedAddress[] }) {
       {addresses.length === 0 && !showAddForm && (
         <div className="text-center py-12 bg-white border border-gray-100 rounded-2xl">
           <MapPin className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-          <p className="text-sm text-gray-600 mb-4">No addresses saved yet.</p>
+          <p className="text-sm text-gray-600 mb-4">{t("noAddresses")}</p>
           <button
             type="button"
             onClick={() => setShowAddForm(true)}
             className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
             <Plus className="w-4 h-4" />
-            Add an address
+            {tAb("addAddress")}
           </button>
         </div>
       )}
@@ -69,10 +72,10 @@ export function AddressesClient({ initial }: { initial: SavedAddress[] }) {
               key={a.id}
               address={a}
               onDelete={async () => {
-                if (!confirm("Delete this address?")) return;
+                if (!confirm(tAb("confirmDelete"))) return;
                 const res = await fetch(`/api/customer/addresses/${a.id}`, { method: "DELETE" });
                 if (!res.ok) {
-                  setError("Failed to delete.");
+                  setError(t("deleteFailed"));
                   return;
                 }
                 await refresh();
@@ -84,7 +87,7 @@ export function AddressesClient({ initial }: { initial: SavedAddress[] }) {
                   body: JSON.stringify({ isDefault: true }),
                 });
                 if (!res.ok) {
-                  setError("Failed to set default.");
+                  setError(t("setDefaultFailed"));
                   return;
                 }
                 await refresh();
@@ -99,7 +102,7 @@ export function AddressesClient({ initial }: { initial: SavedAddress[] }) {
               className="w-full border-2 border-dashed border-gray-200 hover:border-emerald-400 hover:bg-emerald-50/40 rounded-2xl p-4 text-sm font-semibold text-gray-600 hover:text-emerald-700 transition inline-flex items-center justify-center gap-2"
             >
               <Plus className="w-4 h-4" />
-              Add another address
+              {t("addAnother")}
             </button>
           )}
         </div>
@@ -131,6 +134,7 @@ function AddressCard({
   onDelete: () => void | Promise<void>;
   onSetDefault: () => void | Promise<void>;
 }) {
+  const tAb = useTranslations("addressBook");
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-4 sm:p-5">
       <div className="flex items-start justify-between gap-3">
@@ -141,11 +145,11 @@ function AddressCard({
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h3 className="font-semibold text-gray-900 truncate">
-                {address.label || "Address"}
+                {address.label || tAb("addressFallback")}
               </h3>
               {address.isDefault && (
                 <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <Star className="w-2.5 h-2.5 fill-emerald-700" /> Default
+                  <Star className="w-2.5 h-2.5 fill-emerald-700" /> {tAb("defaultBadge")}
                 </span>
               )}
             </div>
@@ -166,7 +170,7 @@ function AddressCard({
               onClick={onSetDefault}
               className="text-xs text-emerald-700 hover:text-emerald-900 hover:underline"
             >
-              Set default
+              {tAb("makeDefault")}
             </button>
           )}
           <button
@@ -175,7 +179,7 @@ function AddressCard({
             className="text-xs text-red-600 hover:text-red-700 hover:underline inline-flex items-center gap-1"
           >
             <Trash2 className="w-3 h-3" />
-            Delete
+            {tAb("delete")}
           </button>
         </div>
       </div>
@@ -191,6 +195,9 @@ function AddAddressForm({
   onSaved: () => void | Promise<void>;
   onError: (msg: string | null) => void;
 }) {
+  const t = useTranslations("marketplaceAccount.addresses");
+  const tAb = useTranslations("addressBook");
+  const tCommon = useTranslations("common");
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     label: "",
@@ -215,13 +222,13 @@ function AddAddressForm({
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        onError(data?.error || "Failed to save.");
+        onError(data?.error || t("saveFailed"));
         setSubmitting(false);
         return;
       }
       await onSaved();
     } catch (e: unknown) {
-      onError(e instanceof Error ? e.message : "Network error");
+      onError(e instanceof Error ? e.message : t("networkError"));
     } finally {
       setSubmitting(false);
     }
@@ -235,43 +242,43 @@ function AddAddressForm({
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-semibold text-gray-900 inline-flex items-center gap-2">
           <Plus className="w-4 h-4 text-emerald-600" />
-          New address
+          {t("newAddress")}
         </h3>
         <button
           type="button"
           onClick={onCancel}
           className="text-gray-400 hover:text-gray-700 p-1 -m-1"
-          aria-label="Cancel"
+          aria-label={tAb("cancel")}
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
-      <Field label="Label (optional)">
+      <Field label={t("labelOptional")}>
         <input
           type="text"
           maxLength={40}
           value={form.label}
           onChange={(e) => setForm({ ...form, label: e.target.value })}
-          placeholder="Home, Work, Mom's place…"
+          placeholder={t("labelPlaceholder")}
           className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
         />
       </Field>
 
-      <Field label="Street" required>
+      <Field label={t("street")} required>
         <input
           type="text"
           required
           maxLength={200}
           value={form.street}
           onChange={(e) => setForm({ ...form, street: e.target.value })}
-          placeholder="123 Main St, Apt 4B"
+          placeholder={t("streetPlaceholder")}
           className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
         />
       </Field>
 
       <div className="grid grid-cols-2 gap-3">
-        <Field label="City" required>
+        <Field label={tCommon("city")} required>
           <input
             type="text"
             required
@@ -281,30 +288,30 @@ function AddAddressForm({
             className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </Field>
-        <Field label="Province / State">
+        <Field label={t("provinceState")}>
           <input
             type="text"
             maxLength={80}
             value={form.state}
             onChange={(e) => setForm({ ...form, state: e.target.value })}
-            placeholder="ON"
+            placeholder={t("provincePlaceholder")}
             className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </Field>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <Field label="Postal / Zip">
+        <Field label={tCommon("zip")}>
           <input
             type="text"
             maxLength={20}
             value={form.zip}
             onChange={(e) => setForm({ ...form, zip: e.target.value })}
-            placeholder="L9E 1C7"
+            placeholder={t("postalPlaceholder")}
             className="w-full px-3 py-2 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
         </Field>
-        <Field label="Country (ISO-2)">
+        <Field label={t("countryIso")}>
           <input
             type="text"
             maxLength={2}
@@ -322,7 +329,7 @@ function AddAddressForm({
           onChange={(e) => setForm({ ...form, isDefault: e.target.checked })}
           className="rounded text-emerald-600 focus:ring-emerald-500"
         />
-        <span>Set as default delivery address</span>
+        <span>{t("setAsDefault")}</span>
       </label>
 
       <div className="flex items-center gap-2 pt-2">
@@ -331,14 +338,14 @@ function AddAddressForm({
           disabled={submitting || !form.street || !form.city}
           className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
         >
-          {submitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Saving…</> : <><Check className="w-4 h-4" /> Save address</>}
+          {submitting ? <><Loader2 className="w-4 h-4 animate-spin" /> {tAb("saving")}</> : <><Check className="w-4 h-4" /> {tAb("save")}</>}
         </button>
         <button
           type="button"
           onClick={onCancel}
           className="text-sm text-gray-600 hover:text-gray-900 px-3 py-2"
         >
-          Cancel
+          {tAb("cancel")}
         </button>
       </div>
     </form>

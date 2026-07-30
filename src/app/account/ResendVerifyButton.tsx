@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Loader2, Send, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * "Resend verification email" button — used inside the not-yet-verified
@@ -9,6 +10,9 @@ import { Loader2, Send, Check } from "lucide-react";
  * sees feedback immediately + can't double-click.
  */
 export function ResendVerifyButton() {
+  const t = useTranslations("marketplaceAccount.misc");
+  // Reuse existing customer-flow strings ("Sending…" / "Network error").
+  const tc = useTranslations("customer");
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -20,7 +24,7 @@ export function ResendVerifyButton() {
       const res = await fetch("/api/customer/verify-email", { method: "POST" });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        setErrorMsg(data?.error || `Failed (HTTP ${res.status})`);
+        setErrorMsg(data?.error || t("failedHttp", { status: res.status }));
         setState("error");
         return;
       }
@@ -29,7 +33,7 @@ export function ResendVerifyButton() {
       // the second email also gets stuck in spam.
       setTimeout(() => setState("idle"), 8000);
     } catch (e: unknown) {
-      setErrorMsg(e instanceof Error ? e.message : "Network error");
+      setErrorMsg(e instanceof Error ? e.message : tc("resetForm.networkError"));
       setState("error");
     }
   }
@@ -42,9 +46,9 @@ export function ResendVerifyButton() {
         disabled={state === "sending" || state === "sent"}
         className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
       >
-        {state === "sending" && <><Loader2 className="w-4 h-4 animate-spin" /> Sending…</>}
-        {state === "sent" && <><Check className="w-4 h-4" /> Sent — check your inbox</>}
-        {(state === "idle" || state === "error") && <><Send className="w-4 h-4" /> Resend verification email</>}
+        {state === "sending" && <><Loader2 className="w-4 h-4 animate-spin" /> {tc("forgotForm.sending")}</>}
+        {state === "sent" && <><Check className="w-4 h-4" /> {t("sentCheckInbox")}</>}
+        {(state === "idle" || state === "error") && <><Send className="w-4 h-4" /> {t("resendVerification")}</>}
       </button>
       {state === "error" && errorMsg && (
         <span className="text-xs text-red-700">{errorMsg}</span>

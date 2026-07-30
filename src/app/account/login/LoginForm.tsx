@@ -3,9 +3,13 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { PasswordInput } from "@/components/PasswordInput";
 
 export function LoginForm() {
+  const tAuth = useTranslations("auth");
+  const tCommon = useTranslations("common");
+  const tLoginForm = useTranslations("customer.loginForm");
   const router = useRouter();
   const search = useSearchParams();
   /** Optional ?next=... param so /order/:slug?from=marketplace can deep-link
@@ -35,14 +39,14 @@ export function LoginForm() {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data?.error || "Sign-in failed");
+        setError(data?.error || tLoginForm("signInFailed"));
         setSubmitting(false);
         return;
       }
       router.push(safeNext);
       router.refresh();
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Sign-in failed");
+      setError(e instanceof Error ? e.message : tLoginForm("signInFailed"));
       setSubmitting(false);
     }
   }
@@ -51,7 +55,7 @@ export function LoginForm() {
     <form onSubmit={onSubmit} className="mt-6 space-y-3">
       <label className="block">
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-          Email <span className="text-red-500">*</span>
+          {tCommon("email")} <span className="text-red-500">*</span>
         </span>
         <input
           type="email"
@@ -64,13 +68,13 @@ export function LoginForm() {
       <label className="block">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-            Password <span className="text-red-500">*</span>
+            {tAuth("password")} <span className="text-red-500">*</span>
           </span>
           <Link
             href="/account/forgot-password"
             className="text-xs text-emerald-600 font-semibold hover:underline"
           >
-            Forgot password?
+            {tAuth("forgotPassword")}
           </Link>
         </div>
         <PasswordInput
@@ -91,9 +95,9 @@ export function LoginForm() {
         className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center justify-center gap-2"
       >
         {submitting ? (
-          <><Loader2 className="w-4 h-4 animate-spin" /> Signing in…</>
+          <><Loader2 className="w-4 h-4 animate-spin" /> {tAuth("signingIn")}</>
         ) : (
-          "Sign in"
+          tAuth("signIn")
         )}
       </button>
     </form>

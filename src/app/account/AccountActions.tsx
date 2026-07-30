@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LogOut, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export function AccountActions() {
+  const tAuth = useTranslations("auth");
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
 
@@ -28,7 +30,7 @@ export function AccountActions() {
         className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-xs font-semibold text-gray-700 transition"
       >
         {signingOut ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <LogOut className="w-3.5 h-3.5" />}
-        Sign out
+        {tAuth("signOut")}
       </button>
     </div>
   );

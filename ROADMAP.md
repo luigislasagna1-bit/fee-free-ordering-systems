@@ -27,10 +27,13 @@ EU VAT number. Ireland VAT OSS registration SUBMITTED 2026-07-30.
   reply + close Fabrizio cmr1ty0lc. The year-end commitment — deliver EARLY.
 - **Phase Driver-Pay Go-Live** — TRIGGER: Luigi's lawyer/payroll sign-off (A23). Un-pause
   delivery-billing-switch.ts, first real payout run, driver disclosures already shipped.
-- **Polish batch (anytime, 1 session):** delivery-zones editor Leaflet→Google Maps swap (Luigi
-  2026-07-04); sold-out auto-prune on restored carts + bundle/combo COMPONENT sold-out check;
-  reservation closed-hours email gets the concrete opening time (orders have it); marketplace
-  /account tree i18n; eye-toggle migration to staff/marketplace password forms.
+- **Polish batch ✅ COMPLETE 2026-07-30 (1 session, as planned):** two entries were stale —
+  delivery-zones Google Maps swap had shipped 2026-07-04 (5dd3c575) and the sold-out
+  restored-cart/component hardening 2026-07-05 (e11ca650). The real remaining gap was the
+  REORDER button re-adding sold-out dishes → fixed + reorder banner localized ×38 (d54ddfc6).
+  Reservation closed-hours email now names the concrete opening time (5ac2b7e9); eye-toggle on
+  all 7 remaining password forms (839a0dcc); marketplace /account tree fully i18n'd ×38 —
+  82 new keys under `marketplaceAccount`, heavy reuse of customer/auth/addressBook keys.
 - **Growth track (next big rock after EU-VAT):** Import-to-Try /import flagship (GloriaFood menu
   import → instant demo store); marketing redesign with real screenshots from the seeded demo;
   town.club competitive-analysis conclusions folded into the marketing program; SEO expansion

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Loader2, CheckCircle2, Eye, EyeOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Customer-side "set a new password" form. Posts to
@@ -12,6 +13,10 @@ import { Loader2, CheckCircle2, Eye, EyeOff } from "lucide-react";
  * reset email was intercepted). Show a confirmation + "Sign in" button.
  */
 export function ResetPasswordForm({ token }: { token: string }) {
+  const t = useTranslations("marketplaceAccount.auth");
+  const tAuth = useTranslations("auth");
+  const tCommon = useTranslations("common");
+  const tResetForm = useTranslations("customer.resetForm");
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -26,7 +31,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
     setError(null);
 
     if (password !== confirm) {
-      setError("The two passwords don't match");
+      setError(tResetForm("passwordMismatch"));
       return;
     }
 
@@ -39,13 +44,13 @@ export function ResetPasswordForm({ token }: { token: string }) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data?.error || "Could not reset password");
+        setError(data?.error || tResetForm("resetFailed"));
         setSubmitting(false);
         return;
       }
       setSubmitted(true);
     } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : "Could not reset password");
+      setError(e instanceof Error ? e.message : tResetForm("resetFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -55,16 +60,16 @@ export function ResetPasswordForm({ token }: { token: string }) {
     return (
       <div className="mt-6 text-center space-y-3 py-4">
         <CheckCircle2 className="w-14 h-14 mx-auto text-emerald-500" />
-        <h2 className="text-lg font-bold text-gray-900">Password updated</h2>
+        <h2 className="text-lg font-bold text-gray-900">{tResetForm("passwordUpdated")}</h2>
         <p className="text-sm text-gray-600">
-          You can now sign in with your new password.
+          {t("signInWithNewPassword")}
         </p>
         <button
           type="button"
           onClick={() => router.push("/account/login")}
           className="mt-2 inline-flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-6 py-3 rounded-xl text-sm transition"
         >
-          Sign in
+          {tAuth("signIn")}
         </button>
       </div>
     );
@@ -74,7 +79,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
     <form onSubmit={onSubmit} className="mt-6 space-y-3">
       <label className="block">
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-          New password <span className="text-red-500">*</span>
+          {tAuth("newPassword")} <span className="text-red-500">*</span>
         </span>
         <div className="mt-1 relative">
           <input
@@ -83,14 +88,14 @@ export function ResetPasswordForm({ token }: { token: string }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             minLength={8}
-            placeholder="At least 8 characters"
+            placeholder={tResetForm("newPasswordPlaceholder")}
             className="w-full pl-3 pr-10 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
           />
           <button
             type="button"
             onClick={() => setShow(s => !s)}
             className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
-            aria-label={show ? "Hide password" : "Show password"}
+            aria-label={show ? tCommon("hidePassword") : tCommon("showPassword")}
           >
             {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
@@ -99,7 +104,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
 
       <label className="block">
         <span className="text-xs font-semibold text-gray-700 uppercase tracking-wide">
-          Confirm new password <span className="text-red-500">*</span>
+          {t("confirmNewPassword")} <span className="text-red-500">*</span>
         </span>
         <input
           type={show ? "text" : "password"}
@@ -121,15 +126,15 @@ export function ResetPasswordForm({ token }: { token: string }) {
         className="w-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white font-bold px-6 py-3 rounded-xl text-sm transition flex items-center justify-center gap-2"
       >
         {submitting ? (
-          <><Loader2 className="w-4 h-4 animate-spin" /> Updating…</>
+          <><Loader2 className="w-4 h-4 animate-spin" /> {tResetForm("updating")}</>
         ) : (
-          "Update password"
+          tResetForm("updatePassword")
         )}
       </button>
 
       <p className="text-center text-sm text-gray-600 pt-2">
         <Link href="/account/login" className="text-emerald-600 font-semibold hover:underline">
-          Cancel and sign in
+          {t("cancelAndSignIn")}
         </Link>
       </p>
     </form>

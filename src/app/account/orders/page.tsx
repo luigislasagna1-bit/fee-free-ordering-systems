@@ -1,11 +1,13 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronLeft, ShoppingBag, ChevronRight, Store, Repeat } from "lucide-react";
 import { MarketplaceReorderCard } from "./MarketplaceReorderCard";
 import prisma from "@/lib/db";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { formatCurrency } from "@/lib/utils";
 
+// metadata stays English — static-metadata i18n deferred (same as /marketplace)
 export const metadata = {
   title: "Your orders — Fee Free Marketplace",
   description: "Your order history across every restaurant on the marketplace.",
@@ -26,6 +28,14 @@ export const metadata = {
 export default async function CustomerOrdersPage() {
   const account = await getCurrentCustomer();
   if (!account) redirect("/account/login?next=/account/orders");
+
+  const [t, tSt, tAcc, tCommon, locale] = await Promise.all([
+    getTranslations("marketplaceAccount.orders"),
+    getTranslations("customer.accountPage.status"),
+    getTranslations("customer.accountPage"),
+    getTranslations("common"),
+    getLocale(),
+  ]);
 
   const [orders, orderAgainBaskets] = await Promise.all([
     prisma.order.findMany({
@@ -62,6 +72,19 @@ export default async function CustomerOrdersPage() {
     }),
   ]);
 
+  // Status labels are reused from the per-restaurant account page catalog;
+  // unknown values fall back to the raw status (same as before i18n).
+  const statusLabel = (status: string) =>
+    STATUS_KEYS.includes(status) ? tSt(status) : status;
+  const typeLabel = (type: string) => {
+    const key = TYPE_KEYS[type];
+    return key ? t(key) : type.replace("_", " ");
+  };
+  const dateLabels = {
+    yesterday: tCommon("yesterday"),
+    daysAgo: (days: number) => t("daysAgo", { days }),
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -70,14 +93,14 @@ export default async function CustomerOrdersPage() {
           className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700 mb-3"
         >
           <ChevronLeft className="w-3.5 h-3.5" />
-          Back to account
+          {t("backToAccount")}
         </Link>
         <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
           <ShoppingBag className="w-6 h-6 text-emerald-600" />
-          Your orders
+          {t("title")}
         </h1>
         <p className="text-sm text-gray-600 mt-1">
-          Every order you&apos;ve placed across all the restaurants on the Fee Free Marketplace.
+          {t("subtitle")}
         </p>
       </div>
 
@@ -85,7 +108,7 @@ export default async function CustomerOrdersPage() {
         <div>
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Repeat className="w-4 h-4 text-emerald-600" />
-            Order again
+            {tAcc("orderAgain")}
           </h2>
           <div className="grid sm:grid-cols-3 gap-3">
             {orderAgainBaskets.map((o) => (
@@ -105,15 +128,15 @@ export default async function CustomerOrdersPage() {
       {orders.length === 0 ? (
         <div className="text-center py-16 bg-white border border-gray-100 rounded-2xl">
           <ShoppingBag className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-          <p className="text-sm text-gray-700 font-semibold">No orders yet</p>
+          <p className="text-sm text-gray-700 font-semibold">{t("emptyTitle")}</p>
           <p className="text-xs text-gray-500 mt-1 mb-5">
-            When you order from a restaurant on the marketplace, it shows up here.
+            {t("emptyBody")}
           </p>
           <Link
             href="/"
             className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2 rounded-lg text-sm transition"
           >
-            Browse the marketplace
+            {t("browseMarketplace")}
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -141,11 +164,13 @@ export default async function CustomerOrdersPage() {
                   <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 flex-wrap">
                     <span>#{o.orderNumber}</span>
                     <span>·</span>
-                    <span className="capitalize">{o.type.replace("_", " ")}</span>
+                    <span className={TYPE_KEYS[o.type] ? undefined : "capitalize"}>
+                      {typeLabel(o.type)}
+                    </span>
                     <span>·</span>
-                    <StatusPill status={o.status} />
+                    <StatusPill status={o.status} label={statusLabel(o.status)} />
                     <span>·</span>
-                    <span>{formatDate(o.createdAt, o.restaurant.timezone)}</span>
+                    <span>{formatDate(o.createdAt, o.restaurant.timezone, locale, dateLabels)}</span>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-300 flex-shrink-0 mt-2" />
@@ -154,7 +179,7 @@ export default async function CustomerOrdersPage() {
           ))}
           {orders.length === 50 && (
             <p className="text-xs text-gray-500 text-center pt-4">
-              Showing your 50 most recent orders.
+              {t("showingRecent", { count: orders.length })}
             </p>
           )}
         </div>
@@ -163,7 +188,26 @@ export default async function CustomerOrdersPage() {
   );
 }
 
-function formatDate(d: Date, timeZone?: string | null): string {
+// Statuses with a translated label in customer.accountPage.status —
+// anything else renders raw (same fallback as before i18n).
+const STATUS_KEYS = ["pending", "accepted", "preparing", "ready", "completed", "cancelled", "rejected"];
+
+// Order.type → marketplaceAccount.orders key. Unknown types fall back to
+// the old replace("_", " ") + CSS-capitalize rendering.
+const TYPE_KEYS: Record<string, string> = {
+  pickup: "typePickup",
+  delivery: "typeDelivery",
+  dine_in: "typeDineIn",
+  take_out: "typeTakeOut",
+  catering: "typeCatering",
+};
+
+function formatDate(
+  d: Date,
+  timeZone: string | null | undefined,
+  locale: string,
+  labels: { yesterday: string; daysAgo: (days: number) => string },
+): string {
   // Absolute timestamps render in the order's RESTAURANT tz — server component,
   // so a naked toLocale* uses the server's UTC clock and a late-night order shows
   // the wrong time/day. The relative buckets ("X days ago") compare absolute
@@ -172,26 +216,26 @@ function formatDate(d: Date, timeZone?: string | null): string {
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   const diffDays = Math.floor(diffMs / (24 * 60 * 60_000));
-  if (diffDays === 0) return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", ...tzOpts });
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: diffDays > 365 ? "numeric" : undefined, ...tzOpts });
+  if (diffDays === 0) return d.toLocaleTimeString(locale, { hour: "numeric", minute: "2-digit", ...tzOpts });
+  if (diffDays === 1) return labels.yesterday;
+  if (diffDays < 7) return labels.daysAgo(diffDays);
+  return d.toLocaleDateString(locale, { month: "short", day: "numeric", year: diffDays > 365 ? "numeric" : undefined, ...tzOpts });
 }
 
-function StatusPill({ status }: { status: string }) {
-  const map: Record<string, { tone: string; label: string }> = {
-    pending:    { tone: "bg-amber-100 text-amber-800",     label: "Pending" },
-    accepted:   { tone: "bg-emerald-100 text-emerald-800", label: "Accepted" },
-    preparing:  { tone: "bg-emerald-100 text-emerald-800", label: "Preparing" },
-    ready:      { tone: "bg-sky-100 text-sky-800",         label: "Ready" },
-    completed:  { tone: "bg-slate-200 text-slate-800",     label: "Completed" },
-    rejected:   { tone: "bg-rose-100 text-rose-800",       label: "Rejected" },
-    cancelled:  { tone: "bg-rose-100 text-rose-800",       label: "Cancelled" },
+function StatusPill({ status, label }: { status: string; label: string }) {
+  const toneMap: Record<string, string> = {
+    pending:    "bg-amber-100 text-amber-800",
+    accepted:   "bg-emerald-100 text-emerald-800",
+    preparing:  "bg-emerald-100 text-emerald-800",
+    ready:      "bg-sky-100 text-sky-800",
+    completed:  "bg-slate-200 text-slate-800",
+    rejected:   "bg-rose-100 text-rose-800",
+    cancelled:  "bg-rose-100 text-rose-800",
   };
-  const cfg = map[status] ?? { tone: "bg-gray-100 text-gray-700", label: status };
+  const tone = toneMap[status] ?? "bg-gray-100 text-gray-700";
   return (
-    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${cfg.tone}`}>
-      {cfg.label}
+    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${tone}`}>
+      {label}
     </span>
   );
 }

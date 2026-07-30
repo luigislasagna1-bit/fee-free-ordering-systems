@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/db";
 import { getCurrentCustomer } from "@/lib/customer-session";
 import { AccountActions } from "./AccountActions";
@@ -33,6 +34,7 @@ import {
  * all or more functions similar to what we created for each
  * individual restaurant account members section").
  */
+// metadata stays English — static-metadata i18n deferred (same as /marketplace)
 export const metadata = { title: "My account — Fee Free Marketplace" };
 
 export const dynamic = "force-dynamic";
@@ -44,6 +46,13 @@ export default async function CustomerAccountPage({
 }) {
   const account = await getCurrentCustomer();
   if (!account) redirect("/account/login?next=/account");
+
+  const t = await getTranslations("marketplaceAccount.dashboard");
+  // Reused labels shared with the per-restaurant /order/[slug]/account page.
+  const tAcct = await getTranslations("customer.accountPage");
+  const tStatus = await getTranslations("customer.accountPage.status");
+  const tType = await getTranslations("receipt.orderTypesLower");
+  const tCommon = await getTranslations("common");
 
   const now = new Date();
 
@@ -147,7 +156,7 @@ export default async function CustomerAccountPage({
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">
-          {account.name ? `Hi, ${account.name.split(" ")[0]}` : "Welcome back"}
+          {account.name ? tAcct("greeting", { name: account.name.split(" ")[0] }) : t("welcomeBack")}
         </h1>
         <p className="text-sm text-gray-600 mt-1">{account.email}</p>
       </div>
@@ -157,9 +166,9 @@ export default async function CustomerAccountPage({
         <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-bold text-emerald-900">Email verified!</p>
+            <p className="text-sm font-bold text-emerald-900">{t("verifiedOkTitle")}</p>
             <p className="text-xs text-emerald-800 mt-0.5">
-              Your email address is now confirmed. Enhanced features like saved cards + order-status notifications are unlocked.
+              {t("verifiedOkBody")}
             </p>
           </div>
         </div>
@@ -168,9 +177,9 @@ export default async function CustomerAccountPage({
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
           <MailWarning className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-bold text-amber-900">That verification link didn&apos;t work</p>
+            <p className="text-sm font-bold text-amber-900">{t("verifiedInvalidTitle")}</p>
             <p className="text-xs text-amber-800 mt-0.5">
-              It may have expired or been used already. Click <strong>Resend verification email</strong> below to get a fresh link.
+              {t.rich("verifiedInvalidBody", { strong: (chunks) => <strong>{chunks}</strong> })}
             </p>
           </div>
         </div>
@@ -184,12 +193,15 @@ export default async function CustomerAccountPage({
           <div className="flex items-start gap-3 mb-3">
             <MailCheck className="w-5 h-5 text-emerald-700 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm font-bold text-emerald-900">Verify your email</p>
+              <p className="text-sm font-bold text-emerald-900">{t("verifyTitle")}</p>
               <p className="text-xs text-emerald-800 mt-0.5 leading-relaxed">
-                We sent a verification link to <strong>{account.email}</strong> when you signed up. Click the button in that email to confirm it&apos;s really you — it unlocks saved cards and order-status notifications.
+                {t.rich("verifyBody", {
+                  email: account.email,
+                  strong: (chunks) => <strong>{chunks}</strong>,
+                })}
               </p>
               <p className="text-xs text-emerald-800 mt-2">
-                Didn&apos;t receive it? Check your spam folder, or click below to send a new one.
+                {t("verifyResendHint")}
               </p>
             </div>
           </div>
@@ -202,20 +214,20 @@ export default async function CustomerAccountPage({
           match the per-restaurant /order/[slug]/account capabilities. */}
       <div className="bg-white rounded-2xl border border-gray-100 p-5">
         <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-          <UserIcon className="w-4 h-4 text-gray-400" /> Profile
+          <UserIcon className="w-4 h-4 text-gray-400" /> {t("profile")}
         </h2>
         <dl className="mt-3 grid grid-cols-3 gap-2 text-sm">
-          <dt className="text-gray-500">Name</dt>
-          <dd className="col-span-2 text-gray-900">{account.name || <em className="text-gray-400">Not set</em>}</dd>
-          <dt className="text-gray-500">Email</dt>
+          <dt className="text-gray-500">{tCommon("name")}</dt>
+          <dd className="col-span-2 text-gray-900">{account.name || <em className="text-gray-400">{t("notSet")}</em>}</dd>
+          <dt className="text-gray-500">{tCommon("email")}</dt>
           <dd className="col-span-2 text-gray-900">{account.email}</dd>
-          <dt className="text-gray-500">Phone</dt>
-          <dd className="col-span-2 text-gray-900">{account.phone || <em className="text-gray-400">Not set</em>}</dd>
-          <dt className="text-gray-500">Verified</dt>
+          <dt className="text-gray-500">{tCommon("phone")}</dt>
+          <dd className="col-span-2 text-gray-900">{account.phone || <em className="text-gray-400">{t("notSet")}</em>}</dd>
+          <dt className="text-gray-500">{t("verifiedLabel")}</dt>
           <dd className="col-span-2 text-gray-900">
             {account.emailVerifiedAt
-              ? <span className="text-emerald-700 font-semibold">✓ Verified</span>
-              : <span className="text-amber-700">Not yet — check your inbox</span>}
+              ? <span className="text-emerald-700 font-semibold">{t("verifiedYes")}</span>
+              : <span className="text-amber-700">{t("verifiedNo")}</span>}
           </dd>
         </dl>
         <MarketplaceProfileEditor
@@ -228,21 +240,21 @@ export default async function CustomerAccountPage({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Tile
           icon={<ShoppingBag className="w-5 h-5" />}
-          title="Your orders"
+          title={t("ordersTile")}
           subtitle={
             orderCount === 0
-              ? "You haven't placed any orders yet."
-              : `${orderCount} order${orderCount === 1 ? "" : "s"} placed`
+              ? t("ordersNone")
+              : t("ordersCount", { count: orderCount })
           }
           href="/account/orders"
         />
         <Tile
           icon={<MapPin className="w-5 h-5" />}
-          title="Saved addresses"
+          title={t("addressesTile")}
           subtitle={
             addressCount === 0
-              ? "No addresses saved yet."
-              : `${addressCount} address${addressCount === 1 ? "" : "es"} on file`
+              ? t("addressesNone")
+              : t("addressesCount", { count: addressCount })
           }
           href="/account/addresses"
         />
@@ -257,13 +269,13 @@ export default async function CustomerAccountPage({
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
               <Repeat className="w-4 h-4 text-emerald-600" />
-              Order again
+              {tAcct("orderAgain")}
             </h2>
             <Link
               href="/account/orders"
               className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-0.5"
             >
-              See all <ChevronRight className="w-3 h-3" />
+              {t("seeAll")} <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
           <div className="grid sm:grid-cols-3 gap-3">
@@ -289,16 +301,16 @@ export default async function CustomerAccountPage({
         <section>
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Tag className="w-4 h-4 text-emerald-600" />
-            Your coupons ({usableCoupons.length})
+            {t("yourCoupons", { count: usableCoupons.length })}
           </h2>
           <ul className="space-y-2">
             {usableCoupons.map((c) => {
               const remaining = c.maxUses === null
-                ? "Unlimited uses"
-                : `${Math.max(0, c.maxUses - c.usedCount)} use${(c.maxUses - c.usedCount) === 1 ? "" : "s"} left`;
+                ? tAcct("unlimitedUses")
+                : tAcct("usesLeft", { n: Math.max(0, c.maxUses - c.usedCount) });
               const discount = c.discountType === "percentage"
-                ? `${c.discountValue}% off`
-                : `${formatCurrency(c.discountValue, c.restaurant?.currency)} off`;
+                ? tAcct("percentOff", { value: c.discountValue })
+                : tAcct("fixedOff", { amount: formatCurrency(c.discountValue, c.restaurant?.currency) });
               return (
                 <li
                   key={c.id}
@@ -307,7 +319,7 @@ export default async function CustomerAccountPage({
                   <div className="min-w-0">
                     <div className="font-bold text-emerald-700">{discount}</div>
                     <div className="text-xs text-gray-500 mt-0.5">
-                      {c.description ?? "Personal coupon"}
+                      {c.description ?? t("personalCoupon")}
                       {c.restaurant?.name && (
                         <>
                           {" · "}
@@ -322,8 +334,8 @@ export default async function CustomerAccountPage({
                     </div>
                     <div className="text-[11px] text-gray-400 mt-1">
                       {remaining}
-                      {c.minimumOrder > 0 && <> · Min. order {formatCurrency(c.minimumOrder, c.restaurant?.currency)}</>}
-                      {c.expiresAt && <> · Expires {new Date(c.expiresAt).toLocaleDateString(undefined, c.restaurant?.timezone ? { timeZone: c.restaurant.timezone } : {})}</>}
+                      {c.minimumOrder > 0 && <> · {tAcct("minOrder", { amount: formatCurrency(c.minimumOrder, c.restaurant?.currency) })}</>}
+                      {c.expiresAt && <> · {tAcct("expires", { date: new Date(c.expiresAt).toLocaleDateString(undefined, c.restaurant?.timezone ? { timeZone: c.restaurant.timezone } : {}) })}</>}
                     </div>
                   </div>
                   <div className="flex-shrink-0">
@@ -345,7 +357,7 @@ export default async function CustomerAccountPage({
         <section>
           <h2 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
             <Store className="w-4 h-4 text-emerald-600" />
-            Your favourites
+            {t("favourites")}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {favRestaurants.map((r) => (
@@ -360,7 +372,7 @@ export default async function CustomerAccountPage({
                 <div className="min-w-0">
                   <div className="font-semibold text-gray-900 truncate">{r.name}</div>
                   <div className="text-xs text-gray-500 truncate">
-                    {r.cuisineType ? `${r.cuisineType} · ` : ""}{r.orderCount} order{r.orderCount === 1 ? "" : "s"}
+                    {r.cuisineType ? `${r.cuisineType} · ` : ""}{t("favOrderCount", { count: r.orderCount })}
                   </div>
                 </div>
               </Link>
@@ -377,13 +389,13 @@ export default async function CustomerAccountPage({
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-base font-bold text-gray-900 flex items-center gap-2">
               <Clock className="w-4 h-4 text-emerald-600" />
-              Recent orders
+              {t("recentOrders")}
             </h2>
             <Link
               href="/account/orders"
               className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-0.5"
             >
-              See all <ChevronRight className="w-3 h-3" />
+              {t("seeAll")} <ChevronRight className="w-3 h-3" />
             </Link>
           </div>
           <ul className="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-100 overflow-hidden">
@@ -399,7 +411,7 @@ export default async function CustomerAccountPage({
                     </div>
                     <div className="text-[11px] text-gray-500 mt-0.5">
                       #{o.orderNumber}
-                      {" · "}{o.type}
+                      {" · "}{tType.has(o.type) ? tType(o.type) : o.type}
                       {" · "}
                       {new Date(o.createdAt).toLocaleDateString(undefined, {
                         month: "short", day: "numeric",
@@ -412,7 +424,7 @@ export default async function CustomerAccountPage({
                       {formatCurrency(Number(o.total), o.restaurant.currency)}
                     </div>
                     <div className="text-[10px] uppercase tracking-wider font-bold text-gray-500 mt-0.5">
-                      {o.status}
+                      {tStatus.has(o.status) ? tStatus(o.status) : o.status}
                     </div>
                   </div>
                 </Link>
@@ -425,14 +437,17 @@ export default async function CustomerAccountPage({
       <AccountActions />
 
       <p className="text-xs text-gray-500 text-center pt-4">
-        Looking for a restaurant?{" "}
-        <Link href="/" className="text-emerald-600 hover:underline">Browse the marketplace</Link>.
+        {t.rich("browsePrompt", {
+          link: (chunks) => (
+            <Link href="/" className="text-emerald-600 hover:underline">{chunks}</Link>
+          ),
+        })}
       </p>
     </div>
   );
 }
 
-function Tile({
+async function Tile({
   icon,
   title,
   subtitle,
@@ -445,6 +460,7 @@ function Tile({
   href: string;
   comingSoon?: boolean;
 }) {
+  const t = await getTranslations("marketplaceAccount.dashboard");
   const body = (
     <div className="block bg-white rounded-2xl border border-gray-100 p-5 transition hover:border-emerald-300 hover:shadow-md">
       <div className="flex items-start justify-between">
@@ -453,7 +469,7 @@ function Tile({
         </div>
         {comingSoon && (
           <span className="text-[10px] font-semibold uppercase tracking-wider bg-gray-100 text-gray-600 rounded-full px-2 py-0.5">
-            Coming soon
+            {t("comingSoon")}
           </span>
         )}
       </div>

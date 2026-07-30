@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Loader2, Pencil, Save, X, KeyRound } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 /**
  * Inline profile editor for the marketplace `/account` dashboard.
@@ -29,6 +30,10 @@ export function MarketplaceProfileEditor({
   initialEmail: string;
   initialPhone: string | null;
 }) {
+  const t = useTranslations("marketplaceAccount.profile");
+  // Reuse the per-restaurant profile-editor strings (identical wording).
+  const tp = useTranslations("customer.profile");
+  const tAuth = useTranslations("auth");
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(initialName ?? "");
   const [phone, setPhone] = useState(initialPhone ?? "");
@@ -46,7 +51,7 @@ export function MarketplaceProfileEditor({
       });
       if (!res.ok) {
         const b = await res.json().catch(() => ({}));
-        throw new Error(b.error || `Save failed (${res.status})`);
+        throw new Error(b.error || t("saveFailed", { status: res.status }));
       }
       // Server component re-renders with fresh values on reload.
       window.location.reload();
@@ -63,13 +68,13 @@ export function MarketplaceProfileEditor({
           onClick={() => setEditing(true)}
           className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold inline-flex items-center gap-1"
         >
-          <Pencil className="w-3 h-3" /> Edit profile
+          <Pencil className="w-3 h-3" /> {tp("editProfile")}
         </button>
         <a
           href="/account/forgot-password"
           className="text-xs text-gray-500 hover:text-gray-700 font-semibold inline-flex items-center gap-1"
         >
-          <KeyRound className="w-3 h-3" /> Reset password
+          <KeyRound className="w-3 h-3" /> {tAuth("resetPassword")}
         </a>
       </div>
     );
@@ -78,17 +83,17 @@ export function MarketplaceProfileEditor({
   return (
     <div className="mt-3 p-3 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
+        <label className="block text-xs font-medium text-gray-600 mb-1">{tp("nameLabel")}</label>
         <input
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
           value={name}
           onChange={(e) => setName(e.target.value)}
           maxLength={100}
-          placeholder="Your name"
+          placeholder={t("namePlaceholder")}
         />
       </div>
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Phone</label>
+        <label className="block text-xs font-medium text-gray-600 mb-1">{tp("phoneLabel")}</label>
         <input
           type="tel"
           inputMode="tel"
@@ -96,11 +101,11 @@ export function MarketplaceProfileEditor({
           value={phone}
           onChange={(e) => setPhone(e.target.value.replace(/[^\d+()\-.\s]/g, ""))}
           maxLength={30}
-          placeholder="(555) 555-5555"
+          placeholder={tp("phonePlaceholder")}
         />
       </div>
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">Email (sign-in identity)</label>
+        <label className="block text-xs font-medium text-gray-600 mb-1">{tp("emailLabel")}</label>
         <input
           type="email"
           className="w-full border border-gray-200 bg-gray-100 rounded-lg px-3 py-2 text-sm text-gray-500 cursor-not-allowed"
@@ -108,7 +113,7 @@ export function MarketplaceProfileEditor({
           disabled
         />
         <p className="text-[10px] text-gray-400 mt-0.5">
-          Email is your sign-in identity. Use Reset password if you&apos;ve forgotten yours.
+          {t("emailHint")}
         </p>
       </div>
       {err && (
@@ -125,7 +130,7 @@ export function MarketplaceProfileEditor({
           disabled={saving}
           className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50"
         >
-          <X className="w-3.5 h-3.5" /> Cancel
+          <X className="w-3.5 h-3.5" /> {tp("cancel")}
         </button>
         <button
           onClick={save}
@@ -133,7 +138,7 @@ export function MarketplaceProfileEditor({
           className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-emerald-500 rounded-lg hover:bg-emerald-600 disabled:opacity-50"
         >
           {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
-          {saving ? "Saving…" : "Save"}
+          {saving ? tp("saving") : tp("save")}
         </button>
       </div>
     </div>

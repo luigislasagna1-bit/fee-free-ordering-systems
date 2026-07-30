@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Repeat } from "lucide-react";
 
 /**
@@ -26,6 +27,9 @@ export function MarketplaceReorderCard({
   formattedTotal: string;
 }) {
   const router = useRouter();
+  // Reuses the per-restaurant account-page strings — exact same meaning,
+  // avoids minting duplicate keys ×38 locales.
+  const tAcc = useTranslations("customer.accountPage");
   const handle = () => {
     try {
       sessionStorage.setItem(`ff_reorder_${restaurantSlug}`, orderId);
@@ -41,12 +45,12 @@ export function MarketplaceReorderCard({
         {restaurantName}
       </div>
       <div className="text-xs text-gray-700 line-clamp-2 min-h-[2.5em]">
-        {itemSummary || "Order"}
+        {itemSummary || tAcc("orderFallback")}
       </div>
       <div className="flex items-center justify-between mt-1">
         <div className="text-sm font-semibold text-gray-900">{formattedTotal}</div>
         <div className="text-xs font-semibold text-emerald-600 inline-flex items-center gap-1">
-          <Repeat className="w-3.5 h-3.5" /> Order again
+          <Repeat className="w-3.5 h-3.5" /> {tAcc("orderAgain")}
         </div>
       </div>
     </button>
