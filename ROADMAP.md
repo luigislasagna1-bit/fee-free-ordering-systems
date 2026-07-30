@@ -1,5 +1,46 @@
 # Fee Free Ordering Systems — Roadmap
 
+## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
+
+**State of the platform:** Both stores live (Play; kitchen iOS with Apple). Email language
+architecture shipped (customer locale persisted per order/reservation; staff emails localized ×38).
+Deliverability solved (SPF/DKIM/DMARC/MX complete, Mail-Tester 9.9/10, plain-text on every email).
+Guest self-cancel live. All 7 Fabrizio reports answered; 6 in testing, 1 (invoices) awaiting the
+EU VAT number. Ireland VAT OSS registration SUBMITTED 2026-07-30.
+
+### Waiting on others (no action; auto-resolves)
+- **Irish Revenue** → EU VAT number (days–weeks). DO NOT resubmit the OSS form.
+- **Fabrizio** → testing both batches + 5 follow-up fixes; more comments expected.
+- **Apple** → kitchen iOS review. ⚠️ Apple ORG membership renewal due ~2026-08-03 (Luigi: watch for the email; renewal lapse pulls BOTH iOS apps).
+- **Gmail** → domain warm-up; check postmaster.google.com ~2026-08-02; DMARC reports → tighten to p=quarantine ~mid-August after 2–4 clean weeks.
+
+### Luigi's small queue (~10 min total)
+1. Guest-cancel prod check (store closed): card order → cancel from email → Stripe shows CANCELED (A26).
+2. Message Fabrizio: update Kitchen app from Play + print one order (vc23 paper test, A24).
+3. Stripe dashboard → Settings → Tax → Enable Stripe Tax (prereq for the EU-VAT build).
+4. (When curious) Play Console "BETA" label question; phone clock sync for the Vercel 2FA.
+
+### Build phases (in priority order)
+- **Phase EU-VAT (task #12)** — TRIGGER: EU VAT number arrives. Scope: Stripe Tax automatic_tax
+  checkout for non-VIES EU restaurants (replaces the 403 block), invoice renders the real VAT
+  rate/amount, SubscriptionInvoice stores tax from the webhook, quarterly OSS return export,
+  reply + close Fabrizio cmr1ty0lc. The year-end commitment — deliver EARLY.
+- **Phase Driver-Pay Go-Live** — TRIGGER: Luigi's lawyer/payroll sign-off (A23). Un-pause
+  delivery-billing-switch.ts, first real payout run, driver disclosures already shipped.
+- **Polish batch (anytime, 1 session):** delivery-zones editor Leaflet→Google Maps swap (Luigi
+  2026-07-04); sold-out auto-prune on restored carts + bundle/combo COMPONENT sold-out check;
+  reservation closed-hours email gets the concrete opening time (orders have it); marketplace
+  /account tree i18n; eye-toggle migration to staff/marketplace password forms.
+- **Growth track (next big rock after EU-VAT):** Import-to-Try /import flagship (GloriaFood menu
+  import → instant demo store); marketing redesign with real screenshots from the seeded demo;
+  town.club competitive-analysis conclusions folded into the marketing program; SEO expansion
+  continues; "24/7 support" positioning once Twilio forwards land.
+- **App-store track:** kitchen iOS launch checklist when Apple approves (dual-store tracker then
+  complete); confirm vc23 prints on paper (Fabrizio).
+
+---
+
+
 > Snapshot as of 2026-05-22. This is a working plan, not a contract — phases
 > can be reordered, scope can change, and some things will get cut. Use it
 > to know what's queued and roughly what each phase is for.
