@@ -1,0 +1,17 @@
+Ciao Fabrizio, grazie per la segnalazione — avevi ragione!
+
+Il pannello "Impostazioni" (icona ingranaggio in basso a destra) era un misto di inglese e italiano: la cornice del pannello (titolo, schede, pausa servizi, disponibilità/prezzi articoli, preferenze) era rimasta in inglese mentre le sotto-schermate erano già tradotte.
+
+Ora è TUTTO tradotto (in tutte le 38 lingue):
+• titolo e schede del pannello ("Impostazioni ristorante", "Pausa servizi", "Disponibilità / prezzi articoli", "Preferenze", "Report del giorno")
+• l'intero flusso di pausa servizi (servizi, durate, pulsanti, messaggi di conferma)
+• disponibilità e prezzi articoli ("Segna esaurito" / "Rendi disponibile", ricerca, suggerimenti)
+• le righe delle preferenze (suono, giorno/notte, stampante, aggiorna)
+• il report di fine giornata (pulsanti e messaggi)
+• i messaggi di errore della stampante e la finestra di smistamento consegne
+
+Per favore riapri l'app cucina (si aggiorna da sola entro qualche minuto — oppure chiudila e riaprila), tocca l'ingranaggio e verifica le quattro schede in italiano. Se vedi ancora qualcosa in inglese in quel pannello, dimmi esattamente quale testo e lo sistemo subito.
+
+Nota: la breve guida di benvenuto ("Welcome to your Kitchen Order App") che appare solo al primo avvio è ancora in inglese — la stiamo traducendo in questi giorni, arriverà con il prossimo aggiornamento.
+
+Grazie ancora — le tue segnalazioni rendono la piattaforma migliore per tutti!

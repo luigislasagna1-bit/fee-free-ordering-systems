@@ -1,0 +1,23 @@
+Ciao Fabrizio — all nine items from this report are built and deployed. Point by point:
+
+1. STAFF RESERVATION EMAIL — now fully in your backend language (we also fixed WHY it was English: notification recipients were silently stuck on an English default with no way to change it — your stores have been switched to Italian, and there's now a language selector per recipient under Settings → Notifications). The email also includes the customer's phone and email (tappable) plus their special requests — like the GloriaFood one you showed.
+
+2. CUSTOMER EMAIL LANGUAGE — the language the customer chooses on the ordering page now follows them into EVERY email (order received, confirmed, rejected, delayed, refund, reservation emails, password reset). A customer who orders in English at your Italian store gets English emails; one who orders in Italian gets Italian. This applies to new orders/bookings from today.
+
+3. SPAM — two halves. Code half is live: every email now also carries a plain-text version (a classic spam-score fix), replies route to the restaurant, and sender identity is consistent. The other half is DNS/domain reputation, which only the platform owner can touch — that session is scheduled. Please keep reporting where new test emails land.
+
+4. CONTACT DETAILS — every customer email footer now shows the restaurant's website, email and a TAPPABLE phone number (order confirmations and all reservation emails included). "Kind regards" and "Powered by" are translated too, and the doubled "Powered by Supported by…" line is fixed.
+
+5. PASSWORD RESET EMAIL — fully translated, and it now speaks as YOUR restaurant ("il tuo account Japanese Restaurant | TEST"), not as Fee Free Ordering, with your contact details in the footer.
+
+6. EYE TOGGLE — on the customer login, signup, and reset-password fields.
+
+7. ACCOUNT AREA — "pickup/delivery" and the PENDING/COMPLETED/CANCELLED labels are translated, pending orders are highlighted amber, and account pages now open in the restaurant's language even for a brand-new visitor with no language chosen yet.
+
+8. CLOSED-HOURS EMAIL — it now names the exact time: "…riceverai un aggiornamento non appena apriranno. Controlla la tua email sabato 2 agosto, 20:15" (computed from your configured opening hours, holidays included).
+
+9. KITCHEN "OPENS IN" — disappears the moment you confirm a reservation, even while still closed (pending bookings keep it). Bonus: the chip text itself is now in your language too ("APRE TRA 1H 52M").
+
+Also fixed from your screenshots: the inbox preview no longer says "Prenotazione confermata" on a request that's still pending, and reservation emails show a proper date ("venerdì 25 luglio, 19:00") instead of "2026-07-25 at 19:00".
+
+Test whatever you like on ristorante-test — especially #2 (order in English, check the email language) and #1 (make a booking, check the staff email arrives in Italian with the customer's phone). Grazie for the thorough report, this one improved the whole platform.

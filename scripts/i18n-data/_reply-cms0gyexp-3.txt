@@ -1,0 +1,9 @@
+Ciao Fabrizio — your two remaining follow-ups are done and deployed:
+
+#1 RESERVATION NOTIFICATION TOGGLES — you were right: the email for a NEW booking request (still pending) was riding the "Table reservation confirmed" toggle, which is misleading. There is now a separate toggle in Settings → Notifications: "New reservation request (pending)". So: that new toggle controls the "please accept this booking" email, and "Table reservation confirmed" now controls only what its name says. Both are ON by default so nobody silently loses booking alerts — flip the new one OFF on your recipient if you don't want the pending emails. ("New order placed" indeed covers only food orders, not reservations.)
+
+#4 PHONE NUMBER — the restaurant's phone now comes FIRST in every customer email footer, inside a small tappable box with a 📞 icon, above the email address and website — exactly as you suggested, since calling is what customers actually do.
+
+(#2 — the cancel page language — was fixed earlier today, as posted above.)
+
+That closes out every point from this report and this morning's follow-ups. Grazie as always — your testing keeps making the platform better for every restaurant on it.

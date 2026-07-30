@@ -1,0 +1,7 @@
+Ciao Fabrizio — both fixed and deployed:
+
+1. CANCEL PAGE LANGUAGE — you found the one customer page still on the old language plumbing. The order-status page (with the cancel confirmation box) now follows the store's language even when the email link opens in a fresh browser: your Italian customer sees "Annullare questo ordine?" with Italian buttons, the whole page in Italian. Bonus: after a self-cancel the page no longer shows the internal English reason line ("Customer cancelled from…") — just "Ordine annullato".
+
+2. BADGE — "Annullato dal cliente" now appears DIRECTLY INSIDE the red box on the kitchen tiles (orders and reservations) and in the order detail, replacing the small line underneath — exactly as you drew it.
+
+Give both another try when you can. Grazie!

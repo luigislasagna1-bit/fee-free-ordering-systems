@@ -1,0 +1,13 @@
+Ciao Fabrizio — built and deployed, ready for you to test.
+
+Self-service cancellation is live, exactly as you described (GloriaFood-style):
+
+ORDERS — when a customer orders while the restaurant is CLOSED, their confirmation email now says the order is queued until opening AND carries a cancellation link ("If something unexpected comes up, you can still cancel your order here"). The link opens the normal order-status page with the cancel confirmation already open — no account, no login, no phone call. Cancelling releases the card hold (it was only an authorization — nothing was ever charged), emails the customer a confirmation, and notifies the restaurant. Once the kitchen has ACCEPTED an order the link politely says to call the restaurant instead — same rule as before.
+
+RESERVATIONS — every reservation email (request received + confirmed) now carries the same kind of link ("If your plans change, you can cancel your reservation here"). It opens a small confirmation page showing the booking; one tap cancels it, the customer gets a confirmation email and the restaurant is notified. If a deposit was paid, the page and email tell the guest to contact the restaurant about it.
+
+KITCHEN — a cancelled order or booking now shows "Cancelled by the customer" right on the tile and in the detail, so staff can see at a glance nobody in the kitchen did it.
+
+Everything is translated in all 38 languages, and the links are signed — they only work for that exact order/booking and can't be guessed or reused.
+
+To test on ristorante-test: place an order while the store is closed (or book a table), open the email, and use the cancellation link. Please tell me anything that feels off — wording, timing, anything. Grazie!

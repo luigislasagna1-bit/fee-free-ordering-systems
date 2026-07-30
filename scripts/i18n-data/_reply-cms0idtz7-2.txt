@@ -1,0 +1,7 @@
+Ciao Fabrizio — both of your points from this morning are fixed and live (I answered earlier on the other report thread by mistake, so here it is properly):
+
+1. CANCEL PAGE LANGUAGE — the page that opens from the email's cancel link (including the "Cancel this order?" confirmation box) now follows the store's language even in a browser where the customer never picked one: your Italian customer sees the whole page in Italian. It was the last customer page on the old language plumbing — thank you for catching it.
+
+2. BADGE — "Annullato dal cliente" now appears DIRECTLY INSIDE the red box on the kitchen tiles (orders and reservations) and in the order detail — the separate line underneath is gone, exactly as you drew it.
+
+Grazie — keep testing!
