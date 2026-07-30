@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, CheckCircle2 } from "lucide-react";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export function ApplyClient() {
   const [name, setName] = useState("");
@@ -78,8 +79,7 @@ export function ApplyClient() {
         </Field>
       </div>
       <Field label="Password">
-        <input
-          type="password"
+        <PasswordInput
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}

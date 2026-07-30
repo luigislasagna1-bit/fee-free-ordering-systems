@@ -6,6 +6,7 @@ import { ChefHat, Loader2, Monitor, Smartphone } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
+import { PasswordInput } from "@/components/PasswordInput";
 import { getNativeAppVersion } from "@/lib/native-app-version";
 
 function KitchenLoginFormInner({ locale, getAppUrl }: { locale: string; getAppUrl?: string | null }) {
@@ -84,8 +85,7 @@ function KitchenLoginFormInner({ locale, getAppUrl }: { locale: string; getAppUr
                   {tAuth("forgotPassword")}
                 </a>
               </div>
-              <input
-                type="password"
+              <PasswordInput
                 required
                 autoComplete="current-password"
                 className="w-full bg-gray-700 border border-gray-600 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder-gray-500 transition"

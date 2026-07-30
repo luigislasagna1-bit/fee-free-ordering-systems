@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export function LoginForm() {
   const router = useRouter();
@@ -72,8 +73,7 @@ export function LoginForm() {
             Forgot password?
           </Link>
         </div>
-        <input
-          type="password"
+        <PasswordInput
           required
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}

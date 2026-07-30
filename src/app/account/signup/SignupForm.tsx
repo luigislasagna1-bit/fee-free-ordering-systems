@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export function SignupForm() {
   const router = useRouter();
@@ -104,14 +105,24 @@ function Field(props: {
         {props.label}
         {props.required && <span className="text-red-500"> *</span>}
       </span>
-      <input
-        type={props.type}
-        value={props.value}
-        onChange={(e) => props.onChange(e.target.value)}
-        required={props.required}
-        minLength={props.minLength}
-        className="mt-1 w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
-      />
+      {props.type === "password" ? (
+        <PasswordInput
+          value={props.value}
+          onChange={(e) => props.onChange(e.target.value)}
+          required={props.required}
+          minLength={props.minLength}
+          className="mt-1 w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
+        />
+      ) : (
+        <input
+          type={props.type}
+          value={props.value}
+          onChange={(e) => props.onChange(e.target.value)}
+          required={props.required}
+          minLength={props.minLength}
+          className="mt-1 w-full px-3 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
+        />
+      )}
       {props.helper && <span className="block mt-1 text-xs text-gray-500">{props.helper}</span>}
     </label>
   );

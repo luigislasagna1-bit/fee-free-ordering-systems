@@ -7,6 +7,7 @@ import { LayoutDashboard, Loader2, ChefHat } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
+import { PasswordInput } from "@/components/PasswordInput";
 import type { ResellerBranding } from "@/lib/reseller-branding";
 
 // Sentinel that mirrors RESELLER_SCOPE_ERROR from src/lib/auth.ts. Kept
@@ -242,8 +243,7 @@ function LoginFormInner({
                 {tAuth("forgotPassword")}
               </a>
             </div>
-            <input
-              type="password"
+            <PasswordInput
               required
               autoComplete="current-password"
               className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"

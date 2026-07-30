@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
+import { PasswordInput } from "@/components/PasswordInput";
 import { COUNTRIES } from "@/lib/regions";
 // Type-only — keeps prisma (pulled in by the resolver) out of the client bundle.
 import type { ResellerBranding } from "@/lib/reseller-branding";
@@ -332,8 +333,7 @@ export function SignupForm({
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">{t("password")} *</label>
-                <input
-                  type="password"
+                <PasswordInput
                   required
                   minLength={8}
                   disabled={!!inviteBlocked}
