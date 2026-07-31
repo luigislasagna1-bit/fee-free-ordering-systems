@@ -453,7 +453,13 @@
       "capNote": "You can apply up to {amount} on this order.",
       "earnLine": "+ Earn {amount}",
       "capHelp": "Your restaurant lets you use up to {percent}% of an order's total in {label}.",
-      "signupHint": "💡 Sign up or log in to earn rewards on this purchase too"
+      "signupHint": "💡 Sign up or log in to earn rewards on this purchase too",
+      "balanceOwner": "From your account · {email}"
+    },
+    "walletIdentity": {
+      "title": "Your {label} aren't being used on this order",
+      "body": "You're signed in as {account}, but this order's email is {typed}. {label} can only pay for an order that belongs to the same account, so they're set aside for now. Order under your own email to use them.",
+      "useAccountEmail": "Use my account email instead"
     },
     "estimatedReady": "Estimated ready",
     "subTotal": "Sub-Total",

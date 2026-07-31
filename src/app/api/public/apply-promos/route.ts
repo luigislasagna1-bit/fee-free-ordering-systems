@@ -304,8 +304,26 @@ export async function POST(req: NextRequest) {
     }
   } catch (e) { console.error("[apply-promos reward]", e); }
 
+  // ── Whose account is this? ────────────────────────────────────────────────
+  // The cart must be able to NAME the account whose balance and perks are in
+  // play. Luigi could not tell from his own checkout whether the balance being
+  // spent was his or the gift recipient's (it was his), and the answer is not
+  // inferable client-side: the wallet follows the session while the order
+  // follows the typed address. Both values here describe the CALLER's own
+  // session, read from their own cookie — nothing about anyone else is
+  // disclosed, and walletBlockedForEmail only ever echoes an address the
+  // caller just typed themselves.
+  const identity = {
+    /** Email of the signed-in account funding the wallet, when signed in. */
+    signedInEmail: promoCtx.sessionEmail,
+    /** Set only when a typed address diverged from the session and therefore
+     *  disabled the wallet — the cart explains the disappearance instead of
+     *  letting the balance silently vanish. */
+    walletBlockedForEmail: promoCtx.walletMismatchEmail,
+  };
+
   // Surface promos that qualified but were blocked by the winning exclusive, so
   // the cart can explain "can't combine" and offer "remove this to use that
   // instead". Luigi 2026-06-07.
-  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable, promoCodeEmailMismatch, reward });
+  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable, promoCodeEmailMismatch, reward, identity });
 }

@@ -1350,6 +1350,11 @@ export function OrderingPageClient({
   // order (default 0 = none; they can also let it accumulate). Luigi 2026-06-27.
   const [rewardInfo, setRewardInfo] = useState<{ balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null; redeemExcludedTotal?: number } | null>(null);
   const [creditToApply, setCreditToApply] = useState(0);
+  // WHOSE account is funding this order (from apply-promos). The wallet follows
+  // the signed-in session while the order follows the typed address, so when
+  // those diverge the balance disappears — this lets the cart say why instead
+  // of leaving the customer guessing whose money was on screen. Luigi 2026-07-31.
+  const [walletIdentity, setWalletIdentity] = useState<{ signedInEmail: string | null; walletBlockedForEmail: string | null }>({ signedInEmail: null, walletBlockedForEmail: null });
   // Cart preview: the first-buy discount was dropped because the email/phone the
   // customer entered turns out to be a returning customer. Drives the gentle
   // "new customers only" note — shown ONLY when the hero banner was visible to
@@ -2749,6 +2754,10 @@ export function OrderingPageClient({
         setFirstBuyUnavailable(!!data.newCustomerOfferUnavailable);
         setCodeEmailMismatch(!!data.promoCodeEmailMismatch);
         setRewardInfo(data.reward ?? null);
+        setWalletIdentity({
+          signedInEmail: data.identity?.signedInEmail ?? null,
+          walletBlockedForEmail: data.identity?.walletBlockedForEmail ?? null,
+        });
         // Keep the chosen credit within the new spendable ceiling as the cart /
         // identity changes (e.g. balance only known after sign-in/email).
         if (!data.reward) setCreditToApply(0);
@@ -6956,6 +6965,7 @@ export function OrderingPageClient({
           total={total}
           // Reward Dollars spend control (store credit). null → no balance / off.
           rewardInfo={rewardInfo}
+          walletIdentity={walletIdentity}
           creditToApply={creditToApply}
           setCreditToApply={setCreditToApply}
           taxRate={restaurant.taxRate}
