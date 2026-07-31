@@ -17,10 +17,20 @@ describe("isOnlineCapturedPayment (EOD online/offline split)", () => {
     expect(isOnlineCapturedPayment("card_in_person", "paid")).toBe(false);
   });
 
-  it("an online method that never reached paid stays OFFLINE (authorized/pending/refunded)", () => {
+  it("an online method that never reached paid stays OFFLINE (authorized/pending/voided)", () => {
     expect(isOnlineCapturedPayment("card", "authorized")).toBe(false);
     expect(isOnlineCapturedPayment("paypal", "pending")).toBe(false);
-    expect(isOnlineCapturedPayment("card", "refunded")).toBe(false);
+    expect(isOnlineCapturedPayment("card", "voided")).toBe(false);
+  });
+
+  it("refunded statuses stay ONLINE — the money WAS captured online; a partial refund must not move the order into the till bucket (Fabrizio cms0gyexp #14, 2026-07-31)", () => {
+    expect(isOnlineCapturedPayment("card", "partially_refunded")).toBe(true);
+    expect(isOnlineCapturedPayment("card", "refunded")).toBe(true);
+    expect(isOnlineCapturedPayment("paypal", "partially_refunded")).toBe(true);
+    expect(isOnlineCapturedPayment("paypal", "refunded")).toBe(true);
+    // ...but not for offline methods.
+    expect(isOnlineCapturedPayment("cash", "refunded")).toBe(false);
+    expect(isOnlineCapturedPayment("card_in_person", "partially_refunded")).toBe(false);
   });
 
   it("missing fields never classify as online", () => {

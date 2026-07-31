@@ -1424,6 +1424,15 @@ model Order {
   kitchenPrintedAt          DateTime?
   rejectedAt                DateTime?
   rejectionReason           String?
+  /// The PRESET reject-reason code (kitchen.rejectReasons.* — e.g. "tooBusy")
+  /// when staff picked one, so CUSTOMER surfaces (status page, email) can
+  /// re-render the reason in the customer's own language instead of the
+  /// staff UI language (Fabrizio cms0gyexp #10, 2026-07-31). Null = free-text
+  /// "other" / auto-reject / legacy row → show rejectionReason verbatim.
+  /// `rejectionReason` itself stays the staff-language string that the
+  /// kitchen tiles, exports and "Auto-rejected" sentinels rely on. Sparse
+  /// nullable column — only rejected orders ever carry it.
+  rejectionReasonKey        String?
   completedAt               DateTime?
   preparationTime           Int?
   deliveryZoneId            String?

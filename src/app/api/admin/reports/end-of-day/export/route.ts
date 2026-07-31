@@ -68,7 +68,19 @@ export async function GET(req: NextRequest) {
     [],
     ["PAYMENTS"],
     ["Method", "Amount", "Count"],
-    ["Online", round2(snapshot.onlinePaymentsAmount), snapshot.onlinePayments],
+    // Per-method online rows when a non-card method took money — matches the
+    // page (cms0gyexp #14: PayPal money must not export as plain "Online").
+    ...((snapshot.onlinePaypalPayments ?? 0) > 0 || (snapshot.onlineOtherPayments ?? 0) > 0
+      ? [
+          ["Online (card)", round2(snapshot.onlineCardPaymentsAmount ?? 0), snapshot.onlineCardPayments ?? 0],
+          ...((snapshot.onlinePaypalPayments ?? 0) > 0
+            ? [["Online (PayPal)", round2(snapshot.onlinePaypalPaymentsAmount ?? 0), snapshot.onlinePaypalPayments]]
+            : []),
+          ...((snapshot.onlineOtherPayments ?? 0) > 0
+            ? [["Online (other)", round2(snapshot.onlineOtherPaymentsAmount ?? 0), snapshot.onlineOtherPayments]]
+            : []),
+        ]
+      : [["Online", round2(snapshot.onlinePaymentsAmount), snapshot.onlinePayments]]),
     ["Offline/Cash", round2(snapshot.offlinePaymentsAmount), snapshot.offlinePayments],
     [],
     ["SALES BREAKDOWN"],
@@ -84,9 +96,23 @@ export async function GET(req: NextRequest) {
     ["Other fees", round2(snapshot.otherFees)],
     ["Total", round2(snapshot.total)],
     ...(round2(snapshot.storeCreditRedeemed ?? 0) > 0
+      ? [["Store credit redeemed", -round2(snapshot.storeCreditRedeemed)]]
+      : []),
+    // Refunds netted out of Collected (cms0gyexp #14).
+    ...(round2(snapshot.refundsAmount ?? 0) > 0
+      ? [[`Refunds (${snapshot.refundedOrders ?? 0} orders)`, -round2(snapshot.refundsAmount)]]
+      : []),
+    ...(round2(snapshot.storeCreditRedeemed ?? 0) > 0 || round2(snapshot.refundsAmount ?? 0) > 0
+      ? [["Collected (cash/card)", round2(snapshot.collected)]]
+      : []),
+    // Cancelled/rejected counts — excluded from the earned numbers above.
+    ...((snapshot.cancelledOrders ?? 0) > 0 || (snapshot.cancelledReservations ?? 0) > 0
       ? [
-          ["Store credit redeemed", -round2(snapshot.storeCreditRedeemed)],
-          ["Collected (cash/card)", round2(snapshot.collected ?? Math.max(0, snapshot.total - snapshot.storeCreditRedeemed))],
+          [],
+          ["CANCELLED / REJECTED"],
+          ["Metric", "Count"],
+          ...((snapshot.cancelledOrders ?? 0) > 0 ? [["Cancelled or rejected orders", snapshot.cancelledOrders]] : []),
+          ...((snapshot.cancelledReservations ?? 0) > 0 ? [["Cancelled or rejected reservations", snapshot.cancelledReservations]] : []),
         ]
       : []),
   ];

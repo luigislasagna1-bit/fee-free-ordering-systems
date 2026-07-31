@@ -272,6 +272,16 @@ export function StatusPageClient({ slug, orderId }: { slug: string; orderId: str
   // the internal reason text. Matches the kitchen + the email. Luigi 2026-06-09.
   const isMissed = order.status === "rejected" && (order.rejectionReason?.startsWith("Auto-rejected") ?? false);
   const isTerminal = isRejected || order.status === "completed";
+  // Preset rejection reasons re-render in the CUSTOMER's language via their
+  // code (kitchen.rejectReasons.* exists ×38) — the stored text is whatever
+  // language the STAFF UI ran in (Fabrizio cms0gyexp #10). Free-text/legacy
+  // rejections have no code and show the stored text verbatim. The allowlist
+  // guard keeps an unexpected code from rendering as a raw key path.
+  const PRESET_REASON_KEYS = ["tooBusy", "closingSoon", "outOfItem", "outsideDeliveryArea", "kitchenClosed", "duplicateOrder", "paymentIssue"];
+  const displayReason =
+    order.rejectionReasonKey && PRESET_REASON_KEYS.includes(order.rejectionReasonKey)
+      ? tk(`rejectReasons.${order.rejectionReasonKey}`)
+      : order.rejectionReason;
   // A SCHEDULED order (customer picked a future time) should show that time —
   // not a "ready in ~20 min" prep countdown, which is meaningless for an order
   // placed for next week (reseller report). Once the scheduled time passes we
@@ -420,7 +430,7 @@ export function StatusPageClient({ slug, orderId }: { slug: string; orderId: str
               {/* Self-cancelled orders skip the reason line — it would show the
                   raw English provenance string ("Customer cancelled from…") to
                   the very customer who cancelled. Same rule as the email. */}
-              {order.rejectionReason && !isMissed && order.cancelledBy !== "customer" && <p className="text-gray-600 mb-4">{t("rejectionReason", { reason: order.rejectionReason })}</p>}
+              {displayReason && !isMissed && order.cancelledBy !== "customer" && <p className="text-gray-600 mb-4">{t("rejectionReason", { reason: displayReason })}</p>}
               <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
                 <Link
                   href={cameFromMarketplace ? "/" : `/order/${slug}`}

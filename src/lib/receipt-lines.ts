@@ -851,6 +851,13 @@ export async function buildEndOfDayReceiptLines(
   r.bold(true).line("RESERVATIONS").bold(false);
   r.line(String(stats.tableReservations));
   r.line(deltaLabel(stats.reservationsDelta));
+  // Cancelled/rejected counts — excluded from the numbers above, printed for
+  // completeness when nonzero (Fabrizio cms0gyexp #14).
+  if ((stats.cancelledOrders ?? 0) > 0 || (stats.cancelledReservations ?? 0) > 0) {
+    r.line("");
+    if ((stats.cancelledOrders ?? 0) > 0) r.columns("Cancelled orders", String(stats.cancelledOrders));
+    if ((stats.cancelledReservations ?? 0) > 0) r.columns("Cancelled resv.", String(stats.cancelledReservations));
+  }
   r.divider("-");
 
   // By channel
@@ -860,9 +867,21 @@ export async function buildEndOfDayReceiptLines(
   r.columns("Dine-in",  `${stats.dineInOrders}  ${formatMoney(stats.dineInSales)}`);
   r.divider("-");
 
-  // Payment split
+  // Payment split. Per-method online rows only when a non-card method took
+  // money — card-only stores keep the familiar single row (cms0gyexp #14:
+  // PayPal money must never print as "card").
   r.bold(true).line("PAYMENT SPLIT").bold(false);
-  r.columns("Online (card)", `${stats.onlinePayments}  ${formatMoney(stats.onlinePaymentsAmount)}`);
+  if ((stats.onlinePaypalPayments ?? 0) > 0 || (stats.onlineOtherPayments ?? 0) > 0) {
+    r.columns("Online (card)", `${stats.onlineCardPayments ?? 0}  ${formatMoney(stats.onlineCardPaymentsAmount ?? 0)}`);
+    if ((stats.onlinePaypalPayments ?? 0) > 0) {
+      r.columns("Online (PayPal)", `${stats.onlinePaypalPayments}  ${formatMoney(stats.onlinePaypalPaymentsAmount ?? 0)}`);
+    }
+    if ((stats.onlineOtherPayments ?? 0) > 0) {
+      r.columns("Online (other)", `${stats.onlineOtherPayments}  ${formatMoney(stats.onlineOtherPaymentsAmount ?? 0)}`);
+    }
+  } else {
+    r.columns("Online (card)", `${stats.onlinePayments}  ${formatMoney(stats.onlinePaymentsAmount)}`);
+  }
   r.columns("Offline",       `${stats.offlinePayments}  ${formatMoney(stats.offlinePaymentsAmount)}`);
   r.divider("-");
 
@@ -877,10 +896,16 @@ export async function buildEndOfDayReceiptLines(
   if (stats.otherFees > 0) r.columns("Other fees", formatMoney(stats.otherFees));
   r.divider("=");
   r.bold(true).columns("TOTAL TAKEN IN", formatMoney(stats.total)).bold(false);
-  // Store credit is a tender, not cash/card — split it out so the drawer /
-  // card-processor reconciliation reads COLLECTED, never the gross total.
+  // Store credit is a tender and refunds went back to the customer — split
+  // them out so the drawer / card-processor reconciliation reads COLLECTED,
+  // never the gross total (refunds: cms0gyexp #14).
   if ((stats.storeCreditRedeemed ?? 0) > 0) {
     r.columns("Store credit", `-${formatMoney(stats.storeCreditRedeemed)}`);
+  }
+  if ((stats.refundsAmount ?? 0) > 0) {
+    r.columns(`Refunds (${stats.refundedOrders ?? 0})`, `-${formatMoney(stats.refundsAmount)}`);
+  }
+  if ((stats.storeCreditRedeemed ?? 0) > 0 || (stats.refundsAmount ?? 0) > 0) {
     r.bold(true).columns("COLLECTED", formatMoney(stats.collected)).bold(false);
   }
   r.line("");

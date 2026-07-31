@@ -157,7 +157,10 @@ export async function GET() {
     const bookings = orderIds.length > 0
       ? await prisma.reservation.findMany({
           where: { orderId: { in: orderIds } },
-          select: { id: true, orderId: true, partySize: true, date: true, time: true, confirmationCode: true, status: true },
+          // notes: the guest's booking note ("wheelchair table please") — was
+          // stored but never surfaced to the kitchen for reserve-then-order
+          // bookings (cms0gyexp #12 follow-up, 2026-07-31).
+          select: { id: true, orderId: true, partySize: true, date: true, time: true, confirmationCode: true, status: true, notes: true },
         })
       : [];
     const bookingByOrderId = new Map(bookings.map((b) => [b.orderId as string, b]));
@@ -228,7 +231,7 @@ export async function GET() {
         }),
         isFirstOrder,
         reservation: b
-          ? { id: b.id, partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status }
+          ? { id: b.id, partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status, notes: b.notes }
           : null,
         // Reward/store-credit display fields (creditApplied is already in ...o).
         rewardLabel: rewardsEnabled ? rewardLabel : null,

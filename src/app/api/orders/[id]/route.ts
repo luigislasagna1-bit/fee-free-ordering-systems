@@ -83,6 +83,9 @@ const PUBLIC_ORDER_SELECT = {
   // Fabrizio cmqqxerxs) — status/confirmation pages append the window end.
   paymentStatus: true, scheduledFor: true, scheduledSlotMinutes: true, estimatedReady: true,
   acceptedAt: true, rejectedAt: true, rejectionReason: true,
+  // Preset reject-reason code — lets the status page render the reason in the
+  // CUSTOMER's language (cms0gyexp #10); free-text rejections have none.
+  rejectionReasonKey: true,
   // WHO cancelled — the status page hides the (English, staff-provenance)
   // rejectionReason line for the customer's OWN self-cancel. cms0gyexp.
   cancelledBy: true,
@@ -422,12 +425,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     }
   }
   // Preset reason CODE from the kitchen's reject modal, when the reason wasn't
-  // free-typed. NOT persisted: `rejectionReason` stays the staff-language
-  // string that 180+ call sites, the kitchen tiles, exports and the
-  // "Auto-rejected" sentinels all rely on. The code is only carried through to
-  // the customer email, which re-renders it in THEIR language — a restaurant
-  // running the app in Chinese was mailing Chinese rejections to Italian
-  // diners (Fabrizio cms0gyexp #10).
+  // free-typed. `rejectionReason` stays the staff-language string that 180+
+  // call sites, the kitchen tiles, exports and the "Auto-rejected" sentinels
+  // all rely on; the code rides in its own sparse column so every CUSTOMER
+  // surface (email AND the status page the customer keeps refreshing) can
+  // re-render the reason in THEIR language — a restaurant running the app in
+  // Chinese was showing Chinese rejections to Italian diners (Fabrizio
+  // cms0gyexp #10; status page closed 2026-07-31).
   const rejectionReasonKey =
     typeof data.rejectionReasonKey === "string" && data.rejectionReasonKey.trim()
       ? data.rejectionReasonKey.trim().slice(0, 40)
@@ -435,6 +439,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   if (newStatus === "rejected") {
     updates.rejectedAt = new Date();
     updates.rejectionReason = String(data.rejectionReason ?? "").slice(0, 500) || null;
+    updates.rejectionReasonKey = rejectionReasonKey;
     // This route is staff-only (session-gated above) — structured attribution
     // for the kitchen's cancelled/rejected provenance (Fabrizio cms0idtz7).
     // The kitchen client's accept-timeout auto-decline also lands here, marked

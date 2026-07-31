@@ -40,6 +40,14 @@ type Stats = {
    *  credit redeemed (a tender, not cash/card) and real cash/card collected.
    *  Optional so a stale cached API payload can't crash the modal. */
   discounts?: number; storeCreditRedeemed?: number; collected?: number;
+  /** cms0gyexp #14 additions (2026-07-31): per-method online split, refunds
+   *  netted out of collected, cancelled/rejected info counts. Optional for the
+   *  same stale-payload reason. */
+  onlineCardPayments?: number; onlineCardPaymentsAmount?: number;
+  onlinePaypalPayments?: number; onlinePaypalPaymentsAmount?: number;
+  onlineOtherPayments?: number; onlineOtherPaymentsAmount?: number;
+  refundedOrders?: number; refundsAmount?: number;
+  cancelledOrders?: number; cancelledReservations?: number;
 };
 
 let activeCurrency = "usd";
@@ -232,7 +240,22 @@ export function EndOfDayModal({
               <div className={`rounded-xl p-3 ${card}`}>
                 <div className={`text-[10px] uppercase tracking-wider mb-2 ${sub}`}>{t("salesBreakdownHeading")}</div>
                 <div className="space-y-1 text-sm">
-                  <div className="flex justify-between"><span>{t("paymentOnline")}</span><span>{stats.onlinePayments} · {fmt(stats.onlinePaymentsAmount)}</span></div>
+                  {/* Per-method online rows appear only once a non-card method
+                      took money — card-only stores keep the familiar single
+                      "Online (card)" row (Fabrizio cms0gyexp #14). */}
+                  {(stats.onlinePaypalPayments ?? 0) > 0 || (stats.onlineOtherPayments ?? 0) > 0 ? (
+                    <>
+                      <div className="flex justify-between"><span>{t("paymentOnline")}</span><span>{stats.onlineCardPayments ?? 0} · {fmt(stats.onlineCardPaymentsAmount ?? 0)}</span></div>
+                      {(stats.onlinePaypalPayments ?? 0) > 0 && (
+                        <div className="flex justify-between"><span>{t("paymentOnlinePaypal")}</span><span>{stats.onlinePaypalPayments} · {fmt(stats.onlinePaypalPaymentsAmount ?? 0)}</span></div>
+                      )}
+                      {(stats.onlineOtherPayments ?? 0) > 0 && (
+                        <div className="flex justify-between"><span>{t("paymentOnlineOther")}</span><span>{stats.onlineOtherPayments} · {fmt(stats.onlineOtherPaymentsAmount ?? 0)}</span></div>
+                      )}
+                    </>
+                  ) : (
+                    <div className="flex justify-between"><span>{t("paymentOnline")}</span><span>{stats.onlinePayments} · {fmt(stats.onlinePaymentsAmount)}</span></div>
+                  )}
                   <div className="flex justify-between"><span>{t("paymentOffline")}</span><span>{stats.offlinePayments} · {fmt(stats.offlinePaymentsAmount)}</span></div>
                   <div className="h-px bg-gray-400/30 my-2" />
                   <div className="flex justify-between"><span>{t("breakdownSubtotal")}</span><span>{fmt(stats.subTotals)}</span></div>
@@ -245,13 +268,30 @@ export function EndOfDayModal({
                   <div className="flex justify-between"><span>{t("breakdownTax")}</span><span>{fmt(stats.taxAmount)}</span></div>
                   <div className="h-px bg-gray-400/30 my-2" />
                   <div className="flex justify-between font-bold"><span>{t("breakdownTotal")}</span><span>{fmt(stats.total)}</span></div>
-                  {/* Store credit is a tender — staff reconcile the drawer/processor
-                      against COLLECTED, never the gross total. Rows only appear when
-                      credit was actually redeemed (feature-gated by the data). */}
+                  {/* Store credit is a tender and refunds went back to the
+                      customer — staff reconcile the drawer/processor against
+                      COLLECTED, never the gross total. Rows only appear when
+                      the deduction actually happened (feature-gated by data). */}
                   {(stats.storeCreditRedeemed ?? 0) > 0 && (
+                    <div className="flex justify-between"><span>{tMoney("pay.rewardCredit")}</span><span>−{fmt(stats.storeCreditRedeemed!)}</span></div>
+                  )}
+                  {(stats.refundsAmount ?? 0) > 0 && (
+                    <div className="flex justify-between"><span>{t("breakdownRefunds")} ({stats.refundedOrders ?? 0})</span><span>−{fmt(stats.refundsAmount!)}</span></div>
+                  )}
+                  {((stats.storeCreditRedeemed ?? 0) > 0 || (stats.refundsAmount ?? 0) > 0) && (
+                    <div className="flex justify-between font-bold"><span>{tMoney("amountCollected")}</span><span>{fmt(stats.collected ?? Math.max(0, stats.total - (stats.storeCreditRedeemed ?? 0) - (stats.refundsAmount ?? 0)))}</span></div>
+                  )}
+                  {/* Cancelled/rejected counts — excluded from the earned
+                      numbers, shown for completeness (cms0gyexp #14). */}
+                  {((stats.cancelledOrders ?? 0) > 0 || (stats.cancelledReservations ?? 0) > 0) && (
                     <>
-                      <div className="flex justify-between"><span>{tMoney("pay.rewardCredit")}</span><span>−{fmt(stats.storeCreditRedeemed!)}</span></div>
-                      <div className="flex justify-between font-bold"><span>{tMoney("amountCollected")}</span><span>{fmt(stats.collected ?? Math.max(0, stats.total - (stats.storeCreditRedeemed ?? 0)))}</span></div>
+                      <div className="h-px bg-gray-400/30 my-2" />
+                      {(stats.cancelledOrders ?? 0) > 0 && (
+                        <div className={`flex justify-between ${sub}`}><span>{t("cancelledOrdersRow")}</span><span>{stats.cancelledOrders}</span></div>
+                      )}
+                      {(stats.cancelledReservations ?? 0) > 0 && (
+                        <div className={`flex justify-between ${sub}`}><span>{t("cancelledReservationsRow")}</span><span>{stats.cancelledReservations}</span></div>
+                      )}
                     </>
                   )}
                 </div>

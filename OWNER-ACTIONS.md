@@ -5,9 +5,9 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-30 by Claude (**A26 guest self-cancel PASSED on prod** — Luigi ran the closed-store card order + cancel; verified: order `cancelled` / `cancelledBy=customer`, wallet spend row flipped to `released` and the $2.29 credit returned. **A28 upgraded + incident**: the first attempt to connect www.luigislasagna.com briefly 404'd the live store; restored in ~4 min, and the zero-downtime domain-switch fix is built — see A28 for the corrected 6-step plan. Earlier today: polish batch shipped (reorder sold-out gap, reservation closed-hours email, eye-toggle everywhere, marketplace /account i18n ×38).)
+**Last updated:** 2026-07-31 by Claude (**Fabrizio cms0gyexp #13 + #14 BUILT (A29)** — end-of-day report overhaul: business day is now CLOSE-TO-CLOSE so the report emails ~5 min after closing and after-close activity rolls to the next day (his 10:01 AM report explained + fixed); rejected/cancelled reservations no longer counted; refunds now shown AND netted out of Collected (his €20 partial-refund repro — including the bucket bug that moved a refunded card order into Offline); PayPal shows as "Online (PayPal)"; cancelled/rejected counts + real "you didn't miss/cancel" signals in the digest email. Plus two #10/#12 follow-ups: the customer status page now shows preset rejection reasons in the CUSTOMER's language (new sparse Order.rejectionReasonKey — ⚠️ schema push to both branches before deploy), and reserve-then-order booking notes finally reach the kitchen (yellow-boxed). i18n ×38, parity + preflight in A29.)
+**Previous update:** 2026-07-30 by Claude (**A26 guest self-cancel PASSED on prod** — Luigi ran the closed-store card order + cancel; verified: order `cancelled` / `cancelledBy=customer`, wallet spend row flipped to `released` and the $2.29 credit returned. **A28 upgraded + incident**: the first attempt to connect www.luigislasagna.com briefly 404'd the live store; restored in ~4 min, and the zero-downtime domain-switch fix is built — see A28 for the corrected 6-step plan. Earlier today: polish batch shipped (reorder sold-out gap, reservation closed-hours email, eye-toggle everywhere, marketplace /account i18n ×38).)
 **Previous update:** 2026-07-19 by Claude (**iOS ring round 3 shipped** from Fabrizio's 2026-07-18 video — the "two orders at once" double-ring, the "music card with a play button", and the ring-gap cadence all fixed web/server-side (adversarially reviewed, 21-agent workflow; 823 tests); his re-test asks posted on the report (IN_TESTING). The wake-handoff piece still rides the NEXT TestFlight build (006c669d, already committed). Earlier same day: Erik's $10 make-good SENT + verified (T-J closed). Remaining opens: awaiting Apple ×1 + Google ×2 review emails, B5 Kitchen 16 KB real fix.)
-**Previous update:** 2026-07-17 by Claude (🎉 driver iOS SUBMITTED to App Review 1:22 AM — Waiting for Review; prod test deliveries cleaned; v1.1 Phase 2 deployed. Earlier: Android submission prep — BOTH signed RELEASE .aab files built + cryptographically proven release-signed [Kitchen vc21/v3.0 + Driver vc1/v1.0, same upload key]; Play org conversion confirmed = 20-tester gate GONE; wrote Play listing copy for both apps; generated 4 Play screenshots from the local demo; rewrote IOS_APP_STORE_SUBMISSION.md for the org + added the driver app. Apple org still Pending — decisions logged in A17.)
 
 ---
 
@@ -65,6 +65,26 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A29. 🆕 Fabrizio's #13/#14 end-of-day report overhaul — BUILT, needs deploy + his re-test
+Built 2026-07-31 from his two comments on report cms0gyexp (full technical log in TODO.md, top of Open).
+What changed in one breath: the daily report now emails **~5 minutes after closing time** and covers
+**close-to-close** (a reservation made after you close counts in TOMORROW's report — that's why his
+arrived at 10:01 AM containing a 23:53 booking); **rejected/cancelled reservations no longer count**;
+**refunds show up and are subtracted from "Collected"** (his €20 partial refund was invisible AND
+quietly moved the card order into the Offline bucket); **PayPal money says "Online (PayPal)"**;
+cancelled/rejected counts appear when nonzero. Bonus: preset rejection reasons now show in the
+CUSTOMER's language on the order status page too, and reserve-then-order booking notes finally
+reach the kitchen in a yellow box.
+
+- **☐ DEPLOY sequence (with Claude):** (1) `npx tsx scripts/push-schema-to-both.ts` — one new
+  nullable column `Order.rejectionReasonKey`, additive/safe; (2) push to Vercel (preflight was green);
+  (3) quick prod check: open the kitchen End-of-day report + `/admin/reports/end-of-day`.
+- **☐ Reply to Fabrizio + flip the report to IN_TESTING** — draft is ready at
+  `scratch/fab-reply-13-14.md` (Claude wrote it; posting is your call — say "post it" and Claude runs
+  `_reply-report.ts` on prod, or post it yourself from the report page).
+- ⏳ Then his re-test: the 31st's report should arrive minutes after his evening close and show
+  reservation #6H6259; a partial refund should appear as "Refunds (1)" with Collected reduced.
 
 ### A28. 🥇 Make **www.luigislasagna.com** the store's REAL address (upgraded from "just forward it")
 Luigi's call (2026-07-30, ~12:30 AM): the .com is where most real customers land. Later that day he

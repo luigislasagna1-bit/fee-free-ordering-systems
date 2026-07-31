@@ -2,13 +2,18 @@
  * End-of-day / monthly digest sweep — shared by two crons (reseller report
  * cmq8gfpxn, Luigi 2026-06-11):
  *
- *   "closing" — every 30 min. Sends a restaurant's end-of-day report shortly
+ *   "closing" — every minute. Sends a restaurant's end-of-day report ~5 min
  *               AFTER its closing time, in its own timezone ("open 10:00–23:00
- *               → report ~23:00–23:30"), covering the local day that just
- *               ended. Overnight rows (close past midnight) report the
- *               PREVIOUS local day when they close in the early hours. Closed
- *               days fall back to a 23:30-local send (skipped when there was
- *               zero activity, like every digest).
+ *               → report ~23:05"), covering the business day that just ended.
+ *               Since cms0gyexp #13 (2026-07-31) the business day runs
+ *               CLOSE-TO-CLOSE (see src/lib/digests.ts), so the report window
+ *               ends at the exact instant that triggers the send — activity
+ *               after close belongs to the NEXT day's report, never to a
+ *               morning-catch-up resend of a day the owner thought was over.
+ *               Overnight rows (close past midnight) report the PREVIOUS
+ *               local day when they close in the early hours; closed days end
+ *               at midnight and send ~00:05 (skipped when there was zero
+ *               activity, like every digest).
  *
  *   "morning" — the legacy daily schedule (08:00 UTC). Now a CATCH-UP: it
  *               sends yesterday's report only when the closing-time sweep
@@ -20,14 +25,20 @@
  * the same day can never be reported twice.
  */
 import prisma from "@/lib/db";
-import { buildDailyDigest, buildMonthlyDigest, buildTodaySnapshot } from "@/lib/digests";
+import {
+  buildDailyDigest,
+  buildMonthlyDigest,
+  buildTodaySnapshot,
+  operationalDayEnd,
+  type DigestHoursRow,
+} from "@/lib/digests";
 import {
   sendDailyDigestEmail,
   sendMonthlyDigestEmail,
   setEmailImprint,
   type DigestStats,
 } from "@/lib/email";
-import { dateKeyInTimezone, localDowAndHHMM } from "@/lib/restaurant-hours";
+import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 
 export type DigestSweepMode = "morning" | "closing";
 
@@ -42,9 +53,16 @@ function inSendWindow(deltaMin: number): boolean {
   return deltaMin >= TARGET_DELAY_MIN && deltaMin < TARGET_DELAY_MIN + CATCHUP_WINDOW_MIN;
 }
 
-function toMin(hhmm: string): number {
-  const [h, m] = hhmm.split(":").map(Number);
-  return (h || 0) * 60 + (m || 0);
+/** Anything worth reporting? Earned activity, or cancelled/rejected/refund
+ *  events that now have their own lines in the report. */
+function hasReportableActivity(stats: DigestStats): boolean {
+  return (
+    stats.orders > 0 ||
+    stats.tableReservations > 0 ||
+    (stats.cancelledOrders ?? 0) > 0 ||
+    (stats.cancelledReservations ?? 0) > 0 ||
+    (stats.refundsAmount ?? 0) > 0
+  );
 }
 
 /** Shift a "YYYY-MM-DD" key by N days (noon-UTC anchor dodges DST edges). */
@@ -54,41 +72,22 @@ function addDaysToKey(key: string, delta: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-type HoursRow = { dayOfWeek: number; isOpen: boolean; closeTime: string | null; closesNextDay: boolean };
-
 /**
- * If this restaurant's business day ended within the last CLOSING_WINDOW_MIN
- * minutes (local clock), return the LOCAL day key that ended; else null.
+ * If this restaurant's business day ended within the send window just now,
+ * return the LOCAL day key that ended; else null. Delegates the "when does day
+ * N end" question to digests.operationalDayEnd — the SAME split-hours-aware
+ * instant that bounds the report window, so the email always fires ~5 min
+ * after the exact moment its own reporting window closes (Fabrizio cms0gyexp
+ * #13). Covers every legacy case: a normal 22:00 close sends 22:05 (todayKey);
+ * an overnight 02:00 close sends 02:05 (yesterdayKey); a 23:58 close spilling
+ * past midnight sends 00:03 (yesterdayKey); a closed day ends at midnight and
+ * sends 00:05 (yesterdayKey) — zero-activity days are skipped by the caller.
  */
-function dayThatJustEnded(rows: HoursRow[], tz: string, now: Date): string | null {
-  const { dow, hhmm } = localDowAndHHMM(now, tz);
-  const nowMin = toMin(hhmm);
+function dayThatJustEnded(rows: DigestHoursRow[], tz: string, now: Date): string | null {
   const todayKey = dateKeyInTimezone(now, tz);
-  const yesterdayKey = addDaysToKey(todayKey, -1);
-  const yesterdayDow = (dow + 6) % 7;
-  const todayRow = rows.find((r) => r.dayOfWeek === dow);
-  const yesterdayRow = rows.find((r) => r.dayOfWeek === yesterdayDow);
-
-  // 1. Yesterday's OVERNIGHT row closing in this morning's early hours
-  //    (e.g. open 10:00 → 02:00: at 02:05 the previous day ended). This is the
-  //    common late-night case — a 2 AM close sends at 2:05 AM.
-  if (yesterdayRow?.isOpen && yesterdayRow.closesNextDay && yesterdayRow.closeTime) {
-    if (inSendWindow(nowMin - toMin(yesterdayRow.closeTime))) return yesterdayKey;
-  }
-  // 2. Yesterday's late close (≥23:25) whose 5-min send mark spills past midnight
-  //    (e.g. close 23:58 → send at 00:03). delta is measured across midnight.
-  if (yesterdayRow?.isOpen && !yesterdayRow.closesNextDay && yesterdayRow.closeTime) {
-    if (inSendWindow(nowMin - toMin(yesterdayRow.closeTime) + 24 * 60)) return yesterdayKey;
-  }
-  // 3. Today's normal close (e.g. close 22:00 → send at 22:05).
-  if (todayRow?.isOpen && !todayRow.closesNextDay && todayRow.closeTime) {
-    if (inSendWindow(nowMin - toMin(todayRow.closeTime))) return todayKey;
-  }
-  // 4. Closed (or hour-less) today → fall back to a 23:35-local send so any
-  //    activity on a "closed" day (scheduled orders, reservations) still
-  //    reports. Zero-activity days are skipped by the caller anyway.
-  if (!todayRow?.isOpen || !todayRow.closeTime) {
-    if (inSendWindow(nowMin - toMin("23:30"))) return todayKey;
+  for (const key of [todayKey, addDaysToKey(todayKey, -1)]) {
+    const end = operationalDayEnd(rows, key, tz);
+    if (inSendWindow((now.getTime() - end.getTime()) / 60_000)) return key;
   }
   return null;
 }
@@ -105,10 +104,12 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
       currency: true,
       defaultLanguage: true,
       lastEodDigestDate: true,
-      // Default (service-null) weekly rows drive the closing-time detection.
+      // Full weekly rows (incl. split-hours intervals) drive the closing-time
+      // detection — operationalDayEnd picks the default (service-null) row per
+      // day itself, falling back to service rows exactly like the report
+      // window does, so send time and window end can never disagree.
       openingHours: {
-        where: { service: null },
-        select: { dayOfWeek: true, isOpen: true, closeTime: true, closesNextDay: true },
+        select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true, service: true, intervals: true },
       },
       notificationRecipients: {
         where: { isActive: true },
@@ -173,7 +174,10 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
     // Skip dispatch on zero-activity days — owners don't need a "0 orders"
     // report. (We deliberately do NOT stamp the marker on a zero-skip: if
     // late activity lands after closing, the morning catch-up still reports.)
-    if (stats && reportDayKey && (stats.orders > 0 || stats.tableReservations > 0)) {
+    // Cancelled/rejected activity and refunds DO count as activity — a day
+    // whose only event was a rejected booking or a refund still gets its
+    // report (Fabrizio cms0gyexp #14: those now render as their own lines).
+    if (stats && reportDayKey && hasReportableActivity(stats)) {
       setEmailImprint(imprint);
       try {
         await Promise.all(
@@ -216,7 +220,7 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
           console.error(`[digest-sweep] buildMonthlyDigest failed for ${r.id}`, e);
           errors++;
         }
-        if (mStats && (mStats.orders > 0 || mStats.tableReservations > 0)) {
+        if (mStats && hasReportableActivity(mStats)) {
           setEmailImprint(imprint);
           try {
             await Promise.all(

@@ -2425,9 +2425,13 @@ export async function POST(req: NextRequest) {
       // auto-coupled to rewardsEnabled; don't depend on a stale value). 2026-06-27.
       if (restaurant.rewardsEnabled && Number.isFinite(requested) && requested > 0) {
         try {
-          // Session identity already resolved (once) by buildPromoOrderContext;
-          // sessionCustomerId is the server-verified signed-in Customer only.
-          if (promoCtx.sessionCustomerId) {
+          // Canonical customerId (session first, else typed-email match). Safe to use
+          // because it's either server-verified or a customer record in this restaurant.
+          // Non-signed-in gift recipients should be able to spend their gifts by typing
+          // their email — so use customerId instead of sessionCustomerId only. Luigi 2026-07-11,
+          // fixed 2026-07-31 after Fabrizio gift test (non-signed customer type email → shows
+          // $0 wallet; accept typed-email customer for reward spend).
+          if (promoCtx.customerId) {
             const onlineCharge = (paymentMethod || "cash") === "card" || (paymentMethod || "cash") === "paypal";
             // Redeemable base excludes rewardRedeemExcluded lines (its OWN
             // flag, independent of promo exclusion) — e.g. store credit
@@ -2438,7 +2442,7 @@ export async function POST(req: NextRequest) {
             ) / 100;
             const claim = await reserveReward({
               restaurantId: restaurant.id,
-              customerId: promoCtx.sessionCustomerId,
+              customerId: promoCtx.customerId,
               requested,
               // Exclude BOTH redeem-excluded item bases AND every refundable
               // deposit portion from the redeemable base — a returnable, untaxed
@@ -2450,7 +2454,7 @@ export async function POST(req: NextRequest) {
               maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
               minCharge: onlineCharge ? 0.5 : 0,
             });
-            if (claim.ok && claim.applied > 0) { creditApplied = claim.applied; creditSpenderId = promoCtx.sessionCustomerId; }
+            if (claim.ok && claim.applied > 0) { creditApplied = claim.applied; creditSpenderId = promoCtx.customerId; }
           }
         } catch (e) { console.error("[orders reward reserve]", e); }
       }

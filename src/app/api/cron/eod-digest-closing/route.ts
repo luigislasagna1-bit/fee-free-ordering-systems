@@ -1,14 +1,15 @@
 /**
- * Closing-time end-of-day digest cron (every 30 minutes).
+ * Closing-time end-of-day digest cron (every minute).
  *
  * Reseller report cmq8gfpxn (Luigi 2026-06-11): the end-of-day report should
- * arrive shortly AFTER the restaurant's closing time — "open 10:00–23:00 →
- * report ~23:00–23:30" — not the next morning, so owners can reconcile the
- * till the same night. Each pass sends only to restaurants whose business day
- * ended within the last 30 minutes in THEIR timezone; overnight closers
- * report the previous local day when they close after midnight. Idempotent
- * via Restaurant.lastEodDigestDate (the morning cron stays as a catch-up).
- * Shared logic: src/lib/digest-cron.ts.
+ * arrive a few minutes AFTER the restaurant's closing time — "open 10:00–23:00
+ * → report ~23:05" — not the next morning, so owners can reconcile the till
+ * the same night. Each pass sends only to restaurants whose business day just
+ * ended in THEIR timezone (split-hours aware; overnight closers report the
+ * previous local day when they close after midnight). Since cms0gyexp #13 the
+ * report window is close-to-close, so it ends exactly when the send fires.
+ * Idempotent via Restaurant.lastEodDigestDate (the morning cron stays as a
+ * catch-up). Shared logic: src/lib/digest-cron.ts.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { requireCronAuth } from "@/lib/cron-auth";

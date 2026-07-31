@@ -70,6 +70,9 @@ export type Order = {
     time: string;
     confirmationCode: string;
     status: string;
+    /** Guest's booking note — highlighted like an order note in the detail
+     *  view (cms0gyexp #12 follow-up). Optional: older cached payloads. */
+    notes?: string | null;
   } | null;
   /** Per-tab kitchen clear flags — each tab filters by its own. */
   clearedFromAllAt?: string | null;

@@ -55,21 +55,33 @@ export type DigestEmailProps = {
     /** Promo+coupon discounts in the window — without it the rows don't sum
      *  to Total whenever a promo fired (matches the in-app EOD "Discounts"). */
     discounts?: number;
-    /** Store credit redeemed (a tender) + real cash/card collected = total −
-     *  credit — the drawer/processor reconciliation rows the EOD page shows. */
+    /** Store credit redeemed (a tender) + refunds issued back + real cash/card
+     *  kept = total − credit − refunds — the drawer/processor reconciliation
+     *  rows the EOD page shows (refunds: Fabrizio cms0gyexp #14). */
     storeCreditRedeemed?: number;
+    refundsAmount?: number;
+    refundedOrders?: number;
     collected?: number;
   };
   /** Channel breakdown */
   pickup: { count: number; value: string };
   delivery: { count: number; value: string };
   onPremise: { count: number; value: string };
-  /** Payment-method breakdown */
+  /** Payment-method breakdown. When PayPal (or another non-card method) took
+   *  money, the per-method cards replace the single "Online payments" card so
+   *  PayPal money is never labeled as card (Fabrizio cms0gyexp #14). */
   offlinePayments?: { count: number; value: string };
   onlinePayments?: { count: number; value: string };
+  onlineCardPayments?: { count: number; value: string };
+  onlinePaypalPayments?: { count: number; value: string };
+  onlineOtherPayments?: { count: number; value: string };
   /** True when no orders were missed/cancelled — drives the reassurance line. */
   noMissedOrders: boolean;
   noCanceledOrders: boolean;
+  /** Cancelled-or-rejected counts — rendered when nonzero so the report is
+   *  complete even on a bad day (Fabrizio cms0gyexp #14). */
+  cancelledOrders?: number;
+  cancelledReservations?: number;
   dashboardUrl: string;
   unsubscribeUrl?: string;
   imprint?: string;
@@ -91,8 +103,14 @@ export default function DigestEmail(props: DigestEmailProps) {
     period, periodLabel, comparisonLabel, restaurantName, t, currency,
     sales, orders, avgOrderValue, reservations, breakdown,
     pickup, delivery, onPremise, offlinePayments, onlinePayments,
-    noMissedOrders, noCanceledOrders, dashboardUrl, unsubscribeUrl, imprint,
+    onlineCardPayments, onlinePaypalPayments, onlineOtherPayments,
+    noMissedOrders, noCanceledOrders, cancelledOrders, cancelledReservations,
+    dashboardUrl, unsubscribeUrl, imprint,
   } = props;
+  // Split online per method only when a non-card method actually took money —
+  // card-only restaurants keep the familiar single "Online payments" card.
+  const splitOnline =
+    (onlinePaypalPayments?.count ?? 0) > 0 || (onlineOtherPayments?.count ?? 0) > 0;
   const title = t(period === "daily" ? "email.digest.headlineDaily" : "email.digest.headlineMonthly");
   const money = (n: number) => formatCurrency(n, currency);
 
@@ -126,6 +144,18 @@ export default function DigestEmail(props: DigestEmailProps) {
             {noCanceledOrders && <div>✓ {t("email.digest.noCanceledOrder")}</div>}
           </InfoCard>
         )}
+        {/* Cancelled/rejected counts — excluded from the earned numbers above,
+            listed here for completeness (Fabrizio cms0gyexp #14). */}
+        {((cancelledOrders ?? 0) > 0 || (cancelledReservations ?? 0) > 0) && (
+          <InfoCard accent="amber">
+            {(cancelledOrders ?? 0) > 0 && (
+              <div>{t("email.digest.cancelledOrdersLine", { count: cancelledOrders! })}</div>
+            )}
+            {(cancelledReservations ?? 0) > 0 && (
+              <div>{t("email.digest.cancelledReservationsLine", { count: cancelledReservations! })}</div>
+            )}
+          </InfoCard>
+        )}
 
         {breakdown && (
           <>
@@ -143,15 +173,24 @@ export default function DigestEmail(props: DigestEmailProps) {
               {breakdownRow(t("email.digest.tax"), breakdown.tax)}
               <div style={{ borderTop: `1px solid ${COLORS.border}`, marginTop: 6, paddingTop: 6 }}>
                 {breakdownRow(t("email.digest.total"), breakdown.total, true)}
-                {/* Store-credit tender + real cash/card collected — the
-                    drawer/processor reconciliation pair the in-app EOD shows.
-                    Gated together on any credit redeemed in the window. */}
-                {(breakdown.storeCreditRedeemed ?? 0) > 0 && (
-                  <>
-                    {breakdownRow(t("money.pay.rewardCredit"), breakdown.storeCreditRedeemed!, false, true)}
-                    {breakdownRow(t("money.amountCollected"), breakdown.collected ?? Math.max(0, breakdown.total - breakdown.storeCreditRedeemed!), true)}
-                  </>
-                )}
+                {/* Store-credit tender + refunds issued back + real cash/card
+                    kept — the drawer/processor reconciliation rows the in-app
+                    EOD shows. The Collected line appears whenever either
+                    deduction fired (refunds: Fabrizio cms0gyexp #14). */}
+                {(breakdown.storeCreditRedeemed ?? 0) > 0 &&
+                  breakdownRow(t("money.pay.rewardCredit"), breakdown.storeCreditRedeemed!, false, true)}
+                {(breakdown.refundsAmount ?? 0) > 0 &&
+                  breakdownRow(
+                    `${t("email.digest.refunds")} (${breakdown.refundedOrders ?? 0})`,
+                    breakdown.refundsAmount!, false, true,
+                  )}
+                {((breakdown.storeCreditRedeemed ?? 0) > 0 || (breakdown.refundsAmount ?? 0) > 0) &&
+                  breakdownRow(
+                    t("money.amountCollected"),
+                    breakdown.collected ??
+                      Math.max(0, breakdown.total - (breakdown.storeCreditRedeemed ?? 0) - (breakdown.refundsAmount ?? 0)),
+                    true,
+                  )}
               </div>
             </Section>
           </>
@@ -171,8 +210,17 @@ export default function DigestEmail(props: DigestEmailProps) {
               {offlinePayments && (
                 <StatCard label={t("email.digest.offlinePayments")} value={`${offlinePayments.count}`} delta={offlinePayments.value} />
               )}
-              {onlinePayments && (
+              {!splitOnline && onlinePayments && (
                 <StatCard label={t("email.digest.onlinePayments")} value={`${onlinePayments.count}`} delta={onlinePayments.value} />
+              )}
+              {splitOnline && onlineCardPayments && (
+                <StatCard label={t("email.digest.onlineCardPayments")} value={`${onlineCardPayments.count}`} delta={onlineCardPayments.value} />
+              )}
+              {splitOnline && (onlinePaypalPayments?.count ?? 0) > 0 && (
+                <StatCard label={t("email.digest.onlinePaypalPayments")} value={`${onlinePaypalPayments!.count}`} delta={onlinePaypalPayments!.value} />
+              )}
+              {splitOnline && (onlineOtherPayments?.count ?? 0) > 0 && (
+                <StatCard label={t("email.digest.onlineOtherPayments")} value={`${onlineOtherPayments!.count}`} delta={onlineOtherPayments!.value} />
               )}
             </StatGrid>
           </>

@@ -207,10 +207,34 @@ export default async function EndOfDayReportPage({
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
           <h2 className="font-semibold text-gray-900 mb-3">{t("paymentSplitHeading")}</h2>
           <div className="space-y-2 text-sm">
-            <div className="flex justify-between text-gray-700">
-              <span>{t("paymentOnline")}</span>
-              <span className="font-semibold">{formatCurrency(snapshot.onlinePaymentsAmount)} · {snapshot.onlinePayments}</span>
-            </div>
+            {/* Per-method online rows appear only once a non-card method took
+                money — card-only stores keep the single familiar row
+                (Fabrizio cms0gyexp #14: PayPal money was labeled "card"). */}
+            {(snapshot.onlinePaypalPayments ?? 0) > 0 || (snapshot.onlineOtherPayments ?? 0) > 0 ? (
+              <>
+                <div className="flex justify-between text-gray-700">
+                  <span>{t("paymentOnline")}</span>
+                  <span className="font-semibold">{formatCurrency(snapshot.onlineCardPaymentsAmount ?? 0)} · {snapshot.onlineCardPayments ?? 0}</span>
+                </div>
+                {(snapshot.onlinePaypalPayments ?? 0) > 0 && (
+                  <div className="flex justify-between text-gray-700">
+                    <span>{t("paymentOnlinePaypal")}</span>
+                    <span className="font-semibold">{formatCurrency(snapshot.onlinePaypalPaymentsAmount ?? 0)} · {snapshot.onlinePaypalPayments}</span>
+                  </div>
+                )}
+                {(snapshot.onlineOtherPayments ?? 0) > 0 && (
+                  <div className="flex justify-between text-gray-700">
+                    <span>{t("paymentOnlineOther")}</span>
+                    <span className="font-semibold">{formatCurrency(snapshot.onlineOtherPaymentsAmount ?? 0)} · {snapshot.onlineOtherPayments}</span>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex justify-between text-gray-700">
+                <span>{t("paymentOnline")}</span>
+                <span className="font-semibold">{formatCurrency(snapshot.onlinePaymentsAmount)} · {snapshot.onlinePayments}</span>
+              </div>
+            )}
             <div className="flex justify-between text-gray-700">
               <span>{t("paymentOffline")}</span>
               <span className="font-semibold">{formatCurrency(snapshot.offlinePaymentsAmount)} · {snapshot.offlinePayments}</span>
@@ -233,12 +257,28 @@ export default async function EndOfDayReportPage({
               <span>{t("breakdownTotal")}</span>
               <span>{formatCurrency(snapshot.total)}</span>
             </div>
-            {/* Store credit is a tender, not cash/card — the reconciliation figure
-                is COLLECTED. Rows appear only when credit was actually redeemed. */}
+            {/* Store credit is a tender and refunds went back to the customer —
+                the reconciliation figure is COLLECTED. Rows appear only when
+                the deduction actually happened (refunds: cms0gyexp #14). */}
             {(snapshot.storeCreditRedeemed ?? 0) > 0 && (
+              <div className="flex justify-between text-gray-700"><span>{tMoney("pay.rewardCredit")}</span><span className="font-semibold">−{formatCurrency(snapshot.storeCreditRedeemed)}</span></div>
+            )}
+            {(snapshot.refundsAmount ?? 0) > 0 && (
+              <div className="flex justify-between text-gray-700"><span>{t("breakdownRefunds")} ({snapshot.refundedOrders ?? 0})</span><span className="font-semibold">−{formatCurrency(snapshot.refundsAmount)}</span></div>
+            )}
+            {((snapshot.storeCreditRedeemed ?? 0) > 0 || (snapshot.refundsAmount ?? 0) > 0) && (
+              <div className="flex justify-between text-gray-900 font-bold"><span>{tMoney("amountCollected")}</span><span>{formatCurrency(snapshot.collected)}</span></div>
+            )}
+            {/* Cancelled/rejected counts — excluded from the earned numbers,
+                shown for completeness (cms0gyexp #14). */}
+            {((snapshot.cancelledOrders ?? 0) > 0 || (snapshot.cancelledReservations ?? 0) > 0) && (
               <>
-                <div className="flex justify-between text-gray-700"><span>{tMoney("pay.rewardCredit")}</span><span className="font-semibold">−{formatCurrency(snapshot.storeCreditRedeemed)}</span></div>
-                <div className="flex justify-between text-gray-900 font-bold"><span>{tMoney("amountCollected")}</span><span>{formatCurrency(snapshot.collected)}</span></div>
+                {(snapshot.cancelledOrders ?? 0) > 0 && (
+                  <div className="flex justify-between text-gray-500 border-t border-gray-100 pt-2 mt-2"><span>{t("cancelledOrdersRow")}</span><span>{snapshot.cancelledOrders}</span></div>
+                )}
+                {(snapshot.cancelledReservations ?? 0) > 0 && (
+                  <div className={`flex justify-between text-gray-500 ${(snapshot.cancelledOrders ?? 0) > 0 ? "" : "border-t border-gray-100 pt-2 mt-2"}`}><span>{t("cancelledReservationsRow")}</span><span>{snapshot.cancelledReservations}</span></div>
+                )}
               </>
             )}
           </div>

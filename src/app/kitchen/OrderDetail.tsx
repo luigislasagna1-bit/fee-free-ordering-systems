@@ -384,6 +384,16 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 {order.reservation.date} {fmtTimeOnly(`${order.reservation.date}T${order.reservation.time}`, hoursFormat, locale)}
                 {" · #"}{order.reservation.confirmationCode}
               </div>
+              {/* Guest's booking note — same yellow emphasis as customer order
+                  notes so staff can't miss it (cms0gyexp #12 follow-up: it was
+                  stored but never shown for reserve-then-order bookings). The
+                  banner background is fixed purple in both themes, so the note
+                  uses banner-contrast yellows, not the theme-aware classes. */}
+              {order.reservation.notes && (
+                <div className="mt-2 rounded-lg px-3 py-2 bg-yellow-400/20 border border-yellow-300/60 text-yellow-100 text-sm font-medium">
+                  {order.reservation.notes}
+                </div>
+              )}
             </div>
           )}
 

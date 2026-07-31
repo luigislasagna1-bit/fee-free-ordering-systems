@@ -240,10 +240,11 @@ export async function POST(req: NextRequest) {
       : r,
   );
 
-  // ── Reward Dollars (store credit) — surface a SIGNED-IN customer's spendable
-  //    balance + the restaurant's redeem settings so the cart can offer the
-  //    "use my {label}" control. Preview only — nothing is decremented here; the
-  //    order route claims atomically. Strict: signed-in id only. Luigi 2026-06-27.
+  // ── Reward Dollars (store credit) — surface a customer's spendable balance +
+  //    the restaurant's redeem settings so the cart can offer the "use my {label}"
+  //    control. Preview only — nothing is decremented here; the order route claims
+  //    atomically. Canonical customerId (session first, else typed-email match).
+  //    Luigi 2026-06-27, fixed 2026-07-31 (was blocking non-logged-in gift recipients).
   let reward: {
     balance: number; redeemEnabled: boolean; minRedeemBalance: number;
     maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null;
@@ -258,11 +259,14 @@ export async function POST(req: NextRequest) {
     // Opting into the program means customers can pay with their balance — gate
     // on rewardsEnabled alone (rewardRedeemEnabled is auto-coupled to it, but we
     // don't depend on a possibly-stale value). Luigi 2026-06-27.
-    // STRICT: the server-verified signed-in customer only — never the typed
-    // email's Customer row — so nobody surfaces someone else's balance.
-    if (r.rewardsEnabled && promoCtx.sessionCustomerId) {
+    // The canonical customerId is safe to use: it's either the session customer
+    // (server-verified) or a typed email that resolved to an actual customer record
+    // in this restaurant (not a stranger). Both cases are allowed to see their own
+    // balance — gift recipients who haven't logged in should be able to use gifts
+    // by typing their email (cms0gyexp follow-up, 2026-07-31).
+    if (r.rewardsEnabled && promoCtx.customerId) {
       const { getBalance } = await import("@/lib/reward-ledger");
-      const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.sessionCustomerId });
+      const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.customerId });
       if (balance > 0) {
         reward = {
           balance,

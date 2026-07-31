@@ -1826,12 +1826,31 @@ export interface DigestStats {
   dineInSales: number;
 
   offlinePayments: number;        // count
-  offlinePaymentsAmount: number;  // cash/card actually collected (net of store credit)
+  offlinePaymentsAmount: number;  // cash/card actually collected (net of store credit + refunds)
   onlinePayments: number;
-  onlinePaymentsAmount: number;   // cash/card actually collected (net of store credit)
+  onlinePaymentsAmount: number;   // cash/card actually collected (net of store credit + refunds)
+  /** Per-method online sub-buckets (sum = onlinePayments/Amount) — so PayPal
+   *  money renders as "Online (PayPal)", not "Online (card)" (Fabrizio
+   *  cms0gyexp #14). "Other" = reward_credit-covered orders + future methods. */
+  onlineCardPayments: number;
+  onlineCardPaymentsAmount: number;
+  onlinePaypalPayments: number;
+  onlinePaypalPaymentsAmount: number;
+  onlineOtherPayments: number;
+  onlineOtherPaymentsAmount: number;
   /** Reward / store credit spent across the window — a TENDER, not cash/card. */
   storeCreditRedeemed: number;
-  /** Real cash/card collected = sales − storeCreditRedeemed. */
+  /** Orders with a (partial or full) refund + total refunded back to customers
+   *  across the window (Order.refundedAmount) — Fabrizio cms0gyexp #14. */
+  refundedOrders: number;
+  refundsAmount: number;
+  /** Cancelled-or-rejected counts (info lines — these are EXCLUDED from the
+   *  earned orders / tableReservations numbers). missedOrders = the auto-
+   *  rejected subset (nobody accepted in time). */
+  cancelledOrders: number;
+  cancelledReservations: number;
+  missedOrders: number;
+  /** Real cash/card kept = sales − storeCreditRedeemed − refundsAmount. */
   collected: number;
   /** Promo + coupon discounts given across the window (Order.promoDiscount +
    *  Order.couponDiscount) — the EOD/Summary "Discounts" line. */
@@ -1887,6 +1906,10 @@ async function sendDigestEmail(
         // saw credit-vs-collected in the digest (audit 2026-07-11).
         discounts: stats.discounts,
         storeCreditRedeemed: stats.storeCreditRedeemed,
+        // Refunds issued back to customers — netted out of "collected"
+        // (Fabrizio cms0gyexp #14).
+        refundsAmount: stats.refundsAmount,
+        refundedOrders: stats.refundedOrders,
         collected: stats.collected,
       },
       pickup:    { count: stats.pickupOrders,   value: money(stats.pickupSales) },
@@ -1894,8 +1917,17 @@ async function sendDigestEmail(
       onPremise: { count: stats.dineInOrders,   value: money(stats.dineInSales) },
       offlinePayments: { count: stats.offlinePayments, value: money(stats.offlinePaymentsAmount) },
       onlinePayments:  { count: stats.onlinePayments,  value: money(stats.onlinePaymentsAmount) },
-      noMissedOrders: true,   // tracked elsewhere; until we wire the real signal we say "you're good"
-      noCanceledOrders: true,
+      // Per-method online split — the template shows PayPal/other cards only
+      // when a non-card method actually took money (Fabrizio cms0gyexp #14).
+      onlineCardPayments:   { count: stats.onlineCardPayments,   value: money(stats.onlineCardPaymentsAmount) },
+      onlinePaypalPayments: { count: stats.onlinePaypalPayments, value: money(stats.onlinePaypalPaymentsAmount) },
+      onlineOtherPayments:  { count: stats.onlineOtherPayments,  value: money(stats.onlineOtherPaymentsAmount) },
+      // Real signals now (were hardcoded true) — cancelled/rejected counts get
+      // their own lines when nonzero.
+      noMissedOrders: stats.missedOrders === 0,
+      noCanceledOrders: stats.cancelledOrders === 0 && stats.cancelledReservations === 0,
+      cancelledOrders: stats.cancelledOrders,
+      cancelledReservations: stats.cancelledReservations,
       dashboardUrl,
       unsubscribeUrl,
       imprint: currentImprint(),
