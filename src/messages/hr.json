@@ -5057,6 +5057,7 @@
       "giftResent": "Upute su ponovno poslane.",
       "giftResendTooSoon": "Upravo su poslane — pričekajte minutu prije ponovnog slanja.",
       "giftAlreadyPending": "Ovaj gost već ima {amount} u {label} koji čekaju preuzimanje. Pošaljite upute ponovno gumbom ✉ ispod ili prvo otkažite taj poklon.",
+      "giftBlockedTitle": "{email} već ima poklon koji čeka preuzimanje",
       "giftStatusPending": "Na čekanju",
       "giftStatusClaimed": "Preuzeto",
       "giftStatusRevoked": "Otkazano",

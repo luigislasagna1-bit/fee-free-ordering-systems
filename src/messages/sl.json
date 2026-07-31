@@ -5057,6 +5057,7 @@
       "giftResent": "Navodila so bila znova poslana.",
       "giftResendTooSoon": "Pravkar poslano — počakajte minuto, preden pošljete znova.",
       "giftAlreadyPending": "Ta gost že ima {amount} v {label}, ki čaka na prevzem. Znova pošljite navodila z gumbom ✉ spodaj ali najprej prekličite tisto darilo.",
+      "giftBlockedTitle": "{email} že ima darilo, ki čaka na prevzem",
       "giftStatusPending": "Čaka",
       "giftStatusClaimed": "Prevzeto",
       "giftStatusRevoked": "Preklicano",

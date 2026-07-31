@@ -5057,6 +5057,7 @@
       "giftResent": "Pokyny byly odeslány znovu.",
       "giftResendTooSoon": "Právě odesláno — počkejte chvíli, než pošlete znovu.",
       "giftAlreadyPending": "Tento host má k vyzvednutí už {amount} v {label}. Pošlete pokyny znovu tlačítkem ✉ níže, nebo tento dárek nejdřív zrušte.",
+      "giftBlockedTitle": "{email} už má dárek k vyzvednutí",
       "giftStatusPending": "Čeká",
       "giftStatusClaimed": "Uplatněno",
       "giftStatusRevoked": "Zrušeno",

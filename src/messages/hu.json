@@ -5057,6 +5057,7 @@
       "giftResent": "Az útmutatót újra elküldtük.",
       "giftResendTooSoon": "Épp most küldtük el — várjon egy percet az újraküldéssel.",
       "giftAlreadyPending": "Ennek a vendégnek már vár átvételre {amount} értékű {label} egyenleg. Küldje el újra az útmutatót az alábbi ✉ gombbal, vagy előbb vonja vissza azt az ajándékot.",
+      "giftBlockedTitle": "{email} címen már átvételre vár egy ajándék",
       "giftStatusPending": "Függőben",
       "giftStatusClaimed": "Beváltva",
       "giftStatusRevoked": "Visszavonva",

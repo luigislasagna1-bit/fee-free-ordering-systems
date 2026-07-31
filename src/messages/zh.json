@@ -5082,7 +5082,8 @@
       "giftResend": "重新发送说明",
       "giftResent": "说明已再次发送。",
       "giftResendTooSoon": "刚刚才发送过——请稍等一分钟再发。",
-      "giftAlreadyPending": "对方已有 {amount} 的 {label} 等待领取。可用下方的 ✉ 按钮重新发送说明，或先取消那份赠礼。"
+      "giftAlreadyPending": "对方已有 {amount} 的 {label} 等待领取。可用下方的 ✉ 按钮重新发送说明，或先取消那份赠礼。",
+      "giftBlockedTitle": "{email} 已有一份待领取的赠礼"
     },
     "imageCrop": {
       "title": "调整您的照片",

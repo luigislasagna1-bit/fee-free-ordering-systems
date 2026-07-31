@@ -5082,7 +5082,8 @@
       "giftResend": "Invia di nuovo le istruzioni",
       "giftResent": "Istruzioni inviate di nuovo.",
       "giftResendTooSoon": "Appena inviate — aspetta un minuto prima di inviarle di nuovo.",
-      "giftAlreadyPending": "Ha già {amount} in {label} in attesa di essere ritirati. Invia di nuovo le istruzioni con il pulsante ✉ qui sotto, oppure annulla prima quel regalo."
+      "giftAlreadyPending": "Ha già {amount} in {label} in attesa di essere ritirati. Invia di nuovo le istruzioni con il pulsante ✉ qui sotto, oppure annulla prima quel regalo.",
+      "giftBlockedTitle": "{email} ha già un regalo in attesa di essere ritirato"
     },
     "imageCrop": {
       "title": "Regola la foto",

@@ -5057,6 +5057,7 @@
       "giftResent": "Pokyny boli odoslané znova.",
       "giftResendTooSoon": "Práve odoslané — počkajte chvíľu, než pošlete znova.",
       "giftAlreadyPending": "Tento hosť má na vyzdvihnutie už {amount} v {label}. Pošlite pokyny znova tlačidlom ✉ nižšie alebo najprv zrušte tento darček.",
+      "giftBlockedTitle": "{email} už má darček na vyzdvihnutie",
       "giftStatusPending": "Čaká sa",
       "giftStatusClaimed": "Uplatnený",
       "giftStatusRevoked": "Zrušený",

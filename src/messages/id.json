@@ -5082,7 +5082,8 @@
       "giftResend": "Kirim ulang petunjuknya",
       "giftResent": "Petunjuk sudah dikirim ulang.",
       "giftResendTooSoon": "Baru saja dikirim — tunggu sebentar sebelum mengirim lagi.",
-      "giftAlreadyPending": "Mereka sudah punya {label} senilai {amount} yang menunggu diklaim. Kirim ulang petunjuknya dengan tombol ✉ di bawah, atau batalkan dulu hadiah tersebut."
+      "giftAlreadyPending": "Mereka sudah punya {label} senilai {amount} yang menunggu diklaim. Kirim ulang petunjuknya dengan tombol ✉ di bawah, atau batalkan dulu hadiah tersebut.",
+      "giftBlockedTitle": "{email} sudah punya hadiah yang menunggu diklaim"
     },
     "imageCrop": {
       "title": "Sesuaikan foto Anda",

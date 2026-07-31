@@ -5082,7 +5082,8 @@
       "giftResend": "案内をもう一度送る",
       "giftResent": "案内を再送しました。",
       "giftResendTooSoon": "送信したばかりです。少し時間をおいてから再送してください。",
-      "giftAlreadyPending": "この方には、受け取り待ちの{label}が{amount}分すでにあります。下の✉ボタンで案内を再送するか、先にそのギフトをキャンセルしてください。"
+      "giftAlreadyPending": "この方には、受け取り待ちの{label}が{amount}分すでにあります。下の✉ボタンで案内を再送するか、先にそのギフトをキャンセルしてください。",
+      "giftBlockedTitle": "{email} には受け取り待ちのギフトがすでにあります"
     },
     "imageCrop": {
       "title": "写真を調整",

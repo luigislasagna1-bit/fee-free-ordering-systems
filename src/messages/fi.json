@@ -5057,6 +5057,7 @@
       "giftResent": "Ohjeet lähetetty uudelleen.",
       "giftResendTooSoon": "Lähetettiin juuri — odota hetki ennen uutta lähetystä.",
       "giftAlreadyPending": "Hänellä on jo {amount} ({label}) odottamassa lunastusta. Lähetä ohjeet uudelleen alla olevalla ✉-painikkeella tai peruuta ensin kyseinen lahja.",
+      "giftBlockedTitle": "Osoitteella {email} on jo lahja odottamassa lunastusta",
       "giftStatusPending": "Odottaa",
       "giftStatusClaimed": "Lunastettu",
       "giftStatusRevoked": "Peruutettu",

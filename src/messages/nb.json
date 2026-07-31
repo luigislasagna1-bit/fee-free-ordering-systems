@@ -5057,6 +5057,7 @@
       "giftResent": "Veiledningen er sendt på nytt.",
       "giftResendTooSoon": "Nettopp sendt — vent et minutt før du sender på nytt.",
       "giftAlreadyPending": "De har allerede {amount} i {label} som venter på å bli hentet. Send veiledningen på nytt med ✉-knappen nedenfor, eller annuller den gaven først.",
+      "giftBlockedTitle": "{email} har allerede en gave som venter på å bli hentet",
       "giftStatusPending": "Venter",
       "giftStatusClaimed": "Innløst",
       "giftStatusRevoked": "Annullert",

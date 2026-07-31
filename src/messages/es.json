@@ -5082,7 +5082,8 @@
       "giftResend": "Reenviar las instrucciones",
       "giftResent": "Instrucciones reenviadas.",
       "giftResendTooSoon": "Acabas de enviarlas: espera un minuto antes de volver a enviarlas.",
-      "giftAlreadyPending": "Ya tiene {amount} en {label} pendientes de reclamar. Reenvía las instrucciones con el botón ✉ de abajo, o cancela antes ese regalo."
+      "giftAlreadyPending": "Ya tiene {amount} en {label} pendientes de reclamar. Reenvía las instrucciones con el botón ✉ de abajo, o cancela antes ese regalo.",
+      "giftBlockedTitle": "{email} ya tiene un regalo pendiente de reclamar"
     },
     "imageCrop": {
       "title": "Ajusta tu foto",

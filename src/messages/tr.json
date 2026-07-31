@@ -5082,7 +5082,8 @@
       "giftResend": "Yönergeleri yeniden gönder",
       "giftResent": "Yönergeler yeniden gönderildi.",
       "giftResendTooSoon": "Az önce gönderildi — tekrar göndermeden önce bir dakika bekleyin.",
-      "giftAlreadyPending": "Bu kişinin henüz alınmamış {amount} tutarında {label} hediyesi zaten var. Aşağıdaki ✉ düğmesiyle yönergeleri yeniden gönderin ya da önce o hediyeyi iptal edin."
+      "giftAlreadyPending": "Bu kişinin henüz alınmamış {amount} tutarında {label} hediyesi zaten var. Aşağıdaki ✉ düğmesiyle yönergeleri yeniden gönderin ya da önce o hediyeyi iptal edin.",
+      "giftBlockedTitle": "{email} adresinin alınmayı bekleyen bir hediyesi zaten var"
     },
     "imageCrop": {
       "title": "Fotoğrafınızı ayarlayın",

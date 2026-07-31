@@ -5082,7 +5082,8 @@
       "giftResend": "Gửi lại hướng dẫn",
       "giftResent": "Đã gửi lại hướng dẫn.",
       "giftResendTooSoon": "Vừa gửi xong — hãy đợi một phút rồi gửi lại.",
-      "giftAlreadyPending": "Họ đã có {amount} {label} đang chờ nhận. Hãy gửi lại hướng dẫn bằng nút ✉ bên dưới, hoặc hủy món quà đó trước."
+      "giftAlreadyPending": "Họ đã có {amount} {label} đang chờ nhận. Hãy gửi lại hướng dẫn bằng nút ✉ bên dưới, hoặc hủy món quà đó trước.",
+      "giftBlockedTitle": "{email} đã có một món quà đang chờ nhận"
     },
     "imageCrop": {
       "title": "Điều chỉnh ảnh của bạn",

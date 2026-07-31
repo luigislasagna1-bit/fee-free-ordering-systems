@@ -5057,6 +5057,7 @@
       "giftResent": "Instructies opnieuw verstuurd.",
       "giftResendTooSoon": "Net verstuurd — wacht even een minuutje voordat je het opnieuw stuurt.",
       "giftAlreadyPending": "Deze persoon heeft al {amount} aan {label} klaarstaan die nog niet is opgehaald. Verstuur de instructies opnieuw met de knop ✉ hieronder, of annuleer dat cadeau eerst.",
+      "giftBlockedTitle": "{email} heeft al een cadeau dat nog niet is opgehaald",
       "giftStatusPending": "In afwachting",
       "giftStatusClaimed": "Geclaimd",
       "giftStatusRevoked": "Geannuleerd",

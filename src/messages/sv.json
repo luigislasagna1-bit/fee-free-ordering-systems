@@ -5057,6 +5057,7 @@
       "giftResent": "Instruktionerna har skickats igen.",
       "giftResendTooSoon": "Nyss skickat — vänta en minut innan du skickar igen.",
       "giftAlreadyPending": "Personen har redan {amount} i {label} som väntar på att hämtas ut. Skicka instruktionerna igen med ✉-knappen nedan, eller återkalla den gåvan först.",
+      "giftBlockedTitle": "{email} har redan en gåva som väntar på att hämtas ut",
       "giftStatusPending": "Väntar",
       "giftStatusClaimed": "Inlöst",
       "giftStatusRevoked": "Återkallad",

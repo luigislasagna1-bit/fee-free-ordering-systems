@@ -5082,7 +5082,8 @@
       "giftResend": "Reenviar as instruções",
       "giftResent": "Instruções reenviadas.",
       "giftResendTooSoon": "Você acabou de enviar — espere um minuto antes de enviar de novo.",
-      "giftAlreadyPending": "Essa pessoa já tem {amount} em {label} esperando para serem resgatados. Reenvie as instruções com o botão ✉ abaixo, ou cancele esse presente primeiro."
+      "giftAlreadyPending": "Essa pessoa já tem {amount} em {label} esperando para serem resgatados. Reenvie as instruções com o botão ✉ abaixo, ou cancele esse presente primeiro.",
+      "giftBlockedTitle": "{email} já tem um presente esperando para ser resgatado"
     },
     "imageCrop": {
       "title": "Ajuste sua foto",

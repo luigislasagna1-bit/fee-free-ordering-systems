@@ -5082,7 +5082,8 @@
       "giftResend": "안내 다시 보내기",
       "giftResent": "안내를 다시 보냈습니다.",
       "giftResendTooSoon": "방금 보냈습니다. 잠시 후에 다시 보내 주세요.",
-      "giftAlreadyPending": "이 고객에게는 아직 받아 가지 않은 {label} {amount}이(가) 있습니다. 아래 ✉ 버튼으로 안내를 다시 보내거나, 먼저 그 선물을 취소하세요."
+      "giftAlreadyPending": "이 고객에게는 아직 받아 가지 않은 {label} {amount}이(가) 있습니다. 아래 ✉ 버튼으로 안내를 다시 보내거나, 먼저 그 선물을 취소하세요.",
+      "giftBlockedTitle": "{email} 님에게 아직 받아 가지 않은 선물이 있습니다"
     },
     "imageCrop": {
       "title": "사진 조정",

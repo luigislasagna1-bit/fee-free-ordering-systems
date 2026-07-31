@@ -5057,6 +5057,7 @@
       "giftResent": "Instrucțiunile au fost trimise din nou.",
       "giftResendTooSoon": "Tocmai le-am trimis — mai așteaptă un minut înainte de a trimite din nou.",
       "giftAlreadyPending": "Această persoană are deja un cadou de {amount} în {label} care așteaptă să fie revendicat. Retrimite instrucțiunile cu butonul ✉ de mai jos sau anulează mai întâi acel cadou.",
+      "giftBlockedTitle": "{email} are deja un cadou de revendicat",
       "giftStatusPending": "În așteptare",
       "giftStatusClaimed": "Revendicat",
       "giftStatusRevoked": "Anulat",

@@ -5082,7 +5082,8 @@
       "giftResend": "Torna a enviar les instruccions",
       "giftResent": "Instruccions reenviades.",
       "giftResendTooSoon": "Acabes d'enviar-les — espera un minut abans de tornar-ho a fer.",
-      "giftAlreadyPending": "Aquesta persona ja té {amount} en {label} pendents de recollir. Torna a enviar les instruccions amb el botó ✉ de sota, o cancel·la abans aquest regal."
+      "giftAlreadyPending": "Aquesta persona ja té {amount} en {label} pendents de recollir. Torna a enviar les instruccions amb el botó ✉ de sota, o cancel·la abans aquest regal.",
+      "giftBlockedTitle": "{email} ja té un regal pendent de recollir"
     },
     "imageCrop": {
       "title": "Ajusta la foto",

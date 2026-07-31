@@ -5082,7 +5082,8 @@
       "giftResend": "Nosūtīt norādījumus vēlreiz",
       "giftResent": "Norādījumi nosūtīti vēlreiz.",
       "giftResendTooSoon": "Tikko nosūtīts — pagaidiet minūti, pirms sūtāt vēlreiz.",
-      "giftAlreadyPending": "Viņam jau ir {amount} {label}, kas gaida saņemšanu. Nosūtiet norādījumus vēlreiz ar ✉ pogu zemāk vai vispirms atceliet to dāvanu."
+      "giftAlreadyPending": "Viņam jau ir {amount} {label}, kas gaida saņemšanu. Nosūtiet norādījumus vēlreiz ar ✉ pogu zemāk vai vispirms atceliet to dāvanu.",
+      "giftBlockedTitle": "{email} jau ir dāvana, kas gaida saņemšanu"
     },
     "imageCrop": {
       "title": "Pielāgojiet foto",

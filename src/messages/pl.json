@@ -5057,6 +5057,7 @@
       "giftResent": "Instrukcja wysłana ponownie.",
       "giftResendTooSoon": "Właśnie wysłano — odczekaj chwilę przed ponownym wysłaniem.",
       "giftAlreadyPending": "Ta osoba ma już {amount} w {label} czekające na odbiór. Wyślij instrukcję ponownie przyciskiem ✉ poniżej albo najpierw anuluj tamten prezent.",
+      "giftBlockedTitle": "{email} ma już prezent czekający na odbiór",
       "giftStatusPending": "Oczekujący",
       "giftStatusClaimed": "Odebrany",
       "giftStatusRevoked": "Anulowany",

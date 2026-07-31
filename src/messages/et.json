@@ -5057,6 +5057,7 @@
       "giftResent": "Juhised saadeti uuesti.",
       "giftResendTooSoon": "Just saadetud — oota hetk, enne kui uuesti saadad.",
       "giftAlreadyPending": "Sellel külalisel on juba {amount} {label} kättesaamist ootamas. Saada juhised uuesti allpool oleva ✉ nupuga või tühista kõigepealt see kingitus.",
+      "giftBlockedTitle": "{email} jaoks ootab juba kingitus kättesaamist",
       "giftStatusPending": "Ootel",
       "giftStatusClaimed": "Lunastatud",
       "giftStatusRevoked": "Tühistatud",

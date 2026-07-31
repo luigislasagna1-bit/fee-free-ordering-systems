@@ -5082,7 +5082,8 @@
       "giftResend": "Išsiųsti instrukcijas dar kartą",
       "giftResent": "Instrukcijos išsiųstos dar kartą.",
       "giftResendTooSoon": "Ką tik išsiųsta — palaukite minutę prieš siųsdami dar kartą.",
-      "giftAlreadyPending": "Šis žmogus jau turi neatsiimtų {amount} {label}. Išsiųskite instrukcijas dar kartą mygtuku ✉ žemiau arba pirma atšaukite tą dovaną."
+      "giftAlreadyPending": "Šis žmogus jau turi neatsiimtų {amount} {label}. Išsiųskite instrukcijas dar kartą mygtuku ✉ žemiau arba pirma atšaukite tą dovaną.",
+      "giftBlockedTitle": "{email} jau turi neatsiimtą dovaną"
     },
     "imageCrop": {
       "title": "Koreguokite nuotrauką",

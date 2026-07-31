@@ -5057,6 +5057,7 @@
       "giftResent": "Anleitung erneut gesendet.",
       "giftResendTooSoon": "Gerade erst gesendet — warten Sie eine Minute, bevor Sie erneut senden.",
       "giftAlreadyPending": "Diese Person hat bereits {amount} in {label}, die noch nicht abgeholt wurden. Senden Sie die Anleitung mit der Schaltfläche ✉ unten erneut, oder stornieren Sie zuerst dieses Geschenk.",
+      "giftBlockedTitle": "{email} hat bereits ein Geschenk, das noch nicht abgeholt wurde",
       "giftStatusPending": "Ausstehend",
       "giftStatusClaimed": "Eingelöst",
       "giftStatusRevoked": "Storniert",
