@@ -169,3 +169,81 @@ describe("reward wallet on captured-order refund (Blocker #8)", () => {
     expect(balance()).toBeGreaterThanOrEqual(0);
   });
 });
+
+/**
+ * SPLIT-IDENTITY orders (Luigi 2026-07-31, found from his own checkout
+ * screenshots). /api/orders resolves the Order's Customer row from the TYPED
+ * email, while the wallet spend comes from the SIGNED-IN session — so one
+ * order's ledger rows can sit on two different accounts: A paid, B earned.
+ *
+ * refundForOrder used to read ONE arbitrary `rows[0].accountId` (findMany has
+ * no orderBy, so not even deterministic) and apply BOTH the spend refund and
+ * the earn clawback to it. Depending on row order that either refunded a
+ * stranger or docked the payer for credit somebody else earned.
+ *
+ * Each write must now land on the account named by the row it is undoing.
+ */
+describe("refundForOrder on a split-identity order (A paid, B earned)", () => {
+  const ORDER_S = "order_split";
+  const acct = (id: string) => h.state.accounts.find((a) => a.id === id)!;
+
+  function seedSplit(rowsNewestFirst: boolean) {
+    // A spent $5 of a $11.50 wallet. B earned $1.50 on the same order.
+    h.state.accounts = [
+      { id: "acct_A", restaurantId: R, customerId: "cust_A", balance: 6.5, lifetimeEarned: 11.5, lifetimeRedeemed: 5 },
+      { id: "acct_B", restaurantId: R, customerId: "cust_B", balance: 1.5, lifetimeEarned: 1.5, lifetimeRedeemed: 0 },
+    ];
+    const spendRow = { id: "led_spend_A", accountId: "acct_A", orderId: ORDER_S, reason: "spend", status: "redeemed", amount: -5, balanceAfter: 6.5 };
+    const earnRow = { id: "led_earn_B", accountId: "acct_B", orderId: ORDER_S, reason: "earn", status: null, amount: 1.5, balanceAfter: 1.5 };
+    // Row order is NOT guaranteed by the query — prove the outcome is identical
+    // either way, which is precisely what the rows[0] bug got wrong.
+    h.state.ledger = rowsNewestFirst ? [earnRow, spendRow] : [spendRow, earnRow];
+    h.state.nextId = 100;
+  }
+
+  it("returns the spend to the account that PAID and claws the earn back from the account that EARNED", async () => {
+    seedSplit(false);
+    await refundForOrder(ORDER_S);
+
+    expect(acct("acct_A").balance).toBe(11.5); // 6.5 + 5 returned — nothing clawed back here
+    expect(acct("acct_B").balance).toBe(0);    // 1.5 − 1.5 earn reversed
+
+    expect(h.state.ledger.find((r) => r.reason === "refund" && r.orderId === ORDER_S)!.accountId).toBe("acct_A");
+    expect(h.state.ledger.find((r) => r.reason === "reverse" && r.orderId === ORDER_S)!.accountId).toBe("acct_B");
+  });
+
+  it("is unaffected by ledger row ORDER — the earn row arriving first must not redirect the refund", async () => {
+    seedSplit(true); // earn row first: the old code refunded acct_B, a stranger
+    await refundForOrder(ORDER_S);
+
+    expect(acct("acct_A").balance).toBe(11.5);
+    expect(acct("acct_B").balance).toBe(0);
+    // The payer's own refund row never lands on the other wallet.
+    expect(h.state.ledger.some((r) => r.reason === "refund" && r.accountId === "acct_B")).toBe(false);
+  });
+
+  it("stays idempotent per account when fired twice", async () => {
+    seedSplit(false);
+    await refundForOrder(ORDER_S);
+    const a = acct("acct_A").balance;
+    const b = acct("acct_B").balance;
+    const rows = h.state.ledger.length;
+
+    await refundForOrder(ORDER_S);
+    expect(acct("acct_A").balance).toBe(a);
+    expect(acct("acct_B").balance).toBe(b);
+    expect(h.state.ledger.length).toBe(rows);
+  });
+
+  it("claws back from EVERY earning account when an order earned on more than one", async () => {
+    seedSplit(false);
+    h.state.accounts.push({ id: "acct_C", restaurantId: R, customerId: "cust_C", balance: 2, lifetimeEarned: 2, lifetimeRedeemed: 0 });
+    h.state.ledger.push({ id: "led_earn_C", accountId: "acct_C", orderId: ORDER_S, reason: "promo:p1", status: null, amount: 2, balanceAfter: 2 });
+
+    await refundForOrder(ORDER_S);
+
+    expect(acct("acct_A").balance).toBe(11.5);
+    expect(acct("acct_B").balance).toBe(0);
+    expect(acct("acct_C").balance).toBe(0); // promo:<id> earns are in the clawback filter too
+  });
+});

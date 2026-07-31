@@ -233,7 +233,15 @@ export async function refundForOrder(orderId: string): Promise<void> {
       select: { id: true, accountId: true, amount: true, reason: true, status: true },
     });
     if (!rows.length) return;
-    const accountId = rows[0].accountId;
+
+    // ⚠️ Every write below targets the account named on the ROW it is undoing.
+    // One order's ledger rows are NOT guaranteed to share an account: /api/orders
+    // resolves the Order's Customer from the TYPED email while the wallet spend
+    // comes from the signed-in session, so a split-identity order carries a
+    // spend on one account and earns on another. This function used to read a
+    // single `rows[0].accountId` — with no orderBy, so not even deterministic —
+    // and apply BOTH the refund and the clawback to it, refunding a stranger or
+    // decrementing the payer by what somebody else earned. Luigi 2026-07-31.
 
     // 1) Return spent credit — only a still-active spend (redeemed/applied). A
     //    spend already released (rejected) or refunded is skipped → idempotent.
@@ -241,43 +249,48 @@ export async function refundForOrder(orderId: string): Promise<void> {
     if (spend) {
       const back = round2(Math.abs(spend.amount));
       if (back > 0) {
+        const spenderId = spend.accountId; // the account that actually paid
         await prisma.$transaction(async (tx) => {
           const a = await tx.rewardAccount.update({
-            where: { id: accountId },
+            where: { id: spenderId },
             data: { balance: { increment: back }, lifetimeRedeemed: { decrement: back } },
             select: { balance: true },
           });
           await tx.rewardLedger.update({ where: { id: spend.id }, data: { status: "refunded" } });
-          await tx.rewardLedger.create({ data: { accountId, amount: back, balanceAfter: round2(a.balance), reason: "refund", orderId } });
+          await tx.rewardLedger.create({ data: { accountId: spenderId, amount: back, balanceAfter: round2(a.balance), reason: "refund", orderId } });
         });
       }
     }
 
     // 2) Claw back earned credit (earn / earn:<trigger> / promo:<id> / signup_bonus
-    //    tied to this order). One "reverse" row, guarded by both an existence check
-    //    (so the balance isn't decremented twice) and the unique constraint.
-    const alreadyReversed = await prisma.rewardLedger.findUnique({
-      where: { accountId_orderId_reason: { accountId, orderId, reason: "reverse" } },
-      select: { id: true },
-    });
-    if (!alreadyReversed) {
-      const earned = round2(
-        rows
-          .filter((r) => r.amount > 0 && (r.reason === "earn" || r.reason.startsWith("earn:") || r.reason.startsWith("promo:") || r.reason === "signup_bonus"))
-          .reduce((s, r) => s + r.amount, 0),
-      );
-      if (earned > 0) {
-        await prisma.$transaction(async (tx) => {
-          const a = await tx.rewardAccount.update({
-            where: { id: accountId },
-            data: { balance: { decrement: earned }, lifetimeEarned: { decrement: earned } },
-            select: { balance: true },
-          });
-          let bal = round2(a.balance);
-          if (bal < 0) { await tx.rewardAccount.update({ where: { id: accountId }, data: { balance: 0 } }); bal = 0; }
-          await tx.rewardLedger.create({ data: { accountId, amount: -earned, balanceAfter: bal, reason: "reverse", orderId } });
+    //    tied to this order) — PER EARNING ACCOUNT. Each account gets its own
+    //    "reverse" row, guarded by both an existence check (so the balance isn't
+    //    decremented twice) and the [account, order, reason] unique constraint.
+    //    In the normal single-account case this is exactly one iteration and the
+    //    behaviour is byte-for-byte what it was before.
+    const earnedByAccount = new Map<string, number>();
+    for (const r of rows) {
+      const isEarn = r.amount > 0 && (r.reason === "earn" || r.reason.startsWith("earn:") || r.reason.startsWith("promo:") || r.reason === "signup_bonus");
+      if (isEarn) earnedByAccount.set(r.accountId, (earnedByAccount.get(r.accountId) ?? 0) + r.amount);
+    }
+    for (const [earnerId, rawEarned] of earnedByAccount) {
+      const earned = round2(rawEarned);
+      if (earned <= 0) continue;
+      const alreadyReversed = await prisma.rewardLedger.findUnique({
+        where: { accountId_orderId_reason: { accountId: earnerId, orderId, reason: "reverse" } },
+        select: { id: true },
+      });
+      if (alreadyReversed) continue;
+      await prisma.$transaction(async (tx) => {
+        const a = await tx.rewardAccount.update({
+          where: { id: earnerId },
+          data: { balance: { decrement: earned }, lifetimeEarned: { decrement: earned } },
+          select: { balance: true },
         });
-      }
+        let bal = round2(a.balance);
+        if (bal < 0) { await tx.rewardAccount.update({ where: { id: earnerId }, data: { balance: 0 } }); bal = 0; }
+        await tx.rewardLedger.create({ data: { accountId: earnerId, amount: -earned, balanceAfter: bal, reason: "reverse", orderId } });
+      });
     }
   } catch (e: any) {
     if (e?.code !== "P2002") console.error("[reward refundForOrder]", e);

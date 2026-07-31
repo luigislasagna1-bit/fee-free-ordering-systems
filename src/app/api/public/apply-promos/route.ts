@@ -267,7 +267,12 @@ export async function POST(req: NextRequest) {
     // authenticated. Reverted 2026-07-31 within the hour it was introduced;
     // the legitimate no-account gift path is a signed claim link, not a
     // typed address.)
-    if (r.rewardsEnabled && promoCtx.sessionCustomerId) {
+    // ...AND only when this order will actually be attributed to that same
+    // customer. A signed-in customer who types someone else's address would
+    // otherwise be offered their own balance to fund a stranger's order — see
+    // sessionWalletSpendable in promo-order-context.ts. The charge route
+    // applies the identical gate, so preview and charge cannot disagree.
+    if (r.rewardsEnabled && promoCtx.sessionCustomerId && promoCtx.sessionWalletSpendable) {
       const { getBalance } = await import("@/lib/reward-ledger");
       const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.sessionCustomerId });
       if (balance > 0) {

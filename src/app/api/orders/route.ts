@@ -2430,7 +2430,13 @@ export async function POST(req: NextRequest) {
           // NEVER widen this to the typed-email Customer row: typing an address
           // is not proof of controlling it, and stored value must be
           // authenticated before it can be spent (reverted 2026-07-31).
-          if (promoCtx.sessionCustomerId) {
+          //
+          // sessionWalletSpendable additionally requires that THIS order will
+          // be attributed to the same customer whose wallet is paying — the
+          // Order's Customer row is resolved from the typed email below, so a
+          // divergence would spend one person's balance while another person's
+          // record collects the order, the earn and the lifetime burn.
+          if (promoCtx.sessionCustomerId && promoCtx.sessionWalletSpendable) {
             const onlineCharge = (paymentMethod || "cash") === "card" || (paymentMethod || "cash") === "paypal";
             // Redeemable base excludes rewardRedeemExcluded lines (its OWN
             // flag, independent of promo exclusion) — e.g. store credit

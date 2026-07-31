@@ -105,6 +105,26 @@ export type PromoOrderContext = {
   sessionCustomerId: string | null;
   sessionEmail: string | null;
   sessionPhone: string | null;
+  /** True when the signed-in customer's wallet may fund THIS order.
+   *
+   *  The order route resolves the Order's Customer row from the TYPED email
+   *  alone (`where: { restaurantId, email: cleanEmail }` in /api/orders), never
+   *  from the session. So when a signed-in customer types someone else's
+   *  address, the money and the record come apart: the session account's
+   *  balance is spent, while the typed address's customer row receives the
+   *  order, the reward EARN, the totalSpent, and the once-per-lifetime burn.
+   *  Value moves from the payer to a different person silently, and a later
+   *  refund can land on the wrong wallet entirely.
+   *
+   *  So both checkout routes refuse the wallet on a MISMATCH. Absent a typed
+   *  email we keep the historical behaviour (phone-only signed-in orders are
+   *  unaffected) — only an explicit divergence is blocked. `walletMismatchEmail`
+   *  carries the address that caused the refusal so the cart can explain it.
+   *  Luigi 2026-07-31, from his own checkout screenshots. */
+  sessionWalletSpendable: boolean;
+  /** The typed address that diverged from the session, when that divergence is
+   *  what disabled the wallet. Null whenever the wallet is spendable. */
+  walletMismatchEmail: string | null;
   /** True when we know who this is (any of email / phone / customerId). While
    *  false, isNewCustomer is the optimistic passthrough and lifetime/member
    *  checks are skipped — the charge re-derives once identity exists. */
@@ -319,6 +339,15 @@ export async function buildPromoOrderContext(args: {
   // and here in the SHARED context so preview and charge stay identical.
   const activePromosResolved = await resolvePromoMenuRefsForServing(restaurant.id, activePromos);
 
+  // ── Wallet / order-attribution agreement (see sessionWalletSpendable) ─────
+  // Compared on the NORMALIZED values both sides already carry: typedEmail is
+  // lowercased+trimmed above, sessionEmail likewise when the session was read.
+  // A signed-in customer typing their OWN address is the overwhelmingly common
+  // case and stays fully spendable; only a genuine divergence is refused.
+  const walletEmailDiverges = !!sessionCustomerId && !!typedEmail && typedEmail !== sessionEmail;
+  const sessionWalletSpendable = !!sessionCustomerId && !walletEmailDiverges;
+  const walletMismatchEmail = walletEmailDiverges ? typedEmail : null;
+
   return {
     activePromos: activePromosResolved,
     isNewCustomer,
@@ -330,6 +359,8 @@ export async function buildPromoOrderContext(args: {
     sessionCustomerId,
     sessionEmail,
     sessionPhone,
+    sessionWalletSpendable,
+    walletMismatchEmail,
     identified,
     grantForcedIds,
     newCustomerOfferUnavailable,
