@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Din {memberLabel}-avtale hos {restaurantName} — {discountLabel}",
-      "intro": "Du har låst opp din {memberLabel}-avtale hos {restaurantName}: {discountLabel}. Den gjelder automatisk – ingen kode nødvendig.",
+      "intro": "Gode nyheter — {restaurantName} har satt opp {discountLabel} til deg som {memberLabel}. Du trenger ingen kode: når bestillingen din oppfyller vilkårene nedenfor, legges rabatten til for deg i kassen.",
       "howToLabel": "Slik bruker du det",
       "usageAccount": "Bare logg inn på kontoen din og bestill – din {discountLabel} legges til automatisk i kassen.",
-      "usageGuest": "I kassen oppgir du denne e-postadressen ({email}), så legges din {discountLabel} til automatisk – ingen kode å skrive.",
-      "accountTip": "Tips: opprett en gratis konto med denne e-postadressen for å lagre opplysningene dine og finne alle VIP-tilbudene dine på ett sted.",
+      "usageGuest": "Oppgi denne e-postadressen ({email}) i kassen, så legges din {discountLabel} til for deg — ingen kode å skrive. Ser du ikke rabatten på bestillingen din, logger du inn på kontoen din, så blir den lagt til.",
+      "usageSignIn": "Dette tilbudet gjelder medlemmer som er logget inn. Logg inn på kontoen din med denne e-postadressen ({email}) før du bestiller, så legges din {discountLabel} til for deg i kassen — ingen kode å skrive.",
+      "accountTip": "Tips: opprett en gratis konto med denne e-postadressen, og logg inn før du bestiller. Da lagres opplysningene dine, alle tilbudene dine samles på ett sted, og hvert tilbud vi har satt av til deg, blir tatt med.",
+      "accountTipSignIn": "Har du ingen konto ennå? Det tar omtrent ett minutt å opprette en — bruk den samme e-postadressen, og logg inn før du bestiller, så blir tilbudet tatt med.",
       "defaultMemberLabel": "VIP-medlem"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Hvis du ikke ventet denne e-posten, kan du trygt se bort fra den."
     },
     "vipGroupWelcome": {
-      "accountTip": "Opprett en konto med denne e-postadressen for også å opptjene og bruke belønningene dine.",
+      "accountTip": "For å opptjene og bruke {label} oppretter du din gratis konto med denne e-postadressen og logger inn hver gang du bestiller — tilgodehavendet ligger på kontoen, så det vises bare i kassen når du er logget inn.",
       "defaultRewardLabel": "belønninger",
       "intro": "Gode nyheter — du er lagt til i {groupName}. Dette får du:",
       "perkEarnRate": "{percent} % tilbake i {label} på hver bestilling",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent} % rabatt — {name}",
       "subject": "Velkommen til {groupName} hos {restaurantName}",
       "usageAccount": "Fordelene dine brukes automatisk når du bestiller — bare logg inn først.",
-      "usageGuest": "Fordelene dine brukes automatisk når du bestiller — bare oppgi denne e-postadressen ({email}) i kassen."
+      "usageGuest": "Rabatter fra denne gruppen legges til for deg i kassen når du oppgir denne e-postadressen ({email}). Vil du også opptjene og bruke {label}, må du opprette din gratis konto med samme adresse og logge inn før du bestiller — tilgodehavende kan bare ligge på en konto."
     }
   },
   "marketing": {

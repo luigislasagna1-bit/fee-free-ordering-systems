@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Ditt {memberLabel}-erbjudande hos {restaurantName} — {discountLabel}",
-      "intro": "Du har låst upp ditt {memberLabel}-erbjudande hos {restaurantName}: {discountLabel}. Det gäller automatiskt — ingen kod behövs.",
+      "intro": "Goda nyheter — {restaurantName} har ordnat {discountLabel} till dig som {memberLabel}. Du behöver ingen kod: när din beställning uppfyller villkoren nedan läggs rabatten till åt dig i kassan.",
       "howToLabel": "Så här använder du det",
       "usageAccount": "Logga bara in på ditt konto och beställ – din {discountLabel} tillämpas automatiskt i kassan.",
-      "usageGuest": "Ange den här e-postadressen ({email}) i kassan, så tillämpas din {discountLabel} automatiskt – ingen kod att skriva.",
-      "accountTip": "Tips: skapa ett gratis konto med den här e-postadressen för att spara dina uppgifter och hitta alla dina VIP-erbjudanden på ett ställe.",
+      "usageGuest": "Ange den här e-postadressen ({email}) i kassan, så läggs din {discountLabel} till åt dig — ingen kod att skriva. Om du inte ser rabatten på din beställning, logga in på ditt konto så tillämpas den.",
+      "usageSignIn": "Det här erbjudandet gäller inloggade medlemmar. Logga in på ditt konto med den här e-postadressen ({email}) innan du beställer, så läggs din {discountLabel} till åt dig i kassan — ingen kod att skriva.",
+      "accountTip": "Tips: skapa ett gratis konto med den här e-postadressen och logga in innan du beställer. Då sparas dina uppgifter, alla dina erbjudanden samlas på ett ställe och varje erbjudande vi lagt undan åt dig kommer med.",
+      "accountTipSignIn": "Har du inget konto än? Det tar ungefär en minut att skapa ett — använd samma e-postadress och logga sedan in innan du beställer, så kommer erbjudandet med.",
       "defaultMemberLabel": "VIP-medlem"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Om du inte väntade dig det här mejlet kan du tryggt ignorera det."
     },
     "vipGroupWelcome": {
-      "accountTip": "Skapa ett konto med den här e-postadressen för att även samla och använda dina belöningar.",
+      "accountTip": "För att samla och använda {label} skapar du ditt gratis konto med den här e-postadressen och loggar in varje gång du beställer — ditt tillgodohavande finns i kontot och syns därför bara i kassan när du är inloggad.",
       "defaultRewardLabel": "belöningar",
       "intro": "Goda nyheter — du har lagts till i {groupName}. Det här ingår:",
       "perkEarnRate": "{percent} % tillbaka i {label} på varje beställning",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent} % rabatt — {name}",
       "subject": "Välkommen till {groupName} hos {restaurantName}",
       "usageAccount": "Dina förmåner tillämpas automatiskt när du beställer — logga bara in först.",
-      "usageGuest": "Dina förmåner tillämpas automatiskt när du beställer — ange bara den här e-postadressen ({email}) i kassan."
+      "usageGuest": "Rabatter från den här gruppen läggs till åt dig i kassan när du anger den här e-postadressen ({email}). Om du också vill samla och använda {label} skapar du ditt gratis konto med samma adress och loggar in innan du beställer — tillgodohavande kan bara finnas i ett konto."
     }
   },
   "marketing": {

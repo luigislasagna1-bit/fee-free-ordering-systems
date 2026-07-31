@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Ihr {memberLabel}-Angebot bei {restaurantName} — {discountLabel}",
-      "intro": "Sie haben Ihr {memberLabel}-Angebot bei {restaurantName} freigeschaltet: {discountLabel}. Es wird automatisch angewendet – kein Code erforderlich.",
+      "intro": "Gute Nachrichten — {restaurantName} hat für dich als {memberLabel} {discountLabel} eingerichtet. Du musst keinen Code eingeben: Sobald deine Bestellung die unten aufgeführten Bedingungen erfüllt, wird der Rabatt an der Kasse für dich abgezogen.",
       "howToLabel": "So nutzt du es",
       "usageAccount": "Melde dich einfach in deinem Konto an und bestelle — dein {discountLabel} wird automatisch an der Kasse angewendet.",
-      "usageGuest": "Gib an der Kasse diese E-Mail-Adresse ({email}) ein und dein {discountLabel} wird automatisch angewendet — kein Code zum Eintippen.",
-      "accountTip": "Tipp: Erstelle mit dieser E-Mail-Adresse ein kostenloses Konto, um deine Daten zu speichern und alle deine VIP-Angebote an einem Ort zu finden.",
+      "usageGuest": "Gib an der Kasse diese E-Mail-Adresse ({email}) an, dann wird dein {discountLabel} für dich abgezogen — kein Code zum Eintippen. Falls der Rabatt in deiner Bestellung nicht auftaucht, melde dich in deinem Konto an, dann wird er angewendet.",
+      "usageSignIn": "Dieses Angebot gilt für angemeldete Mitglieder. Melde dich vor dem Bestellen mit dieser E-Mail-Adresse ({email}) in deinem Konto an, dann wird dein {discountLabel} an der Kasse für dich abgezogen — kein Code zum Eintippen.",
+      "accountTip": "Tipp: Erstelle mit dieser E-Mail-Adresse ein kostenloses Konto und melde dich an, bevor du bestellst. So bleiben deine Daten gespeichert, alle deine Angebote sind an einem Ort, und kein Angebot, das wir für dich hinterlegt haben, geht verloren.",
+      "accountTipSignIn": "Noch kein Konto? Das Anlegen dauert etwa eine Minute — nimm dieselbe E-Mail-Adresse und melde dich vor dem Bestellen an, damit das Angebot berücksichtigt wird.",
       "defaultMemberLabel": "VIP-Mitglied"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Falls Sie dieses Geschenk nicht erwartet haben, können Sie diese E-Mail einfach ignorieren."
     },
     "vipGroupWelcome": {
-      "accountTip": "Erstellen Sie mit dieser E-Mail-Adresse ein Konto, um außerdem Bonusguthaben zu sammeln und einzulösen.",
+      "accountTip": "Um {label} zu sammeln und einzulösen, erstellen Sie mit dieser E-Mail-Adresse Ihr kostenloses Konto und melden Sie sich bei jeder Bestellung an — Ihr Guthaben liegt im Konto und erscheint an der Kasse nur, wenn Sie angemeldet sind.",
       "defaultRewardLabel": "Bonusguthaben",
       "intro": "Gute Nachrichten — Sie wurden zu {groupName} hinzugefügt. Das erwartet Sie:",
       "perkEarnRate": "{percent}% in {label} zurück bei jeder Bestellung",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% Rabatt — {name}",
       "subject": "Willkommen bei {groupName} — {restaurantName}",
       "usageAccount": "Ihre Vorteile werden bei jeder Bestellung automatisch angewendet — melden Sie sich einfach vorher an.",
-      "usageGuest": "Ihre Vorteile werden bei jeder Bestellung automatisch angewendet — geben Sie an der Kasse einfach diese E-Mail-Adresse ({email}) an."
+      "usageGuest": "Rabatte aus dieser Gruppe werden an der Kasse für Sie abgezogen, wenn Sie diese E-Mail-Adresse ({email}) angeben. Um außerdem {label} zu sammeln und einzulösen, erstellen Sie mit dieser Adresse Ihr kostenloses Konto und melden Sie sich vor dem Bestellen an — Guthaben kann nur in einem Konto liegen."
     }
   },
   "marketing": {

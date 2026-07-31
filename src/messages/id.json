@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Penawaran {memberLabel} Anda di {restaurantName} — {discountLabel}",
-      "intro": "Anda telah membuka penawaran {memberLabel} Anda di {restaurantName}: {discountLabel}. Penawaran ini berlaku otomatis — tanpa perlu kode.",
+      "intro": "Kabar baik — {restaurantName} telah menyiapkan {discountLabel} untuk Anda sebagai {memberLabel}. Tidak perlu mengetik kode: saat pesanan Anda memenuhi ketentuan di bawah ini, diskonnya ditambahkan untuk Anda saat checkout.",
       "howToLabel": "Cara menggunakannya",
       "usageAccount": "Cukup masuk ke akun Anda dan pesan — {discountLabel} Anda diterapkan otomatis saat checkout.",
-      "usageGuest": "Saat checkout, masukkan alamat email ini ({email}) dan {discountLabel} Anda diterapkan otomatis — tanpa perlu mengetik kode.",
-      "accountTip": "Tips: buat akun gratis dengan email ini untuk menyimpan detail Anda dan menemukan semua penawaran VIP Anda di satu tempat.",
+      "usageGuest": "Saat checkout, gunakan alamat email ini ({email}) dan {discountLabel} Anda akan ditambahkan — tanpa perlu mengetik kode. Jika diskon tidak muncul pada pesanan Anda, masuk ke akun Anda dan diskon akan diterapkan.",
+      "usageSignIn": "Penawaran ini hanya untuk member yang sudah masuk ke akunnya. Masuk ke akun Anda dengan alamat email ini ({email}) sebelum memesan, dan {discountLabel} Anda akan ditambahkan saat checkout — tanpa perlu mengetik kode.",
+      "accountTip": "Tips: buat akun gratis dengan email ini dan masuk sebelum Anda memesan. Akun menyimpan detail Anda, mengumpulkan semua penawaran di satu tempat, dan memastikan setiap penawaran yang kami sisihkan untuk Anda benar-benar terpakai.",
+      "accountTipSignIn": "Belum punya akun? Membuatnya hanya butuh sekitar satu menit — gunakan alamat email yang sama ini, lalu masuk sebelum memesan agar penawaran ini terpakai.",
       "defaultMemberLabel": "Member VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "Saat checkout Anda akan melihat “Gunakan {label} Anda”. Pakai sebanyak atau sesedikit yang Anda mau untuk pesanan itu — sisanya tinggal dibayar seperti biasa. Tidak ada masa berlaku, jadi saldonya tetap tersimpan sampai Anda ingin memakainya."
     },
     "vipGroupWelcome": {
-      "accountTip": "Buat akun dengan email ini untuk sekaligus mengumpulkan dan menggunakan hadiah Anda.",
+      "accountTip": "Untuk mengumpulkan dan menggunakan {label}, buat akun gratis dengan alamat email ini dan masuk setiap kali Anda memesan — saldo Anda tersimpan di akun, jadi hanya muncul saat checkout ketika Anda sudah masuk.",
       "defaultRewardLabel": "hadiah",
       "intro": "Kabar baik — Anda telah ditambahkan ke {groupName}. Inilah yang Anda dapatkan:",
       "perkEarnRate": "{percent}% kembali dalam {label} di setiap pesanan",
@@ -5710,7 +5712,7 @@
       "perkPercent": "Diskon {percent}% — {name}",
       "subject": "Selamat datang di {groupName} — {restaurantName}",
       "usageAccount": "Keuntungan Anda berlaku otomatis saat Anda memesan — cukup masuk ke akun Anda terlebih dahulu.",
-      "usageGuest": "Keuntungan Anda berlaku otomatis saat Anda memesan — cukup gunakan alamat email ini ({email}) saat checkout."
+      "usageGuest": "Diskon dari grup ini ditambahkan untuk Anda saat checkout bila Anda menggunakan alamat email ini ({email}). Untuk juga mengumpulkan dan menggunakan {label}, buat akun gratis dengan alamat ini dan masuk sebelum Anda memesan — saldo hanya bisa disimpan di dalam akun."
     }
   },
   "marketing": {

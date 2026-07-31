@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Az Ön {memberLabel} ajánlata itt: {restaurantName} — {discountLabel}",
-      "intro": "Feloldotta a(z) {restaurantName} étteremnél elérhető {memberLabel} ajánlatát: {discountLabel}. Automatikusan érvényesül — nincs szükség kódra.",
+      "intro": "Jó hír — a(z) {restaurantName} külön kedvezményt készített neked, mert {memberLabel} vagy: {discountLabel}. Nem kell kódot beírnod: amikor a rendelésed megfelel az alábbi feltételeknek, a kedvezményt a fizetésnél automatikusan hozzáadjuk.",
       "howToLabel": "Hogyan használhatod",
       "usageAccount": "Csak jelentkezz be a fiókodba és rendelj — a(z) {discountLabel} automatikusan érvényesül a fizetésnél.",
-      "usageGuest": "A fizetésnél add meg ezt az e-mail-címet ({email}), és a(z) {discountLabel} automatikusan érvényesül — nem kell kódot beírnod.",
-      "accountTip": "Tipp: hozz létre egy ingyenes fiókot ezzel az e-mail-címmel, hogy elmentsd az adataidat, és egy helyen megtaláld az összes VIP-ajánlatodat.",
+      "usageGuest": "A fizetésnél add meg ezt az e-mail-címet ({email}), és a kedvezményt automatikusan hozzáadjuk: {discountLabel} — nem kell kódot beírnod. Ha nem látod a rendelésednél, jelentkezz be a fiókodba, és érvényesülni fog.",
+      "usageSignIn": "Ez az ajánlat a bejelentkezett tagoké. Rendelés előtt jelentkezz be a fiókodba ezzel az e-mail-címmel ({email}), és a kedvezményt a fizetésnél automatikusan hozzáadjuk: {discountLabel} — nem kell kódot beírnod.",
+      "accountTip": "Tipp: hozz létre egy ingyenes fiókot ezzel az e-mail-címmel, és rendelés előtt jelentkezz be. Így elmentheted az adataidat, egy helyen látod az ajánlataidat, és biztosan megkapsz minden kedvezményt, amit félretettünk neked.",
+      "accountTipSignIn": "Még nincs fiókod? Nagyjából egy perc létrehozni — használd ugyanezt az e-mail-címet, majd rendelés előtt jelentkezz be, hogy az ajánlat érvényesüljön.",
       "defaultMemberLabel": "VIP tag"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Ha nem számított erre az üzenetre, nyugodtan hagyja figyelmen kívül ezt az e-mailt."
     },
     "vipGroupWelcome": {
-      "accountTip": "Hozzon létre fiókot ezzel az e-mail-címmel, hogy a jutalomdollárjait is gyűjthesse és elkölthesse.",
+      "accountTip": "Ahhoz, hogy {label} egyenleget gyűjthessen és elkölthessen, hozzon létre ezzel az e-mail-címmel egy ingyenes fiókot, és minden rendelés előtt jelentkezzen be — az egyenlege a fiókjában él, ezért a fizetésnél csak bejelentkezve jelenik meg.",
       "defaultRewardLabel": "Jutalomdollár",
       "intro": "Jó hírünk van — felvettük Önt a(z) {groupName} csoportba. Íme, mi jár vele:",
       "perkEarnRate": "{percent}% visszajár minden rendelés után — {label}",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% kedvezmény — {name}",
       "subject": "Üdvözöljük a(z) {groupName} csoportban — {restaurantName}",
       "usageAccount": "A kedvezményei automatikusan érvényesülnek, amikor rendel — csak jelentkezzen be előtte.",
-      "usageGuest": "A kedvezményei automatikusan érvényesülnek, amikor rendel — csak adja meg ezt az e-mail-címet ({email}) a fizetésnél."
+      "usageGuest": "A csoport kedvezményeit a fizetésnél automatikusan hozzáadjuk, ha ezt az e-mail-címet ({email}) adja meg. Ahhoz, hogy {label} egyenleget is gyűjthessen és elkölthessen, hozzon létre ezzel a címmel egy ingyenes fiókot, és rendelés előtt jelentkezzen be — az egyenleg csak fiókban tartható."
     }
   },
   "marketing": {

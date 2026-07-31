@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Votre offre {memberLabel} chez {restaurantName} — {discountLabel}",
-      "intro": "Vous avez débloqué votre offre {memberLabel} chez {restaurantName} : {discountLabel}. Elle s'applique automatiquement — aucun code nécessaire.",
+      "intro": "Bonne nouvelle — {restaurantName} vous a réservé {discountLabel} en tant que {memberLabel}. Aucun code à saisir : dès que votre commande remplit les conditions indiquées ci-dessous, la réduction est ajoutée pour vous au moment du paiement.",
       "howToLabel": "Comment en profiter",
       "usageAccount": "Connectez-vous simplement à votre compte et commandez — votre {discountLabel} est appliqué automatiquement au paiement.",
-      "usageGuest": "Au moment du paiement, saisissez cette adresse e-mail ({email}) et votre {discountLabel} est appliqué automatiquement — aucun code à taper.",
-      "accountTip": "Astuce : créez un compte gratuit avec cet e-mail pour enregistrer vos informations et retrouver toutes vos offres VIP au même endroit.",
+      "usageGuest": "Au moment du paiement, utilisez cette adresse e-mail ({email}) et votre {discountLabel} est ajouté pour vous — aucun code à taper. Si vous ne le voyez pas sur votre commande, connectez-vous à votre compte et il s'appliquera.",
+      "usageSignIn": "Cette offre est réservée aux membres connectés. Connectez-vous à votre compte avec cette adresse e-mail ({email}) avant de commander : votre {discountLabel} est alors ajouté pour vous au moment du paiement — aucun code à taper.",
+      "accountTip": "Astuce : créez un compte gratuit avec cet e-mail et connectez-vous avant de commander. Vos informations sont enregistrées, vos offres sont réunies au même endroit et chaque offre mise de côté pour vous est bien prise en compte.",
+      "accountTipSignIn": "Pas encore de compte ? Sa création prend environ une minute — utilisez cette même adresse e-mail, puis connectez-vous avant de commander pour que l'offre soit prise en compte.",
       "defaultMemberLabel": "membre VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "Au moment de payer, vous verrez « Utiliser vos {label} ». Mettez-en autant ou aussi peu que vous voulez sur la commande — vous réglez le reste normalement. Il n'y a pas de date d'expiration, le crédit vous attend jusqu'à ce que vous en ayez envie."
     },
     "vipGroupWelcome": {
-      "accountTip": "Créez un compte avec cet e-mail pour également cumuler et dépenser vos crédits fidélité.",
+      "accountTip": "Pour cumuler et dépenser {label}, créez votre compte gratuit avec cette adresse e-mail et connectez-vous à chaque commande — votre crédit est rattaché au compte, il n'apparaît donc au paiement que si vous êtes connecté.",
       "defaultRewardLabel": "crédits fidélité",
       "intro": "Bonne nouvelle — vous faites désormais partie de {groupName}. Voici ce que cela vous apporte :",
       "perkEarnRate": "{percent} % de retour en {label} sur chaque commande",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent} % de réduction — {name}",
       "subject": "Bienvenue dans {groupName} chez {restaurantName}",
       "usageAccount": "Vos avantages s'appliquent automatiquement lorsque vous commandez — il suffit de vous connecter.",
-      "usageGuest": "Vos avantages s'appliquent automatiquement lorsque vous commandez — utilisez simplement cette adresse e-mail ({email}) au moment du paiement."
+      "usageGuest": "Les réductions de ce groupe sont ajoutées pour vous au moment du paiement lorsque vous utilisez cette adresse e-mail ({email}). Pour cumuler et dépenser également {label}, créez votre compte gratuit avec cette adresse et connectez-vous avant de commander — le crédit ne peut être conservé que dans un compte."
     }
   },
   "marketing": {

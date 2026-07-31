@@ -326,6 +326,18 @@ export function StepRestrictions({
             </button>
           ))}
         </div>
+        {/* "Members only" is a SECOND restriction applied after VIP targeting,
+            and it is the one setting that silently breaks the promise every VIP
+            email makes. The engine refuses the deal for anyone not SIGNED IN, so
+            a customer who simply types their address at checkout — which is what
+            we tell them to do — sees full price and is told nothing. Verified
+            end-to-end 2026-07-31. Warn at the moment of choosing, because the
+            consequence is invisible everywhere else. */}
+        {form.customerType === "member" && (
+          <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
+            {t("clientTypeMemberWarning")}
+          </div>
+        )}
       </Section>
 
       {/* PAYMENT — hidden for payment_reward: its reward method is set in step 2

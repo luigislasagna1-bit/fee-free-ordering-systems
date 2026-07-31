@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Vaša {memberLabel} ponuda u restoranu {restaurantName} — {discountLabel}",
-      "intro": "Otključali ste svoju {memberLabel} ponudu u restoranu {restaurantName}: {discountLabel}. Primenjuje se automatski — bez potrebe za kodom.",
+      "intro": "Dobre vesti — vi ste {memberLabel}, a restoran {restaurantName} vam je pripremio ponudu: {discountLabel}. Nema koda za kucanje: kada vaša porudžbina ispuni uslove navedene ispod, popust se dodaje pri plaćanju.",
       "howToLabel": "Kako da je iskoristite",
       "usageAccount": "Samo se prijavite na svoj nalog i naručite — vaš popust {discountLabel} primenjuje se automatski pri plaćanju.",
-      "usageGuest": "Pri plaćanju unesite ovu e-adresu ({email}) i vaš popust {discountLabel} primenjuje se automatski — bez kucanja koda.",
-      "accountTip": "Savet: napravite besplatan nalog sa ovom e-adresom da sačuvate svoje podatke i pronađete sve svoje VIP ponude na jednom mestu.",
+      "usageGuest": "Vaša ponuda: {discountLabel}. Pri plaćanju unesite ovu e-adresu ({email}) i popust se dodaje umesto vas — bez kucanja koda. Ako ga ne vidite na svojoj porudžbini, prijavite se na svoj nalog i biće primenjen.",
+      "usageSignIn": "Vaša ponuda: {discountLabel}. Važi samo za prijavljene članove — pre nego što naručite, prijavite se na svoj nalog sa ovom e-adresom ({email}) i popust se dodaje pri plaćanju. Nema koda za kucanje.",
+      "accountTip": "Savet: napravite besplatan nalog sa ovom e-adresom i prijavite se pre nego što naručite. Tako se čuvaju vaši podaci, sve ponude su vam na jednom mestu i nijedna ponuda koju smo izdvojili za vas ne propada.",
+      "accountTipSignIn": "Još nemate nalog? Pravljenje traje oko minut — upotrebite istu e-adresu, pa se prijavite pre nego što naručite kako bi ponuda bila primenjena.",
       "defaultMemberLabel": "VIP član"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Ako ovo niste očekivali, slobodno zanemarite ovu e-poruku."
     },
     "vipGroupWelcome": {
-      "accountTip": "Napravite nalog sa ovom e-adresom da biste mogli i da skupljate i da trošite svoje nagrade.",
+      "accountTip": "Da biste skupljali i trošili {label}, napravite svoj besplatan nalog sa ovom e-adresom i prijavljujte se svaki put kada naručujete — vaš kredit se čuva na nalogu, pa se pri plaćanju pojavljuje samo kada ste prijavljeni.",
       "defaultRewardLabel": "nagrade",
       "intro": "Dobre vesti — dodati ste u {groupName}. Evo šta uz to dobijate:",
       "perkEarnRate": "{percent}% povraćaja u {label} na svaku porudžbinu",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% popusta — {name}",
       "subject": "Dobro došli u {groupName} — {restaurantName}",
       "usageAccount": "Vaše pogodnosti se primenjuju automatski kada poručite — samo se prvo prijavite.",
-      "usageGuest": "Vaše pogodnosti se primenjuju automatski kada poručite — samo pri plaćanju unesite ovu e-adresu ({email})."
+      "usageGuest": "Popusti iz ove grupe dodaju se pri plaćanju kada koristite ovu e-adresu ({email}). Da biste i skupljali i trošili {label}, napravite svoj besplatan nalog sa ovom adresom i prijavite se pre nego što naručite — kredit se može čuvati samo na nalogu."
     }
   },
   "marketing": {

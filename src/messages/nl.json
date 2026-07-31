@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Jouw {memberLabel}-aanbieding bij {restaurantName} — {discountLabel}",
-      "intro": "Je hebt jouw {memberLabel}-aanbieding bij {restaurantName} ontgrendeld: {discountLabel}. Deze wordt automatisch toegepast — geen code nodig.",
+      "intro": "Goed nieuws — {restaurantName} heeft {discountLabel} voor je klaargezet als {memberLabel}. Je hoeft geen code in te typen: zodra je bestelling voldoet aan de voorwaarden hieronder, wordt de korting bij het afrekenen voor je toegepast.",
       "howToLabel": "Zo gebruik je hem",
       "usageAccount": "Log gewoon in op je account en bestel — je {discountLabel} wordt automatisch toegepast bij het afrekenen.",
-      "usageGuest": "Voer bij het afrekenen dit e-mailadres in ({email}) en je {discountLabel} wordt automatisch toegepast — geen code om in te typen.",
-      "accountTip": "Tip: maak een gratis account aan met dit e-mailadres om je gegevens op te slaan en al je VIP-aanbiedingen op één plek terug te vinden.",
+      "usageGuest": "Gebruik bij het afrekenen dit e-mailadres ({email}), dan wordt je {discountLabel} voor je toegepast — geen code om in te typen. Zie je de korting niet bij je bestelling? Log dan in op je account, dan wordt hij alsnog toegepast.",
+      "usageSignIn": "Deze aanbieding is voor ingelogde leden. Log vóór het bestellen in op je account met dit e-mailadres ({email}), dan wordt je {discountLabel} bij het afrekenen voor je toegepast — geen code om in te typen.",
+      "accountTip": "Tip: maak een gratis account aan met dit e-mailadres en log in voordat je bestelt. Zo blijven je gegevens bewaard, staan al je aanbiedingen op één plek en wordt elke aanbieding die we voor je hebben klaargezet ook echt meegenomen.",
+      "accountTipSignIn": "Nog geen account? Aanmaken duurt ongeveer een minuut — gebruik hetzelfde e-mailadres en log daarna in voordat je bestelt, zodat de aanbieding wordt meegenomen.",
       "defaultMemberLabel": "VIP-lid"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Verwachtte je dit niet? Dan kun je deze e-mail gewoon negeren."
     },
     "vipGroupWelcome": {
-      "accountTip": "Maak een account aan met dit e-mailadres om ook spaartegoed te verzamelen en te besteden.",
+      "accountTip": "Om {label} te sparen en te besteden, maak je met dit e-mailadres je gratis account aan en log je bij elke bestelling in — je tegoed staat in je account en verschijnt bij het afrekenen dus alleen als je bent ingelogd.",
       "defaultRewardLabel": "spaartegoed",
       "intro": "Goed nieuws — je bent toegevoegd aan {groupName}. Dit krijg je erbij:",
       "perkEarnRate": "{percent}% terug in {label} bij elke bestelling",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% korting — {name}",
       "subject": "Welkom bij {groupName} — {restaurantName}",
       "usageAccount": "Je voordelen worden automatisch toegepast als je bestelt — log eerst even in.",
-      "usageGuest": "Je voordelen worden automatisch toegepast als je bestelt — gebruik bij het afrekenen gewoon dit e-mailadres ({email})."
+      "usageGuest": "Kortingen uit deze groep worden bij het afrekenen voor je toegepast als je dit e-mailadres ({email}) gebruikt. Wil je ook {label} sparen en besteden? Maak dan met dit adres je gratis account aan en log in voordat je bestelt — tegoed kan alleen in een account worden bewaard."
     }
   },
   "marketing": {

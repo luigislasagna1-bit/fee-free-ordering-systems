@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "{memberLabel}-etusi ravintolassa {restaurantName} — {discountLabel}",
-      "intro": "Olet avannut {memberLabel}-etusi ravintolassa {restaurantName}: {discountLabel}. Etu lasketaan automaattisesti – koodia ei tarvita.",
+      "intro": "Hyviä uutisia — {restaurantName} on varannut sinulle {memberLabel}-edun: {discountLabel}. Koodia ei tarvitse kirjoittaa: kun tilauksesi täyttää alla mainitut ehdot, alennus lisätään puolestasi kassalla.",
       "howToLabel": "Näin käytät sitä",
       "usageAccount": "Kirjaudu vain tilillesi ja tee tilaus — {discountLabel} otetaan käyttöön automaattisesti kassalla.",
-      "usageGuest": "Syötä kassalla tämä sähköpostiosoite ({email}), niin {discountLabel} otetaan käyttöön automaattisesti — koodia ei tarvitse kirjoittaa.",
-      "accountTip": "Vinkki: luo maksuton tili tällä sähköpostiosoitteella, niin voit tallentaa tietosi ja löytää kaikki VIP-tarjouksesi yhdestä paikasta.",
+      "usageGuest": "Syötä kassalla tämä sähköpostiosoite ({email}), niin {discountLabel} lisätään puolestasi — koodia ei tarvitse kirjoittaa. Jos alennus ei näy tilauksessasi, kirjaudu tilillesi, niin se otetaan käyttöön.",
+      "usageSignIn": "Tämä etu on tarkoitettu sisäänkirjautuneille jäsenille. Kirjaudu tilillesi tällä sähköpostiosoitteella ({email}) ennen tilaamista, niin {discountLabel} lisätään puolestasi kassalla — koodia ei tarvitse kirjoittaa.",
+      "accountTip": "Vinkki: luo maksuton tili tällä sähköpostiosoitteella ja kirjaudu sisään ennen tilaamista. Näin tietosi säilyvät tallessa, kaikki etusi ovat yhdessä paikassa ja jokainen sinulle varaamamme etu tulee varmasti mukaan.",
+      "accountTipSignIn": "Eikö sinulla ole vielä tiliä? Sen luominen vie noin minuutin — käytä samaa sähköpostiosoitetta ja kirjaudu sisään ennen tilaamista, niin etu tulee mukaan.",
       "defaultMemberLabel": "VIP-jäsen"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Jos et odottanut tätä viestiä, voit jättää sen huomiotta."
     },
     "vipGroupWelcome": {
-      "accountTip": "Luo tili tällä sähköpostiosoitteella, niin voit myös kerätä ja käyttää bonusrahojasi.",
+      "accountTip": "Palkintosaldon ({label}) kerääminen ja käyttäminen vaatii tilin: luo maksuton tili tällä sähköpostiosoitteella ja kirjaudu sisään aina kun tilaat — saldo on tililläsi, joten se näkyy kassalla vain, kun olet kirjautunut sisään.",
       "defaultRewardLabel": "Bonusrahat",
       "intro": "Hyviä uutisia — sinut on lisätty ryhmään {groupName}. Tässä ovat etusi:",
       "perkEarnRate": "{percent} % takaisin jokaisesta tilauksesta — {label}",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent} % alennus — {name}",
       "subject": "Tervetuloa ryhmään {groupName} ravintolassa {restaurantName}",
       "usageAccount": "Etusi otetaan käyttöön automaattisesti, kun teet tilauksen — kirjaudu vain ensin sisään.",
-      "usageGuest": "Etusi otetaan käyttöön automaattisesti, kun teet tilauksen — syötä vain tämä sähköpostiosoite ({email}) kassalla."
+      "usageGuest": "Tämän ryhmän alennukset lisätään puolestasi kassalla, kun käytät tätä sähköpostiosoitetta ({email}). Jos haluat lisäksi kerätä ja käyttää palkintosaldoa ({label}), luo maksuton tili tällä osoitteella ja kirjaudu sisään ennen tilaamista — saldo voi olla vain tilillä."
     }
   },
   "marketing": {

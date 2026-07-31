@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Tu oferta {memberLabel} en {restaurantName} — {discountLabel}",
-      "intro": "Has desbloqueado tu oferta {memberLabel} en {restaurantName}: {discountLabel}. Se aplica automáticamente, sin necesidad de código.",
+      "intro": "Buenas noticias: {restaurantName} ha preparado {discountLabel} para ti como {memberLabel}. No hay ningún código que escribir: cuando tu pedido cumpla las condiciones que se indican abajo, el descuento se añade al finalizar la compra.",
       "howToLabel": "Cómo usarla",
       "usageAccount": "Solo inicia sesión en tu cuenta y haz tu pedido: tu {discountLabel} se aplica automáticamente al finalizar la compra.",
-      "usageGuest": "Al finalizar la compra, introduce esta dirección de email ({email}) y tu {discountLabel} se aplica automáticamente, sin escribir ningún código.",
-      "accountTip": "Consejo: crea una cuenta gratuita con este email para guardar tus datos y encontrar todas tus ofertas VIP en un solo lugar.",
+      "usageGuest": "Al finalizar la compra, usa esta dirección de email ({email}) y añadiremos tu {discountLabel} a tu pedido, sin escribir ningún código. Si no aparece, inicia sesión en tu cuenta y se aplicará.",
+      "usageSignIn": "Esta oferta es para miembros que han iniciado sesión. Inicia sesión en tu cuenta con esta dirección de email ({email}) antes de hacer tu pedido y añadiremos tu {discountLabel} al finalizar la compra, sin escribir ningún código.",
+      "accountTip": "Consejo: crea una cuenta gratuita con este email e inicia sesión antes de hacer tu pedido. Así guardas tus datos, tienes todas tus ofertas en un mismo lugar y te aseguras de que se aplique cada oferta que hemos reservado para ti.",
+      "accountTipSignIn": "¿Aún no tienes cuenta? Crearla lleva alrededor de un minuto: usa esta misma dirección de email y después inicia sesión antes de hacer tu pedido para que la oferta se aplique.",
       "defaultMemberLabel": "miembro VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "Al pagar verás «Usa tu {label}». Aplica al pedido todo lo que quieras, mucho o poco; el resto lo pagas como siempre. No caduca, así que se queda ahí hasta que lo quieras usar."
     },
     "vipGroupWelcome": {
-      "accountTip": "Crea una cuenta con este email para acumular y gastar también tus recompensas.",
+      "accountTip": "Para acumular y gastar {label}, crea tu cuenta gratuita con esta dirección de email e inicia sesión cada vez que hagas un pedido: tu saldo vive en la cuenta, así que solo aparece al finalizar la compra cuando has iniciado sesión.",
       "defaultRewardLabel": "recompensas",
       "intro": "Buenas noticias: ya formas parte de {groupName}. Esto es lo que incluye:",
       "perkEarnRate": "{percent}% de vuelta en {label} con cada pedido",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% de descuento — {name}",
       "subject": "Te damos la bienvenida a {groupName} en {restaurantName}",
       "usageAccount": "Tus ventajas se aplican automáticamente al hacer tu pedido: solo tienes que iniciar sesión.",
-      "usageGuest": "Tus ventajas se aplican automáticamente al hacer tu pedido: solo tienes que usar esta dirección de email ({email}) al finalizar la compra."
+      "usageGuest": "Los descuentos de este grupo se añaden al finalizar la compra cuando usas esta dirección de email ({email}). Para acumular y gastar además {label}, crea tu cuenta gratuita con esta dirección e inicia sesión antes de hacer tu pedido: el saldo solo puede guardarse en una cuenta."
     }
   },
   "marketing": {

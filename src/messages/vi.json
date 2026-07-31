@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Ưu đãi {memberLabel} của bạn tại {restaurantName} — {discountLabel}",
-      "intro": "Bạn đã mở khóa ưu đãi {memberLabel} của bạn tại {restaurantName}: {discountLabel}. Ưu đãi được áp dụng tự động — không cần mã.",
+      "intro": "Tin vui — {restaurantName} đã dành riêng cho bạn {discountLabel} với tư cách {memberLabel}. Không cần nhập mã: khi đơn hàng của bạn đáp ứng các điều kiện bên dưới, ưu đãi sẽ được cộng cho bạn khi thanh toán.",
       "howToLabel": "Cách sử dụng",
       "usageAccount": "Chỉ cần đăng nhập vào tài khoản và đặt hàng — {discountLabel} của bạn sẽ được áp dụng tự động khi thanh toán.",
-      "usageGuest": "Khi thanh toán, hãy nhập địa chỉ email này ({email}) và {discountLabel} của bạn sẽ được áp dụng tự động — không cần nhập mã.",
-      "accountTip": "Mẹo: tạo một tài khoản miễn phí với email này để lưu thông tin của bạn và tìm tất cả ưu đãi VIP ở cùng một nơi.",
+      "usageGuest": "Khi thanh toán, hãy dùng địa chỉ email này ({email}) và {discountLabel} của bạn sẽ được cộng vào — không cần nhập mã. Nếu bạn không thấy ưu đãi trên đơn hàng, hãy đăng nhập vào tài khoản và ưu đãi sẽ được áp dụng.",
+      "usageSignIn": "Ưu đãi này dành cho thành viên đã đăng nhập. Hãy đăng nhập vào tài khoản bằng địa chỉ email này ({email}) trước khi đặt hàng, và {discountLabel} của bạn sẽ được cộng vào khi thanh toán — không cần nhập mã.",
+      "accountTip": "Mẹo: tạo một tài khoản miễn phí bằng email này và đăng nhập trước khi đặt hàng. Tài khoản lưu lại thông tin của bạn, gom mọi ưu đãi về một nơi và đảm bảo bạn nhận được từng ưu đãi mà chúng tôi đã dành riêng cho bạn.",
+      "accountTipSignIn": "Chưa có tài khoản? Tạo tài khoản chỉ mất khoảng một phút — hãy dùng chính địa chỉ email này, rồi đăng nhập trước khi đặt hàng để ưu đãi được áp dụng.",
       "defaultMemberLabel": "Thành viên VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "Khi thanh toán, bạn sẽ thấy “Dùng {label} của bạn”. Dùng nhiều hay ít cho đơn hàng là tùy bạn — phần còn lại cứ thanh toán như bình thường. Không có hạn sử dụng, nên nó vẫn còn đó cho tới khi bạn muốn dùng."
     },
     "vipGroupWelcome": {
-      "accountTip": "Tạo tài khoản bằng email này để đồng thời tích lũy và sử dụng phần thưởng của bạn.",
+      "accountTip": "Để tích lũy và sử dụng {label}, hãy tạo tài khoản miễn phí bằng địa chỉ email này và đăng nhập mỗi lần đặt hàng — số dư của bạn nằm trong tài khoản, nên chỉ hiện ra khi thanh toán lúc bạn đã đăng nhập.",
       "defaultRewardLabel": "phần thưởng",
       "intro": "Tin vui — bạn đã được thêm vào {groupName}. Đây là những ưu đãi đi kèm:",
       "perkEarnRate": "Hoàn {percent}% bằng {label} cho mọi đơn hàng",
@@ -5710,7 +5712,7 @@
       "perkPercent": "Giảm {percent}% — {name}",
       "subject": "Chào mừng bạn đến với {groupName} tại {restaurantName}",
       "usageAccount": "Ưu đãi của bạn được áp dụng tự động khi bạn đặt hàng — chỉ cần đăng nhập trước.",
-      "usageGuest": "Ưu đãi của bạn được áp dụng tự động khi bạn đặt hàng — chỉ cần dùng địa chỉ email này ({email}) khi thanh toán."
+      "usageGuest": "Ưu đãi giảm giá của nhóm này được cộng cho bạn khi thanh toán nếu bạn dùng địa chỉ email này ({email}). Để còn tích lũy và sử dụng {label}, hãy tạo tài khoản miễn phí bằng địa chỉ này và đăng nhập trước khi đặt hàng — số dư chỉ có thể được giữ trong tài khoản."
     }
   },
   "marketing": {

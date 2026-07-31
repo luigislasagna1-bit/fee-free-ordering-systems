@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Twoja oferta {memberLabel} w {restaurantName} — {discountLabel}",
-      "intro": "Odblokowano Twoją ofertę {memberLabel} w {restaurantName}: {discountLabel}. Obowiązuje automatycznie — bez potrzeby kodu.",
+      "intro": "Dobra wiadomość — jako {memberLabel} masz w {restaurantName} przygotowaną ofertę: {discountLabel}. Nie musisz wpisywać żadnego kodu: gdy Twoje zamówienie spełni podane niżej warunki, zniżka zostanie doliczona przy płatności.",
       "howToLabel": "Jak z niej skorzystać",
       "usageAccount": "Po prostu zaloguj się na swoje konto i złóż zamówienie — Twoja oferta {discountLabel} zostanie zastosowana automatycznie przy płatności.",
-      "usageGuest": "Przy płatności podaj ten adres e-mail ({email}), a Twoja oferta {discountLabel} zostanie zastosowana automatycznie — bez wpisywania kodu.",
-      "accountTip": "Wskazówka: załóż darmowe konto z tym adresem e-mail, aby zapisać swoje dane i mieć wszystkie oferty VIP w jednym miejscu.",
+      "usageGuest": "Przy płatności podaj ten adres e-mail ({email}), a Twoja oferta {discountLabel} zostanie doliczona automatycznie — bez wpisywania kodu. Jeśli nie widzisz jej w zamówieniu, zaloguj się na swoje konto, a zniżka zostanie naliczona.",
+      "usageSignIn": "Ta oferta jest przeznaczona dla zalogowanych osób. Zanim złożysz zamówienie, zaloguj się na konto z tym adresem e-mail ({email}), a Twoja oferta {discountLabel} zostanie doliczona przy płatności — bez wpisywania kodu.",
+      "accountTip": "Wskazówka: załóż darmowe konto z tym adresem e-mail i zaloguj się przed złożeniem zamówienia. Konto zapisuje Twoje dane, trzyma wszystkie oferty w jednym miejscu i sprawia, że każda przygotowana dla Ciebie promocja zostanie uwzględniona.",
+      "accountTipSignIn": "Nie masz jeszcze konta? Założenie zajmuje około minuty — użyj tego samego adresu e-mail, a potem zaloguj się przed złożeniem zamówienia, żeby oferta została uwzględniona.",
       "defaultMemberLabel": "członek VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Jeśli nie spodziewasz się tej wiadomości, możesz ją po prostu zignorować."
     },
     "vipGroupWelcome": {
-      "accountTip": "Załóż konto z tym adresem e-mail, aby móc też zbierać i wydawać swoje nagrody.",
+      "accountTip": "Aby zbierać i wydawać {label}, załóż darmowe konto z tym adresem e-mail i loguj się przy każdym zamówieniu — Twoje środki są zapisane na koncie, więc pojawiają się przy płatności tylko po zalogowaniu.",
       "defaultRewardLabel": "nagrody",
       "intro": "Dobra wiadomość — dodaliśmy Cię do grupy {groupName}. Oto, co zyskujesz:",
       "perkEarnRate": "{percent}% zwrotu przy każdym zamówieniu — {label}",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% zniżki — {name}",
       "subject": "Witamy w grupie {groupName} — {restaurantName}",
       "usageAccount": "Twoje korzyści naliczają się automatycznie przy zamówieniu — wystarczy, że najpierw się zalogujesz.",
-      "usageGuest": "Twoje korzyści naliczają się automatycznie — wystarczy, że przy płatności podasz ten adres e-mail ({email})."
+      "usageGuest": "Zniżki z tej grupy zostaną doliczone przy płatności, gdy podasz ten adres e-mail ({email}). Aby dodatkowo zbierać i wydawać {label}, załóż darmowe konto z tym adresem i zaloguj się przed złożeniem zamówienia — środki mogą być gromadzone wyłącznie na koncie."
     }
   },
   "marketing": {

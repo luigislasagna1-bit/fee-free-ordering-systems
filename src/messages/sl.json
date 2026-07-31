@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Vaša ponudba {memberLabel} v {restaurantName} — {discountLabel}",
-      "intro": "Odklenili ste svojo ponudbo {memberLabel} v {restaurantName}: {discountLabel}. Uporabi se samodejno – brez kode.",
+      "intro": "Dobra novica – vi ste {memberLabel}, restavracija {restaurantName} pa je za vas pripravila ponudbo: {discountLabel}. Kode ni treba vnašati: ko vaše naročilo izpolni spodaj navedene pogoje, se popust doda ob zaključku nakupa.",
       "howToLabel": "Kako jo uporabite",
       "usageAccount": "Samo prijavite se v svoj račun in naročite – vaš {discountLabel} se samodejno uporabi ob zaključku nakupa.",
-      "usageGuest": "Ob zaključku nakupa vnesite ta e-poštni naslov ({email}) in vaš {discountLabel} se samodejno uporabi – brez vnosa kode.",
-      "accountTip": "Nasvet: ustvarite brezplačen račun s to e-pošto, da shranite svoje podatke in najdete vse svoje VIP ponudbe na enem mestu.",
+      "usageGuest": "Vaša ponudba: {discountLabel}. Ob zaključku nakupa vnesite ta e-poštni naslov ({email}) in popust se doda samodejno – brez vnosa kode. Če ga na svojem naročilu ne vidite, se prijavite v svoj račun in upoštevan bo.",
+      "usageSignIn": "Vaša ponudba: {discountLabel}. Velja samo za prijavljene člane – preden naročite, se prijavite v svoj račun s tem e-poštnim naslovom ({email}) in popust se doda ob zaključku nakupa. Kode ni treba vnašati.",
+      "accountTip": "Nasvet: ustvarite brezplačen račun s tem e-poštnim naslovom in se prijavite, preden naročite. Tako se shranijo vaši podatki, vse ponudbe so na enem mestu in nobena ponudba, ki smo jo pripravili za vas, ne ostane neizkoriščena.",
+      "accountTipSignIn": "Računa še nimate? Ustvarjanje traja približno minuto – uporabite isti e-poštni naslov, nato pa se pred naročilom prijavite, da bo ponudba upoštevana.",
       "defaultMemberLabel": "VIP član"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Če tega niste pričakovali, lahko to e-sporočilo mirno prezrete."
     },
     "vipGroupWelcome": {
-      "accountTip": "Ustvarite račun s to e-pošto, da boste lahko svoje nagrade tudi zbirali in porabljali.",
+      "accountTip": "Če želite zbirati in porabljati {label}, s tem e-poštnim naslovom ustvarite brezplačen račun in se prijavite ob vsakem naročilu — vaše dobroimetje je shranjeno v računu, zato se ob zaključku nakupa prikaže le, kadar ste prijavljeni.",
       "defaultRewardLabel": "nagrade",
       "intro": "Dobra novica — dodani ste v {groupName}. To vam prinaša:",
       "perkEarnRate": "{percent}% vračila v {label} ob vsakem naročilu",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% popusta — {name}",
       "subject": "Dobrodošli v {groupName} — {restaurantName}",
       "usageAccount": "Vaše ugodnosti se samodejno upoštevajo ob naročilu — le najprej se prijavite.",
-      "usageGuest": "Vaše ugodnosti se samodejno upoštevajo ob naročilu — le ob zaključku naročila uporabite ta e-poštni naslov ({email})."
+      "usageGuest": "Popusti iz te skupine se ob zaključku nakupa dodajo samodejno, če uporabite ta e-poštni naslov ({email}). Če želite {label} tudi zbirati in porabljati, s tem naslovom ustvarite brezplačen račun in se prijavite, preden naročite — dobroimetje je lahko shranjeno samo v računu."
     }
   },
   "marketing": {

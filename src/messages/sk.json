@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Vaša ponuka {memberLabel} v {restaurantName} — {discountLabel}",
-      "intro": "Odomkli ste si svoju ponuku {memberLabel} v {restaurantName}: {discountLabel}. Uplatní sa automaticky — nie je potrebný žiadny kód.",
+      "intro": "Dobrá správa — ako {memberLabel} máte v {restaurantName} pripravenú ponuku: {discountLabel}. Žiadny kód zadávať nemusíte: keď vaša objednávka splní nižšie uvedené podmienky, zľava sa pri platbe pripočíta automaticky.",
       "howToLabel": "Ako ju využiť",
       "usageAccount": "Stačí sa prihlásiť do svojho účtu a objednať si — vaša ponuka {discountLabel} sa pri platbe uplatní automaticky.",
-      "usageGuest": "Pri platbe zadajte túto e-mailovú adresu ({email}) a vaša ponuka {discountLabel} sa uplatní automaticky — žiadny kód nemusíte zadávať.",
-      "accountTip": "Tip: vytvorte si s týmto e-mailom bezplatný účet, aby ste si uložili svoje údaje a našli všetky svoje VIP ponuky na jednom mieste.",
+      "usageGuest": "Pri platbe zadajte túto e-mailovú adresu ({email}) a vaše zvýhodnenie sa pripočíta automaticky: {discountLabel} — žiadny kód zadávať nemusíte. Ak ho pri objednávke nevidíte, prihláste sa do svojho účtu a zľava sa uplatní.",
+      "usageSignIn": "Táto ponuka platí pre prihlásených členov. Skôr než si objednáte, prihláste sa do svojho účtu s touto e-mailovou adresou ({email}). Pri platbe sa vám zvýhodnenie pripočíta automaticky: {discountLabel} — žiadny kód zadávať nemusíte.",
+      "accountTip": "Tip: vytvorte si s týmto e-mailom bezplatný účet a pred objednaním sa prihláste. Uložia sa vám údaje, všetky ponuky budete mať na jednom mieste a žiadna výhoda, ktorú sme pre vás pripravili, vám neunikne.",
+      "accountTipSignIn": "Ešte nemáte účet? Vytvoríte si ho asi za minútu — použite tú istú e-mailovú adresu a pred objednaním sa prihláste, aby sa ponuka uplatnila.",
       "defaultMemberLabel": "VIP člen"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Ak ste tento e-mail nečakali, môžete ho pokojne ignorovať."
     },
     "vipGroupWelcome": {
-      "accountTip": "Vytvorte si s týmto e-mailom účet, aby ste mohli navyše zbierať a míňať svoje odmeny.",
+      "accountTip": "Ak chcete zbierať a míňať {label}, vytvorte si s touto e-mailovou adresou bezplatný účet a pri každej objednávke sa prihláste — váš kredit je uložený na účte, takže sa pri platbe zobrazí, len keď ste prihlásení.",
       "defaultRewardLabel": "odmeny",
       "intro": "Dobrá správa — pridali sme vás do skupiny {groupName}. A čo k tomu patrí:",
       "perkEarnRate": "{percent}% späť z každej objednávky — {label}",
@@ -5710,7 +5712,7 @@
       "perkPercent": "Zľava {percent} % — {name}",
       "subject": "Vitajte v skupine {groupName} — {restaurantName}",
       "usageAccount": "Vaše výhody sa pri objednávke uplatnia automaticky — stačí sa najprv prihlásiť.",
-      "usageGuest": "Vaše výhody sa pri objednávke uplatnia automaticky — pri platbe stačí zadať túto e-mailovú adresu ({email})."
+      "usageGuest": "Zľavy z tejto skupiny sa vám pri platbe pripočítajú automaticky, keď zadáte túto e-mailovú adresu ({email}). Ak chcete aj zbierať a míňať {label}, vytvorte si s touto adresou bezplatný účet a pred objednaním sa prihláste — kredit sa dá držať len na účte."
     }
   },
   "marketing": {

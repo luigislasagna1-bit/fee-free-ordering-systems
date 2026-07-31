@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Sua oferta {memberLabel} em {restaurantName} — {discountLabel}",
-      "intro": "Você desbloqueou sua oferta {memberLabel} em {restaurantName}: {discountLabel}. Ela é aplicada automaticamente — sem necessidade de código.",
+      "intro": "Boas notícias — {restaurantName} preparou {discountLabel} para si enquanto {memberLabel}. Não há nenhum código para digitar: quando o seu pedido cumprir as condições indicadas abaixo, o desconto é adicionado na finalização.",
       "howToLabel": "Como usar",
       "usageAccount": "Basta entrar na sua conta e fazer o pedido — seu {discountLabel} é aplicado automaticamente na finalização.",
-      "usageGuest": "Na finalização, informe este endereço de e-mail ({email}) e seu {discountLabel} será aplicado automaticamente — sem código para digitar.",
-      "accountTip": "Dica: crie uma conta gratuita com este e-mail para salvar seus dados e encontrar todas as suas ofertas VIP em um só lugar.",
+      "usageGuest": "Na finalização, use este endereço de e-mail ({email}) e nós adicionamos o seu {discountLabel} — sem código para digitar. Se não aparecer no seu pedido, inicie sessão na sua conta e será aplicado.",
+      "usageSignIn": "Esta oferta é para membros com sessão iniciada. Inicie sessão na sua conta com este endereço de e-mail ({email}) antes de fazer o pedido e o seu {discountLabel} é adicionado na finalização — sem código para digitar.",
+      "accountTip": "Dica: crie uma conta gratuita com este e-mail e inicie sessão antes de fazer o pedido. Assim guarda os seus dados, mantém as suas ofertas num só lugar e garante que todas as ofertas reservadas para si são mesmo aplicadas.",
+      "accountTipSignIn": "Ainda não tem conta? Criar uma demora cerca de um minuto — use este mesmo endereço de e-mail e depois inicie sessão antes de fazer o pedido, para que a oferta seja aplicada.",
       "defaultMemberLabel": "membro VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "No checkout verá «Use o seu {label}». Aplique à encomenda tanto ou tão pouco quanto quiser — o resto paga normalmente. Não tem prazo de validade, por isso fica à sua espera até quando quiser."
     },
     "vipGroupWelcome": {
-      "accountTip": "Crie uma conta com este e-mail para também acumular e usar as suas recompensas.",
+      "accountTip": "Para acumular e usar {label}, crie a sua conta gratuita com este endereço de e-mail e inicie sessão sempre que encomendar — o seu crédito fica na conta, por isso só aparece ao finalizar a encomenda quando tem sessão iniciada.",
       "defaultRewardLabel": "recompensas",
       "intro": "Boas notícias — foi adicionado(a) a {groupName}. Eis o que está incluído:",
       "perkEarnRate": "{percent}% de volta em {label} em cada encomenda",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% de desconto — {name}",
       "subject": "Bem-vindo(a) a {groupName} — {restaurantName}",
       "usageAccount": "As suas vantagens são aplicadas automaticamente quando encomenda — basta iniciar sessão primeiro.",
-      "usageGuest": "As suas vantagens são aplicadas automaticamente quando encomenda — basta usar este endereço de e-mail ({email}) ao finalizar a encomenda."
+      "usageGuest": "Os descontos deste grupo são adicionados ao finalizar a encomenda quando usa este endereço de e-mail ({email}). Para também acumular e usar {label}, crie a sua conta gratuita com este endereço e inicie sessão antes de encomendar — o crédito só pode ser guardado numa conta."
     }
   },
   "marketing": {

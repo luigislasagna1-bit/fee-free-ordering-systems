@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "{restaurantName} mekanında {memberLabel} fırsatınız — {discountLabel}",
-      "intro": "{restaurantName} mekanında {memberLabel} fırsatınızın kilidini açtınız: {discountLabel}. Otomatik olarak uygulanır — kod gerekmez.",
+      "intro": "Güzel haber — {restaurantName}, {memberLabel} olarak sizin için {discountLabel} tanımladı. Yazılacak bir kod yok: siparişiniz aşağıdaki koşulları karşıladığında indirim ödeme sırasında sizin için eklenir.",
       "howToLabel": "Nasıl kullanılır",
       "usageAccount": "Hesabınıza giriş yapıp sipariş verin yeterli — {discountLabel} indiriminiz ödeme sırasında otomatik olarak uygulanır.",
-      "usageGuest": "Ödeme sırasında bu e-posta adresini ({email}) girin; {discountLabel} indiriminiz otomatik olarak uygulanır — yazılacak bir kod yok.",
-      "accountTip": "İpucu: Bu e-postayla ücretsiz bir hesap oluşturarak bilgilerinizi kaydedin ve tüm VIP tekliflerinizi tek bir yerde bulun.",
+      "usageGuest": "Ödeme sırasında bu e-posta adresini ({email}) kullanın; {discountLabel} indiriminiz sizin için eklenir — yazılacak bir kod yok. Siparişinizde göremiyorsanız hesabınıza giriş yapın, indirim uygulanacaktır.",
+      "usageSignIn": "Bu fırsat, giriş yapmış üyeler içindir. Sipariş vermeden önce bu e-posta adresiyle ({email}) hesabınıza giriş yapın; {discountLabel} indiriminiz ödeme sırasında sizin için eklenir — yazılacak bir kod yok.",
+      "accountTip": "İpucu: Bu e-postayla ücretsiz bir hesap oluşturun ve sipariş vermeden önce giriş yapın. Böylece bilgileriniz kaydedilir, tüm tekliflerinizi tek bir yerde tutarsınız ve sizin için ayırdığımız hiçbir fırsat gözden kaçmaz.",
+      "accountTipSignIn": "Henüz hesabınız yok mu? Oluşturmak yaklaşık bir dakika sürer — aynı e-posta adresini kullanın, ardından fırsatın uygulanması için sipariş vermeden önce giriş yapın.",
       "defaultMemberLabel": "VIP üye"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "Ödeme adımında “{label} bakiyenizi kullanın” seçeneğini göreceksiniz. Siparişe dilediğiniz kadar aktarın — çok ya da az — kalanı her zamanki gibi ödersiniz. Son kullanma tarihi yoktur; siz isteyene kadar durur."
     },
     "vipGroupWelcome": {
-      "accountTip": "Ödüllerinizi de biriktirip harcamak için bu e-postayla bir hesap oluşturun.",
+      "accountTip": "{label} biriktirip harcamak için bu e-posta adresiyle ücretsiz hesabınızı oluşturun ve her sipariş verdiğinizde giriş yapın — bakiyeniz hesabınızda durur, bu yüzden ödeme sırasında yalnızca giriş yapmışken görünür.",
       "defaultRewardLabel": "ödül",
       "intro": "Güzel haber — {groupName} grubuna eklendiniz. İşte size sunduğu ayrıcalıklar:",
       "perkEarnRate": "Her siparişte {label} olarak %{percent} geri",
@@ -5710,7 +5712,7 @@
       "perkPercent": "%{percent} indirim — {name}",
       "subject": "{restaurantName} mekanında {groupName} grubuna hoş geldiniz",
       "usageAccount": "Ayrıcalıklarınız sipariş verdiğinizde otomatik olarak uygulanır — tek yapmanız gereken önce giriş yapmak.",
-      "usageGuest": "Ayrıcalıklarınız sipariş verdiğinizde otomatik olarak uygulanır — ödeme sırasında bu e-posta adresini ({email}) kullanmanız yeterli."
+      "usageGuest": "Bu grubun indirimleri, ödeme sırasında bu e-posta adresini ({email}) kullandığınızda sizin için eklenir. {label} biriktirip harcamak için ise bu adresle ücretsiz hesabınızı oluşturun ve sipariş vermeden önce giriş yapın — bakiye yalnızca bir hesapta tutulabilir."
     }
   },
   "marketing": {

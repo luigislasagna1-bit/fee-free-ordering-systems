@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Jūsu {memberLabel} piedāvājums restorānā {restaurantName} — {discountLabel}",
-      "intro": "Jūs esat atvēris savu {memberLabel} piedāvājumu restorānā {restaurantName}: {discountLabel}. Tas tiek piemērots automātiski — kods nav vajadzīgs.",
+      "intro": "Labas ziņas — {restaurantName} jums kā {memberLabel} ir sagatavojis {discountLabel}. Nekāds kods nav jāievada: kad jūsu pasūtījums atbilst zemāk norādītajiem nosacījumiem, atlaide tiek piemērota jūsu vietā, noformējot pasūtījumu.",
       "howToLabel": "Kā to izmantot",
       "usageAccount": "Vienkārši pierakstieties savā kontā un veiciet pasūtījumu — jūsu {discountLabel} tiek piemērots automātiski, noformējot pasūtījumu.",
-      "usageGuest": "Noformējot pasūtījumu, ievadiet šo e-pasta adresi ({email}), un jūsu {discountLabel} tiks piemērots automātiski — nekas nav jāievada.",
-      "accountTip": "Padoms: izveidojiet bezmaksas kontu ar šo e-pastu, lai saglabātu savus datus un atrastu visus savus VIP piedāvājumus vienuviet.",
+      "usageGuest": "Noformējot pasūtījumu, izmantojiet šo e-pasta adresi ({email}), un jūsu {discountLabel} tiks piemērots jūsu vietā — nekāds kods nav jāievada. Ja neredzat to savā pasūtījumā, pierakstieties savā kontā, un atlaide tiks piemērota.",
+      "usageSignIn": "Šis piedāvājums ir paredzēts dalībniekiem, kuri ir pierakstījušies. Pirms pasūtīšanas pierakstieties savā kontā ar šo e-pasta adresi ({email}), un jūsu {discountLabel} tiks piemērots jūsu vietā, noformējot pasūtījumu — nekāds kods nav jāievada.",
+      "accountTip": "Padoms: izveidojiet bezmaksas kontu ar šo e-pastu un pierakstieties pirms pasūtīšanas. Tā tiek saglabāti jūsu dati, visi piedāvājumi ir vienuviet un neviens jums sagatavotais piedāvājums nepaliek neizmantots.",
+      "accountTipSignIn": "Vēl nav konta? Tā izveide aizņem apmēram minūti — izmantojiet to pašu e-pasta adresi un pēc tam pierakstieties pirms pasūtīšanas, lai piedāvājums tiktu piemērots.",
       "defaultMemberLabel": "VIP dalībnieks"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "Norēķinoties redzēsiet „Izmantojiet savus {label}“. Novirziet pasūtījumam tik daudz vai tik maz, cik vēlaties — pārējo vienkārši samaksājiet kā parasti. Derīguma termiņa nav, tāpēc atlikums saglabājas, līdz to gribēsiet izmantot."
     },
     "vipGroupWelcome": {
-      "accountTip": "Izveidojiet kontu ar šo e-pastu, lai varētu arī krāt un tērēt savus bonusus.",
+      "accountTip": "Lai krātu un tērētu {label}, izveidojiet bezmaksas kontu ar šo e-pasta adresi un pierakstieties katru reizi, kad pasūtāt — jūsu kredīts glabājas kontā, tāpēc, noformējot pasūtījumu, tas parādās tikai tad, ja esat pierakstījies.",
       "defaultRewardLabel": "bonusi",
       "intro": "Labas ziņas — mēs jūs pievienojām grupai {groupName}. Lūk, ko tas jums sniedz:",
       "perkEarnRate": "{percent}% atpakaļ kā {label} par katru pasūtījumu",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% atlaide — {name}",
       "subject": "Laipni lūdzam grupā {groupName} — {restaurantName}",
       "usageAccount": "Jūsu priekšrocības tiek piemērotas automātiski, kad pasūtāt — vienkārši vispirms pierakstieties.",
-      "usageGuest": "Jūsu priekšrocības tiek piemērotas automātiski, kad pasūtāt — norēķinoties vienkārši izmantojiet šo e-pasta adresi ({email})."
+      "usageGuest": "Šīs grupas atlaides tiek piemērotas jūsu vietā, noformējot pasūtījumu, ja izmantojat šo e-pasta adresi ({email}). Savukārt, lai arī krātu un tērētu {label}, izveidojiet bezmaksas kontu ar šo adresi un pierakstieties pirms pasūtīšanas — kredītu var glabāt tikai kontā."
     }
   },
   "marketing": {

@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "La teva oferta {memberLabel} a {restaurantName} — {discountLabel}",
-      "intro": "Has desbloquejat la teva oferta {memberLabel} a {restaurantName}: {discountLabel}. S'aplica automàticament, sense cap codi.",
+      "intro": "Bones notícies: {restaurantName} t'ha preparat {discountLabel} com a {memberLabel}. No cal escriure cap codi: quan la teva comanda compleixi les condicions que s'indiquen a continuació, el descompte s'afegeix en finalitzar la compra.",
       "howToLabel": "Com utilitzar-la",
       "usageAccount": "Només has d'iniciar sessió al teu compte i fer la comanda: el teu {discountLabel} s'aplica automàticament en finalitzar la compra.",
-      "usageGuest": "En finalitzar la compra, introdueix aquesta adreça de correu electrònic ({email}) i el teu {discountLabel} s'aplica automàticament: no cal escriure cap codi.",
-      "accountTip": "Consell: crea un compte gratuït amb aquest correu electrònic per desar les teves dades i trobar totes les teves ofertes VIP en un sol lloc.",
+      "usageGuest": "En finalitzar la compra, utilitza aquesta adreça de correu electrònic ({email}) i t'afegim el teu {discountLabel}: no cal escriure cap codi. Si no el veus a la teva comanda, inicia sessió al teu compte i s'aplicarà.",
+      "usageSignIn": "Aquesta oferta és per a membres amb la sessió iniciada. Inicia sessió al teu compte amb aquesta adreça de correu electrònic ({email}) abans de fer la comanda i t'afegim el teu {discountLabel} en finalitzar la compra: no cal escriure cap codi.",
+      "accountTip": "Consell: crea un compte gratuït amb aquest correu electrònic i inicia sessió abans de fer la comanda. Així deses les teves dades, tens totes les ofertes en un sol lloc i t'assegures que s'apliqui cada oferta que hem reservat per a tu.",
+      "accountTipSignIn": "Encara no tens compte? Crear-lo triga aproximadament un minut: fes servir aquesta mateixa adreça de correu electrònic i després inicia sessió abans de fer la comanda perquè l'oferta s'apliqui.",
       "defaultMemberLabel": "membre VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "En pagar veuràs «Fes servir els teus {label}». Aplica'n tants o tan pocs com vulguis a la comanda — la resta la pagues com sempre. No caduca mai, així que el crèdit t'espera fins que el vulguis fer servir."
     },
     "vipGroupWelcome": {
-      "accountTip": "Crea un compte amb aquest correu electrònic per poder acumular i gastar també les teves recompenses.",
+      "accountTip": "Per acumular i gastar {label}, crea el teu compte gratuït amb aquesta adreça de correu electrònic i inicia sessió cada vegada que facis una comanda: el teu saldo és al compte, així que només apareix en finalitzar la compra quan has iniciat sessió.",
       "defaultRewardLabel": "recompenses",
       "intro": "Bona notícia — ara formes part de {groupName}. Això és el que hi guanyes:",
       "perkEarnRate": "{percent}% de retorn en {label} a cada comanda",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% de descompte — {name}",
       "subject": "Et donem la benvinguda a {groupName} de {restaurantName}",
       "usageAccount": "Els teus avantatges s'apliquen automàticament quan fas la comanda: només cal que iniciïs la sessió abans.",
-      "usageGuest": "Els teus avantatges s'apliquen automàticament quan fas la comanda: només has d'introduir aquesta adreça de correu electrònic ({email}) en finalitzar la compra."
+      "usageGuest": "Els descomptes d'aquest grup s'afegeixen en finalitzar la compra quan utilitzes aquesta adreça de correu electrònic ({email}). Per acumular i gastar també {label}, crea el teu compte gratuït amb aquesta adreça i inicia sessió abans de fer la comanda: el saldo només es pot guardar en un compte."
     }
   },
   "marketing": {

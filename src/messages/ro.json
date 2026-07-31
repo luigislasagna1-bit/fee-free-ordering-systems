@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Oferta ta {memberLabel} la {restaurantName} — {discountLabel}",
-      "intro": "Ai deblocat oferta ta {memberLabel} la {restaurantName}: {discountLabel}. Se aplică automat — fără cod.",
+      "intro": "Vești bune — {restaurantName} ți-a pregătit o ofertă ca {memberLabel}: {discountLabel}. Nu trebuie să tastezi niciun cod: când comanda ta îndeplinește condițiile de mai jos, reducerea se adaugă automat la finalizarea comenzii.",
       "howToLabel": "Cum o folosești",
       "usageAccount": "Doar autentifică-te în contul tău și comandă — {discountLabel} se aplică automat la finalizarea comenzii.",
-      "usageGuest": "La finalizarea comenzii, introdu această adresă de email ({email}) și {discountLabel} se aplică automat — fără cod de tastat.",
-      "accountTip": "Sfat: creează-ți un cont gratuit cu acest email pentru a-ți salva datele și a găsi toate ofertele tale VIP într-un singur loc.",
+      "usageGuest": "La finalizarea comenzii, folosește această adresă de email ({email}) și oferta ta se adaugă automat: {discountLabel} — fără cod de tastat. Dacă nu o vezi în comandă, autentifică-te în contul tău și se va aplica.",
+      "usageSignIn": "Această ofertă este pentru membrii autentificați. Autentifică-te în contul tău cu această adresă de email ({email}) înainte să comanzi, iar oferta se adaugă automat la finalizarea comenzii: {discountLabel} — fără cod de tastat.",
+      "accountTip": "Sfat: creează-ți un cont gratuit cu acest email și autentifică-te înainte să comanzi. Îți salvează datele, îți ține ofertele într-un singur loc și se asigură că primești fiecare ofertă pusă deoparte pentru tine.",
+      "accountTipSignIn": "Nu ai încă un cont? Se creează în aproximativ un minut — folosește aceeași adresă de email, apoi autentifică-te înainte să comanzi, ca oferta să se aplice.",
       "defaultMemberLabel": "membru VIP"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Dacă nu te așteptai la acest mesaj, poți ignora liniștit acest e-mail."
     },
     "vipGroupWelcome": {
-      "accountTip": "Creează-ți un cont cu acest email și vei putea, în plus, să aduni și să folosești recompense.",
+      "accountTip": "Ca să aduni și să folosești {label}, creează-ți contul gratuit cu această adresă de email și autentifică-te de fiecare dată când comanzi — creditul tău stă în cont, așa că apare la finalizarea comenzii doar dacă ești autentificat.",
       "defaultRewardLabel": "recompense",
       "intro": "Vești bune — acum faci parte din {groupName}. Iată ce primești:",
       "perkEarnRate": "{percent}% înapoi în {label} la fiecare comandă",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% reducere — {name}",
       "subject": "Bine ai venit în {groupName} la {restaurantName}",
       "usageAccount": "Beneficiile tale se aplică automat când comanzi — trebuie doar să te autentifici mai întâi.",
-      "usageGuest": "Beneficiile tale se aplică automat când comanzi — folosește doar această adresă de email ({email}) la finalizarea comenzii."
+      "usageGuest": "Reducerile din acest grup se adaugă automat la finalizarea comenzii când folosești această adresă de email ({email}). Pentru a aduna și a cheltui {label} ai nevoie de cont: creează-ți contul gratuit cu această adresă și autentifică-te înainte să comanzi — creditul poate fi păstrat doar într-un cont."
     }
   },
   "marketing": {

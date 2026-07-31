@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "您在 {restaurantName} 的 {memberLabel} 专属优惠 — {discountLabel}",
-      "intro": "您已解锁您在 {restaurantName} 的 {memberLabel} 专属优惠：{discountLabel}。优惠将自动生效，无需任何优惠码。",
+      "intro": "好消息——{restaurantName} 已为您这位 {memberLabel} 准备了 {discountLabel}。无需输入任何优惠码：当您的订单满足以下条件时，优惠会在结账时自动为您加上。",
       "howToLabel": "如何使用",
       "usageAccount": "只需登录您的账户并下单——结账时您的 {discountLabel} 将自动生效。",
-      "usageGuest": "结账时输入此邮箱地址（{email}），您的 {discountLabel} 即可自动生效——无需输入任何优惠码。",
-      "accountTip": "小贴士：用此邮箱创建一个免费账户，即可保存您的信息，并在一处集中查看您所有的 VIP 优惠。",
+      "usageGuest": "结账时请使用此邮箱地址（{email}），您的 {discountLabel} 就会自动为您加上——无需输入优惠码。如果订单上没有显示，请登录您的账户，优惠即可生效。",
+      "usageSignIn": "此优惠仅限已登录的会员使用。下单前请用此邮箱地址（{email}）登录您的账户，结账时您的 {discountLabel} 就会自动为您加上——无需输入优惠码。",
+      "accountTip": "小贴士：用此邮箱创建一个免费账户，并在下单前登录。这样可以保存您的信息，把您的优惠集中在一处，也能确保我们为您预留的每一份优惠都不会漏掉。",
+      "accountTipSignIn": "还没有账户？创建只需大约一分钟——请使用同一个邮箱地址，然后在下单前登录，这份优惠才能生效。",
       "defaultMemberLabel": "VIP 会员"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "在结账页面您会看到“使用您的{label}”。用多用少都由您决定——剩下的金额照常支付即可。额度永不过期，什么时候想用都可以。"
     },
     "vipGroupWelcome": {
-      "accountTip": "用此邮箱创建账户，还可以累积并使用您的奖励。",
+      "accountTip": "若要累积和使用{label}，请用此邮箱地址创建您的免费账户，并在每次下单前登录——您的余额存放在账户里，只有登录后才会在结账时显示。",
       "defaultRewardLabel": "奖励",
       "intro": "好消息——您已被添加到 {groupName}。以下是您可享受的权益：",
       "perkEarnRate": "每笔订单返还 {percent}% 的{label}",
@@ -5710,7 +5712,7 @@
       "perkPercent": "立减 {percent}% — {name}",
       "subject": "欢迎加入 {restaurantName} 的 {groupName}",
       "usageAccount": "下单时您的权益将自动生效——只需先登录即可。",
-      "usageGuest": "下单时您的权益将自动生效——只需在结账时使用此邮箱地址（{email}）。"
+      "usageGuest": "结账时使用此邮箱地址（{email}），本群组的折扣就会自动为您加上。若还想累积和使用{label}，请用此地址创建您的免费账户，并在下单前登录——余额只能保存在账户中。"
     }
   },
   "marketing": {

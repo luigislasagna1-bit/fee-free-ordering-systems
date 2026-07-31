@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Sinu {memberLabel} pakkumine restoranis {restaurantName} — {discountLabel}",
-      "intro": "Avasid oma {memberLabel} pakkumise restoranis {restaurantName}: {discountLabel}. See rakendub automaatselt — koodi pole vaja.",
+      "intro": "Head uudised — sa oled {memberLabel} ja {restaurantName} on sulle valmis pannud soodustuse: {discountLabel}. Koodi pole vaja sisestada: kui su tellimus vastab allpool toodud tingimustele, lisatakse soodustus kassas automaatselt.",
       "howToLabel": "Kuidas seda kasutada",
       "usageAccount": "Logi lihtsalt oma kontole sisse ja telli — sinu {discountLabel} rakendub kassas automaatselt.",
-      "usageGuest": "Sisesta kassas see e-posti aadress ({email}) ja sinu {discountLabel} rakendub automaatselt — koodi pole vaja sisestada.",
-      "accountTip": "Nõuanne: loo selle e-posti aadressiga tasuta konto, et salvestada oma andmed ja leida kõik oma VIP-pakkumised ühest kohast.",
+      "usageGuest": "Sisesta kassas see e-posti aadress ({email}) ja soodustus lisatakse sinu eest automaatselt: {discountLabel} — koodi pole vaja sisestada. Kui sa seda tellimuse juures ei näe, logi oma kontole sisse ja soodustus rakendub.",
+      "usageSignIn": "See pakkumine kehtib sisselogitud liikmetele. Logi enne tellimist selle e-posti aadressiga ({email}) oma kontole sisse ja soodustus lisatakse kassas automaatselt: {discountLabel} — koodi pole vaja sisestada.",
+      "accountTip": "Nõuanne: loo selle e-posti aadressiga tasuta konto ja logi enne tellimist sisse. Nii on su andmed salvestatud, kõik pakkumised ühes kohas ja iga sulle hoitud soodustus jõuab kindlasti kohale.",
+      "accountTipSignIn": "Kontot veel pole? Selle loomiseks kulub umbes minut — kasuta sama e-posti aadressi ja logi enne tellimist sisse, et pakkumine rakenduks.",
       "defaultMemberLabel": "VIP-liige"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "ignoreLine": "Kui sa seda kirja ei oodanud, võid selle rahulikult tähelepanuta jätta."
     },
     "vipGroupWelcome": {
-      "accountTip": "Loo selle e-posti aadressiga konto, et koguda ja kulutada ka oma boonusraha.",
+      "accountTip": "Et {label} koguda ja kulutada, loo selle e-posti aadressiga tasuta konto ja logi iga tellimuse eel sisse — sinu krediit on kontol, seega ilmub see kassas ainult siis, kui oled sisse logitud.",
       "defaultRewardLabel": "Boonusraha",
       "intro": "Head uudised — sind lisati rühma {groupName}. Vaata, mis sellega kaasneb:",
       "perkEarnRate": "{percent}% tagasi igalt tellimuselt — {label}",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% soodustust — {name}",
       "subject": "Tere tulemast rühma {groupName} restoranis {restaurantName}",
       "usageAccount": "Sinu hüved rakenduvad automaatselt, kui tellid — logi lihtsalt enne sisse.",
-      "usageGuest": "Sinu hüved rakenduvad automaatselt, kui tellid — sisesta kassas lihtsalt see e-posti aadress ({email})."
+      "usageGuest": "Selle rühma soodustused lisatakse kassas automaatselt, kui kasutad seda e-posti aadressi ({email}). Et koguda ja kulutada ka {label}, loo selle aadressiga tasuta konto ja logi enne tellimist sisse — krediiti saab hoida ainult kontol."
     }
   },
   "marketing": {

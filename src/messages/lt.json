@@ -5647,11 +5647,13 @@
     },
     "vipSpecial": {
       "subject": "Jūsų {memberLabel} pasiūlymas restorane {restaurantName} — {discountLabel}",
-      "intro": "Atrakinote savo {memberLabel} pasiūlymą restorane {restaurantName}: {discountLabel}. Jis pritaikomas automatiškai – kodo nereikia.",
+      "intro": "Gera žinia — {restaurantName} paruošė jums {discountLabel} kaip {memberLabel}. Kodo įvesti nereikia: kai jūsų užsakymas atitinka toliau nurodytas sąlygas, nuolaida atsiskaitant pritaikoma už jus.",
       "howToLabel": "Kaip pasinaudoti",
       "usageAccount": "Tiesiog prisijunkite prie paskyros ir užsisakykite — jūsų {discountLabel} bus pritaikytas automatiškai atsiskaitant.",
-      "usageGuest": "Atsiskaitydami įveskite šį el. pašto adresą ({email}) ir jūsų {discountLabel} bus pritaikytas automatiškai — jokio kodo įvesti nereikia.",
-      "accountTip": "Patarimas: susikurkite nemokamą paskyrą su šiuo el. paštu, kad išsaugotumėte savo duomenis ir rastumėte visus savo VIP pasiūlymus vienoje vietoje.",
+      "usageGuest": "Atsiskaitydami nurodykite šį el. pašto adresą ({email}) ir jūsų {discountLabel} bus pritaikytas už jus — kodo įvesti nereikia. Jei nematote jo savo užsakyme, prisijunkite prie paskyros ir nuolaida bus pritaikyta.",
+      "usageSignIn": "Šis pasiūlymas skirtas prisijungusiems nariams. Prieš užsisakydami prisijunkite prie paskyros su šiuo el. pašto adresu ({email}) ir jūsų {discountLabel} bus pritaikytas už jus atsiskaitant — kodo įvesti nereikia.",
+      "accountTip": "Patarimas: susikurkite nemokamą paskyrą su šiuo el. paštu ir prisijunkite prieš užsisakydami. Taip išsaugosite savo duomenis, visi pasiūlymai bus vienoje vietoje ir nė vienas jums paruoštas pasiūlymas nebus praleistas.",
+      "accountTipSignIn": "Dar neturite paskyros? Ją susikurti užtrunka maždaug minutę — naudokite tą patį el. pašto adresą, o tada prieš užsisakydami prisijunkite, kad pasiūlymas būtų pritaikytas.",
       "defaultMemberLabel": "VIP narys"
     },
     "customerSignup": {
@@ -5702,7 +5704,7 @@
       "step3Body": "Atsiskaitydami pamatysite „Naudoti savo {label}“. Užsakymui skirkite tiek, kiek norite — daug ar mažai — o likusią sumą tiesiog sumokėsite kaip įprastai. Galiojimo termino nėra, tad likutis laukia tol, kol jo prireiks."
     },
     "vipGroupWelcome": {
-      "accountTip": "Susikurkite paskyrą su šiuo el. paštu, kad galėtumėte ir kaupti, ir išleisti savo premijas.",
+      "accountTip": "Kad galėtumėte kaupti ir išleisti {label}, susikurkite nemokamą paskyrą su šiuo el. pašto adresu ir prisijunkite kaskart užsisakydami — jūsų kreditas laikomas paskyroje, todėl atsiskaitant matomas tik prisijungus.",
       "defaultRewardLabel": "premijos",
       "intro": "Gera žinia — jus įtraukėme į {groupName}. Štai ką gaunate:",
       "perkEarnRate": "{percent}% grąžinama kaip {label} už kiekvieną užsakymą",
@@ -5710,7 +5712,7 @@
       "perkPercent": "{percent}% nuolaida — {name}",
       "subject": "Sveiki atvykę į {groupName} — {restaurantName}",
       "usageAccount": "Jūsų privalumai pritaikomi automatiškai užsakant — tereikia pirma prisijungti.",
-      "usageGuest": "Jūsų privalumai pritaikomi automatiškai užsakant — atsiskaitydami tiesiog nurodykite šį el. pašto adresą ({email})."
+      "usageGuest": "Šios grupės nuolaidos atsiskaitant pritaikomos už jus, kai nurodote šį el. pašto adresą ({email}). O kad galėtumėte kaupti ir išleisti {label}, susikurkite nemokamą paskyrą su šiuo adresu ir prisijunkite prieš užsisakydami — kreditas gali būti laikomas tik paskyroje."
     }
   },
   "marketing": {
