@@ -96,6 +96,23 @@ the platform fix so this can NEVER happen to any restaurant:
    ⚠️ Reversible: putting the Oracle nameservers back restores the GloriaFood site.
    💡 Luigi took this domain over from GloriaFood recently — worth confirming he isn't still
    paying for a GloriaFood site no customer will be able to reach.
+   **STATUS 2026-07-30 ~11:30 PM — done by Luigi, waiting on GoDaddy's SSL only:**
+   nameservers propagated to GoDaddy on all public resolvers; apex + `www` forwarding both set to
+   `https://www.luigislasagna.com` (301). PROVEN working over HTTP:
+   `http://www.luigislasagnamilton.ca → 200 → https://www.luigislasagna.com/`. HTTPS still times
+   out because GoDaddy is still issuing the forwarding cert ("can take a few hours" per their own
+   banner). Browsers try HTTPS first, so the domain looks broken until that lands. NO ACTION —
+   re-check with `for d in luigislasagnamilton.ca www.luigislasagnamilton.ca; do curl -sIL
+   https://$d/; done`. Only `www` + apex were set up; verified earlier that NO other subdomain
+   exists on this domain, so that is full coverage.
+
+### ⚠️ Support note — a 301 you replace stays cached in browsers
+Luigi's LAPTOP kept sending every domain to the old Milton site while his PHONE was fine. Cause:
+`luigislasagna.com` had 301-**permanently** redirected to www.luigislasagnamilton.ca for a long
+time, and browsers cache permanent redirects hard — his browser never re-asked DNS. Incognito
+proved it instantly. Fix = clear browsing data (cached images and files). Expect this from any
+owner (or long-time customer) who used the old address: test in a private window FIRST before
+believing a domain is broken.
 
 **FYI — "the mobile site looks like desktop" (2026-07-30, resolved, NOT a bug):** Safari stores
 **page zoom per DOMAIN**. Luigi's old site lived on luigislasagna.com, so its saved zoom (<100%)
