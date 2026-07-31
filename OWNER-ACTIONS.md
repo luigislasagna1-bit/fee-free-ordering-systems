@@ -62,17 +62,30 @@ the platform fix so this can NEVER happen to any restaurant:
     never on ownership alone;
   • after cutover the old domain 308-redirects (path preserved) → old QR codes/links keep working.
 
-**The steps (do them in this order, WITH Claude):**
-1. ☐ Claude deploys the zero-downtime fix. (Do nothing at GoDaddy before this.)
-2. ☐ Luigi: Admin → Website → Domain → connect `www.luigislasagna.com` → it shows **"Waiting for DNS"**.
-3. ☐ Luigi at GoDaddy on luigislasagna.com: **DELETE the Forwarding entry covering `www`** (it
-   currently 301s www → www.luigislasagnamilton.ca and would fight the new record), then **add
-   `CNAME` name `www` value `cname.vercel-dns.com`**.
-4. ☐ Automatic: within ~5–30 min the admin flips to the new domain; luigispizzapastawings.com starts
-   redirecting to it.
-5. ☐ Luigi at GoDaddy: point the BARE `luigislasagna.com` forwarding at `https://www.luigislasagna.com`
-   (301, forward only, no masking).
-6. ☐ Together: one live test order end-to-end + MX re-verify. Then repeat for luigislasagnamilton.ca.
+**The steps:**
+1. ✅ DONE — zero-downtime fix deployed (plus 3 follow-up fixes; see the incident log below).
+2. ✅ DONE — pending switch registered for `www.luigislasagna.com`.
+3. ✅ DONE 2026-07-30 — Luigi edited the existing `CNAME www` at GoDaddy from `@` to
+   `cname.vercel-dns.com` (no forwarding delete was needed — the www CNAME already existed).
+4. ✅ DONE — cutover complete + VERIFIED on prod: `www.luigislasagna.com` serves the store (200);
+   `luigispizzapastawings.com` 308s to it **with path + query preserved** (table-QR deep links and
+   order-status links all land correctly); MX/SPF/DMARC unchanged.
+5. 🔴 **STILL OPEN — THE ONLY REMAINING STEP, and it matters:** the BARE `luigislasagna.com`
+   (no www) still forwards to the OLD Milton site (`www.luigislasagnamilton.ca`, a GloriaFood page).
+   Anyone typing the domain without "www" — i.e. most people — lands on the old site, not the new
+   store. GoDaddy → luigislasagna.com → **Forwarding** → destination `https://www.luigislasagna.com`,
+   301 permanent, **forward only / NO masking**. Do not touch MX or nameservers.
+6. ☐ One live test order end-to-end on the new domain (kitchen rings + confirmation email arrives).
+   Then repeat the whole flow for luigislasagnamilton.ca whenever you want.
+
+**FYI — "the mobile site looks like desktop" (2026-07-30, resolved, NOT a bug):** Safari stores
+**page zoom per DOMAIN**. Luigi's old site lived on luigislasagna.com, so its saved zoom (<100%)
+was applied to the NEW site the moment the domain was repointed — a zoomed-out viewport lays out
+at ~780+ CSS px, which crosses the `md` (768px) breakpoint and renders the two-column desktop
+checkout on a phone. Fix is device-side: Settings → Safari → Page Zoom → per-site list → 100%.
+A site CANNOT override user zoom (accessibility) and the `user-scalable=no` hack is ignored by
+modern iOS — do not add it. Only affects devices that had zoomed the OLD site on that domain.
+⚠️ Expect this class of report whenever a restaurant REUSES a domain that hosted their old site.
 
 ⚠️ SAFETY: touch ONLY Forwarding + the new `www` CNAME — NOT nameservers, NOT MX/mail records.
 info@luigislasagna.com runs on Microsoft 365 via this domain's MX. Baseline captured 2026-07-30 and
