@@ -91,6 +91,37 @@ export async function POST(req: Request) {
   const locale = r.defaultLanguage || "en";
   const amountLabel = formatCurrency(amount, r.currency);
 
+  // ── ONE UNREDEEMED GIFT PER GUEST (Luigi, 2026-07-31) ────────────────────
+  // A `pending` gift is money the recipient has NOT collected yet. Stacking a
+  // second one on the same address is almost always a mistake — the owner
+  // assumes the first never arrived and sends again — and it used to cause real
+  // loss: once the recipient became account-grade by ANY route, the next gift
+  // took the instant path and the original pending row was orphaned, invisible
+  // to everyone while the owner believed both had landed.
+  //
+  // So refuse, and hand the admin UI everything it needs to offer the right
+  // action instead: resend the instructions, or revoke and re-issue.
+  const outstanding = await prisma.pendingRewardGrant.findFirst({
+    where: { restaurantId, email, status: "pending" },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, amount: true, createdAt: true, emailSentAt: true },
+  });
+  if (outstanding) {
+    return NextResponse.json(
+      {
+        error: "already_pending",
+        code: "already_pending",
+        outstanding: {
+          id: outstanding.id,
+          amount: outstanding.amount,
+          createdAt: outstanding.createdAt.toISOString(),
+          emailSentAt: outstanding.emailSentAt?.toISOString() ?? null,
+        },
+      },
+      { status: 409 },
+    );
+  }
+
   // Existing ACCOUNT holder? (Case-insensitive so legacy mixed-case rows match;
   // prefer the credentialed row — same convention as the orders route.)
   const existing = await prisma.customer.findFirst({

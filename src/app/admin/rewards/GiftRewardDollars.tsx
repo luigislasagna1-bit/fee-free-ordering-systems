@@ -35,6 +35,7 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
   const [gifts, setGifts] = useState<GiftRow[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [revoking, setRevoking] = useState<string | null>(null);
+  const [resending, setResending] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -66,6 +67,20 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
+        // One unredeemed gift per guest: say what they already have and point at
+        // the two real options (resend the instructions, or revoke first) rather
+        // than a bare failure the owner would read as "gifting is broken".
+        if (data.code === "already_pending") {
+          toast.error(
+            t("giftAlreadyPending", {
+              amount: formatCurrency(data.outstanding?.amount ?? 0, currency),
+              label: rewardLabel,
+            }),
+            { duration: 8000 },
+          );
+          load();
+          return;
+        }
         toast.error(data.code === "invalid_email" ? t("giftInvalidEmail") : t("giftFailed"));
         return;
       }
@@ -95,6 +110,28 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
       toast.error(t("giftFailed"));
     } finally {
       setRevoking(null);
+    }
+  }
+
+  // Re-send the how-to-use instructions. Which email goes out is decided
+  // server-side from the gift's CURRENT state (a pending gift claimed in the
+  // meantime must not be told to "create an account" again).
+  async function resend(id: string) {
+    if (resending) return;
+    setResending(id);
+    try {
+      const res = await fetch(`/api/admin/reward-gifts/${id}/resend`, { method: "POST" });
+      if (res.ok) {
+        toast.success(t("giftResent"));
+      } else {
+        const data = await res.json().catch(() => ({}));
+        toast.error(data.code === "too_soon" ? t("giftResendTooSoon") : t("giftFailed"));
+      }
+      load();
+    } catch {
+      toast.error(t("giftFailed"));
+    } finally {
+      setResending(null);
     }
   }
 
@@ -148,6 +185,21 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
                 </div>
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
+                {/* Re-send the instructions. Offered on claimed gifts too: the
+                    money is already theirs, but "how do I use this?" is the
+                    question that actually gets asked. Not offered on revoked. */}
+                {g.status !== "revoked" && (
+                  <button
+                    type="button"
+                    onClick={() => resend(g.id)}
+                    disabled={resending === g.id}
+                    className="text-gray-400 hover:text-emerald-600 disabled:opacity-50"
+                    title={t("giftResend")}
+                    aria-label={t("giftResend")}
+                  >
+                    {resending === g.id ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                  </button>
+                )}
                 {g.status === "claimed" ? (
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                     <CheckCircle2 className="w-3 h-3" /> {t("giftStatusClaimed")}

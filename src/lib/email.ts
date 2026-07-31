@@ -1135,6 +1135,9 @@ export async function sendRewardGiftEmail(params: {
       rewardLabel: params.rewardLabel,
       balanceLabel: params.balanceLabel,
       note: params.note,
+      // Step 1 names the address to sign in with — a different address is a
+      // different wallet, and that mix-up is exactly how a gift looks "broken".
+      giftEmail: params.to,
       orderUrl: params.orderUrl,
       imprint: currentImprint(),
     })
