@@ -5106,7 +5106,13 @@
       "confirmRemoveSpecial": "Remove this special?",
       "confirmRemoveFromGroup": "Remove {name} from “{group}”? They will lose every special attached to that group. The group and its specials stay unchanged for everyone else.",
       "removeFromGroupTitle": "Remove from {group}",
-      "membersCsvCapNote": "Note: only the first 1000 members are exported (server limit)."
+      "membersCsvCapNote": "Note: only the first 1000 members are exported (server limit).",
+      "pickCustomersLabel": "Add customers you already have",
+      "hasAccountBadge": "Account",
+      "alreadyMemberBadge": "Already a member",
+      "pickedCount": "{count, plural, one {# customer selected} other {# customers selected}}",
+      "clearSelection": "Clear",
+      "addSelected": "{count, plural, one {Add # member} other {Add # members}}"
     },
     "imageCrop": {
       "title": "Adjust your photo",

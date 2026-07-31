@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Xóa ưu đãi đặc biệt này?",
       "confirmRemoveFromGroup": "Xóa {name} khỏi “{group}”? Họ sẽ mất mọi ưu đãi gắn với nhóm đó. Nhóm và các ưu đãi vẫn giữ nguyên cho những người khác.",
       "removeFromGroupTitle": "Xóa khỏi {group}",
-      "membersCsvCapNote": "Lưu ý: chỉ 1000 thành viên đầu tiên được xuất (giới hạn máy chủ)."
+      "membersCsvCapNote": "Lưu ý: chỉ 1000 thành viên đầu tiên được xuất (giới hạn máy chủ).",
+      "addSelected": "{count, plural, other {Thêm # thành viên}}",
+      "alreadyMemberBadge": "Đã là thành viên",
+      "clearSelection": "Bỏ chọn",
+      "hasAccountBadge": "Tài khoản",
+      "pickCustomersLabel": "Thêm khách hàng bạn đã có",
+      "pickedCount": "{count, plural, other {Đã chọn # khách hàng}}"
     },
     "rewards": {
       "title": "Đô-la Thưởng",

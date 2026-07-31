@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Noņemt šo īpašo piedāvājumu?",
       "confirmRemoveFromGroup": "Vai izņemt {name} no “{group}”? Viņš zaudēs visus grupai piesaistītos piedāvājumus. Grupa un tās piedāvājumi pārējiem paliek nemainīgi.",
       "removeFromGroupTitle": "Izņemt no {group}",
-      "membersCsvCapNote": "Piezīme: tiek eksportēti tikai pirmie 1000 dalībnieki (servera ierobežojums)."
+      "membersCsvCapNote": "Piezīme: tiek eksportēti tikai pirmie 1000 dalībnieki (servera ierobežojums).",
+      "addSelected": "{count, plural, zero {Pievienot # dalībnieku} one {Pievienot # dalībnieku} other {Pievienot # dalībniekus}}",
+      "alreadyMemberBadge": "Jau dalībnieks",
+      "clearSelection": "Notīrīt",
+      "hasAccountBadge": "Konts",
+      "pickCustomersLabel": "Pievienot jau esošos klientus",
+      "pickedCount": "{count, plural, zero {Atlasīts # klientu} one {Atlasīts # klients} other {Atlasīti # klienti}}"
     },
     "rewards": {
       "title": "Bonusa dolāri",

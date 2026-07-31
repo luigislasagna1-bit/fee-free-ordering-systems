@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Remover esta oferta especial?",
       "confirmRemoveFromGroup": "Remover {name} de “{group}”? Ele perderá todas as ofertas vinculadas a esse grupo. O grupo e suas ofertas continuam iguais para os demais.",
       "removeFromGroupTitle": "Remover de {group}",
-      "membersCsvCapNote": "Observação: apenas os primeiros 1000 membros são exportados (limite do servidor)."
+      "membersCsvCapNote": "Observação: apenas os primeiros 1000 membros são exportados (limite do servidor).",
+      "addSelected": "{count, plural, one {Adicionar # membro} other {Adicionar # membros}}",
+      "alreadyMemberBadge": "Já é membro",
+      "clearSelection": "Limpar",
+      "hasAccountBadge": "Conta",
+      "pickCustomersLabel": "Adicionar seus clientes existentes",
+      "pickedCount": "{count, plural, one {# cliente selecionado} other {# clientes selecionados}}"
     },
     "rewards": {
       "title": "Saldo de recompensa",

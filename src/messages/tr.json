@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Bu özel teklif kaldırılsın mı?",
       "confirmRemoveFromGroup": "{name} “{group}” grubundan çıkarılsın mı? Bu gruba bağlı tüm ayrıcalıkları kaybeder. Grup ve ayrıcalıkları diğerleri için aynı kalır.",
       "removeFromGroupTitle": "{group} grubundan çıkar",
-      "membersCsvCapNote": "Not: yalnızca ilk 1000 üye dışa aktarılır (sunucu sınırı)."
+      "membersCsvCapNote": "Not: yalnızca ilk 1000 üye dışa aktarılır (sunucu sınırı).",
+      "addSelected": "{count, plural, one {# üye ekle} other {# üye ekle}}",
+      "alreadyMemberBadge": "Zaten üye",
+      "clearSelection": "Temizle",
+      "hasAccountBadge": "Hesap",
+      "pickCustomersLabel": "Mevcut müşterileri ekle",
+      "pickedCount": "{count, plural, one {# müşteri seçildi} other {# müşteri seçildi}}"
     },
     "rewards": {
       "title": "Ödül Dolarları",

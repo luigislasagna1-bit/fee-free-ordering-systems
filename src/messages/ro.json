@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Eliminați această ofertă specială?",
       "confirmRemoveFromGroup": "Eliminați {name} din „{group}”? Va pierde toate ofertele atașate acelui grup. Grupul și ofertele lui rămân neschimbate pentru ceilalți.",
       "removeFromGroupTitle": "Elimină din {group}",
-      "membersCsvCapNote": "Notă: doar primii 1000 de membri sunt exportați (limita serverului)."
+      "membersCsvCapNote": "Notă: doar primii 1000 de membri sunt exportați (limita serverului).",
+      "addSelected": "{count, plural, one {Adaugă # membru} few {Adaugă # membri} other {Adaugă # de membri}}",
+      "alreadyMemberBadge": "Deja membru",
+      "clearSelection": "Deselectează",
+      "hasAccountBadge": "Cont",
+      "pickCustomersLabel": "Adăugați clienții existenți",
+      "pickedCount": "{count, plural, one {# client selectat} few {# clienți selectați} other {# de clienți selectați}}"
     },
     "rewards": {
       "title": "Dolari de recompensă",

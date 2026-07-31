@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Odstranim to posebno ponudbo?",
       "confirmRemoveFromGroup": "Odstranim {name} iz »{group}«? Izgubil bo vse ugodnosti, vezane na to skupino. Skupina in njene ugodnosti ostanejo za druge nespremenjene.",
       "removeFromGroupTitle": "Odstrani iz {group}",
-      "membersCsvCapNote": "Opomba: izvozi se samo prvih 1000 članov (omejitev strežnika)."
+      "membersCsvCapNote": "Opomba: izvozi se samo prvih 1000 članov (omejitev strežnika).",
+      "addSelected": "{count, plural, one {Dodaj # člana} two {Dodaj # člana} few {Dodaj # člane} other {Dodaj # članov}}",
+      "alreadyMemberBadge": "Že član",
+      "clearSelection": "Počisti",
+      "hasAccountBadge": "Račun",
+      "pickCustomersLabel": "Dodajte stranke, ki jih že imate",
+      "pickedCount": "{count, plural, one {Izbrana # stranka} two {Izbrani # stranki} few {Izbrane # stranke} other {Izbranih # strank}}"
     },
     "rewards": {
       "title": "Nagradni dobropis",

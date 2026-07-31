@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "إزالة هذا العرض الخاص؟",
       "confirmRemoveFromGroup": "إزالة {name} من «{group}»؟ سيفقد جميع العروض المرتبطة بهذه المجموعة. تبقى المجموعة وعروضها كما هي للبقية.",
       "removeFromGroupTitle": "إزالة من {group}",
-      "membersCsvCapNote": "ملاحظة: يتم تصدير أول 1000 عضو فقط (حد الخادم)."
+      "membersCsvCapNote": "ملاحظة: يتم تصدير أول 1000 عضو فقط (حد الخادم).",
+      "addSelected": "{count, plural, zero {إضافة # أعضاء} one {إضافة # عضو} two {إضافة # عضوين} few {إضافة # أعضاء} many {إضافة # عضوًا} other {إضافة # عضو}}",
+      "alreadyMemberBadge": "عضو بالفعل",
+      "clearSelection": "مسح",
+      "hasAccountBadge": "حساب",
+      "pickCustomersLabel": "إضافة عملاء لديك بالفعل",
+      "pickedCount": "{count, plural, zero {تم تحديد # عملاء} one {تم تحديد # عميل} two {تم تحديد # عميلين} few {تم تحديد # عملاء} many {تم تحديد # عميلًا} other {تم تحديد # عميل}}"
     },
     "rewards": {
       "title": "دولارات المكافآت",

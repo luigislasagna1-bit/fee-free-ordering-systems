@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Usunąć tę ofertę specjalną?",
       "confirmRemoveFromGroup": "Usunąć {name} z grupy „{group}”? Straci wszystkie oferty powiązane z tą grupą. Grupa i jej oferty pozostają bez zmian dla pozostałych.",
       "removeFromGroupTitle": "Usuń z {group}",
-      "membersCsvCapNote": "Uwaga: eksportowanych jest tylko pierwszych 1000 członków (limit serwera)."
+      "membersCsvCapNote": "Uwaga: eksportowanych jest tylko pierwszych 1000 członków (limit serwera).",
+      "addSelected": "{count, plural, one {Dodaj # członka} few {Dodaj # członków} many {Dodaj # członków} other {Dodaj # członka}}",
+      "alreadyMemberBadge": "Już członek",
+      "clearSelection": "Wyczyść",
+      "hasAccountBadge": "Konto",
+      "pickCustomersLabel": "Dodaj klientów, których już masz",
+      "pickedCount": "{count, plural, one {Wybrano # klienta} few {Wybrano # klientów} many {Wybrano # klientów} other {Wybrano # klienta}}"
     },
     "rewards": {
       "title": "Złotówki za zakupy",

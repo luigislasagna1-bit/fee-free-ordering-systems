@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "이 특별 혜택을 제거할까요?",
       "confirmRemoveFromGroup": "{name}을(를) “{group}”에서 제거할까요? 해당 그룹에 연결된 모든 혜택을 잃게 됩니다. 그룹과 혜택은 다른 사람에게는 그대로 유지됩니다.",
       "removeFromGroupTitle": "{group}에서 제거",
-      "membersCsvCapNote": "참고: 처음 1000명의 회원만 내보내집니다(서버 제한)."
+      "membersCsvCapNote": "참고: 처음 1000명의 회원만 내보내집니다(서버 제한).",
+      "addSelected": "{count, plural, other {구성원 #명 추가}}",
+      "alreadyMemberBadge": "이미 구성원",
+      "clearSelection": "지우기",
+      "hasAccountBadge": "계정",
+      "pickCustomersLabel": "기존 고객 추가",
+      "pickedCount": "{count, plural, other {고객 #명 선택됨}}"
     },
     "rewards": {
       "title": "리워드 달러",

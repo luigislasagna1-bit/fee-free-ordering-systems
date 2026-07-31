@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "להסיר את המבצע הזה?",
       "confirmRemoveFromGroup": "להסיר את {name} מ-“{group}”? הוא יאבד את כל ההטבות המשויכות לקבוצה. הקבוצה וההטבות נשארות ללא שינוי עבור השאר.",
       "removeFromGroupTitle": "הסרה מ-{group}",
-      "membersCsvCapNote": "הערה: מיוצאים רק 1000 החברים הראשונים (מגבלת השרת)."
+      "membersCsvCapNote": "הערה: מיוצאים רק 1000 החברים הראשונים (מגבלת השרת).",
+      "addSelected": "{count, plural, one {הוספת # חבר} two {הוספת # חברים} many {הוספת # חברים} other {הוספת # חברים}}",
+      "alreadyMemberBadge": "כבר חבר",
+      "clearSelection": "ניקוי",
+      "hasAccountBadge": "חשבון",
+      "pickCustomersLabel": "הוספת לקוחות שכבר יש לכם",
+      "pickedCount": "{count, plural, one {נבחר # לקוח} two {נבחרו # לקוחות} many {נבחרו # לקוחות} other {נבחרו # לקוחות}}"
     },
     "rewards": {
       "title": "דולרים של תגמולים",

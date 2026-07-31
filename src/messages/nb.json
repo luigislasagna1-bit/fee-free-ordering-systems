@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Fjerne dette tilbudet?",
       "confirmRemoveFromGroup": "Fjerne {name} fra «{group}»? Personen mister alle tilbud knyttet til gruppen. Gruppen og tilbudene er uendret for alle andre.",
       "removeFromGroupTitle": "Fjern fra {group}",
-      "membersCsvCapNote": "Merk: bare de første 1000 medlemmene eksporteres (servergrense)."
+      "membersCsvCapNote": "Merk: bare de første 1000 medlemmene eksporteres (servergrense).",
+      "addSelected": "{count, plural, one {Legg til # medlem} other {Legg til # medlemmer}}",
+      "alreadyMemberBadge": "Allerede medlem",
+      "clearSelection": "Tøm",
+      "hasAccountBadge": "Konto",
+      "pickCustomersLabel": "Legg til kunder du allerede har",
+      "pickedCount": "{count, plural, one {# kunde valgt} other {# kunder valgt}}"
     },
     "rewards": {
       "title": "Bonuskroner",

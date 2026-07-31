@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Να αφαιρεθεί αυτή η προσφορά;",
       "confirmRemoveFromGroup": "Αφαίρεση του/της {name} από «{group}»; Θα χάσει όλες τις προσφορές της ομάδας. Η ομάδα και οι προσφορές της μένουν ίδιες για τους υπόλοιπους.",
       "removeFromGroupTitle": "Αφαίρεση από {group}",
-      "membersCsvCapNote": "Σημείωση: εξάγονται μόνο τα πρώτα 1000 μέλη (όριο διακομιστή)."
+      "membersCsvCapNote": "Σημείωση: εξάγονται μόνο τα πρώτα 1000 μέλη (όριο διακομιστή).",
+      "addSelected": "{count, plural, one {Προσθήκη # μέλους} other {Προσθήκη # μελών}}",
+      "alreadyMemberBadge": "Ήδη μέλος",
+      "clearSelection": "Εκκαθάριση",
+      "hasAccountBadge": "Λογαριασμός",
+      "pickCustomersLabel": "Προσθήκη υπαρχόντων πελατών",
+      "pickedCount": "{count, plural, one {Επιλέχθηκε # πελάτης} other {Επιλέχθηκαν # πελάτες}}"
     },
     "rewards": {
       "title": "Δολάρια Επιβράβευσης",

@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Odstrániť túto špeciálnu ponuku?",
       "confirmRemoveFromGroup": "Odstrániť {name} zo skupiny „{group}“? Príde o všetky ponuky spojené s touto skupinou. Skupina a jej ponuky zostávajú pre ostatných bez zmeny.",
       "removeFromGroupTitle": "Odstrániť zo skupiny {group}",
-      "membersCsvCapNote": "Poznámka: exportuje sa iba prvých 1000 členov (limit servera)."
+      "membersCsvCapNote": "Poznámka: exportuje sa iba prvých 1000 členov (limit servera).",
+      "addSelected": "{count, plural, one {Pridať # člena} few {Pridať # členov} other {Pridať # členov}}",
+      "alreadyMemberBadge": "Už člen",
+      "clearSelection": "Zrušiť výber",
+      "hasAccountBadge": "Účet",
+      "pickCustomersLabel": "Pridať zákazníkov, ktorých už máte",
+      "pickedCount": "{count, plural, one {Vybraný # zákazník} few {Vybraní # zákazníci} other {Vybraných # zákazníkov}}"
     },
     "rewards": {
       "title": "Vernostný kredit",

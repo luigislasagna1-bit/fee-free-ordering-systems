@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Deze aanbieding verwijderen?",
       "confirmRemoveFromGroup": "{name} uit “{group}” verwijderen? Deze persoon verliest alle aan die groep gekoppelde aanbiedingen. Voor de rest blijft de groep ongewijzigd.",
       "removeFromGroupTitle": "Verwijderen uit {group}",
-      "membersCsvCapNote": "Let op: alleen de eerste 1000 leden worden geëxporteerd (serverlimiet)."
+      "membersCsvCapNote": "Let op: alleen de eerste 1000 leden worden geëxporteerd (serverlimiet).",
+      "addSelected": "{count, plural, one {# lid toevoegen} other {# leden toevoegen}}",
+      "alreadyMemberBadge": "Al lid",
+      "clearSelection": "Wissen",
+      "hasAccountBadge": "Account",
+      "pickCustomersLabel": "Bestaande klanten toevoegen",
+      "pickedCount": "{count, plural, one {# klant geselecteerd} other {# klanten geselecteerd}}"
     },
     "rewards": {
       "title": "Spaartegoed",

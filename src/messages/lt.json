@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Pašalinti šį specialų pasiūlymą?",
       "confirmRemoveFromGroup": "Pašalinti {name} iš „{group}“? Jis neteks visų su grupe susietų pasiūlymų. Grupė ir jos pasiūlymai kitiems lieka nepakitę.",
       "removeFromGroupTitle": "Pašalinti iš {group}",
-      "membersCsvCapNote": "Pastaba: eksportuojama tik pirmųjų 1000 narių (serverio riba)."
+      "membersCsvCapNote": "Pastaba: eksportuojama tik pirmųjų 1000 narių (serverio riba).",
+      "addSelected": "{count, plural, one {Pridėti # narį} few {Pridėti # narius} other {Pridėti # narių}}",
+      "alreadyMemberBadge": "Jau narys",
+      "clearSelection": "Išvalyti",
+      "hasAccountBadge": "Paskyra",
+      "pickCustomersLabel": "Pridėti jau turimus klientus",
+      "pickedCount": "{count, plural, one {Pasirinktas # klientas} few {Pasirinkti # klientai} other {Pasirinkta # klientų}}"
     },
     "rewards": {
       "title": "Premijų doleriai",

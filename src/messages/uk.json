@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Вилучити цю спецпропозицію?",
       "confirmRemoveFromGroup": "Вилучити {name} з групи «{group}»? Він втратить усі пов'язані з групою пропозиції. Для інших група та її пропозиції не зміняться.",
       "removeFromGroupTitle": "Вилучити з {group}",
-      "membersCsvCapNote": "Примітка: експортуються лише перші 1000 учасників (обмеження сервера)."
+      "membersCsvCapNote": "Примітка: експортуються лише перші 1000 учасників (обмеження сервера).",
+      "addSelected": "{count, plural, one {Додати # учасника} few {Додати # учасники} many {Додати # учасників} other {Додати # учасника}}",
+      "alreadyMemberBadge": "Вже учасник",
+      "clearSelection": "Очистити",
+      "hasAccountBadge": "Обліковий запис",
+      "pickCustomersLabel": "Додати клієнтів, які у вас уже є",
+      "pickedCount": "{count, plural, one {Вибрано # клієнта} few {Вибрано # клієнти} many {Вибрано # клієнтів} other {Вибрано # клієнта}}"
     },
     "rewards": {
       "title": "Бонусні долари",

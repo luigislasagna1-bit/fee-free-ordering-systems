@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "この特典を削除しますか？",
       "confirmRemoveFromGroup": "{name} を「{group}」から削除しますか？このグループに紐づく特典をすべて失います。グループと特典は他のメンバーには影響しません。",
       "removeFromGroupTitle": "{group}から削除",
-      "membersCsvCapNote": "注：エクスポートされるのは最初の1000名のメンバーのみです（サーバー上限）。"
+      "membersCsvCapNote": "注：エクスポートされるのは最初の1000名のメンバーのみです（サーバー上限）。",
+      "addSelected": "{count, plural, other {#人のメンバーを追加}}",
+      "alreadyMemberBadge": "既にメンバー",
+      "clearSelection": "クリア",
+      "hasAccountBadge": "アカウント",
+      "pickCustomersLabel": "既存のお客様を追加",
+      "pickedCount": "{count, plural, other {#人のお客様を選択中}}"
     },
     "rewards": {
       "title": "リワードドル",

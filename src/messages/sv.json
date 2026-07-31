@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Ta bort det här erbjudandet?",
       "confirmRemoveFromGroup": "Ta bort {name} från ”{group}”? Personen förlorar alla erbjudanden kopplade till gruppen. Gruppen och dess erbjudanden påverkas inte för övriga.",
       "removeFromGroupTitle": "Ta bort från {group}",
-      "membersCsvCapNote": "Obs: endast de första 1000 medlemmarna exporteras (servergräns)."
+      "membersCsvCapNote": "Obs: endast de första 1000 medlemmarna exporteras (servergräns).",
+      "addSelected": "{count, plural, one {Lägg till # medlem} other {Lägg till # medlemmar}}",
+      "alreadyMemberBadge": "Redan medlem",
+      "clearSelection": "Rensa",
+      "hasAccountBadge": "Konto",
+      "pickCustomersLabel": "Lägg till kunder du redan har",
+      "pickedCount": "{count, plural, one {# kund vald} other {# kunder valda}}"
     },
     "rewards": {
       "title": "Bonuspengar",

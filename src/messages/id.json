@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Hapus penawaran spesial ini?",
       "confirmRemoveFromGroup": "Hapus {name} dari “{group}”? Ia akan kehilangan semua penawaran yang terkait grup itu. Grup dan penawarannya tetap sama untuk yang lain.",
       "removeFromGroupTitle": "Hapus dari {group}",
-      "membersCsvCapNote": "Catatan: hanya 1000 anggota pertama yang diekspor (batas server)."
+      "membersCsvCapNote": "Catatan: hanya 1000 anggota pertama yang diekspor (batas server).",
+      "addSelected": "{count, plural, other {Tambahkan # anggota}}",
+      "alreadyMemberBadge": "Sudah jadi anggota",
+      "clearSelection": "Hapus pilihan",
+      "hasAccountBadge": "Akun",
+      "pickCustomersLabel": "Tambahkan pelanggan yang sudah Anda miliki",
+      "pickedCount": "{count, plural, other {# pelanggan dipilih}}"
     },
     "rewards": {
       "title": "Dolar Hadiah",

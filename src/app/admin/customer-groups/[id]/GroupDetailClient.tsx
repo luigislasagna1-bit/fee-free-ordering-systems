@@ -115,6 +115,73 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
     } finally { setAdding(false); }
   }
 
+  // ── Pick existing customers (Luigi 2026-07-31) ────────────────────────────
+  // Retyping addresses for people who are already customers was the friction:
+  // the members endpoint has always accepted customerIds, only the UI was
+  // missing. Debounced server-side search (restaurant-scoped + capped) so this
+  // stays fast on a 10k-customer list instead of shipping the roster down.
+  type Found = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean; alreadyMember: boolean };
+  const [pickQuery, setPickQuery] = useState("");
+  const [pickResults, setPickResults] = useState<Found[] | null>(null);
+  const [picked, setPicked] = useState<Record<string, Found>>({});
+  const [searching, setSearching] = useState(false);
+  const pickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Guards against a slow earlier request overwriting a newer one's results.
+  const pickSeq = useRef(0);
+
+  function onPickQueryChange(value: string) {
+    setPickQuery(value);
+    if (pickTimer.current) clearTimeout(pickTimer.current);
+    const q = value.trim();
+    if (q.length < 2) { setPickResults(null); setSearching(false); return; }
+    setSearching(true);
+    pickTimer.current = setTimeout(async () => {
+      const seq = ++pickSeq.current;
+      try {
+        const res = await fetch(
+          `/api/admin/customers/search?q=${encodeURIComponent(q)}&excludeGroupId=${encodeURIComponent(group.id)}`,
+        );
+        const data = await res.json();
+        if (seq !== pickSeq.current) return; // a newer keystroke already won
+        setPickResults(Array.isArray(data.customers) ? data.customers : []);
+      } catch {
+        if (seq === pickSeq.current) setPickResults([]);
+      } finally {
+        if (seq === pickSeq.current) setSearching(false);
+      }
+    }, 300);
+  }
+
+  function togglePick(c: Found) {
+    setPicked((prev) => {
+      const next = { ...prev };
+      if (next[c.id]) delete next[c.id];
+      else next[c.id] = c;
+      return next;
+    });
+  }
+
+  const pickedList = Object.values(picked);
+
+  async function addPickedMembers() {
+    if (!pickedList.length) return;
+    setAdding(true);
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${group.id}/members`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ customerIds: pickedList.map((c) => c.id) }),
+      });
+      const data = await res.json();
+      if (!res.ok) { toast.error(data.error || t("addFailed")); return; }
+      toast.success(t("membersAdded", { count: data.added }));
+      setPicked({});
+      setPickQuery("");
+      setPickResults(null);
+      await reloadMembers();
+      router.refresh();
+    } finally { setAdding(false); }
+  }
+
   async function reloadMembers() {
     try {
       const g = await fetch(`/api/admin/customer-groups/${group.id}`).then((r) => r.json());
@@ -315,6 +382,88 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
             </div>
           ))}
         </div>
+
+        {/* ── Pick from existing customers (primary path) ───────────────────
+            Owners asked to choose real people instead of retyping addresses
+            (Luigi 2026-07-31). The paste box below stays for bulk rosters and
+            for people who aren't customers yet. */}
+        <label className="block text-xs font-medium text-gray-600 mb-1">{t("pickCustomersLabel")}</label>
+        <div className="relative">
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+          <input
+            className={`${inputCls} pl-9`}
+            placeholder={tCust("searchPlaceholder")}
+            value={pickQuery}
+            onChange={(e) => onPickQueryChange(e.target.value)}
+          />
+          {searching && <Loader2 className="w-4 h-4 animate-spin absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" />}
+        </div>
+
+        {pickResults !== null && (
+          <div className="mt-2 border border-gray-200 rounded-xl divide-y divide-gray-100 max-h-64 overflow-y-auto">
+            {pickResults.length === 0 && !searching && (
+              <p className="text-xs text-gray-400 p-3">{tMenu("noMatchesFor", { query: pickQuery.trim() })}</p>
+            )}
+            {pickResults.map((c) => {
+              const isPicked = !!picked[c.id];
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  disabled={c.alreadyMember}
+                  onClick={() => togglePick(c)}
+                  className={`w-full text-left flex items-center gap-3 px-3 py-2 transition ${
+                    c.alreadyMember ? "opacity-50 cursor-not-allowed" : isPicked ? "bg-emerald-50" : "hover:bg-gray-50"
+                  }`}
+                >
+                  <span className={`w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 ${
+                    isPicked ? "bg-emerald-500 border-emerald-500" : "border-gray-300"
+                  }`}>
+                    {isPicked && <span className="text-white text-[10px] leading-none">✓</span>}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-medium text-gray-900 truncate">{c.name || c.email || c.phone}</span>
+                    <span className="block text-[11px] text-gray-500 truncate">{c.email || c.phone}</span>
+                  </span>
+                  {c.hasAccount && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 flex-shrink-0">
+                      {t("hasAccountBadge")}
+                    </span>
+                  )}
+                  {c.alreadyMember && (
+                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 flex-shrink-0">
+                      {t("alreadyMemberBadge")}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {pickedList.length > 0 && (
+          <div className="mt-2 flex items-center justify-between gap-3 flex-wrap">
+            <span className="text-xs text-gray-600">{t("pickedCount", { count: pickedList.length })}</span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setPicked({})}
+                className="text-xs text-gray-500 hover:text-gray-700 px-2 py-1"
+              >
+                {t("clearSelection")}
+              </button>
+              <button
+                onClick={addPickedMembers}
+                disabled={adding}
+                className="inline-flex items-center gap-1.5 bg-emerald-500 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-emerald-600 transition disabled:opacity-50"
+              >
+                <UserPlus className="w-4 h-4" />
+                {adding ? <Loader2 className="w-4 h-4 animate-spin" /> : t("addSelected", { count: pickedList.length })}
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className="border-t border-gray-100 my-4" />
 
         <label className="block text-xs font-medium text-gray-600 mb-1">{t("addMembersLabel")}</label>
         <textarea

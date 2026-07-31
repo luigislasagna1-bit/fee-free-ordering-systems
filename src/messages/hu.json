@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Eltávolítja ezt az ajánlatot?",
       "confirmRemoveFromGroup": "Eltávolítja {name} tagot a(z) „{group}” csoportból? Elveszíti a csoporthoz kapcsolt összes kedvezményt. A csoport és kedvezményei a többieknek változatlanok maradnak.",
       "removeFromGroupTitle": "Eltávolítás innen: {group}",
-      "membersCsvCapNote": "Megjegyzés: csak az első 1000 tag kerül exportálásra (szerverkorlát)."
+      "membersCsvCapNote": "Megjegyzés: csak az első 1000 tag kerül exportálásra (szerverkorlát).",
+      "addSelected": "{count, plural, one {# tag hozzáadása} other {# tag hozzáadása}}",
+      "alreadyMemberBadge": "Már tag",
+      "clearSelection": "Kijelölés törlése",
+      "hasAccountBadge": "Fiók",
+      "pickCustomersLabel": "Meglévő ügyfelek hozzáadása",
+      "pickedCount": "{count, plural, one {# ügyfél kiválasztva} other {# ügyfél kiválasztva}}"
     },
     "rewards": {
       "title": "Jutalomdollár",

@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "移除此特别优惠？",
       "confirmRemoveFromGroup": "将 {name} 从“{group}”中移除？该顾客将失去该组的所有专属优惠。组及其优惠对其他人保持不变。",
       "removeFromGroupTitle": "从{group}中移除",
-      "membersCsvCapNote": "注意：仅导出前 1000 名会员（服务器上限）。"
+      "membersCsvCapNote": "注意：仅导出前 1000 名会员（服务器上限）。",
+      "addSelected": "{count, plural, other {添加 # 名成员}}",
+      "alreadyMemberBadge": "已是成员",
+      "clearSelection": "清除",
+      "hasAccountBadge": "账户",
+      "pickCustomersLabel": "添加现有客户",
+      "pickedCount": "{count, plural, other {已选择 # 位客户}}"
     },
     "rewards": {
       "title": "奖励金",

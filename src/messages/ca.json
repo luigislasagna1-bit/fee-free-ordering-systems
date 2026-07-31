@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Voleu treure aquesta oferta especial?",
       "confirmRemoveFromGroup": "Vols treure {name} de «{group}»? Perdrà totes les ofertes vinculades a aquest grup. El grup i les seves ofertes no canvien per a la resta.",
       "removeFromGroupTitle": "Treu de {group}",
-      "membersCsvCapNote": "Nota: només s'exporten els primers 1000 membres (límit del servidor)."
+      "membersCsvCapNote": "Nota: només s'exporten els primers 1000 membres (límit del servidor).",
+      "addSelected": "{count, plural, one {Afegeix # membre} other {Afegeix # membres}}",
+      "alreadyMemberBadge": "Ja és membre",
+      "clearSelection": "Esborra",
+      "hasAccountBadge": "Compte",
+      "pickCustomersLabel": "Afegeix clients que ja tens",
+      "pickedCount": "{count, plural, one {# client seleccionat} other {# clients seleccionats}}"
     },
     "rewards": {
       "title": "Dòlars de Recompensa",

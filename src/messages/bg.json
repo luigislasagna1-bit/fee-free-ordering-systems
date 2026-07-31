@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Да премахнете тази специална оферта?",
       "confirmRemoveFromGroup": "Премахване на {name} от „{group}“? Ще загуби всички оферти, свързани с групата. Групата и офертите ѝ остават непроменени за останалите.",
       "removeFromGroupTitle": "Премахни от {group}",
-      "membersCsvCapNote": "Забележка: експортират се само първите 1000 членове (лимит на сървъра)."
+      "membersCsvCapNote": "Забележка: експортират се само първите 1000 членове (лимит на сървъра).",
+      "addSelected": "{count, plural, one {Добавяне на # член} other {Добавяне на # членове}}",
+      "alreadyMemberBadge": "Вече член",
+      "clearSelection": "Изчисти",
+      "hasAccountBadge": "Акаунт",
+      "pickCustomersLabel": "Добавяне на клиенти, които вече имате",
+      "pickedCount": "{count, plural, one {Избран е # клиент} other {Избрани са # клиенти}}"
     },
     "rewards": {
       "title": "Бонус долари",

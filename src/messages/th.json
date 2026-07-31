@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "นำข้อเสนอพิเศษนี้ออกหรือไม่?",
       "confirmRemoveFromGroup": "นำ {name} ออกจาก “{group}” หรือไม่ เขาจะเสียสิทธิพิเศษทั้งหมดของกลุ่มนี้ ส่วนกลุ่มและสิทธิพิเศษยังคงเดิมสำหรับคนอื่น",
       "removeFromGroupTitle": "นำออกจาก {group}",
-      "membersCsvCapNote": "หมายเหตุ: ส่งออกได้เฉพาะสมาชิก 1000 คนแรกเท่านั้น (ขีดจำกัดของเซิร์ฟเวอร์)"
+      "membersCsvCapNote": "หมายเหตุ: ส่งออกได้เฉพาะสมาชิก 1000 คนแรกเท่านั้น (ขีดจำกัดของเซิร์ฟเวอร์)",
+      "addSelected": "{count, plural, other {เพิ่มสมาชิก # คน}}",
+      "alreadyMemberBadge": "เป็นสมาชิกแล้ว",
+      "clearSelection": "ล้าง",
+      "hasAccountBadge": "บัญชี",
+      "pickCustomersLabel": "เพิ่มลูกค้าที่คุณมีอยู่แล้ว",
+      "pickedCount": "{count, plural, other {เลือกลูกค้าแล้ว # คน}}"
     },
     "rewards": {
       "title": "เงินรางวัล",

@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "इस विशेष ऑफ़र को हटाएँ?",
       "confirmRemoveFromGroup": "{name} को “{group}” से हटाएँ? उसे इस समूह से जुड़े सभी ऑफ़र नहीं मिलेंगे। समूह और उसके ऑफ़र बाकी लोगों के लिए वैसे ही रहेंगे।",
       "removeFromGroupTitle": "{group} से हटाएँ",
-      "membersCsvCapNote": "नोट: केवल पहले 1000 सदस्य ही निर्यात किए जाते हैं (सर्वर सीमा)।"
+      "membersCsvCapNote": "नोट: केवल पहले 1000 सदस्य ही निर्यात किए जाते हैं (सर्वर सीमा)।",
+      "addSelected": "{count, plural, one {# सदस्य जोड़ें} other {# सदस्य जोड़ें}}",
+      "alreadyMemberBadge": "पहले से सदस्य",
+      "clearSelection": "साफ़ करें",
+      "hasAccountBadge": "खाता",
+      "pickCustomersLabel": "अपने मौजूदा ग्राहक जोड़ें",
+      "pickedCount": "{count, plural, one {# ग्राहक चुना गया} other {# ग्राहक चुने गए}}"
     },
     "rewards": {
       "title": "रिवॉर्ड डॉलर",

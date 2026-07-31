@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Supprimer cette offre spéciale ?",
       "confirmRemoveFromGroup": "Retirer {name} de « {group} » ? Cette personne perdra toutes les offres liées à ce groupe. Le groupe et ses offres restent inchangés pour les autres.",
       "removeFromGroupTitle": "Retirer de {group}",
-      "membersCsvCapNote": "Remarque : seuls les 1000 premiers membres sont exportés (limite du serveur)."
+      "membersCsvCapNote": "Remarque : seuls les 1000 premiers membres sont exportés (limite du serveur).",
+      "addSelected": "{count, plural, one {Ajouter # membre} other {Ajouter # membres}}",
+      "alreadyMemberBadge": "Déjà membre",
+      "clearSelection": "Effacer",
+      "hasAccountBadge": "Compte",
+      "pickCustomersLabel": "Ajouter des clients que vous avez déjà",
+      "pickedCount": "{count, plural, one {# client sélectionné} other {# clients sélectionnés}}"
     },
     "rewards": {
       "title": "Crédits fidélité",

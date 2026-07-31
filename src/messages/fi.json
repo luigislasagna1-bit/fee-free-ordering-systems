@@ -4902,7 +4902,13 @@
       "confirmRemoveSpecial": "Poistetaanko tämä tarjous?",
       "confirmRemoveFromGroup": "Poistetaanko {name} ryhmästä ”{group}”? Hän menettää kaikki ryhmään liitetyt edut. Ryhmä ja sen edut säilyvät muille ennallaan.",
       "removeFromGroupTitle": "Poista ryhmästä {group}",
-      "membersCsvCapNote": "Huom: vain ensimmäiset 1000 jäsentä viedään (palvelinraja)."
+      "membersCsvCapNote": "Huom: vain ensimmäiset 1000 jäsentä viedään (palvelinraja).",
+      "addSelected": "{count, plural, one {Lisää # jäsen} other {Lisää # jäsentä}}",
+      "alreadyMemberBadge": "Jo jäsen",
+      "clearSelection": "Tyhjennä",
+      "hasAccountBadge": "Tili",
+      "pickCustomersLabel": "Lisää olemassa olevia asiakkaita",
+      "pickedCount": "{count, plural, one {# asiakas valittu} other {# asiakasta valittu}}"
     },
     "rewards": {
       "title": "Bonusrahat",
