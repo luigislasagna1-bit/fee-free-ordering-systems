@@ -76,9 +76,26 @@ export async function buildOrderReceiptPayload(opts: {
   let rewardBalance = 0;
   if (rewardsActive) {
     try {
-      const actual = (await getOrderRewardSummary(order.id)).earned;
-      rewardEarned = actual > 0 ? actual : await projectOrderEarn(order.id);
-      rewardBalance = await getBalance({ restaurantId, customerId: orderCustomerId! });
+      // ⚠️ The wallet belongs to the ATTRIBUTED customer (Order.customerId),
+      // but this receipt is handed to whoever the order's contact address is.
+      // Those are the same person on every ordinary order — but a signed-in
+      // customer ordering for somebody else splits them, and printing the
+      // account holder's stored balance on a stranger's receipt discloses one
+      // customer's financial standing to another, with the account holder never
+      // seeing that it happened. Print the reward block only when the receipt
+      // is going to the account that owns it. Luigi 2026-07-31.
+      const owner = await prisma.customer
+        .findUnique({ where: { id: orderCustomerId! }, select: { email: true } })
+        .catch(() => null);
+      const receiptGoesToOwner =
+        !owner?.email ||
+        !order.customerEmail ||
+        owner.email.toLowerCase() === order.customerEmail.toLowerCase();
+      if (receiptGoesToOwner) {
+        const actual = (await getOrderRewardSummary(order.id)).earned;
+        rewardEarned = actual > 0 ? actual : await projectOrderEarn(order.id);
+        rewardBalance = await getBalance({ restaurantId, customerId: orderCustomerId! });
+      }
     } catch { /* never block print */ }
   }
 

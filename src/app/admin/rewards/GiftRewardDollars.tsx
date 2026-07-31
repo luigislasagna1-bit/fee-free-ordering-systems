@@ -36,6 +36,9 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
   const [loaded, setLoaded] = useState(false);
   const [revoking, setRevoking] = useState<string | null>(null);
   const [resending, setResending] = useState<string | null>(null);
+  // The gift that blocked the last send, shown inline with working actions so
+  // the owner is never told about a gift they cannot reach.
+  const [blocking, setBlocking] = useState<{ id: string; email: string; amount: number; createdAt: string | null } | null>(null);
 
   const load = useCallback(async () => {
     try {
@@ -78,6 +81,19 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
             }),
             { duration: 8000 },
           );
+          // Surface the blocking gift with working actions. Pointing at a row
+          // the owner might not be able to SEE would be a dead end: the list
+          // below is capped at the 50 most recent, so an older pending gift can
+          // sit outside it and block every future gift to that address with no
+          // in-product way to resend or cancel it.
+          if (data.outstanding?.id) {
+            setBlocking({
+              id: data.outstanding.id,
+              email: email.trim().toLowerCase(),
+              amount: Number(data.outstanding.amount) || 0,
+              createdAt: data.outstanding.createdAt ?? null,
+            });
+          }
           load();
           return;
         }
@@ -101,6 +117,9 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
       const res = await fetch(`/api/admin/reward-gifts/${id}/revoke`, { method: "POST" });
       if (res.ok) {
         toast.success(t("giftRevoked"));
+        // Cancelling the blocker clears the way — drop the panel so the form
+        // isn't still warning about a gift that no longer exists.
+        setBlocking((b) => (b && b.id === id ? null : b));
       } else {
         const data = await res.json().catch(() => ({}));
         toast.error(data.code === "not_pending" ? t("giftRevokeTooLate") : t("giftFailed"));
@@ -150,6 +169,42 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
           <p className="text-sm text-gray-600 mt-0.5">{t("giftSubtitle")}</p>
         </div>
       </div>
+
+      {/* The gift that blocked the last attempt, with both ways out. Rendered
+          here rather than relying on the list below, which shows only the 50
+          most recent — an older pending gift would otherwise block every future
+          gift to that address with no in-product way to reach it. */}
+      {blocking && (
+        <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3">
+          <p className="text-sm font-semibold text-amber-900">
+            {t("giftBlockedTitle", { email: blocking.email })}
+          </p>
+          <p className="mt-0.5 text-xs text-amber-800">
+            {formatCurrency(blocking.amount, currency)}
+            {blocking.createdAt ? ` · ${new Date(blocking.createdAt).toLocaleDateString()}` : ""}
+          </p>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => resend(blocking.id)}
+              disabled={resending === blocking.id || revoking === blocking.id}
+              className="inline-flex items-center gap-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 disabled:opacity-50 px-3 py-1.5 text-xs font-bold text-white"
+            >
+              {resending === blocking.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+              {t("giftResend")}
+            </button>
+            <button
+              type="button"
+              onClick={() => revoke(blocking.id)}
+              disabled={revoking === blocking.id || resending === blocking.id}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-amber-300 bg-white hover:bg-amber-100 disabled:opacity-50 px-3 py-1.5 text-xs font-bold text-amber-800"
+            >
+              {revoking === blocking.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Trash2 className="w-3.5 h-3.5" />}
+              {t("giftRevoke")}
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder={t("giftNamePlaceholder")} className={inputCls} />

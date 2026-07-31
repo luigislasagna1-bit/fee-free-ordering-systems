@@ -1819,11 +1819,21 @@ export async function POST(req: NextRequest) {
       // act on consent when the customer supplied an email on THIS order.
       // (The client already sends marketingConsent=false whenever the email
       // field is empty — without this guard a phone-only reorder would wrongly
-      // opt-out a customer who has an email on file.) Since `customer` is only
-      // ever looked up via the email where-clause above, the update branch
-      // always has an email; the guard mainly protects the create branch.
-      const emailPresent = !!cleanEmail;
-      const consentChoice = emailPresent && marketingConsent === true;
+      // opt-out a customer who has an email on file.)
+      //
+      // SECOND GUARD, and read this before touching the attribution above: the
+      // checkbox describes the TYPED address — the client pre-fills its state by
+      // looking up THAT address's stored consent — so it may only ever be
+      // written to a row that IS that address. Once a signed-in customer owns
+      // their orders, `customer` can be the session row while `cleanEmail` is
+      // somebody else's, and writing then falsifies consent in both directions:
+      // it re-subscribes a payer who had opted out, and re-stamps
+      // marketingConsentAt, which is the restaurant's only CASL/GDPR proof that
+      // consent was ever given. When the two diverge we touch NEITHER row.
+      const consentAppliesToThisRow =
+        !!cleanEmail && (!customer || (customer.email ?? "").toLowerCase() === cleanEmail);
+      const emailPresent = consentAppliesToThisRow;
+      const consentChoice = consentAppliesToThisRow && marketingConsent === true;
       if (!customer) {
         customer = await prisma.customer.create({
           data: {

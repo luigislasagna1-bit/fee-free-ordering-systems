@@ -1240,7 +1240,13 @@ export function CheckoutModal({
                     server-side so it survives across orders and can
                     be flipped back from the customer's account profile
                     or the email unsubscribe link. */}
-                {customerInfo.email.trim().length > 0 && (
+                {/* Hidden when the contact address isn't the signed-in
+                    customer's own: the box describes THAT address's preference,
+                    but the order belongs to the account, so there is no row it
+                    could honestly be written to. The server refuses the write in
+                    that state too — this just stops offering a choice that would
+                    silently do nothing. */}
+                {customerInfo.email.trim().length > 0 && !walletIdentity.contactEmailDiffers && (
                   <label className="mt-3 flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
                     <input
                       type="checkbox"

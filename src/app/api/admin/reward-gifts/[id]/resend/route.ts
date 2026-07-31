@@ -44,7 +44,36 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   if (gift.status !== "pending" && gift.status !== "claimed") {
     return NextResponse.json({ error: "not_resendable", code: "not_resendable" }, { status: 400 });
   }
-  if (gift.emailSentAt && Date.now() - gift.emailSentAt.getTime() < RESEND_COOLDOWN_MS) {
+
+  // ── Claim the send atomically ────────────────────────────────────────────
+  // Read-then-send races the revoke button sitting inches away in the same UI:
+  // a revoke landing between the read above and the send below would mail an
+  // invite for money that no longer exists, and stamp emailSentAt LATER than
+  // revokedAt, corrupting the audit trail. Stamping emailSentAt inside a
+  // status-guarded updateMany makes the claim the throttle as well — two rapid
+  // clicks can only match once, so the cooldown cannot be beaten by
+  // concurrency the way a separate read-compare-write could be.
+  const cutoff = new Date(Date.now() - RESEND_COOLDOWN_MS);
+  const sentAt = new Date();
+  const claimed = await prisma.pendingRewardGrant.updateMany({
+    where: {
+      id: gift.id,
+      restaurantId,
+      status: gift.status, // must still be the state we decided the email from
+      OR: [{ emailSentAt: null }, { emailSentAt: { lt: cutoff } }],
+    },
+    data: { emailSentAt: sentAt },
+  });
+  if (claimed.count === 0) {
+    // Either the cooldown is still running or the gift moved (revoked/claimed)
+    // since the read. Both mean: do not send.
+    const fresh = await prisma.pendingRewardGrant.findFirst({
+      where: { id: gift.id, restaurantId },
+      select: { status: true },
+    });
+    if (fresh && fresh.status !== gift.status) {
+      return NextResponse.json({ error: "changed", code: "not_resendable" }, { status: 409 });
+    }
     return NextResponse.json({ error: "too_soon", code: "too_soon" }, { status: 429 });
   }
 
@@ -98,9 +127,15 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
     ok = res.success;
   }
 
-  if (!ok) return NextResponse.json({ error: "send_failed", code: "send_failed" }, { status: 502 });
+  if (!ok) {
+    // Hand the cooldown back so a transient mail failure doesn't lock the owner
+    // out for a minute — restore the previous stamp rather than clearing it, or
+    // a failed send would reset a legitimate throttle.
+    await prisma.pendingRewardGrant
+      .updateMany({ where: { id: gift.id, restaurantId, emailSentAt: sentAt }, data: { emailSentAt: gift.emailSentAt } })
+      .catch(() => {});
+    return NextResponse.json({ error: "send_failed", code: "send_failed" }, { status: 502 });
+  }
 
-  const sentAt = new Date();
-  await prisma.pendingRewardGrant.update({ where: { id: gift.id }, data: { emailSentAt: sentAt } }).catch(() => {});
   return NextResponse.json({ ok: true, emailSentAt: sentAt.toISOString() });
 }

@@ -209,7 +209,27 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
   // the printed receipt uses; returns 0 for guests / earning off, never throws.
   // Awaited here because fireOrderNotifications is already off the request hot
   // path (fire-and-forget from the orders route / Stripe webhook).
-  const projectedEarn = rewardsOn ? await projectOrderEarn(orderId) : 0;
+  const projectedEarnRaw = rewardsOn ? await projectOrderEarn(orderId) : 0;
+
+  // ── Only promise the earn to the person who will actually receive it ──────
+  // projectOrderEarn resolves off Order.customerId — the ATTRIBUTED account —
+  // while this email is addressed to Order.customerEmail. Those are the same
+  // person on every ordinary order, but a signed-in customer ordering for
+  // somebody else splits them (the account earns, the typed address gets the
+  // confirmation). Sending "You earned $4.20" to the typed address would be a
+  // written promise of credit that lands in a different wallet and can never be
+  // honoured to the reader — and it contradicts the checkout notice, which
+  // correctly says the credit belongs to the account. Compared
+  // case-insensitively; a missing row (guest order) leaves the old behaviour
+  // untouched. Luigi 2026-07-31.
+  const earningRow = (order as any).customerId
+    ? await prisma.customer.findUnique({ where: { id: (order as any).customerId }, select: { email: true } }).catch(() => null)
+    : null;
+  const earnGoesToThisReader =
+    !earningRow?.email ||
+    !order.customerEmail ||
+    earningRow.email.toLowerCase() === order.customerEmail.toLowerCase();
+  const projectedEarn = earnGoesToThisReader ? projectedEarnRaw : 0;
 
   // Customer confirmation email — fire-and-forget so a Resend hiccup
   // doesn't fail the webhook (Stripe would retry the whole event).
