@@ -452,7 +452,8 @@
       "chargeToday": "To pay today",
       "capNote": "You can apply up to {amount} on this order.",
       "earnLine": "+ Earn {amount}",
-      "capHelp": "Your restaurant lets you use up to {percent}% of an order's total in {label}."
+      "capHelp": "Your restaurant lets you use up to {percent}% of an order's total in {label}.",
+      "signupHint": "💡 Sign up or log in to earn rewards on this purchase too"
     },
     "estimatedReady": "Estimated ready",
     "subTotal": "Sub-Total",

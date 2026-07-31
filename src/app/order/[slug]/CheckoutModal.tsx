@@ -2315,6 +2315,13 @@ export function CheckoutModal({
                       )}
                     </p>
                   )}
+                  {!isSignedIn && (
+                    <p className="mt-2 text-[11px] text-emerald-700/80">
+                      {tc("reward.signupHint")} — <a href={fromMarketplace ? `/login?next=${encodeURIComponent(`/order/${restaurantSlug}?from=marketplace`)}` : `/order/${restaurantSlug}/account/login?next=${encodeURIComponent(`/order/${restaurantSlug}`)}`} className="font-semibold hover:underline" style={{ color: theme.primaryColor }}>
+                        {tCommon("signIn")}
+                      </a>
+                    </p>
+                  )}
                 </div>
               )}
             </div>
