@@ -207,12 +207,12 @@ interface Props {
    *  redeem settings, surfaced by apply-promos. null → no balance / feature off
    *  → the spend control is hidden entirely. Luigi 2026-06-27. */
   rewardInfo?: { balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null; redeemExcludedTotal?: number } | null;
-  /** WHOSE account is funding this order, from apply-promos. `signedInEmail`
-   *  names the account the balance belongs to; `walletBlockedForEmail` is set
-   *  only when a typed address diverged from that account and switched the
-   *  wallet off, so the cart can explain the disappearance rather than letting
-   *  a balance silently vanish mid-checkout. Luigi 2026-07-31. */
-  walletIdentity?: { signedInEmail: string | null; walletBlockedForEmail: string | null };
+  /** WHOSE account this order belongs to, from apply-promos. `signedInEmail`
+   *  names that account; `contactEmailDiffers` is set when the typed contact
+   *  address is a different one, so the cart can state plainly that the order
+   *  is recorded to the account while the confirmation goes elsewhere.
+   *  Luigi 2026-07-31. */
+  walletIdentity?: { signedInEmail: string | null; contactEmailDiffers: string | null };
   /** How much credit the customer chose to apply on this order (default 0). */
   creditToApply?: number;
   setCreditToApply?: (n: number) => void;
@@ -401,7 +401,7 @@ export function CheckoutModal({
   deliveryFee, appliedServiceFees, taxAmount, depositLinesTotal = 0,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
   rewardInfo = null, creditToApply = 0, setCreditToApply,
-  walletIdentity = { signedInEmail: null, walletBlockedForEmail: null },
+  walletIdentity = { signedInEmail: null, contactEmailDiffers: null },
   customerInfo, setCustomerInfo, onMarketingToggle, savedGuestInfo, onClearSavedInfo,
   savedAddresses = [],
   editingSection, setEditingSection,
@@ -1077,28 +1077,28 @@ export function CheckoutModal({
           </div>
         )}
 
-        {/* WHOSE account is paying. The wallet follows the signed-in session but
-            the order follows the typed address, so when they diverge the balance
-            silently disappears — Luigi hit exactly this and could not tell whose
-            money had been on screen. This names both sides and offers the
-            one-tap repair. It lives in the top banner stack deliberately: the
-            CONTACT SectionCard renders its children only while expanded, so a
-            notice placed there would be invisible in the default state. */}
-        {walletIdentity.walletBlockedForEmail && walletIdentity.signedInEmail && (
+        {/* WHOSE order is this. A signed-in customer owns their orders, so when
+            the typed contact address is somebody else's we say so outright —
+            Luigi could not tell from his own checkout whose account was in play.
+            The one-tap button restores the account's own address for anyone who
+            edited the field by accident. It lives in the top banner stack
+            deliberately: the CONTACT SectionCard renders its children only while
+            expanded, so a notice placed there would be invisible by default. */}
+        {walletIdentity.contactEmailDiffers && walletIdentity.signedInEmail && (
           <div className="px-5 pt-3 flex-shrink-0">
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">
-              <p className="font-semibold">{tc("walletIdentity.title", { label: rewardLabelPlural })}</p>
+            <div className="rounded-xl border border-sky-200 bg-sky-50 p-3 text-xs text-sky-900">
+              <p className="font-semibold">{tc("walletIdentity.title")}</p>
               <p className="mt-1 leading-relaxed">
                 {tc("walletIdentity.body", {
                   account: walletIdentity.signedInEmail,
-                  typed: walletIdentity.walletBlockedForEmail,
+                  typed: walletIdentity.contactEmailDiffers,
                   label: rewardLabelPlural,
                 })}
               </p>
               <button
                 type="button"
                 onClick={() => setCustomerInfo({ ...customerInfo, email: walletIdentity.signedInEmail as string })}
-                className="mt-2 rounded-lg bg-amber-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-amber-700"
+                className="mt-2 rounded-lg bg-sky-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-sky-700"
               >
                 {tc("walletIdentity.useAccountEmail")}
               </button>

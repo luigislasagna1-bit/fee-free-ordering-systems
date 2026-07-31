@@ -267,12 +267,13 @@ export async function POST(req: NextRequest) {
     // authenticated. Reverted 2026-07-31 within the hour it was introduced;
     // the legitimate no-account gift path is a signed claim link, not a
     // typed address.)
-    // ...AND only when this order will actually be attributed to that same
-    // customer. A signed-in customer who types someone else's address would
-    // otherwise be offered their own balance to fund a stranger's order — see
-    // sessionWalletSpendable in promo-order-context.ts. The charge route
-    // applies the identical gate, so preview and charge cannot disagree.
-    if (r.rewardsEnabled && promoCtx.sessionCustomerId && promoCtx.sessionWalletSpendable) {
+    // A signed-in customer now OWNS their orders (/api/orders resolves the
+    // Order's Customer row from the session, not the typed email), so the payer
+    // and the earner are the same person and the balance is always theirs to
+    // spend. The charge route additionally asserts that exact identity before
+    // it reserves anything, so it can only ever refuse where this preview was
+    // optimistic — it fails closed, never the other way round.
+    if (r.rewardsEnabled && promoCtx.sessionCustomerId) {
       const { getBalance } = await import("@/lib/reward-ledger");
       const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.sessionCustomerId });
       if (balance > 0) {
@@ -314,12 +315,12 @@ export async function POST(req: NextRequest) {
   // disclosed, and walletBlockedForEmail only ever echoes an address the
   // caller just typed themselves.
   const identity = {
-    /** Email of the signed-in account funding the wallet, when signed in. */
+    /** Email of the signed-in account this order will belong to, when signed in. */
     signedInEmail: promoCtx.sessionEmail,
-    /** Set only when a typed address diverged from the session and therefore
-     *  disabled the wallet — the cart explains the disappearance instead of
-     *  letting the balance silently vanish. */
-    walletBlockedForEmail: promoCtx.walletMismatchEmail,
+    /** Set when the typed contact address differs from that account's own, so
+     *  the cart can say plainly: recorded to your account, confirmation sent
+     *  there. Informational — it gates nothing. */
+    contactEmailDiffers: promoCtx.contactEmailDiffersFromAccount,
   };
 
   // Surface promos that qualified but were blocked by the winning exclusive, so

@@ -457,9 +457,9 @@
       "balanceOwner": "From your account · {email}"
     },
     "walletIdentity": {
-      "title": "Your {label} aren't being used on this order",
-      "body": "You're signed in as {account}, but this order's email is {typed}. {label} can only pay for an order that belongs to the same account, so they're set aside for now. Order under your own email to use them.",
-      "useAccountEmail": "Use my account email instead"
+      "title": "This order goes on your account",
+      "body": "You're signed in as {account}, so this order — and any {label} you spend or earn on it — belongs to that account. The confirmation will be sent to {typed}.",
+      "useAccountEmail": "Send it to my own email instead"
     },
     "estimatedReady": "Estimated ready",
     "subTotal": "Sub-Total",

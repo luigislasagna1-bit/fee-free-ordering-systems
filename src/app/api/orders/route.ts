@@ -1782,13 +1782,30 @@ export async function POST(req: NextRequest) {
     let customer = null;
     const cleanEmail = customerEmail ? sanitize(customerEmail, 254).toLowerCase() : null;
     const cleanPhone = customerPhone ? sanitize(customerPhone, 30) : null;
-    if (cleanEmail || cleanPhone) {
+
+    // ── A SIGNED-IN CUSTOMER OWNS THEIR ORDERS (Luigi's call, 2026-07-31) ────
+    // This row used to be resolved from the TYPED email alone, so a signed-in
+    // customer ordering for someone else paid from their own wallet while the
+    // typed address's row collected the order, the reward earn, the totalSpent
+    // and the once-per-lifetime burn — value moved silently from the payer to
+    // whoever they typed, and the per-person cap on a lifetime promo could be
+    // reset forever just by typing a fresh address. Luigi hit the first half of
+    // that in his own checkout.
+    //
+    // The session row now wins. The typed email is still stored on the order as
+    // Order.customerEmail, so the confirmation and status links go where the
+    // customer intended — only OWNERSHIP moved.
+    if (promoCtx.sessionCustomerId) {
+      customer = await prisma.customer.findUnique({ where: { id: promoCtx.sessionCustomerId } });
+    }
+
+    if (customer || cleanEmail || cleanPhone) {
       const where = cleanEmail ? { restaurantId: restaurant.id, email: cleanEmail } : undefined;
       // Duplicate guest + account rows for one email exist in the wild (see
       // login route's preference logic). Prefer the ACCOUNT row so a member's
       // order lands on the row with signedUpAt — binding to the guest twin
       // would silently block their reward earn under orderEligibleToEarn.
-      if (where) customer = await prisma.customer.findFirst({ where, orderBy: { passwordHash: { sort: "desc", nulls: "last" } } });
+      if (!customer && where) customer = await prisma.customer.findFirst({ where, orderBy: { passwordHash: { sort: "desc", nulls: "last" } } });
       // BIDIRECTIONAL marketing consent (GloriaFood-parity, Luigi 2026-06-03).
       // The checkbox state IS the customer's explicit choice on this order:
       //   ticked   → opt IN
@@ -2431,12 +2448,18 @@ export async function POST(req: NextRequest) {
           // is not proof of controlling it, and stored value must be
           // authenticated before it can be spent (reverted 2026-07-31).
           //
-          // sessionWalletSpendable additionally requires that THIS order will
-          // be attributed to the same customer whose wallet is paying — the
-          // Order's Customer row is resolved from the typed email below, so a
-          // divergence would spend one person's balance while another person's
-          // record collects the order, the earn and the lifetime burn.
-          if (promoCtx.sessionCustomerId && promoCtx.sessionWalletSpendable) {
+          // The second half is the invariant that makes spending SAFE: the row
+          // this order was actually attributed to (resolved far above) must BE
+          // the wallet's owner. Since a signed-in customer now owns their own
+          // orders that holds by construction — but asserting it here means the
+          // wallet cannot be spent on an order credited to anybody else even if
+          // that resolution is ever changed again. Comparing ids beats comparing
+          // typed emails: it is exact, and it fails closed.
+          const walletOwnerId =
+            promoCtx.sessionCustomerId && customer?.id === promoCtx.sessionCustomerId
+              ? promoCtx.sessionCustomerId
+              : null;
+          if (walletOwnerId) {
             const onlineCharge = (paymentMethod || "cash") === "card" || (paymentMethod || "cash") === "paypal";
             // Redeemable base excludes rewardRedeemExcluded lines (its OWN
             // flag, independent of promo exclusion) — e.g. store credit
@@ -2447,7 +2470,7 @@ export async function POST(req: NextRequest) {
             ) / 100;
             const claim = await reserveReward({
               restaurantId: restaurant.id,
-              customerId: promoCtx.sessionCustomerId,
+              customerId: walletOwnerId,
               requested,
               // Exclude BOTH redeem-excluded item bases AND every refundable
               // deposit portion from the redeemable base — a returnable, untaxed
@@ -2459,7 +2482,7 @@ export async function POST(req: NextRequest) {
               maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
               minCharge: onlineCharge ? 0.5 : 0,
             });
-            if (claim.ok && claim.applied > 0) { creditApplied = claim.applied; creditSpenderId = promoCtx.sessionCustomerId; }
+            if (claim.ok && claim.applied > 0) { creditApplied = claim.applied; creditSpenderId = walletOwnerId; }
           }
         } catch (e) { console.error("[orders reward reserve]", e); }
       }
