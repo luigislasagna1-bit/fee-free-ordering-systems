@@ -85,9 +85,11 @@ checkout, no login required").
 - ☐ **Schema push:** Run `npx tsx scripts/push-schema-to-both.ts` locally (Order.rejectionReasonKey 
   to both Neon branches) → then deploy.
 - ☐ **Live test:** End-to-end order on prod — confirm kitchen tablet rings, confirmation email arrives.
-- ☐ **Reply to Fabrizio:** Post your re-test request to the report (flip to IN_TESTING, or copy/paste
-  the template Claude drafted). Expected: 31st report minutes after close + reservation #6H6259 +
-  refunds (1) row with Collected reduced.
+- ☐ **Reply to Fabrizio:** the full draft is at `FABRIZIO-REPLY-cms0gyexp-13-14.md` (repo root),
+  written in **Italian and English** — it explains the 10:01 timing, all four #14 fixes, the #10/#12
+  follow-ups, and lists the five things to re-test. Post it AFTER deploy and flip the report to
+  IN_TESTING. Expected from his re-test: 31st report arrives minutes after close, contains
+  reservation #6H6259 (and #KYDENB is NOT in the 30th's), refunds row present with Collected reduced.
 
 ### A28. 🥇 Make **www.luigislasagna.com** the store's REAL address (upgraded from "just forward it")
 Luigi's call (2026-07-30, ~12:30 AM): the .com is where most real customers land. Later that day he
