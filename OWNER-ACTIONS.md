@@ -70,13 +70,16 @@ the platform fix so this can NEVER happen to any restaurant:
 4. ✅ DONE — cutover complete + VERIFIED on prod: `www.luigislasagna.com` serves the store (200);
    `luigispizzapastawings.com` 308s to it **with path + query preserved** (table-QR deep links and
    order-status links all land correctly); MX/SPF/DMARC unchanged.
-5. 🔴 **STILL OPEN — THE ONLY REMAINING STEP, and it matters:** the BARE `luigislasagna.com`
-   (no www) still forwards to the OLD Milton site (`www.luigislasagnamilton.ca`, a GloriaFood page).
-   Anyone typing the domain without "www" — i.e. most people — lands on the old site, not the new
-   store. GoDaddy → luigislasagna.com → **Forwarding** → destination `https://www.luigislasagna.com`,
-   301 permanent, **forward only / NO masking**. Do not touch MX or nameservers.
-6. ☐ One live test order end-to-end on the new domain (kitchen rings + confirmation email arrives).
-   Then repeat the whole flow for luigislasagnamilton.ca whenever you want.
+5. ✅ DONE 2026-07-30 8:28 PM — bare `luigislasagna.com` forwarding repointed to
+   `https://www.luigislasagna.com` (301 permanent, forward only, no masking).
+   **VERIFIED: all six hostnames now land on the new store** — luigislasagna.com/.ca (bare + www)
+   and luigispizzapastawings.com (bare + www), every one ending at https://www.luigislasagna.com/
+   with a 200. Mail re-verified after the change: MX unchanged, SPF + M365 autodiscover intact.
+   🎉 **A28 IS COMPLETE.**
+6. ☐ **LUIGI: one live test order** end-to-end on the new domain — confirm the kitchen tablet rings
+   and the confirmation email arrives. Claude verified the plumbing; this is the real-world check.
+7. ☐ Optional, whenever: give `luigislasagnamilton.ca` the same treatment (it still serves the old
+   GloriaFood site). Same flow: it is now just a forwarding change, no cutover needed.
 
 **FYI — "the mobile site looks like desktop" (2026-07-30, resolved, NOT a bug):** Safari stores
 **page zoom per DOMAIN**. Luigi's old site lived on luigislasagna.com, so its saved zoom (<100%)
