@@ -78,8 +78,24 @@ the platform fix so this can NEVER happen to any restaurant:
    🎉 **A28 IS COMPLETE.**
 6. ☐ **LUIGI: one live test order** end-to-end on the new domain — confirm the kitchen tablet rings
    and the confirmation email arrives. Claude verified the plumbing; this is the real-world check.
-7. ☐ Optional, whenever: give `luigislasagnamilton.ca` the same treatment (it still serves the old
-   GloriaFood site). Same flow: it is now just a forwarding change, no cutover needed.
+7. ☐ **`luigislasagnamilton.ca` → the new store.** Harder than the .com: registered at GoDaddy
+   Domains Canada, but its **nameservers are delegated to Oracle Cloud** (GloriaFood's DNS), and
+   `www` CNAMEs to `origin2-sitebuilder.globalfoodsoft.com` = the old GloriaFood site builder.
+   GoDaddy Forwarding only works on GoDaddy nameservers, so it's TWO steps:
+     (a) GoDaddy → luigislasagnamilton.ca → **Nameservers** → switch to GoDaddy default. (Domain
+         Protection locks are on the domain, so GoDaddy may ask Luigi to verify identity. During
+         propagation the domain may briefly show a GoDaddy parked page — harmless.)
+     (b) once propagated → **Forwarding** → `https://www.luigislasagna.com`, 301, forward only,
+         no masking, www included.
+   ✅ **SAFETY VERIFIED 2026-07-30** (Luigi asked whether store confirmation emails ran on this
+   domain — they do NOT): the domain has **no MX, no SPF, no DKIM, no DMARC** — it can neither
+   send nor receive mail — and nothing else resolves on it (checked mail/autodiscover/ftp/shop/
+   order/booking/admin/webmail/blog: all unset). Every address the store uses is
+   `info@luigislasagna.com` (restaurant.email, the sole active notification recipient, and the
+   admin login) — verified in the DB via `scripts/_check-luigi-email-config.ts`.
+   ⚠️ Reversible: putting the Oracle nameservers back restores the GloriaFood site.
+   💡 Luigi took this domain over from GloriaFood recently — worth confirming he isn't still
+   paying for a GloriaFood site no customer will be able to reach.
 
 **FYI — "the mobile site looks like desktop" (2026-07-30, resolved, NOT a bug):** Safari stores
 **page zoom per DOMAIN**. Luigi's old site lived on luigislasagna.com, so its saved zoom (<100%)
