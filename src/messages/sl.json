@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Račun",
       "pickCustomersLabel": "Dodajte stranke, ki jih že imate",
       "pickedCount": "{count, plural, one {Izbrana # stranka} two {Izbrani # stranki} few {Izbrane # stranke} other {Izbranih # strank}}",
-      "showingRange": "Prikazano {from}–{to} od {total}"
+      "showingRange": "Prikazano {from}–{to} od {total}",
+      "notifyOnAddHint": "Nove člane obvesti, da so bili dodani in katere ugodnosti prejmejo.",
+      "notifyOnAddLabel": "Pošlji jim e-pošto z dobrodošlico",
+      "sendWelcomeToAll": "Pošlji dobrodošlico vsem članom",
+      "welcomeAllConfirm": "Pošljem e-pošto z dobrodošlico vsem članom te skupine ({count})?",
+      "welcomeFailed": "E-pošte z dobrodošlico ni bilo mogoče poslati.",
+      "welcomeSent": "{count, plural, =0 {Nobena e-pošta ni bila poslana} one {Dobrodošlica poslana # članu} two {Dobrodošlica poslana # članoma} few {Dobrodošlica poslana # članom} other {Dobrodošlica poslana # članom}}",
+      "sendWelcomeToMember": "Pošlji e-pošto z dobrodošlico temu članu",
+      "welcomeOneConfirm": "Pošljem e-pošto z dobrodošlico na {email}?"
     },
     "rewards": {
       "title": "Nagradni dobropis",
@@ -5654,6 +5662,17 @@
       "howTo": "Ustvarite brezplačen račun pri restavraciji {restaurantName} s tem e-naslovom in vaše dobroimetje {label} bo samodejno dodano v vašo denarnico — pripravljeno za vaše naslednje naročilo.",
       "cta": "Ustvari moj račun",
       "ignoreLine": "Če tega niste pričakovali, lahko to e-sporočilo mirno prezrete."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Ustvarite račun s to e-pošto, da boste lahko svoje nagrade tudi zbirali in porabljali.",
+      "defaultRewardLabel": "nagrade",
+      "intro": "Dobra novica — dodani ste v {groupName}. To vam prinaša:",
+      "perkEarnRate": "{percent}% vračila v {label} ob vsakem naročilu",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% popusta — {name}",
+      "subject": "Dobrodošli v {groupName} — {restaurantName}",
+      "usageAccount": "Vaše ugodnosti se samodejno upoštevajo ob naročilu — le najprej se prijavite.",
+      "usageGuest": "Vaše ugodnosti se samodejno upoštevajo ob naročilu — le ob zaključku naročila uporabite ta e-poštni naslov ({email})."
     }
   },
   "marketing": {

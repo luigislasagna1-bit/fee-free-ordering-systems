@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Cuenta",
       "pickCustomersLabel": "Añadir clientes que ya tienes",
       "pickedCount": "{count, plural, one {# cliente seleccionado} other {# clientes seleccionados}}",
-      "showingRange": "Mostrando {from}–{to} de {total}"
+      "showingRange": "Mostrando {from}–{to} de {total}",
+      "notifyOnAddHint": "Avisa a los nuevos miembros de que se les ha añadido y de las ventajas que reciben.",
+      "notifyOnAddLabel": "Enviarles un email de bienvenida",
+      "sendWelcomeToAll": "Enviar la bienvenida a todos los miembros",
+      "welcomeAllConfirm": "¿Enviar el email de bienvenida a todos los {count} miembros de este grupo?",
+      "welcomeFailed": "No se pudo enviar el email de bienvenida.",
+      "welcomeSent": "{count, plural, =0 {No se envió ningún email} one {Bienvenida enviada a # miembro} other {Bienvenida enviada a # miembros}}",
+      "sendWelcomeToMember": "Enviar el email de bienvenida a este miembro",
+      "welcomeOneConfirm": "¿Enviar el email de bienvenida a {email}?"
     },
     "rewards": {
       "title": "Saldo de recompensa",
@@ -5654,6 +5662,17 @@
       "howTo": "Crea tu cuenta gratuita en {restaurantName} con esta dirección de correo y tu saldo de {label} se añadirá automáticamente a tu monedero, listo para usar en tu próximo pedido.",
       "cta": "Crear mi cuenta",
       "ignoreLine": "Si no esperabas este correo, puedes ignorarlo sin problema."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Crea una cuenta con este email para acumular y gastar también tus recompensas.",
+      "defaultRewardLabel": "recompensas",
+      "intro": "Buenas noticias: ya formas parte de {groupName}. Esto es lo que incluye:",
+      "perkEarnRate": "{percent}% de vuelta en {label} con cada pedido",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% de descuento — {name}",
+      "subject": "Te damos la bienvenida a {groupName} en {restaurantName}",
+      "usageAccount": "Tus ventajas se aplican automáticamente al hacer tu pedido: solo tienes que iniciar sesión.",
+      "usageGuest": "Tus ventajas se aplican automáticamente al hacer tu pedido: solo tienes que usar esta dirección de email ({email}) al finalizar la compra."
     }
   },
   "marketing": {

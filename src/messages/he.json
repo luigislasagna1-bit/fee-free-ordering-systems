@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "חשבון",
       "pickCustomersLabel": "הוספת לקוחות שכבר יש לכם",
       "pickedCount": "{count, plural, one {נבחר # לקוח} two {נבחרו # לקוחות} many {נבחרו # לקוחות} other {נבחרו # לקוחות}}",
-      "showingRange": "מוצגים {from}–{to} מתוך {total}"
+      "showingRange": "מוצגים {from}–{to} מתוך {total}",
+      "notifyOnAddHint": "מודיע לחברים החדשים שהם נוספו ואילו הטבות הם מקבלים.",
+      "notifyOnAddLabel": "שלחו להם דוא\"ל ברוכים הבאים",
+      "sendWelcomeToAll": "שליחת דוא\"ל ברוכים הבאים לכל החברים",
+      "welcomeAllConfirm": "לשלוח את דוא\"ל ברוכים הבאים לכל {count} החברים בקבוצה הזו?",
+      "welcomeFailed": "לא ניתן היה לשלוח את דוא\"ל ברוכים הבאים.",
+      "welcomeSent": "{count, plural, =0 {לא נשלחו הודעות} one {דוא\"ל ברוכים הבאים נשלח ל-# חבר} two {דוא\"ל ברוכים הבאים נשלח ל-# חברים} many {דוא\"ל ברוכים הבאים נשלח ל-# חברים} other {דוא\"ל ברוכים הבאים נשלח ל-# חברים}}",
+      "sendWelcomeToMember": "שליחת דוא\"ל ברוכים הבאים לחבר הזה",
+      "welcomeOneConfirm": "לשלוח את דוא\"ל ברוכים הבאים אל {email}?"
     },
     "rewards": {
       "title": "דולרים של תגמולים",
@@ -5654,6 +5662,17 @@
       "howTo": "כדי לממש את המתנה, יש ליצור חשבון חינם ב־{restaurantName} עם כתובת האימייל הזו, וה־{label} שלך יתווספו לארנק אוטומטית — מוכנים לשימוש בהזמנה הבאה שלך.",
       "cta": "ליצירת החשבון שלי",
       "ignoreLine": "אם לא ציפית להודעה זו, אפשר פשוט להתעלם מהאימייל הזה."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "צור חשבון עם כתובת דוא\"ל זו כדי גם לצבור ולממש את התגמולים שלך.",
+      "defaultRewardLabel": "תגמולים",
+      "intro": "חדשות טובות — נוספת ל-{groupName}. הנה מה שאתה מקבל:",
+      "perkEarnRate": "{percent}% חזרה ב-{label} על כל הזמנה",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% הנחה — {name}",
+      "subject": "ברוך הבא ל-{groupName} ב-{restaurantName}",
+      "usageAccount": "ההטבות שלך חלות אוטומטית כשאתה מזמין — פשוט היכנס לחשבון קודם.",
+      "usageGuest": "ההטבות שלך חלות אוטומטית כשאתה מזמין — פשוט הזן את כתובת הדוא\"ל הזו ({email}) בקופה."
     }
   },
   "marketing": {

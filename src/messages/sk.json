@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Účet",
       "pickCustomersLabel": "Pridať zákazníkov, ktorých už máte",
       "pickedCount": "{count, plural, one {Vybraný # zákazník} few {Vybraní # zákazníci} other {Vybraných # zákazníkov}}",
-      "showingRange": "Zobrazené {from}–{to} z {total}"
+      "showingRange": "Zobrazené {from}–{to} z {total}",
+      "notifyOnAddHint": "Novým členom dá vedieť, že boli pridaní a aké výhody získavajú.",
+      "notifyOnAddLabel": "Poslať im uvítací e-mail",
+      "sendWelcomeToAll": "Poslať uvítanie všetkým členom",
+      "welcomeAllConfirm": "Poslať uvítací e-mail všetkým {count} členom tejto skupiny?",
+      "welcomeFailed": "Uvítací e-mail sa nepodarilo odoslať.",
+      "welcomeSent": "{count, plural, =0 {Neodoslali sa žiadne e-maily} one {Uvítanie odoslané # členovi} few {Uvítanie odoslané # členom} other {Uvítanie odoslané # členom}}",
+      "sendWelcomeToMember": "Poslať uvítací e-mail tomuto členovi",
+      "welcomeOneConfirm": "Poslať uvítací e-mail na adresu {email}?"
     },
     "rewards": {
       "title": "Vernostný kredit",
@@ -5654,6 +5662,17 @@
       "howTo": "Vytvorte si bezplatný účet v reštaurácii {restaurantName} s touto e-mailovou adresou a váš kredit {label} sa automaticky pripíše do vašej peňaženky — pripravený na použitie pri vašej najbližšej objednávke.",
       "cta": "Vytvoriť si účet",
       "ignoreLine": "Ak ste tento e-mail nečakali, môžete ho pokojne ignorovať."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Vytvorte si s týmto e-mailom účet, aby ste mohli navyše zbierať a míňať svoje odmeny.",
+      "defaultRewardLabel": "odmeny",
+      "intro": "Dobrá správa — pridali sme vás do skupiny {groupName}. A čo k tomu patrí:",
+      "perkEarnRate": "{percent}% späť z každej objednávky — {label}",
+      "perkNamed": "{name}",
+      "perkPercent": "Zľava {percent} % — {name}",
+      "subject": "Vitajte v skupine {groupName} — {restaurantName}",
+      "usageAccount": "Vaše výhody sa pri objednávke uplatnia automaticky — stačí sa najprv prihlásiť.",
+      "usageGuest": "Vaše výhody sa pri objednávke uplatnia automaticky — pri platbe stačí zadať túto e-mailovú adresu ({email})."
     }
   },
   "marketing": {

@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Lägg till kunder du redan har",
       "pickedCount": "{count, plural, one {# kund vald} other {# kunder valda}}",
-      "showingRange": "Visar {from}–{to} av {total}"
+      "showingRange": "Visar {from}–{to} av {total}",
+      "notifyOnAddHint": "Talar om för nya medlemmar att de har lagts till och vilka förmåner de får.",
+      "notifyOnAddLabel": "Mejla dem ett välkomstmeddelande",
+      "sendWelcomeToAll": "Skicka välkomstmejl till alla medlemmar",
+      "welcomeAllConfirm": "Skicka välkomstmejlet till alla {count} medlemmar i den här gruppen?",
+      "welcomeFailed": "Det gick inte att skicka välkomstmejlet.",
+      "welcomeSent": "{count, plural, =0 {Inga mejl skickade} one {Välkomstmejl skickat till # medlem} other {Välkomstmejl skickat till # medlemmar}}",
+      "sendWelcomeToMember": "Skicka välkomstmejlet till den här medlemmen",
+      "welcomeOneConfirm": "Skicka välkomstmejlet till {email}?"
     },
     "rewards": {
       "title": "Bonuspengar",
@@ -5654,6 +5662,17 @@
       "howTo": "Skapa ditt kostnadsfria konto hos {restaurantName} med den här e-postadressen, så läggs dina {label} automatiskt till i din plånbok — redo att användas vid din nästa beställning.",
       "cta": "Skapa mitt konto",
       "ignoreLine": "Om du inte väntade dig det här mejlet kan du tryggt ignorera det."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Skapa ett konto med den här e-postadressen för att även samla och använda dina belöningar.",
+      "defaultRewardLabel": "belöningar",
+      "intro": "Goda nyheter — du har lagts till i {groupName}. Det här ingår:",
+      "perkEarnRate": "{percent} % tillbaka i {label} på varje beställning",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent} % rabatt — {name}",
+      "subject": "Välkommen till {groupName} hos {restaurantName}",
+      "usageAccount": "Dina förmåner tillämpas automatiskt när du beställer — logga bara in först.",
+      "usageGuest": "Dina förmåner tillämpas automatiskt när du beställer — ange bara den här e-postadressen ({email}) i kassan."
     }
   },
   "marketing": {

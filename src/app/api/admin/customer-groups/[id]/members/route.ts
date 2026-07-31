@@ -6,9 +6,10 @@
  *     existing Customer when one matches by email, else stored as a raw member.
  * DELETE /api/admin/customer-groups/[id]/members?memberId=...  — remove one
  */
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
+import { notifyGroupWelcome } from "@/lib/vip-notify";
 
 async function ownGroup(id: string, restaurantId: string) {
   const g = await prisma.customerGroup.findUnique({ where: { id }, select: { id: true, restaurantId: true } });
@@ -67,11 +68,40 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
     }
   }
 
+  let notified = 0;
   if (toCreate.length) {
     await prisma.customerGroupMember.createMany({ data: toCreate, skipDuplicates: true });
     await prisma.customerGroup.update({ where: { id: groupId }, data: { updatedAt: new Date() } });
+
+    // "You've been added — here are your perks" (Luigi 2026-07-31: members used
+    // to be added completely silently, so they never learned they had a
+    // discount waiting). Opt-out via notify:false so a roster can be loaded
+    // quietly. Only the people created in THIS request are emailed — never the
+    // existing roster — so a re-add or a double-click can't re-notify anyone.
+    if (body.notify !== false) {
+      const created = await prisma.customerGroupMember.findMany({
+        where: {
+          groupId,
+          OR: [
+            ...(toCreate.map((c) => c.customerId).filter(Boolean).length
+              ? [{ customerId: { in: toCreate.map((c) => c.customerId).filter(Boolean) as string[] } }]
+              : []),
+            ...(toCreate.map((c) => c.email).filter(Boolean).length
+              ? [{ email: { in: toCreate.map((c) => c.email).filter(Boolean) as string[] } }]
+              : []),
+          ],
+        },
+        select: { id: true },
+      });
+      notified = created.length;
+      // Fire-and-forget: a mail hiccup must never fail the add itself.
+      after(
+        notifyGroupWelcome({ groupId, restaurantId, memberIds: created.map((m) => m.id) })
+          .catch((e: unknown) => console.error("[group members] notifyGroupWelcome:", e)),
+      );
+    }
   }
-  return NextResponse.json({ ok: true, added: toCreate.length });
+  return NextResponse.json({ ok: true, added: toCreate.length, notified });
 }
 
 export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {

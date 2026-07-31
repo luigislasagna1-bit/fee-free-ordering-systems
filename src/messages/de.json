@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Vorhandene Kunden hinzufügen",
       "pickedCount": "{count, plural, one {# Kunde ausgewählt} other {# Kunden ausgewählt}}",
-      "showingRange": "{from}–{to} von {total} werden angezeigt"
+      "showingRange": "{from}–{to} von {total} werden angezeigt",
+      "notifyOnAddHint": "Teilt neuen Mitgliedern mit, dass sie hinzugefügt wurden und welche Vorteile sie erhalten.",
+      "notifyOnAddLabel": "Willkommens-E-Mail senden",
+      "sendWelcomeToAll": "Willkommens-E-Mail an alle Mitglieder senden",
+      "welcomeAllConfirm": "Die Willkommens-E-Mail an alle {count} Mitglieder dieser Gruppe senden?",
+      "welcomeFailed": "Die Willkommens-E-Mail konnte nicht gesendet werden.",
+      "welcomeSent": "{count, plural, =0 {Keine E-Mails gesendet} one {Willkommens-E-Mail an # Mitglied gesendet} other {Willkommens-E-Mail an # Mitglieder gesendet}}",
+      "sendWelcomeToMember": "Willkommens-E-Mail an dieses Mitglied senden",
+      "welcomeOneConfirm": "Die Willkommens-E-Mail an {email} senden?"
     },
     "rewards": {
       "title": "Bonusguthaben",
@@ -5654,6 +5662,17 @@
       "howTo": "Erstellen Sie mit dieser E-Mail-Adresse Ihr kostenloses Konto bei {restaurantName}, und Ihr {label}-Guthaben wird automatisch gutgeschrieben — bereit zum Einlösen bei Ihrer nächsten Bestellung.",
       "cta": "Konto erstellen",
       "ignoreLine": "Falls Sie dieses Geschenk nicht erwartet haben, können Sie diese E-Mail einfach ignorieren."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Erstellen Sie mit dieser E-Mail-Adresse ein Konto, um außerdem Bonusguthaben zu sammeln und einzulösen.",
+      "defaultRewardLabel": "Bonusguthaben",
+      "intro": "Gute Nachrichten — Sie wurden zu {groupName} hinzugefügt. Das erwartet Sie:",
+      "perkEarnRate": "{percent}% in {label} zurück bei jeder Bestellung",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% Rabatt — {name}",
+      "subject": "Willkommen bei {groupName} — {restaurantName}",
+      "usageAccount": "Ihre Vorteile werden bei jeder Bestellung automatisch angewendet — melden Sie sich einfach vorher an.",
+      "usageGuest": "Ihre Vorteile werden bei jeder Bestellung automatisch angewendet — geben Sie an der Kasse einfach diese E-Mail-Adresse ({email}) an."
     }
   },
   "marketing": {

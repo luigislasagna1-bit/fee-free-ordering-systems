@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Tài khoản",
       "pickCustomersLabel": "Thêm khách hàng bạn đã có",
       "pickedCount": "{count, plural, other {Đã chọn # khách hàng}}",
-      "showingRange": "Hiển thị {from}–{to} trong tổng số {total}"
+      "showingRange": "Hiển thị {from}–{to} trong tổng số {total}",
+      "notifyOnAddHint": "Báo cho thành viên mới biết họ đã được thêm vào và nhận được những ưu đãi nào.",
+      "notifyOnAddLabel": "Gửi email chào mừng cho họ",
+      "sendWelcomeToAll": "Gửi email chào mừng cho tất cả thành viên",
+      "welcomeAllConfirm": "Gửi email chào mừng cho tất cả {count} thành viên của nhóm này?",
+      "welcomeFailed": "Không thể gửi email chào mừng.",
+      "welcomeSent": "{count, plural, =0 {Không có email nào được gửi} other {Đã gửi email chào mừng cho # thành viên}}",
+      "sendWelcomeToMember": "Gửi email chào mừng cho thành viên này",
+      "welcomeOneConfirm": "Gửi email chào mừng cho {email}?"
     },
     "rewards": {
       "title": "Đô-la Thưởng",
@@ -5654,6 +5662,17 @@
       "howTo": "Hãy tạo tài khoản miễn phí tại {restaurantName} bằng chính địa chỉ email này, và {label} của bạn sẽ được tự động thêm vào ví — sẵn sàng để sử dụng cho đơn hàng tiếp theo.",
       "cta": "Tạo tài khoản của tôi",
       "ignoreLine": "Nếu bạn không mong đợi email này, bạn có thể yên tâm bỏ qua nó."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Tạo tài khoản bằng email này để đồng thời tích lũy và sử dụng phần thưởng của bạn.",
+      "defaultRewardLabel": "phần thưởng",
+      "intro": "Tin vui — bạn đã được thêm vào {groupName}. Đây là những ưu đãi đi kèm:",
+      "perkEarnRate": "Hoàn {percent}% bằng {label} cho mọi đơn hàng",
+      "perkNamed": "{name}",
+      "perkPercent": "Giảm {percent}% — {name}",
+      "subject": "Chào mừng bạn đến với {groupName} tại {restaurantName}",
+      "usageAccount": "Ưu đãi của bạn được áp dụng tự động khi bạn đặt hàng — chỉ cần đăng nhập trước.",
+      "usageGuest": "Ưu đãi của bạn được áp dụng tự động khi bạn đặt hàng — chỉ cần dùng địa chỉ email này ({email}) khi thanh toán."
     }
   },
   "marketing": {

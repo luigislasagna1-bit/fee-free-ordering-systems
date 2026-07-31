@@ -97,6 +97,47 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   // ── Add members (paste emails — auto-links to existing accounts) ──────────
   const [emailsText, setEmailsText] = useState("");
   const [adding, setAdding] = useState(false);
+  /** Whether newly-added members get the "you've been added — here are your
+   *  perks" welcome. ON by default (silent adds were the complaint), but the
+   *  owner can load a roster quietly. Luigi 2026-07-31. */
+  const [notifyOnAdd, setNotifyOnAdd] = useState(true);
+  const [sendingWelcome, setSendingWelcome] = useState(false);
+  /** Member row currently being emailed (drives that row's spinner). */
+  const [welcomeSendingId, setWelcomeSendingId] = useState<string | null>(null);
+
+  /** Send the welcome to ONE member. */
+  async function sendWelcomeTo(memberId: string, email: string) {
+    if (!confirm(t("welcomeOneConfirm", { email }))) return;
+    setWelcomeSendingId(memberId);
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${group.id}/members/notify`, {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ memberIds: [memberId] }),
+      });
+      const data = await res.json();
+      if (!res.ok) { toast.error(data.error || t("welcomeFailed")); return; }
+      toast.success(t("welcomeSent", { count: data.sent ?? 0 }));
+    } catch {
+      toast.error(t("welcomeFailed"));
+    } finally { setWelcomeSendingId(null); }
+  }
+
+  /** Re-send the welcome to everyone already in the group — for members added
+   *  before this email existed, or added with the toggle off. */
+  async function sendWelcomeToAll() {
+    if (!confirm(t("welcomeAllConfirm", { count: members.length }))) return;
+    setSendingWelcome(true);
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${group.id}/members/notify`, {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}),
+      });
+      const data = await res.json();
+      if (!res.ok) { toast.error(data.error || t("welcomeFailed")); return; }
+      toast.success(t("welcomeSent", { count: data.sent ?? 0 }));
+    } catch {
+      toast.error(t("welcomeFailed"));
+    } finally { setSendingWelcome(false); }
+  }
   async function addMembers() {
     const emails = emailsText.split(/[\s,;]+/).map((e) => e.trim()).filter((e) => e.includes("@"));
     if (!emails.length) { toast.error(t("noValidEmails")); return; }
@@ -104,7 +145,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
     try {
       const res = await fetch(`/api/admin/customer-groups/${group.id}/members`, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ emails }),
+        body: JSON.stringify({ emails, notify: notifyOnAdd }),
       });
       const data = await res.json();
       if (!res.ok) { toast.error(data.error || t("addFailed")); return; }
@@ -191,7 +232,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
     try {
       const res = await fetch(`/api/admin/customer-groups/${group.id}/members`, {
         method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customerIds: pickedList.map((c) => c.id) }),
+        body: JSON.stringify({ customerIds: pickedList.map((c) => c.id), notify: notifyOnAdd }),
       });
       const data = await res.json();
       if (!res.ok) { toast.error(data.error || t("addFailed")); return; }
@@ -374,6 +415,22 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
           )}
         </div>
 
+        {/* Send the welcome to people ALREADY in the group — members added
+            before this email existed (or added with the toggle off) would
+            otherwise have to be removed and re-added to hear about their
+            perks. Luigi 2026-07-31. */}
+        {members.length > 0 && (
+          <button
+            type="button"
+            onClick={sendWelcomeToAll}
+            disabled={sendingWelcome}
+            className="mb-3 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-800 px-3 py-1.5 rounded-lg border border-emerald-200 hover:bg-emerald-50 disabled:opacity-50"
+          >
+            {sendingWelcome ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Mail className="w-3.5 h-3.5" />}
+            {t("sendWelcomeToAll")}
+          </button>
+        )}
+
         {/* Member search (name / email / phone) — the export follows it. */}
         {members.length > 0 && (
           <div className="relative max-w-xs mb-3">
@@ -402,7 +459,24 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
                   {m.hasAccount ? t("account") : t("guest")}
                 </span>
               </div>
-              <button onClick={() => removeMember(m.id)} title={t("remove")} className="p-1 text-gray-400 hover:text-red-500 rounded flex-shrink-0"><Trash2 className="w-4 h-4" /></button>
+              <div className="flex items-center gap-0.5 flex-shrink-0">
+                {/* Send the welcome to THIS member — precise control for people
+                    added before the email existed, without mailing the whole
+                    roster. Luigi 2026-07-31. */}
+                {m.email && (
+                  <button
+                    onClick={() => sendWelcomeTo(m.id, m.email!)}
+                    disabled={welcomeSendingId === m.id}
+                    title={t("sendWelcomeToMember")}
+                    className="p-1 text-gray-400 hover:text-emerald-600 rounded disabled:opacity-50"
+                  >
+                    {welcomeSendingId === m.id
+                      ? <Loader2 className="w-4 h-4 animate-spin" />
+                      : <Mail className="w-4 h-4" />}
+                  </button>
+                )}
+                <button onClick={() => removeMember(m.id)} title={t("remove")} className="p-1 text-gray-400 hover:text-red-500 rounded"><Trash2 className="w-4 h-4" /></button>
+              </div>
             </div>
           ))}
         </div>
@@ -533,6 +607,22 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
         )}
 
         <div className="border-t border-gray-100 my-4" />
+
+        {/* Welcome-email toggle — applies to BOTH add paths below/above.
+            Default ON: members used to be added completely silently and never
+            learned they had a discount waiting (Luigi 2026-07-31). */}
+        <label className="flex items-start gap-2 mb-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={notifyOnAdd}
+            onChange={(e) => setNotifyOnAdd(e.target.checked)}
+            className="mt-0.5 accent-emerald-500"
+          />
+          <span className="text-xs text-gray-600">
+            {t("notifyOnAddLabel")}
+            <span className="block text-[11px] text-gray-400">{t("notifyOnAddHint")}</span>
+          </span>
+        </label>
 
         <label className="block text-xs font-medium text-gray-600 mb-1">{t("addMembersLabel")}</label>
         <textarea

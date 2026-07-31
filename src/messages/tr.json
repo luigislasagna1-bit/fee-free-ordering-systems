@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Hesap",
       "pickCustomersLabel": "Mevcut müşterileri ekle",
       "pickedCount": "{count, plural, one {# müşteri seçildi} other {# müşteri seçildi}}",
-      "showingRange": "{total} kayıttan {from}–{to} arası gösteriliyor"
+      "showingRange": "{total} kayıttan {from}–{to} arası gösteriliyor",
+      "notifyOnAddHint": "Yeni üyelere eklendiklerini ve hangi ayrıcalıkları kazandıklarını bildirir.",
+      "notifyOnAddLabel": "Onlara hoş geldin e-postası gönder",
+      "sendWelcomeToAll": "Tüm üyelere hoş geldin e-postası gönder",
+      "welcomeAllConfirm": "Bu gruptaki {count} üyenin tümüne hoş geldin e-postası gönderilsin mi?",
+      "welcomeFailed": "Hoş geldin e-postası gönderilemedi.",
+      "welcomeSent": "{count, plural, =0 {E-posta gönderilmedi} one {# üyeye hoş geldin e-postası gönderildi} other {# üyeye hoş geldin e-postası gönderildi}}",
+      "sendWelcomeToMember": "Bu üyeye hoş geldin e-postası gönder",
+      "welcomeOneConfirm": "{email} adresine hoş geldin e-postası gönderilsin mi?"
     },
     "rewards": {
       "title": "Ödül Dolarları",
@@ -5654,6 +5662,17 @@
       "howTo": "Bu e-posta adresini kullanarak {restaurantName} üzerinde ücretsiz hesabınızı oluşturun; {label} hediyeniz cüzdanınıza otomatik olarak eklenecek — bir sonraki siparişinizde harcamaya hazır.",
       "cta": "Hesabımı oluştur",
       "ignoreLine": "Böyle bir hediye beklemiyorduysanız bu e-postayı güvenle yok sayabilirsiniz."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Ödüllerinizi de biriktirip harcamak için bu e-postayla bir hesap oluşturun.",
+      "defaultRewardLabel": "ödül",
+      "intro": "Güzel haber — {groupName} grubuna eklendiniz. İşte size sunduğu ayrıcalıklar:",
+      "perkEarnRate": "Her siparişte {label} olarak %{percent} geri",
+      "perkNamed": "{name}",
+      "perkPercent": "%{percent} indirim — {name}",
+      "subject": "{restaurantName} mekanında {groupName} grubuna hoş geldiniz",
+      "usageAccount": "Ayrıcalıklarınız sipariş verdiğinizde otomatik olarak uygulanır — tek yapmanız gereken önce giriş yapmak.",
+      "usageGuest": "Ayrıcalıklarınız sipariş verdiğinizde otomatik olarak uygulanır — ödeme sırasında bu e-posta adresini ({email}) kullanmanız yeterli."
     }
   },
   "marketing": {

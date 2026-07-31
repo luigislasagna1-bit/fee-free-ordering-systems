@@ -5113,7 +5113,15 @@
       "pickedCount": "{count, plural, one {# customer selected} other {# customers selected}}",
       "clearSelection": "Clear",
       "addSelected": "{count, plural, one {Add # member} other {Add # members}}",
-      "showingRange": "Showing {from}–{to} of {total}"
+      "showingRange": "Showing {from}–{to} of {total}",
+      "notifyOnAddLabel": "Email them a welcome",
+      "notifyOnAddHint": "Tells new members they have been added and what perks they get.",
+      "sendWelcomeToAll": "Send welcome to all members",
+      "welcomeAllConfirm": "Send the welcome email to all {count} members of this group?",
+      "welcomeSent": "{count, plural, =0 {No emails sent} one {Welcome sent to # member} other {Welcome sent to # members}}",
+      "welcomeFailed": "Could not send the welcome email.",
+      "sendWelcomeToMember": "Send the welcome email to this member",
+      "welcomeOneConfirm": "Send the welcome email to {email}?"
     },
     "imageCrop": {
       "title": "Adjust your photo",
@@ -5654,6 +5662,17 @@
     "footer": {
       "signOff": "Kind regards,",
       "poweredBy": "Powered by"
+    },
+    "vipGroupWelcome": {
+      "subject": "Welcome to {groupName} at {restaurantName}",
+      "intro": "Good news — you have been added to {groupName}. Here is what comes with it:",
+      "usageAccount": "Your perks apply automatically when you order — just sign in first.",
+      "usageGuest": "Your perks apply automatically when you order — just use this email address ({email}) at checkout.",
+      "accountTip": "Create an account with this email to also collect and spend your rewards.",
+      "perkEarnRate": "{percent}% back in {label} on every order",
+      "perkPercent": "{percent}% off — {name}",
+      "perkNamed": "{name}",
+      "defaultRewardLabel": "rewards"
     }
   },
   "marketing": {

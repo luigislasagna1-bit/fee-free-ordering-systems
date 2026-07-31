@@ -1389,6 +1389,73 @@ export async function sendVipSpecialEmail(params: {
   });
 }
 
+/**
+ * "You've been added to <group>" — the welcome a new VIP member gets, naming
+ * the perks that come with it (Luigi 2026-07-31: members were being added
+ * completely silently, so they never learned they had a discount waiting).
+ *
+ * Reuses the CouponAssigned shell exactly like sendVipSpecialEmail does —
+ * `termLines` carries the perk list (earn rate, each attached member special),
+ * built by the caller so this function stays presentation-only.
+ *
+ * Guests (no account) get the same email plus the account nudge: their perks
+ * already apply when they type this address at checkout, but Reward Dollars
+ * need an account to live in.
+ */
+export async function sendVipGroupWelcomeEmail(params: {
+  to: string;
+  customerName: string;
+  restaurantName: string;
+  /** What this GROUP calls its members — falls back to the restaurant default.
+   *  Used as the headline chip only. The SENTENCES use groupName, because a
+   *  label is freely typed and is often plural ("VIP Members"), which made
+   *  "you are now a VIP Members" — the group name reads correctly either way. */
+  memberLabel?: string | null;
+  /** The group's own name, e.g. "Luigi's VIP Pizza Club". */
+  groupName: string;
+  /** Pre-formatted perk lines, e.g. "10% back in Luigi Bucks on every order". */
+  perkLines: string[];
+  hasAccount: boolean;
+  orderUrl: string;
+  signupUrl?: string;
+  restaurantUrl?: string;
+  restaurantEmail?: string | null;
+  restaurantPhone?: string | null;
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const memberLabel = params.memberLabel?.trim() || t("email.vipSpecial.defaultMemberLabel");
+  const html = await renderEmail(
+    CouponAssigned({
+      t,
+      customerName: params.customerName,
+      restaurantName: params.restaurantName,
+      code: "",
+      // The headline IS the membership here, not a discount amount.
+      discountLabel: memberLabel,
+      termLines: params.perkLines,
+      orderUrl: params.orderUrl,
+      restaurantUrl: params.restaurantUrl,
+      restaurantEmail: params.restaurantEmail ?? undefined,
+      restaurantPhone: params.restaurantPhone ?? undefined,
+      imprint: currentImprint(),
+      memberSpecial: true,
+      introOverride: t("email.vipGroupWelcome.intro", { groupName: params.groupName, restaurantName: params.restaurantName }),
+      usageNote: params.hasAccount
+        ? t("email.vipGroupWelcome.usageAccount")
+        : t("email.vipGroupWelcome.usageGuest", { email: params.to }),
+      accountTip: params.hasAccount ? undefined : t("email.vipGroupWelcome.accountTip"),
+    }),
+  );
+  return send({
+    to: params.to,
+    subject: t("email.vipGroupWelcome.subject", { groupName: params.groupName, restaurantName: params.restaurantName }),
+    html,
+    replyTo: params.restaurantEmail ?? undefined,
+    fromName: params.restaurantName,
+  });
+}
+
 export async function sendReservationConfirmation(params: {
   to: string;
   customerName: string;

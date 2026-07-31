@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Lisa olemasolevaid kliente",
       "pickedCount": "{count, plural, one {# klient valitud} other {# klienti valitud}}",
-      "showingRange": "Kuvatakse {from}–{to} / {total}"
+      "showingRange": "Kuvatakse {from}–{to} / {total}",
+      "notifyOnAddHint": "Annab uutele liikmetele teada, et nad lisati rühma ja millised hüved neid ootavad.",
+      "notifyOnAddLabel": "Saada neile tervituskiri",
+      "sendWelcomeToAll": "Saada tervituskiri kõigile liikmetele",
+      "welcomeAllConfirm": "Kas saata tervituskiri selle rühma kõigile {count} liikmele?",
+      "welcomeFailed": "Tervituskirja saatmine ebaõnnestus.",
+      "welcomeSent": "{count, plural, =0 {E-kirju ei saadetud} one {Tervituskiri saadetud # liikmele} other {Tervituskiri saadetud # liikmele}}",
+      "sendWelcomeToMember": "Saada tervituskiri sellele liikmele",
+      "welcomeOneConfirm": "Kas saata tervituskiri aadressile {email}?"
     },
     "rewards": {
       "title": "Boonusraha",
@@ -5654,6 +5662,17 @@
       "howTo": "Loo restorani {restaurantName} juures selle e-posti aadressiga tasuta konto ja sinu {label} lisatakse automaatselt sinu rahakotti — valmis kasutamiseks juba järgmisel tellimusel.",
       "cta": "Loo konto",
       "ignoreLine": "Kui sa seda kirja ei oodanud, võid selle rahulikult tähelepanuta jätta."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Loo selle e-posti aadressiga konto, et koguda ja kulutada ka oma boonusraha.",
+      "defaultRewardLabel": "Boonusraha",
+      "intro": "Head uudised — sind lisati rühma {groupName}. Vaata, mis sellega kaasneb:",
+      "perkEarnRate": "{percent}% tagasi igalt tellimuselt — {label}",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% soodustust — {name}",
+      "subject": "Tere tulemast rühma {groupName} restoranis {restaurantName}",
+      "usageAccount": "Sinu hüved rakenduvad automaatselt, kui tellid — logi lihtsalt enne sisse.",
+      "usageGuest": "Sinu hüved rakenduvad automaatselt, kui tellid — sisesta kassas lihtsalt see e-posti aadress ({email})."
     }
   },
   "marketing": {

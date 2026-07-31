@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Tilføj kunder, du allerede har",
       "pickedCount": "{count, plural, one {# kunde valgt} other {# kunder valgt}}",
-      "showingRange": "Viser {from}–{to} af {total}"
+      "showingRange": "Viser {from}–{to} af {total}",
+      "notifyOnAddHint": "Fortæller nye medlemmer, at de er blevet tilføjet, og hvilke fordele de får.",
+      "notifyOnAddLabel": "Send dem en velkomstmail",
+      "sendWelcomeToAll": "Send velkomstmail til alle medlemmer",
+      "welcomeAllConfirm": "Send velkomstmailen til alle {count} medlemmer i denne gruppe?",
+      "welcomeFailed": "Velkomstmailen kunne ikke sendes.",
+      "welcomeSent": "{count, plural, =0 {Ingen mails sendt} one {Velkomstmail sendt til # medlem} other {Velkomstmail sendt til # medlemmer}}",
+      "sendWelcomeToMember": "Send velkomstmailen til dette medlem",
+      "welcomeOneConfirm": "Send velkomstmailen til {email}?"
     },
     "rewards": {
       "title": "Bonuskroner",
@@ -5654,6 +5662,17 @@
       "howTo": "Opret din gratis konto hos {restaurantName} med denne e-mailadresse, så tilføjes dine {label} automatisk til din wallet – klar til at bruge på din næste bestilling.",
       "cta": "Opret min konto",
       "ignoreLine": "Hvis du ikke forventede denne e-mail, kan du roligt ignorere den."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Opret en konto med denne e-mail, så du også kan optjene og bruge dine belønninger.",
+      "defaultRewardLabel": "belønninger",
+      "intro": "Godt nyt — du er blevet føjet til {groupName}. Her er, hvad der følger med:",
+      "perkEarnRate": "{percent} % tilbage i {label} på hver bestilling",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent} % rabat — {name}",
+      "subject": "Velkommen til {groupName} hos {restaurantName}",
+      "usageAccount": "Dine fordele anvendes automatisk, når du bestiller — du skal blot logge ind først.",
+      "usageGuest": "Dine fordele anvendes automatisk, når du bestiller — brug blot denne e-mailadresse ({email}) ved kassen."
     }
   },
   "marketing": {

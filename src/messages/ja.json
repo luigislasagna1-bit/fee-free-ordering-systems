@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "アカウント",
       "pickCustomersLabel": "既存のお客様を追加",
       "pickedCount": "{count, plural, other {#人のお客様を選択中}}",
-      "showingRange": "全 {total} 件中 {from}–{to} 件を表示"
+      "showingRange": "全 {total} 件中 {from}–{to} 件を表示",
+      "notifyOnAddHint": "新しいメンバーに、追加されたことと受けられる特典をお知らせします。",
+      "notifyOnAddLabel": "ウェルカムメールを送信する",
+      "sendWelcomeToAll": "全メンバーにウェルカムメールを送信",
+      "welcomeAllConfirm": "このグループの全メンバー{count}人にウェルカムメールを送信しますか？",
+      "welcomeFailed": "ウェルカムメールを送信できませんでした。",
+      "welcomeSent": "{count, plural, =0 {メールは送信されませんでした} other {#人のメンバーにウェルカムメールを送信しました}}",
+      "sendWelcomeToMember": "このメンバーにウェルカムメールを送信",
+      "welcomeOneConfirm": "{email} にウェルカムメールを送信しますか？"
     },
     "rewards": {
       "title": "リワードドル",
@@ -5654,6 +5662,17 @@
       "howTo": "このメールアドレスを使って{restaurantName}で無料アカウントを作成すると、{label}が自動的にウォレットに追加され、次回のご注文からすぐにお使いいただけます。",
       "cta": "アカウントを作成",
       "ignoreLine": "お心当たりがない場合は、このメールを無視していただいて問題ありません。"
+    },
+    "vipGroupWelcome": {
+      "accountTip": "このメールアドレスでアカウントを作成すると、リワードを貯めてご利用いただくこともできます。",
+      "defaultRewardLabel": "リワード",
+      "intro": "うれしいお知らせです — {groupName}に追加されました。ご利用いただける特典は次のとおりです：",
+      "perkEarnRate": "ご注文ごとに{percent}%分の{label}を還元",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}%オフ — {name}",
+      "subject": "{restaurantName}の{groupName}へようこそ",
+      "usageAccount": "ご注文時に特典が自動的に適用されます — まずはサインインしてください。",
+      "usageGuest": "ご注文時に特典が自動的に適用されます — お会計時にこのメールアドレス（{email}）をご入力ください。"
     }
   },
   "marketing": {

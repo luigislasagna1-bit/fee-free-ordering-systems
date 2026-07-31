@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Paskyra",
       "pickCustomersLabel": "Pridėti jau turimus klientus",
       "pickedCount": "{count, plural, one {Pasirinktas # klientas} few {Pasirinkti # klientai} other {Pasirinkta # klientų}}",
-      "showingRange": "Rodoma {from}–{to} iš {total}"
+      "showingRange": "Rodoma {from}–{to} iš {total}",
+      "notifyOnAddHint": "Praneša naujiems nariams, kad jie pridėti, ir kokius privalumus gauna.",
+      "notifyOnAddLabel": "Išsiųsti jiems pasveikinimo el. laišką",
+      "sendWelcomeToAll": "Siųsti pasveikinimą visiems nariams",
+      "welcomeAllConfirm": "Siųsti pasveikinimo el. laišką visiems {count} šios grupės nariams?",
+      "welcomeFailed": "Nepavyko išsiųsti pasveikinimo el. laiško.",
+      "welcomeSent": "{count, plural, =0 {El. laiškų neišsiųsta} one {Pasveikinimas išsiųstas # nariui} few {Pasveikinimas išsiųstas # nariams} other {Pasveikinimas išsiųstas # narių}}",
+      "sendWelcomeToMember": "Siųsti pasveikinimą šiam nariui",
+      "welcomeOneConfirm": "Siųsti pasveikinimo el. laišką adresu {email}?"
     },
     "rewards": {
       "title": "Premijų doleriai",
@@ -5654,6 +5662,17 @@
       "howTo": "Susikurkite nemokamą paskyrą pas {restaurantName} naudodami šį el. pašto adresą, ir jūsų {label} bus automatiškai pridėti į jūsų piniginę — galėsite juos išleisti kitam užsakymui.",
       "cta": "Susikurti paskyrą",
       "ignoreLine": "Jei šio laiško nesitikėjote, galite jį saugiai ignoruoti."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Susikurkite paskyrą su šiuo el. paštu, kad galėtumėte ir kaupti, ir išleisti savo premijas.",
+      "defaultRewardLabel": "premijos",
+      "intro": "Gera žinia — jus įtraukėme į {groupName}. Štai ką gaunate:",
+      "perkEarnRate": "{percent}% grąžinama kaip {label} už kiekvieną užsakymą",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% nuolaida — {name}",
+      "subject": "Sveiki atvykę į {groupName} — {restaurantName}",
+      "usageAccount": "Jūsų privalumai pritaikomi automatiškai užsakant — tereikia pirma prisijungti.",
+      "usageGuest": "Jūsų privalumai pritaikomi automatiškai užsakant — atsiskaitydami tiesiog nurodykite šį el. pašto adresą ({email})."
     }
   },
   "marketing": {

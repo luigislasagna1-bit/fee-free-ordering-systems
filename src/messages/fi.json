@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Tili",
       "pickCustomersLabel": "Lisää olemassa olevia asiakkaita",
       "pickedCount": "{count, plural, one {# asiakas valittu} other {# asiakasta valittu}}",
-      "showingRange": "Näytetään {from}–{to} / {total}"
+      "showingRange": "Näytetään {from}–{to} / {total}",
+      "notifyOnAddHint": "Kertoo uusille jäsenille, että heidät on lisätty ryhmään ja mitä etuja he saavat.",
+      "notifyOnAddLabel": "Lähetä heille tervetuloviesti",
+      "sendWelcomeToAll": "Lähetä tervetuloviesti kaikille jäsenille",
+      "welcomeAllConfirm": "Lähetetäänkö tervetuloviesti tämän ryhmän kaikille {count} jäsenelle?",
+      "welcomeFailed": "Tervetuloviestin lähettäminen epäonnistui.",
+      "welcomeSent": "{count, plural, =0 {Sähköposteja ei lähetetty} one {Tervetuloviesti lähetetty # jäsenelle} other {Tervetuloviesti lähetetty # jäsenelle}}",
+      "sendWelcomeToMember": "Lähetä tervetuloviesti tälle jäsenelle",
+      "welcomeOneConfirm": "Lähetetäänkö tervetuloviesti osoitteeseen {email}?"
     },
     "rewards": {
       "title": "Bonusrahat",
@@ -5654,6 +5662,17 @@
       "howTo": "Luo ilmainen tili ravintolaan {restaurantName} tällä sähköpostiosoitteella, niin {label} lisätään lompakkoosi automaattisesti — valmiina käytettäväksi seuraavassa tilauksessasi.",
       "cta": "Luo tili",
       "ignoreLine": "Jos et odottanut tätä viestiä, voit jättää sen huomiotta."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Luo tili tällä sähköpostiosoitteella, niin voit myös kerätä ja käyttää bonusrahojasi.",
+      "defaultRewardLabel": "Bonusrahat",
+      "intro": "Hyviä uutisia — sinut on lisätty ryhmään {groupName}. Tässä ovat etusi:",
+      "perkEarnRate": "{percent} % takaisin jokaisesta tilauksesta — {label}",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent} % alennus — {name}",
+      "subject": "Tervetuloa ryhmään {groupName} ravintolassa {restaurantName}",
+      "usageAccount": "Etusi otetaan käyttöön automaattisesti, kun teet tilauksen — kirjaudu vain ensin sisään.",
+      "usageGuest": "Etusi otetaan käyttöön automaattisesti, kun teet tilauksen — syötä vain tämä sähköpostiosoite ({email}) kassalla."
     }
   },
   "marketing": {

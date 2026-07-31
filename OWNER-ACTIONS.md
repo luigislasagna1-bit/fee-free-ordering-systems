@@ -11,6 +11,30 @@
 
 ---
 
+## 🍕 VIP / SKOOL SETUP — where it stands (2026-07-31, ~4 AM)
+
+**Working and verified on prod:** the 3-promo stack prices correctly — a member cart with a
+pizza + Toonie slice + pop gave 50% / $2.00 / 20% with **no double-discounting** (Luigi tested
+live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Club.
+
+**LUIGI'S NEXT CLICKS:**
+1. ☐ **Send the welcome email** — new ✉️ icon on each member row (one person) or
+   "Send welcome to all members". Suggest emailing YOURSELF first, reading it, then the rest.
+   ⚠️ Claude CANNOT send these — mail credentials exist only in production, by design.
+2. ☐ **Finish the promo tests** in `TESTING-VIP-PROMOS-2026-07-31.md` — the two that matter are
+   (a) a NON-member gets nothing, (b) a member NOT signed in who just types their email at
+   checkout still gets the perks. Both are money-facing.
+3. 🤔 **Decide: the "First-time customer special" is a 10% MASTER on the whole cart.** Master
+   stacks with everything and can never be blocked, so a first-time VIP gets 10% ON TOP of the
+   $2 slice (it lands ~$1.80) and on top of the 50%/20%. Leave it as an acquisition cost, make
+   it standard, or scope it — but it is silently undercutting the $2 floor today.
+4. 🤔 **Decide: the tip is calculated on the PRE-discount subtotal.** On the test cart 15% was
+   $2.62 (15% of $17.48) not $1.35 (15% of $8.98) — so a VIP choosing "15%" tips ~29% of what
+   they actually pay. Defensible, but confirm it is intended.
+5. ☐ **Monthly chore until the engine fix lands:** when the VIP special changes, move the
+   carve-out on the 20% promo (untick the new special's category, re-tick the old one).
+   Forgetting = 70% off that category. The "one discount per item" build removes this chore.
+
 ## ⭐ TOMORROW — the short list (do these WITH Claude / report results)
 
 **Together (5–15 min each):**

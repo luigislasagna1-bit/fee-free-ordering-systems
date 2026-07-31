@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "账户",
       "pickCustomersLabel": "添加现有客户",
       "pickedCount": "{count, plural, other {已选择 # 位客户}}",
-      "showingRange": "显示第 {from}–{to} 条，共 {total} 条"
+      "showingRange": "显示第 {from}–{to} 条，共 {total} 条",
+      "notifyOnAddHint": "告知新成员他们已被添加，以及可享受哪些权益。",
+      "notifyOnAddLabel": "向他们发送欢迎邮件",
+      "sendWelcomeToAll": "向所有成员发送欢迎邮件",
+      "welcomeAllConfirm": "向该群组的全部 {count} 名成员发送欢迎邮件？",
+      "welcomeFailed": "无法发送欢迎邮件。",
+      "welcomeSent": "{count, plural, =0 {未发送任何邮件} other {已向 # 名成员发送欢迎邮件}}",
+      "sendWelcomeToMember": "向该成员发送欢迎邮件",
+      "welcomeOneConfirm": "向 {email} 发送欢迎邮件？"
     },
     "rewards": {
       "title": "奖励金",
@@ -5654,6 +5662,17 @@
       "howTo": "使用此邮箱在 {restaurantName} 创建免费账户，您的 {label} 将自动存入您的钱包——下次下单即可使用。",
       "cta": "创建我的账户",
       "ignoreLine": "如果您并未预期收到此邮件，直接忽略即可，无需担心。"
+    },
+    "vipGroupWelcome": {
+      "accountTip": "用此邮箱创建账户，还可以累积并使用您的奖励。",
+      "defaultRewardLabel": "奖励",
+      "intro": "好消息——您已被添加到 {groupName}。以下是您可享受的权益：",
+      "perkEarnRate": "每笔订单返还 {percent}% 的{label}",
+      "perkNamed": "{name}",
+      "perkPercent": "立减 {percent}% — {name}",
+      "subject": "欢迎加入 {restaurantName} 的 {groupName}",
+      "usageAccount": "下单时您的权益将自动生效——只需先登录即可。",
+      "usageGuest": "下单时您的权益将自动生效——只需在结账时使用此邮箱地址（{email}）。"
     }
   },
   "marketing": {

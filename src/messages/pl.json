@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Dodaj klientów, których już masz",
       "pickedCount": "{count, plural, one {Wybrano # klienta} few {Wybrano # klientów} many {Wybrano # klientów} other {Wybrano # klienta}}",
-      "showingRange": "Pokazano {from}–{to} z {total}"
+      "showingRange": "Pokazano {from}–{to} z {total}",
+      "notifyOnAddHint": "Informuje nowych członków, że zostali dodani i jakie korzyści otrzymują.",
+      "notifyOnAddLabel": "Wyślij im powitalny e-mail",
+      "sendWelcomeToAll": "Wyślij powitanie do wszystkich członków",
+      "welcomeAllConfirm": "Wysłać powitalny e-mail do wszystkich {count} członków tej grupy?",
+      "welcomeFailed": "Nie udało się wysłać powitalnego e-maila.",
+      "welcomeSent": "{count, plural, =0 {Nie wysłano żadnych e-maili} one {Wysłano powitanie do # członka} few {Wysłano powitanie do # członków} many {Wysłano powitanie do # członków} other {Wysłano powitanie do # członka}}",
+      "sendWelcomeToMember": "Wyślij powitalny e-mail do tego członka",
+      "welcomeOneConfirm": "Wysłać powitalny e-mail na adres {email}?"
     },
     "rewards": {
       "title": "Złotówki za zakupy",
@@ -5654,6 +5662,17 @@
       "howTo": "Załóż bezpłatne konto w {restaurantName}, używając tego adresu e-mail, a Twoje {label} zostaną automatycznie dodane do portfela — gotowe do wykorzystania przy następnym zamówieniu.",
       "cta": "Załóż konto",
       "ignoreLine": "Jeśli nie spodziewasz się tej wiadomości, możesz ją po prostu zignorować."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Załóż konto z tym adresem e-mail, aby móc też zbierać i wydawać swoje nagrody.",
+      "defaultRewardLabel": "nagrody",
+      "intro": "Dobra wiadomość — dodaliśmy Cię do grupy {groupName}. Oto, co zyskujesz:",
+      "perkEarnRate": "{percent}% zwrotu przy każdym zamówieniu — {label}",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% zniżki — {name}",
+      "subject": "Witamy w grupie {groupName} — {restaurantName}",
+      "usageAccount": "Twoje korzyści naliczają się automatycznie przy zamówieniu — wystarczy, że najpierw się zalogujesz.",
+      "usageGuest": "Twoje korzyści naliczają się automatycznie — wystarczy, że przy płatności podasz ten adres e-mail ({email})."
     }
   },
   "marketing": {

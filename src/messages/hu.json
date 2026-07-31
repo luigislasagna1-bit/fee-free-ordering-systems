@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Fiók",
       "pickCustomersLabel": "Meglévő ügyfelek hozzáadása",
       "pickedCount": "{count, plural, one {# ügyfél kiválasztva} other {# ügyfél kiválasztva}}",
-      "showingRange": "{from}–{to} látható, összesen {total}"
+      "showingRange": "{from}–{to} látható, összesen {total}",
+      "notifyOnAddHint": "Tudatja az új tagokkal, hogy bekerültek a csoportba, és milyen kedvezmények járnak nekik.",
+      "notifyOnAddLabel": "Üdvözlő e-mail küldése nekik",
+      "sendWelcomeToAll": "Üdvözlő e-mail küldése minden tagnak",
+      "welcomeAllConfirm": "Elküldi az üdvözlő e-mailt a csoport mind a(z) {count} tagjának?",
+      "welcomeFailed": "Nem sikerült elküldeni az üdvözlő e-mailt.",
+      "welcomeSent": "{count, plural, =0 {Nem lett e-mail elküldve} one {Üdvözlő e-mail elküldve # tagnak} other {Üdvözlő e-mail elküldve # tagnak}}",
+      "sendWelcomeToMember": "Üdvözlő e-mail küldése ennek a tagnak",
+      "welcomeOneConfirm": "Elküldi az üdvözlő e-mailt a(z) {email} címre?"
     },
     "rewards": {
       "title": "Jutalomdollár",
@@ -5654,6 +5662,17 @@
       "howTo": "Hozza létre ingyenes fiókját a(z) {restaurantName} oldalán ezzel az e-mail-címmel, és a(z) {label} egyenlege automatikusan bekerül a tárcájába — máris elköltheti a következő rendelésénél.",
       "cta": "Létrehozom a fiókomat",
       "ignoreLine": "Ha nem számított erre az üzenetre, nyugodtan hagyja figyelmen kívül ezt az e-mailt."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Hozzon létre fiókot ezzel az e-mail-címmel, hogy a jutalomdollárjait is gyűjthesse és elkölthesse.",
+      "defaultRewardLabel": "Jutalomdollár",
+      "intro": "Jó hírünk van — felvettük Önt a(z) {groupName} csoportba. Íme, mi jár vele:",
+      "perkEarnRate": "{percent}% visszajár minden rendelés után — {label}",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% kedvezmény — {name}",
+      "subject": "Üdvözöljük a(z) {groupName} csoportban — {restaurantName}",
+      "usageAccount": "A kedvezményei automatikusan érvényesülnek, amikor rendel — csak jelentkezzen be előtte.",
+      "usageGuest": "A kedvezményei automatikusan érvényesülnek, amikor rendel — csak adja meg ezt az e-mail-címet ({email}) a fizetésnél."
     }
   },
   "marketing": {

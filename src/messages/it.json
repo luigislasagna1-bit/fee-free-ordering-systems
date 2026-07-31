@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Account",
       "pickCustomersLabel": "Aggiungi clienti che hai già",
       "pickedCount": "{count, plural, one {# cliente selezionato} other {# clienti selezionati}}",
-      "showingRange": "Mostrati {from}–{to} di {total}"
+      "showingRange": "Mostrati {from}–{to} di {total}",
+      "notifyOnAddHint": "Comunica ai nuovi membri che sono stati aggiunti e quali vantaggi ricevono.",
+      "notifyOnAddLabel": "Invia loro un'email di benvenuto",
+      "sendWelcomeToAll": "Invia il benvenuto a tutti i membri",
+      "welcomeAllConfirm": "Inviare l'email di benvenuto a tutti i {count} membri di questo gruppo?",
+      "welcomeFailed": "Impossibile inviare l'email di benvenuto.",
+      "welcomeSent": "{count, plural, =0 {Nessuna email inviata} one {Benvenuto inviato a # membro} other {Benvenuto inviato a # membri}}",
+      "sendWelcomeToMember": "Invia l'email di benvenuto a questo membro",
+      "welcomeOneConfirm": "Inviare l'email di benvenuto a {email}?"
     },
     "rewards": {
       "title": "Credito fedeltà",
@@ -5654,6 +5662,17 @@
       "howTo": "Crea il tuo account gratuito su {restaurantName} usando questo indirizzo email e il tuo credito in {label} verrà aggiunto automaticamente al tuo portafoglio — pronto da spendere al tuo prossimo ordine.",
       "cta": "Crea il mio account",
       "ignoreLine": "Se non ti aspettavi questo regalo, puoi tranquillamente ignorare questa email."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Crea un account con questa email per accumulare e usare anche i tuoi crediti fedeltà.",
+      "defaultRewardLabel": "crediti fedeltà",
+      "intro": "Buone notizie: ora fai parte di {groupName}. Ecco cosa ti aspetta:",
+      "perkEarnRate": "{percent}% di ritorno in {label} su ogni ordine",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% di sconto — {name}",
+      "subject": "Ti diamo il benvenuto in {groupName} da {restaurantName}",
+      "usageAccount": "I tuoi vantaggi si applicano automaticamente quando ordini: basta accedere al tuo account.",
+      "usageGuest": "I tuoi vantaggi si applicano automaticamente quando ordini: basta usare questo indirizzo email ({email}) al checkout."
     }
   },
   "marketing": {

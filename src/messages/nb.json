@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Legg til kunder du allerede har",
       "pickedCount": "{count, plural, one {# kunde valgt} other {# kunder valgt}}",
-      "showingRange": "Viser {from}–{to} av {total}"
+      "showingRange": "Viser {from}–{to} av {total}",
+      "notifyOnAddHint": "Forteller nye medlemmer at de er lagt til, og hvilke fordeler de får.",
+      "notifyOnAddLabel": "Send dem en velkomst-e-post",
+      "sendWelcomeToAll": "Send velkomst-e-post til alle medlemmer",
+      "welcomeAllConfirm": "Sende velkomst-e-posten til alle de {count} medlemmene i denne gruppen?",
+      "welcomeFailed": "Kunne ikke sende velkomst-e-posten.",
+      "welcomeSent": "{count, plural, =0 {Ingen e-poster sendt} one {Velkomst-e-post sendt til # medlem} other {Velkomst-e-post sendt til # medlemmer}}",
+      "sendWelcomeToMember": "Send velkomst-e-posten til dette medlemmet",
+      "welcomeOneConfirm": "Sende velkomst-e-posten til {email}?"
     },
     "rewards": {
       "title": "Bonuskroner",
@@ -5654,6 +5662,17 @@
       "howTo": "Opprett en gratis konto hos {restaurantName} med denne e-postadressen, så blir dine {label} automatisk lagt til i lommeboken din — klare til å bruke på din neste bestilling.",
       "cta": "Opprett kontoen min",
       "ignoreLine": "Hvis du ikke ventet denne e-posten, kan du trygt se bort fra den."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Opprett en konto med denne e-postadressen for også å opptjene og bruke belønningene dine.",
+      "defaultRewardLabel": "belønninger",
+      "intro": "Gode nyheter — du er lagt til i {groupName}. Dette får du:",
+      "perkEarnRate": "{percent} % tilbake i {label} på hver bestilling",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent} % rabatt — {name}",
+      "subject": "Velkommen til {groupName} hos {restaurantName}",
+      "usageAccount": "Fordelene dine brukes automatisk når du bestiller — bare logg inn først.",
+      "usageGuest": "Fordelene dine brukes automatisk når du bestiller — bare oppgi denne e-postadressen ({email}) i kassen."
     }
   },
   "marketing": {

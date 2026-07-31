@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Akun",
       "pickCustomersLabel": "Tambahkan pelanggan yang sudah Anda miliki",
       "pickedCount": "{count, plural, other {# pelanggan dipilih}}",
-      "showingRange": "Menampilkan {from}–{to} dari {total}"
+      "showingRange": "Menampilkan {from}–{to} dari {total}",
+      "notifyOnAddHint": "Memberi tahu anggota baru bahwa mereka telah ditambahkan dan keuntungan apa yang mereka dapatkan.",
+      "notifyOnAddLabel": "Kirimi mereka email selamat datang",
+      "sendWelcomeToAll": "Kirim email selamat datang ke semua anggota",
+      "welcomeAllConfirm": "Kirim email selamat datang ke semua {count} anggota grup ini?",
+      "welcomeFailed": "Tidak dapat mengirim email selamat datang.",
+      "welcomeSent": "{count, plural, =0 {Tidak ada email yang dikirim} other {Email selamat datang dikirim ke # anggota}}",
+      "sendWelcomeToMember": "Kirim email selamat datang ke anggota ini",
+      "welcomeOneConfirm": "Kirim email selamat datang ke {email}?"
     },
     "rewards": {
       "title": "Dolar Hadiah",
@@ -5654,6 +5662,17 @@
       "howTo": "Buat akun gratis Anda di {restaurantName} dengan alamat email ini, dan {label} Anda akan otomatis ditambahkan ke dompet Anda — siap dipakai untuk pesanan berikutnya.",
       "cta": "Buat akun saya",
       "ignoreLine": "Jika Anda tidak merasa mengharapkan email ini, Anda dapat mengabaikannya dengan aman."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Buat akun dengan email ini untuk sekaligus mengumpulkan dan menggunakan hadiah Anda.",
+      "defaultRewardLabel": "hadiah",
+      "intro": "Kabar baik — Anda telah ditambahkan ke {groupName}. Inilah yang Anda dapatkan:",
+      "perkEarnRate": "{percent}% kembali dalam {label} di setiap pesanan",
+      "perkNamed": "{name}",
+      "perkPercent": "Diskon {percent}% — {name}",
+      "subject": "Selamat datang di {groupName} — {restaurantName}",
+      "usageAccount": "Keuntungan Anda berlaku otomatis saat Anda memesan — cukup masuk ke akun Anda terlebih dahulu.",
+      "usageGuest": "Keuntungan Anda berlaku otomatis saat Anda memesan — cukup gunakan alamat email ini ({email}) saat checkout."
     }
   },
   "marketing": {

@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Account",
       "pickCustomersLabel": "Bestaande klanten toevoegen",
       "pickedCount": "{count, plural, one {# klant geselecteerd} other {# klanten geselecteerd}}",
-      "showingRange": "{from}–{to} van {total} worden getoond"
+      "showingRange": "{from}–{to} van {total} worden getoond",
+      "notifyOnAddHint": "Laat nieuwe leden weten dat ze zijn toegevoegd en welke voordelen ze krijgen.",
+      "notifyOnAddLabel": "Welkomstmail sturen",
+      "sendWelcomeToAll": "Welkomstmail naar alle leden sturen",
+      "welcomeAllConfirm": "De welkomstmail naar alle {count} leden van deze groep sturen?",
+      "welcomeFailed": "Kan de welkomstmail niet versturen.",
+      "welcomeSent": "{count, plural, =0 {Geen e-mails verstuurd} one {Welkomstmail naar # lid verstuurd} other {Welkomstmail naar # leden verstuurd}}",
+      "sendWelcomeToMember": "Welkomstmail naar dit lid sturen",
+      "welcomeOneConfirm": "De welkomstmail naar {email} sturen?"
     },
     "rewards": {
       "title": "Spaartegoed",
@@ -5654,6 +5662,17 @@
       "howTo": "Maak met dit e-mailadres je gratis account aan bij {restaurantName}, dan wordt je {label}-tegoed automatisch aan je wallet toegevoegd — klaar om te besteden bij je volgende bestelling.",
       "cta": "Mijn account aanmaken",
       "ignoreLine": "Verwachtte je dit niet? Dan kun je deze e-mail gewoon negeren."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Maak een account aan met dit e-mailadres om ook spaartegoed te verzamelen en te besteden.",
+      "defaultRewardLabel": "spaartegoed",
+      "intro": "Goed nieuws — je bent toegevoegd aan {groupName}. Dit krijg je erbij:",
+      "perkEarnRate": "{percent}% terug in {label} bij elke bestelling",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% korting — {name}",
+      "subject": "Welkom bij {groupName} — {restaurantName}",
+      "usageAccount": "Je voordelen worden automatisch toegepast als je bestelt — log eerst even in.",
+      "usageGuest": "Je voordelen worden automatisch toegepast als je bestelt — gebruik bij het afrekenen gewoon dit e-mailadres ({email})."
     }
   },
   "marketing": {

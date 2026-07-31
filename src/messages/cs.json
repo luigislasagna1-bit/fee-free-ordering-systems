@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Účet",
       "pickCustomersLabel": "Přidat zákazníky, které už máte",
       "pickedCount": "{count, plural, one {Vybrán # zákazník} few {Vybráni # zákazníci} other {Vybráno # zákazníků}}",
-      "showingRange": "Zobrazeno {from}–{to} z {total}"
+      "showingRange": "Zobrazeno {from}–{to} z {total}",
+      "notifyOnAddHint": "Novým členům dá vědět, že byli přidáni a jaké výhody získávají.",
+      "notifyOnAddLabel": "Poslat jim uvítací e-mail",
+      "sendWelcomeToAll": "Poslat uvítání všem členům",
+      "welcomeAllConfirm": "Poslat uvítací e-mail všem {count} členům této skupiny?",
+      "welcomeFailed": "Uvítací e-mail se nepodařilo odeslat.",
+      "welcomeSent": "{count, plural, =0 {Nebyly odeslány žádné e-maily} one {Uvítání odesláno # členovi} few {Uvítání odesláno # členům} other {Uvítání odesláno # členům}}",
+      "sendWelcomeToMember": "Poslat uvítací e-mail tomuto členovi",
+      "welcomeOneConfirm": "Poslat uvítací e-mail na adresu {email}?"
     },
     "rewards": {
       "title": "Věrnostní kredit",
@@ -5654,6 +5662,17 @@
       "howTo": "Vytvořte si s touto e-mailovou adresou bezplatný účet u podniku {restaurantName} a {label} se vám automaticky připíší do peněženky — můžete je utratit hned při příští objednávce.",
       "cta": "Vytvořit si účet",
       "ignoreLine": "Pokud jste tento e-mail nečekali, můžete ho klidně ignorovat."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Vytvořte si s tímto e-mailem účet, abyste mohli navíc sbírat a utrácet své odměny.",
+      "defaultRewardLabel": "odměny",
+      "intro": "Dobrá zpráva — přidali jsme vás do skupiny {groupName}. A co k tomu patří:",
+      "perkEarnRate": "{percent}% zpět z každé objednávky — {label}",
+      "perkNamed": "{name}",
+      "perkPercent": "Sleva {percent} % — {name}",
+      "subject": "Vítejte ve skupině {groupName} — {restaurantName}",
+      "usageAccount": "Vaše výhody se při objednávce uplatní automaticky — stačí se nejdřív přihlásit.",
+      "usageGuest": "Vaše výhody se při objednávce uplatní automaticky — u pokladny stačí zadat tuto e-mailovou adresu ({email})."
     }
   },
   "marketing": {

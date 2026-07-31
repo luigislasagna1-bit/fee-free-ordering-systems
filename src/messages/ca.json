@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Compte",
       "pickCustomersLabel": "Afegeix clients que ja tens",
       "pickedCount": "{count, plural, one {# client seleccionat} other {# clients seleccionats}}",
-      "showingRange": "Es mostren {from}–{to} de {total}"
+      "showingRange": "Es mostren {from}–{to} de {total}",
+      "notifyOnAddHint": "Comunica als membres nous que els has afegit i quins avantatges reben.",
+      "notifyOnAddLabel": "Envia'ls un correu de benvinguda",
+      "sendWelcomeToAll": "Envia la benvinguda a tots els membres",
+      "welcomeAllConfirm": "Vols enviar el correu de benvinguda a tots els {count} membres d'aquest grup?",
+      "welcomeFailed": "No s'ha pogut enviar el correu de benvinguda.",
+      "welcomeSent": "{count, plural, =0 {No s'ha enviat cap correu} one {S'ha enviat la benvinguda a # membre} other {S'ha enviat la benvinguda a # membres}}",
+      "sendWelcomeToMember": "Envia el correu de benvinguda a aquest membre",
+      "welcomeOneConfirm": "Vols enviar el correu de benvinguda a {email}?"
     },
     "rewards": {
       "title": "Dòlars de Recompensa",
@@ -5654,6 +5662,17 @@
       "howTo": "Crea el teu compte gratuït a {restaurantName} amb aquesta adreça electrònica i el teu saldo de {label} s'afegirà automàticament a la teva cartera — a punt per gastar en la teva propera comanda.",
       "cta": "Crear el meu compte",
       "ignoreLine": "Si no esperaves aquest correu, pots ignorar-lo amb tota tranquil·litat."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Crea un compte amb aquest correu electrònic per poder acumular i gastar també les teves recompenses.",
+      "defaultRewardLabel": "recompenses",
+      "intro": "Bona notícia — ara formes part de {groupName}. Això és el que hi guanyes:",
+      "perkEarnRate": "{percent}% de retorn en {label} a cada comanda",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% de descompte — {name}",
+      "subject": "Et donem la benvinguda a {groupName} de {restaurantName}",
+      "usageAccount": "Els teus avantatges s'apliquen automàticament quan fas la comanda: només cal que iniciïs la sessió abans.",
+      "usageGuest": "Els teus avantatges s'apliquen automàticament quan fas la comanda: només has d'introduir aquesta adreça de correu electrònic ({email}) en finalitzar la compra."
     }
   },
   "marketing": {

@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Nalog",
       "pickCustomersLabel": "Dodajte kupce koje već imate",
       "pickedCount": "{count, plural, one {Odabran # kupac} few {Odabrana # kupca} other {Odabrano # kupaca}}",
-      "showingRange": "Prikazano {from}–{to} od {total}"
+      "showingRange": "Prikazano {from}–{to} od {total}",
+      "notifyOnAddHint": "Obaveštava nove članove da su dodati i koje pogodnosti dobijaju.",
+      "notifyOnAddLabel": "Pošalji im e-poštu dobrodošlice",
+      "sendWelcomeToAll": "Pošalji dobrodošlicu svim članovima",
+      "welcomeAllConfirm": "Poslati e-poštu dobrodošlice svim članovima ove grupe ({count})?",
+      "welcomeFailed": "Slanje e-pošte dobrodošlice nije uspelo.",
+      "welcomeSent": "{count, plural, =0 {Nijedna e-poruka nije poslata} one {Dobrodošlica poslata # članu} few {Dobrodošlica poslata # članovima} other {Dobrodošlica poslata # članovima}}",
+      "sendWelcomeToMember": "Pošalji e-poštu dobrodošlice ovom članu",
+      "welcomeOneConfirm": "Poslati e-poštu dobrodošlice na {email}?"
     },
     "rewards": {
       "title": "Nagradni bodovi",
@@ -5654,6 +5662,17 @@
       "howTo": "Napravite besplatan nalog kod {restaurantName} koristeći ovu e-adresu i {label} će vam automatski biti dodat u novčanik — spreman za trošenje uz sledeću porudžbinu.",
       "cta": "Kreiraj moj nalog",
       "ignoreLine": "Ako ovo niste očekivali, slobodno zanemarite ovu e-poruku."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Napravite nalog sa ovom e-adresom da biste mogli i da skupljate i da trošite svoje nagrade.",
+      "defaultRewardLabel": "nagrade",
+      "intro": "Dobre vesti — dodati ste u {groupName}. Evo šta uz to dobijate:",
+      "perkEarnRate": "{percent}% povraćaja u {label} na svaku porudžbinu",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% popusta — {name}",
+      "subject": "Dobro došli u {groupName} — {restaurantName}",
+      "usageAccount": "Vaše pogodnosti se primenjuju automatski kada poručite — samo se prvo prijavite.",
+      "usageGuest": "Vaše pogodnosti se primenjuju automatski kada poručite — samo pri plaćanju unesite ovu e-adresu ({email})."
     }
   },
   "marketing": {

@@ -8,7 +8,8 @@
  * Scale seam: recipients are chunked so a large roster doesn't fan out unbounded.
  */
 import prisma from "@/lib/db";
-import { sendVipSpecialEmail } from "@/lib/email";
+import { sendVipSpecialEmail, sendVipGroupWelcomeEmail } from "@/lib/email";
+import { getDict } from "@/lib/i18n-dict";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 export type SpecialRecipient = { email: string; name: string | null; hasAccount: boolean };
@@ -115,4 +116,126 @@ export async function notifyRecipientsOfSpecial(opts: { promotionId: string; res
   const ctx = await loadSpecialContext(opts.promotionId, opts.restaurantId);
   if (!ctx) return 0;
   return sendToRecipients(ctx, opts.recipients);
+}
+
+/**
+ * "You've been added to <group>" welcome, with the perks spelled out
+ * (Luigi 2026-07-31 — members were added completely silently).
+ *
+ * The perk list is built from what the group ACTUALLY grants, so the email can
+ * never promise something checkout won't honour:
+ *   • the group's earn-rate override, resolved the same way the ledger does
+ *     (a member's personal rate beats the group's, so we only advertise the
+ *     group rate when it is genuinely the best they'd get);
+ *   • every ACTIVE member special attached to the group (inactive ones never
+ *     auto-apply, so mentioning them would be a lie — same rule as
+ *     loadSpecialContext).
+ *
+ * Fire-and-forget from the routes (wrap in `after()`); chunked like the
+ * special announcement so a big roster can't fan out unbounded.
+ */
+export async function notifyGroupWelcome(opts: {
+  groupId: string;
+  restaurantId: string;
+  /** Limit to these member row ids — used to email ONLY the people just added
+   *  (or one person on a manual resend). Omit to email the whole group. */
+  memberIds?: string[];
+}): Promise<number> {
+  const [group, restaurant] = await Promise.all([
+    prisma.customerGroup.findUnique({
+      where: { id: opts.groupId },
+      select: {
+        id: true, restaurantId: true, name: true, memberLabel: true, rewardEarnPercent: true,
+        // groupPromotions is the LINK table (the "Member specials" list on the
+        // group page); `promotions` is a different, direct relation.
+        groupPromotions: {
+          select: { promotion: { select: { name: true, isActive: true, promotionType: true, ruleConfig: true } } },
+        },
+      },
+    }),
+    prisma.restaurant.findUnique({
+      where: { id: opts.restaurantId },
+      select: {
+        name: true, slug: true, currency: true, defaultLanguage: true, email: true, phone: true,
+        subdomain: true, customDomain: true, customDomainStatus: true, vipMemberLabel: true,
+        rewardsEnabled: true, rewardEarnEnabled: true, rewardLabelPlural: true,
+      },
+    }),
+  ]);
+  if (!group || group.restaurantId !== opts.restaurantId || !restaurant) return 0;
+
+  const t = await getDict(restaurant.defaultLanguage ?? "en");
+  const orderUrl = restaurantOrderUrl(restaurant as any, "");
+  const signupUrl = restaurantOrderUrl(restaurant as any, "/account/signup");
+
+  // ── Perks ────────────────────────────────────────────────────────────────
+  const perkLines: string[] = [];
+  // Earn rate: only when rewards AND earning are switched on — with either off
+  // the ledger never pays this rate, so advertising it would be false.
+  if (restaurant.rewardsEnabled && restaurant.rewardEarnEnabled && (group.rewardEarnPercent ?? 0) > 0) {
+    perkLines.push(t("email.vipGroupWelcome.perkEarnRate", {
+      percent: group.rewardEarnPercent as number,
+      label: restaurant.rewardLabelPlural?.trim() || t("email.vipGroupWelcome.defaultRewardLabel"),
+    }));
+  }
+  for (const link of group.groupPromotions) {
+    const p = link.promotion;
+    if (!p?.isActive) continue;
+    const rc = (p.ruleConfig ?? {}) as any;
+    const pct = typeof rc.discountPercent === "number" ? rc.discountPercent : null;
+    perkLines.push(
+      pct != null
+        ? t("email.vipGroupWelcome.perkPercent", { percent: pct, name: p.name })
+        : t("email.vipGroupWelcome.perkNamed", { name: p.name }),
+    );
+  }
+  // Nothing to announce → don't send a hollow "welcome, you get nothing".
+  if (perkLines.length === 0) return 0;
+
+  const members = await prisma.customerGroupMember.findMany({
+    where: {
+      groupId: opts.groupId,
+      ...(opts.memberIds?.length ? { id: { in: opts.memberIds } } : {}),
+    },
+    take: 5000,
+    select: { email: true, name: true, customer: { select: { email: true, name: true, passwordHash: true } } },
+  });
+
+  const seen = new Set<string>();
+  const recipients = members
+    .map((m) => ({
+      email: (m.email ?? m.customer?.email ?? "").toLowerCase(),
+      name: m.name ?? m.customer?.name ?? null,
+      hasAccount: !!m.customer?.passwordHash,
+    }))
+    .filter((r) => r.email && !seen.has(r.email) && seen.add(r.email));
+
+  const memberLabel = group.memberLabel?.trim() || restaurant.vipMemberLabel;
+  let sent = 0;
+  const CHUNK = 25;
+  for (let i = 0; i < recipients.length; i += CHUNK) {
+    const batch = recipients.slice(i, i + CHUNK);
+    const results = await Promise.allSettled(batch.map((tg) =>
+      sendVipGroupWelcomeEmail({
+        to: tg.email,
+        customerName: tg.name ?? tg.email,
+        restaurantName: restaurant.name,
+        memberLabel,
+        groupName: group.name,
+        perkLines,
+        hasAccount: tg.hasAccount,
+        orderUrl,
+        signupUrl,
+        restaurantUrl: orderUrl,
+        restaurantEmail: restaurant.email,
+        restaurantPhone: restaurant.phone,
+        locale: restaurant.defaultLanguage,
+      }),
+    ));
+    for (const r of results) {
+      if (r.status === "fulfilled") sent++;
+      else console.error("[vip-notify] welcome email failed:", r.reason);
+    }
+  }
+  return sent;
 }

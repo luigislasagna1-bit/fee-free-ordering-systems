@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Conta",
       "pickCustomersLabel": "Adicionar os seus clientes existentes",
       "pickedCount": "{count, plural, one {# cliente selecionado} other {# clientes selecionados}}",
-      "showingRange": "A mostrar {from}–{to} de {total}"
+      "showingRange": "A mostrar {from}–{to} de {total}",
+      "notifyOnAddHint": "Informa os novos membros de que foram adicionados e quais as vantagens que recebem.",
+      "notifyOnAddLabel": "Enviar e-mail de boas-vindas",
+      "sendWelcomeToAll": "Enviar boas-vindas a todos os membros",
+      "welcomeAllConfirm": "Enviar o e-mail de boas-vindas a todos os {count} membros deste grupo?",
+      "welcomeFailed": "Não foi possível enviar o e-mail de boas-vindas.",
+      "welcomeSent": "{count, plural, =0 {Nenhum e-mail enviado} one {Boas-vindas enviadas a # membro} other {Boas-vindas enviadas a # membros}}",
+      "sendWelcomeToMember": "Enviar o e-mail de boas-vindas a este membro",
+      "welcomeOneConfirm": "Enviar o e-mail de boas-vindas a {email}?"
     },
     "rewards": {
       "title": "Saldo de recompensa",
@@ -5654,6 +5662,17 @@
       "howTo": "Crie a sua conta gratuita em {restaurantName} com este endereço de email e o seu saldo de {label} será adicionado automaticamente à sua carteira — pronto a usar no seu próximo pedido.",
       "cta": "Criar a minha conta",
       "ignoreLine": "Se não estava à espera desta oferta, pode simplesmente ignorar este email."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Crie uma conta com este e-mail para também acumular e usar as suas recompensas.",
+      "defaultRewardLabel": "recompensas",
+      "intro": "Boas notícias — foi adicionado(a) a {groupName}. Eis o que está incluído:",
+      "perkEarnRate": "{percent}% de volta em {label} em cada encomenda",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% de desconto — {name}",
+      "subject": "Bem-vindo(a) a {groupName} — {restaurantName}",
+      "usageAccount": "As suas vantagens são aplicadas automaticamente quando encomenda — basta iniciar sessão primeiro.",
+      "usageGuest": "As suas vantagens são aplicadas automaticamente quando encomenda — basta usar este endereço de e-mail ({email}) ao finalizar a encomenda."
     }
   },
   "marketing": {

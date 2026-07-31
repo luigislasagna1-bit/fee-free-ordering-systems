@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Compte",
       "pickCustomersLabel": "Ajouter des clients que vous avez déjà",
       "pickedCount": "{count, plural, one {# client sélectionné} other {# clients sélectionnés}}",
-      "showingRange": "Affichage de {from}–{to} sur {total}"
+      "showingRange": "Affichage de {from}–{to} sur {total}",
+      "notifyOnAddHint": "Indique aux nouveaux membres qu'ils ont été ajoutés et quels avantages ils obtiennent.",
+      "notifyOnAddLabel": "Leur envoyer un e-mail de bienvenue",
+      "sendWelcomeToAll": "Envoyer l'e-mail de bienvenue à tous les membres",
+      "welcomeAllConfirm": "Envoyer l'e-mail de bienvenue à tous les {count} membres de ce groupe ?",
+      "welcomeFailed": "Impossible d'envoyer l'e-mail de bienvenue.",
+      "welcomeSent": "{count, plural, =0 {Aucun e-mail envoyé} one {E-mail de bienvenue envoyé à # membre} other {E-mail de bienvenue envoyé à # membres}}",
+      "sendWelcomeToMember": "Envoyer l'e-mail de bienvenue à ce membre",
+      "welcomeOneConfirm": "Envoyer l'e-mail de bienvenue à {email} ?"
     },
     "rewards": {
       "title": "Crédits fidélité",
@@ -5654,6 +5662,17 @@
       "howTo": "Créez votre compte gratuit chez {restaurantName} avec cette adresse e-mail, et vos {label} seront automatiquement ajoutés à votre portefeuille — prêts à être utilisés lors de votre prochaine commande.",
       "cta": "Créer mon compte",
       "ignoreLine": "Si vous ne vous y attendiez pas, vous pouvez simplement ignorer cet e-mail."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Créez un compte avec cet e-mail pour également cumuler et dépenser vos crédits fidélité.",
+      "defaultRewardLabel": "crédits fidélité",
+      "intro": "Bonne nouvelle — vous faites désormais partie de {groupName}. Voici ce que cela vous apporte :",
+      "perkEarnRate": "{percent} % de retour en {label} sur chaque commande",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent} % de réduction — {name}",
+      "subject": "Bienvenue dans {groupName} chez {restaurantName}",
+      "usageAccount": "Vos avantages s'appliquent automatiquement lorsque vous commandez — il suffit de vous connecter.",
+      "usageGuest": "Vos avantages s'appliquent automatiquement lorsque vous commandez — utilisez simplement cette adresse e-mail ({email}) au moment du paiement."
     }
   },
   "marketing": {

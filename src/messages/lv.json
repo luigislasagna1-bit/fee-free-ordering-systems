@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Konts",
       "pickCustomersLabel": "Pievienot jau esošos klientus",
       "pickedCount": "{count, plural, zero {Atlasīts # klientu} one {Atlasīts # klients} other {Atlasīti # klienti}}",
-      "showingRange": "Rāda {from}–{to} no {total}"
+      "showingRange": "Rāda {from}–{to} no {total}",
+      "notifyOnAddHint": "Paziņo jaunajiem dalībniekiem, ka viņi ir pievienoti un kādas priekšrocības saņem.",
+      "notifyOnAddLabel": "Nosūtīt viņiem sveiciena e-pastu",
+      "sendWelcomeToAll": "Nosūtīt sveicienu visiem dalībniekiem",
+      "welcomeAllConfirm": "Nosūtīt sveiciena e-pastu visiem {count} šīs grupas dalībniekiem?",
+      "welcomeFailed": "Neizdevās nosūtīt sveiciena e-pastu.",
+      "welcomeSent": "{count, plural, =0 {Netika nosūtīts neviens e-pasts} zero {Sveiciens nosūtīts # dalībniekiem} one {Sveiciens nosūtīts # dalībniekam} other {Sveiciens nosūtīts # dalībniekiem}}",
+      "sendWelcomeToMember": "Nosūtīt sveicienu šim dalībniekam",
+      "welcomeOneConfirm": "Nosūtīt sveiciena e-pastu uz {email}?"
     },
     "rewards": {
       "title": "Bonusa dolāri",
@@ -5654,6 +5662,17 @@
       "howTo": "Izveidojiet bezmaksas kontu pie {restaurantName}, izmantojot šo e-pasta adresi, un jūsu {label} tiks automātiski pievienoti jūsu makam — gatavi tērēšanai nākamajā pasūtījumā.",
       "cta": "Izveidot kontu",
       "ignoreLine": "Ja negaidījāt šo e-pastu, varat to droši ignorēt."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Izveidojiet kontu ar šo e-pastu, lai varētu arī krāt un tērēt savus bonusus.",
+      "defaultRewardLabel": "bonusi",
+      "intro": "Labas ziņas — mēs jūs pievienojām grupai {groupName}. Lūk, ko tas jums sniedz:",
+      "perkEarnRate": "{percent}% atpakaļ kā {label} par katru pasūtījumu",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% atlaide — {name}",
+      "subject": "Laipni lūdzam grupā {groupName} — {restaurantName}",
+      "usageAccount": "Jūsu priekšrocības tiek piemērotas automātiski, kad pasūtāt — vienkārši vispirms pierakstieties.",
+      "usageGuest": "Jūsu priekšrocības tiek piemērotas automātiski, kad pasūtāt — norēķinoties vienkārši izmantojiet šo e-pasta adresi ({email})."
     }
   },
   "marketing": {

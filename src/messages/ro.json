@@ -4909,7 +4909,15 @@
       "hasAccountBadge": "Cont",
       "pickCustomersLabel": "Adăugați clienții existenți",
       "pickedCount": "{count, plural, one {# client selectat} few {# clienți selectați} other {# de clienți selectați}}",
-      "showingRange": "Se afișează {from}–{to} din {total}"
+      "showingRange": "Se afișează {from}–{to} din {total}",
+      "notifyOnAddHint": "Îi anunță pe noii membri că au fost adăugați și ce beneficii primesc.",
+      "notifyOnAddLabel": "Trimite-le un e-mail de bun venit",
+      "sendWelcomeToAll": "Trimite e-mailul de bun venit tuturor membrilor",
+      "welcomeAllConfirm": "Trimiteți e-mailul de bun venit tuturor membrilor acestui grup ({count})?",
+      "welcomeFailed": "Nu am putut trimite e-mailul de bun venit.",
+      "welcomeSent": "{count, plural, =0 {Niciun e-mail trimis} one {E-mail de bun venit trimis către # membru} few {E-mailuri de bun venit trimise către # membri} other {E-mailuri de bun venit trimise către # de membri}}",
+      "sendWelcomeToMember": "Trimite e-mailul de bun venit acestui membru",
+      "welcomeOneConfirm": "Trimiteți e-mailul de bun venit către {email}?"
     },
     "rewards": {
       "title": "Dolari de recompensă",
@@ -5654,6 +5662,17 @@
       "howTo": "Creează-ți contul gratuit la {restaurantName} folosind această adresă de e-mail, iar creditul tău în {label} va fi adăugat automat în portofel — gata de folosit la următoarea comandă.",
       "cta": "Îmi creez contul",
       "ignoreLine": "Dacă nu te așteptai la acest mesaj, poți ignora liniștit acest e-mail."
+    },
+    "vipGroupWelcome": {
+      "accountTip": "Creează-ți un cont cu acest email și vei putea, în plus, să aduni și să folosești recompense.",
+      "defaultRewardLabel": "recompense",
+      "intro": "Vești bune — acum faci parte din {groupName}. Iată ce primești:",
+      "perkEarnRate": "{percent}% înapoi în {label} la fiecare comandă",
+      "perkNamed": "{name}",
+      "perkPercent": "{percent}% reducere — {name}",
+      "subject": "Bine ai venit în {groupName} la {restaurantName}",
+      "usageAccount": "Beneficiile tale se aplică automat când comanzi — trebuie doar să te autentifici mai întâi.",
+      "usageGuest": "Beneficiile tale se aplică automat când comanzi — folosește doar această adresă de email ({email}) la finalizarea comenzii."
     }
   },
   "marketing": {
