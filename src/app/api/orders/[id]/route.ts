@@ -421,6 +421,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       updates.estimatedReady = new Date(Date.now() + finalPrepTime * 60 * 1000);
     }
   }
+  // Preset reason CODE from the kitchen's reject modal, when the reason wasn't
+  // free-typed. NOT persisted: `rejectionReason` stays the staff-language
+  // string that 180+ call sites, the kitchen tiles, exports and the
+  // "Auto-rejected" sentinels all rely on. The code is only carried through to
+  // the customer email, which re-renders it in THEIR language — a restaurant
+  // running the app in Chinese was mailing Chinese rejections to Italian
+  // diners (Fabrizio cms0gyexp #10).
+  const rejectionReasonKey =
+    typeof data.rejectionReasonKey === "string" && data.rejectionReasonKey.trim()
+      ? data.rejectionReasonKey.trim().slice(0, 40)
+      : null;
   if (newStatus === "rejected") {
     updates.rejectedAt = new Date();
     updates.rejectionReason = String(data.rejectionReason ?? "").slice(0, 500) || null;
@@ -757,6 +768,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             status: order.status,
             estimatedReady: order.estimatedReady ? new Date(order.estimatedReady) : undefined,
             rejectionReason: order.rejectionReason || undefined,
+            // Lets the email re-render a PRESET reason in the customer's
+            // language; free text / legacy callers omit it and the stored
+            // string is used as-is. Fabrizio cms0gyexp #10.
+            rejectionReasonKey,
             // Status-page link the customer clicks to track the order.
             // Without this the email template defaults the button to
             // href="#" and the "View order status" button does nothing

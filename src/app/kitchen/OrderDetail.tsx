@@ -914,8 +914,8 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
         order={order}
         t={t}
         onClose={() => setShowReject(false)}
-        onConfirm={async (reason) => {
-          await onUpdate(order.id, "rejected", { rejectionReason: reason });
+        onConfirm={async (reason, reasonKey) => {
+          await onUpdate(order.id, "rejected", { rejectionReason: reason, rejectionReasonKey: reasonKey });
         }}
       />
 

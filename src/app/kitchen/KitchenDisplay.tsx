@@ -370,8 +370,16 @@ function ReservationDetail({
             ✉️ <a href={`mailto:${r.customerEmail}`} className="underline">{r.customerEmail}</a>
           </div>
         )}
+        {/* Guest's reservation note — HIGHLIGHTED, not a muted quote
+            (Fabrizio cms0gyexp #12: as faint italic text it was easy to miss,
+            and these carry allergies / high-chair / accessibility requests).
+            Same yellow treatment the ORDER note already uses in OrderDetail
+            (cmrrjwclc), so staff recognise "customer wrote this" instantly.
+            whitespace-pre-line keeps multi-line notes readable. */}
         {r.notes && (
-          <div className={`text-xs ${t.muted} italic border-l-2 ${t.border} pl-3`}>&quot;{r.notes}&quot;</div>
+          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-sm text-yellow-700 dark:text-yellow-300 whitespace-pre-line">
+            {r.notes}
+          </div>
         )}
         {r.preOrderTotal > 0 && (
           <div className={`flex items-center justify-between rounded-xl border ${t.border} px-3 py-2`}>
@@ -5141,9 +5149,9 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         order={orders.find((o) => o.id === rejectFromPrep) ?? null}
         t={t}
         onClose={() => setRejectFromPrep(null)}
-        onConfirm={async (reason) => {
+        onConfirm={async (reason, reasonKey) => {
           if (!rejectFromPrep) return;
-          await updateStatus(rejectFromPrep, "rejected", { rejectionReason: reason });
+          await updateStatus(rejectFromPrep, "rejected", { rejectionReason: reason, rejectionReasonKey: reasonKey });
           toast.success("Order rejected — customer notified");
         }}
       />

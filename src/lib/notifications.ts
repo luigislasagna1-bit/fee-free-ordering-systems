@@ -539,7 +539,12 @@ export type CustomerEventPayload =
        *  the concrete time — "Check your email on Saturday, 25 Jul, 20:15"
        *  (GloriaFood parity, Fabrizio cms0gyexp #8). */
       opensAt?: Date | string | null }
-  | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string;
+  | { event: "orderStatusUpdate"; customerName: string; orderNumber: string; status: string; estimatedReady?: Date; rejectionReason?: string;
+      /** Preset reason CODE (kitchen.rejectReasons.*) so the email can render
+       *  it in the CUSTOMER's language instead of mailing the staff-language
+       *  string verbatim (Fabrizio cms0gyexp #10). Optional: free-typed
+       *  reasons and older callers simply omit it. */
+      rejectionReasonKey?: string | null; trackingUrl?: string; paidOnline?: boolean; paymentMethod?: string;
       /** Store credit the reject/cancel path returned to the wallet — caller
        *  gates on rewardsEnabled; the email adds the "returned to your wallet"
        *  card so a bucks-paid customer never reads "nothing to refund". */
@@ -760,6 +765,7 @@ export async function notifyCustomer(args: {
           restaurantName: restaurant.name,
           estimatedReady: payload.estimatedReady,
           rejectionReason: payload.rejectionReason,
+          rejectionReasonKey: payload.rejectionReasonKey,
           // Real status-page URL — fixes broken "View order status"
           // button on the accepted/ready/etc. emails (Luigi 2026-05-31).
           // Fallback derived from restaurant slug when caller omitted.

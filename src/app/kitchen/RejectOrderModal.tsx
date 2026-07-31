@@ -42,7 +42,7 @@ export function RejectOrderModal({
   t: T;
   onClose: () => void;
   /** Resolved reason string; parent calls updateStatus(...,"rejected",{rejectionReason}). */
-  onConfirm: (reason: string) => Promise<void>;
+  onConfirm: (reason: string, reasonKey?: string | null) => Promise<void>;
 }) {
   const tk = useTranslations("kitchen");
   const tCommon = useTranslations("common");
@@ -79,7 +79,12 @@ export function RejectOrderModal({
   const handleConfirm = async () => {
     setBusy(true);
     try {
-      await onConfirm(resolvedReason);
+      // Send BOTH: the resolved text (stored + shown to staff in THEIR
+      // language, unchanged) and the preset CODE, which lets the customer's
+      // email render the reason in the customer's own language instead of
+      // the staff's (Fabrizio cms0gyexp #10). "other" is free text — there is
+      // nothing to translate, so no code goes with it.
+      await onConfirm(resolvedReason, reasonKey && reasonKey !== "other" ? reasonKey : null);
       onClose();
     } finally {
       setBusy(false);

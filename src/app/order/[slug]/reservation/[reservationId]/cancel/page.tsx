@@ -15,9 +15,12 @@
  * a booking.
  */
 import { notFound } from "next/navigation";
+import { NextIntlClientProvider } from "next-intl";
 import prisma from "@/lib/db";
 import { verifyActionToken } from "@/lib/order-status-token";
 import { formatTime } from "@/lib/format-time";
+import { resolveLocale, loadMessages } from "@/lib/i18n-server";
+import { isSupportedLocale } from "@/lib/locales";
 import { CancelReservationConfirm, type CancelPageState } from "./CancelReservationConfirm";
 
 export const dynamic = "force-dynamic";
@@ -42,6 +45,12 @@ export default async function ReservationCancelPage({
   const tokenOk = verifyActionToken("reservation-cancel", reservationId, token);
 
   let state: CancelPageState = "invalid";
+  // The language the GUEST booked in, persisted on the row (cms0gyexp #2).
+  // It is the strongest signal here: this page is reached from an emailed
+  // link, so the visitor often has no locale cookie at all (different device,
+  // or first ever visit) — without this the page fell back to English while
+  // the email itself was correctly localized (Fabrizio cms0gyexp #11).
+  let bookedLocale: string | null = null;
   let booking: {
     dateTime: string;
     partySize: number;
@@ -55,9 +64,10 @@ export default async function ReservationCancelPage({
       where: { id: reservationId, restaurantId: restaurant.id },
       select: {
         status: true, orderId: true, customerName: true, confirmationCode: true,
-        partySize: true, date: true, time: true, depositPaid: true,
+        partySize: true, date: true, time: true, depositPaid: true, customerLocale: true,
       },
     });
+    bookedLocale = resv?.customerLocale ?? null;
     if (!resv) {
       state = "invalid";
     } else if (resv.orderId) {
@@ -91,15 +101,26 @@ export default async function ReservationCancelPage({
     }
   }
 
+  // Mount a nested provider like the order status page does — the root layout
+  // resolves from the cookie only, which is exactly what's missing on an
+  // emailed link. Booked locale wins; otherwise fall back to the normal
+  // cookie → restaurant-default → accept-language chain.
+  const locale = isSupportedLocale(bookedLocale)
+    ? bookedLocale
+    : await resolveLocale({ restaurantId: restaurant.id });
+  const messages = await loadMessages(locale);
+
   return (
-    <CancelReservationConfirm
-      slug={slug}
-      reservationId={reservationId}
-      token={token ?? ""}
-      restaurantName={restaurant.name}
-      themeSettings={restaurant.themeSettings}
-      initialState={state}
-      booking={booking}
-    />
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <CancelReservationConfirm
+        slug={slug}
+        reservationId={reservationId}
+        token={token ?? ""}
+        restaurantName={restaurant.name}
+        themeSettings={restaurant.themeSettings}
+        initialState={state}
+        booking={booking}
+      />
+    </NextIntlClientProvider>
   );
 }

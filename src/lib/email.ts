@@ -853,6 +853,15 @@ export async function sendOrderStatusUpdateEmail(params: {
   restaurantName: string;
   estimatedReady?: Date;
   rejectionReason?: string;
+  /** The reason CODE the kitchen picked (kitchen.rejectReasons.*), when it was
+   *  one of the presets rather than free text. `rejectionReason` is stored in
+   *  the STAFF's language — correct for the restaurant's own records and UI,
+   *  but it used to be mailed to the customer verbatim, so a restaurant with
+   *  its app set to Chinese sent Chinese rejections to Italian diners
+   *  (Fabrizio cms0gyexp #10). With the code we re-render the reason in the
+   *  CUSTOMER's locale here instead. Absent (free-typed "other", or a legacy
+   *  caller) → fall back to the stored text, exactly as before. */
+  rejectionReasonKey?: string | null;
   trackingUrl?: string;
   /** Order's payment method — drives which refund copy renders on
    *  rejected/cancelled emails ("card → 5-10 business days", "PayPal
@@ -916,7 +925,19 @@ export async function sendOrderStatusUpdateEmail(params: {
       // Forward the rejection reason (if any) so the template can surface
       // it. Previously dropped on the floor — customer never saw WHY their
       // order was declined.
-      rejectionReason: params.rejectionReason,
+      //
+      // Preset reasons are re-rendered from their CODE in the customer's
+      // locale (t is already bound to it); free text is passed through as
+      // typed. `t()` returns the key path itself when a key is missing, so
+      // an unknown/legacy code falls back to the stored text rather than
+      // mailing a raw "kitchen.rejectReasons.x" token. Fabrizio cms0gyexp #10.
+      rejectionReason: (() => {
+        const key = params.rejectionReasonKey?.trim();
+        if (!key || key === "other") return params.rejectionReason;
+        const path = `kitchen.rejectReasons.${key}`;
+        const localized = t(path);
+        return localized && localized !== path ? localized : params.rejectionReason;
+      })(),
       // Real status-page link. Previously was always "#" because the
       // dispatcher never threaded a trackingUrl through — the customer's
       // "View order status" button was a no-op. Luigi bug 2026-05-31.
