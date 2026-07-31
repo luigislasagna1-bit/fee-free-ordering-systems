@@ -4908,7 +4908,8 @@
       "clearSelection": "Tyhjennä",
       "hasAccountBadge": "Tili",
       "pickCustomersLabel": "Lisää olemassa olevia asiakkaita",
-      "pickedCount": "{count, plural, one {# asiakas valittu} other {# asiakasta valittu}}"
+      "pickedCount": "{count, plural, one {# asiakas valittu} other {# asiakasta valittu}}",
+      "showingRange": "Näytetään {from}–{to} / {total}"
     },
     "rewards": {
       "title": "Bonusrahat",

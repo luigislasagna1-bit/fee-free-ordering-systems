@@ -4908,7 +4908,8 @@
       "clearSelection": "Изчисти",
       "hasAccountBadge": "Акаунт",
       "pickCustomersLabel": "Добавяне на клиенти, които вече имате",
-      "pickedCount": "{count, plural, one {Избран е # клиент} other {Избрани са # клиенти}}"
+      "pickedCount": "{count, plural, one {Избран е # клиент} other {Избрани са # клиенти}}",
+      "showingRange": "Показани са {from}–{to} от {total}"
     },
     "rewards": {
       "title": "Бонус долари",

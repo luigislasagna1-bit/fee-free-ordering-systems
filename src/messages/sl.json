@@ -4908,7 +4908,8 @@
       "clearSelection": "Počisti",
       "hasAccountBadge": "Račun",
       "pickCustomersLabel": "Dodajte stranke, ki jih že imate",
-      "pickedCount": "{count, plural, one {Izbrana # stranka} two {Izbrani # stranki} few {Izbrane # stranke} other {Izbranih # strank}}"
+      "pickedCount": "{count, plural, one {Izbrana # stranka} two {Izbrani # stranki} few {Izbrane # stranke} other {Izbranih # strank}}",
+      "showingRange": "Prikazano {from}–{to} od {total}"
     },
     "rewards": {
       "title": "Nagradni dobropis",

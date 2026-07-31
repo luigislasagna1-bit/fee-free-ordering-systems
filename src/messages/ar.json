@@ -4908,7 +4908,8 @@
       "clearSelection": "مسح",
       "hasAccountBadge": "حساب",
       "pickCustomersLabel": "إضافة عملاء لديك بالفعل",
-      "pickedCount": "{count, plural, zero {تم تحديد # عملاء} one {تم تحديد # عميل} two {تم تحديد # عميلين} few {تم تحديد # عملاء} many {تم تحديد # عميلًا} other {تم تحديد # عميل}}"
+      "pickedCount": "{count, plural, zero {تم تحديد # عملاء} one {تم تحديد # عميل} two {تم تحديد # عميلين} few {تم تحديد # عملاء} many {تم تحديد # عميلًا} other {تم تحديد # عميل}}",
+      "showingRange": "عرض {from}–{to} من أصل {total}"
     },
     "rewards": {
       "title": "دولارات المكافآت",

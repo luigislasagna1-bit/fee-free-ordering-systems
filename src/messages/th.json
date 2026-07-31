@@ -4908,7 +4908,8 @@
       "clearSelection": "ล้าง",
       "hasAccountBadge": "บัญชี",
       "pickCustomersLabel": "เพิ่มลูกค้าที่คุณมีอยู่แล้ว",
-      "pickedCount": "{count, plural, other {เลือกลูกค้าแล้ว # คน}}"
+      "pickedCount": "{count, plural, other {เลือกลูกค้าแล้ว # คน}}",
+      "showingRange": "แสดง {from}–{to} จาก {total}"
     },
     "rewards": {
       "title": "เงินรางวัล",

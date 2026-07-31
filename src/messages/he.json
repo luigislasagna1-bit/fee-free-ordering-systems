@@ -4908,7 +4908,8 @@
       "clearSelection": "ניקוי",
       "hasAccountBadge": "חשבון",
       "pickCustomersLabel": "הוספת לקוחות שכבר יש לכם",
-      "pickedCount": "{count, plural, one {נבחר # לקוח} two {נבחרו # לקוחות} many {נבחרו # לקוחות} other {נבחרו # לקוחות}}"
+      "pickedCount": "{count, plural, one {נבחר # לקוח} two {נבחרו # לקוחות} many {נבחרו # לקוחות} other {נבחרו # לקוחות}}",
+      "showingRange": "מוצגים {from}–{to} מתוך {total}"
     },
     "rewards": {
       "title": "דולרים של תגמולים",

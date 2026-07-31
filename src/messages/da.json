@@ -4908,7 +4908,8 @@
       "clearSelection": "Ryd",
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Tilføj kunder, du allerede har",
-      "pickedCount": "{count, plural, one {# kunde valgt} other {# kunder valgt}}"
+      "pickedCount": "{count, plural, one {# kunde valgt} other {# kunder valgt}}",
+      "showingRange": "Viser {from}–{to} af {total}"
     },
     "rewards": {
       "title": "Bonuskroner",

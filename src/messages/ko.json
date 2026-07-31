@@ -4908,7 +4908,8 @@
       "clearSelection": "지우기",
       "hasAccountBadge": "계정",
       "pickCustomersLabel": "기존 고객 추가",
-      "pickedCount": "{count, plural, other {고객 #명 선택됨}}"
+      "pickedCount": "{count, plural, other {고객 #명 선택됨}}",
+      "showingRange": "전체 {total}명 중 {from}–{to}명 표시"
     },
     "rewards": {
       "title": "리워드 달러",

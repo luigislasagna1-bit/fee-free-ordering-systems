@@ -4908,7 +4908,8 @@
       "clearSelection": "Esborra",
       "hasAccountBadge": "Compte",
       "pickCustomersLabel": "Afegeix clients que ja tens",
-      "pickedCount": "{count, plural, one {# client seleccionat} other {# clients seleccionats}}"
+      "pickedCount": "{count, plural, one {# client seleccionat} other {# clients seleccionats}}",
+      "showingRange": "Es mostren {from}–{to} de {total}"
     },
     "rewards": {
       "title": "Dòlars de Recompensa",

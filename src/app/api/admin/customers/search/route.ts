@@ -1,40 +1,49 @@
 /**
- * GET /api/admin/customers/search?q=<term>&excludeGroupId=<id>
+ * GET /api/admin/customers/search?q=<term>&excludeGroupId=<id>&offset=<n>&limit=<n>
  *
- * Typeahead over the SESSION restaurant's customers, for pickers that need to
- * choose real people rather than have the owner retype email addresses
- * (first consumer: adding members to a VIP group — Luigi 2026-07-31).
+ * The SESSION restaurant's customers, for pickers that choose real people
+ * rather than making the owner retype email addresses (first consumer: adding
+ * members to a VIP group — Luigi 2026-07-31).
+ *
+ * Two modes, same endpoint:
+ *   • BROWSE — no `q`: a plain paged list, so the owner can scroll and page
+ *     through everyone instead of having to guess a search term first
+ *     (Luigi 2026-07-31, "should be a better way to see the customers").
+ *   • SEARCH — `q` given: filters by name / email / phone.
  *
  * Restaurant-scoped from the session, never from the client: a tampered query
  * can only ever see this restaurant's customers.
  *
- * Scale: `q` is required (no "list everything" mode), the WHERE is always
- * anchored on restaurantId — which is indexed, as are [restaurantId, email]
- * and [restaurantId, phone] — and results are hard-capped at MAX_RESULTS. A
- * 10k-customer restaurant cannot turn this into a full-table read.
+ * Scale: the WHERE is always anchored on restaurantId (indexed, as are
+ * [restaurantId, email] and [restaurantId, phone]); `limit` is clamped to
+ * MAX_LIMIT so browse mode can't be turned into a full-table dump; and the
+ * total is counted with the same WHERE so the client can page without
+ * over-fetching. A 10k-customer restaurant pages 25 rows at a time.
  *
- * `excludeGroupId` drops people who are ALREADY members of that group, so the
- * picker never offers a duplicate (the add endpoint dedupes too — this is for
- * the UI, not for correctness).
+ * `excludeGroupId` marks people ALREADY in that group so the picker can grey
+ * them out (the add endpoint dedupes too — this is for the UI, not safety).
  */
 
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 
-const MAX_RESULTS = 25;
-/** Below this we'd match half the table for one keystroke — the client also
- *  debounces, but the server must not depend on the client behaving. */
-const MIN_QUERY = 2;
+const DEFAULT_LIMIT = 25;
+const MAX_LIMIT = 50;
 
 export async function GET(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const q = (req.nextUrl.searchParams.get("q") ?? "").trim();
-  const excludeGroupId = req.nextUrl.searchParams.get("excludeGroupId")?.trim() || null;
-  if (q.length < MIN_QUERY) return NextResponse.json({ customers: [] });
+  const sp = req.nextUrl.searchParams;
+  const q = (sp.get("q") ?? "").trim();
+  const excludeGroupId = sp.get("excludeGroupId")?.trim() || null;
+  const offset = Math.max(0, Number.parseInt(sp.get("offset") ?? "0", 10) || 0);
+  const limit = Math.min(
+    MAX_LIMIT,
+    Math.max(1, Number.parseInt(sp.get("limit") ?? String(DEFAULT_LIMIT), 10) || DEFAULT_LIMIT),
+  );
 
   // Members already in the group — resolved to customerIds so the picker can
   // grey them out. Scoped to this restaurant so a foreign groupId reveals
@@ -49,21 +58,39 @@ export async function GET(req: NextRequest) {
     alreadyIn = new Set(existing.map((m) => m.customerId).filter(Boolean) as string[]);
   }
 
-  const rows = await prisma.customer.findMany({
-    where: {
-      restaurantId,
-      OR: [
-        { name: { contains: q, mode: "insensitive" } },
-        { email: { contains: q, mode: "insensitive" } },
-        { phone: { contains: q } },
-      ],
-    },
-    select: { id: true, name: true, email: true, phone: true, passwordHash: true },
-    orderBy: { name: "asc" },
-    take: MAX_RESULTS,
-  });
+  // Browse mode = no filter beyond the restaurant; search mode adds the OR.
+  const where = {
+    restaurantId,
+    ...(q
+      ? {
+          OR: [
+            { name: { contains: q, mode: "insensitive" as const } },
+            { email: { contains: q, mode: "insensitive" as const } },
+            { phone: { contains: q } },
+          ],
+        }
+      : {}),
+  };
+
+  const [total, rows] = await Promise.all([
+    prisma.customer.count({ where }),
+    prisma.customer.findMany({
+      where,
+      select: { id: true, name: true, email: true, phone: true, passwordHash: true },
+      // Name then id: `name` is not unique, so without the id tiebreaker two
+      // pages could repeat or skip a row (the paginated-sort rule from the
+      // admin table work).
+      orderBy: [{ name: "asc" }, { id: "asc" }],
+      skip: offset,
+      take: limit,
+    }),
+  ]);
 
   return NextResponse.json({
+    total,
+    offset,
+    limit,
+    hasMore: offset + rows.length < total,
     customers: rows.map((c) => ({
       id: c.id,
       name: c.name,

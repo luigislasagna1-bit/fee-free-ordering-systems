@@ -4908,7 +4908,8 @@
       "clearSelection": "Tøm",
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Legg til kunder du allerede har",
-      "pickedCount": "{count, plural, one {# kunde valgt} other {# kunder valgt}}"
+      "pickedCount": "{count, plural, one {# kunde valgt} other {# kunder valgt}}",
+      "showingRange": "Viser {from}–{to} av {total}"
     },
     "rewards": {
       "title": "Bonuskroner",

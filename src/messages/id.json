@@ -4908,7 +4908,8 @@
       "clearSelection": "Hapus pilihan",
       "hasAccountBadge": "Akun",
       "pickCustomersLabel": "Tambahkan pelanggan yang sudah Anda miliki",
-      "pickedCount": "{count, plural, other {# pelanggan dipilih}}"
+      "pickedCount": "{count, plural, other {# pelanggan dipilih}}",
+      "showingRange": "Menampilkan {from}–{to} dari {total}"
     },
     "rewards": {
       "title": "Dolar Hadiah",

@@ -4908,7 +4908,8 @@
       "clearSelection": "Očisti",
       "hasAccountBadge": "Račun",
       "pickCustomersLabel": "Dodajte kupce koje već imate",
-      "pickedCount": "{count, plural, one {Odabran # kupac} few {Odabrana # kupca} other {Odabrano # kupaca}}"
+      "pickedCount": "{count, plural, one {Odabran # kupac} few {Odabrana # kupca} other {Odabrano # kupaca}}",
+      "showingRange": "Prikazano {from}–{to} od {total}"
     },
     "rewards": {
       "title": "Nagradni bodovi",

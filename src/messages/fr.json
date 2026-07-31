@@ -4908,7 +4908,8 @@
       "clearSelection": "Effacer",
       "hasAccountBadge": "Compte",
       "pickCustomersLabel": "Ajouter des clients que vous avez déjà",
-      "pickedCount": "{count, plural, one {# client sélectionné} other {# clients sélectionnés}}"
+      "pickedCount": "{count, plural, one {# client sélectionné} other {# clients sélectionnés}}",
+      "showingRange": "Affichage de {from}–{to} sur {total}"
     },
     "rewards": {
       "title": "Crédits fidélité",

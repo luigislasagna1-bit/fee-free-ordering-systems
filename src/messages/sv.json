@@ -4908,7 +4908,8 @@
       "clearSelection": "Rensa",
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Lägg till kunder du redan har",
-      "pickedCount": "{count, plural, one {# kund vald} other {# kunder valda}}"
+      "pickedCount": "{count, plural, one {# kund vald} other {# kunder valda}}",
+      "showingRange": "Visar {from}–{to} av {total}"
     },
     "rewards": {
       "title": "Bonuspengar",

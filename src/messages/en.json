@@ -5112,7 +5112,8 @@
       "alreadyMemberBadge": "Already a member",
       "pickedCount": "{count, plural, one {# customer selected} other {# customers selected}}",
       "clearSelection": "Clear",
-      "addSelected": "{count, plural, one {Add # member} other {Add # members}}"
+      "addSelected": "{count, plural, one {Add # member} other {Add # members}}",
+      "showingRange": "Showing {from}–{to} of {total}"
     },
     "imageCrop": {
       "title": "Adjust your photo",

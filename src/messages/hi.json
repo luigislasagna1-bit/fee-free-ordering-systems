@@ -4908,7 +4908,8 @@
       "clearSelection": "साफ़ करें",
       "hasAccountBadge": "खाता",
       "pickCustomersLabel": "अपने मौजूदा ग्राहक जोड़ें",
-      "pickedCount": "{count, plural, one {# ग्राहक चुना गया} other {# ग्राहक चुने गए}}"
+      "pickedCount": "{count, plural, one {# ग्राहक चुना गया} other {# ग्राहक चुने गए}}",
+      "showingRange": "{total} में से {from}–{to} दिखाए जा रहे हैं"
     },
     "rewards": {
       "title": "रिवॉर्ड डॉलर",

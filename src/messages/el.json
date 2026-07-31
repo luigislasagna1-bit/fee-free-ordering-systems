@@ -4908,7 +4908,8 @@
       "clearSelection": "Εκκαθάριση",
       "hasAccountBadge": "Λογαριασμός",
       "pickCustomersLabel": "Προσθήκη υπαρχόντων πελατών",
-      "pickedCount": "{count, plural, one {Επιλέχθηκε # πελάτης} other {Επιλέχθηκαν # πελάτες}}"
+      "pickedCount": "{count, plural, one {Επιλέχθηκε # πελάτης} other {Επιλέχθηκαν # πελάτες}}",
+      "showingRange": "Εμφανίζονται {from}–{to} από {total}"
     },
     "rewards": {
       "title": "Δολάρια Επιβράβευσης",

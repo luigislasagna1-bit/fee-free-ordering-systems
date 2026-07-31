@@ -4908,7 +4908,8 @@
       "clearSelection": "Очистить",
       "hasAccountBadge": "Аккаунт",
       "pickCustomersLabel": "Добавить клиентов, которые у вас уже есть",
-      "pickedCount": "{count, plural, one {Выбран # клиент} few {Выбрано # клиента} many {Выбрано # клиентов} other {Выбрано # клиента}}"
+      "pickedCount": "{count, plural, one {Выбран # клиент} few {Выбрано # клиента} many {Выбрано # клиентов} other {Выбрано # клиента}}",
+      "showingRange": "Показаны {from}–{to} из {total}"
     },
     "rewards": {
       "title": "Бонусные доллары",

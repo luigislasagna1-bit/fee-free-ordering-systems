@@ -4908,7 +4908,8 @@
       "clearSelection": "Auswahl aufheben",
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Vorhandene Kunden hinzufügen",
-      "pickedCount": "{count, plural, one {# Kunde ausgewählt} other {# Kunden ausgewählt}}"
+      "pickedCount": "{count, plural, one {# Kunde ausgewählt} other {# Kunden ausgewählt}}",
+      "showingRange": "{from}–{to} von {total} werden angezeigt"
     },
     "rewards": {
       "title": "Bonusguthaben",

@@ -4908,7 +4908,8 @@
       "clearSelection": "清除",
       "hasAccountBadge": "账户",
       "pickCustomersLabel": "添加现有客户",
-      "pickedCount": "{count, plural, other {已选择 # 位客户}}"
+      "pickedCount": "{count, plural, other {已选择 # 位客户}}",
+      "showingRange": "显示第 {from}–{to} 条，共 {total} 条"
     },
     "rewards": {
       "title": "奖励金",

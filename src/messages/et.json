@@ -4908,7 +4908,8 @@
       "clearSelection": "Tühjenda",
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Lisa olemasolevaid kliente",
-      "pickedCount": "{count, plural, one {# klient valitud} other {# klienti valitud}}"
+      "pickedCount": "{count, plural, one {# klient valitud} other {# klienti valitud}}",
+      "showingRange": "Kuvatakse {from}–{to} / {total}"
     },
     "rewards": {
       "title": "Boonusraha",

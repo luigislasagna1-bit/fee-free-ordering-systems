@@ -4908,7 +4908,8 @@
       "clearSelection": "Wyczyść",
       "hasAccountBadge": "Konto",
       "pickCustomersLabel": "Dodaj klientów, których już masz",
-      "pickedCount": "{count, plural, one {Wybrano # klienta} few {Wybrano # klientów} many {Wybrano # klientów} other {Wybrano # klienta}}"
+      "pickedCount": "{count, plural, one {Wybrano # klienta} few {Wybrano # klientów} many {Wybrano # klientów} other {Wybrano # klienta}}",
+      "showingRange": "Pokazano {from}–{to} z {total}"
     },
     "rewards": {
       "title": "Złotówki za zakupy",

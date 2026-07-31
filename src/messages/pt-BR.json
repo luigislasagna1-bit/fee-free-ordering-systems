@@ -4908,7 +4908,8 @@
       "clearSelection": "Limpar",
       "hasAccountBadge": "Conta",
       "pickCustomersLabel": "Adicionar seus clientes existentes",
-      "pickedCount": "{count, plural, one {# cliente selecionado} other {# clientes selecionados}}"
+      "pickedCount": "{count, plural, one {# cliente selecionado} other {# clientes selecionados}}",
+      "showingRange": "Mostrando {from}–{to} de {total}"
     },
     "rewards": {
       "title": "Saldo de recompensa",

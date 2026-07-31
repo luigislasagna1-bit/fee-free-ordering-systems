@@ -4908,7 +4908,8 @@
       "clearSelection": "Zrušiť výber",
       "hasAccountBadge": "Účet",
       "pickCustomersLabel": "Pridať zákazníkov, ktorých už máte",
-      "pickedCount": "{count, plural, one {Vybraný # zákazník} few {Vybraní # zákazníci} other {Vybraných # zákazníkov}}"
+      "pickedCount": "{count, plural, one {Vybraný # zákazník} few {Vybraní # zákazníci} other {Vybraných # zákazníkov}}",
+      "showingRange": "Zobrazené {from}–{to} z {total}"
     },
     "rewards": {
       "title": "Vernostný kredit",

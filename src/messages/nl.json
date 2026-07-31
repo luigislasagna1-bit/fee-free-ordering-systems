@@ -4908,7 +4908,8 @@
       "clearSelection": "Wissen",
       "hasAccountBadge": "Account",
       "pickCustomersLabel": "Bestaande klanten toevoegen",
-      "pickedCount": "{count, plural, one {# klant geselecteerd} other {# klanten geselecteerd}}"
+      "pickedCount": "{count, plural, one {# klant geselecteerd} other {# klanten geselecteerd}}",
+      "showingRange": "{from}–{to} van {total} worden getoond"
     },
     "rewards": {
       "title": "Spaartegoed",

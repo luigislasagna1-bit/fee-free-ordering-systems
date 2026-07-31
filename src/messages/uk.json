@@ -4908,7 +4908,8 @@
       "clearSelection": "Очистити",
       "hasAccountBadge": "Обліковий запис",
       "pickCustomersLabel": "Додати клієнтів, які у вас уже є",
-      "pickedCount": "{count, plural, one {Вибрано # клієнта} few {Вибрано # клієнти} many {Вибрано # клієнтів} other {Вибрано # клієнта}}"
+      "pickedCount": "{count, plural, one {Вибрано # клієнта} few {Вибрано # клієнти} many {Вибрано # клієнтів} other {Вибрано # клієнта}}",
+      "showingRange": "Показано {from}–{to} з {total}"
     },
     "rewards": {
       "title": "Бонусні долари",

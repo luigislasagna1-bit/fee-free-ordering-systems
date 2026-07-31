@@ -4908,7 +4908,8 @@
       "clearSelection": "Temizle",
       "hasAccountBadge": "Hesap",
       "pickCustomersLabel": "Mevcut müşterileri ekle",
-      "pickedCount": "{count, plural, one {# müşteri seçildi} other {# müşteri seçildi}}"
+      "pickedCount": "{count, plural, one {# müşteri seçildi} other {# müşteri seçildi}}",
+      "showingRange": "{total} kayıttan {from}–{to} arası gösteriliyor"
     },
     "rewards": {
       "title": "Ödül Dolarları",

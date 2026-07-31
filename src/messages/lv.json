@@ -4908,7 +4908,8 @@
       "clearSelection": "Notīrīt",
       "hasAccountBadge": "Konts",
       "pickCustomersLabel": "Pievienot jau esošos klientus",
-      "pickedCount": "{count, plural, zero {Atlasīts # klientu} one {Atlasīts # klients} other {Atlasīti # klienti}}"
+      "pickedCount": "{count, plural, zero {Atlasīts # klientu} one {Atlasīts # klients} other {Atlasīti # klienti}}",
+      "showingRange": "Rāda {from}–{to} no {total}"
     },
     "rewards": {
       "title": "Bonusa dolāri",

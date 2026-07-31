@@ -4908,7 +4908,8 @@
       "clearSelection": "Kijelölés törlése",
       "hasAccountBadge": "Fiók",
       "pickCustomersLabel": "Meglévő ügyfelek hozzáadása",
-      "pickedCount": "{count, plural, one {# ügyfél kiválasztva} other {# ügyfél kiválasztva}}"
+      "pickedCount": "{count, plural, one {# ügyfél kiválasztva} other {# ügyfél kiválasztva}}",
+      "showingRange": "{from}–{to} látható, összesen {total}"
     },
     "rewards": {
       "title": "Jutalomdollár",

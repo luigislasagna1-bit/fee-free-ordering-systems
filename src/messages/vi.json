@@ -4908,7 +4908,8 @@
       "clearSelection": "Bỏ chọn",
       "hasAccountBadge": "Tài khoản",
       "pickCustomersLabel": "Thêm khách hàng bạn đã có",
-      "pickedCount": "{count, plural, other {Đã chọn # khách hàng}}"
+      "pickedCount": "{count, plural, other {Đã chọn # khách hàng}}",
+      "showingRange": "Hiển thị {from}–{to} trong tổng số {total}"
     },
     "rewards": {
       "title": "Đô-la Thưởng",

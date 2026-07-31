@@ -4908,7 +4908,8 @@
       "clearSelection": "クリア",
       "hasAccountBadge": "アカウント",
       "pickCustomersLabel": "既存のお客様を追加",
-      "pickedCount": "{count, plural, other {#人のお客様を選択中}}"
+      "pickedCount": "{count, plural, other {#人のお客様を選択中}}",
+      "showingRange": "全 {total} 件中 {from}–{to} 件を表示"
     },
     "rewards": {
       "title": "リワードドル",

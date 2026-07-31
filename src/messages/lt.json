@@ -4908,7 +4908,8 @@
       "clearSelection": "Išvalyti",
       "hasAccountBadge": "Paskyra",
       "pickCustomersLabel": "Pridėti jau turimus klientus",
-      "pickedCount": "{count, plural, one {Pasirinktas # klientas} few {Pasirinkti # klientai} other {Pasirinkta # klientų}}"
+      "pickedCount": "{count, plural, one {Pasirinktas # klientas} few {Pasirinkti # klientai} other {Pasirinkta # klientų}}",
+      "showingRange": "Rodoma {from}–{to} iš {total}"
     },
     "rewards": {
       "title": "Premijų doleriai",

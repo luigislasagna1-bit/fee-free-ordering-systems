@@ -4908,7 +4908,8 @@
       "clearSelection": "Deselectează",
       "hasAccountBadge": "Cont",
       "pickCustomersLabel": "Adăugați clienții existenți",
-      "pickedCount": "{count, plural, one {# client selectat} few {# clienți selectați} other {# de clienți selectați}}"
+      "pickedCount": "{count, plural, one {# client selectat} few {# clienți selectați} other {# de clienți selectați}}",
+      "showingRange": "Se afișează {from}–{to} din {total}"
     },
     "rewards": {
       "title": "Dolari de recompensă",

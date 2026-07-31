@@ -33,6 +33,8 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   const tMenu = useTranslations("admin.menuEditor");
   // Earn-rate card strings live with the rest of the rewards copy; toasts are
   // the shared admin saved/saveFailed pair.
+  // Shared Previous/Next for the customer-picker pager.
+  const tCommon = useTranslations("common");
   const tRewards = useTranslations("admin.rewards");
   const tToasts = useTranslations("admin.toasts");
   const router = useRouter();
@@ -121,35 +123,55 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   // missing. Debounced server-side search (restaurant-scoped + capped) so this
   // stays fast on a 10k-customer list instead of shipping the roster down.
   type Found = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean; alreadyMember: boolean };
+  const PICK_PAGE = 25;
+  const [pickOpen, setPickOpen] = useState(false);
   const [pickQuery, setPickQuery] = useState("");
   const [pickResults, setPickResults] = useState<Found[] | null>(null);
+  const [pickTotal, setPickTotal] = useState(0);
+  const [pickOffset, setPickOffset] = useState(0);
   const [picked, setPicked] = useState<Record<string, Found>>({});
   const [searching, setSearching] = useState(false);
   const pickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   // Guards against a slow earlier request overwriting a newer one's results.
   const pickSeq = useRef(0);
 
+  /** One loader for both modes — an empty query BROWSES (paged list of
+   *  everyone) instead of returning nothing, so the owner never has to guess a
+   *  search term to see who they have (Luigi 2026-07-31). */
+  async function loadPickPage(query: string, offset: number) {
+    const seq = ++pickSeq.current;
+    setSearching(true);
+    try {
+      const params = new URLSearchParams({
+        excludeGroupId: group.id,
+        offset: String(offset),
+        limit: String(PICK_PAGE),
+      });
+      if (query.trim()) params.set("q", query.trim());
+      const res = await fetch(`/api/admin/customers/search?${params}`);
+      const data = await res.json();
+      if (seq !== pickSeq.current) return; // a newer request already won
+      setPickResults(Array.isArray(data.customers) ? data.customers : []);
+      setPickTotal(Number(data.total) || 0);
+      setPickOffset(Number(data.offset) || 0);
+    } catch {
+      if (seq === pickSeq.current) { setPickResults([]); setPickTotal(0); }
+    } finally {
+      if (seq === pickSeq.current) setSearching(false);
+    }
+  }
+
+  function openPicker() {
+    const next = !pickOpen;
+    setPickOpen(next);
+    if (next && pickResults === null) loadPickPage("", 0);
+  }
+
   function onPickQueryChange(value: string) {
     setPickQuery(value);
     if (pickTimer.current) clearTimeout(pickTimer.current);
-    const q = value.trim();
-    if (q.length < 2) { setPickResults(null); setSearching(false); return; }
-    setSearching(true);
-    pickTimer.current = setTimeout(async () => {
-      const seq = ++pickSeq.current;
-      try {
-        const res = await fetch(
-          `/api/admin/customers/search?q=${encodeURIComponent(q)}&excludeGroupId=${encodeURIComponent(group.id)}`,
-        );
-        const data = await res.json();
-        if (seq !== pickSeq.current) return; // a newer keystroke already won
-        setPickResults(Array.isArray(data.customers) ? data.customers : []);
-      } catch {
-        if (seq === pickSeq.current) setPickResults([]);
-      } finally {
-        if (seq === pickSeq.current) setSearching(false);
-      }
-    }, 300);
+    // Typing always restarts at page 1; clearing the box falls back to browse.
+    pickTimer.current = setTimeout(() => loadPickPage(value, 0), 300);
   }
 
   function togglePick(c: Found) {
@@ -175,8 +197,10 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
       if (!res.ok) { toast.error(data.error || t("addFailed")); return; }
       toast.success(t("membersAdded", { count: data.added }));
       setPicked({});
-      setPickQuery("");
-      setPickResults(null);
+      // Re-load the SAME page so the people just added flip to "already a
+      // member" in place, rather than collapsing the list the owner was
+      // working through.
+      await loadPickPage(pickQuery, pickOffset);
       await reloadMembers();
       router.refresh();
     } finally { setAdding(false); }
@@ -387,7 +411,19 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
             Owners asked to choose real people instead of retyping addresses
             (Luigi 2026-07-31). The paste box below stays for bulk rosters and
             for people who aren't customers yet. */}
-        <label className="block text-xs font-medium text-gray-600 mb-1">{t("pickCustomersLabel")}</label>
+        <button
+          type="button"
+          onClick={openPicker}
+          className="w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 transition text-left"
+        >
+          <span className="flex items-center gap-2 text-sm font-medium text-gray-700">
+            <UserPlus className="w-4 h-4 text-gray-400" /> {t("pickCustomersLabel")}
+          </span>
+          <ChevronLeft className={`w-4 h-4 text-gray-400 transition-transform ${pickOpen ? "-rotate-90" : "rotate-180"}`} />
+        </button>
+
+        {pickOpen && (
+        <div className="mt-2">
         <div className="relative">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
           <input
@@ -400,7 +436,7 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
         </div>
 
         {pickResults !== null && (
-          <div className="mt-2 border border-gray-200 rounded-xl divide-y divide-gray-100 max-h-64 overflow-y-auto">
+          <div className="mt-2 border border-gray-200 rounded-xl divide-y divide-gray-100 max-h-80 overflow-y-auto">
             {pickResults.length === 0 && !searching && (
               <p className="text-xs text-gray-400 p-3">{tMenu("noMatchesFor", { query: pickQuery.trim() })}</p>
             )}
@@ -439,6 +475,39 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
               );
             })}
           </div>
+        )}
+
+        {/* Pager — the owner asked to page through everyone rather than have to
+            guess a search term (Luigi 2026-07-31). Hidden when everything fits
+            on one page. */}
+        {pickResults !== null && pickTotal > PICK_PAGE && (
+          <div className="mt-2 flex items-center justify-between gap-2">
+            <button
+              type="button"
+              disabled={pickOffset === 0 || searching}
+              onClick={() => loadPickPage(pickQuery, Math.max(0, pickOffset - PICK_PAGE))}
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {tCommon("previous")}
+            </button>
+            <span className="text-[11px] text-gray-500">
+              {t("showingRange", {
+                from: pickTotal === 0 ? 0 : pickOffset + 1,
+                to: Math.min(pickOffset + PICK_PAGE, pickTotal),
+                total: pickTotal,
+              })}
+            </span>
+            <button
+              type="button"
+              disabled={pickOffset + PICK_PAGE >= pickTotal || searching}
+              onClick={() => loadPickPage(pickQuery, pickOffset + PICK_PAGE)}
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {tCommon("next")}
+            </button>
+          </div>
+        )}
+        </div>
         )}
 
         {pickedList.length > 0 && (
