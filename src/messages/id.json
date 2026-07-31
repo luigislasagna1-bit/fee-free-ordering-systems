@@ -561,7 +561,14 @@
       "chargeToday": "Dibayar hari ini",
       "capNote": "Anda dapat menggunakan hingga {amount} untuk pesanan ini.",
       "earnLine": "+ Dapatkan {amount}",
-      "capHelp": "Restoran mengizinkan penggunaan hingga {percent}% dari total pesanan dalam {label}."
+      "capHelp": "Restoran mengizinkan penggunaan hingga {percent}% dari total pesanan dalam {label}.",
+      "signupHint": "💡 Daftar atau masuk untuk mendapatkan hadiah dari pembelian ini juga",
+      "balanceOwner": "Dari akun Anda · {email}"
+    },
+    "walletIdentity": {
+      "title": "Pesanan ini masuk ke akun Anda",
+      "body": "Anda masuk sebagai {account}, jadi pesanan ini — beserta {label} yang Anda pakai atau dapatkan di dalamnya — menjadi milik akun tersebut. Konfirmasinya akan dikirim ke {typed}.",
+      "useAccountEmail": "Kirim ke email saya sendiri saja"
     },
     "guestSigninMarketplace": "Sudah punya akun marketplace? <link>Masuk</link> agar tidak perlu mengetik ulang data Anda.",
     "guestSigninRestaurant": "Sudah punya akun di restoran ini? <link>Masuk</link> agar tidak perlu mengetik ulang data Anda.",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Tarif perolehan khusus",
       "personalRateDesc": "Pelanggan ini memperoleh persentase ini dalam {label} pada setiap pesanan — menggantikan tarif dasar dan tarif grup VIP mana pun.",
       "ratePlaceholder": "Tarif dasar",
-      "rateClear": "Hapus tarif khusus"
+      "rateClear": "Hapus tarif khusus",
+      "giftResend": "Kirim ulang petunjuknya",
+      "giftResent": "Petunjuk sudah dikirim ulang.",
+      "giftResendTooSoon": "Baru saja dikirim — tunggu sebentar sebelum mengirim lagi.",
+      "giftAlreadyPending": "Mereka sudah punya {label} senilai {amount} yang menunggu diklaim. Kirim ulang petunjuknya dengan tombol ✉ di bawah, atau batalkan dulu hadiah tersebut."
     },
     "imageCrop": {
       "title": "Sesuaikan foto Anda",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} baru saja menambahkan {amount} dalam {label} ke dompet Anda — ucapan terima kasih kecil dari restoran.",
       "balanceLine": "Saldo Anda sekarang {balance}",
       "spendHint": "{label} Anda diterapkan saat checkout — manjakan diri di pesanan berikutnya.",
-      "cta": "Pesan sekarang"
+      "cta": "Pesan sekarang",
+      "whatItIs": "{label} adalah saldo yang berlaku di {restaurantName} — langsung dipotong dari tagihan Anda, seperti kartu hadiah. Begini cara memakainya:",
+      "step1Title": "Masuk ke akun Anda",
+      "step1Body": "Gunakan alamat email ini — {email} — karena {label} Anda terhubung dengannya.",
+      "step1BodyNoEmail": "Masuklah dengan alamat email yang menerima pesan ini — saldo Anda terhubung dengannya.",
+      "step2Title": "Tambahkan menu yang ingin Anda santap",
+      "step2Body": "Pesan dari {restaurantName} seperti biasa.",
+      "step3Title": "Pilih berapa banyak {label} yang dipakai",
+      "step3Body": "Saat checkout Anda akan melihat “Gunakan {label} Anda”. Pakai sebanyak atau sesedikit yang Anda mau untuk pesanan itu — sisanya tinggal dibayar seperti biasa. Tidak ada masa berlaku, jadi saldonya tetap tersimpan sampai Anda ingin memakainya."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} punya hadiah untuk Anda — {label} senilai {amount}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "Dikhususkan untuk {email}",
       "howTo": "Buat akun gratis Anda di {restaurantName} dengan alamat email ini, dan {label} Anda akan otomatis ditambahkan ke dompet Anda — siap dipakai untuk pesanan berikutnya.",
       "cta": "Buat akun saya",
-      "ignoreLine": "Jika Anda tidak merasa mengharapkan email ini, Anda dapat mengabaikannya dengan aman."
+      "ignoreLine": "Jika Anda tidak merasa mengharapkan email ini, Anda dapat mengabaikannya dengan aman.",
+      "whatItIs": "{label} adalah saldo yang berlaku di {restaurantName} — langsung dipotong dari tagihan Anda, seperti kartu hadiah. Begini cara mendapatkannya:",
+      "step1Title": "Buat akun gratis Anda",
+      "step1Body": "Gunakan persis alamat email ini — {email} — karena dari situlah kami tahu hadiah ini milik Anda. Hanya butuh sekitar satu menit.",
+      "step2Title": "{amount} Anda muncul otomatis",
+      "step2Body": "Begitu pendaftaran selesai, saldonya sudah ada di akun Anda. Tidak ada kode yang perlu dimasukkan.",
+      "step3Title": "Pakai kapan pun Anda mau",
+      "step3Body": "Saat checkout Anda akan melihat “Gunakan {label} Anda”. Pakai sebanyak atau sesedikit yang Anda mau untuk pesanan itu — sisanya tinggal dibayar seperti biasa. Tidak ada masa berlaku, jadi saldonya tetap tersimpan sampai Anda ingin memakainya."
     },
     "vipGroupWelcome": {
       "accountTip": "Buat akun dengan email ini untuk sekaligus mengumpulkan dan menggunakan hadiah Anda.",

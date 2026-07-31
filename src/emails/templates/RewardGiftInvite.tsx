@@ -98,7 +98,7 @@ export default function RewardGiftInvite(props: RewardGiftInviteProps) {
         <Step
           n={2}
           title={t("email.rewardGiftInvite.step2Title", { amount: amountLabel })}
-          body={t("email.rewardGiftInvite.step2Body", { label: rewardLabel })}
+          body={t("email.rewardGiftInvite.step2Body")}
         />
         <Step
           n={3}

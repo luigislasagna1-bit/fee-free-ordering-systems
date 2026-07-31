@@ -95,7 +95,7 @@ export default function RewardGift(props: RewardGiftProps) {
           title={t("email.rewardGift.step1Title")}
           body={
             giftEmail
-              ? t("email.rewardGift.step1Body", { email: giftEmail })
+              ? t("email.rewardGift.step1Body", { email: giftEmail, label: rewardLabel })
               : t("email.rewardGift.step1BodyNoEmail")
           }
         />

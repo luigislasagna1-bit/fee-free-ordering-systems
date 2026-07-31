@@ -561,7 +561,14 @@
       "chargeToday": "Do zapłaty dziś",
       "capNote": "Do tego zamówienia możesz wykorzystać maksymalnie {amount}.",
       "earnLine": "+ Zdobądź {amount}",
-      "capHelp": "Restauracja pozwala wykorzystać do {percent}% wartości zamówienia w {label}."
+      "capHelp": "Restauracja pozwala wykorzystać do {percent}% wartości zamówienia w {label}.",
+      "signupHint": "💡 Załóż konto lub zaloguj się, aby zdobyć nagrody także za ten zakup",
+      "balanceOwner": "Z Twojego konta · {email}"
+    },
+    "walletIdentity": {
+      "title": "To zamówienie trafi na Twoje konto",
+      "body": "Jesteś zalogowany jako {account}, więc to zamówienie — i wszystkie {label}, które przy nim wykorzystasz lub zdobędziesz — należy do tego konta. Potwierdzenie wyślemy na adres {typed}.",
+      "useAccountEmail": "Wyślij je zamiast tego na mój adres e-mail"
     },
     "guestSigninMarketplace": "Masz już konto marketplace? <link>Zaloguj się</link>, aby nie wpisywać danych ponownie.",
     "guestSigninRestaurant": "Masz już konto w tej restauracji? <link>Zaloguj się</link>, aby nie wpisywać danych ponownie.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Anuluj ten prezent",
       "giftRevoked": "Prezent anulowany.",
       "giftRevokeTooLate": "Za późno — ten prezent został już odebrany.",
+      "giftResend": "Wyślij instrukcję ponownie",
+      "giftResent": "Instrukcja wysłana ponownie.",
+      "giftResendTooSoon": "Właśnie wysłano — odczekaj chwilę przed ponownym wysłaniem.",
+      "giftAlreadyPending": "Ta osoba ma już {amount} w {label} czekające na odbiór. Wyślij instrukcję ponownie przyciskiem ✉ poniżej albo najpierw anuluj tamten prezent.",
       "giftStatusPending": "Oczekujący",
       "giftStatusClaimed": "Odebrany",
       "giftStatusRevoked": "Anulowany",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} właśnie dodał {amount} w {label} do Twojego portfela — małe podziękowanie od restauracji.",
       "balanceLine": "Twoje saldo wynosi teraz {balance}",
       "spendHint": "Twoje {label} są naliczane przy płatności — zrób sobie przyjemność przy następnym zamówieniu.",
+      "whatItIs": "{label} to środki do wykorzystania w {restaurantName} — odejmowane bezpośrednio od Twojego rachunku, tak jak karta podarunkowa. Oto jak ich użyć:",
+      "step1Title": "Zaloguj się na swoje konto",
+      "step1Body": "Użyj tego adresu e-mail — {email} — bo to właśnie do niego przypisane są Twoje {label}.",
+      "step1BodyNoEmail": "Zaloguj się adresem e-mail, na który przyszła ta wiadomość — to właśnie do niego przypisane są Twoje środki.",
+      "step2Title": "Dodaj to, na co masz ochotę",
+      "step2Body": "Zamów w {restaurantName} dokładnie tak jak zwykle.",
+      "step3Title": "Wybierz, ile {label} chcesz wykorzystać",
+      "step3Body": "Przy płatności zobaczysz „Wykorzystaj swoje {label}”. Przeznacz na zamówienie tyle, ile chcesz — resztę po prostu dopłacasz jak zawsze. Środki nie mają terminu ważności, więc poczekają, aż zechcesz ich użyć.",
       "cta": "Zamów teraz"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} ma dla Ciebie prezent: {amount} w {label}.",
       "claimLine": "Zarezerwowane dla: {email}",
       "howTo": "Załóż bezpłatne konto w {restaurantName}, używając tego adresu e-mail, a Twoje {label} zostaną automatycznie dodane do portfela — gotowe do wykorzystania przy następnym zamówieniu.",
+      "whatItIs": "{label} to środki do wykorzystania w {restaurantName} — odejmowane bezpośrednio od Twojego rachunku, tak jak karta podarunkowa. Oto jak je odebrać:",
+      "step1Title": "Załóż bezpłatne konto",
+      "step1Body": "Użyj dokładnie tego adresu e-mail — {email} — bo właśnie po nim rozpoznamy, że prezent jest Twój. Zajmie to około minuty.",
+      "step2Title": "Twoje {amount} pojawi się automatycznie",
+      "step2Body": "W chwili zakończenia rejestracji środki są już na Twoim koncie. Nie musisz wpisywać żadnego kodu.",
+      "step3Title": "Wykorzystaj je, kiedy zechcesz",
+      "step3Body": "Przy płatności zobaczysz „Wykorzystaj swoje {label}”. Przeznacz na zamówienie tyle, ile chcesz — resztę po prostu dopłacasz jak zawsze. Środki nie mają terminu ważności, więc poczekają, aż zechcesz ich użyć.",
       "cta": "Załóż konto",
       "ignoreLine": "Jeśli nie spodziewasz się tej wiadomości, możesz ją po prostu zignorować."
     },

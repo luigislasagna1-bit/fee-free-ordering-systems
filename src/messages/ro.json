@@ -561,7 +561,14 @@
       "chargeToday": "De plată azi",
       "capNote": "Poți aplica până la {amount} la această comandă.",
       "earnLine": "+ Câștigi {amount}",
-      "capHelp": "Restaurantul permite folosirea a până la {percent}% din totalul comenzii în {label}."
+      "capHelp": "Restaurantul permite folosirea a până la {percent}% din totalul comenzii în {label}.",
+      "signupHint": "💡 Creează-ți cont sau autentifică-te ca să câștigi recompense și pentru această comandă",
+      "balanceOwner": "Din contul tău · {email}"
+    },
+    "walletIdentity": {
+      "title": "Comanda aceasta merge pe contul tău",
+      "body": "Ești autentificat ca {account}, așa că această comandă — și orice {label} cheltuiești sau câștigi la ea — aparține acelui cont. Confirmarea va fi trimisă la {typed}.",
+      "useAccountEmail": "Trimite-o mai bine pe e-mailul meu"
     },
     "guestSigninMarketplace": "Ai deja un cont marketplace? <link>Conectează-te</link> ca să nu reintroduci datele.",
     "guestSigninRestaurant": "Ai deja un cont la acest restaurant? <link>Conectează-te</link> ca să nu reintroduci datele.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Anulează acest cadou",
       "giftRevoked": "Cadou anulat.",
       "giftRevokeTooLate": "Prea târziu — acest cadou a fost deja revendicat.",
+      "giftResend": "Retrimite instrucțiunile",
+      "giftResent": "Instrucțiunile au fost trimise din nou.",
+      "giftResendTooSoon": "Tocmai le-am trimis — mai așteaptă un minut înainte de a trimite din nou.",
+      "giftAlreadyPending": "Această persoană are deja un cadou de {amount} în {label} care așteaptă să fie revendicat. Retrimite instrucțiunile cu butonul ✉ de mai jos sau anulează mai întâi acel cadou.",
       "giftStatusPending": "În așteptare",
       "giftStatusClaimed": "Revendicat",
       "giftStatusRevoked": "Anulat",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} tocmai a adăugat {amount} în {label} în portofelul tău — o mică mulțumire din partea restaurantului.",
       "balanceLine": "Soldul tău este acum {balance}",
       "spendHint": "{label} se aplică la finalizarea comenzii — răsfață-te la următoarea comandă.",
+      "whatItIs": "{label} înseamnă credit la {restaurantName} — se scade direct din nota ta de plată, ca un card cadou. Iată cum îl folosești:",
+      "step1Title": "Autentifică-te în contul tău",
+      "step1Body": "Folosește această adresă de e-mail — {email} — pentru că de ea este legat creditul tău în {label}.",
+      "step1BodyNoEmail": "Autentifică-te cu adresa de e-mail la care ai primit acest mesaj — de ea este legat creditul tău.",
+      "step2Title": "Adaugă ce ai poftă să mănânci",
+      "step2Body": "Comandă de la {restaurantName} exact ca de obicei.",
+      "step3Title": "Alege cât {label} folosești",
+      "step3Body": "La finalizarea comenzii vei vedea „Folosește-ți {label}”. Pui spre plata comenzii cât dorești, mai mult sau mai puțin — restul îl plătești ca de obicei. Nu expiră niciodată, așa că te așteaptă până vrei să-l folosești.",
       "cta": "Comandă acum"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} ți-a pus deoparte {amount} în {label}, special pentru tine.",
       "claimLine": "Rezervat pentru {email}",
       "howTo": "Creează-ți contul gratuit la {restaurantName} folosind această adresă de e-mail, iar creditul tău în {label} va fi adăugat automat în portofel — gata de folosit la următoarea comandă.",
+      "whatItIs": "{label} înseamnă credit la {restaurantName} — se scade direct din nota ta de plată, ca un card cadou. Iată cum îl primești:",
+      "step1Title": "Creează-ți contul gratuit",
+      "step1Body": "Folosește exact această adresă de e-mail — {email} — pentru că astfel știm că ție ți se cuvine cadoul. Durează cam un minut.",
+      "step2Title": "{amount} ajung automat în contul tău",
+      "step2Body": "Din clipa în care termini înscrierea, creditul este în contul tău. Nu trebuie să introduci niciun cod.",
+      "step3Title": "Îl folosești când vrei",
+      "step3Body": "La finalizarea comenzii vei vedea „Folosește-ți {label}”. Pui spre plata comenzii cât dorești, mai mult sau mai puțin — restul îl plătești ca de obicei. Nu expiră niciodată, așa că te așteaptă până vrei să-l folosești.",
       "cta": "Îmi creez contul",
       "ignoreLine": "Dacă nu te așteptai la acest mesaj, poți ignora liniștit acest e-mail."
     },

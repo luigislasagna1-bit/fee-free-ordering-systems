@@ -561,7 +561,14 @@
       "chargeToday": "Na úhradu dnes",
       "capNote": "Na túto objednávku môžete uplatniť najviac {amount}.",
       "earnLine": "+ Získajte {amount}",
-      "capHelp": "Reštaurácia umožňuje použiť až {percent}% zo sumy objednávky v {label}."
+      "capHelp": "Reštaurácia umožňuje použiť až {percent}% zo sumy objednávky v {label}.",
+      "signupHint": "💡 Zaregistrujte sa alebo sa prihláste a získajte odmeny aj za tento nákup",
+      "balanceOwner": "Z vášho účtu · {email}"
+    },
+    "walletIdentity": {
+      "title": "Táto objednávka pôjde na váš účet",
+      "body": "Ste prihlásení ako {account}, takže táto objednávka — aj {label}, ktoré pri nej miniete alebo získate — patrí k tomuto účtu. Potvrdenie pošleme na adresu {typed}.",
+      "useAccountEmail": "Poslať ho radšej na môj vlastný e-mail"
     },
     "guestSigninMarketplace": "Máte už účet marketplace? <link>Prihláste sa</link> a nemusíte zadávať údaje znova.",
     "guestSigninRestaurant": "Máte už účet v tejto reštaurácii? <link>Prihláste sa</link> a nemusíte zadávať údaje znova.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Zrušiť tento darček",
       "giftRevoked": "Darček bol zrušený.",
       "giftRevokeTooLate": "Príliš neskoro — tento darček už bol uplatnený.",
+      "giftResend": "Poslať pokyny znova",
+      "giftResent": "Pokyny boli odoslané znova.",
+      "giftResendTooSoon": "Práve odoslané — počkajte chvíľu, než pošlete znova.",
+      "giftAlreadyPending": "Tento hosť má na vyzdvihnutie už {amount} v {label}. Pošlite pokyny znova tlačidlom ✉ nižšie alebo najprv zrušte tento darček.",
       "giftStatusPending": "Čaká sa",
       "giftStatusClaimed": "Uplatnený",
       "giftStatusRevoked": "Zrušený",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} práve pridal {amount} v {label} do vašej peňaženky — malé poďakovanie od reštaurácie.",
       "balanceLine": "Váš zostatok je teraz {balance}",
       "spendHint": "Vaše {label} sa uplatnia pri platbe — doprajte si niečo pri ďalšej objednávke.",
+      "whatItIs": "S {label} máte kredit v reštaurácii {restaurantName} — odpočíta sa priamo zo sumy, ktorú platíte, presne ako darčeková karta. Takto ho použijete:",
+      "step1Title": "Prihláste sa do svojho účtu",
+      "step1Body": "Použite túto e-mailovú adresu — {email} — pretože práve k nej je pripísaný váš kredit v {label}.",
+      "step1BodyNoEmail": "Prihláste sa e-mailovou adresou, na ktorú prišla táto správa — práve k nej je váš kredit pripísaný.",
+      "step2Title": "Pridajte si, na čo máte chuť",
+      "step2Body": "Objednávajte v reštaurácii {restaurantName} presne tak ako zvyčajne.",
+      "step3Title": "Vyberte, koľko {label} chcete použiť",
+      "step3Body": "Pri platbe uvidíte „Využite svoj {label}“. Na objednávku použite toľko alebo tak málo, koľko chcete — zvyšok jednoducho doplatíte ako vždy. Platnosť nikdy nevyprší, takže vám kredit zostane, kým ho nebudete chcieť využiť.",
       "cta": "Objednať teraz"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} má pre vás pripravený darček — {label} v hodnote {amount}.",
       "claimLine": "Rezervované pre {email}",
       "howTo": "Vytvorte si bezplatný účet v reštaurácii {restaurantName} s touto e-mailovou adresou a váš kredit {label} sa automaticky pripíše do vašej peňaženky — pripravený na použitie pri vašej najbližšej objednávke.",
+      "whatItIs": "S {label} máte kredit v reštaurácii {restaurantName} — odpočíta sa priamo zo sumy, ktorú platíte, presne ako darčeková karta. Takto ho získate:",
+      "step1Title": "Vytvorte si bezplatný účet",
+      "step1Body": "Použite presne túto e-mailovú adresu — {email} — podľa nej spoznáme, že darček patrí vám. Zaberie to asi minútu.",
+      "step2Title": "{amount} sa vám pripíše automaticky",
+      "step2Body": "Hneď ako dokončíte registráciu, máte kredit na svojom účte. Žiadny kód netreba zadávať.",
+      "step3Title": "Miňte ho, kedykoľvek budete chcieť",
+      "step3Body": "Pri platbe uvidíte „Využite svoj {label}“. Na objednávku použite toľko alebo tak málo, koľko chcete — zvyšok jednoducho doplatíte ako vždy. Platnosť nikdy nevyprší, takže vám kredit zostane, kým ho nebudete chcieť využiť.",
       "cta": "Vytvoriť si účet",
       "ignoreLine": "Ak ste tento e-mail nečakali, môžete ho pokojne ignorovať."
     },

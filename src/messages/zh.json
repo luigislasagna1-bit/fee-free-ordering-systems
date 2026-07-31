@@ -561,7 +561,14 @@
       "chargeToday": "今日应付",
       "capNote": "本订单最多可使用 {amount}。",
       "earnLine": "+ 赚取 {amount}",
-      "capHelp": "餐厅允许使用 {label} 支付订单总额的最多 {percent}%。"
+      "capHelp": "餐厅允许使用 {label} 支付订单总额的最多 {percent}%。",
+      "signupHint": "💡 注册或登录，本次消费也能赚取奖励",
+      "balanceOwner": "来自您的账户 · {email}"
+    },
+    "walletIdentity": {
+      "title": "此订单将记在您的账户上",
+      "body": "您当前以 {account} 登录，因此这份订单——以及在此订单中使用或赚取的 {label}——都归属该账户。确认邮件将发送至 {typed}。",
+      "useAccountEmail": "改为发送到我自己的邮箱"
     },
     "guestSigninMarketplace": "已有 marketplace 账户？<link>登录</link>即可免去重新填写您的信息。",
     "guestSigninRestaurant": "已在本餐厅有账户？<link>登录</link>即可免去重新填写您的信息。",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "自定义返还比例",
       "personalRateDesc": "该顾客每笔订单按此比例返还 {label} —— 优先于基础比例和任何 VIP 群组比例。",
       "ratePlaceholder": "基础比例",
-      "rateClear": "清除自定义比例"
+      "rateClear": "清除自定义比例",
+      "giftResend": "重新发送说明",
+      "giftResent": "说明已再次发送。",
+      "giftResendTooSoon": "刚刚才发送过——请稍等一分钟再发。",
+      "giftAlreadyPending": "对方已有 {amount} 的 {label} 等待领取。可用下方的 ✉ 按钮重新发送说明，或先取消那份赠礼。"
     },
     "imageCrop": {
       "title": "调整您的照片",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName}刚刚向您的钱包添加了 {amount} {label}——来自餐厅的小小心意。",
       "balanceLine": "您的余额现为 {balance}",
       "spendHint": "您的{label}将在结账时抵扣——下次下单时犒劳一下自己吧。",
-      "cta": "立即下单"
+      "cta": "立即下单",
+      "whatItIs": "{label} 是您在 {restaurantName} 的消费额度——像礼品卡一样，直接从您的账单中扣除。使用方法如下：",
+      "step1Title": "登录您的账户",
+      "step1Body": "请使用这个邮箱地址——{email}——因为您的 {label} 就绑定在它上面。",
+      "step1BodyNoEmail": "请用收到这封邮件的那个邮箱地址登录——您的额度就绑定在它上面。",
+      "step2Title": "添加您想吃的美食",
+      "step2Body": "像平时一样在 {restaurantName} 下单即可。",
+      "step3Title": "选择使用多少 {label}",
+      "step3Body": "在结账页面您会看到“使用您的{label}”。用多用少都由您决定——剩下的金额照常支付即可。额度永不过期，什么时候想用都可以。"
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} 为您准备了一份礼物——价值 {amount} 的 {label}！",
@@ -5672,7 +5691,14 @@
       "claimLine": "已为 {email} 预留",
       "howTo": "使用此邮箱在 {restaurantName} 创建免费账户，您的 {label} 将自动存入您的钱包——下次下单即可使用。",
       "cta": "创建我的账户",
-      "ignoreLine": "如果您并未预期收到此邮件，直接忽略即可，无需担心。"
+      "ignoreLine": "如果您并未预期收到此邮件，直接忽略即可，无需担心。",
+      "whatItIs": "{label} 是您在 {restaurantName} 的消费额度——像礼品卡一样，直接从您的账单中扣除。领取方法如下：",
+      "step1Title": "创建您的免费账户",
+      "step1Body": "请使用这个完全一致的邮箱地址——{email}——我们正是通过它确认这份礼物属于您。大约一分钟即可完成。",
+      "step2Title": "您的 {amount} 会自动到账",
+      "step2Body": "注册完成的那一刻，额度就已在您的账户里，无需输入任何代码。",
+      "step3Title": "随时想用就用",
+      "step3Body": "在结账页面您会看到“使用您的{label}”。用多用少都由您决定——剩下的金额照常支付即可。额度永不过期，什么时候想用都可以。"
     },
     "vipGroupWelcome": {
       "accountTip": "用此邮箱创建账户，还可以累积并使用您的奖励。",

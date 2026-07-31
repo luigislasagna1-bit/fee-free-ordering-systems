@@ -561,7 +561,14 @@
       "chargeToday": "Å betale i dag",
       "capNote": "Du kan bruke inntil {amount} på denne bestillingen.",
       "earnLine": "+ Tjen {amount}",
-      "capHelp": "Restauranten tillater å bruke opptil {percent}% av ordresummen i {label}."
+      "capHelp": "Restauranten tillater å bruke opptil {percent}% av ordresummen i {label}.",
+      "signupHint": "💡 Registrer deg eller logg inn for å tjene bonus på dette kjøpet også",
+      "balanceOwner": "Fra kontoen din · {email}"
+    },
+    "walletIdentity": {
+      "title": "Denne bestillingen legges på kontoen din",
+      "body": "Du er logget inn som {account}, så denne bestillingen — og alle {label} du bruker eller tjener på den — hører til den kontoen. Bekreftelsen sendes til {typed}.",
+      "useAccountEmail": "Send den til min egen e-postadresse i stedet"
     },
     "guestSigninMarketplace": "Har du allerede en marketplace-konto? <link>Logg inn</link> for å slippe å skrive inn opplysningene på nytt.",
     "guestSigninRestaurant": "Har du allerede en konto hos denne restauranten? <link>Logg inn</link> for å slippe å skrive inn opplysningene på nytt.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Annuller denne gaven",
       "giftRevoked": "Gaven er annullert.",
       "giftRevokeTooLate": "For sent — gaven er allerede innløst.",
+      "giftResend": "Send veiledningen på nytt",
+      "giftResent": "Veiledningen er sendt på nytt.",
+      "giftResendTooSoon": "Nettopp sendt — vent et minutt før du sender på nytt.",
+      "giftAlreadyPending": "De har allerede {amount} i {label} som venter på å bli hentet. Send veiledningen på nytt med ✉-knappen nedenfor, eller annuller den gaven først.",
       "giftStatusPending": "Venter",
       "giftStatusClaimed": "Innløst",
       "giftStatusRevoked": "Annullert",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} har nettopp lagt til {amount} i {label} i lommeboken din — en liten takk fra restauranten.",
       "balanceLine": "Saldoen din er nå {balance}",
       "spendHint": "Dine {label} brukes i kassen — unn deg noe ved neste bestilling.",
+      "whatItIs": "{label} er tilgodehavende hos {restaurantName} — det trekkes rett fra regningen din, akkurat som et gavekort. Slik bruker du det:",
+      "step1Title": "Logg inn på kontoen din",
+      "step1Body": "Bruk denne e-postadressen — {email} — for det er den dine {label} er knyttet til.",
+      "step1BodyNoEmail": "Logg inn med e-postadressen denne meldingen ble sendt til — tilgodehavendet ditt er knyttet til den.",
+      "step2Title": "Velg det du har lyst på",
+      "step2Body": "Bestill fra {restaurantName} helt som du pleier.",
+      "step3Title": "Velg hvor mye {label} du vil bruke",
+      "step3Body": "I kassen ser du «Bruk dine {label}». Legg så mye eller så lite du vil på bestillingen — resten betaler du helt som vanlig. Det finnes ingen utløpsdato, så det blir stående til du vil bruke det.",
       "cta": "Bestill nå"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} har satt av {amount} i {label} bare til deg.",
       "claimLine": "Reservert for {email}",
       "howTo": "Opprett en gratis konto hos {restaurantName} med denne e-postadressen, så blir dine {label} automatisk lagt til i lommeboken din — klare til å bruke på din neste bestilling.",
+      "whatItIs": "{label} er tilgodehavende hos {restaurantName} — det trekkes rett fra regningen din, akkurat som et gavekort. Slik får du ditt:",
+      "step1Title": "Opprett din gratis konto",
+      "step1Body": "Bruk nøyaktig denne e-postadressen — {email} — for det er slik vi vet at gaven er din. Det tar omtrent ett minutt.",
+      "step2Title": "Dine {amount} dukker opp automatisk",
+      "step2Body": "I det øyeblikket du er ferdig med registreringen, ligger tilgodehavendet på kontoen din. Du trenger ikke å taste inn noen kode.",
+      "step3Title": "Bruk det når du vil",
+      "step3Body": "I kassen ser du «Bruk dine {label}». Legg så mye eller så lite du vil på bestillingen — resten betaler du helt som vanlig. Det finnes ingen utløpsdato, så det blir stående til du vil bruke det.",
       "cta": "Opprett kontoen min",
       "ignoreLine": "Hvis du ikke ventet denne e-posten, kan du trygt se bort fra den."
     },

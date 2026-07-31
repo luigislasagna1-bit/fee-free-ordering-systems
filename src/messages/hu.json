@@ -561,7 +561,14 @@
       "chargeToday": "Ma fizetendő",
       "capNote": "Ehhez a rendeléshez legfeljebb {amount} használható fel.",
       "earnLine": "+ {amount} jóváírás",
-      "capHelp": "Az étterem a rendelés végösszegének legfeljebb {percent}%-áig engedi a(z) {label} felhasználását."
+      "capHelp": "Az étterem a rendelés végösszegének legfeljebb {percent}%-áig engedi a(z) {label} felhasználását.",
+      "signupHint": "💡 Regisztráljon vagy jelentkezzen be, hogy erre a vásárlásra is kapjon jutalmat",
+      "balanceOwner": "A fiókjából · {email}"
+    },
+    "walletIdentity": {
+      "title": "Ez a rendelés a fiókjához tartozik",
+      "body": "{account} néven van bejelentkezve, így ez a rendelés — és minden {label}, amit rá elkölt vagy vele szerez — ehhez a fiókhoz tartozik. A visszaigazolást a(z) {typed} címre küldjük.",
+      "useAccountEmail": "Inkább a saját e-mail-címemre kérem"
     },
     "guestSigninMarketplace": "Van már marketplace-fiókja? <link>Jelentkezzen be</link>, hogy ne kelljen újra megadnia az adatait.",
     "guestSigninRestaurant": "Van már fiókja ennél az étteremnél? <link>Jelentkezzen be</link>, hogy ne kelljen újra megadnia az adatait.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Ajándék visszavonása",
       "giftRevoked": "Ajándék visszavonva.",
       "giftRevokeTooLate": "Már késő — ezt az ajándékot már beváltották.",
+      "giftResend": "Útmutató újraküldése",
+      "giftResent": "Az útmutatót újra elküldtük.",
+      "giftResendTooSoon": "Épp most küldtük el — várjon egy percet az újraküldéssel.",
+      "giftAlreadyPending": "Ennek a vendégnek már vár átvételre {amount} értékű {label} egyenleg. Küldje el újra az útmutatót az alábbi ✉ gombbal, vagy előbb vonja vissza azt az ajándékot.",
       "giftStatusPending": "Függőben",
       "giftStatusClaimed": "Beváltva",
       "giftStatusRevoked": "Visszavonva",
@@ -5660,6 +5671,14 @@
       "body": "A(z) {restaurantName} most írt jóvá {amount} értékű {label} összeget a tárcájában — egy kis köszönet az étteremtől.",
       "balanceLine": "Egyenlege most {balance}",
       "spendHint": "A {label} a fizetéskor kerül felhasználásra — kényeztesse magát a következő rendelésnél.",
+      "whatItIs": "A(z) {label} a(z) {restaurantName} étteremnél felhasználható egyenleg — közvetlenül a fizetendő végösszegből vonjuk le, akárcsak egy ajándékkártyát. Így használhatja fel:",
+      "step1Title": "Jelentkezzen be a fiókjába",
+      "step1Body": "Ezt az e-mail-címet használja — {email} —, mert a(z) {label} egyenlege ehhez a címhez van kötve.",
+      "step1BodyNoEmail": "Azzal az e-mail-címmel jelentkezzen be, amelyre ez az üzenet érkezett — az egyenlege ehhez a címhez van kötve.",
+      "step2Title": "Tegye kosárba, amit szeretne",
+      "step2Body": "Rendeljen a(z) {restaurantName} étteremtől pontosan úgy, ahogy máskor.",
+      "step3Title": "Válassza ki, mennyi {label} egyenleget használ fel",
+      "step3Body": "A fizetésnél megjelenik a(z) „{label} felhasználása” lehetőség. Annyit fordíthat a rendelésre, amennyit szeretne — a maradékot egyszerűen a szokásos módon fizeti. Az egyenleg soha nem jár le, így megmarad, amíg fel nem szeretné használni.",
       "cta": "Rendeljen most"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "A(z) {restaurantName} {amount} értékű {label} egyenleget tett félre kifejezetten Önnek.",
       "claimLine": "Fenntartva: {email}",
       "howTo": "Hozza létre ingyenes fiókját a(z) {restaurantName} oldalán ezzel az e-mail-címmel, és a(z) {label} egyenlege automatikusan bekerül a tárcájába — máris elköltheti a következő rendelésénél.",
+      "whatItIs": "A(z) {label} a(z) {restaurantName} étteremnél felhasználható egyenleg — közvetlenül a fizetendő végösszegből vonjuk le, akárcsak egy ajándékkártyát. Így juthat hozzá:",
+      "step1Title": "Hozza létre ingyenes fiókját",
+      "step1Body": "Pontosan ezt az e-mail-címet használja — {email} —, mert erről tudjuk, hogy az ajándék az Öné. Nagyjából egy percet vesz igénybe.",
+      "step2Title": "A(z) {amount} automatikusan megjelenik",
+      "step2Body": "Amint befejezi a regisztrációt, az egyenleg már a fiókjában van. Nem kell kódot beírnia.",
+      "step3Title": "Költse el, amikor csak szeretné",
+      "step3Body": "A fizetésnél megjelenik a(z) „{label} felhasználása” lehetőség. Annyit fordíthat a rendelésre, amennyit szeretne — a maradékot egyszerűen a szokásos módon fizeti. Az egyenleg soha nem jár le, így megmarad, amíg fel nem szeretné használni.",
       "cta": "Létrehozom a fiókomat",
       "ignoreLine": "Ha nem számított erre az üzenetre, nyugodtan hagyja figyelmen kívül ezt az e-mailt."
     },

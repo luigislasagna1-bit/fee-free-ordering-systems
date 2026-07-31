@@ -561,7 +561,14 @@
       "chargeToday": "Att betala idag",
       "capNote": "Du kan använda upp till {amount} på den här beställningen.",
       "earnLine": "+ Tjäna {amount}",
-      "capHelp": "Restaurangen tillåter att använda upp till {percent}% av ordersumman i {label}."
+      "capHelp": "Restaurangen tillåter att använda upp till {percent}% av ordersumman i {label}.",
+      "signupHint": "💡 Registrera dig eller logga in för att tjäna bonus på det här köpet också",
+      "balanceOwner": "Från ditt konto · {email}"
+    },
+    "walletIdentity": {
+      "title": "Beställningen läggs på ditt konto",
+      "body": "Du är inloggad som {account}, så den här beställningen — och alla {label} du använder eller tjänar på den — hör till det kontot. Bekräftelsen skickas till {typed}.",
+      "useAccountEmail": "Skicka den till min egen e-postadress i stället"
     },
     "guestSigninMarketplace": "Har du redan ett marketplace-konto? <link>Logga in</link> för att slippa skriva in dina uppgifter igen.",
     "guestSigninRestaurant": "Har du redan ett konto hos den här restaurangen? <link>Logga in</link> för att slippa skriva in dina uppgifter igen.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Återkalla den här gåvan",
       "giftRevoked": "Gåvan har återkallats.",
       "giftRevokeTooLate": "För sent — gåvan har redan lösts in.",
+      "giftResend": "Skicka instruktionerna igen",
+      "giftResent": "Instruktionerna har skickats igen.",
+      "giftResendTooSoon": "Nyss skickat — vänta en minut innan du skickar igen.",
+      "giftAlreadyPending": "Personen har redan {amount} i {label} som väntar på att hämtas ut. Skicka instruktionerna igen med ✉-knappen nedan, eller återkalla den gåvan först.",
       "giftStatusPending": "Väntar",
       "giftStatusClaimed": "Inlöst",
       "giftStatusRevoked": "Återkallad",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} har precis lagt till {amount} i {label} i din plånbok — ett litet tack från restaurangen.",
       "balanceLine": "Ditt saldo är nu {balance}",
       "spendHint": "Dina {label} används i kassan — unna dig något vid nästa beställning.",
+      "whatItIs": "{label} är tillgodohavande hos {restaurantName} — det dras direkt från din nota, precis som ett presentkort. Så här använder du det:",
+      "step1Title": "Logga in på ditt konto",
+      "step1Body": "Använd den här e-postadressen — {email} — eftersom dina {label} är kopplade till just den.",
+      "step1BodyNoEmail": "Logga in med den e-postadress som det här meddelandet skickades till — ditt tillgodohavande är kopplat till just den.",
+      "step2Title": "Lägg till det du vill äta",
+      "step2Body": "Beställ från {restaurantName} precis som vanligt.",
+      "step3Title": "Välj hur mycket {label} du vill använda",
+      "step3Body": "I kassan ser du ”Använd dina {label}”. Lägg så mycket eller så lite du vill på beställningen — resten betalar du som vanligt. Det finns inget sista datum, så det ligger kvar tills du vill använda det.",
       "cta": "Beställ nu"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} har lagt undan {amount} i {label} bara till dig.",
       "claimLine": "Reserverad för {email}",
       "howTo": "Skapa ditt kostnadsfria konto hos {restaurantName} med den här e-postadressen, så läggs dina {label} automatiskt till i din plånbok — redo att användas vid din nästa beställning.",
+      "whatItIs": "{label} är tillgodohavande hos {restaurantName} — det dras direkt från din nota, precis som ett presentkort. Så här får du ditt:",
+      "step1Title": "Skapa ditt kostnadsfria konto",
+      "step1Body": "Använd exakt den här e-postadressen — {email} — för det är så vi vet att gåvan är din. Det tar ungefär en minut.",
+      "step2Title": "Dina {amount} dyker upp automatiskt",
+      "step2Body": "I samma stund som du är klar med registreringen finns tillgodohavandet på ditt konto. Ingen kod behöver anges.",
+      "step3Title": "Använd det när du vill",
+      "step3Body": "I kassan ser du ”Använd dina {label}”. Lägg så mycket eller så lite du vill på beställningen — resten betalar du som vanligt. Det finns inget sista datum, så det ligger kvar tills du vill använda det.",
       "cta": "Skapa mitt konto",
       "ignoreLine": "Om du inte väntade dig det här mejlet kan du tryggt ignorera det."
     },

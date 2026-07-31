@@ -561,7 +561,14 @@
       "chargeToday": "Skal betales i dag",
       "capNote": "Du kan bruge op til {amount} på denne ordre.",
       "earnLine": "+ Optjen {amount}",
-      "capHelp": "Restauranten tillader at bruge op til {percent}% af ordresummen i {label}."
+      "capHelp": "Restauranten tillader at bruge op til {percent}% af ordresummen i {label}.",
+      "signupHint": "💡 Opret dig eller log ind, så optjener du også bonus på dette køb",
+      "balanceOwner": "Fra din konto · {email}"
+    },
+    "walletIdentity": {
+      "title": "Denne ordre lægges på din konto",
+      "body": "Du er logget ind som {account}, så denne ordre – og de {label}, du bruger eller optjener på den – hører til den konto. Bekræftelsen sendes til {typed}.",
+      "useAccountEmail": "Send den til min egen e-mailadresse i stedet"
     },
     "guestSigninMarketplace": "Har du allerede en marketplace-konto? <link>Log ind</link> for at slippe for at indtaste dine oplysninger igen.",
     "guestSigninRestaurant": "Har du allerede en konto hos denne restaurant? <link>Log ind</link> for at slippe for at indtaste dine oplysninger igen.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Annuller denne gave",
       "giftRevoked": "Gaven er annulleret.",
       "giftRevokeTooLate": "For sent – gaven er allerede blevet indløst.",
+      "giftResend": "Send vejledningen igen",
+      "giftResent": "Vejledningen er sendt igen.",
+      "giftResendTooSoon": "Lige sendt – vent et minut, før du sender igen.",
+      "giftAlreadyPending": "De har allerede {amount} i {label}, der venter på at blive hentet. Send vejledningen igen med ✉-knappen nedenfor, eller annuller den gave først.",
       "giftStatusPending": "Afventer",
       "giftStatusClaimed": "Indløst",
       "giftStatusRevoked": "Annulleret",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} har netop tilføjet {amount} i {label} til din saldo — en lille tak fra restauranten.",
       "balanceLine": "Din saldo er nu {balance}",
       "spendHint": "Dine {label} bruges ved kassen — forkæl dig selv ved din næste bestilling.",
+      "whatItIs": "{label} er tilgodehavende hos {restaurantName} – det trækkes direkte fra din regning, ligesom et gavekort. Sådan bruger du det:",
+      "step1Title": "Log ind på din konto",
+      "step1Body": "Brug denne e-mailadresse – {email} – for det er den, dine {label} er knyttet til.",
+      "step1BodyNoEmail": "Log ind med den e-mailadresse, som denne besked blev sendt til – dit tilgodehavende er knyttet til den.",
+      "step2Title": "Vælg det, du har lyst til at spise",
+      "step2Body": "Bestil hos {restaurantName} præcis som du plejer.",
+      "step3Title": "Vælg hvor meget {label} du vil bruge",
+      "step3Body": "Ved kassen ser du ”Brug dine {label}”. Læg så meget eller så lidt på ordren, som du har lyst til – resten betaler du helt som normalt. Der er ingen udløbsdato, så det bliver stående, indtil du vil bruge det.",
       "cta": "Bestil nu"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} har lagt {amount} i {label} til side – bare til dig.",
       "claimLine": "Reserveret til {email}",
       "howTo": "Opret din gratis konto hos {restaurantName} med denne e-mailadresse, så tilføjes dine {label} automatisk til din wallet – klar til at bruge på din næste bestilling.",
+      "whatItIs": "{label} er tilgodehavende hos {restaurantName} – det trækkes direkte fra din regning, ligesom et gavekort. Sådan får du dit:",
+      "step1Title": "Opret din gratis konto",
+      "step1Body": "Brug præcis denne e-mailadresse – {email} – for det er sådan, vi ved, at gaven er din. Det tager cirka et minut.",
+      "step2Title": "Dine {amount} dukker op automatisk",
+      "step2Body": "I samme øjeblik du er færdig med at oprette dig, står tilgodehavendet på din konto. Der er ingen kode, du skal indtaste.",
+      "step3Title": "Brug det, når du har lyst",
+      "step3Body": "Ved kassen ser du ”Brug dine {label}”. Læg så meget eller så lidt på ordren, som du har lyst til – resten betaler du helt som normalt. Der er ingen udløbsdato, så det bliver stående, indtil du vil bruge det.",
       "cta": "Opret min konto",
       "ignoreLine": "Hvis du ikke forventede denne e-mail, kan du roligt ignorere den."
     },

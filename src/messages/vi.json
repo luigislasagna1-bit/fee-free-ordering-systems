@@ -561,7 +561,14 @@
       "chargeToday": "Cần thanh toán hôm nay",
       "capNote": "Bạn có thể dùng tối đa {amount} cho đơn hàng này.",
       "earnLine": "+ Nhận {amount}",
-      "capHelp": "Nhà hàng cho phép dùng tối đa {percent}% tổng đơn hàng bằng {label}."
+      "capHelp": "Nhà hàng cho phép dùng tối đa {percent}% tổng đơn hàng bằng {label}.",
+      "signupHint": "💡 Đăng ký hoặc đăng nhập để nhận thưởng cho cả lần mua này",
+      "balanceOwner": "Từ tài khoản của bạn · {email}"
+    },
+    "walletIdentity": {
+      "title": "Đơn hàng này thuộc về tài khoản của bạn",
+      "body": "Bạn đang đăng nhập bằng {account}, nên đơn hàng này — cùng mọi {label} bạn dùng hoặc nhận được từ đơn — đều thuộc về tài khoản đó. Email xác nhận sẽ được gửi tới {typed}.",
+      "useAccountEmail": "Gửi tới email của chính tôi"
     },
     "guestSigninMarketplace": "Đã có tài khoản marketplace? <link>Đăng nhập</link> để khỏi nhập lại thông tin của bạn.",
     "guestSigninRestaurant": "Đã có tài khoản tại nhà hàng này? <link>Đăng nhập</link> để khỏi nhập lại thông tin của bạn.",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Tỷ lệ tích lũy tùy chỉnh",
       "personalRateDesc": "Khách hàng này tích lũy phần trăm này bằng {label} trên mỗi đơn hàng — thay cho tỷ lệ cơ bản và mọi tỷ lệ nhóm VIP.",
       "ratePlaceholder": "Tỷ lệ cơ bản",
-      "rateClear": "Xóa tỷ lệ tùy chỉnh"
+      "rateClear": "Xóa tỷ lệ tùy chỉnh",
+      "giftResend": "Gửi lại hướng dẫn",
+      "giftResent": "Đã gửi lại hướng dẫn.",
+      "giftResendTooSoon": "Vừa gửi xong — hãy đợi một phút rồi gửi lại.",
+      "giftAlreadyPending": "Họ đã có {amount} {label} đang chờ nhận. Hãy gửi lại hướng dẫn bằng nút ✉ bên dưới, hoặc hủy món quà đó trước."
     },
     "imageCrop": {
       "title": "Điều chỉnh ảnh của bạn",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} vừa thêm {amount} {label} vào ví của bạn — một lời cảm ơn nhỏ từ nhà hàng.",
       "balanceLine": "Số dư của bạn hiện là {balance}",
       "spendHint": "{label} của bạn được áp dụng khi thanh toán — hãy tự thưởng cho mình ở đơn hàng tiếp theo.",
-      "cta": "Đặt hàng ngay"
+      "cta": "Đặt hàng ngay",
+      "whatItIs": "{label} là tín dụng dùng tại {restaurantName} — được trừ thẳng vào hóa đơn của bạn, giống như thẻ quà tặng. Cách dùng như sau:",
+      "step1Title": "Đăng nhập vào tài khoản của bạn",
+      "step1Body": "Hãy dùng địa chỉ email này — {email} — vì {label} của bạn gắn với chính nó.",
+      "step1BodyNoEmail": "Hãy đăng nhập bằng địa chỉ email đã nhận thư này — khoản tín dụng của bạn gắn với chính nó.",
+      "step2Title": "Thêm những món bạn muốn ăn",
+      "step2Body": "Đặt món tại {restaurantName} y như bình thường.",
+      "step3Title": "Chọn dùng bao nhiêu {label}",
+      "step3Body": "Khi thanh toán, bạn sẽ thấy “Dùng {label} của bạn”. Dùng nhiều hay ít cho đơn hàng là tùy bạn — phần còn lại cứ thanh toán như bình thường. Không có hạn sử dụng, nên nó vẫn còn đó cho tới khi bạn muốn dùng."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} có một món quà dành cho bạn — {amount} {label}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "Dành riêng cho {email}",
       "howTo": "Hãy tạo tài khoản miễn phí tại {restaurantName} bằng chính địa chỉ email này, và {label} của bạn sẽ được tự động thêm vào ví — sẵn sàng để sử dụng cho đơn hàng tiếp theo.",
       "cta": "Tạo tài khoản của tôi",
-      "ignoreLine": "Nếu bạn không mong đợi email này, bạn có thể yên tâm bỏ qua nó."
+      "ignoreLine": "Nếu bạn không mong đợi email này, bạn có thể yên tâm bỏ qua nó.",
+      "whatItIs": "{label} là tín dụng dùng tại {restaurantName} — được trừ thẳng vào hóa đơn của bạn, giống như thẻ quà tặng. Cách nhận như sau:",
+      "step1Title": "Tạo tài khoản miễn phí của bạn",
+      "step1Body": "Hãy dùng đúng địa chỉ email này — {email} — vì đó là cách chúng tôi biết món quà là của bạn. Chỉ mất khoảng một phút.",
+      "step2Title": "{amount} của bạn xuất hiện tự động",
+      "step2Body": "Ngay khi đăng ký xong, khoản tín dụng đã nằm trong tài khoản của bạn. Không cần nhập mã nào cả.",
+      "step3Title": "Dùng bất cứ khi nào bạn muốn",
+      "step3Body": "Khi thanh toán, bạn sẽ thấy “Dùng {label} của bạn”. Dùng nhiều hay ít cho đơn hàng là tùy bạn — phần còn lại cứ thanh toán như bình thường. Không có hạn sử dụng, nên nó vẫn còn đó cho tới khi bạn muốn dùng."
     },
     "vipGroupWelcome": {
       "accountTip": "Tạo tài khoản bằng email này để đồng thời tích lũy và sử dụng phần thưởng của bạn.",

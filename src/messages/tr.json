@@ -561,7 +561,9 @@
       "chargeToday": "Bugün ödenecek",
       "capNote": "Bu siparişe en fazla {amount} uygulayabilirsiniz.",
       "earnLine": "+ {amount} kazanın",
-      "capHelp": "Restoran, sipariş tutarının en fazla %{percent} kadarını {label} ile ödemenize izin verir."
+      "capHelp": "Restoran, sipariş tutarının en fazla %{percent} kadarını {label} ile ödemenize izin verir.",
+      "signupHint": "💡 Bu alışverişten de ödül kazanmak için kaydolun veya giriş yapın",
+      "balanceOwner": "Hesabınızdan · {email}"
     },
     "guestSigninMarketplace": "Zaten bir marketplace hesabınız var mı? Bilgilerinizi yeniden yazmamak için <link>giriş yapın</link>.",
     "guestSigninRestaurant": "Bu restoranda zaten bir hesabınız var mı? Bilgilerinizi yeniden yazmamak için <link>giriş yapın</link>.",
@@ -573,7 +575,12 @@
     "couponApply": "Uygula",
     "scheduleModeRanges": "Zaman aralıkları",
     "prepaidDeliveryNote": "Teslimat online ödenir — kurye kapıda ödeme alamaz.",
-    "prepaidDeliveryUnavailable": "Online ödeme şu anda kullanılamıyor, bu yüzden teslimatlı sipariş verilemiyor. Lütfen gel-al'ı seçin."
+    "prepaidDeliveryUnavailable": "Online ödeme şu anda kullanılamıyor, bu yüzden teslimatlı sipariş verilemiyor. Lütfen gel-al'ı seçin.",
+    "walletIdentity": {
+      "title": "Bu sipariş hesabınıza işlenecek",
+      "body": "{account} olarak giriş yaptınız; bu nedenle bu sipariş — ve bu siparişte harcadığınız ya da kazandığınız tüm {label} — o hesaba aittir. Onay e-postası {typed} adresine gönderilecek.",
+      "useAccountEmail": "Bunun yerine kendi e-posta adresime gönder"
+    }
   },
   "reservation": {
     "title": "Masa Rezervasyonu",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Özel kazanım oranı",
       "personalRateDesc": "Bu müşteri her siparişte bu yüzdeyi {label} olarak kazanır — taban oranın ve tüm VIP grubu oranlarının yerine geçer.",
       "ratePlaceholder": "Taban oran",
-      "rateClear": "Özel oranı kaldır"
+      "rateClear": "Özel oranı kaldır",
+      "giftResend": "Yönergeleri yeniden gönder",
+      "giftResent": "Yönergeler yeniden gönderildi.",
+      "giftResendTooSoon": "Az önce gönderildi — tekrar göndermeden önce bir dakika bekleyin.",
+      "giftAlreadyPending": "Bu kişinin henüz alınmamış {amount} tutarında {label} hediyesi zaten var. Aşağıdaki ✉ düğmesiyle yönergeleri yeniden gönderin ya da önce o hediyeyi iptal edin."
     },
     "imageCrop": {
       "title": "Fotoğrafınızı ayarlayın",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} cüzdanınıza az önce {amount} tutarında {label} ekledi — restorandan küçük bir teşekkür.",
       "balanceLine": "Bakiyeniz şimdi {balance}",
       "spendHint": "{label} ödeme sırasında uygulanır — bir sonraki siparişinizde kendinizi şımartın.",
-      "cta": "Şimdi sipariş ver"
+      "cta": "Şimdi sipariş ver",
+      "whatItIs": "{label}, {restaurantName} işletmesinde geçerli bir kredidir — hediye kartı gibi, ödeyeceğiniz tutardan doğrudan düşülür. Nasıl kullanacağınız şöyle:",
+      "step1Title": "Hesabınıza giriş yapın",
+      "step1Body": "Tam olarak bu e-posta adresini kullanın — {email} — çünkü {label} bakiyeniz bu adrese bağlı.",
+      "step1BodyNoEmail": "Bu mesajın gönderildiği e-posta adresiyle giriş yapın — krediniz o adrese bağlı.",
+      "step2Title": "Canınızın çektiklerini ekleyin",
+      "step2Body": "{restaurantName} işletmesinden her zamanki gibi sipariş verin.",
+      "step3Title": "Ne kadar {label} kullanacağınızı seçin",
+      "step3Body": "Ödeme adımında “{label} bakiyenizi kullanın” seçeneğini göreceksiniz. Siparişe dilediğiniz kadar aktarın — çok ya da az — kalanı her zamanki gibi ödersiniz. Son kullanma tarihi yoktur; siz isteyene kadar durur."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} size bir hediye hazırladı — {amount} değerinde {label}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "{email} için ayrılmıştır",
       "howTo": "Bu e-posta adresini kullanarak {restaurantName} üzerinde ücretsiz hesabınızı oluşturun; {label} hediyeniz cüzdanınıza otomatik olarak eklenecek — bir sonraki siparişinizde harcamaya hazır.",
       "cta": "Hesabımı oluştur",
-      "ignoreLine": "Böyle bir hediye beklemiyorduysanız bu e-postayı güvenle yok sayabilirsiniz."
+      "ignoreLine": "Böyle bir hediye beklemiyorduysanız bu e-postayı güvenle yok sayabilirsiniz.",
+      "whatItIs": "{label}, {restaurantName} işletmesinde geçerli bir kredidir — hediye kartı gibi, ödeyeceğiniz tutardan doğrudan düşülür. Kendi bakiyenizi şöyle alırsınız:",
+      "step1Title": "Ücretsiz hesabınızı oluşturun",
+      "step1Body": "Tam olarak bu e-posta adresini kullanın — {email} — çünkü hediyenin size ait olduğunu böyle anlıyoruz. Yaklaşık bir dakika sürer.",
+      "step2Title": "{amount} tutarı otomatik olarak görünür",
+      "step2Body": "Kaydınızı tamamladığınız anda kredi hesabınızda olur. Girilecek bir kod yok.",
+      "step3Title": "Dilediğiniz zaman harcayın",
+      "step3Body": "Ödeme adımında “{label} bakiyenizi kullanın” seçeneğini göreceksiniz. Siparişe dilediğiniz kadar aktarın — çok ya da az — kalanı her zamanki gibi ödersiniz. Son kullanma tarihi yoktur; siz isteyene kadar durur."
     },
     "vipGroupWelcome": {
       "accountTip": "Ödüllerinizi de biriktirip harcamak için bu e-postayla bir hesap oluşturun.",

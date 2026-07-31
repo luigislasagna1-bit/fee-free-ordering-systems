@@ -561,7 +561,9 @@
       "chargeToday": "A pagar hoje",
       "capNote": "Pode aplicar até {amount} nesta encomenda.",
       "earnLine": "+ Ganhe {amount}",
-      "capHelp": "O restaurante permite usar até {percent}% do total do pedido em {label}."
+      "capHelp": "O restaurante permite usar até {percent}% do total do pedido em {label}.",
+      "signupHint": "💡 Registe-se ou inicie sessão para ganhar recompensas também nesta compra",
+      "balanceOwner": "Da sua conta · {email}"
     },
     "guestSigninMarketplace": "Já tem uma conta marketplace? <link>Inicie sessão</link> para não voltar a escrever os seus dados.",
     "guestSigninRestaurant": "Já tem uma conta neste restaurante? <link>Inicie sessão</link> para não voltar a escrever os seus dados.",
@@ -573,7 +575,12 @@
     "couponApply": "Aplicar",
     "scheduleModeRanges": "Intervalos",
     "prepaidDeliveryNote": "A entrega é paga online — o estafeta não pode receber pagamento à porta.",
-    "prepaidDeliveryUnavailable": "O pagamento online não está disponível neste momento, pelo que não é possível encomendar com entrega. Escolha levantamento."
+    "prepaidDeliveryUnavailable": "O pagamento online não está disponível neste momento, pelo que não é possível encomendar com entrega. Escolha levantamento.",
+    "walletIdentity": {
+      "title": "Esta encomenda fica na sua conta",
+      "body": "Tem sessão iniciada como {account}, por isso esta encomenda — e tudo o que gastar ou ganhar em {label} com ela — pertence a essa conta. A confirmação será enviada para {typed}.",
+      "useAccountEmail": "Enviar antes para o meu próprio email"
+    }
   },
   "reservation": {
     "title": "Reservar mesa",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Taxa de ganho personalizada",
       "personalRateDesc": "Este cliente ganha esta percentagem em {label} em cada pedido — sobrepondo-se à taxa base e a qualquer taxa de grupo VIP.",
       "ratePlaceholder": "Taxa base",
-      "rateClear": "Remover a taxa personalizada"
+      "rateClear": "Remover a taxa personalizada",
+      "giftResend": "Reenviar as instruções",
+      "giftResent": "Instruções reenviadas.",
+      "giftResendTooSoon": "Acabou de enviar — aguarde um minuto antes de enviar de novo.",
+      "giftAlreadyPending": "Esta pessoa já tem {amount} em {label} à espera de serem levantados. Reenvie as instruções com o botão ✉ abaixo, ou cancele primeiro essa oferta."
     },
     "imageCrop": {
       "title": "Ajuste a sua foto",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} acabou de adicionar {amount} em {label} à sua carteira — um pequeno agradecimento do restaurante.",
       "balanceLine": "O seu saldo é agora {balance}",
       "spendHint": "Os seus {label} aplicam-se no checkout — mime-se na próxima encomenda.",
-      "cta": "Encomendar agora"
+      "cta": "Encomendar agora",
+      "whatItIs": "Os {label} são crédito em {restaurantName} — são descontados diretamente do valor a pagar, como um cartão-presente. Veja como usá-los:",
+      "step1Title": "Inicie sessão na sua conta",
+      "step1Body": "Use este endereço de email — {email} — porque é a ele que os seus {label} estão associados.",
+      "step1BodyNoEmail": "Inicie sessão com o endereço de email para o qual esta mensagem foi enviada — o crédito está associado a ele.",
+      "step2Title": "Adicione o que lhe apetecer comer",
+      "step2Body": "Encomende em {restaurantName} exatamente como faz habitualmente.",
+      "step3Title": "Escolha quanto {label} quer usar",
+      "step3Body": "No checkout verá «Use o seu {label}». Aplique à encomenda tanto ou tão pouco quanto quiser — o resto paga normalmente. Não tem prazo de validade, por isso fica à sua espera até quando quiser."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} tem uma oferta para si — {amount} em {label}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "Reservado para {email}",
       "howTo": "Crie a sua conta gratuita em {restaurantName} com este endereço de email e o seu saldo de {label} será adicionado automaticamente à sua carteira — pronto a usar no seu próximo pedido.",
       "cta": "Criar a minha conta",
-      "ignoreLine": "Se não estava à espera desta oferta, pode simplesmente ignorar este email."
+      "ignoreLine": "Se não estava à espera desta oferta, pode simplesmente ignorar este email.",
+      "whatItIs": "Os {label} são crédito em {restaurantName} — são descontados diretamente do valor a pagar, como um cartão-presente. Veja como receber os seus:",
+      "step1Title": "Crie a sua conta gratuita",
+      "step1Body": "Use exatamente este endereço de email — {email} — é assim que sabemos que a oferta é sua. Demora cerca de um minuto.",
+      "step2Title": "O seu crédito de {amount} aparece sozinho",
+      "step2Body": "Assim que terminar o registo, o crédito já está na sua conta. Não há nenhum código para introduzir.",
+      "step3Title": "Gaste quando quiser",
+      "step3Body": "No checkout verá «Use o seu {label}». Aplique à encomenda tanto ou tão pouco quanto quiser — o resto paga normalmente. Não tem prazo de validade, por isso fica à sua espera até quando quiser."
     },
     "vipGroupWelcome": {
       "accountTip": "Crie uma conta com este e-mail para também acumular e usar as suas recompensas.",

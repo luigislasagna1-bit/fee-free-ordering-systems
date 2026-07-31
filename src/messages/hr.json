@@ -561,7 +561,14 @@
       "chargeToday": "Za platiti danas",
       "capNote": "Na ovu narudžbu možete primijeniti najviše {amount}.",
       "earnLine": "+ Zaradite {amount}",
-      "capHelp": "Restoran dopušta korištenje do {percent}% ukupnog iznosa narudžbe u {label}."
+      "capHelp": "Restoran dopušta korištenje do {percent}% ukupnog iznosa narudžbe u {label}.",
+      "signupHint": "💡 Registrirajte se ili se prijavite kako biste i za ovu kupnju dobili nagrade",
+      "balanceOwner": "S vašeg računa · {email}"
+    },
+    "walletIdentity": {
+      "title": "Ova narudžba ide na vaš račun",
+      "body": "Prijavljeni ste kao {account}, pa ova narudžba — i svi {label} koje na njoj potrošite ili zaradite — pripadaju tom računu. Potvrdu ćemo poslati na {typed}.",
+      "useAccountEmail": "Pošalji na e-mail adresu mojeg računa"
     },
     "guestSigninMarketplace": "Već imate marketplace račun? <link>Prijavite se</link> da ne morate ponovno upisivati podatke.",
     "guestSigninRestaurant": "Već imate račun u ovom restoranu? <link>Prijavite se</link> da ne morate ponovno upisivati podatke.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Otkaži ovaj poklon",
       "giftRevoked": "Poklon otkazan.",
       "giftRevokeTooLate": "Prekasno — ovaj poklon je već preuzet.",
+      "giftResend": "Pošalji upute ponovno",
+      "giftResent": "Upute su ponovno poslane.",
+      "giftResendTooSoon": "Upravo su poslane — pričekajte minutu prije ponovnog slanja.",
+      "giftAlreadyPending": "Ovaj gost već ima {amount} u {label} koji čekaju preuzimanje. Pošaljite upute ponovno gumbom ✉ ispod ili prvo otkažite taj poklon.",
       "giftStatusPending": "Na čekanju",
       "giftStatusClaimed": "Preuzeto",
       "giftStatusRevoked": "Otkazano",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} je upravo dodao {amount} u {label} u vaš novčanik — mala zahvala restorana.",
       "balanceLine": "Vaš saldo sada iznosi {balance}",
       "spendHint": "Vaši {label} primjenjuju se pri plaćanju — počastite se kod sljedeće narudžbe.",
+      "whatItIs": "{label} su sredstva kod {restaurantName} — odbijaju se izravno od iznosa vaše narudžbe, kao poklon-bon. Evo kako ih iskoristiti:",
+      "step1Title": "Prijavite se na svoj račun",
+      "step1Body": "Upotrijebite baš ovu e-mail adresu — {email} — jer su uz nju vezani vaši {label}.",
+      "step1BodyNoEmail": "Prijavite se e-mail adresom na koju je stigla ova poruka — sredstva su vezana baš uz nju.",
+      "step2Title": "Dodajte ono što želite jesti",
+      "step2Body": "Naručite od {restaurantName} točno kao i inače.",
+      "step3Title": "Odaberite koliko {label} želite iskoristiti",
+      "step3Body": "Pri plaćanju ćete vidjeti „Iskoristite svoje {label}“. Na narudžbu primijenite koliko god želite — ostatak platite kao i uvijek. Nema roka valjanosti, pa sredstva čekaju dok vam ne zatrebaju.",
       "cta": "Naruči odmah"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} je izdvojio {amount} u {label} samo za vas.",
       "claimLine": "Rezervirano za {email}",
       "howTo": "Izradite besplatni račun kod {restaurantName} s ovom e-mail adresom i vaš {label} automatski će biti dodan u vaš novčanik — spreman za potrošnju već pri sljedećoj narudžbi.",
+      "whatItIs": "{label} su sredstva kod {restaurantName} — odbijaju se izravno od iznosa vaše narudžbe, kao poklon-bon. Evo kako doći do svojih:",
+      "step1Title": "Izradite svoj besplatni račun",
+      "step1Body": "Upišite točno ovu e-mail adresu — {email} — jer po njoj znamo da je poklon vaš. Traje oko minutu.",
+      "step2Title": "Iznos od {amount} stiže automatski",
+      "step2Body": "Čim dovršite registraciju, sredstva su na vašem računu. Nema koda za unos.",
+      "step3Title": "Potrošite ih kad god želite",
+      "step3Body": "Pri plaćanju ćete vidjeti „Iskoristite svoje {label}“. Na narudžbu primijenite koliko god želite — ostatak platite kao i uvijek. Nema roka valjanosti, pa sredstva čekaju dok vam ne zatrebaju.",
       "cta": "Izradi moj račun",
       "ignoreLine": "Ako ovo niste očekivali, slobodno zanemarite ovaj e-mail."
     },

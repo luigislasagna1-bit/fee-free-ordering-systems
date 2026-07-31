@@ -561,7 +561,9 @@
       "chargeToday": "Mokėti šiandien",
       "capNote": "Šiam užsakymui galite pritaikyti iki {amount}.",
       "earnLine": "+ Uždirbkite {amount}",
-      "capHelp": "Restoranas leidžia panaudoti iki {percent}% užsakymo sumos {label}."
+      "capHelp": "Restoranas leidžia panaudoti iki {percent}% užsakymo sumos {label}.",
+      "signupHint": "💡 Užsiregistruokite arba prisijunkite, kad ir už šį pirkinį gautumėte premijų",
+      "balanceOwner": "Iš jūsų paskyros · {email}"
     },
     "guestSigninMarketplace": "Jau turite marketplace paskyrą? <link>Prisijunkite</link>, kad nereikėtų iš naujo įvesti duomenų.",
     "guestSigninRestaurant": "Jau turite paskyrą šiame restorane? <link>Prisijunkite</link>, kad nereikėtų iš naujo įvesti duomenų.",
@@ -573,7 +575,12 @@
     "couponApply": "Taikyti",
     "scheduleModeRanges": "Laiko intervalai",
     "prepaidDeliveryNote": "Pristatymas apmokamas internetu — kurjeris negali priimti mokėjimo prie durų.",
-    "prepaidDeliveryUnavailable": "Mokėjimas internetu šiuo metu negalimas, todėl užsakymų su pristatymu pateikti negalima. Pasirinkite atsiėmimą."
+    "prepaidDeliveryUnavailable": "Mokėjimas internetu šiuo metu negalimas, todėl užsakymų su pristatymu pateikti negalima. Pasirinkite atsiėmimą.",
+    "walletIdentity": {
+      "title": "Šis užsakymas priskiriamas jūsų paskyrai",
+      "body": "Esate prisijungę kaip {account}, todėl šis užsakymas — ir visi {label}, kuriuos jam išleisite ar už jį uždirbsite — priklauso tai paskyrai. Patvirtinimą išsiųsime adresu {typed}.",
+      "useAccountEmail": "Vietoj to siųsti į mano paskyros el. paštą"
+    }
   },
   "reservation": {
     "title": "Rezervuoti stalą",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Individualus kaupimo tarifas",
       "personalRateDesc": "Šis klientas už kiekvieną užsakymą gauna šį procentą {label} forma — vietoj bazinio tarifo ir bet kurio VIP grupės tarifo.",
       "ratePlaceholder": "Bazinis tarifas",
-      "rateClear": "Pašalinti individualų tarifą"
+      "rateClear": "Pašalinti individualų tarifą",
+      "giftResend": "Išsiųsti instrukcijas dar kartą",
+      "giftResent": "Instrukcijos išsiųstos dar kartą.",
+      "giftResendTooSoon": "Ką tik išsiųsta — palaukite minutę prieš siųsdami dar kartą.",
+      "giftAlreadyPending": "Šis žmogus jau turi neatsiimtų {amount} {label}. Išsiųskite instrukcijas dar kartą mygtuku ✉ žemiau arba pirma atšaukite tą dovaną."
     },
     "imageCrop": {
       "title": "Koreguokite nuotrauką",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} ką tik pridėjo {amount} {label} į jūsų piniginę — mažas restorano padėkos ženklas.",
       "balanceLine": "Jūsų likutis dabar yra {balance}",
       "spendHint": "Jūsų {label} pritaikomi atsiskaitant — pasilepinkite kitą kartą užsakydami.",
-      "cta": "Užsakyti dabar"
+      "cta": "Užsakyti dabar",
+      "whatItIs": "{label} — tai kreditas restorane {restaurantName}: jie tiesiogiai sumažina jūsų sąskaitą, visai kaip dovanų kortelė. Štai kaip juos panaudoti:",
+      "step1Title": "Prisijunkite prie savo paskyros",
+      "step1Body": "Naudokite būtent šį el. pašto adresą — {email} — nes prie jo priskirti jūsų {label}.",
+      "step1BodyNoEmail": "Prisijunkite tuo el. pašto adresu, kuriuo gavote šį laišką — prie jo priskirtas jūsų kreditas.",
+      "step2Title": "Įsidėkite tai, ko norite pavalgyti",
+      "step2Body": "Užsisakykite iš {restaurantName} lygiai taip, kaip įprastai.",
+      "step3Title": "Pasirinkite, kiek {label} panaudoti",
+      "step3Body": "Atsiskaitydami pamatysite „Naudoti savo {label}“. Užsakymui skirkite tiek, kiek norite — daug ar mažai — o likusią sumą tiesiog sumokėsite kaip įprastai. Galiojimo termino nėra, tad likutis laukia tol, kol jo prireiks."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} turi jums dovaną — {amount} {label}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "Rezervuota adresui {email}",
       "howTo": "Susikurkite nemokamą paskyrą pas {restaurantName} naudodami šį el. pašto adresą, ir jūsų {label} bus automatiškai pridėti į jūsų piniginę — galėsite juos išleisti kitam užsakymui.",
       "cta": "Susikurti paskyrą",
-      "ignoreLine": "Jei šio laiško nesitikėjote, galite jį saugiai ignoruoti."
+      "ignoreLine": "Jei šio laiško nesitikėjote, galite jį saugiai ignoruoti.",
+      "whatItIs": "{label} — tai kreditas restorane {restaurantName}: jie tiesiogiai sumažina jūsų sąskaitą, visai kaip dovanų kortelė. Štai kaip atsiimti savuosius:",
+      "step1Title": "Susikurkite nemokamą paskyrą",
+      "step1Body": "Naudokite būtent šį el. pašto adresą — {email} — nes taip atpažįstame, kad dovana skirta jums. Tai užtruks apie minutę.",
+      "step2Title": "Jūsų {amount} atsiras automatiškai",
+      "step2Body": "Vos baigsite registraciją, kreditas jau bus jūsų paskyroje. Jokio kodo įvesti nereikia.",
+      "step3Title": "Išleiskite tada, kada panorėsite",
+      "step3Body": "Atsiskaitydami pamatysite „Naudoti savo {label}“. Užsakymui skirkite tiek, kiek norite — daug ar mažai — o likusią sumą tiesiog sumokėsite kaip įprastai. Galiojimo termino nėra, tad likutis laukia tol, kol jo prireiks."
     },
     "vipGroupWelcome": {
       "accountTip": "Susikurkite paskyrą su šiuo el. paštu, kad galėtumėte ir kaupti, ir išleisti savo premijas.",

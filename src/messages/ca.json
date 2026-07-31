@@ -561,7 +561,9 @@
       "chargeToday": "A pagar avui",
       "capNote": "Pots aplicar fins a {amount} en aquesta comanda.",
       "earnLine": "+ Guanya {amount}",
-      "capHelp": "El restaurant permet usar fins al {percent}% del total de la comanda en {label}."
+      "capHelp": "El restaurant permet usar fins al {percent}% del total de la comanda en {label}.",
+      "signupHint": "💡 Registra't o inicia la sessió per guanyar recompenses també amb aquesta compra",
+      "balanceOwner": "Del teu compte · {email}"
     },
     "guestSigninMarketplace": "Ja tens un compte de marketplace? <link>Inicia la sessió</link> per no tornar a escriure les teves dades.",
     "guestSigninRestaurant": "Ja tens un compte en aquest restaurant? <link>Inicia la sessió</link> per no tornar a escriure les teves dades.",
@@ -573,7 +575,12 @@
     "couponApply": "Aplica",
     "scheduleModeRanges": "Franges horàries",
     "prepaidDeliveryNote": "El lliurament es paga en línia — el repartidor no pot cobrar a la porta.",
-    "prepaidDeliveryUnavailable": "El pagament en línia no està disponible ara mateix, així que no es poden fer comandes a domicili. Trieu la recollida."
+    "prepaidDeliveryUnavailable": "El pagament en línia no està disponible ara mateix, així que no es poden fer comandes a domicili. Trieu la recollida.",
+    "walletIdentity": {
+      "title": "Aquesta comanda va al teu compte",
+      "body": "Has iniciat la sessió com a {account}, així que aquesta comanda —i tot el que hi gastis o hi guanyis en {label}— pertany a aquest compte. La confirmació s'enviarà a {typed}.",
+      "useAccountEmail": "Envia-la al meu propi correu"
+    }
   },
   "reservation": {
     "title": "Reservar taula",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Taxa d'acumulació personalitzada",
       "personalRateDesc": "Aquest client acumula aquest percentatge en {label} a cada comanda — en lloc de la taxa base i de qualsevol taxa de grup VIP.",
       "ratePlaceholder": "Taxa base",
-      "rateClear": "Treu la taxa personalitzada"
+      "rateClear": "Treu la taxa personalitzada",
+      "giftResend": "Torna a enviar les instruccions",
+      "giftResent": "Instruccions reenviades.",
+      "giftResendTooSoon": "Acabes d'enviar-les — espera un minut abans de tornar-ho a fer.",
+      "giftAlreadyPending": "Aquesta persona ja té {amount} en {label} pendents de recollir. Torna a enviar les instruccions amb el botó ✉ de sota, o cancel·la abans aquest regal."
     },
     "imageCrop": {
       "title": "Ajusta la foto",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} acaba d'afegir {amount} en {label} al teu moneder — un petit agraïment del restaurant.",
       "balanceLine": "El teu saldo ara és {balance}",
       "spendHint": "Els teus {label} s'apliquen al moment de pagar — dona't un caprici a la propera comanda.",
-      "cta": "Demana ara"
+      "cta": "Demana ara",
+      "whatItIs": "Els {label} són crèdit a {restaurantName} — es descompten directament del que has de pagar, com una targeta regal. Així es fan servir:",
+      "step1Title": "Inicia la sessió al teu compte",
+      "step1Body": "Fes servir aquesta adreça electrònica — {email} — perquè és a aquesta que estan vinculats els teus {label}.",
+      "step1BodyNoEmail": "Inicia la sessió amb l'adreça electrònica on has rebut aquest missatge — el crèdit hi està vinculat.",
+      "step2Title": "Afegeix el que et vingui de gust",
+      "step2Body": "Fes la comanda a {restaurantName} tal com ho faries sempre.",
+      "step3Title": "Tria quants {label} vols fer servir",
+      "step3Body": "En pagar veuràs «Fes servir els teus {label}». Aplica'n tants o tan pocs com vulguis a la comanda — la resta la pagues com sempre. No caduca mai, així que el crèdit t'espera fins que el vulguis fer servir."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} té un regal per a tu — {amount} en {label}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "Reservat per a {email}",
       "howTo": "Crea el teu compte gratuït a {restaurantName} amb aquesta adreça electrònica i el teu saldo de {label} s'afegirà automàticament a la teva cartera — a punt per gastar en la teva propera comanda.",
       "cta": "Crear el meu compte",
-      "ignoreLine": "Si no esperaves aquest correu, pots ignorar-lo amb tota tranquil·litat."
+      "ignoreLine": "Si no esperaves aquest correu, pots ignorar-lo amb tota tranquil·litat.",
+      "whatItIs": "Els {label} són crèdit a {restaurantName} — es descompten directament del que has de pagar, com una targeta regal. Així aconsegueixes els teus:",
+      "step1Title": "Crea el teu compte gratuït",
+      "step1Body": "Fes servir exactament aquesta adreça electrònica — {email} — perquè és així com sabem que el regal és teu. Es triga un minut.",
+      "step2Title": "El teu crèdit de {amount} apareix sol",
+      "step2Body": "Tan bon punt acabis el registre, el crèdit ja és al teu compte. No hi ha cap codi per introduir.",
+      "step3Title": "Gasta'l quan vulguis",
+      "step3Body": "En pagar veuràs «Fes servir els teus {label}». Aplica'n tants o tan pocs com vulguis a la comanda — la resta la pagues com sempre. No caduca mai, així que el crèdit t'espera fins que el vulguis fer servir."
     },
     "vipGroupWelcome": {
       "accountTip": "Crea un compte amb aquest correu electrònic per poder acumular i gastar també les teves recompenses.",

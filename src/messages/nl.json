@@ -561,7 +561,14 @@
       "chargeToday": "Vandaag te betalen",
       "capNote": "Je kunt maximaal {amount} op deze bestelling gebruiken.",
       "earnLine": "+ Verdien {amount}",
-      "capHelp": "Dit restaurant staat toe om tot {percent}% van het ordertotaal met {label} te betalen."
+      "capHelp": "Dit restaurant staat toe om tot {percent}% van het ordertotaal met {label} te betalen.",
+      "signupHint": "💡 Registreer je of log in om ook over deze aankoop te sparen",
+      "balanceOwner": "Van je account · {email}"
+    },
+    "walletIdentity": {
+      "title": "Deze bestelling loopt via je account",
+      "body": "Je bent ingelogd als {account}, dus deze bestelling — en alle {label} die je erop uitgeeft of ermee verdient — hoort bij dat account. De bevestiging sturen we naar {typed}.",
+      "useAccountEmail": "Stuur hem liever naar mijn eigen e-mailadres"
     },
     "guestSigninMarketplace": "Heb je al een marketplace-account? <link>Meld je aan</link> om je gegevens niet opnieuw in te voeren.",
     "guestSigninRestaurant": "Heb je al een account bij dit restaurant? <link>Meld je aan</link> om je gegevens niet opnieuw in te voeren.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Dit cadeau annuleren",
       "giftRevoked": "Cadeau geannuleerd.",
       "giftRevokeTooLate": "Te laat — dit cadeau is al geclaimd.",
+      "giftResend": "Instructies opnieuw versturen",
+      "giftResent": "Instructies opnieuw verstuurd.",
+      "giftResendTooSoon": "Net verstuurd — wacht even een minuutje voordat je het opnieuw stuurt.",
+      "giftAlreadyPending": "Deze persoon heeft al {amount} aan {label} klaarstaan die nog niet is opgehaald. Verstuur de instructies opnieuw met de knop ✉ hieronder, of annuleer dat cadeau eerst.",
       "giftStatusPending": "In afwachting",
       "giftStatusClaimed": "Geclaimd",
       "giftStatusRevoked": "Geannuleerd",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} heeft zojuist {amount} aan {label} aan je tegoed toegevoegd — een klein bedankje van het restaurant.",
       "balanceLine": "Je saldo is nu {balance}",
       "spendHint": "Je {label} worden bij het afrekenen verrekend — verwen jezelf bij je volgende bestelling.",
+      "whatItIs": "{label} is tegoed bij {restaurantName} — het gaat rechtstreeks van je rekening af, net als bij een cadeaubon. Zo gebruik je het:",
+      "step1Title": "Log in op je account",
+      "step1Body": "Gebruik dit e-mailadres — {email} — want daaraan is je tegoed in {label} gekoppeld.",
+      "step1BodyNoEmail": "Log in met het e-mailadres waarnaar dit bericht is gestuurd — daaraan is je tegoed gekoppeld.",
+      "step2Title": "Kies wat je wilt eten",
+      "step2Body": "Bestel bij {restaurantName} precies zoals je gewend bent.",
+      "step3Title": "Bepaal hoeveel {label} je gebruikt",
+      "step3Body": "Bij het afrekenen zie je “Gebruik je {label}”. Zet er zoveel of zo weinig van in als je wilt — de rest betaal je gewoon zoals altijd. Er zit geen vervaldatum op, dus het blijft staan tot je het wilt gebruiken.",
       "cta": "Nu bestellen"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} heeft {amount} aan {label} speciaal voor jou klaargezet.",
       "claimLine": "Gereserveerd voor {email}",
       "howTo": "Maak met dit e-mailadres je gratis account aan bij {restaurantName}, dan wordt je {label}-tegoed automatisch aan je wallet toegevoegd — klaar om te besteden bij je volgende bestelling.",
+      "whatItIs": "{label} is tegoed bij {restaurantName} — het gaat rechtstreeks van je rekening af, net als bij een cadeaubon. Zo haal je het binnen:",
+      "step1Title": "Maak je gratis account aan",
+      "step1Body": "Gebruik precies dit e-mailadres — {email} — want daaraan zien we dat het cadeau voor jou is. Het kost ongeveer een minuut.",
+      "step2Title": "Je {amount} verschijnt automatisch",
+      "step2Body": "Zodra je registratie klaar is, staat het tegoed op je account. Je hoeft geen code in te vullen.",
+      "step3Title": "Besteed het wanneer je wilt",
+      "step3Body": "Bij het afrekenen zie je “Gebruik je {label}”. Zet er zoveel of zo weinig van in als je wilt — de rest betaal je gewoon zoals altijd. Er zit geen vervaldatum op, dus het blijft staan tot je het wilt gebruiken.",
       "cta": "Mijn account aanmaken",
       "ignoreLine": "Verwachtte je dit niet? Dan kun je deze e-mail gewoon negeren."
     },

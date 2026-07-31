@@ -561,7 +561,9 @@
       "chargeToday": "Maksājams šodien",
       "capNote": "Šim pasūtījumam varat izmantot līdz {amount}.",
       "earnLine": "+ Nopelniet {amount}",
-      "capHelp": "Restorāns ļauj izmantot līdz {percent}% no pasūtījuma summas {label}."
+      "capHelp": "Restorāns ļauj izmantot līdz {percent}% no pasūtījuma summas {label}.",
+      "signupHint": "💡 Reģistrējieties vai piesakieties, lai nopelnītu bonusus arī par šo pirkumu",
+      "balanceOwner": "No jūsu konta · {email}"
     },
     "guestSigninMarketplace": "Vai jums jau ir marketplace konts? <link>Pierakstieties</link>, lai atkārtoti neievadītu savus datus.",
     "guestSigninRestaurant": "Vai jums jau ir konts šajā restorānā? <link>Pierakstieties</link>, lai atkārtoti neievadītu savus datus.",
@@ -573,7 +575,12 @@
     "couponApply": "Lietot",
     "scheduleModeRanges": "Laika diapazoni",
     "prepaidDeliveryNote": "Piegāde tiek apmaksāta tiešsaistē — kurjers nevar pieņemt maksājumu pie durvīm.",
-    "prepaidDeliveryUnavailable": "Tiešsaistes maksājums šobrīd nav pieejams, tāpēc piegādes pasūtījumus nevar veikt. Izvēlieties saņemšanu uz vietas."
+    "prepaidDeliveryUnavailable": "Tiešsaistes maksājums šobrīd nav pieejams, tāpēc piegādes pasūtījumus nevar veikt. Izvēlieties saņemšanu uz vietas.",
+    "walletIdentity": {
+      "title": "Šis pasūtījums tiks piesaistīts jūsu kontam",
+      "body": "Jūs esat pieteicies kā {account}, tāpēc šis pasūtījums — un visi {label}, ko tam iztērēsiet vai par to nopelnīsiet — pieder šim kontam. Apstiprinājumu nosūtīsim uz {typed}.",
+      "useAccountEmail": "Sūtīt to labāk uz mana konta e-pastu"
+    }
   },
   "reservation": {
     "title": "Rezervēt galdu",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Pielāgota uzkrāšanas likme",
       "personalRateDesc": "Šis klients par katru pasūtījumu saņem šo procentu {label} veidā — bāzes likmes un jebkuras VIP grupas likmes vietā.",
       "ratePlaceholder": "Bāzes likme",
-      "rateClear": "Noņemt pielāgoto likmi"
+      "rateClear": "Noņemt pielāgoto likmi",
+      "giftResend": "Nosūtīt norādījumus vēlreiz",
+      "giftResent": "Norādījumi nosūtīti vēlreiz.",
+      "giftResendTooSoon": "Tikko nosūtīts — pagaidiet minūti, pirms sūtāt vēlreiz.",
+      "giftAlreadyPending": "Viņam jau ir {amount} {label}, kas gaida saņemšanu. Nosūtiet norādījumus vēlreiz ar ✉ pogu zemāk vai vispirms atceliet to dāvanu."
     },
     "imageCrop": {
       "title": "Pielāgojiet foto",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} tikko pievienoja jūsu makam {amount} {label} — neliela pateicība no restorāna.",
       "balanceLine": "Jūsu atlikums tagad ir {balance}",
       "spendHint": "Jūsu {label} tiek piemēroti norēķinoties — palutiniet sevi ar nākamo pasūtījumu.",
-      "cta": "Pasūtīt tagad"
+      "cta": "Pasūtīt tagad",
+      "whatItIs": "{label} ir kredīts restorānā {restaurantName} — tie tiek atskaitīti tieši no jūsu rēķina, tāpat kā dāvanu karte. Lūk, kā tos izmantot:",
+      "step1Title": "Piesakieties savā kontā",
+      "step1Body": "Izmantojiet tieši šo e-pasta adresi — {email} — jo tieši tai ir piesaistīti jūsu {label}.",
+      "step1BodyNoEmail": "Piesakieties ar to e-pasta adresi, uz kuru saņēmāt šo vēstuli — tai ir piesaistīts jūsu kredīts.",
+      "step2Title": "Pievienojiet to, ko vēlaties ēst",
+      "step2Body": "Pasūtiet no {restaurantName} tieši tāpat kā parasti.",
+      "step3Title": "Izvēlieties, cik daudz {label} izmantot",
+      "step3Body": "Norēķinoties redzēsiet „Izmantojiet savus {label}“. Novirziet pasūtījumam tik daudz vai tik maz, cik vēlaties — pārējo vienkārši samaksājiet kā parasti. Derīguma termiņa nav, tāpēc atlikums saglabājas, līdz to gribēsiet izmantot."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} jums ir sagatavojis dāvanu — {amount} {label}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "Rezervēts adresei {email}",
       "howTo": "Izveidojiet bezmaksas kontu pie {restaurantName}, izmantojot šo e-pasta adresi, un jūsu {label} tiks automātiski pievienoti jūsu makam — gatavi tērēšanai nākamajā pasūtījumā.",
       "cta": "Izveidot kontu",
-      "ignoreLine": "Ja negaidījāt šo e-pastu, varat to droši ignorēt."
+      "ignoreLine": "Ja negaidījāt šo e-pastu, varat to droši ignorēt.",
+      "whatItIs": "{label} ir kredīts restorānā {restaurantName} — tie tiek atskaitīti tieši no jūsu rēķina, tāpat kā dāvanu karte. Lūk, kā saņemt savējos:",
+      "step1Title": "Izveidojiet savu bezmaksas kontu",
+      "step1Body": "Izmantojiet tieši šo e-pasta adresi — {email} — jo pēc tās mēs zinām, ka dāvana ir jūsu. Tas aizņem apmēram minūti.",
+      "step2Title": "Jūsu {amount} parādīsies automātiski",
+      "step2Body": "Tiklīdz pabeigsiet reģistrāciju, kredīts būs jūsu kontā. Nekāds kods nav jāievada.",
+      "step3Title": "Tērējiet, kad vien vēlaties",
+      "step3Body": "Norēķinoties redzēsiet „Izmantojiet savus {label}“. Novirziet pasūtījumam tik daudz vai tik maz, cik vēlaties — pārējo vienkārši samaksājiet kā parasti. Derīguma termiņa nav, tāpēc atlikums saglabājas, līdz to gribēsiet izmantot."
     },
     "vipGroupWelcome": {
       "accountTip": "Izveidojiet kontu ar šo e-pastu, lai varētu arī krāt un tērēt savus bonusus.",

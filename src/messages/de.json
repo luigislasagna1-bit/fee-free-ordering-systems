@@ -561,7 +561,14 @@
       "chargeToday": "Heute zu zahlen",
       "capNote": "Du kannst bei dieser Bestellung bis zu {amount} anrechnen.",
       "earnLine": "+ {amount} verdienen",
-      "capHelp": "Dieses Restaurant erlaubt, bis zu {percent}% der Bestellsumme mit {label} zu bezahlen."
+      "capHelp": "Dieses Restaurant erlaubt, bis zu {percent}% der Bestellsumme mit {label} zu bezahlen.",
+      "signupHint": "💡 Registriere dich oder melde dich an, um auch für diesen Kauf Prämien zu sammeln",
+      "balanceOwner": "Aus deinem Konto · {email}"
+    },
+    "walletIdentity": {
+      "title": "Diese Bestellung läuft über dein Konto",
+      "body": "Du bist als {account} angemeldet — diese Bestellung und alle {label}, die du dabei einsetzt oder sammelst, gehören also zu diesem Konto. Die Bestätigung senden wir an {typed}.",
+      "useAccountEmail": "Lieber an meine eigene E-Mail-Adresse senden"
     },
     "guestSigninMarketplace": "Sie haben bereits ein Marketplace-Konto? <link>Anmelden</link>, um Ihre Daten nicht erneut einzugeben.",
     "guestSigninRestaurant": "Sie haben bereits ein Konto bei diesem Restaurant? <link>Anmelden</link>, um Ihre Daten nicht erneut einzugeben.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Dieses Geschenk stornieren",
       "giftRevoked": "Geschenk storniert.",
       "giftRevokeTooLate": "Zu spät — dieses Geschenk wurde bereits eingelöst.",
+      "giftResend": "Anleitung erneut senden",
+      "giftResent": "Anleitung erneut gesendet.",
+      "giftResendTooSoon": "Gerade erst gesendet — warten Sie eine Minute, bevor Sie erneut senden.",
+      "giftAlreadyPending": "Diese Person hat bereits {amount} in {label}, die noch nicht abgeholt wurden. Senden Sie die Anleitung mit der Schaltfläche ✉ unten erneut, oder stornieren Sie zuerst dieses Geschenk.",
       "giftStatusPending": "Ausstehend",
       "giftStatusClaimed": "Eingelöst",
       "giftStatusRevoked": "Storniert",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} hat Ihrem Guthaben soeben {amount} in {label} hinzugefügt — ein kleines Dankeschön vom Restaurant.",
       "balanceLine": "Ihr Guthaben beträgt jetzt {balance}",
       "spendHint": "Ihre {label} werden an der Kasse angerechnet — gönnen Sie sich etwas bei der nächsten Bestellung.",
+      "whatItIs": "{label} sind Guthaben bei {restaurantName} — sie werden direkt von Ihrer Rechnung abgezogen, wie eine Geschenkkarte. So lösen Sie sie ein:",
+      "step1Title": "Melden Sie sich in Ihrem Konto an",
+      "step1Body": "Verwenden Sie diese E-Mail-Adresse — {email} —, denn genau daran ist Ihr Guthaben in {label} gebunden.",
+      "step1BodyNoEmail": "Melden Sie sich mit der E-Mail-Adresse an, an die diese Nachricht gesendet wurde — daran ist Ihr Guthaben gebunden.",
+      "step2Title": "Wählen Sie aus, was Sie essen möchten",
+      "step2Body": "Bestellen Sie bei {restaurantName} ganz wie gewohnt.",
+      "step3Title": "Wählen Sie, wie viel {label} Sie einsetzen möchten",
+      "step3Body": "An der Kasse sehen Sie „{label} einlösen“. Rechnen Sie so viel oder so wenig auf die Bestellung an, wie Sie möchten — den Rest zahlen Sie ganz normal. Es gibt kein Ablaufdatum, das Guthaben bleibt also erhalten, bis Sie es nutzen möchten.",
       "cta": "Jetzt bestellen"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} hat {amount} in {label} nur für Sie reserviert.",
       "claimLine": "Reserviert für {email}",
       "howTo": "Erstellen Sie mit dieser E-Mail-Adresse Ihr kostenloses Konto bei {restaurantName}, und Ihr {label}-Guthaben wird automatisch gutgeschrieben — bereit zum Einlösen bei Ihrer nächsten Bestellung.",
+      "whatItIs": "{label} sind Guthaben bei {restaurantName} — sie werden direkt von Ihrer Rechnung abgezogen, wie eine Geschenkkarte. So erhalten Sie Ihres:",
+      "step1Title": "Erstellen Sie Ihr kostenloses Konto",
+      "step1Body": "Verwenden Sie genau diese E-Mail-Adresse — {email} —, denn daran erkennen wir, dass das Geschenk Ihnen gehört. Das dauert etwa eine Minute.",
+      "step2Title": "Ihre {amount} erscheinen automatisch",
+      "step2Body": "Sobald die Registrierung abgeschlossen ist, liegt das Guthaben in Ihrem Konto. Es muss kein Code eingegeben werden.",
+      "step3Title": "Lösen Sie es ein, wann immer Sie möchten",
+      "step3Body": "An der Kasse sehen Sie „{label} einlösen“. Rechnen Sie so viel oder so wenig auf die Bestellung an, wie Sie möchten — den Rest zahlen Sie ganz normal. Es gibt kein Ablaufdatum, das Guthaben bleibt also erhalten, bis Sie es nutzen möchten.",
       "cta": "Konto erstellen",
       "ignoreLine": "Falls Sie dieses Geschenk nicht erwartet haben, können Sie diese E-Mail einfach ignorieren."
     },

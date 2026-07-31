@@ -561,7 +561,9 @@
       "chargeToday": "Da pagare oggi",
       "capNote": "Puoi applicare fino a {amount} su questo ordine.",
       "earnLine": "+ Guadagna {amount}",
-      "capHelp": "Il ristorante consente di usare fino al {percent}% del totale dell'ordine in {label}."
+      "capHelp": "Il ristorante consente di usare fino al {percent}% del totale dell'ordine in {label}.",
+      "signupHint": "💡 Registrati o accedi per guadagnare premi anche su questo acquisto",
+      "balanceOwner": "Dal tuo account · {email}"
     },
     "guestSigninMarketplace": "Hai già un account marketplace? <link>Accedi</link> per non reinserire i tuoi dati.",
     "guestSigninRestaurant": "Hai già un account in questo ristorante? <link>Accedi</link> per non reinserire i tuoi dati.",
@@ -573,7 +575,12 @@
     "couponApply": "Applica",
     "scheduleModeRanges": "Fasce orarie",
     "prepaidDeliveryNote": "La consegna si paga online — il fattorino non può incassare alla porta.",
-    "prepaidDeliveryUnavailable": "Il pagamento online non è disponibile al momento, quindi non è possibile ordinare con consegna. Scegli il ritiro."
+    "prepaidDeliveryUnavailable": "Il pagamento online non è disponibile al momento, quindi non è possibile ordinare con consegna. Scegli il ritiro.",
+    "walletIdentity": {
+      "title": "Questo ordine va sul tuo account",
+      "body": "Hai effettuato l'accesso come {account}, quindi questo ordine — e tutto ciò che spendi o guadagni in {label} con esso — appartiene a quell'account. La conferma verrà inviata a {typed}.",
+      "useAccountEmail": "Inviala invece al mio indirizzo email"
+    }
   },
   "reservation": {
     "title": "Prenota un tavolo",
@@ -5071,7 +5078,11 @@
       "personalRateTitle": "Tasso di guadagno personalizzato",
       "personalRateDesc": "Questo cliente guadagna questa percentuale in {label} su ogni ordine — al posto del tasso base e di qualsiasi tasso di gruppo VIP.",
       "ratePlaceholder": "Tasso base",
-      "rateClear": "Rimuovi il tasso personalizzato"
+      "rateClear": "Rimuovi il tasso personalizzato",
+      "giftResend": "Invia di nuovo le istruzioni",
+      "giftResent": "Istruzioni inviate di nuovo.",
+      "giftResendTooSoon": "Appena inviate — aspetta un minuto prima di inviarle di nuovo.",
+      "giftAlreadyPending": "Ha già {amount} in {label} in attesa di essere ritirati. Invia di nuovo le istruzioni con il pulsante ✉ qui sotto, oppure annulla prima quel regalo."
     },
     "imageCrop": {
       "title": "Regola la foto",
@@ -5660,7 +5671,15 @@
       "body": "{restaurantName} ha appena aggiunto {amount} in {label} al tuo portafoglio — un piccolo ringraziamento dal ristorante.",
       "balanceLine": "Il tuo saldo ora è {balance}",
       "spendHint": "I tuoi {label} si applicano al momento del pagamento — concediti qualcosa al prossimo ordine.",
-      "cta": "Ordina ora"
+      "cta": "Ordina ora",
+      "whatItIs": "I {label} sono credito da spendere da {restaurantName} — vengono scalati direttamente dal conto, proprio come una gift card. Ecco come usarli:",
+      "step1Title": "Accedi al tuo account",
+      "step1Body": "Usa questo indirizzo email — {email} — perché è proprio a questo che sono collegati i tuoi {label}.",
+      "step1BodyNoEmail": "Accedi con l'indirizzo email a cui è arrivato questo messaggio — il credito è collegato a quello.",
+      "step2Title": "Aggiungi quello che vuoi mangiare",
+      "step2Body": "Ordina da {restaurantName} esattamente come faresti di solito.",
+      "step3Title": "Scegli quanti {label} usare",
+      "step3Body": "Al momento del pagamento vedrai «Usa il tuo {label}». Usane quanti vuoi per questo ordine — il resto lo paghi normalmente. Non ci sono scadenze, quindi il credito resta lì finché non ti serve."
     },
     "rewardGiftInvite": {
       "subject": "{restaurant} ha un regalo per te — {amount} in {label}!",
@@ -5672,7 +5691,14 @@
       "claimLine": "Riservato a {email}",
       "howTo": "Crea il tuo account gratuito su {restaurantName} usando questo indirizzo email e il tuo credito in {label} verrà aggiunto automaticamente al tuo portafoglio — pronto da spendere al tuo prossimo ordine.",
       "cta": "Crea il mio account",
-      "ignoreLine": "Se non ti aspettavi questo regalo, puoi tranquillamente ignorare questa email."
+      "ignoreLine": "Se non ti aspettavi questo regalo, puoi tranquillamente ignorare questa email.",
+      "whatItIs": "I {label} sono credito da spendere da {restaurantName} — vengono scalati direttamente dal conto, proprio come una gift card. Ecco come ottenere i tuoi:",
+      "step1Title": "Crea il tuo account gratuito",
+      "step1Body": "Usa esattamente questo indirizzo email — {email} — perché è così che sappiamo che il regalo è tuo. Ci vuole circa un minuto.",
+      "step2Title": "Il tuo credito di {amount} compare da solo",
+      "step2Body": "Appena completi la registrazione, il credito è già nel tuo account. Non c'è nessun codice da inserire.",
+      "step3Title": "Spendilo quando vuoi",
+      "step3Body": "Al momento del pagamento vedrai «Usa il tuo {label}». Usane quanti vuoi per questo ordine — il resto lo paghi normalmente. Non ci sono scadenze, quindi il credito resta lì finché non ti serve."
     },
     "vipGroupWelcome": {
       "accountTip": "Crea un account con questa email per accumulare e usare anche i tuoi crediti fedeltà.",

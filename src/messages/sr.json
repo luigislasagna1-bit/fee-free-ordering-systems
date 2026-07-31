@@ -561,7 +561,14 @@
       "chargeToday": "Za plaćanje danas",
       "capNote": "Na ovu porudžbinu možete primeniti najviše {amount}.",
       "earnLine": "+ Zaradite {amount}",
-      "capHelp": "Ресторан дозвољава коришћење до {percent}% укупног износа поруџбине у {label}."
+      "capHelp": "Ресторан дозвољава коришћење до {percent}% укупног износа поруџбине у {label}.",
+      "signupHint": "💡 Registrujte se ili se prijavite da biste i za ovu kupovinu dobili nagrade",
+      "balanceOwner": "Sa vašeg naloga · {email}"
+    },
+    "walletIdentity": {
+      "title": "Ova porudžbina ide na vaš nalog",
+      "body": "Prijavljeni ste kao {account}, pa ova porudžbina — i sve {label} koje na njoj potrošite ili zaradite — pripadaju tom nalogu. Potvrdu ćemo poslati na {typed}.",
+      "useAccountEmail": "Pošalji na e-adresu mog naloga"
     },
     "guestSigninMarketplace": "Већ имате marketplace налог? <link>Пријавите се</link> да не уносите податке поново.",
     "guestSigninRestaurant": "Већ имате налог у овом ресторану? <link>Пријавите се</link> да не уносите податке поново.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Otkaži ovaj poklon",
       "giftRevoked": "Poklon je otkazan.",
       "giftRevokeTooLate": "Prekasno — ovaj poklon je već preuzet.",
+      "giftResend": "Pošalji uputstvo ponovo",
+      "giftResent": "Uputstvo je ponovo poslato.",
+      "giftResendTooSoon": "Upravo je poslato — sačekajte minut pre nego što pošaljete ponovo.",
+      "giftAlreadyPending": "Ovaj gost već ima {amount} u {label} koji čekaju da budu preuzeti. Pošaljite uputstvo ponovo dugmetom ✉ ispod ili prvo otkažite taj poklon.",
       "giftStatusPending": "Na čekanju",
       "giftStatusClaimed": "Preuzeto",
       "giftStatusRevoked": "Otkazano",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} je upravo dodao {amount} u {label} u vaš novčanik — mala zahvalnica restorana.",
       "balanceLine": "Vaš saldo je sada {balance}",
       "spendHint": "Vaši {label} se primenjuju pri plaćanju — počastite se prilikom sledeće porudžbine.",
+      "whatItIs": "{label} su kredit kod {restaurantName} — odbijaju se direktno od vašeg računa, kao poklon kartica. Evo kako da ih iskoristite:",
+      "step1Title": "Prijavite se na svoj nalog",
+      "step1Body": "Koristite baš ovu e-adresu — {email} — jer su za nju vezani vaši {label}.",
+      "step1BodyNoEmail": "Prijavite se e-adresom na koju je stigla ova poruka — kredit je vezan baš za nju.",
+      "step2Title": "Dodajte ono što želite da jedete",
+      "step2Body": "Poručite od {restaurantName} isto kao i obično.",
+      "step3Title": "Izaberite koliko {label} da iskoristite",
+      "step3Body": "Pri plaćanju ćete videti „Iskoristite svoje {label}“. Na porudžbinu usmerite koliko god želite — ostatak platite kao i uvek. Nema roka važenja, pa kredit čeka dok vam ne zatreba.",
       "cta": "Poruči odmah"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} je samo za vas izdvojio {label} u vrednosti od {amount}.",
       "claimLine": "Rezervisano za {email}",
       "howTo": "Napravite besplatan nalog kod {restaurantName} koristeći ovu e-adresu i {label} će vam automatski biti dodat u novčanik — spreman za trošenje uz sledeću porudžbinu.",
+      "whatItIs": "{label} su kredit kod {restaurantName} — odbijaju se direktno od vašeg računa, kao poklon kartica. Evo kako da dobijete svoje:",
+      "step1Title": "Napravite besplatan nalog",
+      "step1Body": "Upišite tačno ovu e-adresu — {email} — jer po njoj znamo da je poklon vaš. Traje oko minut.",
+      "step2Title": "Iznos od {amount} stiže automatski",
+      "step2Body": "Čim završite registraciju, kredit je na vašem nalogu. Nema koda za unos.",
+      "step3Title": "Potrošite ga kad god poželite",
+      "step3Body": "Pri plaćanju ćete videti „Iskoristite svoje {label}“. Na porudžbinu usmerite koliko god želite — ostatak platite kao i uvek. Nema roka važenja, pa kredit čeka dok vam ne zatreba.",
       "cta": "Kreiraj moj nalog",
       "ignoreLine": "Ako ovo niste očekivali, slobodno zanemarite ovu e-poruku."
     },

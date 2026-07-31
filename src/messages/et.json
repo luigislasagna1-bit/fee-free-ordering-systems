@@ -561,7 +561,14 @@
       "chargeToday": "Täna maksta",
       "capNote": "Sellele tellimusele saad kasutada kuni {amount}.",
       "earnLine": "+ Teeni {amount}",
-      "capHelp": "Restoran lubab kasutada kuni {percent}% tellimuse summast: {label}."
+      "capHelp": "Restoran lubab kasutada kuni {percent}% tellimuse summast: {label}.",
+      "signupHint": "💡 Loo konto või logi sisse, et teenida ka selle ostu eest boonuseid",
+      "balanceOwner": "Sinu kontolt · {email}"
+    },
+    "walletIdentity": {
+      "title": "See tellimus seotakse sinu kontoga",
+      "body": "Oled sisse logitud kasutajana {account}, seega kuulub see tellimus — ja kõik {label}, mida sellega kulutad või teenid — sellele kontole. Kinnituse saadame aadressile {typed}.",
+      "useAccountEmail": "Saada see hoopis minu enda e-posti aadressile"
     },
     "guestSigninMarketplace": "Kas teil on juba marketplace'i konto? <link>Logige sisse</link>, et oma andmeid uuesti mitte sisestada.",
     "guestSigninRestaurant": "Kas teil on juba selle restorani konto? <link>Logige sisse</link>, et oma andmeid uuesti mitte sisestada.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Tühista see kingitus",
       "giftRevoked": "Kingitus tühistatud.",
       "giftRevokeTooLate": "Liiga hilja — see kingitus on juba lunastatud.",
+      "giftResend": "Saada juhised uuesti",
+      "giftResent": "Juhised saadeti uuesti.",
+      "giftResendTooSoon": "Just saadetud — oota hetk, enne kui uuesti saadad.",
+      "giftAlreadyPending": "Sellel külalisel on juba {amount} {label} kättesaamist ootamas. Saada juhised uuesti allpool oleva ✉ nupuga või tühista kõigepealt see kingitus.",
       "giftStatusPending": "Ootel",
       "giftStatusClaimed": "Lunastatud",
       "giftStatusRevoked": "Tühistatud",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} lisas just teie rahakotti {amount} {label} — väike tänu restoranilt.",
       "balanceLine": "Teie saldo on nüüd {balance}",
       "spendHint": "Teie {label} rakenduvad maksmisel — lubage endale midagi järgmise tellimusega.",
+      "whatItIs": "{label} on krediit restoranis {restaurantName} — see läheb otse teie arvest maha, nagu kinkekaart. Nii saate seda kasutada:",
+      "step1Title": "Logige oma kontole sisse",
+      "step1Body": "Kasutage seda e-posti aadressi — {email} —, sest teie {label} on just sellega seotud.",
+      "step1BodyNoEmail": "Logige sisse e-posti aadressiga, millele see kiri saadeti — teie krediit on just sellega seotud.",
+      "step2Title": "Lisage korvi see, mida süüa soovite",
+      "step2Body": "Tellige restoranist {restaurantName} täpselt nii nagu ikka.",
+      "step3Title": "Valige, kui palju {label} kasutate",
+      "step3Body": "Maksmisel näete valikut „Kasuta oma {label}“. Suunake tellimuse katteks nii palju või nii vähe, kui soovite — ülejäänu maksate tavapäraselt. Aegumistähtaega ei ole, nii et krediit ootab, kuni soovite seda kasutada.",
       "cta": "Telli kohe"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} on pannud just sinu jaoks kõrvale {amount} väärtuses {label}.",
       "claimLine": "Reserveeritud aadressile {email}",
       "howTo": "Loo restorani {restaurantName} juures selle e-posti aadressiga tasuta konto ja sinu {label} lisatakse automaatselt sinu rahakotti — valmis kasutamiseks juba järgmisel tellimusel.",
+      "whatItIs": "{label} on krediit restoranis {restaurantName} — see läheb otse sinu arvest maha, nagu kinkekaart. Nii saad selle kätte:",
+      "step1Title": "Loo oma tasuta konto",
+      "step1Body": "Kasuta täpselt seda e-posti aadressi — {email} —, sest just selle järgi teame, et kingitus on sinu oma. See võtab umbes minuti.",
+      "step2Title": "{amount} ilmub kontole automaatselt",
+      "step2Body": "Kohe kui registreerimise lõpetad, on krediit sinu kontol. Ühtegi koodi pole vaja sisestada.",
+      "step3Title": "Kasuta seda siis, kui ise soovid",
+      "step3Body": "Maksmisel näed valikut „Kasuta oma {label}“. Suuna tellimuse katteks nii palju või nii vähe, kui soovid — ülejäänu maksad tavapäraselt. Aegumistähtaega ei ole, nii et krediit ootab, kuni soovid seda kasutada.",
       "cta": "Loo konto",
       "ignoreLine": "Kui sa seda kirja ei oodanud, võid selle rahulikult tähelepanuta jätta."
     },

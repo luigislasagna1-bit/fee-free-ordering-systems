@@ -561,7 +561,14 @@
       "chargeToday": "Za plačilo danes",
       "capNote": "Za to naročilo lahko uporabite največ {amount}.",
       "earnLine": "+ Prislužite {amount}",
-      "capHelp": "Restavracija dovoljuje porabo do {percent}% zneska naročila v {label}."
+      "capHelp": "Restavracija dovoljuje porabo do {percent}% zneska naročila v {label}.",
+      "signupHint": "💡 Registrirajte se ali se prijavite, da boste nagrade prejeli tudi za ta nakup",
+      "balanceOwner": "Z vašega računa · {email}"
+    },
+    "walletIdentity": {
+      "title": "To naročilo gre na vaš račun",
+      "body": "Prijavljeni ste kot {account}, zato to naročilo — skupaj z vsem, kar pri njem porabite ali prislužite v {label} — pripada temu računu. Potrdilo bomo poslali na {typed}.",
+      "useAccountEmail": "Pošlji na e-naslov mojega računa"
     },
     "guestSigninMarketplace": "Že imate marketplace račun? <link>Prijavite se</link>, da vam ni treba znova vnašati podatkov.",
     "guestSigninRestaurant": "Že imate račun pri tej restavraciji? <link>Prijavite se</link>, da vam ni treba znova vnašati podatkov.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Prekliči to darilo",
       "giftRevoked": "Darilo je preklicano.",
       "giftRevokeTooLate": "Prepozno — to darilo je bilo že prevzeto.",
+      "giftResend": "Znova pošlji navodila",
+      "giftResent": "Navodila so bila znova poslana.",
+      "giftResendTooSoon": "Pravkar poslano — počakajte minuto, preden pošljete znova.",
+      "giftAlreadyPending": "Ta gost že ima {amount} v {label}, ki čaka na prevzem. Znova pošljite navodila z gumbom ✉ spodaj ali najprej prekličite tisto darilo.",
       "giftStatusPending": "Čaka",
       "giftStatusClaimed": "Prevzeto",
       "giftStatusRevoked": "Preklicano",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} je pravkar dodal {amount} v {label} v vašo denarnico — majhna zahvala restavracije.",
       "balanceLine": "Vaše stanje je zdaj {balance}",
       "spendHint": "Vaši {label} se upoštevajo ob plačilu — privoščite si kaj ob naslednjem naročilu.",
+      "whatItIs": "{label} je dobroimetje pri {restaurantName} — odšteje se neposredno od vašega zneska za plačilo, tako kot darilna kartica. Takole ga porabite:",
+      "step1Title": "Prijavite se v svoj račun",
+      "step1Body": "Uporabite prav ta e-naslov — {email} — saj je vaše dobroimetje {label} vezano nanj.",
+      "step1BodyNoEmail": "Prijavite se z e-naslovom, na katerega je prišlo to sporočilo — dobroimetje je vezano prav nanj.",
+      "step2Title": "Dodajte, kar si želite pojesti",
+      "step2Body": "Naročite pri {restaurantName} povsem enako kot običajno.",
+      "step3Title": "Izberite, koliko {label} boste porabili",
+      "step3Body": "Ob plačilu boste videli »Uporabite svoj {label}«. Za naročilo namenite toliko, kolikor želite — preostanek plačate kot običajno. Rok veljavnosti ne poteče, zato dobroimetje počaka, dokler ga ne želite uporabiti.",
       "cta": "Naroči zdaj"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} vam podarja {amount} v valuti {label}.",
       "claimLine": "Rezervirano za {email}",
       "howTo": "Ustvarite brezplačen račun pri restavraciji {restaurantName} s tem e-naslovom in vaše dobroimetje {label} bo samodejno dodano v vašo denarnico — pripravljeno za vaše naslednje naročilo.",
+      "whatItIs": "{label} je dobroimetje pri {restaurantName} — odšteje se neposredno od vašega zneska za plačilo, tako kot darilna kartica. Takole pridete do svojega:",
+      "step1Title": "Ustvarite svoj brezplačni račun",
+      "step1Body": "Vpišite točno ta e-naslov — {email} — saj po njem vemo, da je darilo vaše. Traja približno minuto.",
+      "step2Title": "Znesek {amount} se prikaže samodejno",
+      "step2Body": "Takoj ko dokončate registracijo, je dobroimetje na vašem računu. Nobene kode ni treba vnašati.",
+      "step3Title": "Porabite ga, kadar koli želite",
+      "step3Body": "Ob plačilu boste videli »Uporabite svoj {label}«. Za naročilo namenite toliko, kolikor želite — preostanek plačate kot običajno. Rok veljavnosti ne poteče, zato dobroimetje počaka, dokler ga ne želite uporabiti.",
       "cta": "Ustvari moj račun",
       "ignoreLine": "Če tega niste pričakovali, lahko to e-sporočilo mirno prezrete."
     },

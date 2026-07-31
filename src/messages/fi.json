@@ -561,7 +561,14 @@
       "chargeToday": "Maksettavaa tänään",
       "capNote": "Voit käyttää tähän tilaukseen enintään {amount}.",
       "earnLine": "+ Ansaitse {amount}",
-      "capHelp": "Ravintola sallii käyttää enintään {percent}% tilauksen summasta: {label}."
+      "capHelp": "Ravintola sallii käyttää enintään {percent}% tilauksen summasta: {label}.",
+      "signupHint": "💡 Rekisteröidy tai kirjaudu sisään, niin ansaitset etuja myös tästä ostoksesta",
+      "balanceOwner": "Tililtäsi · {email}"
+    },
+    "walletIdentity": {
+      "title": "Tämä tilaus kirjataan tilillesi",
+      "body": "Olet kirjautuneena tunnuksella {account}, joten tämä tilaus — ja kaikki siihen käyttämäsi tai siitä ansaitsemasi {label} — kuuluu kyseiselle tilille. Vahvistus lähetetään osoitteeseen {typed}.",
+      "useAccountEmail": "Lähetä se mieluummin omaan sähköpostiini"
     },
     "guestSigninMarketplace": "Onko sinulla jo marketplace-tili? <link>Kirjaudu sisään</link> välttääksesi tietojen uudelleen syöttämisen.",
     "guestSigninRestaurant": "Onko sinulla jo tili tässä ravintolassa? <link>Kirjaudu sisään</link> välttääksesi tietojen uudelleen syöttämisen.",
@@ -5046,6 +5053,10 @@
       "giftRevoke": "Peruuta tämä lahja",
       "giftRevoked": "Lahja peruutettu.",
       "giftRevokeTooLate": "Liian myöhäistä — tämä lahja on jo lunastettu.",
+      "giftResend": "Lähetä ohjeet uudelleen",
+      "giftResent": "Ohjeet lähetetty uudelleen.",
+      "giftResendTooSoon": "Lähetettiin juuri — odota hetki ennen uutta lähetystä.",
+      "giftAlreadyPending": "Hänellä on jo {amount} ({label}) odottamassa lunastusta. Lähetä ohjeet uudelleen alla olevalla ✉-painikkeella tai peruuta ensin kyseinen lahja.",
       "giftStatusPending": "Odottaa",
       "giftStatusClaimed": "Lunastettu",
       "giftStatusRevoked": "Peruutettu",
@@ -5660,6 +5671,14 @@
       "body": "{restaurantName} lisäsi juuri lompakkoosi {amount} ({label}) — pieni kiitos ravintolalta.",
       "balanceLine": "Saldosi on nyt {balance}",
       "spendHint": "{label} käytetään kassalla — hemmottele itseäsi seuraavalla tilauksella.",
+      "whatItIs": "{label} on saldoa ravintolassa {restaurantName} — se vähennetään suoraan laskustasi, aivan kuten lahjakortti. Näin käytät sen:",
+      "step1Title": "Kirjaudu tilillesi",
+      "step1Body": "Käytä juuri tätä sähköpostiosoitetta — {email} — sillä saldosi {label} on liitetty siihen.",
+      "step1BodyNoEmail": "Kirjaudu sisään sillä sähköpostiosoitteella, johon tämä viesti lähetettiin — saldosi on liitetty siihen.",
+      "step2Title": "Lisää koriin, mitä haluat syödä",
+      "step2Body": "Tilaa ravintolasta {restaurantName} aivan kuten tavallisesti.",
+      "step3Title": "Valitse, kuinka paljon {label} haluat käyttää",
+      "step3Body": "Kassalla näet kohdan ”Käytä {label}”. Voit käyttää tilaukseen niin paljon tai niin vähän kuin haluat — loput maksat aivan tavalliseen tapaan. Saldo ei vanhene, joten se säilyy siihen asti, kun haluat käyttää sen.",
       "cta": "Tilaa nyt"
     },
     "rewardGiftInvite": {
@@ -5671,6 +5690,13 @@
       "body": "{restaurantName} on varannut juuri sinulle {amount} {label}.",
       "claimLine": "Varattu osoitteelle {email}",
       "howTo": "Luo ilmainen tili ravintolaan {restaurantName} tällä sähköpostiosoitteella, niin {label} lisätään lompakkoosi automaattisesti — valmiina käytettäväksi seuraavassa tilauksessasi.",
+      "whatItIs": "{label} on saldoa ravintolassa {restaurantName} — se vähennetään suoraan laskustasi, aivan kuten lahjakortti. Näin saat omasi:",
+      "step1Title": "Luo ilmainen tili",
+      "step1Body": "Käytä juuri tätä sähköpostiosoitetta — {email} — sillä siitä tiedämme lahjan olevan sinun. Siihen menee noin minuutti.",
+      "step2Title": "{amount} ilmestyy tilillesi automaattisesti",
+      "step2Body": "Heti kun rekisteröityminen on valmis, saldo on tililläsi. Mitään koodia ei tarvitse syöttää.",
+      "step3Title": "Käytä se milloin haluat",
+      "step3Body": "Kassalla näet kohdan ”Käytä {label}”. Voit käyttää tilaukseen niin paljon tai niin vähän kuin haluat — loput maksat aivan tavalliseen tapaan. Saldo ei vanhene, joten se säilyy siihen asti, kun haluat käyttää sen.",
       "cta": "Luo tili",
       "ignoreLine": "Jos et odottanut tätä viestiä, voit jättää sen huomiotta."
     },
