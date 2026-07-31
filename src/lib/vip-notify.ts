@@ -29,7 +29,12 @@ async function loadSpecialContext(promotionId: string, restaurantId: string) {
   const [promo, restaurant] = await Promise.all([
     prisma.promotion.findUnique({
       where: { id: promotionId },
-      select: { id: true, restaurantId: true, isActive: true, name: true, description: true, promotionType: true, ruleConfig: true, minimumOrder: true, endsAt: true },
+      // customerType decides WHICH instructions are truthful: "member" means the
+      // engine refuses this deal for anyone not signed in, so the email must say
+      // "sign in first" rather than "type your email at checkout". Omitting it
+      // from this select is what let the email advertise a route checkout
+      // rejects. Luigi 2026-07-31.
+      select: { id: true, restaurantId: true, isActive: true, name: true, description: true, promotionType: true, ruleConfig: true, minimumOrder: true, endsAt: true, customerType: true },
     }),
     prisma.restaurant.findUnique({
       where: { id: restaurantId },
@@ -68,6 +73,9 @@ async function sendToRecipients(ctx: NonNullable<Awaited<ReturnType<typeof loadS
         expiresAt: promo.endsAt,
         description: promo.description,
         hasAccount: tg.hasAccount,
+        // "Members only" = the engine requires a signed-in session, so the
+        // email must instruct signing in rather than typing an address.
+        requiresSignIn: promo.customerType === "member",
         orderUrl,
         restaurantUrl: orderUrl,
         restaurantEmail: restaurant.email,
@@ -223,6 +231,10 @@ export async function notifyGroupWelcome(opts: {
         memberLabel,
         groupName: group.name,
         perkLines,
+        // The restaurant's own word for its credit, so the email can draw the
+        // one distinction that matters: discounts follow the typed address,
+        // credit needs an account.
+        rewardLabel: restaurant.rewardLabelPlural,
         hasAccount: tg.hasAccount,
         orderUrl,
         signupUrl,

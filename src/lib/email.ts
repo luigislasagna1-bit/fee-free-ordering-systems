@@ -1332,6 +1332,11 @@ export async function sendVipSpecialEmail(params: {
   expiresAt?: Date | null;
   description?: string | null;
   hasAccount: boolean;
+  /** True when the promo is saved with Client type = "Members only", which the
+   *  engine refuses for anyone not SIGNED IN. Switches the instructions from
+   *  "type this email at checkout" to "sign in first", so this email can never
+   *  advertise a route that checkout will silently reject. Luigi 2026-07-31. */
+  requiresSignIn?: boolean;
   orderUrl: string;
   restaurantUrl?: string;
   restaurantEmail?: string | null;
@@ -1359,10 +1364,26 @@ export async function sendVipSpecialEmail(params: {
       date: params.expiresAt.toLocaleDateString(params.locale || undefined, { year: "numeric", month: "long", day: "numeric" }),
     }));
   }
-  const usageNote = params.hasAccount
-    ? t("email.vipSpecial.usageAccount", { discountLabel })
-    : t("email.vipSpecial.usageGuest", { discountLabel, email: params.to });
-  const accountTip = params.hasAccount ? undefined : t("email.vipSpecial.accountTip");
+  // ── Never promise a route the engine will refuse ─────────────────────────
+  // A promo saved with Client type = "Members only" is rejected for anyone who
+  // is not SIGNED IN (promo-engine: customerType === "member" && !ctx.isMember),
+  // and for a guest `isMember` is satisfied only by a marketplace account — so
+  // "just type this email at checkout" would be a promise checkout silently
+  // breaks, with the customer seeing full price and no explanation. When the
+  // promo carries that restriction we send the sign-in wording instead, to
+  // everyone, whether or not they already have an account. Luigi 2026-07-31:
+  // an advertised deal must work when the customer tries it.
+  const usageNote = params.requiresSignIn
+    ? t("email.vipSpecial.usageSignIn", { discountLabel, email: params.to })
+    : params.hasAccount
+      ? t("email.vipSpecial.usageAccount", { discountLabel })
+      : t("email.vipSpecial.usageGuest", { discountLabel, email: params.to });
+  // The "create an account" nudge is optional convenience normally, but when
+  // the deal REQUIRES a session it is the instruction — so keep it for
+  // account-holders too, worded as sign-in rather than sign-up.
+  const accountTip = params.requiresSignIn
+    ? t("email.vipSpecial.accountTipSignIn")
+    : params.hasAccount ? undefined : t("email.vipSpecial.accountTip");
   const html = await renderEmail(
     CouponAssigned({
       t,
@@ -1418,6 +1439,11 @@ export async function sendVipGroupWelcomeEmail(params: {
   groupName: string;
   /** Pre-formatted perk lines, e.g. "10% back in Luigi Bucks on every order". */
   perkLines: string[];
+  /** The restaurant's own name for its credit ("Luigi Buck's"). Used to explain
+   *  that DISCOUNTS follow the typed email but CREDIT needs an account, which is
+   *  the one distinction this email previously blurred. Falls back to the
+   *  localized default. Luigi 2026-07-31. */
+  rewardLabel?: string | null;
   hasAccount: boolean;
   orderUrl: string;
   signupUrl?: string;
@@ -1428,6 +1454,7 @@ export async function sendVipGroupWelcomeEmail(params: {
 }) {
   const t = await getDict(params.locale);
   const memberLabel = params.memberLabel?.trim() || t("email.vipSpecial.defaultMemberLabel");
+  const groupRewardLabel = params.rewardLabel?.trim() || t("checkout.reward.defaultPlural");
   const html = await renderEmail(
     CouponAssigned({
       t,
@@ -1446,8 +1473,10 @@ export async function sendVipGroupWelcomeEmail(params: {
       introOverride: t("email.vipGroupWelcome.intro", { groupName: params.groupName, restaurantName: params.restaurantName }),
       usageNote: params.hasAccount
         ? t("email.vipGroupWelcome.usageAccount")
-        : t("email.vipGroupWelcome.usageGuest", { email: params.to }),
-      accountTip: params.hasAccount ? undefined : t("email.vipGroupWelcome.accountTip"),
+        : t("email.vipGroupWelcome.usageGuest", { email: params.to, label: groupRewardLabel }),
+      // Kept for account-holders too: having an account is not the same as being
+      // SIGNED IN, and the balance is invisible at checkout without a session.
+      accountTip: t("email.vipGroupWelcome.accountTip", { label: groupRewardLabel }),
     }),
   );
   return send({

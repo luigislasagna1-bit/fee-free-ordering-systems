@@ -94,6 +94,38 @@ describe("gift emails render without leaking placeholders", () => {
     expect(html).toContain(LABEL);
   });
 
+  // The VIP-deal and group-welcome emails go through sendVipSpecialEmail /
+  // sendVipGroupWelcomeEmail rather than a bare template, so they are covered by
+  // asserting the MESSAGE CATALOGUE supplies nothing the senders don't pass.
+  // (A full render test would need the whole send pipeline; this catches the
+  // same class — a key referencing a variable no call site provides.)
+  it("every VIP email string's placeholders are supplied by its call site", async () => {
+    const en = (await import("@/messages/en.json")).default as any;
+    const placeholders = (v: string) =>
+      [...new Set([...String(v).matchAll(/\{(\w+)\}/g)].map((m) => m[1]))];
+
+    // What src/lib/email.ts actually passes at each call site.
+    const supplied: Record<string, string[]> = {
+      "vipSpecial.intro": ["memberLabel", "restaurantName", "discountLabel"],
+      "vipSpecial.usageAccount": ["discountLabel"],
+      "vipSpecial.usageGuest": ["discountLabel", "email"],
+      "vipSpecial.usageSignIn": ["discountLabel", "email"],
+      "vipSpecial.accountTip": [],
+      "vipSpecial.accountTipSignIn": [],
+      "vipGroupWelcome.usageAccount": [],
+      "vipGroupWelcome.usageGuest": ["email", "label"],
+      "vipGroupWelcome.accountTip": ["label"],
+    };
+
+    for (const [path, args] of Object.entries(supplied)) {
+      const [ns, key] = path.split(".");
+      const value = en.email[ns][key];
+      expect(value, `${path} missing from en.json`).toBeTruthy();
+      const missing = placeholders(value).filter((p) => !args.includes(p));
+      expect(missing, `${path} uses {${missing.join("},{")}} which its call site does not pass`).toEqual([]);
+    }
+  });
+
   it("falls back cleanly when the gift address is unknown", async () => {
     const t = await getDict("en");
     const html = await renderEmail(

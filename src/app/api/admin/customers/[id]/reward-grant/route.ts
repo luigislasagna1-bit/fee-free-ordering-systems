@@ -11,7 +11,8 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { grant, getBalance } from "@/lib/reward-ledger";
-import { sendRewardGiftEmail } from "@/lib/email";
+import { sendRewardGiftEmail, sendRewardGiftInviteEmail } from "@/lib/email";
+import { isAccountCustomer } from "@/lib/reward-gifts";
 import { formatCurrency } from "@/lib/utils";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
@@ -24,7 +25,11 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
 
   const customer = await prisma.customer.findUnique({
     where: { id },
-    select: { id: true, restaurantId: true, name: true, email: true, marketingConsent: true },
+    // signedUpAt / passwordHash / customerAccountId decide WHICH email this
+    // person can act on: a guest CRM row (created by simply ordering) has no
+    // way to sign in, so telling them to "sign in to your account" is a dead
+    // end for money that is really theirs. Mirrors isAccountCustomer().
+    select: { id: true, restaurantId: true, name: true, email: true, marketingConsent: true, signedUpAt: true, passwordHash: true, customerAccountId: true },
   });
   if (!customer || customer.restaurantId !== restaurantId) {
     return NextResponse.json({ error: "Customer not found" }, { status: 404 });
@@ -73,18 +78,45 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   // having an email at all. Fully localized in the restaurant's language.
   if (amount > 0 && customer.email && customer.marketingConsent) {
     const rewardLabel = r.rewardLabelPlural?.trim() || r.rewardLabelSingular?.trim() || "Reward Dollars";
-    sendRewardGiftEmail({
-      to: customer.email,
-      customerName: customer.name || "",
-      restaurantName: r.name,
-      amountLabel: formatCurrency(amount, r.currency),
-      rewardLabel,
-      balanceLabel: formatCurrency(balance, r.currency),
-      note,
-      orderUrl: restaurantOrderUrl(r as any, ""),
-      restaurantEmail: r.email,
-      locale: r.defaultLanguage || "en",
-    }).catch((e) => console.error("[reward-grant gift email]", e instanceof Error ? e.message : e));
+    const locale = r.defaultLanguage || "en";
+    // WHICH email depends on whether this person can actually sign in. A guest
+    // CRM row is created by simply placing an order, so "Sign in to your
+    // account" would be a dead end: no password, no dashboard, and the balance
+    // is invisible at checkout until they have a session. Send the invite
+    // instead, which tells them to create the account that unlocks it. The
+    // sibling gift-by-email route has always branched this way; this one never
+    // did, so every walk-in customer granted credit from their customer page
+    // got instructions they could not follow. Luigi 2026-07-31.
+    if (isAccountCustomer(customer)) {
+      sendRewardGiftEmail({
+        to: customer.email,
+        customerName: customer.name || "",
+        restaurantName: r.name,
+        amountLabel: formatCurrency(amount, r.currency),
+        rewardLabel,
+        balanceLabel: formatCurrency(balance, r.currency),
+        note,
+        orderUrl: restaurantOrderUrl(r as any, ""),
+        restaurantEmail: r.email,
+        locale,
+      }).catch((e) => console.error("[reward-grant gift email]", e instanceof Error ? e.message : e));
+    } else {
+      // The credit is already banked against their row — the invite's job is
+      // simply to get them an account so they can see and spend it. Same
+      // signup-subpath rule as the gift route: a branded host's ROOT serves the
+      // marketing site, so link to /account/signup explicitly.
+      sendRewardGiftInviteEmail({
+        to: customer.email,
+        customerName: customer.name || "",
+        restaurantName: r.name,
+        amountLabel: formatCurrency(amount, r.currency),
+        rewardLabel,
+        note,
+        orderUrl: restaurantOrderUrl(r as any, "/account/signup"),
+        restaurantEmail: r.email,
+        locale,
+      }).catch((e) => console.error("[reward-grant invite email]", e instanceof Error ? e.message : e));
+    }
   }
 
   const acct = await prisma.rewardAccount.findUnique({

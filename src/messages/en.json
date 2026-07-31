@@ -5643,12 +5643,14 @@
     },
     "vipSpecial": {
       "subject": "Your {memberLabel} deal at {restaurantName} — {discountLabel}",
-      "intro": "You've unlocked your {memberLabel} deal at {restaurantName}: {discountLabel}. It applies automatically — no code needed.",
+      "intro": "Good news — {restaurantName} has set up {discountLabel} for you as a {memberLabel}. There is no code to type: when your order meets the conditions below, the discount is added for you at checkout.",
       "defaultMemberLabel": "VIP member",
       "howToLabel": "How to use it",
       "usageAccount": "Just sign in to your account and order — your {discountLabel} is applied automatically at checkout.",
-      "usageGuest": "At checkout, enter this email address ({email}) and your {discountLabel} is applied automatically — no code to type.",
-      "accountTip": "Tip: create a free account with this email to save your details and find all your VIP offers in one place."
+      "usageGuest": "At checkout, use this email address ({email}) and your {discountLabel} is added for you — no code to type. If you do not see it on your order, sign in to your account and it will apply.",
+      "accountTip": "Tip: create a free account with this email and sign in before you order. It saves your details, keeps your offers in one place, and makes sure every deal we have set aside for you is picked up.",
+      "usageSignIn": "This deal is for signed-in members. Sign in to your account with this email address ({email}) before you order, and your {discountLabel} is added for you at checkout — no code to type.",
+      "accountTipSignIn": "No account yet? Creating one takes about a minute — use this same email address, then sign in before you order so the deal is picked up."
     },
     "customerSignup": {
       "subject": "{restaurant}: new customer account — {customer}",
@@ -5705,8 +5707,8 @@
       "subject": "Welcome to {groupName} at {restaurantName}",
       "intro": "Good news — you have been added to {groupName}. Here is what comes with it:",
       "usageAccount": "Your perks apply automatically when you order — just sign in first.",
-      "usageGuest": "Your perks apply automatically when you order — just use this email address ({email}) at checkout.",
-      "accountTip": "Create an account with this email to also collect and spend your rewards.",
+      "usageGuest": "Discounts from this group are added for you at checkout when you use this email address ({email}). To also collect and spend {label}, create your free account with this address and sign in before you order — credit can only be held in an account.",
+      "accountTip": "To collect and spend {label}, create your free account with this email address and sign in each time you order — your credit lives in the account, so it only appears at checkout when you are signed in.",
       "perkEarnRate": "{percent}% back in {label} on every order",
       "perkPercent": "{percent}% off — {name}",
       "perkNamed": "{name}",
