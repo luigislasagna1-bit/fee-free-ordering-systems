@@ -259,14 +259,17 @@ export async function POST(req: NextRequest) {
     // Opting into the program means customers can pay with their balance — gate
     // on rewardsEnabled alone (rewardRedeemEnabled is auto-coupled to it, but we
     // don't depend on a possibly-stale value). Luigi 2026-06-27.
-    // The canonical customerId is safe to use: it's either the session customer
-    // (server-verified) or a typed email that resolved to an actual customer record
-    // in this restaurant (not a stranger). Both cases are allowed to see their own
-    // balance — gift recipients who haven't logged in should be able to use gifts
-    // by typing their email (cms0gyexp follow-up, 2026-07-31).
-    if (r.rewardsEnabled && promoCtx.customerId) {
+    // STRICT: the server-verified signed-in customer only — never the typed
+    // email's Customer row. Typing an email is NOT proof you control it, so
+    // resolving the wallet from a typed email would let anyone drain anyone
+    // else's stored balance by guessing their address. (Discount perks are
+    // deliberately looser — Luigi's call — but stored VALUE must be
+    // authenticated. Reverted 2026-07-31 within the hour it was introduced;
+    // the legitimate no-account gift path is a signed claim link, not a
+    // typed address.)
+    if (r.rewardsEnabled && promoCtx.sessionCustomerId) {
       const { getBalance } = await import("@/lib/reward-ledger");
-      const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.customerId });
+      const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.sessionCustomerId });
       if (balance > 0) {
         reward = {
           balance,

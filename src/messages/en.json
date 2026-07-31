@@ -5656,7 +5656,7 @@
       "badge": "A gift for you",
       "body": "{restaurantName} just added {amount} in {label} to your wallet — a little thank-you from the restaurant.",
       "balanceLine": "Your balance is now {balance}",
-      "spendHint": "To use your {label}: place an order and enter your email at checkout (no login required). Your credit will be available to spend.",
+      "spendHint": "Your {label} are applied at checkout — treat yourself on your next order.",
       "cta": "Order now"
     },
     "rewardGiftInvite": {
