@@ -66,25 +66,28 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
-### A29. 🆕 Fabrizio's #13/#14 end-of-day report overhaul — BUILT, needs deploy + his re-test
-Built 2026-07-31 from his two comments on report cms0gyexp (full technical log in TODO.md, top of Open).
-What changed in one breath: the daily report now emails **~5 minutes after closing time** and covers
-**close-to-close** (a reservation made after you close counts in TOMORROW's report — that's why his
-arrived at 10:01 AM containing a 23:53 booking); **rejected/cancelled reservations no longer count**;
-**refunds show up and are subtracted from "Collected"** (his €20 partial refund was invisible AND
-quietly moved the card order into the Offline bucket); **PayPal money says "Online (PayPal)"**;
-cancelled/rejected counts appear when nonzero. Bonus: preset rejection reasons now show in the
-CUSTOMER's language on the order status page too, and reserve-then-order booking notes finally
-reach the kitchen in a yellow box.
+### A29. ✅ Fabrizio's #13/#14 end-of-day report overhaul — COMPLETE (2026-07-31, 2:43 AM)
+**All code merged + preflight green (exit 0).** Built from his two comments on report cms0gyexp.
+What shipped: business-day close-to-close windows (reports email ~5 min after closing, after-close
+activity → next day); rejected/cancelled reservations excluded; refunds visible + netted from Collected
+(his €20 card-order repro fixed, including the payment-classifier bug that moved partial refunds
+Offline); per-method online payment split (card/PayPal/other); cancelled/rejected counts as amber rows;
+preset rejection reasons in customer's language (sparse Order.rejectionReasonKey); reserve-then-order
+booking notes in kitchen (yellow-boxed). i18n ×38 done (all 37 non-English locales completed; 12 new
+keys + autoRefreshNote reworded). TypeScript + Prisma + next build ALL GREEN.
 
-- **☐ DEPLOY sequence (with Claude):** (1) `npx tsx scripts/push-schema-to-both.ts` — one new
-  nullable column `Order.rejectionReasonKey`, additive/safe; (2) push to Vercel (preflight was green);
-  (3) quick prod check: open the kitchen End-of-day report + `/admin/reports/end-of-day`.
-- **☐ Reply to Fabrizio + flip the report to IN_TESTING** — draft is ready at
-  `scratch/fab-reply-13-14.md` (Claude wrote it; posting is your call — say "post it" and Claude runs
-  `_reply-report.ts` on prod, or post it yourself from the report page).
-- ⏳ Then his re-test: the 31st's report should arrive minutes after his evening close and show
-  reservation #6H6259; a partial refund should appear as "Refunds (1)" with Collected reduced.
+**BONUS:** Fabrizio's reward-gift test exposed a checkout bug (non-logged-in customers couldn't see
+their balance even with claimed gifts). FIXED (apply-promos + orders routes now use canonical customerId
+instead of sessionCustomerId only); gift email updated with clear instructions ("enter your email at
+checkout, no login required").
+
+**Remaining (Luigi's part):**
+- ☐ **Schema push:** Run `npx tsx scripts/push-schema-to-both.ts` locally (Order.rejectionReasonKey 
+  to both Neon branches) → then deploy.
+- ☐ **Live test:** End-to-end order on prod — confirm kitchen tablet rings, confirmation email arrives.
+- ☐ **Reply to Fabrizio:** Post your re-test request to the report (flip to IN_TESTING, or copy/paste
+  the template Claude drafted). Expected: 31st report minutes after close + reservation #6H6259 +
+  refunds (1) row with Collected reduced.
 
 ### A28. 🥇 Make **www.luigislasagna.com** the store's REAL address (upgraded from "just forward it")
 Luigi's call (2026-07-30, ~12:30 AM): the .com is where most real customers land. Later that day he
