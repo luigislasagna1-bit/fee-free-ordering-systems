@@ -89,6 +89,32 @@ export async function POST(req: NextRequest) {
     data: { customerAccountId: account.id },
   });
 
+  // CLAIM PENDING GIFTS. The per-restaurant signup and reset-password routes
+  // both claim here; the MARKETPLACE signup did not, so a restaurant's gift to
+  // someone who then created a marketplace account stayed `pending` forever.
+  // Worse, the backfill above makes isAccountCustomer() true for this email, so
+  // the next gift takes the INSTANT path — leaving the original stranded and
+  // invisible while the owner believes both were delivered.
+  //
+  // Only restaurants where this person already has a Customer row can be
+  // claimed here: a wallet requires that row (RewardAccount → Customer FK).
+  // A gift from a restaurant they have never ordered from still waits — that
+  // case belongs to the claim-link flow, which can create the row deliberately.
+  // Idempotent and never fatal: signup must succeed even if this does not.
+  try {
+    const linked = await prisma.customer.findMany({
+      where: { email, customerAccountId: account.id },
+      select: { id: true, restaurantId: true },
+      take: 50,
+    });
+    if (linked.length > 0) {
+      const { claimPendingGiftsFor } = await import("@/lib/reward-gifts");
+      for (const c of linked) {
+        await claimPendingGiftsFor({ restaurantId: c.restaurantId, customerId: c.id, email });
+      }
+    }
+  } catch (e) { console.error("[customer signup reward gifts]", e); }
+
   const token = signCustomerToken({ customerAccountId: account.id, email: account.email });
   const res = NextResponse.json({ account });
   const opts = customerCookieOptions();
