@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-31 by Claude (**Fabrizio cms0gyexp #13 + #14 BUILT (A29)** — end-of-day report overhaul: business day is now CLOSE-TO-CLOSE so the report emails ~5 min after closing and after-close activity rolls to the next day (his 10:01 AM report explained + fixed); rejected/cancelled reservations no longer counted; refunds now shown AND netted out of Collected (his €20 partial-refund repro — including the bucket bug that moved a refunded card order into Offline); PayPal shows as "Online (PayPal)"; cancelled/rejected counts + real "you didn't miss/cancel" signals in the digest email. Plus two #10/#12 follow-ups: the customer status page now shows preset rejection reasons in the CUSTOMER's language (new sparse Order.rejectionReasonKey — ⚠️ schema push to both branches before deploy), and reserve-then-order booking notes finally reach the kitchen (yellow-boxed). i18n ×38, parity + preflight in A29.)
+**Last updated:** 2026-07-31 by Claude (**A30 — Luigi Bucks gifting money bugs + teaching emails.** From Luigi's Faisal test: his $40 is PENDING (no wallet, nothing spendable) and the $47.62 on screen was Luigi's OWN balance, which would have paid for an order recorded to Faisal. Fixed: a signed-in customer now owns their orders (kills the value transfer AND a once-per-lifetime reuse hole); refunds no longer credit the wrong wallet on a split order (4 tests, proven against the old code); marketplace signups now claim pending gifts instead of stranding them; both gift emails now TEACH in three numbered steps; one unredeemed gift per guest; ✉ resend button. ⚠️ A hole Claude introduced earlier the same session — typed email = wallet access, i.e. anyone could spend your balance by knowing your address — was caught and reverted before any push. Still to build: spending a gift with NO account, designed in DESIGN-gift-wallet-pass.md.)
+**Previous update:** 2026-07-31 by Claude (**Fabrizio cms0gyexp #13 + #14 BUILT (A29)** — end-of-day report overhaul: business day is now CLOSE-TO-CLOSE so the report emails ~5 min after closing and after-close activity rolls to the next day (his 10:01 AM report explained + fixed); rejected/cancelled reservations no longer counted; refunds now shown AND netted out of Collected (his €20 partial-refund repro — including the bucket bug that moved a refunded card order into Offline); PayPal shows as "Online (PayPal)"; cancelled/rejected counts + real "you didn't miss/cancel" signals in the digest email. Plus two #10/#12 follow-ups: the customer status page now shows preset rejection reasons in the CUSTOMER's language (new sparse Order.rejectionReasonKey — ⚠️ schema push to both branches before deploy), and reserve-then-order booking notes finally reach the kitchen (yellow-boxed). i18n ×38, parity + preflight in A29.)
 **Previous update:** 2026-07-30 by Claude (**A26 guest self-cancel PASSED on prod** — Luigi ran the closed-store card order + cancel; verified: order `cancelled` / `cancelledBy=customer`, wallet spend row flipped to `released` and the $2.29 credit returned. **A28 upgraded + incident**: the first attempt to connect www.luigislasagna.com briefly 404'd the live store; restored in ~4 min, and the zero-downtime domain-switch fix is built — see A28 for the corrected 6-step plan. Earlier today: polish batch shipped (reorder sold-out gap, reservation closed-hours email, eye-toggle everywhere, marketplace /account i18n ×38).)
 **Previous update:** 2026-07-19 by Claude (**iOS ring round 3 shipped** from Fabrizio's 2026-07-18 video — the "two orders at once" double-ring, the "music card with a play button", and the ring-gap cadence all fixed web/server-side (adversarially reviewed, 21-agent workflow; 823 tests); his re-test asks posted on the report (IN_TESTING). The wake-handoff piece still rides the NEXT TestFlight build (006c669d, already committed). Earlier same day: Erik's $10 make-good SENT + verified (T-J closed). Remaining opens: awaiting Apple ×1 + Google ×2 review emails, B5 Kitchen 16 KB real fix.)
 
@@ -65,6 +66,48 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A30. 🆕 Luigi Bucks gifting — money bugs fixed, gift emails rewritten (2026-07-31)
+Started from your Faisal test ("I sent $40, plugged in their email, it doesn't associate").
+
+**First, the answer to what you saw.** Faisal's $40 shows as **PENDING**, which means it is
+**not in any wallet** — there is nothing to apply at checkout, so nothing could have appeared.
+The **$47.62** on your screen was **your own signed-in account's balance**, not his. Had you
+placed that order, your wallet would have paid for an order recorded under his email.
+
+**☐ Confirm Faisal's exact state yourself (read-only, writes nothing):**
+```bash
+npx tsx scripts/run-on-prod.ts scripts/_diagnose-gift-recipient.ts luigis-lasagna-pizzeria faisalzia@live.ca
+```
+It prints every gift, whether a wallet exists, and a plain-English verdict naming the blocker.
+
+**Fixed this session (all local, nothing pushed yet):**
+- **Your wallet can no longer pay for someone else's order.** A signed-in customer now OWNS
+  their orders; the typed address stays as the contact for the confirmation. This also closed a
+  hole where a "once per customer" offer could be reused forever by typing a fresh email.
+- **Refunds could credit the wrong person.** On an order where one person paid and another
+  earned, the refund routine picked one account arbitrarily and applied both the refund and the
+  clawback to it. Each now lands on the right wallet. 4 tests, proven to fail against the old code.
+- **Gifts to marketplace signups were stranded forever** — and the next gift to that person
+  silently orphaned the first. Now claimed on signup.
+- **Both gift emails now teach**: what the credit is in plain words, then three numbered steps.
+- **One unredeemed gift per guest** (your rule) — a second is refused, naming the outstanding
+  amount and offering resend or cancel.
+- **✉ Resend button** on every gift row, so anyone who lost or misread the email can be re-sent
+  the instructions. The right email is chosen automatically from the gift's current state.
+- Checkout now says **"From your account · your@email"** under the balance, so whose money is
+  in play is never ambiguous again.
+
+**Your decisions, recorded:** no dollar cap on no-account gifts; one unredeemed gift per guest
+instead; orders belong to the signed-in account.
+
+**⏳ Still to build — spending a gift WITHOUT an account.** Today Faisal must create an account
+(one password field) to collect his $40. The no-account path is designed but not built: see
+`DESIGN-gift-wallet-pass.md`, which carries your overrides at the top. Honest note attached to it:
+without an amount cap, a forwarded or mis-addressed gift email can be spent in full by whoever
+holds it — the remaining protections are one gift only, this restaurant only, no gift cards, no
+deposits, no driver tips, earns nothing, 90-day expiry, instant revoke.
+
 
 ### A29. ✅ Fabrizio's #13/#14 end-of-day report overhaul — COMPLETE (2026-07-31, 2:43 AM)
 **All code merged + preflight green (exit 0).** Built from his two comments on report cms0gyexp.
