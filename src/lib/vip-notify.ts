@@ -84,9 +84,12 @@ async function sendToRecipients(ctx: NonNullable<Awaited<ReturnType<typeof loadS
         locale: restaurant.defaultLanguage,
       }),
     ));
+    // send() reports failure by FULFILLING with { success: false } (it doesn't
+    // reject), so "fulfilled" alone would count failed + dev-suppressed sends
+    // — the owner would read "emailed 15 members" when nothing left.
     for (const r of results) {
-      if (r.status === "fulfilled") sent++;
-      else console.error("[vip-notify] one email failed:", r.reason);
+      if (r.status === "fulfilled" && r.value.success) sent++;
+      else console.error("[vip-notify] one email failed:", r.status === "fulfilled" ? r.value.error : r.reason);
     }
   }
   return sent;
@@ -244,9 +247,10 @@ export async function notifyGroupWelcome(opts: {
         locale: restaurant.defaultLanguage,
       }),
     ));
+    // Same success-gating as sendToRecipients — fulfilled ≠ sent.
     for (const r of results) {
-      if (r.status === "fulfilled") sent++;
-      else console.error("[vip-notify] welcome email failed:", r.reason);
+      if (r.status === "fulfilled" && r.value.success) sent++;
+      else console.error("[vip-notify] welcome email failed:", r.status === "fulfilled" ? r.value.error : r.reason);
     }
   }
   return sent;

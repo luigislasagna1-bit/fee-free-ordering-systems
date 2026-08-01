@@ -3,7 +3,11 @@
 // The Resend API key + From address are stored in the PlatformSettings table
 // (managed by the super-admin at /superadmin/settings/email) and AES-encrypted
 // at rest. Fallback to RESEND_API_KEY / EMAIL_FROM env vars for backward
-// compatibility. When neither is configured, every helper logs to console.
+// compatibility. When neither is configured — or the send is suppressed
+// outside production — every helper logs to console and returns
+// { success: false, suppressed: true }. A not-sent email must NEVER report
+// success: on 2026-08-01 a local run against prod data recorded 15 gift
+// emails as sent (emailSentAt stamped) while every one was a placeholder.
 //
 // Templates: all email bodies render through React Email components in
 // src/emails/templates/. The visual design (emerald status / navy
@@ -61,17 +65,21 @@ import type { EmailOrderItem } from "@/emails/components/EmailParts";
 
 // Cached transport so we don't query PlatformSettings on every call.
 // Invalidate by calling `resetEmailTransport()` after the super-admin saves.
-let cached: { client: Resend | null; from: string; postalAddress: string | null; loadedAt: number } | null = null;
+// keyDecryptFailed: a Resend key IS saved but can't be decrypted (rotated/
+// missing ENCRYPTION_KEY) — kept so send() can name the real cause instead of
+// a generic "unconfigured".
+let cached: { client: Resend | null; from: string; postalAddress: string | null; keyDecryptFailed: boolean; loadedAt: number } | null = null;
 const CACHE_TTL_MS = 60_000;
 
-async function getTransport(): Promise<{ client: Resend | null; from: string }> {
+async function getTransport(): Promise<{ client: Resend | null; from: string; keyDecryptFailed: boolean }> {
   if (cached && Date.now() - cached.loadedAt < CACHE_TTL_MS) {
-    return { client: cached.client, from: cached.from };
+    return { client: cached.client, from: cached.from, keyDecryptFailed: cached.keyDecryptFailed };
   }
 
   let apiKey: string | null = null;
   let from = process.env.EMAIL_FROM || "Fee Free Ordering <onboarding@resend.dev>";
   let postalAddress: string | null = null;
+  let keyDecryptFailed = false;
 
   try {
     const settings = await prisma.platformSettings.findUnique({ where: { id: "singleton" } });
@@ -79,8 +87,9 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
       try {
         apiKey = decrypt(settings.resendApiKeyEnc, settings.resendApiKeyIv, settings.resendApiKeyTag);
       } catch (e: unknown) {
+        keyDecryptFailed = true;
         const msg = e instanceof Error ? e.message : String(e);
-        console.error("[Email transport] Decryption of saved Resend key FAILED:", msg);
+        console.error("[Email transport] Decryption of saved Resend key FAILED — emails will NOT send until the key is re-saved (superadmin → Settings → Email) or ENCRYPTION_KEY is restored:", msg);
         // A wrong/rotated ENCRYPTION_KEY silently disables ALL email in prod —
         // alert on it (stabilization H8).
         if (IS_PROD) reportError(e, { stage: "email-key-decrypt" });
@@ -100,8 +109,8 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
   }
 
   const client = apiKey ? new Resend(apiKey) : null;
-  cached = { client, from, postalAddress, loadedAt: Date.now() };
-  return { client, from };
+  cached = { client, from, postalAddress, keyDecryptFailed, loadedAt: Date.now() };
+  return { client, from, keyDecryptFailed };
 }
 
 /** Platform legal postal address for COMMERCIAL email footers (CAN-SPAM).
@@ -155,6 +164,14 @@ function applyFromName(from: string, displayName: string | null | undefined): st
   return `"${safeName}" <${addr}>`;
 }
 
+/** Result of every email helper. `success: true` means Resend ACCEPTED the
+ *  email — nothing else may report success. `suppressed: true` marks the
+ *  intentional not-sent paths (dev suppression / no transport outside prod)
+ *  so callers can tell expected dev silence from a real send error; it only
+ *  ever appears alongside `success: false`. Callers persisting sent-state
+ *  (emailSentAt etc.) must gate on `success`. */
+export type SendEmailResult = { success: boolean; suppressed?: boolean; error?: string };
+
 async function send({
   to, cc, subject, html, text, replyTo, listUnsubscribeUrl, fromName,
 }: {
@@ -181,34 +198,45 @@ async function send({
    *  restaurant order emails so the customer's inbox shows the
    *  restaurant's name rather than the platform default. */
   fromName?: string | null;
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<SendEmailResult> {
   if (!to) return { success: false, error: "no recipient" };
-  const { client, from: defaultFrom } = await getTransport();
+  const { client, from: defaultFrom, keyDecryptFailed } = await getTransport();
   const from = applyFromName(defaultFrom, fromName);
+  // Name the actual cause when the saved key exists but won't decrypt — the
+  // 2026-08-01 incident took a debugging session to trace because every
+  // surface just said "unconfigured".
+  const noClientCause = keyDecryptFailed
+    ? "saved Resend key failed to decrypt (rotated/missing ENCRYPTION_KEY) — re-save the key in superadmin → Settings → Email"
+    : "no Resend key configured";
   if (!client) {
     if (IS_PROD) {
       // No working Resend transport in production = every email (customer
       // confirmations, staff new-order, password resets, reservations) silently
       // dropped. Make it LOUD + alertable and return FAILURE so callers don't
-      // record a false "sent" (stabilization H8). Cause is a missing Resend key
-      // or an ENCRYPTION_KEY that can't decrypt the saved one. Don't log the
-      // recipient (PII) — the subject is enough to locate it.
-      console.error("[Email] transport UNCONFIGURED in production — email NOT sent. subject:", subject);
-      reportError(new Error("Email transport unconfigured (no Resend client) in production"), { stage: "email-send", subject });
-      return { success: false, error: "email transport unconfigured" };
+      // record a false "sent" (stabilization H8). Don't log the recipient
+      // (PII) — the subject is enough to locate it.
+      console.error(`[Email] transport UNCONFIGURED in production (${noClientCause}) — email NOT sent. subject:`, subject);
+      reportError(new Error(`Email transport unconfigured in production: ${noClientCause}`), { stage: "email-send", subject });
+      return { success: false, error: `email transport unconfigured: ${noClientCause}` };
     }
-    console.log("[Email placeholder]", to, "·", subject);
-    return { success: true };
+    // No transport in dev = nothing was sent. FAILURE, not success — callers
+    // stamp emailSentAt off this result, and the 2026-08-01 credit-transfer
+    // run recorded 15 emails "sent" that were all placeholders (a local run
+    // against prod data where the prod key wouldn't decrypt locally).
+    // `suppressed: true` marks it as expected dev silence, not a Resend error.
+    console.warn(`[Email placeholder — NOT sent] (${noClientCause})`, to, "·", subject);
+    return { success: false, suppressed: true, error: `email NOT sent — ${noClientCause}` };
   }
   // DEV GUARD (2026-07-12): the dev Neon branch is a COPY of prod, so the
   // PlatformSettings row carries the REAL Resend key and decrypts fine with
   // the local ENCRYPTION_KEY — which means dev tests were sending REAL email
   // to real people (a ShipDay partner intro fired to Justin during a local
   // E2E). Outside production, log-and-skip unless ALLOW_DEV_EMAIL=1 is set
-  // deliberately (e.g. checking rendering in a real inbox).
+  // deliberately (e.g. checking rendering in a real inbox). Skipped means NOT
+  // sent, so this too reports failure + suppressed — never a false "sent".
   if (!IS_PROD && process.env.ALLOW_DEV_EMAIL !== "1") {
     console.log("[Email suppressed — dev] set ALLOW_DEV_EMAIL=1 to really send.", to, "·", subject);
-    return { success: true };
+    return { success: false, suppressed: true, error: "email NOT sent — suppressed outside production (set ALLOW_DEV_EMAIL=1 to really send)" };
   }
   try {
     const headers: Record<string, string> = {};
@@ -2328,7 +2356,7 @@ export async function sendDisputeOwnerAlert(params: {
   reason?: string | null;
   dueByLabel?: string | null;
   stripeUrl?: string;
-}): Promise<{ success: boolean; error?: string }> {
+}): Promise<SendEmailResult> {
   const esc = (s: string) => escapeHtml(s);
   const due = params.dueByLabel
     ? `<p style="margin:0 0 12px"><strong>Respond by ${esc(params.dueByLabel)}</strong> or the dispute is automatically lost.</p>`

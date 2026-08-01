@@ -163,6 +163,14 @@ async function handle(req: NextRequest) {
             customDomainStatus: restaurant.customDomainStatus,
             imprint,
           });
+          // SUPPRESSED (dev / no transport outside prod) = nothing was ever
+          // attempted — do NOT burn the prospect. Stamping here would mark
+          // real prospects "sent" on a local run, exactly the false-sent
+          // failure mode of the 2026-08-01 credit-transfer incident.
+          if (result?.suppressed) {
+            totalErrors++;
+            continue;
+          }
           // Mark sent regardless of result.success — Resend errors on a
           // single recipient (bounced domain, malformed address) should
           // NOT cause infinite retries that re-send to everyone else
