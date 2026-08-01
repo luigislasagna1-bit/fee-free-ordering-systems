@@ -23,6 +23,12 @@ export type CouponAssignedProps = {
   code: string;
   /** Localized discount headline, e.g. "10% off" / "€5.00 off" — built by the sender. */
   discountLabel: string;
+  /** The promo's OWN name, as the owner titled it ("20% OFF Menu Wide - VIP
+   *  MEMBERS"). The headline is derived from the discount type, so for a % or
+   *  fixed-amount deal the name was dropped entirely and the customer could not
+   *  tell WHICH offer they had been given. Shown as its own line when it adds
+   *  something the headline does not. Luigi 2026-07-31. */
+  dealName?: string | null;
   /** Pre-formatted applicable terms, one per line — built by the sender. */
   termLines: string[];
   /** Owner-written description, shown verbatim when present. */
@@ -46,7 +52,7 @@ export type CouponAssignedProps = {
 
 export default function CouponAssigned(props: CouponAssignedProps) {
   const {
-    t, customerName, restaurantName, code, discountLabel, termLines,
+    t, customerName, restaurantName, code, discountLabel, dealName, termLines,
     description, orderUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
     memberSpecial, introOverride, usageNote, accountTip,
   } = props;
@@ -61,6 +67,13 @@ export default function CouponAssigned(props: CouponAssignedProps) {
       <EmailBody>
         <P>{t("email.couponAssigned.greeting", { customerName })}</P>
         <P>{introOverride ?? t("email.couponAssigned.intro", { restaurantName, discountLabel })}</P>
+        {/* The offer's own title. Skipped when it would merely repeat the
+            headline (e.g. a deal literally named "10% off"). */}
+        {dealName && dealName.trim() && dealName.trim().toLowerCase() !== discountLabel.trim().toLowerCase() && (
+          <InfoCard label={t("email.couponAssigned.dealNameLabel")} accent="emerald">
+            <strong style={{ fontSize: 16 }}>{dealName.trim()}</strong>
+          </InfoCard>
+        )}
         {/* Member specials auto-apply (by sign-in or email) — no code to show. */}
         {!memberSpecial && (
           <InfoCard label={t("email.couponAssigned.codeLabel")} accent="emerald">

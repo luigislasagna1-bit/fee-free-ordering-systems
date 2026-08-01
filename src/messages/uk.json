@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Скасовані або відхилені замовлення: {count}",
       "cancelledReservationsLine": "Скасовані або відхилені бронювання: {count}",
       "sentDaily": "Надсилається щодня",
-      "sentMonthly": "Надсилається щомісяця"
+      "sentMonthly": "Надсилається щомісяця",
+      "comparison": {
+        "liveVsYesterday": "до того ж часу вчора",
+        "vsPreviousDay": "до попереднього дня",
+        "vsSameMonthLastYear": "до того ж місяця торік"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Запит на бронювання отримано — {dateTime}, гостей: {partySize}",

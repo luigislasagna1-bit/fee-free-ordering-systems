@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Анулирани или отказани поръчки: {count}",
       "cancelledReservationsLine": "Анулирани или отказани резервации: {count}",
       "sentDaily": "Изпраща се ежедневно",
-      "sentMonthly": "Изпраща се месечно"
+      "sentMonthly": "Изпраща се месечно",
+      "comparison": {
+        "liveVsYesterday": "спрямо същия час вчера",
+        "vsPreviousDay": "спрямо предходния ден",
+        "vsSameMonthLastYear": "спрямо същия месец миналата година"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Заявката за резервация е получена — {dateTime} за {partySize}",

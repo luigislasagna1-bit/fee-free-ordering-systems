@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Đơn hàng đã hủy hoặc bị từ chối: {count}",
       "cancelledReservationsLine": "Đặt bàn đã hủy hoặc bị từ chối: {count}",
       "sentDaily": "Gửi hằng ngày",
-      "sentMonthly": "Gửi hằng tháng"
+      "sentMonthly": "Gửi hằng tháng",
+      "comparison": {
+        "liveVsYesterday": "so với cùng thời điểm hôm qua",
+        "vsPreviousDay": "so với ngày trước đó",
+        "vsSameMonthLastYear": "so với cùng tháng năm ngoái"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Đã nhận yêu cầu đặt bàn — {dateTime} cho {partySize} khách",

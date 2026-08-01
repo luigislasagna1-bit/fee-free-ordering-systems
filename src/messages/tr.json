@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "İptal edilen veya reddedilen siparişler: {count}",
       "cancelledReservationsLine": "İptal edilen veya reddedilen rezervasyonlar: {count}",
       "sentDaily": "Günlük gönderilir",
-      "sentMonthly": "Aylık gönderilir"
+      "sentMonthly": "Aylık gönderilir",
+      "comparison": {
+        "liveVsYesterday": "dün aynı saate göre",
+        "vsPreviousDay": "önceki güne göre",
+        "vsSameMonthLastYear": "geçen yılın aynı ayına göre"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Rezervasyon talebi alındı — {dateTime}, {partySize} kişi",

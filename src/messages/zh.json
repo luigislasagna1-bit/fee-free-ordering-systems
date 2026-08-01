@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "已取消或已拒绝的订单：{count}",
       "cancelledReservationsLine": "已取消或已拒绝的预订：{count}",
       "sentDaily": "每日发送",
-      "sentMonthly": "每月发送"
+      "sentMonthly": "每月发送",
+      "comparison": {
+        "liveVsYesterday": "较昨日同期",
+        "vsPreviousDay": "较前一日",
+        "vsSameMonthLastYear": "较去年同月"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "已收到订座请求 — {dateTime}，{partySize} 位",

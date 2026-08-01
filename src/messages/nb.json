@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Kansellerte eller avviste ordrer: {count}",
       "cancelledReservationsLine": "Kansellerte eller avviste reservasjoner: {count}",
       "sentDaily": "Sendes daglig",
-      "sentMonthly": "Sendes månedlig"
+      "sentMonthly": "Sendes månedlig",
+      "comparison": {
+        "liveVsYesterday": "ift. samme tid i går",
+        "vsPreviousDay": "ift. forrige dag",
+        "vsSameMonthLastYear": "ift. samme måned i fjor"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Reservasjonsforespørsel mottatt — {dateTime} for {partySize}",

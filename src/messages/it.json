@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Ordini annullati o rifiutati: {count}",
       "cancelledReservationsLine": "Prenotazioni annullate o rifiutate: {count}",
       "sentDaily": "Inviato ogni giorno",
-      "sentMonthly": "Inviato ogni mese"
+      "sentMonthly": "Inviato ogni mese",
+      "comparison": {
+        "liveVsYesterday": "vs ieri alla stessa ora",
+        "vsPreviousDay": "vs giorno precedente",
+        "vsSameMonthLastYear": "vs stesso mese dell'anno scorso"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Richiesta di prenotazione ricevuta — {dateTime} per {partySize}",

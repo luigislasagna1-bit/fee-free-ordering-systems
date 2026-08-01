@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "الطلبات الملغاة أو المرفوضة: {count}",
       "cancelledReservationsLine": "الحجوزات الملغاة أو المرفوضة: {count}",
       "sentDaily": "يُرسل يوميًا",
-      "sentMonthly": "يُرسل شهريًا"
+      "sentMonthly": "يُرسل شهريًا",
+      "comparison": {
+        "liveVsYesterday": "مقارنة بالوقت نفسه أمس",
+        "vsPreviousDay": "مقارنة باليوم السابق",
+        "vsSameMonthLastYear": "مقارنة بالشهر نفسه من العام الماضي"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "تم استلام طلب الحجز — {dateTime} لعدد {partySize}",

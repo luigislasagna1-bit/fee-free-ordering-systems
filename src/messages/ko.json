@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "취소 또는 거절된 주문: {count}",
       "cancelledReservationsLine": "취소 또는 거절된 예약: {count}",
       "sentDaily": "매일 발송",
-      "sentMonthly": "매월 발송"
+      "sentMonthly": "매월 발송",
+      "comparison": {
+        "liveVsYesterday": "어제 같은 시간 대비",
+        "vsPreviousDay": "전일 대비",
+        "vsSameMonthLastYear": "전년 동월 대비"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "예약 요청이 접수되었어요 — {dateTime}, {partySize}명",

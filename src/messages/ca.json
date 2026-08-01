@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Comandes cancel·lades o rebutjades: {count}",
       "cancelledReservationsLine": "Reserves cancel·lades o rebutjades: {count}",
       "sentDaily": "S'envia cada dia",
-      "sentMonthly": "S'envia cada mes"
+      "sentMonthly": "S'envia cada mes",
+      "comparison": {
+        "liveVsYesterday": "vs ahir a la mateixa hora",
+        "vsPreviousDay": "vs dia anterior",
+        "vsSameMonthLastYear": "vs mateix mes de l'any passat"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Sol·licitud de reserva rebuda — {dateTime}, comensals: {partySize}",

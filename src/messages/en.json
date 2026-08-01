@@ -5482,7 +5482,12 @@
       "cancelledOrdersLine": "Cancelled or rejected orders: {count}",
       "cancelledReservationsLine": "Cancelled or rejected reservations: {count}",
       "sentDaily": "Sent daily",
-      "sentMonthly": "Sent monthly"
+      "sentMonthly": "Sent monthly",
+      "comparison": {
+        "liveVsYesterday": "vs same time yesterday",
+        "vsPreviousDay": "vs previous day",
+        "vsSameMonthLastYear": "vs same month last year"
+      }
     },
     "reservationConfirmed": {
       "subject": "Reservation confirmed",
@@ -5642,7 +5647,8 @@
       "usesOnce": "Can be used once",
       "usesMany": "Can be used up to {count} times",
       "redeemHint": "Enter the code at checkout, or find it in your account dashboard — it applies only to your account.",
-      "cta": "Order now"
+      "cta": "Order now",
+      "dealNameLabel": "Your deal"
     },
     "vipSpecial": {
       "subject": "Your {memberLabel} deal at {restaurantName} — {discountLabel}",

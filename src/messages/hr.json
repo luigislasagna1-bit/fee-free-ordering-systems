@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Otkazane ili odbijene narudžbe: {count}",
       "cancelledReservationsLine": "Otkazane ili odbijene rezervacije: {count}",
       "sentDaily": "Šalje se dnevno",
-      "sentMonthly": "Šalje se mjesečno"
+      "sentMonthly": "Šalje se mjesečno",
+      "comparison": {
+        "liveVsYesterday": "u odnosu na isto vrijeme jučer",
+        "vsPreviousDay": "u odnosu na prethodni dan",
+        "vsSameMonthLastYear": "u odnosu na isti mjesec prošle godine"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Zahtjev za rezervaciju je zaprimljen — {dateTime} za {partySize}",

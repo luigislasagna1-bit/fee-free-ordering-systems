@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Avbrutna eller avvisade beställningar: {count}",
       "cancelledReservationsLine": "Avbrutna eller avvisade reservationer: {count}",
       "sentDaily": "Skickas dagligen",
-      "sentMonthly": "Skickas månadsvis"
+      "sentMonthly": "Skickas månadsvis",
+      "comparison": {
+        "liveVsYesterday": "jfr samma tid i går",
+        "vsPreviousDay": "jfr föregående dag",
+        "vsSameMonthLastYear": "jfr samma månad i fjol"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Reservationsförfrågan mottagen — {dateTime} för {partySize}",

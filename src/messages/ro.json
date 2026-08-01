@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Comenzi anulate sau respinse: {count}",
       "cancelledReservationsLine": "Rezervări anulate sau respinse: {count}",
       "sentDaily": "Trimis zilnic",
-      "sentMonthly": "Trimis lunar"
+      "sentMonthly": "Trimis lunar",
+      "comparison": {
+        "liveVsYesterday": "față de aceeași oră de ieri",
+        "vsPreviousDay": "față de ziua precedentă",
+        "vsSameMonthLastYear": "față de aceeași lună anul trecut"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Cerere de rezervare primită — {dateTime}, {partySize} persoane",

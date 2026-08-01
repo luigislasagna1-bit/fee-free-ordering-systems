@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Tühistatud või tagasi lükatud tellimused: {count}",
       "cancelledReservationsLine": "Tühistatud või tagasi lükatud reserveeringud: {count}",
       "sentDaily": "Saadetakse iga päev",
-      "sentMonthly": "Saadetakse iga kuu"
+      "sentMonthly": "Saadetakse iga kuu",
+      "comparison": {
+        "liveVsYesterday": "võrreldes eilse sama ajaga",
+        "vsPreviousDay": "võrreldes eelmise päevaga",
+        "vsSameMonthLastYear": "võrreldes eelmise aasta sama kuuga"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Broneeringusoov on kätte saadud — {dateTime}, külalisi: {partySize}",

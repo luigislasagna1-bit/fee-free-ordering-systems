@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Atšaukti arba atmesti užsakymai: {count}",
       "cancelledReservationsLine": "Atšauktos arba atmestos rezervacijos: {count}",
       "sentDaily": "Siunčiama kasdien",
-      "sentMonthly": "Siunčiama kas mėnesį"
+      "sentMonthly": "Siunčiama kas mėnesį",
+      "comparison": {
+        "liveVsYesterday": "lyginant su vakar tuo pačiu metu",
+        "vsPreviousDay": "lyginant su praėjusia diena",
+        "vsSameMonthLastYear": "lyginant su tuo pačiu mėnesiu pernai"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Gautas rezervacijos prašymas — {dateTime}, svečių: {partySize}",

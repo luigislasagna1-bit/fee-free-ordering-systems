@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "ออเดอร์ที่ยกเลิกหรือถูกปฏิเสธ: {count}",
       "cancelledReservationsLine": "การจองที่ยกเลิกหรือถูกปฏิเสธ: {count}",
       "sentDaily": "ส่งทุกวัน",
-      "sentMonthly": "ส่งทุกเดือน"
+      "sentMonthly": "ส่งทุกเดือน",
+      "comparison": {
+        "liveVsYesterday": "เทียบกับเวลาเดียวกันเมื่อวาน",
+        "vsPreviousDay": "เทียบกับวันก่อนหน้า",
+        "vsSameMonthLastYear": "เทียบกับเดือนเดียวกันปีที่แล้ว"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "ได้รับคำขอจองโต๊ะแล้ว — {dateTime} สำหรับ {partySize} ท่าน",

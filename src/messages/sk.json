@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Zrušené alebo zamietnuté objednávky: {count}",
       "cancelledReservationsLine": "Zrušené alebo zamietnuté rezervácie: {count}",
       "sentDaily": "Odosielané denne",
-      "sentMonthly": "Odosielané mesačne"
+      "sentMonthly": "Odosielané mesačne",
+      "comparison": {
+        "liveVsYesterday": "oproti rovnakému času včera",
+        "vsPreviousDay": "oproti predchádzajúcemu dňu",
+        "vsSameMonthLastYear": "oproti rovnakému mesiacu vlani"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Žiadosť o rezerváciu prijatá — {dateTime}, {partySize} os.",

@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Geannuleerde of afgewezen bestellingen: {count}",
       "cancelledReservationsLine": "Geannuleerde of afgewezen reserveringen: {count}",
       "sentDaily": "Dagelijks verzonden",
-      "sentMonthly": "Maandelijks verzonden"
+      "sentMonthly": "Maandelijks verzonden",
+      "comparison": {
+        "liveVsYesterday": "t.o.v. gisteren zelfde tijdstip",
+        "vsPreviousDay": "t.o.v. vorige dag",
+        "vsSameMonthLastYear": "t.o.v. zelfde maand vorig jaar"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Reserveringsaanvraag ontvangen — {dateTime} voor {partySize}",

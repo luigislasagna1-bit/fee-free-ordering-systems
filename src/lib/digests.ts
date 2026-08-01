@@ -406,11 +406,23 @@ function buildStats(
   comparisonLabel: string,
   current: Aggregated,
   prior: Aggregated,
+  /** Structured twins of the two labels, so the SENDER can render them in each
+   *  recipient's language instead of reusing the English built here. */
+  localizable?: {
+    periodAnchorISO?: string;
+    periodKind?: "day" | "month";
+    timezone?: string;
+    comparisonKind?: "liveVsYesterday" | "vsPreviousDay" | "vsSameMonthLastYear";
+  },
 ): DigestStats {
   return {
     restaurantName,
     periodLabel,
     comparisonLabel,
+    periodAnchorISO: localizable?.periodAnchorISO,
+    periodKind: localizable?.periodKind,
+    timezone: localizable?.timezone,
+    comparisonKind: localizable?.comparisonKind,
     sales: current.sales,
     salesDelta: pct(current.sales, prior.sales),
     orders: current.orders,
@@ -501,8 +513,14 @@ async function buildOperationalReport(
     aggregate(restaurantId, prevStart, prevEnd),
   ]);
 
-  const periodLabel = weekdayLabel(parseLocalDateTimeInTz(dayKey, 12, 0, tz), tz);
-  return buildStats(name, periodLabel, isLive ? "vs same time yesterday" : "vs previous day", current, prior);
+  const anchor = parseLocalDateTimeInTz(dayKey, 12, 0, tz);
+  const periodLabel = weekdayLabel(anchor, tz);
+  return buildStats(name, periodLabel, isLive ? "vs same time yesterday" : "vs previous day", current, prior, {
+    periodAnchorISO: anchor.toISOString(),
+    periodKind: "day",
+    timezone: tz,
+    comparisonKind: isLive ? "liveVsYesterday" : "vsPreviousDay",
+  });
 }
 
 /** DigestStats for "yesterday" (the operational day that just ended) — email digest. */
@@ -576,5 +594,10 @@ export async function buildMonthlyDigest(restaurantId: string, now = new Date())
     aggregate(restaurantId, start, end),
     aggregate(restaurantId, priorStart, priorEnd),
   ]);
-  return buildStats(restaurant.name, monthLabel(start, tz), "vs same month last year", current, prior);
+  return buildStats(restaurant.name, monthLabel(start, tz), "vs same month last year", current, prior, {
+    periodAnchorISO: start.toISOString(),
+    periodKind: "month",
+    timezone: tz,
+    comparisonKind: "vsSameMonthLastYear",
+  });
 }

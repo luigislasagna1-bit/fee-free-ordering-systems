@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "הזמנות שבוטלו או דחויות: {count}",
       "cancelledReservationsLine": "הזמנות מקום שבוטלו או דחויות: {count}",
       "sentDaily": "נשלח מדי יום",
-      "sentMonthly": "נשלח מדי חודש"
+      "sentMonthly": "נשלח מדי חודש",
+      "comparison": {
+        "liveVsYesterday": "לעומת אותה שעה אתמול",
+        "vsPreviousDay": "לעומת היום הקודם",
+        "vsSameMonthLastYear": "לעומת אותו חודש בשנה שעברה"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "בקשת ההזמנה התקבלה — {dateTime} ל-{partySize} סועדים",

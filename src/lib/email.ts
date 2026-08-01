@@ -1402,6 +1402,8 @@ export async function sendVipSpecialEmail(params: {
       restaurantName: params.restaurantName,
       code: "",
       discountLabel,
+      // The offer's own title, so the customer can tell WHICH deal this is.
+      dealName: params.dealName,
       termLines,
       description: params.description,
       orderUrl: params.orderUrl,
@@ -1851,6 +1853,18 @@ export interface DigestStats {
   restaurantName: string;
   periodLabel: string;            // e.g. "Friday, May 15, 2026" or "May 2026"
   comparisonLabel: string;        // e.g. "vs previous Friday" or "vs previous month"
+  /** ── Localizable form of the two labels above ──────────────────────────
+   *  periodLabel/comparisonLabel are rendered ONCE when the digest is built,
+   *  in English, and then reused for every recipient — so an Italian owner's
+   *  otherwise-translated report still read "Thursday, July 30, 2026" and
+   *  "vs same time yesterday". These carry the same facts structurally so the
+   *  SENDER can render them in each recipient's own language. Optional: any
+   *  consumer that ignores them keeps the pre-rendered English.
+   *  Luigi 2026-07-31. */
+  periodAnchorISO?: string;       // the day/month this report covers
+  periodKind?: "day" | "month";
+  timezone?: string;              // restaurant tz, so the date lands correctly
+  comparisonKind?: "liveVsYesterday" | "vsPreviousDay" | "vsSameMonthLastYear";
 
   sales: number;
   salesDelta: number;             // percent change vs previous period (signed)
@@ -1927,11 +1941,32 @@ async function sendDigestEmail(
 ) {
   // All money renders in the RESTAURANT's currency (Fabrizio report: was hardcoded $).
   const money = (n: number) => formatCurrency(n ?? 0, currency);
+
+  // ── Render the two headline labels in THIS recipient's language ──────────
+  // stats.periodLabel / comparisonLabel are built once, in English, and shared
+  // by every recipient — so an Italian owner's otherwise fully-translated
+  // report still opened with "Thursday, July 30, 2026" and "vs same time
+  // yesterday". `t` here is already the recipient's own translator, so render
+  // from the structured twins when the builder supplied them and fall back to
+  // the prebuilt English when it did not. Luigi 2026-07-31.
+  const localeTag = (t as any).locale || "en";
+  const periodLabel = stats.periodAnchorISO
+    ? new Date(stats.periodAnchorISO).toLocaleDateString(
+        localeTag,
+        stats.periodKind === "month"
+          ? { month: "long", year: "numeric", timeZone: stats.timezone }
+          : { weekday: "long", month: "long", day: "numeric", year: "numeric", timeZone: stats.timezone },
+      )
+    : stats.periodLabel;
+  const comparisonLabel = stats.comparisonKind
+    ? t(`email.digest.comparison.${stats.comparisonKind}`)
+    : stats.comparisonLabel;
+
   const html = await renderEmail(
     DigestEmail({
       period: kind,
-      periodLabel: stats.periodLabel,
-      comparisonLabel: stats.comparisonLabel,
+      periodLabel,
+      comparisonLabel,
       restaurantName: stats.restaurantName,
       t,
       currency,
@@ -1984,8 +2019,8 @@ async function sendDigestEmail(
   return send({
     to,
     subject: kind === "daily"
-      ? t("email.digest.subjectDaily",   { restaurant: stats.restaurantName, period: stats.periodLabel })
-      : t("email.digest.subjectMonthly", { restaurant: stats.restaurantName, period: stats.periodLabel }),
+      ? t("email.digest.subjectDaily",   { restaurant: stats.restaurantName, period: periodLabel })
+      : t("email.digest.subjectMonthly", { restaurant: stats.restaurantName, period: periodLabel }),
     html,
     listUnsubscribeUrl: unsubscribeUrl,
   });

@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "रद्द या अस्वीकृत ऑर्डर: {count}",
       "cancelledReservationsLine": "रद्द या अस्वीकृत आरक्षण: {count}",
       "sentDaily": "रोज़ाना भेजा जाता है",
-      "sentMonthly": "मासिक भेजा जाता है"
+      "sentMonthly": "मासिक भेजा जाता है",
+      "comparison": {
+        "liveVsYesterday": "कल इसी समय की तुलना में",
+        "vsPreviousDay": "पिछले दिन की तुलना में",
+        "vsSameMonthLastYear": "पिछले साल के इसी महीने की तुलना में"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "रिज़र्वेशन अनुरोध मिल गया — {dateTime}, {partySize} लोगों के लिए",

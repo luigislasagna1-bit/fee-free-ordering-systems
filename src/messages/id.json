@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Pesanan yang dibatalkan atau ditolak: {count}",
       "cancelledReservationsLine": "Reservasi yang dibatalkan atau ditolak: {count}",
       "sentDaily": "Dikirim setiap hari",
-      "sentMonthly": "Dikirim setiap bulan"
+      "sentMonthly": "Dikirim setiap bulan",
+      "comparison": {
+        "liveVsYesterday": "vs waktu yang sama kemarin",
+        "vsPreviousDay": "vs hari sebelumnya",
+        "vsSameMonthLastYear": "vs bulan yang sama tahun lalu"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Permintaan reservasi diterima — {dateTime} untuk {partySize} orang",

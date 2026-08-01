@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Atcelti vai noraidīti pasūtījumi: {count}",
       "cancelledReservationsLine": "Atceltas vai noraidītas rezervācijas: {count}",
       "sentDaily": "Tiek sūtīts katru dienu",
-      "sentMonthly": "Tiek sūtīts katru mēnesi"
+      "sentMonthly": "Tiek sūtīts katru mēnesi",
+      "comparison": {
+        "liveVsYesterday": "salīdzinājumā ar to pašu laiku vakar",
+        "vsPreviousDay": "salīdzinājumā ar iepriekšējo dienu",
+        "vsSameMonthLastYear": "salīdzinājumā ar to pašu mēnesi pērn"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Rezervācijas pieprasījums saņemts — {dateTime}, viesu skaits: {partySize}",

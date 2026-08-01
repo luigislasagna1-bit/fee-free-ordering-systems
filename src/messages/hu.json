@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Lemondott vagy elutasított rendelések: {count}",
       "cancelledReservationsLine": "Lemondott vagy elutasított foglalások: {count}",
       "sentDaily": "Naponta küldve",
-      "sentMonthly": "Havonta küldve"
+      "sentMonthly": "Havonta küldve",
+      "comparison": {
+        "liveVsYesterday": "tegnap ilyenkorhoz képest",
+        "vsPreviousDay": "az előző naphoz képest",
+        "vsSameMonthLastYear": "a tavalyi azonos hónaphoz képest"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Foglalási kérésedet megkaptuk — {dateTime}, {partySize} fő",

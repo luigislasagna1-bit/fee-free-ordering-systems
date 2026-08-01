@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Peruutetut tai hylätyt tilaukset: {count}",
       "cancelledReservationsLine": "Peruutetut tai hylätyt varaukset: {count}",
       "sentDaily": "Lähetetään päivittäin",
-      "sentMonthly": "Lähetetään kuukausittain"
+      "sentMonthly": "Lähetetään kuukausittain",
+      "comparison": {
+        "liveVsYesterday": "vrt. eilen samaan aikaan",
+        "vsPreviousDay": "vrt. edellinen päivä",
+        "vsSameMonthLastYear": "vrt. sama kuukausi viime vuonna"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Varauspyyntösi on vastaanotettu — {dateTime}, {partySize} henkilöä",

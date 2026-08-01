@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "キャンセルまたは拒否された注文：{count}",
       "cancelledReservationsLine": "キャンセルまたは拒否された予約：{count}",
       "sentDaily": "毎日送信",
-      "sentMonthly": "毎月送信"
+      "sentMonthly": "毎月送信",
+      "comparison": {
+        "liveVsYesterday": "昨日の同時刻比",
+        "vsPreviousDay": "前日比",
+        "vsSameMonthLastYear": "前年同月比"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "予約リクエストを受け付けました — {dateTime}・{partySize}名様",

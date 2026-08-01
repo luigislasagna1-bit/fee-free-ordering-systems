@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Ακυρωμένες ή απορριφθείσες παραγγελίες: {count}",
       "cancelledReservationsLine": "Ακυρωμένες ή απορριφθείσες κρατήσεις: {count}",
       "sentDaily": "Αποστέλλεται καθημερινά",
-      "sentMonthly": "Αποστέλλεται μηνιαία"
+      "sentMonthly": "Αποστέλλεται μηνιαία",
+      "comparison": {
+        "liveVsYesterday": "σε σχέση με την ίδια ώρα χθες",
+        "vsPreviousDay": "σε σχέση με την προηγούμενη ημέρα",
+        "vsSameMonthLastYear": "σε σχέση με τον ίδιο μήνα πέρυσι"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Λάβαμε το αίτημα κράτησης — {dateTime} για {partySize}",

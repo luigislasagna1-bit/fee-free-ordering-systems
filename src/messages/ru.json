@@ -5479,7 +5479,12 @@
       "cancelledOrdersLine": "Отменённые или отклонённые заказы: {count}",
       "cancelledReservationsLine": "Отменённые или отклонённые бронирования: {count}",
       "sentDaily": "Отправляется ежедневно",
-      "sentMonthly": "Отправляется ежемесячно"
+      "sentMonthly": "Отправляется ежемесячно",
+      "comparison": {
+        "liveVsYesterday": "к тому же времени вчера",
+        "vsPreviousDay": "к предыдущему дню",
+        "vsSameMonthLastYear": "к тому же месяцу прошлого года"
+      }
     },
     "reservationConfirmed": {
       "previewRequested": "Запрос на бронирование получен — {dateTime}, гостей: {partySize}",
