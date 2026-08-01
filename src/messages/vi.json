@@ -5635,6 +5635,7 @@
       "greeting": "Chào {customerName},",
       "intro": "{restaurantName} đã tặng bạn một phiếu giảm giá cá nhân trị giá {discountLabel}. Phiếu đã được liên kết với tài khoản của bạn — hãy dùng mã bên dưới khi thanh toán.",
       "codeLabel": "Mã giảm giá của bạn",
+      "dealNameLabel": "Ưu đãi của bạn",
       "noteLabel": "Lời nhắn từ nhà hàng",
       "termsLabel": "Điều kiện",
       "discountPercent": "Giảm {value}%",

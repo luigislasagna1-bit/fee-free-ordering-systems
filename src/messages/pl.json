@@ -5635,6 +5635,7 @@
       "greeting": "Cześć {customerName},",
       "intro": "{restaurantName} ma dla Ciebie osobisty kupon na {discountLabel}. Kupon jest już przypisany do Twojego konta — wystarczy, że użyjesz poniższego kodu przy finalizacji zamówienia.",
       "codeLabel": "Twój kod kuponu",
+      "dealNameLabel": "Twoja oferta",
       "noteLabel": "Wiadomość od restauracji",
       "termsLabel": "Warunki",
       "discountPercent": "{value}% zniżki",

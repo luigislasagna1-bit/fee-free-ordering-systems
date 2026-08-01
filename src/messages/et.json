@@ -5635,6 +5635,7 @@
       "greeting": "Tere, {customerName}!",
       "intro": "{restaurantName} kinkis sulle isikliku kupongi väärtusega {discountLabel}. See on juba sinu kontoga seotud — kasuta allolevat koodi tellimuse vormistamisel.",
       "codeLabel": "Sinu kupongikood",
+      "dealNameLabel": "Sinu pakkumine",
       "noteLabel": "Sõnum restoranilt",
       "termsLabel": "Tingimused",
       "discountPercent": "{value}% soodustust",

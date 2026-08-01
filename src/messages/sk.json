@@ -5635,6 +5635,7 @@
       "greeting": "Dobrý deň, {customerName},",
       "intro": "{restaurantName} vám daruje osobný kupón: {discountLabel}. Je už prepojený s vaším účtom — kód uvedený nižšie stačí zadať pri dokončení objednávky.",
       "codeLabel": "Váš kód kupónu",
+      "dealNameLabel": "Vaša ponuka",
       "noteLabel": "Odkaz od reštaurácie",
       "termsLabel": "Podmienky",
       "discountPercent": "zľava {value} %",

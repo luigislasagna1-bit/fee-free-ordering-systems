@@ -28,7 +28,18 @@ export default async function OrderStatusPage({
   });
   if (!restaurant) notFound();
 
-  const locale = await resolveLocale({ restaurantId: restaurant.id });
+  // The language the customer ORDERED in wins over the restaurant's default —
+  // otherwise a diner who ordered in Italian from a restaurant running the app
+  // in Chinese opened the status page (linked straight from their confirmation
+  // email) in Chinese. An explicit language choice on this device still wins.
+  const statusOrder = await prisma.order.findFirst({
+    where: { id: orderId, restaurantId: restaurant.id },
+    select: { customerLocale: true },
+  });
+  const locale = await resolveLocale({
+    restaurantId: restaurant.id,
+    customerLocale: statusOrder?.customerLocale ?? null,
+  });
   const messages = await loadMessages(locale);
 
   return (

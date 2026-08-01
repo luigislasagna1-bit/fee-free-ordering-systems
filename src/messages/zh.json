@@ -5635,6 +5635,7 @@
       "greeting": "您好，{customerName}：",
       "intro": "{restaurantName}赠送给您一张价值{discountLabel}的专属优惠券。它已绑定到您的账户 — 结账时使用下方代码即可。",
       "codeLabel": "您的优惠码",
+      "dealNameLabel": "您的优惠",
       "noteLabel": "来自餐厅的留言",
       "termsLabel": "使用条件",
       "discountPercent": "立减 {value}%",

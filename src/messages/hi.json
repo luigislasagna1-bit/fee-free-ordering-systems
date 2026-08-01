@@ -5635,6 +5635,7 @@
       "greeting": "नमस्ते {customerName},",
       "intro": "{restaurantName} ने आपको {discountLabel} का व्यक्तिगत कूपन दिया है। यह पहले से आपके खाते से जुड़ा है — चेकआउट पर नीचे दिया कोड इस्तेमाल करें।",
       "codeLabel": "आपका कूपन कोड",
+      "dealNameLabel": "आपका ऑफ़र",
       "noteLabel": "रेस्तरां की ओर से संदेश",
       "termsLabel": "शर्तें",
       "discountPercent": "{value}% छूट",

@@ -5635,6 +5635,7 @@
       "greeting": "Halo {customerName},",
       "intro": "{restaurantName} memberi Anda kupon pribadi senilai {discountLabel}. Kupon sudah terhubung ke akun Anda — gunakan kode di bawah saat checkout.",
       "codeLabel": "Kode kupon Anda",
+      "dealNameLabel": "Penawaran Anda",
       "noteLabel": "Pesan dari restoran",
       "termsLabel": "Ketentuan",
       "discountPercent": "Diskon {value}%",

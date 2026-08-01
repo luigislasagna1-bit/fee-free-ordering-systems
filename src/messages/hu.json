@@ -5635,6 +5635,7 @@
       "greeting": "Kedves {customerName}!",
       "intro": "A(z) {restaurantName} személyre szóló kupont ajándékozott Önnek: {discountLabel}. A kupon már össze van kapcsolva a fiókjával — használja az alábbi kódot a fizetésnél.",
       "codeLabel": "Az Ön kuponkódja",
+      "dealNameLabel": "Az Ön ajánlata",
       "noteLabel": "Üzenet az étteremtől",
       "termsLabel": "Feltételek",
       "discountPercent": "{value}% kedvezmény",

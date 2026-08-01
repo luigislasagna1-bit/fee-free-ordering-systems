@@ -5635,6 +5635,7 @@
       "greeting": "Sveiki, {customerName}!",
       "intro": "{restaurantName} jums uzdāvināja personisku kuponu {discountLabel} vērtībā. Tas jau ir piesaistīts jūsu kontam — norēķinoties izmantojiet zemāk redzamo kodu.",
       "codeLabel": "Jūsu kupona kods",
+      "dealNameLabel": "Jūsu piedāvājums",
       "noteLabel": "Ziņa no restorāna",
       "termsLabel": "Nosacījumi",
       "discountPercent": "{value}% atlaide",

@@ -5635,6 +5635,7 @@
       "greeting": "Здравствуйте, {customerName}!",
       "intro": "{restaurantName} дарит вам персональный купон на {discountLabel}. Он уже привязан к вашему аккаунту — используйте код ниже при оформлении заказа.",
       "codeLabel": "Ваш код купона",
+      "dealNameLabel": "Ваше предложение",
       "noteLabel": "Сообщение от ресторана",
       "termsLabel": "Условия",
       "discountPercent": "Скидка {value}%",

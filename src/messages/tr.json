@@ -5635,6 +5635,7 @@
       "greeting": "Merhaba {customerName},",
       "intro": "{restaurantName} size {discountLabel} değerinde kişisel bir kupon hediye etti. Kupon hesabınıza zaten bağlı — ödeme sırasında aşağıdaki kodu kullanın.",
       "codeLabel": "Kupon kodunuz",
+      "dealNameLabel": "Fırsatınız",
       "noteLabel": "Restorandan bir not",
       "termsLabel": "Koşullar",
       "discountPercent": "%{value} indirim",

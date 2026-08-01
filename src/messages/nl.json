@@ -5635,6 +5635,7 @@
       "greeting": "Hoi {customerName},",
       "intro": "{restaurantName} heeft je een persoonlijke coupon van {discountLabel} gegeven. Deze is al gekoppeld aan je account — gebruik de onderstaande code bij het afrekenen.",
       "codeLabel": "Je couponcode",
+      "dealNameLabel": "Je aanbieding",
       "noteLabel": "Een bericht van het restaurant",
       "termsLabel": "Voorwaarden",
       "discountPercent": "{value}% korting",

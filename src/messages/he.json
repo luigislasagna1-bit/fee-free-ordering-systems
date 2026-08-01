@@ -5635,6 +5635,7 @@
       "greeting": "שלום {customerName},",
       "intro": "{restaurantName} העניק לך קופון אישי בשווי {discountLabel}. הוא כבר מקושר לחשבון שלך — השתמש בקוד שלמטה בעת התשלום.",
       "codeLabel": "קוד הקופון שלך",
+      "dealNameLabel": "המבצע שלך",
       "noteLabel": "הודעה מהמסעדה",
       "termsLabel": "תנאים",
       "discountPercent": "{value}% הנחה",

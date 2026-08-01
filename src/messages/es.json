@@ -5635,6 +5635,7 @@
       "greeting": "Hola, {customerName}:",
       "intro": "{restaurantName} te ha regalado un cupón personal de {discountLabel}. Ya está vinculado a tu cuenta — usa el código de abajo al finalizar tu pedido.",
       "codeLabel": "Tu código de cupón",
+      "dealNameLabel": "Tu oferta",
       "noteLabel": "Una nota del restaurante",
       "termsLabel": "Condiciones",
       "discountPercent": "{value}% de descuento",

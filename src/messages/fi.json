@@ -5635,6 +5635,7 @@
       "greeting": "Hei {customerName},",
       "intro": "{restaurantName} on antanut sinulle henkilökohtaisen kupongin: {discountLabel}. Se on jo liitetty tiliisi — käytä alla olevaa koodia kassalla.",
       "codeLabel": "Kuponkikoodisi",
+      "dealNameLabel": "Tarjouksesi",
       "noteLabel": "Viesti ravintolalta",
       "termsLabel": "Ehdot",
       "discountPercent": "{value} % alennus",

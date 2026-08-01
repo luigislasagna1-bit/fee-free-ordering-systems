@@ -5635,6 +5635,7 @@
       "greeting": "Hallo {customerName},",
       "intro": "{restaurantName} hat Ihnen einen persönlichen Gutschein über {discountLabel} geschenkt. Er ist bereits mit Ihrem Konto verknüpft — nutzen Sie einfach den untenstehenden Code an der Kasse.",
       "codeLabel": "Ihr Gutscheincode",
+      "dealNameLabel": "Ihr Angebot",
       "noteLabel": "Eine Nachricht vom Restaurant",
       "termsLabel": "Bedingungen",
       "discountPercent": "{value} % Rabatt",

@@ -5635,6 +5635,7 @@
       "greeting": "Pozdrav {customerName},",
       "intro": "Restoran {restaurantName} darovao vam je osobni kupon za {discountLabel}. Kupon je već povezan s vašim računom — upotrijebite kod u nastavku prilikom plaćanja.",
       "codeLabel": "Vaš kod kupona",
+      "dealNameLabel": "Vaša ponuda",
       "noteLabel": "Poruka restorana",
       "termsLabel": "Uvjeti",
       "discountPercent": "{value}% popusta",

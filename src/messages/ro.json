@@ -5635,6 +5635,7 @@
       "greeting": "Bună, {customerName},",
       "intro": "{restaurantName} ți-a oferit un cupon personal cu {discountLabel}. Este deja asociat contului tău — folosește codul de mai jos la finalizarea comenzii.",
       "codeLabel": "Codul tău de cupon",
+      "dealNameLabel": "Oferta ta",
       "noteLabel": "Un mesaj din partea restaurantului",
       "termsLabel": "Condiții",
       "discountPercent": "{value}% reducere",

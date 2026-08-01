@@ -5635,6 +5635,7 @@
       "greeting": "{customerName}様",
       "intro": "{restaurantName}から{discountLabel}のパーソナルクーポンが贈られました。すでにお客様のアカウントに紐付いています — ご注文時に下記のコードをご利用ください。",
       "codeLabel": "クーポンコード",
+      "dealNameLabel": "ご優待内容",
       "noteLabel": "レストランからのメッセージ",
       "termsLabel": "ご利用条件",
       "discountPercent": "{value}%オフ",

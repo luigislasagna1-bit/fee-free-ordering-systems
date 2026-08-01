@@ -5635,6 +5635,7 @@
       "greeting": "Hei {customerName},",
       "intro": "{restaurantName} har gitt deg en personlig kupong verdt {discountLabel}. Den er allerede knyttet til kontoen din – bruk koden nedenfor i kassen.",
       "codeLabel": "Kupongkoden din",
+      "dealNameLabel": "Tilbudet ditt",
       "noteLabel": "En hilsen fra restauranten",
       "termsLabel": "Vilkår",
       "discountPercent": "{value} % rabatt",

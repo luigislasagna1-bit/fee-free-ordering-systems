@@ -5635,6 +5635,7 @@
       "greeting": "Sveiki, {customerName},",
       "intro": "{restaurantName} padovanojo jums asmeninį {discountLabel} vertės kuponą. Jis jau susietas su jūsų paskyra — atsiskaitydami panaudokite žemiau esantį kodą.",
       "codeLabel": "Jūsų kupono kodas",
+      "dealNameLabel": "Jūsų pasiūlymas",
       "noteLabel": "Restorano žinutė",
       "termsLabel": "Sąlygos",
       "discountPercent": "{value}% nuolaida",

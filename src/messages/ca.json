@@ -5635,6 +5635,7 @@
       "greeting": "Hola, {customerName}:",
       "intro": "{restaurantName} t'ha regalat un cupó personal de {discountLabel}. Ja està vinculat al teu compte — fes servir el codi de sota en finalitzar la comanda.",
       "codeLabel": "El teu codi de cupó",
+      "dealNameLabel": "La teva oferta",
       "noteLabel": "Una nota del restaurant",
       "termsLabel": "Condicions",
       "discountPercent": "{value}% de descompte",

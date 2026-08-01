@@ -16,10 +16,23 @@ export { SUPPORTED_LOCALES, DEFAULT_LOCALE, isSupportedLocale, type Locale } fro
  *  3. Accept-Language header  (auth pages with no session)
  *  4. "en"  (final fallback)
  */
-export async function resolveLocale(opts?: { restaurantId?: string | null }): Promise<Locale> {
+export async function resolveLocale(opts?: {
+  restaurantId?: string | null;
+  /** The language THIS customer actually ordered/booked in
+   *  (Order.customerLocale / Reservation.customerLocale). Ranked ABOVE the
+   *  restaurant default but BELOW the cookie: a person who has actively picked
+   *  a language on this device meant it, while a cookie-less device — someone
+   *  opening the link from their email, on their phone, for the first time —
+   *  should get the language they ordered in rather than the restaurant's.
+   *  That gap is what left an Italian diner reading a Chinese status page
+   *  (Fabrizio cms0gyexp #10). Luigi 2026-07-31. */
+  customerLocale?: string | null;
+}): Promise<Locale> {
   const cookieStore = await cookies();
   const cookieLocale = cookieStore.get("fee-free-locale")?.value;
   if (isSupportedLocale(cookieLocale)) return cookieLocale;
+
+  if (isSupportedLocale(opts?.customerLocale)) return opts!.customerLocale as Locale;
 
   if (opts?.restaurantId) {
     try {

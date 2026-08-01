@@ -5635,6 +5635,7 @@
       "greeting": "Bonjour {customerName},",
       "intro": "{restaurantName} vous offre un coupon personnel de {discountLabel}. Il est déjà associé à votre compte — utilisez le code ci-dessous lors du paiement.",
       "codeLabel": "Votre code coupon",
+      "dealNameLabel": "Votre offre",
       "noteLabel": "Un mot du restaurant",
       "termsLabel": "Conditions",
       "discountPercent": "{value} % de réduction",

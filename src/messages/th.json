@@ -5635,6 +5635,7 @@
       "greeting": "สวัสดีคุณ {customerName}",
       "intro": "{restaurantName} มอบคูปองส่วนตัวมูลค่า {discountLabel} ให้คุณ คูปองผูกกับบัญชีของคุณแล้ว — ใช้โค้ดด้านล่างตอนชำระเงินได้เลย",
       "codeLabel": "โค้ดคูปองของคุณ",
+      "dealNameLabel": "ดีลของคุณ",
       "noteLabel": "ข้อความจากร้านอาหาร",
       "termsLabel": "เงื่อนไข",
       "discountPercent": "ส่วนลด {value}%",

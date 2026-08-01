@@ -5635,6 +5635,7 @@
       "greeting": "안녕하세요 {customerName}님,",
       "intro": "{restaurantName}에서 {discountLabel} 상당의 개인 쿠폰을 선물했습니다. 이미 고객님 계정에 연결되어 있습니다 — 결제 시 아래 코드를 사용하세요.",
       "codeLabel": "쿠폰 코드",
+      "dealNameLabel": "받으신 혜택",
       "noteLabel": "레스토랑에서 보낸 메시지",
       "termsLabel": "이용 조건",
       "discountPercent": "{value}% 할인",

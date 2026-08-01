@@ -472,7 +472,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
   }
   if (newStatus === "cancelled") {
     updates.rejectedAt = new Date();
-    updates.rejectionReason = String(data.rejectionReason ?? "Cancelled by restaurant").slice(0, 500);
+    // Only store a reason if staff actually WROTE one. The old default put the
+    // English literal "Cancelled by restaurant" on the order, which was then
+    // mailed verbatim to the customer and shown on their status page — an
+    // English sentence dropped into an otherwise fully-translated email for an
+    // Italian diner (Fabrizio cms0gyexp #10, the rule behind his rejection
+    // example). Translating it would be worse than useless: it carries no
+    // information the customer does not already have from "your order was
+    // cancelled". So leave it NULL and let every surface fall back to its own
+    // localized status wording. Luigi 2026-07-31.
+    const typedCancelReason = typeof data.rejectionReason === "string" ? data.rejectionReason.trim() : "";
+    updates.rejectionReason = typedCancelReason ? typedCancelReason.slice(0, 500) : null;
     // Staff-only route → structured attribution (Fabrizio cms0idtz7).
     updates.cancelledBy = "restaurant";
   }

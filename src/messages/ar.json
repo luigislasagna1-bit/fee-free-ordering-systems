@@ -5635,6 +5635,7 @@
       "greeting": "مرحبًا {customerName}،",
       "intro": "أهداك {restaurantName} قسيمة شخصية بقيمة {discountLabel}. وهي مرتبطة بحسابك بالفعل — استخدم الرمز أدناه عند إتمام الطلب.",
       "codeLabel": "رمز القسيمة الخاص بك",
+      "dealNameLabel": "عرضك",
       "noteLabel": "رسالة من المطعم",
       "termsLabel": "الشروط",
       "discountPercent": "خصم {value}%",

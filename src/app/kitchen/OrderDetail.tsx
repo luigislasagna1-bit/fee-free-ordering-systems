@@ -942,7 +942,7 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
           />
           <div className="flex gap-3">
             <button
-              onClick={() => act(async () => { await onUpdate(order.id, "cancelled", { rejectionReason: cancelReason || "Cancelled by restaurant" }); setShowCancel(false); })}
+              onClick={() => act(async () => { await onUpdate(order.id, "cancelled", { rejectionReason: cancelReason }); setShowCancel(false); })}
               disabled={busy}
               className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition"
             >
