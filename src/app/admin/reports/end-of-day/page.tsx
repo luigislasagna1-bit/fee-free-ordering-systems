@@ -15,7 +15,7 @@ import { getSessionUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey } from "@/lib/digests";
+import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey, maxSelectableDayKey } from "@/lib/digests";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { getTranslations, getLocale } from "next-intl/server";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
@@ -93,10 +93,15 @@ export default async function EndOfDayReportPage({
   const todayKey = await currentOperationalDayKey(active.id);
   if (!todayKey) redirect("/admin");
   const minDayKey = shiftKey(todayKey, -LOOKBACK_DAYS);
+  // After tonight's close the day's window has already ended, so activity taken
+  // after close belongs to TOMORROW and is absent from today's report by design.
+  // Allow stepping there, or it is unreachable until midnight. Equals todayKey
+  // before close. Luigi 2026-07-31.
+  const maxDayKey = (await maxSelectableDayKey(active.id)) ?? todayKey;
   let dayKey = todayKey;
   const spDate = Array.isArray(sp.date) ? sp.date[0] : sp.date;
   if (spDate && /^\d{4}-\d{2}-\d{2}$/.test(spDate)) {
-    dayKey = spDate < minDayKey ? minDayKey : spDate > todayKey ? todayKey : spDate;
+    dayKey = spDate < minDayKey ? minDayKey : spDate > maxDayKey ? maxDayKey : spDate;
   }
   const isToday = dayKey === todayKey;
 

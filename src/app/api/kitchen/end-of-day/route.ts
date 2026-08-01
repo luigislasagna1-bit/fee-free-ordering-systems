@@ -22,7 +22,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { kitchenAuthOptions } from "@/lib/auth-kitchen";
 import prisma from "@/lib/db";
-import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey } from "@/lib/digests";
+import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey, maxSelectableDayKey } from "@/lib/digests";
 import { buildEndOfDayReceiptLines } from "@/lib/receipt-lines";
 
 /** How many operational days back the stepper can look (today + the prior 7). */
@@ -51,11 +51,17 @@ export async function GET(req: NextRequest) {
   if (!todayKey) {
     return NextResponse.json({ error: "snapshot_failed" }, { status: 500 });
   }
+  // Between tonight's close and midnight the day's window has already ended, so
+  // anything taken after close belongs to TOMORROW and is absent from today's
+  // report by design. Clamping to today in that hour made it unreachable — the
+  // staff member reconciling the till at 23:55 could not see the booking that
+  // just came in. Before close this equals todayKey, so nothing else changes.
+  const maxDayKey = (await maxSelectableDayKey(restaurantId)) ?? todayKey;
   const minDayKey = shiftKey(todayKey, -LOOKBACK_DAYS);
   const raw = req.nextUrl.searchParams.get("date");
   let dayKey = todayKey;
   if (raw && /^\d{4}-\d{2}-\d{2}$/.test(raw)) {
-    dayKey = raw < minDayKey ? minDayKey : raw > todayKey ? todayKey : raw;
+    dayKey = raw < minDayKey ? minDayKey : raw > maxDayKey ? maxDayKey : raw;
   }
 
   const [stats, restaurant] = await Promise.all([

@@ -67,6 +67,25 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A31. 🇮🇪 VAT OSS application DISAPPROVED — resubmit with the position field (2026-07-31)
+Two emails arrived 9:14 AM. The first is the generic auto-template ("you do not qualify for the
+scheme") and reads worse than the situation is. The second, from **Rachel Williams, IE VAT OSS**
+(ossnsd@revenue.ie, +353 42 9353340), gives the real reason:
+
+> "The below section must include your **position within the company, for both contacts**."
+> Position within Company | Fee Free Ordering Inc.
+> "Please resubmit your application."
+
+**What happened:** the COMPANY NAME was entered in the "Position within Company" field instead of a
+job title, on BOTH contacts. Not an eligibility rejection — a form field.
+
+- ☐ **Resubmit** the Non-Union VAT OSS application with a real job title for each contact
+  (Director / President / Owner — whatever matches the corporate filing).
+- ⚠️ **This is the blocker behind Fabrizio's invoices report `cmr1ty0lc`** (T-F): non-VIES EU
+  restaurants can't buy paid plans until the OSS registration is live. Worth telling him it's in
+  progress rather than leaving that report silent.
+
+
 ### A30. 🆕 Luigi Bucks gifting — money bugs fixed, gift emails rewritten (2026-07-31)
 Started from your Faisal test ("I sent $40, plugged in their email, it doesn't associate").
 

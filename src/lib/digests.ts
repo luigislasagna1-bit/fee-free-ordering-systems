@@ -538,6 +538,29 @@ export async function currentOperationalDayKey(restaurantId: string, now = new D
   return operationalDayKeyOf(ctx.rows, now, ctx.tz, ctx.holidays);
 }
 
+/**
+ * The furthest-forward day the End-of-Day stepper may show.
+ *
+ * Normally this is the current operational day. But between tonight's CLOSE and
+ * local midnight, the current day's window has already ENDED — anything taken
+ * after close belongs to tomorrow's business day and is, by design, absent from
+ * today's report. Clamping the stepper to today in that hour made that activity
+ * unreachable on every live surface: Fabrizio's 23:53 booking would correctly
+ * leave the 30th and then be invisible until midnight, which reads as data loss
+ * and is exactly the hour he runs his tests in.
+ *
+ * So once the day has closed, allow stepping one day forward. Before close this
+ * returns the same key as currentOperationalDayKey, so nothing else changes.
+ * Luigi 2026-07-31, from the cms0gyexp #13 re-check.
+ */
+export async function maxSelectableDayKey(restaurantId: string, now = new Date()): Promise<string | null> {
+  const ctx = await reportContext(restaurantId);
+  if (!ctx) return null;
+  const key = operationalDayKeyOf(ctx.rows, now, ctx.tz, ctx.holidays);
+  const end = operationalDayEnd(ctx.rows, key, ctx.tz, ctx.holidays);
+  return now.getTime() >= end.getTime() ? addDaysToKey(key, 1) : key;
+}
+
 /** Build the DigestStats for the previous calendar month. */
 export async function buildMonthlyDigest(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
   const restaurant = await prisma.restaurant.findUnique({
