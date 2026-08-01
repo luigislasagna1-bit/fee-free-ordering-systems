@@ -40,6 +40,7 @@ import {
   PizzaCustomization, PizzaAddResult, PizzaConfig,
 } from "./PizzaBuilder";
 import { geocodeAddress, findZoneForPoint, haversineKm, type ZoneLike } from "@/lib/geocode";
+import { isAddressNotLocated } from "@/lib/checkout-address-gate";
 import {
   resolveDeliveryAddressConfig,
   DELIVERY_FIELD_KEYS,
@@ -4304,6 +4305,21 @@ export function OrderingPageClient({
         const focusId = fieldToFocusId[missingField];
         if (focusId) focusField(focusId);
         toast.error(tT("fieldRequired", { field: tAddr(missingField) }));
+        return;
+      }
+      // Address classification gate (zoned stores): neither exact coords nor a
+      // successful text geocode → guide, don't dead-end. The button is no
+      // longer hard-disabled for this case (2026-08-01 regression fix): the
+      // click lands here and gets the same expand+focus+toast treatment as
+      // every other missing field, with the pin escape hatch in the section.
+      if (isAddressNotLocated({
+        orderType, hasZones,
+        lat: customerInfo.lat, lng: customerInfo.lng,
+        resolvedZone,
+      })) {
+        setEditingSection("ordering");
+        focusField("checkout-delivery-address");
+        toast.error(tCheckout("addressNotLocated"));
         return;
       }
     }

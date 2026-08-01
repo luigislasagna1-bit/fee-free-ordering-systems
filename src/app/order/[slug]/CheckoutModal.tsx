@@ -16,6 +16,7 @@ import { rangeWindowMinutes } from "@/lib/slot-modes";
 import { buildDaySlots } from "@/lib/schedule-slots";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { resolveMapsBrowserKey } from "@/lib/maps-key";
+import { isAddressNotLocated } from "@/lib/checkout-address-gate";
 import { useTranslations } from "next-intl";
 import { HelpTip } from "@/components/HelpTip";
 import {
@@ -706,7 +707,11 @@ export function CheckoutModal({
         } else {
           // Details unavailable (quota/transient): keep the fullest picked
           // label so the choice isn't lost, and DROP any stale coords from a
-          // previous pick — the server's text geocode must own the location.
+          // previous pick — the parent's text geocode of the full label takes
+          // over (it satisfies the gate via resolvedZone). Also open the pin
+          // map: if that geocode ALSO fails, the customer must never be left
+          // with a pick that silently did nothing (2026-08-01 dead-end).
+          setShowPin(true);
           setCustomerInfo({
             ...ciRef.current,
             address: sug.secondary ? `${sug.label}, ${sug.secondary}` : sug.label,
@@ -807,18 +812,19 @@ export function CheckoutModal({
   // ── Every delivery address must be CLASSIFIABLE ─────────────────────────
   // A delivery order must end up either inside a zone or provably outside every
   // zone — never "unknown". Unknown is what charged one of Luigi's customers
-  // $7.99 for a free delivery they qualified for: no map pin, the server-side
-  // geocode came back empty, and every zone-restricted promo then refused an
-  // order that looked completely normal.
+  // $7.99 for a free delivery they qualified for.
   //
-  // Coordinates are what make classification possible, and they only exist if
-  // the customer PICKED a suggestion, dragged the pin, or reused a saved address
-  // that has them — typing freehand explicitly clears them. So for stores that
-  // actually have zones, block the order until we have a point on the map.
-  // Stores with a single flat fee and no zones are unaffected (Luigi's call):
-  // nothing there depends on knowing which zone the address falls in.
-  const addressNotLocated =
-    orderType === "delivery" && hasZones && (customerInfo.lat == null || customerInfo.lng == null);
+  // TWO signals satisfy the gate: exact coords (picked suggestion / dragged
+  // pin / saved address that has them) OR the parent's successful text geocode
+  // (`resolvedZone`). Coords-only was a one-day regression (b2648ac7): a saved
+  // default address without coords opened checkout permanently blocked while
+  // the zone line ("You're in Zone X") rendered right below the block message —
+  // a real customer dead-ended on it within hours (2026-08-01).
+  const addressNotLocated = isAddressNotLocated({
+    orderType, hasZones,
+    lat: customerInfo.lat, lng: customerInfo.lng,
+    resolvedZone,
+  });
 
   const scheduledTooEarly = (() => {
     const sf = customerInfo.scheduledFor;
@@ -2452,9 +2458,15 @@ export function CheckoutModal({
           </div>
           <button
             onClick={placeOrder}
-            disabled={orderLoading || cart.length === 0 || scheduledTooEarly || addressNotLocated || !!serviceConflictText}
+            // addressNotLocated deliberately does NOT hard-disable the button:
+            // a dead button gives no guidance (the 2026-08-01 dead-end). The
+            // click reaches placeOrder, whose validation expands the Ordering
+            // section, focuses the address field, and toasts what's needed —
+            // same guided path every other checkout error uses.
+            disabled={orderLoading || cart.length === 0 || scheduledTooEarly || !!serviceConflictText}
+            aria-disabled={addressNotLocated || undefined}
             className="flex-1 sm:flex-none text-white font-bold py-4 px-6 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 text-base"
-            style={{ backgroundColor: theme.primaryColor }}
+            style={{ backgroundColor: theme.primaryColor, ...(addressNotLocated ? { opacity: 0.5 } : {}) }}
           >
             {orderLoading && <Loader2 className="w-5 h-5 animate-spin" />}
             {orderLoading
