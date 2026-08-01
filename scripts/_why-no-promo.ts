@@ -144,6 +144,31 @@ async function main() {
       if (run(probe.ctx ?? baseCtx, list).some((r) => r.name === p.name)) culprits.push(probe.label);
     }
     console.log(`\n  "${p.name}" [${p.promotionType}, ${p.stackingRule}, customerType=${p.customerType}]`);
+    // The promo's OWN configuration — when nothing external explains it, the
+    // answer is almost always here: a percent that was never set, or item/
+    // category targeting that does not include this dish.
+    const rc: any = (p as any).ruleConfig ?? {};
+    const pct = rc.discountPercent ?? rc.percent ?? null;
+    const groups = Array.isArray(rc.groups) ? rc.groups : null;
+    console.log(`     autoApply=${p.autoApply} code=${p.couponCode ?? "-"} minOrder=$${(p.minimumOrder ?? 0).toFixed(2)} orderType=${p.orderType}`);
+    console.log(`     discountPercent=${pct ?? "(NOT SET -> always $0)"}`);
+    if (groups) {
+      console.log(`     targets ${groups.length} group(s):`);
+      for (const g of groups.slice(0, 6)) {
+        const ids = [
+          Array.isArray(g?.categoryIds) ? `categories=[${g.categoryIds.join(", ")}]` : null,
+          Array.isArray(g?.menuItemIds) ? `items=[${g.menuItemIds.join(", ")}]` : null,
+        ].filter(Boolean).join("  ");
+        console.log(`       - ${ids || JSON.stringify(g).slice(0, 160)}`);
+      }
+      const hit = groups.some((g: any) =>
+        (Array.isArray(g?.categoryIds) && item!.categoryId && g.categoryIds.includes(item!.categoryId)) ||
+        (Array.isArray(g?.menuItemIds) && g.menuItemIds.includes(item!.id)));
+      console.log(`     => does THIS item fall inside its targeting? ${hit ? "YES" : "NO"}`);
+      if (!hit) console.log(`        (this item's category "${item!.category?.name ?? "-"}" is not in the list above)`);
+    } else {
+      console.log(`     targets: WHOLE CART (no item/category groups)`);
+    }
     if (culprits.length) {
       console.log(`     BLOCKED BY: ${culprits.join("  AND/OR  ")}`);
     } else {
