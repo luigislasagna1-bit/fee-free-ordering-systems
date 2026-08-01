@@ -354,6 +354,45 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
             // otherwise. Blocker #8.
             await refundRewardForOrder(order.id);
             result.refunded += 1;
+
+            // ── Receipt for the refund ──────────────────────────────────────
+            // A missed order that was ALREADY PAID gets a real refund here, and
+            // until 2026-07-31 no email ever stated the amount: this path never
+            // sent one, and the Stripe webhook backstop cannot cover it (it
+            // skips while refundStatus is "pending" and then no-ops because
+            // refundedAmount is already stamped). The customer only got the
+            // "we couldn't get to your order" note. Same sender and shape as
+            // the manual refund route.
+            try {
+              const refundedMajor = Math.max(0, Math.round((order.total - ((order as any).creditApplied ?? 0)) * 100) / 100);
+              const cust = (order as any).customerEmail as string | null | undefined;
+              if (refundedMajor > 0 && cust) {
+                const r = await prisma.restaurant.findUnique({
+                  where: { id: rId },
+                  select: { name: true, email: true, currency: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelPlural: true, rewardLabelSingular: true },
+                });
+                if (r) {
+                  const { sendOrderRefundEmail } = await import("@/lib/email");
+                  const { formatCurrency } = await import("@/lib/utils");
+                  const creditBack = r.rewardsEnabled === true && ((order as any).creditApplied ?? 0) > 0 ? (order as any).creditApplied as number : 0;
+                  await sendOrderRefundEmail({
+                    to: cust,
+                    restaurantName: r.name,
+                    orderNumber: (order as any).orderNumber,
+                    customerName: (order as any).customerName ?? "",
+                    refundAmountLabel: formatCurrency(refundedMajor, r.currency),
+                    isFull: true,
+                    creditReturnedLabel: creditBack > 0 ? formatCurrency(creditBack, r.currency) : undefined,
+                    rewardLabel: creditBack > 0 ? (r.rewardLabelPlural?.trim() || r.rewardLabelSingular?.trim() || null) : undefined,
+                    restaurantEmail: r.email,
+                    locale: (order as any).customerLocale || r.defaultLanguage || "en",
+                  }).catch((e) => console.error("[auto-reject refund email]", e instanceof Error ? e.message : e));
+                }
+              }
+            } catch (e) {
+              // Never let a mail failure affect the refund accounting above.
+              console.error("[auto-reject refund email]", e instanceof Error ? e.message : e);
+            }
           } catch (e) {
             result.refundFailed += 1;
             result.errors.push({

@@ -9,6 +9,10 @@ import {
   refundDirectPayment,
   voidPayment,
 } from "@/lib/stripe";
+// Cancelling an ACCEPTED order issues a real refund — the customer gets a
+// receipt for it, same sender the manual refund route uses.
+import { sendOrderRefundEmail } from "@/lib/email";
+import { formatCurrency } from "@/lib/utils";
 import {
   capturePaypalAuthorization,
   voidPaypalAuthorization,
@@ -206,6 +210,13 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // cancel path on reject/cancel.
       type: true,
       shipdayOrderId: true,
+      // Needed to send the customer a receipt when cancelling an ACCEPTED order
+      // issues a real refund — previously no email anywhere stated the amount.
+      // customerLocale so it goes out in the language they ordered in.
+      orderNumber: true,
+      customerName: true,
+      customerEmail: true,
+      customerLocale: true,
       // estimatedPickup/Delivery used as the fallback prep time when the
       // kitchen Accepts without specifying preparationTime — without
       // this fallback we'd leave the order's soft estimate (set at
@@ -588,10 +599,44 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       after(
         (async () => {
           try {
-            await refundCapturedOrder(
-              id, piId, existing.restaurantId,
-              Math.round((existing.total - (existing.creditApplied ?? 0)) * 100) / 100,
-            );
+            const capturedAmount = Math.round((existing.total - (existing.creditApplied ?? 0)) * 100) / 100;
+            const refunded = await refundCapturedOrder(id, piId, existing.restaurantId, capturedAmount);
+            // ── The customer must get a receipt for money that left their card ──
+            // Cancelling an accepted order issues a REAL refund here, but no
+            // email ever stated the amount: this branch never sent one, and the
+            // Stripe webhook backstop is structurally unreachable (it skips
+            // while refundStatus is "pending" — exactly what the helper sets —
+            // and then no-ops because refundedAmount is already stamped, so the
+            // delta is zero). The only mail the customer received was the
+            // status update, which for a card order OPENS with "your card was
+            // authorized but not charged" — factually wrong once captured.
+            // Same sender the manual refund route uses. Luigi 2026-07-31.
+            if (refunded && existing.customerEmail) {
+              const r = await prisma.restaurant.findUnique({
+                where: { id: existing.restaurantId },
+                select: { name: true, email: true, currency: true, defaultLanguage: true, rewardsEnabled: true, rewardLabelPlural: true, rewardLabelSingular: true },
+              });
+              if (r) {
+                // Reward Dollars are restored to the wallet separately, so name
+                // them too — otherwise a part-credit order reads as if only the
+                // card portion came back.
+                const creditBack = r.rewardsEnabled === true && (existing.creditApplied ?? 0) > 0 ? existing.creditApplied! : 0;
+                await sendOrderRefundEmail({
+                  to: existing.customerEmail,
+                  restaurantName: r.name,
+                  orderNumber: existing.orderNumber,
+                  customerName: existing.customerName,
+                  refundAmountLabel: formatCurrency(capturedAmount, r.currency),
+                  isFull: true,
+                  creditReturnedLabel: creditBack > 0 ? formatCurrency(creditBack, r.currency) : undefined,
+                  rewardLabel: creditBack > 0 ? (r.rewardLabelPlural?.trim() || r.rewardLabelSingular?.trim() || null) : undefined,
+                  restaurantEmail: r.email,
+                  // The CUSTOMER's language, per the 2026-07-29 policy — not the
+                  // restaurant's default.
+                  locale: (existing as any).customerLocale || r.defaultLanguage || "en",
+                }).catch((e) => console.error("[cancel refund email]", e instanceof Error ? e.message : e));
+              }
+            }
           } catch (e) {
             console.error("[orders PATCH] refundCapturedOrder:", e);
           }
@@ -938,6 +983,10 @@ async function refundCapturedOrder(
         ...(typeof capturedAmount === "number" ? { refundedAmount: Math.max(0, capturedAmount) } : {}),
       },
     });
+    // Report success so the caller can send the customer a receipt for money
+    // that actually left the account — see the call site. Returning void meant
+    // callers could not tell a completed refund from a failed one.
+    return true;
   } catch (err) {
     console.error("[refund]", err instanceof Error ? err.message : err);
     try {
@@ -947,5 +996,6 @@ async function refundCapturedOrder(
       // Log with the orderId so we can fix it up by hand if needed.
       console.error(`[refund] failed to mark order ${orderId} refundStatus=failed`, e);
     }
+    return false;
   }
 }
