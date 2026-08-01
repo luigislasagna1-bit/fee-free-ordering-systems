@@ -13,6 +13,7 @@ import { CurrencyProvider, useCurrencyFormat } from "@/lib/currency-context";
 import { formatTime as formatHHMM, formatMinutes, type HoursFormat } from "@/lib/format-time";
 import { methodsForOrderType, paymentValueToSlug } from "@/lib/payment-methods";
 import { childBuildLines } from "@/lib/bundle-child-lines";
+import { includeLineInPromoEval } from "@/lib/promo-eval-lines";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rules";
 import { resolveServiceHours, pickHoursForService, type ServiceKind } from "@/lib/service-hours";
@@ -2648,7 +2649,12 @@ export function OrderingPageClient({
         // price, and feeding the synthetic `bundle:<id>` menuItemId into
         // the public promo engine would either no-op (lookup fails) or
         // double-discount. Bundles are self-contained discounts.
-        items: cart.map((ci, i) => ({ ci, i })).filter((x) => !x.ci.isBundle).map(({ ci, i }) => {
+        // Combo MENU ITEMS stay in (real id + real category — the owner can
+        // target them like any dish, and the CHARGE path has always included
+        // them); only promo-priced BUNDLES are excluded. See promo-eval-lines.ts
+        // — reading isBundle alone here is what made every VIP special show $0
+        // on a combo while the server would have discounted it (2026-08-01).
+        items: cart.map((ci, i) => ({ ci, i })).filter((x) => includeLineInPromoEval(x.ci)).map(({ ci, i }) => {
           // Effective per-unit price = lineTotal / qty, which is ALWAYS
           // modifier-inclusive and consistent with subtotal. Using unitPrice/
           // variant/base here omitted paid modifiers for standard modal items
