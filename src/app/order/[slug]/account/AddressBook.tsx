@@ -3,10 +3,29 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { Loader2, MapPin, Plus, Trash2, Check, X } from "lucide-react";
+import { useGoogleMaps } from "@/lib/use-google-maps";
+import { resolveMapsBrowserKey } from "@/lib/maps-key";
+import { composeStreetLine } from "@/lib/delivery-address-fields";
 
 // Leaflet touches `window`, so the map pin must be client-only. Reuses the
 // exact same draggable pin checkout uses for non-Google restaurants.
 const LeafletPin = dynamic(() => import("../CheckoutLeafletPin"), { ssr: false });
+
+/** Places predictions via the callback form so statuses keep their meaning:
+ *  no matches = an empty list (normal), anything else = reject, which flips
+ *  the session to the OSM proxy fallback. (Same wrapper as CheckoutModal.) */
+function svcGetPredictions(
+  svc: google.maps.places.AutocompleteService,
+  req: google.maps.places.AutocompletionRequest,
+): Promise<google.maps.places.AutocompletePrediction[]> {
+  return new Promise((resolve, reject) => {
+    svc.getPlacePredictions(req, (preds, status) => {
+      const S = google.maps.places.PlacesServiceStatus;
+      if (status === S.OK || status === S.ZERO_RESULTS) resolve(preds ?? []);
+      else reject(new Error(String(status)));
+    });
+  });
+}
 
 type Address = {
   id: string;
@@ -19,7 +38,23 @@ type Address = {
   isDefault: boolean;
 };
 
-export function AddressBook({ country }: { country?: string }) {
+export function AddressBook({
+  country,
+  googleMapsApiKey = null,
+  restaurantLat = null,
+  restaurantLng = null,
+  restaurantCity = null,
+}: {
+  country?: string;
+  /** Platform Google key resolved server-side (getPlatformGoogleKey) — same
+   *  prop contract as the ordering page. Null/empty ⇒ OSM-only, as before. */
+  googleMapsApiKey?: string | null;
+  /** Restaurant coords + town: bias Places toward the store's neighbourhood,
+   *  exactly like checkout (5 km circle + town-anchored parallel query). */
+  restaurantLat?: number | null;
+  restaurantLng?: number | null;
+  restaurantCity?: string | null;
+}) {
   const t = useTranslations("addressBook");
   const [list, setList] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,11 +71,23 @@ export function AddressBook({ country }: { country?: string }) {
   const [lat, setLat] = useState<number | null>(null);
   const [lng, setLng] = useState<number | null>(null);
 
-  // ── Address autocomplete — reuses the same free OpenStreetMap proxy as
-  //    checkout (/api/public/geocode/search). Typing in the street field
-  //    suggests addresses; picking one fills street/city/zip. No schema/map —
-  //    parity with the checkout typeahead. Luigi 2026-06-30. ───────────────
-  type Suggestion = { label: string; lat: number; lng: number; line1: string; city: string; postcode: string };
+  // ── Address autocomplete — same dual-provider lane as checkout ──────────
+  //    Google-keyed (platform key) → Places predictions, biased toward the
+  //    restaurant; otherwise / on failure → the free OpenStreetMap proxy
+  //    (/api/public/geocode/search). Places was added 2026-08-01 because the
+  //    OSM lane is weak on Canadian house numbers — parity with checkout.
+  const mapsKey = resolveMapsBrowserKey(googleMapsApiKey);
+  const googleEnabled = !!mapsKey;
+  const { isLoaded: gmapsLoaded } = useGoogleMaps(mapsKey);
+  const placesSessionTokenRef = useRef<google.maps.places.AutocompleteSessionToken | null>(null);
+  const placesServiceRef = useRef<google.maps.places.PlacesService | null>(null);
+  const placesAutoSvcRef = useRef<google.maps.places.AutocompleteService | null>(null);
+  // A hard Places denial (dead key/quota) sticks for the session: later
+  // keystrokes skip the doomed Google call and go straight to the OSM proxy.
+  const googleDeniedRef = useRef(false);
+  type Suggestion =
+    | { kind: "google"; label: string; secondary: string; placeId: string }
+    | { kind: "osm"; label: string; lat: number; lng: number; line1: string; city: string; postcode: string };
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [suggestOpen, setSuggestOpen] = useState(false);
   const justPickedRef = useRef(false);
@@ -51,18 +98,76 @@ export function AddressBook({ country }: { country?: string }) {
     if (q.length < 3) { setSuggestions([]); setSuggestOpen(false); return; }
     const ctrl = new AbortController();
     const id = setTimeout(async () => {
+      const googleReady = !googleDeniedRef.current && googleEnabled && gmapsLoaded
+        && typeof google !== "undefined" && !!google.maps?.places;
+      if (googleReady) {
+        try {
+          if (!placesAutoSvcRef.current) {
+            placesAutoSvcRef.current = new google.maps.places.AutocompleteService();
+          }
+          if (!placesSessionTokenRef.current) {
+            placesSessionTokenRef.current = new google.maps.places.AutocompleteSessionToken();
+          }
+          const req: google.maps.places.AutocompletionRequest = {
+            input: q,
+            sessionToken: placesSessionTokenRef.current,
+            types: ["address"],
+          };
+          if (country) req.componentRestrictions = { country: country.toLowerCase() };
+          // Bias toward the restaurant — tight 5 km circle + origin for
+          // nearest-first sorting (measured tuning: see CheckoutModal).
+          if (restaurantLat != null && restaurantLng != null) {
+            req.location = new google.maps.LatLng(restaurantLat, restaurantLng);
+            req.radius = 5_000;
+            req.origin = new google.maps.LatLng(restaurantLat, restaurantLng);
+          }
+          // Parallel town-anchored query (town-first completes short partials
+          // that the plain query misses — see CheckoutModal). Its failure must
+          // NOT flip googleDeniedRef (pre-caught to []).
+          const town = (restaurantCity || "").trim();
+          const townQuery = town && !q.toLowerCase().includes(town.toLowerCase())
+            ? svcGetPredictions(placesAutoSvcRef.current, { ...req, input: `${town} ${q}` }).catch(() => [])
+            : Promise.resolve([] as google.maps.places.AutocompletePrediction[]);
+          const [near, inTown] = await Promise.all([
+            svcGetPredictions(placesAutoSvcRef.current, req),
+            townQuery,
+          ]);
+          if (ctrl.signal.aborted) return;
+          // Town hits lead, then everything nearest-first; dedupe on place_id.
+          const seenIds = new Set<string>();
+          const merged = [...inTown, ...near].filter((p) => !seenIds.has(p.place_id) && !!seenIds.add(p.place_id));
+          merged.sort((a, b) =>
+            ((a as { distance_meters?: number }).distance_meters ?? Infinity)
+            - ((b as { distance_meters?: number }).distance_meters ?? Infinity));
+          setSuggestions(merged.slice(0, 6).map((p): Suggestion => ({
+            kind: "google",
+            label: p.structured_formatting?.main_text || p.description,
+            secondary: p.structured_formatting?.secondary_text || "",
+            placeId: p.place_id,
+          })));
+          setSuggestOpen(true);
+          return;
+        } catch {
+          // Hard rejection (key denied / quota dead) — remember it so we stop
+          // paying the doomed round-trip on every keystroke; OSM takes over.
+          googleDeniedRef.current = true;
+        }
+      }
       try {
         const params = new URLSearchParams({ q });
         if (country) params.set("country", country);
         const res = await fetch(`/api/public/geocode/search?${params.toString()}`, { signal: ctrl.signal });
         const data = await res.json().catch(() => ({}));
-        setSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
+        setSuggestions(Array.isArray(data.suggestions)
+          ? data.suggestions.map((s: { label: string; lat: number; lng: number; line1: string; city: string; postcode: string }): Suggestion => ({ kind: "osm", ...s }))
+          : []);
         setSuggestOpen(true);
       } catch { /* aborted / network — leave list as-is */ }
     }, 400);
     return () => { clearTimeout(id); ctrl.abort(); };
-  }, [street, country]);
-  const pickSuggestion = (s: Suggestion) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [street, country, googleEnabled, gmapsLoaded, restaurantLat, restaurantLng, restaurantCity]);
+  const pickSuggestion = (s: Extract<Suggestion, { kind: "osm" }>) => {
     justPickedRef.current = true;
     setSuggestOpen(false);
     setSuggestions([]);
@@ -71,6 +176,47 @@ export function AddressBook({ country }: { country?: string }) {
     if (s.postcode) setZip(s.postcode);
     setLat(s.lat);
     setLng(s.lng);
+  };
+  const pickGoogleSuggestion = (sug: Extract<Suggestion, { kind: "google" }>) => {
+    setSuggestOpen(false);
+    setSuggestions([]);
+    if (typeof google === "undefined" || !google.maps?.places) return;
+    if (!placesServiceRef.current) {
+      // PlacesService needs a host node; a detached div is the documented
+      // pattern when results aren't rendered on a Google map.
+      placesServiceRef.current = new google.maps.places.PlacesService(document.createElement("div"));
+    }
+    // getDetails closes the per-session billing window the token opened.
+    const sessionToken = placesSessionTokenRef.current ?? undefined;
+    placesSessionTokenRef.current = null;
+    placesServiceRef.current.getDetails(
+      { placeId: sug.placeId, fields: ["address_components", "formatted_address", "geometry"], sessionToken },
+      (place, status) => {
+        justPickedRef.current = true;
+        if (status === google.maps.places.PlacesServiceStatus.OK && place?.address_components) {
+          const get = (type: string) =>
+            place.address_components!.find((c) => c.types.includes(type))?.long_name ?? "";
+          // House-number position follows the restaurant's country convention
+          // ("Via Mazzini 13" vs "13 Main St") — same rule as checkout.
+          const streetLine = composeStreetLine(get("route"), get("street_number"), country);
+          const cityName = get("locality") || get("sublocality") || get("administrative_area_level_2");
+          const postal = get("postal_code");
+          setStreet(streetLine || place.formatted_address || sug.label);
+          if (cityName) setCity(cityName);
+          if (postal) setZip(postal);
+          const loc = place.geometry?.location;
+          if (loc) { setLat(loc.lat()); setLng(loc.lng()); }
+        } else {
+          // Details unavailable (quota/transient): keep the fullest picked
+          // label so the choice isn't lost, and DROP any coords from a
+          // previous pick (checkout parity) — the row saves coordinate-less
+          // and the backfill/order write-back heal it later.
+          setStreet(sug.secondary ? `${sug.label}, ${sug.secondary}` : sug.label);
+          setLat(null);
+          setLng(null);
+        }
+      },
+    );
   };
 
   const load = async () => {
@@ -198,7 +344,15 @@ export function AddressBook({ country }: { country?: string }) {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               placeholder={t("streetPlaceholder")}
               value={street}
-              onChange={(e) => setStreet(e.target.value)}
+              onChange={(e) => {
+                // Manual typing invalidates picked/dragged coords — the saved
+                // row must fall back to the text geocode, not a stale pin
+                // (checkout parity, Luigi 2026-07-19; gap #2 of the 2026-08-01
+                // checkout-address follow-up).
+                setStreet(e.target.value);
+                setLat(null);
+                setLng(null);
+              }}
               onFocus={() => { if (suggestions.length) setSuggestOpen(true); }}
               onBlur={() => setTimeout(() => setSuggestOpen(false), 150)}
               maxLength={200}
@@ -208,14 +362,17 @@ export function AddressBook({ country }: { country?: string }) {
               <div className="absolute z-20 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-56 overflow-y-auto">
                 {suggestions.map((s, i) => (
                   <button
-                    key={i}
+                    key={s.kind === "google" ? s.placeId : `${s.lat}-${s.lng}-${i}`}
                     type="button"
                     onMouseDown={(e) => e.preventDefault()}
-                    onClick={() => pickSuggestion(s)}
+                    onClick={() => (s.kind === "google" ? pickGoogleSuggestion(s) : pickSuggestion(s))}
                     className="w-full text-left px-3 py-2 text-xs text-gray-700 hover:bg-emerald-50 flex items-start gap-1.5 border-b border-gray-50 last:border-0"
                   >
                     <MapPin className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 mt-0.5" />
-                    <span className="truncate">{s.label}</span>
+                    <span className="truncate">
+                      {s.label}
+                      {s.kind === "google" && s.secondary ? <span className="text-gray-400"> · {s.secondary}</span> : null}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -226,14 +383,14 @@ export function AddressBook({ country }: { country?: string }) {
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               placeholder={t("cityPlaceholder")}
               value={city}
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => { setCity(e.target.value); setLat(null); setLng(null); }}
               maxLength={100}
             />
             <input
               className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
               placeholder={t("postalPlaceholder")}
               value={zip}
-              onChange={(e) => setZip(e.target.value)}
+              onChange={(e) => { setZip(e.target.value); setLat(null); setLng(null); }}
               maxLength={20}
             />
           </div>
