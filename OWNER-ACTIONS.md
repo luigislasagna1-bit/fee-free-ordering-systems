@@ -67,6 +67,25 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A33. ✅ Skool → Luigi Bucks credit transfer — COMPLETE (2026-08-01, ~3:10 AM)
+**$600.00 moved for 15 active Skool members** (unused SKOOL Vouchers Apr–Jul 2026, read off the
+GloriaFood promo list page-by-page with Luigi; Rick DL excluded as no longer active; Tina+Christina
+merged per Luigi; Rob=Robert Quayson, Ken=Kenn, Karen=Kay Savich confirmed by Luigi).
+- **10 instant wallet credits** (had accounts): Karen $60→bal $66.68, Habib $60→$75.00,
+  Robert $40→$47.60, Matt/David/Max/Usman/Alex/Zahra $20→$35.00 each, Robin $15→$41.55.
+- **5 pending gifts** (no account yet — auto-claim at signup, no expiry, resend button):
+  Sadaf $75 (sadafsheikhchaudhry@yahoo.ca), Christina(+Tina) $70, John $60 (rockpick101@gmail.com),
+  Ellie $60 (elliemac126@hotmail.ca), Kenn $40 (kmacfie@me.com).
+- All 15 notification emails REALLY delivered (Resend IDs logged). ⚠️ Gotcha for future scripts:
+  under run-on-prod the transport loads the PROD-encrypted Resend key, local decryption fails, and
+  sends silently become "[Email placeholder]" while returning success:true — the first apply's
+  emails never left. Re-sent via the dev-context env-key transport (ALLOW_DEV_EMAIL=1),
+  scripts/_resend-skool-transfer-emails.ts. Consider making that failure loud.
+- Idempotent: note-marker "Skool voucher transfer (Apr-Jul 2026)" + gift:<id> ledger keys;
+  re-run applies $0.00 (verified). Script: scripts/_skool-credit-transfer.ts.
+- Deliberately EXCLUDED (Luigi's defaults, revisit if he asks): Max's April "Copy" voucher
+  (accidental duplicate), 2025 one-off credits Angelina $30 + JASON $40 (different program).
+
 ### A32. 📅 SCHEDULED — September VIP promo rollover (fires Sept 1, 8:00 AM)
 A cloud reminder is set: https://claude.ai/code/routines/trig_01E8WsfdevsFZN2aFABY8tjX
 It will walk through the monthly chore: retire AUG VIP SPECIAL, create September's,
