@@ -69,6 +69,17 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A36. ✅ Max Bilton's slice reports — BOTH FIXED by Luigi + Claude-verified on prod (2026-08-01)
+(1) "Slice Add On's" now OPTIONAL (min 0 / max 3) on every live Pizza-by-the-SLICE item — the
+"choose at least 1" trap is gone (the 65 min=1 copies left in the DB are all on archived menu
+versions, harmless). (2) "Toonie Tuesday Slice - SKOOL VIP" now has REQUIRED "Choose Which
+Slice" (min1/max1, 21 slice options). Verified read-only against the ACTIVE prod menu
+(scripts/_check-max-fixes.ts). ☐ Remaining: **reply to Max** (suggested text in-chat).
+**Same evening — Apple OLD-team renewal VERIFIED:** Membership shows renewal date
+**Aug 3, 2027**, fee **C$119/yr** (not US$99 — ledger updated). Auto-renew OFF is INTENTIONAL:
+per the cut-costs plan the old team lapses Aug 2027 AFTER the Kitchen app migrates to the org —
+do NOT re-enable; DO calendar the migration well before Aug 2027.
+
 ### A35. 🚨 Sadaf's checkout dead-end — FIXED + verified, needs YOUR push (2026-08-01)
 Her report was real and serious: the 2026-07-31 address-safety change (b2648ac7) accidentally
 dead-ended any delivery customer whose address wasn't hand-picked from the dropdown — saved

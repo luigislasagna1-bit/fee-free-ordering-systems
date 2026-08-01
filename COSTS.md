@@ -57,7 +57,7 @@ customer-facing quality loss.**
 
 | Item | Cost | Next due | Status |
 |---|---|---|---|
-| **Apple Developer — OLD team** | $99/yr | **~2026-08-03** | verify the Jul 11 renewal shows the new expiry |
+| **Apple Developer — OLD team** | **✓ C$119/yr** (billed CAD, not US$99) | ✅ VERIFIED renewed to **2027-08-03** (checked 2026-08-01) | Auto-renew OFF = intentional: lapse at Aug 2027 AFTER Kitchen migrates to the org (–C$119/yr); calendar the migration first |
 | **Apple Developer — ORG** | $99/yr | ~2027-07 | lapse the OLD team ~Aug 2027 AFTER Kitchen migrates (–$99/yr) |
 | Google Play Console | $25 one-time | — | ✅ done forever |
 | Accounting: corporate T2 | ~CA$500–1,500/yr | ❓ | ❓ |
