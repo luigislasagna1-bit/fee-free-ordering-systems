@@ -79,8 +79,18 @@ scheme") and reads worse than the situation is. The second, from **Rachel Willia
 **What happened:** the COMPANY NAME was entered in the "Position within Company" field instead of a
 job title, on BOTH contacts. Not an eligibility rejection — a form field.
 
-- ☐ **Resubmit** the Non-Union VAT OSS application with a real job title for each contact
-  (Director / President / Owner — whatever matches the corporate filing).
+**STATUS 2026-07-31 10:48 PM — Luigi emailed Revenue, ball is in their court.** He replied to
+OSSNSD@revenue.ie explaining it was a typo, stating he is the **Owner/Director**, and asking
+whether they can correct it their side, whether a new application is needed, or whether they can
+issue a verification code so he can log in and update it himself. Sensible — a full resubmission
+may not be necessary and re-keying it blindly risks a second bounce.
+
+- ⏳ **Waiting on Revenue's reply.** ☐ **Luigi calls +353 42 9353340 on Tuesday** if no answer by
+  then (Ireland is 5h ahead of Toronto — call before ~11 AM their time, so before 6 AM ET; late
+  morning ET will miss them).
+- ☐ Only if they insist on a fresh application: resubmit with **Owner/Director** in *Position
+  within Company* for BOTH contacts via the non-Union OSS registration portal (linked from
+  revenue.ie/en/vat/vat-ecommerce/non-union-scheme).
 - ⚠️ **This is the blocker behind Fabrizio's invoices report `cmr1ty0lc`** (T-F): non-VIES EU
   restaurants can't buy paid plans until the OSS registration is live. Worth telling him it's in
   progress rather than leaving that report silent.

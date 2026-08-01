@@ -47,7 +47,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
     return NextResponse.json({ error: "Restaurant not found" }, { status: 404 });
   }
 
-  let body: { email?: string; password?: string; name?: string; phone?: string };
+  let body: { email?: string; password?: string; name?: string; phone?: string; marketingConsent?: boolean };
   try {
     body = await req.json();
   } catch {
@@ -58,6 +58,14 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   const password = body.password || "";
   const name = body.name?.trim() || "";
   const phone = body.phone?.trim() || null;
+  // ── Marketing consent at signup (Luigi 2026-07-31) ───────────────────────
+  // Customer.marketingConsent defaults to FALSE and signup never set it, so
+  // every account holder was recorded as opted-out without ever being asked —
+  // and checkout then pre-fills its tickbox from that stored false, so they
+  // stayed opted out permanently. The signup form now shows a TICKED box, so
+  // the default is opt-IN and an explicit untick is the only way to opt out.
+  // Absent/omitted (older clients) is treated as ticked, matching the form.
+  const marketingConsent = body.marketingConsent !== false;
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json({ error: "Invalid email" }, { status: 400 });
@@ -162,6 +170,8 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
             // Guest row becomes an account NOW — orders placed before this
             // moment never earn reward credit (see orderEligibleToEarn).
             signedUpAt: new Date(),
+            marketingConsent,
+            marketingConsentAt: new Date(),
           },
           select: { id: true, restaurantId: true },
         });
@@ -177,6 +187,10 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
           emailVerifyToken,
           lastLoginAt: new Date(),
           signedUpAt: new Date(),
+          marketingConsent,
+          // Stamped whichever way they chose — this timestamp is the record of
+          // WHEN consent was given, which is what a CASL complaint turns on.
+          marketingConsentAt: new Date(),
         },
         select: { id: true, restaurantId: true },
       });

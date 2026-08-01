@@ -12,10 +12,17 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
   // minLength counts formatting chars, so "+1 (55)" would pass it and hit the
   // server's English-only 400; this check catches it in the user's language.
   const tToast = useTranslations("ordering.toasts");
+  // Reuse the checkout consent label — already translated in all 38 locales.
+  const tOrdering = useTranslations("ordering");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
+  // Marketing consent starts TICKED — opt-in by default, and an explicit
+  // untick is the only way to opt out. Without this the account was created at
+  // the schema default of FALSE, so every account holder was silently recorded
+  // as opted-out, and checkout later pre-filled its own box from that stored
+  // false and kept them there. Luigi 2026-07-31.
+  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "", marketingConsent: true });
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -93,6 +100,16 @@ export function SignupForm({ slug, restaurantName }: { slug: string; restaurantN
           placeholder={t("placeholderPassword")}
         />
       </div>
+      {/* Same wording and shape as the checkout consent box, so the two agree. */}
+      <label className="flex items-start gap-2 text-xs text-gray-600 cursor-pointer">
+        <input
+          type="checkbox"
+          className="mt-0.5"
+          checked={form.marketingConsent}
+          onChange={(e) => setForm({ ...form, marketingConsent: e.target.checked })}
+        />
+        <span>{tOrdering("marketingConsentLabel")}</span>
+      </label>
       {error && (
         <p className="text-xs text-red-600">{error}</p>
       )}
