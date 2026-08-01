@@ -55,11 +55,14 @@ mezzanotte. Quindi:
 Tutto questo vale sia per il report in tempo reale nell'app, sia per l'email di fine
 giornata, sia per la stampa e per l'esportazione.
 
-**Anche dalle tue #10 e #12**
+**Anche dalle tue #10, #11 e #12**
 
 - **#10**: oltre all'email, adesso anche la **pagina di stato dell'ordine** mostra il
   motivo del rifiuto nella lingua del cliente (prima restava nella lingua del
   ristorante).
+- **#11**: l'email di annullamento era già tradotta, ma la **pagina** di conferma
+  dell'annullamento restava in inglese. Ora segue la lingua con cui il cliente ha
+  prenotato.
 - **#12**: la nota scritta dal cliente quando prenota un tavolo **ora arriva
   all'app di cucina**, evidenziata come le note dell'ordine. Prima veniva salvata ma
   non veniva mai mostrata.
@@ -124,10 +127,12 @@ The business day is now **close-to-close** instead of ending at midnight:
 All of this applies to the live in-app report, the end-of-day email, the printed
 slip and the export.
 
-**Also from your #10 and #12**
+**Also from your #10, #11 and #12**
 
 - **#10**: beyond the email, the **order status page** now shows the rejection reason
   in the customer's language (it previously stayed in the restaurant's language).
+- **#11**: the cancellation email was already translated, but the confirmation
+  **page** stayed in English. It now follows the language the guest booked in.
 - **#12**: a guest's note written when booking a table **now reaches the kitchen app**,
   highlighted like an order note. It was being saved but never displayed.
 
