@@ -79,14 +79,17 @@ address could too.**
 store** (typed-not-picked address → Zone 3 resolves → order placeable; unresolvable address →
 guided to the field with the translated message + pin escape hatch, no dead button). Two commits
 sit LOCAL on main — the permission system rightly made the production push Luigi's call:
-1. ☐ **Say "push it"** (or run `git push origin main`) → Vercel deploys the fix live.
-2. ☐ After deploy: **say "run the address backfill"** — `scripts/backfill-address-coords.ts`
-   heals saved addresses missing coordinates (dev first, then prod via run-on-prod; additive,
-   1 req/s, includes Sadaf's row).
-3. ☐ **Reply to Sadaf** once live — suggested: "Found it — you did nothing wrong, a change we
-   shipped the night before was too strict about addresses. It's fixed; your address will work
-   as typed now. Your VIP discount is waiting (and your $75 gift is still unclaimed 😉)."
-4. FYI: two follow-up chips queued (AddressBook coord hardening; two hardcoded-English strings).
+1. ✅ PUSHED + DEPLOYED 2026-08-01 evening (commits 0e4922e2 + docs). **Luigi verified LIVE**:
+   typed "933 maple av" without picking → "You're in Zone 1 — Fee $7.99" → Place Order live.
+2. ✅ BACKFILL RAN on dev (0 rows) + PROD: 11 coordinate-less saved addresses, **7 healed**
+   (all real Milton ones incl. 933 Maple Ave), 4 left null (3 Italian test rows + 1 malformed —
+   all still orderable via the new text-geocode gate). Note: Sadaf had NO saved address row —
+   the typed-address fix is what covers her.
+3. ☐ **Reply to Sadaf** (the only remaining step) — suggested: "Found it — you did nothing
+   wrong, a change we shipped the night before was too strict about addresses. It's fixed; your
+   address will work as typed now. Your VIP discount is waiting (and your $75 gift is still
+   unclaimed 😉)."
+4. FYI: two follow-up sessions running (AddressBook coord hardening; hardcoded-English strings).
 
 ### A34. 💰 COSTS.md launched — answer the 14 questions + 3 time-critical checks (2026-08-01)
 Luigi asked Claude to track ALL recurring costs and update him monthly. Repo-root **`COSTS.md`**

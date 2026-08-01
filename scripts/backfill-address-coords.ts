@@ -11,10 +11,14 @@
 //
 //   npx tsx scripts/backfill-address-coords.ts            (dev DATABASE_URL)
 //   npx tsx scripts/run-on-prod.ts scripts/backfill-address-coords.ts   (prod)
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config({ path: ".env" });
 import { PrismaClient } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { geocodeAddress } from "../src/lib/geocode";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) } as any);
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 async function main() {
