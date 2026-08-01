@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-07-31 by Claude (**A30 — Luigi Bucks gifting money bugs + teaching emails.** From Luigi's Faisal test: his $40 is PENDING (no wallet, nothing spendable) and the $47.62 on screen was Luigi's OWN balance, which would have paid for an order recorded to Faisal. Fixed: a signed-in customer now owns their orders (kills the value transfer AND a once-per-lifetime reuse hole); refunds no longer credit the wrong wallet on a split order (4 tests, proven against the old code); marketplace signups now claim pending gifts instead of stranding them; both gift emails now TEACH in three numbered steps; one unredeemed gift per guest; ✉ resend button. ⚠️ A hole Claude introduced earlier the same session — typed email = wallet access, i.e. anyone could spend your balance by knowing your address — was caught and reverted before any push. Still to build: spending a gift with NO account, designed in DESIGN-gift-wallet-pass.md.)
+**Last updated:** 2026-08-01 by Claude (**A34 — COSTS.md is live + first real invoices folded in.** Luigi asked for all monthly recurring costs tracked + a monthly update; a 6-agent audit built repo-root `COSTS.md`, then Luigi's Neon + Google Cloud invoices corrected it: platform infra is **≈US$100–115/mo actual** (Neon $42.65 + Google Maps ≈CA$44 + Vercel $20 + usage), NOT the $25–45 first estimated — both "probably free tier" guesses were wrong. Scope locked to platform-only (Skool = restaurant cost, excluded). 🔥 MOST URGENT: **Visa ••••6979 is DECLINING at both Neon and Google** — unpaid balances threaten the prod DB and the Maps key (A34 step 0). Also: verify the OLD-team Apple renewal (~Aug 3); GloriaFood zombie; "Schedule Tester" still granting $5/day. Standing rule: every cost discussion now includes savings ideas — top two: Neon compute (order-page cache + autoscaling floor, $42→~$22) and Maps SKU audit (up to –CA$44). Monthly auto-update scheduled for the 1st.)
+**Previous update:** 2026-07-31 by Claude (**A30 — Luigi Bucks gifting money bugs + teaching emails.** From Luigi's Faisal test: his $40 is PENDING (no wallet, nothing spendable) and the $47.62 on screen was Luigi's OWN balance, which would have paid for an order recorded to Faisal. Fixed: a signed-in customer now owns their orders (kills the value transfer AND a once-per-lifetime reuse hole); refunds no longer credit the wrong wallet on a split order (4 tests, proven against the old code); marketplace signups now claim pending gifts instead of stranding them; both gift emails now TEACH in three numbered steps; one unredeemed gift per guest; ✉ resend button. ⚠️ A hole Claude introduced earlier the same session — typed email = wallet access, i.e. anyone could spend your balance by knowing your address — was caught and reverted before any push. Still to build: spending a gift with NO account, designed in DESIGN-gift-wallet-pass.md.)
 **Previous update:** 2026-07-31 by Claude (**Fabrizio cms0gyexp #13 + #14 BUILT (A29)** — end-of-day report overhaul: business day is now CLOSE-TO-CLOSE so the report emails ~5 min after closing and after-close activity rolls to the next day (his 10:01 AM report explained + fixed); rejected/cancelled reservations no longer counted; refunds now shown AND netted out of Collected (his €20 partial-refund repro — including the bucket bug that moved a refunded card order into Offline); PayPal shows as "Online (PayPal)"; cancelled/rejected counts + real "you didn't miss/cancel" signals in the digest email. Plus two #10/#12 follow-ups: the customer status page now shows preset rejection reasons in the CUSTOMER's language (new sparse Order.rejectionReasonKey — ⚠️ schema push to both branches before deploy), and reserve-then-order booking notes finally reach the kitchen (yellow-boxed). i18n ×38, parity + preflight in A29.)
 **Previous update:** 2026-07-30 by Claude (**A26 guest self-cancel PASSED on prod** — Luigi ran the closed-store card order + cancel; verified: order `cancelled` / `cancelledBy=customer`, wallet spend row flipped to `released` and the $2.29 credit returned. **A28 upgraded + incident**: the first attempt to connect www.luigislasagna.com briefly 404'd the live store; restored in ~4 min, and the zero-downtime domain-switch fix is built — see A28 for the corrected 6-step plan. Earlier today: polish batch shipped (reorder sold-out gap, reservation closed-hours email, eye-toggle everywhere, marketplace /account i18n ×38).)
 **Previous update:** 2026-07-19 by Claude (**iOS ring round 3 shipped** from Fabrizio's 2026-07-18 video — the "two orders at once" double-ring, the "music card with a play button", and the ring-gap cadence all fixed web/server-side (adversarially reviewed, 21-agent workflow; 823 tests); his re-test asks posted on the report (IN_TESTING). The wake-handoff piece still rides the NEXT TestFlight build (006c669d, already committed). Earlier same day: Erik's $10 make-good SENT + verified (T-J closed). Remaining opens: awaiting Apple ×1 + Google ×2 review emails, B5 Kitchen 16 KB real fix.)
@@ -66,6 +67,42 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A34. 💰 COSTS.md launched — answer the 14 questions + 3 time-critical checks (2026-08-01)
+Luigi asked Claude to track ALL recurring costs and update him monthly. Repo-root **`COSTS.md`**
+is now the single money-out ledger (Claude updates it the 1st of each month, scheduled).
+Audit result: platform infra ≈ **$25–45/mo** + **~$250–300/yr** annuals; restaurant side separate.
+**UPDATE 2026-08-01 (afternoon):** Luigi sent the first real invoices. Neon is a PAID plan —
+**$42.65/mo actual** — and Google Cloud (Maps) is **≈CA$44/mo actual**; infra total revised to
+**≈US$100–115/mo**. Skool = restaurant cost, excluded per Luigi. ⚠️ BOTH invoices show the
+**Visa ••••6979 declining** — new step 0 below is the most urgent item in this file.
+**YOUR PART:**
+0. ✅ **RESOLVED 2026-08-01 — Luigi settled both failed payments** (Neon $42.65 + Google Cloud
+   ≈CA$44.04). Standing advice kept: the same Visa ••••6979 also backs Sentry (bills Aug 7,
+   $35.72) and Resend (renews Aug 23) — keep a ~$250/mo buffer behind it so a decline never
+   threatens the prod DB again.
+   **END-OF-DAY STATE (2026-08-01): the audit is COMPLETE — every major cost is now a real
+   number.** Total ≈**US$385–415/mo**: Claude Max 20x **CA$316.40** (over half the bill!) +
+   Neon $42.65 + Sentry $35.72 (at 1% usage) + **Google ≈CA$44 which turned out to be a 24/7
+   E2 VM in Toronto, NOT Maps** (Maps ≈ $0; the VM is likely an orphan — FeeFree runs on
+   Vercel+Neon) + Vercel $27+ + Resend $20 + Twilio ~$4. Spend-to-date ≈CA$1,300–1,500.
+   **The cut-costs plan is COMPLETE and PARKED in COSTS.md §6** (target ≈US$150–230/mo:
+   Sentry→free, identify+retire the VM, Claude 20x→5x if usage data allows, Vercel
+   observability off, Neon cache) — Luigi paused to work on other things; NOTHING changed yet.
+   Resume trigger: Luigi says **"let's cut costs"**. Small remaining ❓s: GoDaddy renewals
+   screenshot, Vercel seat-vs-usage, API-key burn, plan start months (COSTS.md §8).**
+1. ☐ **TODAY — Apple OLD team renewal (due ~Aug 3, 2 days):** developer.apple.com → sign in with the
+   OLD team (Luigi's Lasagna & Pizzeria Inc.) → Membership → confirm the expiry now shows **2027**
+   and auto-renew is ON. You renewed Jul 11 but Apple said "processing" and we never confirmed.
+   A silent failure this weekend pulls Fabrizio's Kitchen TestFlight + the App Store apps on that team.
+2. ☐ **GloriaFood zombie check:** log into the old GloriaFood admin → Billing → if ANY paid module
+   is still active for the Milton site (unreachable since the 2026-07-30 domain repoint), cancel it.
+   Every month it survives is pure bleed ($0–90/mo).
+3. 🤔 **"Schedule Tester" automation is still granting $5/DAY on prod** (~$150/mo in free food,
+   TODO.md #424). Cleanup script is ready — tell Claude "run the schedule-tester cleanup" or keep it.
+4. ☐ **Answer the 14 questions** at the bottom of `COSTS.md` (Skool plan? Claude plan? Vercel invoice?
+   Neon upgrade OK? domain registrar? BMO fee? …) — the unknowns are likely bigger than the whole
+   infra stack. Tell Claude the answers in any order; he folds them in.
 
 ### A33. ✅ Skool → Luigi Bucks credit transfer — COMPLETE (2026-08-01, ~3:10 AM)
 **$600.00 moved for 15 active Skool members** (unused SKOOL Vouchers Apr–Jul 2026, read off the
