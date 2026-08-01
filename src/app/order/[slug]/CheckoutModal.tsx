@@ -500,6 +500,12 @@ export function CheckoutModal({
   ciRef.current = customerInfo;
   // Map center is set when an address is picked, but NOT updated while the
   // customer drags the pin — so the map doesn't snap back mid-drag.
+  // Manual pin escape hatch. The map normally appears only once an address is
+  // picked from the list — which leaves a customer whose address simply won't
+  // autocomplete (rural roads, new builds, unusual formatting) with no way to
+  // tell us where they are, and therefore unclassifiable. This lets them open
+  // the map anyway and drop the pin themselves.
+  const [showPin, setShowPin] = useState(false);
   const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(
     customerInfo.lat != null && customerInfo.lng != null
       ? { lat: customerInfo.lat, lng: customerInfo.lng }
@@ -798,6 +804,22 @@ export function CheckoutModal({
   // spinner still lets you pick earlier), so we HARD-block here: disable Place Order + show the inline
   // notice. Mirrors the picker's own minDate/minTimeForDate math via toWallClock, so it can never
   // false-block a slot the picker would legitimately offer (incl. catering — its picks are future).
+  // ── Every delivery address must be CLASSIFIABLE ─────────────────────────
+  // A delivery order must end up either inside a zone or provably outside every
+  // zone — never "unknown". Unknown is what charged one of Luigi's customers
+  // $7.99 for a free delivery they qualified for: no map pin, the server-side
+  // geocode came back empty, and every zone-restricted promo then refused an
+  // order that looked completely normal.
+  //
+  // Coordinates are what make classification possible, and they only exist if
+  // the customer PICKED a suggestion, dragged the pin, or reused a saved address
+  // that has them — typing freehand explicitly clears them. So for stores that
+  // actually have zones, block the order until we have a point on the map.
+  // Stores with a single flat fee and no zones are unaffected (Luigi's call):
+  // nothing there depends on knowing which zone the address falls in.
+  const addressNotLocated =
+    orderType === "delivery" && hasZones && (customerInfo.lat == null || customerInfo.lng == null);
+
   const scheduledTooEarly = (() => {
     const sf = customerInfo.scheduledFor;
     if (!sf) return false;
@@ -1447,14 +1469,16 @@ export function CheckoutModal({
                         restaurant now. Appears once an address is picked; drag/
                         click to set the exact door, coords ride along with the
                         order. Google autocomplete above still fills the address. */}
-                    {deliveryFormConfig.street.show && mapCenter && (
+                    {deliveryFormConfig.street.show && (mapCenter || (showPin && restaurantLat != null && restaurantLng != null)) && (
                       /* relative z-0 flattens Leaflet's internal z-indexes into
                          one stacking context BELOW the suggestion list — without
                          it the map paints over the list and steals its taps
                          (review 2026-07-19, high). */
                       <div className="rounded-lg overflow-hidden border border-gray-200 relative z-0">
                         <CheckoutLeafletPin
-                          center={mapCenter}
+                          // Falls back to the restaurant when the customer opened
+                          // the map manually — they drag from there to their door.
+                          center={mapCenter ?? { lat: restaurantLat as number, lng: restaurantLng as number }}
                           lat={customerInfo.lat ?? null}
                           lng={customerInfo.lng ?? null}
                           onMove={(la, ln) => setCustomerInfo({ ...customerInfo, lat: la, lng: ln })}
@@ -1504,6 +1528,23 @@ export function CheckoutModal({
                     )}
                     {hasZones && !geocoding && geocodeError && (
                       <p className="text-xs text-red-600">{geocodeError}</p>
+                    )}
+                    {/* The step that stops an address becoming "unclassifiable".
+                        Shown as soon as they have typed something but we still
+                        have no point on the map — with the escape hatch, because
+                        a rural or brand-new address genuinely may not autocomplete
+                        and we must never leave them stuck. */}
+                    {addressNotLocated && !geocoding && customerInfo.address.trim().length > 0 && (
+                      <div className="rounded-lg border border-amber-200 bg-amber-50 p-2.5">
+                        <p className="text-xs text-amber-900 font-medium">{tc("pickAddressFromList")}</p>
+                        <button
+                          type="button"
+                          onClick={() => setShowPin(true)}
+                          className="mt-1.5 text-xs font-bold text-amber-800 underline hover:no-underline"
+                        >
+                          {tc("cantFindAddress")}
+                        </button>
+                      </div>
                     )}
                     {hasZones && resolvedZone && resolvedZone.inside && (
                       <p className="text-xs text-gray-600">
@@ -2386,6 +2427,14 @@ export function CheckoutModal({
             {tOrd("toasts.scheduledInPast")}
           </div>
         )}
+        {/* Address must be on the map before we can promise a delivery price or
+            a zone-restricted deal. Amber rather than red: nothing is wrong yet,
+            there is simply one more step. */}
+        {addressNotLocated && !scheduledTooEarly && (
+          <div className="border-t border-amber-100 px-5 py-2.5 bg-amber-50 text-xs text-amber-800 font-medium flex-shrink-0">
+            {tc("addressNotLocated")}
+          </div>
+        )}
         {/* Footer — padding + button height deliberately MATCH the item modal's
             add-to-cart footer (p-5 container, py-4 button): Fabrizio's cmrj664ru
             "stuck to the bottom edge" was the footer hugging the modal's own
@@ -2403,7 +2452,7 @@ export function CheckoutModal({
           </div>
           <button
             onClick={placeOrder}
-            disabled={orderLoading || cart.length === 0 || scheduledTooEarly || !!serviceConflictText}
+            disabled={orderLoading || cart.length === 0 || scheduledTooEarly || addressNotLocated || !!serviceConflictText}
             className="flex-1 sm:flex-none text-white font-bold py-4 px-6 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 text-base"
             style={{ backgroundColor: theme.primaryColor }}
           >
