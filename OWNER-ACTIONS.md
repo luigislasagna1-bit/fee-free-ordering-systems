@@ -67,6 +67,15 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A32. 📅 SCHEDULED — September VIP promo rollover (fires Sept 1, 8:00 AM)
+A cloud reminder is set: https://claude.ai/code/routines/trig_01E8WsfdevsFZN2aFABY8tjX
+It will walk through the monthly chore: retire AUG VIP SPECIAL, create September's,
+move the 20% Menu-Wide carve-outs to the new special's categories (the step whose
+omission briefly gave 50% off Daily Deals on Aug 1), and re-test one deal item +
+one regular item as a VIP member. Also re-raises the two open decisions: tip on
+pre-discount subtotal, and MUC 25/30 staying Exclusive.
+
+
 ### A31. 🇮🇪 VAT OSS application DISAPPROVED — resubmit with the position field (2026-07-31)
 Two emails arrived 9:14 AM. The first is the generic auto-template ("you do not qualify for the
 scheme") and reads worse than the situation is. The second, from **Rachel Williams, IE VAT OSS**
