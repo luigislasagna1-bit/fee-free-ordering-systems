@@ -67,7 +67,7 @@ async function main() {
     where: { restaurantId: restaurant.id, isActive: true },
     select: {
       id: true, name: true, promotionType: true, stackingRule: true, customerType: true,
-      autoApply: true, couponCode: true, minimumOrder: true, orderType: true, ruleConfig: true,
+      autoApply: true, couponCode: true, minimumOrder: true, orderType: true, ruleConfig: true, onceLifetimePerClient: true, usageLimit: true, usedCount: true,
       startsAt: true, endsAt: true, limitedShowtimeSchedules: true,
       groupLinks: { select: { groupId: true, customerId: true, email: true, group: { select: { name: true } } } },
     },
@@ -101,7 +101,9 @@ async function main() {
         verdict = hit ? "TARGETS THIS ITEM ✅" : "does NOT target this item — computes $0 on it";
       }
       console.log(`\n  "${p.name}" [${p.promotionType}, ${p.stackingRule}, ${p.customerType}, autoApply=${p.autoApply}${p.couponCode ? `, code=${p.couponCode}` : ""}]`);
-      if (pct != null) console.log(`     percent: ${pct}%   minOrder: $${(p.minimumOrder ?? 0).toFixed(2)}   orderType: ${p.orderType}`);
+      if (pct != null) if ((p as any).onceLifetimePerClient) console.log(`     ⚠️ ONCE PER CUSTOMER FOREVER — a member who ever used it is permanently blocked`);
+      if ((p as any).usageLimit != null) console.log(`     usage: ${(p as any).usedCount}/${(p as any).usageLimit}`);
+      console.log(`     percent: ${pct}%   minOrder: $${(p.minimumOrder ?? 0).toFixed(2)}   orderType: ${p.orderType}`);
       if (groups) {
         for (const g of groups) {
           const cNames = Array.isArray(g?.categoryIds) ? g.categoryIds.map((id: string) => catName.get(id) ?? id) : [];

@@ -35,6 +35,10 @@ const prisma = new PrismaClient({
   adapter: isNeon ? new PrismaNeon({ connectionString }) : new PrismaPg({ connectionString }),
 } as any);
 
+// Optional: SCHED=<ISO local datetime> env var — promos with day/time windows
+// (happy hour, Tuesday-only deals) are evaluated against the order's scheduled
+// time, exactly as the checkout sends it. Without it they evaluate at "now".
+const SCHED = process.env.SCHED || undefined;
 const [, , slug, email, ...itemQueries] = process.argv;
 if (!slug || !email || itemQueries.length === 0) {
   console.error('Usage: ... _probe-live-promos.ts <slug> <email> "<item>" ["<item2>" ...]');
@@ -78,7 +82,7 @@ async function main() {
   const res = await fetch(url, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ restaurantSlug: slug, orderType: "pickup", subtotal, items, email }),
+    body: JSON.stringify({ restaurantSlug: slug, orderType: "pickup", subtotal, items, email, scheduledFor: SCHED }),
   });
   const j: any = await res.json().catch(() => ({}));
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
-import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey } from "@/lib/digests";
+import { buildTodaySnapshot, buildDayReport, currentOperationalDayKey, maxSelectableDayKey } from "@/lib/digests";
 import { resolveReportScope, resolveActiveLocation } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
@@ -39,10 +39,14 @@ export async function GET(req: NextRequest) {
   const todayKey = await currentOperationalDayKey(active.id);
   if (!todayKey) return NextResponse.json({ error: "No operational day" }, { status: 400 });
   const minDayKey = shiftKey(todayKey, -LOOKBACK_DAYS);
+  // After tonight's close the page's stepper can show the after-close "tomorrow"
+  // day (maxSelectableDayKey) — clamp to the SAME bound, or an export taken from
+  // that view silently exports a different day than the one on screen.
+  const maxDayKey = (await maxSelectableDayKey(active.id)) ?? todayKey;
   let dayKey = todayKey;
   const spDate = Array.isArray(sp.date) ? sp.date[0] : sp.date;
   if (spDate && /^\d{4}-\d{2}-\d{2}$/.test(spDate)) {
-    dayKey = spDate < minDayKey ? minDayKey : spDate > todayKey ? todayKey : spDate;
+    dayKey = spDate < minDayKey ? minDayKey : spDate > maxDayKey ? maxDayKey : spDate;
   }
   const isToday = dayKey === todayKey;
 

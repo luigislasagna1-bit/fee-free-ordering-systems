@@ -59,7 +59,8 @@ giornata, sia per la stampa e per l'esportazione.
 
 - **#10**: oltre all'email, adesso anche la **pagina di stato dell'ordine** mostra il
   motivo del rifiuto nella lingua del cliente (prima restava nella lingua del
-  ristorante).
+  ristorante). Vale per i motivi standard; un motivo scritto a mano libera resta
+  come digitato.
 - **#11**: l'email di annullamento era già tradotta, ma la **pagina** di conferma
   dell'annullamento restava in inglese. Ora segue la lingua con cui il cliente ha
   prenotato.
@@ -69,8 +70,9 @@ giornata, sia per la stampa e per l'esportazione.
 
 **Cosa ti chiediamo di verificare**
 
-1. Stasera, dopo la chiusura: il report deve arrivare dopo pochi minuti, e contenere
-   la giornata intera.
+1. Stasera, dopo la chiusura: se c'è stata attività, il report deve arrivare dopo
+   pochi minuti e contenere la giornata intera (con zero attività non viene
+   inviato nulla — è voluto).
 2. Che la **#6H6259** compaia nel report del 31 (e la **#KYDENB** non in quello del 30).
 3. Una prenotazione rifiutata: non deve più essere conteggiata.
 4. Un ordine con rimborso parziale: deve comparire in "Rimborsi" e l'incassato deve
@@ -131,6 +133,8 @@ slip and the export.
 
 - **#10**: beyond the email, the **order status page** now shows the rejection reason
   in the customer's language (it previously stayed in the restaurant's language).
+  This applies to the standard reasons; a custom hand-typed reason is shown as
+  written.
 - **#11**: the cancellation email was already translated, but the confirmation
   **page** stayed in English. It now follows the language the guest booked in.
 - **#12**: a guest's note written when booking a table **now reaches the kitchen app**,
@@ -138,7 +142,8 @@ slip and the export.
 
 **What we'd like you to re-test**
 
-1. Tonight after closing: the report should arrive within minutes, covering the full day.
+1. Tonight after closing: if there was any activity, the report should arrive within
+   minutes, covering the full day (a zero-activity day sends nothing — by design).
 2. That **#6H6259** appears in the 31st's report (and **#KYDENB** does not appear in the 30th's).
 3. A rejected reservation: it should no longer be counted.
 4. An order with a partial refund: it should appear under "Refunds" and reduce Collected.

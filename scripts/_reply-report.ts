@@ -25,7 +25,8 @@ if (!reportId || !bodyFile || !url) {
   console.error("Usage: _reply-report.ts <reportId> <bodyFile> [newStatus]");
   process.exit(1);
 }
-const COMMENT = readFileSync(bodyFile, "utf8").trim().slice(0, 5000);
+// 12k cap: bilingual (IT+EN) replies run ~7k chars; 5k silently truncated them.
+const COMMENT = readFileSync(bodyFile, "utf8").trim().slice(0, 12000);
 
 async function main() {
   const isNeon = /\.neon\.tech([:/?]|$)/i.test(url!);
