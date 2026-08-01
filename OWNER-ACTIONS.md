@@ -148,6 +148,10 @@ deposits, no driver tips, earns nothing, 90-day expiry, instant revoke.
 
 
 ### A29. ✅ Fabrizio's #13/#14 end-of-day report overhaul — COMPLETE (2026-07-31, 2:43 AM)
+**REPLY POSTED 2026-08-01 ~2:45 AM** after a 10-agent adversarial verify pass (9 CONFIRMED, 1 PARTIAL
+→ fixed pre-post: export now clamps ?date= to maxSelectableDayKey like the page, commit dcdf163d;
+reply wording tightened: #10 = preset reasons only, zero-activity nights send nothing). Bilingual
+IT+EN comment on cms0gyexp, status IN_TESTING, Fabrizio notified in-app.
 **All code merged + preflight green (exit 0).** Built from his two comments on report cms0gyexp.
 What shipped: business-day close-to-close windows (reports email ~5 min after closing, after-close
 activity → next day); rejected/cancelled reservations excluded; refunds visible + netted from Collected
