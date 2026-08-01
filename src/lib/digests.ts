@@ -24,6 +24,10 @@ import prisma from "@/lib/db";
 import type { DigestStats } from "@/lib/email";
 import { parseLocalDateTimeInTz, dateKeyInTimezone, rowIntervals } from "@/lib/restaurant-hours";
 import { isOnlineCapturedPayment } from "@/lib/payment-classify";
+import { holidayEffectForDay } from "@/lib/holiday-rules";
+
+/** Minimal RestaurantHoliday shape holidayEffectForDay needs. */
+export type HolidayRowLike = { date: Date | string; endDate?: Date | string | null; name?: string | null; message?: string | null; rules?: string | null };
 
 // ── Local-date key math (DST-safe) ──────────────────────────────────────────
 // Windows are computed in the RESTAURANT's local timezone, then projected to
@@ -100,9 +104,39 @@ function parseHHMM(t: string | null | undefined): { h: number; m: number } | nul
  * into gap-free windows. Exported for the closing-time digest sweep, which
  * fires the emailed report a few minutes after this instant.
  */
-export function operationalDayEnd(rows: DigestHoursRow[], dayKey: string, tz: string): Date {
+export function operationalDayEnd(
+  rows: DigestHoursRow[],
+  dayKey: string,
+  tz: string,
+  /** Special days. Without these the close is resolved from the WEEKLY row
+   *  alone, so a store open 12:00-18:00 on a holiday still reported at its
+   *  normal 23:00 close — violating the stated rule ("a few minutes after the
+   *  evening closing time") on every special day. Optional so existing callers
+   *  are byte-for-byte unchanged. Luigi 2026-07-31, cms0gyexp #13 re-check. */
+  holidays?: HolidayRowLike[] | null,
+): Date {
   const nextKey = addDaysToKey(dayKey, 1);
   const midnight = parseLocalDateTimeInTz(nextKey, 0, 0, tz);
+
+  // A special day overrides the weekly row: a full closure ends at midnight,
+  // and custom hours end at THEIR last interval. closed_windows keeps the
+  // weekly close (the windows carve out time inside the day, they do not move
+  // the end of it).
+  if (holidays && holidays.length > 0) {
+    const eff = holidayEffectForDay(holidays as any, dayKey, null);
+    if (eff?.kind === "closed") return midnight;
+    if (eff?.kind === "custom_hours" && Array.isArray(eff.intervals) && eff.intervals.length > 0) {
+      let hEnd: Date | null = null;
+      for (const iv of eff.intervals) {
+        const c = parseHHMM((iv as any).close);
+        if (!c) continue;
+        const cand = parseLocalDateTimeInTz(dayKey, c.h, c.m, tz);
+        if (!hEnd || cand.getTime() > hEnd.getTime()) hEnd = cand;
+      }
+      if (hEnd) return hEnd;
+    }
+  }
+
   const ivs = rowIntervals(pickHoursRow(rows, dowOfKey(dayKey)));
   let end: Date | null = null;
   for (const iv of ivs) {
@@ -121,13 +155,13 @@ export function operationalDayEnd(rows: DigestHoursRow[], dayKey: string, tz: st
  * day when hours are absent or the chain degenerates (e.g. a >24h overnight
  * row) — the safe shape that can never lose an order between windows.
  */
-function operationalDayWindow(rows: DigestHoursRow[], dayKey: string, tz: string): [Date, Date] {
+function operationalDayWindow(rows: DigestHoursRow[], dayKey: string, tz: string, holidays?: HolidayRowLike[] | null): [Date, Date] {
   const calStart = parseLocalDateTimeInTz(dayKey, 0, 0, tz);
   const calEnd = parseLocalDateTimeInTz(addDaysToKey(dayKey, 1), 0, 0, tz);
   if (!rows.length) return [calStart, calEnd];
 
-  const start = operationalDayEnd(rows, addDaysToKey(dayKey, -1), tz);
-  const end = operationalDayEnd(rows, dayKey, tz);
+  const start = operationalDayEnd(rows, addDaysToKey(dayKey, -1), tz, holidays);
+  const end = operationalDayEnd(rows, dayKey, tz, holidays);
   if (start.getTime() >= end.getTime()) return [calStart, calEnd];
   return [start, end];
 }
@@ -137,9 +171,9 @@ function operationalDayWindow(rows: DigestHoursRow[], dayKey: string, tz: string
  *  tonight's close and midnight still maps to TODAY — the live EOD view keeps
  *  showing the day that just ended (frozen at close) instead of flipping to an
  *  empty tomorrow while staff reconcile the till. */
-function operationalDayKeyOf(rows: DigestHoursRow[], now: Date, tz: string): string {
+function operationalDayKeyOf(rows: DigestHoursRow[], now: Date, tz: string, holidays?: HolidayRowLike[] | null): string {
   const todayKey = dateKeyInTimezone(now, tz);
-  const [start] = operationalDayWindow(rows, todayKey, tz);
+  const [start] = operationalDayWindow(rows, todayKey, tz, holidays);
   return now.getTime() < start.getTime() ? addDaysToKey(todayKey, -1) : todayKey;
 }
 
@@ -154,7 +188,7 @@ function pct(current: number, prior: number): number {
  *  orders AND reservations are counted separately (info lines, Fabrizio
  *  cms0gyexp #14), and refunds are netted out of "collected". */
 async function aggregate(restaurantId: string, start: Date, end: Date) {
-  const [orders, reservationsCount, cancelledReservations, cancelledOrders, missedOrders] =
+  const [orders, reservationsCount, cancelledReservations, cancelledOrders, missedOrders, killedRefunds] =
     await Promise.all([
       prisma.order.findMany({
         where: {
@@ -222,6 +256,24 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
           orderNumber: { not: { startsWith: "TEST-" } },
         },
       }),
+      // REFUNDS ON KILLED ORDERS. Cancelling an order that was already accepted
+      // and charged issues a REAL refund and stamps refundedAmount — but the
+      // order is now `cancelled`, so the main query above (which excludes
+      // cancelled/rejected) never sees it and the refund showed as ZERO in the
+      // very field Fabrizio asked for. These are added to the DISPLAY totals
+      // only: a cancelled order's total never entered `sales`, so netting its
+      // refund out of `collected` would subtract money that was never counted.
+      // Luigi 2026-07-31, from the cms0gyexp #14 re-check.
+      prisma.order.findMany({
+        where: {
+          restaurantId,
+          createdAt: { gte: start, lt: end },
+          status: { in: ["rejected", "cancelled"] },
+          refundedAmount: { gt: 0 },
+          orderNumber: { not: { startsWith: "TEST-" } },
+        },
+        select: { total: true, creditApplied: true, refundedAmount: true },
+      }),
     ]);
 
   let sales = 0;
@@ -240,7 +292,12 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
   let otherFees = 0;
   let storeCreditRedeemed = 0;
   let discounts = 0;
-  let refundedOrders = 0, refundsAmount = 0;
+  // refundsAmount = every refund the owner issued in this window (what Fabrizio
+  // asked to SEE). refundsNetted = only the part that must come off `collected`,
+  // i.e. refunds on orders whose totals are actually inside `sales`. A cancelled
+  // order's total never entered sales, so netting its refund would subtract
+  // money that was never added. Luigi 2026-07-31.
+  let refundedOrders = 0, refundsAmount = 0, refundsNetted = 0;
 
   for (const o of orders) {
     sales += o.total;
@@ -258,7 +315,11 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     // Refunds only ever move card/PayPal money (writers cap refundedAmount at
     // total − creditApplied; credit goes back to the wallet via the ledger).
     const refunded = Math.min(Math.max(0, (o as any).refundedAmount ?? 0), chargedBase);
-    if (refunded > 0) { refundedOrders++; refundsAmount += refunded; }
+    // Netted out of `collected` below, because this order's total IS part of
+    // `sales`. Refunds on CANCELLED orders are added to the display totals
+    // separately (see killedRefunds) but must NOT be netted, since a cancelled
+    // order's total never entered `sales` in the first place.
+    if (refunded > 0) { refundedOrders++; refundsAmount += refunded; refundsNetted += refunded; }
     const collectedAmt = Math.max(0, chargedBase - refunded);
     discounts += ((o as any).couponDiscount ?? 0) + ((o as any).promoDiscount ?? 0);
 
@@ -290,6 +351,15 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     } else { offlinePayments++; offlinePaymentsAmount += collectedAmt; }
   }
 
+  // Refunds issued by CANCELLING an already-charged order. Real money left the
+  // restaurant, so it belongs in the refunds figures the owner reads — but not
+  // in the netting, because these orders' totals were never in `sales`.
+  for (const k of killedRefunds) {
+    const chargedBase = Math.max(0, k.total - Math.max(0, (k as any).creditApplied ?? 0));
+    const refunded = Math.min(Math.max(0, (k as any).refundedAmount ?? 0), chargedBase);
+    if (refunded > 0) { refundedOrders++; refundsAmount += refunded; }
+  }
+
   return {
     sales,
     orders: orders.length,
@@ -313,7 +383,7 @@ async function aggregate(restaurantId: string, start: Date, end: Date) {
     cancelledOrders, cancelledReservations, missedOrders,
     // Real cash/card kept = gross revenue − store credit redeemed − refunds
     // issued back to customers.
-    collected: Math.max(0, sales - storeCreditRedeemed - refundsAmount),
+    collected: Math.max(0, sales - storeCreditRedeemed - refundsNetted),
     discounts,
     total: sales,
   };
@@ -391,6 +461,11 @@ async function reportContext(restaurantId: string) {
       openingHours: {
         select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true, service: true, intervals: true },
       },
+      // Special days. Without these the business day always ended at the WEEKLY
+      // close, so a holiday with custom hours reported hours late. Bounded —
+      // only days near the report window can matter, but the table is tiny per
+      // restaurant so the whole set is cheaper than a range predicate.
+      holidays: { select: { date: true, endDate: true, name: true, message: true, rules: true }, take: 400 },
     },
   });
   if (!restaurant) return null;
@@ -398,6 +473,7 @@ async function reportContext(restaurantId: string) {
     name: restaurant.name,
     tz: restaurant.timezone ?? "UTC",
     rows: (restaurant.openingHours ?? []) as DigestHoursRow[],
+    holidays: ((restaurant as any).holidays ?? []) as HolidayRowLike[],
   };
 }
 
@@ -408,12 +484,14 @@ async function buildOperationalReport(
   name: string,
   tz: string,
   rows: DigestHoursRow[],
+  /** Special days — so a holiday's custom close defines the business day. */
+  holidays: HolidayRowLike[] | null | undefined,
   dayKey: string,
   now: Date,
   isLive: boolean,
 ): Promise<DigestStats> {
-  const [start, end] = operationalDayWindow(rows, dayKey, tz);
-  const [prevStart, prevEndFull] = operationalDayWindow(rows, addDaysToKey(dayKey, -1), tz);
+  const [start, end] = operationalDayWindow(rows, dayKey, tz, holidays);
+  const [prevStart, prevEndFull] = operationalDayWindow(rows, addDaysToKey(dayKey, -1), tz, holidays);
   const prevEnd = isLive
     ? new Date(Math.min(prevEndFull.getTime(), prevStart.getTime() + Math.max(0, now.getTime() - start.getTime())))
     : prevEndFull;
@@ -432,15 +510,15 @@ export async function buildDailyDigest(restaurantId: string, now = new Date()): 
   const ctx = await reportContext(restaurantId);
   if (!ctx) return null;
   const yesterdayKey = addDaysToKey(dateKeyInTimezone(now, ctx.tz), -1);
-  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, yesterdayKey, now, false);
+  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, ctx.holidays, yesterdayKey, now, false);
 }
 
 /** DigestStats for TODAY (the operational day in progress) — live EOD snapshot. */
 export async function buildTodaySnapshot(restaurantId: string, now = new Date()): Promise<DigestStats | null> {
   const ctx = await reportContext(restaurantId);
   if (!ctx) return null;
-  const dayKey = operationalDayKeyOf(ctx.rows, now, ctx.tz);
-  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, dayKey, now, true);
+  const dayKey = operationalDayKeyOf(ctx.rows, now, ctx.tz, ctx.holidays);
+  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, ctx.holidays, dayKey, now, true);
 }
 
 /** DigestStats for an arbitrary operational `dayKey` (YYYY-MM-DD) — powers the
@@ -448,8 +526,8 @@ export async function buildTodaySnapshot(restaurantId: string, now = new Date())
 export async function buildDayReport(restaurantId: string, dayKey: string, now = new Date()): Promise<DigestStats | null> {
   const ctx = await reportContext(restaurantId);
   if (!ctx) return null;
-  const todayKey = operationalDayKeyOf(ctx.rows, now, ctx.tz);
-  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, dayKey, now, dayKey === todayKey);
+  const todayKey = operationalDayKeyOf(ctx.rows, now, ctx.tz, ctx.holidays);
+  return buildOperationalReport(restaurantId, ctx.name, ctx.tz, ctx.rows, ctx.holidays, dayKey, now, dayKey === todayKey);
 }
 
 /** The current operational-day key (YYYY-MM-DD) for a restaurant — for the API
@@ -457,7 +535,7 @@ export async function buildDayReport(restaurantId: string, dayKey: string, now =
 export async function currentOperationalDayKey(restaurantId: string, now = new Date()): Promise<string | null> {
   const ctx = await reportContext(restaurantId);
   if (!ctx) return null;
-  return operationalDayKeyOf(ctx.rows, now, ctx.tz);
+  return operationalDayKeyOf(ctx.rows, now, ctx.tz, ctx.holidays);
 }
 
 /** Build the DigestStats for the previous calendar month. */

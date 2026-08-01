@@ -31,6 +31,7 @@ import {
   buildTodaySnapshot,
   operationalDayEnd,
   type DigestHoursRow,
+  type HolidayRowLike,
 } from "@/lib/digests";
 import {
   sendDailyDigestEmail,
@@ -83,10 +84,14 @@ function addDaysToKey(key: string, delta: number): string {
  * past midnight sends 00:03 (yesterdayKey); a closed day ends at midnight and
  * sends 00:05 (yesterdayKey) — zero-activity days are skipped by the caller.
  */
-function dayThatJustEnded(rows: DigestHoursRow[], tz: string, now: Date): string | null {
+function dayThatJustEnded(rows: DigestHoursRow[], tz: string, now: Date, holidays?: HolidayRowLike[] | null): string | null {
   const todayKey = dateKeyInTimezone(now, tz);
   for (const key of [todayKey, addDaysToKey(todayKey, -1)]) {
-    const end = operationalDayEnd(rows, key, tz);
+    // MUST pass holidays: the report window resolves the close the same way, so
+    // omitting them here would fire the send at the weekly close while the
+    // window ended at the holiday close — the two disagreeing is precisely the
+    // class of bug that produced Fabrizio's 10:01 AM report.
+    const end = operationalDayEnd(rows, key, tz, holidays);
     if (inSendWindow((now.getTime() - end.getTime()) / 60_000)) return key;
   }
   return null;
@@ -111,6 +116,8 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
       openingHours: {
         select: { dayOfWeek: true, isOpen: true, openTime: true, closeTime: true, closesNextDay: true, service: true, intervals: true },
       },
+      // Special days override the weekly close — see dayThatJustEnded.
+      holidays: { select: { date: true, endDate: true, name: true, message: true, rules: true }, take: 400 },
       notificationRecipients: {
         where: { isActive: true },
         select: { email: true, emailLanguage: true, endOfDayReport: true, endOfMonthReport: true },
@@ -138,7 +145,7 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
     let stats: DigestStats | null = null;
     if (dailyRecipients.length > 0) {
       if (mode === "closing") {
-        reportDayKey = dayThatJustEnded(r.openingHours, tz, now);
+        reportDayKey = dayThatJustEnded(r.openingHours, tz, now, (r as any).holidays);
         if (reportDayKey && reportDayKey !== lastSentKey) {
           try {
             // The day that ended is either today (normal close → full-day
