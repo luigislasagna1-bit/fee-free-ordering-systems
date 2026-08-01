@@ -1504,6 +1504,9 @@ export async function POST(req: NextRequest) {
     // True when the address geocoded but matched NO active zone (accepted only
     // because the restaurant opted into out-of-zone orders) → flag for kitchen.
     let outsideDeliveryZone = false;
+    // Neither inside a zone nor provably outside one — assigned in the delivery
+    // block below, declared here so the promo context can read it.
+    let deliveryZoneUnverified = false;
     // Captured here so it survives past the zone-resolution block and
     // can be stamped onto the Order for the Delivery Heatmap report.
     // We already pay the geocode cost once for zone resolution — reusing
@@ -1563,6 +1566,22 @@ export async function POST(req: NextRequest) {
           }
         }
       }
+      // ── THE THIRD STATE, made explicit ──────────────────────────────────
+      // Until 2026-07-31 a delivery order could end up neither inside a zone
+      // nor flagged outside one: the classification block above only runs
+      // `if (coords)`, so with no map pin AND a failed/absent geocode the order
+      // was silently "unknown". It looked identical to a normal order, and any
+      // zone-restricted promo refused it — which is how ORD-369250179 was
+      // charged $7.99 for a "free delivery over $30" the customer qualified for.
+      //
+      // The state still exists (blocking every delivery on a geocode outage
+      // would cost far more than it saves) but it is no longer silent: it is
+      // named, it is stamped on the order, the kitchen is told the area is
+      // unverified, and zone-restricted promos are HONOURED rather than refused.
+      // Luigi's call: our failure must not cost the customer their deal.
+      deliveryZoneUnverified =
+        zones.length > 0 && !resolvedZoneId && !outsideDeliveryZone;
+
       // Out-of-zone delivery guard (stabilization H3): the client refuses a
       // delivery to an address outside every zone when the restaurant hasn't
       // opted into out-of-zone orders, but the server never enforced it — a
@@ -1703,6 +1722,10 @@ export async function POST(req: NextRequest) {
       // for pickup/dine-in (the engine short-circuits zone-restricted
       // promos via the orderType check).
       deliveryZoneId: resolvedZoneId ?? undefined,
+      // Neither inside a zone nor provably outside one — see deliveryZoneUnverified
+      // above. Zone-restricted promos are honoured in this state so a geocode
+      // failure on OUR side never silently costs the customer their deal.
+      deliveryZoneUnverified,
       // Lets a free_delivery EXCLUSIVE win the slot at its real fee value
       // instead of $0 (audit B10). 0 for non-delivery orders.
       deliveryFee: type === "delivery" ? Math.max(0, zoneDeliveryFee) : 0,

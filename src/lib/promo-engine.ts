@@ -245,6 +245,14 @@ export type ApplyContext = {
    *  that resolved to a known zone). Used for the Delivery Area
    *  restriction. */
   deliveryZoneId?: string;
+  /** True when this delivery address could not be classified AT ALL — no map
+   *  pin AND the geocode failed or was unavailable — so we know neither that it
+   *  is inside a zone nor that it is outside every zone. Distinct from a
+   *  genuine out-of-zone address, which is still correctly refused. In this
+   *  state zone restrictions are SKIPPED, so our own geocoding failure can
+   *  never cost a customer an advertised deal. Luigi's call, 2026-07-31, after
+   *  order ORD-369250179 was charged $7.99 for exactly this. */
+  deliveryZoneUnverified?: boolean;
   /** The delivery fee this order would pay (delivery orders only; 0/undefined
    *  otherwise). free_delivery promos have no cart discount but are WORTH this
    *  fee — the engine scores them at it when picking the best EXCLUSIVE, so a
@@ -449,7 +457,21 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
     // for them. (Owners who want a delivery-only promo should ALSO
     // restrict orderType to "delivery".)
     if (ctx.orderType !== "delivery") return false;
-    if (!ctx.deliveryZoneId || !allowedZones.has(ctx.deliveryZoneId)) return false;
+    // OUR failure must not cost the customer an advertised deal. When the
+    // address could not be classified at all — no map pin and the geocode
+    // failed or was unavailable — we know neither that they're inside a zone
+    // nor that they're outside one. Charging the fee in that state is exactly
+    // how Luigi's customer lost a "free delivery over $30" they qualified for
+    // (order ORD-369250179, 2026-07-31): the promo was refused for a missing
+    // zone, silently, because a geocode returned nothing. So an UNVERIFIED
+    // address skips the zone restriction and keeps the deal. A genuine
+    // out-of-zone address is a different state (outsideDeliveryZone) and is
+    // still correctly refused below. Luigi's call, 2026-07-31.
+    if (ctx.deliveryZoneUnverified) {
+      // fall through — restriction not applied
+    } else if (!ctx.deliveryZoneId || !allowedZones.has(ctx.deliveryZoneId)) {
+      return false;
+    }
   }
 
   // ── Happy Hour + Expiration ────────────────────────────────────────
