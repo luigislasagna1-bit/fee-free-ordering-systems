@@ -204,7 +204,13 @@ export function Badge({
 export type EmailOrderItem = {
   name: string;
   quantity: number;
+  /** UNIT price. Do NOT render this beside the quantity — see lineTotal. */
   price: number;
+  /** What this line actually costs (unit x qty, modifiers included). The Price
+   *  column shows THIS, so the item lines reconcile to the Subtotal and match
+   *  the printed ticket. Optional for older callers, which fall back to
+   *  price x quantity. Luigi 2026-07-31. */
+  lineTotal?: number;
   /** Per-item refundable deposit (untaxed) — shown as a "+ $X refundable deposit"
    *  line under the item so the breakdown reconciles to the Total. Luigi 2026-07-09. */
   isRefundableDeposit?: boolean;
@@ -346,7 +352,7 @@ export function OrderItemsTable({
               )}
             </td>
             <td style={{ padding: "10px 0", color: COLORS.text, textAlign: "right", fontWeight: 600 }}>
-              {formatCurrency(item.price, currency)}
+              {formatCurrency(item.lineTotal ?? item.price * (item.quantity ?? 1), currency)}
             </td>
           </tr>
         ))}

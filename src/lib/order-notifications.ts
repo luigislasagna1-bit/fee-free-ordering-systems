@@ -71,6 +71,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
           name: true,
           quantity: true,
           price: true,
+          // LINE total (unit price x qty, modifiers included). Without it the
+          // email printed the UNIT price beside "3x", so the item lines never
+          // added up to the Subtotal and contradicted the printed ticket.
+          subtotal: true,
           variantName: true,
           notes: true,
           bundleItems: true,
@@ -151,6 +155,9 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       name: i.name,
       quantity: i.quantity,
       price: i.price,
+      // What this line actually costs. Falls back to unit x qty for any legacy
+      // row with no stored subtotal, which still beats showing the unit price.
+      lineTotal: typeof i.subtotal === "number" ? i.subtotal : (i.price ?? 0) * (i.quantity ?? 1),
       // Per-item refundable deposit (untaxed, added to the total on top).
       isRefundableDeposit: !!i.isRefundableDeposit && (i.depositAmount ?? 0) > 0,
       depositAmount: (i.depositAmount ?? 0) > 0 ? i.depositAmount : undefined,

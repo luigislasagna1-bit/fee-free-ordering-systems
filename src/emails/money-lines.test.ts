@@ -104,6 +104,76 @@ describe("customer order confirmation shows every money line", () => {
   });
 });
 
+describe("item lines reconcile to the subtotal", () => {
+  // A 3x line at $9.99 costs $29.97. Printing the UNIT price beside "3x" made
+  // the lines un-addable and contradicted the printed kitchen ticket, which has
+  // always shown the line total.
+  const THREE_OF = [
+    { name: "Chicken Wings (20)", quantity: 3, price: 9.99, lineTotal: 29.97, modifiers: [] },
+  ] as any;
+
+  it("customer email shows the LINE total, not the unit price", async () => {
+    const t = await getDict("en");
+    const html = await renderEmail(
+      OrderConfirmation({
+        t,
+        customerName: "Nada",
+        orderNumber: "ORD-6",
+        restaurantName: "Luigi's",
+        orderType: "pickup",
+        paidOnline: true,
+        estimatedMinutes: 20,
+        items: THREE_OF,
+        trackingUrl: "https://example.com/t",
+        // Deliberately DIFFERENT from the line total, so 29.97 can only come
+        // from the item row itself — otherwise this test passes on the bug.
+        subtotal: 31.11,
+        total: 44.22,
+      } as any),
+    );
+    expect(strip(html), "the line total is missing — the lines cannot add up").toContain("29.97");
+  });
+
+  it("staff email shows the LINE total too, so it matches the printed ticket", async () => {
+    const t = await getDict("en");
+    const html = await renderEmail(
+      KitchenNotification({
+        t,
+        restaurantName: "Luigi's",
+        orderNumber: "ORD-7",
+        customerName: "Nada",
+        orderType: "pickup",
+        paidOnline: true,
+        items: THREE_OF,
+        dashboardUrl: "https://example.com/admin",
+        subtotal: 31.11,
+        total: 44.22,
+      } as any),
+    );
+    expect(strip(html)).toContain("29.97");
+  });
+
+  it("falls back to unit x quantity when a legacy row has no stored line total", async () => {
+    const t = await getDict("en");
+    const html = await renderEmail(
+      KitchenNotification({
+        t,
+        restaurantName: "Luigi's",
+        orderNumber: "ORD-8",
+        customerName: "Nada",
+        orderType: "pickup",
+        paidOnline: true,
+        // No lineTotal — 2 x 7.25 must still render as 14.50, not 7.25.
+        items: [{ name: "Garlic Bread", quantity: 2, price: 7.25, modifiers: [] }] as any,
+        dashboardUrl: "https://example.com/admin",
+        subtotal: 16.33,
+        total: 21.44,
+      } as any),
+    );
+    expect(strip(html)).toContain("14.50");
+  });
+});
+
 describe("staff new-order email shows every money line", () => {
   it("renders subtotal, delivery, service fee, tax, tip, discount and total", async () => {
     const t = await getDict("en");
