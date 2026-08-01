@@ -55,6 +55,12 @@ async function runCreditGrant(s: DueSchedule, periodKey: string): Promise<{ gran
     : [{ customerId: s.customerId ?? null, email: s.email ?? null, name: null }];
 
   let granted = 0, skipped = 0;
+  // Everyone credited must be TOLD, and told how to use it. Until 2026-07-31
+  // this path granted money in silence: for an email-only recipient it even
+  // created a brand-new Customer row purely to hold the credit, so a person who
+  // had never ordered was given a balance nobody ever mentioned to them. Luigi's
+  // rule — anyone we send credit to gets clear instructions, 100%.
+  const toNotify: Array<{ email: string; name: string; customerId: string }> = [];
   // Synthetic ledger key — same across recipients (accountId differs), so the
   // ledger's @@unique([accountId, orderId, reason]) makes each grant exactly-once
   // per period. Luigi 2026-06-27.
@@ -83,13 +89,87 @@ async function runCreditGrant(s: DueSchedule, periodKey: string): Promise<{ gran
       note: s.note ?? null,
       orderId: syntheticOrderId,
     });
-    if (res.ok) granted++;
+    if (res.ok) {
+      granted++;
+      // Queue rather than send inside the loop: one mail hiccup must not stall
+      // the rest of the batch, and the ledger write is already done.
+      const notifyEmail = (m.email ?? "").trim().toLowerCase();
+      if (notifyEmail) toNotify.push({ email: notifyEmail, name: m.name ?? "", customerId });
+    }
 
     // Best-effort audit row (the ledger is the real guard). P2002 = already logged.
     await prisma.vipScheduleGrant.create({
       data: { scheduleId: s.id, periodKey, recipientKey: rkey, customerId, email: m.email?.toLowerCase() ?? null, amount },
     }).catch(() => {});
   }
+  // ── Tell them ────────────────────────────────────────────────────────────
+  // Which email depends on whether they can actually reach the money: someone
+  // with no account cannot sign in, so "sign in to your account" would be a
+  // dead end — they get the invite that walks them through creating one. Same
+  // branch the two admin gift routes use, so all three paths agree.
+  if (toNotify.length > 0) {
+    try {
+      const r = await prisma.restaurant.findUnique({
+        where: { id: s.restaurantId },
+        select: {
+          name: true, email: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true,
+          defaultLanguage: true, currency: true, rewardLabelSingular: true, rewardLabelPlural: true,
+        },
+      });
+      if (r) {
+        const { sendRewardGiftEmail, sendRewardGiftInviteEmail } = await import("@/lib/email");
+        const { isAccountCustomer } = await import("@/lib/reward-gifts");
+        const { getBalance } = await import("@/lib/reward-ledger");
+        const { formatCurrency } = await import("@/lib/utils");
+        const { restaurantOrderUrl } = await import("@/lib/restaurant-url");
+
+        const rewardLabel = r.rewardLabelPlural?.trim() || r.rewardLabelSingular?.trim() || "Reward Dollars";
+        const amountLabel = formatCurrency(amount, r.currency);
+        const locale = r.defaultLanguage || "en";
+        const orderUrl = restaurantOrderUrl(r as any, "");
+        // A branded host's ROOT serves the marketing site, so the invite must
+        // link at the signup form explicitly.
+        const signupUrl = restaurantOrderUrl(r as any, "/account/signup");
+
+        const rows = await prisma.customer.findMany({
+          where: { id: { in: toNotify.map((x) => x.customerId) } },
+          select: { id: true, signedUpAt: true, passwordHash: true, customerAccountId: true },
+        });
+        const byId = new Map(rows.map((x) => [x.id, x]));
+
+        for (const person of toNotify) {
+          const row = byId.get(person.customerId);
+          const hasAccount = !!row && isAccountCustomer(row as any);
+          const common = {
+            to: person.email,
+            customerName: person.name || "",
+            restaurantName: r.name,
+            amountLabel,
+            rewardLabel,
+            note: s.note ?? null,
+            restaurantEmail: r.email,
+            locale,
+          };
+          if (hasAccount) {
+            const balance = await getBalance({ restaurantId: s.restaurantId, customerId: person.customerId });
+            await sendRewardGiftEmail({
+              ...common,
+              balanceLabel: formatCurrency(balance, r.currency),
+              orderUrl,
+            }).catch((e) => console.error("[vip-schedule credit email]", e instanceof Error ? e.message : e));
+          } else {
+            await sendRewardGiftInviteEmail({ ...common, orderUrl: signupUrl })
+              .catch((e) => console.error("[vip-schedule credit invite]", e instanceof Error ? e.message : e));
+          }
+        }
+      }
+    } catch (e) {
+      // Never fail the grant because the notification failed — the money is
+      // already banked and the owner can resend from the admin.
+      console.error("[vip-schedule credit notify]", e instanceof Error ? e.message : e);
+    }
+  }
+
   return { granted, skipped };
 }
 
