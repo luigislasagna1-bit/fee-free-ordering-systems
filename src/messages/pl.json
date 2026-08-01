@@ -580,7 +580,10 @@
     "couponApply": "Zastosuj",
     "scheduleModeRanges": "Przedziały czasowe",
     "prepaidDeliveryNote": "Dostawa jest opłacana online — kurier nie może przyjąć płatności pod drzwiami.",
-    "prepaidDeliveryUnavailable": "Płatność online jest obecnie niedostępna, więc nie można złożyć zamówienia z dostawą. Wybierz odbiór."
+    "prepaidDeliveryUnavailable": "Płatność online jest obecnie niedostępna, więc nie można złożyć zamówienia z dostawą. Wybierz odbiór.",
+    "addressNotLocated": "Wybierz swój adres z podpowiedzi, abyśmy mogli sprawdzić dostawę.",
+    "pickAddressFromList": "Wybierz swój adres z listy powyżej, abyśmy mogli potwierdzić obszar dostawy i jej koszt.",
+    "cantFindAddress": "Nie znajdujesz swojego adresu? Zaznacz miejsce na mapie"
   },
   "reservation": {
     "title": "Zarezerwuj stolik",

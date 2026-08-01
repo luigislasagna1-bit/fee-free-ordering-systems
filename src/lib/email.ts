@@ -335,6 +335,10 @@ interface OrderEmailParams {
   subtotal?: number;
   taxAmount?: number;
   deliveryFee?: number;
+  /** Fee waived by a free-delivery promo. A waived fee is stored as 0 and a $0
+   *  row is hidden, so without this the promo left no trace on the staff email —
+   *  it read as though delivery had been forgotten. Luigi 2026-07-31. */
+  savedDeliveryFee?: number;
   tip?: number;
   /** Sum of per-item refundable deposits (untaxed; already inside total). */
   depositTotal?: number;
@@ -627,6 +631,8 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       subtotal: params.subtotal ?? params.total,
       taxAmount: params.taxAmount,
       deliveryFee: params.deliveryFee,
+      // NOT passed: OrderConfirmation derives the waived fee itself from
+      // appliedPromos — a second source could let the two disagree.
       tip: params.tip,
       depositTotal: params.depositTotal,
       discount: params.discount,
@@ -696,6 +702,10 @@ export async function sendNewOrderNotificationEmail(params: {
   subtotal?: number;
   taxAmount?: number;
   deliveryFee?: number;
+  /** Fee waived by a free-delivery promo. A waived fee is stored as 0 and a $0
+   *  row is hidden, so without this the promo left no trace on the staff email —
+   *  it read as though delivery had been forgotten. Luigi 2026-07-31. */
+  savedDeliveryFee?: number;
   tip?: number;
   /** Sum of per-item refundable deposits (untaxed; already inside total). */
   depositTotal?: number;
@@ -743,6 +753,7 @@ export async function sendNewOrderNotificationEmail(params: {
       subtotal: params.subtotal,
       taxAmount: params.taxAmount,
       deliveryFee: params.deliveryFee,
+      savedDeliveryFee: params.savedDeliveryFee,
       tip: params.tip,
       depositTotal: params.depositTotal,
       discount: params.discount,

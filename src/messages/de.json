@@ -580,7 +580,10 @@
     "couponApply": "Anwenden",
     "scheduleModeRanges": "Zeitfenster",
     "prepaidDeliveryNote": "Lieferungen werden online bezahlt — der Fahrer kann an der Tür kein Geld annehmen.",
-    "prepaidDeliveryUnavailable": "Online-Zahlung ist derzeit nicht verfügbar, daher sind Lieferbestellungen nicht möglich. Bitte Abholung wählen."
+    "prepaidDeliveryUnavailable": "Online-Zahlung ist derzeit nicht verfügbar, daher sind Lieferbestellungen nicht möglich. Bitte Abholung wählen.",
+    "addressNotLocated": "Wählen Sie Ihre Adresse aus den Vorschlägen, damit wir die Lieferung prüfen können.",
+    "pickAddressFromList": "Wählen Sie Ihre Adresse aus der Liste oben, damit wir Ihr Liefergebiet und den Preis bestätigen können.",
+    "cantFindAddress": "Sie finden Ihre Adresse nicht? Setzen Sie stattdessen eine Stecknadel auf der Karte"
   },
   "reservation": {
     "title": "Tisch reservieren",

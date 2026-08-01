@@ -576,6 +576,9 @@
     "scheduleModeRanges": "Laika diapazoni",
     "prepaidDeliveryNote": "Piegāde tiek apmaksāta tiešsaistē — kurjers nevar pieņemt maksājumu pie durvīm.",
     "prepaidDeliveryUnavailable": "Tiešsaistes maksājums šobrīd nav pieejams, tāpēc piegādes pasūtījumus nevar veikt. Izvēlieties saņemšanu uz vietas.",
+    "addressNotLocated": "Izvēlieties savu adresi no ieteikumiem, lai varam pārbaudīt piegādi pie jums.",
+    "pickAddressFromList": "Izvēlieties savu adresi no augstāk redzamā saraksta, lai varam apstiprināt piegādes zonu un cenu.",
+    "cantFindAddress": "Neatrodat savu adresi? Atzīmējiet vietu kartē",
     "walletIdentity": {
       "title": "Šis pasūtījums tiks piesaistīts jūsu kontam",
       "body": "Jūs esat pieteicies kā {account}, tāpēc šis pasūtījums — un visi {label}, ko tam iztērēsiet vai par to nopelnīsiet — pieder šim kontam. Apstiprinājumu nosūtīsim uz {typed}.",

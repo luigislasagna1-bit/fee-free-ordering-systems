@@ -580,7 +580,10 @@
       "title": "Esta encomenda fica na sua conta",
       "body": "Tem sessão iniciada como {account}, por isso esta encomenda — e tudo o que gastar ou ganhar em {label} com ela — pertence a essa conta. A confirmação será enviada para {typed}.",
       "useAccountEmail": "Enviar antes para o meu próprio email"
-    }
+    },
+    "addressNotLocated": "Escolha o seu endereço entre as sugestões para podermos verificar a entrega.",
+    "pickAddressFromList": "Escolha o seu endereço na lista acima para podermos confirmar a sua área de entrega e o preço.",
+    "cantFindAddress": "Não encontra o seu endereço? Coloque antes um pino no mapa"
   },
   "reservation": {
     "title": "Reservar mesa",

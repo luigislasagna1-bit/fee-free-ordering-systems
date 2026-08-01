@@ -576,6 +576,9 @@
     "scheduleModeRanges": "Zaman aralıkları",
     "prepaidDeliveryNote": "Teslimat online ödenir — kurye kapıda ödeme alamaz.",
     "prepaidDeliveryUnavailable": "Online ödeme şu anda kullanılamıyor, bu yüzden teslimatlı sipariş verilemiyor. Lütfen gel-al'ı seçin.",
+    "addressNotLocated": "Size teslimatı kontrol edebilmemiz için adresinizi önerilerden seçin.",
+    "pickAddressFromList": "Teslimat bölgenizi ve ücreti onaylayabilmemiz için adresinizi yukarıdaki listeden seçin.",
+    "cantFindAddress": "Adresinizi bulamıyor musunuz? Bunun yerine haritaya iğne bırakın",
     "walletIdentity": {
       "title": "Bu sipariş hesabınıza işlenecek",
       "body": "{account} olarak giriş yaptınız; bu nedenle bu sipariş — ve bu siparişte harcadığınız ya da kazandığınız tüm {label} — o hesaba aittir. Onay e-postası {typed} adresine gönderilecek.",

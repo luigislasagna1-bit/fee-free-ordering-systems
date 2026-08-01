@@ -580,7 +580,10 @@
       "title": "Aquesta comanda va al teu compte",
       "body": "Has iniciat la sessió com a {account}, així que aquesta comanda —i tot el que hi gastis o hi guanyis en {label}— pertany a aquest compte. La confirmació s'enviarà a {typed}.",
       "useAccountEmail": "Envia-la al meu propi correu"
-    }
+    },
+    "addressNotLocated": "Trieu la vostra adreça entre els suggeriments perquè puguem comprovar el lliurament.",
+    "pickAddressFromList": "Trieu la vostra adreça de la llista de dalt perquè puguem confirmar la zona de lliurament i el preu.",
+    "cantFindAddress": "No trobeu la vostra adreça? Col·loqueu un marcador al mapa"
   },
   "reservation": {
     "title": "Reservar taula",

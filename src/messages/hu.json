@@ -580,7 +580,10 @@
     "couponApply": "Alkalmaz",
     "scheduleModeRanges": "Idősávok",
     "prepaidDeliveryNote": "A kiszállítást online kell fizetni — a futár nem tud fizetést átvenni az ajtóban.",
-    "prepaidDeliveryUnavailable": "Az online fizetés jelenleg nem érhető el, így kiszállításos rendelés nem adható le. Válassza az átvételt."
+    "prepaidDeliveryUnavailable": "Az online fizetés jelenleg nem érhető el, így kiszállításos rendelés nem adható le. Válassza az átvételt.",
+    "addressNotLocated": "Válassza ki a címét a javaslatok közül, hogy ellenőrizhessük a kiszállítást.",
+    "pickAddressFromList": "Válassza ki a címét a fenti listából, hogy megerősíthessük a kiszállítási területet és a díjat.",
+    "cantFindAddress": "Nem találja a címét? Helyezzen el egy jelölőt a térképen"
   },
   "reservation": {
     "title": "Asztal foglalása",

@@ -52,6 +52,11 @@ export type KitchenNotificationProps = {
   taxAmount?: number;
   taxLabel?: string;
   deliveryFee?: number;
+  /** The fee a free-delivery promo waived. A waived fee is stored as 0 and a $0
+   *  row is hidden, so without this the promo left no trace on the staff email —
+   *  it read as though delivery had been forgotten. When set, the row renders as
+   *  the original struck through plus FREE. Luigi 2026-07-31. */
+  savedDeliveryFee?: number;
   tip?: number;
   depositTotal?: number;
   discount?: number;
@@ -86,7 +91,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
   const {
     t, restaurantName, orderNumber, customerName, customerPhone, customerEmail,
     orderType, estimatedMinutes, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
-    taxLabel, deliveryFee, tip, depositTotal, discount, serviceFees, total, deliveryAddress,
+    taxLabel, deliveryFee, savedDeliveryFee, tip, depositTotal, discount, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
     creditApplied, rewardLabel, showAcceptHint = true,
   } = props;
@@ -185,6 +190,11 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
               taxAmount={taxAmount}
               taxLabel={taxLabel ?? t("receipt.customer.tax")}
               deliveryFee={deliveryFee}
+              savedDeliveryFee={savedDeliveryFee}
+              // Reuses the customer email's existing FREE label, already
+              // translated in all 38 locales — a new key here would have shipped
+              // a raw key path to every non-English recipient.
+              freeLabel={t("email.orderConfirmed.promoFreeLabel")}
               tip={tip}
               depositTotal={depositTotal}
               discount={discount}

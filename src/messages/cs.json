@@ -580,7 +580,10 @@
     "couponApply": "Použít",
     "scheduleModeRanges": "Časová rozmezí",
     "prepaidDeliveryNote": "Rozvoz se platí online — kurýr nemůže přijmout platbu u dveří.",
-    "prepaidDeliveryUnavailable": "Online platba není momentálně dostupná, objednávky s rozvozem proto nelze zadat. Zvolte vyzvednutí."
+    "prepaidDeliveryUnavailable": "Online platba není momentálně dostupná, objednávky s rozvozem proto nelze zadat. Zvolte vyzvednutí.",
+    "addressNotLocated": "Vyberte adresu z návrhů, abychom mohli ověřit doručení k vám.",
+    "pickAddressFromList": "Vyberte svou adresu ze seznamu výše, abychom mohli potvrdit oblast doručení a cenu.",
+    "cantFindAddress": "Nemůžete najít svou adresu? Označte místo na mapě"
   },
   "reservation": {
     "title": "Rezervovat stůl",

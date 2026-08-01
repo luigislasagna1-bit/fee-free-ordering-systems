@@ -580,7 +580,10 @@
     "couponApply": "Rakenda",
     "scheduleModeRanges": "Ajavahemikud",
     "prepaidDeliveryNote": "Kohaletoimetamine makstakse veebis — kuller ei saa ukse peal makset vastu võtta.",
-    "prepaidDeliveryUnavailable": "Veebimakse pole praegu saadaval, seega kohaletoimetamisega tellimusi esitada ei saa. Valige järeletulemine."
+    "prepaidDeliveryUnavailable": "Veebimakse pole praegu saadaval, seega kohaletoimetamisega tellimusi esitada ei saa. Valige järeletulemine.",
+    "addressNotLocated": "Valige aadress soovituste hulgast, et saaksime kohaletoimetamist kontrollida.",
+    "pickAddressFromList": "Valige aadress ülalolevast loendist, et saaksime kinnitada kohaletoimetamise piirkonna ja hinna.",
+    "cantFindAddress": "Ei leia oma aadressi? Märkige asukoht kaardil"
   },
   "reservation": {
     "title": "Broneeri laud",

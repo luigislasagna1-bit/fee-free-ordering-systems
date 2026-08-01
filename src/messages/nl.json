@@ -580,7 +580,10 @@
     "couponApply": "Toepassen",
     "scheduleModeRanges": "Tijdvakken",
     "prepaidDeliveryNote": "Bezorging wordt online betaald — de bezorger kan aan de deur geen betaling aannemen.",
-    "prepaidDeliveryUnavailable": "Online betalen is momenteel niet beschikbaar, dus bezorgbestellingen zijn niet mogelijk. Kies afhalen."
+    "prepaidDeliveryUnavailable": "Online betalen is momenteel niet beschikbaar, dus bezorgbestellingen zijn niet mogelijk. Kies afhalen.",
+    "addressNotLocated": "Kies uw adres uit de suggesties, dan controleren we de bezorging bij u.",
+    "pickAddressFromList": "Kies uw adres uit de lijst hierboven, dan bevestigen we uw bezorggebied en de prijs.",
+    "cantFindAddress": "Kunt u uw adres niet vinden? Zet zelf een speld op de kaart"
   },
   "reservation": {
     "title": "Tafel reserveren",

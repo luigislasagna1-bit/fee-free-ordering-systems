@@ -580,7 +580,10 @@
       "title": "Cette commande est liée à votre compte",
       "body": "Vous êtes connecté en tant que {account} : cette commande — ainsi que ce que vous dépensez ou gagnez en {label} dessus — appartient à ce compte. La confirmation sera envoyée à {typed}.",
       "useAccountEmail": "L'envoyer plutôt à ma propre adresse e-mail"
-    }
+    },
+    "addressNotLocated": "Choisissez votre adresse parmi les suggestions pour que nous vérifiions la livraison.",
+    "pickAddressFromList": "Choisissez votre adresse dans la liste ci-dessus pour que nous confirmions votre zone de livraison et le prix.",
+    "cantFindAddress": "Vous ne trouvez pas votre adresse ? Placez plutôt un repère sur la carte"
   },
   "reservation": {
     "title": "Réserver une table",

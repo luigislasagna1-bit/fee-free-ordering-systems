@@ -580,7 +580,10 @@
     "couponApply": "Anvend",
     "scheduleModeRanges": "Tidsintervaller",
     "prepaidDeliveryNote": "Levering betales online — buddet kan ikke modtage betaling ved døren.",
-    "prepaidDeliveryUnavailable": "Onlinebetaling er ikke tilgængelig lige nu, så leveringsordrer kan ikke afgives. Vælg afhentning."
+    "prepaidDeliveryUnavailable": "Onlinebetaling er ikke tilgængelig lige nu, så leveringsordrer kan ikke afgives. Vælg afhentning.",
+    "addressNotLocated": "Vælg din adresse blandt forslagene, så vi kan tjekke leveringen til dig.",
+    "pickAddressFromList": "Vælg din adresse på listen ovenfor, så vi kan bekræfte dit leveringsområde og prisen.",
+    "cantFindAddress": "Kan du ikke finde din adresse? Sæt i stedet en nål på kortet"
   },
   "reservation": {
     "title": "Book et bord",

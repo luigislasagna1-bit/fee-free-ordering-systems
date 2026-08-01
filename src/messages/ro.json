@@ -580,7 +580,10 @@
     "couponApply": "Aplică",
     "scheduleModeRanges": "Intervale orare",
     "prepaidDeliveryNote": "Livrarea se plătește online — curierul nu poate încasa la ușă.",
-    "prepaidDeliveryUnavailable": "Plata online nu este disponibilă momentan, deci comenzile cu livrare nu pot fi plasate. Alegeți ridicarea."
+    "prepaidDeliveryUnavailable": "Plata online nu este disponibilă momentan, deci comenzile cu livrare nu pot fi plasate. Alegeți ridicarea.",
+    "addressNotLocated": "Alegeți adresa din sugestii, ca să putem verifica livrarea la dumneavoastră.",
+    "pickAddressFromList": "Alegeți adresa din lista de mai sus, ca să putem confirma zona de livrare și costul.",
+    "cantFindAddress": "Nu vă găsiți adresa? Puneți un pin pe hartă"
   },
   "reservation": {
     "title": "Rezervă o masă",

@@ -580,7 +580,10 @@
     "couponApply": "Använd",
     "scheduleModeRanges": "Tidsintervall",
     "prepaidDeliveryNote": "Leverans betalas online — budet kan inte ta betalt vid dörren.",
-    "prepaidDeliveryUnavailable": "Onlinebetalning är inte tillgänglig just nu, så leveransbeställningar kan inte läggas. Välj avhämtning."
+    "prepaidDeliveryUnavailable": "Onlinebetalning är inte tillgänglig just nu, så leveransbeställningar kan inte läggas. Välj avhämtning.",
+    "addressNotLocated": "Välj din adress bland förslagen så kan vi kontrollera leveransen till dig.",
+    "pickAddressFromList": "Välj din adress i listan ovan så kan vi bekräfta ditt leveransområde och priset.",
+    "cantFindAddress": "Hittar du inte din adress? Sätt en nål på kartan i stället"
   },
   "reservation": {
     "title": "Boka ett bord",

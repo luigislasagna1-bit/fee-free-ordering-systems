@@ -576,6 +576,9 @@
     "scheduleModeRanges": "Laiko intervalai",
     "prepaidDeliveryNote": "Pristatymas apmokamas internetu — kurjeris negali priimti mokėjimo prie durų.",
     "prepaidDeliveryUnavailable": "Mokėjimas internetu šiuo metu negalimas, todėl užsakymų su pristatymu pateikti negalima. Pasirinkite atsiėmimą.",
+    "addressNotLocated": "Pasirinkite savo adresą iš pasiūlymų, kad galėtume patikrinti pristatymą pas jus.",
+    "pickAddressFromList": "Pasirinkite savo adresą iš aukščiau esančio sąrašo, kad galėtume patvirtinti pristatymo zoną ir kainą.",
+    "cantFindAddress": "Nerandate savo adreso? Pažymėkite vietą žemėlapyje",
     "walletIdentity": {
       "title": "Šis užsakymas priskiriamas jūsų paskyrai",
       "body": "Esate prisijungę kaip {account}, todėl šis užsakymas — ir visi {label}, kuriuos jam išleisite ar už jį uždirbsite — priklauso tai paskyrai. Patvirtinimą išsiųsime adresu {typed}.",

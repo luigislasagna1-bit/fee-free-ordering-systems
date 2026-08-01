@@ -580,7 +580,10 @@
     "couponApply": "適用",
     "scheduleModeRanges": "時間帯",
     "prepaidDeliveryNote": "デリバリーはオンライン決済です — ドライバーは玄関先で支払いを受け取れません。",
-    "prepaidDeliveryUnavailable": "現在オンライン決済がご利用いただけないため、デリバリー注文はできません。テイクアウトをお選びください。"
+    "prepaidDeliveryUnavailable": "現在オンライン決済がご利用いただけないため、デリバリー注文はできません。テイクアウトをお選びください。",
+    "addressNotLocated": "配達できるか確認しますので、候補から住所を選んでください。",
+    "pickAddressFromList": "配達エリアと料金を確認しますので、上のリストから住所を選んでください。",
+    "cantFindAddress": "住所が見つかりませんか？地図にピンを置いてください"
   },
   "reservation": {
     "title": "テーブルを予約",

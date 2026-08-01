@@ -324,6 +324,13 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       subtotal: order.subtotal,
       taxAmount: order.taxAmount,
       deliveryFee: order.deliveryFee,
+      // A waived delivery fee is stored as deliveryFee = 0, and a $0 row is
+      // hidden — so a free-delivery promo left NO trace on the staff email at
+      // all. It read as though delivery had simply been forgotten (Luigi, order
+      // ORD-742085738). Pass the saved amount so the row renders as
+      // "Delivery fee: $7.99 (struck through) FREE", the same treatment the
+      // customer email, receipts and kitchen screen already give it.
+      savedDeliveryFee: appliedPromosForEmail?.find((p) => p.type === "free_delivery")?.discount ?? undefined,
       tip: order.tip,
       depositTotal: depositTotal > 0 ? depositTotal : undefined,
       discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),

@@ -580,7 +580,10 @@
     "couponApply": "Bruk",
     "scheduleModeRanges": "Tidsintervaller",
     "prepaidDeliveryNote": "Levering betales på nett — budet kan ikke ta betalt på døren.",
-    "prepaidDeliveryUnavailable": "Nettbetaling er ikke tilgjengelig akkurat nå, så leveringsbestillinger kan ikke legges inn. Velg henting."
+    "prepaidDeliveryUnavailable": "Nettbetaling er ikke tilgjengelig akkurat nå, så leveringsbestillinger kan ikke legges inn. Velg henting.",
+    "addressNotLocated": "Velg adressen din blant forslagene, så kan vi sjekke leveringen til deg.",
+    "pickAddressFromList": "Velg adressen din fra listen over, så kan vi bekrefte leveringsområdet og prisen.",
+    "cantFindAddress": "Finner du ikke adressen din? Sett en nål på kartet i stedet"
   },
   "reservation": {
     "title": "Bestill bord",

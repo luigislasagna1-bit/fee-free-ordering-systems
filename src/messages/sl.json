@@ -580,7 +580,10 @@
     "couponApply": "Uporabi",
     "scheduleModeRanges": "Časovni razponi",
     "prepaidDeliveryNote": "Dostava se plača prek spleta — dostavljavec ne more sprejeti plačila na vratih.",
-    "prepaidDeliveryUnavailable": "Spletno plačilo trenutno ni na voljo, zato naročil z dostavo ni mogoče oddati. Izberite prevzem."
+    "prepaidDeliveryUnavailable": "Spletno plačilo trenutno ni na voljo, zato naročil z dostavo ni mogoče oddati. Izberite prevzem.",
+    "addressNotLocated": "Izberite svoj naslov med predlogi, da preverimo dostavo do vas.",
+    "pickAddressFromList": "Izberite naslov s seznama zgoraj, da potrdimo območje dostave in ceno.",
+    "cantFindAddress": "Ne najdete svojega naslova? Označite mesto na zemljevidu"
   },
   "reservation": {
     "title": "Rezerviraj mizo",

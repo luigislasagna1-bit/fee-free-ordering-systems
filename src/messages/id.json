@@ -580,7 +580,10 @@
     "couponApply": "Terapkan",
     "scheduleModeRanges": "Rentang waktu",
     "prepaidDeliveryNote": "Pengantaran dibayar online — kurir tidak bisa menerima pembayaran di pintu.",
-    "prepaidDeliveryUnavailable": "Pembayaran online sedang tidak tersedia, jadi pesanan antar tidak bisa dibuat. Silakan pilih ambil sendiri."
+    "prepaidDeliveryUnavailable": "Pembayaran online sedang tidak tersedia, jadi pesanan antar tidak bisa dibuat. Silakan pilih ambil sendiri.",
+    "addressNotLocated": "Pilih alamat Anda dari saran agar kami bisa memeriksa pengiriman ke Anda.",
+    "pickAddressFromList": "Pilih alamat Anda dari daftar di atas agar kami bisa memastikan area dan biaya pengiriman.",
+    "cantFindAddress": "Tidak menemukan alamat Anda? Letakkan pin di peta saja"
   },
   "reservation": {
     "title": "Pesan meja",

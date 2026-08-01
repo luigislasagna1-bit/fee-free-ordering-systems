@@ -251,6 +251,11 @@ export type StaffEventPayload =
       // Full order detail — passed for orderPlaced so the kitchen "new order" email is
       // ITEMIZED (not the minimal "see breakdown in admin" fallback). Luigi 2026-06-25.
       items?: EmailOrderItem[]; subtotal?: number; taxAmount?: number; deliveryFee?: number;
+      /** Fee waived by a free-delivery promo. A waived fee is stored as
+       *  deliveryFee = 0 and a $0 row is hidden, so without this the promo left
+       *  NO trace on the staff email and delivery looked forgotten (Luigi,
+       *  order ORD-742085738). Luigi 2026-07-31. */
+      savedDeliveryFee?: number;
       tip?: number; depositTotal?: number; discount?: number;
       serviceFees?: Array<{ name?: string; amount?: number }>;
       orderType?: string; paidOnline?: boolean;
@@ -368,6 +373,7 @@ async function dispatchStaffEvent(
         subtotal: payload.subtotal,
         taxAmount: payload.taxAmount,
         deliveryFee: payload.deliveryFee,
+        savedDeliveryFee: payload.savedDeliveryFee,
         tip: payload.tip,
         depositTotal: payload.depositTotal,
         discount: payload.discount,
@@ -517,6 +523,11 @@ export type CustomerEventPayload =
       // "Subtotal" silently fell back to the TOTAL and tax/tip/discount rows
       // never rendered. creditApplied/rewardLabel only set when rewards are ON.
       subtotal?: number; taxAmount?: number; deliveryFee?: number; tip?: number; depositTotal?: number; discount?: number;
+      /** Fee waived by a free-delivery promo. Needed because a waived fee is
+       *  stored as deliveryFee = 0 and a $0 row is hidden — so without it the
+       *  promo left NO trace on the staff email and delivery looked forgotten
+       *  (Luigi, order ORD-742085738). Luigi 2026-07-31. */
+      savedDeliveryFee?: number;
       serviceFees?: Array<{ name?: string; amount?: number }>;
       creditApplied?: number; rewardLabel?: string | null; paymentMethod?: string | null; paidStatus?: string | null;
       /** Projected Reward Dollars EARNED on this order (credited at completion) —
@@ -689,6 +700,7 @@ export async function notifyCustomer(args: {
           subtotal: payload.subtotal,
           taxAmount: payload.taxAmount,
           deliveryFee: payload.deliveryFee,
+          savedDeliveryFee: payload.savedDeliveryFee,
           tip: payload.tip,
           depositTotal: payload.depositTotal,
           discount: payload.discount,

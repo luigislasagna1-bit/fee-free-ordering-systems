@@ -580,7 +580,10 @@
     "couponApply": "Primijeni",
     "scheduleModeRanges": "Vremenski rasponi",
     "prepaidDeliveryNote": "Dostava se plaća online — dostavljač ne može naplatiti na vratima.",
-    "prepaidDeliveryUnavailable": "Online plaćanje trenutno nije dostupno pa narudžbe s dostavom nisu moguće. Odaberite preuzimanje."
+    "prepaidDeliveryUnavailable": "Online plaćanje trenutno nije dostupno pa narudžbe s dostavom nisu moguće. Odaberite preuzimanje.",
+    "addressNotLocated": "Odaberite svoju adresu iz prijedloga kako bismo provjerili dostavu do vas.",
+    "pickAddressFromList": "Odaberite adresu s popisa iznad kako bismo potvrdili područje dostave i cijenu.",
+    "cantFindAddress": "Ne možete pronaći svoju adresu? Označite mjesto na karti"
   },
   "reservation": {
     "title": "Rezervirajte stol",

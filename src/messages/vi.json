@@ -580,7 +580,10 @@
     "couponApply": "Áp dụng",
     "scheduleModeRanges": "Khoảng thời gian",
     "prepaidDeliveryNote": "Đơn giao hàng được thanh toán trực tuyến — tài xế không thể thu tiền tại cửa.",
-    "prepaidDeliveryUnavailable": "Thanh toán trực tuyến hiện không khả dụng nên không thể đặt đơn giao hàng. Vui lòng chọn tự đến lấy."
+    "prepaidDeliveryUnavailable": "Thanh toán trực tuyến hiện không khả dụng nên không thể đặt đơn giao hàng. Vui lòng chọn tự đến lấy.",
+    "addressNotLocated": "Chọn địa chỉ của bạn từ gợi ý để chúng tôi kiểm tra giao hàng tới bạn.",
+    "pickAddressFromList": "Chọn địa chỉ của bạn từ danh sách phía trên để chúng tôi xác nhận khu vực và phí giao hàng.",
+    "cantFindAddress": "Không tìm thấy địa chỉ của bạn? Hãy ghim vị trí trên bản đồ"
   },
   "reservation": {
     "title": "Đặt bàn",

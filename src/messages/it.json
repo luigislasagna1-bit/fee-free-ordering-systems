@@ -580,7 +580,10 @@
       "title": "Questo ordine va sul tuo account",
       "body": "Hai effettuato l'accesso come {account}, quindi questo ordine — e tutto ciò che spendi o guadagni in {label} con esso — appartiene a quell'account. La conferma verrà inviata a {typed}.",
       "useAccountEmail": "Inviala invece al mio indirizzo email"
-    }
+    },
+    "addressNotLocated": "Scegli il tuo indirizzo tra i suggerimenti così possiamo verificare la consegna.",
+    "pickAddressFromList": "Scegli il tuo indirizzo dall'elenco qui sopra così possiamo confermare la zona di consegna e il prezzo.",
+    "cantFindAddress": "Non trovi il tuo indirizzo? Metti invece un segnaposto sulla mappa"
   },
   "reservation": {
     "title": "Prenota un tavolo",
