@@ -183,6 +183,8 @@
     "continue": "Nastavi",
     "minimumOrder": "Minimalna narudžba",
     "addMoreToContinue": "Minimalna narudžba za ovu zonu dostave je {min}. Dodajte još {more} za nastavak.",
+    "changeDeliveryAddress": "Promijeni adresu dostave",
+    "switchToPickup": "Prijeđi na osobno preuzimanje",
     "outOfDeliveryArea": "Izvan naših standardnih zona dostave",
     "freeDeliveryApplied": "Besplatna dostava primijenjena",
     "open": "Otvoreno",

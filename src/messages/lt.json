@@ -183,6 +183,8 @@
     "continue": "Tęsti",
     "minimumOrder": "Minimalus užsakymas",
     "addMoreToContinue": "Minimalus užsakymas šiai pristatymo zonai yra {min}. Pridėkite dar {more}, kad tęstumėte.",
+    "changeDeliveryAddress": "Keisti pristatymo adresą",
+    "switchToPickup": "Pereiti prie atsiėmimo",
     "outOfDeliveryArea": "Už standartinių pristatymo zonų",
     "freeDeliveryApplied": "Nemokamas pristatymas pritaikytas",
     "open": "Atidaryta",

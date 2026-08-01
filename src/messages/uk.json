@@ -183,6 +183,8 @@
     "continue": "Продовжити",
     "minimumOrder": "Мінімальне замовлення",
     "addMoreToContinue": "Мінімальне замовлення для цієї зони доставки — {min}. Додайте ще на {more}, щоб продовжити.",
+    "changeDeliveryAddress": "Змінити адресу доставки",
+    "switchToPickup": "Перейти на самовивіз",
     "outOfDeliveryArea": "Поза стандартними зонами доставки",
     "freeDeliveryApplied": "Безкоштовна доставка застосована",
     "open": "Відкрито",

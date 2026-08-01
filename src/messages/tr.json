@@ -183,6 +183,8 @@
     "continue": "Devam Et",
     "minimumOrder": "Minimum Sipariş",
     "addMoreToContinue": "Bu teslimat bölgesi için minimum sipariş {min}. Devam etmek için {more} daha ekleyin.",
+    "changeDeliveryAddress": "Teslimat adresini değiştir",
+    "switchToPickup": "Gel al seçeneğine geç",
     "outOfDeliveryArea": "Standart teslimat bölgelerimiz dışında",
     "freeDeliveryApplied": "Ücretsiz teslimat uygulandı",
     "open": "Açık",

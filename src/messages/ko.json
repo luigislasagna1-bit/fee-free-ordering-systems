@@ -183,6 +183,8 @@
     "continue": "계속",
     "minimumOrder": "최소 주문금액",
     "addMoreToContinue": "이 배달 구역의 최소 주문금액은 {min}입니다. 계속하려면 {more}을 더 추가하세요.",
+    "changeDeliveryAddress": "배달 주소 변경",
+    "switchToPickup": "픽업으로 변경",
     "outOfDeliveryArea": "표준 배달 구역 외 지역",
     "freeDeliveryApplied": "무료 배달 적용됨",
     "open": "영업 중",

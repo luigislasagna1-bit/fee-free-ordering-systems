@@ -183,6 +183,8 @@
     "continue": "Doorgaan",
     "minimumOrder": "Minimumbestelling",
     "addMoreToContinue": "Minimumbestelling voor deze bezorgzone is {min}. Voeg nog {more} toe om door te gaan.",
+    "changeDeliveryAddress": "Bezorgadres wijzigen",
+    "switchToPickup": "Overschakelen naar afhalen",
     "outOfDeliveryArea": "Buiten onze standaard bezorggebieden",
     "freeDeliveryApplied": "Gratis bezorging toegepast",
     "open": "Open",

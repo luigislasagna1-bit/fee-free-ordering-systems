@@ -183,6 +183,8 @@
     "continue": "Fortsett",
     "minimumOrder": "Minimumsbestilling",
     "addMoreToContinue": "Minimumsbestilling for denne leveringssonen er {min}. Legg til {more} til for å fortsette.",
+    "changeDeliveryAddress": "Endre leveringsadresse",
+    "switchToPickup": "Bytt til henting",
     "outOfDeliveryArea": "Utenfor våre vanlige leveringsområder",
     "freeDeliveryApplied": "Gratis levering aktivert",
     "open": "Åpent",

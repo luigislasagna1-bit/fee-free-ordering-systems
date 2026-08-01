@@ -188,6 +188,8 @@
     "continue": "Continue",
     "minimumOrder": "Minimum order",
     "addMoreToContinue": "Minimum order for this delivery zone is {min}. Add {more} more to continue.",
+    "changeDeliveryAddress": "Change delivery address",
+    "switchToPickup": "Switch to pickup",
     "outOfDeliveryArea": "Outside our standard delivery areas",
     "freeDeliveryApplied": "Free delivery applied",
     "removePromoAria": "Remove deal",

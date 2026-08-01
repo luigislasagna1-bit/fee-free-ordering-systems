@@ -183,6 +183,8 @@
     "continue": "Jatka",
     "minimumOrder": "Minimitilaus",
     "addMoreToContinue": "Tämän toimitusalueen minimitilaus on {min}. Lisää {more} jatkaaksesi.",
+    "changeDeliveryAddress": "Vaihda toimitusosoite",
+    "switchToPickup": "Vaihda noutoon",
     "outOfDeliveryArea": "Vakiotoimitusvyöhykkeidemme ulkopuolella",
     "freeDeliveryApplied": "Ilmainen toimitus lisätty",
     "open": "Auki",

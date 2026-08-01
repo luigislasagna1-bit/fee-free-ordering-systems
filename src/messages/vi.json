@@ -183,6 +183,8 @@
     "continue": "Tiếp tục",
     "minimumOrder": "Đơn hàng tối thiểu",
     "addMoreToContinue": "Đơn tối thiểu cho khu vực giao này là {min}. Thêm {more} nữa để tiếp tục.",
+    "changeDeliveryAddress": "Đổi địa chỉ giao hàng",
+    "switchToPickup": "Chuyển sang lấy tại cửa hàng",
     "outOfDeliveryArea": "Ngoài khu vực giao hàng tiêu chuẩn",
     "freeDeliveryApplied": "Miễn phí giao hàng đã được áp dụng",
     "open": "Mở cửa",

@@ -183,6 +183,8 @@
     "continue": "Fortsätt",
     "minimumOrder": "Minimibeställning",
     "addMoreToContinue": "Minsta beställning för denna leveranszon är {min}. Lägg till {more} mer för att fortsätta.",
+    "changeDeliveryAddress": "Ändra leveransadress",
+    "switchToPickup": "Byt till avhämtning",
     "outOfDeliveryArea": "Utanför våra vanliga leveransområden",
     "freeDeliveryApplied": "Gratis leverans tillämpas",
     "open": "Öppen",

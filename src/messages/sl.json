@@ -183,6 +183,8 @@
     "continue": "Nadaljuj",
     "minimumOrder": "Minimalno naročilo",
     "addMoreToContinue": "Minimalno naročilo za to dostavo je {min}. Dodajte še {more} za nadaljevanje.",
+    "changeDeliveryAddress": "Spremeni naslov za dostavo",
+    "switchToPickup": "Preklopi na prevzem",
     "outOfDeliveryArea": "Zunaj naših standardnih območij dostave",
     "freeDeliveryApplied": "Brezplačna dostava uveljavljena",
     "open": "Odprto",

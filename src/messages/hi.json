@@ -183,6 +183,8 @@
     "continue": "जारी रखें",
     "minimumOrder": "न्यूनतम ऑर्डर",
     "addMoreToContinue": "इस डिलीवरी क्षेत्र के लिए न्यूनतम ऑर्डर {min} है। जारी रखने के लिए {more} और जोड़ें।",
+    "changeDeliveryAddress": "डिलीवरी पता बदलें",
+    "switchToPickup": "पिकअप पर स्विच करें",
     "outOfDeliveryArea": "हमारे मानक डिलीवरी क्षेत्र से बाहर",
     "freeDeliveryApplied": "मुफ़्त डिलीवरी लागू हुई",
     "open": "खुला",

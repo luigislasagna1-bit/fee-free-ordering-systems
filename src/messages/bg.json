@@ -183,6 +183,8 @@
     "continue": "Продължи",
     "minimumOrder": "Минимална поръчка",
     "addMoreToContinue": "Минималната поръчка за тази зона е {min}. Добави още {more}, за да продължиш.",
+    "changeDeliveryAddress": "Променете адреса за доставка",
+    "switchToPickup": "Преминете към взимане на място",
     "outOfDeliveryArea": "Извън стандартните ни зони за доставка",
     "freeDeliveryApplied": "Безплатна доставка приложена",
     "open": "Отворено",

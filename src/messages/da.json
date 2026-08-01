@@ -183,6 +183,8 @@
     "continue": "Fortsæt",
     "minimumOrder": "Minimumsordre",
     "addMoreToContinue": "Minimumsordre for denne leveringszone er {min}. Tilføj {more} mere for at fortsætte.",
+    "changeDeliveryAddress": "Skift leveringsadresse",
+    "switchToPickup": "Skift til afhentning",
     "outOfDeliveryArea": "Uden for vores standard leveringsområder",
     "freeDeliveryApplied": "Gratis levering aktiveret",
     "open": "Åben",
