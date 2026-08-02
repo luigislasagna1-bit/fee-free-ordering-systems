@@ -29,6 +29,7 @@ import { formatCurrency } from "./utils";
 import type { DigestStats } from "./email";
 import { getDict, type Translator } from "./i18n-dict";
 import { formatDetailRows } from "./reservation-details";
+import { groupBundleChildren } from "./bundle-child-groups";
 
 // ─── Public types ────────────────────────────────────────────────────────────
 
@@ -334,15 +335,17 @@ function renderKitchenSection(
         applyStyle(r, s);
         r.line(`${item.quantity}x ${item.name}`);
         // Bundle children: indented under the parent, no per-child price.
+        // Identical children collapse to one "- 4x Coke" line (2026-08-02) —
+        // pizzas never collapse, each is its own build for the make line.
         if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
-          for (const child of item.bundleItems) {
+          for (const { child, qty } of groupBundleChildren(item.bundleItems)) {
             applyStyle(r, s);
             const variantPart = child.variantName ? ` (${child.variantName})` : "";
-            const specPart =
-              child.specialityFee && child.specialityFee > 0
-                ? ` (+${fmt(child.specialityFee)})`
-                : "";
-            r.wrapped(`  - 1x ${child.name}${variantPart}${specPart}`, 4);
+            // Upcharge + charged extras ×qty (kitchen mods print no prices, so
+            // the header carries the whole child fee). 2026-08-02.
+            const kFee = ((child.specialityFee ?? 0) + (child.extrasFee ?? 0)) * qty;
+            const specPart = kFee > 0 ? ` (+${fmt(kFee)})` : "";
+            r.wrapped(`  - ${qty}x ${child.name}${variantPart}${specPart}`, 4);
             if (modsEnabled && Array.isArray(child.modifiers)) {
               for (const mod of child.modifiers) {
                 applyStyle(r, modStyle);
@@ -487,18 +490,24 @@ function renderCustomerSection(
         applyStyle(r, s);
         r.columns(`${item.quantity}x ${item.name}`, fmt(item.subtotal));
         if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
-          for (const child of item.bundleItems) {
+          // Same "4x" collapse as the kitchen ticket (2026-08-02).
+          for (const { child, qty } of groupBundleChildren(item.bundleItems)) {
             applyStyle(r, s);
             const variantPart = child.variantName ? ` (${child.variantName})` : "";
             const specPart =
               child.specialityFee && child.specialityFee > 0
-                ? ` (+${fmt(child.specialityFee)})`
+                ? ` (+${fmt(child.specialityFee * qty)})`
                 : "";
-            r.wrapped(`  - ${child.name}${variantPart}${specPart}`, 2);
+            r.wrapped(`  - ${qty > 1 ? `${qty}x ` : ""}${child.name}${variantPart}${specPart}`, 2);
             if (modsEnabled && Array.isArray(child.modifiers)) {
               for (const mod of child.modifiers) {
                 applyStyle(r, modStyle);
-                r.wrapped(`    + ${mod.name}`, 4);
+                // Charged child lines (pool overage / paid extras) print their
+                // price ×qty on an aggregated line — the stored priceAdjustment
+                // is PER UNIT, and "2x Coke" collapses two charged units
+                // (2026-08-02). Covered/included lines print bare.
+                const cp = mod.priceAdjustment && mod.priceAdjustment > 0 ? ` (+${fmt(mod.priceAdjustment * qty)})` : "";
+                r.wrapped(`    + ${mod.name}${cp}`, 4);
               }
             }
           }

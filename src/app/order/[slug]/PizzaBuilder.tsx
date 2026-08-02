@@ -23,6 +23,7 @@ import {
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { useTranslations } from "next-intl";
 import { priceToppingLines, toppingBaseAdjust, type ToppingChargeLine } from "@/lib/pizza-topping-pricing";
+import { allocateToppingPoolHalfUnits } from "@/lib/combo-topping-pool";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -287,6 +288,12 @@ export function computePrice(
   item: MenuItem,
   groups: ModGroup[],
   config: PizzaConfig,
+  /** SHARED-POOL mode (combo "6 toppings combined", Luigi 2026-08-02): the
+   *  half-units of the combo's pool still available to THIS pizza. When set,
+   *  the pizza's own includedToppings/base-credit are bypassed entirely and
+   *  toppings charge only beyond the pool — via the same allocator the
+   *  composer and the orders route use, so preview == charge. */
+  pool?: { halfUnitsAvailable: number },
 ): number {
   // 1 Base price
   let price = item.hasVariants && variantId
@@ -362,14 +369,21 @@ export function computePrice(
     halfToppingMultiplier: config.halfToppingMultiplier,
     reduceOnRemove: config.reduceOnRemove,
   };
-  // Symmetric pay-per-topping (default): the included allowance is a one-time
-  // BASE credit (−included × extra), and EVERY topping below is charged — so the
-  // price drops when a customer removes a topping and rises when they add one.
-  // Applied even at 0 toppings (a stripped preset pizza falls to its base). The
-  // orders route applies the SAME toppingBaseAdjust to the SAME base, so
-  // preview == charge. In legacy mode toppingBaseAdjust returns 0. Luigi 2026-07-09.
-  price += toppingBaseAdjust(toppingCfg);
-  price += priceToppingLines(toppingCfg, toppingLines).reduce((s, c) => s + c, 0);
+  if (pool) {
+    // Shared pool replaces the per-pizza allowance: NO base credit (that would
+    // double-count the pool) and charges only past the remaining half-units.
+    const alloc = allocateToppingPoolHalfUnits(pool.halfUnitsAvailable, [{ cfg: toppingCfg, lines: toppingLines }]);
+    price += alloc.children[0].toppingTotal;
+  } else {
+    // Symmetric pay-per-topping (default): the included allowance is a one-time
+    // BASE credit (−included × extra), and EVERY topping below is charged — so the
+    // price drops when a customer removes a topping and rises when they add one.
+    // Applied even at 0 toppings (a stripped preset pizza falls to its base). The
+    // orders route applies the SAME toppingBaseAdjust to the SAME base, so
+    // preview == charge. In legacy mode toppingBaseAdjust returns 0. Luigi 2026-07-09.
+    price += toppingBaseAdjust(toppingCfg);
+    price += priceToppingLines(toppingCfg, toppingLines).reduce((s, c) => s + c, 0);
+  }
 
   // 6 Other (non-role) modifier groups — flat priceAdjustment per selected option
   for (const [groupId, optionIds] of Object.entries(customization.otherSelections)) {
@@ -613,6 +627,7 @@ function PizzaVisual({
 
 function ToppingPill({
   opt, topping, onToggle, onSetQuantity, onSetCount, allowMultiple = false, primaryColor, priceMultiplier = 1, flatToppingPrice = 0,
+  poolPrice, poolIncludedLabel,
 }: {
   opt: ModOption;
   topping: SelectedTopping | undefined;
@@ -633,6 +648,11 @@ function ToppingPill({
    *  option's price). Luigi 2026-07-06: SUPER PARTY charged $10/topping but the
    *  pill showed the option's $2.50. */
   flatToppingPrice?: number;
+  /** Shared-pool cue (Luigi 2026-08-02). undefined = not pool mode. 0 = covered
+   *  by the pool → show the "Included" chip. >0 = the pool-walk charge. null =
+   *  pool exhausted for an unselected pill → fall back to the normal price. */
+  poolPrice?: number | null;
+  poolIncludedLabel?: string;
 }) {
   const formatCurrency = useCurrencyFormat();
   const selected = !!topping;
@@ -643,7 +663,12 @@ function ToppingPill({
   // multiplier and count. "Light" is price-neutral (charged exactly like normal),
   // so it is NOT shown as free. Luigi 2026-07-06.
   const unitToppingPrice = flatToppingPrice > 0 ? flatToppingPrice : opt.priceAdjustment;
-  const shownPrice = Math.round(unitToppingPrice * priceMultiplier * count * 100) / 100;
+  // Pool mode overrides the flat display with the pool-walk truth (0 = the
+  // green "Included" chip); null falls through to the normal price.
+  const shownPrice = typeof poolPrice === "number"
+    ? poolPrice
+    : Math.round(unitToppingPrice * priceMultiplier * count * 100) / 100;
+  const showIncludedChip = poolPrice === 0 && !!poolIncludedLabel;
 
   return (
     <div
@@ -667,11 +692,15 @@ function ToppingPill({
         <span className={`font-medium truncate ${selected ? "text-gray-900" : "text-gray-700"}`}>
           {opt.name}
         </span>
-        {shownPrice > 0 && (
+        {showIncludedChip ? (
+          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-1.5 py-0.5 flex-shrink-0">
+            {poolIncludedLabel}
+          </span>
+        ) : shownPrice > 0 ? (
           <span className="text-xs text-gray-400 flex-shrink-0">
             +{formatCurrency(shownPrice)}
           </span>
-        )}
+        ) : null}
       </button>
 
       {selected && (
@@ -776,6 +805,14 @@ interface PizzaBuilderProps {
     quantity: number;
     notes: string;
   };
+  /** SHARED-POOL mode (combo "toppings combined", Luigi 2026-08-02): the combo's
+   *  total pool + the half-units the OTHER pizzas already consumed. When set the
+   *  builder prices/labels toppings against the remaining pool instead of this
+   *  pizza's own includedToppings, with a live "N of M left" header. */
+  comboPool?: { totalHalfUnits: number; usedElsewhereHalfUnits: number };
+  /** Cap for the quantity stepper (a combo slot's remaining room). Absent =
+   *  uncapped (standalone ordering). */
+  maxQuantity?: number;
 }
 
 // Default customization state (exported for regression tests).
@@ -843,7 +880,7 @@ export function defaultCustomization(item: MenuItem, config: PizzaConfig, groups
   };
 }
 
-export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, onAdd, allowItemNotes = true, initial }: PizzaBuilderProps) {
+export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, onAdd, allowItemNotes = true, initial, comboPool, maxQuantity }: PizzaBuilderProps) {
   const tp = useTranslations("pizza");
   const tOrd = useTranslations("ordering");
   const formatCurrency = useCurrencyFormat();
@@ -979,10 +1016,46 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
     return { ...config, extraToppingPrice: price };
   }, [config, variantId, item.variants]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Shared-pool state (combo "toppings combined"): half-units still open to
+  // THIS pizza, and this pizza's own topping lines in serialization order —
+  // drives the price, the live header and the per-pill "Included"/price cue.
+  const poolAvailable = comboPool
+    ? Math.max(0, comboPool.totalHalfUnits - comboPool.usedElsewhereHalfUnits)
+    : null;
+  const poolView = useMemo(() => {
+    if (poolAvailable === null) return null;
+    const cfg = {
+      extraToppingPrice: effectiveConfig.extraToppingPrice,
+      includedToppings: 0,
+      halfToppingMultiplier: effectiveConfig.halfToppingMultiplier,
+    };
+    // Same per-unit line expansion as computePrice/pizzaCustomizationToModifiers.
+    const lines: ToppingChargeLine[] = [];
+    const lineOwner: number[] = []; // index into customization.toppings
+    customization.toppings.forEach((t, ti) => {
+      const grp = toppingGroups.find(g => g.id === t.groupId);
+      const opt = grp?.options.find(o => o.id === t.optionId);
+      const units = Math.max(1, t.count ?? 1);
+      for (let i = 0; i < units; i++) {
+        lines.push({ optionId: t.optionId, optionPrice: opt?.priceAdjustment ?? 0, isHalf: t.placement !== "whole" });
+        lineOwner.push(ti);
+      }
+    });
+    const alloc = allocateToppingPoolHalfUnits(poolAvailable, [{ cfg, lines }]);
+    // Per-selected-topping charge (a pill shows ITS total across its units).
+    const chargeByToppingIdx = new Map<number, number>();
+    alloc.children[0].lineCharges.forEach((c, li) => {
+      chargeByToppingIdx.set(lineOwner[li], Math.round(((chargeByToppingIdx.get(lineOwner[li]) ?? 0) + c) * 100) / 100);
+    });
+    const usedHere = alloc.children[0].halfUnitsUsed;
+    return { chargeByToppingIdx, usedHere, leftAfter: Math.max(0, poolAvailable - usedHere) };
+  }, [poolAvailable, customization.toppings, toppingGroups, effectiveConfig]);
+
   // Unit price (for a single pizza at current customization)
   const unitPrice = useMemo(
-    () => computePrice(customization, variantId, item, groups, effectiveConfig),
-    [customization, variantId, effectiveConfig] // eslint-disable-line react-hooks/exhaustive-deps
+    () => computePrice(customization, variantId, item, groups, effectiveConfig,
+      poolAvailable === null ? undefined : { halfUnitsAvailable: poolAvailable }),
+    [customization, variantId, effectiveConfig, poolAvailable] // eslint-disable-line react-hooks/exhaustive-deps
   );
   const lineTotal = Math.round(unitPrice * quantity * 100) / 100;
 
@@ -1565,9 +1638,17 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
                 <div className="flex items-center justify-between mb-3">
                   <SectionHeader
                     label={
-                      config.includedToppings > 0
-                        ? tp("toppingsIncluded", { count: config.includedToppings })
-                        : tp("toppings")
+                      poolView && comboPool
+                        // Shared pool: live "N of M shared toppings left" — the
+                        // allowance belongs to the COMBO, not this pizza, and
+                        // ticks down as the customer adds toppings here.
+                        ? tp("toppingsShared", {
+                            left: poolView.leftAfter % 2 === 0 ? poolView.leftAfter / 2 : (poolView.leftAfter / 2).toFixed(1),
+                            total: comboPool.totalHalfUnits % 2 === 0 ? comboPool.totalHalfUnits / 2 : (comboPool.totalHalfUnits / 2).toFixed(1),
+                          })
+                        : config.includedToppings > 0
+                          ? tp("toppingsIncluded", { count: config.includedToppings })
+                          : tp("toppings")
                     }
                   />
                   {/* Topping count badge */}
@@ -1621,9 +1702,20 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
                           // toppings aren't half/half-eligible we force
                           // "whole" regardless of toppingPlacement state.
                           const placement = toppingsHaveHalfHalf ? toppingPlacement : "whole";
-                          const t = customization.toppings.find(
+                          const tIdx = customization.toppings.findIndex(
                             t => t.optionId === opt.id && t.placement === placement
                           );
+                          const t = tIdx >= 0 ? customization.toppings[tIdx] : undefined;
+                          // Shared-pool price cue: a SELECTED pill shows what it
+                          // actually costs from the pool walk ($0 = "Included");
+                          // an UNSELECTED pill previews "Included" while at least
+                          // a whole credit remains, else its real price — the
+                          // price materializes the moment the pool runs dry.
+                          const poolPillPrice = poolView
+                            ? (t
+                                ? poolView.chargeByToppingIdx.get(tIdx) ?? 0
+                                : (poolView.leftAfter >= (placement !== "whole" ? 1 : 2) ? 0 : null))
+                            : undefined;
                           return (
                             <ToppingPill
                               key={opt.id}
@@ -1636,6 +1728,8 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
                               primaryColor={primaryColor}
                               priceMultiplier={placement !== "whole" ? effectiveConfig.halfToppingMultiplier : 1}
                               flatToppingPrice={effectiveConfig.extraToppingPrice}
+                              poolPrice={poolPillPrice}
+                              poolIncludedLabel={tp("poolIncluded")}
                             />
                           );
                         })}
@@ -1735,7 +1829,9 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
             </button>
           )}
           <div className="flex items-center gap-3">
-            {/* Quantity */}
+            {/* Quantity — capped by maxQuantity when the host (a combo slot)
+                has limited room, so the stepper can't promise pizzas the slot
+                will silently drop. (Adversarial review 2026-08-02.) */}
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setQuantity(q => Math.max(1, q - 1))}
@@ -1745,8 +1841,9 @@ export function PizzaBuilder({ item, config: rawConfig, primaryColor, onClose, o
               </button>
               <span className="w-6 text-center font-bold text-gray-900">{quantity}</span>
               <button
-                onClick={() => setQuantity(q => q + 1)}
-                className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition flex-shrink-0"
+                onClick={() => setQuantity(q => (maxQuantity ? Math.min(maxQuantity, q + 1) : q + 1))}
+                disabled={!!maxQuantity && quantity >= maxQuantity}
+                className="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <Plus className="w-4 h-4 text-gray-600" />
               </button>

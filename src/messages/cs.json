@@ -378,7 +378,9 @@
       "completeSelections": "Proveďte prosím všechny povinné výběry",
       "chooseSize": "Pro pokračování vyberte velikost",
       "completeRequired": "Dokončete prosím povinné výběry"
-    }
+    },
+    "toppingsShared": "Ingredience – zbývá {left} z {total} sdílených ingrediencí",
+    "poolIncluded": "V ceně"
   },
   "info": {
     "poweredBy": "Poháněno službou <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Skupinu se nepodařilo duplikovat — zkuste to znovu.",
       "refundableDeposit": "Vratná záloha",
       "refundableDepositHint": "Přidává k ceně vratnou zálohu — účtuje se zákazníkovi, ale nezdaňuje se, nikdy se neslevuje ani neopravňuje k odměnám a plně se vrací.",
-      "depositAmountLabel": "Výše zálohy"
+      "depositAmountLabel": "Výše zálohy",
+      "comboAllowDuplicates": "Povolit přidání stejné položky vícekrát",
+      "comboAllowDuplicatesHelp": "ZAPNUTO: zákazník může v tomto kroku vybrat několik kusů jedné položky — např. 4× stejnou limonádu — pomocí tlačítek množství. VYPNUTO: každý výběr musí být jiná položka.",
+      "comboPoolTitle": "Sdílet přísady v ceně mezi všemi pizzami",
+      "comboPoolHelp": "Platí jen pro pizzy v tomto kombu. Když je zapnuto, vlastní nastavení „Přísady v ceně“ každé pizzy (z její karty Nastavení pizzy) se uvnitř tohoto komba ignoruje — nahradí ho tento sdílený počet. Přísady nad rámec sdíleného limitu se vždy účtují podle ceny extra přísady dané pizzy, a to i když je volba „Účtovat doplňky a extra“ vypnutá. Položek jiných než pizza se to netýká.",
+      "comboPoolOffHint": "VYPNUTO — každá pizza se řídí vlastním počtem z nastavení „Přísady v ceně“.",
+      "comboPoolOnHint": "ZAPNUTO — všechny pizzy čerpají z jednoho sdíleného limitu. Příklad: 6 sdílených přísad na kombo se 2 pizzami — zákazník může dát 1 přísadu na první pizzu a na druhou mu stále zbývá 5 zdarma. Nad tento limit se další přísady účtují běžně.",
+      "comboPoolCountLabel": "Počet přísad v ceně (všechny pizzy dohromady):"
     },
     "promotionsList": {
       "stackingMaster": "Hlavní",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Dokončete povinné volby",
       "halfHalfToggle": "½ Půl na půl",
       "leftHalf": "Levá polovina",
-      "rightHalf": "Pravá polovina"
+      "rightHalf": "Pravá polovina",
+      "addChoiceQty": "Přidat {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Přidat další {name}",
+      "removeOne": "Odebrat 1× {name}",
+      "slotNeedsMore": "{slot}: vyberte ještě {count}",
+      "howMany": "Kolik kusů?",
+      "poolMeter": "Sdílené ingredience: využito {used} z {total}",
+      "poolLeft": "Zbývá {left}",
+      "poolEmpty": "Vše využito – ingredience navíc se účtují"
     },
     "guidedPromo": {
       "buildYourDeal": "Sestavte si nabídku",

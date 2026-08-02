@@ -378,7 +378,9 @@
       "completeSelections": "Maak alle verplichte keuzes",
       "chooseSize": "Kies een maat om door te gaan",
       "completeRequired": "Vul de verplichte keuzes in"
-    }
+    },
+    "toppingsShared": "Toppings — nog {left} van {total} gedeelde toppings",
+    "poolIncluded": "Inbegrepen"
   },
   "info": {
     "poweredBy": "Mogelijk gemaakt door <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Kon de groep niet dupliceren — probeer het opnieuw.",
       "refundableDeposit": "Terugbetaalbare borg",
       "refundableDepositHint": "Voegt een statiegeldborg toe boven op de prijs — wordt aan de klant in rekening gebracht maar niet belast, nooit met korting of in aanmerking voor beloningen, en volledig terugbetaalbaar.",
-      "depositAmountLabel": "Borgbedrag"
+      "depositAmountLabel": "Borgbedrag",
+      "comboAllowDuplicates": "Toestaan dat hetzelfde item meerdere keren wordt toegevoegd",
+      "comboAllowDuplicatesHelp": "AAN: een klant die deze stap invult kan meerdere stuks van één item kiezen — bijv. 4× dezelfde frisdrank — via de aantalknoppen. UIT: elke keuze moet een ander item zijn.",
+      "comboPoolTitle": "Inbegrepen toppings delen over alle pizza's",
+      "comboPoolHelp": "Geldt alleen voor de pizza's in deze combo. Zolang dit AAN staat, wordt het eigen aantal \"Inbegrepen toppings\" van elke pizza (uit het tabblad Pizza-instellingen) binnen deze combo genegeerd — dit gedeelde aantal komt ervoor in de plaats. Extra toppings boven het gedeelde tegoed worden altijd in rekening gebracht tegen de prijs voor extra toppings van die pizza, ook wanneer \"Kosten rekenen voor add-ons & extra's\" uit staat. Items die geen pizza zijn, worden niet beïnvloed.",
+      "comboPoolOffHint": "UIT — elke pizza gebruikt zijn eigen aantal \"Inbegrepen toppings\".",
+      "comboPoolOnHint": "AAN — alle pizza's putten uit één gedeeld tegoed. Voorbeeld: 6 gedeelde toppings bij een combo met 2 pizza's — een klant kan 1 topping op de eerste pizza leggen en houdt nog 5 gratis over voor de tweede. Daarboven worden extra toppings normaal in rekening gebracht.",
+      "comboPoolCountLabel": "Inbegrepen toppings (alle pizza's samen):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Vul de verplichte opties in",
       "halfHalfToggle": "½ Half om half",
       "leftHalf": "Linkerhelft",
-      "rightHalf": "Rechterhelft"
+      "rightHalf": "Rechterhelft",
+      "addChoiceQty": "Voeg {count} toe{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Nog een {name} toevoegen",
+      "removeOne": "Eén {name} verwijderen",
+      "slotNeedsMore": "{slot}: kies er nog {count}",
+      "howMany": "Hoeveel?",
+      "poolMeter": "Gedeelde toppings: {used} van {total} gebruikt",
+      "poolLeft": "Nog {left}",
+      "poolEmpty": "Alles gebruikt — extra toppings worden in rekening gebracht"
     },
     "guidedPromo": {
       "buildYourDeal": "Stel je deal samen",

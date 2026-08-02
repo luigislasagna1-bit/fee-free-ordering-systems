@@ -378,7 +378,9 @@
       "completeSelections": "Gör alla obligatoriska val",
       "chooseSize": "Välj en storlek för att fortsätta",
       "completeRequired": "Slutför obligatoriska val"
-    }
+    },
+    "toppingsShared": "Toppings — {left} av {total} delade toppings kvar",
+    "poolIncluded": "Ingår"
   },
   "info": {
     "poweredBy": "Drivs av <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Kunde inte duplicera gruppen — försök igen.",
       "refundableDeposit": "Återbetalbar deposition",
       "refundableDepositHint": "Lägger till en pant utöver priset — debiteras kunden men beskattas inte, ges aldrig rabatt eller belöning, och återbetalas helt.",
-      "depositAmountLabel": "Depositionsbelopp"
+      "depositAmountLabel": "Depositionsbelopp",
+      "comboAllowDuplicates": "Tillåt att samma artikel läggs till flera gånger",
+      "comboAllowDuplicatesHelp": "PÅ: en kund som fyller i det här steget kan välja flera av samma artikel – t.ex. 4× samma läsk – med antalsknapparna. AV: alla val måste vara olika artiklar.",
+      "comboPoolTitle": "Dela inkluderade toppingar mellan alla pizzor",
+      "comboPoolHelp": "Gäller endast pizzorna i den här combon. När det är PÅ ignoreras varje pizzas egna \"Inkluderade toppingar\" (från fliken Pizzainställningar) i den här combon – det delade antalet ersätter dem. Extra toppingar utöver den delade potten debiteras alltid enligt pizzans pris för extra topping, även när \"Ta betalt för tillägg & extra\" är av. Artiklar som inte är pizzor påverkas inte.",
+      "comboPoolOffHint": "AV – varje pizza använder sitt eget antal \"Inkluderade toppingar\".",
+      "comboPoolOnHint": "PÅ – alla pizzor delar på en gemensam pott. Exempel: 6 delade toppingar i en combo med 2 pizzor – kunden kan lägga 1 topping på den första pizzan och har fortfarande 5 gratis till den andra. Utöver det debiteras extra toppingar som vanligt.",
+      "comboPoolCountLabel": "Toppingar som ingår (alla pizzor sammanlagt):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Slutför obligatoriska val",
       "halfHalfToggle": "½ Halv & halv",
       "leftHalf": "Vänster halva",
-      "rightHalf": "Höger halva"
+      "rightHalf": "Höger halva",
+      "addChoiceQty": "Lägg till {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Lägg till en {name} till",
+      "removeOne": "Ta bort en {name}",
+      "slotNeedsMore": "{slot}: välj {count} till",
+      "howMany": "Hur många?",
+      "poolMeter": "Delade toppings: {used} av {total} använda",
+      "poolLeft": "{left} kvar",
+      "poolEmpty": "Alla använda — fler toppings kostar extra"
     },
     "guidedPromo": {
       "buildYourDeal": "Bygg ditt erbjudande",

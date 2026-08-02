@@ -33,6 +33,26 @@ describe("parseComboConfig", () => {
     const cfg = parseComboConfig('{"slots":[{"id":"s1","itemIds":["p1"]}],"extrasCharge":true}');
     expect(cfg!.extrasCharge).toBe(true);
   });
+  it("round-trips allowDuplicates: only an explicit false survives", () => {
+    const off = parseComboConfig({ slots: [{ id: "s1", itemIds: ["p1"], allowDuplicates: false }] });
+    expect(off!.slots[0].allowDuplicates).toBe(false);
+    const on = parseComboConfig({ slots: [{ id: "s1", itemIds: ["p1"], allowDuplicates: true }] });
+    expect(on!.slots[0].allowDuplicates).toBeUndefined(); // absent = allowed (default)
+    const absent = parseComboConfig({ slots: [{ id: "s1", itemIds: ["p1"] }] });
+    expect(absent!.slots[0].allowDuplicates).toBeUndefined();
+  });
+  it("round-trips sharedToppings and drops junk values", () => {
+    expect(parseComboConfig({ slots: [{ id: "s1", itemIds: ["p1"] }], sharedToppings: 6 })!.sharedToppings).toBe(6);
+    expect(parseComboConfig({ slots: [{ id: "s1", itemIds: ["p1"] }], sharedToppings: 6.9 })!.sharedToppings).toBe(6);
+    for (const junk of [0, -2, "abc", null, undefined, NaN]) {
+      expect(parseComboConfig({ slots: [{ id: "s1", itemIds: ["p1"] }], sharedToppings: junk })!.sharedToppings).toBeUndefined();
+    }
+    // …and survives a stringify → parse cycle (the admin save → customer load path).
+    const saved = JSON.stringify({ slots: [{ id: "s1", itemIds: ["p1"], allowDuplicates: false }], extrasCharge: false, sharedToppings: 4 });
+    const back = parseComboConfig(saved)!;
+    expect(back.sharedToppings).toBe(4);
+    expect(back.slots[0].allowDuplicates).toBe(false);
+  });
 });
 
 describe("combo upcharge + variant resolution", () => {

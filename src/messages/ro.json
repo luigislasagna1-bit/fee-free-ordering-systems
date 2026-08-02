@@ -378,7 +378,9 @@
       "completeSelections": "Te rugăm să faci toate selecțiile obligatorii",
       "chooseSize": "Te rugăm să alegi o mărime pentru a continua",
       "completeRequired": "Te rugăm să completezi selecțiile obligatorii"
-    }
+    },
+    "toppingsShared": "Toppinguri — {left} din {total} toppinguri comune rămase",
+    "poolIncluded": "Inclus"
   },
   "info": {
     "poweredBy": "Susținut de <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Grupul nu a putut fi duplicat — încercați din nou.",
       "refundableDeposit": "Depozit rambursabil",
       "refundableDepositHint": "Adaugă un depozit returnabil peste preț — facturat clientului, dar netaxat, niciodată redus sau eligibil pentru recompense, și complet rambursabil.",
-      "depositAmountLabel": "Sumă depozit"
+      "depositAmountLabel": "Sumă depozit",
+      "comboAllowDuplicates": "Permite adăugarea aceluiași produs de mai multe ori",
+      "comboAllowDuplicatesHelp": "ACTIVAT: un client care completează acest pas poate lua mai multe bucăți din același produs — de ex. 4× același suc — folosind butoanele de cantitate. DEZACTIVAT: fiecare alegere trebuie să fie un produs diferit.",
+      "comboPoolTitle": "Partajează topping-urile incluse între toate pizzele",
+      "comboPoolHelp": "Se aplică doar pizzelor din acest combo. Cât timp este ACTIVAT, numărul propriu de „Topping-uri incluse” al fiecărei pizza (din fila Configurare pizza) este ignorat în acest combo — acest număr partajat îl înlocuiește. Topping-urile suplimentare peste limita partajată se taxează întotdeauna la prețul de topping suplimentar al pizzei respective, chiar și când opțiunea „Taxează suplimentele și extra-urile” este dezactivată. Produsele care nu sunt pizza nu sunt afectate.",
+      "comboPoolOffHint": "DEZACTIVAT — fiecare pizza folosește propriul număr de „Topping-uri incluse”.",
+      "comboPoolOnHint": "ACTIVAT — toate pizzele folosesc o singură limită partajată. Exemplu: 6 topping-uri partajate la un combo cu 2 pizza — un client poate pune 1 topping pe prima pizza și mai are 5 gratuite pentru a doua. Peste această limită, topping-urile suplimentare se taxează normal.",
+      "comboPoolCountLabel": "Topping-uri incluse (toate pizzele împreună):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Completează opțiunile obligatorii",
       "halfHalfToggle": "½ Jumătate și jumătate",
       "leftHalf": "Jumătatea stângă",
-      "rightHalf": "Jumătatea dreaptă"
+      "rightHalf": "Jumătatea dreaptă",
+      "addChoiceQty": "Adaugă {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Adaugă încă un {name}",
+      "removeOne": "Elimină un {name}",
+      "slotNeedsMore": "{slot}: alege încă {count}",
+      "howMany": "Câte bucăți?",
+      "poolMeter": "Toppinguri comune: {used} din {total} folosite",
+      "poolLeft": "{left} rămase",
+      "poolEmpty": "Toate folosite — toppingurile extra se taxează"
     },
     "guidedPromo": {
       "buildYourDeal": "Construiește-ți oferta",

@@ -504,6 +504,9 @@ function ItemModal({
     itemVariants: Record<string, string[]>;
     // `${itemId}::${variantId}` → per-size upcharge (string for the input).
     variantUpcharges: Record<string, string>;
+    // "Allow adding the same item multiple times" (GloriaFood's wording) —
+    // default true; false = the customer must pick DIFFERENT items.
+    allowDuplicates: boolean;
   };
   const [isCombo, setIsCombo] = useState<boolean>(() => !!parseComboConfig((item as any)?.comboConfig));
   // When true, a child item's add-ons/modifiers (and pizza extra toppings) add
@@ -511,6 +514,16 @@ function ItemModal({
   const [comboExtrasCharge, setComboExtrasCharge] = useState<boolean>(
     () => parseComboConfig((item as any)?.comboConfig)?.extrasCharge ?? false,
   );
+  // Shared topping pool (Luigi 2026-08-02): N whole toppings covered by the
+  // combo price and shared across ALL pizza children ("6 toppings combined").
+  // Replaces each pizza's own Included Toppings while inside this combo.
+  const [comboSharedToppingsOn, setComboSharedToppingsOn] = useState<boolean>(
+    () => (parseComboConfig((item as any)?.comboConfig)?.sharedToppings ?? 0) >= 1,
+  );
+  const [comboSharedToppings, setComboSharedToppings] = useState<string>(() => {
+    const n = parseComboConfig((item as any)?.comboConfig)?.sharedToppings;
+    return n && n >= 1 ? String(n) : "";
+  });
   const [comboSlots, setComboSlots] = useState<ComboSlotForm[]>(() => {
     const c = parseComboConfig((item as any)?.comboConfig);
     return c ? c.slots.map((s) => ({
@@ -518,6 +531,7 @@ function ItemModal({
       upcharges: Object.fromEntries(Object.entries(s.upcharges ?? {}).map(([k, v]) => [k, String(v)])),
       itemVariants: Object.fromEntries(Object.entries(s.itemVariants ?? {}).map(([k, v]) => [k, [...v]])),
       variantUpcharges: Object.fromEntries(Object.entries(s.variantUpcharges ?? {}).map(([k, v]) => [k, String(v)])),
+      allowDuplicates: s.allowDuplicates !== false,
     })) : [];
   });
   // Pool of items the owner can put in a slot — every menu item EXCEPT this one
@@ -535,7 +549,7 @@ function ItemModal({
           : [],
       }))
   );
-  const addComboSlot = () => setComboSlots((s) => [...s, { id: `slot-${Date.now()}`, label: "", min: 1, max: 1, itemIds: [], upcharges: {}, itemVariants: {}, variantUpcharges: {} }]);
+  const addComboSlot = () => setComboSlots((s) => [...s, { id: `slot-${Date.now()}`, label: "", min: 1, max: 1, itemIds: [], upcharges: {}, itemVariants: {}, variantUpcharges: {}, allowDuplicates: true }]);
   const updateComboSlot = (i: number, patch: Partial<ComboSlotForm>) => setComboSlots((s) => s.map((sl, idx) => idx === i ? { ...sl, ...patch } : sl));
   const removeComboSlot = (i: number) => setComboSlots((s) => s.filter((_, idx) => idx !== i));
   const toggleSlotItem = (i: number, itemId: string) => setComboSlots((s) => s.map((sl, idx) => {
@@ -696,8 +710,24 @@ function ItemModal({
                       && (s.itemVariants[itemId] ?? []).includes(variantId);
                   })
               ),
+              // Only an explicit "off" is persisted — absent means allowed.
+              ...(s.allowDuplicates === false ? { allowDuplicates: false } : {}),
             }));
-          return slots.length > 0 ? JSON.stringify({ slots, extrasCharge: comboExtrasCharge }) : null;
+          const sharedN = Math.floor(parseFloat(comboSharedToppings) || 0);
+          // The pool only persists while the combo actually CONTAINS a pizza —
+          // the card hides when the last pizza is removed, and a hidden-but-
+          // saved pool would surprise the customer composer with a meter on a
+          // pizza-less combo. (Adversarial review 2026-08-02.)
+          const comboHasPizza = comboSlots.some((s) =>
+            s.itemIds.some((id) => comboItemPool.find((p) => p.id === id)?.isPizza));
+          return slots.length > 0
+            ? JSON.stringify({
+                slots,
+                extrasCharge: comboExtrasCharge,
+                // Shared topping pool (Luigi 2026-08-02) — ≥1 = ON.
+                ...(comboSharedToppingsOn && sharedN >= 1 && comboHasPizza ? { sharedToppings: sharedN } : {}),
+              })
+            : null;
         })()
       : null;
     // Strip the legacy availability fields + the raw fulfil* form fields from
@@ -1367,6 +1397,36 @@ function ItemModal({
                     </div>
                     <Toggle on={comboExtrasCharge} onToggle={() => setComboExtrasCharge((v) => !v)} />
                   </div>
+                  {/* Shared topping pool (Luigi 2026-08-02) — the "2 large
+                      pizzas, 6 toppings combined" model no other platform has.
+                      Only meaningful when the combo contains pizza items. */}
+                  {comboSlots.some((s) => s.itemIds.some((id) => comboItemPool.find((p) => p.id === id)?.isPizza)) && (
+                    <div className="p-3 bg-amber-50 border border-amber-100 rounded-lg space-y-2">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="text-sm font-semibold text-gray-800 flex items-center gap-1.5">
+                            {t("comboPoolTitle")}
+                            <HelpTip text={t("comboPoolHelp")} />
+                          </div>
+                          <div className="text-xs text-gray-500 mt-0.5">
+                            {comboSharedToppingsOn ? t("comboPoolOnHint") : t("comboPoolOffHint")}
+                          </div>
+                        </div>
+                        <Toggle on={comboSharedToppingsOn} onToggle={() => setComboSharedToppingsOn((v) => !v)} />
+                      </div>
+                      {comboSharedToppingsOn && (
+                        <div className="flex items-center gap-2">
+                          <label className="text-xs text-gray-600">{t("comboPoolCountLabel")}</label>
+                          <input
+                            type="number" min={1} step={1}
+                            className="w-20 border border-gray-200 rounded-lg px-2 py-1.5 text-sm"
+                            value={comboSharedToppings}
+                            onChange={(e) => setComboSharedToppings(e.target.value)}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                   {comboSlots.map((slot, i) => (
                     <div key={slot.id} className="border border-gray-200 rounded-xl p-3 space-y-2">
                       <label className="block text-xs font-semibold text-gray-700">{t("comboSlotNameLabel")}</label>
@@ -1383,6 +1443,21 @@ function ItemModal({
                         <input type="number" min={1} className="w-14 border border-gray-200 rounded-lg px-2 py-2 text-sm" value={slot.max} onChange={(e) => updateComboSlot(i, { max: parseInt(e.target.value) || 1 })} />
                         <button onClick={() => removeComboSlot(i)} className="p-1.5 text-gray-400 hover:text-red-500"><Trash2 className="w-4 h-4" /></button>
                       </div>
+                      {/* GloriaFood-parity duplicate control (Luigi 2026-08-02):
+                          when the slot's max is above 1 the customer gets ×N
+                          steppers — this decides whether N of the SAME item is
+                          allowed (4× Coke) or picks must all differ. */}
+                      {slot.max > 1 && (
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox" className="w-4 h-4 accent-fuchsia-500"
+                            checked={slot.allowDuplicates}
+                            onChange={() => updateComboSlot(i, { allowDuplicates: !slot.allowDuplicates })}
+                          />
+                          <span className="text-xs text-gray-700">{t("comboAllowDuplicates")}</span>
+                          <HelpTip text={t("comboAllowDuplicatesHelp")} />
+                        </label>
+                      )}
                       <div className="text-xs font-medium text-gray-600">{t("comboEligibleItems")}</div>
                       <div className="max-h-44 overflow-y-auto border border-gray-100 rounded-lg divide-y divide-gray-50">
                         {comboItemPool.length === 0 ? (

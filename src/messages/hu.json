@@ -378,7 +378,9 @@
       "completeSelections": "Kérjük, végezze el az összes kötelező választást",
       "chooseSize": "A folytatáshoz kérjük, válasszon méretet",
       "completeRequired": "Kérjük, végezze el a kötelező választásokat"
-    }
+    },
+    "toppingsShared": "Feltétek — {left} / {total} közös feltét maradt",
+    "poolIncluded": "Beleértve"
   },
   "info": {
     "poweredBy": "Üzemelteti: <brand>Fee Free Ordering</brand>",
@@ -2508,7 +2510,14 @@
       "failedToDuplicateGroup": "A csoportot nem sikerült duplikálni — próbálja újra.",
       "refundableDeposit": "Visszatérítendő letét",
       "refundableDepositHint": "Visszaváltható letétet ad az árhoz — a vásárlónak felszámítjuk, de nem adózik, soha nem kedvezményezhető és nem jogosít jutalomra, és teljes mértékben visszatérítendő.",
-      "depositAmountLabel": "Letét összege"
+      "depositAmountLabel": "Letét összege",
+      "comboAllowDuplicates": "Ugyanaz a tétel többször is hozzáadható",
+      "comboAllowDuplicatesHelp": "BE: a vendég ennél a lépésnél ugyanabból a tételből többet is választhat — pl. 4× ugyanazt az üdítőt — a mennyiséggombok segítségével. KI: minden választásnak más-más tételnek kell lennie.",
+      "comboPoolTitle": "Beleértett feltétek megosztása az összes pizza között",
+      "comboPoolHelp": "Csak az ebben a combóban lévő pizzákra vonatkozik. Amíg BE van kapcsolva, a combón belül a rendszer figyelmen kívül hagyja az egyes pizzák saját „Beleértett feltétek” számát (a Pizza beállítás fülről) — helyette ez a közös szám érvényes. A közös kereten felüli extra feltéteket a rendszer mindig az adott pizza extra feltét árán számítja fel, akkor is, ha a „Felárak és extrák felszámítása” ki van kapcsolva. A nem pizza tételeket nem érinti.",
+      "comboPoolOffHint": "KI — minden pizza a saját „Beleértett feltétek” számát használja.",
+      "comboPoolOnHint": "BE — az összes pizza egy közös keretből gazdálkodik. Példa: 6 közös feltét egy 2 pizzás combóban — a vendég tehet 1 feltétet az első pizzára, és még mindig 5 ingyenes feltéte marad a másodikra. Ezen felül az extra feltéteket a szokásos módon számítjuk fel.",
+      "comboPoolCountLabel": "Beleértett feltétek (az összes pizzára együtt):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Töltsd ki a kötelező mezőket",
       "halfHalfToggle": "½ Fele-fele",
       "leftHalf": "Bal fél",
-      "rightHalf": "Jobb fél"
+      "rightHalf": "Jobb fél",
+      "addChoiceQty": "{count} hozzáadása{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Még egy {name} hozzáadása",
+      "removeOne": "Egy {name} eltávolítása",
+      "slotNeedsMore": "{slot}: válassz még {count} darabot",
+      "howMany": "Hány darabot?",
+      "poolMeter": "Közös feltétek: {used} / {total} felhasználva",
+      "poolLeft": "{left} maradt",
+      "poolEmpty": "Mind felhasználva — a további feltétek felárasak"
     },
     "guidedPromo": {
       "buildYourDeal": "Állítsa össze ajánlatát",

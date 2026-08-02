@@ -30,6 +30,7 @@ import { buildPromoOrderContext } from "@/lib/promo-order-context";
 import { reserveCredit as reserveReward, refundClaim as refundRewardClaim, buildSpendLedgerData } from "@/lib/reward-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
+import { priceComboPizzaChildren, type ComboPizzaChildInput } from "@/lib/combo-child-pricing";
 import { checkOrderCap, incrementOrderCount } from "@/lib/order-cap";
 import { notifyCapWarning80, notifyCapReached100 } from "@/lib/cap-notify";
 import {
@@ -768,6 +769,19 @@ export async function POST(req: NextRequest) {
           notes?: string | null; specialityFee?: number; extrasFee?: number;
           pizzaCustomization?: unknown;
         }> = [];
+        // Pizza children queued for the batch server re-price (2026-08-02).
+        // Pool allocation runs in CANONICAL slot order (assigned slot index,
+        // stable within a slot) — NOT raw bundleItems order, which the client
+        // controls: a reordered POST could otherwise route the shared pool onto
+        // the highest-rate pizza and reach a total no honest composition can
+        // produce. Slot-major order is exactly what the composer emits, so
+        // honest carts are unchanged. (Adversarial review 2026-08-02.)
+        const pizzaChildJobs: Array<{
+          childIndex: number;
+          slotIndex: number;
+          clientExtrasFee: number;
+          input: ComboPizzaChildInput;
+        }> = [];
         for (const child of raw.bundleItems) {
           if (!child || typeof child !== "object") {
             return NextResponse.json({ error: "Invalid combo child" }, { status: 400 });
@@ -822,8 +836,18 @@ export async function POST(req: NextRequest) {
           let variantName: string | null = null;
           if (cmVariants.length > 0) {
             if (isPizzaChild) {
-              const chosen = reqVar ? cmVariants.find((v) => v.id === reqVar) : null;
-              if (chosen) { variantId = chosen.id; variantName = chosen.name; }
+              // A sized pizza child MUST resolve to a real variant — variantName
+              // now drives server pricing (variantToppingPrices + per-size
+              // upcharges), so silently accepting an unknown/missing size let a
+              // crafted POST price XL toppings at the base rate and drop the
+              // per-size upcharge. Mirror the standalone-pizza rule: auto-apply
+              // a single size, otherwise 400. (Adversarial review 2026-08-02.)
+              let chosen = reqVar ? cmVariants.find((v) => v.id === reqVar) : null;
+              if (!chosen && cmVariants.length === 1) chosen = cmVariants[0];
+              if (!chosen) {
+                return NextResponse.json({ error: `Please choose a size for "${cm.name}".` }, { status: 400 });
+              }
+              variantId = chosen.id; variantName = chosen.name;
             } else {
               const allowedIds = comboAllowedVariantIds(slot, cid); // null ⇒ all
               let chosen = reqVar ? cmVariants.find((v) => v.id === reqVar) : null;
@@ -845,20 +869,31 @@ export async function POST(req: NextRequest) {
 
           // Modifiers + add-on surcharge. The combo's extrasCharge flag decides
           // whether add-ons cost extra. Non-pizza modifiers are re-priced from
-          // the DB (authoritative); a pizza's extra-topping surcharge is trusted
-          // from the client, the same model standalone pizzas already use.
+          // the DB (authoritative). Pizza children used to TRUST the client's
+          // extrasFee — the last hole in preview==charge. They're now collected
+          // here and re-priced in one batch AFTER the loop (the shared-topping
+          // pool needs every pizza's lines together; see combo-child-pricing).
+          // Luigi 2026-08-02.
           const rawChildMods: any[] = Array.isArray(child.modifiers) ? child.modifiers : [];
           let childMods: Array<{ name: string; priceAdjustment?: number }> | undefined;
           let extras = 0;
           if (isPizzaChild) {
-            childMods = rawChildMods.slice(0, 60).map((m: any) => ({
-              name: sanitize(m?.name ?? "", 200),
-              priceAdjustment: typeof m?.priceAdjustment === "number" ? m.priceAdjustment : 0,
-            }));
-            if (childMods.length === 0) childMods = undefined;
-            if (comboConfig.extrasCharge) {
-              extras = Math.max(0, Math.round((Number(child.extrasFee) || 0) * 100) / 100);
-            }
+            pizzaChildJobs.push({
+              childIndex: comboChildren.length,
+              slotIndex: assigned,
+              clientExtrasFee: Math.max(0, Math.round((Number(child.extrasFee) || 0) * 100) / 100),
+              input: {
+                pizzaConfigRaw: (cm as any).pizzaConfig,
+                variantName,
+                rawModifiers: rawChildMods,
+                candidateGroups: [
+                  ...((cm as any).modifierGroups ?? []),
+                  ...(((cm as any).category as any)?.modifierGroups ?? []),
+                ],
+              },
+            });
+            // modifiers/extrasFee patched after the batch re-price below.
+            childMods = undefined;
           } else {
             // Re-validate each modifier against the item's own + category groups,
             // pricing from the DB. Unknown options are dropped (never trusted).
@@ -876,7 +911,14 @@ export async function POST(req: NextRequest) {
               }
               if (found) {
                 modSum += found.priceAdjustment;
-                validated.push({ name: sanitize(rm?.name ?? found.name, 200), priceAdjustment: found.priceAdjustment });
+                // Persisted priceAdjustment is the DISPLAY charge: when the
+                // combo doesn't charge for extras, the line was free — storing
+                // the DB price made receipts print "(+$)" for money never
+                // collected. (Adversarial review 2026-08-02.)
+                validated.push({
+                  name: sanitize(rm?.name ?? found.name, 200),
+                  priceAdjustment: comboConfig.extrasCharge ? found.priceAdjustment : 0,
+                });
               }
             }
             childMods = validated.length ? validated : undefined;
@@ -899,6 +941,36 @@ export async function POST(req: NextRequest) {
               child.pizzaCustomization && typeof child.pizzaCustomization === "object"
                 ? child.pizzaCustomization
                 : undefined,
+          });
+        }
+        // Batch re-price for pizza children (2026-08-02): the SAME pure lib the
+        // composer previews with, so preview == charge by construction. Closes
+        // the old trust hole where client extrasFee was accepted verbatim, and
+        // runs the shared-topping pool across every pizza in bundleItems order.
+        if (pizzaChildJobs.length > 0) {
+          // Canonical slot-major order (stable sort) — see pizzaChildJobs note.
+          const orderedJobs = [...pizzaChildJobs].sort((a, b) => a.slotIndex - b.slotIndex);
+          const priced = priceComboPizzaChildren({
+            children: orderedJobs.map((j) => j.input),
+            extrasCharge: comboConfig.extrasCharge,
+            sharedToppings: comboConfig.sharedToppings,
+            sanitizeName: (s) => sanitize(s, 200),
+          });
+          priced.forEach((res, i) => {
+            const job = orderedJobs[i];
+            const target = comboChildren[job.childIndex];
+            target.modifiers = res.validatedMods.length ? res.validatedMods : undefined;
+            target.extrasFee = res.extrasFee > 0 ? res.extrasFee : undefined;
+            comboUpcharge += res.extrasFee;
+            // Bake-in telemetry: honest carts should derive ≈ the client's own
+            // number (identical engine, identical inputs). Real-world drift
+            // means a stale cart or tampering — worth eyes either way.
+            if (Math.abs(res.extrasFee - job.clientExtrasFee) > 0.01) {
+              console.warn(
+                `[orders POST] combo pizza extras drift: derived ${res.extrasFee} vs client ${job.clientExtrasFee}` +
+                ` (item ${target.menuItemId}, pool ${comboConfig.sharedToppings ?? "off"})`,
+              );
+            }
           });
         }
         // Every slot's minimum must be satisfied.
@@ -1048,8 +1120,11 @@ export async function POST(req: NextRequest) {
             modifiers: Array.isArray(child.modifiers)
               ? child.modifiers.slice(0, 20).map((m: any) => ({
                   name: sanitize(m?.name ?? "", 200),
-                  priceAdjustment:
-                    typeof m?.priceAdjustment === "number" ? m.priceAdjustment : 0,
+                  // Promo-bundle money is bundlePrice + speciality fees ONLY —
+                  // child modifier picks are free customization, so their
+                  // display price is 0 (receipts now print "(+$)" on charged
+                  // child lines, and these were never charged). 2026-08-02.
+                  priceAdjustment: 0,
                 }))
               : undefined,
             notes: child.notes ? sanitize(child.notes, 200) : null,

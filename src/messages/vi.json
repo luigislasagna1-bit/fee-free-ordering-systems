@@ -378,7 +378,9 @@
       "completeSelections": "Vui lòng hoàn thành tất cả lựa chọn bắt buộc",
       "chooseSize": "Vui lòng chọn kích cỡ để tiếp tục",
       "completeRequired": "Vui lòng hoàn thành các lựa chọn bắt buộc"
-    }
+    },
+    "toppingsShared": "Topping — còn {left} / {total} topping dùng chung",
+    "poolIncluded": "Đã bao gồm"
   },
   "info": {
     "poweredBy": "Được cung cấp bởi <brand>Fee Free Ordering</brand>",
@@ -2508,7 +2510,14 @@
       "failedToDuplicateGroup": "Không thể nhân bản nhóm — vui lòng thử lại.",
       "refundableDeposit": "Tiền đặt cọc hoàn lại",
       "refundableDepositHint": "Thêm khoản đặt cọc hoàn lại vào giá — tính cho khách nhưng không chịu thuế, không bao giờ được giảm giá hoặc đủ điều kiện nhận thưởng, và được hoàn lại toàn bộ.",
-      "depositAmountLabel": "Số tiền đặt cọc"
+      "depositAmountLabel": "Số tiền đặt cọc",
+      "comboAllowDuplicates": "Cho phép thêm cùng một món nhiều lần",
+      "comboAllowDuplicatesHelp": "BẬT: khách có thể chọn nhiều phần của cùng một món trong bước này — ví dụ 4 chai nước ngọt cùng loại — bằng các nút số lượng. TẮT: mỗi lựa chọn phải là một món khác nhau.",
+      "comboPoolTitle": "Dùng chung topping bao gồm cho tất cả các pizza",
+      "comboPoolHelp": "Chỉ áp dụng cho các pizza trong combo này. Khi BẬT, số \"Topping bao gồm\" riêng của từng pizza (trong tab Thiết lập Pizza) sẽ bị bỏ qua trong combo này — con số dùng chung này sẽ thay thế nó. Topping vượt quá hạn mức dùng chung luôn được tính phí theo giá topping thêm của pizza đó, kể cả khi \"Tính phí món kèm & phần thêm\" đang tắt. Các món không phải pizza không bị ảnh hưởng.",
+      "comboPoolOffHint": "TẮT — mỗi pizza dùng số \"Topping bao gồm\" riêng của mình.",
+      "comboPoolOnHint": "BẬT — tất cả pizza dùng chung một hạn mức. Ví dụ: combo 2 pizza với 6 topping dùng chung — khách có thể thêm 1 topping cho pizza thứ nhất và vẫn còn 5 topping miễn phí cho pizza thứ hai. Vượt quá mức đó, topping thêm sẽ được tính phí như bình thường.",
+      "comboPoolCountLabel": "Số topping bao gồm (tính chung tất cả pizza):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Hoàn tất các tùy chọn bắt buộc",
       "halfHalfToggle": "½ Nửa & Nửa",
       "leftHalf": "Nửa bên trái",
-      "rightHalf": "Nửa bên phải"
+      "rightHalf": "Nửa bên phải",
+      "addChoiceQty": "Thêm {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Thêm một {name} nữa",
+      "removeOne": "Bớt một {name}",
+      "slotNeedsMore": "{slot}: chọn thêm {count} món",
+      "howMany": "Số lượng?",
+      "poolMeter": "Topping dùng chung: đã dùng {used} / {total}",
+      "poolLeft": "Còn {left}",
+      "poolEmpty": "Đã dùng hết — topping thêm sẽ được tính phí"
     },
     "guidedPromo": {
       "buildYourDeal": "Tạo ưu đãi của bạn",

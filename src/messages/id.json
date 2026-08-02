@@ -378,7 +378,9 @@
       "completeSelections": "Silakan lengkapi semua pilihan yang diperlukan",
       "chooseSize": "Silakan pilih ukuran untuk melanjutkan",
       "completeRequired": "Silakan lengkapi pilihan yang diperlukan"
-    }
+    },
+    "toppingsShared": "Topping — sisa {left} dari {total} topping bersama",
+    "poolIncluded": "Termasuk"
   },
   "info": {
     "poweredBy": "Didukung oleh <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Tidak dapat menduplikat grup — coba lagi.",
       "refundableDeposit": "Deposit yang dapat dikembalikan",
       "refundableDepositHint": "Menambahkan deposit yang dapat dikembalikan di atas harga — dibebankan kepada pelanggan tetapi tidak dikenai pajak, tidak pernah didiskon atau memenuhi syarat hadiah, dan dapat dikembalikan sepenuhnya.",
-      "depositAmountLabel": "Jumlah deposit"
+      "depositAmountLabel": "Jumlah deposit",
+      "comboAllowDuplicates": "Izinkan menambahkan item yang sama beberapa kali",
+      "comboAllowDuplicatesHelp": "AKTIF: pelanggan yang mengisi langkah ini dapat mengambil beberapa dari satu item — mis. 4× minuman soda yang sama — menggunakan tombol jumlah. NONAKTIF: setiap pilihan harus berupa item yang berbeda.",
+      "comboPoolTitle": "Gabungkan topping termasuk untuk semua pizza",
+      "comboPoolHelp": "Hanya berlaku untuk pizza di dalam combo ini. Saat AKTIF, pengaturan \"Topping Termasuk\" milik masing-masing pizza (dari tab Pengaturan Pizza) diabaikan di dalam combo ini — angka bersama ini menggantikannya. Topping ekstra yang melebihi jatah bersama selalu dikenakan biaya sesuai harga topping ekstra pizza tersebut, bahkan saat \"Kenakan biaya untuk add-on & ekstra\" nonaktif. Item non-pizza tidak terpengaruh.",
+      "comboPoolOffHint": "NONAKTIF — setiap pizza menggunakan jumlah \"Topping Termasuk\" miliknya sendiri.",
+      "comboPoolOnHint": "AKTIF — semua pizza mengambil dari satu jatah bersama. Contoh: 6 topping bersama pada combo 2 pizza — pelanggan dapat menaruh 1 topping di pizza pertama dan masih punya 5 gratis untuk pizza kedua. Lebih dari itu, topping ekstra dikenakan biaya seperti biasa.",
+      "comboPoolCountLabel": "Topping termasuk (gabungan semua pizza):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Lengkapi pilihan yang wajib",
       "halfHalfToggle": "½ Setengah & Setengah",
       "leftHalf": "Bagian kiri",
-      "rightHalf": "Bagian kanan"
+      "rightHalf": "Bagian kanan",
+      "addChoiceQty": "Tambah {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Tambah {name} lagi",
+      "removeOne": "Kurangi satu {name}",
+      "slotNeedsMore": "{slot}: pilih {count} lagi",
+      "howMany": "Berapa banyak?",
+      "poolMeter": "Topping bersama: {used} dari {total} terpakai",
+      "poolLeft": "{left} tersisa",
+      "poolEmpty": "Semua terpakai — topping ekstra dikenai biaya"
     },
     "guidedPromo": {
       "buildYourDeal": "Susun penawaran Anda",

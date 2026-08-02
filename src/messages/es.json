@@ -378,7 +378,9 @@
       "completeSelections": "Por favor, haz todas las selecciones obligatorias",
       "chooseSize": "Por favor, elige un tamaño para continuar",
       "completeRequired": "Por favor, completa las selecciones obligatorias"
-    }
+    },
+    "toppingsShared": "Ingredientes — quedan {left} de {total} ingredientes compartidos",
+    "poolIncluded": "Incluido"
   },
   "info": {
     "poweredBy": "Con tecnología de <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "No se pudo duplicar el grupo — inténtalo de nuevo.",
       "refundableDeposit": "Depósito reembolsable",
       "refundableDepositHint": "Añade un depósito retornable sobre el precio — se cobra al cliente pero no tributa, nunca se descuenta ni es válido para recompensas, y es totalmente reembolsable.",
-      "depositAmountLabel": "Importe del depósito"
+      "depositAmountLabel": "Importe del depósito",
+      "comboAllowDuplicates": "Permitir agregar el mismo artículo varias veces",
+      "comboAllowDuplicatesHelp": "Activado: al completar este paso, el cliente puede elegir varias unidades de un mismo artículo —p. ej., 4× el mismo refresco— con los botones de cantidad. Desactivado: cada selección debe ser un artículo diferente.",
+      "comboPoolTitle": "Compartir los ingredientes incluidos entre todas las pizzas",
+      "comboPoolHelp": "Se aplica solo a las pizzas de este combo. Mientras esté activado, el número de \"Ingredientes incluidos\" propio de cada pizza (de su pestaña Configuración de pizza) se ignora dentro de este combo: este número compartido lo reemplaza. Los ingredientes que superen el límite compartido siempre se cobran al precio de ingrediente extra de esa pizza, incluso si \"Cobrar por complementos y extras\" está desactivado. Los artículos que no son pizza no se ven afectados.",
+      "comboPoolOffHint": "Desactivado: cada pizza usa su propio número de \"Ingredientes incluidos\".",
+      "comboPoolOnHint": "Activado: todas las pizzas comparten un mismo límite. Ejemplo: 6 ingredientes compartidos en un combo de 2 pizzas — el cliente puede poner 1 ingrediente en la primera pizza y aún le quedan 5 gratis para la segunda. A partir de ahí, los ingredientes extra se cobran normalmente.",
+      "comboPoolCountLabel": "Ingredientes incluidos (entre todas las pizzas):"
     },
     "promotionsList": {
       "stackingMaster": "Maestro",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Completa las opciones obligatorias",
       "halfHalfToggle": "½ Mitad y mitad",
       "leftHalf": "Mitad izquierda",
-      "rightHalf": "Mitad derecha"
+      "rightHalf": "Mitad derecha",
+      "addChoiceQty": "Añadir {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Añadir uno más de {name}",
+      "removeOne": "Quitar uno de {name}",
+      "slotNeedsMore": "{slot}: elige {count} más",
+      "howMany": "¿Cuántos?",
+      "poolMeter": "Ingredientes compartidos: {used} de {total} usados",
+      "poolLeft": "Quedan {left}",
+      "poolEmpty": "Todos usados — los ingredientes extra se cobran"
     },
     "guidedPromo": {
       "buildYourDeal": "Crea tu combo",

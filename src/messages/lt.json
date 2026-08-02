@@ -378,7 +378,9 @@
       "completeSelections": "Atlikite visus privalomus pasirinkimus",
       "chooseSize": "Pasirinkite dydį, kad tęstumėte",
       "completeRequired": "Užpildykite privalomus pasirinkimus"
-    }
+    },
+    "toppingsShared": "Priedai — liko {left} iš {total} bendrų priedų",
+    "poolIncluded": "Įskaičiuota"
   },
   "info": {
     "poweredBy": "Palaiko <brand>Fee Free Ordering</brand>",
@@ -3248,7 +3250,14 @@
       "failedToDuplicateGroup": "Nepavyko dubliuoti grupės — bandykite dar kartą.",
       "refundableDeposit": "Grąžinamas užstatas",
       "refundableDepositHint": "Prie kainos prideda grąžinamą užstatą — imamas iš kliento, bet neapmokestinamas, niekada nenuolaidžiaujamas ir nesuteikia teisės į atlygį, ir visiškai grąžinamas.",
-      "depositAmountLabel": "Užstato suma"
+      "depositAmountLabel": "Užstato suma",
+      "comboAllowDuplicates": "Leisti tą patį patiekalą pridėti kelis kartus",
+      "comboAllowDuplicatesHelp": "ĮJUNGTA: klientas, pildydamas šį žingsnį, kiekio mygtukais gali pasiimti kelis to paties patiekalo vienetus — pvz., 4× tą patį gaivųjį gėrimą. IŠJUNGTA: kiekvienas pasirinkimas turi būti vis kitas patiekalas.",
+      "comboPoolTitle": "Bendrinti įskaičiuotus priedus tarp visų picų",
+      "comboPoolHelp": "Taikoma tik šio rinkinio picoms. Kol ĮJUNGTA, kiekvienos picos atskiras nustatymas „Įskaičiuoti priedai“ (iš jos skirtuko „Picos nustatymai“) šiame rinkinyje ignoruojamas — jį pakeičia šis bendras skaičius. Priedai, viršijantys bendrą limitą, visada apmokestinami tos picos papildomo priedo kaina, net kai nustatymas „Imti mokestį už priedus ir papildymus“ išjungtas. Patiekalams, kurie nėra picos, tai įtakos neturi.",
+      "comboPoolOffHint": "IŠJUNGTA — kiekviena pica naudoja savo „Įskaičiuoti priedai“ skaičių.",
+      "comboPoolOnHint": "ĮJUNGTA — visos picos naudoja vieną bendrą limitą. Pavyzdys: 6 bendri priedai 2 picų rinkinyje — klientas ant pirmosios picos gali uždėti 1 priedą ir antrajai vis dar turės 5 nemokamus. Viršijus limitą papildomi priedai apmokestinami įprastai.",
+      "comboPoolCountLabel": "Įskaičiuota priedų (visoms picoms kartu):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Užpildykite privalomas parinktis",
       "halfHalfToggle": "½ Pusė ir pusė",
       "leftHalf": "Kairioji pusė",
-      "rightHalf": "Dešinioji pusė"
+      "rightHalf": "Dešinioji pusė",
+      "addChoiceQty": "Pridėti {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Pridėti dar vieną: {name}",
+      "removeOne": "Pašalinti vieną: {name}",
+      "slotNeedsMore": "{slot}: pasirinkite dar {count}",
+      "howMany": "Kiek?",
+      "poolMeter": "Bendri priedai: panaudota {used} iš {total}",
+      "poolLeft": "liko {left}",
+      "poolEmpty": "Viskas panaudota — papildomi priedai mokami"
     },
     "guidedPromo": {
       "buildYourDeal": "Sukurkite savo pasiūlymą",

@@ -378,7 +378,9 @@
       "completeSelections": "Veuillez faire toutes les sélections obligatoires",
       "chooseSize": "Veuillez choisir une taille pour continuer",
       "completeRequired": "Veuillez compléter les sélections obligatoires"
-    }
+    },
+    "toppingsShared": "Garnitures — il reste {left} sur {total} garnitures partagées",
+    "poolIncluded": "Incluse"
   },
   "info": {
     "poweredBy": "Propulsé par <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Impossible de dupliquer le groupe — veuillez réessayer.",
       "refundableDeposit": "Caution remboursable",
       "refundableDepositHint": "Ajoute une caution consignée au prix — facturée au client mais non taxée, jamais remisée ni éligible aux récompenses, et entièrement remboursable.",
-      "depositAmountLabel": "Montant de la caution"
+      "depositAmountLabel": "Montant de la caution",
+      "comboAllowDuplicates": "Autoriser l'ajout du même article plusieurs fois",
+      "comboAllowDuplicatesHelp": "Activé : un client qui remplit cette étape peut prendre plusieurs exemplaires d'un même article — p. ex. 4× la même boisson gazeuse — à l'aide des boutons de quantité. Désactivé : chaque choix doit être un article différent.",
+      "comboPoolTitle": "Partager les garnitures incluses entre toutes les pizzas",
+      "comboPoolHelp": "S'applique uniquement aux pizzas de ce combo. Lorsque cette option est activée, le nombre de « Garnitures incluses » propre à chaque pizza (défini dans son onglet Configuration pizza) est ignoré dans ce combo — ce nombre partagé le remplace. Les garnitures au-delà du quota partagé sont toujours facturées au prix des garnitures supplémentaires de la pizza concernée, même si « Facturer les suppléments et extras » est désactivé. Les articles autres que les pizzas ne sont pas concernés.",
+      "comboPoolOffHint": "Désactivé — chaque pizza utilise son propre nombre de « Garnitures incluses ».",
+      "comboPoolOnHint": "Activé — toutes les pizzas puisent dans un même quota partagé. Exemple : 6 garnitures partagées pour un combo de 2 pizzas — un client peut mettre 1 garniture sur la première pizza et il lui en reste encore 5 gratuites pour la seconde. Au-delà, les garnitures supplémentaires sont facturées normalement.",
+      "comboPoolCountLabel": "Garnitures incluses (toutes pizzas confondues) :"
     },
     "promotionsList": {
       "stackingMaster": "Maître",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Complétez les options obligatoires",
       "halfHalfToggle": "½ Moitié-moitié",
       "leftHalf": "Moitié gauche",
-      "rightHalf": "Moitié droite"
+      "rightHalf": "Moitié droite",
+      "addChoiceQty": "Ajouter {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Ajouter 1 {name}",
+      "removeOne": "Retirer 1 {name}",
+      "slotNeedsMore": "{slot} : encore {count} à choisir",
+      "howMany": "Combien ?",
+      "poolMeter": "Garnitures partagées : {used} sur {total} utilisées",
+      "poolLeft": "Il en reste {left}",
+      "poolEmpty": "Tout est utilisé — les garnitures supplémentaires sont payantes"
     },
     "guidedPromo": {
       "buildYourDeal": "Composez votre offre",

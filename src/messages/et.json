@@ -378,7 +378,9 @@
       "completeSelections": "Palun tee kõik nõutavad valikud",
       "chooseSize": "Palun vali suurus, et jätkata",
       "completeRequired": "Palun täida nõutavad valikud"
-    }
+    },
+    "toppingsShared": "Lisandid — ühiseid lisandeid alles {left}/{total}",
+    "poolIncluded": "Sisaldub"
   },
   "info": {
     "poweredBy": "Teenuse pakub <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Rühma ei õnnestunud dubleerida — proovi uuesti.",
       "refundableDeposit": "Tagastatav tagatis",
       "refundableDepositHint": "Lisab hinnale tagastatava tagatise — võetakse kliendilt, kuid seda ei maksustata, sellele ei tehta kunagi allahindlust ega anna preemiaõigust ja see tagastatakse täielikult.",
-      "depositAmountLabel": "Tagatise summa"
+      "depositAmountLabel": "Tagatise summa",
+      "comboAllowDuplicates": "Luba sama toodet lisada mitu korda",
+      "comboAllowDuplicatesHelp": "SEES: klient saab seda sammu täites võtta ühte toodet mitu tükki — nt 4× sama karastusjook — koguse nuppude abil. VÄLJAS: iga valik peab olema erinev toode.",
+      "comboPoolTitle": "Jaga kaasatud täidised kõigi pitsade vahel",
+      "comboPoolHelp": "Kehtib ainult selle kombo pitsadele. Kui SEES, eiratakse selles kombos iga pitsa enda seadet „Kaasatud täidised“ (vahekaardilt „Pizza seadistus“) — selle asemel kehtib siinne jagatud arv. Jagatud limiiti ületavate lisatäidiste eest võetakse alati selle pitsa lisatäidise hind, isegi kui „Lisandite ja ekstrade eest tasu võtmine“ on väljas. Muid tooteid peale pitsade see ei mõjuta.",
+      "comboPoolOffHint": "VÄLJAS — iga pitsa kasutab oma „Kaasatud täidised“ arvu.",
+      "comboPoolOnHint": "SEES — kõik pitsad kasutavad ühte jagatud limiiti. Näide: 2 pitsaga kombos on 6 jagatud täidist — klient võib panna esimesele pitsale 1 täidise ja teise jaoks jääb ikka 5 tasuta. Sellest edasi võetakse lisatäidiste eest tasu tavapäraselt.",
+      "comboPoolCountLabel": "Kaasatud täidiseid (kõik pitsad kokku):"
     },
     "promotionsList": {
       "stackingMaster": "Peamine",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Täida kohustuslikud valikud",
       "halfHalfToggle": "½ Pool ja pool",
       "leftHalf": "Vasak pool",
-      "rightHalf": "Parem pool"
+      "rightHalf": "Parem pool",
+      "addChoiceQty": "Lisa {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Lisa veel üks {name}",
+      "removeOne": "Eemalda üks {name}",
+      "slotNeedsMore": "{slot}: vali veel {count}",
+      "howMany": "Mitu?",
+      "poolMeter": "Ühised lisandid: {used}/{total} kasutatud",
+      "poolLeft": "Alles {left}",
+      "poolEmpty": "Kõik kasutatud — täiendavad lisandid on tasulised"
     },
     "guidedPromo": {
       "buildYourDeal": "Pane oma pakkumine kokku",

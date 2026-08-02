@@ -378,7 +378,9 @@
       "completeSelections": "Bitte treffen Sie alle erforderlichen Auswahlen",
       "chooseSize": "Bitte wählen Sie eine Größe, um fortzufahren",
       "completeRequired": "Bitte vervollständigen Sie alle Pflichtangaben"
-    }
+    },
+    "toppingsShared": "Beläge – noch {left} von {total} gemeinsamen Belägen übrig",
+    "poolIncluded": "Inklusive"
   },
   "info": {
     "poweredBy": "Bereitgestellt von <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Gruppe konnte nicht dupliziert werden — bitte erneut versuchen.",
       "refundableDeposit": "Erstattbare Kaution",
       "refundableDepositHint": "Fügt dem Preis eine rückgabefähige Kaution hinzu — wird dem Kunden berechnet, aber nicht besteuert, nie rabattiert oder prämienberechtigt und vollständig erstattbar.",
-      "depositAmountLabel": "Kautionsbetrag"
+      "depositAmountLabel": "Kautionsbetrag",
+      "comboAllowDuplicates": "Mehrfaches Hinzufügen desselben Artikels erlauben",
+      "comboAllowDuplicatesHelp": "AN: Kunden können in diesem Schritt über die Mengen-Schaltflächen denselben Artikel mehrmals wählen — z. B. 4× dieselbe Limo. AUS: Jede Auswahl muss ein anderer Artikel sein.",
+      "comboPoolTitle": "Enthaltene Beläge über alle Pizzen hinweg teilen",
+      "comboPoolHelp": "Gilt nur für die Pizzen in diesem Combo. Wenn AN, wird die eigene Einstellung „Enthaltene Beläge“ jeder Pizza (aus ihrem Tab „Pizza-Einrichtung“) innerhalb dieses Combos ignoriert — diese gemeinsame Anzahl ersetzt sie. Extra-Beläge über das gemeinsame Kontingent hinaus werden immer zum Extra-Belag-Preis der jeweiligen Pizza berechnet, auch wenn „Aufpreis für Zusätze & Extras berechnen“ ausgeschaltet ist. Nicht-Pizza-Artikel sind nicht betroffen.",
+      "comboPoolOffHint": "AUS — für jede Pizza gilt ihre eigene Einstellung „Enthaltene Beläge“.",
+      "comboPoolOnHint": "AN — alle Pizzen teilen sich ein gemeinsames Kontingent. Beispiel: 6 gemeinsame Beläge in einem Combo mit 2 Pizzen — ein Kunde kann 1 Belag auf die erste Pizza legen und hat noch 5 gratis für die zweite. Darüber hinaus werden Extra-Beläge normal berechnet.",
+      "comboPoolCountLabel": "Enthaltene Beläge (alle Pizzen zusammen):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Erforderliche Optionen auswählen",
       "halfHalfToggle": "½ Halb & halb",
       "leftHalf": "Linke Hälfte",
-      "rightHalf": "Rechte Hälfte"
+      "rightHalf": "Rechte Hälfte",
+      "addChoiceQty": "{count} hinzufügen{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Noch 1 {name} hinzufügen",
+      "removeOne": "1 {name} entfernen",
+      "slotNeedsMore": "{slot}: noch {count} auswählen",
+      "howMany": "Wie viele?",
+      "poolMeter": "Gemeinsame Beläge: {used} von {total} verwendet",
+      "poolLeft": "{left} übrig",
+      "poolEmpty": "Alle aufgebraucht – zusätzliche Beläge werden berechnet"
     },
     "guidedPromo": {
       "buildYourDeal": "Stell dir dein Angebot zusammen",

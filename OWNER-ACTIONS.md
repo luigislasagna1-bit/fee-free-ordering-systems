@@ -70,6 +70,26 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A38. 🍕 Combos: pick-4-at-once + SHARED toppings across pizzas — BUILT (2026-08-02)
+Your two asks, modeled on the GloriaFood/Uber screenshots you sent, in one release:
+1. **"Choose 4 Pop" now fills in ONE pass** — tap a drink and −/+ buttons appear right on the
+   row (4 of one kind, 2+2, whatever); drinks with sizes ask their questions ONCE with a
+   "How many?" — no more one-popup-per-drink. A red note lists exactly what's still missing.
+   Cart/kitchen/receipt print "4x Coke" on one line. New per-step setting (like GloriaFood's):
+   **"Allow adding the same item multiple times"** — ON by default.
+2. **NEW combo option no other platform has: "Share included toppings across all pizzas"**
+   (Combo tab → amber card, shows when the combo contains pizzas). Your example: 2 pizzas,
+   6 toppings combined — 1 on the first leaves 5 free for the second; beyond that, charged at
+   that pizza's own topping price. Customers see a live meter ("Shared toppings: 4 of 6
+   used"), and topping buttons say "Included" until the allowance runs out — then the price
+   appears right on the button.
+3. (Under the hood, same release) Fixed a real money hole: combo pizza topping fees were
+   trusted from the customer's browser; the server now re-prices everything itself.
+**YOUR PART:** try it on a test combo (Menu → item → Combo tab), especially the shared-toppings
+card on a 2-pizza combo — and tell Claude if the wording on the two new settings reads right.
+One PAPER print of a combo receipt when convenient (the "4x" collapse + topping prices are on
+both printer paths).
+
 ### A37. 🍽️ Fabrizio cmsajnvkm "smart buttons" — BUILT, awaiting your test + the reply (2026-08-01)
 His request (with Restoo screenshots): let guests answer a few extra things when booking a table.
 **Built exactly to his spec, all OFF by default** — a restaurant that ignores it sees zero change:

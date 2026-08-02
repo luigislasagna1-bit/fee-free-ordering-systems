@@ -14,6 +14,7 @@ import { formatCurrency } from "./utils";
 import { formatTime } from "./format-time";
 import { getDict, type Translator } from "./i18n-dict";
 import { formatDetailRows, type ReservationDetails } from "./reservation-details";
+import { groupBundleChildren } from "./bundle-child-groups";
 
 export type PrinterLanguage = "escpos" | "starprnt" | "star_line" | "plaintext";
 
@@ -566,6 +567,9 @@ export interface ReceiptItem {
     notes?: string | null;
     modifiers?: Array<{ name: string; priceAdjustment?: number }>;
     specialityFee?: number;
+    /** Charged add-on surcharge (combo pizza toppings etc.) — part of the
+     *  child's printed fee alongside specialityFee. 2026-08-02. */
+    extrasFee?: number;
   }> | null;
 }
 
@@ -731,14 +735,16 @@ async function renderKitchenSection(
         applyStyle(r, s);
         r.line(`${item.quantity}x ${item.name}`);
         if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
-          for (const child of item.bundleItems) {
+          // Identical children collapse to one "- 4x Coke" line (2026-08-02) —
+          // MIRRORED with receipt-lines.ts k_items; pizzas never collapse.
+          for (const { child, qty } of groupBundleChildren(item.bundleItems)) {
             applyStyle(r, s);
             const variantPart = child.variantName ? ` (${child.variantName})` : "";
-            const specPart =
-              child.specialityFee && child.specialityFee > 0
-                ? ` (+${fmt(child.specialityFee)})`
-                : "";
-            r.wrapped(`  - 1x ${child.name}${variantPart}${specPart}`, 4);
+            // Upcharge + charged extras ×qty — MIRRORED with receipt-lines.ts
+            // k_items (kitchen mods print no prices). 2026-08-02.
+            const kFee = ((child.specialityFee ?? 0) + ((child as { extrasFee?: number }).extrasFee ?? 0)) * qty;
+            const specPart = kFee > 0 ? ` (+${fmt(kFee)})` : "";
+            r.wrapped(`  - ${qty}x ${child.name}${variantPart}${specPart}`, 4);
             if (modsEnabled && Array.isArray(child.modifiers)) {
               for (const mod of child.modifiers) {
                 applyStyle(r, modStyle);
@@ -895,18 +901,24 @@ async function renderCustomerSection(
         applyStyle(r, s);
         r.columns(`${item.quantity}× ${item.name}`, fmt(item.subtotal));
         if (Array.isArray(item.bundleItems) && item.bundleItems.length > 0) {
-          for (const child of item.bundleItems) {
+          // Same "4x" collapse as the kitchen variant (2026-08-02) — MIRRORED
+          // with receipt-lines.ts items.
+          for (const { child, qty } of groupBundleChildren(item.bundleItems)) {
             applyStyle(r, s);
             const variantPart = child.variantName ? ` (${child.variantName})` : "";
             const specPart =
               child.specialityFee && child.specialityFee > 0
-                ? ` (+${fmt(child.specialityFee)})`
+                ? ` (+${fmt(child.specialityFee * qty)})`
                 : "";
-            r.wrapped(`  - ${child.name}${variantPart}${specPart}`, 2);
+            r.wrapped(`  - ${qty > 1 ? `${qty}x ` : ""}${child.name}${variantPart}${specPart}`, 2);
             if (modsEnabled && Array.isArray(child.modifiers)) {
               for (const mod of child.modifiers) {
                 applyStyle(r, modStyle);
-                r.wrapped(`    + ${mod.name}`, 4);
+                // Charged child lines print their price ×qty (stored price is
+                // per unit; the line aggregates qty units); covered/included
+                // lines print bare — MIRRORED with receipt-lines.ts (2026-08-02).
+                const cp = mod.priceAdjustment && mod.priceAdjustment > 0 ? ` (+${fmt(mod.priceAdjustment * qty)})` : "";
+                r.wrapped(`    + ${mod.name}${cp}`, 4);
               }
             }
           }

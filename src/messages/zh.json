@@ -378,7 +378,9 @@
       "completeSelections": "请完成所有必选项",
       "chooseSize": "请选择大小以继续",
       "completeRequired": "请完成必选项"
-    }
+    },
+    "toppingsShared": "配料 — 共享配料还剩 {left}/{total}",
+    "poolIncluded": "已包含"
   },
   "info": {
     "poweredBy": "由 <brand>Fee Free Ordering</brand> 提供技术支持",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "无法复制分组——请重试。",
       "refundableDeposit": "可退押金",
       "refundableDepositHint": "在价格之外加收可退押金——向顾客收取但不计税，永不打折也不参与奖励，可全额退还。",
-      "depositAmountLabel": "押金金额"
+      "depositAmountLabel": "押金金额",
+      "comboAllowDuplicates": "允许多次添加同一菜品",
+      "comboAllowDuplicatesHelp": "开启：顾客在此步骤中可通过数量按钮多次选择同一菜品，例如 4 份同款汽水。关闭：每次选择都必须是不同的菜品。",
+      "comboPoolTitle": "所有披萨共享包含配料",
+      "comboPoolHelp": "仅适用于此套餐中的披萨。开启后，每个披萨自身的“包含配料”设置（位于其“披萨设置”标签页）在此套餐内将被忽略，由这一共享数量取代。超出共享额度的额外配料始终按该披萨的额外配料价格收费，即使“加料及额外项收费”已关闭。非披萨菜品不受影响。",
+      "comboPoolOffHint": "关闭 — 每个披萨使用自己的“包含配料”数量。",
+      "comboPoolOnHint": "开启 — 所有披萨共用一个共享额度。例如：2 个披萨的套餐共享 6 份配料，顾客可在第一个披萨上加 1 份配料，第二个披萨仍有 5 份免费配料可用。超出后，额外配料按正常价格收费。",
+      "comboPoolCountLabel": "包含配料数（所有披萨合计）："
     },
     "promotionsList": {
       "stackingMaster": "主控",
@@ -6850,7 +6859,16 @@
       "completeRequired": "请完成必选项",
       "halfHalfToggle": "½ 各点一半",
       "leftHalf": "左半边",
-      "rightHalf": "右半边"
+      "rightHalf": "右半边",
+      "addChoiceQty": "添加 {count} 份{price}",
+      "timesCount": "×{count}",
+      "addAnother": "再加一份{name}",
+      "removeOne": "减少一份{name}",
+      "slotNeedsMore": "{slot}：还需选择 {count} 项",
+      "howMany": "要几份？",
+      "poolMeter": "共享配料：已用 {used}/{total}",
+      "poolLeft": "剩余 {left}",
+      "poolEmpty": "已全部用完，额外配料需另收费"
     },
     "guidedPromo": {
       "buildYourDeal": "定制你的优惠",

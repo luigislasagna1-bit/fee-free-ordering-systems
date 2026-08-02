@@ -8,6 +8,7 @@ import {
 import { useCurrencyFormat } from "@/lib/currency-context";
 import { computeApplied } from "@/lib/reward-math";
 import { childBuildLines } from "@/lib/bundle-child-lines";
+import { groupBundleChildren } from "@/lib/bundle-child-groups";
 import { pickHoursForService } from "@/lib/service-hours";
 import { rowIntervals } from "@/lib/restaurant-hours";
 import { parseTheme } from "@/lib/theme";
@@ -2226,18 +2227,21 @@ export function CheckoutModal({
                         )}
                         {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
                           <span className="block mt-1 pl-3 border-l-2 border-gray-100 text-xs text-gray-500 space-y-0.5">
-                            {ci.bundleItems.map((child, ci2) => {
+                            {/* Identical children collapse to "4× Coke" — same
+                                grouping as the cart drawer (2026-08-02). */}
+                            {groupBundleChildren(ci.bundleItems).map(({ child, qty }, ci2) => {
                               // Full child build (crust/sauce/half-half/toppings/
                               // flavour) + note so checkout matches the cart and
                               // the customer can verify before paying (2026-07-08).
                               const { modifierLines, notes } = childBuildLines(child);
+                              // Upcharge + charged extras — matches the cart
+                              // drawer and the composer chip (2026-08-02).
+                              const childFee = ((child.specialityFee ?? 0) + ((child as { extrasFee?: number }).extrasFee ?? 0)) * qty;
                               return (
                               <span key={ci2} className="block">
-                                • {child.name}
+                                • {qty > 1 ? `${qty}× ` : ""}{child.name}
                                 {child.variantName ? ` (${child.variantName})` : ""}
-                                {child.specialityFee && child.specialityFee > 0
-                                  ? ` (+${formatCurrency(child.specialityFee)})`
-                                  : ""}
+                                {childFee > 0 ? ` (+${formatCurrency(childFee)})` : ""}
                                 {modifierLines.map((m, mi) => (
                                   <span key={mi} className="block pl-3 text-gray-400">+ {m.name}</span>
                                 ))}

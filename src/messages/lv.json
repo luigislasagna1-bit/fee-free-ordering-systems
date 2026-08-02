@@ -378,7 +378,9 @@
       "completeSelections": "Lūdzu, veiciet visas obligātās izvēles",
       "chooseSize": "Lūdzu, izvēlieties izmēru, lai turpinātu",
       "completeRequired": "Lūdzu, aizpildiet obligātās izvēles"
-    }
+    },
+    "toppingsShared": "Piedevas — atlikušas {left} no {total} kopīgajām piedevām",
+    "poolIncluded": "Iekļauta"
   },
   "info": {
     "poweredBy": "Nodrošina <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Grupu neizdevās dublēt — mēģiniet vēlreiz.",
       "refundableDeposit": "Atmaksājama drošības nauda",
       "refundableDepositHint": "Pievieno cenai atmaksājamu drošības naudu — tiek iekasēta no klienta, bet netiek aplikta ar nodokli, nekad netiek atlaista un nedod tiesības uz atlīdzību, un tiek pilnībā atmaksāta.",
-      "depositAmountLabel": "Drošības naudas summa"
+      "depositAmountLabel": "Drošības naudas summa",
+      "comboAllowDuplicates": "Atļaut vienu un to pašu produktu pievienot vairākas reizes",
+      "comboAllowDuplicatesHelp": "Ieslēgts: klients, aizpildot šo soli, ar daudzuma pogām var paņemt vairākas vienības no viena produkta — piemēram, 4× vienu un to pašu limonādi. Izslēgts: katrai izvēlei jābūt citam produktam.",
+      "comboPoolTitle": "Kopīgot iekļautās piedevas starp visām picām",
+      "comboPoolHelp": "Attiecas tikai uz šī komplekta picām. Kamēr iestatījums ir ieslēgts, katras picas individuālais \"Iekļautās piedevas\" skaits (no cilnes \"Picas iestatīšana\") šajā komplektā tiek ignorēts — to aizstāj šis kopīgais skaits. Par piedevām, kas pārsniedz kopīgo limitu, vienmēr tiek iekasēta attiecīgās picas papildu piedevas cena — arī tad, ja \"Iekasēt maksu par papildinājumiem un ekstrām\" ir izslēgts. Produktus, kas nav picas, tas neietekmē.",
+      "comboPoolOffHint": "Izslēgts — katra pica izmanto savu \"Iekļautās piedevas\" skaitu.",
+      "comboPoolOnHint": "Ieslēgts — visas picas izmanto vienu kopīgu limitu. Piemērs: 6 kopīgas piedevas komplektā ar 2 picām — klients pirmajai picai var pievienot 1 piedevu, un otrajai vēl paliek 5 bez maksas. Pārsniedzot limitu, par papildu piedevām maksa tiek piemērota kā parasti.",
+      "comboPoolCountLabel": "Iekļautās piedevas (visām picām kopā):"
     },
     "promotionsList": {
       "stackingMaster": "Galvenais",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Aizpildiet obligātās opcijas",
       "halfHalfToggle": "½ Puse uz pusi",
       "leftHalf": "Kreisā puse",
-      "rightHalf": "Labā puse"
+      "rightHalf": "Labā puse",
+      "addChoiceQty": "Pievienot {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Pievienot vēl vienu {name}",
+      "removeOne": "Noņemt vienu {name}",
+      "slotNeedsMore": "{slot}: izvēlieties vēl {count}",
+      "howMany": "Cik daudz?",
+      "poolMeter": "Kopīgās piedevas: izmantotas {used} no {total}",
+      "poolLeft": "Vēl {left}",
+      "poolEmpty": "Visas izmantotas — papildu piedevas par maksu"
     },
     "guidedPromo": {
       "buildYourDeal": "Izveido savu piedāvājumu",

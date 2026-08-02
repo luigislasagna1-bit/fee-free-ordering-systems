@@ -378,7 +378,9 @@
       "completeSelections": "すべての必須項目を選んでください",
       "chooseSize": "続けるにはサイズを選んでください",
       "completeRequired": "必須の選択肢をすべて入力してください"
-    }
+    },
+    "toppingsShared": "トッピング — 共有トッピング残り {left}/{total}",
+    "poolIncluded": "込み"
   },
   "info": {
     "poweredBy": "<brand>Fee Free Ordering</brand> による提供",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "グループを複製できませんでした — もう一度お試しください。",
       "refundableDeposit": "返金可能なデポジット",
       "refundableDepositHint": "価格に返却式のデポジットを追加します。お客様に請求されますが課税されず、割引や特典の対象にもならず、全額返金されます。",
-      "depositAmountLabel": "デポジット金額"
+      "depositAmountLabel": "デポジット金額",
+      "comboAllowDuplicates": "同じ商品を複数回追加できるようにする",
+      "comboAllowDuplicatesHelp": "オン：このステップでは、お客様が数量ボタンを使って同じ商品を複数個選べます（例：同じドリンクを4つ）。オフ：選ぶ商品はすべて異なる必要があります。",
+      "comboPoolTitle": "含まれるトッピングを全ピザで共有する",
+      "comboPoolHelp": "このコンボ内のピザにのみ適用されます。オンの間は、各ピザ自体の「含まれるトッピング」（ピザ設定タブで設定）はこのコンボ内では無視され、この共有数がそれに代わります。共有枠を超える追加トッピングは、「トッピング・追加オプションを有料にする」がオフのときでも、常にそのピザの追加トッピング価格で課金されます。ピザ以外の商品には影響しません。",
+      "comboPoolOffHint": "オフ — 各ピザはそれぞれの「含まれるトッピング」の数を使用します。",
+      "comboPoolOnHint": "オン — すべてのピザが1つの共有枠からトッピングを使います。例：ピザ2枚のコンボで共有トッピングが6個の場合、1枚目に1個のせても、2枚目にはまだ5個を無料で使えます。それを超える追加トッピングは通常どおり課金されます。",
+      "comboPoolCountLabel": "含まれるトッピング数（全ピザ合計）："
     },
     "promotionsList": {
       "stackingMaster": "マスター",
@@ -6850,7 +6859,16 @@
       "completeRequired": "必須オプションを選択してください",
       "halfHalfToggle": "½ ハーフ＆ハーフ",
       "leftHalf": "左半分",
-      "rightHalf": "右半分"
+      "rightHalf": "右半分",
+      "addChoiceQty": "{count}個追加{price}",
+      "timesCount": "×{count}",
+      "addAnother": "{name}をもう1つ追加",
+      "removeOne": "{name}を1つ減らす",
+      "slotNeedsMore": "{slot}：あと{count}個お選びください",
+      "howMany": "いくつにしますか？",
+      "poolMeter": "共有トッピング：{used}/{total} 使用",
+      "poolLeft": "残り{left}個",
+      "poolEmpty": "すべて使用済み — 追加のトッピングは有料です"
     },
     "guidedPromo": {
       "buildYourDeal": "お得なセットを作ろう",

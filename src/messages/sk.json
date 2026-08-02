@@ -378,7 +378,9 @@
       "completeSelections": "Prosím, vykonajte všetky povinné výbery",
       "chooseSize": "Prosím, vyberte veľkosť pre pokračovanie",
       "completeRequired": "Prosím, dokončite povinné výbery"
-    }
+    },
+    "toppingsShared": "Prísady — zostáva {left} z {total} spoločných prísad",
+    "poolIncluded": "V cene"
   },
   "info": {
     "poweredBy": "Poháňané službou <brand>Fee Free Ordering</brand>",
@@ -3248,7 +3250,14 @@
       "failedToDuplicateGroup": "Skupinu sa nepodarilo duplikovať — skúste to znova.",
       "refundableDeposit": "Vratná záloha",
       "refundableDepositHint": "Pridáva k cene vratnú zálohu — účtuje sa zákazníkovi, ale nezdaňuje sa, nikdy sa nezľavňuje ani neoprávňuje na odmeny a plne sa vracia.",
-      "depositAmountLabel": "Výška zálohy"
+      "depositAmountLabel": "Výška zálohy",
+      "comboAllowDuplicates": "Povoliť pridanie rovnakej položky viackrát",
+      "comboAllowDuplicatesHelp": "ZAPNUTÉ: zákazník môže v tomto kroku vybrať viac kusov jednej položky — napr. 4× rovnakú limonádu — pomocou tlačidiel množstva. VYPNUTÉ: každý výber musí byť iná položka.",
+      "comboPoolTitle": "Zdieľať zahrnuté prísady medzi všetkými pizzami",
+      "comboPoolHelp": "Platí len pre pizze v tomto kombe. Kým je zapnuté, vlastné nastavenie „Zahrnuté prísady“ každej pizze (z jej karty Nastavenie pizze) sa v tomto kombe ignoruje — nahrádza ho tento zdieľaný počet. Prísady nad rámec zdieľaného limitu sa vždy účtujú podľa ceny za extra prísadu danej pizze, aj keď je vypnuté „Účtovať za doplnky a extra prísady“. Položiek, ktoré nie sú pizza, sa to netýka.",
+      "comboPoolOffHint": "VYPNUTÉ — každá pizza používa svoj vlastný počet z nastavenia „Zahrnuté prísady“.",
+      "comboPoolOnHint": "ZAPNUTÉ — všetky pizze čerpajú z jedného spoločného limitu. Príklad: 6 zdieľaných prísad v kombe s 2 pizzami — zákazník môže dať 1 prísadu na prvú pizzu a na druhú mu stále zostáva 5 zadarmo. Nad tento limit sa extra prísady účtujú bežným spôsobom.",
+      "comboPoolCountLabel": "Zahrnuté prísady (všetky pizze spolu):"
     },
     "promotionsList": {
       "stackingMaster": "Hlavná",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Vyplňte povinné možnosti",
       "halfHalfToggle": "½ Polovica & polovica",
       "leftHalf": "Ľavá polovica",
-      "rightHalf": "Pravá polovica"
+      "rightHalf": "Pravá polovica",
+      "addChoiceQty": "Pridať {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Pridať ešte 1× {name}",
+      "removeOne": "Odobrať 1× {name}",
+      "slotNeedsMore": "{slot}: vyberte ešte {count}",
+      "howMany": "Koľko kusov?",
+      "poolMeter": "Spoločné prísady: použité {used} z {total}",
+      "poolLeft": "Zostáva: {left}",
+      "poolEmpty": "Všetko použité — ďalšie prísady sú spoplatnené"
     },
     "guidedPromo": {
       "buildYourDeal": "Poskladajte si ponuku",

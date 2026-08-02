@@ -378,7 +378,9 @@
       "completeSelections": "Proszę dokonać wszystkich wymaganych wyborów",
       "chooseSize": "Proszę wybrać rozmiar, aby kontynuować",
       "completeRequired": "Proszę uzupełnić wymagane pola"
-    }
+    },
+    "toppingsShared": "Dodatki — pozostało {left} z {total} wspólnych dodatków",
+    "poolIncluded": "W cenie"
   },
   "info": {
     "poweredBy": "Obsługiwane przez <brand>Fee Free Ordering</brand>",
@@ -2508,7 +2510,14 @@
       "failedToDuplicateGroup": "Nie udało się zduplikować grupy — spróbuj ponownie.",
       "refundableDeposit": "Zwrotna kaucja",
       "refundableDepositHint": "Dodaje zwrotną kaucję do ceny — pobierana od klienta, ale nieopodatkowana, nigdy nierabatowana ani uprawniająca do nagród, i w pełni zwracana.",
-      "depositAmountLabel": "Kwota kaucji"
+      "depositAmountLabel": "Kwota kaucji",
+      "comboAllowDuplicates": "Zezwalaj na wielokrotne dodawanie tej samej pozycji",
+      "comboAllowDuplicatesHelp": "WŁĄCZONE: klient wypełniający ten krok może wybrać kilka sztuk tej samej pozycji — np. 4× ten sam napój — za pomocą przycisków ilości. WYŁĄCZONE: każdy wybór musi być inną pozycją.",
+      "comboPoolTitle": "Wspólna pula wliczonych składników dla wszystkich pizz",
+      "comboPoolHelp": "Dotyczy wyłącznie pizz w tym zestawie. Gdy WŁĄCZONE, własne „Wliczone składniki” każdej pizzy (z jej zakładki „Konfiguracja pizzy”) są w tym zestawie ignorowane — zastępuje je ta wspólna liczba. Składniki ponad wspólną pulę są zawsze płatne według ceny dodatkowego składnika danej pizzy, nawet gdy opcja „Naliczaj opłatę za dodatki” jest wyłączona. Pozycje inne niż pizza pozostają bez zmian.",
+      "comboPoolOffHint": "WYŁĄCZONE — każda pizza korzysta z własnej liczby z ustawienia „Wliczone składniki”.",
+      "comboPoolOnHint": "WŁĄCZONE — wszystkie pizze korzystają z jednej wspólnej puli. Przykład: 6 wspólnych składników w zestawie z 2 pizzami — klient może dodać 1 składnik do pierwszej pizzy i wciąż ma 5 darmowych na drugą. Powyżej tej puli dodatkowe składniki są płatne normalnie.",
+      "comboPoolCountLabel": "Wliczone składniki (łącznie dla wszystkich pizz):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Uzupełnij wymagane opcje",
       "halfHalfToggle": "½ Pół na pół",
       "leftHalf": "Lewa połowa",
-      "rightHalf": "Prawa połowa"
+      "rightHalf": "Prawa połowa",
+      "addChoiceQty": "Dodaj {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Dodaj kolejną sztukę: {name}",
+      "removeOne": "Usuń jedną sztukę: {name}",
+      "slotNeedsMore": "{slot}: wybierz jeszcze {count}",
+      "howMany": "Ile sztuk?",
+      "poolMeter": "Wspólne dodatki: wykorzystano {used} z {total}",
+      "poolLeft": "Pozostało: {left}",
+      "poolEmpty": "Wszystkie wykorzystane — kolejne dodatki są płatne"
     },
     "guidedPromo": {
       "buildYourDeal": "Skomponuj swoją ofertę",

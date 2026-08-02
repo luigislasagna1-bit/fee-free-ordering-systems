@@ -1,9 +1,10 @@
 "use client";
-import { useMemo, useState } from "react";
-import { X, Check, Plus, Trash2, Pencil } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { X, Check, Plus, Minus, Trash2, Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PizzaBuilder, parsePizzaConfig, pizzaCustomizationToModifiers, type PizzaCustomization } from "./PizzaBuilder";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
+import { priceComboPizzaChildren } from "@/lib/combo-child-pricing";
 
 // The two surfaces (this file + OrderingPageClient + PizzaBuilder) each have
 // their own MenuItem shape; combos pass items between them, so we stay loose.
@@ -87,11 +88,23 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
   const [picks, setPicks] = useState<Record<string, Pick[]>>(() => {
     const seeded: Record<string, Pick[]> = Object.fromEntries((config?.slots ?? []).map((s) => [s.id, []]));
     if (!initial?.children?.length || !config) return seeded;
+    // Seed keys must be GLOBALLY unique — the old per-slot-index format
+    // collided for identical pizzas in different slots, and poolDerived keys
+    // fees by pick key, so the second pizza's money overwrote the first's.
+    // (Adversarial review 2026-08-02.)
+    let seedSeq = 0;
     for (const c of initial.children) {
       let slotIdx = -1;
+      // Exact slot via the stored slotId — but ONLY if the item is still in
+      // that slot's eligible pool (an owner edit may have removed it; stale
+      // picks drop, same as the greedy path below).
       if (c.slotId && seeded[c.slotId] && seeded[c.slotId].length < (config.slots.find((s) => s.id === c.slotId)?.max ?? 0)) {
-        slotIdx = config.slots.findIndex((s) => s.id === c.slotId);
-      } else {
+        const exact = config.slots.findIndex((s) => s.id === c.slotId);
+        if (exact !== -1 && (slotPools[exact]?.some((p: AnyItem) => p.id === c.menuItemId) ?? false)) {
+          slotIdx = exact;
+        }
+      }
+      if (slotIdx === -1) {
         slotIdx = config.slots.findIndex((s, si) => {
           if ((seeded[s.id]?.length ?? 0) >= s.max) return false;
           return slotPools[si]?.some((p: AnyItem) => p.id === c.menuItemId) ?? false;
@@ -100,7 +113,7 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
       if (slotIdx === -1) continue; // stale pick (combo config changed) → drop
       const slot = config.slots[slotIdx];
       seeded[slot.id].push({
-        key: `${c.menuItemId}-${seeded[slot.id].length}-${c.variantId ?? c.name}`,
+        key: `${c.menuItemId}-s${seedSeq++}`,
         menuItemId: c.menuItemId, name: c.name, variantId: c.variantId, variantName: c.variantName,
         modifiers: c.modifiers, pizzaCustomization: c.pizzaCustomization,
         upcharge: c.upcharge ?? 0, extrasFee: c.extrasFee,
@@ -119,6 +132,12 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     slotId: string; item: AnyItem; allowedVariants: AnyItem[];
     editKey?: string; initial?: { variantId?: string; modifiers?: ComboCartChild["modifiers"] };
   } | null>(null);
+  // Monotonic pick-key counter. Keys used to be `${itemId}-${picks.length}-…`,
+  // which COLLIDES after a remove + re-add of the same item/size (two picks
+  // share a key → removePick strips both, React keys clash). One counter per
+  // composer instance keeps every key unique for good. Luigi 2026-08-02.
+  const keyCounter = useRef(0);
+  const nextKey = (itemId: string) => `${itemId}-k${keyCounter.current++}`;
 
   if (!config) return null;
 
@@ -134,13 +153,26 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     return allowedIds ? variants.filter((v) => allowedIds.includes(v.id)) : variants;
   };
 
-  const addPick = (slotId: string, pick: Pick) =>
+  // Add `count` copies of a pick in ONE state update (the customize-once
+  // "apply ×N" path). Each copy gets its own unique key; capacity-clamped.
+  const addPickN = (slotId: string, pick: Omit<Pick, "key">, count = 1) =>
     setPicks((p) => {
       const slot = config.slots.find((s) => s.id === slotId)!;
       const cur = p[slotId] ?? [];
-      if (cur.length >= slot.max) return p; // at max — ignore (UI also disables)
-      return { ...p, [slotId]: [...cur, pick] };
+      // allowDuplicates=false is enforced HERE (the state layer), not just in
+      // the row UI — the customizer/builder confirm path lands here too, and a
+      // duplicate-free slot must reject a second unit of the same item no
+      // matter which door it came through. (Adversarial review 2026-08-02.)
+      const dupBlocked = slot.allowDuplicates === false && cur.some((x) => x.menuItemId === pick.menuItemId);
+      if (dupBlocked) return p;
+      const room = Math.max(0, slot.max - cur.length);
+      const cap = slot.allowDuplicates === false ? Math.min(1, room) : room;
+      const n = Math.min(Math.max(1, Math.floor(count)), cap);
+      if (n <= 0) return p; // at max — ignore (UI also disables)
+      const copies: Pick[] = Array.from({ length: n }, () => ({ ...pick, key: nextKey(pick.menuItemId) }));
+      return { ...p, [slotId]: [...cur, ...copies] };
     });
+  const addPick = (slotId: string, pick: Pick) => addPickN(slotId, pick, 1);
   const removePick = (slotId: string, key: string) =>
     setPicks((p) => ({ ...p, [slotId]: (p[slotId] ?? []).filter((x) => x.key !== key) }));
   // In-place edit: swap the pick at `key` for the adjusted one, keeping its
@@ -178,6 +210,10 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     // through one (the orders route would reject it anyway).
     if (item.isSoldOut) return;
     const slot = slotById(slotId);
+    // Duplicate-free slot + item already picked → nothing to open (addPickN
+    // would reject the confirm anyway; don't send the customer into a
+    // customizer whose Add can't land).
+    if (slot.allowDuplicates === false && (picks[slotId] ?? []).some((p) => p.menuItemId === item.id)) return;
     if (parsePizzaConfig(item.pizzaConfig)) {
       setPizzaFor({ slotId, item, upcharge: comboUpchargeFor(slot, item.id) }); // pizza → builder
       return;
@@ -189,27 +225,122 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     }
     // Nothing to choose — add straight away (single/no size, no modifiers).
     const v = allowed.length === 1 ? allowed[0] : null;
-    addPick(slotId, {
-      key: `${item.id}-${picks[slotId]?.length ?? 0}-${v?.id ?? item.name}`,
+    addPickN(slotId, {
       menuItemId: item.id, name: item.name, variantId: v?.id, variantName: v?.name,
       upcharge: comboUpchargeFor(slot, item.id, v?.id),
     });
   };
 
+  // Collapse identical picks for the chips row: same item + size + modifier
+  // lines + fees ⇒ one chip with every member's key (trash pops the last).
+  // A pizza build never groups — each is its own physical build.
+  const groupPicks = (list: Pick[]): Array<{ rep: Pick; keys: string[] }> => {
+    const out: Array<{ rep: Pick; keys: string[] }> = [];
+    const bySig = new Map<string, { rep: Pick; keys: string[] }>();
+    for (const p of list) {
+      if (p.pizzaCustomization) { out.push({ rep: p, keys: [p.key] }); continue; }
+      const sig = JSON.stringify([
+        p.menuItemId, p.variantId ?? "", (p.modifiers ?? []).map((m) => [m.name, m.priceAdjustment ?? 0]),
+        p.upcharge ?? 0, p.extrasFee ?? 0,
+      ]);
+      const existing = bySig.get(sig);
+      if (existing) { existing.keys.push(p.key); continue; }
+      const entry = { rep: p, keys: [p.key] };
+      bySig.set(sig, entry);
+      out.push(entry);
+    }
+    return out;
+  };
+
+  // ── One-pass multi-select (Luigi 2026-08-02, the GloriaFood pattern) ──────
+  // A selected pool row grows −/+ steppers: [+] repeats the LAST pick of that
+  // item verbatim (identical size/mods — the customize-once promise), [−]
+  // removes the last one. Gated by the slot's allowDuplicates (default true).
+  const countOfItem = (slotId: string, itemId: string) =>
+    (picks[slotId] ?? []).filter((p) => p.menuItemId === itemId).length;
+  const addOneMore = (slotId: string, itemId: string) =>
+    setPicks((p) => {
+      const slot = config.slots.find((s) => s.id === slotId)!;
+      const cur = p[slotId] ?? [];
+      if (cur.length >= slot.max) return p;
+      if (slot.allowDuplicates === false) return p; // duplicating is the whole point of this helper
+      const last = [...cur].reverse().find((x) => x.menuItemId === itemId);
+      if (!last) return p;
+      const { key: _oldKey, ...rest } = last;
+      return { ...p, [slotId]: [...cur, { ...rest, key: nextKey(itemId) }] };
+    });
+  const removeLastOf = (slotId: string, itemId: string) =>
+    setPicks((p) => {
+      const cur = p[slotId] ?? [];
+      const idx = [...cur].map((x) => x.menuItemId).lastIndexOf(itemId);
+      if (idx < 0) return p;
+      return { ...p, [slotId]: cur.filter((_, i) => i !== idx) };
+    });
+
+  // ── Shared topping pool: the COMPOSER owns the money (Luigi 2026-08-02) ──
+  // Every pizza pick's fee is re-derived HERE from its stored customization on
+  // ANY change, via the same pure lib the orders route charges with — so
+  // editing pizza #1 re-prices pizza #2 (the old save-time deltas could not),
+  // and preview == charge by construction. Per-pizza mode (no pool) keeps the
+  // save-time fees, which the same lib reproduces server-side.
+  const poolDerived = useMemo(() => {
+    const shared = config?.sharedToppings ?? 0;
+    if (!config || shared < 1) return null;
+    const itemById = new Map<string, AnyItem>(allItems.map((i: AnyItem) => [i.id, i]));
+    // Only picks whose item we can still resolve join the pool walk — pricing a
+    // vanished item with empty modifier groups would drop every line and show
+    // $0. Unresolvable picks keep their STORED fee via the effectiveExtras
+    // fallback; the server stays the authority. (Adversarial review 2026-08-02.)
+    const ordered = config.slots.flatMap((s) =>
+      (picks[s.id] ?? []).filter((p) => p.pizzaCustomization && itemById.has(p.menuItemId)));
+    const priced = priceComboPizzaChildren({
+      children: ordered.map((p) => {
+        const item = itemById.get(p.menuItemId);
+        return {
+          pizzaConfigRaw: item?.pizzaConfig,
+          variantName: p.variantName ?? null,
+          rawModifiers: p.modifiers ?? [],
+          candidateGroups: item?.modifierGroups ?? [],
+        };
+      }),
+      extrasCharge,
+      sharedToppings: shared,
+    });
+    const byKey = new Map<string, { extrasFee: number; modifiers: ComboCartChild["modifiers"]; halfUnitsUsed: number }>();
+    let usedHalfUnits = 0;
+    priced.forEach((res, i) => {
+      byKey.set(ordered[i].key, {
+        extrasFee: res.extrasFee,
+        modifiers: res.validatedMods.length ? res.validatedMods : ordered[i].modifiers,
+        halfUnitsUsed: res.toppingHalfUnitsUsed,
+      });
+      usedHalfUnits += res.toppingHalfUnitsUsed;
+    });
+    return { byKey, usedHalfUnits, totalHalfUnits: shared * 2 };
+  }, [config, picks, allItems, extrasCharge]);
+  const effectiveExtras = (p: Pick): number =>
+    poolDerived?.byKey.get(p.key)?.extrasFee ?? p.extrasFee ?? 0;
+
   const base = comboItem.price || 0;
-  const addonTotal = Object.values(picks).flat().reduce((s, p) => s + (p.upcharge || 0) + (p.extrasFee || 0), 0);
+  const addonTotal = Object.values(picks).flat().reduce((s, p) => s + (p.upcharge || 0) + effectiveExtras(p), 0);
   const lineTotal = Math.round((base + addonTotal) * 100) / 100;
   const slotsSatisfied = config.slots.every((s) => (picks[s.id]?.length ?? 0) >= s.min);
 
   const submit = () => {
     if (!slotsSatisfied) return;
     const children: ComboCartChild[] = config.slots.flatMap((s) =>
-      (picks[s.id] ?? []).map((p) => ({
-        menuItemId: p.menuItemId, name: p.name, variantId: p.variantId, variantName: p.variantName,
-        modifiers: p.modifiers, pizzaCustomization: p.pizzaCustomization,
-        upcharge: p.upcharge, extrasFee: p.extrasFee,
-        slotId: s.id,
-      })),
+      (picks[s.id] ?? []).map((p) => {
+        const derived = poolDerived?.byKey.get(p.key);
+        return {
+          menuItemId: p.menuItemId, name: p.name, variantId: p.variantId, variantName: p.variantName,
+          // Pool mode: derived modifiers carry the pool-walk DISPLAY charges
+          // ($0 = covered), matching what the server will persist.
+          modifiers: derived?.modifiers ?? p.modifiers,
+          pizzaCustomization: p.pizzaCustomization,
+          upcharge: p.upcharge, extrasFee: derived?.extrasFee ?? p.extrasFee,
+          slotId: s.id,
+        };
+      }),
     );
     onAddCombo({ comboItem, lineTotal, children, notes: notes.trim() || undefined });
   };
@@ -221,6 +352,33 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
           <h2 className="text-lg font-bold text-gray-900">{comboItem.name}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
+
+        {/* Shared-pool meter — pinned below the header so it stays visible
+            while the customer scrolls between pizzas. Every customer's prior
+            is per-pizza allowances (no platform ships pooling), so the budget
+            must stay ON SCREEN or the math reads as a bug. Luigi 2026-08-02. */}
+        {poolDerived && (() => {
+          const total = poolDerived.totalHalfUnits / 2;
+          const used = poolDerived.usedHalfUnits / 2;
+          const left = Math.max(0, total - used);
+          const fmtN = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
+          return (
+            <div className={`px-4 py-2.5 border-b ${left <= 0 ? "bg-amber-50" : "bg-gray-50"}`}>
+              <div className="flex items-center justify-between text-xs font-semibold text-gray-700">
+                <span>{t("poolMeter", { used: fmtN(used), total: fmtN(total) })}</span>
+                <span style={left > 0 ? { color: primaryColor } : { color: "#b45309" }}>
+                  {left > 0 ? t("poolLeft", { left: fmtN(left) }) : t("poolEmpty")}
+                </span>
+              </div>
+              <div className="mt-1.5 h-1.5 rounded-full bg-gray-200 overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all"
+                  style={{ width: `${Math.min(100, (used / Math.max(1, total)) * 100)}%`, backgroundColor: left > 0 ? primaryColor : "#f59e0b" }}
+                />
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="flex-1 overflow-y-auto p-4 space-y-5">
           {config.slots.map((slot, si) => {
@@ -242,8 +400,13 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                 </div>
                 {cur.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mb-2">
-                    {cur.map((p) => {
-                      const extra = (p.upcharge ?? 0) + (p.extrasFee ?? 0);
+                    {/* Identical picks collapse into ONE chip with ×N (the
+                        GloriaFood "3x Suicide" pattern) — trash removes one
+                        unit, edit adjusts one unit (splitting it off its
+                        group). Pizzas never collapse. Luigi 2026-08-02. */}
+                    {groupPicks(cur).map(({ rep: p, keys }) => {
+                      const extra = (p.upcharge ?? 0) + effectiveExtras(p);
+                      const qty = keys.length;
                       return (
                         <span key={p.key} className="inline-flex items-center gap-1.5 bg-gray-100 rounded-full pl-1.5 pr-1.5 py-1 text-sm">
                           {/* Tap the pick to adjust it in place (reopens its
@@ -254,9 +417,16 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                             title={t("customizable")}
                           >
                             <Pencil className="w-3 h-3 text-gray-400 flex-shrink-0" />
-                            <span>{p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization || (p.modifiers && p.modifiers.length) ? " ⭐" : ""}{extra > 0 ? ` (+${fmt(extra)})` : ""}</span>
+                            <span>
+                              {qty > 1 ? <strong className="mr-0.5">{t("timesCount", { count: qty })}</strong> : null}
+                              {p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization || (p.modifiers && p.modifiers.length) ? " ⭐" : ""}{extra > 0 ? ` (+${fmt(extra * qty)})` : ""}
+                            </span>
                           </button>
-                          <button onClick={() => removePick(slot.id, p.key)} className="p-0.5 text-gray-400 hover:text-red-500"><Trash2 className="w-3.5 h-3.5" /></button>
+                          <button
+                            onClick={() => removePick(slot.id, keys[keys.length - 1])}
+                            aria-label={t("removeOne", { name: p.name })}
+                            className="p-0.5 text-gray-400 hover:text-red-500"
+                          ><Trash2 className="w-3.5 h-3.5" /></button>
                         </span>
                       );
                     })}
@@ -272,25 +442,59 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                     const fromPrice = sizes.length > 1;
                     const customizable = isPizza || needsCustomizer(it, sizes);
                     const isSold = !!it.isSoldOut;
+                    // One-pass multi-select: a picked row shows −/+ steppers so
+                    // "Choose 4 Pop" fills in one pass (Luigi 2026-08-02, the
+                    // GloriaFood/Uber pattern). [+] repeats the last pick of
+                    // this item verbatim; the row body still opens the
+                    // customizer/builder for a DIFFERENT configuration.
+                    const count = countOfItem(slot.id, it.id);
+                    const dupesAllowed = slot.allowDuplicates !== false;
+                    // Steppers only where a quantity makes sense: multi-pick
+                    // slots. Classic 1-pick slots keep their original look.
+                    const showStepper = count > 0 && !isSold && !isPizza && slot.max > 1;
+                    const canAddMore = !atMax && (dupesAllowed || count === 0);
                     return (
-                      <button key={it.id} disabled={atMax || isSold} onClick={() => choose(slot.id, it)}
-                        className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border border-gray-200 text-sm text-left hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed ${isSold ? "opacity-60 cursor-not-allowed" : ""}`}>
-                        <span className="min-w-0 truncate">
-                          <span className="font-medium text-gray-800">{it.name}</span>
-                          {!isSold && customizable && <span className="ml-1.5 text-[10px] font-bold" style={{ color: primaryColor }}>{t("customizable")}</span>}
-                          {!isSold && fromPrice && <span className="ml-1.5 text-[10px] text-gray-400">{t("chooseSize")}</span>}
-                        </span>
+                      <div key={it.id}
+                        className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border text-sm ${count > 0 ? "" : "border-gray-200"} ${isSold ? "opacity-60" : ""}`}
+                        style={count > 0 ? { borderColor: primaryColor, backgroundColor: `${primaryColor}0d` } : undefined}>
+                        <button
+                          disabled={isSold || atMax || (count > 0 && !dupesAllowed)}
+                          onClick={() => { if (count > 0 && !customizable) { if (canAddMore) addOneMore(slot.id, it.id); } else choose(slot.id, it); }}
+                          className="flex items-center gap-2 min-w-0 flex-1 text-left disabled:cursor-not-allowed"
+                        >
+                          <span className="min-w-0 truncate">
+                            <span className="font-medium text-gray-800">{it.name}</span>
+                            {!isSold && customizable && <span className="ml-1.5 text-[10px] font-bold" style={{ color: primaryColor }}>{t("customizable")}</span>}
+                            {!isSold && fromPrice && <span className="ml-1.5 text-[10px] text-gray-400">{t("chooseSize")}</span>}
+                          </span>
+                        </button>
                         <span className="flex items-center gap-2 flex-shrink-0">
                           {isSold ? (
                             <span className="inline-block bg-gray-200 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">{tOrder("soldOut")}</span>
+                          ) : showStepper ? (
+                            <span className="flex items-center gap-1">
+                              <button
+                                onClick={() => removeLastOf(slot.id, it.id)}
+                                aria-label={t("removeOne", { name: it.name })}
+                                className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                              ><Minus className="w-3.5 h-3.5" /></button>
+                              <span className="w-7 text-center text-sm font-bold" style={{ color: primaryColor }}>{count}</span>
+                              <button
+                                onClick={() => addOneMore(slot.id, it.id)}
+                                disabled={atMax || !dupesAllowed}
+                                aria-label={t("addAnother", { name: it.name })}
+                                className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                              ><Plus className="w-3.5 h-3.5" /></button>
+                            </span>
                           ) : (
                             <>
                               {up > 0 && <span className="text-xs text-gray-500">{fromPrice ? t("fromUpcharge", { price: fmt(up) }) : `+${fmt(up)}`}</span>}
-                              <Plus className="w-4 h-4 text-gray-400" />
+                              {count > 1 && isPizza && <span className="text-sm font-bold" style={{ color: primaryColor }}>{t("timesCount", { count })}</span>}
+                              {!(atMax && count === 0) && <Plus className="w-4 h-4 text-gray-400" />}
                             </>
                           )}
                         </span>
-                      </button>
+                      </div>
                     );
                   })}
                 </div>
@@ -317,6 +521,25 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
         </div>
 
         <div className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t bg-gray-50 rounded-b-2xl">
+          {/* Inline unmet-minimums summary (GloriaFood's red box, Luigi
+              2026-08-02) — names exactly what's missing instead of a silently
+              disabled button. */}
+          {!slotsSatisfied && (
+            <div className="mb-3 p-2.5 bg-red-50 border border-red-200 rounded-lg space-y-0.5" role="alert">
+              {config.slots
+                .filter((s) => (picks[s.id]?.length ?? 0) < s.min)
+                .map((s, i) => {
+                  const label = (s.label && !/^slot\s*\d+$/i.test(s.label.trim()))
+                    ? s.label
+                    : t("slotFallback", { n: config.slots.indexOf(s) + 1 });
+                  return (
+                    <div key={s.id ?? i} className="text-xs font-medium text-red-600">
+                      {t("slotNeedsMore", { slot: label, count: s.min - (picks[s.id]?.length ?? 0) })}
+                    </div>
+                  );
+                })}
+            </div>
+          )}
           <button onClick={submit} disabled={!slotsSatisfied}
             className="w-full py-3 rounded-xl text-white font-semibold disabled:opacity-50"
             style={{ backgroundColor: primaryColor }}>
@@ -335,6 +558,17 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
             primaryColor={primaryColor}
             /* One note per combo (added below), not per pizza slot. */
             allowItemNotes={false}
+            /* Shared pool: this builder sees what the OTHER pizzas left over.
+               (When editing a pick, its own usage is excluded.) The composer
+               memo + server stay the money authority in slot order; this view
+               drives the live header/pills. Luigi 2026-08-02. */
+            comboPool={poolDerived ? {
+              totalHalfUnits: poolDerived.totalHalfUnits,
+              usedElsewhereHalfUnits: Math.max(0, poolDerived.usedHalfUnits -
+                (pizzaFor.editKey ? (poolDerived.byKey.get(pizzaFor.editKey)?.halfUnitsUsed ?? 0) : 0)),
+            } : undefined}
+            /* Slot room caps the builder's own qty stepper — no silent clamp. */
+            maxQuantity={pizzaFor.editKey ? 1 : Math.max(1, slotById(pizzaFor.slotId).max - (picks[pizzaFor.slotId]?.length ?? 0))}
             /* Editing an existing pick → open pre-filled with its build. */
             initial={pizzaFor.initial
               ? { variantId: pizzaFor.initial.variantId, customization: pizzaFor.initial.customization, quantity: 1, notes: "" }
@@ -358,7 +592,10 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
               if (pizzaFor.editKey) {
                 replacePick(pizzaFor.slotId, pizzaFor.editKey, next); // in-place edit
               } else {
-                addPick(pizzaFor.slotId, { key: `${pizzaFor.item.id}-${result.variant?.id ?? ""}-${(picks[pizzaFor.slotId]?.length ?? 0)}`, ...next });
+                // Honor the builder's own quantity stepper: qty 2 = two pizza
+                // picks (capacity-clamped). Was silently dropped to ONE pick —
+                // a customer who set ×2 got one pizza. Luigi 2026-08-02.
+                addPickN(pizzaFor.slotId, next, qty);
               }
               setPizzaFor(null);
             }}
@@ -366,17 +603,28 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
         );
       })()}
 
-      {customizeFor && (
+      {customizeFor && (() => {
+        const cSlot = slotById(customizeFor.slotId);
+        const curCount = (picks[customizeFor.slotId] ?? []).length;
+        const room = Math.max(1, cSlot.max - curCount);
+        // Customize ONCE, apply ×N (Luigi 2026-08-02): the quantity stepper in
+        // the customizer emits N identical picks in one pass. Hidden for
+        // in-place edits and when the slot forbids duplicates.
+        const maxQty = customizeFor.editKey || cSlot.allowDuplicates === false ? 1 : room;
+        const defaultQty = Math.min(maxQty, Math.max(1, cSlot.min - curCount));
+        return (
         <ChildCustomizer
           item={customizeFor.item}
           allowedVariants={customizeFor.allowedVariants}
           primaryColor={primaryColor}
           fmt={fmt}
           extrasCharge={extrasCharge}
-          upchargeFor={(variantId) => comboUpchargeFor(slotById(customizeFor.slotId), customizeFor.item.id, variantId)}
+          upchargeFor={(variantId) => comboUpchargeFor(cSlot, customizeFor.item.id, variantId)}
           initial={customizeFor.initial}
+          maxQty={maxQty}
+          defaultQty={defaultQty}
           onClose={() => setCustomizeFor(null)}
-          onConfirm={(pick) => {
+          onConfirm={(pick, qty) => {
             if (customizeFor.editKey) {
               // In-place edit — swap the pick, keep its position.
               replacePick(customizeFor.slotId, customizeFor.editKey, {
@@ -387,16 +635,16 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
               setCustomizeFor(null);
               return;
             }
-            addPick(customizeFor.slotId, {
-              key: `${customizeFor.item.id}-${pick.variantId ?? ""}-${(picks[customizeFor.slotId]?.length ?? 0)}`,
+            addPickN(customizeFor.slotId, {
               menuItemId: customizeFor.item.id, name: customizeFor.item.name,
               ...pick,
               upcharge: pick.upcharge ?? 0,
-            });
+            }, qty);
             setCustomizeFor(null);
           }}
         />
-      )}
+        );
+      })()}
     </div>
   );
 }
@@ -405,6 +653,7 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
  *  a regular item gets, scoped to the combo's pricing rules. */
 function ChildCustomizer({
   item, allowedVariants, primaryColor, fmt, extrasCharge, upchargeFor, onConfirm, onClose, initial,
+  maxQty = 1, defaultQty = 1,
 }: {
   item: AnyItem;
   allowedVariants: AnyItem[];
@@ -412,11 +661,17 @@ function ChildCustomizer({
   fmt: (n: number) => string;
   extrasCharge: boolean;
   upchargeFor: (variantId?: string | null) => number;
-  onConfirm: (pick: Partial<ComboCartChild>) => void;
+  onConfirm: (pick: Partial<ComboCartChild>, qty: number) => void;
   onClose: () => void;
   /** In-place pick edit: the pick's current size + flat modifier list to seed
    *  the customizer with (instead of the group defaults). Luigi 2026-07-09. */
   initial?: { variantId?: string; modifiers?: ComboCartChild["modifiers"] };
+  /** Customize-once ×N (Luigi 2026-08-02): cap for the quantity stepper —
+   *  1 hides it (edits, duplicate-free slots, full slots). */
+  maxQty?: number;
+  /** Pre-filled quantity: how many the slot still NEEDS (min − picked), so a
+   *  "Choose 4" slot opens the first customizer already set to 4. */
+  defaultQty?: number;
 }) {
   const t = useTranslations("customer.combo");
   const tc = useTranslations("ordering");
@@ -517,7 +772,8 @@ function ChildCustomizer({
     ? Math.round(builtMods.reduce((s, m) => s + (m.priceAdjustment || 0), 0) * 100) / 100
     : 0;
   const upcharge = upchargeFor(variant?.id);
-  const addExtra = upcharge + extrasFee;
+  const [qty, setQty] = useState(() => Math.min(Math.max(1, defaultQty), Math.max(1, maxQty)));
+  const addExtra = (upcharge + extrasFee) * qty;
 
   // Required groups must be satisfied (mirrors the regular item modal).
   const unmet = groups.filter((g) => {
@@ -535,7 +791,7 @@ function ChildCustomizer({
       variantId: variant?.id, variantName: variant?.name,
       modifiers: builtMods,
       upcharge, extrasFee,
-    });
+    }, qty);
   };
 
   return (
@@ -635,10 +891,32 @@ function ChildCustomizer({
         </div>
 
         <div className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t bg-gray-50 rounded-b-2xl">
+          {/* Customize-once ×N: pick the quantity here and N identical copies
+              land at once — no more one-modal-per-drink (Luigi 2026-08-02). */}
+          {maxQty > 1 && (
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-sm font-semibold text-gray-800">{t("howMany")}</span>
+              <span className="flex items-center gap-2">
+                <button onClick={() => setQty((q) => Math.max(1, q - 1))} disabled={qty <= 1}
+                  aria-label={t("removeOne", { name: item.name })}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-40">
+                  <Minus className="w-3.5 h-3.5" /></button>
+                <span className="w-8 text-center text-sm font-bold">{qty}</span>
+                <button onClick={() => setQty((q) => Math.min(maxQty, q + 1))} disabled={qty >= maxQty}
+                  aria-label={t("addAnother", { name: item.name })}
+                  className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-40">
+                  <Plus className="w-3.5 h-3.5" /></button>
+              </span>
+            </div>
+          )}
           <button onClick={confirm} disabled={!canAdd}
             className="w-full py-3 rounded-xl text-white font-semibold disabled:opacity-50"
             style={{ backgroundColor: primaryColor }}>
-            {canAdd ? t("addChoice", { price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" }) : t("completeRequired")}
+            {canAdd
+              ? (maxQty > 1 && qty > 1
+                  ? t("addChoiceQty", { count: qty, price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" })
+                  : t("addChoice", { price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" }))
+              : t("completeRequired")}
           </button>
         </div>
       </div>

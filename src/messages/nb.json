@@ -378,7 +378,9 @@
       "completeSelections": "Gjør alle påkrevde valg",
       "chooseSize": "Velg en størrelse for å fortsette",
       "completeRequired": "Fullfør påkrevde valg"
-    }
+    },
+    "toppingsShared": "Toppinger – {left} av {total} delte toppinger igjen",
+    "poolIncluded": "Inkludert"
   },
   "info": {
     "poweredBy": "Drevet av <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Kunne ikke duplisere gruppen — prøv igjen.",
       "refundableDeposit": "Refunderbart depositum",
       "refundableDepositHint": "Legger til et returnerbart depositum i tillegg til prisen — belastes kunden, men beskattes ikke, gis aldri rabatt eller belønning, og refunderes fullt ut.",
-      "depositAmountLabel": "Depositumbeløp"
+      "depositAmountLabel": "Depositumbeløp",
+      "comboAllowDuplicates": "Tillat å legge til samme vare flere ganger",
+      "comboAllowDuplicatesHelp": "PÅ: en kunde som fyller ut dette trinnet kan velge flere av samme vare — f.eks. 4× samme brus — med antallsknappene. AV: hvert valg må være en annen vare.",
+      "comboPoolTitle": "Del inkluderte toppinger mellom alle pizzaene",
+      "comboPoolHelp": "Gjelder bare pizzaene i denne komboen. Når dette er PÅ, ignoreres hver pizzas egne «Inkluderte toppinger» (fra Pizzaoppsett-fanen) i denne komboen — dette delte antallet erstatter det. Ekstra toppinger utover den delte kvoten belastes alltid med pizzaens pris for ekstra topping, selv når «Ta betalt for tillegg og ekstra» er av. Varer som ikke er pizza, påvirkes ikke.",
+      "comboPoolOffHint": "AV — hver pizza bruker sitt eget antall «Inkluderte toppinger».",
+      "comboPoolOnHint": "PÅ — alle pizzaene trekker fra én delt kvote. Eksempel: 6 delte toppinger i en kombo med 2 pizzaer — kunden kan legge 1 topping på den første pizzaen og har fortsatt 5 gratis til den andre. Utover det belastes ekstra toppinger som normalt.",
+      "comboPoolCountLabel": "Inkluderte toppinger (alle pizzaer til sammen):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Fullfør de påkrevde valgene",
       "halfHalfToggle": "½ Halv & halv",
       "leftHalf": "Venstre halvdel",
-      "rightHalf": "Høyre halvdel"
+      "rightHalf": "Høyre halvdel",
+      "addChoiceQty": "Legg til {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Legg til enda en {name}",
+      "removeOne": "Fjern én {name}",
+      "slotNeedsMore": "{slot}: velg {count} til",
+      "howMany": "Hvor mange?",
+      "poolMeter": "Delte toppinger: {used} av {total} brukt",
+      "poolLeft": "{left} igjen",
+      "poolEmpty": "Alle brukt – flere toppinger koster ekstra"
     },
     "guidedPromo": {
       "buildYourDeal": "Sett sammen tilbudet ditt",

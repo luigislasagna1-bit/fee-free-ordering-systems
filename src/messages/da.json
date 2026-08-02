@@ -378,7 +378,9 @@
       "completeSelections": "Foretag venligst alle påkrævede valg",
       "chooseSize": "Vælg venligst en størrelse for at fortsætte",
       "completeRequired": "Udfyld venligst alle påkrævede valg"
-    }
+    },
+    "toppingsShared": "Toppings — {left} af {total} delte toppings tilbage",
+    "poolIncluded": "Inkluderet"
   },
   "info": {
     "poweredBy": "Drevet af <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Kunne ikke duplikere gruppen — prøv igen.",
       "refundableDeposit": "Refunderbart depositum",
       "refundableDepositHint": "Tilføjer et returnerbart depositum oven i prisen — opkræves hos kunden, men beskattes ikke, gives aldrig rabat eller belønning, og refunderes fuldt ud.",
-      "depositAmountLabel": "Depositumbeløb"
+      "depositAmountLabel": "Depositumbeløb",
+      "comboAllowDuplicates": "Tillad at tilføje samme vare flere gange",
+      "comboAllowDuplicatesHelp": "TIL: en kunde, der udfylder dette trin, kan vælge flere af samme vare — f.eks. 4× den samme sodavand — med antalsknapperne. FRA: hvert valg skal være en forskellig vare.",
+      "comboPoolTitle": "Del inkluderede toppings mellem alle pizzaer",
+      "comboPoolHelp": "Gælder kun for pizzaerne i denne combo. Når indstillingen er slået til, ignoreres hver pizzas egne \"Inkluderede toppings\" (fra fanen Pizzaopsætning) i denne combo — dette fælles antal erstatter dem. Ekstra toppings ud over den fælles pulje beregnes altid til pizzaens pris for ekstra topping, også når \"Tag betaling for tilvalg & ekstra\" er slået fra. Varer, der ikke er pizzaer, påvirkes ikke.",
+      "comboPoolOffHint": "FRA — hver pizza bruger sit eget antal \"Inkluderede toppings\".",
+      "comboPoolOnHint": "TIL — alle pizzaer trækker fra én fælles pulje. Eksempel: 6 fælles toppings i en combo med 2 pizzaer — en kunde kan lægge 1 topping på den første pizza og har stadig 5 gratis til den anden. Herudover beregnes ekstra toppings til normal pris.",
+      "comboPoolCountLabel": "Inkluderede toppings (alle pizzaer tilsammen):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Udfyld de påkrævede valg",
       "halfHalfToggle": "½ Halv & halv",
       "leftHalf": "Venstre halvdel",
-      "rightHalf": "Højre halvdel"
+      "rightHalf": "Højre halvdel",
+      "addChoiceQty": "Tilføj {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Tilføj endnu en {name}",
+      "removeOne": "Fjern én {name}",
+      "slotNeedsMore": "{slot}: vælg {count} mere",
+      "howMany": "Hvor mange?",
+      "poolMeter": "Delte toppings: {used} af {total} brugt",
+      "poolLeft": "{left} tilbage",
+      "poolEmpty": "Alle er brugt — flere toppings koster ekstra"
     },
     "guidedPromo": {
       "buildYourDeal": "Sæt dit tilbud sammen",

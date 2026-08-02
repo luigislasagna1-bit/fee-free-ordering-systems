@@ -378,7 +378,9 @@
       "completeSelections": "Completeu totes les seleccions obligatòries",
       "chooseSize": "Trieu una mida per continuar",
       "completeRequired": "Completeu les seleccions obligatòries"
-    }
+    },
+    "toppingsShared": "Ingredients — {left} de {total} ingredients compartits disponibles",
+    "poolIncluded": "Inclòs"
   },
   "info": {
     "poweredBy": "Amb tecnologia de <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "No s'ha pogut duplicar el grup — torna-ho a provar.",
       "refundableDeposit": "Dipòsit reemborsable",
       "refundableDepositHint": "Afegeix un dipòsit retornable sobre el preu — es cobra al client però no tributa, mai no es descompta ni és elegible per a recompenses, i és totalment reemborsable.",
-      "depositAmountLabel": "Import del dipòsit"
+      "depositAmountLabel": "Import del dipòsit",
+      "comboAllowDuplicates": "Permetre afegir el mateix article diverses vegades",
+      "comboAllowDuplicatesHelp": "Activat: el client que completa aquest pas pot agafar diverses unitats d'un mateix article — p. ex. 4× el mateix refresc — amb els botons de quantitat. Desactivat: cada tria ha de ser un article diferent.",
+      "comboPoolTitle": "Compartir els ingredients inclosos entre totes les pizzes",
+      "comboPoolHelp": "Només s'aplica a les pizzes d'aquest combo. Quan està ACTIVAT, els \"Ingredients inclosos\" propis de cada pizza (de la seva pestanya Configuració de pizza) s'ignoren dins d'aquest combo — aquest nombre compartit els substitueix. Els ingredients extra que superen la quantitat compartida es cobren sempre al preu d'ingredient extra d'aquella pizza, fins i tot quan \"Cobrar pels complements i extres\" està desactivat. Els articles que no són pizza no es veuen afectats.",
+      "comboPoolOffHint": "Desactivat — cada pizza utilitza el seu propi nombre d'\"Ingredients inclosos\".",
+      "comboPoolOnHint": "Activat — totes les pizzes comparteixen una mateixa quantitat inclosa. Exemple: 6 ingredients compartits en un combo de 2 pizzes — el client pot posar 1 ingredient a la primera pizza i encara li'n queden 5 de gratuïts per a la segona. Més enllà d'això, els ingredients extra es cobren amb normalitat.",
+      "comboPoolCountLabel": "Ingredients inclosos (total entre totes les pizzes):"
     },
     "promotionsList": {
       "stackingMaster": "Mestre",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Completa les opcions obligatòries",
       "halfHalfToggle": "½ Meitat i meitat",
       "leftHalf": "Meitat esquerra",
-      "rightHalf": "Meitat dreta"
+      "rightHalf": "Meitat dreta",
+      "addChoiceQty": "Afegeix {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Afegeix un altre {name}",
+      "removeOne": "Treu un {name}",
+      "slotNeedsMore": "{slot}: tria'n {count} més",
+      "howMany": "Quants en vols?",
+      "poolMeter": "Ingredients compartits: {used} de {total} utilitzats",
+      "poolLeft": "Restants: {left}",
+      "poolEmpty": "Tots utilitzats — els ingredients addicionals es cobren"
     },
     "guidedPromo": {
       "buildYourDeal": "Munta la teva oferta",

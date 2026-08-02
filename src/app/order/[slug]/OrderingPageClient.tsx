@@ -42,6 +42,7 @@ import {
 import { geocodeAddress, findZoneForPoint, haversineKm, type ZoneLike } from "@/lib/geocode";
 import { isAddressNotLocated } from "@/lib/checkout-address-gate";
 import { readReservationDraft, writeReservationDraft } from "@/lib/reservation-draft-storage";
+import { groupBundleChildren } from "@/lib/bundle-child-groups";
 import {
   resolveDeliveryAddressConfig,
   DELIVERY_FIELD_KEYS,
@@ -6480,20 +6481,27 @@ export function OrderingPageClient({
                           {/* Bundle child rows — indented under the parent. */}
                           {ci.isBundle && ci.bundleItems && ci.bundleItems.length > 0 && (
                             <div className="mt-1 pl-4 border-l-2 border-gray-100 space-y-0.5">
-                              {ci.bundleItems.map((child, i) => {
+                              {/* Identical children collapse to one "4× Coke"
+                                  line (GloriaFood pattern, Luigi 2026-08-02). */}
+                              {groupBundleChildren(ci.bundleItems).map(({ child, qty }, i) => {
                                 // Show the child's FULL build (crust / sauce /
                                 // half-half / toppings / flavour) + note so the
                                 // customer can verify a combo before paying. The
                                 // build lives pre-flattened in child.modifiers
                                 // (Luigi 2026-07-08).
                                 const { modifierLines, notes } = childBuildLines(child);
+                                // Fee hint = upcharge + charged extras, same
+                                // sum the composer chip showed — so the price
+                                // never appears to shrink between the composer
+                                // and the cart (2026-08-02).
+                                const childFee = ((child.specialityFee ?? 0) + (child.extrasFee ?? 0)) * qty;
                                 return (
                                 <div key={i} className="text-xs text-gray-500">
-                                  • {child.name}
+                                  • {qty > 1 ? `${qty}× ` : ""}{child.name}
                                   {child.variantName ? ` (${child.variantName})` : ""}
-                                  {child.specialityFee && child.specialityFee > 0 ? (
+                                  {childFee > 0 ? (
                                     <span className="ml-1" style={{ color: theme.primaryColor }}>
-                                      (+{fmt(child.specialityFee)})
+                                      (+{fmt(childFee)})
                                     </span>
                                   ) : null}
                                   {modifierLines.map((m, mi) => (
@@ -6906,6 +6914,11 @@ export function OrderingPageClient({
       {/* ── Combo composer ────────────────────────────────────────────── */}
       {comboItem && (
         <ComboComposerModal
+          /* Remount whenever the combo or the edit target changes — the
+             composer seeds its picks in a useState INITIALIZER, so a prop
+             change under a mounted instance would keep stale picks/config
+             (found while driving the UI with scripted clicks, 2026-08-02). */
+          key={`${(comboItem as any).id}-${editingCartIndex ?? "new"}`}
           comboItem={comboItem as any}
           /* Full items (variants, pizzaConfig, modifierGroups) — the composer
              opens the pizza builder per pizza slot and offers per-size picks.

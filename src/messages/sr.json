@@ -378,7 +378,9 @@
       "completeSelections": "Molimo izvršite sve obavezne izbore",
       "chooseSize": "Molimo izaberite veličinu za nastavak",
       "completeRequired": "Molimo dovršite obavezne izbore"
-    }
+    },
+    "toppingsShared": "Dodaci — preostalo {left} od {total} zajedničkih dodataka",
+    "poolIncluded": "Uključeno"
   },
   "info": {
     "poweredBy": "Покреће <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Grupu nije bilo moguće duplirati — pokušajte ponovo.",
       "refundableDeposit": "Povratni depozit",
       "refundableDepositHint": "Dodaje povratni depozit na cenu — naplaćuje se kupcu, ali se ne oporezuje, nikada se ne umanjuje niti daje pravo na nagrade, i u potpunosti se vraća.",
-      "depositAmountLabel": "Iznos depozita"
+      "depositAmountLabel": "Iznos depozita",
+      "comboAllowDuplicates": "Dozvoli dodavanje iste stavke više puta",
+      "comboAllowDuplicatesHelp": "Uključeno: kupac koji popunjava ovaj korak može da uzme više komada iste stavke — npr. 4× isti sok — pomoću dugmadi za količinu. Isključeno: svaki izbor mora biti druga stavka.",
+      "comboPoolTitle": "Deli uključene dodatke između svih pica",
+      "comboPoolHelp": "Važi samo za pice u ovoj kombinaciji. Dok je uključeno, sopstveno podešavanje „Uključeni dodaci” svake pice (sa njene kartice Podešavanje pice) ignoriše se unutar ove kombinacije — zamenjuje ga ovaj zajednički broj. Ekstra dodaci preko zajedničkog broja uvek se naplaćuju po ceni ekstra dodatka te pice, čak i kada je „Naplata dodataka i ekstra stavki” isključena. Stavke koje nisu pice ostaju nepromenjene.",
+      "comboPoolOffHint": "Isključeno — svaka pica koristi svoj broj iz podešavanja „Uključeni dodaci”.",
+      "comboPoolOnHint": "Uključeno — sve pice dele jedan zajednički broj dodataka. Primer: 6 zajedničkih dodataka u kombinaciji od 2 pice — kupac može da stavi 1 dodatak na prvu picu i i dalje ima 5 besplatnih za drugu. Preko toga se ekstra dodaci naplaćuju po uobičajenoj ceni.",
+      "comboPoolCountLabel": "Uključeni dodaci (sve pice zajedno):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Dovršite obavezne opcije",
       "halfHalfToggle": "½ Pola-pola",
       "leftHalf": "Leva polovina",
-      "rightHalf": "Desna polovina"
+      "rightHalf": "Desna polovina",
+      "addChoiceQty": "Dodaj {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Dodaj još: {name}",
+      "removeOne": "Ukloni jedno: {name}",
+      "slotNeedsMore": "{slot}: izaberite još {count}",
+      "howMany": "Koliko komada?",
+      "poolMeter": "Zajednički dodaci: {used} od {total} iskorišćeno",
+      "poolLeft": "Preostalo: {left}",
+      "poolEmpty": "Sve iskorišćeno — svaki sledeći dodatak se naplaćuje"
     },
     "guidedPromo": {
       "buildYourDeal": "Sastavite svoju ponudu",

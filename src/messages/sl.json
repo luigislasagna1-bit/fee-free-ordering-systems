@@ -378,7 +378,9 @@
       "completeSelections": "Prosimo, dokončajte vse obvezne izbire",
       "chooseSize": "Prosimo, izberite velikost za nadaljevanje",
       "completeRequired": "Prosimo, dokončajte obvezne izbire"
-    }
+    },
+    "toppingsShared": "Dodatki — še {left} od {total} skupnih dodatkov",
+    "poolIncluded": "Vključeno"
   },
   "info": {
     "poweredBy": "Poganja <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Skupine ni bilo mogoče podvojiti — poskusite znova.",
       "refundableDeposit": "Vračljiva varščina",
       "refundableDepositHint": "Ceni doda vračljivo varščino — zaračuna se kupcu, a se ne obdavči, nikoli se ne zniža niti ne omogoča nagrad in se v celoti povrne.",
-      "depositAmountLabel": "Znesek varščine"
+      "depositAmountLabel": "Znesek varščine",
+      "comboAllowDuplicates": "Dovoli večkratno dodajanje istega izdelka",
+      "comboAllowDuplicatesHelp": "VKLOPLJENO: stranka, ki izpolnjuje ta korak, lahko z gumbi za količino izbere več enot istega izdelka — npr. 4× isto pijačo. IZKLOPLJENO: vsaka izbira mora biti drug izdelek.",
+      "comboPoolTitle": "Deli vključene sestavine med vsemi picami",
+      "comboPoolHelp": "Velja samo za pice v tej kombinaciji. Ko je vklopljeno, se lastna nastavitev »Vključene sestavine« posamezne pice (z zavihka Nastavitev pice) znotraj te kombinacije ne upošteva — nadomesti jo to skupno število. Dodatne sestavine nad skupno kvoto se vedno zaračunajo po ceni extra sestavine tiste pice, tudi če je možnost »Zaračunaj dodatke in priloge« izklopljena. Na izdelke, ki niso pice, to ne vpliva.",
+      "comboPoolOffHint": "IZKLOPLJENO — vsaka pica uporablja svoje število iz nastavitve »Vključene sestavine«.",
+      "comboPoolOnHint": "VKLOPLJENO — vse pice črpajo iz ene skupne kvote. Primer: 6 skupnih sestavin v kombinaciji z 2 picama — stranka lahko na prvo pico da 1 sestavino in ji za drugo ostane še 5 brezplačnih. Nad to mejo se dodatne sestavine zaračunajo po običajni ceni.",
+      "comboPoolCountLabel": "Vključene sestavine (vse pice skupaj):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Izpolnite obvezne možnosti",
       "halfHalfToggle": "½ Pol-pol",
       "leftHalf": "Leva polovica",
-      "rightHalf": "Desna polovica"
+      "rightHalf": "Desna polovica",
+      "addChoiceQty": "Dodaj {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Dodaj še 1 × {name}",
+      "removeOne": "Odstrani 1 × {name}",
+      "slotNeedsMore": "{slot}: izberite še {count}",
+      "howMany": "Koliko?",
+      "poolMeter": "Skupni dodatki: porabljeno {used} od {total}",
+      "poolLeft": "še {left}",
+      "poolEmpty": "Vse porabljeno — nadaljnji dodatki se zaračunajo"
     },
     "guidedPromo": {
       "buildYourDeal": "Sestavite svojo ponudbo",

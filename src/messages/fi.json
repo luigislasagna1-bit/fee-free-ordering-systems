@@ -378,7 +378,9 @@
       "completeSelections": "Tee kaikki pakolliset valinnat",
       "chooseSize": "Valitse koko jatkaaksesi",
       "completeRequired": "Täytä pakolliset valinnat"
-    }
+    },
+    "toppingsShared": "Täytteet – {left}/{total} jaettua täytettä jäljellä",
+    "poolIncluded": "Sisältyy"
   },
   "info": {
     "poweredBy": "Palvelun tarjoaa <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Ryhmää ei voitu monistaa — yritä uudelleen.",
       "refundableDeposit": "Palautettava pantti",
       "refundableDepositHint": "Lisää hintaan palautettavan pantin — veloitetaan asiakkaalta, mutta sitä ei veroteta, siihen ei koskaan anneta alennusta eikä se oikeuta palkintoihin, ja se palautetaan kokonaan.",
-      "depositAmountLabel": "Pantin määrä"
+      "depositAmountLabel": "Pantin määrä",
+      "comboAllowDuplicates": "Salli sama tuote useita kertoja",
+      "comboAllowDuplicatesHelp": "Päällä: asiakas voi ottaa tähän vaiheeseen useita kappaleita samaa tuotetta määräpainikkeilla — esim. 4 × sama limsa. Pois päältä: jokaisen valinnan on oltava eri tuote.",
+      "comboPoolTitle": "Jaa sisältyvät täytteet kaikkien pizzojen kesken",
+      "comboPoolHelp": "Koskee vain tämän combon pizzoja. Kun asetus on päällä, kunkin pizzan omaa \"Sisältyvät täytteet\" -asetusta (Pizza-asetukset-välilehdellä) ei huomioida tässä combossa — tämä jaettu määrä korvaa sen. Jaetun kiintiön ylittävät lisätäytteet veloitetaan aina kyseisen pizzan lisätäytteen hinnalla, silloinkin kun \"Veloita lisukkeista ja extroista\" on pois päältä. Muihin kuin pizzatuotteisiin tämä ei vaikuta.",
+      "comboPoolOffHint": "Pois päältä — jokainen pizza käyttää omaa \"Sisältyvät täytteet\" -määräänsä.",
+      "comboPoolOnHint": "Päällä — kaikki pizzat käyttävät samaa jaettua kiintiötä. Esimerkki: 6 jaettua täytettä kahden pizzan combossa — asiakas voi lisätä ensimmäiseen pizzaan yhden täytteen, ja toiseen jää silti 5 ilmaista. Sen ylittävät lisätäytteet veloitetaan normaalisti.",
+      "comboPoolCountLabel": "Sisältyvät täytteet (kaikki pizzat yhteensä):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Täytä pakolliset valinnat",
       "halfHalfToggle": "½ Puoliksi & puoliksi",
       "leftHalf": "Vasen puolisko",
-      "rightHalf": "Oikea puolisko"
+      "rightHalf": "Oikea puolisko",
+      "addChoiceQty": "Lisää {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Lisää vielä yksi {name}",
+      "removeOne": "Poista yksi {name}",
+      "slotNeedsMore": "{slot}: valitse vielä {count}",
+      "howMany": "Kuinka monta?",
+      "poolMeter": "Jaetut täytteet: {used}/{total} käytetty",
+      "poolLeft": "{left} jäljellä",
+      "poolEmpty": "Kaikki käytetty – lisätäytteet ovat maksullisia"
     },
     "guidedPromo": {
       "buildYourDeal": "Kokoa tarjouksesi",

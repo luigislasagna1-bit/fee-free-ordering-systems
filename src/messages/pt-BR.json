@@ -378,7 +378,9 @@
       "completeSelections": "Por favor, faça todas as seleções obrigatórias",
       "chooseSize": "Por favor, escolha um tamanho para continuar",
       "completeRequired": "Por favor, complete as seleções obrigatórias"
-    }
+    },
+    "toppingsShared": "Ingredientes — restam {left} de {total} ingredientes compartilhados",
+    "poolIncluded": "Incluído"
   },
   "info": {
     "poweredBy": "Com tecnologia de <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Não foi possível duplicar o grupo — tente novamente.",
       "refundableDeposit": "Depósito reembolsável",
       "refundableDepositHint": "Adiciona um depósito retornável ao preço — cobrado do cliente, mas não tributado, nunca com desconto nem elegível para recompensas, e totalmente reembolsável.",
-      "depositAmountLabel": "Valor do depósito"
+      "depositAmountLabel": "Valor do depósito",
+      "comboAllowDuplicates": "Permitir adicionar o mesmo item várias vezes",
+      "comboAllowDuplicatesHelp": "Ativado: ao preencher esta etapa, o cliente pode levar várias unidades do mesmo item — ex.: 4× o mesmo refrigerante — usando os botões de quantidade. Desativado: cada escolha precisa ser um item diferente.",
+      "comboPoolTitle": "Compartilhar os adicionais incluídos entre todas as pizzas",
+      "comboPoolHelp": "Aplica-se apenas às pizzas deste combo. Enquanto estiver ativado, os \"Adicionais Incluídos\" de cada pizza (da aba Configuração de Pizza) são ignorados dentro deste combo — este número compartilhado os substitui. Adicionais além da quantidade compartilhada são sempre cobrados pelo preço de adicional extra daquela pizza, mesmo quando \"Cobrar por adicionais e extras\" estiver desativado. Itens que não são pizza não são afetados.",
+      "comboPoolOffHint": "Desativado — cada pizza usa o próprio número de \"Adicionais Incluídos\".",
+      "comboPoolOnHint": "Ativado — todas as pizzas usam uma única quantidade compartilhada. Exemplo: 6 adicionais compartilhados em um combo de 2 pizzas — o cliente pode colocar 1 adicional na primeira pizza e ainda ter 5 grátis para a segunda. Acima disso, os adicionais extras são cobrados normalmente.",
+      "comboPoolCountLabel": "Adicionais incluídos (somando todas as pizzas):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Complete as opções obrigatórias",
       "halfHalfToggle": "½ Meio a meio",
       "leftHalf": "Metade esquerda",
-      "rightHalf": "Metade direita"
+      "rightHalf": "Metade direita",
+      "addChoiceQty": "Adicionar {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Adicionar mais 1 {name}",
+      "removeOne": "Remover 1 {name}",
+      "slotNeedsMore": "{slot}: escolha mais {count}",
+      "howMany": "Quantas unidades?",
+      "poolMeter": "Ingredientes compartilhados: {used} de {total} usados",
+      "poolLeft": "Restam {left}",
+      "poolEmpty": "Todos usados — ingredientes extras são cobrados"
     },
     "guidedPromo": {
       "buildYourDeal": "Monte sua oferta",

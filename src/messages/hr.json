@@ -378,7 +378,9 @@
       "completeSelections": "Molimo dovršite sve obavezne odabire",
       "chooseSize": "Molimo odaberite veličinu za nastavak",
       "completeRequired": "Molimo dovršite obavezne odabire"
-    }
+    },
+    "toppingsShared": "Dodaci — preostalo {left} od {total} zajedničkih dodataka",
+    "poolIncluded": "Uključeno"
   },
   "info": {
     "poweredBy": "Pokreće <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Grupu nije bilo moguće duplicirati — pokušajte ponovno.",
       "refundableDeposit": "Povratni polog",
       "refundableDepositHint": "Dodaje povratni polog na cijenu — naplaćuje se kupcu, ali se ne oporezuje, nikada se ne popušta niti daje pravo na nagrade, i u potpunosti se vraća.",
-      "depositAmountLabel": "Iznos pologa"
+      "depositAmountLabel": "Iznos pologa",
+      "comboAllowDuplicates": "Dopusti dodavanje istog artikla više puta",
+      "comboAllowDuplicatesHelp": "UKLJUČENO: gost koji ispunjava ovaj korak može uzeti više komada istog artikla — npr. 4× isto piće — pomoću gumba za količinu. ISKLJUČENO: svaki odabir mora biti različit artikl.",
+      "comboPoolTitle": "Dijeli uključene dodatke među svim pizzama",
+      "comboPoolHelp": "Vrijedi samo za pizze u ovoj combo ponudi. Dok je UKLJUČENO, vlastita postavka \"Uključeni dodaci\" svake pizze (s njezine kartice Postavke pizze) unutar ove combo ponude se zanemaruje — zamjenjuje je ovaj zajednički broj. Dodaci koji prelaze zajedničku kvotu uvijek se naplaćuju po cijeni ekstra dodatka te pizze, čak i kada je opcija \"Naplaćuj dodatke i ekstre\" isključena. Artikli koji nisu pizza ostaju nepromijenjeni.",
+      "comboPoolOffHint": "ISKLJUČENO — svaka pizza koristi vlastiti broj iz svoje postavke \"Uključeni dodaci\".",
+      "comboPoolOnHint": "UKLJUČENO — sve pizze dijele jednu zajedničku kvotu. Primjer: 6 zajedničkih dodataka u combo ponudi s 2 pizze — gost može staviti 1 dodatak na prvu pizzu i još mu ostaje 5 besplatnih za drugu. Iznad toga, ekstra dodaci naplaćuju se po uobičajenoj cijeni.",
+      "comboPoolCountLabel": "Uključeni dodaci (sve pizze zajedno):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Dovršite obavezne opcije",
       "halfHalfToggle": "½ Pola-pola",
       "leftHalf": "Lijeva polovica",
-      "rightHalf": "Desna polovica"
+      "rightHalf": "Desna polovica",
+      "addChoiceQty": "Dodaj {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Dodaj još jedan: {name}",
+      "removeOne": "Ukloni jedan: {name}",
+      "slotNeedsMore": "{slot}: odaberite još {count}",
+      "howMany": "Koliko komada?",
+      "poolMeter": "Zajednički dodaci: iskorišteno {used} od {total}",
+      "poolLeft": "Preostalo: {left}",
+      "poolEmpty": "Sve iskorišteno — daljnji dodaci se naplaćuju"
     },
     "guidedPromo": {
       "buildYourDeal": "Složite svoju ponudu",

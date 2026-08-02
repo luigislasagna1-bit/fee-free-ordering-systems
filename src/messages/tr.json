@@ -378,7 +378,9 @@
       "completeSelections": "Lütfen tüm zorunlu seçimleri yapın",
       "chooseSize": "Devam etmek için lütfen bir boyut seçin",
       "completeRequired": "Lütfen zorunlu seçimleri tamamlayın"
-    }
+    },
+    "toppingsShared": "Malzemeler — {left}/{total} ortak malzeme kaldı",
+    "poolIncluded": "Dahil"
   },
   "info": {
     "poweredBy": "<brand>Fee Free Ordering</brand> tarafından desteklenmektedir",
@@ -2508,7 +2510,14 @@
       "failedToDuplicateGroup": "Grup çoğaltılamadı — lütfen tekrar deneyin.",
       "refundableDeposit": "İade edilebilir depozito",
       "refundableDepositHint": "Fiyatın üzerine iade edilebilir bir depozito ekler — müşteriden alınır ancak vergilendirilmez, asla indirim uygulanmaz veya ödül kazandırmaz ve tamamen iade edilir.",
-      "depositAmountLabel": "Depozito tutarı"
+      "depositAmountLabel": "Depozito tutarı",
+      "comboAllowDuplicates": "Aynı ürünün birden fazla kez eklenmesine izin ver",
+      "comboAllowDuplicatesHelp": "AÇIK: Bu adımı dolduran müşteri, adet düğmelerini kullanarak aynı üründen birkaç tane alabilir — örn. aynı gazlı içecekten 4 adet. KAPALI: Her seçim farklı bir ürün olmalıdır.",
+      "comboPoolTitle": "Dahil malzemeleri tüm pizzalar arasında paylaştır",
+      "comboPoolHelp": "Yalnızca bu kombodaki pizzalar için geçerlidir. AÇIK olduğunda, her pizzanın kendi \"Dahil Malzemeler\" ayarı (Pizza Kurulumu sekmesindeki) bu kombo içinde yok sayılır — onun yerine bu ortak sayı kullanılır. Ortak hakkı aşan ekstra malzemeler, \"Ek malzemeler ve ekstralar için ücret al\" kapalı olsa bile her zaman o pizzanın ekstra malzeme fiyatından ücretlendirilir. Pizza dışı ürünler etkilenmez.",
+      "comboPoolOffHint": "KAPALI — her pizza kendi \"Dahil Malzemeler\" sayısını kullanır.",
+      "comboPoolOnHint": "AÇIK — tüm pizzalar tek bir ortak hakkı kullanır. Örnek: 2 pizzalı bir komboda 6 ortak malzeme — müşteri ilk pizzaya 1 malzeme ekleyip ikinci pizza için hâlâ 5 ücretsiz malzemeye sahip olur. Bunun ötesindeki ekstra malzemeler normal şekilde ücretlendirilir.",
+      "comboPoolCountLabel": "Dahil malzeme sayısı (tüm pizzalar toplamı):"
     },
     "promotionsList": {
       "stackingMaster": "Ana",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Zorunlu seçenekleri tamamlayın",
       "halfHalfToggle": "½ Yarım Yarım",
       "leftHalf": "Sol yarım",
-      "rightHalf": "Sağ yarım"
+      "rightHalf": "Sağ yarım",
+      "addChoiceQty": "{count} adet ekle{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Bir {name} daha ekle",
+      "removeOne": "Bir {name} çıkar",
+      "slotNeedsMore": "{slot}: {count} tane daha seçin",
+      "howMany": "Kaç adet?",
+      "poolMeter": "Ortak malzemeler: {used}/{total} kullanıldı",
+      "poolLeft": "{left} kaldı",
+      "poolEmpty": "Tümü kullanıldı — ekstra malzemeler ücretlidir"
     },
     "guidedPromo": {
       "buildYourDeal": "Fırsatını oluştur",

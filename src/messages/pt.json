@@ -378,7 +378,9 @@
       "completeSelections": "Faça todas as seleções obrigatórias",
       "chooseSize": "Escolha um tamanho para continuar",
       "completeRequired": "Complete as seleções obrigatórias"
-    }
+    },
+    "toppingsShared": "Ingredientes — restam {left} de {total} ingredientes partilhados",
+    "poolIncluded": "Incluído"
   },
   "info": {
     "poweredBy": "Com tecnologia de <brand>Fee Free Ordering</brand>",
@@ -2565,7 +2567,14 @@
       "failedToDuplicateGroup": "Não foi possível duplicar o grupo — tente novamente.",
       "refundableDeposit": "Depósito reembolsável",
       "refundableDepositHint": "Adiciona um depósito retornável ao preço — cobrado ao cliente mas não tributado, nunca com desconto nem elegível para recompensas, e totalmente reembolsável.",
-      "depositAmountLabel": "Valor do depósito"
+      "depositAmountLabel": "Valor do depósito",
+      "comboAllowDuplicates": "Permitir adicionar o mesmo item várias vezes",
+      "comboAllowDuplicatesHelp": "ATIVADO: ao preencher este passo, o cliente pode escolher várias unidades do mesmo item — p. ex., 4× o mesmo refrigerante — usando os botões de quantidade. DESATIVADO: cada escolha tem de ser um item diferente.",
+      "comboPoolTitle": "Partilhar os ingredientes incluídos entre todas as pizzas",
+      "comboPoolHelp": "Aplica-se apenas às pizzas deste combo. Enquanto estiver ATIVADO, os \"Ingredientes Incluídos\" de cada pizza (do respetivo separador Configuração de Pizza) são ignorados dentro deste combo — este número partilhado substitui-os. Os ingredientes que excedam o limite partilhado são sempre cobrados ao preço de ingrediente extra dessa pizza, mesmo quando \"Cobrar complementos e extras\" está desativado. Os itens que não sejam pizzas não são afetados.",
+      "comboPoolOffHint": "DESATIVADO — cada pizza usa o seu próprio número de \"Ingredientes Incluídos\".",
+      "comboPoolOnHint": "ATIVADO — todas as pizzas usam um único limite partilhado. Exemplo: 6 ingredientes partilhados num combo de 2 pizzas — o cliente pode pôr 1 ingrediente na primeira pizza e ainda tem 5 grátis para a segunda. Para além disso, os ingredientes extra são cobrados normalmente.",
+      "comboPoolCountLabel": "Ingredientes incluídos (todas as pizzas em conjunto):"
     },
     "promotionsList": {
       "stackingMaster": "Master",
@@ -6850,7 +6859,16 @@
       "completeRequired": "Preencha as opções obrigatórias",
       "halfHalfToggle": "½ Meia/Meia",
       "leftHalf": "Metade esquerda",
-      "rightHalf": "Metade direita"
+      "rightHalf": "Metade direita",
+      "addChoiceQty": "Adicionar {count}{price}",
+      "timesCount": "×{count}",
+      "addAnother": "Adicionar mais um {name}",
+      "removeOne": "Remover um {name}",
+      "slotNeedsMore": "{slot}: escolha mais {count}",
+      "howMany": "Quantos?",
+      "poolMeter": "Ingredientes partilhados: {used} de {total} usados",
+      "poolLeft": "Restam {left}",
+      "poolEmpty": "Tudo usado — os ingredientes extra são cobrados"
     },
     "guidedPromo": {
       "buildYourDeal": "Monte o seu menu",

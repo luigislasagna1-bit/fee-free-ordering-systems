@@ -33,6 +33,11 @@ export type ComboSlot = {
    *  Lets "20 wings" carry a higher upcharge than "10 wings" in the same combo.
    *  Falls back to the item-level `upcharges[itemId]` when no entry exists. */
   variantUpcharges?: Record<string, number>;
+  /** "Allow adding the same item multiple times" (GloriaFood's wording —
+   *  Luigi 2026-08-02). Default TRUE (absent = allowed), matching what the
+   *  composer always permitted via repeated taps. Explicit false hides the
+   *  quantity stepper so a slot like "pick 4 DIFFERENT dips" works. */
+  allowDuplicates?: boolean;
 };
 
 export type ComboConfig = {
@@ -43,6 +48,13 @@ export type ComboConfig = {
    *  the combo is a predictable fixed price + the owner's per-item/size
    *  upcharges, and modifier picks are free customization. Owner's choice. */
   extrasCharge: boolean;
+  /** SHARED TOPPING POOL (Luigi 2026-08-02): ≥1 = this many whole toppings are
+   *  covered by the combo price and shared by EVERY pizza child, replacing
+   *  each pizza's own includedToppings inside this combo ("2 large pizzas,
+   *  6 toppings combined"). Overage is charged at each pizza's own rate —
+   *  see src/lib/combo-topping-pool.ts for the full semantics. Absent/0 = off
+   *  (each pizza keeps its own allowance). */
+  sharedToppings?: number;
 };
 
 /** Stable key for a per-(item,variant) entry in `variantUpcharges`. */
@@ -121,10 +133,17 @@ export function parseComboConfig(raw: unknown): ComboConfig | null {
       upcharges: Object.keys(upcharges).length ? upcharges : undefined,
       itemVariants: Object.keys(itemVariants).length ? itemVariants : undefined,
       variantUpcharges: Object.keys(variantUpcharges).length ? variantUpcharges : undefined,
+      // Only an explicit false survives — absent stays "allowed" (the default).
+      allowDuplicates: s.allowDuplicates === false ? false : undefined,
     });
   }
   if (slots.length === 0) return null;
-  return { slots, extrasCharge: obj.extrasCharge === true };
+  const sharedRaw = Math.floor(Number((obj as { sharedToppings?: unknown }).sharedToppings));
+  return {
+    slots,
+    extrasCharge: obj.extrasCharge === true,
+    sharedToppings: Number.isFinite(sharedRaw) && sharedRaw >= 1 ? sharedRaw : undefined,
+  };
 }
 
 /** True when an item is a combo (has a usable comboConfig). */

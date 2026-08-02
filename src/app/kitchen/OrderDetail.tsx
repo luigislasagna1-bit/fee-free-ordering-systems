@@ -8,6 +8,7 @@ import {
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { formatDueLabel , formatDateCapitalized } from "@/lib/format-time";
 import { formatDetailRows, readReservationDetails } from "@/lib/reservation-details";
+import { groupBundleChildren } from "@/lib/bundle-child-groups";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
@@ -599,13 +600,18 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                     )}
                     {bundle && bundle.length > 0 && (
                       <div className={`mt-1 pl-3 border-l-2 ${t.border} space-y-0.5`}>
-                        {bundle.map((child, i) => (
+                        {/* Identical children collapse to one "4× Coke" line —
+                            the kitchen reads a count, not four rows. Pizzas
+                            never collapse (each is its own build). 2026-08-02. */}
+                        {groupBundleChildren(bundle).map(({ child, qty }, i) => {
+                          // Upcharge + charged extras (per-unit fees × qty) —
+                          // consistent with the customer surfaces (2026-08-02).
+                          const childFee = ((child.specialityFee ?? 0) + ((child as { extrasFee?: number }).extrasFee ?? 0)) * qty;
+                          return (
                           <div key={i} className={`text-xs ${t.muted}`}>
-                            • 1× {child.name}
+                            • {qty}× {child.name}
                             {child.variantName ? ` (${child.variantName})` : ""}
-                            {child.specialityFee && child.specialityFee > 0
-                              ? ` (+${formatCurrency(child.specialityFee)})`
-                              : ""}
+                            {childFee > 0 ? ` (+${formatCurrency(childFee)})` : ""}
                             {Array.isArray(child.modifiers) && child.modifiers.length > 0 && (
                               <div className={`pl-3 ${t.muted}`}>
                                 {child.modifiers.map((m, mi) => (
@@ -615,7 +621,8 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                             )}
                             {child.notes && <div className="pl-3 italic text-yellow-600">{child.notes}</div>}
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     )}
                     {item.modifiers.map((m, i) => (
