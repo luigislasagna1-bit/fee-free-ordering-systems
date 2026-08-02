@@ -10,7 +10,7 @@ import { sanitizeExternalHref } from "@/lib/html-safe";
 import { resolvePoweredByCredit } from "@/lib/white-label";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import { VisitTracker } from "@/components/order/VisitTracker";
-import { SocialIcon, PLATFORM_LABELS, PLATFORM_COLORS, type SocialPlatform } from "@/components/SocialIcons";
+import { SocialIconLink, type SocialPlatform } from "@/components/SocialIcons";
 
 /** All platforms the admin Social Media page can save — the single source
  *  of truth this page's social section renders from (see SOCIAL_PLATFORMS
@@ -917,18 +917,7 @@ export default async function HostedSitePage({
             {s.sections.social && socials.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-2">
                 {socials.map((sl) => (
-                  <a
-                    key={sl.key}
-                    href={sl.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${PLATFORM_LABELS[sl.key]} link`}
-                    title={PLATFORM_LABELS[sl.key]}
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full hover:scale-110 transition-transform shadow-sm"
-                    style={{ background: PLATFORM_COLORS[sl.key] }}
-                  >
-                    <SocialIcon platform={sl.key} branded={false} className="w-5 h-5 text-white" />
-                  </a>
+                  <SocialIconLink key={sl.key} platform={sl.key} url={sl.url} />
                 ))}
               </div>
             )}

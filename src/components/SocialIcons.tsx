@@ -63,6 +63,42 @@ interface SocialIconProps {
   branded?: boolean;
 }
 
+/**
+ * Circular brand-color badge + icon, as a single self-contained client
+ * component (Luigi 2026-08-02 — the icons-invisible-on-mobile bug).
+ *
+ * A Server Component (src/app/site/[slug]/page.tsx) imported PLATFORM_LABELS
+ * / PLATFORM_COLORS directly from this "use client" file to build the badge
+ * itself — but a Server Component crossing the client boundary can only
+ * reliably use a COMPONENT reference from a "use client" module; a plain
+ * object/const export resolves to `undefined` when read from server-side
+ * code, even though it works fine used INSIDE this file (as SocialIcon does
+ * for its own `branded` lookup below). The visible symptom: `style={{
+ * background: PLATFORM_COLORS[key] }}` silently became `background:
+ * undefined` (no attribute at all — React drops it), so a white icon
+ * (branded=false → currentColor → text-white) rendered on no background —
+ * invisible on a white page, "not loading at all" from the customer's seat.
+ *
+ * Fix: keep the color/label lookup INSIDE the client component. The parent
+ * Server Component only ever passes `platform` + `url`, never the lookup
+ * tables themselves.
+ */
+export function SocialIconLink({ platform, url, className = "w-10 h-10" }: { platform: SocialPlatform; url: string; className?: string }) {
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${PLATFORM_LABELS[platform]} link`}
+      title={PLATFORM_LABELS[platform]}
+      className={`inline-flex items-center justify-center rounded-full hover:scale-110 transition-transform shadow-sm ${className}`}
+      style={{ background: PLATFORM_COLORS[platform] }}
+    >
+      <SocialIcon platform={platform} branded={false} className="w-5 h-5 text-white" />
+    </a>
+  );
+}
+
 export function SocialIcon({ platform, className = "w-5 h-5", branded = true }: SocialIconProps) {
   const color = branded ? PLATFORM_COLORS[platform] : "currentColor";
   switch (platform) {
