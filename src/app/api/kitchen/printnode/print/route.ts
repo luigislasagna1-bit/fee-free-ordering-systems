@@ -12,6 +12,7 @@ import {
   type ReceiptRestaurant,
   type PrinterLanguage,
 } from "@/lib/receipt";
+import { readReservationDetails } from "@/lib/reservation-details";
 import { parseReceiptConfig } from "@/lib/receipt-schema";
 import { fetchDriveEstimate, resolveDistanceMatrixKey, cardinalDirection } from "@/lib/delivery-eta";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
@@ -374,6 +375,10 @@ export async function POST(req: NextRequest) {
         customerPhone: reservation.customerPhone,
         customerEmail: reservation.customerEmail,
         partySize: reservation.partySize,
+        // Booking questions (cmsajnvkm) — mirrors the LAN print-job route.
+        adultsCount: reservation.adultsCount,
+        childrenCount: reservation.childrenCount,
+        details: readReservationDetails(reservation.details),
         date: reservation.date,
         time: reservation.time,
         tableName: reservation.table?.name ?? null,

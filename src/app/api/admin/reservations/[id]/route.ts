@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { notifyCustomer } from "@/lib/notifications";
+import { readReservationDetails } from "@/lib/reservation-details";
 
 const ALLOWED_STATUSES = ["pending", "confirmed", "seated", "completed", "cancelled", "rejected", "no_show"] as const;
 
@@ -99,6 +100,12 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           preOrderTotal: existing.preOrderTotal ?? undefined,
           // Powers the guest cancel link on the "confirmed" email (cms0idtz7).
           reservationId: existing.id,
+          // Smart buttons (cmsajnvkm) — the accept/decline email carries the
+          // same breakdown + detail cards the initial confirmation had.
+          adultsCount: existing.adultsCount,
+          childrenCount: existing.childrenCount,
+          details: readReservationDetails(existing.details),
+          notes: existing.notes,
         },
       }).catch((e) => console.error("[notifyCustomer reservation status]", e));
     }

@@ -635,7 +635,24 @@
     "closedOnDay": "Wir haben am {day} geschlossen — bitte wählen Sie ein anderes Datum.",
     "jumpToNextOpen": "Zum nächsten geöffneten Tag springen ({date})",
     "closedPickAnother": "Wir haben am ausgewählten Datum geschlossen — bitte wählen Sie einen anderen Tag.",
-    "emailRequired": "E-Mail-Adresse ist erforderlich"
+    "emailRequired": "E-Mail-Adresse ist erforderlich",
+    "adults": "Erwachsene",
+    "children": "Kinder",
+    "childDefinitionAge": "Bis {n} Jahre alt",
+    "childDefinitionHeight": "Bis {n} cm groß",
+    "fewerLabel": "Weniger {label}",
+    "moreLabel": "Mehr {label}",
+    "childSeating": "Kinder",
+    "highChairQuestion": "Benötigen Sie einen Hochstuhl?",
+    "strollerQuestion": "Bringen Sie einen Kinderwagen mit?",
+    "allergiesLabel": "Allergien",
+    "allergiesPlaceholder": "Teilen Sie uns Allergien oder besondere Ernährungswünsche mit",
+    "occasionLabel": "Besonderer Anlass",
+    "occasionSelectPlaceholder": "Bitte den besonderen Anlass angeben",
+    "occasionOtherPlaceholder": "Verraten Sie uns, was Sie feiern",
+    "accessibilityLabel": "Barrierefrei",
+    "accessibilityPlaceholder": "z. B. Rollstuhlzugang, stufenlos erreichbarer Sitzplatz",
+    "commentsPlaceholderGeneric": "Anmerkungen (optional) – Sonderwünsche"
   },
   "kitchen": {
     "opensIn": "Öffnet in {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Schließen",
     "pnCancel": "Abbrechen",
     "pnSaving": "Wird gespeichert…",
-    "pnSaveSettings": "Einstellungen speichern"
+    "pnSaveSettings": "Einstellungen speichern",
+    "partyBreakdown": "{adults} Erwachsene, {children} Kinder",
+    "labelChildSeating": "Kindersitzplätze",
+    "labelAllergies": "Allergien",
+    "labelOccasion": "Anlass",
+    "labelAccessibility": "Barrierefreiheit"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Buchungen und Reservierungseinstellungen verwalten",
       "tabReservations": "Reservierungen",
       "tabSettings": "Einstellungen",
-      "depositsSoonDesc": "Erheben Sie eine Anzahlung bei der Buchung, um No-Shows zu reduzieren. Bald als kostenpflichtiges Add-on verfügbar."
+      "depositsSoonDesc": "Erheben Sie eine Anzahlung bei der Buchung, um No-Shows zu reduzieren. Bald als kostenpflichtiges Add-on verfügbar.",
+      "partyBreakdown": "{adults} Erwachsene, {children} Kinder",
+      "headingBookingQuestions": "Fragen zur Reservierung",
+      "descBookingQuestions": "Stellen Sie Gästen bei der Reservierung ein paar zusätzliche Fragen. Die Antworten erscheinen in der Küche, in der Reservierungsliste, auf dem gedruckten Bon und in Ihrer Benachrichtigungs-E-Mail.",
+      "labelSplitParty": "Erwachsene und Kinder getrennt abfragen",
+      "helpSplitParty": "Ersetzt die einzelne Auswahl der Personenanzahl durch getrennte Zähler für Erwachsene und Kinder. Die Gesamtzahl muss weiterhin Ihre Mindest- und Höchstgästezahl einhalten.",
+      "labelChildDefinition": "Wer als Kind gilt",
+      "helpChildDefinition": "Erscheint als kleiner Hinweis unter dem Kinder-Zähler, damit Ihre Gäste wissen, was Sie meinen. Wählen Sie eine Altersgrenze oder eine Körpergröße — oder „Keine Angabe“, wenn kein Hinweis erscheinen soll.",
+      "optionChildDefNone": "Keine Angabe",
+      "optionChildDefAge": "Unter einem bestimmten Alter",
+      "optionChildDefHeight": "Unter einer bestimmten Körpergröße",
+      "labelChildDefYears": "Kinder sind unter",
+      "labelChildDefCm": "Kinder sind unter",
+      "unitYears": "Jahre",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Hochstühle und Kinderwagen",
+      "helpAskChildSeating": "Gäste, die mit Kindern reservieren, können angeben, wie viele Hochstühle sie benötigen und ob sie einen Kinderwagen mitbringen.",
+      "labelAskAllergies": "Allergien",
+      "helpAskAllergies": "Fügt dem Reservierungsformular eine optionale Frage zu Allergien und besonderen Ernährungsbedürfnissen hinzu.",
+      "labelAskOccasion": "Besonderer Anlass",
+      "helpAskOccasion": "Gäste können Ihnen mitteilen, dass sie etwas feiern: Geburtstag, Jahrestag oder Geschäftsessen – so können Sie alles vorbereiten.",
+      "labelAskAccessibility": "Barrierefreiheit",
+      "helpAskAccessibility": "Fügt eine optionale Frage zur Barrierefreiheit hinzu, etwa zu stufenlos erreichbaren Sitzplätzen oder Rollstuhlzugang.",
+      "labelChildSeating": "Kindersitzplätze",
+      "labelAllergies": "Allergien",
+      "labelOccasion": "Anlass",
+      "labelAccessibility": "Barrierefreiheit"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(siehe beigefügten Bestellbeleg)",
       "date": "Datum",
       "time": "Uhrzeit",
-      "confirmationCode": "Bestätigungscode"
+      "confirmationCode": "Bestätigungscode",
+      "adultsChildren": "{adults} Erwachsene / {children} Kinder",
+      "labelChildSeating": "Kindersitzplätze",
+      "labelAllergies": "Allergien",
+      "labelOccasion": "Anlass",
+      "labelAccessibility": "Barrierefreiheit"
     },
     "scheduling": {
       "asap": "SOFORT",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Aktualisierung zu Ihrer Reservierungsanfrage",
       "badgeMissed": "Verpasst",
       "closedNote": "Das Restaurant ist gerade geschlossen — deine Reservierungsanfrage ist vorgemerkt und du bekommst ein Update, sobald es wieder öffnet.",
-      "closedNoteWithTime": "Das Restaurant ist gerade geschlossen — deine Reservierungsanfrage ist vorgemerkt und du bekommst ein Update, sobald es wieder öffnet. Wirf ab {openingTime} einen Blick in dein E-Mail-Postfach."
+      "closedNoteWithTime": "Das Restaurant ist gerade geschlossen — deine Reservierungsanfrage ist vorgemerkt und du bekommst ein Update, sobald es wieder öffnet. Wirf ab {openingTime} einen Blick in dein E-Mail-Postfach.",
+      "partyBreakdown": "{adults} Erwachsene, {children} Kinder",
+      "labelChildSeating": "Kindersitzplätze",
+      "labelAllergies": "Allergien",
+      "labelOccasion": "Anlass",
+      "labelAccessibility": "Barrierefreiheit"
     },
     "newReservation": {
       "preview": "Neue Reservierung — {dateTime} · {partySize} Pers.",
@@ -5548,7 +5606,12 @@
       "subject": "Neue Reservierung — {restaurant}",
       "title": "Neue Reservierung {status}",
       "body": "{customer} hat eine Reservierung für {party} Personen am {date} um {time} angefragt.",
-      "confirmationCode": "Bestätigungscode"
+      "confirmationCode": "Bestätigungscode",
+      "badgeAdultsChildren": "{adults} Erwachsene, {children} Kinder",
+      "labelChildSeating": "Kindersitzplätze",
+      "labelAllergies": "Allergien",
+      "labelOccasion": "Anlass",
+      "labelAccessibility": "Barrierefreiheit"
     },
     "passwordReset": {
       "preview": "Setze dein {brand}-Passwort zurück",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Dein Name",
       "saveFailed": "Speichern fehlgeschlagen ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Geburtstag",
+    "occasionAnniversary": "Hochzeitstag",
+    "occasionDate": "Romantisches Date",
+    "occasionFriends": "Treffen mit Freunden",
+    "occasionFamily": "Familientreffen",
+    "occasionBusiness": "Geschäftlich",
+    "occasionCelebration": "Feier",
+    "occasionOther": "Sonstiges",
+    "highChair": "Hochstuhl",
+    "stroller": "Kinderwagen"
   }
 }

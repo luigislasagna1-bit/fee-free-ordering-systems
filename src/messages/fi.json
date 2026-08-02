@@ -635,7 +635,24 @@
     "closedOnDay": "Olemme suljettuna päivänä {day} — valitse toinen päivämäärä.",
     "jumpToNextOpen": "Siirry seuraavaan avoinna olevaan päivään ({date})",
     "closedPickAnother": "Olemme suljettuna valittuna päivänä — valitse toinen päivä.",
-    "emailRequired": "Sähköpostiosoite vaaditaan"
+    "emailRequired": "Sähköpostiosoite vaaditaan",
+    "adults": "Aikuiset",
+    "children": "Lapset",
+    "childDefinitionAge": "Enintään {n}-vuotiaat",
+    "childDefinitionHeight": "Enintään {n} cm pitkät",
+    "fewerLabel": "Vähennä: {label}",
+    "moreLabel": "Lisää: {label}",
+    "childSeating": "Lapset",
+    "highChairQuestion": "Tarvitsetko syöttötuolin?",
+    "strollerQuestion": "Tuotko rattaat mukanasi?",
+    "allergiesLabel": "Allergiat",
+    "allergiesPlaceholder": "Kerro allergioista tai erityisruokavalioista",
+    "occasionLabel": "Erityinen tilaisuus",
+    "occasionSelectPlaceholder": "Valitse erityinen tilaisuus",
+    "occasionOtherPlaceholder": "Kerro, mitä juhlitte",
+    "accessibilityLabel": "Esteettömyys",
+    "accessibilityPlaceholder": "esim. pääsy pyörätuolilla, portaaton pöytäpaikka",
+    "commentsPlaceholderGeneric": "Kommentit (valinnainen) — erityistoiveet"
   },
   "kitchen": {
     "opensIn": "Avautuu {time} kuluttua",
@@ -1059,7 +1076,12 @@
     "pnClose": "Sulje",
     "pnCancel": "Peruuta",
     "pnSaving": "Tallennetaan…",
-    "pnSaveSettings": "Tallenna asetukset"
+    "pnSaveSettings": "Tallenna asetukset",
+    "partyBreakdown": "{adults} aikuista, {children} lasta",
+    "labelChildSeating": "Lasten istuimet",
+    "labelAllergies": "Allergiat",
+    "labelOccasion": "Tilaisuus",
+    "labelAccessibility": "Esteettömyys"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Hallinnoi varauksia ja varausasetuksia",
       "tabReservations": "Varaukset",
       "tabSettings": "Asetukset",
-      "depositsSoonDesc": "Peri varausmaksu varauksen yhteydessä vähentääksesi peruuttamatta jättämisiä. Tulossa pian maksullisena lisäosana."
+      "depositsSoonDesc": "Peri varausmaksu varauksen yhteydessä vähentääksesi peruuttamatta jättämisiä. Tulossa pian maksullisena lisäosana.",
+      "partyBreakdown": "{adults} aikuista, {children} lasta",
+      "headingBookingQuestions": "Varauskysymykset",
+      "descBookingQuestions": "Kysy vierailta muutama lisätieto varauksen yhteydessä. Vastaukset näkyvät keittiössä, varauslistalla, tulosteessa ja ilmoitussähköpostissasi.",
+      "labelSplitParty": "Kysy aikuiset ja lapset erikseen",
+      "helpSplitParty": "Korvaa yksittäisen seurueen koon valitsimen erillisillä Aikuiset- ja Lapset-laskureilla. Kokonaismäärä noudattaa edelleen asettamiasi vieraiden vähimmäis- ja enimmäismääriä.",
+      "labelChildDefinition": "Kuka lasketaan lapseksi",
+      "helpChildDefinition": "Näytetään pienenä vihjeenä Lapset-laskurin alla, jotta vieraat tietävät, mitä tarkoitat. Valitse ikä- tai pituusraja tai Ei määritelmää, jos et halua näyttää vihjettä.",
+      "optionChildDefNone": "Ei määritelmää",
+      "optionChildDefAge": "Alle tietyn iän",
+      "optionChildDefHeight": "Alle tietyn pituuden",
+      "labelChildDefYears": "Lapset ovat alle",
+      "labelChildDefCm": "Lapset ovat alle",
+      "unitYears": "vuotta",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Syöttötuolit ja rattaat",
+      "helpAskChildSeating": "Vieraat, jotka varaavat pöydän lasten kanssa, voivat kertoa, montako syöttötuolia he tarvitsevat ja tuovatko he mukanaan rattaat.",
+      "labelAskAllergies": "Allergiat",
+      "helpAskAllergies": "Lisää varauslomakkeeseen vapaaehtoisen kysymyksen allergioista ja erityisruokavalioista.",
+      "labelAskOccasion": "Erityinen tilaisuus",
+      "helpAskOccasion": "Antaa vieraiden kertoa, jos he ovat juhlimassa – syntymäpäivä, vuosipäivä tai liikelounas – jotta voit valmistautua.",
+      "labelAskAccessibility": "Esteettömyystarpeet",
+      "helpAskAccessibility": "Lisää vapaaehtoisen kysymyksen esteettömyystarpeista, kuten portaattomasta pöytäpaikasta tai esteettömästä pääsystä pyörätuolilla.",
+      "labelChildSeating": "Lasten istuimet",
+      "labelAllergies": "Allergiat",
+      "labelOccasion": "Tilaisuus",
+      "labelAccessibility": "Esteettömyys"
     },
     "autopilotClient": {
       "pageTitle": "Autopilotti",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(katso liitetty tilauksen kuitti)",
       "date": "Päivämäärä",
       "time": "Aika",
-      "confirmationCode": "Vahvistuskoodi"
+      "confirmationCode": "Vahvistuskoodi",
+      "adultsChildren": "{adults} aikuista / {children} lasta",
+      "labelChildSeating": "Lasten istuimet",
+      "labelAllergies": "Allergiat",
+      "labelOccasion": "Tilaisuus",
+      "labelAccessibility": "Esteettömyys"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Päivitys varauspyyntöösi",
       "badgeMissed": "Menetetty",
       "closedNote": "Ravintola on juuri nyt suljettu — varauspyyntösi on jonossa ja saat päivityksen heti, kun ravintola aukeaa.",
-      "closedNoteWithTime": "Ravintola on juuri nyt suljettu — varauspyyntösi on jonossa ja saat päivityksen heti, kun ravintola aukeaa. Tarkista sähköpostisi: {openingTime}."
+      "closedNoteWithTime": "Ravintola on juuri nyt suljettu — varauspyyntösi on jonossa ja saat päivityksen heti, kun ravintola aukeaa. Tarkista sähköpostisi: {openingTime}.",
+      "partyBreakdown": "{adults} aikuista, {children} lasta",
+      "labelChildSeating": "Lasten istuimet",
+      "labelAllergies": "Allergiat",
+      "labelOccasion": "Tilaisuus",
+      "labelAccessibility": "Esteettömyys"
     },
     "newReservation": {
       "preview": "Uusi varaus — {dateTime} · {partySize} hengen seurue",
@@ -5548,7 +5606,12 @@
       "subject": "Uusi varaus — {restaurant}",
       "title": "Uusi varaus {status}",
       "body": "{customer} pyysi varausta {party} hengelle {date} kello {time}.",
-      "confirmationCode": "Vahvistuskoodi"
+      "confirmationCode": "Vahvistuskoodi",
+      "badgeAdultsChildren": "{adults} aikuista, {children} lasta",
+      "labelChildSeating": "Lasten istuimet",
+      "labelAllergies": "Allergiat",
+      "labelOccasion": "Tilaisuus",
+      "labelAccessibility": "Esteettömyys"
     },
     "passwordReset": {
       "preview": "Nollaa {brand}-salasanasi",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Nimesi",
       "saveFailed": "Tallennus epäonnistui ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Syntymäpäivä",
+    "occasionAnniversary": "Hääpäivä",
+    "occasionDate": "Romanttiset treffit",
+    "occasionFriends": "Ystävien tapaaminen",
+    "occasionFamily": "Perhetapaaminen",
+    "occasionBusiness": "Liiketapaaminen",
+    "occasionCelebration": "Juhla",
+    "occasionOther": "Muu",
+    "highChair": "Syöttötuoli",
+    "stroller": "Rattaat"
   }
 }

@@ -635,7 +635,24 @@
     "closedOnDay": "Ми не працюємо в {day} — будь ласка, оберіть іншу дату.",
     "jumpToNextOpen": "Перейти до наступного відкритого дня ({date})",
     "closedPickAnother": "Ми не працюємо у вибрану дату — будь ласка, оберіть інший день.",
-    "emailRequired": "Електронна пошта обов'язкова"
+    "emailRequired": "Електронна пошта обов'язкова",
+    "adults": "Дорослі",
+    "children": "Діти",
+    "childDefinitionAge": "До {n} років",
+    "childDefinitionHeight": "До {n} см зросту",
+    "fewerLabel": "Менше {label}",
+    "moreLabel": "Більше {label}",
+    "childSeating": "Діти",
+    "highChairQuestion": "Чи потрібен дитячий стільчик?",
+    "strollerQuestion": "Ви будете з дитячим візочком?",
+    "allergiesLabel": "Алергії",
+    "allergiesPlaceholder": "Розкажіть про алергії або дієтичні потреби",
+    "occasionLabel": "Особлива подія",
+    "occasionSelectPlaceholder": "Укажіть особливу подію",
+    "occasionOtherPlaceholder": "Розкажіть, що ви святкуєте",
+    "accessibilityLabel": "Безбар'єрний доступ",
+    "accessibilityPlaceholder": "напр. доступ для візка, місця без сходинок",
+    "commentsPlaceholderGeneric": "Коментарі (необов'язково) — особливі побажання"
   },
   "kitchen": {
     "opensIn": "Відкриється через {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Закрити",
     "pnCancel": "Скасувати",
     "pnSaving": "Збереження…",
-    "pnSaveSettings": "Зберегти налаштування"
+    "pnSaveSettings": "Зберегти налаштування",
+    "partyBreakdown": "{adults} дорослих, {children} дітей",
+    "labelChildSeating": "Дитячі місця",
+    "labelAllergies": "Алергії",
+    "labelOccasion": "Нагода",
+    "labelAccessibility": "Безбар'єрність"
   },
   "admin": {
     "welcomeBack": "З поверненням",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Керування бронюваннями та налаштуваннями",
       "tabReservations": "Бронювання",
       "tabSettings": "Налаштування",
-      "depositsSoonDesc": "Беріть депозит під час бронювання, щоб зменшити неявки. Незабаром як платне доповнення."
+      "depositsSoonDesc": "Беріть депозит під час бронювання, щоб зменшити неявки. Незабаром як платне доповнення.",
+      "partyBreakdown": "{adults} дорослих, {children} дітей",
+      "headingBookingQuestions": "Запитання при бронюванні",
+      "descBookingQuestions": "Ставте гостям кілька додаткових запитань під час бронювання. Відповіді з'являються на кухні, у списку бронювань, на надрукованому чеку та у вашому листі-сповіщенні.",
+      "labelSplitParty": "Запитувати кількість дорослих і дітей окремо",
+      "helpSplitParty": "Замінює спільне поле «Кількість гостей» окремими лічильниками «Дорослі» та «Діти». Загальна кількість і надалі має вкладатися в заданий вами мінімум і максимум гостей.",
+      "labelChildDefinition": "Хто вважається дитиною",
+      "helpChildDefinition": "Показується невеликою підказкою під лічильником «Діти», щоб гості розуміли, кого ви маєте на увазі. Виберіть обмеження за віком чи зростом або «Без визначення», щоб не показувати підказку.",
+      "optionChildDefNone": "Без визначення",
+      "optionChildDefAge": "До певного віку",
+      "optionChildDefHeight": "До певного зросту",
+      "labelChildDefYears": "Дітьми вважаються гості до",
+      "labelChildDefCm": "Дітьми вважаються гості до",
+      "unitYears": "років",
+      "unitCm": "см",
+      "labelAskChildSeating": "Дитячі стільчики та візочки",
+      "helpAskChildSeating": "Гості, які бронюють столик із дітьми, зможуть вказати, скільки дитячих стільчиків їм потрібно та чи прийдуть вони з візочком.",
+      "labelAskAllergies": "Алергії",
+      "helpAskAllergies": "Додає до форми бронювання необов'язкове запитання про алергії та дієтичні потреби.",
+      "labelAskOccasion": "Особлива подія",
+      "helpAskOccasion": "Дозволяє гостям повідомити про особливу нагоду — день народження, річницю, ділову вечерю — щоб ви могли підготуватися.",
+      "labelAskAccessibility": "Потреби щодо доступності",
+      "helpAskAccessibility": "Додає необов'язкове запитання про потреби щодо доступності — наприклад, місце без сходинок або доступ для осіб на візку.",
+      "labelChildSeating": "Дитячі місця",
+      "labelAllergies": "Алергії",
+      "labelOccasion": "Нагода",
+      "labelAccessibility": "Безбар'єрність"
     },
     "autopilotClient": {
       "pageTitle": "Автопілот",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(дивіться доданий чек замовлення)",
       "date": "Дата",
       "time": "Час",
-      "confirmationCode": "Код підтвердження"
+      "confirmationCode": "Код підтвердження",
+      "adultsChildren": "{adults} дорослих / {children} дітей",
+      "labelChildSeating": "Дитячі місця",
+      "labelAllergies": "Алергії",
+      "labelOccasion": "Нагода",
+      "labelAccessibility": "Безбар'єрність"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Оновлення щодо вашого запиту на бронювання",
       "badgeMissed": "Пропущено",
       "closedNote": "Ресторан зараз зачинений — ваш запит на бронювання в черзі, і щойно ресторан відкриється, ви отримаєте оновлення.",
-      "closedNoteWithTime": "Ресторан зараз зачинений — ваш запит на бронювання в черзі, і щойно ресторан відкриється, ви отримаєте оновлення. Перевірте пошту: {openingTime}."
+      "closedNoteWithTime": "Ресторан зараз зачинений — ваш запит на бронювання в черзі, і щойно ресторан відкриється, ви отримаєте оновлення. Перевірте пошту: {openingTime}.",
+      "partyBreakdown": "{adults} дорослих, {children} дітей",
+      "labelChildSeating": "Дитячі місця",
+      "labelAllergies": "Алергії",
+      "labelOccasion": "Нагода",
+      "labelAccessibility": "Безбар'єрність"
     },
     "newReservation": {
       "preview": "Нове бронювання — {dateTime} · гостей: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Нове бронювання — {restaurant}",
       "title": "Нове бронювання {status}",
       "body": "{customer} запросив бронювання для {party} гостей на {date} о {time}.",
-      "confirmationCode": "Код підтвердження"
+      "confirmationCode": "Код підтвердження",
+      "badgeAdultsChildren": "{adults} дорослих, {children} дітей",
+      "labelChildSeating": "Дитячі місця",
+      "labelAllergies": "Алергії",
+      "labelOccasion": "Нагода",
+      "labelAccessibility": "Безбар'єрність"
     },
     "passwordReset": {
       "preview": "Скидання пароля для {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Ваше ім’я",
       "saveFailed": "Не вдалося зберегти ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "День народження",
+    "occasionAnniversary": "Річниця весілля",
+    "occasionDate": "Романтичне побачення",
+    "occasionFriends": "Зустріч із друзями",
+    "occasionFamily": "Зустріч із родиною",
+    "occasionBusiness": "Ділова зустріч",
+    "occasionCelebration": "Святкування",
+    "occasionOther": "Інше",
+    "highChair": "Дитячий стільчик",
+    "stroller": "Дитячий візок"
   }
 }

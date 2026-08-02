@@ -13,6 +13,7 @@ import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./rec
 import { formatCurrency } from "./utils";
 import { formatTime } from "./format-time";
 import { getDict, type Translator } from "./i18n-dict";
+import { formatDetailRows, type ReservationDetails } from "./reservation-details";
 
 export type PrinterLanguage = "escpos" | "starprnt" | "star_line" | "plaintext";
 
@@ -1219,6 +1220,11 @@ export interface ReservationReceiptData {
   customerPhone?: string | null;
   customerEmail?: string | null;
   partySize: number;
+  /** Smart buttons (Fabrizio cmsajnvkm): adults/children split + structured
+   *  details. Absent on legacy bookings — the slip then prints as before. */
+  adultsCount?: number | null;
+  childrenCount?: number | null;
+  details?: ReservationDetails | null;
   date: string;          // "YYYY-MM-DD"
   time: string;          // "HH:MM"
   tableName?: string | null;
@@ -1270,12 +1276,24 @@ export async function buildReservationReceipt(
   r.sizeMode(24).line(`${data.date}`).sizeMode(12);
   r.sizeMode(24).line(formatTime(data.time, activeReceiptHoursFormat)).sizeMode(12);
   r.line(t("receipt.reservation.partyOf", { n: data.partySize }));
+  // Adults/children split (cmsajnvkm) — one extra line, only when present.
+  if (data.adultsCount != null) {
+    r.line(t("receipt.reservation.adultsChildren", { adults: data.adultsCount, children: data.childrenCount ?? 0 }));
+  }
   if (data.tableName) r.line(`${t("receipt.reservation.table")}: ${data.tableName}`);
   r.divider("-");
 
   if (data.notes) {
     r.bold(true).line(t("receipt.reservation.notes")).bold(false);
     r.wrapped(data.notes);
+    r.divider("-");
+  }
+
+  // Booking questions (cmsajnvkm) — mirrored in receipt-lines.ts; keep both
+  // builders in lockstep (GOLDEN pipeline rule).
+  for (const row of formatDetailRows(data.details, t, "receipt.reservation")) {
+    r.bold(true).line(row.label.toUpperCase()).bold(false);
+    r.wrapped(row.value);
     r.divider("-");
   }
 

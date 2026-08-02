@@ -2,6 +2,7 @@
 import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 import { formatCurrency, capitalizeName } from "@/lib/utils";
 import { formatTime, formatDueLabel, formatDateCapitalized } from "@/lib/format-time";
+import { formatDetailRows, readReservationDetails } from "@/lib/reservation-details";
 import {
   Bell, Printer, RefreshCw, LogOut, ChefHat, Sun, Moon,
   Package, Clock, Truck, ShoppingBag, CheckCircle, Trash2,
@@ -301,6 +302,9 @@ function ReservationDetail({
   currency: string;
 }) {
   const tk = useTranslations("kitchen");
+  // Root translator — formatDetailRows takes full dotted keys so the value
+  // phrases resolve from the shared reservationDetails namespace (cmsajnvkm).
+  const tkRoot = useTranslations();
   const locale = useLocale();
   const [busy, setBusy] = useState(false);
   // Localized full date to match the order detail's "order for later" line
@@ -358,6 +362,11 @@ function ReservationDetail({
         <div className={`flex items-center gap-2 flex-wrap ${t.muted}`}>
           <Package className="w-4 h-4 flex-shrink-0" />
           <span>{tk("partyOf", { n: r.partySize })}</span>
+          {/* Adults/children split (cmsajnvkm) — additive line, legacy rows
+              (null counts) render exactly as before. */}
+          {r.adultsCount != null && (
+            <span>· {tk("partyBreakdown", { adults: r.adultsCount, children: r.childrenCount ?? 0 })}</span>
+          )}
           {r.table && <span>· {r.table.name}</span>}
         </div>
         {r.customerPhone && (
@@ -381,6 +390,14 @@ function ReservationDetail({
             {r.notes}
           </div>
         )}
+        {/* Smart-button details (cmsajnvkm) — same yellow can't-miss treatment
+            as the guest note; allergies especially must never be overlooked. */}
+        {formatDetailRows(readReservationDetails(r.details), tkRoot, "kitchen").map((row) => (
+          <div key={row.label} className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2 text-sm text-yellow-700 dark:text-yellow-300">
+            <span className="font-bold uppercase text-[10px] tracking-wide block">{row.label}</span>
+            {row.value}
+          </div>
+        ))}
         {r.preOrderTotal > 0 && (
           <div className={`flex items-center justify-between rounded-xl border ${t.border} px-3 py-2`}>
             <span className={`flex items-center gap-1.5 font-semibold ${t.text}`}>
@@ -864,6 +881,12 @@ type KitchenReservation = {
   customerPhone: string | null;
   customerEmail: string | null;
   partySize: number;
+  /** Smart buttons (cmsajnvkm): adults/children split + structured details
+   *  (child seating / allergies / occasion / accessibility). Null on legacy
+   *  bookings and when the restaurant never enabled the questions. */
+  adultsCount?: number | null;
+  childrenCount?: number | null;
+  details?: unknown;
   date: string;
   time: string;
   notes: string | null;

@@ -28,6 +28,7 @@ import { boxedSectionHasNoContent } from "./receipt";
 import { formatCurrency } from "./utils";
 import type { DigestStats } from "./email";
 import { getDict, type Translator } from "./i18n-dict";
+import { formatDetailRows } from "./reservation-details";
 
 // ─── Public types ────────────────────────────────────────────────────────────
 
@@ -771,12 +772,23 @@ export async function buildReservationReceiptLines(
   r.sizeMode(24).line(data.date).sizeMode(12);
   r.sizeMode(24).line(data.time).sizeMode(12);
   r.line(t("receipt.reservation.partyOf", { n: data.partySize }));
+  // Adults/children split (cmsajnvkm) — MIRRORS receipt.ts; keep in lockstep.
+  if (data.adultsCount != null) {
+    r.line(t("receipt.reservation.adultsChildren", { adults: data.adultsCount, children: data.childrenCount ?? 0 }));
+  }
   if (data.tableName) r.line(`${t("receipt.reservation.table")}: ${data.tableName}`);
   r.divider("-");
 
   if (data.notes) {
     r.bold(true).line(t("receipt.reservation.notes")).bold(false);
     r.line(data.notes);
+    r.divider("-");
+  }
+
+  // Booking questions (cmsajnvkm) — MIRRORS receipt.ts.
+  for (const row of formatDetailRows(data.details, t, "receipt.reservation")) {
+    r.bold(true).line(row.label.toUpperCase()).bold(false);
+    r.line(row.value);
     r.divider("-");
   }
 

@@ -635,7 +635,24 @@
     "closedOnDay": "Chúng tôi đóng cửa vào {day} — vui lòng chọn ngày khác.",
     "jumpToNextOpen": "Chuyển đến ngày mở cửa tiếp theo ({date})",
     "closedPickAnother": "Chúng tôi đóng cửa vào ngày đã chọn — vui lòng chọn ngày khác.",
-    "emailRequired": "Email là bắt buộc"
+    "emailRequired": "Email là bắt buộc",
+    "adults": "Người lớn",
+    "children": "Trẻ em",
+    "childDefinitionAge": "Từ {n} tuổi trở xuống",
+    "childDefinitionHeight": "Cao từ {n} cm trở xuống",
+    "fewerLabel": "Bớt {label}",
+    "moreLabel": "Thêm {label}",
+    "childSeating": "Trẻ em",
+    "highChairQuestion": "Bạn có cần ghế ăn cho bé không?",
+    "strollerQuestion": "Bạn có mang theo xe đẩy không?",
+    "allergiesLabel": "Dị ứng",
+    "allergiesPlaceholder": "Cho chúng tôi biết về dị ứng hoặc chế độ ăn đặc biệt",
+    "occasionLabel": "Dịp đặc biệt",
+    "occasionSelectPlaceholder": "Vui lòng chọn dịp đặc biệt",
+    "occasionOtherPlaceholder": "Cho chúng tôi biết bạn đang ăn mừng dịp gì",
+    "accessibilityLabel": "Hỗ trợ tiếp cận",
+    "accessibilityPlaceholder": "ví dụ: lối vào cho xe lăn, chỗ ngồi không có bậc thang",
+    "commentsPlaceholderGeneric": "Ghi chú (tùy chọn) - yêu cầu đặc biệt"
   },
   "kitchen": {
     "opensIn": "Mở cửa sau {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Đóng",
     "pnCancel": "Hủy",
     "pnSaving": "Đang lưu...",
-    "pnSaveSettings": "Lưu cài đặt"
+    "pnSaveSettings": "Lưu cài đặt",
+    "partyBreakdown": "{adults} người lớn, {children} trẻ em",
+    "labelChildSeating": "Chỗ ngồi cho trẻ",
+    "labelAllergies": "Dị ứng",
+    "labelOccasion": "Dịp",
+    "labelAccessibility": "Hỗ trợ tiếp cận"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",
@@ -2964,7 +2986,33 @@
       "pageSubtitle": "Quản lý đặt chỗ và cài đặt đặt bàn",
       "tabReservations": "Đặt bàn",
       "tabSettings": "Cài đặt",
-      "depositsSoonDesc": "Thu đặt cọc khi khách đặt bàn để giảm tình trạng không đến. Sắp ra mắt dưới dạng tiện ích trả phí."
+      "depositsSoonDesc": "Thu đặt cọc khi khách đặt bàn để giảm tình trạng không đến. Sắp ra mắt dưới dạng tiện ích trả phí.",
+      "partyBreakdown": "{adults} người lớn, {children} trẻ em",
+      "headingBookingQuestions": "Câu hỏi khi đặt bàn",
+      "descBookingQuestions": "Hỏi khách thêm vài thông tin khi họ đặt bàn. Câu trả lời sẽ hiển thị trên màn hình bếp, trong danh sách đặt bàn, trên phiếu in và trong email thông báo của bạn.",
+      "labelSplitParty": "Hỏi riêng số người lớn và trẻ em",
+      "helpSplitParty": "Thay ô chọn Số người duy nhất bằng hai bộ đếm riêng cho Người lớn và Trẻ em. Tổng số vẫn tuân theo số khách tối thiểu và tối đa của bạn.",
+      "labelChildDefinition": "Ai được tính là trẻ em",
+      "helpChildDefinition": "Hiển thị dưới dạng gợi ý nhỏ bên dưới bộ đếm Trẻ em để khách hiểu ý bạn. Chọn giới hạn độ tuổi hoặc chiều cao, hoặc chọn Không có định nghĩa để ẩn gợi ý.",
+      "optionChildDefNone": "Không có định nghĩa",
+      "optionChildDefAge": "Dưới độ tuổi nhất định",
+      "optionChildDefHeight": "Dưới chiều cao nhất định",
+      "labelChildDefYears": "Trẻ em dưới",
+      "labelChildDefCm": "Trẻ em dưới",
+      "unitYears": "tuổi",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Ghế ăn trẻ em và xe đẩy",
+      "helpAskChildSeating": "Khách đặt bàn có trẻ em có thể cho bạn biết họ cần bao nhiêu ghế ăn trẻ em và có mang theo xe đẩy hay không.",
+      "labelAskAllergies": "Dị ứng",
+      "helpAskAllergies": "Thêm câu hỏi tùy chọn về dị ứng và chế độ ăn đặc biệt vào biểu mẫu đặt bàn.",
+      "labelAskOccasion": "Dịp đặc biệt",
+      "helpAskOccasion": "Cho phép khách báo cho bạn biết họ đang mừng một dịp đặc biệt — sinh nhật, kỷ niệm, bữa ăn công việc — để bạn chuẩn bị trước.",
+      "labelAskAccessibility": "Nhu cầu hỗ trợ tiếp cận",
+      "helpAskAccessibility": "Thêm câu hỏi tùy chọn về nhu cầu hỗ trợ tiếp cận, ví dụ chỗ ngồi không có bậc thang hoặc lối vào cho xe lăn.",
+      "labelChildSeating": "Chỗ ngồi cho trẻ",
+      "labelAllergies": "Dị ứng",
+      "labelOccasion": "Dịp",
+      "labelAccessibility": "Hỗ trợ tiếp cận"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(xem hóa đơn đơn hàng kèm theo)",
       "date": "Ngày",
       "time": "Giờ",
-      "confirmationCode": "Mã xác nhận"
+      "confirmationCode": "Mã xác nhận",
+      "adultsChildren": "{adults} người lớn / {children} trẻ em",
+      "labelChildSeating": "Chỗ ngồi cho trẻ",
+      "labelAllergies": "Dị ứng",
+      "labelOccasion": "Dịp",
+      "labelAccessibility": "Hỗ trợ tiếp cận"
     },
     "scheduling": {
       "asap": "CÀNG SỚM CÀNG TỐT",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Cập nhật về yêu cầu đặt bàn của bạn",
       "badgeMissed": "Bị bỏ lỡ",
       "closedNote": "Nhà hàng hiện đang đóng cửa — yêu cầu đặt bàn của bạn đã được xếp vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa.",
-      "closedNoteWithTime": "Nhà hàng hiện đang đóng cửa — yêu cầu đặt bàn của bạn đã được xếp vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa. Hãy kiểm tra email của bạn vào {openingTime}."
+      "closedNoteWithTime": "Nhà hàng hiện đang đóng cửa — yêu cầu đặt bàn của bạn đã được xếp vào hàng chờ và bạn sẽ nhận được cập nhật ngay khi nhà hàng mở cửa. Hãy kiểm tra email của bạn vào {openingTime}.",
+      "partyBreakdown": "{adults} người lớn, {children} trẻ em",
+      "labelChildSeating": "Chỗ ngồi cho trẻ",
+      "labelAllergies": "Dị ứng",
+      "labelOccasion": "Dịp",
+      "labelAccessibility": "Hỗ trợ tiếp cận"
     },
     "newReservation": {
       "preview": "Đặt bàn mới — {dateTime} · {partySize} khách",
@@ -5548,7 +5606,12 @@
       "subject": "Đặt bàn mới — {restaurant}",
       "title": "Đặt bàn mới {status}",
       "body": "{customer} đã yêu cầu đặt bàn cho {party} khách vào {date} lúc {time}.",
-      "confirmationCode": "Mã xác nhận"
+      "confirmationCode": "Mã xác nhận",
+      "badgeAdultsChildren": "{adults} người lớn, {children} trẻ em",
+      "labelChildSeating": "Chỗ ngồi cho trẻ",
+      "labelAllergies": "Dị ứng",
+      "labelOccasion": "Dịp",
+      "labelAccessibility": "Hỗ trợ tiếp cận"
     },
     "passwordReset": {
       "preview": "Đặt lại mật khẩu {brand} của bạn",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Tên của bạn",
       "saveFailed": "Lưu thất bại ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Sinh nhật",
+    "occasionAnniversary": "Kỷ niệm ngày cưới",
+    "occasionDate": "Hẹn hò lãng mạn",
+    "occasionFriends": "Gặp gỡ bạn bè",
+    "occasionFamily": "Họp mặt gia đình",
+    "occasionBusiness": "Công việc",
+    "occasionCelebration": "Tiệc mừng",
+    "occasionOther": "Khác",
+    "highChair": "Ghế ăn cho bé",
+    "stroller": "Xe đẩy em bé"
   }
 }

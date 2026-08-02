@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { formatDueLabel , formatDateCapitalized } from "@/lib/format-time";
+import { formatDetailRows, readReservationDetails } from "@/lib/reservation-details";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
@@ -380,6 +381,10 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               </div>
               <div className="text-sm opacity-95 mt-0.5">
                 {tk("partyOf", { n: order.reservation.partySize })}
+                {/* Adults/children split (cmsajnvkm) — additive, legacy null. */}
+                {order.reservation.adultsCount != null && (
+                  <> {" · "}{tk("partyBreakdown", { adults: order.reservation.adultsCount, children: order.reservation.childrenCount ?? 0 })}</>
+                )}
                 {" · "}
                 {order.reservation.date} {fmtTimeOnly(`${order.reservation.date}T${order.reservation.time}`, hoursFormat, locale)}
                 {" · #"}{order.reservation.confirmationCode}
@@ -394,6 +399,14 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                   {order.reservation.notes}
                 </div>
               )}
+              {/* Smart-button details (cmsajnvkm) — banner-contrast styling to
+                  match the note block above. */}
+              {formatDetailRows(readReservationDetails(order.reservation.details), tRoot, "kitchen").map((row) => (
+                <div key={row.label} className="mt-2 rounded-lg px-3 py-2 bg-yellow-400/20 border border-yellow-300/60 text-yellow-100 text-sm font-medium">
+                  <span className="block text-[10px] font-bold uppercase tracking-wide opacity-90">{row.label}</span>
+                  {row.value}
+                </div>
+              ))}
             </div>
           )}
 

@@ -635,7 +635,24 @@
     "closedOnDay": "نحن مغلقون يوم {day} — يرجى اختيار تاريخ آخر.",
     "jumpToNextOpen": "الانتقال إلى اليوم المفتوح التالي ({date})",
     "closedPickAnother": "نحن مغلقون في التاريخ المحدد — يرجى اختيار يوم آخر.",
-    "emailRequired": "البريد الإلكتروني مطلوب"
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "adults": "البالغون",
+    "children": "الأطفال",
+    "childDefinitionAge": "حتى سن {n}",
+    "childDefinitionHeight": "حتى طول {n} سم",
+    "fewerLabel": "تقليل: {label}",
+    "moreLabel": "زيادة: {label}",
+    "childSeating": "الأطفال",
+    "highChairQuestion": "هل تحتاج إلى كرسي أطفال مرتفع؟",
+    "strollerQuestion": "هل ستُحضر عربة أطفال؟",
+    "allergiesLabel": "الحساسية",
+    "allergiesPlaceholder": "أخبرنا عن أي حساسية أو احتياجات غذائية",
+    "occasionLabel": "مناسبة خاصة",
+    "occasionSelectPlaceholder": "يُرجى تحديد المناسبة الخاصة",
+    "occasionOtherPlaceholder": "أخبرنا بما تحتفل به",
+    "accessibilityLabel": "تسهيلات لذوي الإعاقة",
+    "accessibilityPlaceholder": "مثال: مدخل للكراسي المتحركة، طاولة بدون درجات",
+    "commentsPlaceholderGeneric": "ملاحظات (اختياري) - طلبات خاصة"
   },
   "kitchen": {
     "opensIn": "يفتح خلال {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "إغلاق",
     "pnCancel": "إلغاء",
     "pnSaving": "جارٍ الحفظ…",
-    "pnSaveSettings": "حفظ الإعدادات"
+    "pnSaveSettings": "حفظ الإعدادات",
+    "partyBreakdown": "{adults} بالغ، {children} طفل",
+    "labelChildSeating": "مقاعد الأطفال",
+    "labelAllergies": "الحساسية",
+    "labelOccasion": "المناسبة",
+    "labelAccessibility": "إمكانية الوصول"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "إدارة الحجوزات وإعداداتها",
       "tabReservations": "الحجوزات",
       "tabSettings": "الإعدادات",
-      "depositsSoonDesc": "حصّل عربونًا عند الحجز لتقليل حالات عدم الحضور. قريبًا كإضافة مدفوعة."
+      "depositsSoonDesc": "حصّل عربونًا عند الحجز لتقليل حالات عدم الحضور. قريبًا كإضافة مدفوعة.",
+      "partyBreakdown": "{adults} بالغ، {children} طفل",
+      "headingBookingQuestions": "أسئلة الحجز",
+      "descBookingQuestions": "اطرح على الضيوف بعض الأسئلة الإضافية أثناء الحجز. تظهر الإجابات في المطبخ، وفي قائمة الحجوزات، وعلى الإيصال المطبوع، وفي بريد الإشعارات الخاص بك.",
+      "labelSplitParty": "السؤال عن البالغين والأطفال بشكل منفصل",
+      "helpSplitParty": "يستبدل محدّد عدد الأشخاص الواحد بعدّادين منفصلين للبالغين والأطفال. ويظل الإجمالي ملتزمًا بالحد الأدنى والحد الأقصى للضيوف لديك.",
+      "labelChildDefinition": "من يُعتبر طفلاً",
+      "helpChildDefinition": "يظهر كتلميح صغير أسفل عدّاد الأطفال ليعرف الضيوف ما تقصده. اختر حدًّا للعمر أو للطول، أو «بلا تعريف» لعدم إظهار أي تلميح.",
+      "optionChildDefNone": "بلا تعريف",
+      "optionChildDefAge": "أقل من عمر معيّن",
+      "optionChildDefHeight": "أقل من طول معيّن",
+      "labelChildDefYears": "الأطفال أقل من",
+      "labelChildDefCm": "الأطفال أقل من",
+      "unitYears": "سنة",
+      "unitCm": "سم",
+      "labelAskChildSeating": "كراسي الأطفال المرتفعة وعربات الأطفال",
+      "helpAskChildSeating": "يستطيع الضيوف الذين يحجزون مع أطفال إخبارك بعدد كراسي الأطفال المرتفعة التي يحتاجونها وما إذا كانوا سيُحضرون عربة أطفال.",
+      "labelAskAllergies": "الحساسية",
+      "helpAskAllergies": "يضيف سؤالاً اختيارياً عن الحساسيات والاحتياجات الغذائية إلى نموذج الحجز.",
+      "labelAskOccasion": "مناسبة خاصة",
+      "helpAskOccasion": "يتيح للضيوف إخبارك بأنهم يحتفلون بمناسبة — عيد ميلاد أو ذكرى سنوية أو وجبة عمل — حتى تتمكّن من الاستعداد.",
+      "labelAskAccessibility": "احتياجات إمكانية الوصول",
+      "helpAskAccessibility": "يضيف سؤالاً اختيارياً عن احتياجات إمكانية الوصول، مثل مقاعد بدون درجات أو إمكانية دخول الكراسي المتحركة.",
+      "labelChildSeating": "مقاعد الأطفال",
+      "labelAllergies": "الحساسية",
+      "labelOccasion": "المناسبة",
+      "labelAccessibility": "إمكانية الوصول"
     },
     "autopilotClient": {
       "pageTitle": "الطيار الآلي",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(انظر إيصال الطلب المرفق)",
       "date": "التاريخ",
       "time": "الوقت",
-      "confirmationCode": "رمز التأكيد"
+      "confirmationCode": "رمز التأكيد",
+      "adultsChildren": "{adults} بالغ / {children} طفل",
+      "labelChildSeating": "مقاعد الأطفال",
+      "labelAllergies": "الحساسية",
+      "labelOccasion": "المناسبة",
+      "labelAccessibility": "إمكانية الوصول"
     },
     "scheduling": {
       "asap": "في أقرب وقت",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "تحديث بشأن طلب حجزك",
       "badgeMissed": "فائت",
       "closedNote": "المطعم مغلق حاليًا — طلب الحجز الخاص بك في قائمة الانتظار وستصلك آخر المستجدات فور فتح المطعم.",
-      "closedNoteWithTime": "المطعم مغلق حاليًا — طلب الحجز الخاص بك في قائمة الانتظار وستصلك رسالة تحديث فور فتح المطعم. تفقّد بريدك الإلكتروني في {openingTime}."
+      "closedNoteWithTime": "المطعم مغلق حاليًا — طلب الحجز الخاص بك في قائمة الانتظار وستصلك رسالة تحديث فور فتح المطعم. تفقّد بريدك الإلكتروني في {openingTime}.",
+      "partyBreakdown": "{adults} بالغ، {children} طفل",
+      "labelChildSeating": "مقاعد الأطفال",
+      "labelAllergies": "الحساسية",
+      "labelOccasion": "المناسبة",
+      "labelAccessibility": "إمكانية الوصول"
     },
     "newReservation": {
       "preview": "حجز جديد — {dateTime} · عدد الضيوف {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "حجز جديد — {restaurant}",
       "title": "حجز جديد {status}",
       "body": "طلب {customer} حجزاً لـ {party} ضيف في {date} الساعة {time}.",
-      "confirmationCode": "رمز التأكيد"
+      "confirmationCode": "رمز التأكيد",
+      "badgeAdultsChildren": "{adults} بالغ، {children} طفل",
+      "labelChildSeating": "مقاعد الأطفال",
+      "labelAllergies": "الحساسية",
+      "labelOccasion": "المناسبة",
+      "labelAccessibility": "إمكانية الوصول"
     },
     "passwordReset": {
       "preview": "إعادة تعيين كلمة المرور الخاصة بك في {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "اسمك",
       "saveFailed": "فشل الحفظ ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "عيد ميلاد",
+    "occasionAnniversary": "ذكرى زواج",
+    "occasionDate": "موعد رومانسي",
+    "occasionFriends": "لقاء مع الأصدقاء",
+    "occasionFamily": "لقاء عائلي",
+    "occasionBusiness": "اجتماع عمل",
+    "occasionCelebration": "احتفال",
+    "occasionOther": "أخرى",
+    "highChair": "كرسي أطفال",
+    "stroller": "عربة أطفال"
   }
 }

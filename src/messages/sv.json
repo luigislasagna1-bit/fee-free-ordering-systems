@@ -635,7 +635,24 @@
     "closedOnDay": "Vi har stängt på {day} — välj ett annat datum.",
     "jumpToNextOpen": "Hoppa till nästa öppna dag ({date})",
     "closedPickAnother": "Vi har stängt på det valda datumet — välj en annan dag.",
-    "emailRequired": "E-postadress krävs"
+    "emailRequired": "E-postadress krävs",
+    "adults": "Vuxna",
+    "children": "Barn",
+    "childDefinitionAge": "Upp till {n} år",
+    "childDefinitionHeight": "Upp till {n} cm lång",
+    "fewerLabel": "Färre {label}",
+    "moreLabel": "Fler {label}",
+    "childSeating": "Barn",
+    "highChairQuestion": "Behöver du en barnstol?",
+    "strollerQuestion": "Tar du med dig en barnvagn?",
+    "allergiesLabel": "Allergier",
+    "allergiesPlaceholder": "Berätta om eventuella allergier eller kostbehov",
+    "occasionLabel": "Särskilt tillfälle",
+    "occasionSelectPlaceholder": "Ange det särskilda tillfället",
+    "occasionOtherPlaceholder": "Berätta vad ni firar",
+    "accessibilityLabel": "Tillgänglighet",
+    "accessibilityPlaceholder": "t.ex. rullstolsanpassning, sittplats utan trappsteg",
+    "commentsPlaceholderGeneric": "Kommentarer (valfritt) — särskilda önskemål"
   },
   "kitchen": {
     "opensIn": "Öppnar om {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Stäng",
     "pnCancel": "Avbryt",
     "pnSaving": "Sparar…",
-    "pnSaveSettings": "Spara inställningar"
+    "pnSaveSettings": "Spara inställningar",
+    "partyBreakdown": "{adults} vuxna, {children} barn",
+    "labelChildSeating": "Sittplatser för barn",
+    "labelAllergies": "Allergier",
+    "labelOccasion": "Tillfälle",
+    "labelAccessibility": "Tillgänglighet"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Hantera bokningar och reservationsinställningar",
       "tabReservations": "Reservationer",
       "tabSettings": "Inställningar",
-      "depositsSoonDesc": "Ta en deposition vid bokning för att minska uteblivna besök. Kommer snart som ett betaltillägg."
+      "depositsSoonDesc": "Ta en deposition vid bokning för att minska uteblivna besök. Kommer snart som ett betaltillägg.",
+      "partyBreakdown": "{adults} vuxna, {children} barn",
+      "headingBookingQuestions": "Bokningsfrågor",
+      "descBookingQuestions": "Ställ några extra frågor till gästerna när de bokar. Svaren visas i köket, i reservationslistan, på utskriften och i ditt aviseringsmejl.",
+      "labelSplitParty": "Fråga efter vuxna och barn separat",
+      "helpSplitParty": "Ersätter den enda väljaren för antal gäster med separata räknare för vuxna och barn. Totalen följer fortfarande ditt minsta och maximala antal gäster.",
+      "labelChildDefinition": "Vem räknas som barn",
+      "helpChildDefinition": "Visas som en liten hjälptext under barnräknaren så att gästerna vet vad du menar. Välj en ålders- eller längdgräns, eller Ingen definition för att inte visa någon hjälptext.",
+      "optionChildDefNone": "Ingen definition",
+      "optionChildDefAge": "Under en viss ålder",
+      "optionChildDefHeight": "Under en viss längd",
+      "labelChildDefYears": "Barn är under",
+      "labelChildDefCm": "Barn är under",
+      "unitYears": "år",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Barnstolar och barnvagnar",
+      "helpAskChildSeating": "Gäster som bokar med barn kan ange hur många barnstolar de behöver och om de tar med barnvagn.",
+      "labelAskAllergies": "Allergier",
+      "helpAskAllergies": "Lägger till en valfri fråga om allergier och kostbehov i bokningsformuläret.",
+      "labelAskOccasion": "Särskilt tillfälle",
+      "helpAskOccasion": "Låter gästerna berätta att de ska fira något – en födelsedag, ett jubileum, en affärsmiddag – så att du kan förbereda dig.",
+      "labelAskAccessibility": "Tillgänglighetsbehov",
+      "helpAskAccessibility": "Lägger till en valfri fråga om tillgänglighetsbehov, till exempel sittplats utan trappsteg eller framkomlighet med rullstol.",
+      "labelChildSeating": "Sittplatser för barn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Tillfälle",
+      "labelAccessibility": "Tillgänglighet"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(se bifogat orderkvitto)",
       "date": "Datum",
       "time": "Tid",
-      "confirmationCode": "Bekräftelsekod"
+      "confirmationCode": "Bekräftelsekod",
+      "adultsChildren": "{adults} vuxna / {children} barn",
+      "labelChildSeating": "Sittplatser för barn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Tillfälle",
+      "labelAccessibility": "Tillgänglighet"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Uppdatering om din bokningsförfrågan",
       "badgeMissed": "Missad",
       "closedNote": "Restaurangen är stängd just nu — din bokningsförfrågan ligger i kö och du får en uppdatering så snart de öppnar igen.",
-      "closedNoteWithTime": "Restaurangen är stängd just nu — din bokningsförfrågan ligger i kö och du får en uppdatering så snart de öppnar igen. Håll utkik i din mejl från {openingTime}."
+      "closedNoteWithTime": "Restaurangen är stängd just nu — din bokningsförfrågan ligger i kö och du får en uppdatering så snart de öppnar igen. Håll utkik i din mejl från {openingTime}.",
+      "partyBreakdown": "{adults} vuxna, {children} barn",
+      "labelChildSeating": "Sittplatser för barn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Tillfälle",
+      "labelAccessibility": "Tillgänglighet"
     },
     "newReservation": {
       "preview": "Ny reservation — {dateTime} · sällskap på {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Ny reservation — {restaurant}",
       "title": "Ny reservation {status}",
       "body": "{customer} begärde en reservation för {party} gäster den {date} kl. {time}.",
-      "confirmationCode": "Bekräftelsekod"
+      "confirmationCode": "Bekräftelsekod",
+      "badgeAdultsChildren": "{adults} vuxna, {children} barn",
+      "labelChildSeating": "Sittplatser för barn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Tillfälle",
+      "labelAccessibility": "Tillgänglighet"
     },
     "passwordReset": {
       "preview": "Återställ ditt {brand}-lösenord",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Ditt namn",
       "saveFailed": "Det gick inte att spara ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Födelsedag",
+    "occasionAnniversary": "Bröllopsdag",
+    "occasionDate": "Romantisk dejt",
+    "occasionFriends": "Träffa vänner",
+    "occasionFamily": "Familjeträff",
+    "occasionBusiness": "Affärsmöte",
+    "occasionCelebration": "Firande",
+    "occasionOther": "Annat",
+    "highChair": "Barnstol",
+    "stroller": "Barnvagn"
   }
 }

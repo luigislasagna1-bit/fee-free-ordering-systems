@@ -2850,6 +2850,21 @@ model ReservationSettings {
   cancellationPolicy String   @default("")
   reservationHours   String   @default("{}") // JSON: { "0": { open: "10:00", close: "22:00", enabled: true } }
   blackoutDates      String   @default("[]") // JSON: ["2024-12-25"]
+  /// ── "Smart buttons" booking questions (Fabrizio cmsajnvkm, 2026-08-01) ──
+  /// All default OFF: a restaurant that never opens the settings gets the
+  /// classic single party-size form and zero new UI anywhere.
+  /// splitAdultsChildren ON = Adults + Children counters replace the single
+  /// party-size select (partySize stays = the SUM, server-computed).
+  splitAdultsChildren  Boolean @default(false)
+  /// What "child" means for this restaurant, rendered as helper text under
+  /// the Children counter: "none" (no hint) | "age" (under N years) |
+  /// "height" (under N cm). Value is the N for age/height modes.
+  childDefinitionMode  String  @default("none")
+  childDefinitionValue Int?
+  askChildSeating      Boolean @default(false) // high-chair / stroller counters (shown when children > 0)
+  askAllergies         Boolean @default(false)
+  askOccasion          Boolean @default(false)
+  askAccessibility     Boolean @default(false)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
@@ -2904,6 +2919,19 @@ model Reservation {
   /// booking time, read by every later reservation email (confirm/decline/
   /// missed/cancel). Null = legacy row → restaurant default (cms0gyexp #2).
   customerLocale            String?
+  /// Adults/children split (Fabrizio cmsajnvkm "smart buttons"). Null = the
+  /// booking was made with the classic single party-size picker; when set,
+  /// partySize is ALWAYS their server-computed sum — every partySize reader
+  /// (capacity, deposits, reports, badges) keeps its meaning untouched.
+  adultsCount               Int?
+  childrenCount             Int?
+  /// Sparse structured booking details — same pattern as
+  /// Order.deliveryAddressData (one Json instead of 6 nullable columns).
+  /// Shape (all optional): { childSeating?: { highChairs?, strollers? },
+  /// allergies?, occasion? (whitelisted code), occasionOther?,
+  /// accessibility? }. Sections are server-filtered against the
+  /// restaurant's ask* toggles — see src/lib/reservation-details.ts.
+  details                   Json?
   /// Per-tab kitchen "Clear" flags — a walk-up booking shows in the All and
   /// Complete tabs just like an order, so it needs the SAME independent per-tab
   /// clear flags an Order has, plus its own Reservations-tab flag. Clearing one

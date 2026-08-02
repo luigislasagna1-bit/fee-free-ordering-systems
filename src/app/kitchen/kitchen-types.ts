@@ -73,6 +73,12 @@ export type Order = {
     /** Guest's booking note — highlighted like an order note in the detail
      *  view (cms0gyexp #12 follow-up). Optional: older cached payloads. */
     notes?: string | null;
+    /** Smart buttons (Fabrizio cmsajnvkm): adults/children split + structured
+     *  details (child seating / allergies / occasion / accessibility). Absent
+     *  on legacy bookings and older cached payloads. */
+    adultsCount?: number | null;
+    childrenCount?: number | null;
+    details?: unknown;
   } | null;
   /** Per-tab kitchen clear flags — each tab filters by its own. */
   clearedFromAllAt?: string | null;

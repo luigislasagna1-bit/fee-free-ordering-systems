@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-01 (evening) by Claude (**A35 — Sadaf's checkout dead-end: root-caused to the 2026-07-31 address gate (b2648ac7), fixed, tested, browser-verified; TWO LOCAL COMMITS AWAIT LUIGI'S PUSH** — then the address backfill, then reply to Sadaf. Same day, earlier: A34 cost audit complete, cut-costs plan parked.)
+**Last updated:** 2026-08-02 (late) by Claude (**A37 — Fabrizio's reservation "smart buttons" BUILT** exactly to his Restoo reference: optional Adults/Children counters with the restaurant's own child definition as a hint, plus Children (high chairs/strollers) · Allergies · Special occasion · Accessible chips, flowing to kitchen + admin + CSV + printed slip + both emails; new "Booking questions" settings card with ⓘ help. Everything defaults OFF so nobody's form changes until they opt in. 31 new tests, schema on both branches, ×38 translations in flight. Needs Luigi's try-it pass, then the reply. Earlier today: A36 Max's slice fixes verified, A35 Sadaf's checkout regression shipped, A34 cost ledger.)
+**Previous update:** 2026-08-01 (evening) by Claude (**A35 — Sadaf's checkout dead-end: root-caused to the 2026-07-31 address gate (b2648ac7), fixed, tested, browser-verified; TWO LOCAL COMMITS AWAIT LUIGI'S PUSH** — then the address backfill, then reply to Sadaf. Same day, earlier: A34 cost audit complete, cut-costs plan parked.)
 **Previous update:** 2026-08-01 by Claude (**A34 — COSTS.md is live + first real invoices folded in.** Luigi asked for all monthly recurring costs tracked + a monthly update; a 6-agent audit built repo-root `COSTS.md`, then Luigi's Neon + Google Cloud invoices corrected it: platform infra is **≈US$100–115/mo actual** (Neon $42.65 + Google Maps ≈CA$44 + Vercel $20 + usage), NOT the $25–45 first estimated — both "probably free tier" guesses were wrong. Scope locked to platform-only (Skool = restaurant cost, excluded). 🔥 MOST URGENT: **Visa ••••6979 is DECLINING at both Neon and Google** — unpaid balances threaten the prod DB and the Maps key (A34 step 0). Also: verify the OLD-team Apple renewal (~Aug 3); GloriaFood zombie; "Schedule Tester" still granting $5/day. Standing rule: every cost discussion now includes savings ideas — top two: Neon compute (order-page cache + autoscaling floor, $42→~$22) and Maps SKU audit (up to –CA$44). Monthly auto-update scheduled for the 1st.)
 **Previous update:** 2026-07-31 by Claude (**A30 — Luigi Bucks gifting money bugs + teaching emails.** From Luigi's Faisal test: his $40 is PENDING (no wallet, nothing spendable) and the $47.62 on screen was Luigi's OWN balance, which would have paid for an order recorded to Faisal. Fixed: a signed-in customer now owns their orders (kills the value transfer AND a once-per-lifetime reuse hole); refunds no longer credit the wrong wallet on a split order (4 tests, proven against the old code); marketplace signups now claim pending gifts instead of stranding them; both gift emails now TEACH in three numbered steps; one unredeemed gift per guest; ✉ resend button. ⚠️ A hole Claude introduced earlier the same session — typed email = wallet access, i.e. anyone could spend your balance by knowing your address — was caught and reverted before any push. Still to build: spending a gift with NO account, designed in DESIGN-gift-wallet-pass.md.)
 **Previous update:** 2026-07-31 by Claude (**Fabrizio cms0gyexp #13 + #14 BUILT (A29)** — end-of-day report overhaul: business day is now CLOSE-TO-CLOSE so the report emails ~5 min after closing and after-close activity rolls to the next day (his 10:01 AM report explained + fixed); rejected/cancelled reservations no longer counted; refunds now shown AND netted out of Collected (his €20 partial-refund repro — including the bucket bug that moved a refunded card order into Offline); PayPal shows as "Online (PayPal)"; cancelled/rejected counts + real "you didn't miss/cancel" signals in the digest email. Plus two #10/#12 follow-ups: the customer status page now shows preset rejection reasons in the CUSTOMER's language (new sparse Order.rejectionReasonKey — ⚠️ schema push to both branches before deploy), and reserve-then-order booking notes finally reach the kitchen (yellow-boxed). i18n ×38, parity + preflight in A29.)
@@ -68,6 +69,26 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A37. 🍽️ Fabrizio cmsajnvkm "smart buttons" — BUILT, awaiting your test + the reply (2026-08-01)
+His request (with Restoo screenshots): let guests answer a few extra things when booking a table.
+**Built exactly to his spec, all OFF by default** — a restaurant that ignores it sees zero change:
+- **Adults + Children counters** replacing the single party-size picker (optional), with the
+  restaurant's own definition of "child" as a hint under the Children counter ("Up to 8 years
+  old" / "Up to 130 cm tall") — the part he red-boxed.
+- **Smart-button chips**: Children (how many high chairs / strollers — counters, like his
+  screenshot), Allergies, Special occasion (his exact 8-option list), Accessible.
+- Everything flows to the kitchen screen, the reservations list + CSV, the printed slip, and BOTH
+  emails (staff + guest) — and the guest confirmation email now finally echoes their requests
+  back (that card existed but was never filled in — a real pre-existing gap this closed).
+- Admin → Reservations → Settings → **"Booking questions"** card with ⓘ help on every switch.
+**YOUR PART:**
+1. ☐ **Try it on your own store** (Admin → Reservations → Settings → Booking questions → turn on
+   what you want → book a test table on your site). Nothing changes until you switch one on.
+2. ☐ **Then tell Claude "reply to Fabrizio"** — the reply is drafted and will go on the report
+   (IN_TESTING) asking him to re-test.
+3. FYI: one PAPER test worth doing when convenient — the printed reservation slip now has the
+   extra lines (both printer paths updated in lockstep).
 
 ### A36. ✅ Max Bilton's slice reports — BOTH FIXED by Luigi + Claude-verified on prod (2026-08-01)
 (1) "Slice Add On's" now OPTIONAL (min 0 / max 3) on every live Pizza-by-the-SLICE item — the

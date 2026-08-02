@@ -31,7 +31,20 @@ export async function PUT(req: NextRequest) {
       maxPerSlot, minGuests, maxGuests, autoConfirm, allowPreOrder, holdMinutes,
       requireDeposit, depositAmount,
       cancellationPolicy, reservationHours, blackoutDates,
+      // "Smart buttons" booking questions (Fabrizio cmsajnvkm, 2026-08-01).
+      splitAdultsChildren, childDefinitionMode, childDefinitionValue,
+      askChildSeating, askAllergies, askOccasion, askAccessibility,
     } = body;
+
+    // Child-definition mode is a 3-value whitelist; the value clamps to a sane
+    // human range (1–200 covers both years and centimeters).
+    if (childDefinitionMode !== undefined && !["none", "age", "height"].includes(childDefinitionMode)) {
+      return NextResponse.json({ error: "Invalid child definition mode." }, { status: 400 });
+    }
+    const cleanChildDefValue =
+      childDefinitionValue === undefined ? undefined
+      : childDefinitionValue === null || childDefinitionValue === "" ? null
+      : Math.min(200, Math.max(1, parseInt(String(childDefinitionValue)) || 1));
 
     // Reservation deposits are a paid add-on (take_reservation_deposit). Block
     // turning them ON without it — locked until subscribed (currently comingSoon,
@@ -61,6 +74,13 @@ export async function PUT(req: NextRequest) {
         ...(cancellationPolicy !== undefined && { cancellationPolicy }),
         ...(reservationHours   !== undefined && { reservationHours:   JSON.stringify(reservationHours) }),
         ...(blackoutDates      !== undefined && { blackoutDates:      JSON.stringify(blackoutDates) }),
+        ...(splitAdultsChildren  !== undefined && { splitAdultsChildren: !!splitAdultsChildren }),
+        ...(childDefinitionMode  !== undefined && { childDefinitionMode }),
+        ...(cleanChildDefValue   !== undefined && { childDefinitionValue: cleanChildDefValue }),
+        ...(askChildSeating      !== undefined && { askChildSeating: !!askChildSeating }),
+        ...(askAllergies         !== undefined && { askAllergies: !!askAllergies }),
+        ...(askOccasion          !== undefined && { askOccasion: !!askOccasion }),
+        ...(askAccessibility     !== undefined && { askAccessibility: !!askAccessibility }),
       },
       create: { restaurantId },
     });

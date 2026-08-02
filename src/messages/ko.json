@@ -635,7 +635,24 @@
     "closedOnDay": "{day}에는 영업하지 않습니다 — 다른 날짜를 선택해 주세요.",
     "jumpToNextOpen": "다음 영업일로 이동 ({date})",
     "closedPickAnother": "선택하신 날짜에는 영업하지 않습니다 — 다른 날을 선택해 주세요.",
-    "emailRequired": "이메일은 필수입니다"
+    "emailRequired": "이메일은 필수입니다",
+    "adults": "성인",
+    "children": "어린이",
+    "childDefinitionAge": "{n}세 이하",
+    "childDefinitionHeight": "키 {n}cm 이하",
+    "fewerLabel": "{label} 줄이기",
+    "moreLabel": "{label} 늘리기",
+    "childSeating": "어린이",
+    "highChairQuestion": "유아용 의자가 필요하신가요?",
+    "strollerQuestion": "유모차를 가져오시나요?",
+    "allergiesLabel": "알레르기",
+    "allergiesPlaceholder": "알레르기나 식단 관련 사항을 알려주세요",
+    "occasionLabel": "특별한 날",
+    "occasionSelectPlaceholder": "특별한 날을 선택해 주세요",
+    "occasionOtherPlaceholder": "어떤 날을 축하하시는지 알려 주세요",
+    "accessibilityLabel": "장애인 편의",
+    "accessibilityPlaceholder": "예: 휠체어 접근, 계단 없는 좌석",
+    "commentsPlaceholderGeneric": "코멘트 (선택사항) — 특별 요청"
   },
   "kitchen": {
     "opensIn": "{time} 후 오픈",
@@ -1059,7 +1076,12 @@
     "pnClose": "닫기",
     "pnCancel": "취소",
     "pnSaving": "저장 중...",
-    "pnSaveSettings": "설정 저장"
+    "pnSaveSettings": "설정 저장",
+    "partyBreakdown": "성인 {adults}명, 어린이 {children}명",
+    "labelChildSeating": "어린이 좌석",
+    "labelAllergies": "알레르기",
+    "labelOccasion": "방문 목적",
+    "labelAccessibility": "편의 지원"
   },
   "admin": {
     "welcomeBack": "환영합니다",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "예약 및 예약 설정 관리",
       "tabReservations": "예약",
       "tabSettings": "설정",
-      "depositsSoonDesc": "예약 시 보증금을 받아 노쇼를 줄이세요. 유료 애드온으로 곧 제공됩니다."
+      "depositsSoonDesc": "예약 시 보증금을 받아 노쇼를 줄이세요. 유료 애드온으로 곧 제공됩니다.",
+      "partyBreakdown": "성인 {adults}명, 어린이 {children}명",
+      "headingBookingQuestions": "예약 질문",
+      "descBookingQuestions": "고객이 예약할 때 몇 가지를 추가로 물어보세요. 답변은 주방 화면, 예약 목록, 인쇄 전표, 알림 이메일에 함께 표시됩니다.",
+      "labelSplitParty": "성인과 어린이를 따로 입력받기",
+      "helpSplitParty": "하나의 인원 수 선택 항목 대신 성인과 어린이 카운터를 각각 표시합니다. 총 인원은 설정하신 최소·최대 인원 범위를 그대로 따릅니다.",
+      "labelChildDefinition": "어린이 기준",
+      "helpChildDefinition": "어린이 카운터 아래에 작은 안내 문구로 표시되어 고객이 기준을 알 수 있습니다. 나이 또는 키 기준을 선택하거나, 안내를 표시하지 않으려면 '기준 없음'을 선택하세요.",
+      "optionChildDefNone": "기준 없음",
+      "optionChildDefAge": "나이 기준",
+      "optionChildDefHeight": "키 기준",
+      "labelChildDefYears": "어린이 기준",
+      "labelChildDefCm": "어린이 기준",
+      "unitYears": "세 미만",
+      "unitCm": "cm 미만",
+      "labelAskChildSeating": "유아용 의자 및 유모차",
+      "helpAskChildSeating": "어린이를 동반해 예약하는 고객이 유아용 의자가 몇 개 필요한지, 유모차를 가져오는지 알려줄 수 있습니다.",
+      "labelAskAllergies": "알레르기",
+      "helpAskAllergies": "예약 양식에 알레르기 및 식단 요구 사항을 묻는 선택 항목을 추가합니다.",
+      "labelAskOccasion": "특별한 날",
+      "helpAskOccasion": "고객이 생일, 기념일, 비즈니스 식사 등 축하할 일이 있는지 알려줄 수 있어 미리 준비할 수 있습니다.",
+      "labelAskAccessibility": "편의 지원 요청",
+      "helpAskAccessibility": "계단 없는 좌석, 휠체어 이용 등 편의 지원 필요 사항을 묻는 선택 항목을 추가합니다.",
+      "labelChildSeating": "어린이 좌석",
+      "labelAllergies": "알레르기",
+      "labelOccasion": "방문 목적",
+      "labelAccessibility": "편의 지원"
     },
     "autopilotClient": {
       "pageTitle": "자동화",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(첨부된 주문 영수증 참조)",
       "date": "날짜",
       "time": "시간",
-      "confirmationCode": "확인 코드"
+      "confirmationCode": "확인 코드",
+      "adultsChildren": "성인 {adults}명 / 어린이 {children}명",
+      "labelChildSeating": "어린이 좌석",
+      "labelAllergies": "알레르기",
+      "labelOccasion": "방문 목적",
+      "labelAccessibility": "편의 지원"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "예약 요청 처리 결과 안내",
       "badgeMissed": "놓침",
       "closedNote": "지금은 매장 영업시간이 아니에요 — 예약 요청은 접수 대기 중이며, 매장이 문을 열면 바로 소식을 알려 드릴게요.",
-      "closedNoteWithTime": "지금은 매장 영업시간이 아니에요. 예약 요청은 대기열에 등록되었고, 매장이 문을 여는 대로 바로 알려드릴게요. {openingTime}에 이메일을 확인해 주세요."
+      "closedNoteWithTime": "지금은 매장 영업시간이 아니에요. 예약 요청은 대기열에 등록되었고, 매장이 문을 여는 대로 바로 알려드릴게요. {openingTime}에 이메일을 확인해 주세요.",
+      "partyBreakdown": "성인 {adults}명, 어린이 {children}명",
+      "labelChildSeating": "어린이 좌석",
+      "labelAllergies": "알레르기",
+      "labelOccasion": "방문 목적",
+      "labelAccessibility": "편의 지원"
     },
     "newReservation": {
       "preview": "신규 예약 — {dateTime} · {partySize}명",
@@ -5548,7 +5606,12 @@
       "subject": "새 예약 — {restaurant}",
       "title": "새 예약 {status}",
       "body": "{customer}님이 {date} {time}에 {party}인 예약을 요청했습니다.",
-      "confirmationCode": "확인 코드"
+      "confirmationCode": "확인 코드",
+      "badgeAdultsChildren": "성인 {adults}명, 어린이 {children}명",
+      "labelChildSeating": "어린이 좌석",
+      "labelAllergies": "알레르기",
+      "labelOccasion": "방문 목적",
+      "labelAccessibility": "편의 지원"
     },
     "passwordReset": {
       "preview": "{brand} 비밀번호 재설정",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "이름",
       "saveFailed": "저장 실패 ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "생일",
+    "occasionAnniversary": "결혼기념일",
+    "occasionDate": "로맨틱 데이트",
+    "occasionFriends": "친구 모임",
+    "occasionFamily": "가족 모임",
+    "occasionBusiness": "비즈니스",
+    "occasionCelebration": "축하 자리",
+    "occasionOther": "기타",
+    "highChair": "유아용 의자",
+    "stroller": "유모차"
   }
 }

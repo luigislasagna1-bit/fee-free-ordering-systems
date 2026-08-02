@@ -635,7 +635,24 @@
     "closedOnDay": "Vi har lukket på {day} — vælg venligst en anden dato.",
     "jumpToNextOpen": "Spring til næste åbne dag ({date})",
     "closedPickAnother": "Vi har lukket på den valgte dato — vælg venligst en anden dag.",
-    "emailRequired": "E-mailadresse er påkrævet"
+    "emailRequired": "E-mailadresse er påkrævet",
+    "adults": "Voksne",
+    "children": "Børn",
+    "childDefinitionAge": "Op til {n} år",
+    "childDefinitionHeight": "Op til {n} cm høj",
+    "fewerLabel": "Færre {label}",
+    "moreLabel": "Flere {label}",
+    "childSeating": "Børn",
+    "highChairQuestion": "Har I brug for en højstol?",
+    "strollerQuestion": "Har I en barnevogn med?",
+    "allergiesLabel": "Allergier",
+    "allergiesPlaceholder": "Fortæl os om eventuelle allergier eller kostbehov",
+    "occasionLabel": "Særlig anledning",
+    "occasionSelectPlaceholder": "Angiv den særlige anledning",
+    "occasionOtherPlaceholder": "Fortæl os, hvad I fejrer",
+    "accessibilityLabel": "Tilgængelighed",
+    "accessibilityPlaceholder": "f.eks. kørestolsadgang, trinfri placering",
+    "commentsPlaceholderGeneric": "Kommentarer (valgfrit) – særlige ønsker"
   },
   "kitchen": {
     "opensIn": "Åbner om {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Luk",
     "pnCancel": "Annuller",
     "pnSaving": "Gemmer...",
-    "pnSaveSettings": "Gem indstillinger"
+    "pnSaveSettings": "Gem indstillinger",
+    "partyBreakdown": "{adults} voksne, {children} børn",
+    "labelChildSeating": "Siddeplads til børn",
+    "labelAllergies": "Allergier",
+    "labelOccasion": "Anledning",
+    "labelAccessibility": "Tilgængelighed"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Administrer bookinger og reservationsindstillinger",
       "tabReservations": "Reservationer",
       "tabSettings": "Indstillinger",
-      "depositsSoonDesc": "Opkræv et depositum ved booking for at reducere udeblivelser. Kommer snart som et betalt tilføjelsesprogram."
+      "depositsSoonDesc": "Opkræv et depositum ved booking for at reducere udeblivelser. Kommer snart som et betalt tilføjelsesprogram.",
+      "partyBreakdown": "{adults} voksne, {children} børn",
+      "headingBookingQuestions": "Bookingspørgsmål",
+      "descBookingQuestions": "Stil gæsterne et par ekstra spørgsmål, mens de booker. Svarene vises i køkkenet, på reservationslisten, på den printede seddel og i din notifikationsmail.",
+      "labelSplitParty": "Spørg om voksne og børn hver for sig",
+      "helpSplitParty": "Erstatter den ene vælger for antal gæster med separate tællere til Voksne og Børn. Det samlede antal overholder fortsat dit minimum og maksimum antal gæster.",
+      "labelChildDefinition": "Hvem tæller som barn",
+      "helpChildDefinition": "Vises som en lille hjælpetekst under tælleren Børn, så gæsterne ved, hvad du mener. Vælg en aldersgrænse eller en højdegrænse, eller Ingen definition for ikke at vise nogen hjælpetekst.",
+      "optionChildDefNone": "Ingen definition",
+      "optionChildDefAge": "Under en bestemt alder",
+      "optionChildDefHeight": "Under en bestemt højde",
+      "labelChildDefYears": "Børn er under",
+      "labelChildDefCm": "Børn er under",
+      "unitYears": "år",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Højstole og barnevogne",
+      "helpAskChildSeating": "Gæster, der booker med børn, kan oplyse, hvor mange højstole de har brug for, og om de tager en barnevogn med.",
+      "labelAskAllergies": "Allergier",
+      "helpAskAllergies": "Tilføjer et valgfrit spørgsmål om allergier og kostbehov til bookingformularen.",
+      "labelAskOccasion": "Særlig anledning",
+      "helpAskOccasion": "Lader gæsterne fortælle, at de skal fejre noget – en fødselsdag, et bryllupsdag eller en forretningsmiddag – så I kan forberede jer.",
+      "labelAskAccessibility": "Behov for tilgængelighed",
+      "helpAskAccessibility": "Tilføjer et valgfrit spørgsmål om behov for tilgængelighed, f.eks. trinfri placering eller kørestolsadgang.",
+      "labelChildSeating": "Siddeplads til børn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Anledning",
+      "labelAccessibility": "Tilgængelighed"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(se vedlagte ordrekvittering)",
       "date": "Dato",
       "time": "Tidspunkt",
-      "confirmationCode": "Bekræftelseskode"
+      "confirmationCode": "Bekræftelseskode",
+      "adultsChildren": "{adults} voksne / {children} børn",
+      "labelChildSeating": "Siddeplads til børn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Anledning",
+      "labelAccessibility": "Tilgængelighed"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Opdatering om din reservationsanmodning",
       "badgeMissed": "Mistet",
       "closedNote": "Restauranten er lukket lige nu — din reservationsanmodning er i kø, og du får en opdatering, så snart de åbner igen.",
-      "closedNoteWithTime": "Restauranten er lukket lige nu — din reservationsanmodning er i kø, og du får en opdatering, så snart de åbner igen. Hold øje med din mail fra {openingTime}."
+      "closedNoteWithTime": "Restauranten er lukket lige nu — din reservationsanmodning er i kø, og du får en opdatering, så snart de åbner igen. Hold øje med din mail fra {openingTime}.",
+      "partyBreakdown": "{adults} voksne, {children} børn",
+      "labelChildSeating": "Siddeplads til børn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Anledning",
+      "labelAccessibility": "Tilgængelighed"
     },
     "newReservation": {
       "preview": "Ny reservation — {dateTime} · selskab på {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Ny reservation — {restaurant}",
       "title": "Ny reservation {status}",
       "body": "{customer} anmodede om en reservation til {party} gæster den {date} kl. {time}.",
-      "confirmationCode": "Bekræftelseskode"
+      "confirmationCode": "Bekræftelseskode",
+      "badgeAdultsChildren": "{adults} voksne, {children} børn",
+      "labelChildSeating": "Siddeplads til børn",
+      "labelAllergies": "Allergier",
+      "labelOccasion": "Anledning",
+      "labelAccessibility": "Tilgængelighed"
     },
     "passwordReset": {
       "preview": "Nulstil din {brand}-adgangskode",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Dit navn",
       "saveFailed": "Kunne ikke gemme ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Fødselsdag",
+    "occasionAnniversary": "Bryllupsdag",
+    "occasionDate": "Romantisk date",
+    "occasionFriends": "Møde med venner",
+    "occasionFamily": "Familiesammenkomst",
+    "occasionBusiness": "Forretning",
+    "occasionCelebration": "Fejring",
+    "occasionOther": "Andet",
+    "highChair": "Højstol",
+    "stroller": "Klapvogn"
   }
 }

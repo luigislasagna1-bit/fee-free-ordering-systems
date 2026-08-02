@@ -635,7 +635,24 @@
     "closedOnDay": "{day} günü kapalıyız — lütfen başka bir tarih seçin.",
     "jumpToNextOpen": "Sonraki açık güne geç ({date})",
     "closedPickAnother": "Seçilen tarihte kapalıyız — lütfen başka bir gün seçin.",
-    "emailRequired": "E-posta zorunludur"
+    "emailRequired": "E-posta zorunludur",
+    "adults": "Yetişkin",
+    "children": "Çocuk",
+    "childDefinitionAge": "{n} yaşına kadar",
+    "childDefinitionHeight": "Boyu {n} cm'ye kadar",
+    "fewerLabel": "Daha az {label}",
+    "moreLabel": "Daha fazla {label}",
+    "childSeating": "Çocuk",
+    "highChairQuestion": "Mama sandalyesine ihtiyacınız var mı?",
+    "strollerQuestion": "Bebek arabası getirecek misiniz?",
+    "allergiesLabel": "Alerjiler",
+    "allergiesPlaceholder": "Alerjilerinizi veya özel beslenme ihtiyaçlarınızı belirtin",
+    "occasionLabel": "Özel gün",
+    "occasionSelectPlaceholder": "Lütfen özel günü belirtin",
+    "occasionOtherPlaceholder": "Ne kutladığınızı bize yazın",
+    "accessibilityLabel": "Erişilebilirlik",
+    "accessibilityPlaceholder": "örn. tekerlekli sandalye erişimi, basamaksız oturma alanı",
+    "commentsPlaceholderGeneric": "Yorumlar (isteğe bağlı) — özel istekler"
   },
   "kitchen": {
     "opensIn": "{time} sonra açılır",
@@ -1059,7 +1076,12 @@
     "pnClose": "Kapat",
     "pnCancel": "İptal",
     "pnSaving": "Kaydediliyor…",
-    "pnSaveSettings": "Ayarları Kaydet"
+    "pnSaveSettings": "Ayarları Kaydet",
+    "partyBreakdown": "{adults} yetişkin, {children} çocuk",
+    "labelChildSeating": "Çocuk Oturma Düzeni",
+    "labelAllergies": "Alerjiler",
+    "labelOccasion": "Ziyaret Nedeni",
+    "labelAccessibility": "Erişilebilirlik"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",
@@ -2964,7 +2986,33 @@
       "pageSubtitle": "Rezervasyonları ve rezervasyon ayarlarını yönetin",
       "tabReservations": "Rezervasyonlar",
       "tabSettings": "Ayarlar",
-      "depositsSoonDesc": "Gelmeme durumlarını azaltmak için rezervasyonda kapora alın. Yakında ücretli eklenti olarak."
+      "depositsSoonDesc": "Gelmeme durumlarını azaltmak için rezervasyonda kapora alın. Yakında ücretli eklenti olarak.",
+      "partyBreakdown": "{adults} yetişkin, {children} çocuk",
+      "headingBookingQuestions": "Rezervasyon soruları",
+      "descBookingQuestions": "Misafirlere rezervasyon sırasında birkaç ek soru sorun. Yanıtlar mutfakta, rezervasyon listesinde, yazdırılan fişte ve bildirim e-postanızda görünür.",
+      "labelSplitParty": "Yetişkin ve çocuk sayısını ayrı ayrı sor",
+      "helpSplitParty": "Tek bir kişi sayısı alanı yerine ayrı Yetişkin ve Çocuk sayaçları gösterilir. Toplam kişi sayısı yine minimum ve maksimum misafir sınırlarınıza uyar.",
+      "labelChildDefinition": "Kimler çocuk sayılır",
+      "helpChildDefinition": "Misafirlerin ne demek istediğinizi anlaması için Çocuk sayacının altında küçük bir ipucu olarak gösterilir. Bir yaş ya da boy sınırı seçin; hiç ipucu gösterilmemesi için Tanım yok seçeneğini kullanın.",
+      "optionChildDefNone": "Tanım yok",
+      "optionChildDefAge": "Belirli bir yaştan küçük",
+      "optionChildDefHeight": "Belirli bir boydan kısa",
+      "labelChildDefYears": "Çocuk sayılma sınırı",
+      "labelChildDefCm": "Çocuk sayılma sınırı",
+      "unitYears": "yaş",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Mama sandalyesi ve bebek arabası",
+      "helpAskChildSeating": "Çocuklu misafirler, rezervasyon sırasında kaç mama sandalyesine ihtiyaç duyduklarını ve bebek arabası getirip getirmeyeceklerini belirtebilir.",
+      "labelAskAllergies": "Alerjiler",
+      "helpAskAllergies": "Rezervasyon formuna isteğe bağlı bir alerji ve özel beslenme ihtiyaçları sorusu ekler.",
+      "labelAskOccasion": "Özel gün",
+      "helpAskOccasion": "Misafirlerin bir kutlama yaptıklarını - doğum günü, yıl dönümü, iş yemeği - size bildirmesini sağlar; böylece hazırlık yapabilirsiniz.",
+      "labelAskAccessibility": "Erişilebilirlik ihtiyaçları",
+      "helpAskAccessibility": "Basamaksız oturma alanı veya tekerlekli sandalye erişimi gibi erişilebilirlik ihtiyaçlarına dair isteğe bağlı bir soru ekler.",
+      "labelChildSeating": "Çocuk Oturma Düzeni",
+      "labelAllergies": "Alerjiler",
+      "labelOccasion": "Ziyaret Nedeni",
+      "labelAccessibility": "Erişilebilirlik"
     },
     "autopilotClient": {
       "pageTitle": "Otomatik Pilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(ekli sipariş makbuzuna bakın)",
       "date": "Tarih",
       "time": "Saat",
-      "confirmationCode": "Onay kodu"
+      "confirmationCode": "Onay kodu",
+      "adultsChildren": "{adults} yetişkin / {children} çocuk",
+      "labelChildSeating": "Çocuk Oturma Düzeni",
+      "labelAllergies": "Alerjiler",
+      "labelOccasion": "Ziyaret Nedeni",
+      "labelAccessibility": "Erişilebilirlik"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Rezervasyon talebinizle ilgili güncelleme",
       "badgeMissed": "Kaçırıldı",
       "closedNote": "Restoran şu anda kapalı — rezervasyon talebiniz sırada, restoran açılır açılmaz size haber vereceğiz.",
-      "closedNoteWithTime": "Restoran şu anda kapalı — rezervasyon talebiniz sıraya alındı ve restoran açılır açılmaz size güncelleme göndereceğiz. {openingTime} itibarıyla e-postanızı kontrol edin."
+      "closedNoteWithTime": "Restoran şu anda kapalı — rezervasyon talebiniz sıraya alındı ve restoran açılır açılmaz size güncelleme göndereceğiz. {openingTime} itibarıyla e-postanızı kontrol edin.",
+      "partyBreakdown": "{adults} yetişkin, {children} çocuk",
+      "labelChildSeating": "Çocuk Oturma Düzeni",
+      "labelAllergies": "Alerjiler",
+      "labelOccasion": "Ziyaret Nedeni",
+      "labelAccessibility": "Erişilebilirlik"
     },
     "newReservation": {
       "preview": "Yeni rezervasyon — {dateTime} · {partySize} kişi",
@@ -5548,7 +5606,12 @@
       "subject": "Yeni rezervasyon — {restaurant}",
       "title": "Yeni rezervasyon {status}",
       "body": "{customer}, {date} tarihinde {time} için {party} kişilik rezervasyon talep etti.",
-      "confirmationCode": "Onay kodu"
+      "confirmationCode": "Onay kodu",
+      "badgeAdultsChildren": "{adults} yetişkin, {children} çocuk",
+      "labelChildSeating": "Çocuk Oturma Düzeni",
+      "labelAllergies": "Alerjiler",
+      "labelOccasion": "Ziyaret Nedeni",
+      "labelAccessibility": "Erişilebilirlik"
     },
     "passwordReset": {
       "preview": "{brand} şifrenizi sıfırlayın",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Adınız",
       "saveFailed": "Kaydetme başarısız ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Doğum günü",
+    "occasionAnniversary": "Evlilik yıldönümü",
+    "occasionDate": "Romantik buluşma",
+    "occasionFriends": "Arkadaş buluşması",
+    "occasionFamily": "Aile Buluşması",
+    "occasionBusiness": "İş Yemeği",
+    "occasionCelebration": "Kutlama",
+    "occasionOther": "Diğer",
+    "highChair": "Mama Sandalyesi",
+    "stroller": "Bebek Arabası"
   }
 }

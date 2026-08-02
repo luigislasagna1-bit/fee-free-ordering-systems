@@ -272,6 +272,9 @@ export type StaffEventPayload =
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
   | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending" | "cancelled"; dashboardUrl: string;
+      // Smart buttons (Fabrizio cmsajnvkm): adults/children split + structured
+      // details (child seating / allergies / occasion / accessibility).
+      adultsCount?: number | null; childrenCount?: number | null; details?: import("@/lib/reservation-details").ReservationDetails | null;
       // Guest contact + special requests — GloriaFood parity (cms0gyexp #1):
       // the template renders tel:/mailto: links + an amber requests card.
       customerPhone?: string | null; customerEmail?: string | null; notes?: string | null }
@@ -472,6 +475,10 @@ async function dispatchStaffEvent(
         customerPhone: payload.customerPhone,
         customerEmail: payload.customerEmail,
         specialRequests: payload.notes,
+        // Smart buttons (cmsajnvkm)
+        adultsCount: payload.adultsCount ?? null,
+        childrenCount: payload.childrenCount ?? null,
+        details: payload.details ?? null,
         hoursFormat,
         locale,
       });
@@ -570,6 +577,9 @@ export type CustomerEventPayload =
    *  a paying customer should hear about regardless of restaurant settings. */
   | { event: "orderDelayed"; customerName: string; orderNumber: string; newEstimatedReady: Date; delayMinutes: number; reason: string | null }
   | { event: "reservationConfirmation"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "requested" | "confirmed" | "declined" | "missed" | "cancelled"; depositPaid?: boolean; depositAmount?: number; preOrderTotal?: number;
+      // Smart buttons (Fabrizio cmsajnvkm) + the guest's own notes, so the
+      // confirmation email finally echoes what they asked for.
+      adultsCount?: number | null; childrenCount?: number | null; details?: import("@/lib/reservation-details").ReservationDetails | null; notes?: string | null;
       /** Reservation id — REQUIRED to build the guest cancel link (Fabrizio
        *  cms0idtz7). Optional for back-compat with older call sites. */
       reservationId?: string;
@@ -852,6 +862,12 @@ export async function notifyCustomer(args: {
           depositPaid: payload.depositPaid,
           depositAmount: payload.depositAmount,
           preOrderTotal: payload.preOrderTotal,
+          // Smart buttons (cmsajnvkm) + the guest's notes echoed back — wires
+          // the template's specialRequests card live for the first time.
+          specialRequests: payload.notes ?? null,
+          adultsCount: payload.adultsCount ?? null,
+          childrenCount: payload.childrenCount ?? null,
+          details: payload.details ?? null,
           cancelUrl,
           hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
           // Closed-hours note with the concrete opening time (polish batch —

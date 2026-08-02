@@ -10,6 +10,7 @@ import { notifyCapWarning80, notifyCapReached100 } from "@/lib/cap-notify";
 import { liveOpenStatus, nextOpenAt } from "@/lib/restaurant-hours";
 import { resolveCustomerLocale } from "@/lib/i18n-server";
 import { holidayEffectToday, holidayEffectForDay, hhmmInsideIntervals } from "@/lib/holiday-rules";
+import { parseReservationDetails, computePartySize } from "@/lib/reservation-details";
 
 function sanitize(s: unknown, max = 500): string {
   return String(s ?? "").trim().slice(0, max);
@@ -24,6 +25,10 @@ export async function POST(req: NextRequest) {
       partySize, date, time, notes,
       preOrderItems,
       marketingConsent,
+      // "Smart buttons" (Fabrizio cmsajnvkm): adults/children split + optional
+      // structured details. Server-validated against the restaurant's toggles
+      // in parseReservationDetails — old clients simply omit them.
+      adults, children, details,
     } = body;
 
     if (!restaurantSlug || !customerName || !customerPhone || !partySize || !date || !time) {
@@ -109,6 +114,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Reservation settings not configured. Please contact the restaurant." }, { status: 400 });
     }
 
+    // Normalize the smart-button fields against the restaurant's toggles —
+    // sections the owner never enabled are dropped even if a client sends
+    // them. When the adults/children split is used, partySize is ALWAYS the
+    // server-computed sum so capacity/deposits/reports keep their meaning.
+    const smart = parseReservationDetails({ adults, children, details }, settings);
+    const effectivePartySize = computePartySize(
+      smart.adultsCount,
+      smart.childrenCount,
+      parseInt(String(partySize)),
+    );
+
     // Validate against rules. Pass restaurant.timezone so the
     // proposal's "YYYY-MM-DD HH:MM" string is interpreted as the
     // restaurant's local wall-clock — server runs in UTC on Vercel,
@@ -117,7 +133,7 @@ export async function POST(req: NextRequest) {
     // it's hours in the future for the customer. Luigi 2026-06-01.
     const v = validateBooking(
       settings as ReservationSettingsLike,
-      { date, time, partySize: parseInt(String(partySize)) },
+      { date, time, partySize: effectivePartySize },
       new Date(),
       restaurant.timezone,
       resolveDayHours(settings.reservationHours, restaurant.openingHours, date),
@@ -187,7 +203,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Capacity
-    const cap = await checkReservationCapacity(restaurant.id, settings as ReservationSettingsLike, date, time, parseInt(String(partySize)));
+    const cap = await checkReservationCapacity(restaurant.id, settings as ReservationSettingsLike, date, time, effectivePartySize);
     if (!cap.ok) return NextResponse.json({ error: cap.reason }, { status: 409 });
 
     // Optional pre-order — for v1 store only the precomputed total. (Full Order
@@ -244,11 +260,14 @@ export async function POST(req: NextRequest) {
         customerName: sanitize(customerName, 100),
         customerEmail: customerEmail ? sanitize(customerEmail, 254).toLowerCase() : null,
         customerPhone: sanitize(customerPhone, 30),
-        partySize: parseInt(String(partySize)),
+        partySize: effectivePartySize,
+        adultsCount: smart.adultsCount,
+        childrenCount: smart.childrenCount,
+        details: smart.details ?? undefined,
         date,
         time,
         notes: notes ? sanitize(notes, 500) : null,
-        depositAmount: wantsDeposit ? settings.depositAmount * parseInt(String(partySize)) : 0,
+        depositAmount: wantsDeposit ? settings.depositAmount * effectivePartySize : 0,
         depositPaid: false,
         preOrderTotal,
         alertAt: reservationAlertAt,
@@ -324,6 +343,10 @@ export async function POST(req: NextRequest) {
         event: "reservationConfirmation",
         customerName: reservation.customerName,
         partySize: reservation.partySize,
+        adultsCount: reservation.adultsCount,
+        childrenCount: reservation.childrenCount,
+        details: smart.details,
+        notes: reservation.notes,
         date: reservation.date,
         time: reservation.time,
         confirmationCode: reservation.confirmationCode,
@@ -345,6 +368,9 @@ export async function POST(req: NextRequest) {
         event: "reservationConfirmed",
         customerName: reservation.customerName,
         partySize: reservation.partySize,
+        adultsCount: reservation.adultsCount,
+        childrenCount: reservation.childrenCount,
+        details: smart.details,
         date: reservation.date,
         time: reservation.time,
         confirmationCode: reservation.confirmationCode,

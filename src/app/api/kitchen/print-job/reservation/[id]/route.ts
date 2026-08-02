@@ -36,6 +36,7 @@ import { kitchenAuthOptions } from "@/lib/auth-kitchen";
 import prisma from "@/lib/db";
 import { buildReservationReceipt } from "@/lib/receipt";
 import { buildReservationReceiptLines } from "@/lib/receipt-lines";
+import { readReservationDetails } from "@/lib/reservation-details";
 
 export async function GET(
   req: NextRequest,
@@ -69,6 +70,10 @@ export async function GET(
     customerPhone: reservation.customerPhone,
     customerEmail: reservation.customerEmail,
     partySize: reservation.partySize,
+    // Booking questions (cmsajnvkm) — both builders print them in lockstep.
+    adultsCount: reservation.adultsCount,
+    childrenCount: reservation.childrenCount,
+    details: readReservationDetails(reservation.details),
     date: reservation.date,
     time: reservation.time,
     tableName: reservation.table?.name ?? null,

@@ -635,7 +635,24 @@
     "closedOnDay": "Suntem închiși în {day} — te rugăm să alegi o altă dată.",
     "jumpToNextOpen": "Sari la următoarea zi de deschidere ({date})",
     "closedPickAnother": "Suntem închiși în data selectată — te rugăm să alegi o altă zi.",
-    "emailRequired": "E-mailul este obligatoriu"
+    "emailRequired": "E-mailul este obligatoriu",
+    "adults": "Adulți",
+    "children": "Copii",
+    "childDefinitionAge": "Până la {n} ani",
+    "childDefinitionHeight": "Până la {n} cm înălțime",
+    "fewerLabel": "Mai puțini {label}",
+    "moreLabel": "Mai mulți {label}",
+    "childSeating": "Copii",
+    "highChairQuestion": "Ai nevoie de un scaun pentru copii?",
+    "strollerQuestion": "Vii cu un cărucior?",
+    "allergiesLabel": "Alergii",
+    "allergiesPlaceholder": "Spune-ne dacă ai alergii sau nevoi alimentare speciale",
+    "occasionLabel": "Ocazie specială",
+    "occasionSelectPlaceholder": "Vă rugăm să indicați ocazia specială",
+    "occasionOtherPlaceholder": "Spuneți-ne ce sărbătoriți",
+    "accessibilityLabel": "Accesibilitate",
+    "accessibilityPlaceholder": "ex. acces pentru scaun cu rotile, loc fără trepte",
+    "commentsPlaceholderGeneric": "Comentarii (opțional) - cereri speciale"
   },
   "kitchen": {
     "opensIn": "Se deschide în {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Închide",
     "pnCancel": "Anulează",
     "pnSaving": "Se salvează…",
-    "pnSaveSettings": "Salvează setările"
+    "pnSaveSettings": "Salvează setările",
+    "partyBreakdown": "{adults} adulți, {children} copii",
+    "labelChildSeating": "Scaune copii",
+    "labelAllergies": "Alergii",
+    "labelOccasion": "Ocazie",
+    "labelAccessibility": "Accesibilitate"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Gestionează rezervările și setările de rezervare",
       "tabReservations": "Rezervări",
       "tabSettings": "Setări",
-      "depositsSoonDesc": "Încasează un avans la rezervare pentru a reduce neprezentările. În curând ca supliment plătit."
+      "depositsSoonDesc": "Încasează un avans la rezervare pentru a reduce neprezentările. În curând ca supliment plătit.",
+      "partyBreakdown": "{adults} adulți, {children} copii",
+      "headingBookingQuestions": "Întrebări la rezervare",
+      "descBookingQuestions": "Cereți clienților câteva informații suplimentare atunci când fac rezervarea. Răspunsurile apar în bucătărie, în lista de rezervări, pe bonul tipărit și în e-mailul de notificare.",
+      "labelSplitParty": "Întrebați separat numărul de adulți și de copii",
+      "helpSplitParty": "Înlocuiește selectorul unic pentru numărul de persoane cu contoare separate pentru Adulți și Copii. Totalul respectă în continuare numărul minim și maxim de persoane configurat.",
+      "labelChildDefinition": "Cine este considerat copil",
+      "helpChildDefinition": "Apare ca o notă scurtă sub contorul Copii, ca să știe clienții la ce vă referiți. Alegeți o limită de vârstă sau de înălțime ori Fără definiție, pentru a nu afișa nicio notă.",
+      "optionChildDefNone": "Fără definiție",
+      "optionChildDefAge": "Sub o anumită vârstă",
+      "optionChildDefHeight": "Sub o anumită înălțime",
+      "labelChildDefYears": "Copiii au sub",
+      "labelChildDefCm": "Copiii au sub",
+      "unitYears": "ani",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Scaune înalte și cărucioare",
+      "helpAskChildSeating": "Oaspeții care rezervă cu copii îți pot spune de câte scaune înalte au nevoie și dacă vin cu cărucior.",
+      "labelAskAllergies": "Alergii",
+      "helpAskAllergies": "Adaugă în formularul de rezervare o întrebare opțională despre alergii și cerințe alimentare.",
+      "labelAskOccasion": "Ocazie specială",
+      "helpAskOccasion": "Le permite oaspeților să îți spună că sărbătoresc ceva - o zi de naștere, o aniversare, o masă de afaceri - ca să te poți pregăti.",
+      "labelAskAccessibility": "Nevoi de accesibilitate",
+      "helpAskAccessibility": "Adaugă o întrebare opțională despre nevoile de accesibilitate, cum ar fi loc la masă fără trepte sau acces pentru scaun cu rotile.",
+      "labelChildSeating": "Scaune copii",
+      "labelAllergies": "Alergii",
+      "labelOccasion": "Ocazie",
+      "labelAccessibility": "Accesibilitate"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(vezi chitanța atașată a comenzii)",
       "date": "Data",
       "time": "Ora",
-      "confirmationCode": "Cod de confirmare"
+      "confirmationCode": "Cod de confirmare",
+      "adultsChildren": "{adults} adulți / {children} copii",
+      "labelChildSeating": "Scaune copii",
+      "labelAllergies": "Alergii",
+      "labelOccasion": "Ocazie",
+      "labelAccessibility": "Accesibilitate"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Actualizare privind cererea dvs. de rezervare",
       "badgeMissed": "Ratată",
       "closedNote": "Restaurantul este momentan închis — cererea ta de rezervare este în așteptare și vei primi vești imediat ce se deschide.",
-      "closedNoteWithTime": "Restaurantul este momentan închis — cererea ta de rezervare este în așteptare și vei primi vești imediat ce se deschide. Verifică-ți e-mailul la {openingTime}."
+      "closedNoteWithTime": "Restaurantul este momentan închis — cererea ta de rezervare este în așteptare și vei primi vești imediat ce se deschide. Verifică-ți e-mailul la {openingTime}.",
+      "partyBreakdown": "{adults} adulți, {children} copii",
+      "labelChildSeating": "Scaune copii",
+      "labelAllergies": "Alergii",
+      "labelOccasion": "Ocazie",
+      "labelAccessibility": "Accesibilitate"
     },
     "newReservation": {
       "preview": "Rezervare nouă — {dateTime} · {partySize} persoane",
@@ -5548,7 +5606,12 @@
       "subject": "Rezervare nouă — {restaurant}",
       "title": "Rezervare nouă {status}",
       "body": "{customer} a solicitat o rezervare pentru {party} persoane pe {date} la {time}.",
-      "confirmationCode": "Cod de confirmare"
+      "confirmationCode": "Cod de confirmare",
+      "badgeAdultsChildren": "{adults} adulți, {children} copii",
+      "labelChildSeating": "Scaune copii",
+      "labelAllergies": "Alergii",
+      "labelOccasion": "Ocazie",
+      "labelAccessibility": "Accesibilitate"
     },
     "passwordReset": {
       "preview": "Resetează-ți parola {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Numele tău",
       "saveFailed": "Salvarea a eșuat ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Zi de naștere",
+    "occasionAnniversary": "Aniversarea căsătoriei",
+    "occasionDate": "Întâlnire romantică",
+    "occasionFriends": "Întâlnire cu prietenii",
+    "occasionFamily": "Întâlnire cu familia",
+    "occasionBusiness": "Afaceri",
+    "occasionCelebration": "Sărbătorire",
+    "occasionOther": "Altele",
+    "highChair": "Scaun pentru copii",
+    "stroller": "Cărucior"
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2, Baby, WheatOff, PartyPopper, Accessibility, Minus, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 import { validateBooking, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { parseTheme } from "@/lib/theme";
@@ -8,13 +8,27 @@ import { useTranslations, useLocale } from "next-intl";
 import { pickHoursForService } from "@/lib/service-hours";
 import { formatTime, type HoursFormat } from "@/lib/format-time";
 import { formatCurrency } from "@/lib/utils";
+import { OCCASION_CODES, occasionKey, type ReservationDetails } from "@/lib/reservation-details";
 
 type Theme = ReturnType<typeof parseTheme>;
+
+/** The "smart buttons" slice of ReservationSettings (Fabrizio cmsajnvkm).
+ *  Optional on the wire — restaurants that never touched the new settings
+ *  send nothing and get the classic form. */
+type SmartSettingsSlice = {
+  splitAdultsChildren?: boolean;
+  childDefinitionMode?: string;
+  childDefinitionValue?: number | null;
+  askChildSeating?: boolean;
+  askAllergies?: boolean;
+  askOccasion?: boolean;
+  askAccessibility?: boolean;
+};
 
 interface Props {
   restaurantSlug: string;
   restaurantName: string;
-  settings: ReservationSettingsLike;
+  settings: ReservationSettingsLike & SmartSettingsSlice;
   /** Restaurant's standard opening hours — used as a fallback when
    *  reservationSettings.reservationHours is empty / unset. Each row
    *  is one day of the week (dayOfWeek: 0=Sunday … 6=Saturday) with
@@ -73,6 +87,9 @@ interface Props {
   onContinueToOrder?: (draft: {
     date: string; time: string; partySize: number;
     name: string; phone: string; email: string; notes: string;
+    /** Smart buttons (cmsajnvkm) — must survive the whole reserve-then-order
+     *  chain (draft → sessionStorage → order payload → linked reservation). */
+    adults?: number | null; children?: number | null; details?: ReservationDetails | null;
   }) => void;
 }
 
@@ -239,10 +256,59 @@ export function ReservationModal({
 }: Props) {
   const tr = useTranslations("reservation");
   const tOrd = useTranslations("ordering");
+  const tDet = useTranslations("reservationDetails");
   const [step, setStep] = useState<"details" | "preorder" | "deposit" | "done">("details");
   const [partySize, setPartySize] = useState(Math.max(2, settings.minGuests));
   const [date, setDate] = useState(todayISO());
   const [time, setTime] = useState("19:00");
+
+  // ── "Smart buttons" (Fabrizio cmsajnvkm) ─────────────────────────────────
+  // Adults/children counters replace the single party-size select when the
+  // restaurant turned the split on; partySize is kept = the SUM so every
+  // existing consumer (validation, deposit hint, submit payload) is untouched.
+  const splitParty = !!settings.splitAdultsChildren;
+  const [adults, setAdults] = useState(() => Math.min(Math.max(2, settings.minGuests), settings.maxGuests));
+  const [childrenCount, setChildrenCount] = useState(0);
+  useEffect(() => {
+    if (splitParty) setPartySize(adults + childrenCount);
+  }, [splitParty, adults, childrenCount]);
+  // Optional detail sections — a chip toggles its section open (Restoo-style,
+  // per the report's reference screenshots). Values only make it into the
+  // payload when the section's toggle is ON and something was entered.
+  const [openSections, setOpenSections] = useState<Set<string>>(new Set());
+  const toggleSection = (k: string) =>
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(k)) next.delete(k); else next.add(k);
+      return next;
+    });
+  const [highChairs, setHighChairs] = useState(0);
+  const [strollers, setStrollers] = useState(0);
+  const [allergies, setAllergies] = useState("");
+  const [occasionCode, setOccasionCode] = useState("");
+  const [occasionOther, setOccasionOther] = useState("");
+  const [accessibility, setAccessibility] = useState("");
+  /** Assemble the details payload from ENABLED sections only (the server
+   *  re-filters with the same rules — this is just a clean wire shape). */
+  const buildDetails = (): ReservationDetails | null => {
+    const d: ReservationDetails = {};
+    if (settings.askChildSeating && splitParty && childrenCount > 0 && (highChairs > 0 || strollers > 0)) {
+      d.childSeating = { ...(highChairs > 0 ? { highChairs } : {}), ...(strollers > 0 ? { strollers } : {}) };
+    }
+    if (settings.askAllergies && allergies.trim()) d.allergies = allergies.trim();
+    if (settings.askOccasion && occasionCode) {
+      d.occasion = occasionCode as ReservationDetails["occasion"];
+      if (occasionCode === "other" && occasionOther.trim()) d.occasionOther = occasionOther.trim();
+    }
+    if (settings.askAccessibility && accessibility.trim()) d.accessibility = accessibility.trim();
+    return Object.keys(d).length ? d : null;
+  };
+  const childDefinitionHint =
+    settings.childDefinitionMode === "age" && settings.childDefinitionValue
+      ? tr("childDefinitionAge", { n: settings.childDefinitionValue })
+      : settings.childDefinitionMode === "height" && settings.childDefinitionValue
+        ? tr("childDefinitionHeight", { n: settings.childDefinitionValue })
+        : null;
   // First / last name split for the form (Luigi 2026-06-01) — the
   // wire payload still posts a single `customerName` field so the
   // API + DB schema are unchanged. We concatenate "First Last" on
@@ -553,7 +619,14 @@ export function ReservationModal({
   // (combined checkout), so we DON'T create a reservation here. Luigi 2026-06-08.
   const continueToOrder = () => {
     if (!validateForm()) return;
-    onContinueToOrder?.({ date, time, partySize, name, phone, email, notes });
+    onContinueToOrder?.({
+      date, time, partySize, name, phone, email, notes,
+      // Smart buttons — must survive every seam of the reserve-then-order
+      // chain or they silently drop (the cms0gyexp #12 bug class).
+      adults: splitParty ? adults : null,
+      children: splitParty ? childrenCount : null,
+      details: buildDetails(),
+    });
   };
 
   const submit = async () => {
@@ -568,6 +641,10 @@ export function ReservationModal({
           restaurantSlug,
           customerName: name, customerEmail: email, customerPhone: phone,
           partySize, date, time, notes, marketingConsent,
+          // Smart buttons (cmsajnvkm) — the server re-validates against the
+          // restaurant's toggles; omitted entirely in classic mode.
+          ...(splitParty ? { adults, children: childrenCount } : {}),
+          details: buildDetails() ?? undefined,
         }),
       });
       const data = await res.json();
@@ -620,22 +697,62 @@ export function ReservationModal({
         <div className="flex-1 overflow-y-auto p-5">
           {step === "details" && (
             <div className="space-y-4">
-              {/* Party size */}
-              <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                  <Users className="w-4 h-4" /> {tr("numberOfPeople")}
-                </label>
-                <select
-                  value={partySize}
-                  onChange={e => setPartySize(parseInt(e.target.value))}
-                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
-                  style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
-                >
-                  {partySizeRange.map(n => (
-                    <option key={n} value={n}>{n} {n === 1 ? tr("person") : tr("people")}</option>
-                  ))}
-                </select>
-              </div>
+              {/* Party size — classic single select, OR Adults/Children
+                  counters when the restaurant enabled the split (cmsajnvkm).
+                  partySize stays = the sum either way. */}
+              {!splitParty ? (
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                    <Users className="w-4 h-4" /> {tr("numberOfPeople")}
+                  </label>
+                  <select
+                    value={partySize}
+                    onChange={e => setPartySize(parseInt(e.target.value))}
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
+                    style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                  >
+                    {partySizeRange.map(n => (
+                      <option key={n} value={n}>{n} {n === 1 ? tr("person") : tr("people")}</option>
+                    ))}
+                  </select>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                      <Users className="w-4 h-4" /> {tr("adults")}
+                    </label>
+                    <CounterRow
+                      value={adults}
+                      min={1}
+                      max={Math.max(1, settings.maxGuests - childrenCount)}
+                      onChange={setAdults}
+                      theme={theme}
+                      decLabel={tr("fewerLabel", { label: tr("adults") })}
+                      incLabel={tr("moreLabel", { label: tr("adults") })}
+                    />
+                  </div>
+                  <div>
+                    <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                      <Baby className="w-4 h-4" /> {tr("children")}
+                    </label>
+                    <CounterRow
+                      value={childrenCount}
+                      min={0}
+                      max={Math.max(0, settings.maxGuests - adults)}
+                      onChange={setChildrenCount}
+                      theme={theme}
+                      decLabel={tr("fewerLabel", { label: tr("children") })}
+                      incLabel={tr("moreLabel", { label: tr("children") })}
+                    />
+                    {/* The restaurant's definition of "child" — the red-boxed
+                        hint in Fabrizio's reference ("Up to 8 years"). */}
+                    {childDefinitionHint && (
+                      <p className="text-xs text-gray-500 mt-1">{childDefinitionHint}</p>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Date */}
               <div>
@@ -763,9 +880,106 @@ export function ReservationModal({
                 </label>
               )}
 
-              {/* Comments */}
+              {/* "Smart buttons" (cmsajnvkm) — one outlined chip per enabled
+                  question; tapping reveals its section inline (Restoo-style).
+                  Chips render only for sections the restaurant turned ON, so
+                  non-adopters see nothing new here. */}
+              {(() => {
+                const chips: { key: string; icon: React.ReactNode; label: string }[] = [];
+                if (settings.askChildSeating && splitParty && childrenCount > 0)
+                  chips.push({ key: "childSeating", icon: <Baby className="w-4 h-4" />, label: tr("childSeating") });
+                if (settings.askAllergies)
+                  chips.push({ key: "allergies", icon: <WheatOff className="w-4 h-4" />, label: tr("allergiesLabel") });
+                if (settings.askOccasion)
+                  chips.push({ key: "occasion", icon: <PartyPopper className="w-4 h-4" />, label: tr("occasionLabel") });
+                if (settings.askAccessibility)
+                  chips.push({ key: "accessibility", icon: <Accessibility className="w-4 h-4" />, label: tr("accessibilityLabel") });
+                if (!chips.length) return null;
+                return (
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap gap-2">
+                      {chips.map((c) => {
+                        const open = openSections.has(c.key);
+                        return (
+                          <button
+                            key={c.key}
+                            type="button"
+                            aria-expanded={open}
+                            onClick={() => toggleSection(c.key)}
+                            className="flex items-center gap-1.5 border rounded-full px-3 py-1.5 text-xs font-semibold transition"
+                            style={open
+                              ? { backgroundColor: theme.primaryColor, borderColor: theme.primaryColor, color: "#fff" }
+                              : { borderColor: theme.primaryColor, color: theme.primaryColor }}
+                          >
+                            {c.icon} {c.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    {openSections.has("childSeating") && settings.askChildSeating && splitParty && childrenCount > 0 && (
+                      <div className="rounded-xl border border-gray-200 p-3 space-y-3">
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm text-gray-700">{tr("highChairQuestion")}</span>
+                          <CounterRow value={highChairs} min={0} max={childrenCount} onChange={setHighChairs} theme={theme} compact
+                            decLabel={tr("fewerLabel", { label: tr("highChairQuestion") })} incLabel={tr("moreLabel", { label: tr("highChairQuestion") })} />
+                        </div>
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm text-gray-700">{tr("strollerQuestion")}</span>
+                          <CounterRow value={strollers} min={0} max={childrenCount} onChange={setStrollers} theme={theme} compact
+                            decLabel={tr("fewerLabel", { label: tr("strollerQuestion") })} incLabel={tr("moreLabel", { label: tr("strollerQuestion") })} />
+                        </div>
+                      </div>
+                    )}
+                    {openSections.has("allergies") && settings.askAllergies && (
+                      <textarea
+                        rows={2} placeholder={tr("allergiesPlaceholder")}
+                        value={allergies} onChange={e => setAllergies(e.target.value.slice(0, 500))}
+                        className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 resize-none"
+                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                      />
+                    )}
+                    {openSections.has("occasion") && settings.askOccasion && (
+                      <div className="space-y-2">
+                        <select
+                          value={occasionCode}
+                          onChange={e => setOccasionCode(e.target.value)}
+                          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm bg-white focus:outline-none focus:ring-2"
+                          style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                        >
+                          <option value="">{tr("occasionSelectPlaceholder")}</option>
+                          {OCCASION_CODES.map((code) => (
+                            <option key={code} value={code}>{tDet(occasionKey(code))}</option>
+                          ))}
+                        </select>
+                        {occasionCode === "other" && (
+                          <input
+                            type="text"
+                            placeholder={tr("occasionOtherPlaceholder")}
+                            value={occasionOther}
+                            onChange={e => setOccasionOther(e.target.value.slice(0, 200))}
+                            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2"
+                            style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                          />
+                        )}
+                      </div>
+                    )}
+                    {openSections.has("accessibility") && settings.askAccessibility && (
+                      <textarea
+                        rows={2} placeholder={tr("accessibilityPlaceholder")}
+                        value={accessibility} onChange={e => setAccessibility(e.target.value.slice(0, 500))}
+                        className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 resize-none"
+                        style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
+                      />
+                    )}
+                  </div>
+                );
+              })()}
+
+              {/* Comments — with a dedicated Allergies question live, the
+                  placeholder drops its "allergies" mention so guests aren't
+                  told to type them in two places. */}
               <textarea
-                rows={2} placeholder={tr("commentsPlaceholder")}
+                rows={2} placeholder={settings.askAllergies ? tr("commentsPlaceholderGeneric") : tr("commentsPlaceholder")}
                 value={notes} onChange={e => setNotes(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 resize-none"
                 style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
@@ -881,6 +1095,47 @@ export function ReservationModal({
           )}
         </div>
       </div>
+    </div>
+  );
+}
+
+/** Themed − / value / + stepper (Restoo-style counters — cmsajnvkm). Buttons
+ *  disable at the bounds; labels keep it screen-reader friendly. */
+function CounterRow({ value, min, max, onChange, theme, compact = false, decLabel, incLabel }: {
+  value: number;
+  min: number;
+  max: number;
+  onChange: (v: number) => void;
+  theme: Theme;
+  compact?: boolean;
+  decLabel: string;
+  incLabel: string;
+}) {
+  return (
+    <div className={compact ? "flex items-center gap-2 flex-shrink-0" : "flex items-center gap-2 w-full"}>
+      <button
+        type="button"
+        aria-label={decLabel}
+        disabled={value <= min}
+        onClick={() => onChange(Math.max(min, value - 1))}
+        className="w-9 h-9 rounded-lg border flex items-center justify-center transition disabled:opacity-40"
+        style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+      >
+        <Minus className="w-4 h-4" />
+      </button>
+      <span className={compact ? "min-w-[2ch] text-center text-sm font-bold text-gray-900" : "flex-1 text-center text-sm font-bold text-gray-900"}>
+        {value}
+      </span>
+      <button
+        type="button"
+        aria-label={incLabel}
+        disabled={value >= max}
+        onClick={() => onChange(Math.min(max, value + 1))}
+        className="w-9 h-9 rounded-lg border flex items-center justify-center transition disabled:opacity-40"
+        style={{ borderColor: theme.primaryColor, color: theme.primaryColor }}
+      >
+        <Plus className="w-4 h-4" />
+      </button>
     </div>
   );
 }

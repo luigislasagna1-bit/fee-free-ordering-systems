@@ -1326,7 +1326,13 @@ export function OrderingPageClient({
   // combined checkout). Carries the booking the server needs to create the
   // linked Reservation, plus the date/time/party for the on-screen banner.
   const [reservationDraft, setReservationDraft] = useState<
-    { date: string; time: string; partySize: number; notes: string } | null
+    {
+      date: string; time: string; partySize: number; notes: string;
+      // Smart buttons (cmsajnvkm) — carried through every seam of the
+      // reserve-then-order chain so the linked reservation keeps them.
+      adults?: number | null; children?: number | null;
+      details?: import("@/lib/reservation-details").ReservationDetails | null;
+    } | null
   >(null);
   const [couponCode, setCouponCode] = useState("");
   // A code-less personal gift chosen from the account page ("Use this offer" →
@@ -1693,8 +1699,14 @@ export function OrderingPageClient({
   const applyReservationDraft = (d: {
     date: string; time: string; partySize: number;
     name: string; phone: string; email: string; notes: string;
+    adults?: number | null; children?: number | null;
+    details?: import("@/lib/reservation-details").ReservationDetails | null;
   }) => {
-    setReservationDraft({ date: d.date, time: d.time, partySize: d.partySize, notes: d.notes });
+    setReservationDraft({
+      date: d.date, time: d.time, partySize: d.partySize, notes: d.notes,
+      // Smart buttons (cmsajnvkm) — seam 3 of the reserve-then-order chain.
+      adults: d.adults ?? null, children: d.children ?? null, details: d.details ?? null,
+    });
     setOrderType("dine_in");
     setCustomerInfo((ci) => ({
       ...ci,
@@ -1721,6 +1733,8 @@ export function OrderingPageClient({
         applyReservationDraft({
           date: d.date, time: d.time, partySize: Number(d.partySize),
           name: d.name ?? "", phone: d.phone ?? "", email: d.email ?? "", notes: d.notes ?? "",
+          // Smart buttons (cmsajnvkm) — seam 2: sessionStorage → draft state.
+          adults: d.adults ?? null, children: d.children ?? null, details: d.details ?? null,
         });
       }
     } catch { /* malformed — ignore */ }
@@ -4163,6 +4177,11 @@ export function OrderingPageClient({
           time: reservationDraft.time,
           partySize: reservationDraft.partySize,
           notes: reservationDraft.notes || undefined,
+          // Smart buttons (cmsajnvkm) — seam 4: draft → order payload; the
+          // orders route re-validates and persists them on the linked booking.
+          adults: reservationDraft.adults ?? undefined,
+          children: reservationDraft.children ?? undefined,
+          details: reservationDraft.details ?? undefined,
         }
       : undefined,
     subtotal, taxAmount, deliveryFee, tip: tipAmount, total,

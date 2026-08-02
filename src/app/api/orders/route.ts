@@ -42,6 +42,7 @@ import { getCurrentCustomer } from "@/lib/customer-session";
 import { getSessionUser } from "@/lib/session";
 import { validateBooking, resolveDayHours, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
 import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reservation-booking";
+import { parseReservationDetails, computePartySize, type ReservationDetails } from "@/lib/reservation-details";
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
 import { resolveCustomerLocale } from "@/lib/i18n-server";
 import { shouldDispatchToShipday } from "@/lib/shipday";
@@ -282,7 +283,12 @@ export async function POST(req: NextRequest) {
     // Luigi 2026-06-08. Only runs when a `reservation` payload is present, so
     // it's a no-op for every normal order.
     let reservationData:
-      | { date: string; time: string; partySize: number; notes: string | null; tableId: string | null }
+      | {
+          date: string; time: string; partySize: number; notes: string | null; tableId: string | null;
+          // Smart buttons (Fabrizio cmsajnvkm) — parity with the standalone
+          // reservations route so reserve-then-order never silently drops them.
+          adultsCount: number | null; childrenCount: number | null; details: ReservationDetails | null;
+        }
       | null = null;
     // Whether this restaurant auto-CONFIRMS reservations. A pre-order (booking +
     // food) is ONE unit, so it should auto-accept when auto is on for EITHER
@@ -314,10 +320,21 @@ export async function POST(req: NextRequest) {
       }
       const rDate = sanitize((bodyReservation as any).date, 10);
       const rTime = sanitize((bodyReservation as any).time, 5);
-      const rPartySize = parseInt(String((bodyReservation as any).partySize), 10);
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(rDate) || !/^\d{2}:\d{2}$/.test(rTime) || !Number.isFinite(rPartySize) || rPartySize < 1) {
+      const rRawPartySize = parseInt(String((bodyReservation as any).partySize), 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(rDate) || !/^\d{2}:\d{2}$/.test(rTime) || !Number.isFinite(rRawPartySize) || rRawPartySize < 1) {
         return NextResponse.json({ error: "Invalid reservation details.", code: "reservation_invalid" }, { status: 400 });
       }
+      // Smart buttons — same normalizer as the standalone route; the split's
+      // server-computed sum is authoritative for partySize when present.
+      const rSmart = parseReservationDetails(
+        {
+          adults: (bodyReservation as any).adults,
+          children: (bodyReservation as any).children,
+          details: (bodyReservation as any).details,
+        },
+        rs,
+      );
+      const rPartySize = computePartySize(rSmart.adultsCount, rSmart.childrenCount, rRawPartySize);
       // SAME validation a standalone booking goes through (notice window, max
       // advance, guest bounds) — evaluated in the restaurant's timezone.
       const v = validateBooking(
@@ -380,6 +397,9 @@ export async function POST(req: NextRequest) {
         partySize: rPartySize,
         notes: (bodyReservation as any).notes ? sanitize((bodyReservation as any).notes, 500) : null,
         tableId: rTableId,
+        adultsCount: rSmart.adultsCount,
+        childrenCount: rSmart.childrenCount,
+        details: rSmart.details,
       };
     }
 
@@ -2826,6 +2846,9 @@ export async function POST(req: NextRequest) {
             customerEmail: cleanEmail,
             customerPhone: cleanPhone,
             partySize: reservationData.partySize,
+            adultsCount: reservationData.adultsCount,
+            childrenCount: reservationData.childrenCount,
+            details: reservationData.details ?? undefined,
             date: reservationData.date,
             time: reservationData.time,
             notes: reservationData.notes,

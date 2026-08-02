@@ -635,7 +635,24 @@
     "closedOnDay": "Zatvoreno je u {day} — odaberite drugi datum.",
     "jumpToNextOpen": "Prijeđi na sljedeći otvoreni dan ({date})",
     "closedPickAnother": "Zatvoreno je na odabrani datum — odaberite drugi dan.",
-    "emailRequired": "E-mail je obavezan"
+    "emailRequired": "E-mail je obavezan",
+    "adults": "Odrasli",
+    "children": "Djeca",
+    "childDefinitionAge": "Do {n} godina",
+    "childDefinitionHeight": "Do {n} cm visine",
+    "fewerLabel": "Manje: {label}",
+    "moreLabel": "Više: {label}",
+    "childSeating": "Djeca",
+    "highChairQuestion": "Trebate li dječju stolicu?",
+    "strollerQuestion": "Dolazite li s dječjim kolicima?",
+    "allergiesLabel": "Alergije",
+    "allergiesPlaceholder": "Recite nam ako imate alergije ili posebne prehrambene potrebe",
+    "occasionLabel": "Posebna prigoda",
+    "occasionSelectPlaceholder": "Odaberite posebnu prigodu",
+    "occasionOtherPlaceholder": "Recite nam što slavite",
+    "accessibilityLabel": "Pristupačnost",
+    "accessibilityPlaceholder": "npr. pristup za invalidska kolica, mjesto bez stepenica",
+    "commentsPlaceholderGeneric": "Komentari (neobavezno) — posebni zahtjevi"
   },
   "kitchen": {
     "opensIn": "Otvara za {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Zatvori",
     "pnCancel": "Odustani",
     "pnSaving": "Spremanje…",
-    "pnSaveSettings": "Spremi postavke"
+    "pnSaveSettings": "Spremi postavke",
+    "partyBreakdown": "Odrasli: {adults}, Djeca: {children}",
+    "labelChildSeating": "Sjedalice za djecu",
+    "labelAllergies": "Alergije",
+    "labelOccasion": "Prigoda",
+    "labelAccessibility": "Pristupačnost"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Upravljajte rezervacijama i postavkama rezervacija",
       "tabReservations": "Rezervacije",
       "tabSettings": "Postavke",
-      "depositsSoonDesc": "Naplatite polog pri rezervaciji kako biste smanjili nedolaske. Uskoro kao plaćeni dodatak."
+      "depositsSoonDesc": "Naplatite polog pri rezervaciji kako biste smanjili nedolaske. Uskoro kao plaćeni dodatak.",
+      "partyBreakdown": "Odrasli: {adults}, Djeca: {children}",
+      "headingBookingQuestions": "Pitanja pri rezervaciji",
+      "descBookingQuestions": "Postavite gostima nekoliko dodatnih pitanja tijekom rezervacije. Odgovori se prikazuju u kuhinji, na popisu rezervacija, na ispisanom listiću i u vašoj e-poruci s obavijesti.",
+      "labelSplitParty": "Odvojeno pitanje za odrasle i djecu",
+      "helpSplitParty": "Zamjenjuje jedinstveni odabir broja osoba zasebnim brojačima za odrasle i djecu. Ukupan broj i dalje poštuje vaš minimalni i maksimalni broj gostiju.",
+      "labelChildDefinition": "Tko se smatra djetetom",
+      "helpChildDefinition": "Prikazuje se kao mala napomena ispod brojača djece kako bi gosti znali na što mislite. Odaberite dobnu ili visinsku granicu ili opciju Bez definicije ako ne želite prikazati napomenu.",
+      "optionChildDefNone": "Bez definicije",
+      "optionChildDefAge": "Ispod određene dobi",
+      "optionChildDefHeight": "Ispod određene visine",
+      "labelChildDefYears": "Djeca su ispod",
+      "labelChildDefCm": "Djeca su ispod",
+      "unitYears": "godina",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Dječje stolice i kolica",
+      "helpAskChildSeating": "Gosti koji rezerviraju s djecom mogu vam javiti koliko dječjih stolica trebaju i dolaze li s dječjim kolicima.",
+      "labelAskAllergies": "Alergije",
+      "helpAskAllergies": "Dodaje neobavezno pitanje o alergijama i prehrambenim potrebama u obrazac za rezervaciju.",
+      "labelAskOccasion": "Posebna prigoda",
+      "helpAskOccasion": "Omogućuje gostima da vam jave da nešto slave — rođendan, godišnjicu, poslovni ručak — kako biste se mogli pripremiti.",
+      "labelAskAccessibility": "Potrebe za pristupačnošću",
+      "helpAskAccessibility": "Dodaje neobavezno pitanje o potrebama za pristupačnošću, primjerice mjesto bez stepenica ili pristup za invalidska kolica.",
+      "labelChildSeating": "Sjedalice za djecu",
+      "labelAllergies": "Alergije",
+      "labelOccasion": "Prigoda",
+      "labelAccessibility": "Pristupačnost"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(vidi priloženi račun narudžbe)",
       "date": "Datum",
       "time": "Vrijeme",
-      "confirmationCode": "Kod za potvrdu"
+      "confirmationCode": "Kod za potvrdu",
+      "adultsChildren": "Odrasli: {adults} / Djeca: {children}",
+      "labelChildSeating": "Sjedalice za djecu",
+      "labelAllergies": "Alergije",
+      "labelOccasion": "Prigoda",
+      "labelAccessibility": "Pristupačnost"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Obavijest o vašem zahtjevu za rezervaciju",
       "badgeMissed": "Propušteno",
       "closedNote": "Restoran je trenutačno zatvoren — vaš zahtjev za rezervaciju čeka u redu i dobit ćete obavijest čim otvore.",
-      "closedNoteWithTime": "Restoran je trenutačno zatvoren — vaš zahtjev za rezervaciju čeka u redu i dobit ćete obavijest čim otvore. Provjerite e-poštu u {openingTime}."
+      "closedNoteWithTime": "Restoran je trenutačno zatvoren — vaš zahtjev za rezervaciju čeka u redu i dobit ćete obavijest čim otvore. Provjerite e-poštu u {openingTime}.",
+      "partyBreakdown": "Odrasli: {adults}, Djeca: {children}",
+      "labelChildSeating": "Sjedalice za djecu",
+      "labelAllergies": "Alergije",
+      "labelOccasion": "Prigoda",
+      "labelAccessibility": "Pristupačnost"
     },
     "newReservation": {
       "preview": "Nova rezervacija — {dateTime} · broj gostiju: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Nova rezervacija — {restaurant}",
       "title": "Nova rezervacija {status}",
       "body": "{customer} je zatražio rezervaciju za {party} gostiju {date} u {time}.",
-      "confirmationCode": "Kod za potvrdu"
+      "confirmationCode": "Kod za potvrdu",
+      "badgeAdultsChildren": "Odrasli: {adults}, Djeca: {children}",
+      "labelChildSeating": "Sjedalice za djecu",
+      "labelAllergies": "Alergije",
+      "labelOccasion": "Prigoda",
+      "labelAccessibility": "Pristupačnost"
     },
     "passwordReset": {
       "preview": "Ponovno postavite lozinku za {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Vaše ime",
       "saveFailed": "Spremanje nije uspjelo ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Rođendan",
+    "occasionAnniversary": "Godišnjica braka",
+    "occasionDate": "Romantični spoj",
+    "occasionFriends": "Druženje s prijateljima",
+    "occasionFamily": "Obiteljsko okupljanje",
+    "occasionBusiness": "Poslovno",
+    "occasionCelebration": "Proslava",
+    "occasionOther": "Ostalo",
+    "highChair": "Dječja stolica",
+    "stroller": "Dječja kolica"
   }
 }

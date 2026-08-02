@@ -635,7 +635,24 @@
     "closedOnDay": "We zijn gesloten op {day} — kies een andere datum.",
     "jumpToNextOpen": "Ga naar de volgende open dag ({date})",
     "closedPickAnother": "We zijn gesloten op de geselecteerde datum — kies een andere dag.",
-    "emailRequired": "E-mailadres is verplicht"
+    "emailRequired": "E-mailadres is verplicht",
+    "adults": "Volwassenen",
+    "children": "Kinderen",
+    "childDefinitionAge": "Tot en met {n} jaar",
+    "childDefinitionHeight": "Tot en met {n} cm lang",
+    "fewerLabel": "Minder {label}",
+    "moreLabel": "Meer {label}",
+    "childSeating": "Kinderen",
+    "highChairQuestion": "Heeft u een kinderstoel nodig?",
+    "strollerQuestion": "Neemt u een kinderwagen mee?",
+    "allergiesLabel": "Allergieën",
+    "allergiesPlaceholder": "Vertel ons over allergieën of dieetwensen",
+    "occasionLabel": "Speciale gelegenheid",
+    "occasionSelectPlaceholder": "Geef de speciale gelegenheid aan",
+    "occasionOtherPlaceholder": "Vertel ons wat u viert",
+    "accessibilityLabel": "Toegankelijkheid",
+    "accessibilityPlaceholder": "bijv. rolstoeltoegang, drempelvrije zitplaats",
+    "commentsPlaceholderGeneric": "Opmerkingen (optioneel) - speciale verzoeken"
   },
   "kitchen": {
     "opensIn": "Opent over {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Sluiten",
     "pnCancel": "Annuleren",
     "pnSaving": "Opslaan…",
-    "pnSaveSettings": "Instellingen opslaan"
+    "pnSaveSettings": "Instellingen opslaan",
+    "partyBreakdown": "{adults} volwassenen, {children} kinderen",
+    "labelChildSeating": "Kinderzitplaatsen",
+    "labelAllergies": "Allergieën",
+    "labelOccasion": "Gelegenheid",
+    "labelAccessibility": "Toegankelijkheid"
   },
   "admin": {
     "welcomeBack": "Welkom terug",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Boekingen en reserveringsinstellingen beheren",
       "tabReservations": "Reserveringen",
       "tabSettings": "Instellingen",
-      "depositsSoonDesc": "Vraag een aanbetaling bij het boeken om no-shows te verminderen. Binnenkort als betaalde add-on."
+      "depositsSoonDesc": "Vraag een aanbetaling bij het boeken om no-shows te verminderen. Binnenkort als betaalde add-on.",
+      "partyBreakdown": "{adults} volwassenen, {children} kinderen",
+      "headingBookingQuestions": "Reserveringsvragen",
+      "descBookingQuestions": "Stel gasten tijdens het reserveren een paar extra vragen. De antwoorden verschijnen in de keuken, in de reserveringslijst, op de geprinte bon en in uw e-mailmelding.",
+      "labelSplitParty": "Volwassenen en kinderen apart vragen",
+      "helpSplitParty": "Vervangt de enkele keuze voor het aantal gasten door aparte tellers voor Volwassenen en Kinderen. Het totaal blijft binnen uw minimum en maximum aantal gasten.",
+      "labelChildDefinition": "Wie telt als kind",
+      "helpChildDefinition": "Wordt als kleine toelichting onder de teller Kinderen getoond, zodat gasten weten wat u bedoelt. Kies een leeftijds- of lengtegrens, of Geen om geen toelichting te tonen.",
+      "optionChildDefNone": "Geen definitie",
+      "optionChildDefAge": "Onder een bepaalde leeftijd",
+      "optionChildDefHeight": "Onder een bepaalde lengte",
+      "labelChildDefYears": "Kinderen zijn onder de",
+      "labelChildDefCm": "Kinderen zijn onder de",
+      "unitYears": "jaar",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Kinderstoelen en kinderwagens",
+      "helpAskChildSeating": "Gasten die met kinderen reserveren, kunnen aangeven hoeveel kinderstoelen ze nodig hebben en of ze een kinderwagen meenemen.",
+      "labelAskAllergies": "Allergieën",
+      "helpAskAllergies": "Voegt een optionele vraag over allergieën en dieetwensen toe aan het reserveringsformulier.",
+      "labelAskOccasion": "Speciale gelegenheid",
+      "helpAskOccasion": "Laat gasten doorgeven dat ze iets vieren - een verjaardag, een jubileum, een zakendiner - zodat je je erop kunt voorbereiden.",
+      "labelAskAccessibility": "Toegankelijkheidswensen",
+      "helpAskAccessibility": "Voegt een optionele vraag toe over toegankelijkheidswensen, zoals een drempelvrije zitplaats of rolstoeltoegang.",
+      "labelChildSeating": "Kinderzitplaatsen",
+      "labelAllergies": "Allergieën",
+      "labelOccasion": "Gelegenheid",
+      "labelAccessibility": "Toegankelijkheid"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(zie bijgevoegde orderbon)",
       "date": "Datum",
       "time": "Tijd",
-      "confirmationCode": "Bevestigingscode"
+      "confirmationCode": "Bevestigingscode",
+      "adultsChildren": "{adults} volwassenen / {children} kinderen",
+      "labelChildSeating": "Kinderzitplaatsen",
+      "labelAllergies": "Allergieën",
+      "labelOccasion": "Gelegenheid",
+      "labelAccessibility": "Toegankelijkheid"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Update over uw reserveringsverzoek",
       "badgeMissed": "Gemist",
       "closedNote": "Het restaurant is momenteel gesloten — je reserveringsaanvraag staat in de wachtrij en je krijgt een update zodra ze weer opengaan.",
-      "closedNoteWithTime": "Het restaurant is momenteel gesloten — je reserveringsaanvraag staat in de wachtrij en je krijgt een update zodra ze weer opengaan. Houd vanaf {openingTime} je e-mail in de gaten."
+      "closedNoteWithTime": "Het restaurant is momenteel gesloten — je reserveringsaanvraag staat in de wachtrij en je krijgt een update zodra ze weer opengaan. Houd vanaf {openingTime} je e-mail in de gaten.",
+      "partyBreakdown": "{adults} volwassenen, {children} kinderen",
+      "labelChildSeating": "Kinderzitplaatsen",
+      "labelAllergies": "Allergieën",
+      "labelOccasion": "Gelegenheid",
+      "labelAccessibility": "Toegankelijkheid"
     },
     "newReservation": {
       "preview": "Nieuwe reservering — {dateTime} · gezelschap van {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Nieuwe reservering — {restaurant}",
       "title": "Nieuwe reservering {status}",
       "body": "{customer} heeft een reservering aangevraagd voor {party} gasten op {date} om {time}.",
-      "confirmationCode": "Bevestigingscode"
+      "confirmationCode": "Bevestigingscode",
+      "badgeAdultsChildren": "{adults} volwassenen, {children} kinderen",
+      "labelChildSeating": "Kinderzitplaatsen",
+      "labelAllergies": "Allergieën",
+      "labelOccasion": "Gelegenheid",
+      "labelAccessibility": "Toegankelijkheid"
     },
     "passwordReset": {
       "preview": "Stel je {brand}-wachtwoord opnieuw in",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Je naam",
       "saveFailed": "Opslaan mislukt ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Verjaardag",
+    "occasionAnniversary": "Huwelijksverjaardag",
+    "occasionDate": "Romantische date",
+    "occasionFriends": "Afspraak met vrienden",
+    "occasionFamily": "Familiebijeenkomst",
+    "occasionBusiness": "Zakelijk",
+    "occasionCelebration": "Feest",
+    "occasionOther": "Anders",
+    "highChair": "Kinderstoel",
+    "stroller": "Kinderwagen"
   }
 }

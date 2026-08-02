@@ -635,7 +635,24 @@
     "closedOnDay": "{day}は休業日です — 別の日付をお選びください。",
     "jumpToNextOpen": "次の営業日に移動 ({date})",
     "closedPickAnother": "選択された日付は休業日です — 別の日をお選びください。",
-    "emailRequired": "メールアドレスは必須です"
+    "emailRequired": "メールアドレスは必須です",
+    "adults": "大人",
+    "children": "子供",
+    "childDefinitionAge": "{n}歳まで",
+    "childDefinitionHeight": "身長{n}cmまで",
+    "fewerLabel": "{label}を減らす",
+    "moreLabel": "{label}を増やす",
+    "childSeating": "子供",
+    "highChairQuestion": "ベビーチェアは必要ですか？",
+    "strollerQuestion": "ベビーカーをお持ちになりますか？",
+    "allergiesLabel": "アレルギー",
+    "allergiesPlaceholder": "アレルギーや食事制限があればお知らせください",
+    "occasionLabel": "特別な日",
+    "occasionSelectPlaceholder": "特別な日をお選びください",
+    "occasionOtherPlaceholder": "お祝いの内容をお聞かせください",
+    "accessibilityLabel": "バリアフリー",
+    "accessibilityPlaceholder": "例：車いす対応、段差のない席",
+    "commentsPlaceholderGeneric": "コメント（任意）— 特別なご要望"
   },
   "kitchen": {
     "opensIn": "あと{time}で開店",
@@ -1059,7 +1076,12 @@
     "pnClose": "閉じる",
     "pnCancel": "キャンセル",
     "pnSaving": "保存中…",
-    "pnSaveSettings": "設定を保存"
+    "pnSaveSettings": "設定を保存",
+    "partyBreakdown": "大人{adults}名、子ども{children}名",
+    "labelChildSeating": "子ども用の席",
+    "labelAllergies": "アレルギー",
+    "labelOccasion": "利用シーン",
+    "labelAccessibility": "バリアフリー"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "予約と予約設定を管理",
       "tabReservations": "予約",
       "tabSettings": "設定",
-      "depositsSoonDesc": "予約時にデポジットを受け取り、ノーショーを減らします。有料アドオンとして近日提供予定。"
+      "depositsSoonDesc": "予約時にデポジットを受け取り、ノーショーを減らします。有料アドオンとして近日提供予定。",
+      "partyBreakdown": "大人{adults}名、子ども{children}名",
+      "headingBookingQuestions": "予約時の質問",
+      "descBookingQuestions": "予約時にお客様へいくつか追加の質問ができます。回答はキッチン画面、予約一覧、印刷伝票、通知メールに表示されます。",
+      "labelSplitParty": "大人と子供を分けて質問する",
+      "helpSplitParty": "1つの人数選択欄を、「大人」と「子供」の個別カウンターに置き換えます。合計人数には、設定した最少人数・最大人数がそのまま適用されます。",
+      "labelChildDefinition": "子供の定義",
+      "helpChildDefinition": "「子供」カウンターの下に小さなヒントとして表示され、お客様に基準が伝わります。年齢または身長の上限を選ぶか、ヒントを表示しない場合は「定義なし」を選択します。",
+      "optionChildDefNone": "定義なし",
+      "optionChildDefAge": "年齢で指定",
+      "optionChildDefHeight": "身長で指定",
+      "labelChildDefYears": "子供の年齢",
+      "labelChildDefCm": "子供の年齢",
+      "unitYears": "歳未満",
+      "unitCm": "cm",
+      "labelAskChildSeating": "ハイチェア・ベビーカー",
+      "helpAskChildSeating": "お子様連れのお客様が、必要なハイチェアの数やベビーカーの持ち込みの有無を事前に伝えられます。",
+      "labelAskAllergies": "アレルギー",
+      "helpAskAllergies": "予約フォームにアレルギー・食事制限に関する任意の質問を追加します。",
+      "labelAskOccasion": "特別な日",
+      "helpAskOccasion": "誕生日、記念日、接待など、お祝いの機会をお客様が伝えられるようになり、事前に準備できます。",
+      "labelAskAccessibility": "バリアフリーのご要望",
+      "helpAskAccessibility": "段差のない席や車椅子でのご利用など、バリアフリーに関する任意の質問を追加します。",
+      "labelChildSeating": "子ども用の席",
+      "labelAllergies": "アレルギー",
+      "labelOccasion": "利用シーン",
+      "labelAccessibility": "バリアフリー"
     },
     "autopilotClient": {
       "pageTitle": "自動化",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "（注文レシートを参照）",
       "date": "日付",
       "time": "時間",
-      "confirmationCode": "確認コード"
+      "confirmationCode": "確認コード",
+      "adultsChildren": "大人{adults}名 / 子ども{children}名",
+      "labelChildSeating": "子ども用の席",
+      "labelAllergies": "アレルギー",
+      "labelOccasion": "利用シーン",
+      "labelAccessibility": "バリアフリー"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "ご予約リクエストに関するご連絡",
       "badgeMissed": "見逃し",
       "closedNote": "ただいま店舗は営業時間外です。ご予約リクエストは受付待ちの状態で、開店し次第すぐにお知らせします。",
-      "closedNoteWithTime": "ただいま店舗は営業時間外です。ご予約リクエストは受付済みで、開店しだいすぐにお知らせします。{openingTime}にメールをご確認ください。"
+      "closedNoteWithTime": "ただいま店舗は営業時間外です。ご予約リクエストは受付済みで、開店しだいすぐにお知らせします。{openingTime}にメールをご確認ください。",
+      "partyBreakdown": "大人{adults}名、子ども{children}名",
+      "labelChildSeating": "子ども用の席",
+      "labelAllergies": "アレルギー",
+      "labelOccasion": "利用シーン",
+      "labelAccessibility": "バリアフリー"
     },
     "newReservation": {
       "preview": "新規予約 — {dateTime} · {partySize}名",
@@ -5548,7 +5606,12 @@
       "subject": "新しい予約 — {restaurant}",
       "title": "新しい予約 {status}",
       "body": "{customer} 様が {date} {time} に {party} 名でご予約をリクエストされました。",
-      "confirmationCode": "確認コード"
+      "confirmationCode": "確認コード",
+      "badgeAdultsChildren": "大人{adults}名、子ども{children}名",
+      "labelChildSeating": "子ども用の席",
+      "labelAllergies": "アレルギー",
+      "labelOccasion": "利用シーン",
+      "labelAccessibility": "バリアフリー"
     },
     "passwordReset": {
       "preview": "{brand}のパスワードをリセット",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "お名前",
       "saveFailed": "保存に失敗しました（{status}）"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "誕生日",
+    "occasionAnniversary": "結婚記念日",
+    "occasionDate": "デート",
+    "occasionFriends": "友人との食事",
+    "occasionFamily": "家族の集まり",
+    "occasionBusiness": "接待・会食",
+    "occasionCelebration": "お祝い",
+    "occasionOther": "その他",
+    "highChair": "ベビーチェア",
+    "stroller": "ベビーカー"
   }
 }

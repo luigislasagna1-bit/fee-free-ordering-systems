@@ -635,7 +635,24 @@
     "closedOnDay": "אנחנו סגורים ב{day} — נא לבחור תאריך אחר.",
     "jumpToNextOpen": "מעבר ליום הפתוח הבא ({date})",
     "closedPickAnother": "אנחנו סגורים בתאריך שנבחר — נא לבחור יום אחר.",
-    "emailRequired": "נדרשת כתובת אימייל"
+    "emailRequired": "נדרשת כתובת אימייל",
+    "adults": "מבוגרים",
+    "children": "ילדים",
+    "childDefinitionAge": "עד גיל {n}",
+    "childDefinitionHeight": "עד גובה {n} ס״מ",
+    "fewerLabel": "פחות {label}",
+    "moreLabel": "עוד {label}",
+    "childSeating": "ילדים",
+    "highChairQuestion": "צריכים כיסא תינוק?",
+    "strollerQuestion": "מגיעים עם עגלת תינוק?",
+    "allergiesLabel": "אלרגיות",
+    "allergiesPlaceholder": "ספרו לנו על אלרגיות או צרכים תזונתיים",
+    "occasionLabel": "אירוע מיוחד",
+    "occasionSelectPlaceholder": "נא לציין את האירוע המיוחד",
+    "occasionOtherPlaceholder": "ספרו לנו מה אתם חוגגים",
+    "accessibilityLabel": "נגישות",
+    "accessibilityPlaceholder": "לדוגמה: גישה לכיסא גלגלים, ישיבה ללא מדרגות",
+    "commentsPlaceholderGeneric": "הערות (אופציונלי) — בקשות מיוחדות"
   },
   "kitchen": {
     "opensIn": "נפתח בעוד {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "סגירה",
     "pnCancel": "ביטול",
     "pnSaving": "שומר...",
-    "pnSaveSettings": "שמירת הגדרות"
+    "pnSaveSettings": "שמירת הגדרות",
+    "partyBreakdown": "{adults} מבוגרים, {children} ילדים",
+    "labelChildSeating": "מושבים לילדים",
+    "labelAllergies": "אלרגיות",
+    "labelOccasion": "אירוע",
+    "labelAccessibility": "נגישות"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "נהל הזמנות והגדרות הזמנות שולחן",
       "tabReservations": "הזמנות",
       "tabSettings": "הגדרות",
-      "depositsSoonDesc": "גבה פיקדון בעת ההזמנה כדי לצמצם אי-הגעות. בקרוב כתוסף בתשלום."
+      "depositsSoonDesc": "גבה פיקדון בעת ההזמנה כדי לצמצם אי-הגעות. בקרוב כתוסף בתשלום.",
+      "partyBreakdown": "{adults} מבוגרים, {children} ילדים",
+      "headingBookingQuestions": "שאלות בהזמנת שולחן",
+      "descBookingQuestions": "שאלו את האורחים כמה פרטים נוספים בעת ההזמנה. התשובות מופיעות במטבח, ברשימת ההזמנות, בפתק המודפס ובמייל ההתראה שלכם.",
+      "labelSplitParty": "שאלו על מבוגרים וילדים בנפרד",
+      "helpSplitParty": "מחליף את שדה מספר הסועדים היחיד בשני מונים נפרדים — מבוגרים וילדים. סך האורחים עדיין כפוף למינימום ולמקסימום שהגדרתם.",
+      "labelChildDefinition": "מי נחשב ילד",
+      "helpChildDefinition": "ההגדרה מוצגת כהערה קצרה מתחת למונה הילדים, כדי שהאורחים יבינו למה הכוונה. בחרו מגבלת גיל או מגבלת גובה, או באפשרות ללא הגדרה כדי לא להציג הערה.",
+      "optionChildDefNone": "ללא הגדרה",
+      "optionChildDefAge": "מתחת לגיל מסוים",
+      "optionChildDefHeight": "מתחת לגובה מסוים",
+      "labelChildDefYears": "ילדים הם מתחת ל-",
+      "labelChildDefCm": "ילדים הם מתחת ל-",
+      "unitYears": "שנים",
+      "unitCm": "ס״מ",
+      "labelAskChildSeating": "כיסאות תינוק ועגלות",
+      "helpAskChildSeating": "אורחים שמזמינים שולחן עם ילדים יוכלו לציין כמה כיסאות תינוק הם צריכים והאם הם מגיעים עם עגלה.",
+      "labelAskAllergies": "אלרגיות",
+      "helpAskAllergies": "מוסיף לטופס ההזמנה שאלה אופציונלית על אלרגיות וצרכים תזונתיים.",
+      "labelAskOccasion": "אירוע מיוחד",
+      "helpAskOccasion": "מאפשר לאורחים לספר לכם שהם חוגגים — יום הולדת, יום נישואין, ארוחה עסקית — כדי שתוכלו להתכונן.",
+      "labelAskAccessibility": "צורכי נגישות",
+      "helpAskAccessibility": "מוסיף שאלה אופציונלית על צורכי נגישות, כמו ישיבה ללא מדרגות או גישה לכיסא גלגלים.",
+      "labelChildSeating": "מושבים לילדים",
+      "labelAllergies": "אלרגיות",
+      "labelOccasion": "אירוע",
+      "labelAccessibility": "נגישות"
     },
     "autopilotClient": {
       "pageTitle": "אוטופיילוט",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(ראה קבלת הזמנה מצורפת)",
       "date": "תאריך",
       "time": "שעה",
-      "confirmationCode": "קוד אישור"
+      "confirmationCode": "קוד אישור",
+      "adultsChildren": "{adults} מבוגרים / {children} ילדים",
+      "labelChildSeating": "מושבים לילדים",
+      "labelAllergies": "אלרגיות",
+      "labelOccasion": "אירוע",
+      "labelAccessibility": "נגישות"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "עדכון בנושא בקשת ההזמנה שלך",
       "badgeMissed": "הוחמצה",
       "closedNote": "המסעדה סגורה כרגע — בקשת ההזמנה שלך ממתינה בתור ועדכון יישלח אליך ברגע שהמסעדה תיפתח.",
-      "closedNoteWithTime": "המסעדה סגורה כרגע — בקשת ההזמנה שלך ממתינה בתור ועדכון יישלח אליך ברגע שהמסעדה תיפתח. כדאי לבדוק את המייל ב-{openingTime}."
+      "closedNoteWithTime": "המסעדה סגורה כרגע — בקשת ההזמנה שלך ממתינה בתור ועדכון יישלח אליך ברגע שהמסעדה תיפתח. כדאי לבדוק את המייל ב-{openingTime}.",
+      "partyBreakdown": "{adults} מבוגרים, {children} ילדים",
+      "labelChildSeating": "מושבים לילדים",
+      "labelAllergies": "אלרגיות",
+      "labelOccasion": "אירוע",
+      "labelAccessibility": "נגישות"
     },
     "newReservation": {
       "preview": "הזמנת שולחן חדשה — {dateTime} · {partySize} סועדים",
@@ -5548,7 +5606,12 @@
       "subject": "הזמנת שולחן חדשה — {restaurant}",
       "title": "הזמנת שולחן חדשה {status}",
       "body": "{customer} ביקש הזמנת שולחן ל-{party} אורחים ב-{date} בשעה {time}.",
-      "confirmationCode": "קוד אישור"
+      "confirmationCode": "קוד אישור",
+      "badgeAdultsChildren": "{adults} מבוגרים, {children} ילדים",
+      "labelChildSeating": "מושבים לילדים",
+      "labelAllergies": "אלרגיות",
+      "labelOccasion": "אירוע",
+      "labelAccessibility": "נגישות"
     },
     "passwordReset": {
       "preview": "איפוס הסיסמה שלך ב-{brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "השם שלך",
       "saveFailed": "השמירה נכשלה ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "יום הולדת",
+    "occasionAnniversary": "יום נישואין",
+    "occasionDate": "דייט רומנטי",
+    "occasionFriends": "מפגש חברים",
+    "occasionFamily": "מפגש משפחתי",
+    "occasionBusiness": "פגישה עסקית",
+    "occasionCelebration": "חגיגה",
+    "occasionOther": "אחר",
+    "highChair": "כיסא תינוק",
+    "stroller": "עגלת תינוק"
   }
 }

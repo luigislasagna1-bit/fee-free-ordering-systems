@@ -635,7 +635,24 @@
     "closedOnDay": "हम {day} को बंद रहते हैं — कृपया कोई दूसरी तारीख़ चुनें।",
     "jumpToNextOpen": "अगले खुले दिन पर जाएँ ({date})",
     "closedPickAnother": "चयनित तारीख़ को हम बंद रहते हैं — कृपया कोई दूसरा दिन चुनें।",
-    "emailRequired": "ईमेल आवश्यक है"
+    "emailRequired": "ईमेल आवश्यक है",
+    "adults": "वयस्क",
+    "children": "बच्चे",
+    "childDefinitionAge": "{n} साल तक की उम्र",
+    "childDefinitionHeight": "{n} सेमी तक की लंबाई",
+    "fewerLabel": "{label} घटाएँ",
+    "moreLabel": "{label} बढ़ाएँ",
+    "childSeating": "बच्चे",
+    "highChairQuestion": "क्या आपको हाई चेयर चाहिए?",
+    "strollerQuestion": "क्या आप स्ट्रॉलर ला रहे हैं?",
+    "allergiesLabel": "एलर्जी",
+    "allergiesPlaceholder": "हमें किसी भी एलर्जी या खान-पान संबंधी ज़रूरत के बारे में बताएँ",
+    "occasionLabel": "विशेष अवसर",
+    "occasionSelectPlaceholder": "कृपया विशेष अवसर बताएँ",
+    "occasionOtherPlaceholder": "बताएँ आप क्या मना रहे हैं",
+    "accessibilityLabel": "सुगम्यता",
+    "accessibilityPlaceholder": "जैसे व्हीलचेयर पहुँच, बिना सीढ़ी वाली बैठक",
+    "commentsPlaceholderGeneric": "टिप्पणियाँ (वैकल्पिक) - विशेष अनुरोध"
   },
   "kitchen": {
     "opensIn": "{time} में खुलेगा",
@@ -1059,7 +1076,12 @@
     "pnClose": "बंद करें",
     "pnCancel": "रद्द करें",
     "pnSaving": "सहेजा जा रहा है…",
-    "pnSaveSettings": "सेटिंग्स सहेजें"
+    "pnSaveSettings": "सेटिंग्स सहेजें",
+    "partyBreakdown": "{adults} वयस्क, {children} बच्चे",
+    "labelChildSeating": "बच्चों की सीटिंग",
+    "labelAllergies": "एलर्जी",
+    "labelOccasion": "अवसर",
+    "labelAccessibility": "सुलभता"
   },
   "admin": {
     "comingSoonPlaceholder": {
@@ -3400,7 +3422,33 @@
       "pageSubtitle": "बुकिंग और आरक्षण सेटिंग्स प्रबंधित करें",
       "tabReservations": "आरक्षण",
       "tabSettings": "सेटिंग्स",
-      "depositsSoonDesc": "नो-शो कम करने के लिए बुकिंग के समय जमा राशि लें। जल्द ही एक सशुल्क ऐड-ऑन के रूप में।"
+      "depositsSoonDesc": "नो-शो कम करने के लिए बुकिंग के समय जमा राशि लें। जल्द ही एक सशुल्क ऐड-ऑन के रूप में।",
+      "partyBreakdown": "{adults} वयस्क, {children} बच्चे",
+      "headingBookingQuestions": "बुकिंग संबंधी प्रश्न",
+      "descBookingQuestions": "बुकिंग करते समय अतिथियों से कुछ अतिरिक्त बातें पूछें। उत्तर रसोई में, आरक्षण सूची में, प्रिंट की गई पर्ची पर और आपके सूचना ईमेल में दिखाई देते हैं।",
+      "labelSplitParty": "वयस्कों और बच्चों की संख्या अलग-अलग पूछें",
+      "helpSplitParty": "एकल पार्टी-आकार चयनकर्ता की जगह वयस्कों और बच्चों के अलग-अलग काउंटर दिखाता है। कुल संख्या फिर भी आपकी न्यूनतम और अधिकतम अतिथि सीमा का पालन करती है।",
+      "labelChildDefinition": "बच्चा किसे माना जाए",
+      "helpChildDefinition": "बच्चों वाले काउंटर के नीचे एक छोटे संकेत के रूप में दिखता है, ताकि अतिथि समझ सकें कि आपका मतलब क्या है। उम्र या ऊँचाई की सीमा चुनें, या कोई संकेत न दिखाने के लिए 'कोई परिभाषा नहीं' चुनें।",
+      "optionChildDefNone": "कोई परिभाषा नहीं",
+      "optionChildDefAge": "निश्चित उम्र से कम",
+      "optionChildDefHeight": "निश्चित ऊँचाई से कम",
+      "labelChildDefYears": "बच्चे इससे कम",
+      "labelChildDefCm": "बच्चे इससे कम",
+      "unitYears": "साल",
+      "unitCm": "सेमी",
+      "labelAskChildSeating": "बेबी चेयर और प्रैम",
+      "helpAskChildSeating": "बच्चों के साथ बुकिंग करने वाले मेहमान बता सकते हैं कि उन्हें कितनी बेबी चेयर चाहिए और वे प्रैम ला रहे हैं या नहीं।",
+      "labelAskAllergies": "एलर्जी",
+      "helpAskAllergies": "बुकिंग फ़ॉर्म में एलर्जी और खान-पान संबंधी ज़रूरतों का एक वैकल्पिक प्रश्न जोड़ता है।",
+      "labelAskOccasion": "विशेष अवसर",
+      "helpAskOccasion": "मेहमान बता सकते हैं कि वे कोई खास मौका मना रहे हैं — जन्मदिन, सालगिरह या कारोबारी भोजन — ताकि आप पहले से तैयारी कर सकें।",
+      "labelAskAccessibility": "सुलभता संबंधी ज़रूरतें",
+      "helpAskAccessibility": "सुलभता संबंधी ज़रूरतों के बारे में एक वैकल्पिक प्रश्न जोड़ता है, जैसे बिना सीढ़ी वाली सीट या व्हीलचेयर से पहुंच।",
+      "labelChildSeating": "बच्चों की सीटिंग",
+      "labelAllergies": "एलर्जी",
+      "labelOccasion": "अवसर",
+      "labelAccessibility": "सुलभता"
     },
     "autopilotClient": {
       "pageTitle": "ऑटोपायलट",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(संलग्न ऑर्डर रसीद देखें)",
       "date": "तारीख",
       "time": "समय",
-      "confirmationCode": "पुष्टि कोड"
+      "confirmationCode": "पुष्टि कोड",
+      "adultsChildren": "{adults} वयस्क / {children} बच्चे",
+      "labelChildSeating": "बच्चों की सीटिंग",
+      "labelAllergies": "एलर्जी",
+      "labelOccasion": "अवसर",
+      "labelAccessibility": "सुलभता"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "आपके आरक्षण अनुरोध पर अपडेट",
       "badgeMissed": "छूट गया",
       "closedNote": "रेस्टोरेंट अभी बंद है — आपका रिज़र्वेशन अनुरोध कतार में है और रेस्टोरेंट खुलते ही आपको अपडेट मिल जाएगा।",
-      "closedNoteWithTime": "रेस्टोरेंट अभी बंद है — आपका रिज़र्वेशन अनुरोध कतार में है और रेस्टोरेंट खुलते ही आपको अपडेट मिल जाएगा। {openingTime} पर अपना ईमेल देखें।"
+      "closedNoteWithTime": "रेस्टोरेंट अभी बंद है — आपका रिज़र्वेशन अनुरोध कतार में है और रेस्टोरेंट खुलते ही आपको अपडेट मिल जाएगा। {openingTime} पर अपना ईमेल देखें।",
+      "partyBreakdown": "{adults} वयस्क, {children} बच्चे",
+      "labelChildSeating": "बच्चों की सीटिंग",
+      "labelAllergies": "एलर्जी",
+      "labelOccasion": "अवसर",
+      "labelAccessibility": "सुलभता"
     },
     "newReservation": {
       "preview": "नया रिज़र्वेशन — {dateTime} · {partySize} लोग",
@@ -5548,7 +5606,12 @@
       "subject": "नया आरक्षण — {restaurant}",
       "title": "नया आरक्षण {status}",
       "body": "{customer} ने {date} को {time} बजे {party} मेहमानों के लिए आरक्षण का अनुरोध किया।",
-      "confirmationCode": "पुष्टि कोड"
+      "confirmationCode": "पुष्टि कोड",
+      "badgeAdultsChildren": "{adults} वयस्क, {children} बच्चे",
+      "labelChildSeating": "बच्चों की सीटिंग",
+      "labelAllergies": "एलर्जी",
+      "labelOccasion": "अवसर",
+      "labelAccessibility": "सुलभता"
     },
     "passwordReset": {
       "preview": "अपना {brand} पासवर्ड रीसेट करें",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "आपका नाम",
       "saveFailed": "सहेजना विफल रहा ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "जन्मदिन",
+    "occasionAnniversary": "विवाह की सालगिरह",
+    "occasionDate": "रोमांटिक डेट",
+    "occasionFriends": "दोस्तों से मुलाकात",
+    "occasionFamily": "परिवार से मुलाकात",
+    "occasionBusiness": "बिज़नेस",
+    "occasionCelebration": "जश्न",
+    "occasionOther": "अन्य",
+    "highChair": "बेबी चेयर",
+    "stroller": "प्रैम"
   }
 }

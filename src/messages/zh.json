@@ -635,7 +635,24 @@
     "closedOnDay": "我们{day}不营业 — 请选择其他日期。",
     "jumpToNextOpen": "跳转到下一个营业日 ({date})",
     "closedPickAnother": "我们所选日期不营业 — 请选择其他日子。",
-    "emailRequired": "电子邮箱为必填项"
+    "emailRequired": "电子邮箱为必填项",
+    "adults": "成人",
+    "children": "儿童",
+    "childDefinitionAge": "{n} 岁及以下",
+    "childDefinitionHeight": "身高 {n} 厘米及以下",
+    "fewerLabel": "减少{label}",
+    "moreLabel": "增加{label}",
+    "childSeating": "儿童",
+    "highChairQuestion": "您需要儿童餐椅吗？",
+    "strollerQuestion": "您会携带婴儿车吗？",
+    "allergiesLabel": "过敏情况",
+    "allergiesPlaceholder": "请告知我们任何过敏或饮食需求",
+    "occasionLabel": "特殊场合",
+    "occasionSelectPlaceholder": "请选择特殊场合",
+    "occasionOtherPlaceholder": "请告诉我们您在庆祝什么",
+    "accessibilityLabel": "无障碍需求",
+    "accessibilityPlaceholder": "例如：轮椅通道、无台阶座位",
+    "commentsPlaceholderGeneric": "备注（可选）——特殊要求"
   },
   "kitchen": {
     "opensIn": "{time}后开门",
@@ -1059,7 +1076,12 @@
     "pnClose": "关闭",
     "pnCancel": "取消",
     "pnSaving": "正在保存…",
-    "pnSaveSettings": "保存设置"
+    "pnSaveSettings": "保存设置",
+    "partyBreakdown": "{adults} 位成人，{children} 位儿童",
+    "labelChildSeating": "儿童座椅",
+    "labelAllergies": "过敏情况",
+    "labelOccasion": "场合",
+    "labelAccessibility": "无障碍需求"
   },
   "admin": {
     "welcomeBack": "欢迎回来",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "管理预订及相关设置",
       "tabReservations": "预订",
       "tabSettings": "设置",
-      "depositsSoonDesc": "在客人预订时收取押金，减少爽约。即将作为付费附加功能推出。"
+      "depositsSoonDesc": "在客人预订时收取押金，减少爽约。即将作为付费附加功能推出。",
+      "partyBreakdown": "{adults} 位成人，{children} 位儿童",
+      "headingBookingQuestions": "预订提问",
+      "descBookingQuestions": "在客人预订时额外询问几个问题。答案会显示在厨房屏幕、预订列表、打印小票和您的通知邮件中。",
+      "labelSplitParty": "分别询问成人和儿童人数",
+      "helpSplitParty": "用独立的“成人”和“儿童”计数器取代单一的用餐人数选择器。总人数仍受您设置的最少和最多用餐人数限制。",
+      "labelChildDefinition": "儿童的界定标准",
+      "helpChildDefinition": "会以小提示的形式显示在“儿童”计数器下方，让客人了解您的标准。可选择年龄或身高上限，或选择“不设界定”以不显示提示。",
+      "optionChildDefNone": "不设界定",
+      "optionChildDefAge": "低于某个年龄",
+      "optionChildDefHeight": "低于某个身高",
+      "labelChildDefYears": "儿童指未满",
+      "labelChildDefCm": "儿童指未满",
+      "unitYears": "岁",
+      "unitCm": "厘米",
+      "labelAskChildSeating": "儿童餐椅和婴儿推车",
+      "helpAskChildSeating": "带儿童一起预订的顾客可以告知需要几张儿童餐椅，以及是否会携带婴儿推车。",
+      "labelAskAllergies": "过敏情况",
+      "helpAskAllergies": "在预订表单中添加一个关于过敏和饮食需求的可选问题。",
+      "labelAskOccasion": "特殊场合",
+      "helpAskOccasion": "让顾客告诉您他们要庆祝的场合——生日、纪念日、商务宴请——以便您提前准备。",
+      "labelAskAccessibility": "无障碍需求",
+      "helpAskAccessibility": "在预订表单中添加一个关于无障碍需求的可选问题，例如无台阶座位或轮椅通行。",
+      "labelChildSeating": "儿童座椅",
+      "labelAllergies": "过敏情况",
+      "labelOccasion": "场合",
+      "labelAccessibility": "无障碍需求"
     },
     "autopilotClient": {
       "pageTitle": "自动营销",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "（见附带的订单收据）",
       "date": "日期",
       "time": "时间",
-      "confirmationCode": "确认码"
+      "confirmationCode": "确认码",
+      "adultsChildren": "{adults} 位成人 / {children} 位儿童",
+      "labelChildSeating": "儿童座椅",
+      "labelAllergies": "过敏情况",
+      "labelOccasion": "场合",
+      "labelAccessibility": "无障碍需求"
     },
     "scheduling": {
       "asap": "尽快",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "您的预订申请最新状态",
       "badgeMissed": "已错过",
       "closedNote": "餐厅目前已打烊——您的预订请求已进入队列，餐厅一开门就会为您更新状态。",
-      "closedNoteWithTime": "餐厅目前已打烊——您的预订请求已排入队列，餐厅一开门就会通知您。请在 {openingTime} 查看您的邮箱。"
+      "closedNoteWithTime": "餐厅目前已打烊——您的预订请求已排入队列，餐厅一开门就会通知您。请在 {openingTime} 查看您的邮箱。",
+      "partyBreakdown": "{adults} 位成人，{children} 位儿童",
+      "labelChildSeating": "儿童座椅",
+      "labelAllergies": "过敏情况",
+      "labelOccasion": "场合",
+      "labelAccessibility": "无障碍需求"
     },
     "newReservation": {
       "preview": "新订座 — {dateTime} · {partySize} 位",
@@ -5548,7 +5606,12 @@
       "subject": "新预订 — {restaurant}",
       "title": "新预订 {status}",
       "body": "{customer} 申请了 {date} {time} {party} 人的预订。",
-      "confirmationCode": "确认码"
+      "confirmationCode": "确认码",
+      "badgeAdultsChildren": "{adults} 位成人，{children} 位儿童",
+      "labelChildSeating": "儿童座椅",
+      "labelAllergies": "过敏情况",
+      "labelOccasion": "场合",
+      "labelAccessibility": "无障碍需求"
     },
     "passwordReset": {
       "preview": "重置您的 {brand} 密码",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "您的姓名",
       "saveFailed": "保存失败（{status}）"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "生日",
+    "occasionAnniversary": "结婚纪念日",
+    "occasionDate": "浪漫约会",
+    "occasionFriends": "朋友聚会",
+    "occasionFamily": "家庭聚会",
+    "occasionBusiness": "商务宴请",
+    "occasionCelebration": "庆祝活动",
+    "occasionOther": "其他",
+    "highChair": "儿童餐椅",
+    "stroller": "婴儿车"
   }
 }

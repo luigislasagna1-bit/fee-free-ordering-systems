@@ -635,7 +635,24 @@
     "closedOnDay": "Мы не работаем в {day} — пожалуйста, выберите другую дату.",
     "jumpToNextOpen": "Перейти к следующему открытому дню ({date})",
     "closedPickAnother": "Мы не работаем в выбранную дату — пожалуйста, выберите другой день.",
-    "emailRequired": "Электронная почта обязательна"
+    "emailRequired": "Электронная почта обязательна",
+    "adults": "Взрослые",
+    "children": "Дети",
+    "childDefinitionAge": "До {n} лет",
+    "childDefinitionHeight": "Ростом до {n} см",
+    "fewerLabel": "Уменьшить: {label}",
+    "moreLabel": "Увеличить: {label}",
+    "childSeating": "Дети",
+    "highChairQuestion": "Нужен детский стульчик?",
+    "strollerQuestion": "Вы будете с коляской?",
+    "allergiesLabel": "Аллергии",
+    "allergiesPlaceholder": "Расскажите об аллергиях или особенностях питания",
+    "occasionLabel": "Особый повод",
+    "occasionSelectPlaceholder": "Укажите особый повод",
+    "occasionOtherPlaceholder": "Расскажите, что вы отмечаете",
+    "accessibilityLabel": "Доступная среда",
+    "accessibilityPlaceholder": "напр. доступ для инвалидной коляски, столик без ступеней",
+    "commentsPlaceholderGeneric": "Комментарии (необязательно) — особые пожелания"
   },
   "kitchen": {
     "opensIn": "Откроется через {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Закрыть",
     "pnCancel": "Отмена",
     "pnSaving": "Сохранение...",
-    "pnSaveSettings": "Сохранить настройки"
+    "pnSaveSettings": "Сохранить настройки",
+    "partyBreakdown": "Взрослых: {adults}, детей: {children}",
+    "labelChildSeating": "Детские места",
+    "labelAllergies": "Аллергии",
+    "labelOccasion": "Повод",
+    "labelAccessibility": "Доступная среда"
   },
   "admin": {
     "welcomeBack": "С возвращением",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Управляйте бронями и настройками бронирования",
       "tabReservations": "Брони",
       "tabSettings": "Настройки",
-      "depositsSoonDesc": "Берите депозит при бронировании, чтобы сократить неявки. Скоро как платное дополнение."
+      "depositsSoonDesc": "Берите депозит при бронировании, чтобы сократить неявки. Скоро как платное дополнение.",
+      "partyBreakdown": "Взрослых: {adults}, детей: {children}",
+      "headingBookingQuestions": "Вопросы при бронировании",
+      "descBookingQuestions": "Задайте гостям несколько дополнительных вопросов во время бронирования. Ответы появятся на кухне, в списке броней, в печатном чеке и в письме-уведомлении.",
+      "labelSplitParty": "Отдельно спрашивать количество взрослых и детей",
+      "helpSplitParty": "Заменяет общий выбор количества гостей отдельными счётчиками «Взрослые» и «Дети». Общее число гостей по-прежнему должно укладываться в заданные минимум и максимум.",
+      "labelChildDefinition": "Кто считается ребёнком",
+      "helpChildDefinition": "Показывается небольшой подсказкой под счётчиком «Дети», чтобы гости понимали, кого вы имеете в виду. Выберите ограничение по возрасту или росту либо «Без определения», чтобы не показывать подсказку.",
+      "optionChildDefNone": "Без определения",
+      "optionChildDefAge": "Младше указанного возраста",
+      "optionChildDefHeight": "Ниже указанного роста",
+      "labelChildDefYears": "Дети младше",
+      "labelChildDefCm": "Дети младше",
+      "unitYears": "лет",
+      "unitCm": "см",
+      "labelAskChildSeating": "Детские стульчики и коляски",
+      "helpAskChildSeating": "Гости, которые бронируют столик с детьми, смогут указать, сколько детских стульчиков им нужно и берут ли они с собой коляску.",
+      "labelAskAllergies": "Аллергии",
+      "helpAskAllergies": "Добавляет в форму бронирования необязательный вопрос об аллергиях и особенностях питания.",
+      "labelAskOccasion": "Особый повод",
+      "helpAskOccasion": "Позволяет гостям сообщить, что они отмечают событие — день рождения, годовщину, деловой обед, — чтобы вы могли подготовиться.",
+      "labelAskAccessibility": "Доступная среда",
+      "helpAskAccessibility": "Добавляет необязательный вопрос о доступной среде — например, нужен ли столик без ступеней или доступ для инвалидной коляски.",
+      "labelChildSeating": "Детские места",
+      "labelAllergies": "Аллергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Доступная среда"
     },
     "autopilotClient": {
       "pageTitle": "Автопилот",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(см. приложенный чек заказа)",
       "date": "Дата",
       "time": "Время",
-      "confirmationCode": "Код подтверждения"
+      "confirmationCode": "Код подтверждения",
+      "adultsChildren": "Взрослых: {adults} / Детей: {children}",
+      "labelChildSeating": "Детские места",
+      "labelAllergies": "Аллергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Доступная среда"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Обновление по вашему запросу на бронирование",
       "badgeMissed": "Пропущен",
       "closedNote": "Ресторан сейчас закрыт — ваш запрос на бронирование поставлен в очередь, и вы получите обновление, как только ресторан откроется.",
-      "closedNoteWithTime": "Ресторан сейчас закрыт — ваш запрос на бронирование поставлен в очередь, и вы получите обновление, как только ресторан откроется. Проверьте почту: {openingTime}."
+      "closedNoteWithTime": "Ресторан сейчас закрыт — ваш запрос на бронирование поставлен в очередь, и вы получите обновление, как только ресторан откроется. Проверьте почту: {openingTime}.",
+      "partyBreakdown": "Взрослых: {adults}, детей: {children}",
+      "labelChildSeating": "Детские места",
+      "labelAllergies": "Аллергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Доступная среда"
     },
     "newReservation": {
       "preview": "Новое бронирование — {dateTime} · гостей: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Новая бронь — {restaurant}",
       "title": "Новая бронь {status}",
       "body": "{customer} запросил бронь на {party} гостей {date} в {time}.",
-      "confirmationCode": "Код подтверждения"
+      "confirmationCode": "Код подтверждения",
+      "badgeAdultsChildren": "Взрослых: {adults}, детей: {children}",
+      "labelChildSeating": "Детские места",
+      "labelAllergies": "Аллергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Доступная среда"
     },
     "passwordReset": {
       "preview": "Сброс пароля для {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Ваше имя",
       "saveFailed": "Не удалось сохранить ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "День рождения",
+    "occasionAnniversary": "Годовщина свадьбы",
+    "occasionDate": "Романтическое свидание",
+    "occasionFriends": "Встреча с друзьями",
+    "occasionFamily": "Встреча с семьёй",
+    "occasionBusiness": "Деловая встреча",
+    "occasionCelebration": "Праздник",
+    "occasionOther": "Другое",
+    "highChair": "Детский стульчик",
+    "stroller": "Коляска"
   }
 }

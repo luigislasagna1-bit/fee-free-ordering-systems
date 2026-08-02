@@ -635,7 +635,24 @@
     "closedOnDay": "Oleme suletud sel päeval: {day} — palun valige teine kuupäev.",
     "jumpToNextOpen": "Mine järgmisele avatud päevale ({date})",
     "closedPickAnother": "Valitud kuupäeval oleme suletud — palun valige teine päev.",
-    "emailRequired": "E-posti aadress on kohustuslik"
+    "emailRequired": "E-posti aadress on kohustuslik",
+    "adults": "Täiskasvanud",
+    "children": "Lapsed",
+    "childDefinitionAge": "Kuni {n}-aastased",
+    "childDefinitionHeight": "Kuni {n} cm pikkused",
+    "fewerLabel": "Vähem {label}",
+    "moreLabel": "Rohkem {label}",
+    "childSeating": "Lapsed",
+    "highChairQuestion": "Kas vajate lastetooli?",
+    "strollerQuestion": "Kas tulete lapsevankriga?",
+    "allergiesLabel": "Allergiad",
+    "allergiesPlaceholder": "Andke teada allergiatest või toitumisvajadustest",
+    "occasionLabel": "Eriline sündmus",
+    "occasionSelectPlaceholder": "Palun märkige eriline sündmus",
+    "occasionOtherPlaceholder": "Kirjutage, mida tähistate",
+    "accessibilityLabel": "Ligipääsetavus",
+    "accessibilityPlaceholder": "nt ratastooliga ligipääs, trepivaba istekoht",
+    "commentsPlaceholderGeneric": "Kommentaarid (valikuline) — erisoovid"
   },
   "kitchen": {
     "opensIn": "Avatakse {time} pärast",
@@ -1059,7 +1076,12 @@
     "pnClose": "Sulge",
     "pnCancel": "Tühista",
     "pnSaving": "Salvestan…",
-    "pnSaveSettings": "Salvesta seaded"
+    "pnSaveSettings": "Salvesta seaded",
+    "partyBreakdown": "{adults} täiskasvanut, {children} last",
+    "labelChildSeating": "Laste istekohad",
+    "labelAllergies": "Allergiad",
+    "labelOccasion": "Sündmus",
+    "labelAccessibility": "Ligipääsetavus"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Halda broneeringuid ja seadeid",
       "tabReservations": "Broneeringud",
       "tabSettings": "Seaded",
-      "depositsSoonDesc": "Võtke broneerimisel tagatisraha, et vähendada kohale ilmumata jätmisi. Peagi tasulise lisamoodulina."
+      "depositsSoonDesc": "Võtke broneerimisel tagatisraha, et vähendada kohale ilmumata jätmisi. Peagi tasulise lisamoodulina.",
+      "partyBreakdown": "{adults} täiskasvanut, {children} last",
+      "headingBookingQuestions": "Broneerimisküsimused",
+      "descBookingQuestions": "Küsi külalistelt broneerimise ajal paar lisaküsimust. Vastused kuvatakse köögis, broneeringute loendis, prinditud kviitungil ja sinu teavituse e-kirjas.",
+      "labelSplitParty": "Küsi täiskasvanute ja laste arvu eraldi",
+      "helpSplitParty": "Asendab ühtse seltskonna suuruse valiku eraldi loenduritega Täiskasvanud ja Lapsed. Külaliste koguarv peab endiselt jääma sinu määratud miinimumi ja maksimumi piiresse.",
+      "labelChildDefinition": "Keda loetakse lapseks",
+      "helpChildDefinition": "Kuvatakse väikese vihjena laste loenduri all, et külalised teaksid, keda sa lapseks pead. Vali vanuse- või pikkusepiir või valik Määratlus puudub, kui vihjet ei soovi kuvada.",
+      "optionChildDefNone": "Määratlus puudub",
+      "optionChildDefAge": "Alla teatud vanuse",
+      "optionChildDefHeight": "Alla teatud pikkuse",
+      "labelChildDefYears": "Lapsed on alla",
+      "labelChildDefCm": "Lapsed on alla",
+      "unitYears": "aastat",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Lastetoolid ja lapsevankrid",
+      "helpAskChildSeating": "Lastega broneerivad külalised saavad märkida, mitu lastetooli nad vajavad ja kas neil on kaasas lapsevanker.",
+      "labelAskAllergies": "Allergiad",
+      "helpAskAllergies": "Lisab broneerimisvormile valikulise küsimuse allergiate ja toitumisvajaduste kohta.",
+      "labelAskOccasion": "Eriline sündmus",
+      "helpAskOccasion": "Külalised saavad teada anda, et tähistavad midagi erilist – sünnipäeva, aastapäeva või ärilõunat – ja te saate selleks valmistuda.",
+      "labelAskAccessibility": "Ligipääsuvajadused",
+      "helpAskAccessibility": "Lisab valikulise küsimuse ligipääsuvajaduste kohta, näiteks trepivaba istekoht või ratastooliga ligipääs.",
+      "labelChildSeating": "Laste istekohad",
+      "labelAllergies": "Allergiad",
+      "labelOccasion": "Sündmus",
+      "labelAccessibility": "Ligipääsetavus"
     },
     "autopilotClient": {
       "pageTitle": "Autopiloot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(vt lisatud tellimuse kviitung)",
       "date": "Kuupäev",
       "time": "Kellaaeg",
-      "confirmationCode": "Kinnituskood"
+      "confirmationCode": "Kinnituskood",
+      "adultsChildren": "{adults} täiskasvanut / {children} last",
+      "labelChildSeating": "Laste istekohad",
+      "labelAllergies": "Allergiad",
+      "labelOccasion": "Sündmus",
+      "labelAccessibility": "Ligipääsetavus"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Värskendus teie reserveerimise päringu kohta",
       "badgeMissed": "Vastamata",
       "closedNote": "Restoran on praegu suletud — sinu broneeringusoov on järjekorras ja saadame sulle teate kohe, kui restoran avaneb.",
-      "closedNoteWithTime": "Restoran on praegu suletud — sinu broneeringusoov on järjekorras ja saadame sulle teate kohe, kui restoran avaneb. Vaata oma e-posti: {openingTime}."
+      "closedNoteWithTime": "Restoran on praegu suletud — sinu broneeringusoov on järjekorras ja saadame sulle teate kohe, kui restoran avaneb. Vaata oma e-posti: {openingTime}.",
+      "partyBreakdown": "{adults} täiskasvanut, {children} last",
+      "labelChildSeating": "Laste istekohad",
+      "labelAllergies": "Allergiad",
+      "labelOccasion": "Sündmus",
+      "labelAccessibility": "Ligipääsetavus"
     },
     "newReservation": {
       "preview": "Uus broneering — {dateTime} · külalisi: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Uus broneering — {restaurant}",
       "title": "Uus broneering {status}",
       "body": "{customer} taotles broneeringut {party} külalisele {date} kell {time}.",
-      "confirmationCode": "Kinnituskood"
+      "confirmationCode": "Kinnituskood",
+      "badgeAdultsChildren": "{adults} täiskasvanut, {children} last",
+      "labelChildSeating": "Laste istekohad",
+      "labelAllergies": "Allergiad",
+      "labelOccasion": "Sündmus",
+      "labelAccessibility": "Ligipääsetavus"
     },
     "passwordReset": {
       "preview": "Lähtesta oma {brand} parool",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Sinu nimi",
       "saveFailed": "Salvestamine ebaõnnestus ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Sünnipäev",
+    "occasionAnniversary": "Pulma-aastapäev",
+    "occasionDate": "Romantiline kohting",
+    "occasionFriends": "Kohtumine sõpradega",
+    "occasionFamily": "Kohtumine perega",
+    "occasionBusiness": "Ärikohtumine",
+    "occasionCelebration": "Tähistamine",
+    "occasionOther": "Muu",
+    "highChair": "Lastetool",
+    "stroller": "Lapsevanker"
   }
 }

@@ -635,7 +635,24 @@
     "closedOnDay": "Esam slēgti šajā dienā: {day} — lūdzu, izvēlieties citu datumu.",
     "jumpToNextOpen": "Pāriet uz nākamo atvērto dienu ({date})",
     "closedPickAnother": "Izvēlētajā datumā esam slēgti — lūdzu, izvēlieties citu dienu.",
-    "emailRequired": "E-pasts ir obligāts"
+    "emailRequired": "E-pasts ir obligāts",
+    "adults": "Pieaugušie",
+    "children": "Bērni",
+    "childDefinitionAge": "Līdz {n} gadu vecumam",
+    "childDefinitionHeight": "Līdz {n} cm augumā",
+    "fewerLabel": "Mazāk: {label}",
+    "moreLabel": "Vairāk: {label}",
+    "childSeating": "Bērni",
+    "highChairQuestion": "Vai jums nepieciešams bērnu krēsliņš?",
+    "strollerQuestion": "Vai ņemsiet līdzi bērnu ratiņus?",
+    "allergiesLabel": "Alerģijas",
+    "allergiesPlaceholder": "Pastāstiet par alerģijām vai īpašām uztura vajadzībām",
+    "occasionLabel": "Īpašs notikums",
+    "occasionSelectPlaceholder": "Lūdzu, norādiet īpašo notikumu",
+    "occasionOtherPlaceholder": "Pastāstiet, ko svinat",
+    "accessibilityLabel": "Vides pieejamība",
+    "accessibilityPlaceholder": "piem., piekļuve ar ratiņkrēslu, sēdvieta bez pakāpieniem",
+    "commentsPlaceholderGeneric": "Komentāri (neobligāti) — īpaši lūgumi"
   },
   "kitchen": {
     "opensIn": "Atvērsies pēc {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Aizvērt",
     "pnCancel": "Atcelt",
     "pnSaving": "Saglabā…",
-    "pnSaveSettings": "Saglabāt iestatījumus"
+    "pnSaveSettings": "Saglabāt iestatījumus",
+    "partyBreakdown": "Pieaugušie: {adults}, bērni: {children}",
+    "labelChildSeating": "Bērnu sēdvietas",
+    "labelAllergies": "Alerģijas",
+    "labelOccasion": "Īpašs gadījums",
+    "labelAccessibility": "Pieejamība"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Pārvaldīt rezervācijas un to iestatījumus",
       "tabReservations": "Rezervācijas",
       "tabSettings": "Iestatījumi",
-      "depositsSoonDesc": "Iekasējiet depozītu rezervēšanas laikā, lai samazinātu neierašanos. Drīzumā kā maksas papildinājums."
+      "depositsSoonDesc": "Iekasējiet depozītu rezervēšanas laikā, lai samazinātu neierašanos. Drīzumā kā maksas papildinājums.",
+      "partyBreakdown": "Pieaugušie: {adults}, bērni: {children}",
+      "headingBookingQuestions": "Rezervācijas jautājumi",
+      "descBookingQuestions": "Uzdodiet viesiem dažus papildu jautājumus rezervēšanas laikā. Atbildes redzamas virtuvē, rezervāciju sarakstā, uz izdrukātā talona un jūsu paziņojuma e-pastā.",
+      "labelSplitParty": "Jautāt pieaugušo un bērnu skaitu atsevišķi",
+      "helpSplitParty": "Aizstāj vienu kopīgu viesu skaita izvēlni ar atsevišķiem pieaugušo un bērnu skaitītājiem. Kopējais skaits joprojām atbilst jūsu noteiktajam minimālajam un maksimālajam viesu skaitam.",
+      "labelChildDefinition": "Kurš tiek uzskatīts par bērnu",
+      "helpChildDefinition": "Tiek rādīts kā neliels paskaidrojums zem bērnu skaitītāja, lai viesiem būtu skaidrs, ko ar to domājat. Izvēlieties vecuma vai auguma ierobežojumu vai arī variantu Bez definīcijas, lai paskaidrojumu nerādītu.",
+      "optionChildDefNone": "Bez definīcijas",
+      "optionChildDefAge": "Līdz noteiktam vecumam",
+      "optionChildDefHeight": "Līdz noteiktam augumam",
+      "labelChildDefYears": "Bērni līdz",
+      "labelChildDefCm": "Bērni līdz",
+      "unitYears": "gadiem",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Bērnu krēsliņi un ratiņi",
+      "helpAskChildSeating": "Viesi, kas rezervē galdiņu ar bērniem, var norādīt, cik bērnu krēsliņu viņiem nepieciešams un vai viņi ņems līdzi ratiņus.",
+      "labelAskAllergies": "Alerģijas",
+      "helpAskAllergies": "Pievieno rezervācijas formai neobligātu jautājumu par alerģijām un īpašām uztura vajadzībām.",
+      "labelAskOccasion": "Īpašs notikums",
+      "helpAskOccasion": "Ļauj viesiem pastāstīt, ka viņi kaut ko svin — dzimšanas dienu, jubileju vai biznesa vakariņas —, lai jūs varētu sagatavoties.",
+      "labelAskAccessibility": "Pieejamības vajadzības",
+      "helpAskAccessibility": "Pievieno neobligātu jautājumu par pieejamības vajadzībām, piemēram, sēdvietu bez pakāpieniem vai piekļuvi ar ratiņkrēslu.",
+      "labelChildSeating": "Bērnu sēdvietas",
+      "labelAllergies": "Alerģijas",
+      "labelOccasion": "Īpašs gadījums",
+      "labelAccessibility": "Pieejamība"
     },
     "autopilotClient": {
       "pageTitle": "Autopilots",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(skatiet pievienoto pasūtījuma čeku)",
       "date": "Datums",
       "time": "Laiks",
-      "confirmationCode": "Apstiprinājuma kods"
+      "confirmationCode": "Apstiprinājuma kods",
+      "adultsChildren": "Pieaugušie: {adults} / Bērni: {children}",
+      "labelChildSeating": "Bērnu sēdvietas",
+      "labelAllergies": "Alerģijas",
+      "labelOccasion": "Īpašs gadījums",
+      "labelAccessibility": "Pieejamība"
     },
     "scheduling": {
       "asap": "TŪLĪT",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Informācija par jūsu rezervācijas pieprasījumu",
       "badgeMissed": "Nokavēts",
       "closedNote": "Restorāns šobrīd ir slēgts — jūsu rezervācijas pieprasījums ir rindā, un jūs saņemsiet ziņu, tiklīdz restorāns atvērsies.",
-      "closedNoteWithTime": "Restorāns šobrīd ir slēgts — jūsu rezervācijas pieprasījums ir rindā, un jūs saņemsiet ziņu, tiklīdz restorāns atvērsies. Pārbaudiet savu e-pastu: {openingTime}."
+      "closedNoteWithTime": "Restorāns šobrīd ir slēgts — jūsu rezervācijas pieprasījums ir rindā, un jūs saņemsiet ziņu, tiklīdz restorāns atvērsies. Pārbaudiet savu e-pastu: {openingTime}.",
+      "partyBreakdown": "Pieaugušie: {adults}, bērni: {children}",
+      "labelChildSeating": "Bērnu sēdvietas",
+      "labelAllergies": "Alerģijas",
+      "labelOccasion": "Īpašs gadījums",
+      "labelAccessibility": "Pieejamība"
     },
     "newReservation": {
       "preview": "Jauna rezervācija — {dateTime} · viesu skaits: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Jauna rezervācija — {restaurant}",
       "title": "Jauna rezervācija {status}",
       "body": "{customer} pieprasīja rezervāciju {party} viesiem {date} plkst. {time}.",
-      "confirmationCode": "Apstiprinājuma kods"
+      "confirmationCode": "Apstiprinājuma kods",
+      "badgeAdultsChildren": "Pieaugušie: {adults}, bērni: {children}",
+      "labelChildSeating": "Bērnu sēdvietas",
+      "labelAllergies": "Alerģijas",
+      "labelOccasion": "Īpašs gadījums",
+      "labelAccessibility": "Pieejamība"
     },
     "passwordReset": {
       "preview": "Atiestatiet savu {brand} paroli",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Jūsu vārds",
       "saveFailed": "Saglabāšana neizdevās ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Dzimšanas diena",
+    "occasionAnniversary": "Kāzu gadadiena",
+    "occasionDate": "Romantisks randiņš",
+    "occasionFriends": "Tikšanās ar draugiem",
+    "occasionFamily": "Tikšanās ar ģimeni",
+    "occasionBusiness": "Lietišķa tikšanās",
+    "occasionCelebration": "Svinības",
+    "occasionOther": "Cits",
+    "highChair": "Bērnu krēsliņš",
+    "stroller": "Bērnu ratiņi"
   }
 }

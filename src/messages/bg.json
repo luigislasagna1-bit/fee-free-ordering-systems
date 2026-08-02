@@ -635,7 +635,24 @@
     "closedOnDay": "Затворено е в {day} — моля, изберете друга дата.",
     "jumpToNextOpen": "Прескочи към следващия отворен ден ({date})",
     "closedPickAnother": "Затворено е на избраната дата — моля, изберете друг ден.",
-    "emailRequired": "Имейлът е задължителен"
+    "emailRequired": "Имейлът е задължителен",
+    "adults": "Възрастни",
+    "children": "Деца",
+    "childDefinitionAge": "До {n} години",
+    "childDefinitionHeight": "До {n} см височина",
+    "fewerLabel": "По-малко {label}",
+    "moreLabel": "Повече {label}",
+    "childSeating": "Деца",
+    "highChairQuestion": "Имаш ли нужда от столче за хранене?",
+    "strollerQuestion": "Ще дойдеш ли с детска количка?",
+    "allergiesLabel": "Алергии",
+    "allergiesPlaceholder": "Кажи ни за алергии или специални хранителни нужди",
+    "occasionLabel": "Специален повод",
+    "occasionSelectPlaceholder": "Моля, посочете специалния повод",
+    "occasionOtherPlaceholder": "Кажете ни какво празнувате",
+    "accessibilityLabel": "Достъпност",
+    "accessibilityPlaceholder": "напр. достъп с инвалидна количка, места без стъпала",
+    "commentsPlaceholderGeneric": "Коментари (по желание) — специални желания"
   },
   "kitchen": {
     "opensIn": "Отваря след {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Затвори",
     "pnCancel": "Отказ",
     "pnSaving": "Запазване…",
-    "pnSaveSettings": "Запази настройките"
+    "pnSaveSettings": "Запази настройките",
+    "partyBreakdown": "{adults} възрастни, {children} деца",
+    "labelChildSeating": "Настаняване на деца",
+    "labelAllergies": "Алергии",
+    "labelOccasion": "Повод",
+    "labelAccessibility": "Достъпност"
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Управлявай резервации и настройки",
       "tabReservations": "Резервации",
       "tabSettings": "Настройки",
-      "depositsSoonDesc": "Събирайте депозит при резервация, за да намалите неявяванията. Скоро като платена добавка."
+      "depositsSoonDesc": "Събирайте депозит при резервация, за да намалите неявяванията. Скоро като платена добавка.",
+      "partyBreakdown": "{adults} възрастни, {children} деца",
+      "headingBookingQuestions": "Въпроси при резервация",
+      "descBookingQuestions": "Задавайте на гостите няколко допълнителни въпроса, докато резервират. Отговорите се показват в кухнята, в списъка с резервации, на разпечатаната бележка и в имейла ви с известие.",
+      "labelSplitParty": "Питайте отделно за възрастни и деца",
+      "helpSplitParty": "Заменя общия избор на брой гости с отделни броячи за възрастни и деца. Общият брой продължава да спазва зададените от вас минимум и максимум гости.",
+      "labelChildDefinition": "Кой се брои за дете",
+      "helpChildDefinition": "Показва се като малка подсказка под брояча за деца, за да знаят гостите какво имате предвид. Изберете възрастова граница или граница за височина, или „Без определение“, за да не се показва подсказка.",
+      "optionChildDefNone": "Без определение",
+      "optionChildDefAge": "Под определена възраст",
+      "optionChildDefHeight": "Под определена височина",
+      "labelChildDefYears": "Децата са под",
+      "labelChildDefCm": "Децата са под",
+      "unitYears": "години",
+      "unitCm": "см",
+      "labelAskChildSeating": "Столчета за хранене и детски колички",
+      "helpAskChildSeating": "Гостите, които резервират с деца, могат да ви кажат от колко столчета за хранене имат нужда и дали ще дойдат с детска количка.",
+      "labelAskAllergies": "Алергии",
+      "helpAskAllergies": "Добавя незадължителен въпрос за алергии и хранителни нужди във формата за резервация.",
+      "labelAskOccasion": "Специален повод",
+      "helpAskOccasion": "Позволява на гостите да ви кажат, че празнуват — рожден ден, годишнина, бизнес вечеря — за да можете да се подготвите.",
+      "labelAskAccessibility": "Нужди за достъпност",
+      "helpAskAccessibility": "Добавя незадължителен въпрос за нужди за достъпност, например места без стъпала или достъп с инвалидна количка.",
+      "labelChildSeating": "Настаняване на деца",
+      "labelAllergies": "Алергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Достъпност"
     },
     "autopilotClient": {
       "pageTitle": "Автопилот",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(виж приложената касова бележка)",
       "date": "Дата",
       "time": "Час",
-      "confirmationCode": "Код за потвърждение"
+      "confirmationCode": "Код за потвърждение",
+      "adultsChildren": "{adults} възрастни / {children} деца",
+      "labelChildSeating": "Настаняване на деца",
+      "labelAllergies": "Алергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Достъпност"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Актуализация относно Вашата заявка за резервация",
       "badgeMissed": "Пропуснато",
       "closedNote": "В момента ресторантът е затворен — заявката ви за резервация е в изчакване и ще получите известие веднага щом отворят.",
-      "closedNoteWithTime": "В момента ресторантът е затворен — заявката ви за резервация е в изчакване и ще получите известие веднага щом отворят. Проверете имейла си в {openingTime}."
+      "closedNoteWithTime": "В момента ресторантът е затворен — заявката ви за резервация е в изчакване и ще получите известие веднага щом отворят. Проверете имейла си в {openingTime}.",
+      "partyBreakdown": "{adults} възрастни, {children} деца",
+      "labelChildSeating": "Настаняване на деца",
+      "labelAllergies": "Алергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Достъпност"
     },
     "newReservation": {
       "preview": "Нова резервация — {dateTime} · гости: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Нова резервация — {restaurant}",
       "title": "Нова резервация {status}",
       "body": "{customer} поиска резервация за {party} гости на {date} в {time}.",
-      "confirmationCode": "Код за потвърждение"
+      "confirmationCode": "Код за потвърждение",
+      "badgeAdultsChildren": "{adults} възрастни, {children} деца",
+      "labelChildSeating": "Настаняване на деца",
+      "labelAllergies": "Алергии",
+      "labelOccasion": "Повод",
+      "labelAccessibility": "Достъпност"
     },
     "passwordReset": {
       "preview": "Нулирайте паролата си за {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Твоето име",
       "saveFailed": "Неуспешно запазване ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Рожден ден",
+    "occasionAnniversary": "Годишнина от сватбата",
+    "occasionDate": "Романтична среща",
+    "occasionFriends": "Среща с приятели",
+    "occasionFamily": "Семейна среща",
+    "occasionBusiness": "Бизнес",
+    "occasionCelebration": "Тържество",
+    "occasionOther": "Друго",
+    "highChair": "Детско столче",
+    "stroller": "Детска количка"
   }
 }

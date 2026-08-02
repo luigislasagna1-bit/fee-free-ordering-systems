@@ -635,7 +635,24 @@
     "closedOnDay": "เราปิดทำการใน{day} — กรุณาเลือกวันที่อื่น",
     "jumpToNextOpen": "ไปยังวันเปิดทำการถัดไป ({date})",
     "closedPickAnother": "เราปิดทำการในวันที่ที่เลือก — กรุณาเลือกวันอื่น",
-    "emailRequired": "จำเป็นต้องกรอกอีเมล"
+    "emailRequired": "จำเป็นต้องกรอกอีเมล",
+    "adults": "ผู้ใหญ่",
+    "children": "เด็ก",
+    "childDefinitionAge": "อายุไม่เกิน {n} ปี",
+    "childDefinitionHeight": "สูงไม่เกิน {n} ซม.",
+    "fewerLabel": "ลดจำนวน{label}",
+    "moreLabel": "เพิ่มจำนวน{label}",
+    "childSeating": "เด็ก",
+    "highChairQuestion": "ต้องการเก้าอี้สูงสำหรับเด็กหรือไม่?",
+    "strollerQuestion": "จะนำรถเข็นเด็กมาด้วยหรือไม่?",
+    "allergiesLabel": "การแพ้อาหาร",
+    "allergiesPlaceholder": "โปรดแจ้งอาการแพ้หรือความต้องการพิเศษด้านอาหาร",
+    "occasionLabel": "โอกาสพิเศษ",
+    "occasionSelectPlaceholder": "โปรดระบุโอกาสพิเศษ",
+    "occasionOtherPlaceholder": "บอกเราว่าคุณกำลังฉลองอะไร",
+    "accessibilityLabel": "รองรับผู้พิการ",
+    "accessibilityPlaceholder": "เช่น ทางเข้าสำหรับวีลแชร์ ที่นั่งที่ไม่มีขั้นบันได",
+    "commentsPlaceholderGeneric": "หมายเหตุ (ไม่บังคับ) — คำขอพิเศษ"
   },
   "kitchen": {
     "opensIn": "เปิดในอีก {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "ปิด",
     "pnCancel": "ยกเลิก",
     "pnSaving": "กำลังบันทึก…",
-    "pnSaveSettings": "บันทึกการตั้งค่า"
+    "pnSaveSettings": "บันทึกการตั้งค่า",
+    "partyBreakdown": "ผู้ใหญ่ {adults} คน, เด็ก {children} คน",
+    "labelChildSeating": "ที่นั่งเด็ก",
+    "labelAllergies": "การแพ้อาหาร",
+    "labelOccasion": "โอกาส",
+    "labelAccessibility": "การเข้าถึง"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "จัดการการจองและการตั้งค่า",
       "tabReservations": "การจอง",
       "tabSettings": "การตั้งค่า",
-      "depositsSoonDesc": "เก็บมัดจำเมื่อลูกค้าจองเพื่อลดการไม่มาตามนัด เร็วๆ นี้ในรูปแบบส่วนเสริมแบบชำระเงิน"
+      "depositsSoonDesc": "เก็บมัดจำเมื่อลูกค้าจองเพื่อลดการไม่มาตามนัด เร็วๆ นี้ในรูปแบบส่วนเสริมแบบชำระเงิน",
+      "partyBreakdown": "ผู้ใหญ่ {adults} คน, เด็ก {children} คน",
+      "headingBookingQuestions": "คำถามในการจอง",
+      "descBookingQuestions": "สอบถามข้อมูลเพิ่มเติมจากลูกค้าขณะทำการจอง คำตอบจะแสดงในครัว ในรายการการจอง บนสลิปที่พิมพ์ และในอีเมลแจ้งเตือนของคุณ",
+      "labelSplitParty": "ถามจำนวนผู้ใหญ่และเด็กแยกกัน",
+      "helpSplitParty": "เปลี่ยนจากช่องเลือกจำนวนคนช่องเดียว เป็นตัวนับผู้ใหญ่และเด็กแยกกัน โดยยอดรวมยังคงเป็นไปตามจำนวนแขกขั้นต่ำและสูงสุดที่คุณกำหนดไว้",
+      "labelChildDefinition": "ใครนับเป็นเด็ก",
+      "helpChildDefinition": "แสดงเป็นคำอธิบายสั้น ๆ ใต้ตัวนับเด็ก เพื่อให้ลูกค้าเข้าใจว่าคุณหมายถึงแบบไหน เลือกเกณฑ์อายุหรือส่วนสูง หรือเลือกไม่ระบุเกณฑ์ เพื่อไม่แสดงคำอธิบาย",
+      "optionChildDefNone": "ไม่ระบุเกณฑ์",
+      "optionChildDefAge": "ต่ำกว่าอายุที่กำหนด",
+      "optionChildDefHeight": "ต่ำกว่าส่วนสูงที่กำหนด",
+      "labelChildDefYears": "เด็กคือผู้ที่ต่ำกว่า",
+      "labelChildDefCm": "เด็กคือผู้ที่ต่ำกว่า",
+      "unitYears": "ปี",
+      "unitCm": "ซม.",
+      "labelAskChildSeating": "เก้าอี้เด็กและรถเข็นเด็ก",
+      "helpAskChildSeating": "ลูกค้าที่จองโต๊ะพร้อมเด็กสามารถแจ้งได้ว่าต้องการเก้าอี้เด็กกี่ตัว และจะนำรถเข็นเด็กมาด้วยหรือไม่",
+      "labelAskAllergies": "การแพ้อาหาร",
+      "helpAskAllergies": "เพิ่มคำถามที่ไม่บังคับเกี่ยวกับอาการแพ้อาหารและความต้องการพิเศษด้านอาหารลงในแบบฟอร์มการจอง",
+      "labelAskOccasion": "โอกาสพิเศษ",
+      "helpAskOccasion": "ให้ลูกค้าแจ้งได้ว่ากำลังมาฉลองโอกาสพิเศษ เช่น วันเกิด วันครบรอบ หรือมื้ออาหารธุรกิจ เพื่อให้คุณเตรียมต้อนรับได้",
+      "labelAskAccessibility": "ความต้องการด้านการเข้าถึง",
+      "helpAskAccessibility": "เพิ่มคำถามที่ไม่บังคับเกี่ยวกับความต้องการด้านการเข้าถึง เช่น ที่นั่งที่ไม่มีขั้นบันได หรือทางเข้าสำหรับรถเข็นวีลแชร์",
+      "labelChildSeating": "ที่นั่งเด็ก",
+      "labelAllergies": "การแพ้อาหาร",
+      "labelOccasion": "โอกาส",
+      "labelAccessibility": "การเข้าถึง"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(ดูใบเสร็จออเดอร์แนบ)",
       "date": "วันที่",
       "time": "เวลา",
-      "confirmationCode": "รหัสยืนยัน"
+      "confirmationCode": "รหัสยืนยัน",
+      "adultsChildren": "ผู้ใหญ่ {adults} คน / เด็ก {children} คน",
+      "labelChildSeating": "ที่นั่งเด็ก",
+      "labelAllergies": "การแพ้อาหาร",
+      "labelOccasion": "โอกาส",
+      "labelAccessibility": "การเข้าถึง"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "อัปเดตเกี่ยวกับคำขอจองของคุณ",
       "badgeMissed": "พลาด",
       "closedNote": "ขณะนี้ร้านปิดอยู่ — คำขอจองโต๊ะของคุณอยู่ในคิวแล้ว และคุณจะได้รับการอัปเดตทันทีที่ร้านเปิด",
-      "closedNoteWithTime": "ขณะนี้ร้านปิดอยู่ — คำขอจองโต๊ะของคุณเข้าคิวไว้แล้ว และคุณจะได้รับข่าวทันทีที่ร้านเปิด โปรดตรวจสอบอีเมลของคุณเมื่อถึงเวลา {openingTime}"
+      "closedNoteWithTime": "ขณะนี้ร้านปิดอยู่ — คำขอจองโต๊ะของคุณเข้าคิวไว้แล้ว และคุณจะได้รับข่าวทันทีที่ร้านเปิด โปรดตรวจสอบอีเมลของคุณเมื่อถึงเวลา {openingTime}",
+      "partyBreakdown": "ผู้ใหญ่ {adults} คน, เด็ก {children} คน",
+      "labelChildSeating": "ที่นั่งเด็ก",
+      "labelAllergies": "การแพ้อาหาร",
+      "labelOccasion": "โอกาส",
+      "labelAccessibility": "การเข้าถึง"
     },
     "newReservation": {
       "preview": "การจองใหม่ — {dateTime} · {partySize} ท่าน",
@@ -5548,7 +5606,12 @@
       "subject": "การจองใหม่ — {restaurant}",
       "title": "การจองใหม่ {status}",
       "body": "{customer} ขอจองสำหรับ {party} คน วันที่ {date} เวลา {time}",
-      "confirmationCode": "รหัสยืนยัน"
+      "confirmationCode": "รหัสยืนยัน",
+      "badgeAdultsChildren": "ผู้ใหญ่ {adults} คน, เด็ก {children} คน",
+      "labelChildSeating": "ที่นั่งเด็ก",
+      "labelAllergies": "การแพ้อาหาร",
+      "labelOccasion": "โอกาส",
+      "labelAccessibility": "การเข้าถึง"
     },
     "passwordReset": {
       "preview": "รีเซ็ตรหัสผ่าน {brand} ของคุณ",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "ชื่อของคุณ",
       "saveFailed": "บันทึกไม่สำเร็จ ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "วันเกิด",
+    "occasionAnniversary": "วันครบรอบแต่งงาน",
+    "occasionDate": "เดตโรแมนติก",
+    "occasionFriends": "นัดพบเพื่อน",
+    "occasionFamily": "พบปะครอบครัว",
+    "occasionBusiness": "ธุรกิจ",
+    "occasionCelebration": "งานฉลอง",
+    "occasionOther": "อื่น ๆ",
+    "highChair": "เก้าอี้เด็ก",
+    "stroller": "รถเข็นเด็ก"
   }
 }

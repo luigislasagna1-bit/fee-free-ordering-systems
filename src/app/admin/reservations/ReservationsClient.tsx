@@ -9,6 +9,8 @@ import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { formatTime, type HoursFormat } from "@/lib/format-time";
 import { escCsv } from "@/lib/csv";
+import { formatDetailRows, readReservationDetails, occasionKey } from "@/lib/reservation-details";
+import { HelpTip } from "@/components/HelpTip";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -17,6 +19,8 @@ interface Reservation {
   customerName: string; customerEmail?: string; customerPhone?: string;
   partySize: number; date: string; time: string; durationMinutes: number;
   notes?: string; staffNotes?: string; depositPaid: boolean; depositAmount: number;
+  /** Smart buttons (Fabrizio cmsajnvkm) — null on legacy bookings. */
+  adultsCount?: number | null; childrenCount?: number | null; details?: unknown;
   table?: { id: string; name: string; section?: string };
   createdAt: string;
 }
@@ -26,6 +30,14 @@ interface ResSettings {
   autoConfirm: boolean; allowPreOrder: boolean; holdMinutes: number;
   requireDeposit: boolean; depositAmount: number;
   cancellationPolicy: string; reservationHours: string; blackoutDates: string;
+  /** "Smart buttons" booking questions (Fabrizio cmsajnvkm) — all default OFF. */
+  splitAdultsChildren: boolean;
+  childDefinitionMode: string;
+  childDefinitionValue: number | null;
+  askChildSeating: boolean;
+  askAllergies: boolean;
+  askOccasion: boolean;
+  askAccessibility: boolean;
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -158,6 +170,10 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
   const t = useTranslations("admin.reservationsList");
   // Reuse the existing "Export CSV" label — same key CustomersClient uses.
   const tCsv = useTranslations("admin.customersList");
+  // Booking-question rendering (cmsajnvkm): tRoot takes full dotted keys for
+  // the shared formatter; tDet resolves shared value phrases for the CSV.
+  const tRoot = useTranslations();
+  const tDet = useTranslations("reservationDetails");
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterDate, setFilterDate] = useState(new Date().toISOString().slice(0, 10));
@@ -222,17 +238,33 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
    * restaurant's 12h/24h format, same as the on-screen list.
    */
   const exportCsv = () => {
-    const header = ["Name", "Phone", "Party size", "Date / time", "Table", "Status", "Notes"];
+    // Booking-question columns (cmsajnvkm) ride along; they're blank for
+    // legacy bookings and for restaurants that never enabled the questions.
+    const header = ["Name", "Phone", "Party size", "Adults", "Children", "Date / time", "Table", "Status", "Notes", "Child seating", "Allergies", "Occasion", "Accessibility"];
     const lines = [header.join(",")];
     for (const r of filtered) {
+      const d = readReservationDetails(r.details);
+      const seating = d?.childSeating
+        ? [d.childSeating.highChairs ? `${tDet("highChair")} x${d.childSeating.highChairs}` : "",
+           d.childSeating.strollers ? `${tDet("stroller")} x${d.childSeating.strollers}` : ""].filter(Boolean).join(" / ")
+        : "";
+      const occasion = d?.occasion
+        ? `${tDet(occasionKey(d.occasion))}${d.occasionOther ? ` - ${d.occasionOther}` : ""}`
+        : "";
       lines.push([
         escCsv(r.customerName),
         escCsv(r.customerPhone),
         escCsv(r.partySize),
+        escCsv(r.adultsCount ?? ""),
+        escCsv(r.childrenCount ?? ""),
         escCsv(`${r.date} ${formatTime(r.time, hoursFormat)}`),
         escCsv(r.table ? `${r.table.name}${r.table.section ? ` (${r.table.section})` : ""}` : ""),
         escCsv(STATUS_LABELS[r.status] ?? r.status),
         escCsv(r.notes),
+        escCsv(seating),
+        escCsv(d?.allergies ?? ""),
+        escCsv(occasion),
+        escCsv(d?.accessibility ?? ""),
       ].join(","));
     }
     // UTF-8 BOM so Excel reads accented names correctly.
@@ -336,7 +368,14 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
             {detail.customerPhone && <div className="flex items-center gap-2 text-gray-700"><Phone className="w-3.5 h-3.5 text-gray-400" />{detail.customerPhone}</div>}
             {detail.customerEmail && <div className="flex items-center gap-2 text-gray-700"><Mail className="w-3.5 h-3.5 text-gray-400" />{detail.customerEmail}</div>}
             <div className="flex items-center gap-2 text-gray-700"><Clock className="w-3.5 h-3.5 text-gray-400" />{detail.date} at {formatTime(detail.time, hoursFormat)} ({detail.durationMinutes} min)</div>
-            <div className="flex items-center gap-2 text-gray-700"><Users className="w-3.5 h-3.5 text-gray-400" />{t("guests", { n: detail.partySize })}</div>
+            <div className="flex items-center gap-2 text-gray-700">
+              <Users className="w-3.5 h-3.5 text-gray-400" />
+              {t("guests", { n: detail.partySize })}
+              {/* Adults/children split (cmsajnvkm) — additive; legacy null. */}
+              {detail.adultsCount != null && (
+                <span className="text-gray-500">· {t("partyBreakdown", { adults: detail.adultsCount, children: detail.childrenCount ?? 0 })}</span>
+              )}
+            </div>
             {detail.table && <div className="flex items-center gap-2 text-gray-700"><Table2 className="w-3.5 h-3.5 text-gray-400" />{detail.table.name}{detail.table.section ? ` (${detail.table.section})` : ""}</div>}
           </div>
 
@@ -346,6 +385,15 @@ function ReservationsTab({ hoursFormat }: { hoursFormat: HoursFormat }) {
               <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-2">{detail.notes}</p>
             </div>
           )}
+
+          {/* Booking questions (cmsajnvkm) — one labeled row per answered
+              section; renders nothing for legacy/unanswered bookings. */}
+          {formatDetailRows(readReservationDetails(detail.details), tRoot, "admin.reservationsList").map((row) => (
+            <div key={row.label}>
+              <p className="text-xs font-medium text-gray-500 mb-1">{row.label}</p>
+              <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-2">{row.value}</p>
+            </div>
+          ))}
 
           <div>
             <p className="text-xs font-medium text-gray-500 mb-1">{t("labelStaffNotes")}</p>
@@ -423,6 +471,15 @@ interface SimpleSettingsForm {
   minNoticeMinutes: number;
   maxAdvanceDays: number;
   holdMinutes: number;
+  /** "Booking questions" (Fabrizio cmsajnvkm) — all default OFF, so a
+   *  restaurant that ignores them keeps today's exact booking form. */
+  splitAdultsChildren: boolean;
+  childDefinitionMode: string;
+  childDefinitionValue: number | null;
+  askChildSeating: boolean;
+  askAllergies: boolean;
+  askOccasion: boolean;
+  askAccessibility: boolean;
   /** Customer-facing time-slot interval. 30 = "7:00 PM, 7:30 PM, 8:00
    *  PM, …", 15 = "7:00, 7:15, 7:30 …", 60 = on the hour only.
    *  Persisted as ReservationSettings.slotLengthMinutes — drives the
@@ -459,6 +516,13 @@ function SettingsTab() {
     slotLengthMinutes: 30,
     allowPreOrder: false,
     autoConfirm: true,
+    splitAdultsChildren: false,
+    childDefinitionMode: "none",
+    childDefinitionValue: null,
+    askChildSeating: false,
+    askAllergies: false,
+    askOccasion: false,
+    askAccessibility: false,
   });
 
   useEffect(() => {
@@ -481,6 +545,13 @@ function SettingsTab() {
         slotLengthMinutes: s?.slotLengthMinutes ?? f.slotLengthMinutes,
         allowPreOrder: s?.allowPreOrder ?? f.allowPreOrder,
         autoConfirm: typeof s?.autoConfirm === "boolean" ? s.autoConfirm : f.autoConfirm,
+        splitAdultsChildren: s?.splitAdultsChildren ?? f.splitAdultsChildren,
+        childDefinitionMode: s?.childDefinitionMode ?? f.childDefinitionMode,
+        childDefinitionValue: s?.childDefinitionValue ?? f.childDefinitionValue,
+        askChildSeating: s?.askChildSeating ?? f.askChildSeating,
+        askAllergies: s?.askAllergies ?? f.askAllergies,
+        askOccasion: s?.askOccasion ?? f.askOccasion,
+        askAccessibility: s?.askAccessibility ?? f.askAccessibility,
       }));
     }).finally(() => setLoading(false));
   }, []);
@@ -511,6 +582,15 @@ function SettingsTab() {
             slotLengthMinutes: form.slotLengthMinutes,
             allowPreOrder: form.allowPreOrder,
             autoConfirm: form.autoConfirm,
+            // Booking questions (cmsajnvkm) — the route whitelists each one in
+            // BOTH its destructure and its update spread.
+            splitAdultsChildren: form.splitAdultsChildren,
+            childDefinitionMode: form.childDefinitionMode,
+            childDefinitionValue: form.childDefinitionMode === "none" ? null : form.childDefinitionValue,
+            askChildSeating: form.askChildSeating,
+            askAllergies: form.askAllergies,
+            askOccasion: form.askOccasion,
+            askAccessibility: form.askAccessibility,
           }),
         }),
         fetch("/api/restaurants/profile", {
@@ -724,6 +804,80 @@ function SettingsTab() {
         </div>
       </div>
 
+      {/* Booking questions — the "smart buttons" a guest can answer while
+          booking (Fabrizio cmsajnvkm). Every switch defaults OFF, so an owner
+          who ignores this card keeps the classic form. Greyed like the rules
+          card when reservations are off. */}
+      <div className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-5 transition-opacity ${
+        form.acceptsReservations ? "" : "opacity-60"
+      }`}>
+        <h3 className="font-semibold text-gray-900">{t("headingBookingQuestions")}</h3>
+        <p className="text-xs text-gray-500 mt-0.5 mb-4">{t("descBookingQuestions")}</p>
+        <div className="space-y-4">
+          <ToggleRow
+            label={t("labelSplitParty")}
+            help={t("helpSplitParty")}
+            checked={form.splitAdultsChildren}
+            onChange={(v) => setForm(f => ({ ...f, splitAdultsChildren: v }))}
+          />
+          {/* Child definition — only meaningful once the split is on. */}
+          {form.splitAdultsChildren && (
+            <div className="pl-4 border-l-2 border-gray-100 space-y-3">
+              <div className="flex items-center justify-between gap-4">
+                <div className="min-w-0 flex items-center gap-1.5">
+                  <label className="text-sm text-gray-800">{t("labelChildDefinition")}</label>
+                  <HelpTip text={t("helpChildDefinition")} />
+                </div>
+                <select
+                  value={form.childDefinitionMode}
+                  onChange={(e) => setForm(f => ({ ...f, childDefinitionMode: e.target.value }))}
+                  className="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
+                >
+                  <option value="none">{t("optionChildDefNone")}</option>
+                  <option value="age">{t("optionChildDefAge")}</option>
+                  <option value="height">{t("optionChildDefHeight")}</option>
+                </select>
+              </div>
+              {form.childDefinitionMode !== "none" && (
+                <NumberRow
+                  label={form.childDefinitionMode === "age" ? t("labelChildDefYears") : t("labelChildDefCm")}
+                  unit={form.childDefinitionMode === "age" ? t("unitYears") : t("unitCm")}
+                  value={form.childDefinitionValue ?? (form.childDefinitionMode === "age" ? 8 : 130)}
+                  min={1}
+                  onChange={(v) => setForm(f => ({ ...f, childDefinitionValue: v }))}
+                />
+              )}
+              <ToggleRow
+                label={t("labelAskChildSeating")}
+                help={t("helpAskChildSeating")}
+                checked={form.askChildSeating}
+                onChange={(v) => setForm(f => ({ ...f, askChildSeating: v }))}
+              />
+            </div>
+          )}
+          <div className="pt-2 border-t border-gray-100 space-y-4">
+            <ToggleRow
+              label={t("labelAskAllergies")}
+              help={t("helpAskAllergies")}
+              checked={form.askAllergies}
+              onChange={(v) => setForm(f => ({ ...f, askAllergies: v }))}
+            />
+            <ToggleRow
+              label={t("labelAskOccasion")}
+              help={t("helpAskOccasion")}
+              checked={form.askOccasion}
+              onChange={(v) => setForm(f => ({ ...f, askOccasion: v }))}
+            />
+            <ToggleRow
+              label={t("labelAskAccessibility")}
+              help={t("helpAskAccessibility")}
+              checked={form.askAccessibility}
+              onChange={(v) => setForm(f => ({ ...f, askAccessibility: v }))}
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Reservation Deposits — paid add-on, COMING SOON. Locked teaser so owners
           see it on the roadmap; the take_reservation_deposit feature is comingSoon
           and server-gated in the reservation routes. Luigi 2026-06-14. */}
@@ -747,6 +901,34 @@ function SettingsTab() {
         </div>
       </div>
     </div>
+  );
+}
+
+/** Label + ⓘ help + switch row — the booking-questions card's building block
+ *  (cmsajnvkm). HelpTip on every knob per the standing hover-help rule. */
+function ToggleRow({ label, help, checked, onChange }: {
+  label: string;
+  help: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+}) {
+  return (
+    <label className="flex items-center justify-between gap-4 cursor-pointer">
+      <span className="text-sm text-gray-800 flex items-center gap-1.5 min-w-0">
+        {label}
+        <HelpTip text={help} />
+      </span>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        aria-label={label}
+        onClick={() => onChange(!checked)}
+        className={`relative inline-flex h-6 w-11 rounded-full transition flex-shrink-0 ${checked ? "bg-emerald-500" : "bg-gray-300"}`}
+      >
+        <span className={`inline-block w-5 h-5 bg-white rounded-full shadow transform transition mt-0.5 ${checked ? "translate-x-5" : "translate-x-0.5"}`} />
+      </button>
+    </label>
   );
 }
 

@@ -635,7 +635,24 @@
     "closedOnDay": "We're closed on {day} — please pick a different date.",
     "jumpToNextOpen": "Jump to next open day ({date})",
     "closedPickAnother": "We're closed on the selected date — please pick another day.",
-    "emailRequired": "Email is required"
+    "emailRequired": "Email is required",
+    "adults": "Adults",
+    "children": "Children",
+    "childDefinitionAge": "Up to {n} years old",
+    "childDefinitionHeight": "Up to {n} cm tall",
+    "fewerLabel": "Fewer {label}",
+    "moreLabel": "More {label}",
+    "childSeating": "Children",
+    "highChairQuestion": "Do you need a high chair?",
+    "strollerQuestion": "Are you bringing a stroller?",
+    "allergiesLabel": "Allergies",
+    "allergiesPlaceholder": "Tell us about any allergies or dietary needs",
+    "occasionLabel": "Special occasion",
+    "occasionSelectPlaceholder": "Please indicate the special occasion",
+    "occasionOtherPlaceholder": "Tell us what you're celebrating",
+    "accessibilityLabel": "Accessible",
+    "accessibilityPlaceholder": "e.g. wheelchair access, step-free seating",
+    "commentsPlaceholderGeneric": "Comments (optional) - special requests"
   },
   "kitchen": {
     "opensIn": "Opens in {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Close",
     "pnCancel": "Cancel",
     "pnSaving": "Saving...",
-    "pnSaveSettings": "Save Settings"
+    "pnSaveSettings": "Save Settings",
+    "partyBreakdown": "{adults} adults, {children} children",
+    "labelChildSeating": "Child seating",
+    "labelAllergies": "Allergies",
+    "labelOccasion": "Occasion",
+    "labelAccessibility": "Accessibility"
   },
   "admin": {
     "comingSoonPlaceholder": {
@@ -3503,7 +3525,33 @@
       "pageSubtitle": "Manage bookings and reservation settings",
       "tabReservations": "Reservations",
       "tabSettings": "Settings",
-      "depositsSoonDesc": "Collect a deposit when guests book to cut down on no-shows. Coming soon as a paid add-on."
+      "depositsSoonDesc": "Collect a deposit when guests book to cut down on no-shows. Coming soon as a paid add-on.",
+      "partyBreakdown": "{adults} adults, {children} children",
+      "headingBookingQuestions": "Booking questions",
+      "descBookingQuestions": "Ask guests a few extra things while they book. Answers appear in the kitchen, on the reservations list, on the printed slip and in your notification email.",
+      "labelSplitParty": "Ask adults and children separately",
+      "helpSplitParty": "Replaces the single party-size picker with separate Adults and Children counters. The total still respects your minimum and maximum guests.",
+      "labelChildDefinition": "Who counts as a child",
+      "helpChildDefinition": "Shown as a small hint under the Children counter so guests know what you mean. Choose an age or a height limit, or None to show no hint.",
+      "optionChildDefNone": "No definition",
+      "optionChildDefAge": "Under an age",
+      "optionChildDefHeight": "Under a height",
+      "labelChildDefYears": "Children are under",
+      "labelChildDefCm": "Children are under",
+      "unitYears": "years",
+      "unitCm": "cm",
+      "labelAskChildSeating": "High chairs and strollers",
+      "helpAskChildSeating": "Guests booking with children can tell you how many high chairs they need and whether they're bringing a stroller.",
+      "labelAskAllergies": "Allergies",
+      "helpAskAllergies": "Adds an optional allergies and dietary-needs question to the booking form.",
+      "labelAskOccasion": "Special occasion",
+      "helpAskOccasion": "Lets guests tell you they're celebrating - a birthday, an anniversary, a business meal - so you can prepare.",
+      "labelAskAccessibility": "Accessibility needs",
+      "helpAskAccessibility": "Adds an optional question about accessibility needs, like step-free seating or wheelchair access.",
+      "labelChildSeating": "Child seating",
+      "labelAllergies": "Allergies",
+      "labelOccasion": "Occasion",
+      "labelAccessibility": "Accessibility"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5290,7 +5338,12 @@
       "preOrderHint": "(see attached order receipt)",
       "date": "Date",
       "time": "Time",
-      "confirmationCode": "Confirmation code"
+      "confirmationCode": "Confirmation code",
+      "adultsChildren": "{adults} adults / {children} children",
+      "labelChildSeating": "Child seating",
+      "labelAllergies": "Allergies",
+      "labelOccasion": "Occasion",
+      "labelAccessibility": "Accessibility"
     }
   },
   "email": {
@@ -5532,7 +5585,12 @@
       "previewDeclined": "Reservation update — {dateTime} for {partySize}",
       "previewCancelled": "Reservation cancelled — {dateTime} for {partySize}",
       "closedNote": "The restaurant is currently closed — your reservation request is queued and you'll get an update as soon as they open.",
-      "closedNoteWithTime": "The restaurant is currently closed — your reservation request is queued and you'll get an update as soon as they open. Check your email on {openingTime}."
+      "closedNoteWithTime": "The restaurant is currently closed — your reservation request is queued and you'll get an update as soon as they open. Check your email on {openingTime}.",
+      "partyBreakdown": "{adults} adults, {children} children",
+      "labelChildSeating": "Child seating",
+      "labelAllergies": "Allergies",
+      "labelOccasion": "Occasion",
+      "labelAccessibility": "Accessibility"
     },
     "newReservation": {
       "subject": "New reservation — {restaurant}",
@@ -5551,7 +5609,12 @@
       "labelTime": "Reservation time",
       "cancelledNote": "The customer cancelled this booking from their confirmation email — the table can be released. No action is needed.",
       "labelSpecialRequests": "Special requests",
-      "manageButton": "Manage reservation"
+      "manageButton": "Manage reservation",
+      "badgeAdultsChildren": "{adults} adults, {children} children",
+      "labelChildSeating": "Child seating",
+      "labelAllergies": "Allergies",
+      "labelOccasion": "Occasion",
+      "labelAccessibility": "Accessibility"
     },
     "passwordReset": {
       "subject": "Reset your password",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Your name",
       "saveFailed": "Save failed ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Birthday",
+    "occasionAnniversary": "Wedding anniversary",
+    "occasionDate": "Romantic date",
+    "occasionFriends": "Meeting friends",
+    "occasionFamily": "Meeting family",
+    "occasionBusiness": "Business",
+    "occasionCelebration": "Celebration",
+    "occasionOther": "Other",
+    "highChair": "High chair",
+    "stroller": "Stroller"
   }
 }

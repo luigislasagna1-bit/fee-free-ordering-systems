@@ -635,7 +635,24 @@
     "closedOnDay": "Kami tutup pada {day} — silakan pilih tanggal lain.",
     "jumpToNextOpen": "Lompat ke hari buka berikutnya ({date})",
     "closedPickAnother": "Kami tutup pada tanggal yang dipilih — silakan pilih hari lain.",
-    "emailRequired": "Email wajib diisi"
+    "emailRequired": "Email wajib diisi",
+    "adults": "Dewasa",
+    "children": "Anak-anak",
+    "childDefinitionAge": "Hingga usia {n} tahun",
+    "childDefinitionHeight": "Hingga tinggi {n} cm",
+    "fewerLabel": "Kurangi {label}",
+    "moreLabel": "Tambah {label}",
+    "childSeating": "Anak-anak",
+    "highChairQuestion": "Apakah Anda memerlukan kursi bayi?",
+    "strollerQuestion": "Apakah Anda membawa stroller?",
+    "allergiesLabel": "Alergi",
+    "allergiesPlaceholder": "Beri tahu kami jika ada alergi atau kebutuhan makanan khusus",
+    "occasionLabel": "Acara spesial",
+    "occasionSelectPlaceholder": "Pilih acara spesialnya",
+    "occasionOtherPlaceholder": "Beri tahu kami apa yang Anda rayakan",
+    "accessibilityLabel": "Aksesibilitas",
+    "accessibilityPlaceholder": "mis. akses kursi roda, tempat duduk tanpa anak tangga",
+    "commentsPlaceholderGeneric": "Komentar (opsional) — permintaan khusus"
   },
   "kitchen": {
     "opensIn": "Buka dalam {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Tutup",
     "pnCancel": "Batal",
     "pnSaving": "Menyimpan...",
-    "pnSaveSettings": "Simpan Pengaturan"
+    "pnSaveSettings": "Simpan Pengaturan",
+    "partyBreakdown": "{adults} dewasa, {children} anak",
+    "labelChildSeating": "Tempat duduk anak",
+    "labelAllergies": "Alergi",
+    "labelOccasion": "Acara",
+    "labelAccessibility": "Aksesibilitas"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Kelola pemesanan dan pengaturan reservasi",
       "tabReservations": "Reservasi",
       "tabSettings": "Pengaturan",
-      "depositsSoonDesc": "Tarik deposit saat tamu memesan untuk mengurangi no-show. Segera hadir sebagai add-on berbayar."
+      "depositsSoonDesc": "Tarik deposit saat tamu memesan untuk mengurangi no-show. Segera hadir sebagai add-on berbayar.",
+      "partyBreakdown": "{adults} dewasa, {children} anak",
+      "headingBookingQuestions": "Pertanyaan pemesanan",
+      "descBookingQuestions": "Tanyakan beberapa hal tambahan kepada tamu saat mereka memesan. Jawabannya muncul di dapur, di daftar reservasi, di slip cetak, dan di email notifikasi Anda.",
+      "labelSplitParty": "Tanyakan jumlah dewasa dan anak secara terpisah",
+      "helpSplitParty": "Mengganti satu pemilih jumlah tamu dengan penghitung Dewasa dan Anak yang terpisah. Totalnya tetap mengikuti batas minimum dan maksimum tamu Anda.",
+      "labelChildDefinition": "Siapa yang dihitung sebagai anak",
+      "helpChildDefinition": "Ditampilkan sebagai petunjuk singkat di bawah penghitung Anak agar tamu tahu maksud Anda. Pilih batas usia atau batas tinggi badan, atau Tidak ada untuk tidak menampilkan petunjuk.",
+      "optionChildDefNone": "Tanpa definisi",
+      "optionChildDefAge": "Di bawah usia tertentu",
+      "optionChildDefHeight": "Di bawah tinggi tertentu",
+      "labelChildDefYears": "Anak-anak di bawah",
+      "labelChildDefCm": "Anak-anak di bawah",
+      "unitYears": "tahun",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Kursi bayi dan kereta dorong",
+      "helpAskChildSeating": "Tamu yang melakukan reservasi dengan anak-anak dapat memberi tahu Anda berapa kursi bayi yang mereka butuhkan dan apakah mereka membawa kereta dorong.",
+      "labelAskAllergies": "Alergi",
+      "helpAskAllergies": "Menambahkan pertanyaan opsional tentang alergi dan kebutuhan diet ke formulir reservasi.",
+      "labelAskOccasion": "Acara spesial",
+      "helpAskOccasion": "Memungkinkan tamu memberi tahu Anda bahwa mereka sedang merayakan sesuatu - ulang tahun, hari jadi, atau jamuan bisnis - sehingga Anda bisa bersiap.",
+      "labelAskAccessibility": "Kebutuhan aksesibilitas",
+      "helpAskAccessibility": "Menambahkan pertanyaan opsional tentang kebutuhan aksesibilitas, seperti tempat duduk tanpa anak tangga atau akses kursi roda.",
+      "labelChildSeating": "Tempat duduk anak",
+      "labelAllergies": "Alergi",
+      "labelOccasion": "Acara",
+      "labelAccessibility": "Aksesibilitas"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(lihat kwitansi pesanan terlampir)",
       "date": "Tanggal",
       "time": "Waktu",
-      "confirmationCode": "Kode konfirmasi"
+      "confirmationCode": "Kode konfirmasi",
+      "adultsChildren": "{adults} dewasa / {children} anak",
+      "labelChildSeating": "Tempat duduk anak",
+      "labelAllergies": "Alergi",
+      "labelOccasion": "Acara",
+      "labelAccessibility": "Aksesibilitas"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Pembaruan mengenai permintaan reservasi Anda",
       "badgeMissed": "Terlewat",
       "closedNote": "Restoran saat ini tutup — permintaan reservasi Anda sudah masuk antrean dan Anda akan menerima kabar begitu restoran buka.",
-      "closedNoteWithTime": "Restoran saat ini tutup — permintaan reservasi Anda sudah masuk antrean dan Anda akan menerima kabar begitu restoran buka. Cek email Anda pada {openingTime}."
+      "closedNoteWithTime": "Restoran saat ini tutup — permintaan reservasi Anda sudah masuk antrean dan Anda akan menerima kabar begitu restoran buka. Cek email Anda pada {openingTime}.",
+      "partyBreakdown": "{adults} dewasa, {children} anak",
+      "labelChildSeating": "Tempat duduk anak",
+      "labelAllergies": "Alergi",
+      "labelOccasion": "Acara",
+      "labelAccessibility": "Aksesibilitas"
     },
     "newReservation": {
       "preview": "Reservasi baru — {dateTime} · {partySize} orang",
@@ -5548,7 +5606,12 @@
       "subject": "Reservasi baru — {restaurant}",
       "title": "Reservasi baru {status}",
       "body": "{customer} meminta reservasi untuk {party} tamu pada {date} pukul {time}.",
-      "confirmationCode": "Kode konfirmasi"
+      "confirmationCode": "Kode konfirmasi",
+      "badgeAdultsChildren": "{adults} dewasa, {children} anak",
+      "labelChildSeating": "Tempat duduk anak",
+      "labelAllergies": "Alergi",
+      "labelOccasion": "Acara",
+      "labelAccessibility": "Aksesibilitas"
     },
     "passwordReset": {
       "preview": "Atur ulang kata sandi {brand} Anda",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Nama Anda",
       "saveFailed": "Gagal menyimpan ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Ulang tahun",
+    "occasionAnniversary": "Ulang tahun pernikahan",
+    "occasionDate": "Kencan romantis",
+    "occasionFriends": "Kumpul bersama teman",
+    "occasionFamily": "Kumpul keluarga",
+    "occasionBusiness": "Bisnis",
+    "occasionCelebration": "Perayaan",
+    "occasionOther": "Lainnya",
+    "highChair": "Kursi bayi",
+    "stroller": "Kereta bayi"
   }
 }

@@ -5,6 +5,7 @@
 import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, InfoCard, Badge } from "../components/EmailParts";
+import { formatDetailRows, type ReservationDetails } from "@/lib/reservation-details";
 
 export type ReservationConfirmationProps = {
   t: Translator;
@@ -20,8 +21,13 @@ export type ReservationConfirmationProps = {
   /** Pre-formatted, e.g. "Friday, Dec 24 at 7:30 PM" */
   dateTime: string;
   partySize: number;
-  /** Optional restaurant note shown as a card. */
+  /** The guest's own notes, echoed back (wired live with cmsajnvkm). */
   specialRequests?: string | null;
+  /** Smart buttons (Fabrizio cmsajnvkm): adults/children split + structured
+   *  details. All optional — legacy bookings render exactly as before. */
+  adultsCount?: number | null;
+  childrenCount?: number | null;
+  details?: ReservationDetails | null;
   /** Deposit was paid — the customer-cancelled email adds the "contact the
    *  restaurant about your deposit" note (v1: no auto-refund). */
   depositPaid?: boolean;
@@ -40,8 +46,9 @@ export type ReservationConfirmationProps = {
 
 export default function ReservationConfirmation(props: ReservationConfirmationProps) {
   const { t, status = "confirmed", customerName, reservationNumber, restaurantName, dateTime, partySize,
-    specialRequests, depositPaid, cancelUrl, bookedWhileClosed, opensAtLabel, restaurantAddress,
-    restaurantUrl, restaurantEmail, restaurantPhone, imprint } = props;
+    specialRequests, adultsCount, childrenCount, details, depositPaid, cancelUrl, bookedWhileClosed,
+    opensAtLabel, restaurantAddress, restaurantUrl, restaurantEmail, restaurantPhone, imprint } = props;
+  const detailRows = formatDetailRows(details, t, "email.reservationConfirmed");
 
   // "missed" reuses the neutral "Declined" copy (header "Reservation update",
   // "was not able to accommodate…") — only the badge word differs. Luigi 2026-06-16.
@@ -82,6 +89,9 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
           <div><strong>{dateTime}</strong></div>
           <div style={{ fontSize: 13, color: "#6b7280", marginTop: 2 }}>
             {t("email.reservationConfirmed.partySize", { partySize: String(partySize) })}
+            {adultsCount != null && (
+              <> · {t("email.reservationConfirmed.partyBreakdown", { adults: adultsCount, children: childrenCount ?? 0 })}</>
+            )}
           </div>
         </InfoCard>
 
@@ -90,6 +100,12 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
             {restaurantAddress}
           </InfoCard>
         )}
+
+        {detailRows.map((row) => (
+          <InfoCard key={row.label} label={row.label} accent="amber">
+            {row.value}
+          </InfoCard>
+        ))}
 
         {specialRequests && (
           <InfoCard label={t("email.reservationConfirmed.labelSpecialRequests")} accent="amber">

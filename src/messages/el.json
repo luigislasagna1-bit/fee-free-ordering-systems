@@ -635,7 +635,24 @@
     "closedOnDay": "Είμαστε κλειστοί την ημέρα {day} — παρακαλούμε επιλέξτε άλλη ημερομηνία.",
     "jumpToNextOpen": "Μετάβαση στην επόμενη ανοιχτή ημέρα ({date})",
     "closedPickAnother": "Είμαστε κλειστοί την επιλεγμένη ημερομηνία — παρακαλούμε επιλέξτε άλλη ημέρα.",
-    "emailRequired": "Η διεύθυνση email είναι υποχρεωτική"
+    "emailRequired": "Η διεύθυνση email είναι υποχρεωτική",
+    "adults": "Ενήλικες",
+    "children": "Παιδιά",
+    "childDefinitionAge": "Έως {n} ετών",
+    "childDefinitionHeight": "Ύψος έως {n} εκ.",
+    "fewerLabel": "Μείωση: {label}",
+    "moreLabel": "Αύξηση: {label}",
+    "childSeating": "Παιδιά",
+    "highChairQuestion": "Χρειάζεστε παιδικό καρεκλάκι;",
+    "strollerQuestion": "Θα φέρετε καρότσι μωρού;",
+    "allergiesLabel": "Αλλεργίες",
+    "allergiesPlaceholder": "Πείτε μας για τυχόν αλλεργίες ή διατροφικές ανάγκες",
+    "occasionLabel": "Ειδική περίσταση",
+    "occasionSelectPlaceholder": "Δηλώστε την ειδική περίσταση",
+    "occasionOtherPlaceholder": "Πείτε μας τι γιορτάζετε",
+    "accessibilityLabel": "Προσβασιμότητα",
+    "accessibilityPlaceholder": "π.χ. πρόσβαση με αναπηρικό αμαξίδιο, θέση χωρίς σκαλοπάτια",
+    "commentsPlaceholderGeneric": "Σχόλια (προαιρετικά) - ειδικά αιτήματα"
   },
   "kitchen": {
     "opensIn": "Ανοίγει σε {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Κλείσιμο",
     "pnCancel": "Ακύρωση",
     "pnSaving": "Αποθήκευση…",
-    "pnSaveSettings": "Αποθήκευση ρυθμίσεων"
+    "pnSaveSettings": "Αποθήκευση ρυθμίσεων",
+    "partyBreakdown": "{adults} ενήλικες, {children} παιδιά",
+    "labelChildSeating": "Παιδικά καθίσματα",
+    "labelAllergies": "Αλλεργίες",
+    "labelOccasion": "Περίσταση",
+    "labelAccessibility": "Προσβασιμότητα"
   },
   "admin": {
     "welcomeBack": "Καλώς ορίσατε",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Διαχείριση κρατήσεων και ρυθμίσεων",
       "tabReservations": "Κρατήσεις",
       "tabSettings": "Ρυθμίσεις",
-      "depositsSoonDesc": "Χρεώστε προκαταβολή κατά την κράτηση για να μειώσετε τις μη εμφανίσεις. Σύντομα ως πρόσθετο επί πληρωμή."
+      "depositsSoonDesc": "Χρεώστε προκαταβολή κατά την κράτηση για να μειώσετε τις μη εμφανίσεις. Σύντομα ως πρόσθετο επί πληρωμή.",
+      "partyBreakdown": "{adults} ενήλικες, {children} παιδιά",
+      "headingBookingQuestions": "Ερωτήσεις κράτησης",
+      "descBookingQuestions": "Κάντε στους επισκέπτες μερικές επιπλέον ερωτήσεις κατά την κράτηση. Οι απαντήσεις εμφανίζονται στην κουζίνα, στη λίστα κρατήσεων, στο εκτυπωμένο δελτίο και στο email ειδοποίησής σας.",
+      "labelSplitParty": "Ξεχωριστή ερώτηση για ενήλικες και παιδιά",
+      "helpSplitParty": "Αντικαθιστά τον ενιαίο επιλογέα αριθμού ατόμων με ξεχωριστούς μετρητές για Ενήλικες και Παιδιά. Το σύνολο εξακολουθεί να τηρεί το ελάχιστο και το μέγιστο όριο επισκεπτών που έχετε ορίσει.",
+      "labelChildDefinition": "Ποιος θεωρείται παιδί",
+      "helpChildDefinition": "Εμφανίζεται ως μικρή υπόδειξη κάτω από τον μετρητή παιδιών, ώστε οι επισκέπτες να καταλαβαίνουν τι εννοείτε. Επιλέξτε όριο ηλικίας ή ύψους, ή «Χωρίς ορισμό» για να μην εμφανίζεται καμία υπόδειξη.",
+      "optionChildDefNone": "Χωρίς ορισμό",
+      "optionChildDefAge": "Κάτω από ορισμένη ηλικία",
+      "optionChildDefHeight": "Κάτω από ορισμένο ύψος",
+      "labelChildDefYears": "Τα παιδιά είναι κάτω των",
+      "labelChildDefCm": "Τα παιδιά είναι κάτω των",
+      "unitYears": "ετών",
+      "unitCm": "εκ.",
+      "labelAskChildSeating": "Παιδικά καρεκλάκια και καρότσια",
+      "helpAskChildSeating": "Οι επισκέπτες που κάνουν κράτηση με παιδιά μπορούν να σας πουν πόσα παιδικά καρεκλάκια χρειάζονται και αν θα φέρουν καρότσι.",
+      "labelAskAllergies": "Αλλεργίες",
+      "helpAskAllergies": "Προσθέτει μια προαιρετική ερώτηση για αλλεργίες και διατροφικές ανάγκες στη φόρμα κράτησης.",
+      "labelAskOccasion": "Ειδική περίσταση",
+      "helpAskOccasion": "Επιτρέπει στους επισκέπτες να σας πουν ότι γιορτάζουν — γενέθλια, επέτειο, επαγγελματικό γεύμα — ώστε να προετοιμαστείτε.",
+      "labelAskAccessibility": "Ανάγκες προσβασιμότητας",
+      "helpAskAccessibility": "Προσθέτει μια προαιρετική ερώτηση για ανάγκες προσβασιμότητας, όπως τραπέζι χωρίς σκαλοπάτια ή πρόσβαση με αναπηρικό αμαξίδιο.",
+      "labelChildSeating": "Παιδικά καθίσματα",
+      "labelAllergies": "Αλλεργίες",
+      "labelOccasion": "Περίσταση",
+      "labelAccessibility": "Προσβασιμότητα"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(βλ. συνημμένη απόδειξη παραγγελίας)",
       "date": "Ημερομηνία",
       "time": "Ώρα",
-      "confirmationCode": "Κωδικός επιβεβαίωσης"
+      "confirmationCode": "Κωδικός επιβεβαίωσης",
+      "adultsChildren": "{adults} ενήλικες / {children} παιδιά",
+      "labelChildSeating": "Παιδικά καθίσματα",
+      "labelAllergies": "Αλλεργίες",
+      "labelOccasion": "Περίσταση",
+      "labelAccessibility": "Προσβασιμότητα"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Ενημέρωση σχετικά με το αίτημα κράτησής σας",
       "badgeMissed": "Χαμένη",
       "closedNote": "Το εστιατόριο είναι αυτή τη στιγμή κλειστό — το αίτημα κράτησής σας έχει μπει στη σειρά και θα λάβετε ενημέρωση μόλις ανοίξει.",
-      "closedNoteWithTime": "Το εστιατόριο είναι αυτή τη στιγμή κλειστό — το αίτημα κράτησής σας έχει μπει στη σειρά και θα λάβετε ενημέρωση μόλις ανοίξει. Ελέγξτε το email σας στις {openingTime}."
+      "closedNoteWithTime": "Το εστιατόριο είναι αυτή τη στιγμή κλειστό — το αίτημα κράτησής σας έχει μπει στη σειρά και θα λάβετε ενημέρωση μόλις ανοίξει. Ελέγξτε το email σας στις {openingTime}.",
+      "partyBreakdown": "{adults} ενήλικες, {children} παιδιά",
+      "labelChildSeating": "Παιδικά καθίσματα",
+      "labelAllergies": "Αλλεργίες",
+      "labelOccasion": "Περίσταση",
+      "labelAccessibility": "Προσβασιμότητα"
     },
     "newReservation": {
       "preview": "Νέα κράτηση — {dateTime} · άτομα: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Νέα κράτηση — {restaurant}",
       "title": "Νέα κράτηση {status}",
       "body": "Ο/Η {customer} ζήτησε κράτηση για {party} άτομα στις {date} στις {time}.",
-      "confirmationCode": "Κωδικός επιβεβαίωσης"
+      "confirmationCode": "Κωδικός επιβεβαίωσης",
+      "badgeAdultsChildren": "{adults} ενήλικες, {children} παιδιά",
+      "labelChildSeating": "Παιδικά καθίσματα",
+      "labelAllergies": "Αλλεργίες",
+      "labelOccasion": "Περίσταση",
+      "labelAccessibility": "Προσβασιμότητα"
     },
     "passwordReset": {
       "preview": "Επαναφορά κωδικού πρόσβασης για το {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Το όνομά σας",
       "saveFailed": "Η αποθήκευση απέτυχε ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Γενέθλια",
+    "occasionAnniversary": "Επέτειος γάμου",
+    "occasionDate": "Ρομαντικό ραντεβού",
+    "occasionFriends": "Συνάντηση με φίλους",
+    "occasionFamily": "Οικογενειακή συνάντηση",
+    "occasionBusiness": "Επαγγελματική συνάντηση",
+    "occasionCelebration": "Γιορτή",
+    "occasionOther": "Άλλο",
+    "highChair": "Καρεκλάκι μωρού",
+    "stroller": "Καρότσι μωρού"
   }
 }

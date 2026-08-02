@@ -635,7 +635,24 @@
     "closedOnDay": "Zárva tartunk ezen a napon: {day} — kérjük, válasszon másik dátumot.",
     "jumpToNextOpen": "Ugrás a következő nyitva tartó napra ({date})",
     "closedPickAnother": "A kiválasztott napon zárva tartunk — kérjük, válasszon másik napot.",
-    "emailRequired": "Az e-mail cím megadása kötelező"
+    "emailRequired": "Az e-mail cím megadása kötelező",
+    "adults": "Felnőttek",
+    "children": "Gyerekek",
+    "childDefinitionAge": "{n} éves korig",
+    "childDefinitionHeight": "{n} cm magasságig",
+    "fewerLabel": "{label} csökkentése",
+    "moreLabel": "{label} növelése",
+    "childSeating": "Gyerekek",
+    "highChairQuestion": "Szüksége van etetőszékre?",
+    "strollerQuestion": "Hoz magával babakocsit?",
+    "allergiesLabel": "Allergiák",
+    "allergiesPlaceholder": "Írja le az esetleges allergiákat vagy étrendi igényeket",
+    "occasionLabel": "Különleges alkalom",
+    "occasionSelectPlaceholder": "Kérjük, adja meg a különleges alkalmat",
+    "occasionOtherPlaceholder": "Írja meg, mit ünnepelnek",
+    "accessibilityLabel": "Akadálymentes",
+    "accessibilityPlaceholder": "pl. kerekesszékes megközelítés, lépcsőmentes ülőhely",
+    "commentsPlaceholderGeneric": "Megjegyzések (nem kötelező) - különleges kérések"
   },
   "kitchen": {
     "opensIn": "Nyitás {time} múlva",
@@ -1059,7 +1076,12 @@
     "pnClose": "Bezárás",
     "pnCancel": "Mégse",
     "pnSaving": "Mentés…",
-    "pnSaveSettings": "Beállítások mentése"
+    "pnSaveSettings": "Beállítások mentése",
+    "partyBreakdown": "{adults} felnőtt, {children} gyerek",
+    "labelChildSeating": "Gyerekülés",
+    "labelAllergies": "Allergiák",
+    "labelOccasion": "Alkalom",
+    "labelAccessibility": "Akadálymentesség"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",
@@ -2964,7 +2986,33 @@
       "pageSubtitle": "Foglalások és foglalási beállítások kezelése",
       "tabReservations": "Foglalások",
       "tabSettings": "Beállítások",
-      "depositsSoonDesc": "Kérjen előleget foglaláskor a meg nem jelenések csökkentésére. Hamarosan fizetős kiegészítőként."
+      "depositsSoonDesc": "Kérjen előleget foglaláskor a meg nem jelenések csökkentésére. Hamarosan fizetős kiegészítőként.",
+      "partyBreakdown": "{adults} felnőtt, {children} gyerek",
+      "headingBookingQuestions": "Foglalási kérdések",
+      "descBookingQuestions": "Kérdezzen a vendégektől néhány további dolgot a foglalás során. A válaszok megjelennek a konyhán, a foglalások listájában, a nyomtatott jegyen és az értesítő e-mailben.",
+      "labelSplitParty": "Felnőttek és gyerekek külön megadása",
+      "helpSplitParty": "Az egységes létszámválasztó helyére külön Felnőttek és Gyerekek számláló kerül. Az összlétszámra továbbra is érvényes a beállított minimális és maximális vendégszám.",
+      "labelChildDefinition": "Ki számít gyereknek",
+      "helpChildDefinition": "Rövid magyarázatként jelenik meg a Gyerekek számláló alatt, hogy a vendégek tudják, mire gondol. Válasszon korhatárt vagy testmagassági határt, vagy a Nincs meghatározás lehetőséget, ha nem szeretne magyarázatot megjeleníteni.",
+      "optionChildDefNone": "Nincs meghatározás",
+      "optionChildDefAge": "Adott életkor alatt",
+      "optionChildDefHeight": "Adott testmagasság alatt",
+      "labelChildDefYears": "Gyermek: kevesebb mint",
+      "labelChildDefCm": "Gyermek: kevesebb mint",
+      "unitYears": "év",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Etetőszékek és babakocsik",
+      "helpAskChildSeating": "A gyermekkel érkező vendégek a foglaláskor jelezhetik, hány etetőszékre van szükségük, és hogy hoznak-e babakocsit.",
+      "labelAskAllergies": "Allergiák",
+      "helpAskAllergies": "Opcionális kérdést ad a foglalási űrlaphoz az allergiákról és az étrendi igényekről.",
+      "labelAskOccasion": "Különleges alkalom",
+      "helpAskOccasion": "A vendégek jelezhetik, ha ünnepelnek – születésnap, évforduló, üzleti ebéd –, így fel tud készülni rá.",
+      "labelAskAccessibility": "Akadálymentesítési igények",
+      "helpAskAccessibility": "Opcionális kérdést ad a foglalási űrlaphoz az akadálymentesítési igényekről, például a lépcsőmentesen megközelíthető asztalról vagy a kerekesszékes hozzáférésről.",
+      "labelChildSeating": "Gyerekülés",
+      "labelAllergies": "Allergiák",
+      "labelOccasion": "Alkalom",
+      "labelAccessibility": "Akadálymentesség"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(lásd a csatolt rendelési nyugtát)",
       "date": "Dátum",
       "time": "Időpont",
-      "confirmationCode": "Visszaigazolási kód"
+      "confirmationCode": "Visszaigazolási kód",
+      "adultsChildren": "{adults} felnőtt / {children} gyerek",
+      "labelChildSeating": "Gyerekülés",
+      "labelAllergies": "Allergiák",
+      "labelOccasion": "Alkalom",
+      "labelAccessibility": "Akadálymentesség"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Tájékoztatás foglalási kérelmével kapcsolatban",
       "badgeMissed": "Elmulasztott",
       "closedNote": "Az étterem jelenleg zárva van — a foglalási kérésed sorban áll, és amint kinyitnak, azonnal értesítünk.",
-      "closedNoteWithTime": "Az étterem jelenleg zárva tart — a foglalási kérésed sorban áll, és amint kinyitnak, azonnal értesítést kapsz. Nézd meg az e-mailedet ekkor: {openingTime}."
+      "closedNoteWithTime": "Az étterem jelenleg zárva tart — a foglalási kérésed sorban áll, és amint kinyitnak, azonnal értesítést kapsz. Nézd meg az e-mailedet ekkor: {openingTime}.",
+      "partyBreakdown": "{adults} felnőtt, {children} gyerek",
+      "labelChildSeating": "Gyerekülés",
+      "labelAllergies": "Allergiák",
+      "labelOccasion": "Alkalom",
+      "labelAccessibility": "Akadálymentesség"
     },
     "newReservation": {
       "preview": "Új foglalás — {dateTime} · {partySize} fő",
@@ -5548,7 +5606,12 @@
       "subject": "Új foglalás — {restaurant}",
       "title": "Új foglalás {status}",
       "body": "{customer} foglalást kért {party} vendég részére, {date}-én {time}-kor.",
-      "confirmationCode": "Visszaigazolási kód"
+      "confirmationCode": "Visszaigazolási kód",
+      "badgeAdultsChildren": "{adults} felnőtt, {children} gyerek",
+      "labelChildSeating": "Gyerekülés",
+      "labelAllergies": "Allergiák",
+      "labelOccasion": "Alkalom",
+      "labelAccessibility": "Akadálymentesség"
     },
     "passwordReset": {
       "preview": "Jelszó-visszaállítás a(z) {brand} fiókodhoz",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Neved",
       "saveFailed": "A mentés nem sikerült ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Születésnap",
+    "occasionAnniversary": "Házassági évforduló",
+    "occasionDate": "Romantikus randevú",
+    "occasionFriends": "Baráti találkozó",
+    "occasionFamily": "Családi találkozó",
+    "occasionBusiness": "Üzleti találkozó",
+    "occasionCelebration": "Ünneplés",
+    "occasionOther": "Egyéb",
+    "highChair": "Etetőszék",
+    "stroller": "Babakocsi"
   }
 }

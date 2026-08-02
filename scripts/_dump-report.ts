@@ -9,7 +9,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 config({ path: ".env.local" });
 config({ path: ".env" });
 
-const ID = "cmrldhwep00000ahurwghiksj";
+const ID = "cmsajnvkm000s04jldk5tvlr0";
 
 async function main() {
   const url = process.env.DATABASE_URL!;
@@ -25,7 +25,7 @@ async function main() {
     const v = r[k];
     if (v == null) continue;
     const s = typeof v === "string" ? v : JSON.stringify(v);
-    if (s.length > 1) console.log(`\n[${k}]\n${s.slice(0, 1500)}`);
+    if (s.length > 1) console.log(`\n[${k}]\n${s.slice(0, 8000)}`);
   }
   const comments = await prisma.resellerReportComment.findMany({ where: { reportId: ID }, orderBy: { createdAt: "asc" } });
   console.log(`\n=== COMMENTS (${comments.length}) ===`);

@@ -635,7 +635,24 @@
     "closedOnDay": "Estem tancats el {day} — trieu una altra data.",
     "jumpToNextOpen": "Salta al proper dia obert ({date})",
     "closedPickAnother": "Estem tancats en la data seleccionada — trieu un altre dia.",
-    "emailRequired": "El correu electrònic és obligatori"
+    "emailRequired": "El correu electrònic és obligatori",
+    "adults": "Adults",
+    "children": "Nens",
+    "childDefinitionAge": "Fins a {n} anys",
+    "childDefinitionHeight": "Fins a {n} cm d'alçada",
+    "fewerLabel": "Menys {label}",
+    "moreLabel": "Més {label}",
+    "childSeating": "Nens",
+    "highChairQuestion": "Necessiteu una trona?",
+    "strollerQuestion": "Portareu un cotxet?",
+    "allergiesLabel": "Al·lèrgies",
+    "allergiesPlaceholder": "Indiqueu-nos qualsevol al·lèrgia o necessitat dietètica",
+    "occasionLabel": "Ocasió especial",
+    "occasionSelectPlaceholder": "Indiqueu l'ocasió especial",
+    "occasionOtherPlaceholder": "Digueu-nos què celebreu",
+    "accessibilityLabel": "Accessibilitat",
+    "accessibilityPlaceholder": "p. ex. accés amb cadira de rodes, taula sense esglaons",
+    "commentsPlaceholderGeneric": "Comentaris (opcional) — peticions especials"
   },
   "kitchen": {
     "opensIn": "Obre d'aquí a {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Tanca",
     "pnCancel": "Cancel·la",
     "pnSaving": "S'està desant...",
-    "pnSaveSettings": "Desa la configuració"
+    "pnSaveSettings": "Desa la configuració",
+    "partyBreakdown": "{adults} adults, {children} nens",
+    "labelChildSeating": "Seients infantils",
+    "labelAllergies": "Al·lèrgies",
+    "labelOccasion": "Ocasió",
+    "labelAccessibility": "Accessibilitat"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Gestiona les reserves i la configuració",
       "tabReservations": "Reserves",
       "tabSettings": "Configuració",
-      "depositsSoonDesc": "Cobra un dipòsit en reservar per reduir les absències. Aviat com a complement de pagament."
+      "depositsSoonDesc": "Cobra un dipòsit en reservar per reduir les absències. Aviat com a complement de pagament.",
+      "partyBreakdown": "{adults} adults, {children} nens",
+      "headingBookingQuestions": "Preguntes de la reserva",
+      "descBookingQuestions": "Feu unes quantes preguntes més als clients mentre reserven. Les respostes apareixen a la cuina, a la llista de reserves, al tiquet imprès i al vostre correu de notificació.",
+      "labelSplitParty": "Demana adults i nens per separat",
+      "helpSplitParty": "Substitueix el selector únic de nombre de persones per comptadors separats d'adults i de nens. El total continua respectant el vostre mínim i màxim de persones.",
+      "labelChildDefinition": "Qui es considera nen",
+      "helpChildDefinition": "Es mostra com una petita indicació sota el comptador de nens perquè els clients sàpiguen a què us referiu. Trieu una edat o una alçada màxima, o Sense definició per no mostrar cap indicació.",
+      "optionChildDefNone": "Sense definició",
+      "optionChildDefAge": "Per sota d'una edat",
+      "optionChildDefHeight": "Per sota d'una alçada",
+      "labelChildDefYears": "Els infants tenen menys de",
+      "labelChildDefCm": "Els infants tenen menys de",
+      "unitYears": "anys",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Trones i cotxets",
+      "helpAskChildSeating": "Els clients que reserven amb infants poden indicar-te quantes trones necessiten i si porten cotxet.",
+      "labelAskAllergies": "Al·lèrgies",
+      "helpAskAllergies": "Afegeix al formulari de reserva una pregunta opcional sobre al·lèrgies i necessitats dietètiques.",
+      "labelAskOccasion": "Ocasió especial",
+      "helpAskOccasion": "Permet que els clients t'indiquin que celebren alguna cosa - un aniversari, un aniversari de casament, un àpat de feina - perquè ho puguis preparar.",
+      "labelAskAccessibility": "Necessitats d'accessibilitat",
+      "helpAskAccessibility": "Afegeix una pregunta opcional sobre necessitats d'accessibilitat, com ara una taula sense esglaons o accés per a cadira de rodes.",
+      "labelChildSeating": "Seients infantils",
+      "labelAllergies": "Al·lèrgies",
+      "labelOccasion": "Ocasió",
+      "labelAccessibility": "Accessibilitat"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(vegeu el rebut de comanda adjunt)",
       "date": "Data",
       "time": "Hora",
-      "confirmationCode": "Codi de confirmació"
+      "confirmationCode": "Codi de confirmació",
+      "adultsChildren": "{adults} adults / {children} nens",
+      "labelChildSeating": "Seients infantils",
+      "labelAllergies": "Al·lèrgies",
+      "labelOccasion": "Ocasió",
+      "labelAccessibility": "Accessibilitat"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Actualització sobre la vostra sol·licitud de reserva",
       "badgeMissed": "Perduda",
       "closedNote": "El restaurant ara mateix està tancat — la teva sol·licitud de reserva ha quedat en cua i rebràs una actualització tan bon punt obrin.",
-      "closedNoteWithTime": "El restaurant ara mateix està tancat — la teva sol·licitud de reserva ha quedat en cua i rebràs una actualització tan bon punt obrin. Revisa el teu correu: {openingTime}."
+      "closedNoteWithTime": "El restaurant ara mateix està tancat — la teva sol·licitud de reserva ha quedat en cua i rebràs una actualització tan bon punt obrin. Revisa el teu correu: {openingTime}.",
+      "partyBreakdown": "{adults} adults, {children} nens",
+      "labelChildSeating": "Seients infantils",
+      "labelAllergies": "Al·lèrgies",
+      "labelOccasion": "Ocasió",
+      "labelAccessibility": "Accessibilitat"
     },
     "newReservation": {
       "preview": "Reserva nova — {dateTime} · grup de {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Nova reserva — {restaurant}",
       "title": "Nova reserva {status}",
       "body": "{customer} ha sol·licitat una reserva per a {party} persones el {date} a les {time}.",
-      "confirmationCode": "Codi de confirmació"
+      "confirmationCode": "Codi de confirmació",
+      "badgeAdultsChildren": "{adults} adults, {children} nens",
+      "labelChildSeating": "Seients infantils",
+      "labelAllergies": "Al·lèrgies",
+      "labelOccasion": "Ocasió",
+      "labelAccessibility": "Accessibilitat"
     },
     "passwordReset": {
       "preview": "Restableix la teva contrasenya de {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "El teu nom",
       "saveFailed": "No s'ha pogut desar ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Aniversari",
+    "occasionAnniversary": "Aniversari de casament",
+    "occasionDate": "Cita romàntica",
+    "occasionFriends": "Trobada amb amics",
+    "occasionFamily": "Trobada familiar",
+    "occasionBusiness": "Negocis",
+    "occasionCelebration": "Celebració",
+    "occasionOther": "Altres",
+    "highChair": "Trona",
+    "stroller": "Cotxet"
   }
 }

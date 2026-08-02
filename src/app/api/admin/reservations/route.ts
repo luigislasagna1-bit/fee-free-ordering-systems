@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { randomBytes } from "crypto";
+import { parseReservationDetails, computePartySize } from "@/lib/reservation-details";
 
 export async function GET(req: NextRequest) {
   try {
@@ -39,11 +40,21 @@ export async function POST(req: NextRequest) {
     const {
       customerName, customerEmail, customerPhone, partySize,
       date, time, durationMinutes, notes, tableId, orderId,
+      // Smart buttons (Fabrizio cmsajnvkm) — API parity with the public route;
+      // the walk-in modal may not expose these yet, but the endpoint accepts
+      // them through the same server-side normalizer.
+      adults, children, details,
     } = body;
 
     if (!customerName || !partySize || !date || !time) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
+
+    const settings = await prisma.reservationSettings.findUnique({ where: { restaurantId } });
+    const smart = settings
+      ? parseReservationDetails({ adults, children, details }, settings)
+      : { adultsCount: null, childrenCount: null, details: null };
+    const effectivePartySize = computePartySize(smart.adultsCount, smart.childrenCount, parseInt(partySize));
 
     const confirmationCode = randomBytes(3).toString("hex").toUpperCase();
 
@@ -57,7 +68,10 @@ export async function POST(req: NextRequest) {
         customerName,
         customerEmail: customerEmail || null,
         customerPhone: customerPhone || null,
-        partySize: parseInt(partySize),
+        partySize: effectivePartySize,
+        adultsCount: smart.adultsCount,
+        childrenCount: smart.childrenCount,
+        details: smart.details ?? undefined,
         date,
         time,
         durationMinutes: durationMinutes ?? 90,

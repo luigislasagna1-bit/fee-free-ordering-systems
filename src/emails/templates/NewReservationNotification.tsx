@@ -9,6 +9,7 @@
 import type { Translator } from "@/lib/i18n-dict";
 import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard, Badge } from "../components/EmailParts";
+import { formatDetailRows, type ReservationDetails } from "@/lib/reservation-details";
 
 export type NewReservationNotificationProps = {
   t: Translator;
@@ -20,6 +21,11 @@ export type NewReservationNotificationProps = {
   dateTime: string;
   partySize: number;
   specialRequests?: string | null;
+  /** Smart buttons (Fabrizio cmsajnvkm): adults/children split + structured
+   *  details. All optional — legacy bookings render exactly as before. */
+  adultsCount?: number | null;
+  childrenCount?: number | null;
+  details?: ReservationDetails | null;
   dashboardUrl: string;
   /** The CUSTOMER cancelled this booking via their emailed link (cms0idtz7)
    *  — flips the ping to "cancelled" wording. */
@@ -29,9 +35,10 @@ export type NewReservationNotificationProps = {
 
 export default function NewReservationNotification(props: NewReservationNotificationProps) {
   const { t, restaurantName, reservationNumber, customerName, customerPhone,
-    customerEmail, dateTime, partySize, specialRequests, dashboardUrl,
-    cancelled, imprint } = props;
+    customerEmail, dateTime, partySize, specialRequests, adultsCount,
+    childrenCount, details, dashboardUrl, cancelled, imprint } = props;
   const party = String(partySize);
+  const detailRows = formatDetailRows(details, t, "email.newReservation");
 
   return (
     <EmailLayout preview={cancelled
@@ -49,7 +56,12 @@ export default function NewReservationNotification(props: NewReservationNotifica
           {cancelled
             ? <Badge color="rose">{t("email.newReservation.badgeCancelled")}</Badge>
             : <Badge color="emerald">{t("email.newReservation.badgeNew")}</Badge>}{" "}
-          <Badge color="slate">{t("email.newReservation.badgeParty", { partySize: party })}</Badge>
+          <Badge color="slate">{t("email.newReservation.badgeParty", { partySize: party })}</Badge>{" "}
+          {adultsCount != null && (
+            <Badge color="slate">
+              {t("email.newReservation.badgeAdultsChildren", { adults: adultsCount, children: childrenCount ?? 0 })}
+            </Badge>
+          )}
         </div>
 
         <div style={{ margin: "0 0 6px" }}>
@@ -79,6 +91,12 @@ export default function NewReservationNotification(props: NewReservationNotifica
             {t("email.newReservation.cancelledNote")}
           </P>
         )}
+
+        {detailRows.map((row) => (
+          <InfoCard key={row.label} label={row.label} accent="amber">
+            {row.value}
+          </InfoCard>
+        ))}
 
         {specialRequests && (
           <InfoCard label={t("email.newReservation.labelSpecialRequests")} accent="amber">

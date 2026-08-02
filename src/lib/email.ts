@@ -1534,6 +1534,11 @@ export async function sendReservationConfirmation(params: {
   restaurantUrl?: string;
   restaurantEmail?: string | null;
   restaurantPhone?: string | null;
+  /** Smart buttons (cmsajnvkm) + the guest's own notes echoed back. */
+  specialRequests?: string | null;
+  adultsCount?: number | null;
+  childrenCount?: number | null;
+  details?: import("@/lib/reservation-details").ReservationDetails | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -1569,6 +1574,10 @@ export async function sendReservationConfirmation(params: {
       restaurantName: params.restaurantName,
       dateTime: dateTimeLabel,
       partySize: params.partySize,
+      specialRequests: params.specialRequests,
+      adultsCount: params.adultsCount,
+      childrenCount: params.childrenCount,
+      details: params.details,
       depositPaid: params.depositPaid,
       cancelUrl: params.cancelUrl,
       bookedWhileClosed: params.bookedWhileClosed,
@@ -1612,6 +1621,10 @@ export async function sendNewReservationNotification(params: {
   customerEmail?: string | null;
   /** Guest's special requests / notes — amber card (cms0gyexp #1). */
   specialRequests?: string | null;
+  /** Smart buttons (cmsajnvkm): adults/children split + structured details. */
+  adultsCount?: number | null;
+  childrenCount?: number | null;
+  details?: import("@/lib/reservation-details").ReservationDetails | null;
   /** Restaurant 12h/24h preference for the reservation time. */
   hoursFormat?: "12h" | "24h";
   locale?: string;
@@ -1635,6 +1648,9 @@ export async function sendNewReservationNotification(params: {
       dateTime: dateTimeLabel,
       partySize: params.partySize,
       specialRequests: params.specialRequests,
+      adultsCount: params.adultsCount,
+      childrenCount: params.childrenCount,
+      details: params.details,
       dashboardUrl: params.dashboardUrl,
       cancelled: params.status === "cancelled",
       imprint: currentImprint(),

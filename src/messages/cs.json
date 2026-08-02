@@ -635,7 +635,24 @@
     "closedOnDay": "Máme zavřeno v {day} — vyberte prosím jiné datum.",
     "jumpToNextOpen": "Přejít na další otevřený den ({date})",
     "closedPickAnother": "Ve vybraný den máme zavřeno — vyberte prosím jiný den.",
-    "emailRequired": "E-mail je povinný"
+    "emailRequired": "E-mail je povinný",
+    "adults": "Dospělí",
+    "children": "Děti",
+    "childDefinitionAge": "Do {n} let",
+    "childDefinitionHeight": "Do výšky {n} cm",
+    "fewerLabel": "Méně: {label}",
+    "moreLabel": "Více: {label}",
+    "childSeating": "Děti",
+    "highChairQuestion": "Potřebujete dětskou židličku?",
+    "strollerQuestion": "Berete s sebou kočárek?",
+    "allergiesLabel": "Alergie",
+    "allergiesPlaceholder": "Uveďte prosím alergie nebo dietní požadavky",
+    "occasionLabel": "Zvláštní příležitost",
+    "occasionSelectPlaceholder": "Uveďte prosím zvláštní příležitost",
+    "occasionOtherPlaceholder": "Napište nám, co slavíte",
+    "accessibilityLabel": "Bezbariérový přístup",
+    "accessibilityPlaceholder": "např. přístup pro vozíčkáře, místo bez schodů",
+    "commentsPlaceholderGeneric": "Komentáře (volitelné) — zvláštní přání"
   },
   "kitchen": {
     "opensIn": "Otevírá za {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Zavřít",
     "pnCancel": "Zrušit",
     "pnSaving": "Ukládání…",
-    "pnSaveSettings": "Uložit nastavení"
+    "pnSaveSettings": "Uložit nastavení",
+    "partyBreakdown": "Dospělí: {adults}, děti: {children}",
+    "labelChildSeating": "Sezení pro děti",
+    "labelAllergies": "Alergie",
+    "labelOccasion": "Příležitost",
+    "labelAccessibility": "Bezbariérovost"
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",
@@ -3021,7 +3043,33 @@
       "pageSubtitle": "Správa rezervací a nastavení rezervací",
       "tabReservations": "Rezervace",
       "tabSettings": "Nastavení",
-      "depositsSoonDesc": "Vyberte zálohu při rezervaci a omezte neúčast hostů. Brzy jako placený doplněk."
+      "depositsSoonDesc": "Vyberte zálohu při rezervaci a omezte neúčast hostů. Brzy jako placený doplněk.",
+      "partyBreakdown": "Dospělí: {adults}, děti: {children}",
+      "headingBookingQuestions": "Otázky k rezervaci",
+      "descBookingQuestions": "Zeptejte se hostů při rezervaci na několik doplňujících údajů. Odpovědi se zobrazí v kuchyni, v seznamu rezervací, na tištěném lístku a ve vašem e-mailovém upozornění.",
+      "labelSplitParty": "Ptát se zvlášť na dospělé a děti",
+      "helpSplitParty": "Místo jednoho výběru počtu osob se zobrazí samostatná počítadla Dospělí a Děti. Celkový počet hostů i nadále respektuje vámi nastavené minimum a maximum.",
+      "labelChildDefinition": "Kdo se počítá jako dítě",
+      "helpChildDefinition": "Zobrazí se jako malá nápověda pod počítadlem dětí, aby hosté věděli, koho tím myslíte. Vyberte věkovou nebo výškovou hranici, nebo možnost Bez definice, pokud nechcete zobrazovat žádnou nápovědu.",
+      "optionChildDefNone": "Bez definice",
+      "optionChildDefAge": "Do určitého věku",
+      "optionChildDefHeight": "Do určité výšky",
+      "labelChildDefYears": "Děti jsou mladší",
+      "labelChildDefCm": "Děti jsou mladší",
+      "unitYears": "let",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Dětské židličky a kočárky",
+      "helpAskChildSeating": "Hosté, kteří rezervují s dětmi, vám mohou sdělit, kolik dětských židliček potřebují a zda přijdou s kočárkem.",
+      "labelAskAllergies": "Alergie",
+      "helpAskAllergies": "Přidá do rezervačního formuláře nepovinnou otázku na alergie a dietní požadavky.",
+      "labelAskOccasion": "Zvláštní příležitost",
+      "helpAskOccasion": "Umožní hostům sdělit, že něco slaví — narozeniny, výročí, pracovní oběd — abyste se mohli připravit.",
+      "labelAskAccessibility": "Bezbariérové požadavky",
+      "helpAskAccessibility": "Přidá nepovinnou otázku na bezbariérové požadavky, například stůl přístupný bez schodů nebo přístup pro vozíčkáře.",
+      "labelChildSeating": "Sezení pro děti",
+      "labelAllergies": "Alergie",
+      "labelOccasion": "Příležitost",
+      "labelAccessibility": "Bezbariérovost"
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(viz přiložená účtenka objednávky)",
       "date": "Datum",
       "time": "Čas",
-      "confirmationCode": "Potvrzovací kód"
+      "confirmationCode": "Potvrzovací kód",
+      "adultsChildren": "Dospělí: {adults} / Děti: {children}",
+      "labelChildSeating": "Sezení pro děti",
+      "labelAllergies": "Alergie",
+      "labelOccasion": "Příležitost",
+      "labelAccessibility": "Bezbariérovost"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Aktualizace vaší žádosti o rezervaci",
       "badgeMissed": "Zmeškáno",
       "closedNote": "Restaurace má právě zavřeno — vaše žádost o rezervaci čeká ve frontě a jakmile restaurace otevře, dáme vám vědět.",
-      "closedNoteWithTime": "Restaurace je právě zavřená — vaše žádost o rezervaci čeká ve frontě a jakmile restaurace otevře, pošleme vám aktualizaci. Podívejte se do e-mailu: {openingTime}."
+      "closedNoteWithTime": "Restaurace je právě zavřená — vaše žádost o rezervaci čeká ve frontě a jakmile restaurace otevře, pošleme vám aktualizaci. Podívejte se do e-mailu: {openingTime}.",
+      "partyBreakdown": "Dospělí: {adults}, děti: {children}",
+      "labelChildSeating": "Sezení pro děti",
+      "labelAllergies": "Alergie",
+      "labelOccasion": "Příležitost",
+      "labelAccessibility": "Bezbariérovost"
     },
     "newReservation": {
       "preview": "Nová rezervace — {dateTime} · {partySize} os.",
@@ -5548,7 +5606,12 @@
       "subject": "Nová rezervace — {restaurant}",
       "title": "Nová rezervace {status}",
       "body": "{customer} požádal o rezervaci pro {party} hostů dne {date} v {time}.",
-      "confirmationCode": "Potvrzovací kód"
+      "confirmationCode": "Potvrzovací kód",
+      "badgeAdultsChildren": "Dospělí: {adults}, děti: {children}",
+      "labelChildSeating": "Sezení pro děti",
+      "labelAllergies": "Alergie",
+      "labelOccasion": "Příležitost",
+      "labelAccessibility": "Bezbariérovost"
     },
     "passwordReset": {
       "preview": "Obnovte si heslo k účtu {brand}",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Vaše jméno",
       "saveFailed": "Uložení se nezdařilo ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Narozeniny",
+    "occasionAnniversary": "Výročí svatby",
+    "occasionDate": "Romantická schůzka",
+    "occasionFriends": "Setkání s přáteli",
+    "occasionFamily": "Setkání s rodinou",
+    "occasionBusiness": "Pracovní schůzka",
+    "occasionCelebration": "Oslava",
+    "occasionOther": "Jiné",
+    "highChair": "Dětská židlička",
+    "stroller": "Kočárek"
   }
 }

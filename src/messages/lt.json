@@ -635,7 +635,24 @@
     "closedOnDay": "Esame uždaryti šią dieną: {day} — pasirinkite kitą datą.",
     "jumpToNextOpen": "Pereiti prie kitos atviros dienos ({date})",
     "closedPickAnother": "Pasirinktą dieną esame uždaryti — pasirinkite kitą dieną.",
-    "emailRequired": "El. paštas yra privalomas"
+    "emailRequired": "El. paštas yra privalomas",
+    "adults": "Suaugusieji",
+    "children": "Vaikai",
+    "childDefinitionAge": "Iki {n} metų",
+    "childDefinitionHeight": "Iki {n} cm ūgio",
+    "fewerLabel": "Mažiau: {label}",
+    "moreLabel": "Daugiau: {label}",
+    "childSeating": "Vaikai",
+    "highChairQuestion": "Ar reikės vaikiškos kėdutės?",
+    "strollerQuestion": "Ar atsivešite vaikišką vežimėlį?",
+    "allergiesLabel": "Alergijos",
+    "allergiesPlaceholder": "Parašykite apie alergijas ar mitybos poreikius",
+    "occasionLabel": "Ypatinga proga",
+    "occasionSelectPlaceholder": "Nurodykite ypatingą progą",
+    "occasionOtherPlaceholder": "Parašykite, ką švenčiate",
+    "accessibilityLabel": "Pritaikyta neįgaliesiems",
+    "accessibilityPlaceholder": "pvz., patekimas su neįgaliojo vežimėliu, vieta be laiptelių",
+    "commentsPlaceholderGeneric": "Komentarai (neprivaloma) — specialūs pageidavimai"
   },
   "kitchen": {
     "opensIn": "Atsidarys po {time}",
@@ -1059,7 +1076,12 @@
     "pnClose": "Uždaryti",
     "pnCancel": "Atšaukti",
     "pnSaving": "Saugoma…",
-    "pnSaveSettings": "Išsaugoti nustatymus"
+    "pnSaveSettings": "Išsaugoti nustatymus",
+    "partyBreakdown": "Suaugusiųjų: {adults}, vaikų: {children}",
+    "labelChildSeating": "Vaikų sėdimos vietos",
+    "labelAllergies": "Alergijos",
+    "labelOccasion": "Proga",
+    "labelAccessibility": "Prieinamumas"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
@@ -3704,7 +3726,33 @@
       "pageSubtitle": "Tvarkykite rezervacijas ir rezervacijų nustatymus",
       "tabReservations": "Rezervacijos",
       "tabSettings": "Nustatymai",
-      "depositsSoonDesc": "Imkite užstatą rezervuojant, kad sumažintumėte neatvykimus. Netrukus kaip mokamas priedas."
+      "depositsSoonDesc": "Imkite užstatą rezervuojant, kad sumažintumėte neatvykimus. Netrukus kaip mokamas priedas.",
+      "partyBreakdown": "Suaugusiųjų: {adults}, vaikų: {children}",
+      "headingBookingQuestions": "Rezervacijos klausimai",
+      "descBookingQuestions": "Užduokite svečiams kelis papildomus klausimus, kai jie rezervuoja. Atsakymai matomi virtuvėje, rezervacijų sąraše, atspausdintame kvite ir jūsų pranešimo el. laiške.",
+      "labelSplitParty": "Atskirai klausti suaugusiųjų ir vaikų skaičiaus",
+      "helpSplitParty": "Vietoj vieno bendro svečių skaičiaus lauko rodomi atskiri suaugusiųjų ir vaikų skaičiaus laukai. Bendras skaičius ir toliau atitinka jūsų nustatytą minimalų ir maksimalų svečių skaičių.",
+      "labelChildDefinition": "Kas laikoma vaiku",
+      "helpChildDefinition": "Rodoma kaip trumpas paaiškinimas po vaikų skaičiaus lauku, kad svečiai žinotų, ką turite omenyje. Pasirinkite amžiaus arba ūgio ribą arba „Be apibrėžimo“, kad paaiškinimas nebūtų rodomas.",
+      "optionChildDefNone": "Be apibrėžimo",
+      "optionChildDefAge": "Iki tam tikro amžiaus",
+      "optionChildDefHeight": "Iki tam tikro ūgio",
+      "labelChildDefYears": "Vaikai iki",
+      "labelChildDefCm": "Vaikai iki",
+      "unitYears": "metų",
+      "unitCm": "cm",
+      "labelAskChildSeating": "Vaikiškos kėdutės ir vežimėliai",
+      "helpAskChildSeating": "Su vaikais rezervuojantys svečiai galės nurodyti, kiek vaikiškų kėdučių jiems reikia ir ar atsiveš vežimėlį.",
+      "labelAskAllergies": "Alergijos",
+      "helpAskAllergies": "Į rezervacijos formą įtraukia neprivalomą klausimą apie alergijas ir mitybos poreikius.",
+      "labelAskOccasion": "Ypatinga proga",
+      "helpAskOccasion": "Leidžia svečiams pranešti, kad jie švenčia — gimtadienį, sukaktį ar dalykinius pietus — kad galėtumėte pasiruošti.",
+      "labelAskAccessibility": "Prieinamumo poreikiai",
+      "helpAskAccessibility": "Įtraukia neprivalomą klausimą apie prieinamumo poreikius, pvz., vietą be laiptų ar patekimą su neįgaliojo vežimėliu.",
+      "labelChildSeating": "Vaikų sėdimos vietos",
+      "labelAllergies": "Alergijos",
+      "labelOccasion": "Proga",
+      "labelAccessibility": "Prieinamumas"
     },
     "autopilotClient": {
       "pageTitle": "Autopilotas",
@@ -5286,7 +5334,12 @@
       "preOrderHint": "(žr. pridėtą užsakymo kvitą)",
       "date": "Data",
       "time": "Laikas",
-      "confirmationCode": "Patvirtinimo kodas"
+      "confirmationCode": "Patvirtinimo kodas",
+      "adultsChildren": "Suaugusiųjų: {adults} / vaikų: {children}",
+      "labelChildSeating": "Vaikų sėdimos vietos",
+      "labelAllergies": "Alergijos",
+      "labelOccasion": "Proga",
+      "labelAccessibility": "Prieinamumas"
     },
     "scheduling": {
       "asap": "ASAP",
@@ -5529,7 +5582,12 @@
       "subjectDeclined": "Informacija apie jūsų rezervacijos užklausą",
       "badgeMissed": "Praleista",
       "closedNote": "Restoranas šiuo metu uždarytas — jūsų rezervacijos užklausa laukia eilėje, o vos tik restoranas atsidarys, gausite žinutę.",
-      "closedNoteWithTime": "Restoranas šiuo metu uždarytas — jūsų rezervacijos užklausa laukia eilėje, o vos tik restoranas atsidarys, gausite žinutę. Patikrinkite savo el. paštą: {openingTime}."
+      "closedNoteWithTime": "Restoranas šiuo metu uždarytas — jūsų rezervacijos užklausa laukia eilėje, o vos tik restoranas atsidarys, gausite žinutę. Patikrinkite savo el. paštą: {openingTime}.",
+      "partyBreakdown": "Suaugusiųjų: {adults}, vaikų: {children}",
+      "labelChildSeating": "Vaikų sėdimos vietos",
+      "labelAllergies": "Alergijos",
+      "labelOccasion": "Proga",
+      "labelAccessibility": "Prieinamumas"
     },
     "newReservation": {
       "preview": "Nauja rezervacija — {dateTime} · svečių: {partySize}",
@@ -5548,7 +5606,12 @@
       "subject": "Nauja rezervacija — {restaurant}",
       "title": "Nauja rezervacija {status}",
       "body": "{customer} paprašė rezervacijos {party} svečiams {date} {time} val.",
-      "confirmationCode": "Patvirtinimo kodas"
+      "confirmationCode": "Patvirtinimo kodas",
+      "badgeAdultsChildren": "Suaugusiųjų: {adults}, vaikų: {children}",
+      "labelChildSeating": "Vaikų sėdimos vietos",
+      "labelAllergies": "Alergijos",
+      "labelOccasion": "Proga",
+      "labelAccessibility": "Prieinamumas"
     },
     "passwordReset": {
       "preview": "Atkurkite savo {brand} slaptažodį",
@@ -7218,5 +7281,17 @@
       "namePlaceholder": "Jūsų vardas",
       "saveFailed": "Išsaugoti nepavyko ({status})"
     }
+  },
+  "reservationDetails": {
+    "occasionBirthday": "Gimtadienis",
+    "occasionAnniversary": "Vestuvių metinės",
+    "occasionDate": "Romantiškas pasimatymas",
+    "occasionFriends": "Susitikimas su draugais",
+    "occasionFamily": "Susitikimas su šeima",
+    "occasionBusiness": "Verslo susitikimas",
+    "occasionCelebration": "Šventė",
+    "occasionOther": "Kita",
+    "highChair": "Maitinimo kėdutė",
+    "stroller": "Vaikiškas vežimėlis"
   }
 }
