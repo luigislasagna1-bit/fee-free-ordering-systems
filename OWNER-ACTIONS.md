@@ -72,6 +72,20 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A41. 🟡 Google Cloud alert — Function CPU Duration spiked 13× (2026-08-02, ~20:15 UTC)
+Medium-severity anomaly email from Google Cloud, project **fee-free-ordering-systems**: a Cloud
+Function's CPU duration jumped from ~0 hours/5min average (past 7 days) to 0.05 hours in the last
+5 minutes — a 13× spike. **This is NOT code in this repo** — checked, there's no `firebase-functions`
+dependency or Cloud Functions source anywhere in the codebase, so whatever's running is either a
+Firebase Extension (e.g. an image-resize trigger on Storage) or something set up directly in the
+GCP console, outside what I can see or fix from here.
+**YOUR PART:** open **Google Cloud Console → Cloud Functions** (or Firebase Console → Functions) for
+the `fee-free-ordering-systems` project and check which function spiked — the email's "View in
+Dashboard" button should deep-link straight to it. Paste me the function name + a few log lines and
+I'll dig into whether it's something we should worry about (cost impact — sustained CPU spikes bill
+more) or just noise from an infrequent batch job. Sustained CPU spikes are a COSTS.md-relevant signal
+per your standing rule to track anything that could grow the monthly bill.
+
 ### A39. 📱 Branded Mobile App — BUILT (dark); YOUR pilot prerequisites start the clock (2026-08-02)
 The GloriaFood replacement: restaurants pay **$59/mo** and get their own branded ordering app on
 the App Store + Google Play, managed from the dashboard they already use; menu/price changes
