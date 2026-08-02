@@ -93,7 +93,9 @@ app-store cut only if in-app sales ever launch (get Apple Small Business 15% fir
 
 Skool · M365 info@luigislasagna.com · GoDaddy restaurant domains ×4 · ShipDay usage ·
 platform self-subscriptions (wash minus ~$1.50 Stripe cut) · Luigi Bucks goodwill
-(⚠️ "Schedule Tester" still granting $5/day on prod — cleanup ready) ·
+(✅ the feared "$5/day Schedule Tester leak" was ALREADY CLEANED — verified on prod
+2026-08-01; the only live schedule is the INTENDED monthly $20/member VIP-club credit,
+funded by their US$10/mo Skool subs — fired correctly Aug 1 for 8 members) ·
 **GloriaFood zombie — check & cancel** · tablet replacement someday.
 
 ## 6. 💡 THE SAVINGS PLAN (consolidated 2026-08-01 — Luigi: "we'll do them together")
