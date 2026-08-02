@@ -20,10 +20,13 @@ export const dynamic = "force-dynamic";
 
 export default async function RestaurantAccountLoginPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ next?: string }>;
 }) {
   const { slug } = await params;
+  const { next } = await searchParams;
   const restaurant = await prisma.restaurant.findUnique({
     where: { slug },
     select: { id: true, name: true, slug: true, isActive: true },
@@ -34,8 +37,19 @@ export default async function RestaurantAccountLoginPage({
   const messages = await loadMessages(locale);
   const t = createTranslator({ locale, messages, namespace: "customer.loginPage" });
 
+  // CheckoutModal's "Sign in" link carries ?next=/order/<slug> so a customer
+  // signing in mid-checkout lands back on checkout, not a dead end. This
+  // redirect (already-authenticated) used to ignore that param entirely —
+  // a customer who's already signed in but clicks "Sign in" out of habit
+  // (e.g. the header hadn't visibly updated yet) got punted to their
+  // Account page instead, losing their place in checkout and needing an
+  // extra "Back to <restaurant>" hop to return. Only ever redirect to a
+  // same-restaurant relative path — never follow an absolute/external next.
   const existing = await getCurrentRestaurantCustomer({ expectedRestaurantId: restaurant.id });
-  if (existing) redirect(`/order/${slug}/account`);
+  if (existing) {
+    const safeNext = next && next.startsWith(`/order/${slug}`) ? next : `/order/${slug}/account`;
+    redirect(safeNext);
+  }
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
