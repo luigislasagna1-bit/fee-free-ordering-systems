@@ -41,6 +41,7 @@ import {
 } from "./PizzaBuilder";
 import { geocodeAddress, findZoneForPoint, haversineKm, type ZoneLike } from "@/lib/geocode";
 import { isAddressNotLocated } from "@/lib/checkout-address-gate";
+import { readReservationDraft, writeReservationDraft } from "@/lib/reservation-draft-storage";
 import {
   resolveDeliveryAddressConfig,
   DELIVERY_FIELD_KEYS,
@@ -1719,27 +1720,43 @@ export function OrderingPageClient({
   };
 
   // Pick up a booking handed over from the dedicated reservation page
-  // (/order/[slug]/reservation → "Add food to your booking"). One-shot: consume
-  // + clear the sessionStorage key so a refresh doesn't re-enter reservation
-  // mode. Luigi 2026-06-08.
+  // (/order/[slug]/reservation → "Add food to your booking"), and RESTORE it
+  // after any navigation away and back. Luigi 2026-06-08 / fixed 2026-08-02.
+  //
+  // This used to be a one-shot: read the key then delete it, so "a refresh
+  // doesn't re-enter reservation mode". That reasoning was wrong and cost a
+  // real booking — Luigi was mid reserve-then-order, tapped Sign in to use his
+  // Reward Dollars (a FULL page navigation), came back, and the table booking
+  // was gone: the key had already been deleted and the React state died with
+  // the page, so checkout silently placed a plain order with no table. Same
+  // hole for any round trip: sign-in, account page, back button, refresh.
+  //
+  // The draft now lives as long as the ordering session does. Leaving
+  // reservation mode is an explicit act (the banner's dismiss button) or a
+  // placed order — both null the state, and the sync effect below clears the
+  // key with it.
   useEffect(() => {
-    let raw: string | null = null;
-    try { raw = sessionStorage.getItem("ff_reservation_draft"); } catch { /* ignore */ }
-    if (!raw) return;
-    try { sessionStorage.removeItem("ff_reservation_draft"); } catch { /* ignore */ }
-    try {
-      const d = JSON.parse(raw);
-      if (d && typeof d.date === "string" && typeof d.time === "string" && Number.isFinite(d.partySize)) {
-        applyReservationDraft({
-          date: d.date, time: d.time, partySize: Number(d.partySize),
-          name: d.name ?? "", phone: d.phone ?? "", email: d.email ?? "", notes: d.notes ?? "",
-          // Smart buttons (cmsajnvkm) — seam 2: sessionStorage → draft state.
-          adults: d.adults ?? null, children: d.children ?? null, details: d.details ?? null,
-        });
-      }
-    } catch { /* malformed — ignore */ }
+    const d = readReservationDraft(typeof window !== "undefined" ? window.sessionStorage : null);
+    if (!d) return;
+    applyReservationDraft({
+      date: d.date, time: d.time, partySize: Number(d.partySize),
+      name: d.name ?? "", phone: d.phone ?? "", email: d.email ?? "", notes: d.notes ?? "",
+      // Smart buttons (cmsajnvkm) — seam 2: sessionStorage → draft state.
+      adults: d.adults ?? null, children: d.children ?? null,
+      details: (d.details ?? null) as import("@/lib/reservation-details").ReservationDetails | null,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Mirror the live draft into sessionStorage so it survives a navigation.
+  // Skips its own first run: on mount the restore effect above has already
+  // read the key, and its setState hasn't landed yet — writing here would
+  // erase the very draft we're restoring.
+  const draftSyncSkipRef = useRef(true);
+  useEffect(() => {
+    if (draftSyncSkipRef.current) { draftSyncSkipRef.current = false; return; }
+    writeReservationDraft(typeof window !== "undefined" ? window.sessionStorage : null, reservationDraft);
+  }, [reservationDraft]);
   // Default starts at the SUGGESTED amount (15%). Customer can drag the
   // slider or click "No tip" to override. Luigi 2026-05-29.
   // When the restaurant has tipsEnabled=false, force 0 regardless of
@@ -4466,9 +4483,11 @@ export function OrderingPageClient({
       } catch {}
       sessionTokenRef.current = null;
       // Reserve-then-order: the booking went in with the order — leave
-      // reservation mode so a fresh visit starts clean.
+      // reservation mode so a fresh visit starts clean. (The sync effect
+      // clears the stored copy when the state goes null; the direct call
+      // below makes it immediate, before any re-render.)
       setReservationDraft(null);
-      try { sessionStorage.removeItem("ff_reservation_draft"); } catch {}
+      writeReservationDraft(typeof window !== "undefined" ? window.sessionStorage : null, null);
 
       // Reward Dollars: the card/PayPal charge is the total MINUS the credit the
       // server actually applied. When credit covers the whole order there's
