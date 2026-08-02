@@ -96,10 +96,9 @@ sit LOCAL on main — the permission system rightly made the production push Lui
    (all real Milton ones incl. 933 Maple Ave), 4 left null (3 Italian test rows + 1 malformed —
    all still orderable via the new text-geocode gate). Note: Sadaf had NO saved address row —
    the typed-address fix is what covers her.
-3. ☐ **Reply to Sadaf** (the only remaining step) — suggested: "Found it — you did nothing
-   wrong, a change we shipped the night before was too strict about addresses. It's fixed; your
-   address will work as typed now. Your VIP discount is waiting (and your $75 gift is still
-   unclaimed 😉)."
+3. ✅ **Sadaf messaged (2026-08-01 evening)** — A35 FULLY CLOSED: regression fixed, deployed,
+   backfilled, owner-verified live, customer informed. Watch for her next order (her $75 gift
+   is still unclaimed — signing up claims it).
 4. FYI: two follow-up sessions running (AddressBook coord hardening; hardcoded-English strings).
 
 ### A34. 💰 COSTS.md launched — answer the 14 questions + 3 time-critical checks (2026-08-01)
