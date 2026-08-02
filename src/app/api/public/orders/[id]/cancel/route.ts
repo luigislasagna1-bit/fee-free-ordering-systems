@@ -272,6 +272,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     notifyCustomer({
       restaurantId: order.restaurant.id,
       customerEmail: order.customerEmail,
+      customerId: order.customerId ?? null,
       orderType: order.type,
       customerLocale: order.customerLocale || order.restaurant.defaultLanguage || "en",
       payload: {

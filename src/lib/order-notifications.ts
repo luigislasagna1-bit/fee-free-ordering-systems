@@ -244,6 +244,8 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     restaurantId: order.restaurant.id,
     customerEmail: order.customerEmail,
     customerPhone: order.customerPhone,
+    // Branded-app confirmation push rides the same call (2026-08-02).
+    customerId: (order as any).customerId ?? null,
     orderType: order.type,
     // The CUSTOMER's storefront language, persisted at create (cms0gyexp #2).
     // Legacy rows (null) keep the restaurant-default behavior.

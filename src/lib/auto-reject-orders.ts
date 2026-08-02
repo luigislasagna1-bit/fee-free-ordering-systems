@@ -97,6 +97,10 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       customerEmail: true,
       customerName: true,
       customerLocale: true,
+      // Branded-app order-status push keys off the signed-in customer, not
+      // the email/name snapshot — without this the select, `customerId` was
+      // silently always undefined and the missed-order push never fired.
+      customerId: true,
       type: true,
       total: true,
       // Reward Dollars part-payment — the card refund only covers what was
@@ -419,6 +423,7 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       notifyCustomer({
         restaurantId: order.restaurant.id,
         customerEmail: order.customerEmail,
+        customerId: order.customerId ?? null,
         orderType: order.type,
         customerLocale: (order as any).customerLocale || order.restaurant.defaultLanguage || "en",
         payload: {

@@ -10,6 +10,16 @@ import { sanitizeExternalHref } from "@/lib/html-safe";
 import { resolvePoweredByCredit } from "@/lib/white-label";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import { VisitTracker } from "@/components/order/VisitTracker";
+import { SocialIcon, PLATFORM_LABELS, PLATFORM_COLORS, type SocialPlatform } from "@/components/SocialIcons";
+
+/** All platforms the admin Social Media page can save — the single source
+ *  of truth this page's social section renders from (see SOCIAL_PLATFORMS
+ *  usage below). Matches SocialFooter.tsx's PLATFORMS list. */
+const SOCIAL_PLATFORMS: SocialPlatform[] = [
+  "instagram", "facebook", "tiktok", "x", "youtube", "linkedin",
+  "pinterest", "snapchat", "threads", "whatsapp",
+  "yelp", "googleBusiness", "tripadvisor", "website",
+];
 
 /**
  * Force this route dynamic on every request — restaurant owners expect
@@ -320,11 +330,18 @@ export default async function HostedSitePage({
     : null;
 
   // Social link entries the page should render. Skip any with empty/null URLs
-  // so we don't emit empty buttons.
+  // so we don't emit empty buttons. ALL 14 platforms the admin Social Media
+  // page + the ordering-page footer support (Luigi 2026-08-02: this used to
+  // be a hardcoded 5-platform list that also keyed X/Twitter as "twitter"
+  // while everywhere else saves it as "x" — so 9 of 14 platforms were
+  // silently unsupported here and even X never matched. SOCIAL_PLATFORMS is
+  // the single source of truth, shared with SocialFooter.tsx.
   const socials = r.socialLinks
-    ? (["facebook", "instagram", "twitter", "youtube", "website"] as const)
+    ? SOCIAL_PLATFORMS
         .map((key) => ({ key, url: (r.socialLinks as Record<string, unknown>)?.[key] }))
-        .filter((s): s is { key: typeof s.key; url: string } => typeof s.url === "string" && s.url.length > 0)
+        .filter((s): s is { key: SocialPlatform; url: string } => typeof s.url === "string" && s.url.length > 0)
+        .map((s) => ({ ...s, url: sanitizeExternalHref(s.url) }))
+        .filter((s) => s.url.length > 0)
     : [];
 
   // Sticky-nav anchor link list — only emit links for sections that will
@@ -712,7 +729,7 @@ export default async function HostedSitePage({
           <div className="mt-2 flex justify-center">
             <span className="inline-block w-12 h-1 rounded" style={{ background: themeColor }} />
           </div>
-          <p className="mt-6 text-gray-700 leading-relaxed whitespace-pre-line text-center md:text-left">
+          <p className="mt-6 text-gray-700 leading-relaxed whitespace-pre-line text-center">
             {r.description}
           </p>
         </section>
@@ -900,7 +917,18 @@ export default async function HostedSitePage({
             {s.sections.social && socials.length > 0 && (
               <div className="mt-6 flex flex-wrap gap-2">
                 {socials.map((sl) => (
-                  <SocialIconLink key={sl.key} url={sl.url} kind={sl.key} />
+                  <a
+                    key={sl.key}
+                    href={sl.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${PLATFORM_LABELS[sl.key]} link`}
+                    title={PLATFORM_LABELS[sl.key]}
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full hover:scale-110 transition-transform shadow-sm"
+                    style={{ background: PLATFORM_COLORS[sl.key] }}
+                  >
+                    <SocialIcon platform={sl.key} branded={false} className="w-5 h-5 text-white" />
+                  </a>
                 ))}
               </div>
             )}
@@ -1313,50 +1341,8 @@ function StickyOrderCta({ href, label, themeColor }: { href: string; label: stri
   );
 }
 
-/**
- * Brand-themed monogram button for a social link.
- *
- * Lucide-react removed the actual brand glyphs (Facebook/Instagram/Twitter/
- * YouTube) in v0.474+ for trademark reasons, and depending on a separate
- * @lucide/lab package just for these is overkill. Instead we render a
- * circular badge with the platform's recognizable color + a monogram
- * letter (f for Facebook, Ig for Instagram, X for Twitter, YT for
- * YouTube). Website uses the Lucide Globe (no trademark).
- *
- * Works visually because the colors carry the brand recognition:
- * everyone knows Facebook blue + IG gradient + Twitter/X dark + YouTube
- * red on sight.
- */
-function SocialIconLink({ url, kind }: { url: string; kind: "facebook" | "instagram" | "twitter" | "youtube" | "website" }) {
-  const labels: Record<typeof kind, string> = {
-    facebook: "Facebook",
-    instagram: "Instagram",
-    twitter: "Twitter / X",
-    youtube: "YouTube",
-    website: "Website",
-  };
-  // Per-platform recognizable styling. Background colors mirror each
-  // brand's primary color so the badges are instantly identifiable
-  // without literal logos.
-  const style: Record<typeof kind, { bg: string; fg: string; label: React.ReactNode }> = {
-    facebook:  { bg: "#1877F2", fg: "#ffffff", label: <span className="font-extrabold text-[15px]" style={{ fontFamily: "Georgia, serif" }}>f</span> },
-    instagram: { bg: "linear-gradient(135deg,#FCAF45 0%,#E1306C 50%,#833AB4 100%)", fg: "#ffffff", label: <span className="font-bold text-[10px] tracking-tight">IG</span> },
-    twitter:   { bg: "#0F1419", fg: "#ffffff", label: <span className="font-extrabold text-[14px]">𝕏</span> },
-    youtube:   { bg: "#FF0000", fg: "#ffffff", label: <span className="font-bold text-[10px] tracking-tight">▶</span> },
-    website:   { bg: "#1F2937", fg: "#ffffff", label: <Globe className="w-4 h-4" /> },
-  };
-  const s = style[kind];
-  return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`${labels[kind]} link`}
-      title={labels[kind]}
-      className="inline-flex items-center justify-center w-10 h-10 rounded-full hover:scale-110 transition-transform shadow-sm"
-      style={{ background: s.bg, color: s.fg }}
-    >
-      {s.label}
-    </a>
-  );
-}
+// The circular monogram-badge social link renderer that used to live here
+// (Facebook/Instagram/Twitter/YouTube/Website only) is replaced by the
+// shared <SocialIcon> from @/components/SocialIcons — full 14-platform
+// hand-drawn SVG set (no trademark-icon-library dependency), same one the
+// ordering-page footer uses. See the `socials` derivation above.

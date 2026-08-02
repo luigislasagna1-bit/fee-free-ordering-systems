@@ -9,6 +9,7 @@ import { useCurrencyFormat } from "@/lib/currency-context";
 import { computeApplied } from "@/lib/reward-math";
 import { childBuildLines } from "@/lib/bundle-child-lines";
 import { groupBundleChildren } from "@/lib/bundle-child-groups";
+import { isNativeShell } from "@/lib/native-shell";
 import { pickHoursForService } from "@/lib/service-hours";
 import { rowIntervals } from "@/lib/restaurant-hours";
 import { parseTheme } from "@/lib/theme";
@@ -1989,6 +1990,14 @@ export function CheckoutModal({
                       acceptedMethods.includes(p.slug) &&
                       !(p.slug === "online_card" && !cardPaymentEnabled) &&
                       !(p.slug === "paypal" && !paypalEnabled) &&
+                      // Branded-app shell: PayPal's approval flow is a hard
+                      // main-frame redirect to paypal.com, which a Capacitor
+                      // WebView (no allowNavigation, by ADR) punts to the
+                      // system browser with no way back into the checkout —
+                      // the customer would strand mid-payment. Hidden in the
+                      // shell until the v1.1 Browser.open + app-link return
+                      // flow ships; cards work fully in-shell. 2026-08-02.
+                      !(p.slug === "paypal" && isNativeShell()) &&
                       // ShipDay-dispatched delivery: at-door methods are never
                       // offered — the driver can't collect (Luigi 2026-07-04).
                       !(prepaidDeliveryOnly && (p.slug === "cash" || p.slug === "card_in_person")),

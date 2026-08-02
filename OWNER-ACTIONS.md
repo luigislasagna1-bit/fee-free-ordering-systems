@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-02 (late) by Claude (**A37 — Fabrizio's reservation "smart buttons" BUILT** exactly to his Restoo reference: optional Adults/Children counters with the restaurant's own child definition as a hint, plus Children (high chairs/strollers) · Allergies · Special occasion · Accessible chips, flowing to kitchen + admin + CSV + printed slip + both emails; new "Booking questions" settings card with ⓘ help. Everything defaults OFF so nobody's form changes until they opt in. 31 new tests, schema on both branches, ×38 translations in flight. Needs Luigi's try-it pass, then the reply. Earlier today: A36 Max's slice fixes verified, A35 Sadaf's checkout regression shipped, A34 cost ledger.)
+**Last updated:** 2026-08-02 by Claude (**A39 — Branded Mobile App BUILT dark**: the $59/mo GloriaFood-replacement add-on — per-restaurant apps on both stores, remote-synced menus, resumable wizard, superadmin pipeline, customer order-status push, white-label build tooling with a REAL signed Android app already produced from wizard config. Luigi's three pilot chores are the clock-starter, Apple account check first. Same day: A38 combos shipped.)
+**Previous update:** 2026-08-02 (late) by Claude (**A37 — Fabrizio's reservation "smart buttons" BUILT** exactly to his Restoo reference: optional Adults/Children counters with the restaurant's own child definition as a hint, plus Children (high chairs/strollers) · Allergies · Special occasion · Accessible chips, flowing to kitchen + admin + CSV + printed slip + both emails; new "Booking questions" settings card with ⓘ help. Everything defaults OFF so nobody's form changes until they opt in. 31 new tests, schema on both branches, ×38 translations in flight. Needs Luigi's try-it pass, then the reply. Earlier today: A36 Max's slice fixes verified, A35 Sadaf's checkout regression shipped, A34 cost ledger.)
 **Previous update:** 2026-08-01 (evening) by Claude (**A35 — Sadaf's checkout dead-end: root-caused to the 2026-07-31 address gate (b2648ac7), fixed, tested, browser-verified; TWO LOCAL COMMITS AWAIT LUIGI'S PUSH** — then the address backfill, then reply to Sadaf. Same day, earlier: A34 cost audit complete, cut-costs plan parked.)
 **Previous update:** 2026-08-01 by Claude (**A34 — COSTS.md is live + first real invoices folded in.** Luigi asked for all monthly recurring costs tracked + a monthly update; a 6-agent audit built repo-root `COSTS.md`, then Luigi's Neon + Google Cloud invoices corrected it: platform infra is **≈US$100–115/mo actual** (Neon $42.65 + Google Maps ≈CA$44 + Vercel $20 + usage), NOT the $25–45 first estimated — both "probably free tier" guesses were wrong. Scope locked to platform-only (Skool = restaurant cost, excluded). 🔥 MOST URGENT: **Visa ••••6979 is DECLINING at both Neon and Google** — unpaid balances threaten the prod DB and the Maps key (A34 step 0). Also: verify the OLD-team Apple renewal (~Aug 3); GloriaFood zombie; "Schedule Tester" still granting $5/day. Standing rule: every cost discussion now includes savings ideas — top two: Neon compute (order-page cache + autoscaling floor, $42→~$22) and Maps SKU audit (up to –CA$44). Monthly auto-update scheduled for the 1st.)
 **Previous update:** 2026-07-31 by Claude (**A30 — Luigi Bucks gifting money bugs + teaching emails.** From Luigi's Faisal test: his $40 is PENDING (no wallet, nothing spendable) and the $47.62 on screen was Luigi's OWN balance, which would have paid for an order recorded to Faisal. Fixed: a signed-in customer now owns their orders (kills the value transfer AND a once-per-lifetime reuse hole); refunds no longer credit the wrong wallet on a split order (4 tests, proven against the old code); marketplace signups now claim pending gifts instead of stranding them; both gift emails now TEACH in three numbered steps; one unredeemed gift per guest; ✉ resend button. ⚠️ A hole Claude introduced earlier the same session — typed email = wallet access, i.e. anyone could spend your balance by knowing your address — was caught and reverted before any push. Still to build: spending a gift with NO account, designed in DESIGN-gift-wallet-pass.md.)
@@ -69,6 +70,33 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A39. 📱 Branded Mobile App — BUILT (dark); YOUR pilot prerequisites start the clock (2026-08-02)
+The GloriaFood replacement: restaurants pay **$59/mo** and get their own branded ordering app on
+the App Store + Google Play, managed from the dashboard they already use; menu/price changes
+appear in the app instantly with **no store re-review**. Everything is built and tested but
+**hidden behind "Coming soon"** until YOUR restaurant's pilot app is live on both stores — we
+don't sell what we haven't shipped ourselves. (Why now: GloriaFood retires branded apps
+**April 30, 2027** — every restaurant on their program becomes a prospect.)
+
+**YOUR PART — three account chores; #1 is the long pole (weeks), so start it first:**
+1. 🤔 **Check your Apple Developer situation.** Your GloriaFood screenshots show their branded-app
+   flow mid-setup (step 1/8) — that flow normally creates an Apple Developer account **owned by
+   your restaurant**. Log into https://developer.apple.com with your restaurant email and tell
+   Claude what you see: an active membership means we REUSE it (saves weeks + $99); nothing means
+   we enroll fresh (needs a D-U-N-S number for the restaurant's legal entity — Claude will walk
+   you through it, it's free but slow). ⚠️ This is separate from Fee Free's own Apple account (A17).
+2. ☐ **Create the Google Play org account for your restaurant** ($25 one-time) at
+   https://play.google.com/console/signup — pick **Organization**, use the restaurant's legal
+   info. Identity verification can take a few days. Then invite Claude's publishing address as
+   Admin (Claude will give you the exact email when you're there).
+3. 🔷 **~10 min WITH Claude once #1 resolves:** generate the App Store Connect API key + APNs
+   push key from your Apple account (Claude guides every click; the keys land encrypted in the
+   platform, never in plain text).
+Your wizard is already waiting: Admin → Mobile App (Claude granted your store the add-on free —
+you're the pilot; it stays free for you). Runbooks in the repo: `PLAY_STORE_SUBMISSION_CUSTOMER.md`,
+`APPLE_SUBMISSION_CUSTOMER.md`, `docs/CUSTOMER_APP_PIPELINE.md`. The Android build is already
+proven — a real signed store-ready app was produced from the demo store's wizard config.
 
 ### A38. 🍕 Combos: pick-4-at-once + SHARED toppings across pizzas — BUILT (2026-08-02)
 Your two asks, modeled on the GloriaFood/Uber screenshots you sent, in one release:

@@ -282,6 +282,40 @@ export async function notifyResellerRestaurantAssigned(
  * real state transition (activated = first time it goes active; cancelled =
  * the subscription actually ends). Best-effort; never throws.
  */
+/**
+ * A restaurant owner approved their Branded Mobile App config — a platform
+ * project is waiting for store-access verification. Superadmin-only (the
+ * owner gets localized status emails from src/lib/branded-app/notify.ts).
+ * Best-effort; never throws.
+ */
+export async function notifyBrandedAppSubmitted(
+  restaurantId: string,
+  platform: string,
+): Promise<void> {
+  let r: { id: string; name: string } | null = null;
+  try {
+    r = await prisma.restaurant.findUnique({
+      where: { id: restaurantId },
+      select: { id: true, name: true },
+    });
+  } catch (e) {
+    console.error("[platform-notifications] branded-app lookup failed", e);
+    return;
+  }
+  if (!r) return;
+  const sa = await superadminAudience();
+  await dispatch(sa, {
+    kind: "branded_app_submitted",
+    inAppTitle: `Branded app submitted (${platform}): ${r.name}`,
+    link: `/superadmin/branded-apps`,
+    emailSubject: `Branded app ready for verification: ${r.name}`,
+    emailTitle: "A restaurant approved their branded app setup",
+    emailSubtitle: `${r.name} — ${platform}`,
+    emailBody: `${r.name} completed the Branded Mobile App wizard for ${platform}. Verify their store-account access in the superadmin panel, then move the project to Building.`,
+    emailCtaLabel: "Open branded-app queue",
+  });
+}
+
 export async function notifyAddOnChange(
   restaurantId: string,
   addOn: { slug: string; name: string },

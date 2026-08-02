@@ -20,7 +20,7 @@
 import jwt from "jsonwebtoken";
 import prisma from "@/lib/db";
 
-interface ServiceAccount {
+export interface ServiceAccount {
   projectId: string;
   clientEmail: string;
   privateKey: string;
@@ -29,7 +29,9 @@ interface ServiceAccount {
 // undefined = not parsed yet; null = absent/invalid (→ every send is a no-op).
 let saCache: ServiceAccount | null | undefined;
 
-function getServiceAccount(): ServiceAccount | null {
+// Exported for src/lib/customer-push.ts (branded-app customer pushes) so the
+// FCM auth flow lives ONCE. Kitchen behavior unchanged. 2026-08-02.
+export function getServiceAccount(): ServiceAccount | null {
   if (saCache !== undefined) return saCache;
   const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
   if (!raw || !raw.trim()) {
@@ -60,7 +62,8 @@ function getServiceAccount(): ServiceAccount | null {
 // Cache the OAuth2 access token (~1h life) across invocations of a warm lambda.
 let tokenCache: { token: string; exp: number } | null = null;
 
-async function getAccessToken(sa: ServiceAccount): Promise<string | null> {
+// Exported for src/lib/customer-push.ts — see getServiceAccount note.
+export async function getAccessToken(sa: ServiceAccount): Promise<string | null> {
   const now = Math.floor(Date.now() / 1000);
   if (tokenCache && tokenCache.exp - 60 > now) return tokenCache.token;
   let assertion: string;

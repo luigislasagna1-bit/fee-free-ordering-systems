@@ -68,3 +68,31 @@ android/app/src/main/assets/public/
 
 # Database backups — contain PII, never commit (launch-readiness C-2)
 backups/
+
+# Branded Mobile App per-tenant build artifacts (generated per build; the
+# committed template is apps/customer-shell/ — tenant identity is injected at
+# build time and must never be committed)
+capacitor.customer.config.ts
+store-assets/customer-builds/
+apps/customer-shell/android/.gradle
+apps/customer-shell/android/local.properties
+apps/customer-shell/android/app/build
+apps/customer-shell/android/app/google-services.json
+apps/customer-shell/android/app/src/main/assets/public/
+apps/customer-shell/android/keystore.properties
+apps/customer-shell/ios/App/build
+apps/customer-shell/ios/App/App/public/
+apps/customer-shell/ios/App/App/GoogleService-Info.plist
+apps/customer-shell/*.jks
+# Per-tenant generated icons/splash/brand-color (gen-customer-assets.js
+# overwrites these every build with THE LAST TENANT BUILT's branding — they
+# must never land in the committed template, or whichever tenant built last
+# silently becomes the fleet's fallback branding for anyone who skips
+# asset regeneration). values/strings.xml, styles.xml, layout/, xml/ stay
+# tracked — those are genuinely static template files.
+apps/customer-shell/android/app/src/main/res/mipmap-*/
+apps/customer-shell/android/app/src/main/res/values/ic_launcher_background.xml
+apps/customer-shell/android/app/src/main/res/drawable/splash.png
+apps/customer-shell/android/app/src/main/res/drawable-land-*/splash.png
+apps/customer-shell/android/app/src/main/res/drawable-port-*/splash.png
+apps/customer-shell/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png

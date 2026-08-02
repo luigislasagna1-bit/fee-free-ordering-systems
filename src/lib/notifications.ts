@@ -40,6 +40,7 @@ import {
 } from "@/lib/email";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 import { sendSms } from "@/lib/sms";
+import { sendCustomerPush, customerWantsOrderPush } from "@/lib/customer-push";
 import { hasFeature } from "@/lib/entitlements";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { signActionToken } from "@/lib/order-status-token";
@@ -614,6 +615,12 @@ export async function notifyCustomer(args: {
    *  confirmed, accepted, ready, rejected). Falls back silently when
    *  Twilio isn't configured — same as the email-only path. */
   customerPhone?: string | null;
+  /** Optional Customer.id — when provided AND the restaurant has the
+   *  branded_mobile_app add-on (app_store_listing), an order-status PUSH
+   *  goes to the customer's registered app devices alongside the email,
+   *  gated by their push preference. Same silent-fallback philosophy as
+   *  SMS. Luigi 2026-08-02. */
+  customerId?: string | null;
   customerLocale?: string;
   orderType?: string;
   payload: CustomerEventPayload;
@@ -696,6 +703,32 @@ export async function notifyCustomer(args: {
     }
   };
 
+  // Branded-app push closure — the customer sibling of fireSms, riding the
+  // SAME localized short-message builder so push/SMS wording never diverges.
+  // Gates: branded_mobile_app entitlement + the customer's orderUpdates pref.
+  // Fire-and-forget: a push failure must never affect the email result.
+  // Luigi 2026-08-02.
+  const firePush = async () => {
+    if (!args.customerId) return;
+    try {
+      if (!(await hasFeature(restaurantId, "app_store_listing"))) return;
+      if (!(await customerWantsOrderPush(args.customerId))) return;
+      const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h");
+      if (!body) return;
+      const data: Record<string, string> = {};
+      if ("trackingUrl" in payload && typeof payload.trackingUrl === "string" && payload.trackingUrl) {
+        data.url = payload.trackingUrl;
+      }
+      await sendCustomerPush(restaurantId, args.customerId, {
+        title: restaurant.name,
+        body,
+        data,
+      });
+    } catch (e) {
+      console.error("[notifyCustomer push] threw:", e);
+    }
+  };
+
   switch (payload.event) {
     case "orderConfirmed": {
       if (!restaurant.customerEmailOrderConfirm) return { sent: false, reason: "toggle off" };
@@ -746,6 +779,7 @@ export async function notifyCustomer(args: {
         });
       });
       await fireSms();
+      await firePush();
       return { sent: true, smsSent: smsDispatched };
     }
     case "orderStatusUpdate": {
@@ -812,6 +846,7 @@ export async function notifyCustomer(args: {
         });
       });
       await fireSms();
+      await firePush();
       return { sent: true, smsSent: smsDispatched };
     }
     case "orderDelayed": {
@@ -835,6 +870,7 @@ export async function notifyCustomer(args: {
         });
       });
       await fireSms();
+      await firePush();
       return { sent: true, smsSent: smsDispatched };
     }
     case "reservationConfirmation": {
@@ -887,6 +923,7 @@ export async function notifyCustomer(args: {
         });
       });
       await fireSms();
+      await firePush();
       return { sent: true, smsSent: smsDispatched };
     }
   }

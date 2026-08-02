@@ -1,0 +1,130 @@
+apply plugin: 'com.android.application'
+
+/**
+ * Branded Mobile App — CUSTOMER SHELL template (Luigi 2026-08-02).
+ *
+ * ONE committed native tree serves EVERY restaurant: tenant identity is
+ * injected at build time via -P properties (never edit identity here):
+ *
+ *   ./gradlew bundleRelease \
+ *     -PffApplicationId=com.luigislasagna.orderapp \
+ *     -PffVersionCode=12 -PffVersionName=1.2.0 \
+ *     -PffAppName="Luigi's Lasagna" \
+ *     -PffDeepLinkHost=luigislasagna.com
+ *
+ * The build orchestrator (scripts/build-customer-android.mjs) supplies these
+ * from the tenant's build manifest. `namespace` stays CONSTANT (it's the
+ * R-class package, not the app identity); applicationId is the identity.
+ */
+def ffApplicationId = project.hasProperty('ffApplicationId') ? project.property('ffApplicationId') : 'com.feefreeordering.customer.template'
+def ffVersionCode  = project.hasProperty('ffVersionCode')  ? project.property('ffVersionCode').toInteger() : 1
+def ffVersionName  = project.hasProperty('ffVersionName')  ? project.property('ffVersionName') : '1.0.0'
+// Tenant display name comes via ENV VAR (FF_APP_NAME), not a -P property —
+// build-customer-android.mjs sets it that way deliberately: the orchestrator
+// runs gradlew with shell:true (Windows .bat requirement), and a -P value on
+// the command line is re-parsed by cmd.exe's OWN syntax (&, |, ^, etc.)
+// before we ever see it. An env var's value is never re-parsed like that.
+// -PffAppName stays as a manual-build fallback (e.g. running gradlew by hand).
+def ffAppName      = System.getenv('FF_APP_NAME') ?: (project.hasProperty('ffAppName') ? project.property('ffAppName') : 'Fee Free Customer Shell')
+def ffDeepLinkHost = project.hasProperty('ffDeepLinkHost') ? project.property('ffDeepLinkHost') : 'feefreeordering.com'
+
+// Per-tenant upload keystore, dropped in as keystore.properties by the build
+// orchestrator. Same defensive pattern as android-driver/app/build.gradle:
+// WITHOUT this file bundleRelease silently produces a DEBUG-signed .aab the
+// Play Console rejects — the exact trap the Kitchen app hit on 2026-06-18.
+def keystoreProps = new Properties()
+def keystorePropsFile = rootProject.file('keystore.properties')
+if (keystorePropsFile.exists()) {
+    keystoreProps.load(new FileInputStream(keystorePropsFile))
+}
+
+android {
+    // Constant across all tenants — applicationId below is the real identity.
+    namespace = "com.feefreeordering.customershell"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId ffApplicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode ffVersionCode
+        versionName ffVersionName
+        // App-links autoVerify host — baked into the manifest intent filter.
+        manifestPlaceholders = [ffDeepLinkHost: ffDeepLinkHost]
+        // Launcher label — every tenant sees THEIR restaurant's name.
+        // Android string resources require apostrophes escaped (\') — a name
+        // like "Luigi's Lasagna" otherwise fails AAPT resource flattening.
+        // AGP writes resValue's string verbatim into a GENERATED XML file
+        // (app/build/generated/res/resValues/.../gradleResValues.xml) — it
+        // does NOT XML-escape it. A restaurant name with an unescaped "&" or
+        // "<" (e.g. "Rico & Sons Pizza" — an entirely ordinary name) breaks
+        // the resource merger for every build, and a crafted name can inject
+        // arbitrary XML into that generated file. XML-entity-escape FIRST,
+        // then apply Android string-resource escaping (backslash/quotes) —
+        // neither introduces characters the other pass needs to re-escape.
+        def ffAppNameXml = ffAppName
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("\\", "\\\\")
+            .replace("'", "\\'")
+            .replace('"', "\\\"")
+        resValue "string", "app_name", ffAppNameXml
+        resValue "string", "title_activity_main", ffAppNameXml
+        // Capacitor plugin strings, injected so the committed strings.xml
+        // stays tenant-free.
+        resValue "string", "package_name", ffApplicationId
+        resValue "string", "custom_url_scheme", ffApplicationId
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    signingConfigs {
+        release {
+            if (keystorePropsFile.exists()) {
+                storeFile file(keystoreProps['storeFile'])
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+            }
+        }
+    }
+    buildTypes {
+        release {
+            if (keystorePropsFile.exists()) {
+                signingConfig signingConfigs.release
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

@@ -160,6 +160,7 @@ export async function POST(
       restaurantId: order.restaurant.id,
       customerEmail: order.customerEmail,
       customerPhone: order.customerPhone,
+      customerId: (order as any).customerId ?? null,
       orderType: order.type,
       customerLocale: (order as any).customerLocale || order.restaurant.defaultLanguage || "en",
       payload: {

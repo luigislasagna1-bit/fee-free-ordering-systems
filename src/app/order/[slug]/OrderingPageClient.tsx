@@ -64,6 +64,7 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { SocialFooter } from "./SocialFooter";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import type { PoweredByCredit as PoweredByCreditValue } from "@/lib/white-label";
+import { isNativeShell } from "@/lib/native-shell";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -1517,16 +1518,25 @@ export function OrderingPageClient({
   // card-only by platform rule. Reactive to orderType so switching the order
   // type re-filters the checkout's payment options. See lib/payment-methods.ts.
   const acceptedMethods = useMemo(() => {
-    if (searchParams.get("from") === "marketplace") return ["online_card"];
+    // PayPal is unusable inside the branded-app WebView shell (its redirect
+    // punts to the system browser with no way back — no allowNavigation by
+    // ADR — stranding mid-payment). Filtering it OUT HERE, not just in the
+    // picker UI, is what actually prevents it: this is the value
+    // defaultPaymentMethod, the acceptedMethods-drift re-sync guard (below),
+    // and placeOrder()'s payment branch all key off — a picker-only filter
+    // left every one of those still able to select/keep/submit "paypal".
+    const stripPaypalInShell = (methods: string[]) =>
+      isNativeShell() ? methods.filter((m) => m !== "paypal") : methods;
+    if (searchParams.get("from") === "marketplace") return stripPaypalInShell(["online_card"]);
     const methods = methodsForOrderType(paymentMethodsRaw, orderType);
     // ShipDay-dispatched delivery MUST be prepaid online (Luigi 2026-07-04):
     // the driver only picks up + drops off — nobody collects cash or taps a
     // card at the door. Strip at-door methods for delivery; the server
     // enforces the same rule (code delivery_prepaid_required).
     if (shipdayPrepaidDelivery && orderType === "delivery") {
-      return methods.filter((m) => m === "online_card" || m === "paypal");
+      return stripPaypalInShell(methods.filter((m) => m === "online_card" || m === "paypal"));
     }
-    return methods;
+    return stripPaypalInShell(methods);
   }, [searchParams, paymentMethodsRaw, orderType, shipdayPrepaidDelivery]);
   const defaultPaymentMethod =
     acceptedMethods.includes("cash")

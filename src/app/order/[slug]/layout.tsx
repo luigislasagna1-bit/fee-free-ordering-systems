@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import prisma from "@/lib/db";
 import { parseTheme, DEFAULT_THEME } from "@/lib/theme";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
+import { NativeShellBoot } from "@/components/NativeShellBoot";
 
 /**
  * Per-restaurant browser-tab branding for the WHOLE order flow. This lives on the
@@ -90,10 +91,19 @@ export async function generateViewport(
   };
 }
 
-export default function OrderLayout({ children }: { children: React.ReactNode }) {
+export default async function OrderLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   return (
     <>
       <ServiceWorkerRegister />
+      {/* Branded-app shell bootstrap — no-op outside the Capacitor shell. */}
+      <NativeShellBoot slug={slug} />
       {children}
     </>
   );

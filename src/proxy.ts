@@ -104,7 +104,13 @@ export const config = {
     // Plus the original named exclusions for paths that don't carry a
     // file extension but should still skip the proxy (api, _next,
     // service worker, PWA manifests).
-    "/((?!api|_next/|_static|.*\\.(?:svg|png|jpe?g|gif|webp|avif|ico|css|js|mjs|woff2?|ttf|eot|map|json|txt|xml|mp3|wav|ogg|mp4|webm|pdf)$|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
+    // `.well-known/` added 2026-08-02: apple-app-site-association has no file
+    // extension, so without this the proxy would rewrite it on branded hosts
+    // into /order/<slug>/.well-known/... and iOS universal-link verification
+    // for the Branded Mobile App would silently fail. assetlinks.json was
+    // already safe via the .json exclusion; excluding the whole directory
+    // keeps both served by their dynamic routes on every host.
+    "/((?!api|_next/|_static|\\.well-known/|.*\\.(?:svg|png|jpe?g|gif|webp|avif|ico|css|js|mjs|woff2?|ttf|eot|map|json|txt|xml|mp3|wav|ogg|mp4|webm|pdf)$|manifest-order.webmanifest|manifest-kitchen.webmanifest|sw\\.js|offline\\.html|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
   ],
 };
 

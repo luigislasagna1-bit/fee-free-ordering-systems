@@ -19,6 +19,7 @@ import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session"
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { LogoutButton } from "./LogoutButton";
 import { ProfileEditor } from "./ProfileEditor";
+import { PushPrefsToggle } from "./PushPrefsToggle";
 import { OrderAgainButton } from "./OrderAgainButton";
 import { AddressBook } from "./AddressBook";
 import { RewardActivityList } from "./RewardActivityList";
@@ -265,6 +266,9 @@ export default async function RestaurantAccountDashboard({
                   initialPhone={me.phone ?? null}
                   initialMarketingConsent={me.marketingConsent ?? false}
                 />
+                {/* Branded-app push toggle — self-hides for web-only customers
+                    (renders only when an app device is registered). 2026-08-02. */}
+                <PushPrefsToggle slug={slug} />
               </div>
             </div>
             <LogoutButton slug={slug} />

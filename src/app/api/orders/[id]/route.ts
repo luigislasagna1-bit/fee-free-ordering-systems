@@ -819,6 +819,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
           restaurantId: order.restaurant.id,
           customerEmail: order.customerEmail,
           customerPhone: order.customerPhone,
+          // Branded-app order-status push rides the same call (2026-08-02).
+          customerId: (order as any).customerId ?? null,
           orderType: order.type,
           customerLocale: (order as any).customerLocale || order.restaurant.defaultLanguage || "en",
           payload: {

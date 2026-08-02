@@ -519,6 +519,8 @@ model Restaurant {
   shipdayConfig          ShipdayConfig?
   // FeeFreeDelivery (in-house driver pool) — see models near ShipdayConfig.
   feefreeDeliveryConfig  FeeFreeDeliveryConfig?
+  // Branded Mobile App add-on project — see models near KitchenPushToken.
+  brandedAppProject      BrandedAppProject?
   homeDrivers            Driver[]             @relation("DriverHomeRestaurant")
   deliveryAssignments    DeliveryAssignment[]
   deliverySettlements    DeliverySettlement[]
@@ -1720,6 +1722,8 @@ model Customer {
   vipSpecialTargets CustomerGroupPromotion[]
   rewardAccounts    RewardAccount[]
   vipSchedules      VipSchedule[]
+  pushTokens        CustomerPushToken[]
+  pushPref          CustomerPushPref?
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -4459,4 +4463,240 @@ model KitchenPushToken {
   lastSeenAt   DateTime @default(now())
 
   @@index([restaurantId])
+}
+
+// ─── Branded Mobile App add-on (Luigi 2026-08-02) ───────────────────────────
+// White-label per-restaurant customer apps on the App Store / Play Store.
+// The $59/mo `branded_mobile_app` add-on (billing rides the existing
+// RestaurantAddOn machinery untouched) grants access to the setup wizard at
+// /admin/mobile-app; these tables carry the FULFILLMENT project — a weeks-long
+// state machine with external dependencies (restaurant-owned store accounts,
+// Apple/Google review). Billing entitlement and publication status are
+// deliberately SEPARATE: subscription-active-with-no-published-app is the
+// normal setup window. Store-policy constraints that shaped this design:
+// Apple 4.2.6 requires each restaurant's OWN Apple Developer org account to
+// submit; Google white-label guidance recommends restaurant-owned Play org
+// accounts (Luigi chose them). Secrets NEVER live in these tables in
+// plaintext — the credential table uses the platform encrypt() scheme.
+
+/// One per restaurant — the wizard's persisted state + the approved config
+/// snapshot the build pipeline consumes. Store copy and icon are genuinely
+/// app-specific; theme/logo default to the restaurant's existing branding
+/// (useWebsiteBranding) so most owners configure almost nothing.
+model BrandedAppProject {
+  id           String     @id @default(cuid())
+  restaurantId String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// Public app display name (3–30 chars — both stores cap at 30).
+  appName          String?
+  /// Play short description (≤80 chars) / iOS subtitle source.
+  shortDescription String?
+  /// Full store description (≤4000 chars). Generated suggestion from real
+  /// restaurant data, owner-edited — never identical across restaurants
+  /// (store repetitive-content policy).
+  fullDescription  String?
+  /// Master 1024×1024 opaque PNG (Vercel Blob URL). Build pipeline derives
+  /// every store/launcher variant from this single source.
+  appIconUrl       String?
+  /// Optional splash logo override; null = derive from appIconUrl.
+  splashIconUrl    String?
+  /// Optional Play feature graphic 1024×500; null = pipeline auto-generates
+  /// from icon + brand color.
+  featureGraphicUrl String?
+  /// When true (default) the build pulls colors/logo from the restaurant's
+  /// existing themeSettings/logoUrl at build time; explicit overrides below.
+  useWebsiteBranding Boolean @default(true)
+  primaryColorHex    String?
+  /// Support + legal surfaces required by both stores.
+  supportEmail     String?
+  privacyPolicyUrl String?
+  /// "android" | "ios" | "both" — what the owner selected in the wizard.
+  platformsRequested String @default("both")
+
+  /// Owner approval snapshot: the EXACT config version the pipeline builds
+  /// from. Post-approval edits bump the version and require re-approval.
+  approvedAt            DateTime?
+  approvedByUserId      String?
+  approvedConfig        Json?
+  approvedConfigVersion Int       @default(0)
+
+  /// Optional platform-staff assignee (solo operator today).
+  assignedToUserId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  platforms   BrandedAppPlatform[]
+  credentials BrandedAppStoreCredential[]
+  events      BrandedAppEvent[]
+}
+
+/// Per-store child of a project. The 7-state machine maps 1:1 to who owns
+/// the next action (src/lib/branded-app/status.ts is the single authority on
+/// transitions — the custom-domain flow lesson: few states, events carry the
+/// detail):
+///   draft            → restaurant is filling the wizard
+///   submitted        → owner approved; platform verifying store access
+///   needs_owner      → blocked on a restaurant action (reason = latest event)
+///   building         → platform building / in internal QA / fixing rejection
+///   in_store_review  → waiting on Apple / Google
+///   live             → published (storeUrl set)
+///   suspended        → paused (billing lapse, policy issue, owner request)
+model BrandedAppPlatform {
+  id        String            @id @default(cuid())
+  projectId String
+  project   BrandedAppProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  /// "android" | "ios"
+  platform String
+  status   String @default("draft")
+
+  /// Bundle ID / applicationId. Derived from the restaurant's domain
+  /// (com.<domainroot>.orderapp), superadmin-overridable while draft,
+  /// EFFECTIVELY IMMUTABLE once live — it names the app inside the
+  /// restaurant's own store account. Uniqueness is scoped PER PLATFORM
+  /// (@@unique([platform, packageName]) below) — Android and iOS commonly
+  /// share the identical id for one tenant, that's not a collision; the
+  /// constraint is the DB-level backstop against two DIFFERENT restaurants
+  /// colliding on the same platform (sanitization can map distinct slugs to
+  /// the same segment) or a concurrent superadmin PATCH race. Postgres
+  /// never treats NULL as equal to NULL, so draft rows are unaffected.
+  packageName String?
+  /// Public store listing URL once live — the per-restaurant successor to
+  /// the platform-app constants in src/lib/app-links.ts.
+  storeUrl    String?
+  /// Owner's developer-account checklist state (wizard stage 4), JSON map of
+  /// stepId → { done: bool, at: ISO }. Checkbox state is the OWNER's claim;
+  /// accessVerifiedAt below is OUR confirmation.
+  checklist   Json?
+  /// Set by platform staff after actually confirming our invited account can
+  /// access the restaurant's store console. Gates submitted → building.
+  accessVerifiedAt DateTime?
+  /// Android: the Play App Signing APP SIGNING KEY SHA-256 fingerprint(s),
+  /// comma-separated (from Play Console → App integrity, recorded at first
+  /// publish). Served by /.well-known/assetlinks.json for verified app links.
+  certSha256 String?
+
+  /// Monotonic per-tenant Android versionCode allocator (iOS uses its own
+  /// TestFlight-latest+1 query, floored by this value — see codemagic.yaml).
+  /// CLAIMED ATOMICALLY at manifest-generation time (gen-build-manifest.ts
+  /// increments-and-reads in one update), not at "build-recorded" — so two
+  /// manifest generations before either build uploads still get distinct
+  /// numbers instead of colliding on the same one.
+  nextBuildNumber Int       @default(1)
+  lastBuildAt     DateTime?
+  liveAt          DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([projectId, platform])
+  @@unique([platform, packageName])
+  @@index([status])
+}
+
+/// Encrypted store credentials, one row per (project, kind). A SEPARATE
+/// table so queue/status queries never select ciphertext columns. Secrets
+/// use the platform AES-256-GCM scheme (src/lib/encrypt.ts — the
+/// ShipdayConfig.apiKeyEnc precedent). Entered by superadmin only; no API
+/// ever returns plaintext (reads expose { exists, addedAt } only).
+///   kind "google_service_account" — SA JSON from the RESTAURANT's Play
+///     Console (for the future Publishing-API automation of updates).
+///   kind "apple_asc_key" — the .p8 App Store Connect API key generated on
+///     the RESTAURANT's team (companions below), used by the Codemagic
+///     customer-ios workflow for signing + upload.
+///   kind "android_keystore_passphrase" — passphrase for the per-tenant
+///     upload keystore (.jks itself lives in private Blob storage).
+model BrandedAppStoreCredential {
+  id        String            @id @default(cuid())
+  projectId String
+  project   BrandedAppProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  kind      String
+  secretEnc String
+  secretIv  String
+  secretTag String
+
+  /// Apple non-secret companions (kind apple_asc_key).
+  ascKeyId    String?
+  ascIssuerId String?
+  appleTeamId String?
+  /// Blob URL of the non-secret artifact this credential unlocks (e.g. the
+  /// per-tenant upload keystore .jks for android_keystore_passphrase).
+  artifactUrl String?
+
+  addedByUserId String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([projectId, kind])
+}
+
+/// Project timeline: status changes, approvals, build/store records, notes.
+/// visibility "restaurant" rows render on the owner's status page via
+/// messageKey (translated ×38 client-side under brandedApp.events.*) +
+/// params; `detail` carries verbatim external text (store rejection notes
+/// are inherently English — shown labeled as-is). visibility "internal"
+/// rows are superadmin-only (free-text allowed, keeps the
+/// superadmin-English-only rule intact).
+model BrandedAppEvent {
+  id        String            @id @default(cuid())
+  projectId String
+  project   BrandedAppProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  /// "android" | "ios" | null (project-wide).
+  platform   String?
+  /// "status-changed" | "owner-approved" | "build-recorded" |
+  /// "store-response" | "credential-added" | "access-verified" | "note"
+  type       String
+  fromStatus String?
+  toStatus   String?
+  /// i18n key under brandedApp.events.* for restaurant-visible rendering.
+  messageKey String?
+  params     Json?
+  detail     String?
+  /// "restaurant" | "internal"
+  visibility String  @default("internal")
+  /// "owner" | "platform" | "system"
+  actorType  String
+  actorId    String?
+
+  createdAt DateTime @default(now())
+
+  @@index([projectId, createdAt])
+}
+
+/// Push token for a CUSTOMER device (branded-app installs). Multi-device by
+/// design — a customer's phone AND tablet both stay registered (deliberately
+/// NOT the kitchen single-active-device rule, which is a staff-workflow
+/// policy). token unique ⇒ re-register upserts in place; pruned only when
+/// FCM reports UNREGISTERED. Cascade on Customer delete = account-deletion
+/// compliance for free.
+model CustomerPushToken {
+  id           String   @id @default(cuid())
+  restaurantId String
+  customerId   String
+  customer     Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  /// "android" | "ios" | "web"
+  platform     String   @default("android")
+  createdAt    DateTime @default(now())
+  lastSeenAt   DateTime @default(now())
+
+  @@index([restaurantId])
+  @@index([customerId])
+}
+
+/// Per-customer push preferences. Transactional order updates default ON
+/// (consented via the OS permission prompt); marketing defaults OFF and any
+/// future marketing send ADDITIONALLY requires Customer.marketingConsent —
+/// the same double-gate as marketing email.
+model CustomerPushPref {
+  id           String   @id @default(cuid())
+  customerId   String   @unique
+  customer     Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  orderUpdates Boolean  @default(true)
+  marketing    Boolean  @default(false)
+  updatedAt    DateTime @updatedAt
 }

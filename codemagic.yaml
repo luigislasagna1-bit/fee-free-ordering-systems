@@ -185,6 +185,149 @@ workflows:
         # do NOT auto-submit to App Store review yet — that's a later step.
         submit_to_testflight: true
 
+  # ── Branded Mobile App — per-TENANT customer shell (iOS) ────────────────
+  # ONE parameterized workflow builds EVERY restaurant's branded app. Tenant
+  # identity + credentials arrive per run as env vars (manual UI run for the
+  # pilot; Codemagic REST `POST /builds` with environment.variables at GA):
+  #
+  #   FF_MANIFEST_JSON       base64 of the tenant build manifest (from
+  #                          scripts/gen-build-manifest.ts)
+  #   TENANT_ASC_KEY_P8      the RESTAURANT team's App Store Connect API key
+  #   TENANT_ASC_KEY_ID      its key id
+  #   TENANT_ASC_ISSUER_ID   its issuer id
+  #   FF_GSERVICE_PLIST_B64  base64 GoogleService-Info.plist for this tenant's
+  #                          Firebase iOS app registration (push)
+  #
+  # Signing runs against the RESTAURANT'S OWN Apple team (Apple 4.2.6: template
+  # apps must live in the client's account) via explicit codemagic-cli-tools
+  # flags — NOT the ff-asc-org integration, which is the platform's team. The
+  # ios_signing group's IOS_SIGNING_KEY_PEM is reused across tenants: the first
+  # build on a new team mints ONE distribution cert from the same private key
+  # (one PEM to custody for the whole fleet).
+  customer-ios:
+    name: Branded Customer App (iOS, per-tenant)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      groups:
+        - ios_signing
+      vars:
+        XCODE_PROJECT: "apps/customer-shell/ios/App/App.xcodeproj"
+        XCODE_SCHEME: "App"
+      node: 22
+    triggering:
+      events: []
+    scripts:
+      - name: Install npm dependencies
+        script: npm install --no-audit --no-fund
+      - name: Decode tenant manifest
+        script: |
+          set -e
+          [ -n "$FF_MANIFEST_JSON" ] || { echo "FF_MANIFEST_JSON missing"; exit 1; }
+          mkdir -p store-assets/customer-builds/ci
+          echo "$FF_MANIFEST_JSON" | base64 -d > store-assets/customer-builds/ci/manifest.json
+          node -e "const m=require('./store-assets/customer-builds/ci/manifest.json'); console.log('tenant:', m.slug, m.bundleId); if(!m.bundleId||!m.serverUrl) process.exit(1);"
+      - name: Generate tenant Capacitor config + scaffold iOS project (first run)
+        script: |
+          set -e
+          node scripts/gen-customer-cap-config.mjs store-assets/customer-builds/ci/manifest.json
+          if [ ! -d apps/customer-shell/ios ]; then
+            node scripts/cap-customer.mjs add ios
+          fi
+      - name: Capacitor sync (iOS, CUSTOMER config)
+        script: node scripts/cap-customer.mjs sync ios
+      - name: Plugin allowlist guard (strip fleet plugin bleed — CI-fatal)
+        script: node scripts/customer-plugin-allowlist.mjs
+      - name: Generate tenant assets (icons + splash)
+        script: node scripts/gen-customer-assets.js store-assets/customer-builds/ci/manifest.json
+      - name: Inject tenant identity (bundle id, display name, deep-link domain)
+        script: |
+          set -e
+          BUNDLE_ID=$(node -p "require('./store-assets/customer-builds/ci/manifest.json').bundleId")
+          APP_NAME=$(node -p "require('./store-assets/customer-builds/ci/manifest.json').displayName")
+          LINK_HOST=$(node -p "require('./store-assets/customer-builds/ci/manifest.json').deepLinkHost")
+          cd apps/customer-shell/ios/App
+          sed -i '' "s/PRODUCT_BUNDLE_IDENTIFIER = [^;]*;/PRODUCT_BUNDLE_IDENTIFIER = $BUNDLE_ID;/g" App.xcodeproj/project.pbxproj
+          /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName $APP_NAME" App/Info.plist 2>/dev/null || \
+            /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string $APP_NAME" App/Info.plist
+          cat > App/App.entitlements <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>aps-environment</key><string>production</string>
+            <key>com.apple.developer.associated-domains</key>
+            <array><string>applinks:$LINK_HOST</string></array>
+          </dict>
+          </plist>
+          EOF
+          if [ -n "$FF_GSERVICE_PLIST_B64" ]; then
+            echo "$FF_GSERVICE_PLIST_B64" | base64 -d > App/GoogleService-Info.plist
+          fi
+      - name: Verify SPM manifest + resolve packages (fail loudly, not at Build IPA)
+        script: |
+          set -e
+          MANIFEST=apps/customer-shell/ios/App/CapApp-SPM/Package.swift
+          echo "--- $MANIFEST after sync:"
+          cat "$MANIFEST"
+          grep -q 'node_modules/@capacitor' "$MANIFEST"
+          if grep -q '\\' "$MANIFEST"; then
+            echo "ERROR: backslash paths in $MANIFEST (Windows-generated manifest reached CI)"; exit 1
+          fi
+          xcodebuild -resolvePackageDependencies \
+            -project apps/customer-shell/ios/App/App.xcodeproj -scheme App
+      - name: Set up code signing on the TENANT's team
+        script: |
+          set -e
+          [ -n "$TENANT_ASC_KEY_P8" ] || { echo "TENANT_ASC_KEY_P8 missing (restaurant's ASC API key)"; exit 1; }
+          keychain initialize
+          printf '%s\n' "$TENANT_ASC_KEY_P8" > /tmp/tenant_asc_key.p8
+          if [ -n "$IOS_SIGNING_KEY_PEM" ]; then
+            printf '%s\n' "$IOS_SIGNING_KEY_PEM" > /tmp/ff_signing_key.pem
+          else
+            openssl genrsa -out /tmp/ff_signing_key.pem 2048
+          fi
+          BUNDLE_ID=$(node -p "require('./store-assets/customer-builds/ci/manifest.json').bundleId")
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --issuer-id "$TENANT_ASC_ISSUER_ID" \
+            --key-id "$TENANT_ASC_KEY_ID" \
+            --private-key @file:/tmp/tenant_asc_key.p8 \
+            --certificate-key @file:/tmp/ff_signing_key.pem \
+            --create
+          keychain add-certificates
+          xcode-project use-profiles
+      - name: Set build number (per-tenant monotonic from the manifest + TestFlight)
+        script: |
+          set -e
+          BUNDLE_ID=$(node -p "require('./store-assets/customer-builds/ci/manifest.json').bundleId")
+          MANIFEST_VC=$(node -p "require('./store-assets/customer-builds/ci/manifest.json').versionCode")
+          LATEST=$(app-store-connect get-latest-testflight-build-number "$BUNDLE_ID" \
+            --issuer-id "$TENANT_ASC_ISSUER_ID" --key-id "$TENANT_ASC_KEY_ID" \
+            --private-key @file:/tmp/tenant_asc_key.p8 2>/dev/null || echo 0)
+          [[ "$LATEST" =~ ^[0-9]+$ ]] || LATEST=0
+          NEXT=$((LATEST + 1))
+          if [ "$MANIFEST_VC" -gt "$NEXT" ]; then NEXT="$MANIFEST_VC"; fi
+          echo "CFBundleVersion -> $NEXT (TestFlight latest=$LATEST, manifest=$MANIFEST_VC)"
+          cd apps/customer-shell/ios/App
+          agvtool new-version -all "$NEXT"
+      - name: Build IPA
+        script: |
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+      - name: Publish to the TENANT's TestFlight
+        script: |
+          app-store-connect publish \
+            --path build/ios/ipa/*.ipa \
+            --issuer-id "$TENANT_ASC_ISSUER_ID" \
+            --key-id "$TENANT_ASC_KEY_ID" \
+            --private-key @file:/tmp/tenant_asc_key.p8 \
+            --testflight
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
   # ── Fee Free DELIVERY driver app (iOS) ──────────────────────────────────
   # Same pipeline as ios-kitchen, but for the driver app: a WebView shell of
   # feefreeordering.com/driver + background-location capability. Separate bundle

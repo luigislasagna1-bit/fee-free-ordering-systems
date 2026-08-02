@@ -43,6 +43,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
         select: {
           id: true, status: true, type: true, orderNumber: true, tip: true,
           customerName: true, customerEmail: true, customerPhone: true, customerLocale: true,
+          // Branded-app delivery-status push keys off the signed-in customer
+          // — omitted from this select, customerId was always undefined and
+          // the on-the-way/delivered push never fired.
+          customerId: true,
           estimatedReady: true, scheduledFor: true, paymentMethod: true, paymentStatus: true,
           deliveryLat: true, deliveryLng: true,
           restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true, currency: true, feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true } } } },
@@ -210,6 +214,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
             restaurantId: o.restaurant.id,
             customerEmail: o.customerEmail,
             customerPhone: o.customerPhone,
+            customerId: o.customerId ?? null,
             orderType: o.type,
             customerLocale: o.customerLocale || o.restaurant.defaultLanguage || "en",
             payload: {

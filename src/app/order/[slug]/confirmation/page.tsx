@@ -5,6 +5,7 @@ import { childBuildLines } from "@/lib/bundle-child-lines";
 import Link from "next/link";
 import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
 import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
+import { PushPermissionPrompt } from "@/components/PushPermissionPrompt";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import { resolvePoweredByCredit, RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 import { getTranslations } from "next-intl/server";
@@ -83,6 +84,9 @@ export default async function ConfirmationPage({
           conversion rate. The order page already fires "visit"; this
           closes the loop. */}
       <OrderPlacedTracker restaurantId={order.restaurantId} orderId={order.id} />
+      {/* Branded-app push opt-in — fires ONLY inside the Capacitor shell,
+          at the "notify me when it's ready" moment (never on launch). */}
+      <PushPermissionPrompt />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 text-center">
         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
           <CheckCircle className="w-10 h-10 text-green-500" />

@@ -5130,36 +5130,41 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
                 <Printer className="w-3 h-3" /> {tk("autoPrintNote")}
               </p>
             )}
-            <div className="flex gap-3">
-              <button
-                onClick={confirmAccept}
-                className="flex-1 bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition"
-              >
-                <CheckCircle className="w-4 h-4 inline mr-1.5" />
-                {tCommon("confirm")}
-              </button>
+            {/* Confirm full-width and large on top; Cancel + Reject smaller
+                underneath (Luigi 2026-08-02: "less confusing and less
+                prone to error" — the big obvious action for a busy kitchen
+                is the one you want to accept, the exits stay reachable but
+                require a more deliberate, smaller tap). */}
+            <button
+              onClick={confirmAccept}
+              className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 rounded-xl text-base transition"
+            >
+              <CheckCircle className="w-5 h-5" />
+              {tCommon("confirm")}
+            </button>
+
+            <div className="flex gap-2 mt-3">
               <button
                 onClick={() => setPrepModal(null)}
-                className={`flex-1 ${t.btn} py-3 rounded-xl font-semibold transition`}
+                className={`flex-1 ${t.btn} py-2 rounded-xl text-xs font-semibold transition`}
               >
                 {tCommon("cancel")}
               </button>
+              {/* Don't want to accept? One tap opens the shared reject flow.
+                  We close the Accept prompt first, then open the reject
+                  modal — they're z-stacked so this also keeps focus
+                  management sane. */}
+              <button
+                onClick={() => {
+                  const id = prepModal;
+                  setPrepModal(null);
+                  if (id) setRejectFromPrep(id);
+                }}
+                className="flex-1 flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold py-2 rounded-xl text-xs transition"
+              >
+                <XCircle className="w-3.5 h-3.5" /> {tk("reject")}
+              </button>
             </div>
-
-            {/* Don't want to accept? One tap opens the shared reject flow.
-                We close the Accept prompt first, then open the reject
-                modal — they're z-stacked so this also keeps focus
-                management sane. */}
-            <button
-              onClick={() => {
-                const id = prepModal;
-                setPrepModal(null);
-                if (id) setRejectFromPrep(id);
-              }}
-              className="w-full mt-3 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-bold py-3 rounded-xl transition"
-            >
-              <XCircle className="w-4 h-4" /> {tk("reject")}
-            </button>
           </div>
         </div>
         );
