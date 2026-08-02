@@ -82,13 +82,17 @@ His request (with Restoo screenshots): let guests answer a few extra things when
   emails (staff + guest) — and the guest confirmation email now finally echoes their requests
   back (that card existed but was never filled in — a real pre-existing gap this closed).
 - Admin → Reservations → Settings → **"Booking questions"** card with ⓘ help on every switch.
-**YOUR PART:**
-1. ☐ **Try it on your own store** (Admin → Reservations → Settings → Booking questions → turn on
-   what you want → book a test table on your site). Nothing changes until you switch one on.
-2. ☐ **Then tell Claude "reply to Fabrizio"** — the reply is drafted and will go on the report
-   (IN_TESTING) asking him to re-test.
-3. FYI: one PAPER test worth doing when convenient — the printed reservation slip now has the
-   extra lines (both printer paths updated in lockstep).
+**✅ SHIPPED + REPLIED (2026-08-02).** Commit 791879c7 deployed; verified on PROD that the new
+strings are live AND that Luigi's own store still shows the classic "Number of People" picker —
+proof the opt-in default works and nobody's form changed. Reply posted to the report in Italian +
+English, status NEW → IN_TESTING, Fabrizio notified.
+**YOUR PART (what's left):**
+1. ☐ **Try it on your own store** (Admin → Reservations → Settings → **Booking questions** → turn
+   on what you want → book a test table). Nothing appears for guests until you switch one on.
+2. ☐ Watch for Fabrizio's re-test reply — he was asked specifically whether the occasion list
+   needs anything for the Italian market.
+3. ☐ One PAPER test when convenient — the printed reservation slip now carries the extra lines
+   (both printer paths updated in lockstep).
 
 ### A36. ✅ Max Bilton's slice reports — BOTH FIXED by Luigi + Claude-verified on prod (2026-08-01)
 (1) "Slice Add On's" now OPTIONAL (min 0 / max 3) on every live Pizza-by-the-SLICE item — the
