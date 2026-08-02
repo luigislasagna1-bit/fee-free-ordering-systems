@@ -96,7 +96,8 @@ platform self-subscriptions (wash minus ~$1.50 Stripe cut) · Luigi Bucks goodwi
 (✅ the feared "$5/day Schedule Tester leak" was ALREADY CLEANED — verified on prod
 2026-08-01; the only live schedule is the INTENDED monthly $20/member VIP-club credit,
 funded by their US$10/mo Skool subs — fired correctly Aug 1 for 8 members) ·
-**GloriaFood zombie — check & cancel** · tablet replacement someday.
+**GloriaFood ✅ CANCELLED by Luigi 2026-08-01 — final day Aug 8, 2026** (the old Milton site's
+last vendor tie is cut; ❓ what was it billing monthly, for the record?) · tablet replacement someday.
 
 ## 6. 💡 THE SAVINGS PLAN (consolidated 2026-08-01 — Luigi: "we'll do them together")
 

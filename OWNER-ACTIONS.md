@@ -128,9 +128,10 @@ Audit result: platform infra ≈ **$25–45/mo** + **~$250–300/yr** annuals; r
    OLD team (Luigi's Lasagna & Pizzeria Inc.) → Membership → confirm the expiry now shows **2027**
    and auto-renew is ON. You renewed Jul 11 but Apple said "processing" and we never confirmed.
    A silent failure this weekend pulls Fabrizio's Kitchen TestFlight + the App Store apps on that team.
-2. ☐ **GloriaFood zombie check:** log into the old GloriaFood admin → Billing → if ANY paid module
-   is still active for the Milton site (unreachable since the 2026-07-30 domain repoint), cancel it.
-   Every month it survives is pure bleed ($0–90/mo).
+2. ✅ **GloriaFood CANCELLED (2026-08-01, final day Aug 8).** The old Milton site's last paid
+   tie is cut. FYI: after Aug 8 the old GloriaFood admin (and its promo/voucher history) may
+   become inaccessible — the Skool voucher balances were already transferred (A33), so nothing
+   is lost, but grab any other data you want from there before Aug 8.
 3. 🤔 **"Schedule Tester" automation is still granting $5/DAY on prod** (~$150/mo in free food,
    TODO.md #424). Cleanup script is ready — tell Claude "run the schedule-tester cleanup" or keep it.
 4. ☐ **Answer the 14 questions** at the bottom of `COSTS.md` (Skool plan? Claude plan? Vercel invoice?
