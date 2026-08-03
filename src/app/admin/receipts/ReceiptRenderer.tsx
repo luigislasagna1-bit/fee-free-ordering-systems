@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
 import { formatCurrency } from "@/lib/utils";
 import { childBuildLines } from "@/lib/bundle-child-lines";
+import { buildMoneyBreakdown } from "@/lib/money-breakdown";
 
 // Paper widths in px at 96 dpi:
 //   80 mm thermal = 302 px (default — by far the most common)
@@ -43,10 +44,23 @@ export const SAMPLE_ORDER = {
         { name: "Chicken Wings (20)", modifiers: [{ name: "Buffalo" }, { name: "Ranch dip" }], notes: "extra crispy" },
       ] },
   ],
-  subtotal: 79.94, taxAmount: 7.08, deliveryFee: 0, couponDiscount: 0, total: 87.02,
+  subtotal: 79.94, taxAmount: 7.08, deliveryFee: 0, couponDiscount: 0, total: 93.52,
   paymentMethod: "cash",
+  paymentStatus: "paid",
   notes: "Extra napkins please",
   preparationTime: 20,
+  // Money-stack preview fidelity: a named promo, a service fee, a tip, a
+  // refundable deposit, and store credit applied — so the "totals" section
+  // (which now renders via the shared buildMoneyBreakdown(), same as every
+  // other money surface) shows the full canonical stack an owner would
+  // actually see on a real order, not just subtotal/tax/delivery/total.
+  // Previously deferred as "preview-fidelity only" in the 2026-08-02
+  // money-surfaces audit (Luigi 2026-08-03).
+  appliedPromos: [{ name: "Loyalty Discount", type: "percentage", discount: 5.0, couponCode: "LOYALTY5" }] as Array<{ name: string; type: string; discount: number; couponCode?: string }>,
+  appliedServiceFees: [{ name: "Service Fee", amount: 1.5 }] as Array<{ name: string; amount: number }>,
+  tip: 6.0,
+  depositTotal: 4.0,
+  creditApplied: 10.0,
 };
 
 export type SampleOrder = typeof SAMPLE_ORDER;
@@ -123,7 +137,8 @@ function renderCustomer(
   order: SampleOrder,
   restaurant: any,
   config: CustomerConfig,
-  t: ReturnType<typeof useTranslations<"admin.receiptRenderer">>
+  t: ReturnType<typeof useTranslations<"admin.receiptRenderer">>,
+  tRoot: ReturnType<typeof useTranslations>
 ): React.ReactNode {
   const s = section.style;
   // Receipt money in the restaurant's currency (printed receipts must match
@@ -285,17 +300,60 @@ function renderCustomer(
       );
     }
 
-    case "totals":
+    case "totals": {
+      // Full canonical money stack via the SAME shared helper every other
+      // money surface uses (src/app/admin/orders/OrdersClient.tsx) — reuse,
+      // don't hand-roll a second formatting path. `rewardsActive` is forced
+      // true here (independent of this restaurant's real rewards setting)
+      // so the preview always demonstrates the store-credit-applied line,
+      // same spirit as the "promos" sample above (Luigi 2026-08-03).
+      const breakdown = buildMoneyBreakdown({
+        currency: restaurant?.currency || "usd",
+        audience: "customer",
+        subtotal: order.subtotal,
+        appliedPromos: (order as any).appliedPromos,
+        couponDiscount: order.couponDiscount,
+        deliveryFee: order.deliveryFee,
+        appliedServiceFees: (order as any).appliedServiceFees,
+        taxAmount: order.taxAmount,
+        tip: (order as any).tip,
+        depositTotal: (order as any).depositTotal,
+        total: order.total,
+        orderType: order.type,
+        rewardsActive: true,
+        rewardLabelSingular: restaurant?.rewardLabelSingular ?? null,
+        rewardLabelPlural: restaurant?.rewardLabelPlural ?? null,
+        rewardDefaultLabel: tRoot("customer.confirmation.rewardDefaultName"),
+        creditApplied: (order as any).creditApplied,
+        paidStatus: (order as any).paymentStatus,
+      });
       return (
         <span>
-          <span style={row}><span>{t("subtotal")}</span><span>{fmt(order.subtotal)}</span></span>
-          {order.couponDiscount > 0 && <span style={{ ...row, color: s.highlight ? "#9f9" : "#16a34a" }}><span>{t("discount")}</span><span>-{fmt(order.couponDiscount)}</span></span>}
-          {order.taxAmount > 0    && <span style={row}><span>{t("tax")}</span><span>{fmt(order.taxAmount)}</span></span>}
-          {order.deliveryFee > 0  && <span style={row}><span>{t("deliveryFee")}</span><span>{fmt(order.deliveryFee)}</span></span>}
-          <span style={{ ...SOLID, display: "block" }} />
-          <span style={{ ...row, fontWeight: "bold", fontSize: `${s.fontSize + 2}px` }}><span>{t("total")}</span><span>{fmt(order.total)}</span></span>
+          {breakdown.rows.map((r, i) => {
+            const label = r.labelKey
+              ? tRoot(r.labelKey, r.labelArgs)
+              : [r.labelArgs?.name, r.labelArgs?.code ? `(${r.labelArgs.code})` : ""].filter(Boolean).join(" ");
+            const emphasisStyle: React.CSSProperties = r.emphasis
+              ? { fontWeight: "bold", fontSize: `${s.fontSize + 2}px` }
+              : {};
+            const creditStyle: React.CSSProperties =
+              r.kind === "REWARD_USED" ? { color: s.highlight ? "#9f9" : "#16a34a" } : {};
+            return (
+              <span key={i}>
+                {r.kind === "TOTAL" && <span style={{ ...SOLID, display: "block" }} />}
+                <span style={{ ...row, ...emphasisStyle, ...creditStyle }}>
+                  <span>{r.free ? `${label} — ${t("free")}` : label}</span>
+                  <span>
+                    {r.sign === "minus" ? "-" : r.sign === "plus" ? "+" : ""}
+                    {fmt(r.amount)}
+                  </span>
+                </span>
+              </span>
+            );
+          })}
         </span>
       );
+    }
 
     case "payment":
       return <span>{t("payment")}: <b style={{ textTransform: "capitalize" }}>{order.paymentMethod}</b></span>;
@@ -455,6 +513,7 @@ type Props = CustomerProps | KitchenProps;
 export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
   function ReceiptRenderer({ type, config, order = SAMPLE_ORDER, restaurant, widthPx }, ref) {
     const t = useTranslations("admin.receiptRenderer");
+    const tRoot = useTranslations();
     const w = widthPx ?? PAPER_WIDTH_PX;
     return (
       <div
@@ -475,7 +534,7 @@ export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
 
           const content =
             type === "customer"
-              ? renderCustomer(section, order, restaurant, config as CustomerConfig, t)
+              ? renderCustomer(section, order, restaurant, config as CustomerConfig, t, tRoot)
               : renderKitchen(section, order, config as KitchenConfig, t);
 
           if (content === null) return null;
