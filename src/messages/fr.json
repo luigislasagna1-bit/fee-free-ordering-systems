@@ -7058,7 +7058,8 @@
       "howMany": "Combien ?",
       "poolMeter": "Garnitures partagées : {used} sur {total} utilisées",
       "poolLeft": "Il en reste {left}",
-      "poolEmpty": "Tout est utilisé — les garnitures supplémentaires sont payantes"
+      "poolEmpty": "Tout est utilisé — les garnitures supplémentaires sont payantes",
+      "flavorMeter": "{count} sur {max} sélectionnés"
     },
     "guidedPromo": {
       "buildYourDeal": "Composez votre offre",

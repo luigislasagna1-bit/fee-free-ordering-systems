@@ -7058,7 +7058,8 @@
       "howMany": "Ile sztuk?",
       "poolMeter": "Wspólne dodatki: wykorzystano {used} z {total}",
       "poolLeft": "Pozostało: {left}",
-      "poolEmpty": "Wszystkie wykorzystane — kolejne dodatki są płatne"
+      "poolEmpty": "Wszystkie wykorzystane — kolejne dodatki są płatne",
+      "flavorMeter": "Wybrano {count} z {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Skomponuj swoją ofertę",

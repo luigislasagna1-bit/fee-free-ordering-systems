@@ -7058,7 +7058,8 @@
       "howMany": "Wie viele?",
       "poolMeter": "Gemeinsame Beläge: {used} von {total} verwendet",
       "poolLeft": "{left} übrig",
-      "poolEmpty": "Alle aufgebraucht – zusätzliche Beläge werden berechnet"
+      "poolEmpty": "Alle aufgebraucht – zusätzliche Beläge werden berechnet",
+      "flavorMeter": "{count} von {max} ausgewählt"
     },
     "guidedPromo": {
       "buildYourDeal": "Stell dir dein Angebot zusammen",

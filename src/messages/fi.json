@@ -7058,7 +7058,8 @@
       "howMany": "Kuinka monta?",
       "poolMeter": "Jaetut täytteet: {used}/{total} käytetty",
       "poolLeft": "{left} jäljellä",
-      "poolEmpty": "Kaikki käytetty – lisätäytteet ovat maksullisia"
+      "poolEmpty": "Kaikki käytetty – lisätäytteet ovat maksullisia",
+      "flavorMeter": "{count}/{max} valittu"
     },
     "guidedPromo": {
       "buildYourDeal": "Kokoa tarjouksesi",

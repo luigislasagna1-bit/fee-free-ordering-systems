@@ -7058,7 +7058,8 @@
       "howMany": "Hur många?",
       "poolMeter": "Delade toppings: {used} av {total} använda",
       "poolLeft": "{left} kvar",
-      "poolEmpty": "Alla använda — fler toppings kostar extra"
+      "poolEmpty": "Alla använda — fler toppings kostar extra",
+      "flavorMeter": "{count} av {max} valda"
     },
     "guidedPromo": {
       "buildYourDeal": "Bygg ditt erbjudande",

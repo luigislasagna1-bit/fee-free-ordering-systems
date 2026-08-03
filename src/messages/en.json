@@ -6702,7 +6702,8 @@
       "howMany": "How many?",
       "poolMeter": "Shared toppings: {used} of {total} used",
       "poolLeft": "{left} left",
-      "poolEmpty": "All used — extra toppings are charged"
+      "poolEmpty": "All used — extra toppings are charged",
+      "flavorMeter": "{count} of {max} selected"
     },
     "confirmation": {
       "orderPlaced": "Order Placed!",

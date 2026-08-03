@@ -7058,7 +7058,8 @@
       "howMany": "Cik daudz?",
       "poolMeter": "Kopīgās piedevas: izmantotas {used} no {total}",
       "poolLeft": "Vēl {left}",
-      "poolEmpty": "Visas izmantotas — papildu piedevas par maksu"
+      "poolEmpty": "Visas izmantotas — papildu piedevas par maksu",
+      "flavorMeter": "Izvēlēts {count} no {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Izveido savu piedāvājumu",

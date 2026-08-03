@@ -7058,7 +7058,8 @@
       "howMany": "Hoeveel?",
       "poolMeter": "Gedeelde toppings: {used} van {total} gebruikt",
       "poolLeft": "Nog {left}",
-      "poolEmpty": "Alles gebruikt — extra toppings worden in rekening gebracht"
+      "poolEmpty": "Alles gebruikt — extra toppings worden in rekening gebracht",
+      "flavorMeter": "{count} van {max} geselecteerd"
     },
     "guidedPromo": {
       "buildYourDeal": "Stel je deal samen",

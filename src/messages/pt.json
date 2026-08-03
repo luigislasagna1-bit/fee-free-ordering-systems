@@ -7058,7 +7058,8 @@
       "howMany": "Quantos?",
       "poolMeter": "Ingredientes partilhados: {used} de {total} usados",
       "poolLeft": "Restam {left}",
-      "poolEmpty": "Tudo usado — os ingredientes extra são cobrados"
+      "poolEmpty": "Tudo usado — os ingredientes extra são cobrados",
+      "flavorMeter": "{count} de {max} selecionados"
     },
     "guidedPromo": {
       "buildYourDeal": "Monte o seu menu",

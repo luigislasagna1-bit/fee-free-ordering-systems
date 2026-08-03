@@ -7058,7 +7058,8 @@
       "howMany": "كم العدد؟",
       "poolMeter": "الإضافات المشتركة: تم استخدام {used} من {total}",
       "poolLeft": "تبقّى {left}",
-      "poolEmpty": "تم استخدامها جميعًا — الإضافات الزائدة برسوم"
+      "poolEmpty": "تم استخدامها جميعًا — الإضافات الزائدة برسوم",
+      "flavorMeter": "تم اختيار {count} من {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "صمّم عرضك",

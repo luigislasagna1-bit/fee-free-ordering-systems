@@ -7058,7 +7058,8 @@
       "howMany": "Mitu?",
       "poolMeter": "Ühised lisandid: {used}/{total} kasutatud",
       "poolLeft": "Alles {left}",
-      "poolEmpty": "Kõik kasutatud — täiendavad lisandid on tasulised"
+      "poolEmpty": "Kõik kasutatud — täiendavad lisandid on tasulised",
+      "flavorMeter": "Valitud {count} / {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Pane oma pakkumine kokku",

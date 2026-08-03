@@ -7058,7 +7058,8 @@
       "howMany": "要几份？",
       "poolMeter": "共享配料：已用 {used}/{total}",
       "poolLeft": "剩余 {left}",
-      "poolEmpty": "已全部用完，额外配料需另收费"
+      "poolEmpty": "已全部用完，额外配料需另收费",
+      "flavorMeter": "已选择 {count}/{max}"
     },
     "guidedPromo": {
       "buildYourDeal": "定制你的优惠",

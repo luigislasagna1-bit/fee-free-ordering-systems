@@ -7058,7 +7058,8 @@
       "howMany": "いくつにしますか？",
       "poolMeter": "共有トッピング：{used}/{total} 使用",
       "poolLeft": "残り{left}個",
-      "poolEmpty": "すべて使用済み — 追加のトッピングは有料です"
+      "poolEmpty": "すべて使用済み — 追加のトッピングは有料です",
+      "flavorMeter": "{max}個中{count}個選択済み"
     },
     "guidedPromo": {
       "buildYourDeal": "お得なセットを作ろう",

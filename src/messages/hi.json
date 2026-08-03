@@ -7058,7 +7058,8 @@
       "howMany": "कितने चाहिए?",
       "poolMeter": "साझा टॉपिंग: {used}/{total} इस्तेमाल हुई",
       "poolLeft": "{left} बाकी",
-      "poolEmpty": "सभी इस्तेमाल हो गईं — अतिरिक्त टॉपिंग का शुल्क लगेगा"
+      "poolEmpty": "सभी इस्तेमाल हो गईं — अतिरिक्त टॉपिंग का शुल्क लगेगा",
+      "flavorMeter": "{max} में से {count} चयनित"
     },
     "guidedPromo": {
       "buildYourDeal": "अपनी डील बनाएं",

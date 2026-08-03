@@ -7058,7 +7058,8 @@
       "howMany": "몇 개 드릴까요?",
       "poolMeter": "공유 토핑: {used}/{total} 사용",
       "poolLeft": "{left}개 남음",
-      "poolEmpty": "모두 사용했어요 — 추가 토핑은 유료입니다"
+      "poolEmpty": "모두 사용했어요 — 추가 토핑은 유료입니다",
+      "flavorMeter": "{max}개 중 {count}개 선택됨"
     },
     "guidedPromo": {
       "buildYourDeal": "나만의 딜 만들기",

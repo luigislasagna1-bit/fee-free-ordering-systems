@@ -7058,7 +7058,8 @@
       "howMany": "Quants en vols?",
       "poolMeter": "Ingredients compartits: {used} de {total} utilitzats",
       "poolLeft": "Restants: {left}",
-      "poolEmpty": "Tots utilitzats — els ingredients addicionals es cobren"
+      "poolEmpty": "Tots utilitzats — els ingredients addicionals es cobren",
+      "flavorMeter": "{count} de {max} seleccionats"
     },
     "guidedPromo": {
       "buildYourDeal": "Munta la teva oferta",

@@ -7058,7 +7058,8 @@
       "howMany": "รับกี่ชิ้นดี?",
       "poolMeter": "ท็อปปิ้งรวม: ใช้แล้ว {used} จาก {total}",
       "poolLeft": "เหลืออีก {left}",
-      "poolEmpty": "ใช้ครบแล้ว — ท็อปปิ้งที่เพิ่มจะมีค่าใช้จ่าย"
+      "poolEmpty": "ใช้ครบแล้ว — ท็อปปิ้งที่เพิ่มจะมีค่าใช้จ่าย",
+      "flavorMeter": "เลือกแล้ว {count} จาก {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "จัดดีลของคุณ",

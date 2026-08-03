@@ -419,7 +419,16 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                             <Pencil className="w-3 h-3 text-gray-400 flex-shrink-0" />
                             <span>
                               {qty > 1 ? <strong className="mr-0.5">{t("timesCount", { count: qty })}</strong> : null}
-                              {p.name}{p.variantName ? ` (${p.variantName})` : ""}{p.pizzaCustomization || (p.modifiers && p.modifiers.length) ? " ⭐" : ""}{extra > 0 ? ` (+${fmt(extra * qty)})` : ""}
+                              {p.name}{p.variantName ? ` (${p.variantName})` : ""}
+                              {/* Name the actual selection (e.g. the drink flavor picked)
+                                  instead of a bare star — a customer with two picks of the
+                                  same base item can otherwise not tell them apart in this
+                                  summary. Pizzas keep the star (too many mods to list).
+                                  Luigi 2026-08-03. */}
+                              {!p.pizzaCustomization && p.modifiers && p.modifiers.length
+                                ? ` — ${p.modifiers.map((m) => m.name).join(", ")}`
+                                : p.pizzaCustomization ? " ⭐" : ""}
+                              {extra > 0 ? ` (+${fmt(extra * qty)})` : ""}
                             </span>
                           </button>
                           <button
@@ -624,9 +633,11 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
           maxQty={maxQty}
           defaultQty={defaultQty}
           onClose={() => setCustomizeFor(null)}
-          onConfirm={(pick, qty) => {
+          onConfirm={(entries) => {
             if (customizeFor.editKey) {
-              // In-place edit — swap the pick, keep its position.
+              // In-place edit — always exactly one entry (maxQty is forced to 1
+              // while editing, so multi-flavor mode never triggers here).
+              const { pick } = entries[0];
               replacePick(customizeFor.slotId, customizeFor.editKey, {
                 menuItemId: customizeFor.item.id, name: customizeFor.item.name,
                 ...pick,
@@ -635,11 +646,17 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
               setCustomizeFor(null);
               return;
             }
-            addPickN(customizeFor.slotId, {
-              menuItemId: customizeFor.item.id, name: customizeFor.item.name,
-              ...pick,
-              upcharge: pick.upcharge ?? 0,
-            }, qty);
+            // Multi-flavor mode can confirm several DIFFERENT selections in one
+            // pass (e.g. 2 Coke + 2 Sprite) — each entry lands as its own
+            // addPickN call; the functional setPicks form makes these stack
+            // correctly instead of racing. Luigi 2026-08-03.
+            for (const { pick, qty } of entries) {
+              addPickN(customizeFor.slotId, {
+                menuItemId: customizeFor.item.id, name: customizeFor.item.name,
+                ...pick,
+                upcharge: pick.upcharge ?? 0,
+              }, qty);
+            }
             setCustomizeFor(null);
           }}
         />
@@ -661,7 +678,9 @@ function ChildCustomizer({
   fmt: (n: number) => string;
   extrasCharge: boolean;
   upchargeFor: (variantId?: string | null) => number;
-  onConfirm: (pick: Partial<ComboCartChild>, qty: number) => void;
+  /** One or more (pick, qty) entries in a single confirm — multi-flavor mode
+   *  emits one entry per selected option (e.g. 2 Coke + 2 Sprite at once). */
+  onConfirm: (entries: Array<{ pick: Partial<ComboCartChild>; qty: number }>) => void;
   onClose: () => void;
   /** In-place pick edit: the pick's current size + flat modifier list to seed
    *  the customizer with (instead of the group defaults). Luigi 2026-07-09. */
@@ -677,6 +696,18 @@ function ChildCustomizer({
   const tc = useTranslations("ordering");
   const groups: AnyItem[] = (Array.isArray(item.modifierGroups) ? item.modifierGroups : []).filter((g: AnyItem) => !g.isHidden);
   const hasSizeChoice = allowedVariants.length > 1;
+  // ── Multi-flavor mode (Luigi 2026-08-03, GloriaFood/Uber "choose 4 pop"
+  // pattern) ── When the ONLY thing to decide is a single required/optional
+  // pick-one group (e.g. "Pop: Coke/Pepsi/Sprite…") and the slot has room for
+  // more than one unit, replace the classic radio-list + bottom "How many?"
+  // with per-option steppers so the customer can mix flavors (2 Coke + 2
+  // Sprite) in ONE screen instead of reopening this customizer per flavor.
+  // Gated tight on purpose: any size choice, or more than one visible group,
+  // falls back to the classic walk-through (still fully functional). maxQty
+  // is forced to 1 while editing an existing pick, so this never triggers
+  // there — an edit is always exactly one unit.
+  const singleGroup: AnyItem | null = groups.length === 1 ? groups[0] : null;
+  const multiFlavorMode = !hasSizeChoice && !!singleGroup && singleGroup.maxSelect === 1 && maxQty > 1;
 
   // Half/half detection is needed by the seed initializers below, so it's
   // declared first. Only single-select groups flagged "Can be Half/Half" qualify.
@@ -731,6 +762,24 @@ function ChildCustomizer({
     return seeded;
   });
 
+  // Multi-flavor mode's own state: count per option id. Declared unconditionally
+  // (React hook rules) even though it's only read/written in multiFlavorMode.
+  const [flavorCounts, setFlavorCounts] = useState<Record<string, number>>({});
+  const flavorTotal = Object.values(flavorCounts).reduce((a, b) => a + b, 0);
+  // +1/-1 on one option, capped so the TOTAL across every option never
+  // exceeds the room left in the slot (maxQty). Tapping an unselected row
+  // (count 0) is the same call as tapping +, so a first tap selects at 1
+  // directly — no separate "add" step to get started.
+  const bumpFlavor = (optId: string, delta: number) =>
+    setFlavorCounts((prev) => {
+      const cur = prev[optId] || 0;
+      const next = cur + delta;
+      if (next < 0) return prev;
+      const prevTotal = Object.values(prev).reduce((a, b) => a + b, 0);
+      if (delta > 0 && prevTotal >= maxQty) return prev;
+      return { ...prev, [optId]: next };
+    });
+
   const toggleMod = (g: AnyItem, optId: string) => {
     setMods((prev) => {
       const cur = prev[g.id] || [];
@@ -774,6 +823,16 @@ function ChildCustomizer({
   const upcharge = upchargeFor(variant?.id);
   const [qty, setQty] = useState(() => Math.min(Math.max(1, defaultQty), Math.max(1, maxQty)));
   const addExtra = (upcharge + extrasFee) * qty;
+  // Multi-flavor total across every selected option (each may carry its own
+  // priceAdjustment, e.g. a premium soda flavor).
+  const addExtraMulti = multiFlavorMode
+    ? Object.entries(flavorCounts).reduce((sum, [optId, c]) => {
+        if (c <= 0) return sum;
+        const o = singleGroup?.options.find((x: AnyItem) => x.id === optId);
+        const fee = extrasCharge ? (o?.priceAdjustment ?? 0) : 0;
+        return sum + (upcharge + fee) * c;
+      }, 0)
+    : 0;
 
   // Required groups must be satisfied (mirrors the regular item modal).
   const unmet = groups.filter((g) => {
@@ -783,15 +842,29 @@ function ChildCustomizer({
     const need = g.required ? Math.max(1, g.minSelect || 0) : (g.minSelect || 0);
     return (mods[g.id]?.length ?? 0) < need;
   });
-  const canAdd = unmet.length === 0;
+  const canAdd = multiFlavorMode ? flavorTotal > 0 : unmet.length === 0;
 
   const confirm = () => {
     if (!canAdd) return;
-    onConfirm({
-      variantId: variant?.id, variantName: variant?.name,
-      modifiers: builtMods,
-      upcharge, extrasFee,
-    }, qty);
+    if (multiFlavorMode && singleGroup) {
+      const entries = Object.entries(flavorCounts)
+        .filter(([, c]) => c > 0)
+        .map(([optId, c]) => {
+          const o = singleGroup.options.find((x: AnyItem) => x.id === optId);
+          const fee = extrasCharge ? Math.round(((o?.priceAdjustment ?? 0)) * 100) / 100 : 0;
+          return {
+            pick: {
+              variantId: variant?.id, variantName: variant?.name,
+              modifiers: o ? [{ modifierOptionId: o.id, name: o.name, priceAdjustment: o.priceAdjustment ?? 0 }] : [],
+              upcharge, extrasFee: fee,
+            } as Partial<ComboCartChild>,
+            qty: c,
+          };
+        });
+      onConfirm(entries);
+      return;
+    }
+    onConfirm([{ pick: { variantId: variant?.id, variantName: variant?.name, modifiers: builtMods, upcharge, extrasFee }, qty }]);
   };
 
   return (
@@ -826,9 +899,58 @@ function ChildCustomizer({
             </div>
           )}
 
-          {/* Modifier groups — radio (maxSelect 1) or checkbox (maxSelect >1),
-              plus an optional Half & Half mode for eligible groups. */}
-          {groups.map((g: AnyItem) => {
+          {/* Multi-flavor mode: the group's OPTIONS become the rows, each with
+              its own −/+ stepper (identical interaction to the slot-level
+              pool rows above), so "4 Cans of Pop" fills in one pass — 2 Coke +
+              2 Sprite, whatever — instead of one customizer round-trip per
+              flavor. Luigi 2026-08-03. */}
+          {multiFlavorMode && singleGroup ? (
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="text-sm font-semibold text-gray-800">{singleGroup.name}</span>
+                {singleGroup.required && <span className="text-[10px] font-bold uppercase text-red-500">{tc("required")}</span>}
+                <span className="ml-auto text-xs font-semibold text-gray-500">{t("flavorMeter", { count: flavorTotal, max: maxQty })}</span>
+              </div>
+              <div className="space-y-1.5">
+                {singleGroup.options.filter((o: AnyItem) => o.isAvailable !== false).map((o: AnyItem) => {
+                  const c = flavorCounts[o.id] || 0;
+                  const atCap = flavorTotal >= maxQty;
+                  return (
+                    <div key={o.id}
+                      className={`flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg border text-sm ${c > 0 ? "" : "border-gray-200"}`}
+                      style={c > 0 ? { borderColor: primaryColor, backgroundColor: `${primaryColor}0d` } : undefined}>
+                      <button
+                        type="button"
+                        disabled={c === 0 && atCap}
+                        onClick={() => bumpFlavor(o.id, 1)}
+                        className="flex items-center gap-2 min-w-0 flex-1 text-left disabled:cursor-not-allowed disabled:opacity-40"
+                      >
+                        <span className="min-w-0 truncate font-medium text-gray-800">{o.name}</span>
+                      </button>
+                      <span className="flex items-center gap-2 flex-shrink-0">
+                        {extrasCharge && o.priceAdjustment > 0 && <span className="text-xs text-gray-500">+{fmt(o.priceAdjustment)}</span>}
+                        {c > 0 ? (
+                          <span className="flex items-center gap-1">
+                            <button type="button" onClick={() => bumpFlavor(o.id, -1)}
+                              aria-label={t("removeOne", { name: o.name })}
+                              className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                            ><Minus className="w-3.5 h-3.5" /></button>
+                            <span className="w-6 text-center text-sm font-bold" style={{ color: primaryColor }}>{c}</span>
+                            <button type="button" onClick={() => bumpFlavor(o.id, 1)} disabled={atCap}
+                              aria-label={t("addAnother", { name: o.name })}
+                              className="w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                            ><Plus className="w-3.5 h-3.5" /></button>
+                          </span>
+                        ) : (
+                          <Plus className="w-4 h-4 text-gray-400" />
+                        )}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : groups.map((g: AnyItem) => {
             const sel = mods[g.id] || [];
             const single = g.maxSelect === 1;
             const atMax = !single && sel.length >= (g.maxSelect || 99);
@@ -892,8 +1014,10 @@ function ChildCustomizer({
 
         <div className="p-4 pb-[calc(1rem+env(safe-area-inset-bottom))] border-t bg-gray-50 rounded-b-2xl">
           {/* Customize-once ×N: pick the quantity here and N identical copies
-              land at once — no more one-modal-per-drink (Luigi 2026-08-02). */}
-          {maxQty > 1 && (
+              land at once — no more one-modal-per-drink (Luigi 2026-08-02).
+              Skipped in multi-flavor mode — quantity is already picked inline,
+              per option, above. */}
+          {maxQty > 1 && !multiFlavorMode && (
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm font-semibold text-gray-800">{t("howMany")}</span>
               <span className="flex items-center gap-2">
@@ -913,9 +1037,11 @@ function ChildCustomizer({
             className="w-full py-3 rounded-xl text-white font-semibold disabled:opacity-50"
             style={{ backgroundColor: primaryColor }}>
             {canAdd
-              ? (maxQty > 1 && qty > 1
-                  ? t("addChoiceQty", { count: qty, price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" })
-                  : t("addChoice", { price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" }))
+              ? (multiFlavorMode
+                  ? t("addChoiceQty", { count: flavorTotal, price: addExtraMulti > 0 ? ` · +${fmt(addExtraMulti)}` : "" })
+                  : (maxQty > 1 && qty > 1
+                      ? t("addChoiceQty", { count: qty, price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" })
+                      : t("addChoice", { price: addExtra > 0 ? ` · +${fmt(addExtra)}` : "" })))
               : t("completeRequired")}
           </button>
         </div>

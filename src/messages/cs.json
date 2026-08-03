@@ -7058,7 +7058,8 @@
       "howMany": "Kolik kusů?",
       "poolMeter": "Sdílené ingredience: využito {used} z {total}",
       "poolLeft": "Zbývá {left}",
-      "poolEmpty": "Vše využito – ingredience navíc se účtují"
+      "poolEmpty": "Vše využito – ingredience navíc se účtují",
+      "flavorMeter": "Vybráno {count} z {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Sestavte si nabídku",

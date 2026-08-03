@@ -7058,7 +7058,8 @@
       "howMany": "Hvor mange?",
       "poolMeter": "Delte toppinger: {used} av {total} brukt",
       "poolLeft": "{left} igjen",
-      "poolEmpty": "Alle brukt – flere toppinger koster ekstra"
+      "poolEmpty": "Alle brukt – flere toppinger koster ekstra",
+      "flavorMeter": "{count} av {max} valgt"
     },
     "guidedPromo": {
       "buildYourDeal": "Sett sammen tilbudet ditt",

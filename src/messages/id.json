@@ -7058,7 +7058,8 @@
       "howMany": "Berapa banyak?",
       "poolMeter": "Topping bersama: {used} dari {total} terpakai",
       "poolLeft": "{left} tersisa",
-      "poolEmpty": "Semua terpakai — topping ekstra dikenai biaya"
+      "poolEmpty": "Semua terpakai — topping ekstra dikenai biaya",
+      "flavorMeter": "{count} dari {max} dipilih"
     },
     "guidedPromo": {
       "buildYourDeal": "Susun penawaran Anda",

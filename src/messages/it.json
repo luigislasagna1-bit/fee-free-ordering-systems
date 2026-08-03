@@ -7058,7 +7058,8 @@
       "howMany": "Quantità",
       "poolMeter": "Condimenti condivisi: {used} di {total} utilizzati",
       "poolLeft": "Ancora {left}",
-      "poolEmpty": "Tutti utilizzati — i condimenti extra sono a pagamento"
+      "poolEmpty": "Tutti utilizzati — i condimenti extra sono a pagamento",
+      "flavorMeter": "{count} di {max} selezionati"
     },
     "guidedPromo": {
       "buildYourDeal": "Crea la tua offerta",

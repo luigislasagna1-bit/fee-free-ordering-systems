@@ -7058,7 +7058,8 @@
       "howMany": "Koliko?",
       "poolMeter": "Skupni dodatki: porabljeno {used} od {total}",
       "poolLeft": "še {left}",
-      "poolEmpty": "Vse porabljeno — nadaljnji dodatki se zaračunajo"
+      "poolEmpty": "Vse porabljeno — nadaljnji dodatki se zaračunajo",
+      "flavorMeter": "Izbrano {count} od {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Sestavite svojo ponudbo",

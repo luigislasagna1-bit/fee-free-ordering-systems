@@ -7058,7 +7058,8 @@
       "howMany": "Koľko kusov?",
       "poolMeter": "Spoločné prísady: použité {used} z {total}",
       "poolLeft": "Zostáva: {left}",
-      "poolEmpty": "Všetko použité — ďalšie prísady sú spoplatnené"
+      "poolEmpty": "Všetko použité — ďalšie prísady sú spoplatnené",
+      "flavorMeter": "Vybrané {count} z {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Poskladajte si ponuku",

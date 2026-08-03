@@ -7058,7 +7058,8 @@
       "howMany": "Số lượng?",
       "poolMeter": "Topping dùng chung: đã dùng {used} / {total}",
       "poolLeft": "Còn {left}",
-      "poolEmpty": "Đã dùng hết — topping thêm sẽ được tính phí"
+      "poolEmpty": "Đã dùng hết — topping thêm sẽ được tính phí",
+      "flavorMeter": "Đã chọn {count}/{max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Tạo ưu đãi của bạn",

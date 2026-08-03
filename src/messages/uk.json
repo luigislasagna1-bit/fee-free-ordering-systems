@@ -7058,7 +7058,8 @@
       "howMany": "Скільки?",
       "poolMeter": "Спільні топінги: використано {used} з {total}",
       "poolLeft": "Залишилося {left}",
-      "poolEmpty": "Усе використано — додаткові топінги платні"
+      "poolEmpty": "Усе використано — додаткові топінги платні",
+      "flavorMeter": "Вибрано {count} з {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Зберіть свою пропозицію",

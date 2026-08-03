@@ -7058,7 +7058,8 @@
       "howMany": "Koliko komada?",
       "poolMeter": "Zajednički dodaci: iskorišteno {used} od {total}",
       "poolLeft": "Preostalo: {left}",
-      "poolEmpty": "Sve iskorišteno — daljnji dodaci se naplaćuju"
+      "poolEmpty": "Sve iskorišteno — daljnji dodaci se naplaćuju",
+      "flavorMeter": "Odabrano {count} od {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Složite svoju ponudu",

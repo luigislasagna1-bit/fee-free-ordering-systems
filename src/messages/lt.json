@@ -7058,7 +7058,8 @@
       "howMany": "Kiek?",
       "poolMeter": "Bendri priedai: panaudota {used} iš {total}",
       "poolLeft": "liko {left}",
-      "poolEmpty": "Viskas panaudota — papildomi priedai mokami"
+      "poolEmpty": "Viskas panaudota — papildomi priedai mokami",
+      "flavorMeter": "Pasirinkta {count} iš {max}"
     },
     "guidedPromo": {
       "buildYourDeal": "Sukurkite savo pasiūlymą",

@@ -7058,7 +7058,8 @@
       "howMany": "Kaç adet?",
       "poolMeter": "Ortak malzemeler: {used}/{total} kullanıldı",
       "poolLeft": "{left} kaldı",
-      "poolEmpty": "Tümü kullanıldı — ekstra malzemeler ücretlidir"
+      "poolEmpty": "Tümü kullanıldı — ekstra malzemeler ücretlidir",
+      "flavorMeter": "{max} üzerinden {count} seçildi"
     },
     "guidedPromo": {
       "buildYourDeal": "Fırsatını oluştur",

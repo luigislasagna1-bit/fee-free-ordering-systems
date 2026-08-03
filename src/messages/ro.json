@@ -7058,7 +7058,8 @@
       "howMany": "Câte bucăți?",
       "poolMeter": "Toppinguri comune: {used} din {total} folosite",
       "poolLeft": "{left} rămase",
-      "poolEmpty": "Toate folosite — toppingurile extra se taxează"
+      "poolEmpty": "Toate folosite — toppingurile extra se taxează",
+      "flavorMeter": "{count} din {max} selectate"
     },
     "guidedPromo": {
       "buildYourDeal": "Construiește-ți oferta",

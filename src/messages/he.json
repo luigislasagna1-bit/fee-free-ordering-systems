@@ -7058,7 +7058,8 @@
       "howMany": "כמה?",
       "poolMeter": "תוספות משותפות: {used} מתוך {total} בשימוש",
       "poolLeft": "נותרו {left}",
-      "poolEmpty": "הכול נוצל — כל תוספת נוספת בתשלום"
+      "poolEmpty": "הכול נוצל — כל תוספת נוספת בתשלום",
+      "flavorMeter": "{count} מתוך {max} נבחרו"
     },
     "guidedPromo": {
       "buildYourDeal": "בנו את המבצע שלכם",

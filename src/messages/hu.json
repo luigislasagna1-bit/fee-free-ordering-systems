@@ -7058,7 +7058,8 @@
       "howMany": "Hány darabot?",
       "poolMeter": "Közös feltétek: {used} / {total} felhasználva",
       "poolLeft": "{left} maradt",
-      "poolEmpty": "Mind felhasználva — a további feltétek felárasak"
+      "poolEmpty": "Mind felhasználva — a további feltétek felárasak",
+      "flavorMeter": "{count}/{max} kiválasztva"
     },
     "guidedPromo": {
       "buildYourDeal": "Állítsa össze ajánlatát",
