@@ -252,6 +252,25 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
     return out;
   };
 
+  // Short, human summary of what makes a pick specific, so every chip reads the
+  // same way — "name — what you chose" — instead of some showing a vague ⭐ and
+  // others the actual choice. Pizzas summarize by their TOPPINGS only (crust /
+  // sauce / cheese omitted to keep the chip short); everything else lists its
+  // modifier choices (e.g. the pop flavor). Capped at 3 with a "+N" overflow.
+  // Luigi 2026-08-03 — unify combo chips after the pop multi-select change.
+  const describePick = (p: Pick): string => {
+    let names: string[] = [];
+    if (p.pizzaCustomization) {
+      const tops = Array.isArray(p.pizzaCustomization.toppings) ? p.pizzaCustomization.toppings : [];
+      for (const tp of tops) if (tp?.name && !names.includes(tp.name)) names.push(tp.name);
+    } else {
+      names = (p.modifiers ?? []).map((m) => m.name).filter(Boolean);
+    }
+    if (names.length === 0) return "";
+    const shown = names.slice(0, 3).join(", ");
+    return names.length > 3 ? `${shown} +${names.length - 3}` : shown;
+  };
+
   // ── One-pass multi-select (Luigi 2026-08-02, the GloriaFood pattern) ──────
   // A selected pool row grows −/+ steppers: [+] repeats the LAST pick of that
   // item verbatim (identical size/mods — the customize-once promise), [−]
@@ -420,14 +439,10 @@ export function ComboComposerModal({ comboItem, allItems, primaryColor, fmt, onA
                             <span>
                               {qty > 1 ? <strong className="mr-0.5">{t("timesCount", { count: qty })}</strong> : null}
                               {p.name}{p.variantName ? ` (${p.variantName})` : ""}
-                              {/* Name the actual selection (e.g. the drink flavor picked)
-                                  instead of a bare star — a customer with two picks of the
-                                  same base item can otherwise not tell them apart in this
-                                  summary. Pizzas keep the star (too many mods to list).
-                                  Luigi 2026-08-03. */}
-                              {!p.pizzaCustomization && p.modifiers && p.modifiers.length
-                                ? ` — ${p.modifiers.map((m) => m.name).join(", ")}`
-                                : p.pizzaCustomization ? " ⭐" : ""}
+                              {/* Every chip names the actual selection (drink flavor,
+                                  pizza toppings…) so two picks of the same base item are
+                                  never indistinguishable — no more bare ⭐. Luigi 2026-08-03. */}
+                              {(() => { const d = describePick(p); return d ? ` — ${d}` : ""; })()}
                               {extra > 0 ? ` (+${fmt(extra * qty)})` : ""}
                             </span>
                           </button>
