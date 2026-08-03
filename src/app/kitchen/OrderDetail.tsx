@@ -788,27 +788,26 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
         {/* Status actions */}
         <div className="grid grid-cols-2 gap-2">
           {order.status === "pending" && (
-            // Accept full-width and large on top, Reject small underneath
-            // (Luigi 2026-08-02: "less confusing and less prone to error" —
-            // the big obvious action is the one you want on a busy kitchen
-            // screen; Reject stays reachable but requires a more deliberate
-            // tap, so it's harder to hit by accident reaching for Accept).
-            <div className="col-span-2 flex flex-col items-center gap-2">
+            // Accept + Reject side by side, equal width (Luigi 2026-08-03:
+            // reverted the stacked layout on THIS order-detail screen back to
+            // the original — the stacked "big Accept on top" treatment stays
+            // only on the new-order accept PROMPT, not here).
+            <>
               <button
                 onClick={() => act(() => onUpdate(order.id, "accepted", { preparationTime: 20 }))}
                 disabled={busy}
-                className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3.5 rounded-xl text-base transition disabled:opacity-50"
+                className="flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
               >
-                <CheckCircle className="w-5 h-5" /> {tk("accept")}
+                <CheckCircle className="w-4 h-4" /> {tk("accept")}
               </button>
               <button
                 onClick={() => setShowReject(true)}
                 disabled={busy}
-                className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-xl text-xs transition disabled:opacity-50"
+                className="flex items-center justify-center gap-1.5 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-xl text-sm transition disabled:opacity-50"
               >
-                <XCircle className="w-3.5 h-3.5" /> {tk("reject")}
+                <XCircle className="w-4 h-4" /> {tk("reject")}
               </button>
-            </div>
+            </>
           )}
           {/* Transition buttons after Accept — only render in "tracking"
               workflow mode. In "simple" mode (default, GloriaFood-style)
