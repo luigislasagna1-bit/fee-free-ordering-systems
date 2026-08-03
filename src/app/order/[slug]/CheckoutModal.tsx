@@ -1437,9 +1437,18 @@ export function CheckoutModal({
                             ))}
                             {addrSuggestions[0]?.kind === "google" && (
                               /* Places TOS: attribution is required when predictions
-                                 render off-map (our pin map is Leaflet/OSM). */
-                              <li aria-hidden className="px-3 py-1 text-end text-[10px] text-gray-400 select-none">
-                                powered by Google
+                                 render off-map (our pin map is Leaflet/OSM). Google's
+                                 off-map attribution guideline prefers the official
+                                 logo over plain text — using the non-outlined "Gray"
+                                 lockup (correct for our plain white dropdown
+                                 background); never recolor, stretch, or localize it
+                                 (Luigi 2026-08-03). */
+                              <li aria-hidden className="px-3 py-1.5 text-end select-none">
+                                <img
+                                  src="/icons/google-maps-attribution.svg"
+                                  alt="Google Maps"
+                                  className="inline-block h-4 w-auto"
+                                />
                               </li>
                             )}
                           </ul>
