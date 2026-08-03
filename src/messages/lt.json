@@ -5160,7 +5160,13 @@
       "giftResent": "Instrukcijos išsiųstos dar kartą.",
       "giftResendTooSoon": "Ką tik išsiųsta — palaukite minutę prieš siųsdami dar kartą.",
       "giftAlreadyPending": "Šis žmogus jau turi neatsiimtų {amount} {label}. Išsiųskite instrukcijas dar kartą mygtuku ✉ žemiau arba pirma atšaukite tą dovaną.",
-      "giftBlockedTitle": "{email} jau turi neatsiimtą dovaną"
+      "giftBlockedTitle": "{email} jau turi neatsiimtą dovaną",
+      "giftRevokeConfirm": "Atšaukti šią dovaną? Visi jos aktyvūs panaudojimo kodai bus nedelsiant deaktyvuoti — šio veiksmo negalima anuliuoti.",
+      "codeHint": "Kodas: ····{hint}",
+      "codeStatusActive": "kodas aktyvus",
+      "codeStatusExpired": "kodo galiojimas baigėsi",
+      "codeStatusRevoked": "kodas atšauktas",
+      "codeExpires": "galioja iki {date}"
     },
     "imageCrop": {
       "title": "Koreguokite nuotrauką",
@@ -5941,7 +5947,20 @@
       "step2Title": "Jūsų {amount} atsiras automatiškai",
       "step2Body": "Vos baigsite registraciją, kreditas jau bus jūsų paskyroje. Jokio kodo įvesti nereikia.",
       "step3Title": "Išleiskite tada, kada panorėsite",
-      "step3Body": "Atsiskaitydami pamatysite „Naudoti savo {label}“. Užsakymui skirkite tiek, kiek norite — daug ar mažai — o likusią sumą tiesiog sumokėsite kaip įprastai. Galiojimo termino nėra, tad likutis laukia tol, kol jo prireiks."
+      "step3Body": "Atsiskaitydami pamatysite „Naudoti savo {label}“. Užsakymui skirkite tiek, kiek norite — daug ar mažai — o likusią sumą tiesiog sumokėsite kaip įprastai. Galiojimo termino nėra, tad likutis laukia tol, kol jo prireiks.",
+      "whatItIsSpend": "{label} — tai kreditas restorane {restaurantName}: jie tiesiogiai sumažina jūsų sąskaitą, visai kaip dovanų kortelė. Šį galite panaudoti jau dabar, paskyra nereikalinga:",
+      "step1TitleSpend": "Paspauskite mygtuką žemiau",
+      "step1BodySpend": "Jis atveria jūsų dovaną, kuri jau atrakinta — nereikia nei prisijungimo, nei slaptažodžio.",
+      "step2TitleSpend": "Jūsų {amount} jau čia",
+      "step2BodySpend": "Savo likutį pamatysite, kai tik atsidarys puslapis.",
+      "step3TitleSpend": "Užsisakykite ir pritaikykite jį atsiskaitant",
+      "step3BodySpend": "Jūsų dovana pritaikoma automatiškai — sumažinkite ar pašalinkite ją, jei norite pasilikti vėlesniam laikui.",
+      "spendCtaPrimary": "Panaudokite savo {amount} dabar — paskyra nereikalinga",
+      "orTypeThisCode": "Arba įveskite šį kodą atsiskaitydami:",
+      "codeExpiryLine": "Šis kodas veikia iki {date}. Jei jo galiojimas baigsis, tiesiog paprašykite restorano naujo — jūsų dovana savaime niekada nebaigia galioti.",
+      "neverExpiresLine": "Jūsų {label} niekada nebaigia galioti, baigiasi tik šio kodo galiojimas.",
+      "doNotForwardLine": "Ši nuoroda ir kodas skirti tik jums — prašome nepersiųsti šio laiško.",
+      "createAccountSecondary": "Arba susikurkite nemokamą paskyrą, kad ją pasiliktumėte visam laikui"
     },
     "vipGroupWelcome": {
       "accountTip": "Kad galėtumėte kaupti ir išleisti {label}, susikurkite nemokamą paskyrą su šiuo el. pašto adresu ir prisijunkite kaskart užsisakydami — jūsų kreditas laikomas paskyroje, todėl atsiskaitant matomas tik prisijungus.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "Jūsų {platform} programėlė sustabdyta",
       "suspendedBody": "{restaurant} programėlės kūrimas platformai {platform} buvo sustabdytas. Priežastį rasite savo programėlės būsenos puslapyje arba atsakykite į šį el. laišką – padėsime viską vėl pajudinti į priekį."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Dovana nuo {restaurantName}",
+    "landingSubtitle": "Įveskite savo kodą žemiau, kad jį pamatytumėte ir panaudotumėte — paskyra nereikalinga.",
+    "codeLabel": "Dovanos kodas",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Įveskite kodą iš savo el. laiško arba jį įklijuokite — brūkšneliai ir tarpai nesvarbu.",
+    "helpTipWhatIsThis": "Šis kodas atrakina dovanos likutį, atsiųstą į jūsų el. paštą. Jis veikia be paskyros kūrimo, bet jį galima panaudoti tik šiame restorane ir vienu metu tik vienam užsakymui.",
+    "verifyButton": "Patikrinti mano dovaną",
+    "giftFrom": "Dovana nuo {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}“",
+    "claimButton": "Panaudoti dabar",
+    "claiming": "Atrakiname jūsų dovaną…",
+    "successBanner": "Viskas paruošta — nukreipiame jus į meniu…",
+    "bannerSpending": "Jūs naudojate {restaurant} dovaną",
+    "bannerBalance": "likutis {balance}",
+    "checkoutCreditLabel": "Dovanos kreditas",
+    "checkoutEmailLocked": "El. paštas susietas su jūsų dovana.",
+    "checkoutEmailLockedHelp": "Jūsų dovana yra susieta tiksliai su šiuo el. pašto adresu. Norėdami naudoti kitą adresą, geriau susikurkite nemokamą paskyrą.",
+    "resendButton": "Atsiųsti man naują kodą",
+    "resendSent": "Jei ta dovana vis dar laukia, naujas kodas jau keliauja.",
+    "signUpInstead": "Norite šią dovaną pasilikti visam laikui? <link>Verčiau susikurkite nemokamą paskyrą</link>.",
+    "errInvalid": "Šis kodas atrodo neteisingas. Patikrinkite jį ir bandykite dar kartą arba paprašykite naujo žemiau.",
+    "errExpired": "Šio kodo galiojimas baigėsi, bet jūsų dovanos — ne, paprašykite naujo kodo žemiau.",
+    "errRevoked": "Šį kodą atšaukė restoranas. Susisiekite su juo, jei manote, kad tai klaida.",
+    "errAccountExists": "Geros naujienos — šis el. paštas jau turi paskyrą, ir dovana jau yra joje. Prisijunkite, kad ją panaudotumėte.",
+    "errRewardsOff": "Šio restorano lojalumo programa dabar nepasiekiama.",
+    "errSuperseded": "Ši dovana jau buvo atsiimta. Jei tai nebuvote jūs, susisiekite su restoranu.",
+    "errTooManyAttempts": "Su šiuo kodu buvo per daug bandymų. Paprašykite restorano atsiųsti jums naują.",
+    "errRateLimited": "Per daug bandymų — palaukite akimirką ir bandykite dar kartą.",
+    "errEmailMismatch": "Šis el. paštas neatitinka šios dovanos. Pabandykite adresą, į kurį dovana buvo išsiųsta.",
+    "errGeneric": "Kažkas nepavyko. Bandykite dar kartą po kelių akimirkų."
   }
 }

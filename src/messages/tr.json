@@ -5160,7 +5160,13 @@
       "giftResent": "Yönergeler yeniden gönderildi.",
       "giftResendTooSoon": "Az önce gönderildi — tekrar göndermeden önce bir dakika bekleyin.",
       "giftAlreadyPending": "Bu kişinin henüz alınmamış {amount} tutarında {label} hediyesi zaten var. Aşağıdaki ✉ düğmesiyle yönergeleri yeniden gönderin ya da önce o hediyeyi iptal edin.",
-      "giftBlockedTitle": "{email} adresinin alınmayı bekleyen bir hediyesi zaten var"
+      "giftBlockedTitle": "{email} adresinin alınmayı bekleyen bir hediyesi zaten var",
+      "giftRevokeConfirm": "Bu hediye iptal edilsin mi? Buna ait aktif kullanım kodu anında devre dışı bırakılır — bu işlem geri alınamaz.",
+      "codeHint": "Kod: ····{hint}",
+      "codeStatusActive": "kod aktif",
+      "codeStatusExpired": "kodun süresi doldu",
+      "codeStatusRevoked": "kod iptal edildi",
+      "codeExpires": "geçerlilik süresi {date}"
     },
     "imageCrop": {
       "title": "Fotoğrafınızı ayarlayın",
@@ -5941,7 +5947,20 @@
       "step2Title": "{amount} tutarı otomatik olarak görünür",
       "step2Body": "Kaydınızı tamamladığınız anda kredi hesabınızda olur. Girilecek bir kod yok.",
       "step3Title": "Dilediğiniz zaman harcayın",
-      "step3Body": "Ödeme adımında “{label} bakiyenizi kullanın” seçeneğini göreceksiniz. Siparişe dilediğiniz kadar aktarın — çok ya da az — kalanı her zamanki gibi ödersiniz. Son kullanma tarihi yoktur; siz isteyene kadar durur."
+      "step3Body": "Ödeme adımında “{label} bakiyenizi kullanın” seçeneğini göreceksiniz. Siparişe dilediğiniz kadar aktarın — çok ya da az — kalanı her zamanki gibi ödersiniz. Son kullanma tarihi yoktur; siz isteyene kadar durur.",
+      "whatItIsSpend": "{label}, {restaurantName} işletmesinde geçerli bir kredidir — hediye kartı gibi, ödeyeceğiniz tutardan doğrudan düşülür. Bunu hemen kullanabilirsiniz, hesap gerekmez:",
+      "step1TitleSpend": "Aşağıdaki düğmeye dokunun",
+      "step1BodySpend": "Hediyenizi, kilidi çözülmüş şekilde açar — giriş yok, şifre yok.",
+      "step2TitleSpend": "{amount} tutarınız orada zaten hazır",
+      "step2BodySpend": "Sayfa açıldığı anda bakiyenizi göreceksiniz.",
+      "step3TitleSpend": "Sipariş verin ve ödeme sırasında uygulayın",
+      "step3BodySpend": "Hediyeniz otomatik olarak uygulanır — daha sonra kullanmak isterseniz azaltabilir veya kaldırabilirsiniz.",
+      "spendCtaPrimary": "{amount} tutarınızı şimdi kullanın — hesap gerekmez",
+      "orTypeThisCode": "Veya ödeme sırasında bu kodu girin:",
+      "codeExpiryLine": "Bu kod {date} tarihine kadar geçerlidir. Süresi dolarsa, işletmeden yeni bir kod istemeniz yeterli — hediyenizin kendisi asla süresi dolmaz.",
+      "neverExpiresLine": "{label} bakiyeniz asla sona ermez, sadece bu kodun süresi dolar.",
+      "doNotForwardLine": "Bu bağlantı ve kod yalnızca size özeldir — lütfen bu e-postayı iletmeyin.",
+      "createAccountSecondary": "Veya sonsuza kadar saklamak için ücretsiz bir hesap oluşturun"
     },
     "vipGroupWelcome": {
       "accountTip": "{label} biriktirip harcamak için bu e-posta adresiyle ücretsiz hesabınızı oluşturun ve her sipariş verdiğinizde giriş yapın — bakiyeniz hesabınızda durur, bu yüzden ödeme sırasında yalnızca giriş yapmışken görünür.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "{platform} uygulamanız duraklatıldı",
       "suspendedBody": "{platform} için {restaurant} uygulaması üzerindeki çalışmalar duraklatıldı. Nedenini öğrenmek için uygulama durumu sayfanızı kontrol edin ya da bu e-postayı yanıtlayın; tekrar yoluna koymanıza yardımcı olalım."
     }
+  },
+  "giftPass": {
+    "landingTitle": "{restaurantName} tarafından bir hediye",
+    "landingSubtitle": "Görmek ve kullanmak için aşağıya kodunuzu girin — hesap gerekmez.",
+    "codeLabel": "Hediye kodu",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "E-postanızdaki kodu yazın veya yapıştırın — tire ve boşluklar önemli değil.",
+    "helpTipWhatIsThis": "Bu kod, e-postanıza gönderilen hediye bakiyesinin kilidini açar. Hesap oluşturmadan çalışır, ancak yalnızca bu işletmede ve aynı anda yalnızca bir siparişte kullanılabilir.",
+    "verifyButton": "Hediyemi kontrol et",
+    "giftFrom": "{restaurantName} tarafından bir hediye",
+    "giftAmount": "{amount}",
+    "giftNote": "“{note}”",
+    "claimButton": "Şimdi kullan",
+    "claiming": "Hediyenizin kilidi açılıyor…",
+    "successBanner": "Her şey hazır — sizi menüye yönlendiriyoruz…",
+    "bannerSpending": "{restaurant} hediyesini kullanıyorsunuz",
+    "bannerBalance": "bakiye {balance}",
+    "checkoutCreditLabel": "Hediye kredisi",
+    "checkoutEmailLocked": "E-posta hediyenize kilitlendi.",
+    "checkoutEmailLockedHelp": "Hediyeniz tam olarak bu e-posta adresine bağlıdır. Farklı bir adres kullanmak için lütfen ücretsiz bir hesap oluşturun.",
+    "resendButton": "Bana yeni bir kod gönder",
+    "resendSent": "Hediye hâlâ bekliyorsa, yeni bir kod yolda.",
+    "signUpInstead": "Bu hediyeyi sonsuza kadar saklamayı mı tercih edersiniz? <link>Bunun yerine ücretsiz bir hesap oluşturun</link>.",
+    "errInvalid": "Bu kod doğru görünmüyor. Kontrol edip tekrar deneyin veya aşağıdan yeni bir kod isteyin.",
+    "errExpired": "Bu kodun süresi doldu, ancak hediyenizin dolmadı — aşağıdan yeni bir kod isteyin.",
+    "errRevoked": "Bu kod işletme tarafından iptal edildi. Bunun bir hata olduğunu düşünüyorsanız onlarla iletişime geçin.",
+    "errAccountExists": "İyi haber — bu e-postada zaten bir hesap var ve hediye zaten onun içinde. Kullanmak için giriş yapın.",
+    "errRewardsOff": "Bu işletmenin ödül programı şu anda kullanılamıyor.",
+    "errSuperseded": "Bu hediye zaten alındı. Bu siz değilseniz, işletmeyle iletişime geçin.",
+    "errTooManyAttempts": "Bu kodla çok fazla deneme yapıldı. İşletmeden size yeni bir kod göndermesini isteyin.",
+    "errRateLimited": "Çok fazla deneme — lütfen biraz bekleyip tekrar deneyin.",
+    "errEmailMismatch": "Bu e-posta bu hediyeyle eşleşmiyor. Hediyenin gönderildiği adresi deneyin.",
+    "errGeneric": "Bir şeyler ters gitti. Lütfen bir dakika sonra tekrar deneyin."
   }
 }

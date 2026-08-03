@@ -253,29 +253,39 @@ export async function POST(req: NextRequest) {
      *  lines; the order route enforces the same cap at charge. Independent
      *  of the promo-discount exclusion. Luigi 2026-07-02. */
     redeemExcludedTotal: number;
+    /** Whose wallet this is — lets the cart label the credit row ("Luigi's
+     *  Lasagna gift" vs the ordinary account balance). Gift Wallet Pass,
+     *  2026-08-03. */
+    rewardSource: "session" | "gift_pass" | null;
+    /** True only for a Gift Wallet Pass spend — the client must subtract the
+     *  tip from the redeemable base so the slider max matches the charge-side
+     *  clamp (a bearer credential must buy food, not fund a driver's cash
+     *  tip). False for a signed-in customer spending their own balance. */
+    redeemTipExcluded: boolean;
   } | null = null;
   try {
     const r = restaurant as any;
     // Opting into the program means customers can pay with their balance — gate
     // on rewardsEnabled alone (rewardRedeemEnabled is auto-coupled to it, but we
     // don't depend on a possibly-stale value). Luigi 2026-06-27.
-    // STRICT: the server-verified signed-in customer only — never the typed
-    // email's Customer row. Typing an email is NOT proof you control it, so
-    // resolving the wallet from a typed email would let anyone drain anyone
-    // else's stored balance by guessing their address. (Discount perks are
-    // deliberately looser — Luigi's call — but stored VALUE must be
-    // authenticated. Reverted 2026-07-31 within the hour it was introduced;
-    // the legitimate no-account gift path is a signed claim link, not a
-    // typed address.)
+    // STRICT identity: walletCustomerId is EITHER the server-verified signed-in
+    // session (never the typed email's Customer row — typing an email is NOT
+    // proof you control it, so resolving the wallet from a typed address would
+    // let anyone drain anyone else's stored balance by guessing it; Reverted
+    // 2026-07-31 within the hour it was introduced) OR a proven Gift Wallet
+    // Pass bearer credential whose stored email matches what was typed here
+    // (promo-order-context.ts's resolveGiftPassSpender — the ONLY other way
+    // in). Discount perks are deliberately looser (Luigi's call), but stored
+    // VALUE must be authenticated either way.
     // A signed-in customer now OWNS their orders (/api/orders resolves the
     // Order's Customer row from the session, not the typed email), so the payer
     // and the earner are the same person and the balance is always theirs to
     // spend. The charge route additionally asserts that exact identity before
     // it reserves anything, so it can only ever refuse where this preview was
     // optimistic — it fails closed, never the other way round.
-    if (r.rewardsEnabled && promoCtx.sessionCustomerId) {
+    if (r.rewardsEnabled && promoCtx.walletCustomerId) {
       const { getBalance } = await import("@/lib/reward-ledger");
-      const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.sessionCustomerId });
+      const balance = await getBalance({ restaurantId: restaurant.id, customerId: promoCtx.walletCustomerId });
       if (balance > 0) {
         reward = {
           balance,
@@ -284,6 +294,8 @@ export async function POST(req: NextRequest) {
           maxRedeemPercent: r.rewardMaxRedeemPercent ?? 100,
           labelSingular: r.rewardLabelSingular ?? null,
           labelPlural: r.rewardLabelPlural ?? null,
+          rewardSource: promoCtx.walletSource,
+          redeemTipExcluded: promoCtx.walletSource === "gift_pass",
           // Keyed on rewardRedeemExcluded — its OWN flag, independent of the
           // promo-discount exclusion (Luigi 2026-07-02).
           redeemExcludedTotal: Math.round(

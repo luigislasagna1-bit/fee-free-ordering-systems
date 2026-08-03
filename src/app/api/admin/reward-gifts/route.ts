@@ -23,18 +23,29 @@ import { isAccountCustomer } from "@/lib/reward-gifts";
 import { sendRewardGiftEmail, sendRewardGiftInviteEmail } from "@/lib/email";
 import { formatCurrency } from "@/lib/utils";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { CUSTOMER_ROW_ORDER } from "@/lib/customer-row";
+import { mintPassForGrant } from "@/lib/gift-wallet-pass";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function giftShape(g: {
-  id: string; email: string; name: string; amount: number; note: string | null;
-  status: string; createdAt: Date; claimedAt: Date | null; emailSentAt: Date | null;
-}) {
+type PassInfo = { codeHint: string; expiresAt: string; revoked: boolean; exchanged: boolean };
+
+function giftShape(
+  g: {
+    id: string; email: string; name: string; amount: number; note: string | null;
+    status: string; createdAt: Date; claimedAt: Date | null; emailSentAt: Date | null;
+  },
+  pass?: PassInfo | null,
+) {
   return {
     id: g.id, email: g.email, name: g.name, amount: g.amount, note: g.note,
     status: g.status, createdAt: g.createdAt.toISOString(),
     claimedAt: g.claimedAt?.toISOString() ?? null,
     emailSentAt: g.emailSentAt?.toISOString() ?? null,
+    // Gift Wallet Pass — admin support display ONLY (last-4 hint, never the
+    // full code, which is never even stored). Null when no pass was ever
+    // minted (e.g. an old gift created before this feature shipped).
+    pass: pass ?? null,
   };
 }
 
@@ -48,7 +59,30 @@ export async function GET() {
     take: 50,
     select: { id: true, email: true, name: true, amount: true, note: true, status: true, createdAt: true, claimedAt: true, emailSentAt: true },
   });
-  return NextResponse.json({ gifts: gifts.map(giftShape) });
+  // Fail-open on the pass lookup alone: a schema-push that hasn't landed yet
+  // (deployment-ordering — the GiftWalletPass table is additive, pushed
+  // separately per the standing rule) must never break the EXISTING gift
+  // list this page already showed before this feature existed. Worst case,
+  // rows render with pass:null (no code/status/expiry column) until the
+  // table exists — never a 500 on a page that used to work.
+  let passes: { grantId: string; codeHint: string; expiresAt: Date; revokedAt: Date | null; exchangeCount: number }[] = [];
+  if (gifts.length) {
+    try {
+      passes = await prisma.giftWalletPass.findMany({
+        where: { grantId: { in: gifts.map((g) => g.id) } },
+        select: { grantId: true, codeHint: true, expiresAt: true, revokedAt: true, exchangeCount: true },
+      });
+    } catch (e) {
+      console.error("[reward-gifts GET] giftWalletPass lookup failed — degrading to pass:null", e);
+    }
+  }
+  const passByGrantId = new Map(
+    passes.map((p) => [
+      p.grantId,
+      { codeHint: p.codeHint, expiresAt: p.expiresAt.toISOString(), revoked: !!p.revokedAt, exchanged: p.exchangeCount > 0 } as PassInfo,
+    ]),
+  );
+  return NextResponse.json({ gifts: gifts.map((g) => giftShape(g, passByGrantId.get(g.id))) });
 }
 
 export async function POST(req: Request) {
@@ -62,6 +96,7 @@ export async function POST(req: Request) {
       rewardsEnabled: true,
       name: true, email: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true,
       defaultLanguage: true, currency: true, rewardLabelSingular: true, rewardLabelPlural: true,
+      timezone: true, hoursFormat: true,
     },
   });
   if (!r?.rewardsEnabled) return NextResponse.json({ error: "rewards_off", code: "rewards_off" }, { status: 400 });
@@ -126,7 +161,7 @@ export async function POST(req: Request) {
   // prefer the credentialed row — same convention as the orders route.)
   const existing = await prisma.customer.findFirst({
     where: { restaurantId, email: { equals: email, mode: "insensitive" } },
-    orderBy: { passwordHash: { sort: "desc", nulls: "last" } },
+    orderBy: CUSTOMER_ROW_ORDER as any,
     select: { id: true, name: true, email: true, signedUpAt: true, passwordHash: true, customerAccountId: true },
   });
 
@@ -172,9 +207,41 @@ export async function POST(req: Request) {
   }
 
   // Pending path: the gift waits for signup (no expiry — Luigi 2026-07-28).
+  // Claim stays lazy — a Gift Wallet Pass is minted alongside it, but the
+  // grant itself only ever flips to "claimed" when someone actually spends
+  // it (exchange) or signs up. That is what preserves the revoke path and
+  // stops a CRM row existing for a link nobody clicked.
   const gift = await prisma.pendingRewardGrant.create({
     data: { restaurantId, email, name, amount, note, status: "pending", createdBy: user!.id },
   });
+
+  // Gift Wallet Pass — the no-account spend path (2026-08-03). A mint
+  // failure must never break gift creation: log and fall back to the
+  // signup-only email (degraded, never broken).
+  let spendUrl: string | null = null;
+  let passCode: string | null = null;
+  let codeExpiryLabel: string | null = null;
+  let mintedPassInfo: PassInfo | null = null;
+  try {
+    const minted = await mintPassForGrant({ restaurantId, grantId: gift.id });
+    if (minted) {
+      passCode = minted.code;
+      spendUrl = `${restaurantOrderUrl(r as any, `/gift/${gift.id}`)}#g=${minted.code.replace(/-/g, "")}`;
+      codeExpiryLabel = minted.expiresAt.toLocaleDateString(locale || undefined, {
+        timeZone: r.timezone || "UTC",
+        year: "numeric", month: "long", day: "numeric",
+      });
+      mintedPassInfo = {
+        codeHint: minted.code.replace(/-/g, "").slice(-4),
+        expiresAt: minted.expiresAt.toISOString(),
+        revoked: false,
+        exchanged: false,
+      };
+    }
+  } catch (e) {
+    console.error("[reward-gift mint pass]", e);
+  }
+
   sendRewardGiftInviteEmail({
     to: email,
     customerName: name,
@@ -185,6 +252,9 @@ export async function POST(req: Request) {
     orderUrl: signupUrl,
     restaurantEmail: r.email,
     locale,
+    spendUrl,
+    code: passCode,
+    codeExpiryLabel,
   })
     .then((res2) => prisma.pendingRewardGrant.update({ where: { id: gift.id }, data: { emailSentAt: res2.success ? new Date() : null } }).catch(() => {}))
     .catch((e) => console.error("[reward-gift invite email]", e instanceof Error ? e.message : e));
@@ -192,6 +262,6 @@ export async function POST(req: Request) {
   return NextResponse.json({
     ok: true,
     instant: false,
-    gift: giftShape({ ...gift }),
+    gift: giftShape({ ...gift }, mintedPassInfo),
   });
 }

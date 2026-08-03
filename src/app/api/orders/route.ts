@@ -27,6 +27,7 @@ import { writePromotionUsageRows } from "@/lib/promo-usage";
 import { resolveInheritedHours } from "@/lib/inherited-data";
 import { resolveAssignedPromoByCode, markGrantAppliedById } from "@/lib/coupon-ledger";
 import { buildPromoOrderContext } from "@/lib/promo-order-context";
+import { CUSTOMER_ROW_ORDER } from "@/lib/customer-row";
 import { reserveCredit as reserveReward, refundClaim as refundRewardClaim, buildSpendLedgerData } from "@/lib/reward-ledger";
 import { hasFeature } from "@/lib/entitlements";
 import { parseComboConfig, comboAllowedVariantIds, comboUpchargeFor } from "@/lib/combo";
@@ -1923,7 +1924,7 @@ export async function POST(req: NextRequest) {
       // login route's preference logic). Prefer the ACCOUNT row so a member's
       // order lands on the row with signedUpAt — binding to the guest twin
       // would silently block their reward earn under orderEligibleToEarn.
-      if (!customer && where) customer = await prisma.customer.findFirst({ where, orderBy: { passwordHash: { sort: "desc", nulls: "last" } } });
+      if (!customer && where) customer = await prisma.customer.findFirst({ where, orderBy: CUSTOMER_ROW_ORDER as any });
       // BIDIRECTIONAL marketing consent (GloriaFood-parity, Luigi 2026-06-03).
       // The checkbox state IS the customer's explicit choice on this order:
       //   ticked   → opt IN
@@ -2570,22 +2571,27 @@ export async function POST(req: NextRequest) {
       // auto-coupled to rewardsEnabled; don't depend on a stale value). 2026-06-27.
       if (restaurant.rewardsEnabled && Number.isFinite(requested) && requested > 0) {
         try {
-          // Session identity already resolved (once) by buildPromoOrderContext;
-          // sessionCustomerId is the server-verified signed-in Customer only.
-          // NEVER widen this to the typed-email Customer row: typing an address
-          // is not proof of controlling it, and stored value must be
-          // authenticated before it can be spent (reverted 2026-07-31).
+          // Wallet identity already resolved (once) by buildPromoOrderContext:
+          // walletCustomerId is EITHER the server-verified signed-in Customer
+          // (a typed address is NEVER a wallet key — stored value must be
+          // authenticated before it can be spent, reverted 2026-07-31) OR a
+          // proven Gift Wallet Pass bearer credential whose stored email
+          // matched what was typed at checkout (the ONLY other way in — see
+          // src/lib/gift-wallet-pass.ts).
           //
           // The second half is the invariant that makes spending SAFE: the row
           // this order was actually attributed to (resolved far above) must BE
-          // the wallet's owner. Since a signed-in customer now owns their own
-          // orders that holds by construction — but asserting it here means the
-          // wallet cannot be spent on an order credited to anybody else even if
-          // that resolution is ever changed again. Comparing ids beats comparing
-          // typed emails: it is exact, and it fails closed.
+          // the wallet's owner. For a signed-in customer that holds by
+          // construction; for a Gift Wallet Pass, `customer` above was
+          // resolved from the TYPED email using the same deterministic
+          // ordering (CUSTOMER_ROW_ORDER) the pass's own guest-twin exchange
+          // used, so the two converge on one row — but asserting it here means
+          // the wallet can never be spent on an order credited to anybody else
+          // even if that resolution is ever changed again. Comparing ids beats
+          // comparing typed emails: it is exact, and it fails closed.
           const walletOwnerId =
-            promoCtx.sessionCustomerId && customer?.id === promoCtx.sessionCustomerId
-              ? promoCtx.sessionCustomerId
+            promoCtx.walletCustomerId && customer?.id === promoCtx.walletCustomerId
+              ? promoCtx.walletCustomerId
               : null;
           if (walletOwnerId) {
             const onlineCharge = (paymentMethod || "cash") === "card" || (paymentMethod || "cash") === "paypal";
@@ -2596,16 +2602,26 @@ export async function POST(req: NextRequest) {
             const redeemExcludedLinesTotal = Math.round(
               validatedItems.reduce((s, i) => s + (isRedeemExcludedItem(i.menuItemId) ? i.subtotal : 0), 0) * 100,
             ) / 100;
+            // GIFT-WALLET-PASS-ONLY guard: the tip is a CASH outflow —
+            // serverTip rides in serverTotal and is frozen into
+            // DriverPayout.tipsCents, paid to the driver 100% as cash. A
+            // bearer credential must buy food, not fund a cash payout, so for
+            // a pass-funded order only, subtract it from the redeemable base
+            // (mirrors apply-promos' redeemTipExcluded so the offered max
+            // matches this clamp). A signed-in customer spending their OWN
+            // balance is unaffected — they can tip from their own wallet.
+            const passTipExcluded = promoCtx.walletSource === "gift_pass" ? serverTip : 0;
             const claim = await reserveReward({
               restaurantId: restaurant.id,
               customerId: walletOwnerId,
               requested,
-              // Exclude BOTH redeem-excluded item bases AND every refundable
-              // deposit portion from the redeemable base — a returnable, untaxed
-              // deposit must never be paid with store credit (else the return
-              // refund converts store credit into a cash outflow). subtotal is
-              // base-only, so deposit portions are disjoint — no double-subtract.
-              orderTotal: Math.max(0, Math.round((serverTotal - redeemExcludedLinesTotal - depositLinesTotal) * 100) / 100),
+              // Exclude redeem-excluded item bases, every refundable deposit
+              // portion, AND (gift-pass only) the tip from the redeemable
+              // base. A returnable, untaxed deposit must never be paid with
+              // store credit (else the return refund converts store credit
+              // into a cash outflow); subtotal is base-only, so deposit
+              // portions are disjoint — no double-subtract.
+              orderTotal: Math.max(0, Math.round((serverTotal - redeemExcludedLinesTotal - depositLinesTotal - passTipExcluded) * 100) / 100),
               minRedeemBalance: restaurant.rewardMinRedeemBalance ?? 0,
               maxRedeemPercent: restaurant.rewardMaxRedeemPercent ?? 100,
               minCharge: onlineCharge ? 0.5 : 0,

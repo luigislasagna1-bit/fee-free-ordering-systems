@@ -435,6 +435,7 @@ model Restaurant {
   vipSchedules           VipSchedule[]
   rewardEarnRules        RewardEarnRule[]
   pendingRewardGrants    PendingRewardGrant[]
+  giftWalletPasses       GiftWalletPass[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -1746,6 +1747,7 @@ model Customer {
   vipSchedules      VipSchedule[]
   pushTokens        CustomerPushToken[]
   pushPref          CustomerPushPref?
+  giftWalletPasses  GiftWalletPass[]
 
   @@index([restaurantId])
   @@index([restaurantId, email])
@@ -2416,6 +2418,59 @@ model PendingRewardGrant {
   @@index([restaurantId, email, status])
   /// Admin list, newest first.
   @@index([restaurantId, createdAt])
+}
+
+/// Gift Wallet Pass — a DB-backed, revocable, expiring bearer credential that
+/// lets the holder of a gifted Reward-Dollars balance SPEND it at one
+/// restaurant without ever creating an account. See DESIGN-gift-wallet-pass.md
+/// for the full spec. One row per PendingRewardGrant (grantId @unique — the
+/// mint is idempotent). Sparse side table: nothing added to Order, Customer,
+/// or MenuItem (AGENTS.md hot-table rule). Never stores the raw code —
+/// codeHash is sha256(normalized 16-char Crockford-base32 code), no server
+/// secret involved (deliberately NOT built on order-status-token.ts's HMAC).
+model GiftWalletPass {
+  id           String     @id @default(cuid())
+  restaurantId String
+  /// One pass per gift grant — also the mint's idempotency key.
+  grantId      String     @unique
+  /// The guest-twin Customer row (see src/lib/customer-row.ts). NULL until
+  /// the first successful exchange; never an account-grade row (enforced in
+  /// application code, not here — see resolveGiftPassSpender).
+  customerId   String?
+  /// sha256(normalized code). Indexed unique lookup — no timing oracle.
+  codeHash     String     @unique
+  /// Last 4 chars of the code, plaintext. Admin support display ONLY — never
+  /// enough entropy to reconstruct the credential.
+  codeHint     String
+  /// sha256 of the current browser-session secret set in the ff_gift_pass
+  /// cookie. Single-active-session: minting a new one invalidates the old.
+  sessionHash              String?   @unique
+  /// Sliding 60-minute window, renewed on every successful /me read.
+  sessionExpiresAt         DateTime?
+  /// Hard 12-hour cap from first exchange, set once, never renewed.
+  sessionAbsoluteExpiresAt DateTime?
+  /// 90 days after issue. The GIFT itself never expires (Luigi's rule) —
+  /// only this spendable credential does; a new one can always be minted.
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  revokedReason String?
+  /// DB-enforced caps that do NOT fail open (defence beyond the rate limiter,
+  /// which does fail open with no Upstash/KV configured — see rate-limit.ts).
+  exchangeCount  Int       @default(0)
+  failedAttempts Int       @default(0)
+  resendCount    Int       @default(0)
+  lastResendAt   DateTime?
+  lastExchangeAt DateTime?
+  /// sha256(ip + daily salt) — never a raw IP.
+  lastIpHash     String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  customer   Customer?  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, customerId])
+  @@index([expiresAt])
 }
 
 // ─── Configurable earning rules / campaigns (Reward Dollars, 2026-06-27) ──

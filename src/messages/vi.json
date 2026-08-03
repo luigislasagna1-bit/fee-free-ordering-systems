@@ -5160,7 +5160,13 @@
       "giftResent": "Đã gửi lại hướng dẫn.",
       "giftResendTooSoon": "Vừa gửi xong — hãy đợi một phút rồi gửi lại.",
       "giftAlreadyPending": "Họ đã có {amount} {label} đang chờ nhận. Hãy gửi lại hướng dẫn bằng nút ✉ bên dưới, hoặc hủy món quà đó trước.",
-      "giftBlockedTitle": "{email} đã có một món quà đang chờ nhận"
+      "giftBlockedTitle": "{email} đã có một món quà đang chờ nhận",
+      "giftRevokeConfirm": "Hủy món quà này? Mọi mã sử dụng còn hiệu lực cho món quà này sẽ bị vô hiệu ngay lập tức — không thể hoàn tác.",
+      "codeHint": "Mã: ····{hint}",
+      "codeStatusActive": "mã còn hiệu lực",
+      "codeStatusExpired": "mã đã hết hạn",
+      "codeStatusRevoked": "mã đã bị hủy",
+      "codeExpires": "hết hạn vào {date}"
     },
     "imageCrop": {
       "title": "Điều chỉnh ảnh của bạn",
@@ -5941,7 +5947,20 @@
       "step2Title": "{amount} của bạn xuất hiện tự động",
       "step2Body": "Ngay khi đăng ký xong, khoản tín dụng đã nằm trong tài khoản của bạn. Không cần nhập mã nào cả.",
       "step3Title": "Dùng bất cứ khi nào bạn muốn",
-      "step3Body": "Khi thanh toán, bạn sẽ thấy “Dùng {label} của bạn”. Dùng nhiều hay ít cho đơn hàng là tùy bạn — phần còn lại cứ thanh toán như bình thường. Không có hạn sử dụng, nên nó vẫn còn đó cho tới khi bạn muốn dùng."
+      "step3Body": "Khi thanh toán, bạn sẽ thấy “Dùng {label} của bạn”. Dùng nhiều hay ít cho đơn hàng là tùy bạn — phần còn lại cứ thanh toán như bình thường. Không có hạn sử dụng, nên nó vẫn còn đó cho tới khi bạn muốn dùng.",
+      "whatItIsSpend": "{label} là tín dụng tại {restaurantName} — được trừ trực tiếp vào hóa đơn của bạn, giống như một thẻ quà tặng. Bạn có thể sử dụng ngay bây giờ, không cần tài khoản:",
+      "step1TitleSpend": "Nhấn vào nút dưới đây",
+      "step1BodySpend": "Nó sẽ mở quà tặng của bạn, đã được mở khóa sẵn — không cần đăng nhập, không cần mật khẩu.",
+      "step2TitleSpend": "{amount} của bạn đã có sẵn ở đó",
+      "step2BodySpend": "Bạn sẽ thấy số dư của mình ngay khi trang được mở.",
+      "step3TitleSpend": "Đặt hàng và áp dụng khi thanh toán",
+      "step3BodySpend": "Quà tặng của bạn được áp dụng tự động — giảm hoặc bỏ nó nếu bạn muốn giữ lại để dùng sau.",
+      "spendCtaPrimary": "Sử dụng {amount} của bạn ngay — không cần tài khoản",
+      "orTypeThisCode": "Hoặc nhập mã này khi thanh toán:",
+      "codeExpiryLine": "Mã này có hiệu lực đến {date}. Nếu hết hạn, chỉ cần yêu cầu nhà hàng cấp mã mới — bản thân món quà của bạn không bao giờ hết hạn.",
+      "neverExpiresLine": "{label} của bạn không bao giờ hết hạn, chỉ mã này mới hết hạn.",
+      "doNotForwardLine": "Liên kết và mã này chỉ dành riêng cho bạn — vui lòng không chuyển tiếp email này.",
+      "createAccountSecondary": "Hoặc tạo một tài khoản miễn phí để giữ nó mãi mãi"
     },
     "vipGroupWelcome": {
       "accountTip": "Để tích lũy và sử dụng {label}, hãy tạo tài khoản miễn phí bằng địa chỉ email này và đăng nhập mỗi lần đặt hàng — số dư của bạn nằm trong tài khoản, nên chỉ hiện ra khi thanh toán lúc bạn đã đăng nhập.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "Ứng dụng {platform} của bạn đang tạm dừng",
       "suspendedBody": "Công việc thực hiện ứng dụng {restaurant} cho {platform} đã tạm dừng. Vui lòng kiểm tra trang trạng thái ứng dụng để biết lý do, hoặc trả lời email này và chúng tôi sẽ giúp bạn tiếp tục."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Một món quà từ {restaurantName}",
+    "landingSubtitle": "Nhập mã của bạn dưới đây để xem và sử dụng — không cần tạo tài khoản.",
+    "codeLabel": "Mã quà tặng",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Nhập mã từ email của bạn, hoặc dán vào — dấu gạch ngang và khoảng cách không quan trọng.",
+    "helpTipWhatIsThis": "Mã này mở khóa số dư quà tặng được gửi đến email của bạn. Nó hoạt động mà không cần tạo tài khoản, nhưng chỉ có thể sử dụng tại nhà hàng này và chỉ cho một đơn hàng mỗi lần.",
+    "verifyButton": "Kiểm tra quà tặng của tôi",
+    "giftFrom": "Một món quà từ {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "“{note}”",
+    "claimButton": "Sử dụng ngay",
+    "claiming": "Đang mở khóa quà tặng của bạn…",
+    "successBanner": "Đã xong — đang đưa bạn đến thực đơn…",
+    "bannerSpending": "Bạn đang sử dụng quà tặng của {restaurant}",
+    "bannerBalance": "số dư {balance}",
+    "checkoutCreditLabel": "Tín dụng quà tặng",
+    "checkoutEmailLocked": "Email đã được khóa với quà tặng của bạn.",
+    "checkoutEmailLockedHelp": "Quà tặng của bạn được gắn với chính xác địa chỉ email này. Để sử dụng địa chỉ khác, hãy tạo một tài khoản miễn phí.",
+    "resendButton": "Gửi cho tôi mã mới",
+    "resendSent": "Nếu quà tặng đó vẫn còn hiệu lực, một mã mới đang được gửi đến.",
+    "signUpInstead": "Muốn giữ món quà này mãi mãi? <link>Tạo một tài khoản miễn phí thay vào đó</link>.",
+    "errInvalid": "Mã đó có vẻ không đúng. Hãy kiểm tra lại và thử lại, hoặc yêu cầu mã mới bên dưới.",
+    "errExpired": "Mã này đã hết hạn, nhưng quà tặng của bạn thì chưa — hãy yêu cầu mã mới bên dưới.",
+    "errRevoked": "Mã này đã bị nhà hàng hủy. Hãy liên hệ với họ nếu bạn nghĩ đây là nhầm lẫn.",
+    "errAccountExists": "Tin tốt — email này đã có tài khoản, và quà tặng đã có trong đó. Đăng nhập để sử dụng nó.",
+    "errRewardsOff": "Chương trình tích điểm của nhà hàng này hiện không khả dụng.",
+    "errSuperseded": "Món quà này đã được nhận. Nếu không phải bạn, hãy liên hệ với nhà hàng.",
+    "errTooManyAttempts": "Đã thử quá nhiều lần với mã này. Hãy yêu cầu nhà hàng gửi cho bạn một mã mới.",
+    "errRateLimited": "Đã thử quá nhiều lần — vui lòng chờ một chút và thử lại.",
+    "errEmailMismatch": "Email đó không khớp với quà tặng này. Hãy thử địa chỉ mà quà tặng được gửi đến.",
+    "errGeneric": "Đã có lỗi xảy ra. Vui lòng thử lại sau một chút."
   }
 }

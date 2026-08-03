@@ -5160,7 +5160,13 @@
       "personalRateTitle": "Prilagođena stopa zarade",
       "personalRateDesc": "Ovaj kupac zarađuje ovaj postotak u {label} na svakoj narudžbi — umjesto osnovne stope i svake stope VIP grupe.",
       "ratePlaceholder": "Osnovna stopa",
-      "rateClear": "Ukloni prilagođenu stopu"
+      "rateClear": "Ukloni prilagođenu stopu",
+      "giftRevokeConfirm": "Otkazati ovaj poklon? Svaki aktivni kod za trošenje odmah se poništava — ovo se ne može poništiti.",
+      "codeHint": "Kod: ····{hint}",
+      "codeStatusActive": "kod aktivan",
+      "codeStatusExpired": "kod istekao",
+      "codeStatusRevoked": "kod otkazan",
+      "codeExpires": "ističe {date}"
     },
     "imageCrop": {
       "title": "Prilagodite fotografiju",
@@ -5941,7 +5947,20 @@
       "step3Title": "Potrošite ih kad god želite",
       "step3Body": "Pri plaćanju ćete vidjeti „Iskoristite svoje {label}“. Na narudžbu primijenite koliko god želite — ostatak platite kao i uvijek. Nema roka valjanosti, pa sredstva čekaju dok vam ne zatrebaju.",
       "cta": "Izradi moj račun",
-      "ignoreLine": "Ako ovo niste očekivali, slobodno zanemarite ovaj e-mail."
+      "ignoreLine": "Ako ovo niste očekivali, slobodno zanemarite ovaj e-mail.",
+      "whatItIsSpend": "{label} su kredit u {restaurantName} — skidaju se izravno s vašeg računa, kao poklon-kartica. Ovaj možete potrošiti odmah, bez računa:",
+      "step1TitleSpend": "Dotaknite gumb ispod",
+      "step1BodySpend": "Otvara vaš poklon, već otključan — bez prijave, bez lozinke.",
+      "step2TitleSpend": "Vaš {amount} je već tu",
+      "step2BodySpend": "Vidjet ćete svoje stanje čim se stranica otvori.",
+      "step3TitleSpend": "Naručite i primijenite ga na blagajni",
+      "step3BodySpend": "Vaš poklon se primjenjuje automatski — smanjite ga ili uklonite ako ga radije želite sačuvati za kasnije.",
+      "spendCtaPrimary": "Potrošite svoj {amount} sada — bez računa",
+      "orTypeThisCode": "Ili upišite ovaj kod na blagajni:",
+      "codeExpiryLine": "Ovaj kod vrijedi do {date}. Ako istekne, samo zatražite novi od restorana — vaš poklon sam po sebi nikad ne ističe.",
+      "neverExpiresLine": "Vaš {label} nikad ne ističe, ističe samo ovaj kod.",
+      "doNotForwardLine": "Ova poveznica i kod su samo za vas — nemojte prosljeđivati ovu e-poruku.",
+      "createAccountSecondary": "Ili otvorite besplatan račun da biste ga zadržali zauvijek"
     },
     "vipGroupWelcome": {
       "accountTip": "Da biste skupljali i trošili {label}, izradite svoj besplatan račun s ovom adresom e-pošte i prijavite se svaki put kada naručujete — vaš se kredit čuva na računu, pa se pri naplati prikazuje samo kada ste prijavljeni.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "Vaša {platform} aplikacija je pauzirana",
       "suspendedBody": "Rad na aplikaciji {restaurant} za {platform} je obustavljen. Provjerite stranicu statusa aplikacije da saznate razlog, ili odgovorite na ovaj e-mail pa ćemo vam pomoći da nastavite dalje."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Poklon od {restaurantName}",
+    "landingSubtitle": "Unesite svoj kod ispod da biste ga vidjeli i iskoristili — nije potreban račun.",
+    "codeLabel": "Kod poklona",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Upišite kod iz svoje e-poruke ili ga zalijepite — crtice i razmaci nisu bitni.",
+    "helpTipWhatIsThis": "Ovaj kod otključava poklon-saldo poslan na vašu e-poštu. Radi bez otvaranja računa, ali se može potrošiti samo u ovom restoranu i samo na jednu narudžbu odjednom.",
+    "verifyButton": "Provjeri moj poklon",
+    "giftFrom": "Poklon od {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}”",
+    "claimButton": "Potroši ga sada",
+    "claiming": "Otključavanje vašeg poklona…",
+    "successBanner": "Sve je spremno — vodimo vas na jelovnik…",
+    "bannerSpending": "Trošite poklon od {restaurant}",
+    "bannerBalance": "stanje {balance}",
+    "checkoutCreditLabel": "Poklon-kredit",
+    "checkoutEmailLocked": "E-adresa je zaključana za vaš poklon.",
+    "checkoutEmailLockedHelp": "Vaš poklon je vezan za točno ovu e-adresu. Za korištenje druge adrese, umjesto toga otvorite besplatan račun.",
+    "resendButton": "Pošalji mi novi kod",
+    "resendSent": "Ako taj poklon još čeka, novi kod je već na putu.",
+    "signUpInstead": "Želite li ovaj poklon zadržati zauvijek? <link>Umjesto toga otvorite besplatan račun</link>.",
+    "errInvalid": "Taj kod ne izgleda ispravno. Provjerite ga i pokušajte ponovno, ili zatražite novi ispod.",
+    "errExpired": "Ovaj kod je istekao, ali vaš poklon nije — zatražite novi kod ispod.",
+    "errRevoked": "Ovaj kod je otkazao restoran. Obratite im se ako smatrate da je to greška.",
+    "errAccountExists": "Dobra vijest — ova e-adresa već ima račun, a poklon je već u njemu. Prijavite se da biste ga potrošili.",
+    "errRewardsOff": "Program nagrađivanja ovog restorana trenutno nije dostupan.",
+    "errSuperseded": "Ovaj poklon je već preuzet. Ako to niste bili vi, obratite se restoranu.",
+    "errTooManyAttempts": "Previše pokušaja s ovim kodom. Zamolite restoran da vam pošalje novi.",
+    "errRateLimited": "Previše pokušaja — pričekajte trenutak i pokušajte ponovno.",
+    "errEmailMismatch": "Ta e-adresa ne odgovara ovom poklonu. Pokušajte s adresom na koju je poklon poslan.",
+    "errGeneric": "Nešto je pošlo po zlu. Pokušajte ponovno za trenutak."
   }
 }

@@ -209,7 +209,27 @@ interface Props {
   /** Reward Dollars (store credit) — a signed-in customer's spendable balance +
    *  redeem settings, surfaced by apply-promos. null → no balance / feature off
    *  → the spend control is hidden entirely. Luigi 2026-06-27. */
-  rewardInfo?: { balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null; redeemExcludedTotal?: number } | null;
+  rewardInfo?: {
+    balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null;
+    redeemExcludedTotal?: number;
+    /** "session" (their own account) or "gift_pass" (a Gift Wallet Pass, no
+     *  account) — labels the credit row and drives the tip exclusion + the
+     *  auto-apply default below. Gift Wallet Pass, 2026-08-03. */
+    rewardSource?: "session" | "gift_pass" | null;
+    /** Gift-pass-only: subtract the tip from the redeemable base — a bearer
+     *  credential must buy food, not fund a driver's cash tip. */
+    redeemTipExcluded?: boolean;
+  } | null;
+  /** Persists across modal open/close (owned by the parent) so a Gift
+   *  Wallet Pass balance is auto-applied exactly ONCE — reopening checkout
+   *  after the customer manually reduced it must not snap it back. */
+  giftPassAutoAppliedRef?: { current: boolean };
+  /** The Gift Wallet Pass holder's own address (from /api/public/gift-pass/me),
+   *  when a pass cookie is live. Prefills AND locks the contact email field —
+   *  the wallet is keyed to this exact address (resolveGiftPassSpender's
+   *  typedEmail match), so letting it drift silently loses the gift from the
+   *  preview with no explanation. Null when no pass / signed in. */
+  giftPassEmail?: string | null;
   /** WHOSE account this order belongs to, from apply-promos. `signedInEmail`
    *  names that account; `contactEmailDiffers` is set when the typed contact
    *  address is a different one, so the cart can state plainly that the order
@@ -403,7 +423,7 @@ export function CheckoutModal({
   appliedPromos = [], promoNudgeText = null, serviceConflictText = null, bumpedExclusives = [], hasFreeDelivery = false, baseDeliveryFee = 0,
   deliveryFee, appliedServiceFees, taxAmount, depositLinesTotal = 0,
   tipAmount, tipPercent, setTipPercent, tipsEnabled = true, total, taxRate,
-  rewardInfo = null, creditToApply = 0, setCreditToApply,
+  rewardInfo = null, creditToApply = 0, setCreditToApply, giftPassAutoAppliedRef, giftPassEmail = null,
   walletIdentity = { signedInEmail: null, contactEmailDiffers: null },
   customerInfo, setCustomerInfo, onMarketingToggle, savedGuestInfo, onClearSavedInfo,
   savedAddresses = [],
@@ -460,6 +480,7 @@ export function CheckoutModal({
   const EXTRA_FIELD_KEYS: DeliveryFieldKey[] = ["neighbourhood", "building", "intercom", "floor", "apartment", "parking"];
   const tOrd = useTranslations("ordering");
   const tCommon = useTranslations("common");
+  const tGift = useTranslations("giftPass");
   // Wire every $/€/£ label in this checkout through the restaurant's
   // configured currency via the CurrencyProvider in the parent. We
   // alias to `formatCurrency` so the existing call sites in this file
@@ -857,8 +878,14 @@ export function CheckoutModal({
     !!rewardInfo && rewardInfo.balance > 0 && rewardInfo.balance >= (rewardInfo.minRedeemBalance ?? 0) && total > 0;
   // Redeemable base excludes gift-card (promo-excluded) lines — the server
   // clamps the claim to the same base at charge, so what we offer here is
-  // exactly what will be applied. Luigi 2026-07-02.
-  const rewardBase = rewardEligible ? Math.max(0, r2(total - (rewardInfo!.redeemExcludedTotal ?? 0))) : 0;
+  // exactly what will be applied. Luigi 2026-07-02. Gift-pass-only: ALSO
+  // exclude the tip (redeemTipExcluded) — a bearer credential must buy food,
+  // not fund a driver's cash tip; mirrors the passTipExcluded clamp in
+  // orders/route.ts so the offered max never overstates the real charge-side
+  // ceiling. 2026-08-03.
+  const rewardBase = rewardEligible
+    ? Math.max(0, r2(total - (rewardInfo!.redeemExcludedTotal ?? 0) - (rewardInfo!.redeemTipExcluded ? tipAmount : 0)))
+    : 0;
   const rewardMax = rewardEligible
     ? r2(Math.min(
         rewardInfo!.balance,
@@ -866,6 +893,34 @@ export function CheckoutModal({
         (rewardInfo!.maxRedeemPercent > 0 ? rewardBase * (rewardInfo!.maxRedeemPercent / 100) : rewardBase),
       ))
     : 0;
+  // Prefill the contact email from the Gift Wallet Pass the first time it's
+  // known — never overwrite something the customer already typed.
+  useEffect(() => {
+    if (giftPassEmail && !customerInfo.email) {
+      setCustomerInfo({ ...customerInfo, email: giftPassEmail });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [giftPassEmail]);
+  // Auto-apply the full available credit the FIRST time a Gift Wallet Pass
+  // balance appears — a guest told "spend your $25 gift now" must not be
+  // able to check out at full price by simply failing to find the slider
+  // (creditToApply otherwise defaults to 0). Guarded by a ref owned by the
+  // PARENT so it survives this modal closing/reopening and never re-fires
+  // after the customer has manually adjusted it. Never fires for a signed-in
+  // customer spending their own balance (rewardSource === "session") — that
+  // remains opt-in, unchanged.
+  useEffect(() => {
+    if (
+      rewardInfo?.rewardSource === "gift_pass" &&
+      giftPassAutoAppliedRef &&
+      !giftPassAutoAppliedRef.current &&
+      rewardMax > 0
+    ) {
+      giftPassAutoAppliedRef.current = true;
+      setCreditToApply?.(rewardMax);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rewardInfo?.rewardSource, rewardMax]);
   // Mirror the server's claim EXACTLY (same pure computeApplied the orders
   // route runs), including the card-processor min-charge floor on online
   // payments — otherwise "To pay today" can understate by up to $0.49 on
@@ -1255,12 +1310,22 @@ export function CheckoutModal({
                     id="checkout-contact-email"
                     type="email"
                     required={requireCustomerEmail}
-                    className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2"
+                    readOnly={!!giftPassEmail}
+                    className={`col-span-2 border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 ${giftPassEmail ? "border-gray-200 bg-gray-50 text-gray-600" : "border-gray-200"}`}
                     style={{ "--tw-ring-color": theme.primaryColor } as React.CSSProperties}
                     placeholder={`${tc("emailPlaceholder")}${requireCustomerEmail ? " *" : ` (${tc("emailOptional")})`}`}
                     value={customerInfo.email}
-                    onChange={e => setCustomerInfo({ ...customerInfo, email: e.target.value })}
+                    onChange={e => { if (!giftPassEmail) setCustomerInfo({ ...customerInfo, email: e.target.value }); }}
                   />
+                  {/* Gift Wallet Pass: the wallet is keyed to this EXACT
+                      address (resolveGiftPassSpender's typedEmail match) —
+                      letting it drift would silently drop the gift from the
+                      preview with no explanation, so it's locked read-only. */}
+                  {giftPassEmail && (
+                    <p className="col-span-2 -mt-1 text-[11px] text-gray-500">
+                      {tGift("checkoutEmailLocked")} <HelpTip text={tGift("checkoutEmailLockedHelp")} />
+                    </p>
+                  )}
                 </div>
                 {/* Marketing-consent opt-in (Luigi/Fabrizio 2026-06-02
                     GloriaFood parity). Shown only when the customer
@@ -2368,7 +2433,10 @@ export function CheckoutModal({
                 {creditChosen > 0 && (
                   <>
                     <div className="flex justify-between text-emerald-600 font-medium">
-                      <span>{rewardLabelPlural}</span><span>− {formatCurrency(creditChosen)}</span>
+                      <span>
+                        {rewardInfo?.rewardSource === "gift_pass" ? tGift("checkoutCreditLabel") : rewardLabelPlural}
+                      </span>
+                      <span>− {formatCurrency(creditChosen)}</span>
                     </div>
                     <div className="flex justify-between font-bold text-gray-900 text-base">
                       <span>{tc("reward.chargeToday")}</span><span>{formatCurrency(chargeToday)}</span>

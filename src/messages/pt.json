@@ -5160,7 +5160,13 @@
       "giftResent": "Instruções reenviadas.",
       "giftResendTooSoon": "Acabou de enviar — aguarde um minuto antes de enviar de novo.",
       "giftAlreadyPending": "Esta pessoa já tem {amount} em {label} à espera de serem levantados. Reenvie as instruções com o botão ✉ abaixo, ou cancele primeiro essa oferta.",
-      "giftBlockedTitle": "{email} já tem uma oferta à espera de ser levantada"
+      "giftBlockedTitle": "{email} já tem uma oferta à espera de ser levantada",
+      "giftRevokeConfirm": "Cancelar este presente? Qualquer código de utilização ativo é eliminado de imediato — isto não pode ser desfeito.",
+      "codeHint": "Código: ····{hint}",
+      "codeStatusActive": "código ativo",
+      "codeStatusExpired": "código expirado",
+      "codeStatusRevoked": "código cancelado",
+      "codeExpires": "expira em {date}"
     },
     "imageCrop": {
       "title": "Ajuste a sua foto",
@@ -5941,7 +5947,20 @@
       "step2Title": "O seu crédito de {amount} aparece sozinho",
       "step2Body": "Assim que terminar o registo, o crédito já está na sua conta. Não há nenhum código para introduzir.",
       "step3Title": "Gaste quando quiser",
-      "step3Body": "No checkout verá «Use o seu {label}». Aplique à encomenda tanto ou tão pouco quanto quiser — o resto paga normalmente. Não tem prazo de validade, por isso fica à sua espera até quando quiser."
+      "step3Body": "No checkout verá «Use o seu {label}». Aplique à encomenda tanto ou tão pouco quanto quiser — o resto paga normalmente. Não tem prazo de validade, por isso fica à sua espera até quando quiser.",
+      "whatItIsSpend": "Os {label} são crédito em {restaurantName} — são descontados diretamente do valor a pagar, como um cartão-presente. Pode gastar este agora mesmo, sem necessidade de conta:",
+      "step1TitleSpend": "Toque no botão abaixo",
+      "step1BodySpend": "Abre o seu presente, já desbloqueado — sem iniciar sessão, sem palavra-passe.",
+      "step2TitleSpend": "O seu {amount} já está lá",
+      "step2BodySpend": "Verá o seu saldo logo que a página abrir.",
+      "step3TitleSpend": "Encomende e aplique-o no checkout",
+      "step3BodySpend": "O seu presente é aplicado automaticamente — reduza-o ou remova-o se preferir guardá-lo para depois.",
+      "spendCtaPrimary": "Gaste o seu {amount} agora — sem necessidade de conta",
+      "orTypeThisCode": "Ou escreva este código no checkout:",
+      "codeExpiryLine": "Este código funciona até {date}. Se expirar, basta pedir ao restaurante um novo — o seu presente em si nunca expira.",
+      "neverExpiresLine": "Os seus {label} nunca expiram, apenas este código.",
+      "doNotForwardLine": "Este link e código são só para si — por favor não reencaminhe este email.",
+      "createAccountSecondary": "Ou crie uma conta gratuita para o guardar para sempre"
     },
     "vipGroupWelcome": {
       "accountTip": "Para acumular e usar {label}, crie a sua conta gratuita com este endereço de e-mail e inicie sessão sempre que encomendar — o seu crédito fica na conta, por isso só aparece ao finalizar a encomenda quando tem sessão iniciada.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "A sua app para {platform} está em pausa",
       "suspendedBody": "O trabalho na app de {restaurant} para {platform} foi colocado em pausa. Consulte a página de estado da app para saber o motivo, ou responda a este e-mail e ajudamos a retomar o processo."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Um presente de {restaurantName}",
+    "landingSubtitle": "Introduza o seu código abaixo para o ver e gastar — sem necessidade de conta.",
+    "codeLabel": "Código do presente",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Escreva o código do seu email, ou cole-o — os hífenes e espaços não importam.",
+    "helpTipWhatIsThis": "Este código desbloqueia um saldo de presente enviado para o seu email. Funciona sem criar uma conta, mas só pode ser gasto neste restaurante e apenas numa encomenda de cada vez.",
+    "verifyButton": "Ver o meu presente",
+    "giftFrom": "Um presente de {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "«{note}»",
+    "claimButton": "Gastar agora",
+    "claiming": "A desbloquear o seu presente…",
+    "successBanner": "Está tudo pronto — a levá-lo para o menu…",
+    "bannerSpending": "Está a gastar o presente de {restaurant}",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Crédito de presente",
+    "checkoutEmailLocked": "Email bloqueado ao seu presente.",
+    "checkoutEmailLockedHelp": "O seu presente está associado a este endereço de email exato. Para usar outro endereço, crie uma conta gratuita.",
+    "resendButton": "Enviar-me um novo código",
+    "resendSent": "Se esse presente ainda estiver à espera, um novo código está a caminho.",
+    "signUpInstead": "Prefere guardar este presente para sempre? <link>Crie uma conta gratuita em vez disso</link>.",
+    "errInvalid": "Esse código não parece correto. Verifique-o novamente e tente outra vez, ou peça um novo abaixo.",
+    "errExpired": "Este código expirou, mas o seu presente não — peça um novo código abaixo.",
+    "errRevoked": "Este código foi cancelado pelo restaurante. Contacte-o se pensa que é um erro.",
+    "errAccountExists": "Boas notícias — este email já tem uma conta, e o presente já está nela. Inicie sessão para o gastar.",
+    "errRewardsOff": "O programa de recompensas deste restaurante não está disponível neste momento.",
+    "errSuperseded": "Este presente já foi recolhido. Se não foi você, contacte o restaurante.",
+    "errTooManyAttempts": "Demasiadas tentativas com este código. Peça ao restaurante para lhe enviar um novo.",
+    "errRateLimited": "Demasiadas tentativas — aguarde um momento e tente outra vez.",
+    "errEmailMismatch": "Esse email não corresponde a este presente. Tente o endereço para onde o presente foi enviado.",
+    "errGeneric": "Algo correu mal. Tente outra vez dentro de momentos."
   }
 }

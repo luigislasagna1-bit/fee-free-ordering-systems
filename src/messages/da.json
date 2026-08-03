@@ -5160,7 +5160,13 @@
       "personalRateTitle": "Tilpasset optjeningssats",
       "personalRateDesc": "Denne kunde optjener denne procent i {label} på hver ordre — i stedet for basissatsen og enhver VIP-gruppesats.",
       "ratePlaceholder": "Basissats",
-      "rateClear": "Fjern tilpasset sats"
+      "rateClear": "Fjern tilpasset sats",
+      "giftRevokeConfirm": "Annuller denne gave? Enhver aktiv brugskode til den bliver dræbt med det samme — dette kan ikke fortrydes.",
+      "codeHint": "Kode: ····{hint}",
+      "codeStatusActive": "kode aktiv",
+      "codeStatusExpired": "kode udløbet",
+      "codeStatusRevoked": "kode annulleret",
+      "codeExpires": "udløber {date}"
     },
     "imageCrop": {
       "title": "Tilpas dit foto",
@@ -5941,7 +5947,20 @@
       "step3Title": "Brug det, når du har lyst",
       "step3Body": "Ved kassen ser du ”Brug dine {label}”. Læg så meget eller så lidt på ordren, som du har lyst til – resten betaler du helt som normalt. Der er ingen udløbsdato, så det bliver stående, indtil du vil bruge det.",
       "cta": "Opret min konto",
-      "ignoreLine": "Hvis du ikke forventede denne e-mail, kan du roligt ignorere den."
+      "ignoreLine": "Hvis du ikke forventede denne e-mail, kan du roligt ignorere den.",
+      "whatItIsSpend": "{label} er tilgodehavende hos {restaurantName} — det trækkes direkte fra din regning, ligesom et gavekort. Du kan bruge denne lige nu, ingen konto nødvendig:",
+      "step1TitleSpend": "Tryk på knappen nedenfor",
+      "step1BodySpend": "Den åbner din gave, allerede låst op — ingen login, intet kodeord.",
+      "step2TitleSpend": "Dine {amount} er allerede der",
+      "step2BodySpend": "Du ser din saldo, så snart siden åbner.",
+      "step3TitleSpend": "Bestil, og anvend den ved kassen",
+      "step3BodySpend": "Din gave anvendes automatisk — reducer eller fjern den, hvis du hellere vil gemme den til senere.",
+      "spendCtaPrimary": "Brug dine {amount} nu — ingen konto nødvendig",
+      "orTypeThisCode": "Eller indtast denne kode ved kassen:",
+      "codeExpiryLine": "Denne kode virker indtil {date}. Hvis den udløber, skal du bare bede restauranten om en ny — selve din gave udløber aldrig.",
+      "neverExpiresLine": "Dine {label} udløber aldrig, kun denne kode gør.",
+      "doNotForwardLine": "Dette link og denne kode er kun til dig — videresend venligst ikke denne e-mail.",
+      "createAccountSecondary": "Eller opret en gratis konto for at holde på den for altid"
     },
     "vipGroupWelcome": {
       "accountTip": "For at optjene og bruge {label} skal du oprette din gratis konto med denne e-mailadresse og logge ind, hver gang du bestiller — dit tilgodehavende ligger på kontoen, så det vises kun ved kassen, når du er logget ind.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "Din {platform}-app er sat på pause",
       "suspendedBody": "Arbejdet på {restaurant}-appen til {platform} er sat på pause. Se årsagen på din app-statusside, eller besvar denne e-mail, så hjælper vi dig med at komme videre igen."
     }
+  },
+  "giftPass": {
+    "landingTitle": "En gave fra {restaurantName}",
+    "landingSubtitle": "Indtast din kode nedenfor for at se og bruge den — ingen konto nødvendig.",
+    "codeLabel": "Gavekode",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Skriv koden fra din e-mail, eller indsæt den — streger og mellemrum betyder ikke noget.",
+    "helpTipWhatIsThis": "Denne kode låser en gavesaldo op, der er sendt til din e-mail. Den virker uden at oprette en konto, men den kan kun bruges hos denne restaurant og kun på én ordre ad gangen.",
+    "verifyButton": "Tjek min gave",
+    "giftFrom": "En gave fra {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "“{note}”",
+    "claimButton": "Brug den nu",
+    "claiming": "Låser din gave op…",
+    "successBanner": "Du er klar — du bliver sendt til menuen…",
+    "bannerSpending": "Du bruger {restaurant}s gave",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Gavetilgodehavende",
+    "checkoutEmailLocked": "E-mail låst til din gave.",
+    "checkoutEmailLockedHelp": "Din gave er knyttet til denne præcise e-mailadresse. For at bruge en anden adresse skal du i stedet oprette en gratis konto.",
+    "resendButton": "Send mig en ny kode",
+    "resendSent": "Hvis den gave stadig venter, er en ny kode på vej.",
+    "signUpInstead": "Vil du hellere holde på denne gave for altid? <link>Opret en gratis konto i stedet</link>.",
+    "errInvalid": "Den kode ser ikke rigtig ud. Tjek den igen, og prøv en gang til, eller bed om en ny nedenfor.",
+    "errExpired": "Denne kode er udløbet, men din gave er ikke — anmod om en ny kode nedenfor.",
+    "errRevoked": "Denne kode blev annulleret af restauranten. Kontakt dem, hvis du tror, det er en fejl.",
+    "errAccountExists": "Gode nyheder — denne e-mail har allerede en konto, og gaven er allerede lagt ind på den. Log ind for at bruge den.",
+    "errRewardsOff": "Denne restaurants belønningsprogram er ikke tilgængeligt lige nu.",
+    "errSuperseded": "Denne gave er allerede blevet indløst. Hvis det ikke var dig, skal du kontakte restauranten.",
+    "errTooManyAttempts": "For mange forsøg på denne kode. Bed restauranten om at sende dig en ny.",
+    "errRateLimited": "For mange forsøg — vent et øjeblik, og prøv igen.",
+    "errEmailMismatch": "Den e-mail matcher ikke denne gave. Prøv den adresse, gaven blev sendt til.",
+    "errGeneric": "Der gik noget galt. Prøv igen om et øjeblik."
   }
 }

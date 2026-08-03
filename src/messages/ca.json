@@ -5160,7 +5160,13 @@
       "giftResent": "Instruccions reenviades.",
       "giftResendTooSoon": "Acabes d'enviar-les — espera un minut abans de tornar-ho a fer.",
       "giftAlreadyPending": "Aquesta persona ja té {amount} en {label} pendents de recollir. Torna a enviar les instruccions amb el botó ✉ de sota, o cancel·la abans aquest regal.",
-      "giftBlockedTitle": "{email} ja té un regal pendent de recollir"
+      "giftBlockedTitle": "{email} ja té un regal pendent de recollir",
+      "giftRevokeConfirm": "Vols cancel·lar aquest regal? Qualsevol codi de despesa actiu per a ell s'anul·la immediatament — això no es pot desfer.",
+      "codeHint": "Codi: ····{hint}",
+      "codeStatusActive": "codi actiu",
+      "codeStatusExpired": "codi caducat",
+      "codeStatusRevoked": "codi cancel·lat",
+      "codeExpires": "caduca el {date}"
     },
     "imageCrop": {
       "title": "Ajusta la foto",
@@ -5941,7 +5947,20 @@
       "step2Title": "El teu crèdit de {amount} apareix sol",
       "step2Body": "Tan bon punt acabis el registre, el crèdit ja és al teu compte. No hi ha cap codi per introduir.",
       "step3Title": "Gasta'l quan vulguis",
-      "step3Body": "En pagar veuràs «Fes servir els teus {label}». Aplica'n tants o tan pocs com vulguis a la comanda — la resta la pagues com sempre. No caduca mai, així que el crèdit t'espera fins que el vulguis fer servir."
+      "step3Body": "En pagar veuràs «Fes servir els teus {label}». Aplica'n tants o tan pocs com vulguis a la comanda — la resta la pagues com sempre. No caduca mai, així que el crèdit t'espera fins que el vulguis fer servir.",
+      "whatItIsSpend": "{label} és crèdit a {restaurantName} — es descompta directament de la teva factura, com una targeta de regal. Pots gastar-lo ara mateix, sense necessitat de compte:",
+      "step1TitleSpend": "Toca el botó a continuació",
+      "step1BodySpend": "Obre el teu regal, ja desbloquejat — sense inici de sessió, sense contrasenya.",
+      "step2TitleSpend": "El teu {amount} ja hi és",
+      "step2BodySpend": "Veuràs el teu saldo just quan s'obri la pàgina.",
+      "step3TitleSpend": "Fes la comanda i aplica'l al pagament",
+      "step3BodySpend": "El teu regal s'aplica automàticament — redueix-lo o elimina'l si prefereixes guardar-lo per més endavant.",
+      "spendCtaPrimary": "Gasta el teu {amount} ara — no cal cap compte",
+      "orTypeThisCode": "O escriu aquest codi al pagament:",
+      "codeExpiryLine": "Aquest codi funciona fins el {date}. Si caduca, simplement demana al restaurant un codi nou — el teu regal en si mateix no caduca mai.",
+      "neverExpiresLine": "El teu {label} mai caduca, només ho fa aquest codi.",
+      "doNotForwardLine": "Aquest enllaç i codi són només per a tu — si us plau, no reenviïs aquest correu.",
+      "createAccountSecondary": "O crea un compte gratuït per conservar-lo per sempre"
     },
     "vipGroupWelcome": {
       "accountTip": "Per acumular i gastar {label}, crea el teu compte gratuït amb aquesta adreça de correu electrònic i inicia sessió cada vegada que facis una comanda: el teu saldo és al compte, així que només apareix en finalitzar la compra quan has iniciat sessió.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "La teva aplicació de {platform} està en pausa",
       "suspendedBody": "El treball a l'aplicació {restaurant} per a {platform} s'ha aturat. Consulta la pàgina d'estat de la teva aplicació per saber-ne el motiu, o respon a aquest correu electrònic i t'ajudarem a reprendre-la."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Un regal de {restaurantName}",
+    "landingSubtitle": "Introdueix el teu codi a continuació per veure'l i gastar-lo — no cal cap compte.",
+    "codeLabel": "Codi del regal",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Escriu el codi del teu correu, o enganxa'l — els guions i els espais no importen.",
+    "helpTipWhatIsThis": "Aquest codi desbloqueja un saldo de regal enviat al teu correu electrònic. Funciona sense crear un compte, però només es pot gastar en aquest restaurant i només en una comanda a la vegada.",
+    "verifyButton": "Comprova el meu regal",
+    "giftFrom": "Un regal de {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "«{note}»",
+    "claimButton": "Gasta'l ara",
+    "claiming": "Desbloquejant el teu regal…",
+    "successBanner": "Ja està tot a punt — et portem al menú…",
+    "bannerSpending": "Estàs gastant el regal de {restaurant}",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Crèdit de regal",
+    "checkoutEmailLocked": "Correu electrònic bloquejat al teu regal.",
+    "checkoutEmailLockedHelp": "El teu regal està vinculat a aquesta adreça de correu exacta. Per utilitzar una adreça diferent, crea un compte gratuït.",
+    "resendButton": "Envia'm un codi nou",
+    "resendSent": "Si aquest regal encara està pendent, un codi nou ja està en camí.",
+    "signUpInstead": "Prefereixes conservar aquest regal per sempre? <link>Crea un compte gratuït en lloc d'això</link>.",
+    "errInvalid": "Aquest codi no sembla correcte. Comprova'l bé i torna-ho a provar, o demana'n un nou a continuació.",
+    "errExpired": "Aquest codi ha caducat, però el teu regal no — demana un codi nou a continuació.",
+    "errRevoked": "El restaurant ha cancel·lat aquest codi. Contacta amb ells si creus que és un error.",
+    "errAccountExists": "Bona notícia — aquest correu ja té un compte, i el regal ja hi és. Inicia sessió per gastar-lo.",
+    "errRewardsOff": "El programa de recompenses d'aquest restaurant no està disponible ara mateix.",
+    "errSuperseded": "Aquest regal ja s'ha recollit. Si no has sigut tu, contacta amb el restaurant.",
+    "errTooManyAttempts": "Massa intents amb aquest codi. Demana al restaurant que te'n enviï un de nou.",
+    "errRateLimited": "Massa intents — espera un moment i torna-ho a provar.",
+    "errEmailMismatch": "Aquest correu no coincideix amb aquest regal. Prova l'adreça a la qual es va enviar el regal.",
+    "errGeneric": "S'ha produït un error. Torna-ho a provar d'aquí a un moment."
   }
 }

@@ -20,11 +20,22 @@ export type RewardGiftInviteProps = {
   rewardLabel: string;
   /** Optional note the owner attached to the gift. */
   note?: string | null;
-  /** Storefront root — signing up happens there. */
+  /** Storefront signup form — the SECONDARY path now (Gift Wallet Pass, when
+   *  present, is the primary CTA). */
   orderUrl: string;
   /** The email the gift is locked to (they must sign up with THIS address). */
   giftEmail: string;
   imprint?: string;
+  /** Gift Wallet Pass — spend without an account (2026-08-03). When present,
+   *  becomes the PRIMARY CTA. `spendUrl` carries the code in the URL
+   *  FRAGMENT (never sent to the server/logs); `code` is the same secret
+   *  printed as human-typable text (grouped "XXXX-XXXX-XXXX-XXXX") for the
+   *  claim-page fallback and mail clients that strip fragments. */
+  spendUrl?: string | null;
+  code?: string | null;
+  /** Pre-formatted expiry date of the CODE (not the gift — the gift itself
+   *  never expires), in the restaurant's timezone. */
+  codeExpiryLabel?: string | null;
 };
 
 /** One numbered step. Table-free, block-level, explicit sizes — Outlook desktop
@@ -59,7 +70,8 @@ function Step({ n, title, body }: { n: number; title: string; body: string }) {
 }
 
 export default function RewardGiftInvite(props: RewardGiftInviteProps) {
-  const { t, customerName, restaurantName, amountLabel, rewardLabel, note, orderUrl, giftEmail, imprint } = props;
+  const { t, customerName, restaurantName, amountLabel, rewardLabel, note, orderUrl, giftEmail, imprint, spendUrl, code, codeExpiryLabel } = props;
+  const hasPass = !!spendUrl && !!code;
   return (
     <EmailLayout preview={t("email.rewardGiftInvite.preview", { restaurantName, amount: amountLabel, label: rewardLabel })}>
       <EmailHeader
@@ -89,23 +101,79 @@ export default function RewardGiftInvite(props: RewardGiftInviteProps) {
             words before asking them to do anything, then give the three steps
             in order. Luigi 2026-07-31: "make sure even new guests understand
             how to use their gift". */}
-        <P>{t("email.rewardGiftInvite.whatItIs", { restaurantName, label: rewardLabel })}</P>
-        <Step
-          n={1}
-          title={t("email.rewardGiftInvite.step1Title")}
-          body={t("email.rewardGiftInvite.step1Body", { email: giftEmail })}
-        />
-        <Step
-          n={2}
-          title={t("email.rewardGiftInvite.step2Title", { amount: amountLabel })}
-          body={t("email.rewardGiftInvite.step2Body")}
-        />
-        <Step
-          n={3}
-          title={t("email.rewardGiftInvite.step3Title")}
-          body={t("email.rewardGiftInvite.step3Body", { label: rewardLabel })}
-        />
-        <EmailButton href={orderUrl}>{t("email.rewardGiftInvite.cta")}</EmailButton>
+        {hasPass ? (
+          <>
+            <P>{t("email.rewardGiftInvite.whatItIsSpend", { restaurantName, label: rewardLabel })}</P>
+            <Step n={1} title={t("email.rewardGiftInvite.step1TitleSpend")} body={t("email.rewardGiftInvite.step1BodySpend")} />
+            <Step n={2} title={t("email.rewardGiftInvite.step2TitleSpend")} body={t("email.rewardGiftInvite.step2BodySpend", { amount: amountLabel })} />
+            <Step n={3} title={t("email.rewardGiftInvite.step3TitleSpend")} body={t("email.rewardGiftInvite.step3BodySpend")} />
+          </>
+        ) : (
+          <>
+            {/* Teach it, don't just announce it. The recipient may never have
+                heard of this restaurant's rewards, so say what the credit IS
+                in plain words before asking them to do anything, then give
+                the three steps in order. Luigi 2026-07-31: "make sure even
+                new guests understand how to use their gift". */}
+            <P>{t("email.rewardGiftInvite.whatItIs", { restaurantName, label: rewardLabel })}</P>
+            <Step
+              n={1}
+              title={t("email.rewardGiftInvite.step1Title")}
+              body={t("email.rewardGiftInvite.step1Body", { email: giftEmail })}
+            />
+            <Step
+              n={2}
+              title={t("email.rewardGiftInvite.step2Title", { amount: amountLabel })}
+              body={t("email.rewardGiftInvite.step2Body")}
+            />
+            <Step
+              n={3}
+              title={t("email.rewardGiftInvite.step3Title")}
+              body={t("email.rewardGiftInvite.step3Body", { label: rewardLabel })}
+            />
+          </>
+        )}
+        {hasPass ? (
+          <>
+            <EmailButton href={spendUrl!}>
+              {t("email.rewardGiftInvite.spendCtaPrimary", { amount: amountLabel })}
+            </EmailButton>
+            <div
+              style={{
+                margin: "0 0 16px",
+                padding: "14px 16px",
+                borderRadius: 8,
+                backgroundColor: "#f8fafc",
+                border: `1px solid ${COLORS.border}`,
+              }}
+            >
+              <div style={{ fontSize: 12, color: COLORS.muted, marginBottom: 6 }}>
+                {t("email.rewardGiftInvite.orTypeThisCode")}
+              </div>
+              <div
+                style={{
+                  fontSize: 20,
+                  fontFamily: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace",
+                  letterSpacing: 1.5,
+                  fontWeight: 700,
+                  color: COLORS.text,
+                }}
+              >
+                {code}
+              </div>
+            </div>
+            <P muted size="sm">{t("email.rewardGiftInvite.doNotForwardLine")}</P>
+            <P muted size="sm">{t("email.rewardGiftInvite.neverExpiresLine", { label: rewardLabel })}</P>
+            {codeExpiryLabel && (
+              <P muted size="sm">{t("email.rewardGiftInvite.codeExpiryLine", { date: codeExpiryLabel })}</P>
+            )}
+            <EmailButton href={orderUrl} variant="secondary">
+              {t("email.rewardGiftInvite.createAccountSecondary")}
+            </EmailButton>
+          </>
+        ) : (
+          <EmailButton href={orderUrl}>{t("email.rewardGiftInvite.cta")}</EmailButton>
+        )}
         <P muted size="sm">{t("email.rewardGiftInvite.ignoreLine")}</P>
       </EmailBody>
       <EmailFooter restaurantName={restaurantName} restaurantUrl={orderUrl} imprint={imprint}

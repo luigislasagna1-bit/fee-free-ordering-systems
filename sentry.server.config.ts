@@ -10,6 +10,7 @@
 // SENTRY_FORCE_ENABLE=1 in .env.local if you're hunting a server-side bug.
 // ─────────────────────────────────────────────────────────────────────────
 import * as Sentry from "@sentry/nextjs";
+import { scrubSentryEvent, scrubSentryBreadcrumb } from "@/lib/sentry-scrub";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -28,4 +29,9 @@ Sentry.init({
   // Tag every event with the deployment env so we can filter "production
   // vs preview" in the Sentry UI. Vercel sets this automatically.
   environment: process.env.VERCEL_ENV || process.env.NODE_ENV,
+  // Gift Wallet Pass (2026-08-03): strip a live code out of any request URL/
+  // Referer/breadcrumb this runtime captures. See src/lib/sentry-scrub.ts.
+  beforeSend: (event) => scrubSentryEvent(event),
+  beforeSendTransaction: (event) => scrubSentryEvent(event),
+  beforeBreadcrumb: (breadcrumb) => scrubSentryBreadcrumb(breadcrumb),
 });

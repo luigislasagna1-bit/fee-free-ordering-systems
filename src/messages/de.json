@@ -5160,7 +5160,13 @@
       "personalRateTitle": "Individuelle Sammelrate",
       "personalRateDesc": "Dieser Kunde erhält bei jeder Bestellung diesen Prozentsatz in {label} zurück – anstelle der Basisrate und jeder VIP-Gruppenrate.",
       "ratePlaceholder": "Basisrate",
-      "rateClear": "Individuelle Rate entfernen"
+      "rateClear": "Individuelle Rate entfernen",
+      "giftRevokeConfirm": "Dieses Geschenk stornieren? Ein aktiver Einlösecode dafür wird sofort ungültig — das kann nicht rückgängig gemacht werden.",
+      "codeHint": "Code: ····{hint}",
+      "codeStatusActive": "Code aktiv",
+      "codeStatusExpired": "Code abgelaufen",
+      "codeStatusRevoked": "Code storniert",
+      "codeExpires": "läuft am {date} ab"
     },
     "imageCrop": {
       "title": "Foto anpassen",
@@ -5941,7 +5947,20 @@
       "step3Title": "Lösen Sie es ein, wann immer Sie möchten",
       "step3Body": "An der Kasse sehen Sie „{label} einlösen“. Rechnen Sie so viel oder so wenig auf die Bestellung an, wie Sie möchten — den Rest zahlen Sie ganz normal. Es gibt kein Ablaufdatum, das Guthaben bleibt also erhalten, bis Sie es nutzen möchten.",
       "cta": "Konto erstellen",
-      "ignoreLine": "Falls Sie dieses Geschenk nicht erwartet haben, können Sie diese E-Mail einfach ignorieren."
+      "ignoreLine": "Falls Sie dieses Geschenk nicht erwartet haben, können Sie diese E-Mail einfach ignorieren.",
+      "whatItIsSpend": "{label} sind Guthaben bei {restaurantName} — sie werden direkt von Ihrer Rechnung abgezogen, wie ein Geschenkgutschein. Sie können dieses Guthaben sofort einlösen, kein Konto nötig:",
+      "step1TitleSpend": "Tippen Sie auf den Button unten",
+      "step1BodySpend": "Er öffnet Ihr Geschenk, bereits freigeschaltet — keine Anmeldung, kein Passwort.",
+      "step2TitleSpend": "Ihr {amount} ist schon da",
+      "step2BodySpend": "Sie sehen Ihr Guthaben, sobald die Seite sich öffnet.",
+      "step3TitleSpend": "Bestellen und beim Bezahlen anwenden",
+      "step3BodySpend": "Ihr Geschenk wird automatisch angewendet — reduzieren oder entfernen Sie es, wenn Sie es lieber für später aufheben möchten.",
+      "spendCtaPrimary": "Lösen Sie jetzt Ihr {amount} ein — kein Konto nötig",
+      "orTypeThisCode": "Oder geben Sie diesen Code beim Bezahlen ein:",
+      "codeExpiryLine": "Dieser Code funktioniert bis {date}. Läuft er ab, bitten Sie das Restaurant einfach um einen neuen — Ihr Geschenk selbst verfällt nie.",
+      "neverExpiresLine": "Ihre {label} verfallen nie, nur dieser Code.",
+      "doNotForwardLine": "Dieser Link und Code sind nur für Sie — bitte leiten Sie diese E-Mail nicht weiter.",
+      "createAccountSecondary": "Oder erstellen Sie ein kostenloses Konto, um es dauerhaft zu behalten"
     },
     "vipGroupWelcome": {
       "accountTip": "Um {label} zu sammeln und einzulösen, erstellen Sie mit dieser E-Mail-Adresse Ihr kostenloses Konto und melden Sie sich bei jeder Bestellung an — Ihr Guthaben liegt im Konto und erscheint an der Kasse nur, wenn Sie angemeldet sind.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "Ihre {platform}-App ist pausiert",
       "suspendedBody": "Die Arbeit an der {restaurant}-App für {platform} wurde pausiert. Den Grund finden Sie auf Ihrer App-Statusseite – oder antworten Sie einfach auf diese E-Mail und wir helfen Ihnen, die App wieder in Gang zu bringen."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Ein Geschenk von {restaurantName}",
+    "landingSubtitle": "Geben Sie unten Ihren Code ein, um Ihr Guthaben zu sehen und einzulösen — kein Konto nötig.",
+    "codeLabel": "Geschenkcode",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Geben Sie den Code aus Ihrer E-Mail ein oder fügen Sie ihn ein — Bindestriche und Leerzeichen spielen keine Rolle.",
+    "helpTipWhatIsThis": "Dieser Code schaltet ein Geschenkguthaben frei, das an Ihre E-Mail-Adresse gesendet wurde. Er funktioniert ohne Konto, kann aber nur in diesem Restaurant und nur für eine Bestellung gleichzeitig eingelöst werden.",
+    "verifyButton": "Mein Geschenk prüfen",
+    "giftFrom": "Ein Geschenk von {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}“",
+    "claimButton": "Jetzt einlösen",
+    "claiming": "Ihr Geschenk wird freigeschaltet…",
+    "successBanner": "Alles bereit — wir bringen Sie zur Speisekarte…",
+    "bannerSpending": "Sie lösen das Geschenk von {restaurant} ein",
+    "bannerBalance": "Guthaben {balance}",
+    "checkoutCreditLabel": "Geschenkguthaben",
+    "checkoutEmailLocked": "E-Mail an Ihr Geschenk gebunden.",
+    "checkoutEmailLockedHelp": "Ihr Geschenk ist genau an diese E-Mail-Adresse gebunden. Um eine andere Adresse zu verwenden, erstellen Sie stattdessen ein kostenloses Konto.",
+    "resendButton": "Mir einen neuen Code senden",
+    "resendSent": "Falls dieses Geschenk noch wartet, ist ein neuer Code bereits auf dem Weg.",
+    "signUpInstead": "Möchten Sie dieses Geschenk lieber dauerhaft behalten? <link>Erstellen Sie stattdessen ein kostenloses Konto</link>.",
+    "errInvalid": "Dieser Code scheint nicht korrekt zu sein. Prüfen Sie ihn und versuchen Sie es erneut, oder fordern Sie unten einen neuen an.",
+    "errExpired": "Dieser Code ist abgelaufen, Ihr Geschenk aber nicht — fordern Sie unten einen neuen Code an.",
+    "errRevoked": "Dieser Code wurde vom Restaurant storniert. Wenden Sie sich an das Restaurant, falls Sie das für einen Irrtum halten.",
+    "errAccountExists": "Gute Nachrichten — für diese E-Mail-Adresse besteht bereits ein Konto, und das Geschenk ist bereits darin. Melden Sie sich an, um es einzulösen.",
+    "errRewardsOff": "Das Bonusprogramm dieses Restaurants ist derzeit nicht verfügbar.",
+    "errSuperseded": "Dieses Geschenk wurde bereits eingelöst. Falls das nicht Sie waren, wenden Sie sich an das Restaurant.",
+    "errTooManyAttempts": "Zu viele Versuche mit diesem Code. Bitten Sie das Restaurant um einen neuen.",
+    "errRateLimited": "Zu viele Versuche — bitte warten Sie einen Moment und versuchen Sie es erneut.",
+    "errEmailMismatch": "Diese E-Mail-Adresse passt nicht zu diesem Geschenk. Versuchen Sie die Adresse, an die das Geschenk gesendet wurde.",
+    "errGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es in einem Moment erneut."
   }
 }

@@ -5160,7 +5160,13 @@
       "giftResent": "Instructions renvoyées.",
       "giftResendTooSoon": "Vous venez de les envoyer — attendez une minute avant de renvoyer.",
       "giftAlreadyPending": "Cette personne a déjà {amount} en {label} en attente d'être récupérés. Renvoyez les instructions avec le bouton ✉ ci-dessous, ou annulez d'abord ce cadeau.",
-      "giftBlockedTitle": "{email} a déjà un cadeau en attente d'être récupéré"
+      "giftBlockedTitle": "{email} a déjà un cadeau en attente d'être récupéré",
+      "giftRevokeConfirm": "Annuler ce cadeau ? Tout code de dépense actif est immédiatement désactivé — action irréversible.",
+      "codeHint": "Code : ····{hint}",
+      "codeStatusActive": "code actif",
+      "codeStatusExpired": "code expiré",
+      "codeStatusRevoked": "code annulé",
+      "codeExpires": "expire le {date}"
     },
     "imageCrop": {
       "title": "Ajustez votre photo",
@@ -5941,7 +5947,20 @@
       "step2Title": "Votre crédit de {amount} arrive tout seul",
       "step2Body": "Dès que votre inscription est terminée, le crédit est sur votre compte. Aucun code à saisir.",
       "step3Title": "Dépensez-le quand vous voulez",
-      "step3Body": "Au moment de payer, vous verrez « Utiliser vos {label} ». Mettez-en autant ou aussi peu que vous voulez sur la commande — vous réglez le reste normalement. Il n'y a pas de date d'expiration, le crédit vous attend jusqu'à ce que vous en ayez envie."
+      "step3Body": "Au moment de payer, vous verrez « Utiliser vos {label} ». Mettez-en autant ou aussi peu que vous voulez sur la commande — vous réglez le reste normalement. Il n'y a pas de date d'expiration, le crédit vous attend jusqu'à ce que vous en ayez envie.",
+      "whatItIsSpend": "{label} est un crédit chez {restaurantName} — déduit directement de l'addition, comme une carte cadeau. Vous pouvez dépenser celui-ci dès maintenant, sans compte :",
+      "step1TitleSpend": "Appuyez sur le bouton ci-dessous",
+      "step1BodySpend": "Il ouvre votre cadeau, déjà déverrouillé — pas de connexion, pas de mot de passe.",
+      "step2TitleSpend": "Vos {amount} sont déjà là",
+      "step2BodySpend": "Vous verrez votre solde dès l'ouverture de la page.",
+      "step3TitleSpend": "Commandez et appliquez-le à la caisse",
+      "step3BodySpend": "Votre cadeau est appliqué automatiquement — réduisez-le ou retirez-le si vous préférez le garder pour plus tard.",
+      "spendCtaPrimary": "Dépensez vos {amount} maintenant — aucun compte requis",
+      "orTypeThisCode": "Ou saisissez ce code à la caisse :",
+      "codeExpiryLine": "Ce code fonctionne jusqu'au {date}. S'il expire, demandez simplement un nouveau code au restaurant — votre cadeau, lui, n'expire jamais.",
+      "neverExpiresLine": "Vos {label} n'expirent jamais, seul ce code le peut.",
+      "doNotForwardLine": "Ce lien et ce code sont personnels — merci de ne pas transférer cet e-mail.",
+      "createAccountSecondary": "Ou créez un compte gratuit pour le garder pour toujours"
     },
     "vipGroupWelcome": {
       "accountTip": "Pour cumuler et dépenser {label}, créez votre compte gratuit avec cette adresse e-mail et connectez-vous à chaque commande — votre crédit est rattaché au compte, il n'apparaît donc au paiement que si vous êtes connecté.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "Votre application {platform} est en pause",
       "suspendedBody": "Le travail sur l'application {restaurant} pour {platform} a été mis en pause. Consultez la page de statut de votre application pour en connaître la raison, ou répondez à cet e-mail et nous vous aiderons à relancer le processus."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Un cadeau de {restaurantName}",
+    "landingSubtitle": "Saisissez votre code ci-dessous pour le voir et le dépenser — aucun compte requis.",
+    "codeLabel": "Code cadeau",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Tapez le code reçu par e-mail, ou collez-le — les tirets et espaces n'ont pas d'importance.",
+    "helpTipWhatIsThis": "Ce code débloque un solde cadeau envoyé à votre e-mail. Il fonctionne sans créer de compte, mais il ne peut être dépensé que dans ce restaurant et pour une seule commande à la fois.",
+    "verifyButton": "Vérifier mon cadeau",
+    "giftFrom": "Un cadeau de {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "« {note} »",
+    "claimButton": "Le dépenser maintenant",
+    "claiming": "Déverrouillage de votre cadeau…",
+    "successBanner": "C'est fait — direction le menu…",
+    "bannerSpending": "Vous dépensez le cadeau de {restaurant}",
+    "bannerBalance": "solde {balance}",
+    "checkoutCreditLabel": "Crédit cadeau",
+    "checkoutEmailLocked": "E-mail verrouillé sur votre cadeau.",
+    "checkoutEmailLockedHelp": "Votre cadeau est lié à cette adresse e-mail précise. Pour utiliser une autre adresse, créez plutôt un compte gratuit.",
+    "resendButton": "M'envoyer un nouveau code",
+    "resendSent": "Si ce cadeau attend toujours, un nouveau code arrive.",
+    "signUpInstead": "Vous préférez garder ce cadeau pour toujours ? <link>Créez plutôt un compte gratuit</link>.",
+    "errInvalid": "Ce code ne semble pas correct. Vérifiez-le et réessayez, ou demandez-en un nouveau ci-dessous.",
+    "errExpired": "Ce code a expiré, mais pas votre cadeau — demandez un nouveau code ci-dessous.",
+    "errRevoked": "Ce code a été annulé par le restaurant. Contactez-le si vous pensez qu'il s'agit d'une erreur.",
+    "errAccountExists": "Bonne nouvelle — cet e-mail a déjà un compte, et le cadeau y est déjà. Connectez-vous pour le dépenser.",
+    "errRewardsOff": "Le programme de récompenses de ce restaurant n'est pas disponible actuellement.",
+    "errSuperseded": "Ce cadeau a déjà été récupéré. Si ce n'était pas vous, contactez le restaurant.",
+    "errTooManyAttempts": "Trop de tentatives sur ce code. Demandez au restaurant de vous en envoyer un nouveau.",
+    "errRateLimited": "Trop de tentatives — veuillez patienter un instant et réessayer.",
+    "errEmailMismatch": "Cet e-mail ne correspond pas à ce cadeau. Essayez l'adresse à laquelle le cadeau a été envoyé.",
+    "errGeneric": "Une erreur est survenue. Veuillez réessayer dans un instant."
   }
 }

@@ -5160,7 +5160,13 @@
       "personalRateTitle": "Stopnja zaslužka po meri",
       "personalRateDesc": "Ta stranka pri vsakem naročilu zasluži ta odstotek v {label} — namesto osnovne stopnje in vsake stopnje VIP skupine.",
       "ratePlaceholder": "Osnovna stopnja",
-      "rateClear": "Odstrani stopnjo po meri"
+      "rateClear": "Odstrani stopnjo po meri",
+      "giftRevokeConfirm": "Želite preklicati to darilo? Vsaka aktivna koda za porabo zanj je takoj preklicana — tega ni mogoče razveljaviti.",
+      "codeHint": "Koda: ····{hint}",
+      "codeStatusActive": "koda aktivna",
+      "codeStatusExpired": "koda potekla",
+      "codeStatusRevoked": "koda preklicana",
+      "codeExpires": "poteče {date}"
     },
     "imageCrop": {
       "title": "Prilagodite fotografijo",
@@ -5941,7 +5947,20 @@
       "step3Title": "Porabite ga, kadar koli želite",
       "step3Body": "Ob plačilu boste videli »Uporabite svoj {label}«. Za naročilo namenite toliko, kolikor želite — preostanek plačate kot običajno. Rok veljavnosti ne poteče, zato dobroimetje počaka, dokler ga ne želite uporabiti.",
       "cta": "Ustvari moj račun",
-      "ignoreLine": "Če tega niste pričakovali, lahko to e-sporočilo mirno prezrete."
+      "ignoreLine": "Če tega niste pričakovali, lahko to e-sporočilo mirno prezrete.",
+      "whatItIsSpend": "{label} je dobroimetje v restavraciji {restaurantName} — odšteje se neposredno od vašega računa, tako kot darilna kartica. To lahko porabite takoj, brez računa:",
+      "step1TitleSpend": "Tapnite spodnji gumb",
+      "step1BodySpend": "Odpre vaše darilo, ki je že odklenjeno — brez prijave, brez gesla.",
+      "step2TitleSpend": "Vaš {amount} je že tam",
+      "step2BodySpend": "Svoje dobroimetje boste videli takoj, ko se stran odpre.",
+      "step3TitleSpend": "Naročite in ga uveljavite ob plačilu",
+      "step3BodySpend": "Vaše darilo se uporabi samodejno — zmanjšajte ga ali odstranite, če ga raje shranite za pozneje.",
+      "spendCtaPrimary": "Porabite svoj {amount} zdaj — brez računa",
+      "orTypeThisCode": "Ali vnesite to kodo ob plačilu:",
+      "codeExpiryLine": "Ta koda velja do {date}. Če poteče, preprosto prosite restavracijo za novo — vaše darilo samo po sebi nikoli ne poteče.",
+      "neverExpiresLine": "Vaš {label} nikoli ne poteče, poteče le ta koda.",
+      "doNotForwardLine": "Ta povezava in koda sta samo za vas — prosimo, ne posredujte tega e-sporočila.",
+      "createAccountSecondary": "Ali odprite brezplačen račun, da ga obdržite za vedno"
     },
     "vipGroupWelcome": {
       "accountTip": "Če želite zbirati in porabljati {label}, s tem e-poštnim naslovom ustvarite brezplačen račun in se prijavite ob vsakem naročilu — vaše dobroimetje je shranjeno v računu, zato se ob zaključku nakupa prikaže le, kadar ste prijavljeni.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "Vaša aplikacija za {platform} je začasno ustavljena",
       "suspendedBody": "Delo na aplikaciji {restaurant} za {platform} je začasno ustavljeno. Razlog preverite na strani s stanjem aplikacije ali odgovorite na to e-sporočilo in pomagali vam bomo nadaljevati."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Darilo od {restaurantName}",
+    "landingSubtitle": "Spodaj vnesite svojo kodo, da si ogledate in porabite dobroimetje — račun ni potreben.",
+    "codeLabel": "Koda darila",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Vnesite kodo iz svojega e-sporočila ali jo prilepite — vezice in presledki niso pomembni.",
+    "helpTipWhatIsThis": "Ta koda odklene dobroimetje darila, poslano na vaš e-naslov. Deluje brez odpiranja računa, vendar ga lahko porabite samo v tej restavraciji in samo za eno naročilo naenkrat.",
+    "verifyButton": "Preveri moje darilo",
+    "giftFrom": "Darilo od {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}“",
+    "claimButton": "Porabi ga zdaj",
+    "claiming": "Odklepanje vašega darila…",
+    "successBanner": "Vse je pripravljeno — preusmerjamo vas na jedilnik…",
+    "bannerSpending": "Porabljate darilo restavracije {restaurant}",
+    "bannerBalance": "dobroimetje {balance}",
+    "checkoutCreditLabel": "Darilno dobroimetje",
+    "checkoutEmailLocked": "E-naslov je zaklenjen na vaše darilo.",
+    "checkoutEmailLockedHelp": "Vaše darilo je vezano na točno ta e-naslov. Če želite uporabiti drug naslov, namesto tega odprite brezplačen račun.",
+    "resendButton": "Pošlji mi novo kodo",
+    "resendSent": "Če to darilo še čaka, je nova koda že na poti.",
+    "signUpInstead": "Bi to darilo raje obdržali za vedno? <link>Namesto tega odprite brezplačen račun</link>.",
+    "errInvalid": "Ta koda ni videti pravilna. Preverite jo in poskusite znova ali spodaj zahtevajte novo.",
+    "errExpired": "Ta koda je potekla, vaše darilo pa ni — spodaj zahtevajte novo kodo.",
+    "errRevoked": "To kodo je preklicala restavracija. Obrnite se nanjo, če menite, da gre za napako.",
+    "errAccountExists": "Dobra novica — ta e-naslov že ima račun in darilo je že v njem. Prijavite se, da ga porabite.",
+    "errRewardsOff": "Program zvestobe te restavracije trenutno ni na voljo.",
+    "errSuperseded": "To darilo je že bilo prevzeto. Če to niste bili vi, se obrnite na restavracijo.",
+    "errTooManyAttempts": "Preveč poskusov s to kodo. Prosite restavracijo, naj vam pošlje novo.",
+    "errRateLimited": "Preveč poskusov — počakajte trenutek in poskusite znova.",
+    "errEmailMismatch": "Ta e-naslov se ne ujema s tem darilom. Poskusite z naslovom, na katerega je bilo darilo poslano.",
+    "errGeneric": "Prišlo je do napake. Poskusite znova čez trenutek."
   }
 }

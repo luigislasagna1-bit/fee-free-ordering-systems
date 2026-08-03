@@ -5160,7 +5160,13 @@
       "personalRateTitle": "Mukautettu ansaintaprosentti",
       "personalRateDesc": "Tämä asiakas saa jokaisesta tilauksesta tämän prosentin takaisin ({label}) — perusprosentin ja kaikkien VIP-ryhmäprosenttien sijaan.",
       "ratePlaceholder": "Perusprosentti",
-      "rateClear": "Poista mukautettu prosentti"
+      "rateClear": "Poista mukautettu prosentti",
+      "giftRevokeConfirm": "Peruutetaanko tämä lahja? Sen mahdollinen aktiivinen käyttökoodi mitätöityy välittömästi — tätä ei voi kumota.",
+      "codeHint": "Koodi: ····{hint}",
+      "codeStatusActive": "koodi aktiivinen",
+      "codeStatusExpired": "koodi vanhentunut",
+      "codeStatusRevoked": "koodi peruutettu",
+      "codeExpires": "vanhenee {date}"
     },
     "imageCrop": {
       "title": "Säädä kuvaa",
@@ -5941,7 +5947,20 @@
       "step3Title": "Käytä se milloin haluat",
       "step3Body": "Kassalla näet kohdan ”Käytä {label}”. Voit käyttää tilaukseen niin paljon tai niin vähän kuin haluat — loput maksat aivan tavalliseen tapaan. Saldo ei vanhene, joten se säilyy siihen asti, kun haluat käyttää sen.",
       "cta": "Luo tili",
-      "ignoreLine": "Jos et odottanut tätä viestiä, voit jättää sen huomiotta."
+      "ignoreLine": "Jos et odottanut tätä viestiä, voit jättää sen huomiotta.",
+      "whatItIsSpend": "{label} on saldoa ravintolassa {restaurantName} — se vähennetään suoraan laskustasi, aivan kuten lahjakortti. Voit käyttää tämän juuri nyt, tiliä ei tarvita:",
+      "step1TitleSpend": "Napauta alla olevaa painiketta",
+      "step1BodySpend": "Se avaa lahjasi, joka on jo avattu käyttöön — ei kirjautumista, ei salasanaa.",
+      "step2TitleSpend": "{amount} on jo tilillä",
+      "step2BodySpend": "Näet saldosi heti, kun sivu avautuu.",
+      "step3TitleSpend": "Tilaa ja käytä se kassalla",
+      "step3BodySpend": "Lahjasi käytetään automaattisesti — pienennä sitä tai poista se, jos haluat mieluummin säästää sen myöhempää käyttöä varten.",
+      "spendCtaPrimary": "Käytä {amount} nyt — tiliä ei tarvita",
+      "orTypeThisCode": "Tai kirjoita tämä koodi kassalla:",
+      "codeExpiryLine": "Tämä koodi toimii {date} asti. Jos se vanhenee, pyydä ravintolalta uusi — lahjasi itsessään ei vanhene koskaan.",
+      "neverExpiresLine": "{label} ei vanhene koskaan, vain tämä koodi vanhenee.",
+      "doNotForwardLine": "Tämä linkki ja koodi ovat vain sinua varten — älä välitä tätä sähköpostia eteenpäin.",
+      "createAccountSecondary": "Tai luo ilmainen tili säilyttääksesi sen ikuisesti"
     },
     "vipGroupWelcome": {
       "accountTip": "Palkintosaldon ({label}) kerääminen ja käyttäminen vaatii tilin: luo maksuton tili tällä sähköpostiosoitteella ja kirjaudu sisään aina kun tilaat — saldo on tililläsi, joten se näkyy kassalla vain, kun olet kirjautunut sisään.",
@@ -7505,5 +7524,38 @@
       "suspendedHeadline": "{platform}-sovelluksesi on tauolla",
       "suspendedBody": "{restaurant}-sovelluksen työstäminen alustalle {platform} on keskeytetty. Katso syy sovelluksesi tilasivulta tai vastaa tähän sähköpostiin, niin autamme sinua pääsemään taas eteenpäin."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Lahja ravintolalta {restaurantName}",
+    "landingSubtitle": "Kirjoita koodisi alle nähdäksesi ja käyttääksesi sen — tiliä ei tarvita.",
+    "codeLabel": "Lahjakoodi",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Kirjoita koodi sähköpostistasi tai liitä se — viivat ja välit eivät ole tärkeitä.",
+    "helpTipWhatIsThis": "Tämä koodi avaa sähköpostiisi lähetetyn lahjasaldon. Se toimii luomatta tiliä, mutta sitä voi käyttää vain tässä ravintolassa ja vain yhdessä tilauksessa kerrallaan.",
+    "verifyButton": "Tarkista lahjani",
+    "giftFrom": "Lahja ravintolalta {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "”{note}”",
+    "claimButton": "Käytä se nyt",
+    "claiming": "Avataan lahjaasi…",
+    "successBanner": "Kaikki on valmista — sinut viedään menuun…",
+    "bannerSpending": "Käytät ravintolan {restaurant} lahjaa",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Lahjakrediitti",
+    "checkoutEmailLocked": "Sähköposti lukittu lahjaasi.",
+    "checkoutEmailLockedHelp": "Lahjasi on sidottu juuri tähän sähköpostiosoitteeseen. Käyttääksesi toista osoitetta, luo sen sijaan ilmainen tili.",
+    "resendButton": "Lähetä minulle uusi koodi",
+    "resendSent": "Jos lahja odottaa vielä, uusi koodi on tulossa.",
+    "signUpInstead": "Haluatko säilyttää tämän lahjan ikuisesti? <link>Luo sen sijaan ilmainen tili</link>.",
+    "errInvalid": "Koodi ei näytä oikealta. Tarkista se ja yritä uudelleen, tai pyydä uusi alta.",
+    "errExpired": "Tämä koodi on vanhentunut, mutta lahjasi ei ole — pyydä uusi koodi alta.",
+    "errRevoked": "Ravintola peruutti tämän koodin. Ota heihin yhteyttä, jos tämä on mielestäsi virhe.",
+    "errAccountExists": "Hyviä uutisia — tällä sähköpostilla on jo tili, ja lahja on jo siinä. Kirjaudu sisään käyttääksesi sitä.",
+    "errRewardsOff": "Tämän ravintolan palkkiojärjestelmä ei ole juuri nyt käytettävissä.",
+    "errSuperseded": "Tämä lahja on jo lunastettu. Jos se ei ollut sinä, ota yhteyttä ravintolaan.",
+    "errTooManyAttempts": "Liian monta yritystä tällä koodilla. Pyydä ravintolaa lähettämään sinulle uusi.",
+    "errRateLimited": "Liian monta yritystä — odota hetki ja yritä uudelleen.",
+    "errEmailMismatch": "Tämä sähköposti ei vastaa tätä lahjaa. Kokeile osoitetta, johon lahja lähetettiin.",
+    "errGeneric": "Jokin meni pieleen. Yritä hetken kuluttua uudelleen."
   }
 }
