@@ -35,6 +35,11 @@ import { usePathname } from "next/navigation";
  *                    that's the restaurant owner's job)
  *   - /site/*       (the restaurant's own hosted marketing site —
  *                    same reason: it's the diner's view, not ours)
+ *   - /marketplace* (the consumer marketplace — diners browsing/ordering,
+ *                    not restaurants/resellers; Luigi 2026-08-03)
+ *   - the marketplace host (feefreefood.com / www) — its apex serves the
+ *                    marketplace, and the proxy rewrites "/" so the path
+ *                    can't reveal it; see isMarketplaceHost() below
  *   - any branded host (custom domain / <slug>.<platform> subdomain) —
  *                    the proxy rewrites "/" so the path can't reveal it;
  *                    see isBrandedHost() below
@@ -51,7 +56,7 @@ import { usePathname } from "next/navigation";
  * hides the bubble when it lands on the customer page.
  */
 
-const HIDE_PREFIXES = ["/order/", "/site/", "/kitchen/", "/superadmin/", "/embed/", "/driver/"];
+const HIDE_PREFIXES = ["/order/", "/site/", "/marketplace", "/kitchen/", "/superadmin/", "/embed/", "/driver/"];
 
 declare global {
   interface Window {
@@ -92,6 +97,21 @@ function isBrandedHost(): boolean {
 }
 
 /**
+ * The consumer marketplace host (feefreefood.com / www). Its apex serves the
+ * /marketplace experience via an edge rewrite, so usePathname() reports "/"
+ * and the /marketplace HIDE_PREFIX never matches — the chat is for
+ * restaurants/resellers, not diners browsing the marketplace, so hide it on
+ * the whole host (Luigi 2026-08-03).
+ */
+function isMarketplaceHost(): boolean {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname.toLowerCase();
+  if (!host) return false;
+  const marketplaceDomain = (process.env.NEXT_PUBLIC_MARKETPLACE_DOMAIN || "feefreefood.com").toLowerCase();
+  return host === marketplaceDomain || host === `www.${marketplaceDomain}`;
+}
+
+/**
  * Inside ANY native app shell (Kitchen / Fee Free Delivery — Capacitor WebViews
  * of this site) the support chat must NEVER appear, on any route (Luigi
  * 2026-07-16: the bubble showed up in the iOS driver app, and the in-app
@@ -115,6 +135,9 @@ function shouldHide(pathname: string | null): boolean {
   // Branded customer hosts next — the proxy rewrites "/" so the path alone
   // can't tell us we're on a customer page (see isBrandedHost above).
   if (isBrandedHost()) return true;
+  // The marketplace host serves diners, not restaurants/resellers — hide the
+  // chat on the whole host (its apex is a "/" → /marketplace rewrite).
+  if (isMarketplaceHost()) return true;
   if (!pathname) return false;
   return HIDE_PREFIXES.some((p) => pathname === p.replace(/\/$/, "") || pathname.startsWith(p));
 }
