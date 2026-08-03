@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Tutto salvato",
       "livePreviewLabel": "Anteprima live",
       "iframeTitle": "Anteprima sito ospitato",
-      "previewNote": "L'anteprima si aggiorna al salvataggio. Per vedere le modifiche in tempo reale durante la modifica, clicca Salva e questo pannello si aggiornerà automaticamente."
+      "previewNote": "L'anteprima si aggiorna al salvataggio. Per vedere le modifiche in tempo reale durante la modifica, clicca Salva e questo pannello si aggiornerà automaticamente.",
+      "labelCustomButtonHeading": "Pulsante personalizzato",
+      "toggleCtaEnabled": "Mostra questo pulsante",
+      "fieldCtaLabelLabel": "Testo del pulsante",
+      "fieldCtaLabelPlaceholder": "Guarda il nostro menu su Yelp",
+      "fieldCtaLinkLabel": "Link del pulsante",
+      "fieldCtaLinkHelp": "Dove porta il pulsante quando viene cliccato. Deve iniziare con http:// o https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Apri in una nuova scheda",
+      "toggleCtaNewTabHelp": "Mantiene questa pagina aperta in background invece di lasciarla.",
+      "heroCustomCtaHelp": "Un terzo pulsante accanto a Ordina online / Prenota un tavolo — collega alla tua pagina Yelp, un menu PDF, un modulo per il catering o altrove."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema salvato! Le modifiche sono live sulla tua pagina di ordinazione.",

@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "הכול נשמר",
       "livePreviewLabel": "תצוגה מקדימה חיה",
       "iframeTitle": "תצוגה מקדימה של האתר המתארח",
-      "previewNote": "התצוגה המקדימה מתעדכנת בשמירה. כדי לראות שינויים חיים תוך כדי עריכה, לחצו שמור והפאנל הזה יתרענן אוטומטית."
+      "previewNote": "התצוגה המקדימה מתעדכנת בשמירה. כדי לראות שינויים חיים תוך כדי עריכה, לחצו שמור והפאנל הזה יתרענן אוטומטית.",
+      "labelCustomButtonHeading": "כפתור מותאם אישית",
+      "toggleCtaEnabled": "הצג כפתור זה",
+      "fieldCtaLabelLabel": "טקסט הכפתור",
+      "fieldCtaLabelPlaceholder": "צפו בתפריט שלנו ב-Yelp",
+      "fieldCtaLinkLabel": "קישור הכפתור",
+      "fieldCtaLinkHelp": "לאן הכפתור מוביל בלחיצה. חייב להתחיל ב-http:// או https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "פתח בכרטיסייה חדשה",
+      "toggleCtaNewTabHelp": "משאיר את הדף הזה פתוח ברקע במקום לנווט הרחק ממנו.",
+      "heroCustomCtaHelp": "כפתור שלישי לצד הזמנה אונליין / הזמנת שולחן — קשרו לדף ה-Yelp שלכם, לתפריט PDF, לטופס קייטרינג, או לכל מקום אחר."
     },
     "websiteThemeClient": {
       "toastSaved": "ערכת הנושא נשמרה! השינויים פעילים בדף ההזמנות שלך.",

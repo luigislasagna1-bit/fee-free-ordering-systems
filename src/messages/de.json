@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Alles gespeichert",
       "livePreviewLabel": "Live-Vorschau",
       "iframeTitle": "Vorschau der gehosteten Website",
-      "previewNote": "Vorschau wird beim Speichern aktualisiert. Um Änderungen während der Bearbeitung live zu sehen, klicken Sie auf Speichern — dieses Panel wird dann automatisch aktualisiert."
+      "previewNote": "Vorschau wird beim Speichern aktualisiert. Um Änderungen während der Bearbeitung live zu sehen, klicken Sie auf Speichern — dieses Panel wird dann automatisch aktualisiert.",
+      "labelCustomButtonHeading": "Individueller Button",
+      "toggleCtaEnabled": "Diesen Button anzeigen",
+      "fieldCtaLabelLabel": "Button-Text",
+      "fieldCtaLabelPlaceholder": "Speisekarte auf Yelp ansehen",
+      "fieldCtaLinkLabel": "Button-Link",
+      "fieldCtaLinkHelp": "Wohin der Button beim Klicken führt. Muss mit http:// oder https:// beginnen.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "In neuem Tab öffnen",
+      "toggleCtaNewTabHelp": "Hält diese Seite im Hintergrund geöffnet, statt sie zu verlassen.",
+      "heroCustomCtaHelp": "Ein dritter Button neben Online bestellen / Tisch reservieren — verlinken Sie Ihre Yelp-Seite, eine Speisekarte als PDF, ein Catering-Formular oder etwas anderes."
     },
     "websiteThemeClient": {
       "toastSaved": "Design gespeichert! Änderungen sind auf Ihrer Bestellseite live.",

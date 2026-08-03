@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Vše uloženo",
       "livePreviewLabel": "Živý náhled",
       "iframeTitle": "Náhled hostované stránky",
-      "previewNote": "Náhled se aktualizuje po uložení. Pro zobrazení živých změn při úpravách klikněte na Uložit — panel se poté automaticky obnoví."
+      "previewNote": "Náhled se aktualizuje po uložení. Pro zobrazení živých změn při úpravách klikněte na Uložit — panel se poté automaticky obnoví.",
+      "labelCustomButtonHeading": "Vlastní tlačítko",
+      "toggleCtaEnabled": "Zobrazit toto tlačítko",
+      "fieldCtaLabelLabel": "Text tlačítka",
+      "fieldCtaLabelPlaceholder": "Podívejte se na naše menu na Yelpu",
+      "fieldCtaLinkLabel": "Odkaz tlačítka",
+      "fieldCtaLinkHelp": "Kam tlačítko po kliknutí vede. Musí začínat na http:// nebo https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Otevřít na nové kartě",
+      "toggleCtaNewTabHelp": "Udrží tuto stránku otevřenou na pozadí, místo aby z ní odešla.",
+      "heroCustomCtaHelp": "Třetí tlačítko vedle Objednat online / Rezervovat stůl — odkaz na vaši stránku Yelp, menu v PDF, formulář pro catering nebo kamkoli jinam."
     },
     "websiteThemeClient": {
       "toastSaved": "Motiv uložen! Změny jsou živé na vaší stránce objednávek.",

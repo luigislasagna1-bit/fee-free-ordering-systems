@@ -2273,7 +2273,17 @@
       "buttonAllSaved": "Viskas išsaugota",
       "livePreviewLabel": "Tiesioginė peržiūra",
       "iframeTitle": "Talpinamosios svetainės peržiūra",
-      "previewNote": "Peržiūra atnaujinama išsaugojus. Norėdami matyti pokyčius redagavimo metu, paspauskite Išsaugoti — šis skydelis automatiškai atsinaujins."
+      "previewNote": "Peržiūra atnaujinama išsaugojus. Norėdami matyti pokyčius redagavimo metu, paspauskite Išsaugoti — šis skydelis automatiškai atsinaujins.",
+      "labelCustomButtonHeading": "Pasirinktinis mygtukas",
+      "toggleCtaEnabled": "Rodyti šį mygtuką",
+      "fieldCtaLabelLabel": "Mygtuko tekstas",
+      "fieldCtaLabelPlaceholder": "Peržiūrėkite mūsų meniu Yelp",
+      "fieldCtaLinkLabel": "Mygtuko nuoroda",
+      "fieldCtaLinkHelp": "Kur mygtukas nukreipia paspaudus. Turi prasidėti http:// arba https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Atidaryti naujame skirtuke",
+      "toggleCtaNewTabHelp": "Šį puslapį palieka atvertą fone, o ne iš jo išeina.",
+      "heroCustomCtaHelp": "Trečias mygtukas šalia Užsakyti internetu / Rezervuoti staliuką — nuoroda į jūsų Yelp puslapį, PDF meniu, catering formą ar bet kur kitur."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema išsaugota! Pakeitimai matomi jūsų užsakymų puslapyje.",

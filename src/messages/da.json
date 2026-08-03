@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Alt gemt",
       "livePreviewLabel": "Live forhåndsvisning",
       "iframeTitle": "Forhåndsvisning af hosted site",
-      "previewNote": "Forhåndsvisning opdateres ved gem. For at se ændringer live under redigering, klik Gem — dette panel opdateres automatisk."
+      "previewNote": "Forhåndsvisning opdateres ved gem. For at se ændringer live under redigering, klik Gem — dette panel opdateres automatisk.",
+      "labelCustomButtonHeading": "Brugerdefineret knap",
+      "toggleCtaEnabled": "Vis denne knap",
+      "fieldCtaLabelLabel": "Knaptekst",
+      "fieldCtaLabelPlaceholder": "Se vores menu på Yelp",
+      "fieldCtaLinkLabel": "Knaplink",
+      "fieldCtaLinkHelp": "Hvor knappen fører hen, når der klikkes. Skal starte med http:// eller https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Åbn i en ny fane",
+      "toggleCtaNewTabHelp": "Holder denne side åben i baggrunden i stedet for at navigere væk.",
+      "heroCustomCtaHelp": "En tredje knap ved siden af Bestil online / Book et bord — link til din Yelp-side, en menu-PDF, en cateringformular eller andet."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema gemt! Ændringer er live på din bestillingsside.",

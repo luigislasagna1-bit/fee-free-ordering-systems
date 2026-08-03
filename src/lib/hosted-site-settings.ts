@@ -20,6 +20,36 @@ export type BuiltInSection =
   | "map"
   | "social";
 
+/**
+ * A single owner-defined call-to-action button: custom text + a custom
+ * link, optionally opening in a new tab. Used both for the hero's third
+ * "custom" button (alongside the fixed Order Online / Book a Table CTAs)
+ * and for the optional button on each custom section (Luigi 2026-08-02:
+ * "add a button to any section ... with custom text and a custom link").
+ *
+ * `href` is allowlist-sanitized via `sanitizeExternalHref` both on write
+ * (PATCH /api/admin/website/settings) and on read (the renderer) — same
+ * double-sanitization pattern as `cta.primary`/`cta.secondary`. A button
+ * only renders when `enabled` AND both `label` and `href` are non-empty
+ * after sanitization — there's no sensible fallback destination for an
+ * owner-defined button (unlike primary/secondary, which fall back to the
+ * order/reservation page), so an invalid/cleared CTA simply doesn't render
+ * rather than showing a broken or misleading link.
+ */
+export interface CustomCtaConfig {
+  /** Master on/off switch, independent of label/href so an owner can
+   *  temporarily hide the button without losing their text/link. */
+  enabled: boolean;
+  /** Button label. Empty → button doesn't render even if enabled. */
+  label: string;
+  /** Destination URL. null/empty → button doesn't render even if enabled. */
+  href: string | null;
+  /** Open in a new browser tab (rel="noopener noreferrer" applied
+   *  automatically) instead of navigating the customer away from the
+   *  marketing page. Off by default. */
+  newTab: boolean;
+}
+
 export interface CustomSection {
   /** Stable id so the admin UI can edit/reorder/delete. Generated client-side
    *  (timestamp + random) when the section is first created. */
@@ -33,6 +63,9 @@ export interface CustomSection {
   /** Where to insert this section relative to the built-ins. The renderer
    *  inserts custom sections AFTER the named built-in. */
   position: BuiltInSection;
+  /** Optional button rendered below the section body. Defaults to
+   *  disabled/empty — most custom sections are just narrative content. */
+  cta: CustomCtaConfig;
 }
 
 export interface HostedSiteSettings {
@@ -115,6 +148,10 @@ export interface HostedSiteSettings {
       label: string;
       href: string | null;
     };
+    /** Third, fully owner-defined CTA in the hero — NOT tied to Order
+     *  Online / Book a Table semantics. Disabled/empty by default; most
+     *  restaurants don't need a third hero button. */
+    custom: CustomCtaConfig;
   };
   customSections: CustomSection[];
 }
@@ -145,9 +182,15 @@ export function defaultHostedSiteSettings(): HostedSiteSettings {
     cta: {
       primary: { label: "Order Online", href: null, enabled: true },
       secondary: { label: "Book a Table", href: null, enabled: true },
+      custom: { enabled: false, label: "", href: null, newTab: false },
     },
     customSections: [],
   };
+}
+
+/** Defaults for a brand-new custom section's CTA — disabled/empty. */
+function defaultCustomSectionCta(): CustomCtaConfig {
+  return { enabled: false, label: "", href: null, newTab: false };
 }
 
 /**
@@ -189,6 +232,10 @@ export function parseHostedSiteSettings(raw: string | null | undefined): HostedS
         ...defaults.cta.secondary,
         ...(p.cta?.secondary && typeof p.cta.secondary === "object" ? p.cta.secondary : {}),
       },
+      custom: {
+        ...defaults.cta.custom,
+        ...(p.cta?.custom && typeof p.cta.custom === "object" ? p.cta.custom : {}),
+      },
     },
     customSections: Array.isArray(p.customSections)
       ? p.customSections
@@ -202,6 +249,17 @@ export function parseHostedSiteSettings(raw: string | null | undefined): HostedS
               typeof (s as any).position === "string"
           )
           .slice(0, 2) // hard cap at 2 custom sections in v1
+          .map((s) => ({
+            ...s,
+            // Older sections (saved before the CTA feature shipped) won't
+            // have a `cta` field — fill it in so downstream code never has
+            // to null-check. Partial/malformed `cta` objects merge over
+            // the disabled default the same way header/sections/cta above do.
+            cta: {
+              ...defaultCustomSectionCta(),
+              ...((s as any).cta && typeof (s as any).cta === "object" ? (s as any).cta : {}),
+            },
+          }))
       : [],
   };
 }
@@ -212,3 +270,5 @@ export const MAX_CUSTOM_SECTIONS = 2;
 export const MAX_CUSTOM_SECTION_TITLE_LEN = 80;
 export const MAX_CUSTOM_SECTION_BODY_LEN = 4000;
 export const MAX_CTA_LABEL_LEN = 40;
+/** Applies to cta.custom.href and every customSections[].cta.href. */
+export const MAX_CTA_HREF_LEN = 200;

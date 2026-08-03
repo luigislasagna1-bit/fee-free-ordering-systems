@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Всё сохранено",
       "livePreviewLabel": "Предпросмотр в реальном времени",
       "iframeTitle": "Предпросмотр сайта",
-      "previewNote": "Предпросмотр обновляется при сохранении. Нажмите «Сохранить» — панель обновится автоматически."
+      "previewNote": "Предпросмотр обновляется при сохранении. Нажмите «Сохранить» — панель обновится автоматически.",
+      "labelCustomButtonHeading": "Пользовательская кнопка",
+      "toggleCtaEnabled": "Показать эту кнопку",
+      "fieldCtaLabelLabel": "Текст кнопки",
+      "fieldCtaLabelPlaceholder": "Посмотрите наше меню на Yelp",
+      "fieldCtaLinkLabel": "Ссылка кнопки",
+      "fieldCtaLinkHelp": "Куда ведёт кнопка при нажатии. Должна начинаться с http:// или https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Открыть в новой вкладке",
+      "toggleCtaNewTabHelp": "Оставляет эту страницу открытой в фоне вместо перехода с неё.",
+      "heroCustomCtaHelp": "Третья кнопка рядом с Заказать онлайн / Забронировать столик — ссылка на вашу страницу Yelp, меню в PDF, форму для кейтеринга или куда угодно ещё."
     },
     "websiteThemeClient": {
       "toastSaved": "Тема сохранена! Изменения видны на странице заказа.",

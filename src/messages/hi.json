@@ -2293,7 +2293,17 @@
       "buttonAllSaved": "सब सहेजा गया",
       "livePreviewLabel": "लाइव प्रीव्यू",
       "iframeTitle": "होस्टेड साइट प्रीव्यू",
-      "previewNote": "प्रीव्यू सहेजने पर अपडेट होता है। संपादन के दौरान लाइव बदलाव देखने के लिए, सहेजें पर क्लिक करें और यह पैनल अपने-आप रिफ्रेश हो जाएगा।"
+      "previewNote": "प्रीव्यू सहेजने पर अपडेट होता है। संपादन के दौरान लाइव बदलाव देखने के लिए, सहेजें पर क्लिक करें और यह पैनल अपने-आप रिफ्रेश हो जाएगा।",
+      "labelCustomButtonHeading": "कस्टम बटन",
+      "toggleCtaEnabled": "यह बटन दिखाएं",
+      "fieldCtaLabelLabel": "बटन का टेक्स्ट",
+      "fieldCtaLabelPlaceholder": "Yelp पर हमारा मेनू देखें",
+      "fieldCtaLinkLabel": "बटन का लिंक",
+      "fieldCtaLinkHelp": "क्लिक करने पर यह बटन कहाँ ले जाता है। इसे http:// या https:// से शुरू होना चाहिए।",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "नए टैब में खोलें",
+      "toggleCtaNewTabHelp": "इस पेज से दूर जाने के बजाय इसे बैकग्राउंड में खुला रखता है।",
+      "heroCustomCtaHelp": "ऑनलाइन ऑर्डर करें / टेबल बुक करें बटन के पास एक तीसरा बटन — अपने Yelp पेज, PDF मेनू, केटरिंग फ़ॉर्म, या कहीं और लिंक करें।"
     },
     "websiteEditorPage": {
       "upsellTitle": "Sales Optimized Website ऐड-ऑन आवश्यक है",

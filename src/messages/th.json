@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "บันทึกทั้งหมดแล้ว",
       "livePreviewLabel": "ตัวอย่างสด",
       "iframeTitle": "ตัวอย่างไซต์ที่โฮสต์",
-      "previewNote": "ตัวอย่างอัปเดตเมื่อบันทึก หากต้องการดูการเปลี่ยนแปลงสดระหว่างแก้ไข คลิกบันทึกแล้วแผงนี้จะรีเฟรชอัตโนมัติ"
+      "previewNote": "ตัวอย่างอัปเดตเมื่อบันทึก หากต้องการดูการเปลี่ยนแปลงสดระหว่างแก้ไข คลิกบันทึกแล้วแผงนี้จะรีเฟรชอัตโนมัติ",
+      "labelCustomButtonHeading": "ปุ่มกำหนดเอง",
+      "toggleCtaEnabled": "แสดงปุ่มนี้",
+      "fieldCtaLabelLabel": "ข้อความปุ่ม",
+      "fieldCtaLabelPlaceholder": "ดูเมนูของเราบน Yelp",
+      "fieldCtaLinkLabel": "ลิงก์ปุ่ม",
+      "fieldCtaLinkHelp": "ปุ่มนี้จะพาไปที่ใดเมื่อคลิก ต้องขึ้นต้นด้วย http:// หรือ https://",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "เปิดในแท็บใหม่",
+      "toggleCtaNewTabHelp": "เปิดหน้านี้ค้างไว้ในพื้นหลังแทนที่จะออกจากหน้า",
+      "heroCustomCtaHelp": "ปุ่มที่สามข้าง ๆ สั่งซื้อออนไลน์ / จองโต๊ะ — ลิงก์ไปยังหน้า Yelp ของคุณ เมนู PDF แบบฟอร์มจัดเลี้ยง หรือที่อื่นใดก็ได้"
     },
     "websiteThemeClient": {
       "toastSaved": "บันทึกธีมแล้ว! การเปลี่ยนแปลงมีผลบนหน้าสั่งอาหารของคุณแล้ว",

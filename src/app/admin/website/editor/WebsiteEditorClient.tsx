@@ -168,6 +168,7 @@ export function WebsiteEditorClient({
       title: t("newSectionDefaultTitle"),
       body: "",
       position: "about",
+      cta: { enabled: false, label: "", href: null, newTab: false },
     };
     setSettings((s) => ({ ...s, customSections: [...s.customSections, newSection] }));
   }
@@ -387,6 +388,62 @@ export function WebsiteEditorClient({
               maxLength={200}
             />
           </div>
+
+          {/* Third, fully owner-defined CTA — NOT tied to Order Online /
+              Book a Table semantics. Luigi 2026-08-02: "add a button ...
+              with custom text and a custom link". */}
+          <div className="border-t border-gray-100 pt-4 mt-1">
+            <div className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
+              {t("labelCustomButtonHeading")}
+            </div>
+            <ToggleRow
+              label={t("toggleCtaEnabled")}
+              help={t("heroCustomCtaHelp")}
+              value={settings.cta.custom.enabled}
+              onChange={(v) =>
+                setSettings((s) => ({
+                  ...s,
+                  cta: { ...s.cta, custom: { ...s.cta.custom, enabled: v } },
+                }))
+              }
+            />
+            <TextField
+              label={t("fieldCtaLabelLabel")}
+              placeholder={t("fieldCtaLabelPlaceholder")}
+              value={settings.cta.custom.label}
+              onChange={(v) =>
+                setSettings((s) => ({
+                  ...s,
+                  cta: { ...s.cta, custom: { ...s.cta.custom, label: v } },
+                }))
+              }
+              maxLength={MAX_CTA_LABEL_LEN}
+            />
+            <TextField
+              label={t("fieldCtaLinkLabel")}
+              help={t("fieldCtaLinkHelp")}
+              placeholder={t("fieldCtaLinkPlaceholder")}
+              value={settings.cta.custom.href ?? ""}
+              onChange={(v) =>
+                setSettings((s) => ({
+                  ...s,
+                  cta: { ...s.cta, custom: { ...s.cta.custom, href: v.trim() === "" ? null : v } },
+                }))
+              }
+              maxLength={200}
+            />
+            <ToggleRow
+              label={t("toggleCtaNewTab")}
+              help={t("toggleCtaNewTabHelp")}
+              value={settings.cta.custom.newTab}
+              onChange={(v) =>
+                setSettings((s) => ({
+                  ...s,
+                  cta: { ...s.cta, custom: { ...s.cta.custom, newTab: v } },
+                }))
+              }
+            />
+          </div>
         </Card>
 
         {/* Custom sections */}
@@ -435,6 +492,51 @@ export function WebsiteEditorClient({
                 }
                 options={POSITION_OPTIONS}
               />
+
+              {/* Optional button rendered below this section's body on the
+                  public page. Luigi 2026-08-02: "add a button to any
+                  section ... with custom text and a custom link". */}
+              <div className="border-t border-gray-100 pt-3 mt-1">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">
+                  {t("labelCustomButtonHeading")}
+                </div>
+                <ToggleRow
+                  label={t("toggleCtaEnabled")}
+                  value={sec.cta.enabled}
+                  onChange={(v) =>
+                    updateCustomSection(sec.id, { cta: { ...sec.cta, enabled: v } })
+                  }
+                />
+                <TextField
+                  label={t("fieldCtaLabelLabel")}
+                  placeholder={t("fieldCtaLabelPlaceholder")}
+                  value={sec.cta.label}
+                  onChange={(v) =>
+                    updateCustomSection(sec.id, { cta: { ...sec.cta, label: v } })
+                  }
+                  maxLength={MAX_CTA_LABEL_LEN}
+                />
+                <TextField
+                  label={t("fieldCtaLinkLabel")}
+                  help={t("fieldCtaLinkHelp")}
+                  placeholder={t("fieldCtaLinkPlaceholder")}
+                  value={sec.cta.href ?? ""}
+                  onChange={(v) =>
+                    updateCustomSection(sec.id, {
+                      cta: { ...sec.cta, href: v.trim() === "" ? null : v },
+                    })
+                  }
+                  maxLength={200}
+                />
+                <ToggleRow
+                  label={t("toggleCtaNewTab")}
+                  help={t("toggleCtaNewTabHelp")}
+                  value={sec.cta.newTab}
+                  onChange={(v) =>
+                    updateCustomSection(sec.id, { cta: { ...sec.cta, newTab: v } })
+                  }
+                />
+              </div>
             </div>
           ))}
           {settings.customSections.length < MAX_CUSTOM_SECTIONS && (

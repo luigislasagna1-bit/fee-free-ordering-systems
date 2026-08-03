@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "모두 저장됨",
       "livePreviewLabel": "실시간 미리보기",
       "iframeTitle": "호스팅 사이트 미리보기",
-      "previewNote": "미리보기는 저장 시 업데이트됩니다. 편집 중 실시간 변경사항을 보려면 저장하면 이 패널이 자동으로 새로고침됩니다."
+      "previewNote": "미리보기는 저장 시 업데이트됩니다. 편집 중 실시간 변경사항을 보려면 저장하면 이 패널이 자동으로 새로고침됩니다.",
+      "labelCustomButtonHeading": "맞춤 버튼",
+      "toggleCtaEnabled": "이 버튼 표시",
+      "fieldCtaLabelLabel": "버튼 텍스트",
+      "fieldCtaLabelPlaceholder": "Yelp에서 메뉴 보기",
+      "fieldCtaLinkLabel": "버튼 링크",
+      "fieldCtaLinkHelp": "클릭했을 때 버튼이 이동하는 위치입니다. http:// 또는 https://로 시작해야 합니다.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "새 탭에서 열기",
+      "toggleCtaNewTabHelp": "페이지를 벗어나지 않고 백그라운드에서 열어 둡니다.",
+      "heroCustomCtaHelp": "온라인 주문 / 테이블 예약 버튼 옆에 세 번째 버튼을 추가하세요 — Yelp 페이지, PDF 메뉴, 케이터링 양식 또는 다른 어디로든 연결할 수 있습니다."
     },
     "websiteThemeClient": {
       "toastSaved": "테마가 저장되었습니다! 변경사항이 주문 페이지에 적용되었습니다.",

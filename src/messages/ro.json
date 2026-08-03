@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Toate salvate",
       "livePreviewLabel": "Previzualizare live",
       "iframeTitle": "Previzualizare site găzduit",
-      "previewNote": "Previzualizarea se actualizează la salvare. Pentru a vedea modificările live în timp ce editezi, apasă Salvează și acest panou se va reîncărca automat."
+      "previewNote": "Previzualizarea se actualizează la salvare. Pentru a vedea modificările live în timp ce editezi, apasă Salvează și acest panou se va reîncărca automat.",
+      "labelCustomButtonHeading": "Buton personalizat",
+      "toggleCtaEnabled": "Afișează acest buton",
+      "fieldCtaLabelLabel": "Text buton",
+      "fieldCtaLabelPlaceholder": "Vezi meniul nostru pe Yelp",
+      "fieldCtaLinkLabel": "Link buton",
+      "fieldCtaLinkHelp": "Unde duce butonul când este apăsat. Trebuie să înceapă cu http:// sau https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Deschide într-o filă nouă",
+      "toggleCtaNewTabHelp": "Păstrează această pagină deschisă în fundal, în loc să navigheze departe de ea.",
+      "heroCustomCtaHelp": "Un al treilea buton lângă Comandă online / Rezervă o masă — leagă la pagina ta de Yelp, un meniu PDF, un formular de catering sau altundeva."
     },
     "websiteThemeClient": {
       "toastSaved": "Temă salvată! Modificările sunt live pe pagina ta de comandă.",

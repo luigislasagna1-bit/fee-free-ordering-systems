@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Minden mentve",
       "livePreviewLabel": "Élő előnézet",
       "iframeTitle": "Tárolt oldal előnézete",
-      "previewNote": "Az előnézet mentés után frissül. Az élő változások megtekintéséhez szerkesztés közben kattintson a Mentés gombra, majd ez a panel automatikusan frissül."
+      "previewNote": "Az előnézet mentés után frissül. Az élő változások megtekintéséhez szerkesztés közben kattintson a Mentés gombra, majd ez a panel automatikusan frissül.",
+      "labelCustomButtonHeading": "Egyéni gomb",
+      "toggleCtaEnabled": "Ez a gomb megjelenítése",
+      "fieldCtaLabelLabel": "Gomb szövege",
+      "fieldCtaLabelPlaceholder": "Nézze meg menünket a Yelpen",
+      "fieldCtaLinkLabel": "Gomb hivatkozása",
+      "fieldCtaLinkHelp": "Hova vezet a gomb kattintáskor. http:// vagy https:// résszel kell kezdődnie.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Megnyitás új lapon",
+      "toggleCtaNewTabHelp": "Ezt az oldalt a háttérben nyitva tartja ahelyett, hogy elnavigálna róla.",
+      "heroCustomCtaHelp": "Egy harmadik gomb az Online rendelés / Asztalfoglalás mellett — hivatkozzon a Yelp-oldalára, egy PDF menüre, egy catering űrlapra, vagy bárhová máshova."
     },
     "websiteThemeClient": {
       "toastSaved": "Téma mentve! A változások élőek a rendelési oldalán.",

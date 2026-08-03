@@ -2341,7 +2341,17 @@
       "buttonAllSaved": "All saved",
       "livePreviewLabel": "Live preview",
       "iframeTitle": "Hosted site preview",
-      "previewNote": "Preview updates on save. To see live changes during edits, click Save then this panel will refresh automatically."
+      "previewNote": "Preview updates on save. To see live changes during edits, click Save then this panel will refresh automatically.",
+      "labelCustomButtonHeading": "Custom button",
+      "toggleCtaEnabled": "Show this button",
+      "fieldCtaLabelLabel": "Button text",
+      "fieldCtaLabelPlaceholder": "See our menu on Yelp",
+      "fieldCtaLinkLabel": "Button link",
+      "fieldCtaLinkHelp": "Where the button goes when clicked. Must start with http:// or https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Open in a new tab",
+      "toggleCtaNewTabHelp": "Keeps this page open in the background instead of navigating away.",
+      "heroCustomCtaHelp": "A third button next to Order Online / Book a Table — link to your Yelp page, a menu PDF, a catering form, or anywhere else."
     },
     "websiteEditorPage": {
       "upsellTitle": "Sales Optimized Website add-on required",

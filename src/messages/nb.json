@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Alt lagret",
       "livePreviewLabel": "Direkteforhåndsvisning",
       "iframeTitle": "Forhåndsvisning av hostet nettsted",
-      "previewNote": "Forhåndsvisningen oppdateres ved lagring. For å se endringer under redigering, klikk Lagre — dette panelet oppdateres automatisk."
+      "previewNote": "Forhåndsvisningen oppdateres ved lagring. For å se endringer under redigering, klikk Lagre — dette panelet oppdateres automatisk.",
+      "labelCustomButtonHeading": "Egendefinert knapp",
+      "toggleCtaEnabled": "Vis denne knappen",
+      "fieldCtaLabelLabel": "Knappetekst",
+      "fieldCtaLabelPlaceholder": "Se menyen vår på Yelp",
+      "fieldCtaLinkLabel": "Knappelenke",
+      "fieldCtaLinkHelp": "Hvor knappen fører når den klikkes. Må begynne med http:// eller https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Åpne i en ny fane",
+      "toggleCtaNewTabHelp": "Holder denne siden åpen i bakgrunnen i stedet for å navigere bort.",
+      "heroCustomCtaHelp": "En tredje knapp ved siden av Bestill online / Bestill bord — lenk til Yelp-siden din, en meny-PDF, et cateringskjema, eller noe annet."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema lagret! Endringer er live på bestillingssiden din.",

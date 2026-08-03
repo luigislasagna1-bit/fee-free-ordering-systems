@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Todo guardado",
       "livePreviewLabel": "Vista previa en vivo",
       "iframeTitle": "Vista previa del sitio alojado",
-      "previewNote": "La vista previa se actualiza al guardar. Para ver los cambios en vivo durante la edición, haz clic en Guardar y este panel se actualizará automáticamente."
+      "previewNote": "La vista previa se actualiza al guardar. Para ver los cambios en vivo durante la edición, haz clic en Guardar y este panel se actualizará automáticamente.",
+      "labelCustomButtonHeading": "Botón personalizado",
+      "toggleCtaEnabled": "Mostrar este botón",
+      "fieldCtaLabelLabel": "Texto del botón",
+      "fieldCtaLabelPlaceholder": "Ver nuestro menú en Yelp",
+      "fieldCtaLinkLabel": "Enlace del botón",
+      "fieldCtaLinkHelp": "A dónde lleva el botón al hacer clic. Debe comenzar con http:// o https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Abrir en una pestaña nueva",
+      "toggleCtaNewTabHelp": "Mantiene esta página abierta en segundo plano en lugar de salir de ella.",
+      "heroCustomCtaHelp": "Un tercer botón junto a Pedir en línea / Reservar mesa: enlaza a tu página de Yelp, un menú en PDF, un formulario de catering o cualquier otro lugar."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema guardado. Los cambios están activos en tu página de pedidos.",

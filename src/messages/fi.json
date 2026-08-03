@@ -3329,7 +3329,17 @@
       "buttonAllSaved": "Kaikki tallennettu",
       "livePreviewLabel": "Live-esikatselu",
       "iframeTitle": "Isännöidyn sivuston esikatselu",
-      "previewNote": "Esikatselu päivittyy tallennuksen yhteydessä. Nähdäksesi live-muutokset muokkauksen aikana, napsauta Tallenna — tämä paneeli päivittyy automaattisesti."
+      "previewNote": "Esikatselu päivittyy tallennuksen yhteydessä. Nähdäksesi live-muutokset muokkauksen aikana, napsauta Tallenna — tämä paneeli päivittyy automaattisesti.",
+      "labelCustomButtonHeading": "Mukautettu painike",
+      "toggleCtaEnabled": "Näytä tämä painike",
+      "fieldCtaLabelLabel": "Painikkeen teksti",
+      "fieldCtaLabelPlaceholder": "Katso ruokalistamme Yelpissä",
+      "fieldCtaLinkLabel": "Painikkeen linkki",
+      "fieldCtaLinkHelp": "Minne painike vie, kun sitä klikataan. Täytyy alkaa http:// tai https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Avaa uudessa välilehdessä",
+      "toggleCtaNewTabHelp": "Pitää tämän sivun auki taustalla sen sijaan, että siirryttäisiin pois.",
+      "heroCustomCtaHelp": "Kolmas painike Tilaa verkossa / Varaa pöytä -painikkeiden vieressä — linkitä Yelp-sivullesi, PDF-ruokalistaan, catering-lomakkeeseen tai muualle."
     },
     "websiteThemeClient": {
       "toastSaved": "Teema tallennettu! Muutokset ovat nyt live tilaussivullasi.",

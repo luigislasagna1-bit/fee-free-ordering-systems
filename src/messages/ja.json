@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "すべて保存済み",
       "livePreviewLabel": "ライブプレビュー",
       "iframeTitle": "ホストサイトのプレビュー",
-      "previewNote": "プレビューは保存時に更新されます。編集中にライブ変更を確認するには、保存するとこのパネルが自動的に更新されます。"
+      "previewNote": "プレビューは保存時に更新されます。編集中にライブ変更を確認するには、保存するとこのパネルが自動的に更新されます。",
+      "labelCustomButtonHeading": "カスタムボタン",
+      "toggleCtaEnabled": "このボタンを表示",
+      "fieldCtaLabelLabel": "ボタンのテキスト",
+      "fieldCtaLabelPlaceholder": "Yelpでメニューを見る",
+      "fieldCtaLinkLabel": "ボタンのリンク",
+      "fieldCtaLinkHelp": "クリックしたときにボタンが移動する先。http:// または https:// で始まる必要があります。",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "新しいタブで開く",
+      "toggleCtaNewTabHelp": "このページを移動せずにバックグラウンドで開いたままにします。",
+      "heroCustomCtaHelp": "オンライン注文／席の予約ボタンの横に3つ目のボタンを追加 — Yelpページ、PDFメニュー、ケータリングフォーム、その他どこへでもリンクできます。"
     },
     "websiteThemeClient": {
       "toastSaved": "テーマを保存しました！注文ページに変更が反映されました。",

@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Sve sačuvano",
       "livePreviewLabel": "Pregled uživo",
       "iframeTitle": "Pregled hostovanog sajta",
-      "previewNote": "Pregled se ažurira pri čuvanju. Da biste videli promene uživo tokom uređivanja, kliknite Sačuvaj i ovaj panel će se automatski osvežiti."
+      "previewNote": "Pregled se ažurira pri čuvanju. Da biste videli promene uživo tokom uređivanja, kliknite Sačuvaj i ovaj panel će se automatski osvežiti.",
+      "labelCustomButtonHeading": "Prilagođeno dugme",
+      "toggleCtaEnabled": "Prikaži ovo dugme",
+      "fieldCtaLabelLabel": "Tekst dugmeta",
+      "fieldCtaLabelPlaceholder": "Pogledajte naš meni na Yelp-u",
+      "fieldCtaLinkLabel": "Link dugmeta",
+      "fieldCtaLinkHelp": "Gde dugme vodi kada se klikne. Mora počinjati sa http:// ili https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Otvori u novoj kartici",
+      "toggleCtaNewTabHelp": "Zadržava ovu stranicu otvorenu u pozadini umesto da je napusti.",
+      "heroCustomCtaHelp": "Treće dugme pored Poruči onlajn / Rezerviši sto — link ka vašoj Yelp stranici, meniju u PDF-u, formularu za ketering, ili bilo gde drugde."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema sačuvana! Promene su aktivne na vašoj stranici za naručivanje.",

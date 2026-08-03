@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "تم حفظ الكل",
       "livePreviewLabel": "معاينة مباشرة",
       "iframeTitle": "معاينة الموقع المستضاف",
-      "previewNote": "تُحدَّث المعاينة عند الحفظ. لرؤية التغييرات المباشرة أثناء التعديل، انقر حفظ وسيتحدث هذا اللوح تلقائياً."
+      "previewNote": "تُحدَّث المعاينة عند الحفظ. لرؤية التغييرات المباشرة أثناء التعديل، انقر حفظ وسيتحدث هذا اللوح تلقائياً.",
+      "labelCustomButtonHeading": "زر مخصص",
+      "toggleCtaEnabled": "إظهار هذا الزر",
+      "fieldCtaLabelLabel": "نص الزر",
+      "fieldCtaLabelPlaceholder": "اطّلع على قائمتنا على Yelp",
+      "fieldCtaLinkLabel": "رابط الزر",
+      "fieldCtaLinkHelp": "الوجهة التي يقود إليها الزر عند النقر عليه. يجب أن يبدأ بـ http:// أو https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "الفتح في علامة تبويب جديدة",
+      "toggleCtaNewTabHelp": "يُبقي هذه الصفحة مفتوحة في الخلفية بدلاً من مغادرتها.",
+      "heroCustomCtaHelp": "زر ثالث بجانب اطلب أونلاين / احجز طاولة — اربطه بصفحتك على Yelp، أو قائمة طعام بصيغة PDF، أو نموذج تموين، أو أي مكان آخر."
     },
     "websiteThemeClient": {
       "toastSaved": "تم حفظ المظهر! التغييرات مباشرة على صفحة طلبك.",

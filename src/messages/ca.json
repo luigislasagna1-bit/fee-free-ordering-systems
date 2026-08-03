@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Tot desat",
       "livePreviewLabel": "Vista prèvia en viu",
       "iframeTitle": "Vista prèvia del lloc allotjat",
-      "previewNote": "La vista prèvia s'actualitza en desar. Per veure els canvis en directe durant l'edició, feu clic a Desa i aquest panell s'actualitzarà automàticament."
+      "previewNote": "La vista prèvia s'actualitza en desar. Per veure els canvis en directe durant l'edició, feu clic a Desa i aquest panell s'actualitzarà automàticament.",
+      "labelCustomButtonHeading": "Botó personalitzat",
+      "toggleCtaEnabled": "Mostra aquest botó",
+      "fieldCtaLabelLabel": "Text del botó",
+      "fieldCtaLabelPlaceholder": "Mira el nostre menú a Yelp",
+      "fieldCtaLinkLabel": "Enllaç del botó",
+      "fieldCtaLinkHelp": "On porta el botó en fer clic. Ha de començar amb http:// o https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Obre en una pestanya nova",
+      "toggleCtaNewTabHelp": "Manté aquesta pàgina oberta en segon pla en lloc de sortir-ne.",
+      "heroCustomCtaHelp": "Un tercer botó al costat de Demana en línia / Reserva una taula — enllaça a la teva pàgina de Yelp, un menú en PDF, un formulari de càtering o a qualsevol altre lloc."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema desat! Els canvis ja estan visibles a la pàgina de comandes.",

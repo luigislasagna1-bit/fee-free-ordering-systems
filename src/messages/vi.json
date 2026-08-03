@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Tất cả đã lưu",
       "livePreviewLabel": "Xem trước trực tiếp",
       "iframeTitle": "Xem trước trang web",
-      "previewNote": "Xem trước cập nhật khi lưu. Để xem thay đổi trực tiếp trong khi chỉnh sửa, nhấn Lưu rồi bảng này sẽ tự động làm mới."
+      "previewNote": "Xem trước cập nhật khi lưu. Để xem thay đổi trực tiếp trong khi chỉnh sửa, nhấn Lưu rồi bảng này sẽ tự động làm mới.",
+      "labelCustomButtonHeading": "Nút tùy chỉnh",
+      "toggleCtaEnabled": "Hiển thị nút này",
+      "fieldCtaLabelLabel": "Văn bản nút",
+      "fieldCtaLabelPlaceholder": "Xem thực đơn của chúng tôi trên Yelp",
+      "fieldCtaLinkLabel": "Liên kết nút",
+      "fieldCtaLinkHelp": "Nút này dẫn đến đâu khi được nhấp. Phải bắt đầu bằng http:// hoặc https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Mở trong tab mới",
+      "toggleCtaNewTabHelp": "Giữ trang này mở ở chế độ nền thay vì chuyển sang trang khác.",
+      "heroCustomCtaHelp": "Nút thứ ba bên cạnh Đặt hàng trực tuyến / Đặt bàn — liên kết đến trang Yelp của bạn, thực đơn PDF, biểu mẫu đặt tiệc, hoặc bất kỳ đâu khác."
     },
     "websiteThemeClient": {
       "toastSaved": "Đã lưu giao diện! Thay đổi đang hiển thị trực tiếp trên trang đặt hàng.",

@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Kõik salvestatud",
       "livePreviewLabel": "Reaalajas eelvaade",
       "iframeTitle": "Hostitud saidi eelvaade",
-      "previewNote": "Eelvaade uueneb salvestamisel. Muudatuste nägemiseks redigeerimise ajal klõpsa Salvesta ja see paneel uuendatakse automaatselt."
+      "previewNote": "Eelvaade uueneb salvestamisel. Muudatuste nägemiseks redigeerimise ajal klõpsa Salvesta ja see paneel uuendatakse automaatselt.",
+      "labelCustomButtonHeading": "Kohandatud nupp",
+      "toggleCtaEnabled": "Näita seda nuppu",
+      "fieldCtaLabelLabel": "Nupu tekst",
+      "fieldCtaLabelPlaceholder": "Vaata meie menüüd Yelpis",
+      "fieldCtaLinkLabel": "Nupu link",
+      "fieldCtaLinkHelp": "Kuhu nupp klõpsamisel viib. Peab algama http:// või https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Ava uuel vahelehel",
+      "toggleCtaNewTabHelp": "Hoiab selle lehe taustal avatuna, selle asemel et sealt eemale liikuda.",
+      "heroCustomCtaHelp": "Kolmas nupp Telli veebist / Broneeri laud kõrval — lingi oma Yelpi lehele, PDF-menüüle, cateringi vormile või mujale."
     },
     "websiteThemeClient": {
       "toastSaved": "Kujundus salvestatud! Muutused on sinu tellimislehel nähtavad.",

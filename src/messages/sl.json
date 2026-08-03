@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Vse shranjeno",
       "livePreviewLabel": "Predogled v živo",
       "iframeTitle": "Predogled gostovane strani",
-      "previewNote": "Predogled se posodobi ob shranjevanju. Za ogled sprememb v živo med urejanjem kliknite Shrani — ta panel se bo samodejno osvežil."
+      "previewNote": "Predogled se posodobi ob shranjevanju. Za ogled sprememb v živo med urejanjem kliknite Shrani — ta panel se bo samodejno osvežil.",
+      "labelCustomButtonHeading": "Poljuben gumb",
+      "toggleCtaEnabled": "Prikaži ta gumb",
+      "fieldCtaLabelLabel": "Besedilo gumba",
+      "fieldCtaLabelPlaceholder": "Oglejte si naš jedilnik na Yelpu",
+      "fieldCtaLinkLabel": "Povezava gumba",
+      "fieldCtaLinkHelp": "Kam gumb vodi ob kliku. Začeti se mora s http:// ali https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Odpri v novem zavihku",
+      "toggleCtaNewTabHelp": "To stran obdrži odprto v ozadju, namesto da bi z nje odšli.",
+      "heroCustomCtaHelp": "Tretji gumb poleg Naroči online / Rezerviraj mizo — povežite na svojo stran Yelp, jedilnik v PDF, obrazec za catering ali kamor koli drugam."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema shranjena! Spremembe so v živo na vaši strani za naročanje.",

@@ -10,8 +10,10 @@ import {
   MAX_CUSTOM_SECTION_TITLE_LEN,
   MAX_CUSTOM_SECTION_BODY_LEN,
   MAX_CTA_LABEL_LEN,
+  MAX_CTA_HREF_LEN,
   type HostedSiteSettings,
   type CustomSection,
+  type CustomCtaConfig,
 } from "@/lib/hosted-site-settings";
 
 /**
@@ -113,17 +115,36 @@ export async function PATCH(req: NextRequest) {
     cta: {
       primary: { ...current.cta.primary, ...(body.cta?.primary || {}) },
       secondary: { ...current.cta.secondary, ...(body.cta?.secondary || {}) },
+      custom: { ...current.cta.custom, ...(body.cta?.custom || {}) },
     },
     customSections: Array.isArray(body.customSections)
-      ? body.customSections
+      ? body.customSections.map((sec: any) => ({
+          ...sec,
+          // Merge incoming cta over the CURRENT section's cta (matching an
+          // existing id) so a client that omits `cta` on an otherwise-full
+          // PATCH doesn't silently wipe an already-configured button.
+          // New sections (no matching current id) merge over the disabled
+          // default via parseHostedSiteSettings's own fallback below.
+          cta: {
+            ...(current.customSections.find((c) => c.id === sec?.id)?.cta || {}),
+            ...(sec?.cta && typeof sec.cta === "object" ? sec.cta : {}),
+          },
+        }))
       : current.customSections,
   };
 
   // Never persist a script-executing CTA href (javascript:/data:/…). The render
   // path also sanitizes, but scrub on write so the DB stays clean + no other
-  // consumer is exposed. Bad/empty → "" (render falls back to the order page).
+  // consumer is exposed. Bad/empty → "" (render falls back to the order page
+  // for primary/secondary; the custom CTA and per-section CTAs simply don't
+  // render when href is empty — there's no sensible fallback destination for
+  // an owner-defined button).
   merged.cta.primary.href = sanitizeExternalHref(merged.cta.primary.href, "");
   merged.cta.secondary.href = sanitizeExternalHref(merged.cta.secondary.href, "");
+  merged.cta.custom.href = sanitizeExternalHref(merged.cta.custom.href, "");
+  merged.cta.custom.enabled = !!merged.cta.custom.enabled;
+  merged.cta.custom.newTab = !!merged.cta.custom.newTab;
+  if (typeof merged.cta.custom.label !== "string") merged.cta.custom.label = "";
 
   // Validate caps + lengths.
   if (merged.customSections.length > MAX_CUSTOM_SECTIONS) {
@@ -158,6 +179,32 @@ export async function PATCH(req: NextRequest) {
         { status: 400 },
       );
     }
+
+    // Normalize + sanitize this section's CTA in place. Missing fields fall
+    // back to the disabled default (a section saved before this feature
+    // shipped, or a client that sent a partial object) rather than 400ing —
+    // same tolerant-merge philosophy as the rest of this settings blob.
+    const rawCta: Partial<CustomCtaConfig> =
+      sec.cta && typeof sec.cta === "object" ? sec.cta : {};
+    const normalizedCta: CustomCtaConfig = {
+      enabled: !!rawCta.enabled,
+      label: typeof rawCta.label === "string" ? rawCta.label : "",
+      href: sanitizeExternalHref(rawCta.href, ""),
+      newTab: !!rawCta.newTab,
+    };
+    if (normalizedCta.label.length > MAX_CTA_LABEL_LEN) {
+      return NextResponse.json(
+        { error: `Section button text must be under ${MAX_CTA_LABEL_LEN} chars.` },
+        { status: 400 },
+      );
+    }
+    if ((normalizedCta.href ?? "").length > MAX_CTA_HREF_LEN) {
+      return NextResponse.json(
+        { error: `Section button link must be under ${MAX_CTA_HREF_LEN} chars.` },
+        { status: 400 },
+      );
+    }
+    sec.cta = normalizedCta;
   }
   if (
     typeof merged.cta.primary.label === "string" &&
@@ -174,6 +221,21 @@ export async function PATCH(req: NextRequest) {
   ) {
     return NextResponse.json(
       { error: `CTA labels must be under ${MAX_CTA_LABEL_LEN} chars.` },
+      { status: 400 },
+    );
+  }
+  if (
+    typeof merged.cta.custom.label === "string" &&
+    merged.cta.custom.label.length > MAX_CTA_LABEL_LEN
+  ) {
+    return NextResponse.json(
+      { error: `CTA labels must be under ${MAX_CTA_LABEL_LEN} chars.` },
+      { status: 400 },
+    );
+  }
+  if ((merged.cta.custom.href ?? "").length > MAX_CTA_HREF_LEN) {
+    return NextResponse.json(
+      { error: `CTA links must be under ${MAX_CTA_HREF_LEN} chars.` },
       { status: 400 },
     );
   }

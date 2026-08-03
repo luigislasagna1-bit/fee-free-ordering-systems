@@ -270,6 +270,18 @@ export default async function HostedSitePage({
       }
     : null;
 
+  // Third, fully owner-defined hero CTA (Luigi 2026-08-02: "add a button to
+  // any section ... with custom text and a custom link"). Unlike primary/
+  // secondary there's no sensible fallback destination for an arbitrary
+  // custom button, so a cleared/invalid href means it just doesn't render —
+  // no fallback link, no broken button.
+  const customCtaHref = sanitizeExternalHref(s.cta.custom.href, "");
+  const customCtaLabel = (s.cta.custom.label || "").trim();
+  const heroCustomCta =
+    s.cta.custom.enabled && customCtaLabel && customCtaHref
+      ? { label: customCtaLabel, href: customCtaHref, newTab: !!s.cta.custom.newTab }
+      : null;
+
   // Build JSON-LD structured data so Google understands this page as a
   // local business / restaurant. Powers the knowledge panel, hours table,
   // address card, etc. in search results. Only fields we actually have
@@ -646,7 +658,7 @@ export default async function HostedSitePage({
                   {r.cuisineType}
                 </p>
               )}
-              {(primaryCta || secondaryCta) && (
+              {(primaryCta || secondaryCta || heroCustomCta) && (
                 <div className="mt-8 flex flex-wrap gap-3">
                   {primaryCta && (
                     <Link
@@ -662,6 +674,15 @@ export default async function HostedSitePage({
                       className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition"
                     >
                       {secondaryCta.label}
+                    </Link>
+                  )}
+                  {heroCustomCta && (
+                    <Link
+                      href={heroCustomCta.href}
+                      {...(heroCustomCta.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className="inline-flex items-center justify-center px-7 py-3.5 rounded-full font-bold text-base bg-white/15 hover:bg-white/25 border-2 border-white/40 text-white transition"
+                    >
+                      {heroCustomCta.label}
                     </Link>
                   )}
                 </div>
@@ -709,6 +730,16 @@ export default async function HostedSitePage({
                   style={{ borderColor: themeColor, color: themeColor }}
                 >
                   {secondaryCta.label}
+                </Link>
+              )}
+              {heroCustomCta && (
+                <Link
+                  href={heroCustomCta.href}
+                  {...(heroCustomCta.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-md font-bold text-base md:text-lg border-2 text-gray-800 hover:bg-gray-50 transition"
+                  style={{ borderColor: themeColor, color: themeColor }}
+                >
+                  {heroCustomCta.label}
                 </Link>
               )}
             </div>
@@ -1166,31 +1197,60 @@ function CustomSectionsAt({
   themeColor,
 }: {
   position: string;
-  sections: Array<{ id: string; title: string; body: string; position: string }>;
+  sections: Array<{
+    id: string;
+    title: string;
+    body: string;
+    position: string;
+    cta?: { enabled: boolean; label: string; href: string | null; newTab: boolean };
+  }>;
   themeColor: string;
 }) {
   const matches = sections.filter((s) => s.position === position);
   if (matches.length === 0) return null;
   return (
     <>
-      {matches.map((sec, idx) => (
-        <section
-          key={sec.id}
-          className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
-        >
-          <div className="max-w-3xl mx-auto px-6 py-12">
-            <h2
-              className="text-2xl font-bold text-gray-900"
-              style={{ borderLeft: `4px solid ${themeColor}`, paddingLeft: "0.75rem" }}
-            >
-              {sec.title}
-            </h2>
-            <p className="mt-4 text-gray-700 leading-relaxed whitespace-pre-line">
-              {sec.body}
-            </p>
-          </div>
-        </section>
-      ))}
+      {matches.map((sec, idx) => {
+        // Sanitize + resolve this section's optional button. Same rule as
+        // the hero custom CTA: no fallback destination, so a cleared or
+        // rejected (javascript:/data:/…) href simply means no button.
+        const ctaHref = sanitizeExternalHref(sec.cta?.href, "");
+        const ctaLabel = (sec.cta?.label || "").trim();
+        const cta =
+          sec.cta?.enabled && ctaLabel && ctaHref
+            ? { label: ctaLabel, href: ctaHref, newTab: !!sec.cta.newTab }
+            : null;
+        return (
+          <section
+            key={sec.id}
+            className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
+          >
+            <div className="max-w-3xl mx-auto px-6 py-12">
+              <h2
+                className="text-2xl font-bold text-gray-900"
+                style={{ borderLeft: `4px solid ${themeColor}`, paddingLeft: "0.75rem" }}
+              >
+                {sec.title}
+              </h2>
+              <p className="mt-4 text-gray-700 leading-relaxed whitespace-pre-line">
+                {sec.body}
+              </p>
+              {cta && (
+                <div className="mt-6">
+                  <Link
+                    href={cta.href}
+                    {...(cta.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="inline-flex items-center justify-center px-6 py-3 rounded-full font-semibold text-white shadow hover:brightness-110 transition"
+                    style={{ background: themeColor }}
+                  >
+                    {cta.label}
+                  </Link>
+                </div>
+              )}
+            </div>
+          </section>
+        );
+      })}
     </>
   );
 }

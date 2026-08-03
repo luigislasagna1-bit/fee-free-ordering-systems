@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Viss saglabāts",
       "livePreviewLabel": "Tiešsaistes priekšskatījums",
       "iframeTitle": "Mitinātās vietnes priekšskatījums",
-      "previewNote": "Priekšskatījums atjaunojas pēc saglabāšanas. Lai redzētu izmaiņas rediģēšanas laikā, noklikšķiniet Saglabāt — šis panelis atsvaidzināsies automātiski."
+      "previewNote": "Priekšskatījums atjaunojas pēc saglabāšanas. Lai redzētu izmaiņas rediģēšanas laikā, noklikšķiniet Saglabāt — šis panelis atsvaidzināsies automātiski.",
+      "labelCustomButtonHeading": "Pielāgota poga",
+      "toggleCtaEnabled": "Rādīt šo pogu",
+      "fieldCtaLabelLabel": "Pogas teksts",
+      "fieldCtaLabelPlaceholder": "Skatiet mūsu ēdienkarti Yelp",
+      "fieldCtaLinkLabel": "Pogas saite",
+      "fieldCtaLinkHelp": "Uz kurieni poga ved, kad tai uzklikšķina. Jāsākas ar http:// vai https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Atvērt jaunā cilnē",
+      "toggleCtaNewTabHelp": "Notur šo lapu atvērtu fonā, nevis pāriet prom no tās.",
+      "heroCustomCtaHelp": "Trešā poga blakus Pasūtīt tiešsaistē / Rezervēt galdiņu — saite uz jūsu Yelp lapu, PDF ēdienkarti, ēdināšanas veidlapu vai jebkur citur."
     },
     "websiteThemeClient": {
       "toastSaved": "Dizains saglabāts! Izmaiņas ir redzamas jūsu pasūtīšanas lapā.",

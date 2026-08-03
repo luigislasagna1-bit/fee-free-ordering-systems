@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Alles opgeslagen",
       "livePreviewLabel": "Live voorbeeld",
       "iframeTitle": "Voorbeeld gehoste site",
-      "previewNote": "Voorbeeld wordt bijgewerkt na opslaan. Om live wijzigingen te zien tijdens het bewerken, klik op Opslaan — dit paneel wordt dan automatisch vernieuwd."
+      "previewNote": "Voorbeeld wordt bijgewerkt na opslaan. Om live wijzigingen te zien tijdens het bewerken, klik op Opslaan — dit paneel wordt dan automatisch vernieuwd.",
+      "labelCustomButtonHeading": "Aangepaste knop",
+      "toggleCtaEnabled": "Deze knop tonen",
+      "fieldCtaLabelLabel": "Knoptekst",
+      "fieldCtaLabelPlaceholder": "Bekijk ons menu op Yelp",
+      "fieldCtaLinkLabel": "Knoplink",
+      "fieldCtaLinkHelp": "Waar de knop naartoe leidt bij een klik. Moet beginnen met http:// of https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Openen in een nieuw tabblad",
+      "toggleCtaNewTabHelp": "Houdt deze pagina op de achtergrond open in plaats van ernaartoe te navigeren.",
+      "heroCustomCtaHelp": "Een derde knop naast Online bestellen / Tafel reserveren — link naar je Yelp-pagina, een menu-PDF, een cateringformulier, of iets anders."
     },
     "websiteThemeClient": {
       "toastSaved": "Thema opgeslagen! Wijzigingen zijn live op uw bestelpagina.",

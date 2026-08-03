@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Wszystko zapisane",
       "livePreviewLabel": "Podgląd na żywo",
       "iframeTitle": "Podgląd hostowanej strony",
-      "previewNote": "Podgląd aktualizuje się po zapisaniu. Aby zobaczyć zmiany podczas edycji, kliknij Zapisz — ten panel odświeży się automatycznie."
+      "previewNote": "Podgląd aktualizuje się po zapisaniu. Aby zobaczyć zmiany podczas edycji, kliknij Zapisz — ten panel odświeży się automatycznie.",
+      "labelCustomButtonHeading": "Niestandardowy przycisk",
+      "toggleCtaEnabled": "Pokaż ten przycisk",
+      "fieldCtaLabelLabel": "Tekst przycisku",
+      "fieldCtaLabelPlaceholder": "Zobacz nasze menu na Yelp",
+      "fieldCtaLinkLabel": "Link przycisku",
+      "fieldCtaLinkHelp": "Dokąd prowadzi przycisk po kliknięciu. Musi zaczynać się od http:// lub https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Otwórz w nowej karcie",
+      "toggleCtaNewTabHelp": "Utrzymuje tę stronę otwartą w tle zamiast z niej wychodzić.",
+      "heroCustomCtaHelp": "Trzeci przycisk obok Zamów online / Zarezerwuj stolik — link do Twojej strony na Yelp, menu w PDF, formularza cateringowego lub czegokolwiek innego."
     },
     "websiteThemeClient": {
       "toastSaved": "Motyw zapisany! Zmiany są widoczne na Twojej stronie zamówień.",

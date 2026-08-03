@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Semua tersimpan",
       "livePreviewLabel": "Pratinjau langsung",
       "iframeTitle": "Pratinjau situs yang di-hosting",
-      "previewNote": "Pratinjau diperbarui saat disimpan. Untuk melihat perubahan langsung saat mengedit, klik Simpan lalu panel ini akan menyegarkan otomatis."
+      "previewNote": "Pratinjau diperbarui saat disimpan. Untuk melihat perubahan langsung saat mengedit, klik Simpan lalu panel ini akan menyegarkan otomatis.",
+      "labelCustomButtonHeading": "Tombol khusus",
+      "toggleCtaEnabled": "Tampilkan tombol ini",
+      "fieldCtaLabelLabel": "Teks tombol",
+      "fieldCtaLabelPlaceholder": "Lihat menu kami di Yelp",
+      "fieldCtaLinkLabel": "Tautan tombol",
+      "fieldCtaLinkHelp": "Ke mana tombol ini mengarah saat diklik. Harus dimulai dengan http:// atau https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Buka di tab baru",
+      "toggleCtaNewTabHelp": "Membuat halaman ini tetap terbuka di latar belakang, bukan berpindah darinya.",
+      "heroCustomCtaHelp": "Tombol ketiga di samping Pesan Online / Pesan Meja — tautkan ke halaman Yelp Anda, menu PDF, formulir katering, atau ke mana saja."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema tersimpan! Perubahan sudah aktif di halaman pemesanan Anda.",

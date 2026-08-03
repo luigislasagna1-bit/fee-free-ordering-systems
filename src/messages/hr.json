@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Sve spremljeno",
       "livePreviewLabel": "Pregled uživo",
       "iframeTitle": "Pregled hostiranog mjesta",
-      "previewNote": "Pregled se ažurira pri spremanju. Za prikaz promjena tijekom uređivanja kliknite Spremi, a ovaj panel će se automatski osvježiti."
+      "previewNote": "Pregled se ažurira pri spremanju. Za prikaz promjena tijekom uređivanja kliknite Spremi, a ovaj panel će se automatski osvježiti.",
+      "labelCustomButtonHeading": "Prilagođeni gumb",
+      "toggleCtaEnabled": "Prikaži ovaj gumb",
+      "fieldCtaLabelLabel": "Tekst gumba",
+      "fieldCtaLabelPlaceholder": "Pogledajte naš jelovnik na Yelpu",
+      "fieldCtaLinkLabel": "Poveznica gumba",
+      "fieldCtaLinkHelp": "Kamo gumb vodi kada se klikne. Mora počinjati s http:// ili https://.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Otvori u novoj kartici",
+      "toggleCtaNewTabHelp": "Zadržava ovu stranicu otvorenom u pozadini umjesto da se udalji od nje.",
+      "heroCustomCtaHelp": "Treći gumb pored Naruči online / Rezerviraj stol — poveži na svoju Yelp stranicu, jelovnik u PDF-u, obrazac za catering ili bilo gdje drugdje."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema spremljena! Promjene su aktivne na vašoj stranici narudžbi.",

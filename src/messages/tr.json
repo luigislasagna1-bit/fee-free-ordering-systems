@@ -3364,7 +3364,17 @@
       "buttonAllSaved": "Tümü kaydedildi",
       "livePreviewLabel": "Canlı önizleme",
       "iframeTitle": "Barındırılan site önizlemesi",
-      "previewNote": "Önizleme kaydedildiğinde güncellenir. Düzenleme sırasında canlı değişiklikleri görmek için Kaydet'e tıklayın; bu panel otomatik olarak yenilenir."
+      "previewNote": "Önizleme kaydedildiğinde güncellenir. Düzenleme sırasında canlı değişiklikleri görmek için Kaydet'e tıklayın; bu panel otomatik olarak yenilenir.",
+      "labelCustomButtonHeading": "Özel düğme",
+      "toggleCtaEnabled": "Bu düğmeyi göster",
+      "fieldCtaLabelLabel": "Düğme metni",
+      "fieldCtaLabelPlaceholder": "Menümüzü Yelp'te görün",
+      "fieldCtaLinkLabel": "Düğme bağlantısı",
+      "fieldCtaLinkHelp": "Tıklandığında düğmenin götürdüğü yer. http:// veya https:// ile başlamalıdır.",
+      "fieldCtaLinkPlaceholder": "https://example.com",
+      "toggleCtaNewTab": "Yeni sekmede aç",
+      "toggleCtaNewTabHelp": "Bu sayfayı uzaklaşmak yerine arka planda açık tutar.",
+      "heroCustomCtaHelp": "Online Sipariş / Masa Ayırt düğmelerinin yanında üçüncü bir düğme — Yelp sayfanıza, bir PDF menüye, bir catering formuna veya başka bir yere bağlantı verin."
     },
     "websiteThemeClient": {
       "toastSaved": "Tema kaydedildi! Değişiklikler sipariş sayfanızda yayında.",
