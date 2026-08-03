@@ -532,6 +532,82 @@ export async function restaurantCanTakeCardOnline(restaurantId: string): Promise
 }
 
 /**
+ * Find-or-create the Stripe Customer object (on the RESTAURANT's own
+ * account) for one of our internal `Customer` rows, so Stripe Radar can
+ * link every order from the same person into "related payments" history —
+ * that history is a meaningful chunk of Radar's fraud score, and it's also
+ * what a dispute response cites ("this card/customer has N prior clean
+ * orders").
+ *
+ * Mirrors the reconcile-and-self-heal shape of
+ * `ensureStripeCustomerForRestaurant` in src/lib/addons.ts: if the stored id
+ * comes back `resource_missing` (key rotated to a different Stripe
+ * account/mode, or the customer was deleted on the Stripe side) we mint a
+ * fresh one instead of hard-failing. Any other Stripe error is swallowed —
+ * this is a fraud-signal enhancement, never something that should block a
+ * customer's checkout.
+ *
+ * Returns undefined (not throws) on any failure so the caller can proceed
+ * with `receipt_email` + `metadata` alone, which are still a meaningful
+ * improvement over today's "nothing" state.
+ */
+async function getOrCreateOrderStripeCustomerId(params: {
+  client: Stripe;
+  internalCustomerId: string;
+  email?: string | null;
+  name?: string | null;
+}): Promise<string | undefined> {
+  try {
+    const row = await prisma.customer.findUnique({
+      where: { id: params.internalCustomerId },
+      select: { stripeCustomerId: true },
+    });
+
+    if (row?.stripeCustomerId) {
+      try {
+        const existing = await params.client.customers.retrieve(row.stripeCustomerId);
+        if (!("deleted" in existing && existing.deleted)) {
+          return row.stripeCustomerId;
+        }
+        // Deleted on Stripe — fall through and mint a replacement.
+      } catch (e: any) {
+        const missing = e?.code === "resource_missing" || e?.raw?.code === "resource_missing" || e?.statusCode === 404;
+        if (!missing) {
+          // Transient/network error — don't churn a possibly-fine id, and
+          // don't block checkout either. Skip customer linkage this once.
+          console.error(`[stripe] Stripe Customer lookup failed for ${row.stripeCustomerId}:`, e?.message);
+          return undefined;
+        }
+        // resource_missing → fall through and mint a replacement.
+      }
+    }
+
+    const created = await params.client.customers.create({
+      email: params.email || undefined,
+      name: params.name || undefined,
+      metadata: { internalCustomerId: params.internalCustomerId },
+    });
+
+    // Best-effort persist. A race between two concurrent first orders for
+    // the same customer could each mint a Stripe Customer and the second
+    // write wins — harmless (not money-critical): Radar still links by
+    // card/email, we just end up with one extra unused Stripe Customer.
+    try {
+      await prisma.customer.update({
+        where: { id: params.internalCustomerId },
+        data: { stripeCustomerId: created.id },
+      });
+    } catch (e: any) {
+      console.error(`[stripe] failed to persist stripeCustomerId for customer ${params.internalCustomerId}:`, e?.message);
+    }
+    return created.id;
+  } catch (e: any) {
+    console.error(`[stripe] getOrCreateOrderStripeCustomerId failed for customer ${params.internalCustomerId}:`, e?.message);
+    return undefined;
+  }
+}
+
+/**
  * Create a card authorization on the restaurant's OWN Stripe account.
  * capture_method "manual" — this only places a hold; the funds move when
  * the kitchen accepts the order (`capturePayment`). No application fee, no
@@ -545,6 +621,13 @@ export async function restaurantCanTakeCardOnline(restaurantId: string): Promise
  * `idempotencyKey` (REQUIRED) guards against duplicate authorizations on
  * double-submit / retry — Stripe returns the same PaymentIntent for the
  * same key. Throws when the restaurant has no active keys.
+ *
+ * `receiptEmail` / `internalCustomerId` / `orderNumber` / `orderType` /
+ * `restaurantSlug` / `shipping` are additive fraud-signal + dispute-evidence
+ * fields (2026-08-03 — Stripe Radar flagged our intents as missing customer
+ * email). None of them touch amount, currency, capture semantics, or the
+ * idempotency key — purely metadata/customer-linkage on top of the existing
+ * money-path call. All optional so existing callers keep compiling.
  */
 export async function createDirectPaymentIntent(params: {
   amountCents: number;
@@ -552,6 +635,20 @@ export async function createDirectPaymentIntent(params: {
   restaurantId: string;
   orderId: string;
   idempotencyKey: string;
+  /** Customer's email — passed as Stripe's `receipt_email` and used (with
+   *  `customerName`) when lazily creating the linked Stripe Customer. */
+  receiptEmail?: string | null;
+  customerName?: string | null;
+  /** Our internal `Customer.id` (per-restaurant row). When present we
+   *  find-or-create a Stripe Customer keyed to it and attach it to the
+   *  PaymentIntent, and stamp it into `metadata.customerId`. */
+  internalCustomerId?: string | null;
+  orderNumber?: string | null;
+  orderType?: string | null;
+  restaurantSlug?: string | null;
+  /** Structured delivery address, when available — surfaces on the Stripe
+   *  dashboard so a dispute response doesn't need to come back to our DB. */
+  shipping?: Stripe.PaymentIntentCreateParams.Shipping | null;
 }): Promise<{
   clientSecret: string | null;
   id: string;
@@ -562,15 +659,34 @@ export async function createDirectPaymentIntent(params: {
   if (!rs) {
     throw new Error("Restaurant has not configured Stripe card payments");
   }
+
+  const stripeCustomerId = params.internalCustomerId
+    ? await getOrCreateOrderStripeCustomerId({
+        client: rs.client,
+        internalCustomerId: params.internalCustomerId,
+        email: params.receiptEmail,
+        name: params.customerName,
+      })
+    : undefined;
+
+  const metadata: Record<string, string> = {
+    orderId: params.orderId,
+    restaurantId: params.restaurantId,
+  };
+  if (params.orderNumber) metadata.orderNumber = params.orderNumber;
+  if (params.internalCustomerId) metadata.customerId = params.internalCustomerId;
+  if (params.orderType) metadata.orderType = params.orderType;
+  if (params.restaurantSlug) metadata.restaurantSlug = params.restaurantSlug;
+
   const intent = await rs.client.paymentIntents.create(
     {
       amount: params.amountCents,
       currency: params.currency,
       capture_method: "manual",
-      metadata: {
-        orderId: params.orderId,
-        restaurantId: params.restaurantId,
-      },
+      ...(params.receiptEmail ? { receipt_email: params.receiptEmail } : {}),
+      ...(stripeCustomerId ? { customer: stripeCustomerId } : {}),
+      ...(params.shipping ? { shipping: params.shipping } : {}),
+      metadata,
     },
     { idempotencyKey: params.idempotencyKey },
   );

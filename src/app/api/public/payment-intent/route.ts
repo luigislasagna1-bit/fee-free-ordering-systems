@@ -52,6 +52,9 @@ export async function POST(req: NextRequest) {
       // `currency` is kept as a sanity probe — if it disagrees with
       // the restaurant's, we trust the restaurant.
       currency: true,
+      // Used only to fill in `shipping.address.country` on delivery orders
+      // (best-effort dispute-evidence field, never required).
+      country: true,
       // Key-only model: card payments are available iff the restaurant
       // saved active Stripe keys. We don't need the keys here — the
       // charge helper loads + decrypts them — only to gate cleanly.
@@ -91,7 +94,14 @@ export async function POST(req: NextRequest) {
   // the guard already in /api/public/paypal-order (lines 91-111).
   const dbOrder = await prisma.order.findUnique({
     where: { id: orderId },
-    select: { id: true, restaurantId: true, paymentMethod: true, paymentStatus: true, total: true, creditApplied: true },
+    select: {
+      id: true, restaurantId: true, paymentMethod: true, paymentStatus: true, total: true, creditApplied: true,
+      // Additive fraud-signal / dispute-evidence fields (Stripe Radar fix,
+      // 2026-08-03) — never used for the charge-amount reconciliation above.
+      customerId: true, customerName: true, customerEmail: true,
+      orderNumber: true, type: true,
+      deliveryAddress: true, deliveryCity: true, deliveryZip: true,
+    },
   });
   if (!dbOrder || dbOrder.restaurantId !== restaurant.id) {
     return NextResponse.json({ error: "Order not found" }, { status: 404 });
@@ -117,6 +127,23 @@ export async function POST(req: NextRequest) {
     // cents. Shared helper so charge and refund can never disagree (a
     // drift between them would mis-refund by 100×).
     const amountMinor = toStripeMinorUnits(amount, chargeCurrency);
+
+    // Structured shipping address for delivery/catering orders — best-effort
+    // dispute-evidence field. Only sent when we have BOTH a street line and
+    // a recipient name (Stripe requires `name`); silently omitted otherwise.
+    const shipping =
+      (dbOrder.type === "delivery" || dbOrder.type === "catering") && dbOrder.deliveryAddress && dbOrder.customerName
+        ? {
+            name: dbOrder.customerName,
+            address: {
+              line1: dbOrder.deliveryAddress,
+              city: dbOrder.deliveryCity || undefined,
+              postal_code: dbOrder.deliveryZip || undefined,
+              country: restaurant.country || undefined,
+            },
+          }
+        : null;
+
     const intent = await createDirectPaymentIntent({
       amountCents: amountMinor,
       currency: chargeCurrency,
@@ -125,6 +152,16 @@ export async function POST(req: NextRequest) {
       // Idempotent per order: a double-submit / retry returns the SAME
       // authorization instead of placing a second hold on the card.
       idempotencyKey: `pi_create_${orderId}`,
+      // Fraud-signal / dispute-evidence additions (Stripe Radar flagged our
+      // intents as missing customer email) — see createDirectPaymentIntent
+      // doc comment. None of these change amount/currency/capture/idempotency.
+      receiptEmail: dbOrder.customerEmail,
+      customerName: dbOrder.customerName,
+      internalCustomerId: dbOrder.customerId,
+      orderNumber: dbOrder.orderNumber,
+      orderType: dbOrder.type,
+      restaurantSlug,
+      shipping,
     });
     return NextResponse.json({
       clientSecret: intent.clientSecret,

@@ -1709,6 +1709,19 @@ model Customer {
   /// "ordered from 5 different marketplace restaurants but one identity"
   /// case. Null for guest checkouts that never converted to an account.
   customerAccountId      String?
+  /// Stripe Customer object on the RESTAURANT's OWN Stripe account (key-only
+  /// model — see src/lib/stripe.ts `getRestaurantStripe`), created lazily the
+  /// first time this customer authorizes a card payment. Reused across every
+  /// later order from the same customer AT THIS RESTAURANT so Stripe Radar
+  /// can build "related payments" history for fraud scoring, and so a
+  /// dispute response can be assembled from the Stripe dashboard alone.
+  /// Scoped per-restaurant like the rest of this row (NOT global — a given
+  /// person has a different Stripe Customer id at each restaurant, because
+  /// each restaurant's Stripe account is a separate account). Null until
+  /// their first card order; also null for cash-only customers.
+  /// Additive/nullable — safe on this table without a backfill. Luigi
+  /// 2026-08-03 (Stripe Radar "missing customer email" fix).
+  stripeCustomerId       String?   @unique
   createdAt              DateTime  @default(now())
   updatedAt              DateTime  @updatedAt
 
