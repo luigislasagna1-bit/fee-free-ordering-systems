@@ -1775,7 +1775,8 @@
       "endOfMonthReport": "End-of-month report",
       "testEmail": "Send test email",
       "noRecipients": "No staff recipients yet",
-      "customerSignup": "New customer sign-up"
+      "customerSignup": "New customer sign-up",
+      "dispatchRejected": "Driver dispatch failed"
     },
     "receipts": {
       "title": "Receipts",
@@ -2521,7 +2522,13 @@
       "viesUnverified": "Not verified with VIES yet",
       "viesVerifyNow": "Verify now",
       "viesUnreachable": "The VIES service is temporarily unavailable — try again in a few minutes.",
-      "euVatNote": "EU businesses: a VIES-registered VAT number is required for paid subscriptions. Validated numbers are invoiced at 0% VAT (reverse charge)."
+      "euVatNote": "EU businesses: a VIES-registered VAT number is required for paid subscriptions. Validated numbers are invoiced at 0% VAT (reverse charge).",
+      "useCardForAllSubscriptions": "Use this card for all subscriptions",
+      "useCardForAllSubscriptionsHint": "Point every add-on subscription — even ones that started with a different card — at this one, so a renewal is never missed.",
+      "applyCardSuccess": "{count, plural, one {Applied to # subscription.} other {Applied to # subscriptions.}}",
+      "applyCardNoneToUpdate": "You have no other subscriptions to update.",
+      "applyCardNoCardError": "Save a card first, then try again.",
+      "applyCardError": "Could not update your subscriptions. Please try again."
     },
     "addOns": {
       "backToBilling": "Back to billing",
@@ -5946,6 +5953,17 @@
       "perkPercent": "{percent}% off — {name}",
       "perkNamed": "{name}",
       "defaultRewardLabel": "rewards"
+    },
+    "dispatchRejected": {
+      "subject": "Action needed: order #{orderNumber} couldn't be sent to a driver",
+      "preview": "Order #{orderNumber} — dispatch failed, no driver assigned yet",
+      "headerTitle": "Driver dispatch failed",
+      "subtitle": "Order #{orderNumber}",
+      "badge": "Action needed",
+      "body": "We tried to send order #{orderNumber} for {customerName} to your delivery provider, but it was rejected. No driver has been assigned yet and the customer is waiting.",
+      "reasonLabel": "Reason",
+      "actionLine": "Use the \"Send to ShipDay\" button on the order to try again, or arrange delivery with your own drivers.",
+      "viewOrderButton": "View order"
     }
   },
   "marketing": {

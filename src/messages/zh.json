@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "每月报告",
       "testEmail": "发送测试邮件",
       "noRecipients": "暂无员工接收人",
-      "customerSignup": "新客户注册"
+      "customerSignup": "新客户注册",
+      "dispatchRejected": "分派司机失败"
     },
     "receipts": {
       "title": "收据",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "尚未通过 VIES 核验",
       "viesVerifyNow": "立即核验",
       "viesUnreachable": "VIES 服务暂时不可用——请几分钟后重试。",
-      "euVatNote": "欧盟企业：付费订阅需要在 VIES 注册的增值税号。已验证的税号按 0% 增值税开票（反向征收）。"
+      "euVatNote": "欧盟企业：付费订阅需要在 VIES 注册的增值税号。已验证的税号按 0% 增值税开票（反向征收）。",
+      "useCardForAllSubscriptions": "将此卡用于所有订阅",
+      "useCardForAllSubscriptionsHint": "将每一个附加订阅——即使是用另一张卡开始的——都指向这张卡,确保续费永不错过。",
+      "applyCardSuccess": "已应用于 {count} 个订阅。",
+      "applyCardNoneToUpdate": "您没有其他需要更新的订阅。",
+      "applyCardNoCardError": "请先保存一张卡,然后重试。",
+      "applyCardError": "无法更新您的订阅,请重试。"
     },
     "addOns": {
       "errorCheckout": "启动结账失败",
@@ -5946,6 +5953,17 @@
       "subject": "欢迎加入 {restaurantName} 的 {groupName}",
       "usageAccount": "下单时您的权益将自动生效——只需先登录即可。",
       "usageGuest": "结账时使用此邮箱地址（{email}），本群组的折扣就会自动为您加上。若还想累积和使用{label}，请用此地址创建您的免费账户，并在下单前登录——余额只能保存在账户中。"
+    },
+    "dispatchRejected": {
+      "subject": "需要处理:订单 #{orderNumber} 未能发送给司机",
+      "preview": "订单 #{orderNumber} — 派单失败,尚未分配司机",
+      "headerTitle": "分派司机失败",
+      "subtitle": "订单 #{orderNumber}",
+      "badge": "需要处理",
+      "body": "我们尝试将 {customerName} 的订单 #{orderNumber} 发送给您的配送服务商,但被拒绝了。目前尚未分配司机,顾客正在等待。",
+      "reasonLabel": "原因",
+      "actionLine": "使用订单上的\"发送至 ShipDay\"按钮重试,或安排您自己的司机配送。",
+      "viewOrderButton": "查看订单"
     }
   },
   "marketing": {

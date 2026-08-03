@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Laporan akhir bulan",
       "testEmail": "Kirim email uji",
       "noRecipients": "Belum ada penerima staf",
-      "customerSignup": "Pendaftaran pelanggan baru"
+      "customerSignup": "Pendaftaran pelanggan baru",
+      "dispatchRejected": "Pengiriman ke pengemudi gagal"
     },
     "receipts": {
       "title": "Kwitansi",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Belum diverifikasi dengan VIES",
       "viesVerifyNow": "Verifikasi sekarang",
       "viesUnreachable": "Layanan VIES sementara tidak tersedia — coba lagi dalam beberapa menit.",
-      "euVatNote": "Bisnis UE: nomor PPN terdaftar VIES diperlukan untuk langganan berbayar. Nomor tervalidasi ditagih dengan PPN 0% (reverse charge)."
+      "euVatNote": "Bisnis UE: nomor PPN terdaftar VIES diperlukan untuk langganan berbayar. Nomor tervalidasi ditagih dengan PPN 0% (reverse charge).",
+      "useCardForAllSubscriptions": "Gunakan kartu ini untuk semua langganan",
+      "useCardForAllSubscriptionsHint": "Mengarahkan setiap langganan add-on — bahkan yang dimulai dengan kartu lain — ke kartu ini, agar perpanjangan tidak pernah terlewat.",
+      "applyCardSuccess": "Diterapkan ke {count} langganan.",
+      "applyCardNoneToUpdate": "Anda tidak memiliki langganan lain untuk diperbarui.",
+      "applyCardNoCardError": "Simpan kartu terlebih dahulu, lalu coba lagi.",
+      "applyCardError": "Langganan Anda tidak dapat diperbarui. Silakan coba lagi."
     },
     "addOns": {
       "errorCheckout": "Gagal memulai checkout",
@@ -5946,6 +5953,17 @@
       "subject": "Selamat datang di {groupName} — {restaurantName}",
       "usageAccount": "Keuntungan Anda berlaku otomatis saat Anda memesan — cukup masuk ke akun Anda terlebih dahulu.",
       "usageGuest": "Diskon dari grup ini ditambahkan untuk Anda saat checkout bila Anda menggunakan alamat email ini ({email}). Untuk juga mengumpulkan dan menggunakan {label}, buat akun gratis dengan alamat ini dan masuk sebelum Anda memesan — saldo hanya bisa disimpan di dalam akun."
+    },
+    "dispatchRejected": {
+      "subject": "Tindakan diperlukan: pesanan #{orderNumber} tidak dapat dikirim ke pengemudi",
+      "preview": "Pesanan #{orderNumber} — pengiriman gagal, belum ada pengemudi yang ditugaskan",
+      "headerTitle": "Pengiriman ke pengemudi gagal",
+      "subtitle": "Pesanan #{orderNumber}",
+      "badge": "Perlu tindakan",
+      "body": "Kami mencoba mengirim pesanan #{orderNumber} milik {customerName} ke penyedia pengiriman Anda, tetapi ditolak. Belum ada pengemudi yang ditugaskan dan pelanggan sedang menunggu.",
+      "reasonLabel": "Alasan",
+      "actionLine": "Gunakan tombol \"Kirim ke ShipDay\" pada pesanan untuk mencoba lagi, atau atur pengiriman dengan pengemudi Anda sendiri.",
+      "viewOrderButton": "Lihat pesanan"
     }
   },
   "marketing": {

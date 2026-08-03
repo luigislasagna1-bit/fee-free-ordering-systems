@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Månadsrapport",
       "testEmail": "Skicka testmejl",
       "noRecipients": "Inga personalmottagare ännu",
-      "customerSignup": "Ny kundregistrering"
+      "customerSignup": "Ny kundregistrering",
+      "dispatchRejected": "Chaufförstilldelning misslyckades"
     },
     "receipts": {
       "title": "Kvitton",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Ännu inte kontrollerat i VIES",
       "viesVerifyNow": "Kontrollera nu",
       "viesUnreachable": "VIES-tjänsten är tillfälligt otillgänglig — försök igen om några minuter.",
-      "euVatNote": "EU-företag: ett VIES-registrerat momsnummer krävs för betalda prenumerationer. Validerade nummer faktureras med 0 % moms (omvänd skattskyldighet)."
+      "euVatNote": "EU-företag: ett VIES-registrerat momsnummer krävs för betalda prenumerationer. Validerade nummer faktureras med 0 % moms (omvänd skattskyldighet).",
+      "useCardForAllSubscriptions": "Använd det här kortet för alla prenumerationer",
+      "useCardForAllSubscriptionsHint": "Riktar alla tilläggsprenumerationer — även de som startade med ett annat kort — mot det här kortet, så att en förnyelse aldrig missas.",
+      "applyCardSuccess": "{count, plural, one {Tillämpat på # prenumeration.} other {Tillämpat på # prenumerationer.}}",
+      "applyCardNoneToUpdate": "Du har inga andra prenumerationer att uppdatera.",
+      "applyCardNoCardError": "Spara ett kort först och försök igen.",
+      "applyCardError": "Det gick inte att uppdatera dina prenumerationer. Försök igen."
     },
     "addOns": {
       "errorCheckout": "Det gick inte att starta kassan",
@@ -5946,6 +5953,17 @@
       "subject": "Välkommen till {groupName} hos {restaurantName}",
       "usageAccount": "Dina förmåner tillämpas automatiskt när du beställer — logga bara in först.",
       "usageGuest": "Rabatter från den här gruppen läggs till åt dig i kassan när du anger den här e-postadressen ({email}). Om du också vill samla och använda {label} skapar du ditt gratis konto med samma adress och loggar in innan du beställer — tillgodohavande kan bara finnas i ett konto."
+    },
+    "dispatchRejected": {
+      "subject": "Åtgärd krävs: order #{orderNumber} kunde inte skickas till en chaufför",
+      "preview": "Order #{orderNumber} — tilldelning misslyckades, ingen chaufför tilldelad än",
+      "headerTitle": "Chaufförstilldelning misslyckades",
+      "subtitle": "Beställning #{orderNumber}",
+      "badge": "Åtgärd krävs",
+      "body": "Vi försökte skicka order #{orderNumber} för {customerName} till din leveranspartner, men den avvisades. Ingen chaufför har tilldelats ännu och kunden väntar.",
+      "reasonLabel": "Orsak",
+      "actionLine": "Använd knappen \"Skicka till ShipDay\" på ordern för att försöka igen, eller ordna leverans med dina egna chaufförer.",
+      "viewOrderButton": "Visa order"
     }
   },
   "marketing": {

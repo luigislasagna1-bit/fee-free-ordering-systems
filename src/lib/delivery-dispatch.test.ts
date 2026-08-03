@@ -17,7 +17,7 @@ vi.mock("@/lib/db", () => ({ default: prismaMock }));
 vi.mock("@/lib/shipday-dispatch", () => ({ dispatchOrderNow: dispatchOrderNowMock }));
 vi.mock("@/lib/shipday", () => ({ shouldDispatchToShipday: shouldDispatchToShipdayMock }));
 
-import { assertDispatchable, resolveDeliveryProvider, assignToFeeFreeDriver, dispatchDeliveryNow, displayDeliveryProvider, type DispatchableOrder } from "./delivery-dispatch";
+import { assertDispatchable, resolveDeliveryProvider, assignToFeeFreeDriver, dispatchDeliveryNow, displayDeliveryProvider, isShipdayDispatchRejection, type DispatchableOrder, type DeliveryDispatchResult } from "./delivery-dispatch";
 
 const base = (over: Partial<DispatchableOrder> = {}): DispatchableOrder => ({
   type: "delivery",
@@ -204,5 +204,24 @@ describe("dispatchDeliveryNow (provider branch)", () => {
     const r = await dispatchDeliveryNow("o1");
     expect(r).toEqual({ ok: false, provider: "own", skipped: "not_delivery" });
     expect(prismaMock.feeFreeDeliveryConfig.findUnique).not.toHaveBeenCalled();
+  });
+});
+
+describe("isShipdayDispatchRejection (the dispatchRejected staff-email trigger condition)", () => {
+  it("is true for a genuine ShipDay rejection (not ok, not skipped, shipday)", () => {
+    const r: DeliveryDispatchResult = { ok: false, provider: "shipday", error: "ShipDay rejected the order: bad address" };
+    expect(isShipdayDispatchRejection(r)).toBe(true);
+  });
+  it("is false on a successful dispatch", () => {
+    const r: DeliveryDispatchResult = { ok: true, provider: "shipday", shipdayOrderId: "sd_1" };
+    expect(isShipdayDispatchRejection(r)).toBe(false);
+  });
+  it("is false for a pre-flight guard skip (not a ShipDay rejection — nothing was even sent)", () => {
+    const r: DeliveryDispatchResult = { ok: false, provider: "shipday", skipped: "config_off" };
+    expect(isShipdayDispatchRejection(r)).toBe(false);
+  });
+  it("is false for FeeFree/own rejections — only ShipDay has the manual rescue button today", () => {
+    expect(isShipdayDispatchRejection({ ok: false, provider: "feefree", error: "queue failed" })).toBe(false);
+    expect(isShipdayDispatchRejection({ ok: false, provider: "own", skipped: "provider_own" })).toBe(false);
   });
 });

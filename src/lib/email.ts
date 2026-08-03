@@ -32,6 +32,7 @@ import OrderRejected             from "@/emails/templates/OrderRejected";
 import OrderCanceled             from "@/emails/templates/OrderCanceled";
 import OrderRefund               from "@/emails/templates/OrderRefund";
 import CustomerSignupNotification from "@/emails/templates/CustomerSignupNotification";
+import DispatchRejected          from "@/emails/templates/DispatchRejected";
 import RewardGift                from "@/emails/templates/RewardGift";
 import RewardGiftInvite          from "@/emails/templates/RewardGiftInvite";
 import ReservationConfirmation   from "@/emails/templates/ReservationConfirmation";
@@ -1115,6 +1116,40 @@ export async function sendCustomerSignupNotificationEmail(params: {
   return send({
     to: params.to,
     subject: t("email.customerSignup.subject", { restaurant: params.restaurantName, customer: params.customerName }),
+    html,
+  });
+}
+
+/** STAFF email: an order's automatic ShipDay dispatch was REJECTED (Luigi
+ *  2026-08-03) — no driver has been assigned and the customer is waiting.
+ *  Fired from the accept-hook fire-and-forget path in
+ *  POST /api/orders/[id] (via notifyStaff), gated on the
+ *  NotificationRecipient `dispatchRejected` toggle (default ON). Fully
+ *  localized per recipient emailLanguage, same as sendOrderRejectedEmail. */
+export async function sendDispatchRejectedEmail(params: {
+  to: string;
+  restaurantName: string;
+  orderNumber: string;
+  customerName: string;
+  reason?: string;
+  dashboardUrl: string;
+  locale?: string;
+}) {
+  const t = await getDict(params.locale);
+  const html = await renderEmail(
+    DispatchRejected({
+      t,
+      restaurantName: params.restaurantName,
+      orderNumber: params.orderNumber,
+      customerName: params.customerName,
+      reason: params.reason ?? null,
+      dashboardUrl: params.dashboardUrl,
+      imprint: currentImprint(),
+    })
+  );
+  return send({
+    to: params.to,
+    subject: t("email.dispatchRejected.subject", { orderNumber: params.orderNumber }),
     html,
   });
 }

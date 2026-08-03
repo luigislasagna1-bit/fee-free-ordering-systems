@@ -10,6 +10,7 @@ import {
 import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
 import { localizedAddOnName, localizedAddOnDescription } from "@/lib/addon-catalog-i18n";
 import { escCsv } from "@/lib/csv";
+import { HelpTip } from "@/components/HelpTip";
 import { FiscalDataCard } from "./FiscalDataCard";
 
 type Invoice = {
@@ -80,6 +81,7 @@ export function BillingClient({
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [cardSaved, setCardSaved] = useState(false);
+  const [applyCardMsg, setApplyCardMsg] = useState<string | null>(null);
 
   /**
    * CSV of the visible invoice rows (the page fetches the newest 10 —
@@ -148,6 +150,39 @@ export function BillingClient({
       window.location.href = data.url;
     } catch {
       setError(t("saveCardError"));
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  // "Use this card for all subscriptions" (Luigi 2026-07-11): each add-on
+  // subscription pins whatever card was used at ITS OWN checkout, so
+  // saving a new default card above does NOT repoint anything already
+  // running. This is the explicit action that does — server derives "this
+  // card" from the current default itself, so there's nothing to post but
+  // the request.
+  async function applyCardToAllSubscriptions() {
+    setBusy("applyCard");
+    setError(null);
+    setApplyCardMsg(null);
+    try {
+      const res = await fetch("/api/admin/billing/apply-default-card", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        setError(
+          data.error === "no_card"
+            ? t("applyCardNoCardError")
+            : data.error || t("applyCardError")
+        );
+        return;
+      }
+      setApplyCardMsg(
+        data.totalCount === 0
+          ? t("applyCardNoneToUpdate")
+          : t("applyCardSuccess", { count: data.updatedCount })
+      );
+    } catch {
+      setError(t("applyCardError"));
     } finally {
       setBusy(null);
     }
@@ -271,15 +306,35 @@ export function BillingClient({
                 <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> {t("cardSavedSuccess")}
               </p>
             )}
+            {applyCardMsg && (
+              <p className="mt-2 text-sm text-green-700 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0" /> {applyCardMsg}
+              </p>
+            )}
           </div>
-          <button
-            onClick={saveCard}
-            disabled={busy !== null || !billingConfigured}
-            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50 flex-shrink-0"
-          >
-            {busy === "saveCard" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
-            {savedCard ? t("changeCard") : t("savePaymentMethod")}
-          </button>
+          <div className="flex flex-col items-stretch sm:items-end gap-2 flex-shrink-0">
+            <button
+              onClick={saveCard}
+              disabled={busy !== null || !billingConfigured}
+              className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50"
+            >
+              {busy === "saveCard" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
+              {savedCard ? t("changeCard") : t("savePaymentMethod")}
+            </button>
+            {savedCard && (
+              <div className="flex items-center gap-1.5 justify-end">
+                <button
+                  onClick={applyCardToAllSubscriptions}
+                  disabled={busy !== null || !billingConfigured}
+                  className="inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-5 py-2.5 rounded-lg font-semibold text-sm transition disabled:opacity-50"
+                >
+                  {busy === "applyCard" ? <Loader2 className="w-4 h-4 animate-spin" /> : <CreditCard className="w-4 h-4" />}
+                  {t("useCardForAllSubscriptions")}
+                </button>
+                <HelpTip text={t("useCardForAllSubscriptionsHint")} placement="top" />
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Mesačný výkaz",
       "testEmail": "Odoslať testovací e-mail",
       "noRecipients": "Zatiaľ žiadni príjemcovia z personálu",
-      "customerSignup": "Nová registrácia zákazníka"
+      "customerSignup": "Nová registrácia zákazníka",
+      "dispatchRejected": "Odoslanie kuriérovi sa nepodarilo"
     },
     "receipts": {
       "title": "Účtenky",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Zatiaľ neoverené vo VIES",
       "viesVerifyNow": "Overiť teraz",
       "viesUnreachable": "Služba VIES je dočasne nedostupná — skúste o pár minút.",
-      "euVatNote": "Firmy z EÚ: pre platené predplatné je potrebné IČ DPH registrované vo VIES. Overené čísla fakturujeme s 0 % DPH (prenesenie daňovej povinnosti)."
+      "euVatNote": "Firmy z EÚ: pre platené predplatné je potrebné IČ DPH registrované vo VIES. Overené čísla fakturujeme s 0 % DPH (prenesenie daňovej povinnosti).",
+      "useCardForAllSubscriptions": "Použiť túto kartu pre všetky predplatné",
+      "useCardForAllSubscriptionsHint": "Presmeruje každé predplatné doplnku — aj to začaté inou kartou — na túto kartu, aby žiadne obnovenie nikdy nebolo zmeškané.",
+      "applyCardSuccess": "{count, plural, one {Použité na # predplatné.} other {Použité na # predplatných.}}",
+      "applyCardNoneToUpdate": "Nemáte žiadne ďalšie predplatné na aktualizáciu.",
+      "applyCardNoCardError": "Najprv uložte kartu a skúste to znova.",
+      "applyCardError": "Vaše predplatné sa nepodarilo aktualizovať. Skúste to znova."
     },
     "addOns": {
       "errorCheckout": "Nepodarilo sa spustiť platbu",
@@ -5946,6 +5953,17 @@
       "subject": "Vitajte v skupine {groupName} — {restaurantName}",
       "usageAccount": "Vaše výhody sa pri objednávke uplatnia automaticky — stačí sa najprv prihlásiť.",
       "usageGuest": "Zľavy z tejto skupiny sa vám pri platbe pripočítajú automaticky, keď zadáte túto e-mailovú adresu ({email}). Ak chcete aj zbierať a míňať {label}, vytvorte si s touto adresou bezplatný účet a pred objednaním sa prihláste — kredit sa dá držať len na účte."
+    },
+    "dispatchRejected": {
+      "subject": "Je potrebná akcia: objednávku #{orderNumber} sa nepodarilo odoslať kuriérovi",
+      "preview": "Objednávka #{orderNumber} — odoslanie sa nepodarilo, kuriér ešte nie je pridelený",
+      "headerTitle": "Odoslanie kuriérovi sa nepodarilo",
+      "subtitle": "Objednávka #{orderNumber}",
+      "badge": "Vyžaduje sa akcia",
+      "body": "Skúsili sme odoslať objednávku #{orderNumber} pre {customerName} vášmu poskytovateľovi doručenia, ale bola odmietnutá. Kuriér ešte nebol pridelený a klient čaká.",
+      "reasonLabel": "Dôvod",
+      "actionLine": "Použite tlačidlo \"Odoslať do ShipDay\" pri objednávke a skúste to znova, alebo zabezpečte doručenie vlastnými kuriérmi.",
+      "viewOrderButton": "Zobraziť objednávku"
     }
   },
   "marketing": {

@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Maandelijks rapport",
       "testEmail": "Test-e-mail verzenden",
       "noRecipients": "Nog geen personeelontvangers",
-      "customerSignup": "Nieuwe klantregistratie"
+      "customerSignup": "Nieuwe klantregistratie",
+      "dispatchRejected": "Bezorger toewijzen mislukt"
     },
     "receipts": {
       "title": "Bonnen",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Nog niet via VIES gecontroleerd",
       "viesVerifyNow": "Nu controleren",
       "viesUnreachable": "De VIES-dienst is tijdelijk niet beschikbaar — probeer het over enkele minuten opnieuw.",
-      "euVatNote": "EU-bedrijven: voor betaalde abonnementen is een in VIES geregistreerd btw-nummer vereist. Gevalideerde nummers worden gefactureerd met 0% btw (verleggingsregeling)."
+      "euVatNote": "EU-bedrijven: voor betaalde abonnementen is een in VIES geregistreerd btw-nummer vereist. Gevalideerde nummers worden gefactureerd met 0% btw (verleggingsregeling).",
+      "useCardForAllSubscriptions": "Deze kaart voor alle abonnementen gebruiken",
+      "useCardForAllSubscriptionsHint": "Wijst elk add-on-abonnement — ook abonnementen die met een andere kaart zijn gestart — toe aan deze kaart, zodat een verlenging nooit wordt gemist.",
+      "applyCardSuccess": "{count, plural, one {Toegepast op # abonnement.} other {Toegepast op # abonnementen.}}",
+      "applyCardNoneToUpdate": "Je hebt geen andere abonnementen om bij te werken.",
+      "applyCardNoCardError": "Sla eerst een kaart op en probeer het opnieuw.",
+      "applyCardError": "Je abonnementen konden niet worden bijgewerkt. Probeer het opnieuw."
     },
     "addOns": {
       "errorCheckout": "Afrekenen kon niet worden gestart",
@@ -5946,6 +5953,17 @@
       "subject": "Welkom bij {groupName} — {restaurantName}",
       "usageAccount": "Je voordelen worden automatisch toegepast als je bestelt — log eerst even in.",
       "usageGuest": "Kortingen uit deze groep worden bij het afrekenen voor je toegepast als je dit e-mailadres ({email}) gebruikt. Wil je ook {label} sparen en besteden? Maak dan met dit adres je gratis account aan en log in voordat je bestelt — tegoed kan alleen in een account worden bewaard."
+    },
+    "dispatchRejected": {
+      "subject": "Actie vereist: bestelling #{orderNumber} kon niet naar een bezorger worden gestuurd",
+      "preview": "Bestelling #{orderNumber} — verzending mislukt, nog geen bezorger toegewezen",
+      "headerTitle": "Bezorger toewijzen mislukt",
+      "subtitle": "Bestelling #{orderNumber}",
+      "badge": "Actie vereist",
+      "body": "We hebben geprobeerd bestelling #{orderNumber} van {customerName} naar je bezorgpartner te sturen, maar deze werd afgewezen. Er is nog geen bezorger toegewezen en de klant wacht.",
+      "reasonLabel": "Reden",
+      "actionLine": "Gebruik de knop 'Naar ShipDay verzenden' bij de bestelling om het opnieuw te proberen, of regel de bezorging met je eigen bezorgers.",
+      "viewOrderButton": "Bestelling bekijken"
     }
   },
   "marketing": {

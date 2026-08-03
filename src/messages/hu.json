@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Havi zárás riport",
       "testEmail": "Teszt e-mail küldése",
       "noRecipients": "Még nincsenek személyzeti értesítési címek",
-      "customerSignup": "Új ügyfél-regisztráció"
+      "customerSignup": "Új ügyfél-regisztráció",
+      "dispatchRejected": "A futárnak küldés sikertelen"
     },
     "receipts": {
       "title": "Nyugták",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Még nincs ellenőrizve a VIES-ben",
       "viesVerifyNow": "Ellenőrzés most",
       "viesUnreachable": "A VIES szolgáltatás átmenetileg nem érhető el — próbálja újra néhány perc múlva.",
-      "euVatNote": "EU-s vállalkozások: a fizetős előfizetésekhez VIES-ben regisztrált adószám szükséges. Az érvényesített számokat 0% áfával számlázzuk (fordított adózás)."
+      "euVatNote": "EU-s vállalkozások: a fizetős előfizetésekhez VIES-ben regisztrált adószám szükséges. Az érvényesített számokat 0% áfával számlázzuk (fordított adózás).",
+      "useCardForAllSubscriptions": "Ezt a kártyát használd minden előfizetéshez",
+      "useCardForAllSubscriptionsHint": "Minden kiegészítő-előfizetést — még a más kártyával indítottakat is — ehhez a kártyához irányít, hogy a megújítás soha ne maradjon el.",
+      "applyCardSuccess": "{count, plural, one {Alkalmazva # előfizetésre.} other {Alkalmazva # előfizetésre.}}",
+      "applyCardNoneToUpdate": "Nincs más frissítendő előfizetésed.",
+      "applyCardNoCardError": "Először mentsd el a kártyát, majd próbáld újra.",
+      "applyCardError": "Az előfizetéseidet nem sikerült frissíteni. Próbáld újra."
     },
     "addOns": {
       "errorCheckout": "Nem sikerült elindítani a fizetést",
@@ -5946,6 +5953,17 @@
       "subject": "Üdvözöljük a(z) {groupName} csoportban — {restaurantName}",
       "usageAccount": "A kedvezményei automatikusan érvényesülnek, amikor rendel — csak jelentkezzen be előtte.",
       "usageGuest": "A csoport kedvezményeit a fizetésnél automatikusan hozzáadjuk, ha ezt az e-mail-címet ({email}) adja meg. Ahhoz, hogy {label} egyenleget is gyűjthessen és elkölthessen, hozzon létre ezzel a címmel egy ingyenes fiókot, és rendelés előtt jelentkezzen be — az egyenleg csak fiókban tartható."
+    },
+    "dispatchRejected": {
+      "subject": "Beavatkozás szükséges: a #{orderNumber} rendelést nem sikerült elküldeni a futárnak",
+      "preview": "#{orderNumber} rendelés — a küldés sikertelen, még nincs futár kijelölve",
+      "headerTitle": "A futárnak küldés sikertelen",
+      "subtitle": "#{orderNumber}. rendelés",
+      "badge": "Teendőd van",
+      "body": "Megpróbáltuk elküldeni a {customerName} #{orderNumber} rendelését a futárszolgáltatódnak, de elutasította. Még nincs kijelölt futár, és a vendég vár.",
+      "reasonLabel": "Indok",
+      "actionLine": "Használd a rendelésnél a \"Küldés a ShipDay-nek\" gombot az újbóli próbához, vagy intézd a kiszállítást saját futárral.",
+      "viewOrderButton": "Rendelés megtekintése"
     }
   },
   "marketing": {

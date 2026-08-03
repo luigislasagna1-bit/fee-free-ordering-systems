@@ -96,6 +96,21 @@ export type DeliveryDispatchResult =
   | { ok: false; provider: DeliveryProvider; skipped?: string; error?: string };
 
 /**
+ * True iff a DeliveryDispatchResult represents a genuine ShipDay
+ * REJECTION — not a pre-flight guard skip (order not delivery, config
+ * off, not prepaid, etc — staff can't act on those), not a success, and
+ * not another provider (FeeFree/own have their own surfaces; ShipDay is
+ * the only provider with a manual "Send to ShipDay" rescue button today).
+ * This is the exact condition the accept-hook (POST /api/orders/[id])
+ * uses to decide whether to page staff with the dispatchRejected email —
+ * pulled out so that decision is unit-testable on its own (Luigi
+ * 2026-08-03).
+ */
+export function isShipdayDispatchRejection(r: DeliveryDispatchResult): boolean {
+  return !r.ok && !r.skipped && r.provider === "shipday";
+}
+
+/**
  * Create a QUEUED DeliveryAssignment for our own driver pool. Idempotent — a
  * second call (retry / duplicate accept) returns the existing assignment rather
  * than double-queuing. Prepaid-only via assertDispatchable (MVP restriction —

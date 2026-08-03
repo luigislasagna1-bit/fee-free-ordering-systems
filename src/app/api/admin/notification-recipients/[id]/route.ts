@@ -11,6 +11,7 @@ const TOGGLES = [
   "isActive", "emailLanguage",
   "deliveryConfirmed", "pickupConfirmed", "tableReservationConfirmed", "tableReservationRequested", "orderAheadConfirmed", "dineInConfirmed",
   "orderPlaced", "customerSignup", "orderAccepted", "orderRejected", "orderCanceled", "orderMissed",
+  "dispatchRejected",
   "endOfDayReport", "endOfMonthReport",
   // Dead toggles intentionally excluded (no handler ever reads them):
   //   "orderNotPlaced", "lowBattery", "badInternet"

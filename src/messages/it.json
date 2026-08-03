@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Report fine mese",
       "testEmail": "Invia e-mail di prova",
       "noRecipients": "Nessun destinatario",
-      "customerSignup": "Nuova registrazione cliente"
+      "customerSignup": "Nuova registrazione cliente",
+      "dispatchRejected": "Invio al corriere non riuscito"
     },
     "receipts": {
       "title": "Ricevute",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Non ancora verificato in VIES",
       "viesVerifyNow": "Verifica ora",
       "viesUnreachable": "Il servizio VIES è temporaneamente non disponibile — riprova tra qualche minuto.",
-      "euVatNote": "Aziende UE: per gli abbonamenti a pagamento è richiesta una partita IVA registrata in VIES. I numeri convalidati sono fatturati con IVA 0% (reverse charge)."
+      "euVatNote": "Aziende UE: per gli abbonamenti a pagamento è richiesta una partita IVA registrata in VIES. I numeri convalidati sono fatturati con IVA 0% (reverse charge).",
+      "useCardForAllSubscriptions": "Usa questa carta per tutti gli abbonamenti",
+      "useCardForAllSubscriptionsHint": "Reindirizza ogni abbonamento ai componenti aggiuntivi — anche quelli iniziati con un'altra carta — su questa, così nessun rinnovo verrà mai perso.",
+      "applyCardSuccess": "{count, plural, one {Applicato a # abbonamento.} other {Applicato a # abbonamenti.}}",
+      "applyCardNoneToUpdate": "Non hai altri abbonamenti da aggiornare.",
+      "applyCardNoCardError": "Salva prima una carta, poi riprova.",
+      "applyCardError": "Non è stato possibile aggiornare i tuoi abbonamenti. Riprova."
     },
     "addOns": {
       "errorCheckout": "Impossibile avviare il pagamento",
@@ -5946,6 +5953,17 @@
       "subject": "Ti diamo il benvenuto in {groupName} da {restaurantName}",
       "usageAccount": "I tuoi vantaggi si applicano automaticamente quando ordini: basta accedere al tuo account.",
       "usageGuest": "Gli sconti di questo gruppo vengono aggiunti al checkout quando usi questo indirizzo email ({email}). Per accumulare e usare anche {label}, crea il tuo account gratuito con questo indirizzo e accedi prima di ordinare: il credito può essere conservato solo in un account."
+    },
+    "dispatchRejected": {
+      "subject": "Azione necessaria: l'ordine #{orderNumber} non è stato inviato a un corriere",
+      "preview": "Ordine #{orderNumber} — invio non riuscito, nessun corriere assegnato",
+      "headerTitle": "Invio al corriere non riuscito",
+      "subtitle": "Ordine #{orderNumber}",
+      "badge": "Azione richiesta",
+      "body": "Abbiamo provato a inviare l'ordine #{orderNumber} di {customerName} al tuo fornitore di consegne, ma è stato rifiutato. Non è ancora stato assegnato nessun corriere e il cliente è in attesa.",
+      "reasonLabel": "Motivazione",
+      "actionLine": "Usa il pulsante \"Invia a ShipDay\" sull'ordine per riprovare, oppure organizza la consegna con i tuoi corrieri.",
+      "viewOrderButton": "Visualizza ordine"
     }
   },
   "marketing": {

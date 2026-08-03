@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Informe de final de mes",
       "testEmail": "Envia un correu de prova",
       "noRecipients": "Encara no hi ha destinataris del personal",
-      "customerSignup": "Nou registre de client"
+      "customerSignup": "Nou registre de client",
+      "dispatchRejected": "L'enviament al conductor ha fallat"
     },
     "receipts": {
       "title": "Rebuts",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Encara no verificat a VIES",
       "viesVerifyNow": "Verifica ara",
       "viesUnreachable": "El servei VIES no està disponible temporalment — torna-ho a provar d'aquí a uns minuts.",
-      "euVatNote": "Empreses de la UE: cal un número d'IVA registrat a VIES per a subscripcions de pagament. Els números validats es facturen amb IVA del 0% (inversió del subjecte passiu)."
+      "euVatNote": "Empreses de la UE: cal un número d'IVA registrat a VIES per a subscripcions de pagament. Els números validats es facturen amb IVA del 0% (inversió del subjecte passiu).",
+      "useCardForAllSubscriptions": "Usa aquesta targeta per a totes les subscripcions",
+      "useCardForAllSubscriptionsHint": "Redirigeix totes les subscripcions de complements — fins i tot les que van començar amb una altra targeta — a aquesta, perquè cap renovació es perdi mai.",
+      "applyCardSuccess": "{count, plural, one {Aplicat a # subscripció.} other {Aplicat a # subscripcions.}}",
+      "applyCardNoneToUpdate": "No tens cap altra subscripció per actualitzar.",
+      "applyCardNoCardError": "Desa primer una targeta i torna-ho a provar.",
+      "applyCardError": "No s'han pogut actualitzar les teves subscripcions. Torna-ho a provar."
     },
     "addOns": {
       "errorCheckout": "No s'ha pogut iniciar la compra",
@@ -5946,6 +5953,17 @@
       "subject": "Et donem la benvinguda a {groupName} de {restaurantName}",
       "usageAccount": "Els teus avantatges s'apliquen automàticament quan fas la comanda: només cal que iniciïs la sessió abans.",
       "usageGuest": "Els descomptes d'aquest grup s'afegeixen en finalitzar la compra quan utilitzes aquesta adreça de correu electrònic ({email}). Per acumular i gastar també {label}, crea el teu compte gratuït amb aquesta adreça i inicia sessió abans de fer la comanda: el saldo només es pot guardar en un compte."
+    },
+    "dispatchRejected": {
+      "subject": "Cal actuar: la comanda #{orderNumber} no s'ha pogut enviar a un conductor",
+      "preview": "Comanda #{orderNumber} — enviament fallit, encara sense conductor assignat",
+      "headerTitle": "L'enviament al conductor ha fallat",
+      "subtitle": "Comanda #{orderNumber}",
+      "badge": "Cal actuar",
+      "body": "Hem intentat enviar la comanda #{orderNumber} de {customerName} al vostre proveïdor de repartiment, però ha estat rebutjada. Encara no s'ha assignat cap conductor i el client espera.",
+      "reasonLabel": "Motiu",
+      "actionLine": "Utilitza el botó \"Envia a ShipDay\" a la comanda per tornar-ho a provar, o organitza el lliurament amb els teus propis conductors.",
+      "viewOrderButton": "Veure la comanda"
     }
   },
   "marketing": {

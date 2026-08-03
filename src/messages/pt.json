@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Relatório de fim do mês",
       "testEmail": "Enviar e-mail de teste",
       "noRecipients": "Sem destinatários",
-      "customerSignup": "Novo registo de cliente"
+      "customerSignup": "Novo registo de cliente",
+      "dispatchRejected": "Envio ao motorista falhou"
     },
     "receipts": {
       "title": "Recibos",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Ainda não verificado no VIES",
       "viesVerifyNow": "Verificar agora",
       "viesUnreachable": "O serviço VIES está temporariamente indisponível — tente novamente dentro de minutos.",
-      "euVatNote": "Empresas da UE: é necessário um número de IVA registado no VIES para subscrições pagas. Os números validados são faturados a 0% de IVA (autoliquidação)."
+      "euVatNote": "Empresas da UE: é necessário um número de IVA registado no VIES para subscrições pagas. Os números validados são faturados a 0% de IVA (autoliquidação).",
+      "useCardForAllSubscriptions": "Usar este cartão para todas as subscrições",
+      "useCardForAllSubscriptionsHint": "Aponta todas as subscrições de extras — mesmo as que começaram com outro cartão — para este, para que nenhuma renovação seja perdida.",
+      "applyCardSuccess": "{count, plural, one {Aplicado a # subscrição.} other {Aplicado a # subscrições.}}",
+      "applyCardNoneToUpdate": "Não tem mais subscrições para atualizar.",
+      "applyCardNoCardError": "Guarde primeiro um cartão e tente novamente.",
+      "applyCardError": "Não foi possível atualizar as suas subscrições. Tente novamente."
     },
     "addOns": {
       "errorCheckout": "Falha ao iniciar o checkout",
@@ -5946,6 +5953,17 @@
       "subject": "Bem-vindo(a) a {groupName} — {restaurantName}",
       "usageAccount": "As suas vantagens são aplicadas automaticamente quando encomenda — basta iniciar sessão primeiro.",
       "usageGuest": "Os descontos deste grupo são adicionados ao finalizar a encomenda quando usa este endereço de e-mail ({email}). Para também acumular e usar {label}, crie a sua conta gratuita com este endereço e inicie sessão antes de encomendar — o crédito só pode ser guardado numa conta."
+    },
+    "dispatchRejected": {
+      "subject": "Ação necessária: o pedido #{orderNumber} não pôde ser enviado a um motorista",
+      "preview": "Pedido #{orderNumber} — envio falhou, sem motorista atribuído",
+      "headerTitle": "Envio ao motorista falhou",
+      "subtitle": "Encomenda #{orderNumber}",
+      "badge": "Ação necessária",
+      "body": "Tentámos enviar o pedido #{orderNumber} de {customerName} ao seu fornecedor de entregas, mas foi rejeitado. Ainda não foi atribuído nenhum motorista e o cliente está à espera.",
+      "reasonLabel": "Motivo",
+      "actionLine": "Utilize o botão \"Enviar para o ShipDay\" no pedido para tentar novamente, ou organize a entrega com os seus próprios motoristas.",
+      "viewOrderButton": "Ver pedido"
     }
   },
   "marketing": {

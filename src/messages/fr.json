@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Rapport de fin de mois",
       "testEmail": "Envoyer un e-mail test",
       "noRecipients": "Aucun destinataire du personnel",
-      "customerSignup": "Nouvelle inscription client"
+      "customerSignup": "Nouvelle inscription client",
+      "dispatchRejected": "Envoi au livreur échoué"
     },
     "receipts": {
       "title": "Reçus",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Pas encore vérifié dans VIES",
       "viesVerifyNow": "Vérifier maintenant",
       "viesUnreachable": "Le service VIES est temporairement indisponible — réessayez dans quelques minutes.",
-      "euVatNote": "Entreprises de l'UE : un numéro de TVA enregistré dans VIES est requis pour les abonnements payants. Les numéros validés sont facturés à 0 % de TVA (autoliquidation)."
+      "euVatNote": "Entreprises de l'UE : un numéro de TVA enregistré dans VIES est requis pour les abonnements payants. Les numéros validés sont facturés à 0 % de TVA (autoliquidation).",
+      "useCardForAllSubscriptions": "Utiliser cette carte pour tous les abonnements",
+      "useCardForAllSubscriptionsHint": "Fait pointer chaque abonnement complémentaire — même ceux commencés avec une autre carte — vers celle-ci, pour qu'aucun renouvellement ne soit jamais manqué.",
+      "applyCardSuccess": "{count, plural, one {Appliqué à # abonnement.} other {Appliqué à # abonnements.}}",
+      "applyCardNoneToUpdate": "Vous n'avez aucun autre abonnement à mettre à jour.",
+      "applyCardNoCardError": "Enregistrez d'abord une carte, puis réessayez.",
+      "applyCardError": "Impossible de mettre à jour vos abonnements. Veuillez réessayer."
     },
     "addOns": {
       "errorCheckout": "Impossible de démarrer le paiement",
@@ -5946,6 +5953,17 @@
       "subject": "Bienvenue dans {groupName} chez {restaurantName}",
       "usageAccount": "Vos avantages s'appliquent automatiquement lorsque vous commandez — il suffit de vous connecter.",
       "usageGuest": "Les réductions de ce groupe sont ajoutées pour vous au moment du paiement lorsque vous utilisez cette adresse e-mail ({email}). Pour cumuler et dépenser également {label}, créez votre compte gratuit avec cette adresse et connectez-vous avant de commander — le crédit ne peut être conservé que dans un compte."
+    },
+    "dispatchRejected": {
+      "subject": "Action requise : la commande #{orderNumber} n'a pas pu être envoyée à un livreur",
+      "preview": "Commande #{orderNumber} — envoi échoué, aucun livreur assigné",
+      "headerTitle": "Envoi au livreur échoué",
+      "subtitle": "Commande #{orderNumber}",
+      "badge": "Action requise",
+      "body": "Nous avons essayé d'envoyer la commande #{orderNumber} de {customerName} à votre prestataire de livraison, mais elle a été refusée. Aucun livreur n'a encore été assigné et le client attend.",
+      "reasonLabel": "Motif",
+      "actionLine": "Utilisez le bouton « Envoyer à ShipDay » sur la commande pour réessayer, ou organisez la livraison avec vos propres livreurs.",
+      "viewOrderButton": "Voir la commande"
     }
   },
   "marketing": {

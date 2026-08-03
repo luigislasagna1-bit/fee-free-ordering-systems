@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Mēneša beigu atskaite",
       "testEmail": "Nosūtīt testa e-pastu",
       "noRecipients": "Vēl nav darbinieku saņēmēju",
-      "customerSignup": "Jauna klienta reģistrācija"
+      "customerSignup": "Jauna klienta reģistrācija",
+      "dispatchRejected": "Nosūtīšana kurjeram neizdevās"
     },
     "receipts": {
       "title": "Čeki",
@@ -1989,7 +1990,13 @@
       "viesUnverified": "Vēl nav pārbaudīts VIES",
       "viesVerifyNow": "Pārbaudīt tagad",
       "viesUnreachable": "VIES pakalpojums īslaicīgi nav pieejams — mēģiniet vēlreiz pēc dažām minūtēm.",
-      "euVatNote": "ES uzņēmumi: maksas abonementiem nepieciešams VIES reģistrēts PVN numurs. Apstiprināti numuri tiek rēķināti ar 0% PVN (apgrieztā maksāšana)."
+      "euVatNote": "ES uzņēmumi: maksas abonementiem nepieciešams VIES reģistrēts PVN numurs. Apstiprināti numuri tiek rēķināti ar 0% PVN (apgrieztā maksāšana).",
+      "useCardForAllSubscriptions": "Izmantot šo karti visiem abonementiem",
+      "useCardForAllSubscriptionsHint": "Novirza katru papildinājuma abonementu — pat tos, kas sākti ar citu karti — uz šo karti, lai atjaunošana nekad netiktu palaista garām.",
+      "applyCardSuccess": "{count, plural, one {Piemērots # abonementam.} other {Piemērots # abonementiem.}}",
+      "applyCardNoneToUpdate": "Jums nav citu abonementu, kas jāatjaunina.",
+      "applyCardNoCardError": "Vispirms saglabājiet karti un pēc tam mēģiniet vēlreiz.",
+      "applyCardError": "Neizdevās atjaunināt jūsu abonementus. Lūdzu, mēģiniet vēlreiz."
     },
     "addOns": {
       "errorCheckout": "Neizdevās sākt norēķinu",
@@ -5946,6 +5953,17 @@
       "subject": "Laipni lūdzam grupā {groupName} — {restaurantName}",
       "usageAccount": "Jūsu priekšrocības tiek piemērotas automātiski, kad pasūtāt — vienkārši vispirms pierakstieties.",
       "usageGuest": "Šīs grupas atlaides tiek piemērotas jūsu vietā, noformējot pasūtījumu, ja izmantojat šo e-pasta adresi ({email}). Savukārt, lai arī krātu un tērētu {label}, izveidojiet bezmaksas kontu ar šo adresi un pierakstieties pirms pasūtīšanas — kredītu var glabāt tikai kontā."
+    },
+    "dispatchRejected": {
+      "subject": "Nepieciešama darbība: pasūtījumu #{orderNumber} neizdevās nosūtīt kurjeram",
+      "preview": "Pasūtījums #{orderNumber} — nosūtīšana neizdevās, kurjers vēl nav piešķirts",
+      "headerTitle": "Nosūtīšana kurjeram neizdevās",
+      "subtitle": "Pasūtījums #{orderNumber}",
+      "badge": "Nepieciešama darbība",
+      "body": "Mēs mēģinājām nosūtīt pasūtījumu #{orderNumber} klientam {customerName} jūsu piegādes pakalpojumu sniedzējam, taču tas tika noraidīts. Kurjers vēl nav piešķirts, un klients gaida.",
+      "reasonLabel": "Iemesls",
+      "actionLine": "Izmantojiet pogu \"Nosūtīt uz ShipDay\" pasūtījumā, lai mēģinātu vēlreiz, vai organizējiet piegādi ar saviem kurjeriem.",
+      "viewOrderButton": "Skatīt pasūtījumu"
     }
   },
   "marketing": {

@@ -22,7 +22,7 @@ import { isStripeAlreadyCaptured, isPaypalAlreadyCaptured } from "@/lib/capture-
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { cancelShipdayOrder } from "@/lib/shipday";
-import { dispatchDeliveryNow } from "@/lib/delivery-dispatch";
+import { dispatchDeliveryNow, isShipdayDispatchRejection } from "@/lib/delivery-dispatch";
 import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
 import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
@@ -738,6 +738,26 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             // The provider itself rejected — surfaced in the admin order page's
             // delivery card (Send/Retry button), which shares this code path.
             console.error("[orders PATCH] delivery dispatch rejected", { orderId: id, provider: r.provider, error: r.error });
+            // Staff had no proactive way to learn about this until they
+            // noticed the order still showed "not dispatched" (Luigi
+            // 2026-08-03). ShipDay-specific (the manual "Send to ShipDay"
+            // rescue button only exists for that provider) and gated on
+            // the dispatchRejected toggle. Fire-and-forget — never let a
+            // notification failure affect the accept response, which has
+            // already been sent by the time this callback runs anyway.
+            if (isShipdayDispatchRejection(r)) {
+              const notifyBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+              notifyStaff({
+                restaurantId: existing.restaurantId,
+                payload: {
+                  event: "dispatchRejected",
+                  orderNumber: existing.orderNumber,
+                  customerName: existing.customerName,
+                  reason: r.error,
+                  dashboardUrl: `${notifyBaseUrl}/admin/orders/${id}`,
+                },
+              }).catch((e) => console.error("[notifyStaff dispatchRejected]", e));
+            }
           }
         })
         .catch((e) => console.error("[orders PATCH] delivery dispatch threw:", e)),

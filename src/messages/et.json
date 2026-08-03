@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Kuu lõpu aruanne",
       "testEmail": "Saada testmeil",
       "noRecipients": "Töötajate saajaid pole veel",
-      "customerSignup": "Uue kliendi registreerumine"
+      "customerSignup": "Uue kliendi registreerumine",
+      "dispatchRejected": "Kullerile saatmine ebaõnnestus"
     },
     "receipts": {
       "title": "Kviitungid",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "VIES-is veel kontrollimata",
       "viesVerifyNow": "Kontrolli kohe",
       "viesUnreachable": "VIES-teenus pole ajutiselt kättesaadav — proovige mõne minuti pärast uuesti.",
-      "euVatNote": "EL-i ettevõtted: tasuliste tellimuste jaoks on vajalik VIES-is registreeritud KMKR number. Kinnitatud numbrid arveldatakse 0% käibemaksuga (pöördmaksustamine)."
+      "euVatNote": "EL-i ettevõtted: tasuliste tellimuste jaoks on vajalik VIES-is registreeritud KMKR number. Kinnitatud numbrid arveldatakse 0% käibemaksuga (pöördmaksustamine).",
+      "useCardForAllSubscriptions": "Kasuta seda kaarti kõigi tellimuste jaoks",
+      "useCardForAllSubscriptionsHint": "Suunab kõik lisamoodulite tellimused — isegi need, mis algasid teise kaardiga — sellele kaardile, et uuendamine ei jääks kunagi tähelepanuta.",
+      "applyCardSuccess": "{count, plural, one {Rakendatud # tellimusele.} other {Rakendatud # tellimusele.}}",
+      "applyCardNoneToUpdate": "Teil ei ole muid tellimusi, mida värskendada.",
+      "applyCardNoCardError": "Salvesta esmalt kaart ja proovi seejärel uuesti.",
+      "applyCardError": "Sinu tellimusi ei õnnestunud värskendada. Proovi uuesti."
     },
     "addOns": {
       "errorCheckout": "Makse alustamine ebaõnnestus",
@@ -5946,6 +5953,17 @@
       "subject": "Tere tulemast rühma {groupName} restoranis {restaurantName}",
       "usageAccount": "Sinu hüved rakenduvad automaatselt, kui tellid — logi lihtsalt enne sisse.",
       "usageGuest": "Selle rühma soodustused lisatakse kassas automaatselt, kui kasutad seda e-posti aadressi ({email}). Et koguda ja kulutada ka {label}, loo selle aadressiga tasuta konto ja logi enne tellimist sisse — krediiti saab hoida ainult kontol."
+    },
+    "dispatchRejected": {
+      "subject": "Vajalik tegevus: tellimust #{orderNumber} ei saadud kullerile saata",
+      "preview": "Tellimus #{orderNumber} — saatmine ebaõnnestus, kullerit ei ole veel määratud",
+      "headerTitle": "Kullerile saatmine ebaõnnestus",
+      "subtitle": "Tellimus #{orderNumber}",
+      "badge": "Vajalik tegevus",
+      "body": "Proovisime saata tellimuse #{orderNumber} kliendile {customerName} teie kohaletoimetamise teenusepakkujale, kuid see lükati tagasi. Kullerit ei ole veel määratud ja klient ootab.",
+      "reasonLabel": "Põhjus",
+      "actionLine": "Kasuta tellimusel nuppu \"Saada ShipDaysse\", et uuesti proovida, või korralda kohaletoimetamine oma kulleritega.",
+      "viewOrderButton": "Vaata tellimust"
     }
   },
   "marketing": {

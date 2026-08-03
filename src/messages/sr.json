@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Mesečni izveštaj",
       "testEmail": "Pošalji test email",
       "noRecipients": "Još nema primalaca osoblja",
-      "customerSignup": "Nova registracija kupca"
+      "customerSignup": "Nova registracija kupca",
+      "dispatchRejected": "Slanje vozaču nije uspelo"
     },
     "receipts": {
       "title": "Priznanice",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Још није проверено у VIES-у",
       "viesVerifyNow": "Провери одмах",
       "viesUnreachable": "VIES услуга је привремено недоступна — покушајте поново за неколико минута.",
-      "euVatNote": "Фирме из ЕУ: за плаћене претплате потребан је ПДВ број регистрован у VIES-у. Потврђени бројеви се фактуришу са 0% ПДВ-а (обрнута наплата)."
+      "euVatNote": "Фирме из ЕУ: за плаћене претплате потребан је ПДВ број регистрован у VIES-у. Потврђени бројеви се фактуришу са 0% ПДВ-а (обрнута наплата).",
+      "useCardForAllSubscriptions": "Koristi ovu karticu za sve pretplate",
+      "useCardForAllSubscriptionsHint": "Usmerava svaku pretplatu na dodatak — čak i one započete drugom karticom — na ovu karticu, tako da obnova nikad ne bude propuštena.",
+      "applyCardSuccess": "{count, plural, one {Primenjeno na # pretplatu.} other {Primenjeno na # pretplata.}}",
+      "applyCardNoneToUpdate": "Nemate drugih pretplata za ažuriranje.",
+      "applyCardNoCardError": "Prvo sačuvajte karticu, a zatim pokušajte ponovo.",
+      "applyCardError": "Vaše pretplate nije bilo moguće ažurirati. Pokušajte ponovo."
     },
     "addOns": {
       "errorCheckout": "Nije uspelo pokretanje naplate",
@@ -5946,6 +5953,17 @@
       "subject": "Dobro došli u {groupName} — {restaurantName}",
       "usageAccount": "Vaše pogodnosti se primenjuju automatski kada poručite — samo se prvo prijavite.",
       "usageGuest": "Popusti iz ove grupe dodaju se pri plaćanju kada koristite ovu e-adresu ({email}). Da biste i skupljali i trošili {label}, napravite svoj besplatan nalog sa ovom adresom i prijavite se pre nego što naručite — kredit se može čuvati samo na nalogu."
+    },
+    "dispatchRejected": {
+      "subject": "Potrebna je radnja: porudžbinu #{orderNumber} nije bilo moguće poslati vozaču",
+      "preview": "Porudžbina #{orderNumber} — slanje nije uspelo, vozač još nije dodeljen",
+      "headerTitle": "Slanje vozaču nije uspelo",
+      "subtitle": "Porudžbina #{orderNumber}",
+      "badge": "Potrebna radnja",
+      "body": "Pokušali smo da pošaljemo porudžbinu #{orderNumber} za {customerName} vašem dostavljaču, ali je odbijena. Vozač još nije dodeljen, a kupac čeka.",
+      "reasonLabel": "Razlog",
+      "actionLine": "Koristite dugme \"Pošalji na ShipDay\" na porudžbini za novi pokušaj, ili organizujte dostavu sopstvenim vozačima.",
+      "viewOrderButton": "Pogledaj porudžbinu"
     }
   },
   "marketing": {

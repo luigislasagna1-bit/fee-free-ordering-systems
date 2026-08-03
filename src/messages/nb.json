@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Månedlig sluttrapport",
       "testEmail": "Send teste-post",
       "noRecipients": "Ingen ansattemottakere ennå",
-      "customerSignup": "Ny kunderegistrering"
+      "customerSignup": "Ny kunderegistrering",
+      "dispatchRejected": "Sjåførtildeling mislyktes"
     },
     "receipts": {
       "title": "Kvitteringer",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Ennå ikke kontrollert i VIES",
       "viesVerifyNow": "Kontroller nå",
       "viesUnreachable": "VIES-tjenesten er midlertidig utilgjengelig — prøv igjen om noen minutter.",
-      "euVatNote": "EU-bedrifter: et VIES-registrert MVA-nummer kreves for betalte abonnementer. Validerte numre faktureres med 0 % MVA (omvendt avgiftsplikt)."
+      "euVatNote": "EU-bedrifter: et VIES-registrert MVA-nummer kreves for betalte abonnementer. Validerte numre faktureres med 0 % MVA (omvendt avgiftsplikt).",
+      "useCardForAllSubscriptions": "Bruk dette kortet til alle abonnementer",
+      "useCardForAllSubscriptionsHint": "Peker alle tilleggsabonnementer — selv de som startet med et annet kort — mot dette kortet, slik at en fornyelse aldri blir glemt.",
+      "applyCardSuccess": "{count, plural, one {Brukt på # abonnement.} other {Brukt på # abonnementer.}}",
+      "applyCardNoneToUpdate": "Du har ingen andre abonnementer å oppdatere.",
+      "applyCardNoCardError": "Lagre et kort først, og prøv igjen.",
+      "applyCardError": "Abonnementene dine kunne ikke oppdateres. Prøv igjen."
     },
     "addOns": {
       "errorCheckout": "Kunne ikke starte betaling",
@@ -5946,6 +5953,17 @@
       "subject": "Velkommen til {groupName} hos {restaurantName}",
       "usageAccount": "Fordelene dine brukes automatisk når du bestiller — bare logg inn først.",
       "usageGuest": "Rabatter fra denne gruppen legges til for deg i kassen når du oppgir denne e-postadressen ({email}). Vil du også opptjene og bruke {label}, må du opprette din gratis konto med samme adresse og logge inn før du bestiller — tilgodehavende kan bare ligge på en konto."
+    },
+    "dispatchRejected": {
+      "subject": "Handling nødvendig: bestilling #{orderNumber} kunne ikke sendes til en sjåfør",
+      "preview": "Bestilling #{orderNumber} — sending mislyktes, ingen sjåfør tildelt ennå",
+      "headerTitle": "Sjåførtildeling mislyktes",
+      "subtitle": "Bestilling #{orderNumber}",
+      "badge": "Handling kreves",
+      "body": "Vi prøvde å sende bestilling #{orderNumber} for {customerName} til leveringspartneren din, men den ble avvist. Ingen sjåfør er tildelt ennå, og kunden venter.",
+      "reasonLabel": "Årsak",
+      "actionLine": "Bruk knappen «Send til ShipDay» på bestillingen for å prøve igjen, eller ordne levering med dine egne sjåfører.",
+      "viewOrderButton": "Se bestilling"
     }
   },
   "marketing": {
