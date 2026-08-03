@@ -55,9 +55,29 @@ const nextConfig: NextConfig = {
       { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "Content-Security-Policy", value: "frame-ancestors 'self'" },
     ];
+    // Gift Wallet Pass claim page (2026-08-03): `/order/:slug/gift/*` is a
+    // subpath of `/order`, so the negative lookahead above never matches it —
+    // it is exempt from BOTH SECURITY_HEADERS' frame protection AND anything
+    // else scoped to non-order paths, same as every other /order page. This
+    // page carries a one-shot claim form for a bearer credential, so it gets
+    // its OWN strictly-stronger rule (verified: two matching header entries
+    // for the same key resolve to the LAST one in this array winning — so
+    // this must come after the two rules above, not before, to actually take
+    // effect over anything that might otherwise apply). DENY, not SAMEORIGIN
+    // — this page must never be frameable at all, not even by our own embed
+    // widget, and no-referrer + no-store + noindex on top since the URL
+    // fragment can carry the code.
+    const GIFT_CLAIM_HEADERS = [
+      { key: "X-Frame-Options", value: "DENY" },
+      { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+      { key: "Referrer-Policy", value: "no-referrer" },
+      { key: "X-Robots-Tag", value: "noindex, nofollow" },
+      { key: "Cache-Control", value: "no-store, no-cache, must-revalidate" },
+    ];
     return [
       { source: "/(.*)", headers: SECURITY_HEADERS },
       { source: "/((?!embed|order).*)", headers: FRAME_HEADERS },
+      { source: "/order/:slug/gift/:path*", headers: GIFT_CLAIM_HEADERS },
     ];
   },
 };

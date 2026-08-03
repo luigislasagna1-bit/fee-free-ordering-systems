@@ -5143,7 +5143,13 @@
       "giftResent": "Norādījumi nosūtīti vēlreiz.",
       "giftResendTooSoon": "Tikko nosūtīts — pagaidiet minūti, pirms sūtāt vēlreiz.",
       "giftAlreadyPending": "Viņam jau ir {amount} {label}, kas gaida saņemšanu. Nosūtiet norādījumus vēlreiz ar ✉ pogu zemāk vai vispirms atceliet to dāvanu.",
-      "giftBlockedTitle": "{email} jau ir dāvana, kas gaida saņemšanu"
+      "giftBlockedTitle": "{email} jau ir dāvana, kas gaida saņemšanu",
+      "giftRevokeConfirm": "Atcelt šo dāvanu? Visi tai aktīvie izmantošanas kodi tiks nekavējoties deaktivizēti — to nevar atsaukt.",
+      "codeHint": "Kods: ····{hint}",
+      "codeStatusActive": "kods aktīvs",
+      "codeStatusExpired": "kodam beidzies termiņš",
+      "codeStatusRevoked": "kods atcelts",
+      "codeExpires": "derīgs līdz {date}"
     },
     "imageCrop": {
       "title": "Pielāgojiet foto",
@@ -5924,7 +5930,20 @@
       "step2Title": "Jūsu {amount} parādīsies automātiski",
       "step2Body": "Tiklīdz pabeigsiet reģistrāciju, kredīts būs jūsu kontā. Nekāds kods nav jāievada.",
       "step3Title": "Tērējiet, kad vien vēlaties",
-      "step3Body": "Norēķinoties redzēsiet „Izmantojiet savus {label}“. Novirziet pasūtījumam tik daudz vai tik maz, cik vēlaties — pārējo vienkārši samaksājiet kā parasti. Derīguma termiņa nav, tāpēc atlikums saglabājas, līdz to gribēsiet izmantot."
+      "step3Body": "Norēķinoties redzēsiet „Izmantojiet savus {label}“. Novirziet pasūtījumam tik daudz vai tik maz, cik vēlaties — pārējo vienkārši samaksājiet kā parasti. Derīguma termiņa nav, tāpēc atlikums saglabājas, līdz to gribēsiet izmantot.",
+      "whatItIsSpend": "{label} ir kredīts restorānā {restaurantName} — tie tiek atskaitīti tieši no jūsu rēķina, tāpat kā dāvanu karte. Šo varat izmantot uzreiz, konts nav nepieciešams:",
+      "step1TitleSpend": "Pieskarieties zemāk redzamajai pogai",
+      "step1BodySpend": "Tā atver jūsu dāvanu, kas jau ir atbloķēta — bez pieteikšanās, bez paroles.",
+      "step2TitleSpend": "Jūsu {amount} jau ir tur",
+      "step2BodySpend": "Savu atlikumu redzēsiet, tiklīdz atvērsies lapa.",
+      "step3TitleSpend": "Pasūtiet un piemērojiet to pie kases",
+      "step3BodySpend": "Jūsu dāvana tiek piemērota automātiski — samaziniet vai noņemiet to, ja vēlaties to saglabāt vēlākam laikam.",
+      "spendCtaPrimary": "Izmantojiet savu {amount} tagad — konts nav nepieciešams",
+      "orTypeThisCode": "Vai ierakstiet šo kodu pie kases:",
+      "codeExpiryLine": "Šis kods darbojas līdz {date}. Ja tam beidzas derīgums, vienkārši palūdziet restorānam jaunu — jūsu dāvana pati par sevi nekad nebeidzas.",
+      "neverExpiresLine": "Jūsu {label} nekad nebeidzas, tikai šis kods.",
+      "doNotForwardLine": "Šī saite un kods ir tikai jums — lūdzu, nepārsūtiet šo e-pastu.",
+      "createAccountSecondary": "Vai izveidojiet bezmaksas kontu, lai to paturētu uz visiem laikiem"
     },
     "vipGroupWelcome": {
       "accountTip": "Lai krātu un tērētu {label}, izveidojiet bezmaksas kontu ar šo e-pasta adresi un pierakstieties katru reizi, kad pasūtāt — jūsu kredīts glabājas kontā, tāpēc, noformējot pasūtījumu, tas parādās tikai tad, ja esat pierakstījies.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "Jūsu {platform} lietotne ir pārtraukta",
       "suspendedBody": "Darbs pie {restaurant} lietotnes platformai {platform} ir apturēts. Iemeslu skatiet savas lietotnes statusa lapā vai atbildiet uz šo e-pastu, un mēs palīdzēsim to atsākt."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Dāvana no {restaurantName}",
+    "landingSubtitle": "Ievadiet zemāk savu kodu, lai to redzētu un izmantotu — konts nav nepieciešams.",
+    "codeLabel": "Dāvanas kods",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Ierakstiet kodu no sava e-pasta vai ielīmējiet to — defises un atstarpes nav svarīgas.",
+    "helpTipWhatIsThis": "Šis kods atver dāvanas atlikumu, kas nosūtīts uz jūsu e-pastu. Tas darbojas bez konta izveides, bet to var izmantot tikai šajā restorānā un vienlaikus tikai vienam pasūtījumam.",
+    "verifyButton": "Pārbaudīt manu dāvanu",
+    "giftFrom": "Dāvana no {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}“",
+    "claimButton": "Izmantot tagad",
+    "claiming": "Dāvana tiek atvērta…",
+    "successBanner": "Viss sagatavots — jūs tiekat pārvirzīts uz izvēlni…",
+    "bannerSpending": "Jūs izmantojat {restaurant} dāvanu",
+    "bannerBalance": "atlikums {balance}",
+    "checkoutCreditLabel": "Dāvanas kredīts",
+    "checkoutEmailLocked": "E-pasts piesaistīts jūsu dāvanai.",
+    "checkoutEmailLockedHelp": "Jūsu dāvana ir saistīta tieši ar šo e-pasta adresi. Lai izmantotu citu adresi, tā vietā izveidojiet bezmaksas kontu.",
+    "resendButton": "Sūtīt man jaunu kodu",
+    "resendSent": "Ja dāvana vēl gaida, jauns kods jau ir ceļā.",
+    "signUpInstead": "Vēlaties šo dāvanu paturēt uz visiem laikiem? <link>Tā vietā izveidojiet bezmaksas kontu</link>.",
+    "errInvalid": "Šis kods neizskatās pareizs. Pārbaudiet to un mēģiniet vēlreiz, vai zemāk pieprasiet jaunu kodu.",
+    "errExpired": "Šim kodam beidzies derīguma termiņš, bet jūsu dāvanai nē — pieprasiet jaunu kodu zemāk.",
+    "errRevoked": "Šo kodu atcēlis restorāns. Sazinieties ar viņiem, ja domājat, ka tā ir kļūda.",
+    "errAccountExists": "Labas ziņas — šai e-pasta adresei jau ir konts, un dāvana tajā jau ir. Pieteikieties, lai to izmantotu.",
+    "errRewardsOff": "Šī restorāna lojalitātes programma pašlaik nav pieejama.",
+    "errSuperseded": "Šī dāvana jau ir saņemta. Ja tas nebijāt jūs, sazinieties ar restorānu.",
+    "errTooManyAttempts": "Ar šo kodu ir bijuši pārāk daudz mēģinājumu. Palūdziet restorānam nosūtīt jums jaunu.",
+    "errRateLimited": "Pārāk daudz mēģinājumu — lūdzu, uzgaidiet mirkli un mēģiniet vēlreiz.",
+    "errEmailMismatch": "Šis e-pasts neatbilst šai dāvanai. Pamēģiniet adresi, uz kuru dāvana tika nosūtīta.",
+    "errGeneric": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz pēc mirkļa."
   }
 }

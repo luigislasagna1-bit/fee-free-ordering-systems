@@ -5143,7 +5143,13 @@
       "personalRateTitle": "Kohandatud teenimismäär",
       "personalRateDesc": "See klient teenib igalt tellimuselt selle protsendi {label} kujul — baasmäära ja iga VIP-rühma määra asemel.",
       "ratePlaceholder": "Baasmäär",
-      "rateClear": "Eemalda kohandatud määr"
+      "rateClear": "Eemalda kohandatud määr",
+      "giftRevokeConfirm": "Tühistada see kingitus? Kõik selle aktiivsed kasutuskoodid tühistatakse kohe — seda ei saa tagasi võtta.",
+      "codeHint": "Kood: ····{hint}",
+      "codeStatusActive": "kood aktiivne",
+      "codeStatusExpired": "kood aegunud",
+      "codeStatusRevoked": "kood tühistatud",
+      "codeExpires": "kehtib kuni {date}"
     },
     "imageCrop": {
       "title": "Kohanda fotot",
@@ -5924,7 +5930,20 @@
       "step3Title": "Kasuta seda siis, kui ise soovid",
       "step3Body": "Maksmisel näed valikut „Kasuta oma {label}“. Suuna tellimuse katteks nii palju või nii vähe, kui soovid — ülejäänu maksad tavapäraselt. Aegumistähtaega ei ole, nii et krediit ootab, kuni soovid seda kasutada.",
       "cta": "Loo konto",
-      "ignoreLine": "Kui sa seda kirja ei oodanud, võid selle rahulikult tähelepanuta jätta."
+      "ignoreLine": "Kui sa seda kirja ei oodanud, võid selle rahulikult tähelepanuta jätta.",
+      "whatItIsSpend": "{label} on krediit restoranis {restaurantName} — see läheb otse sinu arvest maha, nagu kinkekaart. Selle saad kasutada juba kohe, kontot vajamata:",
+      "step1TitleSpend": "Puuduta allolevat nuppu",
+      "step1BodySpend": "See avab sinu kingituse juba avatuna — sisselogimist ja parooli ei vaja.",
+      "step2TitleSpend": "Sinu {amount} on juba olemas",
+      "step2BodySpend": "Näed oma saldot kohe, kui leht avaneb.",
+      "step3TitleSpend": "Tee tellimus ja rakenda see kassas",
+      "step3BodySpend": "Kingitus rakendub automaatselt — vähenda või eemalda see, kui soovid selle hilisemaks alles hoida.",
+      "spendCtaPrimary": "Kasuta oma {amount} kohe — kontot ei vaja",
+      "orTypeThisCode": "Või sisesta see kood kassas:",
+      "codeExpiryLine": "See kood toimib kuni {date}. Kui see aegub, küsi restoranilt lihtsalt uus — sinu kingitus ise ei aegu kunagi.",
+      "neverExpiresLine": "Sinu {label} ei aegu kunagi, aegub ainult see kood.",
+      "doNotForwardLine": "See link ja kood on ainult sulle — palun ära edasta seda e-kirja.",
+      "createAccountSecondary": "Või loo tasuta konto, et see igaveseks alles hoida"
     },
     "vipGroupWelcome": {
       "accountTip": "Et {label} koguda ja kulutada, loo selle e-posti aadressiga tasuta konto ja logi iga tellimuse eel sisse — sinu krediit on kontol, seega ilmub see kassas ainult siis, kui oled sisse logitud.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "Teie {platform} rakendus on peatatud",
       "suspendedBody": "Rakenduse {restaurant} arendustöö platvormil {platform} on peatatud. Vaadake põhjust oma rakenduse olekulehelt või vastake sellele e-kirjale — aitame teil selle uuesti käima saada."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Kingitus restoranilt {restaurantName}",
+    "landingSubtitle": "Sisesta allpool oma kood, et seda vaadata ja kasutada — kontot ei vaja.",
+    "codeLabel": "Kinkekood",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Sisesta e-kirjas olnud kood või kleebi see — kriipsud ja tühikud ei loe.",
+    "helpTipWhatIsThis": "See kood avab e-kirjaga saadetud kinkesaldo. See toimib kontot loomata, kuid seda saab kasutada ainult selles restoranis ja korraga vaid ühe tellimuse peal.",
+    "verifyButton": "Kontrolli oma kingitust",
+    "giftFrom": "Kingitus restoranilt {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}“",
+    "claimButton": "Kasuta kohe",
+    "claiming": "Kingituse avamine…",
+    "successBanner": "Kõik on valmis — suunan sind menüüsse…",
+    "bannerSpending": "Kasutad restorani {restaurant} kingitust",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Kinkekrediit",
+    "checkoutEmailLocked": "E-post on lukustatud kingituse külge.",
+    "checkoutEmailLockedHelp": "Kingitus on seotud just selle e-posti aadressiga. Teise aadressi kasutamiseks loo selle asemel tasuta konto.",
+    "resendButton": "Saada mulle uus kood",
+    "resendSent": "Kui kingitus veel ootab, on uus kood juba teel.",
+    "signUpInstead": "Soovid kingituse igaveseks endale jätta? <link>Loo selle asemel tasuta konto</link>.",
+    "errInvalid": "See kood ei tundu õige olevat. Kontrolli seda ja proovi uuesti või küsi allpool uut koodi.",
+    "errExpired": "Kood on aegunud, kuid kingitus mitte — küsi allpool uut koodi.",
+    "errRevoked": "Restoran tühistas selle koodi. Võta nendega ühendust, kui arvad, et see on viga.",
+    "errAccountExists": "Head uudised — sellel e-posti aadressil on juba konto ja kingitus on juba selles. Logi sisse, et seda kasutada.",
+    "errRewardsOff": "Selle restorani boonusprogramm ei ole praegu saadaval.",
+    "errSuperseded": "Kingitus on juba kätte saadud. Kui see ei olnud sinu tegu, võta ühendust restoraniga.",
+    "errTooManyAttempts": "Selle koodiga on tehtud liiga palju katseid. Palu restoranil saata sulle uus.",
+    "errRateLimited": "Liiga palju katseid — palun oota veidi ja proovi uuesti.",
+    "errEmailMismatch": "See e-post ei sobi selle kingitusega. Proovi aadressi, kuhu kingitus saadeti.",
+    "errGeneric": "Midagi läks valesti. Palun proovi mõne hetke pärast uuesti."
   }
 }

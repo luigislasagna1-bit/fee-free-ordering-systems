@@ -5143,7 +5143,13 @@
       "personalRateTitle": "Egyéni gyűjtési arány",
       "personalRateDesc": "Ez az ügyfél minden rendelés után ennyi százalékot kap {label} formájában — az alapérték és minden VIP-csoportarány helyett.",
       "ratePlaceholder": "Alapérték",
-      "rateClear": "Egyéni arány törlése"
+      "rateClear": "Egyéni arány törlése",
+      "giftRevokeConfirm": "Törlöd ezt az ajándékot? Az összes hozzá tartozó aktív költési kód azonnal megszűnik — ez nem vonható vissza.",
+      "codeHint": "Kód: ····{hint}",
+      "codeStatusActive": "kód aktív",
+      "codeStatusExpired": "kód lejárt",
+      "codeStatusRevoked": "kód visszavonva",
+      "codeExpires": "lejár: {date}"
     },
     "imageCrop": {
       "title": "Fotó igazítása",
@@ -5924,7 +5930,20 @@
       "step3Title": "Költse el, amikor csak szeretné",
       "step3Body": "A fizetésnél megjelenik a(z) „{label} felhasználása” lehetőség. Annyit fordíthat a rendelésre, amennyit szeretne — a maradékot egyszerűen a szokásos módon fizeti. Az egyenleg soha nem jár le, így megmarad, amíg fel nem szeretné használni.",
       "cta": "Létrehozom a fiókomat",
-      "ignoreLine": "Ha nem számított erre az üzenetre, nyugodtan hagyja figyelmen kívül ezt az e-mailt."
+      "ignoreLine": "Ha nem számított erre az üzenetre, nyugodtan hagyja figyelmen kívül ezt az e-mailt.",
+      "whatItIsSpend": "A {label} egyenérték a {restaurantName} étteremben — közvetlenül levonódik a számládból, mint egy ajándékkártya. Ezt most azonnal elköltheted, fiók nélkül:",
+      "step1TitleSpend": "Koppints az alábbi gombra",
+      "step1BodySpend": "Megnyitja az ajándékodat, már feloldva — nincs bejelentkezés, nincs jelszó.",
+      "step2TitleSpend": "A {amount} máris ott van",
+      "step2BodySpend": "Az egyenlegedet azonnal látni fogod, amint megnyílik az oldal.",
+      "step3TitleSpend": "Rendelj, és érvényesítsd fizetéskor",
+      "step3BodySpend": "Az ajándékod automatikusan érvényesítve lesz — csökkentheted vagy eltávolíthatod, ha inkább későbbre szeretnéd megtartani.",
+      "spendCtaPrimary": "Költsd el a {amount}-t most — fiók nélkül",
+      "orTypeThisCode": "Vagy írd be ezt a kódot fizetéskor:",
+      "codeExpiryLine": "Ez a kód {date}-ig érvényes. Ha lejár, csak kérj egy újat az étteremtől — az ajándékod maga soha nem jár le.",
+      "neverExpiresLine": "A {label} soha nem jár le, csak ez a kód.",
+      "doNotForwardLine": "Ez a link és kód csak neked szól — kérjük, ne továbbítsd ezt az e-mailt.",
+      "createAccountSecondary": "Vagy hozz létre egy ingyenes fiókot, hogy örökre megtartsd"
     },
     "vipGroupWelcome": {
       "accountTip": "Ahhoz, hogy {label} egyenleget gyűjthessen és elkölthessen, hozzon létre ezzel az e-mail-címmel egy ingyenes fiókot, és minden rendelés előtt jelentkezzen be — az egyenlege a fiókjában él, ezért a fizetésnél csak bejelentkezve jelenik meg.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "A(z) {platform} alkalmazásod szünetel",
       "suspendedBody": "A(z) {restaurant} alkalmazásán végzett munka szünetel a(z) {platform} platformon. Az okot az alkalmazás állapotoldalán találja, vagy válaszoljon erre az e-mailre, és segítünk újra elindítani a folyamatot."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Ajándék a {restaurantName} részéről",
+    "landingSubtitle": "Írd be lent a kódodat, hogy megnézd és elköltsd — nincs szükség fiókra.",
+    "codeLabel": "Ajándékkód",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Írd be az e-mailben kapott kódot, vagy illeszd be — a kötőjelek és szóközök nem számítanak.",
+    "helpTipWhatIsThis": "Ez a kód feloldja az e-mailedre küldött ajándékegyenleget. Fiók létrehozása nélkül is működik, de csak ebben az étteremben és csak egy rendelésre költhető el egyszerre.",
+    "verifyButton": "Ajándékom ellenőrzése",
+    "giftFrom": "Ajándék a {restaurantName} részéről",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}”",
+    "claimButton": "Elköltöm most",
+    "claiming": "Ajándékod feloldása…",
+    "successBanner": "Minden készen áll — irányítunk az étlaphoz…",
+    "bannerSpending": "A {restaurant} ajándékát költöd el",
+    "bannerBalance": "egyenleg {balance}",
+    "checkoutCreditLabel": "Ajándékkredit",
+    "checkoutEmailLocked": "Az e-mail cím az ajándékodhoz van rögzítve.",
+    "checkoutEmailLockedHelp": "Az ajándékod ehhez a pontos e-mail címhez van kötve. Ha másik címet szeretnél használni, hozz létre inkább egy ingyenes fiókot.",
+    "resendButton": "Küldj új kódot",
+    "resendSent": "Ha az ajándék még vár rád, egy új kód már úton van.",
+    "signUpInstead": "Inkább örökre megtartanád ezt az ajándékot? <link>Hozz létre helyette egy ingyenes fiókot</link>.",
+    "errInvalid": "Ez a kód nem tűnik helyesnek. Ellenőrizd, és próbáld újra, vagy kérj egy újat lent.",
+    "errExpired": "Ez a kód lejárt, de az ajándékod nem — kérj új kódot lent.",
+    "errRevoked": "Ezt a kódot az étterem visszavonta. Vedd fel velük a kapcsolatot, ha ezt hibának gondolod.",
+    "errAccountExists": "Jó hír — ehhez az e-mail címhez már van fiók, és az ajándék már benne van. Jelentkezz be, hogy elköltsd.",
+    "errRewardsOff": "Ennek az étteremnek a hűségprogramja jelenleg nem elérhető.",
+    "errSuperseded": "Ezt az ajándékot már felhasználták. Ha nem te voltál, vedd fel a kapcsolatot az étteremmel.",
+    "errTooManyAttempts": "Túl sok próbálkozás ezzel a kóddal. Kérd meg az éttermet, hogy küldjön egy újat.",
+    "errRateLimited": "Túl sok próbálkozás — kérjük, várj egy pillanatot, és próbáld újra.",
+    "errEmailMismatch": "Ez az e-mail cím nem egyezik az ajándékkal. Próbáld meg azt a címet, amelyre az ajándékot küldték.",
+    "errGeneric": "Valami hiba történt. Kérjük, próbáld újra egy pillanat múlva."
   }
 }

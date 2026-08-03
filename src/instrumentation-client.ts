@@ -16,6 +16,7 @@
 // load happened on.
 // ─────────────────────────────────────────────────────────────────────────
 import * as Sentry from "@sentry/nextjs";
+import { scrubSentryEvent, scrubSentryBreadcrumb } from "@/lib/sentry-scrub";
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -37,6 +38,14 @@ Sentry.init({
     process.env.NODE_ENV === "production" ||
     process.env.NEXT_PUBLIC_SENTRY_FORCE_ENABLE === "1",
   environment: process.env.NEXT_PUBLIC_VERCEL_ENV || process.env.NODE_ENV,
+  // Gift Wallet Pass (2026-08-03): the claim page carries the code in the
+  // URL FRAGMENT (`#g=...`), which `window.location` — and therefore
+  // Sentry's captured request/breadcrumb/transaction URLs — includes.
+  // `maskAllText` above masks DOM text, not URLs, so without this a live
+  // code would ship to sentry.io on the first captured error there.
+  beforeSend: (event) => scrubSentryEvent(event),
+  beforeSendTransaction: (event) => scrubSentryEvent(event),
+  beforeBreadcrumb: (breadcrumb) => scrubSentryBreadcrumb(breadcrumb),
 });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

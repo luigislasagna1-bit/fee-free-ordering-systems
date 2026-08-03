@@ -40,13 +40,25 @@ export async function claimPendingGiftsFor(opts: {
   restaurantId: string;
   customerId: string;
   email: string;
+  /** Scope the claim to specific grant ids only (Gift Wallet Pass exchange).
+   *  Absent = today's behaviour exactly: every pending gift for the email is
+   *  claimed. When present, ONLY those grant ids are eligible — so one
+   *  leaked/forwarded pass code can never sweep every outstanding gift for
+   *  that address into one wallet, it can only claim the single gift it was
+   *  issued for. */
+  grantIds?: string[];
 }): Promise<{ claimed: number; totalAmount: number }> {
   const email = opts.email.trim().toLowerCase();
   let claimed = 0;
   let totalAmount = 0;
   try {
     const pending = await prisma.pendingRewardGrant.findMany({
-      where: { restaurantId: opts.restaurantId, email, status: "pending" },
+      where: {
+        restaurantId: opts.restaurantId,
+        email,
+        status: "pending",
+        ...(opts.grantIds && opts.grantIds.length > 0 ? { id: { in: opts.grantIds } } : {}),
+      },
       select: { id: true, amount: true, note: true },
       take: 50, // sanity bound; one person never has more than a handful
     });

@@ -5143,7 +5143,13 @@
       "personalRateTitle": "Niestandardowa stawka naliczania",
       "personalRateDesc": "Ten klient otrzymuje ten procent w {label} przy każdym zamówieniu — zamiast stawki podstawowej i każdej stawki grupy VIP.",
       "ratePlaceholder": "Stawka podstawowa",
-      "rateClear": "Usuń stawkę niestandardową"
+      "rateClear": "Usuń stawkę niestandardową",
+      "giftRevokeConfirm": "Anulować ten prezent? Każdy aktywny kod do wykorzystania zostanie natychmiast unieważniony — nie można tego odwrócić.",
+      "codeHint": "Kod: ····{hint}",
+      "codeStatusActive": "kod aktywny",
+      "codeStatusExpired": "kod wygasł",
+      "codeStatusRevoked": "kod anulowany",
+      "codeExpires": "wygasa {date}"
     },
     "imageCrop": {
       "title": "Dopasuj zdjęcie",
@@ -5924,7 +5930,20 @@
       "step3Title": "Wykorzystaj je, kiedy zechcesz",
       "step3Body": "Przy płatności zobaczysz „Wykorzystaj swoje {label}”. Przeznacz na zamówienie tyle, ile chcesz — resztę po prostu dopłacasz jak zawsze. Środki nie mają terminu ważności, więc poczekają, aż zechcesz ich użyć.",
       "cta": "Załóż konto",
-      "ignoreLine": "Jeśli nie spodziewasz się tej wiadomości, możesz ją po prostu zignorować."
+      "ignoreLine": "Jeśli nie spodziewasz się tej wiadomości, możesz ją po prostu zignorować.",
+      "whatItIsSpend": "{label} to środki do wykorzystania w {restaurantName} — odejmowane bezpośrednio od Twojego rachunku, tak jak karta podarunkowa. Możesz wykorzystać je już teraz, konto nie jest potrzebne:",
+      "step1TitleSpend": "Kliknij przycisk poniżej",
+      "step1BodySpend": "Otworzy on Twój prezent, już odblokowany — bez logowania, bez hasła.",
+      "step2TitleSpend": "Twoje {amount} już tam jest",
+      "step2BodySpend": "Zobaczysz swoje saldo, jak tylko otworzy się strona.",
+      "step3TitleSpend": "Zamów i wykorzystaj je przy kasie",
+      "step3BodySpend": "Twój prezent jest stosowany automatycznie — zmniejsz go lub usuń, jeśli chcesz zachować go na później.",
+      "spendCtaPrimary": "Wykorzystaj swoje {amount} teraz — konto nie jest potrzebne",
+      "orTypeThisCode": "Albo wpisz ten kod przy kasie:",
+      "codeExpiryLine": "Ten kod działa do {date}. Jeśli wygaśnie, po prostu poproś restaurację o nowy — sam prezent nigdy nie wygasa.",
+      "neverExpiresLine": "Twoje {label} nigdy nie wygasają, wygasa tylko ten kod.",
+      "doNotForwardLine": "Ten link i kod są tylko dla Ciebie — proszę, nie przesyłaj dalej tego e-maila.",
+      "createAccountSecondary": "Albo załóż bezpłatne konto, aby zachować je na zawsze"
     },
     "vipGroupWelcome": {
       "accountTip": "Aby zbierać i wydawać {label}, załóż darmowe konto z tym adresem e-mail i loguj się przy każdym zamówieniu — Twoje środki są zapisane na koncie, więc pojawiają się przy płatności tylko po zalogowaniu.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "Twoja aplikacja na {platform} jest wstrzymana",
       "suspendedBody": "Prace nad aplikacją {restaurant} dla platformy {platform} zostały wstrzymane. Sprawdź powód na stronie statusu aplikacji lub odpowiedz na tę wiadomość e-mail, a pomożemy Ci wznowić proces."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Prezent od {restaurantName}",
+    "landingSubtitle": "Wpisz swój kod poniżej, aby zobaczyć go i wykorzystać — konto nie jest potrzebne.",
+    "codeLabel": "Kod prezentu",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Wpisz kod z e-maila lub go wklej — myślniki i spacje nie mają znaczenia.",
+    "helpTipWhatIsThis": "Ten kod odblokowuje saldo prezentu wysłane na Twój e-mail. Działa bez zakładania konta, ale można go wykorzystać tylko w tej restauracji i tylko na jedno zamówienie na raz.",
+    "verifyButton": "Sprawdź mój prezent",
+    "giftFrom": "Prezent od {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}”",
+    "claimButton": "Wykorzystaj teraz",
+    "claiming": "Odblokowujemy Twój prezent…",
+    "successBanner": "Wszystko gotowe — przenosimy Cię do menu…",
+    "bannerSpending": "Wykorzystujesz prezent od {restaurant}",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Środki z prezentu",
+    "checkoutEmailLocked": "E-mail przypisany do Twojego prezentu.",
+    "checkoutEmailLockedHelp": "Twój prezent jest przypisany do tego konkretnego adresu e-mail. Aby użyć innego adresu, załóż bezpłatne konto.",
+    "resendButton": "Wyślij mi nowy kod",
+    "resendSent": "Jeśli ten prezent wciąż czeka, nowy kod jest już w drodze.",
+    "signUpInstead": "Chcesz zachować ten prezent na zawsze? <link>Załóż bezpłatne konto</link>.",
+    "errInvalid": "Ten kod nie wygląda poprawnie. Sprawdź go i spróbuj ponownie albo poproś o nowy poniżej.",
+    "errExpired": "Ten kod wygasł, ale Twój prezent nie — poproś o nowy kod poniżej.",
+    "errRevoked": "Ten kod został anulowany przez restaurację. Skontaktuj się z nią, jeśli uważasz, że to błąd.",
+    "errAccountExists": "Dobra wiadomość — ten e-mail ma już konto, a prezent jest już na nim. Zaloguj się, aby go wykorzystać.",
+    "errRewardsOff": "Program nagród tej restauracji jest teraz niedostępny.",
+    "errSuperseded": "Ten prezent został już odebrany. Jeśli to nie Ty, skontaktuj się z restauracją.",
+    "errTooManyAttempts": "Za dużo prób z tym kodem. Poproś restaurację o wysłanie nowego.",
+    "errRateLimited": "Za dużo prób — chwilę odczekaj i spróbuj ponownie.",
+    "errEmailMismatch": "Ten e-mail nie zgadza się z tym prezentem. Spróbuj adresu, na który wysłano prezent.",
+    "errGeneric": "Coś poszło nie tak. Spróbuj ponownie za chwilę."
   }
 }

@@ -5143,7 +5143,13 @@
       "giftResent": "说明已再次发送。",
       "giftResendTooSoon": "刚刚才发送过——请稍等一分钟再发。",
       "giftAlreadyPending": "对方已有 {amount} 的 {label} 等待领取。可用下方的 ✉ 按钮重新发送说明，或先取消那份赠礼。",
-      "giftBlockedTitle": "{email} 已有一份待领取的赠礼"
+      "giftBlockedTitle": "{email} 已有一份待领取的赠礼",
+      "giftRevokeConfirm": "取消此礼物？其对应的有效兑换码将立即失效——此操作无法撤销。",
+      "codeHint": "兑换码：····{hint}",
+      "codeStatusActive": "兑换码有效",
+      "codeStatusExpired": "兑换码已过期",
+      "codeStatusRevoked": "兑换码已取消",
+      "codeExpires": "有效期至 {date}"
     },
     "imageCrop": {
       "title": "调整您的照片",
@@ -5924,7 +5930,20 @@
       "step2Title": "您的 {amount} 会自动到账",
       "step2Body": "注册完成的那一刻，额度就已在您的账户里，无需输入任何代码。",
       "step3Title": "随时想用就用",
-      "step3Body": "在结账页面您会看到“使用您的{label}”。用多用少都由您决定——剩下的金额照常支付即可。额度永不过期，什么时候想用都可以。"
+      "step3Body": "在结账页面您会看到“使用您的{label}”。用多用少都由您决定——剩下的金额照常支付即可。额度永不过期，什么时候想用都可以。",
+      "whatItIsSpend": "{label} 是 {restaurantName} 的消费余额——可直接抵扣账单，就像礼品卡一样。您现在就可以使用，无需注册账户：",
+      "step1TitleSpend": "点击下方按钮",
+      "step1BodySpend": "即可打开已解锁的礼物——无需登录，无需密码。",
+      "step2TitleSpend": "您的 {amount} 已经到账",
+      "step2BodySpend": "页面打开后即可看到您的余额。",
+      "step3TitleSpend": "下单并在结账时使用",
+      "step3BodySpend": "您的礼物将自动抵扣——如需留待以后使用，也可减少金额或取消抵扣。",
+      "spendCtaPrimary": "立即使用您的 {amount}——无需注册账户",
+      "orTypeThisCode": "或在结账时输入此兑换码：",
+      "codeExpiryLine": "此兑换码有效期至 {date}。如已过期，只需向餐厅索取新的兑换码——您的礼物本身永不过期。",
+      "neverExpiresLine": "您的 {label} 永不过期，只有此兑换码会过期。",
+      "doNotForwardLine": "此链接和兑换码仅供您本人使用——请勿转发此邮件。",
+      "createAccountSecondary": "或创建免费账户以永久保留"
     },
     "vipGroupWelcome": {
       "accountTip": "若要累积和使用{label}，请用此邮箱地址创建您的免费账户，并在每次下单前登录——您的余额存放在账户里，只有登录后才会在结账时显示。",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "您的 {platform} 应用已暂停",
       "suspendedBody": "{platform}上{restaurant}应用的开发工作已暂停。请前往应用状态页面查看具体原因，或直接回复此邮件，我们将协助您继续推进。"
     }
+  },
+  "giftPass": {
+    "landingTitle": "来自 {restaurantName} 的礼物",
+    "landingSubtitle": "输入您的兑换码即可查看和使用余额——无需注册账户。",
+    "codeLabel": "礼品码",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "输入邮件中的兑换码，或直接粘贴——短横线和空格不影响识别。",
+    "helpTipWhatIsThis": "此兑换码可解锁发送到您邮箱的礼品余额。无需注册账户即可使用，但只能在本餐厅使用，且每次只能用于一笔订单。",
+    "verifyButton": "查看我的礼物",
+    "giftFrom": "来自 {restaurantName} 的礼物",
+    "giftAmount": "{amount}",
+    "giftNote": "“{note}”",
+    "claimButton": "立即使用",
+    "claiming": "正在解锁您的礼物……",
+    "successBanner": "一切就绪——正在带您前往菜单……",
+    "bannerSpending": "您正在使用 {restaurant} 的礼物",
+    "bannerBalance": "余额 {balance}",
+    "checkoutCreditLabel": "礼品余额",
+    "checkoutEmailLocked": "邮箱已锁定至您的礼物。",
+    "checkoutEmailLockedHelp": "您的礼物与此邮箱地址绑定。若需使用其他邮箱，请改为创建免费账户。",
+    "resendButton": "给我发送新兑换码",
+    "resendSent": "如果该礼物仍在等待兑换，新的兑换码即将发送给您。",
+    "signUpInstead": "想永久保留这份礼物？<link>改为创建免费账户</link>。",
+    "errInvalid": "该兑换码似乎不正确。请仔细核对后重试，或在下方申请新的兑换码。",
+    "errExpired": "此兑换码已过期，但您的礼物依然有效——请在下方申请新的兑换码。",
+    "errRevoked": "此兑换码已被餐厅取消。如果您认为这是误操作，请联系餐厅。",
+    "errAccountExists": "好消息——该邮箱已注册账户，礼物已存入其中。请登录以使用。",
+    "errRewardsOff": "该餐厅的会员奖励计划目前不可用。",
+    "errSuperseded": "此礼物已被领取。如果不是您本人操作，请联系餐厅。",
+    "errTooManyAttempts": "此兑换码尝试次数过多。请让餐厅为您发送一个新的兑换码。",
+    "errRateLimited": "尝试次数过多——请稍等片刻后再试。",
+    "errEmailMismatch": "该邮箱与此礼物不匹配。请尝试使用收到礼物的邮箱地址。",
+    "errGeneric": "出了点问题，请稍后再试。"
   }
 }

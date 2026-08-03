@@ -8,6 +8,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
+import { revokeGiftWalletPassForGrant } from "@/lib/gift-wallet-pass";
 
 export async function POST(_req: Request, ctx: { params: Promise<{ id: string }> }) {
   const user = await getSessionUser();
@@ -26,5 +27,10 @@ export async function POST(_req: Request, ctx: { params: Promise<{ id: string }>
     if (!exists) return NextResponse.json({ error: "Not found" }, { status: 404 });
     return NextResponse.json({ error: "not_pending", code: "not_pending", status: exists.status }, { status: 409 });
   }
+  // On a successful flip, kill any already-emailed Gift Wallet Pass code
+  // instantly — a revoked gift must not remain spendable via a code someone
+  // already has. No clawback branch here (deliberately out of scope): if the
+  // pass was already exchanged and spent, that credit is gone regardless.
+  await revokeGiftWalletPassForGrant(id, "gift_revoked");
   return NextResponse.json({ ok: true });
 }

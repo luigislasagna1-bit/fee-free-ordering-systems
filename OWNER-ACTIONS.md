@@ -72,6 +72,31 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A42. 🎁 Gift Wallet Pass BUILT — one env-var chore + a runbook note (2026-08-03)
+Built the no-account spend path for gifted Reward Dollars (DESIGN-gift-wallet-pass.md): a recipient
+can now click a link or type a 16-character code from the gift email and spend the balance
+immediately — no signup, no password. Lives in a worktree, not yet merged to `main`
+(`.claude/worktrees/agent-a6ab6708f7c491cc4`, branch `worktree-agent-a6ab6708f7c491cc4`) — review
+and merge when ready.
+
+**YOUR PART — one required chore before this is safe in production at scale:**
+1. ☐ **Set `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN` (or Vercel KV's
+   `KV_REST_API_URL`/`KV_REST_API_TOKEN`) in Vercel prod**, if not already set. Without them,
+   `rateLimitShared` (used by the new `/api/public/gift-pass/*` endpoints) degrades to a
+   per-Vercel-isolate in-memory limiter and **fails open** on any store error (rate-limit.ts:78-86,
+   111) — it's real defence-in-depth, not the security boundary (the 80-bit code entropy is), but a
+   targeted attacker across many isolates is only bounded properly once this is set.
+2. ☐ **A domain-switch runbook line:** if you ever cut a restaurant over to a new `customDomain`,
+   any Gift Wallet Pass links already emailed under the OLD host break (the cookie is host-only by
+   design). Recovery is one click: admin → Reward Dollars → the ✉ Resend button on that gift's row
+   mints a fresh code/link on the new host. Worth remembering the next time a domain cutover
+   happens — nothing to do right now.
+
+**Schema note (not yet pushed):** added `GiftWalletPass` (new table, additive-only — nothing added
+to `Order`/`Customer`/`MenuItem`). Someone needs to run `npx tsx scripts/push-schema-to-both.ts`
+against BOTH Neon branches before this deploys — I did not run it from the worktree per the
+standing rule (schema pushes are a deliberate, reviewed action).
+
 ### A41. 🟡 Google Cloud alert — Function CPU Duration spiked 13× (2026-08-02, ~20:15 UTC)
 Medium-severity anomaly email from Google Cloud, project **fee-free-ordering-systems**: a Cloud
 Function's CPU duration jumped from ~0 hours/5min average (past 7 days) to 0.05 hours in the last

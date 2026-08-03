@@ -5143,7 +5143,13 @@
       "giftResent": "Istruzioni inviate di nuovo.",
       "giftResendTooSoon": "Appena inviate — aspetta un minuto prima di inviarle di nuovo.",
       "giftAlreadyPending": "Ha già {amount} in {label} in attesa di essere ritirati. Invia di nuovo le istruzioni con il pulsante ✉ qui sotto, oppure annulla prima quel regalo.",
-      "giftBlockedTitle": "{email} ha già un regalo in attesa di essere ritirato"
+      "giftBlockedTitle": "{email} ha già un regalo in attesa di essere ritirato",
+      "giftRevokeConfirm": "Annullare questo regalo? Ogni codice di spesa attivo viene disattivato immediatamente — non è reversibile.",
+      "codeHint": "Codice: ····{hint}",
+      "codeStatusActive": "codice attivo",
+      "codeStatusExpired": "codice scaduto",
+      "codeStatusRevoked": "codice annullato",
+      "codeExpires": "scade il {date}"
     },
     "imageCrop": {
       "title": "Regola la foto",
@@ -5924,7 +5930,20 @@
       "step2Title": "Il tuo credito di {amount} compare da solo",
       "step2Body": "Appena completi la registrazione, il credito è già nel tuo account. Non c'è nessun codice da inserire.",
       "step3Title": "Spendilo quando vuoi",
-      "step3Body": "Al momento del pagamento vedrai «Usa il tuo {label}». Usane quanti vuoi per questo ordine — il resto lo paghi normalmente. Non ci sono scadenze, quindi il credito resta lì finché non ti serve."
+      "step3Body": "Al momento del pagamento vedrai «Usa il tuo {label}». Usane quanti vuoi per questo ordine — il resto lo paghi normalmente. Non ci sono scadenze, quindi il credito resta lì finché non ti serve.",
+      "whatItIsSpend": "{label} è credito da {restaurantName} — viene scalato direttamente dal conto, come una carta regalo. Puoi spendere questo subito, senza account:",
+      "step1TitleSpend": "Tocca il bottone qui sotto",
+      "step1BodySpend": "Apre il tuo regalo, già sbloccato — nessun accesso, nessuna password.",
+      "step2TitleSpend": "I tuoi {amount} sono già lì",
+      "step2BodySpend": "Vedrai il tuo saldo appena si apre la pagina.",
+      "step3TitleSpend": "Ordina e applicalo al checkout",
+      "step3BodySpend": "Il tuo regalo viene applicato automaticamente — riducilo o rimuovilo se preferisci conservarlo per dopo.",
+      "spendCtaPrimary": "Spendi i tuoi {amount} ora — nessun account necessario",
+      "orTypeThisCode": "Oppure digita questo codice al checkout:",
+      "codeExpiryLine": "Questo codice funziona fino al {date}. Se scade, chiedi semplicemente un nuovo codice al ristorante — il tuo regalo non scade mai.",
+      "neverExpiresLine": "I tuoi {label} non scadono mai, solo questo codice lo fa.",
+      "doNotForwardLine": "Questo link e questo codice sono solo per te — per favore non inoltrare questa email.",
+      "createAccountSecondary": "Oppure crea un account gratuito per conservarlo per sempre"
     },
     "vipGroupWelcome": {
       "accountTip": "Per accumulare e usare {label}, crea il tuo account gratuito con questo indirizzo email e accedi ogni volta che ordini: il tuo credito è legato all'account, quindi compare al checkout solo quando hai effettuato l'accesso.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "La tua app per {platform} è in pausa",
       "suspendedBody": "Il lavoro sull'app di {restaurant} per {platform} è stato messo in pausa. Controlla la pagina di stato della tua app per conoscerne il motivo, oppure rispondi a questa email e ti aiuteremo a farla ripartire."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Un regalo da {restaurantName}",
+    "landingSubtitle": "Inserisci il tuo codice qui sotto per vederlo e spenderlo — nessun account necessario.",
+    "codeLabel": "Codice regalo",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Digita il codice dalla tua email, oppure incollalo — trattini e spazi non contano.",
+    "helpTipWhatIsThis": "Questo codice sblocca un saldo regalo inviato alla tua email. Funziona senza creare un account, ma può essere spenso solo in questo ristorante e su un solo ordine alla volta.",
+    "verifyButton": "Controlla il mio regalo",
+    "giftFrom": "Un regalo da {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "«{note}»",
+    "claimButton": "Spendilo ora",
+    "claiming": "Sblocco del tuo regalo…",
+    "successBanner": "Fatto — ti portiamo al menù…",
+    "bannerSpending": "Stai spendendo il regalo di {restaurant}",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Credito regalo",
+    "checkoutEmailLocked": "Email bloccata sul tuo regalo.",
+    "checkoutEmailLockedHelp": "Il tuo regalo è legato a questo indirizzo email esatto. Per usarne un altro, crea invece un account gratuito.",
+    "resendButton": "Inviami un nuovo codice",
+    "resendSent": "Se quel regalo è ancora in attesa, un nuovo codice è in arrivo.",
+    "signUpInstead": "Preferisci conservare questo regalo per sempre? <link>Crea invece un account gratuito</link>.",
+    "errInvalid": "Questo codice non sembra corretto. Controllalo e riprova, oppure richiedine uno nuovo qui sotto.",
+    "errExpired": "Questo codice è scaduto, ma il tuo regalo no — richiedi un nuovo codice qui sotto.",
+    "errRevoked": "Questo codice è stato annullato dal ristorante. Contattalo se pensi sia un errore.",
+    "errAccountExists": "Buone notizie — questa email ha già un account e il regalo è già lì. Accedi per spenderlo.",
+    "errRewardsOff": "Il programma fedeltà di questo ristorante non è disponibile al momento.",
+    "errSuperseded": "Questo regalo è già stato riscattato. Se non sei stato tu, contatta il ristorante.",
+    "errTooManyAttempts": "Troppi tentativi con questo codice. Chiedi al ristorante di inviartene uno nuovo.",
+    "errRateLimited": "Troppi tentativi — attendi un momento e riprova.",
+    "errEmailMismatch": "Questa email non corrisponde a questo regalo. Prova l'indirizzo a cui è stato inviato il regalo.",
+    "errGeneric": "Qualcosa è andato storto. Riprova in un momento."
   }
 }

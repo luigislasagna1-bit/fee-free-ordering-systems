@@ -5143,7 +5143,13 @@
       "personalRateTitle": "Rată de câștig personalizată",
       "personalRateDesc": "Acest client câștigă acest procent în {label} la fiecare comandă — în locul ratei de bază și al oricărei rate de grup VIP.",
       "ratePlaceholder": "Rata de bază",
-      "rateClear": "Elimină rata personalizată"
+      "rateClear": "Elimină rata personalizată",
+      "giftRevokeConfirm": "Anulezi acest cadou? Orice cod de cheltuire activ pentru el este dezactivat imediat — această acțiune nu poate fi anulată.",
+      "codeHint": "Cod: ····{hint}",
+      "codeStatusActive": "cod activ",
+      "codeStatusExpired": "cod expirat",
+      "codeStatusRevoked": "cod anulat",
+      "codeExpires": "expiră la {date}"
     },
     "imageCrop": {
       "title": "Ajustați fotografia",
@@ -5924,7 +5930,20 @@
       "step3Title": "Îl folosești când vrei",
       "step3Body": "La finalizarea comenzii vei vedea „Folosește-ți {label}”. Pui spre plata comenzii cât dorești, mai mult sau mai puțin — restul îl plătești ca de obicei. Nu expiră niciodată, așa că te așteaptă până vrei să-l folosești.",
       "cta": "Îmi creez contul",
-      "ignoreLine": "Dacă nu te așteptai la acest mesaj, poți ignora liniștit acest e-mail."
+      "ignoreLine": "Dacă nu te așteptai la acest mesaj, poți ignora liniștit acest e-mail.",
+      "whatItIsSpend": "{label} reprezintă credit la {restaurantName} — se scad direct din nota de plată, ca un card cadou. Poți cheltui acest cadou chiar acum, fără cont:",
+      "step1TitleSpend": "Apasă butonul de mai jos",
+      "step1BodySpend": "Îți deschide cadoul, deja deblocat — fără conectare, fără parolă.",
+      "step2TitleSpend": "Suma ta de {amount} este deja acolo",
+      "step2BodySpend": "Îți vei vedea soldul imediat ce se deschide pagina.",
+      "step3TitleSpend": "Comandă și aplică-l la finalizare",
+      "step3BodySpend": "Cadoul tău este aplicat automat — micșorează-l sau elimină-l dacă preferi să îl păstrezi pentru mai târziu.",
+      "spendCtaPrimary": "Cheltuiește-ți {amount} chiar acum — fără cont",
+      "orTypeThisCode": "Sau scrie acest cod la finalizarea comenzii:",
+      "codeExpiryLine": "Acest cod funcționează până la {date}. Dacă expiră, cere-i restaurantului unul nou — cadoul tău în sine nu expiră niciodată.",
+      "neverExpiresLine": "{label} nu expiră niciodată, doar acest cod expiră.",
+      "doNotForwardLine": "Acest link și cod sunt doar pentru tine — te rugăm să nu redirecționezi acest email.",
+      "createAccountSecondary": "Sau creează un cont gratuit pentru a-l păstra pentru totdeauna"
     },
     "vipGroupWelcome": {
       "accountTip": "Ca să aduni și să folosești {label}, creează-ți contul gratuit cu această adresă de email și autentifică-te de fiecare dată când comanzi — creditul tău stă în cont, așa că apare la finalizarea comenzii doar dacă ești autentificat.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "Aplicația ta pentru {platform} este pusă pe pauză",
       "suspendedBody": "Lucrul la aplicația {restaurant} pentru {platform} a fost pus în pauză. Verifică pagina de stare a aplicației pentru a afla motivul sau răspunde la acest e-mail și te ajutăm să reiei procesul."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Un cadou din partea {restaurantName}",
+    "landingSubtitle": "Introdu codul tău mai jos ca să vezi și să cheltui cadoul — nu ai nevoie de cont.",
+    "codeLabel": "Cod cadou",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Scrie codul din emailul tău sau lipește-l — liniuțele și spațiile nu contează.",
+    "helpTipWhatIsThis": "Acest cod deblochează un sold cadou trimis pe emailul tău. Funcționează fără să creezi un cont, dar poate fi folosit doar la acest restaurant și doar pentru o comandă la un moment dat.",
+    "verifyButton": "Verifică cadoul meu",
+    "giftFrom": "Un cadou din partea {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}”",
+    "claimButton": "Cheltuiește-l acum",
+    "claiming": "Se deblochează cadoul tău…",
+    "successBanner": "Totul e pregătit — te ducem la meniu…",
+    "bannerSpending": "Cheltuiești cadoul de la {restaurant}",
+    "bannerBalance": "sold {balance}",
+    "checkoutCreditLabel": "Credit cadou",
+    "checkoutEmailLocked": "Email blocat pe cadoul tău.",
+    "checkoutEmailLockedHelp": "Cadoul tău este asociat exact acestei adrese de email. Pentru a folosi altă adresă, creează în schimb un cont gratuit.",
+    "resendButton": "Trimite-mi un cod nou",
+    "resendSent": "Dacă acel cadou încă te așteaptă, un cod nou este pe drum.",
+    "signUpInstead": "Preferi să păstrezi acest cadou pentru totdeauna? <link>Creează în schimb un cont gratuit</link>.",
+    "errInvalid": "Codul acesta nu pare corect. Verifică-l din nou și încearcă, sau cere unul nou mai jos.",
+    "errExpired": "Acest cod a expirat, dar cadoul tău nu — cere un cod nou mai jos.",
+    "errRevoked": "Acest cod a fost anulat de restaurant. Contactează-l dacă crezi că este o greșeală.",
+    "errAccountExists": "Vești bune — acest email are deja un cont, iar cadoul este deja în el. Conectează-te pentru a-l cheltui.",
+    "errRewardsOff": "Programul de recompense al acestui restaurant nu este disponibil momentan.",
+    "errSuperseded": "Acest cadou a fost deja colectat. Dacă nu ai fost tu, contactează restaurantul.",
+    "errTooManyAttempts": "Prea multe încercări cu acest cod. Cere restaurantului să îți trimită unul nou.",
+    "errRateLimited": "Prea multe încercări — te rugăm să aștepți un moment și să încerci din nou.",
+    "errEmailMismatch": "Acest email nu se potrivește cu acest cadou. Încearcă adresa pe care a fost trimis cadoul.",
+    "errGeneric": "Ceva nu a funcționat. Te rugăm să încerci din nou într-un moment."
   }
 }

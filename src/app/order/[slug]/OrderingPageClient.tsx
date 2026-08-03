@@ -1217,6 +1217,7 @@ export function OrderingPageClient({
   const tAddr = useTranslations("checkout.addressFields");
   const tCheckout = useTranslations("checkout");
   const tPromoDetail = useTranslations("customer.promoDetail");
+  const tGiftPass = useTranslations("giftPass");
   // Promo popup (Fabrizio 2026-06-25): the owner's configured popup, shown ONCE per browser
   // session on this device. Additive — no config / not enabled ⇒ nothing renders. Default
   // closed (no SSR flash); the effect opens it after mount if eligible + not yet dismissed.
@@ -1359,8 +1360,39 @@ export function OrderingPageClient({
   // Reward Dollars (store credit) — a signed-in customer's spendable balance +
   // redeem settings (from apply-promos), and how much they chose to apply on this
   // order (default 0 = none; they can also let it accumulate). Luigi 2026-06-27.
-  const [rewardInfo, setRewardInfo] = useState<{ balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null; redeemExcludedTotal?: number } | null>(null);
+  const [rewardInfo, setRewardInfo] = useState<{
+    balance: number; minRedeemBalance: number; maxRedeemPercent: number; labelSingular: string | null; labelPlural: string | null;
+    redeemExcludedTotal?: number;
+    /** Whose wallet — "session" (their own account) or "gift_pass" (a Gift
+     *  Wallet Pass, no account). Drives the credit-row label + the
+     *  auto-apply default + the tip exclusion. Gift Wallet Pass, 2026-08-03. */
+    rewardSource?: "session" | "gift_pass" | null;
+    /** Gift-pass-only: the tip must come out of the redeemable base (a
+     *  bearer credential must buy food, not fund a driver's cash tip). */
+    redeemTipExcluded?: boolean;
+  } | null>(null);
   const [creditToApply, setCreditToApply] = useState(0);
+  // A guest told "spend your $25 gift now" must not be able to check out at
+  // full price by simply failing to notice the slider — auto-apply the full
+  // available credit the FIRST time a Gift Wallet Pass balance appears. Only
+  // once per mount (tracked below) so the customer can still freely reduce
+  // it afterward without it snapping back. Gift Wallet Pass, 2026-08-03.
+  const giftPassAutoAppliedRef = useRef(false);
+  // Gift Wallet Pass — storefront banner + checkout email prefill. Fetched
+  // ONCE on mount, skipped entirely when signed in (a signed-in customer's
+  // own wallet always wins — see promo-order-context.ts). Distinct from
+  // rewardInfo: this is read-only banner state, not the checkout spend
+  // control (which still comes from apply-promos, gated on the SAME cookie
+  // via resolveGiftPassSpender). 2026-08-03.
+  const [giftPassInfo, setGiftPassInfo] = useState<{ amountLabel: string; balance: number; restaurantName: string; email: string | null } | null>(null);
+  useEffect(() => {
+    if (currentCustomer) return; // signed-in customer's own wallet always wins
+    fetch("/api/public/gift-pass/me", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((data) => { if (data?.ok) setGiftPassInfo(data); })
+      .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // WHOSE account this order belongs to (from apply-promos). A signed-in
   // customer owns their orders, so when the typed contact address differs the
   // cart says so plainly rather than leaving the customer guessing whose money
@@ -2802,6 +2834,17 @@ export function OrderingPageClient({
         setBlockedPromos(Array.isArray(data.blockedPromos) ? data.blockedPromos : []);
         setFirstBuyUnavailable(!!data.newCustomerOfferUnavailable);
         setCodeEmailMismatch(!!data.promoCodeEmailMismatch);
+        // Recovery message, not a silently vanishing wallet: the pass session
+        // is renewed on every one of these calls (resolveGiftPassSpender's
+        // sliding window), so a live pass reliably keeps reward.rewardSource
+        // === "gift_pass" for as long as the customer is active on the page.
+        // If we previously believed a pass was live (the banner is showing)
+        // and it just dropped out of the response, something genuinely ended
+        // it (expiry / revoke / became-an-account) — say so and point at the
+        // one recovery action, rather than the credit just disappearing.
+        if (giftPassInfo && data.reward?.rewardSource !== "gift_pass") {
+          toast.error(tGiftPass("errSuperseded"), { duration: 8000 });
+        }
         setRewardInfo(data.reward ?? null);
         setWalletIdentity({
           signedInEmail: data.identity?.signedInEmail ?? null,
@@ -2809,6 +2852,10 @@ export function OrderingPageClient({
         });
         // Keep the chosen credit within the new spendable ceiling as the cart /
         // identity changes (e.g. balance only known after sign-in/email).
+        // (Gift Wallet Pass auto-apply is handled inside CheckoutModal, which
+        // is where the FULL clamp — tip exclusion, %-cap, min-charge floor —
+        // is already computed correctly; duplicating that formula here would
+        // risk it drifting out of sync with the real slider max.)
         if (!data.reward) setCreditToApply(0);
         lastEvalCouponRef.current = evalCoupon;
         promosEvaluatedRef.current = true;
@@ -5523,10 +5570,29 @@ export function OrderingPageClient({
             </div>
           );
         })()}
+        {/* Gift Wallet Pass banner — a spendable gift balance with NO account
+            (2026-08-03). Styled with theme.primaryColor, deliberately visually
+            DISTINCT from the signed-in header so nobody mistakes this for
+            being logged in — it authorizes spend on ONE order, nothing else.
+            Suppresses the generic "sign up to earn" banner below (showing
+            both would read as contradictory). */}
+        {giftPassInfo && (
+          <div
+            className="flex items-center gap-3 mb-3 rounded-xl px-4 py-3 text-white shadow-md"
+            style={{ backgroundColor: theme.primaryColor }}
+          >
+            <Gift className="w-5 h-5 flex-shrink-0" />
+            <span className="text-sm font-semibold">
+              {tGiftPass("bannerSpending", { restaurant: giftPassInfo.restaurantName })}
+              {" — "}
+              {tGiftPass("bannerBalance", { balance: giftPassInfo.amountLabel })}
+            </span>
+          </div>
+        )}
         {/* "Sign up to earn" banner — LOGGED-OUT customers only (gated server-side
             in page.tsx). Prompts account creation since guests can't earn/spend.
             Emerald to match the reward tiles. Luigi 2026-06-30. */}
-        {rewardSignupBanner && (
+        {!giftPassInfo && rewardSignupBanner && (
           <a
             href={`/order/${restaurant.slug}/account/login`}
             className="flex items-center justify-between gap-3 mb-3 rounded-xl px-4 py-3 text-white shadow-md no-underline"
@@ -7051,6 +7117,8 @@ export function OrderingPageClient({
           walletIdentity={walletIdentity}
           creditToApply={creditToApply}
           setCreditToApply={setCreditToApply}
+          giftPassAutoAppliedRef={giftPassAutoAppliedRef}
+          giftPassEmail={giftPassInfo?.email ?? null}
           taxRate={restaurant.taxRate}
           customerInfo={customerInfo}
           setCustomerInfo={setCustomerInfo}

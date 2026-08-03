@@ -5143,7 +5143,13 @@
       "personalRateTitle": "Vlastná sadzba získavania",
       "personalRateDesc": "Tento zákazník získava toto percento v {label} z každej objednávky — namiesto základnej sadzby aj akejkoľvek sadzby VIP skupiny.",
       "ratePlaceholder": "Základná sadzba",
-      "rateClear": "Odstrániť vlastnú sadzbu"
+      "rateClear": "Odstrániť vlastnú sadzbu",
+      "giftRevokeConfirm": "Zrušiť tento darček? Akýkoľvek aktívny kód na jeho minutie bude okamžite znehodnotený — toto nemožno vrátiť späť.",
+      "codeHint": "Kód: ····{hint}",
+      "codeStatusActive": "kód aktívny",
+      "codeStatusExpired": "kód vypršaný",
+      "codeStatusRevoked": "kód zrušený",
+      "codeExpires": "vyprší {date}"
     },
     "imageCrop": {
       "title": "Upravte fotografiu",
@@ -5924,7 +5930,20 @@
       "step3Title": "Miňte ho, kedykoľvek budete chcieť",
       "step3Body": "Pri platbe uvidíte „Využite svoj {label}“. Na objednávku použite toľko alebo tak málo, koľko chcete — zvyšok jednoducho doplatíte ako vždy. Platnosť nikdy nevyprší, takže vám kredit zostane, kým ho nebudete chcieť využiť.",
       "cta": "Vytvoriť si účet",
-      "ignoreLine": "Ak ste tento e-mail nečakali, môžete ho pokojne ignorovať."
+      "ignoreLine": "Ak ste tento e-mail nečakali, môžete ho pokojne ignorovať.",
+      "whatItIsSpend": "S {label} máte kredit v reštaurácii {restaurantName} — odpočíta sa priamo zo sumy, ktorú platíte, presne ako darčeková karta. Tento si môžete minúť hneď teraz, účet nie je potrebný:",
+      "step1TitleSpend": "Kliknite na tlačidlo nižšie",
+      "step1BodySpend": "Otvorí váš darček, už odomknutý — žiadne prihlasovanie, žiadne heslo.",
+      "step2TitleSpend": "Vaše {amount} je už tam",
+      "step2BodySpend": "Svoj zostatok uvidíte hneď po otvorení stránky.",
+      "step3TitleSpend": "Objednajte si a uplatnite ho pri platbe",
+      "step3BodySpend": "Váš darček sa uplatní automaticky — znížte ho alebo odstráňte, ak si ho chcete nechať na neskôr.",
+      "spendCtaPrimary": "Minite svoje {amount} teraz — účet nie je potrebný",
+      "orTypeThisCode": "Alebo zadajte tento kód pri platbe:",
+      "codeExpiryLine": "Tento kód platí do {date}. Ak vyprší, stačí požiadať reštauráciu o nový — samotný darček nikdy nevyprší.",
+      "neverExpiresLine": "Váš {label} nikdy nevyprší, vyprší len tento kód.",
+      "doNotForwardLine": "Tento odkaz a kód sú len pre vás — tento e-mail, prosím, neposielajte ďalej.",
+      "createAccountSecondary": "Alebo si vytvorte bezplatný účet a nechajte si ho navždy"
     },
     "vipGroupWelcome": {
       "accountTip": "Ak chcete zbierať a míňať {label}, vytvorte si s touto e-mailovou adresou bezplatný účet a pri každej objednávke sa prihláste — váš kredit je uložený na účte, takže sa pri platbe zobrazí, len keď ste prihlásení.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "Vaša aplikácia pre {platform} je pozastavená",
       "suspendedBody": "Práca na aplikácii {restaurant} pre {platform} bola pozastavená. Dôvod nájdete na stránke so stavom aplikácie, alebo odpovedzte na tento e-mail a pomôžeme vám ju znova rozbehnúť."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Darček od {restaurantName}",
+    "landingSubtitle": "Zadajte svoj kód nižšie a zobrazte si ho a využite — účet nie je potrebný.",
+    "codeLabel": "Kód darčeka",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Napíšte kód z e-mailu alebo ho vložte — na pomlčkách a medzerách nezáleží.",
+    "helpTipWhatIsThis": "Tento kód odomkne zostatok darčeka zaslaný na váš e-mail. Funguje bez vytvorenia účtu, ale možno ho uplatniť len v tejto reštaurácii a len na jednu objednávku naraz.",
+    "verifyButton": "Skontrolovať môj darček",
+    "giftFrom": "Darček od {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}“",
+    "claimButton": "Minúť ho hneď",
+    "claiming": "Odomýkame váš darček…",
+    "successBanner": "Všetko je pripravené — presmerúvame vás na menu…",
+    "bannerSpending": "Míňate darček od {restaurant}",
+    "bannerBalance": "zostatok {balance}",
+    "checkoutCreditLabel": "Kredit z darčeka",
+    "checkoutEmailLocked": "E-mail uzamknutý k vášmu darčeku.",
+    "checkoutEmailLockedHelp": "Váš darček je viazaný na túto presnú e-mailovú adresu. Ak chcete použiť inú adresu, vytvorte si namiesto toho bezplatný účet.",
+    "resendButton": "Poslať mi nový kód",
+    "resendSent": "Ak ten darček stále čaká, nový kód je na ceste.",
+    "signUpInstead": "Chcete si tento darček nechať navždy? <link>Vytvorte si namiesto toho bezplatný účet</link>.",
+    "errInvalid": "Tento kód nevyzerá správne. Skontrolujte ho a skúste to znova, alebo si nižšie vyžiadajte nový.",
+    "errExpired": "Tento kód vypršal, ale váš darček nie — vyžiadajte si nový kód nižšie.",
+    "errRevoked": "Tento kód bol zrušený reštauráciou. Ak si myslíte, že ide o omyl, kontaktujte ju.",
+    "errAccountExists": "Dobrá správa — tento e-mail už má účet a darček je na ňom už pripísaný. Prihláste sa a minite ho.",
+    "errRewardsOff": "Vernostný program tejto reštaurácie nie je momentálne k dispozícii.",
+    "errSuperseded": "Tento darček už bol vyzdvihnutý. Ak to neboli vy, kontaktujte reštauráciu.",
+    "errTooManyAttempts": "Príliš veľa pokusov s týmto kódom. Požiadajte reštauráciu, aby vám poslala nový.",
+    "errRateLimited": "Príliš veľa pokusov — chvíľu počkajte a skúste to znova.",
+    "errEmailMismatch": "Tento e-mail nezodpovedá tomuto darčeku. Skúste adresu, na ktorú bol darček zaslaný.",
+    "errGeneric": "Niečo sa pokazilo. Skúste to prosím o chvíľu znova."
   }
 }

@@ -105,6 +105,21 @@ export type PromoOrderContext = {
   sessionCustomerId: string | null;
   sessionEmail: string | null;
   sessionPhone: string | null;
+  /** The Customer row a Gift Wallet Pass cookie authorizes spending FROM —
+   *  null unless there is no session AND a live pass cookie's stored email
+   *  matches the typed checkout email. NEVER used for isMember,
+   *  resolveGrantById/?grant=, or anything beyond wallet spend — see
+   *  src/lib/gift-wallet-pass.ts's module doc. */
+  giftPassCustomerId: string | null;
+  /** The customer id whose Reward-Dollars wallet this order may spend from —
+   *  the session's own row if signed in (a typed address is NEVER a wallet
+   *  key), else the gift-pass holder's guest-twin row, else null. THE thing
+   *  apply-promos and orders/route.ts must both gate reward-spend on. */
+  walletCustomerId: string | null;
+  /** Who walletCustomerId came from — drives the "gift" label on the credit
+   *  row and the gift-pass-only guards (tip excluded from the redeemable
+   *  base) in orders/route.ts. */
+  walletSource: "session" | "gift_pass" | null;
   /** The contact address typed at checkout when it differs from the signed-in
    *  account's own — otherwise null.
    *
@@ -336,6 +351,34 @@ export async function buildPromoOrderContext(args: {
   const contactEmailDiffersFromAccount =
     !!sessionCustomerId && !!typedEmail && typedEmail !== sessionEmail ? typedEmail : null;
 
+  // ── Wallet spender (Reward-Dollars spend authority) ──────────────────────
+  // The server-verified signed-in customer, full stop — this codebase has no
+  // "sessionWalletSpendable" conjunct (a typed email is never a wallet key;
+  // apply-promos/route.ts and orders/route.ts both say so in their own
+  // comments). A Gift Wallet Pass is consulted ONLY when there is no session
+  // at all, so a signed-in customer's own wallet always wins over a stray
+  // gift-pass cookie sitting in the same browser, and ~99.9% of hot-path
+  // requests (every signed-in or fully-guest order) skip the lookup entirely.
+  const sessionSpender = sessionCustomerId;
+  let giftPassCustomerId: string | null = null;
+  if (!sessionCustomerId) {
+    try {
+      const { resolveGiftPassSpender } = await import("@/lib/gift-wallet-pass");
+      giftPassCustomerId = await resolveGiftPassSpender({
+        expectedRestaurantId: restaurant.id,
+        // The gift email-match guard lives HERE — inside the one context
+        // both apply-promos (preview) and orders (charge) read — so the two
+        // routes cannot structurally disagree about whether the pass applies.
+        typedEmail,
+      });
+    } catch (e) {
+      console.error("[promo-order-context giftPass]", e);
+      giftPassCustomerId = null;
+    }
+  }
+  const walletCustomerId = sessionSpender ?? giftPassCustomerId;
+  const walletSource: "session" | "gift_pass" | null = sessionSpender ? "session" : giftPassCustomerId ? "gift_pass" : null;
+
   return {
     activePromos: activePromosResolved,
     isNewCustomer,
@@ -347,6 +390,9 @@ export async function buildPromoOrderContext(args: {
     sessionCustomerId,
     sessionEmail,
     sessionPhone,
+    giftPassCustomerId,
+    walletCustomerId,
+    walletSource,
     contactEmailDiffersFromAccount,
     identified,
     grantForcedIds,

@@ -5143,7 +5143,13 @@
       "giftResent": "Petunjuk sudah dikirim ulang.",
       "giftResendTooSoon": "Baru saja dikirim — tunggu sebentar sebelum mengirim lagi.",
       "giftAlreadyPending": "Mereka sudah punya {label} senilai {amount} yang menunggu diklaim. Kirim ulang petunjuknya dengan tombol ✉ di bawah, atau batalkan dulu hadiah tersebut.",
-      "giftBlockedTitle": "{email} sudah punya hadiah yang menunggu diklaim"
+      "giftBlockedTitle": "{email} sudah punya hadiah yang menunggu diklaim",
+      "giftRevokeConfirm": "Batalkan hadiah ini? Kode penggunaan aktif untuk hadiah ini akan langsung dinonaktifkan — tindakan ini tidak dapat dibatalkan.",
+      "codeHint": "Kode: ····{hint}",
+      "codeStatusActive": "kode aktif",
+      "codeStatusExpired": "kode berakhir",
+      "codeStatusRevoked": "kode dibatalkan",
+      "codeExpires": "berakhir {date}"
     },
     "imageCrop": {
       "title": "Sesuaikan foto Anda",
@@ -5924,7 +5930,20 @@
       "step2Title": "{amount} Anda muncul otomatis",
       "step2Body": "Begitu pendaftaran selesai, saldonya sudah ada di akun Anda. Tidak ada kode yang perlu dimasukkan.",
       "step3Title": "Pakai kapan pun Anda mau",
-      "step3Body": "Saat checkout Anda akan melihat “Gunakan {label} Anda”. Pakai sebanyak atau sesedikit yang Anda mau untuk pesanan itu — sisanya tinggal dibayar seperti biasa. Tidak ada masa berlaku, jadi saldonya tetap tersimpan sampai Anda ingin memakainya."
+      "step3Body": "Saat checkout Anda akan melihat “Gunakan {label} Anda”. Pakai sebanyak atau sesedikit yang Anda mau untuk pesanan itu — sisanya tinggal dibayar seperti biasa. Tidak ada masa berlaku, jadi saldonya tetap tersimpan sampai Anda ingin memakainya.",
+      "whatItIsSpend": "{label} adalah kredit di {restaurantName} — langsung dipotong dari tagihan Anda, seperti kartu hadiah. Anda bisa menggunakannya sekarang juga, tanpa perlu akun:",
+      "step1TitleSpend": "Ketuk tombol di bawah",
+      "step1BodySpend": "Ini akan membuka hadiah Anda, yang sudah terbuka — tanpa masuk, tanpa kata sandi.",
+      "step2TitleSpend": "{amount} Anda sudah tersedia",
+      "step2BodySpend": "Anda akan melihat saldo Anda begitu halaman terbuka.",
+      "step3TitleSpend": "Pesan dan terapkan saat pembayaran",
+      "step3BodySpend": "Hadiah Anda diterapkan secara otomatis — kurangi atau hapus jika Anda ingin menyimpannya untuk nanti.",
+      "spendCtaPrimary": "Gunakan {amount} Anda sekarang — tanpa perlu akun",
+      "orTypeThisCode": "Atau ketik kode ini saat pembayaran:",
+      "codeExpiryLine": "Kode ini berlaku hingga {date}. Jika sudah tidak berlaku, cukup minta restoran untuk kode baru — hadiah Anda sendiri tidak pernah berakhir.",
+      "neverExpiresLine": "{label} Anda tidak pernah berakhir, hanya kode ini yang berakhir.",
+      "doNotForwardLine": "Tautan dan kode ini khusus untuk Anda — mohon jangan teruskan email ini.",
+      "createAccountSecondary": "Atau buat akun gratis untuk menyimpannya selamanya"
     },
     "vipGroupWelcome": {
       "accountTip": "Untuk mengumpulkan dan menggunakan {label}, buat akun gratis dengan alamat email ini dan masuk setiap kali Anda memesan — saldo Anda tersimpan di akun, jadi hanya muncul saat checkout ketika Anda sudah masuk.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "Aplikasi {platform} Anda sedang dijeda",
       "suspendedBody": "Pengerjaan aplikasi {restaurant} untuk {platform} telah dijeda. Periksa halaman status aplikasi Anda untuk mengetahui alasannya, atau balas email ini dan kami akan membantu melanjutkannya kembali."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Hadiah dari {restaurantName}",
+    "landingSubtitle": "Masukkan kode Anda di bawah untuk melihat dan menggunakannya — tanpa perlu akun.",
+    "codeLabel": "Kode hadiah",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Ketik kode dari email Anda, atau tempel saja — tanda hubung dan spasi tidak masalah.",
+    "helpTipWhatIsThis": "Kode ini membuka saldo hadiah yang dikirim ke email Anda. Kode ini berfungsi tanpa membuat akun, tetapi hanya dapat digunakan di restoran ini dan hanya untuk satu pesanan pada satu waktu.",
+    "verifyButton": "Periksa hadiah saya",
+    "giftFrom": "Hadiah dari {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "“{note}”",
+    "claimButton": "Gunakan sekarang",
+    "claiming": "Membuka hadiah Anda…",
+    "successBanner": "Semua sudah siap — mengarahkan Anda ke menu…",
+    "bannerSpending": "Anda sedang menggunakan hadiah dari {restaurant}",
+    "bannerBalance": "saldo {balance}",
+    "checkoutCreditLabel": "Kredit hadiah",
+    "checkoutEmailLocked": "Email terkunci pada hadiah Anda.",
+    "checkoutEmailLockedHelp": "Hadiah Anda terkait dengan alamat email ini secara persis. Untuk menggunakan alamat lain, buat akun gratis.",
+    "resendButton": "Kirimkan saya kode baru",
+    "resendSent": "Jika hadiah tersebut masih menunggu, kode baru sedang dalam perjalanan.",
+    "signUpInstead": "Lebih suka menyimpan hadiah ini selamanya? <link>Buat akun gratis sebagai gantinya</link>.",
+    "errInvalid": "Kode itu sepertinya tidak benar. Periksa kembali dan coba lagi, atau minta kode baru di bawah.",
+    "errExpired": "Kode ini telah berakhir, tetapi hadiah Anda belum — minta kode baru di bawah.",
+    "errRevoked": "Kode ini telah dibatalkan oleh restoran. Hubungi mereka jika Anda merasa ini adalah kesalahan.",
+    "errAccountExists": "Kabar baik — email ini sudah memiliki akun, dan hadiahnya sudah ada di dalamnya. Masuk untuk menggunakannya.",
+    "errRewardsOff": "Program hadiah restoran ini tidak tersedia saat ini.",
+    "errSuperseded": "Hadiah ini sudah diambil. Jika itu bukan Anda, hubungi restoran.",
+    "errTooManyAttempts": "Terlalu banyak percobaan pada kode ini. Minta restoran mengirimkan kode baru.",
+    "errRateLimited": "Terlalu banyak percobaan — mohon tunggu sebentar dan coba lagi.",
+    "errEmailMismatch": "Email itu tidak cocok dengan hadiah ini. Coba alamat tempat hadiah tersebut dikirim.",
+    "errGeneric": "Terjadi kesalahan. Silakan coba lagi sebentar lagi."
   }
 }

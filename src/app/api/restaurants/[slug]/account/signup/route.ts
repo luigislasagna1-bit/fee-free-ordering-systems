@@ -33,6 +33,7 @@ import {
   restaurantCustomerCookieOptions,
   getChainRestaurantIds,
 } from "@/lib/restaurant-customer-session";
+import { CUSTOMER_ROW_ORDER } from "@/lib/customer-row";
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -147,8 +148,17 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ slug: stri
   // winning + the other hitting the conflict_chain_existing throw below.
   const customers = await Promise.all(
     chainIds.map(async (rid) => {
+      // Deterministic ordering (Gift Wallet Pass, 2026-08-03): this lookup
+      // used to have NO orderBy at all, so among duplicate guest rows for one
+      // email the choice was effectively arbitrary (whichever the DB
+      // happened to return first) — a gifted balance sitting on a DIFFERENT
+      // duplicate row than the one this signup hydrates would be silently
+      // stranded. CUSTOMER_ROW_ORDER is the same ordering orders/route.ts,
+      // admin/reward-gifts/route.ts, and the gift-pass exchange path use, so
+      // all four sites agree on "the" row for a given (restaurantId, email).
       const existing = await prisma.customer.findFirst({
         where: { restaurantId: rid, email },
+        orderBy: CUSTOMER_ROW_ORDER as any,
         select: { id: true, passwordHash: true },
       });
       if (existing) {

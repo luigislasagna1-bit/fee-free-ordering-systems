@@ -1177,6 +1177,13 @@ export async function sendRewardGiftInviteEmail(params: {
   /** Restaurant contact email — Reply-To (deliverability, cms0gyexp #3). */
   restaurantEmail?: string | null;
   locale?: string;
+  /** Gift Wallet Pass — spend without an account (2026-08-03). When present,
+   *  the email leads with "spend now", the code printed as text, and demotes
+   *  signup to a secondary link. `spendUrl` carries the code in the URL
+   *  FRAGMENT only. */
+  spendUrl?: string | null;
+  code?: string | null;
+  codeExpiryLabel?: string | null;
 }) {
   const t = await getDict(params.locale);
   const html = await renderEmail(
@@ -1190,6 +1197,9 @@ export async function sendRewardGiftInviteEmail(params: {
       orderUrl: params.orderUrl,
       giftEmail: params.to,
       imprint: currentImprint(),
+      spendUrl: params.spendUrl,
+      code: params.code,
+      codeExpiryLabel: params.codeExpiryLabel,
     })
   );
   return send({

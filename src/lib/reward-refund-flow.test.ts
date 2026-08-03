@@ -171,6 +171,60 @@ describe("reward wallet on captured-order refund (Blocker #8)", () => {
 });
 
 /**
+ * Gift Wallet Pass (2026-08-03): a pass-funded order spends from the
+ * guest-twin Customer's RewardAccount exactly like any other spend —
+ * releaseForOrder / refundForOrder are agnostic to WHY a Customer row
+ * exists, only to the accountId named on the ledger rows they're undoing.
+ * These tests re-run the release/refund lifecycle against an account that
+ * stands in for a Gift Wallet Pass guest twin (no signedUpAt, no
+ * passwordHash — same shape resolveGiftPassSpender's wallet holder has) to
+ * close the design spec's explicit ask that this path be exercised for a
+ * pass-funded order, not just inferred from the generic case above.
+ */
+describe("release/refund after a Gift-Wallet-Pass-funded spend", () => {
+  const ORDER_G = "order_giftpass";
+
+  function seedGiftPassSpend() {
+    // A guest-twin wallet (earned nothing — it never can) that spent $8 of a
+    // gifted $20 balance on ORDER_G, and — because tips are excluded from a
+    // pass spend's redeemable base — there is no earn row at all: guest
+    // twins never earn (orderEligibleToEarn fails closed with no
+    // signedUpAt).
+    h.state.accounts = [{ id: "acct_giftpass", restaurantId: R, customerId: "cust_guest_twin", balance: 12, lifetimeEarned: 0, lifetimeRedeemed: 8 }];
+    h.state.ledger = [
+      { id: "led_spend_g", accountId: "acct_giftpass", orderId: ORDER_G, reason: "spend", status: "applied", amount: -8, balanceAfter: 12 },
+    ];
+    h.state.nextId = 200;
+  }
+
+  it("releaseForOrder returns the full spend to the guest-twin wallet on a missed/rejected order", async () => {
+    seedGiftPassSpend();
+    await releaseForOrder(ORDER_G);
+    expect(h.state.accounts[0].balance).toBe(20);
+    expect(h.state.ledger.find((r) => r.id === "led_spend_g")!.status).toBe("released");
+  });
+
+  it("refundForOrder returns the spend on a captured-then-refunded pass order, with no earn to claw back", async () => {
+    seedGiftPassSpend();
+    // Completed: spend flips applied → redeemed (mirrors redeemForOrder).
+    h.state.ledger.find((r) => r.id === "led_spend_g")!.status = "redeemed";
+    await refundForOrder(ORDER_G);
+    expect(h.state.accounts[0].balance).toBe(20); // 12 + 8 back, nothing to claw back
+    expect(h.state.ledger.find((r) => r.id === "led_spend_g")!.status).toBe("refunded");
+    expect(h.state.ledger.some((r) => r.reason === "reverse" && r.orderId === ORDER_G)).toBe(false);
+  });
+
+  it("is idempotent on a double-fire (webhook retry) for a pass-funded refund", async () => {
+    seedGiftPassSpend();
+    h.state.ledger.find((r) => r.id === "led_spend_g")!.status = "redeemed";
+    await refundForOrder(ORDER_G);
+    const after = h.state.accounts[0].balance;
+    await refundForOrder(ORDER_G);
+    expect(h.state.accounts[0].balance).toBe(after);
+  });
+});
+
+/**
  * SPLIT-IDENTITY orders (Luigi 2026-07-31, found from his own checkout
  * screenshots). /api/orders resolves the Order's Customer row from the TYPED
  * email, while the wallet spend comes from the SIGNED-IN session — so one

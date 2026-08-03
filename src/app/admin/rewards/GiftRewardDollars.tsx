@@ -23,6 +23,10 @@ type GiftRow = {
   createdAt: string;
   claimedAt: string | null;
   emailSentAt: string | null;
+  /** Gift Wallet Pass — the no-account spend code, admin support view only
+   *  (last-4 hint; the full code is never stored, so it can never be shown
+   *  here either). Null when no pass was ever minted for this gift. */
+  pass: { codeHint: string; expiresAt: string; revoked: boolean; exchanged: boolean } | null;
 };
 
 export function GiftRewardDollars({ currency, rewardLabel }: { currency: string; rewardLabel: string }) {
@@ -112,6 +116,9 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
 
   async function revoke(id: string) {
     if (revoking) return;
+    // Revoke now also kills a live Gift Wallet Pass code instantly (2026-08-03)
+    // — a misclick can no longer be undone by re-clicking Resend, so confirm.
+    if (!window.confirm(t("giftRevokeConfirm"))) return;
     setRevoking(id);
     try {
       const res = await fetch(`/api/admin/reward-gifts/${id}/revoke`, { method: "POST" });
@@ -238,6 +245,28 @@ export function GiftRewardDollars({ currency, rewardLabel }: { currency: string;
                   {formatCurrency(g.amount, currency)} · {new Date(g.createdAt).toLocaleDateString()}
                   {g.note ? ` · “${g.note}”` : ""}
                 </div>
+                {/* Gift Wallet Pass — the no-account spend code. Last-4 hint
+                    only; the full code is never stored, so it can never be
+                    shown, not even here. */}
+                {g.pass && (
+                  <div className="text-[11px] text-gray-400 mt-0.5 flex items-center gap-1">
+                    <span>{t("codeHint", { hint: g.pass.codeHint })}</span>
+                    <span>·</span>
+                    <span>
+                      {g.pass.revoked
+                        ? t("codeStatusRevoked")
+                        : new Date(g.pass.expiresAt).getTime() < Date.now()
+                          ? t("codeStatusExpired")
+                          : t("codeStatusActive")}
+                    </span>
+                    {!g.pass.revoked && (
+                      <>
+                        <span>·</span>
+                        <span>{t("codeExpires", { date: new Date(g.pass.expiresAt).toLocaleDateString() })}</span>
+                      </>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 {/* Re-send the instructions. Offered on claimed gifts too: the

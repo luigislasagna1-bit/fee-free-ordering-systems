@@ -5143,7 +5143,13 @@
       "personalRateTitle": "Aangepast spaarpercentage",
       "personalRateDesc": "Deze klant spaart dit percentage aan {label} bij elke bestelling — in plaats van het basispercentage en elk VIP-groepspercentage.",
       "ratePlaceholder": "Basispercentage",
-      "rateClear": "Aangepast percentage verwijderen"
+      "rateClear": "Aangepast percentage verwijderen",
+      "giftRevokeConfirm": "Dit cadeau annuleren? Een actieve besteedcode hiervoor wordt direct ongeldig — dit kan niet ongedaan worden gemaakt.",
+      "codeHint": "Code: ····{hint}",
+      "codeStatusActive": "code actief",
+      "codeStatusExpired": "code verlopen",
+      "codeStatusRevoked": "code geannuleerd",
+      "codeExpires": "verloopt op {date}"
     },
     "imageCrop": {
       "title": "Pas je foto aan",
@@ -5924,7 +5930,20 @@
       "step3Title": "Besteed het wanneer je wilt",
       "step3Body": "Bij het afrekenen zie je “Gebruik je {label}”. Zet er zoveel of zo weinig van in als je wilt — de rest betaal je gewoon zoals altijd. Er zit geen vervaldatum op, dus het blijft staan tot je het wilt gebruiken.",
       "cta": "Mijn account aanmaken",
-      "ignoreLine": "Verwachtte je dit niet? Dan kun je deze e-mail gewoon negeren."
+      "ignoreLine": "Verwachtte je dit niet? Dan kun je deze e-mail gewoon negeren.",
+      "whatItIsSpend": "{label} zijn tegoed bij {restaurantName} — het gaat rechtstreeks van je rekening af, net als een cadeaubon. Je kunt dit tegoed nu meteen besteden, geen account nodig:",
+      "step1TitleSpend": "Tik op de knop hieronder",
+      "step1BodySpend": "Deze opent je cadeau, al ontgrendeld — geen inloggen, geen wachtwoord.",
+      "step2TitleSpend": "Je {amount} staat er al",
+      "step2BodySpend": "Je ziet je tegoed zodra de pagina opent.",
+      "step3TitleSpend": "Bestel en pas het toe bij het afrekenen",
+      "step3BodySpend": "Je cadeau wordt automatisch toegepast — verlaag of verwijder het als je het liever voor later bewaart.",
+      "spendCtaPrimary": "Besteed je {amount} nu — geen account nodig",
+      "orTypeThisCode": "Of typ deze code bij het afrekenen:",
+      "codeExpiryLine": "Deze code werkt tot {date}. Verloopt hij, vraag het restaurant dan gewoon om een nieuwe — je cadeau zelf verloopt nooit.",
+      "neverExpiresLine": "Je {label} verlopen nooit, alleen deze code wel.",
+      "doNotForwardLine": "Deze link en code zijn alleen voor jou — stuur deze e-mail niet door.",
+      "createAccountSecondary": "Of maak een gratis account om het voor altijd te bewaren"
     },
     "vipGroupWelcome": {
       "accountTip": "Om {label} te sparen en te besteden, maak je met dit e-mailadres je gratis account aan en log je bij elke bestelling in — je tegoed staat in je account en verschijnt bij het afrekenen dus alleen als je bent ingelogd.",
@@ -7477,5 +7496,38 @@
       "suspendedHeadline": "Je {platform}-app is gepauzeerd",
       "suspendedBody": "Het werk aan de {restaurant}-app voor {platform} is gepauzeerd. Bekijk de statuspagina van je app voor de reden, of beantwoord deze e-mail en we helpen je om alles weer op gang te brengen."
     }
+  },
+  "giftPass": {
+    "landingTitle": "Een cadeau van {restaurantName}",
+    "landingSubtitle": "Vul je code hieronder in om je tegoed te bekijken en te besteden — geen account nodig.",
+    "codeLabel": "Cadeaucode",
+    "codePlaceholder": "4K7P-9RT2-M8XW-QN5D",
+    "codeHelp": "Typ de code uit je e-mail, of plak hem — streepjes en spaties maken niet uit.",
+    "helpTipWhatIsThis": "Deze code ontgrendelt een cadeautegoed dat naar je e-mail is gestuurd. Het werkt zonder account, maar kan alleen bij dit restaurant en op één bestelling per keer worden besteed.",
+    "verifyButton": "Mijn cadeau bekijken",
+    "giftFrom": "Een cadeau van {restaurantName}",
+    "giftAmount": "{amount}",
+    "giftNote": "„{note}”",
+    "claimButton": "Nu besteden",
+    "claiming": "Je cadeau wordt ontgrendeld…",
+    "successBanner": "Helemaal klaar — we brengen je naar het menu…",
+    "bannerSpending": "Je besteedt het cadeau van {restaurant}",
+    "bannerBalance": "tegoed {balance}",
+    "checkoutCreditLabel": "Cadeautegoed",
+    "checkoutEmailLocked": "E-mail gekoppeld aan je cadeau.",
+    "checkoutEmailLockedHelp": "Je cadeau is gekoppeld aan precies dit e-mailadres. Wil je een ander adres gebruiken, maak dan in plaats daarvan een gratis account.",
+    "resendButton": "Stuur mij een nieuwe code",
+    "resendSent": "Als dat cadeau nog klaarstaat, is er een nieuwe code onderweg.",
+    "signUpInstead": "Wil je dit cadeau liever voor altijd bewaren? <link>Maak in plaats daarvan een gratis account</link>.",
+    "errInvalid": "Die code klopt niet helemaal. Controleer hem en probeer het opnieuw, of vraag hieronder een nieuwe aan.",
+    "errExpired": "Deze code is verlopen, maar je cadeau niet — vraag hieronder een nieuwe code aan.",
+    "errRevoked": "Deze code is geannuleerd door het restaurant. Neem contact met hen op als je denkt dat dit een fout is.",
+    "errAccountExists": "Goed nieuws — dit e-mailadres heeft al een account, en het cadeau staat er al in. Log in om het te besteden.",
+    "errRewardsOff": "Het spaarprogramma van dit restaurant is momenteel niet beschikbaar.",
+    "errSuperseded": "Dit cadeau is al opgehaald. Als dat niet jij was, neem dan contact op met het restaurant.",
+    "errTooManyAttempts": "Te veel pogingen met deze code. Vraag het restaurant om je een nieuwe te sturen.",
+    "errRateLimited": "Te veel pogingen — wacht even en probeer het opnieuw.",
+    "errEmailMismatch": "Dat e-mailadres komt niet overeen met dit cadeau. Probeer het adres waarnaar het cadeau is gestuurd.",
+    "errGeneric": "Er is iets misgegaan. Probeer het straks opnieuw."
   }
 }

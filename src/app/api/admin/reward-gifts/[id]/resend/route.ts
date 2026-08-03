@@ -25,6 +25,8 @@ import { getBalance } from "@/lib/reward-ledger";
 import { sendRewardGiftEmail, sendRewardGiftInviteEmail } from "@/lib/email";
 import { formatCurrency } from "@/lib/utils";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { isAccountCustomer } from "@/lib/reward-gifts";
+import { mintPassForGrant } from "@/lib/gift-wallet-pass";
 
 const RESEND_COOLDOWN_MS = 60_000;
 
@@ -83,6 +85,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
       rewardsEnabled: true,
       name: true, email: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true,
       defaultLanguage: true, currency: true, rewardLabelSingular: true, rewardLabelPlural: true,
+      timezone: true, hoursFormat: true,
     },
   });
   if (!r?.rewardsEnabled) return NextResponse.json({ error: "rewards_off", code: "rewards_off" }, { status: 400 });
@@ -96,8 +99,21 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
   const orderUrl = restaurantOrderUrl(r as any, "");
   const signupUrl = restaurantOrderUrl(r as any, "/account/signup");
 
+  // A "claimed" gift means SOMEONE resolved it — but that someone might be a
+  // real ACCOUNT (signup / instant-gift path, can just log in) or a Gift
+  // Wallet Pass guest twin (no login exists for them — they still need a
+  // spend code). Only the account case gets the plain balance email; the
+  // guest-twin case needs a fresh code same as a still-pending gift.
+  const claimedCustomer = gift.status === "claimed" && gift.customerId
+    ? await prisma.customer.findUnique({
+        where: { id: gift.customerId },
+        select: { signedUpAt: true, passwordHash: true, customerAccountId: true },
+      })
+    : null;
+  const isGuestTwinClaim = gift.status === "claimed" && claimedCustomer && !isAccountCustomer(claimedCustomer);
+
   let ok = false;
-  if (gift.status === "claimed" && gift.customerId) {
+  if (gift.status === "claimed" && gift.customerId && !isGuestTwinClaim) {
     const balance = await getBalance({ restaurantId, customerId: gift.customerId });
     const res = await sendRewardGiftEmail({
       to: gift.email,
@@ -113,6 +129,29 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
     });
     ok = res.success;
   } else {
+    // Pending gift, OR a claimed-but-guest-twin gift: both need a live spend
+    // code. The raw code is never stored (SHA-256 at rest), so "resend the
+    // same code" is not literally possible — every resend mints a FRESH one,
+    // which also has the benefit of invalidating a possibly-forwarded
+    // original. The recipient is left with exactly one valid code at all
+    // times (never zero — this is not a griefing vector), just never the
+    // SAME text twice.
+    let spendUrl: string | null = null;
+    let passCode: string | null = null;
+    let codeExpiryLabel: string | null = null;
+    try {
+      const minted = await mintPassForGrant({ restaurantId, grantId: gift.id });
+      if (minted) {
+        passCode = minted.code;
+        spendUrl = `${restaurantOrderUrl(r as any, `/gift/${gift.id}`)}#g=${minted.code.replace(/-/g, "")}`;
+        codeExpiryLabel = minted.expiresAt.toLocaleDateString(locale || undefined, {
+          timeZone: r.timezone || "UTC",
+          year: "numeric", month: "long", day: "numeric",
+        });
+      }
+    } catch (e) {
+      console.error("[reward-gift resend mint pass]", e);
+    }
     const res = await sendRewardGiftInviteEmail({
       to: gift.email,
       customerName: gift.name,
@@ -123,6 +162,9 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
       orderUrl: signupUrl,
       restaurantEmail: r.email,
       locale,
+      spendUrl,
+      code: passCode,
+      codeExpiryLabel,
     });
     ok = res.success;
   }
