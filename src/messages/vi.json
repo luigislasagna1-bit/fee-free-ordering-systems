@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Báo cáo cuối tháng",
       "testEmail": "Gửi email thử",
       "noRecipients": "Chưa có người nhận nội bộ",
-      "customerSignup": "Khách hàng mới đăng ký"
+      "customerSignup": "Khách hàng mới đăng ký",
+      "dispatchRejected": "Gửi cho tài xế không thành công"
     },
     "receipts": {
       "title": "Hóa đơn",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Chưa xác minh với VIES",
       "viesVerifyNow": "Xác minh ngay",
       "viesUnreachable": "Dịch vụ VIES tạm thời không khả dụng — thử lại sau vài phút.",
-      "euVatNote": "Doanh nghiệp EU: cần mã số VAT đăng ký VIES cho gói trả phí. Mã hợp lệ được xuất hóa đơn 0% VAT (thuế đảo chiều)."
+      "euVatNote": "Doanh nghiệp EU: cần mã số VAT đăng ký VIES cho gói trả phí. Mã hợp lệ được xuất hóa đơn 0% VAT (thuế đảo chiều).",
+      "useCardForAllSubscriptions": "Dùng thẻ này cho tất cả các gói đăng ký",
+      "useCardForAllSubscriptionsHint": "Chuyển mọi gói đăng ký tiện ích bổ sung — cả những gói bắt đầu bằng thẻ khác — sang thẻ này, để không bao giờ bỏ lỡ lần gia hạn nào.",
+      "applyCardSuccess": "Đã áp dụng cho {count} gói đăng ký.",
+      "applyCardNoneToUpdate": "Bạn không có gói đăng ký khác cần cập nhật.",
+      "applyCardNoCardError": "Hãy lưu một thẻ trước, sau đó thử lại.",
+      "applyCardError": "Không thể cập nhật các gói đăng ký của bạn. Vui lòng thử lại."
     },
     "addOns": {
       "errorCheckout": "Không thể bắt đầu thanh toán",
@@ -5936,6 +5943,17 @@
       "subject": "Chào mừng bạn đến với {groupName} tại {restaurantName}",
       "usageAccount": "Ưu đãi của bạn được áp dụng tự động khi bạn đặt hàng — chỉ cần đăng nhập trước.",
       "usageGuest": "Ưu đãi giảm giá của nhóm này được cộng cho bạn khi thanh toán nếu bạn dùng địa chỉ email này ({email}). Để còn tích lũy và sử dụng {label}, hãy tạo tài khoản miễn phí bằng địa chỉ này và đăng nhập trước khi đặt hàng — số dư chỉ có thể được giữ trong tài khoản."
+    },
+    "dispatchRejected": {
+      "subject": "Cần hành động: đơn hàng #{orderNumber} không thể gửi cho tài xế",
+      "preview": "Đơn hàng #{orderNumber} — gửi thất bại, chưa có tài xế nào được phân công",
+      "headerTitle": "Gửi cho tài xế không thành công",
+      "subtitle": "Đơn hàng #{orderNumber}",
+      "badge": "Cần thao tác",
+      "body": "Chúng tôi đã thử gửi đơn hàng #{orderNumber} của {customerName} đến đơn vị giao hàng của bạn, nhưng bị từ chối. Chưa có tài xế nào được phân công và khách hàng vẫn đang chờ.",
+      "reasonLabel": "Lý do",
+      "actionLine": "Sử dụng nút \"Gửi đến ShipDay\" trên đơn hàng để thử lại, hoặc tự sắp xếp giao hàng với tài xế của riêng bạn.",
+      "viewOrderButton": "Xem đơn hàng"
     }
   },
   "marketing": {

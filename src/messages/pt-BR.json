@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Relatório mensal",
       "testEmail": "Enviar e-mail de teste",
       "noRecipients": "Nenhum destinatário da equipe ainda",
-      "customerSignup": "Novo cadastro de cliente"
+      "customerSignup": "Novo cadastro de cliente",
+      "dispatchRejected": "Envio ao entregador falhou"
     },
     "receipts": {
       "title": "Recibos",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Ainda não verificado no VIES",
       "viesVerifyNow": "Verificar agora",
       "viesUnreachable": "O serviço VIES está temporariamente indisponível — tente novamente em alguns minutos.",
-      "euVatNote": "Empresas da UE: é necessário um número de IVA registrado no VIES para assinaturas pagas. Números validados são faturados com 0% de IVA (reverse charge)."
+      "euVatNote": "Empresas da UE: é necessário um número de IVA registrado no VIES para assinaturas pagas. Números validados são faturados com 0% de IVA (reverse charge).",
+      "useCardForAllSubscriptions": "Usar este cartão para todas as assinaturas",
+      "useCardForAllSubscriptionsHint": "Aponta todas as assinaturas de complementos — mesmo as que começaram com outro cartão — para este, para que nenhuma renovação seja perdida.",
+      "applyCardSuccess": "{count, plural, one {Aplicado a # assinatura.} other {Aplicado a # assinaturas.}}",
+      "applyCardNoneToUpdate": "Você não tem outras assinaturas para atualizar.",
+      "applyCardNoCardError": "Salve um cartão primeiro e tente novamente.",
+      "applyCardError": "Não foi possível atualizar suas assinaturas. Tente novamente."
     },
     "addOns": {
       "errorCheckout": "Falha ao iniciar o checkout",
@@ -5936,6 +5943,17 @@
       "subject": "Boas-vindas a {groupName} em {restaurantName}",
       "usageAccount": "Suas vantagens são aplicadas automaticamente quando você faz um pedido — basta entrar na sua conta antes.",
       "usageGuest": "Os descontos deste grupo são adicionados na finalização quando você usa este endereço de e-mail ({email}). Para também acumular e usar {label}, crie sua conta gratuita com este endereço e entre nela antes de fazer o pedido — o crédito só pode ficar guardado em uma conta."
+    },
+    "dispatchRejected": {
+      "subject": "Ação necessária: o pedido #{orderNumber} não pôde ser enviado a um entregador",
+      "preview": "Pedido #{orderNumber} — envio falhou, sem entregador atribuído",
+      "headerTitle": "Envio ao entregador falhou",
+      "subtitle": "Pedido #{orderNumber}",
+      "badge": "Ação necessária",
+      "body": "Tentamos enviar o pedido #{orderNumber} de {customerName} para o seu provedor de entregas, mas ele foi rejeitado. Ainda não foi atribuído nenhum entregador e o cliente está esperando.",
+      "reasonLabel": "Motivo",
+      "actionLine": "Use o botão \"Enviar para o ShipDay\" no pedido para tentar novamente, ou organize a entrega com seus próprios entregadores.",
+      "viewOrderButton": "Ver pedido"
     }
   },
   "marketing": {

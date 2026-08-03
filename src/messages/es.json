@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Informe de fin de mes",
       "testEmail": "Enviar correo de prueba",
       "noRecipients": "No hay destinatarios",
-      "customerSignup": "Nuevo registro de cliente"
+      "customerSignup": "Nuevo registro de cliente",
+      "dispatchRejected": "Envío al repartidor fallido"
     },
     "receipts": {
       "title": "Recibos",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Aún no verificado en VIES",
       "viesVerifyNow": "Verificar ahora",
       "viesUnreachable": "El servicio VIES no está disponible temporalmente — inténtalo de nuevo en unos minutos.",
-      "euVatNote": "Empresas de la UE: se requiere un número de IVA registrado en VIES para las suscripciones de pago. Los números validados se facturan al 0 % de IVA (inversión del sujeto pasivo)."
+      "euVatNote": "Empresas de la UE: se requiere un número de IVA registrado en VIES para las suscripciones de pago. Los números validados se facturan al 0 % de IVA (inversión del sujeto pasivo).",
+      "useCardForAllSubscriptions": "Usar esta tarjeta para todas las suscripciones",
+      "useCardForAllSubscriptionsHint": "Redirige todas las suscripciones de complementos — incluso las que empezaron con otra tarjeta — a esta, para que nunca se pierda una renovación.",
+      "applyCardSuccess": "{count, plural, one {Aplicado a # suscripción.} other {Aplicado a # suscripciones.}}",
+      "applyCardNoneToUpdate": "No tienes otras suscripciones que actualizar.",
+      "applyCardNoCardError": "Guarda primero una tarjeta y vuelve a intentarlo.",
+      "applyCardError": "No se pudieron actualizar tus suscripciones. Inténtalo de nuevo."
     },
     "addOns": {
       "errorCheckout": "No se pudo iniciar el pago",
@@ -5936,6 +5943,17 @@
       "subject": "Te damos la bienvenida a {groupName} en {restaurantName}",
       "usageAccount": "Tus ventajas se aplican automáticamente al hacer tu pedido: solo tienes que iniciar sesión.",
       "usageGuest": "Los descuentos de este grupo se añaden al finalizar la compra cuando usas esta dirección de email ({email}). Para acumular y gastar además {label}, crea tu cuenta gratuita con esta dirección e inicia sesión antes de hacer tu pedido: el saldo solo puede guardarse en una cuenta."
+    },
+    "dispatchRejected": {
+      "subject": "Acción necesaria: el pedido #{orderNumber} no se pudo enviar a un repartidor",
+      "preview": "Pedido #{orderNumber} — envío fallido, sin repartidor asignado",
+      "headerTitle": "Envío al repartidor fallido",
+      "subtitle": "Pedido #{orderNumber}",
+      "badge": "Se requiere tu acción",
+      "body": "Intentamos enviar el pedido #{orderNumber} de {customerName} a tu proveedor de reparto, pero fue rechazado. Aún no se ha asignado ningún repartidor y el cliente está esperando.",
+      "reasonLabel": "Motivo",
+      "actionLine": "Usa el botón «Enviar a ShipDay» en el pedido para volver a intentarlo, o organiza la entrega con tus propios repartidores.",
+      "viewOrderButton": "Ver pedido"
     }
   },
   "marketing": {

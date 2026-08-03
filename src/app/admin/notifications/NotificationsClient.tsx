@@ -24,6 +24,7 @@ type Recipient = {
   orderCanceled: boolean;
   orderMissed: boolean;
   orderNotPlaced: boolean;
+  dispatchRejected: boolean;
   lowBattery: boolean;
   badInternet: boolean;
   endOfDayReport: boolean;
@@ -60,6 +61,10 @@ const OPERATIONAL_TOGGLES: { key: keyof Recipient; tk: string }[] = [
   { key: "customerSignup", tk: "customerSignup" },
   { key: "orderRejected",  tk: "orderRejected" },
   { key: "orderCanceled",  tk: "orderCanceled" },
+  // ShipDay couldn't dispatch an accepted delivery order — no driver
+  // assigned, customer waiting (Luigi 2026-08-03). Default ON (schema) —
+  // an operational failure alert, not a new-feature ping.
+  { key: "dispatchRejected", tk: "dispatchRejected" },
 ];
 
 const SYSTEM_TOGGLES: { key: keyof Recipient; tk: string }[] = [

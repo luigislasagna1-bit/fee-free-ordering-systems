@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Kuukausiraportti",
       "testEmail": "Lähetä testisähköposti",
       "noRecipients": "Ei henkilökunnan vastaanottajia vielä",
-      "customerSignup": "Uuden asiakkaan rekisteröityminen"
+      "customerSignup": "Uuden asiakkaan rekisteröityminen",
+      "dispatchRejected": "Kuljettajan lähetys epäonnistui"
     },
     "receipts": {
       "title": "Kuitit",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Ei vielä tarkistettu VIES-järjestelmästä",
       "viesVerifyNow": "Tarkista nyt",
       "viesUnreachable": "VIES-palvelu on tilapäisesti poissa käytöstä — yritä uudelleen muutaman minuutin kuluttua.",
-      "euVatNote": "EU-yritykset: maksullisiin tilauksiin vaaditaan VIES-rekisteröity ALV-numero. Vahvistetut numerot laskutetaan 0 %:n ALV:lla (käännetty verovelvollisuus)."
+      "euVatNote": "EU-yritykset: maksullisiin tilauksiin vaaditaan VIES-rekisteröity ALV-numero. Vahvistetut numerot laskutetaan 0 %:n ALV:lla (käännetty verovelvollisuus).",
+      "useCardForAllSubscriptions": "Käytä tätä korttia kaikkiin tilauksiin",
+      "useCardForAllSubscriptionsHint": "Kohdistaa kaikki lisäosien tilaukset — myös eri kortilla aloitetut — tähän korttiin, jotta uusiminen ei jää koskaan huomaamatta.",
+      "applyCardSuccess": "{count, plural, one {Käytetty # tilaukseen.} other {Käytetty # tilaukseen.}}",
+      "applyCardNoneToUpdate": "Sinulla ei ole muita tilauksia päivitettäväksi.",
+      "applyCardNoCardError": "Tallenna kortti ensin ja yritä sitten uudelleen.",
+      "applyCardError": "Tilauksiasi ei voitu päivittää. Yritä uudelleen."
     },
     "addOns": {
       "errorCheckout": "Kassalle siirtyminen epäonnistui",
@@ -5936,6 +5943,17 @@
       "subject": "Tervetuloa ryhmään {groupName} ravintolassa {restaurantName}",
       "usageAccount": "Etusi otetaan käyttöön automaattisesti, kun teet tilauksen — kirjaudu vain ensin sisään.",
       "usageGuest": "Tämän ryhmän alennukset lisätään puolestasi kassalla, kun käytät tätä sähköpostiosoitetta ({email}). Jos haluat lisäksi kerätä ja käyttää palkintosaldoa ({label}), luo maksuton tili tällä osoitteella ja kirjaudu sisään ennen tilaamista — saldo voi olla vain tilillä."
+    },
+    "dispatchRejected": {
+      "subject": "Toimenpide vaaditaan: tilausta #{orderNumber} ei voitu lähettää kuljettajalle",
+      "preview": "Tilaus #{orderNumber} — lähetys epäonnistui, kuljettajaa ei ole vielä osoitettu",
+      "headerTitle": "Kuljettajan lähetys epäonnistui",
+      "subtitle": "Tilaus #{orderNumber}",
+      "badge": "Toimenpiteitä tarvitaan",
+      "body": "Yritimme lähettää tilauksen #{orderNumber} asiakkaalle {customerName} kuljetuspalveluntarjoajallesi, mutta se hylättiin. Kuljettajaa ei ole vielä osoitettu, ja asiakas odottaa.",
+      "reasonLabel": "Syy",
+      "actionLine": "Käytä tilauksen \"Lähetä ShipDay-palveluun\" -painiketta yrittääksesi uudelleen, tai järjestä toimitus omilla kuljettajillasi.",
+      "viewOrderButton": "Näytä tilaus"
     }
   },
   "marketing": {

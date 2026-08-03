@@ -34,6 +34,7 @@ import {
   sendOrderDelayedEmail,
   sendOrderRejectedEmail,
   sendOrderCanceledEmail,
+  sendDispatchRejectedEmail,
   sendReservationConfirmation,
   setEmailImprint,
   setEmailLogoUrl,
@@ -200,6 +201,9 @@ const STAFF_TOGGLE_FOR_EVENT: Record<StaffEvent, keyof NotificationRecipientTogg
   orderRejected: "orderRejected",
   orderCanceled: "orderCanceled",
   orderMissed: "orderMissed",
+  // ShipDay auto-dispatch rejected the order after acceptance — no driver
+  // assigned yet, customer waiting (Luigi 2026-08-03).
+  dispatchRejected: "dispatchRejected",
   // Reservations.
   reservationConfirmed: "tableReservationConfirmed",
   // Reports / digests.
@@ -217,6 +221,7 @@ export type StaffEvent =
   | "orderRejected"
   | "orderCanceled"
   | "orderMissed"
+  | "dispatchRejected"
   | "reservationConfirmed"
   | "endOfDayReport"
   | "endOfMonthReport";
@@ -237,6 +242,7 @@ type NotificationRecipientToggles = {
   orderCanceled: boolean;
   orderMissed: boolean;
   orderNotPlaced: boolean;
+  dispatchRejected: boolean;
   lowBattery: boolean;
   badInternet: boolean;
   endOfDayReport: boolean;
@@ -272,6 +278,7 @@ export type StaffEventPayload =
   | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
+  | { event: "dispatchRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending" | "cancelled"; dashboardUrl: string;
       // Smart buttons (Fabrizio cmsajnvkm): adults/children split + structured
       // details (child seating / allergies / occasion / accessibility).
@@ -457,6 +464,17 @@ async function dispatchStaffEvent(
         restaurantName,
         orderNumber: payload.orderNumber,
         customerName: payload.customerName,
+        dashboardUrl: payload.dashboardUrl,
+        locale,
+      });
+      return;
+    case "dispatchRejected":
+      await sendDispatchRejectedEmail({
+        to,
+        restaurantName,
+        orderNumber: payload.orderNumber,
+        customerName: payload.customerName,
+        reason: payload.reason,
         dashboardUrl: payload.dashboardUrl,
         locale,
       });

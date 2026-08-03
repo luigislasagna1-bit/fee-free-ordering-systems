@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "月次レポート",
       "testEmail": "テストメールを送信",
       "noRecipients": "スタッフの宛先はまだありません",
-      "customerSignup": "新規顧客の登録"
+      "customerSignup": "新規顧客の登録",
+      "dispatchRejected": "ドライバーへの配車に失敗"
     },
     "receipts": {
       "title": "レシート",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "まだVIESで未確認です",
       "viesVerifyNow": "今すぐ確認",
       "viesUnreachable": "VIESサービスが一時的に利用できません — 数分後にもう一度お試しください。",
-      "euVatNote": "EU企業の方へ：有料サブスクリプションにはVIES登録済みのVAT番号が必要です。検証済み番号はVAT 0%（リバースチャージ）で請求されます。"
+      "euVatNote": "EU企業の方へ：有料サブスクリプションにはVIES登録済みのVAT番号が必要です。検証済み番号はVAT 0%（リバースチャージ）で請求されます。",
+      "useCardForAllSubscriptions": "このカードをすべてのサブスクリプションに使用",
+      "useCardForAllSubscriptionsHint": "別のカードで開始したものも含め、すべてのアドオンのサブスクリプションをこのカードに切り替え、更新を見逃さないようにします。",
+      "applyCardSuccess": "{count} 件のサブスクリプションに適用しました。",
+      "applyCardNoneToUpdate": "更新する他のサブスクリプションはありません。",
+      "applyCardNoCardError": "まずカードを保存してから、もう一度お試しください。",
+      "applyCardError": "サブスクリプションを更新できませんでした。もう一度お試しください。"
     },
     "addOns": {
       "errorCheckout": "チェックアウトを開始できませんでした",
@@ -5936,6 +5943,17 @@
       "subject": "{restaurantName}の{groupName}へようこそ",
       "usageAccount": "ご注文時に特典が自動的に適用されます — まずはサインインしてください。",
       "usageGuest": "このグループの割引は、お会計時にこのメールアドレス（{email}）をご入力いただくと自動的に適用されます。さらに {label} を貯めてご利用いただくには、このアドレスで無料アカウントを作成し、ご注文の前にサインインしてください — 残高はアカウントにのみ保存できます。"
+    },
+    "dispatchRejected": {
+      "subject": "対応が必要です: 注文 #{orderNumber} をドライバーに送信できませんでした",
+      "preview": "注文 #{orderNumber} — 配車に失敗、まだドライバーが割り当てられていません",
+      "headerTitle": "ドライバーへの配車に失敗",
+      "subtitle": "注文 #{orderNumber}",
+      "badge": "対応が必要です",
+      "body": "{customerName}様の注文 #{orderNumber} を配送業者に送信しようとしましたが、拒否されました。まだドライバーが割り当てられておらず、お客様がお待ちの状態です。",
+      "reasonLabel": "理由",
+      "actionLine": "注文の「ShipDay に送信」ボタンを使って再試行するか、自社のドライバーで配送を手配してください。",
+      "viewOrderButton": "注文を見る"
     }
   },
   "marketing": {

@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Mesečno poročilo",
       "testEmail": "Pošlji testno e-pošto",
       "noRecipients": "Še ni prejemnikov med osebjem",
-      "customerSignup": "Nova registracija stranke"
+      "customerSignup": "Nova registracija stranke",
+      "dispatchRejected": "Pošiljanje vozniku ni uspelo"
     },
     "receipts": {
       "title": "Računi",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Še ni preverjeno v VIES",
       "viesVerifyNow": "Preveri zdaj",
       "viesUnreachable": "Storitev VIES je začasno nedosegljiva — poskusite znova čez nekaj minut.",
-      "euVatNote": "Podjetja iz EU: za plačljive naročnine je potrebna ID za DDV, registrirana v VIES. Potrjene številke fakturiramo z 0% DDV (obrnjena davčna obveznost)."
+      "euVatNote": "Podjetja iz EU: za plačljive naročnine je potrebna ID za DDV, registrirana v VIES. Potrjene številke fakturiramo z 0% DDV (obrnjena davčna obveznost).",
+      "useCardForAllSubscriptions": "Uporabi to kartico za vse naročnine",
+      "useCardForAllSubscriptionsHint": "Usmeri vsako naročnino na dodatek — tudi tiste, ki so se začele z drugo kartico — na to kartico, tako da prenovitev nikoli ne bo zamujena.",
+      "applyCardSuccess": "{count, plural, one {Uporabljeno za # naročnino.} other {Uporabljeno za # naročnin.}}",
+      "applyCardNoneToUpdate": "Nimate drugih naročnin za posodobitev.",
+      "applyCardNoCardError": "Najprej shranite kartico in nato poskusite znova.",
+      "applyCardError": "Vaših naročnin ni bilo mogoče posodobiti. Poskusite znova."
     },
     "addOns": {
       "errorCheckout": "Blagajne ni bilo mogoče zagnati",
@@ -5936,6 +5943,17 @@
       "subject": "Dobrodošli v {groupName} — {restaurantName}",
       "usageAccount": "Vaše ugodnosti se samodejno upoštevajo ob naročilu — le najprej se prijavite.",
       "usageGuest": "Popusti iz te skupine se ob zaključku nakupa dodajo samodejno, če uporabite ta e-poštni naslov ({email}). Če želite {label} tudi zbirati in porabljati, s tem naslovom ustvarite brezplačen račun in se prijavite, preden naročite — dobroimetje je lahko shranjeno samo v računu."
+    },
+    "dispatchRejected": {
+      "subject": "Potreben je ukrep: naročila #{orderNumber} ni bilo mogoče poslati vozniku",
+      "preview": "Naročilo #{orderNumber} — pošiljanje ni uspelo, voznik še ni dodeljen",
+      "headerTitle": "Pošiljanje vozniku ni uspelo",
+      "subtitle": "Naročilo #{orderNumber}",
+      "badge": "Potrebno je vaše dejanje",
+      "body": "Poskusili smo poslati naročilo #{orderNumber} za {customerName} vašemu ponudniku dostave, vendar je bilo zavrnjeno. Voznik še ni dodeljen, stranka pa čaka.",
+      "reasonLabel": "Razlog",
+      "actionLine": "Uporabite gumb \"Pošlji v ShipDay\" na naročilu za nov poskus, ali organizirajte dostavo z lastnimi vozniki.",
+      "viewOrderButton": "Ogled naročila"
     }
   },
   "marketing": {

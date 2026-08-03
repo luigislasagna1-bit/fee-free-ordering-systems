@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Månedlig rapport",
       "testEmail": "Send test-e-mail",
       "noRecipients": "Ingen personalemodtagere endnu",
-      "customerSignup": "Ny kunderegistrering"
+      "customerSignup": "Ny kunderegistrering",
+      "dispatchRejected": "Chaufførtildeling mislykkedes"
     },
     "receipts": {
       "title": "Kvitteringer",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Endnu ikke kontrolleret i VIES",
       "viesVerifyNow": "Kontrollér nu",
       "viesUnreachable": "VIES-tjenesten er midlertidigt utilgængelig — prøv igen om et par minutter.",
-      "euVatNote": "EU-virksomheder: et VIES-registreret momsnummer kræves til betalte abonnementer. Validerede numre faktureres med 0 % moms (omvendt betalingspligt)."
+      "euVatNote": "EU-virksomheder: et VIES-registreret momsnummer kræves til betalte abonnementer. Validerede numre faktureres med 0 % moms (omvendt betalingspligt).",
+      "useCardForAllSubscriptions": "Brug dette kort til alle abonnementer",
+      "useCardForAllSubscriptionsHint": "Peger alle tilføjelsesabonnementer — selv de, der startede med et andet kort — mod dette kort, så en fornyelse aldrig bliver glemt.",
+      "applyCardSuccess": "{count, plural, one {Anvendt på # abonnement.} other {Anvendt på # abonnementer.}}",
+      "applyCardNoneToUpdate": "Du har ingen andre abonnementer at opdatere.",
+      "applyCardNoCardError": "Gem et kort først, og prøv igen.",
+      "applyCardError": "Dine abonnementer kunne ikke opdateres. Prøv igen."
     },
     "addOns": {
       "errorCheckout": "Kunne ikke starte betaling",
@@ -5936,6 +5943,17 @@
       "subject": "Velkommen til {groupName} hos {restaurantName}",
       "usageAccount": "Dine fordele anvendes automatisk, når du bestiller — du skal blot logge ind først.",
       "usageGuest": "Rabatter fra denne gruppe bliver lagt ind for dig ved kassen, når du bruger denne e-mailadresse ({email}). Vil du også optjene og bruge {label}, skal du oprette din gratis konto med samme adresse og logge ind, før du bestiller — tilgodehavende kan kun ligge på en konto."
+    },
+    "dispatchRejected": {
+      "subject": "Handling påkrævet: bestilling #{orderNumber} kunne ikke sendes til en chauffør",
+      "preview": "Bestilling #{orderNumber} — afsendelse mislykkedes, ingen chauffør tildelt endnu",
+      "headerTitle": "Chaufførtildeling mislykkedes",
+      "subtitle": "Ordre #{orderNumber}",
+      "badge": "Handling påkrævet",
+      "body": "Vi forsøgte at sende bestilling #{orderNumber} for {customerName} til din leveringsudbyder, men den blev afvist. Der er endnu ikke tildelt en chauffør, og kunden venter.",
+      "reasonLabel": "Årsag",
+      "actionLine": "Brug knappen \"Send til ShipDay\" på bestillingen for at prøve igen, eller arrangér levering med dine egne chauffører.",
+      "viewOrderButton": "Se bestilling"
     }
   },
   "marketing": {

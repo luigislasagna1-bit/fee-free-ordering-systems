@@ -651,6 +651,15 @@ model NotificationRecipient {
   /// recipients shouldn't start receiving it unasked (the order toggles
   /// default true because they predate every recipient).
   customerSignup Boolean @default(false)
+  /// Staff ping when an order's automatic ShipDay dispatch is REJECTED
+  /// (ShipDay says no driver / bad address / etc, after the restaurant
+  /// already accepted a delivery order) — the order has no driver
+  /// assigned and the customer is waiting. Default TRUE: unlike
+  /// customerSignup this is an operational FAILURE alert on an existing
+  /// order flow (same bucket as orderMissed/orderRejected), so staff
+  /// should hear about it immediately without opting in first
+  /// (Luigi 2026-08-03).
+  dispatchRejected Boolean @default(true)
 
   // System events
   lowBattery       Boolean @default(true)

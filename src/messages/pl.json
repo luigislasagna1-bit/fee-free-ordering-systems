@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Raport miesięczny",
       "testEmail": "Wyślij e-mail testowy",
       "noRecipients": "Brak odbiorców personelu",
-      "customerSignup": "Nowa rejestracja klienta"
+      "customerSignup": "Nowa rejestracja klienta",
+      "dispatchRejected": "Wysłanie do kierowcy nie powiodło się"
     },
     "receipts": {
       "title": "Paragony",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Jeszcze nie zweryfikowano w VIES",
       "viesVerifyNow": "Zweryfikuj teraz",
       "viesUnreachable": "Usługa VIES jest chwilowo niedostępna — spróbuj ponownie za kilka minut.",
-      "euVatNote": "Firmy z UE: do płatnych subskrypcji wymagany jest numer VAT zarejestrowany w VIES. Zweryfikowane numery są fakturowane z 0% VAT (odwrotne obciążenie)."
+      "euVatNote": "Firmy z UE: do płatnych subskrypcji wymagany jest numer VAT zarejestrowany w VIES. Zweryfikowane numery są fakturowane z 0% VAT (odwrotne obciążenie).",
+      "useCardForAllSubscriptions": "Użyj tej karty do wszystkich subskrypcji",
+      "useCardForAllSubscriptionsHint": "Przekieruje każdą subskrypcję dodatku — nawet tę zaczętą inną kartą — na tę kartę, aby żadne odnowienie nigdy nie zostało przegapione.",
+      "applyCardSuccess": "{count, plural, one {Zastosowano do # subskrypcji.} other {Zastosowano do # subskrypcji.}}",
+      "applyCardNoneToUpdate": "Nie masz innych subskrypcji do zaktualizowania.",
+      "applyCardNoCardError": "Najpierw zapisz kartę, a potem spróbuj ponownie.",
+      "applyCardError": "Nie udało się zaktualizować Twoich subskrypcji. Spróbuj ponownie."
     },
     "addOns": {
       "errorCheckout": "Nie udało się uruchomić płatności",
@@ -5936,6 +5943,17 @@
       "subject": "Witamy w grupie {groupName} — {restaurantName}",
       "usageAccount": "Twoje korzyści naliczają się automatycznie przy zamówieniu — wystarczy, że najpierw się zalogujesz.",
       "usageGuest": "Zniżki z tej grupy zostaną doliczone przy płatności, gdy podasz ten adres e-mail ({email}). Aby dodatkowo zbierać i wydawać {label}, załóż darmowe konto z tym adresem i zaloguj się przed złożeniem zamówienia — środki mogą być gromadzone wyłącznie na koncie."
+    },
+    "dispatchRejected": {
+      "subject": "Wymagane działanie: zamówienia #{orderNumber} nie udało się wysłać do kierowcy",
+      "preview": "Zamówienie #{orderNumber} — wysyłka nie powiodła się, brak przypisanego kierowcy",
+      "headerTitle": "Wysłanie do kierowcy nie powiodło się",
+      "subtitle": "Zamówienie #{orderNumber}",
+      "badge": "Wymagane działanie",
+      "body": "Próbowaliśmy wysłać zamówienie #{orderNumber} dla {customerName} do Twojego dostawcy dostaw, ale zostało odrzucone. Żaden kierowca nie został jeszcze przypisany, a klient czeka.",
+      "reasonLabel": "Powód",
+      "actionLine": "Użyj przycisku \"Wyślij do ShipDay\" na zamówieniu, aby spróbować ponownie, albo zorganizuj dostawę własnymi kierowcami.",
+      "viewOrderButton": "Zobacz zamówienie"
     }
   },
   "marketing": {

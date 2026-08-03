@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Aylık rapor",
       "testEmail": "Test e-postası gönder",
       "noRecipients": "Henüz personel alıcısı yok",
-      "customerSignup": "Yeni müşteri kaydı"
+      "customerSignup": "Yeni müşteri kaydı",
+      "dispatchRejected": "Sürücüye gönderme başarısız oldu"
     },
     "receipts": {
       "title": "Makbuzlar",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Henüz VIES ile doğrulanmadı",
       "viesVerifyNow": "Şimdi doğrula",
       "viesUnreachable": "VIES hizmeti geçici olarak kullanılamıyor — birkaç dakika sonra tekrar deneyin.",
-      "euVatNote": "AB işletmeleri: ücretli abonelikler için VIES'te kayıtlı bir KDV numarası gerekir. Doğrulanmış numaralar %0 KDV ile faturalandırılır (ters vergilendirme)."
+      "euVatNote": "AB işletmeleri: ücretli abonelikler için VIES'te kayıtlı bir KDV numarası gerekir. Doğrulanmış numaralar %0 KDV ile faturalandırılır (ters vergilendirme).",
+      "useCardForAllSubscriptions": "Bu kartı tüm abonelikler için kullan",
+      "useCardForAllSubscriptionsHint": "Farklı bir kartla başlamış olanlar da dahil her eklenti aboneliğini bu karta yönlendirir, böylece bir yenileme asla kaçırılmaz.",
+      "applyCardSuccess": "{count, plural, one {# abonelik güncellendi.} other {# abonelik güncellendi.}}",
+      "applyCardNoneToUpdate": "Güncellenecek başka bir aboneliğiniz yok.",
+      "applyCardNoCardError": "Önce bir kart kaydedin, sonra tekrar deneyin.",
+      "applyCardError": "Abonelikleriniz güncellenemedi. Lütfen tekrar deneyin."
     },
     "addOns": {
       "errorCheckout": "Ödeme başlatılamadı",
@@ -5936,6 +5943,17 @@
       "subject": "{restaurantName} mekanında {groupName} grubuna hoş geldiniz",
       "usageAccount": "Ayrıcalıklarınız sipariş verdiğinizde otomatik olarak uygulanır — tek yapmanız gereken önce giriş yapmak.",
       "usageGuest": "Bu grubun indirimleri, ödeme sırasında bu e-posta adresini ({email}) kullandığınızda sizin için eklenir. {label} biriktirip harcamak için ise bu adresle ücretsiz hesabınızı oluşturun ve sipariş vermeden önce giriş yapın — bakiye yalnızca bir hesapta tutulabilir."
+    },
+    "dispatchRejected": {
+      "subject": "İşlem gerekli: #{orderNumber} numaralı sipariş bir sürücüye gönderilemedi",
+      "preview": "Sipariş #{orderNumber} — gönderim başarısız, henüz sürücü atanmadı",
+      "headerTitle": "Sürücüye gönderme başarısız oldu",
+      "subtitle": "#{orderNumber} numaralı sipariş",
+      "badge": "İşlem gerekli",
+      "body": "{customerName} adına #{orderNumber} numaralı siparişi teslimat sağlayıcınıza göndermeye çalıştık ancak reddedildi. Henüz bir sürücü atanmadı ve müşteri bekliyor.",
+      "reasonLabel": "Neden",
+      "actionLine": "Yeniden denemek için siparişteki \"ShipDay'e gönder\" düğmesini kullanın veya teslimatı kendi sürücülerinizle ayarlayın.",
+      "viewOrderButton": "Siparişi görüntüle"
     }
   },
   "marketing": {

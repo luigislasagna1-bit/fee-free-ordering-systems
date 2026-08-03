@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Monatsbericht",
       "testEmail": "Test-E-Mail senden",
       "noRecipients": "Noch keine Mitarbeiter-Empfänger",
-      "customerSignup": "Neue Kundenregistrierung"
+      "customerSignup": "Neue Kundenregistrierung",
+      "dispatchRejected": "Fahrerzuweisung fehlgeschlagen"
     },
     "receipts": {
       "title": "Belege",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Noch nicht über VIES geprüft",
       "viesVerifyNow": "Jetzt prüfen",
       "viesUnreachable": "Der VIES-Dienst ist vorübergehend nicht erreichbar — bitte in ein paar Minuten erneut versuchen.",
-      "euVatNote": "EU-Unternehmen: Für kostenpflichtige Abos ist eine im VIES registrierte USt-IdNr. erforderlich. Validierte Nummern werden mit 0 % USt (Reverse Charge) fakturiert."
+      "euVatNote": "EU-Unternehmen: Für kostenpflichtige Abos ist eine im VIES registrierte USt-IdNr. erforderlich. Validierte Nummern werden mit 0 % USt (Reverse Charge) fakturiert.",
+      "useCardForAllSubscriptions": "Diese Karte für alle Abonnements verwenden",
+      "useCardForAllSubscriptionsHint": "Richtet jedes Add-on-Abonnement — auch solche, die mit einer anderen Karte begonnen haben — auf diese Karte aus, damit keine Verlängerung je verpasst wird.",
+      "applyCardSuccess": "{count, plural, one {Auf # Abonnement angewendet.} other {Auf # Abonnements angewendet.}}",
+      "applyCardNoneToUpdate": "Du hast keine weiteren Abonnements zu aktualisieren.",
+      "applyCardNoCardError": "Speichere zuerst eine Karte und versuche es dann erneut.",
+      "applyCardError": "Deine Abonnements konnten nicht aktualisiert werden. Bitte versuche es erneut."
     },
     "addOns": {
       "errorCheckout": "Checkout konnte nicht gestartet werden",
@@ -5936,6 +5943,17 @@
       "subject": "Willkommen bei {groupName} — {restaurantName}",
       "usageAccount": "Ihre Vorteile werden bei jeder Bestellung automatisch angewendet — melden Sie sich einfach vorher an.",
       "usageGuest": "Rabatte aus dieser Gruppe werden an der Kasse für Sie abgezogen, wenn Sie diese E-Mail-Adresse ({email}) angeben. Um außerdem {label} zu sammeln und einzulösen, erstellen Sie mit dieser Adresse Ihr kostenloses Konto und melden Sie sich vor dem Bestellen an — Guthaben kann nur in einem Konto liegen."
+    },
+    "dispatchRejected": {
+      "subject": "Handlung erforderlich: Bestellung #{orderNumber} konnte nicht an einen Fahrer gesendet werden",
+      "preview": "Bestellung #{orderNumber} — Zuweisung fehlgeschlagen, noch kein Fahrer zugewiesen",
+      "headerTitle": "Fahrerzuweisung fehlgeschlagen",
+      "subtitle": "Bestellung #{orderNumber}",
+      "badge": "Aktion erforderlich",
+      "body": "Wir haben versucht, Bestellung #{orderNumber} von {customerName} an deinen Lieferdienst zu senden, aber sie wurde abgelehnt. Es wurde noch kein Fahrer zugewiesen, und der Kunde wartet.",
+      "reasonLabel": "Grund",
+      "actionLine": "Verwende die Schaltfläche „An ShipDay senden“ bei der Bestellung, um es erneut zu versuchen, oder organisiere die Lieferung mit deinen eigenen Fahrern.",
+      "viewOrderButton": "Bestellung ansehen"
     }
   },
   "marketing": {

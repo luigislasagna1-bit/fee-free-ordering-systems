@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Mėnesio pabaigos ataskaita",
       "testEmail": "Siųsti bandomąjį el. laišką",
       "noRecipients": "Dar nėra personalo gavėjų",
-      "customerSignup": "Naujo kliento registracija"
+      "customerSignup": "Naujo kliento registracija",
+      "dispatchRejected": "Siuntimas kurjeriui nepavyko"
     },
     "receipts": {
       "title": "Kvitai",
@@ -1989,7 +1990,13 @@
       "viesUnverified": "Dar nepatikrinta VIES",
       "viesVerifyNow": "Patikrinti dabar",
       "viesUnreachable": "VIES paslauga laikinai nepasiekiama — bandykite dar kartą po kelių minučių.",
-      "euVatNote": "ES įmonės: mokamoms prenumeratoms reikalingas VIES registruotas PVM numeris. Patvirtinti numeriai apmokestinami 0% PVM (atvirkštinis apmokestinimas)."
+      "euVatNote": "ES įmonės: mokamoms prenumeratoms reikalingas VIES registruotas PVM numeris. Patvirtinti numeriai apmokestinami 0% PVM (atvirkštinis apmokestinimas).",
+      "useCardForAllSubscriptions": "Naudoti šią kortelę visoms prenumeratoms",
+      "useCardForAllSubscriptionsHint": "Nukreipia visas priedų prenumeratas — net tas, kurios pradėtos kita kortele — į šią kortelę, kad atnaujinimas niekada nebūtų praleistas.",
+      "applyCardSuccess": "{count, plural, one {Pritaikyta # prenumeratai.} other {Pritaikyta # prenumeratoms.}}",
+      "applyCardNoneToUpdate": "Neturite kitų prenumeratų, kurias reikėtų atnaujinti.",
+      "applyCardNoCardError": "Pirmiausia išsaugokite kortelę ir bandykite vėl.",
+      "applyCardError": "Nepavyko atnaujinti jūsų prenumeratų. Bandykite dar kartą."
     },
     "addOns": {
       "errorCheckout": "Nepavyko pradėti apmokėjimo",
@@ -5936,6 +5943,17 @@
       "subject": "Sveiki atvykę į {groupName} — {restaurantName}",
       "usageAccount": "Jūsų privalumai pritaikomi automatiškai užsakant — tereikia pirma prisijungti.",
       "usageGuest": "Šios grupės nuolaidos atsiskaitant pritaikomos už jus, kai nurodote šį el. pašto adresą ({email}). O kad galėtumėte kaupti ir išleisti {label}, susikurkite nemokamą paskyrą su šiuo adresu ir prisijunkite prieš užsisakydami — kreditas gali būti laikomas tik paskyroje."
+    },
+    "dispatchRejected": {
+      "subject": "Reikia veiksmo: užsakymo #{orderNumber} nepavyko nusiųsti kurjeriui",
+      "preview": "Užsakymas #{orderNumber} — siuntimas nepavyko, kurjeris dar nepriskirtas",
+      "headerTitle": "Siuntimas kurjeriui nepavyko",
+      "subtitle": "Užsakymas #{orderNumber}",
+      "badge": "Reikalingas veiksmas",
+      "body": "Bandėme nusiųsti užsakymą #{orderNumber}, skirtą {customerName}, jūsų pristatymo paslaugos teikėjui, bet jis buvo atmestas. Kurjeris dar nepriskirtas, o klientas laukia.",
+      "reasonLabel": "Priežastis",
+      "actionLine": "Naudokite mygtuką \"Siųsti į ShipDay\" prie užsakymo, kad pabandytumėte vėl, arba susitarkite dėl pristatymo su savo kurjeriais.",
+      "viewOrderButton": "Žiūrėti užsakymą"
     }
   },
   "marketing": {

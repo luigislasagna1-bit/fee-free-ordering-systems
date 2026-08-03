@@ -1704,7 +1704,8 @@
       "endOfMonthReport": "Raport de sfârșit de lună",
       "testEmail": "Trimite email de test",
       "noRecipients": "Niciun destinatar din personal încă",
-      "customerSignup": "Înregistrare client nou"
+      "customerSignup": "Înregistrare client nou",
+      "dispatchRejected": "Trimiterea către șofer a eșuat"
     },
     "receipts": {
       "title": "Chitanțe",
@@ -2084,7 +2085,13 @@
       "viesUnverified": "Încă neverificat în VIES",
       "viesVerifyNow": "Verifică acum",
       "viesUnreachable": "Serviciul VIES este temporar indisponibil — încercați din nou peste câteva minute.",
-      "euVatNote": "Companii din UE: pentru abonamente plătite este necesar un număr de TVA înregistrat în VIES. Numerele validate sunt facturate cu TVA 0% (taxare inversă)."
+      "euVatNote": "Companii din UE: pentru abonamente plătite este necesar un număr de TVA înregistrat în VIES. Numerele validate sunt facturate cu TVA 0% (taxare inversă).",
+      "useCardForAllSubscriptions": "Folosește acest card pentru toate abonamentele",
+      "useCardForAllSubscriptionsHint": "Direcționează fiecare abonament la suplimente — chiar și cele începute cu un alt card — către acesta, astfel încât o reînnoire să nu fie ratată niciodată.",
+      "applyCardSuccess": "{count, plural, one {Aplicat la # abonament.} other {Aplicat la # abonamente.}}",
+      "applyCardNoneToUpdate": "Nu ai alte abonamente de actualizat.",
+      "applyCardNoCardError": "Salvează mai întâi un card, apoi încearcă din nou.",
+      "applyCardError": "Abonamentele nu au putut fi actualizate. Încearcă din nou."
     },
     "addOns": {
       "errorCheckout": "Nu s-a putut iniția plata",
@@ -5936,6 +5943,17 @@
       "subject": "Bine ai venit în {groupName} la {restaurantName}",
       "usageAccount": "Beneficiile tale se aplică automat când comanzi — trebuie doar să te autentifici mai întâi.",
       "usageGuest": "Reducerile din acest grup se adaugă automat la finalizarea comenzii când folosești această adresă de email ({email}). Pentru a aduna și a cheltui {label} ai nevoie de cont: creează-ți contul gratuit cu această adresă și autentifică-te înainte să comanzi — creditul poate fi păstrat doar într-un cont."
+    },
+    "dispatchRejected": {
+      "subject": "Este necesară o acțiune: comanda #{orderNumber} nu a putut fi trimisă unui șofer",
+      "preview": "Comanda #{orderNumber} — trimitere eșuată, niciun șofer alocat",
+      "headerTitle": "Trimiterea către șofer a eșuat",
+      "subtitle": "Comanda #{orderNumber}",
+      "badge": "Acțiune necesară",
+      "body": "Am încercat să trimitem comanda #{orderNumber} a lui {customerName} către furnizorul tău de livrare, dar a fost respinsă. Niciun șofer nu a fost alocat încă, iar clientul așteaptă.",
+      "reasonLabel": "Motiv",
+      "actionLine": "Folosește butonul „Trimite la ShipDay” de pe comandă pentru a încerca din nou, sau organizează livrarea cu proprii tăi șoferi.",
+      "viewOrderButton": "Vezi comanda"
     }
   },
   "marketing": {
