@@ -133,9 +133,12 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
   };
 
   const orderTypeLabel = ORDER_TYPE_LABEL[orderType] ?? orderType;
-  const timeLabel = orderType === "delivery"
-    ? t("email.orderConfirmed.timeLabelDelivery")
-    : t("email.orderConfirmed.timeLabelReady");
+  // Service-specific "estimated time" wording in the follow-up sentence:
+  // delivery → delivery time, everything else → pickup time. Fabrizio
+  // cms0gyexp #15 (was a generic "estimated ready" label).
+  const followUpKey = orderType === "delivery"
+    ? "email.orderConfirmed.bodyFollowUpDelivery"
+    : "email.orderConfirmed.bodyFollowUpPickup";
 
   return (
     <EmailLayout preview={t("email.orderConfirmed.preview", { orderNumber })}>
@@ -164,7 +167,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           {t("email.orderConfirmed.bodyReceived", { orderNumber })}
           {scheduledLabel
             ? ""
-            : " " + t("email.orderConfirmed.bodyFollowUp", { timeLabel: timeLabel.toLowerCase(), estimatedMinutes })}
+            : " " + t(followUpKey, { estimatedMinutes })}
         </P>
 
         {/* Prominent "order for later" line for scheduled orders. */}

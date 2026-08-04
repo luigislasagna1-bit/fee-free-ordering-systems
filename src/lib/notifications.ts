@@ -837,6 +837,9 @@ export async function notifyCustomer(args: {
           orderNumber: payload.orderNumber,
           status: payload.status,
           restaurantName: restaurant.name,
+          // Service-aware estimated-time line + delay notice on the accepted
+          // email keys off this. Fabrizio cms0gyexp #15.
+          orderType,
           estimatedReady: payload.estimatedReady,
           rejectionReason: payload.rejectionReason,
           rejectionReasonKey: payload.rejectionReasonKey,
@@ -881,6 +884,8 @@ export async function notifyCustomer(args: {
           newEstimatedReady: payload.newEstimatedReady,
           delayMinutes: payload.delayMinutes,
           reason: payload.reason,
+          // Service-specific new-ETA wording (pickup vs delivery). cms0gyexp #15.
+          orderType,
           restaurantPhone: restaurant.phone,
           restaurantEmail: restaurant.email,
           restaurantUrl: restaurantOrderUrl(restaurant, ""),

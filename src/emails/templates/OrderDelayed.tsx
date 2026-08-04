@@ -28,6 +28,9 @@ export type OrderDelayedProps = {
   delayMinutes: number;
   /** Optional free-text reason ("kitchen running busy", "out of an ingredient"). */
   reason?: string | null;
+  /** Order type — picks the service-specific new-ETA sentence ("new estimated
+   *  pickup time" vs "delivery time"). Fabrizio cms0gyexp #15. */
+  orderType?: string;
   /** Tracking URL — same status page the rest of the order emails link to. */
   trackingUrl: string;
   restaurantUrl?: string;
@@ -39,9 +42,15 @@ export type OrderDelayedProps = {
 export default function OrderDelayed(props: OrderDelayedProps) {
   const {
     t,
-    customerName, orderNumber, restaurantName, newEstimatedReady, delayMinutes, reason,
+    customerName, orderNumber, restaurantName, newEstimatedReady, delayMinutes, reason, orderType,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
+
+  // Service-specific new-ETA sentence: delivery → delivery time, else → pickup
+  // time (dine-in/unknown falls back to pickup wording). Fabrizio cms0gyexp #15.
+  const delayBodyKey = orderType === "delivery"
+    ? "email.orderDelayed.delayBodyDelivery"
+    : "email.orderDelayed.delayBodyPickup";
 
   const etaLabel = newEstimatedReady.toLocaleString(undefined, {
     hour: "numeric",
@@ -62,7 +71,7 @@ export default function OrderDelayed(props: OrderDelayedProps) {
       <EmailBody>
         <P>{t("email.orderDelayed.greeting", { customerName })}</P>
         <P>
-          {t("email.orderDelayed.delayBody", { restaurantName, delayMinutes, minutesWord, etaLabel })}
+          {t(delayBodyKey, { restaurantName, delayMinutes, minutesWord, etaLabel })}
         </P>
         {reason && (
           <InfoCard label={t("email.orderDelayed.noteLabel")} accent="amber">
