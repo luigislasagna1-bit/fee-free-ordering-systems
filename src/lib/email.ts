@@ -916,7 +916,7 @@ export async function sendOrderStatusUpdateEmail(params: {
   // FULL/long date (weekday + day + month + clock) so the accepted email reads
   // "Saturday 1 August, 1:48 PM" rather than the abbreviated "Sat 1 Aug" —
   // Fabrizio cms0gyexp #15 asked for the complete date spelled out.
-  const readyStr = params.estimatedReady
+  const readyStrRaw = params.estimatedReady
     ? params.estimatedReady.toLocaleString(params.locale || undefined, {
         timeZone: params.timezone || "UTC",
         weekday: "long",
@@ -927,6 +927,13 @@ export async function sendOrderStatusUpdateEmail(params: {
         hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
       })
     : null;
+  // Capitalize the leading letter. Locales like Italian render the weekday
+  // lowercase ("sabato 1 agosto alle ore 13:48"), but this string always sits
+  // right after "…previsto:" so a leading capital reads correctly and matches
+  // Fabrizio's requested "Sabato 1 Agosto…" (cms0gyexp #15). Cross-locale-safe:
+  // a leading capital after a colon is fine in every language (already-capital
+  // locales like English/German are unchanged).
+  const readyStr = readyStrRaw ? readyStrRaw.charAt(0).toUpperCase() + readyStrRaw.slice(1) : null;
   // SERVICE-specific estimated-time sentence: pickup/takeout/curbside →
   // "Estimated pickup time", delivery → "Estimated delivery time", dine-in /
   // unknown → the generic "Estimated time". Fabrizio cms0gyexp #15.
