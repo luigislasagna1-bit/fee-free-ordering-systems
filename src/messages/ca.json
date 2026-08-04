@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Digueu-nos què celebreu",
     "accessibilityLabel": "Accessibilitat",
     "accessibilityPlaceholder": "p. ex. accés amb cadira de rodes, taula sense esglaons",
-    "commentsPlaceholderGeneric": "Comentaris (opcional) — peticions especials"
+    "commentsPlaceholderGeneric": "Comentaris (opcional) — peticions especials",
+    "closedOnDate": "Estem tancats el {date} — trieu una altra data."
   },
   "kitchen": {
     "opensIn": "Obre d'aquí a {time}",

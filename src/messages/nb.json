@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Fortell oss hva dere feirer",
     "accessibilityLabel": "Tilgjengelighet",
     "accessibilityPlaceholder": "f.eks. rullestoltilgang, trinnfri plassering",
-    "commentsPlaceholderGeneric": "Kommentarer (valgfritt) — spesielle ønsker"
+    "commentsPlaceholderGeneric": "Kommentarer (valgfritt) — spesielle ønsker",
+    "closedOnDate": "Vi har stengt på {date} — velg en annen dato."
   },
   "kitchen": {
     "opensIn": "Åpner om {time}",

@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Πείτε μας τι γιορτάζετε",
     "accessibilityLabel": "Προσβασιμότητα",
     "accessibilityPlaceholder": "π.χ. πρόσβαση με αναπηρικό αμαξίδιο, θέση χωρίς σκαλοπάτια",
-    "commentsPlaceholderGeneric": "Σχόλια (προαιρετικά) - ειδικά αιτήματα"
+    "commentsPlaceholderGeneric": "Σχόλια (προαιρετικά) - ειδικά αιτήματα",
+    "closedOnDate": "Είμαστε κλειστοί την ημέρα {date} — παρακαλούμε επιλέξτε άλλη ημερομηνία."
   },
   "kitchen": {
     "opensIn": "Ανοίγει σε {time}",

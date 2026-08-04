@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Pastāstiet, ko svinat",
     "accessibilityLabel": "Vides pieejamība",
     "accessibilityPlaceholder": "piem., piekļuve ar ratiņkrēslu, sēdvieta bez pakāpieniem",
-    "commentsPlaceholderGeneric": "Komentāri (neobligāti) — īpaši lūgumi"
+    "commentsPlaceholderGeneric": "Komentāri (neobligāti) — īpaši lūgumi",
+    "closedOnDate": "Esam slēgti šajā dienā: {date} — lūdzu, izvēlieties citu datumu."
   },
   "kitchen": {
     "opensIn": "Atvērsies pēc {time}",

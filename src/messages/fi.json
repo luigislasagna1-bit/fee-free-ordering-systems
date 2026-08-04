@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Kerro, mitä juhlitte",
     "accessibilityLabel": "Esteettömyys",
     "accessibilityPlaceholder": "esim. pääsy pyörätuolilla, portaaton pöytäpaikka",
-    "commentsPlaceholderGeneric": "Kommentit (valinnainen) — erityistoiveet"
+    "commentsPlaceholderGeneric": "Kommentit (valinnainen) — erityistoiveet",
+    "closedOnDate": "Olemme suljettuna päivänä {date} — valitse toinen päivämäärä."
   },
   "kitchen": {
     "opensIn": "Avautuu {time} kuluttua",

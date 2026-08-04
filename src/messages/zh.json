@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "请告诉我们您在庆祝什么",
     "accessibilityLabel": "无障碍需求",
     "accessibilityPlaceholder": "例如：轮椅通道、无台阶座位",
-    "commentsPlaceholderGeneric": "备注（可选）——特殊要求"
+    "commentsPlaceholderGeneric": "备注（可选）——特殊要求",
+    "closedOnDate": "我们{date}不营业 — 请选择其他日期。"
   },
   "kitchen": {
     "opensIn": "{time}后开门",

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { X, Calendar, Clock, Users, CheckCircle2, AlertCircle, Loader2, Baby, WheatOff, PartyPopper, Accessibility, Minus, Plus } from "lucide-react";
 import toast from "react-hot-toast";
 import { validateBooking, resolveReservationIntervals, type ReservationSettingsLike } from "@/lib/reservation-validation";
+import { holidayEffectForDay, type HolidayRow } from "@/lib/holiday-rules";
 import { parseTheme } from "@/lib/theme";
 import { useTranslations, useLocale } from "next-intl";
 import { pickHoursForService } from "@/lib/service-hours";
@@ -45,6 +46,13 @@ interface Props {
     isOpen: boolean;
     service?: string | null;
   }>;
+  /** One-off / extraordinary closures (RestaurantHoliday rows). Without these
+   *  the date picker only knew about the WEEKLY closed days, so a customer
+   *  could pick a special closing date, fill the whole form, and only get
+   *  refused on submit (the server already blocks it). With them the modal
+   *  shows the same up-front "closed on this date" block the ordering flow
+   *  shows for takeaway/delivery. Fabrizio cmsajnvkm, 2026-08-03. */
+  holidays?: HolidayRow[];
   /** Whether email is mandatory on the reservation form. Mirrors the
    *  same flag used by the ordering checkout (Restaurant.
    *  requireCustomerEmail). Default true. */
@@ -121,6 +129,7 @@ function findNextOpenDate(
   reservationHoursJson: string | null | undefined,
   fallbackOpeningHours: Array<{ dayOfWeek: number; isOpen: boolean; service?: string | null }>,
   startISO: string,
+  holidays: HolidayRow[] = [],
 ): string | null {
   let hoursMap: Record<string, { enabled: boolean }> = {};
   try { hoursMap = JSON.parse(reservationHoursJson || "{}"); } catch {}
@@ -129,11 +138,13 @@ function findNextOpenDate(
     const probe = new Date(start);
     probe.setDate(start.getDate() + offset);
     const dow = probe.getDay();
+    const probeKey = `${probe.getFullYear()}-${String(probe.getMonth() + 1).padStart(2, "0")}-${String(probe.getDate()).padStart(2, "0")}`;
+    // A one-off closing date is never a valid "next open" day — skip it even
+    // when the weekly hours say the weekday is open. Luigi 2026-08-03.
+    if (holidayEffectForDay(holidays, probeKey, "reservation")?.kind === "closed") continue;
     const explicit = hoursMap[String(dow)];
     if (explicit) {
-      if (explicit.enabled !== false) {
-        return `${probe.getFullYear()}-${String(probe.getMonth() + 1).padStart(2, "0")}-${String(probe.getDate()).padStart(2, "0")}`;
-      }
+      if (explicit.enabled !== false) return probeKey;
       continue;
     }
     // Fall back to openingHours — prefer a reservation-scoped row,
@@ -145,9 +156,7 @@ function findNextOpenDate(
       (h) => h.dayOfWeek === dow && (h.service == null || h.service === ""),
     );
     const row = reservationRow ?? defaultRow;
-    if (row && row.isOpen) {
-      return `${probe.getFullYear()}-${String(probe.getMonth() + 1).padStart(2, "0")}-${String(probe.getDate()).padStart(2, "0")}`;
-    }
+    if (row && row.isOpen) return probeKey;
   }
   return null;
 }
@@ -163,11 +172,21 @@ function ClosedDayBlock({
   date,
   settings,
   fallbackOpeningHours,
+  holidays = [],
+  holidayClosed = false,
+  holidayName = null,
+  holidayMessage = null,
   onJump,
 }: {
   date: string;
   settings: { reservationHours?: string | null };
   fallbackOpeningHours: Array<{ dayOfWeek: number; isOpen: boolean; service?: string | null }>;
+  /** Extraordinary closures, so the "jump to next open" hop skips them too. */
+  holidays?: HolidayRow[];
+  /** True when THIS date is a one-off closing date (vs a weekly closed day). */
+  holidayClosed?: boolean;
+  holidayName?: string | null;
+  holidayMessage?: string | null;
   onJump: (next: string) => void;
 }) {
   const tr = useTranslations("reservation");
@@ -175,6 +194,9 @@ function ClosedDayBlock({
   // Localized weekday of the closed date (Fabrizio cmrj7jivw — was a hardcoded
   // English array, so the whole notice rendered English in every locale).
   const dayLabel = new Date(`${date}T00:00:00`).toLocaleDateString(locale, { weekday: "long" });
+  // Full localized date for the one-off-closure notice ("Mon, Aug 10") — a
+  // weekday name alone reads wrong for a specific closing date.
+  const dateLabel = new Date(`${date}T00:00:00`).toLocaleDateString(locale, { weekday: "long", month: "short", day: "numeric" });
   const nextOpen = findNextOpenDate(
     settings.reservationHours,
     fallbackOpeningHours,
@@ -183,10 +205,18 @@ function ClosedDayBlock({
       d.setDate(d.getDate() + 1);
       return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
     })(),
+    holidays,
   );
   return (
     <div className="text-sm text-rose-800 bg-rose-50 border border-rose-200 rounded-lg px-3 py-3 space-y-2">
-      <div>{tr("closedOnDay", { day: dayLabel })}</div>
+      {holidayClosed ? (
+        <>
+          <div>{tr("closedOnDate", { date: dateLabel })}{holidayName ? ` — ${holidayName}` : ""}</div>
+          {holidayMessage && <div className="text-xs text-rose-700">{holidayMessage}</div>}
+        </>
+      ) : (
+        <div>{tr("closedOnDay", { day: dayLabel })}</div>
+      )}
       {nextOpen && (
         <button
           type="button"
@@ -244,6 +274,7 @@ function generateTimeSlots(openHHMM: string, closeHHMM: string, stepMin: number)
 export function ReservationModal({
   restaurantSlug, restaurantName, settings,
   fallbackOpeningHours = [],
+  holidays = [],
   requireCustomerEmail = true,
   requireCustomerPhone = true,
   hoursFormat = "24h",
@@ -485,7 +516,22 @@ export function ReservationModal({
     }
     return "ambiguous";
   }, [dayHours, fallbackRow]);
-  const dayLooksClosed = dayStatus === "closedHard";
+
+  // Extraordinary / one-off closure for the SELECTED date (holiday rows).
+  // The weekly dayStatus above never sees these, so a "closing date" slipped
+  // through to submit-time only. A full closure ("closed") blocks the day
+  // exactly like a hard-closed weekday; custom-hours / closed-windows stay
+  // soft here (the slot list + server still enforce them) — Fabrizio's report
+  // is specifically about full closing dates. Luigi 2026-08-03 (cmsajnvkm).
+  const holidayEffect = useMemo(
+    () => holidayEffectForDay(holidays, date, "reservation"),
+    [holidays, date],
+  );
+  const holidayFullyClosed = holidayEffect?.kind === "closed";
+
+  // The single "this date can't be booked" signal, used everywhere below.
+  const dayBlocked = dayStatus === "closedHard" || holidayFullyClosed;
+  const dayLooksClosed = dayBlocked;
 
   // Slot interval — owner-controlled via ReservationSettings.
   // slotLengthMinutes (admin reservation settings, default 30). Cap
@@ -493,6 +539,10 @@ export function ReservationModal({
   // value can't break the loop.
   const slotStep = settings.slotLengthMinutes ?? 30;
   const timeSlots = useMemo(() => {
+    // A full one-off closure wins over the weekly hours — an otherwise-open
+    // weekday that the owner marked as a closing date has NO slots. Checked
+    // first so it can't be overridden by the open-day branches below.
+    if (holidayFullyClosed) return [];
     // 1. Generate the raw list from the day's hours.
     let raw: string[];
     let openHHMM = "10:00";
@@ -554,7 +604,7 @@ export function ReservationModal({
       });
     }
     return raw;
-  }, [dayHours, fallbackRow, dayStatus, slotStep, date, settings.minNoticeMinutes, settings.minNoticeHours, splitIntervals]);
+  }, [dayHours, fallbackRow, dayStatus, holidayFullyClosed, slotStep, date, settings.minNoticeMinutes, settings.minNoticeHours, splitIntervals]);
 
   // When the slot list changes (date pick, hours change, interval
   // change) and the currently-selected time is no longer in the list,
@@ -784,11 +834,18 @@ export function ReservationModal({
                       allowed so an incomplete setup doesn't kill the
                       flow entirely.
                     - "open" → just the time picker. */}
-                {dayStatus === "closedHard" ? (
+                {dayBlocked ? (
                   <ClosedDayBlock
                     date={date}
                     settings={settings}
                     fallbackOpeningHours={fallbackOpeningHours}
+                    holidays={holidays}
+                    // A one-off closing date shows the owner's holiday name /
+                    // message; a weekly closed day keeps the generic weekday
+                    // notice. Luigi 2026-08-03 (cmsajnvkm).
+                    holidayClosed={holidayFullyClosed}
+                    holidayName={holidayFullyClosed ? holidayEffect?.name ?? null : null}
+                    holidayMessage={holidayFullyClosed ? holidayEffect?.message ?? null : null}
                     onJump={(d) => setDate(d)}
                   />
                 ) : (

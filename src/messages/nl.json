@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Vertel ons wat u viert",
     "accessibilityLabel": "Toegankelijkheid",
     "accessibilityPlaceholder": "bijv. rolstoeltoegang, drempelvrije zitplaats",
-    "commentsPlaceholderGeneric": "Opmerkingen (optioneel) - speciale verzoeken"
+    "commentsPlaceholderGeneric": "Opmerkingen (optioneel) - speciale verzoeken",
+    "closedOnDate": "We zijn gesloten op {date} — kies een andere datum."
   },
   "kitchen": {
     "opensIn": "Opent over {time}",

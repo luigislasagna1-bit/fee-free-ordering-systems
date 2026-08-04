@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "บอกเราว่าคุณกำลังฉลองอะไร",
     "accessibilityLabel": "รองรับผู้พิการ",
     "accessibilityPlaceholder": "เช่น ทางเข้าสำหรับวีลแชร์ ที่นั่งที่ไม่มีขั้นบันได",
-    "commentsPlaceholderGeneric": "หมายเหตุ (ไม่บังคับ) — คำขอพิเศษ"
+    "commentsPlaceholderGeneric": "หมายเหตุ (ไม่บังคับ) — คำขอพิเศษ",
+    "closedOnDate": "เราปิดทำการใน{date} — กรุณาเลือกวันที่อื่น"
   },
   "kitchen": {
     "opensIn": "เปิดในอีก {time}",

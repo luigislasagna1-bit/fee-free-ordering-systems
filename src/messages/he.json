@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "ספרו לנו מה אתם חוגגים",
     "accessibilityLabel": "נגישות",
     "accessibilityPlaceholder": "לדוגמה: גישה לכיסא גלגלים, ישיבה ללא מדרגות",
-    "commentsPlaceholderGeneric": "הערות (אופציונלי) — בקשות מיוחדות"
+    "commentsPlaceholderGeneric": "הערות (אופציונלי) — בקשות מיוחדות",
+    "closedOnDate": "אנחנו סגורים ב{date} — נא לבחור תאריך אחר."
   },
   "kitchen": {
     "opensIn": "נפתח בעוד {time}",

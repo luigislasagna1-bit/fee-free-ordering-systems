@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Dites-nous ce que vous fêtez",
     "accessibilityLabel": "Accessibilité",
     "accessibilityPlaceholder": "p. ex. accès en fauteuil roulant, table sans marches",
-    "commentsPlaceholderGeneric": "Commentaires (facultatif) — demandes spéciales"
+    "commentsPlaceholderGeneric": "Commentaires (facultatif) — demandes spéciales",
+    "closedOnDate": "Nous sommes fermés le {date} — veuillez choisir une autre date."
   },
   "kitchen": {
     "opensIn": "Ouvre dans {time}",

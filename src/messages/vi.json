@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Cho chúng tôi biết bạn đang ăn mừng dịp gì",
     "accessibilityLabel": "Hỗ trợ tiếp cận",
     "accessibilityPlaceholder": "ví dụ: lối vào cho xe lăn, chỗ ngồi không có bậc thang",
-    "commentsPlaceholderGeneric": "Ghi chú (tùy chọn) - yêu cầu đặc biệt"
+    "commentsPlaceholderGeneric": "Ghi chú (tùy chọn) - yêu cầu đặc biệt",
+    "closedOnDate": "Chúng tôi đóng cửa vào {date} — vui lòng chọn ngày khác."
   },
   "kitchen": {
     "opensIn": "Mở cửa sau {time}",

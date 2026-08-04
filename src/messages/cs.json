@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Napište nám, co slavíte",
     "accessibilityLabel": "Bezbariérový přístup",
     "accessibilityPlaceholder": "např. přístup pro vozíčkáře, místo bez schodů",
-    "commentsPlaceholderGeneric": "Komentáře (volitelné) — zvláštní přání"
+    "commentsPlaceholderGeneric": "Komentáře (volitelné) — zvláštní přání",
+    "closedOnDate": "Máme zavřeno v {date} — vyberte prosím jiné datum."
   },
   "kitchen": {
     "opensIn": "Otevírá za {time}",

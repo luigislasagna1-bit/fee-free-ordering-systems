@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "お祝いの内容をお聞かせください",
     "accessibilityLabel": "バリアフリー",
     "accessibilityPlaceholder": "例：車いす対応、段差のない席",
-    "commentsPlaceholderGeneric": "コメント（任意）— 特別なご要望"
+    "commentsPlaceholderGeneric": "コメント（任意）— 特別なご要望",
+    "closedOnDate": "{date}は休業日です — 別の日付をお選びください。"
   },
   "kitchen": {
     "opensIn": "あと{time}で開店",

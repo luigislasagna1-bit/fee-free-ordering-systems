@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Ne kutladığınızı bize yazın",
     "accessibilityLabel": "Erişilebilirlik",
     "accessibilityPlaceholder": "örn. tekerlekli sandalye erişimi, basamaksız oturma alanı",
-    "commentsPlaceholderGeneric": "Yorumlar (isteğe bağlı) — özel istekler"
+    "commentsPlaceholderGeneric": "Yorumlar (isteğe bağlı) — özel istekler",
+    "closedOnDate": "{date} günü kapalıyız — lütfen başka bir tarih seçin."
   },
   "kitchen": {
     "opensIn": "{time} sonra açılır",

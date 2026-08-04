@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Beri tahu kami apa yang Anda rayakan",
     "accessibilityLabel": "Aksesibilitas",
     "accessibilityPlaceholder": "mis. akses kursi roda, tempat duduk tanpa anak tangga",
-    "commentsPlaceholderGeneric": "Komentar (opsional) — permintaan khusus"
+    "commentsPlaceholderGeneric": "Komentar (opsional) — permintaan khusus",
+    "closedOnDate": "Kami tutup pada {date} — silakan pilih tanggal lain."
   },
   "kitchen": {
     "opensIn": "Buka dalam {time}",

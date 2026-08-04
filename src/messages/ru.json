@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Расскажите, что вы отмечаете",
     "accessibilityLabel": "Доступная среда",
     "accessibilityPlaceholder": "напр. доступ для инвалидной коляски, столик без ступеней",
-    "commentsPlaceholderGeneric": "Комментарии (необязательно) — особые пожелания"
+    "commentsPlaceholderGeneric": "Комментарии (необязательно) — особые пожелания",
+    "closedOnDate": "Мы не работаем в {date} — пожалуйста, выберите другую дату."
   },
   "kitchen": {
     "opensIn": "Откроется через {time}",

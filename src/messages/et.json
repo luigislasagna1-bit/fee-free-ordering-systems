@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Kirjutage, mida tähistate",
     "accessibilityLabel": "Ligipääsetavus",
     "accessibilityPlaceholder": "nt ratastooliga ligipääs, trepivaba istekoht",
-    "commentsPlaceholderGeneric": "Kommentaarid (valikuline) — erisoovid"
+    "commentsPlaceholderGeneric": "Kommentaarid (valikuline) — erisoovid",
+    "closedOnDate": "Oleme suletud sel päeval: {date} — palun valige teine kuupäev."
   },
   "kitchen": {
     "opensIn": "Avatakse {time} pärast",

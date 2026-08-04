@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Recite nam što slavite",
     "accessibilityLabel": "Pristupačnost",
     "accessibilityPlaceholder": "npr. pristup za invalidska kolica, mjesto bez stepenica",
-    "commentsPlaceholderGeneric": "Komentari (neobavezno) — posebni zahtjevi"
+    "commentsPlaceholderGeneric": "Komentari (neobavezno) — posebni zahtjevi",
+    "closedOnDate": "Zatvoreno je u {date} — odaberite drugi datum."
   },
   "kitchen": {
     "opensIn": "Otvara za {time}",

@@ -106,6 +106,11 @@ export default async function ReservationPage({
       ...restaurant.reservationSettings,
       // The Json columns / Date fields are already JSON-compatible from Prisma.
     },
+    // One-off / extraordinary closures — so the date picker blocks a closing
+    // date up front instead of only failing on submit (Fabrizio cmsajnvkm).
+    holidays: ((restaurant as any).holidays ?? []).map((h: any) => ({
+      date: h.date, endDate: h.endDate, name: h.name, message: h.message, rules: h.rules,
+    })),
   };
 
   return <ReservationPageClient restaurant={serialized as any} closure={closure} />;

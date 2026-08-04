@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Кажете ни какво празнувате",
     "accessibilityLabel": "Достъпност",
     "accessibilityPlaceholder": "напр. достъп с инвалидна количка, места без стъпала",
-    "commentsPlaceholderGeneric": "Коментари (по желание) — специални желания"
+    "commentsPlaceholderGeneric": "Коментари (по желание) — специални желания",
+    "closedOnDate": "Затворено е в {date} — моля, изберете друга дата."
   },
   "kitchen": {
     "opensIn": "Отваря след {time}",

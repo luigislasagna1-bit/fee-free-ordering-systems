@@ -63,6 +63,7 @@ export function ReservationPageClient({ restaurant, closure }: { restaurant: any
       restaurantName={restaurant.name}
       settings={restaurant.reservationSettings}
       fallbackOpeningHours={restaurant.openingHours ?? []}
+      holidays={(restaurant as any).holidays ?? []}
       requireCustomerEmail={true}
       requireCustomerPhone={restaurant.requireCustomerPhone !== false}
       hoursFormat={restaurant.hoursFormat === "12h" ? "12h" : "24h"}

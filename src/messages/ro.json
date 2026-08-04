@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Spuneți-ne ce sărbătoriți",
     "accessibilityLabel": "Accesibilitate",
     "accessibilityPlaceholder": "ex. acces pentru scaun cu rotile, loc fără trepte",
-    "commentsPlaceholderGeneric": "Comentarii (opțional) - cereri speciale"
+    "commentsPlaceholderGeneric": "Comentarii (opțional) - cereri speciale",
+    "closedOnDate": "Suntem închiși în {date} — te rugăm să alegi o altă dată."
   },
   "kitchen": {
     "opensIn": "Se deschide în {time}",

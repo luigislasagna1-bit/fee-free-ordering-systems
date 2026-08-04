@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Povejte nam, kaj praznujete",
     "accessibilityLabel": "Dostopnost",
     "accessibilityPlaceholder": "npr. dostop za invalidski voziček, sedež brez stopnic",
-    "commentsPlaceholderGeneric": "Opombe (neobvezno) - posebne želje"
+    "commentsPlaceholderGeneric": "Opombe (neobvezno) - posebne želje",
+    "closedOnDate": "Ob {date} smo zaprti — izberite drug datum."
   },
   "kitchen": {
     "opensIn": "Odpre čez {time}",

@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Tell us what you're celebrating",
     "accessibilityLabel": "Accessible",
     "accessibilityPlaceholder": "e.g. wheelchair access, step-free seating",
-    "commentsPlaceholderGeneric": "Comments (optional) - special requests"
+    "commentsPlaceholderGeneric": "Comments (optional) - special requests",
+    "closedOnDate": "We're closed on {date} — please pick a different date."
   },
   "kitchen": {
     "opensIn": "Opens in {time}",

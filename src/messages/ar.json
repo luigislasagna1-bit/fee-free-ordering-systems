@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "أخبرنا بما تحتفل به",
     "accessibilityLabel": "تسهيلات لذوي الإعاقة",
     "accessibilityPlaceholder": "مثال: مدخل للكراسي المتحركة، طاولة بدون درجات",
-    "commentsPlaceholderGeneric": "ملاحظات (اختياري) - طلبات خاصة"
+    "commentsPlaceholderGeneric": "ملاحظات (اختياري) - طلبات خاصة",
+    "closedOnDate": "نحن مغلقون يوم {date} — يرجى اختيار تاريخ آخر."
   },
   "kitchen": {
     "opensIn": "يفتح خلال {time}",

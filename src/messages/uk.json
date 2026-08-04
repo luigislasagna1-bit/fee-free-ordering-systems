@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Розкажіть, що ви святкуєте",
     "accessibilityLabel": "Безбар'єрний доступ",
     "accessibilityPlaceholder": "напр. доступ для візка, місця без сходинок",
-    "commentsPlaceholderGeneric": "Коментарі (необов'язково) — особливі побажання"
+    "commentsPlaceholderGeneric": "Коментарі (необов'язково) — особливі побажання",
+    "closedOnDate": "Ми не працюємо в {date} — будь ласка, оберіть іншу дату."
   },
   "kitchen": {
     "opensIn": "Відкриється через {time}",

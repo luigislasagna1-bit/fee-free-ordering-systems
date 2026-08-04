@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Napisz, co świętujesz",
     "accessibilityLabel": "Bez barier",
     "accessibilityPlaceholder": "np. dostęp dla wózka inwalidzkiego, miejsce bez schodów",
-    "commentsPlaceholderGeneric": "Uwagi (opcjonalnie) - specjalne życzenia"
+    "commentsPlaceholderGeneric": "Uwagi (opcjonalnie) - specjalne życzenia",
+    "closedOnDate": "Jesteśmy zamknięci w {date} — proszę wybrać inną datę."
   },
   "kitchen": {
     "opensIn": "Otwarcie za {time}",

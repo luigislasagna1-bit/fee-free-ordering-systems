@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "어떤 날을 축하하시는지 알려 주세요",
     "accessibilityLabel": "장애인 편의",
     "accessibilityPlaceholder": "예: 휠체어 접근, 계단 없는 좌석",
-    "commentsPlaceholderGeneric": "코멘트 (선택사항) — 특별 요청"
+    "commentsPlaceholderGeneric": "코멘트 (선택사항) — 특별 요청",
+    "closedOnDate": "{date}에는 영업하지 않습니다 — 다른 날짜를 선택해 주세요."
   },
   "kitchen": {
     "opensIn": "{time} 후 오픈",

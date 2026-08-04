@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Írja meg, mit ünnepelnek",
     "accessibilityLabel": "Akadálymentes",
     "accessibilityPlaceholder": "pl. kerekesszékes megközelítés, lépcsőmentes ülőhely",
-    "commentsPlaceholderGeneric": "Megjegyzések (nem kötelező) - különleges kérések"
+    "commentsPlaceholderGeneric": "Megjegyzések (nem kötelező) - különleges kérések",
+    "closedOnDate": "Zárva tartunk ezen a napon: {date} — kérjük, válasszon másik dátumot."
   },
   "kitchen": {
     "opensIn": "Nyitás {time} múlva",

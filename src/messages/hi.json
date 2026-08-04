@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "बताएँ आप क्या मना रहे हैं",
     "accessibilityLabel": "सुगम्यता",
     "accessibilityPlaceholder": "जैसे व्हीलचेयर पहुँच, बिना सीढ़ी वाली बैठक",
-    "commentsPlaceholderGeneric": "टिप्पणियाँ (वैकल्पिक) - विशेष अनुरोध"
+    "commentsPlaceholderGeneric": "टिप्पणियाँ (वैकल्पिक) - विशेष अनुरोध",
+    "closedOnDate": "हम {date} को बंद रहते हैं — कृपया कोई दूसरी तारीख़ चुनें।"
   },
   "kitchen": {
     "opensIn": "{time} में खुलेगा",

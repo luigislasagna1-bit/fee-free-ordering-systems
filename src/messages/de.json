@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Verraten Sie uns, was Sie feiern",
     "accessibilityLabel": "Barrierefrei",
     "accessibilityPlaceholder": "z. B. Rollstuhlzugang, stufenlos erreichbarer Sitzplatz",
-    "commentsPlaceholderGeneric": "Anmerkungen (optional) – Sonderwünsche"
+    "commentsPlaceholderGeneric": "Anmerkungen (optional) – Sonderwünsche",
+    "closedOnDate": "Wir haben am {date} geschlossen — bitte wählen Sie ein anderes Datum."
   },
   "kitchen": {
     "opensIn": "Öffnet in {time}",

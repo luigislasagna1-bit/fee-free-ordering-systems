@@ -654,7 +654,8 @@
     "occasionOtherPlaceholder": "Parašykite, ką švenčiate",
     "accessibilityLabel": "Pritaikyta neįgaliesiems",
     "accessibilityPlaceholder": "pvz., patekimas su neįgaliojo vežimėliu, vieta be laiptelių",
-    "commentsPlaceholderGeneric": "Komentarai (neprivaloma) — specialūs pageidavimai"
+    "commentsPlaceholderGeneric": "Komentarai (neprivaloma) — specialūs pageidavimai",
+    "closedOnDate": "Esame uždaryti šią dieną: {date} — pasirinkite kitą datą."
   },
   "kitchen": {
     "opensIn": "Atsidarys po {time}",
