@@ -133,10 +133,32 @@ don't sell what we haven't shipped ourselves. (Why now: GloriaFood retires brand
 3. 🔷 **~10 min WITH Claude once #1 resolves:** generate the App Store Connect API key + APNs
    push key from your Apple account (Claude guides every click; the keys land encrypted in the
    platform, never in plain text).
-Your wizard is already waiting: Admin → Mobile App (Claude granted your store the add-on free —
-you're the pilot; it stays free for you). Runbooks in the repo: `PLAY_STORE_SUBMISSION_CUSTOMER.md`,
+Your wizard is at Admin → Mobile App. Runbooks in the repo: `PLAY_STORE_SUBMISSION_CUSTOMER.md`,
 `APPLE_SUBMISSION_CUSTOMER.md`, `docs/CUSTOMER_APP_PIPELINE.md`. The Android build is already
 proven — a real signed store-ready app was produced from the demo store's wizard config.
+
+**⚠️ VERIFIED STATE 2026-08-04 (overnight prep):** the pilot add-on is NOT actually granted on
+prod — Luigi's store has no `branded_mobile_app` row, so today Admin → Mobile App shows the UPSELL
+panel, not the wizard. The earlier "Claude granted your store the add-on free" note was inaccurate.
+**Tomorrow's STEP 0** (before anything else): grant Luigi's store the `branded_mobile_app` add-on as
+a long-lived comp so the wizard unlocks. NOT done autonomously overnight on purpose — it's a prod
+billing-entitlement write and the dev comp-script (a) refuses prod and (b) only does a 6-day trial
+that the expire-addon-trials cron would then kill; a permanent pilot comp needs the right status +
+far-future trialEndsAt (or a superadmin grant), decided WITH Luigi so we don't repeat the
+comped-add-on billing edge cases from A1. Entitlement = feature `app_store_listing`, checked by
+`hasFeature()` in `/api/admin/mobile-app/project`.
+
+**Tomorrow's sequence (in order):**
+0. Grant the pilot comp (above) → wizard unlocks.
+1. **Apple account check** (the multi-week gate) — Luigi logs into developer.apple.com/account with
+   the RESTAURANT email and reports what he sees; reuse existing enrollment if present, else enroll
+   fresh (free D-U-N-S, slow). This gates the whole iOS timeline — do it first even while other
+   steps proceed.
+2. **Google Play org account** ($25, https://play.google.com/console/signup, Organization) — start
+   in parallel; identity verification takes days.
+3. Run the **wizard together** (app name/icon/colors → derives bundle id).
+4. ~10 min: generate **ASC API key + APNs push key** (Claude guides; keys land encrypted).
+Android build pipeline is already proven; iOS builds via Codemagic `customer-ios` (macOS only).
 
 ### A38. 🍕 Combos: pick-4-at-once + SHARED toppings across pizzas — BUILT (2026-08-02)
 Your two asks, modeled on the GloriaFood/Uber screenshots you sent, in one release:
