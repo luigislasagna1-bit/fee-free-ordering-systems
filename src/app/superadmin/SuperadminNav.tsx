@@ -31,7 +31,14 @@ const items = [
 export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0, restricted = false }: { reportsNewCount?: number; notificationsCount?: number; restricted?: boolean }) {
   const path = usePathname();
   return (
-    <nav className="flex-1 py-3">
+    // The sidebar is a fixed-height flex column (parent <aside> is inside an
+    // h-screen / overflow-hidden shell). The old single scroll-less <nav>
+    // pushed "Log out" below the fold once there were enough items — at 100%
+    // zoom it was unreachable (Luigi 2026-08-03). Fix: the item list scrolls
+    // and Log out is PINNED so it's always visible at any zoom / item count.
+    // min-h-0 lets this flex child shrink below its content so overflow works.
+    <div className="flex-1 flex flex-col min-h-0">
+      <nav className="flex-1 overflow-y-auto py-3">
       {items.filter((i) => !restricted || !i.adminOnly).map(({ href, label, icon: Icon, exact }) => {
         // "Reseller Reports" should NOT light up while on its notifications
         // sub-page — that's the Notifications item's job.
@@ -52,9 +59,11 @@ export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0, res
           </Link>
         );
       })}
-      <button onClick={() => signOut({ callbackUrl: "/login" })} className="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:text-red-500 mx-2 transition w-full mt-2">
+      </nav>
+      {/* Pinned so logout is always reachable regardless of item count/zoom. */}
+      <button onClick={() => signOut({ callbackUrl: "/login" })} className="flex-shrink-0 flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:text-red-500 mx-2 mb-1 border-t border-gray-100 pt-3 transition w-full">
         <LogOut className="w-4 h-4" /> Log out
       </button>
-    </nav>
+    </div>
   );
 }
