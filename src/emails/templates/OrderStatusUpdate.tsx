@@ -181,8 +181,17 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
             only rides POSITIVE updates — a rejected/missed email used to say
             "your order is now rejected. Estimated ready: 10:00" because the
             dispatcher's raw-status sentence overrode this body entirely
-            (Fabrizio cmr6meaaq, 2026-07-04). */}
-        <P>{body}{!isNegative && statusMessage ? ` ${statusMessage}` : ""}</P>
+            (Fabrizio cmr6meaaq, 2026-07-04). It is ALSO suppressed on the
+            COMPLETED email — a finished order has no future ready time, so
+            "Estimated pickup time: …" made no sense there (Fabrizio
+            cms0gyexp #15). */}
+        <P>{body}{!isNegative && key !== "completed" && statusMessage ? ` ${statusMessage}` : ""}</P>
+        {/* Accepted only: reassure the customer that a delay would be
+            communicated, so the estimated time above doesn't read as a hard
+            promise. Fabrizio cms0gyexp #15. */}
+        {key === "accepted" && (
+          <P>{t("email.orderStatus.delayNotice")}</P>
+        )}
         {/* Self-cancel: the internal "Customer cancelled from the order status
             page." reason is redundant noise to the person who did it — hide. */}
         {isNegative && reason && !isMissed && !isSelfCancel && (

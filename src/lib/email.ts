@@ -902,23 +902,48 @@ export async function sendOrderStatusUpdateEmail(params: {
   timezone?: string;
   /** Restaurant 12h/24h preference — clock-time formatting. Luigi 2026-06-08. */
   hoursFormat?: "12h" | "24h";
+  /** Order type (pickup/takeout/curbside vs delivery) — drives the SERVICE-
+   *  specific estimated-time line on the accepted email ("Estimated pickup
+   *  time" vs "Estimated delivery time"), Fabrizio cms0gyexp #15. Absent /
+   *  dine-in falls back to the generic "Estimated time" line. */
+  orderType?: string;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.orderStatus.subject", { orderNumber: params.orderNumber });
   // Format the estimated-ready instant in the RESTAURANT's timezone + the
   // customer's locale (was bare toLocaleString() → server UTC, so a Thursday
   // 8:45 PM slot showed the wrong time). Luigi 2026-06-05.
-  const readyStr = params.estimatedReady
+  // FULL/long date (weekday + day + month + clock) so the accepted email reads
+  // "Saturday 1 August, 1:48 PM" rather than the abbreviated "Sat 1 Aug" —
+  // Fabrizio cms0gyexp #15 asked for the complete date spelled out.
+  const readyStrRaw = params.estimatedReady
     ? params.estimatedReady.toLocaleString(params.locale || undefined, {
         timeZone: params.timezone || "UTC",
-        weekday: "short",
-        month: "short",
+        weekday: "long",
+        month: "long",
         day: "numeric",
         hour: "numeric",
         minute: "2-digit",
         hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
       })
     : null;
+  // Capitalize the leading letter. Locales like Italian render the weekday
+  // lowercase ("sabato 1 agosto alle ore 13:48"), but this string always sits
+  // right after "…previsto:" so a leading capital reads correctly and matches
+  // Fabrizio's requested "Sabato 1 Agosto…" (cms0gyexp #15). Cross-locale-safe:
+  // a leading capital after a colon is fine in every language (already-capital
+  // locales like English/German are unchanged).
+  const readyStr = readyStrRaw ? readyStrRaw.charAt(0).toUpperCase() + readyStrRaw.slice(1) : null;
+  // SERVICE-specific estimated-time sentence: pickup/takeout/curbside →
+  // "Estimated pickup time", delivery → "Estimated delivery time", dine-in /
+  // unknown → the generic "Estimated time". Fabrizio cms0gyexp #15.
+  const estimatedKey = (() => {
+    const type = (params.orderType ?? "").toLowerCase();
+    if (type === "delivery") return "email.orderStatus.estimatedDelivery";
+    if (type === "pickup" || type === "takeout" || type === "curbside")
+      return "email.orderStatus.estimatedPickup";
+    return "email.orderStatus.estimatedReady";
+  })();
   const html = await renderEmail(
     OrderStatusUpdate({
       t,
@@ -932,7 +957,7 @@ export async function sendOrderStatusUpdateEmail(params: {
       // ("è ora rejected") and glued "Estimated ready: 10:00" onto missed/
       // rejected emails. Fabrizio cmr6meaaq, 2026-07-04.
       statusMessage: readyStr
-        ? t("email.orderStatus.estimatedReady", { time: readyStr })
+        ? t(estimatedKey, { time: readyStr })
         : undefined,
       // Forward the rejection reason (if any) so the template can surface
       // it. Previously dropped on the floor — customer never saw WHY their
@@ -985,6 +1010,10 @@ export async function sendOrderDelayedEmail(params: {
   restaurantEmail?: string | null;
   restaurantUrl?: string | null;
   locale?: string;
+  /** Order type — drives the SERVICE-specific new-ETA sentence ("new estimated
+   *  pickup time" vs "delivery time"). Absent/dine-in falls back to pickup
+   *  wording. Fabrizio cms0gyexp #15. */
+  orderType?: string;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.orderDelayed.subject", { orderNumber: params.orderNumber, delayMinutes: params.delayMinutes });
@@ -997,6 +1026,7 @@ export async function sendOrderDelayedEmail(params: {
       newEstimatedReady: params.newEstimatedReady,
       delayMinutes: params.delayMinutes,
       reason: params.reason,
+      orderType: params.orderType,
       trackingUrl: params.trackingUrl ?? "#",
       restaurantPhone: params.restaurantPhone ?? undefined,
       restaurantEmail: params.restaurantEmail ?? undefined,
