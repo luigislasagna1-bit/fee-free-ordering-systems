@@ -7562,5 +7562,24 @@
     "errRateLimited": "Đã thử quá nhiều lần — vui lòng chờ một chút và thử lại.",
     "errEmailMismatch": "Email đó không khớp với quà tặng này. Hãy thử địa chỉ mà quà tặng được gửi đến.",
     "errGeneric": "Đã có lỗi xảy ra. Vui lòng thử lại sau một chút."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Bạn nhận được email này vì bạn là khách hàng của {name}.",
+      "deleteData": "Xóa dữ liệu cá nhân của tôi"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Xóa dữ liệu cá nhân của tôi",
+    "deleteConfirm": "Xóa vĩnh viễn dữ liệu cá nhân liên kết với {email} tại {name}? Tên, thông tin liên hệ và địa chỉ của bạn sẽ bị xóa. Các đơn hàng trước đây chỉ được lưu giữ ở dạng ẩn danh khi cần thiết cho mục đích thuế và kế toán.",
+    "deleteButton": "Xóa dữ liệu của tôi",
+    "deleteDone": "Dữ liệu của bạn đã được xóa.",
+    "deleteDoneDetail": "Chúng tôi đã xóa dữ liệu cá nhân liên kết với {email} tại {name} và đã loại bạn khỏi mọi hoạt động tiếp thị. Email xác nhận đã được gửi đến {email}.",
+    "exportTitle": "Tải xuống dữ liệu của tôi",
+    "exportConfirm": "Gửi email bản sao dữ liệu cá nhân liên kết với {email} tại {name}?",
+    "exportButton": "Gửi dữ liệu của tôi qua email",
+    "exportDone": "Hãy kiểm tra hộp thư đến của bạn.",
+    "exportDoneDetail": "Chúng tôi đang gửi một bản sao dữ liệu của bạn đến {email}. Email sẽ đến trong ít phút nữa.",
+    "invalid": "Liên kết này không hợp lệ hoặc đã hết hạn. Vui lòng sử dụng liên kết trong email gần đây nhất, hoặc liên hệ trực tiếp với nhà hàng."
   }
 }

@@ -172,6 +172,16 @@ export function EmailHeader({
  * GloriaFood-style: contact info in the body color, then a thin separator,
  * then the platform line in muted grey. Optional unsubscribe link.
  */
+/** Localized strings for the prominent CASL marketing footer variant. */
+export type MarketingFooterStrings = {
+  /** "You're receiving this because you're a customer of {name}." */
+  whyReceiving: string;
+  /** "Unsubscribe" */
+  unsubscribe: string;
+  /** "Delete my personal data" */
+  deleteData: string;
+};
+
 export function EmailFooter({
   restaurantName,
   restaurantUrl,
@@ -179,6 +189,9 @@ export function EmailFooter({
   restaurantPhone,
   imprint,
   unsubscribeUrl,
+  dataDeletionUrl,
+  marketing,
+  marketingStrings,
   signOff = "Kind regards,",
   poweredByLabel = "Powered by",
   postalAddress,
@@ -196,6 +209,13 @@ export function EmailFooter({
   imprint?: string;
   /** Optional unsubscribe link — only shown for digest/marketing emails. */
   unsubscribeUrl?: string;
+  /** CASL/GDPR "delete my personal data" self-serve link (marketing only). */
+  dataDeletionUrl?: string;
+  /** Render the prominent CASL marketing footer (descriptive why-received line
+   *  + Unsubscribe + Delete-my-data links) instead of the tiny imprint line. */
+  marketing?: boolean;
+  /** Localized strings for the marketing variant (all 38 locales). */
+  marketingStrings?: MarketingFooterStrings;
   /** Localized "Kind regards," — templates with a Translator pass
    *  t("email.footer.signOff"); default keeps English (cms0gyexp #4b). */
   signOff?: string;
@@ -288,6 +308,28 @@ export function EmailFooter({
             />
           );
         })()}
+        {/* CASL marketing footer: a PROMINENT why-received line + clear
+            Unsubscribe and Delete-my-data links. Larger/darker than the tiny
+            imprint line so the opt-out is actually findable (the old footer's
+            muted 11px "Unsubscribe" is why a recipient said there was none). */}
+        {marketing && marketingStrings && (
+          <div style={{ fontSize: 12, color: COLORS.text, lineHeight: 1.6, marginBottom: 12 }}>
+            <div>{marketingStrings.whyReceiving.replace("{name}", restaurantName ?? "")}</div>
+            <div style={{ marginTop: 6 }}>
+              {unsubscribeUrl && (
+                <a href={unsubscribeUrl} style={{ color: COLORS.emeraldDk, textDecoration: "underline", fontWeight: 600 }}>
+                  {marketingStrings.unsubscribe}
+                </a>
+              )}
+              {unsubscribeUrl && dataDeletionUrl && <span style={{ color: COLORS.muted }}>{"  ·  "}</span>}
+              {dataDeletionUrl && (
+                <a href={dataDeletionUrl} style={{ color: COLORS.emeraldDk, textDecoration: "underline", fontWeight: 600 }}>
+                  {marketingStrings.deleteData}
+                </a>
+              )}
+            </div>
+          </div>
+        )}
         {imprint ? (
           // Custom (reseller) imprint — a full sentence, rendered verbatim.
           <span>{imprint}</span>
@@ -296,7 +338,9 @@ export function EmailFooter({
             {poweredByLabel} <strong style={{ color: COLORS.muted }}>Fee Free Ordering Systems</strong>
           </>
         )}
-        {unsubscribeUrl && (
+        {/* Minimal transactional/digest unsubscribe (non-marketing only — the
+            marketing block above already renders a prominent one). */}
+        {!marketing && unsubscribeUrl && (
           <>
             {" · "}
             <a href={unsubscribeUrl} style={{ color: COLORS.muted, textDecoration: "underline" }}>

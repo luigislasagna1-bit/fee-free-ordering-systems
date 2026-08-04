@@ -50,6 +50,10 @@
       "schedule": "15 * * * *"
     },
     {
+      "path": "/api/cron/retention-anonymize",
+      "schedule": "0 4 * * 0"
+    },
+    {
       "path": "/api/cron/auto-complete-orders",
       "schedule": "*/2 * * * *"
     },

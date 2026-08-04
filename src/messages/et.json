@@ -7562,5 +7562,24 @@
     "errRateLimited": "Liiga palju katseid — palun oota veidi ja proovi uuesti.",
     "errEmailMismatch": "See e-post ei sobi selle kingitusega. Proovi aadressi, kuhu kingitus saadeti.",
     "errGeneric": "Midagi läks valesti. Palun proovi mõne hetke pärast uuesti."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Saate selle e-kirja, kuna olete {name} klient.",
+      "deleteData": "Kustuta minu isikuandmed"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Kustuta minu isikuandmed",
+    "deleteConfirm": "Kas kustutada jäädavalt {name} juures aadressiga {email} seotud isikuandmed? Teie nimi, kontaktandmed ja aadress kustutatakse. Varasemaid tellimusi säilitatakse ainult anonüümitud kujul, kui see on maksu- ja raamatupidamisnõuete tõttu vajalik.",
+    "deleteButton": "Kustuta minu andmed",
+    "deleteDone": "Teie andmed on kustutatud.",
+    "deleteDoneDetail": "Kustutasime {name} juures aadressiga {email} seotud isikuandmed ja eemaldasime teid kõigist turundusteadetest. Kinnitus on saadetud aadressile {email}.",
+    "exportTitle": "Laadi alla minu andmed",
+    "exportConfirm": "Kas saata e-postiga koopia {name} juures aadressiga {email} seotud isikuandmetest?",
+    "exportButton": "Saada mulle mu andmed e-postiga",
+    "exportDone": "Kontrollige oma postkasti.",
+    "exportDoneDetail": "Saadame teie andmete koopia aadressile {email}. See peaks kohe saabuma.",
+    "invalid": "See link on kehtetu või aegunud. Kasutage värskema e-kirja linki või võtke ühendust otse restoraniga."
   }
 }

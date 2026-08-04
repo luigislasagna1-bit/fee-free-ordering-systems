@@ -7,7 +7,7 @@
  * already-has-account case, where the credit lands instantly).
  */
 import type { Translator } from "@/lib/i18n-dict";
-import { EmailLayout, EmailHeader, EmailFooter, COLORS } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, EmailFooter, COLORS, type MarketingFooterStrings } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard, Badge } from "../components/EmailParts";
 
 export type RewardGiftInviteProps = {
@@ -36,6 +36,10 @@ export type RewardGiftInviteProps = {
   /** Pre-formatted expiry date of the CODE (not the gift — the gift itself
    *  never expires), in the restaurant's timezone. */
   codeExpiryLabel?: string | null;
+  /** CASL opt-out (built by the sender via buildOptOutFooter). */
+  unsubscribeUrl?: string;
+  dataDeletionUrl?: string;
+  marketingStrings?: MarketingFooterStrings;
 };
 
 /** One numbered step. Table-free, block-level, explicit sizes — Outlook desktop
@@ -70,7 +74,7 @@ function Step({ n, title, body }: { n: number; title: string; body: string }) {
 }
 
 export default function RewardGiftInvite(props: RewardGiftInviteProps) {
-  const { t, customerName, restaurantName, amountLabel, rewardLabel, note, orderUrl, giftEmail, imprint, spendUrl, code, codeExpiryLabel } = props;
+  const { t, customerName, restaurantName, amountLabel, rewardLabel, note, orderUrl, giftEmail, imprint, spendUrl, code, codeExpiryLabel, unsubscribeUrl, dataDeletionUrl, marketingStrings } = props;
   const hasPass = !!spendUrl && !!code;
   return (
     <EmailLayout preview={t("email.rewardGiftInvite.preview", { restaurantName, amount: amountLabel, label: rewardLabel })}>
@@ -178,7 +182,11 @@ export default function RewardGiftInvite(props: RewardGiftInviteProps) {
       </EmailBody>
       <EmailFooter restaurantName={restaurantName} restaurantUrl={orderUrl} imprint={imprint}
         signOff={t("email.footer.signOff")}
-        poweredByLabel={t("email.footer.poweredBy")} />
+        poweredByLabel={t("email.footer.poweredBy")}
+        unsubscribeUrl={unsubscribeUrl}
+        dataDeletionUrl={dataDeletionUrl}
+        marketing={!!marketingStrings}
+        marketingStrings={marketingStrings} />
     </EmailLayout>
   );
 }

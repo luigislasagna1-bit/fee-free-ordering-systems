@@ -7562,5 +7562,24 @@
     "errRateLimited": "Pārāk daudz mēģinājumu — lūdzu, uzgaidiet mirkli un mēģiniet vēlreiz.",
     "errEmailMismatch": "Šis e-pasts neatbilst šai dāvanai. Pamēģiniet adresi, uz kuru dāvana tika nosūtīta.",
     "errGeneric": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz pēc mirkļa."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Jūs saņemat šo e-pastu, jo esat {name} klients.",
+      "deleteData": "Dzēst manus personas datus"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Dzēst manus personas datus",
+    "deleteConfirm": "Vai neatgriezeniski dzēst personas datus, kas saistīti ar {email} pie {name}? Jūsu vārds, kontaktinformācija un adrese tiks izdzēsti. Iepriekšējie pasūtījumi tiek saglabāti tikai anonimizētā veidā, ja tas nepieciešams nodokļu un grāmatvedības vajadzībām.",
+    "deleteButton": "Dzēst manus datus",
+    "deleteDone": "Jūsu dati ir dzēsti.",
+    "deleteDoneDetail": "Mēs izdzēsām personas datus, kas saistīti ar {email} pie {name}, un noņēmām jūs no visiem mārketinga sarakstiem. Apstiprinājums nosūtīts uz {email}.",
+    "exportTitle": "Lejupielādēt manus datus",
+    "exportConfirm": "Vai nosūtīt pa e-pastu personas datu kopiju, kas saistīta ar {email} pie {name}?",
+    "exportButton": "Nosūtīt man manus datus pa e-pastu",
+    "exportDone": "Pārbaudiet savu iesūtni.",
+    "exportDoneDetail": "Mēs sūtām jūsu datu kopiju uz {email}. Tai vajadzētu drīz pienākt.",
+    "invalid": "Šī saite nav derīga vai tās derīguma termiņš ir beidzies. Lūdzu, izmantojiet saiti no jaunāka e-pasta vai sazinieties tieši ar restorānu."
   }
 }

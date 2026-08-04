@@ -6,7 +6,7 @@
  * marketing email path respects consent).
  */
 import type { Translator } from "@/lib/i18n-dict";
-import { EmailLayout, EmailHeader, EmailFooter, COLORS } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, EmailFooter, COLORS, type MarketingFooterStrings } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard, Badge } from "../components/EmailParts";
 
 /** One numbered step — mirrors RewardGiftInvite's so the two gift emails read
@@ -57,10 +57,14 @@ export type RewardGiftProps = {
   giftEmail?: string;
   orderUrl: string;
   imprint?: string;
+  /** CASL opt-out (built by the sender via buildOptOutFooter). */
+  unsubscribeUrl?: string;
+  dataDeletionUrl?: string;
+  marketingStrings?: MarketingFooterStrings;
 };
 
 export default function RewardGift(props: RewardGiftProps) {
-  const { t, customerName, restaurantName, amountLabel, rewardLabel, balanceLabel, note, giftEmail, orderUrl, imprint } = props;
+  const { t, customerName, restaurantName, amountLabel, rewardLabel, balanceLabel, note, giftEmail, orderUrl, imprint, unsubscribeUrl, dataDeletionUrl, marketingStrings } = props;
   return (
     <EmailLayout preview={t("email.rewardGift.preview", { restaurantName, amount: amountLabel, label: rewardLabel })}>
       <EmailHeader
@@ -113,7 +117,11 @@ export default function RewardGift(props: RewardGiftProps) {
       </EmailBody>
       <EmailFooter restaurantName={restaurantName} restaurantUrl={orderUrl} imprint={imprint}
         signOff={t("email.footer.signOff")}
-        poweredByLabel={t("email.footer.poweredBy")} />
+        poweredByLabel={t("email.footer.poweredBy")}
+        unsubscribeUrl={unsubscribeUrl}
+        dataDeletionUrl={dataDeletionUrl}
+        marketing={!!marketingStrings}
+        marketingStrings={marketingStrings} />
     </EmailLayout>
   );
 }

@@ -26,6 +26,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { KICKSTARTER_FIRST_BUY_REF, sendInviteEmail } from "@/lib/kickstarter";
+import { monthsAgo, EBR_MONTHS, INQUIRY_MONTHS } from "@/lib/marketing-consent";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -49,6 +50,7 @@ async function handle(req: NextRequest) {
   let importsConsidered = 0;
   let totalSent = 0;
   let totalErrors = 0;
+  let totalSkipped = 0;
 
   // 1. Find every restaurant with the Invite Prospects toggle on. We
   // pull the imports + the restaurant metadata in the same query so
@@ -67,6 +69,7 @@ async function handle(req: NextRequest) {
           subdomain: true,
           customDomain: true,
           customDomainStatus: true,
+          defaultLanguage: true,
           resellerProfile: { select: { status: true, companyName: true } },
         },
       },
@@ -118,6 +121,10 @@ async function handle(req: NextRequest) {
       where: {
         restaurantId: restaurant.id,
         isComplete: true,
+        // CASL gate: never send from an import whose owner hasn't attested a
+        // lawful basis. This ALSO freezes every legacy (pre-2026-08-04) import
+        // — they have consentAttestedAt=null — until the owner re-attests.
+        consentAttestedAt: { not: null },
       },
       orderBy: { uploadedAt: "asc" }, // oldest imports first
     });
@@ -126,15 +133,29 @@ async function handle(req: NextRequest) {
       if (imp.emailsSent >= imp.successRows) continue; // already drained
       importsConsidered++;
 
-      // 3. Pull up to BATCH_PER_IMPORT prospects who haven't been
-      // sent yet AND haven't bounced AND haven't unsubscribed. Index
-      // on importId keeps this O(batch) regardless of file size.
+      // Rolling 24-month (EBR) / 6-month (inquiry) implied-consent window,
+      // enforced again at SEND time (defense-in-depth over the import-time
+      // exclusion) — a multi-day drip must not cross the window mid-flight.
+      // Express consent doesn't expire, so no date filter for it.
+      let relationshipFilter: { relationshipDate?: { gte: Date } } = {};
+      if (imp.consentBasis === "existing_business_relationship") {
+        relationshipFilter = { relationshipDate: { gte: monthsAgo(EBR_MONTHS) } };
+      } else if (imp.consentBasis === "inquiry") {
+        relationshipFilter = { relationshipDate: { gte: monthsAgo(INQUIRY_MONTHS) } };
+      }
+
+      // 3. Pull up to BATCH_PER_IMPORT prospects who haven't been sent yet AND
+      // haven't bounced AND haven't unsubscribed AND weren't excluded at import
+      // (stale/suppressed) AND are still inside the consent window. Index on
+      // importId keeps this O(batch) regardless of file size.
       const prospects = await prisma.prospect.findMany({
         where: {
           importId: imp.id,
           emailSentAt: null,
           emailBouncedAt: null,
           unsubscribedAt: null,
+          excludedAt: null,
+          ...relationshipFilter,
         },
         take: BATCH_PER_IMPORT,
       });
@@ -152,30 +173,36 @@ async function handle(req: NextRequest) {
       let sentThisBatch = 0;
       for (const p of prospects) {
         try {
-          const result = await sendInviteEmail(p, {
-            id: restaurant.id,
-            name: restaurant.name,
-            slug: restaurant.slug,
-            email: restaurant.email,
-            phone: restaurant.phone,
-            subdomain: restaurant.subdomain,
-            customDomain: restaurant.customDomain,
-            customDomainStatus: restaurant.customDomainStatus,
-            imprint,
-          });
-          // Mark sent regardless of result.success — Resend errors on a
-          // single recipient (bounced domain, malformed address) should
-          // NOT cause infinite retries that re-send to everyone else
-          // every hour. Set emailSentAt so we move past this prospect.
-          // If the bounce was hard, the bounce webhook will set
-          // emailBouncedAt for downstream filtering.
+          const result = await sendInviteEmail(
+            p,
+            {
+              id: restaurant.id,
+              name: restaurant.name,
+              slug: restaurant.slug,
+              email: restaurant.email,
+              phone: restaurant.phone,
+              subdomain: restaurant.subdomain,
+              customDomain: restaurant.customDomain,
+              customDomainStatus: restaurant.customDomainStatus,
+              defaultLanguage: restaurant.defaultLanguage,
+              imprint,
+            },
+            imp.consentBasis,
+          );
+          // Mark handled regardless of outcome — Resend errors on a single
+          // recipient (bounced domain, malformed address), or a suppression
+          // skip, should NOT cause infinite retries that re-scan everyone
+          // else every hour. Set emailSentAt so we move past this prospect.
           await prisma.prospect.update({
             where: { id: p.id },
             data: { emailSentAt: new Date() },
           });
-          if (result?.success) {
+          if (result?.sent) {
             sentThisBatch++;
             totalSent++;
+          } else if (result?.skipped) {
+            // Suppressed / stale consent / no basis — handled, NOT an error.
+            totalSkipped++;
           } else {
             totalErrors++;
           }
@@ -210,7 +237,7 @@ async function handle(req: NextRequest) {
 
   const elapsedMs = Date.now() - start;
   console.log(
-    `[kickstarter-invites] restaurants=${restaurantsConsidered} skippedInactivePromo=${restaurantsSkippedInactivePromo} imports=${importsConsidered} sent=${totalSent} errors=${totalErrors} elapsedMs=${elapsedMs}`,
+    `[kickstarter-invites] restaurants=${restaurantsConsidered} skippedInactivePromo=${restaurantsSkippedInactivePromo} imports=${importsConsidered} sent=${totalSent} skipped=${totalSkipped} errors=${totalErrors} elapsedMs=${elapsedMs}`,
   );
 
   return NextResponse.json({
@@ -218,6 +245,7 @@ async function handle(req: NextRequest) {
     restaurantsSkippedInactivePromo,
     importsConsidered,
     sent: totalSent,
+    skipped: totalSkipped,
     errors: totalErrors,
     elapsedMs,
   });

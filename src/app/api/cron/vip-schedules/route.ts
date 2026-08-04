@@ -142,6 +142,7 @@ async function runCreditGrant(s: DueSchedule, periodKey: string): Promise<{ gran
           const hasAccount = !!row && isAccountCustomer(row as any);
           const common = {
             to: person.email,
+            restaurantId: s.restaurantId,
             customerName: person.name || "",
             restaurantName: r.name,
             amountLabel,

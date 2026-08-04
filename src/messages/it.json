@@ -7562,5 +7562,24 @@
     "errRateLimited": "Troppi tentativi — attendi un momento e riprova.",
     "errEmailMismatch": "Questa email non corrisponde a questo regalo. Prova l'indirizzo a cui è stato inviato il regalo.",
     "errGeneric": "Qualcosa è andato storto. Riprova in un momento."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Ricevi questa email perché sei cliente di {name}.",
+      "deleteData": "Elimina i miei dati personali"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Elimina i miei dati personali",
+    "deleteConfirm": "Eliminare definitivamente i dati personali collegati a {email} presso {name}? Il tuo nome, i dati di contatto e l'indirizzo verranno cancellati. Gli ordini passati vengono conservati solo in forma anonima quando richiesto a fini fiscali e contabili.",
+    "deleteButton": "Elimina i miei dati",
+    "deleteDone": "I tuoi dati sono stati eliminati.",
+    "deleteDoneDetail": "Abbiamo cancellato i dati personali collegati a {email} presso {name} e ti abbiamo rimosso da tutte le comunicazioni di marketing. Una conferma è stata inviata a {email}.",
+    "exportTitle": "Scarica i miei dati",
+    "exportConfirm": "Inviare via email una copia dei dati personali collegati a {email} presso {name}?",
+    "exportButton": "Inviami i miei dati via email",
+    "exportDone": "Controlla la tua posta in arrivo.",
+    "exportDoneDetail": "Stiamo inviando una copia dei tuoi dati a {email}. Dovrebbe arrivare a breve.",
+    "invalid": "Questo link non è valido o è scaduto. Utilizza il link contenuto in un'email più recente oppure contatta direttamente il ristorante."
   }
 }

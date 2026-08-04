@@ -7562,5 +7562,24 @@
     "errRateLimited": "Çok fazla deneme — lütfen biraz bekleyip tekrar deneyin.",
     "errEmailMismatch": "Bu e-posta bu hediyeyle eşleşmiyor. Hediyenin gönderildiği adresi deneyin.",
     "errGeneric": "Bir şeyler ters gitti. Lütfen bir dakika sonra tekrar deneyin."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Bu e-postayı {name} müşterisi olduğunuz için alıyorsunuz.",
+      "deleteData": "Kişisel verilerimi sil"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Kişisel verilerimi sil",
+    "deleteConfirm": "{email} adresine bağlı, {name} işletmesindeki kişisel veriler kalıcı olarak silinsin mi? Adınız, iletişim bilgileriniz ve adresiniz silinecektir. Geçmiş siparişler yalnızca vergi ve muhasebe gereklilikleri için anonimleştirilmiş biçimde saklanır.",
+    "deleteButton": "Verilerimi sil",
+    "deleteDone": "Verileriniz silindi.",
+    "deleteDoneDetail": "{email} adresine bağlı, {name} işletmesindeki kişisel verileri sildik ve sizi tüm pazarlama iletişimlerinden çıkardık. {email} adresine bir onay gönderildi.",
+    "exportTitle": "Verilerimi indir",
+    "exportConfirm": "{email} adresine bağlı, {name} işletmesindeki kişisel verilerin bir kopyası e-posta ile gönderilsin mi?",
+    "exportButton": "Verilerimi bana e-postayla gönder",
+    "exportDone": "Gelen kutunuzu kontrol edin.",
+    "exportDoneDetail": "Verilerinizin bir kopyasını {email} adresine gönderiyoruz. Kısa süre içinde ulaşması gerekiyor.",
+    "invalid": "Bu bağlantı geçersiz veya süresi dolmuş. Lütfen daha yeni bir e-postadaki bağlantıyı kullanın veya doğrudan restoranla iletişime geçin."
   }
 }

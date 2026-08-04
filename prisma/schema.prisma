@@ -436,6 +436,9 @@ model Restaurant {
   rewardEarnRules        RewardEarnRule[]
   pendingRewardGrants    PendingRewardGrant[]
   giftWalletPasses       GiftWalletPass[]
+  // CASL / anti-spam compliance suite (2026-08-04)
+  emailSuppressions      EmailSuppression[]
+  dataRequestLogs        DataRequestLog[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -2631,6 +2634,20 @@ model ProspectImport {
   emailsLastSent DateTime?
   isComplete     Boolean   @default(false)
 
+  /// CASL consent attestation (2026-08-04). The owner MUST declare a lawful
+  /// basis at upload time — the cron refuses to send from any import where
+  /// consentAttestedAt is null (this also freezes every pre-2026-08-04 import
+  /// until the owner re-attests). Attested once per upload, so it lives here
+  /// on the parent rather than duplicated across every Prospect row.
+  consentBasis      ConsentBasis?
+  consentSourceNote String? // owner's free-text description of the basis
+  consentAttestedAt DateTime?
+  attestedByUserId  String? // audit: which admin user attested
+  /// Rows dropped at import as stale (>24mo implied consent) or already
+  /// suppressed. successRows counts only SENDABLE rows so the drip accounting
+  /// (emailsSent >= successRows) stays correct; excluded rows are tracked here.
+  excludedRows      Int     @default(0)
+
   uploadedAt DateTime   @default(now())
   prospects  Prospect[]
 
@@ -2658,10 +2675,89 @@ model Prospect {
   /// invite campaign.
   convertedToCustomerId String?
 
+  /// Per-row last-order / relationship date, parsed from an optional CSV
+  /// date column. Drives the 24-month CASL implied-consent cutoff. Null =
+  /// no date supplied (treated as stale for implied-consent bases).
+  relationshipDate DateTime?
+  /// Set when this row is excluded from sending (stale relationship or the
+  /// email is already suppressed). Non-null => the cron never sends. Kept
+  /// (not deleted) so the import UI can show "N excluded".
+  excludedAt     DateTime?
+  excludedReason String? // 'stale_relationship' | 'suppressed'
+
   createdAt DateTime @default(now())
 
   @@index([importId])
   @@index([email])
+}
+
+/// Why an email address is suppressed. See EmailSuppression.
+enum SuppressionReason {
+  unsubscribe // user clicked unsubscribe (customer OR prospect path)
+  bounce      // hard bounce reported by the Resend webhook
+  complaint   // spam complaint (feedback loop) from the Resend webhook
+  erasure     // "delete my data" / CASL/GDPR right-to-be-forgotten request
+  manual      // staff / superadmin added by hand
+}
+
+/// Lawful basis for emailing an imported prospect list under CASL.
+enum ConsentBasis {
+  express                        // recipient expressly opted in (no expiry)
+  existing_business_relationship // EBR: purchase within 24 months (implied)
+  inquiry                        // inquiry/application within 6 months (implied)
+}
+
+/// Unified per-restaurant do-not-email list (2026-08-04). ONE row per
+/// (restaurant, lowercased email). Every marketing send MUST consult this
+/// before dispatch — writing here is how the Customer.marketingConsent and
+/// Prospect.unsubscribedAt silos get unified: an unsubscribe (or bounce,
+/// complaint, or erasure) from EITHER path lands one row that silences BOTH.
+model EmailSuppression {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// ALWAYS lowercased + trimmed at the write site — the unique index relies
+  /// on this invariant. Never store mixed case.
+  emailLower String
+  reason     SuppressionReason
+  /// Free-text provenance: 'kickstarter_unsub' | 'autopilot_unsub' |
+  /// 'resend_webhook' | 'admin:<userId>' | 'erasure' | 'backfill'. Audit only.
+  source     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // HOT PATH: isSuppressed(restaurantId, email) is a single indexed point
+  // lookup. Unique so an upsert converges race-safely (webhook retries) and
+  // we never accumulate duplicates.
+  @@unique([restaurantId, emailLower])
+  // Cross-restaurant ops (erasing a person everywhere, admin search).
+  @@index([emailLower])
+}
+
+/// Audit trail for data-rights requests (erasure / export), 2026-08-04.
+/// Deliberately stores NO PII — only a sha256 of the subject email — so the
+/// log itself is not a fresh copy of the data we just erased.
+model DataRequestLog {
+  id           String      @id @default(cuid())
+  action       String // "delete" | "export"
+  scope        String // "restaurant" | "platform"
+  restaurantId String?
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id], onDelete: SetNull)
+
+  subjectHash  String // sha256(lower(email)) — NEVER the raw email
+  requestedVia String // "self-token" | "admin" | "superadmin" | "cron-retention"
+  actorId      String? // admin/superadmin user id when applicable
+  status       String  @default("completed") // completed | partial | failed
+  counts       Json? // { customers, orders, reservations, prospects, ... }
+  stripeStatus String? // deleted | skipped | retry
+
+  createdAt DateTime @default(now())
+
+  @@index([subjectHash, createdAt])
+  @@index([restaurantId, createdAt])
+  @@index([action, createdAt])
 }
 
 model DeliveryZone {

@@ -117,6 +117,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
     const balance = await getBalance({ restaurantId, customerId: gift.customerId });
     const res = await sendRewardGiftEmail({
       to: gift.email,
+      restaurantId,
       customerName: gift.name,
       restaurantName: r.name,
       amountLabel,
@@ -154,6 +155,7 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
     }
     const res = await sendRewardGiftInviteEmail({
       to: gift.email,
+      restaurantId,
       customerName: gift.name,
       restaurantName: r.name,
       amountLabel,

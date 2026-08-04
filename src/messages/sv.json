@@ -7562,5 +7562,24 @@
     "errRateLimited": "För många försök — vänta en stund och försök igen.",
     "errEmailMismatch": "Den e-postadressen matchar inte den här gåvan. Prova adressen som gåvan skickades till.",
     "errGeneric": "Något gick fel. Försök igen om en stund."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Du får det här e-postmeddelandet eftersom du är kund hos {name}.",
+      "deleteData": "Radera mina personuppgifter"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Radera mina personuppgifter",
+    "deleteConfirm": "Radera permanent de personuppgifter som är kopplade till {email} hos {name}? Ditt namn, dina kontaktuppgifter och din adress kommer att raderas. Tidigare beställningar sparas endast i anonymiserad form när det krävs för skatte- och bokföringsändamål.",
+    "deleteButton": "Radera mina uppgifter",
+    "deleteDone": "Dina uppgifter har raderats.",
+    "deleteDoneDetail": "Vi har raderat de personuppgifter som är kopplade till {email} hos {name} och avregistrerat dig från all marknadsföring. En bekräftelse har skickats till {email}.",
+    "exportTitle": "Ladda ner mina uppgifter",
+    "exportConfirm": "Skicka en kopia av de personuppgifter som är kopplade till {email} hos {name} via e-post?",
+    "exportButton": "Skicka mina uppgifter till mig",
+    "exportDone": "Kolla din inkorg.",
+    "exportDoneDetail": "Vi skickar en kopia av dina uppgifter till {email}. Den bör anlända inom kort.",
+    "invalid": "Länken är ogiltig eller har gått ut. Använd länken i ett senare e-postmeddelande eller kontakta restaurangen direkt."
   }
 }

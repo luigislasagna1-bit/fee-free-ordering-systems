@@ -8,6 +8,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 const h = vi.hoisted(() => ({
   customers: [] as any[],
   prospects: [] as any[],
+  suppressions: [] as any[], // unified do-not-email rows written by suppressEmail
 }));
 
 vi.mock("@/lib/db", () => ({
@@ -26,6 +27,21 @@ vi.mock("@/lib/db", () => ({
         );
         for (const r of rows) Object.assign(r, data);
         return { count: rows.length };
+      },
+      // Added for the unified-suppression restaurantId resolution.
+      findMany: async ({ where }: any) => {
+        const ors = where?.OR ?? [];
+        return h.prospects.filter((p) => ors.some((o: any) => (o.id && p.id === o.id) || (o.email && p.email === o.email)));
+      },
+    },
+    // suppressEmail() upserts here — track writes so tests can assert the
+    // Customer/Prospect silos are unified.
+    emailSuppression: {
+      upsert: async ({ where, create }: any) => {
+        const key = where.restaurantId_emailLower;
+        const hit = h.suppressions.find((s) => s.restaurantId === key.restaurantId && s.emailLower === key.emailLower);
+        if (!hit) h.suppressions.push({ ...create });
+        return {};
       },
     },
   },
@@ -46,10 +62,11 @@ beforeEach(() => {
     { id: "c3", restaurantId: "r2", email: "a@x.com", marketingConsent: true }, // other restaurant — untouched
   ];
   h.prospects = [
-    { id: "p1", email: "b@x.com", unsubscribedAt: null },
-    { id: "p2", email: "b@x.com", unsubscribedAt: null }, // same person, second import
-    { id: "p3", email: "other@x.com", unsubscribedAt: null },
+    { id: "p1", email: "b@x.com", unsubscribedAt: null, import: { restaurantId: "r1" } },
+    { id: "p2", email: "b@x.com", unsubscribedAt: null, import: { restaurantId: "r1" } }, // same person, second import
+    { id: "p3", email: "other@x.com", unsubscribedAt: null, import: { restaurantId: "r1" } },
   ];
+  h.suppressions = [];
 });
 
 describe("unsubscribe tokens", () => {
@@ -75,6 +92,8 @@ describe("applyUnsubscribe", () => {
     expect(h.customers[0].marketingConsent).toBe(false);
     expect(h.customers[1].marketingConsent).toBe(false); // duplicate row flipped too
     expect(h.customers[2].marketingConsent).toBe(true); // other restaurant untouched
+    // Unified do-not-email row written for r1 (silences the Prospect path too).
+    expect(h.suppressions).toContainEqual(expect.objectContaining({ restaurantId: "r1", emailLower: "a@x.com" }));
   });
 
   it("prospect: stamps unsubscribedAt on the prospect AND every other list with that email", async () => {
@@ -83,6 +102,8 @@ describe("applyUnsubscribe", () => {
     expect(h.prospects[0].unsubscribedAt).toBeInstanceOf(Date);
     expect(h.prospects[1].unsubscribedAt).toBeInstanceOf(Date);
     expect(h.prospects[2].unsubscribedAt).toBeNull();
+    // Unified do-not-email row written for r1 (silences the Customer path too).
+    expect(h.suppressions).toContainEqual(expect.objectContaining({ restaurantId: "r1", emailLower: "b@x.com" }));
   });
 
   it("is idempotent", async () => {

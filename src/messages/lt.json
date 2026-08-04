@@ -7562,5 +7562,24 @@
     "errRateLimited": "Per daug bandymų — palaukite akimirką ir bandykite dar kartą.",
     "errEmailMismatch": "Šis el. paštas neatitinka šios dovanos. Pabandykite adresą, į kurį dovana buvo išsiųsta.",
     "errGeneric": "Kažkas nepavyko. Bandykite dar kartą po kelių akimirkų."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Gaunate šį el. laišką, nes esate {name} klientas.",
+      "deleteData": "Ištrinti mano asmens duomenis"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Ištrinti mano asmens duomenis",
+    "deleteConfirm": "Ar visam laikui ištrinti asmens duomenis, susietus su {email} adresu {name}? Jūsų vardas, kontaktiniai duomenys ir adresas bus ištrinti. Ankstesni užsakymai saugomi tik anonimizuota forma, kai to reikalaujama mokesčių ir apskaitos tikslais.",
+    "deleteButton": "Ištrinti mano duomenis",
+    "deleteDone": "Jūsų duomenys ištrinti.",
+    "deleteDoneDetail": "Ištrynėme asmens duomenis, susietus su {email} adresu {name}, ir pašalinome jus iš visų rinkodaros pranešimų. Patvirtinimas išsiųstas adresu {email}.",
+    "exportTitle": "Atsisiųsti mano duomenis",
+    "exportConfirm": "Ar el. paštu išsiųsti asmens duomenų, susietų su {email} adresu {name}, kopiją?",
+    "exportButton": "Atsiųskite man mano duomenis el. paštu",
+    "exportDone": "Patikrinkite savo pašto dėžutę.",
+    "exportDoneDetail": "Siunčiame jūsų duomenų kopiją adresu {email}. Ji netrukus turėtų atkeliauti.",
+    "invalid": "Ši nuoroda negalioja arba jos galiojimo laikas baigėsi. Naudokite naujesniame el. laiške pateiktą nuorodą arba susisiekite tiesiogiai su restoranu."
   }
 }

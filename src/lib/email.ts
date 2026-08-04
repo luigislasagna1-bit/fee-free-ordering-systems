@@ -59,6 +59,12 @@ import CouponAssigned            from "@/emails/templates/CouponAssigned";
 import { formatCurrency } from "@/lib/utils";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
+import type { MarketingFooterStrings } from "@/emails/components/EmailLayout";
+import { isSuppressed } from "@/lib/suppression";
+import { checkConsentBasis, type MarketingConsentBasis } from "@/lib/marketing-consent";
+import { isSupportedLocale } from "@/lib/locales";
+import { customerUnsubscribeUrl } from "@/lib/unsubscribe";
+import { dataDeletionUrl } from "@/lib/data-request";
 
 // Cached transport so we don't query PlatformSettings on every call.
 // Invalidate by calling `resetEmailTransport()` after the super-admin saves.
@@ -144,6 +150,14 @@ export const EMAIL_ENABLED = true;
  * restaurant names) blow up some clients unless quoted. We always
  * quote the name to be safe + escape any inner double-quotes.
  */
+/** Resend tag names/values allow only [A-Za-z0-9_-] (≤256 chars). Sanitize so
+ *  a campaign like "autopilot:second_order" doesn't get the whole send
+ *  rejected. */
+function toResendTags(tags: Record<string, string>): Array<{ name: string; value: string }> {
+  const clean = (s: string) => String(s).replace(/[^A-Za-z0-9_-]/g, "_").slice(0, 256) || "_";
+  return Object.entries(tags).map(([name, value]) => ({ name: clean(name), value: clean(value) }));
+}
+
 function applyFromName(from: string, displayName: string | null | undefined): string {
   if (!displayName) return from;
   const trimmed = displayName.trim();
@@ -158,6 +172,7 @@ function applyFromName(from: string, displayName: string | null | undefined): st
 
 async function send({
   to, cc, subject, html, text, replyTo, listUnsubscribeUrl, fromName,
+  classification = "transactional", consentContext, tags, attachments,
 }: {
   to: string;
   /** Optional CC recipient(s). Used by partner-intro emails that loop several
@@ -182,8 +197,34 @@ async function send({
    *  restaurant order emails so the customer's inbox shows the
    *  restaurant's name rather than the platform default. */
   fromName?: string | null;
+  /** "marketing" activates the CASL compliance gate: a `consentContext` is
+   *  REQUIRED, the suppression list is re-checked here as a last line of
+   *  defence (so even a future caller that skips sendMarketingEmail cannot mail
+   *  a suppressed address), and Resend `tags` are attached for webhook
+   *  attribution. Defaults to "transactional" — the ~35 existing callers are
+   *  unaffected and skip every gate below. */
+  classification?: "marketing" | "transactional";
+  consentContext?: { restaurantId: string; emailLower: string };
+  /** Resend tags (echoed back on delivery-event webhooks so bounces/complaints
+   *  can be attributed to a restaurant). Values are sanitized to Resend's
+   *  allowed charset. */
+  tags?: Record<string, string>;
+  /** File attachments (e.g. the DSAR data-export JSON). content is UTF-8 text. */
+  attachments?: Array<{ filename: string; content: string }>;
 }): Promise<{ success: boolean; error?: string }> {
   if (!to) return { success: false, error: "no recipient" };
+  // COMPLIANCE GATE (last line of defence). Marketing mail must never reach a
+  // suppressed address, and must always carry a consent context.
+  if (classification === "marketing") {
+    if (!consentContext) {
+      console.error("[Email] marketing send refused — missing consentContext. subject:", subject);
+      return { success: false, error: "marketing send requires consentContext" };
+    }
+    if (await isSuppressed(consentContext.restaurantId, consentContext.emailLower)) {
+      console.log("[Email] marketing send skipped — address suppressed. subject:", subject);
+      return { success: false, error: "suppressed" };
+    }
+  }
   const { client, from: defaultFrom } = await getTransport();
   const from = applyFromName(defaultFrom, fromName);
   if (!client) {
@@ -237,6 +278,10 @@ async function send({
       ...(plainText ? { text: plainText } : {}),
       ...(replyTo ? { replyTo } : {}),
       ...(Object.keys(headers).length > 0 ? { headers } : {}),
+      ...(tags && Object.keys(tags).length > 0 ? { tags: toResendTags(tags) } : {}),
+      ...(attachments && attachments.length > 0
+        ? { attachments: attachments.map((a) => ({ filename: a.filename, content: Buffer.from(a.content, "utf8") })) }
+        : {}),
     });
     if (error) {
       console.error("[Email send error]", { to, from, name: error.name, message: error.message });
@@ -1189,6 +1234,8 @@ export async function sendDispatchRejectedEmail(params: {
  *  marketingConsent and pre-formats the amounts. */
 export async function sendRewardGiftEmail(params: {
   to: string;
+  /** Restaurant id — scopes the signed unsubscribe / delete-data footer links. */
+  restaurantId: string;
   customerName: string;
   restaurantName: string;
   amountLabel: string;
@@ -1202,6 +1249,7 @@ export async function sendRewardGiftEmail(params: {
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const opt = await buildOptOutFooter({ restaurantId: params.restaurantId, email: params.to, restaurantUrl: params.orderUrl, locale: params.locale });
   const html = await renderEmail(
     RewardGift({
       t,
@@ -1216,6 +1264,9 @@ export async function sendRewardGiftEmail(params: {
       giftEmail: params.to,
       orderUrl: params.orderUrl,
       imprint: currentImprint(),
+      unsubscribeUrl: opt.unsubscribeUrl,
+      dataDeletionUrl: opt.dataDeletionUrl,
+      marketingStrings: opt.marketingStrings,
     })
   );
   return send({
@@ -1224,6 +1275,7 @@ export async function sendRewardGiftEmail(params: {
     html,
     fromName: params.restaurantName,
     replyTo: params.restaurantEmail,
+    listUnsubscribeUrl: opt.unsubscribeUrl,
   });
 }
 
@@ -1233,6 +1285,8 @@ export async function sendRewardGiftEmail(params: {
  *  automatically. 1:1, owner-initiated (Gift form carries the CASL reminder). */
 export async function sendRewardGiftInviteEmail(params: {
   to: string;
+  /** Restaurant id — scopes the signed unsubscribe / delete-data footer links. */
+  restaurantId: string;
   customerName: string;
   restaurantName: string;
   amountLabel: string;
@@ -1251,6 +1305,7 @@ export async function sendRewardGiftInviteEmail(params: {
   codeExpiryLabel?: string | null;
 }) {
   const t = await getDict(params.locale);
+  const opt = await buildOptOutFooter({ restaurantId: params.restaurantId, email: params.to, restaurantUrl: params.orderUrl, locale: params.locale });
   const html = await renderEmail(
     RewardGiftInvite({
       t,
@@ -1265,6 +1320,9 @@ export async function sendRewardGiftInviteEmail(params: {
       spendUrl: params.spendUrl,
       code: params.code,
       codeExpiryLabel: params.codeExpiryLabel,
+      unsubscribeUrl: opt.unsubscribeUrl,
+      dataDeletionUrl: opt.dataDeletionUrl,
+      marketingStrings: opt.marketingStrings,
     })
   );
   return send({
@@ -1273,6 +1331,7 @@ export async function sendRewardGiftInviteEmail(params: {
     html,
     fromName: params.restaurantName,
     replyTo: params.restaurantEmail,
+    listUnsubscribeUrl: opt.unsubscribeUrl,
   });
 }
 
@@ -1326,6 +1385,8 @@ export async function sendOrderRefundEmail(params: {
  *  template stays dumb. */
 export async function sendCouponAssignedEmail(params: {
   to: string;
+  /** Restaurant id — scopes the signed unsubscribe / delete-data footer links. */
+  restaurantId: string;
   customerName: string;
   restaurantName: string;
   code: string;
@@ -1344,6 +1405,7 @@ export async function sendCouponAssignedEmail(params: {
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const opt = await buildOptOutFooter({ restaurantId: params.restaurantId, email: params.to, restaurantUrl: params.restaurantUrl, locale: params.locale });
   const discountLabel =
     params.discountType === "percentage"
       ? t("email.couponAssigned.discountPercent", { value: params.discountValue })
@@ -1388,6 +1450,9 @@ export async function sendCouponAssignedEmail(params: {
       restaurantEmail: params.restaurantEmail ?? undefined,
       restaurantPhone: params.restaurantPhone ?? undefined,
       imprint: currentImprint(),
+      unsubscribeUrl: opt.unsubscribeUrl,
+      dataDeletionUrl: opt.dataDeletionUrl,
+      marketingStrings: opt.marketingStrings,
     }),
   );
   return send({
@@ -1396,6 +1461,7 @@ export async function sendCouponAssignedEmail(params: {
     html,
     replyTo: params.restaurantEmail ?? undefined,
     fromName: params.restaurantName,
+    listUnsubscribeUrl: opt.unsubscribeUrl,
   });
 }
 
@@ -1408,6 +1474,8 @@ export async function sendCouponAssignedEmail(params: {
  */
 export async function sendVipSpecialEmail(params: {
   to: string;
+  /** Restaurant id — scopes the signed unsubscribe / delete-data footer links. */
+  restaurantId: string;
   customerName: string;
   restaurantName: string;
   discountType: "percentage" | "fixed" | "other";
@@ -1434,6 +1502,7 @@ export async function sendVipSpecialEmail(params: {
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const vipOpt = await buildOptOutFooter({ restaurantId: params.restaurantId, email: params.to, restaurantUrl: params.restaurantUrl, locale: params.locale });
   const memberLabel = params.memberLabel?.trim() || t("email.vipSpecial.defaultMemberLabel");
   const discountLabel =
     params.discountType === "percentage" && params.discountValue != null
@@ -1490,6 +1559,9 @@ export async function sendVipSpecialEmail(params: {
       introOverride: t("email.vipSpecial.intro", { memberLabel, restaurantName: params.restaurantName, discountLabel }),
       usageNote,
       accountTip,
+      unsubscribeUrl: vipOpt.unsubscribeUrl,
+      dataDeletionUrl: vipOpt.dataDeletionUrl,
+      marketingStrings: vipOpt.marketingStrings,
     }),
   );
   return send({
@@ -1498,6 +1570,7 @@ export async function sendVipSpecialEmail(params: {
     html,
     replyTo: params.restaurantEmail ?? undefined,
     fromName: params.restaurantName,
+    listUnsubscribeUrl: vipOpt.unsubscribeUrl,
   });
 }
 
@@ -1516,6 +1589,8 @@ export async function sendVipSpecialEmail(params: {
  */
 export async function sendVipGroupWelcomeEmail(params: {
   to: string;
+  /** Restaurant id — scopes the signed unsubscribe / delete-data footer links. */
+  restaurantId: string;
   customerName: string;
   restaurantName: string;
   /** What this GROUP calls its members — falls back to the restaurant default.
@@ -1541,6 +1616,7 @@ export async function sendVipGroupWelcomeEmail(params: {
   locale?: string;
 }) {
   const t = await getDict(params.locale);
+  const grpOpt = await buildOptOutFooter({ restaurantId: params.restaurantId, email: params.to, restaurantUrl: params.restaurantUrl, locale: params.locale });
   const memberLabel = params.memberLabel?.trim() || t("email.vipSpecial.defaultMemberLabel");
   const groupRewardLabel = params.rewardLabel?.trim() || t("checkout.reward.defaultPlural");
   const html = await renderEmail(
@@ -1565,6 +1641,9 @@ export async function sendVipGroupWelcomeEmail(params: {
       // Kept for account-holders too: having an account is not the same as being
       // SIGNED IN, and the balance is invisible at checkout without a session.
       accountTip: t("email.vipGroupWelcome.accountTip", { label: groupRewardLabel }),
+      unsubscribeUrl: grpOpt.unsubscribeUrl,
+      dataDeletionUrl: grpOpt.dataDeletionUrl,
+      marketingStrings: grpOpt.marketingStrings,
     }),
   );
   return send({
@@ -1573,6 +1652,7 @@ export async function sendVipGroupWelcomeEmail(params: {
     html,
     replyTo: params.restaurantEmail ?? undefined,
     fromName: params.restaurantName,
+    listUnsubscribeUrl: grpOpt.unsubscribeUrl,
   });
 }
 
@@ -2185,15 +2265,119 @@ export async function sendMarketplaceSettlementSummaryEmail(params: {
   return send({ to: params.to, subject, html });
 }
 
-// ─── Autopilot marketing emails ──────────────────────────────────────
-// Sent by /api/cron/autopilot for second-order / reengagement campaigns.
-// Bulk-class email → ships with List-Unsubscribe (RFC 8058) so Gmail/
-// Yahoo deliverability rules are satisfied. Reply-To set to the
-// restaurant's own contact email so customer replies go to the
-// restaurant, not us.
+// ─── Marketing emails — THE compliance chokepoint ────────────────────
+// Every marketing-class email (autopilot second-order / reengagement /
+// cart-abandon, kickstarter cold invites, and every FUTURE marketing add-on)
+// MUST go through sendMarketingEmail(). It is the single door that enforces:
+//   GATE 1  unified suppression (do-not-email) — the Customer/Prospect silo fix
+//   GATE 2  a valid CASL consent basis (present + inside the implied-consent window)
+//   footer  the prominent CASL footer: WHY-received + Unsubscribe + Delete-my-data
+//   header  RFC-8058 List-Unsubscribe (Gmail/Yahoo bulk rules)
+//   tags    restaurantId/campaign so the Resend bounce/complaint webhook can attribute
+// Direct resend.emails.send / the private send() with classification:"marketing"
+// are additionally suppression-checked (see send()), and an ESLint rule blocks
+// importing `resend` anywhere but this file.
 
-export async function sendAutopilotEmail(params: {
+/** Load the localized CASL marketing footer strings for a recipient's locale
+ *  (restaurant.defaultLanguage), defaulting to English. Mirrors the unsubscribe
+ *  route's dynamic-import loader. */
+async function marketingFooterStrings(locale?: string | null): Promise<MarketingFooterStrings> {
+  const pick = (m: any): MarketingFooterStrings | null => {
+    const f = m?.emailFooter?.marketing;
+    // The "Unsubscribe" label reuses the already-localized unsubscribe.title.
+    const unsub = m?.unsubscribe?.title;
+    return f?.whyReceiving && f?.deleteData && unsub
+      ? { whyReceiving: f.whyReceiving, unsubscribe: unsub, deleteData: f.deleteData }
+      : null;
+  };
+  const lc = locale && isSupportedLocale(locale) ? locale : "en";
+  try {
+    const got = pick((await import(`@/messages/${lc}.json`)).default);
+    if (got) return got;
+  } catch { /* fall through to en */ }
+  return pick((await import(`@/messages/en.json`)).default)!;
+}
+
+/**
+ * Per-recipient opt-out footer bits for a PROMOTIONAL email that isn't a bulk
+ * campaign (personal coupon, VIP special, reward gift). These are already
+ * consent-gated by their callers, but CASL still requires a VISIBLE unsubscribe
+ * in the body — this builds the signed unsubscribe + delete-my-data links (on
+ * the restaurant's branded origin) and the localized footer strings. The
+ * returned `unsubscribeUrl` is also passed to send() as `listUnsubscribeUrl`.
+ */
+export async function buildOptOutFooter(args: {
+  restaurantId: string;
+  email: string;
+  restaurantUrl?: string | null;
+  locale?: string | null;
+}): Promise<{ unsubscribeUrl: string; dataDeletionUrl: string; marketingStrings: MarketingFooterStrings }> {
+  let origin: string | undefined;
+  try { if (args.restaurantUrl) origin = new URL(args.restaurantUrl).origin; } catch { /* platform fallback */ }
+  return {
+    unsubscribeUrl: customerUnsubscribeUrl({ restaurantId: args.restaurantId, email: args.email, origin }),
+    dataDeletionUrl: dataDeletionUrl({ restaurantId: args.restaurantId, email: args.email, origin }),
+    marketingStrings: await marketingFooterStrings(args.locale),
+  };
+}
+
+/** Brief confirmation that a data-erasure request was completed. Sent to the
+ *  (now-removed) address so the person has a record the request was honored. */
+export async function sendErasureConfirmationEmail(params: {
   to: string;
+  restaurantName: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const safeName = escapeHtml(params.restaurantName || "the restaurant");
+  const html =
+    `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;color:#111827;line-height:1.6">` +
+    `<p>This confirms that ${safeName} has removed the personal data linked to this email address and has stopped all marketing to it.</p>` +
+    `<p style="color:#6b7280;font-size:13px">Records required for tax and accounting are kept only in anonymized form, with nothing that identifies you.</p>` +
+    `</div>`;
+  return send({
+    to: params.to,
+    subject: `Your data has been removed — ${params.restaurantName}`,
+    html,
+    fromName: params.restaurantName,
+  });
+}
+
+/** Deliver a DSAR data export (the "download my data" request) to the on-file
+ *  address ONLY — the JSON is attached, never rendered to a token bearer. */
+export async function sendDataExportEmail(params: {
+  to: string;
+  restaurantName: string;
+  jsonContent: string;
+}): Promise<{ success: boolean; error?: string }> {
+  const safeName = escapeHtml(params.restaurantName || "the restaurant");
+  const html =
+    `<div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;color:#111827;line-height:1.6">` +
+    `<p>Here is a copy of the personal data ${safeName} holds for this email address, attached as a JSON file.</p>` +
+    `<p style="color:#6b7280;font-size:13px">If you didn't request this, you can ignore this email — the data was only sent to your own address.</p>` +
+    `</div>`;
+  return send({
+    to: params.to,
+    subject: `Your data export — ${params.restaurantName}`,
+    html,
+    fromName: params.restaurantName,
+    attachments: [{ filename: "my-data.json", content: params.jsonContent }],
+  });
+}
+
+export async function sendMarketingEmail(params: {
+  /** Session-derived restaurant id — scopes the suppression check + tag. */
+  restaurantId: string;
+  to: string;
+  /** e.g. "autopilot:second_order" | "kickstarter:invite" — tag + logging. */
+  campaign: string;
+  /** REQUIRED consent basis. Null / no basis / a stale implied one => NOT sent
+   *  (fails closed — never default a missing basis to a valid one). */
+  consentBasis: MarketingConsentBasis | null;
+  /** REQUIRED — the signed unsubscribe link (List-Unsubscribe + footer). */
+  unsubscribeUrl: string;
+  /** REQUIRED — the signed "delete my personal data" link (CASL footer). */
+  dataDeletionUrl: string;
+  /** Recipient locale for the footer (restaurant.defaultLanguage). */
+  locale?: string | null;
   customerName: string;
   restaurantName: string;
   subject: string;
@@ -2205,15 +2389,22 @@ export async function sendAutopilotEmail(params: {
   restaurantUrl?: string;
   restaurantEmail?: string;
   restaurantPhone?: string;
-  /** When set, drives the List-Unsubscribe + footer unsubscribe link.
-   *  Typically points at the restaurant's customer-database UI where
-   *  staff can flag the recipient as do-not-contact. */
-  unsubscribeUrl?: string;
-}) {
-  // Substitute the owner-editable tokens in BOTH the subject header and the body
-  // (Luigi 2026-06-10 — they were sent raw, so customers saw "{restaurant_name}"
-  // etc.). Centralised here so every campaign (re-engage / second-order /
-  // cart-abandon) is fixed at once.
+}): Promise<{ sent: boolean; skipped?: "suppressed" | "stale" | "no_basis"; success?: boolean; error?: string }> {
+  const emailLower = params.to.trim().toLowerCase();
+
+  // GATE 1 — unified suppression (silences a person across BOTH send paths).
+  if (await isSuppressed(params.restaurantId, emailLower)) {
+    console.log("[marketing] skip suppressed", { restaurantId: params.restaurantId, campaign: params.campaign });
+    return { sent: false, skipped: "suppressed" };
+  }
+  // GATE 2 — a valid CASL consent basis must be present + in-window.
+  const basis = checkConsentBasis(params.consentBasis);
+  if (basis !== "ok") {
+    console.log("[marketing] skip — no valid consent basis", { campaign: params.campaign, basis });
+    return { sent: false, skipped: basis };
+  }
+
+  // Substitute owner-editable tokens in BOTH subject + body.
   const vars = {
     customerName: params.customerName || "there",
     restaurantName: params.restaurantName || "",
@@ -2236,22 +2427,29 @@ export async function sendAutopilotEmail(params: {
       restaurantEmail: params.restaurantEmail,
       restaurantPhone: params.restaurantPhone,
       imprint: currentImprint(),
-      // CAN-SPAM: commercial mail needs a VISIBLE opt-out + the sender's
-      // postal address in the body, not just the RFC-8058 header.
+      // CASL: commercial mail needs a VISIBLE why-received + opt-out + a
+      // delete-my-data link + the sender's postal address in the BODY.
       unsubscribeUrl: params.unsubscribeUrl,
+      dataDeletionUrl: params.dataDeletionUrl,
+      marketing: true,
+      footerStrings: await marketingFooterStrings(params.locale),
       postalAddress: await getPlatformPostalAddress(),
     })
   );
-  return send({
+
+  const result = await send({
     to: params.to,
     subject,
     html,
-    // Marketing rides the RESTAURANT's identity like receipts do — the
-    // inconsistent platform-name sender was a trust/deliverability wart.
+    // Marketing rides the RESTAURANT's identity like receipts do.
     fromName: params.restaurantName,
     replyTo: params.restaurantEmail,
     listUnsubscribeUrl: params.unsubscribeUrl,
+    classification: "marketing",
+    consentContext: { restaurantId: params.restaurantId, emailLower },
+    tags: { restaurantId: params.restaurantId, emailClass: "marketing", campaign: params.campaign },
   });
+  return { sent: !!result.success, success: result.success, error: result.error };
 }
 
 /** Replace the owner-editable tokens in an Autopilot subject/body.

@@ -89,6 +89,7 @@ export async function POST(req: NextRequest) {
 
     sendRewardGiftInviteEmail({
       to: grant.email, // ALWAYS the address stored on the grant — never a caller-supplied one
+      restaurantId: restaurant.id,
       customerName: grant.name,
       restaurantName: restaurant.name,
       amountLabel: formatCurrency(grant.amount, restaurant.currency),

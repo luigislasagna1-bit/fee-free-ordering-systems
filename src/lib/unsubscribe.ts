@@ -23,6 +23,7 @@
  */
 import jwt from "jsonwebtoken";
 import prisma from "@/lib/db";
+import { suppressEmail } from "@/lib/suppression";
 
 const TOKEN_TTL = "730d";
 
@@ -56,16 +57,20 @@ function baseUrl(): string {
   return (process.env.NEXT_PUBLIC_APP_URL || "https://feefreeordering.com").replace(/\/$/, "");
 }
 
-/** Absolute unsubscribe URL for a restaurant CUSTOMER (autopilot marketing). */
-export function customerUnsubscribeUrl(args: { restaurantId: string; email: string }): string {
+/** Absolute unsubscribe URL for a restaurant CUSTOMER (autopilot marketing).
+ *  Pass `origin` (a branded restaurant origin, from restaurantOrigin().origin)
+ *  to keep the link on the restaurant's own domain; falls back to platform. */
+export function customerUnsubscribeUrl(args: { restaurantId: string; email: string; origin?: string }): string {
   const token = signUnsubscribeToken({ k: "customer", r: args.restaurantId, e: args.email.trim().toLowerCase() });
-  return `${baseUrl()}/api/public/unsubscribe?token=${encodeURIComponent(token)}`;
+  const base = (args.origin || baseUrl()).replace(/\/$/, "");
+  return `${base}/api/public/unsubscribe?token=${encodeURIComponent(token)}`;
 }
 
 /** Absolute unsubscribe URL for a kickstarter PROSPECT. */
-export function prospectUnsubscribeUrl(args: { prospectId: string; email: string }): string {
+export function prospectUnsubscribeUrl(args: { prospectId: string; email: string; origin?: string }): string {
   const token = signUnsubscribeToken({ k: "prospect", p: args.prospectId, e: args.email.trim().toLowerCase() });
-  return `${baseUrl()}/api/public/unsubscribe?token=${encodeURIComponent(token)}`;
+  const base = (args.origin || baseUrl()).replace(/\/$/, "");
+  return `${base}/api/public/unsubscribe?token=${encodeURIComponent(token)}`;
 }
 
 /** Flip the opt-out. Idempotent; returns the (possibly empty) affected count. */
@@ -78,6 +83,13 @@ export async function applyUnsubscribe(payload: UnsubscribePayload): Promise<{ o
         where: { restaurantId: payload.r, email: payload.e },
         data: { marketingConsent: false, marketingConsentAt: new Date() },
       });
+      // Unify: one do-not-email row silences the Prospect path too.
+      await suppressEmail({
+        restaurantId: payload.r,
+        email: payload.e,
+        reason: "unsubscribe",
+        source: "autopilot_unsub",
+      });
     } else {
       await prisma.prospect.updateMany({
         where: { id: payload.p },
@@ -88,6 +100,21 @@ export async function applyUnsubscribe(payload: UnsubscribePayload): Promise<{ o
         where: { email: payload.e, unsubscribedAt: null },
         data: { unsubscribedAt: new Date() },
       });
+      // Unify across the Customer path: write a suppression row for EVERY
+      // restaurant this email is a prospect of (the primary by id — which
+      // survives an email case-mismatch — plus any same-email dupes).
+      const rows = await prisma.prospect.findMany({
+        where: { OR: [{ id: payload.p }, { email: payload.e }] },
+        select: { import: { select: { restaurantId: true } } },
+      });
+      const restaurantIds = [
+        ...new Set(rows.map((r) => r.import?.restaurantId).filter((x): x is string => !!x)),
+      ];
+      await Promise.all(
+        restaurantIds.map((restaurantId) =>
+          suppressEmail({ restaurantId, email: payload.e, reason: "unsubscribe", source: "kickstarter_unsub" }),
+        ),
+      );
     }
     return { ok: true };
   } catch (e) {

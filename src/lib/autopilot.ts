@@ -33,7 +33,7 @@
  */
 
 import prisma from "@/lib/db";
-import { sendAutopilotEmail, setEmailImprint } from "@/lib/email";
+import { sendMarketingEmail, setEmailImprint } from "@/lib/email";
 import {
   isMasterEnabled,
   isCampaignEnabled,
@@ -43,6 +43,14 @@ import {
 import { getStepPromos } from "@/lib/autopilot-promos";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { customerUnsubscribeUrl } from "@/lib/unsubscribe";
+import { dataDeletionUrl } from "@/lib/data-request";
+
+/** Origin (scheme+host) of a URL, for building host-agnostic /api links on the
+ *  restaurant's own branded domain. Falls back to undefined (platform apex). */
+function originOf(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  try { return new URL(url).origin; } catch { return undefined; }
+}
 
 export type AutopilotRunSummary = {
   restaurantId: string;
@@ -84,6 +92,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
     select: {
       id: true, name: true, slug: true, email: true, phone: true,
       subdomain: true, customDomain: true, customDomainStatus: true,
+      defaultLanguage: true,
       resellerProfile: { select: { status: true, companyName: true } },
     },
   });
@@ -153,6 +162,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
         imprint,
+        locale: restaurant.defaultLanguage,
         steps,
       });
     } else {
@@ -172,6 +182,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         restaurantEmail: restaurant.email,
         restaurantPhone: restaurant.phone,
         imprint,
+        locale: restaurant.defaultLanguage,
         delayHours: campaign.delayHours,
         couponId: campaign.couponId,
         subject,
@@ -196,6 +207,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
       restaurantEmail: restaurant.email,
       restaurantPhone: restaurant.phone,
       imprint,
+      locale: restaurant.defaultLanguage,
     });
     summary.results.push({
       campaignType: "cart_abandonment",
@@ -273,6 +285,7 @@ async function runStandardCampaign(opts: {
   restaurantEmail: string | null;
   restaurantPhone: string | null;
   imprint: string | null;
+  locale?: string | null;
   delayHours: number;
   couponId: string | null;
   subject: string;
@@ -303,7 +316,12 @@ async function runStandardCampaign(opts: {
 
     setEmailImprint(opts.imprint);
     try {
-      const res = await sendAutopilotEmail({
+      const origin = originOf(opts.orderRootUrl);
+      const res = await sendMarketingEmail({
+        restaurantId: opts.restaurantId,
+        campaign: `autopilot:${opts.campaignType}`,
+        // These candidates were filtered on marketingConsent:true upstream.
+        consentBasis: { kind: "customer_optin" },
         to: customer.email,
         customerName: customer.name || "there",
         restaurantName: opts.restaurantName,
@@ -316,9 +334,10 @@ async function runStandardCampaign(opts: {
         restaurantUrl: opts.orderRootUrl,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
-        // Per-recipient SIGNED unsubscribe link (Blocker #6) — the RFC 8058
-        // header + footer now hit a real endpoint that flips marketingConsent.
-        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId: opts.restaurantId, email: customer.email }),
+        locale: opts.locale,
+        // Per-recipient SIGNED links (Blocker #6 + CASL) on the branded origin.
+        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId: opts.restaurantId, email: customer.email, origin }),
+        dataDeletionUrl: dataDeletionUrl({ restaurantId: opts.restaurantId, email: customer.email, origin }),
       });
 
       if (res.success) {
@@ -372,6 +391,7 @@ async function runSteppedCampaign(opts: {
   restaurantEmail: string | null;
   restaurantPhone: string | null;
   imprint: string | null;
+  locale?: string | null;
   steps: { stepNumber: number; delayHours: number; discountPercent: number; subject: string; emailBody: string }[];
 }): Promise<{ eligible: number; sent: number; errors: number }> {
   const steps = opts.steps;
@@ -427,7 +447,11 @@ async function runSteppedCampaign(opts: {
 
     setEmailImprint(opts.imprint);
     try {
-      const res = await sendAutopilotEmail({
+      const origin = originOf(opts.orderRootUrl);
+      const res = await sendMarketingEmail({
+        restaurantId: opts.restaurantId,
+        campaign: `autopilot:${opts.campaignType}`,
+        consentBasis: { kind: "customer_optin" },
         to: customer.email,
         customerName: customer.name || "there",
         restaurantName: opts.restaurantName,
@@ -440,8 +464,10 @@ async function runSteppedCampaign(opts: {
         restaurantUrl: opts.orderRootUrl,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
-        // Per-recipient SIGNED unsubscribe link (Blocker #6).
-        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId: opts.restaurantId, email: customer.email }),
+        locale: opts.locale,
+        // Per-recipient SIGNED links (Blocker #6 + CASL) on the branded origin.
+        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId: opts.restaurantId, email: customer.email, origin }),
+        dataDeletionUrl: dataDeletionUrl({ restaurantId: opts.restaurantId, email: customer.email, origin }),
       });
 
       if (res.success) {
@@ -584,6 +610,7 @@ export async function runCartAbandonmentForRestaurant(
     restaurantEmail: string | null;
     restaurantPhone: string | null;
     imprint: string | null;
+    locale?: string | null;
   },
 ): Promise<{ eligible: number; sent: number; errors: number }> {
   // Pull the cart_abandonment campaign config (if any). Subject/body/
@@ -669,7 +696,14 @@ export async function runCartAbandonmentForRestaurant(
     // Send the recovery email.
     setEmailImprint(ctx.imprint);
     try {
-      const res = await sendAutopilotEmail({
+      const origin = originOf(ctx.orderRootUrl);
+      const res = await sendMarketingEmail({
+        restaurantId,
+        campaign: "autopilot:cart_abandonment",
+        // The recipient just interacted with the ordering flow (an inquiry);
+        // recent by construction, so inside CASL's 6-month inquiry window. The
+        // suppression gate + the upstream marketingConsent:false skip still apply.
+        consentBasis: { kind: "inquiry", relationshipDate: new Date() },
         to: session.customerEmail,
         customerName: "there", // CartSession doesn't carry a name field
         restaurantName: ctx.restaurantName,
@@ -682,8 +716,10 @@ export async function runCartAbandonmentForRestaurant(
         restaurantUrl: ctx.orderRootUrl,
         restaurantEmail: ctx.restaurantEmail ?? undefined,
         restaurantPhone: ctx.restaurantPhone ?? undefined,
-        // Per-recipient SIGNED unsubscribe link (Blocker #6).
-        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId, email: session.customerEmail }),
+        locale: ctx.locale,
+        // Per-recipient SIGNED links (Blocker #6 + CASL) on the branded origin.
+        unsubscribeUrl: customerUnsubscribeUrl({ restaurantId, email: session.customerEmail, origin }),
+        dataDeletionUrl: dataDeletionUrl({ restaurantId, email: session.customerEmail, origin }),
       });
 
       if (res.success) {

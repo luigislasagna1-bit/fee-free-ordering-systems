@@ -29,7 +29,12 @@ export default async function AccountDeletionPage() {
 
       <h2>How to request deletion</h2>
       <p>
-        Email <a href="mailto:support@feefreeordering.com?subject=Delete%20my%20account">support@feefreeordering.com</a> from
+        <strong>Customers:</strong> the fastest way is the <strong>&ldquo;Delete my personal data&rdquo;</strong> link
+        in the footer of any recent email from the restaurant you ordered from. It removes your personal
+        information right away, and stops all marketing to your address, without needing to email us.
+      </p>
+      <p>
+        You can also email <a href="mailto:support@feefreeordering.com?subject=Delete%20my%20account">support@feefreeordering.com</a> from
         the email address on your account, with the subject line <strong>&ldquo;Delete my account&rdquo;</strong>. So we can
         verify and locate the right account, please include:
       </p>

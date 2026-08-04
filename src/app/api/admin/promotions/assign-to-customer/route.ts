@@ -167,6 +167,7 @@ export async function POST(req: Request) {
         const orderUrl = restaurantOrderUrl(restaurant, "");
         await sendCouponAssignedEmail({
           to: customerEmail,
+          restaurantId,
           customerName,
           restaurantName: restaurant.name,
           code,

@@ -26,9 +26,11 @@
  */
 
 import prisma from "@/lib/db";
-import { sendAutopilotEmail, setEmailImprint } from "@/lib/email";
+import { sendMarketingEmail, setEmailImprint } from "@/lib/email";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { prospectUnsubscribeUrl } from "@/lib/unsubscribe";
+import { dataDeletionUrl } from "@/lib/data-request";
+import { basisFromImport, type ConsentBasisValue } from "@/lib/marketing-consent";
 import type { Prospect, Restaurant } from "@/generated/prisma/client";
 
 /**
@@ -250,32 +252,38 @@ export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *  test triggers. Returns the underlying send result so the caller can
  *  track per-row errors. */
 export async function sendInviteEmail(
-  prospect: Pick<Prospect, "id" | "name" | "email">,
+  prospect: Pick<Prospect, "id" | "name" | "email" | "relationshipDate">,
   restaurant: Pick<
     Restaurant,
     "id" | "name" | "slug" | "email" | "phone" | "subdomain" | "customDomain" | "customDomainStatus"
-  > & { imprint?: string | null },
+  > & { imprint?: string | null; defaultLanguage?: string | null },
+  /** The import's attested legal basis — drives the CASL consent gate + the
+   *  24-month implied-consent check inside sendMarketingEmail. */
+  consentBasis: ConsentBasisValue | null | undefined,
 ) {
   // The ?ref=kickstarter query param is what we'll attribute the
   // conversion to later (cross-checked against ProspectImport when an
   // order arrives from this prospect's email). The auto-apply happens
   // independently — the new-customer promo fires at checkout regardless
   // of the link they used. Keeping ref purely for attribution.
-  const ctaUrl = restaurantOrderUrl(restaurant, "") + "?ref=kickstarter";
+  const storeUrl = restaurantOrderUrl(restaurant, "");
+  const ctaUrl = storeUrl + "?ref=kickstarter";
+  let origin: string | undefined;
+  try { origin = new URL(storeUrl).origin; } catch { origin = undefined; }
 
   const subject = `Try ${restaurant.name} — 10% off your first order`;
 
-  // We reuse sendAutopilotEmail rather than calling Resend directly —
-  // it already wires List-Unsubscribe (RFC 8058 required by Gmail/Yahoo
-  // bulk rules), Reply-To-restaurant, and the per-restaurant whitelabel
-  // imprint plumbing. The dedicated KickstarterInviteEmail template
-  // (see src/emails/templates/KickstarterInviteEmail.tsx) exists as the
-  // intended richer layout — TODO post-launch: refactor email.ts to
-  // expose a sendHtml() primitive so we can swap the autopilot wrapper
-  // for the dedicated template without losing the unsubscribe plumbing.
+  // sendMarketingEmail is THE compliance chokepoint: it re-checks suppression,
+  // enforces the consent basis, wires List-Unsubscribe (RFC 8058) + the CASL
+  // footer (Unsubscribe + Delete-my-data), Reply-To-restaurant, tags for the
+  // bounce webhook, and the per-restaurant whitelabel imprint plumbing.
   if (restaurant.imprint) setEmailImprint(restaurant.imprint);
   try {
-    return await sendAutopilotEmail({
+    return await sendMarketingEmail({
+      restaurantId: restaurant.id,
+      campaign: "kickstarter:invite",
+      // Fail closed: null basis (no attestation) => sendMarketingEmail skips it.
+      consentBasis: basisFromImport(consentBasis, prospect.relationshipDate),
       to: prospect.email,
       customerName: prospect.name ?? "there",
       restaurantName: restaurant.name,
@@ -287,14 +295,13 @@ export async function sendInviteEmail(
       couponLabel: "10% off your first order",
       ctaUrl,
       ctaLabel: "Start your order",
-      restaurantUrl: restaurantOrderUrl(restaurant, ""),
+      restaurantUrl: storeUrl,
       restaurantEmail: restaurant.email ?? undefined,
       restaurantPhone: restaurant.phone ?? undefined,
-      // unsubscribeUrl: SIGNED per-prospect link (Blocker #6). Gmail's
-      // one-click button and the footer link both hit
-      // /api/public/unsubscribe, which flips Prospect.unsubscribedAt (for
-      // every list carrying this email) so the cron skips them next time.
-      unsubscribeUrl: prospectUnsubscribeUrl({ prospectId: prospect.id, email: prospect.email }),
+      locale: restaurant.defaultLanguage,
+      // SIGNED per-prospect links (Blocker #6 + CASL) on the branded origin.
+      unsubscribeUrl: prospectUnsubscribeUrl({ prospectId: prospect.id, email: prospect.email, origin }),
+      dataDeletionUrl: dataDeletionUrl({ restaurantId: restaurant.id, email: prospect.email, origin }),
     });
   } finally {
     if (restaurant.imprint) setEmailImprint(null);

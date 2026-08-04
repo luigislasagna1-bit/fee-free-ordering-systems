@@ -7562,5 +7562,24 @@
     "errRateLimited": "Liian monta yritystä — odota hetki ja yritä uudelleen.",
     "errEmailMismatch": "Tämä sähköposti ei vastaa tätä lahjaa. Kokeile osoitetta, johon lahja lähetettiin.",
     "errGeneric": "Jokin meni pieleen. Yritä hetken kuluttua uudelleen."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Saat tämän sähköpostin, koska olet asiakkaana ravintolassa {name}.",
+      "deleteData": "Poista henkilötietoni"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Poista henkilötietoni",
+    "deleteConfirm": "Poistetaanko pysyvästi henkilötiedot, jotka on liitetty osoitteeseen {email} ravintolassa {name}? Nimesi, yhteystietosi ja osoitteesi poistetaan. Aiemmat tilaukset säilytetään vain anonymisoituna silloin, kun se on tarpeen verotusta ja kirjanpitoa varten.",
+    "deleteButton": "Poista tietoni",
+    "deleteDone": "Tietosi on poistettu.",
+    "deleteDoneDetail": "Olemme poistaneet osoitteeseen {email} ravintolassa {name} liitetyt henkilötiedot ja poistaneet sinut kaikesta markkinoinnista. Vahvistus on lähetetty osoitteeseen {email}.",
+    "exportTitle": "Lataa tietoni",
+    "exportConfirm": "Lähetetäänkö sähköpostitse kopio osoitteeseen {email} ravintolassa {name} liitetyistä henkilötiedoista?",
+    "exportButton": "Lähetä tietoni sähköpostitse",
+    "exportDone": "Tarkista sähköpostisi.",
+    "exportDoneDetail": "Lähetämme kopion tiedoistasi osoitteeseen {email}. Sen pitäisi saapua pian.",
+    "invalid": "Tämä linkki on virheellinen tai vanhentunut. Käytä linkkiä uudemmasta sähköpostista tai ota yhteyttä suoraan ravintolaan."
   }
 }

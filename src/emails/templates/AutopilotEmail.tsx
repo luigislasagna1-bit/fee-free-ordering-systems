@@ -11,7 +11,7 @@
  * Body supports basic line breaks (whitespace: pre-line) but no HTML —
  * keeps the editor simple and XSS surface zero.
  */
-import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, EmailFooter, type MarketingFooterStrings } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard } from "../components/EmailParts";
 
 export type AutopilotEmailProps = {
@@ -34,6 +34,13 @@ export type AutopilotEmailProps = {
    *  BODY of commercial mail — the RFC-8058 header alone isn't enough).
    *  Same URL the sender puts in the List-Unsubscribe header. */
   unsubscribeUrl?: string;
+  /** CASL/GDPR "delete my personal data" self-serve link (2026-08-04). */
+  dataDeletionUrl?: string;
+  /** Render the prominent CASL marketing footer (why-received + both links)
+   *  instead of the minimal transactional imprint line. */
+  marketing?: boolean;
+  /** Localized footer strings for the marketing variant (38 locales). */
+  footerStrings?: MarketingFooterStrings;
   /** Platform legal postal address — CAN-SPAM requirement on commercial
    *  mail. From PlatformSettings.companyAddress. */
   postalAddress?: string | null;
@@ -43,7 +50,7 @@ export default function AutopilotEmail(props: AutopilotEmailProps) {
   const {
     restaurantName, subject, body, couponCode, couponLabel,
     ctaUrl, ctaLabel, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
-    unsubscribeUrl, postalAddress,
+    unsubscribeUrl, dataDeletionUrl, marketing, footerStrings, postalAddress,
   } = props;
 
   return (
@@ -84,6 +91,9 @@ export default function AutopilotEmail(props: AutopilotEmailProps) {
         restaurantPhone={restaurantPhone}
         imprint={imprint}
         unsubscribeUrl={unsubscribeUrl}
+        dataDeletionUrl={dataDeletionUrl}
+        marketing={marketing}
+        marketingStrings={footerStrings}
         postalAddress={postalAddress}
       />
     </EmailLayout>

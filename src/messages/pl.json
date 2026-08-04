@@ -7562,5 +7562,24 @@
     "errRateLimited": "Za dużo prób — chwilę odczekaj i spróbuj ponownie.",
     "errEmailMismatch": "Ten e-mail nie zgadza się z tym prezentem. Spróbuj adresu, na który wysłano prezent.",
     "errGeneric": "Coś poszło nie tak. Spróbuj ponownie za chwilę."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Otrzymujesz tę wiadomość, ponieważ jesteś klientem {name}.",
+      "deleteData": "Usuń moje dane osobowe"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Usuń moje dane osobowe",
+    "deleteConfirm": "Trwale usunąć dane osobowe powiązane z {email} u {name}? Twoje imię i nazwisko, dane kontaktowe oraz adres zostaną usunięte. Wcześniejsze zamówienia są przechowywane wyłącznie w formie zanonimizowanej, jeśli wymagają tego przepisy podatkowe i księgowe.",
+    "deleteButton": "Usuń moje dane",
+    "deleteDone": "Twoje dane zostały usunięte.",
+    "deleteDoneDetail": "Usunęliśmy dane osobowe powiązane z {email} u {name} i wypisaliśmy Cię ze wszystkich materiałów marketingowych. Potwierdzenie zostało wysłane na adres {email}.",
+    "exportTitle": "Pobierz moje dane",
+    "exportConfirm": "Wysłać e-mailem kopię danych osobowych powiązanych z {email} u {name}?",
+    "exportButton": "Wyślij mi moje dane e-mailem",
+    "exportDone": "Sprawdź swoją skrzynkę odbiorczą.",
+    "exportDoneDetail": "Wysyłamy kopię Twoich danych na adres {email}. Powinna dotrzeć wkrótce.",
+    "invalid": "Ten link jest nieprawidłowy lub wygasł. Skorzystaj z linku w nowszej wiadomości e-mail lub skontaktuj się bezpośrednio z restauracją."
   }
 }

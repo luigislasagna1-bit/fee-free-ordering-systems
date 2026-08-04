@@ -90,6 +90,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
     if (isAccountCustomer(customer)) {
       sendRewardGiftEmail({
         to: customer.email,
+        restaurantId,
         customerName: customer.name || "",
         restaurantName: r.name,
         amountLabel: formatCurrency(amount, r.currency),
@@ -107,6 +108,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
       // marketing site, so link to /account/signup explicitly.
       sendRewardGiftInviteEmail({
         to: customer.email,
+        restaurantId,
         customerName: customer.name || "",
         restaurantName: r.name,
         amountLabel: formatCurrency(amount, r.currency),

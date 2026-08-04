@@ -7562,5 +7562,24 @@
     "errRateLimited": "Zu viele Versuche — bitte warten Sie einen Moment und versuchen Sie es erneut.",
     "errEmailMismatch": "Diese E-Mail-Adresse passt nicht zu diesem Geschenk. Versuchen Sie die Adresse, an die das Geschenk gesendet wurde.",
     "errGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es in einem Moment erneut."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Sie erhalten diese E-Mail, weil Sie Kunde von {name} sind.",
+      "deleteData": "Meine personenbezogenen Daten löschen"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Meine personenbezogenen Daten löschen",
+    "deleteConfirm": "Die mit {email} bei {name} verknüpften personenbezogenen Daten dauerhaft löschen? Ihr Name, Ihre Kontaktdaten und Ihre Adresse werden gelöscht. Frühere Bestellungen werden nur in anonymisierter Form aufbewahrt, soweit dies für Steuer- und Buchhaltungszwecke erforderlich ist.",
+    "deleteButton": "Meine Daten löschen",
+    "deleteDone": "Ihre Daten wurden gelöscht.",
+    "deleteDoneDetail": "Wir haben die mit {email} bei {name} verknüpften personenbezogenen Daten gelöscht und Sie von allen Marketingmitteilungen abgemeldet. Eine Bestätigung wurde an {email} gesendet.",
+    "exportTitle": "Meine Daten herunterladen",
+    "exportConfirm": "Eine Kopie der mit {email} bei {name} verknüpften personenbezogenen Daten per E-Mail senden?",
+    "exportButton": "Meine Daten per E-Mail zusenden",
+    "exportDone": "Bitte prüfen Sie Ihren Posteingang.",
+    "exportDoneDetail": "Wir senden eine Kopie Ihrer Daten an {email}. Sie sollte in Kürze eintreffen.",
+    "invalid": "Dieser Link ist ungültig oder abgelaufen. Bitte verwenden Sie den Link aus einer neueren E-Mail oder wenden Sie sich direkt an das Restaurant."
   }
 }

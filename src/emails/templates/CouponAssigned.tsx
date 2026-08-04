@@ -12,7 +12,7 @@
  * marketingConsent — gated by the caller, not here.
  */
 import type { Translator } from "@/lib/i18n-dict";
-import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, EmailFooter, type MarketingFooterStrings } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard } from "../components/EmailParts";
 
 export type CouponAssignedProps = {
@@ -48,6 +48,11 @@ export type CouponAssignedProps = {
   usageNote?: string;
   /** Optional "make an account" nudge for guests (member-special only). */
   accountTip?: string;
+  /** CASL opt-out (built by the sender via buildOptOutFooter). When present, the
+   *  footer shows the prominent Unsubscribe + Delete-my-data block. */
+  unsubscribeUrl?: string;
+  dataDeletionUrl?: string;
+  marketingStrings?: MarketingFooterStrings;
 };
 
 export default function CouponAssigned(props: CouponAssignedProps) {
@@ -55,6 +60,7 @@ export default function CouponAssigned(props: CouponAssignedProps) {
     t, customerName, restaurantName, code, discountLabel, dealName, termLines,
     description, orderUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
     memberSpecial, introOverride, usageNote, accountTip,
+    unsubscribeUrl, dataDeletionUrl, marketingStrings,
   } = props;
 
   return (
@@ -110,6 +116,10 @@ export default function CouponAssigned(props: CouponAssignedProps) {
         imprint={imprint}
         signOff={t("email.footer.signOff")}
         poweredByLabel={t("email.footer.poweredBy")}
+        unsubscribeUrl={unsubscribeUrl}
+        dataDeletionUrl={dataDeletionUrl}
+        marketing={!!marketingStrings}
+        marketingStrings={marketingStrings}
       />
     </EmailLayout>
   );

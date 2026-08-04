@@ -7562,5 +7562,24 @@
     "errRateLimited": "Preveč poskusov — počakajte trenutek in poskusite znova.",
     "errEmailMismatch": "Ta e-naslov se ne ujema s tem darilom. Poskusite z naslovom, na katerega je bilo darilo poslano.",
     "errGeneric": "Prišlo je do napake. Poskusite znova čez trenutek."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "To e-poštno sporočilo prejemate, ker ste stranka pri {name}.",
+      "deleteData": "Izbriši moje osebne podatke"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Izbriši moje osebne podatke",
+    "deleteConfirm": "Ali želite trajno izbrisati osebne podatke, povezane z {email} pri {name}? Vaše ime, kontaktni podatki in naslov bodo izbrisani. Pretekla naročila se hranijo le v anonimizirani obliki, kadar to zahtevajo davčni in računovodski predpisi.",
+    "deleteButton": "Izbriši moje podatke",
+    "deleteDone": "Vaši podatki so bili izbrisani.",
+    "deleteDoneDetail": "Izbrisali smo osebne podatke, povezane z {email} pri {name}, in vas odstranili z vseh trženjskih seznamov. Potrditev je bila poslana na {email}.",
+    "exportTitle": "Prenesi moje podatke",
+    "exportConfirm": "Ali želite po e-pošti prejeti kopijo osebnih podatkov, povezanih z {email} pri {name}?",
+    "exportButton": "Pošlji mi podatke po e-pošti",
+    "exportDone": "Preverite svoj e-poštni predal.",
+    "exportDoneDetail": "Kopijo vaših podatkov pošiljamo na {email}. Prejeli jo boste v kratkem.",
+    "invalid": "Ta povezava ni veljavna ali je potekla. Uporabite povezavo iz novejšega e-poštnega sporočila ali se obrnite neposredno na restavracijo."
   }
 }

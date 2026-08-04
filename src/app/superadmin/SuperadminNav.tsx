@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone } from "lucide-react";
+import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone, ShieldCheck } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +22,7 @@ const items = [
   { href: "/reseller-reports/notifications", label: "Notifications", icon: Bell },
   { href: "/superadmin/payouts", label: "Payouts", icon: Wallet, adminOnly: true },
   { href: "/superadmin/team", label: "Team", icon: UserCog, adminOnly: true },
+  { href: "/superadmin/data-requests", label: "Data Requests", icon: ShieldCheck, adminOnly: true },
   { href: "/superadmin/settings/stripe", label: "Stripe Settings", icon: Zap, adminOnly: true },
   { href: "/superadmin/settings/email", label: "Email Settings", icon: Mail, adminOnly: true },
   { href: "/superadmin/settings/maps", label: "Maps Settings", icon: MapIcon, adminOnly: true },

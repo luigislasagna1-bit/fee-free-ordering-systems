@@ -7562,5 +7562,24 @@
     "errRateLimited": "Příliš mnoho pokusů — chvíli počkejte a zkuste to znovu.",
     "errEmailMismatch": "Tento e-mail neodpovídá tomuto dárku. Zkuste adresu, na kterou byl dárek zaslán.",
     "errGeneric": "Něco se pokazilo. Zkuste to prosím za chvíli znovu."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Tento e-mail dostáváte, protože jste zákazníkem {name}.",
+      "deleteData": "Smazat mé osobní údaje"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Smazat mé osobní údaje",
+    "deleteConfirm": "Trvale odstranit osobní údaje spojené s {email} u {name}? Vaše jméno, kontaktní údaje a adresa budou vymazány. Předchozí objednávky jsou uchovávány pouze v anonymizované podobě, pokud to vyžadují daňové a účetní předpisy.",
+    "deleteButton": "Smazat mé údaje",
+    "deleteDone": "Vaše údaje byly smazány.",
+    "deleteDoneDetail": "Vymazali jsme osobní údaje spojené s {email} u {name} a odstranili jsme vás ze všech marketingových seznamů. Potvrzení bylo zasláno na {email}.",
+    "exportTitle": "Stáhnout mé údaje",
+    "exportConfirm": "Zaslat e-mailem kopii osobních údajů spojených s {email} u {name}?",
+    "exportButton": "Zaslat mi mé údaje e-mailem",
+    "exportDone": "Zkontrolujte svou e-mailovou schránku.",
+    "exportDoneDetail": "Kopii vašich údajů zasíláme na {email}. Měla by dorazit brzy.",
+    "invalid": "Tento odkaz je neplatný nebo jeho platnost vypršela. Použijte prosím odkaz z novějšího e-mailu, nebo kontaktujte restauraci přímo."
   }
 }

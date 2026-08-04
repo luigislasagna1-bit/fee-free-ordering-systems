@@ -7562,5 +7562,24 @@
     "errRateLimited": "For mange forsøk — vent et øyeblikk og prøv igjen.",
     "errEmailMismatch": "Den e-posten samsvarer ikke med denne gaven. Prøv adressen gaven ble sendt til.",
     "errGeneric": "Noe gikk feil. Prøv igjen om et øyeblikk."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Du mottar denne e-posten fordi du er kunde hos {name}.",
+      "deleteData": "Slett mine personopplysninger"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Slett mine personopplysninger",
+    "deleteConfirm": "Slette permanent personopplysningene knyttet til {email} hos {name}? Navnet ditt, kontaktinformasjonen og adressen din vil bli slettet. Tidligere bestillinger oppbevares kun i anonymisert form når det kreves av hensyn til skatt og regnskap.",
+    "deleteButton": "Slett dataene mine",
+    "deleteDone": "Dataene dine er slettet.",
+    "deleteDoneDetail": "Vi har slettet personopplysningene knyttet til {email} hos {name} og fjernet deg fra all markedsføring. En bekreftelse er sendt til {email}.",
+    "exportTitle": "Last ned dataene mine",
+    "exportConfirm": "Send en kopi av personopplysningene knyttet til {email} hos {name} på e-post?",
+    "exportButton": "Send meg dataene mine på e-post",
+    "exportDone": "Sjekk innboksen din.",
+    "exportDoneDetail": "Vi sender en kopi av dataene dine til {email}. Den bør komme frem om kort tid.",
+    "invalid": "Denne lenken er ugyldig eller har utløpt. Bruk lenken i en nyere e-post, eller kontakt restauranten direkte."
   }
 }

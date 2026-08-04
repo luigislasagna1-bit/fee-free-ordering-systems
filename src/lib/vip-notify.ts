@@ -63,6 +63,7 @@ async function sendToRecipients(ctx: NonNullable<Awaited<ReturnType<typeof loadS
     const results = await Promise.allSettled(batch.map((tg) =>
       sendVipSpecialEmail({
         to: tg.email,
+        restaurantId: promo.restaurantId,
         customerName: tg.name ?? tg.email,
         restaurantName: restaurant.name,
         discountType: disc.type,
@@ -226,6 +227,7 @@ export async function notifyGroupWelcome(opts: {
     const results = await Promise.allSettled(batch.map((tg) =>
       sendVipGroupWelcomeEmail({
         to: tg.email,
+        restaurantId: opts.restaurantId,
         customerName: tg.name ?? tg.email,
         restaurantName: restaurant.name,
         memberLabel,

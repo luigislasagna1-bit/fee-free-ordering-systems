@@ -7562,5 +7562,24 @@
     "errRateLimited": "Too many attempts — please wait a moment and try again.",
     "errEmailMismatch": "That email doesn't match this gift. Try the address the gift was sent to.",
     "errGeneric": "Something went wrong. Please try again in a moment."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "You're receiving this email because you're a customer of {name}.",
+      "deleteData": "Delete my personal data"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Delete my personal data",
+    "deleteConfirm": "Permanently delete the personal data linked to {email} at {name}? Your name, contact details and address will be erased. Past orders are kept only in anonymized form where required for tax and accounting.",
+    "deleteButton": "Delete my data",
+    "deleteDone": "Your data has been deleted.",
+    "deleteDoneDetail": "We've erased the personal data linked to {email} at {name} and removed you from all marketing. A confirmation has been sent to {email}.",
+    "exportTitle": "Download my data",
+    "exportConfirm": "Email a copy of the personal data linked to {email} at {name}?",
+    "exportButton": "Email me my data",
+    "exportDone": "Check your inbox.",
+    "exportDoneDetail": "We're sending a copy of your data to {email}. It should arrive shortly.",
+    "invalid": "This link is invalid or has expired. Please use the link in a more recent email, or contact the restaurant directly."
   }
 }

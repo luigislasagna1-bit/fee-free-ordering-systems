@@ -7562,5 +7562,24 @@
     "errRateLimited": "Terlalu banyak percobaan — mohon tunggu sebentar dan coba lagi.",
     "errEmailMismatch": "Email itu tidak cocok dengan hadiah ini. Coba alamat tempat hadiah tersebut dikirim.",
     "errGeneric": "Terjadi kesalahan. Silakan coba lagi sebentar lagi."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Anda menerima email ini karena Anda adalah pelanggan {name}.",
+      "deleteData": "Hapus data pribadi saya"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Hapus data pribadi saya",
+    "deleteConfirm": "Hapus secara permanen data pribadi yang terkait dengan {email} di {name}? Nama, detail kontak, dan alamat Anda akan dihapus. Pesanan sebelumnya hanya disimpan dalam bentuk anonim jika diperlukan untuk keperluan pajak dan akuntansi.",
+    "deleteButton": "Hapus data saya",
+    "deleteDone": "Data Anda telah dihapus.",
+    "deleteDoneDetail": "Kami telah menghapus data pribadi yang terkait dengan {email} di {name} dan mengeluarkan Anda dari semua daftar pemasaran. Konfirmasi telah dikirim ke {email}.",
+    "exportTitle": "Unduh data saya",
+    "exportConfirm": "Kirim salinan data pribadi yang terkait dengan {email} di {name} melalui email?",
+    "exportButton": "Kirimkan data saya via email",
+    "exportDone": "Periksa kotak masuk Anda.",
+    "exportDoneDetail": "Kami sedang mengirimkan salinan data Anda ke {email}. Email akan tiba sebentar lagi.",
+    "invalid": "Tautan ini tidak valid atau sudah kedaluwarsa. Silakan gunakan tautan pada email yang lebih baru, atau hubungi restoran secara langsung."
   }
 }

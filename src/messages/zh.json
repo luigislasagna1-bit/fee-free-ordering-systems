@@ -7562,5 +7562,24 @@
     "errRateLimited": "尝试次数过多——请稍等片刻后再试。",
     "errEmailMismatch": "该邮箱与此礼物不匹配。请尝试使用收到礼物的邮箱地址。",
     "errGeneric": "出了点问题，请稍后再试。"
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "您收到此邮件是因为您是 {name} 的客户。",
+      "deleteData": "删除我的个人数据"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "删除我的个人数据",
+    "deleteConfirm": "确定要永久删除与 {email} 关联的、在 {name} 的个人数据吗？您的姓名、联系方式和地址将被清除。仅在税务和会计要求的情况下，以匿名形式保留过往订单。",
+    "deleteButton": "删除我的数据",
+    "deleteDone": "您的数据已被删除。",
+    "deleteDoneDetail": "我们已清除与 {email} 关联的、在 {name} 的个人数据，并已将您从所有营销名单中移除。确认邮件已发送至 {email}。",
+    "exportTitle": "下载我的数据",
+    "exportConfirm": "是否将与 {email} 关联的、在 {name} 的个人数据副本发送到您的邮箱？",
+    "exportButton": "将我的数据发送到邮箱",
+    "exportDone": "请查收您的邮箱。",
+    "exportDoneDetail": "我们正在将您的数据副本发送至 {email}，稍后即可送达。",
+    "invalid": "此链接无效或已过期。请使用最近一封邮件中的链接，或直接联系该餐厅。"
   }
 }

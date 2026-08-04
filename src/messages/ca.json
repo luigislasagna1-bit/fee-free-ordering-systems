@@ -7562,5 +7562,24 @@
     "errRateLimited": "Massa intents — espera un moment i torna-ho a provar.",
     "errEmailMismatch": "Aquest correu no coincideix amb aquest regal. Prova l'adreça a la qual es va enviar el regal.",
     "errGeneric": "S'ha produït un error. Torna-ho a provar d'aquí a un moment."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Reps aquest correu electrònic perquè ets client de {name}.",
+      "deleteData": "Suprimeix les meves dades personals"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Suprimeix les meves dades personals",
+    "deleteConfirm": "Vols suprimir definitivament les dades personals vinculades a {email} a {name}? El teu nom, les dades de contacte i l'adreça s'esborraran. Les comandes anteriors només es conserven de forma anonimitzada quan calgui per motius fiscals i comptables.",
+    "deleteButton": "Suprimeix les meves dades",
+    "deleteDone": "Les teves dades han estat suprimides.",
+    "deleteDoneDetail": "Hem esborrat les dades personals vinculades a {email} a {name} i t'hem eliminat de totes les comunicacions de màrqueting. S'ha enviat una confirmació a {email}.",
+    "exportTitle": "Descarrega les meves dades",
+    "exportConfirm": "Vols que t'enviem per correu electrònic una còpia de les dades personals vinculades a {email} a {name}?",
+    "exportButton": "Envia'm les meves dades per correu electrònic",
+    "exportDone": "Comprova la teva safata d'entrada.",
+    "exportDoneDetail": "T'estem enviant una còpia de les teves dades a {email}. Hauria d'arribar en breu.",
+    "invalid": "Aquest enllaç no és vàlid o ha caducat. Fes servir l'enllaç d'un correu electrònic més recent, o contacta directament amb el restaurant."
   }
 }

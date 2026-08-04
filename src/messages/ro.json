@@ -7562,5 +7562,24 @@
     "errRateLimited": "Prea multe încercări — te rugăm să aștepți un moment și să încerci din nou.",
     "errEmailMismatch": "Acest email nu se potrivește cu acest cadou. Încearcă adresa pe care a fost trimis cadoul.",
     "errGeneric": "Ceva nu a funcționat. Te rugăm să încerci din nou într-un moment."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "Primiți acest e-mail deoarece sunteți client al {name}.",
+      "deleteData": "Șterge datele mele personale"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Șterge datele mele personale",
+    "deleteConfirm": "Ștergeți definitiv datele personale asociate cu {email} la {name}? Numele, datele de contact și adresa dumneavoastră vor fi eliminate. Comenzile anterioare sunt păstrate doar în formă anonimizată, acolo unde este necesar din motive fiscale și contabile.",
+    "deleteButton": "Șterge datele mele",
+    "deleteDone": "Datele dumneavoastră au fost șterse.",
+    "deleteDoneDetail": "Am șters datele personale asociate cu {email} la {name} și v-am eliminat din toate listele de marketing. O confirmare a fost trimisă la {email}.",
+    "exportTitle": "Descarcă datele mele",
+    "exportConfirm": "Trimitem prin e-mail o copie a datelor personale asociate cu {email} la {name}?",
+    "exportButton": "Trimite-mi datele prin e-mail",
+    "exportDone": "Verificați căsuța de e-mail.",
+    "exportDoneDetail": "Trimitem o copie a datelor dumneavoastră la {email}. Ar trebui să sosească în curând.",
+    "invalid": "Acest link este invalid sau a expirat. Vă rugăm să folosiți linkul dintr-un e-mail mai recent sau să contactați restaurantul direct."
   }
 }

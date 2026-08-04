@@ -7562,5 +7562,24 @@
     "errRateLimited": "Te veel pogingen — wacht even en probeer het opnieuw.",
     "errEmailMismatch": "Dat e-mailadres komt niet overeen met dit cadeau. Probeer het adres waarnaar het cadeau is gestuurd.",
     "errGeneric": "Er is iets misgegaan. Probeer het straks opnieuw."
+  },
+  "emailFooter": {
+    "marketing": {
+      "whyReceiving": "U ontvangt deze e-mail omdat u klant bent van {name}.",
+      "deleteData": "Mijn persoonsgegevens verwijderen"
+    }
+  },
+  "dataRequest": {
+    "deleteTitle": "Mijn persoonsgegevens verwijderen",
+    "deleteConfirm": "Wilt u de persoonsgegevens die zijn gekoppeld aan {email} bij {name} permanent verwijderen? Uw naam, contactgegevens en adres worden gewist. Eerdere bestellingen worden alleen in geanonimiseerde vorm bewaard, indien vereist voor belasting- en boekhouddoeleinden.",
+    "deleteButton": "Mijn gegevens verwijderen",
+    "deleteDone": "Uw gegevens zijn verwijderd.",
+    "deleteDoneDetail": "We hebben de persoonsgegevens die zijn gekoppeld aan {email} bij {name} gewist en u afgemeld voor alle marketing. Er is een bevestiging verzonden naar {email}.",
+    "exportTitle": "Mijn gegevens downloaden",
+    "exportConfirm": "Een kopie van de persoonsgegevens die zijn gekoppeld aan {email} bij {name} per e-mail versturen?",
+    "exportButton": "Stuur mij mijn gegevens per e-mail",
+    "exportDone": "Controleer uw inbox.",
+    "exportDoneDetail": "We sturen een kopie van uw gegevens naar {email}. Deze zou binnenkort moeten aankomen.",
+    "invalid": "Deze link is ongeldig of verlopen. Gebruik de link uit een recentere e-mail of neem rechtstreeks contact op met het restaurant."
   }
 }

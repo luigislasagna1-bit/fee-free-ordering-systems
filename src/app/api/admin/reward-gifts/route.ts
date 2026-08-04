@@ -187,6 +187,7 @@ export async function POST(req: Request) {
     const balance = await getBalance({ restaurantId, customerId: existing.id });
     sendRewardGiftEmail({
       to: email,
+      restaurantId,
       customerName: name || existing.name || "",
       restaurantName: r.name,
       amountLabel,
@@ -244,6 +245,7 @@ export async function POST(req: Request) {
 
   sendRewardGiftInviteEmail({
     to: email,
+    restaurantId,
     customerName: name,
     restaurantName: r.name,
     amountLabel,
