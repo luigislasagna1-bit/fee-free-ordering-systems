@@ -1225,18 +1225,24 @@ function CustomSectionsAt({
             key={sec.id}
             className={idx % 2 === 0 ? "bg-white" : "bg-gray-50"}
           >
-            <div className="max-w-3xl mx-auto px-6 py-12">
-              <h2
-                className="text-2xl font-bold text-gray-900"
-                style={{ borderLeft: `4px solid ${themeColor}`, paddingLeft: "0.75rem" }}
-              >
+            {/* Centered to MATCH the built-in sections (About, Menu, Special
+                Offers). It used to be left-aligned with a left-border accent
+                bar, which looked out of place next to the centered sections
+                (Luigi 2026-08-04). Now mirrors the About section: centered
+                heading + centered accent underline + centered body + centered
+                CTA. */}
+            <div className="max-w-3xl mx-auto px-6 py-12 text-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
                 {sec.title}
               </h2>
-              <p className="mt-4 text-gray-700 leading-relaxed whitespace-pre-line">
+              <div className="mt-2 flex justify-center">
+                <span className="inline-block w-12 h-1 rounded" style={{ background: themeColor }} />
+              </div>
+              <p className="mt-6 text-gray-700 leading-relaxed whitespace-pre-line text-center">
                 {sec.body}
               </p>
               {cta && (
-                <div className="mt-6">
+                <div className="mt-8 flex justify-center">
                   <Link
                     href={cta.href}
                     {...(cta.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
