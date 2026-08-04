@@ -21,7 +21,12 @@ export type MarketingConsentBasis =
   | { kind: "customer_optin" } // Customer.marketingConsent === true (already gated upstream)
   | { kind: "express" }
   | { kind: "existing_business_relationship"; relationshipDate?: Date | null }
-  | { kind: "inquiry"; relationshipDate?: Date | null };
+  | { kind: "inquiry"; relationshipDate?: Date | null }
+  // Prospect imports uploaded BEFORE the 2026-08-04 attestation gate shipped.
+  // The owner chose to let these finish as-is (Luigi 2026-08-04); the new
+  // attestation + 24-month rules apply only to NEW imports. Suppression still
+  // applies, so anyone who unsubscribed/erased is skipped.
+  | { kind: "grandfathered" };
 
 export type ConsentCheck = "ok" | "stale" | "no_basis";
 
@@ -41,6 +46,7 @@ export function checkConsentBasis(
   switch (basis.kind) {
     case "customer_optin":
     case "express":
+    case "grandfathered":
       return "ok";
     case "existing_business_relationship":
       if (!basis.relationshipDate) return "stale";

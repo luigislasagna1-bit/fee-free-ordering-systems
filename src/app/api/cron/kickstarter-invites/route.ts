@@ -26,7 +26,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { KICKSTARTER_FIRST_BUY_REF, sendInviteEmail } from "@/lib/kickstarter";
-import { monthsAgo, EBR_MONTHS, INQUIRY_MONTHS } from "@/lib/marketing-consent";
+import { monthsAgo, EBR_MONTHS, INQUIRY_MONTHS, basisFromImport } from "@/lib/marketing-consent";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -117,14 +117,15 @@ async function handle(req: NextRequest) {
     // count pending prospects in the WHERE clause without a subquery,
     // so we filter in two steps — Prisma doesn't expose a cleaner way
     // and the cardinality (imports per restaurant) is tiny.
+    // Legacy imports (uploaded BEFORE the 2026-08-04 attestation gate → no
+    // consentAttestedAt) are GRANDFATHERED: the owner chose to let them finish
+    // as-is (Luigi 2026-08-04). New imports carry an attested basis + the
+    // 24-month rule. Both flow here; the suppression gate applies to BOTH, so
+    // anyone who unsubscribed/erased is skipped either way.
     const candidateImports = await prisma.prospectImport.findMany({
       where: {
         restaurantId: restaurant.id,
         isComplete: true,
-        // CASL gate: never send from an import whose owner hasn't attested a
-        // lawful basis. This ALSO freezes every legacy (pre-2026-08-04) import
-        // — they have consentAttestedAt=null — until the owner re-attests.
-        consentAttestedAt: { not: null },
       },
       orderBy: { uploadedAt: "asc" }, // oldest imports first
     });
@@ -132,6 +133,9 @@ async function handle(req: NextRequest) {
     for (const imp of candidateImports) {
       if (imp.emailsSent >= imp.successRows) continue; // already drained
       importsConsidered++;
+
+      // Legacy pre-attestation import (no consentAttestedAt) => grandfathered.
+      const isLegacy = !imp.consentAttestedAt;
 
       // Rolling 24-month (EBR) / 6-month (inquiry) implied-consent window,
       // enforced again at SEND time (defense-in-depth over the import-time
@@ -187,7 +191,10 @@ async function handle(req: NextRequest) {
               defaultLanguage: restaurant.defaultLanguage,
               imprint,
             },
-            imp.consentBasis,
+            // Grandfathered for legacy imports; the attested basis otherwise.
+            isLegacy
+              ? { kind: "grandfathered" as const }
+              : basisFromImport(imp.consentBasis, p.relationshipDate),
           );
           // Mark handled regardless of outcome — Resend errors on a single
           // recipient (bounced domain, malformed address), or a suppression

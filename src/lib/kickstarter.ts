@@ -30,7 +30,7 @@ import { sendMarketingEmail, setEmailImprint } from "@/lib/email";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { prospectUnsubscribeUrl } from "@/lib/unsubscribe";
 import { dataDeletionUrl } from "@/lib/data-request";
-import { basisFromImport, type ConsentBasisValue } from "@/lib/marketing-consent";
+import type { MarketingConsentBasis } from "@/lib/marketing-consent";
 import type { Prospect, Restaurant } from "@/generated/prisma/client";
 
 /**
@@ -252,14 +252,14 @@ export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *  test triggers. Returns the underlying send result so the caller can
  *  track per-row errors. */
 export async function sendInviteEmail(
-  prospect: Pick<Prospect, "id" | "name" | "email" | "relationshipDate">,
+  prospect: Pick<Prospect, "id" | "name" | "email">,
   restaurant: Pick<
     Restaurant,
     "id" | "name" | "slug" | "email" | "phone" | "subdomain" | "customDomain" | "customDomainStatus"
   > & { imprint?: string | null; defaultLanguage?: string | null },
-  /** The import's attested legal basis — drives the CASL consent gate + the
-   *  24-month implied-consent check inside sendMarketingEmail. */
-  consentBasis: ConsentBasisValue | null | undefined,
+  /** Pre-built send-time consent basis (the cron decides: attested import basis,
+   *  or "grandfathered" for pre-attestation legacy imports). Null => not sent. */
+  consentBasis: MarketingConsentBasis | null,
 ) {
   // The ?ref=kickstarter query param is what we'll attribute the
   // conversion to later (cross-checked against ProspectImport when an
@@ -282,8 +282,8 @@ export async function sendInviteEmail(
     return await sendMarketingEmail({
       restaurantId: restaurant.id,
       campaign: "kickstarter:invite",
-      // Fail closed: null basis (no attestation) => sendMarketingEmail skips it.
-      consentBasis: basisFromImport(consentBasis, prospect.relationshipDate),
+      // Fail closed: null basis => sendMarketingEmail skips it.
+      consentBasis,
       to: prospect.email,
       customerName: prospect.name ?? "there",
       restaurantName: restaurant.name,
