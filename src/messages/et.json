@@ -3764,7 +3764,18 @@
       "statValid": "Kehtivad",
       "statSkipped": "Vahele jäetud",
       "statEmailsSent": "Meilid saadetud",
-      "lastSend": "Viimane saatmine: {date}"
+      "lastSend": "Viimane saatmine: {date}",
+      "consentRequired": "Enne üleslaadimist valige alus ja märkige kinnitusruut.",
+      "consentSectionTitle": "Kinnitage, et teil on lubatud sellele loendile e-kirju saata",
+      "consentBasisLabel": "Mis on teie seaduslik alus nende inimestega ühenduse võtmiseks?",
+      "consentBasisPlaceholder": "Valige alus…",
+      "consentBasisExpress": "Nad andsid selgesõnalise nõusoleku turundusteadete saamiseks",
+      "consentBasisEBR": "Nad on olemasolevad kliendid (tellisid viimase 24 kuu jooksul)",
+      "consentBasisInquiry": "Nad esitasid meile päringu (viimase 6 kuu jooksul)",
+      "consentNotePlaceholder": "Valikuline: kust see loend pärineb",
+      "consentCheckbox": "Kinnitan, et mul on CASL-i kohane seaduslik alus nendele kontaktidele e-kirjade saatmiseks ning see loend ei sisalda ostetud ega kogutud aadresse.",
+      "consentDateColumnHint": "Nõuanne: lisage kuupäevaveerg \"last_order\" ja me jätame automaatselt vahele kõik, kelle viimane tellimus oli üle 24 kuu tagasi.",
+      "importedWithExcluded": "Imporditud {successRows}. Vahele jäetud {excludedRows}, kuna need olid liiga vanad või juba tellimusest loobunud."
     },
     "importGloriaFood": {
       "backToMenu": "Tagasi menüüsse",

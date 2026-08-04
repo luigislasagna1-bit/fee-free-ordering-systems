@@ -3764,7 +3764,18 @@
       "statValid": "תקינים",
       "statSkipped": "דולגו",
       "statEmailsSent": "מיילים שנשלחו",
-      "lastSend": "שליחה אחרונה: {date}"
+      "lastSend": "שליחה אחרונה: {date}",
+      "consentRequired": "נא לבחור בסיס חוקי ולסמן את אישור ההסכמה לפני ההעלאה.",
+      "consentSectionTitle": "אשרו שמותר לכם לשלוח דוא\"ל לרשימה זו",
+      "consentBasisLabel": "מהו הבסיס החוקי שלכם ליצירת קשר עם אנשים אלה?",
+      "consentBasisPlaceholder": "בחרו בסיס…",
+      "consentBasisExpress": "הם נתנו הסכמה מפורשת לקבל דיוור שיווקי",
+      "consentBasisEBR": "הם לקוחות קיימים (הזמינו ב-24 החודשים האחרונים)",
+      "consentBasisInquiry": "הם פנו אלינו (ב-6 החודשים האחרונים)",
+      "consentNotePlaceholder": "אופציונלי: מהיכן הגיעה הרשימה הזו",
+      "consentCheckbox": "אני מאשר/ת שיש לי בסיס חוקי לפי CASL לשלוח דוא\"ל לאנשי הקשר הללו, ושרשימה זו אינה מכילה כתובות שנרכשו או נאספו באופן אוטומטי.",
+      "consentDateColumnHint": "טיפ: הוסיפו עמודת תאריך \"last_order\" ואנחנו נדלג אוטומטית על כל מי שההזמנה האחרונה שלו הייתה לפני יותר מ-24 חודשים.",
+      "importedWithExcluded": "יובאו {successRows}. דולגו {excludedRows} מכיוון שהם ישנים מדי או שכבר בוטל המנוי שלהם."
     },
     "importGloriaFood": {
       "backToMenu": "חזרה לתפריט",

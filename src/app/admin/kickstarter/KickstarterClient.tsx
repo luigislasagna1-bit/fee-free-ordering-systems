@@ -327,10 +327,19 @@ function UploadArea({ onUploaded }: { onUploaded: () => void }) {
   const t = useTranslations("admin.kickstarter");
   const [dragOver, setDragOver] = useState(false);
   const [uploading, setUploading] = useState(false);
+  // CASL attestation — must be completed before a list can be uploaded.
+  const [consentBasis, setConsentBasis] = useState("");
+  const [consentAttested, setConsentAttested] = useState(false);
+  const [consentNote, setConsentNote] = useState("");
   const fileRef = useRef<HTMLInputElement | null>(null);
+  const attested = !!consentBasis && consentAttested;
 
   const upload = async (file: File) => {
     if (!file) return;
+    if (!attested) {
+      toast.error(t("consentRequired"));
+      return;
+    }
     if (!/\.csv$/i.test(file.name) && file.type !== "text/csv") {
       toast.error(t("uploadErrorNotCsv"));
       return;
@@ -344,6 +353,9 @@ function UploadArea({ onUploaded }: { onUploaded: () => void }) {
     try {
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("consentBasis", consentBasis);
+      formData.append("consentAttested", "true");
+      if (consentNote.trim()) formData.append("consentSourceNote", consentNote.trim());
       const res = await fetch("/api/restaurants/kickstarter/import", {
         method: "POST",
         body: formData,
@@ -355,10 +367,13 @@ function UploadArea({ onUploaded }: { onUploaded: () => void }) {
       const data = await res.json();
       const successRows = data.import?.successRows ?? 0;
       const errorRows = data.import?.errorRows ?? 0;
+      const excludedRows = data.import?.excludedRows ?? 0;
       toast.success(
-        errorRows > 0
-          ? t("importedWithSkipped", { successRows, errorRows })
-          : t("imported", { successRows }),
+        excludedRows > 0
+          ? t("importedWithExcluded", { successRows, excludedRows })
+          : errorRows > 0
+            ? t("importedWithSkipped", { successRows, errorRows })
+            : t("imported", { successRows }),
         { id: loadingToastId },
       );
       onUploaded();
@@ -371,6 +386,40 @@ function UploadArea({ onUploaded }: { onUploaded: () => void }) {
   };
 
   return (
+    <>
+    {/* CASL attestation — the owner must declare a lawful basis before we
+        accept a list to email. */}
+    <div className="border border-amber-200 bg-amber-50 rounded-xl p-4 mb-3 text-left">
+      <div className="text-sm font-semibold text-amber-900 mb-2">{t("consentSectionTitle")}</div>
+      <label className="block text-xs font-medium text-amber-900 mb-1">{t("consentBasisLabel")}</label>
+      <select
+        value={consentBasis}
+        onChange={(e) => setConsentBasis(e.target.value)}
+        className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm mb-3 bg-white"
+      >
+        <option value="">{t("consentBasisPlaceholder")}</option>
+        <option value="express">{t("consentBasisExpress")}</option>
+        <option value="existing_business_relationship">{t("consentBasisEBR")}</option>
+        <option value="inquiry">{t("consentBasisInquiry")}</option>
+      </select>
+      <input
+        type="text"
+        value={consentNote}
+        onChange={(e) => setConsentNote(e.target.value)}
+        placeholder={t("consentNotePlaceholder")}
+        className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm mb-3 bg-white"
+      />
+      <label className="flex items-start gap-2 text-xs text-amber-900 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={consentAttested}
+          onChange={(e) => setConsentAttested(e.target.checked)}
+          className="mt-0.5"
+        />
+        <span>{t("consentCheckbox")}</span>
+      </label>
+      <p className="text-[11px] text-amber-700 mt-2">{t("consentDateColumnHint")}</p>
+    </div>
     <div
       onDragOver={(e) => {
         e.preventDefault();
@@ -418,6 +467,7 @@ function UploadArea({ onUploaded }: { onUploaded: () => void }) {
         }}
       />
     </div>
+    </>
   );
 }
 

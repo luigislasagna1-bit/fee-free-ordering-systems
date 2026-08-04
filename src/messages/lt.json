@@ -2673,7 +2673,18 @@
       "statValid": "Tinkamų",
       "statSkipped": "Praleista",
       "statEmailsSent": "Išsiųsta el. laiškų",
-      "lastSend": "Paskutinis siuntimas: {date}"
+      "lastSend": "Paskutinis siuntimas: {date}",
+      "consentRequired": "Prieš įkeldami pasirinkite pagrindą ir pažymėkite patvirtinimą.",
+      "consentSectionTitle": "Patvirtinkite, kad galite siųsti el. laiškus šiam sąrašui",
+      "consentBasisLabel": "Koks jūsų teisėtas pagrindas susisiekti su šiais žmonėmis?",
+      "consentBasisPlaceholder": "Pasirinkite pagrindą…",
+      "consentBasisExpress": "Jie davė aiškų sutikimą gauti rinkodaros pranešimus",
+      "consentBasisEBR": "Jie yra esami klientai (užsakė per pastaruosius 24 mėnesius)",
+      "consentBasisInquiry": "Jie kreipėsi į mus su užklausa (per pastaruosius 6 mėnesius)",
+      "consentNotePlaceholder": "Neprivaloma: iš kur gautas šis sąrašas",
+      "consentCheckbox": "Patvirtinu, kad turiu teisėtą pagrindą pagal CASL siųsti el. laiškus šiems kontaktams ir kad šiame sąraše nėra nupirktų ar surinktų adresų.",
+      "consentDateColumnHint": "Patarimas: įtraukite datos stulpelį \"last_order\" ir mes automatiškai praleisime visus, kurių paskutinis užsakymas buvo daugiau nei prieš 24 mėnesius.",
+      "importedWithExcluded": "Importuota {successRows}. Praleista {excludedRows} kaip per senos arba jau atsisakiusios prenumeratos."
     },
     "importGloriaFood": {
       "backToMenu": "Grįžti į meniu",

@@ -3764,7 +3764,18 @@
       "statValid": "Derīgi",
       "statSkipped": "Izlaisti",
       "statEmailsSent": "Nosūtītie e-pasti",
-      "lastSend": "Pēdējā sūtīšana: {date}"
+      "lastSend": "Pēdējā sūtīšana: {date}",
+      "consentRequired": "Pirms augšupielādes lūdzu izvēlieties pamatojumu un atzīmējiet apstiprinājumu.",
+      "consentSectionTitle": "Apstipriniet, ka jums ir atļauts sūtīt e-pastus šim sarakstam",
+      "consentBasisLabel": "Kāds ir jūsu likumīgais pamatojums saziņai ar šīm personām?",
+      "consentBasisPlaceholder": "Izvēlieties pamatojumu…",
+      "consentBasisExpress": "Viņi devuši skaidru piekrišanu saņemt mārketinga ziņas",
+      "consentBasisEBR": "Viņi ir esoši klienti (veikuši pasūtījumu pēdējo 24 mēnešu laikā)",
+      "consentBasisInquiry": "Viņi ir vērsušies pie mums ar pieprasījumu (pēdējo 6 mēnešu laikā)",
+      "consentNotePlaceholder": "Neobligāti: no kurienes šis saraksts iegūts",
+      "consentCheckbox": "Apstiprinu, ka man ir likumīgs pamatojums saskaņā ar CASL sūtīt e-pastus šiem kontaktiem un ka šajā sarakstā nav iegādātu vai savāktu adrešu.",
+      "consentDateColumnHint": "Padoms: iekļaujiet datuma kolonnu \"last_order\", un mēs automātiski izlaidīsim ikvienu, kura pēdējais pasūtījums bijis pirms vairāk nekā 24 mēnešiem.",
+      "importedWithExcluded": "Importēts {successRows}. Izlaisti {excludedRows} kā pārāk veci vai jau atteikušies no abonementa."
     },
     "importGloriaFood": {
       "backToMenu": "Atpakaļ uz ēdienkarti",

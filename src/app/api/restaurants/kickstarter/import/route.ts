@@ -24,6 +24,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { EMAIL_REGEX, parseCsv } from "@/lib/kickstarter";
+import { loadSuppressionSet } from "@/lib/suppression";
+import { monthsAgo, EBR_MONTHS, INQUIRY_MONTHS, type ConsentBasisValue } from "@/lib/marketing-consent";
+
+const VALID_BASES: ConsentBasisValue[] = ["express", "existing_business_relationship", "inquiry"];
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,6 +60,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // CASL consent gate: the owner MUST attest a lawful basis before we accept a
+  // list to email. Without this, importing an old/purchased list and blasting it
+  // is a straight CASL violation (the 2026-08 complaint). Every ProspectImport
+  // carries the attestation; the kickstarter cron refuses to send from any
+  // import where consentAttestedAt is null.
+  const consentBasis = String(form.get("consentBasis") ?? "").trim() as ConsentBasisValue;
+  const consentAttested = String(form.get("consentAttested") ?? "") === "true";
+  const consentSourceNote = String(form.get("consentSourceNote") ?? "").trim().slice(0, 500) || null;
+  const dateColumnHint = String(form.get("dateColumn") ?? "").trim().toLowerCase();
+  if (!VALID_BASES.includes(consentBasis) || !consentAttested) {
+    return NextResponse.json(
+      { error: "You must confirm the lawful basis for contacting these people before importing." },
+      { status: 422 },
+    );
+  }
+
   // Read full file into memory — 2 MB cap above keeps this safe.
   const text = await file.text();
   const rows = parseCsv(text);
@@ -72,6 +92,13 @@ export async function POST(req: NextRequest) {
   const isHeaderRow = headerCandidates.some(
     (c) => c === "email" || c === "name" || c === "phone",
   );
+  // Optional last-order / relationship date column, used to enforce CASL's
+  // 24-month (EBR) / 6-month (inquiry) implied-consent window. Prefer the
+  // owner-supplied column name; else auto-detect common headers.
+  const DATE_HEADERS = ["last_order", "last order", "last order date", "relationship_date", "last_visit", "last visit", "order date"];
+  const dateCol = isHeaderRow
+    ? headerCandidates.findIndex((c) => (dateColumnHint ? c === dateColumnHint : DATE_HEADERS.includes(c)))
+    : -1;
   const headerMap: { name: number; email: number; phone: number } = isHeaderRow
     ? {
         name: headerCandidates.findIndex((c) => c === "name" || c === "full name" || c === "first name"),
@@ -99,16 +126,30 @@ export async function POST(req: NextRequest) {
       totalRows,
       successRows: 0,
       errorRows: 0,
+      consentBasis,
+      consentSourceNote,
+      consentAttestedAt: new Date(),
+      attestedByUserId: user.id,
     },
   });
+
+  // Preload the restaurant's do-not-email set once so an unsubscribed/erased
+  // person can NEVER be resurrected by a re-import.
+  const suppressed = await loadSuppressionSet(restaurantId);
+  // Implied-consent window cutoff (express consent doesn't expire).
+  const impliedCutoff =
+    consentBasis === "existing_business_relationship" ? monthsAgo(EBR_MONTHS)
+    : consentBasis === "inquiry" ? monthsAgo(INQUIRY_MONTHS)
+    : null;
 
   // Track emails we've already imported in THIS file to skip duplicates
   // (one prospect → one invite, even if the CSV listed them twice).
   // Case-insensitive — "Foo@example.com" and "foo@example.com" are the
   // same person.
   const seen = new Set<string>();
-  let successRows = 0;
+  let successRows = 0; // SENDABLE rows only (the cron drains until emailsSent >= successRows)
   let errorRows = 0;
+  let excludedRows = 0; // stale / suppressed — kept but never sent
   // Pre-validated rows queued for a single bulk insert. Doing N
   // individual prisma.prospect.create() calls would be ~N round trips,
   // which at the 2 MB cap could mean 30K queries. createMany() is one
@@ -118,6 +159,9 @@ export async function POST(req: NextRequest) {
     name: string | null;
     email: string;
     phone: string | null;
+    relationshipDate: Date | null;
+    excludedAt: Date | null;
+    excludedReason: string | null;
   };
   const pending: PendingProspect[] = [];
 
@@ -137,13 +181,34 @@ export async function POST(req: NextRequest) {
     seen.add(email);
     const name = headerMap.name >= 0 ? (row[headerMap.name] ?? "").trim() : "";
     const phone = headerMap.phone >= 0 ? (row[headerMap.phone] ?? "").trim() : "";
+    // Parse the optional relationship date (tolerant — blank/invalid = null).
+    let relationshipDate: Date | null = null;
+    if (dateCol >= 0) {
+      const raw = (row[dateCol] ?? "").trim();
+      if (raw) {
+        const d = new Date(raw);
+        if (!Number.isNaN(d.getTime())) relationshipDate = d;
+      }
+    }
+    // Exclude (keep the row, but never send) when suppressed, or when an
+    // implied-consent basis is stale/undated.
+    let excludedReason: string | null = null;
+    if (suppressed.has(email)) {
+      excludedReason = "suppressed";
+    } else if (impliedCutoff && (!relationshipDate || relationshipDate < impliedCutoff)) {
+      excludedReason = "stale_relationship";
+    }
     pending.push({
       importId: importRow.id,
       name: name.length > 0 ? name : null,
       email,
       phone: phone.length > 0 ? phone : null,
+      relationshipDate,
+      excludedAt: excludedReason ? new Date() : null,
+      excludedReason,
     });
-    successRows++;
+    if (excludedReason) excludedRows++;
+    else successRows++;
   }
 
   if (pending.length > 0) {
@@ -158,9 +223,10 @@ export async function POST(req: NextRequest) {
     data: {
       successRows,
       errorRows,
+      excludedRows,
       isComplete: true,
     },
   });
 
-  return NextResponse.json({ id: updated.id, import: updated });
+  return NextResponse.json({ id: updated.id, import: updated, excludedRows });
 }

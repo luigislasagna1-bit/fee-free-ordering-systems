@@ -3764,7 +3764,18 @@
       "statValid": "Valid",
       "statSkipped": "Dilewati",
       "statEmailsSent": "Email terkirim",
-      "lastSend": "Pengiriman terakhir: {date}"
+      "lastSend": "Pengiriman terakhir: {date}",
+      "consentRequired": "Silakan pilih dasar hukum dan centang konfirmasi sebelum mengunggah.",
+      "consentSectionTitle": "Konfirmasi bahwa Anda diizinkan mengirim email ke daftar ini",
+      "consentBasisLabel": "Apa dasar hukum Anda untuk menghubungi orang-orang ini?",
+      "consentBasisPlaceholder": "Pilih dasar…",
+      "consentBasisExpress": "Mereka memberikan persetujuan eksplisit untuk menerima pemasaran",
+      "consentBasisEBR": "Mereka adalah pelanggan yang sudah ada (memesan dalam 24 bulan terakhir)",
+      "consentBasisInquiry": "Mereka pernah bertanya kepada kami (dalam 6 bulan terakhir)",
+      "consentNotePlaceholder": "Opsional: dari mana daftar ini berasal",
+      "consentCheckbox": "Saya mengonfirmasi bahwa saya memiliki dasar hukum berdasarkan CASL untuk mengirim email ke kontak ini, dan daftar ini tidak berisi alamat yang dibeli atau di-scrape.",
+      "consentDateColumnHint": "Tip: sertakan kolom tanggal \"last_order\" dan kami akan otomatis melewati siapa pun yang pesanan terakhirnya lebih dari 24 bulan yang lalu.",
+      "importedWithExcluded": "{successRows} berhasil diimpor. {excludedRows} dilewati karena terlalu lama atau sudah berhenti berlangganan."
     },
     "importGloriaFood": {
       "backToMenu": "Kembali ke Menu",

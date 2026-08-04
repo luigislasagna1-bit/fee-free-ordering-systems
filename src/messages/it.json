@@ -3764,7 +3764,18 @@
       "statValid": "Valide",
       "statSkipped": "Ignorate",
       "statEmailsSent": "Email inviate",
-      "lastSend": "Ultimo invio: {date}"
+      "lastSend": "Ultimo invio: {date}",
+      "consentRequired": "Scegli una base giuridica e spunta la conferma prima di caricare il file.",
+      "consentSectionTitle": "Conferma di essere autorizzato a inviare e-mail a questa lista",
+      "consentBasisLabel": "Qual è la tua base giuridica per contattare queste persone?",
+      "consentBasisPlaceholder": "Scegli una base…",
+      "consentBasisExpress": "Hanno dato il consenso esplicito a ricevere comunicazioni di marketing",
+      "consentBasisEBR": "Sono clienti esistenti (hanno ordinato negli ultimi 24 mesi)",
+      "consentBasisInquiry": "Ci hanno contattato per informazioni (negli ultimi 6 mesi)",
+      "consentNotePlaceholder": "Facoltativo: da dove proviene questa lista",
+      "consentCheckbox": "Confermo di avere una base giuridica ai sensi del CASL per inviare e-mail a questi contatti, e che questa lista non contiene indirizzi acquistati o ottenuti tramite scraping.",
+      "consentDateColumnHint": "Suggerimento: includi una colonna data «last_order» ed escluderemo automaticamente chiunque abbia effettuato l'ultimo ordine da oltre 24 mesi.",
+      "importedWithExcluded": "Importati {successRows}. Esclusi {excludedRows} perché troppo vecchi o già disiscritti."
     },
     "importGloriaFood": {
       "backToMenu": "Torna al Menù",

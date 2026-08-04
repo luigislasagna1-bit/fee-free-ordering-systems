@@ -3764,7 +3764,18 @@
       "statValid": "有效",
       "statSkipped": "已跳过",
       "statEmailsSent": "已发送邮件",
-      "lastSend": "上次发送：{date}"
+      "lastSend": "上次发送：{date}",
+      "consentRequired": "上传前请选择一个依据并勾选确认。",
+      "consentSectionTitle": "确认您有权向此名单发送邮件",
+      "consentBasisLabel": "您联系这些人的合法依据是什么？",
+      "consentBasisPlaceholder": "选择依据…",
+      "consentBasisExpress": "他们已明确同意接收营销信息",
+      "consentBasisEBR": "他们是现有客户（在过去24个月内下过单）",
+      "consentBasisInquiry": "他们向我们咨询过（在过去6个月内）",
+      "consentNotePlaceholder": "可选：此名单的来源",
+      "consentCheckbox": "我确认根据CASL，我有合法依据向这些联系人发送邮件，且此名单不包含购买或抓取的地址。",
+      "consentDateColumnHint": "提示：添加一个 \"last_order\" 日期列，我们会自动跳过最后下单时间超过24个月的联系人。",
+      "importedWithExcluded": "已导入 {successRows} 个。已跳过 {excludedRows} 个，原因为过旧或已取消订阅。"
     },
     "importGloriaFood": {
       "backToMenu": "返回菜单",

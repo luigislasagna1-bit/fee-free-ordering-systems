@@ -3764,7 +3764,18 @@
       "statValid": "Platných",
       "statSkipped": "Přeskočeno",
       "statEmailsSent": "E-mailů odesláno",
-      "lastSend": "Poslední odeslání: {date}"
+      "lastSend": "Poslední odeslání: {date}",
+      "consentRequired": "Před nahráním vyberte právní základ a zaškrtněte potvrzení.",
+      "consentSectionTitle": "Potvrďte, že máte oprávnění zasílat e-maily tomuto seznamu",
+      "consentBasisLabel": "Jaký je váš právní základ pro kontaktování těchto osob?",
+      "consentBasisPlaceholder": "Vyberte základ…",
+      "consentBasisExpress": "Udělili výslovný souhlas s přijímáním marketingových sdělení",
+      "consentBasisEBR": "Jsou stávajícími zákazníky (objednali si v posledních 24 měsících)",
+      "consentBasisInquiry": "Poptávali se u nás (za posledních 6 měsíců)",
+      "consentNotePlaceholder": "Volitelné: odkud tento seznam pochází",
+      "consentCheckbox": "Potvrzuji, že mám právní základ podle CASL k zasílání e-mailů těmto kontaktům a že tento seznam neobsahuje žádné zakoupené ani nasbírané adresy.",
+      "consentDateColumnHint": "Tip: přidejte sloupec s datem „last_order“ a my automaticky vynecháme každého, jehož poslední objednávka byla starší než 24 měsíců.",
+      "importedWithExcluded": "Importováno {successRows}. Přeskočeno {excludedRows} jako příliš staré nebo již odhlášené."
     },
     "importGloriaFood": {
       "backToMenu": "Zpět na menu",

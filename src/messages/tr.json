@@ -3764,7 +3764,18 @@
       "statValid": "Geçerli",
       "statSkipped": "Atlanan",
       "statEmailsSent": "Gönderilen e-postalar",
-      "lastSend": "Son gönderim: {date}"
+      "lastSend": "Son gönderim: {date}",
+      "consentRequired": "Yüklemeden önce lütfen bir dayanak seçin ve onay kutusunu işaretleyin.",
+      "consentSectionTitle": "Bu listeye e-posta gönderme yetkiniz olduğunu onaylayın",
+      "consentBasisLabel": "Bu kişilerle iletişime geçmek için yasal dayanağınız nedir?",
+      "consentBasisPlaceholder": "Bir dayanak seçin…",
+      "consentBasisExpress": "Pazarlama iletileri almak için açık onay verdiler",
+      "consentBasisEBR": "Mevcut müşteriler (son 24 ay içinde sipariş verdiler)",
+      "consentBasisInquiry": "Bizimle iletişime geçtiler (son 6 ay içinde)",
+      "consentNotePlaceholder": "İsteğe bağlı: bu liste nereden geldi",
+      "consentCheckbox": "Bu kişilere e-posta göndermek için CASL kapsamında yasal bir dayanağım olduğunu ve bu listenin satın alınmış veya toplanmış (scraped) adresler içermediğini onaylıyorum.",
+      "consentDateColumnHint": "İpucu: bir \"last_order\" tarih sütunu ekleyin, son siparişi 24 aydan eski olan herkesi otomatik olarak atlayalım.",
+      "importedWithExcluded": "{successRows} içe aktarıldı. {excludedRows} kişi çok eski olduğu veya zaten abonelikten çıktığı için atlandı."
     },
     "importGloriaFood": {
       "backToMenu": "Menüye Dön",

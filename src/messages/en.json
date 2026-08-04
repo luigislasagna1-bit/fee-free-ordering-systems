@@ -1903,7 +1903,18 @@
       "statValid": "Valid",
       "statSkipped": "Skipped",
       "statEmailsSent": "Emails sent",
-      "lastSend": "Last send: {date}"
+      "lastSend": "Last send: {date}",
+      "consentRequired": "Please choose a basis and tick the confirmation before uploading.",
+      "consentSectionTitle": "Confirm you're allowed to email this list",
+      "consentBasisLabel": "What's your lawful basis for contacting these people?",
+      "consentBasisPlaceholder": "Choose a basis…",
+      "consentBasisExpress": "They gave express consent to receive marketing",
+      "consentBasisEBR": "They're existing customers (ordered in the last 24 months)",
+      "consentBasisInquiry": "They enquired with us (in the last 6 months)",
+      "consentNotePlaceholder": "Optional: where this list came from",
+      "consentCheckbox": "I confirm I have a lawful basis under CASL to email these contacts, and this list contains no purchased or scraped addresses.",
+      "consentDateColumnHint": "Tip: include a \"last_order\" date column and we'll automatically skip anyone whose last order was over 24 months ago.",
+      "importedWithExcluded": "Imported {successRows}. Skipped {excludedRows} as too old or already unsubscribed."
     },
     "websiteTheme": {
       "title": "Website Theme",

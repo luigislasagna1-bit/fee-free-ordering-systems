@@ -3764,7 +3764,18 @@
       "statValid": "صالح",
       "statSkipped": "تم التخطي",
       "statEmailsSent": "رسائل مرسلة",
-      "lastSend": "آخر إرسال: {date}"
+      "lastSend": "آخر إرسال: {date}",
+      "consentRequired": "يرجى اختيار الأساس القانوني ووضع علامة على التأكيد قبل الرفع.",
+      "consentSectionTitle": "أكّد أنه يحق لك مراسلة هذه القائمة عبر البريد الإلكتروني",
+      "consentBasisLabel": "ما هو الأساس القانوني للتواصل مع هؤلاء الأشخاص؟",
+      "consentBasisPlaceholder": "اختر أساسًا…",
+      "consentBasisExpress": "قدّموا موافقة صريحة على تلقي الرسائل التسويقية",
+      "consentBasisEBR": "هم عملاء حاليون (قدّموا طلبًا خلال آخر 24 شهرًا)",
+      "consentBasisInquiry": "لقد تواصلوا معنا (خلال آخر 6 أشهر)",
+      "consentNotePlaceholder": "اختياري: من أين جاءت هذه القائمة",
+      "consentCheckbox": "أؤكد أن لدي أساسًا قانونيًا بموجب CASL لمراسلة جهات الاتصال هذه عبر البريد الإلكتروني، وأن هذه القائمة لا تحتوي على عناوين مشتراة أو مُجمَّعة آليًا.",
+      "consentDateColumnHint": "نصيحة: أضف عمود تاريخ باسم \"last_order\" وسنقوم تلقائيًا بتخطي أي شخص كان آخر طلب له قبل أكثر من 24 شهرًا.",
+      "importedWithExcluded": "تم استيراد {successRows}. تم تخطي {excludedRows} لأنهم قدامى جدًا أو ألغوا الاشتراك بالفعل."
     },
     "importGloriaFood": {
       "backToMenu": "العودة إلى القائمة",

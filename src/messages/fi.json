@@ -3729,7 +3729,18 @@
       "statValid": "Kelvollisia",
       "statSkipped": "Ohitettu",
       "statEmailsSent": "Sähköposteja lähetetty",
-      "lastSend": "Viimeisin lähetys: {date}"
+      "lastSend": "Viimeisin lähetys: {date}",
+      "consentRequired": "Valitse peruste ja rastita vahvistus ennen lataamista.",
+      "consentSectionTitle": "Vahvista, että saat lähettää sähköpostia tälle listalle",
+      "consentBasisLabel": "Mikä on laillinen perusteesi ottaa yhteyttä näihin henkilöihin?",
+      "consentBasisPlaceholder": "Valitse peruste…",
+      "consentBasisExpress": "He ovat antaneet nimenomaisen suostumuksen markkinointiviestien vastaanottamiseen",
+      "consentBasisEBR": "He ovat nykyisiä asiakkaita (tilanneet viimeisten 24 kuukauden aikana)",
+      "consentBasisInquiry": "He ovat olleet meihin yhteydessä (viimeisten 6 kuukauden aikana)",
+      "consentNotePlaceholder": "Valinnainen: mistä tämä lista on peräisin",
+      "consentCheckbox": "Vahvistan, että minulla on CASL-lain mukainen laillinen peruste lähettää sähköpostia näille yhteystiedoille, ja ettei tämä lista sisällä ostettuja tai kaavittuja osoitteita.",
+      "consentDateColumnHint": "Vinkki: lisää \"last_order\"-päivämääräsarake, niin ohitamme automaattisesti kaikki, joiden viimeisin tilaus oli yli 24 kuukautta sitten.",
+      "importedWithExcluded": "{successRows} tuotu. {excludedRows} ohitettu: liian vanhoja tai jo poistuneet postituslistalta."
     },
     "importGloriaFood": {
       "backToMenu": "Takaisin menuun",

@@ -3764,7 +3764,18 @@
       "statValid": "Hợp lệ",
       "statSkipped": "Bỏ qua",
       "statEmailsSent": "Email đã gửi",
-      "lastSend": "Lần gửi cuối: {date}"
+      "lastSend": "Lần gửi cuối: {date}",
+      "consentRequired": "Vui lòng chọn cơ sở pháp lý và đánh dấu xác nhận trước khi tải lên.",
+      "consentSectionTitle": "Xác nhận bạn được phép gửi email cho danh sách này",
+      "consentBasisLabel": "Cơ sở pháp lý của bạn để liên hệ với những người này là gì?",
+      "consentBasisPlaceholder": "Chọn cơ sở…",
+      "consentBasisExpress": "Họ đã đồng ý rõ ràng để nhận thông tin tiếp thị",
+      "consentBasisEBR": "Họ là khách hàng hiện tại (đã đặt hàng trong 24 tháng qua)",
+      "consentBasisInquiry": "Họ đã liên hệ hỏi thông tin với chúng tôi (trong 6 tháng qua)",
+      "consentNotePlaceholder": "Tùy chọn: danh sách này lấy từ đâu",
+      "consentCheckbox": "Tôi xác nhận rằng tôi có cơ sở pháp lý theo CASL để gửi email cho những người liên hệ này, và danh sách này không chứa địa chỉ mua hoặc thu thập trái phép.",
+      "consentDateColumnHint": "Mẹo: hãy thêm cột ngày \"last_order\" và chúng tôi sẽ tự động bỏ qua bất kỳ ai có đơn hàng cuối cách đây hơn 24 tháng.",
+      "importedWithExcluded": "Đã nhập {successRows}. Đã bỏ qua {excludedRows} vì quá cũ hoặc đã hủy đăng ký."
     },
     "importGloriaFood": {
       "backToMenu": "Quay lại Thực đơn",

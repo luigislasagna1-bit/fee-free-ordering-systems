@@ -3764,7 +3764,18 @@
       "statValid": "Érvényes",
       "statSkipped": "Kihagyott",
       "statEmailsSent": "Küldött e-mailek",
-      "lastSend": "Utolsó küldés: {date}"
+      "lastSend": "Utolsó küldés: {date}",
+      "consentRequired": "Feltöltés előtt válasszon jogalapot, és jelölje be a megerősítést.",
+      "consentSectionTitle": "Erősítse meg, hogy jogosult e-mailt küldeni erre a listára",
+      "consentBasisLabel": "Mi a jogalapja ezen személyek megkeresésére?",
+      "consentBasisPlaceholder": "Válasszon jogalapot…",
+      "consentBasisExpress": "Kifejezett hozzájárulást adtak marketing üzenetek fogadásához",
+      "consentBasisEBR": "Meglévő ügyfelek (az elmúlt 24 hónapban rendeltek)",
+      "consentBasisInquiry": "Érdeklődtek nálunk (az elmúlt 6 hónapban)",
+      "consentNotePlaceholder": "Opcionális: honnan származik ez a lista",
+      "consentCheckbox": "Megerősítem, hogy jogalappal rendelkezem a CASL szerint ezen kapcsolattartók e-mailben történő megkereséséhez, és hogy ez a lista nem tartalmaz vásárolt vagy gyűjtött címeket.",
+      "consentDateColumnHint": "Tipp: adjon hozzá egy „last_order” dátumoszlopot, és automatikusan kihagyjuk azokat, akiknek az utolsó rendelése több mint 24 hónapja volt.",
+      "importedWithExcluded": "{successRows} importálva. {excludedRows} kihagyva mint túl régi vagy már leiratkozott."
     },
     "importGloriaFood": {
       "backToMenu": "Vissza az étlaphoz",

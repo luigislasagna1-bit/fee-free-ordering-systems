@@ -3764,7 +3764,18 @@
       "statValid": "Gyldige",
       "statSkipped": "Sprunget over",
       "statEmailsSent": "E-mails sendt",
-      "lastSend": "Seneste afsendelse: {date}"
+      "lastSend": "Seneste afsendelse: {date}",
+      "consentRequired": "Vælg et grundlag, og sæt kryds i bekræftelsen, før du uploader.",
+      "consentSectionTitle": "Bekræft, at du må sende e-mails til denne liste",
+      "consentBasisLabel": "Hvad er dit lovlige grundlag for at kontakte disse personer?",
+      "consentBasisPlaceholder": "Vælg et grundlag…",
+      "consentBasisExpress": "De har givet udtrykkeligt samtykke til at modtage markedsføring",
+      "consentBasisEBR": "De er eksisterende kunder (har bestilt inden for de sidste 24 måneder)",
+      "consentBasisInquiry": "De har henvendt sig til os (inden for de sidste 6 måneder)",
+      "consentNotePlaceholder": "Valgfrit: hvor denne liste kommer fra",
+      "consentCheckbox": "Jeg bekræfter, at jeg har et lovligt grundlag under CASL til at sende e-mails til disse kontakter, og at denne liste ikke indeholder købte eller scrapede adresser.",
+      "consentDateColumnHint": "Tip: tilføj en datokolonne \"last_order\", så springer vi automatisk alle over, hvis seneste ordre var mere end 24 måneder siden.",
+      "importedWithExcluded": "{successRows} importeret. {excludedRows} sprunget over som for gamle eller allerede afmeldt."
     },
     "importGloriaFood": {
       "backToMenu": "Tilbage til menu",

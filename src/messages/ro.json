@@ -3764,7 +3764,18 @@
       "statValid": "Valide",
       "statSkipped": "Ignorate",
       "statEmailsSent": "Emailuri trimise",
-      "lastSend": "Ultima trimitere: {date}"
+      "lastSend": "Ultima trimitere: {date}",
+      "consentRequired": "Alegeți un temei și bifați confirmarea înainte de încărcare.",
+      "consentSectionTitle": "Confirmați că aveți dreptul de a trimite e-mailuri către această listă",
+      "consentBasisLabel": "Care este temeiul legal pentru a contacta aceste persoane?",
+      "consentBasisPlaceholder": "Alegeți un temei…",
+      "consentBasisExpress": "Și-au dat consimțământul expres pentru a primi materiale de marketing",
+      "consentBasisEBR": "Sunt clienți existenți (au comandat în ultimele 24 de luni)",
+      "consentBasisInquiry": "Ne-au contactat cu o solicitare (în ultimele 6 luni)",
+      "consentNotePlaceholder": "Opțional: de unde provine această listă",
+      "consentCheckbox": "Confirm că am un temei legal conform CASL pentru a trimite e-mailuri acestor contacte și că această listă nu conține adrese cumpărate sau colectate fără acord.",
+      "consentDateColumnHint": "Sfat: includeți o coloană cu data „last_order” și vom omite automat orice persoană a cărei ultimă comandă a fost cu peste 24 de luni în urmă.",
+      "importedWithExcluded": "S-au importat {successRows}. S-au omis {excludedRows} ca fiind prea vechi sau deja dezabonați."
     },
     "importGloriaFood": {
       "backToMenu": "Înapoi la Meniu",

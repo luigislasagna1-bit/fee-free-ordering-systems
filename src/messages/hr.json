@@ -3764,7 +3764,18 @@
       "statValid": "Valjano",
       "statSkipped": "Preskočeno",
       "statEmailsSent": "E-mailovi poslani",
-      "lastSend": "Zadnje slanje: {date}"
+      "lastSend": "Zadnje slanje: {date}",
+      "consentRequired": "Molimo odaberite pravnu osnovu i potvrdite oznaku prije učitavanja.",
+      "consentSectionTitle": "Potvrdite da smijete slati e-poštu ovom popisu",
+      "consentBasisLabel": "Koja je vaša pravna osnova za kontaktiranje ovih osoba?",
+      "consentBasisPlaceholder": "Odaberite osnovu…",
+      "consentBasisExpress": "Dali su izričit pristanak za primanje marketinških poruka",
+      "consentBasisEBR": "Postojeći su kupci (naručili su u posljednjih 24 mjeseca)",
+      "consentBasisInquiry": "Uputili su nam upit (u posljednjih 6 mjeseci)",
+      "consentNotePlaceholder": "Neobavezno: odakle potječe ovaj popis",
+      "consentCheckbox": "Potvrđujem da imam zakonsku osnovu prema CASL-u za slanje e-pošte ovim kontaktima te da ovaj popis ne sadrži kupljene ili prikupljene adrese.",
+      "consentDateColumnHint": "Savjet: uključite stupac s datumom \"last_order\" i automatski ćemo preskočiti svakoga čija je posljednja narudžba bila prije više od 24 mjeseca.",
+      "importedWithExcluded": "Uvezeno {successRows}. Preskočeno {excludedRows} jer su prestare ili već odjavljene."
     },
     "importGloriaFood": {
       "backToMenu": "Natrag na jelovnik",

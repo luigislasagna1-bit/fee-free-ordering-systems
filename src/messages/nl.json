@@ -3764,7 +3764,18 @@
       "statValid": "Geldig",
       "statSkipped": "Overgeslagen",
       "statEmailsSent": "E-mails verzonden",
-      "lastSend": "Laatste verzending: {date}"
+      "lastSend": "Laatste verzending: {date}",
+      "consentRequired": "Kies een grondslag en vink de bevestiging aan voordat u uploadt.",
+      "consentSectionTitle": "Bevestig dat u deze lijst mag e-mailen",
+      "consentBasisLabel": "Wat is uw wettelijke grondslag om deze personen te contacteren?",
+      "consentBasisPlaceholder": "Kies een grondslag…",
+      "consentBasisExpress": "Deze personen hebben uitdrukkelijk toestemming gegeven om marketing te ontvangen",
+      "consentBasisEBR": "Het zijn bestaande klanten (hebben in de afgelopen 24 maanden besteld)",
+      "consentBasisInquiry": "Deze personen hebben bij ons geïnformeerd (in de afgelopen 6 maanden)",
+      "consentNotePlaceholder": "Optioneel: waar deze lijst vandaan komt",
+      "consentCheckbox": "Ik bevestig dat ik onder CASL een wettelijke grondslag heb om deze contacten te e-mailen, en dat deze lijst geen gekochte of gescrapte adressen bevat.",
+      "consentDateColumnHint": "Tip: voeg een datumkolom \"last_order\" toe, dan slaan we automatisch iedereen over van wie de laatste bestelling meer dan 24 maanden geleden was.",
+      "importedWithExcluded": "{successRows} geïmporteerd. {excludedRows} overgeslagen wegens te oud of reeds afgemeld."
     },
     "importGloriaFood": {
       "backToMenu": "Terug naar menu",

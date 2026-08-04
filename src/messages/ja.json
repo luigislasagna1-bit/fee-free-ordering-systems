@@ -3764,7 +3764,18 @@
       "statValid": "有効",
       "statSkipped": "スキップ",
       "statEmailsSent": "送信済みメール数",
-      "lastSend": "最終送信：{date}"
+      "lastSend": "最終送信：{date}",
+      "consentRequired": "アップロードする前に、根拠を選択し確認欄にチェックを入れてください。",
+      "consentSectionTitle": "このリストにメールを送信する権限があることを確認してください",
+      "consentBasisLabel": "これらの相手に連絡する法的根拠は何ですか？",
+      "consentBasisPlaceholder": "根拠を選択…",
+      "consentBasisExpress": "マーケティング受信について明示的な同意を得ている",
+      "consentBasisEBR": "既存のお客様である（過去24か月以内に注文あり）",
+      "consentBasisInquiry": "お問い合わせをいただいた（過去6か月以内）",
+      "consentNotePlaceholder": "任意：このリストの入手元",
+      "consentCheckbox": "CASLに基づき、これらの連絡先にメールを送信する法的根拠があること、およびこのリストに購入または収集（スクレイピング）されたアドレスが含まれていないことを確認します。",
+      "consentDateColumnHint": "ヒント：「last_order」の日付列を含めると、最終注文から24か月以上経過した相手を自動的にスキップします。",
+      "importedWithExcluded": "{successRows}件をインポートしました。{excludedRows}件は古すぎるか、既に配信停止済みのためスキップしました。"
     },
     "importGloriaFood": {
       "backToMenu": "メニューに戻る",

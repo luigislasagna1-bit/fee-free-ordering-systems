@@ -3764,7 +3764,18 @@
       "statValid": "Vàlides",
       "statSkipped": "Omeses",
       "statEmailsSent": "Correus enviats",
-      "lastSend": "Darrer enviament: {date}"
+      "lastSend": "Darrer enviament: {date}",
+      "consentRequired": "Trieu una base legal i marqueu la confirmació abans de pujar l'arxiu.",
+      "consentSectionTitle": "Confirmeu que teniu permís per enviar correus electrònics a aquesta llista",
+      "consentBasisLabel": "Quina és la vostra base legal per contactar aquestes persones?",
+      "consentBasisPlaceholder": "Trieu una base…",
+      "consentBasisExpress": "Van donar el consentiment exprés per rebre màrqueting",
+      "consentBasisEBR": "Són clients existents (han fet una comanda en els últims 24 mesos)",
+      "consentBasisInquiry": "Ens han fet una consulta (en els últims 6 mesos)",
+      "consentNotePlaceholder": "Opcional: d'on prové aquesta llista",
+      "consentCheckbox": "Confirmo que tinc una base legal segons la CASL per enviar correus electrònics a aquests contactes, i que aquesta llista no conté adreces comprades ni obtingudes mitjançant scraping.",
+      "consentDateColumnHint": "Consell: incloeu una columna de data «last_order» i exclourem automàticament qualsevol persona la darrera comanda de la qual tingui més de 24 mesos.",
+      "importedWithExcluded": "S'han importat {successRows}. S'han exclòs {excludedRows} per ser massa antics o ja donats de baixa."
     },
     "importGloriaFood": {
       "backToMenu": "Torna a la carta",

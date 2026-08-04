@@ -3764,7 +3764,18 @@
       "statValid": "Valides",
       "statSkipped": "Ignorés",
       "statEmailsSent": "E-mails envoyés",
-      "lastSend": "Dernier envoi : {date}"
+      "lastSend": "Dernier envoi : {date}",
+      "consentRequired": "Veuillez choisir une base légale et cocher la case de confirmation avant de charger le fichier.",
+      "consentSectionTitle": "Confirmez que vous êtes autorisé(e) à envoyer des e-mails à cette liste",
+      "consentBasisLabel": "Quelle est votre base légale pour contacter ces personnes ?",
+      "consentBasisPlaceholder": "Choisissez une base…",
+      "consentBasisExpress": "Elles ont donné leur consentement exprès pour recevoir des communications marketing",
+      "consentBasisEBR": "Ce sont des clients existants (ayant commandé au cours des 24 derniers mois)",
+      "consentBasisInquiry": "Elles se sont renseignées auprès de nous (au cours des 6 derniers mois)",
+      "consentNotePlaceholder": "Facultatif : d'où provient cette liste",
+      "consentCheckbox": "Je confirme disposer d'une base légale au titre de la CASL pour envoyer un e-mail à ces contacts, et que cette liste ne contient aucune adresse achetée ou obtenue par extraction automatisée (scraping).",
+      "consentDateColumnHint": "Astuce : incluez une colonne de date « last_order » et nous exclurons automatiquement toute personne dont la dernière commande remonte à plus de 24 mois.",
+      "importedWithExcluded": "{successRows} importés. {excludedRows} ignorés car trop anciens ou déjà désabonnés."
     },
     "importGloriaFood": {
       "backToMenu": "Retour au menu",

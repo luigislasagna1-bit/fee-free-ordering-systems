@@ -3764,7 +3764,18 @@
       "statValid": "Validno",
       "statSkipped": "Preskočeno",
       "statEmailsSent": "Emailova poslato",
-      "lastSend": "Poslednje slanje: {date}"
+      "lastSend": "Poslednje slanje: {date}",
+      "consentRequired": "Молимо изаберите правни основ и потврдите поље за потврду пре отпремања.",
+      "consentSectionTitle": "Потврдите да имате право да шаљете е-пошту овој листи",
+      "consentBasisLabel": "Који је ваш правни основ за контактирање ових особа?",
+      "consentBasisPlaceholder": "Изаберите основ…",
+      "consentBasisExpress": "Дали су изричиту сагласност да примају маркетиншке поруке",
+      "consentBasisEBR": "Они су постојећи купци (наручили су у последњих 24 месеца)",
+      "consentBasisInquiry": "Упутили су нам упит (у последњих 6 месеци)",
+      "consentNotePlaceholder": "Опционо: одакле потиче ова листа",
+      "consentCheckbox": "Потврђујем да имам законски основ према CASL за слање е-поште овим контактима и да ова листа не садржи купљене или прикупљене адресе.",
+      "consentDateColumnHint": "Савет: укључите колону са датумом \"last_order\" и аутоматски ћемо прескочити свакога чија је последња наруџбина била пре више од 24 месеца.",
+      "importedWithExcluded": "Увезено {successRows}. Прескочено {excludedRows} јер су престаре или већ одјављене."
     },
     "importGloriaFood": {
       "backToMenu": "Nazad na meni",
