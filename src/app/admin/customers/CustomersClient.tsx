@@ -332,8 +332,8 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
                           </span>
                         )}
                       </td>
-                      <td className="px-4 py-3 text-gray-500">{formatDate(c.createdAt)}</td>
-                      <td className="px-4 py-3 text-gray-500">{c.signedUpAt ? formatDate(c.signedUpAt) : "—"}</td>
+                      <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{formatDate(c.createdAt)}</td>
+                      <td className="px-4 py-3 text-gray-500 whitespace-nowrap">{c.signedUpAt ? formatDate(c.signedUpAt) : "—"}</td>
                       <td className="px-4 py-3 text-right">
                         <Link href={`/admin/customers/${c.id}`} className="text-emerald-600 hover:text-emerald-700">
                           <ChevronRight className="w-4 h-4" />

@@ -396,7 +396,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               isPublished={isPublished}
               resellerLogoUrl={resellerLogoUrl}
             />
-            <div className="flex-1 flex flex-col overflow-hidden">
+            {/* min-w-0 lets this flex column shrink below its content width, so
+                inner overflow-x-auto tables (e.g. Customers) scroll within their
+                card instead of being clipped by the ancestors' overflow-hidden
+                (wide tables were losing their right-most columns at 100% zoom). */}
+            <div className="flex-1 flex flex-col overflow-hidden min-w-0">
               <AdminHeader
                 session={session}
                 pendingOrders={pendingOrders}
