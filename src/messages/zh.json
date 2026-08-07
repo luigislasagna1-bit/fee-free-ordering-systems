@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "使用{label}支付的 {amount} 已退回到顾客的钱包。"
+    },
+    "timing": {
+      "placedAt": "下单时间",
+      "prepTime": "备餐时间",
+      "readyTime": "预计时间",
+      "pickupTime": "取餐时间",
+      "deliveryTime": "送达时间",
+      "scheduledBanner": "预约订单 — 稍后时段",
+      "acceptedAt": "接单时间"
     }
   },
   "marketing": {

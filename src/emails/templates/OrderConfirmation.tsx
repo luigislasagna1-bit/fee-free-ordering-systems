@@ -21,7 +21,7 @@ import { EmailLayout, EmailHeader } from "../components/EmailLayout";
 import { formatCurrency } from "@/lib/utils";
 import {
   EmailBody, P, EmailButton, InfoCard, Badge,
-  OrderItemsTable, OrderTotals, EmailOrderItem,
+  OrderItemsTable, OrderTotals, EmailOrderItem, TimingBlock,
 } from "../components/EmailParts";
 import { EmailFooter } from "../components/EmailLayout";
 import type { Translator } from "@/lib/i18n-dict";
@@ -33,6 +33,13 @@ export type OrderConfirmationProps = {
   orderType: string;        // "delivery" | "pickup" | "dine_in" — capitalized in render
   paidOnline: boolean;
   estimatedMinutes: number;
+  /** PRE-FORMATTED order-timing facts (restaurant tz + recipient locale), shown
+   *  as one consistent block on every order email. Luigi 2026-08-07. */
+  placedAtLabel?: string | null;
+  prepTimeLabel?: string | null;
+  readyAtLabel?: string | null;
+  /** Label for the ready row — pickup / delivery / generic, by order type. */
+  readyRowLabel?: string | null;
   /** Pre-formatted scheduled slot (restaurant tz + customer locale). When set,
    *  the email shows an "order for later" line instead of the ASAP ETA. */
   scheduledLabel?: string | null;
@@ -105,7 +112,7 @@ export type OrderConfirmationProps = {
 export default function OrderConfirmation(props: OrderConfirmationProps) {
   const {
     customerName, orderNumber, restaurantName, orderType, paidOnline,
-    estimatedMinutes, scheduledLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
+    estimatedMinutes, scheduledLabel, placedAtLabel, prepTimeLabel, readyAtLabel, readyRowLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, cancelUrl, placedWhileClosed, opensAtLabel, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
     appliedPromos, creditApplied, rewardLabel, rewardEarned, paymentValue, paidStatus, t,
@@ -169,6 +176,19 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
             ? ""
             : " " + t(followUpKey, { estimatedMinutes })}
         </P>
+
+        {/* Order timing — placed / prep / ready, with a clear SCHEDULED banner
+            for future orders. One consistent block across every order email
+            (GloriaFood parity, Luigi 2026-08-07): the placement time was never
+            stated at all before, and a scheduled order could read as ASAP. */}
+        <TimingBlock
+          scheduledBadge={scheduledLabel ? t("email.timing.scheduledBanner") : null}
+          rows={[
+            { label: t("email.timing.placedAt"), value: placedAtLabel },
+            { label: t("email.timing.prepTime"), value: prepTimeLabel },
+            { label: readyRowLabel ?? t("email.timing.readyTime"), value: readyAtLabel, emphasis: true },
+          ]}
+        />
 
         {/* Prominent "order for later" line for scheduled orders. */}
         {scheduledLabel && (

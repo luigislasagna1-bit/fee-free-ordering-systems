@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "A {label} egyenlegből fizetett {amount} visszakerült az ügyfél tárcájába."
+    },
+    "timing": {
+      "placedAt": "Rendelés leadva",
+      "prepTime": "Elkészítési idő",
+      "readyTime": "Várható időpont",
+      "pickupTime": "Átvétel időpontja",
+      "deliveryTime": "Kiszállítás időpontja",
+      "scheduledBanner": "ELŐRE ÜTEMEZETT RENDELÉS — későbbi időpontra",
+      "acceptedAt": "Elfogadva"
     }
   },
   "marketing": {

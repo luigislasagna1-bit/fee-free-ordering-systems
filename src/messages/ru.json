@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Сумма {amount}, оплаченная с помощью {label}, возвращена в кошелёк клиента."
+    },
+    "timing": {
+      "placedAt": "Заказ оформлен",
+      "prepTime": "Время приготовления",
+      "readyTime": "Ожидаемое время",
+      "pickupTime": "Время самовывоза",
+      "deliveryTime": "Время доставки",
+      "scheduledBanner": "ЗАПЛАНИРОВАННЫЙ ЗАКАЗ — на более позднее время",
+      "acceptedAt": "Принят"
     }
   },
   "marketing": {

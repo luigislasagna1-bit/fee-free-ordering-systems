@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "De {amount} som betalades med {label} har återförts till kundens plånbok."
+    },
+    "timing": {
+      "placedAt": "Beställning lagd",
+      "prepTime": "Tillagningstid",
+      "readyTime": "Beräknad tid",
+      "pickupTime": "Upphämtningstid",
+      "deliveryTime": "Leveranstid",
+      "scheduledBanner": "FÖRBOKAD BESTÄLLNING — för senare",
+      "acceptedAt": "Accepterad"
     }
   },
   "marketing": {

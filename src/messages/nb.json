@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "De {amount} som ble betalt med {label}, er ført tilbake til kundens lommebok."
+    },
+    "timing": {
+      "placedAt": "Bestilling mottatt",
+      "prepTime": "Tilberedningstid",
+      "readyTime": "Forventet tid",
+      "pickupTime": "Hentetidspunkt",
+      "deliveryTime": "Leveringstidspunkt",
+      "scheduledBanner": "PLANLAGT BESTILLING — til senere",
+      "acceptedAt": "Godtatt"
     }
   },
   "marketing": {

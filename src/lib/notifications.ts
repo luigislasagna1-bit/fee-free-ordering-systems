@@ -288,7 +288,12 @@ export type StaffEventPayload =
       creditApplied?: number; rewardLabel?: string | null;
       /** Projected credit the customer earns — so the STAFF copy of the receipt
        *  matches the customer's, which already showed it. Luigi 2026-08-07. */
-      rewardEarned?: number }
+      rewardEarned?: number;
+      /** Order-timing block: placed / prep / ready + the SCHEDULED banner, so
+       *  the kitchen can't mistake a next-day order for an ASAP one. */
+      placedAt?: Date | string | null; estimatedReady?: Date | string | null;
+      scheduledFor?: Date | string | null; scheduledSlotMinutes?: number | null;
+      estimatedMinutes?: number | null }
   | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string;
       /** Order money for the staff copy. These two emails carried NO amounts,
@@ -372,7 +377,7 @@ export async function notifyStaff(args: {
     await Promise.all(
       eligible.map(async (r) => {
         try {
-          await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload, restaurant.currency, restaurant.hoursFormat === "12h" ? "12h" : "24h");
+          await dispatchStaffEvent(r.email, r.emailLanguage, restaurant.name, payload, restaurant.currency, restaurant.hoursFormat === "12h" ? "12h" : "24h", (restaurant as any).timezone || undefined);
           sent++;
         } catch (err) {
           console.error(`[notifyStaff] send to ${r.email} failed:`, err instanceof Error ? err.message : err);
@@ -424,6 +429,8 @@ async function dispatchStaffEvent(
   payload: StaffEventPayload,
   currency?: string,
   hoursFormat?: "12h" | "24h",
+  /** Restaurant timezone — the staff order-timing block renders in it. */
+  timezone?: string,
 ): Promise<void> {
   switch (payload.event) {
     case "orderPlaced":
@@ -456,6 +463,12 @@ async function dispatchStaffEvent(
         creditApplied: payload.creditApplied,
         rewardLabel: payload.rewardLabel,
         rewardEarned: payload.rewardEarned,
+        placedAt: payload.placedAt,
+        estimatedReady: payload.estimatedReady,
+        scheduledFor: payload.scheduledFor,
+        scheduledSlotMinutes: payload.scheduledSlotMinutes,
+        estimatedMinutes: payload.estimatedMinutes,
+        timezone,
         hoursFormat,
         locale,
         currency,
@@ -604,7 +617,7 @@ export function staffAcceptEventForOrderType(
 // ─── notifyCustomer ────────────────────────────────────────────────────────
 
 export type CustomerEventPayload =
-  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; scheduledSlotMinutes?: number | null; reservation?: { partySize: number; date: string; time: string } | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }>;
+  | { event: "orderConfirmed"; customerName: string; orderNumber: string; items: { name: string; quantity: number; price: number }[]; total: number; orderType: string; estimatedTime: number; scheduledFor?: Date | string | null; scheduledSlotMinutes?: number | null; placedAt?: Date | string | null; estimatedReady?: Date | string | null; reservation?: { partySize: number; date: string; time: string } | null; trackingUrl: string; appliedPromos?: Array<{ name: string; type: string; discount: number; couponCode?: string }>;
       // Full money breakdown (Luigi 2026-07-02): without these the email's
       // "Subtotal" silently fell back to the TOTAL and tax/tip/discount rows
       // never rendered. creditApplied/rewardLabel only set when rewards are ON.
@@ -836,6 +849,8 @@ export async function notifyCustomer(args: {
           orderType: payload.orderType,
           estimatedTime: payload.estimatedTime,
           scheduledFor: payload.scheduledFor ?? null,
+          placedAt: payload.placedAt ?? null,
+          estimatedReady: payload.estimatedReady ?? null,
           // Range-mode window width — email shows "start – end". Fabrizio cmqqxerxs.
           scheduledSlotMinutes: payload.scheduledSlotMinutes ?? null,
           reservation: payload.reservation ?? null,

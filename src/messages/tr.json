@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{label} ile ödenen {amount} müşterinin cüzdanına iade edildi."
+    },
+    "timing": {
+      "placedAt": "Sipariş alındı",
+      "prepTime": "Hazırlık süresi",
+      "readyTime": "Tahmini saat",
+      "pickupTime": "Teslim alma saati",
+      "deliveryTime": "Teslimat saati",
+      "scheduledBanner": "İLERİ TARİHLİ SİPARİŞ — sonrası için",
+      "acceptedAt": "Kabul edildi"
     }
   },
   "marketing": {

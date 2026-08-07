@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{label} से भुगतान की गई {amount} राशि ग्राहक के वॉलेट में वापस कर दी गई है।"
+    },
+    "timing": {
+      "placedAt": "ऑर्डर दिया गया",
+      "prepTime": "तैयारी का समय",
+      "readyTime": "अनुमानित समय",
+      "pickupTime": "पिकअप समय",
+      "deliveryTime": "डिलीवरी समय",
+      "scheduledBanner": "निर्धारित ऑर्डर — बाद के समय के लिए",
+      "acceptedAt": "स्वीकृत"
     }
   },
   "marketing": {

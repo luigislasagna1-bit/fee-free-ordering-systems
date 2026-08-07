@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Το ποσό {amount} που πληρώθηκε με {label} επιστράφηκε στο πορτοφόλι του πελάτη."
+    },
+    "timing": {
+      "placedAt": "Η παραγγελία καταχωρήθηκε",
+      "prepTime": "Χρόνος προετοιμασίας",
+      "readyTime": "Εκτιμώμενη ώρα",
+      "pickupTime": "Ώρα παραλαβής",
+      "deliveryTime": "Ώρα παράδοσης",
+      "scheduledBanner": "ΠΡΟΓΡΑΜΜΑΤΙΣΜΕΝΗ ΠΑΡΑΓΓΕΛΙΑ — για αργότερα",
+      "acceptedAt": "Έγινε αποδεκτή"
     }
   },
   "marketing": {

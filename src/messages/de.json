@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Die mit {label} bezahlten {amount} wurden dem Guthaben des Kunden gutgeschrieben."
+    },
+    "timing": {
+      "placedAt": "Bestellung eingegangen",
+      "prepTime": "Zubereitungszeit",
+      "readyTime": "Voraussichtliche Zeit",
+      "pickupTime": "Abholzeit",
+      "deliveryTime": "Lieferzeit",
+      "scheduledBanner": "VORBESTELLUNG — für später",
+      "acceptedAt": "Angenommen am"
     }
   },
   "marketing": {

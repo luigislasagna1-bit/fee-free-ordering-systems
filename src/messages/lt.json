@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{label} sumokėti {amount} grąžinti į kliento piniginę."
+    },
+    "timing": {
+      "placedAt": "Užsakymas pateiktas",
+      "prepTime": "Ruošimo laikas",
+      "readyTime": "Numatomas laikas",
+      "pickupTime": "Atsiėmimo laikas",
+      "deliveryTime": "Pristatymo laikas",
+      "scheduledBanner": "SUPLANUOTAS UŽSAKYMAS — vėlesniam laikui",
+      "acceptedAt": "Priimta"
     }
   },
   "marketing": {

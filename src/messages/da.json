@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "De {amount}, der blev betalt med {label}, er ført tilbage til kundens tegnebog."
+    },
+    "timing": {
+      "placedAt": "Bestilling modtaget",
+      "prepTime": "Tilberedningstid",
+      "readyTime": "Forventet tid",
+      "pickupTime": "Afhentningstid",
+      "deliveryTime": "Leveringstid",
+      "scheduledBanner": "PLANLAGT BESTILLING — til senere",
+      "acceptedAt": "Accepteret"
     }
   },
   "marketing": {

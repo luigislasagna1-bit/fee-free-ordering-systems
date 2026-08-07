@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Znesek {amount}, plačan z {label}, je bil vrnjen v denarnico stranke."
+    },
+    "timing": {
+      "placedAt": "Naročilo oddano",
+      "prepTime": "Čas priprave",
+      "readyTime": "Predviden čas",
+      "pickupTime": "Čas prevzema",
+      "deliveryTime": "Čas dostave",
+      "scheduledBanner": "NAČRTOVANO NAROČILO — za pozneje",
+      "acceptedAt": "Sprejeto"
     }
   },
   "marketing": {

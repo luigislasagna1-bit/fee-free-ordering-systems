@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{label}でお支払いいただいた {amount} は、お客様のウォレットに返金されました。"
+    },
+    "timing": {
+      "placedAt": "注文日時",
+      "prepTime": "調理時間",
+      "readyTime": "完成予定時刻",
+      "pickupTime": "受け取り時刻",
+      "deliveryTime": "配達時刻",
+      "scheduledBanner": "予約注文 — 後の時間帯",
+      "acceptedAt": "受付日時"
     }
   },
   "marketing": {

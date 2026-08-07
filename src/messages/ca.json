@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Els {amount} pagats amb {label} s'han retornat al moneder del client."
+    },
+    "timing": {
+      "placedAt": "Comanda feta",
+      "prepTime": "Temps de preparació",
+      "readyTime": "Hora prevista",
+      "pickupTime": "Hora de recollida",
+      "deliveryTime": "Hora de lliurament",
+      "scheduledBanner": "COMANDA PROGRAMADA — per més tard",
+      "acceptedAt": "Acceptada el"
     }
   },
   "marketing": {

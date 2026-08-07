@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{amount} paid with {label} has been returned to the customer's wallet."
+    },
+    "timing": {
+      "placedAt": "Order placed",
+      "prepTime": "Prep time",
+      "readyTime": "Ready time",
+      "pickupTime": "Pickup time",
+      "deliveryTime": "Delivery time",
+      "scheduledBanner": "SCHEDULED ORDER — for a later time",
+      "acceptedAt": "Accepted on"
     }
   },
   "marketing": {

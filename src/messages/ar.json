@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "تمت إعادة مبلغ {amount} المدفوع باستخدام {label} إلى محفظة العميل."
+    },
+    "timing": {
+      "placedAt": "تم استلام الطلب",
+      "prepTime": "وقت التحضير",
+      "readyTime": "الوقت المتوقع",
+      "pickupTime": "وقت الاستلام",
+      "deliveryTime": "وقت التوصيل",
+      "scheduledBanner": "طلب مجدول — لوقت لاحق",
+      "acceptedAt": "تم القبول في"
     }
   },
   "marketing": {

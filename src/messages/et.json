@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{label} abil makstud {amount} on kliendi rahakotti tagastatud."
+    },
+    "timing": {
+      "placedAt": "Tellimus esitatud",
+      "prepTime": "Valmistusaeg",
+      "readyTime": "Eeldatav aeg",
+      "pickupTime": "Järeletuleku aeg",
+      "deliveryTime": "Tarneaeg",
+      "scheduledBanner": "PLANEERITUD TELLIMUS — hilisemaks ajaks",
+      "acceptedAt": "Vastu võetud"
     }
   },
   "marketing": {

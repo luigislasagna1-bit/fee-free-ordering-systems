@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{label}(으)로 결제한 {amount}이(가) 고객 지갑으로 반환되었습니다."
+    },
+    "timing": {
+      "placedAt": "주문 접수",
+      "prepTime": "조리 시간",
+      "readyTime": "예상 시각",
+      "pickupTime": "픽업 시각",
+      "deliveryTime": "배달 시각",
+      "scheduledBanner": "예약 주문 — 이후 시간",
+      "acceptedAt": "수락 시각"
     }
   },
   "marketing": {

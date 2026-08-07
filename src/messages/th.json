@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "ยอด {amount} ที่ชำระด้วย {label} ได้คืนเข้ากระเป๋าเงินของลูกค้าแล้ว"
+    },
+    "timing": {
+      "placedAt": "รับคำสั่งซื้อแล้ว",
+      "prepTime": "เวลาเตรียม",
+      "readyTime": "เวลาโดยประมาณ",
+      "pickupTime": "เวลารับสินค้า",
+      "deliveryTime": "เวลาจัดส่ง",
+      "scheduledBanner": "คำสั่งซื้อล่วงหน้า — สำหรับเวลาถัดไป",
+      "acceptedAt": "ตอบรับเมื่อ"
     }
   },
   "marketing": {

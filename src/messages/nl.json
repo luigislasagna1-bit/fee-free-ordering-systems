@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "De met {label} betaalde {amount} is teruggestort naar de wallet van de klant."
+    },
+    "timing": {
+      "placedAt": "Bestelling geplaatst",
+      "prepTime": "Bereidingstijd",
+      "readyTime": "Verwachte tijd",
+      "pickupTime": "Afhaaltijd",
+      "deliveryTime": "Bezorgtijd",
+      "scheduledBanner": "GEPLANDE BESTELLING — voor later",
+      "acceptedAt": "Geaccepteerd op"
     }
   },
   "marketing": {

@@ -608,3 +608,88 @@ export function StatGrid({ children }: { children: React.ReactNode }) {
 export function Divider() {
   return <Hr style={{ borderColor: COLORS.border, margin: "20px 0" }} />;
 }
+
+/**
+ * The order's timing facts, shown the same way on EVERY order email.
+ *
+ * Luigi 2026-08-07, matching the GloriaFood layout he uses as the benchmark:
+ * an accepted-order email there states the fulfilment time right under the
+ * order type ("45 minutes" for ASAP, or the booked slot for a future order) and
+ * the acceptance moment at the bottom. Ours showed these inconsistently — the
+ * placement time was never stated at all, and a SCHEDULED order could be
+ * mistaken for an ASAP one, which is how a restaurant ends up cooking a
+ * next-day order immediately.
+ *
+ * Every value arrives PRE-FORMATTED. Senders own formatting because that is
+ * where the restaurant's timezone, 12h/24h preference and the recipient's
+ * locale live — the same convention the rest of these templates follow.
+ * Rows with no value are skipped, so an email that legitimately lacks a prep
+ * time simply shows fewer lines rather than an empty one.
+ */
+export function TimingBlock({
+  rows,
+  scheduledBadge,
+}: {
+  rows: Array<{ label: string; value?: string | null; emphasis?: boolean }>;
+  /** When set, a prominent banner marks this as a FUTURE order. */
+  scheduledBadge?: string | null;
+}) {
+  const shown = rows.filter((r) => !!r.value);
+  if (shown.length === 0 && !scheduledBadge) return null;
+  return (
+    <div
+      style={{
+        border: `1px solid ${scheduledBadge ? "#bae6fd" : COLORS.border}`,
+        borderRadius: 8,
+        overflow: "hidden",
+        margin: "0 0 16px",
+      }}
+    >
+      {scheduledBadge && (
+        <div
+          style={{
+            background: "#e0f2fe",
+            color: "#075985",
+            fontSize: 13,
+            fontWeight: 700,
+            padding: "8px 14px",
+            borderBottom: "1px solid #bae6fd",
+          }}
+        >
+          {scheduledBadge}
+        </div>
+      )}
+      <table width="100%" cellPadding={0} cellSpacing={0} role="presentation" style={{ borderCollapse: "collapse" }}>
+        <tbody>
+          {shown.map((r, i) => (
+            <tr key={r.label}>
+              <td
+                style={{
+                  fontSize: 13,
+                  color: COLORS.muted,
+                  padding: "8px 14px",
+                  borderTop: i === 0 ? "none" : `1px solid ${COLORS.border}`,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {r.label}
+              </td>
+              <td
+                align="right"
+                style={{
+                  fontSize: 14,
+                  color: COLORS.text,
+                  fontWeight: r.emphasis ? 700 : 500,
+                  padding: "8px 14px",
+                  borderTop: i === 0 ? "none" : `1px solid ${COLORS.border}`,
+                }}
+              >
+                {r.value}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

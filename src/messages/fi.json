@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{label}-saldolla maksetut {amount} on palautettu asiakkaan lompakkoon."
+    },
+    "timing": {
+      "placedAt": "Tilaus vastaanotettu",
+      "prepTime": "Valmistusaika",
+      "readyTime": "Arvioitu aika",
+      "pickupTime": "Noutoaika",
+      "deliveryTime": "Toimitusaika",
+      "scheduledBanner": "AJASTETTU TILAUS — myöhempään ajankohtaan",
+      "acceptedAt": "Hyväksytty"
     }
   },
   "marketing": {

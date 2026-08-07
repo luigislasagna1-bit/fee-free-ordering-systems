@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Сумата {amount}, платена с {label}, е върната в портфейла на клиента."
+    },
+    "timing": {
+      "placedAt": "Поръчката е направена",
+      "prepTime": "Време за приготвяне",
+      "readyTime": "Очаквано време",
+      "pickupTime": "Час за вземане",
+      "deliveryTime": "Час за доставка",
+      "scheduledBanner": "ПЛАНИРАНА ПОРЪЧКА — за по-късно",
+      "acceptedAt": "Приета на"
     }
   },
   "marketing": {

@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Iznos {amount} plaćen putem {label} vraćen je u novčanik kupca."
+    },
+    "timing": {
+      "placedAt": "Narudžba zaprimljena",
+      "prepTime": "Vrijeme pripreme",
+      "readyTime": "Predviđeno vrijeme",
+      "pickupTime": "Vrijeme preuzimanja",
+      "deliveryTime": "Vrijeme dostave",
+      "scheduledBanner": "ZAKAZANA NARUDŽBA — za kasnije",
+      "acceptedAt": "Prihvaćeno"
     }
   },
   "marketing": {

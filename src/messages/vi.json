@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Số tiền {amount} đã thanh toán bằng {label} đã được hoàn lại vào ví của khách hàng."
+    },
+    "timing": {
+      "placedAt": "Đã đặt hàng",
+      "prepTime": "Thời gian chuẩn bị",
+      "readyTime": "Thời gian dự kiến",
+      "pickupTime": "Giờ lấy hàng",
+      "deliveryTime": "Giờ giao hàng",
+      "scheduledBanner": "ĐƠN HÀNG ĐẶT TRƯỚC — cho thời điểm sau",
+      "acceptedAt": "Chấp nhận lúc"
     }
   },
   "marketing": {

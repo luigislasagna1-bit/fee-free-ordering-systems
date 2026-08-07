@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Los {amount} pagados con {label} se han devuelto al monedero del cliente."
+    },
+    "timing": {
+      "placedAt": "Pedido realizado",
+      "prepTime": "Tiempo de preparación",
+      "readyTime": "Hora prevista",
+      "pickupTime": "Hora de recogida",
+      "deliveryTime": "Hora de entrega",
+      "scheduledBanner": "PEDIDO PROGRAMADO — para más tarde",
+      "acceptedAt": "Aceptado el"
     }
   },
   "marketing": {

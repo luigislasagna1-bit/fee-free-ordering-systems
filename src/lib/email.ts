@@ -346,6 +346,11 @@ interface OrderEmailParams {
   /** Scheduled ("order for later") slot. When set, the confirmation email shows
    *  a prominent "Order for later: <date/time>" line instead of the ASAP ETA. */
   scheduledFor?: Date | string | null;
+  /** When the customer placed the order — the "Order placed" row of the timing
+   *  block. Was never stated on any email before. Luigi 2026-08-07. */
+  placedAt?: Date | string | null;
+  /** Expected ready instant, for the emphasised ready/pickup/delivery row. */
+  estimatedReady?: Date | string | null;
   /** Range-mode window width in minutes (Fabrizio cmqqxerxs) — when set the
    *  scheduled line shows "start – end" instead of a single time. */
   scheduledSlotMinutes?: number | null;
@@ -606,6 +611,56 @@ export async function sendKitchenAppLinkEmail(params: { to: string; restaurantNa
   });
 }
 
+/**
+ * The order-timing block's four PRE-FORMATTED strings, built once so the
+ * customer's email and the STAFF copy of the same order can never disagree
+ * about when it was placed or when it is due (Luigi 2026-08-07).
+ *
+ * Everything renders in the RESTAURANT's timezone and 12h/24h preference, in
+ * the recipient's locale — the convention every clock string in this file
+ * follows. A scheduled order's promise IS its slot, so the ready row reuses the
+ * slot label rather than printing a second, slightly different time beside it.
+ */
+function buildTimingLabels(
+  p: {
+    placedAt?: Date | string | null;
+    estimatedReady?: Date | string | null;
+    estimatedMinutes?: number | null;
+    orderType?: string | null;
+    timezone?: string;
+    hoursFormat?: "12h" | "24h";
+    locale?: string | null;
+  },
+  t: Awaited<ReturnType<typeof getDict>>,
+  scheduledLabel: string | null,
+): { placedAtLabel: string | null; prepTimeLabel: string | null; readyAtLabel: string | null; readyRowLabel: string } {
+  const stamp = (d: Date) =>
+    formatDateCapitalized(d, p.locale || "en", {
+      timeZone: p.timezone || "UTC",
+      weekday: "long", day: "numeric", month: "long",
+      hour: "numeric", minute: "2-digit",
+      hourCycle: p.hoursFormat === "24h" ? "h23" : "h12",
+    });
+  const asDate = (v: Date | string | null | undefined) => {
+    if (!v) return null;
+    const d = new Date(v);
+    return Number.isFinite(d.getTime()) ? d : null;
+  };
+  const placed = asDate(p.placedAt);
+  const ready = asDate(p.estimatedReady);
+  const mins = p.estimatedMinutes ?? 0;
+  const ty = (p.orderType ?? "").toLowerCase();
+  return {
+    placedAtLabel: placed ? stamp(placed) : null,
+    prepTimeLabel: mins > 0 ? `${mins} ${t("email.orderConfirmed.minutesLabel")}` : null,
+    readyAtLabel: scheduledLabel ?? (ready ? stamp(ready) : null),
+    readyRowLabel:
+      ty === "delivery" ? t("email.timing.deliveryTime")
+      : (ty === "pickup" || ty === "takeout" || ty === "curbside") ? t("email.timing.pickupTime")
+      : t("email.timing.readyTime"),
+  };
+}
+
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const t = await getDict(params.locale);
   const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });
@@ -634,6 +689,12 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
         return start;
       })()
     : null;
+  const { placedAtLabel, prepTimeLabel, readyAtLabel, readyRowLabel } = buildTimingLabels(
+    { ...params, estimatedMinutes: params.estimatedTime },
+    t,
+    scheduledLabel,
+  );
+
   // Reserve-then-order: a friendly "Tuesday, Jun 8 at 19:00" label for the
   // attached table booking. The stored date/time are the restaurant's local
   // wall-clock, so we format the date WITHOUT a timeZone (no shifting) and
@@ -671,6 +732,10 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       paidOnline: params.paidOnline ?? false,
       estimatedMinutes: params.estimatedTime,
       scheduledLabel,
+      placedAtLabel,
+      prepTimeLabel,
+      readyAtLabel,
+      readyRowLabel,
       reservationPartySize: resv?.partySize ?? null,
       reservationLabel,
       items: params.items as EmailOrderItem[],
@@ -773,9 +838,46 @@ export async function sendNewOrderNotificationEmail(params: {
    *  confirmation already showed it; this STAFF copy of the same order did
    *  not, so the two receipts disagreed. Luigi 2026-08-07. */
   rewardEarned?: number;
+  /** Order-timing block inputs — raw instants, formatted below in the
+   *  restaurant's clock so staff and customer read the SAME times. */
+  /** Confirmed prep minutes. The staff email never received this, so its
+   *  header subtitle silently rendered without a prep time. Luigi 2026-08-07. */
+  estimatedMinutes?: number | null;
+  placedAt?: Date | string | null;
+  estimatedReady?: Date | string | null;
+  scheduledFor?: Date | string | null;
+  scheduledSlotMinutes?: number | null;
+  timezone?: string;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.newOrder.subject", { orderNumber: params.orderNumber, restaurant: params.restaurantName });
+  // Same timing block the CUSTOMER's confirmation shows — one builder, so the
+  // two copies of an order can never quote different times. Luigi 2026-08-07.
+  const staffSchedDate = params.scheduledFor ? new Date(params.scheduledFor) : null;
+  const staffScheduledLabel = staffSchedDate && Number.isFinite(staffSchedDate.getTime()) && staffSchedDate.getTime() > Date.now()
+    ? (() => {
+        const start = staffSchedDate.toLocaleString(params.locale || undefined, {
+          timeZone: params.timezone || "UTC",
+          weekday: "long", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+          hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
+        });
+        const w = params.scheduledSlotMinutes;
+        if (typeof w === "number" && w > 0) {
+          const end = new Date(staffSchedDate.getTime() + w * 60_000).toLocaleTimeString(params.locale || undefined, {
+            timeZone: params.timezone || "UTC",
+            hour: "numeric", minute: "2-digit",
+            hourCycle: params.hoursFormat === "24h" ? "h23" : "h12",
+          });
+          return `${start} – ${end}`;
+        }
+        return start;
+      })()
+    : null;
+  const staffTiming = buildTimingLabels(
+    { ...params, estimatedMinutes: params.estimatedMinutes ?? 0, orderType: params.orderType },
+    t,
+    staffScheduledLabel,
+  );
   const resv = params.reservation ?? null;
   const reservationLabel = resv
     ? (() => {
@@ -817,6 +919,12 @@ export async function sendNewOrderNotificationEmail(params: {
       creditApplied: params.creditApplied,
       rewardLabel: params.rewardLabel,
       rewardEarned: params.rewardEarned,
+      estimatedMinutes: params.estimatedMinutes ?? undefined,
+      placedAtLabel: staffTiming.placedAtLabel,
+      prepTimeLabel: staffTiming.prepTimeLabel,
+      readyAtLabel: staffTiming.readyAtLabel,
+      readyRowLabel: staffTiming.readyRowLabel,
+      scheduledLabel: staffScheduledLabel,
     })
   );
   return send({ to: params.to, subject, html });

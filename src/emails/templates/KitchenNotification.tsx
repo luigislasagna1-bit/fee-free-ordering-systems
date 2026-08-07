@@ -23,7 +23,7 @@ import { EmailLayout, EmailHeader, EmailFooter } from "../components/EmailLayout
 import { formatCurrency } from "@/lib/utils";
 import {
   EmailBody, P, EmailButton, Badge,
-  OrderItemsTable, OrderTotals, EmailOrderItem, InfoCard,
+  OrderItemsTable, OrderTotals, EmailOrderItem, InfoCard, TimingBlock,
 } from "../components/EmailParts";
 
 export type KitchenNotificationProps = {
@@ -35,6 +35,13 @@ export type KitchenNotificationProps = {
   customerEmail?: string | null;
   orderType?: string;
   estimatedMinutes?: number;
+  /** PRE-FORMATTED order-timing facts — same block the customer email shows, so
+   *  staff and customer read identical times. Luigi 2026-08-07. */
+  placedAtLabel?: string | null;
+  prepTimeLabel?: string | null;
+  readyAtLabel?: string | null;
+  readyRowLabel?: string | null;
+  scheduledLabel?: string | null;
   paidOnline?: boolean;
   /** Raw payment method ("cash" | "card_in_person" | …) — when the order is
    *  NOT paid online, the chip says WHAT to collect so a delivery driver
@@ -93,7 +100,7 @@ export type KitchenNotificationProps = {
 export default function KitchenNotification(props: KitchenNotificationProps) {
   const {
     t, restaurantName, orderNumber, customerName, customerPhone, customerEmail,
-    orderType, estimatedMinutes, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
+    orderType, estimatedMinutes, placedAtLabel, prepTimeLabel, readyAtLabel, readyRowLabel, scheduledLabel, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, savedDeliveryFee, tip, depositTotal, discount, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
     creditApplied, rewardLabel, rewardEarned, showAcceptHint = true,
@@ -137,6 +144,19 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
             </Badge>
           )}
         </div>
+
+        {/* Order timing — placed / prep / ready, with a loud SCHEDULED banner
+            for future orders. This is the line that stops a kitchen cooking a
+            next-day order immediately. Same block, same values, as the
+            customer's email. Luigi 2026-08-07 (GloriaFood parity). */}
+        <TimingBlock
+          scheduledBadge={scheduledLabel ? t("email.timing.scheduledBanner") : null}
+          rows={[
+            { label: t("email.timing.placedAt"), value: placedAtLabel },
+            { label: t("email.timing.prepTime"), value: prepTimeLabel },
+            { label: readyRowLabel ?? t("email.timing.readyTime"), value: readyAtLabel, emphasis: true },
+          ]}
+        />
 
         {/* Reserve-then-order: flag the table booking right at the top so the
             store sees "table reservation + pre-order". */}

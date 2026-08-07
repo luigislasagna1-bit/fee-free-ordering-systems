@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "{amount} yang dibayar dengan {label} telah dikembalikan ke dompet pelanggan."
+    },
+    "timing": {
+      "placedAt": "Pesanan dibuat",
+      "prepTime": "Waktu persiapan",
+      "readyTime": "Perkiraan waktu",
+      "pickupTime": "Waktu pengambilan",
+      "deliveryTime": "Waktu pengiriman",
+      "scheduledBanner": "PESANAN TERJADWAL — untuk nanti",
+      "acceptedAt": "Diterima pada"
     }
   },
   "marketing": {

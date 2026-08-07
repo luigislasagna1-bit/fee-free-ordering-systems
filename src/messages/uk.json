@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Суму {amount}, сплачену {label}, повернуто до гаманця клієнта."
+    },
+    "timing": {
+      "placedAt": "Замовлення створено",
+      "prepTime": "Час приготування",
+      "readyTime": "Очікуваний час",
+      "pickupTime": "Час самовивозу",
+      "deliveryTime": "Час доставки",
+      "scheduledBanner": "ЗАПЛАНОВАНЕ ЗАМОВЛЕННЯ — на пізніше",
+      "acceptedAt": "Прийнято"
     }
   },
   "marketing": {

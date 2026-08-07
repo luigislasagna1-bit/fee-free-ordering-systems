@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "הסכום {amount} ששולם באמצעות {label} הוחזר לארנק של הלקוח."
+    },
+    "timing": {
+      "placedAt": "ההזמנה התקבלה",
+      "prepTime": "זמן הכנה",
+      "readyTime": "זמן משוער",
+      "pickupTime": "שעת איסוף",
+      "deliveryTime": "שעת משלוח",
+      "scheduledBanner": "הזמנה מתוזמנת — למועד מאוחר יותר",
+      "acceptedAt": "אושרה בתאריך"
     }
   },
   "marketing": {

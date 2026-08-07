@@ -284,6 +284,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       scheduledFor: (order as any).scheduledFor ?? null,
       // Range-mode window width — email shows "start – end". Fabrizio cmqqxerxs.
       scheduledSlotMinutes: (order as any).scheduledSlotMinutes ?? null,
+      // Order-timing block: when it was placed + the expected ready instant.
+      // The placement time was never stated on any email before. Luigi 2026-08-07.
+      placedAt: (order as any).createdAt ?? null,
+      estimatedReady: (order as any).estimatedReady ?? null,
       // Reserve-then-order: the table booking attached to this order, so the
       // confirmation email states the reservation too. Luigi 2026-06-08.
       reservation: linkedReservation
@@ -352,6 +356,15 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       // of the identical order used to omit it, so the two receipts for one
       // order disagreed. Luigi 2026-08-07.
       rewardEarned: projectedEarn > 0 ? projectedEarn : undefined,
+      // Order-timing block — same instants the customer's confirmation uses, so
+      // both copies quote identical times. Luigi 2026-08-07.
+      placedAt: (order as any).createdAt ?? null,
+      estimatedReady: (order as any).estimatedReady ?? null,
+      scheduledFor: (order as any).scheduledFor ?? null,
+      scheduledSlotMinutes: (order as any).scheduledSlotMinutes ?? null,
+      estimatedMinutes: order.type === "pickup"
+        ? order.restaurant.estimatedPickup
+        : order.restaurant.estimatedDelivery,
       orderType: order.type,
       // "Paid online" = the platform already captured the money (Stripe card,
       // PayPal, or fully covered by store credit). cash AND card_in_person

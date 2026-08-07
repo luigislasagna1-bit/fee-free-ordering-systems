@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Les {amount} payés en {label} ont été recrédités sur le portefeuille du client."
+    },
+    "timing": {
+      "placedAt": "Commande passée",
+      "prepTime": "Temps de préparation",
+      "readyTime": "Heure prévue",
+      "pickupTime": "Heure de retrait",
+      "deliveryTime": "Heure de livraison",
+      "scheduledBanner": "COMMANDE PROGRAMMÉE — pour plus tard",
+      "acceptedAt": "Acceptée le"
     }
   },
   "marketing": {

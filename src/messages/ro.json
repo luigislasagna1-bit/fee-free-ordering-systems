@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Suma de {amount} plătită cu {label} a fost returnată în portofelul clientului."
+    },
+    "timing": {
+      "placedAt": "Comandă plasată",
+      "prepTime": "Timp de preparare",
+      "readyTime": "Ora estimată",
+      "pickupTime": "Ora de ridicare",
+      "deliveryTime": "Ora de livrare",
+      "scheduledBanner": "COMANDĂ PROGRAMATĂ — pentru mai târziu",
+      "acceptedAt": "Acceptată la"
     }
   },
   "marketing": {

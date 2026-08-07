@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Ar {label} samaksātie {amount} ir atgriezti klienta makā."
+    },
+    "timing": {
+      "placedAt": "Pasūtījums saņemts",
+      "prepTime": "Gatavošanas laiks",
+      "readyTime": "Paredzamais laiks",
+      "pickupTime": "Saņemšanas laiks",
+      "deliveryTime": "Piegādes laiks",
+      "scheduledBanner": "PLĀNOTS PASŪTĪJUMS — vēlākam laikam",
+      "acceptedAt": "Apstiprināts"
     }
   },
   "marketing": {

@@ -6060,6 +6060,15 @@
     },
     "staffOrderDead": {
       "creditReturned": "Suma {amount} zaplatená pomocou {label} bola vrátená do peňaženky zákazníka."
+    },
+    "timing": {
+      "placedAt": "Objednávka prijatá",
+      "prepTime": "Čas prípravy",
+      "readyTime": "Predpokladaný čas",
+      "pickupTime": "Čas vyzdvihnutia",
+      "deliveryTime": "Čas doručenia",
+      "scheduledBanner": "NAPLÁNOVANÁ OBJEDNÁVKA — na neskôr",
+      "acceptedAt": "Prijaté"
     }
   },
   "marketing": {
