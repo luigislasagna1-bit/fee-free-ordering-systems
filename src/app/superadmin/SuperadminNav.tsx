@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone, ShieldCheck } from "lucide-react";
+import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone, ShieldCheck, ShoppingBag } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,9 @@ import { cn } from "@/lib/utils";
 const items = [
   { href: "/superadmin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/superadmin/restaurants", label: "Restaurants", icon: Store },
+  // Platform-wide order + reservation feed — same screen partners get, scoped
+  // to every restaurant instead of one portfolio.
+  { href: "/superadmin/orders", label: "Orders", icon: ShoppingBag },
   { href: "/superadmin/billing", label: "Billing", icon: CreditCard, adminOnly: true },
   { href: "/superadmin/add-ons", label: "Add-Ons", icon: Zap, adminOnly: true },
   { href: "/superadmin/branded-apps", label: "Branded Apps", icon: Smartphone },

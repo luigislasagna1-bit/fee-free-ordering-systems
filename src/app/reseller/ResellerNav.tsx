@@ -73,6 +73,10 @@ const groups: Group[] = [
     icon: Store,
     items: [
       { href: "/reseller/restaurants", label: "Management" },
+      // Cross-restaurant order + reservation monitor (Fabrizio's request).
+      // Sits between Management and Pending to mirror the layout partners
+      // already know from GloriaFood's PartnerNet.
+      { href: "/reseller/orders", label: "Orders List" },
       { href: "/reseller/restaurants/pending", label: "Pending" },
     ],
   },
