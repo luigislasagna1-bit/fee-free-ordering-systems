@@ -41,6 +41,7 @@ import {
   type AutopilotCampaignKind,
 } from "@/lib/autopilot-state";
 import { getStepPromos } from "@/lib/autopilot-promos";
+import { pickDueStep } from "@/lib/autopilot-ladder";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { customerUnsubscribeUrl } from "@/lib/unsubscribe";
 import { dataDeletionUrl } from "@/lib/data-request";
@@ -314,6 +315,30 @@ async function runStandardCampaign(opts: {
     if (!customer.email) continue;
     if (alreadySent.has(customer.email)) continue;
 
+    // CLAIM BEFORE SEND — same rule as the stepped path: the row is the permit.
+    // Failure mode is a missed email, never a repeated one. Luigi 2026-08-07.
+    let claimId: string;
+    try {
+      const claim = await prisma.autopilotSend.create({
+        data: {
+          campaignId: opts.campaignId,
+          customerEmail: customer.email,
+          customerId: customer.id,
+          // Single-send campaigns have no ladder, so the cycle is pinned to the
+          // customer's anchor purely to keep the unique key non-null.
+          cycleKey: customer.lastOrderAt ?? customer.createdAt,
+        },
+        select: { id: true },
+      });
+      claimId = claim.id;
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      if (msg.includes("Unique constraint")) continue; // already sent
+      console.error("[autopilot] AutopilotSend claim failed", e);
+      errors++;
+      continue;
+    }
+
     setEmailImprint(opts.imprint);
     try {
       const origin = originOf(opts.orderRootUrl);
@@ -341,25 +366,16 @@ async function runStandardCampaign(opts: {
       });
 
       if (res.success) {
-        try {
-          await prisma.autopilotSend.create({
-            data: {
-              campaignId: opts.campaignId,
-              customerEmail: customer.email,
-              customerId: customer.id,
-            },
-          });
-          sent++;
-        } catch (e: unknown) {
-          const msg = e instanceof Error ? e.message : String(e);
-          if (!msg.includes("Unique constraint")) {
-            console.error("[autopilot] AutopilotSend.create failed", e);
-            errors++;
-          }
-        }
+        sent++;
+      } else if (res.skipped) {
+        // Deliberately not sent (suppressed / no consent / too soon) — keep the
+        // claim so we don't re-evaluate this person every hour.
+        console.log("[autopilot] send skipped", { campaign: opts.campaignType, reason: res.skipped });
       } else {
         console.error("[autopilot] send failed", { campaignId: opts.campaignId, email: customer.email, error: res.error });
         errors++;
+        await prisma.autopilotSend.delete({ where: { id: claimId } })
+          .catch(e => console.error("[autopilot] claim release failed (send will be skipped, not repeated)", e));
       }
     } finally {
       setEmailImprint(null);
@@ -402,15 +418,15 @@ async function runSteppedCampaign(opts: {
   const candidateEmails = candidates.map(c => c.email).filter((e): e is string => !!e);
   if (candidateEmails.length === 0) return { eligible: 0, sent: 0, errors: 0 };
 
-  // Batch 1 — every prior send for these emails (with step + timestamp).
+  // Batch 1 — every prior send for these emails (with step + cycle).
   const allSends = await prisma.autopilotSend.findMany({
     where: { campaignId: opts.campaignId, customerEmail: { in: candidateEmails } },
-    select: { customerEmail: true, sequence: true, sentAt: true },
+    select: { customerEmail: true, sequence: true, sentAt: true, cycleKey: true },
   });
-  const sendsByEmail = new Map<string, { sequence: number; sentAt: Date }[]>();
+  const sendsByEmail = new Map<string, { sequence: number; sentAt: Date; cycleKey: Date | null }[]>();
   for (const s of allSends) {
     const arr = sendsByEmail.get(s.customerEmail) ?? [];
-    arr.push({ sequence: s.sequence, sentAt: s.sentAt });
+    arr.push({ sequence: s.sequence, sentAt: s.sentAt, cycleKey: s.cycleKey });
     sendsByEmail.set(s.customerEmail, arr);
   }
 
@@ -425,16 +441,18 @@ async function runSteppedCampaign(opts: {
   for (const customer of candidates) {
     if (!customer.email) continue;
     // Reorder-restart anchor: last order (reengagement) or signup/first-order
-    // (second_order). Sends before this are from a PRIOR lapse and ignored.
+    // (second_order). This value IS the cycle key we write, and prior sends are
+    // matched on it by EQUALITY — so the "have we sent this step?" read uses the
+    // exact same key as the de-dup write and the two cannot disagree.
+    //
+    // The old code compared `sentAt > lastOrderAt` while writing a key that had
+    // no cycle in it: after a re-order the step looked un-sent but was
+    // un-writable, so it re-sent every single cron hour. Luigi 2026-08-07.
     const lref = customer.lastOrderAt ?? customer.createdAt;
-    const lrefMs = lref.getTime();
-    const priorSends = (sendsByEmail.get(customer.email) ?? []).filter(s => s.sentAt.getTime() > lrefMs);
-    const lastSentStep = priorSends.reduce((m, s) => Math.max(m, s.sequence), 0);
-    const daysSince = (now - lrefMs) / 86_400_000;
-
-    const due = steps.filter(s => s.stepNumber > lastSentStep && daysSince >= s.delayHours / 24);
-    if (due.length === 0) continue;
-    const target = due[due.length - 1]; // highest due step
+    const dueStep = pickDueStep(steps, sendsByEmail.get(customer.email) ?? [], lref, new Date(now));
+    if (!dueStep) continue;
+    // Re-widen to the full step record (pickDueStep only needs number + delay).
+    const target = steps.find(s => s.stepNumber === dueStep.stepNumber)!;
     eligible++;
 
     const promo = stepPromos.get(target.stepNumber);
@@ -444,6 +462,37 @@ async function runSteppedCampaign(opts: {
     const ctaUrl = couponCode
       ? `${opts.orderRootUrl}?coupon=${encodeURIComponent(couponCode)}`
       : opts.orderRootUrl;
+
+    // ── CLAIM BEFORE SEND ────────────────────────────────────────────────
+    // The AutopilotSend row is the PERMIT to send, written first. If the insert
+    // loses to the unique constraint, this step was already mailed for this
+    // cycle and we send nothing.
+    //
+    // The old order was send-then-record, so a record that failed to write left
+    // the email already delivered and the step still looking due — which is
+    // exactly how one address received ~50 copies. Claiming first means the
+    // failure mode is a MISSED email, never a repeated one. Luigi 2026-08-07.
+    let claimId: string;
+    try {
+      const claim = await prisma.autopilotSend.create({
+        data: {
+          campaignId: opts.campaignId,
+          customerEmail: customer.email,
+          customerId: customer.id,
+          sequence: target.stepNumber,
+          cycleKey: lref,
+        },
+        select: { id: true },
+      });
+      claimId = claim.id;
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      // Already claimed (another run, or a retry) — do NOT send.
+      if (msg.includes("Unique constraint")) continue;
+      console.error("[autopilot] stepped claim failed", e);
+      errors++;
+      continue;
+    }
 
     setEmailImprint(opts.imprint);
     try {
@@ -471,26 +520,18 @@ async function runSteppedCampaign(opts: {
       });
 
       if (res.success) {
-        try {
-          await prisma.autopilotSend.create({
-            data: {
-              campaignId: opts.campaignId,
-              customerEmail: customer.email,
-              customerId: customer.id,
-              sequence: target.stepNumber,
-            },
-          });
-          sent++;
-        } catch (e: unknown) {
-          const msg = e instanceof Error ? e.message : String(e);
-          if (!msg.includes("Unique constraint")) {
-            console.error("[autopilot] stepped AutopilotSend.create failed", e);
-            errors++;
-          }
-        }
+        sent++;
+      } else if (res.skipped) {
+        // Deliberately NOT sent (suppressed / no consent / too soon). KEEP the
+        // claim: this step is done for this cycle. Releasing it would re-evaluate
+        // an unsubscribed customer every hour, forever.
+        console.log("[autopilot] stepped send skipped", { campaign: opts.campaignType, step: target.stepNumber, reason: res.skipped });
       } else {
+        // Genuine transport failure — release the claim so the next run retries.
         console.error("[autopilot] stepped send failed", { campaignId: opts.campaignId, email: customer.email, step: target.stepNumber, error: res.error });
         errors++;
+        await prisma.autopilotSend.delete({ where: { id: claimId } })
+          .catch(e => console.error("[autopilot] claim release failed (step will be skipped, not repeated)", e));
       }
     } finally {
       setEmailImprint(null);

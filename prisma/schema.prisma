@@ -438,6 +438,7 @@ model Restaurant {
   giftWalletPasses       GiftWalletPass[]
   // CASL / anti-spam compliance suite (2026-08-04)
   emailSuppressions      EmailSuppression[]
+  marketingSendGuards    MarketingSendGuard[]
   dataRequestLogs        DataRequestLog[]
   // Nabil AI — phone answering system (2026-08-05)
   voiceNumbers           VoiceNumber[]
@@ -2727,6 +2728,39 @@ enum ConsentBasis {
   inquiry                        // inquiry/application within 6 months (implied)
 }
 
+/// 🚨 ANTI-SPAM BACKSTOP (Luigi 2026-08-07). One row per
+/// (restaurant, campaign, lowercased email) recording when that person last
+/// received that campaign. `sendMarketingEmail()` refuses to send the same
+/// campaign to the same address twice inside MIN_RESEND_INTERVAL_MS.
+///
+/// This exists because a de-dup bug in the autopilot runner mailed one address
+/// ~50 copies of the same win-back email, once an hour, for two days. That bug
+/// is fixed at its root (AutopilotSend.cycleKey), but per-campaign de-dup logic
+/// living in each caller means the NEXT such bug spams customers too. This is
+/// the one place that cannot be bypassed: it sits inside the chokepoint every
+/// marketing email already has to pass through.
+///
+/// It only ever SKIPS a send (loudly) — it never throws — so the worst failure
+/// mode is a marketing email delayed, never a transactional email lost.
+model MarketingSendGuard {
+  id           String   @id @default(cuid())
+  restaurantId String
+  /// Campaign tag, e.g. "autopilot:reengagement" | "kickstarter:invite".
+  campaign     String
+  /// ALWAYS lowercased at write, like EmailSuppression.
+  emailLower   String
+  lastSentAt   DateTime @default(now())
+  /// How many times this campaign has reached this address, ever. A count
+  /// climbing fast is the early warning sign of another send loop.
+  sendCount    Int      @default(1)
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([restaurantId, campaign, emailLower])
+  /// Retention sweep ("delete guards older than N days") scans by date.
+  @@index([lastSentAt])
+}
+
 /// Unified per-restaurant do-not-email list (2026-08-04). ONE row per
 /// (restaurant, lowercased email). Every marketing send MUST consult this
 /// before dispatch — writing here is how the Customer.marketingConsent and
@@ -3179,11 +3213,30 @@ model AutopilotSend {
   /// Drip-sequence step this send was for. 0 = single-send (legacy). 1..N =
   /// the Nth email of a multi-step win-back ladder.
   sequence      Int      @default(0)
+  /// 🚨 THE LAPSE CYCLE this send belongs to — the customer's reorder anchor
+  /// (`lastOrderAt ?? createdAt`) at the moment of sending.
+  ///
+  /// WHY THIS EXISTS (spam incident, Luigi 2026-08-07): a re-order is meant to
+  /// RESTART the win-back ladder, and the runner implemented that by ignoring
+  /// sends older than `lastOrderAt`. But the unique key was
+  /// `(campaignId, customerEmail, sequence)` with no notion of a cycle, so the
+  /// restarted step could never be RECORDED — the insert hit the old row's
+  /// unique violation, which was swallowed as "already sent". The email had
+  /// already gone out. Next hour the cron saw the identical state and sent
+  /// again... every hour, forever. One address received ~50 copies.
+  ///
+  /// Including the cycle in the key means a restarted ladder is writable, and
+  /// the runner now filters prior sends by cycleKey EQUALITY — read key and
+  /// write key are the same value, so they cannot drift apart again.
+  ///
+  /// Null only on rows written before this column existed (backfilled by
+  /// scripts/backfill-autopilot-cycle-key.ts); every new write sets it.
+  cycleKey      DateTime?
   sentAt        DateTime @default(now())
 
   campaign AutopilotCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
 
-  @@unique([campaignId, customerEmail, sequence])
+  @@unique([campaignId, customerEmail, sequence, cycleKey])
   @@index([campaignId])
   /// Batch the per-run "who already got which step?" lookup (campaign + email).
   @@index([campaignId, customerEmail])

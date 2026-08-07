@@ -2404,6 +2404,72 @@ export async function sendDataExportEmail(params: {
   });
 }
 
+/**
+ * Minimum gap between two sends of the SAME campaign to the SAME address.
+ *
+ * 20h rather than 24h so a daily-cadence campaign isn't pushed a day later each
+ * run by clock drift, while still making "twice in one day" impossible. Every
+ * real campaign here is days or weeks apart (autopilot drip steps, one-shot
+ * kickstarter invites), so this never delays legitimate mail.
+ */
+const MIN_RESEND_INTERVAL_MS = 20 * 60 * 60 * 1000;
+
+/**
+ * The anti-spam backstop: has this campaign already reached this address too
+ * recently? Atomically records the send when it allows one, so two concurrent
+ * cron runs can't both pass.
+ *
+ * Fails OPEN (allows the send) if the guard table errors — suppression and
+ * consent have already been checked, so the downside of a DB hiccup here is a
+ * duplicate email, not an unlawful one.
+ */
+async function checkAndClaimSendGuard(
+  restaurantId: string,
+  campaign: string,
+  emailLower: string,
+): Promise<{ allowed: boolean; hoursSinceLast?: number; sendCount?: number }> {
+  const now = new Date();
+  const cutoff = new Date(now.getTime() - MIN_RESEND_INTERVAL_MS);
+  try {
+    // Claim atomically: only bump the row if it's older than the cutoff. A
+    // count of 0 means somebody sent recently (or a concurrent run just won).
+    const claimed = await prisma.marketingSendGuard.updateMany({
+      where: { restaurantId, campaign, emailLower, lastSentAt: { lt: cutoff } },
+      data: { lastSentAt: now, sendCount: { increment: 1 } },
+    });
+    if (claimed.count > 0) return { allowed: true };
+
+    // No row updated: either there's a recent row (block) or none at all (first
+    // ever send for this pair — create it and allow).
+    const existing = await prisma.marketingSendGuard.findUnique({
+      where: { restaurantId_campaign_emailLower: { restaurantId, campaign, emailLower } },
+      select: { lastSentAt: true, sendCount: true },
+    });
+    if (existing) {
+      return {
+        allowed: false,
+        hoursSinceLast: Math.round(((now.getTime() - existing.lastSentAt.getTime()) / 3_600_000) * 10) / 10,
+        sendCount: existing.sendCount,
+      };
+    }
+    try {
+      await prisma.marketingSendGuard.create({
+        data: { restaurantId, campaign, emailLower, lastSentAt: now, sendCount: 1 },
+      });
+      return { allowed: true };
+    } catch (e) {
+      // Lost the create race to a concurrent run — that run is sending, so we
+      // must not. This is the correct fail-CLOSED branch.
+      const msg = e instanceof Error ? e.message : String(e);
+      if (msg.includes("Unique constraint")) return { allowed: false, hoursSinceLast: 0 };
+      throw e;
+    }
+  } catch (e) {
+    console.error("[marketing] send-guard unavailable, allowing send", e);
+    return { allowed: true };
+  }
+}
+
 export async function sendMarketingEmail(params: {
   /** Session-derived restaurant id — scopes the suppression check + tag. */
   restaurantId: string;
@@ -2430,7 +2496,7 @@ export async function sendMarketingEmail(params: {
   restaurantUrl?: string;
   restaurantEmail?: string;
   restaurantPhone?: string;
-}): Promise<{ sent: boolean; skipped?: "suppressed" | "stale" | "no_basis"; success?: boolean; error?: string }> {
+}): Promise<{ sent: boolean; skipped?: "suppressed" | "stale" | "no_basis" | "too_soon"; success?: boolean; error?: string }> {
   const emailLower = params.to.trim().toLowerCase();
 
   // GATE 1 — unified suppression (silences a person across BOTH send paths).
@@ -2443,6 +2509,27 @@ export async function sendMarketingEmail(params: {
   if (basis !== "ok") {
     console.log("[marketing] skip — no valid consent basis", { campaign: params.campaign, basis });
     return { sent: false, skipped: basis };
+  }
+  // GATE 3 — ANTI-SPAM BACKSTOP. Nobody gets the same campaign twice inside
+  // MIN_RESEND_INTERVAL_MS, no matter what the calling campaign logic believes.
+  //
+  // A de-dup bug in the autopilot runner once mailed one address ~50 copies of
+  // the same win-back email, hourly, for two days (Luigi 2026-08-07). That root
+  // cause is fixed, but per-caller de-dup means the NEXT bug spams customers
+  // too. This gate is inside the chokepoint every marketing email must pass, so
+  // it cannot be bypassed or forgotten by a new campaign.
+  //
+  // Fails OPEN on a DB error: a marketing email is worth less than a false
+  // outage, and GATES 1+2 (suppression + consent) have already run.
+  const guard = await checkAndClaimSendGuard(params.restaurantId, params.campaign, emailLower);
+  if (!guard.allowed) {
+    console.error("[marketing] BLOCKED as duplicate — a campaign is trying to re-send too soon", {
+      restaurantId: params.restaurantId,
+      campaign: params.campaign,
+      hoursSinceLast: guard.hoursSinceLast,
+      sendCount: guard.sendCount,
+    });
+    return { sent: false, skipped: "too_soon" };
   }
 
   // Substitute owner-editable tokens in BOTH subject + body.
