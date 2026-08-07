@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Παιδικά καθίσματα",
     "labelAllergies": "Αλλεργίες",
     "labelOccasion": "Περίσταση",
-    "labelAccessibility": "Προσβασιμότητα"
+    "labelAccessibility": "Προσβασιμότητα",
+    "delayedBy": "Καθυστέρηση {minutes} λεπτά",
+    "delayedTimes": "{count} αλλαγές"
   },
   "admin": {
     "welcomeBack": "Καλώς ορίσατε",

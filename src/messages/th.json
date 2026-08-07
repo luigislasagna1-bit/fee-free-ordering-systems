@@ -1085,7 +1085,9 @@
     "labelChildSeating": "ที่นั่งเด็ก",
     "labelAllergies": "การแพ้อาหาร",
     "labelOccasion": "โอกาส",
-    "labelAccessibility": "การเข้าถึง"
+    "labelAccessibility": "การเข้าถึง",
+    "delayedBy": "ล่าช้า {minutes} นาที",
+    "delayedTimes": "{count} ครั้ง"
   },
   "admin": {
     "welcomeBack": "ยินดีต้อนรับกลับ",

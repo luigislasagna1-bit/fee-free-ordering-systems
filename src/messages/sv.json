@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Sittplatser för barn",
     "labelAllergies": "Allergier",
     "labelOccasion": "Tillfälle",
-    "labelAccessibility": "Tillgänglighet"
+    "labelAccessibility": "Tillgänglighet",
+    "delayedBy": "Försenad {minutes} min",
+    "delayedTimes": "{count} ändringar"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

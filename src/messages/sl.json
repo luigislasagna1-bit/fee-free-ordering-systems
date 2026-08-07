@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Otroška oprema",
     "labelAllergies": "Alergije",
     "labelOccasion": "Priložnost",
-    "labelAccessibility": "Dostopnost"
+    "labelAccessibility": "Dostopnost",
+    "delayedBy": "Zamuda {minutes} min",
+    "delayedTimes": "{count} sprememb"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

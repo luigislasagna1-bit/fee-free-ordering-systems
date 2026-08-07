@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Scaune copii",
     "labelAllergies": "Alergii",
     "labelOccasion": "Ocazie",
-    "labelAccessibility": "Accesibilitate"
+    "labelAccessibility": "Accesibilitate",
+    "delayedBy": "Întârziat cu {minutes} min",
+    "delayedTimes": "{count} modificări"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Laste istekohad",
     "labelAllergies": "Allergiad",
     "labelOccasion": "Sündmus",
-    "labelAccessibility": "Ligipääsetavus"
+    "labelAccessibility": "Ligipääsetavus",
+    "delayedBy": "Hilineb {minutes} min",
+    "delayedTimes": "{count} muudatust"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

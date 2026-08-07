@@ -1076,6 +1076,11 @@ export async function sendOrderDelayedEmail(params: {
    *  pickup time" vs "delivery time"). Absent/dine-in falls back to pickup
    *  wording. Fabrizio cms0gyexp #15. */
   orderType?: string;
+  /** Restaurant IANA timezone — REQUIRED for a correct clock. Without it the
+   *  new ETA rendered in the server's UTC and told the customer a time hours
+   *  off. Fabrizio cms0gyexp #16. */
+  timezone?: string;
+  hoursFormat?: "12h" | "24h";
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.orderDelayed.subject", { orderNumber: params.orderNumber, delayMinutes: params.delayMinutes });
@@ -1089,6 +1094,9 @@ export async function sendOrderDelayedEmail(params: {
       delayMinutes: params.delayMinutes,
       reason: params.reason,
       orderType: params.orderType,
+      timezone: params.timezone,
+      hoursFormat: params.hoursFormat,
+      locale: params.locale,
       trackingUrl: params.trackingUrl ?? "#",
       restaurantPhone: params.restaurantPhone ?? undefined,
       restaurantEmail: params.restaurantEmail ?? undefined,

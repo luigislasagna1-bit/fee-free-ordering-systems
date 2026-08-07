@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Dečja sedišta",
     "labelAllergies": "Alergije",
     "labelOccasion": "Povod",
-    "labelAccessibility": "Pristupačnost"
+    "labelAccessibility": "Pristupačnost",
+    "delayedBy": "Kašnjenje {minutes} min",
+    "delayedTimes": "{count} izmena"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazad",

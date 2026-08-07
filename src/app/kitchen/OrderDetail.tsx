@@ -529,6 +529,26 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                 {order.completedAt && <Row icon={<Package className="w-4 h-4 text-gray-500" />} t={t}>{tk("completed")}: {fmtTime(order.completedAt, hoursFormat, locale)}</Row>}
               </div>
 
+              {/* Ready time was pushed back. Sits directly under the times it
+                  changed, so staff read "Ready: 23:21" and immediately see WHY.
+                  Replaces the raw "[Delayed +15m at 2026-08-07T20:37:23.405Z]"
+                  that used to land in the customer's Notes box, unreadable and
+                  untranslated. Fabrizio cms0gyexp #16. */}
+              {order.delay && order.delay.totalMinutes > 0 && (
+                <div className="mt-3 rounded-lg px-3 py-2.5 border bg-amber-500/10 border-amber-500/40 text-amber-800 dark:text-amber-300">
+                  <div className="flex items-center gap-2">
+                    <Timer className="w-4 h-4 flex-shrink-0" />
+                    <span className="text-sm font-semibold">
+                      {tk("delayedBy", { minutes: order.delay.totalMinutes })}
+                      {order.delay.count > 1 ? ` (${tk("delayedTimes", { count: order.delay.count })})` : ""}
+                    </span>
+                  </div>
+                  {order.delay.reason && (
+                    <div className="text-sm mt-1 ps-6">{order.delay.reason}</div>
+                  )}
+                </div>
+              )}
+
               {/* Live countdown — ticks once per second once the order is
                   accepted, until either we hit estimatedReady or the
                   server flips status to completed. Clamps at 0:00 with

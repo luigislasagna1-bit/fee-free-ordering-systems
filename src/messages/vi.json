@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Chỗ ngồi cho trẻ",
     "labelAllergies": "Dị ứng",
     "labelOccasion": "Dịp",
-    "labelAccessibility": "Hỗ trợ tiếp cận"
+    "labelAccessibility": "Hỗ trợ tiếp cận",
+    "delayedBy": "Trễ {minutes} phút",
+    "delayedTimes": "{count} thay đổi"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

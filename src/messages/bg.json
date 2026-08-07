@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Настаняване на деца",
     "labelAllergies": "Алергии",
     "labelOccasion": "Повод",
-    "labelAccessibility": "Достъпност"
+    "labelAccessibility": "Достъпност",
+    "delayedBy": "Забавяне с {minutes} мин",
+    "delayedTimes": "{count} промени"
   },
   "admin": {
     "welcomeBack": "Добре дошъл отново",

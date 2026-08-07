@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Asiento infantil",
     "labelAllergies": "Alergias",
     "labelOccasion": "Ocasión",
-    "labelAccessibility": "Accesibilidad"
+    "labelAccessibility": "Accesibilidad",
+    "delayedBy": "Retrasado {minutes} min",
+    "delayedTimes": "{count} cambios"
   },
   "admin": {
     "welcomeBack": "Bienvenido de nuevo",

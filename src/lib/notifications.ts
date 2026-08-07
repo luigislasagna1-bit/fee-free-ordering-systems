@@ -59,10 +59,20 @@ function buildCustomerSms(
   restaurantName: string,
   payload: CustomerEventPayload,
   hoursFormat: "12h" | "24h" = "24h",
+  timezone?: string,
 ): string | null {
-  // Format a Date's clock time per the restaurant's 12h/24h setting.
+  // Format a Date's clock time per the restaurant's 12h/24h setting, IN THE
+  // RESTAURANT'S TIMEZONE. Without the timeZone option this rendered in the
+  // server's clock (UTC on Vercel), so an Italian store texted a time two hours
+  // off — the same defect found in the delayed-order EMAIL. Fabrizio
+  // cms0gyexp #16.
   const clock = (d: Date) =>
-    d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: hoursFormat !== "24h" });
+    d.toLocaleTimeString("en-US", {
+      timeZone: timezone || "UTC",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: hoursFormat !== "24h",
+    });
   switch (payload.event) {
     case "orderConfirmed":
       return `${restaurantName}: Order #${payload.orderNumber} received. We'll text you when it's accepted. ${payload.trackingUrl ?? ""}`.trim();
@@ -765,7 +775,7 @@ export async function notifyCustomer(args: {
     if (!customerPhone) return;
     const entitled = await hasFeature(restaurantId, "customer_sms");
     if (!entitled) return;
-    const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h");
+    const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h", (restaurant as any).timezone || undefined);
     if (!body) return;
     try {
       const r = await sendSms({ to: customerPhone, body });
@@ -788,7 +798,7 @@ export async function notifyCustomer(args: {
     try {
       if (!(await hasFeature(restaurantId, "app_store_listing"))) return;
       if (!(await customerWantsOrderPush(args.customerId))) return;
-      const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h");
+      const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h", (restaurant as any).timezone || undefined);
       if (!body) return;
       const data: Record<string, string> = {};
       if ("trackingUrl" in payload && typeof payload.trackingUrl === "string" && payload.trackingUrl) {
@@ -957,6 +967,11 @@ export async function notifyCustomer(args: {
           reason: payload.reason,
           // Service-specific new-ETA wording (pickup vs delivery). cms0gyexp #15.
           orderType,
+          // The new-ETA clock MUST render in the restaurant's timezone. Without
+          // these two the template fell back to the server's UTC and mailed a
+          // time hours off the real one. Fabrizio cms0gyexp #16.
+          timezone: (restaurant as any).timezone || undefined,
+          hoursFormat: restaurant.hoursFormat === "12h" ? "12h" : "24h",
           restaurantPhone: restaurant.phone,
           restaurantEmail: restaurant.email,
           restaurantUrl: restaurantOrderUrl(restaurant, ""),

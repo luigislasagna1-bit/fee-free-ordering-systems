@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Lasten istuimet",
     "labelAllergies": "Allergiat",
     "labelOccasion": "Tilaisuus",
-    "labelAccessibility": "Esteettömyys"
+    "labelAccessibility": "Esteettömyys",
+    "delayedBy": "Myöhässä {minutes} min",
+    "delayedTimes": "{count} muutosta"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

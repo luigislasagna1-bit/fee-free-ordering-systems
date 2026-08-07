@@ -31,6 +31,13 @@ export type OrderDelayedProps = {
   /** Order type — picks the service-specific new-ETA sentence ("new estimated
    *  pickup time" vs "delivery time"). Fabrizio cms0gyexp #15. */
   orderType?: string;
+  /** Restaurant IANA timezone — the new-ETA clock MUST be rendered in it, not
+   *  the server's UTC. Fabrizio cms0gyexp #16. */
+  timezone?: string;
+  /** Restaurant 12h/24h preference, same as every other order email. */
+  hoursFormat?: "12h" | "24h";
+  /** Recipient locale — keeps the clock string consistent with the body copy. */
+  locale?: string;
   /** Tracking URL — same status page the rest of the order emails link to. */
   trackingUrl: string;
   restaurantUrl?: string;
@@ -43,6 +50,7 @@ export default function OrderDelayed(props: OrderDelayedProps) {
   const {
     t,
     customerName, orderNumber, restaurantName, newEstimatedReady, delayMinutes, reason, orderType,
+    timezone, hoursFormat, locale,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
 
@@ -52,9 +60,21 @@ export default function OrderDelayed(props: OrderDelayedProps) {
     ? "email.orderDelayed.delayBodyDelivery"
     : "email.orderDelayed.delayBodyPickup";
 
-  const etaLabel = newEstimatedReady.toLocaleString(undefined, {
+  // 🚨 Format in the RESTAURANT's timezone, never the server's.
+  //
+  // This was a bare toLocaleString() with no timeZone, so it rendered in the
+  // Vercel server's clock (UTC). An Italian restaurant (UTC+2) delaying an
+  // order due at 23:06 by 15 minutes emailed the customer "9:21 PM" instead of
+  // "23:21" — two hours EARLIER than the original time, which reads as
+  // nonsense. The same bug was fixed for the accepted email back in 2026-06-05;
+  // this template was missed in that sweep. Fabrizio cms0gyexp #16.
+  //
+  // Locale + 12h/24h preference now match every other email's clock rendering.
+  const etaLabel = newEstimatedReady.toLocaleString(locale || undefined, {
+    timeZone: timezone || "UTC",
     hour: "numeric",
     minute: "2-digit",
+    hourCycle: hoursFormat === "24h" ? "h23" : "h12",
   });
 
   const minutesWord = delayMinutes === 1

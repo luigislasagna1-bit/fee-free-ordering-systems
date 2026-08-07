@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Child seating",
     "labelAllergies": "Allergies",
     "labelOccasion": "Occasion",
-    "labelAccessibility": "Accessibility"
+    "labelAccessibility": "Accessibility",
+    "delayedBy": "Delayed by {minutes} min",
+    "delayedTimes": "{count} changes"
   },
   "admin": {
     "comingSoonPlaceholder": {

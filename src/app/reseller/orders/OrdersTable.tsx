@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { ChevronUp, Columns3, Loader2 } from "lucide-react";
 
 /**
@@ -204,17 +204,26 @@ export function OrdersTable({
               const isOpen = expanded === r.id;
               const d = detail[r.id];
               return (
-                <tr key={r.id} className="border-b border-gray-50 align-top">
-                  <td colSpan={visible.length + 1} className="p-0">
-                    <button
-                      type="button"
-                      onClick={() => open(r)}
-                      aria-expanded={isOpen}
-                      className={`w-full text-left transition ${isOpen ? "bg-gray-50/60" : "hover:bg-gray-50/50"}`}
-                    >
-                      <table className="w-full text-sm">
-                        <tbody>
-                          <tr>
+                <Fragment key={r.id}>
+                  {/* ONE table for header + every row.
+                      Each row USED to be its own nested <table> inside a
+                      colSpan cell, so every row sized its columns
+                      independently of the header and of each other — which is
+                      exactly the misalignment Fabrizio reported (cms0gyexp /
+                      cmshrr94z, 2026-08-07): "PAYMENT METHOD" sat far left of
+                      "Cash on pickup", and no two rows lined up. A single
+                      table means the browser computes ONE set of column
+                      widths for the whole grid. */}
+                  <tr
+                    onClick={() => open(r)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(r); }
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isOpen}
+                    className={`border-b border-gray-50 align-top cursor-pointer transition ${isOpen ? "bg-gray-50/60" : "hover:bg-gray-50/50"}`}
+                  >
                             {visible.map((c) => (
                               <td key={c} className={`py-3 px-4 ${c === "total" ? "text-right" : ""}`}>
                                 {c === "restaurant" && (
@@ -256,12 +265,11 @@ export function OrdersTable({
                               </td>
                             ))}
                             <td className="py-3 px-2 w-10" />
-                          </tr>
-                        </tbody>
-                      </table>
-                    </button>
+                  </tr>
 
-                    {isOpen && (
+                  {isOpen && (
+                    <tr className="border-b border-gray-50">
+                      <td colSpan={visible.length + 1} className="p-0">
                       <div className="px-4 pb-4">
                         <div className="flex justify-center -mt-1 mb-2">
                           <button type="button" onClick={() => setExpanded(null)} className="inline-flex items-center gap-1 text-[11px] uppercase tracking-wider text-gray-400 hover:text-gray-600">
@@ -292,9 +300,10 @@ export function OrdersTable({
                           </div>
                         </div>
                       </div>
-                    )}
-                  </td>
-                </tr>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
               );
             })}
           </tbody>

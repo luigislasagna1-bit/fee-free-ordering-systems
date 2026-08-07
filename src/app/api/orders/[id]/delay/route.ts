@@ -23,7 +23,8 @@
  *
  * Side effects:
  *   - Updates Order.estimatedReady += minutes
- *   - Appends a "Delayed by Xm at HH:MM" line to Order.notes
+ *   - Records the delay in the OrderDelay audit table (NOT in
+ *     Order.notes — that field belongs to the customer)
  *   - Fires an "orderDelayed" customer notification (email + optional
  *     SMS if the restaurant has the SMS add-on)
  *   - Logs to console for support visibility
@@ -89,6 +90,10 @@ export async function POST(
           defaultLanguage: true,
           phone: true,
           email: true,
+          // Needed so the delay EMAIL renders the new ETA in the restaurant's
+          // clock rather than the server's UTC. Fabrizio cms0gyexp #16.
+          timezone: true,
+          hoursFormat: true,
         },
       },
     },
@@ -125,23 +130,35 @@ export async function POST(
     ? new Date(order.scheduledFor.getTime() + minutes * 60_000)
     : null;
 
-  // Append a structured delay line to notes so it's auditable in the
-  // admin orders detail page later. HH:MM in restaurant tz would be
-  // ideal but adds dependency; plain ISO is fine for an audit trail.
-  const stamp = new Date().toISOString();
-  const delayLine = reason
-    ? `[Delayed +${minutes}m at ${stamp}] ${reason}`
-    : `[Delayed +${minutes}m at ${stamp}]`;
-  const newNotes = order.notes ? `${order.notes}\n${delayLine}` : delayLine;
-
-  await prisma.order.update({
-    where: { id: order.id },
-    data: {
-      estimatedReady: newReady,
-      ...(newScheduledFor ? { scheduledFor: newScheduledFor } : {}),
-      notes: newNotes,
-    },
-  });
+  // Record the delay in its own AUDIT TABLE — never in Order.notes.
+  //
+  // This used to append `[Delayed +15m at 2026-08-07T20:37:23.405Z]` to
+  // `Order.notes`: untranslated English with a raw UTC timestamp, written into
+  // the field that holds the CUSTOMER's own requests, and printed in the
+  // kitchen's "Notes" box and on the ticket. Staff couldn't read it (Fabrizio
+  // cms0gyexp #16) and a guest's actual note got buried under machine text.
+  //
+  // OrderDelay keeps the full history (every push, not just the last) and lets
+  // the kitchen render it properly localized, in the restaurant's own clock.
+  await prisma.$transaction([
+    prisma.order.update({
+      where: { id: order.id },
+      data: {
+        estimatedReady: newReady,
+        ...(newScheduledFor ? { scheduledFor: newScheduledFor } : {}),
+      },
+    }),
+    prisma.orderDelay.create({
+      data: {
+        orderId: order.id,
+        minutes,
+        reason,
+        previousReady,
+        newReady,
+        byUserId: user.id ?? null,
+      },
+    }),
+  ]);
 
   console.log("[orders/delay]", {
     orderId: order.id,

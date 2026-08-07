@@ -1085,7 +1085,9 @@
     "labelChildSeating": "مقاعد الأطفال",
     "labelAllergies": "الحساسية",
     "labelOccasion": "المناسبة",
-    "labelAccessibility": "إمكانية الوصول"
+    "labelAccessibility": "إمكانية الوصول",
+    "delayedBy": "تأخير {minutes} دقيقة",
+    "delayedTimes": "{count} تغييرات"
   },
   "admin": {
     "welcomeBack": "مرحباً بعودتك",

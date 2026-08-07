@@ -1549,6 +1549,7 @@ model Order {
   // FeeFreeDelivery in-house driver job (side table — no physical column on Order).
   deliveryAssignment DeliveryAssignment?
   items        OrderItem[]
+  delays       OrderDelay[]
   rating       OrderRating?
 
   @@index([restaurantId, createdAt])
@@ -2726,6 +2727,39 @@ enum ConsentBasis {
   express                        // recipient expressly opted in (no expiry)
   existing_business_relationship // EBR: purchase within 24 months (implied)
   inquiry                        // inquiry/application within 6 months (implied)
+}
+
+/// Audit trail for "the kitchen pushed this order's ready time back".
+///
+/// Previously the delay route appended a machine string to `Order.notes`:
+///   [Delayed +15m at 2026-08-07T20:37:23.405Z]
+/// — untranslated English with a raw UTC timestamp, sitting in the field that
+/// holds the CUSTOMER's own requests, and printed on the kitchen ticket. It was
+/// unreadable to staff (Fabrizio cms0gyexp #16) and polluted customer data.
+///
+/// A separate SPARSE table rather than columns on `Order` (per AGENTS.md: don't
+/// widen a table with millions of rows for something only a few rows use), and
+/// it records EVERY delay rather than just the latest, so a repeatedly-pushed
+/// order tells its whole story.
+model OrderDelay {
+  id      String @id @default(cuid())
+  orderId String
+  /// Minutes added by THIS action (1..240, validated at the route).
+  minutes Int
+  /// Optional free-text reason the kitchen typed; also mailed to the customer.
+  reason  String?
+  /// Ready time before and after this delay — so the audit is self-contained
+  /// even if `Order.estimatedReady` is pushed again later.
+  previousReady DateTime?
+  newReady      DateTime?
+  /// Staff user who pressed the button, when the session had one.
+  byUserId  String?
+  createdAt DateTime @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  /// The kitchen loads delays per order, newest first.
+  @@index([orderId, createdAt])
 }
 
 /// 🚨 ANTI-SPAM BACKSTOP (Luigi 2026-08-07). One row per

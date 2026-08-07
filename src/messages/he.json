@@ -1085,7 +1085,9 @@
     "labelChildSeating": "מושבים לילדים",
     "labelAllergies": "אלרגיות",
     "labelOccasion": "אירוע",
-    "labelAccessibility": "נגישות"
+    "labelAccessibility": "נגישות",
+    "delayedBy": "עיכוב של {minutes} דקות",
+    "delayedTimes": "{count} שינויים"
   },
   "admin": {
     "welcomeBack": "ברוך שובך",

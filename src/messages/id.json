@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Tempat duduk anak",
     "labelAllergies": "Alergi",
     "labelOccasion": "Acara",
-    "labelAccessibility": "Aksesibilitas"
+    "labelAccessibility": "Aksesibilitas",
+    "delayedBy": "Tertunda {minutes} menit",
+    "delayedTimes": "{count} perubahan"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

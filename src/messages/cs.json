@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Sezení pro děti",
     "labelAllergies": "Alergie",
     "labelOccasion": "Příležitost",
-    "labelAccessibility": "Bezbariérovost"
+    "labelAccessibility": "Bezbariérovost",
+    "delayedBy": "Zpoždění o {minutes} min",
+    "delayedTimes": "{count} změn"
   },
   "admin": {
     "welcomeBack": "Vítejte zpět",

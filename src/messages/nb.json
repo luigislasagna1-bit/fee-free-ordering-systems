@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Barneplasser",
     "labelAllergies": "Allergier",
     "labelOccasion": "Anledning",
-    "labelAccessibility": "Tilgjengelighet"
+    "labelAccessibility": "Tilgjengelighet",
+    "delayedBy": "Forsinket {minutes} min",
+    "delayedTimes": "{count} endringer"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

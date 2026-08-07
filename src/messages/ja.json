@@ -1085,7 +1085,9 @@
     "labelChildSeating": "子ども用の席",
     "labelAllergies": "アレルギー",
     "labelOccasion": "利用シーン",
-    "labelAccessibility": "バリアフリー"
+    "labelAccessibility": "バリアフリー",
+    "delayedBy": "{minutes}分の遅延",
+    "delayedTimes": "{count}回の変更"
   },
   "admin": {
     "welcomeBack": "おかえりなさい",

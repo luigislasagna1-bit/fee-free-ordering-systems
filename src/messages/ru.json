@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Детские места",
     "labelAllergies": "Аллергии",
     "labelOccasion": "Повод",
-    "labelAccessibility": "Доступная среда"
+    "labelAccessibility": "Доступная среда",
+    "delayedBy": "Задержка на {minutes} мин",
+    "delayedTimes": "{count} изменений"
   },
   "admin": {
     "welcomeBack": "С возвращением",

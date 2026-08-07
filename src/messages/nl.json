@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Kinderzitplaatsen",
     "labelAllergies": "Allergieën",
     "labelOccasion": "Gelegenheid",
-    "labelAccessibility": "Toegankelijkheid"
+    "labelAccessibility": "Toegankelijkheid",
+    "delayedBy": "{minutes} min vertraagd",
+    "delayedTimes": "{count} wijzigingen"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

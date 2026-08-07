@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Bērnu sēdvietas",
     "labelAllergies": "Alerģijas",
     "labelOccasion": "Īpašs gadījums",
-    "labelAccessibility": "Pieejamība"
+    "labelAccessibility": "Pieejamība",
+    "delayedBy": "Aizkavēts par {minutes} min",
+    "delayedTimes": "{count} izmaiņas"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

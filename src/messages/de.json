@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Kindersitzplätze",
     "labelAllergies": "Allergien",
     "labelOccasion": "Anlass",
-    "labelAccessibility": "Barrierefreiheit"
+    "labelAccessibility": "Barrierefreiheit",
+    "delayedBy": "Um {minutes} Min. verschoben",
+    "delayedTimes": "{count} Änderungen"
   },
   "admin": {
     "welcomeBack": "Willkommen zurück",

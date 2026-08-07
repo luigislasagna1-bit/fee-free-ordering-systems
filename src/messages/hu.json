@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Gyerekülés",
     "labelAllergies": "Allergiák",
     "labelOccasion": "Alkalom",
-    "labelAccessibility": "Akadálymentesség"
+    "labelAccessibility": "Akadálymentesség",
+    "delayedBy": "{minutes} perc csúszás",
+    "delayedTimes": "{count} módosítás"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

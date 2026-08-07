@@ -1085,7 +1085,9 @@
     "labelChildSeating": "बच्चों की सीटिंग",
     "labelAllergies": "एलर्जी",
     "labelOccasion": "अवसर",
-    "labelAccessibility": "सुलभता"
+    "labelAccessibility": "सुलभता",
+    "delayedBy": "{minutes} मिनट की देरी",
+    "delayedTimes": "{count} बदलाव"
   },
   "admin": {
     "comingSoonPlaceholder": {

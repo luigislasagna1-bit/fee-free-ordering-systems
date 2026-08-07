@@ -1085,7 +1085,9 @@
     "labelChildSeating": "儿童座椅",
     "labelAllergies": "过敏情况",
     "labelOccasion": "场合",
-    "labelAccessibility": "无障碍需求"
+    "labelAccessibility": "无障碍需求",
+    "delayedBy": "延迟 {minutes} 分钟",
+    "delayedTimes": "{count} 次调整"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

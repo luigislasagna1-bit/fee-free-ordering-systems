@@ -104,6 +104,12 @@ export type Order = {
   paymentStatus: string;
   preparationTime: number | null;
   estimatedReady: string | null;
+  /** Set only when the kitchen has pushed this order's ready time back.
+   *  `totalMinutes` sums every push so a twice-delayed order reads "+25 min",
+   *  and `reason` is the latest one the kitchen typed. Replaces the raw
+   *  "[Delayed +15m at <ISO>]" string that used to be dumped into the
+   *  customer's notes field. Fabrizio cms0gyexp #16. */
+  delay?: { totalMinutes: number; count: number; reason: string | null } | null;
   /** Stamped at order creation when the customer came from /marketplace.
    *  Kitchen display shows a purple "MARKETPLACE" badge so staff knows
    *  it's a discovery-channel order vs a direct walk-up / widget order. */

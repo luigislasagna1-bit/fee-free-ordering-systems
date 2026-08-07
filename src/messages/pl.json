@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Miejsca dla dzieci",
     "labelAllergies": "Alergie",
     "labelOccasion": "Okazja",
-    "labelAccessibility": "Dostępność"
+    "labelAccessibility": "Dostępność",
+    "delayedBy": "Opóźnienie o {minutes} min",
+    "delayedTimes": "{count} zmian"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",

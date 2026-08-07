@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Seients infantils",
     "labelAllergies": "Al·lèrgies",
     "labelOccasion": "Ocasió",
-    "labelAccessibility": "Accessibilitat"
+    "labelAccessibility": "Accessibilitat",
+    "delayedBy": "Retardat {minutes} min",
+    "delayedTimes": "{count} canvis"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

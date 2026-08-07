@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Дитячі місця",
     "labelAllergies": "Алергії",
     "labelOccasion": "Нагода",
-    "labelAccessibility": "Безбар'єрність"
+    "labelAccessibility": "Безбар'єрність",
+    "delayedBy": "Затримка на {minutes} хв",
+    "delayedTimes": "{count} змін"
   },
   "admin": {
     "welcomeBack": "З поверненням",

@@ -166,6 +166,28 @@ export async function GET() {
       : [];
     const bookingByOrderId = new Map(bookings.map((b) => [b.orderId as string, b]));
 
+    // Delay history — ONE batched query keyed by orderId, same shape as the
+    // bookings lookup above (no N+1). The kitchen used to learn about a pushed
+    // ready time only from a raw machine string dumped into the customer's
+    // notes ("[Delayed +15m at 2026-08-07T20:37:23.405Z]"), which staff could
+    // not read at a glance. Fabrizio cms0gyexp #16.
+    const delayRows = orderIds.length > 0
+      ? await prisma.orderDelay.findMany({
+          where: { orderId: { in: orderIds } },
+          orderBy: { createdAt: "asc" },
+          select: { orderId: true, minutes: true, reason: true },
+        })
+      : [];
+    const delayByOrderId = new Map<string, { totalMinutes: number; count: number; reason: string | null }>();
+    for (const d of delayRows) {
+      const cur = delayByOrderId.get(d.orderId) ?? { totalMinutes: 0, count: 0, reason: null };
+      cur.totalMinutes += d.minutes;
+      cur.count += 1;
+      // Latest non-empty reason wins — that's the one still relevant.
+      if (d.reason) cur.reason = d.reason;
+      delayByOrderId.set(d.orderId, cur);
+    }
+
     // ── First-order flag (reseller report cmq3knaqj, FABRIZIO) ──────────────
     // Badge an order when it's the customer's FIRST-EVER order at this
     // restaurant, recognising the customer by PHONE *or* EMAIL (Luigi 2026-06-09)
@@ -234,6 +256,8 @@ export async function GET() {
         reservation: b
           ? { id: b.id, partySize: b.partySize, date: b.date, time: b.time, confirmationCode: b.confirmationCode, status: b.status, notes: b.notes, adultsCount: b.adultsCount, childrenCount: b.childrenCount, details: b.details }
           : null,
+        // Delay summary — drives the amber "ready time pushed back" chip.
+        delay: delayByOrderId.get(o.id) ?? null,
         // Reward/store-credit display fields (creditApplied is already in ...o).
         rewardLabel: rewardsEnabled ? rewardLabel : null,
         rewardsActive: rewardsEnabled && !!(o as any).customerId,

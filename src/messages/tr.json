@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Çocuk Oturma Düzeni",
     "labelAllergies": "Alerjiler",
     "labelOccasion": "Ziyaret Nedeni",
-    "labelAccessibility": "Erişilebilirlik"
+    "labelAccessibility": "Erişilebilirlik",
+    "delayedBy": "{minutes} dk gecikme",
+    "delayedTimes": "{count} değişiklik"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",

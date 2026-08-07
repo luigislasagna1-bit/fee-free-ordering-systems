@@ -1085,7 +1085,9 @@
     "labelChildSeating": "어린이 좌석",
     "labelAllergies": "알레르기",
     "labelOccasion": "방문 목적",
-    "labelAccessibility": "편의 지원"
+    "labelAccessibility": "편의 지원",
+    "delayedBy": "{minutes}분 지연",
+    "delayedTimes": "{count}회 변경"
   },
   "admin": {
     "welcomeBack": "환영합니다",

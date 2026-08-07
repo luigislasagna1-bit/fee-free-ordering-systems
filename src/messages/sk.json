@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Sedenie pre deti",
     "labelAllergies": "Alergie",
     "labelOccasion": "Príležitosť",
-    "labelAccessibility": "Bezbariérovosť"
+    "labelAccessibility": "Bezbariérovosť",
+    "delayedBy": "Meškanie o {minutes} min",
+    "delayedTimes": "{count} zmien"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

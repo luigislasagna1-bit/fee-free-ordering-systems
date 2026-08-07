@@ -1085,7 +1085,9 @@
     "labelChildSeating": "Vaikų sėdimos vietos",
     "labelAllergies": "Alergijos",
     "labelOccasion": "Proga",
-    "labelAccessibility": "Prieinamumas"
+    "labelAccessibility": "Prieinamumas",
+    "delayedBy": "Vėluoja {minutes} min",
+    "delayedTimes": "{count} pakeitimai"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",
