@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Mağaza kredisi"
     },
-    "discounts": "İndirimler"
+    "discounts": "İndirimler",
+    "orderValue": "Sipariş tutarı"
   },
   "common": {
     "showPassword": "Şifreyi göster",
@@ -2910,7 +2911,9 @@
       "colFirstOrder": "İlk Sipariş",
       "badgeOptedIn": "✓ Onay verildi",
       "analyticsHint": "Tarih aralığına göre harcama / ömür boyu metrikler mi arıyorsunuz? <link>Raporlar → Müşteriler (Liste görünümü)</link> — aynı müşteriler, tarih aralığı filtresi ve CSV dışa aktarmayla.",
-      "badgeOptedOut": "✕ Çıkış yapıldı"
+      "badgeOptedOut": "✕ Çıkış yapıldı",
+      "colOrderValue": "Sipariş tutarı",
+      "colCreditSpent": "Harcanan {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponlar & Promosyonlar",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Bir konum seçin",
       "chooserSubtitle": "Bu rapor konuma göredir — görüntülemek için bir konum seçin.",
       "viewingLocation": "Görüntülenen",
-      "changeLocation": "Konumu değiştir"
+      "changeLocation": "Konumu değiştir",
+      "kpiOrderValue": "Sipariş tutarı"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restoran bağlamı yok.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Neden",
       "actionLine": "Yeniden denemek için siparişteki \"ShipDay'e gönder\" düğmesini kullanın veya teslimatı kendi sürücülerinizle ayarlayın.",
       "viewOrderButton": "Siparişi görüntüle"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{label} ile ödenen {amount} müşterinin cüzdanına iade edildi."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restoran",
+      "colCustomer": "Müşteri",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

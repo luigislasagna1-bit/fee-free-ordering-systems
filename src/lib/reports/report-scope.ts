@@ -33,6 +33,12 @@ export type ReportScope = {
   mixedCurrency: boolean;
   /** A child uses a different timezone than the parent → daily split is approximate. */
   mixedTimezone: boolean;
+  /** Store-credit program state, read straight off the parent. Reports need it
+   *  to name the credit column with the store's own word for it ("Luigi Bucks")
+   *  via `resolveRewardLabel` — shape matches that helper's input. */
+  rewardsEnabled: boolean;
+  rewardLabelPlural: string | null;
+  rewardLabelSingular: string | null;
 };
 
 /**
@@ -55,12 +61,20 @@ export type ReportScope = {
 export const resolveReportScope = cache(async (restaurantId: string): Promise<ReportScope> => {
   const parent = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
-    select: { id: true, name: true, city: true, currency: true, timezone: true, slug: true },
+    select: {
+      id: true, name: true, city: true, currency: true, timezone: true, slug: true,
+      rewardsEnabled: true, rewardLabelPlural: true, rewardLabelSingular: true,
+    },
   });
   const currency = (parent?.currency || "usd").toLowerCase();
   const timezone = parent?.timezone ?? null;
   const brandName = parent?.name ?? "";
   const slug = parent?.slug ?? "";
+  const rewards = {
+    rewardsEnabled: parent?.rewardsEnabled === true,
+    rewardLabelPlural: parent?.rewardLabelPlural ?? null,
+    rewardLabelSingular: parent?.rewardLabelSingular ?? null,
+  };
 
   const children = await prisma.restaurant.findMany({
     where: { parentRestaurantId: restaurantId },
@@ -83,6 +97,7 @@ export const resolveReportScope = cache(async (restaurantId: string): Promise<Re
         : [],
       mixedCurrency: false,
       mixedTimezone: false,
+      ...rewards,
     };
   }
 
@@ -104,6 +119,7 @@ export const resolveReportScope = cache(async (restaurantId: string): Promise<Re
     locations,
     mixedCurrency,
     mixedTimezone,
+    ...rewards,
   };
 });
 

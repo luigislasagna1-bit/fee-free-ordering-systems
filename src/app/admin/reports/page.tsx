@@ -7,6 +7,8 @@ import { LocationDrillRow } from "./LocationDrillRow";
 import { previousPeriod, formatChartDate, toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz, eachDayKeyInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { MONEY_SUM, MONEY_SELECT, splitFromSums, collectedOf, showsCredit, type MoneySplit } from "@/lib/reports/collected";
+import { resolveRewardLabel } from "@/lib/reward-label";
 import { dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -47,6 +49,7 @@ export default async function ReportsDashboardPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const t = await getTranslations("admin.reportsHome");
+  const tRoot = await getTranslations();
   const sp = await searchParams;
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
@@ -105,23 +108,31 @@ export default async function ReportsDashboardPage({
     // All-time totals — the GloriaFood "/ 45,947" secondary figure beside the
     // range value. Indexed on (restaurantId, status); runs once per load.
     // SCALE SEAM: cache this nightly once a restaurant passes ~100k orders.
-    prisma.order.aggregate({ where: { restaurantId: { in: scope.ids }, ...REPORT_ORDER_STATUS_WHERE }, _sum: { total: true }, _count: true }),
+    prisma.order.aggregate({ where: { restaurantId: { in: scope.ids }, ...REPORT_ORDER_STATUS_WHERE }, _sum: MONEY_SUM, _count: true }),
     prisma.customer.count({ where: { restaurantId: { in: scope.ids } } }),
     // Per-location breakdown (chain only) — ONE groupBy(restaurantId) instead of
     // an N-location fan-out; the (restaurantId,status,createdAt) index serves it.
     scope.isChain
-      ? prisma.order.groupBy({ by: ["restaurantId"], where: reportOrderWhere(scope.ids, range), _count: true, _sum: { total: true } })
-      : Promise.resolve([] as Array<{ restaurantId: string; _count: number; _sum: { total: number | null } }>),
+      ? prisma.order.groupBy({ by: ["restaurantId"], where: reportOrderWhere(scope.ids, range), _count: true, _sum: MONEY_SUM })
+      : Promise.resolve([] as Array<{ restaurantId: string; _count: number; _sum: { total: number | null; creditApplied: number | null } }>),
   ]);
 
   // One consistent "what counts" rule (reportOrderWhere) → "Orders" and "Avg
   // order" now describe the SAME population. Before, Orders counted every
   // status while Avg divided by completed-only, so they never reconciled.
-  const avgOrder = curOrders > 0 ? curRevenue / curOrders : 0;
-  const prevAvgOrder = prevOrders > 0 ? prevRevenue / prevOrders : 0;
-  const allTimeRevenue = allTimeAgg._sum.total ?? 0;
+  // Every $ figure below is COLLECTED (cash/card actually received), not gross.
+  // `curRevenue.orderValue` / `.creditSpent` stay available for the breakdown line.
+  const avgOrder = curOrders > 0 ? curRevenue.collected / curOrders : 0;
+  const prevAvgOrder = prevOrders > 0 ? prevRevenue.collected / prevOrders : 0;
+  const allTime = splitFromSums(allTimeAgg._sum.total, allTimeAgg._sum.creditApplied);
+  const allTimeRevenue = allTime.collected;
   const allTimeOrders = allTimeAgg._count;
   const allTimeAvg = allTimeOrders > 0 ? allTimeRevenue / allTimeOrders : 0;
+  // Only surface the credit breakdown once real credit has been redeemed —
+  // a store that never ran a rewards program sees exactly what it saw before.
+  const creditShown = showsCredit(curRevenue) || showsCredit(allTime);
+  // The store's own word for its credit — "Luigi Bucks", not "Store credit".
+  const rewardLabel = resolveRewardLabel(scope, tRoot("money.pay.rewardCredit"));
 
   // Build the daily revenue chart. Re-query with a `groupBy(createdAt::date)`
   // would be cleanest but Prisma's groupBy doesn't accept raw date casts —
@@ -130,7 +141,7 @@ export default async function ReportsDashboardPage({
   // the date filter, so safe.
   const dailyOrders = await prisma.order.findMany({
     where: reportOrderWhere(scope.ids, range),
-    select: { total: true, createdAt: true },
+    select: { ...MONEY_SELECT, createdAt: true },
   });
   // Bucket by the restaurant-LOCAL calendar day so the chart lines up with the
   // tz-aware range (a 9pm-PST order counts on the PST day, not UTC tomorrow).
@@ -142,7 +153,8 @@ export default async function ReportsDashboardPage({
   for (const o of dailyOrders) {
     const b = buckets.get(dayKey(new Date(o.createdAt)));
     if (b) {
-      b.revenue += o.total;
+      // Bars plot COLLECTED money, matching the headline card above them.
+      b.revenue += collectedOf(o);
       b.count += 1;
     }
   }
@@ -156,14 +168,15 @@ export default async function ReportsDashboardPage({
   // Per-location rows (chain only) — join the groupBy to the scope's location
   // list, sorted by revenue. A location with no orders in the range shows zero.
   const perLocById = new Map(
-    (perLocationRaw as Array<{ restaurantId: string; _count: number; _sum: { total: number | null } }>)
-      .map((r) => [r.restaurantId, { orders: r._count, revenue: r._sum.total ?? 0 }]),
+    (perLocationRaw as Array<{ restaurantId: string; _count: number; _sum: { total: number | null; creditApplied: number | null } }>)
+      .map((r) => [r.restaurantId, { orders: r._count, money: splitFromSums(r._sum.total, r._sum.creditApplied) }]),
   );
   const locationRows = scope.locations
     .map((l) => {
       const s = perLocById.get(l.id);
       const orders = s?.orders ?? 0;
-      const revenue = s?.revenue ?? 0;
+      // Per-location revenue is COLLECTED too, so the rows sum to the headline.
+      const revenue = s?.money.collected ?? 0;
       return { id: l.id, name: l.name, city: l.city, isParent: l.isParent, currency: l.currency, orders, revenue, avg: orders > 0 ? revenue / orders : 0 };
     })
     .sort((a, b) => b.revenue - a.revenue);
@@ -224,11 +237,17 @@ export default async function ReportsDashboardPage({
           mirroring the GloriaFood "vs restaurant average" pattern. */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <KpiCard
-          label={t("kpiRevenue")}
-          value={formatCurrency(curRevenue)}
+          /* Store credit is a tender, not income — when any was redeemed the
+             headline is explicitly "Collected" so it can't be misread as sales. */
+          label={creditShown ? tRoot("money.amountCollected") : t("kpiRevenue")}
+          value={formatCurrency(curRevenue.collected)}
           allTime={formatCurrency(allTimeRevenue)}
           allTimeLabel={t("allTime")}
-          deltaPct={pctChange(curRevenue, prevRevenue)}
+          breakdown={creditShown ? [
+            { label: t("kpiOrderValue"), value: formatCurrency(curRevenue.orderValue) },
+            { label: rewardLabel, value: `− ${formatCurrency(curRevenue.creditSpent)}` },
+          ] : undefined}
+          deltaPct={pctChange(curRevenue.collected, prevRevenue.collected)}
           icon={DollarSign}
           accent="emerald"
           vsPrevLabel={t("vsPrev")}
@@ -532,7 +551,7 @@ function LocationTable({ rows, currency, t, showSubtotal }: { rows: LocRow[]; cu
 
 /** Single KPI card with delta vs previous-period. */
 function KpiCard({
-  label, value, deltaPct, icon: Icon, accent, vsPrevLabel, vsPrevPctLabel, allTime, allTimeLabel, href,
+  label, value, deltaPct, icon: Icon, accent, vsPrevLabel, vsPrevPctLabel, allTime, allTimeLabel, href, breakdown,
 }: {
   label: string;
   value: string;
@@ -546,6 +565,9 @@ function KpiCard({
   allTimeLabel?: string;
   /** When set, the whole card becomes a drill-down link to a filtered report. */
   href?: string;
+  /** Label/value pairs under the headline — used to show the gross order value
+   *  and the store credit redeemed beside the collected figure. */
+  breakdown?: { label: string; value: string }[];
 }) {
   const ring = {
     emerald: "bg-emerald-50 text-emerald-600",
@@ -580,6 +602,16 @@ function KpiCard({
       </div>
       <div className="text-2xl font-bold text-gray-900 mb-0.5">{value}</div>
       {renderDelta()}
+      {breakdown && breakdown.length > 0 && (
+        <div className="mt-1.5 pt-1.5 border-t border-gray-50 space-y-0.5">
+          {breakdown.map((b) => (
+            <div key={b.label} className="flex items-center justify-between gap-2 text-[11px] text-gray-500">
+              <span>{b.label}</span>
+              <span className="tabular-nums">{b.value}</span>
+            </div>
+          ))}
+        </div>
+      )}
       {allTime && (
         <div className="text-[11px] text-gray-400 mt-1.5 pt-1.5 border-t border-gray-50">
           {allTimeLabel} · {allTime}
@@ -717,12 +749,19 @@ function FirstOrderWelcome({
 // All four hit the existing (restaurantId, status, createdAt) composite
 // index added in this change set.
 
-async function sumRevenue(ids: string | string[], range: { from: Date; to: Date }): Promise<number> {
+/**
+ * Range money, split three ways. Store credit is a TENDER, not income: the
+ * headline "Revenue" figure is `collected` (real cash/card), with the gross
+ * order value and the credit redeemed shown beside it. Before 2026-08-07 this
+ * summed `total` alone and so counted redeemed Luigi Bucks as revenue — which
+ * is why this card never reconciled with the Sales Summary it links to.
+ */
+async function sumRevenue(ids: string | string[], range: { from: Date; to: Date }): Promise<MoneySplit> {
   const r = await prisma.order.aggregate({
     where: reportOrderWhere(ids, range),
-    _sum: { total: true },
+    _sum: MONEY_SUM,
   });
-  return r._sum.total ?? 0;
+  return splitFromSums(r._sum.total, r._sum.creditApplied);
 }
 
 async function countReportOrders(ids: string | string[], range: { from: Date; to: Date }): Promise<number> {

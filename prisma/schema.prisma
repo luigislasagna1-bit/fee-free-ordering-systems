@@ -1714,7 +1714,20 @@ model Customer {
   /// us prove consent if a customer complains.
   marketingConsentAt     DateTime?
   totalOrders            Int       @default(0)
+  /// GROSS lifetime order value at this restaurant — the full `Order.total`,
+  /// before any store credit was applied. NOT "money the restaurant received":
+  /// subtract `totalCreditSpent` for that. Display-only (no VIP tier, group
+  /// rule or promo minimum reads it).
   totalSpent             Float     @default(0)
+  /// Lifetime store credit ("Luigi Bucks") this customer TENDERED here — the
+  /// sum of `Order.creditApplied`. Credit is a tender, not income, so the
+  /// customer list shows three figures: order value, credit spent, and
+  /// collected = totalSpent − totalCreditSpent. Denormalized rather than
+  /// aggregated live so the customers list stays ONE indexed query with
+  /// working DB-side sorting at 10,000+ customers. Kept in step with
+  /// `totalSpent` by the same write in /api/orders and recomputed from real
+  /// orders by scripts/backfill-customer-spend.ts. Luigi 2026-08-07.
+  totalCreditSpent       Float     @default(0)
   /// Timestamp of this customer's most recent order at this restaurant.
   /// Maintained by the order-create webhook. Powers:
   ///   - Reports → Clients dashboard ("returning vs new" cohort split)

@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "स्टोर क्रेडिट"
     },
-    "discounts": "छूट"
+    "discounts": "छूट",
+    "orderValue": "ऑर्डर मूल्य"
   },
   "common": {
     "showPassword": "पासवर्ड दिखाएँ",
@@ -3367,7 +3368,9 @@
       "colFirstOrder": "पहला ऑर्डर",
       "badgeOptedIn": "✓ सहमत",
       "analyticsHint": "किसी तिथि सीमा में खर्च या लाइफटाइम मेट्रिक्स देखना चाहते हैं? <link>रिपोर्ट → क्लाइंट (सूची दृश्य)</link> — वही ग्राहक, तिथि सीमा फ़िल्टर और CSV निर्यात के साथ।",
-      "badgeOptedOut": "✕ अस्वीकृत"
+      "badgeOptedOut": "✕ अस्वीकृत",
+      "colOrderValue": "ऑर्डर मूल्य",
+      "colCreditSpent": "खर्च किए गए {label}"
     },
     "couponsAdmin": {
       "pageTitle": "कूपन और प्रमोशन",
@@ -4670,7 +4673,8 @@
       "chooserTitle": "एक स्थान चुनें",
       "chooserSubtitle": "यह रिपोर्ट प्रति-स्थान है — देखने के लिए कोई स्थान चुनें।",
       "viewingLocation": "देख रहे हैं",
-      "changeLocation": "स्थान बदलें"
+      "changeLocation": "स्थान बदलें",
+      "kpiOrderValue": "ऑर्डर मूल्य"
     },
     "invoice": {
       "title": "इनवॉइस",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "कारण",
       "actionLine": "फिर से प्रयास करने के लिए ऑर्डर पर \"ShipDay को भेजें\" बटन का उपयोग करें, या अपने ड्राइवरों के साथ डिलीवरी की व्यवस्था करें।",
       "viewOrderButton": "ऑर्डर देखें"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{label} से भुगतान की गई {amount} राशि ग्राहक के वॉलेट में वापस कर दी गई है।"
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "रेस्टोरेंट",
+      "colCustomer": "ग्राहक",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

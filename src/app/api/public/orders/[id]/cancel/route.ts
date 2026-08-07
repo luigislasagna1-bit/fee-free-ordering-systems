@@ -45,6 +45,7 @@ import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { releaseForOrder as releaseRewardForOrder } from "@/lib/reward-ledger";
 import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
+import { resolveRewardLabel, orderShowsCredit } from "@/lib/reward-label";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
 /**
@@ -316,6 +317,10 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
           orderNumber: order.orderNumber,
           customerName: order.customerName,
           dashboardUrl: `${baseUrl}/admin/orders`,
+          orderTotal: order.total,
+          ...(orderShowsCredit(order.restaurant as any, order)
+            ? { creditApplied: order.creditApplied, rewardLabel: resolveRewardLabel(order.restaurant as any, "") }
+            : {}),
         },
       }).catch((e: unknown) => console.error("[public cancel notifyStaff]", e)),
     );

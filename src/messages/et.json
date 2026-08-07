@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Poekrediit"
     },
-    "discounts": "Allahindlused"
+    "discounts": "Allahindlused",
+    "orderValue": "Tellimuse väärtus"
   },
   "common": {
     "showPassword": "Näita parooli",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Esimene tellimus",
       "badgeOptedIn": "✓ Nõustunud",
       "analyticsHint": "Otsite kulutuste / eluea näitajaid kuupäevavahemiku järgi? <link>Aruanded → Kliendid (loendi vaade)</link> — samad kliendid, kuupäevavahemiku filtreerimise ja CSV ekspordiga.",
-      "badgeOptedOut": "✕ Loobumisel"
+      "badgeOptedOut": "✕ Loobumisel",
+      "colOrderValue": "Tellimuse väärtus",
+      "colCreditSpent": "Kulutatud {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kupongid ja kampaaniad",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Valige asukoht",
       "chooserSubtitle": "See aruanne on asukohapõhine — valige selle vaatamiseks asukoht.",
       "viewingLocation": "Vaatamisel",
-      "changeLocation": "Muuda asukohta"
+      "changeLocation": "Muuda asukohta",
+      "kpiOrderValue": "Tellimuse väärtus"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Restorani kontekst puudub.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Põhjus",
       "actionLine": "Kasuta tellimusel nuppu \"Saada ShipDaysse\", et uuesti proovida, või korralda kohaletoimetamine oma kulleritega.",
       "viewOrderButton": "Vaata tellimust"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{label} abil makstud {amount} on kliendi rahakotti tagastatud."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restoran",
+      "colCustomer": "Klient",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

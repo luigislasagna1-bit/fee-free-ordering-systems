@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Crédito da loja"
     },
-    "discounts": "Descontos"
+    "discounts": "Descontos",
+    "orderValue": "Valor do pedido"
   },
   "common": {
     "showPassword": "Mostrar senha",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Primeiro Pedido",
       "badgeOptedIn": "✓ Inscrito",
       "analyticsHint": "Procurando métricas de gastos / lifetime em um intervalo de datas? <link>Relatórios → Clientes (visualização em lista)</link> — mesmos clientes, com filtro por período e exportação CSV.",
-      "badgeOptedOut": "✕ Descadastrado"
+      "badgeOptedOut": "✕ Descadastrado",
+      "colOrderValue": "Valor do pedido",
+      "colCreditSpent": "{label} gastos"
     },
     "couponsAdmin": {
       "pageTitle": "Cupons & Promoções",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Escolha um local",
       "chooserSubtitle": "Este relatório é por local — escolha um local para visualizá-lo.",
       "viewingLocation": "Visualizando",
-      "changeLocation": "Mudar de local"
+      "changeLocation": "Mudar de local",
+      "kpiOrderValue": "Valor do pedido"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nenhum contexto de restaurante.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Motivo",
       "actionLine": "Use o botão \"Enviar para o ShipDay\" no pedido para tentar novamente, ou organize a entrega com seus próprios entregadores.",
       "viewOrderButton": "Ver pedido"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Os {amount} pagos com {label} foram devolvidos à carteira do cliente."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurante",
+      "colCustomer": "Cliente",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

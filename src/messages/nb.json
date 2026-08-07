@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Butikkreditt"
     },
-    "discounts": "Rabatter"
+    "discounts": "Rabatter",
+    "orderValue": "Ordreverdi"
   },
   "common": {
     "showPassword": "Vis passord",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Første bestilling",
       "badgeOptedIn": "✓ Påmeldt",
       "analyticsHint": "Leter du etter forbruks- og livstidsmålinger over en datoperiode? <link>Rapporter → Kunder (Listevisning)</link> — samme kunder, med datoperiodefiltrering og CSV-eksport.",
-      "badgeOptedOut": "✕ Meldt av"
+      "badgeOptedOut": "✕ Meldt av",
+      "colOrderValue": "Ordreverdi",
+      "colCreditSpent": "Brukte {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponger og kampanjer",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Velg et sted",
       "chooserSubtitle": "Denne rapporten er per sted — velg et sted for å vise den.",
       "viewingLocation": "Viser",
-      "changeLocation": "Bytt sted"
+      "changeLocation": "Bytt sted",
+      "kpiOrderValue": "Ordreverdi"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Ingen restaurantkontekst.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Årsak",
       "actionLine": "Bruk knappen «Send til ShipDay» på bestillingen for å prøve igjen, eller ordne levering med dine egne sjåfører.",
       "viewOrderButton": "Se bestilling"
+    },
+    "staffOrderDead": {
+      "creditReturned": "De {amount} som ble betalt med {label}, er ført tilbake til kundens lommebok."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurant",
+      "colCustomer": "Kunde",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

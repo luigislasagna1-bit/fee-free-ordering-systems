@@ -769,6 +769,10 @@ export async function sendNewOrderNotificationEmail(params: {
    *  "Paid with X" / "To collect" rows (Luigi 2026-07-02). */
   creditApplied?: number;
   rewardLabel?: string | null;
+  /** Projected credit the customer will EARN on this order. The customer's
+   *  confirmation already showed it; this STAFF copy of the same order did
+   *  not, so the two receipts disagreed. Luigi 2026-08-07. */
+  rewardEarned?: number;
 }) {
   const t = await getDict(params.locale);
   const subject = t("email.newOrder.subject", { orderNumber: params.orderNumber, restaurant: params.restaurantName });
@@ -812,6 +816,7 @@ export async function sendNewOrderNotificationEmail(params: {
       currency: params.currency,
       creditApplied: params.creditApplied,
       rewardLabel: params.rewardLabel,
+      rewardEarned: params.rewardEarned,
     })
   );
   return send({ to: params.to, subject, html });
@@ -932,6 +937,14 @@ export async function sendOrderStatusUpdateEmail(params: {
    *  rejected/cancelled order (caller formats + gates on rewardsEnabled). */
   creditReturned?: string;
   rewardLabel?: string | null;
+  /** POSITIVE-status money summary — PRE-FORMATTED. The "accepted" email is
+   *  the real confirmation but carried no totals, so a customer who paid with
+   *  store credit was never told. Pass only when credit was actually applied
+   *  (the template renders nothing otherwise). Luigi 2026-08-07. */
+  creditUsed?: string;
+  orderTotalLabel?: string;
+  amountDueLabel?: string;
+  balanceSettled?: boolean;
   /** WHO cancelled (status "cancelled" only): "customer" switches the copy
    *  to the you-cancelled variant. Fabrizio cms0idtz7. */
   cancelledBy?: string;
@@ -1028,6 +1041,10 @@ export async function sendOrderStatusUpdateEmail(params: {
       paymentMethod: params.paymentMethod,
       creditReturned: params.creditReturned,
       rewardLabel: params.rewardLabel,
+      creditUsed: params.creditUsed,
+      orderTotalLabel: params.orderTotalLabel,
+      amountDueLabel: params.amountDueLabel,
+      balanceSettled: params.balanceSettled,
       cancelledBy: params.cancelledBy,
       restaurantPhone: params.restaurantPhone ?? undefined,
       restaurantEmail: params.restaurantEmail ?? undefined,
@@ -1099,6 +1116,14 @@ export async function sendOrderRejectedEmail(params: {
    *  of "we'll refund you" — matches GloriaFood's clearer wording
    *  (Fabrizio 2026-06-01). */
   paymentCaptured?: boolean;
+  /** Order money for the STAFF copy — PRE-FORMATTED, caller supplies the
+   *  currency. These emails carried no amounts at all, so the owner learned an
+   *  order died without learning what it was worth or that store credit went
+   *  back to the customer's wallet. Luigi 2026-08-07. */
+  orderTotalLabel?: string;
+  creditReturnedLabel?: string;
+  collectedLabel?: string;
+  rewardLabel?: string | null;
   restaurantEmail?: string;
   restaurantPhone?: string;
   restaurantUrl?: string;
@@ -1114,6 +1139,10 @@ export async function sendOrderRejectedEmail(params: {
       reason: params.reason ?? null,
       paidOnline: params.paidOnline ?? false,
       paymentCaptured: params.paymentCaptured ?? false,
+      orderTotalLabel: params.orderTotalLabel,
+      creditReturnedLabel: params.creditReturnedLabel,
+      collectedLabel: params.collectedLabel,
+      rewardLabel: params.rewardLabel,
       restaurantEmail: params.restaurantEmail,
       restaurantPhone: params.restaurantPhone,
       restaurantUrl: params.restaurantUrl,
@@ -1141,6 +1170,14 @@ export async function sendOrderCanceledEmail(params: {
   dashboardUrl: string;
   paidOnline?: boolean;
   reason?: string;
+  /** Order money for the STAFF copy — PRE-FORMATTED, caller supplies the
+   *  currency. These emails carried no amounts at all, so the owner learned an
+   *  order died without learning what it was worth or that store credit went
+   *  back to the customer's wallet. Luigi 2026-08-07. */
+  orderTotalLabel?: string;
+  creditReturnedLabel?: string;
+  collectedLabel?: string;
+  rewardLabel?: string | null;
   locale?: string;
 }) {
   const t = await getDict(params.locale);
@@ -1152,6 +1189,10 @@ export async function sendOrderCanceledEmail(params: {
       restaurantName: params.restaurantName,
       reason: params.reason ?? null,
       paidOnline: params.paidOnline ?? false,
+      orderTotalLabel: params.orderTotalLabel,
+      creditReturnedLabel: params.creditReturnedLabel,
+      collectedLabel: params.collectedLabel,
+      rewardLabel: params.rewardLabel,
       imprint: currentImprint(),
     })
   );

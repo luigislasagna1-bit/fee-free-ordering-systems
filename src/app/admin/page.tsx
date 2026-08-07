@@ -6,6 +6,8 @@ import { BrandDashboardClient } from "./BrandDashboardClient";
 import { loadSetupProgress } from "@/lib/setup-checklist-loader";
 import { getOrderCapUsage } from "@/lib/order-cap";
 import { REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { MONEY_SUM, splitFromSums } from "@/lib/reports/collected";
+import { resolveRewardLabel } from "@/lib/reward-label";
 
 export default async function AdminDashboard() {
   const user = await getSessionUser();
@@ -61,7 +63,7 @@ export default async function AdminDashboard() {
       // activity log, not a money figure).
       where: { restaurantId, ...REPORT_ORDER_STATUS_WHERE },
       _count: true,
-      _sum: { total: true },
+      _sum: MONEY_SUM,
     }),
     prisma.order.findMany({
       where: { restaurantId },
@@ -72,7 +74,14 @@ export default async function AdminDashboard() {
   ]);
 
   const totalOrders = orderStats.reduce((s, g) => s + g._count, 0);
-  const totalRevenue = orderStats.reduce((s, g) => s + (g._sum.total || 0), 0);
+  // Store credit is a TENDER, not income — the headline is what was actually
+  // collected in cash/card. Order value + credit redeemed ride alongside so the
+  // owner can still see the gross. (Luigi 2026-08-07.)
+  const money = splitFromSums(
+    orderStats.reduce((s, g) => s + (g._sum.total || 0), 0),
+    orderStats.reduce((s, g) => s + (g._sum.creditApplied || 0), 0),
+  );
+  const totalRevenue = money.collected;
   const pendingOrders = orderStats.find((g) => g.status === "pending")?._count || 0;
   const customerCount = await prisma.customer.count({ where: { restaurantId } });
   const orderCapUsage = await getOrderCapUsage(restaurantId!);
@@ -83,6 +92,9 @@ export default async function AdminDashboard() {
       restaurantSlug={restaurant?.slug ?? null}
       totalOrders={totalOrders}
       totalRevenue={totalRevenue}
+      orderValue={money.orderValue}
+      storeCredit={money.creditSpent}
+      rewardLabel={resolveRewardLabel(restaurant, "")}
       customerCount={customerCount}
       pendingOrders={pendingOrders}
       recentOrders={recentOrders.map((o) => ({

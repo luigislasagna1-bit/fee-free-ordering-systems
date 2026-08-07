@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "store credit 已翻译占位"
     },
-    "discounts": "折扣"
+    "discounts": "折扣",
+    "orderValue": "订单金额"
   },
   "common": {
     "showPassword": "显示密码",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "首次下单",
       "badgeOptedIn": "✓ 已订阅",
       "analyticsHint": "需要按日期范围查看消费/生命周期指标？请前往<link>报表 → 客户（列表视图）</link>——同样的顾客数据，支持日期范围筛选和 CSV 导出。",
-      "badgeOptedOut": "✕ 已退订"
+      "badgeOptedOut": "✕ 已退订",
+      "colOrderValue": "订单金额",
+      "colCreditSpent": "已使用的{label}"
     },
     "couponsAdmin": {
       "pageTitle": "优惠券与促销",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "选择门店",
       "chooserSubtitle": "此报表按门店生成 — 请选择一个门店查看。",
       "viewingLocation": "正在查看",
-      "changeLocation": "更换门店"
+      "changeLocation": "更换门店",
+      "kpiOrderValue": "订单金额"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "无餐厅上下文。",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "原因",
       "actionLine": "使用订单上的\"发送至 ShipDay\"按钮重试,或安排您自己的司机配送。",
       "viewOrderButton": "查看订单"
+    },
+    "staffOrderDead": {
+      "creditReturned": "使用{label}支付的 {amount} 已退回到顾客的钱包。"
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "餐厅",
+      "colCustomer": "顾客",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

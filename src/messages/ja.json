@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "ストアクレジット"
     },
-    "discounts": "割引"
+    "discounts": "割引",
+    "orderValue": "注文金額"
   },
   "common": {
     "showPassword": "パスワードを表示",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "初回注文",
       "badgeOptedIn": "✓ 同意済み",
       "analyticsHint": "期間別の利用金額・生涯指標をお探しですか？<link>レポート → 顧客（リスト表示）</link> — 同じ顧客データを期間フィルターと CSV エクスポートで確認できます。",
-      "badgeOptedOut": "✕ 配信停止"
+      "badgeOptedOut": "✕ 配信停止",
+      "colOrderValue": "注文金額",
+      "colCreditSpent": "使用した{label}"
     },
     "couponsAdmin": {
       "pageTitle": "クーポン＆プロモーション",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "店舗を選択",
       "chooserSubtitle": "このレポートは店舗ごとです。表示する店舗を選択してください。",
       "viewingLocation": "表示中",
-      "changeLocation": "店舗を変更"
+      "changeLocation": "店舗を変更",
+      "kpiOrderValue": "注文金額"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "レストランのコンテキストがありません。",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "理由",
       "actionLine": "注文の「ShipDay に送信」ボタンを使って再試行するか、自社のドライバーで配送を手配してください。",
       "viewOrderButton": "注文を見る"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{label}でお支払いいただいた {amount} は、お客様のウォレットに返金されました。"
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "レストラン",
+      "colCustomer": "お客様",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

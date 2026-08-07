@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import { toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { MONEY_SUM, splitFromSums } from "@/lib/reports/collected";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
@@ -43,7 +44,7 @@ export async function GET(req: NextRequest) {
       by: ["customerId"],
       where: { ...reportOrderWhere(scope.ids, range), customerId: { not: null } },
       _count: true,
-      _sum: { total: true },
+      _sum: MONEY_SUM,
     }),
     prisma.order.groupBy({
       by: ["customerId"],
@@ -60,8 +61,9 @@ export async function GET(req: NextRequest) {
   const returning = inRange.filter((r) => priorIds.has(r.customerId));
   const newInRange = inRange.filter((r) => !priorIds.has(r.customerId));
   const totalOrders = inRange.reduce((s, r) => s + r._count, 0);
-  const totalSpend = inRange.reduce((s, r) => s + (r._sum.total ?? 0), 0);
-  const returningSpend = returning.reduce((s, r) => s + (r._sum.total ?? 0), 0);
+  // COLLECTED, not gross — store credit is a tender, not income.
+  const totalSpend = inRange.reduce((s, r) => s + splitFromSums(r._sum.total, r._sum.creditApplied).collected, 0);
+  const returningSpend = returning.reduce((s, r) => s + splitFromSums(r._sum.total, r._sum.creditApplied).collected, 0);
   const avgOrders = inRange.length > 0 ? totalOrders / inRange.length : 0;
   const returningPct = inRange.length > 0 ? (returning.length / inRange.length) * 100 : 0;
 
@@ -71,7 +73,7 @@ export async function GET(req: NextRequest) {
     ["New clients", newInRange.length],
     ["Returning clients", returning.length],
     ["Avg orders per client", round2(avgOrders)],
-    ["Total spend in range", round2(totalSpend)],
+    ["Total collected in range", round2(totalSpend)],
     ["Spend from returning clients", round2(returningSpend)],
     ["Returning clients (%)", round2(returningPct)],
   ];

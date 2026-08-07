@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Store credit"
     },
-    "discounts": "Discounts"
+    "discounts": "Discounts",
+    "orderValue": "Order value"
   },
   "common": {
     "save": "Save",
@@ -3470,7 +3471,9 @@
       "colFirstOrder": "First Order",
       "badgeOptedIn": "✓ Opted in",
       "analyticsHint": "Looking for spend / lifetime metrics over a date range? <link>Reports → Clients (List view)</link> — same customers, with date-range filtering and CSV export.",
-      "badgeOptedOut": "✕ Opt out"
+      "badgeOptedOut": "✕ Opt out",
+      "colOrderValue": "Order value",
+      "colCreditSpent": "{label} spent"
     },
     "couponsAdmin": {
       "pageTitle": "Coupons & Promotions",
@@ -4773,7 +4776,8 @@
       "shareOrderLinkDesc": "Open the publishing page to grab QR codes + a social share kit.",
       "firstOrderPromoTitle": "Launch a first-order promo",
       "firstOrderPromoDesc": "Set up \"$5 off first order\" or a free-delivery coupon to convert visitors.",
-      "welcomeFootnote": "Once orders start flowing, this page becomes the GloriaFood-style dashboard with KPI cards, trend charts, and a \"Grow your restaurant\" panel of deep-link reports."
+      "welcomeFootnote": "Once orders start flowing, this page becomes the GloriaFood-style dashboard with KPI cards, trend charts, and a \"Grow your restaurant\" panel of deep-link reports.",
+      "kpiOrderValue": "Order value"
     },
     "invoice": {
       "title": "Invoice",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Reason",
       "actionLine": "Use the \"Send to ShipDay\" button on the order to try again, or arrange delivery with your own drivers.",
       "viewOrderButton": "View order"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{amount} paid with {label} has been returned to the customer's wallet."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurant",
+      "colCustomer": "Customer",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

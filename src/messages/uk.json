@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Бонусний рахунок"
     },
-    "discounts": "Знижки"
+    "discounts": "Знижки",
+    "orderValue": "Вартість замовлення"
   },
   "common": {
     "showPassword": "Показати пароль",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Перше замовлення",
       "badgeOptedIn": "✓ Погоджується",
       "analyticsHint": "Шукаєте витрати / показники за певний діапазон дат? <link>Звіти → Клієнти (Список)</link> — ті самі клієнти, з фільтрацією за датою та експортом у CSV.",
-      "badgeOptedOut": "✕ Відмовився"
+      "badgeOptedOut": "✕ Відмовився",
+      "colOrderValue": "Вартість замовлення",
+      "colCreditSpent": "Витрачені {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Купони та акції",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Виберіть локацію",
       "chooserSubtitle": "Цей звіт формується за локаціями — виберіть локацію для перегляду.",
       "viewingLocation": "Перегляд",
-      "changeLocation": "Змінити локацію"
+      "changeLocation": "Змінити локацію",
+      "kpiOrderValue": "Вартість замовлення"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Немає контексту ресторану.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Причина",
       "actionLine": "Скористайтеся кнопкою «Надіслати до ShipDay» на замовленні, щоб спробувати ще раз, або організуйте доставку власними водіями.",
       "viewOrderButton": "Переглянути замовлення"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Суму {amount}, сплачену {label}, повернуто до гаманця клієнта."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Ресторан",
+      "colCustomer": "Клієнт",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

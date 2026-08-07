@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "เครดิตร้าน"
     },
-    "discounts": "ส่วนลด"
+    "discounts": "ส่วนลด",
+    "orderValue": "มูลค่าคำสั่งซื้อ"
   },
   "common": {
     "showPassword": "แสดงรหัสผ่าน",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "ออเดอร์แรก",
       "badgeOptedIn": "✓ ยินยอมแล้ว",
       "analyticsHint": "ต้องการดูตัวชี้วัดยอดใช้จ่าย / ตลอดชีวิตในช่วงวันที่? <link>รายงาน → ลูกค้า (มุมมองรายการ)</link> — ลูกค้าเดิม พร้อมการกรองช่วงวันที่และส่งออก CSV",
-      "badgeOptedOut": "✕ ยกเลิกรับข่าวสาร"
+      "badgeOptedOut": "✕ ยกเลิกรับข่าวสาร",
+      "colOrderValue": "มูลค่าคำสั่งซื้อ",
+      "colCreditSpent": "{label} ที่ใช้ไป"
     },
     "couponsAdmin": {
       "pageTitle": "คูปองและโปรโมชั่น",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "เลือกสถานที่",
       "chooserSubtitle": "รายงานนี้แยกตามสถานที่ — เลือกสถานที่เพื่อดู",
       "viewingLocation": "กำลังดู",
-      "changeLocation": "เปลี่ยนสถานที่"
+      "changeLocation": "เปลี่ยนสถานที่",
+      "kpiOrderValue": "มูลค่าคำสั่งซื้อ"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "ไม่มีบริบทร้านอาหาร",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "เหตุผล",
       "actionLine": "ใช้ปุ่ม \"ส่งไปยัง ShipDay\" บนออร์เดอร์เพื่อลองอีกครั้ง หรือจัดส่งด้วยคนขับของคุณเอง",
       "viewOrderButton": "ดูออร์เดอร์"
+    },
+    "staffOrderDead": {
+      "creditReturned": "ยอด {amount} ที่ชำระด้วย {label} ได้คืนเข้ากระเป๋าเงินของลูกค้าแล้ว"
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "ร้านอาหาร",
+      "colCustomer": "ลูกค้า",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

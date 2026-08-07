@@ -1,6 +1,7 @@
 import "server-only";
 import prisma from "@/lib/db";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { MONEY_SELECT, collectedOf } from "@/lib/reports/collected";
 
 /**
  * Promotions Stats row-builder — shared by the /admin/reports/online-ordering/
@@ -32,6 +33,9 @@ export type PromoStatRow = {
   name: string;
   redemptions: number;
   discount: number;
+  /** COLLECTED revenue attributed to the promo — order value MINUS any store
+   *  credit tendered. Store credit is not income, so a promo whose orders were
+   *  paid in Luigi Bucks must not be credited with driving that money. */
   revenue: number;
 };
 
@@ -47,7 +51,7 @@ export async function buildPromoStatRows(
         { couponId: { not: null } },
       ],
     },
-    select: { appliedPromos: true, couponId: true, couponDiscount: true, total: true },
+    select: { appliedPromos: true, couponId: true, couponDiscount: true, ...MONEY_SELECT },
   });
 
   type Acc = PromoStatRow & { legacyCouponId?: string };
@@ -73,12 +77,12 @@ export async function buildPromoStatRows(
         if (!p) continue;
         const name = (p.name ?? "").trim() || "—";
         const code = (p.couponCode ?? "").trim();
-        bump(`p:${name}|${code}`, { code, name }, Number(p.discount ?? 0) || 0, o.total);
+        bump(`p:${name}|${code}`, { code, name }, Number(p.discount ?? 0) || 0, collectedOf(o));
       }
     } else if (o.couponId) {
       // Pre-snapshot legacy order — attribute to its coupon.
       legacyIds.add(o.couponId);
-      bump(`c:${o.couponId}`, { code: "", name: "", legacyCouponId: o.couponId }, o.couponDiscount ?? 0, o.total);
+      bump(`c:${o.couponId}`, { code: "", name: "", legacyCouponId: o.couponId }, o.couponDiscount ?? 0, collectedOf(o));
     }
   }
 

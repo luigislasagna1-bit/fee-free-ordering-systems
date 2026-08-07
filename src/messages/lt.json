@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Parduotuvės kreditas"
     },
-    "discounts": "Nuolaidos"
+    "discounts": "Nuolaidos",
+    "orderValue": "Užsakymo vertė"
   },
   "common": {
     "showPassword": "Rodyti slaptažodį",
@@ -3671,7 +3672,9 @@
       "colFirstOrder": "Pirmas užsakymas",
       "badgeOptedIn": "✓ Sutiko",
       "analyticsHint": "Ieškote išlaidų / viso laikotarpio rodiklių pagal datų intervalą? <link>Ataskaitos → Klientai (Sąrašo rodinys)</link> — tie patys klientai su datų intervalo filtravimu ir CSV eksportu.",
-      "badgeOptedOut": "✕ Atsisakyta"
+      "badgeOptedOut": "✕ Atsisakyta",
+      "colOrderValue": "Užsakymo vertė",
+      "colCreditSpent": "Išleisti {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponai ir akcijos",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Pasirinkite vietą",
       "chooserSubtitle": "Ši ataskaita yra pagal vietą — pasirinkite vietą jai peržiūrėti.",
       "viewingLocation": "Peržiūrima",
-      "changeLocation": "Keisti vietą"
+      "changeLocation": "Keisti vietą",
+      "kpiOrderValue": "Užsakymo vertė"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nėra restorano konteksto.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Priežastis",
       "actionLine": "Naudokite mygtuką \"Siųsti į ShipDay\" prie užsakymo, kad pabandytumėte vėl, arba susitarkite dėl pristatymo su savo kurjeriais.",
       "viewOrderButton": "Žiūrėti užsakymą"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{label} sumokėti {amount} grąžinti į kliento piniginę."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restoranas",
+      "colCustomer": "Klientas",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

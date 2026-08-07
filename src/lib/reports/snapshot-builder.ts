@@ -32,6 +32,7 @@
  */
 
 import prisma from "@/lib/db";
+import { MONEY_SELECT, collectedOf } from "@/lib/reports/collected";
 
 export interface BuildOptions {
   /** Number of days back to rebuild, inclusive of "yesterday". Default 1. */
@@ -120,14 +121,17 @@ async function buildSnapshotForDay(restaurantId: string, dayStart: Date, dayEnd:
   const orders = await prisma.order.findMany({
     where,
     select: {
-      total: true, status: true, type: true, channel: true,
+      ...MONEY_SELECT, status: true, type: true, channel: true,
       paymentMethod: true, customerId: true,
     },
   });
 
   const completed = orders.filter((o) => o.status === "completed");
   const rejected = orders.filter((o) => o.status === "rejected" || o.status === "cancelled");
-  const revenue = completed.reduce((s, o) => s + o.total, 0);
+  // COLLECTED, not gross — store credit is a tender, not income. This snapshot
+  // is the seed for any future cached reporting, so it must not bake in the
+  // wrong definition. Luigi 2026-08-07.
+  const revenue = completed.reduce((s, o) => s + collectedOf(o), 0);
   const revenueCents = Math.round(revenue * 100);
   const avgOrderCents = completed.length > 0 ? Math.round(revenueCents / completed.length) : 0;
 

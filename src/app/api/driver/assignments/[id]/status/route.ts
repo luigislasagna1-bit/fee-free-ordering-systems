@@ -7,6 +7,8 @@ import { resolveFrozenFeeCents } from "@/lib/feefree-delivery";
 import { recomputeDriverRating } from "@/lib/driver-rating";
 import { notifyCustomer } from "@/lib/notifications";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
+import { resolveRewardLabel, orderShowsCredit } from "@/lib/reward-label";
+import { collectedOf } from "@/lib/reports/collected";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -49,7 +51,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
           customerId: true,
           estimatedReady: true, scheduledFor: true, paymentMethod: true, paymentStatus: true,
           deliveryLat: true, deliveryLng: true,
-          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true, currency: true, feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true } } } },
+          // Store credit → the status email can show what was paid with Luigi
+          // Bucks instead of staying silent about it. Luigi 2026-08-07.
+          total: true, creditApplied: true,
+          restaurant: { select: { id: true, defaultLanguage: true, subdomain: true, customDomain: true, customDomainStatus: true, slug: true, lat: true, lng: true, currency: true, rewardsEnabled: true, rewardLabelPlural: true, rewardLabelSingular: true, feefreeDeliveryConfig: { select: { perDeliveryFeeCents: true } } } },
         },
       },
     },
@@ -229,6 +234,18 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
                 o.paymentMethod === "card" || o.paymentMethod === "paypal"
                   ? ["authorized", "paid", "refunded"].includes(o.paymentStatus ?? "")
                   : false,
+              // This was the ONE orderStatusUpdate emitter with no credit block,
+              // so a driver marking an order delivered sent the customer a
+              // status email that never mentioned the store credit they paid
+              // with. Same gate as every other call site. Luigi 2026-08-07.
+              ...(orderShowsCredit(o.restaurant as any, o)
+                ? {
+                    creditApplied: o.creditApplied,
+                    rewardLabel: resolveRewardLabel(o.restaurant as any, ""),
+                    orderTotal: o.total,
+                    balanceSettled: o.paymentStatus === "paid" || collectedOf(o) <= 0.009,
+                  }
+                : {}),
             },
           });
         } catch (e) {

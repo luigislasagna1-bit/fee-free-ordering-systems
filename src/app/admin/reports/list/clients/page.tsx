@@ -5,6 +5,8 @@ import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { MONEY_SUM, splitFromSums, collectedOf } from "@/lib/reports/collected";
+import { resolveRewardLabel } from "@/lib/reward-label";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { TableControls } from "@/components/admin/reports/TableControls";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -54,6 +56,7 @@ export default async function ListClientsPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const t = await getTranslations("admin.reportClientsList");
+  const tRoot = await getTranslations();
   const locale = await getLocale(); // last-order dates in the admin's locale, not en-US
   const sp = await searchParams;
   const user = await getSessionUser();
@@ -100,15 +103,17 @@ export default async function ListClientsPage({
       customerId: restrictIds ? { in: restrictIds } : { not: null },
     },
     _count: true,
-    _sum: { total: true },
+    _sum: MONEY_SUM,
   });
   // Sort + paginate the grouped rows in-process (cheap — typically
   // a few hundred to a few thousand distinct customers per range).
   // The requested sort is applied to the ENTIRE grouped set before the
   // slice, so header-click sorting covers the whole range.
   const sort = pickSort(sp);
+  // Rank by COLLECTED money, not gross: a customer who mostly redeems store
+  // credit must not out-rank one who actually paid. Luigi 2026-08-07.
   const value = (g: (typeof groupedAll)[number]) =>
-    sort?.key === "orders" ? g._count : (g._sum.total ?? 0);
+    sort?.key === "orders" ? g._count : splitFromSums(g._sum.total, g._sum.creditApplied).collected;
   const grouped = groupedAll
     .sort((a, b) => {
       if (sort) {
@@ -119,7 +124,9 @@ export default async function ListClientsPage({
         // repeat or vanish across page boundaries (review 2026-07-19).
         return d !== 0 ? d : (a.customerId ?? "").localeCompare(b.customerId ?? "");
       }
-      return (b._sum.total ?? 0) - (a._sum.total ?? 0); // default: spend desc, exactly as before
+      // default: collected desc (was gross spend — see `value` above)
+      return splitFromSums(b._sum.total, b._sum.creditApplied).collected
+        - splitFromSums(a._sum.total, a._sum.creditApplied).collected;
     })
     .slice((page - 1) * size, page * size);
 
@@ -127,7 +134,7 @@ export default async function ListClientsPage({
   const customers = customerIds.length > 0
     ? await prisma.customer.findMany({
         where: { id: { in: customerIds } },
-        select: { id: true, name: true, email: true, phone: true, totalOrders: true, totalSpent: true, createdAt: true },
+        select: { id: true, name: true, email: true, phone: true, totalOrders: true, totalSpent: true, totalCreditSpent: true, createdAt: true },
       })
     : [];
   const byId = new Map(customers.map((c) => [c.id, c]));
@@ -142,13 +149,21 @@ export default async function ListClientsPage({
         by: ["customerId"],
         where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId: { in: scope.ids }, customerId: { in: customerIds } },
         _count: true,
-        _sum: { total: true },
+        _sum: MONEY_SUM,
         _max: { createdAt: true },
       })
     : [];
   const lifetimeById = new Map(
-    lifetimeRows.map((r) => [r.customerId!, { orders: r._count, spend: r._sum.total ?? 0, lastOrder: r._max.createdAt }]),
+    lifetimeRows.map((r) => [
+      r.customerId!,
+      { orders: r._count, money: splitFromSums(r._sum.total, r._sum.creditApplied), lastOrder: r._max.createdAt },
+    ]),
   );
+  // Show the credit split only once store credit has actually been tendered.
+  const anyCredit =
+    groupedAll.some((g) => (g._sum.creditApplied ?? 0) > 0) ||
+    lifetimeRows.some((r) => (r._sum.creditApplied ?? 0) > 0);
+  const rewardLabelText = resolveRewardLabel(scope, tRoot("money.pay.rewardCredit"));
 
   const totalCustomers = groupedAll.length;
   const pageCount = Math.max(1, Math.ceil(totalCustomers / size));
@@ -176,7 +191,17 @@ export default async function ListClientsPage({
               <th className="py-2.5 px-4 font-semibold">{t("colContact")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colLastOrder")}</th>
               <SortHeader id="orders" label={t("colOrdersInRange")} sort={sort} sp={sp} align="right" />
-              <SortHeader id="spend" label={t("colSpendInRange")} sort={sort} sp={sp} align="right" />
+              {anyCredit && (
+                <>
+                  <th className="py-2.5 px-4 font-semibold text-right">{tRoot("admin.reportsHome.kpiOrderValue")}</th>
+                  <th className="py-2.5 px-4 font-semibold text-right">{rewardLabelText}</th>
+                </>
+              )}
+              <SortHeader
+                id="spend"
+                label={anyCredit ? tRoot("money.amountCollected") : t("colSpendInRange")}
+                sort={sort} sp={sp} align="right"
+              />
               <th className="py-2.5 px-4 font-semibold text-right">{t("colLifetimeOrders")}</th>
               <th className="py-2.5 px-4 font-semibold text-right">{t("colLifetimeSpend")}</th>
             </tr>
@@ -209,9 +234,24 @@ export default async function ListClientsPage({
                   </td>
                   <td className="py-2.5 px-4 text-gray-600 text-xs">{formatLastOrder(lifetimeById.get(c.id)?.lastOrder, locale, scope.timezone ?? undefined)}</td>
                   <td className="py-2.5 px-4 text-right text-gray-700">{g._count.toLocaleString()}</td>
-                  <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(g._sum.total ?? 0)}</td>
+                  {anyCredit && (
+                    <>
+                      <td className="py-2.5 px-4 text-right text-gray-600">{formatCurrency(g._sum.total ?? 0)}</td>
+                      <td className="py-2.5 px-4 text-right text-violet-700">
+                        {(g._sum.creditApplied ?? 0) > 0 ? `− ${formatCurrency(g._sum.creditApplied ?? 0)}` : "—"}
+                      </td>
+                    </>
+                  )}
+                  <td className="py-2.5 px-4 text-right font-semibold text-gray-900">
+                    {formatCurrency(splitFromSums(g._sum.total, g._sum.creditApplied).collected)}
+                  </td>
                   <td className="py-2.5 px-4 text-right text-gray-500">{(lifetimeById.get(c.id)?.orders ?? c.totalOrders).toLocaleString()}</td>
-                  <td className="py-2.5 px-4 text-right text-gray-700">{formatCurrency(lifetimeById.get(c.id)?.spend ?? c.totalSpent)}</td>
+                  <td className="py-2.5 px-4 text-right text-gray-700">
+                    {formatCurrency(
+                      lifetimeById.get(c.id)?.money.collected
+                        ?? collectedOf({ total: c.totalSpent, creditApplied: c.totalCreditSpent }),
+                    )}
+                  </td>
                 </tr>
               );
             })}

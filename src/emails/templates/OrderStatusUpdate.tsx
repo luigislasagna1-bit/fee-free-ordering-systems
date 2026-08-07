@@ -44,6 +44,18 @@ export type OrderStatusUpdateProps = {
   creditReturned?: string;
   /** Restaurant's reward label ("Pizza Bucks") — required with creditReturned. */
   rewardLabel?: string | null;
+  /** POSITIVE statuses (accepted / preparing / ready / completed): a compact
+   *  money summary. This email is documented above as "the real confirmation"
+   *  yet carried NO totals at all, so a customer who paid with Luigi Bucks got
+   *  a confirmation that never mentioned them (Luigi 2026-08-07). All three are
+   *  PRE-FORMATTED currency strings, and the block only renders when store
+   *  credit was actually used — a restaurant without rewards sees the email
+   *  exactly as before. */
+  creditUsed?: string;
+  orderTotalLabel?: string;
+  amountDueLabel?: string;
+  /** True when the balance is already settled — flips "Balance to pay" to "Paid". */
+  balanceSettled?: boolean;
   /** WHO cancelled (status "cancelled" only): "customer" switches the title/
    *  body to the you-cancelled variant — "The restaurant cancelled your
    *  order" would be wrong for a self-cancel. Fabrizio cms0idtz7. */
@@ -107,6 +119,7 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
     t,
     customerName, orderNumber, restaurantName, status, statusMessage, rejectionReason,
     paidOnline, paymentMethod, creditReturned, rewardLabel, cancelledBy,
+    creditUsed, orderTotalLabel, amountDueLabel, balanceSettled,
     trackingUrl, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
   } = props;
   const normalized = status.toLowerCase();
@@ -207,6 +220,29 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
         {creditCopy && (
           <InfoCard label={t("email.orderStatus.paymentLabel")} accent="emerald">
             {creditCopy}
+          </InfoCard>
+        )}
+        {/* POSITIVE statuses: the money summary this email never had. Renders
+            only when store credit was tendered, so nothing changes for a
+            restaurant without a rewards program. Luigi 2026-08-07. */}
+        {!isNegative && creditUsed && (
+          <InfoCard label={t("email.orderStatus.paymentLabel")} accent="emerald">
+            {orderTotalLabel && (
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                <span>{t("ordering.total")}</span>
+                <span>{orderTotalLabel}</span>
+              </div>
+            )}
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+              <span>{t("receipt.customer.paidWithReward", { label: rewardLabel || "" })}</span>
+              <span>− {creditUsed}</span>
+            </div>
+            {amountDueLabel && (
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 12, fontWeight: 700, marginTop: 4 }}>
+                <span>{balanceSettled ? t("money.paid") : t("receipt.customer.balanceDue")}</span>
+                <span>{amountDueLabel}</span>
+              </div>
+            )}
           </InfoCard>
         )}
         {isNegative && restaurantPhone && (

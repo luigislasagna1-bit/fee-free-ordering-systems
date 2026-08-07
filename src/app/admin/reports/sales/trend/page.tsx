@@ -4,6 +4,7 @@ import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { previousPeriod, eachDay, formatChartDate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { MONEY_SELECT, collectedOf } from "@/lib/reports/collected";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { ChartTableToggle } from "@/components/admin/reports/ChartTableToggle";
@@ -50,7 +51,7 @@ export default async function SalesTrendPage({
   // with the Dashboard + Summary.
   const currentOrders = await prisma.order.findMany({
     where: reportOrderWhere(scope.ids, range),
-    select: { total: true, createdAt: true },
+    select: { ...MONEY_SELECT, createdAt: true },
   });
 
   // Previous period — only fetched when comparison overlay is enabled,
@@ -59,7 +60,7 @@ export default async function SalesTrendPage({
   const previousOrders = compare
     ? await prisma.order.findMany({
         where: reportOrderWhere(scope.ids, prev),
-        select: { total: true, createdAt: true },
+        select: { ...MONEY_SELECT, createdAt: true },
       })
     : [];
 
@@ -135,14 +136,17 @@ function formatVal(v: number, m: Metric, currency: string): string {
   return fmtCurrency(v, currency);
 }
 
-function bucketByDay(orders: { total: number; createdAt: Date }[], days: Date[]): DayBucket[] {
+/** Buckets plot COLLECTED money (order value − store credit), matching the
+ *  Sales Summary and the Reports dashboard. Store credit is a tender, not
+ *  income, so a credit-paid day must not read as a cash day. */
+function bucketByDay(orders: { total: number; creditApplied?: number | null; createdAt: Date }[], days: Date[]): DayBucket[] {
   const map = new Map<string, { revenue: number; count: number }>();
   for (const d of days) map.set(d.toDateString(), { revenue: 0, count: 0 });
   for (const o of orders) {
     const k = new Date(o.createdAt).toDateString();
     const cur = map.get(k);
     if (cur) {
-      cur.revenue += o.total;
+      cur.revenue += collectedOf(o);
       cur.count += 1;
     }
   }

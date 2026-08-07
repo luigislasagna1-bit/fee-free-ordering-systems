@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Бонусный счёт"
     },
-    "discounts": "Скидки"
+    "discounts": "Скидки",
+    "orderValue": "Стоимость заказа"
   },
   "common": {
     "showPassword": "Показать пароль",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Первый заказ",
       "badgeOptedIn": "✓ Согласие дано",
       "analyticsHint": "Ищете метрики трат и LTV за период? <link>Отчёты → Клиенты (список)</link> — те же клиенты с фильтрацией по дате и экспортом CSV.",
-      "badgeOptedOut": "✕ Отписан"
+      "badgeOptedOut": "✕ Отписан",
+      "colOrderValue": "Стоимость заказа",
+      "colCreditSpent": "Потрачено {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Купоны и акции",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Выберите локацию",
       "chooserSubtitle": "Этот отчёт формируется по локациям — выберите локацию для просмотра.",
       "viewingLocation": "Просмотр",
-      "changeLocation": "Сменить локацию"
+      "changeLocation": "Сменить локацию",
+      "kpiOrderValue": "Стоимость заказа"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Нет контекста ресторана.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Причина",
       "actionLine": "Используйте кнопку «Отправить в ShipDay» на заказе, чтобы повторить попытку, или организуйте доставку своими водителями.",
       "viewOrderButton": "Просмотреть заказ"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Сумма {amount}, оплаченная с помощью {label}, возвращена в кошелёк клиента."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Ресторан",
+      "colCustomer": "Клиент",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

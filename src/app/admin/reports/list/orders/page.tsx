@@ -4,6 +4,8 @@ import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { MONEY_SELECT, collectedOf } from "@/lib/reports/collected";
+import { resolveRewardLabel } from "@/lib/reward-label";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { TableControls } from "@/components/admin/reports/TableControls";
 import { ExportMenu } from "@/components/admin/reports/ExportMenu";
@@ -120,7 +122,7 @@ export default async function ListOrdersPage({
         status: true,
         type: true,
         customerName: true,
-        total: true,
+        ...MONEY_SELECT,
         paymentMethod: true,
         createdAt: true,
       },
@@ -131,6 +133,12 @@ export default async function ListOrdersPage({
   ]);
 
   const pageCount = Math.max(1, Math.ceil(total / size));
+  // The CSV export has carried "Store credit used" + "Collected" columns since
+  // it shipped while this page showed only the gross Total — so a fully
+  // credit-paid order read here as a full-price sale. Same gate as the export:
+  // the columns appear only when credit was actually tendered on this page.
+  const anyCredit = orders.some((o) => (o.creditApplied ?? 0) > 0);
+  const rewardLabelText = resolveRewardLabel(scope, tRoot("money.pay.rewardCredit"));
 
   return (
     <div>
@@ -168,11 +176,17 @@ export default async function ListOrdersPage({
               <th className="py-2.5 px-4 font-semibold">{t("colPayment")}</th>
               <th className="py-2.5 px-4 font-semibold">{t("colStatus")}</th>
               <SortHeader id="total" label={t("colTotal")} sort={sort} sp={sp} align="right" />
+              {anyCredit && (
+                <>
+                  <th className="py-2.5 px-4 font-semibold text-right">{rewardLabelText}</th>
+                  <th className="py-2.5 px-4 font-semibold text-right">{tRoot("money.amountCollected")}</th>
+                </>
+              )}
             </tr>
           </thead>
           <tbody>
             {orders.length === 0 && (
-              <tr><td colSpan={7} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
+              <tr><td colSpan={anyCredit ? 9 : 7} className="py-6 px-4 text-center text-gray-400 italic">{t("emptyState")}</td></tr>
             )}
             {orders.map((o) => (
               <tr key={o.id} className="border-b border-gray-50 hover:bg-gray-50/50">
@@ -193,7 +207,15 @@ export default async function ListOrdersPage({
                   })()}
                 </td>
                 <td className="py-2.5 px-4"><StatusBadge status={o.status} /></td>
-                <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(o.total)}</td>
+                <td className={`py-2.5 px-4 text-right ${anyCredit ? "text-gray-600" : "font-semibold text-gray-900"}`}>{formatCurrency(o.total)}</td>
+                {anyCredit && (
+                  <>
+                    <td className="py-2.5 px-4 text-right text-violet-700">
+                      {(o.creditApplied ?? 0) > 0 ? `− ${formatCurrency(o.creditApplied ?? 0)}` : <span className="text-gray-400">—</span>}
+                    </td>
+                    <td className="py-2.5 px-4 text-right font-semibold text-gray-900">{formatCurrency(collectedOf(o))}</td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>

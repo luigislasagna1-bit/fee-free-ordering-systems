@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "스토어 크레딧"
     },
-    "discounts": "할인"
+    "discounts": "할인",
+    "orderValue": "주문 금액"
   },
   "common": {
     "showPassword": "비밀번호 표시",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "첫 주문",
       "badgeOptedIn": "✓ 동의함",
       "analyticsHint": "기간별 결제/생애 지표를 찾고 계신가요? <link>보고서 → 고객 (목록 보기)</link> — 동일한 고객, 기간 필터 및 CSV 내보내기 지원.",
-      "badgeOptedOut": "✕ 수신 거부"
+      "badgeOptedOut": "✕ 수신 거부",
+      "colOrderValue": "주문 금액",
+      "colCreditSpent": "사용한 {label}"
     },
     "couponsAdmin": {
       "pageTitle": "쿠폰 및 프로모션",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "매장 선택",
       "chooserSubtitle": "이 보고서는 매장별입니다. 보려면 매장을 선택하세요.",
       "viewingLocation": "보는 중",
-      "changeLocation": "매장 변경"
+      "changeLocation": "매장 변경",
+      "kpiOrderValue": "주문 금액"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "레스토랑 컨텍스트가 없습니다.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "사유",
       "actionLine": "주문의 \"ShipDay로 전송\" 버튼을 사용해 다시 시도하거나, 직접 보유한 기사로 배송을 준비하세요.",
       "viewOrderButton": "주문 보기"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{label}(으)로 결제한 {amount}이(가) 고객 지갑으로 반환되었습니다."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "레스토랑",
+      "colCustomer": "고객",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

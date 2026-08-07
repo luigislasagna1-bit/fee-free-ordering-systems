@@ -26,6 +26,8 @@ import { GrantRewardCredit } from "./GrantRewardCredit";
 import { CustomEarnRate } from "./CustomEarnRate";
 import { CustomerActionsCard } from "./CustomerActionsCard";
 import { RevokeGrantButton } from "./RevokeGrantButton";
+import { MONEY_SUM, splitFromSums, showsCredit } from "@/lib/reports/collected";
+import { resolveRewardLabel } from "@/lib/reward-label";
 
 export const dynamic = "force-dynamic";
 
@@ -35,6 +37,7 @@ export default async function CustomerDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const t = await getTranslations("admin.customerDetailPage");
+  const tRoot = await getTranslations();
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) notFound();
@@ -81,10 +84,15 @@ export default async function CustomerDetailPage({
       orderNumber: { not: { startsWith: "TEST-" } },
     },
     _count: true,
-    _sum: { total: true },
+    _sum: MONEY_SUM,
   });
   const ordersCount = liveStats._count;
-  const spentTotal = liveStats._sum.total ?? 0;
+  // Three figures, never one blended number: store credit is a TENDER, so
+  // `collected` is what this customer actually paid the restaurant in cash/card.
+  const spend = splitFromSums(liveStats._sum.total, liveStats._sum.creditApplied);
+  const spentTotal = spend.collected;
+  const showCredit = showsCredit(spend);
+  const rewardLabelText = resolveRewardLabel(restaurantRow, tRoot("money.pay.rewardCredit"));
 
   // Reward Dollars wallet for this customer (balance + recent ledger), only when
   // the restaurant has the feature on. Best-effort â€” never blocks the page.
@@ -181,7 +189,15 @@ export default async function CustomerDetailPage({
             </div>
             <div>
               <div className="text-2xl font-bold text-gray-900">{formatCurrency(spentTotal)}</div>
-              <div className="text-[10px] uppercase tracking-wider text-gray-500">{t("statSpent")}</div>
+              <div className="text-[10px] uppercase tracking-wider text-gray-500">
+                {showCredit ? tRoot("money.amountCollected") : t("statSpent")}
+              </div>
+              {showCredit && (
+                <div className="mt-1 space-y-0.5 text-[11px] text-gray-500">
+                  <div>{tRoot("admin.reportsHome.kpiOrderValue")} {formatCurrency(spend.orderValue)}</div>
+                  <div className="text-violet-700">{rewardLabelText} − {formatCurrency(spend.creditSpent)}</div>
+                </div>
+              )}
             </div>
           </div>
         </div>

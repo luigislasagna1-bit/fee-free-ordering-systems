@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { MONEY_SUM, splitFromSums } from "@/lib/reports/collected";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { previousPeriod } from "@/lib/reports/date-range";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
@@ -46,7 +47,7 @@ export default async function ClientsDashboardPage({
       by: ["customerId"],
       where: { ...reportOrderWhere(scope.ids, range), customerId: { not: null } },
       _count: true,
-      _sum: { total: true },
+      _sum: MONEY_SUM,
     }),
     prisma.order.groupBy({
       by: ["customerId"],
@@ -63,7 +64,8 @@ export default async function ClientsDashboardPage({
   const returning = inRange.filter((r) => priorIds.has(r.customerId));
   const newInRange = inRange.filter((r) => !priorIds.has(r.customerId));
   const totalOrders = inRange.reduce((s, r) => s + r._count, 0);
-  const totalSpend = inRange.reduce((s, r) => s + (r._sum.total ?? 0), 0);
+  // COLLECTED, not gross — store credit is a tender, not income.
+  const totalSpend = inRange.reduce((s, r) => s + splitFromSums(r._sum.total, r._sum.creditApplied).collected, 0);
   const avgOrders = inRange.length > 0 ? totalOrders / inRange.length : 0;
 
   return (
@@ -100,7 +102,7 @@ export default async function ClientsDashboardPage({
           <div>
             <div className="text-xs text-gray-500 mb-1">{t("spendFromReturningClients")}</div>
             <div className="text-xl font-bold text-gray-900">
-              {formatCurrency(returning.reduce((s, r) => s + (r._sum.total ?? 0), 0))}
+              {formatCurrency(returning.reduce((s, r) => s + splitFromSums(r._sum.total, r._sum.creditApplied).collected, 0))}
             </div>
             <div className="text-[10px] text-gray-400 mt-0.5">
               {inRange.length > 0

@@ -17,6 +17,7 @@ import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 import { isInheriting, type InheritableSetting } from "@/lib/inherited-settings";
 import { dateKeyInTimezone, parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
+import { MONEY_SUM, splitFromSums } from "@/lib/reports/collected";
 
 export interface BrandSummary {
   id: string;
@@ -358,7 +359,7 @@ export async function loadBrandSummary(parentId: string): Promise<BrandSummary |
             orderNumber: { not: { startsWith: "TEST-" } },
           },
           _count: true,
-          _sum: { total: true },
+          _sum: MONEY_SUM,
         }),
       ]);
       return {
@@ -371,7 +372,9 @@ export async function loadBrandSummary(parentId: string): Promise<BrandSummary |
         stats: {
           pendingOrders: pending,
           totalOrdersToday: todayStats._count,
-          revenueToday: todayStats._sum.total ?? 0,
+          // COLLECTED, not gross — store credit is a tender, not income, so a
+          // location paid in Luigi Bucks must not show it as money taken in.
+          revenueToday: splitFromSums(todayStats._sum.total, todayStats._sum.creditApplied).collected,
         },
       };
     })

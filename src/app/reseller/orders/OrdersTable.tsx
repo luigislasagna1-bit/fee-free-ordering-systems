@@ -19,9 +19,13 @@ export type ViewRow = {
   id: string;
   kind: "order" | "reservation";
   ref: string;
-  name: string;
+  /** The STORE the order belongs to. Mandatory context — orderNumber is only
+   *  unique per restaurant, so a cross-restaurant list needs it to disambiguate. */
+  restaurantName: string;
   companyName: string;
   address: string;
+  /** WHO placed it. The feed has always fetched this; the table used to drop it. */
+  customerName: string;
   placedTime: string;
   placedDate: string;
   status: string;
@@ -34,7 +38,7 @@ export type ViewRow = {
 };
 
 export type TableLabels = {
-  colName: string; colCompany: string; colOrderId: string; colPlacedAt: string;
+  colRestaurant: string; colCustomer: string; colCompany: string; colOrderId: string; colPlacedAt: string;
   colStatus: string; colType: string; colTotal: string; colPayment: string; colFulfilment: string;
   columnsLabel: string; emptyState: string; notApplicable: string;
   tabDetail: string; tabItems: string; showLess: string;
@@ -45,12 +49,20 @@ export type TableLabels = {
   loading: string; loadError: string;
 };
 
-type ColumnId = "name" | "company" | "orderId" | "placedAt" | "status" | "type" | "total" | "payment" | "fulfilment";
+type ColumnId =
+  | "restaurant" | "customer" | "company" | "orderId" | "placedAt"
+  | "status" | "type" | "total" | "payment" | "fulfilment";
 
-/** Name / Status / Type are always on — they're what makes a row identifiable. */
-const ALWAYS_ON: ColumnId[] = ["name", "status", "type"];
-const COLUMN_ORDER: ColumnId[] = ["name", "company", "orderId", "placedAt", "status", "type", "total", "payment", "fulfilment"];
-const STORAGE_KEY = "ffos.ordersList.columns.v1";
+/** Restaurant / Customer / Status / Type are always on — together they're what
+ *  makes a row identifiable at a glance (which store, who, what happened). */
+const ALWAYS_ON: ColumnId[] = ["restaurant", "customer", "status", "type"];
+const ALL_COLUMNS: ColumnId[] = [
+  "restaurant", "customer", "company", "orderId", "placedAt",
+  "status", "type", "total", "payment", "fulfilment",
+];
+/** v2: the column ids changed (name → restaurant, + customer). A v1 value would
+ *  restore a set referencing dead ids, so the key is bumped rather than migrated. */
+const STORAGE_KEY = "ffos.ordersList.columns.v2";
 
 const DOT: Record<string, string> = {
   accepted: "bg-emerald-500", completed: "bg-emerald-500",
@@ -74,8 +86,19 @@ type DetailPayload = {
   meta: { label: string; value: string }[];
 };
 
-export function OrdersTable({ rows, labels }: { rows: ViewRow[]; labels: TableLabels }) {
-  const [visible, setVisible] = useState<ColumnId[]>(COLUMN_ORDER);
+export function OrdersTable({
+  rows,
+  labels,
+  showCompany,
+}: {
+  rows: ViewRow[];
+  labels: TableLabels;
+  /** False when every row's company equals its restaurant name — a standalone
+   *  store would otherwise print the same string in two adjacent columns. */
+  showCompany: boolean;
+}) {
+  const columnOrder = showCompany ? ALL_COLUMNS : ALL_COLUMNS.filter((c) => c !== "company");
+  const [visible, setVisible] = useState<ColumnId[]>(() => columnOrder);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [tab, setTab] = useState<"detail" | "items">("detail");
@@ -88,17 +111,18 @@ export function OrdersTable({ rows, labels }: { rows: ViewRow[]; labels: TableLa
       if (raw) {
         const saved = JSON.parse(raw) as ColumnId[];
         if (Array.isArray(saved) && saved.length) {
-          setVisible(COLUMN_ORDER.filter((c) => ALWAYS_ON.includes(c) || saved.includes(c)));
+          setVisible(columnOrder.filter((c) => ALWAYS_ON.includes(c) || saved.includes(c)));
         }
       }
     } catch {
       /* corrupt value — fall back to all columns */
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggle = (c: ColumnId) => {
     if (ALWAYS_ON.includes(c)) return;
-    const next = visible.includes(c) ? visible.filter((x) => x !== c) : COLUMN_ORDER.filter((x) => visible.includes(x) || x === c);
+    const next = visible.includes(c) ? visible.filter((x) => x !== c) : columnOrder.filter((x) => visible.includes(x) || x === c);
     setVisible(next);
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)); } catch { /* private mode */ }
   };
@@ -120,7 +144,8 @@ export function OrdersTable({ rows, labels }: { rows: ViewRow[]; labels: TableLa
   };
 
   const head: Record<ColumnId, string> = {
-    name: labels.colName, company: labels.colCompany, orderId: labels.colOrderId,
+    restaurant: labels.colRestaurant, customer: labels.colCustomer,
+    company: labels.colCompany, orderId: labels.colOrderId,
     placedAt: labels.colPlacedAt, status: labels.colStatus, type: labels.colType,
     total: labels.colTotal, payment: labels.colPayment, fulfilment: labels.colFulfilment,
   };
@@ -147,7 +172,7 @@ export function OrdersTable({ rows, labels }: { rows: ViewRow[]; labels: TableLa
                   <>
                     <button type="button" className="fixed inset-0 z-10 cursor-default" aria-hidden onClick={() => setPickerOpen(false)} />
                     <div className="absolute right-2 top-11 z-20 w-56 bg-white rounded-lg shadow-xl border border-gray-200 py-1.5 normal-case tracking-normal">
-                      {COLUMN_ORDER.map((c) => {
+                      {columnOrder.map((c) => {
                         const locked = ALWAYS_ON.includes(c);
                         const on = visible.includes(c);
                         return (
@@ -192,11 +217,16 @@ export function OrdersTable({ rows, labels }: { rows: ViewRow[]; labels: TableLa
                           <tr>
                             {visible.map((c) => (
                               <td key={c} className={`py-3 px-4 ${c === "total" ? "text-right" : ""}`}>
-                                {c === "name" && (
+                                {c === "restaurant" && (
                                   <>
-                                    <div className="font-semibold text-gray-900">{r.name}</div>
+                                    <div className="font-semibold text-gray-900">{r.restaurantName}</div>
                                     {r.address && <div className="text-xs text-gray-500 mt-0.5">{r.address}</div>}
                                   </>
+                                )}
+                                {c === "customer" && (
+                                  r.customerName
+                                    ? <span className="text-gray-900">{r.customerName}</span>
+                                    : <span className="text-gray-400">{labels.notApplicable}</span>
                                 )}
                                 {c === "company" && <span className="text-gray-600">{r.companyName}</span>}
                                 {c === "orderId" && <span className="font-mono text-xs text-gray-700">{r.ref}</span>}

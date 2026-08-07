@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Bolti kredit"
     },
-    "discounts": "Kedvezmények"
+    "discounts": "Kedvezmények",
+    "orderValue": "Rendelés értéke"
   },
   "common": {
     "showPassword": "Jelszó megjelenítése",
@@ -2910,7 +2911,9 @@
       "colFirstOrder": "Első rendelés",
       "badgeOptedIn": "✓ Feliratkozott",
       "analyticsHint": "Dátumtartományra vonatkozó költési / életkori mutatókat keres? <link>Jelentések → Ügyfelek (lista nézet)</link> — ugyanazok az ügyfelek, dátumtartomány-szűrővel és CSV exporttal.",
-      "badgeOptedOut": "✕ Leiratkozott"
+      "badgeOptedOut": "✕ Leiratkozott",
+      "colOrderValue": "Rendelés értéke",
+      "colCreditSpent": "Elköltött {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponok & Promóciók",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Válassz egy helyszínt",
       "chooserSubtitle": "Ez a jelentés helyszínenkénti — a megtekintéshez válassz egy helyszínt.",
       "viewingLocation": "Megtekintés",
-      "changeLocation": "Helyszín módosítása"
+      "changeLocation": "Helyszín módosítása",
+      "kpiOrderValue": "Rendelés értéke"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nincs éttermi kontextus.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Indok",
       "actionLine": "Használd a rendelésnél a \"Küldés a ShipDay-nek\" gombot az újbóli próbához, vagy intézd a kiszállítást saját futárral.",
       "viewOrderButton": "Rendelés megtekintése"
+    },
+    "staffOrderDead": {
+      "creditReturned": "A {label} egyenlegből fizetett {amount} visszakerült az ügyfél tárcájába."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Étterem",
+      "colCustomer": "Vendég",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Kredit u prodavnici"
     },
-    "discounts": "Popusti"
+    "discounts": "Popusti",
+    "orderValue": "Vrednost porudžbine"
   },
   "common": {
     "showPassword": "Прикажи лозинку",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Prva porudžbina",
       "badgeOptedIn": "✓ Prijavljeni",
       "analyticsHint": "Tražite statistiku potrošnje i metrike tokom datumskog opsega? <link>Izveštaji → Kupci (prikaz liste)</link> — isti kupci, sa filtriranjem po datumu i CSV izvozom.",
-      "badgeOptedOut": "✕ Odjavljen"
+      "badgeOptedOut": "✕ Odjavljen",
+      "colOrderValue": "Vrednost porudžbine",
+      "colCreditSpent": "Potrošeni {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponi i promocije",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Изаберите локацију",
       "chooserSubtitle": "Овај извештај је по локацији — изаберите локацију да бисте га видели.",
       "viewingLocation": "Приказ",
-      "changeLocation": "Промени локацију"
+      "changeLocation": "Промени локацију",
+      "kpiOrderValue": "Vrednost porudžbine"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Razlog",
       "actionLine": "Koristite dugme \"Pošalji na ShipDay\" na porudžbini za novi pokušaj, ili organizujte dostavu sopstvenim vozačima.",
       "viewOrderButton": "Pogledaj porudžbinu"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Iznos {amount} plaćen putem {label} vraćen je u novčanik kupca."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restoran",
+      "colCustomer": "Kupac",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

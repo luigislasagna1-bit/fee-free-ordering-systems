@@ -24,6 +24,15 @@ export type OrderRejectedProps = {
    *  from "we'll refund you" (captured, money moved). Mirrors what
    *  GloriaFood writes in the same case (Fabrizio 2026-06-01 feedback). */
   paymentCaptured?: boolean;
+  /** Order money — the staff copy of a rejected/missed order used to carry NO
+   *  amounts at all, so the owner was told an order died without being told
+   *  what it was worth or that store credit went back to the customer's wallet.
+   *  All PRE-FORMATTED; the block renders only when `orderTotalLabel` is set.
+   *  Luigi 2026-08-07. */
+  orderTotalLabel?: string;
+  creditReturnedLabel?: string;
+  collectedLabel?: string;
+  rewardLabel?: string | null;
   restaurantUrl?: string;
   restaurantEmail?: string;
   restaurantPhone?: string;
@@ -32,6 +41,7 @@ export type OrderRejectedProps = {
 
 export default function OrderRejected(props: OrderRejectedProps) {
   const { t, customerName, orderNumber, restaurantName, reason, paidOnline, paymentCaptured,
+    orderTotalLabel, creditReturnedLabel, collectedLabel, rewardLabel,
     restaurantUrl, restaurantEmail, restaurantPhone, imprint } = props;
   // A timed-out order is auto-rejected ("missed") — show the MISSED badge (amber,
   // reusing the kitchen's word) and hide the internal "Auto-rejected:" reason,
@@ -53,6 +63,31 @@ export default function OrderRejected(props: OrderRejectedProps) {
         {reason && !isMissed && (
           <InfoCard label={t("email.orderRejected.reasonLabel")} accent="amber">
             {reason}
+          </InfoCard>
+        )}
+        {orderTotalLabel && (
+          <InfoCard label={t("money.orderValue")} accent="slate">
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+              <span>{t("ordering.total")}</span>
+              <span>{orderTotalLabel}</span>
+            </div>
+            {creditReturnedLabel && (
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
+                <span>{t("receipt.customer.paidWithReward", { label: rewardLabel || "" })}</span>
+                <span>− {creditReturnedLabel}</span>
+              </div>
+            )}
+            {collectedLabel && (
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 12, fontWeight: 700, marginTop: 4 }}>
+                <span>{t("money.amountCollected")}</span>
+                <span>{collectedLabel}</span>
+              </div>
+            )}
+            {creditReturnedLabel && (
+              <div style={{ marginTop: 8, fontSize: 13 }}>
+                {t("email.staffOrderDead.creditReturned", { label: rewardLabel || "", amount: creditReturnedLabel })}
+              </div>
+            )}
           </InfoCard>
         )}
         {paidOnline && (

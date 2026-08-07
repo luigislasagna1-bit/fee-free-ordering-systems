@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Crédit en magasin"
     },
-    "discounts": "Remises"
+    "discounts": "Remises",
+    "orderValue": "Valeur de la commande"
   },
   "common": {
     "showPassword": "Afficher le mot de passe",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Première commande",
       "badgeOptedIn": "✓ Consentement donné",
       "analyticsHint": "Vous cherchez des métriques de dépenses / valeur à vie sur une période ? <link>Rapports → Clients (vue liste)</link> — mêmes clients, avec filtrage par période et export CSV.",
-      "badgeOptedOut": "✕ Désabonné"
+      "badgeOptedOut": "✕ Désabonné",
+      "colOrderValue": "Valeur de la commande",
+      "colCreditSpent": "{label} dépensés"
     },
     "couponsAdmin": {
       "pageTitle": "Coupons & Promotions",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Choisissez un établissement",
       "chooserSubtitle": "Ce rapport est par établissement — choisissez-en un pour l'afficher.",
       "viewingLocation": "Affichage",
-      "changeLocation": "Changer d'établissement"
+      "changeLocation": "Changer d'établissement",
+      "kpiOrderValue": "Valeur de la commande"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Aucun contexte de restaurant.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Motif",
       "actionLine": "Utilisez le bouton « Envoyer à ShipDay » sur la commande pour réessayer, ou organisez la livraison avec vos propres livreurs.",
       "viewOrderButton": "Voir la commande"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Les {amount} payés en {label} ont été recrédités sur le portefeuille du client."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurant",
+      "colCustomer": "Client",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

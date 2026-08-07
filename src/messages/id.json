@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Kredit toko"
     },
-    "discounts": "Diskon"
+    "discounts": "Diskon",
+    "orderValue": "Nilai pesanan"
   },
   "common": {
     "showPassword": "Tampilkan kata sandi",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Pesanan Pertama",
       "badgeOptedIn": "✓ Setuju",
       "analyticsHint": "Mencari metrik pengeluaran / seumur hidup berdasarkan rentang tanggal? <link>Laporan → Klien (Tampilan daftar)</link> — pelanggan yang sama, dengan filter rentang tanggal dan ekspor CSV.",
-      "badgeOptedOut": "✕ Batal Langganan"
+      "badgeOptedOut": "✕ Batal Langganan",
+      "colOrderValue": "Nilai pesanan",
+      "colCreditSpent": "{label} yang digunakan"
     },
     "couponsAdmin": {
       "pageTitle": "Kupon & Promosi",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Pilih lokasi",
       "chooserSubtitle": "Laporan ini per lokasi — pilih lokasi untuk melihatnya.",
       "viewingLocation": "Melihat",
-      "changeLocation": "Ubah lokasi"
+      "changeLocation": "Ubah lokasi",
+      "kpiOrderValue": "Nilai pesanan"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Tidak ada konteks restoran.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Alasan",
       "actionLine": "Gunakan tombol \"Kirim ke ShipDay\" pada pesanan untuk mencoba lagi, atau atur pengiriman dengan pengemudi Anda sendiri.",
       "viewOrderButton": "Lihat pesanan"
+    },
+    "staffOrderDead": {
+      "creditReturned": "{amount} yang dibayar dengan {label} telah dikembalikan ke dompet pelanggan."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restoran",
+      "colCustomer": "Pelanggan",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

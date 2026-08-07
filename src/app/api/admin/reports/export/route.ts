@@ -6,6 +6,7 @@ import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
+import { MONEY_SUM, splitFromSums, showsCredit } from "@/lib/reports/collected";
 
 /**
  * GET /api/admin/reports/export
@@ -48,8 +49,8 @@ export async function GET(req: NextRequest) {
     topItems, typeBreakdown,
     perLocationRaw,
   ] = await Promise.all([
-    // Revenue (sum of total) + order count for the range, in ONE aggregate.
-    prisma.order.aggregate({ where: reportOrderWhere(scope.ids, range), _sum: { total: true }, _count: true }),
+    // Order value + store credit + order count for the range, in ONE aggregate.
+    prisma.order.aggregate({ where: reportOrderWhere(scope.ids, range), _sum: MONEY_SUM, _count: true }),
     prisma.order.count({ where: reportOrderWhere(scope.ids, range) }),
     // Distinct known customers in the range (mirrors countDistinctCustomers).
     prisma.order.groupBy({
@@ -57,7 +58,7 @@ export async function GET(req: NextRequest) {
       where: { ...reportOrderWhere(scope.ids, range), customerId: { not: null } },
     }),
     // All-time revenue + order count (the KPI cards' secondary "All time" line).
-    prisma.order.aggregate({ where: { restaurantId: { in: scope.ids }, ...REPORT_ORDER_STATUS_WHERE }, _sum: { total: true }, _count: true }),
+    prisma.order.aggregate({ where: { restaurantId: { in: scope.ids }, ...REPORT_ORDER_STATUS_WHERE }, _sum: MONEY_SUM, _count: true }),
     prisma.customer.count({ where: { restaurantId: { in: scope.ids } } }),
     // Top selling items (same groupBy + take as the page).
     prisma.orderItem.groupBy({
@@ -76,26 +77,35 @@ export async function GET(req: NextRequest) {
     }),
     // Per-location breakdown (chain only).
     scope.isChain
-      ? prisma.order.groupBy({ by: ["restaurantId"], where: reportOrderWhere(scope.ids, range), _count: true, _sum: { total: true } })
-      : Promise.resolve([] as Array<{ restaurantId: string; _count: number; _sum: { total: number | null } }>),
+      ? prisma.order.groupBy({ by: ["restaurantId"], where: reportOrderWhere(scope.ids, range), _count: true, _sum: MONEY_SUM })
+      : Promise.resolve([] as Array<{ restaurantId: string; _count: number; _sum: { total: number | null; creditApplied: number | null } }>),
   ]);
 
-  const rangeRev = rangeRevenueAgg._sum.total ?? 0;
+  // Store credit is a TENDER, not income: "Revenue" here is COLLECTED money,
+  // with order value + credit redeemed listed beside it so the export reconciles
+  // with the dashboard AND with the Sales Summary.
+  const rangeMoney = splitFromSums(rangeRevenueAgg._sum.total, rangeRevenueAgg._sum.creditApplied);
   const rangeCustomers = rangeCustomerRows.length;
-  const rangeAvg = rangeOrders > 0 ? rangeRev / rangeOrders : 0;
-  const allTimeRev = allTimeAgg._sum.total ?? 0;
+  const rangeAvg = rangeOrders > 0 ? rangeMoney.collected / rangeOrders : 0;
+  const allTimeMoney = splitFromSums(allTimeAgg._sum.total, allTimeAgg._sum.creditApplied);
   const allTimeOrders = allTimeAgg._count;
+  const creditShown = showsCredit(rangeMoney) || showsCredit(allTimeMoney);
 
   // Per-location rows joined to the scope's location list, sorted by revenue —
   // identical shape + ordering to the dashboard's LocationBreakdown table.
   const perLocById = new Map(
-    (perLocationRaw as Array<{ restaurantId: string; _count: number; _sum: { total: number | null } }>)
-      .map((r) => [r.restaurantId, { orders: r._count, revenue: r._sum.total ?? 0 }]),
+    (perLocationRaw as Array<{ restaurantId: string; _count: number; _sum: { total: number | null; creditApplied: number | null } }>)
+      .map((r) => [r.restaurantId, { orders: r._count, money: splitFromSums(r._sum.total, r._sum.creditApplied) }]),
   );
   const locationRows = scope.locations
     .map((l) => {
       const s = perLocById.get(l.id);
-      return { name: l.name, currency: l.currency, orders: s?.orders ?? 0, revenue: s?.revenue ?? 0 };
+      return {
+        name: l.name, currency: l.currency, orders: s?.orders ?? 0,
+        revenue: s?.money.collected ?? 0,
+        orderValue: s?.money.orderValue ?? 0,
+        credit: s?.money.creditSpent ?? 0,
+      };
     })
     .sort((a, b) => b.revenue - a.revenue);
 
@@ -117,7 +127,11 @@ export async function GET(req: NextRequest) {
   rows.push(["SUMMARY"]);
   rows.push(["Metric", "This range", "All-time"]);
   rows.push(["Orders", rangeOrders, allTimeOrders]);
-  rows.push(["Revenue", round2(rangeRev), round2(allTimeRev)]);
+  if (creditShown) {
+    rows.push(["Order value", round2(rangeMoney.orderValue), round2(allTimeMoney.orderValue)]);
+    rows.push(["Store credit redeemed", round2(rangeMoney.creditSpent), round2(allTimeMoney.creditSpent)]);
+  }
+  rows.push([creditShown ? "Collected" : "Revenue", round2(rangeMoney.collected), round2(allTimeMoney.collected)]);
   rows.push(["Average order", round2(rangeAvg), ""]);
   rows.push(["Customers", rangeCustomers, allTimeCustomers]);
   rows.push([]);
@@ -125,15 +139,21 @@ export async function GET(req: NextRequest) {
   // BY LOCATION (chain only)
   if (scope.isChain) {
     rows.push(["BY LOCATION"]);
-    rows.push(["Location", "Orders", "Revenue"]);
-    for (const l of locationRows) rows.push([l.name, l.orders, round2(l.revenue)]);
+    rows.push(creditShown
+      ? ["Location", "Orders", "Order value", "Store credit redeemed", "Collected"]
+      : ["Location", "Orders", "Revenue"]);
+    for (const l of locationRows) {
+      rows.push(creditShown
+        ? [l.name, l.orders, round2(l.orderValue), round2(l.credit), round2(l.revenue)]
+        : [l.name, l.orders, round2(l.revenue)]);
+    }
     rows.push([]);
   }
 
   // REVENUE BY CURRENCY (chain + multi-currency only)
   if (revenueByCurrency.length > 0) {
-    rows.push(["REVENUE BY CURRENCY"]);
-    rows.push(["Currency", "Revenue"]);
+    rows.push([creditShown ? "COLLECTED BY CURRENCY" : "REVENUE BY CURRENCY"]);
+    rows.push(["Currency", creditShown ? "Collected" : "Revenue"]);
     let currencyTotal = 0;
     for (const [cur, rev] of revenueByCurrency) {
       rows.push([cur.toUpperCase(), round2(rev)]);

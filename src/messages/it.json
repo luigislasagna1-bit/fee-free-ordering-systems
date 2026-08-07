@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Credito negozio"
     },
-    "discounts": "Sconti"
+    "discounts": "Sconti",
+    "orderValue": "Valore dell'ordine"
   },
   "common": {
     "showPassword": "Mostra password",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Primo ordine",
       "badgeOptedIn": "✓ Consenso prestato",
       "analyticsHint": "Cerchi metriche di spesa / lifetime in un intervallo di date? <link>Report → Clienti (Vista elenco)</link> — stessi clienti, con filtro date e export CSV.",
-      "badgeOptedOut": "✕ Disiscritto"
+      "badgeOptedOut": "✕ Disiscritto",
+      "colOrderValue": "Valore dell'ordine",
+      "colCreditSpent": "{label} spesi"
     },
     "couponsAdmin": {
       "pageTitle": "Coupon e promozioni",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Scegli una sede",
       "chooserSubtitle": "Questo report è per sede — scegli una sede per visualizzarlo.",
       "viewingLocation": "Visualizzazione",
-      "changeLocation": "Cambia sede"
+      "changeLocation": "Cambia sede",
+      "kpiOrderValue": "Valore dell'ordine"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nessun contesto ristorante.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Motivazione",
       "actionLine": "Usa il pulsante \"Invia a ShipDay\" sull'ordine per riprovare, oppure organizza la consegna con i tuoi corrieri.",
       "viewOrderButton": "Visualizza ordine"
+    },
+    "staffOrderDead": {
+      "creditReturned": "I {amount} pagati con {label} sono stati restituiti al portafoglio del cliente."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Ristorante",
+      "colCustomer": "Cliente",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

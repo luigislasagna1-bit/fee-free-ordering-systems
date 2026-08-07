@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Guthaben"
     },
-    "discounts": "Rabatte"
+    "discounts": "Rabatte",
+    "orderValue": "Bestellwert"
   },
   "common": {
     "showPassword": "Passwort anzeigen",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Erste Bestellung",
       "badgeOptedIn": "✓ Zugestimmt",
       "analyticsHint": "Ausgaben- / Lifetime-Kennzahlen über einen Zeitraum? <link>Berichte → Kunden (Listenansicht)</link> — dieselben Kunden mit Datumbereichsfilterung und CSV-Export.",
-      "badgeOptedOut": "✕ Abgemeldet"
+      "badgeOptedOut": "✕ Abgemeldet",
+      "colOrderValue": "Bestellwert",
+      "colCreditSpent": "Ausgegebene {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Gutscheine & Aktionen",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Standort auswählen",
       "chooserSubtitle": "Dieser Bericht ist standortbezogen – wähle einen Standort, um ihn anzuzeigen.",
       "viewingLocation": "Ansicht",
-      "changeLocation": "Standort wechseln"
+      "changeLocation": "Standort wechseln",
+      "kpiOrderValue": "Bestellwert"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Kein Restaurant-Kontext.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Grund",
       "actionLine": "Verwende die Schaltfläche „An ShipDay senden“ bei der Bestellung, um es erneut zu versuchen, oder organisiere die Lieferung mit deinen eigenen Fahrern.",
       "viewOrderButton": "Bestellung ansehen"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Die mit {label} bezahlten {amount} wurden dem Guthaben des Kunden gutgeschrieben."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurant",
+      "colCustomer": "Kunde",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

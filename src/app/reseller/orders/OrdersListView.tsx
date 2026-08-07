@@ -7,7 +7,7 @@ import { paymentMethodLabelKey } from "@/lib/payment-label";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { TableControls } from "@/components/admin/reports/TableControls";
 import { buildQuery, one, Pagination, type SearchParams } from "@/components/admin/reports/table-nav";
-import { listScopeRestaurants, hasMixedCurrency, type OrdersScope } from "@/lib/reseller/scope";
+import { listScopeRestaurants, hasMixedCurrency, hasDistinctCompanies, type OrdersScope } from "@/lib/reseller/scope";
 import { fetchOrderFeed, FEED_STATUSES, FEED_TYPES, type FeedStatus, type FeedType } from "@/lib/reseller/order-feed";
 import { OrdersTable, type ViewRow, type TableLabels } from "./OrdersTable";
 import { FeedFilters } from "./FeedFilters";
@@ -70,6 +70,12 @@ export async function OrdersListView({
 
   const feed = await fetchOrderFeed({ scope, range, q, status, types, restaurantId, page, size });
 
+  // The Company column only earns its place when it differs from the restaurant
+  // name. Narrowed by the active restaurant filter so filtering to one standalone
+  // store drops the duplicate column instead of echoing its own name.
+  const companyScope = restaurantId ? restaurants.filter((r) => r.id === restaurantId) : restaurants;
+  const showCompany = hasDistinctCompanies(companyScope);
+
   // ── Per-row formatting: each restaurant has its own timezone AND currency,
   // so this can never be hoisted to a single page-wide formatter.
   const fmtTime = (d: Date, tz: string | null) =>
@@ -91,9 +97,10 @@ export async function OrdersListView({
     id: r.id,
     kind: r.kind,
     ref: r.ref,
-    name: r.restaurant.name,
+    restaurantName: r.restaurant.name,
     companyName: r.restaurant.companyName,
     address: r.restaurant.address,
+    customerName: r.customerName,
     placedTime: fmtTime(r.placedAt, r.restaurant.timezone),
     placedDate: fmtDate(r.placedAt, r.restaurant.timezone),
     status: r.status,
@@ -115,7 +122,8 @@ export async function OrdersListView({
   }));
 
   const labels: TableLabels = {
-    colName: t("colName"), colCompany: t("colCompany"), colOrderId: t("colOrderId"),
+    colRestaurant: t("colRestaurant"), colCustomer: t("colCustomer"),
+    colCompany: t("colCompany"), colOrderId: t("colOrderId"),
     colPlacedAt: t("colPlacedAt"), colStatus: tRoot("admin.reportOrdersList.colStatus"),
     colType: tRoot("admin.reportOrdersList.colType"), colTotal: tRoot("admin.reportOrdersList.colTotal"),
     colPayment: t("colPayment"), colFulfilment: t("colFulfilment"),
@@ -197,7 +205,7 @@ export async function OrdersListView({
       {mixedCurrency && <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3">{t("mixedCurrencyNote")}</p>}
       {feed.depthCapped && <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3">{t("narrowRange")}</p>}
 
-      <OrdersTable rows={rows} labels={labels} />
+      <OrdersTable rows={rows} labels={labels} showCompany={showCompany} />
 
       <div className="flex items-center justify-between gap-3 flex-wrap mt-3">
         <Link href={`${basePath}?${olderQ.toString()}`} className="text-sm text-gray-600 underline hover:text-gray-900">

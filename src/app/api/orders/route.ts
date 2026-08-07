@@ -1961,6 +1961,12 @@ export async function POST(req: NextRequest) {
             email: cleanEmail,
             phone: cleanPhone,
             customerAccountId: currentAccount?.id ?? null,
+            // Seed the lifetime counters with THIS order. They used to start at
+            // zero here while the returning-customer branch below incremented,
+            // so a customer's FIRST order never counted and every "total spent"
+            // figure was one order light forever. Luigi 2026-08-07.
+            totalOrders: 1,
+            totalSpent: serverTotal,
             // Reports — populated at create so first-time customers are
             // captured in the lapsed-customer / cohort queries.
             lastOrderAt: new Date(),
@@ -2831,6 +2837,18 @@ export async function POST(req: NextRequest) {
           if (orderNumberClash && attempt < 3) continue; // fresh number next attempt
           throw e;
         }
+      }
+      // Lifetime store-credit counter. Deliberately AFTER the order row exists
+      // (creditApplied is only resolved further down than the totalSpent bump)
+      // and only for the rare credit-paying order, so the normal path costs
+      // nothing extra. Fire-and-forget: a display counter must never fail a
+      // placed order, and scripts/backfill-customer-spend.ts recomputes it from
+      // real orders. This NEVER touches RewardAccount/RewardLedger — a customer
+      // can't lose Luigi Bucks here. Luigi 2026-08-07.
+      if (creditApplied > 0 && customer?.id) {
+        prisma.customer
+          .update({ where: { id: customer.id }, data: { totalCreditSpent: { increment: creditApplied } } })
+          .catch((e) => console.error("[orders POST] totalCreditSpent increment failed:", e));
       }
     } catch (createErr) {
       // Best-effort rollback of the coupon claim above. If THIS update

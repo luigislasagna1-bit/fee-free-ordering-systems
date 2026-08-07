@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import { previousPeriod, eachDay, toISODate, formatChartDate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { MONEY_SELECT, collectedOf } from "@/lib/reports/collected";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
@@ -41,12 +42,12 @@ export async function GET(req: NextRequest) {
   const [current, previous] = await Promise.all([
     prisma.order.findMany({
       where: reportOrderWhere(scope.ids, range),
-      select: { total: true, createdAt: true },
+      select: { ...MONEY_SELECT, createdAt: true },
     }),
     compare
       ? prisma.order.findMany({
           where: reportOrderWhere(scope.ids, previousPeriod(range)),
-          select: { total: true, createdAt: true },
+          select: { ...MONEY_SELECT, createdAt: true },
         })
       : [],
   ]);
@@ -98,13 +99,14 @@ function valueOf(b: Bucket, m: Metric): number {
   return Math.round(v * 100) / 100;
 }
 
-function bucket(orders: { total: number; createdAt: Date }[], days: Date[]): Bucket[] {
+/** COLLECTED money per day (order value − store credit), matching the page. */
+function bucket(orders: { total: number; creditApplied?: number | null; createdAt: Date }[], days: Date[]): Bucket[] {
   const map = new Map<string, { revenue: number; count: number }>();
   for (const d of days) map.set(d.toDateString(), { revenue: 0, count: 0 });
   for (const o of orders) {
     const k = new Date(o.createdAt).toDateString();
     const cur = map.get(k);
-    if (cur) { cur.revenue += o.total; cur.count += 1; }
+    if (cur) { cur.revenue += collectedOf(o); cur.count += 1; }
   }
   return days.map((d) => {
     const b = map.get(d.toDateString())!;

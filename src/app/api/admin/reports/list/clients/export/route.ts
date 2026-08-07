@@ -4,6 +4,7 @@ import { getSessionUser } from "@/lib/session";
 import { toISODate } from "@/lib/reports/date-range";
 import { parseDateRangeInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere, REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
+import { MONEY_SUM, splitFromSums } from "@/lib/reports/collected";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { buildExportResponse, pickFormat } from "@/lib/reports/export-response";
 
@@ -33,7 +34,7 @@ export async function GET(req: NextRequest) {
     by: ["customerId"],
     where: { ...reportOrderWhere(scope.ids, range), customerId: { not: null } },
     _count: true,
-    _sum: { total: true },
+    _sum: MONEY_SUM,
   });
   // ?sort=orders|spend&dir=asc|desc — the SAME strict allowlist + comparator
   // as the page (pickSort in list/clients/page.tsx), incl. the deterministic
@@ -43,20 +44,22 @@ export async function GET(req: NextRequest) {
   const sortKey = (["orders", "spend"] as const).find((k) => k === rawSort);
   const dir = sp.dir?.trim() === "desc" ? "desc" : "asc";
   const value = (g: (typeof grouped)[number]) =>
-    sortKey === "orders" ? g._count : (g._sum.total ?? 0);
+    sortKey === "orders" ? g._count : splitFromSums(g._sum.total, g._sum.creditApplied).collected;
   grouped.sort((a, b) => {
     if (sortKey) {
       const d = (value(a) - value(b)) * (dir === "asc" ? 1 : -1);
       return d !== 0 ? d : (a.customerId ?? "").localeCompare(b.customerId ?? "");
     }
-    return (b._sum.total ?? 0) - (a._sum.total ?? 0); // default: spend desc, exactly as before
+    // default: COLLECTED desc — store credit is a tender, not spend received.
+    return splitFromSums(b._sum.total, b._sum.creditApplied).collected
+      - splitFromSums(a._sum.total, a._sum.creditApplied).collected;
   });
 
   const customerIds = grouped.map((g) => g.customerId!).filter(Boolean);
   const customers = customerIds.length > 0
     ? await prisma.customer.findMany({
         where: { id: { in: customerIds } },
-        select: { id: true, name: true, email: true, phone: true, totalOrders: true, totalSpent: true, createdAt: true },
+        select: { id: true, name: true, email: true, phone: true, totalOrders: true, totalSpent: true, totalCreditSpent: true, createdAt: true },
       })
     : [];
   const byId = new Map(customers.map((c) => [c.id, c]));
@@ -69,16 +72,16 @@ export async function GET(req: NextRequest) {
         by: ["customerId"],
         where: { ...REPORT_ORDER_STATUS_WHERE, restaurantId: { in: scope.ids }, customerId: { in: customerIds } },
         _count: true,
-        _sum: { total: true },
+        _sum: MONEY_SUM,
       })
     : [];
   const lifetimeById = new Map(
-    lifetimeRows.map((r) => [r.customerId!, { orders: r._count, spend: r._sum.total ?? 0 }]),
+    lifetimeRows.map((r) => [r.customerId!, { orders: r._count, money: splitFromSums(r._sum.total, r._sum.creditApplied) }]),
   );
 
   const rows: (string | number | Date)[][] = [[
     "Customer", "Email", "Phone",
-    "Orders in range", "Spend in range",
+    "Orders in range", "Order value in range", "Store credit in range", "Collected in range",
     "Lifetime orders", "Lifetime spend",
     "First seen",
   ]];
@@ -95,8 +98,11 @@ export async function GET(req: NextRequest) {
       c.phone ?? "",
       g._count,
       round2(g._sum.total ?? 0),
+      round2(g._sum.creditApplied ?? 0),
+      round2(splitFromSums(g._sum.total, g._sum.creditApplied).collected),
       lifetimeById.get(c.id)?.orders ?? c.totalOrders,
-      round2(lifetimeById.get(c.id)?.spend ?? c.totalSpent),
+      round2(lifetimeById.get(c.id)?.money.collected
+        ?? splitFromSums(c.totalSpent, c.totalCreditSpent).collected),
       fmtDate(c.createdAt),
     ]);
   }

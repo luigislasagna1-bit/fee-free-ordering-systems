@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "رصيد المتجر"
     },
-    "discounts": "الخصومات"
+    "discounts": "الخصومات",
+    "orderValue": "قيمة الطلب"
   },
   "common": {
     "showPassword": "إظهار كلمة المرور",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "أول طلب",
       "badgeOptedIn": "✓ مشترك",
       "analyticsHint": "هل تبحث عن مقاييس الإنفاق / الإجمالي عبر نطاق تاريخ؟ <link>التقارير ← العملاء (عرض القائمة)</link> — نفس العملاء، مع تصفية نطاق التاريخ وتصدير CSV.",
-      "badgeOptedOut": "✕ إلغاء الاشتراك"
+      "badgeOptedOut": "✕ إلغاء الاشتراك",
+      "colOrderValue": "قيمة الطلب",
+      "colCreditSpent": "{label} المستخدمة"
     },
     "couponsAdmin": {
       "pageTitle": "الكوبونات والعروض",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "اختر موقعًا",
       "chooserSubtitle": "هذا التقرير خاص بكل موقع — اختر موقعًا لعرضه.",
       "viewingLocation": "عرض",
-      "changeLocation": "تغيير الموقع"
+      "changeLocation": "تغيير الموقع",
+      "kpiOrderValue": "قيمة الطلب"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "لا يوجد سياق مطعم.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "السبب",
       "actionLine": "استخدم زر \"إرسال إلى ShipDay\" على الطلب للمحاولة مرة أخرى، أو رتّب التوصيل مع سائقيك الخاصين.",
       "viewOrderButton": "عرض الطلب"
+    },
+    "staffOrderDead": {
+      "creditReturned": "تمت إعادة مبلغ {amount} المدفوع باستخدام {label} إلى محفظة العميل."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "المطعم",
+      "colCustomer": "العميل",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

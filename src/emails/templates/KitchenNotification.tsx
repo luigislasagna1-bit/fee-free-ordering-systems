@@ -75,6 +75,9 @@ export type KitchenNotificationProps = {
    *  (Luigi 2026-07-02). Only sent when the rewards program is ON. */
   creditApplied?: number;
   rewardLabel?: string | null;
+  /** Projected credit the customer EARNS on this order — so the staff copy of
+   *  the receipt matches the customer's. Luigi 2026-08-07. */
+  rewardEarned?: number;
   /** Headline shown in the header subtitle + the lead badge. Defaults to
    *  the localized "New order" (the placement ping). The acceptance/
    *  confirmation email passes a localized "Order confirmed" so staff can
@@ -93,7 +96,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
     orderType, estimatedMinutes, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, savedDeliveryFee, tip, depositTotal, discount, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
-    creditApplied, rewardLabel, showAcceptHint = true,
+    creditApplied, rewardLabel, rewardEarned, showAcceptHint = true,
   } = props;
   const leadLabel = headline ?? t("email.newOrder.badgeNew");
   // Localized order-type chip — keyed by the raw DB value; unknown values
@@ -102,6 +105,10 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
   const orderTypeLabel = typeKeyed && !typeKeyed.startsWith("receipt.") ? typeKeyed : orderType ?? null;
   const hasItems = items && items.length > 0;
   const rewardUsed = Math.max(0, Number(creditApplied ?? 0));
+  // Staff copy shows what the customer EARNED too, so the two receipts for the
+  // same order finally match — the customer's said "You earned $4.20" while the
+  // kitchen's said nothing. Luigi 2026-08-07.
+  const rewardEarnedAmt = Math.max(0, Number(rewardEarned ?? 0));
   const toCollect = Math.round(Math.max(0, total - rewardUsed) * 100) / 100;
   const rewardName = rewardLabel?.trim() || t("email.newOrder.creditFallback");
   const collectLabel = paidOnline ? t("email.newOrder.collected") : t("email.newOrder.toCollect");
@@ -208,6 +215,8 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
               totalLabel={t("receipt.customer.total")}
               rewardUsed={rewardUsed}
               rewardUsedLabel={t("email.newOrder.paidWith", { label: rewardName })}
+              rewardEarned={rewardEarnedAmt}
+              rewardEarnedLabel={t("receipt.customer.earnedReward", { label: rewardName })}
               balanceDue={toCollect}
               balanceDueLabel={collectLabel}
             />

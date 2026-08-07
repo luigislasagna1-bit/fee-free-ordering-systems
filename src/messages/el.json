@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Πίστωση καταστήματος"
     },
-    "discounts": "Εκπτώσεις"
+    "discounts": "Εκπτώσεις",
+    "orderValue": "Αξία παραγγελίας"
   },
   "common": {
     "showPassword": "Εμφάνιση κωδικού πρόσβασης",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Πρώτη παραγγελία",
       "badgeOptedIn": "✓ Συμφώνησε",
       "analyticsHint": "Αναζητάτε μετρήσεις δαπανών / διάρκειας ζωής σε εύρος ημερομηνιών; <link>Αναφορές → Πελάτες (Προβολή λίστας)</link> — ίδιοι πελάτες, με φίλτρο εύρους ημερομηνιών και εξαγωγή CSV.",
-      "badgeOptedOut": "✕ Εξαίρεση"
+      "badgeOptedOut": "✕ Εξαίρεση",
+      "colOrderValue": "Αξία παραγγελίας",
+      "colCreditSpent": "{label} που δαπανήθηκαν"
     },
     "couponsAdmin": {
       "pageTitle": "Κουπόνια & Προσφορές",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Επιλέξτε τοποθεσία",
       "chooserSubtitle": "Αυτή η αναφορά είναι ανά τοποθεσία — επιλέξτε μια τοποθεσία για προβολή.",
       "viewingLocation": "Προβολή",
-      "changeLocation": "Αλλαγή τοποθεσίας"
+      "changeLocation": "Αλλαγή τοποθεσίας",
+      "kpiOrderValue": "Αξία παραγγελίας"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Δεν υπάρχει πλαίσιο εστιατορίου.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Αιτία",
       "actionLine": "Χρησιμοποιήστε το κουμπί «Αποστολή στο ShipDay» στην παραγγελία για να δοκιμάσετε ξανά, ή οργανώστε την παράδοση με τους δικούς σας διανομείς.",
       "viewOrderButton": "Προβολή παραγγελίας"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Το ποσό {amount} που πληρώθηκε με {label} επιστράφηκε στο πορτοφόλι του πελάτη."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Εστιατόριο",
+      "colCustomer": "Πελάτης",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

@@ -27,6 +27,8 @@ import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledg
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
 import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
 import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
+import { resolveRewardLabel, orderShowsCredit } from "@/lib/reward-label";
+import { collectedOf } from "@/lib/reports/collected";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
 
 const ALLOWED_STATUSES = ["pending", "accepted", "preparing", "ready", "completed", "rejected", "cancelled"] as const;
@@ -873,15 +875,19 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
             // wallet got it back (the reject path released it via
             // releaseRewardForOrder). Feature-gated; the template only renders
             // this on negative statuses. Audit 2026-07-11.
-            ...(["rejected", "cancelled", "canceled"].includes(newStatus) &&
-            (order.restaurant as any).rewardsEnabled === true &&
-            (order.creditApplied ?? 0) > 0
+            // POSITIVE statuses get the same credit facts, plus the total, so
+            // the "accepted" email (the real confirmation) finally shows
+            // Total / paid with Luigi Bucks / balance. Previously it carried no
+            // money at all, so a credit-paying customer was never told.
+            // Luigi 2026-08-07.
+            ...(orderShowsCredit(order.restaurant as any, order)
               ? {
                   creditApplied: order.creditApplied,
-                  rewardLabel:
-                    (order.restaurant as any).rewardLabelPlural?.trim() ||
-                    (order.restaurant as any).rewardLabelSingular?.trim() ||
-                    null,
+                  rewardLabel: resolveRewardLabel(order.restaurant as any, ""),
+                  orderTotal: order.total,
+                  balanceSettled:
+                    order.paymentStatus === "paid" ||
+                    collectedOf(order) <= 0.009,
                 }
               : {}),
           },
@@ -940,6 +946,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               customerName: order.customerName,
               reason: order.rejectionReason || undefined,
               dashboardUrl: `${baseUrl}/admin/orders`,
+              orderTotal: order.total,
+              ...(orderShowsCredit(order.restaurant as any, order)
+                ? { creditApplied: order.creditApplied, rewardLabel: resolveRewardLabel(order.restaurant as any, "") }
+                : {}),
             },
           });
         } catch (e) {
@@ -958,6 +968,10 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
               orderNumber: order.orderNumber,
               customerName: order.customerName,
               dashboardUrl: `${baseUrl}/admin/orders`,
+              orderTotal: order.total,
+              ...(orderShowsCredit(order.restaurant as any, order)
+                ? { creditApplied: order.creditApplied, rewardLabel: resolveRewardLabel(order.restaurant as any, "") }
+                : {}),
             },
           });
         } catch (e) {

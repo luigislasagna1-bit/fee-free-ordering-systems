@@ -1,6 +1,9 @@
 import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { CustomersClient } from "./CustomersClient";
+import { getTranslations } from "next-intl/server";
+import { collectedOf } from "@/lib/reports/collected";
+import { resolveRewardLabel } from "@/lib/reward-label";
 
 /**
  * /admin/customers — the editable CRM hub.
@@ -18,6 +21,7 @@ import { CustomersClient } from "./CustomersClient";
 export const dynamic = "force-dynamic";
 
 export default async function CustomersPage() {
+  const tRoot = await getTranslations();
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return null;
@@ -35,7 +39,7 @@ export default async function CustomersPage() {
       orderBy: { totalSpent: "desc" },
       select: {
         id: true, name: true, email: true, phone: true,
-        totalOrders: true, totalSpent: true, createdAt: true,
+        totalOrders: true, totalSpent: true, totalCreditSpent: true, createdAt: true,
         passwordHash: true,
         // When the customer created their account (null for guests) —
         // distinct from createdAt, which is when the row appeared (first
@@ -54,7 +58,7 @@ export default async function CustomersPage() {
     }),
     prisma.restaurant.findUnique({
       where: { id: restaurantId },
-      select: { rewardsEnabled: true, rewardLabelPlural: true },
+      select: { rewardsEnabled: true, rewardLabelPlural: true, rewardLabelSingular: true },
     }),
   ]);
   const balanceByCustomer = new Map(wallets.map((w) => [w.customerId, w.balance]));
@@ -64,7 +68,11 @@ export default async function CustomersPage() {
     email: c.email,
     phone: c.phone,
     totalOrders: c.totalOrders,
+    // Three separate figures, never one blended number: store credit is a
+    // TENDER, not spend the restaurant received. Luigi 2026-08-07.
     totalSpent: c.totalSpent,
+    creditSpent: c.totalCreditSpent ?? 0,
+    collected: collectedOf({ total: c.totalSpent, creditApplied: c.totalCreditSpent }),
     createdAt: c.createdAt.toISOString(),
     signedUpAt: c.signedUpAt ? c.signedUpAt.toISOString() : null,
     hasAccount: !!c.passwordHash,
@@ -76,7 +84,7 @@ export default async function CustomersPage() {
     <CustomersClient
       customers={customers}
       rewardsEnabled={restaurant?.rewardsEnabled ?? false}
-      rewardLabel={restaurant?.rewardLabelPlural?.trim() || "Reward Dollars"}
+      rewardLabel={resolveRewardLabel(restaurant, tRoot("money.pay.rewardCredit"))}
     />
   );
 }

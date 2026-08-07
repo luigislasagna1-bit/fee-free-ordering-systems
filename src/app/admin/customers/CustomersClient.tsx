@@ -33,7 +33,13 @@ type CustomerRow = {
   email: string | null;
   phone: string | null;
   totalOrders: number;
+  /** GROSS lifetime order value — before store credit. Never present this as
+   *  "spend the restaurant received": that is `collected`. */
   totalSpent: number;
+  /** Lifetime store credit ("Luigi Bucks") this customer tendered. */
+  creditSpent: number;
+  /** totalSpent − creditSpent — real cash/card the restaurant took from them. */
+  collected: number;
   createdAt: string;
   /** When the customer created their ACCOUNT — null for guests. Distinct
    *  from createdAt (row creation = first order). Luigi 2026-07-19. */
@@ -60,8 +66,14 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
 }) {
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.customersList");
+  const tMoney = useTranslations("money");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [query, setQuery] = useState("");
+
+  // Split the spend column into Order value / credit spent / Collected only
+  // once somebody has actually paid with store credit here. A restaurant that
+  // never ran a rewards program sees the exact table it saw before.
+  const anyCredit = useMemo(() => customers.some((c) => c.creditSpent > 0), [customers]);
 
   const counts = useMemo(() => ({
     all: customers.length,
@@ -91,6 +103,8 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
     phone: (c) => c.phone,
     orders: (c) => c.totalOrders,
     spent: (c) => c.totalSpent,
+    creditSpent: (c) => c.creditSpent,
+    collected: (c) => c.collected,
     rewards: (c) => c.rewardBalance,
     marketing: (c) => c.marketingConsent,
     firstOrder: (c) => c.createdAt,
@@ -109,7 +123,7 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
     // mislabeled — it always held createdAt); "Signed up date" = the real
     // account-creation date, blank for guests. The wallet column always
     // exports (stable CSV shape) under the restaurant's own reward label.
-    const header = ["Name", "Email", "Phone", "Total orders", "Total spent", `${rewardLabel} balance`, "First order date", "Signed up date", "Has account", "Marketing consent"];
+    const header = ["Name", "Email", "Phone", "Total orders", "Order value", `${rewardLabel} spent`, "Collected", `${rewardLabel} balance`, "First order date", "Signed up date", "Has account", "Marketing consent"];
     const lines = [header.join(",")];
     for (const c of sorted) {
       lines.push([
@@ -118,6 +132,8 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
         escCsv(c.phone),
         escCsv(c.totalOrders),
         escCsv(c.totalSpent.toFixed(2)),
+        escCsv(c.creditSpent.toFixed(2)),
+        escCsv(c.collected.toFixed(2)),
         escCsv(c.rewardBalance.toFixed(2)),
         escCsv(c.createdAt.slice(0, 10)),
         escCsv(c.signedUpAt ? c.signedUpAt.slice(0, 10) : ""),
@@ -239,8 +255,15 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-bold text-gray-900">{formatCurrency(c.totalSpent)}</div>
-                        <div className="text-[10px] text-gray-400 uppercase tracking-wider">{t("totalSpentLabel")}</div>
+                        <div className="font-bold text-gray-900">{formatCurrency(anyCredit ? c.collected : c.totalSpent)}</div>
+                        <div className="text-[10px] text-gray-400 uppercase tracking-wider">
+                          {anyCredit ? tMoney("amountCollected") : t("totalSpentLabel")}
+                        </div>
+                        {anyCredit && c.creditSpent > 0 && (
+                          <div className="text-[10px] text-violet-700 mt-0.5">
+                            {formatCurrency(c.totalSpent)} − {formatCurrency(c.creditSpent)} {rewardLabel}
+                          </div>
+                        )}
                         {rewardsEnabled && c.rewardBalance > 0 && (
                           <>
                             <div className="font-semibold text-violet-700 text-sm mt-1">{formatCurrency(c.rewardBalance)}</div>
@@ -280,7 +303,16 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
                       { id: "email", label: t("colEmail") },
                       { id: "phone", label: t("colPhone") },
                       { id: "orders", label: t("colOrders") },
-                      { id: "spent", label: t("colTotalSpent") },
+                      // Store credit is a TENDER, not spend the restaurant
+                      // received — so once ANY customer has paid with it the
+                      // single blended column splits into three honest ones.
+                      { id: "spent", label: anyCredit ? t("colOrderValue") : t("colTotalSpent") },
+                      ...(anyCredit
+                        ? [
+                            { id: "creditSpent", label: t("colCreditSpent", { label: rewardLabel }) },
+                            { id: "collected", label: tMoney("amountCollected") },
+                          ]
+                        : []),
                       // The restaurant's own wallet label ("Luigi Bucks") —
                       // configured value, shown verbatim; column hidden when
                       // the rewards master toggle is off.
@@ -311,7 +343,15 @@ export function CustomersClient({ customers, rewardsEnabled, rewardLabel }: {
                       <td className="px-4 py-3 text-gray-600">{c.email || "—"}</td>
                       <td className="px-4 py-3 text-gray-600">{c.phone || "—"}</td>
                       <td className="px-4 py-3 text-gray-600">{c.totalOrders}</td>
-                      <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(c.totalSpent)}</td>
+                      <td className={`px-4 py-3 ${anyCredit ? "text-gray-600" : "font-semibold text-gray-900"}`}>{formatCurrency(c.totalSpent)}</td>
+                      {anyCredit && (
+                        <>
+                          <td className="px-4 py-3 text-violet-700">
+                            {c.creditSpent > 0 ? `− ${formatCurrency(c.creditSpent)}` : <span className="text-gray-400">—</span>}
+                          </td>
+                          <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(c.collected)}</td>
+                        </>
+                      )}
                       {rewardsEnabled && (
                         <td className="px-4 py-3">
                           {c.rewardBalance > 0 ? (

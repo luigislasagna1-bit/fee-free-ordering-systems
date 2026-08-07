@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "קרדיט בחנות"
     },
-    "discounts": "הנחות"
+    "discounts": "הנחות",
+    "orderValue": "שווי ההזמנה"
   },
   "common": {
     "showPassword": "הצגת סיסמה",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "הזמנה ראשונה",
       "badgeOptedIn": "✓ הסכים",
       "analyticsHint": "מחפש מדדי הוצאות / לכל החיים לפי טווח תאריכים? <link>דוחות ← לקוחות (תצוגת רשימה)</link> — אותם לקוחות, עם סינון טווח תאריכים וייצוא CSV.",
-      "badgeOptedOut": "✕ ביטול הסכמה"
+      "badgeOptedOut": "✕ ביטול הסכמה",
+      "colOrderValue": "שווי ההזמנה",
+      "colCreditSpent": "{label} שנוצלו"
     },
     "couponsAdmin": {
       "pageTitle": "קופונים ומבצעים",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "בחר מיקום",
       "chooserSubtitle": "דוח זה הוא לפי מיקום — בחר מיקום כדי לצפות בו.",
       "viewingLocation": "מציג",
-      "changeLocation": "שנה מיקום"
+      "changeLocation": "שנה מיקום",
+      "kpiOrderValue": "שווי ההזמנה"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "אין הקשר מסעדה.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "סיבה",
       "actionLine": "השתמשו בכפתור \"שלח ל-ShipDay\" בהזמנה כדי לנסות שוב, או סדרו משלוח עם הנהגים שלכם.",
       "viewOrderButton": "צפייה בהזמנה"
+    },
+    "staffOrderDead": {
+      "creditReturned": "הסכום {amount} ששולם באמצעות {label} הוחזר לארנק של הלקוח."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "מסעדה",
+      "colCustomer": "לקוח",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

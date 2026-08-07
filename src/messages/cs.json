@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Kredit v obchodě"
     },
-    "discounts": "Slevy"
+    "discounts": "Slevy",
+    "orderValue": "Hodnota objednávky"
   },
   "common": {
     "showPassword": "Zobrazit heslo",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "První objednávka",
       "badgeOptedIn": "✓ Přihlášen",
       "analyticsHint": "Hledáte metriky útrat a celoživotní hodnoty zákazníka za datové rozmezí? <link>Reporty → Klienti (zobrazení seznamu)</link> — stejní zákazníci s filtrováním datového rozsahu a exportem CSV.",
-      "badgeOptedOut": "✕ Odhlášen"
+      "badgeOptedOut": "✕ Odhlášen",
+      "colOrderValue": "Hodnota objednávky",
+      "colCreditSpent": "Utracené {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kupóny a akce",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Vyberte lokalitu",
       "chooserSubtitle": "Tento přehled je podle lokality — vyberte lokalitu pro zobrazení.",
       "viewingLocation": "Zobrazuje se",
-      "changeLocation": "Změnit lokalitu"
+      "changeLocation": "Změnit lokalitu",
+      "kpiOrderValue": "Hodnota objednávky"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Chybí kontext restaurace.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Důvod",
       "actionLine": "Použijte tlačítko \"Odeslat do ShipDay\" u objednávky a zkuste to znovu, nebo zajistěte doručení vlastními kurýry.",
       "viewOrderButton": "Zobrazit objednávku"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Částka {amount} zaplacená pomocí {label} byla vrácena do peněženky zákazníka."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurace",
+      "colCustomer": "Zákazník",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

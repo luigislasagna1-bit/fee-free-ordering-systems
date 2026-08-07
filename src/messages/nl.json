@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Winkeltegoed"
     },
-    "discounts": "Kortingen"
+    "discounts": "Kortingen",
+    "orderValue": "Bestelwaarde"
   },
   "common": {
     "showPassword": "Wachtwoord tonen",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Eerste bestelling",
       "badgeOptedIn": "✓ Aangemeld",
       "analyticsHint": "Zoekt u bestedingen / levenslange statistieken over een datumbereik? <link>Rapporten → Klanten (lijstweergave)</link> — dezelfde klanten, met datumbereikfiltering en CSV-export.",
-      "badgeOptedOut": "✕ Afgemeld"
+      "badgeOptedOut": "✕ Afgemeld",
+      "colOrderValue": "Bestelwaarde",
+      "colCreditSpent": "Bestede {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Coupons en promoties",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Kies een locatie",
       "chooserSubtitle": "Dit rapport is per locatie — kies een locatie om het te bekijken.",
       "viewingLocation": "Bekijken",
-      "changeLocation": "Locatie wijzigen"
+      "changeLocation": "Locatie wijzigen",
+      "kpiOrderValue": "Bestelwaarde"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Geen restaurantcontext.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Reden",
       "actionLine": "Gebruik de knop 'Naar ShipDay verzenden' bij de bestelling om het opnieuw te proberen, of regel de bezorging met je eigen bezorgers.",
       "viewOrderButton": "Bestelling bekijken"
+    },
+    "staffOrderDead": {
+      "creditReturned": "De met {label} betaalde {amount} is teruggestort naar de wallet van de klant."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurant",
+      "colCustomer": "Klant",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

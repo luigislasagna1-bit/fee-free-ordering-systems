@@ -365,7 +365,7 @@ export async function exportPersonData(scope: { restaurantId?: string; email: st
     }),
     prisma.customer.findMany({
       where: { ...restWhere, email: insensitive },
-      select: { id: true, restaurantId: true, name: true, email: true, phone: true, address: true, totalOrders: true, totalSpent: true, lastOrderAt: true, createdAt: true },
+      select: { id: true, restaurantId: true, name: true, email: true, phone: true, address: true, totalOrders: true, totalSpent: true, totalCreditSpent: true, lastOrderAt: true, createdAt: true },
       take: 500,
     }),
     prisma.order.findMany({

@@ -12,6 +12,7 @@
 
 import prisma from "@/lib/db";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
+import { resolveRewardLabel, orderShowsCredit } from "@/lib/reward-label";
 import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder } from "@/lib/reward-ledger";
@@ -469,6 +470,10 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
           customerName: order.customerName,
           reason: reasonText,
           dashboardUrl: `${baseUrl}/admin/orders`,
+          orderTotal: order.total,
+          ...(orderShowsCredit(order.restaurant as any, order)
+            ? { creditApplied: order.creditApplied, rewardLabel: resolveRewardLabel(order.restaurant as any, "") }
+            : {}),
         },
       }).catch((e: unknown) => console.error("[auto-reject notifyStaff]", e));
     } catch (e) {

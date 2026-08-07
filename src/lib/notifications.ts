@@ -24,6 +24,7 @@
 import prisma from "@/lib/db";
 import { formatTime } from "@/lib/format-time";
 import { formatCurrency } from "@/lib/utils";
+import { collectedOf } from "@/lib/reports/collected";
 import {
   sendNewOrderNotificationEmail,
   sendCustomerSignupNotificationEmail,
@@ -274,10 +275,25 @@ export type StaffEventPayload =
       deliveryAddress?: string | null; customerNotes?: string | null;
       // Store-credit part-payment → "Paid with X" / "To collect" rows so staff
       // never over-collect (Luigi 2026-07-02). Only set when rewards are ON.
-      creditApplied?: number; rewardLabel?: string | null }
+      creditApplied?: number; rewardLabel?: string | null;
+      /** Projected credit the customer earns — so the STAFF copy of the receipt
+       *  matches the customer's, which already showed it. Luigi 2026-08-07. */
+      rewardEarned?: number }
   | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
-  | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
-  | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string }
+  | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string;
+      /** Order money for the staff copy. These two emails carried NO amounts,
+       *  so the owner was told an order died without being told what it was
+       *  worth or that store credit went back to the customer's wallet.
+       *  Formatted at dispatch (that is where the currency lives).
+       *  Luigi 2026-08-07. */
+      orderTotal?: number; creditApplied?: number; rewardLabel?: string | null }
+  | { event: "orderCanceled" | "orderMissed"; orderNumber: string; customerName: string; dashboardUrl: string;
+      /** Order money for the staff copy. These two emails carried NO amounts,
+       *  so the owner was told an order died without being told what it was
+       *  worth or that store credit went back to the customer's wallet.
+       *  Formatted at dispatch (that is where the currency lives).
+       *  Luigi 2026-08-07. */
+      orderTotal?: number; creditApplied?: number; rewardLabel?: string | null }
   | { event: "dispatchRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string }
   | { event: "reservationConfirmed"; customerName: string; partySize: number; date: string; time: string; confirmationCode: string; status: "confirmed" | "pending" | "cancelled"; dashboardUrl: string;
       // Smart buttons (Fabrizio cmsajnvkm): adults/children split + structured
@@ -357,6 +373,37 @@ export async function notifyStaff(args: {
   return { sent, skipped: restaurant.notificationRecipients.length - sent };
 }
 
+/**
+ * Pre-format the money lines for the STAFF "order rejected / canceled / missed"
+ * emails. Store credit is a TENDER, not income, so the owner sees three
+ * figures: the order value, what was paid with the store's credit (and is now
+ * back in the customer's wallet), and what was actually collected.
+ *
+ * Returns {} when the order carried no credit context, so a restaurant without
+ * a rewards program gets byte-identical emails to before. Luigi 2026-08-07.
+ */
+function staffOrderMoney(
+  payload: { orderTotal?: number; creditApplied?: number; rewardLabel?: string | null },
+  currency?: string,
+): { orderTotalLabel?: string; creditReturnedLabel?: string; collectedLabel?: string; rewardLabel?: string | null } {
+  if (payload.orderTotal == null) return {};
+  const cur = currency || "usd";
+  const credit = payload.creditApplied ?? 0;
+  return {
+    orderTotalLabel: formatCurrency(payload.orderTotal, cur),
+    ...(credit > 0
+      ? {
+          creditReturnedLabel: formatCurrency(credit, cur),
+          collectedLabel: formatCurrency(
+            collectedOf({ total: payload.orderTotal, creditApplied: credit }),
+            cur,
+          ),
+          rewardLabel: payload.rewardLabel ?? null,
+        }
+      : {}),
+  };
+}
+
 /** Routes a payload to the matching `send*` function from src/lib/email.ts.
  *  Every staff event must be handled here — if you add a new event to
  *  StaffEvent, TypeScript will force you to handle it. */
@@ -398,6 +445,7 @@ async function dispatchStaffEvent(
         customerNotes: payload.customerNotes,
         creditApplied: payload.creditApplied,
         rewardLabel: payload.rewardLabel,
+        rewardEarned: payload.rewardEarned,
         hoursFormat,
         locale,
         currency,
@@ -454,6 +502,7 @@ async function dispatchStaffEvent(
         customerName: payload.customerName,
         reason: payload.reason,
         dashboardUrl: payload.dashboardUrl,
+        ...staffOrderMoney(payload, currency),
         locale,
       });
       return;
@@ -465,6 +514,7 @@ async function dispatchStaffEvent(
         orderNumber: payload.orderNumber,
         customerName: payload.customerName,
         dashboardUrl: payload.dashboardUrl,
+        ...staffOrderMoney(payload, currency),
         locale,
       });
       return;
@@ -586,6 +636,13 @@ export type CustomerEventPayload =
        *  gates on rewardsEnabled; the email adds the "returned to your wallet"
        *  card so a bucks-paid customer never reads "nothing to refund". */
       creditApplied?: number; rewardLabel?: string | null;
+      /** Order total — lets the POSITIVE-status email ("accepted" is the real
+       *  confirmation) show Total / paid-with-credit / balance. Only used when
+       *  creditApplied > 0, so a non-rewards restaurant's email is unchanged.
+       *  Luigi 2026-08-07. */
+      orderTotal?: number;
+      /** True when nothing is left to pay (fully prepaid or fully credit). */
+      balanceSettled?: boolean;
       /** WHO cancelled (for status "cancelled"): "customer" flips the email
        *  copy to the you-cancelled variant instead of "the restaurant
        *  cancelled your order". */
@@ -857,6 +914,20 @@ export async function notifyCustomer(args: {
               ? formatCurrency(payload.creditApplied!, restaurant.currency)
               : undefined,
           rewardLabel: payload.rewardLabel,
+          // POSITIVE-status money summary. Formatted here (this is where the
+          // restaurant's currency lives) and only when store credit was really
+          // used — the template renders nothing without creditUsed.
+          ...((payload.creditApplied ?? 0) > 0 && payload.orderTotal != null
+            ? {
+                creditUsed: formatCurrency(payload.creditApplied!, restaurant.currency),
+                orderTotalLabel: formatCurrency(payload.orderTotal, restaurant.currency),
+                amountDueLabel: formatCurrency(
+                  collectedOf({ total: payload.orderTotal, creditApplied: payload.creditApplied }),
+                  restaurant.currency,
+                ),
+                balanceSettled: payload.balanceSettled === true,
+              }
+            : {}),
           cancelledBy: payload.cancelledBy,
           restaurantPhone: restaurant.phone,
           restaurantEmail: restaurant.email,

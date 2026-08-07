@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Credit magazin"
     },
-    "discounts": "Reduceri"
+    "discounts": "Reduceri",
+    "orderValue": "Valoarea comenzii"
   },
   "common": {
     "showPassword": "Afișează parola",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Prima comandă",
       "badgeOptedIn": "✓ Înscris",
       "analyticsHint": "Cauți statistici de cheltuieli / lifetime pe un interval de date? <link>Rapoarte → Clienți (vedere Listă)</link> — aceiași clienți, cu filtrare după interval de date și export CSV.",
-      "badgeOptedOut": "✕ Dezabonat"
+      "badgeOptedOut": "✕ Dezabonat",
+      "colOrderValue": "Valoarea comenzii",
+      "colCreditSpent": "{label} cheltuiți"
     },
     "couponsAdmin": {
       "pageTitle": "Cupoane & Promoții",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Alege o locație",
       "chooserSubtitle": "Acest raport este per locație — alege o locație pentru a-l vizualiza.",
       "viewingLocation": "Se vizualizează",
-      "changeLocation": "Schimbă locația"
+      "changeLocation": "Schimbă locația",
+      "kpiOrderValue": "Valoarea comenzii"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Niciun context de restaurant.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Motiv",
       "actionLine": "Folosește butonul „Trimite la ShipDay” de pe comandă pentru a încerca din nou, sau organizează livrarea cu proprii tăi șoferi.",
       "viewOrderButton": "Vezi comanda"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Suma de {amount} plătită cu {label} a fost returnată în portofelul clientului."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restaurant",
+      "colCustomer": "Client",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

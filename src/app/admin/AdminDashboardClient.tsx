@@ -17,7 +17,15 @@ interface Props {
   restaurantName: string | null;
   restaurantSlug: string | null;
   totalOrders: number;
+  /** Real cash/card COLLECTED = order value − store credit redeemed. Store
+   *  credit is a tender, not income, so this is the honest revenue headline. */
   totalRevenue: number;
+  /** Gross value of those orders, before any store credit was applied. */
+  orderValue: number;
+  /** Store credit ("Luigi Bucks") redeemed across them. */
+  storeCredit: number;
+  /** The store's own name for its credit; "" when it never renamed it. */
+  rewardLabel: string;
   customerCount: number;
   pendingOrders: number;
   recentOrders: RecentOrder[];
@@ -45,13 +53,21 @@ const STATUS_COLORS: Record<string, string> = {
 
 export function AdminDashboardClient({
   restaurantName, restaurantSlug,
-  totalOrders, totalRevenue, customerCount, pendingOrders, recentOrders,
+  totalOrders, totalRevenue, orderValue, storeCredit, rewardLabel,
+  customerCount, pendingOrders, recentOrders,
   orderCapUsage,
 }: Props) {
   const formatCurrency = useCurrencyFormat();
   const t = useTranslations("admin.dashboard");
   const tSidebar = useTranslations("admin.sidebar");
   const tStatuses = useTranslations("admin.orders");
+  const tMoney = useTranslations("money");
+  const tReports = useTranslations("admin.reportsHome");
+
+  // Only break the tile out once real store credit has been redeemed — a store
+  // that never ran a rewards program sees exactly the tile it saw before.
+  const showCredit = storeCredit > 0;
+  const creditLabel = rewardLabel || tMoney("pay.rewardCredit");
 
   const resetDateLabel = orderCapUsage.resetAt
     ? new Date(orderCapUsage.resetAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })
@@ -127,7 +143,17 @@ export function AdminDashboardClient({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         {[
           { label: t("totalOrders"), value: totalOrders, icon: ShoppingBag, color: "text-blue-500", bg: "bg-blue-50" },
-          { label: t("revenue"), value: formatCurrency(totalRevenue), icon: DollarSign, color: "text-green-500", bg: "bg-green-50" },
+          {
+            label: showCredit ? tMoney("amountCollected") : t("revenue"),
+            value: formatCurrency(totalRevenue),
+            icon: DollarSign, color: "text-green-500", bg: "bg-green-50",
+            breakdown: showCredit
+              ? [
+                  { label: tReports("kpiOrderValue"), value: formatCurrency(orderValue) },
+                  { label: creditLabel, value: `− ${formatCurrency(storeCredit)}` },
+                ]
+              : undefined,
+          },
           { label: t("customers"), value: customerCount, icon: Users, color: "text-amber-500", bg: "bg-amber-50" },
           { label: t("pending"), value: pendingOrders, icon: Clock, color: "text-yellow-500", bg: "bg-yellow-50" },
         ].map((stat) => (
@@ -139,6 +165,16 @@ export function AdminDashboardClient({
               </div>
             </div>
             <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
+            {stat.breakdown && (
+              <div className="mt-2 pt-2 border-t border-gray-50 space-y-0.5">
+                {stat.breakdown.map((b) => (
+                  <div key={b.label} className="flex items-center justify-between gap-2 text-[11px] text-gray-500">
+                    <span>{b.label}</span>
+                    <span className="tabular-nums">{b.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Tín dụng cửa hàng"
     },
-    "discounts": "Giảm giá"
+    "discounts": "Giảm giá",
+    "orderValue": "Giá trị đơn hàng"
   },
   "common": {
     "showPassword": "Hiện mật khẩu",
@@ -2910,7 +2911,9 @@
       "colFirstOrder": "Đơn Đầu Tiên",
       "badgeOptedIn": "✓ Đã đồng ý",
       "analyticsHint": "Muốn xem số liệu chi tiêu / vòng đời theo khoảng thời gian? <link>Báo cáo → Khách hàng (Dạng danh sách)</link> — cùng danh sách khách, có lọc theo ngày và xuất CSV.",
-      "badgeOptedOut": "✕ Hủy đăng ký"
+      "badgeOptedOut": "✕ Hủy đăng ký",
+      "colOrderValue": "Giá trị đơn hàng",
+      "colCreditSpent": "{label} đã dùng"
     },
     "couponsAdmin": {
       "pageTitle": "Phiếu Giảm Giá & Khuyến Mãi",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Chọn một địa điểm",
       "chooserSubtitle": "Báo cáo này theo từng địa điểm — chọn một địa điểm để xem.",
       "viewingLocation": "Đang xem",
-      "changeLocation": "Đổi địa điểm"
+      "changeLocation": "Đổi địa điểm",
+      "kpiOrderValue": "Giá trị đơn hàng"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Không có ngữ cảnh nhà hàng.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Lý do",
       "actionLine": "Sử dụng nút \"Gửi đến ShipDay\" trên đơn hàng để thử lại, hoặc tự sắp xếp giao hàng với tài xế của riêng bạn.",
       "viewOrderButton": "Xem đơn hàng"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Số tiền {amount} đã thanh toán bằng {label} đã được hoàn lại vào ví của khách hàng."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Nhà hàng",
+      "colCustomer": "Khách hàng",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

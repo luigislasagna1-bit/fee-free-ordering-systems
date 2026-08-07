@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Veikala kredīts"
     },
-    "discounts": "Atlaides"
+    "discounts": "Atlaides",
+    "orderValue": "Pasūtījuma vērtība"
   },
   "common": {
     "showPassword": "Rādīt paroli",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Pirmais pasūtījums",
       "badgeOptedIn": "✓ Pieteicies",
       "analyticsHint": "Meklējat izdevumu / mūža metriku pēc datumu diapazona? <link>Atskaites → Klienti (Saraksta skats)</link> — tie paši klienti ar datumu diapazona filtrēšanu un CSV eksportu.",
-      "badgeOptedOut": "✕ Atteikties"
+      "badgeOptedOut": "✕ Atteikties",
+      "colOrderValue": "Pasūtījuma vērtība",
+      "colCreditSpent": "Iztērētie {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponi un akcijas",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Izvēlieties atrašanās vietu",
       "chooserSubtitle": "Šis pārskats ir pa atrašanās vietām — izvēlieties atrašanās vietu, lai to skatītu.",
       "viewingLocation": "Skata",
-      "changeLocation": "Mainīt atrašanās vietu"
+      "changeLocation": "Mainīt atrašanās vietu",
+      "kpiOrderValue": "Pasūtījuma vērtība"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nav restorāna konteksta.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Iemesls",
       "actionLine": "Izmantojiet pogu \"Nosūtīt uz ShipDay\" pasūtījumā, lai mēģinātu vēlreiz, vai organizējiet piegādi ar saviem kurjeriem.",
       "viewOrderButton": "Skatīt pasūtījumu"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Ar {label} samaksātie {amount} ir atgriezti klienta makā."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restorāns",
+      "colCustomer": "Klients",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",

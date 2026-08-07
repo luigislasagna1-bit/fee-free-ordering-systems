@@ -348,6 +348,10 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       // Total and over-collect a credit-part-paid order (Luigi 2026-07-02).
       creditApplied: creditApplied > 0 ? creditApplied : undefined,
       rewardLabel,
+      // Same projected earn the CUSTOMER's confirmation shows — the staff copy
+      // of the identical order used to omit it, so the two receipts for one
+      // order disagreed. Luigi 2026-08-07.
+      rewardEarned: projectedEarn > 0 ? projectedEarn : undefined,
       orderType: order.type,
       // "Paid online" = the platform already captured the money (Stripe card,
       // PayPal, or fully covered by store credit). cash AND card_in_person

@@ -90,3 +90,13 @@ export const listScopeRestaurants = cache(
 export function hasMixedCurrency(restaurants: ScopeRestaurant[]): boolean {
   return new Set(restaurants.map((r) => r.currency.toLowerCase())).size > 1;
 }
+
+/**
+ * True when at least one restaurant belongs to a brand with a different name —
+ * i.e. the "Company Name" column carries information. For a standalone store
+ * `companyName === name`, so showing it would print the same string twice in
+ * two adjacent columns (which is exactly what Luigi reported, 2026-08-07).
+ */
+export function hasDistinctCompanies(restaurants: ScopeRestaurant[]): boolean {
+  return restaurants.some((r) => r.companyName !== r.name);
+}

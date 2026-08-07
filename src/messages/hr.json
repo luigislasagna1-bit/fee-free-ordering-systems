@@ -14,7 +14,8 @@
       "paypal": "PayPal",
       "rewardCredit": "Kredit u trgovini"
     },
-    "discounts": "Popusti"
+    "discounts": "Popusti",
+    "orderValue": "Vrijednost narudžbe"
   },
   "common": {
     "showPassword": "Prikaži lozinku",
@@ -2967,7 +2968,9 @@
       "colFirstOrder": "Prva narudžba",
       "badgeOptedIn": "✓ Prijavljen",
       "analyticsHint": "Tražite potrošnju / cjeloživotne metrike kroz vremenski raspon? <link>Izvještaji → Klijenti (popis)</link> — isti kupci, s filtriranjem vremenskog raspona i izvozom CSV-a.",
-      "badgeOptedOut": "✕ Odjava"
+      "badgeOptedOut": "✕ Odjava",
+      "colOrderValue": "Vrijednost narudžbe",
+      "colCreditSpent": "Potrošeni {label}"
     },
     "couponsAdmin": {
       "pageTitle": "Kuponi i promocije",
@@ -4613,7 +4616,8 @@
       "chooserTitle": "Odaberite lokaciju",
       "chooserSubtitle": "Ovo je izvješće po lokaciji — odaberite lokaciju za prikaz.",
       "viewingLocation": "Prikaz",
-      "changeLocation": "Promijeni lokaciju"
+      "changeLocation": "Promijeni lokaciju",
+      "kpiOrderValue": "Vrijednost narudžbe"
     },
     "reportSalesSummary": {
       "noRestaurantContext": "Nema konteksta restorana.",
@@ -6051,6 +6055,9 @@
       "reasonLabel": "Razlog",
       "actionLine": "Koristite gumb \"Pošalji na ShipDay\" na narudžbi za novi pokušaj, ili organizirajte dostavu vlastitim vozačima.",
       "viewOrderButton": "Pogledaj narudžbu"
+    },
+    "staffOrderDead": {
+      "creditReturned": "Iznos {amount} plaćen putem {label} vraćen je u novčanik kupca."
     }
   },
   "marketing": {
@@ -7652,7 +7659,8 @@
       "pageTitlePlatform": "Orders List — All Restaurants",
       "countLabel": "{count, plural, one {# result} other {# results}} · {range}",
       "searchPlaceholder": "Search name, order ID, phone, email…",
-      "colName": "Name",
+      "colRestaurant": "Restoran",
+      "colCustomer": "Kupac",
       "colCompany": "Company Name",
       "colOrderId": "Order ID",
       "colPlacedAt": "Placed at",
