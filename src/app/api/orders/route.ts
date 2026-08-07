@@ -2044,6 +2044,17 @@ export async function POST(req: NextRequest) {
       }
     }
     if (!resolvedChannel && viaMarketplace) resolvedChannel = "marketplace";
+    // Nabil AI voice orders: the always-on voice service POSTs with the internal
+    // secret + channel:"voice", so voice revenue lands in the Sales "by channel"
+    // report. Additive only — public callers never hold INTERNAL_API_SECRET, so
+    // the money path stays byte-identical for every existing caller.
+    if (
+      !!process.env.INTERNAL_API_SECRET &&
+      req.headers.get("x-internal-key") === process.env.INTERNAL_API_SECRET &&
+      (body as { channel?: unknown })?.channel === "voice"
+    ) {
+      resolvedChannel = "voice";
+    }
 
     // Marketplace orders are online-card-only by platform contract.
     // The customer-side checkout forces "card" as the only option when

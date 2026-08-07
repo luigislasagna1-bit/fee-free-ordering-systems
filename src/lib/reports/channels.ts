@@ -28,7 +28,8 @@ export type ChannelSlug =
   | "social_media"
   | "referral"
   | "affiliate"
-  | "internal";
+  | "internal"
+  | "voice";
 
 export interface ChannelDef {
   slug: ChannelSlug;
@@ -109,6 +110,13 @@ export const CHANNELS: readonly ChannelDef[] = [
     color: "text-indigo-500",
     hex: "#6366f1",
     description: "Visit came from the Fee Free Marketplace browse page.",
+  },
+  {
+    slug: "voice",
+    label: "Phone (Nabil AI)",
+    color: "text-pink-500",
+    hex: "#ec4899",
+    description: "Order taken over the phone by Nabil AI, our automated phone answering agent.",
   },
 ] as const;
 

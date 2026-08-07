@@ -439,6 +439,13 @@ model Restaurant {
   // CASL / anti-spam compliance suite (2026-08-04)
   emailSuppressions      EmailSuppression[]
   dataRequestLogs        DataRequestLog[]
+  // Nabil AI — phone answering system (2026-08-05)
+  voiceNumbers           VoiceNumber[]
+  voiceAgentConfig       VoiceAgentConfig?
+  voiceCalls             VoiceCall[]
+  voiceFaqs              VoiceFaq[]
+  voiceTextLinks         VoiceTextLink[]
+  blockedCallers         BlockedCaller[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -2760,6 +2767,205 @@ model DataRequestLog {
   @@index([action, createdAt])
 }
 
+// ─────────────────────────────────────────────────────────────────────
+// Nabil AI — Fee Free's Automated Phone Answering System (2026-08-05)
+// Inbound AI voice agent (Twilio ConversationRelay + Claude). The always-on
+// voice service is a THIN orchestrator: it NEVER writes here directly — it
+// calls /api/orders (cash) + /api/public/reservations for native create, and
+// x-internal-key-gated /api/internal/voice/* for reads. These tables hold
+// per-restaurant provisioning + config + a call log for the dashboard.
+// ─────────────────────────────────────────────────────────────────────
+
+/// One provisioned Twilio phone number mapped to a restaurant. The inbound
+/// TwiML webhook (/api/twilio/voice) looks up the restaurant by the dialed
+/// `To` number — this is the number→tenant routing table.
+model VoiceNumber {
+  id              String     @id @default(cuid())
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// E.164, e.g. "+12897687778". Unique — one restaurant per number.
+  phoneNumber     String     @unique
+  /// Twilio PhoneNumber SID (PNxxx…) once provisioned via the REST API.
+  twilioNumberSid String?    @unique
+  countryCode     String     @default("US")
+  /// provisioning | active | released | suspended
+  status          String     @default("provisioning")
+  enabled         Boolean    @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([restaurantId])
+}
+
+/// 1:1 per-restaurant Nabil settings (mirrors Loman's Settings tabs).
+/// Greeting text is stored in the restaurant's defaultLanguage and localized
+/// at call time; per-locale overrides live in `greetingsByLocale`.
+model VoiceAgentConfig {
+  id           String     @id @default(cuid())
+  restaurantId String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// Master on/off — the "Active — Handling calls" switch.
+  enabled               Boolean @default(false)
+
+  // ── Greetings (≤200 chars each; localized at call time) ──
+  openGreeting          String?
+  closedGreeting        String?
+  greetingsByLocale     Json?   // { "<locale>": { open, closed } } sparse overrides
+
+  // ── Languages ──
+  primaryLanguage       String  @default("en")
+  languages             Json?   // enabled locale slugs; null = primary only
+
+  // ── Voice / TTS ──
+  ttsProvider           String  @default("ElevenLabs")
+  sttProvider           String  @default("Deepgram")
+  voice                 String? // provider voice id; null = per-locale default
+  voiceSpeed            Float   @default(1.0)   // 0.5..2.0
+  ambientNoise          Boolean @default(false) // subtle restaurant-noise realism
+
+  // ── Capabilities ──
+  canTakeOrders         Boolean @default(true)
+  canBookReservations   Boolean @default(true)
+  canAnswerFaq          Boolean @default(true)
+  allowPizzaCombo       Boolean @default(false) // else transfer (v1: too complex for voice)
+  allowAnonymousCallers Boolean @default(true)
+
+  // ── Ordering behavior (mostly reads existing restaurant config) ──
+  quoteEta              Boolean @default(true)
+  allowScheduledOrders  Boolean @default(false)
+
+  // ── Pay-by-link (opt-in Stripe prepayment, per-order-type matrix) ──
+  /// unpaid = pay-at-store (cash); paid = require Stripe pay-link; both = link
+  /// with graceful pay-at-store fallback on timeout. Delivery is forced to
+  /// "paid" for ShipDay restaurants (the order route rejects unpaid delivery).
+  pickupPaymentMode      String @default("unpaid")
+  deliveryPaymentMode    String @default("unpaid")
+  /// Minutes the caller has to pay the link before it flips to pay-at-store.
+  payByLinkWindowMinutes Int    @default(10)
+  /// cook_now = ring/print immediately (AWAITING PAYMENT badge); hold_until_paid
+  /// = don't ring/print for prep until PAID or timeout.
+  payByLinkPrepMode      String @default("cook_now")
+
+  // ── Handoff / limits / notifications ──
+  transferToNumber      String? // E.164; falls back to Restaurant.alertPhone/phone
+  afterHoursBehavior    String  @default("take_orders") // take_orders | reservations_only | message_only | transfer
+  maxCallSeconds        Int     @default(600)
+  smsConfirmations      Boolean @default(true)
+  recordCalls           Boolean @default(true) // call-recording consent toggle
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// One inbound call — powers the Calls & Reports dashboard (transcript,
+/// recording, AI summary, sentiment, outcome, revenue). PII note: stores the
+/// caller phone + transcript, so it is registered in PII_ERASURE_MAP
+/// (anonymize fromNumber, null transcript/summary; keep row for analytics).
+model VoiceCall {
+  id              String     @id @default(cuid())
+  restaurantId    String
+  restaurant      Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  voiceNumberId   String?
+
+  callSid         String     @unique // Twilio CallSid (CAxxx…) — idempotency key
+  fromNumber      String
+  toNumber        String
+  direction       String     @default("inbound")
+  language        String?
+
+  startedAt       DateTime   @default(now())
+  endedAt         DateTime?
+  durationSeconds Int?
+
+  /// order_placed | reservation_booked | faq_answered | transferred | abandoned | spam | error
+  outcome         String?
+  orderId         String?    // loose ref (log, not FK) — join in the dashboard
+  reservationId   String?
+  customerId      String?    // resolved returning caller
+
+  transcript      Json?      // [{ role, text, ts }]
+  summary         String?    // AI end-of-call summary
+  sentiment       String?    // positive | neutral | negative
+  recordingUrl    String?
+
+  model           String?
+  tokensIn        Int?
+  tokensOut       Int?
+  costCents       Int?
+  transferReason  String?
+
+  createdAt       DateTime   @default(now())
+
+  @@index([restaurantId, startedAt])
+  @@index([fromNumber])
+}
+
+/// Per-restaurant FAQ the agent answers from. Categories mirror the real
+/// Loman examples. Localized (one row per question+locale). AI-recommended
+/// entries mined from transcripts land here as source:"recommended" pending
+/// owner approval.
+model VoiceFaq {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  question   String
+  answer     String
+  /// dietary | allergen | business_info | operational | deflection | escalation
+  category   String   @default("business_info")
+  locale     String   @default("en")
+  /// owner | recommended | seed
+  source     String   @default("owner")
+  sortOrder  Int      @default(0)
+  active     Boolean  @default(true)
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([restaurantId, active])
+}
+
+/// SMS-able links the agent texts mid-call (menu / order / reservation /
+/// support). Auto-populated from our branded restaurantOrderUrl() so they
+/// never 404 like Loman's dead GloriaFood links. `url` null = compute the
+/// branded default at send time.
+model VoiceTextLink {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  /// order_online | menu | reservation | support | custom
+  kind      String
+  label     String
+  url       String?
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([restaurantId, active])
+}
+
+/// Per-restaurant block-list. The TwiML entry route refuses (or the agent
+/// ends) calls from a blocked caller; also set from the "Block Caller" action
+/// on the call-detail panel. Kept on data-erasure (a do-not-serve record,
+/// same principle as EmailSuppression).
+model BlockedCaller {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  phone     String
+  reason    String?
+  createdAt DateTime @default(now())
+
+  @@unique([restaurantId, phone])
+}
+
 model DeliveryZone {
   id               String   @id @default(cuid())
   restaurantId     String
@@ -3139,6 +3345,12 @@ model Reservation {
 
   @@index([restaurantId, date])
   @@index([restaurantId, status])
+  // Partner/superadmin Orders List (2026-08-07): the cross-restaurant feed
+  // merges orders + reservations sorted by createdAt ("Placed at"). Every other
+  // Reservation index is date-leading (the booking slot), which can't serve a
+  // "newest bookings across N restaurants" scan — without this the merged feed
+  // sorts unindexed. Mirrors Order's @@index([restaurantId, createdAt]).
+  @@index([restaurantId, createdAt])
 }
 
 model ServiceFee {

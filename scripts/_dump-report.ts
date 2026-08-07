@@ -9,7 +9,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 config({ path: ".env.local" });
 config({ path: ".env" });
 
-const ID = "cmsajnvkm000s04jldk5tvlr0";
+const ID = process.argv[2] || "cmsajnvkm000s04jldk5tvlr0";
 
 async function main() {
   const url = process.env.DATABASE_URL!;

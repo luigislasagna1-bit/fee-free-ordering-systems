@@ -53,6 +53,8 @@ export const PII_ERASURE_MAP = {
   CustomerPushToken: { scope: "restaurant", action: "delete", fields: ["token"] },
   PendingRewardGrant: { scope: "restaurant", action: "anonymize", fields: ["email", "name", "note"] },
   EmailSuppression: { scope: "restaurant", action: "keep", fields: [] }, // kept: proves do-not-email
+  VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "transcript", "summary", "recordingUrl", "customerId"] }, // Nabil AI; matched by phone (keep duration/outcome/cost)
+  BlockedCaller: { scope: "restaurant", action: "keep", fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
   CustomerAccount: { scope: "platform", action: "anonymize", fields: ["email", "name", "phone", "passwordHash", "emailVerifyToken", "lastLoginAt"] },
   CustomerAddress: { scope: "platform", action: "delete", fields: ["street", "city", "state", "zip", "country"] },
   CustomerPasswordResetToken: { scope: "platform", action: "delete", fields: ["token"] },
@@ -191,6 +193,16 @@ export async function anonymizeCustomerByEmail(
         ...(opts?.nullPaymentIds ? { paymentIntentId: null } : {}),
       },
     })).count;
+    // Nabil AI voice calls are keyed by caller phone. Anonymize the phone +
+    // transcript/summary/recording but KEEP the row (duration, outcome, cost)
+    // for analytics — same anonymize-not-delete principle as orders. (Retention
+    // scrub of old transcripts past the window is a retention-cron follow-up.)
+    if (phones.length) {
+      counts.VoiceCall = (await tx.voiceCall.updateMany({
+        where: { restaurantId, fromNumber: { in: phones } },
+        data: { fromNumber: "REDACTED", transcript: Prisma.DbNull, summary: null, recordingUrl: null, customerId: null },
+      })).count;
+    }
     // Pending reward grants: revoke any still-pending (block claim by a recycled
     // address), then scrub the PII.
     await tx.pendingRewardGrant.updateMany({

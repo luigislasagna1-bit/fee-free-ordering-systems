@@ -3,83 +3,115 @@ import Link from "next/link";
 import { Phone, Sparkles, Mic, Bot, Clock, ArrowRight, Rocket } from "lucide-react";
 import { getSessionUser } from "@/lib/session";
 import { getTranslations } from "next-intl/server";
+import prisma from "@/lib/db";
+import { hasFeature } from "@/lib/entitlements";
+import { shouldDispatchToShipday } from "@/lib/shipday";
+import NabilConfigClient from "./NabilConfigClient";
 
 /**
- * Phone Ordering — "Coming Soon" teaser page.
+ * Nabil AI — Fee Free's Automated Phone Answering System.
  *
- * Linked from the SETUP → Taking Orders sub-group in the sidebar so the
- * feature is publicly discoverable on the admin panel. The page itself
- * doesn't do anything functional yet — there's no Twilio integration,
- * no AI agent, no number provisioning. The implementation is post-
- * launch work.
- *
- * Why ship the teaser before the feature: prospective restaurants get
- * to see the roadmap when they evaluate the platform. Owners can mark
- * interest (not yet wired — would be a future enhancement). And when
- * we DO build it, the entry point is already there in the sidebar so
- * launch is just "swap this page for the real one".
- *
- * When the actual feature lands:
- *   - Replace the body of this page with the configuration UI
- *     (phone number provisioning, AI voice picker, menu coverage,
- *     fallback to staff after-hours, etc.)
- *   - Set the `phone_ordering` add-on's comingSoon=false in /superadmin/add-ons
- *   - Set a real monthlyPriceCents + click Sync to Stripe
- *   - Restaurants can then subscribe + use the feature
+ * When the restaurant has the `phone_ordering_agent` entitlement, this renders
+ * the live configuration UI (greetings, voice, capabilities, payments, handoff)
+ * + a recent-calls list. Otherwise it shows the "Coming Soon" upsell teaser.
+ * "Nabil AI" is a brand name — never translated (standing rule).
  */
 export default async function PhoneOrderingPage() {
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
+  const restaurantId = user.restaurantId;
 
   const t = await getTranslations("admin.phoneOrderingPage");
+  const entitled = await hasFeature(restaurantId, "phone_ordering_agent");
 
-  return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div>
-        <Link
-          href="/admin"
-          className="text-sm text-gray-600 hover:text-gray-900"
-        >
-          &larr; {t("backToAdmin")}
-        </Link>
-        <div className="flex items-center gap-3 mt-2">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-md">
-            <Phone className="w-6 h-6" />
-          </div>
-          <div className="flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              {/* "Nabil AI" is the product brand — untranslated, identical in
-                  every locale (Luigi 2026-06-13). The translated descriptor sits
-                  just beneath it. */}
-              <h1 className="text-2xl font-bold text-gray-900">Nabil AI</h1>
+  const Header = (
+    <div>
+      <Link href="/admin" className="text-sm text-gray-600 hover:text-gray-900">
+        &larr; {t("backToAdmin")}
+      </Link>
+      <div className="flex items-center gap-3 mt-2">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-md">
+          <Phone className="w-6 h-6" />
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-2xl font-bold text-gray-900">Nabil AI</h1>
+            {!entitled && (
               <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
                 <Rocket className="w-3 h-3" />
                 {t("comingSoon")}
               </span>
-            </div>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-amber-600 mt-1">
-              {t("pageTitle")}
-            </p>
-            <p className="text-sm text-gray-600 mt-0.5">
-              {t("pageSubtitle")}
-            </p>
+            )}
           </div>
+          <p className="text-[11px] font-bold uppercase tracking-wider text-amber-600 mt-1">{t("pageTitle")}</p>
+          <p className="text-sm text-gray-600 mt-0.5">{t("pageSubtitle")}</p>
         </div>
       </div>
+    </div>
+  );
 
-      {/* ── Hero pitch ────────────────────────────────────────────── */}
+  if (entitled) {
+    const [config, number, cashDeliveryBlocked, calls] = await Promise.all([
+      prisma.voiceAgentConfig.findUnique({ where: { restaurantId } }),
+      prisma.voiceNumber.findFirst({ where: { restaurantId }, orderBy: { createdAt: "asc" } }),
+      shouldDispatchToShipday(restaurantId).catch(() => false),
+      prisma.voiceCall.findMany({
+        where: { restaurantId },
+        orderBy: { startedAt: "desc" },
+        take: 10,
+        select: { id: true, fromNumber: true, outcome: true, durationSeconds: true, startedAt: true, language: true },
+      }),
+    ]);
+
+    return (
+      <div className="max-w-3xl mx-auto space-y-6 pb-10">
+        {Header}
+        <NabilConfigClient
+          initialConfig={config as any}
+          number={number ? { phoneNumber: number.phoneNumber, status: number.status } : null}
+          cashDeliveryBlocked={!!cashDeliveryBlocked}
+        />
+        <div className="rounded-xl border border-gray-200 bg-white p-5">
+          <h3 className="font-semibold text-gray-900 mb-3">{t("config.recentCalls")}</h3>
+          {calls.length === 0 ? (
+            <p className="text-sm text-gray-500">{t("config.noCalls")}</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <tbody>
+                  {calls.map((c) => (
+                    <tr key={c.id} className="border-t border-gray-100">
+                      <td className="py-2 pr-3 whitespace-nowrap text-gray-500">{new Date(c.startedAt).toLocaleString()}</td>
+                      <td className="py-2 pr-3 whitespace-nowrap font-mono">{c.fromNumber || "—"}</td>
+                      <td className="py-2 pr-3 whitespace-nowrap">
+                        <span className="inline-block px-2 py-0.5 rounded-full text-[11px] bg-gray-100 text-gray-700">
+                          {c.outcome || "—"}
+                        </span>
+                      </td>
+                      <td className="py-2 whitespace-nowrap text-gray-500">{c.durationSeconds != null ? `${c.durationSeconds}s` : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── Not entitled → upsell teaser ─────────────────────────────────────
+  return (
+    <div className="max-w-4xl mx-auto space-y-6">
+      {Header}
       <div className="rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-blue-600 text-white p-6 sm:p-8 shadow-lg">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider opacity-90 mb-2">
           <Sparkles className="w-4 h-4" />
           {t("heroBadge")}
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
-          {t("heroHeadline")}
-        </h2>
-        <p className="mt-3 text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl">
-          {t("heroBody")}
-        </p>
+        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{t("heroHeadline")}</h2>
+        <p className="mt-3 text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl">{t("heroBody")}</p>
         <div className="mt-5 flex flex-wrap gap-2">
           <div className="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium">
             <Clock className="w-3.5 h-3.5" />
@@ -95,48 +127,21 @@ export default async function PhoneOrderingPage() {
           </div>
         </div>
       </div>
-
-      {/* ── Feature preview cards ─────────────────────────────────── */}
       <div className="grid md:grid-cols-2 gap-4">
-        <FeatureCard
-          icon={<Phone className="w-5 h-5" />}
-          title={t("featurePhoneTitle")}
-          body={t("featurePhoneBody")}
-        />
-        <FeatureCard
-          icon={<Bot className="w-5 h-5" />}
-          title={t("featureAiTitle")}
-          body={t("featureAiBody")}
-        />
-        <FeatureCard
-          icon={<Mic className="w-5 h-5" />}
-          title={t("featureVoiceTitle")}
-          body={t("featureVoiceBody")}
-        />
-        <FeatureCard
-          icon={<Sparkles className="w-5 h-5" />}
-          title={t("featureKitchenTitle")}
-          body={t("featureKitchenBody")}
-        />
+        <FeatureCard icon={<Phone className="w-5 h-5" />} title={t("featurePhoneTitle")} body={t("featurePhoneBody")} />
+        <FeatureCard icon={<Bot className="w-5 h-5" />} title={t("featureAiTitle")} body={t("featureAiBody")} />
+        <FeatureCard icon={<Mic className="w-5 h-5" />} title={t("featureVoiceTitle")} body={t("featureVoiceBody")} />
+        <FeatureCard icon={<Sparkles className="w-5 h-5" />} title={t("featureKitchenTitle")} body={t("featureKitchenBody")} />
       </div>
-
-      {/* ── Status / next steps ───────────────────────────────────── */}
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
         <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
           <Rocket className="w-4 h-4" />
           {t("statusHeading")}
         </h3>
-        <p className="text-sm text-amber-900 leading-relaxed">
-          {t("statusBody1")}
-        </p>
-        <p className="text-sm text-amber-900 leading-relaxed mt-2">
-          {t("statusBody2")}
-        </p>
+        <p className="text-sm text-amber-900 leading-relaxed">{t("statusBody1")}</p>
+        <p className="text-sm text-amber-900 leading-relaxed mt-2">{t("statusBody2")}</p>
         <div className="mt-4">
-          <Link
-            href="/admin/billing/add-ons"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 hover:text-amber-900 transition"
-          >
+          <Link href="/admin/billing/add-ons" className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 hover:text-amber-900 transition">
             {t("addonCatalogLink")}
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -146,20 +151,10 @@ export default async function PhoneOrderingPage() {
   );
 }
 
-function FeatureCard({
-  icon,
-  title,
-  body,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  body: string;
-}) {
+function FeatureCard({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5">
-      <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">
-        {icon}
-      </div>
+      <div className="w-10 h-10 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center">{icon}</div>
       <h3 className="mt-3 font-semibold text-gray-900">{title}</h3>
       <p className="mt-1 text-sm text-gray-600 leading-relaxed">{body}</p>
     </div>

@@ -1,0 +1,23 @@
+{
+  "name": "nabil-voice",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Nabil AI voice service — Twilio ConversationRelay WebSocket bridge to Claude (Fee Free's Automated Phone Answering System). Deployed separately (Fly.io); NOT part of the Next.js app (Vercel can't hold a WebSocket).",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.96.0",
+    "jsonwebtoken": "^9.0.3",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^20",
+    "@types/ws": "^8.5.12",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}
