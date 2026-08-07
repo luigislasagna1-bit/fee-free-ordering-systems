@@ -87,7 +87,7 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     where: { id },
     select: {
       id: true, orderNumber: true, status: true, customerId: true,
-      restaurantId: true, createdAt: true, type: true,
+      restaurantId: true, createdAt: true, type: true, notifiedAt: true,
       customerName: true, customerEmail: true, customerPhone: true,
       customerLocale: true,
       creditApplied: true,
@@ -300,9 +300,13 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
     }).catch((e: unknown) => console.error("[public cancel notifyCustomer]", e)),
   );
 
-  // Staff ping — same event the kitchen PATCH path fires, so the owner's
-  // notification toggles apply unchanged.
-  {
+  // Staff ping — ONLY when the order actually reached the kitchen (notifiedAt
+  // set). An unpaid online order cancelled/abandoned BEFORE payment never hit
+  // the board, so a "cancelled" notification for it is pure noise — the store
+  // never received the order (Luigi 2026-08-05: "it doesn't make sense to get a
+  // cancellation email when we didn't get an order"). Customer still gets their
+  // own cancellation confirmation above.
+  if (order.notifiedAt) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://feefreeordering.com";
     after(
       notifyStaff({
