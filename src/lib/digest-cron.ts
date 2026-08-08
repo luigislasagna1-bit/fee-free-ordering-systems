@@ -187,7 +187,17 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
     if (stats && reportDayKey && hasReportableActivity(stats)) {
       setEmailImprint(imprint);
       try {
-        await Promise.all(
+        // 🚨 Only stamp the "already reported" marker if a send ACTUALLY
+        // SUCCEEDED.
+        //
+        // This used to swallow every per-recipient failure, add the full
+        // recipient count to `dailySent`, and stamp the marker regardless. So a
+        // transport hiccup meant the owner never got that day's report AND the
+        // day was permanently marked done — the morning catch-up skips a
+        // stamped day, so the report was lost for good with no error surfaced.
+        // Same "record success regardless" shape as the autopilot spam bug
+        // fixed in 8daacce4. Luigi 2026-08-08, after a missing EOD report.
+        const results = await Promise.all(
           dailyRecipients.map((recipient) =>
             sendDailyDigestEmail({
               to: recipient.email,
@@ -197,17 +207,38 @@ export async function runDigestSweep(mode: DigestSweepMode, now: Date = new Date
               // Recipient's chosen language wins; else the restaurant's default.
               locale: recipient.emailLanguage || r.defaultLanguage || undefined,
               currency: r.currency,
-            }).catch((err) => {
-              console.error(`[digest-sweep] send to ${recipient.email} failed:`, err);
-              errors++;
-            }),
+            })
+              .then((res) => {
+                // `send()` reports transport outcome in `success`; a false there
+                // is a real failure even though nothing threw.
+                const ok = (res as { success?: boolean } | undefined)?.success !== false;
+                if (!ok) {
+                  console.error(`[digest-sweep] send to ${recipient.email} reported failure`, res);
+                  errors++;
+                }
+                return ok;
+              })
+              .catch((err) => {
+                console.error(`[digest-sweep] send to ${recipient.email} failed:`, err);
+                errors++;
+                return false;
+              }),
           ),
         );
-        dailySent += dailyRecipients.length;
-        await prisma.restaurant.update({
-          where: { id: r.id },
-          data: { lastEodDigestDate: new Date(`${reportDayKey}T00:00:00.000Z`) },
-        });
+        const okCount = results.filter(Boolean).length;
+        dailySent += okCount;
+        if (okCount > 0) {
+          await prisma.restaurant.update({
+            where: { id: r.id },
+            data: { lastEodDigestDate: new Date(`${reportDayKey}T00:00:00.000Z`) },
+          });
+        } else {
+          // Leave the marker alone so the morning catch-up retries this day
+          // instead of the report vanishing silently.
+          console.error(
+            `[digest-sweep] NO recipient received the ${reportDayKey} report for ${r.id} — marker left unset for retry`,
+          );
+        }
       } finally {
         setEmailImprint(null);
       }

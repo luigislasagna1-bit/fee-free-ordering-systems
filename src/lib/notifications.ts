@@ -355,6 +355,12 @@ export async function notifyStaff(args: {
       name: true,
       currency: true,
       hoursFormat: true,
+      // REQUIRED by the staff order-timing block. Without it every staff email
+      // rendered "Order placed"/"Pickup time" in the SERVER's clock (UTC): a
+      // 10:38 PM Toronto order printed as "Saturday, August 8 at 2:38 AM".
+      // notifyCustomer already selected this; notifyStaff did not, so only the
+      // staff copy was wrong. Luigi 2026-08-08.
+      timezone: true,
       notificationRecipients: {
         where: { isActive: true },
       },
