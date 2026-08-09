@@ -583,6 +583,14 @@ function calcPercentageOff(promo: PromoInput, ctx: ApplyContext): number {
   // "Extra charges" mode (GloriaFood parity, Luigi 2026-07-07): the % applies to
   // the whole line (none, default), the sized base only (addons — charge
   // toppings), or the un-sized base (addons_sizes — charge size + toppings).
+  //
+  // ⚠️ `addons_sizes` shrinks the base to the CHEAPEST variant, so the discount
+  // stops scaling with the size the customer picks (20% of a $17 small pack even
+  // on a $45 large one). That is the documented intent of the mode and is
+  // covered by promo-bogo-extra-charges.test.ts — but it is almost never what an
+  // owner means by "20% off". The wizard now labels these options in percentage
+  // terms instead of free-item terms so the choice is made knowingly
+  // (Luigi 2026-08-09, after a VIP member was under-discounted on wings).
   const basis = normalizeFreeBasis((rules as { freeItemExtraChargeMode?: unknown }).freeItemExtraChargeMode);
   if (!rules.groups?.length) {
     // Whole-cart %: base excludes promo-excluded lines (gift cards). With a mode,

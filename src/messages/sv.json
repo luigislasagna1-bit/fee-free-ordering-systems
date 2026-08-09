@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Ställ in rabatter automatiskt (dyraste artikeln gratis)",
       "strategyFixedPercent": "Fast rabattprocent",
       "pctOffCheapest": "% rabatt på billigaste artikeln",
-      "pctOffMostExpensive": "% rabatt på dyraste artikeln"
+      "pctOffMostExpensive": "% rabatt på dyraste artikeln",
+      "pctBasisLabel": "Vad rabatten gäller",
+      "pctBasisWhole": "Hela varan — tillbehör och storleksuppgradering ingår (rekommenderas)",
+      "pctBasisAddons": "Endast grundpriset — tillbehör och val rabatteras inte",
+      "pctBasisAddonsSizes": "Endast minsta storlekens grundpris — storlek och tillbehör utan rabatt",
+      "pctBasisHint": "De flesta \"X % rabatt\"-kampanjer bör använda det första alternativet.",
+      "pctBasisSizeWarning": "Obs: med det här alternativet ökar INTE rabatten när kunden väljer en större storlek — en 20 %-kampanj ger samma belopp på minsta och största storleken."
     },
     "promoStepRestrictions": {
       "pageTitle": "Begränsningar och visning",

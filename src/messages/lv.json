@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Iestatīt atlaides automātiski (dārgākais vienums bez maksas)",
       "strategyFixedPercent": "Fiksēts atlaides procents",
       "pctOffCheapest": "% atlaide lētākajam vienumam",
-      "pctOffMostExpensive": "% atlaide dārgākajam vienumam"
+      "pctOffMostExpensive": "% atlaide dārgākajam vienumam",
+      "pctBasisLabel": "Uz ko attiecas atlaide",
+      "pctBasisWhole": "Visa prece — piedevas un lielāks izmērs iekļauts (ieteicams)",
+      "pctBasisAddons": "Tikai pamatcena — piedevām atlaide netiek piemērota",
+      "pctBasisAddonsSizes": "Tikai mazākā izmēra pamatcena — izmērs un piedevas bez atlaides",
+      "pctBasisHint": "Vairumam \"X% atlaide\" akciju vajadzētu izmantot pirmo iespēju.",
+      "pctBasisSizeWarning": "Uzmanību: ar šo iespēju atlaide NEPIEAUG, ja klients izvēlas lielāku izmēru — 20% akcija dod tādu pašu summu mazākajam un lielākajam izmēram."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ierobežojumi un displejs",

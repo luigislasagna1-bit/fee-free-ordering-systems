@@ -2795,7 +2795,13 @@
       "strategyMostExpensive": "Ustaw rabaty automatycznie (najdroższy produkt gratis)",
       "strategyFixedPercent": "Stały procent rabatu",
       "pctOffCheapest": "% zniżki na najtańszy produkt",
-      "pctOffMostExpensive": "% zniżki na najdroższy produkt"
+      "pctOffMostExpensive": "% zniżki na najdroższy produkt",
+      "pctBasisLabel": "Do czego stosuje się rabat",
+      "pctBasisWhole": "Cała pozycja — dodatki i większy rozmiar wliczone (zalecane)",
+      "pctBasisAddons": "Tylko cena bazowa — dodatki i opcje bez rabatu",
+      "pctBasisAddonsSizes": "Tylko cena bazowa najmniejszego rozmiaru — rozmiar i dodatki bez rabatu",
+      "pctBasisHint": "Większość promocji \"X% zniżki\" powinna używać pierwszej opcji.",
+      "pctBasisSizeWarning": "Uwaga: przy tej opcji rabat NIE rośnie, gdy klient wybierze większy rozmiar — promocja 20% daje tę samą kwotę przy najmniejszym i największym rozmiarze."
     },
     "promoStepRestrictions": {
       "pageTitle": "Ograniczenia i wyświetlanie",

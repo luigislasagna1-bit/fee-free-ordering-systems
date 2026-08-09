@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "할인 자동 설정 (가장 비싼 항목 무료)",
       "strategyFixedPercent": "고정 할인율",
       "pctOffCheapest": "가장 저렴한 항목 할인율(%)",
-      "pctOffMostExpensive": "가장 비싼 항목 할인율(%)"
+      "pctOffMostExpensive": "가장 비싼 항목 할인율(%)",
+      "pctBasisLabel": "할인 적용 대상",
+      "pctBasisWhole": "상품 전체 — 추가 항목과 사이즈 업그레이드 포함 (권장)",
+      "pctBasisAddons": "기본 가격만 — 추가 항목은 할인되지 않음",
+      "pctBasisAddonsSizes": "가장 작은 사이즈의 기본 가격만 — 사이즈와 추가 항목은 할인 제외",
+      "pctBasisHint": "대부분의 \"X% 할인\" 프로모션은 첫 번째 옵션을 사용해야 합니다.",
+      "pctBasisSizeWarning": "주의: 이 옵션에서는 고객이 더 큰 사이즈를 선택해도 할인액이 늘지 않습니다 — 20% 할인이 최소 사이즈와 최대 사이즈에서 같은 금액이 됩니다."
     },
     "promoStepRestrictions": {
       "pageTitle": "제한 및 표시",

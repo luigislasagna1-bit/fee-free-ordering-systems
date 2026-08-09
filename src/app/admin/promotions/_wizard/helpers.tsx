@@ -809,26 +809,51 @@ export function GroupsEditor({
 export function ExtraChargeModeSelect({
   rules,
   onChange,
+  variant = "free",
 }: {
   rules: PromoRules;
   onChange: (r: Partial<PromoRules>) => void;
+  /**
+   * "free"       — a genuine free-item deal: the wording is about what the
+   *                customer still pays for on the freed dish.
+   * "percentage" — a %-off / %-combo promo. There is NO free item here, so the
+   *                free-item wording was actively misleading: an owner setting
+   *                up "20% off menu wide" was shown "Charges on the free item"
+   *                and picked an option whose real effect was to compute the
+   *                percentage against the CHEAPEST size. A VIP member ordering
+   *                40 wings then received 20% of the $17 small pack ($3.40) and
+   *                the discount never grew with the size (Luigi 2026-08-09).
+   *                Same engine behaviour, honest labels.
+   */
+  variant?: "free" | "percentage";
 }) {
   const t = useTranslations("admin.promoStepConfig");
+  const pct = variant === "percentage";
+  const mode = rules.freeItemExtraChargeMode ?? "none";
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-1">{t("extraChargeLabel")}</label>
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        {pct ? t("pctBasisLabel") : t("extraChargeLabel")}
+      </label>
       <select
-        value={rules.freeItemExtraChargeMode ?? "none"}
+        value={mode}
         onChange={(e) => onChange({ freeItemExtraChargeMode: e.target.value as PromoRules["freeItemExtraChargeMode"] })}
         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
       >
-        <option value="none">{t("extraChargeNone")}</option>
-        <option value="addons">{t("extraChargeAddons")}</option>
-        <option value="addons_sizes">{t("extraChargeAddonsSizes")}</option>
+        <option value="none">{pct ? t("pctBasisWhole") : t("extraChargeNone")}</option>
+        <option value="addons">{pct ? t("pctBasisAddons") : t("extraChargeAddons")}</option>
+        <option value="addons_sizes">{pct ? t("pctBasisAddonsSizes") : t("extraChargeAddonsSizes")}</option>
       </select>
       <p className="text-[11px] text-gray-400 mt-1">
-        {t("extraChargeHint")}
+        {pct ? t("pctBasisHint") : t("extraChargeHint")}
       </p>
+      {/* Loud warning on the one combination that silently stops the discount
+          scaling with size — the exact shape of the wings complaint. */}
+      {pct && mode === "addons_sizes" && (
+        <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-1.5 mt-1.5">
+          {t("pctBasisSizeWarning")}
+        </p>
+      )}
     </div>
   );
 }

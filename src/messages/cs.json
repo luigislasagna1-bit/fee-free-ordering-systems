@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Nastavit slevy automaticky (nejdražší položka zdarma)",
       "strategyFixedPercent": "Pevné procento slevy",
       "pctOffCheapest": "% sleva na nejlevnější položku",
-      "pctOffMostExpensive": "% sleva na nejdražší položku"
+      "pctOffMostExpensive": "% sleva na nejdražší položku",
+      "pctBasisLabel": "Na co se sleva vztahuje",
+      "pctBasisWhole": "Celá položka — přílohy i větší velikost (doporučeno)",
+      "pctBasisAddons": "Pouze základní cena — přílohy a volby bez slevy",
+      "pctBasisAddonsSizes": "Pouze základní cena nejmenší velikosti — velikost a přílohy bez slevy",
+      "pctBasisHint": "Většina akcí \"X % sleva\" by měla používat první možnost.",
+      "pctBasisSizeWarning": "Pozor: u této možnosti sleva NEROSTE, když si zákazník vybere větší velikost — akce 20 % dá stejnou částku u nejmenší i největší velikosti."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omezení a zobrazení",

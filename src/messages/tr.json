@@ -2795,7 +2795,13 @@
       "strategyMostExpensive": "İndirimleri otomatik ayarla (en pahalı ürün ücretsiz)",
       "strategyFixedPercent": "Sabit indirim yüzdesi",
       "pctOffCheapest": "en ucuz üründe % indirim",
-      "pctOffMostExpensive": "en pahalı üründe % indirim"
+      "pctOffMostExpensive": "en pahalı üründe % indirim",
+      "pctBasisLabel": "İndirimin uygulandığı tutar",
+      "pctBasisWhole": "Ürünün tamamı — ekstralar ve boy farkı dahil (önerilen)",
+      "pctBasisAddons": "Yalnızca temel fiyat — ekstralara indirim uygulanmaz",
+      "pctBasisAddonsSizes": "Yalnızca en küçük boyun temel fiyatı — boy farkı ve ekstralar indirimsiz",
+      "pctBasisHint": "\"%X indirim\" kampanyalarının çoğu ilk seçeneği kullanmalıdır.",
+      "pctBasisSizeWarning": "Dikkat: bu seçenekte müşteri daha büyük boy seçtiğinde indirim ARTMAZ — %20'lik bir kampanya en küçük ve en büyük boyda aynı tutarı verir."
     },
     "promoStepRestrictions": {
       "pageTitle": "Kısıtlamalar & görüntüleme",

@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "הגדר הנחות אוטומטית (הפריט היקר ביותר חינם)",
       "strategyFixedPercent": "אחוז הנחה קבוע",
       "pctOffCheapest": "% הנחה על הפריט הזול ביותר",
-      "pctOffMostExpensive": "% הנחה על הפריט היקר ביותר"
+      "pctOffMostExpensive": "% הנחה על הפריט היקר ביותר",
+      "pctBasisLabel": "על מה חל ההנחה",
+      "pctBasisWhole": "הפריט כולו — כולל תוספות ושדרוג גודל (מומלץ)",
+      "pctBasisAddons": "מחיר הבסיס בלבד — אין הנחה על תוספות",
+      "pctBasisAddonsSizes": "מחיר הבסיס של הגודל הקטן ביותר בלבד — גודל ותוספות ללא הנחה",
+      "pctBasisHint": "רוב מבצעי \"X% הנחה\" צריכים להשתמש באפשרות הראשונה.",
+      "pctBasisSizeWarning": "לתשומת לבך: באפשרות זו ההנחה אינה גדלה כשלקוח בוחר גודל גדול יותר — מבצע של 20% ייתן את אותו סכום בגודל הקטן ובגדול."
     },
     "promoStepRestrictions": {
       "pageTitle": "הגבלות ותצוגה",

@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "自动设置折扣（最贵的商品免费）",
       "strategyFixedPercent": "固定折扣百分比",
       "pctOffCheapest": "最便宜商品的折扣百分比",
-      "pctOffMostExpensive": "最贵商品的折扣百分比"
+      "pctOffMostExpensive": "最贵商品的折扣百分比",
+      "pctBasisLabel": "折扣适用范围",
+      "pctBasisWhole": "整份商品 — 含加料与加大尺寸（推荐）",
+      "pctBasisAddons": "仅基础价格 — 加料与选项不打折",
+      "pctBasisAddonsSizes": "仅最小尺寸的基础价格 — 加大尺寸与加料不打折",
+      "pctBasisHint": "大多数“X% 折扣”促销应选择第一项。",
+      "pctBasisSizeWarning": "注意：使用此选项时，顾客选择更大尺寸折扣不会增加 — 20% 的促销在最小和最大尺寸上给出相同的金额。"
     },
     "promoStepRestrictions": {
       "pageTitle": "限制条件与展示",

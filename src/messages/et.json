@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Määra allahindlused automaatselt (kalleim toode tasuta)",
       "strategyFixedPercent": "Fikseeritud allahindlusprotsent",
       "pctOffCheapest": "% allahindlust odavaimalt tootelt",
-      "pctOffMostExpensive": "% allahindlust kalleimalt tootelt"
+      "pctOffMostExpensive": "% allahindlust kalleimalt tootelt",
+      "pctBasisLabel": "Millele allahindlus kehtib",
+      "pctBasisWhole": "Kogu toode — lisandid ja suurem suurus kaasa arvatud (soovitatav)",
+      "pctBasisAddons": "Ainult põhihind — lisandeid ei soodustata",
+      "pctBasisAddonsSizes": "Ainult väikseima suuruse põhihind — suurus ja lisandid ilma soodustuseta",
+      "pctBasisHint": "Enamik \"X% soodustust\" kampaaniaid peaks kasutama esimest valikut.",
+      "pctBasisSizeWarning": "Tähelepanu: selle valikuga EI kasva soodustus, kui klient valib suurema suuruse — 20% kampaania annab sama summa väikseima ja suurima suuruse puhul."
     },
     "promoStepRestrictions": {
       "pageTitle": "Piirangud ja kuvamine",

@@ -2795,7 +2795,13 @@
       "strategyMostExpensive": "Kedvezmények automatikus beállítása (a legdrágább tétel ingyen)",
       "strategyFixedPercent": "Fix kedvezményszázalék",
       "pctOffCheapest": "% kedvezmény a legolcsóbb tételre",
-      "pctOffMostExpensive": "% kedvezmény a legdrágább tételre"
+      "pctOffMostExpensive": "% kedvezmény a legdrágább tételre",
+      "pctBasisLabel": "Mire vonatkozik a kedvezmény",
+      "pctBasisWhole": "A teljes tétel — feltétek és méretfelár is (ajánlott)",
+      "pctBasisAddons": "Csak az alapár — a feltétekre és választásokra nincs kedvezmény",
+      "pctBasisAddonsSizes": "Csak a legkisebb méret alapára — méret és feltétek kedvezmény nélkül",
+      "pctBasisHint": "A legtöbb \"X% kedvezmény\" akcióhoz az első lehetőséget érdemes választani.",
+      "pctBasisSizeWarning": "Figyelem: ezzel a beállítással a kedvezmény NEM nő, ha a vendég nagyobb méretet választ — egy 20%-os akció ugyanannyit ad a legkisebb és a legnagyobb méretnél."
     },
     "promoStepRestrictions": {
       "pageTitle": "Korlátozások & megjelenítés",

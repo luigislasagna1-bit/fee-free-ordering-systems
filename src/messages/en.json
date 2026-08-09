@@ -3355,7 +3355,13 @@
       "strategyMostExpensive": "Automatically set discounts (most expensive item free)",
       "strategyFixedPercent": "Fixed discount percentage",
       "pctOffCheapest": "% off cheapest item",
-      "pctOffMostExpensive": "% off most expensive item"
+      "pctOffMostExpensive": "% off most expensive item",
+      "pctBasisLabel": "What the discount applies to",
+      "pctBasisWhole": "The whole item — add-ons and size upgrade included (recommended)",
+      "pctBasisAddons": "Base price only — add-ons and choices are not discounted",
+      "pctBasisAddonsSizes": "Smallest size's base price only — size upgrade and add-ons are not discounted",
+      "pctBasisHint": "Most \"X% off\" promotions should use the first option.",
+      "pctBasisSizeWarning": "Heads up: with this option the discount does NOT grow when a customer picks a larger size — a 20% promo gives the same amount on the smallest and the largest size."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & display",

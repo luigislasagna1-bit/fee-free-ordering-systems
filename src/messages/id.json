@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Atur diskon otomatis (item termahal gratis)",
       "strategyFixedPercent": "Persentase diskon tetap",
       "pctOffCheapest": "% diskon item termurah",
-      "pctOffMostExpensive": "% diskon item termahal"
+      "pctOffMostExpensive": "% diskon item termahal",
+      "pctBasisLabel": "Diskon berlaku untuk apa",
+      "pctBasisWhole": "Seluruh item — tambahan dan ukuran termasuk (disarankan)",
+      "pctBasisAddons": "Hanya harga dasar — tambahan tidak didiskon",
+      "pctBasisAddonsSizes": "Hanya harga dasar ukuran terkecil — ukuran dan tambahan tanpa diskon",
+      "pctBasisHint": "Sebagian besar promo \"diskon X%\" sebaiknya memakai opsi pertama.",
+      "pctBasisSizeWarning": "Perhatian: dengan opsi ini diskon TIDAK bertambah saat pelanggan memilih ukuran lebih besar — promo 20% memberi jumlah yang sama pada ukuran terkecil dan terbesar."
     },
     "promoStepRestrictions": {
       "pageTitle": "Batasan & tampilan",

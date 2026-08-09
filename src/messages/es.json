@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Establecer descuentos automáticamente (el artículo más caro gratis)",
       "strategyFixedPercent": "Porcentaje de descuento fijo",
       "pctOffCheapest": "% de descuento en el artículo más barato",
-      "pctOffMostExpensive": "% de descuento en el artículo más caro"
+      "pctOffMostExpensive": "% de descuento en el artículo más caro",
+      "pctBasisLabel": "A qué se aplica el descuento",
+      "pctBasisWhole": "El artículo completo — extras y tamaño incluidos (recomendado)",
+      "pctBasisAddons": "Solo el precio base — extras y opciones sin descuento",
+      "pctBasisAddonsSizes": "Solo el precio base del tamaño más pequeño — tamaño y extras sin descuento",
+      "pctBasisHint": "La mayoría de las promociones de \"X % de descuento\" deberían usar la primera opción.",
+      "pctBasisSizeWarning": "Aviso: con esta opción el descuento NO aumenta si el cliente elige un tamaño mayor — una promo del 20 % da el mismo importe en el tamaño más pequeño y en el más grande."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricciones y visualización",

@@ -3556,7 +3556,13 @@
       "strategyMostExpensive": "Nustatyti nuolaidas automatiškai (brangiausia prekė nemokamai)",
       "strategyFixedPercent": "Fiksuotas nuolaidos procentas",
       "pctOffCheapest": "% nuolaida pigiausiai prekei",
-      "pctOffMostExpensive": "% nuolaida brangiausiai prekei"
+      "pctOffMostExpensive": "% nuolaida brangiausiai prekei",
+      "pctBasisLabel": "Kam taikoma nuolaida",
+      "pctBasisWhole": "Visai prekei — priedai ir didesnis dydis įskaičiuoti (rekomenduojama)",
+      "pctBasisAddons": "Tik bazinė kaina — priedams nuolaida netaikoma",
+      "pctBasisAddonsSizes": "Tik mažiausio dydžio bazinė kaina — dydis ir priedai be nuolaidos",
+      "pctBasisHint": "Daugumai \"X% nuolaida\" akcijų reikėtų rinktis pirmą parinktį.",
+      "pctBasisSizeWarning": "Dėmesio: su šia parinktimi nuolaida NEDIDĖJA, kai klientas pasirenka didesnį dydį — 20% akcija duoda tą pačią sumą mažiausiam ir didžiausiam dydžiui."
     },
     "promoStepRestrictions": {
       "pageTitle": "Apribojimai ir rodymas",

@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Samodejno nastavi popuste (najdražji izdelek brezplačno)",
       "strategyFixedPercent": "Fiksni odstotek popusta",
       "pctOffCheapest": "% popusta na najcenejši izdelek",
-      "pctOffMostExpensive": "% popusta na najdražji izdelek"
+      "pctOffMostExpensive": "% popusta na najdražji izdelek",
+      "pctBasisLabel": "Na kaj se popust nanaša",
+      "pctBasisWhole": "Celoten izdelek — dodatki in večja velikost vključeni (priporočeno)",
+      "pctBasisAddons": "Samo osnovna cena — dodatki in izbire brez popusta",
+      "pctBasisAddonsSizes": "Samo osnovna cena najmanjše velikosti — velikost in dodatki brez popusta",
+      "pctBasisHint": "Večina akcij \"X % popusta\" naj uporabi prvo možnost.",
+      "pctBasisSizeWarning": "Pozor: pri tej možnosti popust NE raste, če stranka izbere večjo velikost — 20-odstotna akcija da enak znesek pri najmanjši in največji velikosti."
     },
     "promoStepRestrictions": {
       "pageTitle": "Omejitve in prikaz",

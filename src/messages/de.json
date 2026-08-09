@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Rabatte automatisch festlegen (teuerster Artikel gratis)",
       "strategyFixedPercent": "Fester Rabattprozentsatz",
       "pctOffCheapest": "% Rabatt auf günstigsten Artikel",
-      "pctOffMostExpensive": "% Rabatt auf teuersten Artikel"
+      "pctOffMostExpensive": "% Rabatt auf teuersten Artikel",
+      "pctBasisLabel": "Worauf der Rabatt angewendet wird",
+      "pctBasisWhole": "Der ganze Artikel — Extras und Größen-Upgrade inklusive (empfohlen)",
+      "pctBasisAddons": "Nur der Grundpreis — Extras und Auswahlen werden nicht rabattiert",
+      "pctBasisAddonsSizes": "Nur der Grundpreis der kleinsten Größe — Größen-Upgrade und Extras ohne Rabatt",
+      "pctBasisHint": "Die meisten \"X % Rabatt\"-Aktionen sollten die erste Option verwenden.",
+      "pctBasisSizeWarning": "Achtung: Mit dieser Option wächst der Rabatt NICHT, wenn der Kunde eine größere Größe wählt — eine 20 %-Aktion ergibt bei der kleinsten und der größten Größe denselben Betrag."
     },
     "promoStepRestrictions": {
       "pageTitle": "Einschränkungen & Anzeige",

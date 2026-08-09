@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Estableix els descomptes automàticament (l'article més car gratis)",
       "strategyFixedPercent": "Percentatge de descompte fix",
       "pctOffCheapest": "% de descompte a l'article més barat",
-      "pctOffMostExpensive": "% de descompte a l'article més car"
+      "pctOffMostExpensive": "% de descompte a l'article més car",
+      "pctBasisLabel": "A què s'aplica el descompte",
+      "pctBasisWhole": "L'article sencer — extres i mida inclosos (recomanat)",
+      "pctBasisAddons": "Només el preu base — extres i opcions sense descompte",
+      "pctBasisAddonsSizes": "Només el preu base de la mida més petita — mida i extres sense descompte",
+      "pctBasisHint": "La majoria de promocions \"X% de descompte\" haurien d'usar la primera opció.",
+      "pctBasisSizeWarning": "Atenció: amb aquesta opció el descompte NO augmenta si el client tria una mida més gran — una promo del 20% dóna el mateix import a la mida més petita i a la més gran."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restriccions i visualització",

@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Kortingen automatisch instellen (duurste item gratis)",
       "strategyFixedPercent": "Vast kortingspercentage",
       "pctOffCheapest": "% korting op goedkoopste item",
-      "pctOffMostExpensive": "% korting op duurste item"
+      "pctOffMostExpensive": "% korting op duurste item",
+      "pctBasisLabel": "Waarop de korting van toepassing is",
+      "pctBasisWhole": "Het hele item — extra's en maatupgrade inbegrepen (aanbevolen)",
+      "pctBasisAddons": "Alleen de basisprijs — extra's en keuzes krijgen geen korting",
+      "pctBasisAddonsSizes": "Alleen de basisprijs van de kleinste maat — maatupgrade en extra's zonder korting",
+      "pctBasisHint": "De meeste \"X% korting\"-acties zouden de eerste optie moeten gebruiken.",
+      "pctBasisSizeWarning": "Let op: met deze optie groeit de korting NIET als de klant een grotere maat kiest — een actie van 20% geeft hetzelfde bedrag bij de kleinste en de grootste maat."
     },
     "promoStepRestrictions": {
       "pageTitle": "Beperkingen en weergave",

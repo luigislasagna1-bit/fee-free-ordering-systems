@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Setează reducerile automat (cel mai scump articol gratuit)",
       "strategyFixedPercent": "Procent de reducere fix",
       "pctOffCheapest": "% reducere la cel mai ieftin articol",
-      "pctOffMostExpensive": "% reducere la cel mai scump articol"
+      "pctOffMostExpensive": "% reducere la cel mai scump articol",
+      "pctBasisLabel": "La ce se aplică reducerea",
+      "pctBasisWhole": "Întregul produs — extra și mărimea incluse (recomandat)",
+      "pctBasisAddons": "Doar prețul de bază — extrele și opțiunile nu se reduc",
+      "pctBasisAddonsSizes": "Doar prețul de bază al celei mai mici mărimi — mărimea și extrele fără reducere",
+      "pctBasisHint": "Majoritatea promoțiilor \"X% reducere\" ar trebui să folosească prima opțiune.",
+      "pctBasisSizeWarning": "Atenție: cu această opțiune reducerea NU crește dacă clientul alege o mărime mai mare — o promoție de 20% dă aceeași sumă la cea mai mică și la cea mai mare mărime."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restricții & afișare",

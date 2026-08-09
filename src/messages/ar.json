@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "تعيين الخصومات تلقائيًا (العنصر الأغلى مجانًا)",
       "strategyFixedPercent": "نسبة خصم ثابتة",
       "pctOffCheapest": "% خصم على العنصر الأرخص",
-      "pctOffMostExpensive": "% خصم على العنصر الأغلى"
+      "pctOffMostExpensive": "% خصم على العنصر الأغلى",
+      "pctBasisLabel": "ما ينطبق عليه الخصم",
+      "pctBasisWhole": "الصنف بالكامل — بما في ذلك الإضافات وترقية الحجم (موصى به)",
+      "pctBasisAddons": "السعر الأساسي فقط — لا خصم على الإضافات",
+      "pctBasisAddonsSizes": "السعر الأساسي لأصغر حجم فقط — الحجم والإضافات بدون خصم",
+      "pctBasisHint": "معظم عروض \"خصم X%\" ينبغي أن تستخدم الخيار الأول.",
+      "pctBasisSizeWarning": "تنبيه: مع هذا الخيار لا يزيد الخصم عندما يختار العميل حجمًا أكبر — عرض 20% يعطي المبلغ نفسه لأصغر وأكبر حجم."
     },
     "promoStepRestrictions": {
       "pageTitle": "القيود والعرض",

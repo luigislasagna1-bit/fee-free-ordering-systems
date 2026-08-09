@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Aseta alennukset automaattisesti (kallein tuote ilmaiseksi)",
       "strategyFixedPercent": "Kiinteä alennusprosentti",
       "pctOffCheapest": "% alennus halvimmasta tuotteesta",
-      "pctOffMostExpensive": "% alennus kalleimmasta tuotteesta"
+      "pctOffMostExpensive": "% alennus kalleimmasta tuotteesta",
+      "pctBasisLabel": "Mihin alennus kohdistuu",
+      "pctBasisWhole": "Koko tuote — lisät ja koon korotus mukaan lukien (suositus)",
+      "pctBasisAddons": "Vain perushinta — lisiä ei alenneta",
+      "pctBasisAddonsSizes": "Vain pienimmän koon perushinta — koko ja lisät ilman alennusta",
+      "pctBasisHint": "Useimpien \"X % alennus\" -kampanjoiden kannattaa käyttää ensimmäistä vaihtoehtoa.",
+      "pctBasisSizeWarning": "Huomio: tällä vaihtoehdolla alennus EI kasva, kun asiakas valitsee isomman koon — 20 %:n kampanja antaa saman summan pienimmässä ja suurimmassa koossa."
     },
     "promoStepRestrictions": {
       "pageTitle": "Rajoitukset & näyttö",

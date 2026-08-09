@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "Définir les remises automatiquement (l'article le plus cher gratuit)",
       "strategyFixedPercent": "Pourcentage de remise fixe",
       "pctOffCheapest": "% de remise sur l'article le moins cher",
-      "pctOffMostExpensive": "% de remise sur l'article le plus cher"
+      "pctOffMostExpensive": "% de remise sur l'article le plus cher",
+      "pctBasisLabel": "Ce à quoi la remise s'applique",
+      "pctBasisWhole": "L'article entier — suppléments et taille inclus (recommandé)",
+      "pctBasisAddons": "Prix de base uniquement — suppléments et choix non remisés",
+      "pctBasisAddonsSizes": "Prix de base de la plus petite taille — taille et suppléments non remisés",
+      "pctBasisHint": "La plupart des promotions « X % de remise » devraient utiliser la première option.",
+      "pctBasisSizeWarning": "Attention : avec cette option, la remise n'augmente PAS si le client choisit une taille plus grande — une promo de 20 % donne le même montant sur la plus petite et la plus grande taille."
     },
     "promoStepRestrictions": {
       "pageTitle": "Restrictions & affichage",

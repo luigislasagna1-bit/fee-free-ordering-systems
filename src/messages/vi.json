@@ -2795,7 +2795,13 @@
       "strategyMostExpensive": "Tự động đặt giảm giá (món đắt nhất miễn phí)",
       "strategyFixedPercent": "Phần trăm giảm giá cố định",
       "pctOffCheapest": "% giảm cho món rẻ nhất",
-      "pctOffMostExpensive": "% giảm cho món đắt nhất"
+      "pctOffMostExpensive": "% giảm cho món đắt nhất",
+      "pctBasisLabel": "Giảm giá áp dụng cho",
+      "pctBasisWhole": "Toàn bộ món — gồm cả topping và nâng cỡ (khuyến nghị)",
+      "pctBasisAddons": "Chỉ giá gốc — topping và tuỳ chọn không được giảm",
+      "pctBasisAddonsSizes": "Chỉ giá gốc của cỡ nhỏ nhất — cỡ lớn và topping không được giảm",
+      "pctBasisHint": "Hầu hết khuyến mãi \"giảm X%\" nên dùng tuỳ chọn đầu tiên.",
+      "pctBasisSizeWarning": "Lưu ý: với tuỳ chọn này, mức giảm KHÔNG tăng khi khách chọn cỡ lớn hơn — khuyến mãi 20% cho cùng một số tiền ở cỡ nhỏ nhất và lớn nhất."
     },
     "promoStepRestrictions": {
       "pageTitle": "Giới hạn & hiển thị",

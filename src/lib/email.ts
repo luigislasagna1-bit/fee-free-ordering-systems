@@ -2339,18 +2339,35 @@ async function sendDigestEmail(
       imprint: currentImprint(),
     })
   );
-  // Digest emails are technically transactional-bulk — they're sent on a
-  // schedule to all opted-in recipients. Gmail/Yahoo's Feb 2024 bulk-
-  // sender rules require List-Unsubscribe headers for anything that
-  // ships to >5K recipients/day. We add it on every digest send so we're
-  // compliant by default and not tripping spam filters at scale.
+  // 🚨 NO one-click unsubscribe header on the owner's own business report.
+  //
+  // This used to pass `listUnsubscribeUrl`, which makes send() emit BOTH
+  // `List-Unsubscribe` and `List-Unsubscribe-Post: One-Click` (RFC 8058) — the
+  // bulk-sender contract. The URL pointed at /admin/notifications: an
+  // authenticated admin page that redirects to /login and has no POST handler,
+  // so the advertised one-click endpoint does not work.
+  //
+  // Declaring yourself bulk mail and then failing the one-click check is worse
+  // than not declaring it at all. Microsoft 365 (where the owner's report
+  // address lives) quarantines on exactly that, AFTER Resend has returned 200 —
+  // so the sweep recorded a successful send and stamped the day as reported
+  // while nothing reached the inbox. Every other staff email to the SAME
+  // address carries no such header and arrives normally, which is why only the
+  // end-of-day report went missing, for every restaurant. Luigi 2026-08-09.
+  //
+  // These reports are not bulk: they go to a handful of addresses the
+  // restaurant itself entered, each with its own on/off toggle in
+  // Settings → Notifications (linked from the footer). Gmail/Yahoo's bulk rules
+  // apply at >5k recipients/day, which a per-restaurant staff report never hits.
   return send({
     to,
     subject: kind === "daily"
       ? t("email.digest.subjectDaily",   { restaurant: stats.restaurantName, period: periodLabel })
       : t("email.digest.subjectMonthly", { restaurant: stats.restaurantName, period: periodLabel }),
     html,
-    listUnsubscribeUrl: unsubscribeUrl,
+    // Send as the RESTAURANT, like every order email that does arrive, instead
+    // of the bare platform default — one consistent sending identity per store.
+    fromName: stats.restaurantName || undefined,
   });
 }
 

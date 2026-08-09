@@ -209,7 +209,11 @@ function TypeSpecific({
               </div>
             )}
           </div>
-          {!wholeCart && <ExtraChargeModeSelect rules={rules} onChange={onRules} />}
+          {/* Percentage-worded variant: same engine behaviour, but the labels
+              describe what the % applies to instead of "charges on the free
+              item" — which is what let a 20%-off promo be set to compute against
+              the cheapest size. Luigi 2026-08-09. */}
+          {!wholeCart && <ExtraChargeModeSelect rules={rules} onChange={onRules} variant="percentage" />}
         </div>
       );
     }
@@ -574,7 +578,7 @@ function TypeSpecific({
               minGroups={2}
             />
           </div>
-          <ExtraChargeModeSelect rules={rules} onChange={onRules} />
+          <ExtraChargeModeSelect rules={rules} onChange={onRules} variant="percentage" />
         </div>
       );
 

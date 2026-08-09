@@ -2852,7 +2852,13 @@
       "strategyMostExpensive": "割引を自動設定（最も高い商品が無料）",
       "strategyFixedPercent": "固定割引率",
       "pctOffCheapest": "最も安い商品の割引率（%）",
-      "pctOffMostExpensive": "最も高い商品の割引率（%）"
+      "pctOffMostExpensive": "最も高い商品の割引率（%）",
+      "pctBasisLabel": "割引の適用対象",
+      "pctBasisWhole": "商品全体 — トッピングとサイズ変更を含む（推奨）",
+      "pctBasisAddons": "基本価格のみ — トッピングや選択は割引対象外",
+      "pctBasisAddonsSizes": "最小サイズの基本価格のみ — サイズ変更とトッピングは割引対象外",
+      "pctBasisHint": "「X%オフ」の多くは最初の選択肢が適切です。",
+      "pctBasisSizeWarning": "ご注意：この設定では、お客様が大きいサイズを選んでも割引額は増えません。20%オフでも最小サイズと最大サイズで同じ金額になります。"
     },
     "promoStepRestrictions": {
       "pageTitle": "制限＆表示",

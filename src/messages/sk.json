@@ -3556,7 +3556,13 @@
       "strategyMostExpensive": "Nastaviť zľavy automaticky (najdrahšia položka zadarmo)",
       "strategyFixedPercent": "Pevné percento zľavy",
       "pctOffCheapest": "% zľava na najlacnejšiu položku",
-      "pctOffMostExpensive": "% zľava na najdrahšiu položku"
+      "pctOffMostExpensive": "% zľava na najdrahšiu položku",
+      "pctBasisLabel": "Na čo sa zľava vzťahuje",
+      "pctBasisWhole": "Celá položka — prílohy aj väčšia veľkosť (odporúčané)",
+      "pctBasisAddons": "Iba základná cena — prílohy a voľby bez zľavy",
+      "pctBasisAddonsSizes": "Iba základná cena najmenšej veľkosti — veľkosť a prílohy bez zľavy",
+      "pctBasisHint": "Väčšina akcií \"X % zľava\" by mala používať prvú možnosť.",
+      "pctBasisSizeWarning": "Pozor: pri tejto možnosti zľava NERASTIE, keď si zákazník vyberie väčšiu veľkosť — akcia 20 % dá rovnakú sumu pri najmenšej aj najväčšej veľkosti."
     },
     "promoStepRestrictions": {
       "pageTitle": "Obmedzenia a zobrazenie",
