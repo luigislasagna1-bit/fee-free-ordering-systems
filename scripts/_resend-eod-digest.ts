@@ -27,6 +27,10 @@ config({ path: ".env" });
 
 const [restaurantId, dayKey] = process.argv.slice(2).filter((a) => !a.startsWith("--"));
 const SEND = process.argv.includes("--send");
+// --to=addr replaces the recipient list entirely — for deliverability checks
+// (Mail-Tester) or "send me a copy here" asks, WITHOUT re-mailing the
+// restaurant's configured recipients. Luigi 2026-08-09 (A27).
+const TO_OVERRIDE = process.argv.find((a) => a.startsWith("--to="))?.slice(5) || null;
 
 async function main() {
   if (!restaurantId || !/^\d{4}-\d{2}-\d{2}$/.test(dayKey ?? "")) {
@@ -54,7 +58,10 @@ async function main() {
   console.log(`Restaurant: ${r.name}  (tz ${r.timezone})`);
   console.log(`lastEodDigestDate: ${r.lastEodDigestDate ? r.lastEodDigestDate.toISOString().slice(0, 10) : "(never)"}`);
 
-  const recipients = r.notificationRecipients.filter((x: any) => x.endOfDayReport === true);
+  const recipients = TO_OVERRIDE
+    ? [{ email: TO_OVERRIDE, emailLanguage: r.defaultLanguage }]
+    : r.notificationRecipients.filter((x: any) => x.endOfDayReport === true);
+  if (TO_OVERRIDE) console.log(`--to override: sending ONLY to ${TO_OVERRIDE}`);
   console.log(`Recipients with the end-of-day toggle ON: ${recipients.length}`);
   for (const x of recipients) console.log(`   ${x.email} (${x.emailLanguage || r.defaultLanguage || "en"})`);
   if (recipients.length === 0) { console.error("nobody to send to"); await prisma.$disconnect(); return; }
