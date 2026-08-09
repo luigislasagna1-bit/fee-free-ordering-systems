@@ -17,6 +17,7 @@ import { refundDirectPayment, voidPayment } from "@/lib/stripe";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder } from "@/lib/reward-ledger";
 import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
+import { syncCustomerTotalsForOrder } from "@/lib/customer-totals";
 import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
@@ -205,6 +206,9 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       // idempotently — without this a capped promo leaks a slot on every
       // abandoned card checkout.
       await releasePromotionUsageForOrder(o.id);
+      // Lifetime counters fall back out of Customer.totalOrders/totalSpent —
+      // mirrors the manual kill flows. Idempotent, never throws.
+      await syncCustomerTotalsForOrder(o.id);
       // Marketplace attribution shouldn't include orders that never paid.
       // (For belt-and-suspenders — usually marketplaceCounterApplied is
       // false on never-paid orders, but the rollback is idempotent.)
@@ -270,6 +274,9 @@ export async function autoRejectStaleOrders(opts: { now?: Date; timeoutMinutes?:
       // consumed (B11). Deletes its PromotionUsage ledger rows + decrements
       // usedCount, idempotently. Luigi 2026-06-30 (B5 ledger).
       await releasePromotionUsageForOrder(order.id);
+      // Lifetime counters fall back out of Customer.totalOrders/totalSpent —
+      // mirrors the manual kill flows. Idempotent, never throws.
+      await syncCustomerTotalsForOrder(order.id);
 
       // Marketplace counter rollback (idempotent). Auto-rejected
       // marketplace orders shouldn't count toward the restaurant's

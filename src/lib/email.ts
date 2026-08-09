@@ -93,7 +93,14 @@ async function getTransport(): Promise<{ client: Resend | null; from: string }> 
         if (IS_PROD) reportError(e, { stage: "email-key-decrypt" });
       }
     }
-    if (settings?.emailFrom) from = settings.emailFrom;
+    // 🚨 The DB-stored From address is trusted ONLY in production. The dev
+    // branch's PlatformSettings still carried the legacy
+    // support@luigislasagna.com sender, so a one-off script run locally with
+    // ALLOW_DEV_EMAIL=1 emailed a real restaurant owner under Luigi's
+    // RESTAURANT domain instead of the platform's (2026-08-09, Sofia region
+    // fix). Outside production the env EMAIL_FROM (checked into .env, platform
+    // domain) is the identity; the dev DB row is a playground value.
+    if (settings?.emailFrom && IS_PROD) from = settings.emailFrom;
     // Legal postal address (superadmin → Settings → Company) — surfaced in
     // MARKETING email footers only (CAN-SPAM). Rides the same cached query.
     postalAddress = settings?.companyAddress?.trim() || null;

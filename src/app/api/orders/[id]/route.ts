@@ -27,6 +27,7 @@ import { redeemCouponsForOrder, releaseCouponsForOrder } from "@/lib/coupon-ledg
 import { redeemForOrder as redeemRewardForOrder, releaseForOrder as releaseRewardForOrder, refundForOrder as refundRewardForOrder, awardForOrder as awardRewardForOrder, getOrderRewardSummary } from "@/lib/reward-ledger";
 import { awardEarnRulesForOrder, awardPromoCreditsForOrder } from "@/lib/reward-earn";
 import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
+import { syncCustomerTotalsForOrder } from "@/lib/customer-totals";
 import { resolveRewardLabel, orderShowsCredit } from "@/lib/reward-label";
 import { collectedOf } from "@/lib/reports/collected";
 import { RESELLER_WHITE_LABEL_SELECT } from "@/lib/white-label";
@@ -555,6 +556,11 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     if (existing.status !== "rejected" && existing.status !== "cancelled") {
       await releasePromotionUsageForOrder(id);
     }
+    // Lifetime counters: totalOrders/totalSpent are bumped at order CREATE,
+    // so a killed order must fall back out of them or the Customers list /
+    // CSV / autopilot segments overcount forever. Idempotent recompute,
+    // never throws. Luigi 2026-08-09.
+    await syncCustomerTotalsForOrder(id);
   }
 
   // ── Kill flow: void vs refund ────────────────────────────────────────────

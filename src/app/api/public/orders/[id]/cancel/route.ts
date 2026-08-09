@@ -44,6 +44,7 @@ import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { releaseCouponsForOrder } from "@/lib/coupon-ledger";
 import { releaseForOrder as releaseRewardForOrder } from "@/lib/reward-ledger";
 import { releasePromotionUsageForOrder } from "@/lib/promo-usage";
+import { syncCustomerTotalsForOrder } from "@/lib/customer-totals";
 import { notifyCustomer, notifyStaff } from "@/lib/notifications";
 import { resolveRewardLabel, orderShowsCredit } from "@/lib/reward-label";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
@@ -178,6 +179,9 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ id: string
   await releaseCouponsForOrder(order.id);
   await releaseRewardForOrder(order.id);
   await releasePromotionUsageForOrder(order.id);
+  // Lifetime counters fall back out of Customer.totalOrders/totalSpent —
+  // mirrors the central PATCH kill flow. Idempotent, never throws.
+  await syncCustomerTotalsForOrder(order.id);
 
   // Reserve-then-order: sync the linked booking so it doesn't sit "pending"
   // forever after its order died — mirrors the kitchen PATCH path.
