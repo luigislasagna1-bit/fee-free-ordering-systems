@@ -6604,7 +6604,14 @@
       "hasAccount": "Already have an account?",
       "signIn": "Sign in",
       "errorGeneric": "Couldn't create your account. Please try again.",
-      "errorEmailTaken": "That email is already registered."
+      "errorEmailTaken": "That email is already registered.",
+      "addressSection": "Restaurant address",
+      "streetAddress": "Street address",
+      "city": "City",
+      "stateProvince": "State / Province",
+      "postalCode": "ZIP / Postal code",
+      "country": "Country",
+      "regionHint": "This sets your prices to {currency} and your clock to {timezone}. You can change both later in Settings."
     },
     "importPage": {
       "eyebrow": "No account needed",

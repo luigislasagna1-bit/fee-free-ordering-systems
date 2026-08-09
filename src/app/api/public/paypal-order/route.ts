@@ -18,11 +18,18 @@ import { createPaypalOrder } from "@/lib/paypal";
 import { hasFeature } from "@/lib/entitlements";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
-// Mirrors SUPPORTED_CURRENCIES in src/lib/utils.ts. PayPal supports
-// all of these for direct payouts as of 2026.
+// PayPal's DOCUMENTED presentment currencies — deliberately NOT derived from
+// the platform catalog (regions.ts), because unlike Stripe (135+ currencies)
+// PayPal only settles in ~24. A store whose currency is outside this set (e.g.
+// PKR) simply doesn't get the PayPal button; card via Stripe still works.
+// The old comment called this a mirror of SUPPORTED_CURRENCIES — it never was,
+// and treating it as one would either strand PayPal at 12 currencies or send
+// PayPal currencies it rejects. Source: PayPal currency-codes reference.
+// Luigi 2026-08-09.
 const ALLOWED_CURRENCIES = new Set([
-  "USD", "CAD", "EUR", "GBP", "AUD", "NZD",
-  "CHF", "SEK", "NOK", "DKK", "JPY", "MXN",
+  "USD", "CAD", "EUR", "GBP", "AUD", "NZD", "CHF", "SEK", "NOK", "DKK",
+  "JPY", "MXN", "BRL", "CZK", "HKD", "HUF", "ILS", "MYR", "PHP", "PLN",
+  "SGD", "THB", "TWD",
 ]);
 const MAX_AMOUNT = 10_000;
 

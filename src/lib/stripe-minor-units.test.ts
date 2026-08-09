@@ -10,7 +10,12 @@ import { describe, it, expect, vi } from "vitest";
 // the conversion helpers under test never touch it.
 vi.mock("@/lib/db", () => ({ default: {} }));
 
-import { toStripeMinorUnits, fromStripeMinorUnits, STRIPE_ZERO_DECIMAL_CURRENCIES } from "@/lib/stripe";
+import {
+  toStripeMinorUnits,
+  fromStripeMinorUnits,
+  STRIPE_ZERO_DECIMAL_CURRENCIES,
+  STRIPE_THREE_DECIMAL_CURRENCIES,
+} from "@/lib/stripe";
 import { SUPPORTED_CURRENCIES } from "@/lib/utils";
 
 describe("toStripeMinorUnits / fromStripeMinorUnits", () => {
@@ -33,6 +38,29 @@ describe("toStripeMinorUnits / fromStripeMinorUnits", () => {
   it("ISK is NOT zero-decimal (Stripe treats it as two-decimal — the old per-route sets had this wrong)", () => {
     expect(STRIPE_ZERO_DECIMAL_CURRENCIES.has("isk")).toBe(false);
     expect(toStripeMinorUnits(100, "isk")).toBe(10000);
+  });
+
+  it("three-decimal currencies convert ×1000, not ×100 (a 10× undercharge)", () => {
+    // 5.500 KWD is 5500 fils. The generic ×100 path would have sent 550 = 0.550 KWD.
+    expect(toStripeMinorUnits(5.5, "kwd")).toBe(5500);
+    expect(toStripeMinorUnits(5.5, "KWD")).toBe(5500);
+    expect(fromStripeMinorUnits(5500, "kwd")).toBe(5.5);
+    expect(toStripeMinorUnits(12.34, "bhd")).toBe(12340);
+    expect(fromStripeMinorUnits(12340, "omr")).toBe(12.34);
+  });
+
+  it("three-decimal amounts are always a multiple of 10 (Stripe rejects otherwise)", () => {
+    for (const c of STRIPE_THREE_DECIMAL_CURRENCIES) {
+      for (const amount of [5.555, 0.001, 19.999, 7.123, 100]) {
+        expect(toStripeMinorUnits(amount, c) % 10).toBe(0);
+      }
+    }
+  });
+
+  it("zero- and three-decimal sets are disjoint", () => {
+    for (const c of STRIPE_THREE_DECIMAL_CURRENCIES) {
+      expect(STRIPE_ZERO_DECIMAL_CURRENCIES.has(c)).toBe(false);
+    }
   });
 
   it("round-trips exactly for every platform-supported currency", () => {

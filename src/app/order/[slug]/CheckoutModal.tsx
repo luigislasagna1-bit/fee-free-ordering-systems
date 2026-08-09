@@ -590,7 +590,13 @@ export function CheckoutModal({
             sessionToken: placesSessionTokenRef.current,
             types: ["address"],
           };
-          if (geocodeCountry) req.componentRestrictions = { country: geocodeCountry.toLowerCase() };
+          // ISO-2 only: the register route can store the sentinel "OTHER", and
+          // a non-ISO code makes Places throw — which the catch below reads as
+          // key-denied and permanently downgrades the session to OSM. Same
+          // guard as /api/public/geocode/search.
+          if (geocodeCountry && /^[A-Za-z]{2}$/.test(geocodeCountry)) {
+            req.componentRestrictions = { country: geocodeCountry.toLowerCase() };
+          }
           // Bias toward the restaurant (Luigi 2026-06-13 + 2026-07-19). A
           // tight CIRCLE (location+radius), not a 0.5° box: measured on prod,
           // the box barely moved rankings (Torino 125 km away still ranked)

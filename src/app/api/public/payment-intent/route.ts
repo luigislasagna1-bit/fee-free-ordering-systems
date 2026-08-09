@@ -2,14 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { createDirectPaymentIntent, toStripeMinorUnits } from "@/lib/stripe";
+import { CURRENCIES } from "@/lib/regions";
 import { hasFeature } from "@/lib/entitlements";
 
-// Currencies we support charging in across Stripe + PayPal + our UI.
-// Mirrors SUPPORTED_CURRENCIES in src/lib/utils.ts — keep in sync.
-const ALLOWED_CURRENCIES = new Set([
-  "usd", "cad", "eur", "gbp", "aud", "nzd",
-  "chf", "sek", "nok", "dkk", "jpy", "mxn",
-]);
+// Currencies this route will create a PaymentIntent in: the platform catalog
+// (regions.ts CURRENCIES — the same single source the admin currency pickers
+// use) minus the few Stripe cannot present. This was a hand-maintained
+// 12-currency mirror while the catalog had 47+, so a store whose country
+// cascade stamped e.g. PKR or THB could pick its currency in admin but every
+// card charge 400'd "Unsupported currency" here. Derived now so the two can
+// never drift again. Luigi 2026-08-09.
+//
+// A currency Stripe rejects fails LOUD at charge time (Stripe API error, no
+// money moves), so the exclusion list only needs the known-unsupported codes:
+// IQD is not a Stripe presentment currency; RUB support is suspended.
+const STRIPE_UNSUPPORTED = new Set(["iqd", "rub"]);
+const ALLOWED_CURRENCIES = new Set(
+  CURRENCIES.map((c) => c.code).filter((c) => !STRIPE_UNSUPPORTED.has(c)),
+);
 const MAX_AMOUNT = 10_000; // $10,000 hard cap
 
 /**
@@ -139,7 +149,9 @@ export async function POST(req: NextRequest) {
               line1: dbOrder.deliveryAddress,
               city: dbOrder.deliveryCity || undefined,
               postal_code: dbOrder.deliveryZip || undefined,
-              country: restaurant.country || undefined,
+              // Stripe documents this as ISO-2 — the register route can now
+              // store the sentinel "OTHER", which must not reach Stripe.
+              country: /^[A-Za-z]{2}$/.test(restaurant.country ?? "") ? restaurant.country! : undefined,
             },
           }
         : null;

@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import { CURRENCIES } from "@/lib/regions";
 
 export function cn(...inputs: ClassValue[]) {
   return clsx(inputs);
@@ -59,22 +60,18 @@ const CURRENCY_LOCALE: Record<string, string> = {
   MXN: "es-MX",
 };
 
-/** Supported currency codes shown in the admin restaurant settings
- *  dropdown. Order matters — most common first. */
-export const SUPPORTED_CURRENCIES: Array<{ code: string; label: string; symbol: string }> = [
-  { code: "USD", label: "US Dollar",        symbol: "$" },
-  { code: "CAD", label: "Canadian Dollar",  symbol: "$" },
-  { code: "EUR", label: "Euro",             symbol: "€" },
-  { code: "GBP", label: "British Pound",    symbol: "£" },
-  { code: "AUD", label: "Australian Dollar", symbol: "$" },
-  { code: "NZD", label: "New Zealand Dollar", symbol: "$" },
-  { code: "CHF", label: "Swiss Franc",      symbol: "CHF" },
-  { code: "SEK", label: "Swedish Krona",    symbol: "kr" },
-  { code: "NOK", label: "Norwegian Krone",  symbol: "kr" },
-  { code: "DKK", label: "Danish Krone",     symbol: "kr" },
-  { code: "JPY", label: "Japanese Yen",     symbol: "¥" },
-  { code: "MXN", label: "Mexican Peso",     symbol: "$" },
-];
+/**
+ * Supported currency codes shown in the admin settings dropdowns, UPPERCASE
+ * (the Service Fees picker matches on `currency.toUpperCase()`).
+ *
+ * DERIVED from regions.CURRENCIES — do not hand-maintain a second list here.
+ * This used to be its own 12-entry array while regions.ts carried 47, so a
+ * restaurant whose country cascade set, say, PKR or THB could not find its own
+ * currency in the Service Fees picker at all. One source, uppercased at the
+ * boundary, means the two can never drift again. Luigi 2026-08-09.
+ */
+export const SUPPORTED_CURRENCIES: Array<{ code: string; label: string; symbol: string }> =
+  CURRENCIES.map((c) => ({ code: c.code.toUpperCase(), label: c.label, symbol: c.symbol }));
 
 /**
  * The bare currency symbol for an ISO-4217 code (e.g. "EUR" → "€", "USD" → "$").

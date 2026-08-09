@@ -258,18 +258,40 @@ export const STRIPE_ZERO_DECIMAL_CURRENCIES = new Set([
   "pyg", "rwf", "ugx", "vnd", "vuv", "xaf", "xof", "xpf",
 ]);
 
+/**
+ * THREE-decimal currencies (1000 subunits — fils/millimes), added alongside the
+ * Gulf/North-African countries in regions.ts. Without this set the generic ×100
+ * path would charge a Kuwaiti restaurant 0.550 KWD for a 5.500 KWD order — a
+ * silent 10× UNDERCHARGE on every card payment. Luigi 2026-08-09.
+ *
+ * Stripe additionally requires three-decimal amounts to be a multiple of 10
+ * (the last digit must be 0), so toStripeMinorUnits rounds to the nearest 10
+ * rather than the nearest unit.
+ *
+ * Note: iqd and lyd are listed for arithmetic completeness only — they are NOT
+ * Stripe presentment currencies (documented set: bhd/jod/kwd/omr/tnd), so an
+ * Iraqi or Libyan store cannot take Stripe cards regardless of this set. The
+ * payment-intent route excludes iqd explicitly.
+ */
+export const STRIPE_THREE_DECIMAL_CURRENCIES = new Set([
+  "bhd", "iqd", "jod", "kwd", "lyd", "omr", "tnd",
+]);
+
 /** Major units → the integer amount Stripe expects for this currency. */
 export function toStripeMinorUnits(amount: number, currency: string): number {
-  return STRIPE_ZERO_DECIMAL_CURRENCIES.has(currency.toLowerCase())
-    ? Math.round(amount)
-    : Math.round(amount * 100);
+  const c = currency.toLowerCase();
+  if (STRIPE_ZERO_DECIMAL_CURRENCIES.has(c)) return Math.round(amount);
+  // Nearest 10 — Stripe rejects three-decimal amounts that aren't a multiple of 10.
+  if (STRIPE_THREE_DECIMAL_CURRENCIES.has(c)) return Math.round(amount * 100) * 10;
+  return Math.round(amount * 100);
 }
 
 /** Stripe's integer amount → major units (e.g. webhook amount_refunded). */
 export function fromStripeMinorUnits(minor: number, currency: string): number {
-  return STRIPE_ZERO_DECIMAL_CURRENCIES.has(currency.toLowerCase())
-    ? minor
-    : Math.round(minor) / 100;
+  const c = currency.toLowerCase();
+  if (STRIPE_ZERO_DECIMAL_CURRENCIES.has(c)) return minor;
+  if (STRIPE_THREE_DECIMAL_CURRENCIES.has(c)) return Math.round(minor) / 1000;
+  return Math.round(minor) / 100;
 }
 
 /** Compute platform application fee for a Connect destination charge. Returns

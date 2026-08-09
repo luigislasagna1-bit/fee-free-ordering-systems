@@ -65,6 +65,11 @@ export const COUNTRIES: CountryRegion[] = [
   { code: "AT", name: "Austria", currency: "eur", language: "de", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Vienna"] },
   { code: "CH", name: "Switzerland", currency: "chf", language: "de", stateLabel: "Canton", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Zurich"] },
   { code: "LU", name: "Luxembourg", currency: "eur", language: "fr", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Luxembourg"] },
+  { code: "MT", name: "Malta", currency: "eur", language: "en", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Malta"] },
+  { code: "MC", name: "Monaco", currency: "eur", language: "fr", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Monaco"] },
+  { code: "AD", name: "Andorra", currency: "eur", language: "ca", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Andorra"] },
+  { code: "SM", name: "San Marino", currency: "eur", language: "it", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/San_Marino"] },
+  { code: "LI", name: "Liechtenstein", currency: "chf", language: "de", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Vaduz"] },
 
   // ── Nordics ────────────────────────────────────────────────────
   { code: "SE", name: "Sweden", currency: "sek", language: "sv", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Stockholm"] },
@@ -90,6 +95,16 @@ export const COUNTRIES: CountryRegion[] = [
   { code: "UA", name: "Ukraine", currency: "uah", language: "uk", stateLabel: "Oblast", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Kyiv"] },
   { code: "RU", name: "Russia", currency: "rub", language: "ru", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h",
     timezones: ["Europe/Moscow", "Europe/Kaliningrad", "Asia/Yekaterinburg", "Asia/Novosibirsk", "Asia/Krasnoyarsk", "Asia/Vladivostok"] },
+  { code: "CY", name: "Cyprus", currency: "eur", language: "el", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Nicosia"] },
+  { code: "MD", name: "Moldova", currency: "mdl", language: "ro", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Chisinau"] },
+  { code: "BA", name: "Bosnia and Herzegovina", currency: "bam", language: "hr", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Sarajevo"] },
+  { code: "MK", name: "North Macedonia", currency: "mkd", language: "mk", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Skopje"] },
+  { code: "AL", name: "Albania", currency: "all", language: "sq", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Tirane"] },
+  { code: "GE", name: "Georgia", currency: "gel", language: "ka", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Tbilisi"] },
+  { code: "AM", name: "Armenia", currency: "amd", language: "hy", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Yerevan"] },
+  { code: "AZ", name: "Azerbaijan", currency: "azn", language: "az", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Baku"] },
+  { code: "KZ", name: "Kazakhstan", currency: "kzt", language: "ru", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "24h",
+    timezones: ["Asia/Almaty", "Asia/Aqtobe", "Asia/Atyrau"] },
 
   // ── Middle East ────────────────────────────────────────────────
   { code: "AE", name: "United Arab Emirates", currency: "aed", language: "ar", stateLabel: "Emirate", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Dubai"] },
@@ -97,6 +112,12 @@ export const COUNTRIES: CountryRegion[] = [
   { code: "QA", name: "Qatar", currency: "qar", language: "ar", stateLabel: null, postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Qatar"] },
   { code: "IL", name: "Israel", currency: "ils", language: "he", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Jerusalem"] },
   { code: "TR", name: "Türkiye", currency: "try", language: "tr", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Europe/Istanbul"] },
+  { code: "KW", name: "Kuwait", currency: "kwd", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Kuwait"] },
+  { code: "BH", name: "Bahrain", currency: "bhd", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Bahrain"] },
+  { code: "OM", name: "Oman", currency: "omr", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Muscat"] },
+  { code: "JO", name: "Jordan", currency: "jod", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Amman"] },
+  { code: "LB", name: "Lebanon", currency: "lbp", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Beirut"] },
+  { code: "IQ", name: "Iraq", currency: "iqd", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Baghdad"] },
 
   // ── Asia-Pacific ───────────────────────────────────────────────
   { code: "AU", name: "Australia", currency: "aud", language: "en", stateLabel: "State/Territory", postalLabel: "Postcode", hoursFormat: "12h",
@@ -114,6 +135,17 @@ export const COUNTRIES: CountryRegion[] = [
   { code: "VN", name: "Vietnam", currency: "vnd", language: "vi", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Ho_Chi_Minh"] },
   { code: "PH", name: "Philippines", currency: "php", language: "en", stateLabel: "Province", postalLabel: "ZIP code", hoursFormat: "12h", timezones: ["Asia/Manila"] },
   { code: "IN", name: "India", currency: "inr", language: "en", stateLabel: "State", postalLabel: "PIN code", hoursFormat: "12h", timezones: ["Asia/Kolkata"] },
+  { code: "PK", name: "Pakistan", currency: "pkr", language: "ur", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Karachi"] },
+  { code: "BD", name: "Bangladesh", currency: "bdt", language: "bn", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Dhaka"] },
+  { code: "LK", name: "Sri Lanka", currency: "lkr", language: "en", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Colombo"] },
+  { code: "NP", name: "Nepal", currency: "npr", language: "ne", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Kathmandu"] },
+  { code: "MM", name: "Myanmar", currency: "mmk", language: "my", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Yangon"] },
+  { code: "KH", name: "Cambodia", currency: "khr", language: "km", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Phnom_Penh"] },
+  { code: "LA", name: "Laos", currency: "lak", language: "lo", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Vientiane"] },
+  { code: "BN", name: "Brunei", currency: "bnd", language: "ms", stateLabel: "Region", postalLabel: "Postcode", hoursFormat: "12h", timezones: ["Asia/Brunei"] },
+  { code: "MO", name: "Macau", currency: "mop", language: "zh", stateLabel: null, postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Asia/Macau"] },
+  { code: "MN", name: "Mongolia", currency: "mnt", language: "mn", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Asia/Ulaanbaatar"] },
+  { code: "FJ", name: "Fiji", currency: "fjd", language: "en", stateLabel: null, postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Pacific/Fiji"] },
 
   // ── Latin America ──────────────────────────────────────────────
   { code: "BR", name: "Brazil", currency: "brl", language: "pt-BR", stateLabel: "State", postalLabel: "CEP", hoursFormat: "24h",
@@ -122,6 +154,16 @@ export const COUNTRIES: CountryRegion[] = [
   { code: "CL", name: "Chile", currency: "clp", language: "es", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["America/Santiago"] },
   { code: "CO", name: "Colombia", currency: "cop", language: "es", stateLabel: "Department", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Bogota"] },
   { code: "PE", name: "Peru", currency: "pen", language: "es", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Lima"] },
+  { code: "UY", name: "Uruguay", currency: "uyu", language: "es", stateLabel: "Department", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["America/Montevideo"] },
+  { code: "PY", name: "Paraguay", currency: "pyg", language: "es", stateLabel: "Department", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["America/Asuncion"] },
+  { code: "BO", name: "Bolivia", currency: "bob", language: "es", stateLabel: "Department", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["America/La_Paz"] },
+  { code: "EC", name: "Ecuador", currency: "usd", language: "es", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Guayaquil"] },
+  { code: "CR", name: "Costa Rica", currency: "crc", language: "es", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Costa_Rica"] },
+  { code: "PA", name: "Panama", currency: "usd", language: "es", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Panama"] },
+  { code: "GT", name: "Guatemala", currency: "gtq", language: "es", stateLabel: "Department", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Guatemala"] },
+  { code: "DO", name: "Dominican Republic", currency: "dop", language: "es", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Santo_Domingo"] },
+  { code: "JM", name: "Jamaica", currency: "jmd", language: "en", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Jamaica"] },
+  { code: "TT", name: "Trinidad and Tobago", currency: "ttd", language: "en", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["America/Port_of_Spain"] },
 
   // ── Africa ─────────────────────────────────────────────────────
   { code: "ZA", name: "South Africa", currency: "zar", language: "en", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Africa/Johannesburg"] },
@@ -129,6 +171,15 @@ export const COUNTRIES: CountryRegion[] = [
   { code: "EG", name: "Egypt", currency: "egp", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Africa/Cairo"] },
   { code: "MA", name: "Morocco", currency: "mad", language: "fr", stateLabel: null, postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Africa/Casablanca"] },
   { code: "KE", name: "Kenya", currency: "kes", language: "en", stateLabel: "County", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Africa/Nairobi"] },
+  { code: "GH", name: "Ghana", currency: "ghs", language: "en", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Africa/Accra"] },
+  { code: "TZ", name: "Tanzania", currency: "tzs", language: "sw", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Africa/Dar_es_Salaam"] },
+  { code: "UG", name: "Uganda", currency: "ugx", language: "en", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Africa/Kampala"] },
+  { code: "ET", name: "Ethiopia", currency: "etb", language: "am", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "12h", timezones: ["Africa/Addis_Ababa"] },
+  { code: "TN", name: "Tunisia", currency: "tnd", language: "ar", stateLabel: "Governorate", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Africa/Tunis"] },
+  { code: "DZ", name: "Algeria", currency: "dzd", language: "ar", stateLabel: "Province", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Africa/Algiers"] },
+  { code: "SN", name: "Senegal", currency: "xof", language: "fr", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Africa/Dakar"] },
+  { code: "CI", name: "Côte d'Ivoire", currency: "xof", language: "fr", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Africa/Abidjan"] },
+  { code: "CM", name: "Cameroon", currency: "xaf", language: "fr", stateLabel: "Region", postalLabel: "Postal code", hoursFormat: "24h", timezones: ["Africa/Douala"] },
 
   // ── Fallback ───────────────────────────────────────────────────
   { code: "OTHER", name: "Other / Not listed", currency: "usd", language: "en", stateLabel: "State/Region", postalLabel: "Postal code", hoursFormat: "24h",
@@ -165,19 +216,27 @@ export function defaultsForCountry(code: string | null | undefined): {
   };
 }
 
-/** Validate an IANA timezone string. Uses Intl.supportedValuesOf when
- *  available (Node 18+/modern browsers); falls back to constructing a
- *  formatter (throws on invalid zone) so we never accept garbage. */
+/** Validate an IANA timezone string.
+ *
+ *  🚨 Do NOT reintroduce an `Intl.supportedValuesOf("timeZone").includes(tz)`
+ *  check here. That list is ICU-build-dependent and, on the ICU shipping with
+ *  current Node, returns the LEGACY aliases while omitting the canonical names
+ *  we actually store — `Asia/Calcutta` is present but `Asia/Kolkata` is not,
+ *  likewise `Europe/Kiev`/`Europe/Kyiv`, `Asia/Saigon`/`Asia/Ho_Chi_Minh`,
+ *  `Asia/Katmandu`/`Asia/Kathmandu`, `Asia/Rangoon`/`Asia/Yangon` — and it omits
+ *  `UTC` entirely, which is exactly what defaultsForCountry("OTHER") hands a
+ *  restaurant. PATCH /api/restaurants/profile gates on this function, so the
+ *  membership test 400'd India, Ukraine, Vietnam, Argentina and every "Other /
+ *  Not listed" store the moment they saved their profile. Luigi 2026-08-09.
+ *
+ *  The constructor probe is the authority: it accepts canonical names AND
+ *  aliases, and throws RangeError on anything bogus ("garbage", "America/Fake").
+ *  It does accept bare UTC offsets like "+05:30", which are not zone IDs and
+ *  would break DST handling, so those are rejected explicitly. */
 export function isValidTimezone(tz: string | null | undefined): boolean {
   if (!tz || typeof tz !== "string") return false;
-  try {
-    const sv = (Intl as { supportedValuesOf?: (k: string) => string[] }).supportedValuesOf;
-    if (typeof sv === "function") {
-      return sv("timeZone").includes(tz);
-    }
-  } catch {
-    /* fall through to the formatter probe */
-  }
+  // Offsets are not zone identifiers — a fixed offset silently breaks DST.
+  if (/^[+-]/.test(tz.trim())) return false;
   try {
     new Intl.DateTimeFormat("en-US", { timeZone: tz });
     return true;
@@ -186,18 +245,23 @@ export function isValidTimezone(tz: string | null | undefined): boolean {
   }
 }
 
-/** All IANA timezones (for a free-form "advanced" picker fallback). */
+/** All IANA timezones (for the free-form "Other / Not listed" picker).
+ *
+ *  Unions the platform's own per-country zones with whatever this runtime's
+ *  Intl reports. The union matters: that list is alias-flavoured and
+ *  ICU-dependent (see isValidTimezone), so on its own it can offer
+ *  `Asia/Calcutta` while omitting the `Asia/Kolkata` we ship for India —
+ *  leaving a restaurant unable to pick its own country's zone. */
 export function allTimezones(): string[] {
+  const own = COUNTRIES.flatMap((c) => c.timezones);
+  let intlZones: string[] = [];
   try {
     const sv = (Intl as { supportedValuesOf?: (k: string) => string[] }).supportedValuesOf;
-    if (typeof sv === "function") {
-      return sv("timeZone");
-    }
+    if (typeof sv === "function") intlZones = sv("timeZone");
   } catch {
-    /* noop */
+    /* per-country zones alone still cover every shipped country */
   }
-  // Minimal fallback — the per-country list covers the common cases.
-  return COUNTRIES.flatMap((c) => c.timezones);
+  return [...new Set([...own, ...intlZones])].sort();
 }
 
 /** Comprehensive currency list for the admin picker. Symbols are
@@ -251,6 +315,47 @@ export const CURRENCIES: Array<{ code: string; label: string; symbol: string }> 
   { code: "egp", label: "Egyptian Pound", symbol: "£" },
   { code: "mad", label: "Moroccan Dirham", symbol: "د.م." },
   { code: "kes", label: "Kenyan Shilling", symbol: "KSh" },
+  { code: "ghs", label: "Ghanaian Cedi", symbol: "GH₵" },
+  { code: "tzs", label: "Tanzanian Shilling", symbol: "TSh" },
+  { code: "ugx", label: "Ugandan Shilling", symbol: "USh" },
+  { code: "etb", label: "Ethiopian Birr", symbol: "Br" },
+  { code: "tnd", label: "Tunisian Dinar", symbol: "د.ت" },
+  { code: "dzd", label: "Algerian Dinar", symbol: "د.ج" },
+  { code: "xof", label: "West African CFA Franc", symbol: "CFA" },
+  { code: "xaf", label: "Central African CFA Franc", symbol: "FCFA" },
+  { code: "pkr", label: "Pakistani Rupee", symbol: "₨" },
+  { code: "bdt", label: "Bangladeshi Taka", symbol: "৳" },
+  { code: "lkr", label: "Sri Lankan Rupee", symbol: "Rs" },
+  { code: "npr", label: "Nepalese Rupee", symbol: "Rs" },
+  { code: "mmk", label: "Myanmar Kyat", symbol: "K" },
+  { code: "khr", label: "Cambodian Riel", symbol: "៛" },
+  { code: "lak", label: "Lao Kip", symbol: "₭" },
+  { code: "bnd", label: "Brunei Dollar", symbol: "$" },
+  { code: "mop", label: "Macanese Pataca", symbol: "MOP$" },
+  { code: "mnt", label: "Mongolian Tögrög", symbol: "₮" },
+  { code: "fjd", label: "Fijian Dollar", symbol: "$" },
+  { code: "kwd", label: "Kuwaiti Dinar", symbol: "د.ك" },
+  { code: "bhd", label: "Bahraini Dinar", symbol: ".د.ب" },
+  { code: "omr", label: "Omani Rial", symbol: "﷼" },
+  { code: "jod", label: "Jordanian Dinar", symbol: "د.ا" },
+  { code: "lbp", label: "Lebanese Pound", symbol: "ل.ل" },
+  { code: "iqd", label: "Iraqi Dinar", symbol: "ع.د" },
+  { code: "mdl", label: "Moldovan Leu", symbol: "L" },
+  { code: "bam", label: "Bosnia-Herzegovina Mark", symbol: "KM" },
+  { code: "mkd", label: "Macedonian Denar", symbol: "ден" },
+  { code: "all", label: "Albanian Lek", symbol: "L" },
+  { code: "gel", label: "Georgian Lari", symbol: "₾" },
+  { code: "amd", label: "Armenian Dram", symbol: "֏" },
+  { code: "azn", label: "Azerbaijani Manat", symbol: "₼" },
+  { code: "kzt", label: "Kazakhstani Tenge", symbol: "₸" },
+  { code: "uyu", label: "Uruguayan Peso", symbol: "$" },
+  { code: "pyg", label: "Paraguayan Guaraní", symbol: "₲" },
+  { code: "bob", label: "Bolivian Boliviano", symbol: "Bs" },
+  { code: "crc", label: "Costa Rican Colón", symbol: "₡" },
+  { code: "gtq", label: "Guatemalan Quetzal", symbol: "Q" },
+  { code: "dop", label: "Dominican Peso", symbol: "RD$" },
+  { code: "jmd", label: "Jamaican Dollar", symbol: "$" },
+  { code: "ttd", label: "Trinidad & Tobago Dollar", symbol: "$" },
 ];
 
 const CURRENCY_CODES = new Set(CURRENCIES.map((c) => c.code));

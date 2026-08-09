@@ -8,7 +8,7 @@ import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 import { PasswordInput } from "@/components/PasswordInput";
-import { COUNTRIES } from "@/lib/regions";
+import { COUNTRIES, CURRENCIES, defaultsForCountry } from "@/lib/regions";
 // Type-only — keeps prisma (pulled in by the resolver) out of the client bundle.
 import type { ResellerBranding } from "@/lib/reseller-branding";
 
@@ -136,6 +136,31 @@ export function SignupForm({
 
   const inviteBlocked = inviteContext && (inviteContext.expired || inviteContext.used);
   const claimBlocked = claimContext && (claimContext.expired || claimContext.used);
+
+  // What the selected country will actually stamp on the restaurant. Mirrors
+  // the server-side cascade in /api/auth/register so the preview can't lie.
+  //
+  // The currency NAME comes from Intl.DisplayNames in the reader's own locale —
+  // CURRENCIES[].label in regions.ts is English-only data, and splicing it into
+  // a translated sentence produced "…i tuoi prezzi in CAD — Canadian Dollar…".
+  // Falls back to the English label, then to the bare ISO code.
+  const regionPreview = (() => {
+    const d = defaultsForCountry(form.country);
+    const code = d.currency.toUpperCase();
+    let name: string | undefined;
+    try {
+      const dn = new Intl.DisplayNames([locale], { type: "currency" }).of(code);
+      // Intl echoes the input code back when it has no name for it.
+      if (dn && dn !== code) name = dn;
+    } catch {
+      /* older runtime — fall through to the English label */
+    }
+    name ??= CURRENCIES.find((c) => c.code === d.currency)?.label;
+    return {
+      timezone: d.timezone,
+      currencyLabel: name ? `${code} — ${name}` : code,
+    };
+  })();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -424,11 +449,11 @@ export function SignupForm({
           {/* ─── Address ──────────────────────────────────────────── */}
           <div className="pt-2">
             <div className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">
-              Restaurant address
+              {t("addressSection")}
             </div>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Street address</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t("streetAddress")}</label>
                 <input
                   type="text"
                   disabled={!!inviteBlocked}
@@ -440,7 +465,7 @@ export function SignupForm({
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("city")}</label>
                   <input
                     type="text"
                     disabled={!!inviteBlocked}
@@ -451,7 +476,7 @@ export function SignupForm({
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">State / Province</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("stateProvince")}</label>
                   <input
                     type="text"
                     disabled={!!inviteBlocked}
@@ -464,7 +489,7 @@ export function SignupForm({
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">ZIP / Postal code</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("postalCode")}</label>
                   <input
                     type="text"
                     disabled={!!inviteBlocked}
@@ -475,7 +500,7 @@ export function SignupForm({
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">{t("country")}</label>
                   <select
                     disabled={!!inviteBlocked}
                     className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-100 bg-white"
@@ -488,6 +513,18 @@ export function SignupForm({
                   </select>
                 </div>
               </div>
+              {/* Country silently drives currency + clock. Before this, an owner
+                  who left the Canada default (or whose country wasn't listed)
+                  got CAD prices and a Toronto clock with nothing on screen
+                  saying so — that is exactly how an Islamabad restaurant was
+                  created as "Islamabad, CA". Showing the consequence makes a
+                  wrong country visible BEFORE submit. Luigi 2026-08-09. */}
+              <p className="text-xs text-gray-500 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2">
+                {t("regionHint", {
+                  currency: regionPreview.currencyLabel,
+                  timezone: regionPreview.timezone,
+                })}
+              </p>
             </div>
           </div>
 

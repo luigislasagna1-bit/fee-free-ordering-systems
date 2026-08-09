@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import prisma from "@/lib/db";
 import { slugify } from "@/lib/utils";
-import { defaultsForCountry } from "@/lib/regions";
+import { defaultsForCountry, regionForCountry } from "@/lib/regions";
 import { isSupportedLocale } from "@/lib/locales";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
 import { validatePassword } from "@/lib/password";
@@ -156,7 +156,18 @@ export async function POST(req: NextRequest) {
     const cityClean         = trim(city, 100);
     const stateClean        = trim(state, 100);
     const zipClean          = trim(zip, 20);
-    const countryClean      = trim(country, 2) ?? "CA"; // ISO-2; default Canada
+    // ISO-2, validated against the shipped country list. 🚨 This used to be
+    // `trim(country, 2) ?? "CA"` — anything missing or unrecognised silently
+    // became CANADA, and the cascade below then stamped CAD + America/Toronto
+    // on the restaurant. A real Islamabad signup landed as "Islamabad, CA" with
+    // Canadian dollars and a Toronto clock because Pakistan simply wasn't in
+    // the list yet. Unknown input now resolves to OTHER (UTC / USD), which is
+    // visibly generic instead of confidently wrong, and the owner can correct
+    // it in the admin profile. Luigi 2026-08-09.
+    // Width 8, not 2 — the sentinel code "OTHER" is five characters and a
+    // 2-char trim would mangle it to "OT".
+    const countryRaw        = trim(country, 8);
+    const countryClean      = regionForCountry(countryRaw) ? countryRaw!.toUpperCase() : "OTHER";
     const cuisineTypeClean  = trim(cuisineType, 60);
 
     // Derive locale defaults from the chosen country so a new restaurant
@@ -188,6 +199,10 @@ export async function POST(req: NextRequest) {
           country: countryClean,
           timezone: regionDefaults.timezone,
           currency: regionDefaults.currency,
+          // Was never persisted, so every store kept the schema default "24h"
+          // regardless of country — a US/Canadian owner had to go and flip it
+          // by hand. Part of the same country cascade. Luigi 2026-08-09.
+          hoursFormat: regionDefaults.hoursFormat,
           defaultLanguage: derivedLanguage,
           cuisineType: cuisineTypeClean,
           email: emailClean,
@@ -212,9 +227,10 @@ export async function POST(req: NextRequest) {
         state: stateClean,
         zip: zipClean,
         country: countryClean,
-        // Region cascade: correct timezone/currency/language from country.
+        // Region cascade: correct timezone/currency/language/hours from country.
         timezone: regionDefaults.timezone,
         currency: regionDefaults.currency,
+        hoursFormat: regionDefaults.hoursFormat,
         defaultLanguage: derivedLanguage,
         cuisineType: cuisineTypeClean,
         // EXPLICITLY override the schema defaults for service flags. Schema

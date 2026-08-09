@@ -3,6 +3,8 @@ import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
 import { isSuperadmin, ROLES } from "@/lib/roles";
 import { slugify } from "@/lib/utils";
+import { defaultsForCountry, regionForCountry } from "@/lib/regions";
+import { isSupportedLocale } from "@/lib/locales";
 import { sendBillingNotificationEmail } from "@/lib/email";
 import crypto from "crypto";
 
@@ -98,11 +100,16 @@ export async function POST(req: NextRequest) {
   const city: string | null = body.city ? String(body.city).trim().slice(0, 100) : null;
   const state: string | null = body.state ? String(body.state).trim().slice(0, 100) : null;
   const zip: string | null = body.zip ? String(body.zip).trim().slice(0, 20) : null;
-  // Country defaults to "US" matching the schema default. Restricted to
-  // a 2-letter ISO code; longer values get trimmed.
-  const country: string = body.country
-    ? String(body.country).trim().slice(0, 2).toUpperCase() || "US"
-    : "US";
+  // Country validated against the shipped list; unknown input resolves to
+  // "OTHER" (UTC/usd) instead of silently masquerading as a real country —
+  // same rule as /api/auth/register (the old slice(0,2) here also mangled
+  // longer input into a fake ISO code). Absent stays "US" per schema default.
+  const countryRaw = body.country ? String(body.country).trim().slice(0, 8).toUpperCase() : "US";
+  const country: string = regionForCountry(countryRaw) ? countryRaw : "OTHER";
+  // Same region cascade the register route applies — without it a reseller-
+  // created Italian store started on the US-Eastern clock in USD.
+  const regionDefaults = defaultsForCountry(country);
+  const derivedLanguage = isSupportedLocale(regionDefaults.language) ? regionDefaults.language : "en";
 
   if (restaurantName.length < 2) return NextResponse.json({ error: "Restaurant name required" }, { status: 400 });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ownerEmail)) return NextResponse.json({ error: "Invalid owner email" }, { status: 400 });
@@ -141,6 +148,12 @@ export async function POST(req: NextRequest) {
       state,
       zip,
       country,
+      // Region cascade — correct timezone/currency/language/hours from the
+      // country instead of the US/Eastern schema defaults.
+      timezone: regionDefaults.timezone,
+      currency: regionDefaults.currency,
+      hoursFormat: regionDefaults.hoursFormat,
+      defaultLanguage: derivedLanguage,
       email: ownerEmail,
       // Every new restaurant lands on the FREE plan. No trial. See
       // src/app/api/restaurants/locations/route.ts for the same rule
