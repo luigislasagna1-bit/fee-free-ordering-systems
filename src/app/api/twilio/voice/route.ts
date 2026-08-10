@@ -174,10 +174,29 @@ async function handle(req: NextRequest) {
     select: { name: true },
     take: 150,
   });
-  const hintTerms = [...new Set(items.map((i) => i.name).filter(Boolean))]
-    .map((n) => n.replace(/,/g, " ").trim())
-    .filter((n) => n.length > 1 && n.length <= 40)
-    .slice(0, 100);
+  // 🚨 Deepgram REJECTS this attribute unless it is strictly clean — the first
+  // live pilot call (2026-08-09) died before the greeting with "Deepgram
+  // invalid argument: 400 Bad Request" and every call fell through to the
+  // store phone. Two causes, both from real menu data: punctuation in item
+  // names ("MINI CARROTS + RANCH DIP", "Kit!") and total length (we sent
+  // 2,021 chars; the ConversationRelay hints limit is 500). So: strip to
+  // letters/digits/spaces/hyphens, collapse whitespace, dedupe, and pack
+  // items whole until the 500-char budget is spent — a truncated dish name
+  // would bias recognition toward a phrase nobody says.
+  const HINTS_MAX_CHARS = 500;
+  const cleaned = [...new Set(
+    items
+      .map((i) => (i.name || "").replace(/[^A-Za-z0-9 -]/g, " ").replace(/\s+/g, " ").trim())
+      .filter((n) => n.length > 1 && n.length <= 40),
+  )];
+  const hintTerms: string[] = [];
+  let hintsLen = 0;
+  for (const term of cleaned) {
+    const added = hintsLen === 0 ? term.length : hintsLen + 1 + term.length;
+    if (added > HINTS_MAX_CHARS) break;
+    hintTerms.push(term);
+    hintsLen = added;
+  }
   const hintsAttr = hintTerms.length ? ` hints="${xml(hintTerms.join(","))}"` : "";
 
   // Providers from config (Deepgram + ElevenLabs are the ConversationRelay
