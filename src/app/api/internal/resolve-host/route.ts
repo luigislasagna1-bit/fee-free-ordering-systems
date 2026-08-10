@@ -46,8 +46,32 @@ export async function GET(req: NextRequest) {
   const value = (req.nextUrl.searchParams.get("value") || "").toLowerCase().trim();
 
   if (!value) return NextResponse.json({ slug: null, hasHostedSite: false });
-  if (by !== "subdomain" && by !== "customDomain") {
+  if (by !== "subdomain" && by !== "customDomain" && by !== "slug") {
     return NextResponse.json({ error: "Bad by param" }, { status: 400 });
+  }
+
+  // ── Reverse lookup: slug → canonical branded domain ────────────────
+  // The proxy asks "does this slug have a live custom domain?" so that
+  // platform-domain /order/<slug> traffic can 308 there (cart-split fix,
+  // Luigi 2026-08-09: the localStorage cart is per-origin, so the same store
+  // being orderable on BOTH feefreeordering.com/order/<slug> AND its branded
+  // domain split customers' carts — a pizza added on one origin "vanished"
+  // at checkout on the other).
+  //
+  // ⚠️ The conditions MUST mirror the inbound by=customDomain direction
+  // exactly (isActive + verified + custom_domain_routing entitlement):
+  // redirecting to a domain this resolver would refuse to serve would strand
+  // every customer. `redirectToHost` carries the answer; null = no domain,
+  // stay on the platform origin.
+  if (by === "slug") {
+    const r = await prisma.restaurant.findFirst({
+      where: { slug: value, isActive: true, customDomain: { not: null }, customDomainStatus: "verified" },
+      select: { id: true, slug: true, customDomain: true },
+    });
+    if (r?.customDomain && (await hasFeature(r.id, "custom_domain_routing"))) {
+      return NextResponse.json({ slug: r.slug, hasHostedSite: false, redirectToHost: r.customDomain });
+    }
+    return NextResponse.json({ slug: value, hasHostedSite: false });
   }
 
   // Canonicalize the host for custom-domain lookups: treat

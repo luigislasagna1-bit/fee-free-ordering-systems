@@ -233,6 +233,63 @@ export async function proxy(req: NextRequest) {
       res.headers.set("Expires", "0");
       return res;
     }
+
+    // ── Canonical branded-domain redirect for /order/<slug> ────────────
+    // The cart is localStorage — PER-ORIGIN. The same store's ordering page
+    // was reachable on BOTH <platform>/order/<slug> AND its verified custom
+    // domain, and the order page's "Back to <restaurant>'s site" breadcrumb
+    // hops between them — so a customer's cart silently split across two
+    // origins and items "vanished" at checkout (live report: a pepperoni
+    // pizza lost mid-order, Luigi 2026-08-02; unreproducible before because
+    // the repro stayed on one origin). One canonical origin per store ends
+    // the split — and a platform-URL storefront for a domain-verified
+    // restaurant was a white-label leak anyway.
+    //
+    // The branded host serves /order/<slug>/... paths AS-IS (same-slug
+    // passthrough below), so the path + query carry over byte-for-byte —
+    // status links, payment, account deep links all keep working.
+    // Fail OPEN on any lookup problem (pass through = old behavior). 308 +
+    // no-store per AGENTS.md; entitlement-dependent, so never cacheable.
+    const orderMatch = pathname.match(/^\/order\/([a-z0-9-]+)(\/.*)?$/);
+    if (orderMatch) {
+      const orderSlug = orderMatch[1];
+      const slugKey = `slug:${orderSlug}`;
+      let canonicalHost: string | null = null;
+      let resolvedSlugLookup = false;
+      const slugCached = getCached(slugKey);
+      if (slugCached.hit) {
+        canonicalHost = slugCached.info.redirectToHost ?? null;
+        resolvedSlugLookup = true;
+      } else {
+        try {
+          const resolveUrl = new URL("/api/internal/resolve-host", req.url);
+          resolveUrl.searchParams.set("by", "slug");
+          resolveUrl.searchParams.set("value", orderSlug);
+          const headers: HeadersInit = {};
+          if (process.env.INTERNAL_API_SECRET) {
+            headers["x-internal-key"] = process.env.INTERNAL_API_SECRET;
+          }
+          const res = await fetch(resolveUrl, { headers });
+          const data = (await res.json()) as { slug: string | null; redirectToHost?: string | null };
+          canonicalHost = data.redirectToHost ?? null;
+          setCached(slugKey, { slug: data.slug ?? orderSlug, hasHostedSite: false, redirectToHost: canonicalHost });
+          resolvedSlugLookup = true;
+        } catch {
+          // Resolver unreachable — serve on the platform origin as before.
+        }
+      }
+      if (resolvedSlugLookup && canonicalHost) {
+        const url = req.nextUrl.clone();
+        url.protocol = "https:";
+        url.host = canonicalHost;
+        url.port = "";
+        const res = NextResponse.redirect(url, 308);
+        res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+        res.headers.set("Pragma", "no-cache");
+        res.headers.set("Expires", "0");
+        return res;
+      }
+    }
     return NextResponse.next();
   }
 
