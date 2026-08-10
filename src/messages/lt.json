@@ -586,7 +586,8 @@
       "title": "Šis užsakymas priskiriamas jūsų paskyrai",
       "body": "Esate prisijungę kaip {account}, todėl šis užsakymas — ir visi {label}, kuriuos jam išleisite ar už jį uždirbsite — priklauso tai paskyrai. Patvirtinimą išsiųsime adresu {typed}.",
       "useAccountEmail": "Vietoj to siųsti į mano paskyros el. paštą"
-    }
+    },
+    "pausedSchedulePrompt": "⏸ Šiuo metu nepriimame užsakymų dabar — pasirinkite vėlesnį laiką ir jį paruošime. Anksčiausias laisvas laikas rodomas žemiau."
   },
   "reservation": {
     "title": "Rezervuoti stalą",

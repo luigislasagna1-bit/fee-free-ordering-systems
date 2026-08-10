@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "Pembayaran online sedang tidak tersedia, jadi pesanan antar tidak bisa dibuat. Silakan pilih ambil sendiri.",
     "addressNotLocated": "Pilih alamat Anda dari saran agar kami bisa memeriksa pengiriman ke Anda.",
     "pickAddressFromList": "Pilih alamat Anda dari daftar di atas agar kami bisa memastikan area dan biaya pengiriman.",
-    "cantFindAddress": "Tidak menemukan alamat Anda? Letakkan pin di peta saja"
+    "cantFindAddress": "Tidak menemukan alamat Anda? Letakkan pin di peta saja",
+    "pausedSchedulePrompt": "⏸ Saat ini kami tidak menerima pesanan untuk sekarang — pilih waktu lebih lambat dan kami akan menyiapkannya. Slot paling awal yang tersedia ditampilkan di bawah."
   },
   "reservation": {
     "title": "Pesan meja",

@@ -586,7 +586,8 @@
     },
     "addressNotLocated": "Scegli il tuo indirizzo tra i suggerimenti così possiamo verificare la consegna.",
     "pickAddressFromList": "Scegli il tuo indirizzo dall'elenco qui sopra così possiamo confermare la zona di consegna e il prezzo.",
-    "cantFindAddress": "Non trovi il tuo indirizzo? Metti invece un segnaposto sulla mappa"
+    "cantFindAddress": "Non trovi il tuo indirizzo? Metti invece un segnaposto sulla mappa",
+    "pausedSchedulePrompt": "⏸ Al momento non accettiamo ordini immediati — scegli un orario più tardi e sarà pronto. Il primo orario disponibile è mostrato qui sotto."
   },
   "reservation": {
     "title": "Prenota un tavolo",

@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "Spletno plačilo trenutno ni na voljo, zato naročil z dostavo ni mogoče oddati. Izberite prevzem.",
     "addressNotLocated": "Izberite svoj naslov med predlogi, da preverimo dostavo do vas.",
     "pickAddressFromList": "Izberite naslov s seznama zgoraj, da potrdimo območje dostave in ceno.",
-    "cantFindAddress": "Ne najdete svojega naslova? Označite mesto na zemljevidu"
+    "cantFindAddress": "Ne najdete svojega naslova? Označite mesto na zemljevidu",
+    "pausedSchedulePrompt": "⏸ Trenutno ne sprejemamo naročil za takoj — izberite poznejši čas in bo pripravljeno. Najzgodnejši prosti termin je prikazan spodaj."
   },
   "reservation": {
     "title": "Rezerviraj mizo",

@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "Online betalen is momenteel niet beschikbaar, dus bezorgbestellingen zijn niet mogelijk. Kies afhalen.",
     "addressNotLocated": "Kies uw adres uit de suggesties, dan controleren we de bezorging bij u.",
     "pickAddressFromList": "Kies uw adres uit de lijst hierboven, dan bevestigen we uw bezorggebied en de prijs.",
-    "cantFindAddress": "Kunt u uw adres niet vinden? Zet zelf een speld op de kaart"
+    "cantFindAddress": "Kunt u uw adres niet vinden? Zet zelf een speld op de kaart",
+    "pausedSchedulePrompt": "⏸ We nemen op dit moment geen directe bestellingen aan — kies een later tijdstip, dan staat het klaar. Het vroegst beschikbare tijdstip staat hieronder."
   },
   "reservation": {
     "title": "Tafel reserveren",

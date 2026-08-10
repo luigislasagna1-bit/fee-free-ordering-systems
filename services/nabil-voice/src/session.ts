@@ -188,8 +188,16 @@ export class CallSession {
   }
 
   private sendText(token: string, last: boolean) {
+    // Belt to the prompt's "no markdown" rule: strip formatting characters the
+    // TTS would otherwise SPEAK — the first live call (2026-08-09) read
+    // "asterisk asterisk" aloud every time the model bolded a price. Safe on
+    // streamed deltas because these are single characters (a "**" split across
+    // two deltas still dies here), and none of them have a legitimate spoken
+    // use in any of our locales.
+    const clean = token.replace(/[*_`~]/g, "");
+    if (!clean && !last) return; // nothing left to say and not the flush marker
     try {
-      this.ws.send(JSON.stringify({ type: "text", token, last }));
+      this.ws.send(JSON.stringify({ type: "text", token: clean, last }));
     } catch {
       /* socket closed */
     }

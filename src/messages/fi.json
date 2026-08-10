@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "Verkkomaksu ei ole juuri nyt käytettävissä, joten toimitustilauksia ei voi tehdä. Valitse nouto.",
     "addressNotLocated": "Valitse osoitteesi ehdotuksista, niin voimme tarkistaa toimituksen sinulle.",
     "pickAddressFromList": "Valitse osoitteesi yllä olevasta luettelosta, niin voimme vahvistaa toimitusalueesi ja hinnan.",
-    "cantFindAddress": "Etkö löydä osoitettasi? Aseta nasta kartalle"
+    "cantFindAddress": "Etkö löydä osoitettasi? Aseta nasta kartalle",
+    "pausedSchedulePrompt": "⏸ Emme ota juuri nyt heti toimitettavia tilauksia — valitse myöhempi aika, niin se on valmiina. Aikaisin vapaa aika näkyy alla."
   },
   "reservation": {
     "title": "Varaa pöytä",

@@ -3470,7 +3470,30 @@ export function OrderingPageClient({
       return ws.length === 0 || ws.some((w) => windowMatches(w, dow, hhmm));
     });
   };
-  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule;
+  // Per-service PAUSE: the kitchen's "pause for now" stops the CURRENT
+  // kitchen, not the future order book — a paused service stays orderable via
+  // schedule-for-later with minimum = the pause end, exactly like a closed
+  // store already allows pre-orders. Holiday closures still hard-disable.
+  // Live report, Luigi 2026-08-09: "a client should still be able to
+  // pre-order for tomorrow morning" — previously the service button was
+  // disabled outright and the server rejected even tomorrow's orders.
+  const servicePausedUntilMs = (() => {
+    const r = restaurant as any;
+    const map: Record<string, unknown> = {
+      pickup: r.pickupPausedUntil,
+      delivery: r.deliveryPausedUntil,
+      dine_in: r.dineInPausedUntil,
+      take_out: r.takeOutPausedUntil,
+      catering: r.cateringPausedUntil,
+    };
+    const v = map[orderType];
+    if (!v) return null;
+    const ms = new Date(v as string).getTime();
+    return Number.isFinite(ms) && ms > Date.now() ? ms : null;
+  })();
+  const servicePausedNow = servicePausedUntilMs !== null;
+
+  const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule || servicePausedNow;
   // Whether the schedule picker is shown at all. Off only when the owner
   // disabled scheduling AND nothing forces it (catering / closed now / fulfilment).
   const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow || fulfilForcesSchedule;
@@ -3544,6 +3567,9 @@ export function OrderingPageClient({
     if (restaurantIsClosedNow && closedNowFirstSlot) candidates.push(closedNowFirstSlot);
     if (orderMinLeadMinutes > 0 && leadMinScheduledLocal) candidates.push(leadMinScheduledLocal);
     if (fulfilMinScheduledLocal) candidates.push(fulfilMinScheduledLocal);
+    // Paused service ⇒ earliest slot is the pause end (restaurant wall clock,
+    // rounded up to the next quarter hour so it aligns with picker slots).
+    if (servicePausedNow && servicePausedUntilMs) candidates.push(toRestaurantWallClock(servicePausedUntilMs, true));
     if (candidates.length === 0) return "";
     // Pick the LATEST (string comparison works because both are zero-padded ISO-shaped).
     return candidates.sort()[candidates.length - 1];
@@ -3555,7 +3581,7 @@ export function OrderingPageClient({
   // OPEN (general hours) but the CHOSEN service starts later today (e.g. Pickup 14:00)
   // — show a service-specific "starts at" note, NOT "we're closed" (Fabrizio
   // 2026-06-22). Both still force scheduling to the service's next opening.
-  const scheduleReason: "catering" | "closed" | "service_later" | "service_special_later" | "both" | "lead" | "fulfil" | null =
+  const scheduleReason: "catering" | "closed" | "service_later" | "service_special_later" | "both" | "lead" | "fulfil" | "paused" | null =
     fulfilForcesSchedule ? "fulfil"
     : cartHasCatering && restaurantIsClosedNow ? "both"
     : cartHasCatering ? "catering"
@@ -3567,6 +3593,9 @@ export function OrderingPageClient({
     : (restaurantIsClosedNow && serviceHasSpecialToday) ? "service_special_later"
     : generalIsClosedNow ? "closed"
     : restaurantIsClosedNow ? "service_later"
+    // Paused outranks "lead": the pause end is the binding minimum and the
+    // banner must say WHY ASAP is gone (kitchen paused, not a lead-time rule).
+    : servicePausedNow ? "paused"
     : (orderMinLeadMinutes > 0 || hideAsap) ? "lead"
     : null;
 
@@ -5337,9 +5366,12 @@ export function OrderingPageClient({
             try { desc = (JSON.parse((restaurant as any).serviceSettings || "null")?.pickup?.description || "").trim(); } catch {}
             return (
               <button
-                onClick={() => !paused && setOrderType("pickup")}
-                disabled={paused}
-                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                // Paused ≠ unavailable: the button stays clickable so the customer can
+                // schedule for after the pause (checkout forces "later" mode).
+                // Only a HOLIDAY closure hard-disables. Luigi 2026-08-09.
+                onClick={() => !holClosed && setOrderType("pickup")}
+                disabled={holClosed}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${holClosed ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "pickup"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
@@ -5362,9 +5394,12 @@ export function OrderingPageClient({
             try { desc = (JSON.parse((restaurant as any).serviceSettings || "null")?.delivery?.description || "").trim(); } catch {}
             return (
               <button
-                onClick={() => !paused && setOrderType("delivery")}
-                disabled={paused}
-                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                // Paused ≠ unavailable: the button stays clickable so the customer can
+                // schedule for after the pause (checkout forces "later" mode).
+                // Only a HOLIDAY closure hard-disables. Luigi 2026-08-09.
+                onClick={() => !holClosed && setOrderType("delivery")}
+                disabled={holClosed}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${holClosed ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "delivery"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
@@ -5391,9 +5426,12 @@ export function OrderingPageClient({
             try { const ss = JSON.parse((restaurant as any).serviceSettings || "null"); const v = ss?.dineIn?.estimatedTime; if (typeof v === "number" && v > 0) est = v; desc = (ss?.dineIn?.description || "").trim(); } catch {}
             return (
               <button
-                onClick={() => !paused && setOrderType("dine_in")}
-                disabled={paused}
-                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                // Paused ≠ unavailable: the button stays clickable so the customer can
+                // schedule for after the pause (checkout forces "later" mode).
+                // Only a HOLIDAY closure hard-disables. Luigi 2026-08-09.
+                onClick={() => !holClosed && setOrderType("dine_in")}
+                disabled={holClosed}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${holClosed ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "dine_in"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }
@@ -5416,9 +5454,12 @@ export function OrderingPageClient({
             try { const ss = JSON.parse((restaurant as any).serviceSettings || "null"); const v = ss?.takeOut?.estimatedTime; if (typeof v === "number" && v > 0) est = v; desc = (ss?.takeOut?.description || "").trim(); } catch {}
             return (
               <button
-                onClick={() => !paused && setOrderType("take_out")}
-                disabled={paused}
-                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${paused ? "opacity-50 cursor-not-allowed" : ""}`}
+                // Paused ≠ unavailable: the button stays clickable so the customer can
+                // schedule for after the pause (checkout forces "later" mode).
+                // Only a HOLIDAY closure hard-disables. Luigi 2026-08-09.
+                onClick={() => !holClosed && setOrderType("take_out")}
+                disabled={holClosed}
+                className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-3 px-2 rounded-xl font-semibold border-2 transition text-sm ${holClosed ? "opacity-50 cursor-not-allowed" : ""}`}
                 style={orderType === "take_out"
                   ? { borderColor: theme.primaryColor, backgroundColor: `${theme.primaryColor}15`, color: theme.primaryColor }
                   : { borderColor: "#e5e7eb", backgroundColor: theme.cardBackground, color: "#6b7280" }

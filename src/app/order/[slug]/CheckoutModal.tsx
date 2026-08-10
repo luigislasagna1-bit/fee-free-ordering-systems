@@ -365,7 +365,7 @@ interface Props {
    *  inside the time-choice section so the customer understands
    *  whether it's a catering rule, a "we're closed right now" rule,
    *  a min-advance rule, or several at once. */
-  scheduleReason?: "catering" | "closed" | "service_later" | "service_special_later" | "both" | "lead" | "fulfil" | null;
+  scheduleReason?: "catering" | "closed" | "service_later" | "service_special_later" | "both" | "lead" | "fulfil" | "paused" | null;
   /** Today's per-service EXTRAORDINARY/special-day OPEN intervals (if any) +
    *  the date key they apply to — so the slot picker offers the special window
    *  for TODAY instead of the weekly hours. Luigi 2026-07-02. */
@@ -1727,6 +1727,8 @@ export function CheckoutModal({
                               hours: cateringNoticeHours ?? 24,
                               strong: (c) => <strong>{c}</strong>,
                             })
+                          ) : scheduleReason === "paused" ? (
+                            tc("pausedSchedulePrompt")
                           ) : scheduleReason === "lead" ? (
                             tc("leadTimePrompt")
                           ) : (

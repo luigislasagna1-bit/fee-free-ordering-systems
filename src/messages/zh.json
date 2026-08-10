@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "在线支付目前不可用，因此无法下外送订单。请选择自取。",
     "addressNotLocated": "请从建议中选择您的地址，以便我们确认能否配送。",
     "pickAddressFromList": "请从上方列表中选择您的地址，以便我们确认配送范围和费用。",
-    "cantFindAddress": "找不到您的地址？改用地图放置图钉"
+    "cantFindAddress": "找不到您的地址？改用地图放置图钉",
+    "pausedSchedulePrompt": "⏸ 我们暂时不接“立即”订单 — 请选择稍后的时间，我们会提前备好。最早可选时间显示在下方。"
   },
   "reservation": {
     "title": "预订餐桌",

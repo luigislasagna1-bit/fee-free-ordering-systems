@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "Online plaćanje trenutno nije dostupno pa narudžbe s dostavom nisu moguće. Odaberite preuzimanje.",
     "addressNotLocated": "Odaberite svoju adresu iz prijedloga kako bismo provjerili dostavu do vas.",
     "pickAddressFromList": "Odaberite adresu s popisa iznad kako bismo potvrdili područje dostave i cijenu.",
-    "cantFindAddress": "Ne možete pronaći svoju adresu? Označite mjesto na karti"
+    "cantFindAddress": "Ne možete pronaći svoju adresu? Označite mjesto na karti",
+    "pausedSchedulePrompt": "⏸ Trenutačno ne primamo narudžbe za odmah — odaberite kasnije vrijeme i bit će spremna. Najraniji slobodan termin prikazan je ispod."
   },
   "reservation": {
     "title": "Rezervirajte stol",

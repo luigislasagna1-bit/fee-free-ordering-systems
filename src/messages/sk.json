@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "Online platba momentálne nie je dostupná, objednávky s rozvozom preto nie je možné zadať. Zvoľte vyzdvihnutie.",
     "addressNotLocated": "Vyberte adresu z návrhov, aby sme mohli overiť doručenie k vám.",
     "pickAddressFromList": "Vyberte svoju adresu zo zoznamu vyššie, aby sme mohli potvrdiť oblasť doručenia a cenu.",
-    "cantFindAddress": "Nemôžete nájsť svoju adresu? Označte miesto na mape"
+    "cantFindAddress": "Nemôžete nájsť svoju adresu? Označte miesto na mape",
+    "pausedSchedulePrompt": "⏸ Objednávky na hneď teraz momentálne neprijímame — vyberte neskorší čas a pripravíme ju. Najskorší voľný termín je nižšie."
   },
   "reservation": {
     "title": "Rezervovať stôl",

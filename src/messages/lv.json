@@ -586,7 +586,8 @@
       "title": "Šis pasūtījums tiks piesaistīts jūsu kontam",
       "body": "Jūs esat pieteicies kā {account}, tāpēc šis pasūtījums — un visi {label}, ko tam iztērēsiet vai par to nopelnīsiet — pieder šim kontam. Apstiprinājumu nosūtīsim uz {typed}.",
       "useAccountEmail": "Sūtīt to labāk uz mana konta e-pastu"
-    }
+    },
+    "pausedSchedulePrompt": "⏸ Šobrīd nepieņemam tūlītējus pasūtījumus — izvēlieties vēlāku laiku, un tas būs gatavs. Agrākais pieejamais laiks redzams zemāk."
   },
   "reservation": {
     "title": "Rezervēt galdu",

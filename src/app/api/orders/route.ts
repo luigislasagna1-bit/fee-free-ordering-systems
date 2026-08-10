@@ -519,11 +519,30 @@ export async function POST(req: NextRequest) {
         default:         return null;
       }
     })();
-    if (pauseField && new Date(pauseField).getTime() > Date.now()) {
+    // A SCHEDULED order for AT/AFTER the pause end is legitimate: the pause
+    // means "stop the kitchen NOW", not "close the future order book" — the
+    // kitchen only meets a scheduled order at its alert time, which is after
+    // they resume. Same rule as ordering while closed (pre-orders allowed).
+    // Applies identically to web checkout and the Nabil AI phone channel
+    // (both land here). ASAP orders during a pause stay refused.
+    // Luigi 2026-08-09: "a client should still be able to pre-order for
+    // tomorrow morning" — previously ANY order of a paused type was refused.
+    const pauseEndMs = pauseField ? new Date(pauseField).getTime() : 0;
+    const scheduledMsForPause = (() => {
+      if (!scheduledFor) return null;
+      const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+      const d = m
+        ? parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), (restaurant as any).timezone ?? undefined)
+        : new Date(scheduledFor);
+      return Number.isFinite(d.getTime()) ? d.getTime() : null;
+    })();
+    const pauseBlocks =
+      pauseEndMs > Date.now() && (scheduledMsForPause === null || scheduledMsForPause < pauseEndMs);
+    if (pauseBlocks) {
       const resumesAt = new Date(pauseField).toLocaleString();
       return NextResponse.json(
         {
-          error: `${type} is temporarily paused by the restaurant. Estimated to resume around ${resumesAt}.`,
+          error: `${type} is temporarily paused by the restaurant. Estimated to resume around ${resumesAt}. You can still place an order scheduled for after that time.`,
           code: "service_paused",
         },
         { status: 423 },

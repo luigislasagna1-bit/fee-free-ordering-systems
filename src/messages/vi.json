@@ -586,7 +586,8 @@
     "prepaidDeliveryUnavailable": "Thanh toán trực tuyến hiện không khả dụng nên không thể đặt đơn giao hàng. Vui lòng chọn tự đến lấy.",
     "addressNotLocated": "Chọn địa chỉ của bạn từ gợi ý để chúng tôi kiểm tra giao hàng tới bạn.",
     "pickAddressFromList": "Chọn địa chỉ của bạn từ danh sách phía trên để chúng tôi xác nhận khu vực và phí giao hàng.",
-    "cantFindAddress": "Không tìm thấy địa chỉ của bạn? Hãy ghim vị trí trên bản đồ"
+    "cantFindAddress": "Không tìm thấy địa chỉ của bạn? Hãy ghim vị trí trên bản đồ",
+    "pausedSchedulePrompt": "⏸ Hiện tại chúng tôi tạm ngừng nhận đơn giao ngay — hãy chọn thời gian muộn hơn và chúng tôi sẽ chuẩn bị sẵn. Khung giờ sớm nhất còn trống hiển thị bên dưới."
   },
   "reservation": {
     "title": "Đặt bàn",
