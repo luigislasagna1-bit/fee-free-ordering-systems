@@ -83,18 +83,14 @@ is only the tip *number* (the driver's app displays it; ShipDay earnings reports
 system never pays drivers for ShipDay orders — driver pay is whatever you configure/pay on the
 ShipDay side. There is currently NO tip-split setting anywhere in Fee Free Ordering.
 
-**YOUR PART:**
-1. ☐ **Look in your ShipDay dashboard → Settings → Driver payment / earnings** for the tip setting
-   you remembered. If ShipDay can set the driver's tip share there, that's the right lever and we
-   change nothing in our code.
-2. ☐ **⚠️ Before ANY 25/75 tip split goes live — ask your accountant one question:** in Ontario,
-   the Employment Standards Act ("Protecting Employees' Tips" rules) restricts an employer from
-   keeping a share of EMPLOYEES' tips (redistribution to a staff tip pool is treated differently
-   from the house keeping it). Whether this applies depends on whether your drivers are employees
-   or contractors and how the split is used. Same class of gate as A23 (driver pay legal sign-off).
-3. ☐ If ShipDay has no such setting and the accountant clears it, tell Claude — the change on our
-   side is small (a per-restaurant "driver tip share %" setting applied where the tip number is
-   sent to ShipDay), but it will make drivers SEE only their share, so it waits for your explicit go.
+**RESOLVED 2026-08-10 (Luigi):** the drivers work for SHIPDAY, not for the restaurant — Luigi pays
+ShipDay a per-order fee, and the tip share the driver sees/keeps is configured on ShipDay's side
+(Luigi believes ShipDay shows the driver only the chosen % — set to 25%). Employment-law question
+is moot on our side under that model (ShipDay's drivers, ShipDay's agreement). **No code change:**
+we keep sending ShipDay the true 100% tip number; ShipDay applies the split.
+
+1. ☐ Only remaining check: confirm the 25% split is actually set in the ShipDay dashboard
+   (Settings → Driver payment), and glance at the first live order's driver-side tip to be sure.
 
 ### A42. 🎁 Gift Wallet Pass BUILT — one env-var chore + a runbook note (2026-08-03)
 Built the no-account spend path for gifted Reward Dollars (DESIGN-gift-wallet-pass.md): a recipient
