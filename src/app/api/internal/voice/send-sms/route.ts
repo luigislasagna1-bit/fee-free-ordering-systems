@@ -8,7 +8,8 @@ export const runtime = "nodejs";
 
 /**
  * POST /api/internal/voice/send-sms  (x-internal-key)
- * The `send_sms_link` tool + confirmation/text-back sender. Texts the caller a
+ * The `send_sms_link` tool + confirmation/text-back sender. Texts the caller
+ * the owner's configured VoiceTextLink for that kind when there is one, else a
  * BRANDED link (their online-order page, menu, reservation, support, or an
  * order receipt) built from restaurantOrderUrl() — so it's always live on our
  * own hosted pages and never 404s like Loman's dead GloriaFood links.
@@ -28,11 +29,28 @@ export async function POST(req: NextRequest) {
 
   const r = await prisma.restaurant.findFirst({
     where: { OR: [{ id: body.restaurantId || undefined }, { slug: body.slug || undefined }], isActive: true },
-    select: { slug: true, subdomain: true, customDomain: true, customDomainStatus: true, name: true, phone: true },
+    select: { id: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, name: true, phone: true },
   });
   if (!r) return NextResponse.json({ error: "Restaurant not found", code: "not_found" }, { status: 404 });
 
   const urlInfo = { slug: r.slug, subdomain: r.subdomain, customDomain: r.customDomain, customDomainStatus: r.customDomainStatus };
+
+  // Owner-configured text link (Nabil dashboard → FAQ & Links) wins for the
+  // kinds it can express; the branded restaurantOrderUrl() stays the fallback
+  // whenever no active row has a url, so an SMS can never end up link-less.
+  // `receipt` is deliberately excluded: /status/<orderId> is a per-order
+  // tracking URL no owner-supplied link can replace.
+  const override = ["order_online", "menu", "reservation", "support"].includes(linkType)
+    ? (
+        await prisma.voiceTextLink.findFirst({
+          where: { restaurantId: r.id, kind: linkType, active: true, url: { not: null } },
+          orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+          select: { url: true },
+        })
+      )?.url ?? null
+    : null;
+  const link = () => override ?? restaurantOrderUrl(urlInfo);
+
   let msg: string;
   switch (linkType) {
     case "receipt":
@@ -41,17 +59,17 @@ export async function POST(req: NextRequest) {
         : `Thanks for your ${r.name} order! ${restaurantOrderUrl(urlInfo)}`;
       break;
     case "menu":
-      msg = `${r.name} menu & online ordering: ${restaurantOrderUrl(urlInfo)}`;
+      msg = `${r.name} menu & online ordering: ${link()}`;
       break;
     case "reservation":
-      msg = `Book a table at ${r.name}: ${restaurantOrderUrl(urlInfo)}`;
+      msg = `Book a table at ${r.name}: ${link()}`;
       break;
     case "support":
-      msg = `${r.name}${r.phone ? ` — call us at ${r.phone}` : ""}: ${restaurantOrderUrl(urlInfo)}`;
+      msg = `${r.name}${r.phone ? ` — call us at ${r.phone}` : ""}: ${link()}`;
       break;
     case "order_online":
     default:
-      msg = `Order online at ${r.name}: ${restaurantOrderUrl(urlInfo)}`;
+      msg = `Order online at ${r.name}: ${link()}`;
       break;
   }
 

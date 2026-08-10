@@ -2,8 +2,13 @@ import type Anthropic from "@anthropic-ai/sdk";
 import type { WebSocket } from "ws";
 import { CONFIG, type CallToken } from "./config";
 import { api } from "./api";
-import { TOOLS, executeTool, type ToolContext } from "./tools";
+import { TOOLS, executeTool, toolsForConfig, type ToolContext } from "./tools";
 import { buildSystemPrompt } from "./prompt";
+import { normalizeAgentConfig } from "./agent-config";
+
+/** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
+const WRAP_UP_LEAD_MS = 45_000;
+const HANGUP_GRACE_MS = 15_000;
 
 const MAX_TOOL_HOPS = 8;
 
@@ -31,19 +36,37 @@ export class CallSession {
   private turnRunning = false;
   private outcome: string | null = null;
   private orderId: string | null = null;
-  private reservationId: string | null = null;
+  private orderNumber: string | null = null;
+  private reservationCode: string | null = null;
+  private customerId: string | null = null;
   private language: string | null = null;
   private usageIn = 0;
   private usageOut = 0;
   private startedAt = Date.now();
   private finalized = false;
+  /** Real caller turns (prompt/dtmf events) — synthetic injected prompts
+   *  (barge-in resume, wrap-up nudge) don't count toward engagement. */
+  private userTurns = 0;
+  /** The per-call tool list (capability toggles remove tools). */
+  private tools: typeof TOOLS = TOOLS;
+  private wrapUpTimer: ReturnType<typeof setTimeout> | undefined;
+  private hangUpTimer: ReturnType<typeof setTimeout> | undefined;
+  private wrapUpInjected = false;
+  /** maxCallSeconds hangup deferred because a turn was still running. */
+  private hangUpRequested = false;
 
   constructor(
     private ws: WebSocket,
     private token: CallToken,
     private anthropic: Anthropic,
   ) {
-    this.ctx = { token, cfg: {}, cashDeliveryBlocked: false, pendingTransfer: null, placedOrders: [] };
+    this.ctx = {
+      token,
+      cfg: normalizeAgentConfig(undefined),
+      cashDeliveryBlocked: false,
+      pendingTransfer: null,
+      placedOrders: [],
+    };
   }
 
   onMessage(raw: string) {
@@ -61,7 +84,15 @@ export class CallSession {
         const text = msg.voicePrompt ?? msg.text ?? msg.transcript ?? "";
         if (msg.lang) this.language = msg.lang;
         this.lastPromptAt = Date.now();
-        if (text) void this.handlePrompt(String(text));
+        if (text) {
+          // Real caller speech landed, so the barge-in resume is moot. Without
+          // this the timer still fires after we've answered and the agent
+          // re-speaks its pre-interrupt half-sentence over the caller.
+          clearTimeout(this.resumeTimer);
+          this.resumeTimer = undefined;
+          this.userTurns++;
+          void this.handlePrompt(String(text));
+        }
         break;
       }
       case "interrupt":
@@ -71,20 +102,36 @@ export class CallSession {
         // interrupt ("mm-hmm", kitchen clatter) halts TTS mid-sentence but
         // produces NO usable transcript — so no prompt ever arrives and the
         // caller gets dead air after the agent "cut itself off" (the exact
-        // first-call symptom). If nothing intelligible follows within 2.5s,
-        // resume and finish the thought.
+        // first-call symptom). If nothing intelligible follows within 4s,
+        // resume and finish the thought. 4s, not 2.5s: a real 2-3s barge-in
+        // plus STT endpointing routinely finalizes after 2.5s, and firing
+        // while the caller is still talking is worse than a beat of silence.
         clearTimeout(this.resumeTimer);
         this.resumeTimer = setTimeout(() => {
+          // Only resume when there IS a spoken turn to pick up. An interrupt
+          // during the welcome greeting leaves an empty history (or a turn we
+          // never started), and "finish your point" then invents a point the
+          // agent never made — while the caller is dictating their order.
+          const last = this.messages[this.messages.length - 1];
+          if (last?.role !== "assistant") return;
           if (Date.now() - this.lastPromptAt > 2000 && !this.turnRunning) {
             void this.runTurn(
               "(You were interrupted mid-sentence but the caller didn't actually say anything. Briefly pick up where you left off and finish your point.)",
             );
           }
-        }, 2500);
+        }, 4000);
         break;
       case "dtmf":
         // Treat keypad input as spoken text (e.g. "press 1 for a person").
-        if (msg.digit || msg.digits) void this.handlePrompt(`(pressed ${msg.digit ?? msg.digits})`);
+        if (msg.digit || msg.digits) {
+          // Keypad input is real caller input: it must retire the barge-in
+          // resume and refresh lastPromptAt exactly like a spoken prompt.
+          this.lastPromptAt = Date.now();
+          clearTimeout(this.resumeTimer);
+          this.resumeTimer = undefined;
+          this.userTurns++;
+          void this.handlePrompt(`(pressed ${msg.digit ?? msg.digits})`);
+        }
         break;
       case "error":
         console.error("[nabil-voice] relay error", msg);
@@ -95,6 +142,22 @@ export class CallSession {
   }
 
   private async init() {
+    // Call-start event: creates the VoiceCall stub (real startedAt, triggers
+    // recording server-side). Fire-and-forget — the call must not wait on it.
+    void api
+      .logCallStart({
+        event: "start",
+        restaurantId: this.token.restaurantId,
+        callSid: this.token.callSid,
+        fromNumber: this.token.from,
+        toNumber: this.token.to,
+        startedAtIso: new Date().toISOString(),
+      })
+      .then((r) => {
+        if (!r.ok) console.error("[nabil-voice] logCallStart rejected", r.status);
+      })
+      .catch((e) => console.error("[nabil-voice] logCallStart failed", e));
+
     try {
       const [menu, context, returningCaller] = await Promise.all([
         api.menu(this.token.slug),
@@ -102,17 +165,71 @@ export class CallSession {
         api.returningCaller(this.token.slug, this.token.from).catch(() => ({ found: false })),
       ]);
       this.ctx.cashDeliveryBlocked = !!context?.delivery?.cashDeliveryBlocked;
-      // Config comes back on context in a later revision; default permissive.
-      this.ctx.cfg = context?.config ?? { canTakeOrders: true, canBookReservations: true, canAnswerFaq: true };
+      // context.config may be ABSENT (older server) — normalize keeps today's
+      // permissive defaults exactly in that case.
+      this.ctx.cfg = normalizeAgentConfig(context?.config);
+      // The returning-caller lookup resolves the Customer — keep the id for
+      // the end log instead of discarding it.
+      this.customerId =
+        typeof (returningCaller as any)?.customerId === "string" ? (returningCaller as any).customerId : null;
       this.system = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg });
     } catch (e) {
       console.error("[nabil-voice] init failed", e);
       this.system = `You are Nabil, the phone assistant for this restaurant. Apologize that you're having trouble accessing the menu right now and offer to connect the caller to a team member (call transfer_to_human).`;
     }
+    this.tools = toolsForConfig(this.ctx.cfg);
+    this.startMaxCallTimers();
     this.ready = true;
     // Flush anything the caller said before we finished loading.
     const pending = this.queued.splice(0);
     for (const t of pending) await this.runTurn(t);
+  }
+
+  /** maxCallSeconds cap, anchored at session start: one polite wrap-up nudge
+   *  at T-45s, then a graceful hangup at T+15s if the call is still up. */
+  private startMaxCallTimers() {
+    const max = this.ctx.cfg.maxCallSeconds;
+    if (!max) return;
+    const elapsed = Date.now() - this.startedAt;
+    this.wrapUpTimer = setTimeout(() => {
+      if (this.finalized || this.wrapUpInjected) return;
+      this.wrapUpInjected = true;
+      // Synthetic user turn — serialized through handlePrompt so it never
+      // races a running turn (2026-08-10 hotfix invariant).
+      void this.handlePrompt(
+        "(You are nearing the maximum call length. Wrap up politely now — finish the current action first.)",
+      );
+    }, Math.max(0, max * 1000 - WRAP_UP_LEAD_MS - elapsed));
+    this.hangUpTimer = setTimeout(() => {
+      if (this.finalized) return;
+      if (this.turnRunning) {
+        // Never cut a turn that may be placing an order or speaking its
+        // confirmation — same invariant as the stateChanged barge-in reset in
+        // runTurnInner: the caller MUST hear the order number and total, or
+        // they assume it failed and order again. Backstop the deferral so a
+        // wedged turn can't hold the line open forever.
+        this.hangUpRequested = true;
+        this.hangUpTimer = setTimeout(() => this.endCapped(), 30_000);
+        return;
+      }
+      this.endCapped();
+    }, Math.max(0, max * 1000 + HANGUP_GRACE_MS - elapsed));
+  }
+
+  /** maxCallSeconds hard end — no outcome stamped, so whatever the call
+   *  earned stands and finalize()'s default covers the rest. */
+  private endCapped() {
+    if (this.finalized) return;
+    // interrupted=true makes an in-flight stream abort quietly (the barge-in
+    // path) instead of speaking the "didn't catch that" apology into a
+    // closing call.
+    this.interrupted = true;
+    this.controller?.abort();
+    try {
+      this.ws.send(JSON.stringify({ type: "end" }));
+    } catch {
+      /* ignore */
+    }
   }
 
   private async handlePrompt(text: string) {
@@ -142,7 +259,16 @@ export class CallSession {
     }
     // Drain prompts that arrived mid-turn, one at a time, in arrival order.
     const next = this.pendingPrompts.shift();
-    if (next !== undefined) await this.runTurn(next);
+    if (next !== undefined) {
+      await this.runTurn(next); // the inner frame owns the deferred hangup
+      return;
+    }
+    // The maxCallSeconds hangup waited for this turn — the queue is empty and
+    // the caller has heard the confirmation, so end now instead of at backstop.
+    if (this.hangUpRequested) {
+      clearTimeout(this.hangUpTimer);
+      this.endCapped();
+    }
   }
 
   private async runTurnInner(userText: string) {
@@ -164,7 +290,7 @@ export class CallSession {
           // it rare. Review wf_a62b0536.
           max_tokens: 2048,
           system: this.system,
-          tools: TOOLS as any,
+          tools: this.tools as any,
           messages: this.messages,
           thinking: { type: "disabled" },
         } as any,
@@ -242,21 +368,47 @@ export class CallSession {
 
       // Final assistant turn.
       this.sendText("", true);
-      if (this.ctx.pendingTransfer) await this.endCall("transferred", this.ctx.pendingTransfer);
+      if (this.ctx.pendingTransfer) this.endTransfer(this.ctx.pendingTransfer);
       return;
+    }
+
+    // Hop cap exhausted (MAX_TOOL_HOPS consecutive tool / max_tokens rounds):
+    // the final-turn branch above never ran, so the turn was never closed.
+    // Flush the turn-final marker so ConversationRelay speaks the buffered
+    // tail, and honor a transfer requested on the last hop instead of leaving
+    // it stale for the next turn. The guard matters: the loop also exits on a
+    // barge-in that landed after tool execution, and that path keeps today's
+    // silent-abort semantics.
+    if (!this.interrupted) {
+      this.sendText("", true);
+      if (this.ctx.pendingTransfer) this.endTransfer(this.ctx.pendingTransfer);
     }
   }
 
+  /** Outcome taxonomy (contract pinned 2026-08-10): read-only tools NEVER
+   *  stamp an outcome; a FAILED place_order/book_reservation stamps "error"
+   *  (dashboard "needs attention"); transfer never overwrites a placed
+   *  order/booked reservation; finalize() defaults the rest. */
   private noteOutcome(tool: string, out: any) {
-    if (tool === "place_order" && out?.ok) {
-      this.outcome = "order_placed";
-      this.orderId = out.orderId ?? out.orderNumber ?? null;
-    } else if (tool === "book_reservation" && out?.ok) {
-      this.outcome = "reservation_booked";
+    if (tool === "place_order") {
+      if (out?.ok) {
+        this.outcome = "order_placed";
+        if (out.orderId != null) this.orderId = String(out.orderId);
+        if (out.orderNumber != null) this.orderNumber = String(out.orderNumber);
+      } else {
+        this.outcome = "error";
+      }
+    } else if (tool === "book_reservation") {
+      if (out?.ok) {
+        this.outcome = "reservation_booked";
+        if (out.confirmationCode != null) this.reservationCode = String(out.confirmationCode);
+      } else {
+        this.outcome = "error";
+      }
     } else if (tool === "transfer_to_human") {
-      this.outcome = "transferred";
-    } else if (!this.outcome) {
-      this.outcome = "faq_answered";
+      if (this.outcome !== "order_placed" && this.outcome !== "reservation_booked") {
+        this.outcome = "transferred";
+      }
     }
   }
 
@@ -276,8 +428,9 @@ export class CallSession {
     }
   }
 
-  private async endCall(outcome: string, reason: string) {
-    this.outcome = outcome;
+  private endTransfer(reason: string) {
+    // Outcome was already stamped by noteOutcome — a transfer must NOT
+    // overwrite order_placed/reservation_booked (contract 2026-08-10).
     try {
       this.ws.send(JSON.stringify({ type: "end", handoffData: JSON.stringify({ reason }) }));
     } catch {
@@ -287,39 +440,65 @@ export class CallSession {
 
   onClose() {
     this.controller?.abort();
+    clearTimeout(this.resumeTimer);
+    clearTimeout(this.wrapUpTimer);
+    clearTimeout(this.hangUpTimer);
     void this.finalize();
   }
 
   private async finalize() {
     if (this.finalized) return;
     this.finalized = true;
+    // A tool can still be in flight when the socket closes — callers routinely
+    // hang up the instant they say "yes", and the maxCallSeconds hangup makes
+    // the same timing deterministic. The place_order POST carries no abort
+    // signal, so the order WILL be created and printed: wait for the turn to
+    // drain so the VoiceCall carries the real outcome + orderNumber instead of
+    // logging "abandoned" against an order that exists. Capped at ~10s; the
+    // row already exists from the "start" upsert and nothing user-facing
+    // waits on this.
+    for (let i = 0; this.turnRunning && i < 100; i++) {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    // Default outcome (contract): a caller who engaged (2+ real turns) got
+    // answers → faq_answered; otherwise abandoned. A stamped outcome —
+    // including "error" — always survives finalize.
+    const outcome = this.outcome ?? (this.userTurns >= 2 ? "faq_answered" : "abandoned");
     try {
-      await api.logCall({
+      const r = await api.logCall({
+        event: "end",
         restaurantId: this.token.restaurantId,
         callSid: this.token.callSid,
         fromNumber: this.token.from,
         toNumber: this.token.to,
         language: this.language,
-        outcome: this.outcome ?? "abandoned",
+        outcome,
         orderId: this.orderId,
-        reservationId: this.reservationId,
+        orderNumber: this.orderNumber,
+        // Voice never learns the DB Reservation id — only the spoken
+        // confirmation code. The server resolves the id from the code.
+        reservationId: null,
+        reservationCode: this.reservationCode,
+        customerId: this.customerId,
+        transferReason: this.ctx.pendingTransfer,
         transcript: this.transcript,
         model: CONFIG.model,
         tokensIn: this.usageIn,
         tokensOut: this.usageOut,
         durationSeconds: Math.round((Date.now() - this.startedAt) / 1000),
       });
+      if (!r.ok) console.error("[nabil-voice] logCall rejected", r.status);
     } catch (e) {
       console.error("[nabil-voice] logCall failed", e);
     }
 
     // Missed-call text-back: a caller who engaged (2+ turns) but didn't place an
     // order/booking or get transferred gets a branded order link — recovers the
-    // sale instead of losing it. Best-effort.
-    const engaged = this.transcript.filter((t) => t.role === "user").length >= 2;
+    // sale instead of losing it. Best-effort; gated on smsConfirmations.
+    const engaged = this.userTurns >= 2;
     const completed =
       this.outcome === "order_placed" || this.outcome === "reservation_booked" || this.outcome === "transferred";
-    if (engaged && !completed && this.token.from) {
+    if (this.ctx.cfg.smsConfirmations && engaged && !completed && this.token.from) {
       try {
         await api.sendSms({
           restaurantId: this.token.restaurantId,

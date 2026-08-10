@@ -103,6 +103,19 @@ function sanitize(s: unknown, max = MAX_STRING): string {
   return String(s ?? "").trim().slice(0, max);
 }
 
+/** Names of the promos auto-applied to an order, parsed from Order.appliedPromos.
+ *  Shared by the 201 AND both duplicate-return paths so the three responses can
+ *  never drift — a duplicate that omitted these let the voice agent read back a
+ *  silently-discounted total (2026-08-10 FIRSTBUY incident). Display-only. */
+function promoNamesFrom(appliedPromos: string | null | undefined): string[] {
+  try {
+    const a = JSON.parse(appliedPromos ?? "[]");
+    return Array.isArray(a) ? a.map((p) => String(p?.name ?? "")).filter(Boolean).slice(0, 5) : [];
+  } catch {
+    return [];
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -243,7 +256,7 @@ export async function POST(req: NextRequest) {
     if (idemKey) {
       const existing = await prisma.order.findUnique({
         where: { idempotencyKey: idemKey },
-        select: { id: true, orderNumber: true, restaurantId: true, total: true, creditApplied: true, paymentMethod: true, paymentStatus: true },
+        select: { id: true, orderNumber: true, restaurantId: true, total: true, creditApplied: true, paymentMethod: true, paymentStatus: true, promoDiscount: true, appliedPromos: true },
       });
       if (existing && existing.restaurantId === restaurant.id) {
         return NextResponse.json({
@@ -251,6 +264,10 @@ export async function POST(req: NextRequest) {
           orderNumber: existing.orderNumber,
           total: existing.total,
           creditApplied: existing.creditApplied ?? 0,
+          // Same auto-applied-promo info the 201 carries — a retry must never
+          // hand the caller a discounted total with no mention of the discount.
+          promoDiscount: existing.promoDiscount ?? 0,
+          appliedPromoNames: promoNamesFrom(existing.appliedPromos),
           requiresPayment:
             (existing.paymentMethod === "card" || existing.paymentMethod === "paypal") &&
             existing.paymentStatus === "pending",
@@ -3029,7 +3046,7 @@ export async function POST(req: NextRequest) {
       if (idemKey && (createErr as any)?.code === "P2002") {
         const dup = await prisma.order.findUnique({
           where: { idempotencyKey: idemKey },
-          select: { id: true, orderNumber: true, total: true, creditApplied: true, paymentMethod: true, paymentStatus: true },
+          select: { id: true, orderNumber: true, total: true, creditApplied: true, paymentMethod: true, paymentStatus: true, promoDiscount: true, appliedPromos: true },
         });
         if (dup) {
           return NextResponse.json({
@@ -3037,6 +3054,8 @@ export async function POST(req: NextRequest) {
             orderNumber: dup.orderNumber,
             total: dup.total,
             creditApplied: dup.creditApplied ?? 0,
+            promoDiscount: dup.promoDiscount ?? 0,
+            appliedPromoNames: promoNamesFrom(dup.appliedPromos),
             requiresPayment:
               (dup.paymentMethod === "card" || dup.paymentMethod === "paypal") &&
               dup.paymentStatus === "pending",
@@ -3230,6 +3249,12 @@ export async function POST(req: NextRequest) {
       // Reward Dollars applied (server truth) — the client charges card/PayPal
       // for total − creditApplied, never the full total. Luigi 2026-06-27.
       creditApplied,
+      // Auto-applied promo info (additive, display-only): lets the voice agent
+      // TELL the caller a discount was applied instead of announcing a total
+      // that silently differs from the read-back price (2026-08-10: FIRSTBUY
+      // auto-applied on a phone order and the caller was never told).
+      promoDiscount: (order as { promoDiscount?: number }).promoDiscount ?? 0,
+      appliedPromoNames: promoNamesFrom((order as { appliedPromos?: string | null }).appliedPromos),
       // Client uses this to decide whether to redirect straight to the
       // status page (cash / pay-in-person / fully credit-covered) or first take
       // the customer through a payment surface (Stripe Elements or PayPal).

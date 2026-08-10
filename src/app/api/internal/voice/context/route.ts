@@ -54,6 +54,36 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Restaurant not found", code: "not_found" }, { status: 404 });
   }
 
+  // Agent behavior config + FAQ/upsell prompt material, fetched in one
+  // parallel batch (this endpoint is hit once per call setup — keep it fast).
+  const [cfg, faqRows, upsellRows] = await Promise.all([
+    prisma.voiceAgentConfig.findUnique({
+      where: { restaurantId: r.id },
+      select: {
+        canTakeOrders: true,
+        canBookReservations: true,
+        canAnswerFaq: true,
+        quoteEta: true,
+        smsConfirmations: true,
+        maxCallSeconds: true,
+        allowScheduledOrders: true,
+        afterHoursBehavior: true,
+      },
+    }),
+    prisma.voiceFaq.findMany({
+      where: { restaurantId: r.id, active: true },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+      take: 30,
+      select: { question: true, answer: true, category: true },
+    }),
+    prisma.voiceUpsell.findMany({
+      where: { restaurantId: r.id, active: true },
+      orderBy: { sortOrder: "asc" },
+      take: 5,
+      select: { note: true, menuItem: { select: { name: true, price: true } } },
+    }),
+  ]);
+
   const now = new Date();
   const tz = r.timezone || undefined;
   const fmt: "12h" | "24h" = r.hoursFormat === "12h" ? "12h" : "24h";
@@ -116,5 +146,31 @@ export async function GET(req: NextRequest) {
       zones: r.deliveryZones,
     },
     pickup: { estimatedMinutes: r.estimatedPickup },
+    // Agent behavior gates. Defaults mirror the VoiceAgentConfig schema
+    // defaults so a restaurant without a config row behaves identically to a
+    // freshly-created one (the voice service previously fell back to its own
+    // permissive defaults because this block didn't exist).
+    config: {
+      canTakeOrders: cfg?.canTakeOrders ?? true,
+      canBookReservations: cfg?.canBookReservations ?? true,
+      canAnswerFaq: cfg?.canAnswerFaq ?? true,
+      quoteEta: cfg?.quoteEta ?? true,
+      smsConfirmations: cfg?.smsConfirmations ?? true,
+      maxCallSeconds: cfg?.maxCallSeconds ?? 600,
+      allowScheduledOrders: cfg?.allowScheduledOrders ?? false,
+      afterHoursBehavior: cfg?.afterHoursBehavior ?? "take_orders",
+    },
+    // Owner-curated FAQ (active only, ≤30) — becomes a prompt section.
+    faqs: faqRows.map((f) => ({
+      q: f.question.trim(),
+      a: f.answer.trim(),
+      category: f.category,
+    })),
+    // Featured Upsells (active, ≤5) — items the agent suggests contextually.
+    upsells: upsellRows.map((u) => ({
+      name: u.menuItem.name,
+      price: u.menuItem.price,
+      note: u.note ?? null,
+    })),
   });
 }

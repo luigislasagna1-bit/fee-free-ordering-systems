@@ -64,6 +64,9 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     found: true,
     blocked: !!blocked,
+    // Kept by the voice session and written to VoiceCall.customerId at the
+    // end log — the dashboard's caller-history join depends on it.
+    customerId: customer.id,
     name: customer.name,
     orderCount: customer.totalOrders,
     lastOrderAt: customer.lastOrderAt ? customer.lastOrderAt.toISOString() : null,

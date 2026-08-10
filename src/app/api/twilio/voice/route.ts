@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import prisma from "@/lib/db";
+import { shouldEnforceTwilioSignature, verifyTwilioSignatureAny, twilioUrlCandidates } from "@/lib/voice/twilio-signature";
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { signNabilCallToken } from "@/lib/voice/session-token";
@@ -27,13 +28,13 @@ import { holidayEffectToday } from "@/lib/holiday-rules";
  *   NABIL_VOICE_WSS_URL     wss URL of the voice service (e.g. wss://nabil-voice.fly.dev/call)
  *   NABIL_VOICE_JWT_SECRET  shared with the voice service to sign/verify call tokens
  *
- * TODO (hardening): validate the X-Twilio-Signature header (HMAC-SHA1 of URL +
- *   sorted params with FFOS_TWILIO_AUTH_TOKEN) so only Twilio can mint tokens.
- *   Low urgency: a forged POST only yields a short-lived, restaurant-scoped
- *   token that is useless without a live ConversationRelay call, and every
- *   downstream write re-validates. Add once the public URL reconstruction
- *   (X-Forwarded-Proto/Host behind Vercel) is confirmed so real calls aren't
- *   rejected.
+ * HARDENING (2026-08-10): POSTs are verified against X-Twilio-Signature via
+ * src/lib/voice/twilio-signature.ts whenever enforcement is on (auth token
+ * configured); invalid → 403 with an empty <Response/>. With NO auth token we
+ * fail CLOSED in production (403) and warn-and-serve only outside it. The
+ * public URL is reconstructed from X-Forwarded-Proto/Host (Vercel). GET stays
+ * open — it only ever yields the generic "can't take your call" message
+ * (Next drops GET bodies, so no `To` can reach it and no token is minted).
  */
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -70,18 +71,73 @@ function bcp47(locale: string): string {
 const GENERIC_MSG =
   "Thanks for calling. We're not able to take your call right now. Please try again later.";
 
-async function handle(req: NextRequest) {
-  let to = "";
-  let from = "";
-  let callSid = "";
+/** Read the Twilio form body once (string params only). Empty on GET probes. */
+async function readTwilioParams(req: NextRequest): Promise<Record<string, string>> {
+  const params: Record<string, string> = {};
   try {
     const form = await req.formData();
-    to = String(form.get("To") || "").trim();
-    from = String(form.get("From") || "").trim();
-    callSid = String(form.get("CallSid") || "").trim();
+    for (const [k, v] of form.entries()) if (typeof v === "string") params[k] = v;
   } catch {
     /* GET probe or empty body */
   }
+  return params;
+}
+
+let warnedNotEnforced = false;
+
+/** The public URL Twilio signed — reconstructed from the forwarding headers
+ *  (first hop) because req.url is Vercel-internal. */
+function publicUrl(req: NextRequest): string {
+  const u = new URL(req.url);
+  const proto = (req.headers.get("x-forwarded-proto") || u.protocol.replace(":", "")).split(",")[0].trim();
+  const host = (req.headers.get("x-forwarded-host") || req.headers.get("host") || u.host).split(",")[0].trim();
+  return `${proto}://${host}${u.pathname}${u.search}`;
+}
+
+/** 403 empty-TwiML. Always logged with the URL we verified against and whether a
+ *  signature header arrived — that pair is what diagnoses a genuine Twilio
+ *  rejection (almost always a URL mismatch). Never logs the auth token. */
+function forbidden(reason: string, fullUrl: string, hadSignature: boolean): Response {
+  console.error(
+    `[twilio/voice] 403 ${reason} — url=${fullUrl} signatureHeader=${hadSignature ? "present" : "missing"}`,
+  );
+  return new Response(`<?xml version="1.0" encoding="UTF-8"?><Response/>`, {
+    status: 403,
+    headers: { "Content-Type": "text/xml; charset=utf-8", "Cache-Control": "no-store" },
+  });
+}
+
+/** 403 empty-TwiML when the POST can't be proven to be Twilio's. */
+function rejectIfForged(req: NextRequest, params: Record<string, string>): Response | null {
+  const fullUrl = publicUrl(req);
+  const hadSignature = !!req.headers.get("x-twilio-signature");
+  if (shouldEnforceTwilioSignature()) {
+    // www/apex candidates: the number's saved webhook URL is what Twilio signs,
+    // and it need not match the host we're reached on. Still HMAC-verified.
+    if (!verifyTwilioSignatureAny(twilioUrlCandidates(fullUrl), params, req.headers.get("x-twilio-signature"))) {
+      return forbidden("invalid signature", fullUrl, hadSignature);
+    }
+  } else if (process.env.NODE_ENV === "production") {
+    // No auth token in prod = we cannot authenticate Twilio → fail CLOSED.
+    // This response mints a signed Nabil call token, so serving it unverified
+    // would let anyone drive a fake call session (orders into the live
+    // kitchen, outbound SMS). Same rule as ../recording-status; dev keeps
+    // warn-and-serve for convenience.
+    if (!warnedNotEnforced) {
+      warnedNotEnforced = true;
+      console.warn(
+        "[twilio/voice] X-Twilio-Signature enforcement is OFF in production — configure the Twilio auth token; inbound calls are rejected until then.",
+      );
+    }
+    return forbidden("no Twilio auth token configured (cannot verify)", fullUrl, hadSignature);
+  }
+  return null;
+}
+
+async function handle(req: NextRequest, params: Record<string, string>) {
+  const to = (params.To || "").trim();
+  const from = (params.From || "").trim();
+  const callSid = (params.CallSid || "").trim();
 
   const wss = (process.env.NABIL_VOICE_WSS_URL || "").trim();
 
@@ -231,5 +287,13 @@ async function handle(req: NextRequest) {
   );
 }
 
-export const POST = handle;
-export const GET = handle;
+export async function POST(req: NextRequest) {
+  const params = await readTwilioParams(req);
+  const rejected = rejectIfForged(req, params);
+  if (rejected) return rejected;
+  return handle(req, params);
+}
+
+export async function GET(req: NextRequest) {
+  return handle(req, await readTwilioParams(req));
+}

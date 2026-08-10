@@ -1,22 +1,34 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Phone, Sparkles, Mic, Bot, Clock, ArrowRight, Rocket } from "lucide-react";
+import { Phone, Sparkles, Mic, Bot, Clock, ArrowRight, Rocket, LayoutDashboard, PhoneCall, UtensilsCrossed, Settings } from "lucide-react";
 import { getSessionUser } from "@/lib/session";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
-import { shouldDispatchToShipday } from "@/lib/shipday";
-import NabilConfigClient from "./NabilConfigClient";
+import { buildQuery, one, type SearchParams } from "@/components/admin/reports/table-nav";
+import NabilStatusHeader from "./NabilStatusHeader";
+import OverviewTab from "./OverviewTab";
+import CallsTab from "./CallsTab";
+import MenuTab from "./MenuTab";
+import SettingsTab from "./SettingsTab";
 
 /**
  * Nabil AI — Fee Free's Automated Phone Answering System.
  *
- * When the restaurant has the `phone_ordering_agent` entitlement, this renders
- * the live configuration UI (greetings, voice, capabilities, payments, handoff)
- * + a recent-calls list. Otherwise it shows the "Coming Soon" upsell teaser.
+ * Entitled restaurants get the full dashboard (Overview / Calls / Menu /
+ * Settings — server-rendered ?tab= tabs, Loman-parity IA and then some);
+ * everyone else sees the "Coming Soon" upsell teaser (UNCHANGED).
  * "Nabil AI" is a brand name — never translated (standing rule).
  */
-export default async function PhoneOrderingPage() {
+
+const TABS = ["overview", "calls", "menu", "settings"] as const;
+type Tab = (typeof TABS)[number];
+
+export default async function PhoneOrderingPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
   const user = await getSessionUser();
   if (!user) redirect("/login");
   if (!user.restaurantId) redirect("/superadmin");
@@ -52,51 +64,60 @@ export default async function PhoneOrderingPage() {
   );
 
   if (entitled) {
-    const [config, number, cashDeliveryBlocked, calls] = await Promise.all([
-      prisma.voiceAgentConfig.findUnique({ where: { restaurantId } }),
-      prisma.voiceNumber.findFirst({ where: { restaurantId }, orderBy: { createdAt: "asc" } }),
-      shouldDispatchToShipday(restaurantId).catch(() => false),
-      prisma.voiceCall.findMany({
-        where: { restaurantId },
-        orderBy: { startedAt: "desc" },
-        take: 10,
-        select: { id: true, fromNumber: true, outcome: true, durationSeconds: true, startedAt: true, language: true },
-      }),
+    const sp = await searchParams;
+    const tabParam = one(sp.tab);
+    const tab: Tab = (TABS as readonly string[]).includes(tabParam ?? "") ? (tabParam as Tab) : "overview";
+
+    const tOverview = await getTranslations("admin.phoneOrderingPage.overview");
+    const [config, number] = await Promise.all([
+      prisma.voiceAgentConfig.findUnique({ where: { restaurantId }, select: { enabled: true } }),
+      prisma.voiceNumber.findFirst({ where: { restaurantId }, orderBy: { createdAt: "asc" }, select: { phoneNumber: true, status: true } }),
     ]);
 
     return (
-      <div className="max-w-3xl mx-auto space-y-6 pb-10">
+      <div className="max-w-7xl mx-auto space-y-5 pb-10">
         {Header}
-        <NabilConfigClient
-          initialConfig={config as any}
-          number={number ? { phoneNumber: number.phoneNumber, status: number.status } : null}
-          cashDeliveryBlocked={!!cashDeliveryBlocked}
+
+        {/* Number + "Active — handling calls" status, visible on every tab. */}
+        <NabilStatusHeader
+          initialEnabled={config?.enabled ?? false}
+          phoneNumber={number?.phoneNumber ?? null}
         />
-        <div className="rounded-xl border border-gray-200 bg-white p-5">
-          <h3 className="font-semibold text-gray-900 mb-3">{t("config.recentCalls")}</h3>
-          {calls.length === 0 ? (
-            <p className="text-sm text-gray-500">{t("config.noCalls")}</p>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <tbody>
-                  {calls.map((c) => (
-                    <tr key={c.id} className="border-t border-gray-100">
-                      <td className="py-2 pr-3 whitespace-nowrap text-gray-500">{new Date(c.startedAt).toLocaleString()}</td>
-                      <td className="py-2 pr-3 whitespace-nowrap font-mono">{c.fromNumber || "—"}</td>
-                      <td className="py-2 pr-3 whitespace-nowrap">
-                        <span className="inline-block px-2 py-0.5 rounded-full text-[11px] bg-gray-100 text-gray-700">
-                          {c.outcome || "—"}
-                        </span>
-                      </td>
-                      <td className="py-2 whitespace-nowrap text-gray-500">{c.durationSeconds != null ? `${c.durationSeconds}s` : "—"}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+
+        {/* Server-rendered ?tab= tabs (per-tab accent, ReservationsClient style). */}
+        <div className="flex border-b border-gray-200 overflow-x-auto">
+          {(
+            [
+              ["overview", tOverview("tabOverview"), LayoutDashboard, "border-amber-500", "text-amber-700", "bg-amber-50", "text-amber-500"],
+              ["calls", tOverview("tabCalls"), PhoneCall, "border-sky-500", "text-sky-700", "bg-sky-50", "text-sky-500"],
+              ["menu", tOverview("tabMenu"), UtensilsCrossed, "border-emerald-500", "text-emerald-700", "bg-emerald-50", "text-emerald-500"],
+              ["settings", tOverview("tabSettings"), Settings, "border-slate-900", "text-slate-900", "bg-slate-100", "text-slate-600"],
+            ] as [Tab, string, typeof Phone, string, string, string, string][]
+          ).map(([key, label, Icon, activeBorder, activeText, activeBg, inactiveIcon]) => {
+            const isActive = tab === key;
+            const u = new URLSearchParams(buildQuery(sp));
+            u.set("tab", key);
+            return (
+              <Link
+                key={key}
+                href={`?${u.toString()}`}
+                className={`flex items-center gap-2 px-5 py-3 text-sm font-medium border-b-2 transition -mb-px whitespace-nowrap ${
+                  isActive
+                    ? `${activeBorder} ${activeText} ${activeBg}`
+                    : "border-transparent text-gray-500 hover:text-gray-800 hover:bg-gray-50"
+                }`}
+              >
+                <Icon className={`w-4 h-4 ${isActive ? "" : inactiveIcon}`} />
+                {label}
+              </Link>
+            );
+          })}
         </div>
+
+        {tab === "overview" && <OverviewTab restaurantId={restaurantId} sp={sp} />}
+        {tab === "calls" && <CallsTab restaurantId={restaurantId} sp={sp} />}
+        {tab === "menu" && <MenuTab restaurantId={restaurantId} sp={sp} />}
+        {tab === "settings" && <SettingsTab restaurantId={restaurantId} />}
       </div>
     );
   }

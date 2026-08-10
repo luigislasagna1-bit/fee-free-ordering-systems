@@ -4,11 +4,39 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { LOCALE_OPTIONS } from "@/lib/locales";
+import { HelpTip } from "@/components/HelpTip";
+import FaqManager, { type Faq } from "./FaqManager";
+import TextLinksManager, { type TextLink } from "./TextLinksManager";
+import BlockedCallersManager, { type BlockedRow } from "./BlockedCallersManager";
 
-type Cfg = Record<string, any>;
+/** The owner-editable VoiceAgentConfig fields this form round-trips. The
+ *  index signature carries any extra DB columns through the PATCH untouched. */
+type Cfg = {
+  openGreeting: string;
+  closedGreeting: string;
+  primaryLanguage: string;
+  voice: string;
+  voiceSpeed: number;
+  ambientNoise: boolean;
+  canTakeOrders: boolean;
+  canBookReservations: boolean;
+  canAnswerFaq: boolean;
+  allowPizzaCombo: boolean;
+  allowAnonymousCallers: boolean;
+  pickupPaymentMode: string;
+  deliveryPaymentMode: string;
+  payByLinkWindowMinutes: number;
+  payByLinkPrepMode: string;
+  quoteEta: boolean;
+  allowScheduledOrders: boolean;
+  smsConfirmations: boolean;
+  afterHoursBehavior: string;
+  transferToNumber: string;
+  recordCalls: boolean;
+  maxCallSeconds: number;
+} & Record<string, unknown>;
 
 const DEFAULTS: Cfg = {
-  enabled: false,
   openGreeting: "",
   closedGreeting: "",
   primaryLanguage: "en",
@@ -30,29 +58,59 @@ const DEFAULTS: Cfg = {
   afterHoursBehavior: "take_orders",
   transferToNumber: "",
   recordCalls: true,
+  maxCallSeconds: 600,
 };
 
+type SubTab = "general" | "voice" | "ordering" | "payments" | "faq" | "blocked";
+
+/**
+ * Nabil settings, reorganized into Loman-style sub-tabs:
+ * General / Voice / Ordering / Payments / FAQ / Blocked callers.
+ *
+ * The four config sub-tabs share one form state + the one existing
+ * PATCH /api/admin/phone-ordering endpoint — every pre-existing config key
+ * keeps working. FAQ + Text Links and Blocked Callers are their own managers
+ * (CRUD APIs from workstream D). Anything the call engine can't do yet
+ * (voiceSpeed / ambientNoise) is labeled "coming soon" — honesty over parity.
+ */
 export default function NabilConfigClient({
   initialConfig,
-  number,
   cashDeliveryBlocked,
+  initialFaqs,
+  initialTextLinks,
+  initialBlockedCallers,
 }: {
-  initialConfig: Cfg | null;
-  number: { phoneNumber: string; status: string } | null;
+  initialConfig: Record<string, unknown> | null;
   cashDeliveryBlocked: boolean;
+  initialFaqs: Faq[];
+  initialTextLinks: TextLink[];
+  initialBlockedCallers: BlockedRow[];
 }) {
   const t = useTranslations("admin.phoneOrderingPage.config");
-  const [cfg, setCfg] = useState<Cfg>({ ...DEFAULTS, ...(initialConfig || {}) });
+  const ts = useTranslations("admin.phoneOrderingPage.settingsTabs");
+  // The DB row may carry nulls for optional strings — DEFAULTS backstops the
+  // shape and the inputs tolerate null via `value ?? ""`.
+  const [cfg, setCfg] = useState<Cfg>(() => ({ ...DEFAULTS, ...(initialConfig ?? {}) }) as Cfg);
   const [saving, setSaving] = useState(false);
-  const set = (k: string, v: any) => setCfg((c) => ({ ...c, [k]: v }));
+  const [sub, setSub] = useState<SubTab>("general");
+  const set = (k: string, v: unknown) => setCfg((c) => ({ ...c, [k]: v }));
 
   const save = async () => {
     setSaving(true);
     try {
+      const body: Record<string, unknown> = {
+        ...cfg,
+        // Clamp client-side too so the owner sees what will actually be saved.
+        maxCallSeconds: Math.min(1800, Math.max(60, Math.round(Number(cfg.maxCallSeconds) || 600))),
+      };
+      // `enabled` is owned SOLELY by NabilStatusHeader (the pause toggle). This
+      // form's state is seeded once at mount, so replaying that snapshot would
+      // silently un-pause (or re-pause) a live line the owner toggled since.
+      delete body.enabled;
       const res = await fetch("/api/admin/phone-ordering", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(cfg),
+        body: JSON.stringify(body),
       });
       if (res.ok) toast.success(t("saved"));
       else toast.error(t("saveError"));
@@ -63,124 +121,213 @@ export default function NabilConfigClient({
     }
   };
 
+  const isConfigSub = sub === "general" || sub === "voice" || sub === "ordering" || sub === "payments";
+
   return (
     <div className="space-y-5">
-      {/* Number + master enable */}
-      <Section title={t("status")}>
-        <div className="flex items-center justify-between gap-4 flex-wrap">
-          <div>
-            <div className="text-sm text-gray-600">{t("numberLabel")}</div>
-            <div className="font-mono font-semibold text-gray-900">
-              {number?.phoneNumber || <span className="text-amber-600 font-sans font-normal">{t("noNumber")}</span>}
-            </div>
-          </div>
-          <Toggle label={t("enable")} checked={!!cfg.enabled} onChange={(v) => set("enabled", v)} />
-        </div>
-        <p className="text-xs text-gray-500 mt-2">{t("enableHint")}</p>
-      </Section>
-
-      {/* Greetings */}
-      <Section title={t("greetings")}>
-        <TextArea label={t("openGreeting")} value={cfg.openGreeting} maxLength={200} onChange={(v) => set("openGreeting", v)} />
-        <TextArea label={t("closedGreeting")} value={cfg.closedGreeting} maxLength={200} onChange={(v) => set("closedGreeting", v)} />
-        <p className="text-xs text-gray-500">{t("greetingHint")}</p>
-      </Section>
-
-      {/* Voice */}
-      <Section title={t("voice")}>
-        <Select
-          label={t("primaryLanguage")}
-          value={cfg.primaryLanguage}
-          options={LOCALE_OPTIONS.map((o) => ({ value: o.code, label: o.label }))}
-          onChange={(v) => set("primaryLanguage", v)}
-        />
-        <Text label={t("voiceId")} value={cfg.voice} placeholder="ElevenLabs voice id (optional)" onChange={(v) => set("voice", v)} />
-        <Toggle label={t("ambientNoise")} checked={!!cfg.ambientNoise} onChange={(v) => set("ambientNoise", v)} />
-        <p className="text-xs text-gray-500">{t("voiceHint")}</p>
-      </Section>
-
-      {/* Capabilities */}
-      <Section title={t("capabilities")}>
-        <Toggle label={t("takeOrders")} checked={!!cfg.canTakeOrders} onChange={(v) => set("canTakeOrders", v)} />
-        <Toggle label={t("bookReservations")} checked={!!cfg.canBookReservations} onChange={(v) => set("canBookReservations", v)} />
-        <Toggle label={t("answerFaq")} checked={!!cfg.canAnswerFaq} onChange={(v) => set("canAnswerFaq", v)} />
-        <Toggle label={t("transferPizzaCombo")} checked={!cfg.allowPizzaCombo} onChange={(v) => set("allowPizzaCombo", !v)} />
-        <Toggle label={t("allowAnonymous")} checked={!!cfg.allowAnonymousCallers} onChange={(v) => set("allowAnonymousCallers", v)} />
-      </Section>
-
-      {/* Payments */}
-      <Section title={t("payments")}>
-        <Select
-          label={t("pickupPayment")}
-          value={cfg.pickupPaymentMode}
-          options={[
-            { value: "unpaid", label: t("modeUnpaid") },
-            { value: "paid", label: t("modePaid") },
-            { value: "both", label: t("modeBoth") },
-          ]}
-          onChange={(v) => set("pickupPaymentMode", v)}
-        />
-        <Select
-          label={t("deliveryPayment")}
-          value={cashDeliveryBlocked ? "paid" : cfg.deliveryPaymentMode}
-          disabled={cashDeliveryBlocked}
-          options={[
-            { value: "unpaid", label: t("modeUnpaid") },
-            { value: "paid", label: t("modePaid") },
-            { value: "both", label: t("modeBoth") },
-          ]}
-          onChange={(v) => set("deliveryPaymentMode", v)}
-        />
-        {cashDeliveryBlocked && <p className="text-xs text-amber-600">{t("shipdayNote")}</p>}
-        <div className="grid grid-cols-2 gap-3">
-          <Number label={t("payWindow")} value={cfg.payByLinkWindowMinutes} min={1} max={60} onChange={(v) => set("payByLinkWindowMinutes", v)} />
-          <Select
-            label={t("prepMode")}
-            value={cfg.payByLinkPrepMode}
-            options={[
-              { value: "cook_now", label: t("prepCookNow") },
-              { value: "hold_until_paid", label: t("prepHold") },
-            ]}
-            onChange={(v) => set("payByLinkPrepMode", v)}
-          />
-        </div>
-      </Section>
-
-      {/* Ordering + after-hours */}
-      <Section title={t("ordering")}>
-        <Toggle label={t("quoteEta")} checked={!!cfg.quoteEta} onChange={(v) => set("quoteEta", v)} />
-        <Toggle label={t("scheduledOrders")} checked={!!cfg.allowScheduledOrders} onChange={(v) => set("allowScheduledOrders", v)} />
-        <Toggle label={t("smsConfirmations")} checked={!!cfg.smsConfirmations} onChange={(v) => set("smsConfirmations", v)} />
-        <Select
-          label={t("afterHours")}
-          value={cfg.afterHoursBehavior}
-          options={[
-            { value: "take_orders", label: t("ahTakeOrders") },
-            { value: "reservations_only", label: t("ahReservations") },
-            { value: "message_only", label: t("ahMessage") },
-            { value: "transfer", label: t("ahTransfer") },
-          ]}
-          onChange={(v) => set("afterHoursBehavior", v)}
-        />
-      </Section>
-
-      {/* Handoff + recording */}
-      <Section title={t("handoff")}>
-        <Text label={t("transferNumber")} value={cfg.transferToNumber} placeholder="+1..." onChange={(v) => set("transferToNumber", v)} />
-        <p className="text-xs text-gray-500">{t("transferHint")}</p>
-        <Toggle label={t("recordCalls")} checked={!!cfg.recordCalls} onChange={(v) => set("recordCalls", v)} />
-        <p className="text-xs text-gray-500">{t("recordHint")}</p>
-      </Section>
-
-      <div className="sticky bottom-0 bg-white/80 backdrop-blur py-3 -mx-1 px-1 border-t border-gray-100">
-        <button
-          onClick={save}
-          disabled={saving}
-          className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-amber-600 text-white font-semibold hover:bg-amber-700 disabled:opacity-60 transition"
-        >
-          {saving ? t("saving") : t("save")}
-        </button>
+      {/* Sub-tab bar. */}
+      <div className="flex border-b border-gray-200 overflow-x-auto">
+        {(
+          [
+            ["general", ts("general")],
+            ["voice", ts("voice")],
+            ["ordering", ts("ordering")],
+            ["payments", ts("payments")],
+            ["faq", ts("faq")],
+            ["blocked", ts("blocked")],
+          ] as [SubTab, string][]
+        ).map(([key, label]) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => setSub(key)}
+            className={`px-4 py-2.5 text-sm font-medium border-b-2 transition -mb-px whitespace-nowrap ${
+              sub === key
+                ? "border-slate-900 text-slate-900 bg-slate-50"
+                : "border-transparent text-gray-500 hover:text-gray-800"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
       </div>
+
+      {/* ── General ─────────────────────────────────────────────────── */}
+      {sub === "general" && (
+        <div className="space-y-5">
+          <Section title={t("greetings")}>
+            <TextArea label={t("openGreeting")} value={cfg.openGreeting} maxLength={200} onChange={(v) => set("openGreeting", v)} />
+            <TextArea label={t("closedGreeting")} value={cfg.closedGreeting} maxLength={200} onChange={(v) => set("closedGreeting", v)} />
+            <p className="text-xs text-gray-500">{t("greetingHint")}</p>
+            {cfg.recordCalls && <p className="text-xs text-amber-600">{ts("consentNote")}</p>}
+          </Section>
+          <Section title={t("handoff")}>
+            <Toggle label={t("allowAnonymous")} checked={!!cfg.allowAnonymousCallers} onChange={(v) => set("allowAnonymousCallers", v)} />
+            <Text label={t("transferNumber")} value={cfg.transferToNumber} placeholder="+1..." onChange={(v) => set("transferToNumber", v)} />
+            <p className="text-xs text-gray-500">{t("transferHint")}</p>
+            <Toggle label={t("recordCalls")} checked={!!cfg.recordCalls} onChange={(v) => set("recordCalls", v)} />
+            <p className="text-xs text-gray-500">{t("recordHint")}</p>
+          </Section>
+        </div>
+      )}
+
+      {/* ── Voice ───────────────────────────────────────────────────── */}
+      {sub === "voice" && (
+        <div className="space-y-5">
+          <Section title={t("voice")}>
+            <Select
+              label={t("primaryLanguage")}
+              value={cfg.primaryLanguage}
+              options={LOCALE_OPTIONS.map((o) => ({ value: o.code, label: o.label }))}
+              onChange={(v) => set("primaryLanguage", v)}
+            />
+            <Text label={t("voiceId")} value={cfg.voice} placeholder="ElevenLabs voice id (optional)" onChange={(v) => set("voice", v)} />
+            <p className="text-xs text-gray-500">{t("voiceHint")}</p>
+          </Section>
+          {/* HONESTY over parity: the call engine doesn't apply these yet.
+              They save fine and will activate the moment the engine supports
+              them — never pretend a slider changes live calls when it doesn't. */}
+          <Section title={ts("voiceComingSoonTitle")}>
+            <p className="text-xs text-amber-600 -mt-1">{ts("voiceComingSoonNote")}</p>
+            <label className="block">
+              <span className="text-sm text-gray-800 flex items-center gap-1.5">
+                {ts("voiceSpeed")}
+                <span className="text-[10px] font-bold uppercase tracking-wide bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">{ts("comingSoonBadge")}</span>
+              </span>
+              <div className="flex items-center gap-3 mt-1">
+                <span className="text-xs text-gray-400">{ts("speedSlower")}</span>
+                <input
+                  type="range"
+                  min={0.5}
+                  max={2}
+                  step={0.1}
+                  value={Number(cfg.voiceSpeed) || 1}
+                  onChange={(e) => set("voiceSpeed", parseFloat(e.target.value))}
+                  className="flex-1 accent-amber-600"
+                />
+                <span className="text-xs text-gray-400">{ts("speedFaster")}</span>
+                <span className="text-xs font-semibold text-gray-700 w-9 text-right tabular-nums">{(Number(cfg.voiceSpeed) || 1).toFixed(1)}×</span>
+              </div>
+            </label>
+            <div className="flex items-center gap-1.5">
+              <Toggle label={t("ambientNoise")} checked={!!cfg.ambientNoise} onChange={(v) => set("ambientNoise", v)} />
+              <span className="text-[10px] font-bold uppercase tracking-wide bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full flex-shrink-0">{ts("comingSoonBadge")}</span>
+            </div>
+          </Section>
+        </div>
+      )}
+
+      {/* ── Ordering ────────────────────────────────────────────────── */}
+      {sub === "ordering" && (
+        <div className="space-y-5">
+          <Section title={t("capabilities")}>
+            <Toggle label={t("takeOrders")} checked={!!cfg.canTakeOrders} onChange={(v) => set("canTakeOrders", v)} />
+            <Toggle label={t("bookReservations")} checked={!!cfg.canBookReservations} onChange={(v) => set("canBookReservations", v)} />
+            <Toggle label={t("answerFaq")} checked={!!cfg.canAnswerFaq} onChange={(v) => set("canAnswerFaq", v)} />
+            <Toggle label={t("transferPizzaCombo")} checked={!cfg.allowPizzaCombo} onChange={(v) => set("allowPizzaCombo", !v)} />
+          </Section>
+          <Section title={t("ordering")}>
+            <Toggle label={t("quoteEta")} checked={!!cfg.quoteEta} onChange={(v) => set("quoteEta", v)} />
+            <Toggle label={t("scheduledOrders")} checked={!!cfg.allowScheduledOrders} onChange={(v) => set("allowScheduledOrders", v)} />
+            {cfg.allowScheduledOrders && <p className="text-xs text-gray-500">{ts("scheduledHint")}</p>}
+            <Toggle label={t("smsConfirmations")} checked={!!cfg.smsConfirmations} onChange={(v) => set("smsConfirmations", v)} />
+            <Select
+              label={t("afterHours")}
+              value={cfg.afterHoursBehavior}
+              options={[
+                { value: "take_orders", label: t("ahTakeOrders") },
+                { value: "reservations_only", label: t("ahReservations") },
+                { value: "message_only", label: t("ahMessage") },
+                { value: "transfer", label: t("ahTransfer") },
+              ]}
+              onChange={(v) => set("afterHoursBehavior", v)}
+            />
+            <label className="block">
+              <span className="text-sm text-gray-800 flex items-center gap-1.5">
+                {ts("maxCallSeconds")}
+                <HelpTip text={ts("maxCallHelp")} />
+              </span>
+              <input
+                type="number"
+                value={cfg.maxCallSeconds ?? 600}
+                min={60}
+                max={1800}
+                onChange={(e) => set("maxCallSeconds", parseInt(e.target.value, 10))}
+                onBlur={() => set("maxCallSeconds", Math.min(1800, Math.max(60, Math.round(Number(cfg.maxCallSeconds) || 600))))}
+                className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+              />
+            </label>
+          </Section>
+        </div>
+      )}
+
+      {/* ── Payments ────────────────────────────────────────────────── */}
+      {sub === "payments" && (
+        <Section title={t("payments")}>
+          {/* Honest state: the voice engine takes pay-at-store orders only
+              until pay-by-link ships. The matrix saves now so the rollout is
+              a flip, but we never imply phone payments already happen. */}
+          <p className="text-xs text-amber-600">{ts("paymentsNotLiveNote")}</p>
+          <Select
+            label={t("pickupPayment")}
+            value={cfg.pickupPaymentMode}
+            options={[
+              { value: "unpaid", label: t("modeUnpaid") },
+              { value: "paid", label: t("modePaid") },
+              { value: "both", label: t("modeBoth") },
+            ]}
+            onChange={(v) => set("pickupPaymentMode", v)}
+          />
+          <Select
+            label={t("deliveryPayment")}
+            value={cashDeliveryBlocked ? "paid" : cfg.deliveryPaymentMode}
+            disabled={cashDeliveryBlocked}
+            options={[
+              { value: "unpaid", label: t("modeUnpaid") },
+              { value: "paid", label: t("modePaid") },
+              { value: "both", label: t("modeBoth") },
+            ]}
+            onChange={(v) => set("deliveryPaymentMode", v)}
+          />
+          {cashDeliveryBlocked && <p className="text-xs text-amber-600">{t("shipdayNote")}</p>}
+          <div className="grid grid-cols-2 gap-3">
+            <NumberInput label={t("payWindow")} value={cfg.payByLinkWindowMinutes} min={1} max={60} onChange={(v) => set("payByLinkWindowMinutes", v)} />
+            <Select
+              label={t("prepMode")}
+              value={cfg.payByLinkPrepMode}
+              options={[
+                { value: "cook_now", label: t("prepCookNow") },
+                { value: "hold_until_paid", label: t("prepHold") },
+              ]}
+              onChange={(v) => set("payByLinkPrepMode", v)}
+            />
+          </div>
+        </Section>
+      )}
+
+      {/* ── FAQ + Text Links ────────────────────────────────────────── */}
+      {sub === "faq" && (
+        <div className="space-y-5">
+          <FaqManager initialFaqs={initialFaqs} />
+          <TextLinksManager initialLinks={initialTextLinks} />
+        </div>
+      )}
+
+      {/* ── Blocked callers ─────────────────────────────────────────── */}
+      {sub === "blocked" && <BlockedCallersManager initialBlocked={initialBlockedCallers} />}
+
+      {/* Save bar — only for the config sub-tabs (the managers save inline). */}
+      {isConfigSub && (
+        <div className="sticky bottom-0 bg-white/80 backdrop-blur py-3 -mx-1 px-1 border-t border-gray-100">
+          <button
+            onClick={save}
+            disabled={saving}
+            className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-amber-600 text-white font-semibold hover:bg-amber-700 disabled:opacity-60 transition"
+          >
+            {saving ? t("saving") : t("save")}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -196,7 +343,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 function Toggle({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) {
   return (
-    <label className="flex items-center justify-between gap-4 cursor-pointer">
+    <label className="flex items-center justify-between gap-4 cursor-pointer flex-1">
       <span className="text-sm text-gray-800">{label}</span>
       <button
         type="button"
@@ -224,6 +371,7 @@ function Text({ label, value, placeholder, onChange }: { label: string; value: s
   );
 }
 function TextArea({ label, value, maxLength, onChange }: { label: string; value: string; maxLength?: number; onChange: (v: string) => void }) {
+  const len = (value ?? "").length;
   return (
     <label className="block">
       <span className="text-sm text-gray-800">{label}</span>
@@ -234,11 +382,16 @@ function TextArea({ label, value, maxLength, onChange }: { label: string; value:
         onChange={(e) => onChange(e.target.value)}
         className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
       />
-      {maxLength && <span className="text-[11px] text-gray-400">{(value ?? "").length}/{maxLength}</span>}
+      {maxLength && (
+        // Live counter — turns amber near the cap so owners see it coming.
+        <span className={`text-[11px] tabular-nums ${len >= maxLength ? "text-red-500 font-semibold" : len >= maxLength - 20 ? "text-amber-600" : "text-gray-400"}`}>
+          {len}/{maxLength}
+        </span>
+      )}
     </label>
   );
 }
-function Number({ label, value, min, max, onChange }: { label: string; value: number; min?: number; max?: number; onChange: (v: number) => void }) {
+function NumberInput({ label, value, min, max, onChange }: { label: string; value: number; min?: number; max?: number; onChange: (v: number) => void }) {
   return (
     <label className="block">
       <span className="text-sm text-gray-800">{label}</span>

@@ -685,12 +685,16 @@ export function AdminSidebar({
     //     (paid add-on unbought, or coming-soon without a backend grant). A child
     //     admin is EXEMPT on childExempt items (Locations) — they use the page for
     //     brand inheritance without owning the add-on.
-    // Granted → "Soon" may still show (preview) but NO lock; paid+shipped → neither.
-    const comingSoon =
-      !!item.comingSoon || (!!item.requiresFeature && comingSoonFeatureSet.has(item.requiresFeature));
+    // Granted → NO "Soon" pill and NO lock: a store with the feature granted is
+    //   using a LIVE product (Nabil pilot, 2026-08-10 — entitled stores were
+    //   still seeing "Soon" on their working dashboard). Ungranted stores keep
+    //   the release-status pill exactly as before.
     const granted =
       (!!item.requiresFeature && entitled.has(item.requiresFeature)) ||
       (!!item.childExempt && isChildAdmin);
+    const comingSoon =
+      !granted &&
+      (!!item.comingSoon || (!!item.requiresFeature && comingSoonFeatureSet.has(item.requiresFeature)));
     const locked = (!!item.requiresFeature || comingSoon) && !granted;
 
     return (

@@ -19,6 +19,7 @@ import { Prisma } from "@/generated/prisma/client";
 import prisma from "@/lib/db";
 import { getRestaurantStripe } from "@/lib/stripe";
 import { suppressEmail } from "@/lib/suppression";
+import { deleteRecording } from "@/lib/voice/twilio-recording";
 
 const NAME_SENTINEL = "Deleted Customer";
 
@@ -53,7 +54,7 @@ export const PII_ERASURE_MAP = {
   CustomerPushToken: { scope: "restaurant", action: "delete", fields: ["token"] },
   PendingRewardGrant: { scope: "restaurant", action: "anonymize", fields: ["email", "name", "note"] },
   EmailSuppression: { scope: "restaurant", action: "keep", fields: [] }, // kept: proves do-not-email
-  VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "transcript", "summary", "recordingUrl", "customerId"] }, // Nabil AI; matched by phone (keep duration/outcome/cost)
+  VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "transcript", "summary", "recordingUrl", "recordingSid", "recordingDurationSeconds", "customerId"] }, // Nabil AI; matched by phone (keep call duration/outcome/cost); audio DELETED at Twilio first
   BlockedCaller: { scope: "restaurant", action: "keep", fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
   CustomerAccount: { scope: "platform", action: "anonymize", fields: ["email", "name", "phone", "passwordHash", "emailVerifyToken", "lastLoginAt"] },
   CustomerAddress: { scope: "platform", action: "delete", fields: ["street", "city", "state", "zip", "country"] },
@@ -138,6 +139,25 @@ export async function anonymizeCustomerByEmail(
   // 2. Stripe deletes (outside the DB transaction).
   const stripeStatus = await deleteStripeCustomers(restaurantId, stripeIds);
 
+  // 2b. Nabil AI call recordings (network, also outside the transaction):
+  // delete the actual audio at Twilio BEFORE nulling our pointer to it,
+  // otherwise the voice data would live on unreferenced in the Twilio account.
+  // Best-effort by design — a Twilio failure is logged but never aborts the
+  // erasure (the DB scrub below still removes every pointer).
+  if (phones.length) {
+    const recordings = await prisma.voiceCall.findMany({
+      where: { restaurantId, fromNumber: { in: phones }, recordingSid: { not: null } },
+      select: { recordingSid: true },
+    });
+    for (const r of recordings) {
+      if (!r.recordingSid) continue;
+      const deleted = await deleteRecording(r.recordingSid);
+      if (!deleted) {
+        console.error("[data-erasure] twilio recording delete failed", { restaurantId, recordingSid: r.recordingSid });
+      }
+    }
+  }
+
   const counts: Record<string, number> = {};
   const nullPay = opts?.nullPaymentIds
     ? { paymentIntentId: null, paypalOrderId: null, paypalAuthorizationId: null, paypalCaptureId: null }
@@ -200,7 +220,10 @@ export async function anonymizeCustomerByEmail(
     if (phones.length) {
       counts.VoiceCall = (await tx.voiceCall.updateMany({
         where: { restaurantId, fromNumber: { in: phones } },
-        data: { fromNumber: "REDACTED", transcript: Prisma.DbNull, summary: null, recordingUrl: null, customerId: null },
+        data: {
+          fromNumber: "REDACTED", transcript: Prisma.DbNull, summary: null, customerId: null,
+          recordingUrl: null, recordingSid: null, recordingDurationSeconds: null,
+        },
       })).count;
     }
     // Pending reward grants: revoke any still-pending (block claim by a recycled

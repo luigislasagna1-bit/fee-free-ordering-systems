@@ -21,8 +21,12 @@ import { useTranslations } from "next-intl";
  * so the picker survives refresh + share-links. The picker reads its
  * initial state from `searchParams` via the same parser the server
  * components use — no client/server drift.
+ *
+ * `defaultPreset` covers the URL-less first load: a page whose server side
+ * defaults to something other than last_7 (the Nabil tabs use last_28) passes
+ * the same value here so the button never contradicts the numbers beside it.
  */
-export function DateRangePicker() {
+export function DateRangePicker({ defaultPreset = "last_7" }: { defaultPreset?: Exclude<Preset, "custom"> }) {
   const t = useTranslations("admin.dateRangePicker");
   const router = useRouter();
   const pathname = usePathname();
@@ -32,7 +36,7 @@ export function DateRangePicker() {
   // updates the displayed range without a manual sync.
   const params: Record<string, string> = {};
   searchParams.forEach((v, k) => { params[k] = v; });
-  const current = parseDateRange(params);
+  const current = parseDateRange({ ...params, preset: params.preset ?? defaultPreset });
 
   const [open, setOpen] = useState(false);
   const [showCustom, setShowCustom] = useState(false);

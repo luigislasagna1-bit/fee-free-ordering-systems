@@ -153,6 +153,74 @@ but `tools.ts` always sends `paymentMethod:"cash"`. Design (build after the dash
 - Delivery on ShipDay stays forced-paid (`cashDeliveryBlocked` already plumbed).
 - UI: the Payments section already renders when entitled; wire it for real + HelpTips ×38.
 
+## Build contracts (PINNED 2026-08-10 — every workstream follows these exactly)
+
+Schema is ALREADY pushed to both Neon branches and `prisma generate` has run:
+`VoiceCall` gained `orderNumber`, `reservationCode`, `recordingSid`,
+`recordingDurationSeconds`, `upsellCents`; new `VoiceUpsell` model exists
+(relations on Restaurant + MenuItem). Do NOT touch prisma/schema.prisma.
+
+### File ownership (workstreams A–E, disjoint — never edit another stream's files)
+- **A — voice service**: `services/nabil-voice/**` ONLY.
+- **B — internal API + intelligence**: `src/app/api/internal/voice/**`,
+  `src/lib/voice/internal-auth.ts`, `src/lib/voice/call-intelligence.ts`,
+  `src/app/api/cron/voice-intelligence/route.ts`, `vercel.json` (add cron),
+  `scripts/backfill-voice-calls-2026-08-10.ts`.
+- **C — Twilio recording + signatures**: `src/lib/voice/twilio-recording.ts`,
+  `src/lib/voice/twilio-signature.ts`, `src/app/api/twilio/voice/recording-status/route.ts`,
+  `src/app/api/admin/phone-ordering/calls/[id]/recording/route.ts` (playback proxy),
+  `src/lib/data-erasure.ts` (recording deletion only), `COSTS.md`.
+- **D — admin CRUD + webhook hardening**: `src/app/api/admin/phone-ordering/route.ts`,
+  `.../faqs/**`, `.../text-links/**`, `.../blocked-callers/**`, `.../upsells/**`,
+  `src/app/api/twilio/voice/route.ts` + `.../handoff/route.ts` (wire signature validation).
+- **E — dashboard UI**: `src/app/admin/phone-ordering/**` (pages/components),
+  `src/lib/voice/analytics.ts`, `src/components/admin/AdminSidebar.tsx`
+  (granted ⇒ hide the "Soon" pill).
+
+### Cross-stream interfaces (import-compatible, exact signatures)
+- C exports `startCallRecording(callSid: string, restaurantId: string): Promise<void>`
+  from `src/lib/voice/twilio-recording.ts` (no-throw; logs failures) and
+  `verifyTwilioSignature(fullUrl: string, params: Record<string, string>, signatureHeader: string | null): boolean`
+  from `src/lib/voice/twilio-signature.ts` (HMAC-SHA1 per Twilio spec; false when
+  TWILIO auth token env is missing — callers then ALLOW in dev, REJECT in prod).
+- B's `/api/internal/voice/call-log` accepts `event: "start" | "end"` (default "end").
+  "start" upserts {callSid, restaurantId, fromNumber, toNumber, startedAt:startedAtIso}
+  and, when VoiceAgentConfig.recordCalls, calls C's `startCallRecording`.
+  "end" merges: endedAt, durationSeconds, language, outcome, orderId (Order.id),
+  orderNumber, reservationId, reservationCode, customerId, transferReason, transcript,
+  model, tokensIn, tokensOut — then fire-and-forget `generateCallIntelligence(callId)`.
+- B's `/api/internal/voice/context` response ADDS:
+  `config: { canTakeOrders, canBookReservations, canAnswerFaq, quoteEta, smsConfirmations,
+  maxCallSeconds, allowScheduledOrders, afterHoursBehavior }`,
+  `faqs: Array<{ q: string; a: string; category: string }>` (active only, ≤30, trimmed),
+  `upsells: Array<{ name: string; price: number; note: string | null }>` (active, ≤5).
+  A consumes all three (prompt sections for faqs/upsells; cfg gates tools + a
+  maxCallSeconds timer that has the agent wrap up politely and end).
+- `place_order` success result adds `orderId` (the route's `id`) so the session logs
+  both id and number.
+- Outcome taxonomy (A): read-only tools NEVER stamp an outcome; failed
+  place_order/book_reservation stamps `error` (dashboard "needs attention");
+  transfer_to_human does NOT overwrite `order_placed`/`reservation_booked` (it only
+  sets transferReason + outcome when nothing stronger exists); at finalize with no
+  outcome: ≥2 user turns → `faq_answered`, else `abandoned`.
+- Intelligence (B): `claude-sonnet-5`, forced tool, output {summary (2–4 sentences,
+  restaurant defaultLanguage, owner-facing), sentiment: positive|neutral|negative,
+  upsellAcceptedItemNames: string[]}; upsellCents computed server-side by matching
+  names to the order's lines; costCents from token usage (load the claude-api skill
+  for current pricing). Never throws into the request path.
+- i18n: NO agent edits `src/messages/*`. Each stream uses `t()` under its assigned
+  sub-namespace of `admin.phoneOrderingPage`: A none · B none · C none ·
+  D `apiErrors` only if needed · E `overview | callLog | callDetail | faqMgr | links |
+  upsells | blocked | settingsTabs`. Each stream ALSO writes a manifest
+  `scripts/i18n-data/nabil-dash/keys-<A|B|C|D|E>.json` = { "<full.key.path>": "<English>" }.
+  The integrator merges manifests into en.json + translates ×38 afterwards.
+- Every new admin route: `getSessionUser()` → 401, `user.restaurantId` → 403,
+  `requireFeature(restaurantId, "phone_ordering_agent")`, restaurant-scoped WHEREs.
+  Internal-auth (B): require the key whenever `INTERNAL_API_SECRET` is set (any env),
+  403 when set-and-wrong, open ONLY when unset in non-production.
+- Money: any revenue figure goes through `collectedOf`/`splitMoney` from
+  `src/lib/reports/collected.ts`; currency via `formatCurrency(n, scope.currency)`.
+
 ## Incident record (2026-08-10) — duplicate voice order + 16-copy print storm
 
 Luigi's live test: **ORD-233787293** ($17.28) and **ORD-235548666** ($19.20) created 1.7 s

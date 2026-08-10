@@ -45,5 +45,8 @@ export const api = {
 
   // Nabil-only internal endpoints (built in task #13 / call-log follow-up)
   sendSms: (body: unknown) => post(`/api/internal/voice/send-sms`, body, true),
+  /** event:"start" — creates the VoiceCall stub (real startedAt, triggers recording). */
+  logCallStart: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
+  /** event:"end" — merges outcome/ids/transcript at hangup. */
   logCall: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
 };

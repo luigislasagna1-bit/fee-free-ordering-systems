@@ -446,6 +446,7 @@ model Restaurant {
   voiceCalls             VoiceCall[]
   voiceFaqs              VoiceFaq[]
   voiceTextLinks         VoiceTextLink[]
+  voiceUpsells           VoiceUpsell[]
   blockedCallers         BlockedCaller[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
@@ -1208,6 +1209,7 @@ model MenuItem {
   variants       ItemVariant[]
   modifierGroups ModifierGroup[]
   orderItems     OrderItem[]
+  voiceUpsells   VoiceUpsell[]
   // Reports — MenuItemView log for Menu Insights "Views" column.
   views          MenuItemView[]
 
@@ -2963,20 +2965,35 @@ model VoiceCall {
 
   /// order_placed | reservation_booked | faq_answered | transferred | abandoned | spam | error
   outcome         String?
-  orderId         String?    // loose ref (log, not FK) — join in the dashboard
+  /// Order.id (loose ref, no FK). HISTORY NOTE: rows before 2026-08-10 stored
+  /// the human orderNumber here (the service had no id) — the dashboard joins
+  /// on orderNumber; orderId is a convenience once backfilled.
+  orderId         String?
+  /// Human order number (ORD-…) — THE join key for revenue attribution.
+  orderNumber     String?
   reservationId   String?
+  /// Reservation confirmation code read to the caller.
+  reservationCode String?
   customerId      String?    // resolved returning caller
 
   transcript      Json?      // [{ role, text, ts }]
   summary         String?    // AI end-of-call summary
   sentiment       String?    // positive | neutral | negative
   recordingUrl    String?
+  /// Twilio Recording SID (RExxx…) — needed to DELETE the recording at Twilio
+  /// on a data-erasure request, and for the authenticated playback proxy.
+  recordingSid    String?
+  recordingDurationSeconds Int?
 
   model           String?
   tokensIn        Int?
   tokensOut       Int?
   costCents       Int?
   transferReason  String?
+  /// Revenue (cents) from lines the intelligence pass judged as agent-suggested
+  /// upsells the caller accepted. Judged per call at call time from the
+  /// transcript + order — never recomputed from the CURRENT upsell list.
+  upsellCents     Int?
 
   createdAt       DateTime   @default(now())
 
@@ -3028,6 +3045,30 @@ model VoiceTextLink {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([restaurantId, active])
+}
+
+/// Featured Upsells (max 5, enforced in the admin API): menu items the agent
+/// suggests contextually during calls — mirrors Loman's "Featured Upsells"
+/// module. Revenue attribution is judged PER CALL by the intelligence pass
+/// (VoiceCall.upsellCents) at call time, never recomputed from the current
+/// list retroactively.
+model VoiceUpsell {
+  id           String     @id @default(cuid())
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  menuItemId   String
+  menuItem     MenuItem   @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  /// Optional owner hint the agent can weave in ("great with the lasagna").
+  note      String?
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([restaurantId, menuItemId])
   @@index([restaurantId, active])
 }
 

@@ -1,5 +1,6 @@
 import { api } from "./api";
 import type { CallToken } from "./config";
+import type { AgentConfig } from "./agent-config";
 
 /**
  * Per-call context handed to every tool executor. The menu / hours / returning
@@ -9,14 +10,14 @@ import type { CallToken } from "./config";
  */
 export type ToolContext = {
   token: CallToken;
-  cfg: any; // VoiceAgentConfig snapshot (payment modes, capabilities, etc.)
+  cfg: AgentConfig; // normalized VoiceAgentConfig snapshot (capabilities, gates)
   cashDeliveryBlocked: boolean;
   /** Set by transfer_to_human — the session ends + hands off after the turn. */
   pendingTransfer: string | null;
   /** Orders already placed THIS call, keyed by basket signature — the guard
    *  against the model placing the same order twice (2026-08-10 live dup:
    *  "Yeah."+"Yes." arrived as two prompts → two place_order calls). */
-  placedOrders: Array<{ signature: string; orderNumber: string; total: number }>;
+  placedOrders: Array<{ signature: string; orderId: string | null; orderNumber: string; total: number }>;
 };
 
 const ITEM_SCHEMA = {
@@ -130,6 +131,19 @@ export const TOOLS = [
   },
 ];
 
+/** The tools the model may call THIS call — capability toggles remove whole
+ *  tools (a tool that isn't offered can't be hallucinated into use), and
+ *  smsConfirmations=false removes texting entirely. transfer_to_human always
+ *  survives so the call can never dead-end. */
+export function toolsForConfig(cfg: AgentConfig) {
+  return TOOLS.filter((t) => {
+    if ((t.name === "place_order" || t.name === "price_order_preview") && !cfg.canTakeOrders) return false;
+    if ((t.name === "book_reservation" || t.name === "check_reservation_availability") && !cfg.canBookReservations) return false;
+    if (t.name === "send_sms_link" && !cfg.smsConfirmations) return false;
+    return true;
+  });
+}
+
 const digits = (s: string) => (s || "").replace(/\D/g, "");
 
 /** Canonical basket signature: same items+type in any order → same string.
@@ -201,6 +215,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         return {
           ok: true,
           alreadyPlaced: true,
+          orderId: prior.orderId,
           orderNumber: prior.orderNumber,
           total: prior.total,
           instruction:
@@ -235,22 +250,39 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       if (!res.ok) {
         // Voice can't schedule ahead yet — the web error's "you can still
         // schedule" suffix would be a promise this channel can't keep. Offer
-        // the SMS ordering link instead (review wf_a62b0536).
+        // the SMS ordering link instead (review wf_a62b0536) — gated ONLY on
+        // texting: the link opens the WEBSITE, which stays schedulable through
+        // a pause, so allowScheduledOrders (a phone-line flag) must not gate it.
         if (res.json?.code === "service_paused") {
           return {
             error: true, code: "service_paused",
             message:
-              "The kitchen has ordering paused right now, and phone orders can't be scheduled ahead yet. Offer to text the caller the online ordering link (send_sms_link) so they can schedule it for after the pause themselves.",
+              ctx.cfg.smsConfirmations
+                ? "The kitchen has ordering paused right now, and phone orders can't be scheduled ahead yet. Offer to text the caller the online ordering link (send_sms_link) so they can schedule it for after the pause themselves."
+                : "The kitchen has ordering paused right now, and phone orders can't be scheduled ahead yet. Apologize and invite the caller to try again after the pause.",
           };
         }
         return { error: true, code: res.json?.code, message: res.json?.error || "Could not place the order." };
       }
+      const orderId = res.json?.id != null ? String(res.json.id) : null;
       const orderNumber = res.json?.orderNumber;
       const total = res.json?.total;
-      if (orderNumber) ctx.placedOrders.push({ signature, orderNumber: String(orderNumber), total: Number(total ?? 0) });
+      if (orderNumber) ctx.placedOrders.push({ signature, orderId, orderNumber: String(orderNumber), total: Number(total ?? 0) });
+      // Auto-applied promo (e.g. a first-time-customer special): tell the
+      // caller WHY the total is lower than the read-back price — a silently
+      // different number sounds like a mistake (live call, 2026-08-10).
+      const promoDiscount = Number(res.json?.promoDiscount ?? 0);
+      const promoNames: string[] = Array.isArray(res.json?.appliedPromoNames)
+        ? res.json.appliedPromoNames.filter((n: unknown) => typeof n === "string" && n)
+        : [];
       return {
-        ok: true, orderNumber, total,
-        instruction: "Read the caller their order number and this exact total — it is the authoritative charged amount including tax.",
+        ok: true, orderId, orderNumber, total,
+        ...(promoDiscount > 0 ? { discountApplied: promoDiscount, discountNames: promoNames } : {}),
+        instruction:
+          "Read the caller their order number and this exact total — it is the authoritative charged amount including tax." +
+          (promoDiscount > 0
+            ? " A discount was applied automatically — briefly mention it as good news (name it if a name is given) so the total doesn't sound like an error."
+            : ""),
       };
     }
     case "check_reservation_availability": {

@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
+import { requirePhoneOrderingFeature } from "./guard";
 
 export const runtime = "nodejs";
 
 /**
  * Nabil AI config — GET + PATCH the restaurant's VoiceAgentConfig.
  * Restaurant-scoped by the session (user.restaurantId), like every other admin
- * settings route. The config is 1:1 with the restaurant; PATCH upserts it.
+ * settings route, plus the phone_ordering_agent entitlement. The config is 1:1
+ * with the restaurant; PATCH upserts it.
  */
 
 // Only these fields are owner-editable (whitelist — never trust arbitrary keys).
@@ -32,6 +34,8 @@ export async function GET() {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const forbidden = await requirePhoneOrderingFeature(restaurantId);
+  if (forbidden) return forbidden;
 
   const [config, number] = await Promise.all([
     prisma.voiceAgentConfig.findUnique({ where: { restaurantId } }),
@@ -44,6 +48,8 @@ export async function PATCH(req: NextRequest) {
   const user = await getSessionUser();
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const forbidden = await requirePhoneOrderingFeature(restaurantId);
+  if (forbidden) return forbidden;
 
   const body = await req.json().catch(() => ({}));
   const data: Record<string, unknown> = {};
@@ -52,7 +58,10 @@ export async function PATCH(req: NextRequest) {
   for (const k of STR_FIELDS) {
     if (typeof body[k] === "string") {
       const v = body[k].trim();
-      // Validate the enum-ish fields; ignore invalid values rather than storing junk.
+      // Validate the enum-ish fields; ignore invalid values rather than
+      // storing junk. DELIBERATE: silent-ignore (not a 400) — the existing
+      // settings client PATCHes the whole form and expects partial saves to
+      // succeed. Keep it this way (audited 2026-08-10).
       if (k === "pickupPaymentMode" || k === "deliveryPaymentMode") {
         if (PAYMENT_MODES.has(v)) data[k] = v;
       } else if (k === "payByLinkPrepMode") {

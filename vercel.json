@@ -96,6 +96,10 @@
     {
       "path": "/api/cron/backup",
       "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/voice-intelligence",
+      "schedule": "*/15 * * * *"
     }
   ]
 }

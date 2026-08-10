@@ -1,0 +1,10 @@
+{
+  "admin.phoneOrderingPage.apiErrors.featureLocked": "Your plan doesn't include the phone ordering agent yet.",
+  "admin.phoneOrderingPage.apiErrors.faqLimit": "You've reached the limit of 100 FAQs. Delete one to add another.",
+  "admin.phoneOrderingPage.apiErrors.linkLimit": "You've reached the limit of 10 text links. Delete one to add another.",
+  "admin.phoneOrderingPage.apiErrors.blockedLimit": "You've reached the limit of 500 blocked callers. Unblock one to add another.",
+  "admin.phoneOrderingPage.apiErrors.upsellLimit": "You can feature up to 5 active upsells. Deactivate one first.",
+  "admin.phoneOrderingPage.apiErrors.invalidPhone": "That phone number doesn't look valid. Include the country code, e.g. +1 905 555 0123.",
+  "admin.phoneOrderingPage.apiErrors.invalidUrl": "Links must be full web addresses starting with http:// or https://.",
+  "admin.phoneOrderingPage.apiErrors.menuItemNotFound": "That menu item wasn't found on your menu."
+}
