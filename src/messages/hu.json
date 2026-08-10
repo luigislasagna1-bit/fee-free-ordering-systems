@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Idősávok (ablakok, pl. 6:00 – 6:15)",
       "timeSelectionMultiHint": "Jelölje be az ügyfelek számára elérhető minden stílust — többnél a pénztárnál választanak. Idősávoknál a lenti időköz az egyes ablakok hossza (alapértelmezés: 15 perc).",
-      "slotIntervalRangeLabel": "Ablakhossz és időköz"
+      "slotIntervalRangeLabel": "Ablakhossz és időköz",
+      "firstOrderDelayLabel": "Első ütemezett rendelés nyitás után",
+      "firstOrderDelayHint": "Bemelegítési ráhagyás: a legkorábbi időpont, amit a vendégek az egyes nyitások után foglalhatnak. 10:00-s nyitás és itt 30 perc → első időpont 10:30. Osztott nyitvatartásnál a déli és esti nyitásra külön érvényes.",
+      "firstOrderDelayNone": "Nyitáskor (ráhagyás nélkül)"
     },
     "delivery": {
       "title": "Szállítási zónák",

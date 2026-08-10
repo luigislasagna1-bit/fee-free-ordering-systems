@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Rentang waktu (jendela seperti 6:00 – 6:15)",
       "timeSelectionMultiHint": "Centang setiap gaya yang boleh digunakan pelanggan — jika lebih dari satu, mereka memilih saat checkout. Untuk rentang, interval di bawah adalah durasi tiap jendela (bawaan 15 mnt).",
-      "slotIntervalRangeLabel": "Durasi & jarak jendela"
+      "slotIntervalRangeLabel": "Durasi & jarak jendela",
+      "firstOrderDelayLabel": "Pesanan terjadwal pertama setelah buka",
+      "firstOrderDelayHint": "Waktu pemanasan: slot paling awal yang bisa dijadwalkan pelanggan setelah setiap jam buka. Buka 10:00 dengan 30 menit di sini → slot pertama 10:30. Berlaku terpisah untuk sesi siang dan malam pada jam buka terpisah.",
+      "firstOrderDelayNone": "Saat buka (tanpa jeda)"
     },
     "delivery": {
       "title": "Zona Pengiriman",

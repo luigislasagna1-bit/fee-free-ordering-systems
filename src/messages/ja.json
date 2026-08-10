@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "時間帯（6:00 – 6:15 のような枠）",
       "timeSelectionMultiHint": "顧客が使えるスタイルをすべてチェックしてください。複数ある場合は会計時に顧客が選びます。時間帯では、下の間隔が各枠の長さになります（既定 15 分）。",
-      "slotIntervalRangeLabel": "時間帯の長さと間隔"
+      "slotIntervalRangeLabel": "時間帯の長さと間隔",
+      "firstOrderDelayLabel": "開店後の最初の予約注文",
+      "firstOrderDelayHint": "準備バッファ:各開店後にお客様が予約できる最初の時間です。10:00開店でここを30分に→最初の枠は10:30。昼夜分割営業の日はそれぞれの開店に個別に適用されます。",
+      "firstOrderDelayNone": "開店と同時(バッファなし)"
     },
     "delivery": {
       "title": "デリバリーエリア",

@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Khoảng thời gian (khung như 6:00 – 6:15)",
       "timeSelectionMultiHint": "Đánh dấu mọi kiểu khách có thể dùng — nếu nhiều hơn một, họ chọn khi thanh toán. Với khoảng thời gian, khoảng cách bên dưới là độ dài mỗi khung (mặc định 15 phút).",
-      "slotIntervalRangeLabel": "Độ dài & khoảng cách khung"
+      "slotIntervalRangeLabel": "Độ dài & khoảng cách khung",
+      "firstOrderDelayLabel": "Đơn đặt trước đầu tiên sau giờ mở cửa",
+      "firstOrderDelayHint": "Thời gian khởi động: khung giờ sớm nhất khách có thể đặt sau mỗi lần mở cửa. Mở 10:00 và đặt 30 phút ở đây → khung đầu tiên là 10:30. Áp dụng riêng cho ca trưa và ca tối vào ngày có giờ mở tách ca.",
+      "firstOrderDelayNone": "Ngay khi mở cửa (không trễ)"
     },
     "delivery": {
       "title": "Khu vực giao hàng",

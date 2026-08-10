@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Vremenski rasponi (prozori poput 6:00 – 6:15)",
       "timeSelectionMultiHint": "Označite svaki stil koji kupci smiju koristiti — s više njih biraju pri naplati. Za raspone, interval ispod je trajanje svakog prozora (zadano 15 min).",
-      "slotIntervalRangeLabel": "Trajanje i razmak prozora"
+      "slotIntervalRangeLabel": "Trajanje i razmak prozora",
+      "firstOrderDelayLabel": "Prva zakazana narudžba nakon otvaranja",
+      "firstOrderDelayHint": "Vrijeme zagrijavanja: najraniji termin koji kupci mogu zakazati nakon svakog otvaranja. Otvaranje u 10:00 uz 30 min ovdje → prvi termin 10:30. Kod podijeljenog radnog vremena vrijedi zasebno za ručak i večeru.",
+      "firstOrderDelayNone": "Pri otvaranju (bez odgode)"
     },
     "delivery": {
       "title": "Zone dostave",

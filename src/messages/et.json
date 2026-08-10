@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Ajavahemikud (aknad nagu 6:00 – 6:15)",
       "timeSelectionMultiHint": "Märkige iga stiil, mida kliendid võivad kasutada — mitme puhul valivad nad kassas. Vahemike puhul on allolev intervall iga akna pikkus (vaikimisi 15 min).",
-      "slotIntervalRangeLabel": "Akna pikkus ja samm"
+      "slotIntervalRangeLabel": "Akna pikkus ja samm",
+      "firstOrderDelayLabel": "Esimene plaanitud tellimus pärast avamist",
+      "firstOrderDelayHint": "Soojendusvaru: varaseim aeg, mille kliendid saavad pärast iga avamist broneerida. Avamine 10:00 ja siin 30 min → esimene aeg 10:30. Jagatud lahtiolekuaegadel kehtib lõuna- ja õhtuavamisele eraldi.",
+      "firstOrderDelayNone": "Avamisel (varuta)"
     },
     "delivery": {
       "title": "Tarnepiirkonnad",

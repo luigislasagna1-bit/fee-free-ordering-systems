@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Zeitfenster (z. B. 6:00 – 6:15)",
       "timeSelectionMultiHint": "Aktivieren Sie jeden Stil, den Kunden nutzen dürfen — bei mehreren wählen sie beim Checkout. Bei Zeitfenstern ist das Intervall unten die Länge jedes Fensters (Standard 15 Min.).",
-      "slotIntervalRangeLabel": "Fensterlänge & Abstand"
+      "slotIntervalRangeLabel": "Fensterlänge & Abstand",
+      "firstOrderDelayLabel": "Erste vorbestellte Zeit nach Öffnung",
+      "firstOrderDelayHint": "Anlaufpuffer: der früheste Slot, den Kunden nach jeder Öffnung wählen können. Öffnung 10:00 mit 30 Min. hier → erster Slot 10:30. Gilt bei geteilten Öffnungszeiten für Mittag- und Abendöffnung getrennt.",
+      "firstOrderDelayNone": "Ab Öffnung (kein Puffer)"
     },
     "delivery": {
       "title": "Lieferzonen",

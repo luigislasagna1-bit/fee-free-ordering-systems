@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Tidsintervall (fönster som 6:00 – 6:15)",
       "timeSelectionMultiHint": "Markera varje stil kunderna får använda — vid flera väljer de i kassan. För tidsintervall är intervallet nedan varje fönsters längd (standard 15 min).",
-      "slotIntervalRangeLabel": "Fönsterlängd & intervall"
+      "slotIntervalRangeLabel": "Fönsterlängd & intervall",
+      "firstOrderDelayLabel": "Första schemalagda beställning efter öppning",
+      "firstOrderDelayHint": "Uppvärmningsbuffert: den tidigaste tid kunder kan boka efter varje öppning. Öppnar 10:00 med 30 min här → första tid 10:30. Vid delade öppettider gäller det lunch- och kvällsöppning var för sig.",
+      "firstOrderDelayNone": "Vid öppning (ingen buffert)"
     },
     "delivery": {
       "title": "Leveranszoner",

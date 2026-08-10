@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Rangos horarios (ventanas tipo 6:00 – 6:15)",
       "timeSelectionMultiHint": "Marca cada estilo disponible para los clientes; con más de uno, eligen al pagar. Para los rangos, el intervalo de abajo es la duración de cada ventana (15 min por defecto).",
-      "slotIntervalRangeLabel": "Duración y espaciado de las ventanas"
+      "slotIntervalRangeLabel": "Duración y espaciado de las ventanas",
+      "firstOrderDelayLabel": "Primer pedido programado tras la apertura",
+      "firstOrderDelayHint": "Margen de arranque: la primera franja que los clientes pueden programar tras cada apertura. Abres a las 10:00 con 30 min aquí → primera franja 10:30. Se aplica por separado a comida y cena en horarios partidos.",
+      "firstOrderDelayNone": "Al abrir (sin margen)"
     },
     "delivery": {
       "title": "Zonas de entrega",

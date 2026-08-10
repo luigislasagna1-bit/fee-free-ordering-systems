@@ -40,6 +40,12 @@ interface ServiceConfig {
    *  to the restaurant-wide default (Restaurant.scheduledOrderInterval). Lets
    *  e.g. delivery use 30-min slots while pickup uses 15. Luigi 2026-06-04. */
   slotInterval?: number;
+  /** "First scheduled order after opening" — minutes after each opening
+   *  window's start before the FIRST schedulable slot (0/undefined = at
+   *  opening). A 10:00-opening store with 30 offers 10:30 as the earliest
+   *  pickup/delivery, giving the kitchen warm-up time. Applies per window on
+   *  split-hours days. Luigi 2026-08-10. */
+  firstOrderDelayMinutes?: number;
   /** LEGACY single-value time-selection mode — still written as a mirror of
    *  slotModes for back-compat readers. Fabrizio cmpxdtl9m/cmqqxerxs. */
   slotMode?: "bands" | "exact" | "both" | "range";
@@ -276,6 +282,27 @@ export function ServicesClient() {
                       >
                         <option value={0}>{t("slotIntervalDefault")}</option>
                         {[5, 10, 15, 20, 30, 45, 60].map(m => (
+                          <option key={m} value={m}>{t("slotIntervalMin", { min: m })}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                  {/* "First scheduled order after opening" (Luigi 2026-08-10):
+                      warm-up buffer so the earliest schedulable slot isn't the
+                      exact opening minute. Applies per window on split hours;
+                      catering is governed by its notice-hours instead. */}
+                  {key !== "reservations" && key !== "catering" && (
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 mb-1" title={t("firstOrderDelayHint")}>
+                        {t("firstOrderDelayLabel")} <span className="text-gray-400 cursor-help">ⓘ</span>
+                      </label>
+                      <select
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+                        value={settings[key].firstOrderDelayMinutes ?? 0}
+                        onChange={e => updateSetting(key, "firstOrderDelayMinutes", parseInt(e.target.value) || 0)}
+                      >
+                        <option value={0}>{t("firstOrderDelayNone")}</option>
+                        {[15, 30, 45, 60, 90, 120].map(m => (
                           <option key={m} value={m}>{t("slotIntervalMin", { min: m })}</option>
                         ))}
                       </select>

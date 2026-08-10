@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Przedziały czasowe (okna typu 6:00 – 6:15)",
       "timeSelectionMultiHint": "Zaznacz każdy styl dostępny dla klientów — przy kilku wybierają przy kasie. Dla przedziałów interwał poniżej to długość każdego okna (domyślnie 15 min).",
-      "slotIntervalRangeLabel": "Długość i odstęp okien"
+      "slotIntervalRangeLabel": "Długość i odstęp okien",
+      "firstOrderDelayLabel": "Pierwsze planowane zamówienie po otwarciu",
+      "firstOrderDelayHint": "Bufor rozruchu: najwcześniejsza godzina, jaką klienci mogą zaplanować po każdym otwarciu. Otwarcie 10:00 i 30 min tutaj → pierwszy termin 10:30. Przy dzielonych godzinach dotyczy osobno otwarcia na obiad i wieczór.",
+      "firstOrderDelayNone": "Od otwarcia (bez buforu)"
     },
     "delivery": {
       "title": "Strefy dostawy",

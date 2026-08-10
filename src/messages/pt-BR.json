@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Faixas de horário (janelas tipo 6:00 – 6:15)",
       "timeSelectionMultiHint": "Marque cada estilo disponível aos clientes — com mais de um, eles escolhem no checkout. Para faixas, o intervalo abaixo é a duração de cada janela (padrão 15 min).",
-      "slotIntervalRangeLabel": "Duração e espaçamento das janelas"
+      "slotIntervalRangeLabel": "Duração e espaçamento das janelas",
+      "firstOrderDelayLabel": "Primeiro pedido agendado após a abertura",
+      "firstOrderDelayHint": "Margem de preparo: o primeiro horário que os clientes podem agendar após cada abertura. Abre às 10:00 com 30 min aqui → primeiro horário 10:30. Em horários divididos vale separadamente para almoço e jantar.",
+      "firstOrderDelayNone": "Na abertura (sem margem)"
     },
     "delivery": {
       "title": "Zonas de Entrega",

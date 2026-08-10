@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Aikavälit (ikkunat kuten 6:00 – 6:15)",
       "timeSelectionMultiHint": "Valitse jokainen asiakkaiden käytettävissä oleva tyyli — jos niitä on useita, he valitsevat kassalla. Aikaväleissä alla oleva väli on kunkin ikkunan pituus (oletus 15 min).",
-      "slotIntervalRangeLabel": "Ikkunan pituus ja väli"
+      "slotIntervalRangeLabel": "Ikkunan pituus ja väli",
+      "firstOrderDelayLabel": "Ensimmäinen ajastettu tilaus avaamisen jälkeen",
+      "firstOrderDelayHint": "Lämmittelyvara: aikaisin aika, jonka asiakkaat voivat varata kunkin avauksen jälkeen. Avaus klo 10:00 ja tässä 30 min → ensimmäinen aika 10:30. Jaetuissa aukioloissa lounas- ja ilta-avaukselle erikseen.",
+      "firstOrderDelayNone": "Avattaessa (ei varaa)"
     },
     "delivery": {
       "title": "Toimitusalueet",

@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Časovni razponi (okna kot 6:00 – 6:15)",
       "timeSelectionMultiHint": "Označite vsak slog, ki ga stranke lahko uporabijo — pri več izbirajo ob plačilu. Pri razponih je spodnji interval dolžina vsakega okna (privzeto 15 min).",
-      "slotIntervalRangeLabel": "Dolžina in razmik oken"
+      "slotIntervalRangeLabel": "Dolžina in razmik oken",
+      "firstOrderDelayLabel": "Prvo načrtovano naročilo po odprtju",
+      "firstOrderDelayHint": "Zagonska rezerva: najzgodnejši termin, ki ga stranke lahko rezervirajo po vsakem odprtju. Odprtje ob 10:00 s 30 min tukaj → prvi termin 10:30. Pri deljenem delovnem času velja ločeno za kosilo in večer.",
+      "firstOrderDelayNone": "Ob odprtju (brez rezerve)"
     },
     "delivery": {
       "title": "Območja dostave",

@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Intervale orare (ferestre de tip 6:00 – 6:15)",
       "timeSelectionMultiHint": "Bifați fiecare stil disponibil clienților — cu mai multe, aleg la finalizare. Pentru intervale, valoarea de mai jos este durata fiecărei ferestre (implicit 15 min).",
-      "slotIntervalRangeLabel": "Durata și distanțarea ferestrelor"
+      "slotIntervalRangeLabel": "Durata și distanțarea ferestrelor",
+      "firstOrderDelayLabel": "Prima comandă programată după deschidere",
+      "firstOrderDelayHint": "Marjă de pregătire: cel mai devreme interval pe care clienții îl pot programa după fiecare deschidere. Deschidere la 10:00 cu 30 min aici → primul interval 10:30. La program fracționat se aplică separat prânzului și serii.",
+      "firstOrderDelayNone": "La deschidere (fără marjă)"
     },
     "delivery": {
       "title": "Zone de livrare",

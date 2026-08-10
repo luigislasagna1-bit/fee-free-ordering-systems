@@ -17,7 +17,7 @@ import { includeLineInPromoEval } from "@/lib/promo-eval-lines";
 import { localDowAndHHMM, liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, rowIntervals, dateKeyInTimezone } from "@/lib/restaurant-hours";
 import { holidayEffectForDay, canonicalHolidayService } from "@/lib/holiday-rules";
 import { resolveServiceHours, pickHoursForService, type ServiceKind } from "@/lib/service-hours";
-import { buildDaySlots } from "@/lib/schedule-slots";
+import { buildDaySlots, shiftIntervalsForFirstOrderDelay } from "@/lib/schedule-slots";
 import { resolveSlotModes } from "@/lib/slot-modes";
 import { isVisibleNow } from "@/lib/menu-visibility";
 import { hasFulfilWindow, isFulfilableAt, fulfilWindowLabel, combinedFulfilConstraint, fulfilWindowsOf, windowMatches } from "@/lib/menu-fulfilment";
@@ -3513,6 +3513,19 @@ export function OrderingPageClient({
   // to the service interval, window-clipped, split/overnight aware. Falls back to
   // the raw opening when the window is too short to offer any slot (an
   // un-orderable config — the order stays blocked exactly as it did before).
+  // "First scheduled order after opening" (Luigi 2026-08-10): per-service
+  // minutes after doors open before the FIRST schedulable slot — a customer
+  // could book the exact opening minute and expect food the second the ovens
+  // turn on. 0 = no delay (default). Capped at 240 for sanity.
+  const activeServiceFirstOrderDelay = (() => {
+    try {
+      const ss = (restaurant as any).serviceSettings ? JSON.parse((restaurant as any).serviceSettings) : null;
+      const key = orderType === "delivery" ? "delivery" : orderType === "dine_in" ? "dineIn" : orderType === "take_out" ? "takeOut" : "pickup";
+      const v = ss?.[key]?.firstOrderDelayMinutes;
+      return typeof v === "number" && v > 0 ? Math.min(240, Math.floor(v)) : 0;
+    } catch { return 0; }
+  })();
+
   const closedNowFirstSlot = (() => {
     if (!restaurantIsClosedNow || !closedMinScheduledLocal) return closedMinScheduledLocal;
     const openDate = closedMinScheduledLocal.split("T")[0];
@@ -3551,9 +3564,15 @@ export function OrderingPageClient({
     // as the picker), so the earliest slot lands on it.
     const specialIvs = isToday && serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null;
     const row = pickHoursForService((restaurant.openingHours ?? []) as any, openDow, svcKind);
-    const dayIvs = specialIvs ?? (row && row.isOpen ? rowIntervals(row as any) : []);
+    const dayIvs = shiftIntervalsForFirstOrderDelay(
+      (specialIvs ?? (row && row.isOpen ? rowIntervals(row as any) : [])) as any,
+      activeServiceFirstOrderDelay,
+    );
     const prevRow = pickHoursForService((restaurant.openingHours ?? []) as any, (openDow + 6) % 7, svcKind);
-    const prevIvs = prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : [];
+    const prevIvs = shiftIntervalsForFirstOrderDelay(
+      (prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : []) as any,
+      activeServiceFirstOrderDelay,
+    );
     const slots = buildDaySlots({
       dayIntervals: dayIvs as any,
       prevDayIntervals: prevIvs as any,
@@ -3609,9 +3628,15 @@ export function OrderingPageClient({
       const dow = d.getDay();
       const specialIvs = datePart === todayLocal && serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null;
       const row = pickHoursForService((restaurant.openingHours ?? []) as any, dow, svcKind);
-      const dayIvs = specialIvs ?? (row && row.isOpen ? rowIntervals(row as any) : []);
+      const dayIvs = shiftIntervalsForFirstOrderDelay(
+        (specialIvs ?? (row && row.isOpen ? rowIntervals(row as any) : [])) as any,
+        activeServiceFirstOrderDelay,
+      );
       const prevRow = pickHoursForService((restaurant.openingHours ?? []) as any, (dow + 6) % 7, svcKind);
-      const prevIvs = prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : [];
+      const prevIvs = shiftIntervalsForFirstOrderDelay(
+        (prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : []) as any,
+        activeServiceFirstOrderDelay,
+      );
       const slots = buildDaySlots({
         dayIntervals: dayIvs as any,
         prevDayIntervals: prevIvs as any,
@@ -7288,6 +7313,7 @@ export function OrderingPageClient({
           serviceLabel={orderType === "delivery" ? t("delivery") : orderType === "pickup" ? t("pickup") : orderType === "dine_in" ? t("dineIn") : t("takeOut")}
           closedNextOpenLocal={closedMinScheduledLocal}
           schedulingInterval={perServiceSlotInterval}
+          firstOrderDelayMinutes={activeServiceFirstOrderDelay}
           schedulingModes={perServiceSlotModes}
           openingHours={(restaurant as any).openingHours ?? []}
           todayServiceSpecialIntervals={serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null}

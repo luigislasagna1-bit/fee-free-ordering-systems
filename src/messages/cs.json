@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Časová rozmezí (okna jako 6:00 – 6:15)",
       "timeSelectionMultiHint": "Zaškrtněte každý styl, který mohou zákazníci použít — u více si vyberou při pokladně. U rozmezí je interval níže délkou každého okna (výchozí 15 min).",
-      "slotIntervalRangeLabel": "Délka a rozestup oken"
+      "slotIntervalRangeLabel": "Délka a rozestup oken",
+      "firstOrderDelayLabel": "První plánovaná objednávka po otevření",
+      "firstOrderDelayHint": "Rozjezdová rezerva: nejbližší čas, který si zákazníci mohou naplánovat po každém otevření. Otevírka 10:00 a 30 min zde → první termín 10:30. Při dělené otevírací době platí zvlášť pro oběd i večer.",
+      "firstOrderDelayNone": "Při otevření (bez rezervy)"
     },
     "delivery": {
       "title": "Oblasti doručení",

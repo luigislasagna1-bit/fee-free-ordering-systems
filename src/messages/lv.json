@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Laika diapazoni (logi kā 6:00 – 6:15)",
       "timeSelectionMultiHint": "Atzīmējiet katru klientiem pieejamo stilu — ja to ir vairāki, viņi izvēlas norēķinos. Diapazoniem zemāk esošais intervāls ir katra loga garums (noklusējums 15 min).",
-      "slotIntervalRangeLabel": "Loga garums un solis"
+      "slotIntervalRangeLabel": "Loga garums un solis",
+      "firstOrderDelayLabel": "Pirmais plānotais pasūtījums pēc atvēršanas",
+      "firstOrderDelayHint": "Iesilšanas rezerve: agrākais laiks, ko klienti var ieplānot pēc katras atvēršanas. Atvēršana 10:00 ar 30 min šeit → pirmais laiks 10:30. Dalītā darba laikā attiecas uz pusdienu un vakara atvēršanu atsevišķi.",
+      "firstOrderDelayNone": "Atverot (bez rezerves)"
     },
     "delivery": {
       "title": "Piegādes zonas",

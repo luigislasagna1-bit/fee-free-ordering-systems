@@ -3,7 +3,8 @@ import { after } from "next/server";
 import prisma from "@/lib/db";
 import { generateOrderNumber, formatCurrency } from "@/lib/utils";
 import { applyPromotions, totalPromoDiscount, specialityFeeForPick } from "@/lib/promo-engine";
-import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone } from "@/lib/restaurant-hours";
+import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone, rowIntervals } from "@/lib/restaurant-hours";
+import { shiftIntervalsForFirstOrderDelay } from "@/lib/schedule-slots";
 import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
 import { resolveServiceHours } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
@@ -2383,6 +2384,56 @@ export async function POST(req: NextRequest) {
               { error: msg, code: "outside_opening_hours" },
               { status: 400 },
             );
+          }
+
+          // ── "First scheduled order after opening" backstop ────────────────
+          // (Luigi 2026-08-10: a 10:00 delivery at a 10:00-opening store
+          // demands food the second the ovens turn on.) The slot is inside
+          // open hours (checked above) but may fall in the per-service warm-up
+          // window right after an opening. Same shared helper as the picker:
+          // if the slot is NOT inside the delay-shifted windows, it's in a
+          // warm-up gap → refuse with the earliest honest time. Fail open on
+          // any parse problem (delay 0 = old behavior).
+          const firstOrderDelay = (() => {
+            try {
+              const ss = (restaurant as any).serviceSettings ? JSON.parse((restaurant as any).serviceSettings) : null;
+              const key = type === "delivery" ? "delivery" : type === "dine_in" ? "dineIn" : type === "take_out" ? "takeOut" : "pickup";
+              const v = ss?.[key]?.firstOrderDelayMinutes;
+              return typeof v === "number" && v > 0 ? Math.min(240, Math.floor(v)) : 0;
+            } catch { return 0; }
+          })();
+          if (firstOrderDelay > 0) {
+            const { dow: schedDow, hhmm: schedHHMM } = localDowAndHHMM(scheduledForDate!, holidayTzKey);
+            const svcRows = resolveServiceHours(allHours, svcKind as any) as any[];
+            const dayRow = svcRows.find((h: any) => h.dayOfWeek === schedDow && h.isOpen);
+            const prevRow2 = svcRows.find((h: any) => h.dayOfWeek === (schedDow + 6) % 7 && h.isOpen);
+            const within = (t: string, iv: { open: string; close: string; closesNextDay?: boolean }) => {
+              const overnight = Boolean(iv.closesNextDay) || iv.close <= iv.open;
+              return overnight ? t >= iv.open || t < iv.close : t >= iv.open && t < iv.close;
+            };
+            const dayIvs = dayRow ? rowIntervals(dayRow) : [];
+            const shifted = shiftIntervalsForFirstOrderDelay(dayIvs, firstOrderDelay);
+            // Previous-day overnight spill (a 00:30 slot belongs to yesterday's
+            // window whose opening — and warm-up — happened yesterday evening):
+            // spill times are fine unless yesterday's whole window collapsed.
+            const prevSpillIvs = (prevRow2 ? rowIntervals(prevRow2) : []).filter(
+              (iv) => Boolean(iv.closesNextDay) || iv.close <= iv.open,
+            );
+            const inSpill = prevSpillIvs.some((iv) => schedHHMM < iv.close);
+            const inShifted = shifted.some((iv) => within(schedHHMM, iv));
+            if (!inShifted && !inSpill) {
+              const svcLabel = type === "delivery" ? "Delivery"
+                : type === "dine_in" ? "Dine-in"
+                : type === "take_out" ? "Take-out" : "Pickup";
+              const earliest = shifted.find((iv) => iv.open >= schedHHMM)?.open ?? shifted[0]?.open;
+              return NextResponse.json(
+                {
+                  error: `${svcLabel} orders start ${firstOrderDelay} minutes after opening${earliest ? ` — the earliest time that day is ${earliest}` : ""}. Please pick a later time.`,
+                  code: "first_order_delay",
+                },
+                { status: 400 },
+              );
+            }
           }
         }
       }

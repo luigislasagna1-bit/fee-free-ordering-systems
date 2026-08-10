@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Franges horàries (finestres com 6:00 – 6:15)",
       "timeSelectionMultiHint": "Marca cada estil disponible per als clients — amb més d'un, trien en pagar. Per a les franges, l'interval de sota és la durada de cada finestra (per defecte 15 min).",
-      "slotIntervalRangeLabel": "Durada i espaiat de les finestres"
+      "slotIntervalRangeLabel": "Durada i espaiat de les finestres",
+      "firstOrderDelayLabel": "Primera comanda programada després d'obrir",
+      "firstOrderDelayHint": "Marge d'escalfament: la primera franja que els clients poden reservar després de cada obertura. Obertura a les 10:00 amb 30 min aquí → primera franja 10:30. S'aplica per separat a dinar i sopar en horaris partits.",
+      "firstOrderDelayNone": "En obrir (sense marge)"
     },
     "delivery": {
       "title": "Zones de lliurament",

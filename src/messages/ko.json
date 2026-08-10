@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "시간대(6:00 – 6:15 같은 구간)",
       "timeSelectionMultiHint": "고객이 사용할 수 있는 방식을 모두 선택하세요. 여러 개면 결제 시 고객이 선택합니다. 시간대의 경우 아래 간격이 각 창의 길이입니다(기본 15분).",
-      "slotIntervalRangeLabel": "시간대 길이 및 간격"
+      "slotIntervalRangeLabel": "시간대 길이 및 간격",
+      "firstOrderDelayLabel": "오픈 후 첫 예약 주문",
+      "firstOrderDelayHint": "준비 시간: 각 오픈 후 고객이 예약할 수 있는 가장 이른 시간입니다. 10:00 오픈에 여기를 30분으로 → 첫 시간대는 10:30. 분리 영업일에는 점심·저녁 오픈에 각각 적용됩니다.",
+      "firstOrderDelayNone": "오픈 즉시(대기 없음)"
     },
     "delivery": {
       "title": "배달 구역",

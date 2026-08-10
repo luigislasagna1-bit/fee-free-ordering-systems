@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Tidsintervaller (vinduer som 6:00 – 6:15)",
       "timeSelectionMultiHint": "Huk av hver stil kundene kan bruke — med flere velger de i kassen. For tidsintervaller er intervallet nedenfor hvert vindus lengde (standard 15 min).",
-      "slotIntervalRangeLabel": "Vinduslengde og intervall"
+      "slotIntervalRangeLabel": "Vinduslengde og intervall",
+      "firstOrderDelayLabel": "Første planlagte ordre etter åpning",
+      "firstOrderDelayHint": "Oppvarmingsbuffer: det tidligste tidspunktet kunder kan planlegge etter hver åpning. Åpner 10:00 med 30 min her → første tid 10:30. Gjelder lunsj- og kveldsåpning hver for seg ved delte åpningstider.",
+      "firstOrderDelayNone": "Ved åpning (ingen buffer)"
     },
     "delivery": {
       "title": "Leveringssoner",

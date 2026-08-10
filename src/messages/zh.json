@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "时间段（如 6:00 – 6:15 的窗口）",
       "timeSelectionMultiHint": "勾选允许顾客使用的每种方式——多于一种时由顾客在结账时选择。对于时间段，下方的间隔即每个窗口的长度（默认 15 分钟）。",
-      "slotIntervalRangeLabel": "时间段长度与间隔"
+      "slotIntervalRangeLabel": "时间段长度与间隔",
+      "firstOrderDelayLabel": "开门后的首个预约订单",
+      "firstOrderDelayHint": "热身缓冲:每次开门后顾客可预约的最早时间。10:00 开门、此处设 30 分钟 → 首个时段为 10:30。分段营业时,午市与晚市分别适用。",
+      "firstOrderDelayNone": "开门即可(无缓冲)"
     },
     "delivery": {
       "title": "配送区域",

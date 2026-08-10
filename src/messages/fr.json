@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Plages horaires (fenêtres du type 6:00 – 6:15)",
       "timeSelectionMultiHint": "Cochez chaque style proposé aux clients — s'il y en a plusieurs, ils choisissent au paiement. Pour les plages, l'intervalle ci-dessous est la durée de chaque fenêtre (15 min par défaut).",
-      "slotIntervalRangeLabel": "Durée et espacement des plages"
+      "slotIntervalRangeLabel": "Durée et espacement des plages",
+      "firstOrderDelayLabel": "Première commande programmée après l'ouverture",
+      "firstOrderDelayHint": "Marge de mise en route : le premier créneau que les clients peuvent réserver après chaque ouverture. Ouverture à 10:00 avec 30 min ici → premier créneau 10:30. S'applique séparément au déjeuner et au dîner en horaires coupés.",
+      "firstOrderDelayNone": "À l'ouverture (sans marge)"
     },
     "delivery": {
       "title": "Zones de livraison",

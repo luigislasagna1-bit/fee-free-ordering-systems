@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Časové rozpätia (okná ako 6:00 – 6:15)",
       "timeSelectionMultiHint": "Zaškrtnite každý štýl, ktorý môžu zákazníci použiť — pri viacerých si vyberú pri pokladni. Pri rozpätiach je interval nižšie dĺžkou každého okna (predvolene 15 min).",
-      "slotIntervalRangeLabel": "Dĺžka a rozostup okien"
+      "slotIntervalRangeLabel": "Dĺžka a rozostup okien",
+      "firstOrderDelayLabel": "Prvá plánovaná objednávka po otvorení",
+      "firstOrderDelayHint": "Rozbehová rezerva: najskorší čas, ktorý si zákazníci môžu naplánovať po každom otvorení. Otvorenie 10:00 a tu 30 min → prvý termín 10:30. Pri delených hodinách platí zvlášť pre obed aj večer.",
+      "firstOrderDelayNone": "Pri otvorení (bez rezervy)"
     },
     "delivery": {
       "title": "Zóny doručenia",

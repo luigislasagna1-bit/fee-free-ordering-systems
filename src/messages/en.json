@@ -1550,7 +1550,10 @@
       },
       "timeSelectionRange": "Time ranges (windows like 6:00 – 6:15)",
       "timeSelectionMultiHint": "Check every style customers may use — with more than one, they choose at checkout. For time ranges, the interval below is each window's length (default 15 min).",
-      "slotIntervalRangeLabel": "Window length & spacing"
+      "slotIntervalRangeLabel": "Window length & spacing",
+      "firstOrderDelayLabel": "First scheduled order after opening",
+      "firstOrderDelayHint": "Warm-up buffer: the earliest slot customers can schedule after each opening. Open at 10:00 with 30 min here → first slot 10:30. Applies to lunch and dinner openings separately on split-hours days.",
+      "firstOrderDelayNone": "At opening (no buffer)"
     },
     "delivery": {
       "title": "Delivery Zones",

@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Fasce orarie (finestre tipo 6:00 – 6:15)",
       "timeSelectionMultiHint": "Spunta ogni stile disponibile per i clienti — con più di uno, scelgono al checkout. Per le fasce, l'intervallo qui sotto è la durata di ogni finestra (15 min di default).",
-      "slotIntervalRangeLabel": "Durata e cadenza delle fasce"
+      "slotIntervalRangeLabel": "Durata e cadenza delle fasce",
+      "firstOrderDelayLabel": "Primo ordine programmato dopo l'apertura",
+      "firstOrderDelayHint": "Margine di avvio: il primo orario prenotabile dai clienti dopo ogni apertura. Apri alle 10:00 con 30 min qui → primo orario 10:30. Con orari spezzati vale separatamente per pranzo e cena.",
+      "firstOrderDelayNone": "All'apertura (nessun margine)"
     },
     "delivery": {
       "title": "Zone di consegna",

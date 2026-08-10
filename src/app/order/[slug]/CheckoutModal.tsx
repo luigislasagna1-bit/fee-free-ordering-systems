@@ -15,7 +15,7 @@ import { rowIntervals } from "@/lib/restaurant-hours";
 import { parseTheme } from "@/lib/theme";
 import { formatTime } from "@/lib/format-time";
 import { rangeWindowMinutes } from "@/lib/slot-modes";
-import { buildDaySlots } from "@/lib/schedule-slots";
+import { buildDaySlots, shiftIntervalsForFirstOrderDelay } from "@/lib/schedule-slots";
 import { useGoogleMaps } from "@/lib/use-google-maps";
 import { resolveMapsBrowserKey } from "@/lib/maps-key";
 import { isAddressNotLocated } from "@/lib/checkout-address-gate";
@@ -377,6 +377,12 @@ interface Props {
   /** The restaurant's next opening moment in datetime-local format
    *  (used by the "we're closed" branch of the banner copy). */
   closedNextOpenLocal?: string;
+  /** "First scheduled order after opening" — minutes after each opening
+   *  window's start before the first schedulable slot (per active service;
+   *  0 = at opening). The parent resolves it from serviceSettings; the picker
+   *  shifts every window with the SAME shared helper the server backstop
+   *  uses. Luigi 2026-08-10. */
+  firstOrderDelayMinutes?: number;
   /** Minutes between selectable scheduling slots (15 / 30 / 60 etc.).
    *  Default 15 to match GloriaFood. Without this the schedule picker
    *  is a free-form datetime-local input and customers can schedule
@@ -451,6 +457,7 @@ export function CheckoutModal({
   hoursFormat = "24h",
   cateringNoticeHours,
   scheduleReason = null,
+  firstOrderDelayMinutes = 0,
   serviceLabel,
   closedNextOpenLocal,
   todayServiceSpecialIntervals = null,
@@ -1872,9 +1879,12 @@ export function CheckoutModal({
                       // and the lunch/dinner gap simply has no slots offered.
                       // For TODAY, a per-service EXTRAORDINARY/special-day OPEN
                       // window overrides the weekly row (Fabrizio cmqp8l948). Luigi 2026-07-02.
-                      const ivs = (todayServiceSpecialIntervals && todayServiceSpecialDateKey && datePart === todayServiceSpecialDateKey)
-                        ? todayServiceSpecialIntervals
-                        : (row && row.isOpen ? rowIntervals(row as any) : []);
+                      const ivs = shiftIntervalsForFirstOrderDelay(
+                        ((todayServiceSpecialIntervals && todayServiceSpecialDateKey && datePart === todayServiceSpecialDateKey)
+                          ? todayServiceSpecialIntervals
+                          : (row && row.isOpen ? rowIntervals(row as any) : [])) as any,
+                        firstOrderDelayMinutes,
+                      );
                       if (ivs.length > 0) {
                         winOpen = ivs[0].open;                       // envelope (exact-mode bounds)
                         winClose = ivs[ivs.length - 1].close;
@@ -1892,7 +1902,10 @@ export function CheckoutModal({
                       const prevRow = pickHoursForService(openingHours as any, (dow + 6) % 7, serviceKind);
                       slots = buildDaySlots({
                         dayIntervals: ivs as any,
-                        prevDayIntervals: (prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : []) as any,
+                        prevDayIntervals: shiftIntervalsForFirstOrderDelay(
+                          (prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : []) as any,
+                          firstOrderDelayMinutes,
+                        ) as any,
                         stepMinutes: step,
                         minMinutes: minMin,
                       });

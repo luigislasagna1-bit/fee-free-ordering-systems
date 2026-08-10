@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Zaman aralıkları (6:00 – 6:15 gibi pencereler)",
       "timeSelectionMultiHint": "Müşterilerin kullanabileceği her stili işaretleyin — birden fazlaysa ödeme sırasında seçerler. Zaman aralıklarında aşağıdaki aralık her pencerenin uzunluğudur (varsayılan 15 dk).",
-      "slotIntervalRangeLabel": "Pencere uzunluğu ve aralığı"
+      "slotIntervalRangeLabel": "Pencere uzunluğu ve aralığı",
+      "firstOrderDelayLabel": "Açılıştan sonra ilk planlı sipariş",
+      "firstOrderDelayHint": "Isınma payı: müşterilerin her açılıştan sonra planlayabileceği en erken saat. 10:00 açılış ve burada 30 dk → ilk saat 10:30. Bölünmüş çalışma saatlerinde öğle ve akşam açılışına ayrı ayrı uygulanır.",
+      "firstOrderDelayNone": "Açılışta (paysız)"
     },
     "delivery": {
       "title": "Teslimat Bölgeleri",

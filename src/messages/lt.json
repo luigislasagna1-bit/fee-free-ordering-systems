@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Laiko intervalai (langai kaip 6:00 – 6:15)",
       "timeSelectionMultiHint": "Pažymėkite kiekvieną klientams leidžiamą stilių — kai jų keli, jie renkasi atsiskaitydami. Intervalams žemiau esantis žingsnis yra kiekvieno lango trukmė (numatytoji 15 min.).",
-      "slotIntervalRangeLabel": "Lango trukmė ir žingsnis"
+      "slotIntervalRangeLabel": "Lango trukmė ir žingsnis",
+      "firstOrderDelayLabel": "Pirmas suplanuotas užsakymas po atidarymo",
+      "firstOrderDelayHint": "Įsibėgėjimo atsarga: anksčiausias laikas, kurį klientai gali rezervuoti po kiekvieno atidarymo. Atidarymas 10:00 ir čia 30 min → pirmas laikas 10:30. Esant skaidytam darbo laikui taikoma pietų ir vakaro atidarymams atskirai.",
+      "firstOrderDelayNone": "Atidarius (be atsargos)"
     },
     "delivery": {
       "title": "Pristatymo zonos",

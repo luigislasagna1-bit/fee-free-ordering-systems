@@ -1479,7 +1479,10 @@
       },
       "timeSelectionRange": "Tijdvakken (vensters zoals 6:00 – 6:15)",
       "timeSelectionMultiHint": "Vink elke stijl aan die klanten mogen gebruiken — bij meerdere kiezen ze bij het afrekenen. Bij tijdvakken is het interval hieronder de lengte van elk vak (standaard 15 min).",
-      "slotIntervalRangeLabel": "Lengte en interval van tijdvakken"
+      "slotIntervalRangeLabel": "Lengte en interval van tijdvakken",
+      "firstOrderDelayLabel": "Eerste geplande bestelling na opening",
+      "firstOrderDelayHint": "Opstartbuffer: het vroegste tijdstip dat klanten na elke opening kunnen inplannen. Open om 10:00 met hier 30 min → eerste tijdstip 10:30. Geldt bij gesplitste openingstijden apart voor lunch en avond.",
+      "firstOrderDelayNone": "Bij opening (geen buffer)"
     },
     "delivery": {
       "title": "Bezorgzones",
