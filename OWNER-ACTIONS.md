@@ -72,6 +72,30 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## A. DO NOW — this week, in priority order
 
+### A43. 💵 Driver tip share (you want drivers to get 25%) — TWO checks are yours (2026-08-10)
+Context: ShipDay dispatch is FIXED as of today (auto-accepted orders silently never dispatched since
+you turned auto-accept on Aug 6 — commit cf88e72e, live and verified). Pre-orders now land in
+ShipDay at payment time with the customer's scheduled delivery date/time.
+
+How tip money actually flows (verified line-by-line today): the customer's tip is charged inside
+your own Stripe payment, so **100% of every tip is already in YOUR account**. What we send ShipDay
+is only the tip *number* (the driver's app displays it; ShipDay earnings reports count it). Our
+system never pays drivers for ShipDay orders — driver pay is whatever you configure/pay on the
+ShipDay side. There is currently NO tip-split setting anywhere in Fee Free Ordering.
+
+**YOUR PART:**
+1. ☐ **Look in your ShipDay dashboard → Settings → Driver payment / earnings** for the tip setting
+   you remembered. If ShipDay can set the driver's tip share there, that's the right lever and we
+   change nothing in our code.
+2. ☐ **⚠️ Before ANY 25/75 tip split goes live — ask your accountant one question:** in Ontario,
+   the Employment Standards Act ("Protecting Employees' Tips" rules) restricts an employer from
+   keeping a share of EMPLOYEES' tips (redistribution to a staff tip pool is treated differently
+   from the house keeping it). Whether this applies depends on whether your drivers are employees
+   or contractors and how the split is used. Same class of gate as A23 (driver pay legal sign-off).
+3. ☐ If ShipDay has no such setting and the accountant clears it, tell Claude — the change on our
+   side is small (a per-restaurant "driver tip share %" setting applied where the tip number is
+   sent to ShipDay), but it will make drivers SEE only their share, so it waits for your explicit go.
+
 ### A42. 🎁 Gift Wallet Pass BUILT — one env-var chore + a runbook note (2026-08-03)
 Built the no-account spend path for gifted Reward Dollars (DESIGN-gift-wallet-pass.md): a recipient
 can now click a link or type a 16-character code from the gift email and spend the balance
