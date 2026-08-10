@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildDaySlots } from "./schedule-slots";
+import { buildDaySlots, shiftIntervalsForFirstOrderDelay } from "./schedule-slots";
 
 /**
  * Overnight-correct slot generation (Luigi 2026-07-04): at 1:50 AM with
@@ -90,5 +90,60 @@ describe("buildDaySlots", () => {
     });
     expect(slots.slice(0, 3)).toEqual(["00:00", "00:30", "01:00"]);
     expect(slots[4]).toBe("10:00");
+  });
+});
+
+/**
+ * "First scheduled order after opening" (Luigi 2026-08-10): a customer could
+ * book the exact opening minute (10:00 delivery at a 10:00-opening store).
+ * The per-service delay shifts every window's OPEN; picker, defaults and the
+ * server backstop all consume this one helper.
+ */
+describe("shiftIntervalsForFirstOrderDelay", () => {
+  it("Luigi's case: 10:00 open + 30 min delay → first offerable slot 10:30", () => {
+    const shifted = shiftIntervalsForFirstOrderDelay([{ open: "10:00", close: "22:00" }], 30);
+    expect(shifted).toEqual([{ open: "10:30", close: "22:00" }]);
+    const slots = buildDaySlots({ dayIntervals: shifted, prevDayIntervals: [], stepMinutes: 15, minMinutes: 0 });
+    expect(slots[0]).toBe("10:30");
+    expect(slots).not.toContain("10:00");
+    expect(slots).not.toContain("10:15");
+  });
+
+  it("0 delay is identity (the default: nothing changes for existing stores)", () => {
+    const ivs = [{ open: "10:00", close: "22:00" }];
+    expect(shiftIntervalsForFirstOrderDelay(ivs, 0)).toBe(ivs);
+  });
+
+  it("delay applies PER WINDOW on split hours (lunch and dinner each warm up)", () => {
+    const shifted = shiftIntervalsForFirstOrderDelay(
+      [{ open: "11:00", close: "14:00" }, { open: "17:00", close: "22:00" }],
+      45,
+    );
+    expect(shifted).toEqual([
+      { open: "11:45", close: "14:00" },
+      { open: "17:45", close: "22:00" },
+    ]);
+  });
+
+  it("a window fully consumed by the delay is dropped, not inverted", () => {
+    const shifted = shiftIntervalsForFirstOrderDelay(
+      [{ open: "11:00", close: "11:30" }, { open: "17:00", close: "22:00" }],
+      60,
+    );
+    expect(shifted).toEqual([{ open: "18:00", close: "22:00" }]);
+  });
+
+  it("overnight window keeps its spill; the delay burdens the evening opening", () => {
+    const shifted = shiftIntervalsForFirstOrderDelay(
+      [{ open: "18:00", close: "02:00", closesNextDay: true }],
+      30,
+    );
+    expect(shifted).toEqual([{ open: "18:30", close: "02:00", closesNextDay: true }]);
+  });
+
+  it("negative and NaN delays are treated as 0", () => {
+    const ivs = [{ open: "10:00", close: "22:00" }];
+    expect(shiftIntervalsForFirstOrderDelay(ivs, -15)).toBe(ivs);
+    expect(shiftIntervalsForFirstOrderDelay(ivs, NaN as unknown as number)).toBe(ivs);
   });
 });

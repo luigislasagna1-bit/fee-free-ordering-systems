@@ -43,6 +43,20 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
 
 ## ⭐ TOMORROW — the short list (do these WITH Claude / report results)
 
+**🌅 TODAY 2026-08-10 (fresh, from the overnight ShipDay session):**
+- **T-K. 🚨 CANCEL your test order #ORD-566877211** (the $11.32 Reward-Dollars scheduled delivery
+  you placed ~1:42 AM to test ShipDay). It is REAL in ShipDay (ID 51583846) with a driver assigned —
+  if you don't cancel, someone delivers it. Admin → Orders → cancel; that auto-cancels it on
+  ShipDay and returns your credit. *(An automated check fires at 1:30 PM and will nag you if it's
+  still live — it only runs if the Claude app is open.)*
+- **T-L. 👀 First real card-paid delivery today: glance at ShipDay.** The auto-accept dispatch fix
+  (cf88e72e) is live and your credit-paid test proved the rare path; the everyday card path uses the
+  same shared code but hasn't been seen live yet. Expect the order in ShipDay within ~1 min of the
+  customer paying — and while you're there, confirm the driver-side tip shows your 25% split (A43).
+
+*(Items below this line are the older 2026-07 list — mostly ✅ done; still-open: T-B waits on Apple,
+T-E/T-F Fabrizio asks, T-G build-next decision.)*
+
 **Together (5–15 min each):**
 - **T-J. ✅ DONE 2026-07-19 — Erik's $10 make-good SENT + verified end-to-end.** Luigi clicked Give (notify ✓) at 06:03Z → email sent; Claude then re-ran the live checkout preview with Erik's REAL email: **exactly −$10.00 applied automatically** (and FIRSTBUY correctly absent — he's returning). Promo dies after his one use (usageLimit 1 + once-per-lifetime); trash icon on his customer page revokes it anytime. Watch: when Erik orders, the order total will show the $10 off. Original plan kept below for the record.
   Original: **Erik's $10 make-good staged + PROVEN; only YOUR 2 clicks remain (that's what sends the email).** Your GO from 2026-07-19. Claude created the promo on prod ("**Sorry we missed your discount — $10 on us**": hidden, $10 off cart, once-per-lifetime, everyone, dies after 1 use) and PROVED it live: a test email attached to it got **-$10.00** at checkout on your real store; an unattached email got nothing; the test attach was then deleted — the deal is currently attached to NOBODY and invisible to the public. The email text (apology + 3 easy steps + "create an account, earn 5% Luigi Bucks") is baked into the promo description. Your clicks:
