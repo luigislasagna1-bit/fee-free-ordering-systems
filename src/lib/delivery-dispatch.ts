@@ -9,6 +9,7 @@ import prisma from "@/lib/db";
 import { dispatchOrderNow } from "@/lib/shipday-dispatch";
 import { shouldDispatchToShipday } from "@/lib/shipday";
 import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
+import { notifyStaff } from "@/lib/notifications";
 
 export type DeliveryProvider = "own" | "shipday" | "feefree";
 
@@ -159,6 +160,59 @@ export async function assignToFeeFreeDriver(
     data: { orderId: order.id, restaurantId: order.restaurantId, status: "queued" },
   });
   return { ok: true, provider: "feefree", assignmentId: assignment.id };
+}
+
+/**
+ * Dispatch an order that is ALREADY "accepted", with the same logging +
+ * staff-alert behaviour as the kitchen Accept hook — the ONE wrapper every
+ * automatic dispatch trigger goes through:
+ *
+ *   1. Kitchen Accept (PATCH /api/orders/[id], pending → accepted)
+ *   2. Stripe auto-accept capture-on-authorize (webhook) — an AUTO-ACCEPTED
+ *      order is born "accepted", so trigger 1 never fires for it
+ *   3. PayPal auto-accept capture (/api/public/paypal-order/[id]/authorize)
+ *   4. Order creation, when an auto-accepted order is already fully prepaid
+ *      by store credit (no online charge → triggers 2/3 never fire either)
+ *
+ * Triggers 2-4 exist because auto-accept + ShipDay silently dispatched NOTHING
+ * (found live on Luigi's store 2026-08-10: auto-accept went on Aug 6 and every
+ * delivery order since bypassed ShipDay). Guards inside dispatchOrderNow keep
+ * this idempotent (`already_dispatched`) and prepaid-only, so an early trigger
+ * on a not-yet-captured order skips harmlessly and a later one picks it up.
+ *
+ * Never throws — callers are payment webhooks and customer-facing routes that
+ * must not fail because a courier API is down. On a genuine ShipDay rejection
+ * (not a pre-flight skip) it pages staff via the dispatchRejected notification,
+ * pointing at the admin order page's manual "Send to ShipDay" rescue button.
+ */
+export async function dispatchAcceptedOrderSafe(orderId: string): Promise<void> {
+  try {
+    const r = await dispatchDeliveryNow(orderId);
+    if (!r.ok && !r.skipped) {
+      console.error("[delivery dispatch] provider rejected", { orderId, provider: r.provider, error: r.error });
+      if (isShipdayDispatchRejection(r)) {
+        const o = await prisma.order.findUnique({
+          where: { id: orderId },
+          select: { restaurantId: true, orderNumber: true, customerName: true },
+        });
+        if (o) {
+          const notifyBaseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+          await notifyStaff({
+            restaurantId: o.restaurantId,
+            payload: {
+              event: "dispatchRejected",
+              orderNumber: o.orderNumber,
+              customerName: o.customerName,
+              reason: r.error,
+              dashboardUrl: `${notifyBaseUrl}/admin/orders/${orderId}`,
+            },
+          }).catch((e) => console.error("[notifyStaff dispatchRejected]", e));
+        }
+      }
+    }
+  } catch (e) {
+    console.error("[delivery dispatch] dispatchAcceptedOrderSafe threw:", e);
+  }
 }
 
 /**

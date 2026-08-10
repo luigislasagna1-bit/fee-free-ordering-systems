@@ -17,11 +17,12 @@
  * [id] is OUR order id, not PayPal's.
  */
 
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import prisma from "@/lib/db";
 import { authorizePaypalOrder, getPaypalAuthorizationStatus, capturePaypalAuthorization } from "@/lib/paypal";
 import { isPaypalAlreadyCaptured } from "@/lib/capture-idempotency";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { dispatchAcceptedOrderSafe } from "@/lib/delivery-dispatch";
 
 export async function POST(_req: Request, ctx: { params: Promise<{ id: string }> }) {
   const { id } = await ctx.params;
@@ -134,6 +135,13 @@ export async function POST(_req: Request, ctx: { params: Promise<{ id: string }>
           );
         }
       }
+      // An auto-accepted order never passes through the kitchen Accept PATCH
+      // (the only dispatch trigger before 2026-08-10), so hand it to the
+      // delivery provider here, now that it's accepted + captured. after():
+      // the customer is waiting on this response for their "Order placed!"
+      // screen — don't add a courier-API roundtrip to it. Safe if capture
+      // failed above (prepaid guard inside skips). Never throws.
+      after(dispatchAcceptedOrderSafe(order.id));
     }
 
     // Release the order to the kitchen + send customer "Order received"

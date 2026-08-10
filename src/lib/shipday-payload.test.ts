@@ -56,6 +56,31 @@ describe("buildShipdayOrderBody — ShipDay insert-order contract", () => {
     expect(b.expectedDeliveryTime).toBe("00:40:00");
   });
 
+  it("a future pre-order anchors delivery on scheduledFor, pickup 25 min before it", () => {
+    // Placed + dispatched at 06:00, but the customer wants it tomorrow 18:00 —
+    // auto-accept dispatches at capture time, so the payload must carry the
+    // scheduled window, not "now + prep".
+    const b = buildShipdayOrderBody(mkInput({ scheduledFor: new Date("2026-07-13T18:00:00.000Z") }), NOW);
+    expect(b.expectedDeliveryDate).toBe("2026-07-13");
+    expect(b.expectedDeliveryTime).toBe("18:00:00");
+    expect(b.expectedPickupTime).toBe("17:35:00");
+  });
+
+  it("a past/stale scheduledFor falls back to the ASAP window", () => {
+    const b = buildShipdayOrderBody(mkInput({ scheduledFor: new Date("2026-07-12T05:00:00.000Z") }), NOW);
+    expect(b.expectedPickupTime).toBe("06:30:00");
+    expect(b.expectedDeliveryTime).toBe("06:55:00");
+    expect(b.expectedDeliveryDate).toBe("2026-07-12");
+  });
+
+  it("a scheduledFor inside the ASAP window behaves as ASAP (no earlier-than-prep pickup)", () => {
+    // Scheduled 06:40 but prep alone runs to 06:30 + 25 min drive → the ASAP
+    // window (delivery 06:55) already covers it; never promise earlier.
+    const b = buildShipdayOrderBody(mkInput({ scheduledFor: new Date("2026-07-12T06:40:00.000Z") }), NOW);
+    expect(b.expectedPickupTime).toBe("06:30:00");
+    expect(b.expectedDeliveryTime).toBe("06:55:00");
+  });
+
   it("phones go out E.164 with country code (the second silent-rejection cause)", () => {
     const b = buildShipdayOrderBody(mkInput(), NOW);
     expect(b.customerPhoneNumber).toBe("+16476690808");

@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 // Stateful Prisma + provider mocks so we can exercise the real dispatch
 // functions (not just the pure guard). vi.hoisted so the (hoisted) vi.mock
 // factories can reference them.
-const { prismaMock, dispatchOrderNowMock, shouldDispatchToShipdayMock } = vi.hoisted(() => ({
+const { prismaMock, dispatchOrderNowMock, shouldDispatchToShipdayMock, notifyStaffMock } = vi.hoisted(() => ({
   prismaMock: {
     order: { findUnique: vi.fn() },
     feeFreeDeliveryConfig: { findUnique: vi.fn() },
@@ -12,12 +12,14 @@ const { prismaMock, dispatchOrderNowMock, shouldDispatchToShipdayMock } = vi.hoi
   },
   dispatchOrderNowMock: vi.fn(),
   shouldDispatchToShipdayMock: vi.fn(),
+  notifyStaffMock: vi.fn(),
 }));
 vi.mock("@/lib/db", () => ({ default: prismaMock }));
 vi.mock("@/lib/shipday-dispatch", () => ({ dispatchOrderNow: dispatchOrderNowMock }));
 vi.mock("@/lib/shipday", () => ({ shouldDispatchToShipday: shouldDispatchToShipdayMock }));
+vi.mock("@/lib/notifications", () => ({ notifyStaff: notifyStaffMock }));
 
-import { assertDispatchable, resolveDeliveryProvider, assignToFeeFreeDriver, dispatchDeliveryNow, displayDeliveryProvider, isShipdayDispatchRejection, type DispatchableOrder, type DeliveryDispatchResult } from "./delivery-dispatch";
+import { assertDispatchable, resolveDeliveryProvider, assignToFeeFreeDriver, dispatchDeliveryNow, dispatchAcceptedOrderSafe, displayDeliveryProvider, isShipdayDispatchRejection, type DispatchableOrder, type DeliveryDispatchResult } from "./delivery-dispatch";
 
 const base = (over: Partial<DispatchableOrder> = {}): DispatchableOrder => ({
   type: "delivery",
@@ -39,6 +41,7 @@ const IN_AREA = { lat: 43.5183, lng: -79.8774 };
 beforeEach(() => {
   vi.clearAllMocks();
   prismaMock.restaurant.findUnique.mockResolvedValue(IN_AREA);
+  notifyStaffMock.mockResolvedValue(undefined);
 });
 
 describe("assertDispatchable (shared ShipDay + FeeFree guards)", () => {
@@ -204,6 +207,60 @@ describe("dispatchDeliveryNow (provider branch)", () => {
     const r = await dispatchDeliveryNow("o1");
     expect(r).toEqual({ ok: false, provider: "own", skipped: "not_delivery" });
     expect(prismaMock.feeFreeDeliveryConfig.findUnique).not.toHaveBeenCalled();
+  });
+});
+
+describe("dispatchAcceptedOrderSafe (shared trigger wrapper — kitchen Accept + all auto-accept paths)", () => {
+  // Route every scenario through the real dispatchDeliveryNow to the ShipDay
+  // branch: feefree off, shipday on.
+  const shipdayRestaurant = () => {
+    prismaMock.feeFreeDeliveryConfig.findUnique.mockResolvedValue({ enabled: false });
+    shouldDispatchToShipdayMock.mockResolvedValue(true);
+  };
+
+  it("pages staff on a genuine ShipDay rejection (auto-accepted orders have no kitchen Accept to surface it)", async () => {
+    shipdayRestaurant();
+    prismaMock.order.findUnique
+      .mockResolvedValueOnce({ id: "o1", restaurantId: "r1", type: "delivery" }) // dispatchDeliveryNow's lookup
+      .mockResolvedValueOnce({ restaurantId: "r1", orderNumber: "ORD-1", customerName: "Ada" }); // notify lookup
+    dispatchOrderNowMock.mockResolvedValue({ ok: false, error: "ShipDay rejected the order: bad address" });
+    await dispatchAcceptedOrderSafe("o1");
+    expect(notifyStaffMock).toHaveBeenCalledTimes(1);
+    expect(notifyStaffMock.mock.calls[0][0]).toMatchObject({
+      restaurantId: "r1",
+      payload: { event: "dispatchRejected", orderNumber: "ORD-1", customerName: "Ada", reason: "ShipDay rejected the order: bad address" },
+    });
+  });
+
+  it("stays silent on a pre-flight guard skip (not prepaid yet, already dispatched, config off…)", async () => {
+    shipdayRestaurant();
+    prismaMock.order.findUnique.mockResolvedValue({ id: "o1", restaurantId: "r1", type: "delivery" });
+    dispatchOrderNowMock.mockResolvedValue({ ok: false, skipped: "not_prepaid" });
+    await dispatchAcceptedOrderSafe("o1");
+    expect(notifyStaffMock).not.toHaveBeenCalled();
+  });
+
+  it("stays silent on success", async () => {
+    shipdayRestaurant();
+    prismaMock.order.findUnique.mockResolvedValue({ id: "o1", restaurantId: "r1", type: "delivery" });
+    dispatchOrderNowMock.mockResolvedValue({ ok: true, shipdayOrderId: "sd_9" });
+    await dispatchAcceptedOrderSafe("o1");
+    expect(notifyStaffMock).not.toHaveBeenCalled();
+  });
+
+  it("never throws — callers are payment webhooks that must not fail on courier errors", async () => {
+    prismaMock.order.findUnique.mockRejectedValue(new Error("db down"));
+    await expect(dispatchAcceptedOrderSafe("o1")).resolves.toBeUndefined();
+  });
+
+  it("never throws even when the staff notification itself fails", async () => {
+    shipdayRestaurant();
+    prismaMock.order.findUnique
+      .mockResolvedValueOnce({ id: "o1", restaurantId: "r1", type: "delivery" })
+      .mockResolvedValueOnce({ restaurantId: "r1", orderNumber: "ORD-1", customerName: "Ada" });
+    dispatchOrderNowMock.mockResolvedValue({ ok: false, error: "rejected" });
+    notifyStaffMock.mockRejectedValue(new Error("smtp down"));
+    await expect(dispatchAcceptedOrderSafe("o1")).resolves.toBeUndefined();
   });
 });
 

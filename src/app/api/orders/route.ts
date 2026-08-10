@@ -48,6 +48,7 @@ import { parseReservationDetails, computePartySize, type ReservationDetails } fr
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
 import { resolveCustomerLocale } from "@/lib/i18n-server";
 import { shouldDispatchToShipday } from "@/lib/shipday";
+import { dispatchAcceptedOrderSafe } from "@/lib/delivery-dispatch";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 
 /** Human English label for an order type — used only as the en fallback in
@@ -3069,6 +3070,18 @@ export async function POST(req: NextRequest) {
           }
         })(),
       );
+    }
+
+    // ── Auto-accept delivery dispatch, prepaid-at-creation case ─────────────
+    // An auto-accepted order never passes through the kitchen Accept PATCH (the
+    // only delivery-dispatch trigger before 2026-08-10). Card/PayPal orders
+    // dispatch from their capture paths once the money is secured; a fully
+    // credit-covered order is born "paid", so this is its only chance. Cash
+    // never dispatches (couriers are prepaid-only) — same rule as manual
+    // accept, enforced by the guards inside. after(): stays off the customer's
+    // checkout response. Never throws.
+    if (order.status === "accepted" && type === "delivery" && fullyCovered) {
+      after(dispatchAcceptedOrderSafe(order.id));
     }
 
     // Marketplace counters — bump monthly orders / revenue / lifetime

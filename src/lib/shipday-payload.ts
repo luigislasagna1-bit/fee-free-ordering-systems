@@ -53,6 +53,13 @@ export type DispatchInput = {
   creditApplied?: number;
   /** Restaurant-set prep time in minutes. Used to compute expectedPickupTime. */
   preparationMinutes: number;
+  /** Customer-requested fulfillment time (Order.scheduledFor), if this is a
+   *  pre-order. When it's later than the ASAP window, the expected delivery
+   *  anchors on IT — dispatch can now happen well before cook time
+   *  (auto-accept dispatches at payment capture, and a kitchen may accept a
+   *  tomorrow pre-order today), and without this ShipDay would summon a
+   *  driver for "now + prep" on an order the customer wants tomorrow. */
+  scheduledFor?: Date | null;
   deliveryInstruction: string | null;
   /** Line items for the ShipDay dashboard/driver app ({name, quantity,
    *  unitPrice}). Optional — totals stay authoritative either way. */
@@ -117,8 +124,18 @@ export function translateShipdayEvent(event: string): {
 
 export function buildShipdayOrderBody(input: DispatchInput, now: Date): Record<string, unknown> {
   const r2 = (n: number) => Math.round(n * 100) / 100;
-  const pickupAt = new Date(now.getTime() + input.preparationMinutes * 60_000);
-  const deliveryAt = new Date(pickupAt.getTime() + 25 * 60_000);
+  // ASAP window: pickup after prep, delivery 25 min later. A pre-order whose
+  // scheduledFor lands BEYOND that window anchors delivery on the scheduled
+  // time instead (pickup 25 min before it); a stale/past scheduledFor falls
+  // back to ASAP so a late-dispatched pre-order still reads as "now".
+  const asapPickupAt = new Date(now.getTime() + input.preparationMinutes * 60_000);
+  const asapDeliveryAt = new Date(asapPickupAt.getTime() + 25 * 60_000);
+  const scheduledAt =
+    input.scheduledFor && input.scheduledFor.getTime() > asapDeliveryAt.getTime()
+      ? input.scheduledFor
+      : null;
+  const deliveryAt = scheduledAt ?? asapDeliveryAt;
+  const pickupAt = scheduledAt ? new Date(scheduledAt.getTime() - 25 * 60_000) : asapPickupAt;
   const timeOf = (d: Date) => d.toISOString().slice(11, 19);
   const dateOf = (d: Date) => d.toISOString().slice(0, 10);
 

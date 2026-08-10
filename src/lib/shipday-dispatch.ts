@@ -44,6 +44,7 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
       notes: true, subtotal: true, taxAmount: true,
       deliveryFee: true, tip: true, total: true, creditApplied: true,
       paymentMethod: true, paymentStatus: true, preparationTime: true,
+      scheduledFor: true,
       items: { select: { name: true, quantity: true, price: true } },
       restaurant: { select: { name: true, address: true, city: true, state: true, zip: true, phone: true, lat: true, lng: true } },
     },
@@ -101,6 +102,9 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     total: full.total,
     creditApplied: full.creditApplied ?? 0,
     preparationMinutes: full.preparationTime ?? 30,
+    // Pre-orders anchor ShipDay's expected times on the customer's requested
+    // time — dispatch may run long before cook time (auto-accept capture).
+    scheduledFor: full.scheduledFor,
     deliveryInstruction: full.notes,
     items: full.items.map((i) => ({ name: i.name, quantity: i.quantity, unitPrice: i.price })),
   });

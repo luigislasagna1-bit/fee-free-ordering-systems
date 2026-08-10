@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { fireOrderNotifications } from "@/lib/order-notifications";
 import { capturePayment } from "@/lib/stripe";
 import { isStripeAlreadyCaptured } from "@/lib/capture-idempotency";
+import { dispatchAcceptedOrderSafe } from "@/lib/delivery-dispatch";
 
 /**
  * Handle payment_intent.* events for customer-to-restaurant orders.
@@ -115,6 +116,14 @@ export async function handlePaymentIntentEvent(event: Stripe.Event) {
           );
         }
       }
+      // An auto-accepted order never passes through the kitchen Accept PATCH —
+      // the ONLY dispatch trigger until 2026-08-10, when Luigi's store turned
+      // auto-accept on and every delivery order silently bypassed ShipDay. So
+      // dispatch here, now that the order is both accepted and captured. Await:
+      // Vercel kills unawaited work after the webhook 200. Safe on a replayed
+      // or failed-capture event — the prepaid/already-dispatched guards inside
+      // just skip. Never throws.
+      await dispatchAcceptedOrderSafe(orderId);
     }
     // IMPORTANT: await — Vercel kills unawaited promises after the
     // webhook 200. fireOrderNotifications is idempotent (notifiedAt guard).
