@@ -21,7 +21,12 @@ function menuText(menu: any): string {
       const flags = [it.isSoldOut ? "SOLD OUT" : "", it.isPizza ? "PIZZA-BUILDER→transfer" : "", it.isCombo ? "COMBO→transfer" : ""]
         .filter(Boolean)
         .join(", ");
-      lines.push(`- ${it.name} [id:${it.menuItemId}] ${fmtMoney(it.price, currency)}${flags ? ` (${flags})` : ""}`);
+      // Variant items: NEVER render the legacy base-price column as the
+      // headline — for sized items it can be $0.00 or a stale number no size
+      // actually costs (the charge path uses variant.price; review
+      // wf_a62b0536). The sizes line below carries the real prices.
+      const headlinePrice = it.variants?.length ? "" : ` ${fmtMoney(it.price, currency)}`;
+      lines.push(`- ${it.name} [id:${it.menuItemId}]${headlinePrice}${flags ? ` (${flags})` : ""}`);
       if (it.description) lines.push(`    ${String(it.description).slice(0, 140)}`);
       if (it.variants?.length) {
         lines.push(
@@ -46,11 +51,21 @@ function menuText(menu: any): string {
 
 function servicesText(ctx: any): string {
   const s = ctx?.services ?? {};
-  const on = (k: string) => s[k]?.offered && !s[k]?.pausedNow;
+  // A PAUSED service is still offered — the kitchen paused NOW, the future
+  // order book is open (same rule as the website since 2026-08-10). Hiding it
+  // made Nabil deny the service existed and turn pre-order callers away
+  // (review wf_a62b0536). Voice can't schedule ahead yet, so the honest offer
+  // is the SMS ordering link.
   const parts: string[] = [];
-  if (on("pickup")) parts.push("pickup");
-  if (on("delivery")) parts.push(ctx?.delivery?.cashDeliveryBlocked ? "delivery (PREPAID only — no cash at door)" : "delivery");
-  if (on("reservations")) parts.push("reservations");
+  const entry = (k: string, label: string) => {
+    if (!s[k]?.offered) return;
+    parts.push(s[k]?.pausedNow
+      ? `${label} (kitchen PAUSED right now — no immediate orders by phone; offer to text the online ordering link so the caller can schedule for after the pause)`
+      : label);
+  };
+  entry("pickup", "pickup");
+  entry("delivery", ctx?.delivery?.cashDeliveryBlocked ? "delivery (PREPAID only — no cash at door)" : "delivery");
+  entry("reservations", "reservations");
   return parts.length ? parts.join(", ") : "none right now";
 }
 
@@ -102,7 +117,7 @@ ${returning}
 4. Get quantities explicitly. Never assume an unspoken quantity. Normalize vague amounts ("a couple" → confirm "two?").
 5. Track the running order. When the caller corrects ("make that a large", "no onions on the first one"), change the RIGHT line.
 6. Confirm anything you're unsure you heard correctly before adding it.
-7. When the order is complete, call price_order_preview, then READ BACK the full order with quantities and the exact total it returns, and get an explicit "yes" before calling place_order. The total you say MUST be the server's total — never a number you calculated.
+7. When the order is complete, READ BACK the full order — every item with its quantity and its menu price — and say the total "will include tax". NEVER announce a computed total before placing: you do not have one, and a number you sum yourself WILL be wrong (no tax, no fees). Get an explicit "yes", call place_order, and then read back the order number AND the exact total place_order returns — that returned total is the only total you may ever state, it is the authoritative charged amount.
 8. After placing, give the order number and the pickup/ready guidance, and offer to text a receipt (send_sms_link "receipt").
 
 ## Payment (v1)

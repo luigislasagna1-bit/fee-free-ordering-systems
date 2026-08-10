@@ -3495,8 +3495,12 @@ export function OrderingPageClient({
 
   const scheduleRequired = cartHasCatering || restaurantIsClosedNow || orderMinLeadMinutes > 0 || hideAsap || fulfilForcesSchedule || servicePausedNow;
   // Whether the schedule picker is shown at all. Off only when the owner
-  // disabled scheduling AND nothing forces it (catering / closed now / fulfilment).
-  const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow || fulfilForcesSchedule;
+  // disabled scheduling AND nothing forces it (catering / closed now / fulfilment
+  // / a paused service). ⚠️ servicePausedNow MUST be here: without it an
+  // ASAP-only store that pauses a service reached checkout with a forced
+  // schedule but NO picker — the auto-fill silently stamped a time the
+  // customer never saw or consented to (adversarial review wf_a62b0536).
+  const schedulingEnabled = schedulingAllowed || cartHasCatering || restaurantIsClosedNow || fulfilForcesSchedule || servicePausedNow;
   // Closed-now default = the FIRST slot the picker actually offers on the opening
   // day, NOT the raw opening minute. A new order can't be ready before now +
   // standard prep (zone-aware for delivery, mirroring estimatedDeliveryMinutes /
@@ -3558,6 +3562,74 @@ export function OrderingPageClient({
     });
     return slots.length > 0 ? `${openDate}T${slots[0]}` : closedMinScheduledLocal;
   })();
+  // First slot the picker will genuinely OFFER at/after a wall-clock minimum,
+  // scanning forward day by day (a pause can end at midnight or inside a
+  // split-hours gap, where the raw rounded minute is un-offerable — the
+  // customer then submitted a default like "Tue 12:00 AM" and died on the
+  // server's hours backstop; seen live on Luigi's store 2026-08-10 00:13,
+  // predicted by review wf_a62b0536). Mirrors closedNowFirstSlot's math:
+  // same buildDaySlots, same per-service interval, same prep floor on today.
+  const firstOfferableSlotAtOrAfter = (minWall: string): string => {
+    const todayLocal = toRestaurantWallClock(Date.now()).split("T")[0];
+    const deliveryPrep = resolvedZone?.zone.estimatedMinutes ?? restaurant.estimatedDelivery;
+    const prep = Math.max(0, orderType === "delivery" ? deliveryPrep : restaurant.estimatedPickup);
+    const step = (() => {
+      try {
+        const ss = (restaurant as any).serviceSettings ? JSON.parse((restaurant as any).serviceSettings) : null;
+        const key = orderType === "delivery" ? "delivery" : orderType === "dine_in" ? "dineIn" : orderType === "take_out" ? "takeOut" : "pickup";
+        const v = ss?.[key]?.slotInterval;
+        if (typeof v === "number" && v > 0) return v;
+      } catch { /* malformed serviceSettings */ }
+      return (restaurant as any).scheduledOrderInterval ?? 15;
+    })();
+    const svcKind = orderType === "delivery" ? "delivery" : orderType === "pickup" ? "pickup" : null;
+    const [minDatePart, minTimePart] = minWall.split("T");
+    for (let off = 0; off < 8; off++) {
+      const d = new Date(`${minDatePart}T12:00:00`);
+      d.setDate(d.getDate() + off);
+      const datePart = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      // Floor: the minimum time on its own day; prep-from-now when the day is
+      // today; open floor (0) on later days.
+      const floorMin = (() => {
+        let f = 0;
+        if (off === 0 && minTimePart) {
+          const [hh, mm] = minTimePart.split(":").map(Number);
+          f = (hh || 0) * 60 + (mm || 0);
+        }
+        if (datePart === todayLocal) {
+          const [npDate, npTime] = toRestaurantWallClock(Date.now() + prep * 60_000).split("T");
+          if (npDate > datePart) return 24 * 60;
+          if (npDate === datePart) {
+            const [hh, mm] = (npTime || "").split(":").map(Number);
+            f = Math.max(f, (hh || 0) * 60 + (mm || 0));
+          }
+        }
+        return f;
+      })();
+      const dow = d.getDay();
+      const specialIvs = datePart === todayLocal && serviceHasSpecialToday ? (todaySvcSpecial as any).intervals : null;
+      const row = pickHoursForService((restaurant.openingHours ?? []) as any, dow, svcKind);
+      const dayIvs = specialIvs ?? (row && row.isOpen ? rowIntervals(row as any) : []);
+      const prevRow = pickHoursForService((restaurant.openingHours ?? []) as any, (dow + 6) % 7, svcKind);
+      const prevIvs = prevRow && prevRow.isOpen ? rowIntervals(prevRow as any) : [];
+      const slots = buildDaySlots({
+        dayIntervals: dayIvs as any,
+        prevDayIntervals: prevIvs as any,
+        stepMinutes: Math.max(5, Math.min(120, step || 15)),
+        minMinutes: floorMin,
+      });
+      if (slots.length > 0) return `${datePart}T${slots[0]}`;
+    }
+    return minWall; // no offerable slot within a week — keep the raw value (blocked as before)
+  };
+  const pausedFirstSlot =
+    servicePausedNow && servicePausedUntilMs
+      ? firstOfferableSlotAtOrAfter(toRestaurantWallClock(servicePausedUntilMs, true))
+      : null;
+  // Does the pause (not the closure) set the actual minimum? Drives which
+  // explanation the checkout banner shows when both apply.
+  const pausedIsBindingMin = !!pausedFirstSlot && (!closedNowFirstSlot || pausedFirstSlot > closedNowFirstSlot);
+
   const effectiveMinScheduledLocal = (() => {
     const candidates: string[] = [];
     if (cartHasCatering && cateringMinScheduledLocal) candidates.push(cateringMinScheduledLocal);
@@ -3567,9 +3639,11 @@ export function OrderingPageClient({
     if (restaurantIsClosedNow && closedNowFirstSlot) candidates.push(closedNowFirstSlot);
     if (orderMinLeadMinutes > 0 && leadMinScheduledLocal) candidates.push(leadMinScheduledLocal);
     if (fulfilMinScheduledLocal) candidates.push(fulfilMinScheduledLocal);
-    // Paused service ⇒ earliest slot is the pause end (restaurant wall clock,
-    // rounded up to the next quarter hour so it aligns with picker slots).
-    if (servicePausedNow && servicePausedUntilMs) candidates.push(toRestaurantWallClock(servicePausedUntilMs, true));
+    // Paused service ⇒ earliest slot is the first slot the picker actually
+    // OFFERS at/after the pause end (slot-grid + hours + prep aware) — never
+    // the raw pause minute, which can be un-offerable (midnight, split-hours
+    // gap) and dead-ended the order at the server's hours backstop.
+    if (pausedFirstSlot) candidates.push(pausedFirstSlot);
     if (candidates.length === 0) return "";
     // Pick the LATEST (string comparison works because both are zero-padded ISO-shaped).
     return candidates.sort()[candidates.length - 1];
@@ -3590,9 +3664,13 @@ export function OrderingPageClient({
     // general-closed check, which would otherwise mask it when the general
     // kitchen reads closed-now. General header/chip/sound stay on the general
     // status (untouched). Luigi 2026-07-02 (Fabrizio cmqnm3hv0).
-    : (restaurantIsClosedNow && serviceHasSpecialToday) ? "service_special_later"
-    : generalIsClosedNow ? "closed"
-    : restaurantIsClosedNow ? "service_later"
+    : (restaurantIsClosedNow && serviceHasSpecialToday) ? (pausedIsBindingMin ? "paused" : "service_special_later")
+    // Closed AND paused: the banner must explain whichever rule actually sets
+    // the floor — a pause ending after tomorrow's opening otherwise showed
+    // "next opening 11:00 AM" while the picker refused everything before the
+    // pause end (review wf_a62b0536).
+    : generalIsClosedNow ? (pausedIsBindingMin ? "paused" : "closed")
+    : restaurantIsClosedNow ? (pausedIsBindingMin ? "paused" : "service_later")
     // Paused outranks "lead": the pause end is the binding minimum and the
     // banner must say WHY ASAP is gone (kitchen paused, not a lead-time rule).
     : servicePausedNow ? "paused"

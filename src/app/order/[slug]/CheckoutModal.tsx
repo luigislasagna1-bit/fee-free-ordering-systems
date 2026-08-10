@@ -871,6 +871,12 @@ export function CheckoutModal({
     const [minDate, minTime] = wc(Date.now() + prep * 60_000).split("T");
     if (dPart < minDate) return true;
     if (dPart === minDate && tPart < (minTime || "").slice(0, 5)) return true;
+    // Forced-schedule floor (pause end / catering notice / closed opening):
+    // exact-time mode and hand-typed values bypass the dropdown, so the
+    // hard-block must enforce the same minimum the picker shows — without
+    // this, a time before the pause end sailed to the server's 423 at the
+    // final step (review wf_a62b0536).
+    if (cateringMode && cateringMinScheduledLocal && sf.slice(0, 16) < cateringMinScheduledLocal.slice(0, 16)) return true;
     return false;
   })();
 
@@ -1823,6 +1829,17 @@ export function CheckoutModal({
                       // a 20-min-prep restaurant, which is impossible.
                       // Luigi 2026-06-01: "first pickup time should
                       // be at least standard pickup time away".
+                      // The forced-schedule floor (catering notice, pause end,
+                      // closed-now opening — whatever the parent computed as
+                      // the minimum) applies on ITS day. ⚠️ It must COMBINE
+                      // with the today floor, not be shadowed by it: the old
+                      // early-return on today meant a same-day pause still
+                      // offered every pre-pause slot, which the server then
+                      // 423'd at the very last step (review wf_a62b0536).
+                      const forcedFloor =
+                        cateringMode && cateringMinScheduledLocal && datePart === cateringMinScheduledLocal.split("T")[0]
+                          ? cateringMinScheduledLocal.split("T")[1] || "00:00"
+                          : "00:00";
                       if (datePart === todayISO) {
                         const prepMinutes = Math.max(
                           0,
@@ -1830,12 +1847,11 @@ export function CheckoutModal({
                             ? estimatedDeliveryMinutes
                             : estimatedPickupMinutes,
                         );
-                        return wallClock(Date.now() + prepMinutes * 60_000).split("T")[1];
+                        const prepFloor = wallClock(Date.now() + prepMinutes * 60_000).split("T")[1];
+                        // Later of the two HH:MM floors (zero-padded strings compare correctly).
+                        return prepFloor > forcedFloor ? prepFloor : forcedFloor;
                       }
-                      if (cateringMode && cateringMinScheduledLocal && datePart === cateringMinScheduledLocal.split("T")[0]) {
-                        return cateringMinScheduledLocal.split("T")[1] || "00:00";
-                      }
-                      return "00:00";
+                      return forcedFloor;
                     })();
                     // Build slots for this date from openingHours + interval.
                     // Service-aware lookup: a restaurant with separate

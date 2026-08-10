@@ -528,22 +528,40 @@ export async function POST(req: NextRequest) {
     // Luigi 2026-08-09: "a client should still be able to pre-order for
     // tomorrow morning" — previously ANY order of a paused type was refused.
     const pauseEndMs = pauseField ? new Date(pauseField).getTime() : 0;
+    // ⚠️ effectiveScheduledFor, not the raw client scheduledFor: for
+    // reserve-then-order the BOOKING time is the authoritative order time
+    // (route comment at :408), and judging the raw field let a tampered
+    // client smuggle an in-pause booking past the guard with a decoy
+    // scheduledFor — and wrongly 423'd reservation pre-orders that omit
+    // scheduledFor. (Adversarial review wf_a62b0536, 2026-08-10.)
     const scheduledMsForPause = (() => {
-      if (!scheduledFor) return null;
-      const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(scheduledFor));
+      if (!effectiveScheduledFor) return null;
+      const m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})/.exec(String(effectiveScheduledFor));
       const d = m
         ? parseLocalDateTimeInTz(m[1], parseInt(m[2], 10), parseInt(m[3], 10), (restaurant as any).timezone ?? undefined)
-        : new Date(scheduledFor);
+        : new Date(effectiveScheduledFor);
       return Number.isFinite(d.getTime()) ? d.getTime() : null;
     })();
     const pauseBlocks =
       pauseEndMs > Date.now() && (scheduledMsForPause === null || scheduledMsForPause < pauseEndMs);
     if (pauseBlocks) {
-      const resumesAt = new Date(pauseField).toLocaleString();
+      // Restaurant wall clock, not the server's UTC (the known
+      // toLocaleString-without-timeZone bug class): Luigi's own pause ending
+      // 11:59 PM Toronto read "3:59 AM" in the live error, and the new
+      // suffix INSTRUCTS the customer to schedule after the shown time — a
+      // UTC-ahead store's customers would follow it into a reject loop.
+      // Same formatting the catering validator already uses.
+      const resumesAt = new Date(pauseField).toLocaleString("en-US", {
+        timeZone: (restaurant as any).timezone ?? undefined,
+        month: "numeric", day: "numeric",
+        hour: "numeric", minute: "2-digit",
+        hour12: (restaurant as any).hoursFormat !== "24h",
+      });
       return NextResponse.json(
         {
           error: `${type} is temporarily paused by the restaurant. Estimated to resume around ${resumesAt}. You can still place an order scheduled for after that time.`,
           code: "service_paused",
+          resumesAtIso: new Date(pauseField).toISOString(),
         },
         { status: 423 },
       );

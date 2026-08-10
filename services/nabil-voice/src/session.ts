@@ -23,6 +23,10 @@ export class CallSession {
   private controller: AbortController | null = null;
   private ready = false;
   private queued: string[] = [];
+  /** Barge-in recovery state (review wf_a62b0536). */
+  private lastPromptAt = 0;
+  private resumeTimer: ReturnType<typeof setTimeout> | undefined;
+  private turnRunning = false;
   private outcome: string | null = null;
   private orderId: string | null = null;
   private reservationId: string | null = null;
@@ -54,12 +58,27 @@ export class CallSession {
       case "prompt": {
         const text = msg.voicePrompt ?? msg.text ?? msg.transcript ?? "";
         if (msg.lang) this.language = msg.lang;
+        this.lastPromptAt = Date.now();
         if (text) void this.handlePrompt(String(text));
         break;
       }
       case "interrupt":
         this.interrupted = true;
         this.controller?.abort();
+        // Barge-in recovery (review wf_a62b0536): a noise/backchannel
+        // interrupt ("mm-hmm", kitchen clatter) halts TTS mid-sentence but
+        // produces NO usable transcript — so no prompt ever arrives and the
+        // caller gets dead air after the agent "cut itself off" (the exact
+        // first-call symptom). If nothing intelligible follows within 2.5s,
+        // resume and finish the thought.
+        clearTimeout(this.resumeTimer);
+        this.resumeTimer = setTimeout(() => {
+          if (Date.now() - this.lastPromptAt > 2000 && !this.turnRunning) {
+            void this.runTurn(
+              "(You were interrupted mid-sentence but the caller didn't actually say anything. Briefly pick up where you left off and finish your point.)",
+            );
+          }
+        }, 2500);
         break;
       case "dtmf":
         // Treat keypad input as spoken text (e.g. "press 1 for a person").
@@ -103,6 +122,15 @@ export class CallSession {
   }
 
   private async runTurn(userText: string) {
+    this.turnRunning = true;
+    try {
+      await this.runTurnInner(userText);
+    } finally {
+      this.turnRunning = false;
+    }
+  }
+
+  private async runTurnInner(userText: string) {
     this.transcript.push({ role: "user", text: userText, ts: new Date().toISOString() });
     this.messages.push({ role: "user", content: userText });
     this.interrupted = false;
@@ -115,7 +143,11 @@ export class CallSession {
       const stream = this.anthropic.messages.stream(
         {
           model: CONFIG.model,
-          max_tokens: 1024,
+          // 2048: cheap insurance against mid-word truncation on long
+          // readbacks in token-dense locales (Hindi/German multi-item orders)
+          // — the max_tokens continuation below is the backstop, this makes
+          // it rare. Review wf_a62b0536.
+          max_tokens: 2048,
           system: this.system,
           tools: TOOLS as any,
           messages: this.messages,
@@ -136,7 +168,16 @@ export class CallSession {
         final = await stream.finalMessage();
       } catch (e) {
         this.controller = null;
-        if (this.interrupted) return; // caller barged in — next prompt is a fresh turn
+        if (this.interrupted) {
+          // Record what was actually SPOKEN before the barge-in — without
+          // this the model's history is missing its own half-sentence and it
+          // resumes incoherently after an interrupt (review wf_a62b0536).
+          if (assistantText.trim()) {
+            this.messages.push({ role: "assistant", content: assistantText + " —" });
+            this.transcript.push({ role: "assistant", text: assistantText + " [interrupted]", ts: new Date().toISOString() });
+          }
+          return; // caller barged in — next prompt (or the resume timer) is a fresh turn
+        }
         console.error("[nabil-voice] stream error", e);
         this.sendText(" Sorry, I didn't catch that — could you say it again?", true);
         return;
@@ -148,8 +189,16 @@ export class CallSession {
       this.usageIn += final.usage?.input_tokens ?? 0;
       this.usageOut += final.usage?.output_tokens ?? 0;
 
+      if (final.stop_reason === "max_tokens") {
+        // A truncated turn otherwise flushed last:true and the caller heard
+        // the sentence stop mid-word (review wf_a62b0536). Continue the turn.
+        this.messages.push({ role: "user", content: "(continue exactly where you left off — do not repeat what you already said)" });
+        continue;
+      }
+
       if (final.stop_reason === "tool_use") {
         const results: any[] = [];
+        let stateChanged = false;
         for (const block of final.content) {
           if (block.type === "tool_use") {
             let out: any;
@@ -159,11 +208,20 @@ export class CallSession {
               console.error("[nabil-voice] tool failed", block.name, e);
               out = { error: true, message: "That didn't work — let me try another way." };
             }
+            if ((block.name === "place_order" || block.name === "book_reservation" || block.name === "send_sms_link") && (out as any)?.ok) {
+              stateChanged = true;
+            }
             this.noteOutcome(block.name, out);
             results.push({ type: "tool_result", tool_use_id: block.id, content: JSON.stringify(out) });
           }
         }
         this.messages.push({ role: "user", content: results });
+        // A barge-in racing a state-changing tool must NOT swallow the
+        // confirmation: the order IS placed — the caller has to hear the
+        // order number and total, or they assume it failed and re-order at
+        // the store (review wf_a62b0536). Pure-speech turns keep normal
+        // barge-in semantics.
+        if (stateChanged) this.interrupted = false;
         continue; // let the model speak its next turn
       }
 

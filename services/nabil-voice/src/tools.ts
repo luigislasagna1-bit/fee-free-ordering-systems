@@ -147,8 +147,18 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
   const slug = ctx.token.slug;
   switch (name) {
     case "price_order_preview": {
-      const res = await api.previewOrder({ restaurantSlug: slug, type: input.type, items: input.items });
-      return res.json;
+      // INTERIM (review wf_a62b0536, CRITICAL): the endpoint this was wired to
+      // (/api/public/apply-promos) cannot return a priced total — it requires a
+      // client-supplied subtotal and answers with promo discounts only — so the
+      // raw 400 leaked into the model, which then summed menu prices itself
+      // (no tax, no fees): the first live call's "prices were all wrong".
+      // Until the internal dry-run priced preview ships, answer
+      // deterministically so the model NEVER invents a total.
+      return {
+        unavailable: true,
+        instruction:
+          "No priced preview is available. Read back the items with their menu prices, say the total will include tax, and only state an exact total AFTER place_order returns it.",
+      };
     }
     case "place_order": {
       const phone = input.customerPhone || ctx.token.from;
@@ -173,8 +183,23 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         payload.deliveryZip = input.deliveryZip;
       }
       const res = await api.placeOrder(payload);
-      if (!res.ok) return { error: true, code: res.json?.code, message: res.json?.error || "Could not place the order." };
-      return { ok: true, orderNumber: res.json?.orderNumber, total: res.json?.total };
+      if (!res.ok) {
+        // Voice can't schedule ahead yet — the web error's "you can still
+        // schedule" suffix would be a promise this channel can't keep. Offer
+        // the SMS ordering link instead (review wf_a62b0536).
+        if (res.json?.code === "service_paused") {
+          return {
+            error: true, code: "service_paused",
+            message:
+              "The kitchen has ordering paused right now, and phone orders can't be scheduled ahead yet. Offer to text the caller the online ordering link (send_sms_link) so they can schedule it for after the pause themselves.",
+          };
+        }
+        return { error: true, code: res.json?.code, message: res.json?.error || "Could not place the order." };
+      }
+      return {
+        ok: true, orderNumber: res.json?.orderNumber, total: res.json?.total,
+        instruction: "Read the caller their order number and this exact total — it is the authoritative charged amount including tax.",
+      };
     }
     case "check_reservation_availability": {
       return api.availability(slug, input.date, input.partySize);
