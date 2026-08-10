@@ -3715,6 +3715,11 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
 
     const direct = getDirectPrinterConfig();
     const directWanted = !!(direct && (opts?.force || direct.autoprint));
+    // Whether THIS device won the atomic claim (vs. skipped-because-claimed or
+    // claim unreachable). The PrintNode branch below must not re-claim an order
+    // we already hold — the second claim would read claimed:false and silently
+    // drop the fallback print.
+    let holdsClaim = false;
     if (directWanted) {
       // Atomic server claim so the native background-print service (which prints
       // this same order while the app is CLOSED) can't double-print it. If another
@@ -3728,6 +3733,7 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
         });
         const cd = await cr.json().catch(() => ({}));
         if (cr.ok && cd.claimed === false) return; // printed by another path → keep marker
+        if (cr.ok && cd.claimed === true) holdsClaim = true;
       } catch { /* fall through and print */ }
       try {
         await doPrintDirect(orderId, printType, { silentError });
@@ -3750,6 +3756,24 @@ export function KitchenDisplay({ restaurant, initialOrders, resellerLogoUrl = nu
       (opts?.force || printerSettings.autoPrint)
     );
     if (printNodeWanted) {
+      // Same atomic claim as the direct path (2026-08-10, Luigi's 16-copy voice
+      // order): a browser session with PrintNode used to print UNCLAIMED, so a
+      // tablet (direct/native) + a browser tab each printed their full copy set
+      // of the same order. Skip if another device already printed; don't
+      // re-claim when this device already holds the claim from the direct
+      // branch (its own claim would read claimed:false and drop the fallback).
+      if (!holdsClaim) {
+        try {
+          const cr = await fetch("/api/kitchen/claim-print", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ orderId }),
+          });
+          const cd = await cr.json().catch(() => ({}));
+          if (cr.ok && cd.claimed === false) return; // printed by another device → keep marker
+          if (cr.ok && cd.claimed === true) holdsClaim = true;
+        } catch { /* claim unreachable — print anyway; a rare dup beats a missed ticket */ }
+      }
       try {
         await doPrint(orderId, printType);
         return; // printed ✓

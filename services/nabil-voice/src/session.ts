@@ -23,6 +23,8 @@ export class CallSession {
   private controller: AbortController | null = null;
   private ready = false;
   private queued: string[] = [];
+  /** Prompts that arrived while a turn was running — drained serially. */
+  private pendingPrompts: string[] = [];
   /** Barge-in recovery state (review wf_a62b0536). */
   private lastPromptAt = 0;
   private resumeTimer: ReturnType<typeof setTimeout> | undefined;
@@ -41,7 +43,7 @@ export class CallSession {
     private token: CallToken,
     private anthropic: Anthropic,
   ) {
-    this.ctx = { token, cfg: {}, cashDeliveryBlocked: false, pendingTransfer: null, orderSeq: 0 };
+    this.ctx = { token, cfg: {}, cashDeliveryBlocked: false, pendingTransfer: null, placedOrders: [] };
   }
 
   onMessage(raw: string) {
@@ -118,6 +120,16 @@ export class CallSession {
       this.queued.push(text);
       return;
     }
+    // Serialize turns (2026-08-10 live dup-order incident): "Yeah." and "Yes."
+    // arrived as two prompt events ~2s apart and ran two OVERLAPPING model
+    // turns — the second saw the first's place_order in history and placed the
+    // same order again. A prompt that lands while a turn is running now waits
+    // its turn instead of racing it. (A true barge-in still aborts the stream
+    // via the separate "interrupt" event — that path is unchanged.)
+    if (this.turnRunning) {
+      this.pendingPrompts.push(text);
+      return;
+    }
     await this.runTurn(text);
   }
 
@@ -128,6 +140,9 @@ export class CallSession {
     } finally {
       this.turnRunning = false;
     }
+    // Drain prompts that arrived mid-turn, one at a time, in arrival order.
+    const next = this.pendingPrompts.shift();
+    if (next !== undefined) await this.runTurn(next);
   }
 
   private async runTurnInner(userText: string) {

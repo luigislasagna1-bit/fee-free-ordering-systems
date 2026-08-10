@@ -13,7 +13,10 @@ export type ToolContext = {
   cashDeliveryBlocked: boolean;
   /** Set by transfer_to_human — the session ends + hands off after the turn. */
   pendingTransfer: string | null;
-  orderSeq: number;
+  /** Orders already placed THIS call, keyed by basket signature — the guard
+   *  against the model placing the same order twice (2026-08-10 live dup:
+   *  "Yeah."+"Yes." arrived as two prompts → two place_order calls). */
+  placedOrders: Array<{ signature: string; orderNumber: string; total: number }>;
 };
 
 const ITEM_SCHEMA = {
@@ -55,7 +58,7 @@ export const TOOLS = [
   {
     name: "place_order",
     description:
-      "Place the order into the kitchen. ONLY call after you have read the full order + total back and the caller said yes. The server re-prices and re-validates everything.",
+      "Place the order into the kitchen. ONLY call after you have read the full order + total back and the caller said yes. The server re-prices and re-validates everything. NEVER call this twice for the same order — a repeated confirmation ('yes', 'yeah', 'ok') after you already placed it is the caller acknowledging, NOT a request for another order. Only place a second order if the caller clearly asks for a new, different order.",
     input_schema: {
       type: "object",
       additionalProperties: false,
@@ -129,6 +132,33 @@ export const TOOLS = [
 
 const digits = (s: string) => (s || "").replace(/\D/g, "");
 
+/** Canonical basket signature: same items+type in any order → same string.
+ *  Order-level notes are deliberately EXCLUDED — a re-send of the same items
+ *  with a slightly reworded note is the same order intent, not a new order. */
+function basketSignature(input: any): string {
+  const items = (Array.isArray(input.items) ? input.items : [])
+    .map((it: any) => ({
+      m: String(it.menuItemId ?? ""),
+      v: String(it.variantId ?? ""),
+      q: Number(it.quantity ?? 1),
+      o: (Array.isArray(it.modifiers) ? it.modifiers : [])
+        .map((mod: any) => String(mod?.modifierOptionId ?? ""))
+        .sort(),
+    }))
+    .sort((a: any, b: any) => (a.m + a.v).localeCompare(b.m + b.v));
+  return JSON.stringify({ t: String(input.type ?? ""), items });
+}
+
+/** FNV-1a 32-bit hex — stable, dependency-free hash for the idempotency key. */
+function fnv1a(s: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(16).padStart(8, "0");
+}
+
 /** Ensure a two-token name (the /api/orders guard requires first + last). */
 function twoTokenName(name: string): string {
   const n = (name || "").trim();
@@ -162,6 +192,21 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
     }
     case "place_order": {
       const phone = input.customerPhone || ctx.token.from;
+      // Duplicate guard (2026-08-10 live incident: two rapid "yes" prompts →
+      // two orders 1.7s apart). Same basket already placed this call → return
+      // the EXISTING order; never create a second one.
+      const signature = basketSignature(input);
+      const prior = ctx.placedOrders.find((p) => p.signature === signature);
+      if (prior) {
+        return {
+          ok: true,
+          alreadyPlaced: true,
+          orderNumber: prior.orderNumber,
+          total: prior.total,
+          instruction:
+            "This exact order was ALREADY placed earlier in this call — do NOT announce a new order. Reassure the caller it's confirmed and repeat the SAME order number and total.",
+        };
+      }
       // v1: pay-at-store (cash). Pay-by-link (task #17) plugs in here for
       // pickupPaymentMode/deliveryPaymentMode of "paid"/"both".
       const payload: Record<string, unknown> = {
@@ -174,7 +219,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         paymentMethod: "cash",
         channel: "voice",
         marketingConsent: false,
-        idempotencyKey: `voice-${ctx.token.callSid}-${ctx.orderSeq++}`,
+        // Basket-stable: the SAME items in the SAME call always produce the
+        // SAME key, so /api/orders returns the already-created order instead
+        // of minting a duplicate (its dedupe path is shaped like the 201).
+        // A genuinely different second order gets a different signature.
+        idempotencyKey: `voice-${ctx.token.callSid}-${fnv1a(signature)}`,
         notes: input.notes,
       };
       if (input.type === "delivery") {
@@ -196,8 +245,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         }
         return { error: true, code: res.json?.code, message: res.json?.error || "Could not place the order." };
       }
+      const orderNumber = res.json?.orderNumber;
+      const total = res.json?.total;
+      if (orderNumber) ctx.placedOrders.push({ signature, orderNumber: String(orderNumber), total: Number(total ?? 0) });
       return {
-        ok: true, orderNumber: res.json?.orderNumber, total: res.json?.total,
+        ok: true, orderNumber, total,
         instruction: "Read the caller their order number and this exact total — it is the authoritative charged amount including tax.",
       };
     }
