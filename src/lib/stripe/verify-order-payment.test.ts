@@ -18,10 +18,18 @@ const h = vi.hoisted(() => {
     intents: {} as Record<string, { status: string; metadata: { orderId: string } }>,
     captures: [] as string[],       // intent ids we called capture on
     notified: [] as string[],       // order ids fireOrderNotifications ran for
+    dispatched: [] as string[],     // order ids dispatchAcceptedOrderSafe ran for
     captureThrows: null as null | (() => never),
   };
   return { state };
 });
+
+// after() would throw outside a real request scope — run the deferred work
+// inline so the dispatch calls are observable.
+vi.mock("next/server", () => ({ after: (p: unknown) => p }));
+vi.mock("@/lib/delivery-dispatch", () => ({
+  dispatchAcceptedOrderSafe: async (orderId: string) => { h.state.dispatched.push(orderId); },
+}));
 
 vi.mock("@/lib/db", () => {
   const s = h.state;
@@ -67,6 +75,7 @@ beforeEach(() => {
   h.state.intents = {};
   h.state.captures = [];
   h.state.notified = [];
+  h.state.dispatched = [];
   h.state.captureThrows = null;
 });
 
@@ -142,5 +151,47 @@ describe("verifyAndReleaseOrderPayment — auto-accept capture (LR-PAY-01)", () 
       expect(result).toBe(st);
       expect(h.state.captures).toEqual([]);
     }
+  });
+});
+
+describe("verifyAndReleaseOrderPayment — auto-accept delivery dispatch (the 2026-08-10 missed wire)", () => {
+  it("AUTO-ACCEPT capture → dispatches the courier (key-only model: this is THE payment moment)", async () => {
+    const o = seedOrder({ status: "accepted" });
+    await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(h.state.dispatched).toEqual([o.id]);
+  });
+
+  it("'already captured' race → still dispatches", async () => {
+    const o = seedOrder({ status: "accepted" });
+    h.state.captureThrows = () => {
+      throw Object.assign(new Error("PaymentIntent already captured"), { code: "payment_intent_unexpected_state" });
+    };
+    await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(h.state.dispatched).toEqual([o.id]);
+  });
+
+  it("NORMAL pending order → NO dispatch (kitchen Accept is that trigger)", async () => {
+    const o = seedOrder({ status: "pending" });
+    await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(h.state.dispatched).toEqual([]);
+  });
+
+  it("capture FAILURE → NO dispatch (order not prepaid yet; later retry dispatches)", async () => {
+    const o = seedOrder({ status: "accepted" });
+    h.state.captureThrows = () => { throw Object.assign(new Error("card declined"), { code: "card_declined" }); };
+    await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(h.state.dispatched).toEqual([]);
+  });
+
+  it("intent already 'succeeded' + order accepted → dispatches; pending → does not", async () => {
+    const a = seedOrder({ id: "oA", status: "accepted", paymentIntentId: "pi_A" });
+    h.state.intents["pi_A"].status = "succeeded";
+    await verifyAndReleaseOrderPayment({ orderId: a.id });
+    expect(h.state.dispatched).toEqual(["oA"]);
+
+    const b = seedOrder({ id: "oB", status: "pending", paymentIntentId: "pi_B" });
+    h.state.intents["pi_B"].status = "succeeded";
+    await verifyAndReleaseOrderPayment({ orderId: b.id });
+    expect(h.state.dispatched).toEqual(["oA"]); // unchanged — oB not dispatched
   });
 });

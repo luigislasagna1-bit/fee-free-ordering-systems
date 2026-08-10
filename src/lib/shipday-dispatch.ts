@@ -78,6 +78,26 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     return { ok: false, skipped: "not_prepaid" };
   }
 
+  // CLAIM-BEFORE-SEND (2026-08-10, same pattern as the autopilot fix): since
+  // the auto-accept fix there are FIVE possible triggers (kitchen Accept,
+  // payment-verify, Stripe webhook, creation, watchdog) and ShipDay has no
+  // unique constraint protecting us — two concurrent callers passing the
+  // read-guards above would BOTH insert, and the customer gets two drivers.
+  // Atomically lease the order by stamping dispatchedAt; the loser sees
+  // count=0 and reports already_dispatched. A lease older than 3 min with no
+  // shipdayOrderId is a crashed attempt — reclaimable, so the watchdog can
+  // still rescue it. On a ShipDay failure the lease is cleared immediately so
+  // the manual Retry button works without waiting out the lease.
+  const claim = await prisma.order.updateMany({
+    where: {
+      id: orderId,
+      shipdayOrderId: null,
+      OR: [{ dispatchedAt: null }, { dispatchedAt: { lt: new Date(Date.now() - 3 * 60_000) } }],
+    },
+    data: { dispatchedAt: new Date() },
+  });
+  if (claim.count === 0) return { ok: false, skipped: "already_dispatched" };
+
   const res = await dispatchOrderToShipday(full.restaurantId, {
     orderId,
     orderNumber: full.orderNumber,
@@ -115,5 +135,11 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     });
     return { ok: true, shipdayOrderId: res.shipdayOrderId };
   }
+  // ShipDay said no (or the call failed) — release the lease so the manual
+  // Retry button and the watchdog can try again immediately.
+  await prisma.order.updateMany({
+    where: { id: orderId, shipdayOrderId: null },
+    data: { dispatchedAt: null },
+  });
   return { ok: false, error: res.error ?? "ShipDay call failed" };
 }

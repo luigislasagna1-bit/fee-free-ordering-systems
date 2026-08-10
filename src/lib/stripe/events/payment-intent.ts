@@ -8,6 +8,14 @@ import { dispatchAcceptedOrderSafe } from "@/lib/delivery-dispatch";
 /**
  * Handle payment_intent.* events for customer-to-restaurant orders.
  *
+ * ⚠️ MOSTLY DORMANT under the key-only model (2026-08-10 finding): restaurants
+ * on their OWN Stripe keys webhook to THEIR endpoints, never ours — zero
+ * payment_intent events reach this handler for those stores. The live payment
+ * path is verifyAndReleaseOrderPayment (src/lib/stripe/verify-order-payment.ts),
+ * run from the customer's confirmation page. Any wiring added here (capture,
+ * dispatch, …) MUST also be added there — this file already cost us a
+ * dispatch outage by looking like the only payment seam.
+ *
  * The model is GloriaFood-style authorize-then-capture on DIRECT charges:
  *   - Customer places order → PaymentIntent created with capture_method=manual
  *     on the restaurant's CONNECTED account (Stripe-Account header)

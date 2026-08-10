@@ -1,7 +1,9 @@
+import { after } from "next/server";
 import prisma from "@/lib/db";
 import { getRestaurantStripe, capturePayment } from "@/lib/stripe";
 import { isStripeAlreadyCaptured } from "@/lib/capture-idempotency";
 import { fireOrderNotifications } from "@/lib/order-notifications";
+import { dispatchAcceptedOrderSafe } from "@/lib/delivery-dispatch";
 
 /**
  * KEY-ONLY model replacement for the Stripe webhook.
@@ -117,11 +119,21 @@ export async function verifyAndReleaseOrderPayment(params: {
           await capturePayment({ paymentIntentId: intent.id, restaurantId: order.restaurantId });
           await prisma.order.update({ where: { id: order.id }, data: { paymentStatus: "paid" } });
           await fireOrderNotifications(order.id);
+          // AUTO-ACCEPT DISPATCH (2026-08-10): under the key-only model THIS is
+          // the moment an auto-accepted card order becomes accepted + paid —
+          // the platform webhook never fires, so the dispatch wire in
+          // events/payment-intent.ts is dormant here. Without this call, every
+          // auto-accepted card delivery waited for the dispatch-watchdog
+          // (found live: both of Luigi's 2026-08-10 lunch orders reached
+          // ShipDay 10-20 min late via RESCUED sweeps). after(): don't add a
+          // courier-API roundtrip to the customer's confirmation page.
+          after(dispatchAcceptedOrderSafe(order.id));
           return "paid";
         } catch (e) {
           if (isStripeAlreadyCaptured(e)) {
             await prisma.order.update({ where: { id: order.id }, data: { paymentStatus: "paid" } });
             await fireOrderNotifications(order.id);
+            after(dispatchAcceptedOrderSafe(order.id));
             return "paid";
           }
           console.error(
@@ -140,6 +152,12 @@ export async function verifyAndReleaseOrderPayment(params: {
         data: { paymentStatus: "paid", paymentIntentId: intent.id },
       });
       await fireOrderNotifications(order.id);
+      // Accepted + captured: make sure the courier isn't forgotten on this
+      // path either. dispatchOrderNow's atomic claim makes a duplicate call
+      // race-safe (skipped "already_dispatched").
+      if (order.status === "accepted") {
+        after(dispatchAcceptedOrderSafe(order.id));
+      }
       return "paid";
     }
     case "requires_action": {
