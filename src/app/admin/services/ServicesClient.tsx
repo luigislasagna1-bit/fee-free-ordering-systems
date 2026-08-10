@@ -7,6 +7,7 @@ import {
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import { PauseServicesControl } from "@/components/admin/PauseServicesControl";
+import { HelpTip } from "@/components/HelpTip";
 import { resolveSlotModes, legacySlotMode, type SlotMode } from "@/lib/slot-modes";
 
 const SERVICE_DEFS = [
@@ -293,8 +294,8 @@ export function ServicesClient() {
                       catering is governed by its notice-hours instead. */}
                   {key !== "reservations" && key !== "catering" && (
                     <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1" title={t("firstOrderDelayHint")}>
-                        {t("firstOrderDelayLabel")} <span className="text-gray-400 cursor-help">ⓘ</span>
+                      <label className="block text-xs font-medium text-gray-600 mb-1">
+                        {t("firstOrderDelayLabel")} <HelpTip text={t("firstOrderDelayHint")} />
                       </label>
                       <select
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"

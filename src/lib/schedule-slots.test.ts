@@ -147,3 +147,37 @@ describe("shiftIntervalsForFirstOrderDelay", () => {
     expect(shiftIntervalsForFirstOrderDelay(ivs, NaN as unknown as number)).toBe(ivs);
   });
 });
+
+/**
+ * Overnight × warm-up crossing midnight (review wf_c7957e03): dropping the
+ * window wholesale erased a 23:00–02:00 store's entire nightly service off a
+ * 60-min preset. The day-side is consumed but the spill survives, starting at
+ * the wrapped minute.
+ */
+describe("shiftIntervalsForFirstOrderDelay — overnight crossing midnight", () => {
+  const NIGHT = [{ open: "23:00", close: "02:00", closesNextDay: true }];
+
+  it("23:00–02:00 + 60 min: day-side consumed, spill preserved from 00:00", () => {
+    const shifted = shiftIntervalsForFirstOrderDelay(NIGHT, 60);
+    expect(shifted).toEqual([{ open: "24:00", close: "02:00", closesNextDay: true, spillFromMin: 0 }]);
+    // Day D offers nothing from this window…
+    expect(buildDaySlots({ dayIntervals: shifted, prevDayIntervals: [], stepMinutes: 30, minMinutes: 0 })).toEqual([]);
+    // …but day D+1 keeps the full spill.
+    const spill = buildDaySlots({ dayIntervals: [], prevDayIntervals: shifted, stepMinutes: 30, minMinutes: 0 });
+    expect(spill[0]).toBe("00:00");
+    expect(spill).toContain("01:30");
+  });
+
+  it("23:30–02:00 + 60 min: spill starts at the wrapped minute, grid-snapped", () => {
+    const shifted = shiftIntervalsForFirstOrderDelay([{ open: "23:30", close: "02:00", closesNextDay: true }], 60);
+    expect(shifted[0].spillFromMin).toBe(30);
+    const spill = buildDaySlots({ dayIntervals: [], prevDayIntervals: shifted, stepMinutes: 20, minMinutes: 0 });
+    expect(spill[0]).toBe("00:40"); // first grid slot at/after 00:30 on a 20-min grid
+    expect(spill).not.toContain("00:00");
+    expect(spill).not.toContain("00:20");
+  });
+
+  it("delay that consumes even the spill drops the window", () => {
+    expect(shiftIntervalsForFirstOrderDelay([{ open: "23:00", close: "01:00", closesNextDay: true }], 180)).toEqual([]);
+  });
+});

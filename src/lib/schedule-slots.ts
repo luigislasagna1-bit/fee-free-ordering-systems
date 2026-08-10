@@ -18,7 +18,16 @@
  *
  * Pure + client-safe. Times are "HH:MM" wall-clock in the restaurant's tz.
  */
-export type HoursInterval = { open: string; close: string; closesNextDay?: boolean };
+export type HoursInterval = {
+  open: string; close: string; closesNextDay?: boolean;
+  /** Set ONLY by shiftIntervalsForFirstOrderDelay when a warm-up delay pushes
+   *  an overnight window's open past midnight: the day-side is consumed
+   *  (open becomes "24:00" = no same-day slots) but the next-day SPILL
+   *  survives, starting at this minute instead of 00:00. Review wf_c7957e03:
+   *  dropping the window wholesale erased a 23:00–02:00 store's entire
+   *  nightly service off a 60-min preset. */
+  spillFromMin?: number;
+};
 
 const toMin = (hhmm: string): number => {
   const [h, m] = hhmm.split(":").map(Number);
@@ -54,11 +63,17 @@ export function shiftIntervalsForFirstOrderDelay(
     const overnight = Boolean(iv.closesNextDay) || closeRaw <= start;
     const shifted = start + delay;
     if (overnight) {
-      // Overnight window: delay applies at the evening opening; the wrap
-      // (past midnight) still needs the shifted open to stay before 24:00 —
-      // beyond that the whole window collapses into the next day (drop; a
-      // >6h delay on an overnight window is a misconfiguration, fail closed).
-      if (shifted >= 24 * 60) continue;
+      // Overnight window: the delay applies at the evening opening. When the
+      // shifted open crosses midnight, the day-side is fully consumed but the
+      // next-day spill SURVIVES from the wrapped minute (open "24:00" yields
+      // zero same-day slots; buildDaySlots' spill loop starts at spillFromMin).
+      // Only when the delay swallows the spill too does the window drop.
+      if (shifted >= 24 * 60) {
+        const spillFrom = shifted - 24 * 60;
+        if (spillFrom >= closeRaw) continue; // delay consumed even the spill
+        out.push({ ...iv, open: "24:00", closesNextDay: true, spillFromMin: spillFrom });
+        continue;
+      }
       out.push({ ...iv, open: toHHMM(shifted) });
       continue;
     }
@@ -86,13 +101,17 @@ export function buildDaySlots(args: {
     out.push(toHHMM(m));
   };
 
-  // 1. Spill from yesterday's overnight window(s): 00:00 → spill end.
+  // 1. Spill from yesterday's overnight window(s): 00:00 → spill end — or
+  //    from spillFromMin when yesterday's warm-up delay crossed midnight
+  //    (snapped up to the slot grid so spill slots stay grid-aligned).
   for (const iv of args.prevDayIntervals) {
     const start = toMin(iv.open);
     const closeRaw = toMin(iv.close);
     const overnight = Boolean(iv.closesNextDay) || closeRaw <= start;
     if (!overnight) continue;
-    for (let m = 0; m <= closeRaw - step; m += step) push(m);
+    const spillFrom = Math.max(0, iv.spillFromMin ?? 0);
+    const firstM = Math.ceil(spillFrom / step) * step;
+    for (let m = firstM; m <= closeRaw - step; m += step) push(m);
   }
 
   // 2. The date's own windows, clipped at midnight.

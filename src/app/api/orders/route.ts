@@ -6,7 +6,7 @@ import { applyPromotions, totalPromoDiscount, specialityFeeForPick } from "@/lib
 import { liveOpenStatus, nextOpenAt, parseLocalDateTimeInTz, localDowAndHHMM, dateKeyInTimezone, rowIntervals } from "@/lib/restaurant-hours";
 import { shiftIntervalsForFirstOrderDelay } from "@/lib/schedule-slots";
 import { holidayEffectForDay, holidayEffectToday, canonicalHolidayService, hhmmInsideIntervals } from "@/lib/holiday-rules";
-import { resolveServiceHours } from "@/lib/service-hours";
+import { resolveServiceHours, pickHoursForService } from "@/lib/service-hours";
 import { resolveSlotModes, rangeWindowMinutes } from "@/lib/slot-modes";
 import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { blockingServiceKind } from "@/lib/service-restriction";
@@ -2327,6 +2327,36 @@ export async function POST(req: NextRequest) {
             { status: 400 },
           );
         }
+        // "First scheduled order after opening" applies on special-day windows
+        // too — the client shifts todayServiceSpecialIntervals through the
+        // same helper, and without this the weekly backstop below never runs
+        // on holiday-effect days (it's gated !holidayEffect), leaving special
+        // days unenforced against tampered clients (review wf_c7957e03).
+        // Reserve-then-order stays exempt for the same reason as the weekly
+        // check: the booking time is authoritative.
+        if (hasFutureSchedule && !reservationData) {
+          const holDelay = (() => {
+            try {
+              const ss = (restaurant as any).serviceSettings ? JSON.parse((restaurant as any).serviceSettings) : null;
+              const key = type === "delivery" ? "delivery" : type === "dine_in" ? "dineIn" : type === "take_out" ? "takeOut" : "pickup";
+              const v = ss?.[key]?.firstOrderDelayMinutes;
+              return typeof v === "number" && v > 0 ? Math.min(240, Math.floor(v)) : 0;
+            } catch { return 0; }
+          })();
+          if (holDelay > 0) {
+            const shiftedHol = shiftIntervalsForFirstOrderDelay(holidayEffect.intervals as any, holDelay);
+            if (!hhmmInsideIntervals(hhmm, shiftedHol.filter((iv) => iv.open !== "24:00") as any)) {
+              const earliest = shiftedHol.find((iv) => iv.open !== "24:00")?.open;
+              return NextResponse.json(
+                {
+                  error: `${serviceDisplayLabel(type)} orders start ${holDelay} minutes after opening on this date${earliest ? ` — the earliest time is ${earliest}` : ""}. Please pick a later time.`,
+                  code: "first_order_delay",
+                },
+                { status: 400 },
+              );
+            }
+          }
+        }
       }
       // Partial-day closure ("close a time range"): the service follows its
       // normal hours EXCEPT during these windows. Reject an order whose time
@@ -2402,25 +2432,45 @@ export async function POST(req: NextRequest) {
               return typeof v === "number" && v > 0 ? Math.min(240, Math.floor(v)) : 0;
             } catch { return 0; }
           })();
-          if (firstOrderDelay > 0) {
+          // ⚠️ Reserve-then-order is EXEMPT (review wf_c7957e03): the booking
+          // time is authoritative, chosen from the RESERVATION picker (which
+          // has its own rules and no warm-up concept) — applying the dine-in
+          // delay here refused a legitimate opening-minute table + pre-order
+          // with an error the customer cannot fix (the checkout time is
+          // locked to the booking). Mirrors the pre-order-limits exemption.
+          if (firstOrderDelay > 0 && !reservationData) {
             const { dow: schedDow, hhmm: schedHHMM } = localDowAndHHMM(scheduledForDate!, holidayTzKey);
-            const svcRows = resolveServiceHours(allHours, svcKind as any) as any[];
-            const dayRow = svcRows.find((h: any) => h.dayOfWeek === schedDow && h.isOpen);
-            const prevRow2 = svcRows.find((h: any) => h.dayOfWeek === (schedDow + 6) % 7 && h.isOpen);
+            // Resolve hours EXACTLY like the client's delay parse does
+            // (pickHoursForService with null → GENERAL rows for dine-in and
+            // take-out) — the liveOpenStatus backstop above deliberately maps
+            // them to pickup, but the DELAY consumers must agree with the
+            // client picker or they describe different slot sets (review
+            // wf_c7957e03: a store with separate pickup hours diverged).
+            const delaySvcKind = type === "delivery" ? "delivery" : type === "pickup" ? "pickup" : null;
+            const dayRow = pickHoursForService(allHours, schedDow, delaySvcKind as any);
+            const prevRow2 = pickHoursForService(allHours, (schedDow + 6) % 7, delaySvcKind as any);
+            const hhmmToMin = (t: string) => { const [h, m] = t.split(":").map(Number); return (h || 0) * 60 + (m || 0); };
             const within = (t: string, iv: { open: string; close: string; closesNextDay?: boolean }) => {
               const overnight = Boolean(iv.closesNextDay) || iv.close <= iv.open;
               return overnight ? t >= iv.open || t < iv.close : t >= iv.open && t < iv.close;
             };
-            const dayIvs = dayRow ? rowIntervals(dayRow) : [];
+            const dayIvs = dayRow && (dayRow as any).isOpen ? rowIntervals(dayRow as any) : [];
             const shifted = shiftIntervalsForFirstOrderDelay(dayIvs, firstOrderDelay);
-            // Previous-day overnight spill (a 00:30 slot belongs to yesterday's
-            // window whose opening — and warm-up — happened yesterday evening):
-            // spill times are fine unless yesterday's whole window collapsed.
-            const prevSpillIvs = (prevRow2 ? rowIntervals(prevRow2) : []).filter(
-              (iv) => Boolean(iv.closesNextDay) || iv.close <= iv.open,
+            // Previous-day overnight spill — judged on the SHIFTED intervals
+            // (a warm-up that crossed midnight moves the spill start too;
+            // raw intervals wrongly exempted post-midnight warm-up minutes).
+            const prevShifted = shiftIntervalsForFirstOrderDelay(
+              prevRow2 && (prevRow2 as any).isOpen ? rowIntervals(prevRow2 as any) : [],
+              firstOrderDelay,
             );
-            const inSpill = prevSpillIvs.some((iv) => schedHHMM < iv.close);
-            const inShifted = shifted.some((iv) => within(schedHHMM, iv));
+            const inSpill = prevShifted.some((iv) => {
+              const overnight = Boolean(iv.closesNextDay) || iv.close <= iv.open || iv.open === "24:00";
+              if (!overnight) return false;
+              return schedHHMM < iv.close && hhmmToMin(schedHHMM) >= (iv.spillFromMin ?? 0);
+            });
+            // Day-side membership: a delay-crossed window (open "24:00") has
+            // no same-day slots — its times belong to the NEXT day's spill.
+            const inShifted = shifted.some((iv) => iv.open !== "24:00" && within(schedHHMM, iv));
             if (!inShifted && !inSpill) {
               const svcLabel = type === "delivery" ? "Delivery"
                 : type === "dine_in" ? "Dine-in"
