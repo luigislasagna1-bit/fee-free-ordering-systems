@@ -122,7 +122,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
   const totalFmt = formatCurrency(total, currency ?? "usd");
 
   return (
-    <EmailLayout preview={t("email.newOrder.preview", { restaurant: restaurantName, orderNumber, total: totalFmt })}>
+    <EmailLayout locale={t.locale} preview={t("email.newOrder.preview", { restaurant: restaurantName, orderNumber, total: totalFmt })}>
       <EmailHeader
         variant="transactional"
         title={t("email.newOrder.headerTitle", { restaurant: restaurantName, orderNumber })}
@@ -150,6 +150,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
             next-day order immediately. Same block, same values, as the
             customer's email. Luigi 2026-08-07 (GloriaFood parity). */}
         <TimingBlock
+          locale={t.locale}
           scheduledBadge={scheduledLabel ? t("email.timing.scheduledBanner") : null}
           rows={[
             { label: t("email.timing.placedAt"), value: placedAtLabel },
@@ -211,8 +212,9 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
             <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#6b7280", marginTop: 20, marginBottom: 4 }}>
               {t("email.newOrder.labelOrderDetails")}
             </div>
-            <OrderItemsTable items={items!} currency={currency ?? "usd"} />
+            <OrderItemsTable locale={t.locale} items={items!} currency={currency ?? "usd"} />
             <OrderTotals
+              locale={t.locale}
               subtotal={subtotal ?? total}
               taxAmount={taxAmount}
               taxLabel={taxLabel ?? t("receipt.customer.tax")}

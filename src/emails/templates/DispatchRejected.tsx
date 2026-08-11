@@ -28,7 +28,7 @@ export type DispatchRejectedProps = {
 export default function DispatchRejected(props: DispatchRejectedProps) {
   const { t, restaurantName, orderNumber, customerName, reason, dashboardUrl, imprint } = props;
   return (
-    <EmailLayout preview={t("email.dispatchRejected.preview", { orderNumber })}>
+    <EmailLayout locale={t.locale} preview={t("email.dispatchRejected.preview", { orderNumber })}>
       <EmailHeader
         variant="transactional"
         title={t("email.dispatchRejected.headerTitle")}

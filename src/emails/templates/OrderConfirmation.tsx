@@ -17,7 +17,7 @@
  * Layout: emerald status header, awaiting-confirmation messaging, itemized
  * receipt, totals breakdown, delivery address (if delivery), tracking CTA.
  */
-import { EmailLayout, EmailHeader } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, marginSide, textStart } from "../components/EmailLayout";
 import { formatCurrency } from "@/lib/utils";
 import {
   EmailBody, P, EmailButton, InfoCard, Badge,
@@ -178,6 +178,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
 
   return (
     <EmailLayout
+      locale={t.locale}
       preview={t(
         alreadyAccepted ? "email.orderConfirmed.previewAccepted" : "email.orderConfirmed.preview",
         { orderNumber },
@@ -222,6 +223,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
             (GloriaFood parity, Luigi 2026-08-07): the placement time was never
             stated at all before, and a scheduled order could read as ASAP. */}
         <TimingBlock
+          locale={t.locale}
           scheduledBadge={scheduledLabel ? t("email.timing.scheduledBanner") : null}
           rows={[
             { label: t("email.timing.placedAt"), value: placedAtLabel },
@@ -267,6 +269,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
           {t("email.orderConfirmed.orderDetailsSectionHeading")}
         </div>
         <OrderItemsTable
+          locale={t.locale}
           items={items}
           currency={currency ?? "usd"}
           qtyLabel={t("receipt.customer.qty")}
@@ -321,7 +324,9 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
                         color: "#047857",
                         padding: "1px 6px",
                         borderRadius: 4,
-                        marginLeft: 6,
+                        // Gap sits on the chip's START side — it trails the
+                        // promo name in the inline flow, which reverses in RTL.
+                        ...marginSide(textStart(t.locale), 6),
                         fontSize: 11,
                       }}
                     >
@@ -338,6 +343,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         )}
 
         <OrderTotals
+          locale={t.locale}
           subtotal={subtotal}
           taxAmount={taxAmount}
           taxLabel={taxLabel ?? t("receipt.customer.tax")}

@@ -69,7 +69,7 @@ export default function ReservationConfirmation(props: ReservationConfirmationPr
     // Preview follows the STATUS like every other string here (cms0gyexp #2b —
     // a pending request's inbox preview used to read "Reservation confirmed",
     // flatly contradicting its own subject). "" suffix = the confirmed key.
-    <EmailLayout preview={t(k("preview"), { dateTime, partySize: String(partySize) })}>
+    <EmailLayout locale={t.locale} preview={t(k("preview"), { dateTime, partySize: String(partySize) })}>
       <EmailHeader
         variant="status"
         title={t(k("headerTitle"))}

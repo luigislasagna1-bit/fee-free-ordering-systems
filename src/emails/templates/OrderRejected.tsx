@@ -48,7 +48,7 @@ export default function OrderRejected(props: OrderRejectedProps) {
   // consistent with the kitchen + the customer email. Luigi 2026-06-09.
   const isMissed = (reason ?? "").trim().startsWith("Auto-rejected");
   return (
-    <EmailLayout preview={t("email.orderRejected.preview", { orderNumber })}>
+    <EmailLayout locale={t.locale} preview={t("email.orderRejected.preview", { orderNumber })}>
       <EmailHeader
         variant="transactional"
         title={t("email.orderRejected.title")}

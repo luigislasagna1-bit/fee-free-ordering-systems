@@ -41,7 +41,7 @@ export default function ScheduledOrderReminder(props: ScheduledOrderReminderProp
   const isDelivery = orderType === "delivery";
 
   return (
-    <EmailLayout preview={t("email.scheduledReminder.preview", { orderNumber })}>
+    <EmailLayout locale={t.locale} preview={t("email.scheduledReminder.preview", { orderNumber })}>
       <EmailHeader
         variant="status"
         title={t("email.scheduledReminder.headerTitle")}

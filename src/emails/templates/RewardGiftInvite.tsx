@@ -7,7 +7,7 @@
  * already-has-account case, where the credit lands instantly).
  */
 import type { Translator } from "@/lib/i18n-dict";
-import { EmailLayout, EmailHeader, EmailFooter, COLORS, type MarketingFooterStrings } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, EmailFooter, COLORS, padSide, marginSide, textStart, textEnd, type MarketingFooterStrings } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard, Badge } from "../components/EmailParts";
 
 export type RewardGiftInviteProps = {
@@ -45,7 +45,7 @@ export type RewardGiftInviteProps = {
 /** One numbered step. Table-free, block-level, explicit sizes — Outlook desktop
  *  ignores flex/grid, so the number sits in an inline-block badge rather than a
  *  column layout. */
-function Step({ n, title, body }: { n: number; title: string; body: string }) {
+function Step({ n, title, body, locale }: { n: number; title: string; body: string; locale?: string | null }) {
   return (
     <div style={{ margin: "0 0 14px" }}>
       <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.text, margin: "0 0 2px" }}>
@@ -61,14 +61,14 @@ function Step({ n, title, body }: { n: number; title: string; body: string }) {
             color: "#ffffff",
             fontSize: 12,
             fontWeight: 700,
-            marginRight: 8,
+            ...marginSide(textEnd(locale), 8),
           }}
         >
           {n}
         </span>
         {title}
       </div>
-      <div style={{ fontSize: 14, lineHeight: 1.55, color: COLORS.muted, paddingLeft: 30 }}>{body}</div>
+      <div style={{ fontSize: 14, lineHeight: 1.55, color: COLORS.muted, ...padSide(textStart(locale), 30) }}>{body}</div>
     </div>
   );
 }
@@ -77,7 +77,7 @@ export default function RewardGiftInvite(props: RewardGiftInviteProps) {
   const { t, customerName, restaurantName, amountLabel, rewardLabel, note, orderUrl, giftEmail, imprint, spendUrl, code, codeExpiryLabel, unsubscribeUrl, dataDeletionUrl, marketingStrings } = props;
   const hasPass = !!spendUrl && !!code;
   return (
-    <EmailLayout preview={t("email.rewardGiftInvite.preview", { restaurantName, amount: amountLabel, label: rewardLabel })}>
+    <EmailLayout locale={t.locale} preview={t("email.rewardGiftInvite.preview", { restaurantName, amount: amountLabel, label: rewardLabel })}>
       <EmailHeader
         variant="transactional"
         title={t("email.rewardGiftInvite.title", { label: rewardLabel })}
@@ -108,9 +108,9 @@ export default function RewardGiftInvite(props: RewardGiftInviteProps) {
         {hasPass ? (
           <>
             <P>{t("email.rewardGiftInvite.whatItIsSpend", { restaurantName, label: rewardLabel })}</P>
-            <Step n={1} title={t("email.rewardGiftInvite.step1TitleSpend")} body={t("email.rewardGiftInvite.step1BodySpend")} />
-            <Step n={2} title={t("email.rewardGiftInvite.step2TitleSpend")} body={t("email.rewardGiftInvite.step2BodySpend", { amount: amountLabel })} />
-            <Step n={3} title={t("email.rewardGiftInvite.step3TitleSpend")} body={t("email.rewardGiftInvite.step3BodySpend")} />
+            <Step locale={t.locale} n={1} title={t("email.rewardGiftInvite.step1TitleSpend")} body={t("email.rewardGiftInvite.step1BodySpend")} />
+            <Step locale={t.locale} n={2} title={t("email.rewardGiftInvite.step2TitleSpend")} body={t("email.rewardGiftInvite.step2BodySpend", { amount: amountLabel })} />
+            <Step locale={t.locale} n={3} title={t("email.rewardGiftInvite.step3TitleSpend")} body={t("email.rewardGiftInvite.step3BodySpend")} />
           </>
         ) : (
           <>
@@ -121,16 +121,19 @@ export default function RewardGiftInvite(props: RewardGiftInviteProps) {
                 new guests understand how to use their gift". */}
             <P>{t("email.rewardGiftInvite.whatItIs", { restaurantName, label: rewardLabel })}</P>
             <Step
+              locale={t.locale}
               n={1}
               title={t("email.rewardGiftInvite.step1Title")}
               body={t("email.rewardGiftInvite.step1Body", { email: giftEmail })}
             />
             <Step
+              locale={t.locale}
               n={2}
               title={t("email.rewardGiftInvite.step2Title", { amount: amountLabel })}
               body={t("email.rewardGiftInvite.step2Body")}
             />
             <Step
+              locale={t.locale}
               n={3}
               title={t("email.rewardGiftInvite.step3Title")}
               body={t("email.rewardGiftInvite.step3Body", { label: rewardLabel })}

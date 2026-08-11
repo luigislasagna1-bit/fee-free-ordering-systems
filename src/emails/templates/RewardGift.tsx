@@ -6,13 +6,13 @@
  * marketing email path respects consent).
  */
 import type { Translator } from "@/lib/i18n-dict";
-import { EmailLayout, EmailHeader, EmailFooter, COLORS, type MarketingFooterStrings } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, EmailFooter, COLORS, padSide, marginSide, textStart, textEnd, type MarketingFooterStrings } from "../components/EmailLayout";
 import { EmailBody, P, EmailButton, InfoCard, Badge } from "../components/EmailParts";
 
 /** One numbered step — mirrors RewardGiftInvite's so the two gift emails read
  *  as one family. Inline-block badge rather than columns: Outlook desktop
  *  ignores flex/grid. */
-function Step({ n, title, body }: { n: number; title: string; body: string }) {
+function Step({ n, title, body, locale }: { n: number; title: string; body: string; locale?: string | null }) {
   return (
     <div style={{ margin: "0 0 14px" }}>
       <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.text, margin: "0 0 2px" }}>
@@ -28,14 +28,14 @@ function Step({ n, title, body }: { n: number; title: string; body: string }) {
             color: "#ffffff",
             fontSize: 12,
             fontWeight: 700,
-            marginRight: 8,
+            ...marginSide(textEnd(locale), 8),
           }}
         >
           {n}
         </span>
         {title}
       </div>
-      <div style={{ fontSize: 14, lineHeight: 1.55, color: COLORS.muted, paddingLeft: 30 }}>{body}</div>
+      <div style={{ fontSize: 14, lineHeight: 1.55, color: COLORS.muted, ...padSide(textStart(locale), 30) }}>{body}</div>
     </div>
   );
 }
@@ -66,7 +66,7 @@ export type RewardGiftProps = {
 export default function RewardGift(props: RewardGiftProps) {
   const { t, customerName, restaurantName, amountLabel, rewardLabel, balanceLabel, note, giftEmail, orderUrl, imprint, unsubscribeUrl, dataDeletionUrl, marketingStrings } = props;
   return (
-    <EmailLayout preview={t("email.rewardGift.preview", { restaurantName, amount: amountLabel, label: rewardLabel })}>
+    <EmailLayout locale={t.locale} preview={t("email.rewardGift.preview", { restaurantName, amount: amountLabel, label: rewardLabel })}>
       <EmailHeader
         variant="transactional"
         title={t("email.rewardGift.title", { label: rewardLabel })}
@@ -95,6 +95,7 @@ export default function RewardGift(props: RewardGiftProps) {
             recipient does not. Luigi 2026-07-31. */}
         <P>{t("email.rewardGift.whatItIs", { restaurantName, label: rewardLabel })}</P>
         <Step
+          locale={t.locale}
           n={1}
           title={t("email.rewardGift.step1Title")}
           body={
@@ -104,11 +105,13 @@ export default function RewardGift(props: RewardGiftProps) {
           }
         />
         <Step
+          locale={t.locale}
           n={2}
           title={t("email.rewardGift.step2Title")}
           body={t("email.rewardGift.step2Body", { restaurantName })}
         />
         <Step
+          locale={t.locale}
           n={3}
           title={t("email.rewardGift.step3Title", { label: rewardLabel })}
           body={t("email.rewardGift.step3Body", { label: rewardLabel })}

@@ -37,7 +37,7 @@ export default function OrderCanceled(props: OrderCanceledProps) {
     orderTotalLabel, creditReturnedLabel, collectedLabel, rewardLabel,
     imprint, restaurantUrl, restaurantEmail, restaurantPhone } = props;
   return (
-    <EmailLayout preview={t("email.orderCanceled.preview", { orderNumber })}>
+    <EmailLayout locale={t.locale} preview={t("email.orderCanceled.preview", { orderNumber })}>
       <EmailHeader
         variant="transactional"
         title={t("email.orderCanceled.title")}

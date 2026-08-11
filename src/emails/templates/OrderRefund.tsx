@@ -34,7 +34,7 @@ export default function OrderRefund(props: OrderRefundProps) {
     creditReturnedLabel, rewardLabel,
     imprint, restaurantUrl, restaurantEmail, restaurantPhone } = props;
   return (
-    <EmailLayout preview={t("email.orderRefund.preview", { orderNumber })}>
+    <EmailLayout locale={t.locale} preview={t("email.orderRefund.preview", { orderNumber })}>
       <EmailHeader
         variant="transactional"
         title={t("email.orderRefund.title")}

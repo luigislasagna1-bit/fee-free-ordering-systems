@@ -82,7 +82,7 @@ export default function OrderDelayed(props: OrderDelayedProps) {
     : t("email.orderDelayed.minutePlural");
 
   return (
-    <EmailLayout preview={t("email.orderDelayed.preview", { orderNumber, delayMinutes })}>
+    <EmailLayout locale={t.locale} preview={t("email.orderDelayed.preview", { orderNumber, delayMinutes })}>
       <EmailHeader
         variant="status"
         title={t("email.orderDelayed.title")}

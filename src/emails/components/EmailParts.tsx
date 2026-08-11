@@ -8,8 +8,16 @@
  * with `<Row>` / `<Column>` which render as `<table>` under the hood.
  */
 import { Section, Row, Column, Hr } from "@react-email/components";
-import { COLORS } from "./EmailLayout";
+import { COLORS, textStart, textEnd, padSide, marginSide, borderSide } from "./EmailLayout";
 import { formatCurrency } from "@/lib/utils";
+
+// A `locale` prop on the blocks below does NOT localize anything — every label
+// still arrives pre-translated from the caller. It exists solely to mirror the
+// hardcoded PHYSICAL layout values (text-align, padding-left, border-left,
+// margin-right, align="right") for Arabic and Hebrew. `dir="rtl"` on <html>
+// flips a table's column order but leaves those pinned to the wrong edge, and
+// email clients can't use logical properties (see textStart/textEnd). Omitting
+// it resolves LTR, i.e. exactly today's output.
 
 // `currency` props below are ISO 4217 codes (e.g. "usd", "eur", "gbp").
 // Money renders through formatCurrency() so the symbol, placement, and
@@ -229,10 +237,12 @@ export type EmailOrderItem = {
 };
 
 export function OrderItemsTable({
-  items, currency = "usd", qtyLabel, itemsLabel, priceLabel, noteLabel, depositLabel,
+  items, currency = "usd", qtyLabel, itemsLabel, priceLabel, noteLabel, depositLabel, locale,
 }: {
   items: EmailOrderItem[];
   currency?: string;
+  /** Recipient locale — mirrors the physical alignment/indent values for RTL. */
+  locale?: string | null;
   /** Localized "Refundable deposit" word for the per-item deposit line. */
   depositLabel?: string;
   // Column headers + the per-line "Note" label. Optional so the kitchen/staff
@@ -243,6 +253,8 @@ export function OrderItemsTable({
   priceLabel?: string;
   noteLabel?: string;
 }) {
+  const start = textStart(locale);
+  const end = textEnd(locale);
   return (
     <table
       cellPadding={0}
@@ -259,7 +271,7 @@ export function OrderItemsTable({
         <tr>
           <th
             style={{
-              textAlign: "left",
+              textAlign: start,
               fontSize: 12,
               fontWeight: 700,
               textTransform: "uppercase",
@@ -274,7 +286,7 @@ export function OrderItemsTable({
           </th>
           <th
             style={{
-              textAlign: "left",
+              textAlign: start,
               fontSize: 12,
               fontWeight: 700,
               textTransform: "uppercase",
@@ -288,7 +300,7 @@ export function OrderItemsTable({
           </th>
           <th
             style={{
-              textAlign: "right",
+              textAlign: end,
               fontSize: 12,
               fontWeight: 700,
               textTransform: "uppercase",
@@ -323,14 +335,14 @@ export function OrderItemsTable({
                 </div>
               )}
               {item.bundleItems && item.bundleItems.length > 0 && (
-                <div style={{ fontSize: 13, color: COLORS.muted, marginTop: 4, paddingLeft: 10, borderLeft: `2px solid ${COLORS.border}` }}>
+                <div style={{ fontSize: 13, color: COLORS.muted, marginTop: 4, ...padSide(start, 10), ...borderSide(start, `2px solid ${COLORS.border}`) }}>
                   {item.bundleItems.map((child, i) => (
                     <div key={i} style={{ marginBottom: 2 }}>
                       <div style={{ color: COLORS.text }}>
                         • {child.name}{child.variantName ? ` (${child.variantName})` : ""}
                       </div>
                       {child.modifiers && child.modifiers.length > 0 && (
-                        <div style={{ paddingLeft: 10 }}>
+                        <div style={{ ...padSide(start, 10) }}>
                           {child.modifiers.map((m, mi) => (
                             <div key={mi}>+ {m.name}</div>
                           ))}
@@ -351,7 +363,7 @@ export function OrderItemsTable({
                 </div>
               )}
             </td>
-            <td style={{ padding: "10px 0", color: COLORS.text, textAlign: "right", fontWeight: 600 }}>
+            <td style={{ padding: "10px 0", color: COLORS.text, textAlign: end, fontWeight: 600 }}>
               {formatCurrency(item.lineTotal ?? item.price * (item.quantity ?? 1), currency)}
             </td>
           </tr>
@@ -376,7 +388,10 @@ export function OrderTotals({
   balanceDue, balanceDueLabel,
   paymentLabel, paymentValue,
   subtotalLabel, deliveryFeeLabel, tipLabel, discountLabel, totalLabel, freeLabel,
+  locale,
 }: {
+  /** Recipient locale — mirrors the physical amount-column alignment for RTL. */
+  locale?: string | null;
   subtotal: number;
   taxAmount?: number;
   deliveryFee?: number;
@@ -428,12 +443,13 @@ export function OrderTotals({
   totalLabel?: string;
   freeLabel?: string;
 }) {
+  const end = textEnd(locale);
   const row = (label: string, amount: number, bold = false) => (
     <Row>
       <Column style={{ fontSize: 14, color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 400 }}>
         {label}
       </Column>
-      <Column style={{ fontSize: 14, textAlign: "right", color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 600 }}>
+      <Column style={{ fontSize: 14, textAlign: end, color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 600 }}>
         {formatCurrency(amount, currency)}
       </Column>
     </Row>
@@ -449,8 +465,8 @@ export function OrderTotals({
           <Column style={{ fontSize: 14, color: COLORS.muted, padding: "4px 0", fontWeight: 400 }}>
             {deliveryFeeLabel ?? "Delivery fee"}
           </Column>
-          <Column style={{ fontSize: 14, textAlign: "right", padding: "4px 0" }}>
-            <span style={{ textDecoration: "line-through", color: "#9ca3af", marginRight: 6 }}>
+          <Column style={{ fontSize: 14, textAlign: end, padding: "4px 0" }}>
+            <span style={{ textDecoration: "line-through", color: "#9ca3af", ...marginSide(end, 6) }}>
               {formatCurrency(savedDeliveryFee, currency)}
             </span>
             <span style={{ color: "#059669", fontWeight: 700 }}>{freeLabel ?? "FREE"}</span>
@@ -468,7 +484,7 @@ export function OrderTotals({
             <Column style={{ fontSize: 14, color: COLORS.muted, padding: "4px 0", fontWeight: 400 }}>
               {f.name ?? ""}
             </Column>
-            <Column style={{ fontSize: 14, textAlign: "right", color: COLORS.muted, padding: "4px 0", fontWeight: 600 }}>
+            <Column style={{ fontSize: 14, textAlign: end, color: COLORS.muted, padding: "4px 0", fontWeight: 600 }}>
               {formatCurrency(Number(f.amount), currency)}
             </Column>
           </Row>
@@ -481,7 +497,7 @@ export function OrderTotals({
           <Column style={{ fontSize: 14, color: "#6d28d9", padding: "4px 0", fontWeight: 400 }}>
             {depositTotalLabel ?? "Refundable deposit (not taxed)"}
           </Column>
-          <Column style={{ fontSize: 14, textAlign: "right", color: "#6d28d9", padding: "4px 0", fontWeight: 600 }}>
+          <Column style={{ fontSize: 14, textAlign: end, color: "#6d28d9", padding: "4px 0", fontWeight: 600 }}>
             {formatCurrency(depositTotal, currency)}
           </Column>
         </Row>
@@ -494,7 +510,7 @@ export function OrderTotals({
           <Column style={{ fontSize: 14, color: "#047857", padding: "4px 0", fontWeight: 600 }}>
             {rewardUsedLabel ?? "Paid with credit"}
           </Column>
-          <Column style={{ fontSize: 14, textAlign: "right", color: "#047857", padding: "4px 0", fontWeight: 700 }}>
+          <Column style={{ fontSize: 14, textAlign: end, color: "#047857", padding: "4px 0", fontWeight: 700 }}>
             − {formatCurrency(rewardUsed!, currency)}
           </Column>
         </Row>
@@ -509,7 +525,7 @@ export function OrderTotals({
           <Column style={{ fontSize: 14, color: "#059669", padding: "4px 0", fontWeight: 600 }}>
             {rewardEarnedLabel ?? "You earned credit"}
           </Column>
-          <Column style={{ fontSize: 14, textAlign: "right", color: "#059669", padding: "4px 0", fontWeight: 700 }}>
+          <Column style={{ fontSize: 14, textAlign: end, color: "#059669", padding: "4px 0", fontWeight: 700 }}>
             + {formatCurrency(rewardEarned, currency)}
           </Column>
         </Row>
@@ -519,7 +535,7 @@ export function OrderTotals({
           <Column style={{ fontSize: 13, color: COLORS.muted, padding: "4px 0" }}>
             {paymentLabel ?? "Payment"}
           </Column>
-          <Column style={{ fontSize: 13, textAlign: "right", color: COLORS.muted, padding: "4px 0", fontWeight: 600 }}>
+          <Column style={{ fontSize: 13, textAlign: end, color: COLORS.muted, padding: "4px 0", fontWeight: 600 }}>
             {paymentValue}
           </Column>
         </Row>
@@ -629,11 +645,15 @@ export function Divider() {
 export function TimingBlock({
   rows,
   scheduledBadge,
+  locale,
 }: {
   rows: Array<{ label: string; value?: string | null; emphasis?: boolean }>;
   /** When set, a prominent banner marks this as a FUTURE order. */
   scheduledBadge?: string | null;
+  /** Recipient locale — mirrors the physical value-column alignment for RTL. */
+  locale?: string | null;
 }) {
+  const end = textEnd(locale);
   const shown = rows.filter((r) => !!r.value);
   if (shown.length === 0 && !scheduledBadge) return null;
   return (
@@ -675,7 +695,7 @@ export function TimingBlock({
                 {r.label}
               </td>
               <td
-                align="right"
+                align={end}
                 style={{
                   fontSize: 14,
                   color: COLORS.text,
