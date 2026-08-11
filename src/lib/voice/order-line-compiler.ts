@@ -157,6 +157,11 @@ export type CompileResult = {
   pricingNote: string | null;
   /** Things the agent must ask about. Non-empty ⇒ do NOT place the order. */
   unresolved: string[];
+  /** What this line costs, computed with the SAME pure engine the order route
+   *  charges with (base + toppingBaseAdjust + Σ priceToppingLines) × quantity.
+   *  Used to compare a pizza against a cheaper same-day deal without asking the
+   *  model to do arithmetic. Null when the line didn't compile. */
+  lineSubtotal?: number | null;
 };
 
 /* ───────────────────────────── name matching ───────────────────────────── */
@@ -619,6 +624,7 @@ export function compilePizzaLine(
 
   // ── advisory topping money (the over-allowance announcement) ───────────
   let pricingNote: string | null = null;
+  let lineSubtotal: number | null = null;
   if (cfg) {
     const flat = variant?.name && cfg.variantToppingPrices?.[variant.name] !== undefined
       ? Number(cfg.variantToppingPrices[variant.name]) || 0
@@ -640,6 +646,17 @@ export function compilePizzaLine(
       );
     }
 
+    // The line's own money, by the same rules the charge path uses. Computed
+    // whether or not we speak a pricing note, because the day-deal comparison
+    // needs it even when there is nothing to announce.
+    {
+      const basePrice = variant ? variant.price : item.price;
+      const charges = priceToppingLines(pricing, chargeLines);
+      const toppings = charges.reduce((a, b) => a + b, 0);
+      lineSubtotal =
+        Math.round(Math.max(0, basePrice + toppingBaseAdjust(pricing) + toppings) * 100) / 100;
+    }
+
     if (flat > 0 && chargeLines.length && !opts.suppressPricingNote) {
       const charges = priceToppingLines(pricing, chargeLines);
       const toppingTotal = charges.reduce((a, b) => a + b, 0) + toppingBaseAdjust(pricing);
@@ -655,9 +672,10 @@ export function compilePizzaLine(
     }
   }
 
-  if (unresolved.length) return { line: null, readBack: "", pricingNote, unresolved };
+  if (unresolved.length) return { line: null, readBack: "", pricingNote, unresolved, lineSubtotal: null };
 
   const quantity = Math.max(1, Math.min(99, Math.floor(Number(intent.quantity) || 1)));
+  if (lineSubtotal == null) lineSubtotal = variant ? variant.price : item.price;
   const sizeLabel = variant ? `${variant.name} ` : "";
   const readBack =
     `${quantity > 1 ? `${quantity}× ` : ""}${sizeLabel}${item.name}` +
@@ -674,6 +692,7 @@ export function compilePizzaLine(
     readBack,
     pricingNote,
     unresolved: [],
+    lineSubtotal: Math.round(lineSubtotal * quantity * 100) / 100,
   };
 }
 

@@ -31,6 +31,8 @@ export type AgentConfig = {
   /** Extra languages the owner enabled. Non-empty ⇒ the phone system is
    *  auto-detecting the caller's language, so the agent must answer in it. */
   languages: string[];
+  /** Offer a cheaper same-day deal when one covers what the caller asked for. */
+  offerDayDeals: boolean;
 };
 
 const BEHAVIORS: ReadonlyArray<AgentConfig["afterHoursBehavior"]> = [
@@ -68,5 +70,6 @@ export function normalizeAgentConfig(raw: unknown): AgentConfig {
     languages: Array.isArray(r.languages)
       ? r.languages.filter((x): x is string => typeof x === "string").slice(0, 38)
       : [],
+    offerDayDeals: bool(r.offerDayDeals, false),
   };
 }

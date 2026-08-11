@@ -554,6 +554,8 @@ model Restaurant {
   // in-grace set is tiny, so indexing graceEndsAt keeps the daily sweep off
   // a full-table scan as the platform grows.
   @@index([graceEndsAt])
+  menuItemDeals MenuItemDeal[]
+
 }
 
 /// Brand → location invite tokens. When a multi-location brand owner wants
@@ -1219,6 +1221,9 @@ model MenuItem {
   // (resolvePromoMenuRefsForServing) — hot-path adjacent, must be indexed.
   @@index([restaurantId, lineageId])
   @@index([restaurantId, rewardEarnExcluded])
+  dealAsDeal     MenuItemDeal?  @relation("DealItem")
+  dealAsStandard MenuItemDeal[] @relation("StandardItem")
+
 }
 
 // Represents a size/variation (e.g., Small / Medium / Large)
@@ -1580,6 +1585,15 @@ model Order {
   // and filter/sort by notifiedAt. Without notifiedAt in the index Postgres scans
   // the whole per-restaurant accepted set every poll. Luigi 2026-06-22.
   @@index([restaurantId, status, notifiedAt])
+  // Card-payment reconciliation (every minute, PLATFORM-WIDE — no restaurantId
+  // to lead with, so none of the indexes above apply). The sweep seeks exactly
+  // "card orders that never reached the kitchen": notifiedAt IS NULL first
+  // because it's the most selective column on the table by a mile — every
+  // normally-released order has it set — then paymentMethod, then the createdAt
+  // range. Without this the reconciler full-table scans Order every 60s, which
+  // is precisely the thing that breaks at 10k concurrent users.
+  // See lib/reconcile-card-payments.ts. Luigi 2026-08-11.
+  @@index([notifiedAt, paymentMethod, createdAt])
 }
 
 /// Customer-submitted rating for a completed order. One row per order
@@ -2210,6 +2224,17 @@ model CustomerGroup {
   /// else the restaurant base rate. Null = no override. Luigi 2026-07-19
   /// ("VIP members earn double").
   rewardEarnPercent Float?
+  /// "Members of this group already get club pricing, so Autopilot shouldn't
+  /// hand them win-back / cart-recovery offers on top." What actually happens
+  /// to them is chosen per campaign on AutopilotState (*VipMode).
+  ///
+  /// DEFAULT FALSE ON PURPOSE (Luigi 2026-08-11, Ben Bilton). A default of true
+  /// would silently change marketing behaviour for every restaurant on the
+  /// platform the moment this deploys — including groups that are NOT discount
+  /// clubs (a catering-leads list, a waitlist), which absolutely should keep
+  /// receiving campaigns. A one-off backfill ticks only the groups that carry a
+  /// real perk (a linked member-only special or a boosted earn rate).
+  skipAutopilotOffers Boolean @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
@@ -2567,6 +2592,20 @@ model AutopilotState {
   secondOrderEnabled     Boolean @default(false)
   reEngageEnabled        Boolean @default(false)
   cartAbandonmentEnabled Boolean @default(false)
+
+  // ── What members of a "club" group get from each campaign ─────────────────
+  // Only consulted for customers in a group with skipAutopilotOffers = true, so
+  // these are inert until the owner ticks a group — which is why they can carry
+  // the sensible default rather than the status-quo one.
+  //   "offer"    → treated like everyone else (the pre-2026-08-11 behaviour)
+  //   "no_offer" → still emailed, but the coupon card is replaced by a note
+  //                about the club pricing they already have
+  //   "skip"     → not emailed at all by this campaign
+  // Luigi 2026-08-11: he wants the nudge kept but the extra discount dropped,
+  // and he wants each restaurant to choose per campaign.
+  reEngageVipMode        String @default("no_offer")
+  secondOrderVipMode     String @default("no_offer")
+  cartAbandonVipMode     String @default("no_offer")
 
   // Cron dedup
   lastSecondOrderRun DateTime?
@@ -2926,6 +2965,14 @@ model VoiceAgentConfig {
   /// restaurant's pizza items; empty/null = smart defaults, and the agent still
   /// lists any group's options whenever the CALLER asks about them.
   pizzaAskGroups        Json?
+  /// DAY DEALS (Luigi 2026-08-11): when a caller orders something that a
+  /// cheaper same-day deal covers ("Tuesday - Large Pizza Special" vs "Large 1
+  /// Topping"), Nabil OFFERS the swap unprompted. Deliberately opt-in and
+  /// default FALSE: it is a real margin decision, and a store that would rather
+  /// not down-sell must never start doing it because of a deploy. The pairings
+  /// themselves live in MenuItemDeal; this only decides whether Nabil mentions
+  /// them. Phone only for now — the ordering page is a separate call.
+  offerDayDeals         Boolean @default(false)
   allowAnonymousCallers Boolean @default(true)
 
   // ── Ordering behavior (mostly reads existing restaurant config) ──
@@ -5250,4 +5297,38 @@ model CustomerPushPref {
   orderUpdates Boolean  @default(true)
   marketing    Boolean  @default(false)
   updatedAt    DateTime @updatedAt
+}
+
+/// DAY DEALS — "this item is the same thing, cheaper, on certain days".
+///
+/// Luigi 2026-08-11: his menu carries a "Tuesday - Large Pizza Special" at
+/// $11.99 that is the identical pizza to "Large 1 Topping" at $17.74. A caller
+/// who asks for a large pepperoni on a Tuesday should be OFFERED the cheaper
+/// one — but only on Tuesdays, and only when it really is the same item.
+///
+/// A SIDE TABLE rather than a column on MenuItem: this is sparse (a dozen rows
+/// against a menu of hundreds) and MenuItem is a hot, wide table already.
+///
+/// The pairing is OWNER-DECLARED on purpose. Sizes live in item NAMES on real
+/// menus ("Large 1 Topping"), and guessing them from text is exactly how a
+/// caller who asked for a Large gets offered a Medium. The day restriction is
+/// NOT stored here — it comes from the deal item's own fulfil window, so the
+/// suggestion and the order route can never disagree about which days it runs.
+model MenuItemDeal {
+  id             String   @id @default(cuid())
+  restaurantId   String
+  /// The cheaper item ("Tuesday - Large Pizza Special"). One deal row per item.
+  dealItemId     String   @unique
+  /// What it substitutes for ("Large 1 Topping").
+  standardItemId String
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  dealItem     MenuItem   @relation("DealItem", fields: [dealItemId], references: [id], onDelete: Cascade)
+  standardItem MenuItem   @relation("StandardItem", fields: [standardItemId], references: [id], onDelete: Cascade)
+
+  @@index([restaurantId, active])
+  @@index([standardItemId])
 }

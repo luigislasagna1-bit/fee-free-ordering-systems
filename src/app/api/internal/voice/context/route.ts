@@ -71,6 +71,7 @@ export async function GET(req: NextRequest) {
         allowPizzaCombo: true,
         pizzaAskGroups: true,
         languages: true,
+        offerDayDeals: true,
       },
     }),
     prisma.voiceFaq.findMany({
@@ -169,6 +170,9 @@ export async function GET(req: NextRequest) {
       // v2 pizza/combo building. Opt-in per store: absent config must keep the
       // v1 transfer behavior, never silently start building.
       allowPizzaCombo: cfg?.allowPizzaCombo ?? false,
+      // Offer a cheaper same-day equivalent unprompted. Opt-in: down-selling is
+      // a margin decision, never a deploy decision.
+      offerDayDeals: cfg?.offerDayDeals ?? false,
       pizzaAskGroups: Array.isArray(cfg?.pizzaAskGroups)
         ? (cfg.pizzaAskGroups as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 20)
         : [],

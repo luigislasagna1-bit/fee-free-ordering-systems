@@ -16,7 +16,7 @@ export const runtime = "nodejs";
 // Only these fields are owner-editable (whitelist — never trust arbitrary keys).
 const BOOL_FIELDS = [
   "enabled", "ambientNoise", "canTakeOrders", "canBookReservations", "canAnswerFaq",
-  "allowPizzaCombo", "allowAnonymousCallers", "quoteEta", "allowScheduledOrders",
+  "allowPizzaCombo", "offerDayDeals", "allowAnonymousCallers", "quoteEta", "allowScheduledOrders",
   "smsConfirmations", "recordCalls",
 ] as const;
 const STR_FIELDS = [

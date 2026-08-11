@@ -37,6 +37,18 @@ function menuText(menu: any, canBuild = false): string {
       // printed their stale legacy price as the headline.
       const headlinePrice = it.variants?.length || it.hasVariants ? "" : ` ${fmtMoney(it.price, currency)}`;
       lines.push(`- ${it.name} [id:${it.menuItemId}]${headlinePrice}${flags ? ` (${flags})` : ""}`);
+      // TODAY'S DEAL on this exact item — the same food, cheaper, running now.
+      // The price and the day check were both computed server-side; just offer
+      // it. Never work out a saving yourself.
+      if (it.todayDeal) {
+        const d = it.todayDeal;
+        const sizes = (d.variants ?? []).length
+          ? ` (${d.variants.map((v: any) => `${v.name} ${fmtMoney(v.price, currency)}`).join(", ")})`
+          : "";
+        lines.push(
+          `    ★ TODAY ONLY: "${d.name}" [id:${d.dealItemId ?? ""}] is this exact item for ${fmtMoney(d.price, currency)}${sizes} — OFFER IT instead when they order this.`,
+        );
+      }
       if (it.description) lines.push(`    ${String(it.description).slice(0, 140)}`);
       if (it.variants?.length) {
         lines.push(

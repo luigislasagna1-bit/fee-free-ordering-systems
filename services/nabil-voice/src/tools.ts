@@ -278,6 +278,11 @@ export const TOOLS = [
       additionalProperties: false,
       properties: {
         lineNumber: { type: "integer", minimum: 1, description: "Which line, as numbered in the running order." },
+        swapToItemId: {
+          type: "string",
+          description:
+            "Swap this line to a different menu item, keeping the same size and toppings. Used to accept a cheaper day deal offered in betterDeal.",
+        },
         size: { type: "string", description: "New size." },
         crust: { type: "string" },
         sauce: { type: "string" },
@@ -667,11 +672,12 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         kind,
         intent: input,
         askGroupIds: ctx.cfg.pizzaAskGroups,
+        offerDeals: ctx.cfg.offerDayDeals,
       });
       if (!res.ok) {
         return { error: true, code: res.json?.code, message: res.json?.error || "I couldn't add that." };
       }
-      const { line, readBack, pricingNote, unresolved } = res.json ?? {};
+      const { line, readBack, pricingNote, unresolved, betterDeal } = res.json ?? {};
       // The compiler refuses to guess. Unresolved questions come back verbatim
       // so the agent asks the caller rather than inventing an option id.
       if (!line || (Array.isArray(unresolved) && unresolved.length)) {
@@ -690,9 +696,25 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         added: readBack,
         pricingNote: pricingNote ?? null,
         order: basketView(ctx),
+        // A cheaper same-day deal covering EXACTLY this order. The saving was
+        // computed server-side with the pricing engine that charges — never
+        // recalculate it, and never claim one that isn't here.
+        ...(betterDeal
+          ? {
+              betterDeal: {
+                name: betterDeal.name,
+                saves: betterDeal.saving,
+                swapTo: betterDeal.menuItemId,
+                lineNumber: ctx.basket.length,
+              },
+            }
+          : {}),
         instruction:
           (pricingNote
             ? "Tell the caller the extra-topping charge in this pricingNote BEFORE moving on — they must never be surprised at pickup. "
+            : "") +
+          (betterDeal
+            ? `TELL THEM ABOUT THE DEAL: today's "${betterDeal.name}" is the same thing for ${betterDeal.saving} less. Offer it in one friendly sentence and ask if they want it. If they say yes, call revise_line with lineNumber ${ctx.basket.length} and swapToItemId "${betterDeal.menuItemId}". If they say no, leave the order exactly as it is and move on. `
             : "") +
           "Confirm what you added in one short sentence, then ask if they'd like anything else. The total comes from quote_order. " +
           "If they change their mind about something already on the order, use revise_line or remove_line with its line number from `order` — never add a corrected copy alongside the old one.",
@@ -742,12 +764,19 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       for (const k of ["size", "crust", "sauce", "cheese", "quantity", "notes"] as const) {
         if (input[k] !== undefined) merged[k] = input[k];
       }
+      // Accepting a day deal: same order, different item. Recompiled like any
+      // other change, so the swapped line is built and priced from scratch.
+      if (typeof input.swapToItemId === "string" && input.swapToItemId.trim()) {
+        merged.menuItemId = input.swapToItemId.trim();
+      }
       if (target._kind === "pizza") merged.toppings = toppings;
 
       const res = await api.buildLine({
         slug,
         kind: target._kind,
         intent: merged,
+        // No deal hunting on a REVISION — the caller has already chosen; being
+        // sold a different item mid-correction is confusing, not helpful.
         askGroupIds: ctx.cfg.pizzaAskGroups,
       });
       if (!res.ok) {

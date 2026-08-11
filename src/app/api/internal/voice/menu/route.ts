@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveScheduledMenuId } from "@/lib/menu-schedule";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
+import { isFulfilableAt } from "@/lib/menu-fulfilment";
 
 // Prisma can't run on the edge runtime.
 export const runtime = "nodejs";
@@ -35,7 +36,7 @@ export async function GET(req: NextRequest) {
 
   const restaurant = await prisma.restaurant.findFirst({
     where: { slug, isActive: true },
-    select: { id: true, name: true, currency: true },
+    select: { id: true, name: true, currency: true, timezone: true },
   });
   if (!restaurant) {
     return NextResponse.json({ error: "Restaurant not found", code: "not_found" }, { status: 404 });
@@ -87,6 +88,47 @@ export async function GET(req: NextRequest) {
       })),
     }));
 
+  // TODAY'S DEALS. An owner can declare that one item is the same thing as
+  // another, cheaper, on certain days ("Tuesday - Large Pizza Special" IS
+  // "Large 1 Topping"). Annotate the standard item so the agent can offer the
+  // cheaper one — computed HERE, from real prices and each deal's own fulfil
+  // window, because a language model comparing prices in its head is how a
+  // caller gets told the wrong thing. Only deals that actually run today
+  // survive `isFulfilableAt`, the same helper /api/orders validates with.
+  const dealPairs = await prisma.menuItemDeal.findMany({
+    where: { restaurantId: menuRestaurantId, active: true },
+    select: {
+      standardItemId: true,
+      dealItem: {
+        select: {
+          id: true, name: true, price: true, isAvailable: true, isSoldOut: true,
+          fulfilDays: true, fulfilFrom: true, fulfilTo: true, fulfilWindows: true,
+          variants: { select: { name: true, price: true }, orderBy: { sortOrder: "asc" } },
+        },
+      },
+    },
+    take: 100,
+  });
+  const now = new Date();
+  const dealsByStandard = new Map<
+    string,
+    { dealItemId: string; name: string; price: number; variants: Array<{ name: string; price: number }> }
+  >();
+  for (const d of dealPairs) {
+    const di = d.dealItem;
+    if (!di || !di.isAvailable || di.isSoldOut) continue;
+    if (!isFulfilableAt(di as never, now, restaurant.timezone ?? undefined)) continue;
+    const prev = dealsByStandard.get(d.standardItemId);
+    // Cheapest wins when a standard item has more than one deal running.
+    if (prev && prev.price <= di.price) continue;
+    dealsByStandard.set(d.standardItemId, {
+      dealItemId: di.id,
+      name: di.name,
+      price: di.price,
+      variants: di.variants.map((v) => ({ name: v.name, price: v.price })),
+    });
+  }
+
   const menu = categories.map((c) => ({
     category: c.name,
     items: c.menuItems.map((it) => {
@@ -117,6 +159,10 @@ export async function GET(req: NextRequest) {
               price: v.price,
               isDefault: v.isDefault,
             })),
+        // A cheaper equivalent running TODAY, if the owner declared one. The
+        // agent offers this instead; the authoritative total still comes from
+        // quote_order / place_order.
+        todayDeal: dealsByStandard.get(it.id) ?? null,
         // Item-level groups PLUS the category-level groups that apply to every
         // item — the /api/orders validator checks against this same union.
         modifierGroups: transferOnly

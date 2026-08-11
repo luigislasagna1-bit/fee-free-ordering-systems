@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
+import { findBetterDeal } from "@/lib/voice/day-deals";
 import { loadRawItem, loadComboData, shapeItemData } from "@/lib/voice/item-loader";
 import {
   compilePizzaLine,
@@ -59,7 +60,7 @@ export async function POST(req: NextRequest) {
 
   const restaurant = await prisma.restaurant.findFirst({
     where: { slug, isActive: true },
-    select: { id: true, currency: true },
+    select: { id: true, currency: true, timezone: true },
   });
   if (!restaurant) {
     return NextResponse.json({ error: "Restaurant not found", code: "not_found" }, { status: 404 });
@@ -93,5 +94,22 @@ export async function POST(req: NextRequest) {
     );
   }
   const result = compilePizzaLine(intent as PizzaIntent, item, opts);
-  return NextResponse.json(result);
+
+  // Is the SAME pizza cheaper today under one of the store's day deals? Only
+  // asked when the owner turned it on, and only when we have a line to compare
+  // against — a suggestion is a nicety and must never delay a broken order.
+  const betterDeal =
+    body.offerDeals === true && result.line
+      ? await findBetterDeal({
+          menuRestaurantId,
+          standardItemId: itemId,
+          intent: intent as PizzaIntent,
+          standardSubtotal: result.lineSubtotal,
+          timezone: restaurant.timezone,
+          askGroupIds,
+          currency: restaurant.currency,
+        })
+      : null;
+
+  return NextResponse.json({ ...result, betterDeal });
 }

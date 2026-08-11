@@ -326,3 +326,82 @@ describe("a pizza can never reach the order as a hand-written item", () => {
     expect(quoted.items).toHaveLength(1);
   });
 });
+
+/**
+ * DAY DEALS. Luigi tested on a Tuesday and paid $17.74 for a pizza his own menu
+ * was selling at $11.99 that day. The saving is computed server-side and comes
+ * back on the add_pizza result; the model's only job is to offer it and, if the
+ * caller says yes, ask for the swap — which recompiles like any other change.
+ */
+describe("day deals", () => {
+  it("passes the owner's setting through so deals are only hunted when enabled", async () => {
+    const c = ctx();
+    (c.cfg as { offerDayDeals?: boolean }).offerDayDeals = true;
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large 1 Topping", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+    expect((apiMock.buildLine.mock.calls[0][0] as { offerDeals: boolean }).offerDeals).toBe(true);
+  });
+
+  it("surfaces the deal with the SERVER's saving, never a recomputed one", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: {
+        line: line("mi_pizza"),
+        readBack: "Large 1 Topping with Pepperoni",
+        pricingNote: null,
+        unresolved: [],
+        betterDeal: { menuItemId: "mi_tuesday", name: "Tuesday - Large Pizza Special", saving: 5.75, subtotal: 11.99, readBack: "Tuesday Special with Pepperoni" },
+      },
+    });
+    const out = (await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c)) as any;
+    expect(out.betterDeal).toEqual({
+      name: "Tuesday - Large Pizza Special",
+      saves: 5.75,
+      swapTo: "mi_tuesday",
+      lineNumber: 1,
+    });
+    expect(String(out.instruction)).toContain("Tuesday - Large Pizza Special");
+  });
+
+  it("says nothing when there is no deal today", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large 1 Topping", pricingNote: null, unresolved: [], betterDeal: null },
+    });
+    const out = (await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c)) as any;
+    expect(out.betterDeal).toBeUndefined();
+    expect(String(out.instruction)).not.toContain("TELL THEM ABOUT THE DEAL");
+  });
+
+  it("accepting the deal SWAPS the line rather than adding a second pizza", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValueOnce({
+      ok: true,
+      json: {
+        line: line("mi_pizza"),
+        readBack: "Large 1 Topping with Pepperoni",
+        pricingNote: null,
+        unresolved: [],
+        betterDeal: { menuItemId: "mi_tuesday", name: "Tuesday Special", saving: 5.75, subtotal: 11.99, readBack: "Tuesday Special" },
+      },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza", toppings: [{ name: "pepperoni" }] }, c);
+
+    apiMock.buildLine.mockResolvedValueOnce({
+      ok: true,
+      json: { line: line("mi_tuesday"), readBack: "Tuesday Special with Pepperoni", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("revise_line", { lineNumber: 1, swapToItemId: "mi_tuesday" }, c);
+
+    expect(c.basket).toHaveLength(1);
+    const swapped = apiMock.buildLine.mock.calls[1][0] as { intent: any };
+    expect(swapped.intent.menuItemId).toBe("mi_tuesday");
+    // the caller's toppings survive the swap
+    expect(swapped.intent.toppings).toEqual([{ name: "pepperoni" }]);
+  });
+});
