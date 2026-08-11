@@ -60,6 +60,10 @@ export interface EndData {
   model: string | null;
   tokensIn: number | null;
   tokensOut: number | null;
+  /** Priced by the voice service, which is the only place that sees the
+   *  prompt-cache split (writes 1.25×, reads 0.1×). Recomputing it from
+   *  tokensIn alone would bill cached reads at the full input rate. */
+  costCents: number | null;
   durationSeconds: number | null;
 }
 
@@ -179,6 +183,7 @@ export function parseEndBody(b: unknown): ParseResult<EndData> {
       transferReason: str(body.transferReason, MAX_REASON_CHARS),
       transcript: capTranscript(body.transcript),
       model: str(body.model, 100),
+      costCents: nonNegInt(body.costCents),
       tokensIn: nonNegInt(body.tokensIn),
       tokensOut: nonNegInt(body.tokensOut),
       durationSeconds: nonNegInt(body.durationSeconds),

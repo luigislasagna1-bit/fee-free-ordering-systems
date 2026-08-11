@@ -89,25 +89,41 @@ export async function GET(req: NextRequest) {
 
   const menu = categories.map((c) => ({
     category: c.name,
-    items: c.menuItems.map((it) => ({
-      menuItemId: it.id,
-      name: it.name,
-      description: it.description ?? null,
-      price: it.price,
-      isSoldOut: it.isSoldOut,
-      isPizza: !!it.pizzaConfig, // builder item — v1 transfers to human
-      isCombo: !!it.comboConfig, // combo item — v1 transfers to human
-      hasVariants: it.hasVariants,
-      variants: it.variants.map((v) => ({
-        variantId: v.id,
-        name: v.name,
-        price: v.price,
-        isDefault: v.isDefault,
-      })),
-      // Item-level groups PLUS the category-level groups that apply to every
-      // item — the /api/orders validator checks against this same union.
-      modifierGroups: [...serializeGroups(it.modifierGroups), ...serializeGroups(c.modifierGroups)],
-    })),
+    items: c.menuItems.map((it) => {
+      const isPizza = !!it.pizzaConfig; // builder item — v1 transfers to human
+      const isCombo = !!it.comboConfig; // combo item — v1 transfers to human
+      // COST: this payload is the system prompt, re-sent on EVERY turn of every
+      // call. Pizza/combo items are transferred to a human in v1, so their
+      // variant + topping matrices are pure waste — measured at 66% of Luigi's
+      // menu (2,549 modifier options the agent may never sell). We still list
+      // the item by name + price so Nabil can recognize it and hand off
+      // gracefully ("we do have that — let me put you through"), just without
+      // the build tree. Restore these when voice can actually build a pizza.
+      const transferOnly = isPizza || isCombo;
+      return {
+        menuItemId: it.id,
+        name: it.name,
+        description: it.description ?? null,
+        price: it.price,
+        isSoldOut: it.isSoldOut,
+        isPizza,
+        isCombo,
+        hasVariants: it.hasVariants,
+        variants: transferOnly
+          ? []
+          : it.variants.map((v) => ({
+              variantId: v.id,
+              name: v.name,
+              price: v.price,
+              isDefault: v.isDefault,
+            })),
+        // Item-level groups PLUS the category-level groups that apply to every
+        // item — the /api/orders validator checks against this same union.
+        modifierGroups: transferOnly
+          ? []
+          : [...serializeGroups(it.modifierGroups), ...serializeGroups(c.modifierGroups)],
+      };
+    }),
   }));
 
   // Domain-biased ASR data (order-accuracy playbook #2 — the single biggest

@@ -42,6 +42,9 @@ export class CallSession {
   private language: string | null = null;
   private usageIn = 0;
   private usageOut = 0;
+  /** Cache split of usageIn — priced at 1.25× (write) and 0.1× (read). */
+  private usageCacheWrite = 0;
+  private usageCacheRead = 0;
   private startedAt = Date.now();
   private finalized = false;
   /** Real caller turns (prompt/dtmf events) — synthetic injected prompts
@@ -185,6 +188,23 @@ export class CallSession {
     for (const t of pending) await this.runTurn(t);
   }
 
+  /** What this call cost in Anthropic spend, in whole cents.
+   *  claude-sonnet-5 list price 2026-08: $3 / MTok input, $15 / MTok output.
+   *  Cache writes bill at 1.25× the input rate, cache reads at 0.1×; usageIn
+   *  is the TOTAL prompt tokens, so the cached portions are subtracted out of
+   *  the full-rate share before being re-added at their own rates. */
+  private costCents(): number {
+    const IN_PER_TOK = 3 / 1_000_000;
+    const OUT_PER_TOK = 15 / 1_000_000;
+    const uncachedIn = Math.max(0, this.usageIn - this.usageCacheWrite - this.usageCacheRead);
+    const dollars =
+      uncachedIn * IN_PER_TOK +
+      this.usageCacheWrite * IN_PER_TOK * 1.25 +
+      this.usageCacheRead * IN_PER_TOK * 0.1 +
+      this.usageOut * OUT_PER_TOK;
+    return Math.round(dollars * 100);
+  }
+
   /** maxCallSeconds cap, anchored at session start: one polite wrap-up nudge
    *  at T-45s, then a graceful hangup at T+15s if the call is still up. */
   private startMaxCallTimers() {
@@ -289,7 +309,15 @@ export class CallSession {
           // — the max_tokens continuation below is the backstop, this makes
           // it rare. Review wf_a62b0536.
           max_tokens: 2048,
-          system: this.system,
+          // PROMPT CACHING — the single biggest cost lever on this service.
+          // The system prompt carries the whole live menu and is byte-identical
+          // on every turn of a call, but was being re-billed at full price each
+          // turn: a real 135s call spent 1,686,948 input tokens ≈ $5.08, which
+          // is unsustainable against a $99/mo plan. Caching writes it once
+          // (1.25×) and reads it back at 0.1× on every later turn.
+          // Render order is tools → system → messages, so this breakpoint
+          // covers the tool definitions too. Requires system as a block array.
+          system: [{ type: "text", text: this.system, cache_control: { type: "ephemeral" } }],
           tools: this.tools as any,
           messages: this.messages,
           thinking: { type: "disabled" },
@@ -327,8 +355,18 @@ export class CallSession {
 
       this.messages.push({ role: "assistant", content: final.content });
       if (assistantText.trim()) this.transcript.push({ role: "assistant", text: assistantText, ts: new Date().toISOString() });
-      this.usageIn += final.usage?.input_tokens ?? 0;
-      this.usageOut += final.usage?.output_tokens ?? 0;
+      // input_tokens is the UNCACHED remainder once prompt caching is on —
+      // the cached prefix is reported separately. Keep tokensIn as the true
+      // total prompt size (so the dashboard doesn't suddenly read as ~0), and
+      // track the cache split so cost can be priced honestly: writes bill at
+      // 1.25× and reads at 0.1× of the input rate.
+      const u = final.usage ?? {};
+      const cacheWrite = u.cache_creation_input_tokens ?? 0;
+      const cacheRead = u.cache_read_input_tokens ?? 0;
+      this.usageIn += (u.input_tokens ?? 0) + cacheWrite + cacheRead;
+      this.usageCacheWrite += cacheWrite;
+      this.usageCacheRead += cacheRead;
+      this.usageOut += u.output_tokens ?? 0;
 
       if (final.stop_reason === "max_tokens") {
         // A truncated turn otherwise flushed last:true and the caller heard
@@ -485,6 +523,9 @@ export class CallSession {
         model: CONFIG.model,
         tokensIn: this.usageIn,
         tokensOut: this.usageOut,
+        // Priced here because only the service sees the cache split; the
+        // intelligence pass would otherwise bill cached reads at full rate.
+        costCents: this.costCents(),
         durationSeconds: Math.round((Date.now() - this.startedAt) / 1000),
       });
       if (!r.ok) console.error("[nabil-voice] logCall rejected", r.status);

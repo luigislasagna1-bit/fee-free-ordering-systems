@@ -87,6 +87,7 @@ export async function POST(req: NextRequest) {
     transferReason: d.transferReason,
     transcript: d.transcript,
     model: d.model,
+    costCents: d.costCents,
     tokensIn: d.tokensIn,
     tokensOut: d.tokensOut,
     durationSeconds: d.durationSeconds,

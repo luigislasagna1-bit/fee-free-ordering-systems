@@ -193,6 +193,7 @@ export async function generateCallIntelligence(callId: string): Promise<{
         durationSeconds: true,
         tokensIn: true,
         tokensOut: true,
+        costCents: true,
         restaurant: { select: { defaultLanguage: true, currency: true } },
       },
     });
@@ -274,8 +275,14 @@ export async function generateCallIntelligence(callId: string): Promise<{
       : 0;
     // costCents = the CALL's own model usage (VoiceCall.tokensIn/Out, written
     // by the voice service at hangup), not this summary pass's usage.
+    //
+    // Only computed here as a FALLBACK. Since prompt caching landed, the voice
+    // service sends an accurate costCents of its own — it is the only place
+    // that sees the cache split (writes 1.25×, reads 0.1× of the input rate),
+    // and tokensIn alone would bill every cached read at the full rate,
+    // overstating a cached call several-fold. Never overwrite a stored value.
     const costCents =
-      call.tokensIn != null || call.tokensOut != null
+      call.costCents == null && (call.tokensIn != null || call.tokensOut != null)
         ? computeCostCents(call.tokensIn ?? 0, call.tokensOut ?? 0)
         : null;
 
