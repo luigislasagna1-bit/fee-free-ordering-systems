@@ -86,6 +86,28 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A44. 📍 "Could not geocode this address" (Sofia Chilly meals, Islamabad) — FIXED, one check is yours (2026-08-10)
+What actually happened: nothing to do with the Pakistan country work from yesterday. The address
+`B17, Islamabad, Qurtabad School` contains a landmark that **is not in OpenStreetMap**, and
+Nominatim (our free geocoder) is AND-matching — one token it can't match returns zero results, no
+partial or fuzzy match. Proven by running the exact query: with the school in it → nothing; with
+the school removed → an immediate hit.
+
+Built today so the next non-Western store doesn't hit the same wall:
+- Admin geocoding no longer calls OpenStreetMap from the browser (the `User-Agent` browsers require
+  us to send was being silently dropped, so we were hitting them anonymously and could be blocked).
+  It goes through our own server now, biased to the restaurant's country, and cached.
+- When the full address misses, the server retries progressively shorter queries. If it can only
+  land a city-level pin it now **says so** ("drag the pin to your exact spot") instead of pretending
+  it's exact — and automatic/silent geocoding refuses coarse pins entirely, because a confidently
+  wrong pin points every delivery-zone radius at the wrong origin.
+
+1. ☐ **Check Sofia Chilly meals' address fields.** Picking an OSM suggestion overwrites the
+   Address/City/Province/Postal fields with OSM's version — the second suggestion you tried was a
+   private house filed under Taxila Tehsil, so the store's saved address may now read
+   "Jutt House B17, House 3006, Street 108, MPCHS Block-E". The map pin is correct (33.683162,
+   72.807489); it's the printed/emailed address text worth a look.
+
 ### A43. 💵 Driver tip share (you want drivers to get 25%) — TWO checks are yours (2026-08-10)
 Context: ShipDay dispatch is FIXED as of today (auto-accepted orders silently never dispatched since
 you turned auto-accept on Aug 6 — commit cf88e72e, live and verified). Pre-orders now land in

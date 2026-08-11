@@ -60,6 +60,8 @@ type Restaurant = {
   city: string | null;
   state: string | null;
   zip: string | null;
+  /** ISO-3166 alpha-2 — biases geocoding to the restaurant's own country. */
+  country?: string | null;
   name: string | null;
   mapProvider?: "leaflet" | "google";
   googleMapsApiKey?: string | null;
@@ -92,6 +94,9 @@ export function DeliveryClient({
   const t = useTranslations("admin.delivery");
   const tCommon = useTranslations("common");
   const tToasts = useTranslations("admin.toasts");
+  // Shared with Restaurant Profile: one "this pin is approximate" string for
+  // both geocoding entry points rather than the same sentence keyed twice ×38.
+  const tProfile = useTranslations("admin.profile");
   const curSym = useCurrencySymbol();
   const [zones, setZones] = useState<Zone[]>(initial);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -189,41 +194,54 @@ export function DeliveryClient({
   // ── Geocode from profile address ──────────────────────────────────────────
   const geocodeRestaurant = async () => {
     if (!restaurant) return;
-    const addr = [restaurant.address, restaurant.city, restaurant.state, restaurant.zip]
-      .filter(Boolean)
-      .join(", ");
-    if (!addr) {
+    const hasAddress = [restaurant.address, restaurant.city, restaurant.state, restaurant.zip]
+      .some((v) => (v || "").trim());
+    if (!hasAddress) {
       toast.error(t("toastNoAddress"));
       return;
     }
     setGeolocating(true);
     try {
-      const encoded = encodeURIComponent(addr);
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1`,
-        { headers: { "User-Agent": "FeeFreeOrderingSystems/1.0" } }
-      );
-      const data = await res.json();
-      if (!data.length) {
+      // Server-side proxy, never Nominatim direct from the browser — it sets
+      // the identifying User-Agent, biases to this restaurant's country, and
+      // walks the shortening fallback ladder. See src/lib/nominatim.ts.
+      const res = await fetch("/api/admin/geocode/resolve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          address: restaurant.address,
+          city: restaurant.city,
+          state: restaurant.state,
+          zip: restaurant.zip,
+          country: restaurant.country,
+        }),
+      });
+      const { match } = await res.json();
+      if (!match) {
         toast.error(t("toastAddressNotFound"));
         return;
       }
-      const lat = parseFloat(data[0].lat);
-      const lng = parseFloat(data[0].lon);
-      setRestaurantLat(lat);
-      setRestaurantLng(lng);
+      setRestaurantLat(match.lat);
+      setRestaurantLng(match.lng);
 
       // Persist to DB so Delivery Zones page always loads with correct coords
       await fetch("/api/restaurants/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lat, lng }),
+        body: JSON.stringify({ lat: match.lat, lng: match.lng }),
       });
-      toast.success(t("toastLocationPinned"));
+      if (match.precise) {
+        toast.success(t("toastLocationPinned"));
+      } else {
+        toast(tProfile("geocodeApproximate", { place: match.label }), { icon: "📍", duration: 8000 });
+      }
     } catch {
       toast.error(t("toastGeocodeFailed"));
+    } finally {
+      // finally, not a trailing call: the "not found" branch returns early and
+      // used to leave the button spinning forever.
+      setGeolocating(false);
     }
-    setGeolocating(false);
   };
 
   // ── Restaurant marker drag ────────────────────────────────────────────────

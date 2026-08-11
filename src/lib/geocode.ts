@@ -1,10 +1,20 @@
+/**
+ * Single-string geocode, server-side only (raw free-form query, no fallback).
+ * For structured address fields prefer `resolveAddress()` in
+ * `src/lib/nominatim.ts` — it biases by country and walks a shortening ladder
+ * instead of returning null the moment one token doesn't match OSM.
+ */
 export async function geocodeAddress(address: string): Promise<{ lat: number; lng: number } | null> {
   if (!address.trim()) return null;
   try {
     const encoded = encodeURIComponent(address);
     const res = await fetch(
       `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1`,
-      { headers: { "User-Agent": "FeeFreeOrderingSystems/1.0" }, signal: AbortSignal.timeout(5000) }
+      {
+        // Nominatim's policy requires an identifying UA *with a contact*.
+        headers: { "User-Agent": "FeeFreeOrderingSystems/1.0 (support@feefreeordering.com)" },
+        signal: AbortSignal.timeout(5000),
+      }
     );
     if (!res.ok) return null;
     const data = await res.json();

@@ -3,12 +3,17 @@
  * ProfileClient — Restaurant Profile admin page.
  *
  * Location section (new):
- * • Address autocomplete using Nominatim (free, no API key needed).
- *   Searching is debounced 400 ms to respect Nominatim's 1 req/s guideline.
+ * • Address autocomplete via /api/admin/geocode/search (server-side Nominatim
+ *   proxy — see src/lib/nominatim.ts for why this must NOT be called from the
+ *   browser). Debounced 400 ms to respect Nominatim's 1 req/s guideline.
  * • Interactive Leaflet map (ProfileMap, SSR-disabled) with a draggable marker.
- * • "Geocode from address fields" button re-geocodes using the structured fields.
+ * • "Geocode from address fields" button re-geocodes using the structured
+ *   fields, falling back to progressively shorter queries. A coarse (city-level)
+ *   hit is reported AS approximate — never dressed up as an exact pin.
  * • On every Save, if lat/lng are still null, an auto-geocode attempt is made
  *   from the address fields before the PUT so the DB is always up to date.
+ *   Automatic paths are preciseOnly: a silent city-centroid pin would point
+ *   every delivery-zone radius at the wrong origin while looking "done".
  *
  * IMPORTANT — sub-component pattern:
  * LocationSection is defined at MODULE level (not inside ProfileClient) so that
@@ -20,7 +25,7 @@ import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { COUNTRIES, CURRENCIES, defaultsForCountry, regionForCountry, allTimezones } from "@/lib/regions";
 import { LOCALE_OPTIONS, SUPPORTED_LOCALES } from "@/lib/locales";
-import { composeStreetLine } from "@/lib/delivery-address-fields";
+import type { GeoSuggestion } from "@/lib/nominatim";
 
 // Every supported language ships a dictionary now, so the country→language
 // cascade can auto-apply any of them.
@@ -91,28 +96,6 @@ type FormState = {
   logoUrl: string; bannerUrl: string; faviconUrl: string;
   reviewLink: string; infoContent: string;
   defaultLanguage: string;
-};
-
-/** One result from Nominatim's /search endpoint with addressdetails=1 */
-type NominatimPlace = {
-  place_id: number;
-  display_name: string;
-  lat: string;
-  lon: string;
-  address: {
-    house_number?: string;
-    road?: string;
-    city?: string;
-    town?: string;
-    village?: string;
-    municipality?: string;
-    county?: string;
-    state?: string;
-    province?: string;
-    postcode?: string;
-    country?: string;
-    country_code?: string;
-  };
 };
 
 type AddressFill = Pick<FormState, "address" | "city" | "state" | "zip" | "country">;
@@ -325,7 +308,7 @@ function LocationSection({
 }: LocationSectionProps) {
   const tProfile = useTranslations("admin.profile");
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<NominatimPlace[]>([]);
+  const [suggestions, setSuggestions] = useState<GeoSuggestion[]>([]);
   const [searching, setSearching] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [geocoding, setGeocoding] = useState(false);
@@ -345,70 +328,77 @@ function LocationSection({
     debounceRef.current = setTimeout(async () => {
       setSearching(true);
       try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search` +
-          `?q=${encodeURIComponent(q)}&format=json&limit=6&addressdetails=1`,
-          { headers: { "User-Agent": "FeeFreeOrderingSystems/1.0" } }
-        );
-        if (res.ok) setSuggestions(await res.json());
+        // Server-side proxy, never Nominatim direct: it sets the identifying
+        // User-Agent the browser would drop, biases results to this
+        // restaurant's country, and caches. See src/lib/nominatim.ts.
+        const params = new URLSearchParams({ q });
+        if (country) params.set("country", country);
+        const res = await fetch(`/api/admin/geocode/search?${params.toString()}`);
+        if (res.ok) {
+          const data = await res.json();
+          setSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
+        }
       } catch {
         // Silently ignore — network hiccup shouldn't break the form
       }
       setSearching(false);
     }, 400);
-  }, []);
+  }, [country]);
 
   // ── Select a suggestion ─────────────────────────────────────────────────
-  const selectPlace = useCallback((place: NominatimPlace) => {
-    const newLat = parseFloat(place.lat);
-    const newLng = parseFloat(place.lon);
-    onCoordsChange(newLat, newLng);
+  const selectPlace = useCallback((place: GeoSuggestion) => {
+    onCoordsChange(place.lat, place.lng);
     // These exact coords are authoritative — tell the auto-geocode effect to
     // skip the field-fill it's about to trigger (no redundant re-geocode).
     skipNextAutoRef.current = true;
 
-    // Decompose Nominatim's addressdetails into our structured fields. The
-    // street follows the restaurant's country convention (number after the
+    // The proxy already decomposed the match into our structured fields; the
+    // street line follows the matched country's convention (number after the
     // street name in IT/DE/…, before it in US/CA/…). Fabrizio 2026-06-24.
-    const a = place.address;
-    const streetNum = a.house_number ?? "";
-    const road = a.road ?? "";
-    const streetLine = composeStreetLine(road, streetNum, a.country_code)
-      || place.display_name.split(",")[0]; // fallback: first segment
-
     onAddressFill({
-      address: streetLine,
-      city: a.city || a.town || a.village || a.municipality || a.county || "",
-      state: a.state || a.province || "",
-      zip: a.postcode || "",
-      country: (a.country_code ?? "").toUpperCase() || "CA",
+      address: place.line1 || place.label.split(",")[0],
+      city: place.city,
+      state: place.state,
+      zip: place.postcode,
+      // Fall back to the country ALREADY on the form — never a hardcoded one.
+      // Defaulting to "CA" here is how a Pakistani store ends up stamped Canada.
+      country: place.countryCode || country,
     });
 
-    setQuery(place.display_name);
+    setQuery(place.label);
     setSuggestions([]);
     setShowDropdown(false);
-  }, [onCoordsChange, onAddressFill]);
+  }, [onCoordsChange, onAddressFill, country]);
 
   // ── Geocode from existing address fields ────────────────────────────────
   const geocodeFromFields = useCallback(async () => {
-    const addrStr = [address, city, state, zip, country].filter(Boolean).join(", ");
-    if (!addrStr.trim()) {
+    // The country alone is never enough — it's always populated (it defaults),
+    // so checking the joined string here would make this guard unreachable.
+    if (![address, city, state, zip].some((v) => (v || "").trim())) {
       toast.error(tProfile("fillAddressFirst"));
       return;
     }
     setGeocoding(true);
     try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search` +
-        `?q=${encodeURIComponent(addrStr)}&format=json&limit=1`,
-        { headers: { "User-Agent": "FeeFreeOrderingSystems/1.0" } }
-      );
-      const data: NominatimPlace[] = await res.json();
-      if (data.length) {
-        const newLat = parseFloat(data[0].lat);
-        const newLng = parseFloat(data[0].lon);
-        onCoordsChange(newLat, newLng);
-        toast.success(tProfile("locationPinnedFromAddress"));
+      const res = await fetch("/api/admin/geocode/resolve", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ address, city, state, zip, country }),
+      });
+      const { match } = await res.json();
+      if (match) {
+        onCoordsChange(match.lat, match.lng);
+        if (match.precise) {
+          toast.success(tProfile("locationPinnedFromAddress"));
+        } else {
+          // Say so when we had to fall back to a coarser query — a city-centroid
+          // pin looks identical to an exact one on the map, and it silently
+          // becomes the origin for every delivery-zone radius.
+          toast(tProfile("geocodeApproximate", { place: match.label }), {
+            icon: "📍",
+            duration: 8000,
+          });
+        }
       } else {
         toast.error(tProfile("geocodeNotFound"));
       }
@@ -445,15 +435,18 @@ function LocationSection({
     if (autoGeoTimerRef.current) clearTimeout(autoGeoTimerRef.current);
     autoGeoTimerRef.current = setTimeout(async () => {
       lastGeoKeyRef.current = key;
-      const addrStr = [address, city, state, zip, country].filter(Boolean).join(", ");
       setGeocoding(true);
       try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(addrStr)}&format=json&limit=1`,
-          { headers: { "User-Agent": "FeeFreeOrderingSystems/1.0" } },
-        );
-        const data: NominatimPlace[] = await res.json();
-        if (data.length) onCoordsChange(parseFloat(data[0].lat), parseFloat(data[0].lon));
+        const res = await fetch("/api/admin/geocode/resolve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          // preciseOnly: an automatic pin must be street-level. Silently
+          // dropping a city-centroid pin would look "done" while pointing
+          // every delivery-zone radius at the wrong origin.
+          body: JSON.stringify({ address, city, state, zip, country, preciseOnly: true }),
+        });
+        const { match } = await res.json();
+        if (match) onCoordsChange(match.lat, match.lng);
       } catch {
         // Silent — the manual "Geocode from address fields" button stays as fallback.
       }
@@ -533,13 +526,13 @@ function LocationSection({
           <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden">
             {suggestions.map((place) => (
               <button
-                key={place.place_id}
+                key={place.id}
                 className="w-full text-left px-3 py-2.5 text-sm hover:bg-emerald-50 border-b border-gray-50 last:border-0 transition"
                 onClick={() => selectPlace(place)}
               >
                 <div className="flex items-start gap-2">
                   <MapPin className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-gray-800 leading-snug">{place.display_name}</span>
+                  <span className="text-gray-800 leading-snug">{place.label}</span>
                 </div>
               </button>
             ))}
@@ -660,21 +653,27 @@ export function ProfileClient({ restaurant }: { restaurant: any }) {
       let saveLat = lat;
       let saveLng = lng;
 
-      // Auto-geocode if we have an address but no coordinates yet
+      // Auto-geocode if we have an address but no coordinates yet. preciseOnly:
+      // a wrong-but-confident pin is worse than none — "No location set" is a
+      // visible warning that prompts the owner to fix it.
       if ((saveLat === null || saveLng === null) && form.address) {
-        const addrStr = [form.address, form.city, form.state, form.zip, form.country]
-          .filter(Boolean)
-          .join(", ");
         try {
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/search` +
-            `?q=${encodeURIComponent(addrStr)}&format=json&limit=1`,
-            { headers: { "User-Agent": "FeeFreeOrderingSystems/1.0" } }
-          );
-          const data: NominatimPlace[] = await res.json();
-          if (data.length) {
-            saveLat = parseFloat(data[0].lat);
-            saveLng = parseFloat(data[0].lon);
+          const res = await fetch("/api/admin/geocode/resolve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              address: form.address,
+              city: form.city,
+              state: form.state,
+              zip: form.zip,
+              country: form.country,
+              preciseOnly: true,
+            }),
+          });
+          const { match } = await res.json();
+          if (match) {
+            saveLat = match.lat;
+            saveLng = match.lng;
             setLat(saveLat);
             setLng(saveLng);
           }
