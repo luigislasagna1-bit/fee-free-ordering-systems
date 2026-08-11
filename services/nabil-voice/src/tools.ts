@@ -29,6 +29,10 @@ export type ToolContext = {
    *  the same customer (promo eligibility is per-customer). */
   customerPhone?: string;
   customerName?: string;
+  /** The last total quote_order spoke aloud. If place_order comes back with a
+   *  different number, the caller agreed to a price we are not charging — say
+   *  so out loud rather than quietly billing something else. */
+  lastQuotedTotal?: number;
   /** menuItemIds the menu flags as PIZZA or COMBO. The model may never send
    *  these as hand-written `items` — they only ever reach an order through the
    *  compiler (add_pizza / add_combo). See mergeBasket. */
@@ -439,8 +443,28 @@ function twoTokenName(name: string): string {
  *  guard passes; the domain is pre-seeded into EmailSuppression so it never
  *  actually sends/bounces. Confirmations go by SMS. */
 function sentinelEmail(phone: string): string {
-  const d = digits(phone) || "unknown";
-  return `voice.${d}@voice.nabil.invalid`;
+  return `voice.${canonicalPhone(phone) || "unknown"}@voice.nabil.invalid`;
+}
+
+/**
+ * ONE canonical form for a caller's number — because the sentinel email above
+ * IS the customer's identity, and identity decides which promotions apply.
+ *
+ * Live on 2026-08-11 (ORD-176217204): Nabil quoted "eighteen oh five — you
+ * qualify for our first-time customer special", then charged twenty oh five.
+ * Nothing was wrong with the promo engine. The caller ID arrives as
+ * +16476690808 and the caller then read his number as "(647) 669-0808", so the
+ * quote was priced as `voice.16476690808@…` (a customer that has never
+ * existed → brand new → first-order discount) and the charge as
+ * `voice.6476690808@…` (four previous orders → no discount). Same person, two
+ * customers, two prices, and the caller agreed to the wrong one.
+ *
+ * North-American numbers reach us both ways, so the country code is dropped
+ * when it is unambiguously there. Anything else is left alone.
+ */
+function canonicalPhone(phone: string): string {
+  const d = digits(phone);
+  return d.length === 11 && d.startsWith("1") ? d.slice(1) : d;
 }
 
 export async function executeTool(name: string, input: any, ctx: ToolContext): Promise<unknown> {
@@ -573,8 +597,18 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         }
       }
 
+      // The caller said yes to a NUMBER. If the charge came back different,
+      // that is the one thing they must hear about — 2026-08-11, ORD-176217204
+      // was quoted eighteen oh five and charged twenty oh five because the
+      // quote and the charge resolved to different customers.
+      const quoted = ctx.lastQuotedTotal;
+      const totalMoved =
+        typeof quoted === "number" && typeof total === "number" && Math.abs(total - quoted) > 0.005;
+      ctx.lastQuotedTotal = undefined;
+
       return {
         ok: true, orderId, orderNumber, total, receiptTexted,
+        ...(totalMoved ? { quotedTotal: quoted, totalChanged: true } : {}),
         ...(promoDiscount > 0 ? { discountApplied: promoDiscount, discountNames: promoNames } : {}),
         instruction:
           (receiptTexted
@@ -582,6 +616,9 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
             : // No text went out (texting off, no caller ID, or it failed) —
               // then the spoken number is all they have, so give it clearly.
               "Read the caller their order number clearly — no receipt text could be sent, so it's the only record they'll have. ") +
+          (totalMoved
+            ? `⚠️ THE TOTAL CHANGED since you quoted ${quoted}. Tell the caller plainly what it is now and why if you know (a discount that did not apply). Never let them hang up believing the old number. `
+            : "") +
           "Read this exact total — it is the authoritative charged amount including tax." +
           (promoDiscount > 0
             ? " A discount was applied automatically — briefly mention it as good news (name it if a name is given) so the total doesn't sound like an error."
@@ -811,6 +848,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         };
       }
       const q = res.json ?? {};
+      ctx.lastQuotedTotal = typeof q.total === "number" ? q.total : undefined;
       return {
         ok: true,
         total: q.total,
