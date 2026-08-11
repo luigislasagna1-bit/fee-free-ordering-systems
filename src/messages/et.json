@@ -4292,7 +4292,10 @@
         "languageMix": "Keeled",
         "sentimentMix": "Meelestatus",
         "recentActivity": "Hiljutine tegevus",
-        "viewAll": "Vaata kõiki kõnesid"
+        "viewAll": "Vaata kõiki kõnesid",
+        "chartPopularItems": "Telefoni teel enim tellitud",
+        "popularItemsCta": "Määra esiletõstetud lisamüügid",
+        "popularItemsEmpty": "Selles ajavahemikus pole veel telefonitellimusi."
       },
       "callLog": {
         "searchPlaceholder": "Otsi telefoni, nime või kokkuvõtte järgi…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Ajastatud tellimused kasutavad samu hilisemaks ajastamise ajavahemikke nagu teie veebitellimise leht.",
         "maxCallSeconds": "Kõne maksimaalne pikkus (sekundites)",
         "maxCallHelp": "Kui see piir saab täis, võtab Nabil jutu viisakalt kokku ja lõpetab kõne. Vahemikus 60 kuni 1800 sekundit (30 minutit).",
-        "paymentsNotLiveNote": "Telefonimaksed aktiveeruvad, kui lingiga maksmine valmis saab — praegu tasutakse kõik häältellimused kohapeal. Teie siinsed valikud salvestatakse ja rakenduvad automaatselt, kui see kasutusele jõuab."
+        "paymentsNotLiveNote": "Telefonimaksed aktiveeruvad, kui lingiga maksmine valmis saab — praegu tasutakse kõik häältellimused kohapeal. Teie siinsed valikud salvestatakse ja rakenduvad automaatselt, kui see kasutusele jõuab.",
+        "voicesLoading": "Häälte laadimine…",
+        "voiceDefault": "Vaikimisi hääl",
+        "voiceDefaultHint": "Mida iganes telefonisüsteem pakub — töötab alati",
+        "voiceFemale": "Naishääl",
+        "voiceMale": "Meeshääl",
+        "previewHint": "Vajuta esitusnuppu, et kuulda, kuidas hääl loeb ette sinu enda tervituse.",
+        "previewUnavailable": "Häälenäidised pole veel sisse lülitatud. Hääle saad siiski valida — salvesta ja helista siis oma numbrile, et seda kuulda.",
+        "previewFailed": "Näidist ei õnnestunud esitada. Proovi hetke pärast uuesti.",
+        "voiceSpeedHelp": "Kui kiiresti Nabil räägib. Aeglasemat on mürarikkal liinil lihtsam jälgida, kiirem mõjub hoogsamalt. Kehtib kõigi kõnede puhul.",
+        "multilingualTitle": "Teiste keelte mõistmine",
+        "multilingualHint": "Vali kõik keeled, mida sinu helistajad kasutavad. Nabil tuvastab keele automaatselt ja vastab samas keeles — jäta kõik välja lülitatuks, et suhelda ainult sinu põhikeeles.",
+        "payAtDoorTitle": "Luba klientidel maksta kullerile ukse juures",
+        "payAtDoorHint": "Kohaletoimetamine toimib nagu järeletulek: helistaja ei maksa telefonis, vaid tasub sularahas või kaardiga siis, kui toit kohale jõuab. Tellimus luuakse ikkagi ShipDay süsteemis, nii et näed seda ka seal.",
+        "payAtDoorWarning": "Nende tellimuste jaoks ShipDay kullerit ei tellita — need toimetavad kohale sinu enda töötajad, kes koguvad ka raha. See on sinu vastutus, mitte ShipDay oma."
       },
       "faqMgr": {
         "title": "KKK, millele Nabil vastab",

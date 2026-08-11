@@ -5,7 +5,7 @@ import prisma from "@/lib/db";
 import { OrderingPageClient } from "./OrderingPageClient";
 import { SandboxClaimBanner } from "./SandboxClaimBanner";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
-import { shouldDispatchToShipday } from "@/lib/shipday";
+import { shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday";
 import { resolveInheritedHours, resolveInheritedZones } from "@/lib/inherited-data";
 import { VisitTracker } from "@/components/order/VisitTracker";
 import { TrackingConsentGate } from "@/components/order/TrackingConsentGate";
@@ -350,7 +350,13 @@ export default async function OrderingPage({
   // collection). The checkout uses this to hide cash / card-in-person for
   // delivery. One indexed ShipdayConfig lookup; if this page's query count
   // ever matters at scale, this is a cacheable seam (config changes rarely).
-  const shipdayPrepaidDelivery = await shouldDispatchToShipday(restaurant.id);
+  // Pay-at-door (Luigi 2026-08-11) opts a store out: their own staff delivers
+  // and collects, ShipDay only gets a record. Off by default, so nothing
+  // changes for a store that hasn't turned it on. The `/api/orders` guard is
+  // the tamper-proof half and reads the same two flags.
+  const shipdayPrepaidDelivery =
+    (await shouldDispatchToShipday(restaurant.id)) &&
+    !(await shipdayPayAtDoorEnabled(restaurant.id));
 
   // Card payments (KEY-ONLY model) require BOTH:
   //   1. THIS restaurant has saved active Stripe API keys (PaymentProvider)

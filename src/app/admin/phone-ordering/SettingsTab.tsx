@@ -8,9 +8,12 @@ import NabilConfigClient from "./NabilConfigClient";
  * sub-tabbed client (General / Voice / Ordering / Payments / FAQ / Blocked).
  */
 export default async function SettingsTab({ restaurantId }: { restaurantId: string }) {
-  const [config, cashDeliveryBlocked, faqs, textLinks, blockedCallers] = await Promise.all([
+  const [config, shipdayDispatches, shipdayCfg, faqs, textLinks, blockedCallers] = await Promise.all([
     prisma.voiceAgentConfig.findUnique({ where: { restaurantId } }),
     shouldDispatchToShipday(restaurantId).catch(() => false),
+    prisma.shipdayConfig
+      .findUnique({ where: { restaurantId }, select: { payAtDoorDelivery: true } })
+      .catch(() => null),
     prisma.voiceFaq.findMany({
       where: { restaurantId },
       orderBy: [{ category: "asc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
@@ -29,10 +32,17 @@ export default async function SettingsTab({ restaurantId }: { restaurantId: stri
     }),
   ]);
 
+  // "Blocked" only when ShipDay dispatches AND the owner has not opted into
+  // pay-at-door. With pay-at-door on, the delivery mode selector unlocks and the
+  // store takes responsibility for the delivery itself (Luigi 2026-08-11).
+  const payAtDoor = !!shipdayCfg?.payAtDoorDelivery;
+
   return (
     <NabilConfigClient
       initialConfig={config as Record<string, unknown> | null}
-      cashDeliveryBlocked={!!cashDeliveryBlocked}
+      shipdayDispatches={!!shipdayDispatches}
+      payAtDoorDelivery={payAtDoor}
+      cashDeliveryBlocked={!!shipdayDispatches && !payAtDoor}
       initialFaqs={faqs}
       initialTextLinks={textLinks}
       initialBlockedCallers={blockedCallers.map((b) => ({ ...b, createdAt: b.createdAt.toISOString() }))}

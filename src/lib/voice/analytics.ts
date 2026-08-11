@@ -447,3 +447,96 @@ export async function fetchUpsellRevenueCents(
     0,
   );
 }
+
+/* ──────────────────── most-ordered-by-phone (Overview) ─────────────────── */
+
+/** One row of "what callers actually order". */
+export type PopularPhoneItem = {
+  /** Menu name as it was sold (OrderItem.name is the order-time snapshot, so a
+   *  renamed item still reports under the name the caller was offered). */
+  name: string;
+  /** Units sold across surviving voice orders. */
+  quantity: number;
+  /** How many distinct voice orders contained it. */
+  orders: number;
+};
+
+/** Aggregate order lines into a ranked "most ordered by phone" list. PURE so
+ *  the ranking rules are unit-tested; the fetcher only supplies rows.
+ *
+ *  Deliberately counts UNITS and ORDERS, not money: an item's share of an
+ *  order's money is not well defined once promos and store credit are applied
+ *  (store credit is a tender, not income — see collected.ts), and the question
+ *  this answers is "what should I put in Featured Upsells?", which is a
+ *  popularity question. */
+export function rankPopularItems(
+  rows: Array<{ orderNumber: string; name: string; quantity: number }>,
+  limit = 8,
+): PopularPhoneItem[] {
+  const byName = new Map<string, { quantity: number; orders: Set<string> }>();
+  for (const r of rows) {
+    const name = (r.name || "").trim();
+    if (!name) continue;
+    let e = byName.get(name);
+    if (!e) {
+      e = { quantity: 0, orders: new Set() };
+      byName.set(name, e);
+    }
+    e.quantity += Math.max(0, Number(r.quantity) || 0);
+    e.orders.add(r.orderNumber);
+  }
+  return [...byName.entries()]
+    .map(([name, e]) => ({ name, quantity: e.quantity, orders: e.orders.size }))
+    .sort((a, b) => b.quantity - a.quantity || b.orders - a.orders || a.name.localeCompare(b.name))
+    .slice(0, Math.max(1, limit));
+}
+
+/**
+ * What phone callers order most — the figure that tells an owner what to put in
+ * Featured Upsells (Loman markets "most popular items"; we can be exact because
+ * we own the order, not a POS mirror).
+ *
+ * Same join and same status filter as every other money figure on this page:
+ * VoiceCall.orderNumber → Order (restaurant-scoped + REPORT_ORDER_STATUS_WHERE,
+ * so a rejected or cancelled order stops counting) → OrderItem.
+ */
+export async function fetchPopularPhoneItems(
+  restaurantId: string,
+  range: { from: Date; to: Date },
+  limit = 8,
+): Promise<PopularPhoneItem[]> {
+  const { default: prisma } = await import("@/lib/db");
+
+  const calls = await prisma.voiceCall.findMany({
+    where: {
+      restaurantId,
+      startedAt: { gte: range.from, lte: range.to },
+      orderNumber: { not: null },
+    },
+    select: { orderNumber: true },
+    take: CALL_FETCH_CAP,
+  });
+  const orderNumbers = Array.from(
+    new Set(calls.map((c) => c.orderNumber).filter((n): n is string => !!n)),
+  );
+  if (!orderNumbers.length) return [];
+
+  // One query, restaurant-scoped through the parent order. `take` is a hard
+  // ceiling so a busy month can never load an unbounded line set.
+  const lines = await prisma.orderItem.findMany({
+    where: {
+      order: {
+        restaurantId,
+        status: REPORT_ORDER_STATUS_WHERE.status,
+        orderNumber: { ...REPORT_ORDER_STATUS_WHERE.orderNumber, in: orderNumbers },
+      },
+    },
+    select: { name: true, quantity: true, order: { select: { orderNumber: true } } },
+    take: 5000,
+  });
+
+  return rankPopularItems(
+    lines.map((l) => ({ orderNumber: l.order.orderNumber, name: l.name, quantity: l.quantity })),
+    limit,
+  );
+}

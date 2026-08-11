@@ -4292,7 +4292,10 @@
         "languageMix": "Sprachen",
         "sentimentMix": "Stimmung",
         "recentActivity": "Letzte Aktivitäten",
-        "viewAll": "Alle Anrufe anzeigen"
+        "viewAll": "Alle Anrufe anzeigen",
+        "chartPopularItems": "Am häufigsten telefonisch bestellt",
+        "popularItemsCta": "Hervorgehobene Upsells festlegen",
+        "popularItemsEmpty": "Noch keine Telefonbestellungen in diesem Zeitraum."
       },
       "callLog": {
         "searchPlaceholder": "Telefon, Name oder Zusammenfassung suchen…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Geplante Bestellungen nutzen dieselben Vorbestellungs-Zeitfenster wie Ihre Online-Bestellseite.",
         "maxCallSeconds": "Maximale Anrufdauer (Sekunden)",
         "maxCallHelp": "Nabil beendet das Gespräch höflich, sobald dieses Limit erreicht ist. Zwischen 60 und 1800 Sekunden (30 Minuten).",
-        "paymentsNotLiveNote": "Telefonzahlungen werden aktiviert, sobald die Zahlung per Link verfügbar ist — derzeit wird jede Telefonbestellung im Restaurant bezahlt. Ihre Auswahl wird gespeichert und automatisch übernommen, sobald die Funktion live geht."
+        "paymentsNotLiveNote": "Telefonzahlungen werden aktiviert, sobald die Zahlung per Link verfügbar ist — derzeit wird jede Telefonbestellung im Restaurant bezahlt. Ihre Auswahl wird gespeichert und automatisch übernommen, sobald die Funktion live geht.",
+        "voicesLoading": "Stimmen werden geladen…",
+        "voiceDefault": "Standardstimme",
+        "voiceDefaultHint": "Was das Telefonsystem gerade bereitstellt — funktioniert immer",
+        "voiceFemale": "Weiblich",
+        "voiceMale": "Männlich",
+        "previewHint": "Klicken Sie auf Wiedergabe, um zu hören, wie die Stimme Ihre eigene Begrüßung vorliest.",
+        "previewUnavailable": "Stimmproben sind noch nicht aktiviert. Sie können trotzdem eine Stimme auswählen — speichern Sie und rufen Sie dann Ihre Nummer an, um sie zu hören.",
+        "previewFailed": "Die Stimmprobe konnte nicht abgespielt werden. Versuchen Sie es gleich noch einmal.",
+        "voiceSpeedHelp": "Wie schnell Nabil spricht. Langsamer ist auf einer lauten Leitung leichter zu verstehen, schneller wirkt flotter. Gilt für jeden Anruf.",
+        "multilingualTitle": "Andere Sprachen verstehen",
+        "multilingualHint": "Wählen Sie jede Sprache aus, die Ihre Anrufer sprechen. Nabil erkennt sie automatisch und antwortet in derselben Sprache — lassen Sie alle aus, wenn nur Ihre Hauptsprache verwendet werden soll.",
+        "payAtDoorTitle": "Kunden beim Fahrer an der Tür bezahlen lassen",
+        "payAtDoorHint": "Lieferung funktioniert wie Abholung: Der Anrufer zahlt nicht am Telefon, sondern bar oder mit Karte, wenn das Essen ankommt. Die Bestellung wird trotzdem in ShipDay angelegt, damit Sie sie dort sehen.",
+        "payAtDoorWarning": "Für diese Bestellungen wird kein ShipDay-Fahrer angefordert — Ihr eigenes Personal liefert sie aus und kassiert das Geld. Dafür sind Sie verantwortlich, nicht ShipDay."
       },
       "faqMgr": {
         "title": "FAQs, die Nabil beantwortet",

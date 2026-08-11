@@ -28,6 +28,9 @@ export type AgentConfig = {
    *  than silently defaulted (Luigi: "let the store choose which ones to always
    *  offer"). Empty = smart defaults. */
   pizzaAskGroups: string[];
+  /** Extra languages the owner enabled. Non-empty ⇒ the phone system is
+   *  auto-detecting the caller's language, so the agent must answer in it. */
+  languages: string[];
 };
 
 const BEHAVIORS: ReadonlyArray<AgentConfig["afterHoursBehavior"]> = [
@@ -61,6 +64,9 @@ export function normalizeAgentConfig(raw: unknown): AgentConfig {
     allowPizzaCombo: bool(r.allowPizzaCombo, false),
     pizzaAskGroups: Array.isArray(r.pizzaAskGroups)
       ? r.pizzaAskGroups.filter((x): x is string => typeof x === "string").slice(0, 20)
+      : [],
+    languages: Array.isArray(r.languages)
+      ? r.languages.filter((x): x is string => typeof x === "string").slice(0, 38)
       : [],
   };
 }

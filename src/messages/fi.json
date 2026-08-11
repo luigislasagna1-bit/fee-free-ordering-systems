@@ -4292,7 +4292,10 @@
         "languageMix": "Kielet",
         "sentimentMix": "Tunnesävy",
         "recentActivity": "Viimeaikainen toiminta",
-        "viewAll": "Näytä kaikki puhelut"
+        "viewAll": "Näytä kaikki puhelut",
+        "chartPopularItems": "Puhelimitse tilatuimmat",
+        "popularItemsCta": "Valitse lisämyyntisuositukset",
+        "popularItemsEmpty": "Tällä aikavälillä ei ole vielä puhelintilauksia."
       },
       "callLog": {
         "searchPlaceholder": "Hae puhelinnumerolla, nimellä tai yhteenvedolla…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Ajastetut tilaukset käyttävät samoja myöhemmäksi ajastamisen aikaikkunoita kuin verkkotilaussivusi.",
         "maxCallSeconds": "Puhelun enimmäiskesto (sekunteina)",
         "maxCallHelp": "Nabil päättää puhelun kohteliaasti, kun tämä raja saavutetaan. 60–1800 sekuntia (30 minuuttia).",
-        "paymentsNotLiveNote": "Puhelinmaksut aktivoituvat, kun maksulinkkiominaisuus julkaistaan — toistaiseksi jokainen puhelintilaus maksetaan paikan päällä. Tässä tekemäsi valinnat tallennetaan, ja ne tulevat voimaan automaattisesti, kun ominaisuus otetaan käyttöön."
+        "paymentsNotLiveNote": "Puhelinmaksut aktivoituvat, kun maksulinkkiominaisuus julkaistaan — toistaiseksi jokainen puhelintilaus maksetaan paikan päällä. Tässä tekemäsi valinnat tallennetaan, ja ne tulevat voimaan automaattisesti, kun ominaisuus otetaan käyttöön.",
+        "voicesLoading": "Ladataan ääniä…",
+        "voiceDefault": "Oletusääni",
+        "voiceDefaultHint": "Puhelinjärjestelmän tarjoama ääni — toimii aina",
+        "voiceFemale": "Naisääni",
+        "voiceMale": "Miesääni",
+        "previewHint": "Paina toistopainiketta ja kuule, miten ääni lukee oman aloitustervehdyksesi.",
+        "previewUnavailable": "Ääninäytteet eivät ole vielä käytössä. Voit silti valita äänen — tallenna ja soita sitten numeroosi, niin kuulet sen.",
+        "previewFailed": "Näytettä ei voitu toistaa. Yritä hetken kuluttua uudelleen.",
+        "voiceSpeedHelp": "Kuinka nopeasti Nabil puhuu. Hitaampaa puhetta on helpompi seurata meluisalla linjalla, nopeampi tuntuu reippaammalta. Koskee kaikkia puheluita.",
+        "multilingualTitle": "Muiden kielten ymmärtäminen",
+        "multilingualHint": "Valitse kaikki kielet, joita soittajasi käyttävät. Nabil tunnistaa kielen automaattisesti ja vastaa samalla kielellä — jätä kaikki pois päältä, niin se pysyy vain pääkielessäsi.",
+        "payAtDoorTitle": "Anna asiakkaiden maksaa kuljettajalle ovella",
+        "payAtDoorHint": "Kotiinkuljetus toimii kuten nouto: soittaja ei maksa puhelimessa, vaan käteisellä tai kortilla ruoan saapuessa. Tilaus luodaan silti ShipDay-palveluun, joten näet sen siellä.",
+        "payAtDoorWarning": "Näihin tilauksiin ei pyydetä ShipDay-kuljettajaa — oma henkilökuntasi toimittaa ne ja perii maksun. Se on sinun vastuullasi, ei ShipDayn."
       },
       "faqMgr": {
         "title": "Usein kysytyt kysymykset, joihin Nabil vastaa",

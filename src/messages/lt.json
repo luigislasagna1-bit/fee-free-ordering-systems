@@ -4292,7 +4292,10 @@
         "languageMix": "Kalbos",
         "sentimentMix": "Nuotaika",
         "recentActivity": "Naujausia veikla",
-        "viewAll": "Peržiūrėti visus skambučius"
+        "viewAll": "Peržiūrėti visus skambučius",
+        "chartPopularItems": "Dažniausiai užsakoma telefonu",
+        "popularItemsCta": "Nustatyti rekomenduojamus papildomus pasiūlymus",
+        "popularItemsEmpty": "Pasirinktu laikotarpiu telefoninių užsakymų dar nėra."
       },
       "callLog": {
         "searchPlaceholder": "Ieškoti pagal telefoną, vardą ar santrauką…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Suplanuotiems užsakymams naudojami tie patys vėlesnio laiko intervalai kaip ir jūsų internetinių užsakymų puslapyje.",
         "maxCallSeconds": "Maksimali skambučio trukmė (sekundėmis)",
         "maxCallHelp": "Pasiekęs šią ribą, Nabil mandagiai užbaigia pokalbį ir baigia skambutį. Nuo 60 iki 1800 sekundžių (30 minučių).",
-        "paymentsNotLiveNote": "Mokėjimai telefonu bus aktyvuoti, kai pradės veikti mokėjimo per nuorodą funkcija — šiuo metu kiekvienas balso užsakymas apmokamas vietoje. Jūsų pasirinkimai čia išsaugomi ir bus automatiškai pritaikyti, kai funkcija pradės veikti."
+        "paymentsNotLiveNote": "Mokėjimai telefonu bus aktyvuoti, kai pradės veikti mokėjimo per nuorodą funkcija — šiuo metu kiekvienas balso užsakymas apmokamas vietoje. Jūsų pasirinkimai čia išsaugomi ir bus automatiškai pritaikyti, kai funkcija pradės veikti.",
+        "voicesLoading": "Įkeliami balsai…",
+        "voiceDefault": "Numatytasis balsas",
+        "voiceDefaultHint": "Toks, kokį pateikia telefono sistema — visada veikia",
+        "voiceFemale": "Moteriškas",
+        "voiceMale": "Vyriškas",
+        "previewHint": "Paspauskite paleidimo mygtuką ir išgirsite, kaip šis balsas perskaito jūsų pasisveikinimą.",
+        "previewUnavailable": "Balso pavyzdžiai dar neįjungti. Balsą vis tiek galite pasirinkti — išsaugokite ir paskambinkite savo numeriu, kad jį išgirstumėte.",
+        "previewFailed": "Nepavyko paleisti šio pavyzdžio. Po akimirkos bandykite dar kartą.",
+        "voiceSpeedHelp": "Kaip greitai kalba Nabil. Lėtesnę kalbą lengviau suprasti triukšmingoje linijoje, greitesnė skamba žvaliau. Taikoma visiems skambučiams.",
+        "multilingualTitle": "Suprasti kitas kalbas",
+        "multilingualHint": "Pasirinkite bet kurias kalbas, kuriomis kalba jūsų skambinantieji. Nabil jas atpažįsta automatiškai ir atsako ta pačia kalba — palikite visas išjungtas, jei norite bendrauti tik savo pagrindine kalba.",
+        "payAtDoorTitle": "Leiskite klientams sumokėti kurjeriui prie durų",
+        "payAtDoorHint": "Pristatymas veikia kaip atsiėmimas: skambinantysis nemoka telefonu, o atsiskaito grynaisiais arba kortele, kai maistas atvežamas. Užsakymas vis tiek sukuriamas ShipDay sistemoje, todėl galėsite jį ten matyti.",
+        "payAtDoorWarning": "Šiems užsakymams ShipDay kurjeris nekviečiamas — juos pristato ir pinigus surenka jūsų pačių darbuotojai. Tai jūsų, o ne ShipDay atsakomybė."
       },
       "faqMgr": {
         "title": "DUK, į kuriuos atsako Nabil",

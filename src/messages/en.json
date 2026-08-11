@@ -4612,7 +4612,10 @@
         "languageMix": "Languages",
         "sentimentMix": "Sentiment",
         "recentActivity": "Recent activity",
-        "viewAll": "View all calls"
+        "viewAll": "View all calls",
+        "chartPopularItems": "Most ordered by phone",
+        "popularItemsCta": "Set featured upsells",
+        "popularItemsEmpty": "No phone orders in this range yet."
       },
       "callLog": {
         "searchPlaceholder": "Search phone, name, or summary…",
@@ -4720,7 +4723,21 @@
         "scheduledHint": "Scheduled orders use the same schedule-for-later slots as your online ordering page.",
         "maxCallSeconds": "Maximum call length (seconds)",
         "maxCallHelp": "Nabil wraps up politely and ends the call when it reaches this limit. Between 60 and 1800 seconds (30 minutes).",
-        "paymentsNotLiveNote": "Phone payments activate once pay-by-link ships — today every voice order is pay-at-store. Your choices here are saved and will apply automatically when it goes live."
+        "paymentsNotLiveNote": "Phone payments activate once pay-by-link ships — today every voice order is pay-at-store. Your choices here are saved and will apply automatically when it goes live.",
+        "voicesLoading": "Loading voices…",
+        "voiceDefault": "Default voice",
+        "voiceDefaultHint": "Whatever the phone system provides — always works",
+        "voiceFemale": "Female",
+        "voiceMale": "Male",
+        "previewHint": "Press play to hear the voice read your own opening greeting.",
+        "previewUnavailable": "Voice samples aren't switched on yet. You can still pick a voice — save, then call your number to hear it.",
+        "previewFailed": "Couldn't play that sample. Try again in a moment.",
+        "voiceSpeedHelp": "How fast Nabil speaks. Slower is easier to follow on a noisy line; faster feels brisker. Applies to every call.",
+        "multilingualTitle": "Understand other languages",
+        "multilingualHint": "Pick any language your callers use. Nabil detects it automatically and answers in the same language — leave them all off to stay in your main language only.",
+        "payAtDoorTitle": "Let customers pay the driver at the door",
+        "payAtDoorHint": "Delivery works like pickup: the caller doesn't pay on the phone, they pay cash or card when the food arrives. The order is still created in ShipDay so you can see it there.",
+        "payAtDoorWarning": "No ShipDay driver is requested for these orders — your own staff delivers them and collects the money. That's your responsibility, not ShipDay's."
       },
       "faqMgr": {
         "title": "FAQs Nabil answers",

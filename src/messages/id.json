@@ -4292,7 +4292,10 @@
         "languageMix": "Bahasa",
         "sentimentMix": "Sentimen",
         "recentActivity": "Aktivitas terbaru",
-        "viewAll": "Lihat semua panggilan"
+        "viewAll": "Lihat semua panggilan",
+        "chartPopularItems": "Paling banyak dipesan lewat telepon",
+        "popularItemsCta": "Atur upsell unggulan",
+        "popularItemsEmpty": "Belum ada pesanan telepon dalam rentang waktu ini."
       },
       "callLog": {
         "searchPlaceholder": "Cari telepon, nama, atau ringkasan…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Pesanan terjadwal menggunakan slot jadwal-untuk-nanti yang sama dengan halaman pemesanan online Anda.",
         "maxCallSeconds": "Durasi panggilan maksimum (detik)",
         "maxCallHelp": "Nabil menutup pembicaraan dengan sopan dan mengakhiri panggilan saat mencapai batas ini. Antara 60 hingga 1800 detik (30 menit).",
-        "paymentsNotLiveNote": "Pembayaran via telepon akan aktif setelah fitur bayar-lewat-tautan dirilis — saat ini semua pesanan suara dibayar di tempat. Pilihan Anda di sini tersimpan dan akan berlaku otomatis saat fitur tersebut diluncurkan."
+        "paymentsNotLiveNote": "Pembayaran via telepon akan aktif setelah fitur bayar-lewat-tautan dirilis — saat ini semua pesanan suara dibayar di tempat. Pilihan Anda di sini tersimpan dan akan berlaku otomatis saat fitur tersebut diluncurkan.",
+        "voicesLoading": "Memuat suara…",
+        "voiceDefault": "Suara bawaan",
+        "voiceDefaultHint": "Apa pun yang disediakan sistem telepon — selalu berfungsi",
+        "voiceFemale": "Perempuan",
+        "voiceMale": "Laki-laki",
+        "previewHint": "Tekan putar untuk mendengar suara ini membacakan salam pembuka Anda sendiri.",
+        "previewUnavailable": "Contoh suara belum diaktifkan. Anda tetap bisa memilih suara — simpan, lalu telepon nomor Anda untuk mendengarnya.",
+        "previewFailed": "Tidak bisa memutar contoh suara itu. Coba lagi sebentar lagi.",
+        "voiceSpeedHelp": "Seberapa cepat Nabil berbicara. Lebih lambat lebih mudah diikuti pada sambungan yang berisik; lebih cepat terasa lebih gesit. Berlaku untuk setiap panggilan.",
+        "multilingualTitle": "Memahami bahasa lain",
+        "multilingualHint": "Pilih bahasa apa pun yang dipakai penelepon Anda. Nabil mendeteksinya secara otomatis dan menjawab dalam bahasa yang sama — biarkan semuanya nonaktif agar tetap memakai bahasa utama Anda saja.",
+        "payAtDoorTitle": "Izinkan pelanggan membayar kurir saat pesanan tiba",
+        "payAtDoorHint": "Pengantaran bekerja seperti ambil sendiri: penelepon tidak membayar lewat telepon, mereka membayar tunai atau dengan kartu saat makanan tiba. Pesanan tetap dibuat di ShipDay sehingga Anda bisa melihatnya di sana.",
+        "payAtDoorWarning": "Tidak ada kurir ShipDay yang dipesan untuk pesanan ini — staf Anda sendiri yang mengantar dan menerima uangnya. Itu tanggung jawab Anda, bukan tanggung jawab ShipDay."
       },
       "faqMgr": {
         "title": "FAQ yang dijawab Nabil",

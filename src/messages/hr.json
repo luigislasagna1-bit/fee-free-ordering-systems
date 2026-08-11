@@ -4292,7 +4292,10 @@
         "languageMix": "Jezici",
         "sentimentMix": "Sentiment",
         "recentActivity": "Nedavna aktivnost",
-        "viewAll": "Prikaži sve pozive"
+        "viewAll": "Prikaži sve pozive",
+        "chartPopularItems": "Najčešće naručeno telefonom",
+        "popularItemsCta": "Postavi istaknute preporuke",
+        "popularItemsEmpty": "Još nema telefonskih narudžbi u ovom razdoblju."
       },
       "callLog": {
         "searchPlaceholder": "Pretraži telefon, ime ili sažetak…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Zakazane narudžbe koriste iste termine za kasnije kao i vaša stranica za online naručivanje.",
         "maxCallSeconds": "Maksimalno trajanje poziva (sekunde)",
         "maxCallHelp": "Nabil pristojno zaključuje razgovor i prekida poziv kad dosegne ovo ograničenje. Između 60 i 1800 sekundi (30 minuta).",
-        "paymentsNotLiveNote": "Plaćanja telefonom aktivirat će se kad plaćanje putem poveznice postane dostupno — danas se svaka glasovna narudžba plaća u restoranu. Vaši odabiri ovdje se spremaju i automatski će se primijeniti kada opcija zaživi."
+        "paymentsNotLiveNote": "Plaćanja telefonom aktivirat će se kad plaćanje putem poveznice postane dostupno — danas se svaka glasovna narudžba plaća u restoranu. Vaši odabiri ovdje se spremaju i automatski će se primijeniti kada opcija zaživi.",
+        "voicesLoading": "Učitavanje glasova…",
+        "voiceDefault": "Zadani glas",
+        "voiceDefaultHint": "Onaj koji telefonski sustav ponudi — uvijek radi",
+        "voiceFemale": "Ženski",
+        "voiceMale": "Muški",
+        "previewHint": "Pritisnite play i poslušajte kako glas čita vaš pozdravni tekst.",
+        "previewUnavailable": "Uzorci glasa još nisu uključeni. Glas ipak možete odabrati — spremite promjene pa nazovite svoj broj da ga čujete.",
+        "previewFailed": "Nismo uspjeli reproducirati taj uzorak. Pokušajte ponovno za koji trenutak.",
+        "voiceSpeedHelp": "Koliko brzo Nabil govori. Sporije se lakše prati na bučnoj liniji, brže zvuči žustrije. Vrijedi za svaki poziv.",
+        "multilingualTitle": "Razumijevanje drugih jezika",
+        "multilingualHint": "Odaberite bilo koji jezik kojim govore vaši pozivatelji. Nabil ga automatski prepoznaje i odgovara na tom istom jeziku — ostavite li sve isključeno, ostaje samo vaš glavni jezik.",
+        "payAtDoorTitle": "Dopustite kupcima da plate dostavljaču na vratima",
+        "payAtDoorHint": "Dostava radi kao i preuzimanje: pozivatelj ne plaća telefonom, nego gotovinom ili karticom kad hrana stigne. Narudžba se i dalje stvara u sustavu ShipDay pa je ondje možete vidjeti.",
+        "payAtDoorWarning": "Za te se narudžbe ne traži dostavljač iz sustava ShipDay — dostavlja ih vaše osoblje i ono naplaćuje novac. Za to ste odgovorni vi, a ne ShipDay."
       },
       "faqMgr": {
         "title": "Česta pitanja na koja Nabil odgovara",

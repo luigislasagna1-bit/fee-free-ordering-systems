@@ -82,8 +82,18 @@ export type PizzaIntent = {
 export type ComboIntent = {
   menuItemId: string;
   /** One entry per slot pick, in slot order. A pizza pick carries its own
-   *  toppings/size, compiled through the same pizza path. */
-  picks: Array<{ menuItemId: string; size?: string | null; toppings?: PizzaIntent["toppings"] }>;
+   *  size, toppings AND crust/sauce/cheese — without those a caller who says
+   *  "the Family Deal with a thin-crust pepperoni" had nowhere to put "thin
+   *  crust", and a store that forces crust to be asked deadlocked the call. */
+  picks: Array<{
+    menuItemId: string;
+    size?: string | null;
+    toppings?: PizzaIntent["toppings"];
+    crust?: string | null;
+    sauce?: string | null;
+    cheese?: string | null;
+    notes?: string | null;
+  }>;
   quantity?: number;
   notes?: string | null;
 };
@@ -130,6 +140,10 @@ export type ComboData = {
   slots: ComboSlotData[];
   extrasCharge: boolean;
   sharedToppings?: number;
+  isSoldOut?: boolean;
+  /** True when a slot's choices were capped — the agent must not tell a caller
+   *  "that isn't one of the choices" for something the store actually sells. */
+  choicesTruncated?: boolean;
 };
 
 /* ─────────────────────────────── result ────────────────────────────────── */
@@ -160,29 +174,159 @@ const norm = (s: string): string =>
 const stem = (s: string): string => norm(s).replace(/e?s$/, "");
 
 /**
- * Resolve one spoken option name within a set of groups.
- * Exact-normalised first, then stem, then a UNIQUE substring hit. Ambiguous or
- * missing → null, so the caller can ask instead of guessing (an invented id is
- * a hard 400 on the item path and is SILENTLY DROPPED on a combo child).
+ * 🚨 NEGATION. A caller who says "no onions" must never be sold onions.
+ * The substring pass below matched `"no onions".includes("onion")` and happily
+ * returned the Onion option — the single worst class of bug this compiler can
+ * have, because the money is right and the FOOD is wrong. Anything carrying a
+ * refusal word is rejected outright and handed back to the agent to ask about.
  */
-export function resolveOption(spoken: string, groups: GroupData[]): OptionData | null {
-  const all = groups.flatMap((g) => g.options);
-  if (!all.length) return null;
-  const want = norm(spoken);
-  if (!want) return null;
+const NEGATION =
+  /(^|\s)(no|not|non|without|w\/o|hold|skip|omit|remove|minus|less|lose|leave off|leave out|none|never|zero|free of|allergic)(\s|$)/;
 
+/** Words a caller may pile around a topping name without changing WHICH topping
+ *  it is. Everything else in the leftover text means we matched the wrong thing
+ *  ("chicken bacon ranch" is not "Bacon"). */
+const QUALIFIERS = new Set([
+  "a", "an", "the", "some", "please", "just", "with", "and", "of", "on", "it", "that",
+  "extra", "double", "triple", "more", "heavy", "light", "easy", "side", "plus", "add",
+  "lots", "lot", "little", "bit", "well", "done", "all", "over", "sauce", "topping", "toppings",
+]);
+
+/** Cheap phonetic key — enough to bridge the ASR errors phone audio actually
+ *  produces ("peperoni", "pepproni", "pepparoni" → one key). Not a full
+ *  Metaphone: consonant skeleton after normalising the usual spellings. */
+const phonetic = (s: string): string =>
+  stem(s)
+    .replace(/[^a-z]/g, "")
+    .replace(/ph/g, "f")
+    .replace(/ck/g, "k")
+    .replace(/sch/g, "sk")
+    .replace(/c(?=[ei])/g, "s")
+    .replace(/[ckq]/g, "k")
+    .replace(/x/g, "ks")
+    .replace(/z/g, "s")
+    .replace(/(.)\1+/g, "$1")
+    .replace(/(?!^)[aeiouy]/g, "");
+
+/** Levenshtein distance, capped — used only after the exact passes fail. */
+function editDistance(a: string, b: string): number {
+  if (a === b) return 0;
+  if (!a.length || !b.length) return Math.max(a.length, b.length);
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const row = [i];
+    for (let j = 1; j <= b.length; j++) {
+      row[j] = Math.min(
+        prev[j] + 1,
+        row[j - 1] + 1,
+        prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1),
+      );
+    }
+    prev = row;
+  }
+  return prev[b.length];
+}
+
+/** How far off a spoken word may be before we stop guessing. Scales with
+ *  length so "pep" can't fuzzy-match "Ham" but "peperoni" can reach
+ *  "Pepperoni". */
+const fuzzyBudget = (len: number): number => (len >= 8 ? 2 : len >= 5 ? 1 : 0);
+
+export type OptionMatch =
+  | { ok: true; option: OptionData }
+  | { ok: false; reason: "negated" | "ambiguous" | "not_found"; suggestions: string[] };
+
+/**
+ * Resolve one spoken option name within a set of groups.
+ *
+ * Passes, in order: negation guard → exact → stem → tightened substring →
+ * phonetic → bounded fuzzy. Anything unresolved comes back with the closest
+ * real menu names so the agent can ask "did you mean X?" instead of a
+ * dead-end "I couldn't find that" — per-restaurant lexical grounding is the
+ * whole point of owning the catalog.
+ *
+ * Never guesses: an invented id is a hard 400 on the item path and is SILENTLY
+ * DROPPED on a combo child.
+ */
+export function matchOption(spoken: string, groups: GroupData[]): OptionMatch {
+  const all = groups.flatMap((g) => g.options);
+  const near = (n = 3) => {
+    const w = stem(spoken);
+    return [...all]
+      .sort((a, b) => editDistance(stem(a.name), w) - editDistance(stem(b.name), w))
+      .slice(0, n)
+      .map((o) => o.name);
+  };
+  if (!all.length) return { ok: false, reason: "not_found", suggestions: [] };
+
+  const want = norm(spoken);
+  if (!want) return { ok: false, reason: "not_found", suggestions: near() };
+
+  // Exact and stem run BEFORE the negation guard on purpose. Real menus carry
+  // options literally named "No Onions" or "Non-Dairy Cheese" — a store that
+  // models a removal as an option should get that option, and "non-dairy"
+  // must not be read as a refusal. Only a phrase that matches nothing exactly
+  // is then tested for negation.
   const exact = all.filter((o) => norm(o.name) === want);
-  if (exact.length === 1) return exact[0];
+  if (exact.length === 1) return { ok: true, option: exact[0] };
+  if (exact.length > 1) return { ok: false, reason: "ambiguous", suggestions: near() };
 
   const wantStem = stem(spoken);
   const stemmed = all.filter((o) => stem(o.name) === wantStem);
-  if (stemmed.length === 1) return stemmed[0];
+  if (stemmed.length === 1) return { ok: true, option: stemmed[0] };
+  if (stemmed.length > 1) return { ok: false, reason: "ambiguous", suggestions: near() };
 
-  const partial = all.filter((o) => norm(o.name).includes(want) || want.includes(norm(o.name)));
-  if (partial.length === 1) return partial[0];
+  if (NEGATION.test(` ${want} `)) {
+    return { ok: false, reason: "negated", suggestions: [] };
+  }
 
-  return null; // absent or ambiguous — the agent must ask
+  // Substring, but only where the EXTRA words are harmless qualifiers. The old
+  // unconditional `want.includes(name)` is what turned "no onions" into onions
+  // and "chicken bacon ranch" into bacon.
+  const partial = all.filter((o) => {
+    const name = norm(o.name);
+    if (name.includes(want)) return true; // caller said a prefix of the real name
+    if (!want.includes(name)) return false;
+    const leftover = want.replace(name, " ").split(" ").filter(Boolean);
+    return leftover.every((w) => QUALIFIERS.has(w));
+  });
+  if (partial.length === 1) return { ok: true, option: partial[0] };
+  if (partial.length > 1) return { ok: false, reason: "ambiguous", suggestions: near() };
+
+  // Mis-heard on a noisy line: "peperoni", "pepproni", "moozarella".
+  const key = phonetic(spoken);
+  if (key.length >= 3) {
+    const sounded = all.filter((o) => phonetic(o.name) === key);
+    if (sounded.length === 1) return { ok: true, option: sounded[0] };
+  }
+
+  const budget = fuzzyBudget(wantStem.length);
+  if (budget > 0) {
+    const scored = all
+      .map((o) => ({ o, d: editDistance(stem(o.name), wantStem) }))
+      .filter((x) => x.d <= budget)
+      .sort((a, b) => a.d - b.d);
+    if (scored.length === 1 || (scored.length > 1 && scored[0].d < scored[1].d)) {
+      return { ok: true, option: scored[0].o };
+    }
+  }
+
+  return { ok: false, reason: "not_found", suggestions: near() };
 }
+
+/** Back-compat thin wrapper — option or null. Prefer `matchOption`, which
+ *  explains WHY it failed and what to offer instead. */
+export function resolveOption(spoken: string, groups: GroupData[]): OptionData | null {
+  const m = matchOption(spoken, groups);
+  return m.ok ? m.option : null;
+}
+
+/** Size words that make a spoken size a DIFFERENT size from the menu one.
+ *  "extra large" must never quietly become "Large". */
+const SIZE_MODIFIERS = new Set([
+  "extra", "x", "xl", "xxl", "jumbo", "giant", "super", "mega", "family", "party",
+  "mini", "personal", "kids", "half", "double",
+]);
 
 /** Resolve a spoken size against the item's variants. */
 export function resolveVariant(spoken: string | null | undefined, variants: VariantData[]): VariantData | null {
@@ -193,11 +337,20 @@ export function resolveVariant(spoken: string | null | undefined, variants: Vari
     return variants.find((v) => v.isDefault) ?? null;
   }
   const want = norm(spoken);
-  return (
-    variants.find((v) => norm(v.name) === want) ??
-    variants.find((v) => norm(v.name).includes(want) || want.includes(norm(v.name))) ??
-    null
-  );
+  const exact = variants.find((v) => norm(v.name) === want);
+  if (exact) return exact;
+
+  const partial = variants.filter((v) => {
+    const name = norm(v.name);
+    if (name.includes(want)) return true;
+    if (!want.includes(name)) return false;
+    // "extra large" contains "large" — but the store doesn't sell extra large,
+    // so silently shrinking the order is the wrong answer. Only accept when the
+    // leftover words don't change the size.
+    const leftover = want.replace(name, " ").split(" ").filter(Boolean);
+    return leftover.every((w) => !SIZE_MODIFIERS.has(w));
+  });
+  return partial.length === 1 ? partial[0] : null;
 }
 
 /* ──────────────────────────── prefix writing ───────────────────────────── */
@@ -212,7 +365,20 @@ export function placementPrefix(placement: Placement, isHalfHalfPizza: boolean):
 
 /* ───────────────────────────── pizza compile ───────────────────────────── */
 
-const money = (n: number, currency = "$") => `${currency}${n.toFixed(2)}`;
+/** Spoken money. `currency` is the restaurant's ISO code ("usd", "cad", "eur"),
+ *  NOT a symbol — concatenating it produced "usd6.00", which the TTS reads out
+ *  as "you ess dee six dollars". Intl gives the real symbol and is pure, so the
+ *  compiler stays dependency-free. */
+const money = (n: number, currency = "usd"): string => {
+  try {
+    return new Intl.NumberFormat("en", {
+      style: "currency",
+      currency: (currency || "usd").toUpperCase(),
+    }).format(n);
+  } catch {
+    return `$${n.toFixed(2)}`; // unknown/invalid code — never break a read-back
+  }
+};
 
 /** Groups belonging to a pizza role, by pizzaConfig group id or pizzaRole tag. */
 function groupsForRole(item: ItemData, role: "crust" | "sauce" | "cheese"): GroupData[] {
@@ -248,10 +414,18 @@ function toppingGroups(item: ItemData): GroupData[] {
 export function compilePizzaLine(
   intent: PizzaIntent,
   item: ItemData,
-  opts: { askGroupIds?: string[]; currency?: string } = {},
+  opts: {
+    askGroupIds?: string[];
+    currency?: string;
+    /** Combo children only. A pizza inside a combo is NOT priced by this
+     *  engine — combo-child-pricing / the shared topping pool decide, and
+     *  `extrasCharge:false` means the extras are free. Quoting the standalone
+     *  number there announces money the caller will never be charged. */
+    suppressPricingNote?: boolean;
+  } = {},
 ): CompileResult {
   const unresolved: string[] = [];
-  const currency = opts.currency ?? "$";
+  const currency = opts.currency ?? "usd";
   const ask = new Set(opts.askGroupIds ?? []);
   const cfg = item.pizzaConfig;
 
@@ -282,31 +456,48 @@ export function compilePizzaLine(
     const spoken = intent[role];
     const mustAsk = groups.some((g) => ask.has(g.id));
 
+    const poolNames = () => groups.flatMap((g) => g.options).map((o) => o.name).join(", ");
+
     if (spoken) {
-      const opt = resolveOption(spoken, groups);
-      if (!opt) {
+      const m = matchOption(spoken, groups);
+      if (!m.ok) {
         unresolved.push(
-          `We don't have "${spoken}" for ${role}. Options: ${groups.flatMap((g) => g.options).map((o) => o.name).join(", ")}.`,
+          m.reason === "negated"
+            ? `Which ${role} would they like instead? Options: ${poolNames()}.`
+            : `We don't have "${spoken}" for ${role}. Options: ${poolNames()}.`,
         );
         continue;
       }
-      mods.push({ modifierOptionId: opt.modifierOptionId, name: opt.name });
-      spokenParts.push(opt.name);
+      mods.push({ modifierOptionId: m.option.modifierOptionId, name: m.option.name });
+      spokenParts.push(m.option.name);
       continue;
     }
 
     if (mustAsk) {
-      unresolved.push(`Which ${role}? ${groups.flatMap((g) => g.options).map((o) => o.name).join(", ")}.`);
+      unresolved.push(`Which ${role}? ${poolNames()}.`);
       continue;
     }
 
-    // Smart default: the marked default, else the single option, else the
-    // first — but ONLY for a required group. Never invent an optional extra.
+    // Smart default for a REQUIRED group only — never invent an optional extra.
+    //
+    // ⚠️ The old fallback was `pool.find(isDefault) ?? pool[0]`, i.e. "whatever
+    // sorts first". Nothing in the schema forces a group to HAVE a default, so
+    // a store whose crust list starts with "Stuffed Crust (+$4.00)" silently
+    // sold a $4 upgrade the caller never asked for and never heard. A default
+    // is only safe when the store actually marked one, or there is only one
+    // choice; otherwise ASK.
     const required = groups.some((g) => g.required || g.minSelect > 0);
     if (!required) continue;
     const pool = groups.flatMap((g) => g.options);
-    const def = pool.find((o) => o.isDefault) ?? (pool.length === 1 ? pool[0] : pool[0]);
-    if (def) mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });
+    const def = pool.find((o) => o.isDefault) ?? (pool.length === 1 ? pool[0] : null);
+    if (!def) {
+      if (pool.length) unresolved.push(`Which ${role}? ${poolNames()}.`);
+      continue;
+    }
+    mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });
+    // A default that COSTS money must be spoken — silence plus a surcharge is
+    // how a caller gets surprised at pickup.
+    if ((Number(def.priceAdjustment) || 0) > 0) spokenParts.push(def.name);
   }
 
   // ── toppings ──────────────────────────────────────────────────────────
@@ -319,11 +510,20 @@ export function compilePizzaLine(
 
   const chargeLines: ToppingChargeLine[] = [];
   for (const t of requested) {
-    const opt = resolveOption(t.name, tGroups);
-    if (!opt) {
-      unresolved.push(`I couldn't find "${t.name}" on the toppings for ${item.name}.`);
+    const m = matchOption(t.name, tGroups);
+    if (!m.ok) {
+      unresolved.push(
+        m.reason === "negated"
+          ? // A refusal is not a topping. Say so plainly rather than adding the
+            // thing the caller just told us to leave off.
+            `The caller said "${t.name}" — that's a topping to LEAVE OFF, not add. Only name toppings they want ON the pizza; confirm with them if unsure.`
+          : m.suggestions.length
+            ? `I couldn't find "${t.name}" on ${item.name}. Did they mean ${m.suggestions.slice(0, 3).join(", ")}?`
+            : `I couldn't find "${t.name}" on the toppings for ${item.name}.`,
+      );
       continue;
     }
+    const opt = m.option;
     const placement: Placement = t.placement ?? "whole";
     // Per-UNIT expansion: double pepperoni is two entries, not count: 2.
     const count = Math.max(1, Math.min(10, Math.floor(Number(t.count) || 1)));
@@ -348,18 +548,38 @@ export function compilePizzaLine(
   // topping lines, so an unseeded preset pizza bills BELOW list price and the
   // kitchen makes a plain one. Seed the configured presets the caller didn't
   // already name or explicitly remove.
+  // RESOLVED = the preset matched a real option on this item. SEEDED = we also
+  // had to add it (the caller hadn't already named it). The config-drift guard
+  // below keys off RESOLVED — a caller who names every preset themselves is a
+  // correctly-configured pizza, not a broken one.
+  let presetsResolved = 0;
   if (cfg?.presetToppings?.length) {
     const already = new Set(mods.map((m) => m.modifierOptionId));
     const poolOptions = tGroups.flatMap((g) => g.options);
-    for (const presetId of cfg.presetToppings) {
-      if (already.has(presetId)) continue;
-      const opt = poolOptions.find((o) => o.modifierOptionId === presetId);
+    for (const preset of cfg.presetToppings) {
+      // 🚨 presetToppings are stored as option NAMES, not ids (MenuClient
+      // migrates legacy id entries to names on every save — the ids are
+      // LIBRARY ids anyway, while the loader exposes the ATTACHED-copy id). An
+      // id-only lookup therefore missed on real data, seeding nothing, and the
+      // pizza went out bare: toppingBaseAdjust still applied its included
+      // allowance as a base credit, so a $20 five-topping pizza billed $10 and
+      // the kitchen got a ticket with no toppings on it. Match id OR name,
+      // exactly like the customer-side builder does.
+      const opt = poolOptions.find(
+        (o) => o.modifierOptionId === preset || norm(o.name) === norm(preset),
+      );
       if (!opt) continue;
+      presetsResolved++;
+      if (already.has(opt.modifierOptionId)) continue; // caller already named it
+      already.add(opt.modifierOptionId);
       mods.push({
         modifierOptionId: opt.modifierOptionId,
         name: `${placementPrefix("whole", isHalfHalf)}${opt.name}`,
       });
       chargeLines.push({ optionId: opt.modifierOptionId, optionPrice: opt.priceAdjustment, isHalf: false });
+      // The kitchen ticket and the read-back must agree — a preset the caller
+      // never mentioned is still on the pizza they're about to pay for.
+      spokenParts.push(opt.name);
     }
   }
 
@@ -375,7 +595,18 @@ export function compilePizzaLine(
       halfToppingMultiplier: cfg.halfToppingMultiplier,
       reduceOnRemove: cfg.reduceOnRemove,
     };
-    if (flat > 0 && chargeLines.length) {
+    // FAIL LOUD rather than sell a half-price pizza. If the store configured
+    // preset toppings and NONE of them resolved against this item's groups, the
+    // config has drifted (renamed option, group detached) — and on the
+    // symmetric model that silently bills below list. Refusing the sale and
+    // asking a human is strictly better than charging $10 for a $20 pizza.
+    if (cfg.presetToppings?.length && presetsResolved === 0 && toppingBaseAdjust(pricing) < 0) {
+      unresolved.push(
+        `${item.name}'s standard toppings aren't set up correctly, so I can't price it by voice. Take this one yourself or transfer the caller.`,
+      );
+    }
+
+    if (flat > 0 && chargeLines.length && !opts.suppressPricingNote) {
       const charges = priceToppingLines(pricing, chargeLines);
       const toppingTotal = charges.reduce((a, b) => a + b, 0) + toppingBaseAdjust(pricing);
       const extra = Math.round(toppingTotal * 100) / 100;
@@ -428,7 +659,10 @@ export function compileComboLine(
   const unresolved: string[] = [];
   const children: NonNullable<CompiledLine["bundleItems"]> = [];
   const spokenParts: string[] = [];
-  const notes: string[] = [];
+
+  if (combo.isSoldOut) {
+    return { line: null, readBack: "", pricingNote: null, unresolved: [`"${combo.name}" is sold out.`] };
+  }
 
   // Assign each pick to the first slot that accepts it and still has room —
   // mirroring the server's greedy first-fit so what we emit is what it books.
@@ -446,7 +680,13 @@ export function compileComboLine(
       }
     }
     if (slotIndex < 0) {
-      unresolved.push(`That isn't one of the choices for ${combo.name}.`);
+      unresolved.push(
+        combo.choicesTruncated
+          ? // We only loaded part of the eligible list, so "not a choice" may be
+            // a lie. Never tell a caller the store doesn't sell something it does.
+            `I can't confirm that goes in the ${combo.name}. Check with the kitchen or transfer the caller rather than refusing it.`
+          : `That isn't one of the choices for ${combo.name}.`,
+      );
       continue;
     }
     const slot = combo.slots[slotIndex];
@@ -457,9 +697,23 @@ export function compileComboLine(
     // per-unit expansion and preset seeding behave identically inside a combo.
     if (child.pizzaConfig) {
       const sub = compilePizzaLine(
-        { menuItemId: child.menuItemId, size: pick.size, toppings: pick.toppings },
+        {
+          menuItemId: child.menuItemId,
+          size: pick.size,
+          toppings: pick.toppings,
+          crust: pick.crust,
+          sauce: pick.sauce,
+          cheese: pick.cheese,
+          notes: pick.notes,
+        },
         child,
-        opts,
+        {
+          ...opts,
+          // A combo child's toppings are priced by combo-child-pricing and the
+          // shared pool — never by the standalone engine. Quoting the
+          // standalone number announces extras the combo won't charge.
+          suppressPricingNote: true,
+        },
       );
       if (!sub.line) {
         unresolved.push(...sub.unresolved);
@@ -472,7 +726,6 @@ export function compileComboLine(
         modifiers: sub.line.modifiers,
       });
       spokenParts.push(sub.readBack);
-      if (sub.pricingNote) notes.push(sub.pricingNote);
       continue;
     }
 
@@ -506,7 +759,7 @@ export function compileComboLine(
 
   if (unresolved.length || !children.length) {
     if (!children.length && !unresolved.length) unresolved.push(`What would you like in the ${combo.name}?`);
-    return { line: null, readBack: "", pricingNote: notes.join(" ") || null, unresolved };
+    return { line: null, readBack: "", pricingNote: null, unresolved };
   }
 
   const quantity = Math.max(1, Math.min(99, Math.floor(Number(intent.quantity) || 1)));
@@ -521,7 +774,10 @@ export function compileComboLine(
       bundleItems: children,
     },
     readBack: `${quantity > 1 ? `${quantity}× ` : ""}${combo.name}: ${spokenParts.join(", ")}`,
-    pricingNote: notes.join(" ") || null,
+    // A combo quotes NO advisory extras. Its money comes from the combo
+    // engine (upcharges, extrasCharge, the shared topping pool) and the only
+    // honest number is the dryRun total from quote_order.
+    pricingNote: null,
     unresolved: [],
   };
 }

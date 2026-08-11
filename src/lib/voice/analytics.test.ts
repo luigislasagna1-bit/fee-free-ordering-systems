@@ -12,6 +12,7 @@ import {
   isAfterHours,
   isWithinIntervals,
   localDayKey,
+  rankPopularItems,
   staffHoursReclaimed,
   type AnalyticsCall,
 } from "./analytics";
@@ -249,5 +250,47 @@ describe("computeVoiceAnalytics", () => {
     expect(result.avgOrderValue).toBe(0);
     expect(result.staffHours).toBe(0);
     expect(result.perDay).toEqual([{ key: "2026-08-10", count: 0 }]);
+  });
+});
+
+describe("rankPopularItems", () => {
+  const rows = [
+    { orderNumber: "A", name: "Pepperoni Pizza", quantity: 2 },
+    { orderNumber: "A", name: "Coke", quantity: 1 },
+    { orderNumber: "B", name: "Pepperoni Pizza", quantity: 1 },
+    { orderNumber: "B", name: "Wings", quantity: 3 },
+    { orderNumber: "C", name: "Coke", quantity: 1 },
+  ];
+
+  it("ranks by units sold, then by how many orders contained it", () => {
+    const out = rankPopularItems(rows);
+    expect(out[0]).toEqual({ name: "Pepperoni Pizza", quantity: 3, orders: 2 });
+    expect(out[1]).toEqual({ name: "Wings", quantity: 3, orders: 1 });
+    expect(out[2]).toEqual({ name: "Coke", quantity: 2, orders: 2 });
+  });
+
+  it("counts distinct orders, not lines", () => {
+    const out = rankPopularItems([
+      { orderNumber: "A", name: "Coke", quantity: 1 },
+      { orderNumber: "A", name: "Coke", quantity: 1 },
+    ]);
+    expect(out[0]).toEqual({ name: "Coke", quantity: 2, orders: 1 });
+  });
+
+  it("honours the limit and drops blank names", () => {
+    const out = rankPopularItems(
+      [
+        { orderNumber: "A", name: "  ", quantity: 9 },
+        { orderNumber: "A", name: "A", quantity: 3 },
+        { orderNumber: "A", name: "B", quantity: 2 },
+        { orderNumber: "A", name: "C", quantity: 1 },
+      ],
+      2,
+    );
+    expect(out.map((r) => r.name)).toEqual(["A", "B"]);
+  });
+
+  it("is empty for no rows", () => {
+    expect(rankPopularItems([])).toEqual([]);
   });
 });

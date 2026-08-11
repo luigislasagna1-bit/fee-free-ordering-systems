@@ -4292,7 +4292,10 @@
         "languageMix": "语言",
         "sentimentMix": "情绪",
         "recentActivity": "近期动态",
-        "viewAll": "查看全部通话"
+        "viewAll": "查看全部通话",
+        "chartPopularItems": "电话点单最多的菜品",
+        "popularItemsCta": "设置精选加购推荐",
+        "popularItemsEmpty": "该时间段内暂无电话订单。"
       },
       "callLog": {
         "searchPlaceholder": "搜索电话、姓名或摘要…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "预约订单使用与您在线点餐页面相同的预约时段。",
         "maxCallSeconds": "最长通话时长（秒）",
         "maxCallHelp": "达到此限制时，Nabil 会礼貌收尾并结束通话。范围为 60 至 1800 秒（30 分钟）。",
-        "paymentsNotLiveNote": "电话支付将在“链接支付”功能上线后启用——目前所有语音订单均为到店付款。您在此处的选择会被保存，并在该功能上线后自动生效。"
+        "paymentsNotLiveNote": "电话支付将在“链接支付”功能上线后启用——目前所有语音订单均为到店付款。您在此处的选择会被保存，并在该功能上线后自动生效。",
+        "voicesLoading": "正在加载语音…",
+        "voiceDefault": "默认语音",
+        "voiceDefaultHint": "使用电话系统自带的语音——始终可用",
+        "voiceFemale": "女声",
+        "voiceMale": "男声",
+        "previewHint": "点击播放，即可听到该语音朗读您自己的开场问候语。",
+        "previewUnavailable": "语音试听功能尚未开启。您仍然可以先挑选一个声音 — 保存后拨打您的号码，就能听到实际效果。",
+        "previewFailed": "无法播放该试听。请稍后再试一次。",
+        "voiceSpeedHelp": "Nabil 说话的速度。语速慢一些，在嘈杂的通话中更容易听清；快一些则显得更利落。对所有来电都生效。",
+        "multilingualTitle": "听懂其他语言",
+        "multilingualHint": "勾选来电顾客可能使用的语言。Nabil 会自动识别，并用同一种语言作答 — 全部保持关闭，则只使用您的主要语言。",
+        "payAtDoorTitle": "允许顾客在门口向送餐员付款",
+        "payAtDoorHint": "外送和自取一样：顾客不在电话里付款，而是在餐品送到时用现金或刷卡支付。订单仍会在 ShipDay 中创建，方便您在那里查看。",
+        "payAtDoorWarning": "这类订单不会呼叫 ShipDay 的送餐员 — 由您自己的员工送餐并收款。这部分由您负责，与 ShipDay 无关。"
       },
       "faqMgr": {
         "title": "Nabil 可回答的常见问题",

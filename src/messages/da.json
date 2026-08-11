@@ -4292,7 +4292,10 @@
         "languageMix": "Sprog",
         "sentimentMix": "Stemning",
         "recentActivity": "Seneste aktivitet",
-        "viewAll": "Se alle opkald"
+        "viewAll": "Se alle opkald",
+        "chartPopularItems": "Mest bestilt via telefon",
+        "popularItemsCta": "Vælg fremhævede mersalgsvarer",
+        "popularItemsEmpty": "Ingen telefonbestillinger i denne periode endnu."
       },
       "callLog": {
         "searchPlaceholder": "Søg efter telefon, navn eller resumé…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Planlagte bestillinger bruger de samme \"planlæg til senere\"-tidsrum som din online bestillingsside.",
         "maxCallSeconds": "Maksimal opkaldslængde (sekunder)",
         "maxCallHelp": "Nabil afrunder høfligt og afslutter opkaldet, når denne grænse nås. Mellem 60 og 1800 sekunder (30 minutter).",
-        "paymentsNotLiveNote": "Telefonbetalinger aktiveres, når betaling via link lanceres — i dag betales alle telefonbestillinger i restauranten. Dine valg her gemmes og træder automatisk i kraft, når funktionen går live."
+        "paymentsNotLiveNote": "Telefonbetalinger aktiveres, når betaling via link lanceres — i dag betales alle telefonbestillinger i restauranten. Dine valg her gemmes og træder automatisk i kraft, når funktionen går live.",
+        "voicesLoading": "Indlæser stemmer…",
+        "voiceDefault": "Standardstemme",
+        "voiceDefaultHint": "Den stemme, telefonsystemet leverer — virker altid",
+        "voiceFemale": "Kvindelig",
+        "voiceMale": "Mandlig",
+        "previewHint": "Tryk på afspil for at høre stemmen læse din egen velkomsthilsen op.",
+        "previewUnavailable": "Stemmeprøver er ikke slået til endnu. Du kan stadig vælge en stemme — gem, og ring så til dit nummer for at høre den.",
+        "previewFailed": "Kunne ikke afspille prøven. Prøv igen om et øjeblik.",
+        "voiceSpeedHelp": "Hvor hurtigt Nabil taler. Langsommere er nemmere at følge på en støjende linje; hurtigere virker mere kvikt. Gælder alle opkald.",
+        "multilingualTitle": "Forstå andre sprog",
+        "multilingualHint": "Vælg de sprog, dine kunder taler. Nabil registrerer sproget automatisk og svarer på samme sprog — lad dem alle være slået fra, hvis du kun vil bruge dit hovedsprog.",
+        "payAtDoorTitle": "Lad kunderne betale chaufføren ved døren",
+        "payAtDoorHint": "Levering fungerer som afhentning: kunden betaler ikke i telefonen, men kontant eller med kort, når maden kommer. Ordren oprettes stadig i ShipDay, så du kan se den der.",
+        "payAtDoorWarning": "Der bestilles ingen ShipDay-chauffør til disse ordrer — dine egne medarbejdere leverer dem og tager imod betalingen. Det er dit ansvar, ikke ShipDays."
       },
       "faqMgr": {
         "title": "FAQ'er, som Nabil besvarer",

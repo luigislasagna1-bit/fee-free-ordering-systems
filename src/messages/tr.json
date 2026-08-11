@@ -4292,7 +4292,10 @@
         "languageMix": "Diller",
         "sentimentMix": "Duygu durumu",
         "recentActivity": "Son etkinlikler",
-        "viewAll": "Tüm aramaları görüntüle"
+        "viewAll": "Tüm aramaları görüntüle",
+        "chartPopularItems": "Telefonla en çok sipariş edilenler",
+        "popularItemsCta": "Öne çıkan ek satışları ayarla",
+        "popularItemsEmpty": "Bu aralıkta henüz telefon siparişi yok."
       },
       "callLog": {
         "searchPlaceholder": "Telefon, ad veya özet arayın…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Planlı siparişler, çevrimiçi sipariş sayfanızdaki ileri tarihe planlama zaman dilimlerinin aynısını kullanır.",
         "maxCallSeconds": "Maksimum arama süresi (saniye)",
         "maxCallHelp": "Nabil bu sınıra ulaştığında konuşmayı kibarca toparlar ve aramayı sonlandırır. 60 ile 1800 saniye (30 dakika) arasında.",
-        "paymentsNotLiveNote": "Telefonla ödemeler, bağlantıyla ödeme özelliği yayınlandığında etkinleşir — şu anda her sesli sipariş restoranda ödemelidir. Buradaki seçimleriniz kaydedilir ve özellik kullanıma açıldığında otomatik olarak uygulanır."
+        "paymentsNotLiveNote": "Telefonla ödemeler, bağlantıyla ödeme özelliği yayınlandığında etkinleşir — şu anda her sesli sipariş restoranda ödemelidir. Buradaki seçimleriniz kaydedilir ve özellik kullanıma açıldığında otomatik olarak uygulanır.",
+        "voicesLoading": "Sesler yükleniyor…",
+        "voiceDefault": "Varsayılan ses",
+        "voiceDefaultHint": "Telefon sistemi hangi sesi sunuyorsa o — her zaman çalışır",
+        "voiceFemale": "Kadın",
+        "voiceMale": "Erkek",
+        "previewHint": "Bu sesin kendi karşılama mesajınızı nasıl okuduğunu duymak için oynat düğmesine basın.",
+        "previewUnavailable": "Ses örnekleri henüz açık değil. Yine de bir ses seçebilirsiniz — kaydedin, sonra numaranızı arayıp dinleyin.",
+        "previewFailed": "Bu örnek çalınamadı. Birazdan tekrar deneyin.",
+        "voiceSpeedHelp": "Nabil'in ne kadar hızlı konuştuğu. Yavaş konuşma gürültülü hatlarda daha kolay anlaşılır; hızlı konuşma daha canlı gelir. Tüm çağrılar için geçerlidir.",
+        "multilingualTitle": "Diğer dilleri anlasın",
+        "multilingualHint": "Arayanlarınızın konuştuğu dilleri seçin. Nabil dili otomatik olarak algılar ve aynı dilde yanıt verir — hepsini kapalı bırakırsanız yalnızca ana dilinizde konuşur.",
+        "payAtDoorTitle": "Müşteriler kapıda kuryeye ödeme yapabilsin",
+        "payAtDoorHint": "Teslimat, gel-al gibi çalışır: arayan kişi telefonda ödeme yapmaz, yemek geldiğinde nakit veya kartla öder. Sipariş yine de ShipDay'de oluşturulur, böylece oradan da görebilirsiniz.",
+        "payAtDoorWarning": "Bu siparişler için ShipDay kuryesi çağrılmaz — teslimatı kendi personeliniz yapar ve parayı onlar tahsil eder. Bu sizin sorumluluğunuzdadır, ShipDay'in değil."
       },
       "faqMgr": {
         "title": "Nabil'in yanıtladığı SSS'ler",

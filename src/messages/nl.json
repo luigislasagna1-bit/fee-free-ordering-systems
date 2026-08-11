@@ -4292,7 +4292,10 @@
         "languageMix": "Talen",
         "sentimentMix": "Sentiment",
         "recentActivity": "Recente activiteit",
-        "viewAll": "Alle gesprekken bekijken"
+        "viewAll": "Alle gesprekken bekijken",
+        "chartPopularItems": "Meest besteld via de telefoon",
+        "popularItemsCta": "Uitgelichte upsells instellen",
+        "popularItemsEmpty": "Nog geen telefonische bestellingen in deze periode."
       },
       "callLog": {
         "searchPlaceholder": "Zoek op telefoon, naam of samenvatting…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Geplande bestellingen gebruiken dezelfde tijdsloten voor later bestellen als je online bestelpagina.",
         "maxCallSeconds": "Maximale gespreksduur (seconden)",
         "maxCallHelp": "Nabil rondt beleefd af en beëindigt het gesprek zodra deze limiet is bereikt. Tussen 60 en 1800 seconden (30 minuten).",
-        "paymentsNotLiveNote": "Telefonische betalingen worden actief zodra betalen via een link beschikbaar is — op dit moment wordt elke telefonische bestelling in het restaurant betaald. Je keuzes hier worden opgeslagen en automatisch toegepast zodra de functie live gaat."
+        "paymentsNotLiveNote": "Telefonische betalingen worden actief zodra betalen via een link beschikbaar is — op dit moment wordt elke telefonische bestelling in het restaurant betaald. Je keuzes hier worden opgeslagen en automatisch toegepast zodra de functie live gaat.",
+        "voicesLoading": "Stemmen laden…",
+        "voiceDefault": "Standaardstem",
+        "voiceDefaultHint": "Wat het telefoonsysteem ook aanbiedt — werkt altijd",
+        "voiceFemale": "Vrouw",
+        "voiceMale": "Man",
+        "previewHint": "Druk op afspelen om te horen hoe de stem je eigen welkomstbegroeting voorleest.",
+        "previewUnavailable": "Stemvoorbeelden staan nog niet aan. Je kunt wel gewoon een stem kiezen — sla op en bel dan je nummer om hem te horen.",
+        "previewFailed": "Dit voorbeeld kon niet worden afgespeeld. Probeer het zo meteen opnieuw.",
+        "voiceSpeedHelp": "Hoe snel Nabil praat. Langzamer is beter te volgen op een rumoerige lijn; sneller voelt vlotter. Geldt voor elk gesprek.",
+        "multilingualTitle": "Andere talen verstaan",
+        "multilingualHint": "Kies elke taal die je bellers spreken. Nabil herkent die automatisch en antwoordt in dezelfde taal — laat ze allemaal uit staan om alleen je hoofdtaal te gebruiken.",
+        "payAtDoorTitle": "Laat klanten de bezorger aan de deur betalen",
+        "payAtDoorHint": "Bezorgen werkt dan net als afhalen: de beller betaalt niet aan de telefoon, maar contant of met kaart wanneer het eten wordt bezorgd. De bestelling wordt nog steeds in ShipDay aangemaakt, zodat je hem daar terugziet.",
+        "payAtDoorWarning": "Voor deze bestellingen wordt geen ShipDay-bezorger aangevraagd — je eigen personeel bezorgt ze en int het geld. Dat is jouw verantwoordelijkheid, niet die van ShipDay."
       },
       "faqMgr": {
         "title": "Veelgestelde vragen die Nabil beantwoordt",

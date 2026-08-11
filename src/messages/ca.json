@@ -4292,7 +4292,10 @@
         "languageMix": "Idiomes",
         "sentimentMix": "Sentiment",
         "recentActivity": "Activitat recent",
-        "viewAll": "Mostra totes les trucades"
+        "viewAll": "Mostra totes les trucades",
+        "chartPopularItems": "El més demanat per telèfon",
+        "popularItemsCta": "Configura els suggeriments destacats",
+        "popularItemsEmpty": "Encara no hi ha comandes per telèfon en aquest període."
       },
       "callLog": {
         "searchPlaceholder": "Cerca per telèfon, nom o resum…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Les comandes programades fan servir les mateixes franges horàries de «programar per a més tard» que la teva pàgina de comandes en línia.",
         "maxCallSeconds": "Durada màxima de la trucada (segons)",
         "maxCallHelp": "Nabil s'acomiada educadament i finalitza la trucada quan arriba a aquest límit. Entre 60 i 1800 segons (30 minuts).",
-        "paymentsNotLiveNote": "Els pagaments per telèfon s'activaran quan estigui disponible el pagament per enllaç; de moment, totes les comandes de veu es paguen al local. Les opcions que triïs aquí es desen i s'aplicaran automàticament quan la funció estigui activa."
+        "paymentsNotLiveNote": "Els pagaments per telèfon s'activaran quan estigui disponible el pagament per enllaç; de moment, totes les comandes de veu es paguen al local. Les opcions que triïs aquí es desen i s'aplicaran automàticament quan la funció estigui activa.",
+        "voicesLoading": "S'estan carregant les veus…",
+        "voiceDefault": "Veu predeterminada",
+        "voiceDefaultHint": "La que ofereixi el sistema telefònic — sempre funciona",
+        "voiceFemale": "Femenina",
+        "voiceMale": "Masculina",
+        "previewHint": "Prem reproduir per escoltar com la veu llegeix la teva salutació inicial.",
+        "previewUnavailable": "Les mostres de veu encara no estan activades. Tot i així pots triar una veu — desa els canvis i truca al teu número per sentir-la.",
+        "previewFailed": "No s'ha pogut reproduir la mostra. Torna-ho a provar d'aquí a un moment.",
+        "voiceSpeedHelp": "La rapidesa amb què parla en Nabil. Més lent és més fàcil de seguir en una línia amb soroll; més ràpid resulta més àgil. S'aplica a totes les trucades.",
+        "multilingualTitle": "Entendre altres idiomes",
+        "multilingualHint": "Tria qualsevol idioma que facin servir els teus clients. En Nabil el detecta automàticament i respon en el mateix idioma — deixa'ls tots desactivats per parlar només en el teu idioma principal.",
+        "payAtDoorTitle": "Permet que els clients paguin al repartidor a la porta",
+        "payAtDoorHint": "El lliurament a domicili funciona com la recollida: qui truca no paga per telèfon, sinó en efectiu o amb targeta quan arriba el menjar. La comanda es continua creant a ShipDay perquè la puguis veure allà.",
+        "payAtDoorWarning": "En aquestes comandes no es demana cap repartidor de ShipDay — les lliura el teu propi personal, que també en cobra l'import. És responsabilitat teva, no de ShipDay."
       },
       "faqMgr": {
         "title": "Preguntes freqüents que respon Nabil",

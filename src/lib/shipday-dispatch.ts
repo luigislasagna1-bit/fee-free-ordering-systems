@@ -15,10 +15,16 @@
  * explain itself.
  */
 import prisma from "@/lib/db";
-import { dispatchOrderToShipday, shouldDispatchToShipday } from "@/lib/shipday";
+import { dispatchOrderToShipday, shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday";
 
 export type DispatchNowResult =
-  | { ok: true; shipdayOrderId: string }
+  | {
+      ok: true;
+      shipdayOrderId: string;
+      /** True when the order was WRITTEN to ShipDay for visibility but no
+       *  driver was requested — pay-at-door delivery the store fulfils itself. */
+      recordOnly?: boolean;
+    }
   | {
       ok: false;
       /** Why we refused before even calling ShipDay (undefined = ShipDay itself said no). */
@@ -71,11 +77,21 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
   // ShipDay orders MUST be prepaid (Luigi 2026-07-04): the driver only picks
   // up + drops off — an unpaid order would be uncollectable. "Prepaid" = the
   // online charge captured OR store credit covering the whole total.
+  //
+  // PAY AT THE DOOR (Luigi 2026-08-11) is the one exception, and it is NOT a
+  // dispatch: when the store has opted in, an unpaid delivery is still WRITTEN
+  // to ShipDay so the owner sees it in the dashboard they already live in, but
+  // it is recorded as `record_only` — the store delivers it themselves. Without
+  // the opt-in the historic refusal is unchanged.
   const fullyPrepaid =
     full.paymentStatus === "paid" || full.total - (full.creditApplied ?? 0) <= 0.009;
+  let recordOnly = false;
   if (!fullyPrepaid) {
-    console.warn(`[shipday dispatchOrderNow] REFUSED ${orderId}: not prepaid (method=${full.paymentMethod}, status=${full.paymentStatus})`);
-    return { ok: false, skipped: "not_prepaid" };
+    if (!(await shipdayPayAtDoorEnabled(full.restaurantId))) {
+      console.warn(`[shipday dispatchOrderNow] REFUSED ${orderId}: not prepaid (method=${full.paymentMethod}, status=${full.paymentStatus})`);
+      return { ok: false, skipped: "not_prepaid" };
+    }
+    recordOnly = true;
   }
 
   // CLAIM-BEFORE-SEND (2026-08-10, same pattern as the autopilot fix): since
@@ -131,9 +147,19 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
   if (res.ok && res.shipdayOrderId) {
     await prisma.order.update({
       where: { id: orderId },
-      data: { shipdayOrderId: res.shipdayOrderId, shipdayStatus: "assigned", dispatchedAt: new Date() },
+      data: {
+        shipdayOrderId: res.shipdayOrderId,
+        // `record_only` is the pay-at-door marker: the order exists in ShipDay
+        // for the owner's records, but no driver was requested and the store
+        // is delivering it. Anything that reads shipdayStatus (kitchen chips,
+        // admin order page) can therefore tell the two apart.
+        shipdayStatus: recordOnly ? "record_only" : "assigned",
+        dispatchedAt: new Date(),
+      },
     });
-    return { ok: true, shipdayOrderId: res.shipdayOrderId };
+    // Only present when TRUE, so the ordinary dispatch result stays exactly the
+    // shape every existing caller (and test) already matches on.
+    return { ok: true, shipdayOrderId: res.shipdayOrderId, ...(recordOnly ? { recordOnly: true as const } : {}) };
   }
   // ShipDay said no (or the call failed) — release the lease so the manual
   // Retry button and the watchdog can try again immediately.

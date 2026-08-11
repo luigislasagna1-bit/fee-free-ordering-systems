@@ -104,6 +104,26 @@ export async function shouldDispatchToShipday(restaurantId: string): Promise<boo
 }
 
 /**
+ * Does this restaurant accept PAY AT THE DOOR delivery?
+ *
+ * ShipDay drivers can't collect money, so a ShipDay restaurant was
+ * prepaid-delivery-only. Luigi 2026-08-11: a store should be able to take an
+ * unpaid delivery order over the phone exactly like a pickup order, deliver it
+ * with their own staff, and still see it in ShipDay. When this is on, the order
+ * is RECORDED in ShipDay but no driver is requested — see dispatchOrderNow.
+ *
+ * Off by default and independent of `enabled`: a store that turns ShipDay off
+ * entirely never reaches this code.
+ */
+export async function shipdayPayAtDoorEnabled(restaurantId: string): Promise<boolean> {
+  const config = await prisma.shipdayConfig.findUnique({
+    where: { restaurantId },
+    select: { payAtDoorDelivery: true },
+  });
+  return !!config?.payAtDoorDelivery;
+}
+
+/**
  * Validate a ShipDay API key with a lightweight authenticated call, so an
  * owner can confirm their key works from the "Test connection" button WITHOUT
  * placing a real delivery order. GET /orders requires a valid key — a 2xx means

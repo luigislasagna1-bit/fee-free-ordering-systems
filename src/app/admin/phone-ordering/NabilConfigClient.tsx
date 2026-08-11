@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import { LOCALE_OPTIONS } from "@/lib/locales";
@@ -8,6 +9,7 @@ import { HelpTip } from "@/components/HelpTip";
 import FaqManager, { type Faq } from "./FaqManager";
 import TextLinksManager, { type TextLink } from "./TextLinksManager";
 import BlockedCallersManager, { type BlockedRow } from "./BlockedCallersManager";
+import VoicePicker from "./VoicePicker";
 
 /** The owner-editable VoiceAgentConfig fields this form round-trips. The
  *  index signature carries any extra DB columns through the PATCH untouched. */
@@ -76,12 +78,17 @@ type SubTab = "general" | "voice" | "ordering" | "payments" | "faq" | "blocked";
 export default function NabilConfigClient({
   initialConfig,
   cashDeliveryBlocked,
+  shipdayDispatches = false,
+  payAtDoorDelivery = false,
   initialFaqs,
   initialTextLinks,
   initialBlockedCallers,
 }: {
   initialConfig: Record<string, unknown> | null;
   cashDeliveryBlocked: boolean;
+  /** ShipDay is the active dispatcher — only then is pay-at-door a question. */
+  shipdayDispatches?: boolean;
+  payAtDoorDelivery?: boolean;
   initialFaqs: Faq[];
   initialTextLinks: TextLink[];
   initialBlockedCallers: BlockedRow[];
@@ -94,6 +101,33 @@ export default function NabilConfigClient({
   const [saving, setSaving] = useState(false);
   const [sub, setSub] = useState<SubTab>("general");
   const set = (k: string, v: unknown) => setCfg((c) => ({ ...c, [k]: v }));
+  /** Extra languages Nabil should understand (VoiceAgentConfig.languages, a
+   *  JSON string[]). Non-empty ⇒ the TwiML nests <Language code="multi"/>. */
+  const extraLanguages: string[] = Array.isArray(cfg.languages)
+    ? (cfg.languages as unknown[]).filter((x): x is string => typeof x === "string")
+    : [];
+
+  // Pay-at-door lives on ShipdayConfig, not VoiceAgentConfig, so it saves on
+  // its own the moment it's flipped — and the page is refreshed because the
+  // server computes `cashDeliveryBlocked` from it.
+  const router = useRouter();
+  const [payAtDoor, setPayAtDoor] = useState(payAtDoorDelivery);
+  const savePayAtDoor = async (v: boolean) => {
+    setPayAtDoor(v);
+    try {
+      const res = await fetch("/api/admin/phone-ordering/pay-at-door", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ payAtDoorDelivery: v }),
+      });
+      if (!res.ok) throw new Error();
+      toast.success(t("saved"));
+      router.refresh();
+    } catch {
+      setPayAtDoor(!v);
+      toast.error(t("saveError"));
+    }
+  };
 
   const save = async () => {
     setSaving(true);
@@ -181,34 +215,77 @@ export default function NabilConfigClient({
               options={LOCALE_OPTIONS.map((o) => ({ value: o.code, label: o.label }))}
               onChange={(v) => set("primaryLanguage", v)}
             />
-            <Text label={t("voiceId")} value={cfg.voice} placeholder="ElevenLabs voice id (optional)" onChange={(v) => set("voice", v)} />
-            <p className="text-xs text-gray-500">{t("voiceHint")}</p>
-          </Section>
-          {/* HONESTY over parity: the call engine doesn't apply these yet.
-              They save fine and will activate the moment the engine supports
-              them — never pretend a slider changes live calls when it doesn't. */}
-          <Section title={ts("voiceComingSoonTitle")}>
-            <p className="text-xs text-amber-600 -mt-1">{ts("voiceComingSoonNote")}</p>
-            <label className="block">
+            <VoicePicker
+              value={String(cfg.voice || "")}
+              speed={Number(cfg.voiceSpeed) || 1}
+              onChange={(v) => set("voice", v)}
+            />
+            {/* Speed is REAL now: it rides ElevenLabs' extended voice attribute
+                ("<id>-<model>-<speed>_<stability>_<similarity>"), which is why
+                the range is 0.7–1.2 — the values the provider accepts. A wider
+                slider would just be clamped, i.e. a lie. */}
+            <label className="block pt-1">
               <span className="text-sm text-gray-800 flex items-center gap-1.5">
                 {ts("voiceSpeed")}
-                <span className="text-[10px] font-bold uppercase tracking-wide bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full">{ts("comingSoonBadge")}</span>
+                <HelpTip text={ts("voiceSpeedHelp")} />
               </span>
               <div className="flex items-center gap-3 mt-1">
                 <span className="text-xs text-gray-400">{ts("speedSlower")}</span>
                 <input
                   type="range"
-                  min={0.5}
-                  max={2}
-                  step={0.1}
-                  value={Number(cfg.voiceSpeed) || 1}
+                  min={0.7}
+                  max={1.2}
+                  step={0.05}
+                  value={Math.min(1.2, Math.max(0.7, Number(cfg.voiceSpeed) || 1))}
                   onChange={(e) => set("voiceSpeed", parseFloat(e.target.value))}
-                  className="flex-1 accent-amber-600"
+                  className="flex-1 accent-sky-600"
                 />
                 <span className="text-xs text-gray-400">{ts("speedFaster")}</span>
-                <span className="text-xs font-semibold text-gray-700 w-9 text-right tabular-nums">{(Number(cfg.voiceSpeed) || 1).toFixed(1)}×</span>
+                <span className="text-xs font-semibold text-gray-700 w-11 text-right tabular-nums">
+                  {(Math.min(1.2, Math.max(0.7, Number(cfg.voiceSpeed) || 1))).toFixed(2)}×
+                </span>
               </div>
             </label>
+          </Section>
+
+          {/* Understand callers in any language. ConversationRelay's
+              <Language code="multi"/> needs Deepgram STT + ElevenLabs TTS —
+              our defaults — so this is real, not aspirational. */}
+          <Section title={ts("multilingualTitle")}>
+            <p className="text-xs text-gray-500 -mt-1">{ts("multilingualHint")}</p>
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {LOCALE_OPTIONS.filter((o) => o.code !== cfg.primaryLanguage).map((o) => {
+                const on = extraLanguages.includes(o.code);
+                return (
+                  <button
+                    key={o.code}
+                    type="button"
+                    onClick={() =>
+                      set(
+                        "languages",
+                        on
+                          ? extraLanguages.filter((c) => c !== o.code)
+                          : [...extraLanguages, o.code].slice(0, 38),
+                      )
+                    }
+                    className={`text-xs px-2 py-1 rounded-full border transition ${
+                      on
+                        ? "border-sky-500 bg-sky-50 text-sky-700 font-semibold"
+                        : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                    }`}
+                  >
+                    {o.label}
+                  </button>
+                );
+              })}
+            </div>
+          </Section>
+
+          {/* HONESTY over parity: the call engine has no way to apply this yet.
+              It saves fine and will activate the moment the engine supports it
+              — never pretend a toggle changes live calls when it doesn't. */}
+          <Section title={ts("voiceComingSoonTitle")}>
+            <p className="text-xs text-amber-600 -mt-1">{ts("voiceComingSoonNote")}</p>
             <div className="flex items-center gap-1.5">
               <Toggle label={t("ambientNoise")} checked={!!cfg.ambientNoise} onChange={(v) => set("ambientNoise", v)} />
               <span className="text-[10px] font-bold uppercase tracking-wide bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded-full flex-shrink-0">{ts("comingSoonBadge")}</span>
@@ -293,6 +370,23 @@ export default function NabilConfigClient({
             onChange={(v) => set("deliveryPaymentMode", v)}
           />
           {cashDeliveryBlocked && <p className="text-xs text-amber-600">{t("shipdayNote")}</p>}
+          {/* Pay at the door (Luigi 2026-08-11). ShipDay's own drivers can't
+              collect money, which is why delivery was prepaid-only. This turns
+              that into a CHOICE: the order is still written to ShipDay so the
+              owner sees it where they already work, but no driver is requested
+              and delivering it becomes the store's own job. The wording says
+              that plainly — an owner must not discover it from a missed order. */}
+          {shipdayDispatches && (
+            <div className="rounded-lg border border-gray-200 p-3 space-y-1.5">
+              <Toggle
+                label={ts("payAtDoorTitle")}
+                checked={payAtDoor}
+                onChange={savePayAtDoor}
+              />
+              <p className="text-xs text-gray-600">{ts("payAtDoorHint")}</p>
+              {payAtDoor && <p className="text-xs text-amber-600">{ts("payAtDoorWarning")}</p>}
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-3">
             <NumberInput label={t("payWindow")} value={cfg.payByLinkWindowMinutes} min={1} max={60} onChange={(v) => set("payByLinkWindowMinutes", v)} />
             <Select

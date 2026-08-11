@@ -5,6 +5,7 @@ import { api } from "./api";
 import { TOOLS, executeTool, toolsForConfig, type ToolContext } from "./tools";
 import { buildSystemPrompt } from "./prompt";
 import { normalizeAgentConfig } from "./agent-config";
+import { withMessageCacheBreakpoint } from "./cache-breakpoints";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
 const WRAP_UP_LEAD_MS = 45_000;
@@ -320,7 +321,13 @@ export class CallSession {
           // covers the tool definitions too. Requires system as a block array.
           system: [{ type: "text", text: this.system, cache_control: { type: "ephemeral" } }],
           tools: this.tools as any,
-          messages: this.messages,
+          // SECOND breakpoint, on the newest message: the system one only
+          // caches what precedes it, so the conversation itself was still
+          // re-billed in full every turn — and it grew fast once pizza landed
+          // (one get_item_options result is thousands of topping tokens that
+          // then ride along for the rest of the call). See cache-breakpoints.ts
+          // for why this never mutates the stored messages.
+          messages: withMessageCacheBreakpoint(this.messages as any) as any,
           thinking: { type: "disabled" },
         } as any,
         { signal: controller.signal },
@@ -397,6 +404,8 @@ export class CallSession {
                 block.name === "send_sms_link" ||
                 block.name === "add_pizza" ||
                 block.name === "add_combo" ||
+                block.name === "revise_line" ||
+                block.name === "remove_line" ||
                 block.name === "quote_order") &&
               (out as any)?.ok
             ) {

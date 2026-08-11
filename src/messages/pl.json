@@ -4292,7 +4292,10 @@
         "languageMix": "Języki",
         "sentimentMix": "Sentyment",
         "recentActivity": "Ostatnia aktywność",
-        "viewAll": "Zobacz wszystkie połączenia"
+        "viewAll": "Zobacz wszystkie połączenia",
+        "chartPopularItems": "Najczęściej zamawiane przez telefon",
+        "popularItemsCta": "Ustaw wyróżnione dosprzedaże",
+        "popularItemsEmpty": "Brak zamówień telefonicznych w tym okresie."
       },
       "callLog": {
         "searchPlaceholder": "Szukaj numeru telefonu, imienia lub podsumowania…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Zamówienia planowane korzystają z tych samych przedziałów czasowych „zamów na później” co Twoja strona zamówień online.",
         "maxCallSeconds": "Maksymalna długość połączenia (w sekundach)",
         "maxCallHelp": "Po osiągnięciu tego limitu Nabil uprzejmie podsumowuje rozmowę i kończy połączenie. Od 60 do 1800 sekund (30 minut).",
-        "paymentsNotLiveNote": "Płatności przez telefon zostaną włączone, gdy udostępnimy płatność linkiem — obecnie każde zamówienie głosowe jest opłacane na miejscu. Wybrane tutaj opcje są zapisywane i zaczną obowiązywać automatycznie po uruchomieniu tej funkcji."
+        "paymentsNotLiveNote": "Płatności przez telefon zostaną włączone, gdy udostępnimy płatność linkiem — obecnie każde zamówienie głosowe jest opłacane na miejscu. Wybrane tutaj opcje są zapisywane i zaczną obowiązywać automatycznie po uruchomieniu tej funkcji.",
+        "voicesLoading": "Wczytywanie głosów…",
+        "voiceDefault": "Głos domyślny",
+        "voiceDefaultHint": "Taki, jaki udostępnia system telefoniczny — zawsze działa",
+        "voiceFemale": "Żeński",
+        "voiceMale": "Męski",
+        "previewHint": "Naciśnij odtwarzanie, aby usłyszeć, jak ten głos czyta Twoje własne powitanie.",
+        "previewUnavailable": "Próbki głosu nie są jeszcze włączone. Nadal możesz wybrać głos — zapisz, a potem zadzwoń na swój numer, żeby go usłyszeć.",
+        "previewFailed": "Nie udało się odtworzyć tej próbki. Spróbuj ponownie za chwilę.",
+        "voiceSpeedHelp": "Jak szybko mówi Nabil. Wolniejsze tempo jest łatwiejsze do zrozumienia na hałaśliwej linii, szybsze brzmi sprawniej. Dotyczy każdego połączenia.",
+        "multilingualTitle": "Rozumienie innych języków",
+        "multilingualHint": "Zaznacz każdy język, którym mówią Twoi klienci. Nabil rozpozna go automatycznie i odpowie w tym samym języku — zostaw wszystkie wyłączone, aby rozmawiać wyłącznie w Twoim głównym języku.",
+        "payAtDoorTitle": "Pozwól klientom zapłacić kierowcy przy drzwiach",
+        "payAtDoorHint": "Dostawa działa tak jak odbiór osobisty: dzwoniący nie płaci przez telefon, tylko gotówką lub kartą, gdy jedzenie dotrze. Zamówienie i tak powstaje w ShipDay, więc możesz je tam zobaczyć.",
+        "payAtDoorWarning": "Do tych zamówień nie jest zamawiany kierowca ShipDay — dowozi je Twój personel i on odbiera pieniądze. To Twoja odpowiedzialność, a nie ShipDay."
       },
       "faqMgr": {
         "title": "Najczęstsze pytania, na które odpowiada Nabil",

@@ -4126,6 +4126,19 @@ model ShipdayConfig {
   /// dashboard paste worked without placing a test order.
   webhookVerifiedAt DateTime?
 
+  /// PAY AT THE DOOR (Luigi 2026-08-11): "stores should be able to do delivery
+  /// without accepting payment over the phone, same as pickup. these orders
+  /// should not be sent with shipday. they should still be populated in
+  /// shipday — it's the store's responsibility."
+  ///
+  /// ShipDay drivers can't collect money, so connecting ShipDay used to force
+  /// every delivery order prepaid. With this ON, a phone caller may pay the
+  /// driver at the door; the order is CREATED in ShipDay for the owner's
+  /// records but NO driver is requested (dispatchOrderNow marks it
+  /// `record_only` instead of `assigned`), and delivering it is the store's
+  /// own job. Default false = today's prepaid-only behaviour, unchanged.
+  payAtDoorDelivery Boolean @default(false)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

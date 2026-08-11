@@ -4292,7 +4292,10 @@
         "languageMix": "Valodas",
         "sentimentMix": "Noskaņojums",
         "recentActivity": "Jaunākās aktivitātes",
-        "viewAll": "Skatīt visus zvanus"
+        "viewAll": "Skatīt visus zvanus",
+        "chartPopularItems": "Visbiežāk pasūtītais pa tālruni",
+        "popularItemsCta": "Iestatīt izceltos piedāvājumus",
+        "popularItemsEmpty": "Šajā periodā vēl nav telefonisku pasūtījumu."
       },
       "callLog": {
         "searchPlaceholder": "Meklēt pēc tālruņa, vārda vai kopsavilkuma…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Plānotie pasūtījumi izmanto tos pašus atliktās izpildes laikus, kas pieejami jūsu tiešsaistes pasūtīšanas lapā.",
         "maxCallSeconds": "Maksimālais zvana ilgums (sekundēs)",
         "maxCallHelp": "Sasniedzot šo limitu, Nabil pieklājīgi noslēdz sarunu un beidz zvanu. No 60 līdz 1800 sekundēm (30 minūtes).",
-        "paymentsNotLiveNote": "Maksājumi pa tālruni tiks aktivizēti, tiklīdz būs pieejama apmaksa ar saiti — pašlaik visi balss pasūtījumi tiek apmaksāti uz vietas restorānā. Šeit veiktās izvēles tiek saglabātas un stāsies spēkā automātiski, tiklīdz funkcija būs pieejama."
+        "paymentsNotLiveNote": "Maksājumi pa tālruni tiks aktivizēti, tiklīdz būs pieejama apmaksa ar saiti — pašlaik visi balss pasūtījumi tiek apmaksāti uz vietas restorānā. Šeit veiktās izvēles tiek saglabātas un stāsies spēkā automātiski, tiklīdz funkcija būs pieejama.",
+        "voicesLoading": "Ielādē balsis…",
+        "voiceDefault": "Noklusējuma balss",
+        "voiceDefaultHint": "Tā, ko piedāvā telefona sistēma — darbojas vienmēr",
+        "voiceFemale": "Sieviešu",
+        "voiceMale": "Vīriešu",
+        "previewHint": "Nospiediet atskaņot, lai dzirdētu, kā balss nolasa jūsu sveiciena tekstu.",
+        "previewUnavailable": "Balss paraugi vēl nav ieslēgti. Balsi tomēr varat izvēlēties — saglabājiet un pēc tam piezvaniet uz savu numuru, lai to dzirdētu.",
+        "previewFailed": "Neizdevās atskaņot šo paraugu. Pēc brīža mēģiniet vēlreiz.",
+        "voiceSpeedHelp": "Cik ātri runā Nabil. Lēnāku runu trokšņainā līnijā ir vieglāk saprast; ātrāka šķiet raitāka. Attiecas uz visiem zvaniem.",
+        "multilingualTitle": "Saprast citas valodas",
+        "multilingualHint": "Izvēlieties jebkuru valodu, kurā runā jūsu zvanītāji. Nabil to atpazīst automātiski un atbild tajā pašā valodā — atstājiet visas izslēgtas, lai paliktu tikai pie savas galvenās valodas.",
+        "payAtDoorTitle": "Ļaujiet klientiem samaksāt kurjeram pie durvīm",
+        "payAtDoorHint": "Piegāde darbojas tāpat kā līdzņemšana: zvanītājs nemaksā pa telefonu, bet norēķinās skaidrā naudā vai ar karti, kad ēdiens tiek piegādāts. Pasūtījums joprojām tiek izveidots ShipDay sistēmā, lai jūs to tur redzētu.",
+        "payAtDoorWarning": "Šiem pasūtījumiem ShipDay kurjers netiek pieprasīts — tos piegādā un naudu iekasē jūsu pašu darbinieki. Tā ir jūsu, nevis ShipDay atbildība."
       },
       "faqMgr": {
         "title": "BUJ, uz kuriem atbild Nabil",

@@ -6,7 +6,13 @@ import { resolveReportScope } from "@/lib/reports/report-scope";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
 import { buildQuery, type SearchParams } from "@/components/admin/reports/table-nav";
-import { fetchVoiceAnalytics, fetchVoiceMonthRevenue, conversionPct, CALL_OUTCOMES } from "@/lib/voice/analytics";
+import {
+  fetchVoiceAnalytics,
+  fetchVoiceMonthRevenue,
+  fetchPopularPhoneItems,
+  conversionPct,
+  CALL_OUTCOMES,
+} from "@/lib/voice/analytics";
 import { PollRefresh } from "@/components/admin/PollRefresh";
 import { formatTzDateTime, formatDuration, OutcomeChip } from "./shared";
 
@@ -36,9 +42,10 @@ export default async function OverviewTab({
   const range = parseDateRangeInTz(spEff, scope.timezone ?? undefined);
   const rangeLabel = formatRangeLabelInTz(range, scope.timezone ?? undefined);
 
-  const [a, monthRevenue] = await Promise.all([
+  const [a, monthRevenue, popularItems] = await Promise.all([
     fetchVoiceAnalytics(restaurantId, range, scope.timezone),
     fetchVoiceMonthRevenue(restaurantId, scope.timezone),
+    fetchPopularPhoneItems(restaurantId, range),
   ]);
 
   const outcomeLabel = (o: string | null) =>
@@ -55,6 +62,14 @@ export default async function OverviewTab({
     u.set("tab", "calls");
     return `?${u.toString()}`;
   })();
+  // Featured Upsells live on the Menu tab — this is the "act on it" link from
+  // the popularity chart to the place the owner changes what Nabil suggests.
+  const upsellsTabQuery = (() => {
+    const u = new URLSearchParams(buildQuery(sp));
+    u.set("tab", "menu");
+    return `?${u.toString()}`;
+  })();
+  const maxPopular = Math.max(...popularItems.map((i) => i.quantity), 1);
 
   const maxPerDay = Math.max(...a.perDay.map((d) => d.count), 1);
   const maxPerHour = Math.max(...a.perHour, 1);
@@ -205,6 +220,42 @@ export default async function OverviewTab({
               <div className="flex justify-between text-[10px] text-gray-400 mt-1.5">
                 <span>0</span><span>6</span><span>12</span><span>18</span><span>23</span>
               </div>
+            </div>
+
+            {/* What callers order most. This is the figure that tells the owner
+                what to put in Featured Upsells — and unlike a POS mirror we can
+                be exact, because we own the order. Units sold, not money: an
+                item's share of an order's money isn't well defined once promos
+                and store credit apply. */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-gray-900">{t("chartPopularItems")}</h3>
+                <Link href={upsellsTabQuery} className="text-xs font-semibold text-sky-600 hover:text-sky-700 inline-flex items-center gap-1">
+                  {t("popularItemsCta")} <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+              {popularItems.length === 0 ? (
+                <p className="text-sm text-gray-400">{t("popularItemsEmpty")}</p>
+              ) : (
+                <div className="space-y-2">
+                  {popularItems.map((it) => (
+                    <div key={it.name} className="flex items-center gap-3">
+                      <div className="w-36 flex-shrink-0 truncate text-sm text-gray-700" title={it.name}>
+                        {it.name}
+                      </div>
+                      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-emerald-400 rounded-full"
+                          style={{ width: `${(it.quantity / maxPopular) * 100}%` }}
+                        />
+                      </div>
+                      <span className="text-sm font-semibold text-gray-900 w-8 text-right tabular-nums">
+                        {it.quantity}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Day of week — Monday-first columns. */}

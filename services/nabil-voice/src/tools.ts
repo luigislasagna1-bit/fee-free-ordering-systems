@@ -24,6 +24,11 @@ export type ToolContext = {
    *  add_pizza / add_combo and sent by place_order alongside any simple items.
    *  Per-call; runTurn's serialization means no two turns mutate it at once. */
   basket: BuiltLine[];
+  /** The number/name the order will actually be placed under, captured the
+   *  first time the caller gives one. Pinned so the QUOTE and the CHARGE price
+   *  the same customer (promo eligibility is per-customer). */
+  customerPhone?: string;
+  customerName?: string;
 };
 
 /** A compiled order line, exactly as /api/orders wants it. Opaque to the model. */
@@ -42,7 +47,36 @@ export type BuiltLine = {
   }>;
   /** Spoken description kept for read-back; stripped before POSTing. */
   _readBack?: string;
+  /** The caller's INTENT that produced this line, kept so a mid-order change
+   *  ("make that second pizza half mushroom instead of onion") can be merged
+   *  and RECOMPILED through the same compiler. Never patch a compiled payload:
+   *  half/half prefixes, per-unit expansion and preset seeding are all decided
+   *  at compile time and would drift the moment anyone hand-edited them. */
+  _kind?: "pizza" | "combo";
+  _intent?: Record<string, unknown>;
 };
+
+/** The running order as the caller would hear it, one numbered line each.
+ *  Returned by EVERY basket tool so the model always knows what "the second
+ *  pizza" refers to without having to remember. */
+function basketView(ctx: ToolContext) {
+  return ctx.basket.map((l, i) => ({ line: i + 1, description: l._readBack || "item" }));
+}
+
+/** Customer identity for THIS call. quote_order and place_order must price
+ *  against the SAME person: promos are keyed on the customer, so quoting as the
+ *  caller-ID number and charging as the number they gave can change the total
+ *  between the "yes" and the receipt. */
+function orderIdentity(ctx: ToolContext, input: any) {
+  if (typeof input?.customerPhone === "string" && input.customerPhone.trim()) {
+    ctx.customerPhone = input.customerPhone.trim();
+  }
+  if (typeof input?.customerName === "string" && input.customerName.trim()) {
+    ctx.customerName = input.customerName.trim();
+  }
+  const phone = ctx.customerPhone || ctx.token.from;
+  return { phone, name: ctx.customerName || "Phone Caller" };
+}
 
 const ITEM_SCHEMA = {
   type: "object",
@@ -195,6 +229,10 @@ export const TOOLS = [
             properties: {
               menuItemId: { type: "string", description: "The chosen item's menuItemId." },
               size: { type: "string" },
+              crust: { type: "string", description: "Only if the caller named one." },
+              sauce: { type: "string", description: "Only if the caller named one." },
+              cheese: { type: "string", description: "Only if the caller named one." },
+              notes: { type: "string", description: "Kitchen note for this item." },
               toppings: {
                 type: "array",
                 items: {
@@ -219,15 +257,83 @@ export const TOOLS = [
     },
   },
   {
+    name: "revise_line",
+    description:
+      "Change something already on the order — 'actually make that second pizza half mushroom instead of onion', 'make the first one large', 'add extra cheese to that'. Give the line number from the running order and ONLY what changes. The order is rebuilt from scratch, so the price stays correct.",
+    input_schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        lineNumber: { type: "integer", minimum: 1, description: "Which line, as numbered in the running order." },
+        size: { type: "string", description: "New size." },
+        crust: { type: "string" },
+        sauce: { type: "string" },
+        cheese: { type: "string" },
+        quantity: { type: "integer", minimum: 1 },
+        notes: { type: "string" },
+        toppings: {
+          type: "array",
+          description:
+            "The COMPLETE new topping list for this item. Use when the caller restates what they want on it.",
+          items: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              name: { type: "string" },
+              placement: { type: "string", enum: ["whole", "left", "right"] },
+              count: { type: "integer", minimum: 1 },
+            },
+            required: ["name"],
+          },
+        },
+        addToppings: {
+          type: "array",
+          description: "Toppings to ADD, leaving the rest of the item alone.",
+          items: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              name: { type: "string" },
+              placement: { type: "string", enum: ["whole", "left", "right"] },
+              count: { type: "integer", minimum: 1 },
+            },
+            required: ["name"],
+          },
+        },
+        removeToppings: {
+          type: "array",
+          description: "Topping names to TAKE OFF ('no onions after all').",
+          items: { type: "string" },
+        },
+      },
+      required: ["lineNumber"],
+    },
+  },
+  {
+    name: "remove_line",
+    description:
+      "Take something off the order entirely — 'actually, forget the wings'. Give the line number from the running order.",
+    input_schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: { lineNumber: { type: "integer", minimum: 1 } },
+      required: ["lineNumber"],
+    },
+  },
+  {
     name: "quote_order",
     description:
-      "Get the authoritative total for everything added so far, including tax and any discount. ALWAYS call this and read the total back before place_order when the order contains a pizza or combo — their prices cannot be added up from menu prices.",
+      "Get the authoritative total for everything added so far, including tax, delivery and any discount. ALWAYS call this and read the total back before place_order when the order contains a pizza or combo — their prices cannot be added up from menu prices. For delivery you must have the address first.",
     input_schema: {
       type: "object",
       additionalProperties: false,
       properties: {
         type: { type: "string", enum: ["pickup", "delivery"] },
         items: { type: "array", items: ITEM_SCHEMA, description: "Simple (non-pizza) items, if any." },
+        customerPhone: { type: "string", description: "The number the order will be placed under, if the caller gave one." },
+        deliveryStreet: { type: "string", description: "Required for delivery — same address you'll place the order with." },
+        deliveryCity: { type: "string" },
+        deliveryZip: { type: "string" },
       },
       required: ["type"],
     },
@@ -262,7 +368,7 @@ export const TOOLS = [
  *  smsConfirmations=false removes texting entirely. transfer_to_human always
  *  survives so the call can never dead-end. */
 export function toolsForConfig(cfg: AgentConfig) {
-  const PIZZA_TOOLS = ["get_item_options", "add_pizza", "add_combo"];
+  const PIZZA_TOOLS = ["get_item_options", "add_pizza", "add_combo", "revise_line", "remove_line"];
   return TOOLS.filter((t) => {
     if ((t.name === "place_order" || t.name === "price_order_preview" || t.name === "quote_order") && !cfg.canTakeOrders) return false;
     if ((t.name === "book_reservation" || t.name === "check_reservation_availability") && !cfg.canBookReservations) return false;
@@ -280,7 +386,10 @@ const digits = (s: string) => (s || "").replace(/\D/g, "");
 /** Server-compiled lines + the model's simple items, ready to POST.
  *  `_readBack` is display-only bookkeeping and must not reach /api/orders. */
 function mergeBasket(ctx: ToolContext, simpleItems: unknown): any[] {
-  const built = ctx.basket.map(({ _readBack, ...line }) => line);
+  // Strip EVERY bookkeeping field. `_intent` in particular is the caller's whole
+  // spoken request — useful for recompiling on revise_line, meaningless (and
+  // large) on the wire.
+  const built = ctx.basket.map(({ _readBack, _kind, _intent, ...line }) => line);
   const simple = Array.isArray(simpleItems) ? simpleItems : [];
   return [...built, ...simple];
 }
@@ -317,7 +426,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       };
     }
     case "place_order": {
-      const phone = input.customerPhone || ctx.token.from;
+      const { phone } = orderIdentity(ctx, input);
       // Server-compiled pizza/combo lines ride alongside whatever simple items
       // the model listed. They were built by /api/internal/voice/build-line —
       // the model never assembled them, and never sees their internals.
@@ -391,6 +500,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       const orderNumber = res.json?.orderNumber;
       const total = res.json?.total;
       if (orderNumber) ctx.placedOrders.push({ signature, orderId, orderNumber: String(orderNumber), total: Number(total ?? 0) });
+      // 🚨 EMPTY THE BASKET. It used to survive the placement, so a caller who
+      // said "oh — and a Coke" after confirming got a SECOND order containing
+      // the first order's food again (new signature ⇒ the dup-guard couldn't
+      // help). The placed lines are done; anything after this is a new order.
+      ctx.basket.length = 0;
       // Auto-applied promo (e.g. a first-time-customer special): tell the
       // caller WHY the total is lower than the read-back price — a silently
       // different number sounds like a mistake (live call, 2026-08-10).
@@ -465,17 +579,121 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
             "Ask the caller about these — one at a time, conversationally — then call this tool again with their answers. Do NOT place the order yet.",
         };
       }
-      ctx.basket.push({ ...line, _readBack: readBack });
+      // Keep the INTENT with the compiled line so revise_line can merge a
+      // change into it and recompile — never patch the compiled payload.
+      ctx.basket.push({ ...line, _readBack: readBack, _kind: kind, _intent: { ...input } });
       return {
         ok: true,
         added: readBack,
         pricingNote: pricingNote ?? null,
-        orderSoFar: ctx.basket.map((l) => l._readBack).filter(Boolean),
+        order: basketView(ctx),
         instruction:
           (pricingNote
             ? "Tell the caller the extra-topping charge in this pricingNote BEFORE moving on — they must never be surprised at pickup. "
             : "") +
-          "Confirm what you added in one short sentence, then ask if they'd like anything else. The total comes from quote_order.",
+          "Confirm what you added in one short sentence, then ask if they'd like anything else. The total comes from quote_order. " +
+          "If they change their mind about something already on the order, use revise_line or remove_line with its line number from `order` — never add a corrected copy alongside the old one.",
+      };
+    }
+
+    // ── mid-order editing ────────────────────────────────────────────────
+    // Loman's headline is a live basket: "if a user changes an item mid-sentence
+    // the AI updates the active order without resetting". Ours was append-only,
+    // so "actually make that a large" produced TWO pizzas and a doubled total.
+    // Both tools RECOMPILE from the stored intent — the compiled payload is
+    // never hand-edited, because half/half prefixes, per-unit expansion and
+    // preset seeding are all decided at compile time.
+    case "revise_line": {
+      const idx = Math.floor(Number(input.lineNumber)) - 1;
+      const target = ctx.basket[idx];
+      if (!target) {
+        return {
+          error: true,
+          code: "no_such_line",
+          order: basketView(ctx),
+          message: "There's no such line on the order. Read them the order and ask which one they mean.",
+        };
+      }
+      if (!target._intent || !target._kind) {
+        return {
+          error: true,
+          code: "not_revisable",
+          order: basketView(ctx),
+          message: "That line can't be changed here — remove it with remove_line and add it again.",
+        };
+      }
+
+      const prev = target._intent as any;
+      let toppings: any[] = Array.isArray(prev.toppings) ? [...prev.toppings] : [];
+      if (Array.isArray(input.toppings)) {
+        toppings = input.toppings; // caller restated the whole list
+      } else {
+        if (Array.isArray(input.removeToppings)) {
+          const drop = input.removeToppings.map((s: string) => String(s).toLowerCase().trim());
+          toppings = toppings.filter((t) => !drop.includes(String(t?.name ?? "").toLowerCase().trim()));
+        }
+        if (Array.isArray(input.addToppings)) toppings = [...toppings, ...input.addToppings];
+      }
+
+      const merged: Record<string, unknown> = { ...prev };
+      for (const k of ["size", "crust", "sauce", "cheese", "quantity", "notes"] as const) {
+        if (input[k] !== undefined) merged[k] = input[k];
+      }
+      if (target._kind === "pizza") merged.toppings = toppings;
+
+      const res = await api.buildLine({
+        slug,
+        kind: target._kind,
+        intent: merged,
+        askGroupIds: ctx.cfg.pizzaAskGroups,
+      });
+      if (!res.ok) {
+        return { error: true, code: res.json?.code, message: res.json?.error || "I couldn't change that." };
+      }
+      const { line, readBack, pricingNote, unresolved } = res.json ?? {};
+      if (!line || (Array.isArray(unresolved) && unresolved.length)) {
+        // The old line stays exactly as it was — a half-applied change is worse
+        // than no change.
+        return {
+          needsInfo: true,
+          questions: unresolved ?? [],
+          order: basketView(ctx),
+          instruction:
+            "Ask the caller about these, then call revise_line again. The order is UNCHANGED until you do.",
+        };
+      }
+      ctx.basket[idx] = { ...line, _readBack: readBack, _kind: target._kind, _intent: merged };
+      return {
+        ok: true,
+        changed: readBack,
+        pricingNote: pricingNote ?? null,
+        order: basketView(ctx),
+        instruction:
+          (pricingNote ? "Tell the caller the extra-topping charge in this pricingNote. " : "") +
+          "Confirm the CHANGE in one short sentence — don't re-read the whole order. Re-quote with quote_order before placing.",
+      };
+    }
+
+    case "remove_line": {
+      const idx = Math.floor(Number(input.lineNumber)) - 1;
+      const target = ctx.basket[idx];
+      if (!target) {
+        return {
+          error: true,
+          code: "no_such_line",
+          order: basketView(ctx),
+          message: "There's no such line on the order. Read them the order and ask which one they mean.",
+        };
+      }
+      ctx.basket.splice(idx, 1);
+      return {
+        ok: true,
+        removed: target._readBack || "that item",
+        order: basketView(ctx),
+        instruction:
+          ctx.basket.length
+            ? "Confirm what you took off in one short sentence, then ask if that's everything. Re-quote before placing."
+            : "The order is now empty. Ask what they'd like.",
       };
     }
 
@@ -484,19 +702,39 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       if (!items.length) {
         return { error: true, code: "empty_order", message: "Nothing has been added yet." };
       }
-      const phone = ctx.token.from;
-      const res = await api.dryRunOrder({
+      // Same customer as place_order will use — promo eligibility is keyed on
+      // the customer, so quoting under the caller-ID number and charging under
+      // the number they gave can move the total between the "yes" and the bill.
+      const { phone, name: quoteName } = orderIdentity(ctx, input);
+      const body: Record<string, unknown> = {
         restaurantSlug: slug,
         type: input.type,
         items,
         // The dry run re-validates exactly like a real placement, so it needs a
         // shape that passes the same guards — no order is created.
-        customerName: "Phone Caller",
+        customerName: twoTokenName(quoteName),
         customerPhone: phone,
         customerEmail: sentinelEmail(phone),
         paymentMethod: "cash",
         channel: "voice",
-      });
+      };
+      if (input.type === "delivery") {
+        // Without these the route 400s on required delivery fields long before
+        // the dryRun branch — every delivery quote failed — and even where it
+        // passed, the fee would be the wrong zone's.
+        if (!input.deliveryStreet) {
+          return {
+            error: true,
+            code: "delivery_address_needed",
+            message:
+              "I need the delivery address before I can give a total — the delivery fee depends on it. Ask for the street address, city and postal code, then quote again.",
+          };
+        }
+        body.deliveryAddress = input.deliveryStreet;
+        body.deliveryCity = input.deliveryCity;
+        body.deliveryZip = input.deliveryZip;
+      }
+      const res = await api.dryRunOrder(body);
       if (!res.ok) {
         return {
           error: true,
@@ -514,9 +752,10 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         tax: q.tax,
         discount: q.discount,
         discountNames: q.appliedPromoNames ?? [],
-        lines: ctx.basket.map((l) => l._readBack).filter(Boolean),
+        deliveryFee: q.deliveryFee,
+        order: basketView(ctx),
         instruction:
-          "Read this EXACT total back to the caller — it is authoritative and includes tax. If a discount applied, mention it as good news by name. Only call place_order after they say yes.",
+          "Read this EXACT total back to the caller — it is authoritative and includes tax. If a discount applied, mention it as good news by name. Only call place_order after they say yes, and place it with the SAME phone number and address you quoted with.",
       };
     }
 
@@ -541,13 +780,26 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       return { ok: true, message: "Connecting you to a team member now." };
     }
     case "send_sms_link": {
+      // The "receipt" link is a LIVE order-tracking page (/status/<orderId>) —
+      // but only if we send the order id. Without it the text fell back to the
+      // generic ordering page, so the caller was promised tracking and got a
+      // menu link. Use the most recent order placed on this call.
+      const lastOrder = [...ctx.placedOrders].reverse().find((p) => p.orderId);
       const res = await api.sendSms({
         restaurantId: ctx.token.restaurantId,
         slug,
-        to: ctx.token.from,
+        to: ctx.customerPhone || ctx.token.from,
         linkType: input.linkType,
+        orderId: lastOrder?.orderId ?? undefined,
       });
-      return res.ok ? { ok: true } : { error: true };
+      return res.ok
+        ? {
+            ok: true,
+            ...(input.linkType === "receipt" && lastOrder?.orderId
+              ? { instruction: "Tell them the text lets them follow the order's progress, not just a receipt." }
+              : {}),
+          }
+        : { error: true };
     }
     default:
       return { error: true, message: `Unknown tool ${name}` };

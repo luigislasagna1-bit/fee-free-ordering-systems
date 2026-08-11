@@ -4292,7 +4292,10 @@
         "languageMix": "언어",
         "sentimentMix": "감정",
         "recentActivity": "최근 활동",
-        "viewAll": "모든 통화 보기"
+        "viewAll": "모든 통화 보기",
+        "chartPopularItems": "전화 주문 인기 메뉴",
+        "popularItemsCta": "추천 업셀 설정",
+        "popularItemsEmpty": "이 기간에는 아직 전화 주문이 없습니다."
       },
       "callLog": {
         "searchPlaceholder": "전화번호, 이름 또는 요약 검색…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "예약 주문은 온라인 주문 페이지와 동일한 「나중에 예약」 시간대를 사용합니다.",
         "maxCallSeconds": "최대 통화 시간(초)",
         "maxCallHelp": "이 제한에 도달하면 Nabil이 정중하게 대화를 마무리하고 통화를 종료합니다. 60초에서 1800초(30분) 사이로 설정하세요.",
-        "paymentsNotLiveNote": "전화 결제는 링크 결제가 출시되면 활성화됩니다 — 현재 모든 음성 주문은 매장 결제입니다. 여기서 선택한 설정은 저장되며, 기능이 시작되면 자동으로 적용됩니다."
+        "paymentsNotLiveNote": "전화 결제는 링크 결제가 출시되면 활성화됩니다 — 현재 모든 음성 주문은 매장 결제입니다. 여기서 선택한 설정은 저장되며, 기능이 시작되면 자동으로 적용됩니다.",
+        "voicesLoading": "음성 불러오는 중…",
+        "voiceDefault": "기본 음성",
+        "voiceDefaultHint": "전화 시스템이 제공하는 음성 — 항상 작동합니다",
+        "voiceFemale": "여성",
+        "voiceMale": "남성",
+        "previewHint": "재생을 누르면 직접 설정한 인사말을 이 음성으로 들어볼 수 있습니다.",
+        "previewUnavailable": "음성 샘플 듣기는 아직 켜져 있지 않습니다. 음성 선택은 지금도 가능합니다 — 저장한 뒤 매장 번호로 전화해 직접 들어 보세요.",
+        "previewFailed": "샘플을 재생하지 못했습니다. 잠시 후 다시 시도해 주세요.",
+        "voiceSpeedHelp": "Nabil이 말하는 속도입니다. 느릴수록 시끄러운 통화에서도 알아듣기 쉽고, 빠를수록 더 경쾌하게 들립니다. 모든 통화에 적용됩니다.",
+        "multilingualTitle": "다른 언어 알아듣기",
+        "multilingualHint": "발신자가 사용하는 언어를 원하는 만큼 선택하세요. Nabil이 자동으로 감지해 같은 언어로 응답합니다 — 모두 꺼 두면 기본 언어로만 응대합니다.",
+        "payAtDoorTitle": "손님이 문 앞에서 배달 기사에게 결제하도록 허용",
+        "payAtDoorHint": "배달도 픽업과 똑같이 진행됩니다. 발신자는 전화로 결제하지 않고, 음식이 도착했을 때 현금이나 카드로 결제합니다. 주문은 그대로 ShipDay에 생성되므로 거기에서도 확인할 수 있습니다.",
+        "payAtDoorWarning": "이런 주문에는 ShipDay 기사를 요청하지 않습니다 — 매장 직원이 직접 배달하고 대금을 받습니다. ShipDay가 아니라 매장의 책임입니다."
       },
       "faqMgr": {
         "title": "Nabil이 답변하는 자주 묻는 질문",

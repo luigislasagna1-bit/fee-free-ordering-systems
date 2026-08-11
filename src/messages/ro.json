@@ -4292,7 +4292,10 @@
         "languageMix": "Limbi",
         "sentimentMix": "Sentiment",
         "recentActivity": "Activitate recentă",
-        "viewAll": "Vezi toate apelurile"
+        "viewAll": "Vezi toate apelurile",
+        "chartPopularItems": "Cele mai comandate la telefon",
+        "popularItemsCta": "Setează upsell-urile promovate",
+        "popularItemsEmpty": "Nicio comandă telefonică în acest interval deocamdată."
       },
       "callLog": {
         "searchPlaceholder": "Caută telefon, nume sau rezumat…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Comenzile programate folosesc aceleași intervale de programare pentru mai târziu ca pagina dvs. de comenzi online.",
         "maxCallSeconds": "Durata maximă a apelului (secunde)",
         "maxCallHelp": "Nabil încheie politicos conversația și termină apelul când atinge această limită. Între 60 și 1800 de secunde (30 de minute).",
-        "paymentsNotLiveNote": "Plățile telefonice se activează odată ce lansăm plata prin link — momentan, fiecare comandă vocală se plătește la restaurant. Alegerile dvs. de aici sunt salvate și se vor aplica automat la lansare."
+        "paymentsNotLiveNote": "Plățile telefonice se activează odată ce lansăm plata prin link — momentan, fiecare comandă vocală se plătește la restaurant. Alegerile dvs. de aici sunt salvate și se vor aplica automat la lansare.",
+        "voicesLoading": "Se încarcă vocile…",
+        "voiceDefault": "Voce implicită",
+        "voiceDefaultHint": "Orice voce oferă sistemul telefonic — funcționează întotdeauna",
+        "voiceFemale": "Feminină",
+        "voiceMale": "Masculină",
+        "previewHint": "Apasă pe redare ca să auzi vocea citind propriul tău mesaj de întâmpinare.",
+        "previewUnavailable": "Mostrele de voce nu sunt încă activate. Poți alege oricum o voce — salvează, apoi sună la numărul tău ca să o auzi.",
+        "previewFailed": "Mostra nu a putut fi redată. Încearcă din nou peste câteva momente.",
+        "voiceSpeedHelp": "Cât de repede vorbește Nabil. Mai rar se urmărește mai ușor pe o linie cu zgomot; mai repede sună mai alert. Se aplică la fiecare apel.",
+        "multilingualTitle": "Înțelege alte limbi",
+        "multilingualHint": "Alege orice limbă folosită de cei care te sună. Nabil o detectează automat și răspunde în aceeași limbă — lasă-le pe toate dezactivate ca să rămâi doar la limba ta principală.",
+        "payAtDoorTitle": "Permite clienților să plătească șoferului la ușă",
+        "payAtDoorHint": "Livrarea funcționează ca ridicarea: clientul nu plătește la telefon, ci plătește în numerar sau cu cardul când ajunge mâncarea. Comanda este creată totuși în ShipDay, ca să o poți vedea acolo.",
+        "payAtDoorWarning": "Pentru aceste comenzi nu se solicită niciun șofer ShipDay — personalul tău le livrează și încasează banii. Este responsabilitatea ta, nu a ShipDay."
       },
       "faqMgr": {
         "title": "Întrebări frecvente la care răspunde Nabil",

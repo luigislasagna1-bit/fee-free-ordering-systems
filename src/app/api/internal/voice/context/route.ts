@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { liveOpenStatus, statusForToday, nextOpenAt } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
-import { shouldDispatchToShipday } from "@/lib/shipday";
+import { shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday";
 
 export const runtime = "nodejs";
 
@@ -70,6 +70,7 @@ export async function GET(req: NextRequest) {
         afterHoursBehavior: true,
         allowPizzaCombo: true,
         pizzaAskGroups: true,
+        languages: true,
       },
     }),
     prisma.voiceFaq.findMany({
@@ -111,8 +112,12 @@ export async function GET(req: NextRequest) {
   const svc = (offered: boolean, until: Date | null) => ({ offered: !!offered, pausedNow: pausedNow(until) });
 
   // Mirror the /api/orders guard: cash delivery is impossible when ShipDay
-  // dispatches (the third-party driver can't collect at the door).
-  const cashDeliveryBlocked = r.acceptsDelivery ? await shouldDispatchToShipday(r.id) : false;
+  // dispatches (the third-party driver can't collect at the door) — UNLESS the
+  // owner turned on pay-at-door delivery, in which case their own staff
+  // delivers it and ShipDay only gets a record (Luigi 2026-08-11).
+  const cashDeliveryBlocked = r.acceptsDelivery
+    ? (await shouldDispatchToShipday(r.id)) && !(await shipdayPayAtDoorEnabled(r.id))
+    : false;
 
   return NextResponse.json({
     restaurant: {
@@ -166,6 +171,12 @@ export async function GET(req: NextRequest) {
       allowPizzaCombo: cfg?.allowPizzaCombo ?? false,
       pizzaAskGroups: Array.isArray(cfg?.pizzaAskGroups)
         ? (cfg.pizzaAskGroups as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 20)
+        : [],
+      // Extra languages the owner enabled. Non-empty ⇒ the TwiML nests
+      // <Language code="multi"/> and Deepgram auto-detects, so the agent must
+      // be told it may answer in whatever language it hears.
+      languages: Array.isArray(cfg?.languages)
+        ? (cfg.languages as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 38)
         : [],
     },
     // Owner-curated FAQ (active only, ≤30) — becomes a prompt section.

@@ -14,6 +14,24 @@ primary_region = 'iad'
   auto_start_machines = true
   min_machines_running = 1
 
+  # CONCURRENT CALLS. Each call holds a WebSocket for its whole duration plus a
+  # streaming Claude loop, so "connections" is the right unit — a request-based
+  # limit would see one request per call and never balance anything.
+  #
+  # soft_limit is where Fly starts preferring another machine; hard_limit is
+  # where it stops sending new calls to this one. With a single machine the
+  # hard limit is the only thing that matters, so it is set well above any
+  # realistic Friday-night peak — a rejected call is worse than a slow one, and
+  # the work is almost entirely I/O wait on Anthropic and Twilio.
+  #
+  # ⚠️ Fly only balances across machines that EXIST: `fly scale count 2` is what
+  # actually buys redundancy (and survives a deploy without dropping live
+  # calls). Until then this config is correct but single-homed.
+  [http_service.concurrency]
+    type = 'connections'
+    soft_limit = 5
+    hard_limit = 25
+
   [[http_service.checks]]
     interval = '15s'
     timeout = '2s'

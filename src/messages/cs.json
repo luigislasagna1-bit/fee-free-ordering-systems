@@ -4292,7 +4292,10 @@
         "languageMix": "Jazyky",
         "sentimentMix": "Sentiment",
         "recentActivity": "Nedávná aktivita",
-        "viewAll": "Zobrazit všechny hovory"
+        "viewAll": "Zobrazit všechny hovory",
+        "chartPopularItems": "Nejčastěji objednávané po telefonu",
+        "popularItemsCta": "Nastavit vybrané upselly",
+        "popularItemsEmpty": "V tomto období zatím žádné telefonické objednávky."
       },
       "callLog": {
         "searchPlaceholder": "Hledat telefon, jméno nebo shrnutí…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Plánované objednávky využívají stejné sloty pro objednání na později jako vaše stránka online objednávek.",
         "maxCallSeconds": "Maximální délka hovoru (v sekundách)",
         "maxCallHelp": "Po dosažení tohoto limitu Nabil hovor zdvořile uzavře a ukončí. Rozmezí 60 až 1800 sekund (30 minut).",
-        "paymentsNotLiveNote": "Platby po telefonu se aktivují, jakmile spustíme platbu přes odkaz – zatím se každá hlasová objednávka platí na místě. Vaše volby se zde uloží a po spuštění se použijí automaticky."
+        "paymentsNotLiveNote": "Platby po telefonu se aktivují, jakmile spustíme platbu přes odkaz – zatím se každá hlasová objednávka platí na místě. Vaše volby se zde uloží a po spuštění se použijí automaticky.",
+        "voicesLoading": "Načítání hlasů…",
+        "voiceDefault": "Výchozí hlas",
+        "voiceDefaultHint": "Ten, který nabídne telefonní systém — funguje vždy",
+        "voiceFemale": "Ženský",
+        "voiceMale": "Mužský",
+        "previewHint": "Stiskněte přehrát a uslyšíte, jak hlas přečte váš vlastní úvodní pozdrav.",
+        "previewUnavailable": "Ukázky hlasu zatím nejsou zapnuté. Hlas si přesto můžete vybrat — uložte změny a pak zavolejte na své číslo, abyste si ho poslechli.",
+        "previewFailed": "Ukázku se nepodařilo přehrát. Zkuste to prosím za chvíli znovu.",
+        "voiceSpeedHelp": "Jak rychle Nabil mluví. Pomalejší tempo se na hlučné lince lépe sleduje, rychlejší působí svižněji. Platí pro všechny hovory.",
+        "multilingualTitle": "Rozumět dalším jazykům",
+        "multilingualHint": "Vyberte kterýkoli jazyk, kterým vaši volající mluví. Nabil ho rozpozná automaticky a odpoví stejným jazykem — pokud necháte všechny vypnuté, zůstane jen u vašeho hlavního jazyka.",
+        "payAtDoorTitle": "Umožnit zákazníkům zaplatit řidiči u dveří",
+        "payAtDoorHint": "Rozvoz pak funguje jako osobní odběr: volající neplatí po telefonu, ale hotově nebo kartou při doručení jídla. Objednávka se i tak vytvoří v ShipDay, takže ji tam uvidíte.",
+        "payAtDoorWarning": "U těchto objednávek se nevyžaduje žádný řidič ShipDay — doručuje je vaše vlastní obsluha, která také vybírá peníze. Je to vaše odpovědnost, ne odpovědnost ShipDay."
       },
       "faqMgr": {
         "title": "Časté dotazy, na které Nabil odpovídá",

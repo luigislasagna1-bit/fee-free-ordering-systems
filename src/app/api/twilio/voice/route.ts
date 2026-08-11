@@ -4,6 +4,8 @@ import { shouldEnforceTwilioSignature, verifyTwilioSignatureAny, twilioUrlCandid
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { signNabilCallToken } from "@/lib/voice/session-token";
+import { packHints } from "@/lib/voice/speech-hints";
+import { buildVoiceAttrValue } from "@/lib/voice/elevenlabs-voices";
 import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 
@@ -70,6 +72,54 @@ function bcp47(locale: string): string {
 
 const GENERIC_MSG =
   "Thanks for calling. We're not able to take your call right now. Please try again later.";
+
+/* ─────────────────────────── speech-recognition hints ────────────────────── */
+
+/** Hints are identical for every caller of a store and cost two menu queries on
+ *  the critical path BEFORE the greeting — so cache them per menu owner. Short
+ *  TTL: an owner who renames a dish shouldn't wait long to hear it recognised. */
+const HINTS_TTL_MS = 5 * 60_000;
+const hintsCache = new Map<string, { value: string; expires: number }>();
+
+async function menuHints(menuOwnerId: string): Promise<string> {
+  const hit = hintsCache.get(menuOwnerId);
+  if (hit && hit.expires > Date.now()) return hit.value;
+
+  const [items, options] = await Promise.all([
+    prisma.menuItem.findMany({
+      where: { restaurantId: menuOwnerId, isAvailable: true },
+      select: { name: true },
+      take: 150,
+    }),
+    // Topping / crust / sauce / cheese names. A group is reachable from the
+    // restaurant three ways (library, item-scoped, category-scoped) — all three
+    // are real in this schema, so all three are matched.
+    prisma.modifierOption.findMany({
+      where: {
+        isAvailable: true,
+        modifierGroup: {
+          isHidden: false,
+          OR: [
+            { restaurantId: menuOwnerId },
+            { menuItem: { restaurantId: menuOwnerId } },
+            { category: { restaurantId: menuOwnerId } },
+          ],
+        },
+      },
+      select: { name: true, modifierGroup: { select: { pizzaRole: true } } },
+      take: 600,
+    }),
+  ]);
+
+  // Pizza-role-tagged options first: those are the words a pizza order lives on.
+  const toppingTerms = [
+    ...options.filter((o) => o.modifierGroup?.pizzaRole).map((o) => o.name),
+    ...options.filter((o) => !o.modifierGroup?.pizzaRole).map((o) => o.name),
+  ];
+  const value = packHints(items.map((i) => i.name), toppingTerms);
+  hintsCache.set(menuOwnerId, { value, expires: Date.now() + HINTS_TTL_MS });
+  return value;
+}
 
 /** Read the Twilio form body once (string params only). Empty on GET probes. */
 async function readTwilioParams(req: NextRequest): Promise<Record<string, string>> {
@@ -149,6 +199,9 @@ async function handle(req: NextRequest, params: Record<string, string>) {
           restaurant: {
             select: {
               id: true, slug: true, name: true, defaultLanguage: true,
+              // The store's own line — the fallback we ring when Nabil can't
+              // take the call. Never dead-air.
+              phone: true,
               timezone: true, hoursFormat: true,
               openingHours: true, holidays: true,
               voiceAgentConfig: true,
@@ -161,8 +214,22 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   const restaurant = line?.restaurant;
   const cfg = restaurant?.voiceAgentConfig;
 
-  // No mapping / number disabled / service not wired → polite message.
-  if (!line || !line.enabled || !restaurant || !wss) {
+  // No mapping at all → polite message; there is nobody to hand the call to.
+  if (!line || !restaurant) {
+    return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
+  }
+
+  // Number disabled, or the voice service isn't wired — RING THE STORE rather
+  // than telling a paying customer to go away. Never dead-air, never a dead
+  // end: the fallback for "Nabil can't take this" is always a human phone.
+  if (!line.enabled || !wss) {
+    const fallback = (cfg?.transferToNumber || restaurant.phone || "").trim();
+    if (fallback) {
+      return twiml(
+        `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
+          `<Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`,
+      );
+    }
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
   }
 
@@ -219,58 +286,68 @@ async function handle(req: NextRequest, params: Record<string, string>) {
 
   const lang = restaurant.defaultLanguage || cfg.primaryLanguage || "en";
 
-  // Domain-biased ASR (accuracy lever #2, the biggest one): feed the LIVE menu
-  // vocabulary to Deepgram via the ConversationRelay `hints` attribute so
-  // menu-specific item names are recognized on noisy phone audio. Names only,
-  // commas stripped (the attribute is comma-separated), capped. Because we own
-  // the catalog this list is always current — an edge POS-mapping rivals lack.
+  // Domain-biased ASR (the biggest accuracy lever we own): feed the LIVE menu
+  // vocabulary — item names AND topping/crust/sauce names — to Deepgram via the
+  // ConversationRelay `hints` attribute so menu-specific words survive noisy
+  // phone audio and heavy accents. Because we own the catalog this list is
+  // always current: per-restaurant lexical grounding an edge POS mapping can't
+  // match. See packHints() for the 500-char budget rules that keep Deepgram
+  // from 400ing the whole call.
   const menuOwnerId = await resolveMenuRestaurantId(restaurant.id);
-  const items = await prisma.menuItem.findMany({
-    where: { restaurantId: menuOwnerId, isAvailable: true },
-    select: { name: true },
-    take: 150,
-  });
-  // 🚨 Deepgram REJECTS this attribute unless it is strictly clean — the first
-  // live pilot call (2026-08-09) died before the greeting with "Deepgram
-  // invalid argument: 400 Bad Request" and every call fell through to the
-  // store phone. Two causes, both from real menu data: punctuation in item
-  // names ("MINI CARROTS + RANCH DIP", "Kit!") and total length (we sent
-  // 2,021 chars; the ConversationRelay hints limit is 500). So: strip to
-  // letters/digits/spaces/hyphens, collapse whitespace, dedupe, and pack
-  // items whole until the 500-char budget is spent — a truncated dish name
-  // would bias recognition toward a phrase nobody says.
-  const HINTS_MAX_CHARS = 500;
-  const cleaned = [...new Set(
-    items
-      .map((i) => (i.name || "").replace(/[^A-Za-z0-9 -]/g, " ").replace(/\s+/g, " ").trim())
-      .filter((n) => n.length > 1 && n.length <= 40),
-  )];
-  const hintTerms: string[] = [];
-  let hintsLen = 0;
-  for (const term of cleaned) {
-    const added = hintsLen === 0 ? term.length : hintsLen + 1 + term.length;
-    if (added > HINTS_MAX_CHARS) break;
-    hintTerms.push(term);
-    hintsLen = added;
-  }
-  const hintsAttr = hintTerms.length ? ` hints="${xml(hintTerms.join(","))}"` : "";
+  const hints = await menuHints(menuOwnerId);
+  const hintsAttr = hints ? ` hints="${xml(hints)}"` : "";
 
   // Providers from config (Deepgram + ElevenLabs are the ConversationRelay
   // defaults; our config mirrors those value names).
   const ttsProvider = cfg.ttsProvider || "ElevenLabs";
   const sttProvider = cfg.sttProvider || "Deepgram";
-  const voiceAttr = cfg.voice ? ` voice="${xml(cfg.voice)}"` : "";
+  // Voice + speed in ONE attribute. ElevenLabs' extended form
+  // "<id>-<model>-<speed>_<stability>_<similarity>" is the only place
+  // VoiceAgentConfig.voiceSpeed can actually take effect — it was a no-op
+  // before. No voice picked ⇒ no attribute at all, exactly as before.
+  const voiceValue = buildVoiceAttrValue(cfg.voice, cfg.voiceSpeed);
+  const voiceAttr = voiceValue ? ` voice="${xml(voiceValue)}"` : "";
+  // Pin the transcription model instead of inheriting Twilio's default, so an
+  // upstream default change can never silently move recognition quality under
+  // a live restaurant. Deepgram-only: sending a Deepgram model name to Google
+  // STT is an invalid argument, and an invalid argument here kills the call
+  // before the greeting (2026-08-09).
+  const speechModelAttr = sttProvider === "Deepgram" ? ` speechModel="nova-3-general"` : "";
+  // Fewer false barge-ins. On noisy phone audio — a busy kitchen behind the
+  // caller, an accent the recognizer scores as low-confidence — "high" (the
+  // default) makes Nabil stop talking mid-sentence at background noise, which
+  // reads to the caller as being cut off. "low" requires more confident speech
+  // before interrupting; real interruptions still work.
+  const interruptAttr = ` interruptSensitivity="low"`;
+
+  // Multilingual auto-detect. Twilio requires Deepgram STT + ElevenLabs TTS for
+  // code="multi" — exactly our default pair — so it is only emitted when both
+  // hold AND the owner listed languages beyond the primary. Off ⇒ byte-identical
+  // TwiML to before.
+  const extraLanguages = Array.isArray(cfg.languages)
+    ? (cfg.languages as unknown[]).filter((x): x is string => typeof x === "string" && x !== lang)
+    : [];
+  const multilingual =
+    extraLanguages.length > 0 && sttProvider === "Deepgram" && ttsProvider === "ElevenLabs";
+  const languageChild = multilingual ? `<Language code="multi"/>` : "";
 
   // Mint the short-lived call token and build the ConversationRelay wss URL.
   const token = signNabilCallToken({ restaurantId: restaurant.id, slug: restaurant.slug, callSid, to, from });
   const url = `${wss}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
-  // On session end (transfer/handoff) Twilio POSTs the <Connect action> — dial staff there.
-  const handoffUrl = `${new URL(req.url).origin}/api/twilio/voice/handoff`;
+  // On session end — a transfer, OR the voice service being unreachable — Twilio
+  // POSTs the <Connect action> with SessionStatus/ErrorCode, and the handoff
+  // route dials the store's real phone. That is the outage fallback: a Fly
+  // outage degrades to a normal ringing phone, never to dead air. Built from the
+  // FORWARDED host (not req.url, which is Vercel-internal) so the URL Twilio
+  // signs is the URL the handoff route reconstructs and verifies.
+  const origin = new URL(publicUrl(req)).origin;
+  const handoffUrl = `${origin}/api/twilio/voice/handoff`;
 
   // NOTE (config not wired here): voiceSpeed + ambientNoise have no direct
   // ConversationRelay attribute — they'd ride ElevenLabs voice settings / audio
-  // mixing, out of scope for v1. `interruptible="any"` gives barge-in;
-  // elevenlabsTextNormalization="auto" reads prices/numbers correctly (accuracy).
+  // mixing. The Settings UI labels them "coming soon" rather than pretending.
+  // `interruptible="any"` gives barge-in; elevenlabsTextNormalization="auto"
+  // reads prices/numbers correctly (accuracy).
   return twiml(
     `<Response><Connect action="${xml(handoffUrl)}">` +
       `<ConversationRelay url="${xml(url)}"` +
@@ -278,11 +355,15 @@ async function handle(req: NextRequest, params: Record<string, string>) {
       ` language="${xml(bcp47(lang))}"` +
       ` ttsProvider="${xml(ttsProvider)}"` +
       ` transcriptionProvider="${xml(sttProvider)}"` +
+      speechModelAttr +
       voiceAttr +
       ` interruptible="any" welcomeGreetingInterruptible="speech"` +
+      interruptAttr +
       ` dtmfDetection="true" elevenlabsTextNormalization="auto"` +
       hintsAttr +
-      `/>` +
+      `>` +
+      languageChild +
+      `</ConversationRelay>` +
       `</Connect></Response>`,
   );
 }

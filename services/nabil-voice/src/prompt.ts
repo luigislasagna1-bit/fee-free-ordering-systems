@@ -201,7 +201,7 @@ export function buildSystemPrompt(args: {
   // the transfer tool's own description — or the model gets contradictory
   // orders and picks one at random.
   const pizzaRule = cfg.allowPizzaCombo
-    ? `Items marked PIZZA or COMBO: BUILD them for the caller with add_pizza / add_combo. Say what they asked for in plain words — sizes and toppings by name, and which half each topping goes on ("left"/"right"/"whole"). Never invent option ids and never type placement codes; the tool resolves names for you. If it returns \`needsInfo\`, ask those questions conversationally, one at a time, then call it again. Use get_item_options when the caller asks what's available.`
+    ? `Items marked PIZZA or COMBO: BUILD them for the caller with add_pizza / add_combo. Say what they asked for in plain words — sizes and toppings by name, and which half each topping goes on ("left"/"right"/"whole"). Only name toppings they want ON it: if they say "no onions", that is NOT a topping to add, it just means don't list onions. Never invent option ids and never type placement codes; the tool resolves names for you. If it returns \`needsInfo\`, ask those questions conversationally, one at a time, then call it again. Use get_item_options when the caller asks what's available.`
     : `Items marked PIZZA-BUILDER or COMBO: do NOT try to build them by voice — say you'll connect them to a team member and call transfer_to_human.`;
 
   // With quote_order available (v2) there IS a real total before placing —
@@ -211,6 +211,14 @@ export function buildSystemPrompt(args: {
     ? `When the caller is done adding, READ BACK the full order, then call quote_order and read the EXACT total it returns — it is authoritative and includes tax. A pizza's price can NEVER be added up from menu prices, so never compute a total yourself. If a discount applied, mention it by name as good news. Get an explicit "yes", then call place_order and give the order number.`
     : `When the order is complete, READ BACK the full order — every item with its quantity and its menu price — and say the total "will include tax". NEVER announce a computed total before placing: you do not have one, and a number you sum yourself WILL be wrong (no tax, no fees). Get an explicit "yes", call place_order, and then read back the order number AND the exact total place_order returns — that returned total is the only total you may ever state, it is the authoritative charged amount.`;
 
+  // Mid-order changes. With the edit tools the basket is LIVE — a correction
+  // changes the line it refers to. Without them the basket is append-only, and
+  // telling the model to "change the right line" only makes it add a second
+  // pizza; the honest instruction there is to re-place, not to patch.
+  const revisingRule = cfg.allowPizzaCombo
+    ? `Keep the running order in mind — every tool result returns it, numbered. When the caller changes something already on it ("actually make that a large", "half mushroom instead of onion on the second one", "forget the wings"), call revise_line or remove_line with that line's number. NEVER add a corrected copy alongside the old one; that charges them twice.`
+    : `Track the running order. If the caller changes their mind about something already added, restate the FULL corrected order when you place it — do not assume an earlier item was replaced.`;
+
   const orderingSection = cfg.canTakeOrders
     ? `
 ## Ordering — accuracy is everything
@@ -218,7 +226,7 @@ export function buildSystemPrompt(args: {
 2. Do not offer or accept an item marked SOLD OUT.
 3. ${pizzaRule}
 4. Get quantities explicitly. Never assume an unspoken quantity. Normalize vague amounts ("a couple" → confirm "two?").
-5. Track the running order. When the caller corrects ("make that a large", "no onions on the first one"), change the RIGHT line.
+5. ${revisingRule}
 6. Confirm anything you're unsure you heard correctly before adding it.
 7. ${quotingRule}
 8. After placing, give the order number${cfg.quoteEta ? " and the pickup/ready guidance" : ""}.${cfg.smsConfirmations ? ` Offer to text a receipt (send_sms_link "receipt").` : ""}
@@ -287,6 +295,10 @@ ${afterHoursSection(context, cfg)}${orderingSection}${requiredInfoSection}${ques
 ## When to hand off (transfer_to_human)
 ${cfg.allowPizzaCombo ? "" : "Pizza/combo builds; a"}${cfg.allowPizzaCombo ? "A" : ""}n explicit request for a person; you've misunderstood twice in a row; anything you cannot confidently and correctly complete. It's better to transfer than to risk a wrong order.
 
+${cfg.languages.length ? `
+## Language
+The phone system detects the caller's language automatically. ANSWER IN THE LANGUAGE THEY SPEAK — if they switch mid-call, switch with them. Keep item names exactly as they appear on the menu below (never translate a dish name), and read prices in the caller's language.
+` : ""}
 ## Style
 Short spoken turns. No long lists — offer a couple of options at a time. Confirm, don't interrogate. Be warm and efficient.
 You are SPEAKING on a telephone — everything you write is read aloud verbatim by text-to-speech. Plain spoken sentences ONLY: never markdown, asterisks, underscores, bullet points, numbered lists, headings, emojis, or symbols (the first live call read "asterisk asterisk" to the caller). Say prices naturally ("twelve fifty" style is fine, "$12.50" is fine — the TTS handles it) and never format them in bold.

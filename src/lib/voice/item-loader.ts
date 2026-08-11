@@ -85,12 +85,29 @@ export function shapeItemData(it: LoadedItem): ItemData {
       price: v.price,
       isDefault: v.isDefault,
     })),
-    modifierGroups: [
+    // ⚠️ DE-DUPLICATE by the exposed (library) id. The same library group can be
+    // attached BOTH to the item and to its category — a real pre-2026-06-01
+    // shape. Both copies carry the same option NAMES, so an un-deduped union
+    // made every topping "ambiguous" and the compiler refused all of them:
+    // "large with mushrooms" became an unanswerable question. Item-level wins,
+    // matching what dedupe-modifier-attachments treats as canonical.
+    modifierGroups: dedupeGroups([
       ...shapeGroups(it.modifierGroups as unknown as RawGroup[]),
       ...shapeGroups((it.category?.modifierGroups ?? []) as unknown as RawGroup[]),
-    ],
+    ]),
     pizzaConfig: parsePizzaConfig((it as { pizzaConfig?: string | null }).pizzaConfig),
   };
+}
+
+function dedupeGroups<T extends { id: string; attachedId?: string }>(groups: T[]): T[] {
+  const seen = new Set<string>();
+  const out: T[] = [];
+  for (const g of groups) {
+    if (seen.has(g.id)) continue;
+    seen.add(g.id);
+    out.push(g);
+  }
+  return out;
 }
 
 /** Null when the item isn't a combo. Resolves every slot's eligible picks so
@@ -102,23 +119,43 @@ export async function loadComboData(
   const combo = parseComboConfig((it as { comboConfig?: string | null }).comboConfig);
   if (!combo) return null;
 
+  // ONE query for every slot, not one per slot. This runs on the critical path
+  // of a live phone call: the old per-slot loop issued N deep queries (variants
+  // + modifier groups + options + category groups, ×40 rows each) back to back,
+  // and the caller heard the silence.
+  const allIds = [...new Set(combo.slots.flatMap((s) => s.itemIds ?? []))];
+  const allCats = [...new Set(combo.slots.flatMap((s) => s.categoryIds ?? []))];
+  const CHOICE_CAP = 120;
+  const pool =
+    allIds.length || allCats.length
+      ? await prisma.menuItem.findMany({
+          where: {
+            restaurantId: menuRestaurantId,
+            isAvailable: true,
+            // Never offer food the kitchen has 86'd — the order route rejects
+            // it, and by then the agent has spent 90 seconds building a combo
+            // it now has to unwind.
+            isSoldOut: false,
+            OR: [
+              ...(allIds.length ? [{ id: { in: allIds } }] : []),
+              ...(allCats.length ? [{ categoryId: { in: allCats } }] : []),
+            ],
+          },
+          include: VOICE_ITEM_INCLUDE,
+          // Deterministic, so the same caller is offered the same choices and
+          // a truncated list truncates the same way every time.
+          orderBy: [{ sortOrder: "asc" }, { id: "asc" }],
+          take: CHOICE_CAP,
+        })
+      : [];
+  const truncated = pool.length >= CHOICE_CAP;
+
   const slots: ComboData["slots"] = [];
   for (const slot of combo.slots) {
-    const byId = slot.itemIds ?? [];
-    const byCat = slot.categoryIds ?? [];
-    if (!byId.length && !byCat.length) continue;
-    const choices = await prisma.menuItem.findMany({
-      where: {
-        restaurantId: menuRestaurantId,
-        isAvailable: true,
-        OR: [
-          ...(byId.length ? [{ id: { in: byId } }] : []),
-          ...(byCat.length ? [{ categoryId: { in: byCat } }] : []),
-        ],
-      },
-      include: VOICE_ITEM_INCLUDE,
-      take: 40,
-    });
+    const byId = new Set(slot.itemIds ?? []);
+    const byCat = new Set(slot.categoryIds ?? []);
+    if (!byId.size && !byCat.size) continue;
+    const choices = pool.filter((c) => byId.has(c.id) || (c.categoryId && byCat.has(c.categoryId)));
     slots.push({
       id: slot.id,
       label: slot.label,
@@ -142,6 +179,8 @@ export async function loadComboData(
     price: it.price,
     extrasCharge: combo.extrasCharge,
     sharedToppings: combo.sharedToppings ?? undefined,
+    isSoldOut: it.isSoldOut,
+    choicesTruncated: truncated,
     slots,
   };
 }

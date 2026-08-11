@@ -48,7 +48,7 @@ import { generateConfirmationCode, checkReservationCapacity } from "@/lib/reserv
 import { parseReservationDetails, computePartySize, type ReservationDetails } from "@/lib/reservation-details";
 import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
 import { resolveCustomerLocale } from "@/lib/i18n-server";
-import { shouldDispatchToShipday } from "@/lib/shipday";
+import { shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday";
 import { dispatchAcceptedOrderSafe } from "@/lib/delivery-dispatch";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 
@@ -2212,8 +2212,15 @@ export async function POST(req: NextRequest) {
     // at-door method here would leave the driver with an uncollectable order.
     // (Fully-store-credit-paid orders come through as "reward_credit", not
     // cash, so they pass — nothing is owed at the door.)
+    //
+    // PAY AT THE DOOR (Luigi 2026-08-11) opts a store OUT of this guard: their
+    // own staff delivers the order and collects, and ShipDay only receives a
+    // record of it (shipdayStatus "record_only", no driver requested). Off by
+    // default, so every existing restaurant keeps the prepaid rule.
     if (type === "delivery" && (paymentMethod === "cash" || paymentMethod === "card_in_person")) {
-      const shipday = await shouldDispatchToShipday(restaurant.id);
+      const shipday =
+        (await shouldDispatchToShipday(restaurant.id)) &&
+        !(await shipdayPayAtDoorEnabled(restaurant.id));
       if (shipday) {
         return NextResponse.json(
           {

@@ -4292,7 +4292,10 @@
         "languageMix": "Språk",
         "sentimentMix": "Sentiment",
         "recentActivity": "Senaste aktivitet",
-        "viewAll": "Visa alla samtal"
+        "viewAll": "Visa alla samtal",
+        "chartPopularItems": "Mest beställt via telefon",
+        "popularItemsCta": "Ange utvalda merförsäljningar",
+        "popularItemsEmpty": "Inga telefonbeställningar i den här perioden än."
       },
       "callLog": {
         "searchPlaceholder": "Sök telefon, namn eller sammanfattning…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Schemalagda beställningar använder samma tidsluckor för beställning i förväg som din onlinebeställningssida.",
         "maxCallSeconds": "Maximal samtalslängd (sekunder)",
         "maxCallHelp": "Nabil avrundar artigt och avslutar samtalet när det når denna gräns. Mellan 60 och 1800 sekunder (30 minuter).",
-        "paymentsNotLiveNote": "Telefonbetalningar aktiveras när betalning via länk lanseras — idag betalas varje röstbeställning på plats i restaurangen. Dina val här sparas och tillämpas automatiskt när funktionen går live."
+        "paymentsNotLiveNote": "Telefonbetalningar aktiveras när betalning via länk lanseras — idag betalas varje röstbeställning på plats i restaurangen. Dina val här sparas och tillämpas automatiskt när funktionen går live.",
+        "voicesLoading": "Laddar röster…",
+        "voiceDefault": "Standardröst",
+        "voiceDefaultHint": "Den röst telefonsystemet erbjuder — fungerar alltid",
+        "voiceFemale": "Kvinnlig",
+        "voiceMale": "Manlig",
+        "previewHint": "Tryck på play för att höra rösten läsa upp din egen välkomsthälsning.",
+        "previewUnavailable": "Röstprover är inte påslagna ännu. Du kan ändå välja en röst — spara och ring sedan ditt nummer för att höra den.",
+        "previewFailed": "Det gick inte att spela upp provet. Försök igen om en stund.",
+        "voiceSpeedHelp": "Hur snabbt Nabil pratar. Långsammare är lättare att följa med i när linjen brusar; snabbare känns raskare. Gäller alla samtal.",
+        "multilingualTitle": "Förstå andra språk",
+        "multilingualHint": "Välj de språk som dina uppringare talar. Nabil känner av språket automatiskt och svarar på samma språk — lämna alla avstängda om du bara vill hålla dig till ditt huvudspråk.",
+        "payAtDoorTitle": "Låt kunderna betala föraren vid dörren",
+        "payAtDoorHint": "Leverans fungerar som avhämtning: den som ringer betalar inte i telefon, utan kontant eller med kort när maten kommer. Ordern skapas ändå i ShipDay så att du kan se den där.",
+        "payAtDoorWarning": "Ingen ShipDay-förare beställs för de här ordrarna — din egen personal levererar dem och tar emot betalningen. Det ansvaret är ditt, inte ShipDays."
       },
       "faqMgr": {
         "title": "Vanliga frågor som Nabil besvarar",

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { requirePhoneOrderingFeature } from "./guard";
+import { isKnownVoiceId } from "@/lib/voice/elevenlabs-voices";
 
 export const runtime = "nodejs";
 
@@ -70,6 +71,13 @@ export async function PATCH(req: NextRequest) {
         if (AFTER_HOURS.has(v)) data[k] = v;
       } else if (k === "openGreeting" || k === "closedGreeting") {
         data[k] = v.slice(0, 200); // ≤200 chars, matches the ConversationRelay greeting
+      } else if (k === "voice") {
+        // The voice id is written verbatim into the ConversationRelay `voice`
+        // attribute — a value the provider rejects kills the call BEFORE the
+        // greeting. Accept only a built-in, or a plausible ElevenLabs id from
+        // the platform account's live list; anything else clears the field
+        // (empty = Twilio's own default, always safe).
+        data[k] = v && (isKnownVoiceId(v) || /^[A-Za-z0-9]{16,32}$/.test(v)) ? v : null;
       } else {
         data[k] = v || null;
       }

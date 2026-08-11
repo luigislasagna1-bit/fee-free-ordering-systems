@@ -4292,7 +4292,10 @@
         "languageMix": "Nyelvek",
         "sentimentMix": "Hangulat",
         "recentActivity": "Legutóbbi aktivitás",
-        "viewAll": "Összes hívás megtekintése"
+        "viewAll": "Összes hívás megtekintése",
+        "chartPopularItems": "Telefonon legtöbbször rendelt tételek",
+        "popularItemsCta": "Kiemelt ajánlatok beállítása",
+        "popularItemsEmpty": "Ebben az időszakban még nincs telefonos rendelés."
       },
       "callLog": {
         "searchPlaceholder": "Keresés telefonszám, név vagy összefoglaló alapján…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Az ütemezett rendelések ugyanazokat a későbbre ütemezhető idősávokat használják, mint az online rendelési oldala.",
         "maxCallSeconds": "Maximális híváshossz (másodperc)",
         "maxCallHelp": "Nabil udvariasan lezárja a beszélgetést, és befejezi a hívást, amikor eléri ezt a korlátot. 60 és 1800 másodperc (30 perc) között.",
-        "paymentsNotLiveNote": "A telefonos fizetés akkor aktiválódik, amikor a fizetési linkes megoldás elérhetővé válik — jelenleg minden telefonos rendelés az üzletben fizetendő. Az itt megadott beállításokat elmentjük, és automatikusan életbe lépnek, amint a funkció elindul."
+        "paymentsNotLiveNote": "A telefonos fizetés akkor aktiválódik, amikor a fizetési linkes megoldás elérhetővé válik — jelenleg minden telefonos rendelés az üzletben fizetendő. Az itt megadott beállításokat elmentjük, és automatikusan életbe lépnek, amint a funkció elindul.",
+        "voicesLoading": "Hangok betöltése…",
+        "voiceDefault": "Alapértelmezett hang",
+        "voiceDefaultHint": "Amit a telefonrendszer kínál — mindig működik",
+        "voiceFemale": "Női",
+        "voiceMale": "Férfi",
+        "previewHint": "Nyomja meg a lejátszás gombot, és meghallgathatja, ahogy a hang felolvassa az Ön saját köszöntő szövegét.",
+        "previewUnavailable": "A hangminták még nincsenek bekapcsolva. Hangot ettől függetlenül választhat — mentse el, majd hívja fel a számát, és meghallgathatja.",
+        "previewFailed": "Ezt a hangmintát nem sikerült lejátszani. Próbálja újra egy pillanat múlva.",
+        "voiceSpeedHelp": "Milyen gyorsan beszél a Nabil. A lassabbat zajos vonalon könnyebb követni, a gyorsabb pörgősebbnek hat. Minden hívásra érvényes.",
+        "multilingualTitle": "Más nyelvek megértése",
+        "multilingualHint": "Jelölje be azokat a nyelveket, amelyeket a hívói használnak. A Nabil automatikusan felismeri, és ugyanazon a nyelven válaszol — ha mindet kikapcsolva hagyja, csak az elsődleges nyelvén beszél.",
+        "payAtDoorTitle": "Az ügyfelek fizethessenek a futárnak az ajtóban",
+        "payAtDoorHint": "A kiszállítás ugyanúgy működik, mint az elvitel: a hívó nem telefonon fizet, hanem készpénzzel vagy kártyával, amikor megérkezik az étel. A rendelés ettől még létrejön a ShipDay-ben, így ott is látja.",
+        "payAtDoorWarning": "Ezekhez a rendelésekhez nem kérünk ShipDay-futárt — ezeket a saját munkatársai szállítják ki és szedik be a pénzt. Ez az Ön felelőssége, nem a ShipDay-é."
       },
       "faqMgr": {
         "title": "Gyakori kérdések, amelyekre Nabil válaszol",

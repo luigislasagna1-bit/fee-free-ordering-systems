@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   compileComboLine,
   compilePizzaLine,
+  matchOption,
   placementPrefix,
   resolveOption,
   resolveVariant,
@@ -355,5 +356,199 @@ describe("combo compile", () => {
     );
     expect(r.line).toBeNull();
     expect(r.unresolved.join(" ")).toMatch(/isn't one of the choices/i);
+  });
+});
+
+/* ══════════════════════════════════════════════════════════════════════════
+   Regressions from the 2026-08-11 adversarial review. Each of these shipped
+   green tests and a real defect — the tests below are the defect, pinned.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+describe("negation — a refused topping must never be added", () => {
+  it.each([
+    "no onions",
+    "without onions",
+    "hold the bacon",
+    "no mushrooms please",
+    "skip the olives",
+    "leave off the onion",
+  ])("rejects %j instead of resolving it to the topping", (phrase) => {
+    const m = matchOption(phrase, [TOPPINGS]);
+    expect(m.ok).toBe(false);
+    if (!m.ok) expect(m.reason).toBe("negated");
+  });
+
+  it("a negated topping stops the whole line — the agent must ask, not guess", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }, { name: "no onions" }] },
+      PIZZA(),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/LEAVE OFF/i);
+  });
+
+  it("still resolves a topping whose own name merely contains a negation-ish word", () => {
+    const m = matchOption("pepperoni", [TOPPINGS]);
+    expect(m.ok && m.option.modifierOptionId).toBe("o_pep");
+  });
+
+  it("a store that MODELS removals as options still gets its option", () => {
+    const WITH_REMOVALS = {
+      ...TOPPINGS,
+      options: [...TOPPINGS.options, { modifierOptionId: "o_no_onion", name: "No Onions", priceAdjustment: 0 }],
+    };
+    const m = matchOption("no onions", [WITH_REMOVALS]);
+    expect(m.ok && m.option.modifierOptionId).toBe("o_no_onion");
+  });
+
+  it("does not read a real ingredient name as a refusal", () => {
+    const DAIRY_FREE = {
+      ...TOPPINGS,
+      options: [{ modifierOptionId: "o_nd", name: "Non-Dairy Cheese", priceAdjustment: 3 }],
+    };
+    const m = matchOption("non dairy cheese", [DAIRY_FREE]);
+    expect(m.ok && m.option.modifierOptionId).toBe("o_nd");
+  });
+});
+
+describe("substring matching is qualifier-bounded", () => {
+  it("'extra pepperoni' is still pepperoni", () => {
+    const m = matchOption("extra pepperoni", [TOPPINGS]);
+    expect(m.ok && m.option.modifierOptionId).toBe("o_pep");
+  });
+
+  it("a multi-ingredient phrase does not silently become one of its words", () => {
+    const m = matchOption("chicken bacon ranch", [TOPPINGS]);
+    expect(m.ok).toBe(false);
+  });
+
+  it("offers the closest real menu names so the agent can ask 'did you mean'", () => {
+    const m = matchOption("anchovies", [TOPPINGS]);
+    expect(m.ok).toBe(false);
+    if (!m.ok) expect(m.suggestions.length).toBeGreaterThan(0);
+  });
+});
+
+describe("mis-heard toppings still resolve (accent + noisy-line robustness)", () => {
+  it.each(["peperoni", "pepproni", "pepperonni"])("%j → Pepperoni", (heard) => {
+    const m = matchOption(heard, [TOPPINGS]);
+    expect(m.ok && m.option.modifierOptionId).toBe("o_pep");
+  });
+
+  it("does not fuzzy-match a short word onto an unrelated topping", () => {
+    const m = matchOption("ham", [TOPPINGS]);
+    expect(m.ok).toBe(false);
+  });
+});
+
+describe("preset toppings are stored by NAME (the half-price pizza)", () => {
+  const NAMED = pizzaCfg({ presetToppings: ["Pepperoni", "Mushrooms"] });
+
+  it("seeds presets given as option NAMES, not just ids", () => {
+    const r = compilePizzaLine({ menuItemId: "mi_pizza", size: "large" }, PIZZA({ pizzaConfig: NAMED }));
+    const ids = r.line!.modifiers.map((m) => m.modifierOptionId);
+    expect(ids).toContain("o_pep");
+    expect(ids).toContain("o_mush");
+  });
+
+  it("does not double-add a NAME preset the caller also asked for", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({ pizzaConfig: pizzaCfg({ presetToppings: ["Pepperoni"] }) }),
+    );
+    expect(r.line!.modifiers.filter((m) => m.modifierOptionId === "o_pep")).toHaveLength(1);
+  });
+
+  it("speaks the seeded presets — the read-back must match the kitchen ticket", () => {
+    const r = compilePizzaLine({ menuItemId: "mi_pizza", size: "large" }, PIZZA({ pizzaConfig: NAMED }));
+    expect(r.readBack).toMatch(/Pepperoni/);
+    expect(r.readBack).toMatch(/Mushrooms/);
+  });
+
+  it("REFUSES the sale when presets exist but none resolve and the pizza would bill below list", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large" },
+      PIZZA({ pizzaConfig: pizzaCfg({ presetToppings: ["Something Renamed"] }) }),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/aren't set up correctly/i);
+  });
+});
+
+describe("required groups are never guessed", () => {
+  const PAID_CRUST = {
+    ...CRUST,
+    options: [
+      { modifierOptionId: "o_stuffed", name: "Stuffed Crust", priceAdjustment: 4 },
+      { modifierOptionId: "o_thin2", name: "Thin Crust", priceAdjustment: 0 },
+    ],
+  };
+
+  it("asks instead of silently attaching whichever option sorts first", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({ modifierGroups: [PAID_CRUST, TOPPINGS] }),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/which crust/i);
+  });
+
+  it("still auto-applies a store-marked default", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA(),
+    );
+    expect(r.line!.modifiers.map((m) => m.modifierOptionId)).toContain("o_regular");
+  });
+
+  it("speaks an auto-applied default that COSTS money", () => {
+    const PAID_DEFAULT = {
+      ...CRUST,
+      options: [{ modifierOptionId: "o_stuffed", name: "Stuffed Crust", priceAdjustment: 4, isDefault: true }],
+    };
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({ modifierGroups: [PAID_DEFAULT, TOPPINGS] }),
+    );
+    expect(r.readBack).toMatch(/Stuffed Crust/);
+  });
+});
+
+describe("sizes are never silently downgraded", () => {
+  const SIZES = [
+    { variantId: "v_s", name: "Small", price: 12 },
+    { variantId: "v_m", name: "Medium", price: 16 },
+    { variantId: "v_l", name: "Large", price: 20 },
+  ];
+
+  it("'extra large' does not become Large when the store doesn't sell it", () => {
+    expect(resolveVariant("extra large", SIZES)).toBeNull();
+  });
+
+  it("still resolves a plain spoken size", () => {
+    expect(resolveVariant("large", SIZES)?.variantId).toBe("v_l");
+  });
+
+  it("asks for the size when it can't be resolved", () => {
+    const r = compilePizzaLine({ menuItemId: "mi_pizza", size: "extra large" }, PIZZA({ variants: SIZES }));
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/Small, Medium, Large/);
+  });
+});
+
+describe("spoken money uses the currency SYMBOL, never the ISO code", () => {
+  it("reads $ for usd, not 'usd'", () => {
+    const r = compilePizzaLine(
+      {
+        menuItemId: "mi_pizza",
+        size: "large",
+        toppings: [{ name: "pepperoni" }, { name: "mushrooms" }, { name: "olives" }, { name: "bacon" }],
+      },
+      PIZZA(),
+      { currency: "usd" },
+    );
+    expect(r.pricingNote).toBeTruthy();
+    expect(r.pricingNote).not.toMatch(/usd/i);
+    expect(r.pricingNote).toMatch(/\$/);
   });
 });

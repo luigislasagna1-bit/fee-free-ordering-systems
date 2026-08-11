@@ -4292,7 +4292,10 @@
         "languageMix": "Ngôn ngữ",
         "sentimentMix": "Cảm xúc",
         "recentActivity": "Hoạt động gần đây",
-        "viewAll": "Xem tất cả cuộc gọi"
+        "viewAll": "Xem tất cả cuộc gọi",
+        "chartPopularItems": "Đặt qua điện thoại nhiều nhất",
+        "popularItemsCta": "Thiết lập món gợi ý bán thêm",
+        "popularItemsEmpty": "Chưa có đơn đặt qua điện thoại trong khoảng thời gian này."
       },
       "callLog": {
         "searchPlaceholder": "Tìm số điện thoại, tên hoặc tóm tắt…",
@@ -4400,7 +4403,21 @@
         "scheduledHint": "Đơn hàng đặt trước sử dụng cùng các khung giờ hẹn trước như trang đặt hàng trực tuyến của bạn.",
         "maxCallSeconds": "Thời lượng cuộc gọi tối đa (giây)",
         "maxCallHelp": "Nabil sẽ lịch sự kết thúc cuộc gọi khi đạt đến giới hạn này. Từ 60 đến 1800 giây (30 phút).",
-        "paymentsNotLiveNote": "Thanh toán qua điện thoại sẽ được kích hoạt khi tính năng thanh toán qua liên kết ra mắt — hiện tại mọi đơn hàng qua điện thoại đều thanh toán tại cửa hàng. Các lựa chọn của bạn ở đây được lưu lại và sẽ tự động áp dụng khi tính năng này đi vào hoạt động."
+        "paymentsNotLiveNote": "Thanh toán qua điện thoại sẽ được kích hoạt khi tính năng thanh toán qua liên kết ra mắt — hiện tại mọi đơn hàng qua điện thoại đều thanh toán tại cửa hàng. Các lựa chọn của bạn ở đây được lưu lại và sẽ tự động áp dụng khi tính năng này đi vào hoạt động.",
+        "voicesLoading": "Đang tải giọng nói…",
+        "voiceDefault": "Giọng mặc định",
+        "voiceDefaultHint": "Dùng giọng có sẵn của hệ thống điện thoại — luôn hoạt động",
+        "voiceFemale": "Nữ",
+        "voiceMale": "Nam",
+        "previewHint": "Nhấn phát để nghe giọng này đọc lời chào mở đầu của bạn.",
+        "previewUnavailable": "Tính năng nghe thử giọng nói chưa được bật. Bạn vẫn có thể chọn giọng — hãy lưu, rồi gọi vào số của bạn để nghe.",
+        "previewFailed": "Không phát được đoạn nghe thử. Vui lòng thử lại sau giây lát.",
+        "voiceSpeedHelp": "Tốc độ nói của Nabil. Nói chậm hơn thì dễ nghe hơn khi đường dây ồn; nói nhanh hơn thì gọn và dứt khoát hơn. Áp dụng cho mọi cuộc gọi.",
+        "multilingualTitle": "Hiểu các ngôn ngữ khác",
+        "multilingualHint": "Chọn bất kỳ ngôn ngữ nào mà khách gọi đến hay dùng. Nabil tự nhận ra và trả lời bằng đúng ngôn ngữ đó — cứ để tắt hết nếu bạn chỉ muốn dùng ngôn ngữ chính của mình.",
+        "payAtDoorTitle": "Cho khách trả tiền cho tài xế tại cửa",
+        "payAtDoorHint": "Đơn giao hàng sẽ giống như đơn lấy tại quán: khách không trả tiền qua điện thoại mà trả bằng tiền mặt hoặc thẻ khi nhận món. Đơn hàng vẫn được tạo trong ShipDay để bạn xem ở đó.",
+        "payAtDoorWarning": "Những đơn này không yêu cầu tài xế ShipDay — nhân viên của bạn tự đi giao và thu tiền. Đó là trách nhiệm của bạn, không phải của ShipDay."
       },
       "faqMgr": {
         "title": "Các câu hỏi thường gặp mà Nabil trả lời",
