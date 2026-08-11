@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Lokasi disematkan dari alamat!",
       "geocodeNotFound": "Tidak dapat melakukan geocoding pada alamat ini. Coba kotak pencarian di atas.",
       "geocodeFailed": "Geocoding gagal. Periksa koneksi internet Anda.",
+      "geocodeApproximate": "Alamat persis itu tidak ditemukan. Kami menyematkan {place} — geser pin ke lokasi tepat Anda.",
       "locationPinned": "Lokasi disematkan",
       "noLocationSet": "Lokasi belum ditetapkan",
       "noLocationHint": "Zona Pengiriman tidak akan berfungsi dengan benar hingga ini ditetapkan.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Menerima pesanan ambil sendiri & pengantaran",
         "bookReservations": "Memesan meja",
         "answerFaq": "Menjawab pertanyaan (jam buka, menu, lokasi)",
-        "transferPizzaCombo": "Meneruskan pesanan pizza & combo ke petugas",
         "allowAnonymous": "Menjawab panggilan tanpa identitas penelepon",
         "payments": "Pembayaran",
         "pickupPayment": "Pesanan ambil sendiri",
@@ -4250,7 +4250,9 @@
         "saved": "Tersimpan",
         "saveError": "Tidak dapat menyimpan — silakan coba lagi.",
         "recentCalls": "Panggilan terbaru",
-        "noCalls": "Belum ada panggilan. Akan muncul di sini setelah Nabil aktif."
+        "noCalls": "Belum ada panggilan. Akan muncul di sini setelah Nabil aktif.",
+        "buildPizzaCombo": "Membuat pizza dan kombo lewat suara",
+        "buildPizzaComboHint": "Nonaktif secara bawaan. Saat aktif, Nabil menyusun pizza — ukuran, topping, bahkan setengah & setengah — dan mengisi slot kombo, alih-alih mengalihkan penelepon ke staf. Buat pesanan percobaan dan periksa struk yang tercetak sebelum Anda mengandalkannya."
       },
       "apiErrors": {
         "featureLocked": "Paket Anda belum mencakup agen pemesanan telepon.",

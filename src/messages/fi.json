@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Sijainti merkitty osoitteen perusteella!",
       "geocodeNotFound": "Tämän osoitteen geokoodaus epäonnistui. Kokeile yllä olevaa hakukenttää.",
       "geocodeFailed": "Geokoodaus epäonnistui. Tarkista internetyhteytesi.",
+      "geocodeApproximate": "Tarkkaa osoitetta ei löytynyt. Merkitsimme kohteen {place} — vedä nasta tarkkaan sijaintiisi.",
       "locationPinned": "Sijainti merkitty",
       "noLocationSet": "Sijaintia ei ole asetettu",
       "noLocationHint": "Toimitusalueet eivät toimi oikein, ennen kuin tämä on asetettu.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Ottaa nouto- ja kuljetustilauksia",
         "bookReservations": "Varaa pöytiä",
         "answerFaq": "Vastaa kysymyksiin (aukioloajat, ruokalista, sijainti)",
-        "transferPizzaCombo": "Siirtää pizza- ja combo-tilaukset ihmiselle",
         "allowAnonymous": "Vastaa puheluihin ilman soittajan tunnusta",
         "payments": "Maksut",
         "pickupPayment": "Noutotilaukset",
@@ -4250,7 +4250,9 @@
         "saved": "Tallennettu",
         "saveError": "Tallennus epäonnistui — yritä uudelleen.",
         "recentCalls": "Viimeisimmät puhelut",
-        "noCalls": "Ei vielä puheluita. Ne näkyvät tässä, kun Nabil on käytössä."
+        "noCalls": "Ei vielä puheluita. Ne näkyvät tässä, kun Nabil on käytössä.",
+        "buildPizzaCombo": "Kokoa pizzat ja combot puhelun aikana",
+        "buildPizzaComboHint": "Oletuksena pois päältä. Kun asetus on päällä, Nabil kokoaa pizzat — koot, täytteet, jopa puoliksi & puoliksi — ja täyttää combon paikat sen sijaan, että siirtäisi soittajan ihmiselle. Tee testitilaus ja tarkista tulostettu kuitti, ennen kuin luotat tähän."
       },
       "apiErrors": {
         "featureLocked": "Tilauspakettisi ei vielä sisällä puhelintilausagenttia.",

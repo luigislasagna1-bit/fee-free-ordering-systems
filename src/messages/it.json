@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Posizione fissata dall'indirizzo!",
       "geocodeNotFound": "Impossibile geocodificare questo indirizzo. Prova la casella di ricerca qui sopra.",
       "geocodeFailed": "Geocodifica non riuscita. Controlla la connessione a Internet.",
+      "geocodeApproximate": "Non abbiamo trovato questo indirizzo esatto. Abbiamo posizionato {place} — trascina il segnaposto sulla tua posizione esatta.",
       "locationPinned": "Posizione fissata",
       "noLocationSet": "Nessuna posizione impostata",
       "noLocationHint": "Le Zone di consegna non funzioneranno correttamente finché non viene impostata.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Prendere ordini da asporto e in consegna",
         "bookReservations": "Prenotare tavoli",
         "answerFaq": "Rispondere alle domande (orari, menu, indirizzo)",
-        "transferPizzaCombo": "Passare pizze e combo a una persona",
         "allowAnonymous": "Rispondere a chiamate senza numero",
         "payments": "Pagamenti",
         "pickupPayment": "Ordini da asporto",
@@ -4250,7 +4250,9 @@
         "saved": "Salvato",
         "saveError": "Impossibile salvare — riprova.",
         "recentCalls": "Chiamate recenti",
-        "noCalls": "Ancora nessuna chiamata. Appariranno qui non appena Nabil sarà attivo."
+        "noCalls": "Ancora nessuna chiamata. Appariranno qui non appena Nabil sarà attivo.",
+        "buildPizzaCombo": "Componi pizze e combo a voce",
+        "buildPizzaComboHint": "Disattivato per impostazione predefinita. Quando è attivo, Nabil compone le pizze — formati, condimenti, persino metà e metà — e completa gli slot dei combo, invece di passare chi chiama a una persona. Fai un ordine di prova e controlla lo scontrino stampato prima di affidarti a questa funzione."
       },
       "apiErrors": {
         "featureLocked": "Il tuo piano non include ancora l'agente per gli ordini telefonici.",

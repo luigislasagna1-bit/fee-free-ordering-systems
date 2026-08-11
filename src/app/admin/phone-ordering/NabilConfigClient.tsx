@@ -224,7 +224,10 @@ export default function NabilConfigClient({
             <Toggle label={t("takeOrders")} checked={!!cfg.canTakeOrders} onChange={(v) => set("canTakeOrders", v)} />
             <Toggle label={t("bookReservations")} checked={!!cfg.canBookReservations} onChange={(v) => set("canBookReservations", v)} />
             <Toggle label={t("answerFaq")} checked={!!cfg.canAnswerFaq} onChange={(v) => set("canAnswerFaq", v)} />
-            <Toggle label={t("transferPizzaCombo")} checked={!cfg.allowPizzaCombo} onChange={(v) => set("allowPizzaCombo", !v)} />
+            {/* Positive framing now that building is real — the old inverted
+                "transfer these" toggle described a limitation, not a choice. */}
+            <Toggle label={t("buildPizzaCombo")} checked={!!cfg.allowPizzaCombo} onChange={(v) => set("allowPizzaCombo", v)} />
+            <p className="text-xs text-gray-500">{t("buildPizzaComboHint")}</p>
           </Section>
           <Section title={t("ordering")}>
             <Toggle label={t("quoteEta")} checked={!!cfg.quoteEta} onChange={(v) => set("quoteEta", v)} />

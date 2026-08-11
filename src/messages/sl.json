@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Lokacija označena iz naslova!",
       "geocodeNotFound": "Tega naslova ni bilo mogoče geokodirati. Poskusite z iskalnim poljem zgoraj.",
       "geocodeFailed": "Geokodiranje ni uspelo. Preverite svojo internetno povezavo.",
+      "geocodeApproximate": "Tega natančnega naslova nismo našli. Označili smo {place} — povlecite oznako na svojo natančno lokacijo.",
       "locationPinned": "Lokacija označena",
       "noLocationSet": "Lokacija ni nastavljena",
       "noLocationHint": "Območja dostave ne bodo delovala pravilno, dokler tega ne nastavite.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Sprejema naročila za prevzem in dostavo",
         "bookReservations": "Rezervira mize",
         "answerFaq": "Odgovarja na vprašanja (delovni čas, meni, lokacija)",
-        "transferPizzaCombo": "Preusmeri naročila pic in kombinacij osebi",
         "allowAnonymous": "Sprejema klice brez prikaza številke",
         "payments": "Plačila",
         "pickupPayment": "Naročila za prevzem",
@@ -4250,7 +4250,9 @@
         "saved": "Shranjeno",
         "saveError": "Shranjevanje ni uspelo — poskusite znova.",
         "recentCalls": "Nedavni klici",
-        "noCalls": "Klicev še ni. Prikazali se bodo tukaj, ko bo Nabil aktiven."
+        "noCalls": "Klicev še ni. Prikazali se bodo tukaj, ko bo Nabil aktiven.",
+        "buildPizzaCombo": "Sestavljanje pic in kombinacij po telefonu",
+        "buildPizzaComboHint": "Privzeto izklopljeno. Ko je vklopljeno, Nabil sestavi pice — velikosti, sestavine, tudi pol & pol — in zapolni mesta v kombinaciji, namesto da klicatelja preveže na osebo. Preden se nanj zanesete, oddajte preizkusno naročilo in preverite natisnjeni račun."
       },
       "apiErrors": {
         "featureLocked": "Vaš paket še ne vključuje agenta za telefonsko naročanje.",

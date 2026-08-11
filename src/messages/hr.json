@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Lokacija označena na temelju adrese!",
       "geocodeNotFound": "Geokodiranje ove adrese nije uspjelo. Pokušajte s okvirom za pretraživanje iznad.",
       "geocodeFailed": "Geokodiranje nije uspjelo. Provjerite internetsku vezu.",
+      "geocodeApproximate": "Nismo pronašli tu točnu adresu. Umjesto toga označili smo {place} — povucite oznaku na svoju točnu lokaciju.",
       "locationPinned": "Lokacija označena",
       "noLocationSet": "Lokacija nije postavljena",
       "noLocationHint": "Zone dostave neće ispravno raditi dok se ovo ne postavi.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Prima narudžbe za preuzimanje i dostavu",
         "bookReservations": "Rezervira stolove",
         "answerFaq": "Odgovara na pitanja (radno vrijeme, jelovnik, lokacija)",
-        "transferPizzaCombo": "Prosljeđuje pizze i combo narudžbe osobi",
         "allowAnonymous": "Javlja se na pozive bez prikaza broja",
         "payments": "Plaćanja",
         "pickupPayment": "Narudžbe za preuzimanje",
@@ -4250,7 +4250,9 @@
         "saved": "Spremljeno",
         "saveError": "Spremanje nije uspjelo — pokušajte ponovno.",
         "recentCalls": "Nedavni pozivi",
-        "noCalls": "Još nema poziva. Pojavit će se ovdje čim Nabil bude aktivan."
+        "noCalls": "Još nema poziva. Pojavit će se ovdje čim Nabil bude aktivan.",
+        "buildPizzaCombo": "Sastavljanje pizza i combo ponuda glasom",
+        "buildPizzaComboHint": "Prema zadanim postavkama isključeno. Kada je uključeno, Nabil sastavlja pizze — veličine, dodatke, čak i pola-pola — i popunjava mjesta u combo ponudi umjesto da pozivatelja prebaci osobi. Napravite probnu narudžbu i provjerite ispisani račun prije nego što se oslonite na to."
       },
       "apiErrors": {
         "featureLocked": "Vaš paket još ne uključuje agenta za telefonske narudžbe.",

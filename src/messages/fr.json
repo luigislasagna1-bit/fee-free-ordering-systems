@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Emplacement positionné à partir de l'adresse !",
       "geocodeNotFound": "Impossible de géocoder cette adresse. Essayez le champ de recherche ci-dessus.",
       "geocodeFailed": "Échec du géocodage. Vérifiez votre connexion Internet.",
+      "geocodeApproximate": "Cette adresse exacte est introuvable. Nous avons placé le repère sur {place} — faites-le glisser jusqu'à votre emplacement exact.",
       "locationPinned": "Emplacement positionné",
       "noLocationSet": "Aucun emplacement défini",
       "noLocationHint": "Les zones de livraison ne fonctionneront pas correctement tant que ceci n'est pas défini.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Prendre les commandes à emporter et en livraison",
         "bookReservations": "Réserver des tables",
         "answerFaq": "Répondre aux questions (horaires, carte, adresse)",
-        "transferPizzaCombo": "Transférer les pizzas et formules à une personne",
         "allowAnonymous": "Répondre aux appels en numéro masqué",
         "payments": "Paiements",
         "pickupPayment": "Commandes à emporter",
@@ -4250,7 +4250,9 @@
         "saved": "Enregistré",
         "saveError": "Échec de l'enregistrement — veuillez réessayer.",
         "recentCalls": "Appels récents",
-        "noCalls": "Aucun appel pour le moment. Ils apparaîtront ici dès que Nabil sera actif."
+        "noCalls": "Aucun appel pour le moment. Ils apparaîtront ici dès que Nabil sera actif.",
+        "buildPizzaCombo": "Composer les pizzas et les combos par téléphone",
+        "buildPizzaComboHint": "Désactivé par défaut. Une fois activé, Nabil compose les pizzas — tailles, garnitures, et même moitié-moitié — et remplit les emplacements des combos, au lieu de transférer l'appelant à une personne. Passez une commande de test et vérifiez le reçu imprimé avant de vous y fier."
       },
       "apiErrors": {
         "featureLocked": "Votre forfait n'inclut pas encore l'agent de commande téléphonique.",

@@ -69,6 +69,7 @@ export class CallSession {
       cashDeliveryBlocked: false,
       pendingTransfer: null,
       placedOrders: [],
+      basket: [],
     };
   }
 
@@ -387,7 +388,18 @@ export class CallSession {
               console.error("[nabil-voice] tool failed", block.name, e);
               out = { error: true, message: "That didn't work — let me try another way." };
             }
-            if ((block.name === "place_order" || block.name === "book_reservation" || block.name === "send_sms_link") && (out as any)?.ok) {
+            // add_pizza/add_combo mutate the call's basket, and quote_order's
+            // spoken total is the number the caller agrees to — a barge-in must
+            // not swallow either confirmation.
+            if (
+              (block.name === "place_order" ||
+                block.name === "book_reservation" ||
+                block.name === "send_sms_link" ||
+                block.name === "add_pizza" ||
+                block.name === "add_combo" ||
+                block.name === "quote_order") &&
+              (out as any)?.ok
+            ) {
               stateChanged = true;
             }
             this.noteOutcome(block.name, out);

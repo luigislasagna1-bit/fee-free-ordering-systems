@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Locație fixată din adresă!",
       "geocodeNotFound": "Această adresă nu a putut fi geocodată. Încearcă caseta de căutare de mai sus.",
       "geocodeFailed": "Geocodarea a eșuat. Verifică-ți conexiunea la internet.",
+      "geocodeApproximate": "Nu am găsit această adresă exactă. Am marcat {place} — trage pinul în locația ta exactă.",
       "locationPinned": "Locație fixată",
       "noLocationSet": "Nicio locație setată",
       "noLocationHint": "Zonele de livrare nu vor funcționa corect până când aceasta nu este setată.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Preia comenzi pentru ridicare și livrare",
         "bookReservations": "Rezervă mese",
         "answerFaq": "Răspunde la întrebări (program, meniu, locație)",
-        "transferPizzaCombo": "Trimite comenzile de pizza și combo către o persoană",
         "allowAnonymous": "Răspunde la apeluri fără identificare",
         "payments": "Plăți",
         "pickupPayment": "Comenzi pentru ridicare",
@@ -4250,7 +4250,9 @@
         "saved": "Salvat",
         "saveError": "Nu s-a putut salva — încearcă din nou.",
         "recentCalls": "Apeluri recente",
-        "noCalls": "Încă niciun apel. Vor apărea aici de îndată ce Nabil este activ."
+        "noCalls": "Încă niciun apel. Vor apărea aici de îndată ce Nabil este activ.",
+        "buildPizzaCombo": "Construiește pizza și combo-uri prin voce",
+        "buildPizzaComboHint": "Dezactivat implicit. Când este activ, Nabil construiește pizza — mărimi, toppinguri, chiar și jumătate-jumătate — și completează sloturile de combo, în loc să transfere apelantul unei persoane. Plasează o comandă de test și verifică bonul tipărit înainte să te bazezi pe această funcție."
       },
       "apiErrors": {
         "featureLocked": "Planul dumneavoastră nu include încă agentul de comenzi telefonice.",

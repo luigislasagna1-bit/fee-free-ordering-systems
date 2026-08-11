@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Locatie vastgezet op basis van adres!",
       "geocodeNotFound": "Kan dit adres niet geocoderen. Probeer het zoekvak hierboven.",
       "geocodeFailed": "Geocoderen mislukt. Controleer je internetverbinding.",
+      "geocodeApproximate": "Dit exacte adres is niet gevonden. We hebben {place} gemarkeerd — sleep de speld naar je exacte locatie.",
       "locationPinned": "Locatie vastgezet",
       "noLocationSet": "Geen locatie ingesteld",
       "noLocationHint": "Bezorgzones werken niet correct totdat dit is ingesteld.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Afhaal- en bezorgbestellingen aannemen",
         "bookReservations": "Tafels reserveren",
         "answerFaq": "Vragen beantwoorden (openingstijden, menu, locatie)",
-        "transferPizzaCombo": "Pizza- en combobestellingen naar een medewerker sturen",
         "allowAnonymous": "Gesprekken zonder nummerweergave aannemen",
         "payments": "Betalingen",
         "pickupPayment": "Afhaalbestellingen",
@@ -4250,7 +4250,9 @@
         "saved": "Opgeslagen",
         "saveError": "Opslaan mislukt — probeer het opnieuw.",
         "recentCalls": "Recente gesprekken",
-        "noCalls": "Nog geen gesprekken. Ze verschijnen hier zodra Nabil actief is."
+        "noCalls": "Nog geen gesprekken. Ze verschijnen hier zodra Nabil actief is.",
+        "buildPizzaCombo": "Pizza's en combo's samenstellen aan de telefoon",
+        "buildPizzaComboHint": "Staat standaard uit. Wanneer dit aan staat, stelt Nabil pizza's samen — maten, toppings, zelfs half-om-half — en vult hij de slots van een combo in, in plaats van de beller naar een medewerker door te verbinden. Plaats een testbestelling en controleer de afgedrukte bon voordat je hierop vertrouwt."
       },
       "apiErrors": {
         "featureLocked": "Je abonnement bevat de telefonische bestelassistent nog niet.",

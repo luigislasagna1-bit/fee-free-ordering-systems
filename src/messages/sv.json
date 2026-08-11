@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Platsen markerad utifrån adressen!",
       "geocodeNotFound": "Det gick inte att geokoda denna adress. Prova sökrutan ovan.",
       "geocodeFailed": "Geokodningen misslyckades. Kontrollera din internetanslutning.",
+      "geocodeApproximate": "Vi hittade inte den exakta adressen. Vi satte nålen på {place} — dra nålen till din exakta plats.",
       "locationPinned": "Plats markerad",
       "noLocationSet": "Ingen plats angiven",
       "noLocationHint": "Leveranszoner fungerar inte korrekt förrän detta är angivet.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Ta emot avhämtnings- och leveransbeställningar",
         "bookReservations": "Boka bord",
         "answerFaq": "Svara på frågor (öppettider, meny, adress)",
-        "transferPizzaCombo": "Skicka pizza- och combobeställningar till en person",
         "allowAnonymous": "Svara på samtal utan nummerpresentation",
         "payments": "Betalningar",
         "pickupPayment": "Avhämtningsbeställningar",
@@ -4250,7 +4250,9 @@
         "saved": "Sparat",
         "saveError": "Det gick inte att spara — försök igen.",
         "recentCalls": "Senaste samtal",
-        "noCalls": "Inga samtal ännu. De visas här så snart Nabil är igång."
+        "noCalls": "Inga samtal ännu. De visas här så snart Nabil är igång.",
+        "buildPizzaCombo": "Bygg pizzor och combos via telefon",
+        "buildPizzaComboHint": "Avstängt som standard. När det är på bygger Nabil pizzor – storlekar, toppings, till och med halv & halv – och fyller platserna i combos, i stället för att koppla den som ringer till en person. Lägg en testbeställning och kontrollera det utskrivna kvittot innan du förlitar dig på funktionen."
       },
       "apiErrors": {
         "featureLocked": "Din plan inkluderar ännu inte telefonbeställningsagenten.",

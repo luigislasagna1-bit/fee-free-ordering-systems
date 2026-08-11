@@ -20,6 +20,14 @@ export type AgentConfig = {
    *  the SMS ordering link; false refuses outright (store takes none). */
   allowScheduledOrders: boolean;
   afterHoursBehavior: "take_orders" | "reservations_only" | "message_only" | "transfer";
+  /** v2: BUILD pizzas + combos by voice instead of transferring them.
+   *  Defaults FALSE — an older server that sends no config, or a store that
+   *  hasn't opted in, keeps v1's transfer behavior exactly. */
+  allowPizzaCombo: boolean;
+  /** Pizza option-group ids the store wants confirmed aloud every time rather
+   *  than silently defaulted (Luigi: "let the store choose which ones to always
+   *  offer"). Empty = smart defaults. */
+  pizzaAskGroups: string[];
 };
 
 const BEHAVIORS: ReadonlyArray<AgentConfig["afterHoursBehavior"]> = [
@@ -47,5 +55,12 @@ export function normalizeAgentConfig(raw: unknown): AgentConfig {
     afterHoursBehavior: BEHAVIORS.includes(r.afterHoursBehavior as AgentConfig["afterHoursBehavior"])
       ? (r.afterHoursBehavior as AgentConfig["afterHoursBehavior"])
       : "take_orders",
+    // Opt-in, and deliberately NOT permissive-by-default like the rest: pizza
+    // pricing is the most defect-prone path in the product, so a missing config
+    // must mean "keep transferring", never "start building".
+    allowPizzaCombo: bool(r.allowPizzaCombo, false),
+    pizzaAskGroups: Array.isArray(r.pizzaAskGroups)
+      ? r.pizzaAskGroups.filter((x): x is string => typeof x === "string").slice(0, 20)
+      : [],
   };
 }

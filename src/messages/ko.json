@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "주소로 위치를 지정했습니다!",
       "geocodeNotFound": "이 주소의 좌표를 찾을 수 없습니다. 위의 검색창을 이용해 보세요.",
       "geocodeFailed": "좌표 변환에 실패했습니다. 인터넷 연결을 확인하세요.",
+      "geocodeApproximate": "정확한 주소를 찾지 못했습니다. 대신 {place}에 핀을 놓았습니다 — 핀을 정확한 위치로 드래그하세요.",
       "locationPinned": "위치 지정됨",
       "noLocationSet": "위치가 설정되지 않음",
       "noLocationHint": "이 항목을 설정할 때까지 배달 구역이 올바르게 작동하지 않습니다.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "포장 및 배달 주문 받기",
         "bookReservations": "좌석 예약",
         "answerFaq": "질문 응대(영업시간, 메뉴, 위치)",
-        "transferPizzaCombo": "피자 및 콤보 주문을 담당자에게 연결",
         "allowAnonymous": "발신자 표시 없는 전화도 받기",
         "payments": "결제",
         "pickupPayment": "포장 주문",
@@ -4250,7 +4250,9 @@
         "saved": "저장됨",
         "saveError": "저장하지 못했습니다 — 다시 시도해 주세요.",
         "recentCalls": "최근 통화",
-        "noCalls": "아직 통화가 없습니다. Nabil이 활성화되면 여기에 표시됩니다."
+        "noCalls": "아직 통화가 없습니다. Nabil이 활성화되면 여기에 표시됩니다.",
+        "buildPizzaCombo": "음성으로 피자와 콤보 구성하기",
+        "buildPizzaComboHint": "기본값은 꺼짐입니다. 켜면 Nabil이 발신자를 직원에게 연결하는 대신 직접 피자를 구성하고 — 크기, 토핑, 반반 피자까지 — 콤보 구성 항목도 채웁니다. 실제로 사용하기 전에 테스트 주문을 한 번 넣어 보고 인쇄된 영수증을 확인하세요."
       },
       "apiErrors": {
         "featureLocked": "현재 플랜에는 전화 주문 에이전트가 아직 포함되어 있지 않습니다.",

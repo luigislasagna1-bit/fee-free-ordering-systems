@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "已根据地址标记位置！",
       "geocodeNotFound": "无法对此地址进行地理编码。请尝试上方的搜索框。",
       "geocodeFailed": "地理编码失败。请检查您的网络连接。",
+      "geocodeApproximate": "未能找到该确切地址。已改为标记 {place} — 请将图钉拖到你的准确位置。",
       "locationPinned": "已标记位置",
       "noLocationSet": "未设置位置",
       "noLocationHint": "在设置此项之前，配送区域将无法正常工作。",
@@ -4218,7 +4219,6 @@
         "takeOrders": "接受自取和配送订单",
         "bookReservations": "预订餐位",
         "answerFaq": "回答问题（营业时间、菜单、位置）",
-        "transferPizzaCombo": "将披萨和套餐订单转给人工",
         "allowAnonymous": "接听无来电显示的电话",
         "payments": "支付",
         "pickupPayment": "自取订单",
@@ -4250,7 +4250,9 @@
         "saved": "已保存",
         "saveError": "保存失败 — 请重试。",
         "recentCalls": "最近通话",
-        "noCalls": "暂无通话。Nabil 上线后将显示在这里。"
+        "noCalls": "暂无通话。Nabil 上线后将显示在这里。",
+        "buildPizzaCombo": "通过语音定制披萨和套餐",
+        "buildPizzaComboHint": "默认关闭。开启后，Nabil 会直接为来电者定制披萨——大小、配料，甚至半半拼——并完成套餐中的各项选择，而不是把电话转给员工。正式启用前，请先下一笔测试订单，并核对打印出的小票。"
       },
       "apiErrors": {
         "featureLocked": "您的套餐尚未包含电话点餐助理。",

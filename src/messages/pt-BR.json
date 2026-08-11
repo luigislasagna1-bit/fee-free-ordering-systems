@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Localização marcada a partir do endereço!",
       "geocodeNotFound": "Não foi possível geocodificar este endereço. Tente a caixa de busca acima.",
       "geocodeFailed": "Falha na geocodificação. Verifique sua conexão com a internet.",
+      "geocodeApproximate": "Não encontramos esse endereço exato. Marcamos {place} — arraste o marcador até sua localização exata.",
       "locationPinned": "Localização marcada",
       "noLocationSet": "Nenhuma localização definida",
       "noLocationHint": "As Zonas de Entrega não funcionarão corretamente até que isto seja definido.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Anotar pedidos para retirada e entrega",
         "bookReservations": "Reservar mesas",
         "answerFaq": "Responder perguntas (horários, cardápio, localização)",
-        "transferPizzaCombo": "Encaminhar pizzas e combos para uma pessoa",
         "allowAnonymous": "Atender chamadas sem identificação",
         "payments": "Pagamentos",
         "pickupPayment": "Pedidos para retirada",
@@ -4250,7 +4250,9 @@
         "saved": "Salvo",
         "saveError": "Não foi possível salvar — tente novamente.",
         "recentCalls": "Chamadas recentes",
-        "noCalls": "Nenhuma chamada ainda. Elas aparecerão aqui assim que o Nabil estiver no ar."
+        "noCalls": "Nenhuma chamada ainda. Elas aparecerão aqui assim que o Nabil estiver no ar.",
+        "buildPizzaCombo": "Montar pizzas e combos por voz",
+        "buildPizzaComboHint": "Desativado por padrão. Quando ativado, o Nabil monta pizzas — tamanhos, adicionais, até metade & metade — e preenche os itens do combo, em vez de transferir quem liga para uma pessoa. Faça um pedido de teste e confira o recibo impresso antes de confiar nele."
       },
       "apiErrors": {
         "featureLocked": "Seu plano ainda não inclui o agente de pedidos por telefone.",

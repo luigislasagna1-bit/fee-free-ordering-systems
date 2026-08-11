@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Konum adresten sabitlendi!",
       "geocodeNotFound": "Bu adres konumlandırılamadı. Yukarıdaki arama kutusunu deneyin.",
       "geocodeFailed": "Konumlandırma başarısız oldu. İnternet bağlantınızı kontrol edin.",
+      "geocodeApproximate": "Bu tam adresi bulamadık. Bunun yerine {place} işaretlendi — iğneyi tam konumunuza sürükleyin.",
       "locationPinned": "Konum sabitlendi",
       "noLocationSet": "Konum ayarlanmadı",
       "noLocationHint": "Bu ayarlanana kadar Teslimat Bölgeleri doğru çalışmaz.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Gel-al ve teslimat siparişleri alır",
         "bookReservations": "Masa rezervasyonu yapar",
         "answerFaq": "Soruları yanıtlar (saatler, menü, konum)",
-        "transferPizzaCombo": "Pizza ve combo siparişlerini bir kişiye aktarır",
         "allowAnonymous": "Numarası gizli çağrıları yanıtlar",
         "payments": "Ödemeler",
         "pickupPayment": "Gel-al siparişleri",
@@ -4250,7 +4250,9 @@
         "saved": "Kaydedildi",
         "saveError": "Kaydedilemedi — lütfen tekrar deneyin.",
         "recentCalls": "Son çağrılar",
-        "noCalls": "Henüz çağrı yok. Nabil yayına girdiğinde burada görünecekler."
+        "noCalls": "Henüz çağrı yok. Nabil yayına girdiğinde burada görünecekler.",
+        "buildPizzaCombo": "Pizzaları ve komboları sesle oluştur",
+        "buildPizzaComboHint": "Varsayılan olarak kapalıdır. Açıkken Nabil, arayanı bir kişiye aktarmak yerine pizzaları kendisi oluşturur — boyutlar, malzemeler, hatta yarım yarım — ve kombo bölmelerini doldurur. Buna güvenmeden önce bir deneme siparişi verip yazdırılan fişi kontrol edin."
       },
       "apiErrors": {
         "featureLocked": "Planınız henüz telefonla sipariş asistanını içermiyor.",

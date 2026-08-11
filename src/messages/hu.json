@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "A helyszín rögzítve a cím alapján!",
       "geocodeNotFound": "Ez a cím nem geokódolható. Próbáld a fenti keresőmezőt.",
       "geocodeFailed": "A geokódolás sikertelen. Ellenőrizd az internetkapcsolatot.",
+      "geocodeApproximate": "Nem találtuk meg ezt a pontos címet. Helyette ezt jelöltük be: {place} — húzd a tűt a pontos helyedre.",
       "locationPinned": "Helyszín rögzítve",
       "noLocationSet": "Nincs beállított helyszín",
       "noLocationHint": "A Szállítási zónák nem működnek megfelelően, amíg ezt nem állítod be.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Elviteles és kiszállításos rendelések felvétele",
         "bookReservations": "Asztalfoglalás",
         "answerFaq": "Kérdések megválaszolása (nyitvatartás, étlap, helyszín)",
-        "transferPizzaCombo": "Pizza- és combo-rendelések átadása munkatársnak",
         "allowAnonymous": "Hívásfogadás rejtett szám esetén is",
         "payments": "Fizetés",
         "pickupPayment": "Elviteles rendelések",
@@ -4250,7 +4250,9 @@
         "saved": "Mentve",
         "saveError": "A mentés nem sikerült — próbálja újra.",
         "recentCalls": "Legutóbbi hívások",
-        "noCalls": "Még nincsenek hívások. Itt jelennek meg, amint a Nabil élesben működik."
+        "noCalls": "Még nincsenek hívások. Itt jelennek meg, amint a Nabil élesben működik.",
+        "buildPizzaCombo": "Pizzák és kombók összeállítása telefonon",
+        "buildPizzaComboHint": "Alapértelmezetten kikapcsolva. Bekapcsolva a Nabil maga állítja össze a pizzákat — méret, feltétek, akár Fél & Fél is —, és kitölti a kombó helyeit, ahelyett, hogy munkatársnak adná át a hívót. Adjon le egy tesztrendelést, és ellenőrizze a kinyomtatott nyugtát, mielőtt élesben használná."
       },
       "apiErrors": {
         "featureLocked": "Az Ön csomagja még nem tartalmazza a telefonos rendelésfelvevő asszisztenst.",

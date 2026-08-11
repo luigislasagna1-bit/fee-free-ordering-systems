@@ -2913,7 +2913,19 @@ model VoiceAgentConfig {
   canTakeOrders         Boolean @default(true)
   canBookReservations   Boolean @default(true)
   canAnswerFaq          Boolean @default(true)
-  allowPizzaCombo       Boolean @default(false) // else transfer (v1: too complex for voice)
+  /// v2 (2026-08-11): Nabil BUILDS pizzas + combos by voice — sizes, toppings,
+  /// half-and-half, combo slots — instead of transferring them. Stays FALSE by
+  /// default: pizza pricing is the most defect-prone path in the codebase, so
+  /// each store opts in after the owner has checked real receipt math. When
+  /// false (or when an older voice build sends no config) the agent transfers
+  /// exactly as it did in v1.
+  allowPizzaCombo       Boolean @default(false)
+  /// Pizza option groups the agent must ALWAYS ask about instead of silently
+  /// taking the default (Luigi 2026-08-10: "let the store choose which ones to
+  /// always offer"). JSON array of ModifierGroup ids belonging to this
+  /// restaurant's pizza items; empty/null = smart defaults, and the agent still
+  /// lists any group's options whenever the CALLER asks about them.
+  pizzaAskGroups        Json?
   allowAnonymousCallers Boolean @default(true)
 
   // ── Ordering behavior (mostly reads existing restaurant config) ──

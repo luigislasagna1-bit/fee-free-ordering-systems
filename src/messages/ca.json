@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Ubicació fixada a partir de l'adreça!",
       "geocodeNotFound": "No s'ha pogut geocodificar aquesta adreça. Prova el quadre de cerca de dalt.",
       "geocodeFailed": "La geocodificació ha fallat. Comprova la connexió a Internet.",
+      "geocodeApproximate": "No hem trobat aquesta adreça exacta. Hem marcat {place} — arrossega el marcador fins al teu punt exacte.",
       "locationPinned": "Ubicació fixada",
       "noLocationSet": "Cap ubicació definida",
       "noLocationHint": "Les zones de lliurament no funcionaran correctament fins que això no estigui definit.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Prendre comandes per recollir i a domicili",
         "bookReservations": "Reservar taules",
         "answerFaq": "Respondre preguntes (horaris, carta, ubicació)",
-        "transferPizzaCombo": "Passar les pizzes i combos a una persona",
         "allowAnonymous": "Respondre trucades sense identificador",
         "payments": "Pagaments",
         "pickupPayment": "Comandes per recollir",
@@ -4250,7 +4250,9 @@
         "saved": "Desat",
         "saveError": "No s'ha pogut desar — torna-ho a provar.",
         "recentCalls": "Trucades recents",
-        "noCalls": "Encara no hi ha trucades. Apareixeran aquí quan Nabil estigui actiu."
+        "noCalls": "Encara no hi ha trucades. Apareixeran aquí quan Nabil estigui actiu.",
+        "buildPizzaCombo": "Crea pizzes i combos per veu",
+        "buildPizzaComboHint": "Desactivat per defecte. Quan està activat, Nabil munta pizzes —mides, ingredients i fins i tot meitat i meitat— i completa els combos, en lloc de passar la trucada a una persona. Fes una comanda de prova i comprova el tiquet imprès abans de confiar-hi."
       },
       "apiErrors": {
         "featureLocked": "El teu pla encara no inclou l'agent de comandes telefòniques.",

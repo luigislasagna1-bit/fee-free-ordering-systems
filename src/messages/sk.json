@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Poloha bola pripnutá podľa adresy!",
       "geocodeNotFound": "Túto adresu sa nepodarilo geokódovať. Skúste vyhľadávacie pole vyššie.",
       "geocodeFailed": "Geokódovanie zlyhalo. Skontrolujte svoje internetové pripojenie.",
+      "geocodeApproximate": "Presnú adresu sa nepodarilo nájsť. Označili sme {place} — potiahnite špendlík na presné miesto.",
       "locationPinned": "Poloha pripnutá",
       "noLocationSet": "Nie je nastavená žiadna poloha",
       "noLocationHint": "Doručovacie zóny nebudú fungovať správne, kým to nenastavíte.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Prijímať objednávky na vyzdvihnutie a rozvoz",
         "bookReservations": "Rezervovať stoly",
         "answerFaq": "Odpovedať na otázky (otváracie hodiny, menu, adresa)",
-        "transferPizzaCombo": "Posielať pizze a combo objednávky človeku",
         "allowAnonymous": "Prijímať hovory bez identifikácie čísla",
         "payments": "Platby",
         "pickupPayment": "Objednávky na vyzdvihnutie",
@@ -4250,7 +4250,9 @@
         "saved": "Uložené",
         "saveError": "Nepodarilo sa uložiť — skúste to znova.",
         "recentCalls": "Nedávne hovory",
-        "noCalls": "Zatiaľ žiadne hovory. Objavia sa tu, keď bude Nabil aktívny."
+        "noCalls": "Zatiaľ žiadne hovory. Objavia sa tu, keď bude Nabil aktívny.",
+        "buildPizzaCombo": "Zostavovanie pízz a combo ponúk hlasom",
+        "buildPizzaComboHint": "Predvolene vypnuté. Keď je zapnuté, Nabil zostaví pizzu — veľkosti, ingrediencie, dokonca aj polovica & polovica — a vyplní sloty v combo ponuke namiesto toho, aby volajúceho prepojil na človeka. Zadajte skúšobnú objednávku a skontrolujte vytlačenú účtenku, skôr než sa na to začnete spoliehať."
       },
       "apiErrors": {
         "featureLocked": "Váš plán zatiaľ nezahŕňa agenta pre telefonické objednávky.",

@@ -794,6 +794,17 @@ export async function POST(req: NextRequest) {
         typeof raw.menuItemId === "string" &&
         Array.isArray(raw.bundleItems) &&
         raw.bundleItems.length > 0;
+      // A combo sent WITHOUT children used to fall through to the normal-item
+      // path and quietly become a combo line with no choices at the parent
+      // price — the kitchen got a ticket with nothing on it. Harmless while
+      // only the web composer built combos (it always sends children); a real
+      // risk now that a voice agent can. Fail loudly instead. 2026-08-11.
+      if (!isComboLine && raw.isCombo === true) {
+        return NextResponse.json(
+          { error: "Please complete all combo choices.", code: "combo_missing_children" },
+          { status: 400 },
+        );
+      }
       if (isComboLine) {
         const comboParent = menuItemMap.get(String(raw.menuItemId));
         if (!comboParent) {
@@ -1941,6 +1952,52 @@ export async function POST(req: NextRequest) {
       ? Math.min(Math.round(clientTip * 100) / 100, serverSubtotal * 2) // cap at 200% of subtotal
       : 0;
     const serverTotal = Math.round((taxBase + serverTax + serverTip + depositLinesTotal) * 100) / 100;
+
+    // ── DRY RUN: priced preview, no side effects ────────────────────────────
+    //
+    // Nabil AI must read a total back to the caller BEFORE placing the order,
+    // and a pizza's price provably cannot be summed from menu prices (the
+    // topping engine applies an included-allowance base credit, per-size
+    // topping rates and half multipliers). The first live call proved the
+    // failure mode: with no real preview the model did its own arithmetic and
+    // quoted "prices all wrong".
+    //
+    // This returns from the SAME code path that charges — every validation,
+    // every promo, the identical tax base — so preview == charge by
+    // construction rather than by two implementations agreeing. It sits after
+    // all pricing and BEFORE the first write: no customer row, no coupon or
+    // promo claim (those start ~700 lines below), no order.
+    //
+    // Internal-key gated: a public caller cannot reach it, so the money path
+    // is byte-identical for every existing client. 2026-08-11.
+    if (
+      (body as { dryRun?: unknown })?.dryRun === true &&
+      !!process.env.INTERNAL_API_SECRET &&
+      req.headers.get("x-internal-key") === process.env.INTERNAL_API_SECRET
+    ) {
+      return NextResponse.json({
+        dryRun: true,
+        total: serverTotal,
+        subtotal: serverSubtotal,
+        discount: Math.round(totalDiscount * 100) / 100,
+        tax: serverTax,
+        deliveryFee: serverDeliveryFee,
+        serviceFees: serverServiceFeesTotal,
+        deposits: depositLinesTotal,
+        tip: serverTip,
+        appliedPromoNames: promoResults
+          .filter((p) => (p.discount ?? 0) > 0)
+          .map((p) => p.name)
+          .filter(Boolean)
+          .slice(0, 5),
+        lines: validatedItems.map((i) => ({
+          name: i.name,
+          quantity: i.quantity,
+          unitPrice: i.price,
+          subtotal: i.subtotal,
+        })),
+      });
+    }
 
     // ── Find or create customer ─────────────────────────────────────────────
     //

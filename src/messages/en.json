@@ -1276,6 +1276,7 @@
       "locationPinnedFromAddress": "Location pinned from address!",
       "geocodeNotFound": "Could not geocode this address. Try the search box above.",
       "geocodeFailed": "Geocoding failed. Check your internet connection.",
+      "geocodeApproximate": "Couldn't find that exact address. Pinned {place} instead — drag the pin to your exact spot.",
       "locationPinned": "Location pinned",
       "noLocationSet": "No location set",
       "noLocationHint": "Delivery Zones will not work correctly until this is set.",
@@ -4538,7 +4539,6 @@
         "takeOrders": "Take pickup & delivery orders",
         "bookReservations": "Book reservations",
         "answerFaq": "Answer questions (hours, menu, location)",
-        "transferPizzaCombo": "Send pizza & combo builds to a person",
         "allowAnonymous": "Answer calls with no caller ID",
         "payments": "Payments",
         "pickupPayment": "Pickup orders",
@@ -4570,7 +4570,9 @@
         "saved": "Saved",
         "saveError": "Couldn't save — please try again.",
         "recentCalls": "Recent calls",
-        "noCalls": "No calls yet. They'll appear here once Nabil is live."
+        "noCalls": "No calls yet. They'll appear here once Nabil is live.",
+        "buildPizzaCombo": "Build pizzas and combos by voice",
+        "buildPizzaComboHint": "Off by default. When on, Nabil builds pizzas — sizes, toppings, even half-and-half — and fills combo slots, instead of passing the caller to a person. Place a test order and check the printed receipt before you rely on it."
       },
       "apiErrors": {
         "featureLocked": "Your plan doesn't include the phone ordering agent yet.",

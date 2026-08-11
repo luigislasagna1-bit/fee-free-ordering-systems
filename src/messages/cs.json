@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Poloha označena z adresy!",
       "geocodeNotFound": "Tuto adresu se nepodařilo geokódovat. Zkuste vyhledávací pole výše.",
       "geocodeFailed": "Geokódování se nezdařilo. Zkontrolujte připojení k internetu.",
+      "geocodeApproximate": "Přesnou adresu se nepodařilo najít. Připnuli jsme {place} — přetáhněte špendlík na přesné místo.",
       "locationPinned": "Poloha označena",
       "noLocationSet": "Poloha není nastavena",
       "noLocationHint": "Dokud toto nenastavíte, nebudou doručovací zóny fungovat správně.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Přijímat objednávky k vyzvednutí i rozvozu",
         "bookReservations": "Rezervovat stoly",
         "answerFaq": "Odpovídat na dotazy (otevírací doba, menu, adresa)",
-        "transferPizzaCombo": "Předat pizzy a komba člověku",
         "allowAnonymous": "Přijímat hovory se skrytým číslem",
         "payments": "Platby",
         "pickupPayment": "Objednávky k vyzvednutí",
@@ -4250,7 +4250,9 @@
         "saved": "Uloženo",
         "saveError": "Nepodařilo se uložit — zkuste to prosím znovu.",
         "recentCalls": "Nedávné hovory",
-        "noCalls": "Zatím žádné hovory. Objeví se zde, jakmile bude Nabil aktivní."
+        "noCalls": "Zatím žádné hovory. Objeví se zde, jakmile bude Nabil aktivní.",
+        "buildPizzaCombo": "Sestavovat pizzy a komba hlasem",
+        "buildPizzaComboHint": "Ve výchozím nastavení vypnuto. Když je zapnuto, Nabil sestaví pizzu — velikosti, přísady, dokonce i půl & půl — a doplní sloty komba, místo aby volajícího přepojil na personál. Zadejte zkušební objednávku a zkontrolujte vytištěnou účtenku, než se na to začnete spoléhat."
       },
       "apiErrors": {
         "featureLocked": "Váš tarif zatím nezahrnuje agenta pro telefonické objednávky.",

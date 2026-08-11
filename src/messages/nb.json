@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Plassering festet fra adressen!",
       "geocodeNotFound": "Kunne ikke geokode denne adressen. Prøv søkefeltet ovenfor.",
       "geocodeFailed": "Geokoding mislyktes. Sjekk internettforbindelsen din.",
+      "geocodeApproximate": "Fant ikke denne nøyaktige adressen. Vi satte nålen på {place} — dra nålen til nøyaktig plassering.",
       "locationPinned": "Plassering festet",
       "noLocationSet": "Ingen plassering angitt",
       "noLocationHint": "Leveringssoner vil ikke fungere riktig før dette er angitt.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Ta imot hente- og leveringsbestillinger",
         "bookReservations": "Bestille bord",
         "answerFaq": "Svare på spørsmål (åpningstider, meny, adresse)",
-        "transferPizzaCombo": "Sende pizza- og combo-bestillinger til en person",
         "allowAnonymous": "Svare på anrop uten nummervisning",
         "payments": "Betalinger",
         "pickupPayment": "Hentebestillinger",
@@ -4250,7 +4250,9 @@
         "saved": "Lagret",
         "saveError": "Kunne ikke lagre — prøv igjen.",
         "recentCalls": "Nylige anrop",
-        "noCalls": "Ingen anrop ennå. De vises her så snart Nabil er aktiv."
+        "noCalls": "Ingen anrop ennå. De vises her så snart Nabil er aktiv.",
+        "buildPizzaCombo": "Bygg pizzaer og komboer med stemmen",
+        "buildPizzaComboHint": "Av som standard. Når den er på, bygger Nabil pizzaer — størrelser, toppings, til og med halv-og-halv — og fyller plassene i komboene, i stedet for å sette innringeren over til en person. Legg inn en testbestilling og sjekk kvitteringen som skrives ut, før du stoler på funksjonen."
       },
       "apiErrors": {
         "featureLocked": "Planen din inkluderer ikke telefonbestillingsagenten ennå.",

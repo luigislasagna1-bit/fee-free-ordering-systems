@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Vieta pažymėta pagal adresą!",
       "geocodeNotFound": "Nepavyko nustatyti šio adreso koordinačių. Pabandykite naudoti paieškos laukelį viršuje.",
       "geocodeFailed": "Geokodavimas nepavyko. Patikrinkite interneto ryšį.",
+      "geocodeApproximate": "Tikslaus adreso rasti nepavyko. Pažymėjome {place} — nutempkite žymeklį į tikslią vietą.",
       "locationPinned": "Vieta pažymėta",
       "noLocationSet": "Vieta nenustatyta",
       "noLocationHint": "Pristatymo zonos neveiks tinkamai, kol tai nebus nustatyta.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Priima atsiėmimo ir pristatymo užsakymus",
         "bookReservations": "Rezervuoja staliukus",
         "answerFaq": "Atsako į klausimus (darbo laikas, meniu, vieta)",
-        "transferPizzaCombo": "Perduoda picų ir rinkinių užsakymus žmogui",
         "allowAnonymous": "Atsiliepia į skambučius be numerio",
         "payments": "Mokėjimai",
         "pickupPayment": "Atsiėmimo užsakymai",
@@ -4250,7 +4250,9 @@
         "saved": "Išsaugota",
         "saveError": "Nepavyko išsaugoti — bandykite dar kartą.",
         "recentCalls": "Naujausi skambučiai",
-        "noCalls": "Skambučių dar nėra. Jie atsiras čia, kai Nabil pradės veikti."
+        "noCalls": "Skambučių dar nėra. Jie atsiras čia, kai Nabil pradės veikti.",
+        "buildPizzaCombo": "Pica ir rinkinių sudarymas balsu",
+        "buildPizzaComboHint": "Pagal numatytuosius nustatymus išjungta. Kai įjungta, Nabil pats sudaro picas – dydžius, priedus, net pusę ant pusės – ir užpildo rinkinių pozicijas, užuot perdavęs skambinantįjį darbuotojui. Prieš pasikliaudami šia funkcija, pateikite bandomąjį užsakymą ir patikrinkite atspausdintą kvitą."
       },
       "apiErrors": {
         "featureLocked": "Jūsų planas dar neapima užsakymų telefonu agento.",

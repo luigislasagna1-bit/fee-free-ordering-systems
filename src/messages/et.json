@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Asukoht märgiti aadressi põhjal!",
       "geocodeNotFound": "Selle aadressi koordinaate ei õnnestunud leida. Proovi ülal olevat otsingukasti.",
       "geocodeFailed": "Geokodeerimine ebaõnnestus. Kontrolli oma internetiühendust.",
+      "geocodeApproximate": "Täpset aadressi ei leitud. Märkisime {place} — lohista nõel oma täpsesse asukohta.",
       "locationPinned": "Asukoht märgitud",
       "noLocationSet": "Asukoht määramata",
       "noLocationHint": "Tarnetsoonid ei tööta korralikult enne, kui see on määratud.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Võtab vastu kaasa- ja kohaletoimetamise tellimusi",
         "bookReservations": "Broneerib laudu",
         "answerFaq": "Vastab küsimustele (lahtiolekuajad, menüü, asukoht)",
-        "transferPizzaCombo": "Suunab pitsa- ja kombotellimused inimesele",
         "allowAnonymous": "Vastab kõnedele ilma numbrinäiduta",
         "payments": "Maksed",
         "pickupPayment": "Kaasa tellimused",
@@ -4250,7 +4250,9 @@
         "saved": "Salvestatud",
         "saveError": "Salvestamine ebaõnnestus — palun proovi uuesti.",
         "recentCalls": "Hiljutised kõned",
-        "noCalls": "Kõnesid veel pole. Need ilmuvad siia, kui Nabil on aktiivne."
+        "noCalls": "Kõnesid veel pole. Need ilmuvad siia, kui Nabil on aktiivne.",
+        "buildPizzaCombo": "Pitsade ja kombode koostamine häälega",
+        "buildPizzaComboHint": "Vaikimisi väljas. Kui see on sees, koostab Nabil pitsasid — suurused, täidised, isegi pool ja pool — ning valib kombodesse kuuluvad road, selle asemel et suunata helistaja töötajale. Esita testtellimus ja kontrolli väljaprinditud kviitungit, enne kui hakkad sellele lootma."
       },
       "apiErrors": {
         "featureLocked": "Sinu pakett ei sisalda veel telefonitellimuste agenti.",

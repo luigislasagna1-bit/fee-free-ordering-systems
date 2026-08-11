@@ -30,67 +30,12 @@ import { allocateToppingPoolHalfUnits } from "@/lib/combo-topping-pool";
 export type ToppingPlacement = "whole" | "left" | "right";
 export type ToppingQuantity  = "light" | "normal";
 
-export interface PizzaConfig {
-  isPizza: boolean;
-  allowHalfHalf: boolean;
-  /** Modifier group ID for crust selection */
-  crustGroupId?: string;
-  /** Modifier group ID for sauce selection */
-  sauceGroupId?: string;
-  /** Modifier group ID for cheese selection */
-  cheeseGroupId?: string;
-  /** One or more modifier group IDs containing toppings */
-  toppingGroupIds: string[];
-  /** How many toppings are included in the base price (0 = all toppings charged individually via option.priceAdjustment) */
-  includedToppings: number;
-  /** When true, topping selection is OPTIONAL (customer may pick 0 — e.g. plain
-   *  cheese). Overrides any topping group's "required" flag in the builder. */
-  toppingsOptional?: boolean;
-  /** Price per topping when includedToppings > 0; ignored when 0 (uses option prices) */
-  extraToppingPrice: number;
-  /** Per-variant topping prices keyed by variant name (overrides extraToppingPrice when a size is selected) */
-  variantToppingPrices?: Record<string, number>;
-  /** "Removing toppings reduces the price" (Luigi 2026-07-09). Default true =
-   *  symmetric pay-per-topping: every topping is charged, the included allowance
-   *  is a base credit, so removing below the included count refunds. false =
-   *  legacy free-credits (removing below included does not refund). */
-  reduceOnRemove?: boolean;
-  /** Topping OPTION ids that pre-fill the builder's included slots (whole,
-   *  normal amount). The customer can add/remove from there. Luigi 2026-07-09. */
-  presetToppings?: string[];
-  /** Option NAMES from garnish-role groups that open pre-selected on this pizza
-   *  (e.g. "Fresh Basil" on a Margherita). Stored by NAME so per-pizza presets
-   *  survive the library→copy option re-sync (which resets per-copy isDefault
-   *  stars). Customers can remove/add; per-option pricing. Luigi 2026-07-09. */
-  presetGarnishes?: string[];
-  /** Multiplier applied to half-pizza toppings (default 0.5 → 50%) */
-  halfToppingMultiplier: number;
-  /** Additional price multiplier for "Extra" quantity on top of base topping price (default 0 = no upcharge) */
-  extraQuantityMultiplier: number;
-  /** Allow a customer to add MULTIPLE of the same topping (double pepperoni etc.),
-   *  each counted as a separate topping. When false, a topping is just on/off.
-   *  Default true. Luigi 2026-06-27. */
-  allowMultipleToppings?: boolean;
-  /**
-   * Customer-facing section display order. Each entry is either a
-   * synthetic id ("section:size", "section:halfHalfToggle") or the
-   * libraryGroupId / id of a modifier group attached to the item.
-   * When undefined or empty the legacy hardcoded order is used, so
-   * existing items render unchanged. Owners drag-reorder the list in
-   * the admin Pizza tab; saved here.
-   */
-  sectionOrder?: string[];
-  /**
-   * Which pizza-roles expose the Whole/Split half-pizza UI. Roles not
-   * in this list render as a simple option grid (whole pizza only).
-   * Defaults to ["sauce", "cheese", "toppings"] when undefined —
-   * matches the legacy behaviour where all three roles supported
-   * half/half. Owners disable a role here when their menu doesn't
-   * actually let customers split that choice across halves (e.g.
-   * cheese is always whole-pizza for their kitchen).
-   */
-  halfHalfRoles?: Array<"sauce" | "cheese" | "toppings">;
-}
+// PizzaConfig + parsePizzaConfig now live in the PURE module
+// src/lib/pizza-config-parse.ts (2026-08-11) so server code — the voice
+// order compiler — shares ONE definition with this "use client" builder.
+// Re-exported so existing imports from PizzaBuilder keep working.
+import type { PizzaConfig } from "@/lib/pizza-config-parse";
+export type { PizzaConfig } from "@/lib/pizza-config-parse";
 
 export interface SelectedTopping {
   optionId: string;
@@ -160,45 +105,7 @@ interface MenuItem {
 
 // ── Utility: parse & validate PizzaConfig from JSON string ───────────────────
 
-export function parsePizzaConfig(json: string | null | undefined): PizzaConfig | null {
-  if (!json) return null;
-  try {
-    const c = JSON.parse(json);
-    if (!c?.isPizza) return null;
-    return {
-      isPizza: true,
-      allowHalfHalf:          c.allowHalfHalf          ?? true,
-      crustGroupId:           c.crustGroupId            ?? undefined,
-      sauceGroupId:           c.sauceGroupId            ?? undefined,
-      cheeseGroupId:          c.cheeseGroupId           ?? undefined,
-      toppingGroupIds:        Array.isArray(c.toppingGroupIds) ? c.toppingGroupIds : [],
-      includedToppings:       Number(c.includedToppings)      || 0,
-      toppingsOptional:       c.toppingsOptional === true,
-      extraToppingPrice:      Number(c.extraToppingPrice)     || 0,
-      variantToppingPrices:   c.variantToppingPrices && typeof c.variantToppingPrices === "object"
-                                ? Object.fromEntries(
-                                    Object.entries(c.variantToppingPrices).map(([k, v]) => [k, Number(v) || 0])
-                                  )
-                                : undefined,
-      // Default true (symmetric pay-per-topping) — only an explicit false opts
-      // a pizza into the legacy free-credit model. Luigi 2026-07-09.
-      reduceOnRemove:         c.reduceOnRemove !== false,
-      presetToppings:         Array.isArray(c.presetToppings) ? c.presetToppings.filter((x: unknown): x is string => typeof x === "string") : undefined,
-      presetGarnishes:        Array.isArray(c.presetGarnishes) ? c.presetGarnishes.filter((x: unknown): x is string => typeof x === "string") : undefined,
-      halfToppingMultiplier:  Number(c.halfToppingMultiplier) || 0.5,
-      extraQuantityMultiplier:Number(c.extraQuantityMultiplier)|| 0,
-      allowMultipleToppings:  c.allowMultipleToppings !== false, // default ON
-      sectionOrder:           Array.isArray(c.sectionOrder)
-                                ? c.sectionOrder.filter((x: unknown): x is string => typeof x === "string")
-                                : undefined,
-      halfHalfRoles:          Array.isArray(c.halfHalfRoles)
-                                ? c.halfHalfRoles.filter((r: unknown): r is "sauce" | "cheese" | "toppings" =>
-                                    r === "sauce" || r === "cheese" || r === "toppings",
-                                  )
-                                : undefined,
-    };
-  } catch { return null; }
-}
+export { parsePizzaConfig } from "@/lib/pizza-config-parse";
 
 /** Synthetic section IDs used in pizzaConfig.sectionOrder for things
  *  that aren't a single modifier group (size picker, half/half toggle,

@@ -68,6 +68,8 @@ export async function GET(req: NextRequest) {
         maxCallSeconds: true,
         allowScheduledOrders: true,
         afterHoursBehavior: true,
+        allowPizzaCombo: true,
+        pizzaAskGroups: true,
       },
     }),
     prisma.voiceFaq.findMany({
@@ -159,6 +161,12 @@ export async function GET(req: NextRequest) {
       maxCallSeconds: cfg?.maxCallSeconds ?? 600,
       allowScheduledOrders: cfg?.allowScheduledOrders ?? false,
       afterHoursBehavior: cfg?.afterHoursBehavior ?? "take_orders",
+      // v2 pizza/combo building. Opt-in per store: absent config must keep the
+      // v1 transfer behavior, never silently start building.
+      allowPizzaCombo: cfg?.allowPizzaCombo ?? false,
+      pizzaAskGroups: Array.isArray(cfg?.pizzaAskGroups)
+        ? (cfg.pizzaAskGroups as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 20)
+        : [],
     },
     // Owner-curated FAQ (active only, ≤30) — becomes a prompt section.
     faqs: faqRows.map((f) => ({

@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "住所から位置をピン留めしました！",
       "geocodeNotFound": "この住所をジオコーディングできませんでした。上の検索ボックスをお試しください。",
       "geocodeFailed": "ジオコーディングに失敗しました。インターネット接続をご確認ください。",
+      "geocodeApproximate": "その住所を正確に特定できませんでした。代わりに {place} にピンを置きました。ピンを正確な場所までドラッグしてください。",
       "locationPinned": "位置をピン留め済み",
       "noLocationSet": "位置が未設定",
       "noLocationHint": "これを設定するまで配達ゾーンは正しく機能しません。",
@@ -4218,7 +4219,6 @@
         "takeOrders": "テイクアウトと配達の注文を受ける",
         "bookReservations": "席の予約を受ける",
         "answerFaq": "質問に答える（営業時間、メニュー、場所）",
-        "transferPizzaCombo": "ピザとコンボの注文を担当者に転送",
         "allowAnonymous": "非通知の電話にも応答",
         "payments": "支払い",
         "pickupPayment": "テイクアウト注文",
@@ -4250,7 +4250,9 @@
         "saved": "保存しました",
         "saveError": "保存できませんでした — もう一度お試しください。",
         "recentCalls": "最近の通話",
-        "noCalls": "まだ通話はありません。Nabil が稼働すると、ここに表示されます。"
+        "noCalls": "まだ通話はありません。Nabil が稼働すると、ここに表示されます。",
+        "buildPizzaCombo": "音声でピザとコンボを組み立てる",
+        "buildPizzaComboHint": "既定ではオフです。オンにすると、発信者をスタッフに転送する代わりに、Nabil がサイズ・トッピング・ハーフ＆ハーフまで含めてピザを組み立て、コンボの各枠に入る商品も選びます。実際の運用に任せる前に、テスト注文を1件行い、印刷されたレシートをご確認ください。"
       },
       "apiErrors": {
         "featureLocked": "現在のプランには、電話注文エージェントはまだ含まれていません。",

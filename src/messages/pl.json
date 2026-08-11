@@ -1253,6 +1253,7 @@
       "locationPinnedFromAddress": "Lokalizacja przypięta na podstawie adresu!",
       "geocodeNotFound": "Nie udało się ustalić współrzędnych tego adresu. Spróbuj użyć pola wyszukiwania powyżej.",
       "geocodeFailed": "Geokodowanie nie powiodło się. Sprawdź połączenie z internetem.",
+      "geocodeApproximate": "Nie znaleziono tego dokładnego adresu. Zaznaczyliśmy {place} — przeciągnij pinezkę na dokładne miejsce.",
       "locationPinned": "Lokalizacja przypięta",
       "noLocationSet": "Nie ustawiono lokalizacji",
       "noLocationHint": "Strefy dostawy nie będą działać poprawnie, dopóki tego nie ustawisz.",
@@ -4218,7 +4219,6 @@
         "takeOrders": "Przyjmowanie zamówień na odbiór i dostawę",
         "bookReservations": "Rezerwowanie stolików",
         "answerFaq": "Odpowiadanie na pytania (godziny, menu, lokalizacja)",
-        "transferPizzaCombo": "Przekazywanie zamówień na pizzę i zestawy do osoby",
         "allowAnonymous": "Odbieranie połączeń z ukrytym numerem",
         "payments": "Płatności",
         "pickupPayment": "Zamówienia na odbiór",
@@ -4250,7 +4250,9 @@
         "saved": "Zapisano",
         "saveError": "Nie udało się zapisać — spróbuj ponownie.",
         "recentCalls": "Ostatnie połączenia",
-        "noCalls": "Brak połączeń. Pojawią się tutaj, gdy Nabil będzie aktywny."
+        "noCalls": "Brak połączeń. Pojawią się tutaj, gdy Nabil będzie aktywny.",
+        "buildPizzaCombo": "Składanie pizz i zestawów głosowo",
+        "buildPizzaComboHint": "Domyślnie wyłączone. Po włączeniu Nabil sam składa pizze — rozmiary, składniki, nawet pół na pół — i wypełnia sloty zestawów, zamiast przekazywać dzwoniącego do obsługi. Zanim zaczniesz na tym polegać, złóż zamówienie testowe i sprawdź wydrukowany paragon."
       },
       "apiErrors": {
         "featureLocked": "Twój plan nie obejmuje jeszcze agenta zamówień telefonicznych.",

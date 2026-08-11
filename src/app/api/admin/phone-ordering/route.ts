@@ -88,6 +88,13 @@ export async function PATCH(req: NextRequest) {
       data[k] = Math.min(2, Math.max(0.5, body[k]));
     }
   }
+  // Pizza option groups the agent must always ask about instead of taking the
+  // store default (empty = smart defaults). Ids only, capped.
+  if (Array.isArray(body.pizzaAskGroups)) {
+    data.pizzaAskGroups = body.pizzaAskGroups
+      .filter((s: unknown) => typeof s === "string")
+      .slice(0, 20);
+  }
   // languages (enabled locale slugs) as a JSON array of strings.
   if (Array.isArray(body.languages)) {
     data.languages = body.languages.filter((s: unknown) => typeof s === "string").slice(0, 38);
