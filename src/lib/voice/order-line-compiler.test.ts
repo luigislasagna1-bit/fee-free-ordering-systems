@@ -552,3 +552,80 @@ describe("spoken money uses the currency SYMBOL, never the ISO code", () => {
     expect(r.pricingNote).toMatch(/\$/);
   });
 });
+
+/* ─────────── found by reading Luigi's LIVE menu, 2026-08-11 ─────────── */
+
+describe("real-menu shapes", () => {
+  it("finds toppings tagged with the SINGULAR role the schema actually stores", () => {
+    // pizzaConfig with no toppingGroupIds → the role fallback is the only path.
+    const TAGGED = { ...TOPPINGS, id: "g_untracked", pizzaRole: "topping" as const };
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({
+        modifierGroups: [CRUST, TAGGED],
+        pizzaConfig: pizzaCfg({ toppingGroupIds: [] }),
+      }),
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.modifiers.map((m) => m.modifierOptionId)).toContain("o_pep");
+  });
+
+  it("applies the store default for a required group with no pizzaRole (Cook Level)", () => {
+    const COOK = {
+      id: "g_cook",
+      name: "Cook Level",
+      required: true,
+      minSelect: 1,
+      maxSelect: 1,
+      pizzaRole: null,
+      options: [
+        { modifierOptionId: "o_light", name: "Lightly Cooked", priceAdjustment: 0 },
+        { modifierOptionId: "o_reg", name: "Regular Cooked", priceAdjustment: 0, isDefault: true },
+        { modifierOptionId: "o_well", name: "Well Done", priceAdjustment: 0 },
+      ],
+    };
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({ modifierGroups: [CRUST, TOPPINGS, COOK] }),
+    );
+    expect(r.line!.modifiers.map((m) => m.modifierOptionId)).toContain("o_reg");
+  });
+
+  it("asks when a required no-role group has a real choice and no default", () => {
+    const COOK = {
+      id: "g_cook",
+      name: "Cook Level",
+      required: true,
+      minSelect: 1,
+      maxSelect: 1,
+      pizzaRole: null,
+      options: [
+        { modifierOptionId: "o_light", name: "Lightly Cooked", priceAdjustment: 0 },
+        { modifierOptionId: "o_well", name: "Well Done", priceAdjustment: 0 },
+      ],
+    };
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({ modifierGroups: [CRUST, TOPPINGS, COOK] }),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/Cook Level/);
+  });
+
+  it("never auto-fills an OPTIONAL group (garnishes stay off unless asked for)", () => {
+    const GARNISH = {
+      id: "g_garnish",
+      name: "Pizza Garnish",
+      required: false,
+      minSelect: 0,
+      maxSelect: 2,
+      pizzaRole: "garnish" as const,
+      options: [{ modifierOptionId: "o_oregano", name: "Oregano", priceAdjustment: 0, isDefault: true }],
+    };
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({ modifierGroups: [CRUST, TOPPINGS, GARNISH] }),
+    );
+    expect(r.line!.modifiers.map((m) => m.modifierOptionId)).not.toContain("o_oregano");
+  });
+});

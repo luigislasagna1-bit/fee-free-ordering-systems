@@ -395,13 +395,20 @@ function groupsForRole(item: ItemData, role: "crust" | "sauce" | "cheese"): Grou
   return item.modifierGroups.filter((g) => g.pizzaRole === role);
 }
 
+/** The schema stores the tag SINGULAR ("topping"); an earlier version of this
+ *  file matched only "toppings", so any pizza whose pizzaConfig has no
+ *  toppingGroupIds fell through to an EMPTY topping list and answered "I
+ *  couldn't find pepperoni" for every topping on the menu. Accept both. */
+const isToppingRole = (role: string | null | undefined): boolean =>
+  role === "topping" || role === "toppings";
+
 function toppingGroups(item: ItemData): GroupData[] {
   const cfg = item.pizzaConfig;
   const byId = cfg?.toppingGroupIds?.length
     ? item.modifierGroups.filter((g) => cfg.toppingGroupIds.includes(g.id))
     : [];
   if (byId.length) return byId;
-  return item.modifierGroups.filter((g) => g.pizzaRole === "toppings");
+  return item.modifierGroups.filter((g) => isToppingRole(g.pizzaRole));
 }
 
 /**
@@ -497,6 +504,33 @@ export function compilePizzaLine(
     mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });
     // A default that COSTS money must be spoken — silence plus a surcharge is
     // how a caller gets surprised at pickup.
+    if ((Number(def.priceAdjustment) || 0) > 0) spokenParts.push(def.name);
+  }
+
+  // ── every OTHER required group (cook level, size-of-fries, …) ─────────
+  // A pizza's required groups are not only crust/sauce/cheese: Luigi's carry a
+  // required "Cook Level" with no pizzaRole at all. The web builder applies its
+  // default; the phone path skipped it entirely, so the same order produced a
+  // DIFFERENT kitchen ticket depending on where it came from. Fill the store's
+  // own default, ask when there is a real choice and no default, and never
+  // invent an optional extra.
+  const roleGroupIds = new Set(
+    (["crust", "sauce", "cheese"] as const).flatMap((r) => groupsForRole(item, r).map((g) => g.id)),
+  );
+  for (const g of item.modifierGroups) {
+    if (roleGroupIds.has(g.id) || isToppingRole(g.pizzaRole) || g.pizzaRole === "garnish") continue;
+    if (toppingGroups(item).some((t) => t.id === g.id)) continue;
+    if (!(g.required || g.minSelect > 0) || !g.options.length) continue;
+    if (ask.has(g.id)) {
+      unresolved.push(`Which ${g.name}? ${g.options.map((o) => o.name).join(", ")}.`);
+      continue;
+    }
+    const def = g.options.find((o) => o.isDefault) ?? (g.options.length === 1 ? g.options[0] : null);
+    if (!def) {
+      unresolved.push(`Which ${g.name}? ${g.options.map((o) => o.name).join(", ")}.`);
+      continue;
+    }
+    mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });
     if ((Number(def.priceAdjustment) || 0) > 0) spokenParts.push(def.name);
   }
 
