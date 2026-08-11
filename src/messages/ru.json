@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Отследить заказ",
       "contactRestaurantNote": "Если у вас есть вопросы по заказу, пожалуйста, свяжитесь с рестораном напрямую по контактным данным ниже.",
       "scheduledFor": "Это заказ на потом — запланирован на {time}.",
-      "tableReservation": "Столик забронирован на {n} — {time}"
+      "tableReservation": "Столик забронирован на {n} — {time}",
+      "subjectAccepted": "Заказ #{orderNumber} подтверждён",
+      "previewAccepted": "Заказ #{orderNumber} подтверждён рестораном",
+      "headerTitleAccepted": "Заказ подтверждён",
+      "headerSubtitleAccepted": "Подтверждён рестораном",
+      "bodyAcceptedNow": "Заказ #{orderNumber} подтверждён, и кухня уже приступает к его приготовлению.",
+      "bodyAcceptedLater": "Заказ #{orderNumber} подтверждён — он запланирован на время, указанное ниже.",
+      "bodyAcceptedClosed": "Заказ #{orderNumber} подтверждён — кухня приступит к нему, как только ресторан откроется.",
+      "closedNoteAccepted": "Ресторан сейчас закрыт, но ваш заказ уже подтверждён — кухня приступит к нему после открытия.",
+      "closedNoteAcceptedWithTime": "Ресторан сейчас закрыт, но ваш заказ уже подтверждён — кухня приступит к нему после открытия, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — заказ №{orderNumber} — {total}",

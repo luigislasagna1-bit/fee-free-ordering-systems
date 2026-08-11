@@ -5875,7 +5875,16 @@
       "trackOrderButton": "تتبع طلبك",
       "contactRestaurantNote": "إذا كان لديك أي استفسار حول طلبك، يرجى التواصل مع المطعم مباشرةً عبر التفاصيل الواردة أدناه.",
       "scheduledFor": "هذا طلب لوقت لاحق — مُجدول في {time}.",
-      "tableReservation": "تم حجز طاولة لـ {n} — {time}"
+      "tableReservation": "تم حجز طاولة لـ {n} — {time}",
+      "subjectAccepted": "تم تأكيد الطلب #{orderNumber}",
+      "previewAccepted": "أكد المطعم الطلب #{orderNumber}",
+      "headerTitleAccepted": "تم تأكيد الطلب",
+      "headerSubtitleAccepted": "مؤكَّد من المطعم",
+      "bodyAcceptedNow": "تم تأكيد الطلب #{orderNumber} وبدأ المطبخ في تحضيره الآن.",
+      "bodyAcceptedLater": "تم تأكيد الطلب #{orderNumber} — وهو مجدول في الوقت الموضّح أدناه.",
+      "bodyAcceptedClosed": "تم تأكيد الطلب #{orderNumber} — وسيبدأ المطبخ في تحضيره عند فتح المطعم.",
+      "closedNoteAccepted": "المطعم مغلق حالياً، لكن طلبك مؤكَّد بالفعل — وسيبدأ المطبخ في تحضيره عند الفتح.",
+      "closedNoteAcceptedWithTime": "المطعم مغلق حالياً، لكن طلبك مؤكَّد بالفعل — وسيبدأ المطبخ في تحضيره عند الفتح في {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — طلب رقم {orderNumber} — {total}",

@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Sekti užsakymą",
       "contactRestaurantNote": "Jei turite klausimų dėl savo užsakymo, susisiekite tiesiogiai su restoranu, naudodami toliau pateiktus kontaktus.",
       "scheduledFor": "Tai užsakymas vėlesniam laikui — suplanuotas {time}.",
-      "tableReservation": "Staliukas rezervuotas {n} asmenims — {time}"
+      "tableReservation": "Staliukas rezervuotas {n} asmenims — {time}",
+      "subjectAccepted": "Užsakymas #{orderNumber} patvirtintas",
+      "previewAccepted": "Restoranas patvirtino užsakymą #{orderNumber}",
+      "headerTitleAccepted": "Užsakymas patvirtintas",
+      "headerSubtitleAccepted": "Patvirtino restoranas",
+      "bodyAcceptedNow": "Užsakymas #{orderNumber} patvirtintas ir virtuvė jau pradėjo jį ruošti.",
+      "bodyAcceptedLater": "Užsakymas #{orderNumber} patvirtintas — jis suplanuotas žemiau nurodytam laikui.",
+      "bodyAcceptedClosed": "Užsakymas #{orderNumber} patvirtintas — virtuvė jį pradės ruošti, kai restoranas atsidarys.",
+      "closedNoteAccepted": "Restoranas dabar uždarytas, bet jūsų užsakymas jau patvirtintas — virtuvė jį pradės ruošti po atidarymo.",
+      "closedNoteAcceptedWithTime": "Restoranas dabar uždarytas, bet jūsų užsakymas jau patvirtintas — virtuvė jį pradės ruošti po atidarymo, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — užsakymas Nr. {orderNumber} — {total}",

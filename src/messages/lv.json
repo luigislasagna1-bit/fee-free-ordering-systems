@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Izsekot pasūtījumam",
       "contactRestaurantNote": "Ja jums ir jautājumi par jūsu pasūtījumu, lūdzu, sazinieties ar restorānu tieši, izmantojot tālāk norādīto kontaktinformāciju.",
       "scheduledFor": "Šis ir pasūtījums vēlākam laikam — ieplānots uz {time}.",
-      "tableReservation": "Galdiņš rezervēts {n} personām — {time}"
+      "tableReservation": "Galdiņš rezervēts {n} personām — {time}",
+      "subjectAccepted": "Pasūtījums #{orderNumber} apstiprināts",
+      "previewAccepted": "Restorāns apstiprināja pasūtījumu #{orderNumber}",
+      "headerTitleAccepted": "Pasūtījums apstiprināts",
+      "headerSubtitleAccepted": "Restorāna apstiprināts",
+      "bodyAcceptedNow": "Pasūtījums #{orderNumber} ir apstiprināts, un virtuve jau sāk to gatavot.",
+      "bodyAcceptedLater": "Pasūtījums #{orderNumber} ir apstiprināts — tas ir ieplānots zemāk norādītajā laikā.",
+      "bodyAcceptedClosed": "Pasūtījums #{orderNumber} ir apstiprināts — virtuve sāks to gatavot, tiklīdz restorāns atvērsies.",
+      "closedNoteAccepted": "Restorāns pašlaik ir slēgts, taču jūsu pasūtījums jau ir apstiprināts — virtuve sāks to gatavot pēc atvēršanas.",
+      "closedNoteAcceptedWithTime": "Restorāns pašlaik ir slēgts, taču jūsu pasūtījums jau ir apstiprināts — virtuve sāks to gatavot pēc atvēršanas, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — pasūtījums Nr. {orderNumber} — {total}",

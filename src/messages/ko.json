@@ -5875,7 +5875,16 @@
       "trackOrderButton": "주문 추적하기",
       "contactRestaurantNote": "주문에 관한 문의 사항이 있으시면 아래 연락처를 통해 레스토랑에 직접 문의해 주세요.",
       "scheduledFor": "나중에 받을 주문입니다 — {time}에 예약되었습니다.",
-      "tableReservation": "{n}명 테이블 예약 완료 — {time}"
+      "tableReservation": "{n}명 테이블 예약 완료 — {time}",
+      "subjectAccepted": "주문 #{orderNumber} 확인됨",
+      "previewAccepted": "레스토랑이 주문 #{orderNumber}을(를) 확인했습니다",
+      "headerTitleAccepted": "주문 확인됨",
+      "headerSubtitleAccepted": "레스토랑에서 확인함",
+      "bodyAcceptedNow": "주문 #{orderNumber}이(가) 확인되었으며, 주방에서 지금 바로 준비를 시작합니다.",
+      "bodyAcceptedLater": "주문 #{orderNumber}이(가) 확인되었으며, 아래 표시된 시간으로 예약되었습니다.",
+      "bodyAcceptedClosed": "주문 #{orderNumber}이(가) 확인되었으며, 레스토랑이 문을 열면 주방에서 준비를 시작합니다.",
+      "closedNoteAccepted": "레스토랑이 지금은 영업 종료 상태이지만 주문은 이미 확인되었습니다 — 영업을 시작하면 주방에서 준비에 들어갑니다.",
+      "closedNoteAcceptedWithTime": "레스토랑이 지금은 영업 종료 상태이지만 주문은 이미 확인되었습니다 — {openingTime}에 영업을 시작하면 주방에서 준비에 들어갑니다."
     },
     "newOrder": {
       "preview": "{restaurant} — 주문 #{orderNumber} — {total}",

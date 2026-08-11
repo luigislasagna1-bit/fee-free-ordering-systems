@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Spor bestillingen din",
       "contactRestaurantNote": "Har du spørsmål om bestillingen din, kan du kontakte restauranten direkte ved hjelp av opplysningene nedenfor.",
       "scheduledFor": "Dette er en bestilling til senere – planlagt til {time}.",
-      "tableReservation": "Bord reservert for {n} — {time}"
+      "tableReservation": "Bord reservert for {n} — {time}",
+      "subjectAccepted": "Bestilling #{orderNumber} bekreftet",
+      "previewAccepted": "Bestilling #{orderNumber} bekreftet av restauranten",
+      "headerTitleAccepted": "Bestilling bekreftet",
+      "headerSubtitleAccepted": "Bekreftet av restauranten",
+      "bodyAcceptedNow": "Bestilling #{orderNumber} er bekreftet, og kjøkkenet er i gang nå.",
+      "bodyAcceptedLater": "Bestilling #{orderNumber} er bekreftet — den er satt opp til tidspunktet nedenfor.",
+      "bodyAcceptedClosed": "Bestilling #{orderNumber} er bekreftet — kjøkkenet setter i gang når restauranten åpner.",
+      "closedNoteAccepted": "Restauranten er stengt akkurat nå, men bestillingen din er allerede bekreftet — kjøkkenet setter i gang når de åpner.",
+      "closedNoteAcceptedWithTime": "Restauranten er stengt akkurat nå, men bestillingen din er allerede bekreftet — kjøkkenet setter i gang når de åpner {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Bestilling #{orderNumber} — {total}",

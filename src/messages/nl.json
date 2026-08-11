@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Volg uw bestelling",
       "contactRestaurantNote": "Heeft u vragen over uw bestelling, neem dan rechtstreeks contact op met het restaurant via de onderstaande gegevens.",
       "scheduledFor": "Dit is een bestelling voor later — gepland voor {time}.",
-      "tableReservation": "Tafel gereserveerd voor {n} — {time}"
+      "tableReservation": "Tafel gereserveerd voor {n} — {time}",
+      "subjectAccepted": "Bestelling #{orderNumber} bevestigd",
+      "previewAccepted": "Bestelling #{orderNumber} bevestigd door het restaurant",
+      "headerTitleAccepted": "Bestelling bevestigd",
+      "headerSubtitleAccepted": "Bevestigd door het restaurant",
+      "bodyAcceptedNow": "Bestelling #{orderNumber} is bevestigd en de keuken gaat er nu mee aan de slag.",
+      "bodyAcceptedLater": "Bestelling #{orderNumber} is bevestigd — ingepland voor het tijdstip hieronder.",
+      "bodyAcceptedClosed": "Bestelling #{orderNumber} is bevestigd — de keuken gaat ermee aan de slag zodra het restaurant opengaat.",
+      "closedNoteAccepted": "Het restaurant is nu gesloten, maar uw bestelling is al bevestigd — de keuken gaat ermee aan de slag zodra ze opengaan.",
+      "closedNoteAcceptedWithTime": "Het restaurant is nu gesloten, maar uw bestelling is al bevestigd — de keuken gaat ermee aan de slag bij opening op {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Bestelling #{orderNumber} — {total}",

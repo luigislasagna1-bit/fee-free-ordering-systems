@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Jälgi oma tellimust",
       "contactRestaurantNote": "Kui teil on tellimuse kohta küsimusi, võtke palun otse ühendust restoraniga allpool toodud kontaktandmete kaudu.",
       "scheduledFor": "See on tellimus hilisemaks — planeeritud ajaks {time}.",
-      "tableReservation": "Laud broneeritud {n} inimesele — {time}"
+      "tableReservation": "Laud broneeritud {n} inimesele — {time}",
+      "subjectAccepted": "Tellimus #{orderNumber} kinnitatud",
+      "previewAccepted": "Restoran kinnitas tellimuse #{orderNumber}",
+      "headerTitleAccepted": "Tellimus kinnitatud",
+      "headerSubtitleAccepted": "Restorani kinnitatud",
+      "bodyAcceptedNow": "Tellimus #{orderNumber} on kinnitatud ja köök alustab selle valmistamisega kohe.",
+      "bodyAcceptedLater": "Tellimus #{orderNumber} on kinnitatud — see on planeeritud allpool näidatud ajaks.",
+      "bodyAcceptedClosed": "Tellimus #{orderNumber} on kinnitatud — köök alustab selle valmistamisega, kui restoran avatakse.",
+      "closedNoteAccepted": "Restoran on praegu suletud, kuid teie tellimus on juba kinnitatud — köök alustab selle valmistamisega pärast avamist.",
+      "closedNoteAcceptedWithTime": "Restoran on praegu suletud, kuid teie tellimus on juba kinnitatud — köök alustab selle valmistamisega pärast avamist, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — tellimus nr {orderNumber} — {total}",

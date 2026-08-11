@@ -5875,7 +5875,16 @@
       "trackOrderButton": "עקוב אחר ההזמנה",
       "contactRestaurantNote": "אם יש לך שאלות לגבי הזמנתך, אנא פנה ישירות למסעדה באמצעות הפרטים שבהמשך.",
       "scheduledFor": "זוהי הזמנה לאחר כך — מתוזמנת ל-{time}.",
-      "tableReservation": "שולחן הוזמן עבור {n} — {time}"
+      "tableReservation": "שולחן הוזמן עבור {n} — {time}",
+      "subjectAccepted": "הזמנה #{orderNumber} אושרה",
+      "previewAccepted": "המסעדה אישרה את הזמנה #{orderNumber}",
+      "headerTitleAccepted": "ההזמנה אושרה",
+      "headerSubtitleAccepted": "אושרה על ידי המסעדה",
+      "bodyAcceptedNow": "הזמנה #{orderNumber} אושרה והמטבח כבר מתחיל בהכנה.",
+      "bodyAcceptedLater": "הזמנה #{orderNumber} אושרה — היא נקבעה לשעה המופיעה למטה.",
+      "bodyAcceptedClosed": "הזמנה #{orderNumber} אושרה — המטבח יתחיל בהכנה עם פתיחת המסעדה.",
+      "closedNoteAccepted": "המסעדה סגורה כרגע, אך ההזמנה שלך כבר אושרה — המטבח יתחיל בהכנה עם הפתיחה.",
+      "closedNoteAcceptedWithTime": "המסעדה סגורה כרגע, אך ההזמנה שלך כבר אושרה — המטבח יתחיל בהכנה עם הפתיחה ב־{openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — הזמנה מס׳ {orderNumber} — {total}",

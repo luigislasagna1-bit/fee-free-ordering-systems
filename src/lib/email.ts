@@ -377,6 +377,11 @@ interface OrderEmailParams {
   /** Order landed while the restaurant was CLOSED — adds the "you'll get an
    *  update as soon as they open" note. */
   placedWhileClosed?: boolean;
+  /** The order was already ACCEPTED when this email went out (auto-accept /
+   *  auto-confirmed pre-order). No kitchen-accept email will follow, so this
+   *  one carries the confirmation instead of promising a second one.
+   *  Luigi 2026-08-11. */
+  alreadyAccepted?: boolean;
   /** The deferred kitchen-alert instant (Order.alertAt = next opening). With
    *  placedWhileClosed, the closed note names the concrete time — GloriaFood
    *  parity ("Check your email on Saturday, 25 Jul, 20:15"). cms0gyexp #8. */
@@ -670,7 +675,13 @@ function buildTimingLabels(
 
 export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
   const t = await getDict(params.locale);
-  const subject = t("email.orderConfirmed.subject", { orderNumber: params.orderNumber });
+  // Auto-accepted orders get the CONFIRMED subject — the inbox line is the only
+  // thing many customers read, and "awaiting confirmation" on an order the
+  // kitchen already took is simply false (Luigi 2026-08-11).
+  const subject = t(
+    params.alreadyAccepted ? "email.orderConfirmed.subjectAccepted" : "email.orderConfirmed.subject",
+    { orderNumber: params.orderNumber },
+  );
   // Pre-format the scheduled slot in the restaurant's timezone + customer
   // locale (only for future-dated "order for later" orders). Luigi 2026-06-05.
   const schedDate = params.scheduledFor ? new Date(params.scheduledFor) : null;
@@ -760,6 +771,7 @@ export async function sendOrderConfirmationEmail(params: OrderEmailParams) {
       trackingUrl: params.trackingUrl,
       cancelUrl: params.cancelUrl,
       placedWhileClosed: params.placedWhileClosed,
+      alreadyAccepted: params.alreadyAccepted,
       opensAtLabel,
       restaurantUrl: params.restaurantUrl,
       restaurantEmail: params.restaurantEmail,

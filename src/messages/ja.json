@@ -5875,7 +5875,16 @@
       "trackOrderButton": "注文状況を確認する",
       "contactRestaurantNote": "ご注文に関するご質問は、以下の連絡先よりレストランに直接お問い合わせください。",
       "scheduledFor": "これは予約注文です — {time} に予定されています。",
-      "tableReservation": "{n} 名様でテーブルを予約しました — {time}"
+      "tableReservation": "{n} 名様でテーブルを予約しました — {time}",
+      "subjectAccepted": "注文 #{orderNumber} が確定しました",
+      "previewAccepted": "レストランが注文 #{orderNumber} を確定しました",
+      "headerTitleAccepted": "注文が確定しました",
+      "headerSubtitleAccepted": "レストランが確定しました",
+      "bodyAcceptedNow": "注文 #{orderNumber} は確定し、キッチンで準備を開始しました。",
+      "bodyAcceptedLater": "注文 #{orderNumber} は確定しました — 下記の時間にご用意します。",
+      "bodyAcceptedClosed": "注文 #{orderNumber} は確定しました — レストランの開店後にキッチンが調理を開始します。",
+      "closedNoteAccepted": "レストランは現在閉店中ですが、ご注文はすでに確定しています — 開店後にキッチンが調理を開始します。",
+      "closedNoteAcceptedWithTime": "レストランは現在閉店中ですが、ご注文はすでに確定しています — {openingTime} の開店後にキッチンが調理を開始します。"
     },
     "newOrder": {
       "preview": "{restaurant} — 注文 #{orderNumber} — {total}",

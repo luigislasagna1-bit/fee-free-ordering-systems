@@ -86,6 +86,43 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A46. ✉️ "Awaiting confirmation" on an AUTO-ACCEPTED order — FIXED + PUSHED (2026-08-11)
+You placed two test orders (ORD-143921044 pickup 1:42 PM, ORD-519009065 delivery 2:55 PM) and both
+customer emails said *"the restaurant will confirm it shortly — you'll get a follow-up email the
+moment they accept."* No follow-up ever came.
+
+**Auto-accept was never broken, and you were right that it wasn't the auto-accept change.** Prod
+proves both orders were accepted the same second they were placed, and the delivery one dispatched
+to ShipDay 1 second after payment (driver assigned). Auto-accept shipped 2026-05-15 (7869cc56) and
+was fine. The break came 13 days later in **42646a7c, 2026-05-28, "Order emails: fix 'Confirmed
+then Rejected' contradiction"** — a real fix for a real problem (customers were getting "Order
+confirmed" then "Order rejected"), which retitled the placement email to "Order received — awaiting
+confirmation" and added the promise of a follow-up. Its commit message reasons entirely about the
+kitchen-accept step and never mentions auto-accept — where that step doesn't exist, so the promised
+email can never arrive. There WAS a correct window, 2026-05-15 → 2026-05-28, but it closed six
+weeks before go-live, so no live customer ever got a correct auto-accept confirmation.
+
+**Blast radius (prod):** 4 of 38 stores run auto-accept — yours, Sabor Goiano, PoshMeal DEMO and
+**La Pergola Alghero (Fabrizio's)**. 385 auto-accepted orders released in 90 days, **177 distinct
+customers**, earliest on record 2026-05-19.
+
+A 12-agent adversarial audit checked the fix before it shipped and caught two more things, both now
+fixed: a scheduled order would have emailed "Prep time: 4320 minutes" (its stored prep time is the
+countdown to the slot, not a cooking estimate), and an after-hours auto-accepted order still
+promised "you'll get an update as soon as they open" three lines under "Order confirmed" — the same
+broken promise. Shipped: 9 new keys × 38 languages, 228 locale renders verified, 1435 tests,
+preflight green.
+
+1. ☐ **Re-run a test order** (pickup or delivery) and confirm the email now reads **"Order
+   confirmed"** with no mention of waiting. Old orders keep their old emails — nothing is re-sent.
+2. 🤔 **Tell Fabrizio?** His store has been sending the same wrong email to real customers since
+   May. It's now fixed for him automatically. Your call whether that's worth a note.
+3. ☐ **Two pre-existing issues found in passing, NOT fixed here** (each wants its own change):
+   every non-English email ships `lang="en" dir="ltr"`, which breaks Arabic/Hebrew direction and
+   mislabels the language on all 37 non-English locales; and the customer SMS/push text is
+   English-only in code with no translation keys. The SMS one is currently harmless — **zero**
+   restaurants have the SMS or branded-app add-on active, so nothing sends today.
+
 ### A44. 📍 "Could not geocode this address" (Sofia Chilly meals, Islamabad) — FIXED, one check is yours (2026-08-10)
 What actually happened: nothing to do with the Pakistan country work from yesterday. The address
 `B17, Islamabad, Qurtabad School` contains a landmark that **is not in OpenStreetMap**, and

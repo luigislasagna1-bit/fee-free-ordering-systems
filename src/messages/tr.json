@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Siparişinizi takip edin",
       "contactRestaurantNote": "Siparişinizle ilgili sorularınız için lütfen aşağıdaki iletişim bilgilerini kullanarak restoranla doğrudan iletişime geçin.",
       "scheduledFor": "Bu, ileri tarihli bir siparıştir — {time} için planlandı.",
-      "tableReservation": "{n} kişilik masa ayrıldı — {time}"
+      "tableReservation": "{n} kişilik masa ayrıldı — {time}",
+      "subjectAccepted": "#{orderNumber} numaralı sipariş onaylandı",
+      "previewAccepted": "#{orderNumber} numaralı siparişiniz restoran tarafından onaylandı",
+      "headerTitleAccepted": "Sipariş onaylandı",
+      "headerSubtitleAccepted": "Restoran tarafından onaylandı",
+      "bodyAcceptedNow": "#{orderNumber} numaralı siparişiniz onaylandı ve mutfak şu an hazırlamaya başladı.",
+      "bodyAcceptedLater": "#{orderNumber} numaralı siparişiniz onaylandı — aşağıda belirtilen saat için planlandı.",
+      "bodyAcceptedClosed": "#{orderNumber} numaralı siparişiniz onaylandı — restoran açılınca mutfak hazırlamaya başlayacak.",
+      "closedNoteAccepted": "Restoran şu anda kapalı, ancak siparişiniz zaten onaylandı — mutfak açılışta hazırlamaya başlayacak.",
+      "closedNoteAcceptedWithTime": "Restoran şu anda kapalı, ancak siparişiniz zaten onaylandı — mutfak {openingTime} açılışında hazırlamaya başlayacak."
     },
     "newOrder": {
       "preview": "{restaurant} — Sipariş No. {orderNumber} — {total}",

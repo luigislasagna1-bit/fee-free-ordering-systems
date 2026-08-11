@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Sledite svojemu naročilu",
       "contactRestaurantNote": "Če imate kakršna koli vprašanja o svojem naročilu, se obrnite neposredno na restavracijo z uporabo spodnjih podatkov.",
       "scheduledFor": "To je naročilo za pozneje — predvideno za {time}.",
-      "tableReservation": "Miza rezervirana za {n} — {time}"
+      "tableReservation": "Miza rezervirana za {n} — {time}",
+      "subjectAccepted": "Naročilo #{orderNumber} potrjeno",
+      "previewAccepted": "Naročilo #{orderNumber} je potrdila restavracija",
+      "headerTitleAccepted": "Naročilo potrjeno",
+      "headerSubtitleAccepted": "Potrdila restavracija",
+      "bodyAcceptedNow": "Naročilo #{orderNumber} je potrjeno in kuhinja je že začela z delom.",
+      "bodyAcceptedLater": "Naročilo #{orderNumber} je potrjeno — načrtovano je za spodaj navedeni čas.",
+      "bodyAcceptedClosed": "Naročilo #{orderNumber} je potrjeno — kuhinja ga bo začela pripravljati, ko se restavracija odpre.",
+      "closedNoteAccepted": "Restavracija je trenutno zaprta, a vaše naročilo je že potrjeno — kuhinja ga bo začela pripravljati po odprtju.",
+      "closedNoteAcceptedWithTime": "Restavracija je trenutno zaprta, a vaše naročilo je že potrjeno — kuhinja ga bo začela pripravljati po odprtju, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Naročilo #{orderNumber} — {total}",

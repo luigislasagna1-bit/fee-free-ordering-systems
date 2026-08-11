@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Seguir a sua encomenda",
       "contactRestaurantNote": "Se tiver alguma dúvida sobre a sua encomenda, contacte diretamente o restaurante utilizando os dados indicados abaixo.",
       "scheduledFor": "Este é um pedido para mais tarde — agendado para {time}.",
-      "tableReservation": "Mesa reservada para {n} — {time}"
+      "tableReservation": "Mesa reservada para {n} — {time}",
+      "subjectAccepted": "Encomenda #{orderNumber} confirmada",
+      "previewAccepted": "Encomenda #{orderNumber} confirmada pelo restaurante",
+      "headerTitleAccepted": "Encomenda confirmada",
+      "headerSubtitleAccepted": "Confirmada pelo restaurante",
+      "bodyAcceptedNow": "A encomenda #{orderNumber} está confirmada e a cozinha já está a trabalhar nela.",
+      "bodyAcceptedLater": "A encomenda #{orderNumber} está confirmada — fica agendada para a hora indicada abaixo.",
+      "bodyAcceptedClosed": "A encomenda #{orderNumber} está confirmada — a cozinha começa a prepará-la quando o restaurante abrir.",
+      "closedNoteAccepted": "O restaurante está fechado neste momento, mas a sua encomenda já está confirmada — a cozinha começa a prepará-la quando abrirem.",
+      "closedNoteAcceptedWithTime": "O restaurante está fechado neste momento, mas a sua encomenda já está confirmada — a cozinha começa a prepará-la quando abrirem, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Pedido n.º {orderNumber} — {total}",

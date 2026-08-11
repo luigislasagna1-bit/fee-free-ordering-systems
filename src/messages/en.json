@@ -5871,7 +5871,16 @@
       "closedNote": "The restaurant is currently closed — your order is queued and you’ll get an update as soon as they open.",
       "cancelNote": "If something unexpected comes up, you can still cancel your order here.",
       "tableReservation": "Table reserved for {n} — {time}",
-      "closedNoteWithTime": "The restaurant is currently closed — your order is queued and you'll get an update as soon as they open. Check your email on {openingTime}."
+      "closedNoteWithTime": "The restaurant is currently closed — your order is queued and you'll get an update as soon as they open. Check your email on {openingTime}.",
+      "subjectAccepted": "Order #{orderNumber} confirmed",
+      "previewAccepted": "Order #{orderNumber} confirmed by the restaurant",
+      "headerTitleAccepted": "Order confirmed",
+      "headerSubtitleAccepted": "Confirmed by the restaurant",
+      "bodyAcceptedNow": "Order #{orderNumber} is confirmed and the kitchen is starting on it now.",
+      "bodyAcceptedLater": "Order #{orderNumber} is confirmed — it's booked in for the time shown below.",
+      "bodyAcceptedClosed": "Order #{orderNumber} is confirmed — the kitchen will start on it when the restaurant opens.",
+      "closedNoteAccepted": "The restaurant is closed right now, but your order is already confirmed — the kitchen will start on it when they open.",
+      "closedNoteAcceptedWithTime": "The restaurant is closed right now, but your order is already confirmed — the kitchen will start on it when they open on {openingTime}."
     },
     "newOrder": {
       "subject": "New order #{orderNumber} — {restaurant}",

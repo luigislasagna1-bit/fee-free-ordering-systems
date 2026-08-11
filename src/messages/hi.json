@@ -5875,7 +5875,16 @@
       "trackOrderButton": "अपना ऑर्डर ट्रैक करें",
       "contactRestaurantNote": "यदि आपके ऑर्डर के बारे में कोई प्रश्न हो, तो कृपया नीचे दिए गए विवरण का उपयोग करके सीधे रेस्तराँ से संपर्क करें।",
       "scheduledFor": "यह बाद के लिए एक ऑर्डर है — {time} के लिए निर्धारित।",
-      "tableReservation": "{n} लोगों के लिए टेबल आरक्षित — {time}"
+      "tableReservation": "{n} लोगों के लिए टेबल आरक्षित — {time}",
+      "subjectAccepted": "ऑर्डर #{orderNumber} कन्फ़र्म हो गया",
+      "previewAccepted": "रेस्तराँ ने ऑर्डर #{orderNumber} कन्फ़र्म कर दिया",
+      "headerTitleAccepted": "ऑर्डर कन्फ़र्म हो गया",
+      "headerSubtitleAccepted": "रेस्तराँ ने कन्फ़र्म किया",
+      "bodyAcceptedNow": "ऑर्डर #{orderNumber} कन्फ़र्म हो गया है और किचन अभी उस पर काम शुरू कर रहा है।",
+      "bodyAcceptedLater": "ऑर्डर #{orderNumber} कन्फ़र्म हो गया है — यह नीचे दिए गए समय के लिए तय है।",
+      "bodyAcceptedClosed": "ऑर्डर #{orderNumber} कन्फ़र्म हो गया है — रेस्तराँ खुलते ही किचन इसे बनाना शुरू कर देगा।",
+      "closedNoteAccepted": "रेस्तराँ अभी बंद है, लेकिन आपका ऑर्डर कन्फ़र्म हो चुका है — खुलते ही किचन इसे बनाना शुरू कर देगा।",
+      "closedNoteAcceptedWithTime": "रेस्तराँ अभी बंद है, लेकिन आपका ऑर्डर कन्फ़र्म हो चुका है — {openingTime} को खुलते ही किचन इसे बनाना शुरू कर देगा।"
     },
     "newOrder": {
       "preview": "{restaurant} — ऑर्डर #{orderNumber} — {total}",

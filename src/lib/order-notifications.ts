@@ -189,6 +189,33 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
     order.items.reduce((s: number, i: any) => s + (i.isRefundableDeposit && (i.depositAmount ?? 0) > 0 ? Number(i.depositAmount) * i.quantity : 0), 0) * 100,
   ) / 100;
 
+  // ── The prep minutes the emails QUOTE must be the ones the order was priced
+  // and promised on ─────────────────────────────────────────────────────────
+  // Both emails used to print the restaurant's flat estimatedPickup /
+  // estimatedDelivery default. An auto-accepted order stores the ZONE-AWARE
+  // promise instead (Order.preparationTime — 35 min for a 35-min delivery zone),
+  // and estimatedReady is computed from THAT. So the timing block contradicted
+  // itself: "Order placed 2:55 PM · Prep time 45 minutes · Delivery time
+  // 3:30 PM" (Luigi 2026-08-11, ORD-519009065). Prefer the order's own stored
+  // prep time; the flat default remains the fallback for a pending order, which
+  // genuinely has no confirmed prep time yet. Luigi 2026-08-11.
+  //
+  // ⚠️ SCHEDULED ORDERS ARE EXCLUDED ON PURPOSE. For a "for later" order,
+  // Order.preparationTime is NOT a cooking estimate — the orders route stores
+  // the whole distance from now to the slot so the kitchen countdown lines up
+  // (src/app/api/orders/route.ts:2661-2668). An order booked three days out
+  // therefore carries preparationTime = 4320, and quoting that as "Prep time:
+  // 4320 minutes" would be worse than the bug being fixed. A scheduled order
+  // keeps the service default; its promise is the SLOT, which the timing block
+  // already shows as the ready row.
+  const defaultPrepMinutes = order.type === "pickup"
+    ? order.restaurant.estimatedPickup
+    : order.restaurant.estimatedDelivery;
+  const storedPrep = (order as any).preparationTime;
+  const prepMinutes = !(order as any).scheduledFor && typeof storedPrep === "number" && storedPrep > 0
+    ? storedPrep
+    : defaultPrepMinutes;
+
   const rewardsOn = (order.restaurant as any).rewardsEnabled === true;
   const creditApplied = rewardsOn ? Math.max(0, (order as any).creditApplied ?? 0) : 0;
   const rewardLabel = rewardsOn
@@ -276,9 +303,7 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       // Never passed before 2026-07-11 → every receipt email said "Pay at store".
       paidOnline: ["card", "paypal", "reward_credit"].includes(order.paymentMethod),
       orderType: order.type,
-      estimatedTime: order.type === "pickup"
-        ? order.restaurant.estimatedPickup
-        : order.restaurant.estimatedDelivery,
+      estimatedTime: prepMinutes,
       // Scheduled ("order for later") slot — drives the prominent scheduled
       // line on the confirmation email. Null = ASAP. Luigi 2026-06-05.
       scheduledFor: (order as any).scheduledFor ?? null,
@@ -309,6 +334,15 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
             ),
           }
         : {}),
+      // Auto-accept (or an auto-confirmed pre-order) makes the order "accepted"
+      // at CREATE, so it never transitions pending → accepted and the kitchen-
+      // accept email — the one that carries the real confirmation — never
+      // fires. Every customer of an auto-accept store therefore got
+      // "awaiting restaurant confirmation" and then silence, right up to the
+      // "your order is complete" email (Luigi 2026-08-11, ORD-143921044).
+      // Telling the template the order is already accepted makes THIS email the
+      // confirmation instead of adding a second, near-duplicate one.
+      alreadyAccepted: order.status === "accepted",
       placedWhileClosed: !!(order as any).placedWhileClosed,
       // The deferred kitchen alert = the restaurant's next opening — lets the
       // closed note say WHEN ("Check your email on Saturday, 25 Jul, 20:15").
@@ -362,9 +396,9 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       estimatedReady: (order as any).estimatedReady ?? null,
       scheduledFor: (order as any).scheduledFor ?? null,
       scheduledSlotMinutes: (order as any).scheduledSlotMinutes ?? null,
-      estimatedMinutes: order.type === "pickup"
-        ? order.restaurant.estimatedPickup
-        : order.restaurant.estimatedDelivery,
+      // Same stored prep minutes the customer's copy quotes — the staff header
+      // ("DELIVERY · 45 min") disagreed with its own timing block too.
+      estimatedMinutes: prepMinutes,
       orderType: order.type,
       // "Paid online" = the platform already captured the money (Stripe card,
       // PayPal, or fully covered by store credit). cash AND card_in_person

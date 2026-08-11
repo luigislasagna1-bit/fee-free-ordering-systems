@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Sledovat objednávku",
       "contactRestaurantNote": "Máte-li jakékoliv dotazy ohledně vaší objednávky, obraťte se prosím přímo na restauraci pomocí níže uvedených kontaktních údajů.",
       "scheduledFor": "Toto je objednávka na později — naplánováno na {time}.",
-      "tableReservation": "Stůl rezervován pro {n} — {time}"
+      "tableReservation": "Stůl rezervován pro {n} — {time}",
+      "subjectAccepted": "Objednávka #{orderNumber} potvrzena",
+      "previewAccepted": "Objednávka #{orderNumber} potvrzena restaurací",
+      "headerTitleAccepted": "Objednávka potvrzena",
+      "headerSubtitleAccepted": "Potvrzeno restaurací",
+      "bodyAcceptedNow": "Objednávka #{orderNumber} je potvrzena a kuchyně se do ní pustila.",
+      "bodyAcceptedLater": "Objednávka #{orderNumber} je potvrzena — je naplánována na čas uvedený níže.",
+      "bodyAcceptedClosed": "Objednávka #{orderNumber} je potvrzena — kuchyně se do ní pustí, jakmile restaurace otevře.",
+      "closedNoteAccepted": "Restaurace je právě zavřená, ale vaše objednávka je už potvrzená — kuchyně se do ní pustí po otevření.",
+      "closedNoteAcceptedWithTime": "Restaurace je právě zavřená, ale vaše objednávka je už potvrzená — kuchyně se do ní pustí po otevření, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Objednávka č. {orderNumber} — {total}",

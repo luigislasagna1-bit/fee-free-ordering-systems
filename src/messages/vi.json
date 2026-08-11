@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Theo dõi đơn hàng của bạn",
       "contactRestaurantNote": "Nếu bạn có thắc mắc về đơn hàng, vui lòng liên hệ trực tiếp với nhà hàng theo thông tin bên dưới.",
       "scheduledFor": "Đây là đơn đặt sau — được lên lịch vào {time}.",
-      "tableReservation": "Đã đặt bàn cho {n} người — {time}"
+      "tableReservation": "Đã đặt bàn cho {n} người — {time}",
+      "subjectAccepted": "Đơn #{orderNumber} đã được xác nhận",
+      "previewAccepted": "Đơn #{orderNumber} đã được nhà hàng xác nhận",
+      "headerTitleAccepted": "Đơn hàng đã được xác nhận",
+      "headerSubtitleAccepted": "Nhà hàng đã xác nhận",
+      "bodyAcceptedNow": "Đơn hàng #{orderNumber} đã được xác nhận và bếp đang bắt đầu chế biến ngay bây giờ.",
+      "bodyAcceptedLater": "Đơn hàng #{orderNumber} đã được xác nhận — đã được xếp lịch vào thời gian hiển thị bên dưới.",
+      "bodyAcceptedClosed": "Đơn hàng #{orderNumber} đã được xác nhận — bếp sẽ bắt đầu chế biến khi nhà hàng mở cửa.",
+      "closedNoteAccepted": "Nhà hàng hiện đang đóng cửa, nhưng đơn hàng của bạn đã được xác nhận — bếp sẽ bắt đầu chế biến khi mở cửa.",
+      "closedNoteAcceptedWithTime": "Nhà hàng hiện đang đóng cửa, nhưng đơn hàng của bạn đã được xác nhận — bếp sẽ bắt đầu chế biến khi mở cửa vào {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Đơn hàng #{orderNumber} — {total}",

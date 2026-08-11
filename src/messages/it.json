@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Monitora il tuo ordine",
       "contactRestaurantNote": "Per qualsiasi domanda sul tuo ordine, ti preghiamo di contattare direttamente il ristorante utilizzando i recapiti riportati di seguito.",
       "scheduledFor": "Questo è un ordine programmato — previsto per {time}.",
-      "tableReservation": "Tavolo prenotato per {n} — {time}"
+      "tableReservation": "Tavolo prenotato per {n} — {time}",
+      "subjectAccepted": "Ordine #{orderNumber} confermato",
+      "previewAccepted": "Ordine #{orderNumber} confermato dal ristorante",
+      "headerTitleAccepted": "Ordine confermato",
+      "headerSubtitleAccepted": "Confermato dal ristorante",
+      "bodyAcceptedNow": "L'ordine #{orderNumber} è confermato e la cucina si sta già mettendo al lavoro.",
+      "bodyAcceptedLater": "L'ordine #{orderNumber} è confermato — è programmato per l'orario indicato qui sotto.",
+      "bodyAcceptedClosed": "L'ordine #{orderNumber} è confermato — la cucina si metterà al lavoro all'apertura del ristorante.",
+      "closedNoteAccepted": "Il ristorante è chiuso in questo momento, ma il tuo ordine è già confermato — la cucina si metterà al lavoro all'apertura.",
+      "closedNoteAcceptedWithTime": "Il ristorante è chiuso in questo momento, ma il tuo ordine è già confermato — la cucina si metterà al lavoro all'apertura, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Ordine n. {orderNumber} — {total}",

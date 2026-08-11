@@ -74,8 +74,16 @@ function buildCustomerSms(
       hour12: hoursFormat !== "24h",
     });
   switch (payload.event) {
-    case "orderConfirmed":
+    case "orderConfirmed": {
+      // Auto-accepted → no "accepted" text is ever coming (the order never
+      // transitions), so promising one strands the customer. Same fix as the
+      // email. Luigi 2026-08-11.
+      if (payload.alreadyAccepted) {
+        const eta = payload.estimatedReady ? clock(new Date(payload.estimatedReady)) : null;
+        return `${restaurantName}: Order #${payload.orderNumber} confirmed${eta ? ` — ready ~${eta}` : ""}. ${payload.trackingUrl ?? ""}`.trim();
+      }
       return `${restaurantName}: Order #${payload.orderNumber} received. We'll text you when it's accepted. ${payload.trackingUrl ?? ""}`.trim();
+    }
     case "orderStatusUpdate": {
       const s = (payload.status ?? "").toLowerCase();
       if (s === "accepted") {
@@ -650,6 +658,10 @@ export type CustomerEventPayload =
       /** Order landed while the restaurant was CLOSED — the email adds the
        *  GloriaFood-parity "you'll get an update as soon as they open" note. */
       placedWhileClosed?: boolean;
+      /** Order was born ACCEPTED (auto-accept / auto-confirmed pre-order), so no
+       *  kitchen-accept email will ever follow — this placement email must BE
+       *  the confirmation instead of promising one. Luigi 2026-08-11. */
+      alreadyAccepted?: boolean;
       /** The deferred kitchen-alert instant (Order.alertAt) = the restaurant's
        *  next opening. When set with placedWhileClosed, the closed note names
        *  the concrete time — "Check your email on Saturday, 25 Jul, 20:15"
@@ -875,6 +887,7 @@ export async function notifyCustomer(args: {
           paidOnline: payload.paidOnline,
           cancelUrl: payload.cancelUrl,
           placedWhileClosed: payload.placedWhileClosed,
+          alreadyAccepted: payload.alreadyAccepted,
           opensAt: payload.opensAt ?? null,
           // Restaurant contacts for the footer (cms0gyexp #4) — the receipt
           // email promised "details below" but never passed them; this also

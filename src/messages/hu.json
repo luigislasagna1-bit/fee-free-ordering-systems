@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Rendelés nyomon követése",
       "contactRestaurantNote": "Ha kérdése van a rendelésével kapcsolatban, forduljon közvetlenül az étteremhez az alábbi elérhetőségeken.",
       "scheduledFor": "Ez egy későbbre szóló rendelés — időpontja: {time}.",
-      "tableReservation": "Asztal lefoglalva {n} főre — {time}"
+      "tableReservation": "Asztal lefoglalva {n} főre — {time}",
+      "subjectAccepted": "#{orderNumber}. rendelés visszaigazolva",
+      "previewAccepted": "#{orderNumber}. rendelését visszaigazolta az étterem",
+      "headerTitleAccepted": "Rendelés visszaigazolva",
+      "headerSubtitleAccepted": "Az étterem visszaigazolta",
+      "bodyAcceptedNow": "A #{orderNumber}. rendelése visszaigazolva, és a konyha már el is kezdte a készítést.",
+      "bodyAcceptedLater": "A #{orderNumber}. rendelése visszaigazolva — a lent megadott időpontra van beütemezve.",
+      "bodyAcceptedClosed": "A #{orderNumber}. rendelése visszaigazolva — a konyha nyitáskor kezd hozzá.",
+      "closedNoteAccepted": "Az étterem most zárva van, de a rendelése már vissza van igazolva — a konyha nyitáskor kezd hozzá.",
+      "closedNoteAcceptedWithTime": "Az étterem most zárva van, de a rendelése már vissza van igazolva — a konyha nyitáskor kezd hozzá: {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Rendelés #{orderNumber} — {total}",

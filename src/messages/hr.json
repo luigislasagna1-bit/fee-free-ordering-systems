@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Pratite svoju narudžbu",
       "contactRestaurantNote": "Ako imate pitanja o svojoj narudžbi, obratite se izravno restoranu koristeći podatke navedene ispod.",
       "scheduledFor": "Ovo je narudžba za kasnije — zakazana za {time}.",
-      "tableReservation": "Stol rezerviran za {n} — {time}"
+      "tableReservation": "Stol rezerviran za {n} — {time}",
+      "subjectAccepted": "Narudžba #{orderNumber} potvrđena",
+      "previewAccepted": "Narudžbu #{orderNumber} potvrdio je restoran",
+      "headerTitleAccepted": "Narudžba potvrđena",
+      "headerSubtitleAccepted": "Potvrdio restoran",
+      "bodyAcceptedNow": "Narudžba #{orderNumber} je potvrđena i kuhinja je već krenula s pripremom.",
+      "bodyAcceptedLater": "Narudžba #{orderNumber} je potvrđena — zakazana je za vrijeme navedeno u nastavku.",
+      "bodyAcceptedClosed": "Narudžba #{orderNumber} je potvrđena — kuhinja će krenuti s pripremom kada se restoran otvori.",
+      "closedNoteAccepted": "Restoran je trenutačno zatvoren, ali vaša narudžba je već potvrđena — kuhinja kreće s pripremom po otvaranju.",
+      "closedNoteAcceptedWithTime": "Restoran je trenutačno zatvoren, ali vaša narudžba je već potvrđena — kuhinja kreće s pripremom po otvaranju, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Narudžba #{orderNumber} — {total}",

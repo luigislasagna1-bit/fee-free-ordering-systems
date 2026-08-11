@@ -5875,7 +5875,16 @@
       "trackOrderButton": "ติดตามออร์เดอร์ของคุณ",
       "contactRestaurantNote": "หากมีข้อสงสัยเกี่ยวกับออร์เดอร์ กรุณาติดต่อร้านอาหารโดยตรงโดยใช้ข้อมูลด้านล่าง",
       "scheduledFor": "นี่คือคำสั่งซื้อแบบสั่งล่วงหน้า — กำหนดเวลาไว้ {time}",
-      "tableReservation": "จองโต๊ะสำหรับ {n} ท่าน — {time}"
+      "tableReservation": "จองโต๊ะสำหรับ {n} ท่าน — {time}",
+      "subjectAccepted": "ยืนยันออร์เดอร์ #{orderNumber} แล้ว",
+      "previewAccepted": "ร้านอาหารยืนยันออร์เดอร์ #{orderNumber} แล้ว",
+      "headerTitleAccepted": "ยืนยันออร์เดอร์แล้ว",
+      "headerSubtitleAccepted": "ร้านอาหารยืนยันแล้ว",
+      "bodyAcceptedNow": "ออร์เดอร์ #{orderNumber} ได้รับการยืนยันแล้ว และครัวกำลังเริ่มทำอาหารให้คุณ",
+      "bodyAcceptedLater": "ออร์เดอร์ #{orderNumber} ได้รับการยืนยันแล้ว — กำหนดไว้ตามเวลาที่แสดงด้านล่าง",
+      "bodyAcceptedClosed": "ออร์เดอร์ #{orderNumber} ได้รับการยืนยันแล้ว — ครัวจะเริ่มทำอาหารเมื่อร้านเปิด",
+      "closedNoteAccepted": "ขณะนี้ร้านปิดอยู่ แต่ออร์เดอร์ของคุณได้รับการยืนยันแล้ว — ครัวจะเริ่มทำอาหารเมื่อร้านเปิด",
+      "closedNoteAcceptedWithTime": "ขณะนี้ร้านปิดอยู่ แต่ออร์เดอร์ของคุณได้รับการยืนยันแล้ว — ครัวจะเริ่มทำอาหารเมื่อร้านเปิดใน {openingTime}"
     },
     "newOrder": {
       "preview": "{restaurant} — ออเดอร์ #{orderNumber} — {total}",

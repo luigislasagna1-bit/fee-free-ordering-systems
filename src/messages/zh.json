@@ -5875,7 +5875,16 @@
       "trackOrderButton": "追踪您的订单",
       "contactRestaurantNote": "如您对订单有任何疑问，请通过以下联系方式直接联系餐厅。",
       "scheduledFor": "这是一笔预约订单，预定时间为 {time}。",
-      "tableReservation": "已为 {n} 位预订餐桌 — {time}"
+      "tableReservation": "已为 {n} 位预订餐桌 — {time}",
+      "subjectAccepted": "订单 #{orderNumber} 已确认",
+      "previewAccepted": "餐厅已确认订单 #{orderNumber}",
+      "headerTitleAccepted": "订单已确认",
+      "headerSubtitleAccepted": "餐厅已确认",
+      "bodyAcceptedNow": "订单 #{orderNumber} 已确认，厨房正在开始备餐。",
+      "bodyAcceptedLater": "订单 #{orderNumber} 已确认——已安排在下方显示的时间。",
+      "bodyAcceptedClosed": "订单 #{orderNumber} 已确认——餐厅营业后厨房会立即开始备餐。",
+      "closedNoteAccepted": "餐厅目前已打烊，但您的订单已经确认——营业后厨房会立即开始备餐。",
+      "closedNoteAcceptedWithTime": "餐厅目前已打烊，但您的订单已经确认——{openingTime} 营业后厨房会立即开始备餐。"
     },
     "newOrder": {
       "preview": "{restaurant} — 订单 #{orderNumber} — {total}",

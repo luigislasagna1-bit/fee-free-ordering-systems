@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Urmărește comanda",
       "contactRestaurantNote": "Dacă aveți întrebări despre comanda dvs., vă rugăm să contactați direct restaurantul folosind datele de mai jos.",
       "scheduledFor": "Aceasta este o comandă pentru mai târziu — programată pentru {time}.",
-      "tableReservation": "Masă rezervată pentru {n} — {time}"
+      "tableReservation": "Masă rezervată pentru {n} — {time}",
+      "subjectAccepted": "Comanda #{orderNumber} confirmată",
+      "previewAccepted": "Comanda #{orderNumber} confirmată de restaurant",
+      "headerTitleAccepted": "Comandă confirmată",
+      "headerSubtitleAccepted": "Confirmată de restaurant",
+      "bodyAcceptedNow": "Comanda #{orderNumber} este confirmată, iar bucătăria a început deja să o prepare.",
+      "bodyAcceptedLater": "Comanda #{orderNumber} este confirmată — este programată pentru ora indicată mai jos.",
+      "bodyAcceptedClosed": "Comanda #{orderNumber} este confirmată — bucătăria începe să o prepare la deschiderea restaurantului.",
+      "closedNoteAccepted": "Restaurantul este închis acum, dar comanda dvs. este deja confirmată — bucătăria începe să o prepare la deschidere.",
+      "closedNoteAcceptedWithTime": "Restaurantul este închis acum, dar comanda dvs. este deja confirmată — bucătăria începe să o prepare la deschidere, pe {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Comanda nr. {orderNumber} — {total}",

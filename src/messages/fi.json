@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Seuraa tilaustasi",
       "contactRestaurantNote": "Jos sinulla on kysyttävää tilauksestasi, ota yhteyttä suoraan ravintolaan alla olevien tietojen avulla.",
       "scheduledFor": "Tämä on tilaus myöhemmäksi — ajoitettu ajankohtaan {time}.",
-      "tableReservation": "Pöytä varattu {n} hengelle — {time}"
+      "tableReservation": "Pöytä varattu {n} hengelle — {time}",
+      "subjectAccepted": "Tilaus #{orderNumber} vahvistettu",
+      "previewAccepted": "Ravintola vahvisti tilauksen #{orderNumber}",
+      "headerTitleAccepted": "Tilaus vahvistettu",
+      "headerSubtitleAccepted": "Ravintolan vahvistama",
+      "bodyAcceptedNow": "Tilaus #{orderNumber} on vahvistettu ja keittiö aloittaa sen valmistamisen nyt.",
+      "bodyAcceptedLater": "Tilaus #{orderNumber} on vahvistettu — se on aikataulutettu alla näkyvään aikaan.",
+      "bodyAcceptedClosed": "Tilaus #{orderNumber} on vahvistettu — keittiö aloittaa sen valmistamisen, kun ravintola avautuu.",
+      "closedNoteAccepted": "Ravintola on nyt suljettu, mutta tilauksesi on jo vahvistettu — keittiö aloittaa sen valmistamisen aukeamisen jälkeen.",
+      "closedNoteAcceptedWithTime": "Ravintola on nyt suljettu, mutta tilauksesi on jo vahvistettu — keittiö aloittaa sen valmistamisen, kun ravintola avautuu {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Tilaus #{orderNumber} — {total}",

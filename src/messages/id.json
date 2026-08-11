@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Lacak pesanan Anda",
       "contactRestaurantNote": "Jika Anda memiliki pertanyaan tentang pesanan Anda, silakan hubungi restoran langsung menggunakan informasi di bawah ini.",
       "scheduledFor": "Ini adalah pesanan untuk nanti — dijadwalkan pada {time}.",
-      "tableReservation": "Meja dipesan untuk {n} orang — {time}"
+      "tableReservation": "Meja dipesan untuk {n} orang — {time}",
+      "subjectAccepted": "Pesanan #{orderNumber} dikonfirmasi",
+      "previewAccepted": "Pesanan #{orderNumber} dikonfirmasi oleh restoran",
+      "headerTitleAccepted": "Pesanan dikonfirmasi",
+      "headerSubtitleAccepted": "Dikonfirmasi oleh restoran",
+      "bodyAcceptedNow": "Pesanan #{orderNumber} sudah dikonfirmasi dan dapur mulai memprosesnya sekarang.",
+      "bodyAcceptedLater": "Pesanan #{orderNumber} sudah dikonfirmasi — dijadwalkan untuk waktu yang tertera di bawah.",
+      "bodyAcceptedClosed": "Pesanan #{orderNumber} sudah dikonfirmasi — dapur akan mulai memprosesnya saat restoran buka.",
+      "closedNoteAccepted": "Restoran sedang tutup, tetapi pesanan Anda sudah dikonfirmasi — dapur akan mulai memprosesnya saat mereka buka.",
+      "closedNoteAcceptedWithTime": "Restoran sedang tutup, tetapi pesanan Anda sudah dikonfirmasi — dapur akan mulai memprosesnya saat buka pada {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Pesanan #{orderNumber} — {total}",

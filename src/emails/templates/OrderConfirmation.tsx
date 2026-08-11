@@ -106,6 +106,15 @@ export type OrderConfirmationProps = {
   paymentValue?: string | null;
   /** Order.paymentStatus — "paid" flips the balance label to "Paid". */
   paidStatus?: string | null;
+  /** The order was ALREADY accepted the moment it was released — i.e. the
+   *  restaurant runs auto-accept (Restaurant.autoAcceptOrders) or a pre-order
+   *  auto-confirmed. Such an order never transitions pending → accepted, so the
+   *  kitchen-accept email that normally carries the real confirmation NEVER
+   *  fires: this placement email is the only one the customer gets. Without
+   *  this flag it told an already-confirmed customer "the restaurant will
+   *  confirm shortly" and then nothing ever arrived (Luigi 2026-08-11,
+   *  ORD-143921044). When set, the email IS the confirmation. */
+  alreadyAccepted?: boolean;
   t: Translator;
 };
 
@@ -115,7 +124,7 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     estimatedMinutes, scheduledLabel, placedAtLabel, prepTimeLabel, readyAtLabel, readyRowLabel, reservationPartySize, reservationLabel, items, subtotal, taxAmount, taxLabel, deliveryFee, tip,
     depositTotal, discount, serviceFees, total, deliveryAddress, trackingUrl, cancelUrl, placedWhileClosed, opensAtLabel, restaurantUrl,
     restaurantEmail, restaurantPhone, imprint, logoUrl, currency,
-    appliedPromos, creditApplied, rewardLabel, rewardEarned, paymentValue, paidStatus, t,
+    appliedPromos, creditApplied, rewardLabel, rewardEarned, paymentValue, paidStatus, alreadyAccepted, t,
   } = props;
   const cur = currency ?? "usd";
   // Reward Dollars part-payment rows — mirror the confirmation page exactly:
@@ -147,12 +156,37 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
     ? "email.orderConfirmed.bodyFollowUpDelivery"
     : "email.orderConfirmed.bodyFollowUpPickup";
 
+  // Auto-accepted order → this email IS the confirmation (no second one is
+  // coming), so it must not promise a follow-up. "The kitchen is starting on it
+  // now" is only true for an ASAP order the store can cook right away, so the
+  // body has THREE truthful shapes. Closed is checked first: a closed store's
+  // estimatedReady is a now+prep guess that falls inside its own closed hours,
+  // so pointing the customer at "the time shown below" would aim them at a time
+  // nobody will cook at — the closed note names the opening instead.
+  // Luigi 2026-08-11.
+  const acceptedBodyKey = placedWhileClosed
+    ? "email.orderConfirmed.bodyAcceptedClosed"
+    : scheduledLabel
+      ? "email.orderConfirmed.bodyAcceptedLater"
+      : "email.orderConfirmed.bodyAcceptedNow";
+  const headerTitleKey = alreadyAccepted
+    ? "email.orderConfirmed.headerTitleAccepted"
+    : "email.orderConfirmed.headerTitle";
+  const headerSubtitleKey = alreadyAccepted
+    ? "email.orderConfirmed.headerSubtitleAccepted"
+    : "email.orderConfirmed.headerSubtitle";
+
   return (
-    <EmailLayout preview={t("email.orderConfirmed.preview", { orderNumber })}>
+    <EmailLayout
+      preview={t(
+        alreadyAccepted ? "email.orderConfirmed.previewAccepted" : "email.orderConfirmed.preview",
+        { orderNumber },
+      )}
+    >
       <EmailHeader
         variant="status"
-        title={t("email.orderConfirmed.headerTitle")}
-        subtitle={t("email.orderConfirmed.headerSubtitle")}
+        title={t(headerTitleKey)}
+        subtitle={t(headerSubtitleKey)}
       />
       <EmailBody>
         {logoUrl ? (
@@ -171,10 +205,16 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
         <P>{t("email.orderConfirmed.greeting", { customerName })}</P>
         <P>
           {t("email.orderConfirmed.bodyThanks", { restaurantName })}{" "}
-          {t("email.orderConfirmed.bodyReceived", { orderNumber })}
-          {scheduledLabel
-            ? ""
-            : " " + t(followUpKey, { estimatedMinutes })}
+          {alreadyAccepted ? (
+            // No follow-up sentence: the exact ready/pickup/delivery instant is
+            // right below in the timing block, which beats "in 20 min".
+            t(acceptedBodyKey, { orderNumber })
+          ) : (
+            <>
+              {t("email.orderConfirmed.bodyReceived", { orderNumber })}
+              {scheduledLabel ? "" : " " + t(followUpKey, { estimatedMinutes })}
+            </>
+          )}
         </P>
 
         {/* Order timing — placed / prep / ready, with a clear SCHEDULED banner
@@ -336,9 +376,20 @@ export default function OrderConfirmation(props: OrderConfirmationProps) {
             generic. */}
         {placedWhileClosed && (
           <P size="sm">
-            {opensAtLabel
-              ? t("email.orderConfirmed.closedNoteWithTime", { openingTime: opensAtLabel })
-              : t("email.orderConfirmed.closedNote")}
+            {alreadyAccepted
+              ? // An auto-accepted order is NOT "queued awaiting an update" — it is
+                // already taken, and NOTHING fires at the named opening instant
+                // (the update this note used to promise WAS the kitchen-accept
+                // email, which auto-accept skips; no cron mails the customer at
+                // opening). Promising it a second time, three lines under a
+                // "confirmed" headline, is the same broken promise this change
+                // exists to kill. Luigi 2026-08-11.
+                opensAtLabel
+                ? t("email.orderConfirmed.closedNoteAcceptedWithTime", { openingTime: opensAtLabel })
+                : t("email.orderConfirmed.closedNoteAccepted")
+              : opensAtLabel
+                ? t("email.orderConfirmed.closedNoteWithTime", { openingTime: opensAtLabel })
+                : t("email.orderConfirmed.closedNote")}
           </P>
         )}
 

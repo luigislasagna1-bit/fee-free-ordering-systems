@@ -5875,7 +5875,16 @@
       "trackOrderButton": "Śledź swoje zamówienie",
       "contactRestaurantNote": "W razie pytań dotyczących zamówienia prosimy o bezpośredni kontakt z restauracją, korzystając z danych podanych poniżej.",
       "scheduledFor": "To zamówienie na później — zaplanowane na {time}.",
-      "tableReservation": "Stolik zarezerwowany dla {n} — {time}"
+      "tableReservation": "Stolik zarezerwowany dla {n} — {time}",
+      "subjectAccepted": "Zamówienie #{orderNumber} potwierdzone",
+      "previewAccepted": "Zamówienie #{orderNumber} potwierdzone przez restaurację",
+      "headerTitleAccepted": "Zamówienie potwierdzone",
+      "headerSubtitleAccepted": "Potwierdzone przez restaurację",
+      "bodyAcceptedNow": "Zamówienie #{orderNumber} jest potwierdzone, a kuchnia już się nim zajęła.",
+      "bodyAcceptedLater": "Zamówienie #{orderNumber} jest potwierdzone — jest zaplanowane na godzinę podaną poniżej.",
+      "bodyAcceptedClosed": "Zamówienie #{orderNumber} jest potwierdzone — kuchnia zajmie się nim po otwarciu restauracji.",
+      "closedNoteAccepted": "Restauracja jest teraz zamknięta, ale Twoje zamówienie jest już potwierdzone — kuchnia zajmie się nim po otwarciu.",
+      "closedNoteAcceptedWithTime": "Restauracja jest teraz zamknięta, ale Twoje zamówienie jest już potwierdzone — kuchnia zajmie się nim po otwarciu, {openingTime}."
     },
     "newOrder": {
       "preview": "{restaurant} — Zamówienie nr {orderNumber} — {total}",
