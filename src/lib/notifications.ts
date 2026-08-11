@@ -42,30 +42,51 @@ import {
 } from "@/lib/email";
 import type { EmailOrderItem } from "@/emails/components/EmailParts";
 import { sendSms } from "@/lib/sms";
+import { getDict } from "@/lib/i18n-dict";
 import { sendCustomerPush, customerWantsOrderPush } from "@/lib/customer-push";
 import { hasFeature } from "@/lib/entitlements";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { signActionToken } from "@/lib/order-status-token";
 
 /**
- * Build a short SMS body for a customer order event. Cap-160 friendly
- * (single-segment) for the common shapes; the SMS sender enforces a
- * 320-char hard cap as a safety net. We deliberately avoid putting the
- * tracking URL in pickup-ready / delivery-ready texts because most
- * customers tap the link, which then defeats the "the page already
- * told you" assumption — keep the texts informational + actionable.
+ * Build a short SMS body for a customer order event, IN THE CUSTOMER'S OWN
+ * LANGUAGE. Every body comes from the `sms.*` namespace in
+ * src/messages/<locale>.json — never a hardcoded English literal, which is
+ * what this builder shipped with until 2026-08-11 (harmless only because no
+ * restaurant had bought the `customer_sms` / `app_store_listing` add-ons yet).
+ * The same bodies feed branded-app PUSH notifications, so both channels speak
+ * the same language as the customer's emails.
+ *
+ * Cap-160 friendly (single-segment) for the common shapes in EVERY locale —
+ * src/lib/sms-i18n.test.ts holds the line; the SMS sender enforces a 320-char
+ * hard cap as a safety net. We deliberately avoid putting the tracking URL in
+ * pickup-ready / delivery-ready texts because most customers tap the link,
+ * which then defeats the "the page already told you" assumption — keep the
+ * texts informational + actionable.
+ *
+ * Adding a shape = add a key to `sms.*` in ALL 38 locales (see
+ * scripts/i18n-add-sms-keys.ts) — an English-only string here is a regression.
  */
-function buildCustomerSms(
+async function buildCustomerSms(
   restaurantName: string,
   payload: CustomerEventPayload,
   hoursFormat: "12h" | "24h" = "24h",
   timezone?: string,
-): string | null {
+  /** The customer's language — same value the emails are rendered in. */
+  locale?: string,
+): Promise<string | null> {
+  const t = await getDict(locale);
   // Format a Date's clock time per the restaurant's 12h/24h setting, IN THE
   // RESTAURANT'S TIMEZONE. Without the timeZone option this rendered in the
   // server's clock (UTC on Vercel), so an Italian store texted a time two hours
   // off — the same defect found in the delayed-order EMAIL. Fabrizio
   // cms0gyexp #16.
+  //
+  // The FORMATTING locale stays "en-US" on purpose even though the words around
+  // it are translated: it yields a stable digits-only "19:30" in 24h mode, and
+  // 12h mode is itself the English AM/PM convention the restaurant opted into.
+  // Rendering the clock in the customer's locale would hand some locales
+  // scripted forms ("午後7:30") that read worse in a 160-char text.
   const clock = (d: Date) =>
     d.toLocaleTimeString("en-US", {
       timeZone: timezone || "UTC",
@@ -73,39 +94,65 @@ function buildCustomerSms(
       minute: "2-digit",
       hour12: hoursFormat !== "24h",
     });
+  /** Every text is prefixed with the restaurant name — the customer needs to
+   *  know who is texting them before anything else, in any language. */
+  const line = (key: string, vars?: Record<string, string | number>) =>
+    `${restaurantName}: ${t(key, vars)}`;
   switch (payload.event) {
     case "orderConfirmed": {
       // Auto-accepted → no "accepted" text is ever coming (the order never
       // transitions), so promising one strands the customer. Same fix as the
       // email. Luigi 2026-08-11.
-      if (payload.alreadyAccepted) {
-        const eta = payload.estimatedReady ? clock(new Date(payload.estimatedReady)) : null;
-        return `${restaurantName}: Order #${payload.orderNumber} confirmed${eta ? ` — ready ~${eta}` : ""}. ${payload.trackingUrl ?? ""}`.trim();
-      }
-      return `${restaurantName}: Order #${payload.orderNumber} received. We'll text you when it's accepted. ${payload.trackingUrl ?? ""}`.trim();
+      const body = payload.alreadyAccepted
+        ? (() => {
+            const eta = payload.estimatedReady ? clock(new Date(payload.estimatedReady)) : null;
+            return eta
+              ? line("sms.orderConfirmedEta", { orderNumber: payload.orderNumber, time: eta })
+              : line("sms.orderConfirmed", { orderNumber: payload.orderNumber });
+          })()
+        : line("sms.orderReceived", { orderNumber: payload.orderNumber });
+      return payload.trackingUrl ? `${body} ${payload.trackingUrl}` : body;
     }
     case "orderStatusUpdate": {
       const s = (payload.status ?? "").toLowerCase();
       if (s === "accepted") {
         const eta = payload.estimatedReady ? clock(new Date(payload.estimatedReady)) : null;
-        return `${restaurantName}: Order #${payload.orderNumber} accepted${eta ? ` — ready ~${eta}` : ""}.`;
+        return eta
+          ? line("sms.acceptedEta", { orderNumber: payload.orderNumber, time: eta })
+          : line("sms.accepted", { orderNumber: payload.orderNumber });
       }
-      if (s === "ready") return `${restaurantName}: Order #${payload.orderNumber} is ready for pickup!`;
-      if (s === "completed") return `${restaurantName}: Order #${payload.orderNumber} is complete. Thanks!`;
+      if (s === "ready") return line("sms.ready", { orderNumber: payload.orderNumber });
+      if (s === "completed") return line("sms.completed", { orderNumber: payload.orderNumber });
       if (s === "rejected" || s === "cancelled" || s === "canceled") {
         // A timed-out order is auto-rejected → tell the customer it was "missed",
         // and never echo the internal "Auto-rejected:" reason. Luigi 2026-06-09.
         const autoMissed = s === "rejected" && (payload.rejectionReason?.startsWith("Auto-rejected") ?? false);
-        if (autoMissed) {
-          return `${restaurantName}: Sorry — we couldn't get to Order #${payload.orderNumber} in time. If you paid online, you won't be charged.`;
+        if (autoMissed) return line("sms.missed", { orderNumber: payload.orderNumber });
+        // The reason is staff-typed free text — it can only ride along verbatim,
+        // so it gets its own key rather than being glued onto the translated
+        // sentence (punctuation and clause order differ per language).
+        const rejected = s === "rejected";
+        if (payload.rejectionReason) {
+          return line(rejected ? "sms.rejectedReason" : "sms.cancelledReason", {
+            orderNumber: payload.orderNumber,
+            reason: payload.rejectionReason,
+          });
         }
-        return `${restaurantName}: Order #${payload.orderNumber} was ${s}${payload.rejectionReason ? ` — ${payload.rejectionReason}` : ""}.`;
+        return line(rejected ? "sms.rejected" : "sms.cancelled", { orderNumber: payload.orderNumber });
       }
       return null;
     }
     case "orderDelayed": {
       const eta = payload.newEstimatedReady ? clock(new Date(payload.newEstimatedReady)) : null;
-      return `${restaurantName}: Heads up — order #${payload.orderNumber} is delayed about ${payload.delayMinutes} minutes${eta ? `, new ETA ~${eta}` : ""}.${payload.reason ? ` ${payload.reason}` : ""}`;
+      const body = eta
+        ? line("sms.delayedEta", {
+            orderNumber: payload.orderNumber,
+            minutes: payload.delayMinutes,
+            time: eta,
+          })
+        : line("sms.delayed", { orderNumber: payload.orderNumber, minutes: payload.delayMinutes });
+      // Staff-typed reason trails as its own sentence, verbatim.
+      return payload.reason ? `${body} ${payload.reason}` : body;
     }
     case "reservationConfirmation": {
       // Respect the status — previously this always said "confirmed", so a
@@ -113,17 +160,21 @@ function buildCustomerSms(
       // "missed" = auto-declined for not being accepted in time; mirror the
       // kind "couldn't get to it in time" tone of a missed order, and never
       // imply the restaurant actively turned them away. Luigi 2026-06-16.
-      const when = `${payload.date} at ${formatTime(payload.time, hoursFormat)}`;
-      if (payload.status === "missed") {
-        return `${restaurantName}: Sorry — we couldn't get to your reservation for ${payload.partySize} on ${when} in time. Please try another time or contact us.`;
-      }
-      if (payload.status === "declined") {
-        return `${restaurantName}: Sorry — we couldn't confirm your reservation for ${payload.partySize} on ${when}. Please try another time or contact us.`;
-      }
+      // "cancelled" (guest self-cancel) fell through to the confirmed branch
+      // and texted "confirmed" to someone who had just cancelled — it now has
+      // its own shape, matching what the EMAIL has always done. Luigi 2026-08-11.
+      const when = {
+        partySize: payload.partySize,
+        date: payload.date,
+        time: formatTime(payload.time, hoursFormat),
+      };
+      if (payload.status === "missed") return line("sms.reservationMissed", when);
+      if (payload.status === "declined") return line("sms.reservationDeclined", when);
+      if (payload.status === "cancelled") return line("sms.reservationCancelled", when);
       if (payload.status === "requested") {
-        return `${restaurantName}: Reservation request for ${payload.partySize} on ${when} received — pending confirmation. Code ${payload.confirmationCode}.`;
+        return line("sms.reservationRequested", { ...when, code: payload.confirmationCode });
       }
-      return `${restaurantName}: Reservation for ${payload.partySize} on ${when} confirmed. Code ${payload.confirmationCode}.`;
+      return line("sms.reservationConfirmed", { ...when, code: payload.confirmationCode });
     }
     default:
       return null;
@@ -802,11 +853,34 @@ export async function notifyCustomer(args: {
   // — SMS Notifications is a paid add-on at $19.99/mo, separately
   // billed; restaurants without the add-on get email-only).
   let smsDispatched = false;
+
+  // The short body is shared by SMS and branded-app push, so build it AT MOST
+  // ONCE per notifyCustomer — and only after an entitlement check has passed,
+  // so a restaurant on neither add-on never pays for the dictionary load on the
+  // order-placement hot path. (getDict caches per locale process-wide, so the
+  // load is a Map hit after the first send anyway.)
+  let shortBodyCache: string | null | undefined;
+  const shortBody = async (): Promise<string | null> => {
+    if (shortBodyCache === undefined) {
+      shortBodyCache = await buildCustomerSms(
+        restaurant.name,
+        payload,
+        restaurant.hoursFormat === "12h" ? "12h" : "24h",
+        (restaurant as any).timezone || undefined,
+        // The customer's language — it was resolved a few lines above all
+        // along, and simply never passed in. That is what left every text
+        // English-only until 2026-08-11.
+        locale,
+      );
+    }
+    return shortBodyCache;
+  };
+
   const fireSms = async () => {
     if (!customerPhone) return;
     const entitled = await hasFeature(restaurantId, "customer_sms");
     if (!entitled) return;
-    const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h", (restaurant as any).timezone || undefined);
+    const body = await shortBody();
     if (!body) return;
     try {
       const r = await sendSms({ to: customerPhone, body });
@@ -820,7 +894,9 @@ export async function notifyCustomer(args: {
   };
 
   // Branded-app push closure — the customer sibling of fireSms, riding the
-  // SAME localized short-message builder so push/SMS wording never diverges.
+  // SAME short-message builder so push/SMS wording never diverges. Since
+  // 2026-08-11 that builder really is localized (it was English-only before,
+  // despite this comment), so the push lands in the customer's language too.
   // Gates: branded_mobile_app entitlement + the customer's orderUpdates pref.
   // Fire-and-forget: a push failure must never affect the email result.
   // Luigi 2026-08-02.
@@ -829,7 +905,7 @@ export async function notifyCustomer(args: {
     try {
       if (!(await hasFeature(restaurantId, "app_store_listing"))) return;
       if (!(await customerWantsOrderPush(args.customerId))) return;
-      const body = buildCustomerSms(restaurant.name, payload, restaurant.hoursFormat === "12h" ? "12h" : "24h", (restaurant as any).timezone || undefined);
+      const body = await shortBody();
       if (!body) return;
       const data: Record<string, string> = {};
       if ("trackingUrl" in payload && typeof payload.trackingUrl === "string" && payload.trackingUrl) {

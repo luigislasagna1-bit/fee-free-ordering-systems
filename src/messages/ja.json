@@ -7959,5 +7959,26 @@
       "narrowRange": "一度に表示できる上限に達しました。期間を絞り込むか、店舗や種類で絞り込んでください。",
       "mixedCurrencyNote": "複数の通貨を使用する店舗があるため、各合計はその店舗の通貨で表示され、合計同士が合算されることはありません。"
     }
+  },
+  "sms": {
+    "orderReceived": "注文 #{orderNumber} を受け付けました。確定しましたらSMSでお知らせします。",
+    "orderConfirmed": "注文 #{orderNumber} が確定しました。",
+    "orderConfirmedEta": "注文 #{orderNumber} が確定しました - {time} 頃に仕上がります。",
+    "accepted": "注文 #{orderNumber} をお受けしました。",
+    "acceptedEta": "注文 #{orderNumber} をお受けしました - {time} 頃に仕上がります。",
+    "ready": "ご注文 #{orderNumber} の準備ができました!",
+    "completed": "ご注文 #{orderNumber} が完了しました。ありがとうございました!",
+    "missed": "申し訳ありません。注文 #{orderNumber} を時間内にお受けできませんでした。オンライン決済の場合、請求はされません。",
+    "rejected": "注文 #{orderNumber} を承ることができませんでした。",
+    "rejectedReason": "注文 #{orderNumber} を承ることができませんでした - {reason}",
+    "cancelled": "注文 #{orderNumber} はキャンセルされました。",
+    "cancelledReason": "注文 #{orderNumber} はキャンセルされました - {reason}",
+    "delayed": "お知らせ: 注文 #{orderNumber} は約 {minutes} 分遅れています。",
+    "delayedEta": "お知らせ: 注文 #{orderNumber} は約 {minutes} 分遅れています。新しい予定は {time} 頃です。",
+    "reservationRequested": "{date} {time} に {partySize} 名のご予約リクエストを受け付けました - 確定待ちです。予約番号 {code}",
+    "reservationConfirmed": "{date} {time} に {partySize} 名のご予約が確定しました。予約番号 {code}",
+    "reservationDeclined": "申し訳ありません。{date} {time} の {partySize} 名のご予約を確定できませんでした。別のお時間をお試しください。",
+    "reservationMissed": "申し訳ありません。{date} {time} の {partySize} 名のご予約を時間内に処理できませんでした。別のお時間をお試しください。",
+    "reservationCancelled": "{date} {time} の {partySize} 名のご予約はキャンセルされました。"
   }
 }

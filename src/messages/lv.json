@@ -7959,5 +7959,26 @@
       "narrowRange": "Esat sasniedzis robežu, cik varam parādīt vienlaikus. Sašauriniet datumu diapazonu vai filtrējiet pēc restorāna vai veida.",
       "mixedCurrencyNote": "Jūsu restorāni izmanto vairāk nekā vienu valūtu, tāpēc katra summa tiek rādīta sava restorāna valūtā un summas nekad netiek saskaitītas kopā."
     }
+  },
+  "sms": {
+    "orderReceived": "Pasūtījums #{orderNumber} saņemts. Nosūtīsim SMS, tiklīdz tas būs pieņemts.",
+    "orderConfirmed": "Pasūtījums #{orderNumber} apstiprināts.",
+    "orderConfirmedEta": "Pasūtījums #{orderNumber} apstiprināts - gatavs ap {time}.",
+    "accepted": "Pasūtījums #{orderNumber} pieņemts.",
+    "acceptedEta": "Pasūtījums #{orderNumber} pieņemts - gatavs ap {time}.",
+    "ready": "Jūsu pasūtījums #{orderNumber} ir gatavs!",
+    "completed": "Jūsu pasūtījums #{orderNumber} ir pabeigts. Paldies!",
+    "missed": "Atvainojamies, nepaspējām laikus apstrādāt pasūtījumu #{orderNumber}. Ja maksājāt tiešsaistē, nauda netiks ieturēta.",
+    "rejected": "Pasūtījums #{orderNumber} netika pieņemts.",
+    "rejectedReason": "Pasūtījums #{orderNumber} netika pieņemts - {reason}",
+    "cancelled": "Pasūtījums #{orderNumber} ir atcelts.",
+    "cancelledReason": "Pasūtījums #{orderNumber} ir atcelts - {reason}",
+    "delayed": "Uzmanību: pasūtījums #{orderNumber} kavējas aptuveni {minutes} min.",
+    "delayedEta": "Uzmanību: pasūtījums #{orderNumber} kavējas aptuveni {minutes} min. Jaunais laiks ap {time}.",
+    "reservationRequested": "Rezervācijas pieprasījums {partySize} pers. {date} plkst. {time} saņemts - gaida apstiprinājumu. Kods {code}",
+    "reservationConfirmed": "Rezervācija {partySize} pers. {date} plkst. {time} apstiprināta. Kods {code}",
+    "reservationDeclined": "Atvainojamies, nevarējām apstiprināt rezervāciju {partySize} pers. {date} plkst. {time}. Izvēlieties citu laiku.",
+    "reservationMissed": "Atvainojamies, nepaspējām laikus apstrādāt rezervāciju {partySize} pers. {date} plkst. {time}. Izvēlieties citu laiku.",
+    "reservationCancelled": "Jūsu rezervācija {partySize} pers. {date} plkst. {time} ir atcelta."
   }
 }

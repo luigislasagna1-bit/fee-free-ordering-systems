@@ -7959,5 +7959,26 @@
       "narrowRange": "Je hebt het maximum bereikt van wat we in één keer kunnen tonen. Verklein het datumbereik, of filter op restaurant of type, om meer te zien.",
       "mixedCurrencyNote": "Je restaurants gebruiken meer dan één valuta, dus elk totaal wordt getoond in de valuta van het eigen restaurant en totalen worden nooit bij elkaar opgeteld."
     }
+  },
+  "sms": {
+    "orderReceived": "Bestelling #{orderNumber} ontvangen. We sms'en u zodra deze is geaccepteerd.",
+    "orderConfirmed": "Bestelling #{orderNumber} bevestigd.",
+    "orderConfirmedEta": "Bestelling #{orderNumber} bevestigd - klaar rond {time}.",
+    "accepted": "Bestelling #{orderNumber} geaccepteerd.",
+    "acceptedEta": "Bestelling #{orderNumber} geaccepteerd - klaar rond {time}.",
+    "ready": "Uw bestelling #{orderNumber} is klaar!",
+    "completed": "Uw bestelling #{orderNumber} is voltooid. Bedankt!",
+    "missed": "Sorry, we konden bestelling #{orderNumber} niet op tijd behandelen. Als u online hebt betaald, wordt er niets afgeschreven.",
+    "rejected": "Bestelling #{orderNumber} is niet geaccepteerd.",
+    "rejectedReason": "Bestelling #{orderNumber} is niet geaccepteerd - {reason}",
+    "cancelled": "Bestelling #{orderNumber} is geannuleerd.",
+    "cancelledReason": "Bestelling #{orderNumber} is geannuleerd - {reason}",
+    "delayed": "Let op: bestelling #{orderNumber} loopt ongeveer {minutes} min achter.",
+    "delayedEta": "Let op: bestelling #{orderNumber} loopt ongeveer {minutes} min achter. Nieuwe tijd rond {time}.",
+    "reservationRequested": "Reserveringsverzoek voor {partySize} pers. op {date} om {time} ontvangen - wacht op bevestiging. Code {code}",
+    "reservationConfirmed": "Reservering voor {partySize} pers. op {date} om {time} bevestigd. Code {code}",
+    "reservationDeclined": "Sorry, we konden uw reservering voor {partySize} pers. op {date} om {time} niet bevestigen. Probeer een ander tijdstip.",
+    "reservationMissed": "Sorry, we konden uw reservering voor {partySize} pers. op {date} om {time} niet op tijd behandelen. Probeer een ander tijdstip.",
+    "reservationCancelled": "Uw reservering voor {partySize} pers. op {date} om {time} is geannuleerd."
   }
 }

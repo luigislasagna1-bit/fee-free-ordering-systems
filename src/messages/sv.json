@@ -7959,5 +7959,26 @@
       "narrowRange": "Du har nått så långt vi kan bläddra på en gång. Begränsa datumintervallet, eller filtrera på restaurang eller typ, för att se mer.",
       "mixedCurrencyNote": "Dina restauranger använder mer än en valuta, så varje summa visas i sin egen restaurangs valuta och summor läggs aldrig ihop."
     }
+  },
+  "sms": {
+    "orderReceived": "Beställning #{orderNumber} mottagen. Vi skickar ett sms så snart den accepterats.",
+    "orderConfirmed": "Beställning #{orderNumber} bekräftad.",
+    "orderConfirmedEta": "Beställning #{orderNumber} bekräftad - klar omkring {time}.",
+    "accepted": "Beställning #{orderNumber} accepterad.",
+    "acceptedEta": "Beställning #{orderNumber} accepterad - klar omkring {time}.",
+    "ready": "Din beställning #{orderNumber} är klar!",
+    "completed": "Din beställning #{orderNumber} är slutförd. Tack!",
+    "missed": "Tyvärr hann vi inte ta emot beställning #{orderNumber} i tid. Har du betalat online dras inga pengar.",
+    "rejected": "Beställning #{orderNumber} accepterades inte.",
+    "rejectedReason": "Beställning #{orderNumber} accepterades inte - {reason}",
+    "cancelled": "Beställning #{orderNumber} har avbrutits.",
+    "cancelledReason": "Beställning #{orderNumber} har avbrutits - {reason}",
+    "delayed": "Obs: beställning #{orderNumber} är ca {minutes} min försenad.",
+    "delayedEta": "Obs: beställning #{orderNumber} är ca {minutes} min försenad. Ny tid omkring {time}.",
+    "reservationRequested": "Bokningsförfrågan för {partySize} pers. den {date} kl. {time} mottagen - inväntar bekräftelse. Kod {code}",
+    "reservationConfirmed": "Bokning för {partySize} pers. den {date} kl. {time} bekräftad. Kod {code}",
+    "reservationDeclined": "Tyvärr kunde vi inte bekräfta din bokning för {partySize} pers. den {date} kl. {time}. Prova en annan tid.",
+    "reservationMissed": "Tyvärr hann vi inte behandla din bokning för {partySize} pers. den {date} kl. {time} i tid. Prova en annan tid.",
+    "reservationCancelled": "Din bokning för {partySize} pers. den {date} kl. {time} är avbokad."
   }
 }

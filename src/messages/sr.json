@@ -7959,5 +7959,26 @@
       "narrowRange": "Dostigli ste granicu onoga što možemo prikazati odjednom. Suzite raspon datuma ili filtrirajte po restoranu ili tipu.",
       "mixedCurrencyNote": "Vaši restorani koriste više od jedne valute, pa se svaki iznos prikazuje u valuti svog restorana i iznosi se nikada ne sabiraju."
     }
+  },
+  "sms": {
+    "orderReceived": "Porudžbina #{orderNumber} je primljena. Poslaćemo SMS čim bude prihvaćena.",
+    "orderConfirmed": "Porudžbina #{orderNumber} je potvrđena.",
+    "orderConfirmedEta": "Porudžbina #{orderNumber} je potvrđena - gotova oko {time}.",
+    "accepted": "Porudžbina #{orderNumber} je prihvaćena.",
+    "acceptedEta": "Porudžbina #{orderNumber} je prihvaćena - gotova oko {time}.",
+    "ready": "Vaša porudžbina #{orderNumber} je spremna!",
+    "completed": "Vaša porudžbina #{orderNumber} je završena. Hvala!",
+    "missed": "Žao nam je, nismo stigli da obradimo porudžbinu #{orderNumber} na vreme. Ako ste platili onlajn, nećete biti naplaćeni.",
+    "rejected": "Porudžbina #{orderNumber} nije prihvaćena.",
+    "rejectedReason": "Porudžbina #{orderNumber} nije prihvaćena - {reason}",
+    "cancelled": "Porudžbina #{orderNumber} je otkazana.",
+    "cancelledReason": "Porudžbina #{orderNumber} je otkazana - {reason}",
+    "delayed": "Napomena: porudžbina #{orderNumber} kasni oko {minutes} min.",
+    "delayedEta": "Napomena: porudžbina #{orderNumber} kasni oko {minutes} min. Novo vreme oko {time}.",
+    "reservationRequested": "Zahtev za rezervaciju za {partySize} os. {date} u {time} je primljen - čeka potvrdu. Kod {code}",
+    "reservationConfirmed": "Rezervacija za {partySize} os. {date} u {time} je potvrđena. Kod {code}",
+    "reservationDeclined": "Žao nam je, nismo mogli da potvrdimo rezervaciju za {partySize} os. {date} u {time}. Pokušajte drugi termin.",
+    "reservationMissed": "Žao nam je, nismo stigli da obradimo rezervaciju za {partySize} os. {date} u {time} na vreme. Pokušajte drugi termin.",
+    "reservationCancelled": "Vaša rezervacija za {partySize} os. {date} u {time} je otkazana."
   }
 }

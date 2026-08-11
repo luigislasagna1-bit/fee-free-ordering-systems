@@ -7959,5 +7959,26 @@
       "narrowRange": "คุณดูครบเท่าที่เราแสดงได้ในครั้งเดียวแล้ว กรุณาลดช่วงวันที่ หรือกรองตามร้านหรือประเภท เพื่อดูเพิ่มเติม",
       "mixedCurrencyNote": "ร้านของคุณใช้สกุลเงินมากกว่าหนึ่งสกุล ยอดรวมแต่ละรายการจึงแสดงในสกุลเงินของร้านนั้น ๆ และจะไม่ถูกนำมารวมกัน"
     }
+  },
+  "sms": {
+    "orderReceived": "รับออร์เดอร์ #{orderNumber} แล้ว เราจะส่ง SMS เมื่อร้านรับออร์เดอร์",
+    "orderConfirmed": "ยืนยันออร์เดอร์ #{orderNumber} แล้ว",
+    "orderConfirmedEta": "ยืนยันออร์เดอร์ #{orderNumber} แล้ว - พร้อมประมาณ {time}",
+    "accepted": "ร้านรับออร์เดอร์ #{orderNumber} แล้ว",
+    "acceptedEta": "ร้านรับออร์เดอร์ #{orderNumber} แล้ว - พร้อมประมาณ {time}",
+    "ready": "ออร์เดอร์ #{orderNumber} ของคุณพร้อมแล้ว!",
+    "completed": "ออร์เดอร์ #{orderNumber} ของคุณเสร็จสมบูรณ์ ขอบคุณครับ",
+    "missed": "ขออภัย เราไม่สามารถรับออร์เดอร์ #{orderNumber} ได้ทัน หากคุณชำระเงินออนไลน์ จะไม่มีการเรียกเก็บเงิน",
+    "rejected": "ออร์เดอร์ #{orderNumber} ไม่ได้รับการยอมรับ",
+    "rejectedReason": "ออร์เดอร์ #{orderNumber} ไม่ได้รับการยอมรับ - {reason}",
+    "cancelled": "ออร์เดอร์ #{orderNumber} ถูกยกเลิก",
+    "cancelledReason": "ออร์เดอร์ #{orderNumber} ถูกยกเลิก - {reason}",
+    "delayed": "แจ้งเตือน: ออร์เดอร์ #{orderNumber} ล่าช้าประมาณ {minutes} นาที",
+    "delayedEta": "แจ้งเตือน: ออร์เดอร์ #{orderNumber} ล่าช้าประมาณ {minutes} นาที เวลาใหม่ประมาณ {time}",
+    "reservationRequested": "รับคำขอจองสำหรับ {partySize} คน วันที่ {date} เวลา {time} แล้ว - รอการยืนยัน รหัส {code}",
+    "reservationConfirmed": "ยืนยันการจองสำหรับ {partySize} คน วันที่ {date} เวลา {time} แล้ว รหัส {code}",
+    "reservationDeclined": "ขออภัย เราไม่สามารถยืนยันการจองสำหรับ {partySize} คน วันที่ {date} เวลา {time} ได้ กรุณาเลือกเวลาอื่น",
+    "reservationMissed": "ขออภัย เราดำเนินการจองสำหรับ {partySize} คน วันที่ {date} เวลา {time} ไม่ทัน กรุณาเลือกเวลาอื่น",
+    "reservationCancelled": "การจองสำหรับ {partySize} คน วันที่ {date} เวลา {time} ถูกยกเลิกแล้ว"
   }
 }

@@ -7959,5 +7959,26 @@
       "narrowRange": "Elérte azt a határt, ameddig egyszerre lapozhatunk. Szűkítse az időszakot, vagy szűrjön étteremre vagy típusra, hogy többet lásson.",
       "mixedCurrencyNote": "Éttermei többféle pénznemet használnak, ezért minden összeg a saját éttermének pénznemében jelenik meg, és az összegeket soha nem adjuk össze."
     }
+  },
+  "sms": {
+    "orderReceived": "A #{orderNumber}. rendelés beérkezett. SMS-t küldünk, amint visszaigazolják.",
+    "orderConfirmed": "A #{orderNumber}. rendelés visszaigazolva.",
+    "orderConfirmedEta": "A #{orderNumber}. rendelés visszaigazolva - kb. {time}-kor kész.",
+    "accepted": "A #{orderNumber}. rendelés elfogadva.",
+    "acceptedEta": "A #{orderNumber}. rendelés elfogadva - kb. {time}-kor kész.",
+    "ready": "A #{orderNumber}. rendelése elkészült!",
+    "completed": "A #{orderNumber}. rendelése teljesítve. Köszönjük!",
+    "missed": "Sajnáljuk, a #{orderNumber}. rendelést nem tudtuk időben átvenni. Ha online fizetett, nem terheljük meg.",
+    "rejected": "A #{orderNumber}. rendelést nem fogadták el.",
+    "rejectedReason": "A #{orderNumber}. rendelést nem fogadták el - {reason}",
+    "cancelled": "A #{orderNumber}. rendelést lemondták.",
+    "cancelledReason": "A #{orderNumber}. rendelést lemondták - {reason}",
+    "delayed": "Figyelem: a #{orderNumber}. rendelés kb. {minutes} percet késik.",
+    "delayedEta": "Figyelem: a #{orderNumber}. rendelés kb. {minutes} percet késik. Új időpont kb. {time}.",
+    "reservationRequested": "Foglalási kérelem {partySize} főre, {date} {time}-kor, beérkezett - visszaigazolásra vár. Kód {code}",
+    "reservationConfirmed": "Foglalás {partySize} főre, {date} {time}-kor, visszaigazolva. Kód {code}",
+    "reservationDeclined": "Sajnáljuk, a {date} {time} időpontra, {partySize} főre szóló foglalást nem tudtuk visszaigazolni. Válasszon másik időpontot.",
+    "reservationMissed": "Sajnáljuk, a {date} {time} időpontra, {partySize} főre szóló foglalást nem tudtuk időben feldolgozni. Válasszon másik időpontot.",
+    "reservationCancelled": "A {date} {time} időpontra, {partySize} főre szóló foglalását lemondtuk."
   }
 }

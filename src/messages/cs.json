@@ -7959,5 +7959,26 @@
       "narrowRange": "Dosáhli jste maxima, které lze najednou zobrazit. Zužte časové období nebo filtrujte podle restaurace či typu.",
       "mixedCurrencyNote": "Vaše restaurace používají více měn, proto se každý součet zobrazuje v měně dané restaurace a součty se nikdy nesčítají dohromady."
     }
+  },
+  "sms": {
+    "orderReceived": "Objednávku #{orderNumber} jsme obdrželi. Jakmile ji restaurace přijme, pošleme SMS.",
+    "orderConfirmed": "Objednávka #{orderNumber} potvrzena.",
+    "orderConfirmedEta": "Objednávka #{orderNumber} potvrzena - hotovo kolem {time}.",
+    "accepted": "Objednávka #{orderNumber} přijata.",
+    "acceptedEta": "Objednávka #{orderNumber} přijata - hotovo kolem {time}.",
+    "ready": "Vaše objednávka #{orderNumber} je připravena!",
+    "completed": "Vaše objednávka #{orderNumber} je dokončena. Děkujeme!",
+    "missed": "Omlouváme se, objednávku #{orderNumber} jsme nestihli vyřídit včas. Pokud jste platili online, nic vám nestrhneme.",
+    "rejected": "Objednávka #{orderNumber} nebyla přijata.",
+    "rejectedReason": "Objednávka #{orderNumber} nebyla přijata - {reason}",
+    "cancelled": "Objednávka #{orderNumber} byla zrušena.",
+    "cancelledReason": "Objednávka #{orderNumber} byla zrušena - {reason}",
+    "delayed": "Upozornění: objednávka #{orderNumber} má zpoždění asi {minutes} min.",
+    "delayedEta": "Upozornění: objednávka #{orderNumber} má zpoždění asi {minutes} min. Nový čas kolem {time}.",
+    "reservationRequested": "Žádost o rezervaci pro {partySize} os. dne {date} v {time} přijata - čeká na potvrzení. Kód {code}",
+    "reservationConfirmed": "Rezervace pro {partySize} os. dne {date} v {time} potvrzena. Kód {code}",
+    "reservationDeclined": "Omlouváme se, rezervaci pro {partySize} os. dne {date} v {time} jsme nemohli potvrdit. Zkuste jiný čas.",
+    "reservationMissed": "Omlouváme se, rezervaci pro {partySize} os. dne {date} v {time} jsme nestihli vyřídit včas. Zkuste jiný čas.",
+    "reservationCancelled": "Vaše rezervace pro {partySize} os. dne {date} v {time} byla zrušena."
   }
 }

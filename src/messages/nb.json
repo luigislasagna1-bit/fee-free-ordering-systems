@@ -7959,5 +7959,26 @@
       "narrowRange": "Du har nådd så langt vi kan bla på én gang. Snevre inn datoperioden, eller filtrer på restaurant eller type, for å se mer.",
       "mixedCurrencyNote": "Restaurantene dine bruker mer enn én valuta, så hver sum vises i sin egen restaurants valuta og summer legges aldri sammen."
     }
+  },
+  "sms": {
+    "orderReceived": "Bestilling #{orderNumber} mottatt. Vi sender deg en SMS så snart den er godtatt.",
+    "orderConfirmed": "Bestilling #{orderNumber} bekreftet.",
+    "orderConfirmedEta": "Bestilling #{orderNumber} bekreftet - klar rundt {time}.",
+    "accepted": "Bestilling #{orderNumber} godtatt.",
+    "acceptedEta": "Bestilling #{orderNumber} godtatt - klar rundt {time}.",
+    "ready": "Bestillingen din #{orderNumber} er klar!",
+    "completed": "Bestillingen din #{orderNumber} er fullført. Takk!",
+    "missed": "Beklager, vi rakk ikke bestilling #{orderNumber} i tide. Har du betalt på nett, blir du ikke belastet.",
+    "rejected": "Bestilling #{orderNumber} ble ikke godtatt.",
+    "rejectedReason": "Bestilling #{orderNumber} ble ikke godtatt - {reason}",
+    "cancelled": "Bestilling #{orderNumber} er avbestilt.",
+    "cancelledReason": "Bestilling #{orderNumber} er avbestilt - {reason}",
+    "delayed": "Obs: bestilling #{orderNumber} er ca. {minutes} min forsinket.",
+    "delayedEta": "Obs: bestilling #{orderNumber} er ca. {minutes} min forsinket. Ny tid rundt {time}.",
+    "reservationRequested": "Reservasjonsforespørsel for {partySize} pers. den {date} kl. {time} mottatt - venter på bekreftelse. Kode {code}",
+    "reservationConfirmed": "Reservasjon for {partySize} pers. den {date} kl. {time} bekreftet. Kode {code}",
+    "reservationDeclined": "Beklager, vi kunne ikke bekrefte reservasjonen din for {partySize} pers. den {date} kl. {time}. Prøv et annet tidspunkt.",
+    "reservationMissed": "Beklager, vi rakk ikke reservasjonen din for {partySize} pers. den {date} kl. {time} i tide. Prøv et annet tidspunkt.",
+    "reservationCancelled": "Reservasjonen din for {partySize} pers. den {date} kl. {time} er kansellert."
   }
 }

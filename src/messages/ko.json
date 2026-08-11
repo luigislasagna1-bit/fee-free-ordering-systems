@@ -7959,5 +7959,26 @@
       "narrowRange": "한 번에 조회할 수 있는 한도에 도달했습니다. 기간을 좁히거나 매장 또는 유형으로 필터링해 주세요.",
       "mixedCurrencyNote": "매장마다 통화가 달라 각 합계는 해당 매장의 통화로 표시되며, 합계끼리 더해지지 않습니다."
     }
+  },
+  "sms": {
+    "orderReceived": "주문 #{orderNumber}을(를) 접수했습니다. 수락되면 문자로 알려드립니다.",
+    "orderConfirmed": "주문 #{orderNumber}이(가) 확인되었습니다.",
+    "orderConfirmedEta": "주문 #{orderNumber}이(가) 확인되었습니다 - {time}쯤 준비됩니다.",
+    "accepted": "주문 #{orderNumber}이(가) 수락되었습니다.",
+    "acceptedEta": "주문 #{orderNumber}이(가) 수락되었습니다 - {time}쯤 준비됩니다.",
+    "ready": "주문 #{orderNumber}이(가) 준비되었습니다!",
+    "completed": "주문 #{orderNumber}이(가) 완료되었습니다. 감사합니다!",
+    "missed": "죄송합니다. 주문 #{orderNumber}을(를) 제때 처리하지 못했습니다. 온라인으로 결제하셨다면 청구되지 않습니다.",
+    "rejected": "주문 #{orderNumber}이(가) 수락되지 않았습니다.",
+    "rejectedReason": "주문 #{orderNumber}이(가) 수락되지 않았습니다 - {reason}",
+    "cancelled": "주문 #{orderNumber}이(가) 취소되었습니다.",
+    "cancelledReason": "주문 #{orderNumber}이(가) 취소되었습니다 - {reason}",
+    "delayed": "안내: 주문 #{orderNumber}이(가) 약 {minutes}분 지연되고 있습니다.",
+    "delayedEta": "안내: 주문 #{orderNumber}이(가) 약 {minutes}분 지연되고 있습니다. 새 예상 시간은 {time}쯤입니다.",
+    "reservationRequested": "{date} {time} {partySize}인 예약 요청을 접수했습니다 - 확인 대기 중. 코드 {code}",
+    "reservationConfirmed": "{date} {time} {partySize}인 예약이 확인되었습니다. 코드 {code}",
+    "reservationDeclined": "죄송합니다. {date} {time} {partySize}인 예약을 확인해 드리지 못했습니다. 다른 시간을 선택해 주세요.",
+    "reservationMissed": "죄송합니다. {date} {time} {partySize}인 예약을 제때 처리하지 못했습니다. 다른 시간을 선택해 주세요.",
+    "reservationCancelled": "{date} {time} {partySize}인 예약이 취소되었습니다."
   }
 }

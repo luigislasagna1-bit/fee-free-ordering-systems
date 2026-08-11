@@ -7959,5 +7959,26 @@
       "narrowRange": "Tek seferde gösterebileceğimiz sınıra ulaştınız. Daha fazlası için tarih aralığını daraltın ya da restorana veya türe göre filtreleyin.",
       "mixedCurrencyNote": "Restoranlarınız birden fazla para birimi kullanıyor; bu nedenle her toplam kendi restoranının para biriminde gösterilir ve toplamlar asla birbirine eklenmez."
     }
+  },
+  "sms": {
+    "orderReceived": "#{orderNumber} numaralı sipariş alındı. Onaylandığında size SMS göndereceğiz.",
+    "orderConfirmed": "#{orderNumber} numaralı sipariş onaylandı.",
+    "orderConfirmedEta": "#{orderNumber} numaralı sipariş onaylandı - yaklaşık {time} hazır olur.",
+    "accepted": "#{orderNumber} numaralı sipariş kabul edildi.",
+    "acceptedEta": "#{orderNumber} numaralı sipariş kabul edildi - yaklaşık {time} hazır olur.",
+    "ready": "#{orderNumber} numaralı siparişiniz hazır!",
+    "completed": "#{orderNumber} numaralı siparişiniz tamamlandı. Teşekkürler!",
+    "missed": "Üzgünüz, #{orderNumber} numaralı siparişe zamanında yetişemedik. Online ödediyseniz ücret alınmayacak.",
+    "rejected": "#{orderNumber} numaralı sipariş kabul edilmedi.",
+    "rejectedReason": "#{orderNumber} numaralı sipariş kabul edilmedi - {reason}",
+    "cancelled": "#{orderNumber} numaralı sipariş iptal edildi.",
+    "cancelledReason": "#{orderNumber} numaralı sipariş iptal edildi - {reason}",
+    "delayed": "Bilgi: #{orderNumber} numaralı sipariş yaklaşık {minutes} dk gecikiyor.",
+    "delayedEta": "Bilgi: #{orderNumber} numaralı sipariş yaklaşık {minutes} dk gecikiyor. Yeni saat yaklaşık {time}.",
+    "reservationRequested": "{date} {time} için {partySize} kişilik rezervasyon talebi alındı - onay bekleniyor. Kod {code}",
+    "reservationConfirmed": "{date} {time} için {partySize} kişilik rezervasyon onaylandı. Kod {code}",
+    "reservationDeclined": "Üzgünüz, {date} {time} için {partySize} kişilik rezervasyonunuzu onaylayamadık. Başka bir saat deneyin.",
+    "reservationMissed": "Üzgünüz, {date} {time} için {partySize} kişilik rezervasyonunuza zamanında yetişemedik. Başka bir saat deneyin.",
+    "reservationCancelled": "{date} {time} için {partySize} kişilik rezervasyonunuz iptal edildi."
   }
 }

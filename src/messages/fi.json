@@ -7959,5 +7959,26 @@
       "narrowRange": "Olet saavuttanut rajan, jonka voimme selata kerralla. Rajaa aikaväliä tai suodata ravintolan tai tyypin mukaan nähdäksesi lisää.",
       "mixedCurrencyNote": "Ravintoloissasi on käytössä useampi valuutta, joten jokainen summa näytetään oman ravintolansa valuutassa eikä summia lasketa koskaan yhteen."
     }
+  },
+  "sms": {
+    "orderReceived": "Tilaus #{orderNumber} vastaanotettu. Lähetämme tekstiviestin, kun se on hyväksytty.",
+    "orderConfirmed": "Tilaus #{orderNumber} vahvistettu.",
+    "orderConfirmedEta": "Tilaus #{orderNumber} vahvistettu - valmis noin klo {time}.",
+    "accepted": "Tilaus #{orderNumber} hyväksytty.",
+    "acceptedEta": "Tilaus #{orderNumber} hyväksytty - valmis noin klo {time}.",
+    "ready": "Tilauksesi #{orderNumber} on valmis!",
+    "completed": "Tilauksesi #{orderNumber} on toimitettu. Kiitos!",
+    "missed": "Pahoittelut, emme ehtineet käsitellä tilausta #{orderNumber} ajoissa. Jos maksoit verkossa, sinulta ei veloiteta.",
+    "rejected": "Tilausta #{orderNumber} ei hyväksytty.",
+    "rejectedReason": "Tilausta #{orderNumber} ei hyväksytty - {reason}",
+    "cancelled": "Tilaus #{orderNumber} on peruttu.",
+    "cancelledReason": "Tilaus #{orderNumber} on peruttu - {reason}",
+    "delayed": "Huom: tilaus #{orderNumber} on noin {minutes} min myöhässä.",
+    "delayedEta": "Huom: tilaus #{orderNumber} on noin {minutes} min myöhässä. Uusi aika noin klo {time}.",
+    "reservationRequested": "Varauspyyntö {partySize} hengelle {date} klo {time} vastaanotettu - odottaa vahvistusta. Koodi {code}",
+    "reservationConfirmed": "Varaus {partySize} hengelle {date} klo {time} vahvistettu. Koodi {code}",
+    "reservationDeclined": "Pahoittelut, emme voineet vahvistaa varaustasi {partySize} hengelle {date} klo {time}. Kokeile toista aikaa.",
+    "reservationMissed": "Pahoittelut, emme ehtineet käsitellä varaustasi {partySize} hengelle {date} klo {time} ajoissa. Kokeile toista aikaa.",
+    "reservationCancelled": "Varauksesi {partySize} hengelle {date} klo {time} on peruttu."
   }
 }

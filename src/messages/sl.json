@@ -7959,5 +7959,26 @@
       "narrowRange": "Dosegli ste mejo tega, kar lahko prikažemo naenkrat. Zožite časovno obdobje ali filtrirajte po restavraciji ali vrsti.",
       "mixedCurrencyNote": "Vaše restavracije uporabljajo več kot eno valuto, zato je vsak skupni znesek prikazan v valuti svoje restavracije in zneski se nikoli ne seštevajo."
     }
+  },
+  "sms": {
+    "orderReceived": "Naročilo #{orderNumber} je prejeto. Ko bo sprejeto, vam pošljemo SMS.",
+    "orderConfirmed": "Naročilo #{orderNumber} je potrjeno.",
+    "orderConfirmedEta": "Naročilo #{orderNumber} je potrjeno - pripravljeno okoli {time}.",
+    "accepted": "Naročilo #{orderNumber} je sprejeto.",
+    "acceptedEta": "Naročilo #{orderNumber} je sprejeto - pripravljeno okoli {time}.",
+    "ready": "Vaše naročilo #{orderNumber} je pripravljeno!",
+    "completed": "Vaše naročilo #{orderNumber} je zaključeno. Hvala!",
+    "missed": "Žal naročila #{orderNumber} nismo uspeli obdelati pravočasno. Če ste plačali na spletu, ne bo bremenitve.",
+    "rejected": "Naročilo #{orderNumber} ni bilo sprejeto.",
+    "rejectedReason": "Naročilo #{orderNumber} ni bilo sprejeto - {reason}",
+    "cancelled": "Naročilo #{orderNumber} je preklicano.",
+    "cancelledReason": "Naročilo #{orderNumber} je preklicano - {reason}",
+    "delayed": "Obvestilo: naročilo #{orderNumber} zamuja približno {minutes} min.",
+    "delayedEta": "Obvestilo: naročilo #{orderNumber} zamuja približno {minutes} min. Nov čas okoli {time}.",
+    "reservationRequested": "Zahteva za rezervacijo za {partySize} os. {date} ob {time} je prejeta - čaka potrditev. Koda {code}",
+    "reservationConfirmed": "Rezervacija za {partySize} os. {date} ob {time} je potrjena. Koda {code}",
+    "reservationDeclined": "Žal rezervacije za {partySize} os. {date} ob {time} nismo mogli potrditi. Poskusite drug termin.",
+    "reservationMissed": "Žal rezervacije za {partySize} os. {date} ob {time} nismo uspeli obdelati pravočasno. Poskusite drug termin.",
+    "reservationCancelled": "Vaša rezervacija za {partySize} os. {date} ob {time} je preklicana."
   }
 }

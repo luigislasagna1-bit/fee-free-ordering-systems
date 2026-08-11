@@ -7959,5 +7959,26 @@
       "narrowRange": "Osiągnięto limit tego, co możemy pokazać naraz. Zawęź zakres dat lub filtruj według restauracji albo typu, aby zobaczyć więcej.",
       "mixedCurrencyNote": "Twoje restauracje używają więcej niż jednej waluty, dlatego każda suma jest pokazywana w walucie swojej restauracji, a sumy nigdy nie są dodawane do siebie."
     }
+  },
+  "sms": {
+    "orderReceived": "Zamówienie #{orderNumber} przyjęte. Wyślemy SMS, gdy zostanie zaakceptowane.",
+    "orderConfirmed": "Zamówienie #{orderNumber} potwierdzone.",
+    "orderConfirmedEta": "Zamówienie #{orderNumber} potwierdzone - gotowe około {time}.",
+    "accepted": "Zamówienie #{orderNumber} zaakceptowane.",
+    "acceptedEta": "Zamówienie #{orderNumber} zaakceptowane - gotowe około {time}.",
+    "ready": "Twoje zamówienie #{orderNumber} jest gotowe!",
+    "completed": "Twoje zamówienie #{orderNumber} zostało zrealizowane. Dziękujemy!",
+    "missed": "Przepraszamy, nie zdążyliśmy przyjąć zamówienia #{orderNumber} na czas. Jeśli płacisz online, nie zostaniesz obciążony.",
+    "rejected": "Zamówienie #{orderNumber} nie zostało przyjęte.",
+    "rejectedReason": "Zamówienie #{orderNumber} nie zostało przyjęte - {reason}",
+    "cancelled": "Zamówienie #{orderNumber} zostało anulowane.",
+    "cancelledReason": "Zamówienie #{orderNumber} zostało anulowane - {reason}",
+    "delayed": "Uwaga: zamówienie #{orderNumber} jest opóźnione o około {minutes} min.",
+    "delayedEta": "Uwaga: zamówienie #{orderNumber} jest opóźnione o około {minutes} min. Nowa godzina około {time}.",
+    "reservationRequested": "Prośba o rezerwację dla {partySize} os. w dniu {date} o {time} przyjęta - czeka na potwierdzenie. Kod {code}",
+    "reservationConfirmed": "Rezerwacja dla {partySize} os. w dniu {date} o {time} potwierdzona. Kod {code}",
+    "reservationDeclined": "Przepraszamy, nie mogliśmy potwierdzić rezerwacji dla {partySize} os. w dniu {date} o {time}. Wybierz inną godzinę.",
+    "reservationMissed": "Przepraszamy, nie zdążyliśmy obsłużyć rezerwacji dla {partySize} os. w dniu {date} o {time}. Wybierz inną godzinę.",
+    "reservationCancelled": "Twoja rezerwacja dla {partySize} os. w dniu {date} o {time} została anulowana."
   }
 }

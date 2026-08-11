@@ -7959,5 +7959,26 @@
       "narrowRange": "Pasiekėte ribą, kiek galime parodyti iš karto. Susiaurinkite datų intervalą arba filtruokite pagal restoraną ar tipą.",
       "mixedCurrencyNote": "Jūsų restoranai naudoja daugiau nei vieną valiutą, todėl kiekviena suma rodoma savo restorano valiuta ir sumos niekada nesudedamos."
     }
+  },
+  "sms": {
+    "orderReceived": "Užsakymas #{orderNumber} gautas. Atsiųsime SMS, kai jis bus priimtas.",
+    "orderConfirmed": "Užsakymas #{orderNumber} patvirtintas.",
+    "orderConfirmedEta": "Užsakymas #{orderNumber} patvirtintas - bus paruoštas apie {time}.",
+    "accepted": "Užsakymas #{orderNumber} priimtas.",
+    "acceptedEta": "Užsakymas #{orderNumber} priimtas - bus paruoštas apie {time}.",
+    "ready": "Jūsų užsakymas #{orderNumber} paruoštas!",
+    "completed": "Jūsų užsakymas #{orderNumber} įvykdytas. Ačiū!",
+    "missed": "Atsiprašome, nespėjome laiku priimti užsakymo #{orderNumber}. Jei mokėjote internetu, pinigai nebus nuskaityti.",
+    "rejected": "Užsakymas #{orderNumber} nebuvo priimtas.",
+    "rejectedReason": "Užsakymas #{orderNumber} nebuvo priimtas - {reason}",
+    "cancelled": "Užsakymas #{orderNumber} atšauktas.",
+    "cancelledReason": "Užsakymas #{orderNumber} atšauktas - {reason}",
+    "delayed": "Dėmesio: užsakymas #{orderNumber} vėluoja apie {minutes} min.",
+    "delayedEta": "Dėmesio: užsakymas #{orderNumber} vėluoja apie {minutes} min. Naujas laikas apie {time}.",
+    "reservationRequested": "Rezervacijos užklausa {partySize} asm. {date} {time} gauta - laukiama patvirtinimo. Kodas {code}",
+    "reservationConfirmed": "Rezervacija {partySize} asm. {date} {time} patvirtinta. Kodas {code}",
+    "reservationDeclined": "Atsiprašome, negalėjome patvirtinti rezervacijos {partySize} asm. {date} {time}. Pasirinkite kitą laiką.",
+    "reservationMissed": "Atsiprašome, nespėjome laiku apdoroti rezervacijos {partySize} asm. {date} {time}. Pasirinkite kitą laiką.",
+    "reservationCancelled": "Jūsų rezervacija {partySize} asm. {date} {time} atšaukta."
   }
 }
