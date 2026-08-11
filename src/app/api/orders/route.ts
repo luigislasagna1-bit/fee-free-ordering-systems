@@ -12,7 +12,8 @@ import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { blockingServiceKind } from "@/lib/service-restriction";
 import { priceToppingLines, priceToppingLinesForDisplay, toppingBaseAdjust, isHalfToppingName } from "@/lib/pizza-topping-pricing";
 import { reportError } from "@/lib/report-error";
-import { findZoneForPoint, geocodeAddress, type ZoneLike } from "@/lib/geocode";
+import { findZoneForPoint, type ZoneLike } from "@/lib/geocode";
+import { resolveAddress } from "@/lib/nominatim";
 import {
   resolveDeliveryAddressConfig,
   firstMissingRequiredField,
@@ -1427,6 +1428,32 @@ export async function POST(req: NextRequest) {
       // 0 in legacy/per-option mode.
       const toppingBaseAdj = toppingEngine ? toppingBaseAdjust(toppingEngine) : 0;
 
+      // 🚨 VOICE BACKSTOP (2026-08-11). A phone order's pizzas are built by
+      // src/lib/voice/order-line-compiler.ts, which always emits the required
+      // groups — a compiled pizza line ALWAYS carries modifiers. A pizza line
+      // arriving from the voice channel with NONE of them is therefore a line
+      // the language model hand-wrote, which is precisely what the compiler
+      // exists to prevent. It happened on the first real pizza order
+      // (ORD-342105315): the restated copy had no toppings, so the base credit
+      // came off with nothing to offset it and a $17.74 pizza billed $14.99.
+      //
+      // Web orders are deliberately untouched: the customer-side builder can
+      // legitimately send a bare pizza when the store marks toppings optional.
+      if (
+        (body as { channel?: unknown })?.channel === "voice" &&
+        toppingEngine &&
+        toppingBaseAdj < 0 &&
+        validatedMods.length === 0
+      ) {
+        return NextResponse.json(
+          {
+            error: `"${menuItem.name}" has to be built with its toppings — it can't be added as a plain item.`,
+            code: "pizza_must_be_compiled",
+          },
+          { status: 400 },
+        );
+      }
+
       // Round the stored unit to 2dp — fp drift (9.99 + 15 = 24.990000000000002)
       // otherwise lands verbatim on receipts/exports.
       const unitPrice = Math.round(Math.max(0, basePrice + toppingBaseAdj + modTotal) * 100) / 100;
@@ -1693,10 +1720,23 @@ export async function POST(req: NextRequest) {
         where: { restaurantId: restaurant.id, isActive: true },
       });
       if (zones.length > 0 && restaurant.lat != null && restaurant.lng != null && flatAddress) {
-        const addrParts = [flatAddress, flatCity, flatZip].filter(Boolean).join(", ");
         // Reuse the pin coords if we have them; only geocode when we don't.
-        const coords = deliveryCoords ?? (await geocodeAddress(addrParts));
-        deliveryCoords = coords;
+        //
+        // resolveAddress (not the raw geocodeAddress) so the CHARGE resolves an
+        // address exactly the way the cart did — same country bias, same
+        // fallback ladder, same apartment-stripping rung, same cache. Two
+        // different geocoders here meant the cart could say "$7.99, no zone"
+        // while the charge found a zone (or the reverse), which is how a
+        // qualifying order got billed for delivery. preciseOnly: a city-centroid
+        // pin would drop every customer into the innermost zone.
+        // Luigi 2026-08-11 (Ben Bilton).
+        const coords =
+          deliveryCoords ??
+          (await resolveAddress(
+            { address: flatAddress, city: flatCity, zip: flatZip, country: restaurant.country },
+            { preciseOnly: true },
+          ));
+        deliveryCoords = coords ? { lat: coords.lat, lng: coords.lng } : null;
         if (coords) {
           const resolved = findZoneForPoint(
             zones as unknown as ZoneLike[],
@@ -1742,8 +1782,25 @@ export async function POST(req: NextRequest) {
       // named, it is stamped on the order, the kitchen is told the area is
       // unverified, and zone-restricted promos are HONOURED rather than refused.
       // Luigi's call: our failure must not cost the customer their deal.
+      //
+      // 2026-08-11 (Luigi, Ben Bilton's report): this state should now be all
+      // but unreachable through the normal flow. The ordering page blocks Place
+      // Order on an address it can't locate (isAddressNotLocated, with a
+      // pin-drop escape hatch), AND it now forwards the coordinates it resolved
+      // instead of dropping them — previously a customer who merely TYPED their
+      // address sent nothing and this route had to geocode again from scratch,
+      // so one flaky lookup produced a zoneless order. Reaching here means a
+      // stale tab, a crafted request, or a genuine outage, so it is logged: a
+      // recurring line here means the client-side gate has regressed.
       deliveryZoneUnverified =
         zones.length > 0 && !resolvedZoneId && !outsideDeliveryZone;
+      if (deliveryZoneUnverified) {
+        console.warn(
+          `[orders] delivery zone UNVERIFIED — restaurant=${restaurant.id} address=${JSON.stringify(flatAddress)} city=${JSON.stringify(flatCity)}. ` +
+            `Order accepted and zone-restricted promos honoured, but it carries no delivery zone. ` +
+            `Expected to be unreachable via the ordering page — check the address gate if this repeats.`,
+        );
+      }
 
       // Out-of-zone delivery guard (stabilization H3): the client refuses a
       // delivery to an address outside every zone when the restaurant hasn't

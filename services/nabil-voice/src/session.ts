@@ -180,6 +180,18 @@ export class CallSession {
       // the end log instead of discarding it.
       this.customerId =
         typeof (returningCaller as any)?.customerId === "string" ? (returningCaller as any).customerId : null;
+      // Which items may ONLY reach an order through the compiler. Collected
+      // once here so place_order can refuse a hand-written pizza — on
+      // 2026-08-11 the model added a pizza with add_pizza AND restated it in
+      // `items`, and the caller was charged twice, the second copy priced below
+      // list because it carried no toppings.
+      this.ctx.builderItemIds = new Set(
+        ((menu as any)?.menu ?? []).flatMap((cat: any) =>
+          (cat?.items ?? [])
+            .filter((it: any) => it?.isPizza || it?.isCombo)
+            .map((it: any) => String(it.menuItemId)),
+        ),
+      );
       this.system = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg });
     } catch (e) {
       console.error("[nabil-voice] init failed", e);

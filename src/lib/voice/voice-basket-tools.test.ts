@@ -250,3 +250,79 @@ describe("quote_order prices what place_order will charge", () => {
     expect(charged.customerPhone).toBe(quoted.customerPhone);
   });
 });
+
+/**
+ * ORD-342105315, 2026-08-11 — the first real pizza order Luigi placed by phone.
+ * The model called add_pizza AND restated the same pizza in place_order's
+ * `items`, so the kitchen got two pizzas and the caller was quoted $36.98 for
+ * one. The restated copy carried no modifiers, so the included-topping credit
+ * came off with nothing to pay for it: $17.74 billed as $14.99.
+ *
+ * The adversarial review raised exactly this and two skeptics talked me out of
+ * it. It is pinned here so nobody can be talked out of it again.
+ */
+describe("a pizza can never reach the order as a hand-written item", () => {
+  const withBuilders = () => {
+    const c = ctx();
+    (c as { builderItemIds?: Set<string> }).builderItemIds = new Set(["mi_pizza", "mi_combo"]);
+    return c;
+  };
+
+  it("drops a pizza the model restates in `items` alongside the compiled one", async () => {
+    const c = withBuilders();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large 1 Topping with Pepperoni", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] }, c);
+
+    await executeTool(
+      "place_order",
+      {
+        type: "pickup",
+        customerName: "Sam Phone",
+        // exactly what the model did on the live call
+        items: [{ menuItemId: "mi_pizza", quantity: 1 }],
+      },
+      c,
+    );
+
+    const sent = apiMock.placeOrder.mock.calls[0][0] as { items: Array<{ menuItemId: string }> };
+    expect(sent.items).toHaveLength(1);
+    expect(sent.items[0]).toHaveProperty("modifiers"); // the COMPILED line, not the bare one
+  });
+
+  it("drops a pizza even when nothing was compiled — it must go through add_pizza", async () => {
+    const c = withBuilders();
+    const out = (await executeTool(
+      "place_order",
+      { type: "pickup", customerName: "Sam Phone", items: [{ menuItemId: "mi_pizza", quantity: 1 }] },
+      c,
+    )) as Record<string, unknown>;
+    expect(out.code).toBe("empty_order");
+    expect(apiMock.placeOrder).not.toHaveBeenCalled();
+  });
+
+  it("still lets a simple item through", async () => {
+    const c = withBuilders();
+    await executeTool(
+      "place_order",
+      { type: "pickup", customerName: "Sam Phone", items: [{ menuItemId: "mi_coke", quantity: 2 }] },
+      c,
+    );
+    const sent = apiMock.placeOrder.mock.calls[0][0] as { items: Array<{ menuItemId: string }> };
+    expect(sent.items.map((i) => i.menuItemId)).toEqual(["mi_coke"]);
+  });
+
+  it("quote_order drops it too, so the spoken total matches what gets charged", async () => {
+    const c = withBuilders();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large 1 Topping", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+    await executeTool("quote_order", { type: "pickup", items: [{ menuItemId: "mi_pizza", quantity: 1 }] }, c);
+    const quoted = apiMock.dryRunOrder.mock.calls[0][0] as { items: unknown[] };
+    expect(quoted.items).toHaveLength(1);
+  });
+});

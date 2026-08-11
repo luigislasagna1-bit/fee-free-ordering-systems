@@ -29,6 +29,10 @@ export type ToolContext = {
    *  the same customer (promo eligibility is per-customer). */
   customerPhone?: string;
   customerName?: string;
+  /** menuItemIds the menu flags as PIZZA or COMBO. The model may never send
+   *  these as hand-written `items` — they only ever reach an order through the
+   *  compiler (add_pizza / add_combo). See mergeBasket. */
+  builderItemIds?: Set<string>;
 };
 
 /** A compiled order line, exactly as /api/orders wants it. Opaque to the model. */
@@ -123,7 +127,12 @@ export const TOOLS = [
       additionalProperties: false,
       properties: {
         type: { type: "string", enum: ["pickup", "delivery"] },
-        items: { type: "array", items: ITEM_SCHEMA },
+        items: {
+          type: "array",
+          items: ITEM_SCHEMA,
+          description:
+            "SIMPLE items only — drinks, wings, sides. NEVER a pizza or a combo, and never anything you already added with add_pizza or add_combo: those are already on the order and listing them again would charge the caller twice.",
+        },
         customerName: { type: "string", description: "The caller's name." },
         customerPhone: { type: "string", description: "Callback number (usually the caller ID)." },
         deliveryStreet: { type: "string" },
@@ -131,7 +140,7 @@ export const TOOLS = [
         deliveryZip: { type: "string" },
         notes: { type: "string", description: "Order-level note (e.g. 'ring the buzzer')." },
       },
-      required: ["type", "items", "customerName", "customerPhone"],
+      required: ["type", "customerName", "customerPhone"],
     },
   },
   {
@@ -385,13 +394,39 @@ const digits = (s: string) => (s || "").replace(/\D/g, "");
 
 /** Server-compiled lines + the model's simple items, ready to POST.
  *  `_readBack` is display-only bookkeeping and must not reach /api/orders. */
-function mergeBasket(ctx: ToolContext, simpleItems: unknown): any[] {
+function mergeBasket(ctx: ToolContext, simpleItems: unknown): { items: any[]; dropped: string[] } {
   // Strip EVERY bookkeeping field. `_intent` in particular is the caller's whole
   // spoken request — useful for recompiling on revise_line, meaningless (and
   // large) on the wire.
   const built = ctx.basket.map(({ _readBack, _kind, _intent, ...line }) => line);
   const simple = Array.isArray(simpleItems) ? simpleItems : [];
-  return [...built, ...simple];
+
+  // 🚨 A PIZZA MAY NEVER ARRIVE AS A HAND-WRITTEN ITEM.
+  //
+  // Live on 2026-08-11, first real pizza order (ORD-342105315): the model added
+  // the pizza with add_pizza AND restated it in `items`, so the caller was
+  // charged for two. Worse, the restated copy had no modifiers at all, so
+  // toppingBaseAdjust took its included-topping credit off a pizza with no
+  // toppings to pay for it — $17.74 billed as $14.99. That is exactly the trap
+  // this whole compiler exists to close, reopened through the one door left
+  // open. So the door is shut here: anything the menu flags as PIZZA or COMBO
+  // is dropped from `items`, as is anything already sitting in the basket.
+  const inBasket = new Set(built.map((l: any) => String(l.menuItemId)));
+  const dropped: string[] = [];
+  const kept = simple.filter((it: any) => {
+    const id = String(it?.menuItemId ?? "");
+    if (!id) return false;
+    if (inBasket.has(id)) {
+      dropped.push(id);
+      return false;
+    }
+    if (ctx.builderItemIds?.has(id)) {
+      dropped.push(id);
+      return false;
+    }
+    return true;
+  });
+  return { items: [...built, ...kept], dropped };
 }
 
 /** Ensure a two-token name (the /api/orders guard requires first + last). */
@@ -430,7 +465,8 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       // Server-compiled pizza/combo lines ride alongside whatever simple items
       // the model listed. They were built by /api/internal/voice/build-line —
       // the model never assembled them, and never sees their internals.
-      const items = mergeBasket(ctx, input.items);
+      const merged = mergeBasket(ctx, input.items);
+      const items = merged.items;
       if (!items.length) {
         return {
           error: true,
@@ -512,11 +548,41 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       const promoNames: string[] = Array.isArray(res.json?.appliedPromoNames)
         ? res.json.appliedPromoNames.filter((n: unknown) => typeof n === "string" && n)
         : [];
+
+      // TEXT the receipt, don't dictate it (Luigi 2026-08-11: "it shouldn't
+      // tell order number by phone, it should text it with the receipt"). An
+      // order number read aloud is the single easiest thing in the call to
+      // mishear, and the caller is usually nowhere near a pen. Sent from HERE
+      // rather than left to the model: a confirmation the agent can forget is
+      // a confirmation the customer doesn't get.
+      let receiptTexted = false;
+      if (ctx.cfg.smsConfirmations && phone && orderNumber) {
+        try {
+          const sms = await api.sendSms({
+            restaurantId: ctx.token.restaurantId,
+            slug,
+            to: phone,
+            linkType: "receipt",
+            orderId,
+            orderNumber: String(orderNumber),
+            total: Number(total ?? 0),
+          });
+          receiptTexted = !!sms.ok;
+        } catch {
+          receiptTexted = false; // fall back to speaking it — see below
+        }
+      }
+
       return {
-        ok: true, orderId, orderNumber, total,
+        ok: true, orderId, orderNumber, total, receiptTexted,
         ...(promoDiscount > 0 ? { discountApplied: promoDiscount, discountNames: promoNames } : {}),
         instruction:
-          "Read the caller their order number and this exact total — it is the authoritative charged amount including tax." +
+          (receiptTexted
+            ? "Their receipt has ALREADY been texted to them with the order number and a tracking link — say so, and do NOT read the order number out loud. "
+            : // No text went out (texting off, no caller ID, or it failed) —
+              // then the spoken number is all they have, so give it clearly.
+              "Read the caller their order number clearly — no receipt text could be sent, so it's the only record they'll have. ") +
+          "Read this exact total — it is the authoritative charged amount including tax." +
           (promoDiscount > 0
             ? " A discount was applied automatically — briefly mention it as good news (name it if a name is given) so the total doesn't sound like an error."
             : ""),
@@ -698,7 +764,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
     }
 
     case "quote_order": {
-      const items = mergeBasket(ctx, input.items);
+      const items = mergeBasket(ctx, input.items).items;
       if (!items.length) {
         return { error: true, code: "empty_order", message: "Nothing has been added yet." };
       }

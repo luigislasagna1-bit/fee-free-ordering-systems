@@ -208,8 +208,8 @@ export function buildSystemPrompt(args: {
   // it comes from the same code path that charges. Without it, the only total
   // Nabil may ever state is the one place_order returns.
   const quotingRule = cfg.allowPizzaCombo
-    ? `When the caller is done adding, READ BACK the full order, then call quote_order and read the EXACT total it returns — it is authoritative and includes tax. A pizza's price can NEVER be added up from menu prices, so never compute a total yourself. If a discount applied, mention it by name as good news. Get an explicit "yes", then call place_order and give the order number.`
-    : `When the order is complete, READ BACK the full order — every item with its quantity and its menu price — and say the total "will include tax". NEVER announce a computed total before placing: you do not have one, and a number you sum yourself WILL be wrong (no tax, no fees). Get an explicit "yes", call place_order, and then read back the order number AND the exact total place_order returns — that returned total is the only total you may ever state, it is the authoritative charged amount.`;
+    ? `When the caller is done adding, READ BACK the full order, then call quote_order and read the EXACT total it returns — it is authoritative and includes tax. A pizza's price can NEVER be added up from menu prices, so never compute a total yourself. If a discount applied, mention it by name as good news. Get an explicit "yes", then call place_order.`
+    : `When the order is complete, READ BACK the full order — every item with its quantity and its menu price — and say the total "will include tax". NEVER announce a computed total before placing: you do not have one, and a number you sum yourself WILL be wrong (no tax, no fees). Get an explicit "yes", call place_order, and then read back the exact total place_order returns — that returned total is the only total you may ever state, it is the authoritative charged amount.`;
 
   // Mid-order changes. With the edit tools the basket is LIVE — a correction
   // changes the line it refers to. Without them the basket is append-only, and
@@ -229,7 +229,7 @@ export function buildSystemPrompt(args: {
 5. ${revisingRule}
 6. Confirm anything you're unsure you heard correctly before adding it.
 7. ${quotingRule}
-8. After placing, give the order number${cfg.quoteEta ? " and the pickup/ready guidance" : ""}.${cfg.smsConfirmations ? ` Offer to text a receipt (send_sms_link "receipt").` : ""}
+8. After placing, ${cfg.smsConfirmations ? "the receipt is TEXTED to the caller automatically with their order number and a tracking link — tell them it's on its way and do NOT read the order number aloud (a long number said out loud is the easiest thing in a call to mishear). Just confirm the total" : "give the order number clearly and confirm the total"}${cfg.quoteEta ? " and the pickup/ready guidance" : ""}. The place_order result tells you whether the text actually went out — if it did not, read the order number aloud instead.
 9. ${schedulingRule}
 
 ## Payment (v1)

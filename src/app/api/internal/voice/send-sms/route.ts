@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import { sendSms } from "@/lib/sms";
+import { formatCurrency } from "@/lib/utils";
 
 export const runtime = "nodejs";
 
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
 
   const r = await prisma.restaurant.findFirst({
     where: { OR: [{ id: body.restaurantId || undefined }, { slug: body.slug || undefined }], isActive: true },
-    select: { id: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, name: true, phone: true },
+    select: { id: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true, name: true, phone: true, currency: true },
   });
   if (!r) return NextResponse.json({ error: "Restaurant not found", code: "not_found" }, { status: 404 });
 
@@ -53,11 +54,31 @@ export async function POST(req: NextRequest) {
 
   let msg: string;
   switch (linkType) {
-    case "receipt":
-      msg = body.orderId
-        ? `Your ${r.name} order — track it here: ${restaurantOrderUrl(urlInfo, `/status/${body.orderId}`)}`
-        : `Thanks for your ${r.name} order! ${restaurantOrderUrl(urlInfo)}`;
+    case "receipt": {
+      // The order NUMBER belongs in the text, not in the caller's ear (Luigi
+      // 2026-08-11: "it shouldn't tell order number by phone, it should text it
+      // with the receipt"). A long digit string read aloud is the easiest thing
+      // in the whole call to mishear, and the caller has nothing to write on.
+      // So the text carries everything they'd want later: the number, what they
+      // owe, and a live tracking link.
+      const num = typeof body.orderNumber === "string" && body.orderNumber.trim()
+        ? String(body.orderNumber).trim()
+        : null;
+      const amount =
+        typeof body.total === "number" && Number.isFinite(body.total)
+          ? formatCurrency(body.total, r.currency || "usd")
+          : null;
+      const track = body.orderId ? restaurantOrderUrl(urlInfo, `/status/${body.orderId}`) : null;
+      msg =
+        [
+          num ? `${r.name} — order ${num} confirmed.` : `Thanks for your ${r.name} order!`,
+          amount ? `Total ${amount}.` : "",
+          track ? `Track it: ${track}` : restaurantOrderUrl(urlInfo),
+        ]
+          .filter(Boolean)
+          .join(" ");
       break;
+    }
     case "menu":
       msg = `${r.name} menu & online ordering: ${link()}`;
       break;
