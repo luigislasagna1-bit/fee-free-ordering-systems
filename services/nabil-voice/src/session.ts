@@ -27,6 +27,9 @@ export class CallSession {
   private transcript: Array<{ role: string; text: string; ts: string }> = [];
   private interrupted = false;
   private controller: AbortController | null = null;
+  /** Consecutive failed model turns. Reset on any success — see the stream
+   *  error handler for why a caller must never be told twice that WE broke. */
+  private streamFailures = 0;
   private ready = false;
   private queued: string[] = [];
   /** Prompts that arrived while a turn was running — drained serially. */
@@ -356,10 +359,37 @@ export class CallSession {
           return; // caller barged in — next prompt (or the resume timer) is a fresh turn
         }
         console.error("[nabil-voice] stream error", e);
+        // 🚨 NEVER blame the caller for OUR outage, and never loop on it.
+        //
+        // On 2026-08-11 the Anthropic key was revoked upstream. Every turn
+        // 401'd, and every 401 answered "Sorry, I didn't catch that — could
+        // you say it again?" — so a caller who was speaking perfectly clearly
+        // was told, over and over, that HE was the problem. That is the worst
+        // failure mode this service can have: it wastes the caller's time,
+        // reads as a broken restaurant, and hides the real fault from us.
+        //
+        // An auth/permission/quota failure will not fix itself inside this
+        // call, so hand off on the FIRST one. Anything else gets exactly one
+        // polite retry (a genuine blip or a truncated stream is worth
+        // retrying) and then hands off too.
+        const status = Number((e as { status?: unknown })?.status) || 0;
+        const unrecoverable = status === 401 || status === 402 || status === 403 || status === 429;
+        this.streamFailures++;
+        if (unrecoverable || this.streamFailures >= 2) {
+          this.ctx.pendingTransfer = `voice service error${status ? ` (${status})` : ""}`;
+          this.sendText(
+            " I'm really sorry — I'm having trouble on my end, not with anything you said. Let me put you through to someone.",
+            true,
+          );
+          this.endTransfer(this.ctx.pendingTransfer);
+          return;
+        }
         this.sendText(" Sorry, I didn't catch that — could you say it again?", true);
         return;
       }
       this.controller = null;
+      // A turn came back — whatever was wrong has cleared.
+      this.streamFailures = 0;
 
       this.messages.push({ role: "assistant", content: final.content });
       if (assistantText.trim()) this.transcript.push({ role: "assistant", text: assistantText, ts: new Date().toISOString() });
