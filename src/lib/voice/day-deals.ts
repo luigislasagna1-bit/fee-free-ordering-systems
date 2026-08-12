@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { isFulfilableAt } from "@/lib/menu-fulfilment";
 import { compilePizzaLine, type ItemData, type PizzaIntent } from "@/lib/voice/order-line-compiler";
 import { loadRawItem, shapeItemData, VOICE_ITEM_INCLUDE } from "@/lib/voice/item-loader";
+import { variantKey, variantsCorrespond } from "@/lib/voice/variant-match";
 
 /**
  * DAY DEALS — "the same thing, cheaper, today".
@@ -30,6 +31,14 @@ import { loadRawItem, shapeItemData, VOICE_ITEM_INCLUDE } from "@/lib/voice/item
  *    inferred. Sizes live in item names on real menus ("Large 1 Topping"), and
  *    guessing them from text is precisely how someone who asked for a Large
  *    gets offered a Medium.
+ *
+ * 4. SIZES MUST LINE UP EXACTLY — "many items have sizes, make sure everything
+ *    matches exactly to the correct thing" (Luigi, 2026-08-11). His Chicken
+ *    Cheese Steak is 6" $9.99 / 12" $15.99 and the Thursday deal is 6" $7.99 /
+ *    12" $12.59. If a deal item ever loses its 12", the compiler would happily
+ *    build the caller's 12" order at the deal's flat price — wrong food, and
+ *    $8 of margin gone per sandwich. `variantsCorrespond` refuses the pairing
+ *    instead of guessing, and the resolved size is compared by name on top.
  */
 
 export type BetterDeal = {
@@ -57,13 +66,24 @@ export async function findBetterDeal(args: {
   standardItemId: string;
   intent: PizzaIntent;
   standardSubtotal: number | null | undefined;
+  /** The standard item's sizes. REQUIRED — the size guard can't be optional. */
+  standardVariants: ReadonlyArray<{ variantId: string; name: string }>;
+  /** The size the caller actually landed on, so the deal must land on it too. */
+  standardVariantId: string | null;
   timezone?: string | null;
   askGroupIds?: string[];
   currency?: string;
   now?: Date;
 }): Promise<BetterDeal | null> {
-  const { menuRestaurantId, standardItemId, intent, standardSubtotal } = args;
+  const { menuRestaurantId, standardItemId, intent, standardSubtotal, standardVariants } = args;
   if (typeof standardSubtotal !== "number" || !Number.isFinite(standardSubtotal)) return null;
+
+  // Which size did the caller actually get? The deal has to end up on the same
+  // one — set equality alone would still let a shared default drift (standard
+  // defaults to 6", deal defaults to 12") when no size was spoken.
+  const wantVariantKey = args.standardVariantId
+    ? (standardVariants.find((v) => v.variantId === args.standardVariantId)?.name ?? null)
+    : null;
 
   try {
     // ALL pairings, not the first. One standard item can have several deals —
@@ -98,6 +118,11 @@ export async function findBetterDeal(args: {
 
       const dealItem: ItemData = shapeItemData(raw);
 
+      // THE SIZE GATE. A 12" Chicken Cheese Steak must never be offered at the
+      // 6" deal price. If the deal doesn't carry the identical set of sizes,
+      // there is no honest swap to offer — stay quiet.
+      if (!variantsCorrespond(standardVariants, dealItem.variants)) continue;
+
       // Build the caller's SAME order against the deal item. If it can't be
       // built identically — the deal doesn't carry that topping, or needs an
       // answer we don't have — say nothing rather than offer something else.
@@ -108,6 +133,16 @@ export async function findBetterDeal(args: {
       );
       if (!compiled.line || compiled.unresolved.length) continue;
       if (typeof compiled.lineSubtotal !== "number") continue;
+
+      // ...and it landed on the same size the caller is actually buying.
+      const gotVariant = compiled.line.variantId
+        ? (dealItem.variants.find((v) => v.variantId === compiled.line!.variantId)?.name ?? null)
+        : null;
+      const sameSize =
+        wantVariantKey === null
+          ? gotVariant === null
+          : gotVariant !== null && variantKey(gotVariant) === variantKey(wantVariantKey);
+      if (!sameSize) continue;
 
       const saving = Math.round((standardSubtotal - compiled.lineSubtotal) * 100) / 100;
       if (saving <= 0) continue;

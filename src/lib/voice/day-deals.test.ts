@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { isFulfilableAt } from "@/lib/menu-fulfilment";
+import { variantsCorrespond } from "@/lib/voice/variant-match";
 
 /**
  * THE DAY GATE — "certain specials are only available on certain days, ensure
@@ -76,5 +77,52 @@ describe("a day deal runs on its day and no other", () => {
     const lateTuesdayInToronto = at("2026-08-12T01:30:00Z");
     expect(isFulfilableAt(TUESDAY_LARGE_PIZZA, lateTuesdayInToronto, TZ)).toBe(true);
     expect(isFulfilableAt(WEDNESDAY_WING_DAY, lateTuesdayInToronto, TZ)).toBe(false);
+  });
+});
+
+/**
+ * THE SIZE GATE — "many items have sizes etc, make sure everything matches
+ * exactly to the correct thing" (Luigi, 2026-08-11).
+ *
+ * Every pair below is his live menu, verbatim.
+ */
+const v = (...names: string[]) => names.map((name) => ({ name }));
+
+describe("a deal is only offered when its sizes match the standard item's", () => {
+  it("accepts Luigi's real size-carrying pairs", () => {
+    // Chicken Cheese Steak 6" $9.99 / 12" $15.99 ↔ Thursday 6" $7.99 / 12" $12.59
+    expect(variantsCorrespond(v("6'", "12'"), v("6'", "12'"))).toBe(true);
+    // Fish & Chips 1pc $13.99 / 2pc $17.99 ↔ Friday 1pc $10.49 / 2pc $13.49
+    expect(variantsCorrespond(v("1 Piece", "2 Pieces"), v("1 Piece", "2 Pieces"))).toBe(true);
+    // Wing day: all four counts, which is the whole point of that pairing.
+    expect(variantsCorrespond(v("10", "20", "30", "40"), v("10", "20", "30", "40"))).toBe(true);
+  });
+
+  it("accepts two flat-priced items — no size to get wrong", () => {
+    // Smash Burger $8.99 ↔ Thursday - Smash Burger $7.19
+    expect(variantsCorrespond([], [])).toBe(true);
+  });
+
+  it("REFUSES a flat-priced deal for a sized item (the $8 hole)", () => {
+    // If the Thursday Chicken Cheese Steak ever lost its 12", quoting its flat
+    // price to someone buying a 12" would be the wrong sandwich AND wrong money.
+    expect(variantsCorrespond(v("6'", "12'"), [])).toBe(false);
+    expect(variantsCorrespond([], v("6'", "12'"))).toBe(false);
+  });
+
+  it("REFUSES a deal that covers only some of the sizes", () => {
+    expect(variantsCorrespond(v("6'", "12'"), v("6'"))).toBe(false);
+    expect(variantsCorrespond(v("10", "20", "30", "40"), v("10", "20"))).toBe(false);
+  });
+
+  it("REFUSES sizes that merely look similar", () => {
+    expect(variantsCorrespond(v("Large"), v("Extra Large"))).toBe(false);
+    expect(variantsCorrespond(v("XL"), v("X-Large"))).toBe(false);
+    expect(variantsCorrespond(v("1 Piece"), v("2 Pieces"))).toBe(false);
+  });
+
+  it("ignores punctuation, case and spacing — 6' and 6\" are one shelf", () => {
+    expect(variantsCorrespond(v("6'", "12'"), v('6"', '12"'))).toBe(true);
+    expect(variantsCorrespond(v("1 Piece"), v("1  piece"))).toBe(true);
   });
 });

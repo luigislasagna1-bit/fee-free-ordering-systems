@@ -18,6 +18,18 @@ function fmtMoney(n: Money, currency: string): string {
 function menuText(menu: any, canBuild = false): string {
   const currency = menu?.restaurant?.currency || "usd";
   const lines: string[] = [];
+  // Items that exist but don't run today. The server already removed them from
+  // the orderable menu — this list exists purely so a caller who asks for one
+  // hears "that's a Thursday special" instead of "we don't have that". There
+  // are no ids here on purpose: nothing here can be ordered today.
+  const off = menu?.notToday ?? [];
+  if (off.length) {
+    lines.push(
+      `\nNOT AVAILABLE TODAY — these are real items on other days. If a caller asks for one, tell them which day it runs and offer something from the menu below instead. You CANNOT order these today: ${off
+        .map((o: any) => `${o.name} (${o.available || "other days"})`)
+        .join("; ")}`,
+    );
+  }
   for (const cat of menu?.menu ?? []) {
     lines.push(`\n## ${cat.category}`);
     for (const it of cat.items ?? []) {
@@ -42,8 +54,13 @@ function menuText(menu: any, canBuild = false): string {
       // it. Never work out a saving yourself.
       if (it.todayDeal) {
         const d = it.todayDeal;
+        // Sizes carry their OWN ids: the caller's size has to be ordered off
+        // the deal item, and a 12" quoted at the 6" price is the whole failure
+        // this feature has to avoid.
         const sizes = (d.variants ?? []).length
-          ? ` (${d.variants.map((v: any) => `${v.name} ${fmtMoney(v.price, currency)}`).join(", ")})`
+          ? ` (${d.variants
+              .map((v: any) => `${v.name} [id:${v.variantId ?? ""}] ${fmtMoney(v.price, currency)}`)
+              .join(", ")})`
           : "";
         lines.push(
           `    ★ TODAY ONLY: "${d.name}" [id:${d.dealItemId ?? ""}] is this exact item for ${fmtMoney(d.price, currency)}${sizes} — OFFER IT instead when they order this.`,

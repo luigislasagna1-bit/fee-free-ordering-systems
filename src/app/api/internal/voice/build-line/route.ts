@@ -105,6 +105,10 @@ export async function POST(req: NextRequest) {
           standardItemId: itemId,
           intent: intent as PizzaIntent,
           standardSubtotal: result.lineSubtotal,
+          // The size guard: the deal must offer the same sizes, and must land
+          // on the same one this line landed on.
+          standardVariants: item.variants,
+          standardVariantId: result.line.variantId,
           timezone: restaurant.timezone,
           askGroupIds,
           currency: restaurant.currency,

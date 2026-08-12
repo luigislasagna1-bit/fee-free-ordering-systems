@@ -3,7 +3,8 @@ import prisma from "@/lib/db";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveScheduledMenuId } from "@/lib/menu-schedule";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
-import { isFulfilableAt } from "@/lib/menu-fulfilment";
+import { fulfilWindowLabel, hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
+import { variantsCorrespond } from "@/lib/voice/variant-match";
 
 // Prisma can't run on the edge runtime.
 export const runtime = "nodejs";
@@ -36,7 +37,7 @@ export async function GET(req: NextRequest) {
 
   const restaurant = await prisma.restaurant.findFirst({
     where: { slug, isActive: true },
-    select: { id: true, name: true, currency: true, timezone: true },
+    select: { id: true, name: true, currency: true, timezone: true, hoursFormat: true },
   });
   if (!restaurant) {
     return NextResponse.json({ error: "Restaurant not found", code: "not_found" }, { status: 404 });
@@ -103,7 +104,10 @@ export async function GET(req: NextRequest) {
         select: {
           id: true, name: true, price: true, isAvailable: true, isSoldOut: true,
           fulfilDays: true, fulfilFrom: true, fulfilTo: true, fulfilWindows: true,
-          variants: { select: { name: true, price: true }, orderBy: { sortOrder: "asc" } },
+          // variantId too: the agent orders the DEAL item's own size, and
+          // making it cross-reference ids between two parts of the prompt is a
+          // guess waiting to happen on a money path.
+          variants: { select: { id: true, name: true, price: true }, orderBy: { sortOrder: "asc" } },
         },
       },
     },
@@ -112,12 +116,26 @@ export async function GET(req: NextRequest) {
   const now = new Date();
   const dealsByStandard = new Map<
     string,
-    { dealItemId: string; name: string; price: number; variants: Array<{ name: string; price: number }> }
+    {
+      dealItemId: string;
+      name: string;
+      price: number;
+      variants: Array<{ variantId: string; name: string; price: number }>;
+    }
   >();
+  // Sizes on the standard items, to check each pairing against.
+  const standardVariants = new Map<string, Array<{ name: string }>>();
+  for (const c of categories) for (const it of c.menuItems) standardVariants.set(it.id, it.variants);
+
   for (const d of dealPairs) {
     const di = d.dealItem;
     if (!di || !di.isAvailable || di.isSoldOut) continue;
     if (!isFulfilableAt(di as never, now, restaurant.timezone ?? undefined)) continue;
+    // THE SIZE GATE. Only annotate when the deal offers the identical set of
+    // sizes — otherwise the agent would read out a 6" price to someone buying
+    // a 12". Checked per pairing, so a mismatched cheap deal doesn't suppress
+    // a sound one on the same item.
+    if (!variantsCorrespond(standardVariants.get(d.standardItemId) ?? [], di.variants)) continue;
     const prev = dealsByStandard.get(d.standardItemId);
     // Cheapest wins when a standard item has more than one deal running.
     if (prev && prev.price <= di.price) continue;
@@ -125,13 +143,53 @@ export async function GET(req: NextRequest) {
       dealItemId: di.id,
       name: di.name,
       price: di.price,
-      variants: di.variants.map((v) => ({ name: v.name, price: v.price })),
+      variants: di.variants.map((v) => ({ variantId: v.id, name: v.name, price: v.price })),
     });
   }
 
-  const menu = categories.map((c) => ({
+  // ── "ONLY ON CERTAIN DAYS" ────────────────────────────────────────────────
+  // Luigi 2026-08-11: "certain specials are only available on certain days,
+  // ensure those are offered only on those days not other days."
+  //
+  // The menu payload IS the agent's prompt. Leaving a Thursday special in it on
+  // a Monday means Nabil can offer it, the caller can accept it, and /api/orders
+  // then refuses the whole order — the caller is told "yes" and then "no", which
+  // is worse than never offering it. So items outside their window are removed
+  // here, against the same `isFulfilableAt` + item-AND-category intersection the
+  // order route enforces, so the two can never disagree.
+  //
+  // They're not hidden entirely: each one is listed by name and day in
+  // `notToday`, with no id and no build tree, so Nabil can answer "that's a
+  // Thursday special" honestly without being able to sell it today. Dropping
+  // the trees also shrinks the prompt on every non-deal day.
+  const tz = restaurant.timezone ?? undefined;
+  const DAY_NAMES = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
+  const dayName = (dow: number) => DAY_NAMES[dow] ?? String(dow);
+  const formatTime = (hhmm: string) => {
+    if (restaurant.hoursFormat !== "12h") return hhmm;
+    const [h, m] = hhmm.split(":").map(Number);
+    if (!Number.isFinite(h)) return hhmm;
+    return `${h % 12 === 0 ? 12 : h % 12}:${String(m ?? 0).padStart(2, "0")}${h >= 12 ? "pm" : "am"}`;
+  };
+  const notToday: Array<{ name: string; available: string }> = [];
+  const seenNotToday = new Set<string>();
+
+  const menu = categories.map((c) => {
+    const catBlocked = hasFulfilWindow(c as never) && !isFulfilableAt(c as never, now, tz);
+    return {
     category: c.name,
-    items: c.menuItems.map((it) => {
+    items: c.menuItems.filter((it) => {
+      const itemBlocked = hasFulfilWindow(it as never) && !isFulfilableAt(it as never, now, tz);
+      if (!itemBlocked && !catBlocked) return true;
+      if (!seenNotToday.has(it.name) && notToday.length < 25) {
+        seenNotToday.add(it.name);
+        notToday.push({
+          name: it.name,
+          available: fulfilWindowLabel(itemBlocked ? (it as never) : (c as never), dayName, formatTime),
+        });
+      }
+      return false;
+    }).map((it) => {
       const isPizza = !!it.pizzaConfig; // builder item — v1 transfers to human
       const isCombo = !!it.comboConfig; // combo item — v1 transfers to human
       // COST: this payload is the system prompt, re-sent on EVERY turn of every
@@ -170,7 +228,8 @@ export async function GET(req: NextRequest) {
           : [...serializeGroups(it.modifierGroups), ...serializeGroups(c.modifierGroups)],
       };
     }),
-  }));
+    };
+  }).filter((c) => c.items.length > 0); // an emptied category is pure prompt cost
 
   // Domain-biased ASR data (order-accuracy playbook #2 — the single biggest
   // accuracy lever). The voice service passes these live menu terms to the STT
@@ -194,6 +253,12 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({
     restaurant: { id: restaurant.id, name: restaurant.name, currency: restaurant.currency },
     menu,
+    // Real items that exist but can't be ordered right now. Name + day only —
+    // no ids, so the agent can talk about them and cannot sell them today.
+    // (Speech hints below deliberately still cover them, so a caller asking for
+    // "the Thursday smash burger" on a Monday is heard correctly and told when
+    // it runs, rather than being misheard as something else.)
+    notToday,
     speechHints,
   });
 }
