@@ -1080,15 +1080,32 @@ orders to your kitchen (typically within a minute) and cancelling stale authoriz
 order stops holding a customer's money. Nothing can complete unless the kitchen was told about it
 first.
 
-1. 🤔 **YOUR CALL — three real orders you never received, $83.62 total.** Deliberately NOT touched
-   by any automatic repair, because the obvious fix (cancel it, void the money, claw the promo back)
-   would be wrong: Sharon turned up and you served her, so cancelling would have destroyed your
-   record of an order you'd actually fulfilled and your ability to collect for it. Whether to chase
-   payment or write each one off is yours, not a cron's:
-   • **ORD-710341102 — Sharon Craven, $36.44** (the one you served)
-   • **ORD-733393825 — Lisa Benacquista, $34.39**
-   • **ORD-721054168 — Uzair Rana, $12.79**
-   Tell me which of the three to chase and I'll walk you through "Request payment" on each.
+1. 🤔 **YOUR CALL — SEVEN orders you never received, $221.01 total** (audited against prod
+   2026-08-12; it was 3 when first found, the full sweep turned up 4 more — including your biggest
+   one). Deliberately NOT touched by any automatic repair, because the obvious fix (cancel it, void
+   the money, claw the promo back) would be wrong: Sharon turned up and you served her, so
+   cancelling would have destroyed your record of an order you'd actually fulfilled and your ability
+   to collect for it. Whether to chase payment or write each one off is yours, not a cron's:
+   • **ORD-246138679 — Anna Martinello, $88.30** — Aug 11, 5:20 PM ← biggest
+   • **ORD-710341102 — Sharon Craven, $36.44** — Aug 11, 4:21 PM (the one you served)
+   • **ORD-733393825 — Lisa Benacquista, $34.39** — Aug 10, 10:02 PM
+   • **ORD-440790893 — jay Fieger, $33.54** — Aug 11, 6:30 PM
+   • **ORD-510778241 — Ali Aydin, $13.99** — Aug 11, 9:18 PM
+   • **ORD-721054168 — Uzair Rana, $12.79** — Aug 8, 10:32 PM
+   • **ORD-347852431 — $1.56** — Aug 11, 5:55 PM — this one is YOUR OWN test (info@luigislasagna.com),
+     so the real customer total is **$219.45 across 6 people**.
+
+   **Almost certainly NO money was ever taken from any of them.** All 7 have no PaymentIntent on
+   file, and 0 of the 41 stranded orders in 60 days have one — meaning these customers never got as
+   far as completing the card form. So this is very likely unpaid food, not money you're holding.
+   ☐ **Confirm it yourself in 2 minutes:** open the Stripe dashboard and search those amounts
+   ($88.30, $36.44, $34.39, $33.54, $13.99, $12.79). No results = nothing was ever charged, nothing
+   to refund. (Claude can't verify this from here — the prod Stripe key can't be decrypted locally.)
+
+   **All 7 pre-date the fix** — the newest was created 9:18 PM on Aug 11, the fix went live ~00:35 AM
+   on Aug 12. So none of these is a new failure, and no new ones have appeared since. That said the
+   store has been closed since, so the fix has not yet been exercised under real traffic — worth a
+   glance at this list again after your first busy service.
 2. 👀 **Watch for one log line.** `RESCUED` in the logs means the safety net caught a real order —
    good, but it also means the customer's browser failed to report a payment. A handful is normal.
    A steady stream means something upstream is broken and worth chasing.
