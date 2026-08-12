@@ -9,6 +9,7 @@ import {
   isLockedType,
 } from "@/lib/promo-types";
 import { fixedDiscountMinError } from "@/lib/promo-validation";
+import { isCampaignOwned, liveCampaignRefs } from "@/lib/autopilot-promos";
 import {
   clampMin,
   normalizeBannerHeadline,
@@ -47,7 +48,19 @@ export async function GET() {
     },
     orderBy: { createdAt: "desc" },
   });
-  return NextResponse.json(promotions);
+
+  // `campaignLocked` — this row's code is being emailed RIGHT NOW by a running
+  // Autopilot campaign, so the list greys out its power button and points the
+  // owner at the campaign toggle instead. The PATCH route enforces the same
+  // rule server-side; this flag only saves the owner a failed click.
+  // Luigi 2026-08-11 (the 2026-07-03 cleanup that killed WIN1..WIN5).
+  const live = promotions.some((p) => isCampaignOwned(p.campaignRef))
+    ? await liveCampaignRefs(restaurantId)
+    : new Set<string>();
+
+  return NextResponse.json(
+    promotions.map((p) => ({ ...p, campaignLocked: !!p.campaignRef && live.has(p.campaignRef) })),
+  );
 }
 
 export async function POST(req: NextRequest) {

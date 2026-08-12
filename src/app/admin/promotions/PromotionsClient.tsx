@@ -17,7 +17,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import {
-  Tag, Edit2, Trash2, Copy, EyeOff, Power, PowerOff,
+  Tag, Edit2, Trash2, Copy, EyeOff, Power, PowerOff, Lock,
   Star, Crown, Shield, Percent, Gift, Package, Zap, Truck, Search,
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -79,6 +79,7 @@ function PromoCard({
     PROMO_TYPE_DISPLAY.find((pt) => pt.value === promo.promotionType) ??
     PROMO_TYPE_DISPLAY[0];
   const Icon = typeInfo.icon;
+  const campaignLocked = !!promo.campaignLocked;
 
   return (
     <div
@@ -195,18 +196,38 @@ function PromoCard({
           </div>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
+          {/* A code a RUNNING Autopilot campaign is still emailing can't be
+              switched off from this list — that is exactly how WIN1..WIN5 and
+              CARTBACK died on 2026-07-03 and then shipped dead in 54 emails.
+              Retiring them goes through the campaign toggle, which preserves
+              codes already in customers' inboxes. Luigi 2026-08-11. */}
           <button
-            onClick={onToggle}
-            title={promo.isActive ? t("titleDeactivate") : t("titleActivate")}
+            onClick={campaignLocked ? undefined : onToggle}
+            disabled={campaignLocked}
+            title={
+              campaignLocked
+                ? t("titleCampaignLocked")
+                : promo.isActive
+                  ? t("titleDeactivate")
+                  : t("titleActivate")
+            }
             className={`p-1.5 rounded transition ${
-              promo.isActive
-                ? "text-green-500 hover:text-green-700"
-                : "text-gray-400 hover:text-green-500"
+              campaignLocked
+                ? "text-gray-300 cursor-not-allowed"
+                : promo.isActive
+                  ? "text-green-500 hover:text-green-700"
+                  : "text-gray-400 hover:text-green-500"
             }`}
           >
             {/* Power (not Eye) for active/inactive — the eye metaphor now belongs
                 to the Visible/Hidden display model (audit #19). */}
-            {promo.isActive ? <Power className="w-4 h-4" /> : <PowerOff className="w-4 h-4" />}
+            {campaignLocked ? (
+              <Lock className="w-4 h-4" />
+            ) : promo.isActive ? (
+              <Power className="w-4 h-4" />
+            ) : (
+              <PowerOff className="w-4 h-4" />
+            )}
           </button>
           <button
             onClick={onDuplicate}
@@ -299,11 +320,18 @@ export function PromotionsClient({
   };
 
   const togglePromo = async (promo: any) => {
-    await fetch(`/api/restaurants/promotions/${promo.id}`, {
+    const res = await fetch(`/api/restaurants/promotions/${promo.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isActive: !promo.isActive }),
     });
+    // The server owns this rule (a code a live Autopilot campaign is still
+    // emailing stays on) — surface its reason rather than failing silently.
+    if (!res.ok) {
+      const data = await res.json().catch(() => null);
+      toast.error(data?.error ?? t("toggleFailed"), { duration: 8000 });
+      return;
+    }
     await reloadPromos();
   };
 

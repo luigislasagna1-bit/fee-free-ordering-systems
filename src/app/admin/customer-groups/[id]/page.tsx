@@ -13,7 +13,7 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
 
   const group = await prisma.customerGroup.findUnique({
     where: { id },
-    select: { id: true, restaurantId: true, name: true, description: true, memberLabel: true, rewardEarnPercent: true },
+    select: { id: true, restaurantId: true, name: true, description: true, memberLabel: true, rewardEarnPercent: true, skipAutopilotOffers: true },
   });
   if (!group || group.restaurantId !== user.restaurantId) notFound();
 
@@ -63,7 +63,7 @@ export default async function GroupDetailPage({ params }: { params: Promise<{ id
 
   return (
     <GroupDetailClient
-      group={{ id: group.id, name: group.name, description: group.description, memberLabel: group.memberLabel, rewardEarnPercent: group.rewardEarnPercent }}
+      group={{ id: group.id, name: group.name, description: group.description, memberLabel: group.memberLabel, rewardEarnPercent: group.rewardEarnPercent, skipAutopilotOffers: group.skipAutopilotOffers }}
       initialMembers={members}
       initialSpecials={specials}
       initialPickable={pickable}

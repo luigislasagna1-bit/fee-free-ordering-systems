@@ -9,6 +9,7 @@ import {
   isLockedType,
 } from "@/lib/promo-types";
 import { fixedDiscountMinError } from "@/lib/promo-validation";
+import { isCampaignOwned, liveCampaignRefs } from "@/lib/autopilot-promos";
 import {
   clampMin,
   normalizeBannerHeadline,
@@ -86,6 +87,37 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     const effMin = minimumOrder ?? current?.minimumOrder;
     const minDiscErr = fixedDiscountMinError(effType, effRc, effMin);
     if (minDiscErr) return NextResponse.json(minDiscErr, { status: 400 });
+  }
+
+  // ── Autopilot-owned codes can't be switched off from here ────────────────
+  // Luigi 2026-08-11 (Ben Bilton's WIN1). WIN1..WIN5 / 2NDOFF / CARTBACK are
+  // Promotion rows created and owned by an Autopilot campaign, and they list
+  // alongside hand-made promos behind the same power button. A routine cleanup
+  // on 2026-07-03 switched six of them off in one pass; the drip then emailed
+  // those dead codes to 52 customers over five weeks (0 redemptions).
+  //
+  // While the owning campaign is ON, its code stays on. Retiring it is still
+  // possible — turn the CAMPAIGN off in Marketing → Autopilot, which routes
+  // through activationPatch() and keeps codes already in customers' inboxes
+  // redeemable for the grace window instead of killing them mid-flight.
+  if (isActive === false) {
+    const owned = await prisma.promotion.findFirst({
+      where: { id, restaurantId },
+      select: { campaignRef: true },
+    });
+    if (isCampaignOwned(owned?.campaignRef)) {
+      const live = await liveCampaignRefs(restaurantId);
+      if (live.has(owned!.campaignRef!)) {
+        return NextResponse.json(
+          {
+            error:
+              "This code belongs to a running Autopilot campaign, which is still emailing it to customers. Turn the campaign off in Marketing → Autopilot to retire it — that keeps codes already sent redeemable for 30 days instead of breaking them.",
+            code: "campaign_owned",
+          },
+          { status: 409 },
+        );
+      }
+    }
   }
 
   // If trying to flip scope to/from "brand", verify this restaurant is

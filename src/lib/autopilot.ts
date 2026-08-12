@@ -33,6 +33,13 @@
  */
 
 import prisma from "@/lib/db";
+import {
+  resolveAutopilotAudience,
+  vipModeFieldFor,
+  normalizeVipMode,
+  DEFAULT_VIP_MODE,
+  type VipMode,
+} from "@/lib/autopilot-audience";
 import { sendMarketingEmail, setEmailImprint } from "@/lib/email";
 import {
   isMasterEnabled,
@@ -126,6 +133,18 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
       ? restaurant.resellerProfile.companyName
       : null;
 
+  // Per-campaign club policy (Luigi 2026-08-11). Read once for the whole run.
+  // Inert unless the owner has ticked at least one customer group, so a
+  // restaurant that never touches this sees byte-identical behaviour.
+  const vipState = await prisma.autopilotState.findUnique({
+    where: { restaurantId },
+    select: { reEngageVipMode: true, secondOrderVipMode: true, cartAbandonVipMode: true },
+  });
+  const vipModeFor = (campaignType: string): VipMode => {
+    const field = vipModeFieldFor(campaignType);
+    return field && vipState ? normalizeVipMode(vipState[field]) : DEFAULT_VIP_MODE;
+  };
+
   for (const campaign of campaigns) {
     const kind = campaign.campaignType as AutopilotCampaignKind;
 
@@ -164,6 +183,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         restaurantPhone: restaurant.phone,
         imprint,
         locale: restaurant.defaultLanguage,
+        vipMode: vipModeFor(campaign.campaignType),
         steps,
       });
     } else {
@@ -186,6 +206,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
         locale: restaurant.defaultLanguage,
         delayHours: campaign.delayHours,
         couponId: campaign.couponId,
+        vipMode: vipModeFor(campaign.campaignType),
         subject,
         emailBody,
       });
@@ -208,6 +229,7 @@ export async function runAutopilotForRestaurant(restaurantId: string): Promise<A
       restaurantEmail: restaurant.email,
       restaurantPhone: restaurant.phone,
       imprint,
+      vipMode: vipModeFor("cart_abandonment"),
       locale: restaurant.defaultLanguage,
     });
     summary.results.push({
@@ -289,6 +311,8 @@ async function runStandardCampaign(opts: {
   locale?: string | null;
   delayHours: number;
   couponId: string | null;
+  /** What members of a ticked club get from THIS campaign. Luigi 2026-08-11. */
+  vipMode?: VipMode;
   subject: string;
   emailBody: string;
 }): Promise<{ eligible: number; sent: number; errors: number }> {
@@ -299,6 +323,13 @@ async function runStandardCampaign(opts: {
     : opts.orderRootUrl;
 
   const candidates = await pickCandidates(opts.restaurantId, opts.campaignType, opts.delayHours);
+
+  // Club members — same rule as the stepped path (see autopilot-audience.ts).
+  const audience = await resolveAutopilotAudience(
+    opts.restaurantId,
+    candidates.map((c) => ({ customerId: c.id, email: c.email })),
+  );
+  const vipMode = opts.vipMode ?? "offer";
 
   const candidateEmails = candidates.map(c => c.email).filter((e): e is string => !!e);
   const existingSends = candidateEmails.length > 0
@@ -314,6 +345,11 @@ async function runStandardCampaign(opts: {
   for (const customer of candidates) {
     if (!customer.email) continue;
     if (alreadySent.has(customer.email)) continue;
+
+    // Club members — checked before the claim so a "skip" consumes nothing.
+    const vip = audience.match({ customerId: customer.id, email: customer.email });
+    if (vip && vipMode === "skip") continue;
+    const suppressOffer = !!vip && vipMode === "no_offer";
 
     // CLAIM BEFORE SEND — same rule as the stepped path: the row is the permit.
     // Failure mode is a missed email, never a repeated one. Luigi 2026-08-07.
@@ -352,10 +388,11 @@ async function runStandardCampaign(opts: {
         restaurantName: opts.restaurantName,
         subject: opts.subject,
         body: opts.emailBody,
-        couponCode: resolved?.code,
-        couponLabel,
-        ctaUrl,
-        ctaLabel: resolved ? "Order with coupon" : "Order now",
+        couponCode: suppressOffer ? undefined : resolved?.code,
+        couponLabel: suppressOffer ? null : couponLabel,
+        memberPerk: suppressOffer ? (vip!.groupName || null) : null,
+        ctaUrl: suppressOffer ? opts.orderRootUrl : ctaUrl,
+        ctaLabel: !suppressOffer && resolved ? "Order with coupon" : "Order now",
         restaurantUrl: opts.orderRootUrl,
         restaurantEmail: opts.restaurantEmail ?? undefined,
         restaurantPhone: opts.restaurantPhone ?? undefined,
@@ -408,6 +445,8 @@ async function runSteppedCampaign(opts: {
   restaurantPhone: string | null;
   imprint: string | null;
   locale?: string | null;
+  /** What members of a ticked club get from THIS campaign. Luigi 2026-08-11. */
+  vipMode?: VipMode;
   steps: { stepNumber: number; delayHours: number; discountPercent: number; subject: string; emailBody: string }[];
 }): Promise<{ eligible: number; sent: number; errors: number }> {
   const steps = opts.steps;
@@ -434,12 +473,31 @@ async function runSteppedCampaign(opts: {
   // ordering page pre-applies it via ?coupon=CODE).
   const stepPromos = await getStepPromos(opts.restaurantId, opts.campaignType);
 
+  // Batch 3 — which of these candidates are CLUB members (Luigi 2026-08-11).
+  // Scoped to the already-capped candidate list, so a big club costs no more
+  // than a small one, and it costs one cheap query when the restaurant has no
+  // club at all. See src/lib/autopilot-audience.ts.
+  const audience = await resolveAutopilotAudience(
+    opts.restaurantId,
+    candidates.map((c) => ({ customerId: c.id, email: c.email })),
+  );
+  const vipMode = opts.vipMode ?? "offer";
+
   const now = Date.now();
   let sent = 0;
   let errors = 0;
   let eligible = 0;
   for (const customer of candidates) {
     if (!customer.email) continue;
+    // ── Club members (Luigi 2026-08-11, Ben Bilton) ──────────────────────────
+    // Checked BEFORE the claim below, deliberately. A "skip" must leave no
+    // AutopilotSend row behind: the claim is what marks a ladder step consumed,
+    // so claiming-then-skipping would permanently burn steps for offers the
+    // customer never received, and un-ticking the group a year later would
+    // resume them mid-ladder with nothing to show for the missing rungs.
+    const vip = audience.match({ customerId: customer.id, email: customer.email });
+    if (vip && vipMode === "skip") continue;
+    const suppressOffer = !!vip && vipMode === "no_offer";
     // Reorder-restart anchor: last order (reengagement) or signup/first-order
     // (second_order). This value IS the cycle key we write, and prior sends are
     // matched on it by EQUALITY — so the "have we sent this step?" read uses the
@@ -456,7 +514,10 @@ async function runSteppedCampaign(opts: {
     eligible++;
 
     const promo = stepPromos.get(target.stepNumber);
-    const couponCode = promo?.couponCode;
+    // A club member on "no_offer" still gets the nudge — just not a second
+    // discount stacked on the one they already hold. The email swaps the coupon
+    // card for a note naming their club (see memberPerk below).
+    const couponCode = suppressOffer ? undefined : promo?.couponCode;
     const pct = promo?.discountPercent ?? target.discountPercent;
     const couponLabel = couponCode ? `${pct}% off your next order` : null;
     const ctaUrl = couponCode
@@ -508,6 +569,10 @@ async function runSteppedCampaign(opts: {
         body: target.emailBody,
         couponCode,
         couponLabel,
+        // Replaces the coupon card for a club member on "no_offer" — the body
+        // copy is the owner's ("Here's a welcome-back treat:"), so something has
+        // to sit where the code would, or the email promises nothing.
+        memberPerk: suppressOffer ? (vip!.groupName || null) : null,
         ctaUrl,
         ctaLabel: couponCode ? "Order with coupon" : "Order now",
         restaurantUrl: opts.orderRootUrl,
@@ -652,8 +717,12 @@ export async function runCartAbandonmentForRestaurant(
     restaurantPhone: string | null;
     imprint: string | null;
     locale?: string | null;
+    /** What members of a ticked club get from cart recovery. Luigi 2026-08-11.
+     *  Defaults to "offer" so any other caller keeps the old behaviour. */
+    vipMode?: VipMode;
   },
 ): Promise<{ eligible: number; sent: number; errors: number }> {
+  const vipMode = ctx.vipMode ?? "offer";
   // Pull the cart_abandonment campaign config (if any). Subject/body/
   // couponId come from there; we fall back to defaults if no row exists.
   const campaign = await prisma.autopilotCampaign.findUnique({
@@ -691,11 +760,31 @@ export async function runCartAbandonmentForRestaurant(
     orderBy: { lastTouchedAt: "asc" },
   });
 
+  // Club members (Luigi 2026-08-11). Cart abandonment is a SEPARATE sweep from
+  // the stepped ladder and would otherwise ignore the setting entirely — a VIP
+  // whose cart already carries their 30% would still be offered CARTBACK's 10%
+  // on top. Scoped to this batch of ≤100 sessions.
+  const audience = await resolveAutopilotAudience(
+    restaurantId,
+    candidates.map((s) => ({ customerId: s.customerId, email: s.customerEmail, phone: s.customerPhone })),
+  );
+
   let sent = 0;
   let errors = 0;
 
   for (const session of candidates) {
     if (!session.customerEmail) continue;
+
+    // A club member is either passed over entirely, or emailed the reminder
+    // with the coupon swapped for a note about the pricing they already have.
+    // "skip" leaves emailSentAt null so the session simply ages out naturally.
+    const vip = audience.match({
+      customerId: session.customerId,
+      email: session.customerEmail,
+      phone: session.customerPhone,
+    });
+    if (vip && vipMode === "skip") continue;
+    const suppressOffer = !!vip && vipMode === "no_offer";
 
     // Respect marketing consent: if this email belongs to a KNOWN customer
     // who has opted out, skip the cart-recovery nudge (it's a marketing
@@ -750,9 +839,10 @@ export async function runCartAbandonmentForRestaurant(
         restaurantName: ctx.restaurantName,
         subject,
         body: emailBody,
-        couponCode: resolved?.code,
-        couponLabel,
-        ctaUrl,
+        couponCode: suppressOffer ? undefined : resolved?.code,
+        couponLabel: suppressOffer ? null : couponLabel,
+        memberPerk: suppressOffer ? (vip!.groupName || null) : null,
+        ctaUrl: suppressOffer ? ctx.orderRootUrl : ctaUrl,
         ctaLabel: "Complete your order",
         restaurantUrl: ctx.orderRootUrl,
         restaurantEmail: ctx.restaurantEmail ?? undefined,

@@ -2,6 +2,7 @@ import { getSessionUser } from "@/lib/session";
 import prisma from "@/lib/db";
 import { isEmailEnabled } from "@/lib/email";
 import { featureGate } from "@/lib/feature-gate";
+import { getStepPromos } from "@/lib/autopilot-promos";
 import { AutopilotClient } from "./AutopilotClient";
 
 export default async function AutopilotPage() {
@@ -69,12 +70,39 @@ export default async function AutopilotPage() {
   // campaign even though order emails were sending fine via Resend. Luigi 2026-06-10.
   const emailConfigured = await isEmailEnabled();
 
+  // ── "Your code isn't live" health check (Luigi 2026-08-11, Ben's WIN1) ──────
+  // A campaign can read ON while the coupon it advertises is switched off or
+  // expired — that state ran for five weeks here and nothing on this page said
+  // so. getStepPromos() now refuses to email a dead code, so the drip degrades
+  // to a couponless "Order now"; this tells the owner it's happening. Per
+  // campaign TYPE, true when the campaign owns codes but none are redeemable.
+  const codeHealth: Record<string, boolean> = {};
+  if (restaurantId) {
+    for (const type of ["reengagement", "second_order"] as const) {
+      const live = await getStepPromos(restaurantId, type);
+      codeHealth[type] = live.size > 0;
+    }
+    const cartCode = await prisma.promotion.count({
+      where: {
+        restaurantId,
+        campaignRef: "autopilot_cart_recovery",
+        isActive: true,
+        AND: [
+          { OR: [{ startsAt: null }, { startsAt: { lte: new Date() } }] },
+          { OR: [{ endsAt: null }, { endsAt: { gte: new Date() } }] },
+        ],
+      },
+    });
+    codeHealth.cart_abandonment = cartCode > 0;
+  }
+
   return (
     <AutopilotClient
       campaigns={campaigns as any}
       coupons={coupons}
       emailConfigured={emailConfigured}
       results={resultsByType}
+      codeHealth={codeHealth}
       currency={restaurant?.currency ?? "usd"}
     />
   );

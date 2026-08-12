@@ -182,22 +182,101 @@ function campaignRefsFor(campaignType: string): string[] {
   return [];
 }
 
+// ─── Campaign ownership ──────────────────────────────────────────────────────
+// Luigi 2026-08-11, from Ben Bilton's WIN1 report.
+//
+// The autopilot codes are ordinary Promotion rows, so they show up in the
+// Promotions list next to hand-made promos behind the same power button. On
+// 2026-07-03 a routine "retire my old promos" pass switched off fifteen rows in
+// thirty seconds — eight the owner meant to retire, and CARTBACK + WIN1..WIN5,
+// which were the live coupons of campaigns that were still running. Nothing
+// warned him, and the drip kept advertising the dead codes for five weeks.
+//
+// The campaign toggle is the source of truth for these rows. `isCampaignOwned`
+// names them; `liveCampaignRefs` says which are currently claimed by an ENABLED
+// campaign, so the API can refuse to deactivate one and the UI can explain why.
+// Turning the CAMPAIGN off is still the supported way to retire a code — that
+// path runs `activationPatch`, which keeps codes already sitting in customers'
+// inboxes redeemable for the grace window instead of killing them outright.
+
+/** True for a promo row that an Autopilot campaign creates and owns. */
+export function isCampaignOwned(campaignRef: string | null | undefined): boolean {
+  return !!campaignRef && campaignRef.startsWith("autopilot_");
+}
+
+/** Which per-campaign toggle governs a given campaignRef. */
+function toggleKeyForRef(campaignRef: string): "reEngageEnabled" | "secondOrderEnabled" | "cartAbandonmentEnabled" | null {
+  if (REENGAGE_TIERS.some((t) => t.campaignRef === campaignRef)) return "reEngageEnabled";
+  if (campaignRef === SECOND_ORDER.campaignRef) return "secondOrderEnabled";
+  if (campaignRef === CART_RECOVERY.campaignRef) return "cartAbandonmentEnabled";
+  return null;
+}
+
+/**
+ * The campaignRefs whose campaign is switched ON for this restaurant — i.e. the
+ * codes that are actively being emailed and must stay redeemable.
+ *
+ * Returns an empty set when the master switch is off or no state row exists, so
+ * a store that never enabled Autopilot is never gated. Never throws: a lookup
+ * failure degrades to "nothing is locked" rather than blocking an owner's edit.
+ */
+export async function liveCampaignRefs(restaurantId: string): Promise<Set<string>> {
+  const live = new Set<string>();
+  try {
+    const state = await prisma.autopilotState.findUnique({
+      where: { restaurantId },
+      select: { masterEnabled: true, reEngageEnabled: true, secondOrderEnabled: true, cartAbandonmentEnabled: true },
+    });
+    if (!state?.masterEnabled) return live;
+    const allRefs = [...REENGAGE_TIERS.map((t) => t.campaignRef), SECOND_ORDER.campaignRef, CART_RECOVERY.campaignRef];
+    for (const ref of allRefs) {
+      const key = toggleKeyForRef(ref);
+      if (key && state[key]) live.add(ref);
+    }
+  } catch (e) {
+    console.error("[autopilot-promos liveCampaignRefs]", e);
+  }
+  return live;
+}
+
 /**
  * The discount each drip STEP advertises, keyed by stepNumber. Single batched
  * query (Luigi 2026-06-10): the cron looks this up once per campaign and reads
  * `{couponCode, discountPercent}` per step — the code the email shows + the
  * ordering page pre-applies via `?coupon=CODE`. stepNumber maps to
  * Promotion.campaignSequence (second_order's null sequence → step 1).
+ *
+ * ⚠️ ONLY REDEEMABLE CODES (Luigi 2026-08-11, Ben Bilton's WIN1 report).
+ * This used to select on `campaignRef` alone, so a step whose promo row was
+ * inactive or expired still got stamped into the email as `?coupon=WIN1` — a
+ * code that reads "invalid or expired" the moment the customer taps it. That
+ * is exactly what happened here: a routine promo cleanup on 2026-07-03 switched
+ * WIN1–WIN5 off from the Promotions list, and the drip kept advertising them
+ * for five weeks (54 emails, 52 customers, 0 redemptions).
+ *
+ * A step with no live promo now simply returns nothing, and the caller falls
+ * back to a plain "Order now" email with no coupon block — a quieter email
+ * beats a broken promise. Same gate as `resolveCouponForCampaign`
+ * (src/lib/autopilot.ts) so the two campaign paths can't disagree.
  */
 export async function getStepPromos(
   restaurantId: string,
   campaignType: string,
+  now: Date = new Date(),
 ): Promise<Map<number, { couponCode: string; discountPercent: number }>> {
   const map = new Map<number, { couponCode: string; discountPercent: number }>();
   const refs = campaignRefsFor(campaignType);
   if (!refs.length) return map;
   const promos = await prisma.promotion.findMany({
-    where: { restaurantId, campaignRef: { in: refs } },
+    where: {
+      restaurantId,
+      campaignRef: { in: refs },
+      isActive: true,
+      AND: [
+        { OR: [{ startsAt: null }, { startsAt: { lte: now } }] },
+        { OR: [{ endsAt: null }, { endsAt: { gte: now } }] },
+      ],
+    },
     select: { campaignSequence: true, couponCode: true, ruleConfig: true },
   });
   for (const p of promos) {

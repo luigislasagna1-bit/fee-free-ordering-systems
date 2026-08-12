@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
 import {
   Zap, ShoppingBag, ShoppingCart, Users, Mail, Clock, Tag,
   ChevronDown, ChevronUp, ToggleLeft, ToggleRight, Save, AlertTriangle,
-  Target, Rocket,
+  Target, Crown, ExternalLink,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { StepSequenceEditor } from "./StepSequenceEditor";
@@ -27,7 +28,20 @@ interface MasterState {
   secondOrderEnabled: boolean;
   reEngageEnabled: boolean;
   cartAbandonmentEnabled: boolean;
+  // What members of a "club" group get from each campaign. Luigi 2026-08-11.
+  reEngageVipMode: VipModeValue;
+  secondOrderVipMode: VipModeValue;
+  cartAbandonVipMode: VipModeValue;
 }
+
+type VipModeValue = "offer" | "no_offer" | "skip";
+
+/** campaignType → the AutopilotState field holding its club policy. */
+const VIP_MODE_KEY: Record<string, "reEngageVipMode" | "secondOrderVipMode" | "cartAbandonVipMode"> = {
+  reengagement: "reEngageVipMode",
+  second_order: "secondOrderVipMode",
+  cart_abandonment: "cartAbandonVipMode",
+};
 
 // ─── Campaign config ──────────────────────────────────────────────────────────
 //
@@ -70,7 +84,7 @@ const COLOR_MAP: Record<string, { bg: string; icon: string; border: string; badg
 // ─── CampaignCard ─────────────────────────────────────────────────────────────
 
 function CampaignCard({
-  config, campaign, stateEnabled, masterEnabled, emailConfigured, coupons, result, currency = "usd", onChange, onToggleStateEnabled,
+  config, campaign, stateEnabled, masterEnabled, emailConfigured, coupons, result, codeLive, hasClubs, vipMode, currency = "usd", onChange, onToggleStateEnabled, onChangeVipMode,
 }: {
   config: typeof CAMPAIGN_CONFIGS[0];
   campaign: Campaign;
@@ -78,6 +92,14 @@ function CampaignCard({
   stateEnabled: boolean;
   /** AutopilotState.masterEnabled — when off, everything is disabled. */
   masterEnabled: boolean;
+  /** False when this campaign's coupon row is inactive/expired, so its emails
+   *  would go out with no offer. Undefined = not checked. */
+  codeLive?: boolean;
+  /** The restaurant has at least one group marked "already gets club pricing",
+   *  so the per-campaign policy control is worth showing. Luigi 2026-08-11. */
+  hasClubs: boolean;
+  /** What club members get from THIS campaign. */
+  vipMode: "offer" | "no_offer" | "skip";
   emailConfigured: boolean;
   coupons: { id: string; code: string; description?: string | null }[];
   /** Sent / Sales (last 30d) for this campaign. Luigi 2026-06-09. */
@@ -85,6 +107,7 @@ function CampaignCard({
   currency?: string;
   onChange: (updated: Partial<Campaign>) => void;
   onToggleStateEnabled: (next: boolean) => void;
+  onChangeVipMode: (next: "offer" | "no_offer" | "skip") => void;
 }) {
   const t = useTranslations("admin.autopilotClient");
   const [expanded, setExpanded] = useState(false);
@@ -141,8 +164,19 @@ function CampaignCard({
   const campaignTagline = t(`campaign_${config.type}_tagline` as any);
   const campaignDescription = t(`campaign_${config.type}_description` as any);
   const campaignTriggerLabel = t(`campaign_${config.type}_triggerLabel` as any);
-  const campaignDefaultSubject = t(`campaign_${config.type}_defaultSubject` as any);
-  const campaignDefaultBody = t(`campaign_${config.type}_defaultBody` as any);
+  // The default subject/body are EMAIL TEMPLATES, not UI copy: they carry the
+  // owner-editable tokens ({customer_name}, {restaurant_name}, {restaurant_link},
+  // {coupon_section}) that applyEmailTokens() substitutes at SEND time
+  // (src/lib/email.ts). next-intl reads `{x}` as an ICU argument, so t() logged a
+  // FORMATTING_ERROR per token and rendered the fallback — the placeholder showed
+  // "admin.autopilotClient.campaign_…" instead of the template. Only in dev:
+  // use-intl's production build skips compiling a message when no values are
+  // passed, which is exactly why this survived unnoticed in prod.
+  // `t.raw` skips the ICU pass in BOTH builds, so the tokens reach the
+  // placeholder byte-for-byte — what the owner needs to see and copy. Never put
+  // these back through t(): the console floods and the placeholder breaks again.
+  const campaignDefaultSubject = t.raw(`campaign_${config.type}_defaultSubject`) as string;
+  const campaignDefaultBody = t.raw(`campaign_${config.type}_defaultBody`) as string;
 
   return (
     <div
@@ -175,6 +209,21 @@ function CampaignCard({
               <span className="text-gray-500">{t("resultSent")}: <span className="font-semibold text-gray-800">{result.sent.toLocaleString()}</span></span>
               <span className="text-gray-500">{t("resultSales")}: <span className="font-semibold text-emerald-600">{formatCurrency(result.sales, currency)}</span></span>
               <span className="text-gray-500">{t("resultFees")}: <span className="font-semibold text-gray-800">{formatCurrency(0, currency)}</span></span>
+            </div>
+          )}
+          {/* CODE HEALTH (Luigi 2026-08-11, Ben Bilton's WIN1 report). A campaign
+              reading "Active" while its coupon row is switched off or expired ran
+              undetected here for five weeks — 54 emails carrying a dead code. The
+              drip no longer ships one, but a silent downgrade to a couponless
+              email is still not what the owner signed up for, so say it out loud
+              on the card that claims the campaign is running. */}
+          {active && codeLive === false && (
+            <div className="flex items-start gap-2 mt-2 p-2.5 bg-amber-50 border border-amber-200 rounded-lg">
+              <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+              <p className="text-xs text-amber-800">
+                <span className="font-semibold">{t("codeNotLiveTitle")}</span>{" "}
+                {t("codeNotLiveBody")}
+              </p>
             </div>
           )}
         </div>
@@ -212,6 +261,37 @@ function CampaignCard({
           )}
 
           <p className="text-sm text-gray-600">{campaignDescription}</p>
+
+          {/* ── What club members get from THIS campaign (Luigi 2026-08-11) ──
+              Hidden entirely when the owner hasn't marked any group as a club —
+              there is nothing for it to govern, and an inert control on every
+              restaurant's page is just noise. */}
+          {hasClubs && (
+            <div className="rounded-xl border border-gray-200 bg-white p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Crown className="w-4 h-4 text-amber-500" />
+                <span className="text-sm font-semibold text-gray-900">{t("vipModeTitle")}</span>
+              </div>
+              <p className="text-xs text-gray-500 mb-2">{t("vipModeDesc")}</p>
+              <div className="flex flex-wrap gap-2">
+                {(["offer", "no_offer", "skip"] as const).map((mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => onChangeVipMode(mode)}
+                    className={`text-left px-3 py-2 rounded-lg border text-xs transition ${
+                      vipMode === mode
+                        ? "border-emerald-500 bg-emerald-50 text-emerald-800"
+                        : "border-gray-200 text-gray-600 hover:border-gray-300"
+                    }`}
+                  >
+                    <span className="block font-semibold">{t(`vipMode_${mode}_label` as any)}</span>
+                    <span className="block text-[11px] opacity-80">{t(`vipMode_${mode}_desc` as any)}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Stepped campaigns (reengagement / second_order) → the drip-sequence
               editor: owner-configured count + delay + % per email. cart_abandonment
@@ -254,6 +334,17 @@ function CampaignCard({
             </select>
             <p className="text-xs text-gray-400 mt-1">{t.rich("couponSectionHint", {
               code: (c) => <code className="bg-gray-100 px-1 rounded">{c}</code>,
+              // "Use <code>{coupon_section}</code> in your email body…" — the
+              // brace pair is the literal email token we're telling the owner to
+              // type, not an ICU variable, but next-intl can't tell the
+              // difference and threw FORMATTING_ERROR for the missing value. This
+              // one broke in PRODUCTION too (unlike the templates above: passing
+              // any values defeats use-intl's no-compile hot path), so every
+              // owner in all 38 locales saw the bare key here instead of the
+              // hint. It needs its rich <code> tag, so t.raw is out; feeding the
+              // token back as its own value renders it verbatim. All 38 locales
+              // use exactly {coupon_section} here (parity audit enforces it).
+              coupon_section: "{coupon_section}",
             })}</p>
           </div>
 
@@ -307,6 +398,8 @@ export function AutopilotClient({
   coupons,
   emailConfigured,
   results = {},
+  codeHealth = {},
+  clubs = { names: [], memberCount: 0 },
   currency = "usd",
 }: {
   campaigns: Campaign[];
@@ -314,9 +407,20 @@ export function AutopilotClient({
   emailConfigured: boolean;
   /** Per-campaignType results (Sent / Sales last 30d). Luigi 2026-06-09. */
   results?: Record<string, { sent: number; sales: number }>;
+  /** Per-campaignType: does this campaign still have a redeemable coupon row?
+   *  Luigi 2026-08-11 — an "Active" campaign advertising a switched-off code
+   *  went unnoticed for five weeks. */
+  codeHealth?: Record<string, boolean>;
+  /** Groups the owner has marked as "already gets club pricing", and how many
+   *  DISTINCT people they hold. Drives the audience summary + each campaign's
+   *  club-policy control. Empty = no clubs, so the controls stay hidden and
+   *  Autopilot behaves exactly as it did before. Luigi 2026-08-11. */
+  clubs?: { names: string[]; memberCount: number };
   currency?: string;
 }) {
   const t = useTranslations("admin.autopilotClient");
+  const clubCount = clubs.memberCount;
+  const clubNames = clubs.names.join(", ");
   const [campaigns, setCampaigns] = useState<Campaign[]>(() =>
     CAMPAIGN_CONFIGS.map(config => {
       const found = initialCampaigns.find(c => c.campaignType === config.type);
@@ -335,6 +439,9 @@ export function AutopilotClient({
     secondOrderEnabled: false,
     reEngageEnabled: false,
     cartAbandonmentEnabled: false,
+    reEngageVipMode: "no_offer",
+    secondOrderVipMode: "no_offer",
+    cartAbandonVipMode: "no_offer",
   });
   const [masterLoaded, setMasterLoaded] = useState(false);
   const [masterSaving, setMasterSaving] = useState(false);
@@ -349,6 +456,9 @@ export function AutopilotClient({
             secondOrderEnabled: !!data.secondOrderEnabled,
             reEngageEnabled: !!data.reEngageEnabled,
             cartAbandonmentEnabled: !!data.cartAbandonmentEnabled,
+            reEngageVipMode: (data.reEngageVipMode ?? "no_offer") as VipModeValue,
+            secondOrderVipMode: (data.secondOrderVipMode ?? "no_offer") as VipModeValue,
+            cartAbandonVipMode: (data.cartAbandonVipMode ?? "no_offer") as VipModeValue,
           });
         }
         setMasterLoaded(true);
@@ -464,23 +574,27 @@ export function AutopilotClient({
         )}
       </div>
 
-      {/* Segment-based targeting — Coming Soon */}
-      <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+      {/* ── Who gets Autopilot offers ────────────────────────────────────────
+          Replaces the old "Segment-based targeting — Coming Soon" card, which
+          promised exactly this. Sits ABOVE the campaign cards because it
+          governs all of them. Luigi 2026-08-11 (Ben Bilton, a VIP member, was
+          emailed a 5%-off win-back on top of his 30% club discount). */}
+      <div className="mb-6 rounded-2xl border border-gray-200 bg-white p-5">
         <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
-            <Target className="w-5 h-5 text-amber-700" />
+          <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
+            <Target className="w-5 h-5 text-emerald-600" />
           </div>
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap mb-1">
-              <h3 className="text-sm font-bold text-amber-900">{t("segmentTitle")}</h3>
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-amber-200 text-amber-800 px-2 py-0.5 rounded-full">
-                <Rocket className="w-2.5 h-2.5" />
-                {t("comingSoon")}
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-amber-900/90 leading-relaxed">
-              {t("segmentBody")}
+            <h3 className="text-sm font-bold text-gray-900 mb-1">{t("audienceTitle")}</h3>
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+              {clubCount > 0 ? t("audienceSkipping", { count: clubCount, groups: clubNames }) : t("audienceNoClubs")}
             </p>
+            <Link
+              href="/admin/customer-groups"
+              className="inline-flex items-center gap-1 text-xs text-emerald-600 font-semibold mt-2 hover:underline"
+            >
+              {t("audienceManage")} <ExternalLink className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </div>
@@ -497,6 +611,10 @@ export function AutopilotClient({
             emailConfigured={emailConfigured}
             coupons={coupons}
             result={results[config.type]}
+            codeLive={codeHealth[config.type]}
+            hasClubs={clubCount > 0}
+            vipMode={master[VIP_MODE_KEY[config.type]] ?? "no_offer"}
+            onChangeVipMode={(next) => patchMaster({ [VIP_MODE_KEY[config.type]]: next } as Partial<MasterState>)}
             currency={currency}
             onChange={partial => update(config.type, partial)}
             onToggleStateEnabled={(next) => patchMaster({ [config.stateKey]: next } as Partial<MasterState>)}

@@ -6,6 +6,7 @@ import prisma from "@/lib/db";
 import { PromotionsClient } from "./PromotionsClient";
 import { PromoExclusions } from "./PromoExclusions";
 import { resolvePromoMenuRefsForServing, findDeadPromoIds } from "@/lib/menu";
+import { isCampaignOwned, liveCampaignRefs } from "@/lib/autopilot-promos";
 
 export default async function PromotionsPage() {
   const t = await getTranslations("admin.promotionsPage");
@@ -65,11 +66,23 @@ export default async function PromotionsPage() {
     deadPromoIds = [...(await findDeadPromoIds(restaurantId, resolved))];
   } catch { /* informational badge only — never block the page */ }
 
+  // Codes a running Autopilot campaign is still emailing — greyed out here so a
+  // promo cleanup can't silently break them (Luigi 2026-08-11, the WIN1 report).
+  // Mirrors the flag /api/restaurants/promotions adds on reload, and the PATCH
+  // route enforces the same rule regardless of what the UI shows.
+  const liveRefs = promotions.some((p) => isCampaignOwned(p.campaignRef))
+    ? await liveCampaignRefs(restaurantId)
+    : new Set<string>();
+  const promotionsWithLock = promotions.map((p) => ({
+    ...p,
+    campaignLocked: !!p.campaignRef && liveRefs.has(p.campaignRef),
+  }));
+
   return (
     <div>
       <HeaderBar t={t} />
       <PromotionsClient
-        promotions={promotions as any}
+        promotions={promotionsWithLock as any}
         categories={categories}
         menuItems={menuItems}
         deadPromoIds={deadPromoIds}

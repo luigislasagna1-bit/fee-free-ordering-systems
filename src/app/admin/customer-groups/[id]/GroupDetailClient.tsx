@@ -5,13 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil, Loader2, Search, Download, Percent, X } from "lucide-react";
+import { ChevronLeft, Users, Trash2, UserPlus, Gift, Plus, Tag, ExternalLink, Mail, Pencil, Loader2, Search, Download, Percent, Megaphone, X } from "lucide-react";
 import { HelpTip } from "@/components/HelpTip";
 import { escCsv } from "@/lib/csv";
 import { ScheduleEditor } from "../ScheduleEditor";
 
 type Member = { id: string; name: string | null; email: string | null; phone: string | null; hasAccount: boolean };
-type Group = { id: string; name: string; description: string | null; memberLabel: string | null; rewardEarnPercent: number | null };
+type Group = { id: string; name: string; description: string | null; memberLabel: string | null; rewardEarnPercent: number | null; skipAutopilotOffers?: boolean };
 type Promo = { id: string; name: string; promotionType: string; isActive: boolean; displayMode: string; couponCode: string | null; ruleConfig: any; minimumOrder: number };
 type Special = Promo & { linkId: string };
 type Pickable = Promo & { groupCount: number };
@@ -79,6 +79,29 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
   const rateParsed = rateDraft.trim() === "" ? null : parseFloat(rateDraft);
   const rateValid = rateParsed === null || Number.isFinite(rateParsed);
   const rateDirty = rateValid && (rateParsed === null ? ratePct != null : rateParsed !== ratePct);
+  // ── "This group already gets club pricing" (Luigi 2026-08-11) ────────────
+  // Saves immediately on toggle — it's one boolean with no valid intermediate
+  // state, so a separate Save button would only be a way to forget to press it.
+  const [skipAutopilot, setSkipAutopilot] = useState(!!group.skipAutopilotOffers);
+  const [savingSkip, setSavingSkip] = useState(false);
+  async function saveSkipAutopilot(next: boolean) {
+    setSavingSkip(true);
+    const prev = skipAutopilot;
+    setSkipAutopilot(next); // optimistic — reverted below if the write fails
+    try {
+      const res = await fetch(`/api/admin/customer-groups/${group.id}`, {
+        method: "PATCH", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ skipAutopilotOffers: next }),
+      });
+      if (!res.ok) { setSkipAutopilot(prev); toast.error(tToasts("saveFailed")); return; }
+      toast.success(tToasts("saved"));
+      router.refresh();
+    } catch {
+      setSkipAutopilot(prev);
+      toast.error(tToasts("saveFailed"));
+    } finally { setSavingSkip(false); }
+  }
+
   async function saveRate(value: number | null) {
     setSavingRate(true);
     try {
@@ -749,6 +772,40 @@ export default function GroupDetailClient({ group, initialMembers, initialSpecia
           </div>
         </section>
       )}
+
+      {/* ── Autopilot: don't stack win-back offers on club pricing ───────────
+          Luigi 2026-08-11 (Ben Bilton, a VIP member, got a 5%-off win-back
+          email on top of his 30% club discount). Ticking this marks the group
+          as a CLUB; what its members actually receive is chosen per campaign on
+          the Autopilot page, so this switch alone never silences anyone. */}
+      <section className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm mt-5">
+        <div className="flex items-center gap-2 mb-1">
+          <Megaphone className="w-5 h-5 text-emerald-600" />
+          <h2 className="font-bold text-gray-900">{t("autopilotCardTitle")}</h2>
+          <HelpTip text={t("autopilotHelp")} />
+        </div>
+        <label className="flex items-start gap-3 mt-2 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={skipAutopilot}
+            disabled={savingSkip}
+            onChange={(e) => saveSkipAutopilot(e.target.checked)}
+            className="mt-0.5 w-4 h-4 accent-emerald-600 disabled:opacity-50"
+          />
+          <span>
+            <span className="block text-sm font-semibold text-gray-900">{t("autopilotSkipLabel")}</span>
+            <span className="block text-sm text-gray-500 mt-0.5">{t("autopilotSkipDesc")}</span>
+          </span>
+        </label>
+        {skipAutopilot && (
+          <p className="text-xs text-gray-400 mt-3">
+            {t("autopilotSkipActive")}{" "}
+            <Link href="/admin/autopilot" className="text-emerald-600 font-semibold hover:underline">
+              {t("autopilotSkipLink")}
+            </Link>
+          </p>
+        )}
+      </section>
 
       {/* ── Automations: recurring credit grants / scheduled re-sends ──────── */}
       <ScheduleEditor target={{ groupId: group.id }} rewardsEnabled={rewardsEnabled} currency={currency} rewardLabelPlural={rewardLabelPlural?.trim() || tRewards("defaultPlural")} />

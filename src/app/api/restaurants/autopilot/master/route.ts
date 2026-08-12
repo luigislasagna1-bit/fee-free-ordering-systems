@@ -23,6 +23,7 @@ import { getSessionUser } from "@/lib/session";
 import { getOrCreateAutopilotState } from "@/lib/autopilot-state";
 import { ensureSteppedCampaign } from "@/lib/autopilot-steps";
 import { ensureCartRecoveryPromo } from "@/lib/autopilot-promos";
+import { normalizeVipMode } from "@/lib/autopilot-audience";
 import prisma from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -41,6 +42,9 @@ export async function GET() {
     secondOrderEnabled: state.secondOrderEnabled,
     reEngageEnabled: state.reEngageEnabled,
     cartAbandonmentEnabled: state.cartAbandonmentEnabled,
+    reEngageVipMode: state.reEngageVipMode,
+    secondOrderVipMode: state.secondOrderVipMode,
+    cartAbandonVipMode: state.cartAbandonVipMode,
     lastSecondOrderRun: state.lastSecondOrderRun,
     lastReEngageRun: state.lastReEngageRun,
     lastCartAbandonRun: state.lastCartAbandonRun,
@@ -67,6 +71,9 @@ export async function PATCH(req: NextRequest) {
     secondOrderEnabled?: boolean;
     reEngageEnabled?: boolean;
     cartAbandonmentEnabled?: boolean;
+    reEngageVipMode?: string;
+    secondOrderVipMode?: string;
+    cartAbandonVipMode?: string;
   } = {};
   for (const k of [
     "masterEnabled",
@@ -75,6 +82,14 @@ export async function PATCH(req: NextRequest) {
     "cartAbandonmentEnabled",
   ] as const) {
     if (typeof body[k] === "boolean") data[k] = body[k] as boolean;
+  }
+
+  // Per-campaign club policy (Luigi 2026-08-11, Ben Bilton). Normalised, never
+  // stored raw — an unknown value would otherwise sit in the DB and be read as
+  // an unrecognised mode by the cron. Only consulted for members of a group the
+  // owner has ticked, so these are inert on a store with no clubs.
+  for (const k of ["reEngageVipMode", "secondOrderVipMode", "cartAbandonVipMode"] as const) {
+    if (typeof body[k] === "string") data[k] = normalizeVipMode(body[k]);
   }
 
   // Make sure the row exists, then apply.
@@ -121,6 +136,9 @@ export async function PATCH(req: NextRequest) {
     secondOrderEnabled: updated.secondOrderEnabled,
     reEngageEnabled: updated.reEngageEnabled,
     cartAbandonmentEnabled: updated.cartAbandonmentEnabled,
+    reEngageVipMode: updated.reEngageVipMode,
+    secondOrderVipMode: updated.secondOrderVipMode,
+    cartAbandonVipMode: updated.cartAbandonVipMode,
     lastSecondOrderRun: updated.lastSecondOrderRun,
     lastReEngageRun: updated.lastReEngageRun,
     lastCartAbandonRun: updated.lastCartAbandonRun,
