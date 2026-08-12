@@ -184,6 +184,8 @@
     "continue": "Jätka",
     "minimumOrder": "Minimaalne tellimus",
     "addMoreToContinue": "Selle tarnepiirkonna miinimumtellimus on {min}. Lisa juurde {more}, et jätkata.",
+    "changeDeliveryAddress": "Muuda tarneaadressi",
+    "switchToPickup": "Vali järeletulemine",
     "outOfDeliveryArea": "Väljaspool meie standardseid tarnepiirkondi",
     "freeDeliveryApplied": "Tasuta kojuvedu rakendatud",
     "open": "Avatud",

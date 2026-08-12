@@ -184,6 +184,8 @@
     "continue": "متابعة",
     "minimumOrder": "الحد الأدنى للطلب",
     "addMoreToContinue": "الحد الأدنى للتوصيل إلى هذه المنطقة هو {min}. أضف {more} أكثر للمتابعة.",
+    "changeDeliveryAddress": "تغيير عنوان التوصيل",
+    "switchToPickup": "التبديل إلى الاستلام",
     "outOfDeliveryArea": "خارج مناطق التوصيل المعتادة",
     "freeDeliveryApplied": "تم تطبيق التوصيل المجاني",
     "open": "مفتوح",

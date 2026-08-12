@@ -183,6 +183,8 @@
     "continue": "Continuar",
     "minimumOrder": "Pedido mínimo",
     "addMoreToContinue": "O pedido mínimo para esta área de entrega é {min}. Adicione mais {more} para continuar.",
+    "changeDeliveryAddress": "Alterar morada de entrega",
+    "switchToPickup": "Mudar para recolha no local",
     "outOfDeliveryArea": "Fora da nossa área de entrega padrão",
     "freeDeliveryApplied": "Entrega grátis aplicada",
     "open": "Aberto",

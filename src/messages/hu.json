@@ -184,6 +184,8 @@
     "continue": "Folytatás",
     "minimumOrder": "Minimális rendelés",
     "addMoreToContinue": "Ebbe a szállítási zónába a minimális rendelési összeg {min}. Adjon hozzá még {more}-t a folytatáshoz.",
+    "changeDeliveryAddress": "Szállítási cím módosítása",
+    "switchToPickup": "Váltás személyes átvételre",
     "outOfDeliveryArea": "A standard szállítási területen kívül",
     "freeDeliveryApplied": "Ingyenes szállítás alkalmazva",
     "open": "Nyitva",

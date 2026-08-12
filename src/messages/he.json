@@ -184,6 +184,8 @@
     "continue": "המשך",
     "minimumOrder": "הזמנה מינימלית",
     "addMoreToContinue": "הזמנה מינימלית לאזור משלוח זה היא {min}. הוסף עוד {more} להמשך.",
+    "changeDeliveryAddress": "שינוי כתובת המשלוח",
+    "switchToPickup": "מעבר לאיסוף עצמי",
     "outOfDeliveryArea": "מחוץ לאזורי המשלוח הרגילים שלנו",
     "freeDeliveryApplied": "משלוח חינם הוחל",
     "open": "פתוח",

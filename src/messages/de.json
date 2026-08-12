@@ -184,6 +184,8 @@
     "continue": "Fortfahren",
     "minimumOrder": "Mindestbestellung",
     "addMoreToContinue": "Die Mindestbestellung für diese Lieferzone beträgt {min}. Fügen Sie noch {more} hinzu, um fortzufahren.",
+    "changeDeliveryAddress": "Lieferadresse ändern",
+    "switchToPickup": "Zur Abholung wechseln",
     "outOfDeliveryArea": "Außerhalb unserer Standard-Lieferzonen",
     "freeDeliveryApplied": "Kostenlose Lieferung angewendet",
     "open": "Geöffnet",

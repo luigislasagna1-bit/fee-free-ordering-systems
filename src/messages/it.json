@@ -183,6 +183,8 @@
     "continue": "Continua",
     "minimumOrder": "Ordine minimo",
     "addMoreToContinue": "L'ordine minimo per questa zona di consegna è {min}. Aggiungi {more} in più per continuare.",
+    "changeDeliveryAddress": "Cambia indirizzo di consegna",
+    "switchToPickup": "Passa al ritiro",
     "outOfDeliveryArea": "Fuori dalla nostra zona di consegna standard",
     "freeDeliveryApplied": "Consegna gratuita applicata",
     "open": "Aperto",

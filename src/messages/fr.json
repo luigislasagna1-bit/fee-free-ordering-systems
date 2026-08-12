@@ -183,6 +183,8 @@
     "continue": "Continuer",
     "minimumOrder": "Commande minimum",
     "addMoreToContinue": "La commande minimum pour cette zone de livraison est de {min}. Ajoutez {more} de plus pour continuer.",
+    "changeDeliveryAddress": "Modifier l'adresse de livraison",
+    "switchToPickup": "Passer au retrait",
     "outOfDeliveryArea": "Hors de notre zone de livraison standard",
     "freeDeliveryApplied": "Livraison gratuite appliquée",
     "open": "Ouvert",

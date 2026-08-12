@@ -184,6 +184,8 @@
     "continue": "Lanjutkan",
     "minimumOrder": "Pesanan minimum",
     "addMoreToContinue": "Minimum pesanan untuk zona pengiriman ini adalah {min}. Tambahkan {more} lagi untuk melanjutkan.",
+    "changeDeliveryAddress": "Ubah alamat pengiriman",
+    "switchToPickup": "Beralih ke ambil sendiri",
     "outOfDeliveryArea": "Di luar area pengiriman standar kami",
     "freeDeliveryApplied": "Pengiriman gratis diterapkan",
     "open": "Buka",

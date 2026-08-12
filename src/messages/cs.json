@@ -184,6 +184,8 @@
     "continue": "Pokračovat",
     "minimumOrder": "Minimální objednávka",
     "addMoreToContinue": "Minimální objednávka pro tuto zónu doručení je {min}. Přidejte ještě {more} pro pokračování.",
+    "changeDeliveryAddress": "Změnit doručovací adresu",
+    "switchToPickup": "Přejít na osobní odběr",
     "outOfDeliveryArea": "Mimo naše standardní oblasti doručení",
     "freeDeliveryApplied": "Doručení zdarma aktivováno",
     "open": "Otevřeno",

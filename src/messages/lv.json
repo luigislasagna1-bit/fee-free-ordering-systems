@@ -184,6 +184,8 @@
     "continue": "Turpināt",
     "minimumOrder": "Minimālais pasūtījums",
     "addMoreToContinue": "Minimālais pasūtījums šai piegādes zonai ir {min}. Pievienojiet vēl {more}, lai turpinātu.",
+    "changeDeliveryAddress": "Mainīt piegādes adresi",
+    "switchToPickup": "Pāriet uz saņemšanu uz vietas",
     "outOfDeliveryArea": "Ārpus mūsu standarta piegādes zonām",
     "freeDeliveryApplied": "Bezmaksas piegāde piemērota",
     "open": "Atvērts",

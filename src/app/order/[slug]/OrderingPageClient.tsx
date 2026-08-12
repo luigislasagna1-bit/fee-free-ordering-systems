@@ -7068,7 +7068,7 @@ export function OrderingPageClient({
                         }}
                         className="flex-1 text-xs font-semibold py-2 px-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition text-gray-700"
                       >
-                        Change delivery address
+                        {t("changeDeliveryAddress")}
                       </button>
                       {restaurant.acceptsPickup && (
                         <button
@@ -7082,7 +7082,7 @@ export function OrderingPageClient({
                             backgroundColor: `${theme.primaryColor}10`,
                           }}
                         >
-                          Switch to pickup
+                          {t("switchToPickup")}
                         </button>
                       )}
                     </div>

@@ -184,6 +184,8 @@
     "continue": "继续",
     "minimumOrder": "最低起订",
     "addMoreToContinue": "该配送区域最低起订金额为 {min}，请再添加 {more} 才能继续。",
+    "changeDeliveryAddress": "更改配送地址",
+    "switchToPickup": "改为自取",
     "outOfDeliveryArea": "超出我们的标准配送范围",
     "freeDeliveryApplied": "已享免费配送",
     "open": "营业中",

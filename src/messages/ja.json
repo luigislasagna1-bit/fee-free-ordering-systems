@@ -184,6 +184,8 @@
     "continue": "続ける",
     "minimumOrder": "最低注文金額",
     "addMoreToContinue": "このデリバリーエリアの最低注文金額は {min} です。続けるには {more} 追加してください。",
+    "changeDeliveryAddress": "配達先住所を変更",
+    "switchToPickup": "お受け取りに切り替える",
     "outOfDeliveryArea": "通常のデリバリーエリア外です",
     "freeDeliveryApplied": "送料無料が適用されました",
     "open": "営業中",

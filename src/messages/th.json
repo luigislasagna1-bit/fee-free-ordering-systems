@@ -184,6 +184,8 @@
     "continue": "ดำเนินการต่อ",
     "minimumOrder": "ออเดอร์ขั้นต่ำ",
     "addMoreToContinue": "ออเดอร์ขั้นต่ำสำหรับเขตจัดส่งนี้คือ {min} กรุณาเพิ่มอีก {more} เพื่อดำเนินการต่อ",
+    "changeDeliveryAddress": "เปลี่ยนที่อยู่จัดส่ง",
+    "switchToPickup": "เปลี่ยนเป็นรับเองที่ร้าน",
     "outOfDeliveryArea": "นอกเขตจัดส่งมาตรฐานของเรา",
     "freeDeliveryApplied": "ฟรีค่าจัดส่งแล้ว",
     "open": "เปิด",

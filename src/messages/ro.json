@@ -184,6 +184,8 @@
     "continue": "Continuă",
     "minimumOrder": "Comandă minimă",
     "addMoreToContinue": "Comanda minimă pentru această zonă de livrare este {min}. Adaugă încă {more} pentru a continua.",
+    "changeDeliveryAddress": "Schimbă adresa de livrare",
+    "switchToPickup": "Treci la ridicare personală",
     "outOfDeliveryArea": "În afara zonelor noastre standard de livrare",
     "freeDeliveryApplied": "Livrare gratuită aplicată",
     "open": "Deschis",

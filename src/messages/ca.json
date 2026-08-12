@@ -184,6 +184,8 @@
     "continue": "Continua",
     "minimumOrder": "Comanda mínima",
     "addMoreToContinue": "La comanda mínima per a aquesta zona de lliurament és {min}. Afegiu {more} més per continuar.",
+    "changeDeliveryAddress": "Canvia l'adreça de lliurament",
+    "switchToPickup": "Canvia a recollida",
     "outOfDeliveryArea": "Fora de les nostres zones de lliurament estàndard",
     "freeDeliveryApplied": "Lliurament gratuït aplicat",
     "open": "Obert",

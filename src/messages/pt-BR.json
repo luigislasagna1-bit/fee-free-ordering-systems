@@ -184,6 +184,8 @@
     "continue": "Continuar",
     "minimumOrder": "Pedido mínimo",
     "addMoreToContinue": "O pedido mínimo para esta zona de entrega é {min}. Adicione mais {more} para continuar.",
+    "changeDeliveryAddress": "Alterar endereço de entrega",
+    "switchToPickup": "Mudar para retirada",
     "outOfDeliveryArea": "Fora das nossas áreas de entrega padrão",
     "freeDeliveryApplied": "Entrega grátis aplicada",
     "open": "Aberto",

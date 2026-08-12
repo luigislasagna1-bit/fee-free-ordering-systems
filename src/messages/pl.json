@@ -184,6 +184,8 @@
     "continue": "Kontynuuj",
     "minimumOrder": "Minimalne zamówienie",
     "addMoreToContinue": "Minimalna wartość zamówienia dla tej strefy dostawy wynosi {min}. Dodaj jeszcze {more}, aby kontynuować.",
+    "changeDeliveryAddress": "Zmień adres dostawy",
+    "switchToPickup": "Przełącz na odbiór osobisty",
     "outOfDeliveryArea": "Poza naszym standardowym obszarem dostawy",
     "freeDeliveryApplied": "Bezpłatna dostawa aktywna",
     "open": "Otwarte",
