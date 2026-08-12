@@ -590,7 +590,10 @@
       "useAccountEmail": "Sūtīt to labāk uz mana konta e-pastu"
     },
     "pausedSchedulePrompt": "⏸ Šobrīd nepieņemam tūlītējus pasūtījumus — izvēlieties vēlāku laiku, un tas būs gatavs. Agrākais pieejamais laiks redzams zemāk.",
-    "checkPinHint": "Domājam, ka esat šeit. Velciet atzīmi tieši līdz savām durvīm, lai piegādes cena būtu pareiza."
+    "checkPinHint": "Domājam, ka esat šeit. Velciet atzīmi tieši līdz savām durvīm, lai piegādes cena būtu pareiza.",
+    "confirmPinCta": "Izmantot šo vietu",
+    "pinConfirmedLabel": "Piegādes vieta apstiprināta",
+    "adjustPin": "Mainīt"
   },
   "reservation": {
     "title": "Rezervēt galdu",

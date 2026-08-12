@@ -590,7 +590,10 @@
     "pickAddressFromList": "Odaberite adresu s popisa iznad kako bismo potvrdili područje dostave i cijenu.",
     "cantFindAddress": "Ne možete pronaći svoju adresu? Označite mjesto na karti",
     "pausedSchedulePrompt": "⏸ Trenutačno ne primamo narudžbe za odmah — odaberite kasnije vrijeme i bit će spremna. Najraniji slobodan termin prikazan je ispod.",
-    "checkPinHint": "Mislimo da ste ovdje. Povucite oznaku točno do svojih vrata kako bi cijena dostave bila točna."
+    "checkPinHint": "Mislimo da ste ovdje. Povucite oznaku točno do svojih vrata kako bi cijena dostave bila točna.",
+    "confirmPinCta": "Koristi ovo mjesto",
+    "pinConfirmedLabel": "Mjesto dostave potvrđeno",
+    "adjustPin": "Promijeni"
   },
   "reservation": {
     "title": "Rezervirajte stol",

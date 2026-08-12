@@ -590,7 +590,10 @@
     "pickAddressFromList": "Wybierz swój adres z listy powyżej, abyśmy mogli potwierdzić obszar dostawy i jej koszt.",
     "cantFindAddress": "Nie znajdujesz swojego adresu? Zaznacz miejsce na mapie",
     "pausedSchedulePrompt": "⏸ Chwilowo nie przyjmujemy zamówień na teraz — wybierz późniejszą godzinę, a wszystko będzie gotowe. Najwcześniejszy dostępny termin widać poniżej.",
-    "checkPinHint": "Sądzimy, że jesteś tutaj. Przeciągnij pinezkę dokładnie pod swoje drzwi, aby cena dostawy była prawidłowa."
+    "checkPinHint": "Sądzimy, że jesteś tutaj. Przeciągnij pinezkę dokładnie pod swoje drzwi, aby cena dostawy była prawidłowa.",
+    "confirmPinCta": "Użyj tego miejsca",
+    "pinConfirmedLabel": "Miejsce dostawy potwierdzone",
+    "adjustPin": "Zmień"
   },
   "reservation": {
     "title": "Zarezerwuj stolik",

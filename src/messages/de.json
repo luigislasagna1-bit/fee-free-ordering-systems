@@ -590,7 +590,10 @@
     "pickAddressFromList": "Wählen Sie Ihre Adresse aus der Liste oben, damit wir Ihr Liefergebiet und den Preis bestätigen können.",
     "cantFindAddress": "Sie finden Ihre Adresse nicht? Setzen Sie stattdessen eine Stecknadel auf der Karte",
     "pausedSchedulePrompt": "⏸ Sofort-Bestellungen nehmen wir gerade nicht an — wählen Sie eine spätere Zeit, dann steht alles bereit. Der früheste freie Termin wird unten angezeigt.",
-    "checkPinHint": "Hier vermuten wir Sie. Ziehen Sie die Markierung genau an Ihre Tür, damit der Lieferpreis stimmt."
+    "checkPinHint": "Hier vermuten wir Sie. Ziehen Sie die Markierung genau an Ihre Tür, damit der Lieferpreis stimmt.",
+    "confirmPinCta": "Diesen Punkt verwenden",
+    "pinConfirmedLabel": "Lieferort bestätigt",
+    "adjustPin": "Ändern"
   },
   "reservation": {
     "title": "Tisch reservieren",

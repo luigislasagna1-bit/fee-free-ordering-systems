@@ -590,7 +590,10 @@
     "pickAddressFromList": "Chọn địa chỉ của bạn từ danh sách phía trên để chúng tôi xác nhận khu vực và phí giao hàng.",
     "cantFindAddress": "Không tìm thấy địa chỉ của bạn? Hãy ghim vị trí trên bản đồ",
     "pausedSchedulePrompt": "⏸ Hiện tại chúng tôi tạm ngừng nhận đơn giao ngay — hãy chọn thời gian muộn hơn và chúng tôi sẽ chuẩn bị sẵn. Khung giờ sớm nhất còn trống hiển thị bên dưới.",
-    "checkPinHint": "Đây là nơi chúng tôi nghĩ bạn đang ở. Kéo ghim đến đúng cửa nhà bạn để phí giao hàng được tính chính xác."
+    "checkPinHint": "Đây là nơi chúng tôi nghĩ bạn đang ở. Kéo ghim đến đúng cửa nhà bạn để phí giao hàng được tính chính xác.",
+    "confirmPinCta": "Dùng vị trí này",
+    "pinConfirmedLabel": "Đã xác nhận vị trí giao hàng",
+    "adjustPin": "Chỉnh lại"
   },
   "reservation": {
     "title": "Đặt bàn",

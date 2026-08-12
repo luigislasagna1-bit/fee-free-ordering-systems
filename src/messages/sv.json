@@ -590,7 +590,10 @@
     "pickAddressFromList": "Välj din adress i listan ovan så kan vi bekräfta ditt leveransområde och priset.",
     "cantFindAddress": "Hittar du inte din adress? Sätt en nål på kartan i stället",
     "pausedSchedulePrompt": "⏸ Vi tar inte emot beställningar till nu just nu — välj en senare tid så har vi den klar. Den tidigaste lediga tiden visas nedan.",
-    "checkPinHint": "Det är här vi tror att du är. Dra nålen till din exakta dörr så att leveranspriset blir rätt."
+    "checkPinHint": "Det är här vi tror att du är. Dra nålen till din exakta dörr så att leveranspriset blir rätt.",
+    "confirmPinCta": "Använd denna plats",
+    "pinConfirmedLabel": "Leveransplats bekräftad",
+    "adjustPin": "Justera"
   },
   "reservation": {
     "title": "Boka ett bord",

@@ -590,7 +590,10 @@
     "pickAddressFromList": "Vyberte svoju adresu zo zoznamu vyššie, aby sme mohli potvrdiť oblasť doručenia a cenu.",
     "cantFindAddress": "Nemôžete nájsť svoju adresu? Označte miesto na mape",
     "pausedSchedulePrompt": "⏸ Objednávky na hneď teraz momentálne neprijímame — vyberte neskorší čas a pripravíme ju. Najskorší voľný termín je nižšie.",
-    "checkPinHint": "Myslíme si, že ste tu. Potiahnite špendlík presne k svojim dverám, aby bola cena za doručenie správna."
+    "checkPinHint": "Myslíme si, že ste tu. Potiahnite špendlík presne k svojim dverám, aby bola cena za doručenie správna.",
+    "confirmPinCta": "Použiť toto miesto",
+    "pinConfirmedLabel": "Miesto doručenia potvrdené",
+    "adjustPin": "Upraviť"
   },
   "reservation": {
     "title": "Rezervovať stôl",

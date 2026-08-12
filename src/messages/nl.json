@@ -590,7 +590,10 @@
     "pickAddressFromList": "Kies uw adres uit de lijst hierboven, dan bevestigen we uw bezorggebied en de prijs.",
     "cantFindAddress": "Kunt u uw adres niet vinden? Zet zelf een speld op de kaart",
     "pausedSchedulePrompt": "⏸ We nemen op dit moment geen directe bestellingen aan — kies een later tijdstip, dan staat het klaar. Het vroegst beschikbare tijdstip staat hieronder.",
-    "checkPinHint": "Dit is waar wij denken dat je bent. Sleep de speld naar je exacte deur zodat de bezorgprijs klopt."
+    "checkPinHint": "Dit is waar wij denken dat je bent. Sleep de speld naar je exacte deur zodat de bezorgprijs klopt.",
+    "confirmPinCta": "Gebruik deze plek",
+    "pinConfirmedLabel": "Bezorglocatie bevestigd",
+    "adjustPin": "Aanpassen"
   },
   "reservation": {
     "title": "Tafel reserveren",

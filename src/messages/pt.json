@@ -590,7 +590,10 @@
     "pickAddressFromList": "Escolha o seu endereço na lista acima para podermos confirmar a sua área de entrega e o preço.",
     "cantFindAddress": "Não encontra o seu endereço? Coloque antes um pino no mapa",
     "pausedSchedulePrompt": "⏸ De momento não aceitamos encomendas imediatas — escolha uma hora mais tarde e estará pronta. O primeiro horário disponível é mostrado abaixo.",
-    "checkPinHint": "É aqui que achamos que está. Arraste o marcador até à sua porta exacta para que o preço de entrega fique certo."
+    "checkPinHint": "É aqui que achamos que está. Arraste o marcador até à sua porta exacta para que o preço de entrega fique certo.",
+    "confirmPinCta": "Usar este ponto",
+    "pinConfirmedLabel": "Local de entrega confirmado",
+    "adjustPin": "Ajustar"
   },
   "reservation": {
     "title": "Reservar mesa",

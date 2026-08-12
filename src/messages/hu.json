@@ -590,7 +590,10 @@
     "pickAddressFromList": "Válassza ki a címét a fenti listából, hogy megerősíthessük a kiszállítási területet és a díjat.",
     "cantFindAddress": "Nem találja a címét? Helyezzen el egy jelölőt a térképen",
     "pausedSchedulePrompt": "⏸ Épp nem veszünk fel azonnali rendelést — válasszon későbbi időpontot, és elkészítjük. A legkorábbi szabad időpont lent látható.",
-    "checkPinHint": "Szerintünk itt van. Húzza a jelölőt pontosan az ajtajához, hogy a szállítási díj helyes legyen."
+    "checkPinHint": "Szerintünk itt van. Húzza a jelölőt pontosan az ajtajához, hogy a szállítási díj helyes legyen.",
+    "confirmPinCta": "Ezt a pontot használom",
+    "pinConfirmedLabel": "Kiszállítási pont megerősítve",
+    "adjustPin": "Módosítás"
   },
   "reservation": {
     "title": "Asztal foglalása",

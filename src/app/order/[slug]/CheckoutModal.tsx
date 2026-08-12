@@ -542,6 +542,13 @@ export function CheckoutModal({
   // tell us where they are, and therefore unclassifiable. This lets them open
   // the map anyway and drop the pin themselves.
   const [showPin, setShowPin] = useState(false);
+  // Luigi 2026-08-12: "once we move the pin there should be a DONE or CONFIRM
+  // button". Without one the map just sits there and the customer has no way to
+  // say "yes, that's my door" — so they scroll past it and nothing is settled.
+  // Purely presentational: it collapses the map to a confirmed line with an
+  // Adjust link. It does NOT gate Place Order, because a confirm that can block
+  // checkout is how a customer gets stranded (the 2026-08-01 dead-end).
+  const [pinConfirmed, setPinConfirmed] = useState(false);
   const [mapCenter, setMapCenter] = useState<{ lat: number; lng: number } | null>(
     customerInfo.lat != null && customerInfo.lng != null
       ? { lat: customerInfo.lat, lng: customerInfo.lng }
@@ -592,6 +599,14 @@ export function CheckoutModal({
     setMapCenter(null);
     setShowPin(false);
   }, [customerInfo.address, customerInfo.lat, customerInfo.lng]);
+
+  // A confirmation belongs to ONE point. Typing in any address field clears
+  // lat/lng by design, so that is exactly the moment an old "yes, that's my
+  // door" stops being true — otherwise the customer edits their street and the
+  // screen still claims the previous spot was confirmed.
+  useEffect(() => {
+    if (customerInfo.lat == null || customerInfo.lng == null) setPinConfirmed(false);
+  }, [customerInfo.lat, customerInfo.lng]);
 
   // ── Address autocomplete — ONE in-modal dropdown for every restaurant ───
   // Google-keyed restaurants get Places predictions; everyone else gets
@@ -911,6 +926,29 @@ export function CheckoutModal({
     lat: customerInfo.lat, lng: customerInfo.lng,
     resolvedZone,
   });
+
+  // ── THE CASE THAT MATTERS MOST: WE COULDN'T FIND IT ───────────────────────
+  // The auto-centre effect above needs coordinates to centre on, so it does
+  // nothing in the ONE situation where a pin is essential — the geocoder came
+  // back empty and there is no point at all. That still left the customer to
+  // notice a link and click it ("can't find your address?"), which Luigi hit on
+  // the live site within minutes: the map only appeared because he went looking
+  // for it. A customer who doesn't go looking just orders with no zone, which is
+  // the whole failure this work exists to stop.
+  //
+  // So if they have typed an address and we cannot place it, open the map
+  // ourselves, centred on the restaurant, and let them drag from there. Same
+  // behaviour the manual link gave — it just no longer depends on the customer
+  // realising they need to ask for it. The link stays for anyone who closes the
+  // map. Luigi 2026-08-12.
+  useEffect(() => {
+    if (orderType !== "delivery") return;
+    if (!addressNotLocated) return;                              // located, or store has no zones
+    if (geocoding) return;                                       // still looking — don't flash the map
+    if (customerInfo.address.trim().length === 0) return;        // nothing typed yet
+    if (restaurantLat == null || restaurantLng == null) return;  // nothing to centre on
+    setShowPin(true);
+  }, [addressNotLocated, geocoding, customerInfo.address, orderType, restaurantLat, restaurantLng]);
 
   const scheduledTooEarly = (() => {
     const sf = customerInfo.scheduledFor;
@@ -1620,7 +1658,21 @@ export function CheckoutModal({
                         restaurant now. Appears once an address is picked; drag/
                         click to set the exact door, coords ride along with the
                         order. Google autocomplete above still fills the address. */}
-                    {deliveryFormConfig.street.show && (mapCenter || (showPin && restaurantLat != null && restaurantLng != null)) && (
+                    {/* Confirmed: the map collapses to one line so it stops
+                        eating the form, with a way straight back into it. */}
+                    {deliveryFormConfig.street.show && pinConfirmed && customerInfo.lat != null && (
+                      <div className="flex items-center justify-between gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-2">
+                        <p className="text-xs font-medium text-emerald-900">{tc("pinConfirmedLabel")}</p>
+                        <button
+                          type="button"
+                          onClick={() => setPinConfirmed(false)}
+                          className="text-xs font-bold text-emerald-800 underline hover:no-underline"
+                        >
+                          {tc("adjustPin")}
+                        </button>
+                      </div>
+                    )}
+                    {deliveryFormConfig.street.show && !pinConfirmed && (mapCenter || (showPin && restaurantLat != null && restaurantLng != null)) && (
                       /* relative z-0 flattens Leaflet's internal z-indexes into
                          one stacking context BELOW the suggestion list — without
                          it the map paints over the list and steals its taps
@@ -1640,7 +1692,20 @@ export function CheckoutModal({
                             decides their delivery zone and therefore their fee,
                             and nobody has agreed to it yet. */}
                         {customerInfo.lat != null && customerInfo.lng != null ? (
-                          <p className="text-xs text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
+                          <div className="flex items-center justify-between gap-2 px-2 py-1.5 bg-gray-50">
+                            <p className="text-xs text-gray-500">{tc("dragPinHint")}</p>
+                            {/* Only offered once there IS a point to confirm —
+                                confirming the geocoder's guess without moving it
+                                would just launder an inference into an approval. */}
+                            <button
+                              type="button"
+                              onClick={() => setPinConfirmed(true)}
+                              className="shrink-0 rounded-md px-2.5 py-1 text-xs font-bold text-white"
+                              style={{ backgroundColor: theme.primaryColor }}
+                            >
+                              {tc("confirmPinCta")}
+                            </button>
+                          </div>
                         ) : (
                           <p className="text-xs font-medium text-amber-900 px-2 py-1.5 bg-amber-50">{tc("checkPinHint")}</p>
                         )}

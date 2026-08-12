@@ -590,7 +590,10 @@
       "useAccountEmail": "Vietoj to siųsti į mano paskyros el. paštą"
     },
     "pausedSchedulePrompt": "⏸ Šiuo metu nepriimame užsakymų dabar — pasirinkite vėlesnį laiką ir jį paruošime. Anksčiausias laisvas laikas rodomas žemiau.",
-    "checkPinHint": "Manome, kad esate čia. Nutempkite žymeklį tiksliai iki savo durų, kad pristatymo kaina būtų teisinga."
+    "checkPinHint": "Manome, kad esate čia. Nutempkite žymeklį tiksliai iki savo durų, kad pristatymo kaina būtų teisinga.",
+    "confirmPinCta": "Naudoti šią vietą",
+    "pinConfirmedLabel": "Pristatymo vieta patvirtinta",
+    "adjustPin": "Keisti"
   },
   "reservation": {
     "title": "Rezervuoti stalą",

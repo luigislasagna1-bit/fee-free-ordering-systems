@@ -590,7 +590,10 @@
     "pickAddressFromList": "Valitse osoitteesi yllä olevasta luettelosta, niin voimme vahvistaa toimitusalueesi ja hinnan.",
     "cantFindAddress": "Etkö löydä osoitettasi? Aseta nasta kartalle",
     "pausedSchedulePrompt": "⏸ Emme ota juuri nyt heti toimitettavia tilauksia — valitse myöhempi aika, niin se on valmiina. Aikaisin vapaa aika näkyy alla.",
-    "checkPinHint": "Arvelemme sinun olevan täällä. Vedä nasta tarkalleen ovellesi, jotta toimitushinta on oikea."
+    "checkPinHint": "Arvelemme sinun olevan täällä. Vedä nasta tarkalleen ovellesi, jotta toimitushinta on oikea.",
+    "confirmPinCta": "Käytä tätä paikkaa",
+    "pinConfirmedLabel": "Toimituspaikka vahvistettu",
+    "adjustPin": "Muuta"
   },
   "reservation": {
     "title": "Varaa pöytä",

@@ -590,7 +590,10 @@
     "pickAddressFromList": "배달 지역과 요금을 확인할 수 있도록 위 목록에서 주소를 선택하세요.",
     "cantFindAddress": "주소를 찾을 수 없나요? 지도에 핀을 찍어 보세요",
     "pausedSchedulePrompt": "⏸ 지금 바로 처리되는 주문은 잠시 받지 않고 있습니다 — 나중 시간을 선택하시면 준비해 두겠습니다. 가장 빠른 가능 시간은 아래에 표시됩니다.",
-    "checkPinHint": "여기가 고객님의 위치로 추정됩니다. 배달 요금이 정확하도록 핀을 정확한 문 앞으로 끌어 주세요."
+    "checkPinHint": "여기가 고객님의 위치로 추정됩니다. 배달 요금이 정확하도록 핀을 정확한 문 앞으로 끌어 주세요.",
+    "confirmPinCta": "이 위치로 설정",
+    "pinConfirmedLabel": "배달 위치 확인됨",
+    "adjustPin": "변경"
   },
   "reservation": {
     "title": "테이블 예약",
