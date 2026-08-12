@@ -77,6 +77,23 @@ async function autoComplete() {
       // auto-complete (and count in reports) once past their due time. Simple
       // mode only reaches "ready" via the manual action.
       status: { in: ["accepted", "ready"] },
+      // NEVER auto-complete an order the kitchen never saw (Luigi 2026-08-11).
+      // `notifiedAt` is THE release flag: the kitchen display, the ticket
+      // printer and the confirmation emails all key off it. A card order under
+      // auto-accept is born status:"accepted" with notifiedAt:null and stays
+      // that way until payment verifies — so without this guard the sweep
+      // flipped never-paid, never-cooked orders to "completed" ~20 min after
+      // checkout. That did three bad things at once:
+      //   1. It hid them from the abandoned-payment sweep in
+      //      auto-reject-orders.ts (which only matches status pending|accepted),
+      //      so they could never be cancelled OR rescued — permanent ghosts.
+      //   2. It counted phantom food as completed revenue in every report.
+      //   3. It ran the fulfillment ledger hooks below, awarding Reward Dollars
+      //      for an order that was never paid and never made.
+      // Found live: ORD-710341102 / ORD-733393825 / ORD-721054168, $83.62 of
+      // orders the store never received. An order can only complete if it was
+      // released to the kitchen first.
+      notifiedAt: { not: null },
     },
     select: { id: true, scheduledFor: true, estimatedReady: true, createdAt: true },
   });

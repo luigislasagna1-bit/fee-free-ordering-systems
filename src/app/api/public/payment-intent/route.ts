@@ -106,6 +106,8 @@ export async function POST(req: NextRequest) {
     where: { id: orderId },
     select: {
       id: true, restaurantId: true, paymentMethod: true, paymentStatus: true, total: true, creditApplied: true,
+      // Needed by the dead-order gate below.
+      status: true,
       // Additive fraud-signal / dispute-evidence fields (Stripe Radar fix,
       // 2026-08-03) — never used for the charge-amount reconciliation above.
       customerId: true, customerName: true, customerEmail: true,
@@ -119,7 +121,30 @@ export async function POST(req: NextRequest) {
   if (dbOrder.paymentMethod !== "card") {
     return NextResponse.json({ error: "Order is not paying by card" }, { status: 400 });
   }
-  if (dbOrder.paymentStatus !== "pending") {
+  // NEVER take money for an order that will never be made. The 30-minute
+  // abandoned-payment sweep cancels unpaid checkouts and the kitchen can
+  // reject — either way the food is not coming. This route only ever gated on
+  // paymentStatus, which says nothing about whether the ORDER is still alive,
+  // so a cancelled order stayed payable indefinitely. That mattered much more
+  // once the payment page became reachable from a bare `?orderId=` link
+  // (Luigi 2026-08-11): a customer re-opening an old link could authorize a
+  // charge against a dead order. Caught in adversarial review.
+  if (dbOrder.status === "cancelled" || dbOrder.status === "rejected") {
+    return NextResponse.json(
+      { error: "This order was cancelled and can no longer be paid for." },
+      { status: 409 },
+    );
+  }
+  // Re-presentable states only. "pending" is a first attempt; "requires_action"
+  // is a 3D-Secure challenge the customer bailed out of (bank app swallowed
+  // them, tab closed) — they must be able to come back and finish, which is the
+  // single most common way an order got abandoned. Re-issuing is safe because
+  // createDirectPaymentIntent below is idempotent per order
+  // (`pi_create_<orderId>`): the customer gets the SAME PaymentIntent back, so a
+  // retry can never place a second hold on their card. Terminal / in-flight
+  // states (paid, authorized, processing, refunded, voided) still refuse —
+  // money has already moved or is moving. Luigi 2026-08-11.
+  if (dbOrder.paymentStatus !== "pending" && dbOrder.paymentStatus !== "requires_action") {
     return NextResponse.json({ error: "Order payment is already in progress" }, { status: 400 });
   }
   // Charge total MINUS any Reward Dollars applied (store credit is a partial
@@ -175,6 +200,39 @@ export async function POST(req: NextRequest) {
       restaurantSlug,
       shipping,
     });
+
+    // ── Persist the intent id ON THE ORDER, immediately (Luigi 2026-08-11) ────
+    // Until this existed, the ONLY way the server ever learned which
+    // PaymentIntent belonged to an order was the `?payment_intent=` query param
+    // Stripe appends when it redirects the customer back to the confirmation
+    // page. So if the customer's browser never made that round trip — tab
+    // closed, signal dropped, bank app swallowed the 3DS return, in-app browser
+    // ate the query string — the order was orphaned forever: money potentially
+    // authorized on the card, `notifiedAt` null, kitchen never told, no email.
+    // Live damage: 36 stranded card orders in 60 days, 0 of which had an intent
+    // id on file, so nothing could ever reconcile them.
+    //
+    // With the id stored at CREATE time, the order is recoverable from the
+    // server alone — that's what /api/cron/reconcile-card-payments walks. The
+    // guard keeps this write honest: only claim the intent while the order is
+    // still awaiting payment, so a concurrent verify that already resolved the
+    // order (paid/authorized/voided) is never walked backwards.
+    //
+    // Best-effort by design: a failed write must not cost the customer their
+    // checkout — the reconcile cron falls back to searching Stripe by
+    // metadata.orderId for exactly this case.
+    try {
+      await prisma.order.updateMany({
+        where: { id: orderId, paymentStatus: "pending", paymentIntentId: null },
+        data: { paymentIntentId: intent.id },
+      });
+    } catch (e) {
+      console.error(
+        `[payment-intent] could not persist intent id for order ${orderId}:`,
+        e instanceof Error ? e.message : e,
+      );
+    }
+
     return NextResponse.json({
       clientSecret: intent.clientSecret,
       // The restaurant's OWN publishable key — the client loads Stripe.js

@@ -42,6 +42,10 @@
       "schedule": "*/5 * * * *"
     },
     {
+      "path": "/api/cron/reconcile-card-payments",
+      "schedule": "* * * * *"
+    },
+    {
       "path": "/api/cron/dispatch-watchdog",
       "schedule": "*/10 * * * *"
     },

@@ -3,7 +3,7 @@ import prisma from "@/lib/db";
 import { formatCurrency as fmtCurrency, formatDate } from "@/lib/utils";
 import { childBuildLines } from "@/lib/bundle-child-lines";
 import Link from "next/link";
-import { CheckCircle, Clock, MapPin, ArrowRight } from "lucide-react";
+import { CheckCircle, Clock, MapPin, ArrowRight, AlertCircle } from "lucide-react";
 import { OrderPlacedTracker } from "@/components/order/OrderPlacedTracker";
 import { PushPermissionPrompt } from "@/components/PushPermissionPrompt";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
@@ -77,6 +77,40 @@ export default async function ConfirmationPage({
     order.restaurant.rewardLabelSingular?.trim() ||
     t("rewardDefaultName");
 
+  // ── Did this order actually REACH the restaurant? (Luigi 2026-08-11) ───────
+  // This page used to render a green "Order Placed!" unconditionally — even for
+  // an online-payment order that was never paid and therefore never released to
+  // the kitchen. Customers walked away certain food was coming while the store
+  // had no idea the order existed (ORD-710341102, Sharon Craven, $36.44: she
+  // read her order number off THIS screen).
+  //
+  // `notifiedAt` is the release flag — the kitchen display, the ticket printer
+  // and the confirmation email all key off it. Only online-payment methods can
+  // be un-released here: cash / pay-at-store / fully-credit-covered orders are
+  // released at create (paymentMethod becomes "reward_credit" when Reward
+  // Dollars cover the whole total), and "paid"/"authorized" card orders have
+  // already been released by verifyAndReleaseOrderPayment above. So this can
+  // only fire on a genuinely unpaid online order — never a false alarm on a
+  // good one.
+  // A dead order can never be paid for. The 30-minute abandoned-payment sweep
+  // cancels unpaid checkouts, and the kitchen can reject — in both cases the
+  // food will NEVER be made, so offering "Complete payment" here would take
+  // money for nothing. (Caught in adversarial review: the first version of
+  // `awaitingPayment` below ignored status entirely, so every one of the 33
+  // auto-cancelled orders would have rendered a working pay button.)
+  const orderDead = order.status === "cancelled" || order.status === "rejected";
+
+  // Payment still outstanding AND still collectable. Note "completed" stays
+  // payable on purpose: the auto-complete bug left phantom completed orders
+  // that the restaurant may well have fulfilled anyway, and Luigi wants to be
+  // able to collect on those (ORD-710341102).
+  const awaitingPayment =
+    !orderDead &&
+    (order.paymentMethod === "card" || order.paymentMethod === "paypal") &&
+    !order.notifiedAt &&
+    order.paymentStatus !== "paid" &&
+    order.paymentStatus !== "authorized";
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4">
       {/* Funnel-terminal beacon. Fires "order_placed" so /admin/reports/
@@ -88,18 +122,47 @@ export default async function ConfirmationPage({
           at the "notify me when it's ready" moment (never on launch). */}
       <PushPermissionPrompt />
       <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg p-8 text-center">
-        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
-          <CheckCircle className="w-10 h-10 text-green-500" />
+        <div
+          className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5 ${
+            orderDead ? "bg-red-100" : awaitingPayment ? "bg-amber-100" : "bg-green-100"
+          }`}
+        >
+          {orderDead || awaitingPayment ? (
+            <AlertCircle className={`w-10 h-10 ${orderDead ? "text-red-500" : "text-amber-500"}`} />
+          ) : (
+            <CheckCircle className="w-10 h-10 text-green-500" />
+          )}
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("orderPlaced")}</h1>
+        {/* Three states, and the page must never claim a better one than the
+            truth. Dead + not-yet-paid both reuse copy that is already
+            translated in all 38 locales — no new strings for the dead case. */}
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          {orderDead
+            ? (order.status === "rejected" ? tStatus("orderRejected") : tStatus("orderCancelled"))
+            : awaitingPayment
+              ? t("paymentNotCompleted")
+              : t("orderPlaced")}
+        </h1>
         <p className="text-gray-500 mb-6">
-          {t("orderReceivedWaiting", { restaurantName: order.restaurant.name })}
+          {orderDead
+            ? (order.rejectionReason
+                ? tStatus("rejectionReason", { reason: order.rejectionReason })
+                : tStatus("orderCancelled"))
+            : awaitingPayment
+              ? t("paymentNotCompletedBody", { restaurantName: order.restaurant.name })
+              : t("orderReceivedWaiting", { restaurantName: order.restaurant.name })}
         </p>
 
-        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6">
+        <div
+          className={`border rounded-xl p-4 mb-6 ${
+            orderDead ? "bg-red-50 border-red-200" : awaitingPayment ? "bg-amber-50 border-amber-200" : "bg-emerald-50 border-emerald-200"
+          }`}
+        >
           <div className="text-sm text-gray-600 mb-1">{t("orderNumber")}</div>
-          <div className="text-2xl font-bold text-emerald-500">{order.orderNumber}</div>
+          <div className={`text-2xl font-bold ${orderDead ? "text-red-600" : awaitingPayment ? "text-amber-600" : "text-emerald-500"}`}>
+            {order.orderNumber}
+          </div>
         </div>
 
         <div className="text-left space-y-3 mb-6">
@@ -338,9 +401,38 @@ export default async function ConfirmationPage({
         </div>
 
         <div className="flex flex-col gap-3">
+          {awaitingPayment && (
+            <>
+              {/* Retry lives on orderId alone — the payment page re-derives the
+                  intent from it, and the create call is idempotent per order, so
+                  this can never place a second hold on the card. */}
+              <Link
+                href={`/order/${slug}/payment?orderId=${order.id}`}
+                className="flex items-center justify-center gap-2 bg-amber-500 text-white font-semibold py-3 rounded-xl hover:bg-amber-600 transition"
+              >
+                {/* Reuse the payment screen's own button label — already
+                    translated in all 38 locales, and it's the same action. */}
+                {tRoot("customer.payment.completePayment")} <ArrowRight className="w-4 h-4" />
+              </Link>
+              {/* The reconcile cron re-checks with Stripe every minute, so a
+                  customer who really did pay sees this flip to "Order Placed"
+                  on the next refresh. Tell them that instead of leaving them
+                  to guess. */}
+              <p className="text-xs text-gray-500 leading-relaxed">
+                {t("paymentNotCompletedPaidAlready", {
+                  restaurantName: order.restaurant.name,
+                  orderNumber: order.orderNumber,
+                })}
+              </p>
+            </>
+          )}
           <Link
             href={`/order/${slug}/status/${order.id}`}
-            className="flex items-center justify-center gap-2 bg-emerald-500 text-white font-semibold py-3 rounded-xl hover:bg-emerald-600 transition"
+            className={`flex items-center justify-center gap-2 font-semibold py-3 rounded-xl transition ${
+              awaitingPayment
+                ? "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                : "bg-emerald-500 text-white hover:bg-emerald-600"
+            }`}
           >
             {t("trackOrderStatus")} <ArrowRight className="w-4 h-4" />
           </Link>

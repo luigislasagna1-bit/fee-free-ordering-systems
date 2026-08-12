@@ -77,19 +77,34 @@ export function PaymentPageClient({ slug }: { slug: string }) {
   // (already translated in all 38 locales) — same pattern as the status page.
   const tRoot = useTranslations();
   const orderId = searchParams.get("orderId") ?? "";
-  const clientSecret = searchParams.get("clientSecret") ?? "";
-  const pk = searchParams.get("pk") ?? "";
+  // ── The page is now self-sufficient from `orderId` alone (Luigi 2026-08-11) ──
+  // It used to require clientSecret + pk to be carried in the QUERY STRING. That
+  // made the payment screen un-reloadable: a refresh, a back-then-forward, a
+  // link handler or in-app browser that trimmed the URL, or anything that
+  // dropped a param landed the customer on "Invalid payment link" mid-checkout —
+  // Luigi's "customers kicked out while trying to pay". It also put a live
+  // payment credential into browser history, referrer headers and access logs.
+  //
+  // Now we re-derive the intent from the order id below. Re-deriving is safe:
+  // /api/public/payment-intent creates with a per-order idempotency key, so a
+  // reload returns the SAME PaymentIntent and can never place a second hold.
+  // The URL params are still READ so a customer already mid-checkout on the
+  // previous build isn't interrupted by the deploy.
+  const legacyClientSecret = searchParams.get("clientSecret") ?? "";
+  const legacyPk = searchParams.get("pk") ?? "";
   // Direct-charge PaymentIntents live on the restaurant's connected account.
   // Stripe.js needs the `stripeAccount` option at load time so confirmation
   // hits the right account. Empty string means "platform charge" — kept
   // as a fallback for legacy intents created before the cutover.
   const stripeAccount = searchParams.get("stripeAccount") ?? "";
 
-  const [stripePromise] = useState(() =>
-    pk
-      ? loadStripe(pk, stripeAccount ? { stripeAccount } : undefined)
+  const [clientSecret, setClientSecret] = useState(legacyClientSecret);
+  const [stripePromise, setStripePromise] = useState(() =>
+    legacyPk
+      ? loadStripe(legacyPk, stripeAccount ? { stripeAccount } : undefined)
       : null,
   );
+  const [setupError, setSetupError] = useState("");
 
   // Money summary — what the card is about to be charged. Fetched from the
   // public order endpoint (same select the status page uses) so the page can
@@ -106,10 +121,15 @@ export function PaymentPageClient({ slug }: { slug: string }) {
   useEffect(() => {
     if (!orderId) return;
     let cancelled = false;
-    fetch(`/api/orders/${orderId}`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((o) => {
-        if (cancelled || !o || typeof o.total !== "number") return;
+    (async () => {
+      let o: any = null;
+      try {
+        const r = await fetch(`/api/orders/${orderId}`);
+        o = r.ok ? await r.json() : null;
+      } catch { /* handled below */ }
+      if (cancelled) return;
+
+      if (o && typeof o.total === "number") {
         // Reward rows only when the program is currently ON for this store.
         const rewardsOn = !!o.restaurant?.rewardsEnabled;
         const creditUsed = rewardsOn ? Math.max(0, Number(o.creditApplied) || 0) : 0;
@@ -124,17 +144,95 @@ export function PaymentPageClient({ slug }: { slug: string }) {
             tRoot("checkout.reward.defaultPlural"),
           currency: (o.restaurant?.currency || "usd").toLowerCase(),
         });
-      })
-      .catch(() => { /* silent — summary is optional */ });
+      }
+
+      // Already carrying an intent from the URL (customer mid-checkout across
+      // the deploy) — nothing to set up.
+      if (legacyClientSecret && legacyPk) return;
+
+      // This order is already settled — don't re-present a card form for money
+      // that's been taken. Send them to the confirmation, which now reports the
+      // real state either way.
+      if (o && (o.paymentStatus === "paid" || o.paymentStatus === "authorized")) {
+        router.replace(`/order/${slug}/confirmation?orderId=${orderId}`);
+        return;
+      }
+
+      if (!o || typeof o.total !== "number") {
+        setSetupError(t("couldNotStartPayment"));
+        return;
+      }
+
+      // Re-derive the PaymentIntent from the order. The server re-prices the
+      // order and refuses on any mismatch, so this `amount` is a probe, not a
+      // trusted input — same contract the checkout has always used.
+      const creditUsed = Math.max(0, Number(o.creditApplied) || 0);
+      const amount = Math.max(0, Math.round((o.total - creditUsed) * 100) / 100);
+      try {
+        const res = await fetch("/api/public/payment-intent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            restaurantSlug: slug,
+            amount,
+            currency: (o.restaurant?.currency || "usd").toLowerCase(),
+            metadata: { orderId },
+          }),
+        });
+        const data = await res.json();
+        if (cancelled) return;
+        if (!res.ok || !data.clientSecret || !data.publishableKey) {
+          setSetupError(data.error || t("couldNotStartPayment"));
+          return;
+        }
+        setStripePromise(
+          loadStripe(data.publishableKey, data.stripeAccount ? { stripeAccount: data.stripeAccount } : undefined),
+        );
+        setClientSecret(data.clientSecret);
+      } catch {
+        if (!cancelled) setSetupError(t("couldNotStartPayment"));
+      }
+    })();
     return () => { cancelled = true; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId]);
   const fmt = (amount: number) => formatCurrency(amount, summary?.currency ?? "usd");
 
-  if (!clientSecret || !pk || !orderId) {
+  // Only a genuinely missing order id is an unrecoverable link now — everything
+  // else is either still resolving or a reportable setup failure.
+  if (!orderId) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center text-gray-500">{t("invalidPaymentLink")}</div>
+      </div>
+    );
+  }
+
+  if (setupError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 text-center space-y-4">
+          <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-xl p-3">
+            {setupError}
+          </div>
+          <button
+            onClick={() => router.push(`/order/${slug}`)}
+            className="w-full bg-gray-100 text-gray-700 font-semibold py-3 rounded-xl hover:bg-gray-200 transition"
+          >
+            {t("backToRestaurant")}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!clientSecret || !stripePromise) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="flex items-center gap-2 text-gray-500">
+          <Loader2 className="w-5 h-5 animate-spin" />
+          {t("preparingPayment")}
+        </div>
       </div>
     );
   }

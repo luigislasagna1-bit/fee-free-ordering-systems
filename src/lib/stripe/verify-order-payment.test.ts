@@ -82,7 +82,7 @@ beforeEach(() => {
 function seedOrder(o: Partial<any>) {
   const order = {
     id: "o1", restaurantId: "r1", status: "pending", paymentMethod: "card",
-    paymentStatus: "pending", paymentIntentId: "pi_1", ...o,
+    paymentStatus: "pending", paymentIntentId: "pi_1", notifiedAt: null, ...o,
   };
   h.state.orders.push(order);
   h.state.intents[order.paymentIntentId] = { status: "requires_capture", metadata: { orderId: order.id } };
@@ -193,5 +193,43 @@ describe("verifyAndReleaseOrderPayment — auto-accept delivery dispatch (the 20
     h.state.intents["pi_B"].status = "succeeded";
     await verifyAndReleaseOrderPayment({ orderId: b.id });
     expect(h.state.dispatched).toEqual(["oA"]); // unchanged — oB not dispatched
+  });
+});
+
+describe("SELF-HEAL — payment settled but the order was never released", () => {
+  // Both branches below set paymentStatus BEFORE calling fireOrderNotifications.
+  // If anything kills the process in between (lambda timeout, throw inside the
+  // fan-out, deploy mid-request) the order is paid with notifiedAt still null —
+  // and every later call used to hit a terminal early-return and give up, so the
+  // kitchen never learned about food the customer had paid for. Luigi 2026-08-11.
+  it("releases a PAID order that never reached the kitchen", async () => {
+    const o = seedOrder({ status: "accepted", paymentStatus: "paid", notifiedAt: null });
+    const result = await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(result).toBe("paid");
+    expect(h.state.notified).toContain(o.id);
+    expect(h.state.dispatched).toContain(o.id); // courier not forgotten either
+  });
+
+  it("releases an AUTHORIZED manual-accept order that never reached the kitchen", async () => {
+    // status "pending" hits the `authorized && status !== accepted` early return.
+    const o = seedOrder({ status: "pending", paymentStatus: "authorized", notifiedAt: null });
+    const result = await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(result).toBe("authorized");
+    expect(h.state.notified).toContain(o.id);
+  });
+
+  it("does NOT re-notify an order the kitchen already has", async () => {
+    const o = seedOrder({ status: "accepted", paymentStatus: "paid", notifiedAt: new Date() });
+    await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(h.state.notified).toEqual([]);
+  });
+
+  it("never releases a refunded or voided order", async () => {
+    for (const st of ["refunded", "voided"]) {
+      h.state.orders = []; h.state.notified = [];
+      const o = seedOrder({ id: `o_${st}`, status: "accepted", paymentStatus: st, notifiedAt: null });
+      await verifyAndReleaseOrderPayment({ orderId: o.id });
+      expect(h.state.notified).toEqual([]);
+    }
   });
 });

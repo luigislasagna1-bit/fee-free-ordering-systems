@@ -47,6 +47,8 @@ export async function verifyAndReleaseOrderPayment(params: {
       paymentMethod: true,
       paymentStatus: true,
       paymentIntentId: true,
+      // Needed by the "money took, kitchen never told" self-heal below.
+      notifiedAt: true,
     },
   });
   if (!order) return null;
@@ -54,6 +56,46 @@ export async function verifyAndReleaseOrderPayment(params: {
   // Only card orders go through Stripe. Cash / pay-in-person never had a
   // PaymentIntent.
   if (order.paymentMethod !== "card") return order.paymentStatus;
+
+  // ── A DEAD ORDER IS NEVER CAPTURED AND NEVER RELEASED ────────────────────
+  // This is the one release path every caller shares (confirmation page, status
+  // poll, reconcile cron), so the guard belongs here rather than in each of
+  // them. Without it there's a live race: the reconciler reads a batch of
+  // unreleased orders, the 30-minute abandoned-payment sweep cancels one of
+  // them a moment later, and the reconciler then captures the card and sends a
+  // cancelled order to the kitchen. Rejected orders are the same story from the
+  // kitchen side. Any hold left behind is released by the reconciler's VOID
+  // sweep within the minute. Caught in adversarial review, 2026-08-11.
+  if (order.status === "cancelled" || order.status === "rejected") {
+    return order.paymentStatus;
+  }
+
+  // ── SELF-HEAL: money settled but the order was never released ─────────────
+  // Every early return below says "this payment is resolved, nothing to do".
+  // That was only safe while resolving a payment and releasing the order were
+  // one inseparable step — and they aren't. Both branches further down set
+  // paymentStatus FIRST and call fireOrderNotifications AFTER, so anything that
+  // kills the process in between (lambda timeout, a Resend hiccup thrown from
+  // inside the fan-out, a deploy mid-request) leaves the order paid/authorized
+  // with notifiedAt still null. Past that point EVERY later call — the customer
+  // refreshing, the status poll, the reconcile cron — hit an early return and
+  // gave up, so the kitchen could never learn about an order the customer had
+  // genuinely paid for. That is the exact failure class this whole change
+  // exists to make impossible, so close it here rather than trusting the
+  // happy path to never be interrupted (Luigi 2026-08-11).
+  //
+  // fireOrderNotifications claims notifiedAt atomically, so this is safe to run
+  // from any number of concurrent callers.
+  if (
+    !order.notifiedAt &&
+    (order.paymentStatus === "paid" || order.paymentStatus === "authorized")
+  ) {
+    console.warn(
+      `[verify-payment] order ${order.id} was ${order.paymentStatus} but never released — releasing now.`,
+    );
+    await fireOrderNotifications(order.id);
+    if (order.status === "accepted") after(dispatchAcceptedOrderSafe(order.id));
+  }
 
   // Terminal states — nothing left to verify.
   if (
