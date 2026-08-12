@@ -183,7 +183,7 @@ export default function OrderStatusUpdate(props: OrderStatusUpdateProps) {
     : null;
 
   return (
-    <EmailLayout preview={`${t("email.orderStatus.previewPrefix", { orderNumber })} — ${title}`}>
+    <EmailLayout locale={t.locale} preview={`${t("email.orderStatus.previewPrefix", { orderNumber })} — ${title}`}>
       <EmailHeader variant="status" title={title} subtitle={`${t("email.orderStatus.orderLabel")} #${orderNumber}`} />
       <EmailBody>
         <P>{t("email.orderStatus.greeting", { customerName })}</P>

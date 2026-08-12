@@ -2321,6 +2321,9 @@ async function sendDigestEmail(
       comparisonLabel,
       restaurantName: stats.restaurantName,
       t,
+      // Same tag the headline labels are formatted with, so <html lang/dir>
+      // agrees with the language the body actually renders in.
+      locale: localeTag,
       currency,
       sales:         { value: money(stats.sales),         ...deltaPair(stats.salesDelta) },
       orders:        { value: String(stats.orders),          ...deltaPair(stats.ordersDelta) },
@@ -2724,6 +2727,7 @@ export async function sendMarketingEmail(params: {
 
   const html = await renderEmail(
     AutopilotEmail({
+      locale: params.locale,
       customerName: params.customerName,
       restaurantName: params.restaurantName,
       subject,

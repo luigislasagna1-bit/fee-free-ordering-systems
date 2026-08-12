@@ -39,7 +39,7 @@ export default function PasswordReset({
 }: PasswordResetProps) {
   const expiry = expiresIn ?? t("email.passwordReset.expiryOneHour");
   return (
-    <EmailLayout preview={t("email.passwordReset.preview", { brand: accountName })}>
+    <EmailLayout locale={t.locale} preview={t("email.passwordReset.preview", { brand: accountName })}>
       <EmailHeader
         variant="transactional"
         title={t("email.passwordReset.title")}

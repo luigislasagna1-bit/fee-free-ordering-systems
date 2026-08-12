@@ -15,6 +15,9 @@ import { EmailLayout, EmailHeader, EmailFooter, type MarketingFooterStrings } fr
 import { EmailBody, P, EmailButton, InfoCard } from "../components/EmailParts";
 
 export type AutopilotEmailProps = {
+  /** Recipient's language — the owner writes the campaign copy in it and the
+   *  footer strings are localized to match, so <html lang/dir> must follow. */
+  locale?: string | null;
   customerName: string;
   restaurantName: string;
   subject: string;
@@ -56,7 +59,7 @@ export type AutopilotEmailProps = {
 
 export default function AutopilotEmail(props: AutopilotEmailProps) {
   const {
-    restaurantName, subject, body, couponCode, couponLabel,
+    locale, restaurantName, subject, body, couponCode, couponLabel,
     memberPerk, memberPerkStrings,
     ctaUrl, ctaLabel, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
     unsubscribeUrl, dataDeletionUrl, marketing, footerStrings, postalAddress,
@@ -67,7 +70,7 @@ export default function AutopilotEmail(props: AutopilotEmailProps) {
   const showPerk = !couponCode && !!memberPerk && !!memberPerkStrings;
 
   return (
-    <EmailLayout preview={subject}>
+    <EmailLayout locale={locale} preview={subject}>
       <EmailHeader variant="status" title={subject} subtitle={restaurantName} />
       <EmailBody>
         {/* The greeting comes from the owner's body ("Hi {customer_name},"), which

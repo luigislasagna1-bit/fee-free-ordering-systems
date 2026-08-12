@@ -17,7 +17,7 @@
  * language + currency (Fabrizio report: it was hardcoded English + USD).
  */
 import { Section, Row, Column } from "@react-email/components";
-import { EmailLayout, EmailHeader, EmailFooter, COLORS } from "../components/EmailLayout";
+import { EmailLayout, EmailHeader, EmailFooter, COLORS, marginSide, textStart, textEnd } from "../components/EmailLayout";
 import {
   EmailBody, P, EmailButton, StatCard, StatGrid, InfoCard, Badge,
 } from "../components/EmailParts";
@@ -42,6 +42,10 @@ export type DigestEmailProps = {
   restaurantName: string;
   /** Translator bound to the restaurant's language (email.digest.* keys). */
   t: DigestTranslator;
+  /** Restaurant's language — `t.locale`. Drives <html lang/dir> + RTL mirroring.
+   *  Separate prop because DigestTranslator is a bare function type, not the
+   *  full Translator that carries `.locale`. */
+  locale?: string | null;
   /** ISO 4217 currency code for the restaurant (e.g. "eur"). */
   currency: string;
   sales: DigestStat;
@@ -87,20 +91,20 @@ export type DigestEmailProps = {
   imprint?: string;
 };
 
-function SectionLabel({ children, note }: { children: React.ReactNode; note?: string }) {
+function SectionLabel({ children, note, locale }: { children: React.ReactNode; note?: string; locale?: string | null }) {
   return (
     <div style={{ marginTop: 20, marginBottom: 4 }}>
       <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#0f172a" }}>
         {children}
       </span>
-      {note && <span style={{ fontSize: 13, color: "#6b7280", marginLeft: 8 }}>({note})</span>}
+      {note && <span style={{ fontSize: 13, color: "#6b7280", ...marginSide(textStart(locale), 8) }}>({note})</span>}
     </div>
   );
 }
 
 export default function DigestEmail(props: DigestEmailProps) {
   const {
-    period, periodLabel, comparisonLabel, restaurantName, t, currency,
+    period, periodLabel, comparisonLabel, restaurantName, t, currency, locale,
     sales, orders, avgOrderValue, reservations, breakdown,
     pickup, delivery, onPremise, offlinePayments, onlinePayments,
     onlineCardPayments, onlinePaypalPayments, onlineOtherPayments,
@@ -117,18 +121,18 @@ export default function DigestEmail(props: DigestEmailProps) {
   const breakdownRow = (label: string, amount: number, bold = false, minus = false) => (
     <Row>
       <Column style={{ fontSize: 14, color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 400 }}>{label}</Column>
-      <Column style={{ fontSize: 14, textAlign: "right", color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 600 }}>{minus ? "−" : ""}{money(amount)}</Column>
+      <Column style={{ fontSize: 14, textAlign: textEnd(locale), color: bold ? COLORS.text : COLORS.muted, padding: "4px 0", fontWeight: bold ? 700 : 600 }}>{minus ? "−" : ""}{money(amount)}</Column>
     </Row>
   );
 
   return (
-    <EmailLayout preview={`${restaurantName} — ${periodLabel}`}>
+    <EmailLayout locale={locale} preview={`${restaurantName} — ${periodLabel}`}>
       <EmailHeader variant="digest" title={title} subtitle={periodLabel} />
       <EmailBody>
         <P>{t("email.digest.hi")}</P>
         <P>{t("email.digest.intro", { restaurant: restaurantName })}</P>
 
-        <SectionLabel note={comparisonLabel}>{t("email.digest.salesPerformance")}</SectionLabel>
+        <SectionLabel locale={locale} note={comparisonLabel}>{t("email.digest.salesPerformance")}</SectionLabel>
         <StatGrid>
           <StatCard label={t("email.digest.sales")}         value={sales.value}         delta={sales.delta}         deltaDirection={sales.deltaDirection} />
           <StatCard label={t("email.digest.orders")}        value={orders.value}        delta={orders.delta}        deltaDirection={orders.deltaDirection} />

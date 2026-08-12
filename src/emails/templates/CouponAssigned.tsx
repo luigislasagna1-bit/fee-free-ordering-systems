@@ -64,7 +64,7 @@ export default function CouponAssigned(props: CouponAssignedProps) {
   } = props;
 
   return (
-    <EmailLayout preview={t("email.couponAssigned.preview", { restaurantName, discountLabel })}>
+    <EmailLayout locale={t.locale} preview={t("email.couponAssigned.preview", { restaurantName, discountLabel })}>
       <EmailHeader
         variant="status"
         title={t("email.couponAssigned.title", { discountLabel })}

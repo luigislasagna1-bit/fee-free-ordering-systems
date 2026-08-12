@@ -33,8 +33,48 @@ import {
 // `setEmailLogoUrl()` / `getCurrentImprintLogoUrl()` for the setter +
 // getter, and `notifications.ts` `withImprint()` for the scoping.
 import { getCurrentImprintLogoUrl } from "@/lib/email";
+import { DEFAULT_LOCALE, isRtlLocale, isSupportedLocale, type Locale } from "@/lib/locales";
 
 export type HeaderVariant = "status" | "transactional" | "digest" | "neutral";
+
+/**
+ * Physical edge the text flows FROM (`start`) and TO (`end`) for a locale.
+ *
+ * These exist because email has no usable logical-property support: Outlook
+ * desktop renders through the Word engine, which ignores `text-align: start`,
+ * `padding-inline-start` and friends, so an RTL layout has to emit REAL
+ * `left`/`right` values that we mirror ourselves. `dir="rtl"` on <html> flips
+ * the reading order and the visual column order of a table, but it does NOT
+ * touch a hardcoded `text-align: right` or `padding-left` — those stay pinned
+ * to the physical side and land on the wrong edge in Arabic and Hebrew.
+ *
+ * An absent/unknown locale resolves LTR, so every existing caller keeps its
+ * current output byte-for-byte.
+ */
+export function textStart(locale?: string | null): "left" | "right" {
+  return isRtlLocale(locale) ? "right" : "left";
+}
+
+export function textEnd(locale?: string | null): "left" | "right" {
+  return isRtlLocale(locale) ? "left" : "right";
+}
+
+/**
+ * Direction-aware one-sided spacing/border fragments, spread into a style
+ * object. `side` is whatever textStart()/textEnd() resolved to.
+ *
+ * These return camelCase React style keys rather than building `padding-${side}`
+ * inline — React only understands camelCase style properties and warns on (then
+ * mishandles) hyphenated ones.
+ */
+export const padSide = (side: "left" | "right", value: number) =>
+  side === "left" ? { paddingLeft: value } : { paddingRight: value };
+
+export const marginSide = (side: "left" | "right", value: number) =>
+  side === "left" ? { marginLeft: value } : { marginRight: value };
+
+export const borderSide = (side: "left" | "right", value: string) =>
+  side === "left" ? { borderLeft: value } : { borderRight: value };
 
 const COLORS = {
   bodyBg:      "#f6f6f6",
@@ -50,14 +90,34 @@ const COLORS = {
 
 export function EmailLayout({
   preview,
+  locale,
   children,
 }: {
   /** First-line preview shown in Gmail / iOS Mail / etc. before the user opens. */
   preview: string;
+  /**
+   * Language this email's CONTENT is written in — normally `t.locale`, the
+   * translator the sender already built with `getDict(params.locale)`.
+   *
+   * Drives `lang` + `dir` on <html>. @react-email/html defaults these to
+   * `lang="en" dir="ltr"` and emits them EXPLICITLY, so leaving it unset was
+   * actively harmful rather than merely absent: an explicit `dir="ltr"`
+   * overrides the RTL auto-detection heuristics mail clients apply to Arabic
+   * and Hebrew, and a false `lang="en"` degrades CJK font selection in Gmail,
+   * screen-reader pronunciation, and Gmail's "translate this message" offer.
+   *
+   * Templates whose body is hardcoded English (VerifyEmail, SignupConfirmation,
+   * the reseller/billing notifications) deliberately leave this unset — `lang`
+   * describes the content, not the recipient's preference, so "en" is the
+   * truthful answer for them.
+   */
+  locale?: string | null;
   children: React.ReactNode;
 }) {
+  const lang: Locale = isSupportedLocale(locale) ? locale : DEFAULT_LOCALE;
+  const rtl = isRtlLocale(lang);
   return (
-    <Html>
+    <Html lang={lang} dir={rtl ? "rtl" : "ltr"}>
       <Head>
         {/* Force light mode rendering — emails on dark-mode Gmail get the */}
         {/* colors inverted by default, which breaks our brand. */}
@@ -77,6 +137,19 @@ export function EmailLayout({
         }}
       >
         <Container
+          // The <html dir> above only reaches clients that render our document
+          // whole (Apple Mail, iOS Mail, Outlook desktop, Thunderbird). Gmail,
+          // Outlook.com and Yahoo strip <html>/<head>/<body> and re-host the
+          // remaining markup inside their OWN document, so that attribute never
+          // arrives — which is most of our recipients. Repeating it on the
+          // outermost surviving element is what actually makes Arabic and
+          // Hebrew read right-to-left in webmail.
+          //
+          // Set ONLY for RTL: emitting dir="ltr" here would both re-create the
+          // original bug one level down (an explicit LTR overrides the client's
+          // own RTL heuristics) and change the rendered output for all 36 LTR
+          // locales, which are currently byte-identical to before this change.
+          dir={rtl ? "rtl" : undefined}
           style={{
             backgroundColor: COLORS.cardBg,
             borderRadius: 12,

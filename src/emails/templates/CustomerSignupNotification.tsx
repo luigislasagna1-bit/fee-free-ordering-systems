@@ -24,7 +24,7 @@ export type CustomerSignupNotificationProps = {
 export default function CustomerSignupNotification(props: CustomerSignupNotificationProps) {
   const { t, restaurantName, customerName, customerEmail, customerPhone, dashboardUrl, imprint } = props;
   return (
-    <EmailLayout preview={t("email.customerSignup.preview", { restaurant: restaurantName, customer: customerName })}>
+    <EmailLayout locale={t.locale} preview={t("email.customerSignup.preview", { restaurant: restaurantName, customer: customerName })}>
       <EmailHeader
         variant="transactional"
         title={t("email.customerSignup.headerTitle", { restaurant: restaurantName })}

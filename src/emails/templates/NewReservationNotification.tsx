@@ -41,7 +41,7 @@ export default function NewReservationNotification(props: NewReservationNotifica
   const detailRows = formatDetailRows(details, t, "email.newReservation");
 
   return (
-    <EmailLayout preview={cancelled
+    <EmailLayout locale={t.locale} preview={cancelled
       ? t("email.newReservation.previewCancelled", { dateTime, partySize: party })
       : t("email.newReservation.preview", { dateTime, partySize: party })}>
       <EmailHeader
