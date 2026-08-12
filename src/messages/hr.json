@@ -7991,5 +7991,26 @@
       "narrowRange": "Došli ste do granice koju možemo prikazati odjednom. Suzite raspon datuma ili filtrirajte po restoranu ili vrsti.",
       "mixedCurrencyNote": "Vaši restorani koriste više od jedne valute, pa se svaki iznos prikazuje u valuti svog restorana i iznosi se nikada ne zbrajaju."
     }
+  },
+  "sms": {
+    "orderReceived": "Narudžba #{orderNumber} zaprimljena. Poslat ćemo SMS čim bude prihvaćena.",
+    "orderConfirmed": "Narudžba #{orderNumber} potvrđena.",
+    "orderConfirmedEta": "Narudžba #{orderNumber} potvrđena - gotova oko {time}.",
+    "accepted": "Narudžba #{orderNumber} prihvaćena.",
+    "acceptedEta": "Narudžba #{orderNumber} prihvaćena - gotova oko {time}.",
+    "ready": "Vaša narudžba #{orderNumber} je spremna!",
+    "completed": "Vaša narudžba #{orderNumber} je završena. Hvala!",
+    "missed": "Žao nam je, nismo stigli obraditi narudžbu #{orderNumber} na vrijeme. Ako ste platili online, nećete biti naplaćeni.",
+    "rejected": "Narudžba #{orderNumber} nije prihvaćena.",
+    "rejectedReason": "Narudžba #{orderNumber} nije prihvaćena - {reason}",
+    "cancelled": "Narudžba #{orderNumber} je otkazana.",
+    "cancelledReason": "Narudžba #{orderNumber} je otkazana - {reason}",
+    "delayed": "Napomena: narudžba #{orderNumber} kasni oko {minutes} min.",
+    "delayedEta": "Napomena: narudžba #{orderNumber} kasni oko {minutes} min. Novo vrijeme oko {time}.",
+    "reservationRequested": "Zahtjev za rezervaciju za {partySize} os. {date} u {time} zaprimljen - čeka potvrdu. Kod {code}",
+    "reservationConfirmed": "Rezervacija za {partySize} os. {date} u {time} potvrđena. Kod {code}",
+    "reservationDeclined": "Žao nam je, nismo mogli potvrditi rezervaciju za {partySize} os. {date} u {time}. Pokušajte drugi termin.",
+    "reservationMissed": "Žao nam je, nismo stigli obraditi rezervaciju za {partySize} os. {date} u {time} na vrijeme. Pokušajte drugi termin.",
+    "reservationCancelled": "Vaša rezervacija za {partySize} os. {date} u {time} je otkazana."
   }
 }

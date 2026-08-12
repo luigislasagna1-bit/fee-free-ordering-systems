@@ -7991,5 +7991,26 @@
       "narrowRange": "הגעת לגבול שאנחנו יכולים לדפדף בבת אחת. צמצם את טווח התאריכים, או סנן לפי מסעדה או סוג, כדי לראות עוד.",
       "mixedCurrencyNote": "המסעדות שלך משתמשות ביותר ממטבע אחד, ולכן כל סכום מוצג במטבע של המסעדה שלו והסכומים לעולם אינם מחוברים יחד."
     }
+  },
+  "sms": {
+    "orderReceived": "הזמנה #{orderNumber} התקבלה. נשלח לך SMS ברגע שהיא תאושר.",
+    "orderConfirmed": "הזמנה #{orderNumber} אושרה.",
+    "orderConfirmedEta": "הזמנה #{orderNumber} אושרה - מוכנה בסביבות {time}.",
+    "accepted": "הזמנה #{orderNumber} התקבלה לטיפול.",
+    "acceptedEta": "הזמנה #{orderNumber} התקבלה לטיפול - מוכנה בסביבות {time}.",
+    "ready": "ההזמנה שלך #{orderNumber} מוכנה!",
+    "completed": "ההזמנה שלך #{orderNumber} הושלמה. תודה!",
+    "missed": "מצטערים, לא הספקנו לטפל בהזמנה #{orderNumber} בזמן. אם שילמת אונליין, לא תחויב.",
+    "rejected": "הזמנה #{orderNumber} לא אושרה.",
+    "rejectedReason": "הזמנה #{orderNumber} לא אושרה - {reason}",
+    "cancelled": "הזמנה #{orderNumber} בוטלה.",
+    "cancelledReason": "הזמנה #{orderNumber} בוטלה - {reason}",
+    "delayed": "לידיעתך: הזמנה #{orderNumber} מתעכבת בכ-{minutes} דק'.",
+    "delayedEta": "לידיעתך: הזמנה #{orderNumber} מתעכבת בכ-{minutes} דק'. הזמן החדש בסביבות {time}.",
+    "reservationRequested": "בקשת הזמנת מקום ל-{partySize} סועדים ב-{date} בשעה {time} התקבלה - ממתינה לאישור. קוד {code}",
+    "reservationConfirmed": "הזמנת מקום ל-{partySize} סועדים ב-{date} בשעה {time} אושרה. קוד {code}",
+    "reservationDeclined": "מצטערים, לא הצלחנו לאשר את ההזמנה ל-{partySize} סועדים ב-{date} בשעה {time}. נסו שעה אחרת.",
+    "reservationMissed": "מצטערים, לא הספקנו לטפל בהזמנה ל-{partySize} סועדים ב-{date} בשעה {time} בזמן. נסו שעה אחרת.",
+    "reservationCancelled": "ההזמנה ל-{partySize} סועדים ב-{date} בשעה {time} בוטלה."
   }
 }

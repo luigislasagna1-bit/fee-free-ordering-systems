@@ -7991,5 +7991,26 @@
       "narrowRange": "لقد وصلت إلى أقصى ما يمكن تصفحه دفعة واحدة. ضيّق النطاق الزمني، أو صفِّ حسب المطعم أو النوع، لعرض المزيد.",
       "mixedCurrencyNote": "تستخدم مطاعمك أكثر من عملة واحدة، لذا يظهر كل إجمالي بعملة مطعمه الخاص ولا تُجمع الإجماليات معًا مطلقًا."
     }
+  },
+  "sms": {
+    "orderReceived": "تم استلام الطلب #{orderNumber}. سنرسل لك رسالة نصية عند قبوله.",
+    "orderConfirmed": "تم تأكيد الطلب #{orderNumber}.",
+    "orderConfirmedEta": "تم تأكيد الطلب #{orderNumber} - سيكون جاهزاً نحو {time}.",
+    "accepted": "تم قبول الطلب #{orderNumber}.",
+    "acceptedEta": "تم قبول الطلب #{orderNumber} - سيكون جاهزاً نحو {time}.",
+    "ready": "طلبك #{orderNumber} جاهز!",
+    "completed": "طلبك #{orderNumber} اكتمل. شكراً لك!",
+    "missed": "نعتذر، لم نتمكن من استلام الطلب #{orderNumber} في الوقت المناسب. إذا دفعت عبر الإنترنت، فلن يُخصم أي مبلغ.",
+    "rejected": "لم يتم قبول الطلب #{orderNumber}.",
+    "rejectedReason": "لم يتم قبول الطلب #{orderNumber} - {reason}",
+    "cancelled": "تم إلغاء الطلب #{orderNumber}.",
+    "cancelledReason": "تم إلغاء الطلب #{orderNumber} - {reason}",
+    "delayed": "تنبيه: الطلب #{orderNumber} متأخر بنحو {minutes} دقيقة.",
+    "delayedEta": "تنبيه: الطلب #{orderNumber} متأخر بنحو {minutes} دقيقة. الوقت الجديد نحو {time}.",
+    "reservationRequested": "تم استلام طلب حجز لـ {partySize} أشخاص في {date} الساعة {time} - في انتظار التأكيد. الرمز {code}",
+    "reservationConfirmed": "تم تأكيد الحجز لـ {partySize} أشخاص في {date} الساعة {time}. الرمز {code}",
+    "reservationDeclined": "نعتذر، لم نتمكن من تأكيد حجزك لـ {partySize} أشخاص في {date} الساعة {time}. جرّب وقتاً آخر.",
+    "reservationMissed": "نعتذر، لم نتمكن من معالجة حجزك لـ {partySize} أشخاص في {date} الساعة {time} في الوقت المناسب. جرّب وقتاً آخر.",
+    "reservationCancelled": "تم إلغاء حجزك لـ {partySize} أشخاص في {date} الساعة {time}."
   }
 }

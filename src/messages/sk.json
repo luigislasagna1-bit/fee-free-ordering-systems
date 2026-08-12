@@ -7991,5 +7991,26 @@
       "narrowRange": "Dosiahli ste maximum, ktoré vieme zobraziť naraz. Zúžte časové obdobie alebo filtrujte podľa reštaurácie či typu.",
       "mixedCurrencyNote": "Vaše reštaurácie používajú viac mien, preto sa každý súčet zobrazuje v mene danej reštaurácie a súčty sa nikdy nespočítavajú."
     }
+  },
+  "sms": {
+    "orderReceived": "Objednávku #{orderNumber} sme prijali. Keď ju reštaurácia potvrdí, pošleme SMS.",
+    "orderConfirmed": "Objednávka #{orderNumber} potvrdená.",
+    "orderConfirmedEta": "Objednávka #{orderNumber} potvrdená - hotová okolo {time}.",
+    "accepted": "Objednávka #{orderNumber} prijatá.",
+    "acceptedEta": "Objednávka #{orderNumber} prijatá - hotová okolo {time}.",
+    "ready": "Vaša objednávka #{orderNumber} je pripravená!",
+    "completed": "Vaša objednávka #{orderNumber} je vybavená. Ďakujeme!",
+    "missed": "Ospravedlňujeme sa, objednávku #{orderNumber} sme nestihli vybaviť včas. Ak ste platili online, nič vám nestrhneme.",
+    "rejected": "Objednávka #{orderNumber} nebola prijatá.",
+    "rejectedReason": "Objednávka #{orderNumber} nebola prijatá - {reason}",
+    "cancelled": "Objednávka #{orderNumber} bola zrušená.",
+    "cancelledReason": "Objednávka #{orderNumber} bola zrušená - {reason}",
+    "delayed": "Upozornenie: objednávka #{orderNumber} mešká asi {minutes} min.",
+    "delayedEta": "Upozornenie: objednávka #{orderNumber} mešká asi {minutes} min. Nový čas okolo {time}.",
+    "reservationRequested": "Žiadosť o rezerváciu pre {partySize} os. dňa {date} o {time} prijatá - čaká na potvrdenie. Kód {code}",
+    "reservationConfirmed": "Rezervácia pre {partySize} os. dňa {date} o {time} potvrdená. Kód {code}",
+    "reservationDeclined": "Ľutujeme, rezerváciu pre {partySize} os. dňa {date} o {time} sme nemohli potvrdiť. Skúste iný čas.",
+    "reservationMissed": "Ľutujeme, rezerváciu pre {partySize} os. dňa {date} o {time} sme nestihli vybaviť včas. Skúste iný čas.",
+    "reservationCancelled": "Vaša rezervácia pre {partySize} os. dňa {date} o {time} bola zrušená."
   }
 }

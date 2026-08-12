@@ -7991,5 +7991,26 @@
       "narrowRange": "Вы достигли предела того, что можно пролистать за раз. Сузьте диапазон дат или отфильтруйте по ресторану либо типу, чтобы увидеть больше.",
       "mixedCurrencyNote": "Ваши рестораны используют несколько валют, поэтому каждая сумма показана в валюте своего ресторана, и суммы никогда не складываются."
     }
+  },
+  "sms": {
+    "orderReceived": "Заказ #{orderNumber} получен. Пришлём SMS, как только его примут.",
+    "orderConfirmed": "Заказ #{orderNumber} подтверждён.",
+    "orderConfirmedEta": "Заказ #{orderNumber} подтверждён - будет готов примерно к {time}.",
+    "accepted": "Заказ #{orderNumber} принят.",
+    "acceptedEta": "Заказ #{orderNumber} принят - будет готов примерно к {time}.",
+    "ready": "Ваш заказ #{orderNumber} готов!",
+    "completed": "Ваш заказ #{orderNumber} выполнен. Спасибо!",
+    "missed": "Извините, мы не успели принять заказ #{orderNumber} вовремя. Если вы платили онлайн, деньги не спишутся.",
+    "rejected": "Заказ #{orderNumber} не принят.",
+    "rejectedReason": "Заказ #{orderNumber} не принят - {reason}",
+    "cancelled": "Заказ #{orderNumber} отменён.",
+    "cancelledReason": "Заказ #{orderNumber} отменён - {reason}",
+    "delayed": "Внимание: заказ #{orderNumber} задерживается примерно на {minutes} мин.",
+    "delayedEta": "Внимание: заказ #{orderNumber} задерживается примерно на {minutes} мин. Новое время около {time}.",
+    "reservationRequested": "Запрос на бронь на {partySize} чел. {date} в {time} получен - ожидает подтверждения. Код {code}",
+    "reservationConfirmed": "Бронь на {partySize} чел. {date} в {time} подтверждена. Код {code}",
+    "reservationDeclined": "Извините, мы не смогли подтвердить бронь на {partySize} чел. {date} в {time}. Выберите другое время.",
+    "reservationMissed": "Извините, мы не успели обработать бронь на {partySize} чел. {date} в {time}. Выберите другое время.",
+    "reservationCancelled": "Ваша бронь на {partySize} чел. {date} в {time} отменена."
   }
 }

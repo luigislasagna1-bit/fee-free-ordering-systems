@@ -7991,5 +7991,26 @@
       "narrowRange": "Atingiu o limite do que podemos percorrer de uma vez. Reduza o intervalo de datas, ou filtre por restaurante ou tipo, para ver mais.",
       "mixedCurrencyNote": "Os seus restaurantes usam mais do que uma moeda, por isso cada total é apresentado na moeda do respetivo restaurante e os totais nunca são somados."
     }
+  },
+  "sms": {
+    "orderReceived": "Encomenda #{orderNumber} recebida. Enviamos um SMS assim que for aceite.",
+    "orderConfirmed": "Encomenda #{orderNumber} confirmada.",
+    "orderConfirmedEta": "Encomenda #{orderNumber} confirmada - pronta por volta das {time}.",
+    "accepted": "Encomenda #{orderNumber} aceite.",
+    "acceptedEta": "Encomenda #{orderNumber} aceite - pronta por volta das {time}.",
+    "ready": "A sua encomenda #{orderNumber} está pronta!",
+    "completed": "A sua encomenda #{orderNumber} está concluída. Obrigado!",
+    "missed": "Lamentamos, não conseguimos tratar da encomenda #{orderNumber} a tempo. Se pagou online, não será cobrado.",
+    "rejected": "Encomenda #{orderNumber} não aceite.",
+    "rejectedReason": "Encomenda #{orderNumber} não aceite - {reason}",
+    "cancelled": "Encomenda #{orderNumber} cancelada.",
+    "cancelledReason": "Encomenda #{orderNumber} cancelada - {reason}",
+    "delayed": "Aviso: a encomenda #{orderNumber} tem cerca de {minutes} min de atraso.",
+    "delayedEta": "Aviso: a encomenda #{orderNumber} tem cerca de {minutes} min de atraso. Nova hora por volta das {time}.",
+    "reservationRequested": "Pedido de reserva para {partySize} pessoas em {date} às {time} recebido - aguarda confirmação. Código {code}",
+    "reservationConfirmed": "Reserva para {partySize} pessoas em {date} às {time} confirmada. Código {code}",
+    "reservationDeclined": "Lamentamos, não conseguimos confirmar a sua reserva para {partySize} pessoas em {date} às {time}. Tente outra hora.",
+    "reservationMissed": "Lamentamos, não conseguimos tratar da sua reserva para {partySize} pessoas em {date} às {time} a tempo. Tente outra hora.",
+    "reservationCancelled": "A sua reserva para {partySize} pessoas em {date} às {time} está cancelada."
   }
 }

@@ -7991,5 +7991,26 @@
       "narrowRange": "Anda telah mencapai batas yang dapat kami tampilkan sekaligus. Persempit rentang tanggal, atau filter berdasarkan restoran atau jenis, untuk melihat lebih banyak.",
       "mixedCurrencyNote": "Restoran Anda menggunakan lebih dari satu mata uang, jadi setiap total ditampilkan dalam mata uang restorannya sendiri dan total tidak pernah dijumlahkan."
     }
+  },
+  "sms": {
+    "orderReceived": "Pesanan #{orderNumber} diterima. Kami akan mengirim SMS begitu pesanan disetujui.",
+    "orderConfirmed": "Pesanan #{orderNumber} dikonfirmasi.",
+    "orderConfirmedEta": "Pesanan #{orderNumber} dikonfirmasi - siap sekitar pukul {time}.",
+    "accepted": "Pesanan #{orderNumber} disetujui.",
+    "acceptedEta": "Pesanan #{orderNumber} disetujui - siap sekitar pukul {time}.",
+    "ready": "Pesanan Anda #{orderNumber} sudah siap!",
+    "completed": "Pesanan Anda #{orderNumber} selesai. Terima kasih!",
+    "missed": "Maaf, kami tidak sempat memproses pesanan #{orderNumber} tepat waktu. Jika Anda membayar online, tidak akan ditagih.",
+    "rejected": "Pesanan #{orderNumber} tidak diterima.",
+    "rejectedReason": "Pesanan #{orderNumber} tidak diterima - {reason}",
+    "cancelled": "Pesanan #{orderNumber} dibatalkan.",
+    "cancelledReason": "Pesanan #{orderNumber} dibatalkan - {reason}",
+    "delayed": "Info: pesanan #{orderNumber} terlambat sekitar {minutes} menit.",
+    "delayedEta": "Info: pesanan #{orderNumber} terlambat sekitar {minutes} menit. Perkiraan baru sekitar pukul {time}.",
+    "reservationRequested": "Permintaan reservasi untuk {partySize} orang pada {date} pukul {time} diterima - menunggu konfirmasi. Kode {code}",
+    "reservationConfirmed": "Reservasi untuk {partySize} orang pada {date} pukul {time} dikonfirmasi. Kode {code}",
+    "reservationDeclined": "Maaf, kami tidak dapat mengonfirmasi reservasi untuk {partySize} orang pada {date} pukul {time}. Coba waktu lain.",
+    "reservationMissed": "Maaf, kami tidak sempat memproses reservasi untuk {partySize} orang pada {date} pukul {time}. Coba waktu lain.",
+    "reservationCancelled": "Reservasi Anda untuk {partySize} orang pada {date} pukul {time} dibatalkan."
   }
 }

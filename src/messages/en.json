@@ -7991,5 +7991,26 @@
       "narrowRange": "You've reached as far as we can page through at once. Narrow the date range, or filter by restaurant or type, to see more.",
       "mixedCurrencyNote": "Your restaurants use more than one currency, so each total is shown in its own restaurant's currency and totals are never added together."
     }
+  },
+  "sms": {
+    "orderReceived": "Order #{orderNumber} received. We'll text you when it's accepted.",
+    "orderConfirmed": "Order #{orderNumber} confirmed.",
+    "orderConfirmedEta": "Order #{orderNumber} confirmed - ready around {time}.",
+    "accepted": "Order #{orderNumber} accepted.",
+    "acceptedEta": "Order #{orderNumber} accepted - ready around {time}.",
+    "ready": "Order #{orderNumber} is ready for pickup!",
+    "completed": "Order #{orderNumber} is complete. Thanks!",
+    "missed": "Sorry, we couldn't get to order #{orderNumber} in time. If you paid online, you won't be charged.",
+    "rejected": "Order #{orderNumber} was not accepted.",
+    "rejectedReason": "Order #{orderNumber} was not accepted - {reason}",
+    "cancelled": "Order #{orderNumber} was cancelled.",
+    "cancelledReason": "Order #{orderNumber} was cancelled - {reason}",
+    "delayed": "Heads up: order #{orderNumber} is delayed by about {minutes} min.",
+    "delayedEta": "Heads up: order #{orderNumber} is delayed by about {minutes} min. New ETA around {time}.",
+    "reservationRequested": "Reservation request for {partySize} on {date} at {time} received - pending confirmation. Code {code}",
+    "reservationConfirmed": "Reservation for {partySize} on {date} at {time} confirmed. Code {code}",
+    "reservationDeclined": "Sorry, we couldn't confirm your reservation for {partySize} on {date} at {time}. Please try another time or call us.",
+    "reservationMissed": "Sorry, we didn't get to your reservation for {partySize} on {date} at {time} in time. Please try another time or call us.",
+    "reservationCancelled": "Your reservation for {partySize} on {date} at {time} is cancelled."
   }
 }

@@ -7991,5 +7991,26 @@
       "narrowRange": "Has arribat al límit del que podem paginar de cop. Redueix l'interval de dates, o filtra per restaurant o tipus, per veure'n més.",
       "mixedCurrencyNote": "Els teus restaurants utilitzen més d'una moneda, així que cada total es mostra en la moneda del seu restaurant i els totals mai no se sumen."
     }
+  },
+  "sms": {
+    "orderReceived": "Comanda #{orderNumber} rebuda. Us enviarem un SMS quan s'accepti.",
+    "orderConfirmed": "Comanda #{orderNumber} confirmada.",
+    "orderConfirmedEta": "Comanda #{orderNumber} confirmada - a punt cap a les {time}.",
+    "accepted": "Comanda #{orderNumber} acceptada.",
+    "acceptedEta": "Comanda #{orderNumber} acceptada - a punt cap a les {time}.",
+    "ready": "La vostra comanda #{orderNumber} està a punt!",
+    "completed": "La vostra comanda #{orderNumber} s'ha completat. Gràcies!",
+    "missed": "Ho sentim, no hem pogut atendre la comanda #{orderNumber} a temps. Si heu pagat en línia, no se us cobrarà.",
+    "rejected": "Comanda #{orderNumber} no acceptada.",
+    "rejectedReason": "Comanda #{orderNumber} no acceptada - {reason}",
+    "cancelled": "Comanda #{orderNumber} cancel·lada.",
+    "cancelledReason": "Comanda #{orderNumber} cancel·lada - {reason}",
+    "delayed": "Avís: la comanda #{orderNumber} s'endarrereix uns {minutes} min.",
+    "delayedEta": "Avís: la comanda #{orderNumber} s'endarrereix uns {minutes} min. Nova hora cap a les {time}.",
+    "reservationRequested": "Sol·licitud de reserva per a {partySize} pers. el {date} a les {time} rebuda - pendent de confirmació. Codi {code}",
+    "reservationConfirmed": "Reserva per a {partySize} pers. el {date} a les {time} confirmada. Codi {code}",
+    "reservationDeclined": "Ho sentim, no hem pogut confirmar la reserva per a {partySize} pers. el {date} a les {time}. Proveu una altra hora.",
+    "reservationMissed": "Ho sentim, no hem pogut atendre a temps la reserva per a {partySize} pers. el {date} a les {time}. Proveu una altra hora.",
+    "reservationCancelled": "La vostra reserva per a {partySize} pers. el {date} a les {time} està cancel·lada."
   }
 }

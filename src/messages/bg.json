@@ -7991,5 +7991,26 @@
       "narrowRange": "Достигнахте максимума, който можем да покажем наведнъж. Стеснете периода или филтрирайте по ресторант или тип, за да видите повече.",
       "mixedCurrencyNote": "Вашите ресторанти използват повече от една валута, затова всяка сума се показва във валутата на съответния ресторант и сумите никога не се събират."
     }
+  },
+  "sms": {
+    "orderReceived": "Поръчка #{orderNumber} е получена. Ще ви пишем, щом бъде приета.",
+    "orderConfirmed": "Поръчка #{orderNumber} е потвърдена.",
+    "orderConfirmedEta": "Поръчка #{orderNumber} е потвърдена - готова около {time}.",
+    "accepted": "Поръчка #{orderNumber} е приета.",
+    "acceptedEta": "Поръчка #{orderNumber} е приета - готова около {time}.",
+    "ready": "Поръчката ви #{orderNumber} е готова!",
+    "completed": "Поръчката ви #{orderNumber} е изпълнена. Благодарим!",
+    "missed": "Съжаляваме, не успяхме да поемем поръчка #{orderNumber} навреме. Ако сте платили онлайн, няма да бъдете таксувани.",
+    "rejected": "Поръчка #{orderNumber} не беше приета.",
+    "rejectedReason": "Поръчка #{orderNumber} не беше приета - {reason}",
+    "cancelled": "Поръчка #{orderNumber} беше анулирана.",
+    "cancelledReason": "Поръчка #{orderNumber} беше анулирана - {reason}",
+    "delayed": "Внимание: поръчка #{orderNumber} закъснява с около {minutes} мин.",
+    "delayedEta": "Внимание: поръчка #{orderNumber} закъснява с около {minutes} мин. Ново време около {time}.",
+    "reservationRequested": "Заявка за резервация за {partySize} души на {date} в {time} е получена - чака потвърждение. Код {code}",
+    "reservationConfirmed": "Резервация за {partySize} души на {date} в {time} е потвърдена. Код {code}",
+    "reservationDeclined": "Съжаляваме, не успяхме да потвърдим резервацията за {partySize} души на {date} в {time}. Опитайте друг час.",
+    "reservationMissed": "Съжаляваме, не успяхме да обработим навреме резервацията за {partySize} души на {date} в {time}. Опитайте друг час.",
+    "reservationCancelled": "Резервацията ви за {partySize} души на {date} в {time} е анулирана."
   }
 }

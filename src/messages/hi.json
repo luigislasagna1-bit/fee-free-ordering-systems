@@ -7991,5 +7991,26 @@
       "narrowRange": "आप उतना देख चुके हैं जितना हम एक बार में दिखा सकते हैं। और देखने के लिए तिथि सीमा घटाएँ, या रेस्टोरेंट या प्रकार से फ़िल्टर करें।",
       "mixedCurrencyNote": "आपके रेस्टोरेंट एक से अधिक मुद्राओं का उपयोग करते हैं, इसलिए प्रत्येक कुल अपने रेस्टोरेंट की मुद्रा में दिखाया जाता है और कुल कभी नहीं जोड़े जाते।"
     }
+  },
+  "sms": {
+    "orderReceived": "ऑर्डर #{orderNumber} मिल गया। स्वीकार होते ही हम आपको SMS भेजेंगे।",
+    "orderConfirmed": "ऑर्डर #{orderNumber} कन्फ़र्म हो गया।",
+    "orderConfirmedEta": "ऑर्डर #{orderNumber} कन्फ़र्म हो गया - लगभग {time} तक तैयार।",
+    "accepted": "ऑर्डर #{orderNumber} स्वीकार हो गया।",
+    "acceptedEta": "ऑर्डर #{orderNumber} स्वीकार हो गया - लगभग {time} तक तैयार।",
+    "ready": "आपका ऑर्डर #{orderNumber} तैयार है!",
+    "completed": "आपका ऑर्डर #{orderNumber} पूरा हो गया। धन्यवाद!",
+    "missed": "क्षमा करें, हम ऑर्डर #{orderNumber} समय पर नहीं ले सके। अगर आपने ऑनलाइन भुगतान किया है, तो शुल्क नहीं लिया जाएगा।",
+    "rejected": "ऑर्डर #{orderNumber} स्वीकार नहीं हुआ।",
+    "rejectedReason": "ऑर्डर #{orderNumber} स्वीकार नहीं हुआ - {reason}",
+    "cancelled": "ऑर्डर #{orderNumber} रद्द हो गया।",
+    "cancelledReason": "ऑर्डर #{orderNumber} रद्द हो गया - {reason}",
+    "delayed": "सूचना: ऑर्डर #{orderNumber} लगभग {minutes} मिनट देर से है।",
+    "delayedEta": "सूचना: ऑर्डर #{orderNumber} लगभग {minutes} मिनट देर से है। नया समय लगभग {time}।",
+    "reservationRequested": "{date} को {time} बजे {partySize} लोगों के लिए आरक्षण अनुरोध मिला - कन्फ़र्मेशन बाकी। कोड {code}",
+    "reservationConfirmed": "{date} को {time} बजे {partySize} लोगों के लिए आरक्षण कन्फ़र्म हो गया। कोड {code}",
+    "reservationDeclined": "क्षमा करें, {date} को {time} बजे {partySize} लोगों के लिए आपका आरक्षण कन्फ़र्म नहीं हो सका। कोई और समय चुनें।",
+    "reservationMissed": "क्षमा करें, {date} को {time} बजे {partySize} लोगों के आरक्षण पर हम समय पर काम नहीं कर सके। कोई और समय चुनें।",
+    "reservationCancelled": "{date} को {time} बजे {partySize} लोगों के लिए आपका आरक्षण रद्द हो गया।"
   }
 }

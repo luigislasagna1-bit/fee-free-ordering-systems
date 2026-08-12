@@ -7991,5 +7991,26 @@
       "narrowRange": "Weiter können wir nicht auf einmal blättern. Schränken Sie den Zeitraum ein oder filtern Sie nach Restaurant oder Typ, um mehr zu sehen.",
       "mixedCurrencyNote": "Ihre Restaurants verwenden mehrere Währungen. Jede Summe wird daher in der Währung des jeweiligen Restaurants angezeigt und Summen werden nie addiert."
     }
+  },
+  "sms": {
+    "orderReceived": "Bestellung #{orderNumber} eingegangen. Wir melden uns per SMS, sobald sie angenommen ist.",
+    "orderConfirmed": "Bestellung #{orderNumber} bestätigt.",
+    "orderConfirmedEta": "Bestellung #{orderNumber} bestätigt - fertig gegen {time}.",
+    "accepted": "Bestellung #{orderNumber} angenommen.",
+    "acceptedEta": "Bestellung #{orderNumber} angenommen - fertig gegen {time}.",
+    "ready": "Ihre Bestellung #{orderNumber} ist fertig!",
+    "completed": "Ihre Bestellung #{orderNumber} ist abgeschlossen. Danke!",
+    "missed": "Leider konnten wir Bestellung #{orderNumber} nicht rechtzeitig bearbeiten. Bei Onlinezahlung wird nichts abgebucht.",
+    "rejected": "Bestellung #{orderNumber} wurde nicht angenommen.",
+    "rejectedReason": "Bestellung #{orderNumber} wurde nicht angenommen - {reason}",
+    "cancelled": "Bestellung #{orderNumber} wurde storniert.",
+    "cancelledReason": "Bestellung #{orderNumber} wurde storniert - {reason}",
+    "delayed": "Hinweis: Bestellung #{orderNumber} verzögert sich um ca. {minutes} Min.",
+    "delayedEta": "Hinweis: Bestellung #{orderNumber} verzögert sich um ca. {minutes} Min. Neue Zeit gegen {time}.",
+    "reservationRequested": "Reservierungsanfrage für {partySize} Pers. am {date} um {time} erhalten - Bestätigung folgt. Code {code}",
+    "reservationConfirmed": "Reservierung für {partySize} Pers. am {date} um {time} bestätigt. Code {code}",
+    "reservationDeclined": "Leider konnten wir Ihre Reservierung für {partySize} Pers. am {date} um {time} nicht bestätigen. Bitte andere Zeit wählen.",
+    "reservationMissed": "Leider konnten wir Ihre Reservierung für {partySize} Pers. am {date} um {time} nicht rechtzeitig bearbeiten. Bitte andere Zeit wählen.",
+    "reservationCancelled": "Ihre Reservierung für {partySize} Pers. am {date} um {time} ist storniert."
   }
 }

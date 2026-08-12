@@ -7991,5 +7991,26 @@
       "narrowRange": "Ви досягли межі того, що можна гортати за раз. Звузьте діапазон дат або відфільтруйте за рестораном чи типом, щоб побачити більше.",
       "mixedCurrencyNote": "Ваші ресторани використовують кілька валют, тому кожна сума показана у валюті свого ресторану, і суми ніколи не додаються."
     }
+  },
+  "sms": {
+    "orderReceived": "Замовлення #{orderNumber} отримано. Надішлемо SMS, щойно його приймуть.",
+    "orderConfirmed": "Замовлення #{orderNumber} підтверджено.",
+    "orderConfirmedEta": "Замовлення #{orderNumber} підтверджено - буде готове близько {time}.",
+    "accepted": "Замовлення #{orderNumber} прийнято.",
+    "acceptedEta": "Замовлення #{orderNumber} прийнято - буде готове близько {time}.",
+    "ready": "Ваше замовлення #{orderNumber} готове!",
+    "completed": "Ваше замовлення #{orderNumber} виконано. Дякуємо!",
+    "missed": "Вибачте, ми не встигли прийняти замовлення #{orderNumber} вчасно. Якщо ви платили онлайн, кошти не спишуться.",
+    "rejected": "Замовлення #{orderNumber} не прийнято.",
+    "rejectedReason": "Замовлення #{orderNumber} не прийнято - {reason}",
+    "cancelled": "Замовлення #{orderNumber} скасовано.",
+    "cancelledReason": "Замовлення #{orderNumber} скасовано - {reason}",
+    "delayed": "Увага: замовлення #{orderNumber} затримується приблизно на {minutes} хв.",
+    "delayedEta": "Увага: замовлення #{orderNumber} затримується приблизно на {minutes} хв. Новий час близько {time}.",
+    "reservationRequested": "Запит на бронювання для {partySize} ос. {date} о {time} отримано - очікує підтвердження. Код {code}",
+    "reservationConfirmed": "Бронювання для {partySize} ос. {date} о {time} підтверджено. Код {code}",
+    "reservationDeclined": "Вибачте, ми не змогли підтвердити бронювання для {partySize} ос. {date} о {time}. Оберіть інший час.",
+    "reservationMissed": "Вибачте, ми не встигли опрацювати бронювання для {partySize} ос. {date} о {time}. Оберіть інший час.",
+    "reservationCancelled": "Ваше бронювання для {partySize} ос. {date} о {time} скасовано."
   }
 }

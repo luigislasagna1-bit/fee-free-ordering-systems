@@ -7991,5 +7991,26 @@
       "narrowRange": "Du har nået så langt, vi kan bladre på én gang. Indsnævr datointervallet, eller filtrér efter restaurant eller type, for at se mere.",
       "mixedCurrencyNote": "Dine restauranter bruger mere end én valuta, så hver total vises i sin egen restaurants valuta, og totaler lægges aldrig sammen."
     }
+  },
+  "sms": {
+    "orderReceived": "Ordre #{orderNumber} modtaget. Vi sender en sms, så snart den er accepteret.",
+    "orderConfirmed": "Ordre #{orderNumber} bekræftet.",
+    "orderConfirmedEta": "Ordre #{orderNumber} bekræftet - klar omkring {time}.",
+    "accepted": "Ordre #{orderNumber} accepteret.",
+    "acceptedEta": "Ordre #{orderNumber} accepteret - klar omkring {time}.",
+    "ready": "Din ordre #{orderNumber} er klar!",
+    "completed": "Din ordre #{orderNumber} er afsluttet. Tak!",
+    "missed": "Beklager, vi nåede ikke ordre #{orderNumber} i tide. Har du betalt online, bliver du ikke trukket.",
+    "rejected": "Ordre #{orderNumber} blev ikke accepteret.",
+    "rejectedReason": "Ordre #{orderNumber} blev ikke accepteret - {reason}",
+    "cancelled": "Ordre #{orderNumber} er annulleret.",
+    "cancelledReason": "Ordre #{orderNumber} er annulleret - {reason}",
+    "delayed": "Obs: ordre #{orderNumber} er ca. {minutes} min. forsinket.",
+    "delayedEta": "Obs: ordre #{orderNumber} er ca. {minutes} min. forsinket. Ny tid omkring {time}.",
+    "reservationRequested": "Reservationsanmodning til {partySize} pers. den {date} kl. {time} modtaget - afventer bekræftelse. Kode {code}",
+    "reservationConfirmed": "Reservation til {partySize} pers. den {date} kl. {time} bekræftet. Kode {code}",
+    "reservationDeclined": "Beklager, vi kunne ikke bekræfte din reservation til {partySize} pers. den {date} kl. {time}. Prøv et andet tidspunkt.",
+    "reservationMissed": "Beklager, vi nåede ikke din reservation til {partySize} pers. den {date} kl. {time} i tide. Prøv et andet tidspunkt.",
+    "reservationCancelled": "Din reservation til {partySize} pers. den {date} kl. {time} er annulleret."
   }
 }

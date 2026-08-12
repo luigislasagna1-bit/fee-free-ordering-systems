@@ -7991,5 +7991,26 @@
       "narrowRange": "已达到单次可翻阅的上限。请缩小日期范围，或按餐厅或类型筛选，以查看更多。",
       "mixedCurrencyNote": "您的餐厅使用多种货币，因此每个金额都以其所属餐厅的货币显示，金额之间不会相加。"
     }
+  },
+  "sms": {
+    "orderReceived": "已收到订单 #{orderNumber}。餐厅接单后我们会发短信通知您。",
+    "orderConfirmed": "订单 #{orderNumber} 已确认。",
+    "orderConfirmedEta": "订单 #{orderNumber} 已确认 - 预计 {time} 备好。",
+    "accepted": "订单 #{orderNumber} 已接单。",
+    "acceptedEta": "订单 #{orderNumber} 已接单 - 预计 {time} 备好。",
+    "ready": "您的订单 #{orderNumber} 已准备好！",
+    "completed": "您的订单 #{orderNumber} 已完成。谢谢！",
+    "missed": "抱歉，我们未能及时处理订单 #{orderNumber}。如您已在线支付，将不会扣款。",
+    "rejected": "订单 #{orderNumber} 未被接受。",
+    "rejectedReason": "订单 #{orderNumber} 未被接受 - {reason}",
+    "cancelled": "订单 #{orderNumber} 已取消。",
+    "cancelledReason": "订单 #{orderNumber} 已取消 - {reason}",
+    "delayed": "提醒：订单 #{orderNumber} 预计延迟约 {minutes} 分钟。",
+    "delayedEta": "提醒：订单 #{orderNumber} 预计延迟约 {minutes} 分钟。新时间约 {time}。",
+    "reservationRequested": "已收到 {date} {time} {partySize} 人的预订申请 - 等待确认。编号 {code}",
+    "reservationConfirmed": "{date} {time} {partySize} 人的预订已确认。编号 {code}",
+    "reservationDeclined": "抱歉，我们无法确认 {date} {time} {partySize} 人的预订。请另选时间或联系我们。",
+    "reservationMissed": "抱歉，我们未能及时处理 {date} {time} {partySize} 人的预订。请另选时间。",
+    "reservationCancelled": "{date} {time} {partySize} 人的预订已取消。"
   }
 }

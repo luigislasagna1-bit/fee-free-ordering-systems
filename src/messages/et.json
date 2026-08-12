@@ -7991,5 +7991,26 @@
       "narrowRange": "Olete jõudnud nii kaugele, kui korraga sirvida saab. Kitsendage ajavahemikku või filtreerige restorani või tüübi järgi.",
       "mixedCurrencyNote": "Teie restoranid kasutavad mitut valuutat, seega kuvatakse iga summa oma restorani valuutas ja summasid ei liideta kunagi kokku."
     }
+  },
+  "sms": {
+    "orderReceived": "Saime tellimuse #{orderNumber} kätte. Saadame SMS-i, kui restoran selle kinnitab.",
+    "orderConfirmed": "Tellimus #{orderNumber} on kinnitatud.",
+    "orderConfirmedEta": "Tellimus #{orderNumber} on kinnitatud - valmis umbes kell {time}.",
+    "accepted": "Tellimus #{orderNumber} on vastu võetud.",
+    "acceptedEta": "Tellimus #{orderNumber} on vastu võetud - valmis umbes kell {time}.",
+    "ready": "Teie tellimus #{orderNumber} on valmis!",
+    "completed": "Teie tellimus #{orderNumber} on täidetud. Aitäh!",
+    "missed": "Vabandame, me ei jõudnud tellimust #{orderNumber} õigeks ajaks vastu võtta. Kui maksite veebis, teilt raha ei võeta.",
+    "rejected": "Tellimust #{orderNumber} ei võetud vastu.",
+    "rejectedReason": "Tellimust #{orderNumber} ei võetud vastu - {reason}",
+    "cancelled": "Tellimus #{orderNumber} on tühistatud.",
+    "cancelledReason": "Tellimus #{orderNumber} on tühistatud - {reason}",
+    "delayed": "Teade: tellimus #{orderNumber} hilineb umbes {minutes} min.",
+    "delayedEta": "Teade: tellimus #{orderNumber} hilineb umbes {minutes} min. Uus aeg umbes kell {time}.",
+    "reservationRequested": "Broneeringu päring {partySize} inimesele {date} kell {time} on saadud - ootab kinnitust. Kood {code}",
+    "reservationConfirmed": "Broneering {partySize} inimesele {date} kell {time} on kinnitatud. Kood {code}",
+    "reservationDeclined": "Vabandame, me ei saanud kinnitada broneeringut {partySize} inimesele {date} kell {time}. Proovige teist aega.",
+    "reservationMissed": "Vabandame, me ei jõudnud broneeringut {partySize} inimesele {date} kell {time} õigeks ajaks menetleda.",
+    "reservationCancelled": "Teie broneering {partySize} inimesele {date} kell {time} on tühistatud."
   }
 }

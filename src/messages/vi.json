@@ -7991,5 +7991,26 @@
       "narrowRange": "Bạn đã xem hết mức chúng tôi có thể hiển thị một lần. Hãy thu hẹp khoảng thời gian, hoặc lọc theo nhà hàng hay loại, để xem thêm.",
       "mixedCurrencyNote": "Các nhà hàng của bạn dùng nhiều loại tiền tệ, nên mỗi tổng được hiển thị theo tiền tệ của nhà hàng đó và các tổng không bao giờ được cộng lại."
     }
+  },
+  "sms": {
+    "orderReceived": "Đã nhận đơn #{orderNumber}. Chúng tôi sẽ nhắn tin khi đơn được chấp nhận.",
+    "orderConfirmed": "Đơn #{orderNumber} đã được xác nhận.",
+    "orderConfirmedEta": "Đơn #{orderNumber} đã được xác nhận - xong khoảng {time}.",
+    "accepted": "Đơn #{orderNumber} đã được chấp nhận.",
+    "acceptedEta": "Đơn #{orderNumber} đã được chấp nhận - xong khoảng {time}.",
+    "ready": "Đơn hàng #{orderNumber} của bạn đã sẵn sàng!",
+    "completed": "Đơn hàng #{orderNumber} của bạn đã hoàn tất. Cảm ơn bạn!",
+    "missed": "Xin lỗi, chúng tôi không kịp xử lý đơn #{orderNumber}. Nếu bạn đã thanh toán online, bạn sẽ không bị trừ tiền.",
+    "rejected": "Đơn #{orderNumber} không được chấp nhận.",
+    "rejectedReason": "Đơn #{orderNumber} không được chấp nhận - {reason}",
+    "cancelled": "Đơn #{orderNumber} đã bị hủy.",
+    "cancelledReason": "Đơn #{orderNumber} đã bị hủy - {reason}",
+    "delayed": "Lưu ý: đơn #{orderNumber} trễ khoảng {minutes} phút.",
+    "delayedEta": "Lưu ý: đơn #{orderNumber} trễ khoảng {minutes} phút. Giờ mới khoảng {time}.",
+    "reservationRequested": "Đã nhận yêu cầu đặt bàn cho {partySize} khách vào {date} lúc {time} - đang chờ xác nhận. Mã {code}",
+    "reservationConfirmed": "Đặt bàn cho {partySize} khách vào {date} lúc {time} đã được xác nhận. Mã {code}",
+    "reservationDeclined": "Xin lỗi, chúng tôi không thể xác nhận đặt bàn cho {partySize} khách vào {date} lúc {time}. Vui lòng chọn giờ khác.",
+    "reservationMissed": "Xin lỗi, chúng tôi không kịp xử lý đặt bàn cho {partySize} khách vào {date} lúc {time}. Vui lòng chọn giờ khác.",
+    "reservationCancelled": "Đặt bàn cho {partySize} khách vào {date} lúc {time} đã bị hủy."
   }
 }

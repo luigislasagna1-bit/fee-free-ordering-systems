@@ -7991,5 +7991,26 @@
       "narrowRange": "Ai ajuns la limita a ceea ce putem afișa deodată. Restrânge intervalul de date sau filtrează după restaurant ori tip pentru a vedea mai multe.",
       "mixedCurrencyNote": "Restaurantele tale folosesc mai multe monede, așa că fiecare total este afișat în moneda propriului restaurant, iar totalurile nu se adună niciodată."
     }
+  },
+  "sms": {
+    "orderReceived": "Comanda #{orderNumber} a fost primită. Vă trimitem un SMS când este acceptată.",
+    "orderConfirmed": "Comanda #{orderNumber} confirmată.",
+    "orderConfirmedEta": "Comanda #{orderNumber} confirmată - gata în jurul orei {time}.",
+    "accepted": "Comanda #{orderNumber} acceptată.",
+    "acceptedEta": "Comanda #{orderNumber} acceptată - gata în jurul orei {time}.",
+    "ready": "Comanda dvs. #{orderNumber} este gata!",
+    "completed": "Comanda dvs. #{orderNumber} este finalizată. Mulțumim!",
+    "missed": "Ne pare rău, nu am reușit să preluăm comanda #{orderNumber} la timp. Dacă ați plătit online, nu veți fi taxat.",
+    "rejected": "Comanda #{orderNumber} nu a fost acceptată.",
+    "rejectedReason": "Comanda #{orderNumber} nu a fost acceptată - {reason}",
+    "cancelled": "Comanda #{orderNumber} a fost anulată.",
+    "cancelledReason": "Comanda #{orderNumber} a fost anulată - {reason}",
+    "delayed": "Atenție: comanda #{orderNumber} întârzie aproximativ {minutes} min.",
+    "delayedEta": "Atenție: comanda #{orderNumber} întârzie aproximativ {minutes} min. Ora nouă în jur de {time}.",
+    "reservationRequested": "Cerere de rezervare pentru {partySize} pers. pe {date} la {time} primită - în așteptarea confirmării. Cod {code}",
+    "reservationConfirmed": "Rezervare pentru {partySize} pers. pe {date} la {time} confirmată. Cod {code}",
+    "reservationDeclined": "Ne pare rău, nu am putut confirma rezervarea pentru {partySize} pers. pe {date} la {time}. Încercați altă oră.",
+    "reservationMissed": "Ne pare rău, nu am reușit să preluăm la timp rezervarea pentru {partySize} pers. pe {date} la {time}. Încercați altă oră.",
+    "reservationCancelled": "Rezervarea dvs. pentru {partySize} pers. pe {date} la {time} este anulată."
   }
 }

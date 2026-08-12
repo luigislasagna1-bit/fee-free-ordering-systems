@@ -7991,5 +7991,26 @@
       "narrowRange": "Você chegou ao limite do que podemos exibir de uma vez. Reduza o intervalo de datas, ou filtre por restaurante ou tipo, para ver mais.",
       "mixedCurrencyNote": "Seus restaurantes usam mais de uma moeda, então cada total é mostrado na moeda do próprio restaurante e os totais nunca são somados."
     }
+  },
+  "sms": {
+    "orderReceived": "Pedido #{orderNumber} recebido. Enviaremos um SMS assim que for aceito.",
+    "orderConfirmed": "Pedido #{orderNumber} confirmado.",
+    "orderConfirmedEta": "Pedido #{orderNumber} confirmado - pronto por volta das {time}.",
+    "accepted": "Pedido #{orderNumber} aceito.",
+    "acceptedEta": "Pedido #{orderNumber} aceito - pronto por volta das {time}.",
+    "ready": "Seu pedido #{orderNumber} está pronto!",
+    "completed": "Seu pedido #{orderNumber} foi concluído. Obrigado!",
+    "missed": "Desculpe, não conseguimos atender o pedido #{orderNumber} a tempo. Se você pagou online, não será cobrado.",
+    "rejected": "Pedido #{orderNumber} não aceito.",
+    "rejectedReason": "Pedido #{orderNumber} não aceito - {reason}",
+    "cancelled": "Pedido #{orderNumber} cancelado.",
+    "cancelledReason": "Pedido #{orderNumber} cancelado - {reason}",
+    "delayed": "Aviso: o pedido #{orderNumber} está com cerca de {minutes} min de atraso.",
+    "delayedEta": "Aviso: o pedido #{orderNumber} está com cerca de {minutes} min de atraso. Novo horário por volta das {time}.",
+    "reservationRequested": "Solicitação de reserva para {partySize} pessoas em {date} às {time} recebida - aguardando confirmação. Código {code}",
+    "reservationConfirmed": "Reserva para {partySize} pessoas em {date} às {time} confirmada. Código {code}",
+    "reservationDeclined": "Desculpe, não conseguimos confirmar sua reserva para {partySize} pessoas em {date} às {time}. Tente outro horário.",
+    "reservationMissed": "Desculpe, não conseguimos atender sua reserva para {partySize} pessoas em {date} às {time} a tempo. Tente outro horário.",
+    "reservationCancelled": "Sua reserva para {partySize} pessoas em {date} às {time} está cancelada."
   }
 }
