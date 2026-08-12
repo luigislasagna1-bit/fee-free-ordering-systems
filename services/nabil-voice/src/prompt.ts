@@ -114,7 +114,15 @@ function servicesText(ctx: any, cfg: AgentConfig): string {
 }
 
 /** afterHoursBehavior — only rendered when the store is closed right now.
- *  "take_orders" = today's behavior (no extra instruction). */
+ *
+ *  "take_orders" USED to return nothing at all, which is how Nabil ended up
+ *  telling a caller the restaurant was open while it was closed (Luigi, live,
+ *  2026-08-12: said open once, then closed on the next two calls). "Keep taking
+ *  orders after hours" is a legitimate owner choice — it must never license
+ *  "we're open now". The only thing carrying closed-ness was one quiet line far
+ *  below, `- Open now: no`, which the model honoured most of the time and not
+ *  always; that intermittency is the signature of an instruction that is too
+ *  weak, not of a bug in the hours. Every branch now says the store is closed. */
 function afterHoursSection(context: any, cfg: AgentConfig): string {
   if (context?.open?.isOpenNow) return "";
   const nextOpen = context?.open?.nextOpenAt;
@@ -146,8 +154,17 @@ The restaurant is closed. Do NOT take orders or book reservations — politely e
 ## CLOSED RIGHT NOW — offer staff (this OVERRIDES the ordering and reservation instructions below)
 The restaurant is closed. Do NOT take orders or book reservations yourself — answer simple questions, and offer to connect the caller to a member of staff (transfer_to_human) for anything else.${reopen}
 `;
+    // "take_orders" (and any unrecognised value) — the owner is happy to keep
+    // selling after hours. Taking the order is fine; misrepresenting the state
+    // of the shop is not. The caller must be told it is a pre-order for after
+    // reopening, because someone who believes the kitchen is cooking now will
+    // turn up to a locked door.
     default:
-      return "";
+      return `
+## CLOSED RIGHT NOW — orders are PRE-ORDERS for later (this OVERRIDES the ordering instructions below)
+The restaurant is CLOSED at this moment. You may still take the order, but it is for AFTER the restaurant reopens.${reopen}
+NEVER tell the caller the restaurant is open, and never say the food is being made now, will be "right up", or give a delivery or pickup time measured from this moment. Say plainly that you're closed right now and when the order will be ready.
+`;
   }
 }
 
