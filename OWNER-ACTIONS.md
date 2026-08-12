@@ -81,11 +81,23 @@ print the kitchen a new ticket, because that food was made days ago.
   Now fixed three ways: the sender can no longer attach a switched-off code, the Promotions list
   greys out (🔒) any code a running campaign owns, and the Autopilot page shows an amber
   "this campaign has no working offer code" warning if it ever happens again.
-- **T-O. 🤔 YOUR CALL — free delivery covers Zones 1–3 only (of 8).** Zone 4 (11 km) and beyond pay
-  $10.99–$49.99. That's a legitimate setup, but your promo's own description says *"Free Delivery on
-  ALL orders over $30 (within our standard delivery zone)"*, which reads broader than 8 km. One
-  customer (ORD-870058858, $44.97 in Zone 4) paid $10.99 under it. Either widen the zones or
-  tighten the wording — tell me which.
+- **T-O. ✅ RESOLVED 2026-08-12 — wording tightened, zones unchanged.** Luigi's call: *"free delivery
+  is in our standard area, outside that the free delivery doesn't apply and cost varies based on
+  distance"*. Zones 1–3 (to 8 km) stay free over $30; nothing was widened. Both customer-facing
+  surfaces were rewritten to say the same thing, so the cart and the phone can't contradict:
+  > *"Free delivery on orders over $30 within our standard delivery area (up to 8 km). Outside that
+  > area free delivery doesn't apply — the delivery fee varies with distance."*
+  For the record, widening to Zone 4 would have been cheap — **$21.98 across 2 orders in 90 days**
+  (~$88/yr) — so the door is open if a Zone 4 customer ever pushes back.
+  ⚠️ **The real finding from that analysis is bigger and is NOT closed.** Of 110 delivery orders in
+  90 days, **7 had no delivery zone recorded at all, every one over $30, and they were charged
+  $157.96** — an average of $22.57 each, far above the $7.99 Zone 1–2 fee. That is Ben's bug at
+  seven times the cost of this whole question: the address couldn't be placed, so the zone-restricted
+  free-delivery promo was refused and a higher fee applied. Fixed going forward (server-side
+  geocoding + preview/charge parity, live 2026-08-12), but **those 7 customers were likely
+  overcharged and have never been looked at.** Two smaller oddities in the same data: Zone 1 shows
+  $15.98 charged on orders over $30 that should have been free, and Zones 5 and 6 each had an
+  over-$30 order charged $0. ☐ Say the word and Claude will pull the 7 orders with names and amounts.
 - **T-Q. ✅ DONE — VIP members no longer get win-back offers stacked on club pricing.**
   You asked whether groups could be excluded from these campaigns. They couldn't — the capability
   didn't exist anywhere in the system, so it's now built. **Two settings:**
