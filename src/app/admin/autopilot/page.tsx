@@ -96,6 +96,33 @@ export default async function AutopilotPage() {
     codeHealth.cart_abandonment = cartCode > 0;
   }
 
+  // ── Which groups the owner has marked "members already get club pricing" ────
+  // Without this the client falls back to its `{ names: [], memberCount: 0 }`
+  // default, which makes `hasClubs` false — and that hides the per-campaign
+  // club-policy control ENTIRELY while the audience card cheerfully tells the
+  // owner to "tick Members already get club pricing" on a group they have
+  // already ticked. Meanwhile the backend honours the setting, so members were
+  // silently switched to code-less emails with no way to see or change it.
+  // Caught in adversarial review, 2026-08-12.
+  let clubs: { names: string[]; memberCount: number } = { names: [], memberCount: 0 };
+  if (restaurantId) {
+    const clubGroups = await prisma.customerGroup.findMany({
+      where: { restaurantId, skipAutopilotOffers: true },
+      select: { id: true, name: true },
+      orderBy: { name: "asc" },
+    });
+    if (clubGroups.length > 0) {
+      // A row count, not a distinct-people count: someone in two ticked clubs
+      // (or added both by email and from the customer list) counts twice. It
+      // drives one summary sentence, and an aggregate is the only shape that
+      // stays cheap on a 50,000-member club.
+      const memberCount = await prisma.customerGroupMember.count({
+        where: { restaurantId, groupId: { in: clubGroups.map((g) => g.id) } },
+      });
+      clubs = { names: clubGroups.map((g) => g.name), memberCount };
+    }
+  }
+
   return (
     <AutopilotClient
       campaigns={campaigns as any}
@@ -104,6 +131,7 @@ export default async function AutopilotPage() {
       results={resultsByType}
       codeHealth={codeHealth}
       currency={restaurant?.currency ?? "usd"}
+      clubs={clubs}
     />
   );
 }

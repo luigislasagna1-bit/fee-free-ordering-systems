@@ -777,13 +777,27 @@ export async function runCartAbandonmentForRestaurant(
 
     // A club member is either passed over entirely, or emailed the reminder
     // with the coupon swapped for a note about the pricing they already have.
-    // "skip" leaves emailSentAt null so the session simply ages out naturally.
     const vip = audience.match({
       customerId: session.customerId,
       email: session.customerEmail,
       phone: session.customerPhone,
     });
-    if (vip && vipMode === "skip") continue;
+    if (vip && vipMode === "skip") {
+      // Retire the row, exactly like the marketing-opt-out branch below. A bare
+      // `continue` would have been a slow poison: nothing else on the platform
+      // ever writes abandonedAt, the candidate query has no upper age bound, and
+      // it sorts OLDEST FIRST — so every skipped session stays a candidate
+      // forever and drifts to the front of the take:100 batch. Once 100 piled up
+      // the cron would re-read the same stuck rows every hour and skip all of
+      // them, silently killing cart recovery for the WHOLE restaurant with
+      // sent: 0 and no error. Club members order most often, so they would have
+      // gotten there first. Caught in adversarial review, 2026-08-12.
+      await prisma.cartSession.update({
+        where: { id: session.id },
+        data: { abandonedAt: new Date() },
+      });
+      continue;
+    }
     const suppressOffer = !!vip && vipMode === "no_offer";
 
     // Respect marketing consent: if this email belongs to a KNOWN customer

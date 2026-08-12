@@ -421,6 +421,10 @@ export function AutopilotClient({
   const t = useTranslations("admin.autopilotClient");
   const clubCount = clubs.memberCount;
   const clubNames = clubs.names.join(", ");
+  // Whether a group is TICKED, not whether it has members yet — an owner who
+  // ticks an empty club must still be able to set the policy before they add
+  // anyone to it. (clubCount is a member tally, and drives the summary line.)
+  const hasTickedClub = clubs.names.length > 0;
   const [campaigns, setCampaigns] = useState<Campaign[]>(() =>
     CAMPAIGN_CONFIGS.map(config => {
       const found = initialCampaigns.find(c => c.campaignType === config.type);
@@ -612,7 +616,7 @@ export function AutopilotClient({
             coupons={coupons}
             result={results[config.type]}
             codeLive={codeHealth[config.type]}
-            hasClubs={clubCount > 0}
+            hasClubs={hasTickedClub}
             vipMode={master[VIP_MODE_KEY[config.type]] ?? "no_offer"}
             onChangeVipMode={(next) => patchMaster({ [VIP_MODE_KEY[config.type]]: next } as Partial<MasterState>)}
             currency={currency}

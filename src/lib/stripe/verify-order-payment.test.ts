@@ -99,6 +99,37 @@ describe("verifyAndReleaseOrderPayment — auto-accept capture (LR-PAY-01)", () 
     expect(h.state.notified).toContain(o.id);          // still released to kitchen
   });
 
+  // A "completed" card order with notifiedAt null is a phantom left by the
+  // auto-complete bug. The confirmation page keeps it payable on purpose so the
+  // restaurant can still collect for food it may well have served — but every
+  // capture site gated on status === "accepted", so paying one placed a hold
+  // nothing would ever capture. It expired after ~7 days and the restaurant was
+  // paid nothing, silently. Adversarial review, 2026-08-12.
+  it("PHANTOM: completed + requires_capture → CAPTURES the money", async () => {
+    const o = seedOrder({ status: "completed" });
+    const result = await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(result).toBe("paid");
+    expect(h.state.captures).toEqual(["pi_1"]);
+    expect(o.paymentStatus).toBe("paid");
+  });
+
+  it("PHANTOM: completed order is never re-sent to the kitchen", async () => {
+    // The food was made and handed over days ago. Collecting the money is
+    // right; printing a fresh ticket is how a restaurant cooks it twice.
+    const o = seedOrder({ status: "completed" });
+    await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(h.state.notified).not.toContain(o.id);
+    expect(h.state.dispatched).not.toContain(o.id);
+  });
+
+  it("PHANTOM: an already-paid completed order is not released either", async () => {
+    // The self-heal path releases anything paid-but-unreleased; a phantom must
+    // be exempt or the reconcile sweep would print old tickets in a loop.
+    const o = seedOrder({ status: "completed", paymentStatus: "paid" });
+    await verifyAndReleaseOrderPayment({ orderId: o.id });
+    expect(h.state.notified).not.toContain(o.id);
+  });
+
   it("NORMAL: pending + requires_capture → authorizes but does NOT capture", async () => {
     const o = seedOrder({ status: "pending" });
     const result = await verifyAndReleaseOrderPayment({ orderId: o.id });

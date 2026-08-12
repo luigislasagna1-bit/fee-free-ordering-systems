@@ -86,8 +86,15 @@ export async function verifyAndReleaseOrderPayment(params: {
   //
   // fireOrderNotifications claims notifiedAt atomically, so this is safe to run
   // from any number of concurrent callers.
+  //
+  // "completed" is excluded: those are the phantom orders the auto-complete bug
+  // left behind, and the restaurant has in all likelihood already made and
+  // handed over that food. Releasing one now would print the kitchen a ticket
+  // for a job finished days ago — the one outcome worse than the order having
+  // been quiet. Their money is still collected (see the capture branch below).
   if (
     !order.notifiedAt &&
+    order.status !== "completed" &&
     (order.paymentStatus === "paid" || order.paymentStatus === "authorized")
   ) {
     console.warn(
@@ -156,10 +163,33 @@ export async function verifyAndReleaseOrderPayment(params: {
       // must not block releasing the order to the kitchen — leave it
       // "authorized" (a later poll retries via the fall-through above);
       // isStripeAlreadyCaptured treats a mid-capture DB-write failure as done.
-      if (order.status === "accepted") {
+      // "completed" captures too, and this is NOT a nicety — it is the whole
+      // point of leaving a phantom order payable. The confirmation page keeps a
+      // status:"completed" order collectable on purpose (the auto-complete bug
+      // left orders the restaurant may well have cooked and served anyway), but
+      // every capture site in the codebase gated on status === "accepted", so
+      // paying one placed a manual-capture HOLD that nothing would ever capture:
+      // the money sat on the customer's card for ~7 days and then silently
+      // released, the restaurant was paid nothing, and — because the release
+      // stamped notifiedAt — the order also dropped out of the reconcile cron's
+      // "unpaid, needs attention" report, so nobody would ever have noticed.
+      // Caught in adversarial review, 2026-08-12.
+      const captureNow = order.status === "accepted" || order.status === "completed";
+      // A completed order's food was made and handed over long ago. Capturing
+      // its money is right; printing the kitchen a fresh ticket for it is not —
+      // that is how a restaurant cooks the same order twice. So the release
+      // side-effects below stay tied to "accepted".
+      const releaseToKitchen = order.status === "accepted";
+      if (captureNow) {
         try {
           await capturePayment({ paymentIntentId: intent.id, restaurantId: order.restaurantId });
           await prisma.order.update({ where: { id: order.id }, data: { paymentStatus: "paid" } });
+          if (!releaseToKitchen) {
+            console.warn(
+              `[verify-payment] captured ${intent.id} for COMPLETED order ${order.id} — paid after the fact, deliberately not re-sent to the kitchen.`,
+            );
+            return "paid";
+          }
           await fireOrderNotifications(order.id);
           // AUTO-ACCEPT DISPATCH (2026-08-10): under the key-only model THIS is
           // the moment an auto-accepted card order becomes accepted + paid —
@@ -174,6 +204,7 @@ export async function verifyAndReleaseOrderPayment(params: {
         } catch (e) {
           if (isStripeAlreadyCaptured(e)) {
             await prisma.order.update({ where: { id: order.id }, data: { paymentStatus: "paid" } });
+            if (!releaseToKitchen) return "paid";
             await fireOrderNotifications(order.id);
             after(dispatchAcceptedOrderSafe(order.id));
             return "paid";
@@ -184,7 +215,10 @@ export async function verifyAndReleaseOrderPayment(params: {
           );
         }
       }
-      await fireOrderNotifications(order.id);
+      // Everything else still releases here — an ordinary pending card order
+      // reaches the kitchen on exactly this line. Only "completed" is held back,
+      // because its food was already made.
+      if (order.status !== "completed") await fireOrderNotifications(order.id);
       return "authorized";
     }
     case "succeeded": {
@@ -193,7 +227,10 @@ export async function verifyAndReleaseOrderPayment(params: {
         where: { id: order.id },
         data: { paymentStatus: "paid", paymentIntentId: intent.id },
       });
-      await fireOrderNotifications(order.id);
+      // A completed order that turns out to be captured is money correctly
+      // collected on food already served — record it, but don't hand the
+      // kitchen a ticket for a job it finished days ago.
+      if (order.status !== "completed") await fireOrderNotifications(order.id);
       // Accepted + captured: make sure the courier isn't forgotten on this
       // path either. dispatchOrderNow's atomic claim makes a duplicate call
       // race-safe (skipped "already_dispatched").
