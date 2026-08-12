@@ -94,11 +94,29 @@ export async function POST(req: NextRequest) {
       break;
   }
 
+  // sendSms RETURNS {sent:false, reason} — it does not throw. So the old
+  // try/catch never caught anything and this route answered ok:true for every
+  // failure there is: Twilio env vars missing, an unusable phone number, a 4xx
+  // from Twilio. The voice service trusts that flag (`receiptTexted = !!sms.ok`,
+  // tools.ts) and, believing the text went out, has Nabil tell the caller their
+  // receipt has been sent instead of reading the total aloud. So the one case
+  // where the customer most needs to hear the number is the case where we
+  // silently stopped saying it.
+  //
+  // Same lesson as the email transport on 2026-08-01: report what actually
+  // happened, never what was merely attempted. Caught in the Nabil completeness
+  // sweep, 2026-08-12.
   try {
-    await sendSms({ to, body: msg });
-    return NextResponse.json({ ok: true });
+    const result = await sendSms({ to, body: msg });
+    if (!result.sent) {
+      console.error(`[voice/send-sms] NOT sent (${linkType}) — ${result.reason ?? "unknown"}`);
+      return NextResponse.json({ ok: false, reason: result.reason ?? "not sent" }, { status: 502 });
+    }
+    return NextResponse.json({ ok: true, sid: result.sid });
   } catch (e) {
-    console.error("[voice/send-sms] failed", e);
+    // Defensive only — sendSms catches its own throws. Keep it so an unexpected
+    // one can never be reported as a success.
+    console.error("[voice/send-sms] threw", e);
     return NextResponse.json({ ok: false }, { status: 502 });
   }
 }

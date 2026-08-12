@@ -28,6 +28,13 @@ function xml(s: string): string {
 }
 
 const BYE = "Thanks for calling. We couldn't connect you to a team member right now — please try again shortly.";
+// The call-time-limit goodbye. BYE is about a FAILED transfer and would be a
+// non-sequitur here — the caller never asked for a person, they just ran long.
+// ⚠️ i18n debt: every TwiML string in this feature is hardcoded English (see the
+// completeness sweep, 2026-08-12). Fixing that is its own change; this at least
+// doesn't add a WRONG English sentence on top of an untranslated one.
+const TIME_LIMIT_BYE =
+  "Thanks for calling. We've reached the time limit for this call, so I'll let you go — please call back to finish your order.";
 
 /** Read the Twilio form body once (string params only). Empty on GET probes. */
 async function readTwilioParams(req: NextRequest): Promise<Record<string, string>> {
@@ -89,6 +96,26 @@ function rejectIfForged(req: NextRequest, params: Record<string, string>): Respo
 
 async function handle(params: Record<string, string>) {
   const to = (params.To || "").trim();
+
+  // ── NOT every session end wants a human ───────────────────────────────────
+  // This route runs whenever the ConversationRelay session ends while the CALL
+  // is still up, and it used to dial the restaurant every single time. That is
+  // right for transfer_to_human, and wrong for the call-time-limit cut-off,
+  // which ends the session for a completely different reason: the caller was
+  // simply bridged onto the restaurant's phone mid-sentence with no context.
+  // The service now stamps a reason (session.ts endCapped), so honour it.
+  const reason = (() => {
+    try {
+      return String(JSON.parse(params.HandoffData || "{}")?.reason ?? "");
+    } catch {
+      return ""; // malformed → fall through to the historical transfer behaviour
+    }
+  })();
+  if (reason === "call_time_limit") {
+    return twiml(
+      `<Response><Say voice="Polly.Joanna-Neural">${xml(TIME_LIMIT_BYE)}</Say><Hangup/></Response>`,
+    );
+  }
 
   const line = to
     ? await prisma.voiceNumber.findUnique({

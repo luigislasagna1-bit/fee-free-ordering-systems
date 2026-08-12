@@ -263,7 +263,19 @@ export class CallSession {
     this.interrupted = true;
     this.controller?.abort();
     try {
-      this.ws.send(JSON.stringify({ type: "end" }));
+      // MUST carry a reason. Ending the ConversationRelay session hands the
+      // still-live CALL to the <Connect action> URL, and that route dials the
+      // restaurant — correct for a real transfer_to_human (which does send a
+      // reason, below), catastrophic here: a caller who simply talked past the
+      // time limit was silently bridged onto the restaurant's ringing phone,
+      // mid-sentence, with no context for whoever picked up. Worse, if
+      // transferToNumber/alertPhone are unset and restaurant.phone IS the Nabil
+      // number, that dial re-enters the agent and the caller loops.
+      // The handoff route now reads this and hangs up politely instead.
+      // Caught in the Nabil completeness sweep, 2026-08-12.
+      this.ws.send(
+        JSON.stringify({ type: "end", handoffData: JSON.stringify({ reason: "call_time_limit" }) }),
+      );
     } catch {
       /* ignore */
     }
