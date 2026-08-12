@@ -1106,6 +1106,16 @@ first.
    on Aug 12. So none of these is a new failure, and no new ones have appeared since. That said the
    store has been closed since, so the fix has not yet been exercised under real traffic — worth a
    glance at this list again after your first busy service.
+
+   **✅ DECIDED 2026-08-12 (Luigi): five write-offs, one email.** Luigi confirmed jay Fieger's and
+   Ali Aydin's orders never reached the store either — same failure, and **none of that food was
+   ever made**, so there is nothing to charge for. **jay Fieger, Ali Aydin, Anna Martinello, Lisa
+   Benacquista and Uzair Rana are written off — no contact, no invoice.** The only one to reach out
+   to is **Sharon Craven ORD-710341102 ($36.44)**, because she came in and was served: she has the
+   food, so she is the only customer who owes anything. Draft email prepared; Luigi sends it (mail
+   credentials are production-only, by design).
+   ⚠️ **Check Stripe for Sharon's $36.44 BEFORE sending** — if she was in fact charged, that email
+   would be asking her to pay twice.
 2. 👀 **Watch for one log line.** `RESCUED` in the logs means the safety net caught a real order —
    good, but it also means the customer's browser failed to report a payment. A handful is normal.
    A steady stream means something upstream is broken and worth chasing.
