@@ -2672,7 +2672,9 @@
         "payment_reward": "Hadiah Metode Pembayaran",
         "free_dish_meal": "Hidangan Gratis sebagai Bagian dari Makanan"
       },
-      "campaignFallback": "Kampanye"
+      "campaignFallback": "Kampanye",
+      "titleCampaignLocked": "Kode ini sedang dikirim lewat email oleh kampanye Autopilot yang aktif. Matikan kampanye di Pemasaran → Autopilot untuk menariknya.",
+      "toggleFailed": "Promosi ini tidak dapat diubah. Silakan coba lagi."
     },
     "promoWizard": {
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Tambahkan setidaknya satu email.",
       "stepsHint": "Setiap email dikirim lebih lama setelah pesanan terakhir mereka, dengan diskonnya sendiri. Urutan berhenti otomatis begitu mereka memesan lagi.",
       "stepsReset": "Setel ulang ke default",
-      "stepsResetConfirm": "Ganti semua email dengan urutan default?"
+      "stepsResetConfirm": "Ganti semua email dengan urutan default?",
+      "codeNotLiveTitle": "Kampanye ini tidak punya kode penawaran yang berfungsi.",
+      "codeNotLiveBody": "Kuponnya dimatikan atau kedaluwarsa, jadi email ini terkirim tanpa diskon. Aktifkan lagi kodenya di Promosi dan kupon.",
+      "audienceTitle": "Siapa yang menerima penawaran Autopilot",
+      "audienceSkipping": "Semua orang yang memenuhi pemicu kampanye — kecuali anggota yang sudah mendapat harga klub. Saat ini {count} di {groups}.",
+      "audienceNoClubs": "Semua orang yang memenuhi pemicu kampanye. Untuk menahan satu klub VIP, buka grup pelanggan lalu centang “Anggota sudah mendapat harga klub”.",
+      "audienceManage": "Kelola grup pelanggan",
+      "vipModeTitle": "Anggota klub",
+      "vipModeDesc": "Apa yang diterima anggota grup dengan harga klub dari kampanye ini.",
+      "vipMode_offer_label": "Sama seperti semua",
+      "vipMode_offer_desc": "Mereka juga dapat penawarannya",
+      "vipMode_no_offer_label": "Email, tanpa kode tambahan",
+      "vipMode_no_offer_desc": "Hanya pengingat — harga klub mereka sudah berlaku",
+      "vipMode_skip_label": "Jangan kirim email",
+      "vipMode_skip_desc": "Dilewati kampanye ini"
     },
     "marketplaceSettings": {
       "pageTitle": "Listing Marketplace",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Tidak dapat mengirim email selamat datang.",
       "welcomeSent": "{count, plural, =0 {Tidak ada email yang dikirim} other {Email selamat datang dikirim ke # anggota}}",
       "sendWelcomeToMember": "Kirim email selamat datang ke anggota ini",
-      "welcomeOneConfirm": "Kirim email selamat datang ke {email}?"
+      "welcomeOneConfirm": "Kirim email selamat datang ke {email}?",
+      "autopilotCardTitle": "Pemasaran otomatis",
+      "autopilotHelp": "Autopilot mengirim sendiri email pemulihan pelanggan, dorongan pesanan kedua, dan keranjang terbengkalai. Anggota grup ini sudah mendapat harga klub Anda, jadi Anda mungkin tidak ingin Autopilot menawarkan diskon tambahan di atasnya.",
+      "autopilotSkipLabel": "Anggota sudah mendapat harga klub",
+      "autopilotSkipDesc": "Autopilot tidak akan memberi anggota grup ini kode diskon tambahan. Tidak ada yang dikeluarkan dari grup atau diberhentikan langganannya, dan penawaran khusus anggota serta persentase reward Anda tetap sama.",
+      "autopilotSkipActive": "Pilih apa yang diterima anggota ini dari setiap kampanye di halaman Autopilot.",
+      "autopilotSkipLink": "Buka Autopilot"
     },
     "rewards": {
       "title": "Dolar Hadiah",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Dijadwalkan untuk {time}",
       "paidWithReward": "Dibayar dengan {label}",
       "earnedReward": "Anda mendapatkan {label}",
-      "rewardDefaultName": "Dolar Hadiah"
+      "rewardDefaultName": "Dolar Hadiah",
+      "paymentNotCompleted": "Pembayaran belum selesai",
+      "paymentNotCompletedBody": "{restaurantName} belum menerima pesanan ini karena pembayaran belum selesai. Anda tidak dikenai biaya — jumlah apa pun yang ditahan di kartu Anda akan dilepaskan otomatis.",
+      "paymentNotCompletedPaidAlready": "Sudah membayar? Tunggu sebentar lalu muat ulang halaman ini — kami mengonfirmasi pembayaran secara otomatis. Jika pesan ini masih muncul, hubungi {restaurantName} dan sebutkan nomor pesanan {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "API key Google Maps tidak ada — atur di Admin → Pengaturan Peta.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Tautan pembayaran tidak valid.",
       "completePayment": "Selesaikan Pembayaran",
       "orderReserved": "Pesanan Anda dicadangkan saat Anda membayar",
-      "securedByStripe": "Diamankan oleh Stripe. Kami tidak pernah menyimpan detail kartu Anda."
+      "securedByStripe": "Diamankan oleh Stripe. Kami tidak pernah menyimpan detail kartu Anda.",
+      "preparingPayment": "Menyiapkan pembayaran aman…",
+      "couldNotStartPayment": "Kami tidak dapat memulai pembayaran untuk pesanan ini. Silakan kembali dan coba lagi.",
+      "backToRestaurant": "Kembali ke restoran"
     },
     "paymentPage": {
       "loading": "Memuat…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Anda menerima email ini karena Anda adalah pelanggan {name}.",
       "deleteData": "Hapus data pribadi saya"
+    },
+    "memberPerk": {
+      "title": "Harga anggota Anda",
+      "body": "Anda anggota {group}, jadi harga anggota Anda sudah otomatis diterapkan saat memesan — tanpa perlu kode."
     }
   },
   "dataRequest": {

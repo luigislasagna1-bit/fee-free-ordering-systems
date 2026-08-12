@@ -2672,7 +2672,9 @@
         "payment_reward": "Recompensă pentru metoda de plată",
         "free_dish_meal": "Fel gratuit ca parte a unei mese"
       },
-      "campaignFallback": "Campanie"
+      "campaignFallback": "Campanie",
+      "titleCampaignLocked": "Acest cod este trimis pe e-mail de o campanie Autopilot activă. Dezactivează campania din Marketing → Autopilot pentru a-l retrage.",
+      "toggleFailed": "Promoția nu a putut fi modificată. Încearcă din nou."
     },
     "promoWizard": {
       "errorPickType": "Alege un tip de promoție pentru a continua.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Adaugă cel puțin un e-mail.",
       "stepsHint": "Fiecare e-mail este trimis mai târziu după ultima comandă, cu propria reducere. Secvența se oprește automat în momentul în care comandă din nou.",
       "stepsReset": "Resetează la implicit",
-      "stepsResetConfirm": "Înlocuiești toate e-mailurile cu secvența implicită?"
+      "stepsResetConfirm": "Înlocuiești toate e-mailurile cu secvența implicită?",
+      "codeNotLiveTitle": "Această campanie nu are niciun cod de ofertă funcțional.",
+      "codeNotLiveBody": "Cuponul este dezactivat sau expirat, deci aceste e-mailuri pleacă fără reducere. Reactivează codul din Promoții și cupoane.",
+      "audienceTitle": "Cine primește ofertele Autopilot",
+      "audienceSkipping": "Toți cei care declanșează o campanie — mai puțin membrii care au deja prețuri de club. În acest moment, {count} în {groups}.",
+      "audienceNoClubs": "Toți cei care declanșează o campanie. Ca să lași deoparte un club VIP, deschide un grup de clienți și bifează „Membrii au deja prețuri de club”.",
+      "audienceManage": "Gestionează grupurile de clienți",
+      "vipModeTitle": "Membrii clubului",
+      "vipModeDesc": "Ce primesc de la această campanie membrii unui grup cu prețuri de club.",
+      "vipMode_offer_label": "La fel ca toți",
+      "vipMode_offer_desc": "Primesc și ei oferta",
+      "vipMode_no_offer_label": "E-mail, fără cod",
+      "vipMode_no_offer_desc": "Doar memento — prețurile lor de club se aplică deja",
+      "vipMode_skip_label": "Fără e-mail",
+      "vipMode_skip_desc": "Excluși din această campanie"
     },
     "marketplaceSettings": {
       "pageTitle": "Listare Marketplace",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Nu am putut trimite e-mailul de bun venit.",
       "welcomeSent": "{count, plural, =0 {Niciun e-mail trimis} one {E-mail de bun venit trimis către # membru} few {E-mailuri de bun venit trimise către # membri} other {E-mailuri de bun venit trimise către # de membri}}",
       "sendWelcomeToMember": "Trimite e-mailul de bun venit acestui membru",
-      "welcomeOneConfirm": "Trimiteți e-mailul de bun venit către {email}?"
+      "welcomeOneConfirm": "Trimiteți e-mailul de bun venit către {email}?",
+      "autopilotCardTitle": "Marketing automat",
+      "autopilotHelp": "Autopilot trimite singur e-mailurile de recâștigare, de a doua comandă și de coș abandonat. Membrii acestui grup au deja prețurile tale de club, așa că probabil nu vrei ca Autopilot să le mai ofere o reducere pe deasupra.",
+      "autopilotSkipLabel": "Membrii au deja prețuri de club",
+      "autopilotSkipDesc": "Autopilot nu le va da membrilor acestui grup un cod de reducere în plus. Nimeni nu este scos din grup și nici dezabonat, iar ofertele tale pentru membri și ratele de recompensă rămân neatinse.",
+      "autopilotSkipActive": "Alege ce primesc acești membri de la fiecare campanie, în pagina Autopilot.",
+      "autopilotSkipLink": "Deschide Autopilot"
     },
     "rewards": {
       "title": "Dolari de recompensă",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Programat pentru {time}",
       "paidWithReward": "Plătit cu {label}",
       "earnedReward": "Ai câștigat {label}",
-      "rewardDefaultName": "Dolari de recompensă"
+      "rewardDefaultName": "Dolari de recompensă",
+      "paymentNotCompleted": "Plata nu a fost finalizată",
+      "paymentNotCompletedBody": "{restaurantName} nu a primit această comandă, deoarece plata nu a fost finalizată. Nu ți s-a debitat nimic — orice sumă blocată pe card este eliberată automat.",
+      "paymentNotCompletedPaidAlready": "Ai plătit deja? Așteaptă un moment și reîmprospătează această pagină — confirmăm plățile automat. Dacă mesajul persistă, contactează {restaurantName} și menționează numărul comenzii {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Cheia API Google Maps lipsește — setați-o în Admin → Setări hartă.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Link de plată invalid.",
       "completePayment": "Finalizează plata",
       "orderReserved": "Comanda ta este rezervată în timp ce plătești",
-      "securedByStripe": "Securizat de Stripe. Nu stocăm niciodată datele cardului tău."
+      "securedByStripe": "Securizat de Stripe. Nu stocăm niciodată datele cardului tău.",
+      "preparingPayment": "Se pregătește plata securizată…",
+      "couldNotStartPayment": "Nu am putut iniția plata pentru această comandă. Întoarce-te și încearcă din nou.",
+      "backToRestaurant": "Înapoi la restaurant"
     },
     "paymentPage": {
       "loading": "Se încarcă…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Primiți acest e-mail deoarece sunteți client al {name}.",
       "deleteData": "Șterge datele mele personale"
+    },
+    "memberPerk": {
+      "title": "Prețurile tale de membru",
+      "body": "Faci parte din {group}, așa că prețurile tale de membru se aplică automat când comanzi — fără niciun cod."
     }
   },
   "dataRequest": {

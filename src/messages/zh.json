@@ -2672,7 +2672,9 @@
         "payment_reward": "支付方式奖励",
         "free_dish_meal": "作为套餐一部分的免费菜品"
       },
-      "campaignFallback": "营销活动"
+      "campaignFallback": "营销活动",
+      "titleCampaignLocked": "此优惠码正由一个正在运行的 Autopilot 营销活动通过邮件发送。如需停用，请在“营销 → Autopilot”中关闭该活动。",
+      "toggleFailed": "无法修改此促销。请重试。"
     },
     "promoWizard": {
       "errorPickType": "请选择促销类型以继续。",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "请至少添加一封邮件。",
       "stepsHint": "每封邮件会在客户上次下单后更久才发送，并带有各自的折扣。一旦客户再次下单，序列会自动停止。",
       "stepsReset": "恢复默认",
-      "stepsResetConfirm": "用默认序列替换所有邮件？"
+      "stepsResetConfirm": "用默认序列替换所有邮件？",
+      "codeNotLiveTitle": "此营销活动没有可用的优惠码。",
+      "codeNotLiveBody": "它的优惠券已关闭或过期，因此这些邮件发出时不含折扣。请在“促销与优惠券”中重新启用该优惠码。",
+      "audienceTitle": "谁会收到 Autopilot 优惠",
+      "audienceSkipping": "所有符合营销活动触发条件的顾客 — 已享会员价的成员除外。目前 {groups} 中共有 {count} 人。",
+      "audienceNoClubs": "所有符合营销活动触发条件的顾客。若要排除某个 VIP 俱乐部，请打开对应的顾客群组并勾选“成员已享会员价”。",
+      "audienceManage": "管理顾客群组",
+      "vipModeTitle": "俱乐部成员",
+      "vipModeDesc": "享受会员价的群组成员在此营销活动中会收到什么。",
+      "vipMode_offer_label": "与其他人相同",
+      "vipMode_offer_desc": "他们也会收到优惠",
+      "vipMode_no_offer_label": "邮件，不带折扣码",
+      "vipMode_no_offer_desc": "仅作提醒 — 他们的会员价已自动生效",
+      "vipMode_skip_label": "不给他们发邮件",
+      "vipMode_skip_desc": "此营销活动会跳过他们"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace 上架",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "无法发送欢迎邮件。",
       "welcomeSent": "{count, plural, =0 {未发送任何邮件} other {已向 # 名成员发送欢迎邮件}}",
       "sendWelcomeToMember": "向该成员发送欢迎邮件",
-      "welcomeOneConfirm": "向 {email} 发送欢迎邮件？"
+      "welcomeOneConfirm": "向 {email} 发送欢迎邮件？",
+      "autopilotCardTitle": "自动营销",
+      "autopilotHelp": "Autopilot 会自动发送赢回顾客、二次下单和购物车挽回邮件。本群组的成员已经享受您的会员价，所以您多半不希望 Autopilot 再额外给他们一个折扣。",
+      "autopilotSkipLabel": "成员已享会员价",
+      "autopilotSkipDesc": "Autopilot 不会再给本群组的成员发放额外的折扣码。不会有人被移出群组或被退订，您的会员专享优惠和返还比例也不受影响。",
+      "autopilotSkipActive": "在 Autopilot 页面上选择这些成员在每个营销活动中收到什么。",
+      "autopilotSkipLink": "打开 Autopilot"
     },
     "rewards": {
       "title": "奖励金",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "预约时间：{time}",
       "paidWithReward": "使用 {label} 支付",
       "earnedReward": "您获得了 {label}",
-      "rewardDefaultName": "奖励金"
+      "rewardDefaultName": "奖励金",
+      "paymentNotCompleted": "支付未完成",
+      "paymentNotCompletedBody": "由于支付未完成，{restaurantName} 尚未收到此订单。我们没有向您收费——您卡上冻结的任何金额都会自动释放。",
+      "paymentNotCompletedPaidAlready": "已经付款了？请稍候片刻并刷新本页——我们会自动确认付款。如果仍显示此提示，请联系 {restaurantName} 并提供订单号 {orderNumber}。"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "缺少 Google Maps API 密钥——请在管理后台 → 地图设置中配置。",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "无效的支付链接。",
       "completePayment": "完成支付",
       "orderReserved": "您的订单已锁定，请完成支付",
-      "securedByStripe": "由 Stripe 安全加密，我们不会保存您的银行卡信息。"
+      "securedByStripe": "由 Stripe 安全加密，我们不会保存您的银行卡信息。",
+      "preparingPayment": "正在准备安全支付…",
+      "couldNotStartPayment": "无法为此订单启动支付。请返回后重试。",
+      "backToRestaurant": "返回餐厅"
     },
     "paymentPage": {
       "loading": "加载中…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "您收到此邮件是因为您是 {name} 的客户。",
       "deleteData": "删除我的个人数据"
+    },
+    "memberPerk": {
+      "title": "您的会员价",
+      "body": "您是 {group} 的会员，下单时会员价已自动生效 — 无需折扣码。"
     }
   },
   "dataRequest": {

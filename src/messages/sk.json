@@ -3376,7 +3376,9 @@
         "payment_reward": "Odmena za spôsob platby",
         "free_dish_meal": "Jedlo zadarmo ako súčasť menu"
       },
-      "campaignFallback": "Kampaň"
+      "campaignFallback": "Kampaň",
+      "titleCampaignLocked": "Tento kód rozposiela e-mailom bežiaca kampaň Autopilot. Vypnite kampaň v Marketing → Autopilot, ak ju chcete ukončiť.",
+      "toggleFailed": "Akciu sa nepodarilo zmeniť. Skúste to znova."
     },
     "promoWizard": {
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",
@@ -3877,7 +3879,21 @@
       "stepsNeedOne": "Pridajte aspoň jeden e-mail.",
       "stepsHint": "Každý e-mail sa odošle neskôr po poslednej objednávke, s vlastnou zľavou. Sekvencia sa automaticky zastaví, hneď ako zákazník znova objedná.",
       "stepsReset": "Obnoviť predvolené",
-      "stepsResetConfirm": "Nahradiť všetky e-maily predvolenou sekvenciou?"
+      "stepsResetConfirm": "Nahradiť všetky e-maily predvolenou sekvenciou?",
+      "codeNotLiveTitle": "Táto kampaň nemá funkčný zľavový kód.",
+      "codeNotLiveBody": "Jej kupón je vypnutý alebo vypršal, takže tieto e-maily odchádzajú bez zľavy. Zapnite kód späť v Akcie a kupóny.",
+      "audienceTitle": "Komu Autopilot posiela ponuky",
+      "audienceSkipping": "Všetci, ktorí spĺňajú spúšťač kampane — okrem členov, ktorí už majú klubové ceny. Momentálne {count} v {groups}.",
+      "audienceNoClubs": "Všetci, ktorí spĺňajú spúšťač kampane. Ak chcete vynechať VIP klub, otvorte skupinu zákazníkov a začiarknite „Členovia už majú klubové ceny“.",
+      "audienceManage": "Spravovať skupiny zákazníkov",
+      "vipModeTitle": "Členovia klubu",
+      "vipModeDesc": "Čo z tejto kampane dostanú členovia skupiny s klubovými cenami.",
+      "vipMode_offer_label": "Rovnako ako ostatní",
+      "vipMode_offer_desc": "Ponuku dostanú tiež",
+      "vipMode_no_offer_label": "E-mail bez kódu",
+      "vipMode_no_offer_desc": "Len pripomenutie — klubové ceny už platia",
+      "vipMode_skip_label": "Neposielať im e-mail",
+      "vipMode_skip_desc": "Táto kampaň ich vynechá"
     },
     "marketplaceSettings": {
       "pageTitle": "Záznam na Marketplace",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Uvítací e-mail sa nepodarilo odoslať.",
       "welcomeSent": "{count, plural, =0 {Neodoslali sa žiadne e-maily} one {Uvítanie odoslané # členovi} few {Uvítanie odoslané # členom} other {Uvítanie odoslané # členom}}",
       "sendWelcomeToMember": "Poslať uvítací e-mail tomuto členovi",
-      "welcomeOneConfirm": "Poslať uvítací e-mail na adresu {email}?"
+      "welcomeOneConfirm": "Poslať uvítací e-mail na adresu {email}?",
+      "autopilotCardTitle": "Automatický marketing",
+      "autopilotHelp": "Autopilot sám rozposiela e-maily na získanie zákazníkov späť, na druhú objednávku a na opustený košík. Členovia tejto skupiny už majú vaše klubové ceny, takže pravdepodobne nechcete, aby im Autopilot ponúkal ešte ďalšiu zľavu navyše.",
+      "autopilotSkipLabel": "Členovia už majú klubové ceny",
+      "autopilotSkipDesc": "Autopilot nedá členom tejto skupiny žiadny zľavový kód navyše. Nikto nie je zo skupiny odstránený ani odhlásený z odberu a vaše ponuky pre členov aj sadzby odmien zostávajú nezmenené.",
+      "autopilotSkipActive": "Na stránke Autopilot vyberte, čo títo členovia dostanú z každej kampane.",
+      "autopilotSkipLink": "Otvoriť Autopilot"
     },
     "rewards": {
       "title": "Vernostný kredit",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Naplánované na {time}",
       "paidWithReward": "Zaplatené pomocou {label}",
       "earnedReward": "Získali ste {label}",
-      "rewardDefaultName": "Vernostný kredit"
+      "rewardDefaultName": "Vernostný kredit",
+      "paymentNotCompleted": "Platba nebola dokončená",
+      "paymentNotCompletedBody": "{restaurantName} túto objednávku nedostal, pretože platba nebola dokončená. Nič sme vám nestrhli — akákoľvek suma blokovaná na karte sa automaticky uvoľní.",
+      "paymentNotCompletedPaidAlready": "Už ste zaplatili? Chvíľu počkajte a obnovte túto stránku — platby potvrdzujeme automaticky. Ak sa správa stále zobrazuje, kontaktujte {restaurantName} a uveďte číslo objednávky {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Chýba kľúč Google Maps API — nastavte ho v Administrácii → Nastavenia mapy.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Neplatný odkaz na platbu.",
       "completePayment": "Dokončiť platbu",
       "orderReserved": "Vaša objednávka je rezervovaná počas platby",
-      "securedByStripe": "Zabezpečené cez Stripe. Vaše údaje o karte nikdy neukladáme."
+      "securedByStripe": "Zabezpečené cez Stripe. Vaše údaje o karte nikdy neukladáme.",
+      "preparingPayment": "Pripravuje sa zabezpečená platba…",
+      "couldNotStartPayment": "Platbu za túto objednávku sa nepodarilo spustiť. Vráťte sa späť a skúste to znova.",
+      "backToRestaurant": "Späť na reštauráciu"
     },
     "paymentPage": {
       "loading": "Načítava sa…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Tento e-mail dostávate, pretože ste zákazníkom {name}.",
       "deleteData": "Odstrániť moje osobné údaje"
+    },
+    "memberPerk": {
+      "title": "Vaše členské ceny",
+      "body": "Ste členom {group}, takže sa vaše členské ceny pri objednávke uplatnia automaticky — kód nie je potrebný."
     }
   },
   "dataRequest": {

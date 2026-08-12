@@ -3129,6 +3129,8 @@
       "expiresOn": "Expires {date}",
       "titleDeactivate": "Deactivate",
       "titleActivate": "Activate",
+      "titleCampaignLocked": "This code is being emailed by a running Autopilot campaign. Turn the campaign off in Marketing → Autopilot to retire it.",
+      "toggleFailed": "Couldn't change this promotion. Please try again.",
       "titleDuplicate": "Duplicate",
       "titleEdit": "Edit",
       "badgeAuto": "Auto",
@@ -3645,6 +3647,8 @@
       "emailBodyLabel": "Email Body",
       "savingButton": "Saving...",
       "saveButton": "Save Campaign",
+      "codeNotLiveTitle": "This campaign has no working offer code.",
+      "codeNotLiveBody": "Its coupon is switched off or expired, so these emails go out without a discount. Turn the code back on under Promotions & Coupons.",
       "emailNotConfiguredTitle": "Email provider not configured.",
       "emailNotConfiguredBody": "Campaign settings are saved, but emails won't be sent until email delivery is set up for your account.",
       "campaign_second_order_title": "Encourage Second Order",
@@ -3676,7 +3680,19 @@
       "stepsNeedOne": "Add at least one email.",
       "stepsHint": "Each email goes out further from their last order, with its own discount. The sequence stops automatically the moment they order again.",
       "stepsReset": "Reset to defaults",
-      "stepsResetConfirm": "Replace all emails with the default sequence?"
+      "stepsResetConfirm": "Replace all emails with the default sequence?",
+      "audienceTitle": "Who gets Autopilot offers",
+      "audienceSkipping": "Everyone who matches a campaign trigger — except members already on club pricing. Currently {count} in {groups}.",
+      "audienceNoClubs": "Everyone who matches a campaign trigger. To hold back a VIP club, open a customer group and tick “Members already get club pricing”.",
+      "audienceManage": "Manage customer groups",
+      "vipModeTitle": "Club members",
+      "vipModeDesc": "What members of a group on club pricing get from this campaign.",
+      "vipMode_offer_label": "Same as everyone",
+      "vipMode_offer_desc": "They get the offer too",
+      "vipMode_no_offer_label": "Email, no extra code",
+      "vipMode_no_offer_desc": "Reminder only — their club pricing already applies",
+      "vipMode_skip_label": "Don't email them",
+      "vipMode_skip_desc": "Skipped by this campaign"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listing",
@@ -5674,7 +5690,13 @@
       "welcomeSent": "{count, plural, =0 {No emails sent} one {Welcome sent to # member} other {Welcome sent to # members}}",
       "welcomeFailed": "Could not send the welcome email.",
       "sendWelcomeToMember": "Send the welcome email to this member",
-      "welcomeOneConfirm": "Send the welcome email to {email}?"
+      "welcomeOneConfirm": "Send the welcome email to {email}?",
+      "autopilotCardTitle": "Automatic marketing",
+      "autopilotHelp": "Autopilot sends win-back, second-order and abandoned-cart emails on its own. Members of this group already get your club pricing, so you probably don't want Autopilot offering them another discount on top.",
+      "autopilotSkipLabel": "Members already get club pricing",
+      "autopilotSkipDesc": "Autopilot won't hand this group's members an extra discount code. Nobody is removed from the group or unsubscribed, and your member specials and reward rates are untouched.",
+      "autopilotSkipActive": "Choose what these members receive from each campaign on the Autopilot page.",
+      "autopilotSkipLink": "Open Autopilot"
     },
     "imageCrop": {
       "title": "Adjust your photo",
@@ -7066,7 +7088,10 @@
       "scheduledFor": "Scheduled for {time}",
       "paidWithReward": "Paid with {label}",
       "earnedReward": "You earned {label}",
-      "rewardDefaultName": "Reward Dollars"
+      "rewardDefaultName": "Reward Dollars",
+      "paymentNotCompleted": "Payment not completed",
+      "paymentNotCompletedBody": "{restaurantName} has not received this order, because the payment wasn't completed. You have not been charged — any amount held on your card is released automatically.",
+      "paymentNotCompletedPaidAlready": "Already paid? Wait a moment and refresh this page — we confirm payments automatically. If it still shows this, contact {restaurantName} and quote order number {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API key missing — set it in Admin → Map Settings.",
@@ -7254,7 +7279,10 @@
       "invalidPaymentLink": "Invalid payment link.",
       "completePayment": "Complete Payment",
       "orderReserved": "Your order is reserved while you pay",
-      "securedByStripe": "Secured by Stripe. We never store your card details."
+      "securedByStripe": "Secured by Stripe. We never store your card details.",
+      "preparingPayment": "Preparing secure payment…",
+      "couldNotStartPayment": "We couldn't start the payment for this order. Please go back and try again.",
+      "backToRestaurant": "Back to restaurant"
     },
     "paymentPage": {
       "loading": "Loading…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "You're receiving this email because you're a customer of {name}.",
       "deleteData": "Delete my personal data"
+    },
+    "memberPerk": {
+      "title": "Your member pricing",
+      "body": "You're a {group} member, so your member pricing is already applied when you order — no code needed."
     }
   },
   "dataRequest": {

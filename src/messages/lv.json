@@ -2672,7 +2672,9 @@
         "payment_reward": "Atlīdzība par maksājuma veidu",
         "free_dish_meal": "Bezmaksas ēdiens kā maltītes daļa"
       },
-      "campaignFallback": "Kampaņa"
+      "campaignFallback": "Kampaņa",
+      "titleCampaignLocked": "Šo kodu e-pastā izsūta aktīva Autopilot kampaņa. Lai to atsauktu, izslēdziet kampaņu sadaļā Mārketings → Autopilot.",
+      "toggleFailed": "Neizdevās mainīt šo piedāvājumu. Mēģiniet vēlreiz."
     },
     "promoWizard": {
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Pievienojiet vismaz vienu e-pastu.",
       "stepsHint": "Katrs e-pasts tiek nosūtīts vēlāk pēc pēdējā pasūtījuma, ar savu atlaidi. Secība automātiski apstājas, tiklīdz klients pasūta atkārtoti.",
       "stepsReset": "Atiestatīt uz noklusējumu",
-      "stepsResetConfirm": "Aizstāt visus e-pastus ar noklusējuma secību?"
+      "stepsResetConfirm": "Aizstāt visus e-pastus ar noklusējuma secību?",
+      "codeNotLiveTitle": "Šai kampaņai nav derīga piedāvājuma koda.",
+      "codeNotLiveBody": "Tās kupons ir izslēgts vai beidzies, tāpēc šie e-pasti tiek sūtīti bez atlaides. Ieslēdziet kodu atpakaļ sadaļā Piedāvājumi un kuponi.",
+      "audienceTitle": "Kas saņem Autopilot piedāvājumus",
+      "audienceSkipping": "Visi, kas atbilst kampaņas aktivizētājam — izņemot biedrus, kuriem jau ir kluba cenas. Pašlaik {count} šajās grupās: {groups}.",
+      "audienceNoClubs": "Visi, kas atbilst kampaņas aktivizētājam. Lai izlaistu VIP klubu, atveriet klientu grupu un atzīmējiet “Biedri jau saņem kluba cenas”.",
+      "audienceManage": "Pārvaldīt klientu grupas",
+      "vipModeTitle": "Kluba biedri",
+      "vipModeDesc": "Ko no šīs kampaņas saņem tās grupas biedri, kurai ir kluba cenas.",
+      "vipMode_offer_label": "Tāpat kā visiem",
+      "vipMode_offer_desc": "Viņi arī saņem piedāvājumu",
+      "vipMode_no_offer_label": "E-pasts bez papildu koda",
+      "vipMode_no_offer_desc": "Tikai atgādinājums — kluba cenas jau ir spēkā",
+      "vipMode_skip_label": "Nesūtīt viņiem e-pastu",
+      "vipMode_skip_desc": "Šī kampaņa viņus izlaiž"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace ieraksts",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Neizdevās nosūtīt sveiciena e-pastu.",
       "welcomeSent": "{count, plural, =0 {Netika nosūtīts neviens e-pasts} zero {Sveiciens nosūtīts # dalībniekiem} one {Sveiciens nosūtīts # dalībniekam} other {Sveiciens nosūtīts # dalībniekiem}}",
       "sendWelcomeToMember": "Nosūtīt sveicienu šim dalībniekam",
-      "welcomeOneConfirm": "Nosūtīt sveiciena e-pastu uz {email}?"
+      "welcomeOneConfirm": "Nosūtīt sveiciena e-pastu uz {email}?",
+      "autopilotCardTitle": "Automātiskais mārketings",
+      "autopilotHelp": "Autopilot pats sūta atgriešanas, otrā pasūtījuma un pamestā groza e-pastus. Šīs grupas biedri jau saņem jūsu kluba cenas, tāpēc, visticamāk, nevēlaties, lai Autopilot piedāvātu viņiem vēl vienu atlaidi virsū.",
+      "autopilotSkipLabel": "Biedri jau saņem kluba cenas",
+      "autopilotSkipDesc": "Autopilot neizsniegs šīs grupas biedriem papildu atlaides kodu. Neviens netiek izņemts no grupas un neviena abonements netiek atsaukts, un jūsu biedru piedāvājumi un uzkrāšanas likmes paliek neskartas.",
+      "autopilotSkipActive": "Autopilot lapā izvēlieties, ko šie biedri saņem no katras kampaņas.",
+      "autopilotSkipLink": "Atvērt Autopilot"
     },
     "rewards": {
       "title": "Bonusa dolāri",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Ieplānots {time}",
       "paidWithReward": "Apmaksāts ar {label}",
       "earnedReward": "Nopelnīji {label}",
-      "rewardDefaultName": "Bonusa dolāri"
+      "rewardDefaultName": "Bonusa dolāri",
+      "paymentNotCompleted": "Maksājums nav pabeigts",
+      "paymentNotCompletedBody": "{restaurantName} nav saņēmis šo pasūtījumu, jo maksājums netika pabeigts. No jums nekas nav ieturēts — jebkura kartē rezervētā summa tiek atbrīvota automātiski.",
+      "paymentNotCompletedPaidAlready": "Jau samaksājāt? Uzgaidiet mirkli un atsvaidziniet šo lapu — maksājumus apstiprinām automātiski. Ja šis paziņojums joprojām parādās, sazinieties ar {restaurantName} un norādiet pasūtījuma numuru {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Trūkst Google Maps API atslēgas — iestatiet to Administrācija → Kartes iestatījumi.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Nederīga maksājuma saite.",
       "completePayment": "Pabeigt maksājumu",
       "orderReserved": "Jūsu pasūtījums ir rezervēts maksājuma laikā",
-      "securedByStripe": "Drošību nodrošina Stripe. Mēs nekad neglabājam jūsu kartes datus."
+      "securedByStripe": "Drošību nodrošina Stripe. Mēs nekad neglabājam jūsu kartes datus.",
+      "preparingPayment": "Tiek sagatavots drošs maksājums…",
+      "couldNotStartPayment": "Neizdevās sākt šī pasūtījuma apmaksu. Lūdzu, atgriezieties un mēģiniet vēlreiz.",
+      "backToRestaurant": "Atpakaļ uz restorānu"
     },
     "paymentPage": {
       "loading": "Ielādē…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Jūs saņemat šo e-pastu, jo esat {name} klients.",
       "deleteData": "Dzēst manus personas datus"
+    },
+    "memberPerk": {
+      "title": "Jūsu biedra cenas",
+      "body": "Jūs esat {group} biedrs, tāpēc jūsu biedra cenas tiek piemērotas automātiski, kad pasūtāt — kods nav vajadzīgs."
     }
   },
   "dataRequest": {

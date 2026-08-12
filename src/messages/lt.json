@@ -3376,7 +3376,9 @@
         "payment_reward": "Atlygis už mokėjimo būdą",
         "free_dish_meal": "Nemokamas patiekalas kaip valgio dalis"
       },
-      "campaignFallback": "Kampanija"
+      "campaignFallback": "Kampanija",
+      "titleCampaignLocked": "Šį kodą el. paštu siunčia veikianti Autopilot kampanija. Norėdami jį atšaukti, išjunkite kampaniją skiltyje Rinkodara → Autopilot.",
+      "toggleFailed": "Nepavyko pakeisti šio pasiūlymo. Bandykite dar kartą."
     },
     "promoWizard": {
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",
@@ -3877,7 +3879,21 @@
       "stepsNeedOne": "Pridėkite bent vieną el. laišką.",
       "stepsHint": "Kiekvienas el. laiškas siunčiamas vėliau po paskutinio užsakymo, su savo nuolaida. Seka automatiškai sustoja, kai klientas užsako dar kartą.",
       "stepsReset": "Atstatyti numatytuosius",
-      "stepsResetConfirm": "Pakeisti visus el. laiškus numatytąja seka?"
+      "stepsResetConfirm": "Pakeisti visus el. laiškus numatytąja seka?",
+      "codeNotLiveTitle": "Ši kampanija neturi veikiančio pasiūlymo kodo.",
+      "codeNotLiveBody": "Jos kuponas išjungtas arba nebegalioja, todėl šie el. laiškai išsiunčiami be nuolaidos. Vėl įjunkite kodą skiltyje Pasiūlymai ir kuponai.",
+      "audienceTitle": "Kas gauna Autopilot pasiūlymus",
+      "audienceSkipping": "Visi, kurie atitinka kampanijos aktyviklį — išskyrus narius, kurie jau turi klubo kainas. Šiuo metu {count} šiose grupėse: {groups}.",
+      "audienceNoClubs": "Visi, kurie atitinka kampanijos aktyviklį. Kad kampanija apeitų VIP klubą, atidarykite klientų grupę ir pažymėkite „Nariai jau gauna klubo kainas“.",
+      "audienceManage": "Tvarkyti klientų grupes",
+      "vipModeTitle": "Klubo nariai",
+      "vipModeDesc": "Ką iš šios kampanijos gauna grupės, kuriai taikomos klubo kainos, nariai.",
+      "vipMode_offer_label": "Kaip ir visiems",
+      "vipMode_offer_desc": "Jie taip pat gauna pasiūlymą",
+      "vipMode_no_offer_label": "El. laiškas be papildomo kodo",
+      "vipMode_no_offer_desc": "Tik priminimas — klubo kainos jau galioja",
+      "vipMode_skip_label": "Nesiųsti jiems el. laiškų",
+      "vipMode_skip_desc": "Ši kampanija juos praleidžia"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace skelbimas",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Nepavyko išsiųsti pasveikinimo el. laiško.",
       "welcomeSent": "{count, plural, =0 {El. laiškų neišsiųsta} one {Pasveikinimas išsiųstas # nariui} few {Pasveikinimas išsiųstas # nariams} other {Pasveikinimas išsiųstas # narių}}",
       "sendWelcomeToMember": "Siųsti pasveikinimą šiam nariui",
-      "welcomeOneConfirm": "Siųsti pasveikinimo el. laišką adresu {email}?"
+      "welcomeOneConfirm": "Siųsti pasveikinimo el. laišką adresu {email}?",
+      "autopilotCardTitle": "Automatinė rinkodara",
+      "autopilotHelp": "Autopilot pats siunčia susigrąžinimo, antrojo užsakymo ir palikto krepšelio el. laiškus. Šios grupės nariai jau gauna jūsų klubo kainas, todėl greičiausiai nenorite, kad Autopilot siūlytų jiems dar vieną nuolaidą papildomai.",
+      "autopilotSkipLabel": "Nariai jau gauna klubo kainas",
+      "autopilotSkipDesc": "Autopilot nesuteiks šios grupės nariams papildomo nuolaidos kodo. Niekas nepašalinamas iš grupės ir neišbraukiamas iš el. laiškų sąrašo, o jūsų pasiūlymai nariams ir kaupimo tarifai lieka nepakeisti.",
+      "autopilotSkipActive": "Autopilot puslapyje pasirinkite, ką šie nariai gauna iš kiekvienos kampanijos.",
+      "autopilotSkipLink": "Atidaryti Autopilot"
     },
     "rewards": {
       "title": "Premijų doleriai",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Suplanuota {time}",
       "paidWithReward": "Apmokėta naudojant {label}",
       "earnedReward": "Uždirbote {label}",
-      "rewardDefaultName": "Premijų doleriai"
+      "rewardDefaultName": "Premijų doleriai",
+      "paymentNotCompleted": "Mokėjimas nebaigtas",
+      "paymentNotCompletedBody": "{restaurantName} negavo šio užsakymo, nes mokėjimas nebuvo baigtas. Iš jūsų nieko nenuskaičiuota — bet kokia kortelėje rezervuota suma atlaisvinama automatiškai.",
+      "paymentNotCompletedPaidAlready": "Jau sumokėjote? Palaukite akimirką ir atnaujinkite šį puslapį — mokėjimus patvirtiname automatiškai. Jei pranešimas vis dar rodomas, susisiekite su {restaurantName} ir nurodykite užsakymo numerį {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Trūksta Google Maps API rakto — nustatykite jį Administravimas → Žemėlapio nustatymai.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Neteisinga mokėjimo nuoroda.",
       "completePayment": "Užbaigti mokėjimą",
       "orderReserved": "Jūsų užsakymas rezervuotas mokėjimo metu",
-      "securedByStripe": "Apsaugota Stripe. Mes niekada nesaugome jūsų kortelės duomenų."
+      "securedByStripe": "Apsaugota Stripe. Mes niekada nesaugome jūsų kortelės duomenų.",
+      "preparingPayment": "Ruošiamas saugus mokėjimas…",
+      "couldNotStartPayment": "Nepavyko pradėti šio užsakymo mokėjimo. Grįžkite atgal ir bandykite dar kartą.",
+      "backToRestaurant": "Grįžti į restoraną"
     },
     "paymentPage": {
       "loading": "Kraunama…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Gaunate šį el. laišką, nes esate {name} klientas.",
       "deleteData": "Ištrinti mano asmens duomenis"
+    },
+    "memberPerk": {
+      "title": "Jūsų nario kainos",
+      "body": "Esate {group} narys, todėl užsakant jūsų nario kainos jau taikomos automatiškai — kodo nereikia."
     }
   },
   "dataRequest": {

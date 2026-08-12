@@ -2672,7 +2672,9 @@
         "payment_reward": "Tasu makseviisi eest",
         "free_dish_meal": "Tasuta roog eine osana"
       },
-      "campaignFallback": "Kampaania"
+      "campaignFallback": "Kampaania",
+      "titleCampaignLocked": "Seda koodi saadab e-postiga töötav Autopilot kampaania. Selle tagasivõtmiseks lülitage kampaania välja jaotises Turundus → Autopilot.",
+      "toggleFailed": "Pakkumist ei õnnestunud muuta. Proovige uuesti."
     },
     "promoWizard": {
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Lisa vähemalt üks e-kiri.",
       "stepsHint": "Iga e-kiri saadetakse viimasest tellimusest hiljem, oma allahindlusega. Jada peatub automaatselt niipea, kui klient uuesti tellib.",
       "stepsReset": "Lähtesta vaikeväärtustele",
-      "stepsResetConfirm": "Asendada kõik e-kirjad vaikejadaga?"
+      "stepsResetConfirm": "Asendada kõik e-kirjad vaikejadaga?",
+      "codeNotLiveTitle": "Sellel kampaanial pole toimivat pakkumiskoodi.",
+      "codeNotLiveBody": "Selle kupong on välja lülitatud või aegunud, seega lähevad need e-kirjad välja ilma soodustuseta. Lülitage kood uuesti sisse jaotises Pakkumised ja kupongid.",
+      "audienceTitle": "Kes saavad Autopilot-pakkumisi",
+      "audienceSkipping": "Kõik, kes vastavad kampaania käivitajale — välja arvatud liikmed, kellel on juba klubihinnad. Praegu {count} gruppides {groups}.",
+      "audienceNoClubs": "Kõik, kes vastavad kampaania käivitajale. Kui soovite VIP-klubi kõrvale jätta, avage kliendigrupp ja märkige „Liikmed saavad juba klubihindu“.",
+      "audienceManage": "Halda kliendigruppe",
+      "vipModeTitle": "Klubi liikmed",
+      "vipModeDesc": "Mida saavad sellest kampaaniast klubihindadega grupi liikmed.",
+      "vipMode_offer_label": "Sama mis kõigil",
+      "vipMode_offer_desc": "Nemad saavad pakkumise samuti",
+      "vipMode_no_offer_label": "E-kiri, lisakoodita",
+      "vipMode_no_offer_desc": "Ainult meeldetuletus — nende klubihinnad juba kehtivad",
+      "vipMode_skip_label": "Ära saada neile e-kirja",
+      "vipMode_skip_desc": "See kampaania jätab nad vahele"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace'i kuulutus",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Tervituskirja saatmine ebaõnnestus.",
       "welcomeSent": "{count, plural, =0 {E-kirju ei saadetud} one {Tervituskiri saadetud # liikmele} other {Tervituskiri saadetud # liikmele}}",
       "sendWelcomeToMember": "Saada tervituskiri sellele liikmele",
-      "welcomeOneConfirm": "Kas saata tervituskiri aadressile {email}?"
+      "welcomeOneConfirm": "Kas saata tervituskiri aadressile {email}?",
+      "autopilotCardTitle": "Automaatne turundus",
+      "autopilotHelp": "Autopilot saadab ise e-kirju klientide tagasivõitmiseks, teise tellimuse õhutamiseks ja pooleli jäänud ostukorvide meeldetuletamiseks. Selle grupi liikmed saavad juba teie klubihindu, seega tõenäoliselt ei taha te, et Autopilot pakuks neile lisaks veel ühte allahindlust.",
+      "autopilotSkipLabel": "Liikmed saavad juba klubihindu",
+      "autopilotSkipDesc": "Autopilot ei anna selle grupi liikmetele täiendavat sooduskoodi. Kedagi ei eemaldata grupist ega e-kirjade nimekirjast ning teie liikmepakkumised ja preemiamäärad jäävad puutumata.",
+      "autopilotSkipActive": "Valige Autopilot-lehel, mida need liikmed igast kampaaniast saavad.",
+      "autopilotSkipLink": "Ava Autopilot"
     },
     "rewards": {
       "title": "Boonusraha",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Ajastatud kellaajaks {time}",
       "paidWithReward": "Makstud: {label}",
       "earnedReward": "Teenisid {label}",
-      "rewardDefaultName": "Boonusraha"
+      "rewardDefaultName": "Boonusraha",
+      "paymentNotCompleted": "Makse jäi lõpetamata",
+      "paymentNotCompletedBody": "{restaurantName} ei ole seda tellimust saanud, sest makse jäi lõpetamata. Sinult ei ole raha võetud — kaardil broneeritud summa vabastatakse automaatselt.",
+      "paymentNotCompletedPaidAlready": "Kas maksid juba? Oota hetk ja värskenda lehte — kinnitame maksed automaatselt. Kui teade püsib, võta ühendust restoraniga {restaurantName} ja nimeta tellimuse number {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Mapsi API võti puudub — seadista see Admin → Kaardi seaded.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Kehtetu makselink.",
       "completePayment": "Lõpeta makse",
       "orderReserved": "Sinu tellimus on maksmise ajal reserveeritud",
-      "securedByStripe": "Kaitstud Stripe'iga. Me ei salvesta kunagi sinu kaardi andmeid."
+      "securedByStripe": "Kaitstud Stripe'iga. Me ei salvesta kunagi sinu kaardi andmeid.",
+      "preparingPayment": "Turvalise makse ettevalmistamine…",
+      "couldNotStartPayment": "Selle tellimuse makset ei õnnestunud alustada. Mine tagasi ja proovi uuesti.",
+      "backToRestaurant": "Tagasi restorani juurde"
     },
     "paymentPage": {
       "loading": "Laadimine…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Saate selle e-kirja, kuna olete {name} klient.",
       "deleteData": "Kustuta minu isikuandmed"
+    },
+    "memberPerk": {
+      "title": "Teie liikmehind",
+      "body": "Olete {group} liige, seega rakendub teie liikmehind tellimisel automaatselt — koodi pole vaja."
     }
   },
   "dataRequest": {

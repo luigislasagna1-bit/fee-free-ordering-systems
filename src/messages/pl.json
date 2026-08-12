@@ -2615,7 +2615,9 @@
         "payment_reward": "Nagroda za metodę płatności",
         "free_dish_meal": "Darmowe danie w ramach posiłku"
       },
-      "campaignFallback": "Kampania"
+      "campaignFallback": "Kampania",
+      "titleCampaignLocked": "Ten kod jest wysyłany e-mailem przez działającą kampanię Autopilot. Wyłącz kampanię w Marketing → Autopilot, aby go wycofać.",
+      "toggleFailed": "Nie udało się zmienić tej promocji. Spróbuj ponownie."
     },
     "promoWizard": {
       "errorPickType": "Wybierz typ promocji, aby kontynuować.",
@@ -3116,7 +3118,21 @@
       "stepsNeedOne": "Dodaj co najmniej jeden e-mail.",
       "stepsHint": "Każdy e-mail jest wysyłany później po ostatnim zamówieniu, z własnym rabatem. Sekwencja zatrzymuje się automatycznie, gdy klient ponownie złoży zamówienie.",
       "stepsReset": "Przywróć domyślne",
-      "stepsResetConfirm": "Zastąpić wszystkie e-maile domyślną sekwencją?"
+      "stepsResetConfirm": "Zastąpić wszystkie e-maile domyślną sekwencją?",
+      "codeNotLiveTitle": "Ta kampania nie ma działającego kodu oferty.",
+      "codeNotLiveBody": "Jej kupon jest wyłączony lub wygasł, więc te e-maile wychodzą bez rabatu. Włącz kod ponownie w Promocje i kupony.",
+      "audienceTitle": "Komu Autopilot wysyła oferty",
+      "audienceSkipping": "Wszyscy, którzy spełniają wyzwalacz kampanii — z wyjątkiem członków, którzy mają już ceny klubowe. Obecnie {count} w {groups}.",
+      "audienceNoClubs": "Wszyscy, którzy spełniają wyzwalacz kampanii. Aby wykluczyć klub VIP, otwórz grupę klientów i zaznacz „Członkowie mają już ceny klubowe”.",
+      "audienceManage": "Zarządzaj grupami klientów",
+      "vipModeTitle": "Członkowie klubu",
+      "vipModeDesc": "Co członkowie grupy z cenami klubowymi otrzymują z tej kampanii.",
+      "vipMode_offer_label": "Tak jak wszyscy",
+      "vipMode_offer_desc": "Oni też dostają ofertę",
+      "vipMode_no_offer_label": "E-mail bez kodu",
+      "vipMode_no_offer_desc": "Tylko przypomnienie — ceny klubowe już działają",
+      "vipMode_skip_label": "Nie wysyłaj e-maila",
+      "vipMode_skip_desc": "Pomijani w tej kampanii"
     },
     "marketplaceSettings": {
       "pageTitle": "Listing w Marketplace",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Nie udało się wysłać powitalnego e-maila.",
       "welcomeSent": "{count, plural, =0 {Nie wysłano żadnych e-maili} one {Wysłano powitanie do # członka} few {Wysłano powitanie do # członków} many {Wysłano powitanie do # członków} other {Wysłano powitanie do # członka}}",
       "sendWelcomeToMember": "Wyślij powitalny e-mail do tego członka",
-      "welcomeOneConfirm": "Wysłać powitalny e-mail na adres {email}?"
+      "welcomeOneConfirm": "Wysłać powitalny e-mail na adres {email}?",
+      "autopilotCardTitle": "Automatyczny marketing",
+      "autopilotHelp": "Autopilot sam wysyła e-maile odzyskujące klientów, zachęcające do drugiego zamówienia i przypominające o porzuconym koszyku. Członkowie tej grupy mają już Twoje ceny klubowe, więc prawdopodobnie nie chcesz, aby Autopilot oferował im jeszcze dodatkowy rabat.",
+      "autopilotSkipLabel": "Członkowie mają już ceny klubowe",
+      "autopilotSkipDesc": "Autopilot nie przekaże członkom tej grupy dodatkowego kodu rabatowego. Nikt nie zostaje usunięty z grupy ani wypisany z subskrypcji, a Twoje oferty dla członków i stawki nagród pozostają bez zmian.",
+      "autopilotSkipActive": "Wybierz na stronie Autopilot, co ci członkowie otrzymają z każdej kampanii.",
+      "autopilotSkipLink": "Otwórz Autopilot"
     },
     "rewards": {
       "title": "Złotówki za zakupy",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Zaplanowane na {time}",
       "paidWithReward": "Zapłacono za pomocą {label}",
       "earnedReward": "Zdobyto {label}",
-      "rewardDefaultName": "Złotówki za zakupy"
+      "rewardDefaultName": "Złotówki za zakupy",
+      "paymentNotCompleted": "Płatność nie została zakończona",
+      "paymentNotCompletedBody": "{restaurantName} nie otrzymał tego zamówienia, ponieważ płatność nie została zakończona. Nie pobraliśmy żadnych środków — każda kwota zablokowana na karcie zostanie zwolniona automatycznie.",
+      "paymentNotCompletedPaidAlready": "Już zapłacono? Odczekaj chwilę i odśwież tę stronę — płatności potwierdzamy automatycznie. Jeśli komunikat nadal się wyświetla, skontaktuj się z {restaurantName} i podaj numer zamówienia {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Brak klucza API Google Maps — ustaw go w Panelu → Ustawienia mapy.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Nieprawidłowy link do płatności.",
       "completePayment": "Dokończ płatność",
       "orderReserved": "Twoje zamówienie jest zarezerwowane podczas płatności",
-      "securedByStripe": "Zabezpieczone przez Stripe. Nigdy nie przechowujemy danych Twojej karty."
+      "securedByStripe": "Zabezpieczone przez Stripe. Nigdy nie przechowujemy danych Twojej karty.",
+      "preparingPayment": "Przygotowywanie bezpiecznej płatności…",
+      "couldNotStartPayment": "Nie udało się rozpocząć płatności za to zamówienie. Wróć i spróbuj ponownie.",
+      "backToRestaurant": "Wróć do restauracji"
     },
     "paymentPage": {
       "loading": "Ładowanie…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Otrzymujesz tę wiadomość, ponieważ jesteś klientem {name}.",
       "deleteData": "Usuń moje dane osobowe"
+    },
+    "memberPerk": {
+      "title": "Twoje ceny członkowskie",
+      "body": "Jesteś członkiem {group}, więc Twoje ceny członkowskie są stosowane automatycznie przy zamówieniu — bez kodu."
     }
   },
   "dataRequest": {

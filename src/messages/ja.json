@@ -2672,7 +2672,9 @@
         "payment_reward": "支払い方法リワード",
         "free_dish_meal": "食事の一部として無料の一品"
       },
-      "campaignFallback": "キャンペーン"
+      "campaignFallback": "キャンペーン",
+      "titleCampaignLocked": "このコードは実行中の Autopilot キャンペーンがメールで配信しています。停止するには、マーケティング → Autopilot でキャンペーンをオフにしてください。",
+      "toggleFailed": "このプロモーションを変更できませんでした。もう一度お試しください。"
     },
     "promoWizard": {
       "errorPickType": "続けるにはプロモーションタイプを選択してください。",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "メールを少なくとも1通追加してください。",
       "stepsHint": "各メールは前回の注文からさらに時間を空けて、それぞれの割引付きで送信されます。お客様が再度注文するとシーケンスは自動的に停止します。",
       "stepsReset": "デフォルトに戻す",
-      "stepsResetConfirm": "すべてのメールを既定のシーケンスに置き換えますか？"
+      "stepsResetConfirm": "すべてのメールを既定のシーケンスに置き換えますか？",
+      "codeNotLiveTitle": "このキャンペーンには有効なクーポンコードがありません。",
+      "codeNotLiveBody": "クーポンがオフまたは期限切れのため、これらのメールは割引なしで送信されます。「プロモーションとクーポン」でコードを再度オンにしてください。",
+      "audienceTitle": "Autopilot のオファーを受け取る人",
+      "audienceSkipping": "キャンペーンの条件に一致するお客様全員 — ただし、すでに会員価格が適用されているメンバーは除きます。現在 {groups} に {count} 人。",
+      "audienceNoClubs": "キャンペーンの条件に一致するお客様全員。VIP クラブを対象から外すには、顧客グループを開いて「メンバーはすでに会員価格が適用済み」にチェックを入れてください。",
+      "audienceManage": "顧客グループを管理",
+      "vipModeTitle": "クラブ会員",
+      "vipModeDesc": "会員価格が適用されているグループのメンバーが、このキャンペーンで受け取る内容です。",
+      "vipMode_offer_label": "全員と同じ",
+      "vipMode_offer_desc": "オファーも受け取ります",
+      "vipMode_no_offer_label": "メールのみ、コードなし",
+      "vipMode_no_offer_desc": "お知らせのみ — 会員価格はすでに適用済み",
+      "vipMode_skip_label": "メールを送らない",
+      "vipMode_skip_desc": "このキャンペーンでは対象外"
     },
     "marketplaceSettings": {
       "pageTitle": "マーケットプレイス掲載",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "ウェルカムメールを送信できませんでした。",
       "welcomeSent": "{count, plural, =0 {メールは送信されませんでした} other {#人のメンバーにウェルカムメールを送信しました}}",
       "sendWelcomeToMember": "このメンバーにウェルカムメールを送信",
-      "welcomeOneConfirm": "{email} にウェルカムメールを送信しますか？"
+      "welcomeOneConfirm": "{email} にウェルカムメールを送信しますか？",
+      "autopilotCardTitle": "自動マーケティング",
+      "autopilotHelp": "Autopilot は、掘り起こし、2回目の注文の促進、カート放棄のメールを自動で送信します。このグループのメンバーにはすでに会員価格が適用されているため、Autopilot からさらに割引を出したくない場合がほとんどです。",
+      "autopilotSkipLabel": "メンバーはすでに会員価格が適用済み",
+      "autopilotSkipDesc": "Autopilot はこのグループのメンバーに追加の割引コードを配布しません。グループからの削除や配信停止は行われず、会員限定特典や還元率もそのままです。",
+      "autopilotSkipActive": "これらのメンバーが各キャンペーンで受け取る内容は、Autopilot ページで選べます。",
+      "autopilotSkipLink": "Autopilot を開く"
     },
     "rewards": {
       "title": "リワードドル",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "{time} にご予約",
       "paidWithReward": "{label}で支払い",
       "earnedReward": "{label}を獲得しました",
-      "rewardDefaultName": "リワードドル"
+      "rewardDefaultName": "リワードドル",
+      "paymentNotCompleted": "お支払いが完了していません",
+      "paymentNotCompletedBody": "お支払いが完了しなかったため、{restaurantName}にこのご注文は届いていません。請求は発生していません。カードで確保された金額は自動的に解除されます。",
+      "paymentNotCompletedPaidAlready": "すでにお支払い済みですか？少し待ってからこのページを再読み込みしてください。お支払いは自動で確認されます。それでもこの表示が続く場合は、注文番号 {orderNumber} をお伝えのうえ{restaurantName}までご連絡ください。"
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps APIキーがありません。管理画面 → マップ設定で設定してください。",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "無効な支払いリンクです。",
       "completePayment": "お支払いを完了する",
       "orderReserved": "お支払い中は注文を確保しています",
-      "securedByStripe": "Stripeで保護されています。カード情報は保存されません。"
+      "securedByStripe": "Stripeで保護されています。カード情報は保存されません。",
+      "preparingPayment": "安全なお支払いを準備しています…",
+      "couldNotStartPayment": "このご注文のお支払いを開始できませんでした。前の画面に戻ってもう一度お試しください。",
+      "backToRestaurant": "レストランに戻る"
     },
     "paymentPage": {
       "loading": "読み込み中…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "このメールは、あなたが{name}のお客様であるためお送りしています。",
       "deleteData": "個人データを削除する"
+    },
+    "memberPerk": {
+      "title": "お客様の会員価格",
+      "body": "お客様は {group} の会員です。ご注文時に会員価格が自動で適用されます — コードは必要ありません。"
     }
   },
   "dataRequest": {

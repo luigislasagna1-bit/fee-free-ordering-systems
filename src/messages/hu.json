@@ -2615,7 +2615,9 @@
         "payment_reward": "Jutalom fizetési módért",
         "free_dish_meal": "Ingyenes fogás egy étkezés részeként"
       },
-      "campaignFallback": "Kampány"
+      "campaignFallback": "Kampány",
+      "titleCampaignLocked": "Ezt a kódot egy futó Autopilot kampány küldi e-mailben. A visszavonásához kapcsolja ki a kampányt a Marketing → Autopilot menüpontban.",
+      "toggleFailed": "Az akciót nem sikerült módosítani. Próbálja újra."
     },
     "promoWizard": {
       "errorPickType": "Válasszon promóciótípust a folytatáshoz.",
@@ -3116,7 +3118,21 @@
       "stepsNeedOne": "Adjon hozzá legalább egy e-mailt.",
       "stepsHint": "Minden e-mail később megy ki az utolsó rendeléshez képest, saját kedvezménnyel. A sorozat automatikusan leáll, amint újra rendelnek.",
       "stepsReset": "Alapértékek visszaállítása",
-      "stepsResetConfirm": "Lecseréli az összes e-mailt az alapértelmezett sorozatra?"
+      "stepsResetConfirm": "Lecseréli az összes e-mailt az alapértelmezett sorozatra?",
+      "codeNotLiveTitle": "Ennek a kampánynak nincs működő ajánlatkódja.",
+      "codeNotLiveBody": "A kuponja ki van kapcsolva vagy lejárt, így ezek az e-mailek kedvezmény nélkül mennek ki. Kapcsolja vissza a kódot az Akciók és kuponok alatt.",
+      "audienceTitle": "Ki kap Autopilot-ajánlatokat",
+      "audienceSkipping": "Mindenki, aki megfelel egy kampánykiváltónak — kivéve azokat a tagokat, akik már klubárat kapnak. Jelenleg {count} fő itt: {groups}.",
+      "audienceNoClubs": "Mindenki, aki megfelel egy kampánykiváltónak. Ha vissza szeretne tartani egy VIP-klubot, nyisson meg egy ügyfélcsoportot, és jelölje be a „A tagok már klubárat kapnak” lehetőséget.",
+      "audienceManage": "Ügyfélcsoportok kezelése",
+      "vipModeTitle": "Klubtagok",
+      "vipModeDesc": "Mit kapnak ebből a kampányból a klubáras csoport tagjai.",
+      "vipMode_offer_label": "Mint mindenki más",
+      "vipMode_offer_desc": "Ők is megkapják az ajánlatot",
+      "vipMode_no_offer_label": "E-mail, extra kód nélkül",
+      "vipMode_no_offer_desc": "Csak emlékeztető — a klubáraik már érvényesek",
+      "vipMode_skip_label": "Ne kapjanak e-mailt",
+      "vipMode_skip_desc": "Ez a kampány kihagyja őket"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace listázás",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Nem sikerült elküldeni az üdvözlő e-mailt.",
       "welcomeSent": "{count, plural, =0 {Nem lett e-mail elküldve} one {Üdvözlő e-mail elküldve # tagnak} other {Üdvözlő e-mail elküldve # tagnak}}",
       "sendWelcomeToMember": "Üdvözlő e-mail küldése ennek a tagnak",
-      "welcomeOneConfirm": "Elküldi az üdvözlő e-mailt a(z) {email} címre?"
+      "welcomeOneConfirm": "Elküldi az üdvözlő e-mailt a(z) {email} címre?",
+      "autopilotCardTitle": "Automatikus marketing",
+      "autopilotHelp": "Az Autopilot magától küld visszanyerő, második rendelést ösztönző és elhagyott kosaras e-maileket. Ennek a csoportnak a tagjai már az Ön klubárait kapják, ezért valószínűleg nem szeretné, hogy az Autopilot még egy kedvezményt is kínáljon nekik.",
+      "autopilotSkipLabel": "A tagok már klubárat kapnak",
+      "autopilotSkipDesc": "Az Autopilot nem ad extra kedvezménykódot ennek a csoportnak a tagjainak. Senkit nem távolít el a csoportból és senkit nem iratkoztat le, a tagsági ajánlatai és a gyűjtési arányai pedig érintetlenek maradnak.",
+      "autopilotSkipActive": "Az Autopilot oldalon adhatja meg, hogy ezek a tagok mit kapjanak az egyes kampányokból.",
+      "autopilotSkipLink": "Autopilot megnyitása"
     },
     "rewards": {
       "title": "Jutalomdollár",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Időpontra ütemezve: {time}",
       "paidWithReward": "Fizetve ezzel: {label}",
       "earnedReward": "{label} jóváírva",
-      "rewardDefaultName": "Jutalomdollár"
+      "rewardDefaultName": "Jutalomdollár",
+      "paymentNotCompleted": "A fizetés nem fejeződött be",
+      "paymentNotCompletedBody": "A(z) {restaurantName} nem kapta meg ezt a rendelést, mert a fizetés nem fejeződött be. Nem terheltünk meg — a kártyán zárolt összeg automatikusan felszabadul.",
+      "paymentNotCompletedPaidAlready": "Már fizetett? Várjon egy pillanatot, és frissítse az oldalt — a fizetéseket automatikusan megerősítjük. Ha továbbra is ezt látja, keresse a(z) {restaurantName} éttermet, és adja meg a(z) {orderNumber} rendelésszámot."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Hiányzik a Google Maps API-kulcs – add meg az Admin → Térképbeállítások menüben.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Érvénytelen fizetési link.",
       "completePayment": "Fizetés befejezése",
       "orderReserved": "A rendelésedet fenntartottuk a fizetés idejére",
-      "securedByStripe": "Stripe-védelemmel ellátva. Kártyaadataidat soha nem tároljuk."
+      "securedByStripe": "Stripe-védelemmel ellátva. Kártyaadataidat soha nem tároljuk.",
+      "preparingPayment": "Biztonságos fizetés előkészítése…",
+      "couldNotStartPayment": "Nem tudtuk elindítani a fizetést ehhez a rendeléshez. Lépjen vissza, és próbálja újra.",
+      "backToRestaurant": "Vissza az étteremhez"
     },
     "paymentPage": {
       "loading": "Betöltés…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Azért kapja ezt az e-mailt, mert Ön a(z) {name} vásárlója.",
       "deleteData": "Személyes adataim törlése"
+    },
+    "memberPerk": {
+      "title": "Az Ön tagsági árai",
+      "body": "Ön {group} tag, ezért rendeléskor automatikusan a tagsági árai érvényesek — nincs szükség kódra."
     }
   },
   "dataRequest": {

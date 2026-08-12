@@ -2672,7 +2672,9 @@
         "payment_reward": "Recompensa per mètode de pagament",
         "free_dish_meal": "Plat gratis com a part d'un àpat"
       },
-      "campaignFallback": "Campanya"
+      "campaignFallback": "Campanya",
+      "titleCampaignLocked": "Una campanya d'Autopilot activa està enviant aquest codi per correu. Desactiva la campanya a Màrqueting → Autopilot per retirar-lo.",
+      "toggleFailed": "No s'ha pogut canviar aquesta promoció. Torna-ho a provar."
     },
     "promoWizard": {
       "errorPickType": "Trieu un tipus de promoció per continuar.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Afegeix almenys un correu.",
       "stepsHint": "Cada correu s'envia més tard després de la seva última comanda, amb el seu propi descompte. La seqüència s'atura automàticament en el moment que tornen a demanar.",
       "stepsReset": "Restableix els valors predeterminats",
-      "stepsResetConfirm": "Vols substituir tots els correus per la seqüència predeterminada?"
+      "stepsResetConfirm": "Vols substituir tots els correus per la seqüència predeterminada?",
+      "codeNotLiveTitle": "Aquesta campanya no té cap codi d'oferta que funcioni.",
+      "codeNotLiveBody": "El seu cupó està desactivat o caducat, així que aquests correus surten sense descompte. Torna a activar el codi a Promocions i cupons.",
+      "audienceTitle": "Qui rep les ofertes d'Autopilot",
+      "audienceSkipping": "Tothom qui activa una campanya — excepte els membres que ja tenen preus de club. Ara mateix, {count} a {groups}.",
+      "audienceNoClubs": "Tothom qui activa una campanya. Per deixar fora un club VIP, obriu un grup de clients i marqueu «Els membres ja tenen preus de club».",
+      "audienceManage": "Gestiona els grups de clients",
+      "vipModeTitle": "Membres del club",
+      "vipModeDesc": "Què reben d'aquesta campanya els membres d'un grup amb preus de club.",
+      "vipMode_offer_label": "Igual que tothom",
+      "vipMode_offer_desc": "També reben l'oferta",
+      "vipMode_no_offer_label": "Correu, sense codi",
+      "vipMode_no_offer_desc": "Només recordatori — els seus preus de club ja s'apliquen",
+      "vipMode_skip_label": "Sense correu",
+      "vipMode_skip_desc": "Exclosos d'aquesta campanya"
     },
     "marketplaceSettings": {
       "pageTitle": "Llistat al Marketplace",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "No s'ha pogut enviar el correu de benvinguda.",
       "welcomeSent": "{count, plural, =0 {No s'ha enviat cap correu} one {S'ha enviat la benvinguda a # membre} other {S'ha enviat la benvinguda a # membres}}",
       "sendWelcomeToMember": "Envia el correu de benvinguda a aquest membre",
-      "welcomeOneConfirm": "Vols enviar el correu de benvinguda a {email}?"
+      "welcomeOneConfirm": "Vols enviar el correu de benvinguda a {email}?",
+      "autopilotCardTitle": "Màrqueting automàtic",
+      "autopilotHelp": "Autopilot envia pel seu compte els correus de recuperació, de segona comanda i de carret abandonat. Els membres d'aquest grup ja tenen els vostres preus de club, així que segurament no voleu que Autopilot els ofereixi un altre descompte a sobre.",
+      "autopilotSkipLabel": "Els membres ja tenen preus de club",
+      "autopilotSkipDesc": "Autopilot no donarà cap codi de descompte extra als membres d'aquest grup. No s'elimina ningú del grup ni se'l dona de baixa, i les vostres ofertes per a membres i les taxes de recompensa queden intactes.",
+      "autopilotSkipActive": "Trieu què reben aquests membres de cada campanya a la pàgina d'Autopilot.",
+      "autopilotSkipLink": "Obre Autopilot"
     },
     "rewards": {
       "title": "Dòlars de Recompensa",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Programada per a {time}",
       "paidWithReward": "Pagat amb {label}",
       "earnedReward": "Has guanyat {label}",
-      "rewardDefaultName": "Dòlars de Recompensa"
+      "rewardDefaultName": "Dòlars de Recompensa",
+      "paymentNotCompleted": "Pagament no completat",
+      "paymentNotCompletedBody": "{restaurantName} no ha rebut aquesta comanda perquè el pagament no s'ha completat. No se t'ha cobrat res: qualsevol import retingut a la teva targeta s'allibera automàticament.",
+      "paymentNotCompletedPaidAlready": "Ja has pagat? Espera un moment i actualitza aquesta pàgina: confirmem els pagaments automàticament. Si continua apareixent això, contacta amb {restaurantName} i indica el número de comanda {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Falta la clau de l'API de Google Maps — configura-la a Admin → Configuració del mapa.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Enllaç de pagament no vàlid.",
       "completePayment": "Completar el pagament",
       "orderReserved": "La teva comanda està reservada mentre pagues",
-      "securedByStripe": "Protegit per Stripe. Mai emmagatzemem les dades de la teva targeta."
+      "securedByStripe": "Protegit per Stripe. Mai emmagatzemem les dades de la teva targeta.",
+      "preparingPayment": "Preparant el pagament segur…",
+      "couldNotStartPayment": "No hem pogut iniciar el pagament d'aquesta comanda. Torna enrere i prova-ho de nou.",
+      "backToRestaurant": "Torna al restaurant"
     },
     "paymentPage": {
       "loading": "Carregant…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Reps aquest correu electrònic perquè ets client de {name}.",
       "deleteData": "Suprimeix les meves dades personals"
+    },
+    "memberPerk": {
+      "title": "Els vostres preus de membre",
+      "body": "Sou membre de {group}, així que els vostres preus de membre ja s'apliquen quan feu la comanda — sense cap codi."
     }
   },
   "dataRequest": {

@@ -2672,7 +2672,9 @@
         "payment_reward": "Nagrada za način plaćanja",
         "free_dish_meal": "Besplatno jelo kao deo obroka"
       },
-      "campaignFallback": "Kampanja"
+      "campaignFallback": "Kampanja",
+      "titleCampaignLocked": "Ovaj kod e-poštom šalje aktivna Autopilot kampanja. Isključite kampanju u Marketing → Autopilot da biste ga povukli.",
+      "toggleFailed": "Promociju nije bilo moguće promeniti. Pokušajte ponovo."
     },
     "promoWizard": {
       "errorPickType": "Odaberite vrstu promocije za nastavak.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Додајте барем један имејл.",
       "stepsHint": "Сваки имејл се шаље касније у односу на њихову последњу поруџбину, са сопственим попустом. Низ се аутоматски зауставља чим поново наруче.",
       "stepsReset": "Врати подразумевано",
-      "stepsResetConfirm": "Заменити све имејлове подразумеваним низом?"
+      "stepsResetConfirm": "Заменити све имејлове подразумеваним низом?",
+      "codeNotLiveTitle": "Ova kampanja nema ispravan kod ponude.",
+      "codeNotLiveBody": "Njen kupon je isključen ili je istekao pa ovi mejlovi odlaze bez popusta. Ponovo uključite kod u Promocije i kuponi.",
+      "audienceTitle": "Kome Autopilot šalje ponude",
+      "audienceSkipping": "Svi koji odgovaraju okidaču kampanje — osim članova koji već imaju klupske cene. Trenutno {count} u {groups}.",
+      "audienceNoClubs": "Svi koji odgovaraju okidaču kampanje. Da izuzmete VIP klub, otvorite grupu kupaca i označite „Članovi već imaju klupske cene“.",
+      "audienceManage": "Upravljanje grupama kupaca",
+      "vipModeTitle": "Članovi kluba",
+      "vipModeDesc": "Šta iz ove kampanje dobijaju članovi grupe sa klupskim cenama.",
+      "vipMode_offer_label": "Isto kao svi",
+      "vipMode_offer_desc": "I oni dobijaju ponudu",
+      "vipMode_no_offer_label": "Email bez koda",
+      "vipMode_no_offer_desc": "Samo podsetnik — klupske cene već važe",
+      "vipMode_skip_label": "Ne šalji im email",
+      "vipMode_skip_desc": "Ova kampanja ih preskače"
     },
     "marketplaceSettings": {
       "pageTitle": "Listing na Marketplace-u",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Slanje e-pošte dobrodošlice nije uspelo.",
       "welcomeSent": "{count, plural, =0 {Nijedna e-poruka nije poslata} one {Dobrodošlica poslata # članu} few {Dobrodošlica poslata # članovima} other {Dobrodošlica poslata # članovima}}",
       "sendWelcomeToMember": "Pošalji e-poštu dobrodošlice ovom članu",
-      "welcomeOneConfirm": "Poslati e-poštu dobrodošlice na {email}?"
+      "welcomeOneConfirm": "Poslati e-poštu dobrodošlice na {email}?",
+      "autopilotCardTitle": "Automatski marketing",
+      "autopilotHelp": "Autopilot sam šalje email poruke za vraćanje kupaca, za drugu porudžbinu i za napuštenu korpu. Članovi ove grupe već imaju vaše klupske cene, pa verovatno ne želite da im Autopilot nudi još i dodatni popust.",
+      "autopilotSkipLabel": "Članovi već imaju klupske cene",
+      "autopilotSkipDesc": "Autopilot članovima ove grupe neće dati dodatni kod za popust. Niko se ne uklanja iz grupe niti se odjavljuje sa liste, a vaše ponude za članove i stope nagrada ostaju nepromenjene.",
+      "autopilotSkipActive": "Na stranici Autopilot izaberite šta ovi članovi dobijaju iz svake kampanje.",
+      "autopilotSkipLink": "Otvori Autopilot"
     },
     "rewards": {
       "title": "Nagradni bodovi",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Zakazano za {time}",
       "paidWithReward": "Плаћено са {label}",
       "earnedReward": "Зарадили сте {label}",
-      "rewardDefaultName": "Nagradni bodovi"
+      "rewardDefaultName": "Nagradni bodovi",
+      "paymentNotCompleted": "Plaćanje nije završeno",
+      "paymentNotCompletedBody": "{restaurantName} nije primio ovu narudžbinu jer plaćanje nije završeno. Ništa vam nije naplaćeno — svaki iznos rezervisan na kartici automatski se oslobađa.",
+      "paymentNotCompletedPaidAlready": "Već ste platili? Sačekajte trenutak i osvežite ovu stranicu — plaćanja potvrđujemo automatski. Ako se poruka i dalje prikazuje, kontaktirajte {restaurantName} i navedite broj narudžbine {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Nedostaje API ključ za Google Maps — podesite ga u Admin → Podešavanja mape.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Nevažeći link za plaćanje.",
       "completePayment": "Završi plaćanje",
       "orderReserved": "Vaša narudžbina je rezervisana dok plaćate",
-      "securedByStripe": "Zaštićeno od strane Stripe. Nikada ne čuvamo podatke vaše kartice."
+      "securedByStripe": "Zaštićeno od strane Stripe. Nikada ne čuvamo podatke vaše kartice.",
+      "preparingPayment": "Priprema bezbednog plaćanja…",
+      "couldNotStartPayment": "Nismo mogli da pokrenemo plaćanje za ovu narudžbinu. Vratite se i pokušajte ponovo.",
+      "backToRestaurant": "Nazad na restoran"
     },
     "paymentPage": {
       "loading": "Učitavanje…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Примате овај имејл зато што сте купац код {name}.",
       "deleteData": "Обриши моје личне податке"
+    },
+    "memberPerk": {
+      "title": "Vaše članske cene",
+      "body": "Član ste {group}, pa se vaše članske cene primenjuju automatski pri poručivanju — kod nije potreban."
     }
   },
   "dataRequest": {

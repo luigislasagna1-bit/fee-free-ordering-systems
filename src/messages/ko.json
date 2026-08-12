@@ -2672,7 +2672,9 @@
         "payment_reward": "결제 수단 리워드",
         "free_dish_meal": "식사의 일부로 무료 요리"
       },
-      "campaignFallback": "캠페인"
+      "campaignFallback": "캠페인",
+      "titleCampaignLocked": "이 코드는 실행 중인 Autopilot 캠페인이 이메일로 발송하고 있습니다. 중단하려면 마케팅 → Autopilot에서 캠페인을 끄세요.",
+      "toggleFailed": "이 프로모션을 변경하지 못했습니다. 다시 시도해 주세요."
     },
     "promoWizard": {
       "errorPickType": "계속하려면 프로모션 유형을 선택하세요.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "이메일을 최소 하나 추가하세요.",
       "stepsHint": "각 이메일은 마지막 주문에서 더 시간이 지난 뒤 각자의 할인과 함께 발송됩니다. 고객이 다시 주문하는 순간 시퀀스가 자동으로 중단됩니다.",
       "stepsReset": "기본값으로 재설정",
-      "stepsResetConfirm": "모든 이메일을 기본 시퀀스로 바꿀까요?"
+      "stepsResetConfirm": "모든 이메일을 기본 시퀀스로 바꿀까요?",
+      "codeNotLiveTitle": "이 캠페인에는 사용 가능한 할인 코드가 없습니다.",
+      "codeNotLiveBody": "쿠폰이 꺼져 있거나 만료되어 이 이메일은 할인 없이 발송됩니다. 프로모션 및 쿠폰에서 코드를 다시 켜세요.",
+      "audienceTitle": "Autopilot 혜택을 받는 대상",
+      "audienceSkipping": "캠페인 조건에 해당하는 모든 고객 — 이미 회원가를 적용받는 구성원은 제외합니다. 현재 {groups}에 {count}명.",
+      "audienceNoClubs": "캠페인 조건에 해당하는 모든 고객. VIP 클럽을 제외하려면 고객 그룹을 열고 “구성원이 이미 회원가를 적용받음”에 체크하세요.",
+      "audienceManage": "고객 그룹 관리",
+      "vipModeTitle": "클럽 회원",
+      "vipModeDesc": "회원가가 적용된 그룹의 구성원이 이 캠페인에서 받는 내용입니다.",
+      "vipMode_offer_label": "모두와 동일",
+      "vipMode_offer_desc": "혜택도 함께 받음",
+      "vipMode_no_offer_label": "이메일만, 코드 없음",
+      "vipMode_no_offer_desc": "알림만 — 회원가는 이미 적용됨",
+      "vipMode_skip_label": "이메일 보내지 않기",
+      "vipMode_skip_desc": "이 캠페인에서 제외"
     },
     "marketplaceSettings": {
       "pageTitle": "마켓플레이스 등록",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "환영 이메일을 보내지 못했습니다.",
       "welcomeSent": "{count, plural, =0 {보낸 이메일 없음} other {구성원 #명에게 환영 이메일을 보냈습니다}}",
       "sendWelcomeToMember": "이 구성원에게 환영 이메일 보내기",
-      "welcomeOneConfirm": "{email}에게 환영 이메일을 보낼까요?"
+      "welcomeOneConfirm": "{email}에게 환영 이메일을 보낼까요?",
+      "autopilotCardTitle": "자동 마케팅",
+      "autopilotHelp": "Autopilot은 재방문 유도, 두 번째 주문, 장바구니 이탈 이메일을 알아서 발송합니다. 이 그룹의 구성원은 이미 회원가를 적용받고 있으므로, Autopilot이 여기에 할인까지 더 얹는 것은 원하지 않으실 가능성이 큽니다.",
+      "autopilotSkipLabel": "구성원이 이미 회원가를 적용받음",
+      "autopilotSkipDesc": "Autopilot이 이 그룹의 구성원에게 추가 할인 코드를 주지 않습니다. 그룹에서 빠지거나 수신 거부되는 사람은 없으며, 회원 전용 혜택과 적립률도 그대로입니다.",
+      "autopilotSkipActive": "이 구성원들이 각 캠페인에서 무엇을 받을지는 Autopilot 페이지에서 선택하세요.",
+      "autopilotSkipLink": "Autopilot 열기"
     },
     "rewards": {
       "title": "리워드 달러",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "{time}에 예약됨",
       "paidWithReward": "{label}(으)로 결제",
       "earnedReward": "{label}을(를) 적립했습니다",
-      "rewardDefaultName": "리워드 달러"
+      "rewardDefaultName": "리워드 달러",
+      "paymentNotCompleted": "결제가 완료되지 않았습니다",
+      "paymentNotCompletedBody": "결제가 완료되지 않아 {restaurantName}에 이 주문이 전달되지 않았습니다. 요금은 청구되지 않았으며, 카드에 승인된 금액은 자동으로 취소됩니다.",
+      "paymentNotCompletedPaidAlready": "이미 결제하셨나요? 잠시 기다린 후 이 페이지를 새로고침해 주세요. 결제는 자동으로 확인됩니다. 계속 이 화면이 표시되면 주문번호 {orderNumber}와 함께 {restaurantName}에 문의해 주세요."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API 키가 없습니다 — 관리자 → 지도 설정에서 등록해 주세요.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "유효하지 않은 결제 링크입니다.",
       "completePayment": "결제 완료",
       "orderReserved": "결제하는 동안 주문이 예약 유지됩니다",
-      "securedByStripe": "Stripe로 안전하게 보호됩니다. 카드 정보는 저장되지 않습니다."
+      "securedByStripe": "Stripe로 안전하게 보호됩니다. 카드 정보는 저장되지 않습니다.",
+      "preparingPayment": "안전한 결제를 준비하고 있습니다…",
+      "couldNotStartPayment": "이 주문의 결제를 시작할 수 없습니다. 이전 화면으로 돌아가 다시 시도해 주세요.",
+      "backToRestaurant": "레스토랑으로 돌아가기"
     },
     "paymentPage": {
       "loading": "로딩 중…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "이 이메일은 회원님이 {name}의 고객이시기 때문에 발송되었습니다.",
       "deleteData": "내 개인정보 삭제"
+    },
+    "memberPerk": {
+      "title": "회원님의 회원가",
+      "body": "{group} 회원이시라 주문하실 때 회원가가 이미 적용됩니다 — 코드는 필요 없습니다."
     }
   },
   "dataRequest": {

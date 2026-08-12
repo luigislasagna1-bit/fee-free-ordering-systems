@@ -2672,7 +2672,9 @@
         "payment_reward": "Belöning för betalningsmetod",
         "free_dish_meal": "Gratis rätt som del av en måltid"
       },
-      "campaignFallback": "Kampanj"
+      "campaignFallback": "Kampanj",
+      "titleCampaignLocked": "Den här koden mejlas ut av en pågående Autopilot-kampanj. Stäng av kampanjen under Marknadsföring → Autopilot för att dra tillbaka den.",
+      "toggleFailed": "Kunde inte ändra erbjudandet. Försök igen."
     },
     "promoWizard": {
       "errorPickType": "Välj en kampanjtyp för att fortsätta.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Lägg till minst ett e-postmeddelande.",
       "stepsHint": "Varje e-post skickas längre efter deras senaste beställning, med en egen rabatt. Sekvensen stoppas automatiskt så snart de beställer igen.",
       "stepsReset": "Återställ standard",
-      "stepsResetConfirm": "Ersätt alla e-postmeddelanden med standardsekvensen?"
+      "stepsResetConfirm": "Ersätt alla e-postmeddelanden med standardsekvensen?",
+      "codeNotLiveTitle": "Den här kampanjen har ingen fungerande erbjudandekod.",
+      "codeNotLiveBody": "Kupongen är avstängd eller har gått ut, så mejlen skickas utan rabatt. Slå på koden igen under Erbjudanden och kuponger.",
+      "audienceTitle": "Vem som får Autopilot-erbjudanden",
+      "audienceSkipping": "Alla som matchar en kampanjutlösare — utom medlemmar som redan har klubbpriser. Just nu {count} i {groups}.",
+      "audienceNoClubs": "Alla som matchar en kampanjutlösare. Vill du undanta en VIP-klubb öppnar du en kundgrupp och kryssar i ”Medlemmarna får redan klubbpriser”.",
+      "audienceManage": "Hantera kundgrupper",
+      "vipModeTitle": "Klubbmedlemmar",
+      "vipModeDesc": "Vad medlemmar i en grupp med klubbpriser får från den här kampanjen.",
+      "vipMode_offer_label": "Samma som alla",
+      "vipMode_offer_desc": "De får erbjudandet också",
+      "vipMode_no_offer_label": "Mejl, ingen extra kod",
+      "vipMode_no_offer_desc": "Bara påminnelse — deras klubbpriser gäller redan",
+      "vipMode_skip_label": "Mejla dem inte",
+      "vipMode_skip_desc": "Hoppas över av den här kampanjen"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-annons",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Det gick inte att skicka välkomstmejlet.",
       "welcomeSent": "{count, plural, =0 {Inga mejl skickade} one {Välkomstmejl skickat till # medlem} other {Välkomstmejl skickat till # medlemmar}}",
       "sendWelcomeToMember": "Skicka välkomstmejlet till den här medlemmen",
-      "welcomeOneConfirm": "Skicka välkomstmejlet till {email}?"
+      "welcomeOneConfirm": "Skicka välkomstmejlet till {email}?",
+      "autopilotCardTitle": "Automatisk marknadsföring",
+      "autopilotHelp": "Autopilot skickar på egen hand e-post för att vinna tillbaka kunder, för andra beställningen och för övergivna varukorgar. Medlemmarna i den här gruppen får redan dina klubbpriser, så du vill förmodligen inte att Autopilot erbjuder dem ytterligare en rabatt ovanpå det.",
+      "autopilotSkipLabel": "Medlemmarna får redan klubbpriser",
+      "autopilotSkipDesc": "Autopilot ger inte den här gruppens medlemmar någon extra rabattkod. Ingen tas bort från gruppen eller avregistreras, och dina medlemserbjudanden och bonusnivåer påverkas inte.",
+      "autopilotSkipActive": "Välj på Autopilot-sidan vad de här medlemmarna ska få från varje kampanj.",
+      "autopilotSkipLink": "Öppna Autopilot"
     },
     "rewards": {
       "title": "Bonuspengar",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Schemalagd för {time}",
       "paidWithReward": "Betalat med {label}",
       "earnedReward": "Du tjänade {label}",
-      "rewardDefaultName": "Bonuspengar"
+      "rewardDefaultName": "Bonuspengar",
+      "paymentNotCompleted": "Betalningen slutfördes inte",
+      "paymentNotCompletedBody": "{restaurantName} har inte fått den här beställningen eftersom betalningen inte slutfördes. Du har inte debiterats — eventuellt reserverat belopp på ditt kort frisläpps automatiskt.",
+      "paymentNotCompletedPaidAlready": "Har du redan betalat? Vänta en stund och uppdatera sidan — vi bekräftar betalningar automatiskt. Om det här fortfarande visas, kontakta {restaurantName} och uppge ordernummer {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-nyckel saknas — ange den i Admin → Kartinställningar.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Ogiltig betalningslänk.",
       "completePayment": "Slutför betalning",
       "orderReserved": "Din beställning är reserverad medan du betalar",
-      "securedByStripe": "Säkrat av Stripe. Vi lagrar aldrig dina kortuppgifter."
+      "securedByStripe": "Säkrat av Stripe. Vi lagrar aldrig dina kortuppgifter.",
+      "preparingPayment": "Förbereder säker betalning…",
+      "couldNotStartPayment": "Vi kunde inte starta betalningen för den här beställningen. Gå tillbaka och försök igen.",
+      "backToRestaurant": "Tillbaka till restaurangen"
     },
     "paymentPage": {
       "loading": "Laddar…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Du får det här e-postmeddelandet eftersom du är kund hos {name}.",
       "deleteData": "Radera mina personuppgifter"
+    },
+    "memberPerk": {
+      "title": "Ditt medlemspris",
+      "body": "Du är medlem i {group}, så ditt medlemspris gäller automatiskt när du beställer — ingen kod behövs."
     }
   },
   "dataRequest": {

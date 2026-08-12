@@ -2672,7 +2672,9 @@
         "payment_reward": "Belohnung für Zahlungsmethode",
         "free_dish_meal": "Gratisgericht als Teil einer Mahlzeit"
       },
-      "campaignFallback": "Kampagne"
+      "campaignFallback": "Kampagne",
+      "titleCampaignLocked": "Dieser Code wird von einer laufenden Autopilot-Kampagne per E-Mail versendet. Schalten Sie die Kampagne unter Marketing → Autopilot ab, um ihn zurückzuziehen.",
+      "toggleFailed": "Diese Aktion konnte nicht geändert werden. Bitte versuchen Sie es erneut."
     },
     "promoWizard": {
       "errorPickType": "Wählen Sie einen Aktionstyp, um fortzufahren.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Fügen Sie mindestens eine E-Mail hinzu.",
       "stepsHint": "Jede E-Mail wird später nach der letzten Bestellung gesendet, mit eigenem Rabatt. Die Sequenz stoppt automatisch, sobald wieder bestellt wird.",
       "stepsReset": "Auf Standard zurücksetzen",
-      "stepsResetConfirm": "Alle E-Mails durch die Standardsequenz ersetzen?"
+      "stepsResetConfirm": "Alle E-Mails durch die Standardsequenz ersetzen?",
+      "codeNotLiveTitle": "Diese Kampagne hat keinen funktionierenden Angebotscode.",
+      "codeNotLiveBody": "Ihr Gutschein ist deaktiviert oder abgelaufen, daher gehen diese E-Mails ohne Rabatt raus. Aktivieren Sie den Code unter Aktionen und Gutscheine wieder.",
+      "audienceTitle": "Wer Autopilot-Angebote erhält",
+      "audienceSkipping": "Alle, auf die ein Kampagnen-Auslöser zutrifft — außer Mitgliedern, die bereits Club-Preise haben. Aktuell {count} in {groups}.",
+      "audienceNoClubs": "Alle, auf die ein Kampagnen-Auslöser zutrifft. Um einen VIP-Club auszunehmen, öffnen Sie eine Kundengruppe und setzen Sie das Häkchen bei „Mitglieder erhalten bereits Club-Preise“.",
+      "audienceManage": "Kundengruppen verwalten",
+      "vipModeTitle": "Club-Mitglieder",
+      "vipModeDesc": "Was Mitglieder einer Gruppe mit Club-Preisen aus dieser Kampagne erhalten.",
+      "vipMode_offer_label": "Wie alle anderen",
+      "vipMode_offer_desc": "Sie erhalten das Angebot ebenfalls",
+      "vipMode_no_offer_label": "E-Mail, ohne Extra-Code",
+      "vipMode_no_offer_desc": "Nur Erinnerung — ihre Club-Preise gelten bereits",
+      "vipMode_skip_label": "Keine E-Mail senden",
+      "vipMode_skip_desc": "Wird von dieser Kampagne übersprungen"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-Eintrag",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Die Willkommens-E-Mail konnte nicht gesendet werden.",
       "welcomeSent": "{count, plural, =0 {Keine E-Mails gesendet} one {Willkommens-E-Mail an # Mitglied gesendet} other {Willkommens-E-Mail an # Mitglieder gesendet}}",
       "sendWelcomeToMember": "Willkommens-E-Mail an dieses Mitglied senden",
-      "welcomeOneConfirm": "Die Willkommens-E-Mail an {email} senden?"
+      "welcomeOneConfirm": "Die Willkommens-E-Mail an {email} senden?",
+      "autopilotCardTitle": "Automatisches Marketing",
+      "autopilotHelp": "Autopilot versendet selbstständig E-Mails zur Rückgewinnung, zur Zweitbestellung und zu abgebrochenen Warenkörben. Mitglieder dieser Gruppe erhalten bereits Ihre Club-Preise — Sie möchten ihnen also vermutlich nicht zusätzlich noch einen Rabatt über Autopilot anbieten.",
+      "autopilotSkipLabel": "Mitglieder erhalten bereits Club-Preise",
+      "autopilotSkipDesc": "Autopilot gibt den Mitgliedern dieser Gruppe keinen zusätzlichen Rabattcode. Niemand wird aus der Gruppe entfernt oder abgemeldet, und Ihre Mitglieder-Angebote und Bonussätze bleiben unverändert.",
+      "autopilotSkipActive": "Legen Sie auf der Autopilot-Seite fest, was diese Mitglieder aus jeder Kampagne erhalten.",
+      "autopilotSkipLink": "Autopilot öffnen"
     },
     "rewards": {
       "title": "Bonusguthaben",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Geplant für {time}",
       "paidWithReward": "Bezahlt mit {label}",
       "earnedReward": "Sie haben {label} verdient",
-      "rewardDefaultName": "Bonusguthaben"
+      "rewardDefaultName": "Bonusguthaben",
+      "paymentNotCompleted": "Zahlung nicht abgeschlossen",
+      "paymentNotCompletedBody": "{restaurantName} hat diese Bestellung nicht erhalten, weil die Zahlung nicht abgeschlossen wurde. Dir wurde nichts berechnet — ein eventuell auf deiner Karte reservierter Betrag wird automatisch freigegeben.",
+      "paymentNotCompletedPaidAlready": "Schon bezahlt? Warte einen Moment und lade diese Seite neu — wir bestätigen Zahlungen automatisch. Wenn das weiterhin angezeigt wird, wende dich an {restaurantName} und nenne die Bestellnummer {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-Schlüssel fehlt – bitte in Admin → Karteneinstellungen eintragen.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Ungültiger Zahlungslink.",
       "completePayment": "Zahlung abschließen",
       "orderReserved": "Deine Bestellung ist reserviert, während du bezahlst",
-      "securedByStripe": "Gesichert durch Stripe. Wir speichern niemals deine Kartendaten."
+      "securedByStripe": "Gesichert durch Stripe. Wir speichern niemals deine Kartendaten.",
+      "preparingPayment": "Sichere Zahlung wird vorbereitet…",
+      "couldNotStartPayment": "Die Zahlung für diese Bestellung konnte nicht gestartet werden. Bitte geh zurück und versuche es erneut.",
+      "backToRestaurant": "Zurück zum Restaurant"
     },
     "paymentPage": {
       "loading": "Wird geladen…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Sie erhalten diese E-Mail, weil Sie Kunde von {name} sind.",
       "deleteData": "Meine personenbezogenen Daten löschen"
+    },
+    "memberPerk": {
+      "title": "Ihre Mitglieder-Preise",
+      "body": "Sie sind Mitglied von {group}, daher werden Ihre Mitglieder-Preise bei der Bestellung automatisch angewendet — ganz ohne Code."
     }
   },
   "dataRequest": {

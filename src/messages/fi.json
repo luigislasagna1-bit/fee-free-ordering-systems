@@ -2672,7 +2672,9 @@
         "payment_reward": "Palkkio maksutavasta",
         "free_dish_meal": "Ilmainen annos aterian osana"
       },
-      "campaignFallback": "Kampanja"
+      "campaignFallback": "Kampanja",
+      "titleCampaignLocked": "Käynnissä oleva Autopilot-kampanja lähettää tätä koodia sähköpostitse. Poista kampanja käytöstä kohdassa Markkinointi → Autopilot, jos haluat vetää sen pois.",
+      "toggleFailed": "Tarjouksen muuttaminen epäonnistui. Yritä uudelleen."
     },
     "promoWizard": {
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Lisää vähintään yksi sähköposti.",
       "stepsHint": "Jokainen sähköposti lähetetään myöhemmin viimeisestä tilauksesta, omalla alennuksellaan. Sarja pysähtyy automaattisesti heti, kun asiakas tilaa uudelleen.",
       "stepsReset": "Palauta oletukset",
-      "stepsResetConfirm": "Korvataanko kaikki sähköpostit oletussarjalla?"
+      "stepsResetConfirm": "Korvataanko kaikki sähköpostit oletussarjalla?",
+      "codeNotLiveTitle": "Tällä kampanjalla ei ole toimivaa tarjouskoodia.",
+      "codeNotLiveBody": "Sen kuponki on poistettu käytöstä tai vanhentunut, joten nämä sähköpostit lähtevät ilman alennusta. Ota koodi takaisin käyttöön kohdassa Tarjoukset ja kupongit.",
+      "audienceTitle": "Kuka saa Autopilot-tarjoukset",
+      "audienceSkipping": "Kaikki, jotka osuvat kampanjan käynnistysehtoon — paitsi jäsenet, joilla on jo klubihinnat. Tällä hetkellä {count} ryhmissä {groups}.",
+      "audienceNoClubs": "Kaikki, jotka osuvat kampanjan käynnistysehtoon. Jos haluat jättää VIP-klubin pois, avaa asiakasryhmä ja rastita ”Jäsenet saavat jo klubihinnat”.",
+      "audienceManage": "Hallitse asiakasryhmiä",
+      "vipModeTitle": "Klubin jäsenet",
+      "vipModeDesc": "Mitä klubihinnoilla olevan ryhmän jäsenet saavat tästä kampanjasta.",
+      "vipMode_offer_label": "Sama kuin muille",
+      "vipMode_offer_desc": "Hekin saavat tarjouksen",
+      "vipMode_no_offer_label": "Viesti, ei lisäkoodia",
+      "vipMode_no_offer_desc": "Vain muistutus — klubihinnat ovat jo voimassa",
+      "vipMode_skip_label": "Älä lähetä heille viestiä",
+      "vipMode_skip_desc": "Ohitetaan tässä kampanjassa"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-listaus",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Tervetuloviestin lähettäminen epäonnistui.",
       "welcomeSent": "{count, plural, =0 {Sähköposteja ei lähetetty} one {Tervetuloviesti lähetetty # jäsenelle} other {Tervetuloviesti lähetetty # jäsenelle}}",
       "sendWelcomeToMember": "Lähetä tervetuloviesti tälle jäsenelle",
-      "welcomeOneConfirm": "Lähetetäänkö tervetuloviesti osoitteeseen {email}?"
+      "welcomeOneConfirm": "Lähetetäänkö tervetuloviesti osoitteeseen {email}?",
+      "autopilotCardTitle": "Automaattinen markkinointi",
+      "autopilotHelp": "Autopilot lähettää itse viestit asiakkaiden takaisin voittamiseksi, toisen tilauksen kannustamiseksi ja hylätyistä ostoskoreista muistuttamiseksi. Tämän ryhmän jäsenet saavat jo klubihintasi, joten et luultavasti halua, että Autopilot tarjoaa heille vielä lisäalennuksen päälle.",
+      "autopilotSkipLabel": "Jäsenet saavat jo klubihinnat",
+      "autopilotSkipDesc": "Autopilot ei anna tämän ryhmän jäsenille ylimääräistä alennuskoodia. Ketään ei poisteta ryhmästä eikä postituslistalta, ja jäsenetusi ja palkkioprosenttisi säilyvät ennallaan.",
+      "autopilotSkipActive": "Valitse Autopilot-sivulla, mitä nämä jäsenet saavat kustakin kampanjasta.",
+      "autopilotSkipLink": "Avaa Autopilot"
     },
     "rewards": {
       "title": "Bonusrahat",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Ajoitettu: {time}",
       "paidWithReward": "Maksettu: {label}",
       "earnedReward": "Ansaitsit {label}",
-      "rewardDefaultName": "Bonusrahat"
+      "rewardDefaultName": "Bonusrahat",
+      "paymentNotCompleted": "Maksua ei viimeistelty",
+      "paymentNotCompletedBody": "{restaurantName} ei ole saanut tätä tilausta, koska maksua ei viimeistelty. Sinulta ei ole veloitettu mitään — mahdollinen kortille varattu summa vapautuu automaattisesti.",
+      "paymentNotCompletedPaidAlready": "Maksoitko jo? Odota hetki ja päivitä tämä sivu — vahvistamme maksut automaattisesti. Jos tämä näkyy edelleen, ota yhteyttä ravintolaan {restaurantName} ja mainitse tilausnumero {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-avain puuttuu — aseta se Hallintapaneelissa → Karttojen asetukset.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Virheellinen maksulinkki.",
       "completePayment": "Viimeistele maksu",
       "orderReserved": "Tilauksesi on varattu maksun suorittamisen ajaksi",
-      "securedByStripe": "Suojattu Stripe-palvelulla. Emme koskaan tallenna korttitietojasi."
+      "securedByStripe": "Suojattu Stripe-palvelulla. Emme koskaan tallenna korttitietojasi.",
+      "preparingPayment": "Valmistellaan turvallista maksua…",
+      "couldNotStartPayment": "Tämän tilauksen maksua ei voitu aloittaa. Palaa takaisin ja yritä uudelleen.",
+      "backToRestaurant": "Takaisin ravintolaan"
     },
     "paymentPage": {
       "loading": "Ladataan…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Saat tämän sähköpostin, koska olet asiakkaana ravintolassa {name}.",
       "deleteData": "Poista henkilötietoni"
+    },
+    "memberPerk": {
+      "title": "Jäsenhintasi",
+      "body": "Kuulut ryhmään {group}, joten jäsenhintasi on automaattisesti voimassa tilatessasi — koodia ei tarvita."
     }
   },
   "dataRequest": {

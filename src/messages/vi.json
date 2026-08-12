@@ -2615,7 +2615,9 @@
         "payment_reward": "Thưởng theo phương thức thanh toán",
         "free_dish_meal": "Món miễn phí trong bữa ăn"
       },
-      "campaignFallback": "Chiến dịch"
+      "campaignFallback": "Chiến dịch",
+      "titleCampaignLocked": "Mã này đang được một chiến dịch Autopilot đang chạy gửi qua email. Tắt chiến dịch trong Tiếp thị → Autopilot để thu hồi mã.",
+      "toggleFailed": "Không thể thay đổi khuyến mãi này. Vui lòng thử lại."
     },
     "promoWizard": {
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",
@@ -3116,7 +3118,21 @@
       "stepsNeedOne": "Thêm ít nhất một email.",
       "stepsHint": "Mỗi email được gửi xa hơn so với đơn hàng gần nhất của họ, kèm ưu đãi riêng. Chuỗi tự động dừng ngay khi họ đặt hàng lại.",
       "stepsReset": "Đặt lại mặc định",
-      "stepsResetConfirm": "Thay tất cả email bằng chuỗi mặc định?"
+      "stepsResetConfirm": "Thay tất cả email bằng chuỗi mặc định?",
+      "codeNotLiveTitle": "Chiến dịch này không có mã ưu đãi nào hoạt động.",
+      "codeNotLiveBody": "Phiếu giảm giá của nó đã tắt hoặc hết hạn, nên các email này gửi đi mà không có giảm giá. Bật lại mã trong Khuyến mãi và phiếu giảm giá.",
+      "audienceTitle": "Ai nhận ưu đãi từ Autopilot",
+      "audienceSkipping": "Mọi khách khớp điều kiện kích hoạt chiến dịch — trừ thành viên đã được hưởng giá thành viên. Hiện có {count} người trong {groups}.",
+      "audienceNoClubs": "Mọi khách khớp điều kiện kích hoạt chiến dịch. Để giữ lại một câu lạc bộ VIP, hãy mở nhóm khách hàng và tích “Thành viên đã được hưởng giá thành viên”.",
+      "audienceManage": "Quản lý nhóm khách hàng",
+      "vipModeTitle": "Thành viên câu lạc bộ",
+      "vipModeDesc": "Những gì thành viên của nhóm đang hưởng giá thành viên nhận được từ chiến dịch này.",
+      "vipMode_offer_label": "Giống mọi người",
+      "vipMode_offer_desc": "Họ cũng nhận ưu đãi",
+      "vipMode_no_offer_label": "Gửi email, không mã",
+      "vipMode_no_offer_desc": "Chỉ nhắc — giá thành viên của họ vốn đã áp dụng",
+      "vipMode_skip_label": "Không gửi email",
+      "vipMode_skip_desc": "Chiến dịch này bỏ qua họ"
     },
     "marketplaceSettings": {
       "pageTitle": "Danh Sách Marketplace",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Không thể gửi email chào mừng.",
       "welcomeSent": "{count, plural, =0 {Không có email nào được gửi} other {Đã gửi email chào mừng cho # thành viên}}",
       "sendWelcomeToMember": "Gửi email chào mừng cho thành viên này",
-      "welcomeOneConfirm": "Gửi email chào mừng cho {email}?"
+      "welcomeOneConfirm": "Gửi email chào mừng cho {email}?",
+      "autopilotCardTitle": "Tiếp thị tự động",
+      "autopilotHelp": "Autopilot tự gửi email kéo khách quay lại, khuyến khích đơn thứ hai và nhắc giỏ hàng bỏ quên. Thành viên của nhóm này vốn đã được hưởng giá thành viên của bạn, nên có lẽ bạn không muốn Autopilot tặng thêm một giảm giá nữa.",
+      "autopilotSkipLabel": "Thành viên đã được hưởng giá thành viên",
+      "autopilotSkipDesc": "Autopilot sẽ không đưa thêm mã giảm giá cho thành viên của nhóm này. Không ai bị xoá khỏi nhóm hay bị hủy đăng ký, và các ưu đãi riêng cho thành viên cùng tỷ lệ tích thưởng của bạn vẫn giữ nguyên.",
+      "autopilotSkipActive": "Chọn những gì các thành viên này nhận được từ mỗi chiến dịch trên trang Autopilot.",
+      "autopilotSkipLink": "Mở Autopilot"
     },
     "rewards": {
       "title": "Đô-la Thưởng",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Đã lên lịch cho {time}",
       "paidWithReward": "Đã thanh toán bằng {label}",
       "earnedReward": "Bạn đã nhận được {label}",
-      "rewardDefaultName": "Đô-la Thưởng"
+      "rewardDefaultName": "Đô-la Thưởng",
+      "paymentNotCompleted": "Thanh toán chưa hoàn tất",
+      "paymentNotCompletedBody": "{restaurantName} chưa nhận được đơn hàng này vì thanh toán chưa hoàn tất. Bạn chưa bị tính phí — mọi khoản tạm giữ trên thẻ sẽ được hoàn lại tự động.",
+      "paymentNotCompletedPaidAlready": "Bạn đã thanh toán rồi? Hãy đợi một lát rồi tải lại trang này — chúng tôi xác nhận thanh toán tự động. Nếu vẫn hiển thị như vậy, hãy liên hệ {restaurantName} và cung cấp mã đơn hàng {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Thiếu API key Google Maps — hãy cài đặt trong Quản trị → Cài đặt bản đồ.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Đường dẫn thanh toán không hợp lệ.",
       "completePayment": "Hoàn tất thanh toán",
       "orderReserved": "Đơn hàng của bạn đang được giữ trong khi bạn thanh toán",
-      "securedByStripe": "Bảo mật bởi Stripe. Chúng tôi không lưu thông tin thẻ của bạn."
+      "securedByStripe": "Bảo mật bởi Stripe. Chúng tôi không lưu thông tin thẻ của bạn.",
+      "preparingPayment": "Đang chuẩn bị thanh toán an toàn…",
+      "couldNotStartPayment": "Chúng tôi không thể bắt đầu thanh toán cho đơn hàng này. Vui lòng quay lại và thử lại.",
+      "backToRestaurant": "Quay lại nhà hàng"
     },
     "paymentPage": {
       "loading": "Đang tải…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Bạn nhận được email này vì bạn là khách hàng của {name}.",
       "deleteData": "Xóa dữ liệu cá nhân của tôi"
+    },
+    "memberPerk": {
+      "title": "Giá thành viên của bạn",
+      "body": "Bạn là thành viên {group}, nên giá thành viên của bạn đã tự động áp dụng khi đặt hàng — không cần mã."
     }
   },
   "dataRequest": {

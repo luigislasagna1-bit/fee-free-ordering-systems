@@ -2672,7 +2672,9 @@
         "payment_reward": "תגמול לפי אמצעי תשלום",
         "free_dish_meal": "מנה חינם כחלק מארוחה"
       },
-      "campaignFallback": "קמפיין"
+      "campaignFallback": "קמפיין",
+      "titleCampaignLocked": "הקוד הזה נשלח במייל על ידי קמפיין Autopilot פעיל. כדי לבטל אותו, כבו את הקמפיין בשיווק ← Autopilot.",
+      "toggleFailed": "לא ניתן היה לשנות את המבצע. נסו שוב."
     },
     "promoWizard": {
       "errorPickType": "בחר סוג מבצע להמשך.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "הוסף לפחות אימייל אחד.",
       "stepsHint": "כל אימייל נשלח רחוק יותר מההזמנה האחרונה שלהם, עם הנחה משלו. הרצף נעצר אוטומטית ברגע שהם מזמינים שוב.",
       "stepsReset": "אפס לברירת מחדל",
-      "stepsResetConfirm": "להחליף את כל האימיילים ברצף ברירת המחדל?"
+      "stepsResetConfirm": "להחליף את כל האימיילים ברצף ברירת המחדל?",
+      "codeNotLiveTitle": "לקמפיין הזה אין קוד הטבה תקין.",
+      "codeNotLiveBody": "הקופון שלו כבוי או פג תוקף, ולכן המיילים האלה יוצאים ללא הנחה. הפעילו את הקוד מחדש במבצעים וקופונים.",
+      "audienceTitle": "מי מקבל הצעות מ-Autopilot",
+      "audienceSkipping": "כל מי שעונה על תנאי ההפעלה של קמפיין — חוץ מחברים שכבר נהנים ממחירי מועדון. כרגע {count} ב-{groups}.",
+      "audienceNoClubs": "כל מי שעונה על תנאי ההפעלה של קמפיין. כדי להחריג מועדון VIP, פתחו קבוצת לקוחות וסמנו “החברים כבר מקבלים מחירי מועדון”.",
+      "audienceManage": "ניהול קבוצות לקוחות",
+      "vipModeTitle": "חברי מועדון",
+      "vipModeDesc": "מה מקבלים מהקמפיין הזה חברים בקבוצה עם מחירי מועדון.",
+      "vipMode_offer_label": "כמו כולם",
+      "vipMode_offer_desc": "גם הם מקבלים את ההצעה",
+      "vipMode_no_offer_label": "מייל בלי קוד נוסף",
+      "vipMode_no_offer_desc": "תזכורת בלבד — מחירי המועדון שלהם כבר חלים",
+      "vipMode_skip_label": "לא לשלוח להם",
+      "vipMode_skip_desc": "מדולגים בקמפיין הזה"
     },
     "marketplaceSettings": {
       "pageTitle": "רישום ב-Marketplace",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "לא ניתן היה לשלוח את דוא\"ל ברוכים הבאים.",
       "welcomeSent": "{count, plural, =0 {לא נשלחו הודעות} one {דוא\"ל ברוכים הבאים נשלח ל-# חבר} two {דוא\"ל ברוכים הבאים נשלח ל-# חברים} many {דוא\"ל ברוכים הבאים נשלח ל-# חברים} other {דוא\"ל ברוכים הבאים נשלח ל-# חברים}}",
       "sendWelcomeToMember": "שליחת דוא\"ל ברוכים הבאים לחבר הזה",
-      "welcomeOneConfirm": "לשלוח את דוא\"ל ברוכים הבאים אל {email}?"
+      "welcomeOneConfirm": "לשלוח את דוא\"ל ברוכים הבאים אל {email}?",
+      "autopilotCardTitle": "שיווק אוטומטי",
+      "autopilotHelp": "מערכת Autopilot שולחת בעצמה מיילים להחזרת לקוחות, להזמנה שנייה ולעגלה נטושה. חברי הקבוצה הזו כבר מקבלים את מחירי המועדון שלכם, ולכן כנראה שלא תרצו שמערכת Autopilot תציע להם הנחה נוספת מעבר לכך.",
+      "autopilotSkipLabel": "החברים כבר מקבלים מחירי מועדון",
+      "autopilotSkipDesc": "מערכת Autopilot לא תיתן לחברי הקבוצה הזו קוד הנחה נוסף. אף אחד לא יוסר מהקבוצה ולא יוסר מרשימת התפוצה, ומבצעי החברים ושיעורי התגמול שלכם נשארים ללא שינוי.",
+      "autopilotSkipActive": "בחרו בעמוד Autopilot מה החברים האלה מקבלים מכל קמפיין.",
+      "autopilotSkipLink": "פתיחת Autopilot"
     },
     "rewards": {
       "title": "דולרים של תגמולים",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "מתוזמן לשעה {time}",
       "paidWithReward": "שולם באמצעות {label}",
       "earnedReward": "צברת {label}",
-      "rewardDefaultName": "דולרים של תגמולים"
+      "rewardDefaultName": "דולרים של תגמולים",
+      "paymentNotCompleted": "התשלום לא הושלם",
+      "paymentNotCompletedBody": "{restaurantName} לא קיבל את ההזמנה הזו מכיוון שהתשלום לא הושלם. לא חויבת — כל סכום שנתפס בכרטיס שלך משוחרר אוטומטית.",
+      "paymentNotCompletedPaidAlready": "כבר שילמת? המתן רגע ורענן את הדף — אנחנו מאשרים תשלומים אוטומטית. אם ההודעה עדיין מופיעה, פנה אל {restaurantName} וציין את מספר ההזמנה {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "מפתח Google Maps API חסר — הגדר אותו בניהול → הגדרות מפה.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "קישור תשלום לא תקין.",
       "completePayment": "השלם תשלום",
       "orderReserved": "הזמנתך שמורה בזמן שאתה משלם",
-      "securedByStripe": "מאובטח על ידי Stripe. פרטי הכרטיס שלך לא נשמרים אצלנו."
+      "securedByStripe": "מאובטח על ידי Stripe. פרטי הכרטיס שלך לא נשמרים אצלנו.",
+      "preparingPayment": "מכינים תשלום מאובטח…",
+      "couldNotStartPayment": "לא הצלחנו להתחיל את התשלום עבור ההזמנה הזו. חזור אחורה ונסה שוב.",
+      "backToRestaurant": "חזרה למסעדה"
     },
     "paymentPage": {
       "loading": "טוען…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "אתה מקבל אימייל זה מכיוון שאתה לקוח של {name}.",
       "deleteData": "מחק את המידע האישי שלי"
+    },
+    "memberPerk": {
+      "title": "מחירי החברים שלך",
+      "body": "יש לך חברות ב-{group}, ולכן מחירי החברים שלך כבר חלים בעת ההזמנה — בלי צורך בקוד."
     }
   },
   "dataRequest": {

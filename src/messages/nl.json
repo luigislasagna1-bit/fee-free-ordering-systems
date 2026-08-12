@@ -2672,7 +2672,9 @@
         "payment_reward": "Beloning voor betaalmethode",
         "free_dish_meal": "Gratis gerecht als onderdeel van een maaltijd"
       },
-      "campaignFallback": "Campagne"
+      "campaignFallback": "Campagne",
+      "titleCampaignLocked": "Deze code wordt gemaild door een actieve Autopilot-campagne. Zet de campagne uit bij Marketing → Autopilot om hem in te trekken.",
+      "toggleFailed": "Deze actie kon niet worden gewijzigd. Probeer het opnieuw."
     },
     "promoWizard": {
       "errorPickType": "Kies een promotietype om door te gaan.",
@@ -3173,7 +3175,21 @@
       "stepsNeedOne": "Voeg minstens één e-mail toe.",
       "stepsHint": "Elke e-mail wordt later na hun laatste bestelling verzonden, met een eigen korting. De reeks stopt automatisch zodra ze opnieuw bestellen.",
       "stepsReset": "Standaard herstellen",
-      "stepsResetConfirm": "Alle e-mails vervangen door de standaardreeks?"
+      "stepsResetConfirm": "Alle e-mails vervangen door de standaardreeks?",
+      "codeNotLiveTitle": "Deze campagne heeft geen werkende aanbiedingscode.",
+      "codeNotLiveBody": "De coupon staat uit of is verlopen, dus deze e-mails gaan zonder korting de deur uit. Zet de code weer aan bij Acties en coupons.",
+      "audienceTitle": "Wie Autopilot-aanbiedingen krijgt",
+      "audienceSkipping": "Iedereen die aan een campagnetrigger voldoet — behalve leden die al clubprijzen hebben. Op dit moment {count} in {groups}.",
+      "audienceNoClubs": "Iedereen die aan een campagnetrigger voldoet. Wilt u een VIP-club uitsluiten, open dan een klantgroep en vink “Leden krijgen al clubprijzen” aan.",
+      "audienceManage": "Klantgroepen beheren",
+      "vipModeTitle": "Clubleden",
+      "vipModeDesc": "Wat leden van een groep met clubprijzen uit deze campagne krijgen.",
+      "vipMode_offer_label": "Net als iedereen",
+      "vipMode_offer_desc": "Zij krijgen de aanbieding ook",
+      "vipMode_no_offer_label": "E-mail, geen extra code",
+      "vipMode_no_offer_desc": "Alleen een herinnering — hun clubprijzen gelden al",
+      "vipMode_skip_label": "Geen e-mail sturen",
+      "vipMode_skip_desc": "Overgeslagen door deze campagne"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace-vermelding",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Kan de welkomstmail niet versturen.",
       "welcomeSent": "{count, plural, =0 {Geen e-mails verstuurd} one {Welkomstmail naar # lid verstuurd} other {Welkomstmail naar # leden verstuurd}}",
       "sendWelcomeToMember": "Welkomstmail naar dit lid sturen",
-      "welcomeOneConfirm": "De welkomstmail naar {email} sturen?"
+      "welcomeOneConfirm": "De welkomstmail naar {email} sturen?",
+      "autopilotCardTitle": "Automatische marketing",
+      "autopilotHelp": "Autopilot verstuurt zelf e-mails om klanten terug te winnen, voor een tweede bestelling en voor achtergelaten winkelwagens. Leden van deze groep krijgen al uw clubprijzen, dus u wilt waarschijnlijk niet dat Autopilot hun daarbovenop nog een korting aanbiedt.",
+      "autopilotSkipLabel": "Leden krijgen al clubprijzen",
+      "autopilotSkipDesc": "Autopilot geeft de leden van deze groep geen extra kortingscode. Niemand wordt uit de groep verwijderd of afgemeld, en uw ledenacties en spaarpercentages blijven ongewijzigd.",
+      "autopilotSkipActive": "Kies op de Autopilot-pagina wat deze leden uit elke campagne ontvangen.",
+      "autopilotSkipLink": "Autopilot openen"
     },
     "rewards": {
       "title": "Spaartegoed",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "Gepland voor {time}",
       "paidWithReward": "Betaald met {label}",
       "earnedReward": "Je hebt {label} verdiend",
-      "rewardDefaultName": "Spaartegoed"
+      "rewardDefaultName": "Spaartegoed",
+      "paymentNotCompleted": "Betaling niet voltooid",
+      "paymentNotCompletedBody": "{restaurantName} heeft deze bestelling niet ontvangen, omdat de betaling niet is voltooid. Er is niets afgeschreven — een eventueel gereserveerd bedrag op je kaart wordt automatisch vrijgegeven.",
+      "paymentNotCompletedPaidAlready": "Al betaald? Wacht even en vernieuw deze pagina — we bevestigen betalingen automatisch. Als dit blijft staan, neem dan contact op met {restaurantName} en noem bestelnummer {orderNumber}."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API-sleutel ontbreekt — stel deze in via Beheer → Kaartinstellingen.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Ongeldige betaallink.",
       "completePayment": "Betaling voltooien",
       "orderReserved": "Je bestelling is gereserveerd terwijl je betaalt",
-      "securedByStripe": "Beveiligd door Stripe. We slaan je kaartgegevens nooit op."
+      "securedByStripe": "Beveiligd door Stripe. We slaan je kaartgegevens nooit op.",
+      "preparingPayment": "Veilige betaling voorbereiden…",
+      "couldNotStartPayment": "We konden de betaling voor deze bestelling niet starten. Ga terug en probeer het opnieuw.",
+      "backToRestaurant": "Terug naar restaurant"
     },
     "paymentPage": {
       "loading": "Laden…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "U ontvangt deze e-mail omdat u klant bent van {name}.",
       "deleteData": "Mijn persoonsgegevens verwijderen"
+    },
+    "memberPerk": {
+      "title": "Uw ledenprijs",
+      "body": "U bent lid van {group}, dus uw ledenprijs wordt bij het bestellen automatisch toegepast — geen code nodig."
     }
   },
   "dataRequest": {

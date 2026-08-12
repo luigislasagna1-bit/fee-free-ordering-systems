@@ -2615,7 +2615,9 @@
         "payment_reward": "Ödeme Yöntemi Ödülü",
         "free_dish_meal": "Öğünün Parçası Olarak Ücretsiz Yemek"
       },
-      "campaignFallback": "Kampanya"
+      "campaignFallback": "Kampanya",
+      "titleCampaignLocked": "Bu kod, çalışan bir Autopilot kampanyası tarafından e-postayla gönderiliyor. Geri çekmek için kampanyayı Pazarlama → Autopilot bölümünden kapatın.",
+      "toggleFailed": "Bu kampanya değiştirilemedi. Lütfen tekrar deneyin."
     },
     "promoWizard": {
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",
@@ -3116,7 +3118,21 @@
       "stepsNeedOne": "En az bir e-posta ekleyin.",
       "stepsHint": "Her e-posta, son siparişlerinden daha sonra kendi indirimiyle gönderilir. Müşteri tekrar sipariş verdiği anda dizi otomatik olarak durur.",
       "stepsReset": "Varsayılanlara sıfırla",
-      "stepsResetConfirm": "Tüm e-postalar varsayılan diziyle değiştirilsin mi?"
+      "stepsResetConfirm": "Tüm e-postalar varsayılan diziyle değiştirilsin mi?",
+      "codeNotLiveTitle": "Bu kampanyanın çalışan bir teklif kodu yok.",
+      "codeNotLiveBody": "Kuponu kapalı veya süresi dolmuş, bu yüzden bu e-postalar indirimsiz gidiyor. Kodu Kampanyalar ve kuponlar bölümünden yeniden açın.",
+      "audienceTitle": "Autopilot tekliflerini kim alır",
+      "audienceSkipping": "Bir kampanya tetikleyicisiyle eşleşen herkes — kulüp fiyatı alan üyeler hariç. Şu anda {groups} içinde {count} kişi.",
+      "audienceNoClubs": "Bir kampanya tetikleyicisiyle eşleşen herkes. Bir VIP kulübü kapsam dışında tutmak için bir müşteri grubunu açın ve “Üyeler zaten kulüp fiyatı alıyor” seçeneğini işaretleyin.",
+      "audienceManage": "Müşteri gruplarını yönet",
+      "vipModeTitle": "Kulüp üyeleri",
+      "vipModeDesc": "Kulüp fiyatı uygulanan bir gruptaki üyelerin bu kampanyadan ne alacağı.",
+      "vipMode_offer_label": "Herkesle aynı",
+      "vipMode_offer_desc": "Onlar da teklifi alır",
+      "vipMode_no_offer_label": "E-posta, ek kod yok",
+      "vipMode_no_offer_desc": "Yalnızca hatırlatma — kulüp fiyatları zaten geçerli",
+      "vipMode_skip_label": "E-posta gönderme",
+      "vipMode_skip_desc": "Bu kampanya onları atlar"
     },
     "marketplaceSettings": {
       "pageTitle": "Marketplace Listesi",
@@ -5317,7 +5333,13 @@
       "welcomeFailed": "Hoş geldin e-postası gönderilemedi.",
       "welcomeSent": "{count, plural, =0 {E-posta gönderilmedi} one {# üyeye hoş geldin e-postası gönderildi} other {# üyeye hoş geldin e-postası gönderildi}}",
       "sendWelcomeToMember": "Bu üyeye hoş geldin e-postası gönder",
-      "welcomeOneConfirm": "{email} adresine hoş geldin e-postası gönderilsin mi?"
+      "welcomeOneConfirm": "{email} adresine hoş geldin e-postası gönderilsin mi?",
+      "autopilotCardTitle": "Otomatik pazarlama",
+      "autopilotHelp": "Autopilot; geri kazanma, ikinci sipariş ve terk edilmiş sepet e-postalarını kendi başına gönderir. Bu grubun üyeleri zaten kulüp fiyatlarınızdan yararlanıyor, bu yüzden Autopilot'un onlara bir de ek indirim sunmasını muhtemelen istemezsiniz.",
+      "autopilotSkipLabel": "Üyeler zaten kulüp fiyatı alıyor",
+      "autopilotSkipDesc": "Autopilot, bu grubun üyelerine ek indirim kodu vermez. Kimse gruptan çıkarılmaz veya listeden çıkarılmaz; üyelere özel fırsatlarınız ve kazanım oranlarınız olduğu gibi kalır.",
+      "autopilotSkipActive": "Bu üyelerin her kampanyadan ne alacağını Autopilot sayfasından seçin.",
+      "autopilotSkipLink": "Autopilot'u aç"
     },
     "rewards": {
       "title": "Ödül Dolarları",
@@ -7056,7 +7078,10 @@
       "scheduledFor": "{time} için planlandı",
       "paidWithReward": "{label} ile ödendi",
       "earnedReward": "{label} kazandınız",
-      "rewardDefaultName": "Ödül Dolarları"
+      "rewardDefaultName": "Ödül Dolarları",
+      "paymentNotCompleted": "Ödeme tamamlanmadı",
+      "paymentNotCompletedBody": "Ödeme tamamlanmadığı için {restaurantName} bu siparişi almadı. Sizden ücret alınmadı — kartınızda bloke edilen tutar otomatik olarak serbest bırakılır.",
+      "paymentNotCompletedPaidAlready": "Zaten ödediniz mi? Biraz bekleyip bu sayfayı yenileyin — ödemeleri otomatik olarak doğruluyoruz. Bu mesaj hâlâ görünüyorsa {restaurantName} ile iletişime geçin ve {orderNumber} sipariş numarasını belirtin."
     },
     "deliveryZones": {
       "googleMapsKeyMissing": "Google Maps API anahtarı eksik — Admin → Harita Ayarları bölümünden ekleyin.",
@@ -7210,7 +7235,10 @@
       "invalidPaymentLink": "Geçersiz ödeme bağlantısı.",
       "completePayment": "Ödemeyi Tamamla",
       "orderReserved": "Ödeme yapılırken siparişiniz rezerve tutulmaktadır",
-      "securedByStripe": "Stripe tarafından güvence altına alınmıştır. Kart bilgilerinizi asla saklamayız."
+      "securedByStripe": "Stripe tarafından güvence altına alınmıştır. Kart bilgilerinizi asla saklamayız.",
+      "preparingPayment": "Güvenli ödeme hazırlanıyor…",
+      "couldNotStartPayment": "Bu sipariş için ödemeyi başlatamadık. Lütfen geri dönüp tekrar deneyin.",
+      "backToRestaurant": "Restorana dön"
     },
     "paymentPage": {
       "loading": "Yükleniyor…"
@@ -7905,6 +7933,10 @@
     "marketing": {
       "whyReceiving": "Bu e-postayı {name} müşterisi olduğunuz için alıyorsunuz.",
       "deleteData": "Kişisel verilerimi sil"
+    },
+    "memberPerk": {
+      "title": "Üye fiyatlarınız",
+      "body": "{group} üyesisiniz, bu yüzden sipariş verdiğinizde üye fiyatlarınız zaten uygulanır — koda gerek yok."
     }
   },
   "dataRequest": {
