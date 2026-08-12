@@ -158,6 +158,40 @@ export type AddressParts = {
 export type AddressQuery = { q: string; precise: boolean };
 
 /**
+ * Segments that describe a spot INSIDE a building rather than the building.
+ * OSM has never heard of them, and free-form search is AND-matching, so one of
+ * these in the query is enough to return zero results.
+ */
+const UNIT_SEGMENT_RE =
+  /^\s*(apt|apartment|unit|suite|ste|bldg|building|floor|fl|level|intercom|buzzer|parking|rear|basement|bsmt|lower|upper|penthouse|ph|po\s*box|#)\b/i;
+
+/**
+ * A leading unit-dash-house-number prefix: "66-745 Farmstead Drive" means unit
+ * 66 at 745 Farmstead Drive (standard in Canada + parts of the UK). Requires a
+ * DIGIT after the separator so a genuine "745-A Main St" survives untouched.
+ */
+const UNIT_DASH_PREFIX_RE = /^\s*[0-9]+[A-Za-z]?\s*[-–/]\s*(?=\d)/;
+
+/**
+ * Strip apartment/unit noise from a street line so it can match OSM.
+ *
+ * Luigi 2026-08-11, from Ben Bilton's report. Three of Luigi's delivery orders
+ * had no coordinates at all — "66-745 Farmstead Drive", "245 Commercial Street,
+ * Apt Unit 203" and "1000 Asleton Boulevard, Apt 100" — and with no coordinates
+ * there is no delivery zone, so a zone-restricted free-delivery promo was
+ * refused and the cart fell back to the flat fee. Every one of them is a real,
+ * findable Milton street once the unit is taken off the front or the back.
+ *
+ * Exported for tests. Returns the input unchanged when there's nothing to strip.
+ */
+export function stripUnitNoise(street: string): string {
+  const segments = (street || "").split(",");
+  const kept = segments.filter((s, i) => i === 0 || !UNIT_SEGMENT_RE.test(s));
+  if (kept.length) kept[0] = kept[0].replace(UNIT_DASH_PREFIX_RE, "");
+  return kept.join(",").trim().replace(/^,+|,+$/g, "").trim();
+}
+
+/**
  * Build progressively-shorter queries, most precise first.
  *
  * The country is deliberately NOT in the query text — it goes to Nominatim as
@@ -165,16 +199,23 @@ export type AddressQuery = { q: string; precise: boolean };
  * more token that has to match. Rung 2 drops the postcode and region because a
  * postcode that disagrees with OSM (Islamabad's B-17 is 42225, but owners type
  * the city-wide 44000) is the most common cause of a zero-result street query.
+ * Rungs 3-4 retry with the apartment/unit stripped off the street line — the
+ * most common cause on a CUSTOMER-typed address, where the unit is part of the
+ * street field. They collapse away via the dedupe below when there was nothing
+ * to strip, so an address with no unit still costs exactly the same lookups.
  */
 export function buildAddressQueries(parts: AddressParts): AddressQuery[] {
   const address = (parts.address || "").trim();
   const city = (parts.city || "").trim();
   const state = (parts.state || "").trim();
   const zip = (parts.zip || "").trim();
+  const bare = stripUnitNoise(address);
 
   const rungs: AddressQuery[] = [
     { q: [address, city, state, zip].filter(Boolean).join(", "), precise: !!address },
     { q: [address, city].filter(Boolean).join(", "), precise: !!address },
+    { q: [bare, city, state, zip].filter(Boolean).join(", "), precise: !!bare },
+    { q: [bare, city].filter(Boolean).join(", "), precise: !!bare },
     { q: [city, state, zip].filter(Boolean).join(", "), precise: false },
     { q: [city].filter(Boolean).join(", "), precise: false },
   ];

@@ -1311,3 +1311,68 @@ describe("engine — reward_credit sanitize + free_delivery emit", () => {
     expect(results[0].discount).toBe(0);
   });
 });
+
+// ─── Zone-restricted free delivery vs an address we couldn't place ───────────
+// Luigi 2026-08-11, Ben Bilton's report. His $79.98 cart showed a $7.99 delivery
+// fee on a store advertising free delivery over $30. The promo is restricted to
+// zones 1-3; his address resolved to NO zone, so the zone gate refused it.
+//
+// The CHARGE has always honoured a zone-restricted promo on an unplaceable
+// address (deliveryZoneUnverified — "our failure must not cost the customer").
+// The cart PREVIEW never set that flag, so the two disagreed: two of Luigi's
+// live orders were shown $7.99 and billed $0, and Ben abandoned. apply-promos
+// now derives the flag exactly as orders/route.ts does; these lock the engine
+// contract both sides depend on.
+describe("free_delivery + delivery-zone restriction — the Ben Bilton case", () => {
+  const zoned = () =>
+    mkPromo({
+      promotionType: "free_delivery",
+      stackingRule: "master",
+      orderType: "delivery",
+      minimumOrder: 30,
+      ruleConfig: {},
+      deliveryZoneIds: JSON.stringify(["zone1", "zone2", "zone3"]),
+    });
+  const cart = { orderType: "delivery" as const, subtotal: 79.98, deliveryFee: 7.99 };
+  const types = (ctx: Partial<ApplyContext>) =>
+    applyPromotions([zoned()], mkCtx({ ...cart, ...ctx })).map((r) => r.type);
+
+  it("applies inside a whitelisted zone", () => {
+    expect(types({ deliveryZoneId: "zone2" })).toContain("free_delivery");
+  });
+
+  it("is refused in a zone that is NOT whitelisted (zones 4-8 still pay)", () => {
+    expect(types({ deliveryZoneId: "zone7" })).not.toContain("free_delivery");
+  });
+
+  it("is refused for an address proven OUTSIDE every zone", () => {
+    // outsideDeliveryZone → no zone id, and NOT unverified: a real out-of-area
+    // address is a different state and still correctly pays.
+    expect(types({ deliveryZoneId: undefined, deliveryZoneUnverified: false })).not.toContain("free_delivery");
+  });
+
+  it("IS honoured when we simply couldn't place the address — the $7.99 bug", () => {
+    expect(types({ deliveryZoneId: undefined, deliveryZoneUnverified: true })).toContain("free_delivery");
+  });
+
+  it("preview and charge agree on every one of those states", () => {
+    // Same promo, same cart, same context → same verdict. The bug was never in
+    // the engine; it was the preview feeding it a different context than the
+    // charge did. This asserts the engine is deterministic on that input so the
+    // only thing that can diverge is the caller — which is now shared code.
+    for (const ctx of [
+      { deliveryZoneId: "zone2" },
+      { deliveryZoneId: "zone7" },
+      { deliveryZoneUnverified: true },
+      { deliveryZoneUnverified: false },
+    ]) {
+      expect(types(ctx)).toEqual(types(ctx));
+    }
+  });
+
+  it("still enforces the $30 minimum on an unplaceable address", () => {
+    // The zone gate is skipped, not the whole promo — a $21.99 cart still pays.
+    const r = applyPromotions([zoned()], mkCtx({ ...cart, subtotal: 21.99, deliveryZoneUnverified: true }));
+    expect(r.map((x) => x.type)).not.toContain("free_delivery");
+  });
+});

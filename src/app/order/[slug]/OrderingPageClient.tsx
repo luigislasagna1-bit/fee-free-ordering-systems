@@ -39,7 +39,10 @@ import {
   PizzaBuilder, parsePizzaConfig, pizzaCustomizationToModifiers,
   PizzaCustomization, PizzaAddResult, PizzaConfig,
 } from "./PizzaBuilder";
-import { geocodeAddress, findZoneForPoint, haversineKm, type ZoneLike } from "@/lib/geocode";
+// NOTE: no geocodeAddress import — address lookup goes through
+// /api/public/geocode/resolve so the browser never calls Nominatim directly
+// (dropped User-Agent, no country bias, no fallback ladder). Luigi 2026-08-11.
+import { findZoneForPoint, haversineKm, type ZoneLike } from "@/lib/geocode";
 import { isAddressNotLocated } from "@/lib/checkout-address-gate";
 import { readReservationDraft, writeReservationDraft } from "@/lib/reservation-draft-storage";
 import { groupBundleChildren } from "@/lib/bundle-child-groups";
@@ -2672,11 +2675,33 @@ export function OrderingPageClient({
       setGeocodeError(null);
       return;
     }
-    const fullAddress = addressParts.join(", ");
     const handle = setTimeout(async () => {
       setGeocoding(true);
       setGeocodeError(null);
-      const coords = await geocodeAddress(fullAddress);
+      // Server-side resolve (Luigi 2026-08-11, Ben Bilton's $7.99 report). This
+      // used to be a raw browser fetch to Nominatim: no country bias, no
+      // fallback ladder, and a User-Agent the browser drops — so an address
+      // carrying an apartment number ("66-745 Farmstead Drive") returned zero
+      // results, got no coordinates, resolved to no zone, and lost the
+      // customer their free delivery. /api/public/geocode/resolve walks the
+      // ladder server-side and is the SAME resolver the charge uses.
+      let coords: { lat: number; lng: number } | null = null;
+      try {
+        const res = await fetch("/api/public/geocode/resolve", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            address: customerInfo.address,
+            city: customerInfo.city,
+            zip: customerInfo.zip,
+            country: restaurant.country,
+          }),
+        });
+        const data = res.ok ? await res.json() : null;
+        if (data?.match && Number.isFinite(data.match.lat) && Number.isFinite(data.match.lng)) {
+          coords = { lat: data.match.lat, lng: data.match.lng };
+        }
+      } catch { /* network blip → treated as "couldn't locate", same as a miss */ }
       setGeocoding(false);
       if (!coords) {
         setCustomerCoords(null);
@@ -2692,6 +2717,14 @@ export function OrderingPageClient({
   const resolvedZone = hasZones && customerCoords
     ? findZoneForPoint(deliveryZones, restaurant.lat, restaurant.lng, customerCoords.lat, customerCoords.lng)
     : null;
+  /** The customer has typed a delivery address, so a missing zone means "we
+   *  tried and couldn't place it" rather than "they haven't told us yet". Sent
+   *  to the preview so the server can distinguish those two states — without it
+   *  an empty address field looks identical to a failed lookup. The server owns
+   *  the verdict from here (apply-promos returns `delivery.zoneUnverified`); the
+   *  page deliberately does NOT re-derive it, so there is one answer, not two.
+   *  Luigi 2026-08-11 (Ben Bilton). */
+  const deliveryAddressEntered = orderType === "delivery" && !!customerInfo.address?.trim();
   // Straight-line distance from the store to the typed delivery address, shown
   // on the checkout zone line so the customer sees how far they are (Luigi
   // 2026-07-15). Null until the address geocodes / when the store has no coords.
@@ -2777,6 +2810,14 @@ export function OrderingPageClient({
         // longer sent: the server derives it from the session cookie, the
         // same canonical signal the charge uses — Blocker #7.)
         deliveryZoneId: orderType === "delivery" && resolvedZone?.inside ? resolvedZone.zone.id : undefined,
+        // The coordinates behind that zone — sent so the server can classify the
+        // address itself (inside / outside / can't-place) exactly as the CHARGE
+        // does, instead of inferring from a zone id that is only ever sent for
+        // in-zone addresses. Without this the cart quoted $7.99 on carts the
+        // charge delivered free. Luigi 2026-08-11 (Ben Bilton).
+        deliveryLat: orderType === "delivery" ? customerCoords?.lat : undefined,
+        deliveryLng: orderType === "delivery" ? customerCoords?.lng : undefined,
+        deliveryAddressEntered,
         // Acquisition channel → the preview only applies promos channelled to
         // this customer's channel (website vs marketplace). Luigi 2026-06-09.
         channel: customerChannel,
@@ -2862,7 +2903,11 @@ export function OrderingPageClient({
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere, pendingGrantId]);
+  // customerCoords + the typed-address flag are dependencies in their own right,
+  // NOT just via resolvedZone: an address that fails to place leaves resolvedZone
+  // null both before and after typing, so without them the cart would never
+  // re-ask the server and would keep showing a stale fee. Luigi 2026-08-11.
+  }, [cart, orderType, resolvedZone?.zone.id, resolvedZone?.inside, customerCoords?.lat, customerCoords?.lng, deliveryAddressEntered, currentCustomer, couponCode, customerInfo.scheduledFor, customerInfo.paymentMethod, suppressedPromoIds, debouncedIdentity, customerIsReturning, hasOrderedHere, pendingGrantId]);
 
   const subtotal = cart.reduce((s, i) => s + i.lineTotal, 0);
   // Per-unit refundable deposit for a cart line — derived from the line's menu
@@ -3764,6 +3809,13 @@ export function OrderingPageClient({
   const baseDeliveryFee = orderType === "delivery"
     ? (zoneFee !== undefined ? zoneFee : restaurant.deliveryFee)
     : 0;
+  // NOTE (Luigi 2026-08-11): the FEE NUMBER here was never the bug. For an
+  // address we can't place, the charge also falls back to restaurant.deliveryFee
+  // (orders/route.ts — zoneDeliveryFee is only overwritten once coords resolve),
+  // so $7.99 was the honest quote. What diverged was the free-delivery PROMO:
+  // the charge honours zone-restricted promos on an unplaced address, the cart
+  // refused them. That is fixed in apply-promos, and `hasFreeDelivery` below now
+  // agrees with the charge, which is what flips this row to a struck-out FREE.
   const minimumOrderForType = orderType === "delivery"
     ? (zoneMin !== undefined ? zoneMin : restaurant.minimumOrder)
     : restaurant.minimumOrder;
@@ -4334,8 +4386,20 @@ export function OrderingPageClient({
     deliveryZip: orderType === "delivery" ? customerInfo.zip : "",
     deliveryAddressData,
     // Precise map-pin coords (delivery only) — driver gets an exact spot.
-    deliveryLat: orderType === "delivery" ? customerInfo.lat : null,
-    deliveryLng: orderType === "delivery" ? customerInfo.lng : null,
+    //
+    // Falls back to the coordinates the PAGE resolved for the typed address
+    // (`customerCoords`). Luigi 2026-08-11: these were previously dropped, so a
+    // customer who simply typed their address sent no coords at all and the
+    // charge had to geocode again from scratch. If that second lookup missed —
+    // a Nominatim blip, a cache miss, anything — the order landed in the
+    // "unverified" state with NO delivery zone, which is how three of Luigi's
+    // orders (and Ben Bilton's abandoned cart) ended up zoneless on a store
+    // whose free-delivery promo is zone-restricted. Sending what we already
+    // know means an address the page could place is ALWAYS attached to a zone,
+    // and it removes a duplicate geocode from the checkout hot path.
+    // An explicit pin still wins: it's the customer's own precise spot.
+    deliveryLat: orderType === "delivery" ? (customerInfo.lat ?? customerCoords?.lat ?? null) : null,
+    deliveryLng: orderType === "delivery" ? (customerInfo.lng ?? customerCoords?.lng ?? null) : null,
     notes: combinedNotes, paymentMethod: customerInfo.paymentMethod,
     scheduledFor: customerInfo.scheduledFor || null,
     // Which time-selection style the customer used ("bands"|"range"|"exact")
@@ -4709,16 +4773,16 @@ export function OrderingPageClient({
         });
         const piData = await piRes.json();
         if (!piRes.ok) throw new Error(piData.error || tT("paymentSetupFailed"));
-        const params = new URLSearchParams({
-          orderId: orderData.id,
-          clientSecret: piData.clientSecret,
-          pk: piData.publishableKey,
-          // Direct-charge PaymentIntents need Stripe.js to be told which
-          // connected account they belong to. piData.stripeAccount is set
-          // by /api/public/payment-intent — forward it through.
-          stripeAccount: piData.stripeAccount ?? "",
-        });
-        router.push(`/order/${restaurant.slug}/payment?${params.toString()}`);
+        // Navigate with the ORDER ID ONLY (Luigi 2026-08-11). The clientSecret
+        // and publishable key used to ride in the query string, which made the
+        // payment screen die on any reload / back-forward / URL-trimming link
+        // handler — "invalid payment link" in the middle of paying — and leaked
+        // a live payment credential into history, referrers and access logs.
+        // The payment page re-derives the intent from the order id; the create
+        // call is idempotent per order, so it gets THIS same PaymentIntent back
+        // rather than placing a second hold. The POST above still runs first so
+        // a broken payment setup surfaces as a toast here, before we navigate.
+        router.push(`/order/${restaurant.slug}/payment?orderId=${orderData.id}`);
       } else if (customerInfo.paymentMethod === "paypal" && paypalEnabled && needsOnline) {
         // PayPal flow — create a PayPal Order, get the approve URL,
         // redirect customer there. Customer signs in + approves on

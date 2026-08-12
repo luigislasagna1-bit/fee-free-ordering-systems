@@ -4,6 +4,7 @@ import { resolvePromotions, totalPromoDiscount, discountableSubtotal, type Apply
 import { parseLocalDateTimeInTz } from "@/lib/restaurant-hours";
 import { resolveAssignedPromoByCode } from "@/lib/coupon-ledger";
 import { buildPromoOrderContext } from "@/lib/promo-order-context";
+import { findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -23,6 +24,16 @@ export async function POST(req: NextRequest) {
     // flag is NOT taken from the client anymore — buildPromoOrderContext
     // derives it server-side from the session, same as the charge.
     deliveryZoneId,
+    // The address's coordinates as the PAGE resolved them (picked suggestion,
+    // dragged pin, or /api/public/geocode/resolve). Sent so this route can
+    // classify the address the SAME way the charge does — see the zone block
+    // below. Absent while the customer hasn't typed an address yet, and absent
+    // when the lookup genuinely failed. Luigi 2026-08-11.
+    deliveryLat, deliveryLng,
+    // True once the customer has actually typed a delivery address. Without it
+    // an empty address field is indistinguishable from a failed lookup, and we
+    // would flag "unverified" (and hide the fee) before they've typed anything.
+    deliveryAddressEntered,
     // Acquisition channel ("website" | "marketplace") — gates which promos
     // apply: a marketplace-channel customer only gets "marketplace"/"both"
     // promos; a website customer only "website"/"both". Luigi 2026-06-09.
@@ -187,21 +198,63 @@ export async function POST(req: NextRequest) {
     committedExclusive = row ? { id: row.id, name: row.name } : null;
   }
 
-  // free_delivery promos compete at their REAL fee value (audit B10). Use the
-  // customer's resolved ZONE fee when a zone is known — the charge scores with
-  // the zone fee (orders/route.ts zoneDeliveryFee), so a base-fee preview could
-  // pick a different winner between two competing exclusives whenever zone fee
-  // ≠ base fee (always customer-favorable, but preview must equal charge).
-  // Zone lookup is scoped to this restaurant so a foreign zone id can't leak
-  // another store's fee. Falls back to the base fee (pre-zone typing stage).
-  const previewZoneId = typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined;
+  // ── Delivery zone + fee, resolved the way the CHARGE resolves it ──────────
+  //
+  // Luigi 2026-08-11, Ben Bilton's report: his $79.98 cart showed a $7.99
+  // delivery fee on a store advertising free delivery over $30. The cause was
+  // right here — this route classified the address only from a zone id the page
+  // sends ONLY when the address is inside a zone, and it never set
+  // `deliveryZoneUnverified`. So an address the geocoder couldn't place looked
+  // like "no zone" to the engine, the zone-restricted free-delivery promo was
+  // refused, and the cart fell back to `restaurant.deliveryFee`. The charge
+  // (orders/route.ts) does the opposite: it names that third state and HONOURS
+  // zone-restricted promos in it. Two live orders prove the split — customers
+  // shown $7.99 and billed $0. Ben just abandoned instead.
+  //
+  // This block is a deliberate mirror of orders/route.ts's zone resolution:
+  // same coords (the charge already trusts the client's pin), same
+  // findZoneForPoint, same outermost-zone fee for an out-of-zone address, same
+  // definition of "unverified". Preview and charge now reach the same verdict
+  // from the same inputs. Zone lookups stay scoped to this restaurant so a
+  // foreign zone id can't leak another store's fee.
+  const isDelivery = (orderType ?? "pickup") === "delivery";
+  const lat = Number(deliveryLat);
+  const lng = Number(deliveryLng);
+  const hasCoords =
+    Number.isFinite(lat) && Number.isFinite(lng) &&
+    Math.abs(lat) <= 90 && Math.abs(lng) <= 180 && !(lat === 0 && lng === 0);
+
+  let previewZoneId: string | undefined =
+    typeof deliveryZoneId === "string" && deliveryZoneId ? deliveryZoneId : undefined;
   let previewDeliveryFee = Math.max(0, restaurant.deliveryFee ?? 0);
-  if ((orderType ?? "pickup") === "delivery" && previewZoneId) {
-    const zone = await prisma.deliveryZone.findFirst({
-      where: { id: previewZoneId, restaurantId: restaurant.id },
-      select: { deliveryFee: true },
+  let previewZoneUnverified = false;
+
+  if (isDelivery) {
+    const zones = await prisma.deliveryZone.findMany({
+      where: { restaurantId: restaurant.id, isActive: true },
     });
-    if (zone) previewDeliveryFee = Math.max(0, zone.deliveryFee ?? 0);
+    if (zones.length > 0) {
+      let outsideDeliveryZone = false;
+      previewZoneId = undefined;
+      if (hasCoords && restaurant.lat != null && restaurant.lng != null) {
+        const resolved = findZoneForPoint(zones as unknown as ZoneLike[], restaurant.lat, restaurant.lng, lat, lng);
+        if (resolved) {
+          // Inside or outside, the matched zone's fee is what the charge bills
+          // (out-of-zone falls back to the outermost zone, closest to them).
+          previewDeliveryFee = Math.max(0, resolved.zone.deliveryFee ?? 0);
+          if (resolved.inside) previewZoneId = resolved.zone.id;
+          else outsideDeliveryZone = true;
+        }
+      }
+      // The third state: neither placed in a zone nor proven outside every one.
+      // Only claim it once an address actually exists to classify — an empty
+      // field is "not asked yet", not "we tried and failed".
+      previewZoneUnverified =
+        !!deliveryAddressEntered && !previewZoneId && !outsideDeliveryZone;
+    } else if (previewZoneId) {
+      // No active zones but a stale id was sent — ignore it rather than trust it.
+      previewZoneId = undefined;
+    }
   }
 
   const ctx: ApplyContext = {
@@ -216,7 +269,8 @@ export async function POST(req: NextRequest) {
     paymentMethod,
     hasUsedLifetime: promoCtx.hasUsedLifetime,
     deliveryZoneId: previewZoneId,
-    deliveryFee: (orderType ?? "pickup") === "delivery" ? previewDeliveryFee : 0,
+    deliveryZoneUnverified: previewZoneUnverified,
+    deliveryFee: isDelivery ? previewDeliveryFee : 0,
     // Restaurant's IANA timezone — drives Happy Hour / day-of-week
     // evaluation in the owner's local time, not the Vercel UTC clock.
     // Without this the Italian "15:00–18:00" window was being matched
@@ -338,5 +392,20 @@ export async function POST(req: NextRequest) {
   // Surface promos that qualified but were blocked by the winning exclusive, so
   // the cart can explain "can't combine" and offer "remove this to use that
   // instead". Luigi 2026-06-07.
-  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, blockedPromos, newCustomerOfferUnavailable, promoCodeEmailMismatch, reward, identity });
+  //
+  // `delivery` is the server's verdict on the address (Luigi 2026-08-11). The
+  // cart renders the fee from THIS rather than from its own zone guess, so the
+  // number on screen is the number the charge will bill — and when the address
+  // isn't placed yet it renders "confirm your address" instead of a figure that
+  // may be wrong in either direction.
+  const delivery = {
+    /** Fee before any free-delivery promo, from the resolved zone. */
+    baseFee: isDelivery ? previewDeliveryFee : 0,
+    /** Zone the address landed in, null when outside every zone or unresolved. */
+    zoneId: previewZoneId ?? null,
+    /** True when we could not place this address at all — the cart must not
+     *  quote a fee, and should ask for a map pin. */
+    zoneUnverified: previewZoneUnverified,
+  };
+  return NextResponse.json({ applied, totalDiscount, hasFreeDelivery, delivery, blockedPromos, newCustomerOfferUnavailable, promoCodeEmailMismatch, reward, identity });
 }
