@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-02 (later) by Claude (**A40 — cart-loss customer report: could NOT reproduce, need more detail from you.** Full write-up + what I need in TODO.md's top entry. Also this session: fixed the social-icons bug + About-text centering + kitchen button reorder from your notes, and queued the custom-CTA-button feature you asked for — not built yet, needs a quick design pass.)
+**Last updated:** 2026-08-12 by Claude (**EVERYTHING FROM THE LAST TWO DAYS IS NOW PUSHED AND LIVE.** Fourteen sessions' worth of work had piled up uncommitted — including two finished pieces stranded on side branches that would have been lost. Headline: **A47 — paid card orders were being lost before the kitchen ever saw them** (36 stranded in 60 days on your store, 3 orders you never received, $83.62). Also live: Autopilot no longer pays club members twice or mails a dead code (Ben Bilton's report), the cart now quotes the same delivery fee the card is charged, staff order emails name each special, every email declares its own language (Arabic/Hebrew now read right-to-left), and customer SMS is translated into all 38 languages. **Your list is A47 step 1 (three real orders need a decision from you), then the test passes in T-P / A45 / A46.**)
+**Previous update:** 2026-08-02 (later) by Claude (**A40 — cart-loss customer report: could NOT reproduce, need more detail from you.** Full write-up + what I need in TODO.md's top entry. Also this session: fixed the social-icons bug + About-text centering + kitchen button reorder from your notes, and queued the custom-CTA-button feature you asked for — not built yet, needs a quick design pass.)
 **Previous update:** 2026-08-02 by Claude (**A39 — Branded Mobile App BUILT dark**: the $59/mo GloriaFood-replacement add-on — per-restaurant apps on both stores, remote-synced menus, resumable wizard, superadmin pipeline, customer order-status push, white-label build tooling with a REAL signed Android app already produced from wizard config. Luigi's three pilot chores are the clock-starter, Apple account check first. Same day: A38 combos shipped.)
 **Previous update:** 2026-08-02 (late) by Claude (**A37 — Fabrizio's reservation "smart buttons" BUILT** exactly to his Restoo reference: optional Adults/Children counters with the restaurant's own child definition as a hint, plus Children (high chairs/strollers) · Allergies · Special occasion · Accessible chips, flowing to kitchen + admin + CSV + printed slip + both emails; new "Booking questions" settings card with ⓘ help. Everything defaults OFF so nobody's form changes until they opt in. 31 new tests, schema on both branches, ×38 translations in flight. Needs Luigi's try-it pass, then the reply. Earlier today: A36 Max's slice fixes verified, A35 Sadaf's checkout regression shipped, A34 cost ledger.)
 **Previous update:** 2026-08-01 (evening) by Claude (**A35 — Sadaf's checkout dead-end: root-caused to the 2026-07-31 address gate (b2648ac7), fixed, tested, browser-verified; TWO LOCAL COMMITS AWAIT LUIGI'S PUSH** — then the address backfill, then reply to Sadaf. Same day, earlier: A34 cost audit complete, cut-costs plan parked.)
@@ -42,6 +43,70 @@ live). Group earn rate is set to **10%**. 15 members in 🍕Luigi's VIP Pizza Cl
    Forgetting = 70% off that category. The "one discount per item" build removes this chore.
 
 ## ⭐ TOMORROW — the short list (do these WITH Claude / report results)
+
+**🌅 TODAY 2026-08-12 — EVERYTHING FROM THE LAST TWO DAYS IS NOW LIVE.**
+Fourteen sessions had finished work that was never pushed. Two of them had finished and committed
+their work on side branches that were never merged — the email-language fix and the customer-SMS
+translations — and both would have been lost the next time those folders were cleaned up. All of it
+is now on `main` and deployed. Gate before push: **1521 tests green, TypeScript clean, production
+build clean, all 38 languages at full parity (0 missing / 0 extra / 0 mismatched)**, and both
+database branches confirmed to already carry the new columns.
+
+⚠️ **Before pushing, a 24-agent adversarial review of the batch found 3 real defects** (of 19
+candidates — 15 were refuted). All three are fixed, but you should know the worst one, because it
+sat on the exact feature built to help you: **a phantom order that a customer re-paid would have
+authorized their card and never actually collected the money.** The hold would sit there for about
+7 days and quietly vanish, you'd be paid nothing, and the order would have dropped off the "unpaid,
+needs attention" report at the same time. Now it captures properly — and deliberately does NOT
+print the kitchen a new ticket, because that food was made days ago.
+
+- **T-T. 🤔 START HERE — A47 step 1: three real orders, $83.62, need a decision from you.**
+  Sharon Craven $36.44, Lisa Benacquista $34.39, Uzair Rana $12.79. Nothing automatic touched them
+  on purpose. Tell me which to chase and I'll walk you through it.
+- **T-U. 👀 The 30-second proof the big fix works:** place a card order and **close the tab the
+  instant you hit Pay**. It should still reach your kitchen within about a minute.
+
+**🌅 TODAY 2026-08-11 (from Ben Bilton's Skool message — both complaints were real bugs):**
+- **T-M. ⏳ PUSH + DEPLOY the fix, then reply to Ben.** Draft reply is at the bottom of
+  `.claude/plans/see-this-message-i-eventual-yao.md`. ⚠️ **Do NOT tell him "standard promos can't
+  stack with VIP"** — WIN1 is a *Master* promo, it stacks by design, and no email or page has ever
+  said otherwise. It failed because the code was switched OFF, which is now fixed.
+- **T-N. ✅ DONE (data fix, live on prod now) — your 7 Autopilot codes are back on.**
+  WIN1–WIN5, 2NDOFF and CARTBACK were all `isActive: false`. **You turned them off by accident on
+  2026-07-03 at 7:56 PM** — fifteen promos went off in thirty seconds, eight you meant to retire
+  (BOGO, 50% off entire menu, MEAL DEAL, 20% OFF EVERYTHING, …) and six that were the live coupons
+  of campaigns still running. They sit in the same Promotions list behind the same power button
+  with only a small "Autopilot" badge, and nothing warned you. **54 emails to 52 customers between
+  2026-07-04 and today carried a dead code (0 redemptions, ever).** Ben's went out Aug 9.
+  Now fixed three ways: the sender can no longer attach a switched-off code, the Promotions list
+  greys out (🔒) any code a running campaign owns, and the Autopilot page shows an amber
+  "this campaign has no working offer code" warning if it ever happens again.
+- **T-O. 🤔 YOUR CALL — free delivery covers Zones 1–3 only (of 8).** Zone 4 (11 km) and beyond pay
+  $10.99–$49.99. That's a legitimate setup, but your promo's own description says *"Free Delivery on
+  ALL orders over $30 (within our standard delivery zone)"*, which reads broader than 8 km. One
+  customer (ORD-870058858, $44.97 in Zone 4) paid $10.99 under it. Either widen the zones or
+  tighten the wording — tell me which.
+- **T-Q. ✅ DONE — VIP members no longer get win-back offers stacked on club pricing.**
+  You asked whether groups could be excluded from these campaigns. They couldn't — the capability
+  didn't exist anywhere in the system, so it's now built. **Two settings:**
+  (1) On each customer group: **"Members already get club pricing"**. Ticked already for all three
+  of your groups (Pizza Club, Milton Ultimate Club, MUC Leaders) — I only ticked groups that carry
+  a real perk, so a future mailing-list group won't be silenced by accident.
+  (2) On each Autopilot campaign: **Same as everyone / Email, no extra code / Don't email them**.
+  All three default to **"Email, no extra code"** — your choice: they still get the nudge, but the
+  coupon block is replaced by "your member pricing already applies". Change any of them on the
+  Autopilot page. *(These are Autopilot campaigns, not Kickstarter — Kickstarter is your separate
+  FIRSTBUY first-buy promo, untouched.)*
+- **T-R. ✅ DONE — win-back timing fixed: 3 → 21 days.** Your "we miss you" email was firing a
+  median of **5.1 days** after someone's last order (Ben got his at 5.3 days). The ladder is now
+  **21 / 40 / 60 / 90 days**. Nobody gets extra email from this — it only delays.
+- **T-S. ✅ DONE — staff order emails now name each special.** Your ORD-910152825 email showed only
+  "Promo discount −$37.01". It now lists every promo that fired with its own amount (and the coupon
+  code where one was typed), with any remainder still shown so the column always adds up to Total.
+- **T-P. 👀 After deploy, try the delivery test in the plan file** (order page → Delivery →
+  `66-745 Farmstead Drive, Milton`). It used to charge $7.99; it should now land in Zone 2 and read
+  FREE. Ben has no saved address on file, so ask him for his street address and run the same test
+  against it — that tells us whether he was a geocode failure or genuinely in Zone 4+.
 
 **🌅 TODAY 2026-08-10 (fresh, from the overnight ShipDay session):**
 - **T-K. 🚨 CANCEL your test order #ORD-566877211** (the $11.32 Reward-Dollars scheduled delivery
@@ -117,11 +182,16 @@ preflight green.
    confirmed"** with no mention of waiting. Old orders keep their old emails — nothing is re-sent.
 2. 🤔 **Tell Fabrizio?** His store has been sending the same wrong email to real customers since
    May. It's now fixed for him automatically. Your call whether that's worth a note.
-3. ☐ **Two pre-existing issues found in passing, NOT fixed here** (each wants its own change):
-   every non-English email ships `lang="en" dir="ltr"`, which breaks Arabic/Hebrew direction and
-   mislabels the language on all 37 non-English locales; and the customer SMS/push text is
-   English-only in code with no translation keys. The SMS one is currently harmless — **zero**
-   restaurants have the SMS or branded-app add-on active, so nothing sends today.
+3. ✅ **DONE 2026-08-12 — both of the pre-existing issues found in passing are now fixed and live.**
+   Each got its own change, as flagged. (a) Every email now declares its own language, and Arabic
+   and Hebrew read right-to-left — harder than it sounds, because Gmail/Outlook.com/Yahoo strip the
+   `<html>` element entirely, so the direction is repeated on the container table, and email can't
+   use logical CSS (Outlook renders with the Word engine) so the alignment and padding are mirrored
+   by hand. Staff-facing English-body templates deliberately keep `lang="en"`. (b) Customer SMS and
+   branded-app push are translated into all 38 languages — one builder feeds both surfaces. Kept
+   under 138 characters and GSM-7 only, because SMS bills per segment and a single em dash would
+   double what a restaurant pays per text. Still nothing sends today (no store has the add-on), which
+   is exactly why it was worth fixing before the first one turns it on.
 
 ### A44. 📍 "Could not geocode this address" (Sofia Chilly meals, Islamabad) — FIXED, one check is yours (2026-08-10)
 What actually happened: nothing to do with the Pakistan country work from yesterday. The address
@@ -406,18 +476,27 @@ scheme") and reads worse than the situation is. The second, from **Rachel Willia
 **What happened:** the COMPANY NAME was entered in the "Position within Company" field instead of a
 job title, on BOTH contacts. Not an eligibility rejection — a form field.
 
-**STATUS 2026-07-31 10:48 PM — Luigi emailed Revenue, ball is in their court.** He replied to
-OSSNSD@revenue.ie explaining it was a typo, stating he is the **Owner/Director**, and asking
-whether they can correct it their side, whether a new application is needed, or whether they can
-issue a verification code so he can log in and update it himself. Sensible — a full resubmission
-may not be necessary and re-keying it blindly risks a second bounce.
+**STATUS 2026-08-10 — Revenue answered: they CANNOT amend the application. Full resubmission
+required.** So the new one has to be right first time. Everything needed is in
+**`docs/VAT-OSS-RESUBMISSION-2026-08-10.md`** — a field-by-field sheet built from what was actually
+filed on 2026-07-30, so you re-type nothing from memory.
 
-- ⏳ **Waiting on Revenue's reply.** ☐ **Luigi calls +353 42 9353340 on Tuesday** if no answer by
-  then (Ireland is 5h ahead of Toronto — call before ~11 AM their time, so before 6 AM ET; late
-  morning ET will miss them).
-- ☐ Only if they insist on a fresh application: resubmit with **Owner/Director** in *Position
-  within Company* for BOTH contacts via the non-Union OSS registration portal (linked from
-  revenue.ie/en/vat/vat-ecommerce/non-union-scheme).
+**The governing rule: change exactly ONE thing — the two `Position within Company` fields → `Director`.**
+Every other field passed Revenue's review without comment; re-keying an unchallenged field is how you
+earn a second bounce.
+
+**Both open questions resolved 2026-08-10 — there is nothing left to decide, only to type:**
+- Both contacts were you ⇒ `Director` in **both** position fields (a repeated true title beats an
+  invented second one).
+- No EU sale has actually happened ⇒ date of first supply = **`2026-10-01`**, NOT the original
+  `2026-08-01`. A past date with no supply behind it is a false statement on a tax registration —
+  worse than the field that bounced you. Effective date lands 1 Oct either way, and the
+  EU-VAT-at-checkout code doesn't exist yet, so this costs nothing. Explain the change in the
+  covering email so it doesn't generate a query.
+
+- ☐ Submit at <https://www.ros.ie/vatoss-web/vatoss.html>, screenshot the form BEFORE clicking
+  submit, and reply on Rachel's existing thread so the new filing isn't read as a stray duplicate
+  (draft email is in §5 of the sheet).
 - ⚠️ **This is the blocker behind Fabrizio's invoices report `cmr1ty0lc`** (T-F): non-VIES EU
   restaurants can't buy paid plans until the OSS registration is live. Worth telling him it's in
   progress rather than leaving that report silent.
@@ -952,3 +1031,67 @@ When you have the iPad handy, tell Claude "let's do C3": print a real test order
 ---
 
 *Claude also keeps a full audit under `docs/launch-readiness/` — findings there reference these action items where an owner step closes a finding.*
+
+### A45. 📞 Nabil AI now BUILDS pizzas and combos — two things are yours before it goes live (2026-08-11)
+Nabil can now take a pizza order by voice: sizes, toppings, half-and-half, combo slots, and
+mid-order changes ("actually make that second one half mushroom"). It is **switched OFF for every
+store, including yours** — it turns on only after the two checks below.
+
+An adversarial review of the build found and fixed 21 real defects first. The worst one is worth
+knowing about because it is exactly what these checks exist to catch: preset toppings are stored
+by NAME, the builder looked them up by ID, so a $20 five-topping pizza would have been sold for
+**$10** with a plain-cheese ticket in the kitchen. Fixed, pinned by tests, and the code now
+refuses the sale outright rather than guessing if that config ever drifts again.
+
+1. ☐ **Call +1 365 658 1458 and place four orders**, checking the PRINTED RECEIPT each time:
+   (a) a large pepperoni, (b) half pepperoni / half mushroom, (c) a five-topping pizza — you
+   should HEAR the extra-topping charge announced before you confirm, (d) a combo.
+   The number Nabil reads you comes from the same code that charges, so if the receipt matches
+   what you heard on all four, the money path is sound.
+2. ☐ **Then say yes/no to two cost switches** (details in the session summary):
+   • `NABIL_MODEL=claude-haiku-4-5` — roughly halves the per-call AI cost, but it's a different
+     model driving the money path, so it should not go in until after your four test calls.
+   • `fly scale count 2` — about +US$5–7/mo. Today one machine holds every live call, so a crash
+     or a deploy drops calls in progress. Not urgent at pilot volume; needed before you sell this
+     to other restaurants.
+3. ☐ **Optional, ~US$5/mo:** an ElevenLabs API key would switch on the "hear this voice" play
+   button in Settings → Voice. The voice picker works without it — you just can't preview.
+
+### A47. 💳 Paid card orders were being LOST before the kitchen saw them — FIXED (2026-08-12)
+This started with one customer, Sharon Craven, who paid for ORD-710341102 and then walked in to
+collect food nobody had cooked. She was not a one-off.
+
+**What was wrong.** Your Stripe account webhooks YOUR endpoints, not ours (that's the key-only
+model, by design). So the only thing that ever moved a paid card order into your kitchen was the
+customer's browser landing back on the confirmation page after Stripe redirected it. **That made
+the customer's phone a single point of failure for the entire order.** Closing the tab, a 3-D
+Secure bounce into a banking app, an Instagram/Facebook in-app browser eating part of the return
+link, or just losing signal — any of those lost the order outright. And because the PaymentIntent
+id only ever arrived on that same redirect, nothing could find those orders afterwards even in
+principle. **Audit of your store: 36 stranded card orders in 60 days.**
+
+A second bug hid the worst of them. An auto-accepted card order still awaiting payment was being
+flipped to "completed" about 20 minutes after checkout, which made it invisible to every cleanup
+sweep, counted food you never made as revenue, and awarded Reward Dollars on it.
+
+**What's live now:** the intent id is saved on the order the moment checkout starts, and a
+reconciliation job asks Stripe every minute what actually happened — releasing genuinely paid
+orders to your kitchen (typically within a minute) and cancelling stale authorizations so a dead
+order stops holding a customer's money. Nothing can complete unless the kitchen was told about it
+first.
+
+1. 🤔 **YOUR CALL — three real orders you never received, $83.62 total.** Deliberately NOT touched
+   by any automatic repair, because the obvious fix (cancel it, void the money, claw the promo back)
+   would be wrong: Sharon turned up and you served her, so cancelling would have destroyed your
+   record of an order you'd actually fulfilled and your ability to collect for it. Whether to chase
+   payment or write each one off is yours, not a cron's:
+   • **ORD-710341102 — Sharon Craven, $36.44** (the one you served)
+   • **ORD-733393825 — Lisa Benacquista, $34.39**
+   • **ORD-721054168 — Uzair Rana, $12.79**
+   Tell me which of the three to chase and I'll walk you through "Request payment" on each.
+2. 👀 **Watch for one log line.** `RESCUED` in the logs means the safety net caught a real order —
+   good, but it also means the customer's browser failed to report a payment. A handful is normal.
+   A steady stream means something upstream is broken and worth chasing.
+3. ☐ **One live test when convenient:** place a card order and **close the tab the instant you hit
+   Pay** — don't wait for the "thank you" page. The order should still reach your kitchen within
+   about a minute. That is the whole fix, demonstrated in one move.
