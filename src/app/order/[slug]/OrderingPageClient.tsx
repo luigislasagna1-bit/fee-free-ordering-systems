@@ -7353,6 +7353,13 @@ export function OrderingPageClient({
           geocoding={geocoding}
           geocodeError={geocodeError}
           resolvedZone={resolvedZone}
+          // Where the SERVER placed the typed address. Until this was passed
+          // down, the pin map could only ever open for a customer who picked an
+          // autocomplete suggestion — someone who typed a perfectly good address
+          // and never touched the dropdown got coords, a zone and a fee without
+          // ever being shown a map to check. That is the path every wrong-zone
+          // order we found came down. Luigi 2026-08-12.
+          customerCoords={customerCoords}
           distanceFromStoreKm={distanceFromStoreKm}
           acceptOutsideZoneOrders={!!(restaurant as any).acceptOutsideZoneOrders}
           mapProvider={restaurant.mapProvider ?? "leaflet"}

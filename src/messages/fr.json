@@ -589,7 +589,8 @@
     "addressNotLocated": "Choisissez votre adresse parmi les suggestions pour que nous vérifiions la livraison.",
     "pickAddressFromList": "Choisissez votre adresse dans la liste ci-dessus pour que nous confirmions votre zone de livraison et le prix.",
     "cantFindAddress": "Vous ne trouvez pas votre adresse ? Placez plutôt un repère sur la carte",
-    "pausedSchedulePrompt": "⏸ Nous ne prenons pas de commandes immédiates pour le moment — choisissez une heure plus tard et tout sera prêt. Le premier créneau disponible est affiché ci-dessous."
+    "pausedSchedulePrompt": "⏸ Nous ne prenons pas de commandes immédiates pour le moment — choisissez une heure plus tard et tout sera prêt. Le premier créneau disponible est affiché ci-dessous.",
+    "checkPinHint": "C'est là que nous pensons que vous êtes. Faites glisser le repère jusqu'à votre porte exacte pour que le prix de livraison soit juste."
   },
   "reservation": {
     "title": "Réserver une table",

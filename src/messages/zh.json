@@ -589,7 +589,8 @@
     "addressNotLocated": "请从建议中选择您的地址，以便我们确认能否配送。",
     "pickAddressFromList": "请从上方列表中选择您的地址，以便我们确认配送范围和费用。",
     "cantFindAddress": "找不到您的地址？改用地图放置图钉",
-    "pausedSchedulePrompt": "⏸ 我们暂时不接“立即”订单 — 请选择稍后的时间，我们会提前备好。最早可选时间显示在下方。"
+    "pausedSchedulePrompt": "⏸ 我们暂时不接“立即”订单 — 请选择稍后的时间，我们会提前备好。最早可选时间显示在下方。",
+    "checkPinHint": "这是我们推测的您的位置。请将图钉拖到您家门口的准确位置，以便正确计算配送费。"
   },
   "reservation": {
     "title": "预订餐桌",

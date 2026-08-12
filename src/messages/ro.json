@@ -589,7 +589,8 @@
     "addressNotLocated": "Alegeți adresa din sugestii, ca să putem verifica livrarea la dumneavoastră.",
     "pickAddressFromList": "Alegeți adresa din lista de mai sus, ca să putem confirma zona de livrare și costul.",
     "cantFindAddress": "Nu vă găsiți adresa? Puneți un pin pe hartă",
-    "pausedSchedulePrompt": "⏸ Momentan nu preluăm comenzi pentru acum — alege o oră mai târzie și o vom pregăti. Cel mai devreme interval disponibil este afișat mai jos."
+    "pausedSchedulePrompt": "⏸ Momentan nu preluăm comenzi pentru acum — alege o oră mai târzie și o vom pregăti. Cel mai devreme interval disponibil este afișat mai jos.",
+    "checkPinHint": "Aici credem că vă aflați. Trageți indicatorul exact la ușa dumneavoastră pentru ca prețul livrării să fie corect."
   },
   "reservation": {
     "title": "Rezervă o masă",

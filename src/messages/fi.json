@@ -589,7 +589,8 @@
     "addressNotLocated": "Valitse osoitteesi ehdotuksista, niin voimme tarkistaa toimituksen sinulle.",
     "pickAddressFromList": "Valitse osoitteesi yllä olevasta luettelosta, niin voimme vahvistaa toimitusalueesi ja hinnan.",
     "cantFindAddress": "Etkö löydä osoitettasi? Aseta nasta kartalle",
-    "pausedSchedulePrompt": "⏸ Emme ota juuri nyt heti toimitettavia tilauksia — valitse myöhempi aika, niin se on valmiina. Aikaisin vapaa aika näkyy alla."
+    "pausedSchedulePrompt": "⏸ Emme ota juuri nyt heti toimitettavia tilauksia — valitse myöhempi aika, niin se on valmiina. Aikaisin vapaa aika näkyy alla.",
+    "checkPinHint": "Arvelemme sinun olevan täällä. Vedä nasta tarkalleen ovellesi, jotta toimitushinta on oikea."
   },
   "reservation": {
     "title": "Varaa pöytä",

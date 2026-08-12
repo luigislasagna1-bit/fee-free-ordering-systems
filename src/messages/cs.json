@@ -589,7 +589,8 @@
     "addressNotLocated": "Vyberte adresu z návrhů, abychom mohli ověřit doručení k vám.",
     "pickAddressFromList": "Vyberte svou adresu ze seznamu výše, abychom mohli potvrdit oblast doručení a cenu.",
     "cantFindAddress": "Nemůžete najít svou adresu? Označte místo na mapě",
-    "pausedSchedulePrompt": "⏸ Objednávky na hned teď nepřijímáme — vyberte pozdější čas a připravíme ji. Nejbližší volný termín je níže."
+    "pausedSchedulePrompt": "⏸ Objednávky na hned teď nepřijímáme — vyberte pozdější čas a připravíme ji. Nejbližší volný termín je níže.",
+    "checkPinHint": "Tady si myslíme, že jste. Přetáhněte špendlík přesně ke svým dveřím, aby cena za doručení seděla."
   },
   "reservation": {
     "title": "Rezervovat stůl",

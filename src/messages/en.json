@@ -589,7 +589,8 @@
     "addressNotLocated": "Pick your address from the suggestions so we can check delivery to you.",
     "pickAddressFromList": "Choose your address from the list above so we can confirm your delivery area and price.",
     "cantFindAddress": "Can't find your address? Place a pin on the map instead",
-    "pausedSchedulePrompt": "⏸ We’re not taking orders for right now — pick a later time and we’ll have it ready. The earliest available slot is shown below."
+    "pausedSchedulePrompt": "⏸ We’re not taking orders for right now — pick a later time and we’ll have it ready. The earliest available slot is shown below.",
+    "checkPinHint": "This is where we think you are. Drag the pin to your exact door so your delivery price is right."
   },
   "reservation": {
     "title": "Book a table",

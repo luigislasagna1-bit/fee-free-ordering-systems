@@ -589,7 +589,8 @@
       "body": "{account} olarak giriş yaptınız; bu nedenle bu sipariş — ve bu siparişte harcadığınız ya da kazandığınız tüm {label} — o hesaba aittir. Onay e-postası {typed} adresine gönderilecek.",
       "useAccountEmail": "Bunun yerine kendi e-posta adresime gönder"
     },
-    "pausedSchedulePrompt": "⏸ Şu anda hemen teslim siparişi almıyoruz — daha geç bir saat seçin, hazır olsun. En erken uygun saat aşağıda gösteriliyor."
+    "pausedSchedulePrompt": "⏸ Şu anda hemen teslim siparişi almıyoruz — daha geç bir saat seçin, hazır olsun. En erken uygun saat aşağıda gösteriliyor.",
+    "checkPinHint": "Burada olduğunuzu düşünüyoruz. Teslimat ücretinin doğru olması için iğneyi tam kapınıza sürükleyin."
   },
   "reservation": {
     "title": "Masa Rezervasyonu",

@@ -589,7 +589,8 @@
     "addressNotLocated": "Vyberte adresu z návrhov, aby sme mohli overiť doručenie k vám.",
     "pickAddressFromList": "Vyberte svoju adresu zo zoznamu vyššie, aby sme mohli potvrdiť oblasť doručenia a cenu.",
     "cantFindAddress": "Nemôžete nájsť svoju adresu? Označte miesto na mape",
-    "pausedSchedulePrompt": "⏸ Objednávky na hneď teraz momentálne neprijímame — vyberte neskorší čas a pripravíme ju. Najskorší voľný termín je nižšie."
+    "pausedSchedulePrompt": "⏸ Objednávky na hneď teraz momentálne neprijímame — vyberte neskorší čas a pripravíme ju. Najskorší voľný termín je nižšie.",
+    "checkPinHint": "Myslíme si, že ste tu. Potiahnite špendlík presne k svojim dverám, aby bola cena za doručenie správna."
   },
   "reservation": {
     "title": "Rezervovať stôl",

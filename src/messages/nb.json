@@ -589,7 +589,8 @@
     "addressNotLocated": "Velg adressen din blant forslagene, så kan vi sjekke leveringen til deg.",
     "pickAddressFromList": "Velg adressen din fra listen over, så kan vi bekrefte leveringsområdet og prisen.",
     "cantFindAddress": "Finner du ikke adressen din? Sett en nål på kartet i stedet",
-    "pausedSchedulePrompt": "⏸ Vi tar ikke imot bestillinger til nå akkurat nå — velg et senere tidspunkt, så har vi den klar. Det tidligste ledige tidspunktet vises nedenfor."
+    "pausedSchedulePrompt": "⏸ Vi tar ikke imot bestillinger til nå akkurat nå — velg et senere tidspunkt, så har vi den klar. Det tidligste ledige tidspunktet vises nedenfor.",
+    "checkPinHint": "Det er her vi tror du er. Dra nålen til nøyaktig døren din, så leveringsprisen blir riktig."
   },
   "reservation": {
     "title": "Bestill bord",

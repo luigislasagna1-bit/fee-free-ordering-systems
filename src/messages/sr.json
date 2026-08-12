@@ -589,7 +589,8 @@
     "addressNotLocated": "Izaberite svoju adresu iz predloga da bismo proverili dostavu do vas.",
     "pickAddressFromList": "Izaberite adresu sa liste iznad da bismo potvrdili zonu dostave i cenu.",
     "cantFindAddress": "Ne možete da pronađete svoju adresu? Označite mesto na mapi",
-    "pausedSchedulePrompt": "⏸ Trenutno ne primamo porudžbine za odmah — izaberite kasnije vreme i biće spremna. Najraniji slobodan termin je prikazan ispod."
+    "pausedSchedulePrompt": "⏸ Trenutno ne primamo porudžbine za odmah — izaberite kasnije vreme i biće spremna. Najraniji slobodan termin je prikazan ispod.",
+    "checkPinHint": "Мислимо да сте овде. Превуците ознаку тачно до својих врата да би цена доставе била тачна."
   },
   "reservation": {
     "title": "Rezerviši sto",

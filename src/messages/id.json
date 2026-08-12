@@ -589,7 +589,8 @@
     "addressNotLocated": "Pilih alamat Anda dari saran agar kami bisa memeriksa pengiriman ke Anda.",
     "pickAddressFromList": "Pilih alamat Anda dari daftar di atas agar kami bisa memastikan area dan biaya pengiriman.",
     "cantFindAddress": "Tidak menemukan alamat Anda? Letakkan pin di peta saja",
-    "pausedSchedulePrompt": "⏸ Saat ini kami tidak menerima pesanan untuk sekarang — pilih waktu lebih lambat dan kami akan menyiapkannya. Slot paling awal yang tersedia ditampilkan di bawah."
+    "pausedSchedulePrompt": "⏸ Saat ini kami tidak menerima pesanan untuk sekarang — pilih waktu lebih lambat dan kami akan menyiapkannya. Slot paling awal yang tersedia ditampilkan di bawah.",
+    "checkPinHint": "Ini perkiraan lokasi Anda. Geser pin ke pintu Anda yang tepat agar biaya pengiriman benar."
   },
   "reservation": {
     "title": "Pesan meja",

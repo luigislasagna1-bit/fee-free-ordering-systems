@@ -589,7 +589,8 @@
     "addressNotLocated": "Valige aadress soovituste hulgast, et saaksime kohaletoimetamist kontrollida.",
     "pickAddressFromList": "Valige aadress ülalolevast loendist, et saaksime kinnitada kohaletoimetamise piirkonna ja hinna.",
     "cantFindAddress": "Ei leia oma aadressi? Märkige asukoht kaardil",
-    "pausedSchedulePrompt": "⏸ Praegu me kohe täidetavaid tellimusi vastu ei võta — vali hilisem aeg ja paneme selle valmis. Varaseim vaba aeg on näha allpool."
+    "pausedSchedulePrompt": "⏸ Praegu me kohe täidetavaid tellimusi vastu ei võta — vali hilisem aeg ja paneme selle valmis. Varaseim vaba aeg on näha allpool.",
+    "checkPinHint": "Arvame, et olete siin. Lohistage nõel täpselt oma ukseni, et kohaletoimetamise hind oleks õige."
   },
   "reservation": {
     "title": "Broneeri laud",

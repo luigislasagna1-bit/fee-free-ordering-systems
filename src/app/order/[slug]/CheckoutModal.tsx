@@ -290,6 +290,11 @@ interface Props {
   geocoding: boolean;
   geocodeError: string | null;
   resolvedZone: { zone: { name: string; color: string; deliveryFee: number; estimatedMinutes: number; minimumOrder: number }; inside: boolean } | null;
+  /** Where the parent's server-side geocode placed the TYPED address. Distinct
+   *  from customerInfo.lat/lng, which are only set by picking a suggestion or
+   *  dragging the pin — this is the weaker, inferred point. Used to open the map
+   *  so an inferred location always gets looked at. Luigi 2026-08-12. */
+  customerCoords?: { lat: number; lng: number } | null;
   /** Straight-line km from the store to the typed delivery address (null until
    *  geocoded). Appended to the zone line so the customer sees how far they are. */
   distanceFromStoreKm?: number | null;
@@ -465,7 +470,7 @@ export function CheckoutModal({
   paypalEnabled,
   couponCode, setCouponCode, couponId, couponDiscount, couponLoading, applyCoupon,
   estimatedDeliveryMinutes, estimatedPickupMinutes,
-  hasZones, geocoding, geocodeError, resolvedZone, distanceFromStoreKm = null, acceptOutsideZoneOrders = false,
+  hasZones, geocoding, geocodeError, resolvedZone, customerCoords = null, distanceFromStoreKm = null, acceptOutsideZoneOrders = false,
   googleMapsApiKey, geocodeCountry, restaurantLat, restaurantLng, restaurantCity,
   deliveryFormConfig,
   reservationContext = null,
@@ -542,6 +547,51 @@ export function CheckoutModal({
       ? { lat: customerInfo.lat, lng: customerInfo.lng }
       : null,
   );
+
+  // ── SHOW THE MAP FOR AN INFERRED ADDRESS TOO ──────────────────────────────
+  // The map used to appear only when the customer PICKED a suggestion (that's
+  // the only thing that set mapCenter) or clicked the "can't find my address"
+  // link. Someone who typed a complete address and never touched the dropdown
+  // got coordinates from the server geocode, a zone, and a delivery fee —
+  // without ever being shown where we think they live. Every wrong-zone order
+  // we found came down that path, Ben Bilton's included: his street geocoded to
+  // nothing because of the unit prefix, so his cart quietly fell back to the
+  // flat fee on an order that qualified for free delivery.
+  //
+  // A server geocode is an INFERENCE, not the customer's word. So when one lands
+  // and we have no confirmed point of our own, centre the map on it and show it.
+  // Nothing is forced: they can ignore it, and the existing skip/escape paths
+  // are untouched — but they can no longer be charged for a zone they were never
+  // shown. Luigi 2026-08-12.
+  const lastAutoCenteredRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (orderType !== "delivery") return;
+    // A pin the customer set themselves always wins — never yank the map off it.
+    if (customerInfo.lat != null && customerInfo.lng != null) return;
+    if (!customerCoords) return;
+    // Re-centre once per distinct point, so dragging or re-rendering can't fight
+    // the customer for control of the map.
+    const key = `${customerCoords.lat.toFixed(6)},${customerCoords.lng.toFixed(6)}`;
+    if (lastAutoCenteredRef.current === key) return;
+    lastAutoCenteredRef.current = key;
+    setMapCenter({ lat: customerCoords.lat, lng: customerCoords.lng });
+    setShowPin(true);
+  }, [customerCoords, customerInfo.lat, customerInfo.lng, orderType]);
+
+  // ── A STALE PIN IS WORSE THAN NO PIN ──────────────────────────────────────
+  // mapCenter and showPin were never reset. Clearing the street field, or using
+  // "+ Enter a new address", left the previous address's map on screen with a
+  // marker still sitting on it — and CheckoutLeafletPin falls back to the map
+  // centre when lat/lng are null, so that marker LOOKED like a confirmed
+  // location for an address the customer had already abandoned. Drop the map
+  // when the address goes away. Caught while mapping this flow, 2026-08-12.
+  useEffect(() => {
+    if (customerInfo.address.trim().length > 0) return;
+    if (customerInfo.lat != null && customerInfo.lng != null) return;
+    lastAutoCenteredRef.current = null;
+    setMapCenter(null);
+    setShowPin(false);
+  }, [customerInfo.address, customerInfo.lat, customerInfo.lng]);
 
   // ── Address autocomplete — ONE in-modal dropdown for every restaurant ───
   // Google-keyed restaurants get Places predictions; everyone else gets
@@ -1584,7 +1634,16 @@ export function CheckoutModal({
                           lng={customerInfo.lng ?? null}
                           onMove={(la, ln) => setCustomerInfo({ ...customerInfo, lat: la, lng: ln })}
                         />
-                        <p className="text-xs text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
+                        {/* Two different jobs. Once the customer owns the point,
+                            this is a quiet "you can fine-tune it". While it's
+                            still the geocoder's guess it has to ASK — that spot
+                            decides their delivery zone and therefore their fee,
+                            and nobody has agreed to it yet. */}
+                        {customerInfo.lat != null && customerInfo.lng != null ? (
+                          <p className="text-xs text-gray-500 px-2 py-1.5 bg-gray-50">{tc("dragPinHint")}</p>
+                        ) : (
+                          <p className="text-xs font-medium text-amber-900 px-2 py-1.5 bg-amber-50">{tc("checkPinHint")}</p>
+                        )}
                       </div>
                     )}
                     {/* Customizable extra address fields (Neighbourhood, Block/

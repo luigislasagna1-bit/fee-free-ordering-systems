@@ -589,7 +589,8 @@
     "addressNotLocated": "Trieu la vostra adreça entre els suggeriments perquè puguem comprovar el lliurament.",
     "pickAddressFromList": "Trieu la vostra adreça de la llista de dalt perquè puguem confirmar la zona de lliurament i el preu.",
     "cantFindAddress": "No trobeu la vostra adreça? Col·loqueu un marcador al mapa",
-    "pausedSchedulePrompt": "⏸ Ara mateix no acceptem comandes immediates — tria una hora més tard i la tindrem a punt. L'hora disponible més propera es mostra a sota."
+    "pausedSchedulePrompt": "⏸ Ara mateix no acceptem comandes immediates — tria una hora més tard i la tindrem a punt. L'hora disponible més propera es mostra a sota.",
+    "checkPinHint": "Aquí és on creiem que ets. Arrossega el marcador fins a la teva porta exacta perquè el preu del lliurament sigui correcte."
   },
   "reservation": {
     "title": "Reservar taula",
