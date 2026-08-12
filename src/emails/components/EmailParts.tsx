@@ -376,6 +376,7 @@ export function OrderTotals({
   balanceDue, balanceDueLabel,
   paymentLabel, paymentValue,
   subtotalLabel, deliveryFeeLabel, tipLabel, discountLabel, totalLabel, freeLabel,
+  discountBreakdown,
 }: {
   subtotal: number;
   taxAmount?: number;
@@ -427,6 +428,13 @@ export function OrderTotals({
   discountLabel?: string;
   totalLabel?: string;
   freeLabel?: string;
+  /** The individual promos behind `discount`, so the breakdown names each
+   *  special instead of lumping them into one line (Luigi 2026-08-11). Promo
+   *  NAMES are owner-authored data, not UI copy, so they need no i18n — the
+   *  fallback label does. free_delivery must NOT appear here: its saving lives
+   *  on the delivery row as "FREE (was $X)". Anything the named rows don't
+   *  cover still renders on the generic line, so the column always reconciles. */
+  discountBreakdown?: Array<{ name?: string; amount?: number; couponCode?: string }>;
 }) {
   const row = (label: string, amount: number, bold = false) => (
     <Row>
@@ -474,7 +482,41 @@ export function OrderTotals({
           </Row>
         ))}
       {!!tip && tip > 0 && row(tipLabel ?? "Tip", tip)}
-      {!!discount && discount > 0 && row(discountLabel ?? "Promo discount", -discount)}
+      {/* ── Discount, itemised by promo ───────────────────────────────────────
+          Luigi 2026-08-11: a staff email reading "Promo discount −$37.01" gave
+          the kitchen no way to see WHICH specials a customer had used. Each
+          named promo now gets its own green row, in the same shape the service
+          fees above already use.
+
+          Reconciliation is the rule here: the rows must still add up to Total.
+          So whatever the named promos don't account for (a manual coupon, a
+          legacy order with no snapshot) is rendered as the remainder on the
+          original generic line. Nothing is ever dropped, and an order with no
+          snapshot at all falls straight through to the old single row. */}
+      {(() => {
+        const named = (discountBreakdown ?? []).filter((d) => d && Number(d.amount ?? 0) > 0);
+        const total = Number(discount ?? 0);
+        if (total <= 0) return null;
+        const namedSum = named.reduce((s, d) => s + Number(d.amount), 0);
+        // Half a cent of tolerance — float noise must not mint a phantom row.
+        const remainder = Math.round((total - namedSum) * 100) / 100;
+        return (
+          <>
+            {named.map((d, i) => (
+              <Row key={`promo-${i}`}>
+                <Column style={{ fontSize: 14, color: "#047857", padding: "4px 0", fontWeight: 400 }}>
+                  {d.name || (discountLabel ?? "Promo discount")}
+                  {d.couponCode ? ` (${d.couponCode})` : ""}
+                </Column>
+                <Column style={{ fontSize: 14, textAlign: "right", color: "#047857", padding: "4px 0", fontWeight: 600 }}>
+                  {formatCurrency(-Number(d.amount), currency)}
+                </Column>
+              </Row>
+            ))}
+            {remainder > 0.005 && row(discountLabel ?? "Promo discount", -remainder)}
+          </>
+        );
+      })()}
       {!!taxAmount && taxAmount > 0 && row(taxLabel, taxAmount)}
       {!!depositTotal && depositTotal > 0 && (
         <Row>

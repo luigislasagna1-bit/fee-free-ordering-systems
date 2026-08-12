@@ -67,6 +67,9 @@ export type KitchenNotificationProps = {
   tip?: number;
   depositTotal?: number;
   discount?: number;
+  /** Each promo behind `discount`, so staff can see WHICH specials a customer
+   *  used instead of one lumped figure. Luigi 2026-08-11. */
+  discountBreakdown?: Array<{ name?: string; amount?: number; couponCode?: string }>;
   /** Per-order service/other fees (parsed [{name, amount}]) — named rows so
    *  the staff email's totals reconcile to Total. 2026-07-11. */
   serviceFees?: Array<{ name?: string; amount?: number }>;
@@ -101,7 +104,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
   const {
     t, restaurantName, orderNumber, customerName, customerPhone, customerEmail,
     orderType, estimatedMinutes, placedAtLabel, prepTimeLabel, readyAtLabel, readyRowLabel, scheduledLabel, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
-    taxLabel, deliveryFee, savedDeliveryFee, tip, depositTotal, discount, serviceFees, total, deliveryAddress,
+    taxLabel, deliveryFee, savedDeliveryFee, tip, depositTotal, discount, discountBreakdown, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
     creditApplied, rewardLabel, rewardEarned, showAcceptHint = true,
   } = props;
@@ -225,6 +228,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
               tip={tip}
               depositTotal={depositTotal}
               discount={discount}
+              discountBreakdown={discountBreakdown}
               serviceFees={serviceFees}
               total={total}
               currency={currency ?? "usd"}

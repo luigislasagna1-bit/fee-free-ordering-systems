@@ -253,3 +253,95 @@ describe("staff new-order email shows every money line", () => {
     expect(strip(html)).not.toMatch(/\b(receipt|email|checkout|customer)\.[a-zA-Z]+\.[a-zA-Z]+/);
   });
 });
+
+/**
+ * Luigi 2026-08-11: the staff email for a $70.02 order read "Promo discount
+ * −$37.01" and nothing else, so the kitchen had no way to tell WHICH specials
+ * the customer had used — on a store running a Toonie Tuesday slice price, a
+ * 30% VIP special and a menu-wide 20% at the same time, that single figure is
+ * unreadable. Order.appliedPromos already snapshots every promo that fired, so
+ * the data was there; only the render was missing.
+ *
+ * The invariant that matters is RECONCILIATION: the named rows plus any
+ * remainder must still add up to the discount the Total was computed from.
+ */
+describe("staff email itemises the promos behind the discount", () => {
+  const base = {
+    restaurantName: "Luigi's",
+    orderNumber: "ORD-910152825",
+    customerName: "Ben",
+    orderType: "delivery",
+    items: ITEMS,
+    subtotal: 70.02,
+    tip: 10.5,
+    taxAmount: 4.29,
+    total: 47.8,
+    dashboardUrl: "https://example.com/admin",
+  };
+
+  it("names each special with its own amount instead of one lumped figure", async () => {
+    const t = await getDict("en");
+    const html = await renderEmail(
+      KitchenNotification({
+        t,
+        ...base,
+        discount: 37.01,
+        discountBreakdown: [
+          { name: "TOONIE TUESDAY", amount: 21.0 },
+          { name: "AUG VIP SPECIAL", amount: 11.01 },
+          { name: "20% OFF Menu Wide - VIP MEMBERS", amount: 5.0 },
+        ],
+      } as any),
+    );
+    const text = strip(html);
+    for (const [name, amount] of [
+      ["TOONIE TUESDAY", "21.00"],
+      ["AUG VIP SPECIAL", "11.01"],
+      ["20% OFF Menu Wide - VIP MEMBERS", "5.00"],
+    ]) {
+      expect(text, `"${name}" is missing from the staff email`).toContain(name);
+      expect(text, `${name}'s amount ${amount} is missing`).toContain(amount);
+    }
+    // Fully accounted for → no leftover generic row duplicating the same money.
+    expect(text).not.toContain("37.01");
+  });
+
+  it("still shows the remainder when the named promos don't cover the whole discount", async () => {
+    // e.g. a hand-entered coupon, or a legacy order with no promo snapshot.
+    const t = await getDict("en");
+    const html = await renderEmail(
+      KitchenNotification({
+        t,
+        ...base,
+        discount: 37.01,
+        discountBreakdown: [{ name: "AUG VIP SPECIAL", amount: 11.01 }],
+      } as any),
+    );
+    const text = strip(html);
+    expect(text).toContain("AUG VIP SPECIAL");
+    expect(text).toContain("11.01");
+    expect(text).toContain("26.00"); // the remainder — money is never dropped
+  });
+
+  it("falls back to the single line for an order with no snapshot at all", async () => {
+    const t = await getDict("en");
+    const html = await renderEmail(
+      KitchenNotification({ t, ...base, discount: 37.01 } as any),
+    );
+    const text = strip(html);
+    expect(text).toContain("37.01");
+  });
+
+  it("shows a coupon code beside its promo when one was typed", async () => {
+    const t = await getDict("en");
+    const html = await renderEmail(
+      KitchenNotification({
+        t,
+        ...base,
+        discount: 3.5,
+        discountBreakdown: [{ name: "5% off your next online order", amount: 3.5, couponCode: "WIN1" }],
+      } as any),
+    );
+    expect(strip(html)).toContain("WIN1");
+  });
+});

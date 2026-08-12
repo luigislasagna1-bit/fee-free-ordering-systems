@@ -381,6 +381,14 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       tip: order.tip,
       depositTotal: depositTotal > 0 ? depositTotal : undefined,
       discount: (order.couponDiscount ?? 0) + (order.promoDiscount ?? 0),
+      // Name every special that fired instead of one lumped "Promo discount"
+      // (Luigi 2026-08-11: an order showing "-$37.01" gave the kitchen no way to
+      // tell WHICH deals a customer had used). free_delivery is excluded — its
+      // saving isn't part of promoDiscount and is already rendered on the
+      // delivery row as "FREE (was $7.99)"; including it would double-count.
+      discountBreakdown: appliedPromosForEmail
+        ?.filter((p) => p.type !== "free_delivery" && Number(p.discount) > 0)
+        .map((p) => ({ name: p.name, amount: Number(p.discount), couponCode: p.couponCode })),
       serviceFees: serviceFeesForEmail,
       // "Paid with {label}" + "To collect" rows — staff must never read the
       // Total and over-collect a credit-part-paid order (Luigi 2026-07-02).

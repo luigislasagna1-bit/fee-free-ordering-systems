@@ -283,6 +283,10 @@ export type StaffEventPayload =
        *  order ORD-742085738). Luigi 2026-07-31. */
       savedDeliveryFee?: number;
       tip?: number; depositTotal?: number; discount?: number;
+      /** The individual promos behind `discount`, so the staff email names each
+       *  special instead of one lumped figure. Excludes free_delivery, which is
+       *  already shown on the delivery row. Luigi 2026-08-11. */
+      discountBreakdown?: Array<{ name?: string; amount?: number; couponCode?: string }>;
       serviceFees?: Array<{ name?: string; amount?: number }>;
       orderType?: string; paidOnline?: boolean;
       // Raw payment method ("cash" | "card" | "card_in_person" | "paypal" |
@@ -466,6 +470,7 @@ async function dispatchStaffEvent(
         tip: payload.tip,
         depositTotal: payload.depositTotal,
         discount: payload.discount,
+        discountBreakdown: payload.discountBreakdown,
         serviceFees: payload.serviceFees,
         orderType: payload.orderType,
         paidOnline: payload.paidOnline,

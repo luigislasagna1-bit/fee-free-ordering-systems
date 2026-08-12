@@ -840,6 +840,10 @@ export async function sendNewOrderNotificationEmail(params: {
   /** Sum of per-item refundable deposits (untaxed; already inside total). */
   depositTotal?: number;
   discount?: number;
+  /** The individual promos behind `discount` — each rendered as its own named
+   *  row so a reader can see WHICH specials applied, not just the total.
+   *  Excludes free_delivery (shown on the delivery row). Luigi 2026-08-11. */
+  discountBreakdown?: Array<{ name?: string; amount?: number; couponCode?: string }>;
   /** Per-order service/other fees (parsed [{name, amount}]) — named rows. */
   serviceFees?: Array<{ name?: string; amount?: number }>;
   deliveryAddress?: string | null;
@@ -928,6 +932,7 @@ export async function sendNewOrderNotificationEmail(params: {
       tip: params.tip,
       depositTotal: params.depositTotal,
       discount: params.discount,
+      discountBreakdown: params.discountBreakdown,
       serviceFees: params.serviceFees,
       total: params.total,
       deliveryAddress: params.deliveryAddress,
@@ -2492,6 +2497,25 @@ async function marketingFooterStrings(locale?: string | null): Promise<Marketing
 }
 
 /**
+ * Localized copy for the "you're already a member" card that REPLACES the coupon
+ * card when the owner has told Autopilot not to hand club members another code
+ * (Luigi 2026-08-11, Ben Bilton). Same locale-resolution shape as
+ * marketingFooterStrings — recipient locale, falling back to English.
+ */
+async function memberPerkStrings(locale?: string | null): Promise<{ title: string; body: string }> {
+  const pick = (m: any): { title: string; body: string } | null => {
+    const p = m?.emailFooter?.memberPerk;
+    return p?.title && p?.body ? { title: p.title, body: p.body } : null;
+  };
+  const lc = locale && isSupportedLocale(locale) ? locale : "en";
+  try {
+    const got = pick((await import(`@/messages/${lc}.json`)).default);
+    if (got) return got;
+  } catch { /* fall through to en */ }
+  return pick((await import(`@/messages/en.json`)).default)!;
+}
+
+/**
  * Per-recipient opt-out footer bits for a PROMOTIONAL email that isn't a bulk
  * campaign (personal coupon, VIP special, reward gift). These are already
  * consent-gated by their callers, but CASL still requires a VISIBLE unsubscribe
@@ -2643,6 +2667,11 @@ export async function sendMarketingEmail(params: {
   body: string;
   couponCode?: string | null;
   couponLabel?: string | null;
+  /** Name of the customer's club, when this recipient is a member and the owner
+   *  chose to send the nudge WITHOUT an extra code (Luigi 2026-08-11). Replaces
+   *  the coupon card with "your member pricing already applies", so the email
+   *  still delivers on the owner's "here's a treat" copy. Null = normal email. */
+  memberPerk?: string | null;
   ctaUrl: string;
   ctaLabel?: string;
   restaurantUrl?: string;
@@ -2701,6 +2730,8 @@ export async function sendMarketingEmail(params: {
       body,
       couponCode: params.couponCode,
       couponLabel: params.couponLabel,
+      memberPerk: params.memberPerk,
+      memberPerkStrings: params.memberPerk ? await memberPerkStrings(params.locale) : undefined,
       ctaUrl: params.ctaUrl,
       ctaLabel: params.ctaLabel,
       restaurantUrl: params.restaurantUrl,

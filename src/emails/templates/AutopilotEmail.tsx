@@ -22,6 +22,14 @@ export type AutopilotEmailProps = {
   /** Optional discount coupon code to highlight in a card + amount. */
   couponCode?: string | null;
   couponLabel?: string | null;
+  /** Name of the recipient's club when the owner chose to send the nudge WITHOUT
+   *  a code (Luigi 2026-08-11). Renders in place of the coupon card, so the
+   *  owner's "here's a welcome-back treat:" copy still lands on something —
+   *  the standing member pricing they already have. */
+  memberPerk?: string | null;
+  /** Localized title/body for that card, resolved from the recipient's locale
+   *  by the sender (same shape as footerStrings). `{group}` is substituted. */
+  memberPerkStrings?: { title: string; body: string };
   /** Click-through CTA. Goes to the restaurant's ordering page with the
    *  coupon pre-applied if there is one. */
   ctaUrl: string;
@@ -49,9 +57,14 @@ export type AutopilotEmailProps = {
 export default function AutopilotEmail(props: AutopilotEmailProps) {
   const {
     restaurantName, subject, body, couponCode, couponLabel,
+    memberPerk, memberPerkStrings,
     ctaUrl, ctaLabel, restaurantUrl, restaurantEmail, restaurantPhone, imprint,
     unsubscribeUrl, dataDeletionUrl, marketing, footerStrings, postalAddress,
   } = props;
+  // A club member on "no offer" never also carries a code — the sender clears
+  // one when it sets the other — but assert the exclusivity here too so the
+  // email can never show both "here's 5% off" and "your pricing already applies".
+  const showPerk = !couponCode && !!memberPerk && !!memberPerkStrings;
 
   return (
     <EmailLayout preview={subject}>
@@ -74,6 +87,17 @@ export default function AutopilotEmail(props: AutopilotEmailProps) {
             )}
             <div style={{ fontSize: 12, color: "#047857", marginTop: 6 }}>
               We&apos;ve pre-applied it for you — just click the button below.
+            </div>
+          </InfoCard>
+        )}
+
+        {showPerk && (
+          <InfoCard label={memberPerkStrings!.title} accent="emerald">
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#065f46", marginBottom: 4 }}>
+              {memberPerk}
+            </div>
+            <div style={{ fontSize: 13, color: "#047857" }}>
+              {memberPerkStrings!.body.replace(/\{group\}/g, memberPerk!)}
             </div>
           </InfoCard>
         )}
