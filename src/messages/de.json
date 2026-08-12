@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Diese Kampagne hat keinen funktionierenden Angebotscode.",
       "codeNotLiveBody": "Ihr Gutschein ist deaktiviert oder abgelaufen, daher gehen diese E-Mails ohne Rabatt raus. Aktivieren Sie den Code unter Aktionen und Gutscheine wieder.",
       "audienceTitle": "Wer Autopilot-Angebote erhält",
-      "audienceSkipping": "Alle, auf die ein Kampagnen-Auslöser zutrifft — außer Mitgliedern, die bereits Club-Preise haben. Aktuell {count} in {groups}.",
+      "audienceSkipping": "Alle, auf die ein Kampagnen-Auslöser zutrifft. Was Mitglieder mit Club-Preisen erhalten, wird pro Kampagne unter „Club-Mitglieder“ festgelegt. Aktuell {count} in {groups}.",
       "audienceNoClubs": "Alle, auf die ein Kampagnen-Auslöser zutrifft. Um einen VIP-Club auszunehmen, öffnen Sie eine Kundengruppe und setzen Sie das Häkchen bei „Mitglieder erhalten bereits Club-Preise“.",
       "audienceManage": "Kundengruppen verwalten",
       "vipModeTitle": "Club-Mitglieder",

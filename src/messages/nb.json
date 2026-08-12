@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Denne kampanjen har ingen fungerende tilbudskode.",
       "codeNotLiveBody": "Kupongen er slått av eller utløpt, så disse e-postene sendes uten rabatt. Slå på koden igjen under Tilbud og kuponger.",
       "audienceTitle": "Hvem som får Autopilot-tilbud",
-      "audienceSkipping": "Alle som utløser en kampanje — bortsett fra medlemmer som allerede har klubbpriser. Akkurat nå {count} i {groups}.",
+      "audienceSkipping": "Alle som treffer en kampanjeutløser. Hva medlemmer med klubbpriser får, angis per kampanje under «Klubbmedlemmer». For øyeblikket {count} i {groups}.",
       "audienceNoClubs": "Alle som utløser en kampanje. Vil du holde en VIP-klubb utenfor, åpner du en kundegruppe og huker av «Medlemmene får allerede klubbpriser».",
       "audienceManage": "Administrer kundegrupper",
       "vipModeTitle": "Klubbmedlemmer",

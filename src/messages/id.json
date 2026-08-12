@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Kampanye ini tidak punya kode penawaran yang berfungsi.",
       "codeNotLiveBody": "Kuponnya dimatikan atau kedaluwarsa, jadi email ini terkirim tanpa diskon. Aktifkan lagi kodenya di Promosi dan kupon.",
       "audienceTitle": "Siapa yang menerima penawaran Autopilot",
-      "audienceSkipping": "Semua orang yang memenuhi pemicu kampanye — kecuali anggota yang sudah mendapat harga klub. Saat ini {count} di {groups}.",
+      "audienceSkipping": "Semua orang yang memenuhi pemicu kampanye. Apa yang diterima anggota dengan harga klub diatur per kampanye, di bagian “Anggota klub”. Saat ini {count} di {groups}.",
       "audienceNoClubs": "Semua orang yang memenuhi pemicu kampanye. Untuk menahan satu klub VIP, buka grup pelanggan lalu centang “Anggota sudah mendapat harga klub”.",
       "audienceManage": "Kelola grup pelanggan",
       "vipModeTitle": "Anggota klub",

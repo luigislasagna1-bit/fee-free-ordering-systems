@@ -3122,7 +3122,7 @@
       "codeNotLiveTitle": "Chiến dịch này không có mã ưu đãi nào hoạt động.",
       "codeNotLiveBody": "Phiếu giảm giá của nó đã tắt hoặc hết hạn, nên các email này gửi đi mà không có giảm giá. Bật lại mã trong Khuyến mãi và phiếu giảm giá.",
       "audienceTitle": "Ai nhận ưu đãi từ Autopilot",
-      "audienceSkipping": "Mọi khách khớp điều kiện kích hoạt chiến dịch — trừ thành viên đã được hưởng giá thành viên. Hiện có {count} người trong {groups}.",
+      "audienceSkipping": "Tất cả những người khớp với điều kiện kích hoạt chiến dịch. Những gì thành viên đã có giá câu lạc bộ nhận được sẽ được đặt riêng cho từng chiến dịch, tại “Thành viên câu lạc bộ”. Hiện có {count} trong {groups}.",
       "audienceNoClubs": "Mọi khách khớp điều kiện kích hoạt chiến dịch. Để giữ lại một câu lạc bộ VIP, hãy mở nhóm khách hàng và tích “Thành viên đã được hưởng giá thành viên”.",
       "audienceManage": "Quản lý nhóm khách hàng",
       "vipModeTitle": "Thành viên câu lạc bộ",

@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Sellel kampaanial pole toimivat pakkumiskoodi.",
       "codeNotLiveBody": "Selle kupong on välja lülitatud või aegunud, seega lähevad need e-kirjad välja ilma soodustuseta. Lülitage kood uuesti sisse jaotises Pakkumised ja kupongid.",
       "audienceTitle": "Kes saavad Autopilot-pakkumisi",
-      "audienceSkipping": "Kõik, kes vastavad kampaania käivitajale — välja arvatud liikmed, kellel on juba klubihinnad. Praegu {count} gruppides {groups}.",
+      "audienceSkipping": "Kõik, kes vastavad kampaania käivitajale. Mida saavad kliubihindadega liikmed, määratakse kampaaniate kaupa jaotises „Klubiliikmed“. Praegu {count} rühmades {groups}.",
       "audienceNoClubs": "Kõik, kes vastavad kampaania käivitajale. Kui soovite VIP-klubi kõrvale jätta, avage kliendigrupp ja märkige „Liikmed saavad juba klubihindu“.",
       "audienceManage": "Halda kliendigruppe",
       "vipModeTitle": "Klubi liikmed",

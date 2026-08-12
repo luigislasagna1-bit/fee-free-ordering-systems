@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Această campanie nu are niciun cod de ofertă funcțional.",
       "codeNotLiveBody": "Cuponul este dezactivat sau expirat, deci aceste e-mailuri pleacă fără reducere. Reactivează codul din Promoții și cupoane.",
       "audienceTitle": "Cine primește ofertele Autopilot",
-      "audienceSkipping": "Toți cei care declanșează o campanie — mai puțin membrii care au deja prețuri de club. În acest moment, {count} în {groups}.",
+      "audienceSkipping": "Toți cei care corespund unui declanșator de campanie. Ce primesc membrii care au deja prețuri de club se setează pentru fiecare campanie, la „Membrii clubului”. În prezent {count} în {groups}.",
       "audienceNoClubs": "Toți cei care declanșează o campanie. Ca să lași deoparte un club VIP, deschide un grup de clienți și bifează „Membrii au deja prețuri de club”.",
       "audienceManage": "Gestionează grupurile de clienți",
       "vipModeTitle": "Membrii clubului",

@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "이 캠페인에는 사용 가능한 할인 코드가 없습니다.",
       "codeNotLiveBody": "쿠폰이 꺼져 있거나 만료되어 이 이메일은 할인 없이 발송됩니다. 프로모션 및 쿠폰에서 코드를 다시 켜세요.",
       "audienceTitle": "Autopilot 혜택을 받는 대상",
-      "audienceSkipping": "캠페인 조건에 해당하는 모든 고객 — 이미 회원가를 적용받는 구성원은 제외합니다. 현재 {groups}에 {count}명.",
+      "audienceSkipping": "캠페인 조건에 해당하는 모든 사람. 클럽 가격이 적용되는 회원에게 무엇을 보낼지는 ‘클럽 회원’에서 캠페인별로 설정합니다. 현재 {groups}에 {count}명.",
       "audienceNoClubs": "캠페인 조건에 해당하는 모든 고객. VIP 클럽을 제외하려면 고객 그룹을 열고 “구성원이 이미 회원가를 적용받음”에 체크하세요.",
       "audienceManage": "고객 그룹 관리",
       "vipModeTitle": "클럽 회원",

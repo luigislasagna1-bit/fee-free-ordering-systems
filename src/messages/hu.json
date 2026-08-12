@@ -3122,7 +3122,7 @@
       "codeNotLiveTitle": "Ennek a kampánynak nincs működő ajánlatkódja.",
       "codeNotLiveBody": "A kuponja ki van kapcsolva vagy lejárt, így ezek az e-mailek kedvezmény nélkül mennek ki. Kapcsolja vissza a kódot az Akciók és kuponok alatt.",
       "audienceTitle": "Ki kap Autopilot-ajánlatokat",
-      "audienceSkipping": "Mindenki, aki megfelel egy kampánykiváltónak — kivéve azokat a tagokat, akik már klubárat kapnak. Jelenleg {count} fő itt: {groups}.",
+      "audienceSkipping": "Mindenki, akire illik egy kampányindító feltétel. Azt, hogy a klubáras tagok mit kapnak, kampányonként állítod be a „Klubtagok” résznél. Jelenleg {count} a következőkben: {groups}.",
       "audienceNoClubs": "Mindenki, aki megfelel egy kampánykiváltónak. Ha vissza szeretne tartani egy VIP-klubot, nyisson meg egy ügyfélcsoportot, és jelölje be a „A tagok már klubárat kapnak” lehetőséget.",
       "audienceManage": "Ügyfélcsoportok kezelése",
       "vipModeTitle": "Klubtagok",

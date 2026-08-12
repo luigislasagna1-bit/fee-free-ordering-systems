@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Esta campaña no tiene ningún código de oferta que funcione.",
       "codeNotLiveBody": "Su cupón está desactivado o caducado, así que estos correos salen sin descuento. Vuelve a activar el código en Promociones y cupones.",
       "audienceTitle": "Quién recibe las ofertas de Autopilot",
-      "audienceSkipping": "Todo el que active una campaña — excepto los miembros que ya tienen precios de club. Ahora mismo, {count} en {groups}.",
+      "audienceSkipping": "Todos los que cumplan el disparador de una campaña. Lo que reciben los miembros que ya tienen precios de club se configura por campaña, en «Miembros del club». Actualmente {count} en {groups}.",
       "audienceNoClubs": "Todo el que active una campaña. Para dejar fuera a un club VIP, abre un grupo de clientes y marca «Los miembros ya tienen precios de club».",
       "audienceManage": "Gestionar grupos de clientes",
       "vipModeTitle": "Miembros del club",

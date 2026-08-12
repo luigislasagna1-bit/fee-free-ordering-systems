@@ -3883,7 +3883,7 @@
       "codeNotLiveTitle": "Táto kampaň nemá funkčný zľavový kód.",
       "codeNotLiveBody": "Jej kupón je vypnutý alebo vypršal, takže tieto e-maily odchádzajú bez zľavy. Zapnite kód späť v Akcie a kupóny.",
       "audienceTitle": "Komu Autopilot posiela ponuky",
-      "audienceSkipping": "Všetci, ktorí spĺňajú spúšťač kampane — okrem členov, ktorí už majú klubové ceny. Momentálne {count} v {groups}.",
+      "audienceSkipping": "Každý, kto spĺňa spúšťač kampane. To, čo dostanú členovia s klubovými cenami, sa nastavuje pre každú kampaň zvlášť v časti „Členovia klubu“. Aktuálne {count} v {groups}.",
       "audienceNoClubs": "Všetci, ktorí spĺňajú spúšťač kampane. Ak chcete vynechať VIP klub, otvorte skupinu zákazníkov a začiarknite „Členovia už majú klubové ceny“.",
       "audienceManage": "Spravovať skupiny zákazníkov",
       "vipModeTitle": "Členovia klubu",

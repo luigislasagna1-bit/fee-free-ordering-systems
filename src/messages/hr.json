@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Ova kampanja nema ispravan kod ponude.",
       "codeNotLiveBody": "Njezin je kupon isključen ili istekao pa ovi e-mailovi odlaze bez popusta. Ponovno uključite kod u Promocije i kuponi.",
       "audienceTitle": "Kome Autopilot šalje ponude",
-      "audienceSkipping": "Svi koji odgovaraju okidaču kampanje — osim članova koji već imaju klupske cijene. Trenutačno {count} u {groups}.",
+      "audienceSkipping": "Svi koji odgovaraju okidaču kampanje. Što dobivaju članovi s klupskim cijenama postavlja se za svaku kampanju zasebno, pod „Članovi kluba“. Trenutačno {count} u {groups}.",
       "audienceNoClubs": "Svi koji odgovaraju okidaču kampanje. Da izuzmete VIP klub, otvorite grupu kupaca i označite „Članovi već imaju klupske cijene”.",
       "audienceManage": "Upravljanje grupama kupaca",
       "vipModeTitle": "Članovi kluba",

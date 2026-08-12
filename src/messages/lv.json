@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Šai kampaņai nav derīga piedāvājuma koda.",
       "codeNotLiveBody": "Tās kupons ir izslēgts vai beidzies, tāpēc šie e-pasti tiek sūtīti bez atlaides. Ieslēdziet kodu atpakaļ sadaļā Piedāvājumi un kuponi.",
       "audienceTitle": "Kas saņem Autopilot piedāvājumus",
-      "audienceSkipping": "Visi, kas atbilst kampaņas aktivizētājam — izņemot biedrus, kuriem jau ir kluba cenas. Pašlaik {count} šajās grupās: {groups}.",
+      "audienceSkipping": "Visi, kas atbilst kampaņas nosacījumam. To, ko saņem dalībnieki ar kluba cenām, iestata katrai kampaņai atsevišķi sadaļā “Kluba dalībnieki”. Pašlaik {count} grupās {groups}.",
       "audienceNoClubs": "Visi, kas atbilst kampaņas aktivizētājam. Lai izlaistu VIP klubu, atveriet klientu grupu un atzīmējiet “Biedri jau saņem kluba cenas”.",
       "audienceManage": "Pārvaldīt klientu grupas",
       "vipModeTitle": "Kluba biedri",

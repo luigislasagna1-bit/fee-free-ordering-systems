@@ -3122,7 +3122,7 @@
       "codeNotLiveTitle": "Ta kampania nie ma działającego kodu oferty.",
       "codeNotLiveBody": "Jej kupon jest wyłączony lub wygasł, więc te e-maile wychodzą bez rabatu. Włącz kod ponownie w Promocje i kupony.",
       "audienceTitle": "Komu Autopilot wysyła oferty",
-      "audienceSkipping": "Wszyscy, którzy spełniają wyzwalacz kampanii — z wyjątkiem członków, którzy mają już ceny klubowe. Obecnie {count} w {groups}.",
+      "audienceSkipping": "Każdy, kto spełnia warunek kampanii. To, co otrzymują członkowie z cenami klubowymi, ustawia się osobno dla każdej kampanii w sekcji „Członkowie klubu”. Obecnie {count} w {groups}.",
       "audienceNoClubs": "Wszyscy, którzy spełniają wyzwalacz kampanii. Aby wykluczyć klub VIP, otwórz grupę klientów i zaznacz „Członkowie mają już ceny klubowe”.",
       "audienceManage": "Zarządzaj grupami klientów",
       "vipModeTitle": "Członkowie klubu",

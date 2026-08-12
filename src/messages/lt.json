@@ -3883,7 +3883,7 @@
       "codeNotLiveTitle": "Ši kampanija neturi veikiančio pasiūlymo kodo.",
       "codeNotLiveBody": "Jos kuponas išjungtas arba nebegalioja, todėl šie el. laiškai išsiunčiami be nuolaidos. Vėl įjunkite kodą skiltyje Pasiūlymai ir kuponai.",
       "audienceTitle": "Kas gauna Autopilot pasiūlymus",
-      "audienceSkipping": "Visi, kurie atitinka kampanijos aktyviklį — išskyrus narius, kurie jau turi klubo kainas. Šiuo metu {count} šiose grupėse: {groups}.",
+      "audienceSkipping": "Visi, kurie atitinka kampanijos sąlygą. Ką gauna nariai, jau turintys klubo kainas, nustatoma kiekvienai kampanijai atskirai skiltyje „Klubo nariai“. Šiuo metu {count} grupėse {groups}.",
       "audienceNoClubs": "Visi, kurie atitinka kampanijos aktyviklį. Kad kampanija apeitų VIP klubą, atidarykite klientų grupę ir pažymėkite „Nariai jau gauna klubo kainas“.",
       "audienceManage": "Tvarkyti klientų grupes",
       "vipModeTitle": "Klubo nariai",

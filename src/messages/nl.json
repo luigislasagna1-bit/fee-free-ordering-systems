@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Deze campagne heeft geen werkende aanbiedingscode.",
       "codeNotLiveBody": "De coupon staat uit of is verlopen, dus deze e-mails gaan zonder korting de deur uit. Zet de code weer aan bij Acties en coupons.",
       "audienceTitle": "Wie Autopilot-aanbiedingen krijgt",
-      "audienceSkipping": "Iedereen die aan een campagnetrigger voldoet — behalve leden die al clubprijzen hebben. Op dit moment {count} in {groups}.",
+      "audienceSkipping": "Iedereen die aan een campagnetrigger voldoet. Wat leden met clubprijzen krijgen, stel je per campagne in onder ‘Clubleden’. Op dit moment {count} in {groups}.",
       "audienceNoClubs": "Iedereen die aan een campagnetrigger voldoet. Wilt u een VIP-club uitsluiten, open dan een klantgroep en vink “Leden krijgen al clubprijzen” aan.",
       "audienceManage": "Klantgroepen beheren",
       "vipModeTitle": "Clubleden",

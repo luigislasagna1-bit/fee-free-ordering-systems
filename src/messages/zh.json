@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "此营销活动没有可用的优惠码。",
       "codeNotLiveBody": "它的优惠券已关闭或过期，因此这些邮件发出时不含折扣。请在“促销与优惠券”中重新启用该优惠码。",
       "audienceTitle": "谁会收到 Autopilot 优惠",
-      "audienceSkipping": "所有符合营销活动触发条件的顾客 — 已享会员价的成员除外。目前 {groups} 中共有 {count} 人。",
+      "audienceSkipping": "所有符合活动触发条件的人。已享会员价的成员会收到什么，在“俱乐部会员”中按活动分别设置。目前 {groups} 中有 {count} 人。",
       "audienceNoClubs": "所有符合营销活动触发条件的顾客。若要排除某个 VIP 俱乐部，请打开对应的顾客群组并勾选“成员已享会员价”。",
       "audienceManage": "管理顾客群组",
       "vipModeTitle": "俱乐部成员",

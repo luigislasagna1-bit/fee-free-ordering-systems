@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Tällä kampanjalla ei ole toimivaa tarjouskoodia.",
       "codeNotLiveBody": "Sen kuponki on poistettu käytöstä tai vanhentunut, joten nämä sähköpostit lähtevät ilman alennusta. Ota koodi takaisin käyttöön kohdassa Tarjoukset ja kupongit.",
       "audienceTitle": "Kuka saa Autopilot-tarjoukset",
-      "audienceSkipping": "Kaikki, jotka osuvat kampanjan käynnistysehtoon — paitsi jäsenet, joilla on jo klubihinnat. Tällä hetkellä {count} ryhmissä {groups}.",
+      "audienceSkipping": "Kaikki, jotka täyttävät kampanjan ehdon. Se, mitä klubihinnoittelun jäsenet saavat, määritetään kampanjakohtaisesti kohdassa ”Klubin jäsenet”. Tällä hetkellä {count} ryhmissä {groups}.",
       "audienceNoClubs": "Kaikki, jotka osuvat kampanjan käynnistysehtoon. Jos haluat jättää VIP-klubin pois, avaa asiakasryhmä ja rastita ”Jäsenet saavat jo klubihinnat”.",
       "audienceManage": "Hallitse asiakasryhmiä",
       "vipModeTitle": "Klubin jäsenet",

@@ -3122,7 +3122,7 @@
       "codeNotLiveTitle": "Bu kampanyanın çalışan bir teklif kodu yok.",
       "codeNotLiveBody": "Kuponu kapalı veya süresi dolmuş, bu yüzden bu e-postalar indirimsiz gidiyor. Kodu Kampanyalar ve kuponlar bölümünden yeniden açın.",
       "audienceTitle": "Autopilot tekliflerini kim alır",
-      "audienceSkipping": "Bir kampanya tetikleyicisiyle eşleşen herkes — kulüp fiyatı alan üyeler hariç. Şu anda {groups} içinde {count} kişi.",
+      "audienceSkipping": "Bir kampanya tetikleyicisine uyan herkes. Kulüp fiyatlandırmasındaki üyelerin ne alacağı, “Kulüp üyeleri” altında her kampanya için ayrı ayarlanır. Şu anda {groups} içinde {count} kişi.",
       "audienceNoClubs": "Bir kampanya tetikleyicisiyle eşleşen herkes. Bir VIP kulübü kapsam dışında tutmak için bir müşteri grubunu açın ve “Üyeler zaten kulüp fiyatı alıyor” seçeneğini işaretleyin.",
       "audienceManage": "Müşteri gruplarını yönet",
       "vipModeTitle": "Kulüp üyeleri",

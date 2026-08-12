@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Cette campagne n'a aucun code promo fonctionnel.",
       "codeNotLiveBody": "Son coupon est désactivé ou expiré : ces e-mails partent donc sans réduction. Réactivez le code dans Promotions et coupons.",
       "audienceTitle": "Qui reçoit les offres Autopilot",
-      "audienceSkipping": "Toutes les personnes qui déclenchent une campagne — sauf les membres qui bénéficient déjà des tarifs club. Actuellement {count} dans {groups}.",
+      "audienceSkipping": "Toute personne correspondant au déclencheur d’une campagne. Ce que reçoivent les membres bénéficiant déjà des tarifs club se règle campagne par campagne, sous « Membres du club ». Actuellement {count} dans {groups}.",
       "audienceNoClubs": "Toutes les personnes qui déclenchent une campagne. Pour mettre un club VIP de côté, ouvrez un groupe de clients et cochez « Les membres bénéficient déjà des tarifs club ».",
       "audienceManage": "Gérer les groupes de clients",
       "vipModeTitle": "Membres du club",

@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Tato kampaň nemá funkční slevový kód.",
       "codeNotLiveBody": "Její kupon je vypnutý nebo vypršel, takže tyto e-maily odcházejí bez slevy. Zapněte kód zpět v Akce a kupony.",
       "audienceTitle": "Komu Autopilot posílá nabídky",
-      "audienceSkipping": "Všichni, kdo splní spouštěč kampaně — kromě členů, kteří už mají klubové ceny. Nyní {count} v {groups}.",
+      "audienceSkipping": "Každý, kdo splní spouštěč kampaně. Co dostanou členové s klubovými cenami, se nastavuje u každé kampaně zvlášť v části „Členové klubu“. Aktuálně {count} v {groups}.",
       "audienceNoClubs": "Všichni, kdo splní spouštěč kampaně. Chcete-li vynechat VIP klub, otevřete skupinu zákazníků a zaškrtněte „Členové už mají klubové ceny“.",
       "audienceManage": "Spravovat skupiny zákazníků",
       "vipModeTitle": "Členové klubu",

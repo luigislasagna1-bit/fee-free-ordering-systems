@@ -3682,7 +3682,7 @@
       "stepsReset": "Reset to defaults",
       "stepsResetConfirm": "Replace all emails with the default sequence?",
       "audienceTitle": "Who gets Autopilot offers",
-      "audienceSkipping": "Everyone who matches a campaign trigger — except members already on club pricing. Currently {count} in {groups}.",
+      "audienceSkipping": "Everyone who matches a campaign trigger. What members already on club pricing get is set per campaign, under “Club members”. Currently {count} in {groups}.",
       "audienceNoClubs": "Everyone who matches a campaign trigger. To hold back a VIP club, open a customer group and tick “Members already get club pricing”.",
       "audienceManage": "Manage customer groups",
       "vipModeTitle": "Club members",

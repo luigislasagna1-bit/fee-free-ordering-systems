@@ -3179,7 +3179,7 @@
       "codeNotLiveTitle": "Aquesta campanya no té cap codi d'oferta que funcioni.",
       "codeNotLiveBody": "El seu cupó està desactivat o caducat, així que aquests correus surten sense descompte. Torna a activar el codi a Promocions i cupons.",
       "audienceTitle": "Qui rep les ofertes d'Autopilot",
-      "audienceSkipping": "Tothom qui activa una campanya — excepte els membres que ja tenen preus de club. Ara mateix, {count} a {groups}.",
+      "audienceSkipping": "Tothom que compleixi el desencadenant d’una campanya. Què reben els membres que ja tenen preus de club es defineix per campanya, a «Membres del club». Actualment {count} a {groups}.",
       "audienceNoClubs": "Tothom qui activa una campanya. Per deixar fora un club VIP, obriu un grup de clients i marqueu «Els membres ja tenen preus de club».",
       "audienceManage": "Gestiona els grups de clients",
       "vipModeTitle": "Membres del club",
