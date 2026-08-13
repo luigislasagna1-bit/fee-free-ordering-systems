@@ -878,6 +878,13 @@ export async function sendNewOrderNotificationEmail(params: {
    *  customer twin `sendOrderConfirmationEmail({ alreadyAccepted })`; any NEW
    *  way for an order to be born accepted must set it. Luigi 2026-08-12. */
   alreadyAccepted?: boolean;
+  /** The REAL auto-reject window in minutes (auto-reject-window.ts). Undefined
+   *  → the old generic "within your configured timeout" sentence, which named a
+   *  setting that has never existed. Luigi 2026-08-12. */
+  autoRejectMinutes?: number;
+  /** Order landed while the shop was closed: its window starts at OPENING, not
+   *  at placement, so it gets its own sentence. */
+  placedWhileClosed?: boolean;
 }) {
   const t = await getDict(params.locale);
   const subject = t(
@@ -960,6 +967,8 @@ export async function sendNewOrderNotificationEmail(params: {
       readyRowLabel: staffTiming.readyRowLabel,
       scheduledLabel: staffScheduledLabel,
       autoAccepted: params.alreadyAccepted === true,
+      autoRejectMinutes: params.autoRejectMinutes,
+      placedWhileClosed: params.placedWhileClosed === true,
     })
   );
   return send({ to: params.to, subject, html });

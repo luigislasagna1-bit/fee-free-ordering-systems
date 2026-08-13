@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Đơn mới #{orderNumber} — đã tự động nhận — {restaurant}",
       "badgeAutoAccepted": "Đã tự động nhận",
       "autoAcceptedLabel": "Không cần thao tác",
-      "autoAcceptedNote": "Tự động nhận đơn đang bật nên đơn này đã được nhận thay bạn và khách đã nhận được xác nhận. Không cần nhận đơn — chỉ cần chuẩn bị món."
+      "autoAcceptedNote": "Tự động nhận đơn đang bật nên đơn này đã được nhận thay bạn và khách đã nhận được xác nhận. Không cần nhận đơn — chỉ cần chuẩn bị món.",
+      "acceptHintMinutes": "Hãy nhận đơn này trong Kitchen Order App hoặc trang quản trị trong vòng {minutes} phút. Nếu không ai nhận kịp, đơn sẽ bị từ chối tự động và khách được thông báo.",
+      "acceptHintClosedMinutes": "Đơn này đến khi bạn đang đóng cửa nên sẽ chờ đến lúc bạn mở. Kể từ khi mở cửa, bạn có {minutes} phút để nhận đơn trước khi đơn bị từ chối tự động."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Đơn hàng của bạn đã được hủy",

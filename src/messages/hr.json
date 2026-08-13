@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Nova narudžba #{orderNumber} — automatski prihvaćena — {restaurant}",
       "badgeAutoAccepted": "Automatski prihvaćeno",
       "autoAcceptedLabel": "Nije potrebna nikakva radnja",
-      "autoAcceptedNote": "Automatsko prihvaćanje je uključeno pa je ova narudžba prihvaćena umjesto vas, a kupac je već primio svoju potvrdu. Nema se što prihvatiti — samo je pripremite."
+      "autoAcceptedNote": "Automatsko prihvaćanje je uključeno pa je ova narudžba prihvaćena umjesto vas, a kupac je već primio svoju potvrdu. Nema se što prihvatiti — samo je pripremite.",
+      "acceptHintMinutes": "Prihvatite ovu narudžbu u Kitchen Order App ili administracijskoj ploči u roku od {minutes} minuta. Ako je nitko ne prihvati na vrijeme, automatski se odbija, a kupac dobiva obavijest.",
+      "acceptHintClosedMinutes": "Ova je narudžba stigla dok ste bili zatvoreni pa čeka do otvaranja. Od trenutka otvaranja imate {minutes} minuta da je prihvatite prije nego što bude automatski odbijena."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tvoja narudžba je otkazana",

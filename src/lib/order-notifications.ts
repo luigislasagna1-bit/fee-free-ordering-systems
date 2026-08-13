@@ -26,6 +26,7 @@ import { projectOrderEarn } from "@/lib/reward-earn";
 import { signActionToken } from "@/lib/order-status-token";
 import { shouldOfferEmailCancel } from "@/lib/customer-cancel-policy";
 import { formatFullDeliveryAddress } from "@/lib/address-format";
+import { autoRejectWindowMinutes } from "@/lib/auto-reject-window";
 
 // Promo usage give-back on a killed/abandoned order now lives in
 // `releasePromotionUsageForOrder(orderId)` in @/lib/promo-usage — it deletes the
@@ -438,6 +439,12 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       // (Luigi 2026-08-12, ORD-002270106). Keep in lockstep with the customer
       // flag above — one order, one truth.
       alreadyAccepted: order.status === "accepted",
+      // Quote the REAL accept window instead of "your configured timeout" —
+      // there is no such setting; it's 4 minutes, or 15 measured from OPENING
+      // on an order placed while closed (Luigi 2026-08-12). Same source the
+      // cron enforces, so the email can't drift from the behaviour.
+      autoRejectMinutes: autoRejectWindowMinutes(!!(order as any).placedWhileClosed),
+      placedWhileClosed: !!(order as any).placedWhileClosed,
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyStaff:", e));
 

@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Nová objednávka #{orderNumber} — automaticky přijata — {restaurant}",
       "badgeAutoAccepted": "Automaticky přijato",
       "autoAcceptedLabel": "Není potřeba nic dělat",
-      "autoAcceptedNote": "Automatické přijímání je zapnuté, takže tato objednávka byla přijata za vás a zákazník už dostal potvrzení. Není co přijímat — stačí ji připravit."
+      "autoAcceptedNote": "Automatické přijímání je zapnuté, takže tato objednávka byla přijata za vás a zákazník už dostal potvrzení. Není co přijímat — stačí ji připravit.",
+      "acceptHintMinutes": "Přijměte tuto objednávku v Kitchen Order App nebo v administraci do {minutes} minut. Pokud ji nikdo včas nepřijme, bude automaticky odmítnuta a zákazník dostane zprávu.",
+      "acceptHintClosedMinutes": "Tato objednávka přišla, když jste měli zavřeno, takže čeká do otevření. Od okamžiku otevření máte {minutes} minut na její přijetí, než bude automaticky odmítnuta."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Vaše objednávka byla zrušena",

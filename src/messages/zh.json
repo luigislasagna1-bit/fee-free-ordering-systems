@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "新订单 #{orderNumber} — 已自动接单 — {restaurant}",
       "badgeAutoAccepted": "已自动接单",
       "autoAcceptedLabel": "无需操作",
-      "autoAcceptedNote": "自动接单已开启，因此本单已为您接下，顾客也已收到确认。无需接单，直接备餐即可。"
+      "autoAcceptedNote": "自动接单已开启，因此本单已为您接下，顾客也已收到确认。无需接单，直接备餐即可。",
+      "acceptHintMinutes": "请在 {minutes} 分钟内于 Kitchen Order App 或管理后台接单。若无人及时接单，系统将自动拒单并通知顾客。",
+      "acceptHintClosedMinutes": "本单是在您打烊期间进来的，会一直等到您开门。从开门那一刻起，您有 {minutes} 分钟接单，逾期系统将自动拒单。"
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "您的订单已取消",

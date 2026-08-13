@@ -105,6 +105,15 @@ export type KitchenNotificationProps = {
    *  accept it or it would be auto-rejected (Luigi 2026-08-12, ORD-002270106).
    *  See the customer-side twin, OrderConfirmation's `alreadyAccepted`. */
   autoAccepted?: boolean;
+  /** The REAL minutes the kitchen has to accept, so the hint can name it
+   *  instead of the old "within your configured timeout" — which pointed at a
+   *  setting that has never existed (Luigi 2026-08-12). Undefined keeps the
+   *  generic sentence, for callers that don't know the window. */
+  autoRejectMinutes?: number;
+  /** The window on a closed-when-placed order starts at OPENING, not at
+   *  placement, so quoting it as "you have 15 minutes" would be a lie the
+   *  moment the order lands overnight. Own sentence. */
+  placedWhileClosed?: boolean;
 };
 
 export default function KitchenNotification(props: KitchenNotificationProps) {
@@ -114,7 +123,18 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
     taxLabel, deliveryFee, savedDeliveryFee, tip, depositTotal, discount, discountBreakdown, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
     creditApplied, rewardLabel, rewardEarned, showAcceptHint = true, autoAccepted = false,
+    autoRejectMinutes, placedWhileClosed = false,
   } = props;
+  // Name the real window when we know it. A closed-when-placed order's window
+  // starts at OPENING, not now, so it gets its own sentence rather than a
+  // countdown the reader would start immediately.
+  const acceptHintText =
+    typeof autoRejectMinutes === "number" && autoRejectMinutes > 0
+      ? t(
+          placedWhileClosed ? "email.newOrder.acceptHintClosedMinutes" : "email.newOrder.acceptHintMinutes",
+          { minutes: String(autoRejectMinutes) },
+        )
+      : t("email.newOrder.acceptHint");
   const leadLabel = headline ?? (autoAccepted ? t("email.newOrder.badgeAutoAccepted") : t("email.newOrder.badgeNew"));
   // Localized order-type chip — keyed by the raw DB value; unknown values
   // (e.g. legacy "curbside") degrade to the raw slug rather than crashing.
@@ -304,7 +324,7 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
 
         {showAcceptHint && !autoAccepted && (
           <P size="sm" muted>
-            {t("email.newOrder.acceptHint")}
+            {acceptHintText}
           </P>
         )}
       </EmailBody>

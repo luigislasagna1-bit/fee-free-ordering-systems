@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "新規注文 #{orderNumber} — 自動承認済み — {restaurant}",
       "badgeAutoAccepted": "自動承認済み",
       "autoAcceptedLabel": "対応は不要です",
-      "autoAcceptedNote": "自動承認がオンのため、この注文は自動で承認され、お客様には確認のご案内が送信済みです。承認の操作は不要です。そのまま調理を始めてください。"
+      "autoAcceptedNote": "自動承認がオンのため、この注文は自動で承認され、お客様には確認のご案内が送信済みです。承認の操作は不要です。そのまま調理を始めてください。",
+      "acceptHintMinutes": "この注文を {minutes} 分以内に Kitchen Order App または管理ダッシュボードで承認してください。時間内に誰も承認しない場合は自動的に拒否され、お客様に通知されます。",
+      "acceptHintClosedMinutes": "この注文は閉店中に入ったため、開店まで保留されます。開店した時点から {minutes} 分以内に承認しないと、自動的に拒否されます。"
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "ご注文はキャンセルされました",

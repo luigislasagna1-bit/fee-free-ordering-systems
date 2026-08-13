@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Naujas užsakymas #{orderNumber} — priimtas automatiškai — {restaurant}",
       "badgeAutoAccepted": "Priimtas automatiškai",
       "autoAcceptedLabel": "Nieko daryti nereikia",
-      "autoAcceptedNote": "Automatinis priėmimas įjungtas, todėl šis užsakymas buvo priimtas už jus, o klientas jau gavo savo patvirtinimą. Priimti nieko nereikia — tiesiog paruoškite jį."
+      "autoAcceptedNote": "Automatinis priėmimas įjungtas, todėl šis užsakymas buvo priimtas už jus, o klientas jau gavo savo patvirtinimą. Priimti nieko nereikia — tiesiog paruoškite jį.",
+      "acceptHintMinutes": "Priimkite šį užsakymą Kitchen Order App arba administravimo skydelyje per {minutes} minutes. Jei niekas jo laiku nepriims, jis bus automatiškai atmestas, o klientas apie tai informuotas.",
+      "acceptHintClosedMinutes": "Šis užsakymas gautas, kai buvote uždaryti, todėl laukia iki atidarymo. Nuo atidarymo momento turite {minutes} minutes jį priimti, kol jis nebus automatiškai atmestas."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tavo užsakymas atšauktas",

@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Jauns pasūtījums #{orderNumber} — pieņemts automātiski — {restaurant}",
       "badgeAutoAccepted": "Pieņemts automātiski",
       "autoAcceptedLabel": "Nekas nav jādara",
-      "autoAcceptedNote": "Automātiskā pieņemšana ir ieslēgta, tāpēc šis pasūtījums tika pieņemts jūsu vietā un klients jau ir saņēmis savu apstiprinājumu. Nav ko pieņemt — vienkārši sagatavojiet to."
+      "autoAcceptedNote": "Automātiskā pieņemšana ir ieslēgta, tāpēc šis pasūtījums tika pieņemts jūsu vietā un klients jau ir saņēmis savu apstiprinājumu. Nav ko pieņemt — vienkārši sagatavojiet to.",
+      "acceptHintMinutes": "Apstipriniet šo pasūtījumu Kitchen Order App vai administratora panelī {minutes} minūšu laikā. Ja neviens to laikus neapstiprina, tas tiek automātiski noraidīts un klients saņem paziņojumu.",
+      "acceptHintClosedMinutes": "Šis pasūtījums pienāca, kamēr bijāt slēgti, tāpēc tas gaida līdz atvēršanai. No atvēršanas brīža jums ir {minutes} minūtes, lai to apstiprinātu, pirms tas tiek automātiski noraidīts."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tavs pasūtījums ir atcelts",

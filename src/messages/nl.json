@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Nieuwe bestelling #{orderNumber} — automatisch geaccepteerd — {restaurant}",
       "badgeAutoAccepted": "Automatisch geaccepteerd",
       "autoAcceptedLabel": "Geen actie nodig",
-      "autoAcceptedNote": "Automatisch accepteren staat aan, dus deze bestelling is voor u geaccepteerd en de klant heeft zijn bevestiging al ontvangen. Er valt niets te accepteren — u kunt de bestelling meteen klaarmaken."
+      "autoAcceptedNote": "Automatisch accepteren staat aan, dus deze bestelling is voor u geaccepteerd en de klant heeft zijn bevestiging al ontvangen. Er valt niets te accepteren — u kunt de bestelling meteen klaarmaken.",
+      "acceptHintMinutes": "Accepteer deze bestelling binnen {minutes} minuten in de Kitchen Order App of het beheerdersdashboard. Accepteert niemand hem op tijd, dan wordt hij automatisch geweigerd en krijgt de klant bericht.",
+      "acceptHintClosedMinutes": "Deze bestelling kwam binnen terwijl u gesloten was en staat daarom in de wacht tot u opent. Vanaf het moment dat u opent heeft u {minutes} minuten om hem te accepteren voordat hij automatisch wordt geweigerd."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Je bestelling is geannuleerd",

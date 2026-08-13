@@ -22,20 +22,14 @@ import { unrecordMarketplaceOrder } from "@/lib/marketplace";
 import { unrecordSmartLinkOrder } from "@/lib/marketing-studio";
 import { restaurantOrderUrl } from "@/lib/restaurant-url";
 
-/** Minutes a regular pending order can sit before we auto-reject.
- *  Matches the kitchen-display visual countdown (4 min) so the bell —
- *  including the full-length 4-minute GloriaFood alert — plays out for
- *  the whole window instead of being cut short when the order is
- *  rejected. The KitchenDisplay client also triggers an instant reject
- *  the moment the countdown elapses, but this cron is the safety net for
- *  when the tablet is offline / not loaded. MUST stay in sync with the
- *  kitchen countdown (KitchenDisplay.tsx `totalMs`). Tunable via
- *  AUTO_REJECT_TIMEOUT_MINUTES env. */
-const DEFAULT_TIMEOUT_MINUTES = 4;
-/** Closed-when-placed orders get a longer window — staff may be a few
- *  minutes late arriving after open, and the kitchen UI gives them
- *  15 min from alertAt before flashing URGENT. Keep auto-reject aligned. */
-const CLOSED_PLACED_TIMEOUT_MINUTES = 15;
+// The two windows moved to auto-reject-window.ts so the store's new-order email
+// can quote the real number without importing this module's prisma/stripe
+// weight. This cron remains the thing that ENFORCES them; that file is the
+// single source for what they ARE. Luigi 2026-08-12.
+// The KitchenDisplay client also triggers an instant reject the moment its
+// countdown elapses; this cron is the safety net for when the tablet is offline
+// or not loaded.
+import { DEFAULT_TIMEOUT_MINUTES, CLOSED_PLACED_TIMEOUT_MINUTES } from "@/lib/auto-reject-window";
 
 export type AutoRejectResult = {
   scanned: number;

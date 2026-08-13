@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Novo naročilo #{orderNumber} — samodejno sprejeto — {restaurant}",
       "badgeAutoAccepted": "Samodejno sprejeto",
       "autoAcceptedLabel": "Ukrepanje ni potrebno",
-      "autoAcceptedNote": "Samodejno sprejemanje je vklopljeno, zato je bilo to naročilo sprejeto namesto vas in stranka je že prejela svojo potrditev. Ni ničesar za sprejeti – samo pripravite ga."
+      "autoAcceptedNote": "Samodejno sprejemanje je vklopljeno, zato je bilo to naročilo sprejeto namesto vas in stranka je že prejela svojo potrditev. Ni ničesar za sprejeti – samo pripravite ga.",
+      "acceptHintMinutes": "Sprejmite to naročilo v Kitchen Order App ali skrbniški nadzorni plošči v {minutes} minutah. Če ga nihče ne sprejme pravočasno, se samodejno zavrne, stranka pa prejme obvestilo.",
+      "acceptHintClosedMinutes": "To naročilo je prispelo, ko ste bili zaprti, zato čaka do odprtja. Od trenutka odprtja imate {minutes} minut, da ga sprejmete, preden bo samodejno zavrnjeno."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tvoje naročilo je preklicano",

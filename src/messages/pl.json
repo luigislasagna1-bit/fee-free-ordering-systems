@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Nowe zamówienie #{orderNumber} — zaakceptowane automatycznie — {restaurant}",
       "badgeAutoAccepted": "Zaakceptowane automatycznie",
       "autoAcceptedLabel": "Nie trzeba nic robić",
-      "autoAcceptedNote": "Automatyczna akceptacja jest włączona, więc to zamówienie zostało zaakceptowane za Ciebie, a klient otrzymał już potwierdzenie. Nie ma nic do akceptowania — po prostu je przygotuj."
+      "autoAcceptedNote": "Automatyczna akceptacja jest włączona, więc to zamówienie zostało zaakceptowane za Ciebie, a klient otrzymał już potwierdzenie. Nie ma nic do akceptowania — po prostu je przygotuj.",
+      "acceptHintMinutes": "Zaakceptuj to zamówienie w Kitchen Order App lub w panelu administracyjnym w ciągu {minutes} minut. Jeśli nikt nie zaakceptuje go na czas, zostanie odrzucone automatycznie, a klient otrzyma powiadomienie.",
+      "acceptHintClosedMinutes": "To zamówienie wpłynęło, gdy było zamknięte, więc czeka do otwarcia. Od momentu otwarcia masz {minutes} minut na jego zaakceptowanie, zanim zostanie odrzucone automatycznie."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Twoje zamówienie zostało anulowane",

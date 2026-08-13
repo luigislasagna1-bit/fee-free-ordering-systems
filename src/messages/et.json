@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Uus tellimus #{orderNumber} — automaatselt vastu võetud — {restaurant}",
       "badgeAutoAccepted": "Automaatselt vastu võetud",
       "autoAcceptedLabel": "Midagi pole vaja teha",
-      "autoAcceptedNote": "Automaatne vastuvõtt on sisse lülitatud, seega võeti see tellimus teie eest vastu ja klient on kinnituse juba kätte saanud. Vastu võtta pole midagi – valmistage see lihtsalt ette."
+      "autoAcceptedNote": "Automaatne vastuvõtt on sisse lülitatud, seega võeti see tellimus teie eest vastu ja klient on kinnituse juba kätte saanud. Vastu võtta pole midagi – valmistage see lihtsalt ette.",
+      "acceptHintMinutes": "Võtke see tellimus vastu Kitchen Order Appis või administraatori töölaual {minutes} minuti jooksul. Kui keegi ei võta seda õigeks ajaks vastu, lükatakse see automaatselt tagasi ja klienti teavitatakse.",
+      "acceptHintClosedMinutes": "See tellimus saabus siis, kui olite suletud, seega ootab see avamiseni. Alates avamishetkest on teil {minutes} minutit selle vastuvõtmiseks, enne kui see automaatselt tagasi lükatakse."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Sinu tellimus on tühistatud",

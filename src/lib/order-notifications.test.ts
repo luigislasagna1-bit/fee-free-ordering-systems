@@ -169,6 +169,27 @@ describe("fireOrderNotifications — delivery address on the store email", () =>
   });
 });
 
+// The email used to say auto-reject runs "within your configured timeout".
+// There is no such setting: it's 4 minutes, or 15 from OPENING when the order
+// landed while the shop was closed (Luigi 2026-08-12).
+describe("fireOrderNotifications — quoted auto-reject window", () => {
+  it("quotes the real 4-minute window on a normal order", async () => {
+    prismaMock.order.findUnique.mockResolvedValue(orderRow({ status: "pending", preparationTime: null }));
+    await fireOrderNotifications("o1");
+    expect(staffPayload().autoRejectMinutes).toBe(4);
+    expect(staffPayload().placedWhileClosed).toBe(false);
+  });
+
+  it("quotes the longer window for an order placed while closed", async () => {
+    prismaMock.order.findUnique.mockResolvedValue(
+      orderRow({ status: "pending", preparationTime: null, placedWhileClosed: true }),
+    );
+    await fireOrderNotifications("o1");
+    expect(staffPayload().autoRejectMinutes).toBe(15);
+    expect(staffPayload().placedWhileClosed).toBe(true);
+  });
+});
+
 describe("fireOrderNotifications — quoted prep time", () => {
   it("quotes the ORDER's stored prep minutes, not the restaurant's flat default", async () => {
     prismaMock.order.findUnique.mockResolvedValue(orderRow());

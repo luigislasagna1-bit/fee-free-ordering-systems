@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Nova comanda #{orderNumber} — acceptada automàticament — {restaurant}",
       "badgeAutoAccepted": "Acceptada automàticament",
       "autoAcceptedLabel": "No cal fer res",
-      "autoAcceptedNote": "L'acceptació automàtica està activada, així que aquesta comanda s'ha acceptat per tu i el client ja ha rebut la seva confirmació. No hi ha res a acceptar: només cal preparar-la."
+      "autoAcceptedNote": "L'acceptació automàtica està activada, així que aquesta comanda s'ha acceptat per tu i el client ja ha rebut la seva confirmació. No hi ha res a acceptar: només cal preparar-la.",
+      "acceptHintMinutes": "Accepta aquesta comanda des de la Kitchen Order App o el tauler d'administració en un termini de {minutes} minuts. Si ningú no l'accepta a temps, es rebutja automàticament i s'avisa el client.",
+      "acceptHintClosedMinutes": "Aquesta comanda va arribar mentre estàveu tancats, així que queda en espera fins que obriu. Des del moment en què obriu teniu {minutes} minuts per acceptar-la abans que sigui rebutjada automàticament."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "La teva comanda s'ha cancel·lat",

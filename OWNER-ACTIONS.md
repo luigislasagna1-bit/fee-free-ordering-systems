@@ -213,10 +213,19 @@ instructions are left as the customer wrote them. Postal codes get the space put
    accept it. Old emails are never re-sent. **Type the delivery address in all lowercase on
    purpose** — the email, the kitchen screen and the printed ticket should all come out capitalized,
    with the postal code on the ticket.
-2. 🤔 **The pending email's wording is still slightly off, and I left it alone deliberately.** It
-   says auto-reject runs "within your configured timeout" — there is no such setting. The real
-   window is **4 minutes** (15 for an order placed while you're closed), fixed in code. Say the word
-   and I'll make it name the actual number instead.
+2. ✅ **DONE 2026-08-12 — the pending email now names the real window.** It used to say auto-reject
+   runs "within your configured timeout"; there is no such setting. It now reads *"Accept this order
+   … **within 4 minutes**. If nobody accepts it in time it is declined automatically and the customer
+   is told."*
+
+   **An order placed while you're CLOSED gets its own sentence**, because one number would have been
+   wrong: that window is **15 minutes measured from when you open**, not from when the order lands.
+   Quoting "you have 15 minutes" on an order that arrives at 2 AM would be a lie. It reads *"parked
+   until you open … from the moment you open you have 15 minutes."*
+
+   The number is read from the same source the auto-reject cron enforces, so the email can never
+   drift from the actual behaviour — both windows now live in one file instead of being copied
+   inside the cron. 38 languages, parity clean.
 
 ### A46. ✉️ "Awaiting confirmation" on an AUTO-ACCEPTED order — FIXED + PUSHED (2026-08-11)
 You placed two test orders (ORD-143921044 pickup 1:42 PM, ORD-519009065 delivery 2:55 PM) and both

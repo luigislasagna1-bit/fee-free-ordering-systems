@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Pesanan baru #{orderNumber} — diterima otomatis — {restaurant}",
       "badgeAutoAccepted": "Diterima otomatis",
       "autoAcceptedLabel": "Tidak perlu tindakan",
-      "autoAcceptedNote": "Terima otomatis aktif, jadi pesanan ini sudah diterima untuk Anda dan pelanggan sudah menerima konfirmasinya. Tidak ada yang perlu diterima — cukup siapkan pesanannya."
+      "autoAcceptedNote": "Terima otomatis aktif, jadi pesanan ini sudah diterima untuk Anda dan pelanggan sudah menerima konfirmasinya. Tidak ada yang perlu diterima — cukup siapkan pesanannya.",
+      "acceptHintMinutes": "Terima pesanan ini dari Kitchen Order App atau dasbor admin dalam {minutes} menit. Jika tidak ada yang menerimanya tepat waktu, pesanan ditolak otomatis dan pelanggan diberi tahu.",
+      "acceptHintClosedMinutes": "Pesanan ini masuk saat Anda tutup, jadi menunggu sampai Anda buka. Sejak Anda buka, Anda punya {minutes} menit untuk menerimanya sebelum ditolak otomatis."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Pesananmu dibatalkan",

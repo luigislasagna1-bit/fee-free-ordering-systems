@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Ny bestilling #{orderNumber} — automatisk godtatt — {restaurant}",
       "badgeAutoAccepted": "Automatisk godtatt",
       "autoAcceptedLabel": "Ingenting å gjøre",
-      "autoAcceptedNote": "Automatisk godtakelse er på, så denne bestillingen er godtatt for deg, og kunden har allerede fått bekreftelsen sin. Det er ingenting å godta – bare lag den."
+      "autoAcceptedNote": "Automatisk godtakelse er på, så denne bestillingen er godtatt for deg, og kunden har allerede fått bekreftelsen sin. Det er ingenting å godta – bare lag den.",
+      "acceptHintMinutes": "Godta denne bestillingen i Kitchen Order App eller adminpanelet innen {minutes} minutter. Hvis ingen godtar den i tide, avvises den automatisk og kunden får beskjed.",
+      "acceptHintClosedMinutes": "Denne bestillingen kom inn mens dere hadde stengt, så den venter til dere åpner. Fra det øyeblikket dere åpner, har dere {minutes} minutter på å godta den før den avvises automatisk."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Bestillingen din er kansellert",

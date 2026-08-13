@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Ny ordre #{orderNumber} — automatisk accepteret — {restaurant}",
       "badgeAutoAccepted": "Automatisk accepteret",
       "autoAcceptedLabel": "Ingen handling nødvendig",
-      "autoAcceptedNote": "Automatisk accept er slået til, så denne bestilling er accepteret for dig, og kunden har allerede fået sin bekræftelse. Der er intet at acceptere – gå bare i gang med at lave den."
+      "autoAcceptedNote": "Automatisk accept er slået til, så denne bestilling er accepteret for dig, og kunden har allerede fået sin bekræftelse. Der er intet at acceptere – gå bare i gang med at lave den.",
+      "acceptHintMinutes": "Accepter denne bestilling i Kitchen Order App eller admin-dashboardet inden for {minutes} minutter. Hvis ingen accepterer den i tide, afvises den automatisk, og kunden får besked.",
+      "acceptHintClosedMinutes": "Denne bestilling kom ind, mens I havde lukket, så den venter, til I åbner. Fra det øjeblik I åbner, har I {minutes} minutter til at acceptere den, før den afvises automatisk."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Din bestilling er annulleret",

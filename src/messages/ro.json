@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Comandă nouă #{orderNumber} — acceptată automat — {restaurant}",
       "badgeAutoAccepted": "Acceptată automat",
       "autoAcceptedLabel": "Nu trebuie să faceți nimic",
-      "autoAcceptedNote": "Acceptarea automată este activată, așa că această comandă a fost acceptată în locul dvs., iar clientul a primit deja confirmarea. Nu aveți ce accepta — doar pregătiți-o."
+      "autoAcceptedNote": "Acceptarea automată este activată, așa că această comandă a fost acceptată în locul dvs., iar clientul a primit deja confirmarea. Nu aveți ce accepta — doar pregătiți-o.",
+      "acceptHintMinutes": "Acceptați această comandă din Kitchen Order App sau din panoul de administrare în {minutes} minute. Dacă nimeni nu o acceptă la timp, este respinsă automat, iar clientul este anunțat.",
+      "acceptHintClosedMinutes": "Această comandă a sosit cât timp ați fost închiși, așa că rămâne în așteptare până la deschidere. Din momentul în care deschideți aveți {minutes} minute să o acceptați înainte de a fi respinsă automat."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Comanda ta a fost anulată",

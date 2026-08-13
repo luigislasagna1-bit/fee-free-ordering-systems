@@ -361,7 +361,15 @@ export type StaffEventPayload =
        *  it never transitions and the orderAccepted* email never fires. This
        *  placement ping is then the store's ONLY copy and must say "confirmed",
        *  not "accept it or it gets auto-rejected". Luigi 2026-08-12. */
-      alreadyAccepted?: boolean }
+      alreadyAccepted?: boolean;
+      /** orderPlaced only — the REAL auto-reject window for this order, from
+       *  auto-reject-window.ts. The email used to say "within your configured
+       *  timeout", which named a setting that does not exist. Omitted (e.g. the
+       *  kitchen test-order ping) → the old generic sentence. Luigi 2026-08-12. */
+      autoRejectMinutes?: number;
+      /** orderPlaced only — the order landed while the shop was closed, so its
+       *  window starts at OPENING, not at placement. Different sentence. */
+      placedWhileClosed?: boolean }
   | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string;
       /** Order money for the staff copy. These two emails carried NO amounts,
@@ -546,6 +554,8 @@ async function dispatchStaffEvent(
         // Auto-accepted at create → this ping IS the confirmation (the
         // transition-driven acceptance email can never fire for it).
         alreadyAccepted: payload.alreadyAccepted === true,
+        autoRejectMinutes: payload.autoRejectMinutes,
+        placedWhileClosed: payload.placedWhileClosed === true,
         timezone,
         hoursFormat,
         locale,

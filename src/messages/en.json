@@ -5940,6 +5940,8 @@
       "seeBreakdown": "See itemized breakdown in the admin dashboard.",
       "openKitchenApp": "Open Kitchen Order App",
       "acceptHint": "Accept this order from the Kitchen Order App or the admin dashboard. Auto-reject runs if no action is taken within your configured timeout.",
+      "acceptHintMinutes": "Accept this order from the Kitchen Order App or the admin dashboard within {minutes} minutes. If nobody accepts it in time it is declined automatically and the customer is told.",
+      "acceptHintClosedMinutes": "This order arrived while you were closed, so it is parked until you open. From the moment you open you have {minutes} minutes to accept it before it is declined automatically.",
       "badgeAutoAccepted": "Auto-accepted",
       "autoAcceptedLabel": "No action needed",
       "autoAcceptedNote": "Auto-accept is on, so this order was accepted for you and the customer has already been sent their confirmation. There is nothing to accept — just prepare it."

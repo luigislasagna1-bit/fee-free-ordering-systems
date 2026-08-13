@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Uusi tilaus #{orderNumber} — hyväksytty automaattisesti — {restaurant}",
       "badgeAutoAccepted": "Hyväksytty automaattisesti",
       "autoAcceptedLabel": "Ei toimenpiteitä",
-      "autoAcceptedNote": "Automaattinen hyväksyntä on käytössä, joten tämä tilaus hyväksyttiin puolestasi ja asiakas on jo saanut vahvistuksensa. Mitään ei tarvitse hyväksyä – valmista se vain."
+      "autoAcceptedNote": "Automaattinen hyväksyntä on käytössä, joten tämä tilaus hyväksyttiin puolestasi ja asiakas on jo saanut vahvistuksensa. Mitään ei tarvitse hyväksyä – valmista se vain.",
+      "acceptHintMinutes": "Hyväksy tämä tilaus Kitchen Order Appissa tai hallintapaneelissa {minutes} minuutin kuluessa. Jos kukaan ei hyväksy sitä ajoissa, se hylätään automaattisesti ja asiakkaalle ilmoitetaan.",
+      "acceptHintClosedMinutes": "Tämä tilaus saapui, kun olitte kiinni, joten se odottaa avaamiseen asti. Avaamishetkestä alkaen teillä on {minutes} minuuttia aikaa hyväksyä se, ennen kuin se hylätään automaattisesti."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tilauksesi on peruutettu",

@@ -5946,7 +5946,9 @@
       "subjectAutoAccepted": "Új #{orderNumber}. rendelés — automatikusan elfogadva — {restaurant}",
       "badgeAutoAccepted": "Automatikusan elfogadva",
       "autoAcceptedLabel": "Nincs teendő",
-      "autoAcceptedNote": "Az automatikus elfogadás be van kapcsolva, ezért ezt a rendelést elfogadtuk Ön helyett, és a vendég már megkapta a visszaigazolást. Nincs mit elfogadni – csak készítse el."
+      "autoAcceptedNote": "Az automatikus elfogadás be van kapcsolva, ezért ezt a rendelést elfogadtuk Ön helyett, és a vendég már megkapta a visszaigazolást. Nincs mit elfogadni – csak készítse el.",
+      "acceptHintMinutes": "Fogadja el ezt a rendelést a Kitchen Order Appban vagy az adminisztrációs felületen {minutes} percen belül. Ha senki nem fogadja el időben, automatikusan elutasításra kerül, és a vendég értesítést kap.",
+      "acceptHintClosedMinutes": "Ez a rendelés zárva tartás idején érkezett, ezért nyitásig várakozik. A nyitás pillanatától {minutes} perce van elfogadni, mielőtt automatikusan elutasításra kerül."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Rendelésed lemondva",

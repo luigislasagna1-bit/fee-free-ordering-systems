@@ -152,6 +152,36 @@ describe("kitchen new-order email — pending vs auto-accepted", () => {
     expect(text).not.toContain("Auto-accepted");
   });
 
+  // The old sentence pointed at "your configured timeout" — a setting that has
+  // never existed. The real window is 4 minutes, or 15 measured from OPENING on
+  // an order placed while closed (Luigi 2026-08-12).
+  it("names the real accept window instead of an imaginary setting", async () => {
+    const text = await renderStaff({ autoRejectMinutes: 4 });
+    expect(text).toContain("within 4 minutes");
+    expect(text).not.toContain("your configured timeout");
+  });
+
+  it("does not start a closed-store order's clock at placement", async () => {
+    // Its 15 minutes run from when the shop opens; quoting them as a countdown
+    // would be a lie for an order that lands overnight.
+    const text = await renderStaff({ autoRejectMinutes: 15, placedWhileClosed: true });
+    expect(text).toContain("parked until you open");
+    expect(text).toContain("15 minutes to accept it");
+    expect(text).not.toContain("your configured timeout");
+  });
+
+  it("keeps the old generic sentence when the caller doesn't know the window", async () => {
+    // The kitchen test-order ping passes no minutes.
+    const text = await renderStaff({});
+    expect(text).toContain("your configured timeout");
+  });
+
+  it("never shows an accept window on an auto-accepted order", async () => {
+    const text = await renderStaff({ autoAccepted: true, autoRejectMinutes: 4 });
+    expect(text).not.toContain("within 4 minutes");
+    expect(text).toContain("No action needed");
+  });
+
   it("says AUTO-ACCEPTED and drops the accept prompt when auto-accept already ran", async () => {
     const text = await renderStaff({ autoAccepted: true });
     expect(text).toContain("Auto-accepted");
