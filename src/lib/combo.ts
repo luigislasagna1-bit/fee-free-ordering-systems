@@ -151,6 +151,72 @@ export function isComboItem(item: { comboConfig?: string | null }): boolean {
   return parseComboConfig(item.comboConfig) !== null;
 }
 
+/** Old→new id maps produced by a menu deep-clone. */
+export type ComboIdMaps = {
+  itemIds: ReadonlyMap<string, string>;
+  categoryIds: ReadonlyMap<string, string>;
+  variantIds: ReadonlyMap<string, string>;
+};
+
+/**
+ * Rewrite every id reference inside a raw comboConfig JSON string through the
+ * old→new maps of a menu clone: slot itemIds/categoryIds, upcharge keys,
+ * itemVariants keys + variant-id values, and `${itemId}::${variantId}` keys in
+ * variantUpcharges. Ids with no mapping (references outside the cloned menu)
+ * are kept verbatim, and unknown fields pass through untouched — this is a
+ * structural rewrite, not a re-normalization. Returns the rewritten JSON
+ * string, or null when nothing changed (caller can skip the write).
+ */
+export function remapComboConfigIds(raw: string | null | undefined, maps: ComboIdMaps): string | null {
+  if (!raw || !raw.trim()) return null;
+  let obj: any;
+  try { obj = JSON.parse(raw); } catch { return null; }
+  if (!obj || typeof obj !== "object" || !Array.isArray(obj.slots)) return null;
+
+  let touched = false;
+  const mapId = (m: ReadonlyMap<string, string>, id: unknown): unknown => {
+    if (typeof id === "string" && m.has(id)) { touched = true; return m.get(id)!; }
+    return id;
+  };
+  const rekey = (rec: Record<string, unknown>, keyFor: (k: string) => string): Record<string, unknown> => {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(rec)) {
+      const nk = keyFor(k);
+      if (nk !== k) touched = true;
+      out[nk] = v;
+    }
+    return out;
+  };
+  const mapVariantKey = (k: string): string => {
+    const sep = k.indexOf("::");
+    if (sep < 0) return k;
+    const itemId = maps.itemIds.get(k.slice(0, sep)) ?? k.slice(0, sep);
+    const variantId = maps.variantIds.get(k.slice(sep + 2)) ?? k.slice(sep + 2);
+    return comboVariantKey(itemId, variantId);
+  };
+
+  for (const s of obj.slots) {
+    if (!s || typeof s !== "object") continue;
+    if (Array.isArray(s.itemIds)) s.itemIds = s.itemIds.map((id: unknown) => mapId(maps.itemIds, id));
+    if (Array.isArray(s.categoryIds)) s.categoryIds = s.categoryIds.map((id: unknown) => mapId(maps.categoryIds, id));
+    if (s.upcharges && typeof s.upcharges === "object") {
+      s.upcharges = rekey(s.upcharges, (k) => maps.itemIds.get(k) ?? k);
+    }
+    if (s.itemVariants && typeof s.itemVariants === "object") {
+      const rekeyed = rekey(s.itemVariants, (k) => maps.itemIds.get(k) ?? k);
+      for (const [k, v] of Object.entries(rekeyed)) {
+        if (Array.isArray(v)) rekeyed[k] = v.map((id: unknown) => mapId(maps.variantIds, id));
+      }
+      s.itemVariants = rekeyed;
+    }
+    if (s.variantUpcharges && typeof s.variantUpcharges === "object") {
+      s.variantUpcharges = rekey(s.variantUpcharges, mapVariantKey);
+    }
+  }
+
+  return touched ? JSON.stringify(obj) : null;
+}
+
 /** A customer's pick for one slot — references a menu item + optional variant
  *  + optional pizza customization (carried for the kitchen) + the upcharge that
  *  applied. Stored on the order so receipts/kitchen can render the combo parts. */
