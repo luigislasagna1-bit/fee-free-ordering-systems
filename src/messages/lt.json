@@ -4274,7 +4274,9 @@
         "recentCalls": "Naujausi skambučiai",
         "noCalls": "Skambučių dar nėra. Jie atsiras čia, kai Nabil pradės veikti.",
         "buildPizzaCombo": "Pica ir rinkinių sudarymas balsu",
-        "buildPizzaComboHint": "Pagal numatytuosius nustatymus išjungta. Kai įjungta, Nabil pats sudaro picas – dydžius, priedus, net pusę ant pusės – ir užpildo rinkinių pozicijas, užuot perdavęs skambinantįjį darbuotojui. Prieš pasikliaudami šia funkcija, pateikite bandomąjį užsakymą ir patikrinkite atspausdintą kvitą."
+        "buildPizzaComboHint": "Pagal numatytuosius nustatymus išjungta. Kai įjungta, Nabil pats sudaro picas – dydžius, priedus, net pusę ant pusės – ir užpildo rinkinių pozicijas, užuot perdavęs skambinantįjį darbuotojui. Prieš pasikliaudami šia funkcija, pateikite bandomąjį užsakymą ir patikrinkite atspausdintą kvitą.",
+        "offerDayDeals": "Siūlyti šiandienos pasiūlymus be raginimo",
+        "offerDayDealsHint": "Pagal numatytuosius išjungta. Įjungus, jei skambinantysis užsisako tai, kam šiandien galioja pigesnis to paties dydžio pasiūlymas, Nabil tai pamini pats. Laimi palankumą ir kainuoja maržos — jūsų sprendimas."
       },
       "apiErrors": {
         "featureLocked": "Jūsų planas dar neapima užsakymų telefonu agento.",

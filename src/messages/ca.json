@@ -4274,7 +4274,9 @@
         "recentCalls": "Trucades recents",
         "noCalls": "Encara no hi ha trucades. Apareixeran aquí quan Nabil estigui actiu.",
         "buildPizzaCombo": "Crea pizzes i combos per veu",
-        "buildPizzaComboHint": "Desactivat per defecte. Quan està activat, Nabil munta pizzes —mides, ingredients i fins i tot meitat i meitat— i completa els combos, en lloc de passar la trucada a una persona. Fes una comanda de prova i comprova el tiquet imprès abans de confiar-hi."
+        "buildPizzaComboHint": "Desactivat per defecte. Quan està activat, Nabil munta pizzes —mides, ingredients i fins i tot meitat i meitat— i completa els combos, en lloc de passar la trucada a una persona. Fes una comanda de prova i comprova el tiquet imprès abans de confiar-hi.",
+        "offerDayDeals": "Oferir les ofertes d'avui sense que ho demanin",
+        "offerDayDealsHint": "Desactivat per defecte. Quan està actiu, si algú demana un producte que avui té una oferta més barata de la mateixa mida, en Nabil ho diu sense que li ho preguntin. Guanya simpatia i costa marge — tu decideixes."
       },
       "apiErrors": {
         "featureLocked": "El teu pla encara no inclou l'agent de comandes telefòniques.",

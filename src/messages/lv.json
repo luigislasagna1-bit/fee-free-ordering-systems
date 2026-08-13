@@ -4274,7 +4274,9 @@
         "recentCalls": "Nesenie zvani",
         "noCalls": "Zvanu vēl nav. Tie parādīsies šeit, tiklīdz Nabil būs aktīvs.",
         "buildPizzaCombo": "Veidot picas un komplektus pa tālruni",
-        "buildPizzaComboHint": "Pēc noklusējuma izslēgts. Kad ieslēgts, Nabil pats saliek picas — izmērus, piedevas, pat puse uz pusi — un aizpilda komplekta slotus, nevis pārslēdz zvanītāju uz darbinieku. Pirms paļaujaties uz šo iespēju, veiciet izmēģinājuma pasūtījumu un pārbaudiet izdrukāto čeku."
+        "buildPizzaComboHint": "Pēc noklusējuma izslēgts. Kad ieslēgts, Nabil pats saliek picas — izmērus, piedevas, pat puse uz pusi — un aizpilda komplekta slotus, nevis pārslēdz zvanītāju uz darbinieku. Pirms paļaujaties uz šo iespēju, veiciet izmēģinājuma pasūtījumu un pārbaudiet izdrukāto čeku.",
+        "offerDayDeals": "Piedāvāt šodienas akcijas bez jautājuma",
+        "offerDayDealsHint": "Pēc noklusējuma izslēgts. Kad ieslēgts un zvanītājs pasūta ko tādu, kam šodien ir lētāks tāda paša izmēra piedāvājums, Nabil to pats piemin. Iegūst labvēlību un maksā maržu — jūsu izvēle."
       },
       "apiErrors": {
         "featureLocked": "Jūsu plānā vēl nav iekļauts tālruņa pasūtījumu aģents.",

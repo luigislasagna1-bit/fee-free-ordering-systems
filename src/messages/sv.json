@@ -4274,7 +4274,9 @@
         "recentCalls": "Senaste samtal",
         "noCalls": "Inga samtal ännu. De visas här så snart Nabil är igång.",
         "buildPizzaCombo": "Bygg pizzor och combos via telefon",
-        "buildPizzaComboHint": "Avstängt som standard. När det är på bygger Nabil pizzor – storlekar, toppings, till och med halv & halv – och fyller platserna i combos, i stället för att koppla den som ringer till en person. Lägg en testbeställning och kontrollera det utskrivna kvittot innan du förlitar dig på funktionen."
+        "buildPizzaComboHint": "Avstängt som standard. När det är på bygger Nabil pizzor – storlekar, toppings, till och med halv & halv – och fyller platserna i combos, i stället för att koppla den som ringer till en person. Lägg en testbeställning och kontrollera det utskrivna kvittot innan du förlitar dig på funktionen.",
+        "offerDayDeals": "Erbjud dagens erbjudanden självmant",
+        "offerDayDealsHint": "Av som standard. När det är på och en kund beställer något som i dag har ett billigare erbjudande i samma storlek nämner Nabil det självmant. Ger goodwill och kostar marginal — ditt val."
       },
       "apiErrors": {
         "featureLocked": "Din plan inkluderar ännu inte telefonbeställningsagenten.",

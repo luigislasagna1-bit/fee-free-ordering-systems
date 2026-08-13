@@ -24,6 +24,7 @@ type Cfg = {
   canBookReservations: boolean;
   canAnswerFaq: boolean;
   allowPizzaCombo: boolean;
+  offerDayDeals: boolean;
   allowAnonymousCallers: boolean;
   pickupPaymentMode: string;
   deliveryPaymentMode: string;
@@ -49,6 +50,7 @@ const DEFAULTS: Cfg = {
   canBookReservations: true,
   canAnswerFaq: true,
   allowPizzaCombo: false,
+  offerDayDeals: false,
   allowAnonymousCallers: true,
   pickupPaymentMode: "unpaid",
   deliveryPaymentMode: "unpaid",
@@ -305,6 +307,12 @@ export default function NabilConfigClient({
                 "transfer these" toggle described a limitation, not a choice. */}
             <Toggle label={t("buildPizzaCombo")} checked={!!cfg.allowPizzaCombo} onChange={(v) => set("allowPizzaCombo", v)} />
             <p className="text-xs text-gray-500">{t("buildPizzaComboHint")}</p>
+            {/* Day Deals was fully built and service-wired but had NO toggle —
+                the API accepted offerDayDeals, the voice service read it, and
+                the only way to change it was a database edit. Finished work
+                nobody could reach. Luigi 2026-08-12. */}
+            <Toggle label={t("offerDayDeals")} checked={!!cfg.offerDayDeals} onChange={(v) => set("offerDayDeals", v)} />
+            <p className="text-xs text-gray-500">{t("offerDayDealsHint")}</p>
           </Section>
           <Section title={t("ordering")}>
             <Toggle label={t("quoteEta")} checked={!!cfg.quoteEta} onChange={(v) => set("quoteEta", v)} />

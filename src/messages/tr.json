@@ -4274,7 +4274,9 @@
         "recentCalls": "Son çağrılar",
         "noCalls": "Henüz çağrı yok. Nabil yayına girdiğinde burada görünecekler.",
         "buildPizzaCombo": "Pizzaları ve komboları sesle oluştur",
-        "buildPizzaComboHint": "Varsayılan olarak kapalıdır. Açıkken Nabil, arayanı bir kişiye aktarmak yerine pizzaları kendisi oluşturur — boyutlar, malzemeler, hatta yarım yarım — ve kombo bölmelerini doldurur. Buna güvenmeden önce bir deneme siparişi verip yazdırılan fişi kontrol edin."
+        "buildPizzaComboHint": "Varsayılan olarak kapalıdır. Açıkken Nabil, arayanı bir kişiye aktarmak yerine pizzaları kendisi oluşturur — boyutlar, malzemeler, hatta yarım yarım — ve kombo bölmelerini doldurur. Buna güvenmeden önce bir deneme siparişi verip yazdırılan fişi kontrol edin.",
+        "offerDayDeals": "Bugünün fırsatlarını kendiliğinden söyle",
+        "offerDayDealsHint": "Varsayılan olarak kapalı. Açıkken, arayan kişi bugün aynı boyutta daha ucuz fırsatı olan bir ürün sipariş ederse Nabil bunu sorulmadan söyler. Müşteri memnuniyeti kazandırır, kârdan götürür — karar sizin."
       },
       "apiErrors": {
         "featureLocked": "Planınız henüz telefonla sipariş asistanını içermiyor.",

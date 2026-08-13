@@ -4274,7 +4274,9 @@
         "recentCalls": "Seneste opkald",
         "noCalls": "Ingen opkald endnu. De vises her, når Nabil er live.",
         "buildPizzaCombo": "Byg pizzaer og comboer over telefonen",
-        "buildPizzaComboHint": "Slået fra som standard. Når den er slået til, bygger Nabil pizzaer — størrelser, toppings, endda halv & halv — og udfylder combo-pladser i stedet for at stille opkaldet videre til en medarbejder. Afgiv en testbestilling, og tjek den printede bon, før du stoler på funktionen."
+        "buildPizzaComboHint": "Slået fra som standard. Når den er slået til, bygger Nabil pizzaer — størrelser, toppings, endda halv & halv — og udfylder combo-pladser i stedet for at stille opkaldet videre til en medarbejder. Afgiv en testbestilling, og tjek den printede bon, før du stoler på funktionen.",
+        "offerDayDeals": "Tilbyd dagens tilbud uopfordret",
+        "offerDayDealsHint": "Slået fra som standard. Når det er slået til, og en kunde bestiller noget, der har et billigere tilbud i samme størrelse i dag, nævner Nabil det uopfordret. Det giver goodwill og koster margin — dit valg."
       },
       "apiErrors": {
         "featureLocked": "Din plan inkluderer endnu ikke telefonbestillingsagenten.",

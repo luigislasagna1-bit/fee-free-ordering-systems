@@ -4274,7 +4274,9 @@
         "recentCalls": "Recente gesprekken",
         "noCalls": "Nog geen gesprekken. Ze verschijnen hier zodra Nabil actief is.",
         "buildPizzaCombo": "Pizza's en combo's samenstellen aan de telefoon",
-        "buildPizzaComboHint": "Staat standaard uit. Wanneer dit aan staat, stelt Nabil pizza's samen — maten, toppings, zelfs half-om-half — en vult hij de slots van een combo in, in plaats van de beller naar een medewerker door te verbinden. Plaats een testbestelling en controleer de afgedrukte bon voordat je hierop vertrouwt."
+        "buildPizzaComboHint": "Staat standaard uit. Wanneer dit aan staat, stelt Nabil pizza's samen — maten, toppings, zelfs half-om-half — en vult hij de slots van een combo in, in plaats van de beller naar een medewerker door te verbinden. Plaats een testbestelling en controleer de afgedrukte bon voordat je hierop vertrouwt.",
+        "offerDayDeals": "Aanbiedingen van vandaag uit zichzelf noemen",
+        "offerDayDealsHint": "Standaard uit. Als dit aanstaat en een beller iets bestelt waarvoor vandaag een goedkopere aanbieding in hetzelfde formaat loopt, noemt Nabil die ongevraagd. Levert goodwill op en kost marge — jouw keuze."
       },
       "apiErrors": {
         "featureLocked": "Je abonnement bevat de telefonische bestelassistent nog niet.",

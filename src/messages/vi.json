@@ -4274,7 +4274,9 @@
         "recentCalls": "Cuộc gọi gần đây",
         "noCalls": "Chưa có cuộc gọi nào. Chúng sẽ xuất hiện ở đây khi Nabil hoạt động.",
         "buildPizzaCombo": "Tạo pizza và combo bằng giọng nói",
-        "buildPizzaComboHint": "Mặc định tắt. Khi bật, Nabil sẽ tự tạo pizza — kích cỡ, topping, kể cả pizza nửa vị này nửa vị kia — và điền các vị trí trong combo, thay vì chuyển người gọi đến nhân viên. Hãy đặt một đơn thử và kiểm tra phiếu in ra trước khi tin dùng tính năng này."
+        "buildPizzaComboHint": "Mặc định tắt. Khi bật, Nabil sẽ tự tạo pizza — kích cỡ, topping, kể cả pizza nửa vị này nửa vị kia — và điền các vị trí trong combo, thay vì chuyển người gọi đến nhân viên. Hãy đặt một đơn thử và kiểm tra phiếu in ra trước khi tin dùng tính năng này.",
+        "offerDayDeals": "Chủ động giới thiệu ưu đãi hôm nay",
+        "offerDayDealsHint": "Mặc định tắt. Khi bật, nếu khách gọi đặt món mà hôm nay có ưu đãi rẻ hơn cùng kích cỡ, Nabil sẽ chủ động nhắc. Được lòng khách nhưng giảm lợi nhuận — bạn quyết định."
       },
       "apiErrors": {
         "featureLocked": "Gói của bạn chưa bao gồm trợ lý nhận đơn qua điện thoại.",

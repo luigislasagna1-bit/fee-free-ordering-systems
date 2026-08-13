@@ -4274,7 +4274,9 @@
         "recentCalls": "Panggilan terbaru",
         "noCalls": "Belum ada panggilan. Akan muncul di sini setelah Nabil aktif.",
         "buildPizzaCombo": "Membuat pizza dan kombo lewat suara",
-        "buildPizzaComboHint": "Nonaktif secara bawaan. Saat aktif, Nabil menyusun pizza — ukuran, topping, bahkan setengah & setengah — dan mengisi slot kombo, alih-alih mengalihkan penelepon ke staf. Buat pesanan percobaan dan periksa struk yang tercetak sebelum Anda mengandalkannya."
+        "buildPizzaComboHint": "Nonaktif secara bawaan. Saat aktif, Nabil menyusun pizza — ukuran, topping, bahkan setengah & setengah — dan mengisi slot kombo, alih-alih mengalihkan penelepon ke staf. Buat pesanan percobaan dan periksa struk yang tercetak sebelum Anda mengandalkannya.",
+        "offerDayDeals": "Tawarkan promo hari ini tanpa diminta",
+        "offerDayDealsHint": "Nonaktif secara bawaan. Saat aktif, jika penelepon memesan sesuatu yang hari ini punya promo lebih murah dengan ukuran sama, Nabil menyebutkannya tanpa diminta. Menambah simpati dan mengurangi margin — keputusan Anda."
       },
       "apiErrors": {
         "featureLocked": "Paket Anda belum mencakup agen pemesanan telepon.",

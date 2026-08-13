@@ -4274,7 +4274,9 @@
         "recentCalls": "Viimeisimmät puhelut",
         "noCalls": "Ei vielä puheluita. Ne näkyvät tässä, kun Nabil on käytössä.",
         "buildPizzaCombo": "Kokoa pizzat ja combot puhelun aikana",
-        "buildPizzaComboHint": "Oletuksena pois päältä. Kun asetus on päällä, Nabil kokoaa pizzat — koot, täytteet, jopa puoliksi & puoliksi — ja täyttää combon paikat sen sijaan, että siirtäisi soittajan ihmiselle. Tee testitilaus ja tarkista tulostettu kuitti, ennen kuin luotat tähän."
+        "buildPizzaComboHint": "Oletuksena pois päältä. Kun asetus on päällä, Nabil kokoaa pizzat — koot, täytteet, jopa puoliksi & puoliksi — ja täyttää combon paikat sen sijaan, että siirtäisi soittajan ihmiselle. Tee testitilaus ja tarkista tulostettu kuitti, ennen kuin luotat tähän.",
+        "offerDayDeals": "Tarjoa päivän tarjouksia oma-aloitteisesti",
+        "offerDayDealsHint": "Oletuksena pois. Kun päällä ja soittaja tilaa jotain, josta on tänään halvempi samankokoinen tarjous, Nabil mainitsee sen pyytämättä. Tuo hyvää tahtoa ja maksaa katetta — sinun päätöksesi."
       },
       "apiErrors": {
         "featureLocked": "Tilauspakettisi ei vielä sisällä puhelintilausagenttia.",

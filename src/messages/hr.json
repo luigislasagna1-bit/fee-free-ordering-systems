@@ -4274,7 +4274,9 @@
         "recentCalls": "Nedavni pozivi",
         "noCalls": "Još nema poziva. Pojavit će se ovdje čim Nabil bude aktivan.",
         "buildPizzaCombo": "Sastavljanje pizza i combo ponuda glasom",
-        "buildPizzaComboHint": "Prema zadanim postavkama isključeno. Kada je uključeno, Nabil sastavlja pizze — veličine, dodatke, čak i pola-pola — i popunjava mjesta u combo ponudi umjesto da pozivatelja prebaci osobi. Napravite probnu narudžbu i provjerite ispisani račun prije nego što se oslonite na to."
+        "buildPizzaComboHint": "Prema zadanim postavkama isključeno. Kada je uključeno, Nabil sastavlja pizze — veličine, dodatke, čak i pola-pola — i popunjava mjesta u combo ponudi umjesto da pozivatelja prebaci osobi. Napravite probnu narudžbu i provjerite ispisani račun prije nego što se oslonite na to.",
+        "offerDayDeals": "Ponudi današnje akcije bez pitanja",
+        "offerDayDealsHint": "Isključeno prema zadanome. Kada je uključeno i pozivatelj naruči nešto što danas ima jeftiniju ponudu iste veličine, Nabil to sam spomene. Donosi naklonost i košta marže — vaša odluka."
       },
       "apiErrors": {
         "featureLocked": "Vaš paket još ne uključuje agenta za telefonske narudžbe.",

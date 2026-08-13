@@ -4274,7 +4274,9 @@
         "recentCalls": "Letzte Anrufe",
         "noCalls": "Noch keine Anrufe. Sie erscheinen hier, sobald Nabil live ist.",
         "buildPizzaCombo": "Pizzen und Combos am Telefon zusammenstellen",
-        "buildPizzaComboHint": "Standardmäßig aus. Wenn aktiviert, stellt Nabil Pizzen zusammen — Größen, Beläge, sogar Halb & Halb — und füllt Combo-Slots, statt Anrufende an eine Person weiterzuleiten. Geben Sie eine Testbestellung auf und prüfen Sie den gedruckten Beleg, bevor Sie sich darauf verlassen."
+        "buildPizzaComboHint": "Standardmäßig aus. Wenn aktiviert, stellt Nabil Pizzen zusammen — Größen, Beläge, sogar Halb & Halb — und füllt Combo-Slots, statt Anrufende an eine Person weiterzuleiten. Geben Sie eine Testbestellung auf und prüfen Sie den gedruckten Beleg, bevor Sie sich darauf verlassen.",
+        "offerDayDeals": "Tagesangebote von sich aus nennen",
+        "offerDayDealsHint": "Standardmäßig aus. Wenn aktiviert und ein Anrufer etwas bestellt, für das es heute ein günstigeres Angebot in derselben Größe gibt, weist Nabil unaufgefordert darauf hin. Das schafft Sympathie und kostet Marge — Ihre Entscheidung."
       },
       "apiErrors": {
         "featureLocked": "Ihr Tarif enthält den Telefon-Bestellagenten noch nicht.",

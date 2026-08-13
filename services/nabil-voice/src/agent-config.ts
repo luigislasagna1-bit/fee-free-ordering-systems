@@ -4,6 +4,10 @@
  * may not send one at all, so EVERY field falls back to today's permissive
  * behavior exactly (contract pinned 2026-08-10 in DESIGN-nabil-dashboard.md).
  */
+/** VoiceAgentConfig.pickupPaymentMode / deliveryPaymentMode. */
+export type PaymentMode = "unpaid" | "paid" | "both";
+const PAYMENT_MODES: PaymentMode[] = ["unpaid", "paid", "both"];
+
 export type AgentConfig = {
   canTakeOrders: boolean;
   canBookReservations: boolean;
@@ -28,6 +32,16 @@ export type AgentConfig = {
    *  than silently defaulted (Luigi: "let the store choose which ones to always
    *  offer"). Empty = smart defaults. */
   pizzaAskGroups: string[];
+  /** How a PHONE order is paid, per order type — deliberately separate from the
+   *  store's web payment settings (Luigi 2026-08-12: "there should be separate
+   *  toggles for ONLINE orders and separate toggles for PHONE ORDERS").
+   *    unpaid = pay at the store (cash) — what every store does today
+   *    paid   = the caller must pay a link before we accept the order
+   *    both   = link, with a pay-at-store fallback when it isn't paid in time
+   *  Until pay-by-link exists, "paid" REFUSES rather than quietly taking cash:
+   *  an owner who asked for prepayment must not be handed an unpaid order. */
+  pickupPaymentMode: PaymentMode;
+  deliveryPaymentMode: PaymentMode;
   /** Extra languages the owner enabled. Non-empty ⇒ the phone system is
    *  auto-detecting the caller's language, so the agent must answer in it. */
   languages: string[];
@@ -67,6 +81,16 @@ export function normalizeAgentConfig(raw: unknown): AgentConfig {
     pizzaAskGroups: Array.isArray(r.pizzaAskGroups)
       ? r.pizzaAskGroups.filter((x): x is string => typeof x === "string").slice(0, 20)
       : [],
+    // "unpaid" is the safe default in both directions: it is the schema default,
+    // it is what every store does today, and an OLDER app server that sends no
+    // config at all must keep taking pay-at-store orders rather than suddenly
+    // refusing them because it looks like prepayment was required.
+    pickupPaymentMode: PAYMENT_MODES.includes(r.pickupPaymentMode as PaymentMode)
+      ? (r.pickupPaymentMode as PaymentMode)
+      : "unpaid",
+    deliveryPaymentMode: PAYMENT_MODES.includes(r.deliveryPaymentMode as PaymentMode)
+      ? (r.deliveryPaymentMode as PaymentMode)
+      : "unpaid",
     languages: Array.isArray(r.languages)
       ? r.languages.filter((x): x is string => typeof x === "string").slice(0, 38)
       : [],

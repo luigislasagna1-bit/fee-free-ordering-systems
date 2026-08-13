@@ -4274,7 +4274,9 @@
         "recentCalls": "Llamadas recientes",
         "noCalls": "Todavía no hay llamadas. Aparecerán aquí en cuanto Nabil esté activo.",
         "buildPizzaCombo": "Crear pizzas y combos por voz",
-        "buildPizzaComboHint": "Desactivado por defecto. Cuando está activado, Nabil crea las pizzas — tamaños, ingredientes, incluso mitad y mitad — y completa las posiciones del combo, en lugar de pasar la llamada a una persona. Haz un pedido de prueba y revisa el recibo impreso antes de confiar en esta función."
+        "buildPizzaComboHint": "Desactivado por defecto. Cuando está activado, Nabil crea las pizzas — tamaños, ingredientes, incluso mitad y mitad — y completa las posiciones del combo, en lugar de pasar la llamada a una persona. Haz un pedido de prueba y revisa el recibo impreso antes de confiar en esta función.",
+        "offerDayDeals": "Ofrecer las ofertas de hoy sin que las pidan",
+        "offerDayDealsHint": "Desactivado por defecto. Cuando está activo, si alguien pide algo que hoy tiene una oferta más barata del mismo tamaño, Nabil lo menciona sin que se lo pregunten. Gana simpatía y cuesta margen — tú decides."
       },
       "apiErrors": {
         "featureLocked": "Tu plan aún no incluye el agente de pedidos por teléfono.",

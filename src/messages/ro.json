@@ -4274,7 +4274,9 @@
         "recentCalls": "Apeluri recente",
         "noCalls": "Încă niciun apel. Vor apărea aici de îndată ce Nabil este activ.",
         "buildPizzaCombo": "Construiește pizza și combo-uri prin voce",
-        "buildPizzaComboHint": "Dezactivat implicit. Când este activ, Nabil construiește pizza — mărimi, toppinguri, chiar și jumătate-jumătate — și completează sloturile de combo, în loc să transfere apelantul unei persoane. Plasează o comandă de test și verifică bonul tipărit înainte să te bazezi pe această funcție."
+        "buildPizzaComboHint": "Dezactivat implicit. Când este activ, Nabil construiește pizza — mărimi, toppinguri, chiar și jumătate-jumătate — și completează sloturile de combo, în loc să transfere apelantul unei persoane. Plasează o comandă de test și verifică bonul tipărit înainte să te bazezi pe această funcție.",
+        "offerDayDeals": "Propune ofertele de azi din proprie inițiativă",
+        "offerDayDealsHint": "Dezactivat implicit. Când e activ și apelantul comandă ceva ce are azi o ofertă mai ieftină la aceeași mărime, Nabil o menționează singur. Câștigă simpatie și costă marjă — decizia vă aparține."
       },
       "apiErrors": {
         "featureLocked": "Planul dumneavoastră nu include încă agentul de comenzi telefonice.",

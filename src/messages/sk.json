@@ -4274,7 +4274,9 @@
         "recentCalls": "Nedávne hovory",
         "noCalls": "Zatiaľ žiadne hovory. Objavia sa tu, keď bude Nabil aktívny.",
         "buildPizzaCombo": "Zostavovanie pízz a combo ponúk hlasom",
-        "buildPizzaComboHint": "Predvolene vypnuté. Keď je zapnuté, Nabil zostaví pizzu — veľkosti, ingrediencie, dokonca aj polovica & polovica — a vyplní sloty v combo ponuke namiesto toho, aby volajúceho prepojil na človeka. Zadajte skúšobnú objednávku a skontrolujte vytlačenú účtenku, skôr než sa na to začnete spoliehať."
+        "buildPizzaComboHint": "Predvolene vypnuté. Keď je zapnuté, Nabil zostaví pizzu — veľkosti, ingrediencie, dokonca aj polovica & polovica — a vyplní sloty v combo ponuke namiesto toho, aby volajúceho prepojil na človeka. Zadajte skúšobnú objednávku a skontrolujte vytlačenú účtenku, skôr než sa na to začnete spoliehať.",
+        "offerDayDeals": "Ponúkať dnešné akcie bez vyzvania",
+        "offerDayDealsHint": "Predvolene vypnuté. Keď je zapnuté a volajúci si objedná niečo, na čo dnes beží lacnejšia akcia v rovnakej veľkosti, Nabil to sám spomenie. Získa priazeň a stojí to maržu — rozhodnutie je na vás."
       },
       "apiErrors": {
         "featureLocked": "Váš plán zatiaľ nezahŕňa agenta pre telefonické objednávky.",

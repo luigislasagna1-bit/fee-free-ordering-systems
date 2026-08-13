@@ -4594,7 +4594,9 @@
         "recentCalls": "Recent calls",
         "noCalls": "No calls yet. They'll appear here once Nabil is live.",
         "buildPizzaCombo": "Build pizzas and combos by voice",
-        "buildPizzaComboHint": "Off by default. When on, Nabil builds pizzas — sizes, toppings, even half-and-half — and fills combo slots, instead of passing the caller to a person. Place a test order and check the printed receipt before you rely on it."
+        "buildPizzaComboHint": "Off by default. When on, Nabil builds pizzas — sizes, toppings, even half-and-half — and fills combo slots, instead of passing the caller to a person. Place a test order and check the printed receipt before you rely on it.",
+        "offerDayDeals": "Offer today's deals unprompted",
+        "offerDayDealsHint": "Off by default. When on, if a caller orders something that has a cheaper same-size deal running today, Nabil mentions it without being asked. It wins goodwill and costs margin — your call."
       },
       "apiErrors": {
         "featureLocked": "Your plan doesn't include the phone ordering agent yet.",
@@ -5912,6 +5914,7 @@
     },
     "newOrder": {
       "subject": "New order #{orderNumber} — {restaurant}",
+      "subjectAutoAccepted": "New order #{orderNumber} — auto-accepted — {restaurant}",
       "title": "New order received",
       "body": "{customer} just placed order #{orderNumber} for {total}.",
       "openAdmin": "Open admin",
@@ -5937,7 +5940,6 @@
       "seeBreakdown": "See itemized breakdown in the admin dashboard.",
       "openKitchenApp": "Open Kitchen Order App",
       "acceptHint": "Accept this order from the Kitchen Order App or the admin dashboard. Auto-reject runs if no action is taken within your configured timeout.",
-      "subjectAutoAccepted": "New order #{orderNumber} — auto-accepted — {restaurant}",
       "badgeAutoAccepted": "Auto-accepted",
       "autoAcceptedLabel": "No action needed",
       "autoAcceptedNote": "Auto-accept is on, so this order was accepted for you and the customer has already been sent their confirmation. There is nothing to accept — just prepare it."

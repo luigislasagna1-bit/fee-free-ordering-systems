@@ -4274,7 +4274,9 @@
         "recentCalls": "Legutóbbi hívások",
         "noCalls": "Még nincsenek hívások. Itt jelennek meg, amint a Nabil élesben működik.",
         "buildPizzaCombo": "Pizzák és kombók összeállítása telefonon",
-        "buildPizzaComboHint": "Alapértelmezetten kikapcsolva. Bekapcsolva a Nabil maga állítja össze a pizzákat — méret, feltétek, akár Fél & Fél is —, és kitölti a kombó helyeit, ahelyett, hogy munkatársnak adná át a hívót. Adjon le egy tesztrendelést, és ellenőrizze a kinyomtatott nyugtát, mielőtt élesben használná."
+        "buildPizzaComboHint": "Alapértelmezetten kikapcsolva. Bekapcsolva a Nabil maga állítja össze a pizzákat — méret, feltétek, akár Fél & Fél is —, és kitölti a kombó helyeit, ahelyett, hogy munkatársnak adná át a hívót. Adjon le egy tesztrendelést, és ellenőrizze a kinyomtatott nyugtát, mielőtt élesben használná.",
+        "offerDayDeals": "Ajánlja fel a mai akciókat magától",
+        "offerDayDealsHint": "Alapból kikapcsolva. Ha be van kapcsolva, és a hívó olyat rendel, amire ma ugyanabban a méretben olcsóbb ajánlat fut, Nabil magától szól. Jóindulatot szerez és árrésbe kerül — az Ön döntése."
       },
       "apiErrors": {
         "featureLocked": "Az Ön csomagja még nem tartalmazza a telefonos rendelésfelvevő asszisztenst.",

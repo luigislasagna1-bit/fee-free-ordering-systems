@@ -4274,7 +4274,9 @@
         "recentCalls": "Ostatnie połączenia",
         "noCalls": "Brak połączeń. Pojawią się tutaj, gdy Nabil będzie aktywny.",
         "buildPizzaCombo": "Składanie pizz i zestawów głosowo",
-        "buildPizzaComboHint": "Domyślnie wyłączone. Po włączeniu Nabil sam składa pizze — rozmiary, składniki, nawet pół na pół — i wypełnia sloty zestawów, zamiast przekazywać dzwoniącego do obsługi. Zanim zaczniesz na tym polegać, złóż zamówienie testowe i sprawdź wydrukowany paragon."
+        "buildPizzaComboHint": "Domyślnie wyłączone. Po włączeniu Nabil sam składa pizze — rozmiary, składniki, nawet pół na pół — i wypełnia sloty zestawów, zamiast przekazywać dzwoniącego do obsługi. Zanim zaczniesz na tym polegać, złóż zamówienie testowe i sprawdź wydrukowany paragon.",
+        "offerDayDeals": "Proponuj dzisiejsze okazje bez pytania",
+        "offerDayDealsHint": "Domyślnie wyłączone. Gdy włączone, a dzwoniący zamawia coś, na co dziś jest tańsza oferta w tym samym rozmiarze, Nabil sam o niej wspomni. Zyskuje przychylność i kosztuje marżę — Twoja decyzja."
       },
       "apiErrors": {
         "featureLocked": "Twój plan nie obejmuje jeszcze agenta zamówień telefonicznych.",

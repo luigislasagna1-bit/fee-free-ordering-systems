@@ -519,8 +519,35 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
             "This exact order was ALREADY placed earlier in this call — do NOT announce a new order. Reassure the caller it's confirmed and repeat the SAME order number and total.",
         };
       }
-      // v1: pay-at-store (cash). Pay-by-link (task #17) plugs in here for
-      // pickupPaymentMode/deliveryPaymentMode of "paid"/"both".
+      // ── The owner's PHONE payment policy, honoured at last ───────────────
+      // This used to be a hardcoded `paymentMethod: "cash"` with a comment
+      // saying pay-by-link would "plug in here". Meanwhile the admin happily
+      // saved pickupPaymentMode/deliveryPaymentMode and NOTHING read them, so a
+      // store that switched phone orders to prepaid saw no change whatsoever —
+      // the setting was decorative. Luigi 2026-08-12: phone and web must have
+      // separate, real payment settings.
+      //
+      //   unpaid → pay at the store. Cash, exactly as today.
+      //   both   → link with a pay-at-store fallback. The link doesn't exist
+      //            yet, so the documented fallback applies immediately: cash.
+      //            The caller still gets a working order, which is the whole
+      //            point of "both".
+      //   paid   → the owner requires prepayment. Pay-by-link is NOT built, so
+      //            there is no honest way to take this order by phone. REFUSE.
+      //            Quietly booking it as cash would hand an owner who asked for
+      //            prepayment an unpaid order — the exact failure this setting
+      //            exists to prevent, and worse than not taking the call.
+      const paymentMode =
+        input.type === "delivery" ? ctx.cfg.deliveryPaymentMode : ctx.cfg.pickupPaymentMode;
+      if (paymentMode === "paid") {
+        return {
+          ok: false,
+          refused: "prepayment_required",
+          instruction:
+            `This restaurant requires ${input.type} orders to be paid in advance, and paying by phone isn't available yet. ` +
+            `Do NOT place the order and do NOT promise it. Apologise briefly, and offer to text the caller a link so they can order and pay online (send_sms_link), or to pass them to a member of staff.`,
+        };
+      }
       const payload: Record<string, unknown> = {
         restaurantSlug: slug,
         type: input.type,
@@ -528,6 +555,9 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         customerName: twoTokenName(input.customerName),
         customerPhone: phone,
         customerEmail: sentinelEmail(phone),
+        // Only "unpaid" and "both" reach here (gate above), and both settle at
+        // the store — so cash is right for each. When pay-by-link ships, "both"
+        // changes here and "paid" stops refusing.
         paymentMethod: "cash",
         channel: "voice",
         marketingConsent: false,
@@ -838,6 +868,21 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       // the customer, so quoting under the caller-ID number and charging under
       // the number they gave can move the total between the "yes" and the bill.
       const { phone, name: quoteName } = orderIdentity(ctx, input);
+      // Refuse BEFORE quoting, not after. The dry run deliberately short-
+      // circuits ahead of the placement guards, so without this the caller is
+      // read a full itemised total, says yes, and only then discovers the order
+      // can't be taken — the worst possible order in which to find out.
+      const quoteMode =
+        input.type === "delivery" ? ctx.cfg.deliveryPaymentMode : ctx.cfg.pickupPaymentMode;
+      if (quoteMode === "paid") {
+        return {
+          error: true,
+          code: "prepayment_required",
+          message:
+            `${input.type === "delivery" ? "Delivery" : "Pickup"} orders here must be paid in advance, and paying by phone isn't available yet. ` +
+            `Don't quote a total or take the order. Offer to text an ordering link (send_sms_link), or to pass the caller to staff.`,
+        };
+      }
       const body: Record<string, unknown> = {
         restaurantSlug: slug,
         type: input.type,
@@ -847,6 +892,8 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         customerName: twoTokenName(quoteName),
         customerPhone: phone,
         customerEmail: sentinelEmail(phone),
+        // Matches what place_order will send (see the gate there) so the quote
+        // is priced the same way the order is charged.
         paymentMethod: "cash",
         channel: "voice",
       };

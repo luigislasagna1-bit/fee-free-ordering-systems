@@ -72,6 +72,12 @@ export async function GET(req: NextRequest) {
         pizzaAskGroups: true,
         languages: true,
         offerDayDeals: true,
+        // The owner's PHONE payment policy, separate from the web one by
+        // design (Luigi 2026-08-12). Until now these were written by the admin
+        // and read by nobody, while place_order hardcoded cash — so a store
+        // that switched phone orders to prepaid saw nothing change.
+        pickupPaymentMode: true,
+        deliveryPaymentMode: true,
       },
     }),
     prisma.voiceFaq.findMany({
@@ -173,6 +179,12 @@ export async function GET(req: NextRequest) {
       // Offer a cheaper same-day equivalent unprompted. Opt-in: down-selling is
       // a margin decision, never a deploy decision.
       offerDayDeals: cfg?.offerDayDeals ?? false,
+      // "unpaid" = pay at the store (cash) · "paid" = require a pay-link ·
+      // "both" = link with a pay-at-store fallback. Default "unpaid" matches
+      // both the schema default and what every store does today, so nothing
+      // changes for anyone until an owner deliberately picks otherwise.
+      pickupPaymentMode: cfg?.pickupPaymentMode ?? "unpaid",
+      deliveryPaymentMode: cfg?.deliveryPaymentMode ?? "unpaid",
       pizzaAskGroups: Array.isArray(cfg?.pizzaAskGroups)
         ? (cfg.pizzaAskGroups as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 20)
         : [],

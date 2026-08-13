@@ -4274,7 +4274,9 @@
         "recentCalls": "Hiljutised kõned",
         "noCalls": "Kõnesid veel pole. Need ilmuvad siia, kui Nabil on aktiivne.",
         "buildPizzaCombo": "Pitsade ja kombode koostamine häälega",
-        "buildPizzaComboHint": "Vaikimisi väljas. Kui see on sees, koostab Nabil pitsasid — suurused, täidised, isegi pool ja pool — ning valib kombodesse kuuluvad road, selle asemel et suunata helistaja töötajale. Esita testtellimus ja kontrolli väljaprinditud kviitungit, enne kui hakkad sellele lootma."
+        "buildPizzaComboHint": "Vaikimisi väljas. Kui see on sees, koostab Nabil pitsasid — suurused, täidised, isegi pool ja pool — ning valib kombodesse kuuluvad road, selle asemel et suunata helistaja töötajale. Esita testtellimus ja kontrolli väljaprinditud kviitungit, enne kui hakkad sellele lootma.",
+        "offerDayDeals": "Paku tänaseid pakkumisi ise",
+        "offerDayDealsHint": "Vaikimisi väljas. Kui sisse lülitatud ja helistaja tellib midagi, millel on täna sama suurusega odavam pakkumine, mainib Nabil seda ise. Võidab poolehoidu ja maksab marginaali — otsus on teie."
       },
       "apiErrors": {
         "featureLocked": "Sinu pakett ei sisalda veel telefonitellimuste agenti.",
