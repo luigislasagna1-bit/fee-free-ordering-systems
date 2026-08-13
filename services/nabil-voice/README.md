@@ -55,5 +55,14 @@ Phone Numbers → the Nabil number → Voice → **A CALL COMES IN**:
 ## Notes / follow-ups
 - **Transfer to a human** needs a `<Connect action="…/api/twilio/voice/handoff">` on the TwiML + a small handoff route that `<Dial>`s the restaurant's `transferToNumber` when we send `{type:"end", handoffData}`. (Tracked.)
 - Two internal endpoints this service calls are built alongside it: `POST /api/internal/voice/send-sms` (task #13) and `POST /api/internal/voice/call-log` (VoiceCall logging + AI summary/sentiment).
-- `voiceSpeed` / `ambientNoise` config have no direct ConversationRelay attribute (v1 no-op).
+- `voiceSpeed` **is** applied — it rides the extended ConversationRelay `voice`
+  value (`<id>-<model>-<speed>_<stability>_<similarity>`, built by
+  `src/lib/voice/elevenlabs-voices.ts`), which also pins the TTS model to
+  `turbo_v2_5` so audio quality is never a side effect of the speed slider.
+- `ambientNoise` is still a **no-op** and is labelled "coming soon" in the UI.
+  It is not a matter of finding the right attribute: ConversationRelay owns the
+  media path end-to-end and this service only ever exchanges TEXT with it, so
+  there is nowhere to mix a background bed in. Doing it for real means leaving
+  ConversationRelay for raw Media Streams and taking over STT, TTS and barge-in
+  ourselves. Do not ship a toggle that pretends otherwise.
 - Local run: `npm install && APP_BASE_URL=… INTERNAL_API_SECRET=… NABIL_VOICE_JWT_SECRET=… ANTHROPIC_API_KEY=… npm start`.

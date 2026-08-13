@@ -15,6 +15,32 @@ function fmtMoney(n: Money, currency: string): string {
   return `${sym}${(n ?? 0).toFixed(2)}`;
 }
 
+/**
+ * The caller's own number, grouped so the TTS reads it as a phone number rather
+ * than one enormous integer. North-American numbers become "647 669 0808";
+ * anything else keeps its digits with the country code split off.
+ *
+ * Why this exists: the prompt has always told Nabil the callback number is
+ * "usually their caller ID — confirm it", but the number was never actually put
+ * in the prompt, so Nabil COULDN'T confirm it and always asked the caller to
+ * recite it instead. On 2026-08-12 that dictation came back from Deepgram as
+ * "$6.04 $7.06 $6.09 $0.08 $0.08" — smart-formatting had read the spoken digits
+ * as currency — and the call spent two extra turns recovering. Reading a number
+ * we already hold back to the caller removes the whole failure mode.
+ */
+function spokenPhone(e164: string | null | undefined): string | null {
+  const raw = (e164 || "").trim();
+  if (!raw) return null;
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length < 7) return null; // not a dialable number (blocked/anonymous)
+  if (digits.length === 11 && digits.startsWith("1")) {
+    const d = digits.slice(1);
+    return `${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`;
+  }
+  if (digits.length === 10) return `${digits.slice(0, 3)} ${digits.slice(3, 6)} ${digits.slice(6)}`;
+  return raw.startsWith("+") ? `${raw.slice(0, raw.length - 7)} ${raw.slice(-7)}` : digits;
+}
+
 function menuText(menu: any, canBuild = false): string {
   const currency = menu?.restaurant?.currency || "usd";
   const lines: string[] = [];
@@ -201,8 +227,10 @@ export function buildSystemPrompt(args: {
   context: any;
   returningCaller: any;
   cfg: AgentConfig;
+  /** The caller's own number (E.164), straight off the call token. */
+  callerPhone?: string | null;
 }): string {
-  const { menu, context, returningCaller, cfg } = args;
+  const { menu, context, returningCaller, cfg, callerPhone } = args;
   const name = context?.restaurant?.name || menu?.restaurant?.name || "the restaurant";
   const openNow = context?.open?.isOpenNow;
   const todayHours = context?.open?.todayHours;
@@ -284,9 +312,14 @@ export function buildSystemPrompt(args: {
 `
     : "";
 
+  const spokenCaller = spokenPhone(callerPhone);
   const requiredInfo: string[] = [];
   if (cfg.canTakeOrders) {
-    requiredInfo.push("- Pickup: caller's name + a callback number (usually their caller ID — confirm it).");
+    requiredInfo.push(
+      spokenCaller
+        ? `- Pickup: caller's name + a callback number. You ALREADY HAVE their number — read it back for a yes/no ("I have you at ${spokenCaller} — is that the best number?"). Never make them recite it; only ask for digits if they say it's wrong.`
+        : "- Pickup: caller's name + a callback number (no caller ID on this call, so you do have to ask).",
+    );
     requiredInfo.push("- Delivery: name + phone + a full street address (street, city, postcode).");
   }
   if (cfg.canBookReservations) {
@@ -298,6 +331,7 @@ export function buildSystemPrompt(args: {
     ? `
 ## Required info to collect
 ${requiredInfo.join("\n")}
+- HEARING DIGITS: speech-to-text sometimes hands you a spoken number formatted as money or as decimals — "$6.04 $7.06 $0.08" is a caller saying "6 4 7 6 6 9 0 8". When a reply where you expected digits arrives looking like currency, strip the symbols and punctuation and read the remaining digits back for confirmation instead of asking them to start over. If it's still unclear after ONE re-ask, invite them to type it on their keypad — keypad presses reach you as text.
 `
     : "";
 

@@ -32,20 +32,32 @@ describe("buildVoiceAttrValue", () => {
     expect(buildVoiceAttrValue("   ", 0.8)).toBeNull();
   });
 
-  it("emits the bare id at normal speed", () => {
-    expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", 1)).toBe("21m00Tcm4TlvDq8ikWAM");
-    expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", null)).toBe("21m00Tcm4TlvDq8ikWAM");
-  });
-
-  it("uses the extended id-model-speed_stability_similarity form when speed differs", () => {
-    expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", 0.8)).toBe(
-      "21m00Tcm4TlvDq8ikWAM-flash_v2_5-0.80_0.50_0.75",
+  it("pins the quality model even at normal speed", () => {
+    // The model must NOT depend on whether the owner touched the speed slider:
+    // it used to, and nudging speed silently downgraded TTS to flash.
+    expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", 1)).toBe(
+      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-1.00_0.50_0.75",
+    );
+    expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", null)).toBe(
+      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-1.00_0.50_0.75",
     );
   });
 
+  it("carries the owner's speed in the same extended form", () => {
+    expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", 0.8)).toBe(
+      "21m00Tcm4TlvDq8ikWAM-turbo_v2_5-0.80_0.50_0.75",
+    );
+  });
+
+  it("never speaks through the low-fidelity flash model", () => {
+    for (const speed of [null, 0.7, 1, 1.1, 1.2, 5]) {
+      expect(buildVoiceAttrValue("21m00Tcm4TlvDq8ikWAM", speed)).not.toContain("flash");
+    }
+  });
+
   it("clamps an out-of-range stored speed rather than sending it", () => {
-    expect(buildVoiceAttrValue("abc123def456ghij", 2)).toBe("abc123def456ghij-flash_v2_5-1.20_0.50_0.75");
-    expect(buildVoiceAttrValue("abc123def456ghij", 0.1)).toBe("abc123def456ghij-flash_v2_5-0.70_0.50_0.75");
+    expect(buildVoiceAttrValue("abc123def456ghij", 2)).toBe("abc123def456ghij-turbo_v2_5-1.20_0.50_0.75");
+    expect(buildVoiceAttrValue("abc123def456ghij", 0.1)).toBe("abc123def456ghij-turbo_v2_5-0.70_0.50_0.75");
   });
 
   it("never emits a character that would break the XML attribute", () => {

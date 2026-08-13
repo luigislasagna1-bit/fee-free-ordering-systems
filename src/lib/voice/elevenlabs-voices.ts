@@ -61,11 +61,28 @@ export function clampVoiceSpeed(speed: number | null | undefined): number {
 }
 
 /**
+ * The TTS model every Nabil voice speaks through.
+ *
+ * `turbo_v2_5`, NOT `flash_v2_5`. Both are multilingual (v2_5 = 32 languages,
+ * which our 38-locale line needs); flash is the fastest and the least accurate,
+ * turbo trades roughly 200ms of model latency for markedly better pronunciation
+ * and word endings.
+ *
+ * 🚨 Why this is now a CONSTANT instead of a branch. This value used to be sent
+ * ONLY when voiceSpeed differed from 1.0 — so nudging the speed slider silently
+ * moved a store onto the lowest-fidelity model, and the two effects compounded:
+ * the fastest model, played faster. Luigi's store was on 1.1× and reported
+ * exactly what that produces — slurred words, clipped endings, wrong emphasis.
+ * A quality setting must never be a side effect of an unrelated slider, so the
+ * model is now pinned for everyone who has picked a voice.
+ */
+const TTS_MODEL = "turbo_v2_5";
+
+/**
  * Build the ConversationRelay `voice` attribute value.
  *
- * Returns null when there is nothing to say — no voice picked AND no speed
- * change — so the TwiML stays byte-identical to today for every store that
- * hasn't touched the setting.
+ * Returns null only when no voice is picked — that store sends no `voice`
+ * attribute at all and gets Twilio's default, which is always safe.
  *
  * The extended form REQUIRES all three tuning numbers, so stability and
  * similarity are pinned at ElevenLabs' own defaults (0.5 / 0.75) and only speed
@@ -76,11 +93,9 @@ export function buildVoiceAttrValue(
   speed: number | null | undefined,
 ): string | null {
   const id = (voiceId || "").trim();
+  if (!id) return null; // no voice picked: never send a model/speed for an unknown voice
   const s = clampVoiceSpeed(speed);
-  const speedIsDefault = Math.abs(s - 1) < 0.005;
-  if (!id) return null; // no voice picked: never send a speed for an unknown voice
-  if (speedIsDefault) return id;
-  return `${id}-flash_v2_5-${s.toFixed(2)}_0.50_0.75`;
+  return `${id}-${TTS_MODEL}-${s.toFixed(2)}_0.50_0.75`;
 }
 
 /** Ids the picker will accept from the client. Validated server-side so a

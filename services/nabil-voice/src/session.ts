@@ -192,7 +192,15 @@ export class CallSession {
             .map((it: any) => String(it.menuItemId)),
         ),
       );
-      this.system = buildSystemPrompt({ menu, context, returningCaller, cfg: this.ctx.cfg });
+      this.system = buildSystemPrompt({
+        menu,
+        context,
+        returningCaller,
+        cfg: this.ctx.cfg,
+        // Caller ID, so Nabil can read the callback number back for a yes/no
+        // instead of making the caller dictate ten digits down a phone line.
+        callerPhone: this.token.from,
+      });
     } catch (e) {
       console.error("[nabil-voice] init failed", e);
       this.system = `You are Nabil, the phone assistant for this restaurant. Apologize that you're having trouble accessing the menu right now and offer to connect the caller to a team member (call transfer_to_human).`;

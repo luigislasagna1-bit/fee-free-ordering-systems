@@ -102,15 +102,60 @@ export async function deleteRecording(recordingSid: string): Promise<boolean> {
  * from Twilio's media response (so <audio> seeking works) + our own
  * Content-Type/Cache-Control. Nothing else crosses over — Twilio's remaining
  * headers (request ids, cookies…) must not leak to the browser.
+ *
+ * `Accept-Ranges: bytes` is asserted rather than merely forwarded: this proxy
+ * satisfies ranges itself (see parseByteRange + the recording route) even when
+ * the upstream answers a ranged request with a plain 200, so seeking is a
+ * property of OUR response, not of Twilio's.
  */
 export function audioPassthroughHeaders(upstream: Headers): Record<string, string> {
   const out: Record<string, string> = {
     "Content-Type": "audio/mpeg",
     "Cache-Control": "private, no-store",
+    "accept-ranges": "bytes",
   };
-  for (const h of ["accept-ranges", "content-range", "content-length"]) {
+  for (const h of ["content-range", "content-length"]) {
     const v = upstream.get(h);
     if (v) out[h] = v;
   }
   return out;
+}
+
+/**
+ * Parse a single-range `Range: bytes=…` header against a known total size.
+ *
+ * Only the forms a media element actually sends are honoured — `bytes=N-`,
+ * `bytes=N-M`, and the suffix form `bytes=-N`. Multi-range (comma) requests are
+ * refused (null) because a multipart/byteranges body is not something an
+ * <audio> element asks for, and half-implementing it would be worse than
+ * serving the whole file.
+ *
+ * Returns null when the header is absent or unusable → caller serves 200.
+ * Returns `unsatisfiable` when the range starts past the end of the file → the
+ * caller must answer 416, never a 200 with the whole file (which is what makes
+ * a player silently jump back to the start).
+ */
+export function parseByteRange(
+  header: string | null | undefined,
+  size: number,
+): { start: number; end: number } | "unsatisfiable" | null {
+  const raw = (header || "").trim();
+  if (!raw || !size || size <= 0) return null;
+  const m = /^bytes=(\d*)-(\d*)$/i.exec(raw);
+  if (!m) return null; // multi-range or malformed → whole file
+  const [, startStr, endStr] = m;
+
+  // Suffix form: the LAST n bytes.
+  if (startStr === "") {
+    const n = Number(endStr);
+    if (!endStr || !Number.isFinite(n) || n <= 0) return null;
+    return { start: Math.max(0, size - n), end: size - 1 };
+  }
+
+  const start = Number(startStr);
+  if (!Number.isFinite(start) || start < 0) return null;
+  if (start >= size) return "unsatisfiable";
+  const end = endStr === "" ? size - 1 : Math.min(Number(endStr), size - 1);
+  if (!Number.isFinite(end) || end < start) return "unsatisfiable";
+  return { start, end };
 }

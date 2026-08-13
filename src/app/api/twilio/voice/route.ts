@@ -343,9 +343,11 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   const origin = new URL(publicUrl(req)).origin;
   const handoffUrl = `${origin}/api/twilio/voice/handoff`;
 
-  // NOTE (config not wired here): voiceSpeed + ambientNoise have no direct
-  // ConversationRelay attribute — they'd ride ElevenLabs voice settings / audio
-  // mixing. The Settings UI labels them "coming soon" rather than pretending.
+  // NOTE (config): voiceSpeed DOES take effect — it rides the extended `voice`
+  // value built above, which also pins the TTS model to turbo_v2_5 so audio
+  // quality never depends on whether the owner touched the speed slider.
+  // ambientNoise is still not wired to anything (no ConversationRelay
+  // attribute); the Settings UI labels it "coming soon" rather than pretending.
   // `interruptible="any"` gives barge-in; elevenlabsTextNormalization="auto"
   // reads prices/numbers correctly (accuracy).
   return twiml(
