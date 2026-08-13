@@ -55,11 +55,16 @@ export async function buildAndSendPartnerIntro(restaurantId: string): Promise<vo
   if (!r) throw new Error("restaurant not found");
   const owner = r.users[0];
   const addr = [r.address, r.city, r.state].filter(Boolean).join(", ");
-  await sendShipdayPartnerIntro({
+  const res = await sendShipdayPartnerIntro({
     restaurantName: r.name,
     restaurantAddress: addr || null,
     ownerName: owner?.name ?? null,
     ownerEmail: owner?.email ?? r.email ?? null,
     ownerPhone: r.phone ?? null,
   });
+  // send() reports failure as { success: false } rather than throwing — without
+  // this check the "throws on send failure" contract above was never true, so
+  // a failed/suppressed send kept the partnerNotifiedAt claim and the intro
+  // was silently lost (callers only unclaim inside their catch).
+  if (!res.success) throw new Error(res.error || "partner intro send failed");
 }

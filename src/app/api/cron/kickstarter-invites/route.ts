@@ -196,6 +196,17 @@ async function handle(req: NextRequest) {
               ? { kind: "grandfathered" as const }
               : basisFromImport(imp.consentBasis, p.relationshipDate),
           );
+          // TRANSPORT SUPPRESSED (no Resend key, or a non-prod run without
+          // ALLOW_DEV_EMAIL=1) = nothing was ever attempted — do NOT burn the
+          // prospect. Stamping here would mark real prospects "sent" on a local
+          // run, exactly the false-sent failure mode of the 2026-08-01
+          // credit-transfer incident. Distinct from `skipped: "suppressed"`
+          // below, which means the address is on the do-not-email list and was
+          // correctly passed over.
+          if (result?.transportSuppressed) {
+            totalErrors++;
+            continue;
+          }
           // Mark handled regardless of outcome — Resend errors on a single
           // recipient (bounced domain, malformed address), or a suppression
           // skip, should NOT cause infinite retries that re-scan everyone

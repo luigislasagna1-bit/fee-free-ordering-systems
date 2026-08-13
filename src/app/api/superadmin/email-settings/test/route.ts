@@ -20,6 +20,15 @@ export async function POST(req: NextRequest) {
   const result = await sendEmailSettingsTest({ to: to.trim().toLowerCase() });
 
   if (!result.success) {
+    // Suppressed = the transport deliberately skipped the send (dev without
+    // ALLOW_DEV_EMAIL=1, or no usable key outside prod) — say so instead of
+    // blaming Resend for a send that was never attempted.
+    if (result.suppressed) {
+      return NextResponse.json(
+        { error: result.error ?? "Email was suppressed — nothing sent." },
+        { status: 500 },
+      );
+    }
     return NextResponse.json(
       {
         error: result.error
