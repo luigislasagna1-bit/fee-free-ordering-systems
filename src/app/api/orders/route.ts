@@ -3370,6 +3370,43 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // ── Saved-address coordinate write-back (2026-08-01 follow-up) ─────────
+    // A signed-in customer who picked/dragged a precise pin at checkout just
+    // told us where their address actually is — heal any saved address-book
+    // row that matches this street+city but is missing coords, so the next
+    // order (and its driver) gets the exact doorstep without a re-pick.
+    // Strictly scoped: the SESSION customer's own rows (never email-resolved),
+    // exact text match, and only rows with NO coords — a row whose pin was
+    // deliberately fine-tuned is never overwritten. Fire-and-forget: the
+    // checkout response never waits on it, a failure only means the row stays
+    // coordinate-less (scripts/backfill-address-coords.ts covers those).
+    if (
+      type === "delivery" && hasPin &&
+      promoCtx.sessionCustomerId && customer?.id === promoCtx.sessionCustomerId &&
+      deliveryData?.street && deliveryData?.city
+    ) {
+      const wbCustomerId = promoCtx.sessionCustomerId;
+      const wbStreet = deliveryData.street.trim();
+      const wbCity = deliveryData.city.trim();
+      after(
+        (async () => {
+          try {
+            await prisma.restaurantCustomerAddress.updateMany({
+              where: {
+                customerId: wbCustomerId,
+                street: { equals: wbStreet, mode: "insensitive" },
+                city: { equals: wbCity, mode: "insensitive" },
+                OR: [{ lat: null }, { lng: null }],
+              },
+              data: { lat: pinLat, lng: pinLng },
+            });
+          } catch (e) {
+            console.error("[orders POST] saved-address coord write-back:", e);
+          }
+        })(),
+      );
+    }
+
     return NextResponse.json({
       id: order.id,
       orderNumber: order.orderNumber,

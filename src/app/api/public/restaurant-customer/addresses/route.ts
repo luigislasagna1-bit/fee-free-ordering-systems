@@ -35,10 +35,15 @@ export async function POST(req: NextRequest) {
   const state   = body?.state   ? String(body.state).trim().slice(0, 30)  : null;
   const zip     = body?.zip     ? String(body.zip).trim().slice(0, 20)    : null;
   const country = body?.country ? String(body.country).trim().slice(0, 10) || "CA" : "CA";
-  // Pin-confirmed coords (optional) — only stored when both are finite numbers.
+  // Pin-confirmed coords (optional) — stored only as a PAIR of finite,
+  // plausible values (same rule as the orders route's pin guard; 0,0 is the
+  // classic "empty geocode" sentinel, never a real doorstep).
   const latN = Number(body?.lat), lngN = Number(body?.lng);
-  const lat = body?.lat != null && Number.isFinite(latN) ? latN : null;
-  const lng = body?.lng != null && Number.isFinite(lngN) ? lngN : null;
+  const coordsOk = body?.lat != null && body?.lng != null
+    && Number.isFinite(latN) && Number.isFinite(lngN)
+    && Math.abs(latN) <= 90 && Math.abs(lngN) <= 180 && !(latN === 0 && lngN === 0);
+  const lat = coordsOk ? latN : null;
+  const lng = coordsOk ? lngN : null;
   const wantsDefault = !!body?.isDefault;
 
   // Cap so a malicious client can't pile up rows.

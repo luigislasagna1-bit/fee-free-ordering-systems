@@ -30,6 +30,28 @@ export async function PATCH(req: NextRequest, ctx: { params: Promise<{ id: strin
   if (body.zip !== undefined) data.zip = body.zip ? String(body.zip).slice(0, 20) : null;
   if (body.country !== undefined) data.country = String(body.country).slice(0, 10) || "CA";
 
+  // Pin-confirmed coords travel as a PAIR: both finite + plausible → stored,
+  // anything else (incl. explicit nulls) → cleared. Without this branch the
+  // route silently dropped lat/lng, so a coordinate could never be added or
+  // corrected on an existing row (2026-08-01 checkout-address follow-up).
+  if (body.lat !== undefined || body.lng !== undefined) {
+    const latN = Number(body.lat), lngN = Number(body.lng);
+    const plausible = Number.isFinite(latN) && Number.isFinite(lngN)
+      && Math.abs(latN) <= 90 && Math.abs(lngN) <= 180 && !(latN === 0 && lngN === 0);
+    data.lat = plausible ? latN : null;
+    data.lng = plausible ? lngN : null;
+  } else if (
+    // Address text changed with no fresh coords → the stored pin now points at
+    // the OLD address. Same rule as checkout: edited text invalidates the pin
+    // (the backfill/geocode lane re-resolves from text). Unchanged text keeps it.
+    (data.street !== undefined && data.street !== existing.street) ||
+    (data.city !== undefined && data.city !== existing.city) ||
+    (data.zip !== undefined && data.zip !== existing.zip)
+  ) {
+    data.lat = null;
+    data.lng = null;
+  }
+
   if (body.isDefault === true && !existing.isDefault) {
     await prisma.restaurantCustomerAddress.updateMany({
       where: { customerId: me.id, isDefault: true, NOT: { id } },

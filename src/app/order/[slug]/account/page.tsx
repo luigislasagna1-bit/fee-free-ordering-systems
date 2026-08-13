@@ -30,6 +30,7 @@ import { resolveLocale, loadMessages } from "@/lib/i18n-server";
 import { HelpTip } from "@/components/HelpTip";
 import { qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 import { usedLifetimePromoIds } from "@/lib/coupon-ledger";
+import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
 export const dynamic = "force-dynamic";
 
@@ -44,9 +45,15 @@ export default async function RestaurantAccountDashboard({
     select: {
       id: true, name: true, slug: true, isActive: true, currency: true, timezone: true, country: true,
       rewardsEnabled: true, rewardLabelSingular: true, rewardLabelPlural: true,
+      // AddressBook's Places autocomplete biases toward the store, like checkout.
+      lat: true, lng: true, city: true,
     },
   });
   if (!restaurant || !restaurant.isActive) notFound();
+
+  // Platform Google Maps key — same single key as the ordering page (Luigi
+  // 2026-07-04). Empty ⇒ AddressBook stays on the free OSM autocomplete.
+  const mapsKey = await resolveEffectiveMapsKey();
 
   // Locale: cookie → restaurant default → en (cms0gyexp #7 — matches the
   // storefront; bare getTranslations() gave a cookieless Italian-store
@@ -372,7 +379,13 @@ export default async function RestaurantAccountDashboard({
             <MapPin className="w-4 h-4 text-emerald-500" />
             {t("savedAddresses")}
           </h2>
-          <AddressBook country={restaurant.country} />
+          <AddressBook
+            country={restaurant.country}
+            googleMapsApiKey={mapsKey || null}
+            restaurantLat={restaurant.lat}
+            restaurantLng={restaurant.lng}
+            restaurantCity={restaurant.city}
+          />
         </div>
 
         {/* Order again rail — top 3 successful past baskets with a
