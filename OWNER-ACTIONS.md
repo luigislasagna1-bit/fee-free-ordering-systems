@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-12 by Claude (**EVERYTHING FROM THE LAST TWO DAYS IS NOW PUSHED AND LIVE.** Fourteen sessions' worth of work had piled up uncommitted — including two finished pieces stranded on side branches that would have been lost. Headline: **A47 — paid card orders were being lost before the kitchen ever saw them** (36 stranded in 60 days on your store, 3 orders you never received, $83.62). Also live: Autopilot no longer pays club members twice or mails a dead code (Ben Bilton's report), the cart now quotes the same delivery fee the card is charged, staff order emails name each special, every email declares its own language (Arabic/Hebrew now read right-to-left), and customer SMS is translated into all 38 languages. **Your list is A47 step 1 (three real orders need a decision from you), then the test passes in T-P / A45 / A46.**)
+**Last updated:** 2026-08-13 by Claude (**A49 — Apple's business-model question is answered and waiting for you to paste.** The Fee Free Order App review is held on Guideline 2.1(b): Apple wants to know whether the paid service behind the app is sold to consumers or to businesses. It's businesses, and nothing is purchasable inside the app at all — verified by sweeping every link in the kitchen screens. No code change, no new build. The paste-ready reply plus 4 pre-send checks are in `docs/APPLE-REVIEW-2.1B-REPLY-2026-08-13.md`; the most important one is that App Store Connect must have **zero** in-app-purchase items, even drafts.)
+**Previous update:** 2026-08-12 by Claude (**EVERYTHING FROM THE LAST TWO DAYS IS NOW PUSHED AND LIVE.** Fourteen sessions' worth of work had piled up uncommitted — including two finished pieces stranded on side branches that would have been lost. Headline: **A47 — paid card orders were being lost before the kitchen ever saw them** (36 stranded in 60 days on your store, 3 orders you never received, $83.62). Also live: Autopilot no longer pays club members twice or mails a dead code (Ben Bilton's report), the cart now quotes the same delivery fee the card is charged, staff order emails name each special, every email declares its own language (Arabic/Hebrew now read right-to-left), and customer SMS is translated into all 38 languages. **Your list is A47 step 1 (three real orders need a decision from you), then the test passes in T-P / A45 / A46.**)
 **Previous update:** 2026-08-02 (later) by Claude (**A40 — cart-loss customer report: could NOT reproduce, need more detail from you.** Full write-up + what I need in TODO.md's top entry. Also this session: fixed the social-icons bug + About-text centering + kitchen button reorder from your notes, and queued the custom-CTA-button feature you asked for — not built yet, needs a quick design pass.)
 **Previous update:** 2026-08-02 by Claude (**A39 — Branded Mobile App BUILT dark**: the $59/mo GloriaFood-replacement add-on — per-restaurant apps on both stores, remote-synced menus, resumable wizard, superadmin pipeline, customer order-status push, white-label build tooling with a REAL signed Android app already produced from wizard config. Luigi's three pilot chores are the clock-starter, Apple account check first. Same day: A38 combos shipped.)
 **Previous update:** 2026-08-02 (late) by Claude (**A37 — Fabrizio's reservation "smart buttons" BUILT** exactly to his Restoo reference: optional Adults/Children counters with the restaurant's own child definition as a hint, plus Children (high chairs/strollers) · Allergies · Special occasion · Accessible chips, flowing to kitchen + admin + CSV + printed slip + both emails; new "Booking questions" settings card with ⓘ help. Everything defaults OFF so nobody's form changes until they opt in. 31 new tests, schema on both branches, ×38 translations in flight. Needs Luigi's try-it pass, then the reply. Earlier today: A36 Max's slice fixes verified, A35 Sadaf's checkout regression shipped, A34 cost ledger.)
@@ -162,6 +163,49 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A49. 🍎 Apple wants your business model in writing — reply is written, 4 checks then paste (2026-08-13)
+Apple's message on submission `5b432e16` (**Fee Free Order App**, version 1.0 (30), reviewed on an
+iPad Air 11"): *"it appears the app may access or include paid digital content or services, and we
+want to understand your business model."* One question: **"Are the enterprise services in your app
+sold to single users, consumers, or for family use?"**
+
+**This is the Guideline 3.1.3(c) Enterprise Services test, and we pass it cleanly.** Apple only needs
+to know whether the paid service behind the app is bought by *businesses for their employees* (no
+in-app purchase required) or by *individuals/families* (in-app purchase required). Ours is bought by
+restaurant businesses — and better still, **nothing is purchasable anywhere inside the app.** I swept
+every link in the kitchen screens to be sure before writing the answer: the only things reachable in
+the app are the order screen, its login, a password-reset page, and tapping a customer's phone/email.
+No pricing, no sign-up, no billing, no upgrade, no add-ons. **No code change and no new build needed.**
+
+**Everything is in `docs/APPLE-REVIEW-2.1B-REPLY-2026-08-13.md`** — the paste-ready reply, the
+verification table behind each claim, and the wording traps.
+
+**Round 1 (Aug 4) was a different guideline — 3.2 Business**, Apple thinking this is an in-house app
+for one company and suggesting private distribution. Your Aug 4 reply beat that. But its answer #5
+said *"a restaurant may optionally pay for a separate platform subscription"* — **that one phrase
+caused round 2.** A reviewer reading "pay… subscription" has to decide if it's a consumer
+subscription (needs in-app purchase) or a business one (doesn't).
+
+So this reply threads a needle: it has to stay **publicly available to any restaurant business** (or
+3.2 comes back) while being clearly **not sold to consumers or families** (which answers this round).
+Both statements are in the reply on purpose — drop either one and Apple bounces us to the other
+guideline.
+
+1. ✅ **In-App Purchases page is EMPTY** — you verified 2026-08-12.
+2. ✅ **Subscriptions page is EMPTY** — you verified 2026-08-12. (Separate list from In-App Purchases;
+   auto-renewable subscriptions never show on the IAP page. "Streamlined Purchasing: Turned On" is
+   inert with zero subscriptions.)
+3. ☐ **Sign in once at feefreeordering.com/kitchen/login as `demo@feefreeordering.com` /
+   `AppReview2026!`** — the reply stakes its credibility on that account, and a dead demo login is an
+   instant rejection. (I confirmed the reviewer's test-order page still works: Fee Free Demo
+   Restaurant, menu loads, pickup-only.)
+4. ☐ **Clear the red ❗ next to "App Review" in the App Store Connect sidebar** if it's flagging an
+   incomplete required field.
+5. ☐ **Paste the reply** from §3 of the doc into the message thread. Reply **in the thread** — do
+   **not** upload a new build and do **not** start a new submission (it loses your queue position).
+6. ☐ **Tell me what comes back.** If Apple asks a follow-up, send me the exact text — every answer has
+   to stay consistent with the two before it, which is what tripped us on round 2.
 
 ### A48. ✉️ YOUR copy of an auto-accepted order still said "accept it or it gets rejected" — FIXED (2026-08-12)
 Your ORD-002270106 ($58.34, super party size, 2:57 PM) was **auto-accepted the second it was
