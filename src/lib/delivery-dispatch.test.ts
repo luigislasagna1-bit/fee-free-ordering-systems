@@ -30,7 +30,7 @@ const base = (over: Partial<DispatchableOrder> = {}): DispatchableOrder => ({
   paymentStatus: "paid",
   total: 25,
   creditApplied: 0,
-  restaurant: { address: "1 Shop Rd", city: "Milton", state: "ON", zip: "L9T" },
+  restaurant: { address: "1 Shop Rd", city: "Milton", state: "ON", zip: "L9T", country: "CA" },
   ...over,
 });
 
@@ -49,8 +49,11 @@ describe("assertDispatchable (shared ShipDay + FeeFree guards)", () => {
     const g = assertDispatchable(base());
     expect(g.ok).toBe(true);
     if (g.ok) {
-      expect(g.customerAddress).toBe("12 Main St, Milton, L9T");
-      expect(g.restaurantAddress).toBe("1 Shop Rd, Milton, ON, L9T");
+      // Province AND country are part of the composed address — without them
+      // Uber Direct geocoded the drop into the wrong country and rejected every
+      // order as out of area (2026-08-13).
+      expect(g.customerAddress).toBe("12 Main St, Milton, ON, L9T, Canada");
+      expect(g.restaurantAddress).toBe("1 Shop Rd, Milton, ON, L9T, Canada");
     }
   });
   it("rejects non-delivery orders", () => {
@@ -66,7 +69,10 @@ describe("assertDispatchable (shared ShipDay + FeeFree guards)", () => {
   });
   it("rejects when either address is missing", () => {
     expect(assertDispatchable(base({ deliveryAddress: null, deliveryCity: null, deliveryZip: null }))).toEqual({ ok: false, skipped: "missing_address" });
-    expect(assertDispatchable(base({ restaurant: { address: null, city: null, state: null, zip: null } }))).toEqual({ ok: false, skipped: "missing_address" });
+    // Province + country are inherited from the store, so a streetless drop
+    // still composes to "ON, Canada" — the guard must look at the STREET.
+    expect(assertDispatchable(base({ deliveryAddress: null }))).toEqual({ ok: false, skipped: "missing_address" });
+    expect(assertDispatchable(base({ restaurant: { address: null, city: null, state: null, zip: null, country: null } }))).toEqual({ ok: false, skipped: "missing_address" });
   });
   it("rejects unpaid orders (prepaid-only — drivers never collect cash)", () => {
     expect(assertDispatchable(base({ paymentStatus: "pending", total: 25, creditApplied: 0 }))).toEqual({ ok: false, skipped: "not_prepaid" });

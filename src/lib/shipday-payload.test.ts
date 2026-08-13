@@ -16,11 +16,11 @@ function mkInput(o: Partial<DispatchInput> = {}): DispatchInput {
     customerName: "Sameem Nabil",
     customerEmail: "customer@example.com",
     customerPhone: "6476690808",
-    customerAddress: "933 maple ave, milton, L9T2H6",
+    dropoff: { street: "933 Maple Ave", city: "Milton", state: "Ontario", zip: "L9T 2H6", country: "Canada" },
     customerLat: 43.51,
     customerLng: -79.88,
     restaurantName: "Luigi's Lasagna & Pizzeria",
-    restaurantAddress: "506 Collis Court, Milton, ON, L9T5M7",
+    pickup: { street: "506 Collis Court", city: "Milton", state: "Ontario", zip: "L9T 5M7", country: "Canada" },
     restaurantPhone: "(905) 555-1234",
     restaurantLat: 43.52,
     restaurantLng: -79.87,
@@ -125,6 +125,39 @@ describe("buildShipdayOrderBody — ShipDay insert-order contract", () => {
   it("paymentMethod is deliberately ABSENT (its enum would require card fields)", () => {
     const b = buildShipdayOrderBody(mkInput(), NOW);
     expect("paymentMethod" in b).toBe(false);
+  });
+
+  // 2026-08-13: every Uber Direct quote came back "out of delivery area" on
+  // drops 1-3 km from the store, while the same order attached to DoorDash.
+  // Uber re-geocodes the dropoff STRING and discards our coordinates, and the
+  // string carried no province and no country.
+  it("the single-line addresses carry state AND country (the Uber out-of-area regression)", () => {
+    const b = buildShipdayOrderBody(mkInput(), NOW);
+    expect(b.customerAddress).toBe("933 Maple Ave, Milton, Ontario, L9T 2H6, Canada");
+    expect(b.restaurantAddress).toBe("506 Collis Court, Milton, Ontario, L9T 5M7, Canada");
+  });
+
+  it("the structured dropoff/pickup breakdowns ride alongside the strings", () => {
+    const b = buildShipdayOrderBody(mkInput(), NOW);
+    expect(b.dropoff).toEqual({ street: "933 Maple Ave", city: "Milton", state: "Ontario", zip: "L9T 2H6", country: "Canada" });
+    expect(b.pickup).toEqual({ street: "506 Collis Court", city: "Milton", state: "Ontario", zip: "L9T 5M7", country: "Canada" });
+  });
+
+  it("a unit rides in the address line AND the breakdown (drivers need it, geocoders tolerate it)", () => {
+    const b = buildShipdayOrderBody(
+      mkInput({ dropoff: { street: "6911 Derry Road West", unit: "Apt 4B", city: "Milton", state: "Ontario", zip: "L9T 7H5", country: "Canada" } }),
+      NOW,
+    );
+    expect(b.customerAddress).toBe("6911 Derry Road West, Apt 4B, Milton, Ontario, L9T 7H5, Canada");
+    expect((b.dropoff as Record<string, unknown>).unit).toBe("Apt 4B");
+  });
+
+  it("a store with no province (most of Europe) still gets a country", () => {
+    const b = buildShipdayOrderBody(
+      mkInput({ dropoff: { street: "Via Mazzini 13", city: "Bologna", zip: "40121", country: "Italy" } }),
+      NOW,
+    );
+    expect(b.customerAddress).toBe("Via Mazzini 13, Bologna, 40121, Italy");
   });
 
   it("coordinates pass through when present, undefined when absent (ShipDay geocodes then)", () => {

@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-13 (later) by Claude (**Six finished pieces that had been sitting on side branches are now live** — one of them since 5 July. Nothing was lost, but nothing was live either: a duplicated menu's combo deals pointed at the original menu's items and offered the customer nothing; emails that never left the building were recording themselves as sent; saved delivery addresses couldn't gain or correct their map pin; reservation statuses and the kitchen's first-run tour were English-only for every non-English owner; and customer spend totals had no nightly safety net. Preflight green (1579 tests, full build), translations at full parity across all 38 languages. **Nothing here needs anything from you** — your list is still A49 below. One item was deliberately NOT shipped: the iOS native printer bridge, because shipping it means a new iOS build, and a new build would cost you your place in the Apple review queue while A49 is pending.)
+**Last updated:** 2026-08-13 (latest) by Claude (**A50 — the ShipDay→Uber "out of delivery area" problem.** Found a real defect: the address we send ShipDay had no province and no country ("1095 Ezard Cres, Milton, L9T 6W9" — Milton in *which* country?). DoorDash never cared because it uses the map pin we send; Uber's docs say it **always re-geocodes the address text and discards the coordinates**, so Uber was the only one reading the one line that was wrong. Fixed, plus the unit/parking notes that were being crammed into the street line. 1602 tests + build green. **Not deployed** — A50 step 1 is a 2-minute check only you can do first, because there's a second possible cause I can't see from outside your ShipDay account.)
+**Previous update:** 2026-08-13 (later) by Claude (**Six finished pieces that had been sitting on side branches are now live** — one of them since 5 July. Nothing was lost, but nothing was live either: a duplicated menu's combo deals pointed at the original menu's items and offered the customer nothing; emails that never left the building were recording themselves as sent; saved delivery addresses couldn't gain or correct their map pin; reservation statuses and the kitchen's first-run tour were English-only for every non-English owner; and customer spend totals had no nightly safety net. Preflight green (1579 tests, full build), translations at full parity across all 38 languages. **Nothing here needs anything from you** — your list is still A49 below. One item was deliberately NOT shipped: the iOS native printer bridge, because shipping it means a new iOS build, and a new build would cost you your place in the Apple review queue while A49 is pending.)
 **Previous update:** 2026-08-13 by Claude (**A49 — Apple's business-model question is answered and waiting for you to paste.** The Fee Free Order App review is held on Guideline 2.1(b): Apple wants to know whether the paid service behind the app is sold to consumers or to businesses. It's businesses, and nothing is purchasable inside the app at all — verified by sweeping every link in the kitchen screens. No code change, no new build. The paste-ready reply plus 4 pre-send checks are in `docs/APPLE-REVIEW-2.1B-REPLY-2026-08-13.md`; the most important one is that App Store Connect must have **zero** in-app-purchase items, even drafts.)
 **Previous update:** 2026-08-12 by Claude (**EVERYTHING FROM THE LAST TWO DAYS IS NOW PUSHED AND LIVE.** Fourteen sessions' worth of work had piled up uncommitted — including two finished pieces stranded on side branches that would have been lost. Headline: **A47 — paid card orders were being lost before the kitchen ever saw them** (36 stranded in 60 days on your store, 3 orders you never received, $83.62). Also live: Autopilot no longer pays club members twice or mails a dead code (Ben Bilton's report), the cart now quotes the same delivery fee the card is charged, staff order emails name each special, every email declares its own language (Arabic/Hebrew now read right-to-left), and customer SMS is translated into all 38 languages. **Your list is A47 step 1 (three real orders need a decision from you), then the test passes in T-P / A45 / A46.**)
 **Previous update:** 2026-08-02 (later) by Claude (**A40 — cart-loss customer report: could NOT reproduce, need more detail from you.** Full write-up + what I need in TODO.md's top entry. Also this session: fixed the social-icons bug + About-text centering + kitchen button reorder from your notes, and queued the custom-CTA-button feature you asked for — not built yet, needs a quick design pass.)
@@ -164,6 +165,54 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A50. 🚚 ShipDay → Uber says "out of delivery area" every time — one real defect FIXED, one thing only you can check (2026-08-13)
+
+**Your report:** DoorDash attaches to a ShipDay order fine; Uber says the delivery is out of the
+area every single time, even 1 km away.
+
+**What I found and fixed (certain, in code, not deployed yet).** The address we hand ShipDay
+carried **no province and no country**. A live order from this morning went out as:
+
+> `1095 Ezard Cres, Milton, L9T 6W9`
+
+Milton — in which country? There are Miltons in Massachusetts, Florida, Washington and a dozen
+other US states. Nothing in that line says Ontario, and nothing says Canada, because the order
+table has no column for either. It now goes out as:
+
+> `1095 Ezard Cres, Milton, Ontario, L9T 6W9, Canada`
+
+**Why that broke Uber but not DoorDash.** We also send the exact map pin from checkout. DoorDash
+uses it — so the thin address never mattered there. Uber's own documentation says it **always
+re-geocodes the drop-off address and throws the coordinates away**. So Uber was the only one
+actually reading that line, and it was the only line that was wrong.
+
+Two smaller things fixed in the same change: the store's own postal code was being sent as
+`L9T2H6` with no space, and unit/floor/intercom/parking notes were being crammed into the street
+line ("6911 Derry Road West, Apt RBC Branch, …") where a geocoder has to guess what they mean.
+Those now go to the driver's instructions, where a human reads them.
+
+**☐ STEP 1 — the 2-minute check only you can do, BEFORE we deploy.**
+In ShipDay, create an order by hand (or open an existing one) and type the delivery address in
+full, exactly like this — **including the province and the word Canada**:
+
+> `1095 Ezard Cres, Milton, Ontario, L9T 6W9, Canada`
+
+Then ask for an **Uber** quote.
+
+- **If a quote comes back** → the address was the whole problem, my fix does exactly this
+  automatically for every order, and we deploy.
+- **If it STILL says out of area** with that perfect address → the problem is not our data, it's
+  your ShipDay/Uber account or coverage, and no code change can fix it. Tell me and go to step 2.
+
+**☐ STEP 2 — only if step 1 still fails.** Ask ShipDay support (support@shipday.com /
+1-650-550-2975): *"Is Uber Direct available to Canadian merchants on my account, and is Milton,
+Ontario inside Uber's coverage for it?"* Worth asking because **ShipDay's Canadian third-party
+delivery FAQ prices DoorDash only — their US page prices DoorDash *and* Uber.** That may be
+nothing, or it may mean Uber isn't offered here at all. I can't tell from outside your account.
+
+**Status:** code fixed, 1602 tests green, full build green, **not committed and not deployed** —
+I'd rather you run step 1 first, because if it fails the answer isn't in the code.
 
 ### A49. 🍎 Apple wants your business model in writing — reply is written, 4 checks then paste (2026-08-13)
 Apple's message on submission `5b432e16` (**Fee Free Order App**, version 1.0 (30), reviewed on an

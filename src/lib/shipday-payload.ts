@@ -11,6 +11,13 @@
  *  - Phones: E.164 with country code (sanitizePhone; raw fallback so
  *    ShipDay's surfaced error names the field rather than us dropping a
  *    required one).
+ *  - Addresses: the single-line `customerAddress` / `restaurantAddress` MUST
+ *    carry state + country, and the structured `dropoff` / `pickup` breakdowns
+ *    ride alongside them. Uber Direct re-geocodes the dropoff STRING and throws
+ *    our coordinates away, so an unqualified "…, Milton, L9T 6W9" resolved to a
+ *    US Milton and every Uber quote came back "out of delivery area" while the
+ *    same order attached to DoorDash (which honours the coords) fine — see
+ *    src/lib/shipday-address.ts for the full write-up. Luigi 2026-08-13.
  *  - Money fields rounded to 2dp.
  *  - totalOrderCost = what the driver COLLECTS (total − store credit,
  *    clamped ≥ 0) — deliberate money semantics (Luigi 2026-07-04): prepaid
@@ -21,6 +28,7 @@
  *  - orderItem: line items so the dashboard/driver app show the food.
  */
 import { sanitizePhone } from "@/lib/phone";
+import { singleLineAddress, type ShipdayAddress } from "@/lib/shipday-address";
 
 export type DispatchInput = {
   orderId: string;
@@ -28,11 +36,14 @@ export type DispatchInput = {
   customerName: string;
   customerEmail: string | null;
   customerPhone: string | null;
-  customerAddress: string;
+  /** Structured dropoff (shipday-address.ts). The single-line `customerAddress`
+   *  is derived from it, so the two can never disagree. */
+  dropoff: ShipdayAddress;
   customerLat?: number | null;
   customerLng?: number | null;
   restaurantName: string;
-  restaurantAddress: string;
+  /** Structured pickup — same deal for `restaurantAddress`. */
+  pickup: ShipdayAddress;
   restaurantPhone: string | null;
   restaurantLat?: number | null;
   restaurantLng?: number | null;
@@ -142,11 +153,18 @@ export function buildShipdayOrderBody(input: DispatchInput, now: Date): Record<s
   return {
     orderNumber: input.orderNumber,
     customerName: input.customerName,
-    customerAddress: input.customerAddress,
+    // Single line AND structured breakdown, exactly as ShipDay's own SDKs send
+    // them (Customer.get_body / Pickup.get_body emit `customerAddress` +
+    // `dropoff` and `restaurantAddress` + `pickup` together). The breakdown is
+    // the belt; the completed single line is the braces — Uber geocodes the
+    // string, and it is the string that was missing state + country.
+    customerAddress: singleLineAddress(input.dropoff),
+    dropoff: input.dropoff,
     customerEmail: input.customerEmail ?? undefined,
     customerPhoneNumber: sanitizePhone(input.customerPhone) ?? input.customerPhone ?? undefined,
     restaurantName: input.restaurantName,
-    restaurantAddress: input.restaurantAddress,
+    restaurantAddress: singleLineAddress(input.pickup),
+    pickup: input.pickup,
     restaurantPhoneNumber: sanitizePhone(input.restaurantPhone) ?? input.restaurantPhone ?? undefined,
     expectedPickupTime: timeOf(pickupAt),
     expectedDeliveryDate: dateOf(deliveryAt),

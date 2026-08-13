@@ -10,6 +10,7 @@ import { dispatchOrderNow } from "@/lib/shipday-dispatch";
 import { shouldDispatchToShipday } from "@/lib/shipday";
 import { isFeeFreeServiceArea } from "@/lib/feefree-delivery";
 import { notifyStaff } from "@/lib/notifications";
+import { buildDropoffAddress, buildPickupAddress, singleLineAddress } from "@/lib/shipday-address";
 
 export type DeliveryProvider = "own" | "shipday" | "feefree";
 
@@ -63,10 +64,20 @@ export type DispatchableOrder = {
   deliveryAddress: string | null;
   deliveryCity: string | null;
   deliveryZip: string | null;
+  /** Optional — the FeeFree guard path doesn't load it. When present the
+   *  composed address uses the clean structured street. */
+  deliveryAddressData?: unknown;
   paymentStatus: string;
   total: number;
   creditApplied: number | null;
-  restaurant: { address: string | null; city: string | null; state: string | null; zip: string | null };
+  restaurant: {
+    address: string | null;
+    city: string | null;
+    state: string | null;
+    zip: string | null;
+    /** Optional for the same reason; supplies the customer's country. */
+    country?: string | null;
+  };
 };
 
 export type DispatchGuard =
@@ -84,9 +95,26 @@ export type DispatchGuard =
 export function assertDispatchable(o: DispatchableOrder): DispatchGuard {
   if (o.type !== "delivery") return { ok: false, skipped: "not_delivery" };
   if (!["accepted", "preparing", "ready"].includes(o.status)) return { ok: false, skipped: "order_dead" };
-  const customerAddress = [o.deliveryAddress, o.deliveryCity, o.deliveryZip].filter(Boolean).join(", ");
-  const restaurantAddress = [o.restaurant.address, o.restaurant.city, o.restaurant.state, o.restaurant.zip].filter(Boolean).join(", ");
-  if (!customerAddress || !restaurantAddress) return { ok: false, skipped: "missing_address" };
+  // Composed by the SAME builder the ShipDay payload uses, so the guard and the
+  // wire can't drift — they were two hand-rolled joins until 2026-08-13, and
+  // both were missing the country that Uber Direct needs.
+  const dropoff = buildDropoffAddress({
+    deliveryAddress: o.deliveryAddress,
+    deliveryCity: o.deliveryCity,
+    deliveryZip: o.deliveryZip,
+    deliveryAddressData: o.deliveryAddressData,
+    restaurantState: o.restaurant.state,
+    restaurantCountry: o.restaurant.country ?? null,
+  });
+  const pickup = buildPickupAddress({ ...o.restaurant, country: o.restaurant.country ?? null });
+  // Guard on the STREET, not on the composed line: province and country are
+  // INHERITED from the store, so a drop with no street of its own still
+  // composes to a non-empty "ON, Canada". A courier can't deliver to a
+  // province — that is a missing address, and the same street-level check runs
+  // in dispatchOrderNow so the guard and the wire agree.
+  if (!dropoff.street || !pickup.street) return { ok: false, skipped: "missing_address" };
+  const customerAddress = singleLineAddress(dropoff);
+  const restaurantAddress = singleLineAddress(pickup);
   const fullyPrepaid = o.paymentStatus === "paid" || o.total - (o.creditApplied ?? 0) <= 0.009;
   if (!fullyPrepaid) return { ok: false, skipped: "not_prepaid" };
   return { ok: true, customerAddress, restaurantAddress };

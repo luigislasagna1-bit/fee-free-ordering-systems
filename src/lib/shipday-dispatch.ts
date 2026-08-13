@@ -16,6 +16,7 @@
  */
 import prisma from "@/lib/db";
 import { dispatchOrderToShipday, shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday";
+import { buildDeliveryInstruction, buildDropoffAddress, buildPickupAddress } from "@/lib/shipday-address";
 
 export type DispatchNowResult =
   | {
@@ -47,12 +48,15 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
       orderNumber: true, customerName: true, customerEmail: true,
       customerPhone: true, deliveryAddress: true, deliveryCity: true,
       deliveryZip: true, deliveryLat: true, deliveryLng: true,
+      deliveryAddressData: true,
       notes: true, subtotal: true, taxAmount: true,
       deliveryFee: true, tip: true, total: true, creditApplied: true,
       paymentMethod: true, paymentStatus: true, preparationTime: true,
       scheduledFor: true,
       items: { select: { name: true, quantity: true, price: true } },
-      restaurant: { select: { name: true, address: true, city: true, state: true, zip: true, phone: true, lat: true, lng: true } },
+      // `country` is not cosmetic: without it Uber Direct geocodes the drop into
+      // the wrong country and rejects every order as out of area (2026-08-13).
+      restaurant: { select: { name: true, address: true, city: true, state: true, zip: true, country: true, phone: true, lat: true, lng: true } },
     },
   });
   if (!full) return { ok: false, skipped: "not_found" };
@@ -67,9 +71,19 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     return { ok: false, skipped: "config_off" };
   }
 
-  const customerAddress = [full.deliveryAddress, full.deliveryCity, full.deliveryZip].filter(Boolean).join(", ");
-  const restaurantAddress = [full.restaurant.address, full.restaurant.city, full.restaurant.state, full.restaurant.zip].filter(Boolean).join(", ");
-  if (!customerAddress || !restaurantAddress) {
+  // Structured + fully-qualified (state, country, canonical postcode) — the
+  // couriers geocode these, and an under-qualified drop is what made every Uber
+  // Direct quote come back "out of delivery area". See shipday-address.ts.
+  const dropoff = buildDropoffAddress({
+    deliveryAddress: full.deliveryAddress,
+    deliveryCity: full.deliveryCity,
+    deliveryZip: full.deliveryZip,
+    deliveryAddressData: full.deliveryAddressData,
+    restaurantState: full.restaurant.state,
+    restaurantCountry: full.restaurant.country,
+  });
+  const pickup = buildPickupAddress(full.restaurant);
+  if (!dropoff.street || !pickup.street) {
     console.error("[shipday dispatchOrderNow] missing address", { orderId });
     return { ok: false, skipped: "missing_address" };
   }
@@ -120,14 +134,15 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     customerName: full.customerName,
     customerEmail: full.customerEmail,
     customerPhone: full.customerPhone,
-    customerAddress,
-    // Exact checkout-time pin — ShipDay skips its own geocoding when
-    // coordinates are provided, so the driver goes where the customer
-    // actually pointed, not where the address string happens to resolve.
+    dropoff,
+    // Exact checkout-time pin. ShipDay and DoorDash Drive honour it and skip
+    // their own geocoding, so the driver goes where the customer actually
+    // pointed. Uber Direct does NOT — it re-geocodes the address string
+    // regardless — which is exactly why `dropoff` above must stand on its own.
     customerLat: full.deliveryLat,
     customerLng: full.deliveryLng,
     restaurantName: full.restaurant.name,
-    restaurantAddress,
+    pickup,
     restaurantPhone: full.restaurant.phone,
     restaurantLat: full.restaurant.lat,
     restaurantLng: full.restaurant.lng,
@@ -141,7 +156,10 @@ export async function dispatchOrderNow(orderId: string): Promise<DispatchNowResu
     // Pre-orders anchor ShipDay's expected times on the customer's requested
     // time — dispatch may run long before cook time (auto-accept capture).
     scheduledFor: full.scheduledFor,
-    deliveryInstruction: full.notes,
+    // Floor / intercom / building / neighbourhood / parking move OUT of the
+    // geocodable street and IN here, next to the customer's own note — a human
+    // reads this field, a geocoder chokes on it.
+    deliveryInstruction: buildDeliveryInstruction(full.notes, full.deliveryAddressData) ?? null,
     items: full.items.map((i) => ({ name: i.name, quantity: i.quantity, unitPrice: i.price })),
   });
   if (res.ok && res.shipdayOrderId) {
