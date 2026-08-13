@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Asiento infantil",
       "labelAllergies": "Alergias",
       "labelOccasion": "Ocasión",
-      "labelAccessibility": "Accesibilidad"
+      "labelAccessibility": "Accesibilidad",
+      "status": {
+        "pending": "Pendiente",
+        "confirmed": "Confirmada",
+        "seated": "En mesa",
+        "completed": "Completada",
+        "cancelled": "Cancelada",
+        "no_show": "No presentada"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

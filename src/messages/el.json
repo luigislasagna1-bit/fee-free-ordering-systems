@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Παιδικά καθίσματα",
       "labelAllergies": "Αλλεργίες",
       "labelOccasion": "Περίσταση",
-      "labelAccessibility": "Προσβασιμότητα"
+      "labelAccessibility": "Προσβασιμότητα",
+      "status": {
+        "pending": "Σε εκκρεμότητα",
+        "confirmed": "Επιβεβαιωμένη",
+        "seated": "Στο τραπέζι",
+        "completed": "Ολοκληρωμένη",
+        "cancelled": "Ακυρωμένη",
+        "no_show": "Δεν εμφανίστηκε"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

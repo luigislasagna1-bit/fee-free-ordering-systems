@@ -3510,7 +3510,15 @@
       "labelChildSeating": "बच्चों की सीटिंग",
       "labelAllergies": "एलर्जी",
       "labelOccasion": "अवसर",
-      "labelAccessibility": "सुलभता"
+      "labelAccessibility": "सुलभता",
+      "status": {
+        "pending": "लंबित",
+        "confirmed": "पुष्टि हुई",
+        "seated": "टेबल पर",
+        "completed": "पूर्ण",
+        "cancelled": "रद्द",
+        "no_show": "नहीं आए"
+      }
     },
     "autopilotClient": {
       "pageTitle": "ऑटोपायलट",

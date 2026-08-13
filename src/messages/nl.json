@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Kinderzitplaatsen",
       "labelAllergies": "Allergieën",
       "labelOccasion": "Gelegenheid",
-      "labelAccessibility": "Toegankelijkheid"
+      "labelAccessibility": "Toegankelijkheid",
+      "status": {
+        "pending": "In afwachting",
+        "confirmed": "Bevestigd",
+        "seated": "Aan tafel",
+        "completed": "Afgerond",
+        "cancelled": "Geannuleerd",
+        "no_show": "Niet verschenen"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

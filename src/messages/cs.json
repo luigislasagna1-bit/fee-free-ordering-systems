@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Sezení pro děti",
       "labelAllergies": "Alergie",
       "labelOccasion": "Příležitost",
-      "labelAccessibility": "Bezbariérovost"
+      "labelAccessibility": "Bezbariérovost",
+      "status": {
+        "pending": "Čeká",
+        "confirmed": "Potvrzená",
+        "seated": "U stolu",
+        "completed": "Dokončená",
+        "cancelled": "Zrušená",
+        "no_show": "Nedostavil se"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

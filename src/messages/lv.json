@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Bērnu sēdvietas",
       "labelAllergies": "Alerģijas",
       "labelOccasion": "Īpašs gadījums",
-      "labelAccessibility": "Pieejamība"
+      "labelAccessibility": "Pieejamība",
+      "status": {
+        "pending": "Gaida",
+        "confirmed": "Apstiprināta",
+        "seated": "Pie galda",
+        "completed": "Pabeigta",
+        "cancelled": "Atcelta",
+        "no_show": "Neieradās"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilots",

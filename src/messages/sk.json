@@ -3814,7 +3814,15 @@
       "labelChildSeating": "Sedenie pre deti",
       "labelAllergies": "Alergie",
       "labelOccasion": "Príležitosť",
-      "labelAccessibility": "Bezbariérovosť"
+      "labelAccessibility": "Bezbariérovosť",
+      "status": {
+        "pending": "Čaká",
+        "confirmed": "Potvrdená",
+        "seated": "Pri stole",
+        "completed": "Dokončená",
+        "cancelled": "Zrušená",
+        "no_show": "Nedostavil sa"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

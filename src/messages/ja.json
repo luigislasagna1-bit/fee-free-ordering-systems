@@ -3110,7 +3110,15 @@
       "labelChildSeating": "子ども用の席",
       "labelAllergies": "アレルギー",
       "labelOccasion": "利用シーン",
-      "labelAccessibility": "バリアフリー"
+      "labelAccessibility": "バリアフリー",
+      "status": {
+        "pending": "確認待ち",
+        "confirmed": "確認済み",
+        "seated": "着席済み",
+        "completed": "完了",
+        "cancelled": "キャンセル済み",
+        "no_show": "無断キャンセル"
+      }
     },
     "autopilotClient": {
       "pageTitle": "自動化",

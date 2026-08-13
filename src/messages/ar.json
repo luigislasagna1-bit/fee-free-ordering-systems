@@ -3110,7 +3110,15 @@
       "labelChildSeating": "مقاعد الأطفال",
       "labelAllergies": "الحساسية",
       "labelOccasion": "المناسبة",
-      "labelAccessibility": "إمكانية الوصول"
+      "labelAccessibility": "إمكانية الوصول",
+      "status": {
+        "pending": "قيد الانتظار",
+        "confirmed": "مؤكد",
+        "seated": "تم الجلوس",
+        "completed": "مكتمل",
+        "cancelled": "ملغى",
+        "no_show": "لم يحضر"
+      }
     },
     "autopilotClient": {
       "pageTitle": "الطيار الآلي",

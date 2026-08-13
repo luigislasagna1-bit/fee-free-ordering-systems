@@ -3110,7 +3110,15 @@
       "labelChildSeating": "儿童座椅",
       "labelAllergies": "过敏情况",
       "labelOccasion": "场合",
-      "labelAccessibility": "无障碍需求"
+      "labelAccessibility": "无障碍需求",
+      "status": {
+        "pending": "待确认",
+        "confirmed": "已确认",
+        "seated": "已入座",
+        "completed": "已完成",
+        "cancelled": "已取消",
+        "no_show": "未到店"
+      }
     },
     "autopilotClient": {
       "pageTitle": "自动营销",

@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Lasten istuimet",
       "labelAllergies": "Allergiat",
       "labelOccasion": "Tilaisuus",
-      "labelAccessibility": "Esteettömyys"
+      "labelAccessibility": "Esteettömyys",
+      "status": {
+        "pending": "Odottaa",
+        "confirmed": "Vahvistettu",
+        "seated": "Pöydässä",
+        "completed": "Valmis",
+        "cancelled": "Peruttu",
+        "no_show": "Ei saapunut"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilotti",

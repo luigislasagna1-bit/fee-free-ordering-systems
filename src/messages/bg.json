@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Настаняване на деца",
       "labelAllergies": "Алергии",
       "labelOccasion": "Повод",
-      "labelAccessibility": "Достъпност"
+      "labelAccessibility": "Достъпност",
+      "status": {
+        "pending": "Чакаща",
+        "confirmed": "Потвърдена",
+        "seated": "На масата",
+        "completed": "Приключена",
+        "cancelled": "Отменена",
+        "no_show": "Неявяване"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Автопилот",

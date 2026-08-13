@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Dečja sedišta",
       "labelAllergies": "Alergije",
       "labelOccasion": "Povod",
-      "labelAccessibility": "Pristupačnost"
+      "labelAccessibility": "Pristupačnost",
+      "status": {
+        "pending": "Na čekanju",
+        "confirmed": "Potvrđena",
+        "seated": "Za stolom",
+        "completed": "Završena",
+        "cancelled": "Otkazana",
+        "no_show": "Nedolazak"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

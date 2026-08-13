@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Scaune copii",
       "labelAllergies": "Alergii",
       "labelOccasion": "Ocazie",
-      "labelAccessibility": "Accesibilitate"
+      "labelAccessibility": "Accesibilitate",
+      "status": {
+        "pending": "În așteptare",
+        "confirmed": "Confirmată",
+        "seated": "La masă",
+        "completed": "Finalizată",
+        "cancelled": "Anulată",
+        "no_show": "Neprezentare"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

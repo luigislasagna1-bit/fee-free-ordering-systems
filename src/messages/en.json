@@ -3613,7 +3613,15 @@
       "labelChildSeating": "Child seating",
       "labelAllergies": "Allergies",
       "labelOccasion": "Occasion",
-      "labelAccessibility": "Accessibility"
+      "labelAccessibility": "Accessibility",
+      "status": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "seated": "Seated",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "no_show": "No-show"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

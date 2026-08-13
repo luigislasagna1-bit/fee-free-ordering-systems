@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Siddeplads til børn",
       "labelAllergies": "Allergier",
       "labelOccasion": "Anledning",
-      "labelAccessibility": "Tilgængelighed"
+      "labelAccessibility": "Tilgængelighed",
+      "status": {
+        "pending": "Afventer",
+        "confirmed": "Bekræftet",
+        "seated": "Ved bordet",
+        "completed": "Afsluttet",
+        "cancelled": "Annulleret",
+        "no_show": "Udeblevet"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

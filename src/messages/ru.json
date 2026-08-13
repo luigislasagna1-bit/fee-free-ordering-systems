@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Детские места",
       "labelAllergies": "Аллергии",
       "labelOccasion": "Повод",
-      "labelAccessibility": "Доступная среда"
+      "labelAccessibility": "Доступная среда",
+      "status": {
+        "pending": "Ожидает",
+        "confirmed": "Подтверждена",
+        "seated": "За столом",
+        "completed": "Завершена",
+        "cancelled": "Отменена",
+        "no_show": "Неявка"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Автопилот",

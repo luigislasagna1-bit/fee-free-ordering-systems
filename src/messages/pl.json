@@ -3053,7 +3053,15 @@
       "labelChildSeating": "Miejsca dla dzieci",
       "labelAllergies": "Alergie",
       "labelOccasion": "Okazja",
-      "labelAccessibility": "Dostępność"
+      "labelAccessibility": "Dostępność",
+      "status": {
+        "pending": "Oczekująca",
+        "confirmed": "Potwierdzona",
+        "seated": "Przy stoliku",
+        "completed": "Zakończona",
+        "cancelled": "Anulowana",
+        "no_show": "Nieobecność"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

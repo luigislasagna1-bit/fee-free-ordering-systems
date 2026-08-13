@@ -3110,7 +3110,15 @@
       "labelChildSeating": "מושבים לילדים",
       "labelAllergies": "אלרגיות",
       "labelOccasion": "אירוע",
-      "labelAccessibility": "נגישות"
+      "labelAccessibility": "נגישות",
+      "status": {
+        "pending": "ממתין",
+        "confirmed": "מאושר",
+        "seated": "הושבו",
+        "completed": "הושלם",
+        "cancelled": "בוטל",
+        "no_show": "לא הגיע"
+      }
     },
     "autopilotClient": {
       "pageTitle": "אוטופיילוט",

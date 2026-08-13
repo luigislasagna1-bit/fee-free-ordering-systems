@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Otroška oprema",
       "labelAllergies": "Alergije",
       "labelOccasion": "Priložnost",
-      "labelAccessibility": "Dostopnost"
+      "labelAccessibility": "Dostopnost",
+      "status": {
+        "pending": "V čakanju",
+        "confirmed": "Potrjena",
+        "seated": "Za mizo",
+        "completed": "Zaključena",
+        "cancelled": "Preklicana",
+        "no_show": "Neprihod"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

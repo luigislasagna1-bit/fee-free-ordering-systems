@@ -3053,7 +3053,15 @@
       "labelChildSeating": "Gyerekülés",
       "labelAllergies": "Allergiák",
       "labelOccasion": "Alkalom",
-      "labelAccessibility": "Akadálymentesség"
+      "labelAccessibility": "Akadálymentesség",
+      "status": {
+        "pending": "Függőben",
+        "confirmed": "Megerősítve",
+        "seated": "Asztalnál",
+        "completed": "Lezárva",
+        "cancelled": "Lemondva",
+        "no_show": "Nem jelent meg"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

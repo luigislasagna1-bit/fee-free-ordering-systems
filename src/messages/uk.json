@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Дитячі місця",
       "labelAllergies": "Алергії",
       "labelOccasion": "Нагода",
-      "labelAccessibility": "Безбар'єрність"
+      "labelAccessibility": "Безбар'єрність",
+      "status": {
+        "pending": "Очікує",
+        "confirmed": "Підтверджена",
+        "seated": "За столом",
+        "completed": "Завершена",
+        "cancelled": "Скасована",
+        "no_show": "Неявка"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Автопілот",

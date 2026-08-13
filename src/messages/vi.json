@@ -3053,7 +3053,15 @@
       "labelChildSeating": "Chỗ ngồi cho trẻ",
       "labelAllergies": "Dị ứng",
       "labelOccasion": "Dịp",
-      "labelAccessibility": "Hỗ trợ tiếp cận"
+      "labelAccessibility": "Hỗ trợ tiếp cận",
+      "status": {
+        "pending": "Chờ xác nhận",
+        "confirmed": "Đã xác nhận",
+        "seated": "Đã vào bàn",
+        "completed": "Hoàn tất",
+        "cancelled": "Đã hủy",
+        "no_show": "Không đến"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

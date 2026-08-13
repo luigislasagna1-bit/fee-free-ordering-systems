@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Kindersitzplätze",
       "labelAllergies": "Allergien",
       "labelOccasion": "Anlass",
-      "labelAccessibility": "Barrierefreiheit"
+      "labelAccessibility": "Barrierefreiheit",
+      "status": {
+        "pending": "Ausstehend",
+        "confirmed": "Bestätigt",
+        "seated": "Am Tisch",
+        "completed": "Abgeschlossen",
+        "cancelled": "Storniert",
+        "no_show": "Nicht erschienen"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

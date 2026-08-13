@@ -3814,7 +3814,15 @@
       "labelChildSeating": "Vaikų sėdimos vietos",
       "labelAllergies": "Alergijos",
       "labelOccasion": "Proga",
-      "labelAccessibility": "Prieinamumas"
+      "labelAccessibility": "Prieinamumas",
+      "status": {
+        "pending": "Laukiama",
+        "confirmed": "Patvirtinta",
+        "seated": "Prie stalo",
+        "completed": "Užbaigta",
+        "cancelled": "Atšaukta",
+        "no_show": "Neatvyko"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilotas",

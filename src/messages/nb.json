@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Barneplasser",
       "labelAllergies": "Allergier",
       "labelOccasion": "Anledning",
-      "labelAccessibility": "Tilgjengelighet"
+      "labelAccessibility": "Tilgjengelighet",
+      "status": {
+        "pending": "Venter",
+        "confirmed": "Bekreftet",
+        "seated": "Ved bordet",
+        "completed": "Fullført",
+        "cancelled": "Kansellert",
+        "no_show": "Ikke møtt"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",

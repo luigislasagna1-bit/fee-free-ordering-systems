@@ -3110,7 +3110,15 @@
       "labelChildSeating": "Laste istekohad",
       "labelAllergies": "Allergiad",
       "labelOccasion": "Sündmus",
-      "labelAccessibility": "Ligipääsetavus"
+      "labelAccessibility": "Ligipääsetavus",
+      "status": {
+        "pending": "Ootel",
+        "confirmed": "Kinnitatud",
+        "seated": "Lauas",
+        "completed": "Lõpetatud",
+        "cancelled": "Tühistatud",
+        "no_show": "Ei ilmunud"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopiloot",

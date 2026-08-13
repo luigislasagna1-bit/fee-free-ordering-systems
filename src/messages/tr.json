@@ -3053,7 +3053,15 @@
       "labelChildSeating": "Çocuk Oturma Düzeni",
       "labelAllergies": "Alerjiler",
       "labelOccasion": "Ziyaret Nedeni",
-      "labelAccessibility": "Erişilebilirlik"
+      "labelAccessibility": "Erişilebilirlik",
+      "status": {
+        "pending": "Beklemede",
+        "confirmed": "Onaylandı",
+        "seated": "Masada",
+        "completed": "Tamamlandı",
+        "cancelled": "İptal edildi",
+        "no_show": "Gelmedi"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Otomatik Pilot",

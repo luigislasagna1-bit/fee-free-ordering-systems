@@ -3110,7 +3110,15 @@
       "labelChildSeating": "ที่นั่งเด็ก",
       "labelAllergies": "การแพ้อาหาร",
       "labelOccasion": "โอกาส",
-      "labelAccessibility": "การเข้าถึง"
+      "labelAccessibility": "การเข้าถึง",
+      "status": {
+        "pending": "รอยืนยัน",
+        "confirmed": "ยืนยันแล้ว",
+        "seated": "เข้าโต๊ะแล้ว",
+        "completed": "เสร็จสิ้น",
+        "cancelled": "ยกเลิกแล้ว",
+        "no_show": "ไม่มาตามนัด"
+      }
     },
     "autopilotClient": {
       "pageTitle": "Autopilot",
