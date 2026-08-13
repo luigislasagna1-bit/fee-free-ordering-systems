@@ -1688,6 +1688,21 @@ model Customer {
   name                   String
   email                  String?
   phone                  String?
+  /// `phone` reduced to bare digits with a NANP country code dropped, so one
+  /// person is one row no matter how their number was typed or which channel it
+  /// arrived on. THE lookup key — never match on `phone` itself.
+  ///
+  /// Why a column and not a cleverer query: `phone` holds arbitrary user-typed
+  /// text (prod today has "(416) 833-8405", "4168338405" and "(647) 669-0808"
+  /// for the same shapes), so an exact match misses and a `contains` match goes
+  /// full-table on Customer — forbidden on a hot path at the 10,000-user target.
+  ///
+  /// This exists because Twilio hands us "+14168338405" while checkout stores
+  /// "4168338405": on 2026-08-13 a three-order regular was not recognised, was
+  /// quoted a first-time discount she wasn't entitled to, was charged a
+  /// different total to the one she agreed to, and ended up with a second
+  /// Customer row. One unnormalised string, four failures.
+  phoneDigits            String?
   address                String?
   notes                  String?
   // Per-restaurant signup credentials. Null = guest-order row that never
@@ -1794,6 +1809,9 @@ model Customer {
   @@index([restaurantId, email])
   // Account-phone uniqueness check at signup filters on (restaurantId, phone).
   @@index([restaurantId, phone])
+  // THE identity lookup: returning phone caller, and the voice order's
+  // resolve-or-create. A point lookup, never a scan.
+  @@index([restaurantId, phoneDigits])
   @@index([customerAccountId])
   @@index([chainCustomerId])
   @@index([emailVerifyToken])
@@ -3014,6 +3032,13 @@ model VoiceCall {
 
   callSid         String     @unique // Twilio CallSid (CAxxx…) — idempotency key
   fromNumber      String
+  /// 🛡️ ERASURE KEY. `fromNumber` is E.164 ("+14168338405") while every phone
+  /// a "delete my data" request is resolved from is stored bare ("4168338405"),
+  /// so data-erasure.ts could never match a VoiceCall — it silently left the
+  /// caller's number, full transcript, AI summary AND the Twilio recording in
+  /// place while reporting success. Match on THIS.
+  /// Registered in PII_ERASURE_MAP; keep it there.
+  fromDigits      String?
   toNumber        String
   direction       String     @default("inbound")
   language        String?
@@ -3054,10 +3079,20 @@ model VoiceCall {
   /// transcript + order — never recomputed from the CURRENT upsell list.
   upsellCents     Int?
 
+  /// The total READ ALOUD to the caller, and the total actually charged. They
+  /// must be the same number. Stored because when they weren't — twice, on
+  /// 2026-08-11 and 2026-08-13 — nothing anywhere noticed: the call logged as a
+  /// clean `order_placed` and both were found by hand, days later, by reading a
+  /// transcript. A divergence here is a caller billed something they never
+  /// agreed to, so it is surfaced on the call page and alerted on.
+  quotedTotal     Float?
+  chargedTotal    Float?
+
   createdAt       DateTime   @default(now())
 
   @@index([restaurantId, startedAt])
   @@index([fromNumber])
+  @@index([fromDigits])
 }
 
 /// Per-restaurant FAQ the agent answers from. Categories mirror the real

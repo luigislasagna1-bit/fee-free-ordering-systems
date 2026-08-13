@@ -4414,7 +4414,9 @@
         "historyEmpty": "Ovo je prvi poziv s ovog broja.",
         "metaModel": "Model",
         "metaTokens": "Ulazni/izlazni tokeni",
-        "metaCost": "Trošak AI-ja"
+        "metaCost": "Trošak AI-ja",
+        "totalMismatchTitle": "Ukupan iznos promijenio se nakon što je kupac pristao",
+        "totalMismatchBody": "Nabil je rekao {quoted}, a narudžba je zaprimljena na {charged}. Kupac je pristao na prvi iznos. Provjerite ovu narudžbu prije nego postane pritužba."
       },
       "upsells": {
         "title": "Istaknute dodatne ponude",

@@ -247,8 +247,148 @@ describe("quote_order prices what place_order will charge", () => {
 
     const quoted = apiMock.dryRunOrder.mock.calls[0][0] as { customerPhone: string };
     const charged = apiMock.placeOrder.mock.calls[0][0] as { customerPhone: string };
-    expect(quoted.customerPhone).toBe("+14165550142");
+    expect(quoted.customerPhone).toBe(charged.customerPhone);
+  });
+
+  /**
+   * ORD-264127463, 2026-08-13 — the defect this whole file was supposed to
+   * cover and didn't. The old test passed the SAME string to both tools, so it
+   * could only ever prove that two identical inputs produce two identical
+   * outputs. The real call doesn't work like that: the quote runs on caller ID
+   * (`+14168338405`) because the caller hasn't been asked yet, and the charge
+   * runs on the digits they then dictate (`4168338405`).
+   *
+   * `promo-order-context.ts` counts a customer's prior orders with an EXACT
+   * string match on `Order.customerPhone`, so those two forms are two different
+   * people: Roya Safi was quoted $23.37 as a brand-new customer entitled to a
+   * first-time discount, and charged $25.87 as the three-order regular she is.
+   * She had already said yes to the first number.
+   */
+  it("prices the same person whether the number comes from caller ID or the caller's mouth", async () => {
+    const c = ctx();
+    c.token.from = "+14168338405";
+    c.customerPhone = "4168338405"; // seeded canonical at session init
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large Pizza", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+
+    // Quoted before the caller was asked — identity comes from caller ID.
+    await executeTool("quote_order", { type: "pickup" }, c);
+    // Then they read their number out, and speech-to-text hands it over
+    // formatted differently. Same person.
+    await executeTool("place_order", { type: "pickup", customerName: "Roya Safi", customerPhone: "(416) 833-8405" }, c);
+
+    const quoted = apiMock.dryRunOrder.mock.calls[0][0] as { customerPhone: string; customerEmail: string };
+    const charged = apiMock.placeOrder.mock.calls[0][0] as { customerPhone: string; customerEmail: string };
+    expect(quoted.customerPhone).toBe("4168338405");
     expect(charged.customerPhone).toBe(quoted.customerPhone);
+    expect(charged.customerEmail).toBe(quoted.customerEmail);
+  });
+
+  it("never asks the server to charge a total the caller did not hear", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large Pizza", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+    await executeTool("quote_order", { type: "pickup" }, c);
+    await executeTool("place_order", { type: "pickup", customerName: "Ada Lovelace" }, c);
+
+    const charged = apiMock.placeOrder.mock.calls[0][0] as { expectedTotal?: number };
+    expect(charged.expectedTotal).toBe(24.5);
+  });
+
+  it("a 409 from the price gate means NO order was placed and the caller must be re-asked", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large Pizza", pricingNote: null, unresolved: [] },
+    });
+    apiMock.dryRunOrder.mockResolvedValue({
+      ok: true,
+      json: { total: 23.37, subtotal: 20, tax: 3.37, appliedPromoNames: ["First-time customer special"] },
+    });
+    apiMock.placeOrder.mockResolvedValue({
+      ok: false,
+      status: 409,
+      json: { code: "total_changed", total: 25.97, expectedTotal: 23.37, appliedPromoNames: [] },
+    });
+
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+    await executeTool("quote_order", { type: "pickup" }, c);
+    const out = (await executeTool("place_order", { type: "pickup", customerName: "Roya Safi" }, c)) as {
+      error?: boolean; code?: string; notPlaced?: boolean; total?: number; instruction?: string;
+    };
+
+    expect(out.error).toBe(true);
+    expect(out.code).toBe("total_changed");
+    expect(out.notPlaced).toBe(true);
+    expect(out.total).toBe(25.97);
+    // The agent must be told WHY, from the real promo diff — never a guess.
+    expect(out.instruction).toContain("First-time customer special");
+    // Nothing was created, so nothing may be remembered as placed.
+    expect(c.placedOrders).toHaveLength(0);
+    // And no receipt may go out for an order that does not exist.
+    expect(apiMock.sendSms).not.toHaveBeenCalled();
+  });
+
+  it("does not send a stale expectedTotal after the caller adds something", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large Pizza", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+    await executeTool("quote_order", { type: "pickup" }, c);
+    // "Oh — and a Coke." A legitimately different total; refusing it would be
+    // worse than the bug the gate exists to stop.
+    await executeTool(
+      "place_order",
+      { type: "pickup", customerName: "Ada Lovelace", items: [{ menuItemId: "mi_coke", quantity: 1 }] },
+      c,
+    );
+
+    const charged = apiMock.placeOrder.mock.calls[0][0] as { expectedTotal?: number };
+    expect(charged.expectedTotal).toBeUndefined();
+  });
+
+  it("retires the quote when the caller gives a DIFFERENT number after it", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large Pizza", pricingNote: null, unresolved: [] },
+    });
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+    await executeTool("quote_order", { type: "pickup" }, c);
+    expect(c.lastQuotedTotal).toBe(24.5);
+
+    // A spouse's line, a work number — a different customer to the promo
+    // engine, so the total we quoted no longer describes what we would charge.
+    await executeTool("place_order", { type: "pickup", customerName: "Ada Lovelace", customerPhone: "905 555 0199" }, c);
+
+    const charged = apiMock.placeOrder.mock.calls[0][0] as { expectedTotal?: number };
+    expect(charged.expectedTotal).toBeUndefined();
+  });
+
+  it("does not claim an order failed when placement timed out", async () => {
+    const c = ctx();
+    apiMock.buildLine.mockResolvedValue({
+      ok: true,
+      json: { line: line("mi_pizza"), readBack: "Large Pizza", pricingNote: null, unresolved: [] },
+    });
+    apiMock.placeOrder.mockRejectedValue(Object.assign(new Error("timeout"), { name: "TimeoutError" }));
+    await executeTool("add_pizza", { menuItemId: "mi_pizza" }, c);
+    const out = (await executeTool("place_order", { type: "pickup", customerName: "Ada Lovelace" }, c)) as {
+      code?: string; instruction?: string;
+    };
+    // Aborting our side does not un-create an order — so never retry, and never
+    // tell the caller either way.
+    expect(out.code).toBe("place_order_unknown");
+    expect(out.instruction).toContain("transfer_to_human");
+    expect(c.placedOrders).toHaveLength(0);
   });
 });
 

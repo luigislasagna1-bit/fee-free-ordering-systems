@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { ArrowRight, Ban, CalendarDays, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
+import { AlertTriangle, ArrowRight, Ban, CalendarDays, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
@@ -178,6 +178,27 @@ export default async function CallDetailPage({
           <p className="text-sm text-gray-500">{t("recordingPending")}</p>
         )}
       </div>
+
+      {/* 🚨 The caller agreed to one number and was billed another.
+          This has happened twice (2026-08-11, 2026-08-13) and BOTH times the
+          call logged as a clean "order placed" — found only by reading the
+          transcript days later. It is the loudest thing on the page now. */}
+      {call.quotedTotal != null &&
+        call.chargedTotal != null &&
+        Math.abs(call.quotedTotal - call.chargedTotal) > 0.005 && (
+          <div className="rounded-xl border-2 border-red-300 bg-red-50 p-5">
+            <h3 className="font-semibold text-red-900 mb-1 flex items-center gap-1.5">
+              <AlertTriangle className="w-4 h-4 text-red-600" />
+              {t("totalMismatchTitle")}
+            </h3>
+            <p className="text-sm text-red-800 leading-relaxed">
+              {t("totalMismatchBody", {
+                quoted: fmt(call.quotedTotal),
+                charged: fmt(call.chargedTotal),
+              })}
+            </p>
+          </div>
+        )}
 
       {/* AI summary. */}
       <div className="rounded-xl border border-gray-200 bg-white p-5">

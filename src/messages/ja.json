@@ -4414,7 +4414,9 @@
         "historyEmpty": "この番号からの通話はこれが初めてです。",
         "metaModel": "モデル",
         "metaTokens": "入出力トークン",
-        "metaCost": "AIコスト"
+        "metaCost": "AIコスト",
+        "totalMismatchTitle": "お客様の了承後に合計金額が変わりました",
+        "totalMismatchBody": "Nabil は {quoted} と伝えましたが、注文は {charged} で作成されました。お客様が了承したのは最初の金額です。クレームになる前にこの注文をご確認ください。"
       },
       "upsells": {
         "title": "おすすめアップセル",

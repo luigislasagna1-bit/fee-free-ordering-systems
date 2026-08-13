@@ -6,6 +6,14 @@ import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { fulfilWindowLabel, hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { variantsCorrespond } from "@/lib/voice/variant-match";
 
+/** Budget for the names-only view of a pizza/combo's choices. This exists so a
+ *  store with a hundred toppings can't reintroduce the payload cost that
+ *  stripping the build trees removed ($5.08 → $0.28 per call). Names are for
+ *  ANSWERING questions; anything the agent builds with still comes from
+ *  get_item_options. */
+const VOICE_MENU_MAX_CHOICE_GROUPS = 4;
+const VOICE_MENU_MAX_OPTION_NAMES = 12;
+
 // Prisma can't run on the edge runtime.
 export const runtime = "nodejs";
 
@@ -193,13 +201,24 @@ export async function GET(req: NextRequest) {
       const isPizza = !!it.pizzaConfig; // builder item — v1 transfers to human
       const isCombo = !!it.comboConfig; // combo item — v1 transfers to human
       // COST: this payload is the system prompt, re-sent on EVERY turn of every
-      // call. Pizza/combo items are transferred to a human in v1, so their
-      // variant + topping matrices are pure waste — measured at 66% of Luigi's
-      // menu (2,549 modifier options the agent may never sell). We still list
-      // the item by name + price so Nabil can recognize it and hand off
-      // gracefully ("we do have that — let me put you through"), just without
-      // the build tree. Restore these when voice can actually build a pizza.
-      const transferOnly = isPizza || isCombo;
+      // call. A pizza/combo build tree is 66% of Luigi's menu (2,549 modifier
+      // options) and was costing $5.08 a call before it was stripped — the
+      // heavy matrices stay behind get_item_options, always. That win is not
+      // negotiable and this must never become "send everything again".
+      //
+      // But stripping them to NOTHING left the agent unable to answer the most
+      // ordinary question a pizzeria gets. On 2026-08-13 a caller asked for a
+      // thin-crust pizza and Nabil said "we don't have thin crust" — a GUESS,
+      // asserted before any lookup, which happened to be right. Meanwhile this
+      // same route ships every crust and topping name to the STT layer as
+      // speechHints, so we hear the word perfectly and hand it to an agent that
+      // has never seen it.
+      //
+      // So: NAMES ONLY for pizzas and combos. No ids, no prices — a few dozen
+      // tokens, enough for the agent to know what exists and to answer "what
+      // crusts do you have?" without a round trip. Anything it needs to BUILD
+      // with still comes from get_item_options.
+      const buildable = isPizza || isCombo;
       return {
         menuItemId: it.id,
         name: it.name,
@@ -209,7 +228,7 @@ export async function GET(req: NextRequest) {
         isPizza,
         isCombo,
         hasVariants: it.hasVariants,
-        variants: transferOnly
+        variants: buildable
           ? []
           : it.variants.map((v) => ({
               variantId: v.id,
@@ -217,13 +236,33 @@ export async function GET(req: NextRequest) {
               price: v.price,
               isDefault: v.isDefault,
             })),
+        // Sizes a caller can ASK about, by name. Deliberately not `variants`:
+        // no ids and no prices, so nothing here can reach an order payload or
+        // be quoted — the agent must still go through get_item_options.
+        ...(buildable && it.variants.length
+          ? { sizeNames: it.variants.map((v) => v.name) }
+          : {}),
+        // Same idea for the choices callers actually ask about by name. Capped
+        // so a store with a hundred toppings can't quietly reintroduce the cost
+        // problem this strip exists to solve.
+        ...(buildable
+          ? (() => {
+              const choices = [...serializeGroups(it.modifierGroups), ...serializeGroups(c.modifierGroups)]
+                .map((g) => ({
+                  name: g.name,
+                  options: (g.options ?? []).slice(0, VOICE_MENU_MAX_OPTION_NAMES).map((o) => o.name),
+                }))
+                .filter((g) => g.options.length);
+              return choices.length ? { choiceNames: choices.slice(0, VOICE_MENU_MAX_CHOICE_GROUPS) } : {};
+            })()
+          : {}),
         // A cheaper equivalent running TODAY, if the owner declared one. The
         // agent offers this instead; the authoritative total still comes from
         // quote_order / place_order.
         todayDeal: dealsByStandard.get(it.id) ?? null,
         // Item-level groups PLUS the category-level groups that apply to every
         // item — the /api/orders validator checks against this same union.
-        modifierGroups: transferOnly
+        modifierGroups: buildable
           ? []
           : [...serializeGroups(it.modifierGroups), ...serializeGroups(c.modifierGroups)],
       };

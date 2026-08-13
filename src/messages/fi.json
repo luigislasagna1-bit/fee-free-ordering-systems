@@ -4414,7 +4414,9 @@
         "historyEmpty": "Tämä on ensimmäinen puhelu tästä numerosta.",
         "metaModel": "Malli",
         "metaTokens": "Tokenit sisään/ulos",
-        "metaCost": "Tekoälykustannus"
+        "metaCost": "Tekoälykustannus",
+        "totalMismatchTitle": "Summa muuttui sen jälkeen, kun asiakas hyväksyi",
+        "totalMismatchBody": "Nabil ilmoitti {quoted} ja tilaus kirjattiin hintaan {charged}. Asiakas hyväksyi ensimmäisen summan. Tarkista tämä tilaus, ennen kuin siitä tulee reklamaatio."
       },
       "upsells": {
         "title": "Esille nostetut lisämyynnit",

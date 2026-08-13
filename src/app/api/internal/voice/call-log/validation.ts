@@ -65,6 +65,10 @@ export interface EndData {
    *  tokensIn alone would bill cached reads at the full input rate. */
   costCents: number | null;
   durationSeconds: number | null;
+  /** The total spoken to the caller, and the one actually charged. Equal on a
+   *  healthy call; a difference means someone agreed to a price we didn't bill. */
+  quotedTotal: number | null;
+  chargedTotal: number | null;
 }
 
 export type ParseResult<T> = { ok: true; data: T } | { ok: false; error: string };
@@ -90,6 +94,13 @@ function str(v: unknown, max: number): string | null {
 function nonNegInt(v: unknown): number | null {
   if (typeof v !== "number" || !Number.isFinite(v) || v < 0) return null;
   return Math.floor(v);
+}
+
+/** Money, not a count — deliberately NOT nonNegInt, which would floor $25.97 to
+ *  $25 and quietly turn a two-dollar-sixty divergence into a three-dollar one. */
+function money(v: unknown): number | null {
+  if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > 1_000_000) return null;
+  return Math.round(v * 100) / 100;
 }
 
 /**
@@ -187,6 +198,8 @@ export function parseEndBody(b: unknown): ParseResult<EndData> {
       tokensIn: nonNegInt(body.tokensIn),
       tokensOut: nonNegInt(body.tokensOut),
       durationSeconds: nonNegInt(body.durationSeconds),
+      quotedTotal: money(body.quotedTotal),
+      chargedTotal: money(body.chargedTotal),
     },
   };
 }

@@ -4414,7 +4414,9 @@
         "historyEmpty": "Acesta este primul apel de la acest număr.",
         "metaModel": "Model",
         "metaTokens": "Tokeni intrare/ieșire",
-        "metaCost": "Cost AI"
+        "metaCost": "Cost AI",
+        "totalMismatchTitle": "Totalul s-a schimbat după ce clientul a acceptat",
+        "totalMismatchBody": "Nabil a spus {quoted}, iar comanda a fost înregistrată la {charged}. Clientul a acceptat prima sumă. Verificați această comandă înainte să devină o reclamație."
       },
       "upsells": {
         "title": "Upsell-uri promovate",

@@ -20,6 +20,7 @@ import prisma from "@/lib/db";
 import { getRestaurantStripe } from "@/lib/stripe";
 import { suppressEmail } from "@/lib/suppression";
 import { deleteRecording } from "@/lib/voice/twilio-recording";
+import { phoneDigitsKey } from "@/lib/phone";
 
 const NAME_SENTINEL = "Deleted Customer";
 
@@ -54,7 +55,7 @@ export const PII_ERASURE_MAP = {
   CustomerPushToken: { scope: "restaurant", action: "delete", fields: ["token"] },
   PendingRewardGrant: { scope: "restaurant", action: "anonymize", fields: ["email", "name", "note"] },
   EmailSuppression: { scope: "restaurant", action: "keep", fields: [] }, // kept: proves do-not-email
-  VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "transcript", "summary", "recordingUrl", "recordingSid", "recordingDurationSeconds", "customerId"] }, // Nabil AI; matched by phone (keep call duration/outcome/cost); audio DELETED at Twilio first
+  VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "fromDigits", "transcript", "summary", "recordingUrl", "recordingSid", "recordingDurationSeconds", "customerId"] }, // Nabil AI; matched on fromDigits — fromNumber is E.164 and matched NOTHING (keep call duration/outcome/cost); audio DELETED at Twilio first
   BlockedCaller: { scope: "restaurant", action: "keep", fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
   CustomerAccount: { scope: "platform", action: "anonymize", fields: ["email", "name", "phone", "passwordHash", "emailVerifyToken", "lastLoginAt"] },
   CustomerAddress: { scope: "platform", action: "delete", fields: ["street", "city", "state", "zip", "country"] },
@@ -131,6 +132,14 @@ export async function anonymizeCustomerByEmail(
   const orderIds = orders.map((o) => o.id);
   orders.forEach((o) => o.customerPhone && phones.push(o.customerPhone));
 
+  // 🛡️ The same person's number reaches us in several shapes — Twilio sends
+  // E.164 ("+14168338405"), checkout stores whatever was typed ("(416)
+  // 833-8405", "4168338405"). Matching VoiceCall on `fromNumber` therefore
+  // matched NOTHING, and this function reported a successful erasure while
+  // leaving the caller's number, their entire transcript, the AI summary and
+  // the Twilio audio in place. Match on the normalized key instead.
+  const phoneKeys = [...new Set(phones.map((p) => phoneDigitsKey(p)).filter((x): x is string => !!x))];
+
   const rewardAccounts = customerIds.length
     ? await prisma.rewardAccount.findMany({ where: { customerId: { in: customerIds } }, select: { id: true } })
     : [];
@@ -144,9 +153,9 @@ export async function anonymizeCustomerByEmail(
   // otherwise the voice data would live on unreferenced in the Twilio account.
   // Best-effort by design — a Twilio failure is logged but never aborts the
   // erasure (the DB scrub below still removes every pointer).
-  if (phones.length) {
+  if (phoneKeys.length) {
     const recordings = await prisma.voiceCall.findMany({
-      where: { restaurantId, fromNumber: { in: phones }, recordingSid: { not: null } },
+      where: { restaurantId, fromDigits: { in: phoneKeys }, recordingSid: { not: null } },
       select: { recordingSid: true },
     });
     for (const r of recordings) {
@@ -217,11 +226,11 @@ export async function anonymizeCustomerByEmail(
     // transcript/summary/recording but KEEP the row (duration, outcome, cost)
     // for analytics — same anonymize-not-delete principle as orders. (Retention
     // scrub of old transcripts past the window is a retention-cron follow-up.)
-    if (phones.length) {
+    if (phoneKeys.length) {
       counts.VoiceCall = (await tx.voiceCall.updateMany({
-        where: { restaurantId, fromNumber: { in: phones } },
+        where: { restaurantId, fromDigits: { in: phoneKeys } },
         data: {
-          fromNumber: "REDACTED", transcript: Prisma.DbNull, summary: null, customerId: null,
+          fromNumber: "REDACTED", fromDigits: null, transcript: Prisma.DbNull, summary: null, customerId: null,
           recordingUrl: null, recordingSid: null, recordingDurationSeconds: null,
         },
       })).count;

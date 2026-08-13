@@ -22,6 +22,12 @@
  */
 
 import prisma from "@/lib/db";
+import { isNonRoutableEmail } from "@/lib/voice/sentinel-identity";
+
+/** Why no email went out to a `.invalid` address — a phone caller has no inbox,
+ *  so their receipt travels by SMS. Not an error; just never a "sent". */
+const NON_ROUTABLE_REASON = "recipient address cannot receive mail (phone caller)";
+
 import { formatTime } from "@/lib/format-time";
 import { formatCurrency } from "@/lib/utils";
 import { collectedOf } from "@/lib/reports/collected";
@@ -818,6 +824,23 @@ export async function notifyCustomer(args: {
   const { restaurantId, customerEmail, customerPhone, customerLocale, orderType, payload } = args;
   if (!customerEmail) return { sent: false, reason: "no customer email" };
 
+  // 📮 A phone caller has no email address, so the voice service synthesizes
+  // `voice.<digits>@voice.nabil.invalid` to satisfy /api/orders. `.invalid` is
+  // reserved by RFC 2606 and can never receive mail — yet every Nabil order
+  // fired a confirmation at one anyway. `tools.ts` claimed the domain was
+  // pre-seeded into EmailSuppression; there is no such seed, and it would not
+  // have helped: suppression is only consulted on the MARKETING path. So every
+  // phone order has been generating a hard bounce, and enough hard bounces cost
+  // the sending domain its reputation for every real customer.
+  //
+  // Skip the EMAIL leg only. The SMS and push legs run separately below and are
+  // how a phone caller actually gets their receipt — an early return here would
+  // take away the confirmation we promised them out loud.
+  //
+  // And report it HONESTLY: `sent: true` has to mean an email was actually
+  // handed to Resend, or this result is worth nothing to anyone reading it.
+  const emailDeliverable = !isNonRoutableEmail(customerEmail);
+
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: restaurantId },
     select: {
@@ -947,7 +970,7 @@ export async function notifyCustomer(args: {
   switch (payload.event) {
     case "orderConfirmed": {
       if (!restaurant.customerEmailOrderConfirm) return { sent: false, reason: "toggle off" };
-      await withImprint(restaurantId, async () => {
+      if (emailDeliverable) await withImprint(restaurantId, async () => {
         await sendOrderConfirmationEmail({
           to: customerEmail,
           customerName: payload.customerName,
@@ -998,7 +1021,7 @@ export async function notifyCustomer(args: {
       });
       await fireSms();
       await firePush();
-      return { sent: true, smsSent: smsDispatched };
+      return { sent: emailDeliverable, ...(emailDeliverable ? {} : { reason: NON_ROUTABLE_REASON }), smsSent: smsDispatched };
     }
     case "orderStatusUpdate": {
       // Match the right toggle based on status + order type.
@@ -1030,7 +1053,7 @@ export async function notifyCustomer(args: {
         toggle = restaurant.customerEmailOrderRejected;
       }
       if (!toggle) return { sent: false, reason: "toggle off" };
-      await withImprint(restaurantId, async () => {
+      if (emailDeliverable) await withImprint(restaurantId, async () => {
         await sendOrderStatusUpdateEmail({
           to: customerEmail,
           customerName: payload.customerName,
@@ -1082,14 +1105,14 @@ export async function notifyCustomer(args: {
       });
       await fireSms();
       await firePush();
-      return { sent: true, smsSent: smsDispatched };
+      return { sent: emailDeliverable, ...(emailDeliverable ? {} : { reason: NON_ROUTABLE_REASON }), smsSent: smsDispatched };
     }
     case "orderDelayed": {
       // No toggle gate — when the kitchen pushes the ready time, the
       // customer always hears about it. They paid; they deserve the
       // update. Imprint set so reseller-branded restaurants stay on
       // their own letterhead.
-      await withImprint(restaurantId, async () => {
+      if (emailDeliverable) await withImprint(restaurantId, async () => {
         await sendOrderDelayedEmail({
           to: customerEmail,
           customerName: payload.customerName,
@@ -1113,7 +1136,7 @@ export async function notifyCustomer(args: {
       });
       await fireSms();
       await firePush();
-      return { sent: true, smsSent: smsDispatched };
+      return { sent: emailDeliverable, ...(emailDeliverable ? {} : { reason: NON_ROUTABLE_REASON }), smsSent: smsDispatched };
     }
     case "reservationConfirmation": {
       // Reservations always send — customer expects this after booking.
@@ -1127,7 +1150,7 @@ export async function notifyCustomer(args: {
               `/reservation/${payload.reservationId}/cancel?t=${signActionToken("reservation-cancel", payload.reservationId)}`,
             )
           : undefined;
-      await withImprint(restaurantId, async () => {
+      if (emailDeliverable) await withImprint(restaurantId, async () => {
         await sendReservationConfirmation({
           to: customerEmail,
           customerName: payload.customerName,
@@ -1166,7 +1189,7 @@ export async function notifyCustomer(args: {
       });
       await fireSms();
       await firePush();
-      return { sent: true, smsSent: smsDispatched };
+      return { sent: emailDeliverable, ...(emailDeliverable ? {} : { reason: NON_ROUTABLE_REASON }), smsSent: smsDispatched };
     }
   }
 }

@@ -1,20 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
+import { phoneDigitsKey } from "@/lib/phone";
+import { VOICE_SENTINEL_DOMAIN } from "@/lib/voice/sentinel-identity";
 
 export const runtime = "nodejs";
 
 /**
  * GET /api/internal/voice/returning-caller?slug=&phone=<E.164 or digits>
  *
- * The `lookup_returning_caller` tool. A cheap point lookup on the existing
- * @@index([restaurantId, phone]) so Nabil can greet a returning caller by name
- * ("Welcome back, Maria") and offer a fast reorder of their usual. Also reports
- * whether the caller is on the block-list so the service can decline.
+ * The `lookup_returning_caller` tool. A cheap point lookup on
+ * @@index([restaurantId, phoneDigits]) so Nabil can greet a returning caller by
+ * name ("Welcome back, Maria") and offer a fast reorder of their usual. Also
+ * reports whether the caller is on the block-list so the service can decline.
  *
- * The caller phone is passed already normalized by the voice service (same
- * sanitize the order route applies before storing `Customer.phone`), so this is
- * an exact-match point lookup, not a scan.
+ * 🚨 This used to say the phone "is passed already normalized by the voice
+ * service", and match `phone` exactly. Both halves were false: the service
+ * passes Twilio's raw E.164 (`+14168338405`) and checkout stores bare digits
+ * (`4168338405`), so the lookup matched NOTHING and every caller looked new.
+ * On 2026-08-13 that turned a three-order regular into a stranger who was asked
+ * to recite the number we were holding, had her name taken down by
+ * speech-to-text, and got a second Customer row. A comment asserting an
+ * invariant nobody enforced is what let it ship — so the normalization now
+ * happens HERE, on whatever arrives, and cannot be got wrong by a caller.
  */
 export async function GET(req: NextRequest) {
   const forbidden = requireInternalKey(req);
@@ -32,17 +40,39 @@ export async function GET(req: NextRequest) {
   });
   if (!restaurant) return NextResponse.json({ error: "Restaurant not found", code: "not_found" }, { status: 404 });
 
-  const [blocked, customer] = await Promise.all([
+  const digits = phoneDigitsKey(phone);
+
+  const [blocked, candidates] = await Promise.all([
+    // ⚠️ NOT normalized: BlockedCaller.phone is stored as "+" + digits behind a
+    // @@unique([restaurantId, phone]), so this lookup wants the raw E.164 the
+    // service sends. Canonicalizing here would quietly stop the block list
+    // matching anyone.
     prisma.blockedCaller.findUnique({
       where: { restaurantId_phone: { restaurantId: restaurant.id, phone } },
       select: { id: true },
     }),
-    prisma.customer.findFirst({
-      where: { restaurantId: restaurant.id, phone },
-      orderBy: { lastOrderAt: "desc" },
-      select: { id: true, name: true, totalOrders: true, lastOrderAt: true },
-    }),
+    digits
+      ? prisma.customer.findMany({
+          where: { restaurantId: restaurant.id, phoneDigits: digits },
+          orderBy: { lastOrderAt: "desc" },
+          // A few, not one: the same person can have more than one row (a voice
+          // sentinel twin from before this was fixed, a guest row beside an
+          // account row), and `orderBy` alone would hand back whichever ordered
+          // most recently — which for a fork is the WRONG one, carrying the
+          // speech-to-text name and none of the history.
+          take: 5,
+          select: { id: true, name: true, email: true, totalOrders: true, lastOrderAt: true },
+        })
+      : Promise.resolve([]),
   ]);
+
+  // Prefer a real customer record over a voice sentinel twin — but only when
+  // there is exactly one. A shared household or work line can sit behind
+  // several customers, and greeting the caller as the wrong one ("Welcome back,
+  // Maria") then offering "the usual" from somebody else's order history is a
+  // privacy leak dressed up as a nice touch. Better to treat them as new.
+  const real = candidates.filter((c) => !(c.email ?? "").endsWith(VOICE_SENTINEL_DOMAIN));
+  const customer = real.length === 1 ? real[0] : real.length === 0 ? (candidates[0] ?? null) : null;
 
   if (!customer) {
     return NextResponse.json({ found: false, blocked: !!blocked });

@@ -4414,7 +4414,9 @@
         "historyEmpty": "Toto je první hovor z tohoto čísla.",
         "metaModel": "Model",
         "metaTokens": "Tokeny vstup/výstup",
-        "metaCost": "Náklady na AI"
+        "metaCost": "Náklady na AI",
+        "totalMismatchTitle": "Celková částka se změnila poté, co zákazník souhlasil",
+        "totalMismatchBody": "Nabil uvedl {quoted} a objednávka byla založena za {charged}. Zákazník souhlasil s první částkou. Zkontrolujte tuto objednávku, než se z ní stane stížnost."
       },
       "upsells": {
         "title": "Vybrané upselly",

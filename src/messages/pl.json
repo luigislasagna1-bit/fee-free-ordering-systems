@@ -4414,7 +4414,9 @@
         "historyEmpty": "To pierwsze połączenie z tego numeru.",
         "metaModel": "Model",
         "metaTokens": "Tokeny wej./wyj.",
-        "metaCost": "Koszt AI"
+        "metaCost": "Koszt AI",
+        "totalMismatchTitle": "Suma zmieniła się po zgodzie klienta",
+        "totalMismatchBody": "Nabil podał {quoted}, a zamówienie złożono na {charged}. Klient zgodził się na pierwszą kwotę. Sprawdź to zamówienie, zanim stanie się reklamacją."
       },
       "upsells": {
         "title": "Wyróżnione dosprzedaże",

@@ -4414,7 +4414,9 @@
         "historyEmpty": "Aquesta és la primera trucada des d'aquest número.",
         "metaModel": "Model",
         "metaTokens": "Tokens d'entrada/sortida",
-        "metaCost": "Cost de la IA"
+        "metaCost": "Cost de la IA",
+        "totalMismatchTitle": "El total va canviar després que el client hi accedís",
+        "totalMismatchBody": "El Nabil va dir {quoted} i la comanda es va registrar per {charged}. El client va acceptar el primer import. Reviseu aquesta comanda abans que es converteixi en una reclamació."
       },
       "upsells": {
         "title": "Vendes addicionals destacades",

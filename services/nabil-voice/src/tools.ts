@@ -26,13 +26,22 @@ export type ToolContext = {
   basket: BuiltLine[];
   /** The number/name the order will actually be placed under, captured the
    *  first time the caller gives one. Pinned so the QUOTE and the CHARGE price
-   *  the same customer (promo eligibility is per-customer). */
+   *  the same customer (promo eligibility is per-customer). ALWAYS canonical —
+   *  see orderIdentity, which is the only writer. */
   customerPhone?: string;
   customerName?: string;
-  /** The last total quote_order spoke aloud. If place_order comes back with a
-   *  different number, the caller agreed to a price we are not charging — say
-   *  so out loud rather than quietly billing something else. */
+  /** The last total quote_order spoke aloud. place_order sends it as
+   *  `expectedTotal` so the SERVER refuses to create an order at a price the
+   *  caller never heard (409 total_changed, before any write). */
   lastQuotedTotal?: number;
+  /** The basket that total was quoted FOR. Without it, a caller who adds a Coke
+   *  after the quote trips the "your total changed" warning on a total that
+   *  changed for the most ordinary reason there is. Hashed over the MERGED item
+   *  set — simple items never enter ctx.basket, they are merged inline. */
+  lastQuoteSignature?: string;
+  /** Promo names the quote carried, so a moved total can be explained by what
+   *  actually changed instead of a hardcoded guess about discounts. */
+  lastQuotedDiscountNames?: string[];
   /** menuItemIds the menu flags as PIZZA or COMBO. The model may never send
    *  these as hand-written `items` — they only ever reach an order through the
    *  compiler (add_pizza / add_combo). See mergeBasket. */
@@ -99,16 +108,80 @@ function basketView(ctx: ToolContext) {
 /** Customer identity for THIS call. quote_order and place_order must price
  *  against the SAME person: promos are keyed on the customer, so quoting as the
  *  caller-ID number and charging as the number they gave can change the total
- *  between the "yes" and the receipt. */
+ *  between the "yes" and the receipt.
+ *
+ *  🚨 EVERYTHING STORED HERE IS CANONICAL. Occurrence #1 of this bug
+ *  (ORD-176217204, 2026-08-11) was "fixed" by canonicalizing only sentinelEmail,
+ *  which left the raw string on `customerPhone` — so on 2026-08-13 Roya Safi was
+ *  quoted as `+14168338405` (matches none of her three past orders → brand new →
+ *  first-time discount → $23.37) and charged as `4168338405` (matches all three →
+ *  no discount → $25.97). Same person, two customers, two prices, and she had
+ *  already said yes to the wrong one. Canonicalize at the BOUNDARY, once, so no
+ *  caller downstream can reintroduce the split. */
 function orderIdentity(ctx: ToolContext, input: any) {
   if (typeof input?.customerPhone === "string" && input.customerPhone.trim()) {
-    ctx.customerPhone = input.customerPhone.trim();
+    const given = canonicalPhone(input.customerPhone) || input.customerPhone.trim();
+    // A caller who gives a DIFFERENT number after being quoted (a spouse's
+    // line, a work number) is a different customer to the promo engine, so the
+    // quote no longer describes what we would charge. Retire it rather than
+    // compare the charge against a total priced for somebody else.
+    //
+    // Compared against the EFFECTIVE identity, not just an explicitly-set one:
+    // the quote almost always runs on caller ID before anyone has been asked,
+    // so `ctx.customerPhone` being unset is the normal case and the exact one
+    // this has to catch.
+    const effective = ctx.customerPhone || canonicalPhone(ctx.token.from || "");
+    if (effective && effective !== given) {
+      ctx.lastQuotedTotal = undefined;
+      ctx.lastQuoteSignature = undefined;
+      ctx.lastQuotedDiscountNames = undefined;
+    }
+    ctx.customerPhone = given;
   }
   if (typeof input?.customerName === "string" && input.customerName.trim()) {
     ctx.customerName = input.customerName.trim();
   }
-  const phone = ctx.customerPhone || ctx.token.from;
-  return { phone, name: ctx.customerName || "Phone Caller" };
+  const raw = ctx.customerPhone || ctx.token.from;
+  return { phone: canonicalPhone(raw) || raw, name: ctx.customerName || "Phone Caller" };
+}
+
+/** Why a total moved, in the caller's terms — derived from the promo names the
+ *  quote carried versus the ones the charge did.
+ *
+ *  Never guess. The old code appended "(a discount that did not apply)" to EVERY
+ *  changed total, so a delivery-fee or service-fee change would have been
+ *  explained to the caller as a discount problem. An empty string is a better
+ *  answer than a confident wrong one. */
+function describeTotalChange(before: string[], after: string[]): string {
+  const lost = before.filter((n) => !after.includes(n));
+  if (lost.length) return ` — ${lost.join(" and ")} did not apply`;
+  const gained = after.filter((n) => !before.includes(n));
+  if (gained.length) return ` — ${gained.join(" and ")} applied`;
+  return "";
+}
+
+/** How long the receipt text may hold a silent phone line before we give up and
+ *  let the agent read the order number aloud instead. */
+const SMS_DEADLINE_MS = 1500;
+
+/** Race a promise against a deadline, resolving to `null` on timeout instead of
+ *  throwing. Every caller here has an honest fallback, and a rejection inside a
+ *  tool hop just becomes a generic "that didn't work" the caller can't act on. */
+function withDeadline<T>(p: Promise<T>, ms: number): Promise<T | null> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const done = (v: T | null) => {
+    clearTimeout(timer);
+    return v;
+  };
+  return Promise.race([
+    p.then(done, (e) => {
+      clearTimeout(timer);
+      throw e;
+    }),
+    new Promise<null>((resolve) => {
+      timer = setTimeout(() => resolve(null), ms);
+    }),
+  ]);
 }
 
 const ITEM_SCHEMA = {
@@ -162,14 +235,22 @@ export const TOOLS = [
           description:
             "SIMPLE items only — drinks, wings, sides. NEVER a pizza or a combo, and never anything you already added with add_pizza or add_combo: those are already on the order and listing them again would charge the caller twice.",
         },
-        customerName: { type: "string", description: "The caller's name." },
-        customerPhone: { type: "string", description: "Callback number (usually the caller ID)." },
+        customerName: { type: "string", description: "The caller's name, if you have it." },
+        customerPhone: {
+          type: "string",
+          description:
+            "OMIT THIS. The caller's own number is already known from caller ID and is used automatically. Only send a number if the caller explicitly gave a DIFFERENT one to use instead.",
+        },
         deliveryStreet: { type: "string" },
         deliveryCity: { type: "string" },
         deliveryZip: { type: "string" },
         notes: { type: "string", description: "Order-level note (e.g. 'ring the buzzer')." },
       },
-      required: ["type", "customerName", "customerPhone"],
+      // customerPhone is NOT required: it is known from caller ID. Requiring it
+      // made the model ask for it every time — a tool contract beats a prompt
+      // paragraph, so prompt.ts:347's "never make them recite it" lost, and Roya
+      // spent 40s of a 205s call dictating a number we already held.
+      required: ["type"],
     },
   },
   {
@@ -205,7 +286,10 @@ export const TOOLS = [
   {
     name: "get_item_options",
     description:
-      "Look up the full choices for ONE menu item: sizes, crusts, sauces, toppings and their prices — or, for a combo, what goes in each slot. Call this when the caller asks what's available ('what crusts do you have?') or before building a pizza or combo you don't know the options for.",
+      "The ONLY source of a pizza's or combo's sizes, crusts, sauces, toppings, prices and slot choices. " +
+      "The menu in your system prompt NEVER contains any of them — it lists the item's name and nothing else, so you do " +
+      "not know them and cannot infer them. Call this BEFORE you say what is or isn't available, before you quote an " +
+      "option price, and before building a pizza or combo. Not 'when you don't know the options' — you never know them.",
     input_schema: {
       type: "object",
       additionalProperties: false,
@@ -529,7 +613,7 @@ function sentinelEmail(phone: string): string {
  * North-American numbers reach us both ways, so the country code is dropped
  * when it is unambiguously there. Anything else is left alone.
  */
-function canonicalPhone(phone: string): string {
+export function canonicalPhone(phone: string): string {
   const d = digits(phone);
   return d.length === 11 && d.startsWith("1") ? d.slice(1) : d;
 }
@@ -552,7 +636,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       };
     }
     case "place_order": {
-      const { phone } = orderIdentity(ctx, input);
+      const { phone, name: orderName } = orderIdentity(ctx, input);
       // Server-compiled pizza/combo lines ride alongside whatever simple items
       // the model listed. They were built by /api/internal/voice/build-line —
       // the model never assembled them, and never sees their internals.
@@ -614,7 +698,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         restaurantSlug: slug,
         type: input.type,
         items,
-        customerName: twoTokenName(input.customerName),
+        // Resolved, not read straight off the tool input: customerName is now
+        // optional, and a returning caller's stored name is better than
+        // whatever speech-to-text made of them saying it ("Roya Safi" came back
+        // as "Royanne Veal" and went onto the kitchen ticket).
+        customerName: twoTokenName(orderName),
         customerPhone: phone,
         customerEmail: sentinelEmail(phone),
         // Only "unpaid" and "both" reach here (gate above), and both settle at
@@ -647,8 +735,63 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           payload.deliveryLng = verified.lng;
         }
       }
-      const res = await api.placeOrder(payload);
+      // The number the caller actually said yes to. The server refuses to
+      // create the order at anything else (409 total_changed, before any write),
+      // so "preview == charge" stops being a convention the two sides agree to
+      // observe and becomes something neither side can break.
+      //
+      // Sent ONLY when the quote describes THIS basket: a caller who adds a Coke
+      // after the read-back has legitimately changed their total, and refusing
+      // that would be worse than the bug we're fixing.
+      const quoteStillApplies =
+        typeof ctx.lastQuotedTotal === "number" && ctx.lastQuoteSignature === signature;
+      if (quoteStillApplies) payload.expectedTotal = ctx.lastQuotedTotal;
+
+      let res: { ok: boolean; status: number; json: any };
+      try {
+        res = await api.placeOrder(payload);
+      } catch (e) {
+        // Timed out or the connection died. We do NOT know whether the order was
+        // created — aborting our side does not un-create it — so the one thing
+        // we must not do is retry, and the one thing we must not say is that it
+        // failed. Hand the caller to a person who can look.
+        console.error("[nabil-voice] placeOrder failed", e);
+        return {
+          error: true,
+          code: "place_order_unknown",
+          instruction:
+            "The order MAY or MAY NOT have gone through — do not say either way, and do NOT call place_order again. " +
+            "Tell the caller you're checking and connect them to a member of staff (transfer_to_human).",
+        };
+      }
       if (!res.ok) {
+        // The server re-priced to something the caller never agreed to and
+        // created NOTHING. Take the caller back to a yes/no on the real number
+        // instead of apologising for a ticket that is already in the kitchen.
+        if (res.status === 409 && res.json?.code === "total_changed") {
+          const wasQuoted = ctx.lastQuotedTotal;
+          const newTotal = Number(res.json?.total ?? 0);
+          const nowNames: string[] = Array.isArray(res.json?.appliedPromoNames)
+            ? res.json.appliedPromoNames.filter((n: unknown) => typeof n === "string" && n)
+            : [];
+          const reason = describeTotalChange(ctx.lastQuotedDiscountNames ?? [], nowNames);
+          // The quote is dead either way — never let a stale number ride into a
+          // second attempt.
+          ctx.lastQuotedTotal = undefined;
+          ctx.lastQuoteSignature = undefined;
+          ctx.lastQuotedDiscountNames = undefined;
+          return {
+            error: true,
+            code: "total_changed",
+            notPlaced: true,
+            quotedTotal: wasQuoted,
+            total: newTotal,
+            instruction:
+              `THE ORDER WAS NOT PLACED. The real total is ${newTotal}, not the ${wasQuoted} you quoted${reason}. ` +
+              `Apologise briefly, tell the caller the correct total plainly, and ask whether they still want it. ` +
+              `Only call place_order again after they say yes. Do NOT claim the order is in.`,
+          };
+        }
         // Voice can't schedule ahead yet — the web error's "you can still
         // schedule" suffix would be a promise this channel can't keep. Offer
         // the SMS ordering link instead (review wf_a62b0536) — gated ONLY on
@@ -682,38 +825,59 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         ? res.json.appliedPromoNames.filter((n: unknown) => typeof n === "string" && n)
         : [];
 
+      // The caller said yes to a NUMBER. If the charge came back different,
+      // that is the one thing they must hear about — 2026-08-11, ORD-176217204
+      // was quoted eighteen oh five and charged twenty oh five because the
+      // quote and the charge resolved to different customers.
+      //
+      // With the server-side expectedTotal gate above this should now be
+      // unreachable for a quoted basket; it stays as the backstop for a total
+      // that moved for a reason the gate deliberately allows (the caller added
+      // something after the quote) and for any older server that ignores the
+      // field. Computed BEFORE the receipt goes out — texting a receipt for a
+      // price the caller hasn't been told about is how they find out at the
+      // counter.
+      const quoted = quoteStillApplies ? ctx.lastQuotedTotal : undefined;
+      const totalMoved =
+        typeof quoted === "number" && typeof total === "number" && Math.abs(total - quoted) > 0.005;
+      const changeReason = totalMoved
+        ? describeTotalChange(ctx.lastQuotedDiscountNames ?? [], promoNames)
+        : "";
+      ctx.lastQuotedTotal = undefined;
+      ctx.lastQuoteSignature = undefined;
+      ctx.lastQuotedDiscountNames = undefined;
+
       // TEXT the receipt, don't dictate it (Luigi 2026-08-11: "it shouldn't
       // tell order number by phone, it should text it with the receipt"). An
       // order number read aloud is the single easiest thing in the call to
       // mishear, and the caller is usually nowhere near a pen. Sent from HERE
       // rather than left to the model: a confirmation the agent can forget is
       // a confirmation the customer doesn't get.
+      //
+      // Raced against a deadline: this is a cross-region round trip sitting
+      // inside a tool hop that emits no audio, so a slow Resend/Twilio leg is
+      // silence on a live phone line. On timeout we report NOT texted, which
+      // makes the agent read the order number aloud — the honest fallback.
       let receiptTexted = false;
       if (ctx.cfg.smsConfirmations && phone && orderNumber) {
         try {
-          const sms = await api.sendSms({
-            restaurantId: ctx.token.restaurantId,
-            slug,
-            to: phone,
-            linkType: "receipt",
-            orderId,
-            orderNumber: String(orderNumber),
-            total: Number(total ?? 0),
-          });
-          receiptTexted = !!sms.ok;
+          const sms = await withDeadline(
+            api.sendSms({
+              restaurantId: ctx.token.restaurantId,
+              slug,
+              to: phone,
+              linkType: "receipt",
+              orderId,
+              orderNumber: String(orderNumber),
+              total: Number(total ?? 0),
+            }),
+            SMS_DEADLINE_MS,
+          );
+          receiptTexted = !!sms?.ok;
         } catch {
           receiptTexted = false; // fall back to speaking it — see below
         }
       }
-
-      // The caller said yes to a NUMBER. If the charge came back different,
-      // that is the one thing they must hear about — 2026-08-11, ORD-176217204
-      // was quoted eighteen oh five and charged twenty oh five because the
-      // quote and the charge resolved to different customers.
-      const quoted = ctx.lastQuotedTotal;
-      const totalMoved =
-        typeof quoted === "number" && typeof total === "number" && Math.abs(total - quoted) > 0.005;
-      ctx.lastQuotedTotal = undefined;
 
       return {
         ok: true, orderId, orderNumber, total, receiptTexted,
@@ -726,7 +890,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
               // then the spoken number is all they have, so give it clearly.
               "Read the caller their order number clearly — no receipt text could be sent, so it's the only record they'll have. ") +
           (totalMoved
-            ? `⚠️ THE TOTAL CHANGED since you quoted ${quoted}. Tell the caller plainly what it is now and why if you know (a discount that did not apply). Never let them hang up believing the old number. `
+            ? `⚠️ THE TOTAL CHANGED since you quoted ${quoted}${changeReason}. Tell the caller plainly what it is now. Never let them hang up believing the old number. `
             : "") +
           "Read this exact total — it is the authoritative charged amount including tax." +
           (promoDiscount > 0
@@ -1073,18 +1237,37 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         };
       }
       const q = res.json ?? {};
+      const quotedNames: string[] = Array.isArray(q.appliedPromoNames)
+        ? q.appliedPromoNames.filter((n: unknown) => typeof n === "string" && n)
+        : [];
       ctx.lastQuotedTotal = typeof q.total === "number" ? q.total : undefined;
+      // WHAT this total was quoted for. place_order sends the total back as
+      // `expectedTotal` only when the basket still matches, so a caller adding a
+      // Coke after the read-back is allowed to change their total while a
+      // silently re-priced basket is not. Signature over the MERGED items —
+      // simple items never enter ctx.basket, they are merged in here.
+      ctx.lastQuoteSignature = basketSignature({ type: input.type, items });
+      ctx.lastQuotedDiscountNames = quotedNames;
       return {
         ok: true,
         total: q.total,
         subtotal: q.subtotal,
         tax: q.tax,
         discount: q.discount,
-        discountNames: q.appliedPromoNames ?? [],
+        discountNames: quotedNames,
         deliveryFee: q.deliveryFee,
+        // Forwarded so the agent can itemise if the caller asks what the extra
+        // charge is. The total already includes them; without these it could
+        // only say "tax", and a refundable deposit is exactly the line a caller
+        // expects to be told about.
+        serviceFees: q.serviceFees,
+        deposits: q.deposits,
+        // So a re-quote after the caller corrects their number is visibly a
+        // different customer, rather than an unexplained change of total.
+        pricedAs: { phone, name: twoTokenName(quoteName) },
         order: basketView(ctx),
         instruction:
-          "Read this EXACT total back to the caller — it is authoritative and includes tax. If a discount applied, mention it as good news by name. Only call place_order after they say yes, and place it with the SAME phone number and address you quoted with.",
+          "Read this EXACT total back to the caller — it is authoritative and includes tax. Do NOT mention any discount yet: this is a quote, and a discount here is not confirmed until the order is actually placed. Only call place_order after they say yes.",
       };
     }
 

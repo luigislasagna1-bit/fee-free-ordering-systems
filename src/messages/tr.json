@@ -4414,7 +4414,9 @@
         "historyEmpty": "Bu numaradan gelen ilk arama.",
         "metaModel": "Model",
         "metaTokens": "Giren/çıkan token",
-        "metaCost": "Yapay zeka maliyeti"
+        "metaCost": "Yapay zeka maliyeti",
+        "totalMismatchTitle": "Müşteri onay verdikten sonra toplam değişti",
+        "totalMismatchBody": "Nabil {quoted} tutarını söyledi, sipariş ise {charged} olarak oluşturuldu. Müşteri ilk tutarı kabul etmişti. Bir şikâyete dönüşmeden bu siparişi kontrol edin."
       },
       "upsells": {
         "title": "Öne Çıkan Ek Satışlar",

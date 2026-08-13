@@ -4414,7 +4414,9 @@
         "historyEmpty": "זו השיחה הראשונה ממספר זה.",
         "metaModel": "מודל",
         "metaTokens": "טוקנים נכנסים/יוצאים",
-        "metaCost": "עלות AI"
+        "metaCost": "עלות AI",
+        "totalMismatchTitle": "הסכום השתנה אחרי שהלקוח אישר",
+        "totalMismatchBody": "‏Nabil אמר {quoted} וההזמנה נפתחה על {charged}. הלקוח אישר את הסכום הראשון. בדקו את ההזמנה הזאת לפני שתהפוך לתלונה."
       },
       "upsells": {
         "title": "מנות נבחרות למכירה נוספת",

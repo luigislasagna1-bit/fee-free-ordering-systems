@@ -4414,7 +4414,9 @@
         "historyEmpty": "这是该号码的首次来电。",
         "metaModel": "模型",
         "metaTokens": "Token 输入/输出",
-        "metaCost": "AI 成本"
+        "metaCost": "AI 成本",
+        "totalMismatchTitle": "顾客确认后总金额发生了变化",
+        "totalMismatchBody": "Nabil 报的是 {quoted}，但订单以 {charged} 生成。顾客同意的是前一个金额。请在演变成投诉之前核对这笔订单。"
       },
       "upsells": {
         "title": "精选加购推荐",

@@ -5,6 +5,7 @@ import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { startCallRecording } from "@/lib/voice/twilio-recording";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
 import { parseStartBody, parseEndBody } from "./validation";
+import { phoneDigitsKey } from "@/lib/phone";
 
 export const runtime = "nodejs";
 
@@ -46,12 +47,15 @@ export async function POST(req: NextRequest) {
 
     const row = await prisma.voiceCall.upsert({
       where: { callSid },
-      create: { callSid, restaurantId, fromNumber, toNumber, startedAt },
+      // fromDigits is the ERASURE key — written here, at the only moment the
+      // number is guaranteed present. Without it a "delete my data" request
+      // cannot reach this row or the Twilio audio it points at.
+      create: { callSid, restaurantId, fromNumber, toNumber, startedAt, fromDigits: phoneDigitsKey(fromNumber) },
       // If "end" somehow landed first (retry reordering), still stamp the real
       // startedAt; never clobber a known number with an empty retry payload.
       update: {
         startedAt,
-        ...(fromNumber ? { fromNumber } : {}),
+        ...(fromNumber ? { fromNumber, fromDigits: phoneDigitsKey(fromNumber) } : {}),
         ...(toNumber ? { toNumber } : {}),
       },
       select: { id: true },
@@ -91,6 +95,12 @@ export async function POST(req: NextRequest) {
     tokensIn: d.tokensIn,
     tokensOut: d.tokensOut,
     durationSeconds: d.durationSeconds,
+    // The number read aloud vs the number charged. Recorded so a divergence is
+    // VISIBLE: it has happened twice (2026-08-11, 2026-08-13), both times the
+    // call logged as a clean success and both times it was found by hand, days
+    // later, by reading a transcript.
+    quotedTotal: d.quotedTotal,
+    chargedTotal: d.chargedTotal,
     endedAt: new Date(),
   };
 
@@ -100,6 +110,7 @@ export async function POST(req: NextRequest) {
       restaurantId: d.restaurantId,
       callSid: d.callSid,
       fromNumber: d.fromNumber,
+      fromDigits: phoneDigitsKey(d.fromNumber),
       toNumber: d.toNumber,
       ...data,
     },
@@ -107,7 +118,7 @@ export async function POST(req: NextRequest) {
     // when present so an end retry can't blank what start already wrote.
     update: {
       ...data,
-      ...(d.fromNumber ? { fromNumber: d.fromNumber } : {}),
+      ...(d.fromNumber ? { fromNumber: d.fromNumber, fromDigits: phoneDigitsKey(d.fromNumber) } : {}),
       ...(d.toNumber ? { toNumber: d.toNumber } : {}),
     },
     select: { id: true },

@@ -4414,7 +4414,9 @@
         "historyEmpty": "Dette er det første opkald fra dette nummer.",
         "metaModel": "Model",
         "metaTokens": "Tokens ind/ud",
-        "metaCost": "AI-omkostning"
+        "metaCost": "AI-omkostning",
+        "totalMismatchTitle": "Totalen ændrede sig, efter kunden sagde ja",
+        "totalMismatchBody": "Nabil sagde {quoted}, og ordren blev oprettet til {charged}. Kunden accepterede det første beløb. Tjek denne ordre, før den bliver til en klage."
       },
       "upsells": {
         "title": "Fremhævede mersalg",

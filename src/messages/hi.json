@@ -4631,7 +4631,9 @@
         "historyEmpty": "इस नंबर से यह पहली कॉल है।",
         "metaModel": "मॉडल",
         "metaTokens": "इनपुट/आउटपुट टोकन",
-        "metaCost": "AI लागत"
+        "metaCost": "AI लागत",
+        "totalMismatchTitle": "ग्राहक की सहमति के बाद कुल राशि बदल गई",
+        "totalMismatchBody": "Nabil ने {quoted} बताया था और ऑर्डर {charged} पर दर्ज हुआ। ग्राहक ने पहली राशि पर सहमति दी थी। शिकायत बनने से पहले इस ऑर्डर की जाँच करें।"
       },
       "upsells": {
         "title": "चुनिंदा अपसेल",

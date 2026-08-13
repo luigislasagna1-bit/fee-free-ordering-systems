@@ -4414,7 +4414,9 @@
         "historyEmpty": "Il s'agit du premier appel provenant de ce numéro.",
         "metaModel": "Modèle",
         "metaTokens": "Tokens entrants/sortants",
-        "metaCost": "Coût IA"
+        "metaCost": "Coût IA",
+        "totalMismatchTitle": "Le total a changé après l'accord du client",
+        "totalMismatchBody": "Nabil a annoncé {quoted} et la commande a été enregistrée à {charged}. Le client a accepté le premier montant. Vérifiez cette commande avant qu'elle ne devienne une réclamation."
       },
       "upsells": {
         "title": "Ventes additionnelles mises en avant",

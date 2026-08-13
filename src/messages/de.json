@@ -4414,7 +4414,9 @@
         "historyEmpty": "Dies ist der erste Anruf von dieser Nummer.",
         "metaModel": "Modell",
         "metaTokens": "Tokens (Ein-/Ausgabe)",
-        "metaCost": "KI-Kosten"
+        "metaCost": "KI-Kosten",
+        "totalMismatchTitle": "Der Gesamtbetrag hat sich nach der Zusage geändert",
+        "totalMismatchBody": "Nabil nannte {quoted}, die Bestellung wurde mit {charged} angelegt. Der Anrufer hat dem ersten Betrag zugestimmt. Prüfen Sie diese Bestellung, bevor daraus eine Beschwerde wird."
       },
       "upsells": {
         "title": "Hervorgehobene Upsells",

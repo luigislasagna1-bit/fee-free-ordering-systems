@@ -4734,7 +4734,9 @@
         "historyEmpty": "This is the first call from this number.",
         "metaModel": "Model",
         "metaTokens": "Tokens in/out",
-        "metaCost": "AI cost"
+        "metaCost": "AI cost",
+        "totalMismatchTitle": "The total changed after the caller said yes",
+        "totalMismatchBody": "Nabil quoted {quoted} and the order was placed at {charged}. The caller agreed to the first number. Check this order before it becomes a complaint."
       },
       "upsells": {
         "title": "Featured Upsells",

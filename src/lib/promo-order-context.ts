@@ -41,6 +41,8 @@ import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session"
 import { usedLifetimePromoIds, findActiveGrants, resolveGrantById } from "@/lib/coupon-ledger";
 import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membership";
 import { resolvePromoMenuRefsForServing } from "@/lib/menu";
+import { phoneDigitsKey } from "@/lib/phone";
+import { CUSTOMER_ROW_ORDER } from "@/lib/customer-row";
 
 export type PromoChannel = "website" | "marketplace";
 
@@ -212,6 +214,39 @@ export async function buildPromoOrderContext(args: {
       select: { id: true },
     });
     customerId = existing?.id ?? null;
+  }
+  // ── Then the PHONE, as an indexed key ─────────────────────────────────────
+  //
+  // Without this, "who is this?" was answered by email alone, and the
+  // new-vs-returning count below fell back to matching `Order.customerPhone` as
+  // an exact string — against a column holding whatever anyone typed. Prod has
+  // "(416) 833-8405", "4168338405" and "(647) 669-0808" side by side, and
+  // Twilio delivers E.164, so the same person routinely failed to match their
+  // own order history. On 2026-08-13 that priced Roya Safi's quote as a
+  // first-time customer (+1 prefix, matched nothing) and her charge as the
+  // three-order regular she is (bare digits, matched everything): $23.37
+  // agreed, $25.97 billed.
+  //
+  // Resolving to a customerId here fixes it for EVERY channel and is cheaper
+  // than the string match it replaces — a point lookup on
+  // @@index([restaurantId, phoneDigits]) instead of a predicate on an
+  // unindexed text column of the Order table.
+  if (!customerId && phone) {
+    const digits = phoneDigitsKey(phone);
+    if (digits) {
+      const byPhone = await prisma.customer.findMany({
+        where: { restaurantId: restaurant.id, phoneDigits: digits },
+        orderBy: CUSTOMER_ROW_ORDER as any,
+        take: 2,
+        select: { id: true },
+      });
+      // Exactly one, or none. A number shared by several customers (a household
+      // line, a shared work phone) identifies nobody, and picking one of them
+      // would hand this order somebody else's promo history — including their
+      // once-per-lifetime burn. Ambiguity falls back to the previous behaviour
+      // rather than guessing.
+      customerId = byPhone.length === 1 ? byPhone[0].id : null;
+    }
   }
   const identified = !!(email || phone || customerId);
 

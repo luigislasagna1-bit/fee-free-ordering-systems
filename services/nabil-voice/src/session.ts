@@ -2,7 +2,7 @@ import type Anthropic from "@anthropic-ai/sdk";
 import type { WebSocket } from "ws";
 import { CONFIG, type CallToken } from "./config";
 import { api } from "./api";
-import { TOOLS, executeTool, toolsForConfig, type ToolContext } from "./tools";
+import { TOOLS, executeTool, toolsForConfig, canonicalPhone, type ToolContext } from "./tools";
 import { buildSystemPrompt } from "./prompt";
 import { normalizeAgentConfig } from "./agent-config";
 import { withMessageCacheBreakpoint } from "./cache-breakpoints";
@@ -12,6 +12,28 @@ const WRAP_UP_LEAD_MS = 45_000;
 const HANGUP_GRACE_MS = 15_000;
 
 const MAX_TOOL_HOPS = 8;
+
+/** An `interrupt` arriving within this long of a turn opening belongs to the
+ *  sentence BEFORE it, not the one now streaming. Long enough to cover the gap
+ *  Twilio leaves between the two events, short enough that a caller who really
+ *  does talk over the new sentence is still heard. */
+const INTERRUPT_GRACE_MS = 800;
+
+/** How long a turn may go without emitting a single token before we say
+ *  something. A tool hop is silent by construction, and a caller cannot tell
+ *  silence from a dropped call. */
+const FILLER_AFTER_MS = 1_200;
+
+/** A turn that was aborted before speaking a word gets re-answered after this
+ *  long — cancelled the moment the caller speaks again, so we never talk over a
+ *  genuine barge-in. Without it, the interrupt/prompt race leaves the line dead
+ *  until the caller gives up and says "Hello?". */
+const SILENT_TURN_RETRY_MS = 1_200;
+
+/** Hard cap on how long one sentence may hold off barge-in. A protected window
+ *  that somehow never closes would make Nabil un-interruptible for the rest of
+ *  the call — far worse than the truncation it prevents. */
+const PROTECT_MAX_MS = 12_000;
 
 /**
  * One phone call. Bridges the Twilio ConversationRelay WebSocket to a Claude
@@ -38,12 +60,38 @@ export class CallSession {
   private lastPromptAt = 0;
   private resumeTimer: ReturnType<typeof setTimeout> | undefined;
   private turnRunning = false;
+  /** When the CURRENT turn started streaming. ConversationRelay delivers
+   *  `interrupt` and `prompt` as separate events, and the interrupt raised by a
+   *  caller talking over the PREVIOUS sentence routinely lands a beat AFTER the
+   *  prompt it produced. Without this, that stale interrupt aborts the reply to
+   *  the very words that caused it — which is the dead air Roya answered with
+   *  "Hello?" on 2026-08-13. A `!turnRunning` check cannot catch it: handlePrompt
+   *  runs synchronously all the way to messages.stream(), so a later interrupt
+   *  always sees turnRunning === true. Only elapsed time separates them. */
+  private turnStartedAt = 0;
+  /** Retry timer for a turn that was aborted before it said anything at all. */
+  private silentTurnTimer: ReturnType<typeof setTimeout> | undefined;
+  /** One-shot "one moment" so a silent tool hop never sounds like a dead line. */
+  private fillerTimer: ReturnType<typeof setTimeout> | undefined;
+  /** A sentence the caller MUST hear in full — a total, a corrected total, an
+   *  order confirmation. Suppressing the barge-in flag is not enough on its own:
+   *  ConversationRelay has already flushed its TTS buffer by the time it tells
+   *  us, so simply carrying on resumes mid-word ("…venty seven"). The sentence
+   *  has to be re-spoken from the start. */
+  private protectedUntil = 0;
+  private protectedText = "";
+  private bargedDuringProtected = false;
   private outcome: string | null = null;
   private orderId: string | null = null;
   private orderNumber: string | null = null;
   private reservationCode: string | null = null;
   private customerId: string | null = null;
   private language: string | null = null;
+  /** The total spoken to the caller, and the one actually charged. Logged so a
+   *  divergence is visible in the dashboard instead of being discovered days
+   *  later by reading a transcript (2026-08-11 and 2026-08-13, both by hand). */
+  private quotedTotal: number | null = null;
+  private chargedTotal: number | null = null;
   private usageIn = 0;
   private usageOut = 0;
   /** Cache split of usageIn — priced at 1.25× (write) and 0.1× (read). */
@@ -74,6 +122,11 @@ export class CallSession {
       pendingTransfer: null,
       placedOrders: [],
       basket: [],
+      // Seed the pricing identity from caller ID, in canonical form, BEFORE the
+      // first tool can run. Promo eligibility is per-customer, so a quote priced
+      // against an empty identity and a charge priced against the caller is two
+      // different customers and two different totals (ORD-264127463, 2026-08-13).
+      customerPhone: canonicalPhone(token.from || "") || undefined,
     };
   }
 
@@ -98,12 +151,28 @@ export class CallSession {
           // re-speaks its pre-interrupt half-sentence over the caller.
           clearTimeout(this.resumeTimer);
           this.resumeTimer = undefined;
+          // Same for the silent-turn retry: the caller has moved on, so
+          // re-answering the turn they abandoned would talk over them.
+          clearTimeout(this.silentTurnTimer);
+          this.silentTurnTimer = undefined;
           this.userTurns++;
           void this.handlePrompt(String(text));
         }
         break;
       }
       case "interrupt":
+        // A stale interrupt belonging to the PREVIOUS sentence: the caller spoke
+        // over what we were saying, which produced both this event and the
+        // prompt that just opened a turn. Killing that turn answers their words
+        // with silence. See turnStartedAt.
+        if (this.turnRunning && Date.now() - this.turnStartedAt < INTERRUPT_GRACE_MS) break;
+        // Mid-total, mid-confirmation: note it and keep speaking. The sentence
+        // is re-spoken whole at the end of the turn (ConversationRelay has
+        // already dropped the audio, so carrying on would resume mid-word).
+        if (Date.now() < this.protectedUntil) {
+          this.bargedDuringProtected = true;
+          break;
+        }
         this.interrupted = true;
         this.controller?.abort();
         // Barge-in recovery (review wf_a62b0536): a noise/backchannel
@@ -180,6 +249,12 @@ export class CallSession {
       // the end log instead of discarding it.
       this.customerId =
         typeof (returningCaller as any)?.customerId === "string" ? (returningCaller as any).customerId : null;
+      // A known caller's STORED name beats whatever speech-to-text makes of them
+      // saying it out loud — "Roya Safi" came back as "Royanne Veal" and that is
+      // what printed on the kitchen ticket. The model can still override it if
+      // the caller gives a different name for this order.
+      const knownName = (returningCaller as any)?.found ? (returningCaller as any)?.name : null;
+      if (typeof knownName === "string" && knownName.trim()) this.ctx.customerName = knownName.trim();
       // Which items may ONLY reach an order through the compiler. Collected
       // once here so place_order can refuse a hand-written pizza — on
       // 2026-08-11 the model added a pizza with add_pizza AND restated it in
@@ -313,6 +388,10 @@ export class CallSession {
       await this.runTurnInner(userText);
     } finally {
       this.turnRunning = false;
+      // No exit path from runTurnInner — return, throw, transfer, hop cap — may
+      // leave the filler armed to speak into the next turn.
+      clearTimeout(this.fillerTimer);
+      this.fillerTimer = undefined;
     }
     // Drain prompts that arrived mid-turn, one at a time, in arrival order.
     const next = this.pendingPrompts.shift();
@@ -332,6 +411,24 @@ export class CallSession {
     this.transcript.push({ role: "user", text: userText, ts: new Date().toISOString() });
     this.messages.push({ role: "user", content: userText });
     this.interrupted = false;
+    this.turnStartedAt = Date.now();
+    // Nothing has been said on this turn yet. If the turn ends still false, the
+    // caller got silence for an answer — see the recovery at the end.
+    let spokeAnything = false;
+    // A turn can spend seconds inside tool hops with the line completely quiet.
+    // One short filler, once, deterministically — not left to the model, which
+    // has already spent its single permitted holding phrase by prompt rule.
+    // Cleared in runTurn's finally, so no exit path can leave it armed.
+    const stopFiller = () => {
+      clearTimeout(this.fillerTimer);
+      this.fillerTimer = undefined;
+    };
+    this.fillerTimer = setTimeout(() => {
+      if (!spokeAnything && !this.interrupted) {
+        spokeAnything = true;
+        this.sendText("One moment.", false);
+      }
+    }, FILLER_AFTER_MS);
 
     let hops = 0;
     while (hops++ < MAX_TOOL_HOPS && !this.interrupted) {
@@ -372,6 +469,11 @@ export class CallSession {
       stream.on("text", (delta: string) => {
         if (this.interrupted) return;
         assistantText += delta;
+        stopFiller();
+        spokeAnything = true;
+        // Anything spoken during a protected window is kept verbatim so it can
+        // be repeated whole if the caller talks over it.
+        if (Date.now() < this.protectedUntil) this.protectedText += delta;
         this.sendText(delta, false);
       });
 
@@ -387,6 +489,12 @@ export class CallSession {
           if (assistantText.trim()) {
             this.messages.push({ role: "assistant", content: assistantText + " —" });
             this.transcript.push({ role: "assistant", text: assistantText + " [interrupted]", ts: new Date().toISOString() });
+          } else {
+            // Aborted before a single token — the caller's words were answered
+            // with nothing at all. Nothing ran (finalMessage rejected before
+            // stop_reason was read), so re-answering is side-effect free. Cancel
+            // the moment the caller speaks again, so we never talk over them.
+            this.scheduleSilentTurnRetry(userText);
           }
           return; // caller barged in — next prompt (or the resume timer) is a fresh turn
         }
@@ -483,11 +591,24 @@ export class CallSession {
         // order number and total, or they assume it failed and re-order at
         // the store (review wf_a62b0536). Pure-speech turns keep normal
         // barge-in semantics.
-        if (stateChanged) this.interrupted = false;
+        //
+        // Clearing the flag was only ever half the fix, and 2026-08-13 proved
+        // it: it un-aborts an interrupt that landed DURING the tool call, but
+        // the confirmation is spoken on the NEXT stream, which was completely
+        // unprotected. Roya talked over "your actual total comes to twenty five
+        // ninety se—" and the one sentence that had to be heard was the one that
+        // was lost. Open a protected window across the sentence itself.
+        if (stateChanged) {
+          this.interrupted = false;
+          this.protectedUntil = Date.now() + PROTECT_MAX_MS;
+          this.protectedText = "";
+          this.bargedDuringProtected = false;
+        }
         continue; // let the model speak its next turn
       }
 
       // Final assistant turn.
+      this.closeProtectedWindow();
       this.sendText("", true);
       if (this.ctx.pendingTransfer) this.endTransfer(this.ctx.pendingTransfer);
       return;
@@ -500,9 +621,68 @@ export class CallSession {
     // it stale for the next turn. The guard matters: the loop also exits on a
     // barge-in that landed after tool execution, and that path keeps today's
     // silent-abort semantics.
+    this.closeProtectedWindow();
     if (!this.interrupted) {
       this.sendText("", true);
       if (this.ctx.pendingTransfer) this.endTransfer(this.ctx.pendingTransfer);
+    } else if (!spokeAnything) {
+      // The loop exited on an interrupt between hops and said nothing at all —
+      // the third silent exit. Same recovery as an aborted first token.
+      this.scheduleSilentTurnRetry(userText);
+    }
+  }
+
+  /** Re-answer a turn that produced no audio whatsoever.
+   *
+   *  There are three ways to leave runTurnInner having said nothing — aborted
+   *  before the first token, the loop condition failing on a stale interrupt,
+   *  and every delta suppressed — and all three used to end in indefinite
+   *  silence, because the 4s barge-in resume timer self-cancels when the last
+   *  message is a USER turn (which is exactly what a zero-token abort leaves).
+   *  That is what made Roya say "Hello?" into a dead line on 2026-08-13.
+   *
+   *  Deliberately a delay and not an immediate `continue`: the caller may still
+   *  be talking, and the retry is cancelled the instant real speech arrives. */
+  private scheduleSilentTurnRetry(userText: string) {
+    // The caller has already moved on — either their next words are queued
+    // behind this turn, or they landed while it was unwinding (an abort takes a
+    // tick to propagate, so a prompt can arrive after the interrupt and before
+    // we get here, which is precisely when the cancel-on-prompt path misses).
+    // Re-answering the turn they abandoned would talk over the answer to what
+    // they actually asked.
+    if (this.pendingPrompts.length || this.lastPromptAt > this.turnStartedAt) return;
+    clearTimeout(this.silentTurnTimer);
+    this.silentTurnTimer = setTimeout(() => {
+      this.silentTurnTimer = undefined;
+      if (this.turnRunning || this.finalized) return;
+      // Drop the unanswered user turn before replaying it — runTurnInner pushes
+      // it again, and two identical user messages in a row confuse the model.
+      const last = this.messages[this.messages.length - 1];
+      if (last?.role === "user" && last?.content === userText) this.messages.pop();
+      this.transcript.pop();
+      this.interrupted = false;
+      void this.runTurn(userText);
+    }, SILENT_TURN_RETRY_MS);
+  }
+
+  /** Close a protected sentence, repeating it whole if the caller talked over
+   *  it. ConversationRelay drops its TTS buffer the moment it reports a
+   *  barge-in, so the audio is already gone — carrying on would resume
+   *  mid-word ("…venty seven"). Say the sentence again, once. */
+  private closeProtectedWindow() {
+    if (!this.protectedUntil) return;
+    const text = this.protectedText.trim();
+    const barged = this.bargedDuringProtected;
+    this.protectedUntil = 0;
+    this.protectedText = "";
+    this.bargedDuringProtected = false;
+    if (barged && text) {
+      this.sendText(` Sorry — let me say that again. ${text}`, false);
+      this.transcript.push({
+        role: "assistant",
+        text: `(repeated after barge-in) ${text}`,
+        ts: new Date().toISOString(),
+      });
     }
   }
 
@@ -511,13 +691,27 @@ export class CallSession {
    *  (dashboard "needs attention"); transfer never overwrites a placed
    *  order/booked reservation; finalize() defaults the rest. */
   private noteOutcome(tool: string, out: any) {
+    // The last total READ ALOUD, whether or not an order followed it. Captured
+    // here rather than at placement so a caller who was quoted and then hung up
+    // still leaves a record of the number they were given.
+    if (tool === "quote_order" && out?.ok && typeof out.total === "number") {
+      this.quotedTotal = out.total;
+    }
     if (tool === "place_order") {
       if (out?.ok) {
         this.outcome = "order_placed";
         if (out.orderId != null) this.orderId = String(out.orderId);
         if (out.orderNumber != null) this.orderNumber = String(out.orderNumber);
+        if (typeof out.total === "number") this.chargedTotal = out.total;
+        // The quote the caller actually agreed to, as the tool saw it — more
+        // reliable than the running one, which a later re-quote would overwrite.
+        if (typeof out.quotedTotal === "number") this.quotedTotal = out.quotedTotal;
       } else {
         this.outcome = "error";
+        // A refused placement still tells us the two numbers disagreed, and
+        // that is exactly the event worth recording.
+        if (typeof out?.total === "number") this.chargedTotal = out.total;
+        if (typeof out?.quotedTotal === "number") this.quotedTotal = out.quotedTotal;
       }
     } else if (tool === "book_reservation") {
       if (out?.ok) {
@@ -564,6 +758,10 @@ export class CallSession {
     clearTimeout(this.resumeTimer);
     clearTimeout(this.wrapUpTimer);
     clearTimeout(this.hangUpTimer);
+    // The caller has hung up: a pending retry or filler would start a whole new
+    // model turn (and bill for it) talking to nobody.
+    clearTimeout(this.silentTurnTimer);
+    clearTimeout(this.fillerTimer);
     void this.finalize();
   }
 
@@ -610,6 +808,10 @@ export class CallSession {
         // intelligence pass would otherwise bill cached reads at full rate.
         costCents: this.costCents(),
         durationSeconds: Math.round((Date.now() - this.startedAt) / 1000),
+        // A difference between these two is a caller billed a price they never
+        // agreed to. The dashboard flags it; nothing used to.
+        quotedTotal: this.quotedTotal,
+        chargedTotal: this.chargedTotal,
       });
       if (!r.ok) console.error("[nabil-voice] logCall rejected", r.status);
     } catch (e) {

@@ -52,6 +52,8 @@ import { isPaymentMethodAcceptedForType } from "@/lib/payment-methods";
 import { resolveCustomerLocale } from "@/lib/i18n-server";
 import { shouldDispatchToShipday, shipdayPayAtDoorEnabled } from "@/lib/shipday";
 import { dispatchAcceptedOrderSafe } from "@/lib/delivery-dispatch";
+import { phoneDigitsKey } from "@/lib/phone";
+import { isVoiceSentinelEmail } from "@/lib/voice/sentinel-identity";
 const ALLOWED_ORDER_TYPES = ["pickup", "delivery", "dine_in", "take_out", "catering"] as const;
 
 /** Human English label for an order type — used only as the en fallback in
@@ -2063,6 +2065,47 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // ── The caller may never be billed a price they did not agree to ────────
+    //
+    // `expectedTotal` is the number that was READ ALOUD and said yes to. We are
+    // standing on the same seam the dry run uses: after all pricing, before the
+    // first write. If the server has re-priced to something else, nothing is
+    // created — the agent has to state the new total and get a fresh yes.
+    //
+    // This exists because a spoken apology is not a safeguard. On 2026-08-13
+    // Roya Safi agreed to $23.37, the order was created at $25.97, the receipt
+    // was texted, and only THEN did the agent try to tell her — a sentence a
+    // barge-in then cut off mid-word ("twenty five ninety se—"). Same shape as
+    // ORD-176217204 two days earlier. The client-side comparison stays as a
+    // belt-and-braces check, but only the server can refuse atomically: any
+    // client-side pre-flight is a separate request and therefore a TOCTOU gap.
+    //
+    // Internal-key gated and OPTIONAL, so the money path is byte-identical for
+    // every existing client that doesn't send it.
+    const expectedTotalRaw = (body as { expectedTotal?: unknown })?.expectedTotal;
+    if (
+      typeof expectedTotalRaw === "number" &&
+      Number.isFinite(expectedTotalRaw) &&
+      !!process.env.INTERNAL_API_SECRET &&
+      req.headers.get("x-internal-key") === process.env.INTERNAL_API_SECRET &&
+      Math.abs(serverTotal - expectedTotalRaw) > 0.005
+    ) {
+      return NextResponse.json(
+        {
+          error: "The total changed since it was quoted — the order was not placed.",
+          code: "total_changed",
+          total: serverTotal,
+          expectedTotal: expectedTotalRaw,
+          appliedPromoNames: promoResults
+            .filter((p) => (p.discount ?? 0) > 0)
+            .map((p) => p.name)
+            .filter(Boolean)
+            .slice(0, 5),
+        },
+        { status: 409 },
+      );
+    }
+
     // ── Find or create customer ─────────────────────────────────────────────
     //
     // Two layers of customer identity:
@@ -2102,6 +2145,43 @@ export async function POST(req: NextRequest) {
       // order lands on the row with signedUpAt — binding to the guest twin
       // would silently block their reward earn under orderEligibleToEarn.
       if (!customer && where) customer = await prisma.customer.findFirst({ where, orderBy: CUSTOMER_ROW_ORDER as any });
+      // ── A PHONE CALLER IS NOT A NEW CUSTOMER ────────────────────────────
+      //
+      // A voice order carries a synthetic `voice.<digits>@voice.nabil.invalid`
+      // address, which by construction matches no existing row — so the email
+      // lookup above always missed and the create below always fired. Every
+      // time a regular phoned, they got a brand-new Customer record: split
+      // lifetime totals, stranded Reward Dollars, an unreachable VIP tier, and
+      // a promo engine that saw a first-time buyer. Roya Safi, 2026-08-13.
+      //
+      // Fall back to the phone, which for a phone call is the only real
+      // identity we have. Scoped to the sentinel so ordinary web checkout is
+      // untouched: a typed email is a deliberate identity claim, and matching
+      // web orders on phone would merge a shared household line into one row.
+      if (!customer && cleanPhone && isVoiceSentinelEmail(cleanEmail)) {
+        const digits = phoneDigitsKey(cleanPhone);
+        if (digits) {
+          const candidates = await prisma.customer.findMany({
+            where: { restaurantId: restaurant.id, phoneDigits: digits },
+            orderBy: CUSTOMER_ROW_ORDER as any,
+            take: 6,
+          });
+          const real = candidates.filter((c) => !isVoiceSentinelEmail(c.email));
+          // ⚠️ ONLY when it is unambiguous. A number can genuinely belong to
+          // several customers — a household line, a shared work phone — and
+          // binding this order to a guess would move a stranger's money: their
+          // lifetime spend, their reward wallet, their once-per-lifetime promo.
+          // That is a worse failure than the duplicate row we're preventing.
+          //
+          // When it IS ambiguous, still prefer an existing sentinel row over
+          // minting another one, so repeat callers converge on a single record
+          // instead of growing one per call.
+          customer =
+            real.length === 1
+              ? real[0]
+              : (candidates.find((c) => isVoiceSentinelEmail(c.email)) ?? null);
+        }
+      }
       // BIDIRECTIONAL marketing consent (GloriaFood-parity, Luigi 2026-06-03).
       // The checkbox state IS the customer's explicit choice on this order:
       //   ticked   → opt IN
@@ -2137,6 +2217,9 @@ export async function POST(req: NextRequest) {
             name: sanitize(customerName, 100),
             email: cleanEmail,
             phone: cleanPhone,
+            // THE identity key. Written alongside `phone` everywhere, so the
+            // next lookup can find this person however their number is typed.
+            phoneDigits: phoneDigitsKey(cleanPhone),
             customerAccountId: currentAccount?.id ?? null,
             // Seed the lifetime counters with THIS order. They used to start at
             // zero here while the returning-customer branch below incremented,
@@ -2167,6 +2250,13 @@ export async function POST(req: NextRequest) {
             // so we don't overwrite a previous link.
             ...(currentAccount && !customer.customerAccountId
               ? { customerAccountId: currentAccount.id }
+              : {}),
+            // Backfill the identity key for rows created before it existed, and
+            // for a customer who has only now given us a number. Never blank an
+            // existing key: an order placed without a phone must not erase the
+            // key that makes this person findable.
+            ...(cleanPhone && !customer.phoneDigits
+              ? { phoneDigits: phoneDigitsKey(cleanPhone) }
               : {}),
             // Flip consent in EITHER direction when the customer's choice
             // differs from what we have stored — and only re-stamp the

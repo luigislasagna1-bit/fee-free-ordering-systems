@@ -4414,7 +4414,9 @@
         "historyEmpty": "See on esimene kõne sellelt numbrilt.",
         "metaModel": "Mudel",
         "metaTokens": "Tokenid sisse/välja",
-        "metaCost": "AI kulu"
+        "metaCost": "AI kulu",
+        "totalMismatchTitle": "Summa muutus pärast seda, kui klient nõustus",
+        "totalMismatchBody": "Nabil ütles {quoted} ja tellimus vormistati hinnaga {charged}. Klient nõustus esimese summaga. Kontrollige seda tellimust, enne kui sellest saab kaebus."
       },
       "upsells": {
         "title": "Esiletõstetud lisamüügid",

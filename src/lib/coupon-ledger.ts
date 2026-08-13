@@ -22,6 +22,7 @@
  * the ledger is a correctness/marketing layer, never a reason an order fails.
  */
 import prisma from "@/lib/db";
+import { phoneDigitsKey } from "@/lib/phone";
 
 /** A coupon counts as "used" (blocks re-grant of a once-per-lifetime offer)
  *  while it is applied to a live order OR terminally redeemed. `granted`,
@@ -36,11 +37,19 @@ export function normalizeEmail(e?: string | null): string | null {
 
 /** Loose phone normalization for identity matching — strip everything but
  *  digits so "+1 (905) 385-4444" and "9053854444" match. Falls back to the
- *  trimmed raw value if there are too few digits to be a real number. */
+ *  trimmed raw value if there are too few digits to be a real number.
+ *
+ *  🚨 The NANP country code is dropped too. Keeping it meant "+19053854444"
+ *  and "9053854444" were two different people to this ledger, so a
+ *  once-per-lifetime promo could be burned twice by the same customer simply by
+ *  arriving down a channel that formats numbers differently — which is exactly
+ *  what the phone line does (Twilio always sends E.164, web checkout never
+ *  does). Same root cause as the 2026-08-13 quote/charge split; one shared key
+ *  now, in `phoneDigitsKey`. */
 export function normalizePhone(p?: string | null): string | null {
   if (!p) return null;
-  const digits = p.replace(/\D/g, "");
-  if (digits.length >= 7) return digits;
+  const key = phoneDigitsKey(p);
+  if (key) return key;
   const v = p.trim();
   return v || null;
 }

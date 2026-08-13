@@ -4414,7 +4414,9 @@
         "historyEmpty": "Esta é a primeira chamada deste número.",
         "metaModel": "Modelo",
         "metaTokens": "Tokens entrada/saída",
-        "metaCost": "Custo de IA"
+        "metaCost": "Custo de IA",
+        "totalMismatchTitle": "O total mudou depois de o cliente aceitar",
+        "totalMismatchBody": "O Nabil indicou {quoted} e o pedido foi registado por {charged}. O cliente aceitou o primeiro valor. Verifique este pedido antes que se torne uma reclamação."
       },
       "upsells": {
         "title": "Upsells em destaque",
