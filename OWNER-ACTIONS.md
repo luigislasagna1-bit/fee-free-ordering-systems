@@ -166,6 +166,58 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A51. 📞 The Roya call — why it was that bad, and what's now live (2026-08-13)
+
+**You said the last call Nabil handled was horrible. It was worse than it sounded.** The caller was
+**Roya Safi** — not a stranger, a customer who had ordered from you three times and spent $181.99.
+
+Three things went wrong that you couldn't hear:
+
+1. **She agreed to $23.37 and the order was placed at $25.97.** Nabil announced a "first time customer
+   discount" she was never eligible for, she said yes, the order went in — and only *then* did it try
+   to tell her the real price, and got cut off mid-word saying it.
+2. **It created a second customer record for her** ("Royanne Veal"), splitting her order history,
+   rewards and lifetime spend in two.
+3. **It asked her to read out a phone number it already had**, one group of digits at a time. That
+   took about forty seconds of a three-minute call.
+
+**All three were the same bug.** Your phone system sends numbers as `+14168338405`; your checkout
+stores them as `4168338405`. Five different parts of the system each had their own idea of who was
+calling and none of them agreed, so Nabil didn't recognise her, priced the quote as a brand-new
+customer, priced the charge as a regular, and filed her under a brand-new record. The same thing
+happened two days earlier on one of your own test calls — the fix that time only covered half of it.
+
+**Fixed and live now** (Vercel + Fly v23): one shared way of reading a phone number everywhere; the
+order system refuses to place an order at a price the caller wasn't told (it hands the caller back a
+corrected total and asks again, instead of apologising after the ticket prints); Nabil greets a
+returning caller by name and never asks for a number it already has; the dead air and the cut-off
+sentence are both fixed in code; and pizza crust/size/topping names are now in Nabil's head so it
+stops guessing ("we don't have thin crust" was a guess that happened to be right).
+
+**Also found and fixed while in there, both of which affect every restaurant, not just yours:**
+- **"Delete my data" was never reaching phone calls.** It reported success while leaving the caller's
+  number, the full transcript and the actual Twilio audio recording in place. That's a privacy-law
+  problem, and it was silent.
+- **Every phone order was emailing a fake address and bouncing.** A caller has no email, so the system
+  invents one at a dead domain — and then mailed it. Enough bounces damage your sending reputation for
+  every real customer.
+
+**Roya's record is repaired** — back to one record, 4 orders, $207.96. Per your call, the $2.60 was
+left alone: she was told the corrected total before hanging up and paid at the store.
+
+1. ☐ **One test call when convenient, from a number that has ordered from you before.** Check: it
+   greets you by name; it never asks you to recite your number; it asks one question at a time; and
+   the total it says before you agree is the total on the receipt. That last one is the whole fix.
+2. 🤔 **YOUR CALL — one number I deliberately did NOT touch.** `647 669 0808` (your own test line) has
+   **ten** different customer records behind it — "MOHIT", "TEST LATEST", several "Sameem Nabil"s with
+   different emails. The repair script refuses to merge when a number belongs to more than one person,
+   because guessing would move a stranger's spend and rewards onto someone else's record. If those are
+   all test data you want cleaned up, say so and I'll do it; if any is a real customer, leave it.
+3. 👀 **Worth knowing:** part of the slowness on Roya's call was not us — Anthropic returned an
+   "overloaded" error mid-call at 16:07:36, eight seconds before her order was created. Our retry
+   handled it and the order went through. Nabil now says "one moment" instead of going silent when
+   that happens.
+
 ### A50. 🚚 ShipDay → Uber says "out of delivery area" every time — one real defect FIXED, one thing only you can check (2026-08-13)
 
 **Your report:** DoorDash attaches to a ShipDay order fine; Uber says the delivery is out of the
