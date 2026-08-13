@@ -15,6 +15,8 @@
 // unchanged. Luigi 2026-06-04.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { formatAddressCase, formatPostcode } from "./address-format";
+
 export type DeliveryFieldKey =
   | "street"
   | "city"
@@ -106,6 +108,34 @@ export function isCustomDeliveryForm(raw: unknown): boolean {
 }
 
 export type DeliveryAddressData = Partial<Record<DeliveryFieldKey, string>>;
+
+/**
+ * Tidy a customer's typed address for storage: capitalize the name-shaped
+ * fields, canonicalize the postcode, and leave `parking` exactly as typed
+ * (it's free-text instructions — title-casing a sentence reads worse than
+ * leaving it alone).
+ *
+ * Normalizing HERE, at write, means every downstream consumer gets a clean
+ * value for free — printed ticket, kitchen display, both emails, ShipDay, the
+ * driver app, CSV exports — instead of each one remembering to format. The
+ * display helpers stay idempotent, so orders placed before this shipped are
+ * still tidied when they're rendered. Luigi 2026-08-12.
+ *
+ * Geocoding and dispatch are unaffected: every geocoder we call is
+ * case-insensitive, and the digits are untouched.
+ */
+export function normalizeDeliveryAddressData(data: DeliveryAddressData): DeliveryAddressData {
+  const out: DeliveryAddressData = {};
+  for (const key of DELIVERY_FIELD_KEYS) {
+    const raw = data[key];
+    if (typeof raw !== "string" || !raw.trim()) continue;
+    out[key] =
+      key === "postcode" ? formatPostcode(raw)
+      : key === "parking" ? raw.trim()
+      : formatAddressCase(raw);
+  }
+  return out;
+}
 
 /**
  * Compose the flat one-line `deliveryAddress` string (for receipts / kitchen /

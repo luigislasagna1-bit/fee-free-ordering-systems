@@ -5940,7 +5940,11 @@
       "subject": "Нове замовлення #{orderNumber} — {restaurant}",
       "title": "Отримано нове замовлення",
       "body": "{customer} щойно зробив замовлення #{orderNumber} на суму {total}.",
-      "openAdmin": "Відкрити адмінпанель"
+      "openAdmin": "Відкрити адмінпанель",
+      "subjectAutoAccepted": "Нове замовлення #{orderNumber} — прийнято автоматично — {restaurant}",
+      "badgeAutoAccepted": "Прийнято автоматично",
+      "autoAcceptedLabel": "Нічого робити не потрібно",
+      "autoAcceptedNote": "Автоматичне прийняття увімкнено, тому це замовлення прийнято за вас, і клієнт уже отримав своє підтвердження. Приймати нічого не треба — просто приготуйте його."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Ваше замовлення скасовано",

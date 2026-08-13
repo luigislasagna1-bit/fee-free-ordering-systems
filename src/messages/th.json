@@ -5940,7 +5940,11 @@
       "subject": "ออเดอร์ใหม่ #{orderNumber} — {restaurant}",
       "title": "ได้รับออเดอร์ใหม่",
       "body": "{customer} เพิ่งสั่งออเดอร์ #{orderNumber} มูลค่า {total}",
-      "openAdmin": "เปิดผู้ดูแล"
+      "openAdmin": "เปิดผู้ดูแล",
+      "subjectAutoAccepted": "ออเดอร์ใหม่ #{orderNumber} — รับอัตโนมัติแล้ว — {restaurant}",
+      "badgeAutoAccepted": "รับอัตโนมัติแล้ว",
+      "autoAcceptedLabel": "ไม่ต้องดำเนินการ",
+      "autoAcceptedNote": "เปิดใช้การรับออเดอร์อัตโนมัติอยู่ ออเดอร์นี้จึงถูกรับให้คุณแล้ว และลูกค้าได้รับการยืนยันไปแล้ว ไม่ต้องกดรับ — เตรียมอาหารได้เลย"
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "ออเดอร์ของคุณถูกยกเลิกแล้ว",

@@ -5940,7 +5940,11 @@
       "subject": "新订单 #{orderNumber} — {restaurant}",
       "title": "收到新订单",
       "body": "{customer} 刚刚下了订单 #{orderNumber}，金额 {total}。",
-      "openAdmin": "打开后台"
+      "openAdmin": "打开后台",
+      "subjectAutoAccepted": "新订单 #{orderNumber} — 已自动接单 — {restaurant}",
+      "badgeAutoAccepted": "已自动接单",
+      "autoAcceptedLabel": "无需操作",
+      "autoAcceptedNote": "自动接单已开启，因此本单已为您接下，顾客也已收到确认。无需接单，直接备餐即可。"
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "您的订单已取消",

@@ -5940,7 +5940,11 @@
       "subject": "Uusi tilaus #{orderNumber} — {restaurant}",
       "title": "Uusi tilaus vastaanotettu",
       "body": "{customer} teki tilauksen #{orderNumber} summalla {total}.",
-      "openAdmin": "Avaa hallintapaneeli"
+      "openAdmin": "Avaa hallintapaneeli",
+      "subjectAutoAccepted": "Uusi tilaus #{orderNumber} — hyväksytty automaattisesti — {restaurant}",
+      "badgeAutoAccepted": "Hyväksytty automaattisesti",
+      "autoAcceptedLabel": "Ei toimenpiteitä",
+      "autoAcceptedNote": "Automaattinen hyväksyntä on käytössä, joten tämä tilaus hyväksyttiin puolestasi ja asiakas on jo saanut vahvistuksensa. Mitään ei tarvitse hyväksyä – valmista se vain."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tilauksesi on peruutettu",

@@ -5940,7 +5940,11 @@
       "subject": "新規注文 #{orderNumber} — {restaurant}",
       "title": "新しい注文が入りました",
       "body": "{customer} 様が {total} の注文 #{orderNumber} を行いました。",
-      "openAdmin": "管理パネルを開く"
+      "openAdmin": "管理パネルを開く",
+      "subjectAutoAccepted": "新規注文 #{orderNumber} — 自動承認済み — {restaurant}",
+      "badgeAutoAccepted": "自動承認済み",
+      "autoAcceptedLabel": "対応は不要です",
+      "autoAcceptedNote": "自動承認がオンのため、この注文は自動で承認され、お客様には確認のご案内が送信済みです。承認の操作は不要です。そのまま調理を始めてください。"
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "ご注文はキャンセルされました",

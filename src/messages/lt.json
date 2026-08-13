@@ -5940,7 +5940,11 @@
       "subject": "Naujas užsakymas #{orderNumber} — {restaurant}",
       "title": "Gautas naujas užsakymas",
       "body": "{customer} ką tik pateikė užsakymą #{orderNumber} už {total}.",
-      "openAdmin": "Atidaryti administravimo skydelį"
+      "openAdmin": "Atidaryti administravimo skydelį",
+      "subjectAutoAccepted": "Naujas užsakymas #{orderNumber} — priimtas automatiškai — {restaurant}",
+      "badgeAutoAccepted": "Priimtas automatiškai",
+      "autoAcceptedLabel": "Nieko daryti nereikia",
+      "autoAcceptedNote": "Automatinis priėmimas įjungtas, todėl šis užsakymas buvo priimtas už jus, o klientas jau gavo savo patvirtinimą. Priimti nieko nereikia — tiesiog paruoškite jį."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tavo užsakymas atšauktas",

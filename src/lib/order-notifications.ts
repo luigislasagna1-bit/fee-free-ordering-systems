@@ -25,6 +25,7 @@ import { formatCurrency } from "@/lib/utils";
 import { projectOrderEarn } from "@/lib/reward-earn";
 import { signActionToken } from "@/lib/order-status-token";
 import { shouldOfferEmailCancel } from "@/lib/customer-cancel-policy";
+import { formatFullDeliveryAddress } from "@/lib/address-format";
 
 // Promo usage give-back on a killed/abandoned order now lives in
 // `releasePromotionUsageForOrder(orderId)` in @/lib/promo-usage — it deletes the
@@ -417,8 +418,26 @@ export async function fireOrderNotifications(orderId: string): Promise<{ fired: 
       paymentMethod: order.paymentMethod,
       customerPhone: order.customerPhone,
       customerEmail: order.customerEmail,
-      deliveryAddress: order.deliveryAddress,
+      // The FULL address — street, postcode, city — the way GloriaFood prints
+      // it. This email passed `Order.deliveryAddress` alone, which is the
+      // STREET: city and postal code live in their own columns and never
+      // reached the reader at all (Luigi 2026-08-12). Formatted on the way out
+      // as well as normalized at write, so orders placed before that shipped
+      // are tidied too.
+      deliveryAddress: formatFullDeliveryAddress({
+        street: order.deliveryAddress,
+        city: (order as any).deliveryCity,
+        postcode: (order as any).deliveryZip,
+      }) || null,
       customerNotes: order.notes,
+      // Same flag the customer's confirmation gets, for the same reason: an
+      // auto-accepted order is born "accepted" and never transitions, so the
+      // kitchen-accept email never fires and THIS is the store's only copy. It
+      // used to arrive badged "New order" with "accept it or auto-reject runs"
+      // for an order the customer had already been told was confirmed
+      // (Luigi 2026-08-12, ORD-002270106). Keep in lockstep with the customer
+      // flag above — one order, one truth.
+      alreadyAccepted: order.status === "accepted",
     },
   }).catch((e) => console.error("[fireOrderNotifications] notifyStaff:", e));
 

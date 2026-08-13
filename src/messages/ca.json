@@ -5940,7 +5940,11 @@
       "subject": "Nova comanda #{orderNumber} — {restaurant}",
       "title": "Nova comanda rebuda",
       "body": "{customer} acaba de fer la comanda #{orderNumber} per {total}.",
-      "openAdmin": "Obre l'administrador"
+      "openAdmin": "Obre l'administrador",
+      "subjectAutoAccepted": "Nova comanda #{orderNumber} — acceptada automàticament — {restaurant}",
+      "badgeAutoAccepted": "Acceptada automàticament",
+      "autoAcceptedLabel": "No cal fer res",
+      "autoAcceptedNote": "L'acceptació automàtica està activada, així que aquesta comanda s'ha acceptat per tu i el client ja ha rebut la seva confirmació. No hi ha res a acceptar: només cal preparar-la."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "La teva comanda s'ha cancel·lat",

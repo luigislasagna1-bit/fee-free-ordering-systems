@@ -10,6 +10,7 @@ import { resolveReportScope } from "@/lib/reports/report-scope";
 import { formatCurrency } from "@/lib/utils";
 import { getOrderRewardSummary } from "@/lib/reward-ledger";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
+import { formatFullDeliveryAddress } from "@/lib/address-format";
 import { ShipdayDispatchCard } from "./ShipdayDispatchCard";
 
 /**
@@ -170,7 +171,11 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             {isDelivery && order.deliveryAddress && (
               <div className="pt-1">
                 <div className="text-xs font-semibold text-gray-500 uppercase mt-2 mb-0.5">{tk("deliveryAddress")}</div>
-                {order.deliveryAddress}{order.deliveryCity ? `, ${order.deliveryCity}` : ""} {order.deliveryZip ?? ""}
+                {formatFullDeliveryAddress({
+                  street: order.deliveryAddress,
+                  city: order.deliveryCity,
+                  postcode: order.deliveryZip,
+                })}
               </div>
             )}
             {order.paymentMethod && (

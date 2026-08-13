@@ -5940,7 +5940,11 @@
       "subject": "नया ऑर्डर #{orderNumber} — {restaurant}",
       "title": "नया ऑर्डर प्राप्त हुआ",
       "body": "{customer} ने अभी {total} का ऑर्डर #{orderNumber} दिया है।",
-      "openAdmin": "एडमिन खोलें"
+      "openAdmin": "एडमिन खोलें",
+      "subjectAutoAccepted": "नया ऑर्डर #{orderNumber} — स्वतः स्वीकृत — {restaurant}",
+      "badgeAutoAccepted": "स्वतः स्वीकृत",
+      "autoAcceptedLabel": "कोई कार्रवाई ज़रूरी नहीं",
+      "autoAcceptedNote": "ऑटो-स्वीकृति चालू है, इसलिए यह ऑर्डर आपकी ओर से स्वीकार कर लिया गया है और ग्राहक को उसकी पुष्टि भी भेजी जा चुकी है। स्वीकार करने के लिए कुछ नहीं है — बस इसे तैयार करें।"
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "आपका ऑर्डर कैंसिल हो गया है",

@@ -5940,7 +5940,11 @@
       "subject": "신규 주문 #{orderNumber} — {restaurant}",
       "title": "신규 주문 접수됨",
       "body": "{customer}님이 {total}의 주문 #{orderNumber}을(를) 접수했습니다.",
-      "openAdmin": "관리자 열기"
+      "openAdmin": "관리자 열기",
+      "subjectAutoAccepted": "신규 주문 #{orderNumber} — 자동 접수됨 — {restaurant}",
+      "badgeAutoAccepted": "자동 접수됨",
+      "autoAcceptedLabel": "조치 불필요",
+      "autoAcceptedNote": "자동 접수가 켜져 있어 이 주문은 자동으로 접수되었고 고객에게 확인 안내도 이미 발송되었습니다. 따로 접수할 필요 없이 바로 준비하시면 됩니다."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "주문이 취소되었습니다",

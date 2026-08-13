@@ -5940,7 +5940,11 @@
       "subject": "Jauns pasūtījums #{orderNumber} — {restaurant}",
       "title": "Jauns pasūtījums saņemts",
       "body": "{customer} tikko veica pasūtījumu #{orderNumber} par {total}.",
-      "openAdmin": "Atvērt administratoru"
+      "openAdmin": "Atvērt administratoru",
+      "subjectAutoAccepted": "Jauns pasūtījums #{orderNumber} — pieņemts automātiski — {restaurant}",
+      "badgeAutoAccepted": "Pieņemts automātiski",
+      "autoAcceptedLabel": "Nekas nav jādara",
+      "autoAcceptedNote": "Automātiskā pieņemšana ir ieslēgta, tāpēc šis pasūtījums tika pieņemts jūsu vietā un klients jau ir saņēmis savu apstiprinājumu. Nav ko pieņemt — vienkārši sagatavojiet to."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tavs pasūtījums ir atcelts",

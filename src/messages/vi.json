@@ -5940,7 +5940,11 @@
       "subject": "Đơn mới #{orderNumber} — {restaurant}",
       "title": "Đã nhận đơn mới",
       "body": "{customer} vừa đặt đơn #{orderNumber} với tổng {total}.",
-      "openAdmin": "Mở quản trị"
+      "openAdmin": "Mở quản trị",
+      "subjectAutoAccepted": "Đơn mới #{orderNumber} — đã tự động nhận — {restaurant}",
+      "badgeAutoAccepted": "Đã tự động nhận",
+      "autoAcceptedLabel": "Không cần thao tác",
+      "autoAcceptedNote": "Tự động nhận đơn đang bật nên đơn này đã được nhận thay bạn và khách đã nhận được xác nhận. Không cần nhận đơn — chỉ cần chuẩn bị món."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Đơn hàng của bạn đã được hủy",

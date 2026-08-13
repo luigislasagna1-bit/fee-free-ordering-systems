@@ -24,7 +24,8 @@
 
 import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
 import type { ReceiptOrder, ReceiptRestaurant, ReservationReceiptData } from "./receipt";
-import { boxedSectionHasNoContent } from "./receipt";
+import { boxedSectionHasNoContent, deliveryCityLine } from "./receipt";
+import { formatAddressLine, formatCustomerName } from "./address-format";
 import { formatCurrency } from "./utils";
 import type { DigestStats } from "./email";
 import { getDict, type Translator } from "./i18n-dict";
@@ -316,11 +317,17 @@ function renderKitchenSection(
       break;
 
     case "k_customer":
-      r.line(order.customerName);
+      // Matches the kitchen screen, which has capitalized names since
+      // 2026-07-03 while the ticket did not (Luigi 2026-08-12).
+      r.line(formatCustomerName(order.customerName));
       if (order.customerPhone) r.line(order.customerPhone);
       if (order.type === "delivery" && order.deliveryAddress) {
-        r.line(order.deliveryAddress);
-        if (order.deliveryCity) r.line(order.deliveryCity);
+        r.line(formatAddressLine(order.deliveryAddress));
+        // City + postal code on one line — the postal code never reached paper
+        // before, so a driver working off the ticket alone had a partial
+        // address (Luigi 2026-08-12).
+        const cityLine = deliveryCityLine(order);
+        if (cityLine) r.line(cityLine);
         // Zone name only — the per-zone "estimated minutes" was random/confusing
         // (Luigi 2026-06-13) and is dropped. The promised READY time lives in the
         // timing section.
@@ -467,12 +474,13 @@ function renderCustomerSection(
       break;
 
     case "customer_info":
-      r.line(order.customerName);
+      r.line(formatCustomerName(order.customerName));
       if (order.customerPhone) r.line(order.customerPhone);
       if (order.customerEmail) r.line(order.customerEmail);
       if (order.type === "delivery" && order.deliveryAddress) {
-        r.line(order.deliveryAddress);
-        if (order.deliveryCity) r.line(order.deliveryCity);
+        r.line(formatAddressLine(order.deliveryAddress));
+        const cityLine = deliveryCityLine(order);
+        if (cityLine) r.line(cityLine);
         // Live driving time + distance (with compass direction), paired in the
         // customer's address area. Additive plain lines. Luigi 2026-06-13.
         if (order.driveTimeText) r.line(`${t("receipt.customer.drivingTime")}: ${order.driveTimeText}`);

@@ -5940,7 +5940,11 @@
       "subject": "Nova porudžbina #{orderNumber} — {restaurant}",
       "title": "Nova porudžbina primljena",
       "body": "{customer} je upravo naručio #{orderNumber} za {total}.",
-      "openAdmin": "Otvori admin"
+      "openAdmin": "Otvori admin",
+      "subjectAutoAccepted": "Nova porudžbina #{orderNumber} — automatski prihvaćena — {restaurant}",
+      "badgeAutoAccepted": "Аутоматски прихваћено",
+      "autoAcceptedLabel": "Није потребна никаква радња",
+      "autoAcceptedNote": "Аутоматско прихватање је укључено, па је ова поруџбина прихваћена уместо вас, а купац је већ добио своју потврду. Нема шта да прихватате — само је припремите."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Твоја поруџбина је отказана",

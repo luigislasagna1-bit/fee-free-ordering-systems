@@ -5940,7 +5940,11 @@
       "subject": "Novo naročilo #{orderNumber} — {restaurant}",
       "title": "Novo naročilo prejeto",
       "body": "{customer} je pravkar oddal naročilo #{orderNumber} za {total}.",
-      "openAdmin": "Odpri admin"
+      "openAdmin": "Odpri admin",
+      "subjectAutoAccepted": "Novo naročilo #{orderNumber} — samodejno sprejeto — {restaurant}",
+      "badgeAutoAccepted": "Samodejno sprejeto",
+      "autoAcceptedLabel": "Ukrepanje ni potrebno",
+      "autoAcceptedNote": "Samodejno sprejemanje je vklopljeno, zato je bilo to naročilo sprejeto namesto vas in stranka je že prejela svojo potrditev. Ni ničesar za sprejeti – samo pripravite ga."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Tvoje naročilo je preklicano",

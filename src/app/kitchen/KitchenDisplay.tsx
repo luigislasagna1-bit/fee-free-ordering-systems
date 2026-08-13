@@ -30,6 +30,7 @@ import { getNativeAppVersion } from "@/lib/native-app-version";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
 import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
 import { useTranslations, useLocale } from "next-intl";
+import { formatAddressCase } from "@/lib/address-format";
 import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 
 // Web bundle stamp baked at build time (next.config.ts env). Shown in the 3-dot
@@ -638,10 +639,12 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
   // capitalizes each word for readability. Tokens mixing letters+digits
   // (units "12b") go fully UPPERCASE; existing inner capitals ("McMaster")
   // are left alone. Display-only.
-  const displayCaps = (s: string) =>
-    s.replace(/\S+/g, (w) =>
-      /\d/.test(w) && /[a-z]/i.test(w) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1),
-    );
+  // This rule now lives in @/lib/address-format so the printed ticket, both
+  // order emails and the admin page format identically to the tile — they used
+  // to show the raw lowercase the customer typed (Luigi 2026-08-12). Same
+  // behaviour as the local version it replaces, plus ordinal street numbers
+  // keep their lowercase suffix ("123 1st Ave", not "123 1ST Ave").
+  const displayCaps = formatAddressCase;
   const tileName = displayCaps(order.customerName.replace("[TEST] ", ""));
   const tileAddress = (() => {
     const addr = (order.deliveryAddress ?? "").trim();

@@ -98,6 +98,13 @@ export type KitchenNotificationProps = {
    *  an ALREADY-ACCEPTED order was nonsense (spotted on Luigi's live test,
    *  cms0gyexp). */
   showAcceptHint?: boolean;
+  /** Auto-accept was on, so this order was born `accepted` — the placement
+   *  ping IS the confirmation. Swaps the "New order" badge for "Auto-accepted"
+   *  and replaces the accept prompt with a "nothing to accept" note. Without
+   *  it the owner's only email for an auto-accepted order told them to go
+   *  accept it or it would be auto-rejected (Luigi 2026-08-12, ORD-002270106).
+   *  See the customer-side twin, OrderConfirmation's `alreadyAccepted`. */
+  autoAccepted?: boolean;
 };
 
 export default function KitchenNotification(props: KitchenNotificationProps) {
@@ -106,9 +113,9 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
     orderType, estimatedMinutes, placedAtLabel, prepTimeLabel, readyAtLabel, readyRowLabel, scheduledLabel, paidOnline, paymentMethod, reservationPartySize, reservationLabel, items, subtotal, taxAmount,
     taxLabel, deliveryFee, savedDeliveryFee, tip, depositTotal, discount, discountBreakdown, serviceFees, total, deliveryAddress,
     customerNotes, dashboardUrl, imprint, currency, headline,
-    creditApplied, rewardLabel, rewardEarned, showAcceptHint = true,
+    creditApplied, rewardLabel, rewardEarned, showAcceptHint = true, autoAccepted = false,
   } = props;
-  const leadLabel = headline ?? t("email.newOrder.badgeNew");
+  const leadLabel = headline ?? (autoAccepted ? t("email.newOrder.badgeAutoAccepted") : t("email.newOrder.badgeNew"));
   // Localized order-type chip — keyed by the raw DB value; unknown values
   // (e.g. legacy "curbside") degrade to the raw slug rather than crashing.
   const typeKeyed = orderType ? t(`receipt.orderTypes.${orderType}`) : null;
@@ -215,7 +222,22 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
             <div style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", color: "#6b7280", marginTop: 20, marginBottom: 4 }}>
               {t("email.newOrder.labelOrderDetails")}
             </div>
-            <OrderItemsTable locale={t.locale} items={items!} currency={currency ?? "usd"} />
+            {/* Column headers were the last English-only strings left in this
+                email — a French store's kitchen ticket read "Qté" nowhere and
+                "Qty / Items / Price" everywhere. Same already-translated keys
+                the customer receipt uses, so both copies of one order match.
+                (The old "staff email is intentionally English" default predates
+                the 2026-07-29 policy flip in this file's header.) */}
+            <OrderItemsTable
+              locale={t.locale}
+              items={items!}
+              currency={currency ?? "usd"}
+              qtyLabel={t("receipt.customer.qty")}
+              itemsLabel={t("receipt.customer.items")}
+              priceLabel={t("receipt.customer.price")}
+              noteLabel={t("receipt.customer.lineNote")}
+              depositLabel={t("ordering.refundableDeposit")}
+            />
             <OrderTotals
               locale={t.locale}
               subtotal={subtotal ?? total}
@@ -269,9 +291,18 @@ export default function KitchenNotification(props: KitchenNotificationProps) {
           </InfoCard>
         )}
 
+        {/* WHAT DO I DO NOW? — the one line that differs between an order the
+            kitchen must still accept and one auto-accept already confirmed.
+            Both cannot be true; auto-accept wins. */}
+        {autoAccepted ? (
+          <InfoCard label={t("email.newOrder.autoAcceptedLabel")} accent="emerald">
+            {t("email.newOrder.autoAcceptedNote")}
+          </InfoCard>
+        ) : null}
+
         <EmailButton href={dashboardUrl}>{t("email.newOrder.openKitchenApp")}</EmailButton>
 
-        {showAcceptHint && (
+        {showAcceptHint && !autoAccepted && (
           <P size="sm" muted>
             {t("email.newOrder.acceptHint")}
           </P>

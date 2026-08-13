@@ -871,9 +871,19 @@ export async function sendNewOrderNotificationEmail(params: {
   scheduledFor?: Date | string | null;
   scheduledSlotMinutes?: number | null;
   timezone?: string;
+  /** Auto-accept (or reservation auto-confirm) made this order `accepted` at
+   *  CREATE. It never transitions pending → accepted, so the acceptance email
+   *  below never fires — THIS email is the store's only copy and must carry the
+   *  confirmation itself. Subject, badge and footer all switch. Same rule as the
+   *  customer twin `sendOrderConfirmationEmail({ alreadyAccepted })`; any NEW
+   *  way for an order to be born accepted must set it. Luigi 2026-08-12. */
+  alreadyAccepted?: boolean;
 }) {
   const t = await getDict(params.locale);
-  const subject = t("email.newOrder.subject", { orderNumber: params.orderNumber, restaurant: params.restaurantName });
+  const subject = t(
+    params.alreadyAccepted ? "email.newOrder.subjectAutoAccepted" : "email.newOrder.subject",
+    { orderNumber: params.orderNumber, restaurant: params.restaurantName },
+  );
   // Same timing block the CUSTOMER's confirmation shows — one builder, so the
   // two copies of an order can never quote different times. Luigi 2026-08-07.
   const staffSchedDate = params.scheduledFor ? new Date(params.scheduledFor) : null;
@@ -949,6 +959,7 @@ export async function sendNewOrderNotificationEmail(params: {
       readyAtLabel: staffTiming.readyAtLabel,
       readyRowLabel: staffTiming.readyRowLabel,
       scheduledLabel: staffScheduledLabel,
+      autoAccepted: params.alreadyAccepted === true,
     })
   );
   return send({ to: params.to, subject, html });

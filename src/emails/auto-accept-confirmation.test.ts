@@ -1,5 +1,7 @@
 /**
- * An AUTO-ACCEPTED order gets exactly ONE customer email — this one.
+ * An AUTO-ACCEPTED order gets exactly ONE email PER SIDE — the customer's
+ * placement confirmation and the store's placement ping. Both must say
+ * "confirmed"; neither gets a follow-up. Customer side first, store side below.
  *
  * The bug (Luigi 2026-08-11, ORD-143921044): auto-accept sets status
  * "accepted" at CREATE, so the order never transitions pending → accepted and
@@ -21,6 +23,7 @@ vi.mock("@/lib/db", () => ({ default: {} }));
 import { renderEmail } from "./render";
 import { getDict } from "@/lib/i18n-dict";
 import OrderConfirmation from "./templates/OrderConfirmation";
+import KitchenNotification from "./templates/KitchenNotification";
 
 const strip = (html: string) =>
   html.replace(/<[^>]+>/g, " ").replace(/&#x27;|&#39;/g, "'").replace(/&amp;/g, "&").replace(/\s+/g, " ");
@@ -113,5 +116,69 @@ describe("order confirmation email — pending vs already-accepted", () => {
       expect(text).toContain("Lasagna");
       expect(text).toContain("15.80");
     }
+  });
+});
+
+// ── The STORE's copy of the same order (Luigi 2026-08-12, ORD-002270106) ──────
+// The customer side above shipped 2026-08-11; the owner's did not. His
+// auto-accepted $58.34 order arrived badged "New order" with "Accept this order
+// … auto-reject runs if no action is taken" — for an order the customer had
+// already been told was confirmed. Same fix, other side of the wire.
+async function renderStaff(extra: Record<string, unknown>) {
+  const t = await getDict("en");
+  const html = await renderEmail(
+    KitchenNotification({
+      t,
+      restaurantName: "Luigi's Lasagna & Pizzeria",
+      orderNumber: "ORD-002270106",
+      customerName: "Sameem",
+      orderType: "delivery",
+      paidOnline: true,
+      items: [{ name: "SUPER PARTY SIZE", quantity: 1, price: 49.99, modifiers: [] }],
+      subtotal: 49.99,
+      total: 58.34,
+      dashboardUrl: "https://example.com/admin/orders",
+      ...extra,
+    } as any),
+  );
+  return strip(html);
+}
+
+describe("kitchen new-order email — pending vs auto-accepted", () => {
+  it("still tells the kitchen to accept an order that really is pending", async () => {
+    const text = await renderStaff({});
+    expect(text).toContain("New order");
+    expect(text).toContain("Accept this order from the Kitchen Order App");
+    expect(text).not.toContain("Auto-accepted");
+  });
+
+  it("says AUTO-ACCEPTED and drops the accept prompt when auto-accept already ran", async () => {
+    const text = await renderStaff({ autoAccepted: true });
+    expect(text).toContain("Auto-accepted");
+    expect(text).toContain("No action needed");
+    expect(text).toContain("the customer has already been sent their confirmation");
+    // The contradiction Luigi photographed: an order that cannot be
+    // auto-rejected must never be threatened with auto-rejection.
+    expect(text).not.toContain("Accept this order from the Kitchen Order App");
+    expect(text).not.toContain("Auto-reject runs");
+  });
+
+  it("keeps the kitchen ticket itself identical either way", async () => {
+    const pending = await renderStaff({});
+    const accepted = await renderStaff({ autoAccepted: true });
+    for (const text of [pending, accepted]) {
+      expect(text).toContain("SUPER PARTY SIZE");
+      expect(text).toContain("58.34");
+      expect(text).toContain("Open Kitchen Order App");
+    }
+  });
+
+  it("lets the acceptance email's own headline win over the auto-accept badge", async () => {
+    // sendOrderAcceptedNotificationEmail passes headline "Order confirmed" and
+    // showAcceptHint:false. It must not start rendering "Auto-accepted".
+    const text = await renderStaff({ headline: "Order confirmed", showAcceptHint: false });
+    expect(text).toContain("Order confirmed");
+    expect(text).not.toContain("Auto-accepted");
+    expect(text).not.toContain("Accept this order from the Kitchen Order App");
   });
 });

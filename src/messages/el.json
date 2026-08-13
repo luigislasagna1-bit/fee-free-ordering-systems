@@ -5940,7 +5940,11 @@
       "subject": "Νέα παραγγελία #{orderNumber} — {restaurant}",
       "title": "Νέα παραγγελία ελήφθη",
       "body": "Ο/Η {customer} μόλις έκανε παραγγελία #{orderNumber} για {total}.",
-      "openAdmin": "Άνοιγμα διαχείρισης"
+      "openAdmin": "Άνοιγμα διαχείρισης",
+      "subjectAutoAccepted": "Νέα παραγγελία #{orderNumber} — έγινε αυτόματα δεκτή — {restaurant}",
+      "badgeAutoAccepted": "Έγινε αυτόματα δεκτή",
+      "autoAcceptedLabel": "Δεν χρειάζεται καμία ενέργεια",
+      "autoAcceptedNote": "Η αυτόματη αποδοχή είναι ενεργή, οπότε αυτή η παραγγελία έγινε δεκτή για εσάς και ο πελάτης έχει ήδη λάβει την επιβεβαίωσή του. Δεν υπάρχει τίποτα να αποδεχτείτε — απλώς ετοιμάστε την."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Η παραγγελία σου ακυρώθηκε",

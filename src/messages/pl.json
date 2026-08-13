@@ -5940,7 +5940,11 @@
       "subject": "Nowe zamówienie #{orderNumber} — {restaurant}",
       "title": "Nowe zamówienie otrzymane",
       "body": "{customer} złożył zamówienie #{orderNumber} na kwotę {total}.",
-      "openAdmin": "Otwórz panel admina"
+      "openAdmin": "Otwórz panel admina",
+      "subjectAutoAccepted": "Nowe zamówienie #{orderNumber} — zaakceptowane automatycznie — {restaurant}",
+      "badgeAutoAccepted": "Zaakceptowane automatycznie",
+      "autoAcceptedLabel": "Nie trzeba nic robić",
+      "autoAcceptedNote": "Automatyczna akceptacja jest włączona, więc to zamówienie zostało zaakceptowane za Ciebie, a klient otrzymał już potwierdzenie. Nie ma nic do akceptowania — po prostu je przygotuj."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Twoje zamówienie zostało anulowane",

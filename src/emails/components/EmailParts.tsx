@@ -245,9 +245,10 @@ export function OrderItemsTable({
   locale?: string | null;
   /** Localized "Refundable deposit" word for the per-item deposit line. */
   depositLabel?: string;
-  // Column headers + the per-line "Note" label. Optional so the kitchen/staff
-  // email (intentionally English) can omit them; the customer receipt passes
-  // localized values from receipt.customer.*. Fall back to English.
+  // Column headers + the per-line "Note" label. Both the customer receipt and
+  // the staff kitchen ticket pass localized values from receipt.customer.* —
+  // staff bodies stopped being English-only in the 2026-07-29 policy flip. The
+  // English fallbacks remain for callers that render outside a dictionary.
   qtyLabel?: string;
   itemsLabel?: string;
   priceLabel?: string;

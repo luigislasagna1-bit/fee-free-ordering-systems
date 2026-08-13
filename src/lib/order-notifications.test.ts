@@ -119,6 +119,54 @@ describe("fireOrderNotifications — auto-accepted orders", () => {
     await fireOrderNotifications("o1");
     expect(customerPayload().alreadyAccepted).toBe(false);
   });
+
+  // ORD-002270106 (Luigi 2026-08-12): the CUSTOMER's copy was fixed above on
+  // 2026-08-11, the STORE's was not. An auto-accepted order still mailed the
+  // owner "New order — accept it or auto-reject runs" for an order the customer
+  // had already been told was confirmed. Both copies must read the same status.
+  it("tells the STORE the order is already accepted too, not just the customer", async () => {
+    prismaMock.order.findUnique.mockResolvedValue(orderRow({ status: "accepted" }));
+    await fireOrderNotifications("o1");
+    expect(staffPayload().alreadyAccepted).toBe(true);
+    expect(staffPayload().alreadyAccepted).toBe(customerPayload().alreadyAccepted);
+  });
+
+  it("keeps the STORE's accept prompt on an order the kitchen must still accept", async () => {
+    prismaMock.order.findUnique.mockResolvedValue(orderRow({ status: "pending", preparationTime: null }));
+    await fireOrderNotifications("o1");
+    expect(staffPayload().alreadyAccepted).toBe(false);
+    expect(staffPayload().alreadyAccepted).toBe(customerPayload().alreadyAccepted);
+  });
+});
+
+// Luigi 2026-08-12, alongside the auto-accept fix: the store email printed
+// `Order.deliveryAddress` — the STREET only. City and postal code live in their
+// own columns and never reached the reader, so the owner's copy of a delivery
+// order was missing half the address GloriaFood prints.
+describe("fireOrderNotifications — delivery address on the store email", () => {
+  it("sends the FULL address — street, postcode, city — properly capitalized", async () => {
+    prismaMock.order.findUnique.mockResolvedValue(
+      orderRow({ deliveryAddress: "705 rayner court", deliveryCity: "milton", deliveryZip: "l9t0p1" }),
+    );
+    await fireOrderNotifications("o1");
+    expect(staffPayload().deliveryAddress).toBe("705 Rayner Court, L9T 0P1, Milton");
+  });
+
+  it("degrades to whatever the order actually has", async () => {
+    prismaMock.order.findUnique.mockResolvedValue(
+      orderRow({ deliveryAddress: "17 commercial st", deliveryCity: null, deliveryZip: null }),
+    );
+    await fireOrderNotifications("o1");
+    expect(staffPayload().deliveryAddress).toBe("17 Commercial St");
+  });
+
+  it("sends null, not an empty string, for an order with no address", async () => {
+    prismaMock.order.findUnique.mockResolvedValue(
+      orderRow({ type: "pickup", deliveryAddress: null, deliveryCity: null, deliveryZip: null }),
+    );
+    await fireOrderNotifications("o1");
+    expect(staffPayload().deliveryAddress).toBeNull();
+  });
 });
 
 describe("fireOrderNotifications — quoted prep time", () => {

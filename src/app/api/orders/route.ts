@@ -18,6 +18,7 @@ import {
   resolveDeliveryAddressConfig,
   firstMissingRequiredField,
   composeFlatDeliveryAddress,
+  normalizeDeliveryAddressData,
   DELIVERY_FIELD_KEYS,
   type DeliveryAddressData,
 } from "@/lib/delivery-address-fields";
@@ -476,11 +477,17 @@ export async function POST(req: NextRequest) {
           { status: 400 },
         );
       }
-      deliveryData = Object.keys(data).length ? data : null;
+      // Tidy the typed values ONCE, here, before anything is stored: customers
+      // type "705 rayner court" / "l9t0p1" on a phone and every surface that
+      // reads the order — ticket, kitchen tile, emails, ShipDay, driver app —
+      // inherited the lowercase (Luigi 2026-08-12). Validation ran above on the
+      // raw values, so a field can't be lost to formatting.
+      const tidy = normalizeDeliveryAddressData(data);
+      deliveryData = Object.keys(tidy).length ? tidy : null;
       // Recompose the flat columns from the structured data (single source).
-      flatCity = data.city?.trim() || null;
-      flatZip = data.postcode?.trim() || null;
-      const composed = composeFlatDeliveryAddress(data);
+      flatCity = tidy.city?.trim() || null;
+      flatZip = tidy.postcode?.trim() || null;
+      const composed = composeFlatDeliveryAddress(tidy);
       flatAddress = composed || flatAddress || null;
     }
 

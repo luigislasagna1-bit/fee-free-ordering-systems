@@ -5940,7 +5940,11 @@
       "subject": "Nuovo ordine #{orderNumber} — {restaurant}",
       "title": "Nuovo ordine ricevuto",
       "body": "{customer} ha appena effettuato l'ordine #{orderNumber} per {total}.",
-      "openAdmin": "Apri admin"
+      "openAdmin": "Apri admin",
+      "subjectAutoAccepted": "Nuovo ordine #{orderNumber} — accettato automaticamente — {restaurant}",
+      "badgeAutoAccepted": "Accettato automaticamente",
+      "autoAcceptedLabel": "Nessuna azione richiesta",
+      "autoAcceptedNote": "L'accettazione automatica è attiva, quindi questo ordine è stato accettato per te e il cliente ha già ricevuto la sua conferma. Non c'è nulla da accettare: preparalo e basta."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "L'ordine è stato annullato",

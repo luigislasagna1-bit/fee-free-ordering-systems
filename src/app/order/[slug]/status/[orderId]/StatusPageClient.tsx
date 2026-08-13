@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { childBuildLines } from "@/lib/bundle-child-lines";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
+import { formatFullDeliveryAddress } from "@/lib/address-format";
 import {
   CheckCircle, Clock, ChefHat, Package, XCircle, Loader2,
   Phone, Mail, MapPin, Repeat, Printer, HelpCircle, X,
@@ -814,9 +815,15 @@ export function StatusPageClient({ slug, orderId }: { slug: string; orderId: str
                 <MapPin className="w-4 h-4 text-emerald-500" /> {t("deliveryTo")}
               </div>
               <div className="text-sm text-gray-700">
-                {order.deliveryAddress}
-                {order.deliveryCity ? `, ${order.deliveryCity}` : ""}
-                {order.deliveryZip ? ` ${order.deliveryZip}` : ""}
+                {/* Same formatter as the ticket, the kitchen and both emails —
+                    the customer reading their own order back should see it
+                    written properly, not the lowercase they typed on a phone
+                    (Luigi 2026-08-12). */}
+                {formatFullDeliveryAddress({
+                  street: order.deliveryAddress,
+                  city: order.deliveryCity,
+                  postcode: order.deliveryZip,
+                })}
               </div>
               {/* No separate deliveryInstructions column — those are
                   concatenated into `notes` at order-create time and

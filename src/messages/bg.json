@@ -5940,7 +5940,11 @@
       "subject": "Нова поръчка #{orderNumber} — {restaurant}",
       "title": "Нова поръчка получена",
       "body": "{customer} направи поръчка #{orderNumber} на стойност {total}.",
-      "openAdmin": "Отвори администрацията"
+      "openAdmin": "Отвори администрацията",
+      "subjectAutoAccepted": "Нова поръчка #{orderNumber} — приета автоматично — {restaurant}",
+      "badgeAutoAccepted": "Приета автоматично",
+      "autoAcceptedLabel": "Не е необходимо действие",
+      "autoAcceptedNote": "Автоматичното приемане е включено, затова тази поръчка беше приета вместо вас и клиентът вече получи потвърждението си. Няма какво да приемате — просто я пригответе."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Поръчката ти е отменена",

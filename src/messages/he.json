@@ -5940,7 +5940,11 @@
       "subject": "הזמנה חדשה #{orderNumber} — {restaurant}",
       "title": "הזמנה חדשה התקבלה",
       "body": "{customer} הזמין הרגע הזמנה #{orderNumber} בסכום {total}.",
-      "openAdmin": "פתח ניהול"
+      "openAdmin": "פתח ניהול",
+      "subjectAutoAccepted": "הזמנה חדשה #{orderNumber} — אושרה אוטומטית — {restaurant}",
+      "badgeAutoAccepted": "אושרה אוטומטית",
+      "autoAcceptedLabel": "לא נדרשת פעולה",
+      "autoAcceptedNote": "אישור אוטומטי פעיל, ולכן ההזמנה אושרה עבורכם והלקוח כבר קיבל את האישור שלו. אין מה לאשר — פשוט הכינו אותה."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "ההזמנה שלך בוטלה",

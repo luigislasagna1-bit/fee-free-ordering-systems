@@ -5940,7 +5940,11 @@
       "subject": "Yeni #{orderNumber} numaralı sipariş — {restaurant}",
       "title": "Yeni sipariş alındı",
       "body": "{customer} az önce {total} tutarında #{orderNumber} numaralı siparişi verdi.",
-      "openAdmin": "Yönetici panelini aç"
+      "openAdmin": "Yönetici panelini aç",
+      "subjectAutoAccepted": "Yeni #{orderNumber} numaralı sipariş — otomatik kabul edildi — {restaurant}",
+      "badgeAutoAccepted": "Otomatik kabul edildi",
+      "autoAcceptedLabel": "İşlem yapmanıza gerek yok",
+      "autoAcceptedNote": "Otomatik kabul açık olduğu için bu sipariş sizin adınıza kabul edildi ve müşteriye onayı çoktan gönderildi. Kabul etmeniz gereken bir şey yok — sadece hazırlayın."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Siparişin iptal edildi",

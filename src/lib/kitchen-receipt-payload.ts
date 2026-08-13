@@ -163,6 +163,9 @@ export async function buildOrderReceiptPayload(opts: {
     customerEmail: (order as any).customerEmail,
     deliveryAddress: (order as any).deliveryAddress,
     deliveryCity: (order as any).deliveryCity,
+    // Was never passed, so the postal code could not print even though the
+    // column has held it all along (Luigi 2026-08-12).
+    deliveryZip: (order as any).deliveryZip,
     deliveryZoneName: (order as any).deliveryZoneName ?? null,
     deliveryEstimatedMinutes: (order as any).deliveryEstimatedMinutes ?? null,
     driveDistanceText, driveTimeText, driveDirection,

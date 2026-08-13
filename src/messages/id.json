@@ -5940,7 +5940,11 @@
       "subject": "Pesanan baru #{orderNumber} — {restaurant}",
       "title": "Pesanan baru diterima",
       "body": "{customer} baru saja menempatkan pesanan #{orderNumber} senilai {total}.",
-      "openAdmin": "Buka admin"
+      "openAdmin": "Buka admin",
+      "subjectAutoAccepted": "Pesanan baru #{orderNumber} — diterima otomatis — {restaurant}",
+      "badgeAutoAccepted": "Diterima otomatis",
+      "autoAcceptedLabel": "Tidak perlu tindakan",
+      "autoAcceptedNote": "Terima otomatis aktif, jadi pesanan ini sudah diterima untuk Anda dan pelanggan sudah menerima konfirmasinya. Tidak ada yang perlu diterima — cukup siapkan pesanannya."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Pesananmu dibatalkan",

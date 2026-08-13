@@ -15,8 +15,26 @@ import { formatTime } from "./format-time";
 import { getDict, type Translator } from "./i18n-dict";
 import { formatDetailRows, type ReservationDetails } from "./reservation-details";
 import { groupBundleChildren } from "./bundle-child-groups";
+import { formatAddressCase, formatAddressLine, formatCustomerName, formatPostcode } from "./address-format";
 
 export type PrinterLanguage = "escpos" | "starprnt" | "star_line" | "plaintext";
+
+/**
+ * The second address line on a delivery ticket: "Milton L9T 0P1".
+ *
+ * City and postal code share a line, mailing-label style, so the ticket gains
+ * the postal code it never printed without gaining a line. Returns "" when the
+ * order has neither. Shared by the kitchen and customer receipts, and by the
+ * structured line builder in receipt-lines.ts, so all three agree.
+ */
+export function deliveryCityLine(order: {
+  deliveryCity?: string | null;
+  deliveryZip?: string | null;
+}): string {
+  return [formatAddressCase(order.deliveryCity), formatPostcode(order.deliveryZip)]
+    .filter(Boolean)
+    .join(" ");
+}
 
 // Translate the canonical lowercase order-type string ("delivery" / "pickup" /
 // "dine_in" / "catering" / "takeout") via the receipt dictionary. Falls back
@@ -487,6 +505,10 @@ export interface ReceiptOrder {
   customerEmail?: string | null;
   deliveryAddress?: string | null;
   deliveryCity?: string | null;
+  /** Postal / ZIP code. Printed on the city line ("Milton L9T 0P1") — the
+   *  ticket carried the street and city but never the postal code, so a driver
+   *  reading only the paper had an incomplete address. Luigi 2026-08-12. */
+  deliveryZip?: string | null;
   deliveryZoneName?: string | null;
   deliveryEstimatedMinutes?: number | null;
   /** Live Google driving distance + traffic-aware time for a DELIVERY order,
@@ -709,11 +731,17 @@ async function renderKitchenSection(
       break;
 
     case "k_customer":
-      r.line(order.customerName);
+      // The kitchen SCREEN has capitalized names since 2026-07-03; the paper
+      // ticket beside it still printed "felcy alexander" (Luigi 2026-08-12).
+      r.line(formatCustomerName(order.customerName));
       if (order.customerPhone) r.line(order.customerPhone);
       if (order.type === "delivery" && order.deliveryAddress) {
-        r.line(order.deliveryAddress);
-        if (order.deliveryCity) r.line(order.deliveryCity);
+        r.line(formatAddressLine(order.deliveryAddress));
+        // City + postal code on ONE line, mailing-label style, so the full
+        // address fits without adding a line to every delivery ticket. The
+        // postal code never printed at all before (Luigi 2026-08-12).
+        const cityLine = deliveryCityLine(order);
+        if (cityLine) r.line(cityLine);
         // Zone name only — the per-zone "estimated minutes" was random/confusing
         // (Luigi 2026-06-13) and is dropped. The promised READY time lives in the
         // timing section.
@@ -872,12 +900,13 @@ async function renderCustomerSection(
       break;
 
     case "customer_info":
-      r.line(order.customerName);
+      r.line(formatCustomerName(order.customerName));
       if (order.customerPhone) r.line(order.customerPhone);
       if (order.customerEmail) r.line(order.customerEmail);
       if (order.type === "delivery" && order.deliveryAddress) {
-        r.line(order.deliveryAddress);
-        if (order.deliveryCity) r.line(order.deliveryCity);
+        r.line(formatAddressLine(order.deliveryAddress));
+        const cityLine = deliveryCityLine(order);
+        if (cityLine) r.line(cityLine);
         // Live driving time + distance (with compass direction), paired in the
         // customer's address area. Additive plain lines. Luigi 2026-06-13.
         if (order.driveTimeText) r.line(`${t("receipt.customer.drivingTime")}: ${order.driveTimeText}`);

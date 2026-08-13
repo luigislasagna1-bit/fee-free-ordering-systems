@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
 import { paymentStatusLabel } from "./kitchen-types";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
+import { formatFullDeliveryAddress } from "@/lib/address-format";
 import { useTranslations, useLocale } from "next-intl";
 import { RejectOrderModal } from "./RejectOrderModal";
 import { Countdown } from "./Countdown";
@@ -460,7 +461,13 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
               </div>
               {order.deliveryAddress && (
                 <Row icon={<MapPin className="w-4 h-4" />} t={t}>
-                  {order.deliveryAddress}{order.deliveryCity ? `, ${order.deliveryCity}` : ""}
+                  {/* Same capitalization as the tile behind it — the detail
+                      view showed the raw lowercase the customer typed while
+                      the tile above it was already formatted (Luigi
+                      2026-08-12). No postal code here: Fabrizio ruled it not
+                      useful on the kitchen screen (2026-07-03); it prints on
+                      the ticket and rides the dispatch payload instead. */}
+                  {formatFullDeliveryAddress({ street: order.deliveryAddress, city: order.deliveryCity })}
                 </Row>
               )}
               {/* Drive distance + live-traffic ETA + directions (reseller report

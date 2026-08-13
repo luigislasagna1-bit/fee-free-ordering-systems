@@ -356,7 +356,12 @@ export type StaffEventPayload =
        *  the kitchen can't mistake a next-day order for an ASAP one. */
       placedAt?: Date | string | null; estimatedReady?: Date | string | null;
       scheduledFor?: Date | string | null; scheduledSlotMinutes?: number | null;
-      estimatedMinutes?: number | null }
+      estimatedMinutes?: number | null;
+      /** orderPlaced only — auto-accept made the order `accepted` at CREATE, so
+       *  it never transitions and the orderAccepted* email never fires. This
+       *  placement ping is then the store's ONLY copy and must say "confirmed",
+       *  not "accept it or it gets auto-rejected". Luigi 2026-08-12. */
+      alreadyAccepted?: boolean }
   | { event: "customerSignup"; customerName: string; customerEmail: string; customerPhone?: string | null; dashboardUrl: string }
   | { event: "orderRejected"; orderNumber: string; customerName: string; reason?: string; dashboardUrl: string;
       /** Order money for the staff copy. These two emails carried NO amounts,
@@ -538,6 +543,9 @@ async function dispatchStaffEvent(
         scheduledFor: payload.scheduledFor,
         scheduledSlotMinutes: payload.scheduledSlotMinutes,
         estimatedMinutes: payload.estimatedMinutes,
+        // Auto-accepted at create → this ping IS the confirmation (the
+        // transition-driven acceptance email can never fire for it).
+        alreadyAccepted: payload.alreadyAccepted === true,
         timezone,
         hoursFormat,
         locale,

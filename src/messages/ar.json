@@ -5940,7 +5940,11 @@
       "subject": "طلب جديد #{orderNumber} — {restaurant}",
       "title": "تم استلام طلب جديد",
       "body": "قدّم {customer} الطلب #{orderNumber} بمبلغ {total}.",
-      "openAdmin": "فتح لوحة التحكم"
+      "openAdmin": "فتح لوحة التحكم",
+      "subjectAutoAccepted": "طلب جديد #{orderNumber} — تم القبول تلقائيًا — {restaurant}",
+      "badgeAutoAccepted": "مقبول تلقائيًا",
+      "autoAcceptedLabel": "لا يلزم أي إجراء",
+      "autoAcceptedNote": "القبول التلقائي مُفعَّل، لذلك تم قبول هذا الطلب نيابةً عنك وتلقّى العميل تأكيده بالفعل. لا يوجد ما تقبله — ابدأ التحضير مباشرةً."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "تم إلغاء طلبك",

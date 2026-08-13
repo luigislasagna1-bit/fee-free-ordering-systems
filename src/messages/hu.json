@@ -5940,7 +5940,11 @@
       "subject": "Új #{orderNumber}. rendelés — {restaurant}",
       "title": "Új rendelés érkezett",
       "body": "{customer} éppen leadta a #{orderNumber}. rendelést, összege: {total}.",
-      "openAdmin": "Admin megnyitása"
+      "openAdmin": "Admin megnyitása",
+      "subjectAutoAccepted": "Új #{orderNumber}. rendelés — automatikusan elfogadva — {restaurant}",
+      "badgeAutoAccepted": "Automatikusan elfogadva",
+      "autoAcceptedLabel": "Nincs teendő",
+      "autoAcceptedNote": "Az automatikus elfogadás be van kapcsolva, ezért ezt a rendelést elfogadtuk Ön helyett, és a vendég már megkapta a visszaigazolást. Nincs mit elfogadni – csak készítse el."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Rendelésed lemondva",

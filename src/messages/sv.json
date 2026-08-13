@@ -5940,7 +5940,11 @@
       "subject": "Ny beställning #{orderNumber} — {restaurant}",
       "title": "Ny beställning mottagen",
       "body": "{customer} lade precis beställning #{orderNumber} på {total}.",
-      "openAdmin": "Öppna admin"
+      "openAdmin": "Öppna admin",
+      "subjectAutoAccepted": "Ny beställning #{orderNumber} — automatiskt accepterad — {restaurant}",
+      "badgeAutoAccepted": "Automatiskt accepterad",
+      "autoAcceptedLabel": "Inget behöver göras",
+      "autoAcceptedNote": "Automatisk accept är på, så den här beställningen har accepterats åt dig och kunden har redan fått sin bekräftelse. Det finns inget att acceptera – bara att laga den."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Din beställning är avbruten",

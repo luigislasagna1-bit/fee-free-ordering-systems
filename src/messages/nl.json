@@ -5940,7 +5940,11 @@
       "subject": "Nieuwe bestelling #{orderNumber} — {restaurant}",
       "title": "Nieuwe bestelling ontvangen",
       "body": "{customer} heeft zojuist bestelling #{orderNumber} geplaatst voor {total}.",
-      "openAdmin": "Beheer openen"
+      "openAdmin": "Beheer openen",
+      "subjectAutoAccepted": "Nieuwe bestelling #{orderNumber} — automatisch geaccepteerd — {restaurant}",
+      "badgeAutoAccepted": "Automatisch geaccepteerd",
+      "autoAcceptedLabel": "Geen actie nodig",
+      "autoAcceptedNote": "Automatisch accepteren staat aan, dus deze bestelling is voor u geaccepteerd en de klant heeft zijn bevestiging al ontvangen. Er valt niets te accepteren — u kunt de bestelling meteen klaarmaken."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Je bestelling is geannuleerd",

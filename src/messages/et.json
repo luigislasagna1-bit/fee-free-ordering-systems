@@ -5940,7 +5940,11 @@
       "subject": "Uus tellimus #{orderNumber} — {restaurant}",
       "title": "Uus tellimus saadud",
       "body": "{customer} esitas just tellimuse #{orderNumber} summas {total}.",
-      "openAdmin": "Ava administraator"
+      "openAdmin": "Ava administraator",
+      "subjectAutoAccepted": "Uus tellimus #{orderNumber} — automaatselt vastu võetud — {restaurant}",
+      "badgeAutoAccepted": "Automaatselt vastu võetud",
+      "autoAcceptedLabel": "Midagi pole vaja teha",
+      "autoAcceptedNote": "Automaatne vastuvõtt on sisse lülitatud, seega võeti see tellimus teie eest vastu ja klient on kinnituse juba kätte saanud. Vastu võtta pole midagi – valmistage see lihtsalt ette."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Sinu tellimus on tühistatud",

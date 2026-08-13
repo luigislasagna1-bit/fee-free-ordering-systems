@@ -5940,7 +5940,11 @@
       "subject": "Nová objednávka č. {orderNumber} — {restaurant}",
       "title": "Nová objednávka prijatá",
       "body": "{customer} práve zadal objednávku č. {orderNumber} za {total}.",
-      "openAdmin": "Otvoriť admin panel"
+      "openAdmin": "Otvoriť admin panel",
+      "subjectAutoAccepted": "Nová objednávka č. {orderNumber} — automaticky prijatá — {restaurant}",
+      "badgeAutoAccepted": "Automaticky prijaté",
+      "autoAcceptedLabel": "Netreba nič robiť",
+      "autoAcceptedNote": "Automatické prijímanie je zapnuté, takže táto objednávka bola prijatá za vás a zákazník už dostal potvrdenie. Nie je čo prijímať — stačí ju pripraviť."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Vaša objednávka bola zrušená",

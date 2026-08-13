@@ -163,6 +163,61 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A48. ✉️ YOUR copy of an auto-accepted order still said "accept it or it gets rejected" — FIXED (2026-08-12)
+Your ORD-002270106 ($58.34, super party size, 2:57 PM) was **auto-accepted the second it was
+placed** — the customer was correctly told it was confirmed. The email that landed in YOUR inbox as
+the store owner said *"New order"* and, at the bottom, *"Accept this order from the Kitchen Order
+App… Auto-reject runs if no action is taken."* Nothing could have been accepted and nothing could
+have been auto-rejected. You were right that GloriaFood doesn't do this.
+
+**This is the other half of A46.** That fix (2026-08-11) taught the CUSTOMER's email to say
+"confirmed" on an auto-accepted order. The STORE's email was never told. Same root cause: an
+auto-accepted order is created already accepted, so it never *transitions* into accepted — and every
+"order confirmed" email in the system hangs off that transition. For an auto-accept store the
+placement email is the only email either side ever gets, so it has to carry the confirmation itself.
+
+**What your email looks like now.** Auto-accept ON: badge reads **AUTO-ACCEPTED**, the subject says
+*"New order #… — auto-accepted — Luigi's Lasagna & Pizzeria"*, and the footer is a green
+**No action needed** box explaining the customer already has their confirmation. Auto-accept OFF:
+completely unchanged — still "New order", still the accept prompt, because there it's true.
+
+Fixed in passing, same email: the order table's **Qty / Items / Price** headings were the last
+English-only text in it, so a French or Arabic store's kitchen ticket had English column headers.
+They now use the same translations the customer receipt has always used.
+
+**Addresses now look like addresses everywhere (your second note, same session).** You sent the
+GloriaFood address block and said ours comes in lowercase and incomplete. Both were true:
+
+- **The email printed the street only.** City and postal code are stored in their own columns and
+  never reached the reader. Your email now shows the full thing in GloriaFood's order —
+  *705 Rayner Court, L9T 0P1, Milton*.
+- **The postal code never printed on the ticket at all.** The column has held it since day one but
+  no receipt section read it, so a driver working off the paper alone had a partial address. It now
+  shares the city line ("Milton L9T 0P1"), so the ticket gains the postcode without gaining a line.
+- **Lowercase is fixed at the source.** Addresses are tidied when the order is saved, so every
+  surface downstream inherits it — ticket, kitchen screen, both emails, ShipDay, the driver app,
+  CSV exports. The kitchen tile has capitalized addresses since July; that rule is now one shared
+  piece of code instead of living only inside the tile, which is why the rest had drifted.
+- Orders placed **before** this are fixed too — the formatting is also applied when they're
+  displayed, not only when they're saved.
+
+It deliberately never "corrects" an address you'd typed properly: `McMaster`, `O'Brien` and
+`MacDonald-Cartier` survive untouched, `1st Ave` doesn't become `1ST Ave`, and free-text parking
+instructions are left as the customer wrote them. Postal codes get the space put back
+(`l9t0p1` → `L9T 0P1`, and the UK equivalent); every other country's format is only upper-cased.
+
+38 languages, parity audit clean, preflight green (1530 tests + 20 new).
+
+1. ☐ **Place one test order with auto-accept ON** and confirm your email says AUTO-ACCEPTED with no
+   accept prompt. Then turn auto-accept OFF and place another — that one should still tell you to
+   accept it. Old emails are never re-sent. **Type the delivery address in all lowercase on
+   purpose** — the email, the kitchen screen and the printed ticket should all come out capitalized,
+   with the postal code on the ticket.
+2. 🤔 **The pending email's wording is still slightly off, and I left it alone deliberately.** It
+   says auto-reject runs "within your configured timeout" — there is no such setting. The real
+   window is **4 minutes** (15 for an order placed while you're closed), fixed in code. Say the word
+   and I'll make it name the actual number instead.
+
 ### A46. ✉️ "Awaiting confirmation" on an AUTO-ACCEPTED order — FIXED + PUSHED (2026-08-11)
 You placed two test orders (ORD-143921044 pickup 1:42 PM, ORD-519009065 delivery 2:55 PM) and both
 customer emails said *"the restaurant will confirm it shortly — you'll get a follow-up email the

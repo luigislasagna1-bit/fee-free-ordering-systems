@@ -5940,7 +5940,11 @@
       "subject": "Comandă nouă #{orderNumber} — {restaurant}",
       "title": "Comandă nouă primită",
       "body": "{customer} tocmai a plasat comanda #{orderNumber} pentru {total}.",
-      "openAdmin": "Deschide admin"
+      "openAdmin": "Deschide admin",
+      "subjectAutoAccepted": "Comandă nouă #{orderNumber} — acceptată automat — {restaurant}",
+      "badgeAutoAccepted": "Acceptată automat",
+      "autoAcceptedLabel": "Nu trebuie să faceți nimic",
+      "autoAcceptedNote": "Acceptarea automată este activată, așa că această comandă a fost acceptată în locul dvs., iar clientul a primit deja confirmarea. Nu aveți ce accepta — doar pregătiți-o."
     },
     "orderStatus": {
       "cancelledByCustomerTitle": "Comanda ta a fost anulată",
