@@ -318,7 +318,16 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // default) makes Nabil stop talking mid-sentence at background noise, which
   // reads to the caller as being cut off. "low" requires more confident speech
   // before interrupting; real interruptions still work.
-  const interruptAttr = ` interruptSensitivity="low"`;
+  // Plus: a backchannel is the "mm-hmm", "yeah", "okay" a listener says to show
+  // they're still there. Twilio counts those as an interruption and stops the
+  // agent mid-word, which is the single most-reported "Nabil cut itself off"
+  // symptom (Luigi, 2026-08-13). ignoreBackchannel makes Twilio hold the floor
+  // through them; it is supported on nova-3, which is what we pin below.
+  // We already carry a 4s barge-in RECOVERY timer in the voice service for
+  // exactly this case (session.ts) — that stays as the backstop for a noise
+  // interrupt that produces no transcript, but this stops most of them
+  // happening at all, which is far better than recovering afterwards.
+  const interruptAttr = ` interruptSensitivity="low" ignoreBackchannel="true"`;
 
   // Multilingual auto-detect. Twilio requires Deepgram STT + ElevenLabs TTS for
   // code="multi" — exactly our default pair — so it is only emitted when both
