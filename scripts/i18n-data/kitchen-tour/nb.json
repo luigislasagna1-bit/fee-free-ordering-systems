@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Hopp over",
+  "tourSkipAria": "Hopp over omvisningen",
+  "tourBack": "Tilbake",
+  "tourNext": "Neste",
+  "tourGotIt": "Skjønner",
+  "tourWelcomeTitle": "Velkommen til din Kitchen Order App",
+  "tourWelcomeBody": "Her ser du alle kundebestillinger i sanntid. En rask gjennomgang – tar mindre enn ett minutt.",
+  "tourNewOrderTitle": "Når en ny bestilling kommer inn",
+  "tourNewOrderBody": "Et høyt varsel spilles av, og bestillingskortet blinker <flash>oransje</flash> til venstre. Trykk på det for å se detaljene, og trykk deretter på <accept>Godta</accept> for å bekrefte tilberedningstiden. Kunden varsles umiddelbart.",
+  "tourFlowTitle": "Flytt bestillinger gjennom flyten",
+  "tourFlowBody": "Etter at du har godtatt, flyttes bestillingen til <b>Forbereder</b>. Når maten er ferdig, trykker du på <b>Klar</b> ved henting eller <b>Ute på levering</b> ved levering. Hvert trykk varsler kunden.",
+  "tourRejectTitle": "Hvis du ikke kan oppfylle en bestilling",
+  "tourRejectBody": "Trykk på <reject>Avvis</reject> og velg en årsak (utsolgt, stenger snart, osv.). Kunden refunderes automatisk og får beskjed – ingen ubehagelig telefonsamtale nødvendig.",
+  "tourPrintingTitle": "Utskrift og innstillinger",
+  "tourPrintingBody": "Hvis du har en termisk skriver tilkoblet, skrives kvitteringer ut automatisk når du godtar en bestilling. Sett opp skriveren eller endre innstillinger via <gear></gear>-knappen i topplinjen.",
+  "tourPrintingHint": "Du kan se denne omvisningen på nytt når som helst ved å slette nettleserens nettstedsdata.",
+  "tourDoneTitle": "Alt er klart",
+  "tourDoneBody": "Det var alt. Kjøkkenet går av seg selv herfra – bare hold denne fanen åpen i åpningstiden. Lykke til der ute."
+}

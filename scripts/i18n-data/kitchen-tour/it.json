@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Salta",
+  "tourSkipAria": "Salta il tour",
+  "tourBack": "Indietro",
+  "tourNext": "Avanti",
+  "tourGotIt": "Capito",
+  "tourWelcomeTitle": "Benvenuto nella tua Kitchen Order App",
+  "tourWelcomeBody": "Qui vedrai ogni ordine dei clienti in tempo reale. Una rapida panoramica — ci vorrà meno di un minuto.",
+  "tourNewOrderTitle": "Quando arriva un nuovo ordine",
+  "tourNewOrderBody": "Suona un avviso sonoro e la scheda dell’ordine lampeggia in <flash>arancione</flash> sulla sinistra. Toccala per vedere i dettagli, poi tocca <accept>Accetta</accept> per confermare il tempo di preparazione. Il cliente viene avvisato all’istante.",
+  "tourFlowTitle": "Fai avanzare gli ordini nel flusso",
+  "tourFlowBody": "Dopo l’accettazione, l’ordine passa a <b>In preparazione</b>. Quando il cibo è pronto, tocca <b>Pronto</b> per il ritiro o <b>In consegna</b> per gli ordini a domicilio. Ogni tocco invia una notifica al cliente.",
+  "tourRejectTitle": "Se non puoi evadere un ordine",
+  "tourRejectBody": "Tocca <reject>Rifiuta</reject> e scegli un motivo (prodotto esaurito, chiusura imminente, ecc.). Il cliente viene rimborsato automaticamente e informato — nessuna telefonata imbarazzante.",
+  "tourPrintingTitle": "Stampa e impostazioni",
+  "tourPrintingBody": "Se hai una stampante termica collegata, gli scontrini vengono stampati automaticamente quando accetti un ordine. Configura la stampante o modifica le impostazioni tramite il pulsante <gear></gear> nella barra in alto.",
+  "tourPrintingHint": "Puoi rivedere questo tour in qualsiasi momento cancellando i dati del sito nel browser.",
+  "tourDoneTitle": "È tutto pronto",
+  "tourDoneBody": "Ecco fatto. Da qui la cucina va avanti da sola — tieni questa scheda aperta durante il servizio. Buon lavoro!"
+}

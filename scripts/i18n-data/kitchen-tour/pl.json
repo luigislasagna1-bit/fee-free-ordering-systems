@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Pomiń",
+  "tourSkipAria": "Pomiń samouczek",
+  "tourBack": "Wstecz",
+  "tourNext": "Dalej",
+  "tourGotIt": "Rozumiem",
+  "tourWelcomeTitle": "Witaj w swojej aplikacji Kitchen Order App",
+  "tourWelcomeBody": "Tutaj zobaczysz każde zamówienie klienta w czasie rzeczywistym. Krótki przewodnik — zajmie mniej niż minutę.",
+  "tourNewOrderTitle": "Gdy pojawi się nowe zamówienie",
+  "tourNewOrderBody": "Rozlega się głośny alarm, a karta zamówienia miga na <flash>pomarańczowo</flash> po lewej stronie. Dotknij jej, aby zobaczyć szczegóły, a następnie dotknij <accept>Przyjmij</accept>, aby potwierdzić czas przygotowania. Klient zostanie natychmiast powiadomiony.",
+  "tourFlowTitle": "Prowadź zamówienia przez kolejne etapy",
+  "tourFlowBody": "Po przyjęciu zamówienie przechodzi do statusu <b>Przygotowywane</b>. Gdy jedzenie jest gotowe, dotknij <b>Gotowe</b> przy odbiorze osobistym lub <b>W dostawie</b> przy dostawie. Każde dotknięcie powiadamia klienta.",
+  "tourRejectTitle": "Jeśli nie możesz zrealizować zamówienia",
+  "tourRejectBody": "Dotknij <reject>Odrzuć</reject> i wybierz powód (brak składników, wkrótce zamykamy itp.). Klient automatycznie otrzyma zwrot pieniędzy i informację — bez niezręcznej rozmowy telefonicznej.",
+  "tourPrintingTitle": "Drukowanie i ustawienia",
+  "tourPrintingBody": "Jeśli masz podłączoną drukarkę termiczną, paragony drukują się automatycznie po przyjęciu zamówienia. Skonfiguruj drukarkę lub zmień ustawienia przyciskiem <gear></gear> na górnym pasku.",
+  "tourPrintingHint": "Możesz obejrzeć ten samouczek ponownie w dowolnym momencie, czyszcząc dane witryny w przeglądarce.",
+  "tourDoneTitle": "Wszystko gotowe",
+  "tourDoneBody": "To wszystko. Od teraz kuchnia działa sama — po prostu trzymaj tę kartę otwartą podczas serwisu. Powodzenia!"
+}

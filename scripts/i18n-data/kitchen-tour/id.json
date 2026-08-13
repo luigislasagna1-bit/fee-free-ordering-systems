@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Lewati",
+  "tourSkipAria": "Lewati tur",
+  "tourBack": "Kembali",
+  "tourNext": "Lanjut",
+  "tourGotIt": "Mengerti",
+  "tourWelcomeTitle": "Selamat datang di Kitchen Order App Anda",
+  "tourWelcomeBody": "Di sinilah Anda akan melihat setiap pesanan pelanggan secara real-time. Panduan singkat — tidak sampai satu menit.",
+  "tourNewOrderTitle": "Saat pesanan baru masuk",
+  "tourNewOrderBody": "Nada peringatan keras akan berbunyi dan kartu pesanan berkedip <flash>oranye</flash> di sebelah kiri. Ketuk untuk melihat detailnya, lalu ketuk <accept>Terima</accept> untuk mengonfirmasi waktu persiapan. Pelanggan langsung diberi tahu.",
+  "tourFlowTitle": "Pindahkan pesanan melalui alurnya",
+  "tourFlowBody": "Setelah diterima, pesanan berpindah ke <b>Sedang Disiapkan</b>. Saat makanan sudah siap, ketuk <b>Siap</b> untuk pengambilan atau <b>Sedang Diantar</b> untuk pengantaran. Setiap ketukan memberi tahu pelanggan.",
+  "tourRejectTitle": "Jika Anda tidak dapat memenuhi pesanan",
+  "tourRejectBody": "Ketuk <reject>Tolak</reject> dan pilih alasannya (stok habis, hampir tutup, dll.). Dana pelanggan dikembalikan secara otomatis dan mereka diberi tahu — tanpa perlu telepon yang canggung.",
+  "tourPrintingTitle": "Pencetakan & pengaturan",
+  "tourPrintingBody": "Jika printer termal terhubung, struk akan tercetak otomatis saat Anda menerima pesanan. Atur printer atau ubah pengaturan lewat tombol <gear></gear> di bilah atas.",
+  "tourPrintingHint": "Anda dapat menonton ulang tur ini kapan saja dengan menghapus data situs di browser Anda.",
+  "tourDoneTitle": "Semua sudah siap",
+  "tourDoneBody": "Selesai. Dapur berjalan dengan sendirinya mulai sekarang — cukup biarkan tab ini tetap terbuka selama jam layanan. Semoga lancar."
+}

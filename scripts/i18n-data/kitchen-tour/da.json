@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Spring over",
+  "tourSkipAria": "Spring rundvisningen over",
+  "tourBack": "Tilbage",
+  "tourNext": "Næste",
+  "tourGotIt": "Forstået",
+  "tourWelcomeTitle": "Velkommen til din Kitchen Order App",
+  "tourWelcomeBody": "Her ser du alle kundeordrer i realtid. En hurtig rundvisning — det tager under et minut.",
+  "tourNewOrderTitle": "Når en ny ordre kommer ind",
+  "tourNewOrderBody": "En høj alarm lyder, og ordrekortet blinker <flash>orange</flash> i venstre side. Tryk på det for at se detaljerne, og tryk derefter på <accept>Acceptér</accept> for at bekræfte tilberedningstiden. Kunden får straks besked.",
+  "tourFlowTitle": "Flyt ordrer gennem forløbet",
+  "tourFlowBody": "Efter accept flyttes ordren til <b>Forberedes</b>. Når maden er klar, skal du trykke på <b>Klar</b> ved afhentning eller <b>Ude til levering</b> ved levering. Hvert tryk giver kunden besked.",
+  "tourRejectTitle": "Hvis du ikke kan gennemføre en ordre",
+  "tourRejectBody": "Tryk på <reject>Afvis</reject> og vælg en årsag (udsolgt, lukker snart osv.). Kunden refunderes automatisk og får besked — ingen akavet telefonopringning nødvendig.",
+  "tourPrintingTitle": "Udskrivning og indstillinger",
+  "tourPrintingBody": "Hvis du har en termoprinter tilsluttet, udskrives kvitteringer automatisk, når du accepterer en ordre. Opsæt din printer eller skift indstillinger via <gear></gear>-knappen i toplinjen.",
+  "tourPrintingHint": "Du kan se denne rundvisning igen når som helst ved at rydde din browsers webstedsdata.",
+  "tourDoneTitle": "Du er klar",
+  "tourDoneBody": "Det var det. Køkkenet kører af sig selv herfra — hold bare denne fane åben under servicen. Held og lykke derude."
+}

@@ -1,0 +1,20 @@
+{
+  "tourSkip": "건너뛰기",
+  "tourSkipAria": "투어 건너뛰기",
+  "tourBack": "이전",
+  "tourNext": "다음",
+  "tourGotIt": "확인",
+  "tourWelcomeTitle": "Kitchen Order App에 오신 것을 환영합니다",
+  "tourWelcomeBody": "모든 고객 주문을 실시간으로 확인하는 곳입니다. 간단히 둘러볼게요 — 1분도 채 걸리지 않습니다.",
+  "tourNewOrderTitle": "새 주문이 도착하면",
+  "tourNewOrderBody": "큰 알림음이 울리고 왼쪽의 주문 카드가 <flash>주황색</flash>으로 깜박입니다. 카드를 탭해 상세 내용을 확인한 뒤 <accept>수락</accept>을 탭해 준비 시간을 확정하세요. 고객에게 즉시 알림이 전송됩니다.",
+  "tourFlowTitle": "주문 단계 진행하기",
+  "tourFlowBody": "수락하면 주문이 <b>준비 중</b> 상태로 이동합니다. 음식이 준비되면 픽업은 <b>준비 완료</b>, 배달은 <b>배달 출발</b>을 탭하세요. 탭할 때마다 고객에게 알림이 전송됩니다.",
+  "tourRejectTitle": "주문을 처리할 수 없다면",
+  "tourRejectBody": "<reject>거절</reject>을 탭하고 사유(재고 소진, 곧 마감 등)를 선택하세요. 고객에게 자동으로 환불되고 안내도 전송되니 곤란한 전화를 걸 필요가 없습니다.",
+  "tourPrintingTitle": "인쇄 및 설정",
+  "tourPrintingBody": "감열 프린터가 연결되어 있으면 주문을 수락할 때 영수증이 자동으로 인쇄됩니다. 프린터 설정이나 기타 설정 변경은 상단 바의 <gear></gear> 버튼에서 할 수 있습니다.",
+  "tourPrintingHint": "브라우저의 사이트 데이터를 지우면 언제든지 이 투어를 다시 볼 수 있습니다.",
+  "tourDoneTitle": "모든 준비가 끝났습니다",
+  "tourDoneBody": "이게 전부입니다. 이제 주방은 알아서 돌아갑니다 — 영업 중에는 이 탭만 켜 두세요. 화이팅!"
+}

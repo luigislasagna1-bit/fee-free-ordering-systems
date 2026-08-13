@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Kihagyás",
+  "tourSkipAria": "Bemutató kihagyása",
+  "tourBack": "Vissza",
+  "tourNext": "Tovább",
+  "tourGotIt": "Értem",
+  "tourWelcomeTitle": "Üdvözöljük a Kitchen Order App alkalmazásban",
+  "tourWelcomeBody": "Itt jelenik meg minden vásárlói rendelés valós időben. Gyors bemutató – kevesebb mint egy percet vesz igénybe.",
+  "tourNewOrderTitle": "Amikor új rendelés érkezik",
+  "tourNewOrderBody": "Hangos jelzés szólal meg, és a rendeléskártya <flash>narancssárgán</flash> villog a bal oldalon. Koppintson rá a részletekért, majd koppintson az <accept>Elfogadás</accept> gombra az elkészítési idő megerősítéséhez. A vásárló azonnal értesítést kap.",
+  "tourFlowTitle": "Vigye végig a rendeléseket a folyamaton",
+  "tourFlowBody": "Elfogadás után a rendelés a <b>Készítés alatt</b> állapotba kerül. Ha elkészült az étel, koppintson a <b>Kész</b> gombra elvitel esetén, vagy a <b>Kiszállítás alatt</b> gombra kiszállításnál. Minden koppintás értesíti a vásárlót.",
+  "tourRejectTitle": "Ha nem tud teljesíteni egy rendelést",
+  "tourRejectBody": "Koppintson a <reject>Visszautasítás</reject> gombra, és válasszon egy okot (elfogyott, hamarosan zárunk stb.). A vásárló automatikusan visszakapja a pénzét, és értesítést kap – nincs szükség kellemetlen telefonhívásra.",
+  "tourPrintingTitle": "Nyomtatás és beállítások",
+  "tourPrintingBody": "Ha hőnyomtató van csatlakoztatva, a nyugták automatikusan nyomtatódnak a rendelés elfogadásakor. A nyomtató beállításához vagy a beállítások módosításához használja a felső sáv <gear></gear> gombját.",
+  "tourPrintingHint": "Ezt a bemutatót bármikor újranézheti, ha törli a böngésző webhelyadatait.",
+  "tourDoneTitle": "Minden készen áll",
+  "tourDoneBody": "Ennyi az egész. Innentől a konyha magától működik – csak tartsa nyitva ezt a lapot a műszak alatt. Sok sikert!"
+}

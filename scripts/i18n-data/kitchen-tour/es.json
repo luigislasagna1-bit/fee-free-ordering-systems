@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Omitir",
+  "tourSkipAria": "Omitir el recorrido",
+  "tourBack": "Atrás",
+  "tourNext": "Siguiente",
+  "tourGotIt": "Entendido",
+  "tourWelcomeTitle": "Bienvenido a tu Kitchen Order App",
+  "tourWelcomeBody": "Aquí verás cada pedido de tus clientes en tiempo real. Un recorrido rápido: te tomará menos de un minuto.",
+  "tourNewOrderTitle": "Cuando llega un pedido nuevo",
+  "tourNewOrderBody": "Suena una alerta fuerte y la tarjeta del pedido parpadea en <flash>naranja</flash> a la izquierda. Tócala para ver los detalles y luego toca <accept>Aceptar</accept> para confirmar el tiempo de preparación. El cliente recibe la notificación al instante.",
+  "tourFlowTitle": "Mueve los pedidos por el flujo",
+  "tourFlowBody": "Después de aceptarlo, el pedido pasa a <b>Preparando</b>. Cuando la comida esté lista, toca <b>Listo</b> si es para recoger o <b>En reparto</b> si es a domicilio. Cada toque notifica al cliente.",
+  "tourRejectTitle": "Si no puedes preparar un pedido",
+  "tourRejectBody": "Toca <reject>Rechazar</reject> y elige un motivo (sin stock, cierre próximo, etc.). El cliente recibe el reembolso automáticamente y queda informado — sin necesidad de llamadas incómodas.",
+  "tourPrintingTitle": "Impresión y ajustes",
+  "tourPrintingBody": "Si tienes una impresora térmica conectada, los recibos se imprimen automáticamente al aceptar un pedido. Configura tu impresora o cambia los ajustes con el botón <gear></gear> de la barra superior.",
+  "tourPrintingHint": "Puedes volver a ver este recorrido cuando quieras borrando los datos del sitio en tu navegador.",
+  "tourDoneTitle": "Todo listo",
+  "tourDoneBody": "Eso es todo. A partir de aquí, la cocina funciona sola: solo mantén esta pestaña abierta durante el servicio. ¡Mucha suerte!"
+}

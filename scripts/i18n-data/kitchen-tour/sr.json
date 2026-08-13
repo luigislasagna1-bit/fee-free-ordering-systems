@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Preskoči",
+  "tourSkipAria": "Preskoči vodič",
+  "tourBack": "Nazad",
+  "tourNext": "Dalje",
+  "tourGotIt": "Razumem",
+  "tourWelcomeTitle": "Dobrodošli u vašu Kitchen Order App aplikaciju",
+  "tourWelcomeBody": "Ovde ćete u realnom vremenu videti svaku porudžbinu gostiju. Kratak vodič — trajaće manje od minut.",
+  "tourNewOrderTitle": "Kada stigne nova porudžbina",
+  "tourNewOrderBody": "Oglasi se glasno upozorenje, a kartica porudžbine levo treperi <flash>narandžasto</flash>. Dodirnite je da vidite detalje, zatim dodirnite <accept>Prihvati</accept> da potvrdite vreme pripreme. Gost odmah dobija obaveštenje.",
+  "tourFlowTitle": "Vodite porudžbine kroz tok rada",
+  "tourFlowBody": "Nakon prihvatanja, porudžbina prelazi u <b>U pripremi</b>. Kada je hrana gotova, dodirnite <b>Spremno</b> za preuzimanje ili <b>U dostavi</b> za dostavu. Svaki dodir obaveštava gosta.",
+  "tourRejectTitle": "Ako ne možete da ispunite porudžbinu",
+  "tourRejectBody": "Dodirnite <reject>Odbij</reject> i izaberite razlog (nema na stanju, uskoro zatvaramo itd.). Gostu se novac automatski vraća i on dobija obaveštenje — bez neprijatnog telefonskog poziva.",
+  "tourPrintingTitle": "Štampanje i podešavanja",
+  "tourPrintingBody": "Ako je termalni štampač povezan, računi se automatski štampaju kada prihvatite porudžbinu. Podesite štampač ili izmenite podešavanja preko dugmeta <gear></gear> u gornjoj traci.",
+  "tourPrintingHint": "Ovaj vodič možete ponovo pogledati u bilo kom trenutku brisanjem podataka sajta u pregledaču.",
+  "tourDoneTitle": "Sve je spremno",
+  "tourDoneBody": "To je to. Kuhinja odavde radi sama — samo držite ovu karticu otvorenom tokom smene. Srećno!"
+}

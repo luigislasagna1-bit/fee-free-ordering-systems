@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   ChefHat, Bell, CheckCircle2, XCircle, Printer, Settings,
   ArrowRight, ArrowLeft, X, SkipForward, PartyPopper,
@@ -40,8 +41,12 @@ interface Slide {
 }
 
 export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | null | undefined }) {
+  const t = useTranslations("kitchen");
   const [visible, setVisible] = useState(false);
   const [slideIdx, setSlideIdx] = useState(0);
+  // Rebuilt per render — cheap (nothing renders until `visible`, and while
+  // visible the only re-render trigger is the slide index changing).
+  const slides = buildSlides(t);
 
   // Check localStorage on mount only. We deliberately don't re-check
   // on prop changes — once shown for a session, the user finishes or
@@ -91,7 +96,7 @@ export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | n
   }
 
   function next() {
-    if (slideIdx < SLIDES.length - 1) setSlideIdx(slideIdx + 1);
+    if (slideIdx < slides.length - 1) setSlideIdx(slideIdx + 1);
     else dismiss("completed");
   }
   function back() {
@@ -99,8 +104,8 @@ export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | n
   }
 
   if (!visible) return null;
-  const slide = SLIDES[slideIdx];
-  const isLast = slideIdx === SLIDES.length - 1;
+  const slide = slides[slideIdx];
+  const isLast = slideIdx === slides.length - 1;
 
   return (
     <div
@@ -115,9 +120,9 @@ export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | n
           type="button"
           onClick={() => dismiss("skipped")}
           className="absolute top-3 right-3 z-10 inline-flex items-center gap-1 text-xs font-medium text-gray-500 hover:text-gray-900 px-2 py-1 rounded hover:bg-gray-100 transition"
-          aria-label="Skip tour"
+          aria-label={t("tourSkipAria")}
         >
-          <SkipForward className="w-3.5 h-3.5" /> Skip
+          <SkipForward className="w-3.5 h-3.5" /> {t("tourSkip")}
         </button>
 
         {/* Slide content */}
@@ -133,7 +138,7 @@ export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | n
 
         {/* Progress dots */}
         <div className="flex items-center justify-center gap-1.5 pb-4">
-          {SLIDES.map((_, i) => (
+          {slides.map((_, i) => (
             <span
               key={i}
               className={`rounded-full transition-all ${
@@ -151,7 +156,7 @@ export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | n
             disabled={slideIdx === 0}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 disabled:opacity-30 disabled:cursor-not-allowed px-3 py-2 rounded-lg hover:bg-gray-100 transition"
           >
-            <ArrowLeft className="w-4 h-4" /> Back
+            <ArrowLeft className="w-4 h-4" /> {t("tourBack")}
           </button>
           <button
             type="button"
@@ -160,11 +165,11 @@ export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | n
           >
             {isLast ? (
               <>
-                Got it <X className="w-4 h-4" />
+                {t("tourGotIt")} <X className="w-4 h-4" />
               </>
             ) : (
               <>
-                Next <ArrowRight className="w-4 h-4" />
+                {t("tourNext")} <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
@@ -178,66 +183,60 @@ export function KitchenFirstRunTour({ restaurantId }: { restaurantId: string | n
 // trivially editable when the kitchen UI changes shape. Five slides
 // matches GloriaFood's flow which we know converts well (kitchen staff
 // don't have patience for more than ~5 steps).
-const SLIDES: Slide[] = [
-  {
-    icon: <ChefHat className="w-8 h-8" />,
-    iconBg: "bg-emerald-500",
-    title: "Welcome to your Kitchen Order App",
-    body: (
-      <>
-        This is where you&apos;ll see every customer order in real time. Quick walkthrough — should take less than a minute.
-      </>
-    ),
-  },
-  {
-    icon: <Bell className="w-8 h-8" />,
-    iconBg: "bg-orange-500",
-    title: "When a new order arrives",
-    body: (
-      <>
-        A loud alert plays and the order card flashes <strong className="text-orange-600">orange</strong> on the left. Tap it to see the details, then tap <strong className="text-emerald-600">Accept</strong> to confirm the prep time. The customer is notified instantly.
-      </>
-    ),
-  },
-  {
-    icon: <CheckCircle2 className="w-8 h-8" />,
-    iconBg: "bg-blue-500",
-    title: "Move orders through the flow",
-    body: (
-      <>
-        After accepting, an order moves to <strong>Preparing</strong>. When the food&apos;s ready, tap <strong>Ready</strong> for pickup or <strong>Out for delivery</strong> for delivery. Each tap notifies the customer.
-      </>
-    ),
-  },
-  {
-    icon: <XCircle className="w-8 h-8" />,
-    iconBg: "bg-red-500",
-    title: "If you can't fulfill an order",
-    body: (
-      <>
-        Tap <strong className="text-red-600">Reject</strong> and pick a reason (out of stock, closing soon, etc.). The customer is refunded automatically and informed — no awkward phone call needed.
-      </>
-    ),
-  },
-  {
-    icon: <Printer className="w-8 h-8" />,
-    iconBg: "bg-slate-700",
-    title: "Printing & settings",
-    body: (
-      <>
-        If you have a thermal printer connected, receipts print automatically when you accept an order. Set up your printer or change settings via the <Settings className="inline w-3.5 h-3.5" /> button in the top bar. <br /><br />
-        <span className="text-xs text-gray-500">You can re-watch this tour anytime by clearing your browser&apos;s site data.</span>
-      </>
-    ),
-  },
-  {
-    icon: <PartyPopper className="w-8 h-8" />,
-    iconBg: "bg-emerald-600",
-    title: "You're all set",
-    body: (
-      <>
-        That&apos;s it. The kitchen runs itself from here — just keep this tab open during service. Good luck out there.
-      </>
-    ),
-  },
-];
+// All copy resolves through kitchen.tour* keys (×38 locales); the styled
+// <strong> spans come through t.rich tags so translators can move them
+// freely, and the inline gear icon is the empty-paired <gear></gear> tag.
+function buildSlides(t: ReturnType<typeof useTranslations<"kitchen">>): Slide[] {
+  return [
+    {
+      icon: <ChefHat className="w-8 h-8" />,
+      iconBg: "bg-emerald-500",
+      title: t("tourWelcomeTitle"),
+      body: t("tourWelcomeBody"),
+    },
+    {
+      icon: <Bell className="w-8 h-8" />,
+      iconBg: "bg-orange-500",
+      title: t("tourNewOrderTitle"),
+      body: t.rich("tourNewOrderBody", {
+        flash: (c) => <strong className="text-orange-600">{c}</strong>,
+        accept: (c) => <strong className="text-emerald-600">{c}</strong>,
+      }),
+    },
+    {
+      icon: <CheckCircle2 className="w-8 h-8" />,
+      iconBg: "bg-blue-500",
+      title: t("tourFlowTitle"),
+      body: t.rich("tourFlowBody", { b: (c) => <strong>{c}</strong> }),
+    },
+    {
+      icon: <XCircle className="w-8 h-8" />,
+      iconBg: "bg-red-500",
+      title: t("tourRejectTitle"),
+      body: t.rich("tourRejectBody", {
+        reject: (c) => <strong className="text-red-600">{c}</strong>,
+      }),
+    },
+    {
+      icon: <Printer className="w-8 h-8" />,
+      iconBg: "bg-slate-700",
+      title: t("tourPrintingTitle"),
+      body: (
+        <>
+          {t.rich("tourPrintingBody", {
+            gear: () => <Settings className="inline w-3.5 h-3.5" />,
+          })}{" "}
+          <br />
+          <br />
+          <span className="text-xs text-gray-500">{t("tourPrintingHint")}</span>
+        </>
+      ),
+    },
+    {
+      icon: <PartyPopper className="w-8 h-8" />,
+      iconBg: "bg-emerald-600",
+      title: t("tourDoneTitle"),
+      body: t("tourDoneBody"),
+    },
+  ];
+}

@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Praleisti",
+  "tourSkipAria": "Praleisti apžvalgą",
+  "tourBack": "Atgal",
+  "tourNext": "Toliau",
+  "tourGotIt": "Supratau",
+  "tourWelcomeTitle": "Sveiki atvykę į jūsų Kitchen Order App",
+  "tourWelcomeBody": "Čia realiuoju laiku matysite kiekvieną kliento užsakymą. Trumpa apžvalga — užtruks mažiau nei minutę.",
+  "tourNewOrderTitle": "Kai atkeliauja naujas užsakymas",
+  "tourNewOrderBody": "Pasigirsta garsus signalas, o užsakymo kortelė kairėje mirksi <flash>oranžine</flash> spalva. Bakstelėkite ją, kad pamatytumėte informaciją, tada bakstelėkite <accept>Priimti</accept>, kad patvirtintumėte paruošimo laiką. Klientas informuojamas akimirksniu.",
+  "tourFlowTitle": "Perkelkite užsakymus per etapus",
+  "tourFlowBody": "Priėmus užsakymą, jis pereina į būseną <b>Ruošiama</b>. Kai maistas paruoštas, bakstelėkite <b>Paruošta</b>, jei atsiimama vietoje, arba <b>Išvežta pristatyti</b>, jei pristatoma. Kiekvienas bakstelėjimas informuoja klientą.",
+  "tourRejectTitle": "Jei negalite įvykdyti užsakymo",
+  "tourRejectBody": "Bakstelėkite <reject>Atmesti</reject> ir pasirinkite priežastį (baigėsi prekės, netrukus užsidarote ir pan.). Klientui automatiškai grąžinami pinigai ir jis apie tai informuojamas — nereikia jokio nemalonaus skambučio.",
+  "tourPrintingTitle": "Spausdinimas ir nustatymai",
+  "tourPrintingBody": "Jei prijungtas terminis spausdintuvas, kvitai spausdinami automatiškai, kai priimate užsakymą. Nustatykite spausdintuvą arba keiskite nustatymus per mygtuką <gear></gear> viršutinėje juostoje.",
+  "tourPrintingHint": "Šią apžvalgą bet kada galite peržiūrėti iš naujo, išvalę naršyklės svetainės duomenis.",
+  "tourDoneTitle": "Viskas paruošta",
+  "tourDoneBody": "Tai viskas. Nuo šiol virtuvė sukasi pati — tiesiog laikykite šį skirtuką atidarytą darbo metu. Sėkmės!"
+}

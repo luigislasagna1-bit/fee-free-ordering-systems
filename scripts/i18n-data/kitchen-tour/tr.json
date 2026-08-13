@@ -1,0 +1,20 @@
+{
+  "tourSkip": "Atla",
+  "tourSkipAria": "Turu atla",
+  "tourBack": "Geri",
+  "tourNext": "İleri",
+  "tourGotIt": "Anladım",
+  "tourWelcomeTitle": "Kitchen Order App’inize hoş geldiniz",
+  "tourWelcomeBody": "Tüm müşteri siparişlerini burada gerçek zamanlı olarak göreceksiniz. Kısa bir tanıtım — bir dakikadan az sürer.",
+  "tourNewOrderTitle": "Yeni bir sipariş geldiğinde",
+  "tourNewOrderBody": "Yüksek sesli bir uyarı çalar ve sipariş kartı solda <flash>turuncu</flash> renkte yanıp söner. Ayrıntıları görmek için karta dokunun, ardından hazırlık süresini onaylamak için <accept>Kabul Et</accept> düğmesine dokunun. Müşteri anında bilgilendirilir.",
+  "tourFlowTitle": "Siparişleri akışta ilerletin",
+  "tourFlowBody": "Kabul edilen sipariş <b>Hazırlanıyor</b> durumuna geçer. Yemek hazır olduğunda gel-al için <b>Hazır</b>, teslimat için <b>Yola Çıktı</b> düğmesine dokunun. Her dokunuşta müşteri bilgilendirilir.",
+  "tourRejectTitle": "Bir siparişi karşılayamıyorsanız",
+  "tourRejectBody": "<reject>Reddet</reject> düğmesine dokunun ve bir neden seçin (stokta yok, yakında kapanıyor vb.). Müşteriye otomatik olarak geri ödeme yapılır ve bilgi verilir — zahmetli bir telefon görüşmesine gerek kalmaz.",
+  "tourPrintingTitle": "Yazdırma ve ayarlar",
+  "tourPrintingBody": "Bağlı bir termal yazıcınız varsa, bir siparişi kabul ettiğinizde fişler otomatik olarak yazdırılır. Yazıcınızı kurmak veya ayarları değiştirmek için üst çubuktaki <gear></gear> düğmesini kullanın.",
+  "tourPrintingHint": "Tarayıcınızın site verilerini temizleyerek bu turu istediğiniz zaman yeniden izleyebilirsiniz.",
+  "tourDoneTitle": "Her şey hazır",
+  "tourDoneBody": "Hepsi bu kadar. Bundan sonra mutfak kendi akışında ilerler — servis boyunca bu sekmeyi açık tutmanız yeterli. Kolay gelsin!"
+}
