@@ -15,6 +15,12 @@
  *      ever decremented them when an order was later rejected or cancelled — so
  *      they drifted high. Recomputing fixes both.
  *
+ * The drift in (2) accrues continuously, so the same recompute now also runs
+ * nightly at /api/cron/customer-spend-recompute. BOTH call the one shared
+ * `recomputeCustomerSpend()` in src/lib/customer-spend-recompute.ts — this
+ * script is a thin console wrapper around it and must stay that way, so the
+ * scheduled job and the manual job can never disagree.
+ *
  * ⚠️  THIS SCRIPT NEVER TOUCHES A WALLET.
  *     It reads Order rows and writes exactly three DISPLAY columns on Customer.
  *     `RewardAccount.balance`, `RewardAccount.lifetimeEarned/Redeemed` and
@@ -36,13 +42,12 @@ import { config } from "dotenv";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { recomputeCustomerSpend } from "../src/lib/customer-spend-recompute";
 
 config({ path: ".env.local" });
 config({ path: ".env" });
 
 const APPLY = process.argv.includes("--apply");
-const BATCH = 500;
-const round2 = (n: number) => Math.round(n * 100) / 100;
 
 async function main() {
   const url = process.env.DATABASE_URL!;
@@ -52,81 +57,32 @@ async function main() {
 
   console.log(APPLY ? "MODE: APPLY (will write)\n" : "MODE: DRY RUN (no writes)\n");
 
-  // One grouped pass over the order table — NOT per-customer queries.
-  const grouped = await prisma.order.groupBy({
-    by: ["customerId"],
-    where: {
-      customerId: { not: null },
-      status: { notIn: ["rejected", "cancelled"] },
-      orderNumber: { not: { startsWith: "TEST-" } },
-    },
-    _count: { _all: true },
-    _sum: { total: true, creditApplied: true },
+  const result = await recomputeCustomerSpend(prisma, {
+    apply: APPLY,
+    onProgress: (scanned) => process.stdout.write(`  …scanned ${scanned}\r`),
   });
-  const truth = new Map(
-    grouped.map((g) => [
-      g.customerId!,
-      {
-        orders: g._count._all,
-        spent: round2(g._sum.total ?? 0),
-        credit: round2(g._sum.creditApplied ?? 0),
-      },
-    ]),
-  );
-  console.log(`Orders grouped for ${truth.size} customer(s).`);
 
-  let scanned = 0;
-  let drifted = 0;
-  let written = 0;
-  const samples: string[] = [];
-  let cursor: string | undefined;
+  console.log(`Orders grouped for ${result.groupedCustomers} customer(s).`);
+  console.log(`\nScanned ${result.scanned} customer(s); ${result.drifted} need correcting.`);
 
-  for (;;) {
-    const page = await prisma.customer.findMany({
-      where: cursor ? { id: { gt: cursor } } : {},
-      orderBy: { id: "asc" },
-      take: BATCH,
-      select: { id: true, name: true, email: true, totalOrders: true, totalSpent: true, totalCreditSpent: true },
-    });
-    if (page.length === 0) break;
-    cursor = page[page.length - 1].id;
-
-    for (const c of page) {
-      scanned++;
-      const want = truth.get(c.id) ?? { orders: 0, spent: 0, credit: 0 };
-      const same =
-        c.totalOrders === want.orders &&
-        round2(c.totalSpent) === want.spent &&
-        round2(c.totalCreditSpent ?? 0) === want.credit;
-      if (same) continue;
-      drifted++;
-      if (samples.length < 25) {
-        samples.push(
-          `  ${(c.name || c.email || c.id).slice(0, 32).padEnd(34)}` +
-            `orders ${c.totalOrders}→${want.orders}   ` +
-            `spent ${round2(c.totalSpent)}→${want.spent}   ` +
-            `credit ${round2(c.totalCreditSpent ?? 0)}→${want.credit}`,
-        );
-      }
-      if (APPLY) {
-        await prisma.customer.update({
-          where: { id: c.id },
-          data: { totalOrders: want.orders, totalSpent: want.spent, totalCreditSpent: want.credit },
-        });
-        written++;
-      }
+  if (result.samples.length > 0) {
+    const more = result.drifted > result.samples.length ? ` (first ${result.samples.length} of ${result.drifted})` : "";
+    console.log(`\nSample of what changes${more}:`);
+    for (const s of result.samples) {
+      console.log(
+        `  ${s.label.slice(0, 32).padEnd(34)}` +
+          `orders ${s.from.orders}→${s.to.orders}   ` +
+          `spent ${s.from.spent}→${s.to.spent}   ` +
+          `credit ${s.from.credit}→${s.to.credit}`,
+      );
     }
-    process.stdout.write(`  …scanned ${scanned}\r`);
   }
 
-  console.log(`\n\nScanned ${scanned} customer(s); ${drifted} need correcting.`);
-  if (samples.length > 0) {
-    console.log(`\nSample of what changes${drifted > samples.length ? ` (first ${samples.length} of ${drifted})` : ""}:`);
-    for (const s of samples) console.log(s);
-  }
+  if (result.failed > 0) console.log(`\n⚠️  ${result.failed} row(s) failed to update — see errors above.`);
+
   console.log(
     APPLY
-      ? `\n✅ Wrote ${written} customer row(s). Wallets untouched.`
+      ? `\n✅ Wrote ${result.written} customer row(s). Wallets untouched.`
       : `\nDRY RUN — nothing written. Re-run with --apply to write. Wallets are never touched either way.`,
   );
 
