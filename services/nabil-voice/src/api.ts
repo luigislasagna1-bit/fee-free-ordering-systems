@@ -45,6 +45,13 @@ export const api = {
       `/api/internal/voice/item-options?slug=${encodeURIComponent(slug)}&itemId=${encodeURIComponent(itemId)}`,
     ),
 
+  /** Is this address deliverable, and what does it cost — answered mid-call,
+   *  through the SAME resolveAddress + findZoneForPoint the charge uses, so a
+   *  quote and a charge can never be two different answers. Also returns the
+   *  coordinates it resolved, which place_order forwards so the ORDER lands in
+   *  a real zone instead of "unverified". */
+  checkAddress: (body: unknown) => post(`/api/internal/voice/check-address`, body, true),
+
   // Writes (reuse existing routes — server re-validates + re-prices)
   previewOrder: (body: unknown) => post(`/api/public/apply-promos`, body), // read-only preview (public)
   /** Priced preview through the SAME path that charges (dryRun short-circuits

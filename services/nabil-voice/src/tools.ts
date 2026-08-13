@@ -37,7 +37,32 @@ export type ToolContext = {
    *  these as hand-written `items` — they only ever reach an order through the
    *  compiler (add_pizza / add_combo). See mergeBasket. */
   builderItemIds?: Set<string>;
+  /** Coordinates check_delivery_address resolved for THIS call's address, and
+   *  the address they belong to. Forwarded by quote_order and place_order as
+   *  deliveryLat/deliveryLng so the order resolves the SAME zone the caller was
+   *  quoted — without them a voice delivery lands in the "unverified" third
+   *  state and is billed the restaurant's flat fee instead of the zone's.
+   *  Cleared whenever the address changes, so a stale pin can never ride along
+   *  with a new street (the same rule the web AddressBook follows). */
+  deliveryCoords?: { lat: number; lng: number; forAddress: string } | null;
 };
+
+/** Normalized key for "is this the same address I verified?" — case- and
+ *  punctuation-insensitive, so "123 Main St." and "123 main st" match.
+ *
+ *  Street and city collapse whitespace but KEEP word boundaries: the spaces
+ *  carry meaning, and a key loose enough to merge two different streets would
+ *  let a stale pin ride along with a new address — the money bug this whole
+ *  key exists to prevent.
+ *
+ *  A postcode is the opposite: "L9T 2J3" and "L9T2J3" are the same postcode,
+ *  and whether the model writes the space is a coin flip. Strip separators
+ *  there so a spoken postcode never invalidates a pin we just resolved. */
+export function addressKey(street?: string, city?: string, zip?: string): string {
+  const words = (s?: string) => (s || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  const tight = (s?: string) => (s || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+  return [words(street), words(city), tight(zip)].filter(Boolean).join("|");
+}
 
 /** A compiled order line, exactly as /api/orders wants it. Opaque to the model. */
 export type BuiltLine = {
@@ -339,6 +364,21 @@ export const TOOLS = [
     },
   },
   {
+    name: "check_delivery_address",
+    description:
+      "FIRST STEP OF EVERY DELIVERY ORDER, before taking any food. Checks a delivery address against the restaurant's real delivery zones and returns whether they deliver there, the delivery fee, and any minimum order. Call this the moment you have the caller's street, city and postcode — never after building the order, because the fee and whether delivery is possible at all depend on the address.",
+    input_schema: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        street: { type: "string", description: "House number and street, as the caller said it." },
+        city: { type: "string" },
+        zip: { type: "string", description: "Postcode, if the caller gave one." },
+      },
+      required: ["street"],
+    },
+  },
+  {
     name: "quote_order",
     description:
       "Get the authoritative total for everything added so far, including tax, delivery and any discount. ALWAYS call this and read the total back before place_order when the order contains a pizza or combo — their prices cannot be added up from menu prices. For delivery you must have the address first.",
@@ -388,7 +428,14 @@ export const TOOLS = [
 export function toolsForConfig(cfg: AgentConfig) {
   const PIZZA_TOOLS = ["get_item_options", "add_pizza", "add_combo", "revise_line", "remove_line"];
   return TOOLS.filter((t) => {
-    if ((t.name === "place_order" || t.name === "price_order_preview" || t.name === "quote_order") && !cfg.canTakeOrders) return false;
+    if (
+      (t.name === "place_order" ||
+        t.name === "price_order_preview" ||
+        t.name === "quote_order" ||
+        t.name === "check_delivery_address") &&
+      !cfg.canTakeOrders
+    )
+      return false;
     if ((t.name === "book_reservation" || t.name === "check_reservation_availability") && !cfg.canBookReservations) return false;
     if (t.name === "send_sms_link" && !cfg.smsConfirmations) return false;
     // v2 build tools only exist for stores that opted in. A tool that isn't
@@ -400,6 +447,21 @@ export function toolsForConfig(cfg: AgentConfig) {
 }
 
 const digits = (s: string) => (s || "").replace(/\D/g, "");
+
+/** The verified pin for an address, or null when we have none for THIS address.
+ *  Guards against a stale pin riding along after the caller corrects their
+ *  street — the same rule the web address book enforces (2026-08-01): a text
+ *  change without fresh coordinates must clear the old ones, never reuse them. */
+function deliveryPin(
+  ctx: ToolContext,
+  street?: string,
+  city?: string,
+  zip?: string,
+): { lat: number; lng: number } | null {
+  const pin = ctx.deliveryCoords;
+  if (!pin) return null;
+  return pin.forAddress === addressKey(street, city, zip) ? { lat: pin.lat, lng: pin.lng } : null;
+}
 
 /** Server-compiled lines + the model's simple items, ready to POST.
  *  `_readBack` is display-only bookkeeping and must not reach /api/orders. */
@@ -572,6 +634,18 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         payload.deliveryAddress = input.deliveryStreet;
         payload.deliveryCity = input.deliveryCity;
         payload.deliveryZip = input.deliveryZip;
+        // Forward the coordinates check_delivery_address already resolved, but
+        // ONLY when they belong to this exact address. /api/orders treats these
+        // as the customer's own pin and skips its own geocode, so the ORDER
+        // lands in the same zone the caller was quoted. Without them a voice
+        // delivery falls into the "unverified" third state and is billed the
+        // restaurant's flat deliveryFee instead of the zone's — which is where
+        // every voice delivery has been landing.
+        const verified = deliveryPin(ctx, input.deliveryStreet, input.deliveryCity, input.deliveryZip);
+        if (verified) {
+          payload.deliveryLat = verified.lat;
+          payload.deliveryLng = verified.lng;
+        }
       }
       const res = await api.placeOrder(payload);
       if (!res.ok) {
@@ -890,6 +964,41 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       };
     }
 
+    case "check_delivery_address": {
+      const street = String(input.street ?? "").trim();
+      if (!street) {
+        return { error: true, code: "missing_street", message: "I need the street address first." };
+      }
+      const city = input.city ? String(input.city).trim() : undefined;
+      const zip = input.zip ? String(input.zip).trim() : undefined;
+
+      // A new address invalidates the old pin immediately — before the lookup,
+      // so a failed check can never leave the previous address's coordinates
+      // attached to a different street.
+      ctx.deliveryCoords = null;
+
+      const res = await api.checkAddress({ slug, street, city, zip });
+      if (!res.ok) {
+        // A geocoder outage must not dead-end a caller who is trying to give us
+        // money. Fall through to the old behaviour: take the order, let the
+        // store confirm the details.
+        return {
+          error: true,
+          code: res.json?.code,
+          message: "I couldn't check that address just now.",
+          instruction:
+            "Do NOT tell the caller anything about systems or maps, and do NOT refuse the order. Carry on taking it normally — the store will confirm the delivery details.",
+        };
+      }
+      const j = res.json ?? {};
+      if (j.located && typeof j.lat === "number" && typeof j.lng === "number") {
+        ctx.deliveryCoords = { lat: j.lat, lng: j.lng, forAddress: addressKey(street, city, zip) };
+      }
+      // `instruction` (written by the endpoint) tells the model how to SAY it;
+      // matchedAddress/zoneName/distanceKm are deliberately for the model only.
+      return j;
+    }
+
     case "quote_order": {
       const items = mergeBasket(ctx, input.items).items;
       if (!items.length) {
@@ -943,6 +1052,15 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         body.deliveryAddress = input.deliveryStreet;
         body.deliveryCity = input.deliveryCity;
         body.deliveryZip = input.deliveryZip;
+        // Same verified pin place_order will send. If the quote geocoded and
+        // the charge didn't (or vice versa), the caller agrees to one delivery
+        // fee and is billed another — the precise split that produced Ben
+        // Bilton's $7.99.
+        const verified = deliveryPin(ctx, input.deliveryStreet, input.deliveryCity, input.deliveryZip);
+        if (verified) {
+          body.deliveryLat = verified.lat;
+          body.deliveryLng = verified.lng;
+        }
       }
       const res = await api.dryRunOrder(body);
       if (!res.ok) {

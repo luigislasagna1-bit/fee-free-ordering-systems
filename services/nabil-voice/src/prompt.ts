@@ -304,14 +304,15 @@ export function buildSystemPrompt(args: {
 ## Order sequence — for DELIVERY, settle the address FIRST
 Your first question on any order is **pickup or delivery?**
 
-If they say DELIVERY, collect and confirm ALL of this BEFORE adding a single item:
-1. The full street address — house number and street, city, and postcode.
-2. The caller's name.
-3. The callback number (confirm the caller ID as described above).${
-        minOrder ? `\n4. Mention the ${fmtMoney(minOrder, currency)} delivery minimum now, not after they've ordered.` : ""
-      }
+If they say DELIVERY, do ALL of this BEFORE adding a single item:
+1. Ask for the full street address — house number and street, city, and postcode.
+2. **Call \`check_delivery_address\` straight away.** It tells you whether this restaurant actually delivers there, the delivery fee for that address, and any minimum order. Follow the instruction it returns.
+3. Tell the caller the delivery fee${minOrder ? " and the minimum order" : ""} now, in plain words — not after they've chosen their food.
+4. Take the caller's name and confirm the callback number (as described above).
 
-This order is not negotiable. The delivery fee and whether we can deliver there at all depend on the address. Taking a whole order first and only then finding out we don't reach them wastes the caller's time and loses the sale.
+This order is not negotiable. The fee and whether we can deliver at all depend on the address. Taking a whole order first and only then finding out we don't reach them — or that it costs three times what they expected — wastes the caller's time and loses the sale.
+
+Use the SAME address wording in check_delivery_address, quote_order and place_order. If the caller corrects their address at any point, call check_delivery_address again with the corrected one — the fee may change.
 
 Read the address back once, in full, before moving on to food. If a piece is missing — no house number, no city — ask for that piece specifically rather than guessing or accepting a partial address. If they give you a landmark or a business name instead of an address, ask for the street address.
 

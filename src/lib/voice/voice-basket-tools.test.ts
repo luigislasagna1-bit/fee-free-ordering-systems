@@ -26,6 +26,7 @@ const { apiMock } = vi.hoisted(() => ({
     dryRunOrder: vi.fn(),
     itemOptions: vi.fn(),
     sendSms: vi.fn(),
+    checkAddress: vi.fn(),
   },
 }));
 vi.mock("../../../services/nabil-voice/src/api", () => ({ api: apiMock }));
@@ -473,5 +474,120 @@ describe("get_item_options gives the model what add_combo demands", () => {
     const out = (await executeTool("get_item_options", { menuItemId: "mi_pizza" }, ctx())) as any;
     expect(out.groups[0].choices).toEqual(["Pepperoni"]);
     expect(out.combo).toBeNull();
+  });
+});
+
+describe("check_delivery_address — the quote and the charge must resolve the SAME zone", () => {
+  const located = (over: Record<string, unknown> = {}) => ({
+    ok: true,
+    json: {
+      hasZones: true, located: true, inside: true,
+      lat: 43.51, lng: -79.88, matchedAddress: "17 Commercial St, Milton",
+      zoneName: "Zone 1", deliveryFee: 7.99, minimumOrder: 25, estimatedMinutes: 45,
+      distanceKm: 2.1, currency: "cad", instruction: "We deliver to this address.",
+      ...over,
+    },
+  });
+
+  const withAddress = async () => {
+    const c = ctx();
+    apiMock.checkAddress.mockResolvedValue(located());
+    await executeTool("check_delivery_address", { street: "17 Commercial St", city: "Milton", zip: "L9T2J3" }, c);
+    return c;
+  };
+
+  it("keeps the resolved pin and sends it to place_order as deliveryLat/Lng", async () => {
+    const c = await withAddress();
+    c.basket.push(line("mi_pizza") as any);
+    await executeTool(
+      "place_order",
+      { type: "delivery", customerName: "Sam", customerPhone: "6476690808", deliveryStreet: "17 Commercial St", deliveryCity: "Milton", deliveryZip: "L9T2J3" },
+      c,
+    );
+    const sent = apiMock.placeOrder.mock.calls[0][0] as any;
+    // Without these the order lands in the "zone unverified" third state and is
+    // billed the restaurant's flat fee instead of the zone's.
+    expect(sent.deliveryLat).toBe(43.51);
+    expect(sent.deliveryLng).toBe(-79.88);
+  });
+
+  it("sends the same pin to quote_order, so the quote can't price a different zone", async () => {
+    const c = await withAddress();
+    c.basket.push(line("mi_pizza") as any);
+    await executeTool(
+      "quote_order",
+      { type: "delivery", deliveryStreet: "17 Commercial St", deliveryCity: "Milton", deliveryZip: "L9T2J3" },
+      c,
+    );
+    const sent = apiMock.dryRunOrder.mock.calls[0][0] as any;
+    expect(sent.deliveryLat).toBe(43.51);
+    expect(sent.deliveryLng).toBe(-79.88);
+  });
+
+  it("NEVER lets a pin follow the caller to a different address", async () => {
+    const c = await withAddress();
+    c.basket.push(line("mi_pizza") as any);
+    // Caller corrects the street; the old pin belongs to the old address.
+    await executeTool(
+      "place_order",
+      { type: "delivery", customerName: "Sam", customerPhone: "6476690808", deliveryStreet: "900 Nowhere Rd", deliveryCity: "Milton" },
+      c,
+    );
+    const sent = apiMock.placeOrder.mock.calls[0][0] as any;
+    expect(sent.deliveryLat).toBeUndefined();
+    expect(sent.deliveryLng).toBeUndefined();
+  });
+
+  it("matches an address back regardless of punctuation and case", async () => {
+    const c = await withAddress();
+    c.basket.push(line("mi_pizza") as any);
+    await executeTool(
+      "place_order",
+      { type: "delivery", customerName: "Sam", customerPhone: "6476690808", deliveryStreet: "17 commercial st.", deliveryCity: "MILTON", deliveryZip: "l9t 2j3" },
+      c,
+    );
+    expect((apiMock.placeOrder.mock.calls[0][0] as any).deliveryLat).toBe(43.51);
+  });
+
+  it("drops the previous pin the moment a NEW address is checked, even if that check fails", async () => {
+    const c = await withAddress();
+    apiMock.checkAddress.mockResolvedValue({ ok: false, status: 500, json: {} });
+    await executeTool("check_delivery_address", { street: "900 Nowhere Rd" }, c);
+    expect(c.deliveryCoords).toBeNull();
+  });
+
+  it("an unlocatable address does NOT dead-end the caller", async () => {
+    const c = ctx();
+    apiMock.checkAddress.mockResolvedValue({
+      ok: true,
+      json: { hasZones: true, located: false, instruction: "Ask once for the missing piece." },
+    });
+    const out = (await executeTool("check_delivery_address", { street: "asdfgh" }, c)) as any;
+    expect(out.located).toBe(false);
+    expect(c.deliveryCoords).toBeNull();
+    // No pin, but nothing refuses the order either — hard-blocking an
+    // unlocatable address is what stranded a real customer on 2026-08-01.
+    expect(out.error).toBeUndefined();
+  });
+
+  it("a geocoder outage tells the model to carry on, not to blame the caller", async () => {
+    const c = ctx();
+    apiMock.checkAddress.mockResolvedValue({ ok: false, status: 502, json: { code: "upstream" } });
+    const out = (await executeTool("check_delivery_address", { street: "17 Commercial St" }, c)) as any;
+    expect(String(out.instruction)).toContain("do NOT refuse the order");
+    expect(String(out.instruction)).toContain("Do NOT tell the caller anything about systems");
+  });
+
+  it("passes an out-of-zone answer through with its fee instead of refusing", async () => {
+    const c = ctx();
+    apiMock.checkAddress.mockResolvedValue(
+      located({ inside: false, zoneName: "Zone 8", deliveryFee: 49.99, instruction: "This address is BEYOND every delivery zone." }),
+    );
+    const out = (await executeTool("check_delivery_address", { street: "Far Away Rd" }, c)) as any;
+    expect(out.inside).toBe(false);
+    expect(out.deliveryFee).toBe(49.99);
+    // Still pinned — the caller may well accept it, and if they do the order
+    // must resolve that same outer zone.
+    expect(c.deliveryCoords).not.toBeNull();
   });
 });
