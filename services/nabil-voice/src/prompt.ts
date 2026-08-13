@@ -293,6 +293,32 @@ export function buildSystemPrompt(args: {
     ? `Keep the running order in mind — every tool result returns it, numbered. When the caller changes something already on it ("actually make that a large", "half mushroom instead of onion on the second one", "forget the wings"), call revise_line or remove_line with that line's number. NEVER add a corrected copy alongside the old one; that charges them twice.`
     : `Track the running order. If the caller changes their mind about something already added, restate the FULL corrected order when you place it — do not assume an earlier item was replaced.`;
 
+  // Sequence rule (Luigi 2026-08-13). Nothing used to say WHEN to collect
+  // delivery details, so the model did what it does for pickup: build the whole
+  // order, then ask at the end. For delivery that is the wrong way round — the
+  // address decides the fee AND whether we can deliver at all, so discovering it
+  // last means a caller spends three minutes ordering food we then can't bring
+  // them. Ask the moment they say "delivery".
+  const deliveryFirstRule = cfg.canTakeOrders
+    ? `
+## Order sequence — for DELIVERY, settle the address FIRST
+Your first question on any order is **pickup or delivery?**
+
+If they say DELIVERY, collect and confirm ALL of this BEFORE adding a single item:
+1. The full street address — house number and street, city, and postcode.
+2. The caller's name.
+3. The callback number (confirm the caller ID as described above).${
+        minOrder ? `\n4. Mention the ${fmtMoney(minOrder, currency)} delivery minimum now, not after they've ordered.` : ""
+      }
+
+This order is not negotiable. The delivery fee and whether we can deliver there at all depend on the address. Taking a whole order first and only then finding out we don't reach them wastes the caller's time and loses the sale.
+
+Read the address back once, in full, before moving on to food. If a piece is missing — no house number, no city — ask for that piece specifically rather than guessing or accepting a partial address. If they give you a landmark or a business name instead of an address, ask for the street address.
+
+For PICKUP the name and callback number can wait until the order is built — don't front-load questions they don't need yet.
+`
+    : "";
+
   const orderingSection = cfg.canTakeOrders
     ? `
 ## Ordering — accuracy is everything
@@ -371,7 +397,7 @@ ${minOrder ? `- Delivery minimum: ${fmtMoney(minOrder, currency)}` : ""}
 ${etaLine}
 ${cannot.join("\n")}
 ${returning}
-${afterHoursSection(context, cfg)}${orderingSection}${requiredInfoSection}${questionsSection}${faqSection(context, cfg)}${upsellSection(context, cfg, currency)}
+${afterHoursSection(context, cfg)}${deliveryFirstRule}${orderingSection}${requiredInfoSection}${questionsSection}${faqSection(context, cfg)}${upsellSection(context, cfg, currency)}
 ## When to hand off (transfer_to_human)
 ${cfg.allowPizzaCombo ? "" : "Pizza/combo builds; a"}${cfg.allowPizzaCombo ? "A" : ""}n explicit request for a person; you've misunderstood twice in a row; anything you cannot confidently and correctly complete. It's better to transfer than to risk a wrong order.
 
@@ -381,6 +407,14 @@ The phone system detects the caller's language automatically. ANSWER IN THE LANG
 ` : ""}
 ## Style
 Short spoken turns. No long lists — offer a couple of options at a time. Confirm, don't interrogate. Be warm and efficient.
+
+## NEVER think out loud
+The caller hears every word you write, and they are standing in a kitchen or a car — not reading a log.
+
+- While you are looking something up or fixing an attempt that didn't work, say **at most ONE** short holding phrase ("one moment", "let me get that added"). Do the rest of the work silently across as many tool calls as you need. Do NOT narrate each attempt.
+- NEVER describe what went wrong internally, and never use internal words out loud: item, id, modifier, option, slot, tool, catering item, "let me try that again", "let me check that directly", "let me fix this properly". On 2026-08-13 a caller ordering a pizza-and-wings combo heard four sentences of this in a row, including "this is the catering wings item, not the combo's regular wings" — they had no idea what any of it meant and it sounded broken.
+- If something genuinely cannot be resolved, don't explain the machinery — say plainly that you're having trouble with that one item and either offer an alternative or transfer_to_human.
+- The caller only ever needs to hear: what you understood, what it costs, and what happens next.
 You are SPEAKING on a telephone — everything you write is read aloud verbatim by text-to-speech. Plain spoken sentences ONLY: never markdown, asterisks, underscores, bullet points, numbered lists, headings, emojis, or symbols (the first live call read "asterisk asterisk" to the caller). Say prices naturally ("twelve fifty" style is fine, "$12.50" is fine — the TTS handles it) and never format them in bold.
 
 # MENU (live — ${name})

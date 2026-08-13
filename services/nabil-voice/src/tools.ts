@@ -662,8 +662,18 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
     }
     case "get_item_options": {
       const res = await api.itemOptions(slug, String(input.menuItemId ?? ""));
-      // Trim to what's speakable — the agent needs names and prices, not ids
-      // it will never type (the server resolves names for it).
+      // Trim to what's speakable — for MODIFIER groups the agent needs names and
+      // prices, not ids it will never type (the compiler resolves toppings,
+      // crusts and sauces by name).
+      //
+      // 🚨 COMBO SLOT CHOICES ARE THE EXCEPTION, and getting this wrong cost a
+      // caller a whole minute on 2026-08-13. `add_combo` REQUIRES
+      // `picks[].menuItemId`, but this trim used to hand back bare names — so
+      // the model had to hunt the main menu for something called "Wings" and
+      // found the CATERING wings (50/100/200 pc) instead of the combo's regular
+      // 20 pc. The slot rejected the id, the model retried three times, and it
+      // narrated every attempt out loud ("this is the catering wings item…").
+      // Never withhold an id the tool schema demands.
       const item = res?.item;
       if (!item) return { error: true, message: "I couldn't find that item." };
       const groups = (item.modifierGroups ?? []).map((g: any) => ({
@@ -682,15 +692,36 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         allowHalfHalf: item.pizzaConfig?.allowHalfHalf ?? null,
         combo: res?.combo
           ? {
+              // A SHARED topping pool: this many toppings are covered by the
+              // combo price and shared across EVERY pizza in it, replacing each
+              // pizza's own allowance. So "6 shared" means any split the caller
+              // likes — 1 and 5, 4 and 2, all 6 on one. Without this the model
+              // reads each pizza's own includedToppings, invents a "3 each"
+              // rule, and argues with a caller who asks for 1 and 5 (which is
+              // exactly what happened on 2026-08-12, before it tried anyway and
+              // found out it was free).
+              sharedToppings: res.combo.sharedToppings ?? null,
               slots: res.combo.slots.map((s: any) => ({
                 label: s.label,
                 choose: s.min === s.max ? s.min : `${s.min}-${s.max}`,
-                choices: s.choices.map((c: any) => c.name),
+                choices: s.choices.map((c: any) => ({
+                  name: c.name,
+                  // REQUIRED by add_combo — see the note above.
+                  menuItemId: c.menuItemId,
+                  // Only present when the slot restricts which sizes are
+                  // orderable inside the combo; offering one outside the set
+                  // 400s the build route.
+                  ...(Array.isArray(c.variants) && c.variants.length
+                    ? { sizes: c.variants.map((v: any) => v.name) }
+                    : {}),
+                })),
               })),
             }
           : null,
         instruction:
-          "Offer these in natural speech — a couple of options at a time, never a long list. Prices are for reading aloud; the order total always comes from quote_order.",
+          "Offer these in natural speech — a couple of options at a time, never a long list. Prices are for reading aloud; the order total always comes from quote_order. " +
+          "For a combo, pass each slot pick's menuItemId to add_combo EXACTLY as given here — never an id you found elsewhere in the menu, even if the name matches. " +
+          "If sharedToppings is a number, the combo's pizzas SHARE that many toppings between them: any split the caller wants is fine and costs nothing extra. Say so plainly if they ask.",
       };
     }
 

@@ -405,3 +405,73 @@ describe("day deals", () => {
     expect(swapped.intent.toppings).toEqual([{ name: "pepperoni" }]);
   });
 });
+
+describe("get_item_options gives the model what add_combo demands", () => {
+  // 2026-08-13, live call: a caller ordering the Large/Wings combo asked for
+  // honey garlic wings. This tool handed back bare NAMES, but add_combo requires
+  // picks[].menuItemId — so the model went hunting the main menu for "Wings",
+  // found the CATERING wings (50/100/200 pc), had the slot reject it, and
+  // narrated three retries out loud at the caller.
+  const comboRes = () => ({
+    item: { name: "Large / Wings Combo", variants: [], modifierGroups: [] },
+    combo: {
+      sharedToppings: 6,
+      slots: [
+        {
+          label: "Pick your wings",
+          min: 1,
+          max: 1,
+          choices: [
+            { menuItemId: "mi_wings_20", name: "Wings", variants: [{ variantId: "v20", name: "20 pc" }] },
+            { menuItemId: "mi_wings_catering", name: "Wings", variants: [] },
+          ],
+        },
+      ],
+    },
+  });
+
+  it("returns each slot choice's menuItemId, not just its name", async () => {
+    apiMock.itemOptions.mockResolvedValue(comboRes());
+    const out = (await executeTool("get_item_options", { menuItemId: "mi_combo" }, ctx())) as any;
+    const choices = out.combo.slots[0].choices;
+    expect(choices[0]).toMatchObject({ name: "Wings", menuItemId: "mi_wings_20" });
+    // Two choices share the name "Wings" — the id is the ONLY thing that
+    // distinguishes the combo's 20pc from the catering tray.
+    expect(choices.map((c: any) => c.menuItemId)).toEqual(["mi_wings_20", "mi_wings_catering"]);
+  });
+
+  it("carries the sizes a slot restricts, so an unorderable one is never offered", async () => {
+    apiMock.itemOptions.mockResolvedValue(comboRes());
+    const out = (await executeTool("get_item_options", { menuItemId: "mi_combo" }, ctx())) as any;
+    expect(out.combo.slots[0].choices[0].sizes).toEqual(["20 pc"]);
+    expect(out.combo.slots[0].choices[1].sizes).toBeUndefined();
+  });
+
+  it("passes sharedToppings through so the model stops inventing a per-pizza limit", async () => {
+    apiMock.itemOptions.mockResolvedValue(comboRes());
+    const out = (await executeTool("get_item_options", { menuItemId: "mi_combo" }, ctx())) as any;
+    expect(out.combo.sharedToppings).toBe(6);
+    expect(String(out.instruction)).toContain("SHARE");
+  });
+
+  it("tells the model to use the id given here and no other", async () => {
+    apiMock.itemOptions.mockResolvedValue(comboRes());
+    const out = (await executeTool("get_item_options", { menuItemId: "mi_combo" }, ctx())) as any;
+    expect(String(out.instruction)).toContain("never an id you found elsewhere");
+  });
+
+  it("still trims modifier options to names — those resolve by name, not id", async () => {
+    apiMock.itemOptions.mockResolvedValue({
+      item: {
+        name: "Large Pizza",
+        variants: [{ name: "Large", price: 18 }],
+        modifierGroups: [{ name: "Toppings", pizzaRole: "topping", required: false, options: [{ name: "Pepperoni", id: "o_pep" }] }],
+        pizzaConfig: { includedToppings: 3 },
+      },
+      combo: null,
+    });
+    const out = (await executeTool("get_item_options", { menuItemId: "mi_pizza" }, ctx())) as any;
+    expect(out.groups[0].choices).toEqual(["Pepperoni"]);
+    expect(out.combo).toBeNull();
+  });
+});
