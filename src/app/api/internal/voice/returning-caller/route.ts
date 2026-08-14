@@ -75,7 +75,23 @@ export async function GET(req: NextRequest) {
   const customer = real.length === 1 ? real[0] : real.length === 0 ? (candidates[0] ?? null) : null;
 
   if (!customer) {
-    return NextResponse.json({ found: false, blocked: !!blocked });
+    // We can't say WHO this is — but we may still know what we called them last
+    // time they phoned. A name off OUR OWN previous voice ticket for this exact
+    // number is not somebody else's record, and it is offered to the caller as a
+    // question ("I have you down as Sam, is that right?"), never stated as fact.
+    // Worth it: on 2026-08-14 a caller was asked three times and the ticket
+    // still went out under a mis-heard name (Luigi approved this 2026-08-14).
+    const lastVoice = digits
+      ? await prisma.order.findFirst({
+          where: { restaurantId: restaurant.id, channel: "voice", customerPhone: { contains: digits } },
+          orderBy: { createdAt: "desc" },
+          select: { customerName: true },
+        })
+      : null;
+    // Strip the "(phone)" placeholder the voice path appends to satisfy the
+    // order route's two-token name rule — it is ours, not theirs.
+    const hint = (lastVoice?.customerName ?? "").replace(/\s*\(phone\)\s*$/i, "").trim();
+    return NextResponse.json({ found: false, blocked: !!blocked, ...(hint ? { nameHint: hint } : {}) });
   }
 
   // Compact last-order summary for a "the usual?" reorder prompt.

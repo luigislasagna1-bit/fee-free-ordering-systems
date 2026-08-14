@@ -353,12 +353,31 @@ For PICKUP, don't front-load questions — but settle the name and callback numb
     : "";
 
   const spokenCaller = spokenPhone(callerPhone);
+  // A name we can OFFER rather than ask for. Either the customer we resolved,
+  // or — when the number is shared by several customers and identifies nobody —
+  // the name from OUR OWN last voice ticket for that number. Never another
+  // customer's record, and always offered as a question (Luigi, 2026-08-14).
+  const knownName: string | null =
+    (returningCaller?.found && typeof returningCaller?.name === "string" && returningCaller.name.trim()
+      ? returningCaller.name.trim()
+      : null) ??
+    (typeof returningCaller?.nameHint === "string" && returningCaller.nameHint.trim()
+      ? returningCaller.nameHint.trim()
+      : null);
   const requiredInfo: string[] = [];
   if (cfg.canTakeOrders) {
     requiredInfo.push(
       spokenCaller
         ? `- Pickup: the caller's name. The NUMBER is already known — see the caller ID line at the top. Read it back for a yes/no, never make them recite it.`
         : "- Pickup: caller's name + a callback number (no caller ID on this call, so you do have to ask).",
+    );
+    // A name is not worth three turns. On 2026-08-14 "Dishen" came back as
+    // "Addition.", then "g e s h e n", then "Dishen" — 19 seconds and an
+    // apology, on a call the caller already found slow.
+    requiredInfo.push(
+      knownName
+        ? `- You already have a name on file for this number: **${knownName}**. OFFER it — "I have you down as ${knownName}, is that right?" — never ask them to say it cold. Only take a fresh name if they correct you.`
+        : "- A NAME IS WORTH TWO ATTEMPTS, NOT MORE. If you haven't got it cleanly after asking twice, use your best guess and move on — a slightly wrong name on a ticket costs nothing; a third attempt costs you the caller's patience.",
     );
     requiredInfo.push(
       spokenCaller
@@ -439,7 +458,8 @@ Everything below is what a real call sounded like on 2026-08-13, and every line 
 - **Don't reuse a phrase.** If you have already said "Got it", say something else. If you have already asked "Anything else for you?", ask it differently or don't ask again. Three identical acknowledgements in one call sounds like a machine, because it is one.
 - **Use the caller's name at most twice** in the whole call — once when you learn it, once at goodbye.
 - **Never comment on the phone line itself.** No "I hear you now", no "sorry, I didn't catch that" when they clearly spoke, no remarks about connection quality.
-- **Menu names are packaging, not questions.** If an item is called something like "Large 1 Topping", the caller ordered "a large pizza" — say that. Never ask a caller how many toppings they want so you can pick between menu entries; add what they ask for and the price takes care of itself.
+- **Don't interrogate the caller about menu structure.** Never ask how many toppings they want so you can choose between menu entries — add what they ask for and the price takes care of itself.
+- 🚨 **But the SIZE in a menu name is REAL, and you must never round it off.** "Large 1 Topping" and "EXTRA Large 1 Topping" are two different pizzas at two different prices. When a tool gives you a \`speakExactly\`, say the item's name as written — do NOT translate it into what you think the caller meant. On 2026-08-14 a caller asked for extra large three times, heard "extra large" read back, and a Large went to the kitchen, because the name was treated as packaging.
 - **After the order is placed, stop selling.** Confirm and close. Don't ask if they want anything else.
 - If the caller disputes the total AFTER the order is placed, do not negotiate and do not place another one — apologise and call transfer_to_human.
 

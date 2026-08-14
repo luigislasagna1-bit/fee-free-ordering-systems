@@ -96,6 +96,10 @@ export type BuiltLine = {
    *  at compile time and would drift the moment anyone hand-edited them. */
   _kind?: "pizza" | "combo";
   _intent?: Record<string, unknown>;
+  /** What the compiler put on each half, read off the compiled modifiers. The
+   *  half-by-half confirmation and the drift check both speak from THIS, never
+   *  from the model's memory of the conversation. */
+  _halves?: { left: string[]; right: string[]; whole: string[] } | null;
 };
 
 /** The running order as the caller would hear it, one numbered line each.
@@ -320,11 +324,19 @@ export const TOOLS = [
               placement: {
                 type: "string",
                 enum: ["whole", "left", "right"],
-                description: "Which half. Default whole.",
+                description:
+                  "REQUIRED. Which part of the pizza this topping goes on. 'whole' for an ordinary pizza. " +
+                  "On a half-and-half you must say 'left' or 'right' for EVERY topping — never leave it to be guessed.",
               },
               count: { type: "integer", minimum: 1, description: "2 = double that topping." },
             },
-            required: ["name"],
+            // 🚨 placement is REQUIRED, not optional-with-a-default.
+            // It used to default to "whole" below the model, where no prompt
+            // could reach it. On 2026-08-14 that put a caller's toppings across
+            // a side he had explicitly rejected and billed them at the whole-
+            // pizza rate (double the half rate). Same lesson as the Roya call
+            // the day before: a required field beats a paragraph of prompt.
+            required: ["name", "placement"],
           },
         },
         quantity: { type: "integer", minimum: 1, description: "How many of this exact pizza." },
@@ -362,10 +374,14 @@ export const TOOLS = [
                   additionalProperties: false,
                   properties: {
                     name: { type: "string" },
-                    placement: { type: "string", enum: ["whole", "left", "right"] },
+                    placement: {
+                      type: "string",
+                      enum: ["whole", "left", "right"],
+                      description: "REQUIRED. 'whole', or 'left'/'right' on a half-and-half.",
+                    },
                     count: { type: "integer", minimum: 1 },
                   },
-                  required: ["name"],
+                  required: ["name", "placement"],
                 },
               },
             },
@@ -407,10 +423,14 @@ export const TOOLS = [
             additionalProperties: false,
             properties: {
               name: { type: "string" },
-              placement: { type: "string", enum: ["whole", "left", "right"] },
+              placement: {
+                type: "string",
+                enum: ["whole", "left", "right"],
+                description: "REQUIRED. 'whole', or 'left'/'right' on a half-and-half.",
+              },
               count: { type: "integer", minimum: 1 },
             },
-            required: ["name"],
+            required: ["name", "placement"],
           },
         },
         addToppings: {
@@ -421,10 +441,14 @@ export const TOOLS = [
             additionalProperties: false,
             properties: {
               name: { type: "string" },
-              placement: { type: "string", enum: ["whole", "left", "right"] },
+              placement: {
+                type: "string",
+                enum: ["whole", "left", "right"],
+                description: "REQUIRED. 'whole', or 'left'/'right' on a half-and-half.",
+              },
               count: { type: "integer", minimum: 1 },
             },
-            required: ["name"],
+            required: ["name", "placement"],
           },
         },
         removeToppings: {
@@ -976,7 +1000,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       if (!res.ok) {
         return { error: true, code: res.json?.code, message: res.json?.error || "I couldn't add that." };
       }
-      const { line, readBack, pricingNote, unresolved, betterDeal } = res.json ?? {};
+      const { line, readBack, pricingNote, unresolved, betterDeal, halves } = res.json ?? {};
       // The compiler refuses to guess. Unresolved questions come back verbatim
       // so the agent asks the caller rather than inventing an option id.
       if (!line || (Array.isArray(unresolved) && unresolved.length)) {
@@ -989,10 +1013,21 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       }
       // Keep the INTENT with the compiled line so revise_line can merge a
       // change into it and recompile — never patch the compiled payload.
-      ctx.basket.push({ ...line, _readBack: readBack, _kind: kind, _intent: { ...input } });
+      ctx.basket.push({ ...line, _readBack: readBack, _kind: kind, _intent: { ...input }, _halves: halves ?? null });
       return {
         ok: true,
         added: readBack,
+        // 🚨 SAY THIS, DON'T SUMMARISE IT.
+        //
+        // `readBack` is built from the COMPILED line — the same strings the
+        // kitchen prints, including the item's real name. The instruction used
+        // to invite a one-sentence summary, and on 2026-08-14 the model summed
+        // "Large 1 Topping" up as "extra large" and regrouped a half-and-half
+        // onto the wrong sides. The caller heard a pizza that did not exist and
+        // had nothing to object to. A model reading "Large 1 Topping" aloud is
+        // a model the caller corrects.
+        speakExactly: readBack,
+        ...(halves ? { halves } : {}),
         pricingNote: pricingNote ?? null,
         order: basketView(ctx),
         // A cheaper same-day deal covering EXACTLY this order. The saving was
@@ -1015,7 +1050,13 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           (betterDeal
             ? `TELL THEM ABOUT THE DEAL: today's "${betterDeal.name}" is the same thing for ${betterDeal.saving} less. Offer it in one friendly sentence and ask if they want it. If they say yes, call revise_line with lineNumber ${ctx.basket.length} and swapToItemId "${betterDeal.menuItemId}". If they say no, leave the order exactly as it is and move on. `
             : "") +
-          "Confirm what you added in one short sentence, then ask if they'd like anything else. The total comes from quote_order. " +
+          "Read `speakExactly` back WORD FOR WORD, including the item name exactly as written — do not restate the size, " +
+          "the halves or the item in your own words, and do not shorten it. " +
+          (halves
+            ? "This pizza is SPLIT, so confirm it one half at a time: say what is on the first half and get a yes, then the second half and get a yes. " +
+              "One question per turn. A single long question covering both halves gets a 'sure' from a tired caller and the wrong pizza gets made. "
+            : "Then ask if they'd like anything else. ") +
+          "The total comes from quote_order. " +
           "If they change their mind about something already on the order, use revise_line or remove_line with its line number from `order` — never add a corrected copy alongside the old one.",
       };
     }
@@ -1081,7 +1122,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       if (!res.ok) {
         return { error: true, code: res.json?.code, message: res.json?.error || "I couldn't change that." };
       }
-      const { line, readBack, pricingNote, unresolved } = res.json ?? {};
+      const { line, readBack, pricingNote, unresolved, halves } = res.json ?? {};
       if (!line || (Array.isArray(unresolved) && unresolved.length)) {
         // The old line stays exactly as it was — a half-applied change is worse
         // than no change.

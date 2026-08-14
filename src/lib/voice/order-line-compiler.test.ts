@@ -629,3 +629,120 @@ describe("real-menu shapes", () => {
     expect(r.line!.modifiers.map((m) => m.modifierOptionId)).not.toContain("o_oregano");
   });
 });
+
+/* ────────────── ORD-319717217, 2026-08-14 — the wrong pizza ───────────── */
+
+/**
+ * A caller asked for an EXTRA LARGE half-and-half three times and the kitchen
+ * got a Large with the toppings on the wrong sides. Both defects were here, in
+ * this file, and both answered `ok`.
+ *
+ * On this menu size is not an option on the pizza — "Large 1 Topping" ($17.74)
+ * and "EXTRA Large 1 Topping" ($21.99) are two separate MenuItems with NO
+ * variants. So every one of these fixtures deliberately has `hasVariants:false`.
+ */
+const NO_VARIANT_PIZZA = (name: string): ItemData => ({
+  menuItemId: "mi_large1",
+  name,
+  price: 17.74,
+  hasVariants: false,
+  variants: [],
+  modifierGroups: [CRUST, TOPPINGS],
+  pizzaConfig: pizzaCfg({ includedToppings: 1 }),
+});
+
+describe("size, when size IS the item and not an option on it", () => {
+  it("refuses a size the item cannot be, instead of silently dropping it", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_large1", size: "extra large", toppings: [{ name: "pepperoni" }] },
+      NO_VARIANT_PIZZA("Large 1 Topping"),
+    );
+    // The old code compiled this happily and told the agent the size was set.
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/separate item/i);
+    expect(r.unresolved.join(" ")).toMatch(/get_item_options/);
+  });
+
+  it("accepts the size when it IS that item — 'extra large' must not match 'Large'", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_large1", size: "extra large", toppings: [{ name: "pepperoni" }] },
+      NO_VARIANT_PIZZA("EXTRA Large 1 Topping"),
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.line).not.toBeNull();
+  });
+
+  it("says nothing about a size it cannot read — a freeform note must not dead-end a caller", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_large1", size: "12 inch", toppings: [{ name: "pepperoni" }] },
+      NO_VARIANT_PIZZA("Large 1 Topping"),
+    );
+    expect(r.unresolved).toEqual([]);
+  });
+});
+
+describe("half-and-half placement is the order, not a default", () => {
+  it("asks which half instead of guessing 'whole' — the guess doubles the charge", () => {
+    const r = compilePizzaLine(
+      {
+        menuItemId: "mi_pizza",
+        size: "large",
+        toppings: [
+          { name: "pepperoni", placement: "left" },
+          { name: "mushrooms" }, // the model forgot to say which side
+        ],
+      },
+      PIZZA(),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/which half/i);
+  });
+
+  it("refuses the same topping on two halves — that is a move, charged twice", () => {
+    const r = compilePizzaLine(
+      {
+        menuItemId: "mi_pizza",
+        size: "large",
+        toppings: [
+          { name: "pepperoni", placement: "left" },
+          { name: "pepperoni", placement: "right" },
+        ],
+      },
+      PIZZA(),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/MOVED|both halves/i);
+  });
+
+  it("reads the halves back grouped BY SIDE, from the compiled line", () => {
+    const r = compilePizzaLine(
+      {
+        menuItemId: "mi_pizza",
+        size: "large",
+        toppings: [
+          { name: "pepperoni", placement: "left" },
+          { name: "bacon", placement: "left" },
+          { name: "mushrooms", placement: "right" },
+          { name: "olives", placement: "right" },
+        ],
+      },
+      PIZZA(),
+    );
+    expect(r.unresolved).toEqual([]);
+    // Grouped by side, not one clause per topping — the shape a caller can
+    // actually check, and the shape a model cannot regroup wrongly.
+    expect(r.readBack).toContain("left half: Pepperoni, Bacon");
+    expect(r.readBack).toContain("right half: Mushrooms, Olives");
+    // And the structured form matches the modifiers the kitchen prints.
+    expect(r.halves).toEqual({ left: ["Pepperoni", "Bacon"], right: ["Mushrooms", "Olives"], whole: [] });
+  });
+
+  it("leaves a plain pizza's read-back alone", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+      PIZZA(),
+    );
+    expect(r.halves).toBeNull();
+    expect(r.readBack).toContain("with Pepperoni");
+  });
+});

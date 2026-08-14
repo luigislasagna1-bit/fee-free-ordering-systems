@@ -157,6 +157,10 @@ export type CompileResult = {
   pricingNote: string | null;
   /** Things the agent must ask about. Non-empty ⇒ do NOT place the order. */
   unresolved: string[];
+  /** What is on each half, read off the COMPILED modifiers — so a spoken
+   *  confirmation built from this describes the pizza the kitchen will make,
+   *  not the one the model remembers. Null unless the pizza is split. */
+  halves?: { left: string[]; right: string[]; whole: string[] } | null;
   /** What this line costs, computed with the SAME pure engine the order route
    *  charges with (base + toppingBaseAdjust + Σ priceToppingLines) × quantity.
    *  Used to compare a pizza against a cheaper same-day deal without asking the
@@ -333,6 +337,36 @@ const SIZE_MODIFIERS = new Set([
   "mini", "personal", "kids", "half", "double",
 ]);
 
+/**
+ * The size a string is talking about, as a canonical token — for menus where
+ * size is baked into the ITEM NAME rather than offered as a variant
+ * ("EXTRA Large 1 Topping" vs "Large 1 Topping" are two separate MenuItems).
+ *
+ * Returns null when the text names no size we recognise. That is deliberate and
+ * load-bearing: the caller in `compilePizzaLine` only REFUSES when it can name
+ * the size, so a freeform "12 inch" or "the usual" passes through untouched
+ * rather than dead-ending someone.
+ *
+ * 🚨 Longest match first. "extra large" contains "large", so testing "large"
+ * first would classify every extra-large as large — which is precisely the
+ * mistake this function exists to catch.
+ */
+export function normalizeSizeToken(text: string | null | undefined): string | null {
+  const t = norm(text ?? "");
+  if (!t) return null;
+  // Ordered longest/most-specific first.
+  const SIZES: Array<[string, RegExp]> = [
+    ["extra large", /\b(extra\s*large|x\s*-?\s*large|xl|xxl)\b/],
+    ["large", /\blarge\b/],
+    ["medium", /\bmedium\b|\bmed\b/],
+    ["small", /\bsmall\b/],
+    ["personal", /\bpersonal\b|\bmini\b/],
+    ["party", /\bparty\b|\bsuper\s*party\b/],
+  ];
+  for (const [token, re] of SIZES) if (re.test(t)) return token;
+  return null;
+}
+
 /** Resolve a spoken size against the item's variants. */
 export function resolveVariant(spoken: string | null | undefined, variants: VariantData[]): VariantData | null {
   if (!variants.length) return null;
@@ -456,6 +490,38 @@ export function compilePizzaLine(
           : `Which size for ${item.name}? ${item.variants.map((v) => v.name).join(", ")}.`,
       );
     }
+  } else if (intent.size) {
+    // 🚨 SIZE IS SOMETIMES THE ITEM, NOT AN OPTION ON IT.
+    //
+    // On menus like Luigi's, "Large 1 Topping" ($17.74) and "EXTRA Large 1
+    // Topping" ($21.99) are two SEPARATE MenuItems with no variants at all —
+    // so there is nothing here to resolve a size against. This branch did not
+    // exist, which meant a spoken size on such an item was read off the wire
+    // and SILENTLY DISCARDED: nothing landed in `unresolved`, add_pizza
+    // answered `ok`, and the line compiled at the wrong size.
+    //
+    // On 2026-08-14 a caller asked for extra large three times, the agent
+    // noticed and correctly called revise_line({size:"extra large"}) — which
+    // recompiled straight back through this same hole and returned `ok` AGAIN.
+    // The agent then told the caller "that's confirmed, we do have extra large
+    // available" because its tools had twice reported success. It wasn't
+    // inventing; it was misinformed. A Large went to the kitchen.
+    //
+    // Fail CLOSED: if the caller named a size this item cannot express, say so
+    // and let the agent ask. Only recognised size words are rejected — a
+    // freeform note like "12 inch" must not dead-end a caller.
+    const want = normalizeSizeToken(intent.size);
+    const itemSize = normalizeSizeToken(item.name);
+    // Both sides must be recognisable before we refuse. An item whose name
+    // carries no size ("Build Your Own Pizza") tells us nothing, and refusing
+    // on a hunch would dead-end a caller for no reason.
+    if (want && itemSize && itemSize !== want) {
+      unresolved.push(
+        `"${item.name}" IS the ${itemSize} one — on this menu each size is a SEPARATE item, not an option. ` +
+          `Find the ${want} version with get_item_options and build that item instead. Do not tell the caller ` +
+          `the size is set until you have.`,
+      );
+    }
   }
 
   const mods: CompiledModifier[] = [];
@@ -563,7 +629,38 @@ export function compilePizzaLine(
       continue;
     }
     const opt = m.option;
+    // 🚨 ON A SPLIT PIZZA, "WHICH HALF" IS NOT A DEFAULT — IT IS THE ORDER.
+    //
+    // `?? "whole"` used to guess here, BELOW the model, where no prompt could
+    // reach it. On a half-and-half pizza that guess spreads a topping across a
+    // side the caller explicitly rejected AND doubles its charge (a whole
+    // topping bills $2.75 where a half bills $1.38). Fail closed and ask.
+    //
+    // Deliberately duplicated with the now-required `placement` field in the
+    // voice tool schemas: those two layers deploy separately (Vercel vs Fly)
+    // and WILL be out of step, so each has to hold the line on its own.
+    if (isHalfHalf && t.placement == null) {
+      unresolved.push(
+        `Which half for the ${opt.name} — the left, the right, or the whole pizza? Ask before adding it.`,
+      );
+      continue;
+    }
     const placement: Placement = t.placement ?? "whole";
+    // The same option on two placements means the kitchen makes it twice and
+    // the caller pays twice — almost always a MOVE the caller asked for that
+    // was expressed as an add. Ask rather than bill it.
+    const clash = mods.find(
+      (existing) =>
+        existing.modifierOptionId === opt.modifierOptionId &&
+        existing.name !== `${placementPrefix(placement, isHalfHalf)}${opt.name}`,
+    );
+    if (clash) {
+      unresolved.push(
+        `${opt.name} is already on this pizza as "${clash.name}". Did the caller want it MOVED there, or on both halves ` +
+          `(which costs double)? Confirm, then send the full topping list with the placement they want.`,
+      );
+      continue;
+    }
     // Per-UNIT expansion: double pepperoni is two entries, not count: 2.
     const count = Math.max(1, Math.min(10, Math.floor(Number(t.count) || 1)));
     for (let i = 0; i < count; i++) {
@@ -677,9 +774,35 @@ export function compilePizzaLine(
   const quantity = Math.max(1, Math.min(99, Math.floor(Number(intent.quantity) || 1)));
   if (lineSubtotal == null) lineSubtotal = variant ? variant.price : item.price;
   const sizeLabel = variant ? `${variant.name} ` : "";
-  const readBack =
-    `${quantity > 1 ? `${quantity}× ` : ""}${sizeLabel}${item.name}` +
-    (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "");
+
+  // ── what is actually on each half, read off the COMPILED line ────────────
+  //
+  // Derived from `mods` — the exact strings the kitchen will print — so a
+  // read-back built from this cannot drift from the ticket. Null unless the
+  // pizza is genuinely split.
+  const halves = isHalfHalf ? splitHalves(mods) : null;
+
+  // 🚨 A HALF/HALF READ-BACK MUST BE GROUPED BY SIDE.
+  //
+  // This used to be one clause per topping — "Pepperoni on the left half,
+  // Ground Beef on the right half, Jalapeno on the right half, …" — six
+  // near-identical fragments, which is exactly the shape a model regroups
+  // wrongly when it compresses. On 2026-08-14 it did: it moved two toppings to
+  // the wrong side in its spoken summary, asked one compound five-item
+  // question, and a worn-down caller said "Sure. Sure."
+  //
+  // One clause per SIDE is shorter, and an inverted grouping is audible.
+  const readBack = halves
+    ? `${quantity > 1 ? `${quantity}× ` : ""}${sizeLabel}${item.name} — ` +
+      [
+        halves.left.length ? `left half: ${halves.left.join(", ")}` : "",
+        halves.right.length ? `right half: ${halves.right.join(", ")}` : "",
+        halves.whole.length ? `all over: ${halves.whole.join(", ")}` : "",
+      ]
+        .filter(Boolean)
+        .join("; ")
+    : `${quantity > 1 ? `${quantity}× ` : ""}${sizeLabel}${item.name}` +
+      (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "");
 
   return {
     line: {
@@ -690,10 +813,29 @@ export function compilePizzaLine(
       notes: intent.notes ?? null,
     },
     readBack,
+    halves,
     pricingNote,
     unresolved: [],
     lineSubtotal: Math.round(lineSubtotal * quantity * 100) / 100,
   };
+}
+
+/**
+ * Group compiled modifier names by which half they are on.
+ *
+ * Reads the SAME "(L.H) " / "(R.H) " / "(W) " prefixes the kitchen ticket
+ * carries, so anything built from this describes the real pizza. Base
+ * selections (crust, sauce, cheese) carry no prefix and are excluded — the
+ * caller is being asked about toppings.
+ */
+export function splitHalves(mods: CompiledModifier[]): { left: string[]; right: string[]; whole: string[] } {
+  const out = { left: [] as string[], right: [] as string[], whole: [] as string[] };
+  for (const m of mods) {
+    if (m.name.startsWith("(L.H) ")) out.left.push(m.name.slice(6));
+    else if (m.name.startsWith("(R.H) ")) out.right.push(m.name.slice(6));
+    else if (m.name.startsWith("(W) ")) out.whole.push(m.name.slice(4));
+  }
+  return out;
 }
 
 /* ───────────────────────────── combo compile ───────────────────────────── */

@@ -6,6 +6,7 @@ import { TOOLS, executeTool, toolsForConfig, canonicalPhone, type ToolContext } 
 import { buildSystemPrompt } from "./prompt";
 import { normalizeAgentConfig } from "./agent-config";
 import { withMessageCacheBreakpoint } from "./cache-breakpoints";
+import { normalizeAsr } from "./asr-normalize";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
 const WRAP_UP_LEAD_MS = 45_000;
@@ -142,7 +143,10 @@ export class CallSession {
         void this.init();
         break;
       case "prompt": {
-        const text = msg.voicePrompt ?? msg.text ?? msg.transcript ?? "";
+        // Repair speech-to-text SURFACE FORMATTING before anything downstream
+        // sees it — Deepgram writes the spoken word "half" as "0.5", which on
+        // 2026-08-14 reached the model twice on a half-and-half pizza order.
+        const text = normalizeAsr(String(msg.voicePrompt ?? msg.text ?? msg.transcript ?? ""));
         if (msg.lang) this.language = msg.lang;
         this.lastPromptAt = Date.now();
         if (text) {
@@ -442,7 +446,9 @@ export class CallSession {
           // readbacks in token-dense locales (Hindi/German multi-item orders)
           // — the max_tokens continuation below is the backstop, this makes
           // it rare. Review wf_a62b0536.
-          max_tokens: 2048,
+          // 4096, not 2048: reasoning tokens now share this budget, and a
+          // truncated turn is a sentence that stops mid-word.
+          max_tokens: 4096,
           // PROMPT CACHING — the single biggest cost lever on this service.
           // The system prompt carries the whole live menu and is byte-identical
           // on every turn of a call, but was being re-billed at full price each
@@ -460,7 +466,12 @@ export class CallSession {
           // then ride along for the rest of the call). See cache-breakpoints.ts
           // for why this never mutates the stored messages.
           messages: withMessageCacheBreakpoint(this.messages as any) as any,
-          thinking: { type: "disabled" },
+          // Reasoning ON (Luigi, 2026-08-14, to be reviewed after a week).
+          // Disabled is documented to make the model LESS likely to reach for a
+          // tool — which is how it announced "we do have extra large available"
+          // without ever looking. It costs ~0.3-0.8s before it speaks, on the
+          // hard turns only; every other change in this batch buys that back.
+          thinking: { type: "adaptive" },
         } as any,
         { signal: controller.signal },
       );
@@ -524,7 +535,12 @@ export class CallSession {
           this.endTransfer(this.ctx.pendingTransfer);
           return;
         }
-        this.sendText(" Sorry, I didn't catch that — could you say it again?", true);
+        // 🚨 NOT "I didn't catch that". This branch is OUR stream failing —
+        // the caller may have spoken perfectly. Telling them they were unclear
+        // makes them repeat themselves into a system that is broken, and hides
+        // the real fault from us; during the 2026-08-11 key revocation this
+        // exact sentence was said on every turn of every call. Own it.
+        this.sendText(" Sorry — that dropped on my end. Go ahead.", true);
         return;
       }
       this.controller = null;
@@ -568,14 +584,17 @@ export class CallSession {
             // add_pizza/add_combo mutate the call's basket, and quote_order's
             // spoken total is the number the caller agrees to — a barge-in must
             // not swallow either confirmation.
+            // 🚨 KEEP THIS LIST SHORT. Protection means the caller CANNOT
+            // interrupt the next sentence, and it used to cover every basket
+            // edit — so on 2026-08-14 a caller trying to correct which half his
+            // toppings went on was talking into a sentence that could not be
+            // stopped, four separate times. Un-interruptible speech is a cost,
+            // not a safety feature; it is only worth paying where a caller who
+            // misses the words is left believing something false about their
+            // money or their order.
             if (
               (block.name === "place_order" ||
                 block.name === "book_reservation" ||
-                block.name === "send_sms_link" ||
-                block.name === "add_pizza" ||
-                block.name === "add_combo" ||
-                block.name === "revise_line" ||
-                block.name === "remove_line" ||
                 block.name === "quote_order") &&
               (out as any)?.ok
             ) {
