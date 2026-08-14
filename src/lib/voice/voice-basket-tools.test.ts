@@ -731,3 +731,57 @@ describe("check_delivery_address — the quote and the charge must resolve the S
     expect(c.deliveryCoords).not.toBeNull();
   });
 });
+
+/**
+ * The on-demand item lookup was the largest source of context that grows while
+ * a caller is on the line: no group cap, no option cap, and no memoisation, so
+ * the same topping list could be fetched repeatedly and every copy stayed in
+ * the conversation for the rest of the call. The cached menu payload has had
+ * caps since the $5.08-a-call incident; this path never did.
+ */
+describe("get_item_options does not grow the call", () => {
+  // api.itemOptions is a GET helper — it resolves to the response BODY, not to
+  // the { ok, json } envelope the POST helpers return.
+  const bigItem = {
+    item: {
+      name: "Build Your Own Pizza",
+      variants: [{ name: "Large", price: 14.99 }],
+      pizzaConfig: { includedToppings: 0, extraToppingPrice: 2.5, allowHalfHalf: true },
+      modifierGroups: Array.from({ length: 12 }, (_, g) => ({
+        name: `Group ${g}`,
+        required: false,
+        options: Array.from({ length: 60 }, (_, o) => ({ name: `Option ${g}-${o}` })),
+      })),
+    },
+  };
+
+  it("caps groups and options instead of reciting a hundred choices", async () => {
+    const c = ctx();
+    c.itemOptionsSeen = new Set<string>();
+    apiMock.itemOptions.mockResolvedValue(bigItem);
+    const out = (await executeTool("get_item_options", { menuItemId: "mi_byo" }, c)) as any;
+    expect(out.groups.length).toBeLessThanOrEqual(8);
+    for (const g of out.groups) expect(g.choices.length).toBeLessThanOrEqual(40);
+    // And it says how many it left out, rather than pretending that's all there is.
+    expect(out.groups[0].andMore).toBe(20);
+  });
+
+  it("answers the second ask from memory — the menu cannot change mid-call", async () => {
+    const c = ctx();
+    c.itemOptionsSeen = new Set<string>();
+    apiMock.itemOptions.mockResolvedValue(bigItem);
+    await executeTool("get_item_options", { menuItemId: "mi_byo" }, c);
+    const again = (await executeTool("get_item_options", { menuItemId: "mi_byo" }, c)) as any;
+    expect(again.alreadyProvided).toBe(true);
+    expect(apiMock.itemOptions).toHaveBeenCalledTimes(1);
+  });
+
+  it("still looks up a DIFFERENT item", async () => {
+    const c = ctx();
+    c.itemOptionsSeen = new Set<string>();
+    apiMock.itemOptions.mockResolvedValue(bigItem);
+    await executeTool("get_item_options", { menuItemId: "mi_a" }, c);
+    await executeTool("get_item_options", { menuItemId: "mi_b" }, c);
+    expect(apiMock.itemOptions).toHaveBeenCalledTimes(2);
+  });
+});

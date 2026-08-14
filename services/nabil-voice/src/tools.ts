@@ -54,6 +54,10 @@ export type ToolContext = {
    *  Cleared whenever the address changes, so a stale pin can never ride along
    *  with a new street (the same rule the web AddressBook follows). */
   deliveryCoords?: { lat: number; lng: number; forAddress: string } | null;
+  /** menuItemIds already looked up on this call. The menu cannot change
+   *  mid-call, so a second lookup returns a pointer instead of another copy of
+   *  the same topping list — see get_item_options. */
+  itemOptionsSeen?: Set<string>;
 };
 
 /** Normalized key for "is this the same address I verified?" — case- and
@@ -187,6 +191,12 @@ function withDeadline<T>(p: Promise<T>, ms: number): Promise<T | null> {
     }),
   ]);
 }
+
+/** Caps on the on-demand item lookup. The cached menu payload has had caps
+ *  since the $5.08-a-call incident; this path never did, and it is the one that
+ *  lands in the CONVERSATION, where it is re-sent on every later turn. */
+const MAX_OPTION_GROUPS = 8;
+const MAX_OPTIONS_PER_GROUP = 40;
 
 const ITEM_SCHEMA = {
   type: "object",
@@ -923,7 +933,23 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       };
     }
     case "get_item_options": {
-      const res = await api.itemOptions(slug, String(input.menuItemId ?? ""));
+      const wantedId = String(input.menuItemId ?? "");
+      // 🚨 ASKED TWICE, PAID FOR ALL CALL. There was no memoisation, so the
+      // model could re-fetch the same item repeatedly and every copy stayed in
+      // the conversation for the rest of the call — the single largest source
+      // of the context that grows while a caller is on the line. The answer
+      // cannot change mid-call (the menu is loaded once at setup), so the
+      // second ask is pure waste: a short pointer back is strictly better than
+      // another few hundred tokens of the same topping list.
+      if (ctx.itemOptionsSeen?.has(wantedId)) {
+        return {
+          alreadyProvided: true,
+          instruction:
+            "You already looked this item up earlier in this call and the answer has not changed. " +
+            "Use what you were told then — do not ask the caller to wait while you look again.",
+        };
+      }
+      const res = await api.itemOptions(slug, wantedId);
       // Trim to what's speakable — for MODIFIER groups the agent needs names and
       // prices, not ids it will never type (the compiler resolves toppings,
       // crusts and sauces by name).
@@ -938,12 +964,23 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       // Never withhold an id the tool schema demands.
       const item = res?.item;
       if (!item) return { error: true, message: "I couldn't find that item." };
-      const groups = (item.modifierGroups ?? []).map((g: any) => ({
-        name: g.name,
-        role: g.pizzaRole ?? null,
-        required: g.required,
-        choices: (g.options ?? []).map((o: any) => o.name),
-      }));
+      // Capped, like the menu payload already is (VOICE_MENU_MAX_* in
+      // menu/route.ts). This path had NO caps of any kind: a combo with two
+      // 120-choice slots serialises to thousands of tokens that then ride along
+      // for the whole call. A caller cannot be read a hundred choices anyway —
+      // if the list is longer than this, the right move is to ask what they
+      // want, not to recite it.
+      const groups = (item.modifierGroups ?? []).slice(0, MAX_OPTION_GROUPS).map((g: any) => {
+        const all = (g.options ?? []).map((o: any) => o.name);
+        return {
+          name: g.name,
+          role: g.pizzaRole ?? null,
+          required: g.required,
+          choices: all.slice(0, MAX_OPTIONS_PER_GROUP),
+          ...(all.length > MAX_OPTIONS_PER_GROUP ? { andMore: all.length - MAX_OPTIONS_PER_GROUP } : {}),
+        };
+      });
+      ctx.itemOptionsSeen?.add(wantedId);
       return {
         name: item.name,
         sizes: (item.variants ?? []).map((v: any) => ({ name: v.name, price: v.price })),

@@ -5,7 +5,7 @@ import { api } from "./api";
 import { TOOLS, executeTool, toolsForConfig, canonicalPhone, type ToolContext } from "./tools";
 import { buildSystemPrompt } from "./prompt";
 import { normalizeAgentConfig } from "./agent-config";
-import { withMessageCacheBreakpoint } from "./cache-breakpoints";
+import { withMessageCacheBreakpoints } from "./cache-breakpoints";
 import { normalizeAsr } from "./asr-normalize";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
@@ -41,6 +41,11 @@ const SILENT_TURN_RETRY_MS = 1_200;
  *  that somehow never closes would make Nabil un-interruptible for the rest of
  *  the call — far worse than the truncation it prevents. */
 const PROTECT_MAX_MS = 12_000;
+
+/** Failed tool attempts before the caller is handed to a person. Two, because
+ *  the third attempt is the one that turns a recoverable moment into the call
+ *  the owner replays and calls horrible. */
+const STRUGGLE_LIMIT = 2;
 
 /**
  * One phone call. Bridges the Twilio ConversationRelay WebSocket to a Claude
@@ -135,6 +140,20 @@ export class CallSession {
    *  several. Every per-turn token figure quoted before this existed used the
    *  wrong denominator. */
   private modelRequests = 0;
+  /** Where the rolling conversation cache anchor sits, carried between turns.
+   *  See cache-breakpoints.ts — a breakpoint that moves every turn is written
+   *  once and read never. */
+  private cacheAnchor: number | null = null;
+  /** Things WE said that the model did not author, waiting to be told to it on
+   *  the next turn. See speak(). */
+  private spokenAsides: string[] = [];
+  /** The exact string of the most recent user message pushed into `messages`.
+   *  The silent-turn retry identifies its own turn by this — it cannot compare
+   *  against the raw transcript text, which may have had an aside prefixed. */
+  private lastUserContent: string | null = null;
+  /** Times the agent has failed at the same thing on this call. Two strikes and
+   *  a caller is better served by a person than by a third attempt. */
+  private struggles = 0;
   private startedAt = Date.now();
   private finalized = false;
   /** Real caller turns (prompt/dtmf events) — synthetic injected prompts
@@ -160,6 +179,7 @@ export class CallSession {
       pendingTransfer: null,
       placedOrders: [],
       basket: [],
+      itemOptionsSeen: new Set<string>(),
       // Seed the pricing identity from caller ID, in canonical form, BEFORE the
       // first tool can run. Promo eligibility is per-customer, so a quote priced
       // against an empty identity and a charge priced against the caller is two
@@ -450,7 +470,20 @@ export class CallSession {
 
   private async runTurnInner(userText: string) {
     this.transcript.push({ role: "user", text: userText, ts: new Date().toISOString() });
-    this.messages.push({ role: "user", content: userText });
+    // Tell the model what WE said on its behalf since it last spoke, so it can
+    // actually obey "at most one holding phrase" and "don't reuse a phrase".
+    // Rides on the user turn because the API requires strict alternation and
+    // this model does not accept a mid-conversation system message.
+    const asides = this.spokenAsides.splice(0);
+    const userContent = asides.length
+      ? `(You already said out loud, just now: ${asides.map((a) => JSON.stringify(a)).join(" ")} — do not repeat any of it.)
+${userText}`
+      : userText;
+    // Remembered verbatim: the silent-turn retry has to be able to identify the
+    // exact message it pushed, and comparing against the raw userText stopped
+    // working the moment an aside could be prefixed to it.
+    this.lastUserContent = userContent;
+    this.messages.push({ role: "user", content: userContent });
     this.interrupted = false;
     this.turnStartedAt = Date.now();
     // Nothing has been said on this turn yet. If the turn ends still false, the
@@ -467,7 +500,7 @@ export class CallSession {
     this.fillerTimer = setTimeout(() => {
       if (!spokeAnything && !this.interrupted) {
         spokeAnything = true;
-        this.sendText("One moment.", false);
+        this.speak("One moment.", false);
       }
     }, FILLER_AFTER_MS);
 
@@ -483,6 +516,11 @@ export class CallSession {
       hops++;
       const controller = new AbortController();
       this.controller = controller;
+
+      // Computed before the request so the advanced anchor survives into the
+      // next turn — an anchor that moves every turn is written and never read.
+      const cached = withMessageCacheBreakpoints(this.messages as any, this.cacheAnchor);
+      this.cacheAnchor = cached.anchorIndex;
 
       const stream = this.anthropic.messages.stream(
         {
@@ -520,13 +558,14 @@ export class CallSession {
           // covers the tool definitions too. Requires system as a block array.
           system: [{ type: "text", text: this.system, cache_control: { type: "ephemeral" } }],
           tools: this.tools as any,
-          // SECOND breakpoint, on the newest message: the system one only
-          // caches what precedes it, so the conversation itself was still
-          // re-billed in full every turn — and it grew fast once pizza landed
-          // (one get_item_options result is thousands of topping tokens that
-          // then ride along for the rest of the call). See cache-breakpoints.ts
-          // for why this never mutates the stored messages.
-          messages: withMessageCacheBreakpoint(this.messages as any) as any,
+          // Breakpoints on the CONVERSATION: the newest message, plus a rolling
+          // anchor further back. The system one only caches what precedes it,
+          // so without these the conversation is re-billed every turn — and one
+          // busy pizza turn can append 18 content blocks, enough to jump clean
+          // over the API's 20-block lookback and silently re-prefill the whole
+          // call. See cache-breakpoints.ts for why the anchor has to be stable
+          // and why neither marker ever mutates the stored messages.
+          messages: cached.messages as any,
           // Paired with output_config.effort above — see that comment. Adaptive
           // means the model spends reasoning only where the turn warrants it.
           thinking: { type: "adaptive" },
@@ -593,7 +632,7 @@ export class CallSession {
         this.streamFailures++;
         if (unrecoverable || this.streamFailures >= 2) {
           this.ctx.pendingTransfer = `voice service error${status ? ` (${status})` : ""}`;
-          this.sendText(
+          this.speak(
             " I'm really sorry — I'm having trouble on my end, not with anything you said. Let me put you through to someone.",
             true,
           );
@@ -605,7 +644,7 @@ export class CallSession {
         // makes them repeat themselves into a system that is broken, and hides
         // the real fault from us; during the 2026-08-11 key revocation this
         // exact sentence was said on every turn of every call. Own it.
-        this.sendText(" Sorry — that dropped on my end. Go ahead.", true);
+        this.speak(" Sorry — that dropped on my end. Go ahead.", true);
         return;
       }
       this.controller = null;
@@ -719,6 +758,7 @@ export class CallSession {
             ) {
               stateChanged = true;
             }
+            this.noteStruggle(block.name, out);
             this.noteOutcome(block.name, out);
             results.push({ type: "tool_result", tool_use_id: block.id, content: JSON.stringify(out) });
           }
@@ -795,9 +835,21 @@ export class CallSession {
       if (this.turnRunning || this.finalized) return;
       // Drop the unanswered user turn before replaying it — runTurnInner pushes
       // it again, and two identical user messages in a row confuse the model.
+      //
+      // 🚨 The two pops must agree. `transcript.pop()` used to be unconditional
+      // while `messages.pop()` was guarded, so on the path where the guard
+      // missed (the hop-cap exit, where the last message is a tool_result) the
+      // user turn was left duplicated in history AND an unrelated line was
+      // deleted from the owner's transcript. Reachable only late in a call,
+      // which is exactly where we were already suspicious.
       const last = this.messages[this.messages.length - 1];
-      if (last?.role === "user" && last?.content === userText) this.messages.pop();
-      this.transcript.pop();
+      const droppable =
+        last?.role === "user" && this.lastUserContent !== null && last?.content === this.lastUserContent;
+      if (droppable) {
+        this.messages.pop();
+        const lastT = this.transcript[this.transcript.length - 1];
+        if (lastT?.role === "user" && lastT?.text === userText) this.transcript.pop();
+      }
       this.interrupted = false;
       void this.runTurn(userText);
     }, SILENT_TURN_RETRY_MS);
@@ -815,12 +867,56 @@ export class CallSession {
     this.protectedText = "";
     this.bargedDuringProtected = false;
     if (barged && text) {
-      this.sendText(` Sorry — let me say that again. ${text}`, false);
+      this.speak(` Sorry — let me say that again. ${text}`, false);
       this.transcript.push({
         role: "assistant",
         text: `(repeated after barge-in) ${text}`,
         ts: new Date().toISOString(),
       });
+    }
+  }
+
+  /**
+   * Count the times the agent has failed at the same thing, and hand the call
+   * to a person once it is clearly stuck.
+   *
+   * Luigi, 2026-08-14: a forty-second call that ends with a human beats a
+   * four-minute call that ends with the wrong pizza. On the call that prompted
+   * this, the agent spent three turns failing to place a topping and three more
+   * failing to hear a name, and the caller absorbed all of it.
+   *
+   * A counter here rather than an instruction in the prompt, because the prompt
+   * has been asked to police this before and cannot: the model is the thing
+   * that is struggling, so it is the last thing that should be judging whether
+   * to give up. `needsInfo` deliberately does NOT count — asking a caller which
+   * half they want is the system working.
+   */
+  private noteStruggle(tool: string, out: any) {
+    const failed = !!out?.error || out?.notPlaced === true;
+    if (!failed) {
+      // Any success clears the count: a caller who corrects themselves twice
+      // and then lands it is not a struggling call.
+      this.struggles = 0;
+      return;
+    }
+    this.struggles++;
+    if (this.struggles >= STRUGGLE_LIMIT && !this.ctx.pendingTransfer) {
+      console.warn("[nabil-voice] struggling — handing off", {
+        callSid: this.token.callSid,
+        tool,
+        code: out?.code ?? null,
+        struggles: this.struggles,
+      });
+      this.ctx.pendingTransfer = `agent struggling (${this.struggles} failed attempts, last: ${tool})`;
+      // Tell the model, so the caller gets a proper handoff sentence instead of
+      // another attempt followed by the line going quiet. Mutating `out` is
+      // safe here: this runs before the tool_result is serialised.
+      if (out && typeof out === "object") {
+        out.instruction =
+          "STOP TRYING. This has failed twice and the caller is being put through to a person now. " +
+          "Say one short, warm sentence — that you'll get someone who can sort it out — and nothing else. " +
+          "Do not apologise at length, do not explain what went wrong, and do not attempt it again.";
+      }
     }
   }
 
@@ -900,6 +996,31 @@ export class CallSession {
       cacheReadTokens: this.usageCacheRead,
       cacheWriteTokens: this.usageCacheWrite,
     };
+  }
+
+  /**
+   * Say something the MODEL did not author — the holding phrase, a re-spoken
+   * sentence, an apology for our own outage.
+   *
+   * 🚨 These used to go straight out through sendText and be recorded nowhere.
+   * The caller heard them; the model had no idea they existed. So the prompt
+   * rules "say at most ONE holding phrase" and "don't reuse a phrase" were
+   * asking it to obey a rule about words it could not see, and the filler fires
+   * MORE often as a call gets longer — longer call, more fillers it can't see,
+   * more chances it adds its own, caller hears two in a row and it sounds
+   * confused. A feedback loop keyed on elapsed call time.
+   *
+   * Recorded in the transcript (so the owner sees what was actually said) and
+   * held for the next turn (so the model does). Not pushed into `messages`
+   * directly: an assistant message here would break the strict user/assistant
+   * alternation the API requires mid-turn.
+   */
+  private speak(text: string, last: boolean) {
+    this.sendText(text, last);
+    const clean = text.trim();
+    if (!clean) return;
+    this.transcript.push({ role: "assistant", text: clean, ts: new Date().toISOString() });
+    this.spokenAsides.push(clean);
   }
 
   private sendText(token: string, last: boolean) {
