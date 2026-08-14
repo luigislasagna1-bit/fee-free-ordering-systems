@@ -1000,7 +1000,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       if (!res.ok) {
         return { error: true, code: res.json?.code, message: res.json?.error || "I couldn't add that." };
       }
-      const { line, readBack, pricingNote, unresolved, betterDeal, halves } = res.json ?? {};
+      const { line, readBack, pricingNote, unresolved, betterDeal, halves, switchedTo } = res.json ?? {};
       // The compiler refuses to guess. Unresolved questions come back verbatim
       // so the agent asks the caller rather than inventing an option id.
       if (!line || (Array.isArray(unresolved) && unresolved.length)) {
@@ -1028,6 +1028,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         // a model the caller corrects.
         speakExactly: readBack,
         ...(halves ? { halves } : {}),
+        // The server built a DIFFERENT menu item to give the caller the size
+        // they actually asked for — on this menu each size is often its own
+        // product. Never a silent substitution (Luigi 2026-08-14: "cheapest,
+        // but tell them"), so it is surfaced and the instruction below says it.
+        ...(switchedTo ? { switchedTo } : {}),
         pricingNote: pricingNote ?? null,
         order: basketView(ctx),
         // A cheaper same-day deal covering EXACTLY this order. The saving was
@@ -1049,6 +1054,12 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
             : "") +
           (betterDeal
             ? `TELL THEM ABOUT THE DEAL: today's "${betterDeal.name}" is the same thing for ${betterDeal.saving} less. Offer it in one friendly sentence and ask if they want it. If they say yes, call revise_line with lineNumber ${ctx.basket.length} and swapToItemId "${betterDeal.menuItemId}". If they say no, leave the order exactly as it is and move on. `
+            : "") +
+          (switchedTo
+            ? `That size is a different item on this menu, so it was built as "${switchedTo.to}" instead of "${switchedTo.from}"` +
+              (switchedTo.saving > 0
+                ? `, which also comes to ${switchedTo.saving} LESS — say so as good news in the same breath. `
+                : `. Mention the item you built in the read-back; do not present it as a problem. `)
             : "") +
           "Read `speakExactly` back WORD FOR WORD, including the item name exactly as written — do not restate the size, " +
           "the halves or the item in your own words, and do not shorten it. " +

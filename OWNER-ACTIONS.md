@@ -166,6 +166,46 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A53. 📄 Reseller Marketing Kit — flyers with each partner's own QR (2026-08-14)
+
+**A reseller asked for the flyers "but with my own QR code on them".** Built:
+**Sales & Marketing → Marketing Kit** in the reseller dashboard. Pick a flyer, see a live
+preview, download **print PDF + share PNG**. The QR always points at that partner's own
+`/signup?ref=` link, so any restaurant that signs up through it is credited to them
+automatically. This fills the "Pitch one-pager… includes a QR code linking to your referral
+signup URL" card that has said **Soon** since the Sales & Marketing section shipped.
+
+**Five flyers.** Your reference artwork is reproduced faithfully as *Own Your Orders (full
+one-pager)* — same layout, same wording, same prices — with only the QR and the contact block
+swapped per partner. Alongside it, *The Whole System*, written from what the product actually
+does today (AI phone ordering, branded apps, 38 languages, store credit), plus three more
+angles. A partner who has set up their own branding gets flyers in **their** brand with zero
+Fee Free marks on them.
+
+**⚠️ THREE REAL BUGS FOUND AND FIXED WHILE BUILDING THIS — all pre-existing:**
+1. **Partners paying $19.99/mo for a custom domain were being shown `feefreeordering.com`
+   as their referral link** — in all three places it appeared, including the approval email.
+   Printing that on a flyer would have made it permanent.
+2. **A lapsed Branded subscription made a partner's domain 404.** Restaurants already had a
+   graceful fallback for this; partners did not. Now it redirects to the main signup page
+   **keeping their `?ref=`**, so flyers printed while they were subscribed keep crediting them
+   even if they cancel. This one only matters because we are about to put those URLs on paper.
+3. **A WebP logo would have silently broken every flyer a partner generated** (the renderer
+   cannot read WebP, and the failure produces a corrupt file rather than an error). Logo
+   uploads now accept JPG/PNG/SVG only; the login-background upload still takes WebP.
+
+**Nothing here needs anything from you yet** — but two things are worth knowing:
+- **Printed flyers are English only for now.** All 38 languages are wired up and the key set is
+  complete, but the actual translations of the flyer wording are not written yet, so the
+  language picker deliberately shows English alone. I would rather show one language than offer
+  "Français" and hand someone an English flyer they only notice after printing 500.
+- 🤔 **Your call:** the reference flyer names Luigi's Lasagna & Pizzeria and says "Real human
+  Canadian support". Every partner who prints it says that too — including partners in Italy.
+  Tell me if you want those two lines to become per-partner instead.
+
+Preflight green (1666 tests, full production build), 38 locales at full parity (7381 keys,
+0 missing / 0 extra), schema pushed to **both** database branches.
+
 ### A52. 🍕 The extra-large that left as a large — your #1 priority (2026-08-14)
 
 **You called this one HORRIBLE: laggy, glitchy, and wrong about the half-and-half.** You were right,

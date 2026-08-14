@@ -352,19 +352,41 @@ const SIZE_MODIFIERS = new Set([
  * mistake this function exists to catch.
  */
 export function normalizeSizeToken(text: string | null | undefined): string | null {
+  return splitSizeToken(text).token;
+}
+
+/** Ordered longest/most-specific first — "extra large" must be tested before
+ *  "large", or every extra-large is classified as large. */
+const SIZE_PATTERNS: Array<[string, RegExp]> = [
+  ["extra large", /\b(extra\s*large|x\s*-?\s*large|xl|xxl)\b/],
+  ["large", /\blarge\b/],
+  ["medium", /\b(medium|med)\b/],
+  ["small", /\bsmall\b/],
+  ["personal", /\b(personal|mini)\b/],
+  ["party", /\bparty\b/],
+];
+
+/**
+ * The size a string names, AND what is left of it once the size is removed.
+ *
+ * The remainder is what makes a size family knowable without guessing: two
+ * items whose names differ ONLY by their size token are the same product in two
+ * sizes. "Large 1 Topping" and "EXTRA Large 1 Topping" both leave "1 topping".
+ * "Large 1 Topping" and "Medium 2 Topping" leave "1 topping" and "2 topping",
+ * so they are correctly NOT a pair.
+ *
+ * That is a much stronger test than name similarity, which is how a caller who
+ * asked for a Large ends up with a Medium.
+ */
+export function splitSizeToken(text: string | null | undefined): { token: string | null; rest: string } {
   const t = norm(text ?? "");
-  if (!t) return null;
-  // Ordered longest/most-specific first.
-  const SIZES: Array<[string, RegExp]> = [
-    ["extra large", /\b(extra\s*large|x\s*-?\s*large|xl|xxl)\b/],
-    ["large", /\blarge\b/],
-    ["medium", /\bmedium\b|\bmed\b/],
-    ["small", /\bsmall\b/],
-    ["personal", /\bpersonal\b|\bmini\b/],
-    ["party", /\bparty\b|\bsuper\s*party\b/],
-  ];
-  for (const [token, re] of SIZES) if (re.test(t)) return token;
-  return null;
+  if (!t) return { token: null, rest: "" };
+  for (const [token, re] of SIZE_PATTERNS) {
+    if (re.test(t)) {
+      return { token, rest: t.replace(re, " ").replace(/\s+/g, " ").trim() };
+    }
+  }
+  return { token: null, rest: t };
 }
 
 /** Resolve a spoken size against the item's variants. */
@@ -389,7 +411,30 @@ export function resolveVariant(spoken: string | null | undefined, variants: Vari
     const leftover = want.replace(name, " ").split(" ").filter(Boolean);
     return leftover.every((w) => !SIZE_MODIFIERS.has(w));
   });
-  return partial.length === 1 ? partial[0] : null;
+  if (partial.length === 1) return partial[0];
+
+  // 🚨 LAST RESORT: compare SIZES, not strings.
+  //
+  // Everything above is substring matching, which cannot cope with a variant
+  // named for its dimensions. On "Build Your Own Pizza" — the one pizza on
+  // Luigi's menu where size IS a variant — the real names are "Large (10 Slice
+  // - 14 inch)" and "X Large (12 Slice - 18 inch)", and the result was that
+  // the item could not be ordered by voice AT ANY SIZE:
+  //
+  //   "extra large" → matches neither name → null
+  //   "large"       → substring of BOTH    → partial.length === 2 → null
+  //
+  // So a caller asking for an extra large was told we don't offer it, on the
+  // very item that does (2026-08-14). `normalizeSizeToken` already maps both
+  // "extra large" and "X Large (12 Slice - 18 inch)" onto one token; it was
+  // simply never consulted here.
+  //
+  // Still fails closed: only ONE variant may claim the size. If two do, the
+  // menu is ambiguous and a human should decide, not this function.
+  const wantToken = normalizeSizeToken(spoken);
+  if (!wantToken) return null;
+  const byToken = variants.filter((v) => normalizeSizeToken(v.name) === wantToken);
+  return byToken.length === 1 ? byToken[0] : null;
 }
 
 /* ──────────────────────────── prefix writing ───────────────────────────── */

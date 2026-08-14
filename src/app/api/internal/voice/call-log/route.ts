@@ -100,6 +100,7 @@ export async function POST(req: NextRequest) {
     // call logged as a clean success and both times it was found by hand, days
     // later, by reading a transcript.
     quotedTotal: d.quotedTotal,
+    latency: d.latency ?? undefined,
     chargedTotal: d.chargedTotal,
     endedAt: new Date(),
   };

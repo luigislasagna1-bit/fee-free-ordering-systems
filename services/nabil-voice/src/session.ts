@@ -14,6 +14,12 @@ const HANGUP_GRACE_MS = 15_000;
 
 const MAX_TOOL_HOPS = 8;
 
+/** How many times one turn may be continued after a max_tokens truncation.
+ *  Separate from MAX_TOOL_HOPS: a continuation is not work, it is us having
+ *  mis-sized the output budget, and letting the two share a counter meant a
+ *  truncated turn ran out of room to do the thing it was truncated doing. */
+const MAX_CONTINUATIONS = 2;
+
 /** An `interrupt` arriving within this long of a turn opening belongs to the
  *  sentence BEFORE it, not the one now streaming. Long enough to cover the gap
  *  Twilio leaves between the two events, short enough that a caller who really
@@ -98,6 +104,37 @@ export class CallSession {
   /** Cache split of usageIn — priced at 1.25× (write) and 0.1× (read). */
   private usageCacheWrite = 0;
   private usageCacheRead = 0;
+  /**
+   * 📏 THE MEASUREMENT LAYER. Nothing in this service timed anything, so every
+   * latency claim ever made about it — including in the plan that asked for
+   * this — was arithmetic on token counts, not observation.
+   *
+   * `ttftMs` is what the caller actually experiences: the wait between their
+   * words arriving and the first syllable coming back.
+   *
+   * `cacheReadPerRequest` is the important one. A cache breakpoint only looks
+   * back 20 content blocks for the previous write, and one tool-heavy turn can
+   * append 18 — so a busy pizza turn can silently push the conversation out of
+   * the window, after which EVERY request re-processes the whole call from
+   * scratch at full price. It is a multi-second stall with no error, and it is
+   * the leading suspect for "fine for a minute, then bad". A zero here after
+   * non-zeroes is that cliff, caught.
+   */
+  private perRequest: Array<{
+    hop: number;
+    ttftMs: number | null;
+    totalMs: number;
+    cacheRead: number;
+    cacheWrite: number;
+    uncached: number;
+    stop: string | null;
+  }> = [];
+  private toolTimings: Array<{ name: string; ms: number; ok: boolean }> = [];
+  private truncations = 0;
+  /** Model requests, which is NOT the same as turns — a turn with tool hops is
+   *  several. Every per-turn token figure quoted before this existed used the
+   *  wrong denominator. */
+  private modelRequests = 0;
   private startedAt = Date.now();
   private finalized = false;
   /** Real caller turns (prompt/dtmf events) — synthetic injected prompts
@@ -434,21 +471,45 @@ export class CallSession {
       }
     }, FILLER_AFTER_MS);
 
+    // Tool hops and max_tokens continuations used to share ONE counter, so a
+    // turn that got truncated three times had five hops left to do the actual
+    // work — and when the shared budget ran out, the loop fell through to a
+    // flush that spoke a half-finished word. They are separate budgets now:
+    // hops measure how much WORK a turn is doing, continuations measure how
+    // badly we mis-sized the output budget, and the two are unrelated.
     let hops = 0;
-    while (hops++ < MAX_TOOL_HOPS && !this.interrupted) {
+    let continuations = 0;
+    while (hops < MAX_TOOL_HOPS && !this.interrupted) {
+      hops++;
       const controller = new AbortController();
       this.controller = controller;
 
       const stream = this.anthropic.messages.stream(
         {
           model: CONFIG.model,
-          // 2048: cheap insurance against mid-word truncation on long
-          // readbacks in token-dense locales (Hindi/German multi-item orders)
-          // — the max_tokens continuation below is the backstop, this makes
-          // it rare. Review wf_a62b0536.
-          // 4096, not 2048: reasoning tokens now share this budget, and a
-          // truncated turn is a sentence that stops mid-word.
-          max_tokens: 4096,
+          // 🚨 THIS BUDGET IS SHARED BY REASONING AND SPEECH.
+          //
+          // Adaptive thinking spends from the same allowance as the sentence
+          // the caller hears, and thinking grows with how hard the model finds
+          // the turn — which is exactly when the answer also needs room. Run it
+          // too tight and the reasoning eats the reply, the sentence stops
+          // mid-word, and the caller hears the agent break. Spoken answers here
+          // are one or two sentences; the headroom is for the thinking.
+          max_tokens: 8192,
+          // Reasoning ON (Luigi, 2026-08-14), but at LOW effort.
+          //
+          // `effort` is NOT optional in practice: on this model it defaults to
+          // HIGH, so enabling thinking without setting it — which is what
+          // shipped in Fly v24 this morning — buys maximum reasoning on EVERY
+          // turn, including "yes" and "pepperoni". Every one of those tokens is
+          // generated before the caller hears a word, on a phone line where the
+          // whole budget to first audio is under a second.
+          //
+          // Low still fixes what thinking was turned on for: a model with
+          // reasoning disabled is documented to be LESS likely to reach for a
+          // tool, which is how it announced "we do have extra large available"
+          // without ever looking it up.
+          output_config: { effort: "low" },
           // PROMPT CACHING — the single biggest cost lever on this service.
           // The system prompt carries the whole live menu and is byte-identical
           // on every turn of a call, but was being re-billed at full price each
@@ -466,19 +527,23 @@ export class CallSession {
           // then ride along for the rest of the call). See cache-breakpoints.ts
           // for why this never mutates the stored messages.
           messages: withMessageCacheBreakpoint(this.messages as any) as any,
-          // Reasoning ON (Luigi, 2026-08-14, to be reviewed after a week).
-          // Disabled is documented to make the model LESS likely to reach for a
-          // tool — which is how it announced "we do have extra large available"
-          // without ever looking. It costs ~0.3-0.8s before it speaks, on the
-          // hard turns only; every other change in this batch buys that back.
+          // Paired with output_config.effort above — see that comment. Adaptive
+          // means the model spends reasoning only where the turn warrants it.
           thinking: { type: "adaptive" },
         } as any,
         { signal: controller.signal },
       );
 
+      const requestStartedAt = Date.now();
+      this.modelRequests++;
+      let ttftMs: number | null = null;
+
       let assistantText = "";
       stream.on("text", (delta: string) => {
         if (this.interrupted) return;
+        // TIME TO FIRST TOKEN — the only latency number that describes what the
+        // caller hears. Everything else is bookkeeping.
+        if (ttftMs === null) ttftMs = Date.now() - requestStartedAt;
         assistantText += delta;
         stopFiller();
         spokeAnything = true;
@@ -562,9 +627,57 @@ export class CallSession {
       this.usageCacheRead += cacheRead;
       this.usageOut += u.output_tokens ?? 0;
 
+      // Per-REQUEST, not per-turn. These two were previously summed into three
+      // totals and the shape thrown away, which made a broken cache and a
+      // healthy one produce identical numbers.
+      this.perRequest.push({
+        hop: hops,
+        ttftMs,
+        totalMs: Date.now() - requestStartedAt,
+        cacheRead,
+        cacheWrite,
+        uncached: u.input_tokens ?? 0,
+        stop: final.stop_reason ?? null,
+      });
+      // 🚨 THE CACHE CLIFF, CAUGHT IN THE ACT. Once a call has read from cache,
+      // a request that reads NOTHING means the breakpoint fell outside the
+      // 20-block lookback and we just re-processed the entire conversation at
+      // full price — seconds of silence, no error, invisible until now.
+      if (cacheRead === 0 && this.usageCacheRead > 0) {
+        console.error("[nabil-voice] CACHE MISS mid-call — prefix re-processed", {
+          callSid: this.token.callSid,
+          request: this.modelRequests,
+          hop: hops,
+          uncached: u.input_tokens ?? 0,
+          ttftMs,
+        });
+      }
+
       if (final.stop_reason === "max_tokens") {
         // A truncated turn otherwise flushed last:true and the caller heard
         // the sentence stop mid-word (review wf_a62b0536). Continue the turn.
+        //
+        // LOUD, because this is the mechanism behind "speaking broken
+        // language" and it was completely silent: no log, no counter, nothing
+        // in the call record. If this fires at all we have mis-sized
+        // max_tokens against how much the model is reasoning.
+        continuations++;
+        console.warn("[nabil-voice] max_tokens truncation", {
+          callSid: this.token.callSid,
+          hop: hops,
+          continuation: continuations,
+          spokenChars: assistantText.length,
+        });
+        this.truncations++;
+        // A continuation does NOT cost a tool hop (it isn't work), but it must
+        // not loop forever either. Two attempts, then close the turn cleanly
+        // rather than leaving a sentence hanging.
+        if (continuations > MAX_CONTINUATIONS) {
+          console.error("[nabil-voice] giving up on continuation", { callSid: this.token.callSid });
+          this.sendText(" — sorry, let me start that again.", true);
+          return;
+        }
+        hops--; // refund the hop: continuations and work are separate budgets
         this.messages.push({ role: "user", content: "(continue exactly where you left off — do not repeat what you already said)" });
         continue;
       }
@@ -575,9 +688,15 @@ export class CallSession {
         for (const block of final.content) {
           if (block.type === "tool_use") {
             let out: any;
+            // A tool hop emits no audio, so its duration IS silence on the
+            // line. Timed so the filler threshold can be set from data instead
+            // of from a guess.
+            const toolStartedAt = Date.now();
             try {
               out = await executeTool(block.name, block.input, this.ctx);
+              this.toolTimings.push({ name: block.name, ms: Date.now() - toolStartedAt, ok: !(out as any)?.error });
             } catch (e) {
+              this.toolTimings.push({ name: block.name, ms: Date.now() - toolStartedAt, ok: false });
               console.error("[nabil-voice] tool failed", block.name, e);
               out = { error: true, message: "That didn't work — let me try another way." };
             }
@@ -746,6 +865,43 @@ export class CallSession {
     }
   }
 
+  /**
+   * What this call actually cost the caller in waiting, as one compact object.
+   *
+   * Percentiles rather than a mean: a call with nineteen 400ms replies and one
+   * 6-second stall averages to something that looks fine and sounds broken.
+   * p95 is the stall.
+   */
+  private latencySummary() {
+    const pct = (xs: number[], p: number): number | null => {
+      if (!xs.length) return null;
+      const sorted = [...xs].sort((a, b) => a - b);
+      return sorted[Math.min(sorted.length - 1, Math.floor((p / 100) * sorted.length))];
+    };
+    const ttfts = this.perRequest.map((r) => r.ttftMs).filter((n): n is number => typeof n === "number");
+    const tools = this.toolTimings.map((t) => t.ms);
+    // The index of the first request that read nothing from cache AFTER a
+    // successful read — i.e. where the conversation fell out of the lookback
+    // window. Null on a healthy call.
+    let cacheCliffAtRequest: number | null = null;
+    let seenRead = false;
+    this.perRequest.forEach((r, i) => {
+      if (r.cacheRead > 0) seenRead = true;
+      else if (seenRead && cacheCliffAtRequest === null) cacheCliffAtRequest = i + 1;
+    });
+    return {
+      requests: this.modelRequests,
+      turns: this.userTurns,
+      ttftMs: { p50: pct(ttfts, 50), p95: pct(ttfts, 95), max: ttfts.length ? Math.max(...ttfts) : null },
+      toolMs: { p50: pct(tools, 50), p95: pct(tools, 95), max: tools.length ? Math.max(...tools) : null },
+      slowestTools: [...this.toolTimings].sort((a, b) => b.ms - a.ms).slice(0, 5),
+      truncations: this.truncations,
+      cacheCliffAtRequest,
+      cacheReadTokens: this.usageCacheRead,
+      cacheWriteTokens: this.usageCacheWrite,
+    };
+  }
+
   private sendText(token: string, last: boolean) {
     // Belt to the prompt's "no markdown" rule: strip formatting characters the
     // TTS would otherwise SPEAK — the first live call (2026-08-09) read
@@ -831,6 +987,7 @@ export class CallSession {
         // agreed to. The dashboard flags it; nothing used to.
         quotedTotal: this.quotedTotal,
         chargedTotal: this.chargedTotal,
+        latency: this.latencySummary(),
       });
       if (!r.ok) console.error("[nabil-voice] logCall rejected", r.status);
     } catch (e) {

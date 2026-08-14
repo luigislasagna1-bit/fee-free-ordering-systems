@@ -3088,6 +3088,15 @@ model VoiceCall {
   quotedTotal     Float?
   chargedTotal    Float?
 
+  /// 📏 How long this caller spent waiting, measured rather than inferred:
+  /// p50/p95/max time-to-first-token, tool durations, model REQUESTS (not
+  /// turns — a turn with tool hops is several), truncation count, and the
+  /// request at which the prompt cache fell out of its 20-block lookback
+  /// window, if it did. Nothing in the voice service timed anything before
+  /// this, so every latency figure ever quoted about it was arithmetic on
+  /// token counts. One JSON blob on a per-CALL row — never on a hot table.
+  latency         Json?
+
   createdAt       DateTime   @default(now())
 
   @@index([restaurantId, startedAt])
@@ -3840,6 +3849,7 @@ model ResellerProfile {
   restaurants Restaurant[]
   commissions CommissionTransaction[]
   payouts     PayoutRequest[]
+  kitProfile  ResellerKitProfile?
 
   @@index([status])
   @@index([referralCode])
@@ -3852,6 +3862,83 @@ model ResellerProfile {
   // "approved vs pending" filter, this covers the white-label tier
   // queries.
   @@index([whiteLabelStatus])
+}
+
+/// Reseller Marketing Kit personalization (Luigi 2026-08-14). ONE row per partner.
+///
+/// A SIDE TABLE on purpose. ResellerProfile is the identity/billing/routing row that
+/// /api/internal/resolve-host reads on EVERY request to a branded host; it must not
+/// accumulate kit-only columns. This table is not hot by construction — one row per partner
+/// (hundreds, not millions), read only on the Marketing Kit page and its renderer.
+///
+/// Rendered assets always pull brand, QR target and prices LIVE at render time (same rule as
+/// MarketingAsset.designJson), so nothing stored here can go stale on a printed page.
+///
+/// ⚠️ NO CUSTOMER PII EVER. These are a business partner's own contact details, deliberately
+/// printed on collateral they hand out. Not in PII_ERASURE_MAP — that map is scoped to the
+/// CUSTOMER surface, and partner identity (User + ResellerProfile, including encrypted payout
+/// details) is likewise outside it. Removed by partner-account deletion via the cascade below.
+/// Do not add a diner-facing field here.
+model ResellerKitProfile {
+  id                String          @id @default(cuid())
+  resellerProfileId String          @unique
+  resellerProfile   ResellerProfile @relation(fields: [resellerProfileId], references: [id], onDelete: Cascade)
+
+  /// Contact block printed on every asset. Prefilled in the FORM from companyName / User.email
+  /// so the partner confirms before anything is persisted — never silently copied.
+  contactName    String?
+  contactEmail   String?
+  contactPhone   String?
+  /// Human-readable website line; null → the referral link's displayUrl.
+  contactWebsite String?
+
+  /// Accent colour for kit assets ("#RRGGBB"). Deliberately SEPARATE from
+  /// ResellerProfile.brandPrimaryColor: that column drives the PAID branded login page, and
+  /// writing to it from a flyer editor would silently restyle their login screen. Prefilled
+  /// from it, never written back.
+  accentColor String?
+
+  /// Whether to print platform add-on prices. Defaults OFF: prices live in the AddOn table per
+  /// environment, carry no currency, and a white-label partner may resell at their own price.
+  showPricing Boolean @default(false)
+
+  /// Locale the printed COPY renders in — NOT the dashboard chrome, which stays English by
+  /// reseller-area convention. Validated against isSupportedLocale().
+  outputLocale String @default("en")
+
+  /// Per-template copy overrides: { "<templateId>": { headline?, subhead? } }.
+  /// Bounded by the API (template ids validated, per-field length caps, total size cap) so it
+  /// cannot grow into an unbounded document.
+  overridesJson String @default("{}")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// Content-addressed cache of rendered Marketing Kit assets (Luigi 2026-08-14).
+///
+/// `hash` is an HMAC of (template, size, brand, personalisation, locale, engine version) —
+/// keyed, not a plain digest, because every input is public information a stranger could hold,
+/// which would otherwise make the Blob path computable and the bucket enumerable.
+///
+/// Invalidation is free: change a brand colour or a phone number and the hash changes, so the
+/// old row simply orphans. Reverting an edit re-hits the original entry, which a version
+/// counter would not. A nightly GC removes rows unused for 90 days.
+model MarketingKitRender {
+  id                String   @id @default(cuid())
+  hash              String   @unique
+  resellerProfileId String
+  templateId        String
+  sizeId            String
+  locale            String
+  pngUrl            String   @default("")
+  pdfUrl            String   @default("")
+  bytes             Int      @default(0)
+  createdAt         DateTime @default(now())
+  lastUsedAt        DateTime @default(now())
+
+  @@index([resellerProfileId, createdAt])
+  @@index([lastUsedAt])
 }
 
 // Many-to-many between User and Restaurant for non-owner access. The owning

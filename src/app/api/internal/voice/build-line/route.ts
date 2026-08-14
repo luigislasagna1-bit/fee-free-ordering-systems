@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { findBetterDeal } from "@/lib/voice/day-deals";
+import { findSizeMatch } from "@/lib/voice/item-family";
 import { loadRawItem, loadComboData, shapeItemData } from "@/lib/voice/item-loader";
 import {
   compilePizzaLine,
@@ -93,7 +94,46 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
-  const result = compilePizzaLine(intent as PizzaIntent, item, opts);
+  let result = compilePizzaLine(intent as PizzaIntent, item, opts);
+  let switchedTo: { from: string; to: string; saving: number } | null = null;
+
+  // ── The caller asked for a size this item cannot be ────────────────────
+  //
+  // On menus where each size is its own product, "make it extra large" means
+  // building a DIFFERENT item. The compiler refuses rather than silently
+  // dropping the size (which is how a Large reached the kitchen on
+  // 2026-08-14), but refusing is not the answer the caller wants: Luigi —
+  // "why cant it do an extra large? it should be able to!"
+  //
+  // So resolve it HERE, server-side, in the same hop. The model never picks the
+  // SKU and never sees this happen; it stated an intent and gets back a
+  // compiled line at the size it asked for. Doing it on the model's side would
+  // cost three more round trips, which is where the dead air came from.
+  const sizeMatch = await findSizeMatch({
+    menuRestaurantId,
+    item,
+    raw,
+    intent: intent as PizzaIntent,
+    namedSubtotal: result.lineSubtotal,
+    timezone: restaurant.timezone,
+  });
+  if (sizeMatch) {
+    const swapped = await loadRawItem(menuRestaurantId, sizeMatch.menuItemId);
+    if (swapped) {
+      const swappedItem = shapeItemData(swapped);
+      const recompiled = compilePizzaLine(
+        { ...(intent as PizzaIntent), menuItemId: sizeMatch.menuItemId },
+        swappedItem,
+        opts,
+      );
+      // Only take the swap if it fully compiles. A half-resolved swap is worse
+      // than the honest refusal it replaces.
+      if (recompiled.line && !recompiled.unresolved.length) {
+        result = recompiled;
+        switchedTo = { from: item.name, to: swappedItem.name, saving: sizeMatch.saving };
+      }
+    }
+  }
 
   // Is the SAME pizza cheaper today under one of the store's day deals? Only
   // asked when the owner turned it on, and only when we have a line to compare
@@ -115,5 +155,5 @@ export async function POST(req: NextRequest) {
         })
       : null;
 
-  return NextResponse.json({ ...result, betterDeal });
+  return NextResponse.json({ ...result, betterDeal, switchedTo });
 }

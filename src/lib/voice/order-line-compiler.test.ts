@@ -6,6 +6,7 @@ import {
   placementPrefix,
   resolveOption,
   resolveVariant,
+  splitSizeToken,
   type ComboData,
   type ItemData,
 } from "./order-line-compiler";
@@ -744,5 +745,111 @@ describe("half-and-half placement is the order, not a default", () => {
     );
     expect(r.halves).toBeNull();
     expect(r.readBack).toContain("with Pepperoni");
+  });
+});
+
+/* ───────── Build Your Own — the pizza that could not be ordered ───────── */
+
+/**
+ * Luigi, 2026-08-14: "we have extra large build your own also!"
+ *
+ * He was right, and it was worse than a missing size: "Build Your Own Pizza"
+ * could not be ordered by voice AT ANY SIZE. Its variants are named for their
+ * dimensions, and the matcher only did substrings:
+ *   "extra large" matched neither name        → null
+ *   "large"       was a substring of BOTH     → ambiguous → null
+ * So the one pizza on the menu where size genuinely IS an option was the one
+ * the agent could never build.
+ */
+const BYO_VARIANTS = [
+  { variantId: "v_s", name: "Small (6 Slice - 10 inch)", price: 9.99, isDefault: true },
+  { variantId: "v_m", name: "Medium (8 Slice - 12 inch)", price: 11.99 },
+  { variantId: "v_l", name: "Large (10 Slice - 14 inch)", price: 14.99 },
+  { variantId: "v_xl", name: "X Large (12 Slice - 18 inch)", price: 18.99 },
+];
+
+describe("resolveVariant against dimension-named sizes", () => {
+  it('finds "X Large (12 Slice - 18 inch)" from "extra large"', () => {
+    expect(resolveVariant("extra large", BYO_VARIANTS)?.variantId).toBe("v_xl");
+  });
+
+  it('is no longer ambiguous on plain "large"', () => {
+    // "large" is a substring of BOTH "Large (10 Slice…)" and "X Large (12 Slice…)".
+    expect(resolveVariant("large", BYO_VARIANTS)?.variantId).toBe("v_l");
+  });
+
+  it("handles the spoken shorthands", () => {
+    expect(resolveVariant("XL", BYO_VARIANTS)?.variantId).toBe("v_xl");
+    expect(resolveVariant("x-large", BYO_VARIANTS)?.variantId).toBe("v_xl");
+    expect(resolveVariant("medium", BYO_VARIANTS)?.variantId).toBe("v_m");
+    expect(resolveVariant("small", BYO_VARIANTS)?.variantId).toBe("v_s");
+  });
+
+  it("still refuses a size the item does not have", () => {
+    expect(resolveVariant("party size", BYO_VARIANTS)).toBeNull();
+  });
+
+  it("still refuses when two variants claim the same size", () => {
+    // An ambiguous menu is a human's problem, not something to guess at.
+    expect(
+      resolveVariant("large", [
+        { variantId: "a", name: "Large Thin", price: 10 },
+        { variantId: "b", name: "Large Thick", price: 12 },
+      ]),
+    ).toBeNull();
+  });
+
+  it("does not let the size fallback override an exact name match", () => {
+    expect(resolveVariant("Medium (8 Slice - 12 inch)", BYO_VARIANTS)?.variantId).toBe("v_m");
+  });
+
+  it("builds an extra-large Build Your Own end to end, at the right price", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "extra large", toppings: [{ name: "pepperoni" }] },
+      PIZZA({ name: "Build Your Own Pizza", price: 9.99, variants: BYO_VARIANTS }),
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.variantId).toBe("v_xl");
+    expect(r.readBack).toContain("X Large");
+  });
+});
+
+/* ───────────── size families: the rule that decides equivalence ───────── */
+
+/**
+ * `splitSizeToken` is what stops a size family from being a guess. Two items
+ * are the same product in two sizes only if their names are IDENTICAL once the
+ * size word is removed — not merely similar, which is how a caller who asked
+ * for a Large gets handed a Medium.
+ *
+ * Verified against Luigi's live menu: from "Large 1 Topping" the rule accepts
+ * exactly SMALL/Medium/EXTRA Large "1 Topping" and rejects all ~25 other pizzas
+ * in the same category.
+ */
+describe("splitSizeToken — the family key", () => {
+  it("reduces a size lattice to one shared key", () => {
+    const key = (n: string) => splitSizeToken(n).rest;
+    expect(key("Large 1 Topping")).toBe("1 topping");
+    expect(key("EXTRA Large 1 Topping")).toBe("1 topping");
+    expect(key("Medium 1 Topping")).toBe("1 topping");
+    expect(key("SMALL 1 Topping")).toBe("1 topping");
+  });
+
+  it("keeps different products apart", () => {
+    // Same size word, different product — must NOT pair.
+    expect(splitSizeToken("Large 1 Topping").rest).not.toBe(splitSizeToken("Large 2 Topping").rest);
+    expect(splitSizeToken("Large 1 Topping").rest).not.toBe(splitSizeToken("Large 5 Topping Pizza").rest);
+  });
+
+  it("reports the size it removed, longest match first", () => {
+    expect(splitSizeToken("EXTRA Large 1 Topping").token).toBe("extra large");
+    expect(splitSizeToken("Large 1 Topping").token).toBe("large");
+    expect(splitSizeToken("X Large (12 Slice - 18 inch)").token).toBe("extra large");
+  });
+
+  it("reports no size for a name that has none", () => {
+    const r = splitSizeToken("Build Your Own Pizza");
+    expect(r.token).toBeNull();
+    expect(r.rest).toBe("build your own pizza");
   });
 });

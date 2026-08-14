@@ -68,6 +68,9 @@ export interface EndData {
   /** The total spoken to the caller, and the one actually charged. Equal on a
    *  healthy call; a difference means someone agreed to a price we didn't bill. */
   quotedTotal: number | null;
+  /** Measured wait times for this call — see VoiceCall.latency. Shape-checked,
+   *  not trusted: it is written by the voice service and rendered to an owner. */
+  latency: LatencyBlob | null;
   chargedTotal: number | null;
 }
 
@@ -101,6 +104,35 @@ function nonNegInt(v: unknown): number | null {
 function money(v: unknown): number | null {
   if (typeof v !== "number" || !Number.isFinite(v) || v < 0 || v > 1_000_000) return null;
   return Math.round(v * 100) / 100;
+}
+
+/** Cap on the serialized latency blob. It is bounded by construction (a fixed
+ *  set of numbers plus the five slowest tools), but this is a whitelist-shaped
+ *  parser and an unbounded JSON column on a per-call row is how a payload
+ *  becomes a storage problem. */
+const MAX_LATENCY_CHARS = 4000;
+
+/** Values a Json column can actually hold. Same reason TranscriptTurn is a type
+ *  alias rather than an interface: Prisma's InputJsonValue will not accept
+ *  `unknown`, and an interface has no implicit index signature. */
+type JsonValue = string | number | boolean | null | JsonValue[] | { [k: string]: JsonValue };
+export type LatencyBlob = { [k: string]: JsonValue };
+
+/** Accept a plain JSON object, reject arrays, primitives and anything oversized.
+ *  Deliberately no key whitelist: this blob is diagnostics written by our own
+ *  voice service, it carries no PII (durations and token counts only), and it
+ *  is rendered as formatted numbers rather than as text. The round-trip through
+ *  JSON.stringify/parse is what actually enforces "plain JSON" — it drops
+ *  functions and undefined, and throws on anything circular. */
+function plainObject(v: unknown, maxChars: number): LatencyBlob | null {
+  if (!v || typeof v !== "object" || Array.isArray(v)) return null;
+  try {
+    const json = JSON.stringify(v);
+    if (json.length > maxChars) return null;
+    return JSON.parse(json) as LatencyBlob;
+  } catch {
+    return null; // circular or unserializable
+  }
 }
 
 /**
@@ -199,6 +231,7 @@ export function parseEndBody(b: unknown): ParseResult<EndData> {
       tokensOut: nonNegInt(body.tokensOut),
       durationSeconds: nonNegInt(body.durationSeconds),
       quotedTotal: money(body.quotedTotal),
+      latency: plainObject(body.latency, MAX_LATENCY_CHARS),
       chargedTotal: money(body.chargedTotal),
     },
   };
