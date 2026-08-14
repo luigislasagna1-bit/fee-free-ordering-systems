@@ -248,9 +248,33 @@ also where the ~12 seconds of dead air in the middle of the call came from.
   and Red Onion were missing from the list; "BBQ Swirl" and "Gift Card" were in it. All 34 of your
   toppings now fit.
 
+**UPDATE, same day — the "goes bad after a minute" problem is addressed and now MEASURABLE.**
+- **Extra large works properly now.** Two fixes: Build Your Own was unorderable by voice at *any*
+  size (its sizes are named "X Large (12 Slice - 18 inch)", and the matcher was comparing text, so
+  "extra large" matched nothing and plain "large" matched two things at once and gave up); and when
+  the size is a different product, the server now swaps to it in the same step. Checked against your
+  live menu: from "Large 1 Topping" it finds exactly SMALL / Medium / EXTRA Large "1 Topping" and
+  rejects all ~25 other pizzas in that category. Cheapest wins and the caller is told.
+- **The likely cause of the mid-call decline is fixed.** The system could only "remember" about 20
+  steps back, and one busy pizza question uses 18 of them — so a single complicated turn could push
+  the call out of its own memory, after which every reply re-read the entire conversation from
+  scratch. Seconds of silence, no error, and completely invisible in anything we recorded.
+- **Nabil can now hear itself.** "One moment" and the apologies were spoken but never recorded, so
+  the rule "don't repeat yourself" was about words it couldn't see — and those fire more often the
+  longer a call runs. That was a loop that got worse with time.
+- **It stops looking things up twice.** The menu can't change mid-call, so the second lookup now
+  returns a pointer instead of another few hundred lines of toppings that ride along for the rest
+  of the call.
+- **It hands off after two failed attempts** at the same thing, with one short sentence — your call,
+  and the right one.
+- ⏱️ **Every call now records how long you waited**, per reply, plus where the time went. Until
+  today nothing in the system timed anything, which is why my earlier numbers were estimates.
+
 1. ☐ **Test call, from a number that has ordered before.** Order an **extra large, half X / half Y**,
    then change your mind about which side something goes on. What should happen: it reads the halves
    back one at a time, and it does **not** claim a size it hasn't actually set.
+   **Tell me when you've done it** — I'll pull the real timings and tell you exactly where the
+   seconds went, instead of guessing.
 2. 💰 **A price rise is coming on 1 September that has nothing to do with us.** The AI model is on
    introductory pricing until 31 August. Your real cost is **$0.48/call today, $0.72 from 1 Sept** with
    no change from anyone. The savings in this plan more than cover it — the projection is
