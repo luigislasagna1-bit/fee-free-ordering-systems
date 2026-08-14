@@ -166,6 +166,54 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A52. 🍕 The extra-large that left as a large — your #1 priority (2026-08-14)
+
+**You called this one HORRIBLE: laggy, glitchy, and wrong about the half-and-half.** You were right,
+and it was worse than it sounded: **the ticket that reached the kitchen was wrong in two ways.**
+
+- He asked for **extra large** three times. Nabil said *"that's confirmed, we do have extra large
+  available"* and read back "one extra large pizza". The ticket says **Large 1 Topping**.
+- He corrected the halves explicitly — *"pepperoni, ground beef, jalapeno on the same side"* — and the
+  ticket has pepperoni alone on one half and everything else on the other.
+
+**Nabil was not making things up. It was being lied to by its own tools.** On your menu, size is not an
+option on a pizza — "Large 1 Topping" and "EXTRA Large 1 Topping" are two separate products. The code
+that applies a size only ran for pizzas that have sizes *as options*, so on yours the word "extra
+large" was read and thrown away, and the tool answered **"done"**. Nabil noticed its own mistake, asked
+to change the size, got told "done" a second time, and passed that on to your caller. That same hole is
+also where the ~12 seconds of dead air in the middle of the call came from.
+
+**Now live** (Vercel + Fly v24, both machines, rolled without dropping a call):
+- The size is refused instead of dropped — Nabil is told to go and find the extra-large item.
+- Which half a topping goes on is now a **required** answer, not a guess. It used to default to "whole"
+  below the AI where no instruction could reach it, which puts a topping on a side the caller rejected
+  **and bills it at double**.
+- The same topping on both halves is now a question, not a silent double charge.
+- The read-back is built from the real ticket and grouped by side — *"left half: Pepperoni, Ground Beef;
+  right half: Chicken, Green Peppers"* — and a split pizza is confirmed **one half at a time**, so a
+  tired caller can't say "sure" to five toppings at once.
+- **"half of it" was reaching the AI as "0.5 of it"** — a speech-to-text quirk we can't switch off at
+  the provider. Fixed on our side.
+- Nabil can no longer be interrupted only where it matters (totals and confirmations). It used to be
+  un-interruptible after *every* edit — which is why your caller's correction kept landing on deaf ears.
+- **Reasoning is ON** (your call). Slightly more thinking before it speaks on hard turns.
+- **Your test line's toppings weren't even being boosted for speech recognition.** Pepperoni, Jalapeno
+  and Red Onion were missing from the list; "BBQ Swirl" and "Gift Card" were in it. All 34 of your
+  toppings now fit.
+
+1. ☐ **Test call, from a number that has ordered before.** Order an **extra large, half X / half Y**,
+   then change your mind about which side something goes on. What should happen: it reads the halves
+   back one at a time, and it does **not** claim a size it hasn't actually set.
+2. 💰 **A price rise is coming on 1 September that has nothing to do with us.** The AI model is on
+   introductory pricing until 31 August. Your real cost is **$0.48/call today, $0.72 from 1 Sept** with
+   no change from anyone. The savings in this plan more than cover it — the projection is
+   **$108/mo → about $77/mo** at your current volume once the menu-trimming work lands.
+3. 🤔 **Still your call: the ten duplicate customer records on 647 669 0808** (from A51 step 2). Say the
+   word and I'll clean them up.
+4. ⚠️ **Not fixed yet, and you should know:** asking for an extra large now gets a *question* rather
+   than an extra large pizza. Nabil will say it can't do that size on that item. Making it actually
+   *switch* to the extra-large product is the next piece of work.
+
 ### A51. 📞 The Roya call — why it was that bad, and what's now live (2026-08-13)
 
 **You said the last call Nabil handled was horrible. It was worse than it sounded.** The caller was

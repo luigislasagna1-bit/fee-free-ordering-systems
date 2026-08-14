@@ -85,37 +85,73 @@ async function menuHints(menuOwnerId: string): Promise<string> {
   const hit = hintsCache.get(menuOwnerId);
   if (hit && hit.expires > Date.now()) return hit.value;
 
-  const [items, options] = await Promise.all([
+  // A group is reachable from the restaurant three ways (library, item-scoped,
+  // category-scoped) — all three are real in this schema, so all three match.
+  const groupScope = {
+    isHidden: false,
+    OR: [
+      { restaurantId: menuOwnerId },
+      { menuItem: { restaurantId: menuOwnerId } },
+      { category: { restaurantId: menuOwnerId } },
+    ],
+  };
+  // Toppings are fetched as their OWN query rather than filtered out of a
+  // general one. Two reasons, both learned the hard way against live data:
+  // a single `take` ordered by name cuts off mid-alphabet before the toppings
+  // are covered, and `distinct: ["name"]` collapses each name to whichever
+  // group Postgres hands back first — which for "Pepperoni" was a "Choose
+  // Which Slice" group with no pizzaRole at all, so the topping vanished from
+  // the boosted list entirely.
+  const [items, toppingRows, otherRows] = await Promise.all([
     prisma.menuItem.findMany({
       where: { restaurantId: menuOwnerId, isAvailable: true },
       select: { name: true },
+      // Ordered so the 500-char budget always keeps the SAME terms. Without it
+      // Postgres returns heap order, which shifts after a write or a VACUUM —
+      // so which words Deepgram was biased toward changed on its own, and no
+      // recognition problem could be reproduced or tested.
+      orderBy: { name: "asc" },
       take: 150,
     }),
-    // Topping / crust / sauce / cheese names. A group is reachable from the
-    // restaurant three ways (library, item-scoped, category-scoped) — all three
-    // are real in this schema, so all three are matched.
     prisma.modifierOption.findMany({
       where: {
         isAvailable: true,
-        modifierGroup: {
-          isHidden: false,
-          OR: [
-            { restaurantId: menuOwnerId },
-            { menuItem: { restaurantId: menuOwnerId } },
-            { category: { restaurantId: menuOwnerId } },
-          ],
-        },
+        modifierGroup: { ...groupScope, pizzaRole: { in: ["topping", "toppings"] } },
       },
-      select: { name: true, modifierGroup: { select: { pizzaRole: true } } },
-      take: 600,
+      select: { name: true },
+      // Safe HERE, unlike on a combined query: this one is already scoped to
+      // topping groups, so collapsing by name cannot pick a row whose role is
+      // something else. Without it, 400 rows are the same dozen toppings
+      // repeated once per pizza and the list never reaches past "Garlic".
+      distinct: ["name"],
+      orderBy: { name: "asc" },
+      take: 400,
+    }),
+    prisma.modifierOption.findMany({
+      where: {
+        isAvailable: true,
+        modifierGroup: { ...groupScope, pizzaRole: { notIn: ["topping", "toppings"] } },
+      },
+      select: { name: true },
+      distinct: ["name"],
+      orderBy: { name: "asc" },
+      take: 400,
     }),
   ]);
 
-  // Pizza-role-tagged options first: those are the words a pizza order lives on.
-  const toppingTerms = [
-    ...options.filter((o) => o.modifierGroup?.pizzaRole).map((o) => o.name),
-    ...options.filter((o) => !o.modifierGroup?.pizzaRole).map((o) => o.name),
-  ];
+  // 🚨 ACTUAL TOPPINGS FIRST, then everything else.
+  //
+  // "Pizza-role-tagged" was too coarse: crusts, sauces, cheeses and bases all
+  // carry a pizzaRole, and alphabetically they crowded the toppings out. On
+  // Luigi's live menu the boosted list ran out at "Chicken", so Pepperoni,
+  // Jalapeno and Red Onion — three of the six toppings on the pizza that went
+  // out wrong on 2026-08-14 — were never boosted, while "BBQ Swirl" and
+  // "Balsamic" were.
+  //
+  // Toppings are the open-ended part of a pizza order and the part a caller
+  // rattles off fastest. Crust and sauce are a short closed set the agent
+  // offers by name anyway. packHints dedupes, so repeats across groups are free.
+  const toppingTerms = [...toppingRows.map((o) => o.name), ...otherRows.map((o) => o.name)];
   const value = packHints(items.map((i) => i.name), toppingTerms);
   hintsCache.set(menuOwnerId, { value, expires: Date.now() + HINTS_TTL_MS });
   return value;

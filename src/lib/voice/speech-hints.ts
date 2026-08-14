@@ -18,10 +18,24 @@
 /** ConversationRelay's documented ceiling for the whole comma-joined string. */
 export const HINTS_MAX_CHARS = 500;
 
-/** Items get the larger guaranteed share; toppings keep a reserved floor. They
- *  are the words callers mumble ("pepperoni", "bocconcini", "giardiniera") and,
- *  now that Nabil BUILDS pizzas, the words that decide what the kitchen makes. */
-export const HINTS_ITEM_BUDGET = 300;
+/**
+ * TOPPINGS GO FIRST. This used to read "items get the larger guaranteed share;
+ * toppings keep a reserved floor" — but the code packed items against a 300-char
+ * budget BEFORE toppings saw any, and 150 item names always exhausted it. On a
+ * real store that left 35 boosted terms, 18 of them item names, "Gift Card" and
+ * "Milk" among them, and **three of the six toppings on the 2026-08-14 pizza
+ * absent entirely** (Jalapeno, Green Peppers, Red Onion).
+ *
+ * Toppings are the words a pizza order actually lives on, the words callers
+ * mumble, and the words that decide what the kitchen makes. Items are usually
+ * said clearly and, unlike a topping, a mis-heard item name fails loudly — the
+ * agent cannot find it and asks. A mis-heard topping just gets made.
+ *
+ * So: toppings against their own guaranteed budget first, then items with
+ * whatever is left, then toppings again to mop up. A store with no toppings
+ * still fills 500 chars with item names.
+ */
+export const HINTS_TOPPING_BUDGET = 380;
 
 export const cleanHint = (s: string): string =>
   (s || "").replace(/[^A-Za-z0-9 -]/g, " ").replace(/\s+/g, " ").trim();
@@ -29,11 +43,11 @@ export const cleanHint = (s: string): string =>
 /**
  * Pack two prioritised term lists into one ≤500-char comma list.
  *
- * Items are packed first against their own budget, then toppings against the
- * full budget (so they inherit whatever items left unspent), then items again
- * to mop up any remaining slack. That way a store with three menu items still
- * fills 500 chars with toppings, and a store with no toppings still gets 500
- * chars of item names.
+ * Toppings are packed first against their own budget, then items against the
+ * full budget (inheriting whatever toppings left unspent), then toppings again
+ * to mop up any remaining slack. A store with no toppings still gets 500 chars
+ * of item names; a store with a long topping list no longer loses half of it to
+ * gift cards.
  */
 export function packHints(itemTerms: string[], toppingTerms: string[]): string {
   const used = new Set<string>();
@@ -56,8 +70,8 @@ export function packHints(itemTerms: string[], toppingTerms: string[]): string {
     }
   };
 
-  take(itemTerms, HINTS_ITEM_BUDGET);
-  take(toppingTerms, HINTS_MAX_CHARS);
+  take(toppingTerms, HINTS_TOPPING_BUDGET);
   take(itemTerms, HINTS_MAX_CHARS);
+  take(toppingTerms, HINTS_MAX_CHARS);
   return picked.join(",");
 }
