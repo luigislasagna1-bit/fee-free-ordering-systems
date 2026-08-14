@@ -203,8 +203,15 @@ Fee Free marks on them.
   Canadian support". Every partner who prints it says that too — including partners in Italy.
   Tell me if you want those two lines to become per-partner instead.
 
-Preflight green (1666 tests, full production build), 38 locales at full parity (7381 keys,
+Preflight green (1673 tests, full production build), 38 locales at full parity (7381 keys,
 0 missing / 0 extra), schema pushed to **both** database branches.
+
+**✅ DEPLOYED AND LIVE** (commit `56ce2ea9`, 2026-08-14). Verified on production: the page and
+all three API routes exist and are correctly locked to signed-in approved partners; the
+marketing site, pricing, partners and login pages all still return 200. Tested end-to-end on
+local first — preview, PDF, PNG, bare QR, saving your details, and the cache (a repeat render
+drops from ~3 s to 229 ms). **Go to Sales & Marketing → Marketing Kit in your reseller
+dashboard.** The one test that really matters: print a flyer and scan the QR off the paper.
 
 ### A52. 🍕 The extra-large that left as a large — your #1 priority (2026-08-14)
 
