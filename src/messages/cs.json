@@ -8054,5 +8054,253 @@
     "reservationDeclined": "Omlouváme se, rezervaci pro {partySize} os. dne {date} v {time} jsme nemohli potvrdit. Zkuste jiný čas.",
     "reservationMissed": "Omlouváme se, rezervaci pro {partySize} os. dne {date} v {time} jsme nestihli vyřídit včas. Zkuste jiný čas.",
     "reservationCancelled": "Vaše rezervace pro {partySize} os. dne {date} v {time} byla zrušena."
+  },
+  "resellerKit": {
+    "common": {
+      "scanLabel": "Scan to get started",
+      "commission": "commission",
+      "freePlan": "Free for your first {cap} orders every month. No contract, cancel anytime.",
+      "ctaTitle": "Start free today"
+    },
+    "ownYourOrders": {
+      "tagline": "Commission-free online ordering for independent restaurants",
+      "headline1": "Own Your Orders.",
+      "headline2": "Keep Your Margin.",
+      "subhead": "Stop handing a third of every delivery order to an app. Take orders on your own site, keep the full ticket, and turn one-time customers into regulars you actually own.",
+      "compare": {
+        "thirdPartyLabel": "Third-party apps",
+        "upTo": "up to {pct}%",
+        "directLabel": "Your own site",
+        "zero": "0%"
+      },
+      "chips": {
+        "keepEverything": "Keep 100% of every direct order",
+        "ownCustomers": "Your customer list, not theirs",
+        "noContract": "No contract",
+        "cancelAnytime": "Cancel anytime"
+      },
+      "cta": {
+        "title": "Start free today"
+      },
+      "included": {
+        "1": "An ordering page for pickup and delivery, on your own web address",
+        "2": "An order screen for any Android tablet, with a ring you can hear",
+        "3": "Your menu, modifiers, opening hours, coupons and promotions",
+        "4": "Delivery zones and fees you draw and set yourself",
+        "5": "A customer list you own and can export whenever you like",
+        "6": "Card payments straight into your account, or cash at the counter",
+        "title": "What you get"
+      }
+    },
+    "feeComparison": {
+      "intro": "Keep using {apps} to get found. Use your own ordering page for everyone who comes back.",
+      "headline1": "Everything you need",
+      "headline2": "to take orders direct.",
+      "tiles": {
+        "commission": {
+          "title": "0% commission",
+          "body": "Every direct order stays yours, whatever the basket size."
+        },
+        "keep": {
+          "title": "Keep the full ticket",
+          "body": "No per-order cut, no marketing levy, no surprise deductions."
+        },
+        "free": {
+          "title": "Free to start",
+          "body": "Your first {cap} orders every month cost nothing."
+        },
+        "widget": {
+          "title": "Works with your site",
+          "body": "Drop an ordering button onto the website you already have."
+        },
+        "kitchen": {
+          "title": "Any Android tablet",
+          "body": "Orders ring through on a tablet your kitchen can actually hear."
+        },
+        "database": {
+          "title": "Your customer list",
+          "body": "Names, emails and order history you can export and market to."
+        },
+        "payments": {
+          "title": "Card or cash",
+          "body": "Take payment online or at the counter — your call, per service."
+        },
+        "printers": {
+          "title": "Prints to your printer",
+          "body": "Works with common thermal receipt printers, or run paperless."
+        },
+        "delivery": {
+          "title": "Delivery zones and fees",
+          "body": "Draw your own zones, set your own fees, add your own drivers."
+        }
+      },
+      "cta": {
+        "title": "See it on your own menu",
+        "body": "Scan the code and I will set up a working demo with your real dishes."
+      }
+    },
+    "combineDontChoose": {
+      "headline": "Combine, don't choose.",
+      "subhead": "The delivery apps are good at one thing: finding you new customers. They are an expensive way to serve the same regulars over and over. Use both, for what each is actually good at.",
+      "steps": {
+        "1": {
+          "title": "Stay on the apps",
+          "body": "Keep {apps} exactly as they are. They still bring you first-time customers."
+        },
+        "2": {
+          "title": "Put a code in every bag",
+          "body": "A small card in the bag invites that customer to order direct next time."
+        },
+        "3": {
+          "title": "Repeat orders come direct",
+          "body": "They reorder on your own page, at your prices, with no commission taken."
+        },
+        "4": {
+          "title": "You keep the customer",
+          "body": "Their details are yours — so you can bring them back whenever you want."
+        }
+      },
+      "math": {
+        "title": "On a ${total} order",
+        "viaApps": "Through an app you can lose about ${amount}",
+        "direct": "Ordered direct, you keep it all"
+      },
+      "cta": {
+        "title": "Let's set this up"
+      }
+    },
+    "flagshipOnepager": {
+      "brandName": "Fee Free Ordering",
+      "tagline": "The fee-free ordering platform for independent restaurants",
+      "credit": "Created by restaurant owners • Used by Luigi's Lasagna & Pizzeria in Milton",
+      "headline1": "OWN YOUR ORDERS.",
+      "headline2": "KEEP YOUR MARGIN.",
+      "subhead": "Save thousands in third-party commissions and turn more customers into direct repeat customers.",
+      "commission": "commission",
+      "compare": {
+        "apps": "3rd-Party Apps:",
+        "upToWord": "Up to",
+        "direct": "Fee Free Direct Orders:",
+        "vs": "VS"
+      },
+      "phone": {
+        "storeName": "Your Restaurant",
+        "item1": "Margherita Pizza",
+        "item2": "House Salad",
+        "checkout": "Checkout",
+        "cart": "Cart 2"
+      },
+      "support": {
+        "title": "Real human Canadian support",
+        "body": "We're here when you need us."
+      },
+      "badges": {
+        "profit": "More",
+        "profitSub": "Profit",
+        "customers": "Your",
+        "customersSub": "Customers",
+        "brand": "Stronger",
+        "brandSub": "Brand",
+        "control": "Complete Control",
+        "zero": "$0",
+        "zeroSub": "TO START",
+        "noContract": "NO",
+        "noContractSub": "CONTRACT",
+        "noCard": "NO",
+        "noCardSub": "CREDIT CARD",
+        "cancel": "CANCEL",
+        "cancelSub": "ANYTIME"
+      },
+      "why": {
+        "1": "Keep 100% of every direct order",
+        "2": "Own your customer database",
+        "3": "Keep using UberEats / Skip / DoorDash for discovery",
+        "4": "Convert repeat orders to your own system",
+        "5": "Lower customer fees, higher restaurant profit",
+        "title": "Why Restaurants Use Fee Free"
+      },
+      "android": "All you need is an Android tablet to accept orders",
+      "included": {
+        "1": "Ordering widget for your existing website",
+        "2": "Kitchen app for any Android tablet",
+        "3": "Pickup + delivery ordering",
+        "4": "Menu, modifiers, hours, coupons & promotions",
+        "5": "Email + browser notifications",
+        "6": "Delivery zones + fees",
+        "7": "Customer database you own",
+        "8": "Mobile friendly + multi-language",
+        "9": "Printer optional (existing compatible printer may work)",
+        "10": "Cash + pay-at-store included",
+        "title": "What's Included"
+      },
+      "cost": {
+        "title": "What Does It Cost?",
+        "core": "Core Platform:",
+        "note": "Free to start. Paid add-ons only when you need them.",
+        "addons": "Optional add-ons available",
+        "noUpfront": "No upfront payment. No long-term contract."
+      },
+      "cta": {
+        "title": "BOOK A FREE DEMO",
+        "scan": "Scan to visit our site"
+      },
+      "footer": "You keep the customer. You keep the margin."
+    },
+    "wholeSystem": {
+      "badge": "0% commission on direct orders",
+      "headline": "The whole ordering system, on one page.",
+      "subhead": "Take pickup, delivery and table bookings on your own site — and keep the whole ticket. Free for your first {cap} orders every month, and unlimited the moment you add any paid feature.",
+      "pillars": {
+        "take": {
+          "1": "Your own ordering page, plus a button for the website you already have",
+          "2": "An order screen for any Android tablet, with a ring staff can hear",
+          "3": "Pickup, delivery and table bookings, each with their own hours",
+          "4": "Delivery zones you draw yourself, with your own fee per zone",
+          "title": "Take the order"
+        },
+        "keep": {
+          "1": "A customer list you own outright and can export any time",
+          "2": "Store credit and rewards that bring people back for a second order",
+          "3": "Order updates by email, text and app notification",
+          "4": "Your menu in 38 languages, so nobody is locked out",
+          "title": "Keep the customer"
+        },
+        "grow": {
+          "1": "Promotions, coupon codes and member-only pricing",
+          "2": "Printed flyers and posters with scannable codes, made for you",
+          "3": "Reports on sales, dishes and returning customers",
+          "4": "An end-of-day summary in your inbox after you close",
+          "title": "Grow the business"
+        }
+      },
+      "standout": {
+        "1": {
+          "title": "An AI that answers the phone",
+          "body": "It takes the order while your kitchen keeps cooking, and never puts a caller on hold."
+        },
+        "2": {
+          "title": "Your own app, both stores",
+          "body": "Your name and your logo on the customer's phone — not a listing inside someone else's app."
+        },
+        "3": {
+          "title": "Card money, straight to you",
+          "body": "Online payments land in your own account. No holding period, no middleman."
+        },
+        "title": "Things the delivery apps simply don't do"
+      },
+      "addons": {
+        "1": "Online payments",
+        "2": "Your own website",
+        "3": "Your own branded app",
+        "4": "AI phone ordering",
+        "5": "Text-message marketing",
+        "6": "Extra locations",
+        "title": "Add these only when you want them"
+      },
+      "cta": {
+        "title": "Let's put your menu on it.",
+        "body": "Scan the code to start free, or get in touch and I'll set the whole thing up with your real dishes so you can try it before you decide."
+      }
+    }
   }
 }

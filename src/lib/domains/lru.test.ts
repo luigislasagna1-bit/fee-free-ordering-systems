@@ -11,6 +11,7 @@ const FULL: TenantInfo = {
   customDomainActive: false,
   subdomain: "luigis",
   redirectToHost: "www.luigislasagna.com",
+  resellerLapsedRef: "ref_abc123",
 };
 
 describe("tenant LRU round-trip", () => {
@@ -25,6 +26,16 @@ describe("tenant LRU round-trip", () => {
     expect(got.hit).toBe(true);
     if (!got.hit) return;
     expect(got.info).toEqual(FULL);
+  });
+
+  it("caches a lapsed-reseller answer for the POSITIVE ttl (it is a real resolution)", () => {
+    // The host IS ours, it just isn't entitled today. Treating it as a miss would
+    // re-query the resolver every 10s for a partner who may stay lapsed for months.
+    setCached("customDomain:acme.com", { slug: null, hasHostedSite: false, resellerLapsedRef: "ref_abc" });
+    const got = getCached("customDomain:acme.com");
+    expect(got.hit).toBe(true);
+    if (!got.hit) return;
+    expect(got.info.resellerLapsedRef).toBe("ref_abc");
   });
 
   it("carries redirectToHost specifically (the field that broke)", () => {

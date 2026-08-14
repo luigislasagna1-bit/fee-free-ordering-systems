@@ -9,6 +9,7 @@ import {
   TIER_THRESHOLDS,
 } from "@/lib/commission";
 import { formatCurrency , PLATFORM_CURRENCY } from "@/lib/utils";
+import { buildResellerReferralUrl } from "@/lib/reseller/referral-url";
 import {
   Store, TrendingUp, Wallet, DollarSign, Clock, ArrowRight, Percent, BarChart3, Plus, Sparkles,
 } from "lucide-react";
@@ -72,6 +73,11 @@ export default async function ResellerDashboardPage() {
         whiteLabelTier: true,
         customDomain: true,
         customDomainStatus: true,
+        // Needed by buildResellerReferralUrl() for the "Your referral link" card below.
+        // Without it the chain silently falls through to the platform apex, which is the
+        // bug this select fixes — see src/lib/reseller/referral-url.ts.
+        genericSubdomain: true,
+        status: true,
       },
     }),
   ]);
@@ -311,7 +317,7 @@ export default async function ResellerDashboardPage() {
             Restaurants signing up with this link are attributed to you automatically.
           </p>
           <code className="block bg-gray-50 rounded-lg p-2 text-xs text-gray-700 break-all">
-            {`${process.env.NEXT_PUBLIC_APP_URL || ""}/signup?ref=${profile.referralCode}`}
+            {buildResellerReferralUrl({ ...profile, ...(whiteLabel ?? {}) }).url}
           </code>
           <Link
             href="/reseller/restaurants"

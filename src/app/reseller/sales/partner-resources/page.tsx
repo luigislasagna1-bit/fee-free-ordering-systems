@@ -31,9 +31,10 @@ export default function ResellerPartnerResourcesPage() {
       <div className="grid sm:grid-cols-2 gap-4 mb-6">
         <Resource
           icon={<FileText className="w-5 h-5" />}
-          title="Pitch one-pager"
-          status="coming-soon"
-          body="Single-page PDF you can email or hand a restaurant after a meeting. Explains Fee Free in plain language, shows the 25-30% vs 0% commission delta, and includes a QR code linking to your referral signup URL."
+          title="Pitch one-pagers — ready now"
+          status="ready"
+          href="/reseller/marketing-kit"
+          body="Three print-ready flyers you can email or hand a restaurant after a meeting. Your brand, your contact details, and a QR code pointing at your own referral signup URL — already on them. Download as PDF for printing or PNG for messaging."
         />
         <Resource
           icon={<BarChart3 className="w-5 h-5" />}
@@ -82,25 +83,34 @@ export default function ResellerPartnerResourcesPage() {
 }
 
 function Resource({
-  icon, title, body, status,
+  icon, title, body, status, href,
 }: {
   icon: React.ReactNode;
   title: string;
   body: string;
   status: "ready" | "coming-soon";
+  href?: string;
 }) {
-  return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+  const card = (
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 h-full hover:border-emerald-300 transition">
       <div className="flex items-center gap-2 mb-2">
         <div className="w-9 h-9 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">{icon}</div>
         <h3 className="text-sm font-bold text-gray-900 flex-1">{title}</h3>
-        {status === "coming-soon" && (
+        {status === "coming-soon" ? (
           <span className="text-[9px] uppercase tracking-wider font-bold bg-amber-100 text-amber-800 rounded-full px-2 py-0.5">
             Soon
+          </span>
+        ) : (
+          <span className="text-[9px] uppercase tracking-wider font-bold bg-emerald-100 text-emerald-800 rounded-full px-2 py-0.5">
+            Ready
           </span>
         )}
       </div>
       <p className="text-xs text-gray-600 leading-relaxed">{body}</p>
     </div>
   );
+  if (status === "ready" && href) {
+    return <Link href={href} className="block">{card}</Link>;
+  }
+  return card;
 }

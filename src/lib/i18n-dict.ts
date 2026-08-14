@@ -9,7 +9,11 @@
  *   t("receipt.customer.subtotal");
  *   t("email.orderConfirmed.subject", { orderNumber: "123" });
  */
-import { isSupportedLocale, type Locale } from "./i18n-server";
+// Import from locales.ts (client-safe) rather than i18n-server.ts, which re-exports the same
+// symbols but also pulls in prisma + next/headers. This module is the dictionary loader used
+// by print routes, email and the Marketing Kit renderer — none of which need a database
+// client, and one of which must stay usable outside a request context. Luigi 2026-08-14.
+import { isSupportedLocale, type Locale } from "./locales";
 
 type AnyDict = Record<string, unknown>;
 

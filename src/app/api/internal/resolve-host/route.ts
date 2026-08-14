@@ -157,19 +157,25 @@ export async function GET(req: NextRequest) {
   // (so resubscribing instantly restores it without re-claiming the
   // slug).
   if (by === "subdomain") {
+    // Gating moved OUT of the `where` and INTO code (Luigi 2026-08-14) so a LAPSED
+    // subscription can be distinguished from "no such host". Same single query; the
+    // active path behaves exactly as before. See resellerLapsedRef below.
     const reseller = await prisma.resellerProfile.findFirst({
-      where: {
-        genericSubdomain: value,
-        status: "approved",
-        whiteLabelStatus: "active",
-      },
-      select: { id: true },
+      where: { genericSubdomain: value, status: "approved" },
+      select: { id: true, whiteLabelStatus: true, referralCode: true },
     });
-    if (reseller) {
+    if (reseller?.whiteLabelStatus === "active") {
       return NextResponse.json({
         slug: null,
         hasHostedSite: false,
         resellerProfileId: reseller.id,
+      });
+    }
+    if (reseller) {
+      return NextResponse.json({
+        slug: null,
+        hasHostedSite: false,
+        resellerLapsedRef: reseller.referralCode,
       });
     }
   }
@@ -183,6 +189,9 @@ export async function GET(req: NextRequest) {
   // simply stops routing — they keep the Vercel binding but the proxy
   // 404s until they reactivate.
   if (by === "customDomain") {
+    // As above: entitlement gating happens in code so a lapsed partner degrades to a
+    // redirect instead of a 404. Printed flyers carry these domains — see
+    // src/lib/reseller/referral-url.ts.
     const reseller = await prisma.resellerProfile.findFirst({
       where: {
         // Same www/apex normalization as the restaurant lookup above —
@@ -190,16 +199,21 @@ export async function GET(req: NextRequest) {
         customDomain: { in: candidates },
         customDomainStatus: "verified",
         status: "approved",
-        whiteLabelStatus: "active",
-        whiteLabelTier: "full",
       },
-      select: { id: true },
+      select: { id: true, whiteLabelStatus: true, whiteLabelTier: true, referralCode: true },
     });
-    if (reseller) {
+    if (reseller?.whiteLabelStatus === "active" && reseller.whiteLabelTier === "full") {
       return NextResponse.json({
         slug: null,
         hasHostedSite: false,
         resellerProfileId: reseller.id,
+      });
+    }
+    if (reseller) {
+      return NextResponse.json({
+        slug: null,
+        hasHostedSite: false,
+        resellerLapsedRef: reseller.referralCode,
       });
     }
   }

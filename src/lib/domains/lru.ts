@@ -50,6 +50,14 @@ export type TenantInfo = {
    *  the proxy 308s to the same path on this new live domain, so printed
    *  QR codes and old links keep working after a domain switch. */
   redirectToHost?: string | null;
+  /** The host matched an APPROVED reseller whose white-label subscription has
+   *  LAPSED (or, for a custom domain, dropped off the Full tier). The row still
+   *  carries the domain, so resubscribing restores it instantly — but until then
+   *  the host must not serve the paid branded experience. This is the partner's
+   *  referralCode, and the proxy 302s to `<platform>/signup?ref=<code>` instead of
+   *  404ing, so PRINTED flyers carrying that domain keep attributing after a
+   *  partner cancels. Without it their paper becomes landfill. Luigi 2026-08-14. */
+  resellerLapsedRef?: string | null;
 };
 
 type Entry = TenantInfo & { expiresAt: number };
@@ -84,6 +92,7 @@ export function getCached(host: string): { hit: true; info: TenantInfo } | { hit
       customDomainActive: e.customDomainActive ?? true,
       subdomain: e.subdomain ?? null,
       redirectToHost: e.redirectToHost ?? null,
+      resellerLapsedRef: e.resellerLapsedRef ?? null,
     },
   };
 }
@@ -92,7 +101,9 @@ export function setCached(host: string, info: TenantInfo): void {
   // A redirect answer (previous custom domain → new one) is a REAL resolution,
   // not a miss, even though it carries no slug — cache it for the positive TTL
   // so a redirected domain doesn't re-query the resolver every 10 seconds.
-  const resolved = info.slug !== null || !!info.redirectToHost;
+  // A lapsed-reseller answer is likewise a real resolution: the host IS ours, it
+  // just isn't entitled today. 60s also means a resubscribe goes live within a minute.
+  const resolved = info.slug !== null || !!info.redirectToHost || !!info.resellerLapsedRef;
   const ttl = resolved ? POSITIVE_TTL_MS : NEGATIVE_TTL_MS;
   cache.set(host, { ...info, expiresAt: Date.now() + ttl });
   if (cache.size > MAX_ENTRIES) {

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/db";
 import { getSessionUser, isResellerView } from "@/lib/session";
 import { decrypt } from "@/lib/encrypt";
+import { buildResellerReferralUrl } from "@/lib/reseller/referral-url";
 import { ProfileClient } from "./ProfileClient";
 
 export default async function ResellerProfilePage() {
@@ -25,7 +26,10 @@ export default async function ResellerProfilePage() {
     }
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+  // Referral link on the partner's OWN most-branded host — a paid Branded partner used to
+  // be shown feefreeordering.com here despite paying for a custom domain. See
+  // src/lib/reseller/referral-url.ts.
+  const referral = buildResellerReferralUrl(profile);
 
   return (
     <ProfileClient
@@ -38,7 +42,7 @@ export default async function ResellerProfilePage() {
         payoutMethod: (profile.payoutMethod as "paypal" | "bank" | "other" | null) ?? null,
         payoutDetails: payoutDetailsDecrypted,
         referralCode: profile.referralCode,
-        referralUrl: `${baseUrl}/signup?ref=${profile.referralCode}`,
+        referralUrl: referral.url,
       }}
     />
   );

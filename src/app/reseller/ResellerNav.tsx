@@ -87,6 +87,7 @@ const groups: Group[] = [
     items: [
       { href: "/reseller/sales/preamble", label: "Preamble" },
       { href: "/reseller/sales/way-to-go", label: "Way to go" },
+      { href: "/reseller/marketing-kit", label: "Marketing Kit" },
       { href: "/reseller/sales/partner-resources", label: "Partner Resources" },
       { href: "/reseller/sales/restaurant-resources", label: "Restaurant Resources" },
     ],

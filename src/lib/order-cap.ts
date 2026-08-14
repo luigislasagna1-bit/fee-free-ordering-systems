@@ -31,7 +31,10 @@
 import prisma from "@/lib/db";
 import { hasAnyPaidAddOn } from "@/lib/entitlements";
 
-export const FREE_PLAN_MONTHLY_CAP = 100;
+// Lives in order-cap-constants.ts so copy (e.g. partner flyers) can read the number without
+// importing prisma. Imported AND re-exported so every existing importer is unaffected.
+import { FREE_PLAN_MONTHLY_CAP } from "./order-cap-constants";
+export { FREE_PLAN_MONTHLY_CAP };
 
 /** Returns the first day of the calendar month AFTER the given date,
  *  at 00:00 UTC. Used as the next-reset timestamp. */

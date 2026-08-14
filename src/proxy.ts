@@ -329,6 +329,7 @@ export async function proxy(req: NextRequest) {
   let customDomainActive = true;
   let tenantSubdomain: string | null = null;
   let redirectToHost: string | null = null;
+  let resellerLapsedRef: string | null = null;
 
   const cached = getCached(cacheKey);
   if (cached.hit) {
@@ -338,6 +339,7 @@ export async function proxy(req: NextRequest) {
     customDomainActive = cached.info.customDomainActive ?? true;
     tenantSubdomain = cached.info.subdomain ?? null;
     redirectToHost = cached.info.redirectToHost ?? null;
+    resellerLapsedRef = cached.info.resellerLapsedRef ?? null;
   } else {
     try {
       const resolveUrl = new URL("/api/internal/resolve-host", req.url);
@@ -348,14 +350,15 @@ export async function proxy(req: NextRequest) {
         headers["x-internal-key"] = process.env.INTERNAL_API_SECRET;
       }
       const res = await fetch(resolveUrl, { headers });
-      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean; resellerProfileId?: string | null; customDomainActive?: boolean; subdomain?: string | null; redirectToHost?: string | null };
+      const data = (await res.json()) as { slug: string | null; hasHostedSite?: boolean; resellerProfileId?: string | null; customDomainActive?: boolean; subdomain?: string | null; redirectToHost?: string | null; resellerLapsedRef?: string | null };
       slug = data.slug ?? null;
       hasHostedSite = !!data.hasHostedSite;
       resellerProfileId = data.resellerProfileId ?? null;
       customDomainActive = data.customDomainActive ?? true;
       tenantSubdomain = data.subdomain ?? null;
       redirectToHost = data.redirectToHost ?? null;
-      setCached(cacheKey, { slug, hasHostedSite, resellerProfileId, customDomainActive, subdomain: tenantSubdomain, redirectToHost });
+      resellerLapsedRef = data.resellerLapsedRef ?? null;
+      setCached(cacheKey, { slug, hasHostedSite, resellerProfileId, customDomainActive, subdomain: tenantSubdomain, redirectToHost, resellerLapsedRef });
     } catch {
       // If the resolver is unreachable, fail open to the marketing page. This
       // matters because a transient resolver outage shouldn't 500 the whole
@@ -443,6 +446,29 @@ export async function proxy(req: NextRequest) {
     const requestHeaders = new Headers(req.headers);
     requestHeaders.set("x-reseller-profile-id", resellerProfileId);
     return NextResponse.rewrite(targetUrl, { request: { headers: requestHeaders } });
+  }
+
+  // ── Lapsed RESELLER branded host → redirect to the platform signup ─
+  // The host matched an approved partner whose white-label subscription lapsed (or whose
+  // custom domain dropped off the Full tier). Their row keeps the domain so resubscribing
+  // restores it instantly — but until then this host must not 404, because PRINTED
+  // collateral carries it: flyers, door hangers, business cards, bag stickers. 302 to the
+  // platform signup PRESERVING the ?ref= attribution so paper printed while they were
+  // subscribed keeps crediting them. Mirrors the lapsed-custom-domain behaviour below,
+  // and must sit BEFORE the !slug 404 (a reseller host legitimately has no slug).
+  // Entitlement-dependent → must never be cached (AGENTS.md). Luigi 2026-08-14.
+  if (resellerLapsedRef && !slug) {
+    const target = new URL(`https://${PLATFORM_DOMAIN}/signup`);
+    target.searchParams.set("ref", resellerLapsedRef);
+    // Carry any other query the caller had (utm_*, etc.) without letting it clobber ref.
+    req.nextUrl.searchParams.forEach((v, k) => {
+      if (k !== "ref") target.searchParams.set(k, v);
+    });
+    const res = NextResponse.redirect(target, 302);
+    res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+    res.headers.set("Pragma", "no-cache");
+    res.headers.set("Expires", "0");
+    return res;
   }
 
   if (!slug) {

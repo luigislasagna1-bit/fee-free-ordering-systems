@@ -11,6 +11,7 @@
  */
 import prisma from "@/lib/db";
 import { sendResellerApplicationStatusEmail, setEmailImprint, setEmailLogoUrl } from "@/lib/email";
+import { buildResellerReferralUrl, RESELLER_REFERRAL_URL_SELECT } from "@/lib/reseller/referral-url";
 
 type Variant = "received" | "approved" | "rejected";
 
@@ -31,7 +32,11 @@ export async function notifyResellerOfApplicationChange(
       where: { id: resellerProfileId },
       select: {
         companyName: true,
-        referralCode: true,
+        // The white-label/domain fields buildResellerReferralUrl() needs. Mostly
+        // future-proofing (a brand-new approval has no subscription yet), but a
+        // RE-approved suspended paid partner gets their own domain, and leaving one
+        // hand-rolled concatenation behind is how this drifts again.
+        ...RESELLER_REFERRAL_URL_SELECT,
         user: { select: { email: true, name: true } },
       },
     });
@@ -46,7 +51,7 @@ export async function notifyResellerOfApplicationChange(
     // start sending it to restaurants right away without an extra step.
     const referralUrl =
       variant === "approved" && profile.referralCode
-        ? `${baseUrl}/signup?ref=${profile.referralCode}`
+        ? buildResellerReferralUrl(profile).url
         : null;
     const dashboardUrl =
       variant === "approved"

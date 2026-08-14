@@ -14,18 +14,39 @@ import path from "path";
  * PATCHes into ResellerProfile.brandLogoUrl via /api/reseller/branding.
  */
 
-const ALLOWED_TYPES: Record<string, string> = {
+/**
+ * Allowed types are PURPOSE-SCOPED (Luigi 2026-08-14).
+ *
+ * A `logo` feeds the Marketing Kit's server-side renderer, and satori's supported image list
+ * is png/apng/jpeg/gif/svg — a WebP source THROWS `Unsupported image type: image/webp`
+ * mid-render. Worse, `ImageResponse` builds its 200 + `content-type: image/png` response
+ * BEFORE rendering, so that failure ships a truncated, broken file rather than an error.
+ * WebP was accepted for logos until a partner's logo would have silently broken every flyer
+ * they generated. If WebP logos are ever wanted back, transcode on upload — don't just
+ * re-add the MIME type.
+ *
+ * A `background` (the branded login page's hero image) is only ever rendered by a BROWSER,
+ * which handles WebP fine — so it keeps WebP. Scoping this per purpose rather than blanket-
+ * blocking avoids regressing the login-background upload, which shares this route.
+ */
+const BASE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/jpg": "jpg",
   "image/png": "png",
-  "image/webp": "webp",
-  // SVG for logos — common request, but treat with care since SVG can
-  // contain scripts. Vercel Blob serves with image/svg+xml so it can't
-  // execute in an <img> tag, but blocking <object>/iframe usage is the
-  // caller's responsibility. We keep it allowlisted here because logo
-  // upload is a controlled flow.
-  "image/svg+xml": "svg",
 };
+
+// SVG for logos — common request, but treat with care since SVG can contain scripts.
+// Vercel Blob serves with image/svg+xml so it can't execute in an <img> tag, but blocking
+// <object>/iframe usage is the caller's responsibility. Allowlisted because logo upload is
+// a controlled flow.
+const LOGO_TYPES: Record<string, string> = { ...BASE_TYPES, "image/svg+xml": "svg" };
+const BACKGROUND_TYPES: Record<string, string> = { ...BASE_TYPES, "image/webp": "webp" };
+
+function allowedTypesFor(purpose: string | null): { map: Record<string, string>; label: string } {
+  return purpose === "background"
+    ? { map: BACKGROUND_TYPES, label: "JPG, PNG, or WebP" }
+    : { map: LOGO_TYPES, label: "JPG, PNG, or SVG" };
+}
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 
 const HAS_BLOB = !!process.env.BLOB_READ_WRITE_TOKEN;
@@ -53,9 +74,16 @@ export async function POST(req: NextRequest) {
   const file = form.get("file") as File | null;
   if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 });
 
-  const ext = ALLOWED_TYPES[file.type];
+  // Defaults to the strict LOGO set when absent — the safer default, since the logo is the
+  // one that reaches the flyer renderer.
+  const purposeRaw = form.get("purpose");
+  const { map: allowedTypes, label: allowedLabel } = allowedTypesFor(
+    typeof purposeRaw === "string" ? purposeRaw : null,
+  );
+
+  const ext = allowedTypes[file.type];
   if (!ext) {
-    return NextResponse.json({ error: "Only JPG, PNG, WebP, and SVG images are allowed" }, { status: 400 });
+    return NextResponse.json({ error: `Only ${allowedLabel} images are allowed` }, { status: 400 });
   }
   if (file.size > MAX_SIZE) {
     return NextResponse.json({ error: "Image must be under 5 MB" }, { status: 400 });

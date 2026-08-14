@@ -36,9 +36,11 @@ export function LogoClient({
     setBgBusy("upload");
     setBgError(null);
     try {
-      // Step 1 — upload bytes
+      // Step 1 — upload bytes. purpose="background" keeps WebP allowed here: this image is
+      // only ever rendered by a browser, unlike the logo which feeds the flyer renderer.
       const form = new FormData();
       form.append("file", file);
+      form.append("purpose", "background");
       const uploadRes = await fetch("/api/reseller/upload", {
         method: "POST",
         body: form,
@@ -193,7 +195,7 @@ export function LogoClient({
             <div className="text-center">
               <Upload className="w-8 h-8 text-gray-400 mx-auto mb-2" />
               <div className="text-sm text-gray-600">No logo yet</div>
-              <div className="text-xs text-gray-400 mt-1">PNG, JPG, WebP, or SVG · max 5 MB</div>
+              <div className="text-xs text-gray-400 mt-1">PNG, JPG, or SVG · max 5 MB</div>
             </div>
           )}
         </div>
@@ -206,7 +208,7 @@ export function LogoClient({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/jpeg,image/png,image/webp,image/svg+xml"
+            accept="image/jpeg,image/png,image/svg+xml"
             className="hidden"
             onChange={(e) => {
               const f = e.target.files?.[0];
