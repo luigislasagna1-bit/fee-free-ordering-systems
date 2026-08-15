@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, ArrowRight } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
+import { formatCurrency } from "@/lib/utils";
 import { buildSeoLinks, parseSeoSlug } from "@/lib/hosted-site-seo";
 import { resolvePoweredByCredit } from "@/lib/white-label";
 import { safeJsonLd } from "@/lib/safe-json-ld";
@@ -254,7 +255,7 @@ export default async function SeoLandingPage({
                     <div className="flex items-start justify-between gap-3">
                       <h3 className="font-semibold text-gray-900">{item.name}</h3>
                       <span className="font-bold" style={{ color: themeColor }}>
-                        ${item.price.toFixed(2)}
+                        {formatCurrency(item.price, r.currency)}
                       </span>
                     </div>
                     {item.description && (

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Nalaganje Google Maps ni uspelo. Preverite omejitve svojega API ključa.",
       "restaurantMarker": "Restavracija",
       "yourAddress": "Vaš naslov",
-      "tooltipFee": "Dostava: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Dostava: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "Predviden čas: ~{minutes} min"
     },
     "forgotForm": {

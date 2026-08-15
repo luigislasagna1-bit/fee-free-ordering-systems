@@ -20,6 +20,9 @@ export default async function RestaurantInfoPage({ params }: { params: Promise<{
       // configured an imprint or logo). Luigi 2026-06-23.
       resellerProfile: { select: RESELLER_WHITE_LABEL_SELECT },
       phone: true, email: true, address: true, city: true, state: true, zip: true,
+      // Drives the delivery-zone fee/minimum formatting below — without it the
+      // legend fell back to a hardcoded "$" on Euro stores (Fabrizio #17).
+      currency: true,
       lat: true, lng: true,
       mapProvider: true, googleMapsApiKey: true,
       logoUrl: true, bannerUrl: true,

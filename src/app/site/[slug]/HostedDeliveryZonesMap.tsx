@@ -33,12 +33,15 @@ export function HostedDeliveryZonesMap({
   restaurantLat,
   restaurantLng,
   zones,
+  currency,
   provider,
   googleMapsApiKey,
 }: {
   restaurantLat: number;
   restaurantLng: number;
   zones: HostedDeliveryZone[];
+  /** The restaurant's ISO 4217 code — the zone tooltips render fees in it. */
+  currency: string;
   provider: "leaflet" | "google";
   googleMapsApiKey?: string;
 }) {
@@ -47,6 +50,7 @@ export function HostedDeliveryZonesMap({
       restaurantLat={restaurantLat}
       restaurantLng={restaurantLng}
       zones={zones}
+      currency={currency}
       provider={provider}
       googleMapsApiKey={googleMapsApiKey}
     />

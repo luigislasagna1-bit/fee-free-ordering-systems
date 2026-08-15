@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "โหลด Google Maps ไม่ได้ ตรวจสอบข้อจำกัด API key ของคุณ",
       "restaurantMarker": "ร้านอาหาร",
       "yourAddress": "ที่อยู่ของคุณ",
-      "tooltipFee": "ค่าจัดส่ง: ${fee}",
-      "tooltipMin": "ขั้นต่ำ: ${min}",
+      "tooltipFee": "ค่าจัดส่ง: {fee}",
+      "tooltipMin": "ขั้นต่ำ: {min}",
       "tooltipEta": "เวลาโดยประมาณ: ~{minutes} นาที"
     },
     "forgotForm": {

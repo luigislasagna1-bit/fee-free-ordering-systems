@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Не можа да се зареди Google Maps. Провери ограниченията на API ключа си.",
       "restaurantMarker": "Ресторант",
       "yourAddress": "Твоят адрес",
-      "tooltipFee": "Такса: ${fee}",
-      "tooltipMin": "Мин.: ${min}",
+      "tooltipFee": "Такса: {fee}",
+      "tooltipMin": "Мин.: {min}",
       "tooltipEta": "Прогноза: ~{minutes} мин"
     },
     "forgotForm": {

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "No s'ha pogut carregar Google Maps. Comprova les restriccions de la teva clau API.",
       "restaurantMarker": "Restaurant",
       "yourAddress": "La teva adreça",
-      "tooltipFee": "Tarifa: ${fee}",
-      "tooltipMin": "Mín: ${min}",
+      "tooltipFee": "Tarifa: {fee}",
+      "tooltipMin": "Mín: {min}",
       "tooltipEta": "Temps estimat: ~{minutes} min"
     },
     "forgotForm": {

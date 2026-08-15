@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { parseTheme } from "@/lib/theme";
+import { formatCurrency } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { PoweredByCredit } from "@/components/PoweredByFeeFree";
 import type { PoweredByCredit as PoweredByCreditValue } from "@/lib/white-label";
@@ -50,6 +51,10 @@ interface DeliveryZone {
 interface Restaurant {
   slug: string;
   name: string;
+  /** ISO 4217 code the restaurant prices in ("usd", "eur", …) — the
+   *  delivery-zone fee/minimum line below MUST render in it. Fabrizio #17
+   *  (2026-08-12): a Euro store's info page advertised "$" zones. */
+  currency: string;
   slogan?: string;
   description?: string;
   phone?: string;
@@ -99,6 +104,10 @@ export function RestaurantInfoClient({
 }) {
   const tInfo = useTranslations("info");
   const tOrdering = useTranslations("ordering");
+  // Same strings the map's hover tooltips use, so the legend under the map and
+  // the tooltip on it can never disagree — and both are already translated in
+  // all 38 locales.
+  const tZones = useTranslations("customer.deliveryZones");
   const [inquiry, setInquiry] = useState({ name: "", email: "", phone: "", message: "" });
   const [sending, setSending] = useState(false);
 
@@ -438,19 +447,30 @@ export function RestaurantInfoClient({
               restaurantLat={restaurant.lat}
               restaurantLng={restaurant.lng}
               zones={restaurant.deliveryZones as any}
+              currency={restaurant.currency}
               provider={restaurant.mapProvider ?? "leaflet"}
               googleMapsApiKey={restaurant.googleMapsApiKey ?? undefined}
             />
             <ul className="mt-3 space-y-1.5 text-sm">
-              {restaurant.deliveryZones!.map((z) => (
-                <li key={z.id} className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: z.color }} />
-                  <span className="font-semibold">{z.name}</span>
-                  <span className="text-gray-500">
-                    — Min ${z.minimumOrder.toFixed(2)}, Fee ${z.deliveryFee.toFixed(2)}, ~{z.estimatedMinutes} min
-                  </span>
-                </li>
-              ))}
+              {restaurant.deliveryZones!.map((z) => {
+                // Fee / minimum / ETA in the RESTAURANT's currency and language.
+                // This line used to be hardcoded English with a literal "$",
+                // so a Euro store advertised dollar zones (Fabrizio #17).
+                const parts = [
+                  tZones("tooltipFee", { fee: formatCurrency(z.deliveryFee, restaurant.currency) }),
+                  ...(z.minimumOrder > 0
+                    ? [tZones("tooltipMin", { min: formatCurrency(z.minimumOrder, restaurant.currency) })]
+                    : []),
+                  tZones("tooltipEta", { minutes: z.estimatedMinutes }),
+                ];
+                return (
+                  <li key={z.id} className="flex items-center gap-2">
+                    <span className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: z.color }} />
+                    <span className="font-semibold">{z.name}</span>
+                    <span className="text-gray-500">— {parts.join(", ")}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}

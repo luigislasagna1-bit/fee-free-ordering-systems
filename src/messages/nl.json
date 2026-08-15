@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Maps kon niet worden geladen. Controleer de beperkingen van je API-sleutel.",
       "restaurantMarker": "Restaurant",
       "yourAddress": "Jouw adres",
-      "tooltipFee": "Kosten: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Kosten: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "Schatting: ~{minutes} min"
     },
     "forgotForm": {

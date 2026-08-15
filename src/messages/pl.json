@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Nie udało się załadować Google Maps. Sprawdź ograniczenia klucza API.",
       "restaurantMarker": "Restauracja",
       "yourAddress": "Twój adres",
-      "tooltipFee": "Opłata: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Opłata: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "Czas dostawy: ~{minutes} min"
     },
     "forgotForm": {

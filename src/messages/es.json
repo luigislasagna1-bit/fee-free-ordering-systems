@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "No se pudo cargar Google Maps. Verifica las restricciones de tu clave de API.",
       "restaurantMarker": "Restaurante",
       "yourAddress": "Tu dirección",
-      "tooltipFee": "Tarifa: ${fee}",
-      "tooltipMin": "Mín: ${min}",
+      "tooltipFee": "Tarifa: {fee}",
+      "tooltipMin": "Mín: {min}",
       "tooltipEta": "Tiempo estimado: ~{minutes} min"
     },
     "forgotForm": {

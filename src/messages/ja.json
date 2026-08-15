@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Mapsを読み込めませんでした。APIキーの制限をご確認ください。",
       "restaurantMarker": "レストラン",
       "yourAddress": "お届け先住所",
-      "tooltipFee": "配達料：${fee}",
-      "tooltipMin": "最低注文：${min}",
+      "tooltipFee": "配達料：{fee}",
+      "tooltipMin": "最低注文：{min}",
       "tooltipEta": "到着予定：約{minutes}分"
     },
     "forgotForm": {

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Nem sikerült betölteni a Google Maps-et. Ellenőrizd az API-kulcs korlátozásait.",
       "restaurantMarker": "Étterem",
       "yourAddress": "A te címed",
-      "tooltipFee": "Díj: ${fee}",
-      "tooltipMin": "Min.: ${min}",
+      "tooltipFee": "Díj: {fee}",
+      "tooltipMin": "Min.: {min}",
       "tooltipEta": "Becsült idő: ~{minutes} perc"
     },
     "forgotForm": {

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Maps를 불러올 수 없습니다. API 키 제한을 확인해 주세요.",
       "restaurantMarker": "식당",
       "yourAddress": "내 주소",
-      "tooltipFee": "배달료: ${fee}",
-      "tooltipMin": "최소 주문: ${min}",
+      "tooltipFee": "배달료: {fee}",
+      "tooltipMin": "최소 주문: {min}",
       "tooltipEta": "예상 시간: ~{minutes}분"
     },
     "forgotForm": {

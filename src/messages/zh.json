@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "无法加载 Google Maps，请检查 API 密钥限制。",
       "restaurantMarker": "餐厅",
       "yourAddress": "您的地址",
-      "tooltipFee": "配送费：${fee}",
-      "tooltipMin": "最低金额：${min}",
+      "tooltipFee": "配送费：{fee}",
+      "tooltipMin": "最低金额：{min}",
       "tooltipEta": "预计时间：约 {minutes} 分钟"
     },
     "forgotForm": {

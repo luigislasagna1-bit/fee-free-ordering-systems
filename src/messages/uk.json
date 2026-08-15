@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Не вдалося завантажити Google Maps. Перевірте обмеження вашого ключа API.",
       "restaurantMarker": "Ресторан",
       "yourAddress": "Ваша адреса",
-      "tooltipFee": "Доставка: ${fee}",
-      "tooltipMin": "Мін.: ${min}",
+      "tooltipFee": "Доставка: {fee}",
+      "tooltipMin": "Мін.: {min}",
       "tooltipEta": "Час доставки: ~{minutes} хв"
     },
     "forgotForm": {

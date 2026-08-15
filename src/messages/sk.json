@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Maps sa nepodarilo načítať. Skontrolujte obmedzenia vášho API kľúča.",
       "restaurantMarker": "Reštaurácia",
       "yourAddress": "Vaša adresa",
-      "tooltipFee": "Poplatok: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Poplatok: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "ETA: ~{minutes} min"
     },
     "forgotForm": {

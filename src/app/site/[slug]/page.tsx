@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Phone, Mail, Globe, Clock, ShoppingBag } from "lucide-react";
 import { loadHostedSite } from "@/lib/hosted-site";
+import { formatCurrency } from "@/lib/utils";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
 import { safeJsonLd } from "@/lib/safe-json-ld";
 import { sanitizeExternalHref } from "@/lib/html-safe";
@@ -871,7 +872,7 @@ export default async function HostedSitePage({
                     <div className="flex items-start justify-between gap-3">
                       <h3 className="font-semibold text-gray-900 min-w-0">{item.name}</h3>
                       <span className="font-bold whitespace-nowrap flex-shrink-0" style={{ color: themeColor }}>
-                        ${item.price.toFixed(2)}
+                        {formatCurrency(item.price, r.currency)}
                       </span>
                     </div>
                     {item.description && (
@@ -1004,6 +1005,7 @@ export default async function HostedSitePage({
               restaurantLat={r.lat}
               restaurantLng={r.lng}
               zones={r.deliveryZones}
+              currency={r.currency}
               provider={r.mapProvider}
               googleMapsApiKey={r.googleMapsApiKey ?? undefined}
             />
@@ -1021,8 +1023,8 @@ export default async function HostedSitePage({
                   <div className="flex-1 min-w-0">
                     <div className="font-semibold text-gray-900 text-sm truncate">{z.name}</div>
                     <div className="text-[11px] text-gray-500">
-                      {z.deliveryFee > 0 ? `$${z.deliveryFee.toFixed(2)} fee` : "Free delivery"}
-                      {z.minimumOrder > 0 ? ` · $${z.minimumOrder.toFixed(0)} min` : ""}
+                      {z.deliveryFee > 0 ? `${formatCurrency(z.deliveryFee, r.currency)} fee` : "Free delivery"}
+                      {z.minimumOrder > 0 ? ` · ${formatCurrency(z.minimumOrder, r.currency)} min` : ""}
                       {z.estimatedMinutes > 0 ? ` · ~${z.estimatedMinutes} min` : ""}
                     </div>
                   </div>

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Không thể tải Google Maps. Kiểm tra lại các hạn chế API key của bạn.",
       "restaurantMarker": "Nhà hàng",
       "yourAddress": "Địa chỉ của bạn",
-      "tooltipFee": "Phí: ${fee}",
-      "tooltipMin": "Tối thiểu: ${min}",
+      "tooltipFee": "Phí: {fee}",
+      "tooltipMin": "Tối thiểu: {min}",
       "tooltipEta": "Dự kiến: ~{minutes} phút"
     },
     "forgotForm": {

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "تعذّر تحميل Google Maps. تحقق من قيود مفتاح API الخاص بك.",
       "restaurantMarker": "المطعم",
       "yourAddress": "عنوانك",
-      "tooltipFee": "الرسوم: ${fee}",
-      "tooltipMin": "الحد الأدنى: ${min}",
+      "tooltipFee": "الرسوم: {fee}",
+      "tooltipMin": "الحد الأدنى: {min}",
       "tooltipEta": "الوقت التقديري: ~{minutes} دقيقة"
     },
     "forgotForm": {

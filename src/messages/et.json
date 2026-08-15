@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Mapsi laadimine ebaõnnestus. Kontrolli API võtme piiranguid.",
       "restaurantMarker": "Restoran",
       "yourAddress": "Sinu aadress",
-      "tooltipFee": "Tasu: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Tasu: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "ETA: ~{minutes} min"
     },
     "forgotForm": {

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Maps लोड नहीं हो सका। अपनी API कुंजी प्रतिबंध जांचें।",
       "restaurantMarker": "रेस्तरां",
       "yourAddress": "आपका पता",
-      "tooltipFee": "शुल्क: ${fee}",
-      "tooltipMin": "न्यूनतम: ${min}",
+      "tooltipFee": "शुल्क: {fee}",
+      "tooltipMin": "न्यूनतम: {min}",
       "tooltipEta": "ETA: ~{minutes} मिनट"
     },
     "forgotForm": {

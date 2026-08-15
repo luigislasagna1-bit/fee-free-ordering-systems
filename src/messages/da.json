@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Kunne ikke indlæse Google Maps. Kontroller dine API-nøglebegrænsninger.",
       "restaurantMarker": "Restaurant",
       "yourAddress": "Din adresse",
-      "tooltipFee": "Gebyr: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Gebyr: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "ETA: ~{minutes} min"
     },
     "forgotForm": {

@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Δεν ήταν δυνατή η φόρτωση του Google Maps. Ελέγξτε τους περιορισμούς του κλειδιού API.",
       "restaurantMarker": "Εστιατόριο",
       "yourAddress": "Η διεύθυνσή σας",
-      "tooltipFee": "Χρέωση: ${fee}",
-      "tooltipMin": "Ελάχ.: ${min}",
+      "tooltipFee": "Χρέωση: {fee}",
+      "tooltipMin": "Ελάχ.: {min}",
       "tooltipEta": "Εκτ. άφιξη: ~{minutes} λεπτά"
     },
     "forgotForm": {

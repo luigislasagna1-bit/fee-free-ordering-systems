@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Tidak dapat memuat Google Maps. Periksa batasan API key Anda.",
       "restaurantMarker": "Restoran",
       "yourAddress": "Alamat Anda",
-      "tooltipFee": "Biaya: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Biaya: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "ETA: ~{minutes} menit"
     },
     "forgotForm": {

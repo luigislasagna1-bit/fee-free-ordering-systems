@@ -6,6 +6,7 @@ import { MapContainer, TileLayer, Marker as LMarker, Circle as LCircle, Tooltip 
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useGoogleMaps } from "@/lib/use-google-maps";
+import { formatCurrency } from "@/lib/utils";
 
 export type CustomerZone = {
   id: string;
@@ -22,6 +23,11 @@ interface Props {
   restaurantLat: number;
   restaurantLng: number;
   zones: CustomerZone[];
+  /** The RESTAURANT's ISO 4217 code ("usd", "eur", …). Required on purpose,
+   *  same reason formatCurrency requires it: the fee/minimum tooltips used to
+   *  bake a "$" into the translated string, so a Euro restaurant advertised
+   *  dollar delivery fees in all 38 locales. Fabrizio #17, 2026-08-12. */
+  currency: string;
   customerLat?: number | null;
   customerLng?: number | null;
   compact?: boolean;
@@ -112,7 +118,7 @@ const customerIcon = L.divIcon({
 });
 
 function LeafletVariant({
-  restaurantLat, restaurantLng, zones, customerLat, customerLng, compact,
+  restaurantLat, restaurantLng, zones, currency, customerLat, customerLng, compact,
 }: Props) {
   const t = useTranslations("customer.deliveryZones");
   const sortedZones = useMemo(
@@ -147,8 +153,8 @@ function LeafletVariant({
         >
           <LTooltip sticky>
             <strong>{zone.name}</strong>
-            <br />{t("tooltipFee", { fee: zone.deliveryFee.toFixed(2) })}
-            {zone.minimumOrder > 0 && <><br />{t("tooltipMin", { min: zone.minimumOrder.toFixed(2) })}</>}
+            <br />{t("tooltipFee", { fee: formatCurrency(zone.deliveryFee, currency) })}
+            {zone.minimumOrder > 0 && <><br />{t("tooltipMin", { min: formatCurrency(zone.minimumOrder, currency) })}</>}
             <br />{t("tooltipEta", { minutes: zone.estimatedMinutes })}
           </LTooltip>
         </LCircle>

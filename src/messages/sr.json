@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Nije moguće učitati Google Maps. Proverite ograničenja API ključa.",
       "restaurantMarker": "Restoran",
       "yourAddress": "Vaša adresa",
-      "tooltipFee": "Naknada: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Naknada: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "Procenjeno vreme: ~{minutes} min"
     },
     "forgotForm": {

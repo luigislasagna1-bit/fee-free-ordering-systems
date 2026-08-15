@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "לא ניתן לטעון את Google Maps. בדוק את הגבלות מפתח ה-API שלך.",
       "restaurantMarker": "מסעדה",
       "yourAddress": "הכתובת שלך",
-      "tooltipFee": "דמי משלוח: ${fee}",
-      "tooltipMin": "מינימום: ${min}",
+      "tooltipFee": "דמי משלוח: {fee}",
+      "tooltipMin": "מינימום: {min}",
       "tooltipEta": "זמן הגעה משוער: ~{minutes} דקות"
     },
     "forgotForm": {

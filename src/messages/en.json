@@ -7188,8 +7188,8 @@
       "googleMapsLoadError": "Couldn't load Google Maps. Check your API key restrictions.",
       "restaurantMarker": "Restaurant",
       "yourAddress": "Your address",
-      "tooltipFee": "Fee: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Fee: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "ETA: ~{minutes} min"
     },
     "forgotForm": {

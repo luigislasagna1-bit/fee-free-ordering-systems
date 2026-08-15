@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Nu s-a putut încărca Google Maps. Verificați restricțiile cheii API.",
       "restaurantMarker": "Restaurant",
       "yourAddress": "Adresa ta",
-      "tooltipFee": "Taxă: ${fee}",
-      "tooltipMin": "Minim: ${min}",
+      "tooltipFee": "Taxă: {fee}",
+      "tooltipMin": "Minim: {min}",
       "tooltipEta": "ETA: ~{minutes} min"
     },
     "forgotForm": {

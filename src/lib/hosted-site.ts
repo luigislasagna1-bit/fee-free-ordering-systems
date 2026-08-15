@@ -31,6 +31,11 @@ export interface HostedSiteData {
   state: string | null;
   zip: string | null;
   country: string;
+  /** ISO 4217 code the restaurant prices in ("usd", "eur", …). EVERY money
+   *  string on the hosted site (menu prices, delivery-zone fee/minimum) must
+   *  go through formatCurrency(amount, currency) — these were hardcoded "$"
+   *  and a Euro restaurant saw dollars. Fabrizio #17, 2026-08-12. */
+  currency: string;
   cuisineType: string | null;
   logoUrl: string | null;
   faviconUrl: string | null;
@@ -158,7 +163,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
     select: {
       id: true, name: true, slug: true, slogan: true, description: true,
       phone: true, email: true, address: true, city: true, state: true,
-      zip: true, country: true, cuisineType: true, logoUrl: true,
+      zip: true, country: true, currency: true, cuisineType: true, logoUrl: true,
       // Owner-uploaded favicon — used as the browser tab icon on the hosted
       // website (was never selected, so the site kept the platform default
       // even after the owner set one). Luigi 2026-06-05.
@@ -345,6 +350,7 @@ export async function loadHostedSite(slug: string): Promise<HostedSiteResult> {
       state: restaurant.state,
       zip: restaurant.zip,
       country: restaurant.country,
+      currency: restaurant.currency,
       cuisineType: restaurant.cuisineType,
       logoUrl: restaurant.logoUrl,
       faviconUrl: restaurant.faviconUrl,

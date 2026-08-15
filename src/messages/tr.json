@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Maps yüklenemedi. API anahtarı kısıtlamalarını kontrol edin.",
       "restaurantMarker": "Restoran",
       "yourAddress": "Adresiniz",
-      "tooltipFee": "Ücret: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Ücret: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "Tahmini süre: ~{minutes} dk"
     },
     "forgotForm": {

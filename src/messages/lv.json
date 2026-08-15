@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Neizdevās ielādēt Google Maps. Pārbaudiet API atslēgas ierobežojumus.",
       "restaurantMarker": "Restorāns",
       "yourAddress": "Jūsu adrese",
-      "tooltipFee": "Maksa: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Maksa: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "Plānotais laiks: ~{minutes} min"
     },
     "forgotForm": {

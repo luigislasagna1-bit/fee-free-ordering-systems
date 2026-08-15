@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Google Mapsin lataus epäonnistui. Tarkista API-avaimen rajoitukset.",
       "restaurantMarker": "Ravintola",
       "yourAddress": "Osoitteesi",
-      "tooltipFee": "Toimitusmaksu: ${fee}",
-      "tooltipMin": "Vähimmäis: ${min}",
+      "tooltipFee": "Toimitusmaksu: {fee}",
+      "tooltipMin": "Vähimmäis: {min}",
       "tooltipEta": "Arvioitu aika: ~{minutes} min"
     },
     "forgotForm": {

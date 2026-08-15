@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Nepavyko įkelti Google Maps. Patikrinkite API rakto apribojimus.",
       "restaurantMarker": "Restoranas",
       "yourAddress": "Jūsų adresas",
-      "tooltipFee": "Mokestis: ${fee}",
-      "tooltipMin": "Min.: ${min}",
+      "tooltipFee": "Mokestis: {fee}",
+      "tooltipMin": "Min.: {min}",
       "tooltipEta": "Numatomas laikas: ~{minutes} min"
     },
     "forgotForm": {

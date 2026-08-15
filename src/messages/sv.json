@@ -7178,8 +7178,8 @@
       "googleMapsLoadError": "Det gick inte att läsa in Google Maps. Kontrollera dina API-nyckelbegränsningar.",
       "restaurantMarker": "Restaurang",
       "yourAddress": "Din adress",
-      "tooltipFee": "Avgift: ${fee}",
-      "tooltipMin": "Min: ${min}",
+      "tooltipFee": "Avgift: {fee}",
+      "tooltipMin": "Min: {min}",
       "tooltipEta": "Beräknad tid: ~{minutes} min"
     },
     "forgotForm": {
