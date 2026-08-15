@@ -196,15 +196,24 @@ combo's insides could not be edited. None of it was visible afterwards: only the
 - **Voices**: ElevenLabs' current premade library (14 new, 8 female) is in Settings → Voice; ids verified live.
   Your store is still on "Mark" 1.1× — pick whichever you like there.
 
-**YOUR THREE STEPS:**
-1. ☐ **Local Anthropic key** (blocks the test suite): console.anthropic.com → API keys → Create Key
-   ("local-dev-nabil-sim") → Copy → open `C:\FeeFreeOrderingSystems\.env.local` in Notepad → replace the
-   value after `ANTHROPIC_API_KEY=` → save → tell me "done". Never paste the key in chat.
-2. 🔷 **Two live test calls with me on the line** (after the Fly deploy): (a) a normal half-and-half pizza +
-   wings order to confirm the new agent end-to-end; (b) the SAME call again after I flip
-   `NABIL_STT_MODEL=flux` on Vercel (Deepgram's newer listener: better turn-taking, fewer false interruptions).
-   If (b) sounds better it stays; if a call dies before the greeting, I flip it back in 30 s.
-3. 🤔 **Optional, ~US$5/mo**: an ElevenLabs API key switches on "hear this voice" in the picker (see COSTS.md).
+**RESULT (2026-08-15, later the same day): LIVE.** Release gate 🟢 GO on sha `96d56074` — **35/35 scenarios,
+100 % exact cart, 100 % items/modifiers/halves/combo slots, model 20.7¢ per est. call-minute** (ceiling 40¢
+all-in ⇒ model budget 30¢). Fly deployed to both machines (`Anthropic key OK`, health 200); Vercel deployed.
+Every scenario also passed twice across the day's earlier passes. Real-call cost measured on your last five
+calls: 25–31¢/min all-in. **A step-by-step test email is on its way to your inbox** (superadmin + support@).
+Today's Anthropic spend ≈ US$110 was the BUILD (~250 simulated calls to find/fix bugs); steady state = ~$14
+per release gate, real calls ≈ 80–95¢ for a 3-minute order.
+
+**YOUR STEPS NOW:**
+1. ✅ Local key + credit — done (2026-08-15). ⚠️ Turn on **auto-reload** at console.anthropic.com/settings/billing
+   so a suite run can never die at $0 again (it happened twice today).
+2. 🔷 **Follow the test email** (call +1 365 658 1458: half-and-half + wings + a correction; then the
+   "remove the mushrooms from that one" trick; then Admin → Phone ordering → your call → **Show timeline** and
+   **Turn this call into a regression case**). Tell me anything wrong on the ticket — it becomes a permanent test.
+3. 🔷 **Deepgram Flux experiment** (10 min with me): I flip `NABIL_STT_MODEL=flux` on Vercel, you make one
+   call; better turn-taking stays, a dead greeting gets flipped back in 30 s. Same for smart-format off.
+4. 🤔 **Optional, ~US$5/mo**: an ElevenLabs API key switches on "hear this voice" in the picker (see COSTS.md).
+5. 🤔 Voice: your store is still on "Mark" 1.1× — 14 new voices (8 female) are in Settings → Voice.
 
 ### A54. 🚨 FIRSTBUY rejected real orders — "registered to a different email" (2026-08-14)
 

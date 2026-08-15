@@ -30,9 +30,9 @@ const concurrency = opt("--concurrency", "4");
 const reportsDir = join(process.cwd(), "reports", "nabil-sim");
 mkdirSync(reportsDir, { recursive: true });
 
-function run(label: string, cmd: string, cmdArgs: string[]): boolean {
-  console.log(`\n━━━ ${label}: ${cmd} ${cmdArgs.join(" ")}`);
-  const r = spawnSync(cmd, cmdArgs, { stdio: "inherit", shell: process.platform === "win32" });
+function run(label: string, cmd: string, cmdArgs: string[], cwd?: string): boolean {
+  console.log(`\n━━━ ${label}: ${cmd} ${cmdArgs.join(" ")}${cwd ? ` (in ${cwd})` : ""}`);
+  const r = spawnSync(cmd, cmdArgs, { stdio: "inherit", shell: process.platform === "win32", cwd });
   const ok = r.status === 0;
   console.log(ok ? `✅ ${label} passed` : `❌ ${label} FAILED (exit ${r.status})`);
   return ok;
@@ -89,7 +89,8 @@ appendFileSync(historyPath, `| ${new Date().toISOString()} | ${sha} | ${green ? 
 if (!green) process.exit(1);
 if (flag("--deploy")) {
   const fly = process.env.FLYCTL || join(process.env.USERPROFILE || process.env.HOME || "", ".fly", "bin", process.platform === "win32" ? "flyctl.exe" : "flyctl");
-  const ok = run("fly deploy", fly, ["deploy", "--app", "nabil-voice", "--build-arg", `AGENT_VERSION=${sha}`, "--config", "services/nabil-voice/fly.toml", "--dockerfile", "services/nabil-voice/Dockerfile", "services/nabil-voice"]);
+  // Run from the service directory so flyctl picks up fly.toml + Dockerfile itself.
+  const ok = run("fly deploy", fly, ["deploy", "--app", "nabil-voice", "--build-arg", `AGENT_VERSION=${sha}`], join(process.cwd(), "services", "nabil-voice"));
   if (!ok) process.exit(1);
   console.log("Deployed. Verify: curl https://nabil-voice.fly.dev/health → 200 ok, then one live smoke call.");
 } else {
