@@ -284,10 +284,17 @@ TTS holds each sentence and DROPS one that reads as system talk before the voice
 `narration_dropped`). The deciding run (Opus-off + guard on the leak-prone ids, ≈$5) and the release gate
 (≈$14) are **waiting on Anthropic credit — it ran dry again at 16:03 UTC mid-run.**
 
+**RESULT (2026-08-15 evening): LIVE.** Vercel `bc18f3a`, Fly `4234bf1e` (both machines healthy). Final gate on the
+shipped code: 35 scenarios, **100 % exact carts, 100 % items/modifiers/halves/slots, robotic-utterance rate 0 %,
+model 20.3¢/est-min**; the single "fail" was a test-harness timing artefact (fixed, 5/5 on re-run). The Opus 5
+thinking-off candidate ran a full 35×2 gate too: 100 % exact carts, 18¢/est-min, 2.7× faster to first audio —
+but without thinking it read its own reasoning (and once the internal STATE block) aloud, so it stays an
+EXPERIMENT config behind `NABIL_MODEL/NABIL_THINKING/NABIL_TTS_CHUNK` until the guard is proven on a live call.
+Round-2 test spend ≈ US$70 (three benches, two gates, targeted runs) — more than the ~$30 I planned, because
+the model comparison was worth settling with data; the credit ran dry once more mid-run (auto-reload, please).
+
 **YOUR STEPS NOW:**
-1. 🚨 **Anthropic credit is at $0 again** — please add credit AND turn on **auto-reload** at
-   console.anthropic.com/settings/billing (three runs have now died at $0). The moment it's back I run the
-   deciding bench + the gate and deploy Fly; Vercel is already deployable independent of this.
+1. ⚠️ Turn on **auto-reload** at console.anthropic.com/settings/billing (three runs have died at $0 today).
 2. 🔷 **Call again — same script as the email**, listen for: "Sure." within ~1.5 s → "So that's a large pizza, half
    pepperoni and mushrooms, half green peppers and onions — anything else?" → no 2-cent line → no "Dishen" → your
    name only asked at the end → Jessica's voice → the total in words. Then Test 2 (two larges → "remove the
