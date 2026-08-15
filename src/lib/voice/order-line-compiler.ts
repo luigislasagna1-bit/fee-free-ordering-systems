@@ -226,7 +226,9 @@ const norm = (s: string): string =>
     // callers say the word. Same key for both — "extra cheese" must find
     // "X - Cheese", the single most common request there is. Mirrored in
     // services/nabil-voice/src/fuzzy.ts (parity test).
-    .replace(/\bx\b/g, "extra");
+    .replace(/\bx\b/g, "extra")
+    // "HG Mixed" ↔ "honey garlic mixed" — the abbreviation wing menus use.
+    .replace(/\bhg\b/g, "honey garlic");
 
 /** Singular-ish form so "mushrooms" matches "Mushroom". */
 const stem = (s: string): string => norm(s).replace(/e?s$/, "");

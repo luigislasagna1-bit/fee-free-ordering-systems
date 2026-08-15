@@ -455,6 +455,7 @@ export class CallSession {
     cart.beginTurn();
     dialogueBeginTurn(this.dialogue, turn);
     this.ctx.speakExactlyThisTurn = [];
+    this.ctx.lastUserText = synthetic ? undefined : userText;
     const cartHashBefore = cart.cartHash();
     const turnStarted = this.now();
 

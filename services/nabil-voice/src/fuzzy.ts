@@ -18,7 +18,8 @@ export const norm = (s: string): string =>
     .replace(/\s+/g, " ")
     .trim()
     // "X - Cheese" / "X Large" ↔ "extra cheese" / "extra large" (mirrors the compiler).
-    .replace(/\bx\b/g, "extra");
+    .replace(/\bx\b/g, "extra")
+    .replace(/\bhg\b/g, "honey garlic");
 
 /** Singular-ish form so "mushrooms" matches "Mushroom". */
 export const stem = (s: string): string => norm(s).replace(/e?s$/, "");

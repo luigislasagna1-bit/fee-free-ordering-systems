@@ -16,7 +16,7 @@
  * both (build-line is additive; the Fly side may need the new kinds).
  */
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, appendFileSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, appendFileSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 const args = process.argv.slice(2);
@@ -43,14 +43,16 @@ const sha = (() => {
   return (r.stdout || "").trim() || "unknown";
 })();
 const stamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+const runStartedAt = Date.now();
 const results: Array<[string, boolean]> = [];
+void stamp;
 
 results.push(["typecheck:voice", run("typecheck:voice", "npm", ["run", "typecheck:voice"])]);
 if (results.every(([, ok]) => ok)) results.push(["voice unit tests", run("voice unit tests", "npx", ["vitest", "run", "src/lib/voice"])]);
 if (results.every(([, ok]) => ok) && !flag("--skip-sim")) {
   results.push([
     "critical+injection sim",
-    run("critical+injection sim", "npx", ["tsx", "scripts/nabil-sim.ts", "--suite", "critical", "--repeat", repeat, "--concurrency", concurrency, "--out", reportsDir, "--name", `${stamp}-release`]),
+    run("critical+injection sim", "npx", ["tsx", "scripts/nabil-sim.ts", "--suite", "critical", "--repeat", repeat, "--concurrency", concurrency, "--out", reportsDir]),
   ]);
 }
 
@@ -60,7 +62,8 @@ if (results.every(([, ok]) => ok) && !flag("--skip-sim")) {
 // just wrote.
 if (results.every(([, ok]) => ok) && !flag("--skip-sim")) {
   try {
-    const files = readdirSync(reportsDir).filter((f) => f.startsWith(`${stamp}-release`) && f.endsWith(".json"));
+    // The CLI names reports by its own timestamp — take the newest critical report written since this run started.
+    const files = readdirSync(reportsDir).filter((f) => f.endsWith(".json") && f.includes("critical") && statSync(join(reportsDir, f)).mtimeMs >= runStartedAt);
     const latest = files.sort().pop();
     if (latest) {
       const m = JSON.parse(readFileSync(join(reportsDir, latest), "utf8")).metrics ?? {};

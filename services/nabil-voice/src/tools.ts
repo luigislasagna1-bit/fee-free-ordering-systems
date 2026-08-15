@@ -29,7 +29,27 @@ export type ToolContext = {
   /** speakExactly strings handed to the model this turn (claims guard). */
   speakExactlyThisTurn: string[];
   currency: string;
+  /** The caller's words this turn — `hint`s are sanitised against them so the
+   *  model cannot smuggle its own interpretation ("that one — the bacon pizza")
+   *  past the ambiguity check. */
+  lastUserText?: string;
 };
+
+/** Keep only hint words the caller actually said (plus deixis/ordinals). */
+export function sanitizeHint(hint: unknown, lastUserText: string | undefined): string | undefined {
+  if (typeof hint !== "string" || !hint.trim()) return undefined;
+  if (!lastUserText) return hint;
+  const said = new Set(lastUserText.toLowerCase().replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).filter(Boolean));
+  const stemOf = (w: string) => w.replace(/e?s$/, "");
+  const saidStems = new Set([...said].map(stemOf));
+  const kept = hint
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]+/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .filter((w) => said.has(w) || saidStems.has(stemOf(w)) || /^(that|this|it|one|first|second|third|fourth|fifth|last|both|the|a|an|l\d+)$/.test(w));
+  return kept.length ? kept.join(" ") : undefined;
+}
 
 /** Caps on the on-demand item lookup — this payload lands in the CONVERSATION. */
 const MAX_OPTION_GROUPS = 8;
@@ -80,6 +100,7 @@ const PICK_ADD_SCHEMA = {
   properties: {
     slotLabel: { type: "string", description: "The slot this pick is for, as get_item_options labelled it (e.g. 'Drink')." },
     menuItemId: { type: "string", description: "The chosen item's menuItemId EXACTLY as get_item_options gave it for that slot." },
+    quantity: { type: "integer", minimum: 1, description: "How many IDENTICAL picks this entry stands for ('four Cokes' in a choose-4 slot = one entry with quantity 4)." },
     options: { type: "array", items: { type: "string" }, description: "Choices by NAME for a non-pizza pick (dip flavour, wing sauce)." },
     ...PIZZA_FIELDS,
   },
@@ -92,7 +113,8 @@ const PICK_CHANGE_SCHEMA = {
     pickId: { type: "string", description: "From ORDER STATE, e.g. 'P2'. Preferred." },
     slotLabel: { type: "string", description: "Only if you don't know the pickId: the slot name (e.g. 'Drink')." },
     remove: { type: "boolean", description: "Take this pick out of the combo." },
-    menuItemId: { type: "string", description: "Replace the pick with this item (id from get_item_options for that slot)." },
+    menuItemId: { type: "string", description: "With pickId: replace that pick with this item. With only slotLabel: ADD this item to that slot (a slot that takes several picks — 'choose 4 pop' — gets one more each time; use quantity for several identical ones)." },
+    quantity: { type: "integer", minimum: 1, description: "When adding to a slot: how many identical picks to add." },
     options: { type: "array", items: { type: "string" } },
     addToppings: { type: "array", items: TOPPING_SCHEMA },
     removeToppings: { type: "array", items: REMOVE_TOPPING_SCHEMA },
@@ -155,7 +177,7 @@ export const TOOLS = [
         hint: {
           type: "string",
           description:
-            "ALWAYS include the caller's own words for WHICH line ('that one', 'the bacon one', 'the second pizza', 'both') — even when you also give lineId. The server double-checks: if the words could mean more than one line it returns candidates and you must ask.",
+            "ALWAYS include the caller's own words for WHICH line — VERBATIM, copied from what they said ('that one', 'the bacon one', 'the second pizza'), never your interpretation. Even when you also give lineId. The server double-checks: if the words could mean more than one line it returns candidates and you must ask.",
         },
         revertLastChange: { type: "boolean", description: "Undo the last change on this line ('no wait, that was wrong') — puts it back exactly as it was before." },
         quantity: { type: "integer", minimum: 1 },
@@ -523,12 +545,12 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
 
     case "update_line": {
       const { lineId, hint, ...changes } = input ?? {};
-      const r = await cart.updateLine({ lineId, hint }, changes);
+      const r = await cart.updateLine({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) }, changes);
       return mutationOut(ctx, r, "changed");
     }
 
     case "remove_line": {
-      const r = cart.removeLine({ lineId: input?.lineId, hint: input?.hint });
+      const r = cart.removeLine({ lineId: input?.lineId, hint: sanitizeHint(input?.hint, ctx.lastUserText) });
       return mutationOut(ctx, r, "removed");
     }
 

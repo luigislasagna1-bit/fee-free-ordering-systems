@@ -117,6 +117,8 @@ export type PickChange = {
   slotLabel?: string | null;
   remove?: boolean;
   menuItemId?: string;
+  /** For an APPEND: how many identical picks to add ("four Cokes" in a choose-4 slot). */
+  quantity?: number;
   size?: string | null;
   options?: string[];
   toppings?: ToppingReq[];
@@ -1068,7 +1070,8 @@ export class CartEngine {
     for (const raw of Array.isArray((input as any).picks) ? (input as any).picks : []) {
       const id = String(raw?.menuItemId ?? "").trim();
       if (!id) continue;
-      combo.picks.push(this.cleanPick({ ...raw, menuItemId: id }, ""));
+      const n = Math.max(1, Math.min(12, Math.floor(Number(raw?.quantity) || 1)));
+      for (let i = 0; i < n; i++) combo.picks.push(this.cleanPick({ ...raw, menuItemId: id }, ""));
     }
     this.renumberPicks(combo, "fresh");
     return combo;
@@ -1209,8 +1212,16 @@ export class CartEngine {
         const exact = picks.filter((p) => labelOf(p) === label);
         const partial = exact.length ? [] : picks.filter((p) => labelOf(p).includes(label));
         const cands = (xs: Pick[]) => xs.map((p) => ({ lineId: p.pickId, description: this.describePick(p) }));
-        if (exact.length > 1) throw { code: "ambiguous_pick", message: `Several picks are in the ${pc.slotLabel} slot — say which (pickId).`, candidates: cands(exact) };
-        if (exact.length === 1) targetPick = exact[0];
+        // A slot that takes SEVERAL picks (choose 4 pop): a new pick for the
+        // same item is another one, not a change to the first — the caller
+        // said "four Cokes", and one Coke changed four times is still one Coke
+        // (T07, 2026-08-15). Only a change WITHOUT a menuItemId, or one that
+        // names a different item for a slot holding exactly one pick, edits.
+        const sameItem = (p: Pick) => !!pc.menuItemId && String(pc.menuItemId) === p.menuItemId;
+        if (exact.length >= 1 && pc.menuItemId && exact.some(sameItem)) {
+          // append below (leave targetPick undefined)
+        } else if (exact.length > 1) throw { code: "ambiguous_pick", message: `Several picks are in the ${pc.slotLabel} slot — say which (pickId).`, candidates: cands(exact) };
+        else if (exact.length === 1) targetPick = exact[0];
         else if (partial.length === 1 && !pc.menuItemId) {
           // A pure edit ("the drink → diet") on the one pick that partially matches.
           targetPick = partial[0];
@@ -1227,10 +1238,10 @@ export class CartEngine {
         continue;
       }
       if (!targetPick) {
-        // Append a new pick (for the named slot, if given).
-        if (!pc.menuItemId) throw { code: "missing_item", message: "A new pick needs a menuItemId." };
-        const np = this.cleanPick({ ...pc, menuItemId: String(pc.menuItemId) }, "");
-        picks.push(np);
+        // Append new pick(s) (for the named slot, if given).
+        if (!pc.menuItemId) throw { code: "missing_item", message: "A new pick needs a menuItemId (use pickId to change an existing pick)." };
+        const n = Math.max(1, Math.min(12, Math.floor(Number(pc.quantity) || 1)));
+        for (let i = 0; i < n; i++) picks.push(this.cleanPick({ ...pc, menuItemId: String(pc.menuItemId) }, ""));
         this.renumberPicks(out, "keep", line);
         continue;
       }

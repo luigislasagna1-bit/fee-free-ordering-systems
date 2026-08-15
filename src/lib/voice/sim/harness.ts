@@ -369,7 +369,8 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
       cartHashBefore: ev.cartHashBefore ?? null,
       cartHashAfter: ev.cartHashAfter ?? null,
       ttftMs: ev.ttfaMs ?? ev.hops?.[0]?.ttftMs ?? null,
-      clarified: asksQuestion(ev.spoken ?? "") && !linesMutated,
+      // A question anywhere in the reply counts ("How would you like them? We have…" ends with a period).
+      clarified: /\?/.test(ev.spoken ?? "") && !linesMutated,
     });
   }
   if (nonSynthetic.length !== sends.length) {
@@ -419,7 +420,7 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
   for (const i of expectedAt) {
     const tr = turns.find((t) => t.scriptIndex === i);
     if (!tr) reasons.push(`expected a clarification after caller turn ${i}, but that turn was never delivered`);
-    else if (!tr.clarified) reasons.push(`expected a clarification after caller turn ${i} — Nabil ${asksQuestion(tr.agent) ? "asked but also changed the order" : "did not ask a question"}`);
+    else if (!tr.clarified) reasons.push(`expected a clarification after caller turn ${i} — Nabil ${/\?/.test(tr.agent) ? "asked but also changed the order" : "did not ask a question"}`);
   }
 
   // Said / not said.
