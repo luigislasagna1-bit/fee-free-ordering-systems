@@ -245,16 +245,47 @@ calls: 25–31¢/min all-in. **A step-by-step test email is on its way to your i
 Today's Anthropic spend ≈ US$110 was the BUILD (~250 simulated calls to find/fix bugs); steady state = ~$14
 per release gate, real calls ≈ 80–95¢ for a 3-minute order.
 
+**ROUND 2 — your first live call on the new agent (17:58 UTC, 72 s) and what it changed.**
+You hung up early: robotic voice, a "random" line, toppings "not understood", machine read-back, wrong price.
+The call's own timeline (the new one) shows the CART WAS EXACTLY RIGHT — large, left pepperoni + mushrooms,
+right green peppers + onions, no problems. Everything you heard wrong was in the layer between the engine and
+your ear, and each has a specific cause and fix:
+- **"Toppings not understood" / "machine read-back"** — the engine handed the model the KITCHEN TICKET string
+  ("Large 2 Topping — left half: Pepperoni, Mushrooms; right half: Green Peppers, Onions") and ordered it read
+  WORD FOR WORD, then "confirm one half at a time". A SKU that says "2 Topping" for your 4-topping order.
+  → Now the engine speaks like a person: **"a large pizza, half pepperoni and mushrooms, half green peppers and
+  onions"**, one recap, one yes; the whole order at the end reads "So that's …, …, and …" and the total is in
+  words ("twenty dollars and fifty-one cents"). The ticket string is unchanged underneath.
+- **"Wrong price"** — "about 2 cents extra" was true (4 half-toppings at 2.75 × ½ = 1.375 each round to 1.38 →
+  5.52 vs the 5.50 included) but absurd to say. → Surcharges are spoken in words and only from 50 ¢ up.
+  (Your website charges the same 2 ¢ on that pizza — a tiny rounding fix on the money path is a separate,
+  optional item; tell me if you want it.)
+- **"Random"** — the very first thing it said was "I have you down as Dishen — is that right?" (the last voice
+  ticket on your test number was Dishen; your line's history is Sam / Dishen / Jashan). → A name is only offered
+  when the last three voice orders on the number agree, and only when settling the name at the end. And "Take
+  your time." was a three-word fragment on the legacy voice — the style rule now forbids bare fragments.
+- **"Robotic voice"** — your store was on the LEGACY ElevenLabs "Rachel" at 1.1× speed. → **Switched to Jessica at
+  1.0×** on your live config (you picked her). Two experiment levers added for a live call: warmer delivery
+  (`NABIL_TTS_STABILITY=0.4`) and phrase-chunked TTS (`NABIL_TTS_CHUNK=sentence`).
+- **Silence** (5.2 s before it spoke after your pizza sentence; 2.9 s after your name) → the model now says a
+  short "Sure." before it works, and pure bookkeeping (your name, pickup) no longer costs a second model round.
+- **New guard rails**: a free 370-scenario deterministic tier runs in every test pass at $0 (the directive's
+  "hundreds → 1000+" without spend); a naturalness lint fails the release if Nabil ever speaks a ticket string
+  again; the menu resolver now carries a numeric confidence (asks on a near-tie, never guesses) and a
+  spoken-alias dictionary (GP, pep, shrooms, x-cheese, HG…); every call records which listener and voice it ran with.
+
 **YOUR STEPS NOW:**
 1. ✅ Local key + credit — done (2026-08-15). ⚠️ Turn on **auto-reload** at console.anthropic.com/settings/billing
    so a suite run can never die at $0 again (it happened twice today).
-2. 🔷 **Follow the test email** (call +1 365 658 1458: half-and-half + wings + a correction; then the
-   "remove the mushrooms from that one" trick; then Admin → Phone ordering → your call → **Show timeline** and
-   **Turn this call into a regression case**). Tell me anything wrong on the ticket — it becomes a permanent test.
+2. 🔷 **Call again — same script as the email**, listen for: "Sure." within ~1.5 s → "So that's a large pizza, half
+   pepperoni and mushrooms, half green peppers and onions — anything else?" → no 2-cent line → no "Dishen" → your
+   name only asked at the end → Jessica's voice → the total in words. Then Test 2 (two larges → "remove the
+   mushrooms from that one" must ASK). Tell me the moment anything is off — the timeline shows me every step.
 3. 🔷 **Deepgram Flux experiment** (10 min with me): I flip `NABIL_STT_MODEL=flux` on Vercel, you make one
-   call; better turn-taking stays, a dead greeting gets flipped back in 30 s. Same for smart-format off.
+   call; better turn-taking stays, a dead greeting gets flipped back in 30 s. Same for smart-format off, and for
+   the two TTS levers above.
 4. 🤔 **Optional, ~US$5/mo**: an ElevenLabs API key switches on "hear this voice" in the picker (see COSTS.md).
-5. 🤔 Voice: your store is still on "Mark" 1.1× — 14 new voices (8 female) are in Settings → Voice.
+5. 🤔 Optional money-path fix (the 2 ¢ half-topping rounding on the website) — say the word.
 
 ### A54. 🚨 FIRSTBUY rejected real orders — "registered to a different email" (2026-08-14)
 

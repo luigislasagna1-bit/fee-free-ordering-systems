@@ -10,9 +10,17 @@ timeline (`VoiceCallEvent`) + admin view + "turn call into regression case", tor
 T01–T25 + injection I01–I10 (`npm run nabil:sim`), release gate (`npm run nabil:release`),
 model-config benchmark (`npm run nabil:bench`), Twilio experiment flags (Flux STT etc.), 14 new
 ElevenLabs voices. **Definition of done = critical suite 100 % 3/3, then Vercel → Fly deploy.**
-Next: run the suite (needs local Anthropic key — OWNER-ACTIONS A55), iterate to 100 %, adversarial
-generator (`--generate`), stress mode, replay CLI, canary Fly app, Flux live test, pay-by-link
-(phone payments; PCI via link — never card numbers on the line), multilingual read-back strings.
+**Round 2 (2026-08-15 evening, after Luigi's first live call):** the cart was exactly right but the
+PRESENTATION was a machine — fixed: a spoken layer (`src/lib/voice/spoken-line.ts`, engine `spoken` /
+`spokenOrder()`, money in words, surcharges only ≥ 50 ¢), name-on-file only when the number's history
+agrees, Jessica 1.0× on Luigi's line + TTS levers (`NABIL_TTS_STABILITY`, `NABIL_TTS_CHUNK`), bookkeeping
+merge (no second model round for name/pickup) + pre-tool ack, resolver confidence + spoken-alias
+dictionary, STT/TTS on the call's versions, a FREE 370-scenario engine tier in `npm test`, naturalness
+lint in the gate, cost gate warn 30 ¢ / fail 40 ¢ model share (Luigi: quality → latency → cost).
+Next: Luigi's live calls (any wrong ticket → regression JSON → root cause), Flux / smart-format / TTS
+lever live experiments, ¢/min column in admin, paid adversarial `--generate` in 25-scenario budgeted
+batches, optional half-topping cent-allocation fix on the money path, canary Fly app, pay-by-link,
+multilingual read-back strings, audio (ASR-error) tier if Luigi provides a Deepgram key.
 
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 
