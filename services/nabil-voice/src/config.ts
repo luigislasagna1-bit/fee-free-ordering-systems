@@ -42,6 +42,9 @@ export type CallToken = {
   callSid: string;
   to: string;
   from: string;
+  /** Listener / voice ConversationRelay was configured with (from the TwiML route); null on older tokens. */
+  sttModel?: string | null;
+  ttsVoice?: string | null;
 };
 
 /** Verify a call token (mirrors src/lib/voice/session-token.ts on the app side). */
@@ -49,9 +52,17 @@ export function verifyCallToken(token: string): CallToken | null {
   try {
     const d = jwt.verify(token, CONFIG.jwtSecret) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
-      return { restaurantId, slug, callSid, to, from } as CallToken;
+      return {
+        restaurantId,
+        slug,
+        callSid,
+        to,
+        from,
+        sttModel: typeof sttModel === "string" ? sttModel : null,
+        ttsVoice: typeof ttsVoice === "string" ? ttsVoice : null,
+      } as CallToken;
     }
     return null;
   } catch {

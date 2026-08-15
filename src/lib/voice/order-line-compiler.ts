@@ -230,18 +230,51 @@ export type CompileResult = {
 /** Spoken text → comparable key. STT gives us "extra cheese", the menu says
  *  "Extra Cheese"; punctuation and plurals are noise. */
 const norm = (s: string): string =>
-  s
-    .toLowerCase()
-    .replace(/[^a-z0-9 ]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    // Menus abbreviate "extra" as a lone "X" ("X - Cheese", "X Large") while
-    // callers say the word. Same key for both — "extra cheese" must find
-    // "X - Cheese", the single most common request there is. Mirrored in
-    // services/nabil-voice/src/fuzzy.ts (parity test).
-    .replace(/\bx\b/g, "extra")
-    // "HG Mixed" ↔ "honey garlic mixed" — the abbreviation wing menus use.
-    .replace(/\bhg\b/g, "honey garlic");
+  applySpokenAliases(
+    s
+      .toLowerCase()
+      // "jalapeño" must not become "jalape o": fold accents before stripping.
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9 ]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      // Menus abbreviate "extra" as a lone "X" ("X - Cheese", "X Large") while
+      // callers say the word. Same key for both — "extra cheese" must find
+      // "X - Cheese", the single most common request there is. Mirrored in
+      // services/nabil-voice/src/fuzzy.ts (parity test).
+      .replace(/\bx\b/g, "extra")
+      // "HG Mixed" ↔ "honey garlic mixed" — the abbreviation wing menus use.
+      .replace(/\bhg\b/g, "honey garlic"),
+  );
+
+/**
+ * SPOKEN-ALIAS DICTIONARY (directive: "green pepper / green peppers / GP must
+ * resolve to the SAME modifier"). Store-agnostic pizzeria shorthand mapped to
+ * the words menus actually print, applied inside `norm` so every matcher —
+ * item search, topping/option resolution, cart target aliases — sees one key.
+ * Kept deliberately small and unambiguous; per-store aliases belong in menu
+ * data, not here. MIRRORED VERBATIM in services/nabil-voice/src/fuzzy.ts
+ * (fuzzy-parity.test.ts pins both).
+ */
+const SPOKEN_ALIASES: Array<[RegExp, string]> = [
+  [/\bgp\b/g, "green pepper"],
+  [/\bpeps?\b/g, "pepperoni"],
+  [/\b(?:shrooms?|mush)\b/g, "mushroom"],
+  [/\bdouble cheese\b/g, "extra cheese"],
+  [/\bbarbecue\b/g, "bbq"],
+  [/\bveggies?\b/g, "vegetable"],
+  [/\bmeat ?lovers?\b/g, "meat lover"],
+  [/\bmargarita\b/g, "margherita"],
+  [/\bjalapenos?\b/g, "jalapeno"],
+  [/\broasted red peppers?\b/g, "roasted red pepper"],
+  [/\bcoke zero\b/g, "coke zero"],
+];
+function applySpokenAliases(s: string): string {
+  let out = s;
+  for (const [re, to] of SPOKEN_ALIASES) out = out.replace(re, to);
+  return out;
+}
 
 /** Singular-ish form so "mushrooms" matches "Mushroom". */
 const stem = (s: string): string => norm(s).replace(/e?s$/, "");

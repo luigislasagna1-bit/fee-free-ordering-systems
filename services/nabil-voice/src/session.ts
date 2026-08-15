@@ -180,8 +180,8 @@ export class CallSession {
       modelConfig: { thinking: CONFIG.thinking, maxTokens: CONFIG.maxTokens, effort: "low" },
       menuSnapshotHash: null,
       cfgHash: null,
-      sttModel: null,
-      ttsVoice: null,
+      sttModel: token.sttModel ?? null,
+      ttsVoice: token.ttsVoice ?? null,
     };
   }
 

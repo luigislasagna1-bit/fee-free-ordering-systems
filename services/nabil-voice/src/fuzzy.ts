@@ -12,14 +12,43 @@
 
 /** Spoken text → comparable key. */
 export const norm = (s: string): string =>
-  (s ?? "")
-    .toLowerCase()
-    .replace(/[^a-z0-9 ]+/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    // "X - Cheese" / "X Large" ↔ "extra cheese" / "extra large" (mirrors the compiler).
-    .replace(/\bx\b/g, "extra")
-    .replace(/\bhg\b/g, "honey garlic");
+  applySpokenAliases(
+    (s ?? "")
+      .toLowerCase()
+      // "jalapeño" must not become "jalape o": fold accents before stripping.
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9 ]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      // "X - Cheese" / "X Large" ↔ "extra cheese" / "extra large" (mirrors the compiler).
+      .replace(/\bx\b/g, "extra")
+      .replace(/\bhg\b/g, "honey garlic"),
+  );
+
+/**
+ * SPOKEN-ALIAS DICTIONARY — VERBATIM COPY of the compiler's (see
+ * src/lib/voice/order-line-compiler.ts SPOKEN_ALIASES; fuzzy-parity.test.ts
+ * pins both). Store-agnostic pizzeria shorthand → the words menus print.
+ */
+export const SPOKEN_ALIASES: Array<[RegExp, string]> = [
+  [/\bgp\b/g, "green pepper"],
+  [/\bpeps?\b/g, "pepperoni"],
+  [/\b(?:shrooms?|mush)\b/g, "mushroom"],
+  [/\bdouble cheese\b/g, "extra cheese"],
+  [/\bbarbecue\b/g, "bbq"],
+  [/\bveggies?\b/g, "vegetable"],
+  [/\bmeat ?lovers?\b/g, "meat lover"],
+  [/\bmargarita\b/g, "margherita"],
+  [/\bjalapenos?\b/g, "jalapeno"],
+  [/\broasted red peppers?\b/g, "roasted red pepper"],
+  [/\bcoke zero\b/g, "coke zero"],
+];
+export function applySpokenAliases(s: string): string {
+  let out = s;
+  for (const [re, to] of SPOKEN_ALIASES) out = out.replace(re, to);
+  return out;
+}
 
 /** Singular-ish form so "mushrooms" matches "Mushroom". */
 export const stem = (s: string): string => norm(s).replace(/e?s$/, "");

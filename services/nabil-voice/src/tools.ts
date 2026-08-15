@@ -444,9 +444,17 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       const q = String(input?.query ?? "").trim();
       if (!q) return { error: true, code: "missing_query", message: "Say what to look for." };
       const r = menu.search(q);
+      // Confidence policy (directive: never guess a menu id): a unique
+      // high-confidence hit is used and SAID by name; a near-tie or a weak hit
+      // is a question; only when nothing scores can "not on the menu" be said.
+      const top = r.candidates[0];
+      const runnerUp = r.candidates[1];
+      const confident = !!top && top.confidence >= 0.85 && (!runnerUp || runnerUp.confidence < 0.85);
+      const plausible = r.candidates.filter((c) => c.confidence >= 0.4);
       return {
         ok: true,
         exact: r.exact,
+        confidence: r.confidence,
         sizeHint: r.sizeHint,
         candidates: r.candidates.map((c) => ({
           menuItemId: c.menuItemId,
@@ -456,17 +464,19 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           price: c.price,
           sizes: c.sizes,
           soldOut: c.soldOut,
+          confidence: c.confidence,
+          matchedOn: c.matchedOn,
           ...(c.todayDeal ? { todayDeal: c.todayDeal } : {}),
         })),
         notToday: r.notToday,
         instruction:
-          r.candidates.length === 0
+          r.candidates.length === 0 || !plausible.length
             ? r.notToday.length
               ? "That item runs on other days (see notToday) — say which day and offer something from the menu."
               : "Nothing on this menu matches. Say so plainly and offer the closest real item you can find on the menu."
-            : r.exact
-              ? "The first candidate is the item. Add it with add_to_order (get_item_options first for a pizza/combo)."
-              : "More than one item could match — say the top two by name and ask which they meant. Never pick for them.",
+            : confident || r.exact
+              ? `The first candidate is the item${top && top.matchedOn !== "name" ? ` (matched by ${top.matchedOn} — say its name, "${top?.name}", so the caller can object)` : ""}. Add it with add_to_order (get_item_options first for a pizza/combo).`
+              : `More than one item could match (${plausible.slice(0, 3).map((c) => c.name).join(" / ")}) — say the top two by name and ask which they meant. Never pick for them.`,
       };
     }
 

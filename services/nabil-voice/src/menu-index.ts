@@ -38,12 +38,26 @@ export type MenuEntry = {
   keywords: string[];
 };
 
-export type SearchCandidate = MenuEntry & { score: number };
+export type SearchCandidate = MenuEntry & {
+  score: number;
+  /** 0..1 — how sure the resolver is that THIS entry is what the caller
+   *  named. 1.0 exact name, 0.9 stem/stop-word-exact, ~0.8 every spoken token
+   *  found, 0.6 phonetic, 0.55 bounded fuzzy, <= 0.5 partial. Any two
+   *  candidates within 5 points of each other are both capped at 0.6 — a
+   *  near-tie is not a match, it is a question. */
+  confidence: number;
+  /** What the query matched on: "name" | "family" | "tokens" | "keywords" | "phonetic" | "fuzzy". */
+  matchedOn: string;
+};
 
 export type FindResult = {
   candidates: SearchCandidate[];
   /** True when the top candidate is an exact (or stem-exact) name match. */
   exact: boolean;
+  /** Confidence of the top candidate (0 when nothing matched). Policy in
+   *  tools.ts: >= 0.85 & unique -> use it (and SAY the name); several
+   *  plausible -> ask; nothing >= 0.4 -> "not on the menu" is allowed. */
+  confidence: number;
   /** A size word found in the query and stripped before matching. */
   sizeHint: string | null;
   /** Real items that exist on other days — so "the Thursday special" is answered honestly. */
@@ -68,6 +82,18 @@ const STOP = new Set([
   "can", "could", "have", "one", "two", "three", "order", "pizza", "pizzas", "combo", "deal", "size", "piece",
   "pieces", "pc", "pcs", "it", "that", "this", "to", "my", "your", "add", "another",
 ]);
+
+/** Match tier -> confidence (see SearchCandidate.confidence). Size bonuses
+ *  (+-5) and the sold-out nudge (-1) leave the tier intact. */
+export function confidenceFromScore(score: number, matchedOn: string): number {
+  if (score >= 95) return 1;
+  if (score >= 85) return 0.9;
+  if (score >= 65) return matchedOn === "keywords" ? 0.7 : 0.8;
+  if (matchedOn === "phonetic") return 0.6;
+  if (matchedOn === "fuzzy") return 0.55;
+  if (score >= 45) return 0.5;
+  return 0.4;
+}
 
 function tokens(s: string): string[] {
   return norm(s)
@@ -117,8 +143,11 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
         .filter((o: { name: string }) => o.name)
     : [];
 
-  function search(query: string, opts?: { limit?: number }): FindResult {
+  function search(rawQuery: string, opts?: { limit?: number }): FindResult {
     const limit = opts?.limit ?? MAX_CANDIDATES;
+    // "one topping" / "two topping" name a PRODUCT on N-topping menus, so the
+    // number word must survive stop-word removal as the digit the menu prints.
+    const query = String(rawQuery ?? "").replace(/\b(one|two|three|four|five|six)\b(?=\s+toppings?\b)/gi, (w) => String(["one", "two", "three", "four", "five", "six"].indexOf(w.toLowerCase()) + 1));
     const split = splitSizeToken(query);
     const qNorm = split.rest || norm(query);
     const qStem = stem(qNorm);
@@ -133,37 +162,72 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
       // finds every size of it.
       const familyN = e.familyKey;
       let score = 0;
+      let matchedOn = "";
       const nameTok = tokens(e.name).join(" ");
       const famTok = tokens(familyN).join(" ");
       const qTok = qTokens.join(" ");
-      if (nameN === qNorm || familyN === qNorm) score = 100;
-      else if (nameStem === qStem || stem(familyN) === qStem) score = 90;
+      if (nameN === qNorm || familyN === qNorm) {
+        score = 100;
+        matchedOn = nameN === qNorm ? "name" : "family";
+      } else if (nameStem === qStem || stem(familyN) === qStem) {
+        score = 90;
+        matchedOn = "name";
+      }
       // "a coke" / "the coke" — same words once stop words are gone.
-      else if (qTok && (nameTok === qTok || famTok === qTok)) score = 100;
-      else if (qTok && (stem(nameTok) === stem(qTok) || stem(famTok) === stem(qTok))) score = 90;
-      else if (qTokens.length) {
+      else if (qTok && (nameTok === qTok || famTok === qTok)) {
+        score = 100;
+        matchedOn = "name";
+      } else if (qTok && (stem(nameTok) === stem(qTok) || stem(famTok) === stem(qTok))) {
+        score = 90;
+        matchedOn = "name";
+      } else if (qTokens.length) {
         const nameTokens = new Set([...tokens(e.name), ...tokens(e.category), ...e.keywords.flatMap((k) => tokens(k))]);
         // A token matches on equality, stem, or a ≥3-char prefix either way
         // ("dip" ~ "dipping", "pepp" ~ "pepperoni").
         const tokMatch = (n: string, t: string) => n === t || stem(n) === stem(t) || (t.length >= 3 && n.startsWith(t)) || (n.length >= 3 && t.startsWith(n));
         const hits = qTokens.filter((t) => nameTokens.has(t) || [...nameTokens].some((n) => tokMatch(n, t)));
-        if (hits.length === qTokens.length) score = 70 + Math.min(10, hits.length);
-        else if (hits.length > 0 && hits.length >= Math.ceil(qTokens.length / 2)) score = 40 + hits.length * 5;
+        const nameOnly = tokens(e.name);
+        const viaKeywords = hits.some((t) => !nameOnly.some((n) => tokMatch(n, t)));
+        if (hits.length === qTokens.length) {
+          score = 70 + Math.min(10, hits.length);
+          matchedOn = viaKeywords ? "keywords" : "tokens";
+        } else if (hits.length > 0 && hits.length >= Math.ceil(qTokens.length / 2)) {
+          score = 40 + hits.length * 5;
+          matchedOn = viaKeywords ? "keywords" : "tokens";
+        }
       }
-      if (score === 0 && qPhon.length >= 3 && (phonetic(e.name) === qPhon || phonetic(familyN) === qPhon)) score = 50;
+      if (score === 0 && qPhon.length >= 3 && (phonetic(e.name) === qPhon || phonetic(familyN) === qPhon)) {
+        score = 50;
+        matchedOn = "phonetic";
+      }
       if (score === 0) {
         const budget = fuzzyBudget(qStem.length);
-        if (budget > 0 && (editDistance(nameStem, qStem) <= budget || editDistance(stem(familyN), qStem) <= budget)) score = 30;
+        if (budget > 0 && (editDistance(nameStem, qStem) <= budget || editDistance(stem(familyN), qStem) <= budget)) {
+          score = 30;
+          matchedOn = "fuzzy";
+        }
       }
       if (score === 0) continue;
       // A size in the query that matches the item's own name-size is a strong tie-break.
       if (split.token && e.nameSize === split.token) score += 5;
       if (split.token && e.nameSize && e.nameSize !== split.token) score -= 5;
       if (e.soldOut) score -= 1;
-      scored.push({ ...e, score });
+      scored.push({ ...e, score, matchedOn, confidence: 0 });
     }
     scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
     const candidates = scored.slice(0, limit);
+    // Confidence: from the match tier, then capped when a rival is close —
+    // a near-tie is a question, never a pick. Size siblings of one family
+    // ("Large 1 Topping" vs "EXTRA Large 1 Topping" when the caller said
+    // "large") are not rivals: the size word already decided.
+    for (const c of candidates) c.confidence = confidenceFromScore(c.score, c.matchedOn);
+    if (candidates.length >= 2 && Math.abs(candidates[0].score - candidates[1].score) <= 5) {
+      const sizeSiblings = !!split.token && candidates[0].familyKey === candidates[1].familyKey && candidates[0].nameSize !== candidates[1].nameSize;
+      if (!sizeSiblings) {
+        candidates[0].confidence = Math.min(candidates[0].confidence, 0.6);
+        candidates[1].confidence = Math.min(candidates[1].confidence, 0.6);
+      }
+    }
     const notTodayHits = notToday.filter((o) => {
       const on = norm(o.name);
       return on === qNorm || stem(o.name) === qStem || (qTokens.length && qTokens.every((t) => on.includes(t)));
@@ -178,6 +242,7 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
     return {
       candidates,
       exact: !!top && top.score >= 90 && (!second || second.score < 90 || secondIsSizeSibling),
+      confidence: top?.confidence ?? 0,
       sizeHint: split.token,
       notToday: notTodayHits,
     };

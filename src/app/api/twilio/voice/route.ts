@@ -392,7 +392,17 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   const languageChild = multilingual ? `<Language code="multi"/>` : "";
 
   // Mint the short-lived call token and build the ConversationRelay wss URL.
-  const token = signNabilCallToken({ restaurantId: restaurant.id, slug: restaurant.slug, callSid, to, from });
+  const token = signNabilCallToken({
+    restaurantId: restaurant.id,
+    slug: restaurant.slug,
+    callSid,
+    to,
+    from,
+    // Recorded on the call's versions (directive §27) — which listener and
+    // which voice this call actually ran with.
+    sttModel: sttProvider === "Deepgram" ? sttModel : sttProvider,
+    ...(voiceValue ? { ttsVoice: voiceValue } : {}),
+  });
   const url = `${wss}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
   // On session end — a transfer, OR the voice service being unreachable — Twilio
   // POSTs the <Connect action> with SessionStatus/ErrorCode, and the handoff

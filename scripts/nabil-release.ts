@@ -68,9 +68,17 @@ if (results.every(([, ok]) => ok) && !flag("--skip-sim")) {
     if (latest) {
       const m = JSON.parse(readFileSync(join(reportsDir, latest), "utf8")).metrics ?? {};
       const cpm = Number(m.modelCentsPerEstMinute ?? 0);
-      const ok = cpm <= 30;
-      console.log(`\n━━━ cost gate: model ${cpm.toFixed(1)}¢ per est. call-minute (budget 30¢ ⇒ ≤ 40¢ all-in) → ${ok ? "✅" : "❌ OVER BUDGET"}`);
-      results.push(["cost ≤ 40¢/min all-in", ok]);
+      // Luigi 2026-08-15 (after the first live call): quality and reliability
+      // first — going a little over the 40¢/min mark is acceptable. So: WARN
+      // past the 30¢ model share (≈ 40¢ all-in), FAIL only past 40¢ model
+      // share (≈ 48¢ all-in), which is where "a little over" stops.
+      const ok = cpm <= 40;
+      const warn = cpm > 30;
+      console.log(`\n━━━ cost gate: model ${cpm.toFixed(1)}¢ per est. call-minute → ${ok ? (warn ? "⚠️ over the 30¢ target (allowed: quality first)" : "✅") : "❌ OVER THE HARD CEILING (40¢ model share)"}`);
+      results.push(["cost ≤ 40¢/min model share (warn > 30¢)", ok]);
+      const robotic = Number(m.roboticUtteranceRate ?? 0);
+      console.log(`━━━ naturalness: robotic-utterance rate ${(robotic * 100).toFixed(1)}% (target 0)${robotic > 0 ? " — see the report's 'Robotic utterances' section" : ""}`);
+      results.push(["robotic-utterance rate ≤ 2%", robotic <= 0.02]);
     }
   } catch (e) {
     console.warn("cost gate: could not read the report", e);

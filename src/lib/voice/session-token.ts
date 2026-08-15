@@ -21,6 +21,11 @@ export type NabilCallPayload = {
   callSid: string;
   to: string;
   from: string;
+  /** What ConversationRelay was told to use on THIS call — recorded on the
+   *  call's versions so a quality change can be tied to a listener/voice
+   *  change (directive §27). Optional: older tokens/tests omit them. */
+  sttModel?: string;
+  ttsVoice?: string;
 };
 
 function getSecret(): string {
@@ -39,8 +44,10 @@ export function verifyNabilCallToken(token: string): NabilCallPayload | null {
   try {
     const d = jwt.verify(token, getSecret()) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
+      void sttModel;
+      void ttsVoice;
       return {
         restaurantId: restaurantId as string,
         slug: slug as string,

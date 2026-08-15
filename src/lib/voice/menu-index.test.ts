@@ -152,3 +152,37 @@ describe("search", () => {
     expect(idx.search("a pizza please").candidates).toEqual([]);
   });
 });
+
+describe("confidence (directive: never guess a menu id — resolve, or ask)", () => {
+  it("exact names are 1.0; a size sibling does not cap it", () => {
+    const r = idx.search("Large 1 Topping");
+    expect(r.confidence).toBe(1);
+    expect(["name", "family"]).toContain(r.candidates[0].matchedOn);
+    const s = idx.search("large one topping");
+    expect(s.candidates[0].menuItemId).toBe("pz_large");
+    expect(s.confidence).toBeGreaterThanOrEqual(0.85);
+  });
+  it("a near-tie between real rivals caps BOTH at 0.6 so tools must ask", () => {
+    const two = buildMenuIndex({
+      menu: [{ category: "Salads", items: [item("s1", "Chicken Caesar Salad", { price: 9 }), item("s2", "Chicken Caesar Wrap", { price: 9 })] }],
+    });
+    const r = two.search("chicken caesar");
+    expect(r.candidates.length).toBe(2);
+    expect(r.candidates[0].confidence).toBeLessThanOrEqual(0.6);
+    expect(r.candidates[1].confidence).toBeLessThanOrEqual(0.6);
+    expect(r.confidence).toBeLessThanOrEqual(0.6);
+    // …but a full name is unambiguous even with a near-twin on the menu.
+    expect(two.search("chicken caesar wrap").confidence).toBe(1);
+  });
+  it("phonetic and fuzzy hits are visible as such and land below the use-it line", () => {
+    const p = idx.search("peperoni");
+    expect(p.candidates[0].menuItemId).toBe("pz_pep");
+    expect(["phonetic", "fuzzy", "name"]).toContain(p.candidates[0].matchedOn);
+    // A keyword-only match (an option name, not the item name) is weaker than a name match.
+    const k = idx.search("garlic");
+    expect(k.candidates[0].menuItemId).toBe("dip");
+  });
+  it("nothing found ⇒ confidence 0", () => {
+    expect(idx.search("unicorn steak").confidence).toBe(0);
+  });
+});

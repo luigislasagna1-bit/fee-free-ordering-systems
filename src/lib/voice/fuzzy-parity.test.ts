@@ -132,7 +132,10 @@ describe("stem / phonetic / bounded fuzzy — the service's sameName agrees with
     // sameName deliberately does not: sameName is for finding an existing
     // intent topping again, never for picking from a menu.
     expect(matchOption("pep", one("Pepperoni")).ok).toBe(true);
-    expect(svc.sameName("pep", "Pepperoni")).toBe(false);
+    // "pep" is in the spoken-alias dictionary on BOTH sides now (2026-08-15),
+    // so the service agrees it is pepperoni — that is the point of the table.
+    expect(svc.sameName("pep", "Pepperoni")).toBe(true);
+    expect(svc.sameName("pea", "Pepperoni")).toBe(false);
   });
 
   it("agrees on the primitives directly where the compiler exposes them through resolveVariant", () => {
@@ -198,5 +201,63 @@ describe("hashJson — service copy == sim", () => {
     expect(quickHash({ b: 1, a: 2 })).toBe(quickHash({ a: 2, b: 1 }));
     expect(quickHash({ b: 1, a: 2 })).toBe(fnv1a(svcStableStringify({ a: 2, b: 1 })));
     expect(quickHash({ b: 1, a: 2 })).not.toBe(quickHash({ b: 1, a: 3 }));
+  });
+});
+
+/* ── spoken-alias dictionary: service copy == compiler (via matchOption) ─── */
+
+describe("spoken aliases resolve to the same menu option on both sides (directive: GP == green pepper)", () => {
+  const TOPPINGS: GroupData = {
+    id: "g_top",
+    name: "Toppings",
+    required: false,
+    minSelect: 0,
+    maxSelect: 10,
+    pizzaRole: "toppings",
+    options: [
+      { modifierOptionId: "o_gp", name: "Green Peppers", priceAdjustment: 2.5 },
+      { modifierOptionId: "o_pep", name: "Pepperoni", priceAdjustment: 2.5 },
+      { modifierOptionId: "o_mush", name: "Mushrooms", priceAdjustment: 2.5 },
+      { modifierOptionId: "o_xc", name: "X - Cheese", priceAdjustment: 2.5 },
+      { modifierOptionId: "o_jal", name: "Jalapeño", priceAdjustment: 2.5 },
+      { modifierOptionId: "o_rrp", name: "Roasted Red Peppers", priceAdjustment: 2.5 },
+      { modifierOptionId: "o_bbq", name: "BBQ Chicken", priceAdjustment: 2.5 },
+    ],
+  };
+  const cases: Array<[string, string]> = [
+    ["GP", "o_gp"],
+    ["green pepper", "o_gp"],
+    ["green peppers", "o_gp"],
+    ["pep", "o_pep"],
+    ["shrooms", "o_mush"],
+    ["mush", "o_mush"],
+    ["double cheese", "o_xc"],
+    ["extra cheese", "o_xc"],
+    ["x-cheese", "o_xc"],
+    ["jalapenos", "o_jal"],
+    ["jalapeño", "o_jal"],
+    ["roasted red pepper", "o_rrp"],
+    ["barbecue chicken", "o_bbq"],
+  ];
+  it("compiler matchOption resolves every alias", () => {
+    for (const [spoken, id] of cases) {
+      const m = matchOption(spoken, [TOPPINGS]);
+      expect(m.ok, spoken).toBe(true);
+      if (m.ok) expect(m.option.modifierOptionId, spoken).toBe(id);
+    }
+  });
+  it("the service norm() produces the same key the compiler does for every alias", () => {
+    // Same alias table on both sides ⇒ the cart engine can find a topping the
+    // compiler resolved ("mushrooms" ↔ "Mushroom") from any of these forms.
+    for (const [spoken] of cases) {
+      const target = TOPPINGS.options.find((o) => o.modifierOptionId === cases.find(([s]) => s === spoken)![1])!.name;
+      expect(svc.sameName(spoken, target), `${spoken} ~ ${target}`).toBe(true);
+    }
+    expect(svc.norm("GP")).toBe("green pepper");
+    expect(svc.norm("Jalapeño")).toBe("jalapeno");
+    expect(svc.norm("meatlovers")).toBe("meat lover");
+    expect(svc.norm("Meat Lovers")).toBe("meat lover");
+    expect(svc.norm("veggie")).toBe("vegetable");
+    expect(svc.SPOKEN_ALIASES.length).toBeGreaterThan(8);
   });
 });
