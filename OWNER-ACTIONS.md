@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-15 by Claude (**A55 — Nabil AI P0 rebuild.** The last failed call (red onion "not available", "One moment" ×12, combo re-added ×4) traced to facts the model was asked to remember or was handed truncated. Rebuilt: an authoritative server cart with stable line ids for EVERY item, a state block on every turn, editable combos, code-enforced "ask, don't guess", compaction for long calls, a full per-call timeline in the admin, a "turn this call into a test" button, and a 35-call torture suite that gates every Fly deploy. **Blocked on one thing only you can do: a valid Anthropic key in `.env.local` (A55 step 1).** 14 new ElevenLabs voices are in the picker.)
+**Last updated:** 2026-08-15 (later) by Claude (**A56 — Fabrizio #17: a Euro restaurant's info page was quoting delivery fees in dollars.** The "Our delivery areas" legend under the map had the "$" typed straight into the code, so it printed dollars no matter what currency the owner set. The same "$" was also baked into all 38 translated tooltip strings, and the hosted marketing website had it in three more places, including every menu price. All fixed to use the restaurant's own currency and language, pushed as `b1ae29cf`, and confirmed on his live store — his zones now read "Costo: 5,00 €, Min: 20,00 €". Reply posted, he's been asked to re-test. **Nothing needed from you.**)
+**Previous update:** 2026-08-15 by Claude (**A55 — Nabil AI P0 rebuild.** The last failed call (red onion "not available", "One moment" ×12, combo re-added ×4) traced to facts the model was asked to remember or was handed truncated. Rebuilt: an authoritative server cart with stable line ids for EVERY item, a state block on every turn, editable combos, code-enforced "ask, don't guess", compaction for long calls, a full per-call timeline in the admin, a "turn this call into a test" button, and a 35-call torture suite that gates every Fly deploy. **Blocked on one thing only you can do: a valid Anthropic key in `.env.local` (A55 step 1).** 14 new ElevenLabs voices are in the picker.)
 **Previous update:** 2026-08-13 (latest) by Claude (**A50 — the ShipDay→Uber "out of delivery area" problem.** Found a real defect: the address we send ShipDay had no province and no country ("1095 Ezard Cres, Milton, L9T 6W9" — Milton in *which* country?). DoorDash never cared because it uses the map pin we send; Uber's docs say it **always re-geocodes the address text and discards the coordinates**, so Uber was the only one reading the one line that was wrong. Fixed, plus the unit/parking notes that were being crammed into the street line. 1602 tests + build green. **Not deployed** — A50 step 1 is a 2-minute check only you can do first, because there's a second possible cause I can't see from outside your ShipDay account.)
 **Previous update:** 2026-08-13 (later) by Claude (**Six finished pieces that had been sitting on side branches are now live** — one of them since 5 July. Nothing was lost, but nothing was live either: a duplicated menu's combo deals pointed at the original menu's items and offered the customer nothing; emails that never left the building were recording themselves as sent; saved delivery addresses couldn't gain or correct their map pin; reservation statuses and the kitchen's first-run tour were English-only for every non-English owner; and customer spend totals had no nightly safety net. Preflight green (1579 tests, full build), translations at full parity across all 38 languages. **Nothing here needs anything from you** — your list is still A49 below. One item was deliberately NOT shipped: the iOS native printer bridge, because shipping it means a new iOS build, and a new build would cost you your place in the Apple review queue while A49 is pending.)
 **Previous update:** 2026-08-13 by Claude (**A49 — Apple's business-model question is answered and waiting for you to paste.** The Fee Free Order App review is held on Guideline 2.1(b): Apple wants to know whether the paid service behind the app is sold to consumers or to businesses. It's businesses, and nothing is purchasable inside the app at all — verified by sweeping every link in the kitchen screens. No code change, no new build. The paste-ready reply plus 4 pre-send checks are in `docs/APPLE-REVIEW-2.1B-REPLY-2026-08-13.md`; the most important one is that App Store Connect must have **zero** in-app-purchase items, even drafts.)
@@ -166,6 +167,46 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A56. 💶 Fabrizio #17 — a Euro store was advertising delivery fees in dollars (2026-08-15)
+
+**What he saw:** on his restaurant's info page, "Our delivery areas" listed each zone as
+"Min $20.00, Fee $5.00, ~30 min" — dollars, even though his backend is set to euros.
+
+**Why it happened:** that one line had the dollar sign typed directly into the code instead of asking
+the restaurant what currency it uses. It was also written in English only. Two things made it worse
+than a one-line typo:
+- The hover tooltips on the delivery map had the same "$" baked into the **translated text of all 38
+  languages** — so the Italian, German and Japanese versions all said dollars too.
+- Your **hosted marketing website** (the "Sales Optimized Website" add-on) had the same mistake in
+  three more places, including **every menu price on the page**. Nobody had reported that one yet.
+
+**Fixed:** every one of those now prints in the restaurant's own currency, formatted the way that
+currency is normally written (a euro store reads "1,00 €", not "€1.00"), and the zone line is now
+translated like the rest of the page. The currency symbol can no longer be typed into a translation —
+it comes from the restaurant record, so this cannot come back through a new language.
+
+**RESULT: SHIPPED AND CONFIRMED ON HIS LIVE STORE (2026-08-15).** Pushed as `b1ae29cf`. Before
+telling him anything, I loaded his own restaurant's info page on production — the exact page his
+screenshot came from — and it now reads:
+
+    Zone 1 — Costo: 5,00 €, Min: 20,00 €
+    Zone 2 — Costo: 10,00 €, Min: 50,00 €
+
+Same numbers as his screenshot, euro symbol, European number format, and the labels are now in
+Italian instead of English. Preflight was green before the push (2090 tests, full build) and all 38
+languages are at exact parity.
+
+**Reply posted** on report `cms0gyexp` (English, per your standing rule), Fabrizio notified. Status
+left at IN_TESTING — it was already there, so nothing moved backwards. He's been asked to re-check
+the zone list, hover the map circles, and look at the hosted-website menu prices.
+
+**Safety check before the push:** `main` was level with the remote, no other session was running,
+each of the 38 language files contained only my two-line change (no sibling session's translations
+swept in), and the other in-flight work in the shared tree (the FIRSTBUY/coupon-ledger files) was
+left untouched — staged by explicit path, per your standing rule.
+
+**NOTHING IS NEEDED FROM YOU ON THIS ONE.**
 
 ### A55. 📞 NABIL AI P0 — rebuilt around an authoritative cart; 3 things are yours (2026-08-15)
 
