@@ -34,6 +34,20 @@ const INTERRUPT_GRACE_MS = 800;
  *  turns of a call whose plain TTFT was ~1 s. */
 const FILLER_AFTER_TOOL_MS = 1_500;
 const FILLER_PHRASES = ["One sec.", "Let me check that.", "Just a moment.", "Bear with me a second."];
+/**
+ * BOOKKEEPING MERGE (latency, Luigi's live call 2026-08-15: 2.9 s of silence
+ * after "my name is Sam" because set_fulfilment + set_customer forced a second
+ * model hop before "Thanks, Sam"). When a hop's tools are ALL of these, ALL
+ * succeeded, and the model already spoke a complete sentence in that same
+ * message, there is nothing left to say: the turn ends there and the
+ * tool_result blocks ride at the front of the NEXT user message (a valid
+ * shape — results first, then STATE + the caller's words). Saves ~1 s and one
+ * request on every name / pickup turn. Anything whose RESULT the caller must
+ * hear (a delivery address check with a fee, any cart change) is excluded.
+ */
+const MERGEABLE_TOOLS = new Set(["set_customer"]);
+const isMergeableCall = (name: string, input: any): boolean =>
+  MERGEABLE_TOOLS.has(name) || (name === "set_fulfilment" && String(input?.type ?? "").toLowerCase() === "pickup" && !input?.street);
 
 const SILENT_TURN_RETRY_MS = 1_200;
 /** Hard cap on how long one sentence may hold off barge-in. */
@@ -77,6 +91,8 @@ export class CallSession {
   private ready = false;
   private queued: string[] = [];
   private pendingPrompts: string[] = [];
+  /** tool_result blocks held back by the bookkeeping merge — prepended to the next user message. */
+  private pendingToolResults: any[] = [];
   private lastPromptAt = 0;
   private resumeTimer: ReturnType<typeof setTimeout> | undefined;
   private turnRunning = false;
@@ -484,7 +500,9 @@ export class CallSession {
       this.callFactsSent = true;
     }
     const stateBlock = this.stateBlockFor(turn, extra) ?? (extra.length ? `[CALL FACTS]\n${extra.join("\n")}\n[/CALL FACTS]` : null);
-    const content = buildUserTurnContent({ stateBlock, asides, text: userText });
+    // Results held back by the bookkeeping merge ride at the FRONT of this
+    // message (tool_result blocks must precede any text in the reply turn).
+    const content = [...this.pendingToolResults.splice(0), ...buildUserTurnContent({ stateBlock, asides, text: userText })];
     this.pushMessage({ role: "user", content }, { turn, kind: "user" });
     this.interrupted = false;
     this.turnStartedAt = this.now();
@@ -493,6 +511,7 @@ export class CallSession {
     let spokenThisTurn = "";
     let ttfaMs: number | null = null;
     let fillerUsed: { phrase: string; afterMs: number } | null = null;
+    let mergedBookkeeping = false;
     const toolOutputsThisTurn: unknown[] = [];
     const toolNamesThisTurn: string[] = [];
     const hopsRecord: Array<{ hop: number; ttftMs: number | null; totalMs: number; stop: string | null; tokensIn: number; tokensOut: number; cacheRead: number; cacheWrite: number }> = [];
@@ -669,6 +688,29 @@ export class CallSession {
           this.noteOutcome(block.name, out);
           results.push({ type: "tool_result", tool_use_id: block.id, content: JSON.stringify(out) });
         }
+        // BOOKKEEPING MERGE — see MERGEABLE_TOOLS. The model already said its
+        // sentence; the results only close the loop, so they wait for the next
+        // user message instead of costing a second hop of silence.
+        const spokeSentence = /[.!?…]["')]?\s*$/.test(assistantText.trim()) && assistantText.trim().length >= 8;
+        const mergeable =
+          !this.interrupted &&
+          spokeSentence &&
+          final.content.every((b: any) => b.type !== "tool_use" || isMergeableCall(b.name, b.input)) &&
+          toolOutputsThisTurn.slice(-toolNames.length).every((o: any) => o && o.ok !== false && !o.error && !o.needsInfo);
+        if (mergeable) {
+          this.pendingToolResults.push(
+            ...results.map((r: any) => ({
+              ...r,
+              // Compact: the next STATE block carries the customer / fulfilment; the payload need not.
+              content: JSON.stringify({ ok: true, applied: true, note: "applied while you were speaking; see STATE" }),
+            })),
+          );
+          mergedBookkeeping = true;
+          this.closeProtectedWindow();
+          this.sendText("", true);
+          if (this.ctx.pendingTransfer) this.endTransfer(this.ctx.pendingTransfer);
+          break;
+        }
         // The tool RAN — its result goes into history no matter what happens
         // to the sentence after it, or the model's next turn believes the
         // order is something it isn't.
@@ -713,7 +755,7 @@ export class CallSession {
       }
     }
     if (ttfaMs !== null) this.ttfaMsList.push(ttfaMs);
-    this.emitTurnEvent({ turn, userText, synthetic, hopsRecord, toolsRecord, ttfaMs, fillerUsed, interrupted: this.interrupted, spoken: spokenThisTurn, cartHashBefore, stateBlock, compacted });
+    this.emitTurnEvent({ turn, userText, synthetic, hopsRecord, toolsRecord, ttfaMs, fillerUsed, interrupted: this.interrupted, spoken: spokenThisTurn, cartHashBefore, stateBlock, compacted, mergedBookkeeping });
   }
 
   private emitTurnEvent(a: {
@@ -729,6 +771,7 @@ export class CallSession {
     cartHashBefore: string;
     stateBlock: string | null;
     compacted: boolean;
+    mergedBookkeeping?: boolean;
   }) {
     this.events.emit({
       type: "turn",
@@ -746,6 +789,7 @@ export class CallSession {
       cartHashAfter: this.ctx.cart.cartHash(),
       stateChars: a.stateBlock?.length ?? 0,
       messagesEstTokens: estimateTokens(this.messages),
+      ...(a.mergedBookkeeping ? { mergedBookkeeping: true } : {}),
     });
     if (a.compacted) {
       /* recorded separately */

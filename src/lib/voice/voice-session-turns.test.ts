@@ -255,3 +255,86 @@ describe("fillers only cover TOOL silence, never plain first-token latency", () 
     expect(said).toContain("Coke comes in one size.");
   });
 });
+
+/**
+ * BOOKKEEPING MERGE (Luigi's live call 2026-08-15: 2.9 s of silence after "my
+ * name is Sam" because set_fulfilment + set_customer forced a second model hop
+ * before "Thanks, Sam"). When the model already spoke a full sentence in the
+ * same message as pure bookkeeping calls, the turn ends there; the tool
+ * results ride at the front of the NEXT user message.
+ */
+describe("bookkeeping merge — no second hop when the model already answered", () => {
+  /** A fake that returns scripted messages and records every request's messages[]. */
+  function scripted(script: Array<{ text?: string; tools?: Array<{ id: string; name: string; input: unknown }> }>) {
+    const requests: any[] = [];
+    let call = 0;
+    return {
+      requests,
+      calls: () => call,
+      messages: {
+        stream: (params: any) => {
+          requests.push(params.messages);
+          const step = script[call++] ?? { text: "Okay." };
+          const listeners: Array<(d: string) => void> = [];
+          return {
+            on: (evt: string, cb: (d: string) => void) => {
+              if (evt === "text") listeners.push(cb);
+            },
+            finalMessage: async () => {
+              if (step.text) for (const l of listeners) l(step.text);
+              const content: any[] = [];
+              if (step.text) content.push({ type: "text", text: step.text });
+              for (const t of step.tools ?? []) content.push({ type: "tool_use", id: t.id, name: t.name, input: t.input });
+              return { stop_reason: step.tools?.length ? "tool_use" : "end_turn", content, usage: { input_tokens: 10, output_tokens: 5 } };
+            },
+          };
+        },
+      },
+    };
+  }
+
+  it("text + set_fulfilment(pickup) + set_customer in ONE message = one request; results lead the next user turn", async () => {
+    const fake = scripted([
+      { text: "Thanks, Sam — what can I get for you?", tools: [{ id: "t1", name: "set_fulfilment", input: { type: "pickup" } }, { id: "t2", name: "set_customer", input: { name: "Sam" } }] },
+      { text: "Sure. What size?" },
+    ]);
+    const { ws, s } = await startedSession(fake as never);
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pickup, and my name is Sam." }));
+    await settle(50);
+    expect(fake.calls()).toBe(1); // no second hop
+    expect(ws.said()).toContain("Thanks, Sam — what can I get for you?");
+    expect(ws.spoken().some((t) => t.last)).toBe(true); // the turn was closed
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "A large pizza please." }));
+    await settle(50);
+    expect(fake.calls()).toBe(2);
+    const second = fake.requests[1];
+    const lastUser = second[second.length - 1];
+    expect(lastUser.role).toBe("user");
+    // tool_result blocks first (t1, t2), then the STATE / caller text blocks.
+    expect(lastUser.content[0]).toMatchObject({ type: "tool_result", tool_use_id: "t1" });
+    expect(lastUser.content[1]).toMatchObject({ type: "tool_result", tool_use_id: "t2" });
+    expect(lastUser.content.slice(2).every((b: any) => b.type === "text")).toBe(true);
+    expect(String(lastUser.content[lastUser.content.length - 1].text)).toContain("A large pizza please.");
+  });
+
+  it("does NOT merge when the model said nothing, when a tool changes the cart, or when a tool needs info", async () => {
+    // (a) silent bookkeeping call → the second hop must run so the caller hears something.
+    const silent = scripted([{ tools: [{ id: "t1", name: "set_customer", input: { name: "Sam" } }] }, { text: "Got it, Sam." }]);
+    const a = await startedSession(silent as never);
+    a.s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "It's Sam." }));
+    await settle(50);
+    expect(silent.calls()).toBe(2);
+    expect(a.ws.said()).toContain("Got it, Sam.");
+
+    // (b) a delivery address check is not bookkeeping — its result (fee/zone) must be spoken.
+    apiMock.checkAddress = vi.fn(async () => ({ ok: true, located: true, inside: true, fee: 4.99, zoneName: "Zone A" }));
+    const delivery = scripted([
+      { text: "Delivery, got it.", tools: [{ id: "t1", name: "set_fulfilment", input: { type: "delivery", street: "1 Main St", city: "Milton", zip: "L9T 1A1" } }] },
+      { text: "That's in our zone, delivery is four ninety-nine." },
+    ]);
+    const b = await startedSession(delivery as never);
+    b.s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Delivery to 1 Main St Milton L9T 1A1." }));
+    await settle(80);
+    expect(delivery.calls()).toBe(2);
+  });
+});

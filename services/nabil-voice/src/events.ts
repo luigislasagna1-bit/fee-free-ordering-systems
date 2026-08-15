@@ -63,6 +63,8 @@ export type CallEvent = CallEventBase &
         cartHashAfter: string | null;
         stateChars: number;
         messagesEstTokens: number;
+        /** The bookkeeping merge ended the turn after hop 1 (no second model request). */
+        mergedBookkeeping?: boolean;
       }
     | { type: "call_end"; outcome: string; latency: unknown; usage: unknown; costCents: number }
     | { type: "error"; where: string; message: string }

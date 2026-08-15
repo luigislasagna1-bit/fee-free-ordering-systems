@@ -14,6 +14,10 @@
  *   off        = claude-sonnet-5, thinking disabled
  *   haiku-off  = claude-haiku-4-5, thinking disabled (latency reference only —
  *                a mid-call model switch is not on the table)
+ *   opus-off   = claude-opus-5, thinking disabled (Luigi 2026-08-15: accuracy
+ *                first, then latency, then cost — if Opus is measurably more
+ *                accurate on the hard ids it is allowed to cost more)
+ *   opus-adaptive = claude-opus-5, adaptive thinking (effort low)
  */
 import { spawnSync } from "node:child_process";
 import { readFileSync, readdirSync, mkdirSync } from "node:fs";
@@ -35,9 +39,11 @@ const CONFIGS: Record<string, { env: Record<string, string>; model?: string }> =
   adaptive: { env: { NABIL_THINKING: "adaptive" } },
   off: { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024" } },
   "haiku-off": { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024" }, model: "claude-haiku-4-5" },
+  "opus-off": { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024" }, model: "claude-opus-5" },
+  "opus-adaptive": { env: { NABIL_THINKING: "adaptive" }, model: "claude-opus-5" },
 };
 
-type Row = { config: string; passRate: number; exact: number; halluc: number; ttfaP50: number | null; ttfaP95: number | null; costCents: number; failed: string[] };
+type Row = { config: string; passRate: number; exact: number; halluc: number; robotic: number; ttfaP50: number | null; ttfaP95: number | null; costCents: number; cpm: number; failed: string[] };
 const rows: Row[] = [];
 for (const c of configs) {
   const cfg = CONFIGS[c];
@@ -58,12 +64,12 @@ for (const c of configs) {
   }
   const j = JSON.parse(readFileSync(join(out, latest), "utf8"));
   const m = j.metrics ?? {};
-  rows.push({ config: c, passRate: m.passRate ?? 0, exact: m.exactCartAccuracy ?? 0, halluc: m.hallucinationRate ?? 0, ttfaP50: m.ttftP50 ?? null, ttfaP95: m.ttftP95 ?? null, costCents: m.totalCostCents ?? 0, failed: m.failedIds ?? [] });
+  rows.push({ config: c, passRate: m.passRate ?? 0, exact: m.exactCartAccuracy ?? 0, halluc: m.hallucinationRate ?? 0, robotic: m.roboticUtteranceRate ?? 0, ttfaP50: m.ttftP50 ?? null, ttfaP95: m.ttftP95 ?? null, costCents: m.totalCostCents ?? 0, cpm: m.modelCentsPerEstMinute ?? 0, failed: m.failedIds ?? [] });
 }
 console.log("\n━━━ BENCH RESULTS");
-console.log("config       pass    exact   halluc  ttfa p50  ttfa p95  cost");
+console.log("config         pass    exact   halluc  robotic ttfa p50  ttfa p95  cost     ¢/est-min");
 for (const r of rows) {
   const p = (x: number) => `${(x * 100).toFixed(0)}%`.padEnd(7);
-  console.log(`${r.config.padEnd(12)} ${p(r.passRate)} ${p(r.exact)} ${p(r.halluc)} ${String(r.ttfaP50 ?? "–").padEnd(9)} ${String(r.ttfaP95 ?? "–").padEnd(9)} $${(r.costCents / 100).toFixed(2)}${r.failed.length ? `  failed: ${r.failed.join(",")}` : ""}`);
+  console.log(`${r.config.padEnd(14)} ${p(r.passRate)} ${p(r.exact)} ${p(r.halluc)} ${p(r.robotic)} ${String(r.ttfaP50 ?? "–").padEnd(9)} ${String(r.ttfaP95 ?? "–").padEnd(9)} $${(r.costCents / 100).toFixed(2).padEnd(7)} ${r.cpm.toFixed(1)}¢${r.failed.length ? `  failed: ${r.failed.join(",")}` : ""}`);
 }
-console.log("\nDecision rule: keep the config with the highest pass rate; break ties on TTFA p95, then cost. Set NABIL_THINKING / NABIL_MAX_TOKENS on Fly accordingly.");
+console.log("\nDecision rule (Luigi 2026-08-15): the most ACCURATE config wins (pass rate, then exact cart); ties break on TTFA p95, then cost. Set NABIL_THINKING / NABIL_MAX_TOKENS / NABIL_MODEL on Fly accordingly.");

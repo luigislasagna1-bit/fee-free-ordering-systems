@@ -220,3 +220,31 @@ describe("compact", () => {
     expect(out.droppedMessages).toBe(0);
   });
 });
+
+describe("compact + the bookkeeping merge (session.ts prepends tool_results to a caller turn)", () => {
+  it("drops orphaned tool_result blocks at the cut and still strips the old STATE behind them", () => {
+    const { messages, meta, transcript } = buildCall(12);
+    // Turn 5 is the first kept caller turn (12 - KEEP_TURNS + 1). Make it a
+    // MERGED turn: it starts with tool_result blocks answering turn 4's
+    // bookkeeping tool_use, which is about to be folded into the digest.
+    const idx = meta.findIndex((m) => m.kind === "user" && m.turn === 5);
+    messages[idx] = {
+      role: "user",
+      content: [
+        { type: "tool_result", tool_use_id: "merged1", content: JSON.stringify({ ok: true, applied: true }) },
+        { type: "tool_result", tool_use_id: "merged2", content: JSON.stringify({ ok: true, applied: true }) },
+        ...messages[idx].content,
+      ],
+    };
+    const out = compact({ messages, meta, transcript, turn: 12, cs: createCompactionState() });
+    const first = out.messages[2]; // after the note pair
+    expect(out.meta[2]).toEqual({ turn: 5, kind: "user" });
+    // No orphan tool_result may lead the kept history (its tool_use is gone).
+    expect(first.content.some((b: any) => b.type === "tool_result")).toBe(false);
+    // Turn 5's STATE block is older than the newest KEEP_STATE_BLOCKS → stripped, caller words kept.
+    expect(first.content.map((b: any) => b.text)).toEqual(["caller says 5"]);
+    // A merged turn INSIDE the kept window keeps its tool_results (their tool_use is kept too).
+    const idx9 = out.meta.findIndex((m) => m.kind === "user" && m.turn === 9);
+    expect(idx9).toBeGreaterThan(0);
+  });
+});

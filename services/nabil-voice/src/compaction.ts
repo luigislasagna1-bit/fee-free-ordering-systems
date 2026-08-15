@@ -155,8 +155,19 @@ export function compact(args: {
     const mm = meta[i];
     if (mm?.kind === "tool_result" && Array.isArray(m.content) && mm.turn <= turn - 4) {
       tail.push({ ...m, content: m.content.map((b: any) => (b?.type === "tool_result" ? stubToolResult(b) : b)) });
-    } else if (mm?.kind === "user" && Array.isArray(m.content) && m.content.length > 1 && mm.turn < keepStateFrom && /^\[STATE /.test(String(m.content[0]?.text ?? ""))) {
-      tail.push({ ...m, content: m.content.slice(1) });
+    } else if (mm?.kind === "user" && Array.isArray(m.content)) {
+      let content: any[] = m.content;
+      // A caller turn may START with tool_result blocks (the bookkeeping merge
+      // in session.ts). If this is the first kept message, the assistant
+      // tool_use they answer was just folded into the digest — an orphan
+      // tool_result is an API error, so drop them (the model already spoke).
+      if (i === cut) content = content.filter((b: any) => b?.type !== "tool_result");
+      const firstText = content.findIndex((b: any) => b?.type === "text");
+      const textBlocks = content.filter((b: any) => b?.type === "text").length;
+      if (textBlocks > 1 && mm.turn < keepStateFrom && firstText >= 0 && /^\[STATE /.test(String(content[firstText]?.text ?? ""))) {
+        content = [...content.slice(0, firstText), ...content.slice(firstText + 1)];
+      }
+      tail.push(content === m.content ? m : { ...m, content });
     } else if (mm?.kind === "assistant" && Array.isArray(m.content)) {
       // Old thinking blocks carry nothing the model can use next turn.
       const stripped = m.content.filter((b: any) => b?.type !== "thinking" && b?.type !== "redacted_thinking");
