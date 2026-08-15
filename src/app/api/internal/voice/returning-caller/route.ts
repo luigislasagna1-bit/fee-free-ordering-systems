@@ -3,6 +3,7 @@ import prisma from "@/lib/db";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { phoneDigitsKey } from "@/lib/phone";
 import { VOICE_SENTINEL_DOMAIN } from "@/lib/voice/sentinel-identity";
+import { MIN_AGREEING, nameHintFromRecentVoiceOrders } from "@/lib/voice/name-hint";
 
 export const runtime = "nodejs";
 
@@ -76,21 +77,26 @@ export async function GET(req: NextRequest) {
 
   if (!customer) {
     // We can't say WHO this is — but we may still know what we called them last
-    // time they phoned. A name off OUR OWN previous voice ticket for this exact
+    // time they phoned. A name off OUR OWN previous voice tickets for this exact
     // number is not somebody else's record, and it is offered to the caller as a
-    // question ("I have you down as Sam, is that right?"), never stated as fact.
-    // Worth it: on 2026-08-14 a caller was asked three times and the ticket
-    // still went out under a mis-heard name (Luigi approved this 2026-08-14).
-    const lastVoice = digits
-      ? await prisma.order.findFirst({
+    // question ("Is this for Sam?"), never stated as fact. Worth it: on
+    // 2026-08-14 a caller was asked three times and the ticket still went out
+    // under a mis-heard name (Luigi approved this 2026-08-14).
+    //
+    // 🚨 But ONE ticket is not a name on file. On 2026-08-15 the last voice
+    // order on Luigi's own line was "Dishen" (a tester), so Nabil greeted Sam
+    // with "I have you down as Dishen?" — the "random" line he reported. A
+    // shared household or work phone does the same. The hint now needs the last
+    // MIN_AGREEING voice orders to agree (name-hint.ts); otherwise Nabil asks.
+    const recent = digits
+      ? await prisma.order.findMany({
           where: { restaurantId: restaurant.id, channel: "voice", customerPhone: { contains: digits } },
           orderBy: { createdAt: "desc" },
+          take: MIN_AGREEING,
           select: { customerName: true },
         })
-      : null;
-    // Strip the "(phone)" placeholder the voice path appends to satisfy the
-    // order route's two-token name rule — it is ours, not theirs.
-    const hint = (lastVoice?.customerName ?? "").replace(/\s*\(phone\)\s*$/i, "").trim();
+      : [];
+    const hint = nameHintFromRecentVoiceOrders(recent.map((o) => o.customerName));
     return NextResponse.json({ found: false, blocked: !!blocked, ...(hint ? { nameHint: hint } : {}) });
   }
 
