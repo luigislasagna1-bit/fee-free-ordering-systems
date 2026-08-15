@@ -79,6 +79,16 @@ export function qtyWord(n: number, opts: { article?: boolean } = {}): string {
   return q < ONES.length ? ONES[q] : String(q);
 }
 
+/** A menu NAME as speech: "Large / Wings Combo" → "Large and Wings Combo"
+ *  (the voice would say "slash"); "&" → "and"; collapsed spaces. */
+export function speakName(s: string): string {
+  return String(s ?? "")
+    .replace(/\s*\/\s*/g, " and ")
+    .replace(/\s*&\s*/g, " and ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 /** Lowercase a menu word for speech, keeping short all-caps tokens ("BBQ"). */
 export function lowerName(s: string): string {
   return String(s ?? "")
@@ -136,7 +146,7 @@ export function spokenPizza(p: SpokenPizzaInput): string {
   const size = spokenVariant(p.variantName, p.itemName) ?? (generic ? sizeWordFromName(p.itemName) : null);
   const head = generic
     ? `${size ? `${size} ` : ""}${p.quantity > 1 && !p.omitQuantity ? "pizzas" : "pizza"}`
-    : `${size ? `${size} ` : ""}${p.itemName.trim()}`;
+    : `${size ? `${size} ` : ""}${speakName(p.itemName)}`;
   const parts: string[] = [];
   const each = p.quantity > 1 && !p.omitQuantity ? "each " : "";
   if (p.halves && (p.halves.left.length || p.halves.right.length)) {
@@ -169,7 +179,7 @@ export type SpokenItemInput = {
 
 export function spokenItem(p: SpokenItemInput): string {
   const size = spokenVariant(p.variantName, p.itemName);
-  const head = `${size ? `${size} ` : ""}${p.itemName.trim()}`;
+  const head = `${size ? `${size} ` : ""}${speakName(p.itemName)}`;
   const opts = (p.options ?? []).map(lowerName).filter(Boolean);
   const lead = p.omitQuantity ? head : `${qtyWord(p.quantity)} ${head}`;
   return opts.length ? `${lead}, ${joinAnd(opts)}` : lead;
@@ -203,7 +213,7 @@ export function spokenCombo(p: SpokenComboInput): string {
     counts.set(c.spokenNoQty, (counts.get(c.spokenNoQty) ?? 0) + 1);
   }
   const rest = order.map((t) => `${qtyWord(counts.get(t)!)} ${t}`);
-  const lead = `${qtyWord(p.quantity)} ${p.comboName.trim()}`;
+  const lead = `${qtyWord(p.quantity)} ${speakName(p.comboName)}`;
   const groups = [...labelled, ...rest];
   return groups.length ? `${lead} with ${joinAnd(groups)}` : lead;
 }

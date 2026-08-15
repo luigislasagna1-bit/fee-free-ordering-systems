@@ -167,7 +167,7 @@ describe("spoken-line helpers", () => {
     expect(spokenPizza({ quantity: 1, itemName: "Large 1 Topping", toppings: ["Pepperoni"] })).toBe("a large pizza, with pepperoni");
     expect(spokenItem({ quantity: 3, itemName: "Pop Can", options: ["Coke"] })).toBe("three Pop Can, coke");
     expect(spokenCombo({ quantity: 1, comboName: "Large / Wings Combo", children: [{ kind: "pizza", spokenNoQty: "large pizza, with pepperoni" }, { kind: "item", spokenNoQty: "Chicken Wings, hot mixed" }] })).toBe(
-      "a Large / Wings Combo with a large pizza, with pepperoni and a Chicken Wings, hot mixed",
+      "a Large and Wings Combo with a large pizza, with pepperoni and a Chicken Wings, hot mixed",
     );
     expect(spokenOrder([])).toBe("Nothing is on the order yet.");
     expect(spokenOrder(["a", "b", "c"])).toBe("So that's a, b, and c.");
