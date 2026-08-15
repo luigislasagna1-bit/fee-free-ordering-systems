@@ -625,7 +625,21 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         minimumOrder: typeof j.minimumOrder === "number" ? j.minimumOrder : null,
         zoneName: j.zoneName ?? null,
       });
-      return { ok: true, fulfilment: "delivery", ...j, state: cart.stateForModel() };
+      // A street with no city/postcode that the check could not place is not
+      // an address yet — ask for the rest NOW, not at quote time (the 22:10
+      // call on 2026-08-15 only asked after the whole order was taken).
+      const partial = !input?.city && !input?.zip && j.located !== true;
+      return {
+        ok: true,
+        fulfilment: "delivery",
+        ...j,
+        state: cart.stateForModel(),
+        ...(partial
+          ? { instruction: "That street alone couldn't be placed. Ask for the city and postal code right now — one question — and call set_fulfilment again with the full address before any food; then say the delivery fee plainly." }
+          : j.located === true && typeof j.deliveryFee === "number"
+            ? { instruction: "Address found. Tell the caller the delivery fee in one short clause and move to the food." }
+            : {}),
+      };
     }
 
     case "set_customer": {
