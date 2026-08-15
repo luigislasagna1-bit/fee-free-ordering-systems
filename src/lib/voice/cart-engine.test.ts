@@ -441,3 +441,63 @@ describe("validate / quote / place bookkeeping", () => {
     expect(e.fullReadBack()).toMatch(/^1\. 1× 20 pc Wings 2\. 2× Coke$/);
   });
 });
+
+describe("the SPOKEN layer (Luigi's live call 2026-08-15)", () => {
+  /** A compiler that returns the natural spoken form + raw surcharge like the real one now does. */
+  const spokenCompiler = (): Compiler => ({
+    async compile(req): Promise<CompileResponse> {
+      const it: any = req.intent;
+      if (req.kind === "pizza") {
+        return {
+          ok: true,
+          line: { menuItemId: it.menuItemId, variantId: null, quantity: it.quantity, modifiers: [{ modifierOptionId: "t_pep", name: "(L.H) Pepperoni" }, { modifierOptionId: "t_mush", name: "(R.H) Mushroom" }] },
+          readBack: "Large 3 Topping — left half: Pepperoni; right half: Mushroom",
+          spoken: "a large pizza, half pepperoni, half mushrooms",
+          spokenNoQty: "large pizza, half pepperoni, half mushrooms",
+          pricingNote: "2 toppings; 3 included, so that's CA$0.02 extra.",
+          surcharge: { amount: 0.02, direction: "extra" },
+          halves: { left: ["Pepperoni"], right: ["Mushroom"], whole: [] },
+          unresolved: [],
+          lineSubtotal: 23,
+        };
+      }
+      return {
+        ok: true,
+        line: { menuItemId: it.menuItemId, variantId: null, quantity: it.quantity, modifiers: [] },
+        readBack: `${it.quantity}× Coke`,
+        spoken: it.quantity > 1 ? `${it.quantity === 2 ? "two" : it.quantity} Coke` : "a Coke",
+        pricingNote: "Add-ons come to CA$1.50 extra.",
+        surcharge: { amount: 1.5, direction: "extra" },
+        unresolved: [],
+        lineSubtotal: 2 * it.quantity,
+      };
+    },
+  });
+
+  it("speakExactly is the spoken form, the ticket string stays in the state description, and sub-50¢ surcharges are silent", async () => {
+    const e = new CartEngine({ compiler: spokenCompiler(), menu: buildMenuIndex(MENU), askGroupIds: [], allowPizzaCombo: true, callerId: "6476690808" });
+    e.beginTurn();
+    const r = await e.addLine({ menuItemId: "pz_large", quantity: 1, toppings: [{ name: "pepperoni", placement: "left" }, { name: "mushrooms", placement: "right" }] } as any);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.speakExactly).toBe("a large pizza, half pepperoni, half mushrooms");
+    expect(r.line.description).toBe("Large 3 Topping — left half: Pepperoni; right half: Mushroom");
+    // 2¢ is a rounding artefact — never spoken.
+    expect(r.pricingNote).toBeNull();
+    const c = await e.addLine({ menuItemId: "dr_coke", quantity: 2 } as any);
+    expect(c.ok).toBe(true);
+    if (!c.ok) return;
+    expect(c.pricingNote).toBe("Extra toppings add one dollar and fifty cents.");
+    expect(e.spokenOrder()).toBe("So that's a large pizza, half pepperoni, half mushrooms, and two Coke.");
+    expect(e.fullReadBack()).toBe("1. Large 3 Topping — left half: Pepperoni; right half: Mushroom 2. 2× Coke");
+    const rm = await e.removeLine({ lineId: "L2" });
+    expect(rm.ok && rm.speakExactly).toBe("Took off two Coke.");
+  });
+
+  it("an older build-line without `spoken` falls back to the ticket string and keeps its pricingNote", async () => {
+    const { e } = engine();
+    const r = await e.addLine({ menuItemId: "dr_coke", quantity: 1 } as any);
+    expect(r.ok && r.speakExactly).toBe("1× Coke");
+    expect(e.spokenOrder()).toBe("So that's 1× Coke.");
+  });
+});

@@ -4,6 +4,7 @@ import type { AgentConfig } from "./agent-config";
 import { fnv1a } from "./basket-signature";
 import { CartEngine, type MutationResult, type OrderState } from "./cart-engine";
 import type { MenuIndex } from "./menu-index";
+import { spokenMoney } from "./spoken-money";
 
 /**
  * The tools the model may call, and what they do.
@@ -418,20 +419,20 @@ function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "chang
   return {
     ...r,
     instruction:
-      (r.pricingNote ? `Tell the caller the extra charge in pricingNote BEFORE moving on. ` : "") +
+      (r.pricingNote ? `Mention pricingNote in passing (one short clause) — it is already in words. ` : "") +
       (r.betterDeal
         ? `TELL THEM ABOUT THE DEAL: today's "${r.betterDeal.name}" is the same thing for ${r.betterDeal.saving} less. Offer it in one friendly sentence; if yes, call update_line with lineId ${r.lineId} and replaceWithItemId "${r.betterDeal.menuItemId}"; if no, move on. `
         : "") +
       (r.switchedTo ? `That size is a different item on this menu, so it was built as "${r.switchedTo.to}" instead of "${r.switchedTo.from}"${r.switchedTo.saving > 0 ? `, which also comes to ${r.switchedTo.saving} less — say so as good news. ` : ". Mention the item you built; don't present it as a problem. "}` : "") +
       (needs
         ? `The line is on the order but NOT finished. Ask the caller: ${line.questions?.[0] ?? "the missing detail"} — one question — then call update_line with lineId ${r.lineId}. `
-        : `Say speakExactly back WORD FOR WORD (item name exactly as written), then ` +
+        : `Say speakExactly ONCE, naturally, in one sentence — keep every item, size, topping and half exactly as written (connective words only, never regroup halves), then ` +
           (halves && (halves.left.length || halves.right.length)
-            ? "confirm one half at a time — first half, get a yes, second half, get a yes. "
+            ? (verb === "changed" ? "ask if that's right now. " : "ask what else they'd like — one question. ")
             : verb === "removed"
               ? "ask if that's everything. "
               : "ask what else they'd like. ")) +
-      "The total comes from quote_order.",
+      "Never read the item's menu code name if speakExactly doesn't. The total comes from quote_order.",
   };
 }
 
@@ -652,7 +653,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       const names: string[] = Array.isArray(q.appliedPromoNames) ? q.appliedPromoNames.filter((n: unknown) => typeof n === "string" && n) : [];
       const total = typeof q.total === "number" ? q.total : Number(q.total ?? 0);
       cart.recordQuote({ total, discountNames: names });
-      const speak = `${cart.fullReadBack()} ${f.type === "delivery" ? "Delivered" : "For pickup"}, your total is ${money(total, ctx.currency)} including tax.`;
+      const speak = `${cart.spokenOrder()} ${f.type === "delivery" ? "Delivered" : "For pickup"}, your total comes to ${spokenMoney(total)}, tax included.`;
       ctx.speakExactlyThisTurn.push(speak);
       return {
         ok: true,
@@ -667,7 +668,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         speakExactly: speak,
         state: cart.stateForModel(),
         instruction:
-          "Read speakExactly back — the whole order, then the EXACT total (it is authoritative and includes tax). Do NOT mention any discount yet. Then ask for a plain yes. Only call place_order after they say yes; if they change anything, quote again.",
+          "Read speakExactly back naturally — the whole order, then the EXACT total in those words (it is authoritative and includes tax). Do NOT mention any discount yet. Then ask for a plain yes. Only call place_order after they say yes; if they change anything, quote again.",
       };
     }
 
@@ -751,7 +752,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
             notPlaced: true,
             quotedTotal: quoted.total,
             total: newTotal,
-            instruction: `THE ORDER WAS NOT PLACED. The real total is ${money(newTotal, ctx.currency)}, not the ${money(quoted.total, ctx.currency)} you quoted${reason}. Apologise briefly, tell the caller the correct total plainly, and ask whether they still want it. Call quote_order again and only then place_order after they say yes. Do NOT claim the order is in.`,
+            instruction: `THE ORDER WAS NOT PLACED. The real total is ${spokenMoney(newTotal)}, not the ${spokenMoney(quoted.total)} you quoted${reason}. Apologise briefly, tell the caller the correct total plainly, and ask whether they still want it. Call quote_order again and only then place_order after they say yes. Do NOT claim the order is in.`,
           };
         }
         if (res.json?.code === "service_paused") {
@@ -802,8 +803,8 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
           (receiptTexted
             ? "Their receipt has ALREADY been texted with the order number and a tracking link — say so, and do NOT read the order number aloud. "
             : "Read the caller their order number clearly — no receipt text could be sent, so it's the only record they'll have. ") +
-          (totalMoved ? `⚠️ THE TOTAL CHANGED since you quoted ${money(quoted.total, ctx.currency)}${changeReason}. Tell the caller plainly what it is now. ` : "") +
-          `Confirm the total ${money(total, ctx.currency)} — it is the authoritative charged amount including tax.` +
+          (totalMoved ? `⚠️ THE TOTAL CHANGED since you quoted ${spokenMoney(quoted.total)}${changeReason}. Tell the caller plainly what it is now. ` : "") +
+          `Confirm the total ${spokenMoney(total)} — it is the authoritative charged amount including tax.` +
           (promoDiscount > 0 ? " A discount was applied automatically — mention it briefly as good news (name it if given) so the total doesn't sound like an error." : "") +
           " Then close warmly. Do not ask if they want anything else.",
       };

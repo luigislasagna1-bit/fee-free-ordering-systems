@@ -37,6 +37,7 @@ import {
   type ToppingChargeLine,
   type ToppingPricingConfig,
 } from "@/lib/pizza-topping-pricing";
+import { lowerName, spokenCombo, spokenItem, spokenPizza } from "./spoken-line";
 
 /* ────────────────────────────── wire shapes ────────────────────────────── */
 
@@ -184,8 +185,20 @@ export type ComboData = {
 
 export type CompileResult = {
   line: CompiledLine | null;
-  /** Plain-language confirmation for the agent to speak back. */
+  /** The TICKET string — exact item name, "left half: …; right half: …". Used
+   *  by the STATE block, the timeline and tests. NOT what the agent says. */
   readBack: string;
+  /** What a person would SAY for this line ("a large pizza, half pepperoni and
+   *  mushrooms, half green peppers and onions") — see spoken-line.ts. Empty
+   *  when the line did not compile. */
+  spoken: string;
+  /** `spoken` without the leading quantity word — how a combo names its
+   *  children ("first pizza large, half …"). */
+  spokenNoQty?: string;
+  /** Raw over-allowance money for the caller of this compiler to phrase (the
+   *  voice service speaks it in words and only above a threshold). Null when
+   *  the line is at list price or not priced here (combos). */
+  surcharge?: { amount: number; direction: "extra" | "less" } | null;
   /** Money the caller should hear BEFORE confirming (Luigi 2026-08-10:
    *  always announce the over-allowance charge). Null when nothing to say. */
   pricingNote: string | null;
@@ -706,7 +719,7 @@ export function compilePizzaLine(
   const cfg = item.pizzaConfig;
 
   if (item.isSoldOut) {
-    return { line: null, readBack: "", pricingNote: null, unresolved: [`"${item.name}" is sold out.`] };
+    return { line: null, readBack: "", spoken: "", pricingNote: null, unresolved: [`"${item.name}" is sold out.`] };
   }
 
   // ── size ──────────────────────────────────────────────────────────────
@@ -728,6 +741,18 @@ export function compilePizzaLine(
 
   const mods: CompiledModifier[] = [];
   const spokenParts: string[] = [];
+  // Words for the SPOKEN line that are not toppings — a chosen crust ("thin
+  // crust"), a priced default, a cook level. Kept apart from spokenParts so the
+  // ticket read-back is byte-identical to before and the spoken form can put
+  // them after the toppings.
+  const spokenOptions: string[] = [];
+  const speakRole = (role: "crust" | "sauce" | "cheese", name: string): string => {
+    const w = lowerName(name);
+    if (role === "crust" && !/crust/i.test(w)) return `${w} crust`;
+    if (role === "sauce" && !/sauce|base/i.test(w)) return `${w} sauce`;
+    if (role === "cheese" && !/cheese/i.test(w)) return `${w} cheese`;
+    return w;
+  };
 
   // ── crust / sauce / cheese: smart default, unless the store says ask ───
   for (const role of ["crust", "sauce", "cheese"] as const) {
@@ -750,6 +775,9 @@ export function compilePizzaLine(
       }
       mods.push({ modifierOptionId: m.option.modifierOptionId, name: m.option.name });
       spokenParts.push(m.option.name);
+      // A caller-chosen crust/sauce/cheese is part of what they hear back —
+      // a default one is not (it is the standard pizza).
+      spokenOptions.push(speakRole(role, m.option.name));
       continue;
     }
 
@@ -777,7 +805,10 @@ export function compilePizzaLine(
     mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });
     // A default that COSTS money must be spoken — silence plus a surcharge is
     // how a caller gets surprised at pickup.
-    if ((Number(def.priceAdjustment) || 0) > 0) spokenParts.push(def.name);
+    if ((Number(def.priceAdjustment) || 0) > 0) {
+      spokenParts.push(def.name);
+      spokenOptions.push(speakRole(role, def.name));
+    }
   }
 
   // ── every OTHER required group (cook level, size-of-fries, …) ─────────
@@ -789,12 +820,15 @@ export function compilePizzaLine(
   );
   {
     const chosenIds = new Set(mods.map((m) => m.modifierOptionId));
-    const out = { mods, spokenParts, unresolved };
+    const otherSpoken: string[] = [];
+    const out = { mods, spokenParts: otherSpoken, unresolved };
     for (const g of item.modifierGroups) {
       if (roleGroupIds.has(g.id) || isToppingRole(g.pizzaRole) || g.pizzaRole === "garnish") continue;
       if (toppingGroups(item).some((t) => t.id === g.id)) continue;
       fillRequiredGroup(g, chosenIds, ask, out);
     }
+    spokenParts.push(...otherSpoken);
+    spokenOptions.push(...otherSpoken.map(lowerName));
   }
 
   // ── toppings ──────────────────────────────────────────────────────────
@@ -972,6 +1006,7 @@ export function compilePizzaLine(
 
   // ── advisory topping money (the over-allowance announcement) ───────────
   let pricingNote: string | null = null;
+  let surcharge: CompileResult["surcharge"] = null;
   let lineSubtotal: number | null = null;
   if (cfg) {
     const flat = variant?.name && cfg.variantToppingPrices?.[variant.name] !== undefined
@@ -1014,8 +1049,10 @@ export function compilePizzaLine(
       const countLabel = `${wholes + halves} topping${wholes + halves === 1 ? "" : "s"}`;
       if (extra > 0) {
         pricingNote = `${countLabel}; ${cfg.includedToppings} included, so that's ${money(extra, currency)} extra.`;
+        surcharge = { amount: extra, direction: "extra" };
       } else if (extra < 0) {
         pricingNote = `${countLabel} — that's ${money(Math.abs(extra), currency)} less than the standard build.`;
+        surcharge = { amount: Math.abs(extra), direction: "less" };
       }
     }
   }
@@ -1024,7 +1061,9 @@ export function compilePizzaLine(
     return {
       line: null,
       readBack: "",
+      spoken: "",
       pricingNote,
+      surcharge,
       unresolved,
       lineSubtotal: null,
       ...(notices.length ? { notices } : {}),
@@ -1073,6 +1112,22 @@ export function compilePizzaLine(
       (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "") +
       noSuffix;
 
+  // The SPOKEN form (spoken-line.ts): toppings by side, options after, no SKU
+  // jargon, no punctuation a voice would not say.
+  const toppingOptionIds = new Set(tGroups.flatMap((g) => g.options.map((o) => o.modifierOptionId)));
+  const wholeToppingNames = halves ? [] : mods.filter((m) => toppingOptionIds.has(m.modifierOptionId)).map((m) => m.name);
+  const spokenArgs = {
+    quantity,
+    itemName: item.name,
+    variantName: variant?.name ?? null,
+    halves,
+    toppings: wholeToppingNames,
+    options: spokenOptions,
+    removed: removedPresets,
+  };
+  const spoken = spokenPizza(spokenArgs);
+  const spokenNoQty = spokenPizza({ ...spokenArgs, omitQuantity: true });
+
   return {
     line: {
       menuItemId: item.menuItemId,
@@ -1082,8 +1137,11 @@ export function compilePizzaLine(
       notes,
     },
     readBack,
+    spoken,
+    spokenNoQty,
     halves,
     pricingNote,
+    surcharge,
     unresolved: [],
     lineSubtotal: Math.round(lineSubtotal * quantity * 100) / 100,
     ...(notices.length ? { notices } : {}),
@@ -1134,6 +1192,7 @@ export function compileItemLine(intent: ItemIntent, item: ItemData, opts: Compil
   const fail = (): CompileResult => ({
     line: null,
     readBack: "",
+      spoken: "",
     pricingNote: null,
     unresolved,
     halves: null,
@@ -1251,9 +1310,14 @@ export function compileItemLine(intent: ItemIntent, item: ItemData, opts: Compil
     extras > 0 && !opts.suppressPricingNote
       ? `Add-ons come to ${money(Math.round(extras * 100) / 100, currency)} extra.`
       : null;
+  const surcharge: CompileResult["surcharge"] =
+    extras > 0 && !opts.suppressPricingNote ? { amount: Math.round(extras * 100) / 100, direction: "extra" } : null;
   const readBack =
     `${quantity > 1 ? `${quantity}× ` : ""}${variant ? `${variant.name} ` : ""}${item.name}` +
     (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "");
+  const spokenArgs = { quantity, itemName: item.name, variantName: variant?.name ?? null, options: spokenParts };
+  const spoken = spokenItem(spokenArgs);
+  const spokenNoQty = spokenItem({ ...spokenArgs, omitQuantity: true });
 
   return {
     line: {
@@ -1264,8 +1328,11 @@ export function compileItemLine(intent: ItemIntent, item: ItemData, opts: Compil
       notes: intent.notes ?? null,
     },
     readBack,
+    spoken,
+    spokenNoQty,
     halves: null,
     pricingNote,
+    surcharge,
     unresolved: [],
     lineSubtotal: Math.round(unit * quantity * 100) / 100,
     ...(notices.length ? { notices } : {}),
@@ -1289,11 +1356,12 @@ export function compileComboLine(
   const notices: string[] = [];
   const children: NonNullable<CompiledLine["bundleItems"]> = [];
   const spokenParts: string[] = [];
+  const spokenChildren: Array<{ kind: "pizza" | "item"; spokenNoQty: string }> = [];
   const childNotes: string[] = [];
   const pickSlots: NonNullable<CompileResult["pickSlots"]> = [];
 
   if (combo.isSoldOut) {
-    return { line: null, readBack: "", pricingNote: null, unresolved: [`"${combo.name}" is sold out.`] };
+    return { line: null, readBack: "", spoken: "", pricingNote: null, unresolved: [`"${combo.name}" is sold out.`] };
   }
 
   // Assign each pick to the first slot that accepts it and still has room —
@@ -1386,6 +1454,7 @@ export function compileComboLine(
     const childNote = (sub.line.notes ?? "").trim();
     if (childNote) childNotes.push(`${child.name}: ${childNote}`);
     spokenParts.push(sub.readBack);
+    spokenChildren.push({ kind: child.pizzaConfig ? "pizza" : "item", spokenNoQty: sub.spokenNoQty || sub.spoken || sub.readBack });
   }
 
   // Every slot's minimum must be satisfied or the route 400s at the end.
@@ -1403,6 +1472,7 @@ export function compileComboLine(
     return {
       line: null,
       readBack: "",
+      spoken: "",
       pricingNote: null,
       unresolved,
       ...(notices.length ? { notices } : {}),
@@ -1425,6 +1495,9 @@ export function compileComboLine(
       bundleItems: children,
     },
     readBack: `${quantity > 1 ? `${quantity}× ` : ""}${combo.name}: ${spokenParts.join(", ")}`,
+    spoken: spokenCombo({ quantity, comboName: combo.name, children: spokenChildren }),
+    spokenNoQty: spokenCombo({ quantity: 1, comboName: combo.name, children: spokenChildren }).replace(/^a /, ""),
+    surcharge: null,
     // A combo quotes NO advisory extras. Its money comes from the combo
     // engine (upcharges, extrasCharge, the shared topping pool) and the only
     // honest number is the dryRun total from quote_order.

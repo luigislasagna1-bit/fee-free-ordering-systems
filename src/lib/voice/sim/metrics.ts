@@ -33,9 +33,33 @@ export type SimMetrics = {
    *  model must stay under ~30¢. Prod reference 2026-08-15: ~19¢/min. */
   modelCentsPerEstMinute: number;
   turnsPerEstMinute: number;
+  /** Share of agent utterances that read like a machine (see isRoboticUtterance):
+   *  ticket punctuation, line/pick ids, "left half:", numbered lists, currency
+   *  codes, generic SKU names. Luigi's live call 2026-08-15 was 1/4. Target 0. */
+  roboticUtteranceRate: number;
+  roboticUtterances: Array<{ id: string; turn: number; text: string; why: string }>;
   flakyIds: string[];
   failedIds: string[];
 };
+
+/**
+ * NATURALNESS LINT — the deterministic part of "does it sound like a person".
+ * The sim cannot hear TTS, but it can catch what the caller heard on
+ * 2026-08-15: "Large 2 Topping — left half: Pepperoni, Mushrooms; right half:
+ * …", "1. … 2. …", "CA$0.02". Returns the first reason or null.
+ */
+export function isRoboticUtterance(text: string): string | null {
+  const t = String(text ?? "");
+  if (!t.trim()) return null;
+  if (/[;×]/.test(t)) return "ticket punctuation (; ×)";
+  if (/\b(?:left|right) half:/i.test(t)) return "'left half:' ticket phrasing";
+  if (/(?:^|\s)\d\.\s+\S/.test(t)) return "numbered list";
+  if (/(?:\b(?:CA|US|AU|NZ))?\$\s?\d/.test(t) || /\b(?:CAD|USD|EUR|GBP)\b/.test(t)) return "currency symbol/code instead of words";
+  if (/\b[LP]\d{1,2}\b/.test(t)) return "line/pick id spoken";
+  if (/\b(?:tool|modifier|slot|line id|menu id)\b/i.test(t)) return "system vocabulary";
+  if (/\b(?:xx?-?l|xl|extra[- ]?large|large|medium|small)\s+\d\s*-?\s*topping\b/i.test(t)) return "generic SKU name spoken";
+  return null;
+}
 
 /** Real-call pacing assumption for cost-per-minute (see SimMetrics). */
 export const EST_SECONDS_PER_TURN = 10;
@@ -73,6 +97,8 @@ export function computeMetrics(reports: ScenarioReport[]): SimMetrics {
   let cost = 0;
   let escalations = 0;
   let wrongPlacement = 0;
+  let utterances = 0;
+  const robotic: SimMetrics["roboticUtterances"] = [];
 
   for (const r of reports) {
     items = { c: items.c + r.cartDiff.items.correct, t: items.t + r.cartDiff.items.total };
@@ -86,6 +112,12 @@ export function computeMetrics(reports: ScenarioReport[]): SimMetrics {
         if (tc.name === "transfer_to_human" && tc.ok) escalations++;
       }
       if (typeof t.ttftMs === "number") ttfts.push(t.ttftMs);
+      if (t.agent && t.agent.trim()) {
+        utterances++;
+        const why = isRoboticUtterance(t.agent);
+        if (why && robotic.length < 200) robotic.push({ id: r.id, turn: t.idx, text: t.agent.slice(0, 200), why });
+        else if (why) robotic.push({ id: r.id, turn: t.idx, text: "", why });
+      }
       // Precision is measured only where a scenario SAYS where clarification
       // belongs: of the scripted turns Nabil clarified on, how many were the
       // declared ones. Recall is what `pass` already enforces.
@@ -125,6 +157,8 @@ export function computeMetrics(reports: ScenarioReport[]): SimMetrics {
     totalCostCents: cost,
     modelCentsPerEstMinute: ratio(cost, (turns * EST_SECONDS_PER_TURN) / 60),
     turnsPerEstMinute: 60 / EST_SECONDS_PER_TURN,
+    roboticUtteranceRate: ratio(robotic.length, utterances),
+    roboticUtterances: robotic.filter((x) => x.text),
     flakyIds,
     failedIds,
   };

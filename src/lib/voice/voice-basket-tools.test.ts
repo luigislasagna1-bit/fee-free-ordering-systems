@@ -328,7 +328,8 @@ describe("place_order and the quote", () => {
     expect(out.quotedTotal).toBe(23.37);
     // The agent must be told WHY, from the real promo diff — never a guess.
     expect(String(out.instruction)).toContain("First-time customer special did not apply");
-    expect(String(out.instruction)).toContain("$25.97");
+    // Money is spoken in WORDS now (Luigi 2026-08-15: "CA$0.02" became "about 2 cents").
+    expect(String(out.instruction)).toContain("twenty-five dollars and ninety-seven cents");
     expect(String(out.instruction)).toContain("NOT PLACED");
     // Nothing was created, so nothing may be remembered as placed …
     expect(ctx.cart.placedOrders()).toHaveLength(0);
@@ -588,7 +589,9 @@ describe("update_line changes a line instead of adding another", () => {
     expect(ctx.cart.lines()).toHaveLength(1);
     expect(out.line.description).toBe("1× Large Large 1 Topping with Pepperoni");
     expect(out.speakExactly).toBe("1× Large Large 1 Topping with Pepperoni");
-    expect(String(out.instruction)).toContain("WORD FOR WORD");
+    // Natural recap, not a word-for-word ticket read (Luigi's live call 2026-08-15).
+    expect(String(out.instruction)).toContain("naturally");
+    expect(String(out.instruction)).not.toContain("WORD FOR WORD");
     // The change was MERGED into the original intent and recompiled — never
     // patched onto the compiled payload.
     const second = api.buildLine.mock.calls[1][0] as { kind: string; intent: Record<string, unknown> };
@@ -658,7 +661,7 @@ describe("remove_line", () => {
     const out = await run(ctx, "remove_line", { lineId: "L1" });
     expect(out.ok).toBe(true);
     expect(out.lineId).toBe("L1");
-    expect(out.speakExactly).toBe("Removed 1× Large 1 Topping with Pepperoni.");
+    expect(out.speakExactly).toBe("Took off 1× Large 1 Topping with Pepperoni.");
     expect(String(out.instruction)).toContain("ask if that's everything");
     expect(out.state.lines.map((l: any) => l.lineId)).toEqual(["L2"]);
     // L2 is still L2; the next add is L3, and L1 is never reused.
@@ -699,8 +702,11 @@ describe("quote_order prices what place_order will charge", () => {
     expect(out.ok).toBe(true);
     expect(out.total).toBe(24.5);
     expect(out.discountNames).toEqual(["WELCOME"]);
-    expect(out.speakExactly).toBe(`${ctx.cart.fullReadBack()} For pickup, your total is $24.50 including tax.`);
-    expect(out.speakExactly).toContain("1. 1× Large 1 Topping with Pepperoni 2. 2× Coke");
+    // The pre-quote read-back is the SPOKEN order (no numbered list, no "CA$"),
+    // then the total in words — what a person behind the counter would say.
+    expect(out.speakExactly).toBe(`${ctx.cart.spokenOrder()} For pickup, your total comes to twenty-four dollars and fifty cents, tax included.`);
+    expect(out.speakExactly).toContain("So that's 1× Large 1 Topping with Pepperoni, and 2× Coke.");
+    expect(out.speakExactly).not.toMatch(/CA\$|\d\.\s/);
     expect(ctx.speakExactlyThisTurn).toContain(out.speakExactly);
     expect(ctx.cart.lastQuote()).toEqual({ total: 24.5, signature: ctx.cart.signature(), discountNames: ["WELCOME"] });
     expect(out.state.quote).toEqual({ total: 24.5, stale: false });

@@ -67,6 +67,7 @@ export function renderMarkdown(input: ReportInput): string {
   lines.push(`| wrong placement | ${pctStr(m.wrongPlacementRate)} |`);
   lines.push(`| tool failure rate | ${pctStr(m.toolFailureRate)} |`);
   lines.push(`| hallucination-flag rate | ${pctStr(m.hallucinationRate)} |`);
+  lines.push(`| robotic-utterance rate | ${pctStr(m.roboticUtteranceRate)} |`);
   lines.push(`| clarification precision | ${pctStr(m.clarificationPrecision)} |`);
   lines.push(`| escalation rate | ${pctStr(m.escalationRate)} |`);
   lines.push(`| TTFA p50 / p95 | ${ms(m.ttftP50)} / ${ms(m.ttftP95)} |`);
@@ -105,6 +106,15 @@ export function renderMarkdown(input: ReportInput): string {
     for (const [k, v] of [...clusters.entries()].sort((a, b) => b[1].length - a[1].length)) lines.push(`| ${esc(k)} | ${v.length} | ${v.join(", ")} |`);
   }
   lines.push("");
+
+  if (m.roboticUtterances.length) {
+    lines.push(`## Robotic utterances (naturalness lint — target 0)`);
+    lines.push("");
+    lines.push(`| id | turn | why | Nabil said |`);
+    lines.push(`|---|---|---|---|`);
+    for (const u of m.roboticUtterances.slice(0, 40)) lines.push(`| ${u.id} | ${u.turn} | ${esc(u.why)} | ${esc(u.text)} |`);
+    lines.push("");
+  }
 
   if ((input.scenarios ?? []).some((s) => s.suite.includes("broad"))) {
     lines.push(`## Taxonomy × reason bucket (broad)`);

@@ -206,7 +206,7 @@ ${menuText(menu, cfg.allowPizzaCombo)}`;
   const knownName: string | null =
     (returningCaller?.found && typeof returningCaller?.name === "string" && returningCaller.name.trim() ? returningCaller.name.trim() : null) ??
     (typeof returningCaller?.nameHint === "string" && returningCaller.nameHint.trim() ? returningCaller.nameHint.trim() : null);
-  if (knownName) facts.push(`Name on file for this number: ${knownName} — OFFER it ("I have you down as ${knownName}, is that right?"); only take a fresh name if they correct you.`);
+  if (knownName) facts.push(`Name on file for this number: ${knownName} — offer it ONLY when you settle the name near the end of the order (FLOW step 3: "Is this for ${knownName}?"), never in the greeting or before the food; take a fresh name if they correct you.`);
   if (returningCaller?.found && returningCaller?.name) {
     const last = returningCaller.lastOrder?.items?.map((i: any) => `${i.quantity}× ${i.name}`).join(", ");
     facts.push(`Returning caller (${returningCaller.orderCount ?? 0} past orders).${last ? ` Last order: ${last}. You may offer "the usual".` : ""} Greet them by first name.`);

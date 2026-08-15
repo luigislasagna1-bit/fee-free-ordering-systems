@@ -36,6 +36,7 @@
 import { basketSignature, fnv1a } from "./basket-signature";
 import { norm, stem, sameName } from "./fuzzy";
 import type { MenuIndex, MenuKind } from "./menu-index";
+import { spokenOrderText, spokenSurcharge } from "./spoken-money";
 
 /* ────────────────────────────── intent model ───────────────────────────── */
 
@@ -169,7 +170,12 @@ export type CompileResponse =
       ok: true;
       line: CompiledLine | null;
       readBack: string;
+      /** The natural spoken form from the compiler (spoken-line.ts on Vercel). Older builds omit it. */
+      spoken?: string;
+      spokenNoQty?: string;
       pricingNote: string | null;
+      /** Raw over-allowance money — spoken here (words, threshold), never read from pricingNote. */
+      surcharge?: { amount: number; direction: "extra" | "less" } | null;
       unresolved: string[];
       halves?: Halves | null;
       lineSubtotal?: number | null;
@@ -194,7 +200,12 @@ export type CartLine = {
   kind: MenuKind;
   intent: LineIntent;
   compiled: CompiledLine | null;
+  /** Ticket string (STATE, timeline). */
   readBack: string;
+  /** What the agent SAYS for this line — natural, no SKU jargon (see
+   *  spoken-line.ts). Falls back to readBack for lines the compiler could not
+   *  finish or for a build-line that predates the field. */
+  spoken: string;
   halves: Halves | null;
   pricingNote: string | null;
   status: LineStatus;
@@ -932,7 +943,7 @@ export class CartEngine {
       ok: true,
       lineId: line.lineId,
       line: this.summarize(line),
-      speakExactly: `Removed ${line.readBack}.`,
+      speakExactly: `Took off ${line.spoken}.`,
       pricingNote: null,
       state: this.stateForModel(),
     };
@@ -961,11 +972,18 @@ export class CartEngine {
     };
   }
 
-  /** The whole order, one numbered line each, for the pre-quote read-back. */
+  /** The whole order as TICKET lines, numbered — for get_order_state / debugging. */
   fullReadBack(): string {
     const lines = this.state.lines;
     if (!lines.length) return "Nothing is on the order yet.";
     return lines.map((l, i) => `${i + 1}. ${l.readBack}${l.status === "needs_info" ? " (not finished)" : ""}`).join(" ");
+  }
+
+  /** The whole order as a person would SAY it before quoting: "So that's a
+   *  large pizza, half …, twenty piece Chicken Wings, hot mixed, and two
+   *  Dipping Sauce, garlic." Unfinished lines say so. */
+  spokenOrder(): string {
+    return spokenOrderText(this.state.lines.map((l) => (l.status === "needs_info" ? `${l.spoken}, which isn't finished yet` : l.spoken)));
   }
 
   /* ── internals ────────────────────────────────────────────────────────── */
@@ -1035,7 +1053,7 @@ export class CartEngine {
       speakExactly:
         line.status === "needs_info"
           ? `${line.readBack} — still need: ${line.questions.join(" ")}`
-          : line.readBack,
+          : line.spoken,
       pricingNote: line.pricingNote,
       ...(line.halves ? { halves: line.halves } : {}),
       ...(res.notices?.length ? { notices: res.notices } : {}),
@@ -1344,14 +1362,16 @@ export class CartEngine {
     const readBack = complete
       ? res.readBack || `${intent.quantity}× ${entry?.name ?? "item"}`
       : res.readBack || `${intent.quantity}× ${entry?.name ?? "item"} (not finished)`;
+    const spoken = complete && res.spoken ? res.spoken : readBack;
     return {
       lineId,
       kind,
       intent,
       compiled: complete ? res.line : null,
       readBack,
+      spoken,
       halves: res.halves ?? null,
-      pricingNote: res.pricingNote ?? null,
+      pricingNote: spokenSurcharge(res.surcharge, res.pricingNote ?? null),
       status: complete ? "complete" : "needs_info",
       questions: unresolved.slice(),
       aliases: buildAliases(kind, intent, entry?.name ?? "", res, this.deps.menu),
