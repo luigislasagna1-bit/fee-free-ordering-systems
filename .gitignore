@@ -101,3 +101,4 @@ apps/customer-shell/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2
 reports/nabil-sim/generated/
 reports/nabil-sim/*-broad*
 reports/nabil-sim/*-iter*
+reports/nabil-sim/*.json
