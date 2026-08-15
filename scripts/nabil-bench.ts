@@ -40,6 +40,9 @@ const CONFIGS: Record<string, { env: Record<string, string>; model?: string }> =
   off: { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024" } },
   "haiku-off": { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024" }, model: "claude-haiku-4-5" },
   "opus-off": { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024" }, model: "claude-opus-5" },
+  /** opus-off + sentence-chunk TTS with the narration filter (drops thinking-aloud sentences before the voice). */
+  "opus-off-chunk": { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024", NABIL_TTS_CHUNK: "sentence" }, model: "claude-opus-5" },
+  "off-chunk": { env: { NABIL_THINKING: "off", NABIL_MAX_TOKENS: "1024", NABIL_TTS_CHUNK: "sentence" } },
   "opus-adaptive": { env: { NABIL_THINKING: "adaptive" }, model: "claude-opus-5" },
 };
 

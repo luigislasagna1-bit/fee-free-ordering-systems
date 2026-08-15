@@ -360,11 +360,17 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
       const status = (r.output as { line?: { status?: string } } | null)?.line?.status;
       return status === "complete";
     });
+    // What the caller HEARD: the model's text minus any sentence the narration
+    // filter dropped before it reached the voice (sentence-chunk mode).
+    let heardText = ev.spoken ?? "";
+    for (const d of rec.all) {
+      if (d.type === "narration_dropped" && d.turn === t && d.text) heardText = heardText.replace(d.text, " ").replace(/\s+/g, " ").trim();
+    }
     turns.push({
       idx: turns.length,
       scriptIndex: send ? send.scriptIndex : null,
       caller: send ? send.say : ev.synthetic ? `(synthetic) ${ev.utterance}` : ev.utterance,
-      agent: ev.spoken ?? "",
+      agent: heardText,
       toolCalls,
       cartHashBefore: ev.cartHashBefore ?? null,
       cartHashAfter: ev.cartHashAfter ?? null,

@@ -17,6 +17,7 @@ import { createEventSink, type EventSink } from "./events";
 import { checkClaims } from "./claims-guard";
 import { agentVersion, hashJson, quickHash, type Versions } from "./versions";
 import { PLAYBOOK_PROTOCOL, PLAYBOOK_STYLE } from "./playbook";
+import { isNarrationLeak } from "./narration-filter";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
 const WRAP_UP_LEAD_MS = 45_000;
@@ -144,6 +145,7 @@ export class CallSession {
   private menuHash: string | null = null;
   private menuFacts: { soldOut: string[]; notToday: string[] } = { soldOut: [], notToday: [] };
   private hallucinationSuspects = 0;
+  private narrationDropped = 0;
   private ttfaMsList: number[] = [];
   private eventFlushInFlight: Promise<unknown> | null = null;
 
@@ -824,9 +826,20 @@ export class CallSession {
   private noteStruggle(tool: string, out: any) {
     const failed = (!!out?.error || out?.notPlaced === true) && !out?.needsInfo;
     if (!failed) {
-      if (out?.ok) this.struggles = 0;
+      if (out?.ok) {
+        this.struggles = 0;
+        // A success AFTER the struggle hand-off was armed in this same turn
+        // means the model recovered (bench T25, 2026-08-15: two bad ids, then
+        // find_menu_item, then a clean add — and the caller was transferred
+        // anyway). Only a turn that ENDS in failure hands off.
+        if (this.ctx.pendingTransfer?.startsWith("agent struggling")) this.ctx.pendingTransfer = null;
+      }
       return;
     }
+    // A wrong menu id is the model's own slip with an obvious recovery
+    // (find_menu_item) — the tool result says so. It is not a reason to give
+    // up on the caller.
+    if (out?.code === "unknown_item") return;
     this.struggles++;
     if (this.struggles >= STRUGGLE_LIMIT && !this.ctx.pendingTransfer) {
       console.warn("[nabil-voice] struggling — handing off", { callSid: this.token.callSid, tool, code: out?.code ?? null, struggles: this.struggles });
@@ -906,27 +919,41 @@ export class CallSession {
     const clean = token.replace(/[*_`~#]/g, "");
     if (!clean && !last) return;
     if (CONFIG.ttsChunk === "sentence") {
-      // Buffer to clause boundaries so the voice gets whole phrases, not
+      // Buffer to SENTENCE boundaries so (a) the voice gets whole phrases, not
       // three-word fragments ("Take your time." arrived as three tokens on
-      // 2026-08-15 and came out as mumble). Flush on . ! ? , — ; or 60 chars.
+      // 2026-08-15 and came out as mumble), and (b) a sentence that is the
+      // model thinking aloud can be DROPPED before anyone hears it
+      // (narration-filter.ts). Flush on . ! ? … or at 140 chars.
       this.ttsBuffer += clean;
       if (!last) {
-        const m = /^([\s\S]*?[.!?,;—:](?=\s|$))([\s\S]*)$/.exec(this.ttsBuffer);
+        const m = /^([\s\S]*?[.!?…]["')]?(?=\s|$))([\s\S]*)$/.exec(this.ttsBuffer);
         if (m && m[1].trim()) {
-          this.wsSendText(m[1], false);
           this.ttsBuffer = m[2];
-        } else if (this.ttsBuffer.length >= 60) {
-          this.wsSendText(this.ttsBuffer, false);
+          this.speakClause(m[1], false);
+        } else if (this.ttsBuffer.length >= 140) {
+          const chunk = this.ttsBuffer;
           this.ttsBuffer = "";
+          this.speakClause(chunk, false);
         }
         return;
       }
       const rest = this.ttsBuffer;
       this.ttsBuffer = "";
-      this.wsSendText(rest, true);
+      this.speakClause(rest, true);
       return;
     }
     this.wsSendText(clean, last);
+  }
+
+  /** Sentence-chunk mode: forward a complete clause unless it is narration. */
+  private speakClause(clause: string, last: boolean) {
+    if (clause.trim() && isNarrationLeak(clause)) {
+      this.narrationDropped++;
+      this.events.emit({ type: "narration_dropped", turn: this.turnIndex, text: clause.trim().slice(0, 300) });
+      if (last) this.wsSendText("", true);
+      return;
+    }
+    this.wsSendText(clause, last);
   }
 
   private wsSendText(token: string, last: boolean) {
