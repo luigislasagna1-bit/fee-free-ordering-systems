@@ -293,9 +293,26 @@ EXPERIMENT config behind `NABIL_MODEL/NABIL_THINKING/NABIL_TTS_CHUNK` until the 
 Round-2 test spend ≈ US$70 (three benches, two gates, targeted runs) — more than the ~$30 I planned, because
 the model comparison was worth settling with data; the credit ran dry once more mid-run (auto-reload, please).
 
+**ROUND 3 (2026-08-15 ~22:30 UTC) — your 21:20 call + the 21:15 tester's call, read from their timelines:**
+your cart was right except the thing you spotted: **half Philly Steak lost its ranch base** (the model copied the four
+toppings itself; the recipe's default sauce never travelled), and it asked twice whether mushrooms/green peppers "on
+both halves costs extra" (they're just in both recipes). The tester's call asked for name + number BEFORE any food and
+never put "one extra large pizza" on the order while it asked questions. → Live now (Vercel `2d2b6a3`, Fly same,
+gate 35/35 exact, 0 % robotic, 24¢/min): "half of a named pizza" is first-class in the engine — recipe toppings,
+shared toppings go on the whole pizza automatically, **"Ranch Base on the Philly Steak half" on the ticket and spoken**,
+read back as "half Philly Steak, half Deluxe"; food goes on the order the moment it's named; name/number only after the
+food; no "let me check that" while saving a name; "/" is said as "and"; **banter rule** ("I love you" → one warm playful
+line, back to the order); **asking for a person = instant transfer** (rings your store phone since no transfer number
+is set); **whole-sentence voice delivery** on your line (the "missing words / losing reception" glitch is token-by-token
+streaming); **Deepgram Flux listener ON** (turn-taking / fewer false interruptions) — this one is the live experiment.
+
 **YOUR STEPS NOW:**
-1. ⚠️ Turn on **auto-reload** at console.anthropic.com/settings/billing (three runs have died at $0 today).
-2. 🔷 **Call again — same script as the email**, listen for: "Sure." within ~1.5 s → "So that's a large pizza, half
+1. 🔷 **Call now** — if the greeting plays and it hears you, Flux stays; if not, tell me and I revert in ~4 min.
+   Order "Large and Wings combo, half Philly steak half deluxe, wings BBQ" → listen for "half Philly Steak, half
+   Deluxe" + "ranch base on the Philly Steak half", no double-topping question. Say "you're the best, I love you" once
+   and ask for a person at the end.
+2. ⚠️ Turn on **auto-reload** at console.anthropic.com/settings/billing (three runs have died at $0 today).
+3. 🔷 **Call again — same script as the email**, listen for: "Sure." within ~1.5 s → "So that's a large pizza, half
    pepperoni and mushrooms, half green peppers and onions — anything else?" → no 2-cent line → no "Dishen" → your
    name only asked at the end → Jessica's voice → the total in words. Then Test 2 (two larges → "remove the
    mushrooms from that one" must ASK). Tell me the moment anything is off — the timeline shows me every step.
