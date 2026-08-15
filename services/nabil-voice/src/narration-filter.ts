@@ -16,8 +16,14 @@
  */
 
 const LEAK_MARKERS: RegExp[] = [
+  // The STATE block or its fields echoed back (gate 2026-08-15, T06 under Opus-off).
+  /\[STATE\b|\[\/STATE\]|\bcart=[0-9a-f]{6,}|\bblocking:|\bquote: none|\bpending:|\bunannounced:/i,
   /\bmenu item\b/i,
   /\b[LP]\d{1,2}\b/, // line / pick ids
+  /\bI (?:should|need to|can't|cannot|must) (?:set|quote|add|note|clarify|pick|go with|resend|re-send|use|check|verify|call|read it back)\b/i,
+  /\bthey (?:may be|might be|confirmed|originally said|asked)\b/i,
+  /\blet me (?:add|set|note|quote|pick|re-?send)\b/i,
+  /\bmost natural reading\b|\bfulfilment to pickup\b|\bempty order\b/i,
   /\b(?:the|that) (?:update|tool|call|system|state|cart|line) (?:was|is|says|shows|returned|failed|blocked)/i,
   /\bwas blocked\b/i,
   /\bthey asked\b/i,

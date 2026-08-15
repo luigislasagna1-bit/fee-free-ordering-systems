@@ -671,7 +671,11 @@ export class CallSession {
         // BOOKKEEPING MERGE — see MERGEABLE_TOOLS. The model already said its
         // sentence; the results only close the loop, so they wait for the next
         // user message instead of costing a second hop of silence.
-        const spokeSentence = /[.!?…]["')]?\s*$/.test(assistantText.trim()) && assistantText.trim().length >= 8;
+        // The merged reply must hand the turn BACK to the caller with a
+        // question ("Thanks, Sam — what can I get for you?"). "Thanks, Riley."
+        // alone leaves silence where the second hop would have asked the next
+        // thing (gate 2026-08-15, I03: the number check never came).
+        const spokeSentence = /\?["')]?\s*$/.test(assistantText.trim()) && assistantText.trim().length >= 8;
         const mergeable =
           !this.interrupted &&
           spokeSentence &&

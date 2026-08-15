@@ -11,6 +11,12 @@ describe("narration filter — the model's inner monologue never reaches the cal
       "Let me set that up properly.",
       "Let me check the Meat Lovers toppings.",
       "I need to make sure the topping came through on those first two.",
+      "[STATE t=2 | cart=db5a1218 | pickup/delivery: not settled | name: needed | phone: caller ID]",
+      "Nothing is on the order yet. I should set fulfilment to pickup and set the customer phone confirmation.",
+      "I can't quote an empty order.",
+      "They may be distracted.",
+      "I'll pick the most natural reading: they originally said one Hawaiian.",
+      "Let me add the large pepperoni and the medium Hawaiian.",
     ]) {
       expect(isNarrationLeak(s), s).toBe(true);
     }
@@ -21,6 +27,8 @@ describe("narration filter — the model's inner monologue never reaches the cal
       "Got it — a large pizza, half pepperoni and mushrooms, half green peppers and onions.",
       "Anything else for you?",
       "I'll check that address for you.",
+      "I'll add that for you.",
+      "Let me get that on.",
       "Do you mean the first pizza, the pepperoni one?",
       "Your total comes to twenty dollars and fifty-one cents, tax included.",
       "We're open until midnight tonight.",
