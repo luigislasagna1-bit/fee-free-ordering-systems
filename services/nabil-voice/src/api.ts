@@ -95,4 +95,11 @@ export const api = {
   logCallStart: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
   /** event:"end" — merges outcome/ids/transcript at hangup. */
   logCall: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
+  /** event:"events" — a mid-call flush of the event log (crash-safe observability). */
+  logEvents: (body: unknown) => post(`/api/internal/voice/call-log`, body, true),
 };
+
+/** The service's whole view of the app. `CallSession` takes one of these so
+ *  the simulator can stand up an offline backend (menu snapshot + the real
+ *  compiler in-process) and drive the REAL session against it. */
+export type VoiceApi = typeof api;

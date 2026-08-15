@@ -5,12 +5,7 @@ import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { findBetterDeal } from "@/lib/voice/day-deals";
 import { findSizeMatch } from "@/lib/voice/item-family";
 import { loadRawItem, loadComboData, shapeItemData } from "@/lib/voice/item-loader";
-import {
-  compilePizzaLine,
-  compileComboLine,
-  type ComboIntent,
-  type PizzaIntent,
-} from "@/lib/voice/order-line-compiler";
+import { buildLineCore, type BuildLineKind, type BuildLineLoaders } from "@/lib/voice/build-line-core";
 
 export const runtime = "nodejs";
 
@@ -30,7 +25,12 @@ export const runtime = "nodejs";
  * agent ASKS instead of guessing — an invented option id is a hard 400 on the
  * item path and is silently dropped on a combo child.
  *
- * Body: { slug, kind: "pizza" | "combo", intent, askGroupIds? }
+ * Body: { slug, kind: "item" | "pizza" | "combo", intent, askGroupIds?, offerDeals? }
+ *
+ * This file is a thin wrapper: it authenticates, finds the restaurant, and
+ * hands Prisma-backed loaders to `buildLineCore`, which owns every decision
+ * (kind gates, the size-family swap, the day-deal check) and is unit-tested
+ * with in-memory loaders.
  */
 export async function POST(req: NextRequest) {
   const forbidden = requireInternalKey(req);
@@ -44,18 +44,17 @@ export async function POST(req: NextRequest) {
   }
 
   const slug = String(body.slug ?? "").toLowerCase().trim();
-  const kind = String(body.kind ?? "");
-  const intent = (body.intent ?? {}) as PizzaIntent & ComboIntent;
+  const kind = String(body.kind ?? "") as BuildLineKind;
   const askGroupIds = Array.isArray(body.askGroupIds)
     ? (body.askGroupIds as unknown[]).filter((x): x is string => typeof x === "string")
     : [];
 
   if (!slug) return NextResponse.json({ error: "Missing slug", code: "missing_slug" }, { status: 400 });
-  if (kind !== "pizza" && kind !== "combo") {
-    return NextResponse.json({ error: "kind must be pizza|combo", code: "bad_kind" }, { status: 400 });
+  if (kind !== "item" && kind !== "pizza" && kind !== "combo") {
+    return NextResponse.json({ error: "kind must be item|pizza|combo", code: "bad_kind" }, { status: 400 });
   }
-  const itemId = String(intent.menuItemId ?? "").trim();
-  if (!itemId) {
+  const intent = (body.intent && typeof body.intent === "object" ? body.intent : {}) as Record<string, unknown>;
+  if (!String(intent.menuItemId ?? "").trim()) {
     return NextResponse.json({ error: "Missing menuItemId", code: "missing_item" }, { status: 400 });
   }
 
@@ -68,92 +67,48 @@ export async function POST(req: NextRequest) {
   }
 
   const menuRestaurantId = await resolveMenuRestaurantId(restaurant.id);
-  const raw = await loadRawItem(menuRestaurantId, itemId);
-  if (!raw) {
-    return NextResponse.json({ error: "Item not found", code: "item_not_found" }, { status: 404 });
-  }
 
-  const opts = { askGroupIds, currency: restaurant.currency };
+  // One raw row per id for the life of this request: the core asks for the
+  // item, may ask whether it is a combo, and may ask for a size sibling — each
+  // is a distinct id or a repeat of one already loaded, never a second query
+  // for the same row. This is the critical path of a live phone call.
+  const rawCache = new Map<string, Awaited<ReturnType<typeof loadRawItem>>>();
+  const getRaw = async (id: string) => {
+    if (!rawCache.has(id)) rawCache.set(id, await loadRawItem(menuRestaurantId, id));
+    return rawCache.get(id) ?? null;
+  };
 
-  if (kind === "combo") {
-    const combo = await loadComboData(menuRestaurantId, raw);
-    if (!combo) {
-      return NextResponse.json(
-        { error: "That item isn't a combo", code: "not_a_combo" },
-        { status: 400 },
-      );
-    }
-    const result = compileComboLine(intent as ComboIntent, combo, opts);
-    return NextResponse.json(result);
-  }
+  const loaders: BuildLineLoaders = {
+    item: async (id) => {
+      const raw = await getRaw(id);
+      return raw ? shapeItemData(raw) : null;
+    },
+    combo: async (id) => {
+      const raw = await getRaw(id);
+      return raw ? loadComboData(menuRestaurantId, raw) : null;
+    },
+    sizeMatch: async ({ item, intent, namedSubtotal, timezone }) =>
+      findSizeMatch({
+        menuRestaurantId,
+        item,
+        raw: await getRaw(item.menuItemId),
+        intent,
+        namedSubtotal,
+        timezone,
+      }),
+    betterDeal: async (args) => findBetterDeal({ menuRestaurantId, ...args }),
+  };
 
-  const item = shapeItemData(raw);
-  if (!item.pizzaConfig) {
-    return NextResponse.json(
-      { error: "That item isn't a pizza builder", code: "not_a_pizza" },
-      { status: 400 },
-    );
-  }
-  let result = compilePizzaLine(intent as PizzaIntent, item, opts);
-  let switchedTo: { from: string; to: string; saving: number } | null = null;
-
-  // ── The caller asked for a size this item cannot be ────────────────────
-  //
-  // On menus where each size is its own product, "make it extra large" means
-  // building a DIFFERENT item. The compiler refuses rather than silently
-  // dropping the size (which is how a Large reached the kitchen on
-  // 2026-08-14), but refusing is not the answer the caller wants: Luigi —
-  // "why cant it do an extra large? it should be able to!"
-  //
-  // So resolve it HERE, server-side, in the same hop. The model never picks the
-  // SKU and never sees this happen; it stated an intent and gets back a
-  // compiled line at the size it asked for. Doing it on the model's side would
-  // cost three more round trips, which is where the dead air came from.
-  const sizeMatch = await findSizeMatch({
-    menuRestaurantId,
-    item,
-    raw,
-    intent: intent as PizzaIntent,
-    namedSubtotal: result.lineSubtotal,
-    timezone: restaurant.timezone,
-  });
-  if (sizeMatch) {
-    const swapped = await loadRawItem(menuRestaurantId, sizeMatch.menuItemId);
-    if (swapped) {
-      const swappedItem = shapeItemData(swapped);
-      const recompiled = compilePizzaLine(
-        { ...(intent as PizzaIntent), menuItemId: sizeMatch.menuItemId },
-        swappedItem,
-        opts,
-      );
-      // Only take the swap if it fully compiles. A half-resolved swap is worse
-      // than the honest refusal it replaces.
-      if (recompiled.line && !recompiled.unresolved.length) {
-        result = recompiled;
-        switchedTo = { from: item.name, to: swappedItem.name, saving: sizeMatch.saving };
-      }
-    }
-  }
-
-  // Is the SAME pizza cheaper today under one of the store's day deals? Only
-  // asked when the owner turned it on, and only when we have a line to compare
-  // against — a suggestion is a nicety and must never delay a broken order.
-  const betterDeal =
-    body.offerDeals === true && result.line
-      ? await findBetterDeal({
-          menuRestaurantId,
-          standardItemId: itemId,
-          intent: intent as PizzaIntent,
-          standardSubtotal: result.lineSubtotal,
-          // The size guard: the deal must offer the same sizes, and must land
-          // on the same one this line landed on.
-          standardVariants: item.variants,
-          standardVariantId: result.line.variantId,
-          timezone: restaurant.timezone,
-          askGroupIds,
-          currency: restaurant.currency,
-        })
-      : null;
-
-  return NextResponse.json({ ...result, betterDeal, switchedTo });
+  const out = await buildLineCore(
+    {
+      kind,
+      intent,
+      askGroupIds,
+      offerDeals: body.offerDeals === true,
+      currency: restaurant.currency,
+      timezone: restaurant.timezone,
+    },
+    loaders,
+  );
+  return NextResponse.json(out.body, { status: out.status });
 }

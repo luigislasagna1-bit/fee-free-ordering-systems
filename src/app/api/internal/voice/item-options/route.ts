@@ -51,5 +51,21 @@ export async function GET(req: NextRequest) {
   const item = shapeItemData(raw);
   const combo = await loadComboData(menuRestaurantId, raw);
 
+  // ENVELOPE (contract with services/nabil-voice `get_item_options`, and with
+  // the offline snapshot in src/lib/voice/sim/ which stores the same `item` /
+  // `combo` shapes per menuItemId):
+  //   {
+  //     currency: string,            // restaurant.currency, for read-back only
+  //     item:     ItemData,          // shapeItemData(raw) — sizes, item ∪ category
+  //                                  //   modifier groups (deduped by library id),
+  //                                  //   parsed pizzaConfig; NEVER truncated here
+  //     combo:    ComboData | null,  // loadComboData(...) — null unless the item
+  //                                  //   is a combo; every slot with its eligible
+  //                                  //   `choices` (ItemData[]), `choicesTruncated`
+  //                                  //   when the 120-item pool cap was hit
+  //   }
+  // No option-count caps live server-side: the voice service is the only place
+  // that trims groups for the model (its `andMore` markers), so what the
+  // compiler validates against is always the FULL tree returned here.
   return NextResponse.json({ currency: restaurant.currency, item, combo });
 }

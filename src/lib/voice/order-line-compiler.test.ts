@@ -1,13 +1,16 @@
 import { describe, expect, it } from "vitest";
 import {
   compileComboLine,
+  compileItemLine,
   compilePizzaLine,
   matchOption,
+  matchOptionAcrossGroups,
   placementPrefix,
   resolveOption,
   resolveVariant,
   splitSizeToken,
   type ComboData,
+  type GroupData,
   type ItemData,
 } from "./order-line-compiler";
 import { isHalfToppingName } from "@/lib/pizza-topping-pricing";
@@ -851,5 +854,588 @@ describe("splitSizeToken — the family key", () => {
     const r = splitSizeToken("Build Your Own Pizza");
     expect(r.token).toBeNull();
     expect(r.rest).toBe("build your own pizza");
+  });
+});
+
+/* ══════════════════════════════════════════════════════════════════════════
+   compileItemLine — simple (non-pizza) items, 2026-08-15
+   ══════════════════════════════════════════════════════════════════════════ */
+
+const DIPS: GroupData = {
+  id: "g_dips",
+  name: "Dips",
+  required: false,
+  minSelect: 0,
+  maxSelect: 2,
+  pizzaRole: null,
+  options: [
+    { modifierOptionId: "o_ranch_dip", name: "Ranch", priceAdjustment: 0.75 },
+    { modifierOptionId: "o_blue", name: "Blue Cheese", priceAdjustment: 0.75 },
+    { modifierOptionId: "o_honey", name: "Honey Garlic", priceAdjustment: 0 },
+  ],
+};
+const SAUCES: GroupData = {
+  id: "g_sauces",
+  name: "Sauces",
+  required: false,
+  minSelect: 0,
+  maxSelect: 1,
+  pizzaRole: null,
+  options: [
+    { modifierOptionId: "o_ranch_sauce", name: "Ranch", priceAdjustment: 0 },
+    { modifierOptionId: "o_bbq", name: "BBQ", priceAdjustment: 0 },
+    { modifierOptionId: "o_hot", name: "Hot", priceAdjustment: 0 },
+  ],
+};
+const DRESSING: GroupData = {
+  id: "g_dress",
+  name: "Dressing",
+  required: true,
+  minSelect: 1,
+  maxSelect: 1,
+  pizzaRole: null,
+  options: [
+    { modifierOptionId: "o_caesar", name: "Caesar", priceAdjustment: 0, isDefault: true },
+    { modifierOptionId: "o_italian", name: "Italian", priceAdjustment: 0 },
+  ],
+};
+const COOK: GroupData = {
+  id: "g_cook",
+  name: "Cook Level",
+  required: true,
+  minSelect: 1,
+  maxSelect: 1,
+  pizzaRole: null,
+  options: [
+    { modifierOptionId: "o_light", name: "Lightly Cooked", priceAdjustment: 0 },
+    { modifierOptionId: "o_well", name: "Well Done", priceAdjustment: 0 },
+  ],
+};
+
+const SALAD = (over: Partial<ItemData> = {}): ItemData => ({
+  menuItemId: "mi_salad",
+  name: "Caesar Salad",
+  price: 8,
+  hasVariants: true,
+  variants: [
+    { variantId: "v_side", name: "Side", price: 6 },
+    { variantId: "v_full", name: "Full", price: 10 },
+  ],
+  modifierGroups: [DRESSING],
+  pizzaConfig: null,
+  ...over,
+});
+
+const WINGS_WITH_DIPS = (over: Partial<ItemData> = {}): ItemData => ({
+  ...WINGS,
+  modifierGroups: [DIPS, SAUCES],
+  ...over,
+});
+
+describe("compileItemLine — sizes", () => {
+  it("resolves a spoken size to the variant and prices from it", () => {
+    const r = compileItemLine({ menuItemId: "mi_salad", size: "full" }, SALAD());
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.variantId).toBe("v_full");
+    expect(r.lineSubtotal).toBe(10);
+    expect(r.readBack).toBe("Full Caesar Salad");
+  });
+
+  it("asks which size, WITH prices, when the item is sized and none was said", () => {
+    const r = compileItemLine({ menuItemId: "mi_salad" }, SALAD());
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/which size/i);
+    expect(r.unresolved.join(" ")).toMatch(/Side \(\$6\.00\), Full \(\$10\.00\)/);
+  });
+
+  it("asks again when the spoken size isn't one the item has", () => {
+    const r = compileItemLine({ menuItemId: "mi_salad", size: "jumbo" }, SALAD());
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/jumbo/);
+    expect(r.unresolved.join(" ")).toMatch(/which size/i);
+  });
+
+  it("uses a store-marked default silently when no size was said", () => {
+    const item = SALAD({
+      variants: [
+        { variantId: "v_side", name: "Side", price: 6 },
+        { variantId: "v_full", name: "Full", price: 10, isDefault: true },
+      ],
+    });
+    const r = compileItemLine({ menuItemId: "mi_salad" }, item);
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.variantId).toBe("v_full");
+  });
+
+  it("uses the only variant silently", () => {
+    const item = SALAD({ variants: [{ variantId: "v_only", name: "Regular", price: 7 }] });
+    const r = compileItemLine({ menuItemId: "mi_salad" }, item);
+    expect(r.line!.variantId).toBe("v_only");
+    expect(r.lineSubtotal).toBe(7);
+  });
+
+  it("refuses a sold-out item", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings" }, { ...WINGS, isSoldOut: true });
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/sold out/i);
+  });
+
+  it("notices — does not block — a size spoken for a one-size item", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings", size: "large" }, WINGS);
+    expect(r.unresolved).toEqual([]);
+    expect(r.line).not.toBeNull();
+    expect(r.notices).toEqual(["10pc Wings comes in one size"]);
+  });
+
+  it("fails closed when size IS the item and the caller named a different one", () => {
+    const r = compileItemLine(
+      { menuItemId: "mi_sub", size: "large" },
+      { ...WINGS, menuItemId: "mi_sub", name: "Small Meatball Sub" },
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/separate item/i);
+  });
+
+  it("accepts a spoken size that IS this item's size", () => {
+    const r = compileItemLine(
+      { menuItemId: "mi_sub", size: "small" },
+      { ...WINGS, menuItemId: "mi_sub", name: "Small Meatball Sub" },
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.notices).toBeUndefined();
+  });
+
+  it("resolves a spoken size inside a 'Size' modifier group when the store models it that way", () => {
+    const SIZE_GROUP: GroupData = {
+      id: "g_size",
+      name: "Size",
+      required: true,
+      minSelect: 1,
+      maxSelect: 1,
+      pizzaRole: null,
+      options: [
+        { modifierOptionId: "o_sm", name: "Small", priceAdjustment: 0 },
+        { modifierOptionId: "o_lg", name: "Large", priceAdjustment: 3 },
+      ],
+    };
+    const r = compileItemLine({ menuItemId: "mi_fries", size: "large" }, {
+      ...WINGS,
+      menuItemId: "mi_fries",
+      name: "Fries",
+      price: 4,
+      modifierGroups: [SIZE_GROUP],
+    });
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.modifiers.map((m) => m.modifierOptionId)).toEqual(["o_lg"]);
+    expect(r.lineSubtotal).toBe(7);
+    expect(r.notices).toBeUndefined();
+  });
+});
+
+describe("compileItemLine — options", () => {
+  it("matches spoken options across groups and prices them", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings", options: ["blue cheese", "bbq"] }, WINGS_WITH_DIPS());
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.modifiers).toEqual([
+      { modifierOptionId: "o_blue", name: "Blue Cheese" },
+      { modifierOptionId: "o_bbq", name: "BBQ" },
+    ]);
+    expect(r.readBack).toBe("10pc Wings with Blue Cheese, BBQ");
+    expect(r.lineSubtotal).toBe(12.75);
+    expect(r.pricingNote).toMatch(/\$0\.75/);
+  });
+
+  it("asks which group when the same name lives in two groups", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings", options: ["ranch"] }, WINGS_WITH_DIPS());
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/Ranch \(Dips\)/);
+    expect(r.unresolved.join(" ")).toMatch(/Ranch \(Sauces\)/);
+  });
+
+  it("matchOptionAcrossGroups reports the group it landed in", () => {
+    const m = matchOptionAcrossGroups("honey garlic", [DIPS, SAUCES]);
+    expect(m.ok && m.group.id).toBe("g_dips");
+    const amb = matchOptionAcrossGroups("ranch", [DIPS, SAUCES]);
+    expect(!amb.ok && amb.reason).toBe("ambiguous_group");
+    if (!amb.ok) expect(amb.suggestions).toEqual(["Ranch (Dips)", "Ranch (Sauces)"]);
+    const none = matchOptionAcrossGroups("ketchup", [DIPS, SAUCES]);
+    expect(!none.ok && none.reason).toBe("no_match");
+    if (!none.ok) expect(none.suggestions.length).toBeGreaterThan(0);
+    const neg = matchOptionAcrossGroups("no ranch", [DIPS, SAUCES]);
+    expect(!neg.ok && neg.reason).toBe("negated");
+  });
+
+  it("enforces maxSelect and drops the extras", () => {
+    const r = compileItemLine(
+      { menuItemId: "mi_wings", options: ["bbq", "hot"] }, // Sauces: maxSelect 1
+      WINGS_WITH_DIPS(),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved).toEqual(["Only 1 choice for Sauces: Ranch, BBQ, Hot."]);
+  });
+
+  it("dedupes an option said twice", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings", options: ["bbq", "BBQ"] }, WINGS_WITH_DIPS());
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.modifiers).toHaveLength(1);
+  });
+
+  it("fills a required group from its default when nothing was said", () => {
+    const r = compileItemLine({ menuItemId: "mi_salad", size: "side" }, SALAD());
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.modifiers.map((m) => m.modifierOptionId)).toEqual(["o_caesar"]);
+    // A free default is not spoken.
+    expect(r.readBack).toBe("Side Caesar Salad");
+  });
+
+  it("asks for a required group with a real choice and no default", () => {
+    const r = compileItemLine({ menuItemId: "mi_salad", size: "side" }, SALAD({ modifierGroups: [COOK] }));
+    expect(r.line).toBeNull();
+    expect(r.unresolved).toEqual(["Which Cook Level? Lightly Cooked, Well Done."]);
+  });
+
+  it("asks a required group the store listed in askGroupIds even when it has a default", () => {
+    const r = compileItemLine({ menuItemId: "mi_salad", size: "side" }, SALAD(), { askGroupIds: ["g_dress"] });
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/Which Dressing/);
+  });
+
+  it("does not ask a required group the caller already satisfied", () => {
+    const r = compileItemLine({ menuItemId: "mi_salad", size: "side", options: ["italian"] }, SALAD(), {
+      askGroupIds: ["g_dress"],
+    });
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.modifiers.map((m) => m.modifierOptionId)).toEqual(["o_italian"]);
+  });
+
+  it("speaks an auto-applied default that COSTS money", () => {
+    const PAID = {
+      ...DRESSING,
+      options: [{ modifierOptionId: "o_prem", name: "Premium Dressing", priceAdjustment: 1.5, isDefault: true }],
+    };
+    const r = compileItemLine({ menuItemId: "mi_salad", size: "side" }, SALAD({ modifierGroups: [PAID] }));
+    expect(r.readBack).toBe("Side Caesar Salad with Premium Dressing");
+    expect(r.lineSubtotal).toBe(7.5);
+  });
+
+  it("never adds a refused option — the agent is told to ask", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings", options: ["no ranch"] }, WINGS_WITH_DIPS());
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/LEAVE OFF/);
+  });
+
+  it("offers the closest real names for an unknown option", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings", options: ["blu chese"] }, WINGS_WITH_DIPS());
+    // "blu chese" is within fuzzy reach of Blue Cheese — resolves.
+    expect(r.unresolved).toEqual([]);
+    const r2 = compileItemLine({ menuItemId: "mi_wings", options: ["ketchup"] }, WINGS_WITH_DIPS());
+    expect(r2.line).toBeNull();
+    expect(r2.unresolved.join(" ")).toMatch(/couldn't find "ketchup"/);
+    expect(r2.unresolved.join(" ")).toMatch(/Did they mean/);
+  });
+
+  it("subtotal = (variant or item price + Σ options) × quantity, clamped 1..50", () => {
+    const r = compileItemLine(
+      { menuItemId: "mi_wings", quantity: 3, options: ["ranch", "blue cheese"] },
+      WINGS_WITH_DIPS({ modifierGroups: [DIPS] }),
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.quantity).toBe(3);
+    expect(r.lineSubtotal).toBe(Math.round((12 + 0.75 + 0.75) * 3 * 100) / 100);
+    expect(r.readBack).toBe("3× 10pc Wings with Ranch, Blue Cheese");
+    expect(compileItemLine({ menuItemId: "mi_wings", quantity: 900 }, WINGS).line!.quantity).toBe(50);
+    expect(compileItemLine({ menuItemId: "mi_wings", quantity: 0 }, WINGS).line!.quantity).toBe(1);
+  });
+
+  it("carries notes and never invents halves", () => {
+    const r = compileItemLine({ menuItemId: "mi_wings", notes: "extra crispy" }, WINGS);
+    expect(r.line!.notes).toBe("extra crispy");
+    expect(r.halves).toBeNull();
+    expect(r.pricingNote).toBeNull();
+  });
+});
+
+/* ───────────────────── excludeToppings — "Hawaiian, no ham" ───────────────── */
+
+describe("excludeToppings — leaving a preset off", () => {
+  const HAWAIIAN = () =>
+    PIZZA({
+      name: "Hawaiian",
+      pizzaConfig: pizzaCfg({ presetToppings: ["Pepperoni", "Mushrooms", "Onion"] }),
+    });
+
+  it("removes the preset from the modifiers, notes it, and says it", () => {
+    const r = compilePizzaLine({ menuItemId: "mi_pizza", size: "large", excludeToppings: ["onions"] }, HAWAIIAN());
+    expect(r.unresolved).toEqual([]);
+    const ids = r.line!.modifiers.map((m) => m.modifierOptionId);
+    expect(ids).toContain("o_pep");
+    expect(ids).toContain("o_mush");
+    expect(ids).not.toContain("o_onion");
+    expect(r.line!.notes).toBe("NO Onion");
+    expect(r.readBack).toBe("Large Hawaiian with Pepperoni, Mushrooms, no Onion");
+    expect(r.notices).toBeUndefined();
+  });
+
+  it("appends to the caller's own notes with '; '", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", notes: "well done", excludeToppings: ["no mushrooms", "onion"] },
+      HAWAIIAN(),
+    );
+    expect(r.line!.notes).toBe("well done; NO Mushrooms; NO Onion");
+    expect(r.readBack).toMatch(/, no Mushrooms, no Onion$/);
+  });
+
+  it("an exclusion that was never on the pizza is a notice, not a refusal", () => {
+    const r = compilePizzaLine({ menuItemId: "mi_pizza", size: "large", excludeToppings: ["anchovies"] }, HAWAIIAN());
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.notes).toBeNull();
+    expect(r.notices).toEqual(["anchovies wasn't on this pizza to begin with"]);
+    // Bacon IS on the menu but not on this pizza — same answer.
+    const r2 = compilePizzaLine({ menuItemId: "mi_pizza", size: "large", excludeToppings: ["bacon"] }, HAWAIIAN());
+    expect(r2.notices).toEqual(["bacon wasn't on this pizza to begin with"]);
+    expect(r2.line!.modifiers.map((m) => m.modifierOptionId)).not.toContain("o_bacon");
+  });
+
+  it("a topping both asked for and excluded is a contradiction to confirm", () => {
+    const r = compilePizzaLine(
+      { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "onion" }], excludeToppings: ["onion"] },
+      HAWAIIAN(),
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/both asked for Onion/);
+  });
+
+  it("the removed preset is not charged — the line prices what the kitchen makes", () => {
+    const withAll = compilePizzaLine({ menuItemId: "mi_pizza", size: "large" }, HAWAIIAN());
+    const without = compilePizzaLine({ menuItemId: "mi_pizza", size: "large", excludeToppings: ["onion"] }, HAWAIIAN());
+    expect(without.lineSubtotal!).toBeLessThan(withAll.lineSubtotal!);
+  });
+
+  it("works on a half-and-half read-back too", () => {
+    const r = compilePizzaLine(
+      {
+        menuItemId: "mi_pizza",
+        size: "large",
+        toppings: [{ name: "bacon", placement: "left" }],
+        excludeToppings: ["onion"],
+      },
+      HAWAIIAN(),
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.readBack).toMatch(/left half: Bacon; all over: Pepperoni, Mushrooms, no Onion$/);
+    expect(r.halves).toEqual({ left: ["Bacon"], right: [], whole: ["Pepperoni", "Mushrooms"] });
+  });
+});
+
+/* ────────────────────────── toppings[] — what each word became ──────────── */
+
+describe("toppings[] output", () => {
+  it("lists one entry per requested topping that resolved, with placement and count", () => {
+    const r = compilePizzaLine(
+      {
+        menuItemId: "mi_pizza",
+        size: "large",
+        toppings: [
+          { name: "peperoni", placement: "left", count: 2 },
+          { name: "mushroom", placement: "right" },
+        ],
+      },
+      PIZZA(),
+    );
+    expect(r.toppings).toEqual([
+      { spoken: "peperoni", resolved: "Pepperoni", placement: "left", count: 2 },
+      { spoken: "mushroom", resolved: "Mushrooms", placement: "right", count: 1 },
+    ]);
+  });
+
+  it("is absent when nothing was requested (old shape untouched)", () => {
+    const r = compilePizzaLine({ menuItemId: "mi_pizza", size: "large" }, PIZZA());
+    expect(r.toppings).toBeUndefined();
+    expect(r.notices).toBeUndefined();
+  });
+});
+
+/* ───────────────────────── combo: slotLabel + item picks ─────────────────── */
+
+describe("combo — pickSlots and slotLabel routing", () => {
+  const TWO_WING_SLOTS: ComboData = {
+    menuItemId: "mi_combo2",
+    name: "Wing Party",
+    price: 30,
+    extrasCharge: false,
+    slots: [
+      { id: "s_a", label: "First Wings", min: 1, max: 1, choices: [WINGS_WITH_DIPS()] },
+      { id: "s_b", label: "Second Wings", min: 1, max: 1, choices: [WINGS_WITH_DIPS()] },
+    ],
+  };
+
+  it("reports which slot each pick landed in, aligned with picks order", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo",
+        picks: [
+          { menuItemId: "mi_pizza", size: "large", toppings: [{ name: "pepperoni" }] },
+          { menuItemId: "mi_wings" },
+        ],
+      },
+      COMBO,
+    );
+    expect(r.pickSlots).toEqual([
+      { index: 0, slotId: "s1", slotLabel: "Pizza" },
+      { index: 1, slotId: "s2", slotLabel: "Wings" },
+    ]);
+  });
+
+  it("honours a slotLabel that names a slot with room, case-insensitively", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo2",
+        picks: [
+          { menuItemId: "mi_wings", slotLabel: "second wings", options: ["bbq"] },
+          { menuItemId: "mi_wings", options: ["hot"] },
+        ],
+      },
+      TWO_WING_SLOTS,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.pickSlots).toEqual([
+      { index: 0, slotId: "s_b", slotLabel: "Second Wings" },
+      { index: 1, slotId: "s_a", slotLabel: "First Wings" },
+    ]);
+  });
+
+  it("falls back to first-fit when the named slot is full or doesn't list the item", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo",
+        picks: [
+          { menuItemId: "mi_wings", slotLabel: "Pizza" }, // Pizza slot doesn't list wings
+          { menuItemId: "mi_pizza", size: "large" },
+        ],
+      },
+      COMBO,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.pickSlots).toEqual([
+      { index: 0, slotId: "s2", slotLabel: "Wings" },
+      { index: 1, slotId: "s1", slotLabel: "Pizza" },
+    ]);
+  });
+
+  it("resolves a non-pizza pick's options through the item compiler, keeping the wire child shape", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo2",
+        picks: [
+          { menuItemId: "mi_wings", options: ["blue cheese", "bbq"] },
+          { menuItemId: "mi_wings", options: ["honey garlic"] },
+        ],
+      },
+      TWO_WING_SLOTS,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.bundleItems![0]).toEqual({
+      menuItemId: "mi_wings",
+      variantId: null,
+      name: "10pc Wings",
+      modifiers: [
+        { modifierOptionId: "o_blue", name: "Blue Cheese" },
+        { modifierOptionId: "o_bbq", name: "BBQ" },
+      ],
+    });
+    // A child never quotes standalone money inside a combo.
+    expect(r.pricingNote).toBeNull();
+    expect(r.readBack).toContain("10pc Wings with Blue Cheese, BBQ");
+  });
+
+  it("asks about a non-pizza pick's ambiguous option instead of guessing the group", () => {
+    const r = compileComboLine(
+      { menuItemId: "mi_combo2", picks: [{ menuItemId: "mi_wings", options: ["ranch"] }, { menuItemId: "mi_wings" }] },
+      TWO_WING_SLOTS,
+    );
+    expect(r.line).toBeNull();
+    expect(r.unresolved.join(" ")).toMatch(/Ranch \(Dips\)/);
+  });
+
+  it("fills / asks a non-pizza pick's REQUIRED group", () => {
+    const SALAD_COMBO: ComboData = {
+      menuItemId: "mi_combo3",
+      name: "Salad Combo",
+      price: 15,
+      extrasCharge: false,
+      slots: [
+        { id: "s_s", label: "Salad", min: 1, max: 1, choices: [SALAD()] },
+        {
+          id: "s_c",
+          label: "Cooked",
+          min: 1,
+          max: 1,
+          choices: [SALAD({ menuItemId: "mi_salad2", name: "Cooked Salad", modifierGroups: [COOK] })],
+        },
+      ],
+    };
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo3",
+        picks: [{ menuItemId: "mi_salad", size: "side" }, { menuItemId: "mi_salad2", size: "side" }],
+      },
+      SALAD_COMBO,
+    );
+    expect(r.line).toBeNull();
+    // Caesar defaulted silently; Cook Level has no default → asked.
+    expect(r.unresolved).toEqual(["Which Cook Level? Lightly Cooked, Well Done."]);
+    const ok = compileComboLine(
+      {
+        menuItemId: "mi_combo3",
+        picks: [
+          { menuItemId: "mi_salad", size: "side" },
+          { menuItemId: "mi_salad2", size: "side", options: ["well done"] },
+        ],
+      },
+      SALAD_COMBO,
+    );
+    expect(ok.unresolved).toEqual([]);
+    expect(ok.line!.bundleItems![0].modifiers.map((m) => m.modifierOptionId)).toEqual(["o_caesar"]);
+    expect(ok.line!.bundleItems![1].modifiers.map((m) => m.modifierOptionId)).toEqual(["o_well"]);
+  });
+
+  it("passes excludeToppings through to a pizza pick and hoists its note onto the combo line", () => {
+    const HAWAIIAN_COMBO: ComboData = {
+      ...COMBO,
+      slots: [
+        {
+          id: "s1",
+          label: "Pizza",
+          min: 1,
+          max: 1,
+          choices: [PIZZA({ name: "Hawaiian", pizzaConfig: pizzaCfg({ presetToppings: ["Pepperoni", "Onion"] }) })],
+        },
+        COMBO.slots[1],
+      ],
+    };
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo",
+        picks: [{ menuItemId: "mi_pizza", size: "large", excludeToppings: ["onion"] }, { menuItemId: "mi_wings" }],
+      },
+      HAWAIIAN_COMBO,
+    );
+    expect(r.unresolved).toEqual([]);
+    const pizza = r.line!.bundleItems![0];
+    expect(pizza.modifiers.map((m) => m.modifierOptionId)).not.toContain("o_onion");
+    expect(r.readBack).toContain("no Onion");
+    expect(r.line!.notes).toBe("Hawaiian: NO Onion");
+  });
+
+  it("surfaces a child's notice on the combo result", () => {
+    const r = compileComboLine(
+      {
+        menuItemId: "mi_combo",
+        picks: [{ menuItemId: "mi_pizza", size: "large" }, { menuItemId: "mi_wings", size: "large" }],
+      },
+      COMBO,
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.notices).toEqual(["10pc Wings comes in one size"]);
   });
 });

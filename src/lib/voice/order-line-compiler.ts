@@ -1,6 +1,6 @@
 /**
  * Voice order-line COMPILER — turns a spoken *intent* into the exact
- * `/api/orders` wire payload for a pizza or a combo.
+ * `/api/orders` wire payload for a simple item, a pizza or a combo.
  *
  * WHY THIS EXISTS (2026-08-11). The order route accepts a payload shape with
  * several traps that are lethal if a language model hand-assembles it:
@@ -77,6 +77,33 @@ export type PizzaIntent = {
   cheese?: string | null;
   quantity?: number;
   notes?: string | null;
+  /** Preset toppings the caller wants LEFT OFF ("Hawaiian, no ham"). Matched
+   *  against the pizza's configured presets; a name that isn't a preset comes
+   *  back as a notice, never as a refusal. */
+  excludeToppings?: string[];
+};
+
+/** What the model says the caller asked for on one SIMPLE (non-pizza) item —
+ *  a salad, wings, a drink. Options are spoken names resolved across every
+ *  modifier group the item carries. */
+export type ItemIntent = {
+  menuItemId: string;
+  quantity?: number;
+  size?: string | null;
+  options?: string[];
+  notes?: string | null;
+};
+
+/** Options every compile entry point accepts. */
+export type CompileOpts = {
+  /** Group ids the STORE wants always confirmed aloud (VoiceAgentConfig.pizzaAskGroups). */
+  askGroupIds?: string[];
+  currency?: string;
+  /** Combo children only. A child is NOT priced by the standalone engine —
+   *  combo-child-pricing / the shared topping pool decide, and
+   *  `extrasCharge:false` means the extras are free. Quoting the standalone
+   *  number there announces money the caller will never be charged. */
+  suppressPricingNote?: boolean;
 };
 
 export type ComboIntent = {
@@ -87,11 +114,18 @@ export type ComboIntent = {
    *  crust", and a store that forces crust to be asked deadlocked the call. */
   picks: Array<{
     menuItemId: string;
+    /** Which slot this pick is for, by the slot's label (case-insensitive).
+     *  Honoured when that slot has room and lists the item; otherwise the
+     *  server's first-fit rule applies, exactly as before. */
+    slotLabel?: string;
     size?: string | null;
     toppings?: PizzaIntent["toppings"];
+    excludeToppings?: string[];
     crust?: string | null;
     sauce?: string | null;
     cheese?: string | null;
+    /** Non-pizza picks: spoken option names (dip, sauce, dressing…). */
+    options?: string[];
     notes?: string | null;
   }>;
   quantity?: number;
@@ -166,6 +200,16 @@ export type CompileResult = {
    *  Used to compare a pizza against a cheaper same-day deal without asking the
    *  model to do arithmetic. Null when the line didn't compile. */
   lineSubtotal?: number | null;
+  /** Things worth SAYING that do not block the order — "Onions wasn't on this
+   *  pizza to begin with", "Caesar Salad comes in one size". Never a question. */
+  notices?: string[];
+  /** Pizza only: one entry per REQUESTED topping that resolved, so the agent
+   *  can see what each spoken word became without re-parsing the modifiers. */
+  toppings?: Array<{ spoken: string; resolved: string; placement: Placement; count: number }>;
+  /** Combo only: which slot each pick landed in. `index` is the pick's
+   *  position in `intent.picks`; picks that landed nowhere are absent here and
+   *  explained in `unresolved`. */
+  pickSlots?: Array<{ index: number; slotId: string; slotLabel: string }>;
 };
 
 /* ───────────────────────────── name matching ───────────────────────────── */
@@ -329,6 +373,147 @@ export function resolveOption(spoken: string, groups: GroupData[]): OptionData |
   const m = matchOption(spoken, groups);
   return m.ok ? m.option : null;
 }
+
+export type CrossGroupMatch =
+  | { ok: true; group: GroupData; option: OptionData }
+  | { ok: false; reason: "ambiguous_group" | "negated" | "no_match"; suggestions: string[] };
+
+/**
+ * Resolve one spoken option name across ALL of an item's groups, and say
+ * WHICH group it landed in — a simple item's options are not role-tagged the
+ * way a pizza's are, so "ranch" may legitimately live in both "Dips" and
+ * "Salad Dressing". Matching group-by-group first means a store whose Dips
+ * and Sauces both list "Ranch" gets a real question ("Ranch (Dips) or Ranch
+ * (Sauces)?") instead of a within-pool ambiguity with no way out.
+ */
+export function matchOptionAcrossGroups(spoken: string, groups: GroupData[]): CrossGroupMatch {
+  const hits: Array<{ group: GroupData; option: OptionData }> = [];
+  for (const g of groups) {
+    if (!g.options.length) continue;
+    const m = matchOption(spoken, [g]);
+    if (m.ok) hits.push({ group: g, option: m.option });
+  }
+  if (hits.length === 1) return { ok: true, group: hits[0].group, option: hits[0].option };
+  if (hits.length > 1) {
+    return {
+      ok: false,
+      reason: "ambiguous_group",
+      suggestions: hits.map((h) => `${h.option.name} (${h.group.name})`),
+    };
+  }
+  // No group claimed it on its own — reuse the pooled matcher for its reason
+  // and its "did you mean" list.
+  const pooled = matchOption(spoken, groups);
+  if (pooled.ok) {
+    // Cannot happen in practice (a pooled hit is a hit inside some group), but
+    // never throw away a real answer if it does.
+    const group = groups.find((g) => g.options.some((o) => o.modifierOptionId === pooled.option.modifierOptionId));
+    if (group) return { ok: true, group, option: pooled.option };
+  }
+  if (!pooled.ok && pooled.reason === "negated") return { ok: false, reason: "negated", suggestions: [] };
+  const suggestions = pooled.ok ? [] : pooled.suggestions;
+  return {
+    ok: false,
+    reason: !pooled.ok && pooled.reason === "ambiguous" ? "ambiguous_group" : "no_match",
+    suggestions,
+  };
+}
+
+/* ─────────────────────── shared compile building blocks ─────────────────── */
+
+/**
+ * 🚨 SIZE IS SOMETIMES THE ITEM, NOT AN OPTION ON IT.
+ *
+ * On menus like Luigi's, "Large 1 Topping" ($17.74) and "EXTRA Large 1
+ * Topping" ($21.99) are two SEPARATE MenuItems with no variants at all — so
+ * there is nothing to resolve a spoken size against. Before this rule existed
+ * a spoken size on such an item was read off the wire and SILENTLY DISCARDED:
+ * nothing landed in `unresolved`, add_pizza answered `ok`, and the line
+ * compiled at the wrong size.
+ *
+ * On 2026-08-14 a caller asked for extra large three times, the agent noticed
+ * and correctly called revise_line({size:"extra large"}) — which recompiled
+ * straight back through this same hole and returned `ok` AGAIN. The agent then
+ * told the caller "that's confirmed, we do have extra large available" because
+ * its tools had twice reported success. It wasn't inventing; it was
+ * misinformed. A Large went to the kitchen.
+ *
+ * Fail CLOSED: if the caller named a size this item cannot express, say so and
+ * let the agent ask. Only recognised size words are rejected — a freeform note
+ * like "12 inch" must not dead-end a caller — and BOTH sides must be
+ * recognisable: an item whose name carries no size ("Build Your Own Pizza")
+ * tells us nothing, and refusing on a hunch would dead-end a caller for no
+ * reason. Returns the message for `unresolved`, or null when there is no
+ * conflict.
+ */
+function sizeIsTheItemConflict(spokenSize: string | null | undefined, itemName: string): string | null {
+  const want = normalizeSizeToken(spokenSize);
+  const itemSize = normalizeSizeToken(itemName);
+  if (want && itemSize && itemSize !== want) {
+    return (
+      `"${itemName}" IS the ${itemSize} one — on this menu each size is a SEPARATE item, not an option. ` +
+      `Find the ${want} version with get_item_options and build that item instead. Do not tell the caller ` +
+      `the size is set until you have.`
+    );
+  }
+  return null;
+}
+
+/**
+ * Fill ONE required group the caller said nothing about, or ask.
+ *
+ * A pizza's required groups are not only crust/sauce/cheese: Luigi's carry a
+ * required "Cook Level" with no pizzaRole at all, and a simple item's are all
+ * like that. The web builder applies its default; the phone path used to skip
+ * them entirely, so the same order produced a DIFFERENT kitchen ticket
+ * depending on where it came from. Fill the store's own default, ask when
+ * there is a real choice and no default, and never invent an optional extra.
+ *
+ * ⚠️ A default is only safe when the store actually marked one, or there is
+ * only one choice. "Whatever sorts first" once sold a $4 stuffed crust the
+ * caller never asked for and never heard. A default that COSTS money is spoken
+ * — silence plus a surcharge is how a caller gets surprised at pickup.
+ *
+ * @param chosenIds Option ids already on the line. A group the caller already
+ *   satisfied is left alone.
+ * @param ask Group ids the store wants confirmed aloud, default or not.
+ */
+function fillRequiredGroup(
+  g: GroupData,
+  chosenIds: Set<string>,
+  ask: Set<string>,
+  out: { mods: CompiledModifier[]; spokenParts: string[]; unresolved: string[] },
+): void {
+  if (!(g.required || g.minSelect > 0) || !g.options.length) return;
+  const need = Math.max(g.minSelect, g.required ? 1 : 0);
+  const have = g.options.filter((o) => chosenIds.has(o.modifierOptionId)).length;
+  if (have >= need) return;
+  const optionNames = () => g.options.map((o) => o.name).join(", ");
+  if (ask.has(g.id)) {
+    out.unresolved.push(`Which ${g.name}? ${optionNames()}.`);
+    return;
+  }
+  const def =
+    g.options.find((o) => o.isDefault && !chosenIds.has(o.modifierOptionId)) ??
+    (g.options.length === 1 && !chosenIds.has(g.options[0].modifierOptionId) ? g.options[0] : null);
+  if (!def) {
+    out.unresolved.push(`Which ${g.name}? ${optionNames()}.`);
+    return;
+  }
+  out.mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });
+  chosenIds.add(def.modifierOptionId);
+  if ((Number(def.priceAdjustment) || 0) > 0) out.spokenParts.push(def.name);
+}
+
+/** "no onions" / "without the ham" / "hold ham" → "onions" / "ham" / "ham".
+ *  Exclusions arrive as topping NAMES, but a model that copies the caller's
+ *  words verbatim would otherwise trip the negation guard on the very thing
+ *  it is trying to leave off. */
+const stripLeadingNegation = (s: string): string =>
+  norm(s)
+    .replace(/^(no|not|non|without|w o|hold|skip|omit|remove|minus|less|lose|leave off|leave out|none|zero|free of|allergic to)\s+/, "")
+    .replace(/^(the|any|of)\s+/, "")
+    .trim();
 
 /** Size words that make a spoken size a DIFFERENT size from the menu one.
  *  "extra large" must never quietly become "Large". */
@@ -505,17 +690,10 @@ function toppingGroups(item: ItemData): GroupData[] {
 export function compilePizzaLine(
   intent: PizzaIntent,
   item: ItemData,
-  opts: {
-    askGroupIds?: string[];
-    currency?: string;
-    /** Combo children only. A pizza inside a combo is NOT priced by this
-     *  engine — combo-child-pricing / the shared topping pool decide, and
-     *  `extrasCharge:false` means the extras are free. Quoting the standalone
-     *  number there announces money the caller will never be charged. */
-    suppressPricingNote?: boolean;
-  } = {},
+  opts: CompileOpts = {},
 ): CompileResult {
   const unresolved: string[] = [];
+  const notices: string[] = [];
   const currency = opts.currency ?? "usd";
   const ask = new Set(opts.askGroupIds ?? []);
   const cfg = item.pizzaConfig;
@@ -536,37 +714,9 @@ export function compilePizzaLine(
       );
     }
   } else if (intent.size) {
-    // 🚨 SIZE IS SOMETIMES THE ITEM, NOT AN OPTION ON IT.
-    //
-    // On menus like Luigi's, "Large 1 Topping" ($17.74) and "EXTRA Large 1
-    // Topping" ($21.99) are two SEPARATE MenuItems with no variants at all —
-    // so there is nothing here to resolve a size against. This branch did not
-    // exist, which meant a spoken size on such an item was read off the wire
-    // and SILENTLY DISCARDED: nothing landed in `unresolved`, add_pizza
-    // answered `ok`, and the line compiled at the wrong size.
-    //
-    // On 2026-08-14 a caller asked for extra large three times, the agent
-    // noticed and correctly called revise_line({size:"extra large"}) — which
-    // recompiled straight back through this same hole and returned `ok` AGAIN.
-    // The agent then told the caller "that's confirmed, we do have extra large
-    // available" because its tools had twice reported success. It wasn't
-    // inventing; it was misinformed. A Large went to the kitchen.
-    //
-    // Fail CLOSED: if the caller named a size this item cannot express, say so
-    // and let the agent ask. Only recognised size words are rejected — a
-    // freeform note like "12 inch" must not dead-end a caller.
-    const want = normalizeSizeToken(intent.size);
-    const itemSize = normalizeSizeToken(item.name);
-    // Both sides must be recognisable before we refuse. An item whose name
-    // carries no size ("Build Your Own Pizza") tells us nothing, and refusing
-    // on a hunch would dead-end a caller for no reason.
-    if (want && itemSize && itemSize !== want) {
-      unresolved.push(
-        `"${item.name}" IS the ${itemSize} one — on this menu each size is a SEPARATE item, not an option. ` +
-          `Find the ${want} version with get_item_options and build that item instead. Do not tell the caller ` +
-          `the size is set until you have.`,
-      );
-    }
+    // Size may be the ITEM, not an option on it — see sizeIsTheItemConflict.
+    const conflict = sizeIsTheItemConflict(intent.size, item.name);
+    if (conflict) unresolved.push(conflict);
   }
 
   const mods: CompiledModifier[] = [];
@@ -625,29 +775,19 @@ export function compilePizzaLine(
 
   // ── every OTHER required group (cook level, size-of-fries, …) ─────────
   // A pizza's required groups are not only crust/sauce/cheese: Luigi's carry a
-  // required "Cook Level" with no pizzaRole at all. The web builder applies its
-  // default; the phone path skipped it entirely, so the same order produced a
-  // DIFFERENT kitchen ticket depending on where it came from. Fill the store's
-  // own default, ask when there is a real choice and no default, and never
-  // invent an optional extra.
+  // required "Cook Level" with no pizzaRole at all. Same rule as a simple
+  // item's groups — see fillRequiredGroup.
   const roleGroupIds = new Set(
     (["crust", "sauce", "cheese"] as const).flatMap((r) => groupsForRole(item, r).map((g) => g.id)),
   );
-  for (const g of item.modifierGroups) {
-    if (roleGroupIds.has(g.id) || isToppingRole(g.pizzaRole) || g.pizzaRole === "garnish") continue;
-    if (toppingGroups(item).some((t) => t.id === g.id)) continue;
-    if (!(g.required || g.minSelect > 0) || !g.options.length) continue;
-    if (ask.has(g.id)) {
-      unresolved.push(`Which ${g.name}? ${g.options.map((o) => o.name).join(", ")}.`);
-      continue;
+  {
+    const chosenIds = new Set(mods.map((m) => m.modifierOptionId));
+    const out = { mods, spokenParts, unresolved };
+    for (const g of item.modifierGroups) {
+      if (roleGroupIds.has(g.id) || isToppingRole(g.pizzaRole) || g.pizzaRole === "garnish") continue;
+      if (toppingGroups(item).some((t) => t.id === g.id)) continue;
+      fillRequiredGroup(g, chosenIds, ask, out);
     }
-    const def = g.options.find((o) => o.isDefault) ?? (g.options.length === 1 ? g.options[0] : null);
-    if (!def) {
-      unresolved.push(`Which ${g.name}? ${g.options.map((o) => o.name).join(", ")}.`);
-      continue;
-    }
-    mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });
-    if ((Number(def.priceAdjustment) || 0) > 0) spokenParts.push(def.name);
   }
 
   // ── toppings ──────────────────────────────────────────────────────────
@@ -659,6 +799,7 @@ export function compilePizzaLine(
   }
 
   const chargeLines: ToppingChargeLine[] = [];
+  const toppingsOut: NonNullable<CompileResult["toppings"]> = [];
   for (const t of requested) {
     const m = matchOption(t.name, tGroups);
     if (!m.ok) {
@@ -722,7 +863,35 @@ export function compilePizzaLine(
     spokenParts.push(
       `${count > 1 ? `${count}× ` : ""}${opt.name}${placement === "left" ? " on the left half" : placement === "right" ? " on the right half" : ""}`,
     );
+    toppingsOut.push({ spoken: t.name, resolved: opt.name, placement, count });
   }
+
+  // ── exclusions: "Hawaiian, no ham" ─────────────────────────────────────
+  // Resolved against the topping pool with the SAME matcher the additions use
+  // (plurals, typos, phonetics), after stripping the refusal word a verbatim
+  // model would carry in ("no ham" → "ham"). Whether the name is actually a
+  // preset is decided during seeding below; what matched nothing on the pizza
+  // becomes a NOTICE, never a refusal — a caller who says "no anchovies" on a
+  // pizza that never had them is not asking a question.
+  const excludeIds = new Map<string, string>(); // optionId → spoken form
+  const excludeKeys = new Map<string, string>(); // norm/stem key → spoken form
+  const excludeMatched = new Map<string, string>(); // spoken form → preset name removed
+  for (const raw of intent.excludeToppings ?? []) {
+    const spoken = String(raw ?? "").trim();
+    if (!spoken) continue;
+    const cleaned = stripLeadingNegation(spoken) || norm(spoken);
+    const m = matchOption(cleaned, tGroups);
+    if (m.ok) excludeIds.set(m.option.modifierOptionId, spoken);
+    excludeKeys.set(norm(cleaned), spoken);
+    excludeKeys.set(stem(cleaned), spoken);
+  }
+  const isExcluded = (opt: OptionData, preset: string): string | null =>
+    excludeIds.get(opt.modifierOptionId) ??
+    excludeKeys.get(norm(opt.name)) ??
+    excludeKeys.get(stem(opt.name)) ??
+    excludeKeys.get(norm(preset)) ??
+    excludeKeys.get(stem(preset)) ??
+    null;
 
   // ── preset seeding: a preset pizza must NEVER arrive bare ──────────────
   // toppingBaseAdjust is applied whenever pizzaConfig parses, even with zero
@@ -734,6 +903,7 @@ export function compilePizzaLine(
   // below keys off RESOLVED — a caller who names every preset themselves is a
   // correctly-configured pizza, not a broken one.
   let presetsResolved = 0;
+  const removedPresets: string[] = [];
   if (cfg?.presetToppings?.length) {
     const already = new Set(mods.map((m) => m.modifierOptionId));
     const poolOptions = tGroups.flatMap((g) => g.options);
@@ -751,6 +921,20 @@ export function compilePizzaLine(
       );
       if (!opt) continue;
       presetsResolved++;
+      const excludedAs = isExcluded(opt, preset);
+      if (excludedAs !== null) {
+        if (already.has(opt.modifierOptionId)) {
+          // Named as a topping AND asked to be left off — a contradiction we
+          // will not resolve by guessing which one the caller meant.
+          unresolved.push(
+            `The caller both asked for ${opt.name} and asked to leave it off. Confirm which before adding it.`,
+          );
+          continue;
+        }
+        excludeMatched.set(excludedAs, opt.name);
+        if (!removedPresets.includes(opt.name)) removedPresets.push(opt.name);
+        continue; // leave it off — the kitchen ticket says NO, below
+      }
       if (already.has(opt.modifierOptionId)) continue; // caller already named it
       already.add(opt.modifierOptionId);
       mods.push({
@@ -762,6 +946,21 @@ export function compilePizzaLine(
       // never mentioned is still on the pizza they're about to pay for.
       spokenParts.push(opt.name);
     }
+  }
+
+  // Exclusions that removed no preset. If the same word also matched a topping
+  // the caller ADDED, that is a contradiction to confirm; otherwise it is only
+  // worth mentioning — the pizza never had it.
+  for (const raw of intent.excludeToppings ?? []) {
+    const spoken = String(raw ?? "").trim();
+    if (!spoken || excludeMatched.has(spoken)) continue;
+    const addedId = [...excludeIds.entries()].find(([, s]) => s === spoken)?.[0];
+    if (addedId && mods.some((m) => m.modifierOptionId === addedId)) {
+      const name = tGroups.flatMap((g) => g.options).find((o) => o.modifierOptionId === addedId)?.name ?? spoken;
+      unresolved.push(`The caller both asked for ${name} and asked to leave it off. Confirm which before adding it.`);
+      continue;
+    }
+    notices.push(`${spoken} wasn't on this pizza to begin with`);
   }
 
   // ── advisory topping money (the over-allowance announcement) ───────────
@@ -814,11 +1013,27 @@ export function compilePizzaLine(
     }
   }
 
-  if (unresolved.length) return { line: null, readBack: "", pricingNote, unresolved, lineSubtotal: null };
+  if (unresolved.length) {
+    return {
+      line: null,
+      readBack: "",
+      pricingNote,
+      unresolved,
+      lineSubtotal: null,
+      ...(notices.length ? { notices } : {}),
+      ...(toppingsOut.length ? { toppings: toppingsOut } : {}),
+    };
+  }
 
   const quantity = Math.max(1, Math.min(99, Math.floor(Number(intent.quantity) || 1)));
   if (lineSubtotal == null) lineSubtotal = variant ? variant.price : item.price;
   const sizeLabel = variant ? `${variant.name} ` : "";
+  // A removed preset is spoken AND written on the ticket — the kitchen must
+  // not build the standard pizza because the note went missing.
+  const noSuffix = removedPresets.map((n) => `, no ${n}`).join("");
+  const notes = removedPresets.length
+    ? [intent.notes?.trim() || "", ...removedPresets.map((n) => `NO ${n}`)].filter(Boolean).join("; ")
+    : (intent.notes ?? null);
 
   // ── what is actually on each half, read off the COMPILED line ────────────
   //
@@ -845,9 +1060,11 @@ export function compilePizzaLine(
         halves.whole.length ? `all over: ${halves.whole.join(", ")}` : "",
       ]
         .filter(Boolean)
-        .join("; ")
+        .join("; ") +
+      noSuffix
     : `${quantity > 1 ? `${quantity}× ` : ""}${sizeLabel}${item.name}` +
-      (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "");
+      (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "") +
+      noSuffix;
 
   return {
     line: {
@@ -855,13 +1072,15 @@ export function compilePizzaLine(
       variantId: variant?.variantId ?? null,
       quantity,
       modifiers: mods,
-      notes: intent.notes ?? null,
+      notes,
     },
     readBack,
     halves,
     pricingNote,
     unresolved: [],
     lineSubtotal: Math.round(lineSubtotal * quantity * 100) / 100,
+    ...(notices.length ? { notices } : {}),
+    ...(toppingsOut.length ? { toppings: toppingsOut } : {}),
   };
 }
 
@@ -883,6 +1102,169 @@ export function splitHalves(mods: CompiledModifier[]): { left: string[]; right: 
   return out;
 }
 
+/* ───────────────────────────── item compile ────────────────────────────── */
+
+/** Variant names with their prices, for a "which size?" question the caller
+ *  can actually answer. */
+const sizeMenu = (variants: VariantData[], currency: string): string =>
+  variants.map((v) => `${v.name} (${money(v.price, currency)})`).join(", ");
+
+/**
+ * Compile a spoken SIMPLE item — a salad, wings, a drink — into a wire line.
+ *
+ * Same contract as the pizza compiler: the model states an intent, this
+ * resolves it against the item's real variants and modifier groups, and
+ * anything it cannot resolve confidently comes back in `unresolved[]`. Sizes
+ * are never silently downgraded, options are never guessed, required groups
+ * are filled from the store's own default or asked, and an option the caller
+ * REFUSED is never added.
+ */
+export function compileItemLine(intent: ItemIntent, item: ItemData, opts: CompileOpts = {}): CompileResult {
+  const unresolved: string[] = [];
+  const notices: string[] = [];
+  const currency = opts.currency ?? "usd";
+  const ask = new Set(opts.askGroupIds ?? []);
+  const fail = (): CompileResult => ({
+    line: null,
+    readBack: "",
+    pricingNote: null,
+    unresolved,
+    halves: null,
+    lineSubtotal: null,
+    ...(notices.length ? { notices } : {}),
+  });
+
+  if (item.isSoldOut) {
+    unresolved.push(`${item.name} is sold out today.`);
+    return fail();
+  }
+
+  const mods: CompiledModifier[] = [];
+  const spokenParts: string[] = [];
+  const chosenIds = new Set<string>();
+  let extras = 0;
+
+  // ── size ──────────────────────────────────────────────────────────────
+  let variant: VariantData | null = null;
+  let sizeHandled = false;
+  if (item.hasVariants && item.variants.length) {
+    variant = resolveVariant(intent.size, item.variants);
+    sizeHandled = true;
+    if (!variant) {
+      unresolved.push(
+        intent.size
+          ? `We don't have "${intent.size}" for ${item.name}. Which size? ${sizeMenu(item.variants, currency)}.`
+          : `Which size for ${item.name}? ${sizeMenu(item.variants, currency)}.`,
+      );
+    }
+  } else if (intent.size) {
+    // Some stores model size as a MODIFIER GROUP ("Size: Small / Large")
+    // rather than as variants. A spoken size that resolves inside such a group
+    // is simply that choice — not "one size", not a separate item.
+    const sizeGroups = item.modifierGroups.filter((g) => /\bsizes?\b/.test(norm(g.name)) && g.options.length);
+    for (const g of sizeGroups) {
+      const m = matchOption(intent.size, [g]);
+      if (!m.ok) continue;
+      mods.push({ modifierOptionId: m.option.modifierOptionId, name: m.option.name });
+      chosenIds.add(m.option.modifierOptionId);
+      spokenParts.push(m.option.name);
+      extras += Number(m.option.priceAdjustment) || 0;
+      sizeHandled = true;
+      break;
+    }
+    if (!sizeHandled) {
+      // Size may be the ITEM, not an option on it — see sizeIsTheItemConflict.
+      const conflict = sizeIsTheItemConflict(intent.size, item.name);
+      if (conflict) unresolved.push(conflict);
+      else if (!normalizeSizeToken(item.name)) notices.push(`${item.name} comes in one size`);
+    }
+  }
+
+  // ── options, across every group ───────────────────────────────────────
+  const countIn = (g: GroupData) => g.options.filter((o) => chosenIds.has(o.modifierOptionId)).length;
+  const overfull = new Set<string>();
+  for (const raw of intent.options ?? []) {
+    const spoken = String(raw ?? "").trim();
+    if (!spoken) continue;
+    const m = matchOptionAcrossGroups(spoken, item.modifierGroups);
+    if (!m.ok) {
+      if (m.reason === "negated") {
+        unresolved.push(
+          `The caller said "${spoken}" — that's something to LEAVE OFF, not add. Only name options they want ON the ${item.name}; a removal goes in notes. Confirm with them if unsure.`,
+        );
+      } else if (m.reason === "ambiguous_group") {
+        unresolved.push(
+          m.suggestions.length
+            ? `"${spoken}" could be ${m.suggestions.join(" or ")} on ${item.name}. Which one?`
+            : `"${spoken}" matches more than one option on ${item.name}. Which one?`,
+        );
+      } else {
+        unresolved.push(
+          m.suggestions.length
+            ? `I couldn't find "${spoken}" on ${item.name}. Did they mean ${m.suggestions.slice(0, 3).join(", ")}?`
+            : `I couldn't find "${spoken}" on ${item.name} — it has no such option; a special request goes in notes.`,
+        );
+      }
+      continue;
+    }
+    const { group: g, option: opt } = m;
+    if (chosenIds.has(opt.modifierOptionId)) continue; // said twice — once is enough
+    if (g.maxSelect > 0 && countIn(g) >= g.maxSelect) {
+      if (!overfull.has(g.id)) {
+        overfull.add(g.id);
+        unresolved.push(
+          `Only ${g.maxSelect} choice${g.maxSelect === 1 ? "" : "s"} for ${g.name}: ${g.options.map((o) => o.name).join(", ")}.`,
+        );
+      }
+      continue; // the extra is dropped, and the agent asks
+    }
+    mods.push({ modifierOptionId: opt.modifierOptionId, name: opt.name });
+    chosenIds.add(opt.modifierOptionId);
+    spokenParts.push(opt.name);
+    extras += Number(opt.priceAdjustment) || 0;
+  }
+
+  // ── every required group the caller left unsatisfied ──────────────────
+  {
+    const before = mods.length;
+    const out = { mods, spokenParts, unresolved };
+    for (const g of item.modifierGroups) fillRequiredGroup(g, chosenIds, ask, out);
+    for (const m of mods.slice(before)) {
+      const opt = item.modifierGroups.flatMap((g) => g.options).find((o) => o.modifierOptionId === m.modifierOptionId);
+      extras += Number(opt?.priceAdjustment) || 0;
+    }
+  }
+
+  if (unresolved.length) return fail();
+
+  const quantity = Math.max(1, Math.min(50, Math.floor(Number(intent.quantity) || 1)));
+  const base = variant ? variant.price : item.price;
+  const unit = Math.round((base + extras) * 100) / 100;
+  const pricingNote =
+    extras > 0 && !opts.suppressPricingNote
+      ? `Add-ons come to ${money(Math.round(extras * 100) / 100, currency)} extra.`
+      : null;
+  const readBack =
+    `${quantity > 1 ? `${quantity}× ` : ""}${variant ? `${variant.name} ` : ""}${item.name}` +
+    (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "");
+
+  return {
+    line: {
+      menuItemId: item.menuItemId,
+      variantId: variant?.variantId ?? null,
+      quantity,
+      modifiers: mods,
+      notes: intent.notes ?? null,
+    },
+    readBack,
+    halves: null,
+    pricingNote,
+    unresolved: [],
+    lineSubtotal: Math.round(unit * quantity * 100) / 100,
+    ...(notices.length ? { notices } : {}),
+  };
+}
+
 /* ───────────────────────────── combo compile ───────────────────────────── */
 
 /**
@@ -894,11 +1276,14 @@ export function splitHalves(mods: CompiledModifier[]): { left: string[]; right: 
 export function compileComboLine(
   intent: ComboIntent,
   combo: ComboData,
-  opts: { askGroupIds?: string[]; currency?: string } = {},
+  opts: CompileOpts = {},
 ): CompileResult {
   const unresolved: string[] = [];
+  const notices: string[] = [];
   const children: NonNullable<CompiledLine["bundleItems"]> = [];
   const spokenParts: string[] = [];
+  const childNotes: string[] = [];
+  const pickSlots: NonNullable<CompileResult["pickSlots"]> = [];
 
   if (combo.isSoldOut) {
     return { line: null, readBack: "", pricingNote: null, unresolved: [`"${combo.name}" is sold out.`] };
@@ -906,18 +1291,30 @@ export function compileComboLine(
 
   // Assign each pick to the first slot that accepts it and still has room —
   // mirroring the server's greedy first-fit so what we emit is what it books.
+  // A pick that NAMES its slot goes there when that slot lists the item and
+  // has room ("the wings in the second slot, not the first"); the server
+  // books greedily by our emitted order, so a named slot only changes which
+  // slot's rules (allowed sizes, min/max) we validate against.
   const fill = combo.slots.map(() => 0);
   const picks = intent.picks ?? [];
 
-  for (const pick of picks) {
+  const accepts = (i: number, menuItemId: string): boolean =>
+    fill[i] < combo.slots[i].max && combo.slots[i].choices.some((c) => c.menuItemId === menuItemId);
+
+  for (let pickIndex = 0; pickIndex < picks.length; pickIndex++) {
+    const pick = picks[pickIndex];
     let slotIndex = -1;
-    for (let i = 0; i < combo.slots.length; i++) {
-      const s = combo.slots[i];
-      if (fill[i] >= s.max) continue;
-      if (s.choices.some((c) => c.menuItemId === pick.menuItemId)) {
-        slotIndex = i;
-        break;
+    const wantLabel = typeof pick.slotLabel === "string" ? norm(pick.slotLabel) : "";
+    if (wantLabel) {
+      for (let i = 0; i < combo.slots.length; i++) {
+        if (norm(combo.slots[i].label) === wantLabel && accepts(i, pick.menuItemId)) {
+          slotIndex = i;
+          break;
+        }
       }
+    }
+    for (let i = 0; slotIndex < 0 && i < combo.slots.length; i++) {
+      if (accepts(i, pick.menuItemId)) slotIndex = i;
     }
     if (slotIndex < 0) {
       unresolved.push(
@@ -932,59 +1329,56 @@ export function compileComboLine(
     const slot = combo.slots[slotIndex];
     const child = slot.choices.find((c) => c.menuItemId === pick.menuItemId)!;
     fill[slotIndex] += 1;
+    pickSlots.push({ index: pickIndex, slotId: slot.id, slotLabel: slot.label });
+
+    // A combo child's toppings/options are priced by combo-child-pricing and
+    // the shared pool — never by the standalone engine. Quoting the standalone
+    // number announces extras the combo won't charge.
+    const childOpts: CompileOpts = { ...opts, suppressPricingNote: true };
 
     // A pizza child goes through the SAME pizza compiler, so half/half,
     // per-unit expansion and preset seeding behave identically inside a combo.
-    if (child.pizzaConfig) {
-      const sub = compilePizzaLine(
-        {
-          menuItemId: child.menuItemId,
-          size: pick.size,
-          toppings: pick.toppings,
-          crust: pick.crust,
-          sauce: pick.sauce,
-          cheese: pick.cheese,
-          notes: pick.notes,
-        },
-        child,
-        {
-          ...opts,
-          // A combo child's toppings are priced by combo-child-pricing and the
-          // shared pool — never by the standalone engine. Quoting the
-          // standalone number announces extras the combo won't charge.
-          suppressPricingNote: true,
-        },
-      );
-      if (!sub.line) {
-        unresolved.push(...sub.unresolved);
-        continue;
-      }
-      children.push({
-        menuItemId: child.menuItemId,
-        variantId: sub.line.variantId,
-        name: child.name,
-        modifiers: sub.line.modifiers,
-      });
-      spokenParts.push(sub.readBack);
-      continue;
-    }
-
-    // Non-pizza child: size only. The server requires a resolvable variant
-    // whenever the allowed pool isn't exactly one.
-    const variant = resolveVariant(pick.size, child.variants);
-    if (child.hasVariants && child.variants.length && !variant) {
-      unresolved.push(
-        `Which size for the ${child.name}? ${child.variants.map((v) => v.name).join(", ")}.`,
-      );
+    const sub = child.pizzaConfig
+      ? compilePizzaLine(
+          {
+            menuItemId: child.menuItemId,
+            size: pick.size,
+            toppings: pick.toppings,
+            excludeToppings: pick.excludeToppings,
+            crust: pick.crust,
+            sauce: pick.sauce,
+            cheese: pick.cheese,
+            notes: pick.notes,
+          },
+          child,
+          childOpts,
+        )
+      : // A non-pizza child goes through the SAME item compiler, so its size,
+        // its spoken options and its required groups (dip, dressing, flavour)
+        // are resolved or asked exactly as they would be standalone. The wire
+        // child shape is unchanged: the server takes id + variant + modifiers.
+        compileItemLine(
+          { menuItemId: child.menuItemId, size: pick.size, options: pick.options, notes: pick.notes },
+          child,
+          childOpts,
+        );
+    if (sub.notices?.length) notices.push(...sub.notices);
+    if (!sub.line) {
+      unresolved.push(...sub.unresolved);
       continue;
     }
     children.push({
       menuItemId: child.menuItemId,
-      variantId: variant?.variantId ?? null,
+      variantId: sub.line.variantId,
       name: child.name,
-      modifiers: [],
+      modifiers: sub.line.modifiers,
     });
-    spokenParts.push(`${variant ? `${variant.name} ` : ""}${child.name}`);
+    // The wire child carries no notes, so a child's note ("NO Ham", "extra
+    // crispy") is hoisted onto the combo line — otherwise it never reaches the
+    // kitchen at all.
+    const childNote = (sub.line.notes ?? "").trim();
+    if (childNote) childNotes.push(`${child.name}: ${childNote}`);
+    spokenParts.push(sub.readBack);
   }
 
   // Every slot's minimum must be satisfied or the route 400s at the end.
@@ -999,17 +1393,27 @@ export function compileComboLine(
 
   if (unresolved.length || !children.length) {
     if (!children.length && !unresolved.length) unresolved.push(`What would you like in the ${combo.name}?`);
-    return { line: null, readBack: "", pricingNote: null, unresolved };
+    return {
+      line: null,
+      readBack: "",
+      pricingNote: null,
+      unresolved,
+      ...(notices.length ? { notices } : {}),
+      ...(pickSlots.length ? { pickSlots } : {}),
+    };
   }
 
   const quantity = Math.max(1, Math.min(99, Math.floor(Number(intent.quantity) || 1)));
+  const notes = childNotes.length
+    ? [intent.notes?.trim() || "", ...childNotes].filter(Boolean).join("; ")
+    : (intent.notes ?? null);
   return {
     line: {
       menuItemId: combo.menuItemId,
       variantId: null,
       quantity,
       modifiers: [],
-      notes: intent.notes ?? null,
+      notes,
       isCombo: true,
       bundleItems: children,
     },
@@ -1019,5 +1423,7 @@ export function compileComboLine(
     // honest number is the dryRun total from quote_order.
     pricingNote: null,
     unresolved: [],
+    ...(notices.length ? { notices } : {}),
+    pickSlots,
   };
 }

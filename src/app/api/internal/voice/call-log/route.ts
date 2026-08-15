@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { after } from "next/server";
 import prisma from "@/lib/db";
+import { Prisma } from "@/generated/prisma/client";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { startCallRecording } from "@/lib/voice/twilio-recording";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
-import { parseStartBody, parseEndBody } from "./validation";
+import { redactEventPayload } from "@/lib/voice/event-redaction";
+import { parseStartBody, parseEndBody, parseEventsBody, parseMenuSnapshotBody, type ParsedEvent } from "./validation";
 import { phoneDigitsKey } from "@/lib/phone";
 
 export const runtime = "nodejs";
@@ -12,7 +14,7 @@ export const runtime = "nodejs";
 /**
  * POST /api/internal/voice/call-log  (x-internal-key)
  *
- * The voice service calls this twice per call:
+ * The voice service calls this several times per call:
  *
  *  - event:"start" — at call setup. Upserts the minimal row with the REAL
  *    startedAt (the pre-2026-08-10 rows were created at hangup, so
@@ -21,22 +23,39 @@ export const runtime = "nodejs";
  *    what triggers the Twilio call recording (startCallRecording is no-throw;
  *    a recording failure never breaks the call).
  *
+ *  - event:"events" — mid-call flushes of the EVENT LOG (directive §25–§26):
+ *    `{ restaurantId, callSid, events: CallEvent[] }`. Each event is
+ *    whitelisted + capped (validation.ts), REDACTED (event-redaction.ts) and
+ *    written with createMany + skipDuplicates on (callId, seq), so a retried
+ *    flush is a no-op. The VoiceCall stub is created if "start" hasn't landed
+ *    yet (reordering). Responds `{ ok, id, inserted }`.
+ *
  *  - event:"end" (default, so an un-upgraded voice service keeps working) —
- *    at hangup. Merges the whitelisted outcome fields (see validation.ts) and
- *    then, AFTER the response is sent, fires the AI intelligence pass
- *    (summary/sentiment/upsell revenue) — fire-and-forget via next/server
- *    `after`, error-logged, never blocking or throwing into the request path.
+ *    at hangup. Merges the whitelisted outcome fields (see validation.ts),
+ *    the §27 `versions` block (agentVersion/promptVersion/toolsVersion +
+ *    menuSnapshotHash → columns) and the TAIL of the event log (same path as
+ *    "events"), and then, AFTER the response is sent, fires the AI
+ *    intelligence pass (summary/sentiment/upsell revenue) — fire-and-forget
+ *    via next/server `after`, error-logged, never blocking or throwing into
+ *    the request path.
+ *
+ *  - event:"menu-snapshot" — `{ restaurantId, hash, payload }`: the exact menu
+ *    payload a call ran against, upserted by content hash (VoiceMenuSnapshot)
+ *    so a call can be replayed against what it actually saw. Not sent by the
+ *    service yet; the branch is here so enabling it is a service-only change.
  *
  * Idempotent on the Twilio callSid (unique) so retries can't duplicate, and
- * start/end arriving out of order still converge on the same row.
- * PII: fromNumber + transcript are covered by PII_ERASURE_MAP (VoiceCall).
+ * start/events/end arriving out of order still converge on the same row.
+ * PII: fromNumber + transcript are covered by PII_ERASURE_MAP (VoiceCall);
+ * event payloads by PII_ERASURE_MAP (VoiceCallEvent, deleted with the call).
  */
 export async function POST(req: NextRequest) {
   const forbidden = requireInternalKey(req);
   if (forbidden) return forbidden;
 
   const b = await req.json().catch(() => ({}));
-  const event = b?.event === "start" ? "start" : "end";
+  const event =
+    b?.event === "start" ? "start" : b?.event === "events" ? "events" : b?.event === "menu-snapshot" ? "menu-snapshot" : "end";
 
   if (event === "start") {
     const parsed = parseStartBody(b);
@@ -74,6 +93,42 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, id: row.id });
   }
 
+  if (event === "events") {
+    const parsed = parseEventsBody(b);
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error, code: "bad_request" }, { status: 400 });
+    }
+    const { callSid, restaurantId, events } = parsed.data;
+    // Stub the call row if the flush beat "start" (or start failed) — the
+    // events must never be lost for want of a parent. fromNumber is unknown
+    // here; "start"/"end" fill it in when they land (they merge, not clobber).
+    const row = await prisma.voiceCall.upsert({
+      where: { callSid },
+      create: { callSid, restaurantId, fromNumber: "", toNumber: "" },
+      update: {},
+      select: { id: true },
+    });
+    const inserted = await persistEvents(row.id, events);
+    return NextResponse.json({ ok: true, id: row.id, inserted });
+  }
+
+  if (event === "menu-snapshot") {
+    const parsed = parseMenuSnapshotBody(b);
+    if (!parsed.ok) {
+      return NextResponse.json({ error: parsed.error, code: "bad_request" }, { status: 400 });
+    }
+    const { restaurantId, hash, payload } = parsed.data;
+    // Content-addressed: the same menu → the same hash → one row. A retry or
+    // a second call on the same menu is a no-op update. No PII in a menu.
+    await prisma.voiceMenuSnapshot.upsert({
+      where: { hash },
+      create: { hash, restaurantId, payload: payload as Prisma.InputJsonValue },
+      update: {},
+      select: { hash: true },
+    });
+    return NextResponse.json({ ok: true, hash });
+  }
+
   const parsed = parseEndBody(b);
   if (!parsed.ok) {
     return NextResponse.json({ error: parsed.error, code: "bad_request" }, { status: 400 });
@@ -102,6 +157,12 @@ export async function POST(req: NextRequest) {
     quotedTotal: d.quotedTotal,
     latency: d.latency ?? undefined,
     chargedTotal: d.chargedTotal,
+    // §27 — what was live on this call. Only set when the service sent them
+    // (undefined = leave the column alone on an un-upgraded service's retry).
+    ...(d.versions?.agentVersion ? { agentVersion: d.versions.agentVersion } : {}),
+    ...(d.versions?.promptVersion ? { promptVersion: d.versions.promptVersion } : {}),
+    ...(d.versions?.toolsVersion ? { toolsVersion: d.versions.toolsVersion } : {}),
+    ...(d.menuSnapshotHash ? { menuSnapshotHash: d.menuSnapshotHash } : {}),
     endedAt: new Date(),
   };
 
@@ -125,6 +186,12 @@ export async function POST(req: NextRequest) {
     select: { id: true },
   });
 
+  // The tail of the event log rides on the end event (whatever the last
+  // mid-call flush didn't send, plus call_end). Same idempotent path.
+  if (d.events.length) {
+    await persistEvents(row.id, d.events);
+  }
+
   // Fire-and-forget AFTER the response is sent (Vercel keeps the function
   // alive for `after` callbacks). generateCallIntelligence never throws, but
   // belt-and-suspenders: a rejection here must never surface anywhere.
@@ -135,4 +202,34 @@ export async function POST(req: NextRequest) {
   });
 
   return NextResponse.json({ ok: true, id: row.id });
+}
+
+/**
+ * Redact + insert a batch of events for one call, idempotently: the
+ * (callId, seq) unique + skipDuplicates means a retried flush inserts nothing
+ * and eventCount only grows by what actually landed. Returns the number of
+ * rows inserted.
+ */
+async function persistEvents(callId: string, events: ParsedEvent[]): Promise<number> {
+  if (events.length === 0) return 0;
+  const rows = events.map((e) => ({
+    callId,
+    seq: e.seq,
+    ts: e.ts,
+    turn: e.turn,
+    type: e.type,
+    // THE redaction chokepoint — nothing reaches VoiceCallEvent.payload
+    // without passing through here (event-redaction.ts).
+    payload: redactEventPayload(e.payload) as Prisma.InputJsonValue,
+    latencyMs: e.latencyMs,
+    cartHash: e.cartHash,
+  }));
+  const { count } = await prisma.voiceCallEvent.createMany({ data: rows, skipDuplicates: true });
+  if (count > 0) {
+    // COALESCE, not Prisma `increment`: the column is nullable (null on every
+    // pre-event-log row) and `NULL + n` is NULL, so an increment would leave
+    // the counter empty forever. Atomic, so two flushes can't lose an add.
+    await prisma.$executeRaw`UPDATE "VoiceCall" SET "eventCount" = COALESCE("eventCount", 0) + ${count} WHERE "id" = ${callId}`;
+  }
+  return count;
 }

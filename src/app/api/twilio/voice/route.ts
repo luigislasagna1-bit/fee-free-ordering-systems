@@ -348,7 +348,20 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // a live restaurant. Deepgram-only: sending a Deepgram model name to Google
   // STT is an invalid argument, and an invalid argument here kills the call
   // before the greeting (2026-08-09).
-  const speechModelAttr = sttProvider === "Deepgram" ? ` speechModel="nova-3-general"` : "";
+  //
+  // ConversationRelay EXPERIMENTS (2026-08-15 research): Deepgram "flux" adds
+  // native turn detection (fewer false interruptions, faster end-of-turn) but
+  // has NO smart formatting; smart-format off makes "half" stop arriving as
+  // "0.5". Both are env-flagged and OFF by default because an invalid TwiML
+  // attribute kills the call before the greeting and each needs ONE live call
+  // to verify. Flip with NABIL_STT_MODEL / NABIL_DEEPGRAM_SMART_FORMAT on Vercel.
+  const sttModel = process.env.NABIL_STT_MODEL || "nova-3-general";
+  const speechModelAttr = sttProvider === "Deepgram" ? ` speechModel="${xml(sttModel)}"` : "";
+  const smartFormat = process.env.NABIL_DEEPGRAM_SMART_FORMAT; // "true" | "false" | unset
+  const smartFormatAttr =
+    sttProvider === "Deepgram" && (smartFormat === "true" || smartFormat === "false") ? ` deepgramSmartFormat="${smartFormat}"` : "";
+  const reportInputAttr =
+    process.env.NABIL_REPORT_INPUT_DURING_SPEECH === "speech" ? ` reportInputDuringAgentSpeech="speech"` : "";
   // Fewer false barge-ins. On noisy phone audio — a busy kitchen behind the
   // caller, an accent the recognizer scores as low-confidence — "high" (the
   // default) makes Nabil stop talking mid-sentence at background noise, which
@@ -363,7 +376,9 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // exactly this case (session.ts) — that stays as the backstop for a noise
   // interrupt that produces no transcript, but this stops most of them
   // happening at all, which is far better than recovering afterwards.
-  const interruptAttr = ` interruptSensitivity="low" ignoreBackchannel="true"`;
+  const interruptSensitivity = process.env.NABIL_INTERRUPT_SENSITIVITY || "low";
+  const ignoreBackchannel = process.env.NABIL_IGNORE_BACKCHANNEL || "true";
+  const interruptAttr = ` interruptSensitivity="${xml(interruptSensitivity)}" ignoreBackchannel="${xml(ignoreBackchannel)}"`;
 
   // Multilingual auto-detect. Twilio requires Deepgram STT + ElevenLabs TTS for
   // code="multi" — exactly our default pair — so it is only emitted when both
@@ -403,9 +418,11 @@ async function handle(req: NextRequest, params: Record<string, string>) {
       ` ttsProvider="${xml(ttsProvider)}"` +
       ` transcriptionProvider="${xml(sttProvider)}"` +
       speechModelAttr +
+      smartFormatAttr +
       voiceAttr +
       ` interruptible="any" welcomeGreetingInterruptible="speech"` +
       interruptAttr +
+      reportInputAttr +
       ` dtmfDetection="true" elevenlabsTextNormalization="auto"` +
       hintsAttr +
       `>` +

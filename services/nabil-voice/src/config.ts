@@ -19,6 +19,16 @@ export const CONFIG = {
   anthropicKey: need("ANTHROPIC_API_KEY"),
   /** Fast tier for the real-time turn loop (see plan: latency gates first audio). */
   model: process.env.NABIL_MODEL || "claude-sonnet-5",
+  /** Reasoning mode for the turn loop. Sonnet 5 defaults to ADAPTIVE thinking
+   *  when the parameter is omitted, which on a phone line is a silent
+   *  time-to-first-token tax on every "yes". Decided by benchmark
+   *  (scripts/nabil-bench.ts); overridable per deploy without a code change. */
+  thinking: (process.env.NABIL_THINKING || "adaptive") as "adaptive" | "off",
+  /** Output budget per model request. Spoken replies are one or two sentences;
+   *  the headroom is for reasoning when thinking is on. */
+  maxTokens: parseInt(process.env.NABIL_MAX_TOKENS || "2048", 10),
+  /** Cross-call prompt cache TTL for the store prefix (system + menu). */
+  cacheTtl: (process.env.NABIL_CACHE_TTL || "1h") as "5m" | "1h",
 };
 
 export type CallToken = {

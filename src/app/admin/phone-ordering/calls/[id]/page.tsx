@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { AlertTriangle, ArrowRight, Ban, CalendarDays, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
+import { AlertTriangle, ArrowRight, Ban, CalendarDays, ListTree, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
 import prisma from "@/lib/db";
 import { getSessionUser } from "@/lib/session";
 import { hasFeature } from "@/lib/entitlements";
@@ -12,20 +12,30 @@ import { REPORT_ORDER_STATUS_WHERE } from "@/lib/reports/order-filter";
 import { CALL_OUTCOMES } from "@/lib/voice/analytics";
 import { formatTzDateTime, formatDuration, OutcomeChip, SentimentDot } from "../../shared";
 import BlockCallerButton from "./BlockCallerButton";
+import CallTimeline from "./CallTimeline";
 
 /**
  * Call detail — transcript bubbles, AI summary + sentiment, the recording
  * player, the FULL order card with money (we OWN the order — no "See POS"),
  * reservation + transfer cards, caller history, block/unblock. Scoped fetch:
  * id + restaurantId or 404.
+ *
+ * `?debug=1` additionally loads the per-call EVENT LOG (VoiceCallEvent) and
+ * renders the "Call timeline" (CallTimeline.tsx) — off by default so the
+ * everyday page never pays for the events query.
  */
 
 type TranscriptTurn = { role?: string; text?: string; ts?: number | string };
 
+/** A call is capped at 600 events by the service; the take is a safety net. */
+const MAX_TIMELINE_EVENTS = 2000;
+
 export default async function CallDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ debug?: string | string[] }>;
 }) {
   const user = await getSessionUser();
   if (!user) redirect("/login");
@@ -34,10 +44,24 @@ export default async function CallDetailPage({
   if (!(await hasFeature(restaurantId, "phone_ordering_agent"))) redirect("/admin/phone-ordering");
 
   const { id } = await params;
+  const sp = await searchParams;
+  const debug = (Array.isArray(sp.debug) ? sp.debug[0] : sp.debug) === "1";
   const call = await prisma.voiceCall.findFirst({
     where: { id, restaurantId },
   });
   if (!call) notFound();
+
+  // Event log — only under ?debug=1 (see file comment). Ordered by seq, which
+  // is the service's per-call monotonic counter, so the timeline reads in the
+  // exact order things happened even when clocks disagree.
+  const timelineEvents = debug
+    ? await prisma.voiceCallEvent.findMany({
+        where: { callId: call.id },
+        orderBy: { seq: "asc" },
+        take: MAX_TIMELINE_EVENTS,
+        select: { seq: true, ts: true, turn: true, type: true, payload: true, latencyMs: true, cartHash: true },
+      })
+    : [];
 
   const t = await getTranslations("admin.phoneOrderingPage.callDetail");
   const tCalls = await getTranslations("admin.phoneOrderingPage.callLog");
@@ -150,11 +174,18 @@ export default async function CallDetailPage({
               {call.sentiment && <SentimentDot sentiment={call.sentiment} label={tCalls(`sentiment.${call.sentiment}`)} />}
             </div>
           </div>
-          {call.fromNumber && (
-            <div className="flex items-center gap-2">
-              <BlockCallerButton phone={call.fromNumber} blockedId={blockedRow?.id ?? null} />
-            </div>
-          )}
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Timeline toggle — a plain link flipping ?debug=1, so it works
+                without client JS and the URL is shareable with support. */}
+            <Link
+              href={debug ? `/admin/phone-ordering/calls/${call.id}` : `/admin/phone-ordering/calls/${call.id}?debug=1`}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+            >
+              <ListTree className="w-3.5 h-3.5" />
+              {debug ? t("timeline.hideTimeline") : t("timeline.showTimeline")}
+            </Link>
+            {call.fromNumber && <BlockCallerButton phone={call.fromNumber} blockedId={blockedRow?.id ?? null} />}
+          </div>
         </div>
         {blockedRow && (
           <p className="mt-2 text-xs text-red-600 flex items-center gap-1.5">
@@ -349,6 +380,23 @@ export default async function CallDetailPage({
           </div>
         )}
       </div>
+
+      {/* Call timeline (event log) — ?debug=1 only. */}
+      {debug && (
+        <CallTimeline
+          callId={call.id}
+          events={timelineEvents}
+          versions={{
+            agentVersion: call.agentVersion,
+            promptVersion: call.promptVersion,
+            toolsVersion: call.toolsVersion,
+            model: call.model,
+            menuSnapshotHash: call.menuSnapshotHash,
+            eventCount: call.eventCount,
+          }}
+          interruptedTag={t("interruptedTag")}
+        />
+      )}
 
       {/* Caller history. */}
       <div className="rounded-xl border border-gray-200 bg-white p-5">

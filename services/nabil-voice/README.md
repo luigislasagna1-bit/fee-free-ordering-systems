@@ -12,6 +12,11 @@ The always-on WebSocket bridge between **Twilio ConversationRelay** and **Claude
 
 It is a **thin orchestrator**: it never touches the database. Every read goes through the `x-internal-key`-gated `/api/internal/voice/*` endpoints and every write reuses the existing public create routes, so pricing + validation stay single-sourced (`preview==charge`; the money path is unchanged).
 
+## Architecture (P0 rebuild, 2026-08-15)
+The language model is NOT the memory of the order. `src/cart-engine.ts` holds the AUTHORITATIVE cart for the call (every line — items, pizzas, combos — with stable ids `L1…`, combo picks `P1…`, `needs_info` lines with the compiler's questions, validation, quote/place bookkeeping); `src/tools.ts` is a thin adapter over it (`find_menu_item, get_item_options, add_to_order, update_line, remove_line, set_fulfilment, set_customer, get_order_state, quote_order, place_order` + reservations/transfer/sms); `src/session.ts` re-renders the cart as a `[STATE …]` block on every caller turn (`src/turn-context.ts`), compacts long histories (`src/compaction.ts`), tracks dialogue state (`src/dialogue-state.ts`), measures ungrounded claims (`src/claims-guard.ts`), and emits a per-call event log (`src/events.ts`, persisted by the app as `VoiceCallEvent`) stamped with `src/versions.ts`. Compilation of intent → order line happens on Vercel (`/api/internal/voice/build-line`) — this container cannot import `src/`. Regression suite: `npm run nabil:sim` at the repo root; release gate: `npm run nabil:release`.
+
+Extra env: `NABIL_THINKING=adaptive|off`, `NABIL_MAX_TOKENS` (2048), `NABIL_CACHE_TTL=1h|5m`, `NABIL_AGENT_VERSION` (set by the Dockerfile build arg).
+
 ## Speech providers
 Deepgram (transcription) and ElevenLabs (text-to-speech) are **built into Twilio ConversationRelay** — there are **no separate Deepgram/ElevenLabs accounts to create**. They're selected by the TwiML attributes (`transcriptionProvider="Deepgram"`, `ttsProvider="ElevenLabs"`), which `/api/twilio/voice` already sets, and billed through Twilio. You only need to complete **ConversationRelay onboarding** in the Twilio console (accept the Predictive & Generative AI/ML Features Addendum).
 

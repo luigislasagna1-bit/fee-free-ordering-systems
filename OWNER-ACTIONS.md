@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-13 (latest) by Claude (**A50 — the ShipDay→Uber "out of delivery area" problem.** Found a real defect: the address we send ShipDay had no province and no country ("1095 Ezard Cres, Milton, L9T 6W9" — Milton in *which* country?). DoorDash never cared because it uses the map pin we send; Uber's docs say it **always re-geocodes the address text and discards the coordinates**, so Uber was the only one reading the one line that was wrong. Fixed, plus the unit/parking notes that were being crammed into the street line. 1602 tests + build green. **Not deployed** — A50 step 1 is a 2-minute check only you can do first, because there's a second possible cause I can't see from outside your ShipDay account.)
+**Last updated:** 2026-08-15 by Claude (**A55 — Nabil AI P0 rebuild.** The last failed call (red onion "not available", "One moment" ×12, combo re-added ×4) traced to facts the model was asked to remember or was handed truncated. Rebuilt: an authoritative server cart with stable line ids for EVERY item, a state block on every turn, editable combos, code-enforced "ask, don't guess", compaction for long calls, a full per-call timeline in the admin, a "turn this call into a test" button, and a 35-call torture suite that gates every Fly deploy. **Blocked on one thing only you can do: a valid Anthropic key in `.env.local` (A55 step 1).** 14 new ElevenLabs voices are in the picker.)
+**Previous update:** 2026-08-13 (latest) by Claude (**A50 — the ShipDay→Uber "out of delivery area" problem.** Found a real defect: the address we send ShipDay had no province and no country ("1095 Ezard Cres, Milton, L9T 6W9" — Milton in *which* country?). DoorDash never cared because it uses the map pin we send; Uber's docs say it **always re-geocodes the address text and discards the coordinates**, so Uber was the only one reading the one line that was wrong. Fixed, plus the unit/parking notes that were being crammed into the street line. 1602 tests + build green. **Not deployed** — A50 step 1 is a 2-minute check only you can do first, because there's a second possible cause I can't see from outside your ShipDay account.)
 **Previous update:** 2026-08-13 (later) by Claude (**Six finished pieces that had been sitting on side branches are now live** — one of them since 5 July. Nothing was lost, but nothing was live either: a duplicated menu's combo deals pointed at the original menu's items and offered the customer nothing; emails that never left the building were recording themselves as sent; saved delivery addresses couldn't gain or correct their map pin; reservation statuses and the kitchen's first-run tour were English-only for every non-English owner; and customer spend totals had no nightly safety net. Preflight green (1579 tests, full build), translations at full parity across all 38 languages. **Nothing here needs anything from you** — your list is still A49 below. One item was deliberately NOT shipped: the iOS native printer bridge, because shipping it means a new iOS build, and a new build would cost you your place in the Apple review queue while A49 is pending.)
 **Previous update:** 2026-08-13 by Claude (**A49 — Apple's business-model question is answered and waiting for you to paste.** The Fee Free Order App review is held on Guideline 2.1(b): Apple wants to know whether the paid service behind the app is sold to consumers or to businesses. It's businesses, and nothing is purchasable inside the app at all — verified by sweeping every link in the kitchen screens. No code change, no new build. The paste-ready reply plus 4 pre-send checks are in `docs/APPLE-REVIEW-2.1B-REPLY-2026-08-13.md`; the most important one is that App Store Connect must have **zero** in-app-purchase items, even drafts.)
 **Previous update:** 2026-08-12 by Claude (**EVERYTHING FROM THE LAST TWO DAYS IS NOW PUSHED AND LIVE.** Fourteen sessions' worth of work had piled up uncommitted — including two finished pieces stranded on side branches that would have been lost. Headline: **A47 — paid card orders were being lost before the kitchen ever saw them** (36 stranded in 60 days on your store, 3 orders you never received, $83.62). Also live: Autopilot no longer pays club members twice or mails a dead code (Ben Bilton's report), the cart now quotes the same delivery fee the card is charged, staff order emails name each special, every email declares its own language (Arabic/Hebrew now read right-to-left), and customer SMS is translated into all 38 languages. **Your list is A47 step 1 (three real orders need a decision from you), then the test passes in T-P / A45 / A46.**)
@@ -165,6 +166,87 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A55. 📞 NABIL AI P0 — rebuilt around an authoritative cart; 3 things are yours (2026-08-15)
+
+**What happened on the last call (Jashan, 03:28 UTC, no order):** Nabil told him red onion and roasted red
+peppers weren't available on a Large 3 Topping. They are — the menu has 34 toppings. The prompt carried only
+the FIRST 12 topping names, with no "…and 22 more" marker, so the model read a truncated list as the whole
+menu. It also said "One moment." on 12 of 17 turns (a timer that fired on any slow answer, not just lookups),
+and when he corrected the second pizza inside the combo it re-added the whole combo four times because a
+combo's insides could not be edited. None of it was visible afterwards: only the words were logged.
+
+**What is built (this session — Vercel + Fly, deploy pending your key + the gate):**
+- **The order lives in code, not in the model's memory.** Every line — drinks and wings included, not just
+  pizzas — sits in a server cart with a stable number (L1, L2…) that never changes; the model reads the whole
+  order back from a state block on every turn instead of remembering it. Combos are editable inside (P1, P2…).
+  "Which one did you mean?" is asked by code when a correction is ambiguous — never guessed. An order can't be
+  quoted or placed while anything is unfinished, and can't be placed unless the exact same order was quoted.
+- **Truncated lists are impossible to mistake** ("+22 more" markers everywhere; the tools carry `truncated`
+  counts) and Nabil is instructed it may only call something unavailable when a tool said so.
+- **Fillers only during a lookup**, rotated, recorded. Barge-in records what you actually HEARD.
+- **Long calls**: history is compacted every ~12 turns; the cart is never summarised away.
+- **Every call now records a full timeline** (what you said → what it called → what came back → cart before/
+  after → what it said → timing). Admin → Phone ordering → a call → **Show timeline**, plus a **"Turn this
+  call into a regression case"** button that downloads a test file for me.
+- **A torture-test suite** of 25 brutal pizzeria calls + 10 "trick the AI" calls that drive the REAL agent
+  against a snapshot of YOUR menu and check the final cart line by line. `npm run nabil:release` refuses to
+  deploy Fly unless all pass 3 times out of 3. It costs ≈ $8 per single pass (Anthropic), ≈ $12–25 for the
+  3× release gate — never part of the normal preflight.
+- **Voices**: ElevenLabs' current premade library (14 new, 8 female) is in Settings → Voice; ids verified live.
+  Your store is still on "Mark" 1.1× — pick whichever you like there.
+
+**YOUR THREE STEPS:**
+1. ☐ **Local Anthropic key** (blocks the test suite): console.anthropic.com → API keys → Create Key
+   ("local-dev-nabil-sim") → Copy → open `C:\FeeFreeOrderingSystems\.env.local` in Notepad → replace the
+   value after `ANTHROPIC_API_KEY=` → save → tell me "done". Never paste the key in chat.
+2. 🔷 **Two live test calls with me on the line** (after the Fly deploy): (a) a normal half-and-half pizza +
+   wings order to confirm the new agent end-to-end; (b) the SAME call again after I flip
+   `NABIL_STT_MODEL=flux` on Vercel (Deepgram's newer listener: better turn-taking, fewer false interruptions).
+   If (b) sounds better it stays; if a call dies before the greeting, I flip it back in 30 s.
+3. 🤔 **Optional, ~US$5/mo**: an ElevenLabs API key switches on "hear this voice" in the picker (see COSTS.md).
+
+### A54. 🚨 FIRSTBUY rejected real orders — "registered to a different email" (2026-08-14)
+
+**You reported customers seeing "the promo is registered to a different email address".
+It was a bug, and it did not just block the discount — it rejected the whole order** with a
+400 before payment. Those customers could not check out at all.
+
+**Cause.** That message exists for genuine 1:1 gift codes (like the `SORRY10-ERIK` make-good).
+But the check asked only "does any customer hold a coupon row with this code?" — and the system
+writes such a row, stamped with the redeemer's email, every time anyone redeems a *tracked*
+promo. FIRSTBUY is tracked. So a customer who used FIRSTBUY left a row with their address on it,
+and a later customer typing the same code was measured against that stranger's email and refused.
+
+**Why only some people.** The lookup ignores `redeemed` rows, so a FIRSTBUY order that
+**completed** cleaned up after itself. But an order that was **missed, rejected or cancelled**
+flips to `released`, which the lookup *does* match — leaving a permanent landmine. An order still
+in flight leaves a temporary one. Hence intermittent, and easy to miss.
+
+**Scope.** Same trap applied to every Autopilot code (WIN1…, CARTBACK) and every
+once-per-lifetime promo — any shared code, not just FIRSTBUY. Customers who clicked the email's
+button were never affected (FIRSTBUY auto-applies); only those who **typed the code** — which is
+exactly what the invite email tells them to do.
+
+**Fixed** — the ownership check now keys off what the promotion *is* (`assigned_manual` /
+`assigned_group:` = a real 1:1 gift) instead of the incidental existence of a coupon row.
+Personal gift codes are still protected; broadcast codes are not blockable. 9 regression tests,
+`npm run preflight` green. No data cleanup needed — the stale rows are simply ignored now.
+
+**Also shipped in the same change: refusals are no longer silent.** `/api/orders` alerted on
+crashes but said nothing about the ~69 places it deliberately turns a customer away — which is
+why this bug had to be reconstructed from source and one shopper's memory. Every rejection now
+writes one greppable line, `[checkout-rejected]`, with the reason, the store, the typed code and
+the item count. **No personal data goes in it** — name, email, phone and address are excluded by
+design, and there is a test that fails if any of them ever leak in. Promo-integrity refusals also
+raise a Sentry alert; ordinary ones (store closed, below minimum, sold out) are logged only, so
+the alerting stays quiet enough to mean something.
+
+☐ **Decide: push to production.** Written and verified locally, NOT deployed — Claude has not
+pushed. Say the word and it ships.
+☐ **Worth knowing:** typing FIRSTBUY still shows no "code applied" chip, because the promo
+auto-applies rather than going through the coupon lane. The 10% *does* come off. If customers
+find that confusing, that is a separate small UX fix — tell Claude if you want it.
 
 ### A53. 📄 Reseller Marketing Kit — flyers with each partner's own QR (2026-08-14)
 

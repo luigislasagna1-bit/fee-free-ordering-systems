@@ -1,0 +1,1672 @@
+{
+  "addresses": [],
+  "capturedAt": "2026-08-15T05:19:36.858Z",
+  "combos": {
+    "cmr8gqquw0003ygvhoimk2en8": {
+      "choicesTruncated": false,
+      "extrasCharge": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqquw0003ygvhoimk2en8",
+      "name": "TEST Combo (remap verify)",
+      "price": 19.99,
+      "slots": [
+        {
+          "choiceIds": [
+            "cmr8gqqwl0004ygvh3egksox7",
+            "cmr8gqrrh0013ygvhhxphk2c6"
+          ],
+          "choiceVariantIds": {
+            "cmr8gqqwl0004ygvh3egksox7": [
+              "cmr8gqqyg0005ygvh4liqocmn"
+            ]
+          },
+          "id": "s1",
+          "label": "Pick a main",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "choiceIds": [
+            "cmr8gqsmx001yygvhel02bjar",
+            "cmr8gqsod001zygvhtsjvek92"
+          ],
+          "id": "s2",
+          "label": "Pick a side",
+          "max": 1,
+          "min": 1
+        }
+      ]
+    },
+    "cmsbfx2ec0000h4vh34v55eto": {
+      "choicesTruncated": false,
+      "extrasCharge": true,
+      "isSoldOut": false,
+      "menuItemId": "cmsbfx2ec0000h4vh34v55eto",
+      "name": "TEST Double Pizza + 4 Pop Combo",
+      "price": 39.99,
+      "sharedToppings": 6,
+      "slots": [
+        {
+          "choiceIds": [
+            "cmp3k2vn8002fuwvhsu91q3ev"
+          ],
+          "id": "slot-pz1",
+          "label": "Choose your 1st pizza",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "choiceIds": [
+            "cmp7g12xn0000v4vhz2friz0c"
+          ],
+          "id": "slot-pz2",
+          "label": "Choose your 2nd pizza",
+          "max": 1,
+          "min": 1
+        },
+        {
+          "choiceIds": [
+            "cmoofqlyf000u9kvh3cqlyi76",
+            "cmoofqlyo000w9kvhx01962cz"
+          ],
+          "id": "slot-pop",
+          "label": "Choose 4 Pop",
+          "max": 4,
+          "min": 4
+        }
+      ]
+    }
+  },
+  "context": {
+    "config": {
+      "afterHoursBehavior": "take_orders",
+      "allowPizzaCombo": false,
+      "allowScheduledOrders": false,
+      "canAnswerFaq": true,
+      "canBookReservations": true,
+      "canTakeOrders": true,
+      "deliveryPaymentMode": "unpaid",
+      "languages": [],
+      "maxCallSeconds": 600,
+      "offerDayDeals": false,
+      "pickupPaymentMode": "unpaid",
+      "pizzaAskGroups": [],
+      "quoteEta": true,
+      "smsConfirmations": true
+    },
+    "delivery": {
+      "acceptOutsideZoneOrders": false,
+      "cashDeliveryBlocked": false,
+      "deliveryFee": 7.99,
+      "estimatedMinutes": 45,
+      "minimumOrder": 1,
+      "zones": [
+        {
+          "deliveryFee": 1,
+          "estimatedMinutes": 30,
+          "minimumOrder": 0,
+          "name": "Zone 1"
+        },
+        {
+          "deliveryFee": 2,
+          "estimatedMinutes": 30,
+          "minimumOrder": 1,
+          "name": "Zone 2"
+        },
+        {
+          "deliveryFee": 3,
+          "estimatedMinutes": 40,
+          "minimumOrder": 0,
+          "name": "Zone 3"
+        }
+      ]
+    },
+    "faqs": [
+      {
+        "a": "Yes — gluten-free crust is available on any small pizza for $3 more.",
+        "category": "dietary",
+        "q": "Do you have gluten-free crust?"
+      },
+      {
+        "a": "There is free parking behind the building, entrance on Mill Street.",
+        "category": "operational",
+        "q": "Where do I park?"
+      }
+    ],
+    "open": {
+      "holidayName": null,
+      "isOpenNow": true,
+      "nextOpenAt": "2026-08-15T05:19:40.757Z",
+      "status": {
+        "closesAt": "03:00",
+        "kind": "open",
+        "spansMidnight": true
+      },
+      "todayHours": "10:00 – 03:00 (next day)"
+    },
+    "pickup": {
+      "estimatedMinutes": 20
+    },
+    "restaurant": {
+      "address": "17 Commercial Street, Milton, Ontario, L9T 2H6",
+      "currency": "usd",
+      "hoursFormat": "24h",
+      "name": "Luigi's Lasagna & Pizzeria",
+      "phone": "905 385 4444",
+      "taxRatePct": 13,
+      "timezone": "America/New_York"
+    },
+    "services": {
+      "catering": {
+        "offered": true,
+        "pausedNow": false
+      },
+      "delivery": {
+        "offered": true,
+        "pausedNow": false
+      },
+      "dineIn": {
+        "offered": true,
+        "pausedNow": false
+      },
+      "pickup": {
+        "offered": true,
+        "pausedNow": false
+      },
+      "reservations": {
+        "offered": true,
+        "pausedNow": false
+      },
+      "takeOut": {
+        "offered": true,
+        "pausedNow": false
+      }
+    },
+    "upsells": [
+      {
+        "name": "Spaghetti Bolognese",
+        "note": "Great with any pizza",
+        "price": 13.99
+      },
+      {
+        "name": "Fettuccine Alfredo",
+        "note": null,
+        "price": 12.99
+      }
+    ]
+  },
+  "hash": "e8e9ed83d8a9557a",
+  "items": {
+    "cmoofqlxu000p9kvhu0ppa1pr": {
+      "hasVariants": false,
+      "isSoldOut": true,
+      "menuItemId": "cmoofqlxu000p9kvhu0ppa1pr",
+      "modifierGroups": [],
+      "name": "Spaghetti Bolognese",
+      "pizzaConfig": null,
+      "price": 13.99,
+      "variants": []
+    },
+    "cmoofqlxy000q9kvhr9i39xes": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqlxy000q9kvhr9i39xes",
+      "modifierGroups": [],
+      "name": "Fettuccine Alfredo",
+      "pizzaConfig": null,
+      "price": 12.99,
+      "variants": []
+    },
+    "cmoofqly3000r9kvhesuhwh18": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqly3000r9kvhesuhwh18",
+      "modifierGroups": [
+        {
+          "attachedId": "cmrf3ndsy0000akvhwcjfwo6q",
+          "id": "cmrf3ndsy0000akvhwcjfwo6q",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Add extra Patties (TEST)",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmrf3nduy0002akvhiuwupsmd",
+              "name": "2 Extra Smash Patties",
+              "priceAdjustment": 6
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmrf3nduy0001akvhdewlelm3",
+              "name": "Extra Smash Patty",
+              "priceAdjustment": 3
+            }
+          ],
+          "pizzaRole": null,
+          "required": false
+        }
+      ],
+      "name": "Penne Arrabbiata",
+      "pizzaConfig": null,
+      "price": 11.99,
+      "variants": []
+    },
+    "cmoofqly7000s9kvhgt9qo0bv": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqly7000s9kvhgt9qo0bv",
+      "modifierGroups": [],
+      "name": "Caesar Salad",
+      "pizzaConfig": null,
+      "price": 9.99,
+      "variants": []
+    },
+    "cmoofqlyb000t9kvhd9ood9qq": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqlyb000t9kvhd9ood9qq",
+      "modifierGroups": [],
+      "name": "Garden Salad",
+      "pizzaConfig": null,
+      "price": 7.99,
+      "variants": []
+    },
+    "cmoofqlyf000u9kvh3cqlyi76": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqlyf000u9kvh3cqlyi76",
+      "modifierGroups": [],
+      "name": "Soda",
+      "pizzaConfig": null,
+      "price": 2.99,
+      "variants": []
+    },
+    "cmoofqlyk000v9kvh3qhkotm2": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqlyk000v9kvh3qhkotm2",
+      "modifierGroups": [],
+      "name": "Lemonade",
+      "pizzaConfig": null,
+      "price": 3.99,
+      "variants": []
+    },
+    "cmoofqlyo000w9kvhx01962cz": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqlyo000w9kvhx01962cz",
+      "modifierGroups": [],
+      "name": "Water",
+      "pizzaConfig": null,
+      "price": 1.99,
+      "variants": []
+    },
+    "cmoofqlys000x9kvh99jo9lw7": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqlys000x9kvh99jo9lw7",
+      "modifierGroups": [],
+      "name": "Tiramisu",
+      "pizzaConfig": null,
+      "price": 6.99,
+      "variants": []
+    },
+    "cmoofqlyx000y9kvhckkfsya3": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmoofqlyx000y9kvhckkfsya3",
+      "modifierGroups": [],
+      "name": "Cannoli",
+      "pizzaConfig": null,
+      "price": 5.99,
+      "variants": []
+    },
+    "cmp3k2vn8002fuwvhsu91q3ev": {
+      "hasVariants": true,
+      "isSoldOut": false,
+      "menuItemId": "cmp3k2vn8002fuwvhsu91q3ev",
+      "modifierGroups": [
+        {
+          "attachedId": "cmp3k5t5b002xuwvh3h4nu57x",
+          "id": "cmopy01ag00028cvhv2zuwg7z",
+          "maxSelect": 30,
+          "minSelect": 0,
+          "name": "Toppings",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr723lbx000d48vh04gr9zbf",
+              "name": "pepperoni",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr723lbx000e48vhzy02ru8k",
+              "name": "green pepper",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr723lbx000f48vhc8e02m0e",
+              "name": "pineapple",
+              "priceAdjustment": 3
+            }
+          ],
+          "pizzaRole": null,
+          "required": false
+        },
+        {
+          "attachedId": "cmp3kh7sx00007gvhkx8iobta",
+          "id": "cmp3k515x002quwvhn9i3vwoa",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Pizza Crust",
+          "options": [
+            {
+              "isDefault": true,
+              "modifierOptionId": "cmp3kh7t500017gvh64iplaia",
+              "name": "Regular Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh7t500027gvhk0d6f9wq",
+              "name": "Thin Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh7t500037gvh1orop6oe",
+              "name": "Thick Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh7t600047gvh432fnirw",
+              "name": "Whole Wheat Regular",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh7t600057gvhd3g4pmos",
+              "name": "Whole Wheat Thin",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh7t600067gvhzz9sim20",
+              "name": "Whole Wheat Thick",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmp3kh9of00077gvhudnkdu01",
+          "id": "cmp3k7crt0036uwvhfnn274np",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Base Sauce",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh9oj00087gvhhq1gyv3o",
+              "name": "Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh9oj00097gvhzeqvae05",
+              "name": "Light Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh9oj000a7gvh78isrtpc",
+              "name": "Extra Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh9ok000b7gvhstv32k4n",
+              "name": "Ranch Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh9ok000c7gvhgsoa0xhb",
+              "name": "Garlic Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kh9ok000d7gvhc5qiveaz",
+              "name": "Olive Oil Base",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmp3kl9h2000e7gvhd2hpdu2f",
+          "id": "cmp3k8cdb003duwvhtalslrm8",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Cheese Options",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kl9hb000f7gvh95zc4qmx",
+              "name": "Regular Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kl9hb000g7gvhj4msoosc",
+              "name": "Light Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kl9hb000h7gvhinpx489t",
+              "name": "No Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kl9hb000i7gvhbpnn4v4y",
+              "name": "Extra Cheese",
+              "priceAdjustment": 3
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp3kl9hb000j7gvhjsso8fbe",
+              "name": "2X Double Cheese",
+              "priceAdjustment": 6
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmp4conqr000hacvh2g5c3cue",
+          "id": "cmp4cnmcp000cacvhh3w0v0i0",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Cook Level",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp4conqy000iacvh8qkr8lhg",
+              "name": "Regular Cooked",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp4conqy000jacvhfqrvu5rp",
+              "name": "Lightly Cooked",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp4conqy000kacvhrjn5qyf8",
+              "name": "Well Cooked",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp4conqy000lacvhw4rnrr9l",
+              "name": "Extra Well Cooked",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        }
+      ],
+      "name": "BYO Pizza",
+      "pizzaConfig": {
+        "allowHalfHalf": true,
+        "allowMultipleToppings": true,
+        "cheeseGroupId": "cmp3k8cdb003duwvhtalslrm8",
+        "crustGroupId": "cmp3k515x002quwvhn9i3vwoa",
+        "extraQuantityMultiplier": 1,
+        "extraToppingPrice": 0,
+        "halfToppingMultiplier": 0.5,
+        "includedToppings": 0,
+        "isPizza": true,
+        "reduceOnRemove": true,
+        "sauceGroupId": "cmp3k7crt0036uwvhfnn274np",
+        "toppingGroupIds": [
+          "cmopy01ag00028cvhv2zuwg7z"
+        ],
+        "toppingsOptional": false,
+        "variantToppingPrices": {
+          "Large": 3,
+          "Medium": 2.5,
+          "Small": 2,
+          "Super Party": 10,
+          "XL": 4
+        }
+      },
+      "price": 0,
+      "variants": [
+        {
+          "isDefault": true,
+          "name": "Small",
+          "price": 9.99,
+          "variantId": "cmp4dporx001lacvhvo2cq4a5"
+        },
+        {
+          "isDefault": false,
+          "name": "Medium",
+          "price": 11.99,
+          "variantId": "cmp4dpos5001macvhazimog02"
+        },
+        {
+          "isDefault": false,
+          "name": "Large",
+          "price": 14.99,
+          "variantId": "cmp4dpose001nacvhn4vvbk9m"
+        },
+        {
+          "isDefault": false,
+          "name": "XL",
+          "price": 18.99,
+          "variantId": "cmp4dposn001oacvhq2iyxm2s"
+        },
+        {
+          "isDefault": false,
+          "name": "Super Party",
+          "price": 49.99,
+          "variantId": "cmp4dposw001pacvh01eix1v9"
+        }
+      ]
+    },
+    "cmp7g12xn0000v4vhz2friz0c": {
+      "hasVariants": true,
+      "isSoldOut": false,
+      "menuItemId": "cmp7g12xn0000v4vhz2friz0c",
+      "modifierGroups": [
+        {
+          "attachedId": "cmp7g13030005v4vhrhn73nvj",
+          "id": "cmopy01ag00028cvhv2zuwg7z",
+          "maxSelect": 30,
+          "minSelect": 0,
+          "name": "Toppings",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr723lbx000g48vh62ydacrb",
+              "name": "pepperoni",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr723lbx000h48vhu97fn8ri",
+              "name": "green pepper",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr723lbx000i48vhq34h7d7p",
+              "name": "pineapple",
+              "priceAdjustment": 3
+            }
+          ],
+          "pizzaRole": null,
+          "required": false
+        },
+        {
+          "attachedId": "cmp7g130h0009v4vhitj4oi3d",
+          "id": "cmp3k515x002quwvhn9i3vwoa",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Pizza Crust",
+          "options": [
+            {
+              "isDefault": true,
+              "modifierOptionId": "cmp7g130k000av4vhl4yugz5s",
+              "name": "Regular Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130k000bv4vhmgg7qe0f",
+              "name": "Thin Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130k000cv4vh253bkpms",
+              "name": "Thick Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130k000dv4vhk4yil1yr",
+              "name": "Whole Wheat Regular",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130k000ev4vhdb9s094i",
+              "name": "Whole Wheat Thin",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130k000fv4vh25g5iw4l",
+              "name": "Whole Wheat Thick",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmp7g130w000gv4vh577kedg8",
+          "id": "cmp3k7crt0036uwvhfnn274np",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Base Sauce",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130z000hv4vh5iw6s9q7",
+              "name": "Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130z000iv4vhbzflfuve",
+              "name": "Light Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130z000jv4vhsfrh20hk",
+              "name": "Extra Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130z000kv4vh9mgg2rgc",
+              "name": "Ranch Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130z000lv4vh6dwkgshf",
+              "name": "Garlic Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g130z000mv4vhzh800drk",
+              "name": "Olive Oil Base",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmp7g131b000nv4vhgqadecp4",
+          "id": "cmp3k8cdb003duwvhtalslrm8",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Cheese Options",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g131e000ov4vhp38gs4rv",
+              "name": "Regular Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g131e000pv4vh62duhvpt",
+              "name": "Light Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g131e000qv4vh55p1umtz",
+              "name": "No Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g131e000rv4vhk2p5uafw",
+              "name": "Extra Cheese",
+              "priceAdjustment": 3
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmp7g131e000sv4vh4ylbfkht",
+              "name": "2X Double Cheese",
+              "priceAdjustment": 6
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        }
+      ],
+      "name": "Philly Steak Pizza",
+      "pizzaConfig": {
+        "allowHalfHalf": true,
+        "allowMultipleToppings": true,
+        "cheeseGroupId": "cmp3k8cdb003duwvhtalslrm8",
+        "crustGroupId": "cmp3k515x002quwvhn9i3vwoa",
+        "extraQuantityMultiplier": 1,
+        "extraToppingPrice": 0,
+        "halfToppingMultiplier": 0.5,
+        "includedToppings": 4,
+        "isPizza": true,
+        "reduceOnRemove": true,
+        "sauceGroupId": "cmp3k7crt0036uwvhfnn274np",
+        "toppingGroupIds": [
+          "cmopy01ag00028cvhv2zuwg7z"
+        ],
+        "toppingsOptional": false,
+        "variantToppingPrices": {
+          "Large": 15,
+          "Medium": 10,
+          "Small": 5,
+          "XL": 20
+        }
+      },
+      "price": 0,
+      "variants": [
+        {
+          "isDefault": true,
+          "name": "Small",
+          "price": 20,
+          "variantId": "cmp7g4uhs000tv4vhdmiqkcve"
+        },
+        {
+          "isDefault": false,
+          "name": "Medium",
+          "price": 30,
+          "variantId": "cmp7g4uhx000uv4vhoiizw9nu"
+        },
+        {
+          "isDefault": false,
+          "name": "Large",
+          "price": 40,
+          "variantId": "cmp7g4ui2000vv4vhy0te1tse"
+        },
+        {
+          "isDefault": false,
+          "name": "XL",
+          "price": 50,
+          "variantId": "cmp7g4uia000wv4vhbpcgduwh"
+        }
+      ]
+    },
+    "cmr8gqquw0003ygvhoimk2en8": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqquw0003ygvhoimk2en8",
+      "modifierGroups": [],
+      "name": "TEST Combo (remap verify)",
+      "pizzaConfig": null,
+      "price": 19.99,
+      "variants": []
+    },
+    "cmr8gqqwl0004ygvh3egksox7": {
+      "hasVariants": true,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqqwl0004ygvh3egksox7",
+      "modifierGroups": [
+        {
+          "attachedId": "cmr8gqr6a000aygvhd8wmd3i3",
+          "id": "cmopy01ag00028cvhv2zuwg7z",
+          "maxSelect": 30,
+          "minSelect": 0,
+          "name": "Toppings",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqr7v000bygvhlhk0s2gc",
+              "name": "pepperoni",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqr7v000cygvhujw5yqjj",
+              "name": "green pepper",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqr7v000dygvhjk66qrj0",
+              "name": "pineapple",
+              "priceAdjustment": 3
+            }
+          ],
+          "pizzaRole": null,
+          "required": false
+        },
+        {
+          "attachedId": "cmr8gqrar000eygvhluj81zro",
+          "id": "cmp3k515x002quwvhn9i3vwoa",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Pizza Crust",
+          "options": [
+            {
+              "isDefault": true,
+              "modifierOptionId": "cmr8gqrc2000fygvhfmhqj9ic",
+              "name": "Regular Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrc2000gygvhlpv0at3p",
+              "name": "Thin Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrc2000hygvhqpeby2ls",
+              "name": "Thick Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrc2000iygvhq13kvz7k",
+              "name": "Whole Wheat Regular",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrc3000jygvha4kabl2h",
+              "name": "Whole Wheat Thin",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrc3000kygvhhbshpzfb",
+              "name": "Whole Wheat Thick",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmr8gqreq000lygvh9salza59",
+          "id": "cmp3k7crt0036uwvhfnn274np",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Base Sauce",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrg6000mygvhx9skfrwn",
+              "name": "Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrg6000nygvh6ncva18g",
+              "name": "Light Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrg6000oygvhw0kzl9cj",
+              "name": "Extra Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrg6000pygvhx72bf8zx",
+              "name": "Ranch Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrg6000qygvhorvgeibl",
+              "name": "Garlic Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrg6000rygvhwtrltfiq",
+              "name": "Olive Oil Base",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmr8gqrjm000sygvhbh835tit",
+          "id": "cmp3k8cdb003duwvhtalslrm8",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Cheese Options",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrkt000tygvho30kjfgw",
+              "name": "Regular Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrkt000uygvhg4jmk6s5",
+              "name": "Light Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrkt000vygvhkuyzo6qt",
+              "name": "No Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrkt000wygvhfsevbw79",
+              "name": "Extra Cheese",
+              "priceAdjustment": 3
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrkt000xygvhdzmiu07a",
+              "name": "2X Double Cheese",
+              "priceAdjustment": 6
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmr8gqrnl000yygvh8hxvpgzo",
+          "id": "cmp4cnmcp000cacvhh3w0v0i0",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Cook Level",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqroq000zygvhdkhzswjy",
+              "name": "Regular Cooked",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqroq0010ygvhsopskrac",
+              "name": "Lightly Cooked",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqroq0011ygvhnei0gno9",
+              "name": "Well Cooked",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqroq0012ygvhb3oagsd5",
+              "name": "Extra Well Cooked",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        }
+      ],
+      "name": "BYO Pizza",
+      "pizzaConfig": {
+        "allowHalfHalf": true,
+        "allowMultipleToppings": true,
+        "cheeseGroupId": "cmp3k8cdb003duwvhtalslrm8",
+        "crustGroupId": "cmp3k515x002quwvhn9i3vwoa",
+        "extraQuantityMultiplier": 1,
+        "extraToppingPrice": 0,
+        "halfToppingMultiplier": 0.5,
+        "includedToppings": 0,
+        "isPizza": true,
+        "reduceOnRemove": true,
+        "sauceGroupId": "cmp3k7crt0036uwvhfnn274np",
+        "toppingGroupIds": [
+          "cmopy01ag00028cvhv2zuwg7z"
+        ],
+        "toppingsOptional": false,
+        "variantToppingPrices": {
+          "Large": 3,
+          "Medium": 2.5,
+          "Small": 2,
+          "Super Party": 10,
+          "XL": 4
+        }
+      },
+      "price": 0,
+      "variants": [
+        {
+          "isDefault": true,
+          "name": "Small",
+          "price": 9.99,
+          "variantId": "cmr8gqqyg0005ygvh4liqocmn"
+        },
+        {
+          "isDefault": false,
+          "name": "Medium",
+          "price": 11.99,
+          "variantId": "cmr8gqr020006ygvh0uix7md2"
+        },
+        {
+          "isDefault": false,
+          "name": "Large",
+          "price": 14.99,
+          "variantId": "cmr8gqr1m0007ygvhulxqf8ak"
+        },
+        {
+          "isDefault": false,
+          "name": "XL",
+          "price": 18.99,
+          "variantId": "cmr8gqr2v0008ygvh3s310mm5"
+        },
+        {
+          "isDefault": false,
+          "name": "Super Party",
+          "price": 49.99,
+          "variantId": "cmr8gqr460009ygvhzaoe8pyc"
+        }
+      ]
+    },
+    "cmr8gqrrh0013ygvhhxphk2c6": {
+      "hasVariants": true,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqrrh0013ygvhhxphk2c6",
+      "modifierGroups": [
+        {
+          "attachedId": "cmr8gqrxo0018ygvhe33bgf40",
+          "id": "cmopy01ag00028cvhv2zuwg7z",
+          "maxSelect": 30,
+          "minSelect": 0,
+          "name": "Toppings",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrz60019ygvh131fdjy8",
+              "name": "pepperoni",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrz6001aygvho59uxu07",
+              "name": "green pepper",
+              "priceAdjustment": 2
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqrz6001bygvh729g8bg8",
+              "name": "pineapple",
+              "priceAdjustment": 3
+            }
+          ],
+          "pizzaRole": null,
+          "required": false
+        },
+        {
+          "attachedId": "cmr8gqs1v001cygvhq8h96hn5",
+          "id": "cmp3k515x002quwvhn9i3vwoa",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Pizza Crust",
+          "options": [
+            {
+              "isDefault": true,
+              "modifierOptionId": "cmr8gqs3c001dygvhzfowwgw2",
+              "name": "Regular Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqs3c001eygvhif47oni1",
+              "name": "Thin Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqs3c001fygvhfrqy2046",
+              "name": "Thick Crust",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqs3c001gygvh3y2ge83r",
+              "name": "Whole Wheat Regular",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqs3c001hygvh1wz795fu",
+              "name": "Whole Wheat Thin",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqs3c001iygvhr0lo1xuz",
+              "name": "Whole Wheat Thick",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmr8gqs6e001jygvh2h0j1h73",
+          "id": "cmp3k7crt0036uwvhfnn274np",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Base Sauce",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsb3001kygvhjlvu32sg",
+              "name": "Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsb3001lygvhazmy0p5y",
+              "name": "Light Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsb3001mygvh2799j4p9",
+              "name": "Extra Pizza Sauce",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsb3001nygvhnrfd1o9r",
+              "name": "Ranch Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsb3001oygvhm4qscal7",
+              "name": "Garlic Base",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsb3001pygvhp0yioszi",
+              "name": "Olive Oil Base",
+              "priceAdjustment": 0
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        },
+        {
+          "attachedId": "cmr8gqsei001qygvhq5l2ynj6",
+          "id": "cmp3k8cdb003duwvhtalslrm8",
+          "maxSelect": 1,
+          "minSelect": 0,
+          "name": "Cheese Options",
+          "options": [
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsfm001rygvhssx1etgj",
+              "name": "Regular Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsfm001sygvhn0xil9kp",
+              "name": "Light Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsfm001tygvhrthdweiv",
+              "name": "No Cheese",
+              "priceAdjustment": 0
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsfm001uygvhvubvxatq",
+              "name": "Extra Cheese",
+              "priceAdjustment": 3
+            },
+            {
+              "isDefault": false,
+              "modifierOptionId": "cmr8gqsfm001vygvhr7oxbkpb",
+              "name": "2X Double Cheese",
+              "priceAdjustment": 6
+            }
+          ],
+          "pizzaRole": null,
+          "required": true
+        }
+      ],
+      "name": "Philly Steak Pizza",
+      "pizzaConfig": {
+        "allowHalfHalf": true,
+        "allowMultipleToppings": true,
+        "cheeseGroupId": "cmp3k8cdb003duwvhtalslrm8",
+        "crustGroupId": "cmp3k515x002quwvhn9i3vwoa",
+        "extraQuantityMultiplier": 1,
+        "extraToppingPrice": 0,
+        "halfToppingMultiplier": 0.5,
+        "includedToppings": 4,
+        "isPizza": true,
+        "reduceOnRemove": true,
+        "sauceGroupId": "cmp3k7crt0036uwvhfnn274np",
+        "toppingGroupIds": [
+          "cmopy01ag00028cvhv2zuwg7z"
+        ],
+        "toppingsOptional": false,
+        "variantToppingPrices": {
+          "Large": 15,
+          "Medium": 10,
+          "Small": 5,
+          "XL": 20
+        }
+      },
+      "price": 0,
+      "variants": [
+        {
+          "isDefault": true,
+          "name": "Small",
+          "price": 20,
+          "variantId": "cmr8gqrss0014ygvh191b15bv"
+        },
+        {
+          "isDefault": false,
+          "name": "Medium",
+          "price": 30,
+          "variantId": "cmr8gqru10015ygvhpsozucwz"
+        },
+        {
+          "isDefault": false,
+          "name": "Large",
+          "price": 40,
+          "variantId": "cmr8gqrvb0016ygvhbuqil49x"
+        },
+        {
+          "isDefault": false,
+          "name": "XL",
+          "price": 50,
+          "variantId": "cmr8gqrwk0017ygvhm60ynxko"
+        }
+      ]
+    },
+    "cmr8gqsl7001xygvhn7uko933": {
+      "hasVariants": false,
+      "isSoldOut": true,
+      "menuItemId": "cmr8gqsl7001xygvhn7uko933",
+      "modifierGroups": [],
+      "name": "Spaghetti Bolognese",
+      "pizzaConfig": null,
+      "price": 13.99,
+      "variants": []
+    },
+    "cmr8gqsmx001yygvhel02bjar": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqsmx001yygvhel02bjar",
+      "modifierGroups": [],
+      "name": "Penne Arrabbiata",
+      "pizzaConfig": null,
+      "price": 11.99,
+      "variants": []
+    },
+    "cmr8gqsod001zygvhtsjvek92": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqsod001zygvhtsjvek92",
+      "modifierGroups": [],
+      "name": "Fettuccine Alfredo",
+      "pizzaConfig": null,
+      "price": 12.99,
+      "variants": []
+    },
+    "cmr8gqsr80021ygvhs1anx70j": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqsr80021ygvhs1anx70j",
+      "modifierGroups": [],
+      "name": "Caesar Salad",
+      "pizzaConfig": null,
+      "price": 9.99,
+      "variants": []
+    },
+    "cmr8gqssm0022ygvhgowd7yda": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqssm0022ygvhgowd7yda",
+      "modifierGroups": [],
+      "name": "Garden Salad",
+      "pizzaConfig": null,
+      "price": 7.99,
+      "variants": []
+    },
+    "cmr8gqsv10024ygvhgzxjs6fl": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqsv10024ygvhgzxjs6fl",
+      "modifierGroups": [],
+      "name": "Soda",
+      "pizzaConfig": null,
+      "price": 2.99,
+      "variants": []
+    },
+    "cmr8gqswi0025ygvh4r1e1dyn": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqswi0025ygvh4r1e1dyn",
+      "modifierGroups": [],
+      "name": "Lemonade",
+      "pizzaConfig": null,
+      "price": 3.99,
+      "variants": []
+    },
+    "cmr8gqsxv0026ygvhel9k8sac": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqsxv0026ygvhel9k8sac",
+      "modifierGroups": [],
+      "name": "Water",
+      "pizzaConfig": null,
+      "price": 1.99,
+      "variants": []
+    },
+    "cmr8gqt0h0028ygvhqodr6rjl": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqt0h0028ygvhqodr6rjl",
+      "modifierGroups": [],
+      "name": "Tiramisu",
+      "pizzaConfig": null,
+      "price": 6.99,
+      "variants": []
+    },
+    "cmr8gqt200029ygvhdwk4o20g": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmr8gqt200029ygvhdwk4o20g",
+      "modifierGroups": [],
+      "name": "Cannoli",
+      "pizzaConfig": null,
+      "price": 5.99,
+      "variants": []
+    },
+    "cmsbfx2ec0000h4vh34v55eto": {
+      "hasVariants": false,
+      "isSoldOut": false,
+      "menuItemId": "cmsbfx2ec0000h4vh34v55eto",
+      "modifierGroups": [],
+      "name": "TEST Double Pizza + 4 Pop Combo",
+      "pizzaConfig": null,
+      "price": 39.99,
+      "variants": []
+    }
+  },
+  "menu": {
+    "menu": [
+      {
+        "category": "Pasta",
+        "items": [
+          {
+            "description": "House-made meat sauce over spaghetti",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": true,
+            "menuItemId": "cmoofqlxu000p9kvhu0ppa1pr",
+            "modifierGroups": [],
+            "name": "Spaghetti Bolognese",
+            "price": 13.99,
+            "todayDeal": null,
+            "variants": []
+          },
+          {
+            "description": "Rich cream sauce with Parmesan",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqlxy000q9kvhr9i39xes",
+            "modifierGroups": [],
+            "name": "Fettuccine Alfredo",
+            "price": 12.99,
+            "todayDeal": null,
+            "variants": []
+          }
+        ]
+      },
+      {
+        "category": "Salads",
+        "items": [
+          {
+            "description": "Romaine, croutons, Caesar dressing, Parmesan",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqly7000s9kvhgt9qo0bv",
+            "modifierGroups": [],
+            "name": "Caesar Salad",
+            "price": 9.99,
+            "todayDeal": null,
+            "variants": []
+          },
+          {
+            "description": "Mixed greens, veggies, choice of dressing",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqlyb000t9kvhd9ood9qq",
+            "modifierGroups": [],
+            "name": "Garden Salad",
+            "price": 7.99,
+            "todayDeal": null,
+            "variants": []
+          }
+        ]
+      },
+      {
+        "category": "Drinks",
+        "items": [
+          {
+            "description": "Fresh-squeezed lemonade",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqlyk000v9kvh3qhkotm2",
+            "modifierGroups": [],
+            "name": "Lemonade",
+            "price": 3.99,
+            "todayDeal": null,
+            "variants": []
+          },
+          {
+            "description": "Still or sparkling",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqlyo000w9kvhx01962cz",
+            "modifierGroups": [],
+            "name": "Water",
+            "price": 1.99,
+            "todayDeal": null,
+            "variants": []
+          },
+          {
+            "description": "Coke, Diet Coke, Sprite, or Orange",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqlyf000u9kvh3cqlyi76",
+            "modifierGroups": [],
+            "name": "Soda",
+            "price": 2.99,
+            "todayDeal": null,
+            "variants": []
+          }
+        ]
+      },
+      {
+        "category": "Desserts",
+        "items": [
+          {
+            "description": "2 pizzas + 4 cans of pop (test combo)",
+            "hasVariants": false,
+            "isCombo": true,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmsbfx2ec0000h4vh34v55eto",
+            "modifierGroups": [],
+            "name": "TEST Double Pizza + 4 Pop Combo",
+            "price": 39.99,
+            "todayDeal": null,
+            "variants": []
+          },
+          {
+            "description": "Crispy shell filled with sweet ricotta cream",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqlyx000y9kvhckkfsya3",
+            "modifierGroups": [],
+            "name": "Cannoli",
+            "price": 5.99,
+            "todayDeal": null,
+            "variants": []
+          },
+          {
+            "description": "Classic Italian dessert with espresso and mascarpone",
+            "hasVariants": false,
+            "isCombo": false,
+            "isPizza": false,
+            "isSoldOut": false,
+            "menuItemId": "cmoofqlys000x9kvh99jo9lw7",
+            "modifierGroups": [],
+            "name": "Tiramisu",
+            "price": 6.99,
+            "todayDeal": null,
+            "variants": []
+          }
+        ]
+      }
+    ],
+    "notToday": [
+      {
+        "available": "Mondays, Tuesdays, Wednesdays · 10:00 – 15:00 / Fridays, Saturdays · 15:00 – 20:00",
+        "name": "BYO Pizza"
+      },
+      {
+        "available": "Mondays, Tuesdays, Wednesdays · 10:00 – 15:00 / Fridays, Saturdays · 15:00 – 20:00",
+        "name": "Philly Steak Pizza"
+      },
+      {
+        "available": "Mondays, Wednesdays, Fridays · 10:00 – 20:00",
+        "name": "Penne Arrabbiata"
+      }
+    ],
+    "restaurant": {
+      "currency": "usd",
+      "id": "cmoofqlcq00059kvh4m59wk2b",
+      "name": "Luigi's Lasagna & Pizzeria"
+    },
+    "speechHints": [
+      "Pizzas",
+      "BYO Pizza",
+      "Small",
+      "Medium",
+      "Large",
+      "XL",
+      "Super Party",
+      "pepperoni",
+      "green pepper",
+      "pineapple",
+      "Regular Crust",
+      "Thin Crust",
+      "Thick Crust",
+      "Whole Wheat Regular",
+      "Whole Wheat Thin",
+      "Whole Wheat Thick",
+      "Pizza Sauce",
+      "Light Pizza Sauce",
+      "Extra Pizza Sauce",
+      "Ranch Base",
+      "Garlic Base",
+      "Olive Oil Base",
+      "Regular Cheese",
+      "Light Cheese",
+      "No Cheese",
+      "Extra Cheese",
+      "2X Double Cheese",
+      "Regular Cooked",
+      "Lightly Cooked",
+      "Well Cooked",
+      "Extra Well Cooked",
+      "Philly Steak Pizza",
+      "Pasta",
+      "Penne Arrabbiata",
+      "Extra Smash Patty",
+      "2 Extra Smash Patties",
+      "Spaghetti Bolognese",
+      "Fettuccine Alfredo",
+      "Salads",
+      "Caesar Salad",
+      "Garden Salad",
+      "Drinks",
+      "Lemonade",
+      "Water",
+      "Soda",
+      "Desserts",
+      "TEST Double Pizza + 4 Pop Combo",
+      "Cannoli",
+      "Tiramisu"
+    ]
+  },
+  "menuHash": "c9b1ee06788aba79",
+  "menuRestaurantId": "cmoofqlcq00059kvh4m59wk2b",
+  "pricing": {
+    "currency": "usd",
+    "deliveryFee": 7.99,
+    "minimumOrder": 1,
+    "taxRatePct": 13,
+    "zones": [
+      {
+        "deliveryFee": 1,
+        "estimatedMinutes": 30,
+        "minimumOrder": 0,
+        "name": "Zone 1"
+      },
+      {
+        "deliveryFee": 2,
+        "estimatedMinutes": 30,
+        "minimumOrder": 1,
+        "name": "Zone 2"
+      },
+      {
+        "deliveryFee": 3,
+        "estimatedMinutes": 40,
+        "minimumOrder": 0,
+        "name": "Zone 3"
+      }
+    ]
+  },
+  "restaurantId": "cmoofqlcq00059kvh4m59wk2b",
+  "slug": "demo-pizza-palace",
+  "version": 1
+}

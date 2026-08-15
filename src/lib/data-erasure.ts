@@ -56,6 +56,9 @@ export const PII_ERASURE_MAP = {
   PendingRewardGrant: { scope: "restaurant", action: "anonymize", fields: ["email", "name", "note"] },
   EmailSuppression: { scope: "restaurant", action: "keep", fields: [] }, // kept: proves do-not-email
   VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "fromDigits", "transcript", "summary", "recordingUrl", "recordingSid", "recordingDurationSeconds", "customerId"] }, // Nabil AI; matched on fromDigits — fromNumber is E.164 and matched NOTHING (keep call duration/outcome/cost); audio DELETED at Twilio first
+  VoiceCallEvent: { scope: "restaurant", action: "delete", fields: ["payload"] }, // Nabil AI event log (what the caller said, tool inputs/outputs, cart, address — redacted at write but still speech). DELETED (not anonymized) via the parent VoiceCall's fromDigits, BEFORE that row's fromDigits is nulled. Timings/versions live on VoiceCall, so nothing analytic is lost.
+  // VoiceMenuSnapshot: NOT listed on purpose — it is the menu payload keyed by
+  // content hash (items, prices, options). Restaurant data, no customer PII.
   BlockedCaller: { scope: "restaurant", action: "keep", fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
   CustomerAccount: { scope: "platform", action: "anonymize", fields: ["email", "name", "phone", "passwordHash", "emailVerifyToken", "lastLoginAt"] },
   CustomerAddress: { scope: "platform", action: "delete", fields: ["street", "city", "state", "zip", "country"] },
@@ -227,6 +230,12 @@ export async function anonymizeCustomerByEmail(
     // for analytics — same anonymize-not-delete principle as orders. (Retention
     // scrub of old transcripts past the window is a retention-cron follow-up.)
     if (phoneKeys.length) {
+      // The event log holds the caller's actual words + every tool payload —
+      // delete it outright. MUST run before the VoiceCall scrub below nulls
+      // fromDigits, or the join finds nothing and the events survive.
+      counts.VoiceCallEvent = (await tx.voiceCallEvent.deleteMany({
+        where: { call: { restaurantId, fromDigits: { in: phoneKeys } } },
+      })).count;
       counts.VoiceCall = (await tx.voiceCall.updateMany({
         where: { restaurantId, fromDigits: { in: phoneKeys } },
         data: {

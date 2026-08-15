@@ -9,8 +9,15 @@ import {
   parseStartBody,
   parseEndBody,
   capTranscript,
+  parseEvents,
+  parseEventsBody,
+  parseVersions,
+  parseMenuSnapshotBody,
+  capEventPayload,
   MAX_TRANSCRIPT_TURNS,
   MAX_TURN_TEXT_CHARS,
+  MAX_EVENTS_PER_BODY,
+  MAX_EVENT_PAYLOAD_CHARS,
 } from "./validation";
 
 const base = { callSid: "CA123", restaurantId: "rest_1" };
@@ -159,5 +166,170 @@ describe("capTranscript", () => {
       { role: "agent", text: "kept", ts: "not-a-number" },
     ])!;
     expect(t).toEqual([{ role: "agent", text: "kept" }]);
+  });
+});
+
+// ── Event log (directive §25–§27) ──────────────────────────────────────────
+
+const ISO = "2026-08-15T12:00:00.000Z";
+const ev = (over: Record<string, unknown>) => ({ seq: 1, ts: ISO, turn: 0, type: "asr", text: "hi", ...over });
+
+describe("parseEvents", () => {
+  it("lifts seq/ts/turn/type into columns and keeps the rest as payload", () => {
+    const [e] = parseEvents([ev({ type: "asr", text: "one large pepperoni", lang: "en", synthetic: false })]);
+    expect(e.seq).toBe(1);
+    expect(e.ts.toISOString()).toBe(ISO);
+    expect(e.turn).toBe(0);
+    expect(e.type).toBe("asr");
+    expect(e.payload).toEqual({ text: "one large pepperoni", lang: "en", synthetic: false });
+    expect(e.latencyMs).toBeNull();
+    expect(e.cartHash).toBeNull();
+  });
+
+  it("derives latencyMs + cartHash per type (tool_result ms/cartHashAfter, cart hash, turn ttfaMs, filler afterMs, tool_use cartHashBefore)", () => {
+    const out = parseEvents([
+      ev({ seq: 1, type: "tool_use", hop: 1, toolUseId: "t1", name: "add_line", input: {}, cartHashBefore: "aaaa" }),
+      ev({ seq: 2, type: "tool_result", hop: 1, toolUseId: "t1", name: "add_line", ok: true, code: null, ms: 321.7, output: {}, cartHashAfter: "bbbb" }),
+      ev({ seq: 3, type: "cart", hash: "bbbb", lines: [], problems: [], fulfilment: null }),
+      ev({ seq: 4, type: "filler", hop: 1, tool: "add_line", afterMs: 900, phrase: "one sec" }),
+      ev({ seq: 5, type: "turn", turnId: "u1", ttfaMs: 1200, cartHashBefore: "aaaa", cartHashAfter: "bbbb", hops: [], tools: [] }),
+    ]);
+    expect(out.map((e) => [e.type, e.latencyMs, e.cartHash])).toEqual([
+      ["tool_use", null, "aaaa"],
+      ["tool_result", 321, "bbbb"],
+      ["cart", null, "bbbb"],
+      ["filler", 900, null],
+      ["turn", 1200, "bbbb"],
+    ]);
+  });
+
+  it("drops unknown types, bad seq, unparseable ts, and duplicate seqs (first wins) — never the whole batch", () => {
+    const out = parseEvents([
+      ev({ seq: 1, type: "asr", text: "kept" }),
+      ev({ seq: 2, type: "made_up" }),
+      ev({ seq: -1, type: "asr" }),
+      ev({ seq: 1.5, type: "asr" }),
+      ev({ seq: 3, ts: "banana", type: "asr" }),
+      ev({ seq: 1, type: "asr", text: "dupe" }),
+      null,
+      "nope",
+      ev({ seq: 4, ts: Date.parse(ISO), type: "error", where: "x", message: "y" }), // epoch ms accepted
+    ]);
+    expect(out.map((e) => e.seq)).toEqual([1, 4]);
+    expect(out[0].payload.text).toBe("kept");
+    expect(out[1].ts.toISOString()).toBe(ISO);
+  });
+
+  it("caps the batch at MAX_EVENTS_PER_BODY", () => {
+    const many = Array.from({ length: MAX_EVENTS_PER_BODY + 20 }, (_, i) => ev({ seq: i }));
+    expect(parseEvents(many)).toHaveLength(MAX_EVENTS_PER_BODY);
+  });
+
+  it("returns [] for a non-array", () => {
+    expect(parseEvents(undefined)).toEqual([]);
+    expect(parseEvents({ seq: 1 })).toEqual([]);
+  });
+
+  it("turn: non-integer / negative → null", () => {
+    expect(parseEvents([ev({ turn: null })])[0].turn).toBeNull();
+    expect(parseEvents([ev({ turn: "3" })])[0].turn).toBeNull();
+    expect(parseEvents([ev({ turn: 2 })])[0].turn).toBe(2);
+  });
+});
+
+describe("capEventPayload", () => {
+  it("passes small payloads through unchanged", () => {
+    expect(capEventPayload({ a: 1, b: "x" })).toEqual({ a: 1, b: "x" });
+  });
+
+  it("shortens long strings with a visible marker so the event stays under the cap", () => {
+    const big = "y".repeat(20_000);
+    const r = capEventPayload({ output: { text: big }, ok: true });
+    expect(JSON.stringify(r).length).toBeLessThanOrEqual(MAX_EVENT_PAYLOAD_CHARS);
+    expect(r.ok).toBe(true);
+    const text = (r.output as any).text as string;
+    expect(text.startsWith("yyyy")).toBe(true);
+    expect(text).toMatch(/…\[truncated \d+ chars\]$/);
+  });
+
+  it("collapses to a preview when many medium strings still exceed the cap", () => {
+    const arr = Array.from({ length: 200 }, (_, i) => `line ${i} ${"z".repeat(300)}`);
+    const r = capEventPayload({ lines: arr });
+    expect(JSON.stringify(r).length).toBeLessThanOrEqual(MAX_EVENT_PAYLOAD_CHARS);
+    expect(r._truncated).toBe(true);
+    expect(typeof r.preview).toBe("string");
+  });
+
+  it("never throws on a circular payload", () => {
+    const c: any = { a: 1 };
+    c.self = c;
+    expect(capEventPayload(c)).toEqual({ _unserializable: true });
+  });
+});
+
+describe("parseEventsBody", () => {
+  it("requires callSid + restaurantId + an events array", () => {
+    expect(parseEventsBody({ callSid: "CA1", events: [] }).ok).toBe(false);
+    expect(parseEventsBody({ ...base }).ok).toBe(false);
+    const r = parseEventsBody({ ...base, events: [ev({})] });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.data.events).toHaveLength(1);
+  });
+});
+
+describe("parseVersions + end-body versions/events", () => {
+  it("maps the four stored version fields and ignores the rest", () => {
+    expect(
+      parseVersions({ agentVersion: "fly-abc", promptVersion: "p7", toolsVersion: "t3", menuSnapshotHash: "8baa73198470c7bb", model: "claude", modelConfig: {} }),
+    ).toEqual({ agentVersion: "fly-abc", promptVersion: "p7", toolsVersion: "t3", menuSnapshotHash: "8baa73198470c7bb" });
+    expect(parseVersions(null)).toBeNull();
+    expect(parseVersions({})).toBeNull();
+    expect(parseVersions("v1")).toBeNull();
+  });
+
+  it("end body carries versions, menuSnapshotHash and the event tail", () => {
+    const r = parseEndBody({
+      ...base,
+      outcome: "order_placed",
+      versions: { agentVersion: "a1", promptVersion: "p1", toolsVersion: "t1", menuSnapshotHash: "h1" },
+      menuSnapshotHash: "h1",
+      events: [ev({ seq: 9, type: "call_end", outcome: "order_placed", latency: {}, usage: {}, costCents: 3 })],
+    });
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.data.versions?.agentVersion).toBe("a1");
+      expect(r.data.menuSnapshotHash).toBe("h1");
+      expect(r.data.events).toHaveLength(1);
+      expect(r.data.events[0].type).toBe("call_end");
+    }
+  });
+
+  it("an un-upgraded voice service (no versions/events) still parses", () => {
+    const r = parseEndBody({ ...base, outcome: "abandoned" });
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      expect(r.data.versions).toBeNull();
+      expect(r.data.menuSnapshotHash).toBeNull();
+      expect(r.data.events).toEqual([]);
+    }
+  });
+
+  it("falls back to versions.menuSnapshotHash when the top-level one is missing", () => {
+    const r = parseEndBody({ ...base, versions: { menuSnapshotHash: "hh" } });
+    expect(r.ok && r.data.menuSnapshotHash).toBe("hh");
+  });
+});
+
+describe("parseMenuSnapshotBody", () => {
+  it("accepts a hash + object payload", () => {
+    const r = parseMenuSnapshotBody({ restaurantId: "r1", hash: "8baa73198470c7bb", payload: { items: [1, 2] } });
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.data.payload).toEqual({ items: [1, 2] });
+  });
+  it("rejects a missing/odd hash or payload", () => {
+    expect(parseMenuSnapshotBody({ restaurantId: "r1", payload: {} }).ok).toBe(false);
+    expect(parseMenuSnapshotBody({ restaurantId: "r1", hash: "x y", payload: {} }).ok).toBe(false);
+    expect(parseMenuSnapshotBody({ restaurantId: "r1", hash: "8baa73198470c7bb" }).ok).toBe(false);
+    expect(parseMenuSnapshotBody({ hash: "8baa73198470c7bb", payload: {} }).ok).toBe(false);
   });
 });

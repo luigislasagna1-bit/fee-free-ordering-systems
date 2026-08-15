@@ -1,5 +1,19 @@
 # Fee Free Ordering Systems — Roadmap
 
+## 📞 NABIL AI — #1 PRIORITY (Luigi directive 2026-08-15) — P0 rebuild landed 2026-08-15
+
+Standard: *would I trust it to answer the phone during Friday dinner rush?* Plan + diagnosis:
+`~/.claude/plans/enchanted-wiggling-nest.md`. Built this session: authoritative cart engine
+(`services/nabil-voice/src/cart-engine.ts`, stable line ids for EVERY item, editable combo picks,
+code-enforced clarification), new tool surface, STATE block per turn, compaction, per-call event
+timeline (`VoiceCallEvent`) + admin view + "turn call into regression case", torture suite
+T01–T25 + injection I01–I10 (`npm run nabil:sim`), release gate (`npm run nabil:release`),
+model-config benchmark (`npm run nabil:bench`), Twilio experiment flags (Flux STT etc.), 14 new
+ElevenLabs voices. **Definition of done = critical suite 100 % 3/3, then Vercel → Fly deploy.**
+Next: run the suite (needs local Anthropic key — OWNER-ACTIONS A55), iterate to 100 %, adversarial
+generator (`--generate`), stress mode, replay CLI, canary Fly app, Flux live test, pay-by-link
+(phone payments; PCI via link — never card numbers on the line), multilingual read-back strings.
+
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 
 **State of the platform:** Both stores live (Play; kitchen iOS with Apple). Email language

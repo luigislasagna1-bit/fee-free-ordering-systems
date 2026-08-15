@@ -3097,11 +3097,64 @@ model VoiceCall {
   /// token counts. One JSON blob on a per-CALL row — never on a hot table.
   latency         Json?
 
+  /// 🏷️ What was LIVE on this call (directive §27): the voice-service build,
+  /// the prompt + tool-schema versions and the hash of the menu snapshot it
+  /// was given. When a metric moves these say which release it moved with.
+  /// Written from the end event's `versions` block; null on pre-2026-08-15 rows.
+  agentVersion     String?
+  promptVersion    String?
+  toolsVersion     String?
+  menuSnapshotHash String?
+  /// Number of VoiceCallEvent rows persisted for this call (bumped on every
+  /// events flush) — lets the timeline header say "N events" without a COUNT.
+  eventCount       Int?
+  events           VoiceCallEvent[]
+
   createdAt       DateTime   @default(now())
 
   @@index([restaurantId, startedAt])
   @@index([fromNumber])
   @@index([fromDigits])
+}
+
+/// One entry of the per-call EVENT LOG the voice service emits (directive
+/// §25–§26): what Nabil heard, said, which tools it called with what, what
+/// came back, what the cart held after each step, fillers/interruptions and
+/// per-turn latency. Rendered as the admin "Call timeline" (?debug=1).
+/// `payload` is REDACTED before write (src/lib/voice/event-redaction.ts) —
+/// phones keep the last 4, emails keep the domain, long digit runs are masked.
+/// PII note: still holds caller speech, so it is in PII_ERASURE_MAP
+/// (deleted via the parent VoiceCall's fromDigits, and cascades on delete).
+model VoiceCallEvent {
+  id        String    @id @default(cuid())
+  callId    String
+  call      VoiceCall @relation(fields: [callId], references: [id], onDelete: Cascade)
+  /// Monotonic per call — the (callId, seq) unique is what makes a retried
+  /// flush idempotent (createMany skipDuplicates).
+  seq       Int
+  ts        DateTime
+  turn      Int?
+  /// call_start | asr | model_text | tool_use | tool_result | cart | filler | interrupt | protected_respoken | compaction | cache_miss | hallucination_suspect | turn | call_end | error
+  type      String
+  payload   Json      // redacted before write
+  latencyMs Int?
+  cartHash  String?
+
+  @@unique([callId, seq])
+  @@index([callId, type])
+}
+
+/// The exact menu payload a call (or a batch of calls) ran against, keyed by
+/// its content hash (VoiceCall.menuSnapshotHash → here). Lets a failed call be
+/// replayed against the menu it actually saw. No PII — menu data only, so it
+/// is deliberately NOT in PII_ERASURE_MAP.
+model VoiceMenuSnapshot {
+  hash         String   @id
+  restaurantId String
+  payload      Json
+  createdAt    DateTime @default(now())
+
+  @@index([restaurantId, createdAt])
 }
 
 /// Per-restaurant FAQ the agent answers from. Categories mirror the real

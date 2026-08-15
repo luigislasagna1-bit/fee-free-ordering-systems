@@ -191,25 +191,67 @@ describe("a turn never ends in silence", () => {
   });
 });
 
-describe("a silent tool hop never sounds like a dropped call", () => {
-  it("says something rather than nothing while the model is slow to start", async () => {
-    // A reply that takes longer than the filler deadline to produce its first
-    // token: the line would otherwise be dead air.
+describe("fillers only cover TOOL silence, never plain first-token latency", () => {
+  // 2026-08-15: the old any-turn filler spoke "One moment." on 12 of 17 turns
+  // of a call whose plain TTFT was ~1 s. Now a filler is armed only while a
+  // tool hop is running.
+  const FILLERS = ["One sec.", "Let me check that.", "Just a moment.", "Bear with me a second."];
+
+  it("stays quiet on a slow plain answer", async () => {
     const slow = {
       messages: {
         stream: () => ({
           on: () => {},
           finalMessage: async () => {
-            await settle(1500);
-            return { stop_reason: "end_turn", content: [], usage: {} };
+            await settle(1700);
+            return { stop_reason: "end_turn", content: [{ type: "text", text: "Pickup it is." }], usage: {} };
           },
         }),
       },
     };
     const { ws, s } = await startedSession(slow as never);
     s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pickup." }));
-    await settle(1400);
+    await settle(1650);
+    for (const f of FILLERS) expect(ws.said()).not.toContain(f);
+  });
 
-    expect(ws.said()).toContain("One moment");
+  it("speaks exactly one rotated filler when a tool hop leaves the line silent", async () => {
+    // Hop 1: the model calls a (slow) tool. Hop 2: the answer.
+    apiMock.itemOptions = vi.fn(async () => {
+      await settle(1800);
+      return { item: { name: "Coke", modifierGroups: [], variants: [] }, combo: null };
+    });
+    apiMock.menu.mockResolvedValue({
+      restaurant: { name: "Luigi's", currency: "cad" },
+      menu: [{ category: "Drinks", items: [{ menuItemId: "coke", name: "Coke", price: 2, isPizza: false, isCombo: false, hasVariants: false, variants: [] }] }],
+    });
+    let call = 0;
+    const two = {
+      messages: {
+        stream: () => {
+          call++;
+          const listeners: Array<(d: string) => void> = [];
+          return {
+            on: (evt: string, cb: (d: string) => void) => {
+              if (evt === "text") listeners.push(cb);
+            },
+            finalMessage: async () => {
+              if (call === 1) {
+                return { stop_reason: "tool_use", content: [{ type: "tool_use", id: "t1", name: "get_item_options", input: { menuItemId: "coke" } }], usage: {} };
+              }
+              for (const l of listeners) l("Coke comes in one size.");
+              return { stop_reason: "end_turn", content: [{ type: "text", text: "Coke comes in one size." }], usage: {} };
+            },
+          };
+        },
+      },
+    };
+    const { ws, s } = await startedSession(two as never);
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "What sizes of Coke?" }));
+    await settle(2400);
+    const said = ws.said();
+    const spokenFillers = FILLERS.filter((f) => said.includes(f));
+    expect(spokenFillers).toHaveLength(1);
+    expect(said).toContain("Coke comes in one size.");
   });
 });

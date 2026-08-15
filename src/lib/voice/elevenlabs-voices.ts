@@ -37,8 +37,26 @@ export type NabilVoice = {
  */
 export const NABIL_VOICES: NabilVoice[] = [
   { id: "UgBBYS2sOqTuMpoF3BR0", name: "Mark", gender: "male", accent: "American · natural conversation" },
-  { id: "21m00Tcm4TlvDq8ikWAM", name: "Rachel", gender: "female", accent: "American · calm, clear" },
-  { id: "EXAVITQu4vr4xnSDxMaL", name: "Sarah", gender: "female", accent: "American · soft, friendly" },
+  // ElevenLabs' CURRENT premade library (ids verified against the public
+  // /v1/voices list on 2026-08-15 — Luigi asked for a realistic female voice).
+  // Female, conversational first:
+  { id: "cgSgspJ2msm6clMCkdW9", name: "Jessica", gender: "female", accent: "American · playful, bright, warm — conversational" },
+  { id: "hpp4J3VqNfWAUOO0d1Us", name: "Bella", gender: "female", accent: "American · professional, bright, warm" },
+  { id: "EXAVITQu4vr4xnSDxMaL", name: "Sarah", gender: "female", accent: "American · mature, reassuring, confident" },
+  { id: "XrExE9yKIg1WjnnlVkGX", name: "Matilda", gender: "female", accent: "American · knowledgeable, professional" },
+  { id: "FGY2WhTYpPnrIDTdsKH5", name: "Laura", gender: "female", accent: "American · enthusiastic, quirky" },
+  { id: "Xb7hH8MSUJpSbSDYk0k2", name: "Alice", gender: "female", accent: "British · clear, engaging" },
+  { id: "pFZP5JQG7iQjIQuC4Bku", name: "Lily", gender: "female", accent: "British · velvety, warm" },
+  { id: "SAz9YHcvj6GT2YYXdXww", name: "River", gender: "female", accent: "American · relaxed, neutral" },
+  // Male, conversational:
+  { id: "cjVigY5qzO86Huf0OWal", name: "Eric", gender: "male", accent: "American · smooth, trustworthy" },
+  { id: "iP95p4xoKVk53GoZ742B", name: "Chris", gender: "male", accent: "American · charming, down-to-earth" },
+  { id: "CwhRBWXzGAHq8TQ4Fs17", name: "Roger", gender: "male", accent: "American · laid-back, resonant" },
+  { id: "bIHbv24MWmeRgasZH58o", name: "Will", gender: "male", accent: "American · relaxed optimist" },
+  { id: "nPczCjzI2devNBz1zQrb", name: "Brian", gender: "male", accent: "American · deep, comforting" },
+  // Legacy premades (no longer in ElevenLabs' public list, kept so a store
+  // that already picked one is not broken by an update; not recommended):
+  { id: "21m00Tcm4TlvDq8ikWAM", name: "Rachel", gender: "female", accent: "American · calm, clear (legacy)" },
   { id: "AZnzlk1XvdvUeBnXmlld", name: "Domi", gender: "female", accent: "American · confident" },
   { id: "MF3mGyEYCl7XYWbV9V6O", name: "Elli", gender: "female", accent: "American · young, bright" },
   { id: "pNInz6obpgDQGcFmaJgB", name: "Adam", gender: "male", accent: "American · deep, steady" },
