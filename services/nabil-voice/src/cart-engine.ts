@@ -107,6 +107,9 @@ export type LineChanges = {
   excludeToppings?: string[];
   // combos
   picks?: PickChange[];
+  /** Put the line back the way it was BEFORE the last update ("no wait, that
+   *  was wrong"). Deterministic — no re-deriving from the conversation. */
+  revertLastChange?: boolean;
 };
 
 export type PickChange = {
@@ -195,10 +198,14 @@ export type CartLine = {
   status: LineStatus;
   questions: string[];
   aliases: string[];
+  /** Whole phrases (item name, resolved option/topping names, pick names) — exact-phrase matches outrank token overlap. */
+  aliasPhrases?: string[];
   addedTurn: number;
   lastTouchedTurn: number;
   /** Which slot each pick landed in (combos), from the compiler. */
   pickSlots: Array<{ pickId: string; slotLabel: string }>;
+  /** The intent before the most recent update — what `revertLastChange` restores. */
+  previousIntent?: LineIntent | null;
   meta: {
     switchedTo?: { from: string; to: string; saving: number } | null;
     betterDeal?: { name: string; menuItemId: string; saving: number } | null;
@@ -633,16 +640,43 @@ export class CartEngine {
 
   /* ── target resolution ────────────────────────────────────────────────── */
 
-  resolveTarget(t: Target): { line: CartLine } | { error: "no_such_line" | "ambiguous_line"; candidates: Array<{ lineId: string; description: string }> } {
+  /**
+   * Which line does the caller mean?
+   *
+   * `lineId` wins when it is the ONLY thing given. When the model also passes
+   * `hint` (the caller's own words — the tool schema asks for it every time),
+   * the hint is resolved independently and must AGREE: a lineId chosen by the
+   * model for "that one" while two similar pizzas were just added in one breath
+   * is a guess, and the whole point of this engine is that guesses become
+   * questions (T15, 2026-08-15). `scope`, when given, narrows candidates to
+   * lines the requested change could apply to (e.g. lines that HAVE the topping
+   * being removed) — one survivor is not ambiguous.
+   */
+  resolveTarget(
+    t: Target,
+    scope?: (l: CartLine) => boolean,
+  ): { line: CartLine } | { error: "no_such_line" | "ambiguous_line"; candidates: Array<{ lineId: string; description: string }> } {
     const all = this.state.lines;
-    const cands = () => all.map((l) => ({ lineId: l.lineId, description: l.readBack }));
+    const cands = (xs: CartLine[] = all) => xs.map((l) => ({ lineId: l.lineId, description: l.readBack }));
     const rawId = typeof t.lineId === "string" ? t.lineId.trim() : "";
+    const hint = typeof t.hint === "string" ? norm(t.hint) : "";
     if (rawId) {
       const id = /^\d+$/.test(rawId) ? `L${rawId}` : rawId.toUpperCase();
       const line = all.find((l) => l.lineId === id);
-      return line ? { line } : { error: "no_such_line", candidates: cands() };
+      if (!line) return { error: "no_such_line", candidates: cands() };
+      if (!hint) return { line };
+      // Cross-check the caller's words against the model's pick. The words
+      // VETO the id only when they clearly point elsewhere: a different single
+      // line, or pure deixis among lines that arrived together. Words that are
+      // ambiguous but include the model's pick are consistent with it — the
+      // model resolved them from context we don't have.
+      const byHint = this.resolveTarget({ hint }, scope);
+      if ("line" in byHint) return byHint.line === line ? { line } : { error: "ambiguous_line", candidates: cands([line, byHint.line]) };
+      if (byHint.error === "ambiguous_line" && !byHint.candidates.some((c) => c.lineId === line.lineId)) return byHint;
+      if (byHint.error === "ambiguous_line" && this.isPureDeixis(hint)) return byHint;
+      // The words matched nothing (a description the aliases don't carry) — trust the id.
+      return { line };
     }
-    const hint = typeof t.hint === "string" ? norm(t.hint) : "";
     if (!hint) {
       // No target at all: the focus line, if there is exactly one line or a focus.
       if (all.length === 1) return { line: all[0] };
@@ -668,12 +702,17 @@ export class CartEngine {
       else if (w === "last" || w === "latest" || w === "previous") last = true;
       else if (!DEICTIC.has(w)) rest.push(w);
     }
-    // Score by alias-token overlap.
-    let pool = all;
+    // Score by alias-token overlap; a hint that IS one of a line's whole
+    // phrases (an option name, an item name) outranks partial overlap, so
+    // "the Coke" is the Coke and not the Diet Coke.
+    let pool = scope ? all.filter(scope) : all;
+    if (!pool.length) pool = all;
     if (rest.length) {
-      const scored = all.map((l) => {
+      const restPhrase = rest.join(" ");
+      const scored = pool.map((l) => {
         const aliasSet = new Set(l.aliases.map(stem));
-        const hits = rest.filter((w) => aliasSet.has(stem(w))).length;
+        let hits = rest.filter((w) => aliasSet.has(stem(w))).length;
+        if ((l.aliasPhrases ?? []).some((p) => stem(p) === stem(restPhrase))) hits += 2;
         return { l, hits };
       });
       const best = Math.max(...scored.map((s) => s.hits));
@@ -687,11 +726,22 @@ export class CartEngine {
     if (last) return { line: pool[pool.length - 1] };
     if (pool.length === 1) return { line: pool[0] };
     if (!rest.length) {
-      // Pure deixis ("that one") → the focus line.
+      // Pure deixis ("that one") → the focus line — UNLESS other lines arrived
+      // in the same breath (same turn) and could equally be meant. Then it is
+      // a question, not a pick.
       const focus = this.state.focusLineId ? pool.find((l) => l.lineId === this.state.focusLineId) : undefined;
-      if (focus) return { line: focus };
+      if (focus) {
+        const siblings = pool.filter((l) => l !== focus && l.addedTurn === focus.addedTurn);
+        if (!siblings.length) return { line: focus };
+        return { error: "ambiguous_line", candidates: cands([focus, ...siblings]) };
+      }
     }
-    return { error: "ambiguous_line", candidates: pool.map((l) => ({ lineId: l.lineId, description: l.readBack })) };
+    return { error: "ambiguous_line", candidates: cands(pool) };
+  }
+
+  private isPureDeixis(hint: string): boolean {
+    const words = norm(hint).split(" ").filter((w) => w && !HINT_STOP.has(w));
+    return words.length > 0 && words.every((w) => DEICTIC.has(w) || ORDINALS[w] === undefined && (w === "one" || w === "that" || w === "it" || w === "this"));
   }
 
   /* ── mutations ────────────────────────────────────────────────────────── */
@@ -769,7 +819,17 @@ export class CartEngine {
   }
 
   async updateLine(target: Target, changes: LineChanges): Promise<MutationResult> {
-    const r = this.resolveTarget(target);
+    // Narrow "which line" by what the change could apply to: removing
+    // mushrooms can only mean a line that HAS mushrooms.
+    const removeNames = [
+      ...(changes.removeToppings ?? []).map((t) => String(t?.name ?? "")),
+      ...(changes.removeOptions ?? []).map(String),
+      ...(changes.picks ?? []).flatMap((p) => (p.removeToppings ?? []).map((t) => String(t?.name ?? ""))),
+    ].filter(Boolean);
+    const scope = removeNames.length
+      ? (l: CartLine) => removeNames.every((n) => l.aliases.some((a) => sameName(a, n)))
+      : undefined;
+    const r = this.resolveTarget(target, scope);
     if ("error" in r) {
       return r.error === "ambiguous_line"
         ? this.fail("ambiguous_line", "Several lines could be the one meant — ask the caller which.", { needsInfo: true, candidates: r.candidates })
@@ -778,6 +838,22 @@ export class CartEngine {
     const line = r.line;
     let kind = line.kind;
     let intent: LineIntent = JSON.parse(JSON.stringify(line.intent));
+    if (changes.revertLastChange) {
+      if (!line.previousIntent) {
+        return this.fail("nothing_to_revert", `${line.lineId} has not been changed since it was added — there is nothing to undo.`, { needsInfo: true, lineId: line.lineId });
+      }
+      intent = JSON.parse(JSON.stringify(line.previousIntent));
+      kind = this.deps.menu.kindOf(intent.menuItemId) ?? kind;
+      const res0 = await this.compile(kind, intent, { offerDeals: false });
+      if (!res0.ok) return this.fail(res0.code || "compile_failed", res0.message || "I couldn't undo that.", { error: true, lineId: line.lineId });
+      const idx0 = this.state.lines.indexOf(line);
+      const rebuilt0 = this.materialize(line.lineId, kind, intent, res0, line.addedTurn);
+      rebuilt0.previousIntent = null;
+      this.state.lines[idx0] = rebuilt0;
+      this.state.focusLineId = line.lineId;
+      this.retireQuote();
+      return this.okResult(rebuilt0, res0);
+    }
     if (changes.replaceWithItemId) {
       const id = String(changes.replaceWithItemId).trim();
       if (!this.deps.menu.has(id)) return this.fail("unknown_item", "That replacement isn't on this menu.");
@@ -830,6 +906,7 @@ export class CartEngine {
     }
     const idx = this.state.lines.indexOf(line);
     const rebuilt = this.materialize(line.lineId, kind, applied, res, line.addedTurn);
+    rebuilt.previousIntent = JSON.parse(JSON.stringify(line.intent));
     this.state.lines[idx] = rebuilt;
     this.state.focusLineId = line.lineId;
     this.retireQuote();
@@ -1056,6 +1133,45 @@ export class CartEngine {
       return out;
     }
     // combo
+    // A size addressed at the combo itself ("make the pizza extra large") goes
+    // to the one pizza pick, else the one pick at all; several ⇒ ask which.
+    if (ch.size !== undefined) {
+      delete out.size;
+      const picks = out.picks as Pick[];
+      const pizzaPicks = picks.filter((p) => this.deps.menu.kindOf(p.menuItemId) === "pizza");
+      const target = pizzaPicks.length === 1 ? pizzaPicks[0] : picks.length === 1 ? picks[0] : null;
+      if (!target) {
+        throw {
+          code: "ambiguous_pick",
+          message: "Say which pick in the combo the size is for (pickId).",
+          candidates: (pizzaPicks.length ? pizzaPicks : picks).map((p) => ({ lineId: p.pickId, description: this.describePick(p) })),
+        };
+      }
+      target.size = cleanNote(ch.size);
+    }
+    // Option changes addressed at the combo itself ("make the wings hot") go
+    // to the ONE non-pizza pick that takes options; several ⇒ ask which.
+    if (Array.isArray(ch.setOptions) || Array.isArray(ch.addOptions) || Array.isArray(ch.removeOptions)) {
+      const itemPicks = (out.picks as Pick[]).filter((p) => this.deps.menu.kindOf(p.menuItemId) === "item");
+      if (itemPicks.length === 1) {
+        const p = itemPicks[0];
+        let opts = Array.isArray(ch.setOptions) ? cleanStrings(ch.setOptions) : (p.options ?? []).slice();
+        if (Array.isArray(ch.removeOptions)) {
+          const drop = cleanStrings(ch.removeOptions);
+          opts = opts.filter((o) => !drop.some((d) => sameName(d, o)));
+        }
+        for (const o of cleanStrings(ch.addOptions ?? [])) if (!opts.some((x) => sameName(x, o))) opts.push(o);
+        p.options = opts;
+      } else if (itemPicks.length > 1) {
+        throw {
+          code: "ambiguous_pick",
+          message: "Several picks in this combo take options — say which one (pickId).",
+          candidates: itemPicks.map((p) => ({ lineId: p.pickId, description: this.describePick(p) })),
+        };
+      } else {
+        throw { code: "no_such_pick", message: "Nothing in this combo takes those options — use picks[] with a pickId." };
+      }
+    }
     for (const k of ["crust", "sauce", "cheese"] as const) if ((ch as any)[k] !== undefined) {
       // A crust/sauce/cheese on the combo itself is meaningless — apply to the only pizza pick if there is exactly one.
       const pizzaPicks = (out.picks as Pick[]).filter((p) => this.deps.menu.kindOf(p.menuItemId) === "pizza");
@@ -1228,6 +1344,7 @@ export class CartEngine {
       status: complete ? "complete" : "needs_info",
       questions: unresolved.slice(),
       aliases: buildAliases(kind, intent, entry?.name ?? "", res, this.deps.menu),
+      aliasPhrases: buildAliasPhrases(kind, intent, entry?.name ?? "", res, this.deps.menu),
       addedTurn,
       lastTouchedTurn: this.state.turn,
       pickSlots,
@@ -1383,7 +1500,34 @@ function buildAliases(kind: MenuKind, intent: LineIntent, itemName: string, res:
       add(menu.get(p.menuItemId)?.name);
       add(p.size);
       for (const t of p.toppings ?? []) add(t.name);
+      if (menu.kindOf(p.menuItemId) === "pizza") words.add("pizza");
+      for (const o of p.options ?? []) add(o);
     }
   }
   return [...words];
+}
+
+function buildAliasPhrases(kind: MenuKind, intent: LineIntent, itemName: string, res: Extract<CompileResponse, { ok: true }>, menu: MenuIndex): string[] {
+  const out = new Set<string>();
+  const add = (s: string | null | undefined) => {
+    const n = norm(s ?? "");
+    if (n) out.add(n);
+  };
+  add(itemName);
+  const anyIntent = intent as any;
+  if (kind === "pizza") {
+    for (const t of (intent as PizzaIntent).toppings) add(t.name);
+    if (res.halves) for (const n of [...res.halves.left, ...res.halves.right, ...res.halves.whole]) add(n);
+  } else if (kind === "item") {
+    for (const o of (intent as ItemIntent).options) add(o);
+    for (const m of res.line?.modifiers ?? []) add(m.name);
+    add(anyIntent.size);
+  } else {
+    for (const p of (intent as ComboIntent).picks) {
+      add(menu.get(p.menuItemId)?.name);
+      for (const o of p.options ?? []) add(o);
+      for (const t of p.toppings ?? []) add(t.name);
+    }
+  }
+  return [...out];
 }

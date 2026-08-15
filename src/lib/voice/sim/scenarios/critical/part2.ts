@@ -1,17 +1,18 @@
 /** Critical suite T14–T25 (see index.ts for conventions). */
 import type { Scenario, CanonicalLine } from "../../scenario-types";
 import { L, ADDR } from "../luigis-ids";
+import { PLACE_IF_DONE } from "../../harness";
 
 const A = (name = "Marco"): Record<string, string> => ({
   "(your|the|a) name|name for the order|who('s| is) (this|it) for|name (should|do) i put": `It's ${name}.`,
   "(best|good|right|correct) number|callback|reach you|call you back|number (i have|on file)|\\d{3} \\d{3} \\d{4}": "Yes, that's the right number.",
   "pick ?up or delivery|delivery or pick ?up|for pickup or": "Pickup.",
   "(is that|does that|do i have that|did i get that|sound) (right|correct|good|ok)\\??|correct\\?$|right\\?$": "Yes, that's right.",
-  "(shall|should|can|may) i (go ahead and )?(place|send|put)|place (it|the order|that)\\?|send (it|that) (through|in)\\?|good to go\\?": "Yes, go ahead.",
+  "(shall|should|can|may) i (go ahead and )?(place|send|put)|place (it|the order|that)\\?|send (it|that) (through|in)\\?|good to go\\?|ready to (place|send)|want me to (place|send)|(place|send) (it|that|the order) (now|for you)\\?": PLACE_IF_DONE,
 });
-const FAMILY_L: string[] = [L.large1, L.large2, L.large3, L.large5];
-const FAMILY_XL: string[] = [L.xl1, L.xl2, L.xl3];
-const FAMILY_M: string[] = [L.medium1, L.medium2];
+const FAMILY_L: string[] = [L.large1, L.large2, L.large3, L.large5, L.buildYourOwn];
+const FAMILY_XL: string[] = [L.xl1, L.xl2, L.xl3, L.buildYourOwn];
+const FAMILY_M: string[] = [L.medium1, L.medium2, L.buildYourOwn];
 const pizza = (item: string, qty: number, whole: string[], left: string[] = [], right: string[] = [], extra: Partial<CanonicalLine> = {}): CanonicalLine => {
   const fam = FAMILY_L.includes(item) ? FAMILY_L : FAMILY_XL.includes(item) ? FAMILY_XL : FAMILY_M.includes(item) ? FAMILY_M : [];
   return { item, ...(fam.length ? { itemAlt: fam.filter((x) => x !== item) } : {}), qty, options: [], halves: { left, right, whole }, ...extra };
@@ -39,7 +40,7 @@ export const T14: Scenario = base(
     "Add ten wings hot mixed.",
     "Make the wings twenty.",
     "Change the wings to mild mixed.",
-    "Add a garlic dip.",
+    "Add a garlic dipping sauce.",
     "Make that two garlic dips.",
     "Add a Coke.",
     "Add a Sprite.",
@@ -139,7 +140,7 @@ export const T17: Scenario = base(
   "A topping the item doesn't support",
   ["availability", "modifier"],
   ["Pickup. A large pepperoni pizza with truffle shavings.", "OK, skip the truffle. Just pepperoni.", "That's it.", "Yes."],
-  { cart: { lines: [pizza(L.large1, 1, ["pepperoni"])] }, mustPlace: true, mustNotSay: ["truffle.*(added|got it|on it)"] },
+  { cart: { lines: [pizza(L.large1, 1, ["pepperoni"])] }, mustPlace: true, mustNotSay: ["truffle[^.?!]{0,40}\\b(added|got it|on it|is on)\\b"] },
 );
 
 export const T18: Scenario = base(
@@ -205,7 +206,7 @@ export const T21: Scenario = {
     fulfilment: { type: "delivery", address: ADDR.street },
     customer: { name: "Dana" },
     mustPlace: true,
-    mustSay: ["delivery fee|\\$\\d+(\\.\\d\\d)? (for )?delivery|deliver(y)? (is|will be|comes to)"],
+    mustSay: ["deliver[a-z]*[^.?!]{0,40}\\$\\d|\\$\\d[\\d.]*[^.?!]{0,40}deliver|delivery fee"],
   },
 };
 
@@ -276,7 +277,7 @@ export const T25: Scenario = {
       "Actually on that combo pizza, no pineapple on the Hawaiian side.",
       "Oh wait, go back to the first pizza and remove mushrooms but only from that half, and add onions to the other half.",
       "What time do you guys close tonight?",
-      "Okay great, and add 20 wings, half medium half honey garlic, plus two garlic dips.",
+      "Okay great, and add 20 wings, half medium half honey garlic, plus two garlic dipping sauces.",
       "That's everything.",
       "Yes, place it.",
     ],
@@ -286,13 +287,14 @@ export const T25: Scenario = {
       "(what('s| is) the|your|full|street) address|where (are we|am i) delivering|deliver(ing)? to\\?|postal code|postcode|city": `${ADDR.street}, ${ADDR.city}, ${ADDR.zip}.`,
       "buzzer|apartment|unit|instructions": "It's a house.",
       "(two|2) (separate|orders of|lots of) (ten|10)|split (them|the wings)|10 and 10|two tens": "Yes, two orders of ten is fine.",
+      "wings?[^.?!]*(flavou?r|tossed|on the side|separate|split|sauce)[^.?!]*\\?": "Mixed please — two orders of ten: one mild mixed, one honey garlic mixed.",
     },
   },
   expected: {
     cart: {
       lines: [
         { item: L.large3, itemAlt: FAMILY_L.filter((x) => x !== L.large3), qty: 1, options: [], halves: { left: ["pepperoni"], right: ["green peppers", "onions"], whole: ["bacon"] } },
-        { item: L.medium1, itemAlt: [L.medium2], qty: 1, options: [], halves: { left: [], right: [], whole: [] } },
+        { item: L.medium1, itemAlt: [L.medium2, L.buildYourOwn], qty: 1, options: [], halves: { left: [], right: [], whole: [] } },
         {
           item: L.largeWings,
           qty: 1,

@@ -19,7 +19,7 @@
  * service fees, size-family swaps and day-deal offers (both need Prisma).
  */
 import { buildLineCore } from "@/lib/voice/build-line-core";
-import type { ItemData } from "@/lib/voice/order-line-compiler";
+import { compilePizzaLine, normalizeSizeToken, splitSizeToken, type ItemData } from "@/lib/voice/order-line-compiler";
 import type { VoiceApi } from "../../../../services/nabil-voice/src/api";
 import { hydrateComboData, type MenuSnapshot } from "./snapshot-types";
 import { priceOrder, resolveSimAddress, type OrderBody } from "./fake-pricer";
@@ -79,6 +79,10 @@ export function createFakeBackend(snapshot: MenuSnapshot, opts: FakeBackendOpts 
     if (!it) return null;
     return soldOut.has(id) ? { ...clone(it), isSoldOut: true } : clone(it);
   };
+  /** Category of an item, from the menu payload (the size-family rule is "same category"). */
+  const categoryById = new Map<string, string>();
+  for (const cat of snapshot.menu?.menu ?? []) for (const it of (cat as any).items ?? []) categoryById.set(String(it.menuItemId), String((cat as any).category ?? ""));
+  const categoryOf = (id: string) => categoryById.get(id) ?? "";
   const comboOf = (id: string) => {
     if (!(id in snapshot.combos)) return null;
     const c = hydrateComboData(snapshot, id);
@@ -225,6 +229,28 @@ export function createFakeBackend(snapshot: MenuSnapshot, opts: FakeBackendOpts 
           {
             item: async (id) => itemOf(id),
             combo: async (id) => comboOf(id),
+            // Offline twin of item-family.findSizeMatch: on menus where each size
+            // is its own product ("Large 1 Topping" / "Medium 1 Topping"), a
+            // spoken size that the named item can't be resolves to the sibling
+            // whose name differs ONLY by its size token, in the same category.
+            sizeMatch: async ({ item, intent }) => {
+              const want = normalizeSizeToken(intent.size ?? null);
+              if (!want) return null;
+              const have = splitSizeToken(item.name);
+              if (!have.token || have.token === want) return null;
+              const cat = categoryOf(item.menuItemId);
+              const siblings = Object.values(snapshot.items).filter((c) => {
+                if (c.menuItemId === item.menuItemId || !c.pizzaConfig) return false;
+                if (categoryOf(c.menuItemId) !== cat) return false;
+                const sp = splitSizeToken(c.name);
+                return sp.token === want && sp.rest === have.rest;
+              });
+              if (siblings.length !== 1) return null;
+              const sib = siblings[0];
+              const compiled = compilePizzaLine({ ...intent, menuItemId: sib.menuItemId }, sib, { currency });
+              if (!compiled.line || compiled.unresolved.length) return null;
+              return { menuItemId: sib.menuItemId, name: sib.name, variantId: compiled.line.variantId, subtotal: compiled.lineSubtotal ?? 0, readBack: compiled.readBack, saving: 0 };
+            },
           },
         );
         return { ok: out.status === 200, status: out.status, json: out.body };

@@ -102,6 +102,11 @@ export function createRecordingSink(now: () => number = Date.now): { sink: Event
 }
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** Standing-answer sentinel: "yes, place it" only once the script is spoken;
+ *  "not yet" while scripted turns remain. Use as the VALUE of the answer keyed
+ *  on Nabil's "shall I place it?" question. */
+export const PLACE_IF_DONE = "__PLACE_IF_DONE__";
 async function waitUntil(pred: () => boolean, timeoutMs: number, stepMs = 20): Promise<boolean> {
   const until = Date.now() + timeoutMs;
   while (Date.now() < until) {
@@ -213,7 +218,10 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
         const hit = matchAnswer(lastAgent, [scn.caller.answers, next?.ifAsked]);
         const guardTripped = !!hit && hit.key === lastAnswerKey && answerStreak >= 2;
         if (hit && !guardTripped) {
-          say = hit.say;
+          // A standing "yes, place it" must never pre-empt the script: a real
+          // caller with more to say says "not yet". The sentinel expands by
+          // whether scripted turns remain.
+          say = hit.say === PLACE_IF_DONE ? (next ? "Not yet — I've got more to add." : "Yes, go ahead.") : hit.say;
           kind = "answer";
           answerStreak = hit.key === lastAnswerKey ? answerStreak + 1 : 1;
           lastAnswerKey = hit.key;

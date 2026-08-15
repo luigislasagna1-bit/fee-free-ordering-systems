@@ -54,6 +54,26 @@ if (results.every(([, ok]) => ok) && !flag("--skip-sim")) {
   ]);
 }
 
+// COST GATE (Luigi 2026-08-15): ≤ 40¢ per call-minute ALL-IN. Twilio
+// ConversationRelay + inbound voice take ~8¢, so the model share must stay
+// under 30¢ per estimated call-minute (turns × 10 s). Read off the report we
+// just wrote.
+if (results.every(([, ok]) => ok) && !flag("--skip-sim")) {
+  try {
+    const files = readdirSync(reportsDir).filter((f) => f.startsWith(`${stamp}-release`) && f.endsWith(".json"));
+    const latest = files.sort().pop();
+    if (latest) {
+      const m = JSON.parse(readFileSync(join(reportsDir, latest), "utf8")).metrics ?? {};
+      const cpm = Number(m.modelCentsPerEstMinute ?? 0);
+      const ok = cpm <= 30;
+      console.log(`\n━━━ cost gate: model ${cpm.toFixed(1)}¢ per est. call-minute (budget 30¢ ⇒ ≤ 40¢ all-in) → ${ok ? "✅" : "❌ OVER BUDGET"}`);
+      results.push(["cost ≤ 40¢/min all-in", ok]);
+    }
+  } catch (e) {
+    console.warn("cost gate: could not read the report", e);
+  }
+}
+
 const green = results.every(([, ok]) => ok);
 console.log("\n━━━ GO / NO-GO");
 for (const [label, ok] of results) console.log(`  ${ok ? "PASS" : "FAIL"}  ${label}`);

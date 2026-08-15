@@ -32,6 +32,10 @@ export type MenuEntry = {
   /** The name with the size token removed — the size-family key. */
   familyKey: string;
   todayDeal: unknown | null;
+  /** Option names of a SIMPLE item's groups ("Garlic", "Ranch" on Dipping
+   *  Sauce) — so "garlic dip" finds the dip whose flavour is an option, not
+   *  only items with "garlic" in their name. */
+  keywords: string[];
 };
 
 export type SearchCandidate = MenuEntry & { score: number };
@@ -98,6 +102,10 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
         nameSize: split.token,
         familyKey: split.rest,
         todayDeal: it.todayDeal ?? null,
+        keywords:
+          kind === "item" && Array.isArray(it.modifierGroups)
+            ? ([...new Set<string>((it.modifierGroups as any[]).flatMap((g: any) => (Array.isArray(g?.options) ? g.options.map((o: any) => norm(String(o?.name ?? ""))) : [])))] as string[]).filter(Boolean).slice(0, 80)
+            : [],
       };
       byId.set(id, entry);
       list.push(entry);
@@ -134,8 +142,11 @@ export function buildMenuIndex(menuPayload: any): MenuIndex {
       else if (qTok && (nameTok === qTok || famTok === qTok)) score = 100;
       else if (qTok && (stem(nameTok) === stem(qTok) || stem(famTok) === stem(qTok))) score = 90;
       else if (qTokens.length) {
-        const nameTokens = new Set([...tokens(e.name), ...tokens(e.category)]);
-        const hits = qTokens.filter((t) => nameTokens.has(t) || [...nameTokens].some((n) => stem(n) === stem(t)));
+        const nameTokens = new Set([...tokens(e.name), ...tokens(e.category), ...e.keywords.flatMap((k) => tokens(k))]);
+        // A token matches on equality, stem, or a ≥3-char prefix either way
+        // ("dip" ~ "dipping", "pepp" ~ "pepperoni").
+        const tokMatch = (n: string, t: string) => n === t || stem(n) === stem(t) || (t.length >= 3 && n.startsWith(t)) || (n.length >= 3 && t.startsWith(n));
+        const hits = qTokens.filter((t) => nameTokens.has(t) || [...nameTokens].some((n) => tokMatch(n, t)));
         if (hits.length === qTokens.length) score = 70 + Math.min(10, hits.length);
         else if (hits.length > 0 && hits.length >= Math.ceil(qTokens.length / 2)) score = 40 + hits.length * 5;
       }

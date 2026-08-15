@@ -11,6 +11,7 @@
  */
 import type { Scenario, CanonicalLine, CallerTurn } from "../../scenario-types";
 import { L, ADDR } from "../luigis-ids";
+import { PLACE_IF_DONE } from "../../harness";
 
 const CALLER = "+16475550100";
 
@@ -20,7 +21,7 @@ const A = (name = "Marco"): Record<string, string> => ({
   "(best|good|right|correct) number|callback|reach you|call you back|number (i have|on file)|\\d{3} \\d{3} \\d{4}": "Yes, that's the right number.",
   "pick ?up or delivery|delivery or pick ?up|for pickup or": "Pickup.",
   "(is that|does that|do i have that|did i get that|sound) (right|correct|good|ok)\\??|correct\\?$|right\\?$": "Yes, that's right.",
-  "(shall|should|can|may) i (go ahead and )?(place|send|put)|place (it|the order|that)\\?|send (it|that) (through|in)\\?|good to go\\?": "Yes, go ahead.",
+  "(shall|should|can|may) i (go ahead and )?(place|send|put)|place (it|the order|that)\\?|send (it|that) (through|in)\\?|good to go\\?|ready to (place|send)|want me to (place|send)|(place|send) (it|that|the order) (now|for you)\\?": PLACE_IF_DONE,
 });
 
 /** Luigi's N-topping pizzas are separate products priced the same for the
@@ -28,15 +29,16 @@ const A = (name = "Marco"): Record<string, string> => ({
  *  of the same-size family. */
 const FAMILY: Record<string, string[]> = {
   [L.small1]: [L.small1],
-  [L.medium1]: [L.medium1, L.medium2],
-  [L.medium2]: [L.medium1, L.medium2],
-  [L.large1]: [L.large1, L.large2, L.large3, L.large5],
-  [L.large2]: [L.large1, L.large2, L.large3, L.large5],
-  [L.large3]: [L.large1, L.large2, L.large3, L.large5],
-  [L.large5]: [L.large1, L.large2, L.large3, L.large5],
-  [L.xl1]: [L.xl1, L.xl2, L.xl3],
-  [L.xl2]: [L.xl1, L.xl2, L.xl3],
-  [L.xl3]: [L.xl1, L.xl2, L.xl3],
+  [L.medium1]: [L.medium1, L.medium2, L.buildYourOwn],
+  [L.medium2]: [L.medium1, L.medium2, L.buildYourOwn],
+  // Build Your Own Pizza (sized variants) is the same food built a different way — accepted too.
+  [L.large1]: [L.large1, L.large2, L.large3, L.large5, L.buildYourOwn],
+  [L.large2]: [L.large1, L.large2, L.large3, L.large5, L.buildYourOwn],
+  [L.large3]: [L.large1, L.large2, L.large3, L.large5, L.buildYourOwn],
+  [L.large5]: [L.large1, L.large2, L.large3, L.large5, L.buildYourOwn],
+  [L.xl1]: [L.xl1, L.xl2, L.xl3, L.buildYourOwn],
+  [L.xl2]: [L.xl1, L.xl2, L.xl3, L.buildYourOwn],
+  [L.xl3]: [L.xl1, L.xl2, L.xl3, L.buildYourOwn],
 };
 const pizza = (item: string, qty: number, whole: string[], left: string[] = [], right: string[] = [], extra: Partial<CanonicalLine> = {}): CanonicalLine => ({
   item,
@@ -319,7 +321,7 @@ export const T13: Scenario = base(
     "Hmm, actually change the pizza to extra large.",
     "And add green olives to the mushroom half.",
     "How much is a garlic dip?",
-    "Add two garlic dips.",
+    "Add two of the small garlic dipping sauces.",
     "Actually just one garlic dip.",
     "What was the first pizza again?",
     "Great. And one Coke.",

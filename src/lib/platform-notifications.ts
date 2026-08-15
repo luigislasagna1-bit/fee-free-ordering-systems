@@ -32,13 +32,13 @@ import { ROLES } from "@/lib/roles";
 
 /** Absolute base URL for email links. NEXT_PUBLIC_APP_URL is localhost in
  *  laptop dev; fall back to the real domain so prod links never point local. */
-function appUrl(): string {
+export function appUrl(): string {
   const env = process.env.NEXT_PUBLIC_APP_URL;
   if (env && !/localhost|127\.0\.0\.1/.test(env)) return env.replace(/\/$/, "");
   return "https://feefreeordering.com";
 }
 
-interface Recipient {
+export interface Recipient {
   email: string;
   name: string | null;
 }
@@ -83,10 +83,11 @@ async function resellerRecipient(resellerProfileId: string | null | undefined): 
   }
 }
 
-/** One in-app ResellerNotification row per recipient (best-effort). */
-async function createInApp(
+/** One in-app ResellerNotification row per recipient (best-effort). Exported
+ *  for src/lib/ops-messages.ts, which reuses this exact plumbing. */
+export async function createInApp(
   recipients: Recipient[],
-  n: { kind: string; title: string; body?: string | null; linkUrl: string },
+  n: { kind: string; title: string; body?: string | null; linkUrl?: string | null },
 ): Promise<void> {
   if (recipients.length === 0) return;
   try {
@@ -96,7 +97,7 @@ async function createInApp(
         kind: n.kind,
         title: n.title,
         body: n.body ?? null,
-        linkUrl: n.linkUrl,
+        linkUrl: n.linkUrl ?? null,
       })),
     });
   } catch (e) {
@@ -104,20 +105,37 @@ async function createInApp(
   }
 }
 
-/** Fan-out emails; one bad recipient never blocks the rest. */
-async function emailAll(
+/** Per-recipient outcome of emailAll. `success` mirrors SendEmailResult: true
+ *  ONLY when Resend accepted the email. */
+export interface EmailOutcome {
+  to: string;
+  success: boolean;
+  error?: string;
+}
+
+/** Fan-out emails; one bad recipient never blocks the rest. Returns the
+ *  per-recipient outcomes (a thrown helper is reported as a failure, not
+ *  re-thrown) — the notify* functions here ignore them (best-effort), while
+ *  src/lib/ops-messages.ts uses them to decide sent-vs-retry. Exported for
+ *  that reuse; behaviour for the existing callers is unchanged. */
+export async function emailAll(
   recipients: Recipient[],
   build: (r: Recipient) => Parameters<typeof sendReportNotificationEmail>[0],
-): Promise<void> {
-  if (recipients.length === 0) return;
-  await Promise.allSettled(
-    recipients.map(async (r) => {
+): Promise<EmailOutcome[]> {
+  if (recipients.length === 0) return [];
+  const settled = await Promise.allSettled(
+    recipients.map(async (r): Promise<EmailOutcome> => {
       try {
-        await sendReportNotificationEmail(build(r));
+        const res = await sendReportNotificationEmail(build(r));
+        return { to: r.email, success: !!res?.success, error: res?.success ? undefined : res?.error || "email not sent" };
       } catch (e) {
         console.error("[platform-notifications] email failed", { to: r.email, e });
+        return { to: r.email, success: false, error: e instanceof Error ? e.message : String(e) };
       }
     }),
+  );
+  return settled.map((s, i) =>
+    s.status === "fulfilled" ? s.value : { to: recipients[i].email, success: false, error: String(s.reason) },
   );
 }
 
@@ -174,8 +192,8 @@ function opsEmail(): string {
 
 /** Superadmin audience: in-app to the superadmin login(s) (drives the panel
  *  bell), email to those PLUS the ops inbox, deduped, so support@ always gets
- *  a copy. */
-async function superadminAudience(): Promise<{ inApp: Recipient[]; email: Recipient[] }> {
+ *  a copy. Exported for src/lib/ops-messages.ts (same audience, same rules). */
+export async function superadminAudience(): Promise<{ inApp: Recipient[]; email: Recipient[] }> {
   const users = await superadminRecipients();
   const byAddr = new Map<string, Recipient>();
   for (const u of users) byAddr.set(u.email, u);

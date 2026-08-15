@@ -5108,6 +5108,28 @@ model ResellerNotification {
   @@index([recipientEmail, createdAt])
 }
 
+/// Queued platform-owner notifications (no customer PII — operator-authored
+/// subject/body addressed to the platform's own superadmin users + ops inbox,
+/// so it is deliberately NOT in PII_ERASURE_MAP). A script with only a
+/// DATABASE_URL enqueues a row; the every-minute eod-digest-closing cron on
+/// production emails it out via src/lib/ops-messages.ts (dispatch claims a row
+/// by bumping `attempts`, gives up after 5). Luigi 2026-08-15.
+model OpsMessage {
+  id        String    @id @default(cuid())
+  subject   String
+  /// Plain text; newlines preserved (blank line = new paragraph in the email).
+  body      String
+  /// App-relative or absolute URL for the CTA.
+  link      String?
+  ctaLabel  String?
+  createdAt DateTime  @default(now())
+  sentAt    DateTime?
+  attempts  Int       @default(0)
+  lastError String?
+
+  @@index([sentAt, createdAt])
+}
+
 /// Per-viewer "last seen" marker for the in-app new-activity badge. One row
 /// per (report, viewer email). A report shows a NEW badge for a viewer when
 /// its updatedAt is newer than their seenAt (or they have no row yet). Marked

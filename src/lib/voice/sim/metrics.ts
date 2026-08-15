@@ -27,9 +27,20 @@ export type SimMetrics = {
   turnsPerScenario: number;
   costPerScenarioCents: number;
   totalCostCents: number;
+  /** Model spend per ESTIMATED real call-minute. A real caller turn (speech +
+   *  TTS + pause) runs ~10 s, so minutes ≈ turns × 10 s. Luigi's ceiling is
+   *  40¢/min ALL-IN; Twilio ConversationRelay + inbound voice take ~8¢, so the
+   *  model must stay under ~30¢. Prod reference 2026-08-15: ~19¢/min. */
+  modelCentsPerEstMinute: number;
+  turnsPerEstMinute: number;
   flakyIds: string[];
   failedIds: string[];
 };
+
+/** Real-call pacing assumption for cost-per-minute (see SimMetrics). */
+export const EST_SECONDS_PER_TURN = 10;
+/** Luigi 2026-08-15: ≤ 40¢ per call-minute all-in ⇒ model ≤ ~30¢ after Twilio. */
+export const MODEL_CENTS_PER_MINUTE_BUDGET = 30;
 
 const ratio = (a: number, b: number) => (b > 0 ? a / b : 0);
 const pct = (xs: number[], p: number): number | null => {
@@ -112,6 +123,8 @@ export function computeMetrics(reports: ScenarioReport[]): SimMetrics {
     turnsPerScenario: ratio(turns, n),
     costPerScenarioCents: ratio(cost, n),
     totalCostCents: cost,
+    modelCentsPerEstMinute: ratio(cost, (turns * EST_SECONDS_PER_TURN) / 60),
+    turnsPerEstMinute: 60 / EST_SECONDS_PER_TURN,
     flakyIds,
     failedIds,
   };

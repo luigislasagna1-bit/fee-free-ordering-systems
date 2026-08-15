@@ -151,8 +151,13 @@ export const TOOLS = [
       type: "object",
       additionalProperties: false,
       properties: {
-        lineId: { type: "string", description: "From ORDER STATE, e.g. 'L2'. Preferred." },
-        hint: { type: "string", description: "Only if you don't know the lineId: 'the pepperoni one', 'the second pizza', 'the combo'." },
+        lineId: { type: "string", description: "From ORDER STATE, e.g. 'L2'." },
+        hint: {
+          type: "string",
+          description:
+            "ALWAYS include the caller's own words for WHICH line ('that one', 'the bacon one', 'the second pizza', 'both') — even when you also give lineId. The server double-checks: if the words could mean more than one line it returns candidates and you must ask.",
+        },
+        revertLastChange: { type: "boolean", description: "Undo the last change on this line ('no wait, that was wrong') — puts it back exactly as it was before." },
         quantity: { type: "integer", minimum: 1 },
         replaceWithItemId: { type: "string", description: "Swap to a different menu item keeping everything else that fits (a day deal, a different size product)." },
         setOptions: { type: "array", items: { type: "string" }, description: "Simple item: the complete new option list." },
@@ -173,7 +178,7 @@ export const TOOLS = [
     input_schema: {
       type: "object",
       additionalProperties: false,
-      properties: { lineId: { type: "string" }, hint: { type: "string", description: "Only if you don't know the lineId." } },
+      properties: { lineId: { type: "string" }, hint: { type: "string", description: "The caller's own words for which line ('the wings', 'that one') — always include; the server checks ambiguity." } },
     },
   },
   {

@@ -12,6 +12,7 @@
     "preflight": "prisma generate && node scripts/check-role-pref-not-authz.mjs && tsc --noEmit && npm run typecheck:voice && vitest run && next build",
     "typecheck:voice": "cd services/nabil-voice && tsc --noEmit",
     "nabil:sim": "tsx scripts/nabil-sim.ts",
+    "nabil:replay": "tsx scripts/nabil-replay.ts",
     "nabil:release": "tsx scripts/nabil-release.ts",
     "nabil:bench": "tsx scripts/nabil-bench.ts",
     "nabil:snapshot": "tsx scripts/nabil-snapshot-menu.ts",

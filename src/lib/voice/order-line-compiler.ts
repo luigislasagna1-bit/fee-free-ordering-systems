@@ -221,7 +221,12 @@ const norm = (s: string): string =>
     .toLowerCase()
     .replace(/[^a-z0-9 ]+/g, " ")
     .replace(/\s+/g, " ")
-    .trim();
+    .trim()
+    // Menus abbreviate "extra" as a lone "X" ("X - Cheese", "X Large") while
+    // callers say the word. Same key for both — "extra cheese" must find
+    // "X - Cheese", the single most common request there is. Mirrored in
+    // services/nabil-voice/src/fuzzy.ts (parity test).
+    .replace(/\bx\b/g, "extra");
 
 /** Singular-ish form so "mushrooms" matches "Mushroom". */
 const stem = (s: string): string => norm(s).replace(/e?s$/, "");

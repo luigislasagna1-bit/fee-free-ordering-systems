@@ -73,6 +73,7 @@ export function renderMarkdown(input: ReportInput): string {
   lines.push(`| tool p95 | ${ms(m.toolP95)} |`);
   lines.push(`| turns / scenario | ${m.turnsPerScenario.toFixed(1)} |`);
   lines.push(`| cost / scenario · total | ${cents(m.costPerScenarioCents)} · ${cents(m.totalCostCents)} |`);
+  lines.push(`| model ¢ per est. call-minute (budget 30¢ ⇒ ≤40¢ all-in with Twilio) | ${m.modelCentsPerEstMinute.toFixed(1)}¢ ${m.modelCentsPerEstMinute > 30 ? "🔴 OVER BUDGET" : "🟢"} |`);
   lines.push(`| flaky | ${m.flakyIds.length ? m.flakyIds.join(", ") : "none"} |`);
   lines.push(`| failed | ${m.failedIds.length ? m.failedIds.join(", ") : "none"} |`);
   lines.push("");
@@ -104,6 +105,13 @@ export function renderMarkdown(input: ReportInput): string {
     for (const [k, v] of [...clusters.entries()].sort((a, b) => b[1].length - a[1].length)) lines.push(`| ${esc(k)} | ${v.length} | ${v.join(", ")} |`);
   }
   lines.push("");
+
+  if ((input.scenarios ?? []).some((s) => s.suite.includes("broad"))) {
+    lines.push(`## Taxonomy × reason bucket (broad)`);
+    lines.push("");
+    lines.push(renderTaxonomyReasonTable(reports, input.scenarios ?? []));
+    lines.push("");
+  }
 
   lines.push(`## Failures in detail`);
   lines.push("");
@@ -152,6 +160,54 @@ export function renderMarkdown(input: ReportInput): string {
   if (versions) lines.push(`Versions: \`${esc(JSON.stringify(versions))}\``);
   lines.push("");
   return lines.join("\n");
+}
+
+/**
+ * taxonomy × reason-bucket matrix for broad (generated) runs: one row per
+ * taxonomy bucket, one column per failure bucket, plus runs / pass counts.
+ * Pure — the CLI prints it and the Markdown can embed it.
+ */
+export type TaxonomyReasonMatrix = { taxonomies: string[]; buckets: string[]; counts: Map<string, Map<string, number>>; runs: Map<string, number>; passed: Map<string, number> };
+
+export function taxonomyReasonMatrix(reports: ScenarioReport[], scenarios: Scenario[]): TaxonomyReasonMatrix {
+  const scnById = new Map(scenarios.map((s) => [s.id, s]));
+  const counts = new Map<string, Map<string, number>>();
+  const runs = new Map<string, number>();
+  const passed = new Map<string, number>();
+  const bucketSet = new Set<string>();
+  for (const r of reports) {
+    const taxes = scnById.get(r.id)?.taxonomy ?? ["?"];
+    for (const tax of taxes.length ? taxes : ["?"]) {
+      runs.set(tax, (runs.get(tax) ?? 0) + 1);
+      if (r.pass) passed.set(tax, (passed.get(tax) ?? 0) + 1);
+      else {
+        const b = reasonBucket(r.reasons[0] ?? "unknown");
+        bucketSet.add(b);
+        const row = counts.get(tax) ?? new Map<string, number>();
+        row.set(b, (row.get(b) ?? 0) + 1);
+        counts.set(tax, row);
+      }
+    }
+  }
+  const taxonomies = [...runs.keys()].sort();
+  const buckets = [...bucketSet].sort((a, b) => {
+    const tot = (x: string) => taxonomies.reduce((n, t) => n + (counts.get(t)?.get(x) ?? 0), 0);
+    return tot(b) - tot(a) || a.localeCompare(b);
+  });
+  return { taxonomies, buckets, counts, runs, passed };
+}
+
+/** Plain-text table of `taxonomyReasonMatrix` (also valid Markdown). */
+export function renderTaxonomyReasonTable(reports: ScenarioReport[], scenarios: Scenario[]): string {
+  const m = taxonomyReasonMatrix(reports, scenarios);
+  if (!m.taxonomies.length) return "(no runs)";
+  const head = ["taxonomy", "runs", "pass", ...m.buckets];
+  const rows = m.taxonomies.map((t) => [t, String(m.runs.get(t) ?? 0), String(m.passed.get(t) ?? 0), ...m.buckets.map((b) => String(m.counts.get(t)?.get(b) ?? 0))]);
+  const total = ["TOTAL", String([...m.runs.values()].reduce((a, b) => a + b, 0)), String([...m.passed.values()].reduce((a, b) => a + b, 0)), ...m.buckets.map((b) => String(m.taxonomies.reduce((n, t) => n + (m.counts.get(t)?.get(b) ?? 0), 0)))];
+  const all = [head, ...rows, total];
+  const w = head.map((_, i) => Math.max(...all.map((r) => r[i].length)));
+  const fmt = (r: string[]) => `| ${r.map((c, i) => c.padEnd(w[i])).join(" | ")} |`;
+  return [fmt(head), `|${w.map((x) => "-".repeat(x + 2)).join("|")}|`, ...rows.map(fmt), fmt(total)].join("\n");
 }
 
 /** Writes `<dir>/<name>.json` and `<dir>/<name>.md`; returns both paths. */

@@ -199,7 +199,21 @@ const sortStr = (xs: unknown[] | undefined) => (Array.isArray(xs) ? xs.map((x) =
 
 function normHalves(h: CanonicalLine["halves"]): CanonicalLine["halves"] | undefined {
   if (!h) return undefined;
-  return { left: sortStr(h.left), right: sortStr(h.right), whole: sortStr(h.whole) };
+  let left = sortStr(h.left);
+  let right = sortStr(h.right);
+  const whole = sortStr(h.whole);
+  // A topping on BOTH halves is the same pizza as that topping on the whole
+  // ("pepperoni on the Hawaiian side and on the meat-lovers side" ≡ pepperoni
+  // all over; two half charges = one whole charge on this pricing model).
+  for (const t of [...left]) {
+    const i = right.indexOf(t);
+    if (i >= 0 && !whole.includes(t)) {
+      whole.push(t);
+      left = left.filter((x, j) => !(x === t && j === left.indexOf(t)));
+      right.splice(i, 1);
+    }
+  }
+  return { left, right, whole: whole.sort() };
 }
 
 function normPick(p: CanonicalPick): CanonicalPick {

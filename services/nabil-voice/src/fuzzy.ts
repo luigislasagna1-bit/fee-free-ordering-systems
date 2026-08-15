@@ -16,7 +16,9 @@ export const norm = (s: string): string =>
     .toLowerCase()
     .replace(/[^a-z0-9 ]+/g, " ")
     .replace(/\s+/g, " ")
-    .trim();
+    .trim()
+    // "X - Cheese" / "X Large" ↔ "extra cheese" / "extra large" (mirrors the compiler).
+    .replace(/\bx\b/g, "extra");
 
 /** Singular-ish form so "mushrooms" matches "Mushroom". */
 export const stem = (s: string): string => norm(s).replace(/e?s$/, "");

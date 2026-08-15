@@ -10,10 +10,17 @@
  * report window is close-to-close, so it ends exactly when the send fires.
  * Idempotent via Restaurant.lastEodDigestDate (the morning cron stays as a
  * catch-up). Shared logic: src/lib/digest-cron.ts.
+ *
+ * Piggyback (2026-08-15): because this is the platform's only every-minute
+ * cron, it also flushes the ops-message queue (src/lib/ops-messages.ts) —
+ * DB-queued notes to the platform owner that production emails out. Strictly
+ * best-effort and AFTER the digest work: it can neither delay a digest nor
+ * change this route's status/response.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { requireCronAuth } from "@/lib/cron-auth";
 import { runDigestSweep } from "@/lib/digest-cron";
+import { dispatchPendingOpsMessages } from "@/lib/ops-messages";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,5 +29,9 @@ export async function GET(req: NextRequest) {
   const denied = requireCronAuth(req);
   if (denied) return denied;
   const result = await runDigestSweep("closing");
+  // Best-effort ops-message flush — never affects the digest result above.
+  await dispatchPendingOpsMessages().catch((e) => {
+    console.error("[eod-digest-closing] ops-message dispatch failed", e);
+  });
   return NextResponse.json(result);
 }

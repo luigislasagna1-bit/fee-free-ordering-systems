@@ -281,8 +281,29 @@ describe("resolveTarget never guesses", () => {
     expect((e.resolveTarget({ hint: "the second pizza" }) as any).line.lineId).toBe("L2");
     expect((e.resolveTarget({ hint: "the first one" }) as any).line.lineId).toBe("L1");
     expect((e.resolveTarget({ hint: "the coke" }) as any).line.lineId).toBe("L3");
-    expect((e.resolveTarget({ hint: "that one" }) as any).line.lineId).toBe("L3"); // focus = last added
+    // "that one" right after three lines arrived in ONE breath is a question, not a pick.
+    expect((e.resolveTarget({ hint: "that one" }) as any).error).toBe("ambiguous_line");
     expect((e.resolveTarget({ hint: "the last pizza" }) as any).line.lineId).toBe("L2");
+    // …but once a line arrives on its own turn, "that one" is that line.
+    e.beginTurn();
+    await e.addLine({ menuItemId: "dip_garlic", quantity: 1 });
+    expect((e.resolveTarget({ hint: "that one" }) as any).line.lineId).toBe("L4");
+    // A model-chosen lineId that disagrees with the caller's words is not trusted.
+    const cross = e.resolveTarget({ lineId: "L1", hint: "the coke" }) as any;
+    expect(cross.error).toBe("ambiguous_line");
+    // …and a change-scoped hint resolves when only one line can take it (T15).
+    const t15 = e.resolveTarget({ hint: "that one" }, (l) => l.aliases.includes("olive")) as any;
+    expect(t15.line.lineId).toBe("L2");
+  });
+  it("revertLastChange restores the intent before the last update", async () => {
+    const e = await two();
+    await e.updateLine({ lineId: "L1" }, { addToppings: [{ name: "bacon", placement: "whole" }] });
+    expect(e.getLine("L1")!.compiled!.modifiers.map((m) => m.name)).toEqual(["Pepperoni", "Bacon"]);
+    const r = await e.updateLine({ lineId: "L1" }, { revertLastChange: true });
+    expect(r.ok).toBe(true);
+    expect(e.getLine("L1")!.compiled!.modifiers.map((m) => m.name)).toEqual(["Pepperoni"]);
+    const again = await e.updateLine({ lineId: "L1" }, { revertLastChange: true });
+    expect(!again.ok && again.code).toBe("nothing_to_revert");
   });
   it("ambiguous → candidates; unknown → no_such_line", async () => {
     const e = await two();
@@ -317,6 +338,17 @@ describe("combo pick edits", () => {
     expect(e.getLine("L1")!.status).toBe("complete");
     expect((e.getLine("L1")!.intent as ComboIntent).picks.map((p) => p.pickId)).toEqual(["P1", "P2", "P4"]);
   });
+  it("option/size changes addressed at the combo route to the one pick that takes them", async () => {
+    const { e } = engine();
+    await e.addLine({ menuItemId: "cb_double", quantity: 1, picks: [{ menuItemId: "pz_large" }, { menuItemId: "pz_large" }, { menuItemId: "dr_coke" }] });
+    const u = await e.updateLine({ lineId: "L1" }, { setOptions: ["diet"] });
+    expect(u.ok).toBe(true);
+    expect((e.getLine("L1")!.intent as ComboIntent).picks[2].options).toEqual(["diet"]);
+    // Two pizza picks: a bare size is ambiguous, never guessed.
+    const s = await e.updateLine({ lineId: "L1" }, { size: "extra large" });
+    expect(!s.ok && s.code).toBe("ambiguous_pick");
+  });
+
   it("topping change on a two-pizza combo without a pick is ambiguous_pick", async () => {
     const { e } = engine();
     await e.addLine({ menuItemId: "cb_double", quantity: 1, picks: [{ menuItemId: "pz_large" }, { menuItemId: "pz_large" }, { menuItemId: "dr_coke" }] });
