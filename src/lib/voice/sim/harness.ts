@@ -217,7 +217,12 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
         let kind: (typeof sends)[number]["kind"] = "script";
         const hit = matchAnswer(lastAgent, [scn.caller.answers, next?.ifAsked]);
         const guardTripped = !!hit && hit.key === lastAnswerKey && answerStreak >= 2;
-        if (hit && !guardTripped) {
+        // A script whose ONLY remaining line is a bare affirmation ("Yes.") is
+        // done ordering — that line IS the placement yes. Treating it as "more
+        // to add" made a scenario say "Not yet" and then "Yes." to "what else?"
+        // (gate 2026-08-15, I03: exact cart, never placed).
+        const onlyAffirmationLeft = !!next && scriptIdx === turns.length - 1 && /^(?:yes|yep|yeah|sure|ok(?:ay)?|correct|that's right|go ahead)[.! ]*$/i.test(next.say.trim());
+        if (hit && !guardTripped && !(hit.say === PLACE_IF_DONE && onlyAffirmationLeft)) {
           // A standing "yes, place it" must never pre-empt the script: a real
           // caller with more to say says "not yet". The sentinel expands by
           // whether scripted turns remain.
