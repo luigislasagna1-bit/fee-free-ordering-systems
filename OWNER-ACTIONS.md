@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-15 (later) by Claude (**A56 — Fabrizio #17: a Euro restaurant's info page was quoting delivery fees in dollars.** The "Our delivery areas" legend under the map had the "$" typed straight into the code, so it printed dollars no matter what currency the owner set. The same "$" was also baked into all 38 translated tooltip strings, and the hosted marketing website had it in three more places, including every menu price. All fixed to use the restaurant's own currency and language, pushed as `b1ae29cf`, and confirmed on his live store — his zones now read "Costo: 5,00 €, Min: 20,00 €". Reply posted, he's been asked to re-test. **Nothing needed from you.**)
+**Last updated:** 2026-08-15 (latest) by Claude (**A57 — the whole product now says we're LAUNCHED, and the iPhone app is live everywhere.** Your Fee Free Order App is approved and public on the App Store (Apple ID 6794053932 — verified against Apple's own listing API), so **A49 is closed and A17 is finished**. Flipping that one link switched on the iPhone/iPad download across the marketing site, the footer, /admin/publishing, the signup email and the "text me the app link" message — all at once, because they all read the same switch. Alongside it, every trace of "soft launch / coming soon / at launch" for the *platform* is gone: the homepage's "Something big is cooking" teaser is now a **NOW LIVE** section with the real 5-step path to your first order, and there's a new homepage section selling the order app on iPhone + iPad + Android. Also corrected a marketing claim that had gone **wrong**, not just stale: 12 comparison pages still told restaurants the Marketplace was "coming soon — pricing announced at launch", when it has been **live and free** since 14 July and your own Terms already promise a free listing. Genuinely unreleased add-ons (POS, AI Phone, Reservation Deposits, ContentPilot, Customer SMS, Marketing Studio, Branded Mobile App) still correctly say "coming soon". 38 languages at full parity, 2138 tests + build green. **Nothing needed from you.**)
+**Previous update:** 2026-08-15 (later) by Claude (**A56 — Fabrizio #17: a Euro restaurant's info page was quoting delivery fees in dollars.** The "Our delivery areas" legend under the map had the "$" typed straight into the code, so it printed dollars no matter what currency the owner set. The same "$" was also baked into all 38 translated tooltip strings, and the hosted marketing website had it in three more places, including every menu price. All fixed to use the restaurant's own currency and language, pushed as `b1ae29cf`, and confirmed on his live store — his zones now read "Costo: 5,00 €, Min: 20,00 €". Reply posted, he's been asked to re-test. **Nothing needed from you.**)
 **Previous update:** 2026-08-15 by Claude (**A55 — Nabil AI P0 rebuild.** The last failed call (red onion "not available", "One moment" ×12, combo re-added ×4) traced to facts the model was asked to remember or was handed truncated. Rebuilt: an authoritative server cart with stable line ids for EVERY item, a state block on every turn, editable combos, code-enforced "ask, don't guess", compaction for long calls, a full per-call timeline in the admin, a "turn this call into a test" button, and a 35-call torture suite that gates every Fly deploy. **Blocked on one thing only you can do: a valid Anthropic key in `.env.local` (A55 step 1).** 14 new ElevenLabs voices are in the picker.)
 **Previous update:** 2026-08-13 (latest) by Claude (**A50 — the ShipDay→Uber "out of delivery area" problem.** Found a real defect: the address we send ShipDay had no province and no country ("1095 Ezard Cres, Milton, L9T 6W9" — Milton in *which* country?). DoorDash never cared because it uses the map pin we send; Uber's docs say it **always re-geocodes the address text and discards the coordinates**, so Uber was the only one reading the one line that was wrong. Fixed, plus the unit/parking notes that were being crammed into the street line. 1602 tests + build green. **Not deployed** — A50 step 1 is a 2-minute check only you can do first, because there's a second possible cause I can't see from outside your ShipDay account.)
 **Previous update:** 2026-08-13 (later) by Claude (**Six finished pieces that had been sitting on side branches are now live** — one of them since 5 July. Nothing was lost, but nothing was live either: a duplicated menu's combo deals pointed at the original menu's items and offered the customer nothing; emails that never left the building were recording themselves as sent; saved delivery addresses couldn't gain or correct their map pin; reservation statuses and the kitchen's first-run tour were English-only for every non-English owner; and customer spend totals had no nightly safety net. Preflight green (1579 tests, full build), translations at full parity across all 38 languages. **Nothing here needs anything from you** — your list is still A49 below. One item was deliberately NOT shipped: the iOS native printer bridge, because shipping it means a new iOS build, and a new build would cost you your place in the Apple review queue while A49 is pending.)
@@ -274,9 +275,19 @@ your ear, and each has a specific cause and fix:
   again; the menu resolver now carries a numeric confidence (asks on a near-tie, never guesses) and a
   spoken-alias dictionary (GP, pep, shrooms, x-cheese, HG…); every call records which listener and voice it ran with.
 
+**Model benchmark (8 hardest scenarios, one pass each, ≈$17):** Sonnet 5 adaptive (today's prod): 8/8 exact
+carts, but 3.5 s to first audio (thinking happens before it can even say "Sure"), 24.8¢/est-min. Sonnet 5
+thinking-off: 7/8 (one real cart miss on the huge order), 28¢. **Opus 5 thinking-off: 8/8 exact, 1.3 s to
+first audio (2.7× faster), 26.4¢/est-min** — but with thinking off it spoke its reasoning aloud in 3–5 of
+128 turns ("I'll use the Large 1 Topping menu item directly"). So I built a deterministic guard: sentence-chunk
+TTS holds each sentence and DROPS one that reads as system talk before the voice ever hears it (logged as
+`narration_dropped`). The deciding run (Opus-off + guard on the leak-prone ids, ≈$5) and the release gate
+(≈$14) are **waiting on Anthropic credit — it ran dry again at 16:03 UTC mid-run.**
+
 **YOUR STEPS NOW:**
-1. ✅ Local key + credit — done (2026-08-15). ⚠️ Turn on **auto-reload** at console.anthropic.com/settings/billing
-   so a suite run can never die at $0 again (it happened twice today).
+1. 🚨 **Anthropic credit is at $0 again** — please add credit AND turn on **auto-reload** at
+   console.anthropic.com/settings/billing (three runs have now died at $0). The moment it's back I run the
+   deciding bench + the gate and deploy Fly; Vercel is already deployable independent of this.
 2. 🔷 **Call again — same script as the email**, listen for: "Sure." within ~1.5 s → "So that's a large pizza, half
    pepperoni and mushrooms, half green peppers and onions — anything else?" → no 2-cent line → no "Dishen" → your
    name only asked at the end → Jessica's voice → the total in words. Then Test 2 (two larges → "remove the
@@ -548,6 +559,22 @@ nothing, or it may mean Uber isn't offered here at all. I can't tell from outsid
 **Status:** code fixed, 1602 tests green, full build green, **not committed and not deployed** —
 I'd rather you run step 1 first, because if it fails the answer isn't in the code.
 
+### A49. ✅ DONE 2026-08-15 — 🎉 APPROVED. The Fee Free Order App is PUBLIC on the App Store.
+The 2.1(b) business-model reply worked. **Apple ID 6794053932** is live and public:
+https://apps.apple.com/us/app/fee-free-order-app/id6794053932 — verified against Apple's own
+listing API (`itunes.apple.com/lookup?id=6794053932`) rather than the storefront page, which
+rate-limits automated checks with a 429 and can look like a dead link when it isn't. The listing
+reads: name **Fee Free Order App**, seller **Fee Free Ordering Inc.** (the org, never the old
+team), price **Free**, iOS 15+, **iosUniversal** (iPhone *and* iPad).
+
+`APP_LINKS.kitchen.ios` is flipped, which completes **A17 step 12** and lights up every iOS
+surface at once — marketing badges, the footer, the /admin/publishing install hub (now with its
+own App Store QR beside the Play one), the signup welcome email, the "text/email me the app
+link" message, and the kitchen login hint (which used to hand an iPhone owner a Play link).
+☐ Optional leftover from A17: step 11 — revoke the 2 old Sandbox-only APNs keys in Apple → Keys.
+
+<details><summary>original request (kept for the record)</summary>
+
 ### A49. 🍎 Apple wants your business model in writing — reply is written, 4 checks then paste (2026-08-13)
 Apple's message on submission `5b432e16` (**Fee Free Order App**, version 1.0 (30), reviewed on an
 iPad Air 11"): *"it appears the app may access or include paid digital content or services, and we
@@ -590,6 +617,7 @@ guideline.
    **not** upload a new build and do **not** start a new submission (it loses your queue position).
 6. ☐ **Tell me what comes back.** If Apple asks a follow-up, send me the exact text — every answer has
    to stay consistent with the two before it, which is what tripped us on round 2.
+</details>
 
 ### A48. ✉️ YOUR copy of an auto-accepted order still said "accept it or it gets rejected" — FIXED (2026-08-12)
 Your ORD-002270106 ($58.34, super party size, 2:57 PM) was **auto-accepted the second it was
@@ -1291,7 +1319,10 @@ Until the phone is set, the cron still runs but just logs "no alert phone config
 9. 🎉 **SUBMITTED TO APP REVIEW 2026-07-23** — status "Waiting for Review", build 30, Apple ID 6794053932. Typical turnaround 24–48h.
 10. ⚠️ **THE RING WAS NEVER TESTED** — Luigi chose to submit without it. Build 30 is already installed on his iPhone, so the test is ~2 min and can be done DURING review: lock phone → place an order at /order/fee-free-demo-restaurant → should ring. If it fails, fix + upload a new build before/after approval (the ring is the app's headline feature; the web engine still rings when the app is OPEN, so a push failure degrades rather than breaks it).
 11. ☐ Cleanup: revoke the 2 old Sandbox-only APNs keys in Apple → Keys (the live one is `Fee Free Push Key Prod`, Sandbox & Production).
-12. ☐ When approved → tell Claude → flip `APP_LINKS.kitchen.ios` in src/lib/app-links.ts = iOS badges live on every surface.
+12. ✅ DONE 2026-08-15 — **APPROVED and public.** `APP_LINKS.kitchen.ios` flipped to
+    https://apps.apple.com/us/app/fee-free-order-app/id6794053932; iOS badges are live on every
+    surface (marketing, footer, /admin/publishing + its own App Store QR, signup email, app-link
+    email/SMS, kitchen login hint). See **A49** for the verification detail.
 
 **🔑 THREE DECISIONS (original, for the record — full detail in `IOS_APP_STORE_SUBMISSION.md` §D1–D3):**
 - **D1 — Kitchen bundle id is stuck on the OLD team.** `com.feefreeordering.kitchen` lives under the old team (`NT5ZY28ATK`) and is TestFlight-only. Apple's "Transfer App" needs a *publicly released* app, so **a TestFlight-only app generally can't be transferred** — the old "submit now, transfer later" plan is NOT reliable for Kitchen. Pick: **(D1-a, recommended)** remove it from the old team + re-register the same bundle id fresh under the org (lose build-24 TestFlight history, re-upload one build); or **(D1-b)** submit from the old team now (Seller shows "Luigi's Lasagna & Pizzeria Inc." — the name you didn't want public). **Driver app has no iOS App ID yet → register `com.feefreeordering.driver` CLEAN under the org, no transfer ever.**
