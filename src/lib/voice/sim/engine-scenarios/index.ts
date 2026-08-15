@@ -178,6 +178,43 @@ export const ENGINE_SCENARIOS: EngineScenario[] = [
     [pizza(L.large1, 1, ["pepperoni"])],
   ),
   scn(
+    "E11_bench_t25_explicit_id_with_shared_words",
+    "bench T25 (2026-08-15): an explicit lineId whose hint words also fit another line, and 'that combo pizza' after a yes, must NOT be refused as ambiguous",
+    ["reference", "combo", "regression"],
+    [
+      add({ menuItemId: L.large2, toppings: [t("pepperoni", "left"), t("mushrooms", "left"), t("green peppers", "right"), t("bacon", "whole")] }, "two large pizzas first one half pepperoni and mushrooms half green peppers bacon on the whole thing"),
+      add({ menuItemId: L.medium1, toppings: [] }, "second pizza just cheese medium"),
+      add(
+        {
+          menuItemId: L.largeWings,
+          picks: [
+            { slotLabel: "Pizza", menuItemId: L.large3, toppings: [t("pepperoni", "left"), t("pineapple", "left"), t("ground beef", "right"), t("chicken", "right")] },
+            { slotLabel: "Chicken Wings", menuItemId: L.wings, size: "20", options: ["Hot Mixed"] },
+          ],
+        },
+        "then the large and wings combo pizza half hawaiian style pepperoni and pineapple half meat lovers wings hot mixed",
+      ),
+      upd({ lineId: "L1", hint: "go back to the first pizza and remove mushrooms but only from that half, and add onions to the other half", removeToppings: [{ name: "mushrooms", placement: "left" }], addToppings: [t("onions", "right")] }, "go back to the first pizza and remove mushrooms but only from that half and add onions to the other half"),
+      // The words fit L3 (pepperoni, halves) AND L1 — an explicit id wins.
+      upd({ lineId: "L3", hint: "pepperoni on both halves the meat lovers half gets everything meat lovers has", picks: [{ pickId: "P1", toppings: [t("pepperoni", "whole"), t("pineapple", "left"), t("ground beef", "right"), t("chicken", "right")] }] }, "yes pepperoni on both halves the meat lovers half gets everything meat lovers has"),
+      // Pure deixis + explicit id after a confirmation: the focus line (L1) is NOT a veto.
+      upd({ lineId: "L3", hint: "that combo pizza, the Large and Wings Combo one", picks: [{ pickId: "P1", excludeToppings: [], removeToppings: [{ name: "pineapple", placement: "left" }] }] }, "yes that's right"),
+    ],
+    [
+      pizza(L.large2, 1, ["bacon"], ["pepperoni"], ["green peppers", "onions"]),
+      pizza(L.medium1, 1, []),
+      {
+        item: L.largeWings,
+        qty: 1,
+        options: [],
+        picks: [
+          { slot: "pizza", item: L.large3, options: [], halves: { left: [], right: ["ground beef", "chicken"], whole: ["pepperoni"] } },
+          { slot: "chicken wings", item: L.wings, size: "20", options: ["hot mixed"] },
+        ],
+      },
+    ],
+  ),
+  scn(
     "E10_gp_hg_aliases",
     "GP / HG / pep / shrooms / x-cheese resolve to the menu's words",
     ["alias", "resolver"],

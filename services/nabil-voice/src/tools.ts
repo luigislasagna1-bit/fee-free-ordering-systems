@@ -423,7 +423,7 @@ function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "chang
       (r.betterDeal
         ? `TELL THEM ABOUT THE DEAL: today's "${r.betterDeal.name}" is the same thing for ${r.betterDeal.saving} less. Offer it in one friendly sentence; if yes, call update_line with lineId ${r.lineId} and replaceWithItemId "${r.betterDeal.menuItemId}"; if no, move on. `
         : "") +
-      (r.switchedTo ? `That size is a different item on this menu, so it was built as "${r.switchedTo.to}" instead of "${r.switchedTo.from}"${r.switchedTo.saving > 0 ? `, which also comes to ${r.switchedTo.saving} less — say so as good news. ` : ". Mention the item you built; don't present it as a problem. "}` : "") +
+      (r.switchedTo ? `That size is a different item on this menu, so it was built as "${r.switchedTo.to}" instead of "${r.switchedTo.from}"${r.switchedTo.saving > 0 ? `, which also comes to ${spokenMoney(Number(r.switchedTo.saving) || 0)} less — say so as good news, in plain words (never the menu code name). ` : ". Say it in plain words — the size, not the menu code name — and don't present it as a problem. "}` : "") +
       (needs
         ? `The line is on the order but NOT finished. Ask the caller: ${line.questions?.[0] ?? "the missing detail"} — one question — then call update_line with lineId ${r.lineId}. `
         : `Say speakExactly ONCE, naturally, in one sentence — keep every item, size, topping and half exactly as written (connective words only, never regroup halves), then ` +

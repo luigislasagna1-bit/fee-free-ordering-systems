@@ -679,15 +679,32 @@ export class CartEngine {
       if (!line) return { error: "no_such_line", candidates: cands() };
       if (!hint) return { line };
       // Cross-check the caller's words against the model's pick. The words
-      // VETO the id only when they clearly point elsewhere: a different single
-      // line, or pure deixis among lines that arrived together. Words that are
-      // ambiguous but include the model's pick are consistent with it — the
-      // model resolved them from context we don't have.
+      // VETO the id only when they clearly point elsewhere: content words that
+      // fit a different single line and NOT the pick, an ordinal that lands on
+      // another line, or pure deixis among lines that arrived together (T15).
+      // Words that are consistent with the pick — even if they would ALSO fit
+      // another line — never veto: the model resolved them from context we
+      // don't have (bench T25, 2026-08-15: "pepperoni on both halves — the
+      // meat lovers half…" with lineId L3 was refused as ambiguous with L1
+      // because L1 also carries pepperoni; and "that combo pizza" after the
+      // caller's "yes, that's right" was refused because deixis pointed at the
+      // focus line — the caller was transferred over it).
       const byHint = this.resolveTarget({ hint }, scope);
-      if ("line" in byHint) return byHint.line === line ? { line } : { error: "ambiguous_line", candidates: cands([line, byHint.line]) };
-      if (byHint.error === "ambiguous_line" && !byHint.candidates.some((c) => c.lineId === line.lineId)) return byHint;
-      if (byHint.error === "ambiguous_line" && this.isPureDeixis(hint)) return byHint;
-      // The words matched nothing (a description the aliases don't carry) — trust the id.
+      if (this.isPureDeixis(hint)) {
+        // "that one" + an id: only sibling ambiguity (lines that arrived in
+        // the same breath) is a question; a lone focus line is not a veto.
+        if ("error" in byHint && byHint.error === "ambiguous_line") return byHint;
+        return { line };
+      }
+      const contentWords = hint.split(" ").filter((w) => w && !HINT_STOP.has(w) && !DEICTIC.has(w) && !ORDINALS[w] && w !== "last" && w !== "latest" && w !== "previous");
+      const aliasSet = new Set(line.aliases.map(stem));
+      const fits =
+        contentWords.some((w) => aliasSet.has(stem(w))) ||
+        (line.aliasPhrases ?? []).some((p) => stem(p) === stem(contentWords.join(" ")));
+      if ("line" in byHint) return byHint.line === line || (fits && contentWords.length > 0) ? { line } : { error: "ambiguous_line", candidates: cands([line, byHint.line]) };
+      if (byHint.error === "ambiguous_line" && !fits && !byHint.candidates.some((c) => c.lineId === line.lineId)) return byHint;
+      // The words matched nothing (a description the aliases don't carry), or
+      // matched the pick among others — trust the id.
       return { line };
     }
     if (!hint) {
