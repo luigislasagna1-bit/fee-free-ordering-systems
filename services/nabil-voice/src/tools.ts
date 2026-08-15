@@ -91,8 +91,22 @@ const PIZZA_FIELDS = {
   crust: { type: "string", description: "Only if the caller named one." },
   sauce: { type: "string", description: "Only if the caller named one." },
   cheese: { type: "string", description: "Only if the caller named one." },
-  toppings: { type: "array", items: TOPPING_SCHEMA, description: "Toppings the caller wants ON it. 'no onions' is NOT a topping — use excludeToppings." },
-  excludeToppings: { type: "array", items: { type: "string" }, description: "Standard toppings to LEAVE OFF a named pizza ('no green peppers on the Hawaiian')." },
+  toppings: { type: "array", items: TOPPING_SCHEMA, description: "Toppings the caller wants ON it. 'no onions' is NOT a topping — use excludeToppings. Do NOT list a named pizza's own toppings here — use halfRecipes." },
+  halfRecipes: {
+    type: "array",
+    items: {
+      type: "object",
+      additionalProperties: false,
+      properties: {
+        placement: { type: "string", enum: ["left", "right", "whole"], description: "Which side is built to that recipe ('whole' = the whole pizza, e.g. a Build Your Own made 'Hawaiian style')." },
+        menuItemId: { type: "string", description: "The NAMED pizza's menuItemId from the menu / find_menu_item (e.g. Philly Steak Pizza)." },
+      },
+      required: ["placement", "menuItemId"],
+    },
+    description:
+      "'Half Philly Steak, half Deluxe' / 'half Hawaiian': a side built to a NAMED pizza's recipe. Send the recipe pizza's id and side — the system adds its toppings, puts anything both sides share on the whole pizza, carries its base sauce as a kitchen note, and reads it back by name. No get_item_options needed. Any EXTRA toppings the caller adds on that side go in `toppings` with the same placement.",
+  },
+  excludeToppings: { type: "array", items: { type: "string" }, description: "Standard toppings to LEAVE OFF a named pizza or a recipe half ('no pineapple on the Hawaiian half')." },
   notes: { type: "string", description: "Kitchen note for this item (well done, cut in squares…)." },
 };
 const PICK_ADD_SCHEMA = {

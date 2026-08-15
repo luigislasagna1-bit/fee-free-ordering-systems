@@ -215,6 +215,49 @@ export const ENGINE_SCENARIOS: EngineScenario[] = [
     ],
   ),
   scn(
+    "E12_luigis_half_philly_half_deluxe_combo",
+    "Luigi's 21:20 call: Large/Wings combo, pizza half Philly Steak half Deluxe (recipes, overlap → whole, ranch note), wings BBQ, garlic dip, thin crust",
+    ["combo", "half_recipe", "regression"],
+    [
+      add(
+        {
+          menuItemId: L.largeWings,
+          picks: [
+            { slotLabel: "Pizza", menuItemId: L.large3, halfRecipes: [{ placement: "left", menuItemId: "cmpuex44806lq04kvesomkta7" }, { placement: "right", menuItemId: "cmpuex52708kk04kv4l0xflwf" }] },
+            { slotLabel: "Chicken Wings", menuItemId: L.wings, size: "20", options: ["BBQ Mixed"] },
+          ],
+        },
+        "can I get a pizza and wing combo half philly steak half deluxe barbecue for the wings",
+        { speaks: "half Philly Steak Pizza, half Deluxe Pizza", mustNotSpeak: "both halves|double|extra" },
+      ),
+      add({ menuItemId: L.dip, options: ["garlic"] }, "one garlic sauce", { speaks: "Dipping Sauce, garlic" }),
+      upd({ lineId: "L1", hint: "the pizza", picks: [{ pickId: "P1", crust: "thin" }] }, "and can you make the pizza thin crust", { speaks: "thin crust" }),
+    ],
+    [
+      {
+        item: L.largeWings,
+        qty: 1,
+        options: [],
+        picks: [
+          { slot: "pizza", item: L.large3, options: [], halves: { left: ["steak", "red onion"], right: ["pepperoni"], whole: ["mushrooms", "green peppers"] } },
+          { slot: "chicken wings", item: L.wings, size: "20", options: ["bbq mixed"] },
+        ],
+      },
+      simple(L.dip, 1, ["garlic"]),
+    ],
+  ),
+  scn(
+    "E13_xl_pizza_named_before_toppings",
+    "the 21:15 tester: 'one extra large pizza' goes on the order at once; toppings arrive later as updates, half by half",
+    ["needs_info", "half_half", "regression"],
+    [
+      add({ menuItemId: L.xl1 }, "one extra large pizza", { mustNotSpeak: "not finished|still need" }),
+      upd({ lineId: "L1", hint: "it", addToppings: [t("pepperoni", "left")] }, "half pepperoni"),
+      upd({ lineId: "L1", hint: "other half", addToppings: [t("chicken", "right"), t("ground beef", "right"), t("red onion", "right"), t("black olives", "right")] }, "other half chicken ground beef red onion black olives"),
+    ],
+    [pizza(L.xl1, 1, [], ["pepperoni"], ["chicken", "ground beef", "red onion", "black olives"])],
+  ),
+  scn(
     "E10_gp_hg_aliases",
     "GP / HG / pep / shrooms / x-cheese resolve to the menu's words",
     ["alias", "resolver"],

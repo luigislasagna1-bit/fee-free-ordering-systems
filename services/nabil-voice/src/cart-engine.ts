@@ -60,8 +60,13 @@ export type PizzaIntent = {
   cheese?: string | null;
   toppings: ToppingReq[];
   excludeToppings?: string[];
+  /** "Half Philly Steak, half Deluxe": a side built to a NAMED pizza's recipe
+   *  (compiler expands presets, merges overlaps, carries the base sauce). */
+  halfRecipes?: HalfRecipe[];
   notes?: string | null;
 };
+
+export type HalfRecipe = { placement: Placement; menuItemId: string };
 
 export type Pick = {
   /** Engine-assigned, per line, monotonic — "P1", "P2", …; how a pick is addressed later. */
@@ -72,6 +77,7 @@ export type Pick = {
   options?: string[];
   toppings?: ToppingReq[];
   excludeToppings?: string[];
+  halfRecipes?: HalfRecipe[];
   crust?: string | null;
   sauce?: string | null;
   cheese?: string | null;
@@ -106,6 +112,8 @@ export type LineChanges = {
   removeToppings?: Array<{ name: string; placement?: Placement | null }>;
   moveTopping?: { name: string; to: Placement };
   excludeToppings?: string[];
+  /** Replace the named-pizza recipes on the halves ("make the other half Hawaiian"). */
+  halfRecipes?: HalfRecipe[];
   // combos
   picks?: PickChange[];
   /** Put the line back the way it was BEFORE the last update ("no wait, that
@@ -127,6 +135,7 @@ export type PickChange = {
   removeToppings?: Array<{ name: string; placement?: Placement | null }>;
   moveTopping?: { name: string; to: Placement };
   excludeToppings?: string[];
+  halfRecipes?: HalfRecipe[];
   crust?: string | null;
   sauce?: string | null;
   cheese?: string | null;
@@ -182,6 +191,8 @@ export type CompileResponse =
       notices?: string[];
       toppings?: Array<{ spoken: string; resolved: string; placement: Placement; count: number }>;
       pickSlots?: Array<{ index: number; slotId: string; slotLabel: string }>;
+      /** Names of the named pizzas used by halfRecipes (aliases: "the Philly one"). */
+      recipeNames?: string[];
       betterDeal?: { name: string; menuItemId: string; saving: number } | null;
       switchedTo?: { from: string; to: string; menuItemId?: string; saving: number } | null;
     }
@@ -360,6 +371,18 @@ const cleanTopping = (t: any): ToppingReq | null => {
 };
 const cleanStrings = (xs: unknown): string[] =>
   Array.isArray(xs) ? xs.map((s) => (typeof s === "string" ? s.trim() : "")).filter(Boolean) : [];
+
+/** halfRecipes as sent by the model → validated shape (ids are checked against the menu by the caller). */
+const cleanHalfRecipes = (xs: unknown): HalfRecipe[] =>
+  Array.isArray(xs)
+    ? xs
+        .map((r: any) => ({
+          placement: (r?.placement === "left" || r?.placement === "right" ? r.placement : "whole") as Placement,
+          menuItemId: String(r?.menuItemId ?? "").trim(),
+        }))
+        .filter((r) => r.menuItemId)
+        .slice(0, 3)
+    : [];
 
 /* ─────────────────────────────── the engine ────────────────────────────── */
 
@@ -816,11 +839,16 @@ export class CartEngine {
     } else {
       intent = this.freshIntent(kind, menuItemId, input);
     }
-    // Every id inside a combo must be on this menu too.
+    // Every id inside a combo must be on this menu too — and every named-pizza
+    // recipe referenced by a half.
     if (kind === "combo") {
       for (const p of (intent as ComboIntent).picks) {
         if (!menu.has(p.menuItemId)) return this.fail("unknown_item", `"${p.menuItemId}" isn't on this menu — use the ids from get_item_options.`);
+        for (const hr of p.halfRecipes ?? []) if (!menu.has(hr.menuItemId)) return this.fail("unknown_item", `Recipe pizza "${hr.menuItemId}" isn't on this menu — use find_menu_item.`);
       }
+    }
+    if (kind === "pizza") {
+      for (const hr of (intent as PizzaIntent).halfRecipes ?? []) if (!menu.has(hr.menuItemId)) return this.fail("unknown_item", `Recipe pizza "${hr.menuItemId}" isn't on this menu — use find_menu_item.`);
     }
 
     // Duplicate-add guard.
@@ -1099,6 +1127,7 @@ export class CartEngine {
         cheese: cleanNote((input as any).cheese),
         toppings: dedupeToppings([...toppings, ...extra]),
         excludeToppings: cleanStrings((input as any).excludeToppings),
+        ...(cleanHalfRecipes((input as any).halfRecipes).length ? { halfRecipes: cleanHalfRecipes((input as any).halfRecipes) } : {}),
         notes,
       };
     }
@@ -1123,6 +1152,8 @@ export class CartEngine {
     if (toppings.length) p.toppings = dedupeToppings(toppings);
     const ex = cleanStrings(raw.excludeToppings);
     if (ex.length) p.excludeToppings = ex;
+    const hr = cleanHalfRecipes(raw.halfRecipes);
+    if (hr.length) p.halfRecipes = hr;
     for (const k of ["crust", "sauce", "cheese", "notes"] as const) {
       const v = cleanNote(raw[k]);
       if (v) p[k] = v;
@@ -1168,6 +1199,11 @@ export class CartEngine {
     }
     if (kind === "pizza") {
       for (const k of ["crust", "sauce", "cheese"] as const) if (ch[k] !== undefined) out[k] = cleanNote(ch[k]);
+      if (ch.halfRecipes !== undefined) {
+        const hr = cleanHalfRecipes(ch.halfRecipes);
+        if (hr.length) out.halfRecipes = hr;
+        else delete out.halfRecipes;
+      }
       applyToppingChanges(out, ch, line?.halves ?? null, this.presetNamesOf(line));
       return out;
     }
@@ -1301,6 +1337,11 @@ export class CartEngine {
       for (const k of ["crust", "sauce", "cheese"] as const) if (pc[k] !== undefined) targetPick[k] = cleanNote(pc[k]) ?? undefined;
       if (Array.isArray(pc.options)) targetPick.options = cleanStrings(pc.options);
       if (pc.slotLabel && !targetPick.slotLabel) targetPick.slotLabel = pc.slotLabel;
+      if (pc.halfRecipes !== undefined) {
+        const hr = cleanHalfRecipes(pc.halfRecipes);
+        if (hr.length) targetPick.halfRecipes = hr;
+        else delete targetPick.halfRecipes;
+      }
       if (pc.toppings || pc.addToppings || pc.removeToppings || pc.moveTopping || pc.excludeToppings) {
         applyToppingChanges(targetPick, pc, null, []);
       }
@@ -1546,6 +1587,7 @@ function buildAliases(kind: MenuKind, intent: LineIntent, itemName: string, res:
   add(itemName);
   words.add(kind);
   if (kind === "pizza") words.add("pizza");
+  for (const rn of res.recipeNames ?? []) add(rn);
   if (kind === "combo") {
     words.add("combo");
     words.add("deal");
@@ -1586,6 +1628,7 @@ function buildAliasPhrases(kind: MenuKind, intent: LineIntent, itemName: string,
     if (n) out.add(n);
   };
   add(itemName);
+  for (const rn of res.recipeNames ?? []) add(rn);
   const anyIntent = intent as any;
   if (kind === "pizza") {
     for (const t of (intent as PizzaIntent).toppings) add(t.name);

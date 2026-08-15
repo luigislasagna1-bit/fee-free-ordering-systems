@@ -702,7 +702,10 @@ describe("half-and-half placement is the order, not a default", () => {
     expect(r.unresolved.join(" ")).toMatch(/which half/i);
   });
 
-  it("refuses the same topping on two halves — that is a move, charged twice", () => {
+  it("the same topping on BOTH halves is one whole-pizza topping — never a question, never billed twice", () => {
+    // 2026-08-15: "pepperoni on both halves" used to come back as a clash
+    // question ("moved, or on both halves — which costs double?"); the caller
+    // had said exactly that. On a half-and-half, both halves = the whole pizza.
     const r = compilePizzaLine(
       {
         menuItemId: "mi_pizza",
@@ -710,12 +713,14 @@ describe("half-and-half placement is the order, not a default", () => {
         toppings: [
           { name: "pepperoni", placement: "left" },
           { name: "pepperoni", placement: "right" },
+          { name: "mushrooms", placement: "right" },
         ],
       },
       PIZZA(),
     );
-    expect(r.line).toBeNull();
-    expect(r.unresolved.join(" ")).toMatch(/MOVED|both halves/i);
+    expect(r.unresolved).toEqual([]);
+    expect(r.halves).toEqual({ left: [], right: ["Mushrooms"], whole: ["Pepperoni"] });
+    expect(r.line!.modifiers.filter((m) => /Pepperoni/.test(m.name))).toHaveLength(1);
   });
 
   it("reads the halves back grouped BY SIDE, from the compiled line", () => {

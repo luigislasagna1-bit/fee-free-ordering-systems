@@ -112,10 +112,28 @@ export async function buildLineCore(
   const askGroupIds = Array.isArray(input.askGroupIds)
     ? input.askGroupIds.filter((x): x is string => typeof x === "string")
     : [];
-  const opts = { askGroupIds, currency: input.currency };
 
   const item = await loaders.item(itemId);
   if (!item) return { status: 404, body: { error: "Item not found", code: "item_not_found" } };
+
+  // "Half Philly Steak, half Deluxe": the recipe pizzas named by halfRecipes
+  // (on the pizza itself, or on any combo pick) are loaded here so the
+  // compiler can expand their presets and carry their base sauce.
+  const recipeIds = new Set<string>();
+  const collect = (o: unknown) => {
+    for (const hr of Array.isArray((o as { halfRecipes?: unknown })?.halfRecipes) ? ((o as { halfRecipes: unknown[] }).halfRecipes as unknown[]) : []) {
+      const id = String((hr as { menuItemId?: unknown })?.menuItemId ?? "").trim();
+      if (id) recipeIds.add(id);
+    }
+  };
+  collect(intent);
+  for (const pick of Array.isArray(intent.picks) ? (intent.picks as unknown[]) : []) collect(pick);
+  const recipes: Record<string, ItemData> = {};
+  for (const id of recipeIds) {
+    const r = await loaders.item(id);
+    if (r) recipes[id] = r;
+  }
+  const opts = { askGroupIds, currency: input.currency, ...(recipeIds.size ? { recipes } : {}) };
 
   // ── combo ──────────────────────────────────────────────────────────────
   if (input.kind === "combo") {

@@ -137,6 +137,9 @@ export type SpokenPizzaInput = {
   options?: string[];
   /** Presets the caller removed ("Ham"). */
   removed?: string[];
+  /** Named-pizza recipes per side ("half Philly Steak, half Deluxe"); the
+   *  recipe's own toppings are NOT in `halves` — only extras are. */
+  recipes?: { left?: string; right?: string; whole?: string };
   /** Combo child: no leading "a"/"two". */
   omitQuantity?: boolean;
 };
@@ -149,18 +152,27 @@ export function spokenPizza(p: SpokenPizzaInput): string {
     : `${size ? `${size} ` : ""}${speakName(p.itemName)}`;
   const parts: string[] = [];
   const each = p.quantity > 1 && !p.omitQuantity ? "each " : "";
-  if (p.halves && (p.halves.left.length || p.halves.right.length)) {
-    const left = collapseCounts(p.halves.left);
-    const right = collapseCounts(p.halves.right);
-    const whole = collapseCounts(p.halves.whole);
-    const sides: string[] = [];
-    if (left.length) sides.push(`half ${joinAnd(left)}`);
-    if (right.length) sides.push(`half ${joinAnd(right)}`);
+  const rec = p.recipes ?? {};
+  const split = (p.halves && (p.halves.left.length || p.halves.right.length)) || rec.left || rec.right;
+  if (split) {
+    const left = collapseCounts(p.halves?.left ?? []);
+    const right = collapseCounts(p.halves?.right ?? []);
+    const whole = collapseCounts(p.halves?.whole ?? []);
+    const sideText = (recipe: string | undefined, extras: string[]) => {
+      // "half Philly Steak" / "half Philly Steak plus jalapeno" / "half pepperoni and mushrooms"
+      if (recipe && extras.length) return `half ${speakName(recipe)} plus ${joinAnd(extras)}`;
+      if (recipe) return `half ${speakName(recipe)}`;
+      return extras.length ? `half ${joinAnd(extras)}` : "";
+    };
+    const sides = [sideText(rec.left, left), sideText(rec.right, right)].filter(Boolean);
     parts.push(`${each}${sides.join(", ")}`);
     if (whole.length) parts.push(`${joinAnd(whole)} on the whole thing`);
   } else {
     const t = collapseCounts(p.toppings ?? []);
-    if (t.length) parts.push(`${each}with ${joinAnd(t)}`);
+    const wholeRecipe = rec.whole ? `${speakName(rec.whole)} style` : "";
+    if (wholeRecipe && t.length) parts.push(`${each}${wholeRecipe} with ${joinAnd(t)}`);
+    else if (wholeRecipe) parts.push(`${each}${wholeRecipe}`);
+    else if (t.length) parts.push(`${each}with ${joinAnd(t)}`);
   }
   if (p.removed?.length) parts.push(`no ${joinAnd(p.removed.map(lowerName))}`);
   if (p.options?.length) parts.push(p.options.join(", "));

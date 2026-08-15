@@ -78,6 +78,13 @@ export type PizzaIntent = {
   cheese?: string | null;
   quantity?: number;
   notes?: string | null;
+  /** "Half Philly Steak, half Deluxe" on a build pizza — a HALF (or the whole)
+   *  built to the RECIPE of a named pizza. The compiler expands that pizza's
+   *  preset toppings onto the side, merges anything both sides share onto the
+   *  whole pizza (no "double" question), carries the recipe's base sauce as a
+   *  kitchen note when it differs from this pizza's, and reads it back by name.
+   *  Needs `opts.recipes[menuItemId]` (build-line-core loads them). */
+  halfRecipes?: Array<{ placement: Placement; menuItemId: string }>;
   /** Preset toppings the caller wants LEFT OFF ("Hawaiian, no ham"). Matched
    *  against the pizza's configured presets; a name that isn't a preset comes
    *  back as a notice, never as a refusal. */
@@ -105,6 +112,8 @@ export type CompileOpts = {
    *  `extrasCharge:false` means the extras are free. Quoting the standalone
    *  number there announces money the caller will never be charged. */
   suppressPricingNote?: boolean;
+  /** Recipe pizzas referenced by `halfRecipes` (theirs and every pick's), by menuItemId. */
+  recipes?: Record<string, ItemData>;
 };
 
 export type ComboIntent = {
@@ -122,6 +131,8 @@ export type ComboIntent = {
     size?: string | null;
     toppings?: PizzaIntent["toppings"];
     excludeToppings?: string[];
+    /** See PizzaIntent.halfRecipes. */
+    halfRecipes?: Array<{ placement: Placement; menuItemId: string }>;
     crust?: string | null;
     sauce?: string | null;
     cheese?: string | null;
@@ -223,6 +234,8 @@ export type CompileResult = {
    *  position in `intent.picks`; picks that landed nowhere are absent here and
    *  explained in `unresolved`. */
   pickSlots?: Array<{ index: number; slotId: string; slotLabel: string }>;
+  /** Pizza only: names of the recipe pizzas used by halfRecipes (aliases, state). */
+  recipeNames?: string[];
 };
 
 /* ───────────────────────────── name matching ───────────────────────────── */
@@ -707,6 +720,16 @@ const money = (n: number, currency = "usd"): string => {
 };
 
 /** Groups belonging to a pizza role, by pizzaConfig group id or pizzaRole tag. */
+/** Same spoken name (norm / stem) — for merging recipe toppings with spoken ones. */
+const sameSpokenName = (a: string, b: string): boolean => norm(a) === norm(b) || stem(a) === stem(b);
+
+/** The option a group falls to by default (isDefault, or the only choice); null when a store didn't mark one. */
+function defaultOptionName(groups: GroupData[]): string | null {
+  const pool = groups.flatMap((g) => g.options);
+  const def = pool.find((o) => o.isDefault) ?? (pool.length === 1 ? pool[0] : null);
+  return def ? def.name : null;
+}
+
 function groupsForRole(item: ItemData, role: "crust" | "sauce" | "cheese"): GroupData[] {
   const cfg = item.pizzaConfig;
   const byId = cfg
@@ -776,6 +799,62 @@ export function compilePizzaLine(
     if (conflict) unresolved.push(conflict);
   }
 
+  const tGroups = toppingGroups(item);
+  // ── half recipes: "half Philly Steak, half Deluxe" ─────────────────────
+  // Expand each named pizza's presets onto its side. Anything on BOTH sides
+  // (from either recipe, or a recipe and a spoken topping) is one whole-pizza
+  // topping — that is what "on both halves" means, never a double.
+  const requested: Array<{ name: string; placement?: Placement; count?: number; fromRecipe?: string }> = (intent.toppings ?? []).map((t) => ({ ...t }));
+  const recipeNames: string[] = [];
+  const recipeSauceNotes: string[] = [];
+  const spokenRecipeBySide: { left?: string; right?: string; whole?: string } = {};
+  const excludeSet = new Set((intent.excludeToppings ?? []).map((x) => norm(stripLeadingNegation(String(x ?? "")) || String(x ?? ""))));
+  const recipeSauceBySide: Array<{ side: Placement; recipe: string; sauce: string }> = [];
+  for (const hr of intent.halfRecipes ?? []) {
+    const recipe = opts.recipes?.[String(hr?.menuItemId ?? "")];
+    const side: Placement = hr?.placement === "left" || hr?.placement === "right" ? hr.placement : "whole";
+    if (!recipe || !recipe.pizzaConfig) {
+      unresolved.push(`I don't have the recipe for that named pizza (${hr?.menuItemId ?? "?"}) — use get_item_options on it and send its toppings, or ask the caller.`);
+      continue;
+    }
+    recipeNames.push(recipe.name);
+    spokenRecipeBySide[side] = recipe.name;
+    for (const preset of recipe.pizzaConfig.presetToppings ?? []) {
+      const pName = String(preset ?? "").trim();
+      if (!pName) continue;
+      if (excludeSet.has(norm(pName)) || excludeSet.has(stem(pName))) continue; // "no pineapple on the Hawaiian half"
+      const already = requested.find((t) => sameSpokenName(t.name, pName));
+      if (already) {
+        // On the other side (or spoken for one side while the recipe wants it here) ⇒ whole.
+        if (already.placement !== side && already.placement !== "whole") already.placement = "whole";
+        continue;
+      }
+      requested.push({ name: pName, placement: side, fromRecipe: recipe.name });
+    }
+    // The recipe's base sauce, when it is not what THIS pizza would get by
+    // default, rides as a kitchen note for that half (sauce is a whole-pizza
+    // group on the ticket; the kitchen sauces halves from the note).
+    const rSauce = defaultOptionName(groupsForRole(recipe, "sauce"));
+    const mySauce = intent.sauce ? null : defaultOptionName(groupsForRole(item, "sauce"));
+    if (rSauce && !intent.sauce && rSauce !== mySauce) recipeSauceBySide.push({ side, recipe: recipe.name, sauce: rSauce });
+  }
+  // A recipe on the WHOLE pizza with its own base sauce simply sets the sauce.
+  let recipeWholeSauce: string | null = null;
+  for (const r of recipeSauceBySide) {
+    if (r.side === "whole") recipeWholeSauce = r.sauce;
+    else recipeSauceNotes.push(`${r.sauce} on the ${r.recipe} half`);
+  }
+  // Two recipes that share a topping ⇒ whole (dedupe by name across sides).
+  for (let a = 0; a < requested.length; a++) {
+    for (let b = requested.length - 1; b > a; b--) {
+      if (sameSpokenName(requested[a].name, requested[b].name) && requested[a].placement !== requested[b].placement && requested[a].placement !== "whole" && requested[b].placement !== "whole") {
+        requested[a].placement = "whole";
+        requested.splice(b, 1);
+      }
+    }
+  }
+  const isHalfHalf = requested.some((t) => t.placement === "left" || t.placement === "right");
+
   const mods: CompiledModifier[] = [];
   const spokenParts: string[] = [];
   // Words for the SPOKEN line that are not toppings — a chosen crust ("thin
@@ -795,7 +874,7 @@ export function compilePizzaLine(
   for (const role of ["crust", "sauce", "cheese"] as const) {
     const groups = groupsForRole(item, role);
     if (!groups.length) continue;
-    const spoken = intent[role];
+    const spoken = role === "sauce" ? (intent.sauce ?? recipeWholeSauce) : intent[role];
     const mustAsk = groups.some((g) => ask.has(g.id));
 
     const poolNames = () => groups.flatMap((g) => g.options).map((o) => o.name).join(", ");
@@ -869,15 +948,15 @@ export function compilePizzaLine(
   }
 
   // ── toppings ──────────────────────────────────────────────────────────
-  const tGroups = toppingGroups(item);
-  const requested = intent.toppings ?? [];
-  const isHalfHalf = requested.some((t) => t.placement === "left" || t.placement === "right");
+
   if (isHalfHalf && cfg && cfg.allowHalfHalf === false) {
     unresolved.push(`${item.name} can't be split into halves.`);
   }
 
   const chargeLines: ToppingChargeLine[] = [];
   const toppingsOut: NonNullable<CompileResult["toppings"]> = [];
+  /** "placement|OptionName" of toppings that came from a half recipe (not spoken by name). */
+  const recipeDerived = new Set<string>();
   for (const t of requested) {
     const m = matchOption(t.name, tGroups);
     if (!m.ok) {
@@ -942,6 +1021,7 @@ export function compilePizzaLine(
       `${count > 1 ? `${count}× ` : ""}${opt.name}${placement === "left" ? " on the left half" : placement === "right" ? " on the right half" : ""}`,
     );
     toppingsOut.push({ spoken: t.name, resolved: opt.name, placement, count });
+    if (t.fromRecipe) recipeDerived.add(`${placement}|${opt.name}`);
   }
 
   // ── exclusions: "Hawaiian, no ham" ─────────────────────────────────────
@@ -1114,9 +1194,9 @@ export function compilePizzaLine(
   // A removed preset is spoken AND written on the ticket — the kitchen must
   // not build the standard pizza because the note went missing.
   const noSuffix = removedPresets.map((n) => `, no ${n}`).join("");
-  const notes = removedPresets.length
-    ? [intent.notes?.trim() || "", ...removedPresets.map((n) => `NO ${n}`)].filter(Boolean).join("; ")
-    : (intent.notes ?? null);
+  const noteParts = [intent.notes?.trim() || "", ...removedPresets.map((n) => `NO ${n}`), ...recipeSauceNotes].filter(Boolean);
+  const notes = noteParts.length ? noteParts.join("; ") : null;
+  for (const n of recipeSauceNotes) spokenOptions.push(lowerName(n));
 
   // ── what is actually on each half, read off the COMPILED line ────────────
   //
@@ -1135,15 +1215,17 @@ export function compilePizzaLine(
   // question, and a worn-down caller said "Sure. Sure."
   //
   // One clause per SIDE is shorter, and an inverted grouping is audible.
+  const sideLabel = (side: "left" | "right") => (spokenRecipeBySide[side] ? `${side} half (${spokenRecipeBySide[side]})` : `${side} half`);
   const readBack = halves
     ? `${quantity > 1 ? `${quantity}× ` : ""}${sizeLabel}${item.name} — ` +
       [
-        halves.left.length ? `left half: ${halves.left.join(", ")}` : "",
-        halves.right.length ? `right half: ${halves.right.join(", ")}` : "",
+        halves.left.length ? `${sideLabel("left")}: ${halves.left.join(", ")}` : "",
+        halves.right.length ? `${sideLabel("right")}: ${halves.right.join(", ")}` : "",
         halves.whole.length ? `all over: ${halves.whole.join(", ")}` : "",
       ]
         .filter(Boolean)
         .join("; ") +
+      (recipeSauceNotes.length ? ` (${recipeSauceNotes.join("; ")})` : "") +
       noSuffix
     : `${quantity > 1 ? `${quantity}× ` : ""}${sizeLabel}${item.name}` +
       (spokenParts.length ? ` with ${spokenParts.join(", ")}` : "") +
@@ -1152,12 +1234,24 @@ export function compilePizzaLine(
   // The SPOKEN form (spoken-line.ts): toppings by side, options after, no SKU
   // jargon, no punctuation a voice would not say.
   const toppingOptionIds = new Set(tGroups.flatMap((g) => g.options.map((o) => o.modifierOptionId)));
-  const wholeToppingNames = halves ? [] : mods.filter((m) => toppingOptionIds.has(m.modifierOptionId)).map((m) => m.name);
+  const wholeToppingNames = halves
+    ? []
+    : mods.filter((m) => toppingOptionIds.has(m.modifierOptionId) && !recipeDerived.has(`whole|${m.name}`)).map((m) => m.name);
+  // For SPEECH a recipe half is named ("half Philly Steak"), not enumerated;
+  // only toppings the caller added on top of the recipe are spoken by name.
+  const spokenHalves = halves
+    ? {
+        left: halves.left.filter((n) => !recipeDerived.has(`left|${n}`)),
+        right: halves.right.filter((n) => !recipeDerived.has(`right|${n}`)),
+        whole: halves.whole.filter((n) => !recipeDerived.has(`whole|${n}`)),
+      }
+    : null;
   const spokenArgs = {
     quantity,
     itemName: item.name,
     variantName: variant?.name ?? null,
-    halves,
+    halves: spokenHalves,
+    recipes: spokenRecipeBySide,
     toppings: wholeToppingNames,
     options: spokenOptions,
     removed: removedPresets,
@@ -1179,6 +1273,7 @@ export function compilePizzaLine(
     halves,
     pricingNote,
     surcharge,
+    ...(recipeNames.length ? { recipeNames } : {}),
     unresolved: [],
     lineSubtotal: Math.round(lineSubtotal * quantity * 100) / 100,
     ...(notices.length ? { notices } : {}),
@@ -1456,6 +1551,7 @@ export function compileComboLine(
             menuItemId: child.menuItemId,
             size: pick.size,
             toppings: pick.toppings,
+            halfRecipes: pick.halfRecipes,
             excludeToppings: pick.excludeToppings,
             crust: pick.crust,
             sauce: pick.sauce,

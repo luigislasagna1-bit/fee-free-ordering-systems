@@ -204,3 +204,55 @@ describe("spoken money (Fly service copy)", () => {
     expect(spokenOrderText(["x", "y", "z"])).toBe("So that's x, y, and z.");
   });
 });
+
+/* ───────────────────── half recipes (Luigi's 21:20 call, 2026-08-15) ─────── */
+
+describe("half of a NAMED pizza is first-class: recipe toppings, overlaps, base sauce, spoken by name", () => {
+  const philly = "cmpuex44806lq04kvesomkta7"; // presets Steak, Mushrooms, Green Peppers, Red Onion; default sauce Ranch Base
+  const deluxe = "cmpuex52708kk04kv4l0xflwf"; // presets Pepperoni, Green Peppers, Mushrooms; default Pizza Sauce Base
+  const recipes = { [philly]: item(philly), [deluxe]: item(deluxe) };
+
+  it("half Philly Steak, half Deluxe on the combo's Large 3 Topping: shared toppings go whole, ranch rides as a half note, spoken by name", () => {
+    const r = compilePizzaLine(
+      { menuItemId: L.large3, halfRecipes: [{ placement: "left", menuItemId: philly }, { placement: "right", menuItemId: deluxe }] },
+      item(L.large3),
+      { currency: "cad", recipes, suppressPricingNote: true },
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.halves).toEqual({ left: ["Steak", "Red Onion"], right: ["Pepperoni"], whole: ["Mushrooms", "Green Peppers"] });
+    // the kitchen sees the recipe names AND the sauce for that half
+    expect(r.readBack).toBe("Large 3 Topping — left half (Philly Steak Pizza): Steak, Red Onion; right half (Deluxe Pizza): Pepperoni; all over: Mushrooms, Green Peppers (Ranch Base on the Philly Steak Pizza half)");
+    expect(r.line!.notes).toBe("Ranch Base on the Philly Steak Pizza half");
+    // the caller hears the recipe names, not an enumeration, plus the sauce note
+    expect(r.spoken).toBe("a large pizza, half Philly Steak Pizza, half Deluxe Pizza, ranch base on the philly steak pizza half");
+    expect(r.recipeNames).toEqual(["Philly Steak Pizza", "Deluxe Pizza"]);
+    // whole-pizza sauce stays the pizza's own default (Pizza Sauce Base) — no per-half sauce on the ticket line itself
+    expect(r.line!.modifiers.some((m) => /Ranch/.test(m.name))).toBe(false);
+  });
+
+  it("an extra topping on a recipe half is spoken as 'plus'; 'no pineapple on the Hawaiian half' removes it from the recipe", () => {
+    const haw = L.hawaiian;
+    const r = compilePizzaLine(
+      { menuItemId: L.large2, halfRecipes: [{ placement: "left", menuItemId: haw }], toppings: [{ name: "jalapeno", placement: "left" }, { name: "bacon", placement: "right" }], excludeToppings: ["pineapple"] },
+      item(L.large2),
+      { currency: "cad", recipes: { [haw]: item(haw) } },
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.halves).toEqual({ left: ["Jalapeno", "Pepperoni"], right: ["Bacon"], whole: [] });
+    expect(r.spoken).toBe("a large pizza, half Hawaiian Pizza plus jalapeno, half bacon");
+  });
+
+  it("a WHOLE recipe on a build pizza takes the recipe's base sauce as the pizza's sauce", () => {
+    const r = compilePizzaLine({ menuItemId: L.large3, halfRecipes: [{ placement: "whole", menuItemId: philly }] }, item(L.large3), { currency: "cad", recipes });
+    expect(r.unresolved).toEqual([]);
+    expect(r.line!.modifiers.map((m) => m.name)).toContain("Ranch Base");
+    expect(r.line!.notes).toBeNull();
+    expect(r.spoken).toBe("a large pizza, Philly Steak Pizza style, ranch base");
+  });
+
+  it("a recipe id the compiler was not given is a question, never a silent plain pizza", () => {
+    const r = compilePizzaLine({ menuItemId: L.large3, halfRecipes: [{ placement: "left", menuItemId: philly }] }, item(L.large3), { currency: "cad" });
+    expect(r.line).toBeNull();
+    expect(r.unresolved[0]).toMatch(/recipe/);
+  });
+});

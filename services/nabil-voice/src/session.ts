@@ -505,7 +505,9 @@ export class CallSession {
       stopFiller();
       const armedAt = this.now();
       this.fillerTimer = setTimeout(() => {
-        if (fillerUsed || this.interrupted || this.now() < this.protectedUntil || toolName === "transfer_to_human") return;
+        // No "let me check that" while merely saving a name or "pickup" — the
+        // caller heard exactly that on 2026-08-15 and asked "what happened?".
+        if (fillerUsed || this.interrupted || this.now() < this.protectedUntil || toolName === "transfer_to_human" || toolName === "set_customer" || toolName === "set_fulfilment") return;
         const phrase = FILLER_PHRASES.filter((p) => p !== this.lastFillerPhrase)[(this.fillerCount + turn) % (FILLER_PHRASES.length - 1)] ?? FILLER_PHRASES[0];
         this.lastFillerPhrase = phrase;
         this.fillerCount++;
