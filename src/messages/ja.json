@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "同じキッチンフロー",
       "featureKitchenBody": "電話注文はオンライン注文とともに、既存の Kitchen Order App に届きます。新しいアプリも新しい研修も不要 — チームは同じ方法で注文を受け付けます。",
       "statusHeading": "現在の開発状況",
-      "statusBody1": "基盤構築に集中して取り組んでいます。音声エージェント、Twilio 統合、キッチンへの受け渡し — すべて開発中です。メインプラットフォームのローンチ後まもなく早期アクセスのレストランに展開する予定です。",
+      "statusBody1": "現在、開発の真っ最中です。音声エージェント、Twilio連携、キッチンへの受け渡しはいずれも活発に開発中で、すでに実際のパイロット回線で稼働しています。日々の営業で実証できしだい、レストランの皆さまに開放します。",
       "statusBody2": "準備ができたら、他のアドオンと同様に請求ページから購読できるようになります。それまでこのページは予告のためのものです。",
       "addonCatalogLink": "アドオンカタログ全体を見る",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "アップグレードして解除 →",
       "brandedAppTitle": "ブランドモバイルアプリ",
       "brandedAppDescription": "自社ブランドで iOS・Android アプリストアにアプリを申請。",
-      "getAppTitle": "Kitchen Order App を入手",
-      "getAppBody": "Google Play で無料。新しい注文は画面がオフでも即座に着信音でお知らせし、レシートは WiFi 経由で印刷されます。",
-      "getAppScanHint": "キッチンのタブレットまたはスマートフォンでスキャンすると Google Play が開きます",
-      "getAppIosSoon": "iPhone/iPad 版は App Store に近日登場予定です。それまでの間、iPad ではブラウザでキッチン画面をご利用いただけます。",
+      "getAppTitle": "Fee Free Order Appをインストール",
+      "getAppBody": "お店のスマホやタブレットで注文を受信・受注・印刷・管理。iPhone・iPad・Androidで無料。新規注文は画面が消えていても即座に鳴ります。",
+      "getAppScanHint": "注文を受けるスマホまたはタブレットで読み取ってください",
+      "goLiveTitle": "注文を受け付ける準備が整いました",
+      "goLiveBody": "注文を受ける端末で一度これを確認しておけば、最初の本番注文で慌てずに済みます。",
+      "goLiveStepInstall": "その端末にFee Free Order Appをインストールする",
+      "goLiveStepSignIn": "店舗アカウントでアプリにサインインする",
+      "goLiveStepNotifications": "通知の受信先を確認し、アラートが届くようにする",
+      "goLiveStepPrinting": "キッチン伝票を印刷する場合はレシート印刷を設定する",
+      "goLiveStepTestOrder": "自店のページでテスト注文をして受注してみる",
+      "goLiveStepShare": "注文リンクをお客様に共有する",
+      "goLiveInstallPrompt": "注文を受ける端末にアプリを入れましょう:",
       "sendLinkTitle": "スマホにリンクを送信",
       "sendLinkBody": "キッチンで使う端末にアプリをインストールしましょう。ダウンロードリンクをメールまたはSMSでお送りします。",
       "sendLinkEmailOption": "メール",
@@ -5680,8 +5688,8 @@
         "appConnected": "注文受付アプリの接続",
         "appConnectedDetail": {
           "native": "{device} · {ago} · ネイティブアプリ",
-          "browser": "{device} · {ago} · ブラウザで動作中 — 確実な着信音通知のため、無料の Android アプリをインストールしてください",
-          "install": "無料の Kitchen Order App（Google Play）をインストールすると、新しい注文が即座に着信音でお知らせされます。それまでの間もメール／SMS の通知は届きます。"
+          "browser": "{device} · {ago} · ブラウザで動作中 — 確実な着信音のため無料のFee Free Order Appをインストールしてください",
+          "install": "無料のFee Free Order AppをiPhone・iPad・Androidにインストールすると、新規注文が即座に鳴ります。それまではメール/SMSの通知が届きます。"
         },
         "notificationRecipient": "通知の受信者を1名以上"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "飲食店オーナーの皆さまへ",
           "title": "あなたのレストラン。<accent>手数料0%、利益は100%あなたのもの。</accent>",
-          "subtitle": "テイクアウト・デリバリー・店内飲食・ケータリングの注文を、手数料 0% であなた自身のブランドページで受け付けられます。ローンチと同時に登場する GrowthNet マーケティングツールと Marketplace 広告が、初めての来店客を直接注文のリピーターに育てます。",
+          "subtitle": "テイクアウト、デリバリー、店内、ケータリングの注文を自店ブランドのページで手数料0%で受け付け。GrowthNetのマーケティングツールと無料のFee Free Marketplace掲載が、初めての来訪者をリピートする直接のお客様に変えます。",
           "ctaStart": "無料で始める",
           "ctaDemo": "実際の注文ページを見る",
           "badge": "手数料0%",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "無料 · iOS + Android",
           "title": "売上につながる注文を、もう逃さない。",
-          "subtitle": "ネイティブの Kitchen Order App が、どんな iPhone、iPad、Android タブレットも、堅牢な注文ステーションに変えます — 忙しい夜でも一件の売上も取りこぼさない安全網付き。",
+          "subtitle": "ネイティブのFee Free Order Appが、どのiPhone・iPad・Androidタブレットも堅牢な注文端末に変えます。忙しい夜が売上を逃す原因にならないよう、セーフティネットも備えています。",
           "frameAlt": "Kitchen Order App — 新規注文の着信",
-          "getApp": "無料の Kitchen Order App をタブレットに入れる",
+          "getApp": "無料のFee Free Order Appをスマホやタブレットに",
           "ring": {
             "title": "画面オフでも大音量アラーム",
             "body": "注文が入った瞬間、フルスクリーンのアラームがタブレットを起こします — スリープ中でも。"
@@ -6615,7 +6623,7 @@
           "smsBody": "注文がキッチンで進むたびにお客様へSMS — 受注、調理完了、お渡し完了。",
           "contentpilotBody": "あなたのAIソーシャル担当 — Instagram、Facebook、X、TikTok への投稿を下書き・予約投稿。",
           "saveTitle": "バンドルでお得に",
-          "saveBody": "バンドルは各ツールを個別に購入するよりお得になります。価格はローンチ時に発表します。",
+          "saveBody": "バンドルは各ツールを個別に購入するより安くなります — 価格は近日公開。",
           "ownMessage": "GrowthNetと当社だけのマーケティングツールが、マーケットプレイスで初めて出会ったお客様を<em>あなた自身の、直接・ロイヤル・リピートするお客様</em>へと変えます。"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "ダウンロード:",
           "androidLine1": "入手:"
         },
-        "softlaunch": {
-          "eyebrow": "ソフトローンチ",
-          "title": "<accent>大きな</accent>何かが、調理中。",
-          "body": "厳選した飲食店オーナーの皆さまを、いち早くお迎えします。Fee Free Ordering とともに成長しましょう。",
-          "tick1": "オンライン注文の未来の一員になる",
-          "tick2": "早期アクセス特典を確保する",
-          "tick3": "プラットフォームづくりに参加する",
-          "cta": "ソフトローンチに参加する",
-          "imgAlt": "Fee Free Ordering — まもなくローンチ"
+        "live": {
+          "eyebrow": "提供中",
+          "title": "あなたのお店は<accent>今日</accent>から始められます。",
+          "body": "Fee Free Orderingは稼働中で、実際の注文を受け付けています。お客様、ブランド、売上を取り戻したい独立系レストランのために作られました。準備は半日、クレジットカードも契約も不要です。",
+          "tick1": "無料で開始 — クレジットカード不要",
+          "tick2": "メニューを数分でインポートまたは作成",
+          "tick3": "自店ブランドの注文ページを公開",
+          "tick4": "無料のFee Free Order AppをiPhone・iPad・Androidにインストール",
+          "tick5": "手数料0%で直接注文の受付を開始",
+          "cta": "今日から注文を受け付ける",
+          "imgAlt": "Fee Free Ordering — 稼働中で注文受付中"
+        },
+        "orderStation": {
+          "eyebrow": "無料 · iPhone、iPad、Android",
+          "title": "あなたの注文端末。<accent>すでにポケットの中に。</accent>",
+          "body": "Fee Free Order App（レストラン向けの当社ネイティブ注文受付アプリ）は、iPhone・iPad・Androidタブレットをそのまま注文端末に変えます。届いた瞬間に注文を受け、混雑の中でも聞き逃さず、最後まで管理し、キッチン伝票を印刷。専用ハードウェアの購入は不要です。",
+          "devices": {
+            "title": "手持ちの端末で動作",
+            "body": "余っているタブレットや古いスマホがそのまま注文端末に。レンタルも購入も不要です。"
+          },
+          "alerts": {
+            "title": "受注するまで鳴り続ける",
+            "body": "注文が届いた瞬間、大きなアラームが端末を起こします。画面が消えていても鳴ります。"
+          },
+          "manage": {
+            "title": "受注・管理・印刷",
+            "body": "注文のすべてをアプリで処理し、WiFiサーマルプリンターにキッチン伝票を印刷できます。"
+          },
+          "free": "すべてのFee Free Orderingアカウントに無料で付属"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "アプリを入手",
-            "title": "チームのための Kitchen Order App。",
-            "body": "注文の管理、レシートの印刷、ステータスの更新まで — すべてタブレット一つで。"
+            "title": "スタッフのためのFee Free Order App。",
+            "body": "iPhone・iPad・Androidタブレットから注文を受け、管理し、印刷。アカウントに無料で付属します。"
           },
           "growth": {
             "eyebrow": "成長のために",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "アドオン",
       "addOnsSubtitle": "有料機能を個別に追加できます。いつでもキャンセル可能 — 契約不要。",
-      "addOnPriceComingSoon": "ローンチ時に料金発表",
+      "addOnPriceComingSoon": "価格は近日公開",
       "compareTitle": "すべてのレストランに提供",
       "compareItems": [
         "直接注文の手数料0%",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "地元の独立系レストラン",
     "nativeAppsTitle": "iOS & Android 向けマーケットプレイスアプリ",
     "comingSoon": "近日公開",
-    "nativeAppsBody": "マーケットプレイス専用の注文アプリを現在開発中です（現在 Google Play にあるアプリはレストランのスタッフ向けです）。それまでの間は、ブラウザの<b>共有メニュー</b>から<b>「ホーム画面に追加」</b>を選択してください。マーケットプレイスが本物のアプリのようにアイコン、スプラッシュ画面、フルスクリーン表示で利用できます。アプリストアは不要です。",
+    "nativeAppsBody": "マーケットプレイス専用の注文アプリを現在開発中です（現在 App Store and Google Play にあるアプリはレストランのスタッフ向けです）。それまでの間は、ブラウザの<b>共有メニュー</b>から<b>「ホーム画面に追加」</b>を選択してください。マーケットプレイスが本物のアプリのようにアイコン、スプラッシュ画面、フルスクリーン表示で利用できます。アプリストアは不要です。",
     "ownerTitle": "レストランオーナーの方へ。掲載しませんか。",
     "ownerBody": "レストランを経営されていますか？<b>Fee Free Marketplace への掲載は無料です</b> — 月額料金も、注文ごとの手数料も、一切かかりません。テイクアウトやデリバリーを提供して近隣の新規顧客にリーチしながら、あなたのブランド、顧客、そして価格の 100% を守り続けられます。",
     "getListedFree": "無料で始める",
@@ -7030,7 +7058,7 @@
     "featured": "おすすめ",
     "allRestaurants": "すべてのレストラン",
     "emptyTitle": "まだ始まったばかりです",
-    "emptyBody": "現在、マーケットプレイスに掲載中のレストランはありません — 掲載受付はローンチと同時に始まります。レストランを運営されている方は、今すぐ無料アカウントを作成すれば、オープン初日から <b>Marketplace</b> に参加できます。",
+    "emptyBody": "ここにはまだ店舗がありません。レストランを経営されている方は、無料アカウントを作成して公開してください。テイクアウトまたはデリバリーを行うすべての店舗が<b>Marketplace</b>に無料・手数料なしで掲載されます。",
     "restaurantLogin": "レストランログイン",
     "noMatchesTitle": "一致する結果なし",
     "noMatchesBody": "別の検索キーワードを試すか、フィルターをクリアしてください。",

@@ -646,8 +646,8 @@ export const COMPETITORS: Competitor[] = [
     whyFeeFree: [
       { title: "Automated GloriaFood menu import — photos included",
         body: "Paste your GloriaFood ordering link and your entire menu is recreated automatically: categories, items, size variants and every modifier group and option (a verified production import moved 12,653 modifier options in 1.2 seconds), with food photos transferred in the background. No retyping, and you can preview your live page before creating an account." },
-      { title: "Marketplace discovery coming at launch",
-        body: "Fee Free Marketplace (feefreefood.com) is coming soon — your restaurant gets listed for new-customer discovery at launch, with pricing announced at launch. GloriaFood has no marketplace at all; restaurants only get the customers they bring themselves." },
+      { title: "Marketplace discovery, included free",
+        body: "Fee Free Marketplace (feefreefood.com) is live, and every published pickup or delivery restaurant is listed on it free of charge — no monthly fee, no per-order commission, and you can opt out any time. GloriaFood has no marketplace at all; restaurants only get the customers they bring themselves." },
       { title: "Direct charges + manual capture",
         body: "Customer payments go straight to your Stripe account. The card is only AUTHORIZED at checkout; we capture when you accept the order. Reject = void, no Stripe fee, no chargeback risk. GloriaFood requires Stripe but uses a simpler immediate-charge flow with separate refunds." },
       { title: "Reseller / partner program",
@@ -657,8 +657,8 @@ export const COMPETITORS: Competitor[] = [
     ],
     comparison: [
       { feature: "Commission on direct orders",         feefree: "0%",                              competitor: "0%" },
-      { feature: "Marketplace included",                 feefree: "Coming soon (feefreefood.com)",  competitor: "No" },
-      { feature: "Marketplace fee structure",            feefree: "Pricing announced at launch",    competitor: "N/A" },
+      { feature: "Marketplace included",                 feefree: "Yes — feefreefood.com",          competitor: "No" },
+      { feature: "Marketplace fee structure",            feefree: "$0 — free listing, 0% commission", competitor: "N/A" },
       { feature: "Card auth-then-capture",               feefree: "Yes",                            competitor: "Immediate charge + refund" },
       { feature: "Partner / reseller program",           feefree: "Up to 15% lifetime",             competitor: "No" },
       { feature: "Languages supported",                  feefree: "38 languages",         competitor: "20+ (Oracle scale)" },
@@ -668,11 +668,11 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is there a real GloriaFood alternative?",
-        a: "Yes — Fee Free Ordering. Same zero-commission ordering for independent restaurants, plus a discovery marketplace at feefreefood.com coming soon (GloriaFood has none), plus a reseller program with up to 15% lifetime commission." },
+        a: "Yes — Fee Free Ordering. Same zero-commission ordering for independent restaurants, plus a live discovery marketplace at feefreefood.com that lists you free (GloriaFood has none), plus a reseller program with up to 15% lifetime commission." },
       { q: "Why would I switch from GloriaFood to Fee Free Ordering?",
-        a: "Three reasons most owners cite: (1) the upcoming Fee Free Marketplace (coming soon) adds new-customer discovery without extra setup, (2) modern direct charges + manual capture means card authorizations void cleanly on rejected orders with no Stripe fees, (3) a smaller team that ships changes weekly and reads every support email." },
+        a: "Three reasons most owners cite: (1) the Fee Free Marketplace adds new-customer discovery free, with no extra setup, (2) modern direct charges + manual capture means card authorizations void cleanly on rejected orders with no Stripe fees, (3) a smaller team that ships changes weekly and reads every support email." },
       { q: "Does Fee Free Ordering charge commission like UberEats?",
-        a: "No. Direct orders through your own ordering page or hosted site cost $0 in platform commission — forever. An optional discovery marketplace is coming soon — pricing announced at launch." },
+        a: "No. Direct orders through your own ordering page or hosted site cost $0 in platform commission — forever. Our discovery marketplace lists you free too, with no commission on marketplace orders." },
     ],
   },
   {
@@ -699,8 +699,8 @@ export const COMPETITORS: Competitor[] = [
         body: "Fee Free Ordering's core (admin, widget, kitchen app, customer database) is free forever. ChowNow charges $149-199/mo per location just to use the platform, before add-ons." },
       { title: "Pay only for add-ons you actually use",
         body: "Online Payments, Hosted Website and Multi-Location are each optional à-la-carte add-ons — turn on only what you need (current prices are public at /pricing). ChowNow bundles features into tiers, forcing you to pay for what you don't need." },
-      { title: "Marketplace discovery coming soon",
-        body: "A discovery marketplace at feefreefood.com is coming soon. ChowNow has no marketplace; you bring 100% of your own customers." },
+      { title: "Marketplace discovery, included free",
+        body: "Our discovery marketplace at feefreefood.com is live and lists every published pickup or delivery restaurant free of charge. ChowNow has no marketplace; you bring 100% of your own customers." },
       { title: "No setup fee",
         body: "Sign up at /signup, paste your menu, you're live. ChowNow charges a one-time setup fee (often quoted at $399+) to get started." },
     ],
@@ -708,7 +708,7 @@ export const COMPETITORS: Competitor[] = [
       { feature: "Base monthly cost",                    feefree: "$0",                              competitor: "$149–199 / location" },
       { feature: "Setup fee",                            feefree: "$0",                              competitor: "Typically $399+" },
       { feature: "Commission on direct orders",          feefree: "0%",                              competitor: "0%" },
-      { feature: "Marketplace included",                 feefree: "Coming soon (feefreefood.com)",  competitor: "No" },
+      { feature: "Marketplace included",                 feefree: "Yes, free (feefreefood.com)",     competitor: "No" },
       { feature: "Hosted website",                       feefree: "Optional add-on — see /pricing", competitor: "Bundled (tier-dependent)" },
       { feature: "Multi-location",                       feefree: "Optional add-on — see /pricing", competitor: "Per-location pricing" },
       { feature: "Card payments",                        feefree: "Optional add-on — see /pricing", competitor: "Bundled with Stripe Connect" },
@@ -739,7 +739,7 @@ export const COMPETITORS: Competitor[] = [
         body: "We're not anti-UberEats — keep using them for new-customer discovery. Then put a QR card in every bag pointing customers to your Fee Free ordering page for repeat orders at zero commission. Best of both." },
     ],
     comparison: [
-      { feature: "Commission per order",                 feefree: "0% on direct orders (discovery marketplace coming soon)", competitor: "15-30%" },
+      { feature: "Commission per order",                 feefree: "0% on direct orders (free marketplace listing too)", competitor: "15-30%" },
       { feature: "Setup fee",                            feefree: "$0",                              competitor: "$350 \"activation fee\"" },
       { feature: "Monthly fee",                          feefree: "$0 (core)",                       competitor: "$0" },
       { feature: "Customer data ownership",              feefree: "Yours",                          competitor: "Uber's" },
@@ -752,7 +752,7 @@ export const COMPETITORS: Competitor[] = [
       { q: "How can a restaurant reduce UberEats commission?",
         a: "Stop paying it where you don't have to. Set up Fee Free Ordering as your direct ordering channel, drop a QR card in every UberEats bag pointing customers to your Fee Free page, and customers reorder direct at 0% commission. UberEats stays useful for new-customer discovery; Fee Free captures the lifetime value." },
       { q: "What is the best UberEats alternative for small restaurants?",
-        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and a UberEats-style discovery marketplace at feefreefood.com is coming soon — pricing announced at launch." },
+        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and a UberEats-style discovery marketplace at feefreefood.com lists you free, with no commission." },
       { q: "Can I stop using UberEats entirely?",
         a: "Most restaurants don't — UberEats is great for first-time-customer discovery. The smart play is keeping UE listed for reach and using Fee Free for repeat orders, where the margin is. After ~3 months you'll see your direct orders climb and your UberEats dependency drop naturally." },
     ],
@@ -785,7 +785,7 @@ export const COMPETITORS: Competitor[] = [
         body: "Stay on DoorDash for discovery, slip a QR card in the bag pointing to your Fee Free page, capture repeat orders at zero commission. Most restaurants see direct-order share grow to 60%+ within 6 months." },
     ],
     comparison: [
-      { feature: "Commission per order",                 feefree: "0% on direct orders (discovery marketplace coming soon)", competitor: "15-30% (plan-dependent)" },
+      { feature: "Commission per order",                 feefree: "0% on direct orders (free marketplace listing too)", competitor: "15-30% (plan-dependent)" },
       { feature: "Higher placement costs",               feefree: "N/A",                            competitor: "Premier plan = 30% for more visibility" },
       { feature: "Customer data ownership",              feefree: "Yours",                          competitor: "DoorDash's" },
       { feature: "Marketing to past customers",          feefree: "Full (your DB)",                 competitor: "Blocked" },
@@ -793,7 +793,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is there a DoorDash alternative with no commission?",
-        a: "Yes — Fee Free Ordering. Direct orders cost 0% in platform commission (only standard Stripe card fees), and an optional DoorDash-style discovery channel — the Fee Free Marketplace — is coming soon, pricing announced at launch." },
+        a: "Yes — Fee Free Ordering. Direct orders cost 0% in platform commission (only standard Stripe card fees), and a DoorDash-style discovery channel — the Fee Free Marketplace — is included free, with no commission." },
       { q: "Why do restaurants hate the DoorDash commission?",
         a: "On a $30 order, DoorDash takes $9 (30%), leaves you $21. Stripe takes another $1. After food cost (~35%) and labor (~25%), you might net $2. Fee Free's direct-order route leaves you the full $30 minus roughly $1 in card fees — after the same food and labor costs you net about $11 instead of $2." },
     ],
@@ -811,18 +811,18 @@ export const COMPETITORS: Competitor[] = [
         body: "Fee Free Ordering is built in Ontario, Canada — same time zone, same banking system, instant CAD payouts via Stripe Connect. No more Skip's 20-30% commission on every order they send your way." },
       { title: "Same customers, way more margin",
         body: "The same person who orders pizza via Skip can order direct from your Fee Free page tomorrow. You keep the $9-15/order Skip would have taken." },
-      { title: "A marketplace for Skip's discovery role — coming soon",
-        body: "Our feefreefood.com marketplace is coming soon: the same 'browse local restaurants' UX customers expect, with Canadian dollars, Canadian tax and Canadian support. Pricing announced at launch." },
+      { title: "A marketplace for Skip's discovery role — free",
+        body: "Our feefreefood.com marketplace is live: the same 'browse local restaurants' UX customers expect, with Canadian dollars, Canadian tax and Canadian support — and your listing is free, with no commission." },
     ],
     comparison: [
-      { feature: "Commission per order",                 feefree: "0% on direct orders (discovery marketplace coming soon)", competitor: "20-30%" },
+      { feature: "Commission per order",                 feefree: "0% on direct orders (free marketplace listing too)", competitor: "20-30%" },
       { feature: "Payout currency",                      feefree: "CAD direct to your Stripe",      competitor: "CAD (weekly batch)" },
       { feature: "Canadian tax handling",                feefree: "Built-in (HST/GST by province)", competitor: "Yes" },
       { feature: "Customer ownership",                   feefree: "Yours",                          competitor: "Skip's" },
     ],
     faqs: [
       { q: "What's a Canadian alternative to SkipTheDishes for restaurants?",
-        a: "Fee Free Ordering — built in Ontario, supports HST/GST per province out of the box, payouts in CAD direct to your Stripe account, and 0% platform commission on direct orders. An optional Skip-style discovery marketplace at feefreefood.com is coming soon — pricing announced at launch." },
+        a: "Fee Free Ordering — built in Ontario, supports HST/GST per province out of the box, payouts in CAD direct to your Stripe account, and 0% platform commission on direct orders. A Skip-style discovery marketplace at feefreefood.com lists you free, with no commission." },
     ],
   },
   {
@@ -846,7 +846,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is there a Foodpanda alternative with lower fees?",
-        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and a discovery marketplace is coming soon — pricing announced at launch." },
+        a: "Fee Free Ordering — the core platform is free, you keep 100% of direct-order revenue, and our discovery marketplace lists you free, with no commission." },
     ],
   },
   // ─── POS-first / payment-first platforms ──────────────────────────
@@ -889,12 +889,12 @@ export const COMPETITORS: Competitor[] = [
     whyFeeFree: [
       { title: "Bring your own payment processor",
         body: "Fee Free uses Stripe Connect — you keep your existing Stripe account or open a new one in 5 minutes. Square Online forces you to use Square Payments at Square's rates." },
-      { title: "Marketplace discovery coming soon",
-        body: "Square has no marketplace — your only customers are people who already know your URL. Fee Free's discovery marketplace at feefreefood.com is coming soon." },
+      { title: "Marketplace discovery, included free",
+        body: "Square has no marketplace — your only customers are people who already know your URL. Fee Free's discovery marketplace at feefreefood.com is live and lists you free." },
     ],
     comparison: [
       { feature: "Payment processor",                    feefree: "Stripe (yours)",                 competitor: "Square Payments only" },
-      { feature: "Marketplace discovery",                feefree: "Coming soon (feefreefood.com)",  competitor: "None" },
+      { feature: "Marketplace discovery",                feefree: "Yes, free (feefreefood.com)",     competitor: "None" },
       { feature: "Monthly cost",                         feefree: "$0 core + add-ons",              competitor: "$29-79/mo" },
     ],
     faqs: [
@@ -916,14 +916,14 @@ export const COMPETITORS: Competitor[] = [
         body: "Fee Free is restaurant-first — kitchen display, receipt printing, delivery zones, opening hours, prep-time logic are all native. Wix Restaurants is a module bolted on a general website builder; everything works but the depth isn't the same." },
       { title: "Embed in your existing site",
         body: "Already have a website (Wix, WordPress, Squarespace, Shopify, plain HTML)? Drop our snippet on your existing site and a 'See MENU & Order' button appears. No need to rebuild on a different platform." },
-      { title: "0% commission — marketplace coming soon",
-        body: "Wix's marketplace doesn't exist. Fee Free Marketplace (coming soon) will get you in front of new customers without you paying Wix more." },
+      { title: "0% commission — plus a free marketplace",
+        body: "Wix has no marketplace. Fee Free Marketplace gets you in front of new customers at no extra cost — free listing, no commission." },
     ],
     comparison: [
       { feature: "Hosted website",                       feefree: "Optional add-on — see /pricing", competitor: "Required (Wix plan)" },
       { feature: "Restaurant-first features",            feefree: "Native",                         competitor: "Module on general builder" },
       { feature: "Embed on existing website",            feefree: "Yes (one-line snippet)",         competitor: "Wix-only" },
-      { feature: "Marketplace included",                 feefree: "Coming soon",                    competitor: "No" },
+      { feature: "Marketplace included",                 feefree: "Yes, free",                      competitor: "No" },
     ],
     faqs: [
       { q: "Can I use Fee Free Ordering with my Wix website?",
@@ -943,7 +943,7 @@ export const COMPETITORS: Competitor[] = [
       { title: "Reservations AND ordering in one platform",
         body: "Fee Free handles reservations, online ordering, kitchen display, customer database — one login, one bill. OpenTable is reservations-only; you'd still need a separate ordering platform." },
       { title: "No per-cover fees",
-        body: "Reservations are included with no per-cover fee, and an optional Reservation Deposits add-on is coming soon — pricing announced at launch. OpenTable's per-cover fee scales with success — the more reservations you take, the more they charge." },
+        body: "Reservations are included with no per-cover fee, and an optional Reservation Deposits add-on is coming soon — pricing to be announced. OpenTable's per-cover fee scales with success — the more reservations you take, the more they charge." },
     ],
     comparison: [
       { feature: "Per-reservation fee",                  feefree: "$0",                              competitor: "$0.25-$1.00/cover" },
@@ -953,7 +953,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is there an OpenTable alternative without per-cover fees?",
-        a: "Yes — Fee Free Ordering. Reservations are part of the platform with no per-cover fee (an optional Reservation Deposits add-on is coming soon — pricing announced at launch), and you get online ordering, kitchen display, and customer database in the same login." },
+        a: "Yes — Fee Free Ordering. Reservations are part of the platform with no per-cover fee (an optional Reservation Deposits add-on is coming soon — pricing to be announced), and you get online ordering, kitchen display, and customer database in the same login." },
     ],
   },
   {
@@ -975,7 +975,7 @@ export const COMPETITORS: Competitor[] = [
     ],
     faqs: [
       { q: "Is Resy expensive for small restaurants?",
-        a: "For most independents, yes — Resy starts at $249/mo just for reservations. Fee Free Ordering handles reservations + online ordering + kitchen display + customer database for a $0 base, with an optional Reservation Deposits add-on coming soon if you want to take deposits on bookings — pricing announced at launch." },
+        a: "For most independents, yes — Resy starts at $249/mo just for reservations. Fee Free Ordering handles reservations + online ordering + kitchen display + customer database for a $0 base, with an optional Reservation Deposits add-on coming soon if you want to take deposits on bookings — pricing to be announced." },
     ],
   },
   // ─── Niche / pizza-specific ───────────────────────────────────────

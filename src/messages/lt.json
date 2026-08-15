@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Ta pati virtuvės eiga",
       "featureKitchenBody": "Telefoniniai užsakymai patenka į jūsų esamą Kitchen Order App kartu su internetiniais užsakymais. Jokios naujos programėlės, jokio naujo mokymo — jūsų komanda priima juos tuo pačiu būdu.",
       "statusHeading": "Dabartinė situacija",
-      "statusBody1": "Mes intensyviai kuriame pagrindą. Balso agentas, Twilio integracija, virtuvės perdavimas — visa tai aktyviai kuriama. Tikimės pristatyti ankstyvosios prieigos restoranams netrukus po pagrindinės platformos paleidimo.",
+      "statusBody1": "Esame įsibėgėję su kūrimu. Balso agentas, Twilio integracija ir perdavimas virtuvei — visa tai aktyviai kuriama ir jau veikia realioje bandomojoje linijoje. Atversime restoranams, kai tai pasiteisins kasdienėje veikloje.",
       "statusBody2": "Kai bus paruošta, galėsite užsisakyti iš atsiskaitymo puslapio kaip bet kurį kitą priedą. Kol kas šis puslapis tik perspėja, kad tai artėja.",
       "addonCatalogLink": "Žiūrėti visą priedų katalogą",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Atnaujinti, kad atrakintumėte →",
       "brandedAppTitle": "Pažymėta mobilioji programa",
       "brandedAppDescription": "Pateikite savo programą į iOS ir Android parduotuves su savo prekės ženklu.",
-      "getAppTitle": "Atsisiųskite programėlę „Kitchen Order App“",
-      "getAppBody": "Nemokama Google Play parduotuvėje. Nauji užsakymai suskamba akimirksniu — net išjungus ekraną — o kvitai spausdinami per WiFi.",
-      "getAppScanHint": "Nuskenuokite virtuvės planšete arba telefonu, kad atsidarytų Google Play",
-      "getAppIosSoon": "iPhone/iPad versija netrukus pasirodys App Store — iki tol virtuvę iPad planšetėje galima naudoti naršyklėje.",
+      "getAppTitle": "Įdiekite Fee Free Order App",
+      "getAppBody": "Gaukite, priimkite, spausdinkite ir tvarkykite užsakymus iš savo restorano telefono ar planšetės. Nemokama iPhone, iPad ir Android — nauji užsakymai suskamba iškart, net ir išjungus ekraną.",
+      "getAppScanHint": "Nuskaitykite telefonu ar planšete, kuria priimsite užsakymus",
+      "goLiveTitle": "Esate pasiruošę priimti užsakymus",
+      "goLiveBody": "Pereikite tai kartą įrenginyje, kuriuo priimsite užsakymus, kad pirmasis tikras užsakymas jūsų neužkluptų.",
+      "goLiveStepInstall": "Įdiekite Fee Free Order App į tą telefoną ar planšetę",
+      "goLiveStepSignIn": "Prisijunkite programėlėje su savo restorano paskyra",
+      "goLiveStepNotifications": "Patikrinkite pranešimų gavėjus, kad įspėjimai jus pasiektų",
+      "goLiveStepPrinting": "Nustatykite kvitų spausdinimą, jei spausdinate virtuvės kvitus",
+      "goLiveStepTestOrder": "Pateikite bandomąjį užsakymą savo puslapyje ir jį priimkite",
+      "goLiveStepShare": "Pasidalykite užsakymų nuoroda su klientais",
+      "goLiveInstallPrompt": "Įdiekite programėlę į savo užsakymų įrenginį:",
       "sendLinkTitle": "Atsiųskite nuorodą į savo telefoną",
       "sendLinkBody": "Įsidiekite programėlę įrenginyje, kurį naudosite virtuvėje – atsiųsime atsisiuntimo nuorodą el. paštu arba SMS žinute.",
       "sendLinkEmailOption": "El. paštu",
@@ -5680,8 +5688,8 @@
         "appConnected": "Prijungta užsakymų priėmimo programėlė",
         "appConnectedDetail": {
           "native": "{device} · {ago} · įdiegta programėlė",
-          "browser": "{device} · {ago} · veikia naršyklėje — įdiekite nemokamą Android programėlę, kad skambėjimo įspėjimai būtų patikimi",
-          "install": "Įdiekite nemokamą „Kitchen Order App“ (Google Play), kad nauji užsakymai suskambėtų akimirksniu. Iki tol vis tiek gausite įspėjimus el. paštu / SMS."
+          "browser": "{device} · {ago} · veikia naršyklėje — įdiekite nemokamą Fee Free Order App patikimiems garsiniams įspėjimams",
+          "install": "Įdiekite nemokamą Fee Free Order App į iPhone, iPad ar Android, kad nauji užsakymai suskambėtų iškart. Iki tol vis tiek gausite el. pašto / SMS pranešimus."
         },
         "notificationRecipient": "Bent vienas pranešimų gavėjas"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Restoranų savininkams",
           "title": "Jūsų restoranas. <accent>0 % komisinių. 100 % jūsų.</accent>",
-          "subtitle": "Priimkite atsiėmimo, pristatymo, vietoje ir furšetų užsakymus savo firminiame puslapyje su 0% komisiniu — o GrowthNet rinkodaros įrankiai ir Marketplace reklama, pasirodysiantys startuojant, pirmą kartą apsilankiusius pavers nuolatiniais tiesioginiais klientais.",
+          "subtitle": "Priimkite išsinešimo, pristatymo, valgymo vietoje ir maitinimo užsakymus savo prekės ženklo puslapyje su 0 % komisiniu — su GrowthNet rinkodaros įrankiais ir nemokamu Fee Free Marketplace įrašu, kurie pirmą kartą apsilankiusius paverčia nuolatiniais tiesioginiais klientais.",
           "ctaStart": "Pradėkite nemokamai",
           "ctaDemo": "Pažiūrėkite veikiančią parduotuvę",
           "badge": "0 % komisinių",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Nemokama · iOS + Android",
           "title": "Niekada nepraleiskite apmokėto užsakymo.",
-          "subtitle": "Natyvioji Kitchen Order App paverčia bet kurį iPhone, iPad ar Android planšetę nepralaidžia užsakymų stotimi — su apsauginiu tinklu, kad įtemptas vakaras niekada nekainuotų jums pardavimo.",
+          "subtitle": "Savoji Fee Free Order App paverčia bet kurį iPhone, iPad ar Android planšetę neperšaunama užsakymų stotimi — su apsauginiu tinklu, kad įtempta vakaro pamaina niekada nekainuotų pardavimo.",
           "frameAlt": "Kitchen Order App — gaunamas užsakymas",
-          "getApp": "Gaukite nemokamą Kitchen Order App savo planšetėje",
+          "getApp": "Atsisiųskite nemokamą Fee Free Order App į telefoną ar planšetę",
           "ring": {
             "title": "Garsus skambutis net užgesusiu ekranu",
             "body": "Viso ekrano signalas pažadina planšetę vos tik gavus užsakymą — net jai miegant."
@@ -6615,7 +6623,7 @@
           "smsBody": "Rašykite klientams žinutes, kai jų užsakymas keliauja per virtuvę — patvirtinta, paruošta, įvykdyta.",
           "contentpilotBody": "Jūsų AI socialinių tinklų vadybininkas — rengia ir suplanuoja įrašus Instagram, Facebook, X ir TikTok.",
           "saveTitle": "Rinkinys ir taupymas",
-          "saveBody": "Rinkinys kainuos mažiau nei perkant kiekvieną įrankį atskirai — kainos bus paskelbtos paleidimo metu.",
+          "saveBody": "Rinkinys kainuos mažiau nei kiekvienas įrankis atskirai — kainos netrukus.",
           "ownMessage": "GrowthNet ir mūsų išskirtiniai rinkodaros įrankiai pirmą kartą prekyvietėje apsilankiusius klientus paverčia <em>tiesioginiais, lojaliais ir nuolatiniais klientais, kurie priklauso jums.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Atsisiųskite iš",
           "androidLine1": "Gaukite iš"
         },
-        "softlaunch": {
-          "eyebrow": "Tylusis startas",
-          "title": "Verda kažkas <accent>didelio</accent>.",
-          "body": "Kviečiame išskirtinę restoranų savininkų grupę prisijungti anksti ir augti kartu su Fee Free Ordering.",
-          "tick1": "Tapkite internetinio užsakymo ateities dalimi",
-          "tick2": "Užsitikrinkite ankstyvosios prieigos privalumus",
-          "tick3": "Padėkite kurti platformą",
-          "cta": "Prisijunkite prie tyliojo starto",
-          "imgAlt": "Fee Free Ordering — netrukus startuoja"
+        "live": {
+          "eyebrow": "Jau veikia",
+          "title": "Jūsų restoranas gali pradėti <accent>šiandien</accent>.",
+          "body": "Fee Free Ordering veikia ir priima tikrus užsakymus. Sukurta nepriklausomiems restoranams, norintiems susigrąžinti savo klientus, savo prekės ženklą ir savo pajamas — paruošiama per popietę, be kredito kortelės ir be sutarties.",
+          "tick1": "Pradėkite nemokamai — be kredito kortelės",
+          "tick2": "Importuokite arba sukurkite meniu per kelias minutes",
+          "tick3": "Paskelbkite savo prekės ženklo užsakymų puslapį",
+          "tick4": "Įdiekite nemokamą Fee Free Order App į iPhone, iPad ar Android",
+          "tick5": "Pradėkite priimti tiesioginius užsakymus su 0 % komisiniu",
+          "cta": "Pradėkite priimti užsakymus šiandien",
+          "imgAlt": "Fee Free Ordering — veikia ir priima užsakymus"
+        },
+        "orderStation": {
+          "eyebrow": "Nemokama · iPhone, iPad ir Android",
+          "title": "Jūsų užsakymų stotis. <accent>Jau jūsų kišenėje.</accent>",
+          "body": "Fee Free Order App — mūsų savoji restorano užsakymų priėmimo programėlė — paverčia iPhone, iPad ar Android planšetę jūsų užsakymų terminalu. Priimkite užsakymus vos jiems atkeliavus, išgirskite juos net per didžiausią šurmulį, tvarkykite iki galo ir spausdinkite virtuvės kvitus. Nereikia pirkti specialios įrangos.",
+          "devices": {
+            "title": "Veikia su turima įranga",
+            "body": "Atliekama planšetė ar senas telefonas tampa jūsų užsakymų stotimi — nieko nuomoti ar pirkti nereikia."
+          },
+          "alerts": {
+            "title": "Skamba, kol priimate",
+            "body": "Garsus signalas pažadina įrenginį vos atkeliavus užsakymui — net ir išjungus ekraną."
+          },
+          "manage": {
+            "title": "Priimkite, tvarkykite, spausdinkite",
+            "body": "Sutvarkykite visą užsakymą programėlėje ir spausdinkite virtuvės kvitus savo WiFi termospausdintuvu."
+          },
+          "free": "Nemokama su kiekviena Fee Free Ordering paskyra"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Atsisiųskite programėlę",
-            "title": "Kitchen Order App jūsų komandai.",
-            "body": "Tvarkykite užsakymus, spausdinkite čekius ir atnaujinkite būseną — viskas tiesiog iš jūsų planšetės."
+            "title": "Fee Free Order App jūsų komandai.",
+            "body": "Priimkite, tvarkykite ir spausdinkite užsakymus iš iPhone, iPad ar Android planšetės. Nemokama su jūsų paskyra."
           },
           "growth": {
             "eyebrow": "Sukurta augimui",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Papildiniai",
       "addOnsSubtitle": "Atrakinkite mokamus funkcionalumus atskirai. Galima atsisakyti bet kada — jokių sutarčių.",
-      "addOnPriceComingSoon": "Kainos bus paskelbtos paleidimo metu",
+      "addOnPriceComingSoon": "Kainos netrukus",
       "compareTitle": "Kiekvienas restoranas gauna",
       "compareItems": [
         "0 % komisinių už tiesioginius užsakymus",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "nepriklausomi vietiniai restoranai",
     "nativeAppsTitle": "Marketplace programėlė iOS ir Android įrenginiams",
     "comingSoon": "Netrukus",
-    "nativeAppsBody": "Speciali Marketplace užsakymų programėlė jau kuriama (šiuo metu Google Play esanti programėlė skirta restoranų darbuotojams). Kol kas palieskite naršyklės <b>bendrinimo meniu</b> ir pasirinkite <b>„Pridėti prie pagrindinio ekrano“</b> — gausite Marketplace kaip tikrą programėlės piktogramą su paleidimo ekranu ir viso ekrano patirtimi. Programėlių parduotuvės nereikia.",
+    "nativeAppsBody": "Speciali Marketplace užsakymų programėlė jau kuriama (šiuo metu App Store and Google Play esanti programėlė skirta restoranų darbuotojams). Kol kas palieskite naršyklės <b>bendrinimo meniu</b> ir pasirinkite <b>„Pridėti prie pagrindinio ekrano“</b> — gausite Marketplace kaip tikrą programėlės piktogramą su paleidimo ekranu ir viso ekrano patirtimi. Programėlių parduotuvės nereikia.",
     "ownerTitle": "Restorano savininkas? Prisijunkite.",
     "ownerBody": "Turite restoraną? <b>Įtraukimas į Fee Free Marketplace yra nemokamas</b> — jokio mėnesinio mokesčio, jokių komisinių už užsakymą, niekada. Siūlykite atsiėmimą arba pristatymą ir pasiekite naujų klientų netoliese, išsaugodami savo prekės ženklą, savo klientus ir 100% savo kainų.",
     "getListedFree": "Pradėkite nemokamai",
@@ -7030,7 +7058,7 @@
     "featured": "Rekomenduojami",
     "allRestaurants": "Visi restoranai",
     "emptyTitle": "Mes tik pradedame",
-    "emptyBody": "Rinkoje dar nėra restoranų — įtraukimas prasidės startuojant. Jei valdote restoraną, susikurkite nemokamą paskyrą jau dabar ir atidarymo dieną galėsite prisijungti prie <b>Marketplace</b> platformos.",
+    "emptyBody": "Čia dar nėra restoranų. Jei turite restoraną, susikurkite nemokamą paskyrą ir paskelbkite — kiekvienas restoranas su išsinešimu ar pristatymu <b>Marketplace</b> patenka nemokamai ir be komisinių.",
     "restaurantLogin": "Restorano prisijungimas",
     "noMatchesTitle": "Nieko nerasta",
     "noMatchesBody": "Pabandykite kitą paieškos frazę arba išvalykite filtrus.",

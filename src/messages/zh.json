@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "沿用现有厨房流程",
       "featureKitchenBody": "电话订单与在线订单一起进入您现有的 Kitchen Order App。无需新应用，无需新培训 — 您的团队以相同的方式接受订单。",
       "statusHeading": "目前进展",
-      "statusBody1": "我们正在全力搭建基础架构。语音智能体、Twilio 集成、厨房交接——均在积极开发中。我们预计在主平台上线后不久向早期体验餐厅推出此功能。",
+      "statusBody1": "我们正在全力开发。语音助手、Twilio 集成和厨房交接都在积极开发中，并且已经在一条真实的试点线路上运行。等它在日常营业中经受住考验，我们就会向餐厅开放。",
       "statusBody2": "准备就绪后，您可以像其他附加服务一样从账单页面订阅。在此之前，本页面仅作提前告知。",
       "addonCatalogLink": "查看完整附加服务目录",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "升级以解锁 →",
       "brandedAppTitle": "品牌移动应用",
       "brandedAppDescription": "使用您的品牌形象将专属应用提交至 iOS 和 Android 应用商店。",
-      "getAppTitle": "获取 Kitchen Order App",
-      "getAppBody": "在 Google Play 免费下载。新订单即时响铃——即使屏幕关闭也一样——小票通过 WiFi 打印。",
-      "getAppScanHint": "用厨房平板或手机扫码即可打开 Google Play",
-      "getAppIosSoon": "iPhone/iPad 版即将登陆 App Store——在此之前，iPad 可在浏览器中运行厨房端。",
+      "getAppTitle": "安装 Fee Free Order App",
+      "getAppBody": "用餐厅的手机或平板接收、接受、打印和管理订单。iPhone、iPad 和 Android 均免费 —— 新订单立即响铃，即使屏幕熄灭也一样。",
+      "getAppScanHint": "用你接单的手机或平板扫描",
+      "goLiveTitle": "你已经可以开始接单了",
+      "goLiveBody": "在你要用来接单的设备上把这些走一遍，第一笔真实订单就不会打你个措手不及。",
+      "goLiveStepInstall": "在那台手机或平板上安装 Fee Free Order App",
+      "goLiveStepSignIn": "用你的餐厅账户登录应用",
+      "goLiveStepNotifications": "检查通知接收人，确保提醒能送达你",
+      "goLiveStepPrinting": "如果你打印厨房小票，请设置小票打印",
+      "goLiveStepTestOrder": "在自己的页面下一笔测试订单并接受它",
+      "goLiveStepShare": "把你的点餐链接分享给客户",
+      "goLiveInstallPrompt": "把应用装到你的接单设备上：",
       "sendLinkTitle": "把链接发送到你的手机",
       "sendLinkBody": "在你厨房要使用的设备上装好这款应用——我们会通过邮件或短信把下载链接发给你。",
       "sendLinkEmailOption": "邮件",
@@ -5680,8 +5688,8 @@
         "appConnected": "接单应用已连接",
         "appConnectedDetail": {
           "native": "{device} · {ago} · 原生应用",
-          "browser": "{device} · {ago} · 正在浏览器中运行——安装免费 Android 应用以获得可靠的响铃提醒",
-          "install": "安装免费的 Kitchen Order App（Google Play），让新订单即时响铃。在此之前，您仍会收到邮件/SMS 提醒。"
+          "browser": "{device} · {ago} · 正在浏览器中运行 —— 请安装免费的 Fee Free Order App 以获得可靠的响铃提醒",
+          "install": "在 iPhone、iPad 或 Android 上安装免费的 Fee Free Order App，新订单就会立即响铃。在那之前你仍会收到邮件/短信提醒。"
         },
         "notificationRecipient": "至少一位通知接收人"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "专为餐厅老板打造",
           "title": "您的餐厅。<accent>0% 佣金。100% 归您所有。</accent>",
-          "subtitle": "在你自己的品牌页面上接收自取、外送、堂食和宴席订单，佣金 0% —— GrowthNet 营销工具与 Marketplace 广告将随平台上线推出，把首次到访的顾客变成长期复购的直接客户。",
+          "subtitle": "在你自己的品牌页面上接收自取、外送、堂食和宴会订单，佣金为 0% —— 配合 GrowthNet 营销工具和免费的 Fee Free Marketplace 收录，把初次到访的人变成回头的直接客户。",
           "ctaStart": "免费开始",
           "ctaDemo": "查看真实店面",
           "badge": "0% 抽成",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "免费 · iOS + Android",
           "title": "绝不漏掉任何一笔付费订单。",
-          "subtitle": "原生 Kitchen Order App 能把任意 iPhone、iPad 或 Android 平板变成一台坚不可摧的接单工作站——多重保障让生意火爆的夜晚也绝不丢单。",
+          "subtitle": "原生的 Fee Free Order App 能把任何 iPhone、iPad 或 Android 平板变成坚不可摧的接单终端 —— 还有一层安全网，让忙碌的夜晚永远不会让你丢掉一单生意。",
           "frameAlt": "Kitchen Order App——新订单进入",
-          "getApp": "在你的平板上免费获取 Kitchen Order App",
+          "getApp": "在你的手机或平板上获取免费的 Fee Free Order App",
           "ring": {
             "title": "熄屏也能高声响铃",
             "body": "订单一到，全屏闹铃立刻唤醒平板——即便它正在休眠。"
@@ -6615,7 +6623,7 @@
           "smsBody": "随着订单在厨房中流转，向顾客发送短信——已确认、已备好、已完成。",
           "contentpilotBody": "你的 AI 社媒经理——为 Instagram、Facebook、X 和 TikTok 撰写并定时发布内容。",
           "saveTitle": "打包更省",
-          "saveBody": "整套购买将比单独购买每个工具更划算——价格将在上线时公布。",
+          "saveBody": "打包价会比单独购买每个工具更便宜 —— 价格即将公布。",
           "ownMessage": "GrowthNet 和我们独家的营销工具，将首次光顾的平台顾客转化为<em>真正属于你的直接、忠诚、回头的客户。</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "下载于",
           "androidLine1": "获取于"
         },
-        "softlaunch": {
-          "eyebrow": "内测启动",
-          "title": "好戏，<accent>正在</accent>下锅。",
-          "body": "我们正在邀请一批精选的餐厅老板抢先加入，与 Fee Free Ordering 一同成长。",
-          "tick1": "成为在线点餐未来的一份子",
-          "tick2": "锁定抢先体验权益",
-          "tick3": "参与共同塑造平台",
-          "cta": "加入内测",
-          "imgAlt": "Fee Free Ordering — 即将上线"
+        "live": {
+          "eyebrow": "现已上线",
+          "title": "你的餐厅<accent>今天</accent>就能开始。",
+          "body": "Fee Free Ordering 已经上线，正在接收真实订单。它专为想拿回自己的客户、品牌和收入的独立餐厅打造 —— 一个下午就能配置好，无需信用卡，也没有合约。",
+          "tick1": "免费开始 —— 无需信用卡",
+          "tick2": "几分钟内导入或搭建你的菜单",
+          "tick3": "发布你自己品牌的点餐页面",
+          "tick4": "在 iPhone、iPad 或 Android 上安装免费的 Fee Free Order App",
+          "tick5": "以 0% 佣金开始接收直接订单",
+          "cta": "今天就开始接单",
+          "imgAlt": "Fee Free Ordering —— 已上线并正在接单"
+        },
+        "orderStation": {
+          "eyebrow": "免费 · iPhone、iPad 和 Android",
+          "title": "你的接单终端。<accent>早就在你口袋里。</accent>",
+          "body": "Fee Free Order App —— 我们为餐厅接单打造的原生应用 —— 把 iPhone、iPad 或 Android 平板直接变成你的接单终端。订单一到就能接下，忙碌时段也听得见，全程管理到底，并打印厨房小票。无需购买专用硬件。",
+          "devices": {
+            "title": "用你已有的设备就行",
+            "body": "闲置的平板或旧手机就是你的接单终端 —— 不用租，也不用买。"
+          },
+          "alerts": {
+            "title": "一直响到你接单",
+            "body": "订单进来的瞬间，响亮的提示音就会唤醒设备 —— 即使屏幕已经熄灭。"
+          },
+          "manage": {
+            "title": "接单、管理、打印",
+            "body": "在应用里处理整笔订单，并把厨房小票打印到你的 WiFi 热敏打印机。"
+          },
+          "free": "每个 Fee Free Ordering 账户均免费包含"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "下载应用",
-            "title": "为你的团队打造的 Kitchen Order App。",
-            "body": "管理订单、打印小票、更新订单状态——全部在你的平板上一手掌控。"
+            "title": "给团队用的 Fee Free Order App。",
+            "body": "在 iPhone、iPad 或 Android 平板上接单、管理并打印订单。随账户免费提供。"
           },
           "growth": {
             "eyebrow": "为增长而生",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "附加功能",
       "addOnsSubtitle": "单独解锁付费功能，随时取消，无需合同。",
-      "addOnPriceComingSoon": "定价将在发布时公布",
+      "addOnPriceComingSoon": "价格即将公布",
       "compareTitle": "每家餐厅均包含",
       "compareItems": [
         "直接订单 0% 佣金",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "本地独立餐厅",
     "nativeAppsTitle": "iOS & Android 版 Marketplace 应用",
     "comingSoon": "即将推出",
-    "nativeAppsBody": "专门的 Marketplace 点餐应用正在开发中（目前 Google Play 上的应用是供餐厅员工使用的）。在此期间，您可以点击浏览器的<b>分享菜单</b>，选择<b>“Add to Home Screen”</b>——即可将 Marketplace 添加为真正的应用图标，享受启动画面与全屏体验。无需应用商店。",
+    "nativeAppsBody": "专门的 Marketplace 点餐应用正在开发中（目前 App Store and Google Play 上的应用是供餐厅员工使用的）。在此期间，您可以点击浏览器的<b>分享菜单</b>，选择<b>“Add to Home Screen”</b>——即可将 Marketplace 添加为真正的应用图标，享受启动画面与全屏体验。无需应用商店。",
     "ownerTitle": "您是餐厅老板？立即上架。",
     "ownerBody": "拥有一家餐厅吗？<b>在 Fee Free Marketplace 上架完全免费</b>——永远没有月费，没有按单佣金。提供自取或配送服务，触达附近的新顾客，同时保留您的品牌、您的顾客以及 100% 的定价权。",
     "getListedFree": "免费开始",
@@ -7030,7 +7058,7 @@
     "featured": "精选",
     "allRestaurants": "全部餐厅",
     "emptyTitle": "我们刚刚起步",
-    "emptyBody": "平台上暂无餐厅——上线时开放入驻。如果您经营餐厅，现在就创建免费账户，开放当天即可加入 <b>Marketplace</b>。",
+    "emptyBody": "这里还没有餐厅。如果你经营餐厅，创建免费账户并发布即可 —— 每一家提供自取或外送的餐厅都会免费列入 <b>Marketplace</b>，且不收佣金。",
     "restaurantLogin": "餐厅登录",
     "noMatchesTitle": "无匹配结果",
     "noMatchesBody": "请尝试其他搜索词或清除筛选条件。",

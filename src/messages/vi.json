@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Cùng quy trình bếp",
       "featureKitchenBody": "Đơn hàng qua điện thoại đến Kitchen Order App hiện có của bạn cùng với đơn hàng trực tuyến. Không cần ứng dụng mới, không cần đào tạo mới — nhóm của bạn chấp nhận chúng theo cùng một cách.",
       "statusHeading": "Tình trạng hiện tại",
-      "statusBody1": "Chúng tôi đang tập trung xây dựng nền tảng. Tác nhân giọng nói, tích hợp Twilio, kết nối bếp — tất cả đang được phát triển tích cực. Chúng tôi dự kiến triển khai cho các nhà hàng truy cập sớm ngay sau khi nền tảng chính ra mắt.",
+      "statusBody1": "Chúng tôi đang dồn sức xây dựng. Trợ lý giọng nói, tích hợp Twilio và bàn giao xuống bếp đều đang được phát triển tích cực và đã chạy trên một đường dây thử nghiệm thật. Chúng tôi sẽ mở cho các nhà hàng khi nó được kiểm chứng trong vận hành hằng ngày.",
       "statusBody2": "Khi sẵn sàng, bạn có thể đăng ký từ trang thanh toán như bất kỳ tiện ích nào khác. Cho đến lúc đó trang này chỉ là thông báo trước rằng nó sắp đến.",
       "addonCatalogLink": "Xem toàn bộ danh mục tiện ích",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Nâng cấp để mở khóa →",
       "brandedAppTitle": "Ứng dụng di động có thương hiệu",
       "brandedAppDescription": "Gửi ứng dụng của bạn lên App Store iOS & Android với thương hiệu riêng.",
-      "getAppTitle": "Tải Kitchen Order App",
-      "getAppBody": "Miễn phí trên Google Play. Đơn hàng mới đổ chuông ngay lập tức — kể cả khi màn hình tắt — và hóa đơn in qua WiFi.",
-      "getAppScanHint": "Quét bằng máy tính bảng hoặc điện thoại của bếp để mở Google Play",
-      "getAppIosSoon": "Phiên bản iPhone/iPad sắp có mặt trên App Store — trong lúc chờ, iPad có thể chạy màn hình bếp trên trình duyệt.",
+      "getAppTitle": "Cài Fee Free Order App",
+      "getAppBody": "Nhận, duyệt, in và xử lý đơn từ điện thoại hoặc máy tính bảng của nhà hàng. Miễn phí cho iPhone, iPad và Android — đơn mới reo ngay lập tức, kể cả khi màn hình tắt.",
+      "getAppScanHint": "Quét bằng điện thoại hoặc máy tính bảng bạn dùng để nhận đơn",
+      "goLiveTitle": "Bạn đã sẵn sàng nhận đơn",
+      "goLiveBody": "Hãy làm qua một lượt trên thiết bị bạn dùng để nhận đơn, để đơn thật đầu tiên không làm bạn bối rối.",
+      "goLiveStepInstall": "Cài Fee Free Order App lên điện thoại hoặc máy tính bảng đó",
+      "goLiveStepSignIn": "Đăng nhập ứng dụng bằng tài khoản nhà hàng của bạn",
+      "goLiveStepNotifications": "Kiểm tra người nhận thông báo để cảnh báo đến được với bạn",
+      "goLiveStepPrinting": "Thiết lập in hóa đơn nếu bạn in phiếu bếp",
+      "goLiveStepTestOrder": "Đặt một đơn thử trên trang của bạn rồi duyệt nó",
+      "goLiveStepShare": "Chia sẻ liên kết đặt món với khách của bạn",
+      "goLiveInstallPrompt": "Tải ứng dụng về thiết bị nhận đơn của bạn:",
       "sendLinkTitle": "Gửi liên kết đến điện thoại của bạn",
       "sendLinkBody": "Cài ứng dụng trên thiết bị bạn sẽ dùng trong bếp — chúng tôi sẽ gửi liên kết tải về qua email hoặc tin nhắn.",
       "sendLinkEmailOption": "Email",
@@ -5680,8 +5688,8 @@
         "appConnected": "Đã kết nối ứng dụng nhận đơn",
         "appConnectedDetail": {
           "native": "{device} · {ago} · ứng dụng gốc",
-          "browser": "{device} · {ago} · đang chạy trên trình duyệt — cài ứng dụng Android miễn phí để chuông báo hoạt động ổn định",
-          "install": "Cài Kitchen Order App miễn phí (Google Play) để đơn hàng mới đổ chuông ngay lập tức. Trước đó, bạn vẫn nhận được cảnh báo qua email/SMS."
+          "browser": "{device} · {ago} · đang chạy trên trình duyệt — hãy cài Fee Free Order App miễn phí để có chuông báo đáng tin cậy",
+          "install": "Cài Fee Free Order App miễn phí trên iPhone, iPad hoặc Android để đơn mới reo ngay lập tức. Từ giờ đến lúc đó bạn vẫn nhận được cảnh báo qua email/SMS."
         },
         "notificationRecipient": "Ít nhất một người nhận thông báo"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Dành cho chủ nhà hàng",
           "title": "Nhà Hàng Của Bạn. <accent>0% Hoa Hồng. 100% Của Bạn.</accent>",
-          "subtitle": "Nhận đơn mang đi, giao hàng, dùng tại chỗ và tiệc trên trang mang thương hiệu riêng của bạn với 0% hoa hồng — cùng bộ công cụ marketing GrowthNet và quảng cáo Marketplace ra mắt ngay khi khai trương, biến khách ghé lần đầu thành khách quen đặt hàng trực tiếp.",
+          "subtitle": "Nhận đơn mang đi, giao hàng, dùng tại chỗ và tiệc trên trang thương hiệu của riêng bạn với 0% hoa hồng — cùng công cụ tiếp thị GrowthNet và một mục miễn phí trên Fee Free Marketplace, biến khách ghé lần đầu thành khách trực tiếp quay lại.",
           "ctaStart": "Bắt đầu miễn phí",
           "ctaDemo": "Xem cửa hàng trực tuyến mẫu",
           "badge": "0% hoa hồng",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Miễn phí · iOS + Android",
           "title": "Không bao giờ bỏ lỡ một đơn hàng có tiền.",
-          "subtitle": "Kitchen Order App gốc biến mọi iPhone, iPad hay máy tính bảng Android thành một trạm nhận đơn vững chắc — với lớp an toàn để một đêm bận rộn không bao giờ khiến bạn mất một đơn hàng.",
+          "subtitle": "Fee Free Order App gốc biến bất kỳ iPhone, iPad hay máy tính bảng Android nào thành trạm nhận đơn không thể phá vỡ — với lưới an toàn để một tối đông khách không bao giờ khiến bạn mất một đơn hàng.",
           "frameAlt": "Kitchen Order App — đơn hàng mới đến",
-          "getApp": "Tải Kitchen Order App miễn phí về máy tính bảng của bạn",
+          "getApp": "Tải Fee Free Order App miễn phí về điện thoại hoặc máy tính bảng của bạn",
           "ring": {
             "title": "Chuông lớn khi tắt màn hình",
             "body": "Báo động toàn màn hình đánh thức máy tính bảng ngay khoảnh khắc đơn hàng đến — kể cả khi đang ngủ."
@@ -6615,7 +6623,7 @@
           "smsBody": "Nhắn tin cho khách khi đơn của họ di chuyển qua bếp — đã xác nhận, sẵn sàng, hoàn tất.",
           "contentpilotBody": "Trợ lý mạng xã hội AI của bạn — soạn và lên lịch bài đăng lên Instagram, Facebook, X & TikTok.",
           "saveTitle": "Mua gói & tiết kiệm",
-          "saveBody": "Gói sẽ rẻ hơn so với mua từng công cụ riêng lẻ — giá sẽ được công bố khi ra mắt.",
+          "saveBody": "Gói này sẽ rẻ hơn mua từng công cụ riêng lẻ — giá sẽ có sớm.",
           "ownMessage": "GrowthNet và các công cụ tiếp thị độc quyền của chúng tôi biến khách lần đầu từ sàn thương mại thành <em>khách hàng trực tiếp, trung thành và quay lại thuộc về riêng bạn.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Tải về trên",
           "androidLine1": "Tải về tại"
         },
-        "softlaunch": {
-          "eyebrow": "Ra mắt giới hạn",
-          "title": "Điều <accent>lớn lao</accent> đang được nhào nặn.",
-          "body": "Chúng tôi đang mời một nhóm chủ nhà hàng chọn lọc tham gia sớm và cùng phát triển với Fee Free Ordering.",
-          "tick1": "Trở thành một phần của tương lai đặt món trực tuyến",
-          "tick2": "Giữ trọn ưu đãi dành cho người tham gia sớm",
-          "tick3": "Góp phần định hình nền tảng",
-          "cta": "Tham gia ra mắt giới hạn",
-          "imgAlt": "Fee Free Ordering — sắp ra mắt"
+        "live": {
+          "eyebrow": "Đã hoạt động",
+          "title": "Nhà hàng của bạn có thể bắt đầu <accent>ngay hôm nay</accent>.",
+          "body": "Fee Free Ordering đã hoạt động và đang nhận đơn thật. Nó được xây cho những nhà hàng độc lập muốn lấy lại khách hàng, thương hiệu và doanh thu của mình — thiết lập trong một buổi chiều, không cần thẻ tín dụng và không cần hợp đồng.",
+          "tick1": "Bắt đầu miễn phí — không cần thẻ tín dụng",
+          "tick2": "Nhập hoặc dựng thực đơn trong vài phút",
+          "tick3": "Đăng trang đặt món mang thương hiệu của bạn",
+          "tick4": "Cài Fee Free Order App miễn phí trên iPhone, iPad hoặc Android",
+          "tick5": "Bắt đầu nhận đơn trực tiếp với 0% hoa hồng",
+          "cta": "Bắt đầu nhận đơn ngay hôm nay",
+          "imgAlt": "Fee Free Ordering — đang hoạt động và nhận đơn"
+        },
+        "orderStation": {
+          "eyebrow": "Miễn phí · iPhone, iPad & Android",
+          "title": "Trạm nhận đơn của bạn. <accent>Vốn đã nằm trong túi.</accent>",
+          "body": "Fee Free Order App — ứng dụng gốc của chúng tôi để nhận đơn cho nhà hàng — biến iPhone, iPad hoặc máy tính bảng Android thành máy nhận đơn của bạn. Nhận đơn ngay khi vừa vào, nghe được giữa lúc đông khách, xử lý đến cùng và in phiếu bếp. Không phải mua thiết bị chuyên dụng.",
+          "devices": {
+            "title": "Chạy trên thiết bị bạn đã có",
+            "body": "Một máy tính bảng dư hoặc chiếc điện thoại cũ trở thành trạm nhận đơn — không thuê, không mua gì thêm."
+          },
+          "alerts": {
+            "title": "Reo đến khi bạn nhận",
+            "body": "Chuông lớn đánh thức thiết bị ngay khi có đơn — kể cả khi màn hình đã tắt."
+          },
+          "manage": {
+            "title": "Nhận, xử lý, in",
+            "body": "Xử lý trọn đơn ngay trong ứng dụng và in phiếu bếp ra máy in nhiệt WiFi của bạn."
+          },
+          "free": "Miễn phí với mọi tài khoản Fee Free Ordering"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Tải ứng dụng",
-            "title": "Kitchen Order App cho đội ngũ của bạn.",
-            "body": "Quản lý đơn hàng, in hóa đơn và cập nhật trạng thái — tất cả ngay trên máy tính bảng của bạn."
+            "title": "Fee Free Order App cho đội của bạn.",
+            "body": "Nhận, xử lý và in đơn từ iPhone, iPad hoặc máy tính bảng Android. Miễn phí cùng tài khoản của bạn."
           },
           "growth": {
             "eyebrow": "Sinh ra để tăng trưởng",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Tiện ích bổ sung",
       "addOnsSubtitle": "Mở khóa tính năng trả phí từng cái. Hủy bất kỳ lúc nào — không hợp đồng.",
-      "addOnPriceComingSoon": "Giá sẽ công bố khi ra mắt",
+      "addOnPriceComingSoon": "Giá sẽ có sớm",
       "compareTitle": "Mọi nhà hàng đều có",
       "compareItems": [
         "0% hoa hồng trên đơn hàng trực tiếp",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "nhà hàng địa phương độc lập",
     "nativeAppsTitle": "Ứng dụng marketplace cho iOS & Android",
     "comingSoon": "Sắp ra mắt",
-    "nativeAppsBody": "Một ứng dụng đặt hàng riêng cho marketplace đang được phát triển (ứng dụng hiện có trên Google Play là dành cho nhân viên nhà hàng). Trong lúc chờ, hãy nhấn vào <b>menu chia sẻ</b> của trình duyệt và chọn <b>“Thêm vào Màn hình chính”</b> — bạn sẽ có marketplace dưới dạng biểu tượng ứng dụng thật sự, với màn hình chào và trải nghiệm toàn màn hình. Không cần cửa hàng ứng dụng.",
+    "nativeAppsBody": "Một ứng dụng đặt hàng riêng cho marketplace đang được phát triển (ứng dụng hiện có trên App Store and Google Play là dành cho nhân viên nhà hàng). Trong lúc chờ, hãy nhấn vào <b>menu chia sẻ</b> của trình duyệt và chọn <b>“Thêm vào Màn hình chính”</b> — bạn sẽ có marketplace dưới dạng biểu tượng ứng dụng thật sự, với màn hình chào và trải nghiệm toàn màn hình. Không cần cửa hàng ứng dụng.",
     "ownerTitle": "Bạn là chủ nhà hàng? Đăng ký ngay.",
     "ownerBody": "Bạn có nhà hàng? <b>Đăng ký trên Fee Free Marketplace là miễn phí</b> — không phí hàng tháng, không hoa hồng trên mỗi đơn, mãi mãi. Cung cấp dịch vụ tự đến lấy hoặc giao hàng và tiếp cận khách hàng mới ở gần trong khi vẫn giữ thương hiệu, khách hàng và 100% giá của bạn.",
     "getListedFree": "Bắt đầu miễn phí",
@@ -7030,7 +7058,7 @@
     "featured": "Nổi bật",
     "allRestaurants": "Tất cả nhà hàng",
     "emptyTitle": "Chúng tôi đang bắt đầu",
-    "emptyBody": "Chưa có nhà hàng nào trên marketplace — danh sách sẽ mở khi ra mắt. Nếu bạn là chủ nhà hàng, hãy tạo tài khoản miễn phí ngay hôm nay để có thể tham gia <b>Marketplace</b> ngay ngày đầu mở cửa.",
+    "emptyBody": "Chưa có nhà hàng nào ở đây. Nếu bạn có nhà hàng, hãy tạo tài khoản miễn phí và đăng — mọi nhà hàng có mang đi hoặc giao hàng đều được đưa lên <b>Marketplace</b> miễn phí và không mất hoa hồng.",
     "restaurantLogin": "Đăng nhập dành cho nhà hàng",
     "noMatchesTitle": "Không có kết quả",
     "noMatchesBody": "Hãy thử từ khóa khác hoặc xóa bộ lọc.",

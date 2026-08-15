@@ -16,8 +16,13 @@
  * driver.ios LIVE 2026-07-23 (first public iOS app — seller Fee Free
  * Ordering Inc., approved under the org). driver.play LIVE 2026-07-23
  * (Play Console shows Production; public listing verified).
- * kitchen.ios = still TestFlight-only on the old Apple team — D1-a
- * migration to the org in progress (OWNER-ACTIONS A17).
+ * kitchen.ios LIVE 2026-08-15 — "Fee Free Order App", seller Fee Free
+ * Ordering Inc., free, iOS 15+, iPhone AND iPad (iosUniversal). Verified
+ * against Apple's own lookup API (itunes.apple.com/lookup?id=6794053932)
+ * rather than the storefront HTML, which rate-limits bots with a 429.
+ * With BOTH kitchen links live, every "iOS coming soon" surface across
+ * marketing, /admin/publishing and the kitchen-app-link email now
+ * resolves to a real download with no further edits.
  */
 
 export type StoreLinks = { play: string | null; ios: string | null };
@@ -25,7 +30,7 @@ export type StoreLinks = { play: string | null; ios: string | null };
 export const APP_LINKS: Record<"kitchen" | "driver", StoreLinks> = {
   kitchen: {
     play: "https://play.google.com/store/apps/details?id=com.feefreeordering.kitchen",
-    ios: null,
+    ios: "https://apps.apple.com/us/app/fee-free-order-app/id6794053932",
   },
   driver: {
     play: "https://play.google.com/store/apps/details?id=com.feefreeordering.driver",

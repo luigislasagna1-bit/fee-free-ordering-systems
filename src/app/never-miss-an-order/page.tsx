@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Fragment } from "react";
 import { cookies } from "next/headers";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
+import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
+import { APP_LINKS } from "@/lib/app-links";
 import { COMPETITORS } from "@/data/competitors";
 import { safeJsonLd } from "@/lib/safe-json-ld";
-import { ArrowRight, BellRing, Printer, PhoneCall, Zap, Check, ShieldCheck } from "lucide-react";
+import { ArrowRight, BellRing, Printer, PhoneCall, Zap, Check, ShieldCheck, Smartphone } from "lucide-react";
 
 /**
  * "Never miss an order" — the kitchen-reliability landing page
@@ -38,8 +41,9 @@ const LAYERS = [
     Icon: BellRing,
     eyebrow: "LAYER 1",
     heading: "It rings until someone accepts it — not once, until.",
-    body: "The Kitchen Order App doesn't ping and give up. When an order lands it rings loudly and keeps ringing until a staff member accepts it. A single chime across a loud kitchen is easy to miss; a phone that won't stop until you deal with it is not.",
+    body: "The Fee Free Order App — our free native restaurant order-taking app for iPhone, iPad and Android — doesn't ping and give up. When an order lands it rings loudly and keeps ringing until a staff member accepts it. A single chime across a loud kitchen is easy to miss; a phone that won't stop until you deal with it is not.",
     bullets: [
+      "Free on the App Store and Google Play. Install it on the iPhone, iPad or Android tablet you already own — nothing to lease, no setup fee.",
       "Rings with the screen off. The tablet or phone can be locked, dark, and face-down on the pass — it still wakes up and rings. On Android and on iPhone, including a locked iPhone at 2 a.m.",
       "Two independent ring engines. A foreground alarm while the app is open, plus a separate native alarm baked into the app for when the screen is off — so the ring survives even if the app was backgrounded or the phone was asleep.",
       "An accept countdown you can see. Each new order shows a visible countdown, so staff know how long it's been waiting and orders get handled in the order they arrived.",
@@ -92,7 +96,11 @@ const LAYERS = [
 const FAQS: Array<{ q: string; a: string }> = [
   {
     q: "What actually happens the moment a customer places an order?",
-    a: "Your Kitchen Order App rings — loudly, and even if the tablet's screen is off — and keeps ringing until a staff member accepts the order. On acceptance, a kitchen ticket prints to your thermal printer, and if the order was paid online the customer's card is charged. If you'd rather not touch the tablet, auto-accept does the accepting and printing automatically the instant the order arrives.",
+    a: "Your Fee Free Order App rings — loudly, and even if the tablet's screen is off — and keeps ringing until a staff member accepts the order. On acceptance, a kitchen ticket prints to your thermal printer, and if the order was paid online the customer's card is charged. If you'd rather not touch the tablet, auto-accept does the accepting and printing automatically the instant the order arrives.",
+  },
+  {
+    q: "Where do I get the app, and what does it run on?",
+    a: "The Fee Free Order App is free on both the App Store and Google Play. It runs on iPhone, iPad and Android phones and tablets, so the device you already own becomes your order station — you don't buy a terminal from us. Install it, sign in with your restaurant account, and new orders start ringing on it.",
   },
   {
     q: "Will it really ring if the tablet is locked or asleep?",
@@ -108,7 +116,7 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "Do I need to buy special hardware?",
-    a: "No. A spare Android tablet or an old iPhone becomes your kitchen terminal, and it prints to a standard WiFi thermal printer. There's no proprietary terminal to buy — a real difference from platforms that lock you into a several-hundred-dollar box plus a setup fee.",
+    a: "No. A spare Android tablet, an iPad or an old iPhone becomes your order station — the Fee Free Order App is free on both the App Store and Google Play — and it prints to a standard WiFi thermal printer. There's no proprietary terminal to buy, a real difference from platforms that lock you into a several-hundred-dollar box plus a setup fee.",
   },
   {
     q: "What does all of this cost?",
@@ -121,21 +129,21 @@ const FAQS: Array<{ q: string; a: string }> = [
 ];
 
 export const metadata: Metadata = {
-  title: "Never Miss an Order — The Restaurant Ordering System That Rings Until You Answer | Fee Free Ordering",
+  title: "Never Miss an Order — The Restaurant Order-Taking App That Rings Until You Answer | Fee Free Ordering",
   description:
-    "Most online ordering fails at one moment: the order nobody saw. Fee Free Ordering has four layers of backup — a kitchen app that rings until accepted (even on a locked iPhone), thermal ticket printing, an automatic phone call if staff still miss it, and auto-accept. Built in Canada. 0% commission.",
+    "Most online ordering fails at one moment: the order nobody saw. Fee Free Ordering has four layers of backup — the free Fee Free Order App for iPhone, iPad and Android rings until accepted (even on a locked iPhone), thermal ticket printing, an automatic phone call if staff still miss it, and auto-accept. Built in Canada. 0% commission.",
   alternates: { canonical: "/never-miss-an-order" },
   openGraph: {
     title: "Never Miss an Order — Four Layers So No Ticket Ever Slips Through",
     description:
-      "Ring-until-accepted on any device, thermal printing, an automatic phone call if it's still missed, and auto-accept. The reliability layer nobody else markets.",
+      "The free Fee Free Order App for iPhone, iPad and Android rings until accepted, prints to your thermal printer, phones you if it's still missed, and can auto-accept. The reliability layer nobody else markets.",
     type: "website",
     siteName: "Fee Free Ordering",
   },
   twitter: {
     card: "summary_large_image",
     title: "Never Miss an Order",
-    description: "The kitchen ordering system with four layers of backup so no order is ever silently dropped.",
+    description: "A restaurant order-taking app for iOS and Android with four layers of backup, so no order is ever silently dropped.",
   },
 };
 
@@ -169,6 +177,25 @@ export default async function NeverMissAnOrderPage() {
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
+  // The Order App as its own entity, so a search/AI result for "restaurant
+  // order taking app iOS" can surface the real store listings. Emitted only
+  // for LIVE listings (app-links.ts) — never advertise a store page that
+  // doesn't exist. Both live since 2026-08-15.
+  const orderApp = {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    name: "Fee Free Order App",
+    alternateName: "Kitchen Order App",
+    applicationCategory: "BusinessApplication",
+    applicationSubCategory: "Restaurant order-taking app",
+    operatingSystem: [APP_LINKS.kitchen.ios && "iOS", APP_LINKS.kitchen.play && "Android"].filter(Boolean).join(", "),
+    description:
+      "The free native restaurant order-taking app from Fee Free Ordering. Receive new orders with a loud ring that plays even with the screen off, accept and manage orders, and print kitchen tickets to a WiFi thermal printer from an iPhone, iPad or Android tablet.",
+    installUrl: [APP_LINKS.kitchen.ios, APP_LINKS.kitchen.play].filter(Boolean) as string[],
+    downloadUrl: [APP_LINKS.kitchen.ios, APP_LINKS.kitchen.play].filter(Boolean) as string[],
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    publisher: { "@type": "Organization", name: "Fee Free Ordering Inc.", url: baseUrl },
+  };
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -183,6 +210,13 @@ export default async function NeverMissAnOrderPage() {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: safeJsonLd(faqPage) }}
       />
+      {(APP_LINKS.kitchen.ios || APP_LINKS.kitchen.play) && (
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(orderApp) }}
+        />
+      )}
 
       <main className="flex-1">
         {/* ─── HERO ──────────────────────────────────────────────────── */}
@@ -218,7 +252,7 @@ export default async function NeverMissAnOrderPage() {
               </Link>
             </div>
             <p className="mt-6 text-xs text-gray-500">
-              No credit card · 0% commission on direct orders · Built in Canada
+              No credit card · 0% commission on direct orders · Free Order App for iPhone, iPad &amp; Android · Built in Canada
             </p>
           </div>
         </section>
@@ -254,37 +288,66 @@ export default async function NeverMissAnOrderPage() {
 
         {/* ─── THE 4 LAYERS (alternating) ──────────────────────────────── */}
         {LAYERS.map((layer, i) => (
-          <section key={layer.n} className={`py-16 px-4 ${i % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
-            <div className="max-w-5xl mx-auto">
-              <div className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-                <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-emerald-600 mb-3">
-                    <layer.Icon className="w-4 h-4" />
-                    {layer.eyebrow}
+          <Fragment key={layer.n}>
+            <section className={`py-16 px-4 ${i % 2 === 0 ? "bg-gray-50" : "bg-white"}`}>
+              <div className="max-w-5xl mx-auto">
+                <div className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${i % 2 === 1 ? "lg:[&>*:first-child]:order-2" : ""}`}>
+                  <div>
+                    <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-emerald-600 mb-3">
+                      <layer.Icon className="w-4 h-4" />
+                      {layer.eyebrow}
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-4">
+                      {layer.heading}
+                    </h2>
+                    <p className="text-gray-600 leading-relaxed">{layer.body}</p>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight mb-4">
-                    {layer.heading}
-                  </h2>
-                  <p className="text-gray-600 leading-relaxed">{layer.body}</p>
-                </div>
-                <div>
-                  <ul className="space-y-3">
-                    {layer.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <Check className="w-3.5 h-3.5" />
-                        </div>
-                        <span className="text-sm text-gray-700 leading-relaxed">{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-5 text-xs text-gray-500 leading-relaxed border-l-2 border-emerald-200 pl-3">
-                    {layer.note}
-                  </p>
+                  <div>
+                    <ul className="space-y-3">
+                      {layer.bullets.map((b) => (
+                        <li key={b} className="flex items-start gap-3">
+                          <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Check className="w-3.5 h-3.5" />
+                          </div>
+                          <span className="text-sm text-gray-700 leading-relaxed">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-5 text-xs text-gray-500 leading-relaxed border-l-2 border-emerald-200 pl-3">
+                      {layer.note}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+
+            {/* Download band, immediately after LAYER 1 — the layer that
+                explains the app itself. Both stores went live by 2026-08-15
+                (Play 07-22, App Store 08-15), so this is a real download,
+                not a teaser. Badges are availability-driven via app-links.ts,
+                so if a listing is ever pulled this degrades on its own. */}
+            {i === 0 && (
+              <section className="py-12 px-4 bg-white border-y border-gray-100">
+                <div className="max-w-3xl mx-auto text-center">
+                  <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 rounded-full px-3 py-1.5 text-xs font-semibold mb-4">
+                    <Smartphone className="w-3.5 h-3.5" />
+                    FREE · IPHONE, IPAD &amp; ANDROID
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
+                    Get the Fee Free Order App
+                  </h2>
+                  <p className="mt-3 text-gray-600 leading-relaxed">
+                    Our native restaurant order-taking app. Receive, accept, print and manage orders
+                    from the phone or tablet you already own — no proprietary terminal to buy. Free
+                    with every Fee Free Ordering account.
+                  </p>
+                  <div className="mt-6 flex justify-center">
+                    <AppDownloadBadges />
+                  </div>
+                </div>
+              </section>
+            )}
+          </Fragment>
         ))}
 
         {/* ─── PROOF / CONFIDENCE STRIP ─────────────────────────────────── */}
@@ -365,7 +428,17 @@ export default async function NeverMissAnOrderPage() {
                 See the live demo
               </Link>
             </div>
-            <p className="mt-6 text-emerald-100 text-xs">
+            {/* Second download CTA — an owner who read all four layers is the
+                most likely person on the site to install the app right now. */}
+            <div className="mt-8 pt-7 border-t border-white/25">
+              <p className="text-emerald-50 text-sm font-semibold mb-4">
+                Or grab the free Fee Free Order App for the device you&apos;ll take orders on:
+              </p>
+              <div className="flex justify-center">
+                <AppDownloadBadges onDark />
+              </div>
+            </div>
+            <p className="mt-7 text-emerald-100 text-xs">
               Questions about your kitchen setup?{" "}
               <a
                 href={`mailto:support@feefreeordering.com?subject=${encodeURIComponent("Kitchen setup question")}`}

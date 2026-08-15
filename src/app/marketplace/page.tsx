@@ -142,13 +142,15 @@ export default async function MarketplacePage() {
       </section>
 
       {/* ─── Marketplace app Coming Soon notice ───────────────────────────
-          This is about the CONSUMER marketplace ordering app — still not in
-          any store. NOTE (2026-07-22): the restaurant-STAFF Kitchen app is
-          now live on Google Play, so the copy (nativeAppsTitle/Body ×38)
-          must say "marketplace app" explicitly — a visitor searching Play
-          finds "Fee Free Order App" (the staff app) and must not install
-          the wrong thing. PWA install (Add to Home Screen) works today on
-          iOS Safari + Android Chrome for ordering. */}
+          LEGITIMATE "Coming Soon": this is the CONSUMER marketplace ordering
+          app, which is still not in any store — unlike the platform itself,
+          which launched. Do NOT sweep this one up in a launch-messaging pass.
+          NOTE (2026-08-15): the restaurant-STAFF app is now live on BOTH
+          stores (Play 07-22, App Store 08-15), so the copy (nativeAppsTitle/
+          Body ×38) must name "marketplace app" explicitly AND both stores —
+          a visitor searching either store finds "Fee Free Order App" (the
+          staff app) and must not install the wrong thing. PWA install (Add
+          to Home Screen) works today on iOS Safari + Android Chrome. */}
       <section className="bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
           <div className="flex items-start gap-3 rounded-xl bg-amber-50 border border-amber-200 p-4 sm:p-5 max-w-3xl mx-auto">

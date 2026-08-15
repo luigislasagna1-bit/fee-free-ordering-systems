@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Mesmo fluxo de cozinha",
       "featureKitchenBody": "Os pedidos por telefone chegam ao seu Kitchen Order App atual, junto com os pedidos online. Sem aplicativo novo, sem treinamento novo — sua equipe os aceita da mesma forma.",
       "statusHeading": "Onde estamos hoje",
-      "statusBody1": "Estamos de cabeça baixa construindo a fundação. O agente de voz, a integração com Twilio, a transferência para a cozinha — tudo em desenvolvimento ativo. Esperamos lançar para restaurantes com acesso antecipado em breve após o lançamento da plataforma principal.",
+      "statusBody1": "Estamos a todo vapor no desenvolvimento. O agente de voz, a integração com o Twilio e a passagem para a cozinha estão em desenvolvimento ativo e já rodando em uma linha piloto real. Vamos abrir para os restaurantes assim que estiver comprovado no dia a dia.",
       "statusBody2": "Quando estiver pronto, você poderá assinar na sua página de cobrança como qualquer outro add-on. Por enquanto, esta página é apenas um aviso de que está chegando.",
       "addonCatalogLink": "Ver o catálogo completo de add-ons",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Faça upgrade para desbloquear →",
       "brandedAppTitle": "App Mobile com sua Marca",
       "brandedAppDescription": "Envie seu próprio app para a App Store e Google Play com sua identidade visual.",
-      "getAppTitle": "Baixe o Kitchen Order App",
-      "getAppBody": "Grátis no Google Play. Novos pedidos tocam na hora — mesmo com a tela desligada — e os recibos são impressos via WiFi.",
-      "getAppScanHint": "Escaneie com o tablet ou celular da cozinha para abrir o Google Play",
-      "getAppIosSoon": "A versão para iPhone/iPad chegará em breve à App Store — até lá, iPads podem operar a cozinha pelo navegador.",
+      "getAppTitle": "Instale o Fee Free Order App",
+      "getAppBody": "Receba, aceite, imprima e gerencie pedidos pelo celular ou tablet do seu restaurante. Grátis para iPhone, iPad e Android — pedidos novos tocam na hora, mesmo com a tela desligada.",
+      "getAppScanHint": "Escaneie com o celular ou tablet que vai receber os pedidos",
+      "goLiveTitle": "Você está pronto para receber pedidos",
+      "goLiveBody": "Passe por isto uma vez no aparelho que vai receber os pedidos, para o primeiro pedido de verdade não te pegar de surpresa.",
+      "goLiveStepInstall": "Instale o Fee Free Order App nesse celular ou tablet",
+      "goLiveStepSignIn": "Entre no app com a conta do seu restaurante",
+      "goLiveStepNotifications": "Confira os destinatários de notificação para os avisos chegarem até você",
+      "goLiveStepPrinting": "Configure a impressão se você imprime comandas de cozinha",
+      "goLiveStepTestOrder": "Faça um pedido de teste na sua própria página e aceite",
+      "goLiveStepShare": "Compartilhe seu link de pedidos com os clientes",
+      "goLiveInstallPrompt": "Instale o app no aparelho onde recebe pedidos:",
       "sendLinkTitle": "Envie o link para o seu celular",
       "sendLinkBody": "Baixe o app no aparelho que você vai usar na cozinha — enviamos o link por e-mail ou SMS.",
       "sendLinkEmailOption": "E-mail",
@@ -5680,8 +5688,8 @@
         "appConnected": "App de recebimento de pedidos conectado",
         "appConnectedDetail": {
           "native": "{device} · {ago} · app nativo",
-          "browser": "{device} · {ago} · rodando no navegador — instale o app Android grátis para alertas sonoros confiáveis",
-          "install": "Instale grátis o Kitchen Order App (Google Play) para que novos pedidos toquem na hora. Até lá, você continua recebendo alertas por e-mail/SMS."
+          "browser": "{device} · {ago} · rodando em um navegador — instale o Fee Free Order App gratuito para alertas sonoros confiáveis",
+          "install": "Instale o Fee Free Order App gratuito no iPhone, iPad ou Android para os pedidos novos tocarem na hora. Até lá você continua recebendo avisos por e-mail/SMS."
         },
         "notificationRecipient": "Pelo menos um destinatário de notificações"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Para donos de restaurante",
           "title": "O Seu Restaurante. <accent>0% de Comissão. 100% Seu.</accent>",
-          "subtitle": "Receba pedidos de retirada, entrega, no salão e catering na sua própria página com a sua marca, com 0% de comissão — e com as ferramentas de marketing GrowthNet e os anúncios no Marketplace, que chegam no lançamento, transforme visitantes de primeira viagem em clientes diretos e recorrentes.",
+          "subtitle": "Receba pedidos para retirada, entrega, no salão e catering na sua própria página com a sua marca e 0% de comissão — com as ferramentas de marketing GrowthNet e um anúncio gratuito no Fee Free Marketplace para transformar novos visitantes em clientes diretos recorrentes.",
           "ctaStart": "Comece grátis",
           "ctaDemo": "Veja uma loja ao vivo",
           "badge": "0% de comissão",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Grátis · iOS + Android",
           "title": "Nunca perca um pedido pago.",
-          "subtitle": "O Kitchen Order App nativo transforma qualquer iPhone, iPad ou tablet Android em uma estação de pedidos à prova de falhas — com uma rede de segurança para que uma noite movimentada nunca custe uma venda.",
+          "subtitle": "O Fee Free Order App nativo transforma qualquer iPhone, iPad ou tablet Android em uma estação de pedidos à prova de falhas — com uma rede de proteção para que uma noite cheia nunca custe uma venda.",
           "frameAlt": "Kitchen Order App — pedido chegando",
-          "getApp": "Baixe o Kitchen Order App grátis no seu tablet",
+          "getApp": "Baixe o Fee Free Order App gratuito no seu celular ou tablet",
           "ring": {
             "title": "Alarme alto com tela apagada",
             "body": "Um alarme em tela cheia desperta o tablet no instante em que um pedido chega — mesmo em repouso."
@@ -6615,7 +6623,7 @@
           "smsBody": "Envie mensagens ao cliente conforme o pedido avança na cozinha — confirmado, pronto, concluído.",
           "contentpilotBody": "Seu gerente de redes sociais com IA — cria e agenda posts no Instagram, Facebook, X e TikTok.",
           "saveTitle": "Junte e economize",
-          "saveBody": "O pacote custará menos do que comprar cada ferramenta separadamente — preços anunciados no lançamento.",
+          "saveBody": "O pacote vai custar menos do que comprar cada ferramenta separadamente — preços em breve.",
           "ownMessage": "O GrowthNet e nossas ferramentas exclusivas de marketing transformam clientes de marketplace de primeira viagem em <em>clientes diretos, fiéis e recorrentes que são seus.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Baixe na",
           "androidLine1": "Disponível na"
         },
-        "softlaunch": {
-          "eyebrow": "Soft launch",
-          "title": "Algo <accent>grande</accent> está fervendo.",
-          "body": "Estamos convidando um grupo seleto de donos de restaurantes para entrar cedo e crescer com a Fee Free Ordering.",
-          "tick1": "Faça parte do futuro dos pedidos online",
-          "tick2": "Garanta benefícios de acesso antecipado",
-          "tick3": "Ajude a moldar a plataforma",
-          "cta": "Participe do soft launch",
-          "imgAlt": "Fee Free Ordering — em breve"
+        "live": {
+          "eyebrow": "No ar agora",
+          "title": "Seu restaurante pode começar <accent>hoje</accent>.",
+          "body": "O Fee Free Ordering está no ar e recebendo pedidos de verdade. Foi feito para restaurantes independentes que querem de volta seus clientes, sua marca e sua receita — configura em uma tarde, sem cartão de crédito e sem contrato.",
+          "tick1": "Comece grátis — sem cartão de crédito",
+          "tick2": "Importe ou monte seu cardápio em minutos",
+          "tick3": "Publique sua página de pedidos com a sua marca",
+          "tick4": "Instale o Fee Free Order App gratuito no iPhone, iPad ou Android",
+          "tick5": "Comece a receber pedidos diretos com 0% de comissão",
+          "cta": "Comece a receber pedidos hoje",
+          "imgAlt": "Fee Free Ordering — no ar e recebendo pedidos"
+        },
+        "orderStation": {
+          "eyebrow": "Grátis · iPhone, iPad e Android",
+          "title": "Sua estação de pedidos. <accent>Já está no seu bolso.</accent>",
+          "body": "O Fee Free Order App — nosso aplicativo nativo de recebimento de pedidos para restaurantes — transforma um iPhone, um iPad ou um tablet Android no seu terminal de pedidos. Receba pedidos na hora, ouça no meio da correria, gerencie até o fim e imprima comandas de cozinha. Sem hardware proprietário para comprar.",
+          "devices": {
+            "title": "Roda no aparelho que você já tem",
+            "body": "Um tablet sobrando ou um celular antigo vira sua estação de pedidos — nada para alugar, nada para comprar."
+          },
+          "alerts": {
+            "title": "Toca até você aceitar",
+            "body": "Um alarme alto acorda o aparelho assim que o pedido chega — mesmo com a tela desligada."
+          },
+          "manage": {
+            "title": "Aceite, gerencie, imprima",
+            "body": "Resolva o pedido inteiro pelo app e imprima comandas na sua impressora térmica WiFi."
+          },
+          "free": "Grátis em toda conta Fee Free Ordering"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Baixe o app",
-            "title": "Kitchen Order App para a sua equipe.",
-            "body": "Gerencie pedidos, imprima recibos e atualize o status — tudo pelo seu tablet."
+            "title": "Fee Free Order App para sua equipe.",
+            "body": "Receba, gerencie e imprima pedidos por um iPhone, iPad ou tablet Android. Grátis com a sua conta."
           },
           "growth": {
             "eyebrow": "Feito para crescer",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Complementos",
       "addOnsSubtitle": "Desbloqueie recursos pagos individualmente. Cancele quando quiser — sem contratos.",
-      "addOnPriceComingSoon": "Preços anunciados no lançamento",
+      "addOnPriceComingSoon": "Preços em breve",
       "compareTitle": "Todo restaurante recebe",
       "compareItems": [
         "0% de comissão em pedidos diretos",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "restaurantes locais independentes",
     "nativeAppsTitle": "Um app do marketplace para iOS e Android",
     "comingSoon": "Em breve",
-    "nativeAppsBody": "Um app dedicado de pedidos do marketplace está a caminho (o app disponível hoje no Google Play é para a equipe do restaurante). Enquanto isso, toque no <b>menu de compartilhamento</b> do seu navegador e escolha <b>“Adicionar à Tela de Início”</b> — você terá o marketplace como um ícone de app de verdade, com tela de abertura e experiência em tela cheia. Sem precisar de loja de aplicativos.",
+    "nativeAppsBody": "Um app dedicado de pedidos do marketplace está a caminho (o app disponível hoje no App Store and Google Play é para a equipe do restaurante). Enquanto isso, toque no <b>menu de compartilhamento</b> do seu navegador e escolha <b>“Adicionar à Tela de Início”</b> — você terá o marketplace como um ícone de app de verdade, com tela de abertura e experiência em tela cheia. Sem precisar de loja de aplicativos.",
     "ownerTitle": "Dono de restaurante? Apareça aqui.",
     "ownerBody": "Tem um restaurante? <b>Aparecer no Fee Free Marketplace é grátis</b> — nunca uma taxa mensal nem uma comissão por pedido. Ofereça retirada ou entrega e alcance novos clientes por perto, mantendo sua marca, seus clientes e 100 % dos seus preços.",
     "getListedFree": "Comece grátis",
@@ -7030,7 +7058,7 @@
     "featured": "Destaques",
     "allRestaurants": "Todos os restaurantes",
     "emptyTitle": "Estamos apenas começando",
-    "emptyBody": "Nenhum restaurante no marketplace ainda — as listagens abrem no lançamento. Se você tem um restaurante, crie sua conta gratuita agora e poderá entrar no <b>Marketplace</b> no dia em que ele abrir.",
+    "emptyBody": "Ainda não há restaurantes aqui. Se você tem um restaurante, crie sua conta gratuita e publique — todo restaurante com retirada ou entrega aparece no <b>Marketplace</b> sem custo algum e sem comissão.",
     "restaurantLogin": "Acesso para restaurantes",
     "noMatchesTitle": "Nenhum resultado",
     "noMatchesBody": "Tente um termo diferente ou limpe os filtros.",

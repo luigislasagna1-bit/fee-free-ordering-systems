@@ -65,16 +65,28 @@ export default function SignupConfirmation({
             <li>Add your menu items (or import them from a screenshot — we can help)</li>
             <li>Set your opening hours + delivery zones</li>
             <li>Choose which services you offer (delivery, pickup, dine-in, reservations)</li>
-            {/* Availability-driven (app-links.ts): the item disappears if the
-                Play listing is ever nulled; text link, not badge artwork —
-                email clients block images too often. */}
-            {APP_LINKS.kitchen.play && (
+            {/* Availability-driven (app-links.ts): each store link disappears
+                if its listing is ever nulled; text links, not badge artwork —
+                email clients block images too often. Both stores live since
+                2026-08-15, so this is the owner's real install step. */}
+            {(APP_LINKS.kitchen.ios || APP_LINKS.kitchen.play) && (
               <li>
-                Install the free{" "}
-                <a href={APP_LINKS.kitchen.play} style={{ color: "#059669", fontWeight: 600 }}>
-                  Kitchen Order App for Android
-                </a>{" "}
-                on your tablet or phone — new orders ring instantly
+                Install the free <strong>Fee Free Order App</strong> on the phone or tablet you&apos;ll
+                take orders on — new orders ring instantly, even with the screen off
+                {APP_LINKS.kitchen.ios && (
+                  <>
+                    {" — "}
+                    <a href={APP_LINKS.kitchen.ios} style={{ color: "#059669", fontWeight: 600 }}>
+                      App Store
+                    </a>
+                  </>
+                )}
+                {APP_LINKS.kitchen.ios && APP_LINKS.kitchen.play ? " · " : APP_LINKS.kitchen.play ? " — " : ""}
+                {APP_LINKS.kitchen.play && (
+                  <a href={APP_LINKS.kitchen.play} style={{ color: "#059669", fontWeight: 600 }}>
+                    Google Play
+                  </a>
+                )}
               </li>
             )}
             <li>Publish — your restaurant goes live and starts taking orders</li>

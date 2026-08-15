@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Alur dapur yang sama",
       "featureKitchenBody": "Pesanan telepon masuk ke Kitchen Order App Anda yang sudah ada bersama pesanan online. Tanpa aplikasi baru, tanpa pelatihan baru — tim Anda menerimanya dengan cara yang sama.",
       "statusHeading": "Status saat ini",
-      "statusBody1": "Kami sedang membangun fondasinya. Agen suara, integrasi Twilio, serah terima ke dapur — semua dalam pengembangan aktif. Kami berharap dapat meluncurkan ini ke restoran akses awal segera setelah platform utama diluncurkan.",
+      "statusBody1": "Kami sedang giat membangun. Agen suara, integrasi Twilio, dan penyerahan ke dapur semuanya dalam pengembangan aktif dan sudah berjalan di jalur pilot yang nyata. Kami akan membukanya untuk restoran setelah terbukti di layanan sehari-hari.",
       "statusBody2": "Ketika sudah siap, Anda akan dapat berlangganannya dari halaman penagihan seperti add-on lainnya. Hingga saat itu, halaman ini hanya pemberitahuan bahwa fitur ini akan segera hadir.",
       "addonCatalogLink": "Lihat katalog add-on lengkap",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Upgrade untuk membuka →",
       "brandedAppTitle": "Aplikasi Mobile Bermerek",
       "brandedAppDescription": "Kirimkan aplikasi Anda sendiri ke toko aplikasi iOS & Android dengan merek Anda.",
-      "getAppTitle": "Dapatkan Kitchen Order App",
-      "getAppBody": "Gratis di Google Play. Pesanan baru langsung berdering — bahkan saat layar mati — dan struk dicetak lewat WiFi.",
-      "getAppScanHint": "Pindai dengan tablet atau ponsel dapur untuk membuka Google Play",
-      "getAppIosSoon": "Versi iPhone/iPad segera hadir di App Store — sementara itu, iPad dapat menjalankan dapur lewat browser.",
+      "getAppTitle": "Pasang Fee Free Order App",
+      "getAppBody": "Terima, konfirmasi, cetak, dan kelola pesanan dari ponsel atau tablet restoran Anda. Gratis untuk iPhone, iPad, dan Android — pesanan baru langsung berdering, bahkan saat layar mati.",
+      "getAppScanHint": "Pindai dengan ponsel atau tablet yang Anda pakai menerima pesanan",
+      "goLiveTitle": "Anda siap menerima pesanan",
+      "goLiveBody": "Lakukan ini sekali di perangkat yang Anda pakai menerima pesanan, agar pesanan sungguhan pertama tidak membuat Anda kelabakan.",
+      "goLiveStepInstall": "Pasang Fee Free Order App di ponsel atau tablet itu",
+      "goLiveStepSignIn": "Masuk ke aplikasi dengan akun restoran Anda",
+      "goLiveStepNotifications": "Periksa penerima notifikasi agar peringatan sampai ke Anda",
+      "goLiveStepPrinting": "Atur pencetakan struk jika Anda mencetak struk dapur",
+      "goLiveStepTestOrder": "Buat pesanan uji coba di halaman Anda dan terima",
+      "goLiveStepShare": "Bagikan tautan pemesanan Anda ke pelanggan",
+      "goLiveInstallPrompt": "Dapatkan aplikasinya di perangkat penerima pesanan Anda:",
       "sendLinkTitle": "Kirim tautan ke ponsel Anda",
       "sendLinkBody": "Dapatkan aplikasi di perangkat yang akan Anda pakai di dapur — kami akan mengirimkan tautan unduhan lewat email atau SMS.",
       "sendLinkEmailOption": "Email",
@@ -5680,8 +5688,8 @@
         "appConnected": "Aplikasi penerima pesanan terhubung",
         "appConnectedDetail": {
           "native": "{device} · {ago} · aplikasi native",
-          "browser": "{device} · {ago} · berjalan di browser — instal aplikasi Android gratis untuk notifikasi dering yang andal",
-          "install": "Instal Kitchen Order App gratis (Google Play) agar pesanan baru langsung berdering. Sebelum itu, Anda tetap menerima notifikasi email/SMS."
+          "browser": "{device} · {ago} · berjalan di browser — pasang Fee Free Order App gratis agar peringatan dering andal",
+          "install": "Pasang Fee Free Order App gratis di iPhone, iPad, atau Android agar pesanan baru langsung berdering. Sampai saat itu Anda tetap menerima peringatan email/SMS."
         },
         "notificationRecipient": "Minimal satu penerima notifikasi"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Untuk pemilik restoran",
           "title": "Restoran Anda. <accent>Komisi 0%. 100% Milik Anda.</accent>",
-          "subtitle": "Terima pesanan ambil sendiri, antar, makan di tempat & katering di halaman branded milik Anda sendiri dengan komisi 0% — plus tools marketing GrowthNet dan iklan Marketplace yang hadir saat peluncuran untuk mengubah pengunjung baru menjadi pelanggan langsung yang setia.",
+          "subtitle": "Terima pesanan ambil sendiri, antar, makan di tempat, dan katering di halaman bermerek Anda sendiri dengan komisi 0% — dengan alat pemasaran GrowthNet dan pencantuman gratis di Fee Free Marketplace yang mengubah pengunjung pertama menjadi pelanggan langsung yang kembali lagi.",
           "ctaStart": "Mulai gratis",
           "ctaDemo": "Lihat etalase langsung",
           "badge": "Komisi 0%",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Gratis · iOS + Android",
           "title": "Tak pernah lewatkan satu pun pesanan berbayar.",
-          "subtitle": "Kitchen Order App native mengubah iPhone, iPad, atau tablet Android mana pun menjadi stasiun pesanan yang tangguh — dengan jaring pengaman agar malam yang sibuk tak pernah membuat Anda kehilangan penjualan.",
+          "subtitle": "Fee Free Order App native mengubah iPhone, iPad, atau tablet Android mana pun menjadi stasiun pesanan antipeluru — dengan jaring pengaman agar malam yang sibuk tidak pernah membuat Anda kehilangan penjualan.",
           "frameAlt": "Kitchen Order App — pesanan masuk",
-          "getApp": "Dapatkan Kitchen Order App gratis di tablet Anda",
+          "getApp": "Dapatkan Fee Free Order App gratis di ponsel atau tablet Anda",
           "ring": {
             "title": "Dering kencang saat layar mati",
             "body": "Alarm layar penuh membangunkan tablet seketika saat pesanan masuk — bahkan ketika tertidur."
@@ -6615,7 +6623,7 @@
           "smsBody": "Kirim SMS ke pelanggan saat pesanan mereka melewati setiap tahap di dapur — dikonfirmasi, siap, selesai.",
           "contentpilotBody": "Manajer media sosial AI Anda — menyusun draf dan menjadwalkan unggahan ke Instagram, Facebook, X & TikTok.",
           "saveTitle": "Paketkan & hemat",
-          "saveBody": "Paket akan lebih murah daripada membeli setiap alat secara terpisah — harga diumumkan saat peluncuran.",
+          "saveBody": "Paketnya akan lebih murah daripada membeli tiap alat terpisah — harga segera hadir.",
           "ownMessage": "GrowthNet dan alat pemasaran eksklusif kami mengubah pelanggan marketplace yang baru pertama kali menjadi <em>pelanggan langsung, setia, dan berulang yang menjadi milik Anda.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Unduh di",
           "androidLine1": "Dapatkan di"
         },
-        "softlaunch": {
-          "eyebrow": "Soft launch",
-          "title": "Ada yang <accent>besar</accent> sedang dimasak.",
-          "body": "Kami mengundang sekelompok pemilik restoran terpilih untuk bergabung lebih awal dan berkembang bersama Fee Free Ordering.",
-          "tick1": "Jadilah bagian dari masa depan pemesanan online",
-          "tick2": "Kunci keuntungan akses awal",
-          "tick3": "Bantu wujudkan platform ini",
-          "cta": "Ikut soft launch",
-          "imgAlt": "Fee Free Ordering — segera hadir"
+        "live": {
+          "eyebrow": "Sudah aktif",
+          "title": "Restoran Anda bisa mulai <accent>hari ini</accent>.",
+          "body": "Fee Free Ordering sudah aktif dan menerima pesanan sungguhan. Dibuat untuk restoran independen yang ingin pelanggan, merek, dan pendapatannya kembali — disiapkan dalam satu sore, tanpa kartu kredit dan tanpa kontrak.",
+          "tick1": "Mulai gratis — tanpa kartu kredit",
+          "tick2": "Impor atau susun menu Anda dalam hitungan menit",
+          "tick3": "Terbitkan halaman pemesanan bermerek Anda",
+          "tick4": "Pasang Fee Free Order App gratis di iPhone, iPad, atau Android",
+          "tick5": "Mulai terima pesanan langsung dengan komisi 0%",
+          "cta": "Mulai terima pesanan hari ini",
+          "imgAlt": "Fee Free Ordering — aktif dan menerima pesanan"
+        },
+        "orderStation": {
+          "eyebrow": "Gratis · iPhone, iPad & Android",
+          "title": "Stasiun pesanan Anda. <accent>Sudah ada di saku Anda.</accent>",
+          "body": "Fee Free Order App — aplikasi native kami untuk menerima pesanan restoran — mengubah iPhone, iPad, atau tablet Android menjadi terminal pesanan Anda. Terima pesanan begitu masuk, dengar di tengah keramaian, kelola sampai selesai, dan cetak struk dapur. Tidak perlu membeli perangkat khusus.",
+          "devices": {
+            "title": "Jalan di perangkat yang sudah Anda punya",
+            "body": "Tablet menganggur atau ponsel lama menjadi stasiun pesanan Anda — tidak ada yang perlu disewa atau dibeli."
+          },
+          "alerts": {
+            "title": "Berdering sampai Anda terima",
+            "body": "Alarm keras membangunkan perangkat begitu pesanan masuk — bahkan saat layar mati."
+          },
+          "manage": {
+            "title": "Terima, kelola, cetak",
+            "body": "Tangani seluruh pesanan dari aplikasi dan cetak struk dapur ke printer termal WiFi Anda."
+          },
+          "free": "Gratis dengan setiap akun Fee Free Ordering"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Dapatkan aplikasinya",
-            "title": "Kitchen Order App untuk tim Anda.",
-            "body": "Kelola pesanan, cetak struk, dan perbarui status — semua dari tablet Anda."
+            "title": "Fee Free Order App untuk tim Anda.",
+            "body": "Terima, kelola, dan cetak pesanan dari iPhone, iPad, atau tablet Android. Gratis dengan akun Anda."
           },
           "growth": {
             "eyebrow": "Dirancang untuk berkembang",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Add-on",
       "addOnsSubtitle": "Buka fitur berbayar secara individual. Batalkan kapan saja — tidak ada kontrak.",
-      "addOnPriceComingSoon": "Harga diumumkan saat peluncuran",
+      "addOnPriceComingSoon": "Harga segera hadir",
       "compareTitle": "Setiap restoran mendapatkan",
       "compareItems": [
         "Komisi 0% untuk pesanan langsung",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "restoran lokal independen",
     "nativeAppsTitle": "Aplikasi marketplace untuk iOS & Android",
     "comingSoon": "Segera Hadir",
-    "nativeAppsBody": "Aplikasi pemesanan marketplace khusus sedang dalam pengembangan (aplikasi yang ada di Google Play saat ini ditujukan untuk staf restoran). Sementara itu, ketuk <b>menu bagikan</b> di browser Anda dan pilih <b>“Tambahkan ke Layar Utama”</b> — Anda akan mendapatkan marketplace sebagai ikon aplikasi sungguhan, dengan layar pembuka dan pengalaman layar penuh. Tanpa perlu toko aplikasi.",
+    "nativeAppsBody": "Aplikasi pemesanan marketplace khusus sedang dalam pengembangan (aplikasi yang ada di App Store and Google Play saat ini ditujukan untuk staf restoran). Sementara itu, ketuk <b>menu bagikan</b> di browser Anda dan pilih <b>“Tambahkan ke Layar Utama”</b> — Anda akan mendapatkan marketplace sebagai ikon aplikasi sungguhan, dengan layar pembuka dan pengalaman layar penuh. Tanpa perlu toko aplikasi.",
     "ownerTitle": "Pemilik restoran? Daftarkan diri Anda.",
     "ownerBody": "Punya restoran? <b>Terdaftar di Fee Free Marketplace itu gratis</b> — tanpa biaya bulanan, tanpa komisi per pesanan, selamanya. Tawarkan ambil sendiri atau pengantaran dan jangkau pelanggan baru di sekitar sambil mempertahankan merek Anda, pelanggan Anda, dan 100% harga Anda.",
     "getListedFree": "Mulai gratis",
@@ -7030,7 +7058,7 @@
     "featured": "Unggulan",
     "allRestaurants": "Semua restoran",
     "emptyTitle": "Kami baru saja memulai",
-    "emptyBody": "Belum ada restoran di marketplace ini — pendaftaran dibuka saat peluncuran. Jika Anda mengelola restoran, buat akun gratis Anda sekarang dan Anda bisa bergabung dengan <b>Marketplace</b> tepat di hari pembukaannya.",
+    "emptyBody": "Belum ada restoran di sini. Jika Anda punya restoran, buat akun gratis dan terbitkan — setiap restoran dengan ambil sendiri atau antar tercantum di <b>Marketplace</b> tanpa biaya dan tanpa komisi.",
     "restaurantLogin": "Masuk sebagai restoran",
     "noMatchesTitle": "Tidak ada hasil",
     "noMatchesBody": "Coba kata kunci lain atau hapus filter yang diterapkan.",

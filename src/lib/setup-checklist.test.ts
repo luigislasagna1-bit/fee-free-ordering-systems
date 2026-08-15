@@ -63,15 +63,21 @@ describe("orders.appConnected — install-hub detail variants (Play launch 2026-
     expect(typeof s.detailArgs?.lastSeenAtMs).toBe("number");
   });
 
-  it("browser-only device → browser nudge variant", () => {
+  it("browser-only device → browser nudge variant, platform-neutral", () => {
     const s = appStep(makeInput({ kitchenDeviceDetail: device, hasNativeApp: false }));
     expect(s.detailKey).toBe("orders.appConnectedDetail.browser");
-    expect(s.detail).toContain("install the free Android app");
+    expect(s.detail).toContain("install the free Fee Free Order App");
+    // The App Store listing went live 2026-08-15, so the nudge must NOT name a
+    // single platform — an iPhone/iPad owner used to read "the free Android
+    // app" as "not for me" and stay on the browser kitchen.
+    expect(s.detail).not.toContain("Android app");
   });
 
   it("no device at all → install nudge; completion semantics UNCHANGED", () => {
     const s = appStep(makeInput({ hasKitchenDevice: false, kitchenDeviceDetail: null }));
     expect(s.detailKey).toBe("orders.appConnectedDetail.install");
+    expect(s.detail).toContain("iPhone, iPad or Android");
+    expect(s.detail).not.toContain("Google Play");
     expect(s.complete).toBe(false);
     // Browser kitchens still count as connected — hasNativeApp is display-only.
     expect(appStep(makeInput({ hasNativeApp: false })).complete).toBe(true);

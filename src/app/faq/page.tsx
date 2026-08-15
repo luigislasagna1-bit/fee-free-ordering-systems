@@ -69,11 +69,15 @@ const FAQS: Array<{ q: string; a: string }> = [
   },
   {
     q: "How do I make sure I never miss an order during a rush?",
-    a: "This is what the Kitchen Order App is built for. It rings loudly and keeps ringing until someone accepts the order — even with the phone or tablet screen off and locked, even overnight (verified on both Android and iOS). You can turn on auto-accept so orders are taken automatically, and if an order still sits unattended, the system places an automatic phone call to the restaurant as a last-resort alert. Between the continuous ring and the fallback call, orders don't slip through during a rush.",
+    a: "This is what the Fee Free Order App — our free native order-taking app for iPhone, iPad and Android — is built for. It rings loudly and keeps ringing until someone accepts the order — even with the phone or tablet screen off and locked, even overnight (verified on both Android and iOS). You can turn on auto-accept so orders are taken automatically, and if an order still sits unattended, the system places an automatic phone call to the restaurant as a last-resort alert. Between the continuous ring and the fallback call, orders don't slip through during a rush.",
   },
   {
     q: "What hardware do I need? Do I have to buy a special POS?",
-    a: "Almost none. You need an Android or iOS phone or tablet to run the free Kitchen Order App — most restaurants already have one. If you want printed tickets, we print directly to common WiFi thermal printers (Star, Epson, Bixolon and Citizen) over your local network, so you can use a printer you likely already own. There's no proprietary terminal to buy and no expensive locked-down POS hardware required to start taking orders.",
+    a: "Almost none. You need an iPhone, iPad or Android phone or tablet to run the free Fee Free Order App — most restaurants already have one. If you want printed tickets, we print directly to common WiFi thermal printers (Star, Epson, Bixolon and Citizen) over your local network, so you can use a printer you likely already own. There's no proprietary terminal to buy and no expensive locked-down POS hardware required to start taking orders.",
+  },
+  {
+    q: "Is there an app for taking orders, and what does it cost?",
+    a: "Yes — the Fee Free Order App, our native restaurant order-taking app. It's free on both the App Store and Google Play and runs on iPhone, iPad and Android phones and tablets, so the device you already own becomes your order station. New orders ring on it the moment they arrive, and staff accept, manage and complete orders and print kitchen tickets from the same screen. It's included with every account — there's nothing extra to subscribe to. (Not to be confused with the optional Branded Mobile App add-on, which is a separate customer-facing ordering app published under your own restaurant brand.)",
   },
 
   // ── Migration ──────────────────────────────────────────────────────────

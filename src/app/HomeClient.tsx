@@ -50,6 +50,14 @@ const ADDON_DEFS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
   { icon: CalendarCheck, key: "deposits", comingSoon: true },
 ];
 
+/* S1d "Your order station" — the three claims are each backed by shipped,
+   device-verified behaviour documented on /never-miss-an-order. */
+const ORDER_STATION_DEFS: { icon: LucideIcon; key: string }[] = [
+  { icon: Smartphone, key: "devices" },
+  { icon: BellRing, key: "alerts" },
+  { icon: Receipt, key: "manage" },
+];
+
 const RELIABILITY_DEFS: { icon: LucideIcon; key: string }[] = [
   { icon: BellRing, key: "ring" },
   { icon: PhoneCall, key: "call" },
@@ -162,34 +170,40 @@ export function HomeClient({ locale }: { locale: string }) {
         </div>
       </section>
 
-      {/* ── S1b · SOFT LAUNCH (m2/m3) — bg matched to the rocket art so its
-          near-white background blends seamlessly (no boxed edge). ─────────── */}
+      {/* ── S1b · NOW LIVE (was the soft-launch teaser until 2026-08-15) ────
+          Fee Free Ordering is a launched commercial product, so this slot is
+          now an acquisition section, not a "join the waitlist" tease: the
+          real five-step path from signup to first order, ending in the CTA.
+          The rocket art stays (it reads as "we're live", not "coming soon")
+          and the bg is still matched to its near-white background so there's
+          no boxed edge. Step 4 is the Fee Free Order App — order reception
+          is part of go-live, not an afterthought. ─────────────────────────── */}
       <MarketingSection tone="light" className="!bg-[#f2f6f7]">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
           <div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs font-bold uppercase tracking-wide">
-              <Rocket className="w-3.5 h-3.5" /> {t("softlaunch.eyebrow")}
+              <Rocket className="w-3.5 h-3.5" /> {t("live.eyebrow")}
             </span>
             <h2 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 leading-[1.08] tracking-tight">
-              {t.rich("softlaunch.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
+              {t.rich("live.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
             </h2>
-            <p className="mt-4 text-lg text-gray-600 leading-relaxed max-w-xl">{t("softlaunch.body")}</p>
+            <p className="mt-4 text-lg text-gray-600 leading-relaxed max-w-xl">{t("live.body")}</p>
             <ul className="mt-6 space-y-2.5">
-              {["tick1", "tick2", "tick3"].map((k) => (
-                <li key={k} className="flex items-center gap-2.5 text-gray-700">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500 flex-shrink-0" />
-                  <span className="font-medium">{t(`softlaunch.${k}`)}</span>
+              {["tick1", "tick2", "tick3", "tick4", "tick5"].map((k) => (
+                <li key={k} className="flex items-start gap-2.5 text-gray-700">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                  <span className="font-medium">{t(`live.${k}`)}</span>
                 </li>
               ))}
             </ul>
             <div className="mt-8">
-              <PrimaryButton href="/signup">{t("softlaunch.cta")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
+              <PrimaryButton href="/signup">{t("live.cta")}<ArrowRight className="w-4 h-4" /></PrimaryButton>
             </div>
           </div>
           <div className="relative">
             <img
               src="/marketing/soft-launch-rocket.png"
-              alt={t("softlaunch.imgAlt")}
+              alt={t("live.imgAlt")}
               width={300}
               height={495}
               className="w-full h-auto max-w-[16rem] sm:max-w-xs mx-auto"
@@ -253,6 +267,42 @@ export function HomeClient({ locale }: { locale: string }) {
             </div>
             <img src="/marketing/data-shield.png" alt="" width={216} height={240} className="hidden sm:block w-24 h-auto flex-shrink-0 self-center" />
           </div>
+        </div>
+      </MarketingSection>
+
+      {/* ── S1d · YOUR ORDER STATION (iOS + Android, 2026-08-15) ──────────
+          The Fee Free Order App went live on the App Store 2026-08-15, so
+          native order reception on BOTH platforms is now a headline selling
+          point rather than a footer link. Deliberately placed high (4th
+          screen) so an owner scanning the page learns "they give me a native
+          order-taking app too" before the deep-dive S6 section, which keeps
+          the reliability detail. Claims here are limited to what S6 and
+          /never-miss-an-order already document as shipped + device-verified.
+          Centered band (S6 is image+grid) so the two don't read as a repeat. */}
+      <MarketingSection tone="gray">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-700 px-3 py-1 text-xs font-bold uppercase tracking-wide">
+            <Smartphone className="w-3.5 h-3.5" /> {t("orderStation.eyebrow")}
+          </span>
+          <h2 className="mt-4 text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-gray-900 leading-[1.08] tracking-tight">
+            {t.rich("orderStation.title", { accent: (c) => <span className="text-emerald-600">{c}</span> })}
+          </h2>
+          <p className="mt-4 text-lg text-gray-600 leading-relaxed">{t("orderStation.body")}</p>
+        </div>
+        <div className="mt-10 grid sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
+          {ORDER_STATION_DEFS.map((d) => (
+            <div key={d.key} className="rounded-2xl border border-gray-200/80 bg-white p-6 text-center shadow-[0_8px_30px_-14px_rgba(16,24,40,0.12)]">
+              <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100 mb-3">
+                <d.icon className="w-5 h-5" />
+              </span>
+              <div className="font-bold text-gray-900 text-sm leading-tight">{t(`orderStation.${d.key}.title`)}</div>
+              <p className="text-sm text-gray-600 leading-relaxed mt-1">{t(`orderStation.${d.key}.body`)}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <p className="text-sm font-semibold text-gray-700 mb-4">{t("orderStation.free")}</p>
+          <div className="flex justify-center"><AppDownloadBadges /></div>
         </div>
       </MarketingSection>
 

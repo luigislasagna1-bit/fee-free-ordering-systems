@@ -333,14 +333,16 @@ export function computeSetupProgress(input: ChecklistInput): SetupProgress {
       complete: hasKitchenDevice,
       // Three detail variants since the Play launch (2026-07-22): the native
       // app is registered (push token present) → confirm it; a device exists
-      // but it's browser-only → nudge toward the free Android app (reliable
+      // but it's browser-only → nudge toward the free Order App (reliable
       // ring with the screen off); nothing yet → install nudge. Completion
       // deliberately unchanged — browser kitchens stay a supported setup.
+      // Both stores live since 2026-08-15, so the nudge no longer says
+      // "Android" — an iPhone/iPad owner used to read this as "not for me".
       detail: kitchenDeviceDetail
         ? hasNativeApp
           ? `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)} · native app`
-          : `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)} · running in a browser — install the free Android app for reliable ring alerts`
-        : "Install the free Kitchen Order App (Google Play) so new orders ring instantly. Until then you'll still get email/SMS alerts.",
+          : `${kitchenDeviceDetail.label} · ${formatRelativeAgo(kitchenDeviceDetail.lastSeenAt)} · running in a browser — install the free Fee Free Order App for reliable ring alerts`
+        : "Install the free Fee Free Order App on iPhone, iPad or Android so new orders ring instantly. Until then you'll still get email/SMS alerts.",
       detailKey: kitchenDeviceDetail
         ? hasNativeApp
           ? "orders.appConnectedDetail.native"

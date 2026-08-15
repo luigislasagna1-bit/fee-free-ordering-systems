@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Isti kuhinjski tijek",
       "featureKitchenBody": "Telefonske narudžbe stižu u vašu postojeću aplikaciju Kitchen Order App zajedno s online narudžbama. Bez nove aplikacije, bez novog osposobljavanja – vaš ih tim prihvaća na isti način.",
       "statusHeading": "Gdje smo danas",
-      "statusBody1": "Marljivo gradimo temelje. Glasovni agent, Twilio integracija, predaja kuhinji — sve u aktivnom razvoju. Očekujemo da ovo pokrenemo za restorane s ranim pristupom uskoro nakon pokretanja glavne platforme.",
+      "statusBody1": "Duboko smo u izradi. Glasovni agent, Twilio integracija i predaja u kuhinju u aktivnom su razvoju i već rade na pravoj pilot liniji. Otvorit ćemo to restoranima kad se dokaže u svakodnevnom radu.",
       "statusBody2": "Kada bude spremo, moći ćete se pretplatiti na to sa svoje stranice za naplatu kao i na svaki drugi dodatak. Do tada ova stranica je samo najava da dolazi.",
       "addonCatalogLink": "Pogledajte cijeli katalog dodataka",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Nadogradite za otključavanje →",
       "brandedAppTitle": "Brendirana mobilna aplikacija",
       "brandedAppDescription": "Pošaljite svoju vlastitu aplikaciju u iOS i Android trgovine aplikacija s vašim brendom.",
-      "getAppTitle": "Preuzmite aplikaciju Kitchen Order App",
-      "getAppBody": "Besplatno na usluzi Google Play. Nove narudžbe zvone odmah — čak i kad je zaslon isključen — a računi se ispisuju putem WiFi veze.",
-      "getAppScanHint": "Skenirajte kuhinjskim tabletom ili telefonom kako biste otvorili Google Play",
-      "getAppIosSoon": "Verzija za iPhone/iPad stiže u App Store — do tada iPadi mogu voditi kuhinju u pregledniku.",
+      "getAppTitle": "Instalirajte Fee Free Order App",
+      "getAppBody": "Primajte, prihvaćajte, ispisujte i vodite narudžbe s mobitela ili tableta svog restorana. Besplatno za iPhone, iPad i Android — nove narudžbe zvone odmah, čak i s ugašenim zaslonom.",
+      "getAppScanHint": "Skenirajte mobitelom ili tabletom na kojem ćete primati narudžbe",
+      "goLiveTitle": "Spremni ste za primanje narudžbi",
+      "goLiveBody": "Prođite ovo jednom na uređaju na kojem ćete primati narudžbe, da vas prva prava narudžba ne iznenadi.",
+      "goLiveStepInstall": "Instalirajte Fee Free Order App na taj mobitel ili tablet",
+      "goLiveStepSignIn": "Prijavite se u aplikaciju računom svog restorana",
+      "goLiveStepNotifications": "Provjerite primatelje obavijesti da vas upozorenja stignu",
+      "goLiveStepPrinting": "Postavite ispis računa ako ispisujete kuhinjske narudžbenice",
+      "goLiveStepTestOrder": "Napravite probnu narudžbu na svojoj stranici i prihvatite je",
+      "goLiveStepShare": "Podijelite poveznicu za narudžbe sa svojim gostima",
+      "goLiveInstallPrompt": "Preuzmite aplikaciju na svoj uređaj za narudžbe:",
       "sendLinkTitle": "Pošaljite poveznicu na svoj telefon",
       "sendLinkBody": "Preuzmite aplikaciju na uređaj koji ćete koristiti u kuhinji — poslat ćemo vam poveznicu za preuzimanje e-poštom ili SMS-om.",
       "sendLinkEmailOption": "E-pošta",
@@ -5680,8 +5688,8 @@
         "appConnected": "Aplikacija za primanje narudžbi povezana",
         "appConnectedDetail": {
           "native": "{device} · {ago} · nativna aplikacija",
-          "browser": "{device} · {ago} · radi u pregledniku — instalirajte besplatnu Android aplikaciju za pouzdana zvučna upozorenja",
-          "install": "Instalirajte besplatnu aplikaciju Kitchen Order App (Google Play) kako bi nove narudžbe odmah zazvonile. Do tada ćete i dalje primati upozorenja e-poštom/SMS-om."
+          "browser": "{device} · {ago} · radi u pregledniku — instalirajte besplatnu Fee Free Order App za pouzdana zvučna upozorenja",
+          "install": "Instalirajte besplatnu Fee Free Order App na iPhone, iPad ili Android da nove narudžbe odmah zazvone. Do tada ćete i dalje dobivati obavijesti e-poštom/SMS-om."
         },
         "notificationRecipient": "Barem jedan primatelj obavijesti"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Za vlasnike restorana",
           "title": "Vaš restoran. <accent>0% provizije. 100% vaše.</accent>",
-          "subtitle": "Zaprimajte narudžbe za preuzimanje, dostavu, blagovanje u restoranu i catering na vlastitoj brendiranoj stranici uz 0% provizije — a GrowthNet marketinški alati i Marketplace oglašavanje, dostupni od lansiranja, pretvaraju prve posjetitelje u stalne, izravne goste.",
+          "subtitle": "Primajte narudžbe za van, dostavu, na mjestu i catering na vlastitoj brendiranoj stranici uz 0 % provizije — uz GrowthNet marketinške alate i besplatan upis u Fee Free Marketplace koji prve posjetitelje pretvaraju u stalne, izravne goste.",
           "ctaStart": "Započnite besplatno",
           "ctaDemo": "Pogledajte živu stranicu",
           "badge": "0% provizije",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Besplatno · iOS + Android",
           "title": "Nikad ne propustite plaćenu narudžbu.",
-          "subtitle": "Izvorna aplikacija Kitchen Order App pretvara svaki iPhone, iPad ili Android tablet u neuništivu stanicu za narudžbe — sa sigurnosnom mrežom koja se brine da vas užurbana večer nikad ne stoji prodaje.",
+          "subtitle": "Izvorna Fee Free Order App pretvara bilo koji iPhone, iPad ili Android tablet u neprobojnu stanicu za narudžbe — sa sigurnosnom mrežom da vas gužva navečer nikad ne stoji prodaje.",
           "frameAlt": "Kitchen Order App — dolazna narudžba",
-          "getApp": "Preuzmite besplatnu Kitchen Order App na svoj tablet",
+          "getApp": "Preuzmite besplatnu Fee Free Order App na mobitel ili tablet",
           "ring": {
             "title": "Glasna zvonjava i s isključenim zaslonom",
             "body": "Alarm preko cijelog zaslona budi tablet istog trenutka kad stigne narudžba — čak i kad je usnuo."
@@ -6615,7 +6623,7 @@
           "smsBody": "Šaljite poruke gostima dok njihova narudžba prolazi kroz kuhinju — potvrđeno, spremno, dovršeno.",
           "contentpilotBody": "Vaš AI menadžer društvenih mreža — sastavlja i zakazuje objave na Instagram, Facebook, X i TikTok.",
           "saveTitle": "Objedinite i uštedite",
-          "saveBody": "Paket će koštati manje od kupnje svakog alata zasebno — cijene će biti objavljene pri lansiranju.",
+          "saveBody": "Paket će stajati manje nego svaki alat zasebno — cijene uskoro.",
           "ownMessage": "GrowthNet i naši ekskluzivni marketinški alati pretvaraju nove kupce s tržnice u <em>izravne, lojalne i stalne kupce koji pripadaju vama.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Preuzmite na",
           "androidLine1": "Nabavite na"
         },
-        "softlaunch": {
-          "eyebrow": "Meki početak",
-          "title": "Nešto se <accent>veliko</accent> kuha.",
-          "body": "Pozivamo odabranu skupinu vlasnika restorana da nam se rano pridruže i rastu zajedno s Fee Free Ordering.",
-          "tick1": "Budite dio budućnosti online naručivanja",
-          "tick2": "Osigurajte si pogodnosti ranog pristupa",
-          "tick3": "Pomozite oblikovati platformu",
-          "cta": "Pridružite se mekom početku",
-          "imgAlt": "Fee Free Ordering — uskoro stiže"
+        "live": {
+          "eyebrow": "Sada dostupno",
+          "title": "Vaš restoran može krenuti <accent>već danas</accent>.",
+          "body": "Fee Free Ordering radi i prima prave narudžbe. Napravljen je za neovisne restorane koji žele natrag svoje goste, svoj brend i svoj prihod — postavlja se u jedno poslijepodne, bez kreditne kartice i bez ugovora.",
+          "tick1": "Počnite besplatno — bez kreditne kartice",
+          "tick2": "Uvezite ili složite jelovnik u nekoliko minuta",
+          "tick3": "Objavite vlastitu stranicu za narudžbe",
+          "tick4": "Instalirajte besplatnu Fee Free Order App na iPhone, iPad ili Android",
+          "tick5": "Počnite primati izravne narudžbe uz 0 % provizije",
+          "cta": "Počnite primati narudžbe već danas",
+          "imgAlt": "Fee Free Ordering — radi i prima narudžbe"
+        },
+        "orderStation": {
+          "eyebrow": "Besplatno · iPhone, iPad i Android",
+          "title": "Vaša stanica za narudžbe. <accent>Već ju imate u džepu.</accent>",
+          "body": "Fee Free Order App — naša izvorna aplikacija za primanje restoranskih narudžbi — pretvara iPhone, iPad ili Android tablet u vaš terminal za narudžbe. Primajte narudžbe čim stignu, čujte ih usred najveće gužve, vodite ih do kraja i ispisujte kuhinjske narudžbenice. Bez kupnje posebne opreme.",
+          "devices": {
+            "title": "Radi na uređajima koje već imate",
+            "body": "Višak tableta ili stari mobitel postaje vaša stanica za narudžbe — ništa se ne unajmljuje ni kupuje."
+          },
+          "alerts": {
+            "title": "Zvoni dok ne prihvatite",
+            "body": "Glasan alarm budi uređaj čim stigne narudžba — čak i s ugašenim zaslonom."
+          },
+          "manage": {
+            "title": "Prihvatite, vodite, ispišite",
+            "body": "Odradite cijelu narudžbu u aplikaciji i ispišite kuhinjske narudžbenice na svom WiFi termalnom pisaču."
+          },
+          "free": "Besplatno uz svaki Fee Free Ordering račun"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Preuzmite aplikaciju",
-            "title": "Kitchen Order App za vaš tim.",
-            "body": "Upravljajte narudžbama, ispisujte račune i ažurirajte status — sve s vašeg tableta."
+            "title": "Fee Free Order App za vaš tim.",
+            "body": "Primajte, vodite i ispisujte narudžbe s iPhonea, iPada ili Android tableta. Besplatno uz vaš račun."
           },
           "growth": {
             "eyebrow": "Stvoreno za rast",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Dodaci",
       "addOnsSubtitle": "Otključajte plaćene značajke pojedinačno. Otkažite kada god — bez ugovora.",
-      "addOnPriceComingSoon": "Cijene objavljene pri pokretanju",
+      "addOnPriceComingSoon": "Cijene uskoro",
       "compareTitle": "Svaki restoran dobiva",
       "compareItems": [
         "0% provizije na izravne narudžbe",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "neovisnih lokalnih restorana",
     "nativeAppsTitle": "Marketplace aplikacija za iOS i Android",
     "comingSoon": "Uskoro",
-    "nativeAppsBody": "Namjenska aplikacija za naručivanje putem Marketplacea je u pripremi (aplikacija koja je danas na usluzi Google Play namijenjena je osoblju restorana). U međuvremenu dodirnite <b>izbornik za dijeljenje</b> u svom pregledniku i odaberite <b>„Dodaj na početni zaslon”</b> — dobit ćete Marketplace kao pravu ikonu aplikacije, s uvodnim zaslonom i prikazom preko cijelog zaslona. Trgovina aplikacija nije potrebna.",
+    "nativeAppsBody": "Namjenska aplikacija za naručivanje putem Marketplacea je u pripremi (aplikacija koja je danas na usluzi App Store and Google Play namijenjena je osoblju restorana). U međuvremenu dodirnite <b>izbornik za dijeljenje</b> u svom pregledniku i odaberite <b>„Dodaj na početni zaslon”</b> — dobit ćete Marketplace kao pravu ikonu aplikacije, s uvodnim zaslonom i prikazom preko cijelog zaslona. Trgovina aplikacija nije potrebna.",
     "ownerTitle": "Vlasnik restorana? Dodajte se na popis.",
     "ownerBody": "Imate restoran? <b>Uvrštavanje na Fee Free Marketplace je besplatno</b> — bez mjesečne naknade, bez provizije po narudžbi, nikada. Ponudite preuzimanje ili dostavu i doprite do novih kupaca u blizini, zadržavajući svoj brend, svoje kupce i 100% svojih cijena.",
     "getListedFree": "Krenite besplatno",
@@ -7030,7 +7058,7 @@
     "featured": "Istaknuto",
     "allRestaurants": "Svi restorani",
     "emptyTitle": "Tek smo počeli",
-    "emptyBody": "Još nema restorana na marketplaceu — uvrštavanja kreću s lansiranjem. Ako vodite restoran, otvorite besplatan račun već sada i moći ćete se pridružiti platformi <b>Marketplace</b> prvog dana.",
+    "emptyBody": "Ovdje još nema restorana. Ako vodite restoran, otvorite besplatan račun i objavite ga — svaki restoran s preuzimanjem ili dostavom nalazi se na <b>Marketplace</b> besplatno i bez provizije.",
     "restaurantLogin": "Prijava za restorane",
     "noMatchesTitle": "Nema rezultata",
     "noMatchesBody": "Isprobajte drugi pojam za pretragu ili uklonite filtre.",

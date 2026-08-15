@@ -45,6 +45,19 @@ export interface SolutionPage {
   faqs: SolutionFaq[];
 }
 
+/**
+ * Slugs whose SUBJECT is the Fee Free Order App itself — these render the
+ * App Store + Google Play badges in the body, not just the footer (2026-08-15,
+ * the day the App Store listing went live). Deliberately a small allow-list:
+ * a page about QR menus or a city landing page shouldn't lead with an app
+ * download. The template also emits MobileApplication JSON-LD for these, so
+ * a search for "restaurant order taking app for iPhone" can reach the real
+ * store listings.
+ */
+export const ORDER_APP_SOLUTION_SLUGS = new Set([
+  "restaurant-order-taking-app",
+]);
+
 /** Short human label for cross-link pills + footer (derived from the slug). */
 export function solutionLabel(p: SolutionPage): string {
   return p.h1;
@@ -538,7 +551,7 @@ export const SOLUTION_PAGES: SolutionPage[] = [
       },
       {
         "q": "What's the catch — how does Fee Free make money?",
-        "a": "Through optional, à-la-carte add-ons like online card payments and multi-location management. You only pay for what you use. The core ordering is commission-free and free for your first 100 orders monthly. An optional Marketplace listing is coming soon — pricing announced at launch."
+        "a": "Through optional, à-la-carte add-ons like online card payments and multi-location management. You only pay for what you use. The core ordering is commission-free and free for your first 100 orders monthly. A Fee Free Marketplace listing is included free, with no commission."
       },
       {
         "q": "How quickly can I start taking commission-free orders?",

@@ -24,7 +24,12 @@ multilingual read-back strings, audio (ASR-error) tier if Luigi provides a Deepg
 
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 
-**State of the platform:** Both stores live (Play; kitchen iOS with Apple). Email language
+**State of the platform:** 🎉 **LAUNCHED — both stores live for real.** The Fee Free Order App is
+PUBLIC on the App Store as of 2026-08-15 (Apple ID `6794053932`, seller Fee Free Ordering Inc.,
+free, iPhone + iPad) alongside Google Play, so `APP_LINKS.kitchen.ios` is flipped and every iOS
+surface is active. The marketing site now positions the platform as a live product — the homepage
+soft-launch teaser is a NOW LIVE acquisition section, and no public copy describes Fee Free
+Ordering itself as pre-launch (individually unreleased add-ons keep their "Soon"). Email language
 architecture shipped (customer locale persisted per order/reservation; staff emails localized ×38).
 Deliverability solved (SPF/DKIM/DMARC/MX complete, Mail-Tester 9.9/10, plain-text on every email).
 Guest self-cancel live. All 7 Fabrizio reports answered; 6 in testing, 1 (invoices) awaiting the
@@ -33,7 +38,7 @@ EU VAT number. Ireland VAT OSS registration SUBMITTED 2026-07-30.
 ### Waiting on others (no action; auto-resolves)
 - **Irish Revenue** → EU VAT number (days–weeks). DO NOT resubmit the OSS form.
 - **Fabrizio** → testing both batches + 5 follow-up fixes; more comments expected.
-- **Apple** → kitchen iOS review. ⚠️ Apple ORG membership renewal due ~2026-08-03 (Luigi: watch for the email; renewal lapse pulls BOTH iOS apps).
+- ~~**Apple** → kitchen iOS review.~~ ✅ **APPROVED + PUBLIC 2026-08-15** (see OWNER-ACTIONS A49/A17). ⚠️ Apple ORG membership renewal still matters — a lapse pulls BOTH iOS apps.
 - **Gmail** → domain warm-up; check postmaster.google.com ~2026-08-02; DMARC reports → tighten to p=quarantine ~mid-August after 2–4 clean weeks.
 
 ### Luigi's small queue (~10 min total)
@@ -60,8 +65,10 @@ EU VAT number. Ireland VAT OSS registration SUBMITTED 2026-07-30.
   import → instant demo store); marketing redesign with real screenshots from the seeded demo;
   town.club competitive-analysis conclusions folded into the marketing program; SEO expansion
   continues; "24/7 support" positioning once Twilio forwards land.
-- **App-store track:** kitchen iOS launch checklist when Apple approves (dual-store tracker then
-  complete); confirm vc23 prints on paper (Fabrizio).
+- **App-store track:** ✅ kitchen iOS approved + live 2026-08-15; dual-store tracker COMPLETE and
+  marketed as a headline feature (homepage order-station section, /never-miss-an-order,
+  /restaurant-order-taking-app, publishing go-live checklist). Remaining: confirm vc23 prints on
+  paper (Fabrizio); revoke the 2 old Sandbox-only APNs keys (A17 step 11).
 
 ---
 

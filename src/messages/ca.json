@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "El mateix flux de cuina",
       "featureKitchenBody": "Les comandes telefòniques arriben a la teva Kitchen Order App actual, al costat de les comandes en línia. Sense cap aplicació nova ni cap formació nova: el teu equip les accepta de la mateixa manera.",
       "statusHeading": "On som avui",
-      "statusBody1": "Estem treballant de valent en els fonaments. L'agent de veu, la integració amb Twilio, el traspàs a cuina — tot en desenvolupament actiu. Esperem llançar-ho a restaurants d'accés anticipat aviat després del llançament de la plataforma principal.",
+      "statusBody1": "Estem de ple en la construcció. L'agent de veu, la integració amb Twilio i el traspàs a la cuina estan en desenvolupament actiu i ja funcionen en una línia pilot real. L'obrirem als restaurants quan estigui provat en el servei diari.",
       "statusBody2": "Quan estigui llest, podràs subscriure't des de la teva pàgina de facturació com qualsevol altre complement. Fins llavors, aquesta pàgina és simplement un avis que s'acosta.",
       "addonCatalogLink": "Veure el catàleg complet de complements",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Actualitza per desbloquejar →",
       "brandedAppTitle": "App mòbil de marca",
       "brandedAppDescription": "Envia la teva pròpia app a les botigues d'apps d'iOS i Android amb la teva marca.",
-      "getAppTitle": "Obteniu la Kitchen Order App",
-      "getAppBody": "Gratuïta a Google Play. Les comandes noves sonen a l'instant — fins i tot amb la pantalla apagada — i els tiquets s'imprimeixen per WiFi.",
-      "getAppScanHint": "Escanegeu-lo amb la tauleta o el telèfon de la cuina per obrir Google Play",
-      "getAppIosSoon": "La versió per a iPhone/iPad arribarà aviat a l'App Store — mentrestant, els iPads poden fer funcionar la cuina al navegador.",
+      "getAppTitle": "Instal·la la Fee Free Order App",
+      "getAppBody": "Rep, accepta, imprimeix i gestiona comandes des del mòbil o la tauleta del teu restaurant. Gratis per a iPhone, iPad i Android — les comandes noves sonen a l'instant, fins i tot amb la pantalla apagada.",
+      "getAppScanHint": "Escaneja amb el mòbil o la tauleta on rebràs les comandes",
+      "goLiveTitle": "Ja pots rebre comandes",
+      "goLiveBody": "Fes això un cop al dispositiu on rebràs les comandes, perquè la primera comanda real no t'agafi desprevingut.",
+      "goLiveStepInstall": "Instal·la la Fee Free Order App en aquell mòbil o tauleta",
+      "goLiveStepSignIn": "Inicia sessió a l'aplicació amb el compte del teu restaurant",
+      "goLiveStepNotifications": "Revisa els destinataris de les notificacions perquè els avisos t'arribin",
+      "goLiveStepPrinting": "Configura la impressió de tiquets si imprimeixes comandes de cuina",
+      "goLiveStepTestOrder": "Fes una comanda de prova a la teva pàgina i accepta-la",
+      "goLiveStepShare": "Comparteix el teu enllaç de comandes amb els clients",
+      "goLiveInstallPrompt": "Instal·la l'aplicació al teu dispositiu de comandes:",
       "sendLinkTitle": "Envia't l'enllaç al telèfon",
       "sendLinkBody": "Instal·la l'app al dispositiu que faràs servir a la cuina: t'enviarem l'enllaç de descàrrega per correu o SMS.",
       "sendLinkEmailOption": "Correu",
@@ -5680,8 +5688,8 @@
         "appConnected": "App de recepció de comandes connectada",
         "appConnectedDetail": {
           "native": "{device} · {ago} · app nativa",
-          "browser": "{device} · {ago} · funcionant en un navegador — instal·leu l'app gratuïta per a Android per tenir alertes sonores fiables",
-          "install": "Instal·leu la Kitchen Order App gratuïta (Google Play) perquè les comandes noves sonin a l'instant. Mentrestant, continuareu rebent alertes per correu electrònic/SMS."
+          "browser": "{device} · {ago} · funcionant en un navegador — instal·la la Fee Free Order App gratuïta per tenir avisos sonors fiables",
+          "install": "Instal·la la Fee Free Order App gratuïta a l'iPhone, l'iPad o Android perquè les comandes noves sonin a l'instant. Fins llavors seguiràs rebent avisos per correu/SMS."
         },
         "notificationRecipient": "Almenys un destinatari de notificacions"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Per a propietaris de restaurants",
           "title": "El teu restaurant. <accent>0% de comissió. 100% teu.</accent>",
-          "subtitle": "Rep comandes per recollir, a domicili, al local i de càtering a la teva pròpia pàgina amb la teva marca, amb un 0% de comissió — i amb les eines de màrqueting GrowthNet i la publicitat al Marketplace, que arriben amb el llançament, converteix els visitants nous en clients directes i recurrents.",
+          "subtitle": "Rep comandes per emportar, a domicili, al local i de càtering a la teva pròpia pàgina de marca amb un 0 % de comissió — amb les eines de màrqueting de GrowthNet i una fitxa gratuïta al Fee Free Marketplace que converteixen els visitants nous en clients directes habituals.",
           "ctaStart": "Comença gratis",
           "ctaDemo": "Mira una botiga real",
           "badge": "0% de comissió",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Gratis · iOS + Android",
           "title": "No perdis mai una comanda pagada.",
-          "subtitle": "La Kitchen Order App nativa converteix qualsevol iPhone, iPad o tauleta Android en una estació de comandes a prova de bombes — amb una xarxa de seguretat perquè una nit de molta feina no et costi mai una venda.",
+          "subtitle": "La Fee Free Order App nativa converteix qualsevol iPhone, iPad o tauleta Android en una estació de comandes a prova de bales — amb una xarxa de seguretat perquè una nit de molta feina no et costi mai una venda.",
           "frameAlt": "Kitchen Order App — comanda entrant",
-          "getApp": "Aconsegueix la Kitchen Order App gratuïta a la teva tauleta",
+          "getApp": "Aconsegueix la Fee Free Order App gratuïta al mòbil o la tauleta",
           "ring": {
             "title": "So fort amb la pantalla apagada",
             "body": "Una alarma a pantalla completa desperta la tauleta a l'instant que arriba una comanda — fins i tot adormida."
@@ -6615,7 +6623,7 @@
           "smsBody": "Envia missatges de text als clients a mesura que la seva comanda avança per la cuina — confirmada, llesta, completada.",
           "contentpilotBody": "El teu gestor de xarxes amb AI — redacta i programa publicacions a Instagram, Facebook, X i TikTok.",
           "saveTitle": "Empaqueta i estalvia",
-          "saveBody": "El paquet costarà menys que comprar cada eina per separat — preus anunciats al llançament.",
+          "saveBody": "El paquet costarà menys que comprar cada eina per separat — preus ben aviat.",
           "ownMessage": "GrowthNet i les nostres eines de màrqueting exclusives converteixen els clients que arriben per primera vegada del marketplace en <em>clients directes, fidels i recurrents que són teus.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Descarrega-la a l'",
           "androidLine1": "Aconsegueix-la a"
         },
-        "softlaunch": {
-          "eyebrow": "Llançament suau",
-          "title": "S'està coent <accent>quelcom</accent> gros.",
-          "body": "Estem convidant un grup selecte de restauradors a unir-s'hi des del principi i créixer amb Fee Free Ordering.",
-          "tick1": "Forma part del futur de les comandes en línia",
-          "tick2": "Assegura't avantatges d'accés anticipat",
-          "tick3": "Ajuda a donar forma a la plataforma",
-          "cta": "Uneix-te al llançament suau",
-          "imgAlt": "Fee Free Ordering — properament"
+        "live": {
+          "eyebrow": "Ja en marxa",
+          "title": "El teu restaurant pot començar <accent>avui mateix</accent>.",
+          "body": "Fee Free Ordering està en marxa i rep comandes reals. Està fet per a restaurants independents que volen recuperar els seus clients, la seva marca i els seus ingressos — es configura en una tarda, sense targeta de crèdit i sense contracte.",
+          "tick1": "Comença gratis — sense targeta de crèdit",
+          "tick2": "Importa o crea la teva carta en minuts",
+          "tick3": "Publica la teva pàgina de comandes amb la teva marca",
+          "tick4": "Instal·la la Fee Free Order App gratuïta a l'iPhone, l'iPad o Android",
+          "tick5": "Comença a rebre comandes directes amb un 0 % de comissió",
+          "cta": "Comença a rebre comandes avui",
+          "imgAlt": "Fee Free Ordering — en marxa i rebent comandes"
+        },
+        "orderStation": {
+          "eyebrow": "Gratis · iPhone, iPad i Android",
+          "title": "La teva estació de comandes. <accent>Ja la portes a la butxaca.</accent>",
+          "body": "La Fee Free Order App — la nostra aplicació nativa de recepció de comandes per a restaurants — converteix un iPhone, un iPad o una tauleta Android en el teu terminal de comandes. Agafa les comandes en el moment que entren, escolta-les enmig del rebombori, gestiona-les fins al final i imprimeix tiquets de cuina. Sense maquinari propietari a comprar.",
+          "devices": {
+            "title": "Funciona amb els aparells que ja tens",
+            "body": "Una tauleta que et sobra o un mòbil vell es converteix en la teva estació de comandes — res per llogar ni per comprar."
+          },
+          "alerts": {
+            "title": "Sona fins que ho acceptes",
+            "body": "Una alarma forta desperta el dispositiu en el moment que entra una comanda — fins i tot amb la pantalla apagada."
+          },
+          "manage": {
+            "title": "Accepta, gestiona, imprimeix",
+            "body": "Resol tota la comanda des de l'aplicació i imprimeix tiquets de cuina a la teva impressora tèrmica WiFi."
+          },
+          "free": "Gratis amb qualsevol compte de Fee Free Ordering"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Aconsegueix l'app",
-            "title": "Kitchen Order App per al teu equip.",
-            "body": "Gestiona comandes, imprimeix tiquets i actualitza l'estat — tot des de la teva tauleta."
+            "title": "Fee Free Order App per al teu equip.",
+            "body": "Rep, gestiona i imprimeix comandes des d'un iPhone, un iPad o una tauleta Android. Gratis amb el teu compte."
           },
           "growth": {
             "eyebrow": "Pensat per créixer",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Complements",
       "addOnsSubtitle": "Desbloquegeu funcions de pagament individualment. Cancel·leu en qualsevol moment — sense contractes.",
-      "addOnPriceComingSoon": "Preus anunciats en el llançament",
+      "addOnPriceComingSoon": "Preus ben aviat",
       "compareTitle": "Cada restaurant obté",
       "compareItems": [
         "0% de comissió en comandes directes",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "restaurants locals independents",
     "nativeAppsTitle": "Una app de marketplace per a iOS i Android",
     "comingSoon": "Properament",
-    "nativeAppsBody": "Hi ha en preparació una app dedicada per fer comandes al marketplace (l'app que hi ha avui a Google Play és per al personal del restaurant). Mentrestant, toqueu el <b>menú de compartir</b> del navegador i trieu <b>«Afegeix a la pantalla d'inici»</b> — obtindreu el marketplace com una icona d'app real, amb pantalla de presentació i experiència a pantalla completa. No cal cap botiga d'aplicacions.",
+    "nativeAppsBody": "Hi ha en preparació una app dedicada per fer comandes al marketplace (l'app que hi ha avui a App Store and Google Play és per al personal del restaurant). Mentrestant, toqueu el <b>menú de compartir</b> del navegador i trieu <b>«Afegeix a la pantalla d'inici»</b> — obtindreu el marketplace com una icona d'app real, amb pantalla de presentació i experiència a pantalla completa. No cal cap botiga d'aplicacions.",
     "ownerTitle": "Ets propietari d'un restaurant? Apareix al llistat.",
     "ownerBody": "Tens un restaurant? <b>Aparèixer al Fee Free Marketplace és gratis</b>: mai una quota mensual ni una comissió per comanda. Ofereix recollida o lliurament i arriba a nous clients propers tot mantenint la teva marca, els teus clients i el 100 % dels teus preus.",
     "getListedFree": "Comença gratis",
@@ -7030,7 +7058,7 @@
     "featured": "Destacats",
     "allRestaurants": "Tots els restaurants",
     "emptyTitle": "Acabem de començar",
-    "emptyBody": "Encara no hi ha restaurants al marketplace — els llistats s'obriran al llançament. Si tens un restaurant, crea ara el teu compte gratuït i podràs unir-te al <b>Marketplace</b> el dia que obri.",
+    "emptyBody": "Encara no hi ha restaurants aquí. Si tens un restaurant, crea el teu compte gratuït i publica'l — tot restaurant amb recollida o lliurament apareix al <b>Marketplace</b> sense cap cost i sense comissió.",
     "restaurantLogin": "Accés per a restaurants",
     "noMatchesTitle": "Sense resultats",
     "noMatchesBody": "Prova un terme de cerca diferent o esborra els filtres.",

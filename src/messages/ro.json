@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Același flux în bucătărie",
       "featureKitchenBody": "Comenzile telefonice ajung în Kitchen Order App existentă, alături de comenzile online. Nicio aplicație nouă, niciun instructaj nou — echipa ta le acceptă în același mod.",
       "statusHeading": "Stadiul actual",
-      "statusBody1": "Suntem cu capul plecat construind fundația. Agentul vocal, integrarea Twilio, transferul în bucătărie — toate în dezvoltare activă. Ne așteptăm să lansăm acest serviciu pentru restaurantele cu acces timpuriu curând după lansarea platformei principale.",
+      "statusBody1": "Suntem în plină construcție. Agentul vocal, integrarea Twilio și predarea către bucătărie sunt toate în dezvoltare activă și rulează deja pe o linie-pilot reală. O deschidem restaurantelor odată ce se dovedește în serviciul zilnic.",
       "statusBody2": "Când va fi gata, vei putea să te abonezi de pe pagina de facturare ca la orice alt add-on. Până atunci, această pagină este doar o notificare că urmează.",
       "addonCatalogLink": "Vezi catalogul complet de add-on-uri",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Fă upgrade pentru a debloca →",
       "brandedAppTitle": "Aplicație mobilă cu brand propriu",
       "brandedAppDescription": "Trimite propria aplicație în App Store-urile iOS & Android cu brandul tău.",
-      "getAppTitle": "Descarcă Kitchen Order App",
-      "getAppBody": "Gratuit pe Google Play. Comenzile noi sună instantaneu — chiar și cu ecranul stins — iar bonurile se imprimă prin WiFi.",
-      "getAppScanHint": "Scanează cu tableta sau telefonul din bucătărie pentru a deschide Google Play",
-      "getAppIosSoon": "Versiunea pentru iPhone/iPad urmează să apară în App Store — până atunci, iPad-urile pot rula bucătăria în browser.",
+      "getAppTitle": "Instalează Fee Free Order App",
+      "getAppBody": "Primește, acceptă, tipărește și gestionează comenzi de pe telefonul sau tableta restaurantului. Gratuit pentru iPhone, iPad și Android — comenzile noi sună imediat, chiar și cu ecranul stins.",
+      "getAppScanHint": "Scanează cu telefonul sau tableta pe care vei prelua comenzile",
+      "goLiveTitle": "Ești gata să primești comenzi",
+      "goLiveBody": "Parcurge asta o dată pe dispozitivul pe care vei prelua comenzile, ca prima comandă reală să nu te prindă nepregătit.",
+      "goLiveStepInstall": "Instalează Fee Free Order App pe acel telefon sau tabletă",
+      "goLiveStepSignIn": "Autentifică-te în aplicație cu contul restaurantului",
+      "goLiveStepNotifications": "Verifică destinatarii notificărilor ca alertele să ajungă la tine",
+      "goLiveStepPrinting": "Configurează tipărirea bonurilor dacă tipărești bonuri de bucătărie",
+      "goLiveStepTestOrder": "Plasează o comandă de test pe pagina ta și acceptă-o",
+      "goLiveStepShare": "Distribuie linkul de comandă clienților tăi",
+      "goLiveInstallPrompt": "Ia aplicația pe dispozitivul tău de preluare a comenzilor:",
       "sendLinkTitle": "Trimite linkul pe telefon",
       "sendLinkBody": "Instalează aplicația pe dispozitivul pe care îl vei folosi în bucătărie — îți trimitem linkul de descărcare pe e-mail sau prin SMS.",
       "sendLinkEmailOption": "E-mail",
@@ -5680,8 +5688,8 @@
         "appConnected": "Aplicația de preluare a comenzilor conectată",
         "appConnectedDetail": {
           "native": "{device} · {ago} · aplicație nativă",
-          "browser": "{device} · {ago} · rulează în browser — instalează aplicația Android gratuită pentru alerte sonore fiabile",
-          "install": "Instalează gratuit Kitchen Order App (Google Play) ca noile comenzi să sune instantaneu. Până atunci vei primi în continuare alerte prin email/SMS."
+          "browser": "{device} · {ago} · rulează într-un browser — instalează aplicația gratuită Fee Free Order App pentru alerte sonore fiabile",
+          "install": "Instalează aplicația gratuită Fee Free Order App pe iPhone, iPad sau Android ca noile comenzi să sune imediat. Până atunci vei primi în continuare alerte pe email/SMS."
         },
         "notificationRecipient": "Cel puțin un destinatar de notificări"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Pentru proprietarii de restaurante",
           "title": "Restaurantul tău. <accent>0% comision. 100% al tău.</accent>",
-          "subtitle": "Primește comenzi de ridicare, livrare, servire în local și catering pe propria ta pagină personalizată, cu 0% comision — iar instrumentele de marketing GrowthNet și publicitatea Marketplace, disponibile la lansare, transformă vizitatorii ocazionali în clienți direcți și fideli.",
+          "subtitle": "Preia comenzi la pachet, cu livrare, în local și de catering pe propria pagină de brand cu 0% comision — cu instrumentele de marketing GrowthNet și o listare gratuită în Fee Free Marketplace, care transformă vizitatorii noi în clienți direcți fideli.",
           "ctaStart": "Începe gratuit",
           "ctaDemo": "Vezi un magazin live",
           "badge": "0% comision",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Gratuit · iOS + Android",
           "title": "Nu rata nicio comandă plătită.",
-          "subtitle": "Aplicația nativă Kitchen Order App transformă orice iPhone, iPad sau tabletă Android într-o stație de comenzi de neclintit — cu o plasă de siguranță, ca o seară aglomerată să nu te coste niciodată o vânzare.",
+          "subtitle": "Aplicația nativă Fee Free Order App transformă orice iPhone, iPad sau tabletă Android într-o stație de comenzi de neclintit — cu o plasă de siguranță ca o seară aglomerată să nu te coste niciodată o vânzare.",
           "frameAlt": "Kitchen Order App — comandă în curs",
-          "getApp": "Descarcă gratuit Kitchen Order App pe tableta ta",
+          "getApp": "Ia aplicația gratuită Fee Free Order App pe telefon sau tabletă",
           "ring": {
             "title": "Sonerie puternică cu ecranul stins",
             "body": "O alarmă pe tot ecranul trezește tableta în clipa în care sosește o comandă — chiar și în repaus."
@@ -6615,7 +6623,7 @@
           "smsBody": "Trimite SMS clienților pe măsură ce comanda lor avansează în bucătărie — confirmată, gata, finalizată.",
           "contentpilotBody": "Managerul tău AI de social media — redactează și programează postări pe Instagram, Facebook, X și TikTok.",
           "saveTitle": "Grupează și economisește",
-          "saveBody": "Pachetul va costa mai puțin decât cumpărarea fiecărui instrument separat — prețurile vor fi anunțate la lansare.",
+          "saveBody": "Pachetul va costa mai puțin decât fiecare instrument separat — prețuri în curând.",
           "ownMessage": "GrowthNet și instrumentele noastre exclusive de marketing transformă clienții care vin prima dată din marketplace în <em>clienți direcți, fideli și constanți, care îți aparțin.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Descarcă din",
           "androidLine1": "Disponibil pe"
         },
-        "softlaunch": {
-          "eyebrow": "Lansare în avanpremieră",
-          "title": "Se pregătește ceva <accent>mare</accent>.",
-          "body": "Invităm un grup select de proprietari de restaurante să se alăture din timp și să crească împreună cu Fee Free Ordering.",
-          "tick1": "Fii parte din viitorul comenzilor online",
-          "tick2": "Asigură-ți beneficiile de acces timpuriu",
-          "tick3": "Ajută la modelarea platformei",
-          "cta": "Alătură-te lansării în avanpremieră",
-          "imgAlt": "Fee Free Ordering — în curând disponibil"
+        "live": {
+          "eyebrow": "Acum activ",
+          "title": "Restaurantul tău poate porni <accent>chiar azi</accent>.",
+          "body": "Fee Free Ordering este activ și primește comenzi reale. E construit pentru restaurantele independente care își vor înapoi clienții, brandul și încasările — se configurează într-o după-amiază, fără card bancar și fără contract.",
+          "tick1": "Începe gratuit — fără card bancar",
+          "tick2": "Importă sau construiește meniul în câteva minute",
+          "tick3": "Publică propria pagină de comenzi",
+          "tick4": "Instalează aplicația gratuită Fee Free Order App pe iPhone, iPad sau Android",
+          "tick5": "Începe să primești comenzi directe cu 0% comision",
+          "cta": "Începe să primești comenzi azi",
+          "imgAlt": "Fee Free Ordering — activ și pregătit de comenzi"
+        },
+        "orderStation": {
+          "eyebrow": "Gratuit · iPhone, iPad și Android",
+          "title": "Stația ta de comenzi. <accent>O ai deja în buzunar.</accent>",
+          "body": "Fee Free Order App — aplicația noastră nativă de preluare a comenzilor pentru restaurante — transformă un iPhone, un iPad sau o tabletă Android în terminalul tău de comenzi. Preia comenzile în clipa în care intră, auzi-le și în plin vârf, gestionează-le până la final și tipărește bonuri de bucătărie. Fără echipamente speciale de cumpărat.",
+          "devices": {
+            "title": "Merge pe echipamentul pe care îl ai deja",
+            "body": "O tabletă în plus sau un telefon vechi devine stația ta de comenzi — nimic de închiriat, nimic de cumpărat."
+          },
+          "alerts": {
+            "title": "Sună până accepți",
+            "body": "O alarmă puternică trezește dispozitivul în clipa în care intră o comandă — chiar și cu ecranul stins."
+          },
+          "manage": {
+            "title": "Acceptă, gestionează, tipărește",
+            "body": "Rezolvă toată comanda din aplicație și tipărește bonuri de bucătărie pe imprimanta ta termică WiFi."
+          },
+          "free": "Gratuit cu orice cont Fee Free Ordering"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Descarcă aplicația",
-            "title": "Kitchen Order App pentru echipa ta.",
-            "body": "Gestionează comenzile, printează bonurile și actualizează statusul — totul de pe tableta ta."
+            "title": "Fee Free Order App pentru echipa ta.",
+            "body": "Preia, gestionează și tipărește comenzi de pe un iPhone, iPad sau tabletă Android. Gratuit cu contul tău."
           },
           "growth": {
             "eyebrow": "Creat pentru creștere",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Suplimente",
       "addOnsSubtitle": "Deblochează funcționalitățile plătite individual. Anulează oricând — fără contracte.",
-      "addOnPriceComingSoon": "Prețuri anunțate la lansare",
+      "addOnPriceComingSoon": "Prețuri în curând",
       "compareTitle": "Fiecare restaurant primește",
       "compareItems": [
         "0% comision la comenzile directe",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "restaurante locale independente",
     "nativeAppsTitle": "O aplicație de marketplace pentru iOS și Android",
     "comingSoon": "În curând",
-    "nativeAppsBody": "O aplicație dedicată de comenzi pentru marketplace este în pregătire (aplicația disponibilă azi pe Google Play este pentru personalul restaurantelor). Între timp, atinge <b>meniul de partajare</b> al browserului și alege <b>„Adaugă la ecranul de pornire”</b> — vei avea marketplace-ul ca aplicație reală, cu pictogramă proprie, ecran de deschidere și experiență pe tot ecranul. Nu este nevoie de niciun magazin de aplicații.",
+    "nativeAppsBody": "O aplicație dedicată de comenzi pentru marketplace este în pregătire (aplicația disponibilă azi pe App Store and Google Play este pentru personalul restaurantelor). Între timp, atinge <b>meniul de partajare</b> al browserului și alege <b>„Adaugă la ecranul de pornire”</b> — vei avea marketplace-ul ca aplicație reală, cu pictogramă proprie, ecran de deschidere și experiență pe tot ecranul. Nu este nevoie de niciun magazin de aplicații.",
     "ownerTitle": "Eşti proprietar de restaurant? Încrie-te.",
     "ownerBody": "Ai un restaurant? <b>Înscrierea în Fee Free Marketplace este gratuită</b> — fără abonament lunar, fără comision per comandă, niciodată. Oferă ridicare sau livrare și ajunge la clienți noi din apropiere, păstrându-ți brandul, clienții și 100% din prețuri.",
     "getListedFree": "Începe gratuit",
@@ -7030,7 +7058,7 @@
     "featured": "Recomandate",
     "allRestaurants": "Toate restaurantele",
     "emptyTitle": "Abia am început",
-    "emptyBody": "Niciun restaurant pe marketplace deocamdată — listările se deschid la lansare. Dacă conduci un restaurant, creează-ți acum contul gratuit și vei putea intra în <b>Marketplace</b> chiar din ziua deschiderii.",
+    "emptyBody": "Încă nu sunt restaurante aici. Dacă ai un restaurant, creează-ți contul gratuit și publică — orice restaurant cu ridicare sau livrare este listat în <b>Marketplace</b> gratuit și fără comision.",
     "restaurantLogin": "Autentificare restaurant",
     "noMatchesTitle": "Niciun rezultat",
     "noMatchesBody": "Încearcă un alt termen de căutare sau şterge filtrele.",

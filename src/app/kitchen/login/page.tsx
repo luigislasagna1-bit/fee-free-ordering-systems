@@ -9,11 +9,12 @@ import { KitchenLoginForm } from "./KitchenLoginForm";
 // switcher control.
 export default async function KitchenLoginPage() {
   const locale = await resolveLocale();
-  // "Get the app" hint (Play launch 2026-07-22): platform-branded store
-  // listing, so it must NOT show on the neutral reseller host (zero platform
-  // branding there — same rule as the tab title above in layout.tsx). The
-  // form additionally hides it when running INSIDE the native shell.
+  // "Get the app" hint (Play 2026-07-22, App Store 2026-08-15): platform-branded
+  // store listings, so they must NOT show on the neutral reseller host (zero
+  // platform branding there — same rule as the tab title above in layout.tsx).
+  // The form additionally hides them when running INSIDE the native shell.
+  // Both stores are passed so an owner on an iPhone isn't handed a Play link.
   const host = (await headers()).get("host");
-  const getAppUrl = isNeutralResellerHost(host) ? null : APP_LINKS.kitchen.play;
-  return <KitchenLoginForm locale={locale} getAppUrl={getAppUrl} />;
+  const appLinks = isNeutralResellerHost(host) ? null : APP_LINKS.kitchen;
+  return <KitchenLoginForm locale={locale} appLinks={appLinks} />;
 }

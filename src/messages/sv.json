@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Samma köksflöde",
       "featureKitchenBody": "Telefonbeställningar hamnar i din befintliga Kitchen Order App tillsammans med onlinebeställningar. Ingen ny app, ingen ny utbildning – ditt team accepterar dem på samma sätt.",
       "statusHeading": "Var detta står idag",
-      "statusBody1": "Vi bygger grunden på heltid. Röst-agenten, Twilio-integrationen, köksöverlämningen — allt under aktiv utveckling. Vi räknar med att lansera detta för restauranger med tidig tillgång snart efter att huvudplattformen lanseras.",
+      "statusBody1": "Vi bygger för fullt. Röstagenten, Twilio-integrationen och överlämningen till köket är alla under aktiv utveckling och körs redan på en skarp pilotlinje. Vi öppnar det för restauranger när det är bevisat i daglig drift.",
       "statusBody2": "När det är klart kan du prenumerera på det från din faktureringssida precis som vilket annat tillägg som helst. Tills dess är den här sidan bara en förvarning om att det kommer.",
       "addonCatalogLink": "Se hela tilläggskatalogen",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Uppgradera för att låsa upp →",
       "brandedAppTitle": "Varumärkesapp för mobilen",
       "brandedAppDescription": "Skicka in din egen app till iOS och Android app-butiker med ditt varumärke.",
-      "getAppTitle": "Hämta Kitchen Order App",
-      "getAppBody": "Gratis på Google Play. Nya beställningar ringer omedelbart — även när skärmen är av — och kvitton skrivs ut via WiFi.",
-      "getAppScanHint": "Skanna med kökets surfplatta eller telefon för att öppna Google Play",
-      "getAppIosSoon": "Versionen för iPhone/iPad är på väg till App Store — tills dess kan iPads köra köket i webbläsaren.",
+      "getAppTitle": "Installera Fee Free Order App",
+      "getAppBody": "Ta emot, acceptera, skriv ut och hantera beställningar från restaurangens telefon eller surfplatta. Gratis för iPhone, iPad och Android — nya beställningar ringer direkt, även med skärmen avstängd.",
+      "getAppScanHint": "Skanna med telefonen eller surfplattan du tar emot beställningar på",
+      "goLiveTitle": "Du är redo att ta emot beställningar",
+      "goLiveBody": "Gå igenom det här en gång på enheten du tar emot beställningar på, så att den första riktiga beställningen inte överraskar dig.",
+      "goLiveStepInstall": "Installera Fee Free Order App på den telefonen eller surfplattan",
+      "goLiveStepSignIn": "Logga in i appen med ditt restaurangkonto",
+      "goLiveStepNotifications": "Kontrollera dina aviseringsmottagare så att larmen når fram",
+      "goLiveStepPrinting": "Ställ in kvittoutskrift om du skriver ut kökskvitton",
+      "goLiveStepTestOrder": "Lägg en testbeställning på din egen sida och acceptera den",
+      "goLiveStepShare": "Dela din beställningslänk med dina gäster",
+      "goLiveInstallPrompt": "Hämta appen till din beställningsenhet:",
       "sendLinkTitle": "Skicka länken till din telefon",
       "sendLinkBody": "Hämta appen på enheten du ska använda i köket – vi mejlar eller sms:ar dig nedladdningslänken.",
       "sendLinkEmailOption": "E-post",
@@ -5680,8 +5688,8 @@
         "appConnected": "Beställningsapp ansluten",
         "appConnectedDetail": {
           "native": "{device} · {ago} · native-app",
-          "browser": "{device} · {ago} · körs i webbläsare — installera den kostnadsfria Android-appen för tillförlitliga ringsignaler",
-          "install": "Installera den kostnadsfria Kitchen Order App (Google Play) så att nya beställningar ringer omedelbart. Tills dess får du fortfarande aviseringar via e-post/SMS."
+          "browser": "{device} · {ago} · körs i en webbläsare — installera den kostnadsfria Fee Free Order App för pålitliga ringlarm",
+          "install": "Installera den kostnadsfria Fee Free Order App på iPhone, iPad eller Android så att nya beställningar ringer direkt. Fram till dess får du fortfarande e-post-/SMS-aviseringar."
         },
         "notificationRecipient": "Minst en aviseringsmottagare"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "För restaurangägare",
           "title": "Din restaurang. <accent>0% provision. 100% din.</accent>",
-          "subtitle": "Ta emot avhämtnings-, leverans-, dine-in- och cateringbeställningar på din egen profilerade sida med 0% provision – med GrowthNet-marknadsföringsverktyg och Marketplace-annonsering som kommer vid lanseringen och gör förstagångsbesökare till återkommande direktkunder.",
+          "subtitle": "Ta emot avhämtnings-, leverans-, ät-här- och cateringbeställningar på din egen varumärkessida med 0 % provision — med GrowthNets marknadsföringsverktyg och en gratis Fee Free Marketplace-listning som gör förstagångsbesökare till återkommande, direkta kunder.",
           "ctaStart": "Kom igång gratis",
           "ctaDemo": "Se en livebutik",
           "badge": "0% i provision",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Gratis · iOS + Android",
           "title": "Missa aldrig en betald beställning.",
-          "subtitle": "Den inbyggda Kitchen Order App förvandlar vilken iPhone, iPad eller Android-surfplatta som helst till en idiotsäker beställningsstation – med ett skyddsnät så att en hektisk kväll aldrig kostar dig en försäljning.",
+          "subtitle": "Den inbyggda Fee Free Order App gör vilken iPhone, iPad eller Android-surfplatta som helst till en skottsäker beställningsstation — med ett skyddsnät så att en hektisk kväll aldrig kostar dig en försäljning.",
           "frameAlt": "Kitchen Order App – inkommande beställning",
-          "getApp": "Skaffa den kostnadsfria Kitchen Order App till din surfplatta",
+          "getApp": "Hämta den kostnadsfria Fee Free Order App till din telefon eller surfplatta",
           "ring": {
             "title": "Hög signal med släckt skärm",
             "body": "Ett larm i helskärm väcker surfplattan i samma stund en beställning kommer in – även när den är i viloläge."
@@ -6615,7 +6623,7 @@
           "smsBody": "Sms:a kunderna allteftersom deras beställning rör sig genom köket – bekräftad, klar, färdig.",
           "contentpilotBody": "Din AI-baserade social media-ansvarige – skapar utkast och schemalägger inlägg till Instagram, Facebook, X och TikTok.",
           "saveTitle": "Paketera och spara",
-          "saveBody": "Paketet kommer att kosta mindre än att köpa varje verktyg separat — priser meddelas vid lanseringen.",
+          "saveBody": "Paketet kostar mindre än att köpa varje verktyg separat — priser kommer snart.",
           "ownMessage": "GrowthNet och våra exklusiva marknadsföringsverktyg förvandlar förstagångskunder från marknadsplatsen till <em>direkta, lojala återkommande kunder som du äger.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Ladda ner i",
           "androidLine1": "Hämta den på"
         },
-        "softlaunch": {
-          "eyebrow": "Mjuklansering",
-          "title": "Något <accent>stort</accent> puttrar på spisen.",
-          "body": "Vi bjuder in en utvald grupp restaurangägare att gå med tidigt och växa tillsammans med Fee Free Ordering.",
-          "tick1": "Var en del av framtidens onlinebeställningar",
-          "tick2": "Säkra dina förmåner som tidig användare",
-          "tick3": "Hjälp till att forma plattformen",
-          "cta": "Gå med i mjuklanseringen",
-          "imgAlt": "Fee Free Ordering — lanseras snart"
+        "live": {
+          "eyebrow": "Nu live",
+          "title": "Din restaurang kan börja <accent>idag</accent>.",
+          "body": "Fee Free Ordering är live och tar emot riktiga beställningar. Byggt för fristående restauranger som vill ha tillbaka sina gäster, sitt varumärke och sina intäkter — klart på en eftermiddag, utan kreditkort och utan avtal.",
+          "tick1": "Kom igång gratis — inget kreditkort",
+          "tick2": "Importera eller bygg din meny på några minuter",
+          "tick3": "Publicera din egen beställningssida",
+          "tick4": "Installera den kostnadsfria Fee Free Order App på iPhone, iPad eller Android",
+          "tick5": "Börja ta emot direkta beställningar med 0 % provision",
+          "cta": "Börja ta emot beställningar idag",
+          "imgAlt": "Fee Free Ordering — live och redo för beställningar"
+        },
+        "orderStation": {
+          "eyebrow": "Gratis · iPhone, iPad och Android",
+          "title": "Din beställningsstation. <accent>Redan i fickan.</accent>",
+          "body": "Fee Free Order App — vår inbyggda app för att ta emot restaurangbeställningar — gör en iPhone, iPad eller Android-surfplatta till din beställningsterminal. Ta emot beställningar direkt, hör dem mitt i rusningen, hantera dem hela vägen och skriv ut kökskvitton. Ingen egen specialhårdvara att köpa.",
+          "devices": {
+            "title": "Körs på utrustning du redan har",
+            "body": "En surfplatta över eller en gammal telefon blir din beställningsstation — inget att hyra, inget att köpa."
+          },
+          "alerts": {
+            "title": "Ringer tills du accepterar",
+            "body": "Ett högt larm väcker enheten i samma stund en beställning kommer in — även med skärmen avstängd."
+          },
+          "manage": {
+            "title": "Acceptera, hantera, skriv ut",
+            "body": "Sköt hela beställningen i appen och skriv ut kökskvitton på din WiFi-termoskrivare."
+          },
+          "free": "Gratis med varje Fee Free Ordering-konto"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Skaffa appen",
-            "title": "Kitchen Order App för ditt team.",
-            "body": "Hantera beställningar, skriv ut kvitton och uppdatera status — allt från din surfplatta."
+            "title": "Fee Free Order App för ditt team.",
+            "body": "Ta emot, hantera och skriv ut beställningar från en iPhone, iPad eller Android-surfplatta. Gratis med ditt konto."
           },
           "growth": {
             "eyebrow": "Byggd för tillväxt",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Tillägg",
       "addOnsSubtitle": "Lås upp betalfunktioner individuellt. Avbryt när som helst — inga kontrakt.",
-      "addOnPriceComingSoon": "Pris tillkännagivs vid lansering",
+      "addOnPriceComingSoon": "Priser kommer snart",
       "compareTitle": "Varje restaurang får",
       "compareItems": [
         "0% provision på direktbeställningar",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "oberoende lokala restauranger",
     "nativeAppsTitle": "En marketplace-app för iOS och Android",
     "comingSoon": "Kommer snart",
-    "nativeAppsBody": "En dedikerad beställningsapp för marketplace är på väg (appen som finns på Google Play idag är för restaurangpersonal). Under tiden kan du öppna webbläsarens <b>delningsmeny</b> och välja <b>”Lägg till på hemskärmen”</b> — då får du marketplace som en riktig appikon, med startskärm och helskärmsupplevelse. Ingen appbutik behövs.",
+    "nativeAppsBody": "En dedikerad beställningsapp för marketplace är på väg (appen som finns på App Store and Google Play idag är för restaurangpersonal). Under tiden kan du öppna webbläsarens <b>delningsmeny</b> och välja <b>”Lägg till på hemskärmen”</b> — då får du marketplace som en riktig appikon, med startskärm och helskärmsupplevelse. Ingen appbutik behövs.",
     "ownerTitle": "Restaurangägare? Kom med på listan.",
     "ownerBody": "Äger du en restaurang? <b>Att listas på Fee Free Marketplace är gratis</b> – ingen månadsavgift, ingen provision per beställning, någonsin. Erbjud avhämtning eller leverans och nå nya kunder i närheten samtidigt som du behåller ditt varumärke, dina kunder och 100 % av dina priser.",
     "getListedFree": "Kom igång gratis",
@@ -7030,7 +7058,7 @@
     "featured": "Utvalda",
     "allRestaurants": "Alla restauranger",
     "emptyTitle": "Vi har precis börjat",
-    "emptyBody": "Inga restauranger på marketplace ännu – listningarna öppnar vid lanseringen. Driver du en restaurang? Skapa ditt kostnadsfria konto nu, så kan du gå med i <b>Marketplace</b> samma dag det öppnar.",
+    "emptyBody": "Inga restauranger här ännu. Driver du en restaurang? Skapa ditt kostnadsfria konto och publicera — alla restauranger med avhämtning eller leverans listas gratis på <b>Marketplace</b>, utan provision.",
     "restaurantLogin": "Restauranginloggning",
     "noMatchesTitle": "Inga träffar",
     "noMatchesBody": "Prova ett annat sökord eller rensa filtren.",

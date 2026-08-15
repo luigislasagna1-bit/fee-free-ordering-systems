@@ -3,10 +3,12 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
-import { SOLUTION_PAGES, getSolutionPage } from "@/data/solution-pages";
+import { SOLUTION_PAGES, getSolutionPage, ORDER_APP_SOLUTION_SLUGS } from "@/data/solution-pages";
+import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
+import { APP_LINKS } from "@/lib/app-links";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
 import { safeJsonLd } from "@/lib/safe-json-ld";
-import { Upload, Check, Percent, ChefHat, Printer, CalendarCheck, Megaphone, Globe, Headset } from "lucide-react";
+import { Upload, Check, Percent, ChefHat, Printer, CalendarCheck, Megaphone, Globe, Headset, Smartphone } from "lucide-react";
 
 /**
  * Programmatic SEO "solution" landing page — ROOT URLs (GloriaFood-parity), e.g.
@@ -80,6 +82,25 @@ export default async function SolutionLandingPage({ params }: { params: Promise<
     "@type": "FAQPage",
     mainEntity: p.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
   };
+  // Order-App pages additionally describe the app as its own entity, pointing
+  // at the real store listings. Only emitted for LIVE listings (app-links.ts)
+  // — never advertise a store page that doesn't exist.
+  const isOrderAppPage = ORDER_APP_SOLUTION_SLUGS.has(p.slug);
+  const orderApp = {
+    "@context": "https://schema.org",
+    "@type": "MobileApplication",
+    name: "Fee Free Order App",
+    alternateName: "Kitchen Order App",
+    applicationCategory: "BusinessApplication",
+    applicationSubCategory: "Restaurant order-taking app",
+    operatingSystem: [APP_LINKS.kitchen.ios && "iOS", APP_LINKS.kitchen.play && "Android"].filter(Boolean).join(", "),
+    description:
+      "The free native restaurant order-taking app from Fee Free Ordering. New orders ring on an iPhone, iPad or Android tablet even with the screen off; staff accept, manage and complete orders and print kitchen tickets to a WiFi thermal printer.",
+    installUrl: [APP_LINKS.kitchen.ios, APP_LINKS.kitchen.play].filter(Boolean) as string[],
+    downloadUrl: [APP_LINKS.kitchen.ios, APP_LINKS.kitchen.play].filter(Boolean) as string[],
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    publisher: { "@type": "Organization", name: "Fee Free Ordering Inc.", url: baseUrl },
+  };
 
   // Internal cross-link graph: same category first, then the rest, capped to keep it tidy.
   const related = [
@@ -92,6 +113,9 @@ export default async function SolutionLandingPage({ params }: { params: Promise<
       <PublicNav currentLocale="en" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(softwareApplication) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(faqPage) }} />
+      {isOrderAppPage && (APP_LINKS.kitchen.ios || APP_LINKS.kitchen.play) && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(orderApp) }} />
+      )}
 
       <main className="flex-1">
         {/* HERO */}
@@ -121,6 +145,32 @@ export default async function SolutionLandingPage({ params }: { params: Promise<
             <p className="text-gray-700 leading-relaxed">{p.painPoint.body}</p>
           </div>
         </section>
+
+        {/* DOWNLOAD BAND — only on pages whose subject IS the Order App
+            (ORDER_APP_SOLUTION_SLUGS). A visitor landing here from
+            "restaurant order taking app" searched for a DOWNLOAD; making them
+            hunt the footer for it was the gap. Badges are availability-driven
+            via app-links.ts, so a pulled listing degrades on its own. */}
+        {isOrderAppPage && (APP_LINKS.kitchen.ios || APP_LINKS.kitchen.play) && (
+          <section className="py-12 px-4 bg-gray-50 border-y border-gray-100">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 rounded-full px-3 py-1.5 text-xs font-semibold mb-4">
+                <Smartphone className="w-3.5 h-3.5" />
+                FREE · IPHONE, IPAD &amp; ANDROID
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
+                Get the Fee Free Order App
+              </h2>
+              <p className="mt-3 text-gray-600 leading-relaxed">
+                Our native restaurant order-taking app. Install it on the phone or tablet you already
+                own and it becomes your order station — free with every Fee Free Ordering account.
+              </p>
+              <div className="mt-6 flex justify-center">
+                <AppDownloadBadges />
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* BENEFITS (page-specific) */}
         <section className="py-14 px-4 bg-gray-50">

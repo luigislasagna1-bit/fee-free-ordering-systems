@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Ugyanaz a konyhai folyamat",
       "featureKitchenBody": "A telefonos rendelések a meglévő Kitchen Order App alkalmazásába érkeznek az online rendelések mellé. Nincs új alkalmazás, nincs új betanítás — csapata ugyanúgy fogadja őket.",
       "statusHeading": "A jelenlegi állás",
-      "statusBody1": "Az alapokat építjük. A hangügynök, a Twilio integráció, a konyhai átadás — mind aktív fejlesztés alatt áll. Várhatóan hamarosan elindítjuk a korai hozzáférésű éttermek számára a fő platform indítása után.",
+      "statusBody1": "Javában építjük. A hangügynök, a Twilio-integráció és a konyhai átadás mind aktív fejlesztés alatt áll, és már működik egy éles pilotvonalon. Akkor nyitjuk meg az éttermeknek, ha bizonyított a napi üzemben.",
       "statusBody2": "Ha készen lesz, a számlázási oldaláról előfizethet rá, mint bármely más bővítményre. Addig ez az oldal csak egy előzetes értesítés arról, hogy jön.",
       "addonCatalogLink": "A teljes bővítménykatalógus megtekintése",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Frissítés a feloldáshoz →",
       "brandedAppTitle": "Márkás mobilalkalmazás",
       "brandedAppDescription": "Saját alkalmazás benyújtása az iOS és Android áruházakba a saját márkájával.",
-      "getAppTitle": "Töltse le a Kitchen Order App alkalmazást",
-      "getAppBody": "Ingyenes a Google Play-en. Az új rendelések azonnal csörögnek — kikapcsolt képernyő mellett is —, a nyugták pedig WiFi-n keresztül nyomtatódnak.",
-      "getAppScanHint": "Olvassa be a konyhai tablettel vagy telefonnal a Google Play megnyitásához",
-      "getAppIosSoon": "Az iPhone/iPad verzió hamarosan érkezik az App Store-ba — addig az iPadek böngészőben futtathatják a konyhát.",
+      "getAppTitle": "Telepítsd a Fee Free Order Appot",
+      "getAppBody": "Fogadd, vedd fel, nyomtasd és kezeld a rendeléseket az étterem telefonjáról vagy táblagépéről. Ingyenes iPhone-ra, iPadre és Androidra — az új rendelések azonnal csörögnek, kikapcsolt képernyővel is.",
+      "getAppScanHint": "Olvasd be azzal a telefonnal vagy táblagéppel, amin rendeléseket veszel fel",
+      "goLiveTitle": "Készen állsz a rendelésekre",
+      "goLiveBody": "Menj végig ezen egyszer azon az eszközön, amin rendeléseket veszel fel, hogy az első igazi rendelés ne érjen váratlanul.",
+      "goLiveStepInstall": "Telepítsd a Fee Free Order Appot arra a telefonra vagy táblagépre",
+      "goLiveStepSignIn": "Jelentkezz be az appba az étterem fiókjával",
+      "goLiveStepNotifications": "Ellenőrizd az értesítési címzetteket, hogy a riasztások elérjenek",
+      "goLiveStepPrinting": "Állítsd be a bizonylatnyomtatást, ha konyhai bonokat nyomtatsz",
+      "goLiveStepTestOrder": "Adj le egy tesztrendelést a saját oldaladon, és fogadd el",
+      "goLiveStepShare": "Oszd meg a rendelési linkedet a vendégeiddel",
+      "goLiveInstallPrompt": "Töltsd le az appot a rendelésfelvevő eszközödre:",
       "sendLinkTitle": "Küldje el a linket a telefonjára",
       "sendLinkBody": "Töltse le az alkalmazást arra az eszközre, amelyet a konyhában használ – e-mailben vagy SMS-ben elküldjük a letöltési linket.",
       "sendLinkEmailOption": "E-mail",
@@ -5680,8 +5688,8 @@
         "appConnected": "Rendelésfogadó alkalmazás csatlakoztatva",
         "appConnectedDetail": {
           "native": "{device} · {ago} · natív alkalmazás",
-          "browser": "{device} · {ago} · böngészőben fut — telepítse az ingyenes Android-alkalmazást a megbízható csörgő értesítésekhez",
-          "install": "Telepítse az ingyenes Kitchen Order App alkalmazást (Google Play), hogy az új rendelések azonnal csörögjenek. Addig is kap e-mail/SMS értesítéseket."
+          "browser": "{device} · {ago} · böngészőben fut — telepítsd az ingyenes Fee Free Order Appot a megbízható csörgő riasztásokért",
+          "install": "Telepítsd az ingyenes Fee Free Order Appot iPhone-ra, iPadre vagy Androidra, hogy az új rendelések azonnal csörögjenek. Addig is kapsz e-mail/SMS értesítéseket."
         },
         "notificationRecipient": "Legalább egy értesítési címzett"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Éttermeseknek",
           "title": "Az Ön étterme. <accent>0% jutalék. 100% az Öné.</accent>",
-          "subtitle": "Fogadj elviteles, kiszállításos, helyben fogyasztásos és catering-rendeléseket a saját, márkádra szabott oldaladon 0% jutalékkal — a rajtkor érkező GrowthNet marketingeszközök és a Marketplace-hirdetések pedig hűséges, közvetlenül nálad rendelő törzsvendégekké teszik az első látogatókat.",
+          "subtitle": "Fogadj elvitelre, kiszállításra, helyben fogyasztásra és cateringre szóló rendeléseket a saját arculatos oldaladon 0% jutalékkal — a GrowthNet marketingeszközeivel és egy ingyenes Fee Free Marketplace-megjelenéssel, amelyek az első látogatókból visszatérő, közvetlen vendégeket csinálnak.",
           "ctaStart": "Kezdd el ingyen",
           "ctaDemo": "Nézz meg egy élő rendelési oldalt",
           "badge": "0% jutalék",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Ingyenes · iOS + Android",
           "title": "Soha ne maradj le egy fizető rendelésről sem.",
-          "subtitle": "A natív Kitchen Order App bármelyik iPhone-t, iPad-et vagy Android táblagépet golyóálló rendelésfogadó állomássá alakít — biztonsági hálóval, hogy egy mozgalmas este se kerüljön egyetlen eladásodba sem.",
+          "subtitle": "A natív Fee Free Order App bármilyen iPhone-t, iPadet vagy Android táblagépet golyóálló rendelésfelvevő pulttá alakít — védőhálóval, hogy egy pörgős este soha ne kerüljön egy eladásodba.",
           "frameAlt": "Kitchen Order App — beérkező rendelés",
-          "getApp": "Töltsd le az ingyenes Kitchen Order App-ot a táblagépedre",
+          "getApp": "Töltsd le az ingyenes Fee Free Order Appot a telefonodra vagy táblagépedre",
           "ring": {
             "title": "Hangos csengés kikapcsolt képernyővel",
             "body": "Egy teljes képernyős riasztás felébreszti a táblagépet abban a pillanatban, ahogy a rendelés megérkezik — még alvó állapotból is."
@@ -6615,7 +6623,7 @@
           "smsBody": "Üzenj a vendégeknek, ahogy a rendelésük halad a konyhán — visszaigazolva, kész, befejezve.",
           "contentpilotBody": "Az AI közösségi médiamenedzsered — bejegyzéseket fogalmaz és ütemez az Instagram, Facebook, X és TikTok platformokra.",
           "saveTitle": "Csomagolj és spórolj",
-          "saveBody": "A csomag kevesebbe kerül majd, mint az eszközök külön-külön megvásárlása — az árakat az induláskor jelentjük be.",
+          "saveBody": "A csomag olcsóbb lesz, mint az eszközöket külön megvenni — árak hamarosan.",
           "ownMessage": "A GrowthNet és exkluzív marketingeszközeink az először a piactérről érkező vásárlókat <em>közvetlen, hűséges és visszatérő vásárlókká teszik, akik a tieid.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Töltsd le innen:",
           "androidLine1": "Szerezd be itt:"
         },
-        "softlaunch": {
-          "eyebrow": "Soft launch",
-          "title": "Valami <accent>nagy</accent> készülődik a konyhában.",
-          "body": "Éttermesek egy szűk körét hívjuk meg, hogy korán csatlakozzanak és együtt növekedjenek a Fee Free Ordering rendszerrel.",
-          "tick1": "Légy része az online rendelés jövőjének",
-          "tick2": "Rögzítsd a korai hozzáférés előnyeit",
-          "tick3": "Segíts alakítani a platformot",
-          "cta": "Csatlakozz a soft launchhoz",
-          "imgAlt": "Fee Free Ordering — hamarosan indul"
+        "live": {
+          "eyebrow": "Már elérhető",
+          "title": "Az étterem <accent>már ma</accent> elindulhat.",
+          "body": "A Fee Free Ordering él, és valódi rendeléseket fogad. Független éttermeknek készült, amelyek vissza akarják kapni a vendégeiket, a márkájukat és a bevételüket — egy délután alatt beállítható, bankkártya és szerződés nélkül.",
+          "tick1": "Kezdd ingyen — bankkártya nélkül",
+          "tick2": "Importáld vagy építsd fel az étlapot percek alatt",
+          "tick3": "Tedd közzé a saját rendelési oldaladat",
+          "tick4": "Telepítsd az ingyenes Fee Free Order Appot iPhone-ra, iPadre vagy Androidra",
+          "tick5": "Kezdj közvetlen rendeléseket fogadni 0% jutalékkal",
+          "cta": "Kezdj rendeléseket fogadni még ma",
+          "imgAlt": "Fee Free Ordering — él és fogadja a rendeléseket"
+        },
+        "orderStation": {
+          "eyebrow": "Ingyenes · iPhone, iPad és Android",
+          "title": "A rendelésfelvevő pultod. <accent>Már a zsebedben van.</accent>",
+          "body": "A Fee Free Order App — natív éttermi rendelésfelvevő alkalmazásunk — egy iPhone-t, iPadet vagy Android táblagépet alakít a rendelési termináloddá. Vedd fel a rendeléseket abban a pillanatban, ahogy beérkeznek, halld meg őket a legnagyobb rohanásban is, vidd végig őket, és nyomtass konyhai bonokat. Nem kell külön hardvert venni.",
+          "devices": {
+            "title": "A meglévő eszközeiden fut",
+            "body": "Egy felesleges táblagép vagy egy régi telefon lesz a rendelésfelvevő pultod — semmit sem kell bérelni vagy venni."
+          },
+          "alerts": {
+            "title": "Csörög, amíg el nem fogadod",
+            "body": "Hangos riasztás ébreszti fel a készüléket, amint befut egy rendelés — kikapcsolt képernyővel is."
+          },
+          "manage": {
+            "title": "Elfogadás, kezelés, nyomtatás",
+            "body": "Intézd az egész rendelést az appban, és nyomtass konyhai bonokat a WiFis hőnyomtatódra."
+          },
+          "free": "Ingyenes minden Fee Free Ordering fiókkal"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Töltsd le az appot",
-            "title": "Kitchen Order App a csapatodnak.",
-            "body": "Kezeld a rendeléseket, nyomtass nyugtákat és frissítsd a státuszt — mindezt a tabletedről."
+            "title": "Fee Free Order App a csapatodnak.",
+            "body": "Vedd fel, kezeld és nyomtasd a rendeléseket iPhone-ról, iPadről vagy Android táblagépről. Ingyenes a fiókoddal."
           },
           "growth": {
             "eyebrow": "A növekedésre tervezve",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Bővítmények",
       "addOnsSubtitle": "Oldjon fel fizetős funkciókat egyenként. Bármikor lemondható — nincs szerződés.",
-      "addOnPriceComingSoon": "Az árak az induláskor kerülnek bejelentésre",
+      "addOnPriceComingSoon": "Árak hamarosan",
       "compareTitle": "Minden étterem megkapja",
       "compareItems": [
         "0% jutalék a közvetlen rendeléseken",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "független helyi étterem",
     "nativeAppsTitle": "Piactér-alkalmazás iOS-re és Androidra",
     "comingSoon": "Hamarosan",
-    "nativeAppsBody": "Készül egy dedikált piactéri rendelési alkalmazás (a ma a Google Play-en elérhető alkalmazás az éttermi személyzetnek szól). Addig is koppintson a böngésző <b>megosztás menüjére</b>, és válassza a <b>„Hozzáadás a kezdőképernyőhöz”</b> lehetőséget — így a piacteret valódi alkalmazásikonnal, indítóképernyővel és teljes képernyős élménnyel kapja meg. Nincs szükség alkalmazásboltra.",
+    "nativeAppsBody": "Készül egy dedikált piactéri rendelési alkalmazás (a ma a App Store and Google Play-en elérhető alkalmazás az éttermi személyzetnek szól). Addig is koppintson a böngésző <b>megosztás menüjére</b>, és válassza a <b>„Hozzáadás a kezdőképernyőhöz”</b> lehetőséget — így a piacteret valódi alkalmazásikonnal, indítóképernyővel és teljes képernyős élménnyel kapja meg. Nincs szükség alkalmazásboltra.",
     "ownerTitle": "Étteremtulajdonos? Kerülj fel a listára.",
     "ownerBody": "Van éttermed? <b>A Fee Free Marketplace-en való megjelenés ingyenes</b> — nincs havidíj, nincs rendelésenkénti jutalék, soha. Kínálj elvitelt vagy kiszállítást, és érj el új vásárlókat a közelben, miközben megtartod a márkádat, a vásárlóidat és az áraid 100%-át.",
     "getListedFree": "Kezdd el ingyen",
@@ -7030,7 +7058,7 @@
     "featured": "Kiemelt",
     "allRestaurants": "Összes étterem",
     "emptyTitle": "Épp csak elkezdtük",
-    "emptyBody": "Még nincs étterem a piactéren — a listázás a rajtkor nyílik meg. Ha éttermet üzemeltetsz, hozd létre ingyenes fiókod már most, és a nyitás napján csatlakozhatsz a <b>Marketplace</b>-hez.",
+    "emptyBody": "Itt még nincsenek éttermek. Ha éttermet vezetsz, hozd létre az ingyenes fiókodat és tedd közzé — minden elvitelt vagy kiszállítást vállaló étterem ingyen, jutalék nélkül szerepel a <b>Marketplace</b>-en.",
     "restaurantLogin": "Éttermi bejelentkezés",
     "noMatchesTitle": "Nincs találat",
     "noMatchesBody": "Próbálj más keresőszót, vagy töröld a szűrőket.",

@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Stejný kuchyňský tok",
       "featureKitchenBody": "Telefonické objednávky přicházejí do vaší stávající aplikace Kitchen Order App spolu s online objednávkami. Žádná nová aplikace, žádné nové školení – váš tým je přijímá stejným způsobem.",
       "statusHeading": "Kde to dnes stojíme",
-      "statusBody1": "Intenzivně pracujeme na základech. Hlasový agent, integrace Twilio, předání do kuchyně — vše aktivně ve vývoji. Očekáváme, že tuto funkci spustíme pro restaurace s předčasným přístupem brzy po spuštění hlavní platformy.",
+      "statusBody1": "Jsme v plném vývoji. Hlasový agent, integrace s Twilio i předání do kuchyně jsou v aktivním vývoji a už běží na ostré pilotní lince. Otevřeme to restauracím, až se to osvědčí v každodenním provozu.",
       "statusBody2": "Až bude připraveno, budete se moci přihlásit k odběru z vaší fakturační stránky jako k jakémukoli jinému doplňku. Do té doby je tato stránka jen předzvěstí toho, co přichází.",
       "addonCatalogLink": "Zobrazit celý katalog doplňků",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Upgradovat pro odemčení →",
       "brandedAppTitle": "Mobilní aplikace s vaší značkou",
       "brandedAppDescription": "Odešlete vlastní aplikaci do obchodů iOS a Android se svou značkou.",
-      "getAppTitle": "Získejte Kitchen Order App",
-      "getAppBody": "Zdarma na Google Play. Nové objednávky okamžitě zazvoní — i při vypnuté obrazovce — a účtenky se tisknou přes WiFi.",
-      "getAppScanHint": "Naskenujte kuchyňským tabletem nebo telefonem a otevřete Google Play",
-      "getAppIosSoon": "Verze pro iPhone/iPad míří do App Store — do té doby mohou iPady provozovat kuchyni v prohlížeči.",
+      "getAppTitle": "Nainstalujte Fee Free Order App",
+      "getAppBody": "Přijímejte, potvrzujte, tiskněte a spravujte objednávky z telefonu nebo tabletu restaurace. Zdarma pro iPhone, iPad a Android — nové objednávky zazvoní okamžitě, i při zhasnutém displeji.",
+      "getAppScanHint": "Naskenujte telefonem nebo tabletem, na kterém budete přijímat objednávky",
+      "goLiveTitle": "Jste připraveni přijímat objednávky",
+      "goLiveBody": "Projděte si to jednou na zařízení, na kterém budete přijímat objednávky, aby vás první opravdová objednávka nezaskočila.",
+      "goLiveStepInstall": "Nainstalujte Fee Free Order App do toho telefonu nebo tabletu",
+      "goLiveStepSignIn": "Přihlaste se v aplikaci účtem své restaurace",
+      "goLiveStepNotifications": "Zkontrolujte příjemce upozornění, aby se k vám hlášky dostaly",
+      "goLiveStepPrinting": "Nastavte tisk účtenek, pokud tisknete kuchyňské bony",
+      "goLiveStepTestOrder": "Zadejte testovací objednávku na své stránce a přijměte ji",
+      "goLiveStepShare": "Sdílejte odkaz na objednávky se svými hosty",
+      "goLiveInstallPrompt": "Stáhněte si aplikaci do objednávkového zařízení:",
       "sendLinkTitle": "Pošlete si odkaz do telefonu",
       "sendLinkBody": "Nainstalujte aplikaci na zařízení, které budete používat v kuchyni — odkaz ke stažení vám pošleme e-mailem nebo SMS.",
       "sendLinkEmailOption": "E-mail",
@@ -5680,8 +5688,8 @@
         "appConnected": "Aplikace pro příjem objednávek připojena",
         "appConnectedDetail": {
           "native": "{device} · {ago} · nativní aplikace",
-          "browser": "{device} · {ago} · běží v prohlížeči — nainstalujte bezplatnou aplikaci pro Android pro spolehlivé zvonění při nových objednávkách",
-          "install": "Nainstalujte si bezplatnou Kitchen Order App (Google Play), aby nové objednávky okamžitě zazvonily. Do té doby budete dál dostávat upozornění e-mailem/SMS."
+          "browser": "{device} · {ago} · běží v prohlížeči — nainstalujte bezplatnou Fee Free Order App pro spolehlivé zvukové upozornění",
+          "install": "Nainstalujte bezplatnou Fee Free Order App na iPhone, iPad nebo Android, aby nové objednávky zazvonily okamžitě. Do té doby budete stále dostávat e-mailová/SMS upozornění."
         },
         "notificationRecipient": "Alespoň jeden příjemce upozornění"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Pro majitele restaurací",
           "title": "Vaše restaurace. <accent>0% provize. 100% vaše.</accent>",
-          "subtitle": "Přijímejte objednávky s vyzvednutím, rozvozem, konzumací v restauraci i catering na vlastní značkové stránce s 0% provizí — marketingové nástroje GrowthNet a inzerce na Marketplace, které dorazí při spuštění, promění první návštěvníky ve stálé přímé zákazníky.",
+          "subtitle": "Přijímejte objednávky s sebou, na rozvoz, na místě i cateringové na vlastní značkové stránce s 0% provizí — s marketingovými nástroji GrowthNet a bezplatným zápisem ve Fee Free Marketplace, které z prvních návštěvníků udělají stálé přímé zákazníky.",
           "ctaStart": "Začít zdarma",
           "ctaDemo": "Prohlédnout živou stránku",
           "badge": "0% provize",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Zdarma · iOS + Android",
           "title": "Nikdy nepřijdete o placenou objednávku.",
-          "subtitle": "Nativní Kitchen Order App promění libovolný iPhone, iPad nebo Android tablet v neprůstřelnou objednávkovou stanici — s pojistkou, aby vás rušný večer nikdy nestál tržbu.",
+          "subtitle": "Nativní Fee Free Order App promění jakýkoli iPhone, iPad nebo tablet s Androidem v neprůstřelné objednávkové stanoviště — se záchrannou sítí, aby vás rušný večer nikdy nestál prodej.",
           "frameAlt": "Kitchen Order App — příchozí objednávka",
-          "getApp": "Získejte aplikaci Kitchen Order App zdarma na svůj tablet",
+          "getApp": "Stáhněte si bezplatnou Fee Free Order App do telefonu nebo tabletu",
           "ring": {
             "title": "Hlasité zvonění i při zhasnuté obrazovce",
             "body": "Celoobrazovkový alarm probudí tablet v okamžiku, kdy přijde objednávka — i když je uspaný."
@@ -6615,7 +6623,7 @@
           "smsBody": "Posílejte zákazníkům zprávy, jak jejich objednávka prochází kuchyní — potvrzeno, hotovo, dokončeno.",
           "contentpilotBody": "Váš AI správce sociálních sítí — připraví a naplánuje příspěvky na Instagram, Facebook, X a TikTok.",
           "saveTitle": "Balíček a úspora",
-          "saveBody": "Balíček bude stát méně než nákup jednotlivých nástrojů zvlášť — ceny oznámíme při spuštění.",
+          "saveBody": "Balíček bude stát méně než každý nástroj zvlášť — ceny brzy.",
           "ownMessage": "GrowthNet a naše exkluzivní marketingové nástroje promění zákazníky z tržiště v <em>přímé, věrné a vracející se zákazníky, kteří patří vám.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Stáhnout v",
           "androidLine1": "Stáhnout na"
         },
-        "softlaunch": {
-          "eyebrow": "Měkký start",
-          "title": "Něco <accent>velkého</accent> se vaří.",
-          "body": "Zveme vybranou skupinu majitelů restaurací, aby se připojili včas a rostli společně s Fee Free Ordering.",
-          "tick1": "Buďte součástí budoucnosti online objednávání",
-          "tick2": "Zajistěte si výhody předčasného přístupu",
-          "tick3": "Pomozte utvářet platformu",
-          "cta": "Připojte se k měkkému startu",
-          "imgAlt": "Fee Free Ordering — brzy spouštíme"
+        "live": {
+          "eyebrow": "Už v provozu",
+          "title": "Vaše restaurace může začít <accent>ještě dnes</accent>.",
+          "body": "Fee Free Ordering běží a přijímá skutečné objednávky. Vzniklo pro nezávislé restaurace, které chtějí zpět své hosty, svou značku a své tržby — nastavíte za jedno odpoledne, bez platební karty a bez smlouvy.",
+          "tick1": "Začněte zdarma — bez platební karty",
+          "tick2": "Naimportujte nebo vytvořte menu během minut",
+          "tick3": "Zveřejněte vlastní objednávkovou stránku",
+          "tick4": "Nainstalujte bezplatnou Fee Free Order App na iPhone, iPad nebo Android",
+          "tick5": "Začněte přijímat přímé objednávky s 0% provizí",
+          "cta": "Začněte přijímat objednávky dnes",
+          "imgAlt": "Fee Free Ordering — v provozu a přijímá objednávky"
+        },
+        "orderStation": {
+          "eyebrow": "Zdarma · iPhone, iPad a Android",
+          "title": "Vaše objednávkové stanoviště. <accent>Máte ho už v kapse.</accent>",
+          "body": "Fee Free Order App — naše nativní aplikace pro příjem objednávek v restauraci — promění iPhone, iPad nebo tablet s Androidem ve váš objednávkový terminál. Přijímejte objednávky hned, jak dorazí, uslyšíte je i v největším náporu, dotáhněte je do konce a tiskněte kuchyňské bony. Není potřeba kupovat žádný speciální hardware.",
+          "devices": {
+            "title": "Běží na zařízení, které už máte",
+            "body": "Z tabletu, co zbyl, nebo starého telefonu se stane objednávkové stanoviště — nic si nepronajímáte ani nekupujete."
+          },
+          "alerts": {
+            "title": "Zvoní, dokud nepřijmete",
+            "body": "Hlasitý budík probudí zařízení hned, jak dorazí objednávka — i při zhasnutém displeji."
+          },
+          "manage": {
+            "title": "Přijmout, spravovat, vytisknout",
+            "body": "Vyřiďte celou objednávku v aplikaci a tiskněte kuchyňské bony na WiFi termotiskárně."
+          },
+          "free": "Zdarma ke každému účtu Fee Free Ordering"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Stáhněte si aplikaci",
-            "title": "Kitchen Order App pro váš tým.",
-            "body": "Spravujte objednávky, tiskněte účtenky a aktualizujte stav — vše z vašeho tabletu."
+            "title": "Fee Free Order App pro váš tým.",
+            "body": "Přijímejte, spravujte a tiskněte objednávky z iPhonu, iPadu nebo tabletu s Androidem. Zdarma k vašemu účtu."
           },
           "growth": {
             "eyebrow": "Stvořeno pro růst",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Doplňky",
       "addOnsSubtitle": "Odemkněte placené funkce jednotlivě. Kdykoli zrušit — žádné smlouvy.",
-      "addOnPriceComingSoon": "Ceny oznámeny při spuštění",
+      "addOnPriceComingSoon": "Ceny brzy",
       "compareTitle": "Každá restaurace dostane",
       "compareItems": [
         "0% provize z přímých objednávek",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "nezávislých místních restaurací",
     "nativeAppsTitle": "Marketplace aplikace pro iOS a Android",
     "comingSoon": "Již brzy",
-    "nativeAppsBody": "Samostatná objednávková aplikace pro marketplace se připravuje (aplikace, která je dnes na Google Play, je určena pro personál restaurací). Mezitím klepněte v prohlížeči na <b>nabídku sdílení</b> a zvolte <b>„Přidat na plochu“</b> — marketplace získáte jako skutečnou ikonu aplikace, s úvodní obrazovkou a zobrazením na celou obrazovku. Bez nutnosti obchodu s aplikacemi.",
+    "nativeAppsBody": "Samostatná objednávková aplikace pro marketplace se připravuje (aplikace, která je dnes na App Store and Google Play, je určena pro personál restaurací). Mezitím klepněte v prohlížeči na <b>nabídku sdílení</b> a zvolte <b>„Přidat na plochu“</b> — marketplace získáte jako skutečnou ikonu aplikace, s úvodní obrazovkou a zobrazením na celou obrazovku. Bez nutnosti obchodu s aplikacemi.",
     "ownerTitle": "Jste majitel restaurace? Nechte se zapsat.",
     "ownerBody": "Máte restauraci? <b>Zařazení na Fee Free Marketplace je zdarma</b> — žádný měsíční poplatek, žádná provize za objednávku, nikdy. Nabídněte vyzvednutí nebo doručení a oslovte nové zákazníky ve svém okolí, přičemž si zachováte svou značku, své zákazníky a 100 % svých cen.",
     "getListedFree": "Začněte zdarma",
@@ -7030,7 +7058,7 @@
     "featured": "Doporučené",
     "allRestaurants": "Všechny restaurace",
     "emptyTitle": "Teprve začínáme",
-    "emptyBody": "Na marketplace zatím nejsou žádné restaurace — zápisy se otevřou při spuštění. Pokud provozujete restauraci, vytvořte si bezplatný účet už teď a v den otevření se budete moci připojit k <b>Marketplace</b>.",
+    "emptyBody": "Zatím tu nejsou žádné restaurace. Pokud vedete restauraci, založte si bezplatný účet a zveřejněte ji — každá restaurace s výdejem nebo rozvozem je v <b>Marketplace</b> zdarma a bez provize.",
     "restaurantLogin": "Přihlášení pro restaurace",
     "noMatchesTitle": "Žádné výsledky",
     "noMatchesBody": "Zkuste jiný výraz nebo zrušte filtry.",

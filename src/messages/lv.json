@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Tāda pati virtuves plūsma",
       "featureKitchenBody": "Telefoniskie pasūtījumi nonāk jūsu esošajā Kitchen Order App kopā ar tiešsaistes pasūtījumiem. Nekādas jaunas lietotnes, nekādas jaunas apmācības — jūsu komanda tos pieņem tādā pašā veidā.",
       "statusHeading": "Pašreizējais stāvoklis",
-      "statusBody1": "Mēs intensīvi veidojam pamatu. Balss aģents, Twilio integrācija, virtuves nodošana — viss aktīvā izstrādē. Paredzam ieviest šo agrīnas piekļuves restorānos drīz pēc galvenās platformas palaišanas.",
+      "statusBody1": "Mēs pilnā sparā būvējam. Balss aģents, Twilio integrācija un nodošana virtuvei ir aktīvā izstrādē un jau darbojas uz reālas pilotlīnijas. Atvērsim to restorāniem, kad tas būs pierādījies ikdienas darbā.",
       "statusBody2": "Kad tas būs gatavs, varēsiet to abonēt no norēķinu lapas tāpat kā jebkuru citu papildinājumu. Līdz tam šī lapa ir tikai paziņojums, ka tas nāk.",
       "addonCatalogLink": "Skatīt pilno papildinājumu katalogu",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Jaunināt, lai atbloķētu →",
       "brandedAppTitle": "Branded mobilā lietotne",
       "brandedAppDescription": "Iesniedziet savu lietotni iOS un Android lietotnēs ar savu zīmolu.",
-      "getAppTitle": "Iegūstiet lietotni Kitchen Order App",
-      "getAppBody": "Bez maksas Google Play veikalā. Par jauniem pasūtījumiem uzreiz atskan zvans — pat ar izslēgtu ekrānu — un čeki tiek drukāti caur WiFi.",
-      "getAppScanHint": "Skenējiet ar virtuves planšetdatoru vai tālruni, lai atvērtu Google Play",
-      "getAppIosSoon": "iPhone/iPad versija drīzumā būs pieejama App Store — līdz tam iPad ierīcēs virtuvi var darbināt pārlūkprogrammā.",
+      "getAppTitle": "Instalē Fee Free Order App",
+      "getAppBody": "Saņem, apstiprini, izdrukā un pārvaldi pasūtījumus no sava restorāna telefona vai planšetes. Bez maksas iPhone, iPad un Android ierīcēm — jauni pasūtījumi zvana uzreiz, arī ar izslēgtu ekrānu.",
+      "getAppScanHint": "Noskenē ar telefonu vai planšeti, kurā pieņemsi pasūtījumus",
+      "goLiveTitle": "Tu esi gatavs pieņemt pasūtījumus",
+      "goLiveBody": "Izej to vienreiz cauri ierīcē, kurā pieņemsi pasūtījumus, lai pirmais īstais pasūtījums tevi nepārsteigtu.",
+      "goLiveStepInstall": "Instalē Fee Free Order App tajā telefonā vai planšetē",
+      "goLiveStepSignIn": "Pieteicies lietotnē ar sava restorāna kontu",
+      "goLiveStepNotifications": "Pārbaudi paziņojumu saņēmējus, lai brīdinājumi tevi sasniegtu",
+      "goLiveStepPrinting": "Iestati čeku drukāšanu, ja drukā virtuves čekus",
+      "goLiveStepTestOrder": "Izveido testa pasūtījumu savā lapā un apstiprini to",
+      "goLiveStepShare": "Padalies ar savu pasūtījumu saiti ar klientiem",
+      "goLiveInstallPrompt": "Iegūsti lietotni savā pasūtījumu ierīcē:",
       "sendLinkTitle": "Nosūtīt saiti uz tālruni",
       "sendLinkBody": "Iegūstiet lietotni ierīcē, ko izmantosiet virtuvē — nosūtīsim lejupielādes saiti e-pastā vai īsziņā.",
       "sendLinkEmailOption": "E-pasts",
@@ -5680,8 +5688,8 @@
         "appConnected": "Pasūtījumu pieņemšanas lietotne pievienota",
         "appConnectedDetail": {
           "native": "{device} · {ago} · natīvā lietotne",
-          "browser": "{device} · {ago} · darbojas pārlūkprogrammā — instalējiet bezmaksas Android lietotni uzticamiem zvana signāliem",
-          "install": "Instalējiet bezmaksas lietotni Kitchen Order App (Google Play), lai par jauniem pasūtījumiem uzreiz atskanētu zvans. Līdz tam jūs joprojām saņemsiet e-pasta/SMS brīdinājumus."
+          "browser": "{device} · {ago} · darbojas pārlūkā — instalē bezmaksas Fee Free Order App uzticamiem skaņas signāliem",
+          "install": "Instalē bezmaksas Fee Free Order App iPhone, iPad vai Android ierīcē, lai jauni pasūtījumi zvanītu uzreiz. Līdz tam joprojām saņemsi e-pasta/SMS brīdinājumus."
         },
         "notificationRecipient": "Vismaz viens paziņojumu saņēmējs"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Restorānu īpašniekiem",
           "title": "Jūsu restorāns. <accent>0% komisijas. 100% jūsu.</accent>",
-          "subtitle": "Pieņem līdzņemšanas, piegādes, uz vietas un ēdināšanas pasūtījumus savā zīmola lapā ar 0% komisiju — GrowthNet mārketinga rīki un Marketplace reklāma, kas būs pieejami no starta, pārvērš pirmreizējos apmeklētājus par pastāvīgiem, tiešajiem klientiem.",
+          "subtitle": "Pieņem līdzņemšanas, piegādes, uz vietas un ēdināšanas pasūtījumus savā zīmola lapā ar 0% komisiju — ar GrowthNet mārketinga rīkiem un bezmaksas Fee Free Marketplace ierakstu, kas pirmreizējos apmeklētājus pārvērš pastāvīgos tiešajos klientos.",
           "ctaStart": "Sākt bez maksas",
           "ctaDemo": "Apskati reālu veikalu",
           "badge": "0% komisijas",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Bez maksas · iOS + Android",
           "title": "Nekad nepalaid garām apmaksātu pasūtījumu.",
-          "subtitle": "Vietējā Kitchen Order App pārvērš jebkuru iPhone, iPad vai Android planšeti par neapturamu pasūtījumu staciju — ar drošības tīklu, lai aizņemts vakars nekad neizmaksātu tev pārdošanu.",
+          "subtitle": "Natīvā Fee Free Order App pārvērš jebkuru iPhone, iPad vai Android planšeti par nesatricināmu pasūtījumu staciju — ar drošības tīklu, lai aizņemts vakars tev nekad nemaksātu pārdošanu.",
           "frameAlt": "Kitchen Order App — ienākošs pasūtījums",
-          "getApp": "Iegūsti bezmaksas Kitchen Order App savā planšetē",
+          "getApp": "Iegūsti bezmaksas Fee Free Order App savā telefonā vai planšetē",
           "ring": {
             "title": "Skaļš zvans pat ar izslēgtu ekrānu",
             "body": "Pilnekrāna trauksme pamodina planšeti tajā pašā brīdī, kad pienāk pasūtījums — pat miega režīmā."
@@ -6615,7 +6623,7 @@
           "smsBody": "Sūti klientiem īsziņas, kamēr viņu pasūtījums virzās caur virtuvi — apstiprināts, gatavs, pabeigts.",
           "contentpilotBody": "Tavs AI sociālo tīklu pārvaldnieks — sagatavo un ieplāno ierakstus Instagram, Facebook, X un TikTok.",
           "saveTitle": "Apvieno un ietaupi",
-          "saveBody": "Komplekts maksās mazāk nekā katra rīka iegāde atsevišķi — cenas tiks paziņotas palaišanas brīdī.",
+          "saveBody": "Komplekts maksās mazāk nekā katrs rīks atsevišķi — cenas drīzumā.",
           "ownMessage": "GrowthNet un mūsu ekskluzīvie mārketinga rīki pārvērš tirdzniecības vietā pirmoreiz nonākušos klientus par <em>tiešiem, lojāliem un pastāvīgiem klientiem, kas pieder jums.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Lejupielādē no",
           "androidLine1": "Iegūsti to"
         },
-        "softlaunch": {
-          "eyebrow": "Mīkstā palaišana",
-          "title": "Kaut kas <accent>liels</accent> jau gatavojas.",
-          "body": "Aicinām izraudzītu restorānu īpašnieku loku pievienoties jau tagad un augt kopā ar Fee Free Ordering.",
-          "tick1": "Esiet daļa no tiešsaistes pasūtīšanas nākotnes",
-          "tick2": "Nodrošiniet sev agrīnās pieejas priekšrocības",
-          "tick3": "Palīdziet veidot platformu",
-          "cta": "Pievienoties mīkstajai palaišanai",
-          "imgAlt": "Fee Free Ordering — drīzumā tiek palaists"
+        "live": {
+          "eyebrow": "Jau darbojas",
+          "title": "Tavs restorāns var sākt <accent>jau šodien</accent>.",
+          "body": "Fee Free Ordering darbojas un pieņem īstus pasūtījumus. Tas veidots neatkarīgiem restorāniem, kuri grib atgūt savus klientus, savu zīmolu un savus ieņēmumus — uzstādīšana vienā pēcpusdienā, bez kredītkartes un bez līguma.",
+          "tick1": "Sāc bez maksas — bez kredītkartes",
+          "tick2": "Importē vai izveido ēdienkarti dažās minūtēs",
+          "tick3": "Publicē savu zīmola pasūtījumu lapu",
+          "tick4": "Instalē bezmaksas Fee Free Order App iPhone, iPad vai Android ierīcē",
+          "tick5": "Sāc pieņemt tiešos pasūtījumus ar 0% komisiju",
+          "cta": "Sāc pieņemt pasūtījumus jau šodien",
+          "imgAlt": "Fee Free Ordering — darbojas un pieņem pasūtījumus"
+        },
+        "orderStation": {
+          "eyebrow": "Bez maksas · iPhone, iPad un Android",
+          "title": "Tava pasūtījumu stacija. <accent>Jau tavā kabatā.</accent>",
+          "body": "Fee Free Order App — mūsu natīvā restorāna pasūtījumu pieņemšanas lietotne — pārvērš iPhone, iPad vai Android planšeti par tavu pasūtījumu termināli. Pieņem pasūtījumus, tiklīdz tie ienāk, sadzirdi tos pat vislielākajā steigā, pārvaldi tos līdz galam un izdrukā virtuves čekus. Nav jāpērk īpaša aparatūra.",
+          "devices": {
+            "title": "Darbojas ar ierīcēm, kas tev jau ir",
+            "body": "Lieka planšete vai vecs telefons kļūst par tavu pasūtījumu staciju — nekas nav jāīrē un nav jāpērk."
+          },
+          "alerts": {
+            "title": "Zvana, līdz apstiprini",
+            "body": "Skaļš signāls pamodina ierīci, tiklīdz pienāk pasūtījums — arī ar izslēgtu ekrānu."
+          },
+          "manage": {
+            "title": "Apstiprini, pārvaldi, izdrukā",
+            "body": "Apstrādā visu pasūtījumu lietotnē un izdrukā virtuves čekus uz sava WiFi termoprintera."
+          },
+          "free": "Bez maksas ar katru Fee Free Ordering kontu"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Iegūstiet lietotni",
-            "title": "Kitchen Order App jūsu komandai.",
-            "body": "Pārvaldiet pasūtījumus, drukājiet čekus un atjauniniet statusu — viss no jūsu planšetdatora."
+            "title": "Fee Free Order App tavai komandai.",
+            "body": "Pieņem, pārvaldi un izdrukā pasūtījumus no iPhone, iPad vai Android planšetes. Bez maksas ar tavu kontu."
           },
           "growth": {
             "eyebrow": "Veidots izaugsmei",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Papildinājumi",
       "addOnsSubtitle": "Atbloķējiet maksas funkcijas atsevišķi. Atceliet jebkurā laikā — nav līgumu.",
-      "addOnPriceComingSoon": "Cenas tiks paziņotas palaišanas brīdī",
+      "addOnPriceComingSoon": "Cenas drīzumā",
       "compareTitle": "Katrs restorāns saņem",
       "compareItems": [
         "0% komisijas par tiešajiem pasūtījumiem",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "neatkarīgi vietējie restorāni",
     "nativeAppsTitle": "Marketplace lietotne iOS un Android ierīcēm",
     "comingSoon": "Drīzumā",
-    "nativeAppsBody": "Īpaša Marketplace pasūtīšanas lietotne ir izstrādē (lietotne, kas šodien pieejama Google Play, ir paredzēta restorāna personālam). Pa to laiku pieskarieties pārlūkprogrammas <b>kopīgošanas izvēlnei</b> un izvēlieties <b>“Pievienot sākuma ekrānam”</b> — jūs iegūsiet Marketplace kā īstu lietotni ar ikonu, ielādes ekrānu un pilnekrāna pieredzi. Lietotņu veikals nav nepieciešams.",
+    "nativeAppsBody": "Īpaša Marketplace pasūtīšanas lietotne ir izstrādē (lietotne, kas šodien pieejama App Store and Google Play, ir paredzēta restorāna personālam). Pa to laiku pieskarieties pārlūkprogrammas <b>kopīgošanas izvēlnei</b> un izvēlieties <b>“Pievienot sākuma ekrānam”</b> — jūs iegūsiet Marketplace kā īstu lietotni ar ikonu, ielādes ekrānu un pilnekrāna pieredzi. Lietotņu veikals nav nepieciešams.",
     "ownerTitle": "Restorāna īpašnieks? Reģistrējieties.",
     "ownerBody": "Vai jums pieder restorāns? <b>Reģistrācija Fee Free Marketplace ir bez maksas</b> — nekādas ikmēneša maksas, nekādas komisijas par pasūtījumu, nekad. Piedāvājiet izņemšanu vai piegādi un sasniedziet jaunus klientus tuvumā, saglabājot savu zīmolu, savus klientus un 100% savu cenu.",
     "getListedFree": "Sāciet bez maksas",
@@ -7030,7 +7058,7 @@
     "featured": "Izceltie",
     "allRestaurants": "Visi restorāni",
     "emptyTitle": "Mēs tikko sākam",
-    "emptyBody": "Tirgus vietā vēl nav neviena restorāna — iekļaušana sāksies līdz ar startu. Ja jums pieder restorāns, izveidojiet bezmaksas kontu jau tagad, un atvēršanas dienā varēsiet pievienoties <b>Marketplace</b> platformai.",
+    "emptyBody": "Šeit vēl nav neviena restorāna. Ja vadi restorānu, izveido bezmaksas kontu un publicē — katrs restorāns ar līdzņemšanu vai piegādi ir <b>Marketplace</b> bez maksas un bez komisijas.",
     "restaurantLogin": "Restorāna pieteikšanās",
     "noMatchesTitle": "Nav rezultātu",
     "noMatchesBody": "Izmēģiniet citu meklēšanas terminu vai notīriet filtrus.",

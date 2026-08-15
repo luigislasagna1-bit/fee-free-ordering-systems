@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Aynı mutfak akışı",
       "featureKitchenBody": "Telefon siparişleri, çevrimiçi siparişlerle birlikte mevcut Kitchen Order App'inize ulaşır. Yeni uygulama yok, yeni eğitim yok — ekibiniz onları aynı şekilde kabul eder.",
       "statusHeading": "Bugün nerede duruyoruz",
-      "statusBody1": "Temeli oluşturmak için yoğun çalışıyoruz. Ses ajanı, Twilio entegrasyonu, mutfak devri — hepsi aktif geliştirmede. Ana platform yayına girdikten kısa süre sonra bunu erken erişim restoranlarına sunmayı bekliyoruz.",
+      "statusBody1": "Geliştirmenin tam ortasındayız. Sesli ajan, Twilio entegrasyonu ve mutfağa devir hepsi aktif geliştirmede ve şimdiden gerçek bir pilot hatta çalışıyor. Günlük serviste kendini kanıtladığında restoranlara açacağız.",
       "statusBody2": "Hazır olduğunda fatura sayfanızdan diğer eklentiler gibi abone olabileceksiniz. O zamana kadar bu sayfa yalnızca geliyor olduğuna dair bir ön bildirimdir.",
       "addonCatalogLink": "Tam eklenti kataloğunu görün",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Kilidi açmak için yükseltin →",
       "brandedAppTitle": "Markalı Mobil Uygulama",
       "brandedAppDescription": "Kendi markanızla iOS ve Android uygulama mağazalarına kendi uygulamanızı gönderin.",
-      "getAppTitle": "Kitchen Order App'i edinin",
-      "getAppBody": "Google Play'de ücretsiz. Yeni siparişler anında zil çalar — ekran kapalıyken bile — ve fişler WiFi üzerinden yazdırılır.",
-      "getAppScanHint": "Google Play'i açmak için mutfak tableti veya telefonla tarayın",
-      "getAppIosSoon": "iPhone/iPad sürümü App Store'a geliyor — o zamana kadar iPad'ler mutfağı tarayıcıda çalıştırabilir.",
+      "getAppTitle": "Fee Free Order App'i kurun",
+      "getAppBody": "Siparişleri restoranınızın telefonundan veya tabletinden alın, kabul edin, yazdırın ve yönetin. iPhone, iPad ve Android için ücretsiz — yeni siparişler ekran kapalıyken bile anında çalar.",
+      "getAppScanHint": "Sipariş alacağınız telefon veya tabletle tarayın",
+      "goLiveTitle": "Sipariş almaya hazırsınız",
+      "goLiveBody": "Bunu sipariş alacağınız cihazda bir kez uygulayın, böylece ilk gerçek sipariş sizi hazırlıksız yakalamaz.",
+      "goLiveStepInstall": "Fee Free Order App'i o telefona veya tablete kurun",
+      "goLiveStepSignIn": "Uygulamaya restoran hesabınızla giriş yapın",
+      "goLiveStepNotifications": "Uyarıların size ulaşması için bildirim alıcılarınızı kontrol edin",
+      "goLiveStepPrinting": "Mutfak fişi yazdırıyorsanız fiş yazdırmayı ayarlayın",
+      "goLiveStepTestOrder": "Kendi sayfanızda bir test siparişi verin ve kabul edin",
+      "goLiveStepShare": "Sipariş bağlantınızı müşterilerinizle paylaşın",
+      "goLiveInstallPrompt": "Uygulamayı sipariş aldığınız cihaza indirin:",
       "sendLinkTitle": "Bağlantıyı telefonuna gönder",
       "sendLinkBody": "Uygulamayı mutfakta kullanacağın cihaza indir — indirme bağlantısını sana e-postayla ya da SMS ile gönderelim.",
       "sendLinkEmailOption": "E-posta",
@@ -5680,8 +5688,8 @@
         "appConnected": "Sipariş alma uygulaması bağlandı",
         "appConnectedDetail": {
           "native": "{device} · {ago} · yerel uygulama",
-          "browser": "{device} · {ago} · tarayıcıda çalışıyor — güvenilir zil uyarıları için ücretsiz Android uygulamasını yükleyin",
-          "install": "Yeni siparişler anında zil çalsın diye ücretsiz Kitchen Order App'i (Google Play) yükleyin. O zamana kadar e-posta/SMS uyarıları almaya devam edersiniz."
+          "browser": "{device} · {ago} · tarayıcıda çalışıyor — güvenilir sesli uyarılar için ücretsiz Fee Free Order App'i kurun",
+          "install": "Yeni siparişlerin anında çalması için ücretsiz Fee Free Order App'i iPhone, iPad veya Android'e kurun. O zamana kadar e-posta/SMS uyarıları almaya devam edersiniz."
         },
         "notificationRecipient": "En az bir bildirim alıcısı"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Restoran sahipleri için",
           "title": "Restoranınız. <accent>0% Komisyon. 100% Sizin.</accent>",
-          "subtitle": "Gel-al, teslimat, restoranda ve catering siparişlerini kendi markalı sayfanızda 0% komisyonla alın — lansmanla birlikte gelecek GrowthNet pazarlama araçları ve Marketplace reklamlarıyla ilk kez gelen ziyaretçileri doğrudan sipariş veren sadık müşterilere dönüştürün.",
+          "subtitle": "Paket servis, teslimat, restoranda ve catering siparişlerini kendi markalı sayfanızda %0 komisyonla alın — ilk kez gelen ziyaretçileri düzenli, doğrudan müşterilere dönüştüren GrowthNet pazarlama araçları ve ücretsiz bir Fee Free Marketplace kaydıyla.",
           "ctaStart": "Ücretsiz başlayın",
           "ctaDemo": "Canlı bir vitrini görün",
           "badge": "%0 komisyon",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Ücretsiz · iOS + Android",
           "title": "Hiçbir ödenmiş siparişi kaçırmayın.",
-          "subtitle": "Yerel Kitchen Order App, herhangi bir iPhone, iPad ya da Android tabletini sarsılmaz bir sipariş istasyonuna dönüştürür — yoğun bir gecenin size satış kaybettirmemesi için bir güvenlik ağıyla.",
+          "subtitle": "Yerel Fee Free Order App her iPhone'u, iPad'i veya Android tableti kurşun geçirmez bir sipariş istasyonuna dönüştürür — yoğun bir gecenin size asla bir satışa mal olmaması için bir güvenlik ağıyla.",
           "frameAlt": "Kitchen Order App — gelen sipariş",
-          "getApp": "Ücretsiz Kitchen Order App'i tabletinize indirin",
+          "getApp": "Ücretsiz Fee Free Order App'i telefonunuza veya tabletinize indirin",
           "ring": {
             "title": "Ekran kapalıyken yüksek sesli alarm",
             "body": "Bir sipariş düştüğü an tam ekran alarm tableti uyandırır — uyku modundayken bile."
@@ -6615,7 +6623,7 @@
           "smsBody": "Siparişi mutfakta ilerledikçe müşterilere mesaj atın — onaylandı, hazır, tamamlandı.",
           "contentpilotBody": "Yapay zekâ sosyal medya yöneticiniz — Instagram, Facebook, X ve TikTok için gönderileri hazırlar ve zamanlar.",
           "saveTitle": "Paketle ve tasarruf et",
-          "saveBody": "Paket, her aracı ayrı satın almaktan daha ucuz olacak — fiyatlar lansmanla birlikte açıklanacak.",
+          "saveBody": "Paket, her aracı ayrı ayrı almaktan daha ucuza gelecek — fiyatlar yakında.",
           "ownMessage": "GrowthNet ve özel pazarlama araçlarımız, pazar yerinden gelen ilk kez gelen müşterileri <em>size ait doğrudan, sadık ve tekrar gelen müşterilere</em> dönüştürür."
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Şuradan indirin:",
           "androidLine1": "Şuradan edinin:"
         },
-        "softlaunch": {
-          "eyebrow": "Yumuşak lansman",
-          "title": "Mutfakta <accent>büyük</accent> bir şeyler pişiyor.",
-          "body": "Seçkin bir restoran sahibi grubunu erkenden katılmaya ve Fee Free Ordering ile birlikte büyümeye davet ediyoruz.",
-          "tick1": "Online siparişin geleceğinin bir parçası olun",
-          "tick2": "Erken erişim avantajlarını şimdiden kilitleyin",
-          "tick3": "Platformu şekillendirmeye yardımcı olun",
-          "cta": "Yumuşak lansmana katılın",
-          "imgAlt": "Fee Free Ordering — çok yakında"
+        "live": {
+          "eyebrow": "Şimdi yayında",
+          "title": "Restoranınız <accent>bugün</accent> başlayabilir.",
+          "body": "Fee Free Ordering yayında ve gerçek siparişler alıyor. Müşterilerini, markasını ve gelirini geri isteyen bağımsız restoranlar için yapıldı — bir öğleden sonrada kurulur, kredi kartı ve sözleşme gerekmez.",
+          "tick1": "Ücretsiz başlayın — kredi kartı yok",
+          "tick2": "Menünüzü dakikalar içinde aktarın veya oluşturun",
+          "tick3": "Kendi markalı sipariş sayfanızı yayınlayın",
+          "tick4": "Ücretsiz Fee Free Order App'i iPhone, iPad veya Android'e kurun",
+          "tick5": "%0 komisyonla doğrudan sipariş almaya başlayın",
+          "cta": "Bugün sipariş almaya başlayın",
+          "imgAlt": "Fee Free Ordering — yayında ve sipariş alıyor"
+        },
+        "orderStation": {
+          "eyebrow": "Ücretsiz · iPhone, iPad ve Android",
+          "title": "Sipariş istasyonunuz. <accent>Zaten cebinizde.</accent>",
+          "body": "Fee Free Order App — restoran siparişi alma için yerel uygulamamız — bir iPhone'u, iPad'i veya Android tableti sipariş terminalinize dönüştürür. Siparişleri geldikleri anda alın, yoğunluğun ortasında bile duyun, sonuna kadar yönetin ve mutfak fişi yazdırın. Satın alınacak özel donanım yok.",
+          "devices": {
+            "title": "Elinizdeki cihazlarda çalışır",
+            "body": "Boştaki bir tablet veya eski bir telefon sipariş istasyonunuz olur — kiralanacak ya da satın alınacak bir şey yok."
+          },
+          "alerts": {
+            "title": "Kabul edene kadar çalar",
+            "body": "Sipariş geldiği anda yüksek sesli bir alarm cihazı uyandırır — ekran kapalıyken bile."
+          },
+          "manage": {
+            "title": "Kabul edin, yönetin, yazdırın",
+            "body": "Siparişin tamamını uygulamadan halledin ve mutfak fişlerini WiFi termal yazıcınızdan yazdırın."
+          },
+          "free": "Her Fee Free Ordering hesabıyla ücretsiz"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Uygulamayı edinin",
-            "title": "Ekibiniz için Kitchen Order App.",
-            "body": "Siparişleri yönetin, fişleri yazdırın ve durumu güncelleyin — hepsi tabletinizden."
+            "title": "Ekibiniz için Fee Free Order App.",
+            "body": "Siparişleri iPhone, iPad veya Android tabletten alın, yönetin ve yazdırın. Hesabınızla ücretsiz."
           },
           "growth": {
             "eyebrow": "Büyüme için tasarlandı",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Eklentiler",
       "addOnsSubtitle": "Ücretli özelliklerin kilidini tek tek açın. İstediğiniz zaman iptal edin — sözleşme yok.",
-      "addOnPriceComingSoon": "Fiyatlandırma lansmanda açıklanacak",
+      "addOnPriceComingSoon": "Fiyatlar yakında",
       "compareTitle": "Her restoran şunları alır",
       "compareItems": [
         "Doğrudan siparişlerde 0% komisyon",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "bağımsız yerel restoran",
     "nativeAppsTitle": "iOS ve Android için bir marketplace uygulaması",
     "comingSoon": "Çok Yakında",
-    "nativeAppsBody": "Özel bir marketplace sipariş uygulaması hazırlık aşamasında (bugün Google Play'deki uygulama restoran personeli içindir). Bu arada tarayıcınızın <b>paylaş menüsüne</b> dokunun ve <b>“Ana Ekrana Ekle”</b> seçeneğini seçin — marketplace'i gerçek bir uygulama simgesi, açılış ekranı ve tam ekran deneyimiyle kullanırsınız. Uygulama mağazası gerekmez.",
+    "nativeAppsBody": "Özel bir marketplace sipariş uygulaması hazırlık aşamasında (bugün App Store and Google Play'deki uygulama restoran personeli içindir). Bu arada tarayıcınızın <b>paylaş menüsüne</b> dokunun ve <b>“Ana Ekrana Ekle”</b> seçeneğini seçin — marketplace'i gerçek bir uygulama simgesi, açılış ekranı ve tam ekran deneyimiyle kullanırsınız. Uygulama mağazası gerekmez.",
     "ownerTitle": "Restoran sahibi misiniz? Listeleyin.",
     "ownerBody": "Bir restoranınız mı var? <b>Fee Free Marketplace'te yer almak ücretsizdir</b> — asla aylık ücret yok, sipariş başına komisyon yok. Gel al veya teslimat sunun, markanızı, müşterilerinizi ve fiyatlarınızın %100'ünü korurken yakınınızdaki yeni müşterilere ulaşın.",
     "getListedFree": "Ücretsiz başlayın",
@@ -7030,7 +7058,7 @@
     "featured": "Öne Çıkanlar",
     "allRestaurants": "Tüm restoranlar",
     "emptyTitle": "Henüz yeni başlıyoruz",
-    "emptyBody": "Marketplace'te henüz restoran yok — listelemeler lansmanla birlikte açılıyor. Bir restoranınız varsa, ücretsiz hesabınızı şimdi oluşturun; açıldığı gün <b>Marketplace</b>'e katılabilirsiniz.",
+    "emptyBody": "Burada henüz restoran yok. Bir restoran işletiyorsanız ücretsiz hesabınızı oluşturun ve yayınlayın — paket servis veya teslimat yapan her restoran <b>Marketplace</b>'te ücretsiz ve komisyonsuz yer alır.",
     "restaurantLogin": "Restoran girişi",
     "noMatchesTitle": "Sonuç bulunamadı",
     "noMatchesBody": "Farklı bir arama terimi deneyin veya filtreleri temizleyin.",

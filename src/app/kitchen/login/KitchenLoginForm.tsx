@@ -9,7 +9,12 @@ import { AuthLanguageSwitcher } from "@/components/AuthLanguageSwitcher";
 import { PasswordInput } from "@/components/PasswordInput";
 import { getNativeAppVersion } from "@/lib/native-app-version";
 
-function KitchenLoginFormInner({ locale, getAppUrl }: { locale: string; getAppUrl?: string | null }) {
+/** Store links for the "get the app" hint — null on the neutral reseller
+ *  host (zero platform branding there). Each side is independently nullable
+ *  so the hint tracks app-links.ts without further edits. */
+type StoreHint = { ios: string | null; play: string | null } | null;
+
+function KitchenLoginFormInner({ locale, appLinks }: { locale: string; appLinks?: StoreHint }) {
   const tAuth = useTranslations("auth");
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -106,17 +111,29 @@ function KitchenLoginFormInner({ locale, getAppUrl }: { locale: string; getAppUr
         </div>
 
         {/* "Get the app" — only in a plain browser (native check resolved to
-            null), never on the neutral reseller host (getAppUrl null from the
-            server), never while the native bridge is still answering. */}
-        {getAppUrl && appVersion === null && (
-          <a
-            href={getAppUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 flex items-center justify-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition"
-          >
-            <Smartphone className="w-3.5 h-3.5" /> {tAuth("kitchenGetAppHint")}
-          </a>
+            null), never on the neutral reseller host (appLinks null from the
+            server), never while the native bridge is still answering.
+            BOTH stores since 2026-08-15: an owner opening this on an iPhone
+            used to be handed a Play link they couldn't install. "App Store" /
+            "Google Play" are brand names → never translated, so the dual
+            links add ZERO i18n keys. */}
+        {appLinks && (appLinks.ios || appLinks.play) && appVersion === null && (
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-xs text-emerald-400">
+            <span className="flex items-center gap-1.5">
+              <Smartphone className="w-3.5 h-3.5" /> {tAuth("kitchenGetAppHint")}
+            </span>
+            {appLinks.ios && (
+              <a href={appLinks.ios} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2 hover:text-emerald-300 transition">
+                App Store
+              </a>
+            )}
+            {appLinks.ios && appLinks.play && <span aria-hidden className="text-gray-600">·</span>}
+            {appLinks.play && (
+              <a href={appLinks.play} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2 hover:text-emerald-300 transition">
+                Google Play
+              </a>
+            )}
+          </div>
         )}
         {appVersion && (
           <p className="mt-4 text-center text-[11px] text-gray-600">v{appVersion}</p>
@@ -126,14 +143,14 @@ function KitchenLoginFormInner({ locale, getAppUrl }: { locale: string; getAppUr
   );
 }
 
-export function KitchenLoginForm({ locale, getAppUrl }: { locale: string; getAppUrl?: string | null }) {
+export function KitchenLoginForm({ locale, appLinks }: { locale: string; appLinks?: StoreHint }) {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-emerald-500" />
       </div>
     }>
-      <KitchenLoginFormInner locale={locale} getAppUrl={getAppUrl} />
+      <KitchenLoginFormInner locale={locale} appLinks={appLinks} />
     </Suspense>
   );
 }

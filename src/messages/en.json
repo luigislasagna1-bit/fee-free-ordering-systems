@@ -2682,8 +2682,8 @@
         "appConnected": "Order-taking app connected",
         "appConnectedDetail": {
           "native": "{device} · {ago} · native app",
-          "browser": "{device} · {ago} · running in a browser — install the free Android app for reliable ring alerts",
-          "install": "Install the free Kitchen Order App (Google Play) so new orders ring instantly. Until then you'll still get email/SMS alerts."
+          "browser": "{device} · {ago} · running in a browser — install the free Fee Free Order App for reliable ring alerts",
+          "install": "Install the free Fee Free Order App on iPhone, iPad or Android so new orders ring instantly. Until then you'll still get email/SMS alerts."
         },
         "notificationRecipient": "At least one notification recipient"
       },
@@ -4273,10 +4273,18 @@
       "statusReadyDetail": "Click Publish to make your ordering widget live.",
       "statusStepsRemaining": "{count, plural, one {# required step remaining.} other {# required steps remaining.}}",
       "orderTakingAppTitle": "Order-taking app",
-      "getAppTitle": "Get the Kitchen Order App",
-      "getAppBody": "Free on Google Play. New orders ring instantly — even with the screen off — and receipts print over WiFi.",
-      "getAppScanHint": "Scan with the kitchen tablet or phone to open Google Play",
-      "getAppIosSoon": "The iPhone/iPad version is coming to the App Store — until then, iPads can run the kitchen in the browser.",
+      "getAppTitle": "Install the Fee Free Order App",
+      "getAppBody": "Receive, accept, print and manage orders from your restaurant's phone or tablet. Free for iPhone, iPad and Android — new orders ring instantly, even with the screen off.",
+      "getAppScanHint": "Scan with the phone or tablet you'll take orders on",
+      "goLiveTitle": "You're ready to take orders",
+      "goLiveBody": "Run through this once on the device you'll use to take orders, so your first real order can't catch you out.",
+      "goLiveStepInstall": "Install the Fee Free Order App on that phone or tablet",
+      "goLiveStepSignIn": "Sign in to the app with your restaurant account",
+      "goLiveStepNotifications": "Check your notification recipients so alerts reach you",
+      "goLiveStepPrinting": "Set up receipt printing if you print kitchen tickets",
+      "goLiveStepTestOrder": "Place a test order on your own page and accept it",
+      "goLiveStepShare": "Share your ordering link with your customers",
+      "goLiveInstallPrompt": "Get the app on your order-taking device:",
       "sendLinkTitle": "Send the link to your phone",
       "sendLinkBody": "Get the app on the device you'll use in the kitchen — we'll email or text you the download link.",
       "sendLinkEmailOption": "Email",
@@ -4565,7 +4573,7 @@
       "featureKitchenTitle": "Same kitchen flow",
       "featureKitchenBody": "Phone orders land in your existing Kitchen Order App alongside online orders. No new app, no new training — your team accepts them the same way.",
       "statusHeading": "Where this stands today",
-      "statusBody1": "We're heads-down building the foundation. The voice agent, the Twilio integration, the kitchen handoff — all in active development. We expect to roll this out to early-access restaurants soon after the main platform launches.",
+      "statusBody1": "We're deep in build. The voice agent, the Twilio integration and the kitchen handoff are all in active development and already running on a live pilot line. We'll open it up to restaurants once it's proven in daily service.",
       "statusBody2": "When it's ready you'll be able to subscribe to it from your billing page like any other add-on. Until then this page is just a heads-up that it's coming.",
       "addonCatalogLink": "See the full add-on catalog",
       "config": {
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "For restaurant owners",
           "title": "Your Restaurant. <accent>0% Commission. 100% Yours.</accent>",
-          "subtitle": "Take pickup, delivery, dine-in & catering orders on your own branded page at 0% commission — with GrowthNet marketing tools and Marketplace advertising arriving at launch to turn first-time visitors into repeat, direct customers.",
+          "subtitle": "Take pickup, delivery, dine-in & catering orders on your own branded page at 0% commission — with GrowthNet marketing tools and a free Fee Free Marketplace listing to turn first-time visitors into repeat, direct customers.",
           "ctaStart": "Start free",
           "ctaDemo": "See a live storefront",
           "badge": "0% commission",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Free · iOS + Android",
           "title": "Never miss a paying order.",
-          "subtitle": "The native Kitchen Order App turns any iPhone, iPad or Android tablet into a bulletproof order station — with a safety net so a busy night never costs you a sale.",
+          "subtitle": "The native Fee Free Order App turns any iPhone, iPad or Android tablet into a bulletproof order station — with a safety net so a busy night never costs you a sale.",
           "frameAlt": "Kitchen Order App — incoming order",
-          "getApp": "Get the free Kitchen Order App on your tablet",
+          "getApp": "Get the free Fee Free Order App on your phone or tablet",
           "ring": {
             "title": "Screen-off loud ring",
             "body": "A full-screen alarm wakes the tablet the instant an order lands — even asleep."
@@ -6616,7 +6624,7 @@
           "smsBody": "Text customers as their order moves through the kitchen — confirmed, ready, complete.",
           "contentpilotBody": "Your AI social manager — drafts and schedules posts to Instagram, Facebook, X & TikTok.",
           "saveTitle": "Bundle & save",
-          "saveBody": "The bundle will cost less than buying each tool separately — pricing announced at launch."
+          "saveBody": "The bundle will cost less than buying each tool separately — pricing coming soon."
         },
         "addons": {
           "eyebrow": "Add-ons — no tiers",
@@ -6732,15 +6740,35 @@
           "iosLine1": "Download on the",
           "androidLine1": "Get it on"
         },
-        "softlaunch": {
-          "eyebrow": "Soft launch",
-          "title": "Something <accent>big</accent> is cooking.",
-          "body": "We're inviting a select group of restaurant owners to join early and grow with Fee Free Ordering.",
-          "tick1": "Be part of the future of online ordering",
-          "tick2": "Lock in early-access benefits",
-          "tick3": "Help shape the platform",
-          "cta": "Join the soft launch",
-          "imgAlt": "Fee Free Ordering — launching soon"
+        "live": {
+          "eyebrow": "Now live",
+          "title": "Your restaurant can start <accent>today</accent>.",
+          "body": "Fee Free Ordering is live and taking real orders. It's built for independent restaurants that want their customers, their brand and their revenue back — set up in an afternoon, no credit card and no contract.",
+          "tick1": "Get started free — no credit card",
+          "tick2": "Import or build your menu in minutes",
+          "tick3": "Publish your branded ordering page",
+          "tick4": "Install the free Fee Free Order App on iPhone, iPad or Android",
+          "tick5": "Start taking direct orders at 0% commission",
+          "cta": "Start taking orders today",
+          "imgAlt": "Fee Free Ordering — live and taking orders"
+        },
+        "orderStation": {
+          "eyebrow": "Free · iPhone, iPad & Android",
+          "title": "Your order station. <accent>Already in your pocket.</accent>",
+          "body": "The Fee Free Order App — our native restaurant order-taking app — turns an iPhone, iPad or Android tablet into your order terminal. Take new orders the moment they land, hear them through a rush, manage them to completion and print kitchen tickets. No proprietary hardware to buy.",
+          "devices": {
+            "title": "Runs on hardware you own",
+            "body": "A spare tablet or an old phone becomes your order station — nothing to lease, nothing to buy."
+          },
+          "alerts": {
+            "title": "Rings until you accept",
+            "body": "A loud alarm wakes the device the moment an order lands — even with the screen off."
+          },
+          "manage": {
+            "title": "Accept, manage, print",
+            "body": "Work the whole order from the app, and print kitchen tickets to your WiFi thermal printer."
+          },
+          "free": "Free with every Fee Free Ordering account"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Get the app",
-            "title": "Kitchen Order App for your team.",
-            "body": "Manage orders, print receipts and update status — all from your tablet."
+            "title": "Fee Free Order App for your team.",
+            "body": "Take, manage and print orders from an iPhone, iPad or Android tablet. Free with your account."
           },
           "growth": {
             "eyebrow": "Built for growth",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Add-ons",
       "addOnsSubtitle": "Unlock paid features individually. Cancel anytime — no contracts.",
-      "addOnPriceComingSoon": "Pricing announced at launch",
+      "addOnPriceComingSoon": "Pricing coming soon",
       "compareTitle": "Every restaurant gets",
       "compareItems": [
         "0% commission on direct orders",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "independent local restaurants",
     "nativeAppsTitle": "A marketplace app for iOS & Android",
     "comingSoon": "Coming Soon",
-    "nativeAppsBody": "A dedicated marketplace ordering app is in the pipeline (the app on Google Play today is for restaurant staff). In the meantime, tap your browser’s <b>share menu</b> and choose <b>“Add to Home Screen”</b> — you’ll get the marketplace as a real app icon, splash screen and full-screen experience. No app store required.",
+    "nativeAppsBody": "A dedicated marketplace ordering app is in the pipeline (the app you will find on the App Store and Google Play today is for restaurant staff). In the meantime, tap your browser’s <b>share menu</b> and choose <b>“Add to Home Screen”</b> — you’ll get the marketplace as a real app icon, splash screen and full-screen experience. No app store required.",
     "ownerTitle": "Restaurant owner? Get listed.",
     "ownerBody": "Own a restaurant? <b>Getting listed on the Fee Free Marketplace is free</b> — no monthly fee, no per-order commission, ever. Offer pickup or delivery and reach new customers nearby while keeping your brand, your customers, and 100% of your prices.",
     "getListedFree": "Get started free",
@@ -7030,7 +7058,7 @@
     "featured": "Featured",
     "allRestaurants": "All restaurants",
     "emptyTitle": "We’re just getting started",
-    "emptyBody": "No restaurants on the marketplace yet — listings open at launch. If you run a restaurant, create your free account now and you'll be able to join the <b>Marketplace</b> the day it opens.",
+    "emptyBody": "No restaurants here yet. If you run a restaurant, create your free account and publish — every pickup or delivery restaurant is listed on the <b>Marketplace</b> free of charge, with no commission.",
     "restaurantLogin": "Restaurant log in",
     "noMatchesTitle": "No matches",
     "noMatchesBody": "Try a different search term or clear the filters.",

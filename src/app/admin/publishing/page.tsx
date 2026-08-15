@@ -12,7 +12,21 @@ import { APP_LINKS } from "@/lib/app-links";
 import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
 import { setupStepLabel } from "@/lib/setup-step-i18n";
 import { SendAppLinkForm } from "./SendAppLinkForm";
+import { restaurantOrderUrl } from "@/lib/restaurant-url";
 import prisma from "@/lib/db";
+
+/** Post-publish deployment checklist. `href: null` = nothing to click (the
+ *  action happens on the device itself); "STOREFRONT" resolves to the
+ *  restaurant's own most-branded order URL at render time. Keys live under
+ *  admin.publishingPage so they translate with the rest of the page. */
+const GO_LIVE_STEPS: { key: string; href: string | null }[] = [
+  { key: "goLiveStepInstall", href: null },
+  { key: "goLiveStepSignIn", href: "/kitchen" },
+  { key: "goLiveStepNotifications", href: "/admin/notifications" },
+  { key: "goLiveStepPrinting", href: "/admin/receipts" },
+  { key: "goLiveStepTestOrder", href: "STOREFRONT" },
+  { key: "goLiveStepShare", href: "/admin/website" },
+];
 
 export default async function PublishingHubPage() {
   const t = await getTranslations("admin.publishingPage");
@@ -29,20 +43,48 @@ export default async function PublishingHubPage() {
     getPublishState(user.restaurantId),
     listKitchenDevices(user.restaurantId),
     hasFeature(user.restaurantId, "hosted_marketing_page"),
-    // Prefill the "send me the link" form with the owner's own contact.
-    prisma.restaurant.findUnique({ where: { id: user.restaurantId }, select: { phone: true, email: true } }),
+    // Prefill the "send me the link" form with the owner's own contact, and
+    // resolve the storefront URL for the go-live checklist's "place a test
+    // order" step (branded domain → subdomain → platform apex).
+    prisma.restaurant.findUnique({
+      where: { id: user.restaurantId },
+      select: { phone: true, email: true, slug: true, subdomain: true, customDomain: true, customDomainStatus: true },
+    }),
   ]);
   const progress = state.progress;
   const isPublished = !!state.publishedAt;
   const publishReady = !!progress?.publishReady;
   const liveDevices = devices.filter((d) => d.isLive);
   const hostedUrl = hasHostedSite ? `/site/${user.restaurantSlug ?? ""}` : null;
-  // QR to the Play listing — the owner reads this page on desktop while the
-  // TABLET needs the app; scanning beats typing. Server-side SVG via the
-  // existing `qrcode` dep (same opts as smart-links QR), no client JS.
-  const playQrSvg = APP_LINKS.kitchen.play
-    ? await QRCode.toString(APP_LINKS.kitchen.play, { type: "svg", margin: 1, width: 140, errorCorrectionLevel: "M" })
-    : null;
+  // QR per live store — the owner reads this page on desktop while the PHONE
+  // or TABLET needs the app; scanning beats typing. Both stores have been live
+  // since 2026-08-15, so an owner on an iPhone is no longer handed an
+  // Android-only code. Server-side SVG via the existing `qrcode` dep (same
+  // opts as smart-links QR), no client JS. Availability-driven: each QR
+  // disappears if app-links.ts ever nulls that listing.
+  const [iosQrSvg, playQrSvg] = await Promise.all([
+    APP_LINKS.kitchen.ios
+      ? QRCode.toString(APP_LINKS.kitchen.ios, { type: "svg", margin: 1, width: 132, errorCorrectionLevel: "M" })
+      : null,
+    APP_LINKS.kitchen.play
+      ? QRCode.toString(APP_LINKS.kitchen.play, { type: "svg", margin: 1, width: 132, errorCorrectionLevel: "M" })
+      : null,
+  ]);
+  // "Place a test order" target — the restaurant's own storefront on its
+  // most-branded domain. Falls back to the platform path when no branded
+  // host is configured yet.
+  const storefrontUrl = restaurant
+    ? restaurantOrderUrl({
+        slug: restaurant.slug,
+        subdomain: restaurant.subdomain,
+        customDomain: restaurant.customDomain,
+        customDomainStatus: restaurant.customDomainStatus,
+      })
+    : "/admin/website";
+  const storeQrs = [
+    { key: "ios", label: "App Store", svg: iosQrSvg },
+    { key: "play", label: "Google Play", svg: playQrSvg },
+  ].filter((q) => q.svg);
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -105,6 +147,53 @@ export default async function PublishingHubPage() {
         />
       </div>
 
+      {/* Go-live checklist (2026-08-15) — the "you're published, now what?"
+          gap. Publishing flips a flag; it does NOT put the app in the owner's
+          hand, and an owner whose order device isn't set up is exactly how a
+          paid order gets missed. Shown only once published, so it reads as a
+          deployment checklist rather than more setup homework. Every step
+          links to the screen that actually does it; nothing here duplicates
+          the required-steps list above (that one gates publishing, this one
+          starts service). */}
+      {isPublished && (
+        <div className="rounded-xl border border-emerald-200 bg-white p-5">
+          <h2 className="font-semibold text-gray-900 flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+            {t("goLiveTitle")}
+          </h2>
+          <p className="text-sm text-gray-600 mt-1">{t("goLiveBody")}</p>
+          <ol className="mt-4 space-y-2.5">
+            {GO_LIVE_STEPS.map((step, i) => (
+              <li key={step.key} className="flex items-start gap-3 text-sm">
+                <span className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-bold text-xs flex-shrink-0">
+                  {i + 1}
+                </span>
+                <span className="text-gray-700 leading-relaxed">
+                  {step.href ? (
+                    <Link
+                      href={step.href === "STOREFRONT" ? storefrontUrl : step.href}
+                      {...(step.href === "STOREFRONT" ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className="text-emerald-700 font-medium hover:underline"
+                    >
+                      {t(step.key)}
+                    </Link>
+                  ) : (
+                    t(step.key)
+                  )}
+                </span>
+              </li>
+            ))}
+          </ol>
+          {/* Both store badges again, at the moment the owner is actually
+              about to start service — this is the highest-intent placement
+              in the whole product. */}
+          <div className="mt-5 pt-4 border-t border-gray-100">
+            <p className="text-xs font-semibold text-gray-700 mb-2.5">{t("goLiveInstallPrompt")}</p>
+            <AppDownloadBadges />
+          </div>
+        </div>
+      )}
+
       {/* Order-taking devices */}
       <div className="rounded-xl border border-gray-200 bg-white p-5">
         <div className="flex items-start justify-between gap-4">
@@ -139,33 +228,39 @@ export default async function PublishingHubPage() {
             {t("openKitchen")}
           </Link>
         </div>
-        {/* Install hub — the Kitchen Order App is on Google Play (2026-07-22).
-            Availability-driven: the whole block hides if app-links.ts ever
-            nulls the Play URL; the iOS line drops when iOS goes live. This is
-            the target of the "Order-taking app connected" setup step. */}
-        {APP_LINKS.kitchen.play && (
+        {/* Install hub — the Fee Free Order App is on Google Play (2026-07-22)
+            AND the App Store (2026-08-15). Availability-driven: the whole
+            block hides if app-links.ts ever nulls both URLs, and each QR /
+            badge tracks its own listing. This is the target of the
+            "Order-taking app connected" setup step. "App Store" / "Google
+            Play" are brand names → never translated. */}
+        {(APP_LINKS.kitchen.ios || APP_LINKS.kitchen.play) && (
           <div className="mt-4 rounded-lg bg-emerald-50/60 border border-emerald-100 p-4">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-start gap-4">
               <div className="flex-1 min-w-0">
                 <h3 className="font-semibold text-gray-900 text-sm">{t("getAppTitle")}</h3>
                 <p className="text-xs text-gray-600 mt-0.5">{t("getAppBody")}</p>
                 <div className="mt-3"><AppDownloadBadges /></div>
-                {!APP_LINKS.kitchen.ios && (
-                  <p className="text-[11px] text-gray-500 mt-2">{t("getAppIosSoon")}</p>
-                )}
               </div>
-              {playQrSvg && (
-                <div className="flex-shrink-0 text-center">
-                  <div
-                    className="inline-block rounded-lg bg-white border border-gray-200 p-2 [&_svg]:block"
-                    dangerouslySetInnerHTML={{ __html: playQrSvg }}
-                  />
-                  <p className="text-[11px] text-gray-500 mt-1 max-w-[150px]">{t("getAppScanHint")}</p>
+              {storeQrs.length > 0 && (
+                <div className="flex-shrink-0">
+                  <div className="flex gap-3">
+                    {storeQrs.map((q) => (
+                      <div key={q.key} className="text-center">
+                        <div
+                          className="inline-block rounded-lg bg-white border border-gray-200 p-2 [&_svg]:block"
+                          dangerouslySetInnerHTML={{ __html: q.svg! }}
+                        />
+                        <p className="text-[11px] font-semibold text-gray-700 mt-1">{q.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-gray-500 mt-1 text-center max-w-[300px]">{t("getAppScanHint")}</p>
                 </div>
               )}
             </div>
             {/* Send the download link to the owner's own phone/email so they can
-                install on the kitchen device without hunting the store. */}
+                install on the order-taking device without hunting the store. */}
             <SendAppLinkForm defaultEmail={user.email ?? restaurant?.email ?? ""} defaultPhone={restaurant?.phone ?? ""} />
           </div>
         )}

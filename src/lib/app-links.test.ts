@@ -22,11 +22,20 @@ describe("APP_LINKS", () => {
       const url = APP_LINKS[app].ios;
       if (url !== null) {
         expect(url.startsWith("https://apps.apple.com/")).toBe(true);
+        // An App Store listing must carry a numeric track id — a bare
+        // /app/<slug> URL 404s.
+        expect(url).toMatch(/\/id\d+$/);
       }
     });
   }
 
   it("kitchen Play listing is LIVE (2026-07-22) — regression guard against accidental un-flip", () => {
     expect(APP_LINKS.kitchen.play).toContain("com.feefreeordering.kitchen");
+  });
+
+  it("kitchen App Store listing is LIVE (2026-08-15) — regression guard against accidental un-flip", () => {
+    // Verified via itunes.apple.com/lookup?id=6794053932 → "Fee Free Order
+    // App", Fee Free Ordering Inc., free, iosUniversal (iPhone + iPad).
+    expect(APP_LINKS.kitchen.ios).toBe("https://apps.apple.com/us/app/fee-free-order-app/id6794053932");
   });
 });

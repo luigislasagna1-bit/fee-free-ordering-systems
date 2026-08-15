@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Samme kjøkkenflyt",
       "featureKitchenBody": "Telefonbestillinger havner i din eksisterende Kitchen Order App sammen med nettbestillinger. Ingen ny app, ingen ny opplæring – teamet ditt aksepterer dem på samme måte.",
       "statusHeading": "Hvor dette står i dag",
-      "statusBody1": "Vi er fordypet i å bygge fundamentet. Stemmeagenten, Twilio-integrasjonen, kjøkkenoverføringen — alt under aktiv utvikling. Vi forventer å rulle dette ut til tidlig-tilgang-restauranter snart etter at hovedplattformen lanseres.",
+      "statusBody1": "Vi bygger for fullt. Stemmeagenten, Twilio-integrasjonen og overleveringen til kjøkkenet er alle under aktiv utvikling og kjører allerede på en live pilotlinje. Vi åpner det for restauranter når det er bevist i daglig drift.",
       "statusBody2": "Når det er klart, vil du kunne abonnere på det fra faktureringssiden din som et hvilket som helst annet tillegg. Frem til da er denne siden bare et varsel om at det kommer.",
       "addonCatalogLink": "Se den fullstendige tilleggskatalogen",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Oppgrader for å låse opp →",
       "brandedAppTitle": "Merkevarebasert mobilapp",
       "brandedAppDescription": "Send inn din egen app til iOS og Android-appbutikkene med merkevaren din.",
-      "getAppTitle": "Hent Kitchen Order App",
-      "getAppBody": "Gratis på Google Play. Nye bestillinger ringer umiddelbart — selv med skjermen av — og kvitteringer skrives ut over WiFi.",
-      "getAppScanHint": "Skann med kjøkkennettbrettet eller telefonen for å åpne Google Play",
-      "getAppIosSoon": "iPhone/iPad-versjonen kommer til App Store — inntil da kan iPader kjøre kjøkkenet i nettleseren.",
+      "getAppTitle": "Installer Fee Free Order App",
+      "getAppBody": "Motta, godta, skriv ut og håndter bestillinger fra restaurantens telefon eller nettbrett. Gratis for iPhone, iPad og Android — nye bestillinger ringer med én gang, også med skjermen av.",
+      "getAppScanHint": "Skann med telefonen eller nettbrettet du tar imot bestillinger på",
+      "goLiveTitle": "Du er klar til å ta imot bestillinger",
+      "goLiveBody": "Gå gjennom dette én gang på enheten du tar imot bestillinger på, så den første ekte bestillingen ikke tar deg på senga.",
+      "goLiveStepInstall": "Installer Fee Free Order App på den telefonen eller det nettbrettet",
+      "goLiveStepSignIn": "Logg inn i appen med restaurantkontoen din",
+      "goLiveStepNotifications": "Sjekk varselmottakerne dine så varslene når frem",
+      "goLiveStepPrinting": "Sett opp kvitteringsutskrift hvis du skriver ut kjøkkenbonger",
+      "goLiveStepTestOrder": "Legg inn en testbestilling på din egen side og godta den",
+      "goLiveStepShare": "Del bestillingslenken din med gjestene dine",
+      "goLiveInstallPrompt": "Last ned appen til bestillingsenheten din:",
       "sendLinkTitle": "Send lenken til telefonen din",
       "sendLinkBody": "Få appen på enheten du skal bruke på kjøkkenet – vi sender deg nedlastingslenken på e-post eller SMS.",
       "sendLinkEmailOption": "E-post",
@@ -5680,8 +5688,8 @@
         "appConnected": "Ordremottaksapp tilkoblet",
         "appConnectedDetail": {
           "native": "{device} · {ago} · native app",
-          "browser": "{device} · {ago} · kjører i nettleser — installer den gratis Android-appen for pålitelige ringevarsler",
-          "install": "Installer den gratis Kitchen Order App (Google Play) så nye bestillinger ringer umiddelbart. Inntil da får du fortsatt varsler på e-post/SMS."
+          "browser": "{device} · {ago} · kjører i en nettleser — installer den gratis Fee Free Order App for pålitelige ringevarsler",
+          "install": "Installer den gratis Fee Free Order App på iPhone, iPad eller Android så nye bestillinger ringer med én gang. Inntil da får du fortsatt e-post-/SMS-varsler."
         },
         "notificationRecipient": "Minst én varselmottaker"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "For restauranteiere",
           "title": "Din restaurant. <accent>0 % i provisjon. 100 % din.</accent>",
-          "subtitle": "Ta imot henting-, leverings-, spis-inne- og cateringbestillinger på din egen merkevareside med 0% provisjon — med GrowthNet-markedsføringsverktøy og Marketplace-annonsering som kommer ved lansering og gjør førstegangsbesøkende til faste, direkte kunder.",
+          "subtitle": "Ta imot henting-, levering-, spis-her- og cateringbestillinger på din egen merkevareside med 0 % provisjon — med GrowthNet-markedsføringsverktøy og en gratis Fee Free Marketplace-oppføring som gjør førstegangsbesøkende til faste, direkte kunder.",
           "ctaStart": "Kom i gang gratis",
           "ctaDemo": "Se en ekte butikkside",
           "badge": "0% provisjon",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Gratis · iOS + Android",
           "title": "Gå aldri glipp av en betalt bestilling.",
-          "subtitle": "Den native Kitchen Order App-en gjør enhver iPhone, iPad eller Android-nettbrett om til en skuddsikker bestillingsstasjon — med et sikkerhetsnett som sørger for at en travel kveld aldri koster deg et salg.",
+          "subtitle": "Den native Fee Free Order App gjør enhver iPhone, iPad eller Android-nettbrett til en skuddsikker bestillingsstasjon — med et sikkerhetsnett så en travel kveld aldri koster deg et salg.",
           "frameAlt": "Kitchen Order App — innkommende bestilling",
-          "getApp": "Få den gratis Kitchen Order App-en på nettbrettet ditt",
+          "getApp": "Last ned den gratis Fee Free Order App til telefonen eller nettbrettet ditt",
           "ring": {
             "title": "Høy ringelyd med skjermen av",
             "body": "En alarm i fullskjerm vekker nettbrettet i det øyeblikket en bestilling kommer inn — selv om det er i hvilemodus."
@@ -6615,7 +6623,7 @@
           "smsBody": "Send tekstmeldinger til kundene mens bestillingen beveger seg gjennom kjøkkenet — bekreftet, klar, fullført.",
           "contentpilotBody": "Din AI-ansvarlige for sosiale medier — skriver utkast og planlegger innlegg til Instagram, Facebook, X og TikTok.",
           "saveTitle": "Samle og spar",
-          "saveBody": "Pakken vil koste mindre enn å kjøpe hvert verktøy separat — priser annonseres ved lansering.",
+          "saveBody": "Pakken koster mindre enn å kjøpe hvert verktøy separat — priser kommer snart.",
           "ownMessage": "GrowthNet og våre eksklusive markedsføringsverktøy gjør førstegangskunder fra markedsplassen til <em>direkte, lojale og gjentakende kunder som du eier selv.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Last ned i",
           "androidLine1": "Få den på"
         },
-        "softlaunch": {
-          "eyebrow": "Myk lansering",
-          "title": "Noe <accent>stort</accent> putrer i gryta.",
-          "body": "Vi inviterer en utvalgt gruppe restauranteiere til å bli med tidlig og vokse sammen med Fee Free Ordering.",
-          "tick1": "Bli en del av fremtiden for nettbestilling",
-          "tick2": "Sikre deg fordelene ved tidlig tilgang",
-          "tick3": "Vær med på å forme plattformen",
-          "cta": "Bli med på den myke lanseringen",
-          "imgAlt": "Fee Free Ordering — lanseres snart"
+        "live": {
+          "eyebrow": "Nå live",
+          "title": "Restauranten din kan starte <accent>i dag</accent>.",
+          "body": "Fee Free Ordering er live og tar imot ekte bestillinger. Bygget for uavhengige restauranter som vil ha tilbake gjestene sine, merkevaren sin og inntektene sine — satt opp på en ettermiddag, uten kredittkort og uten kontrakt.",
+          "tick1": "Kom i gang gratis — uten kredittkort",
+          "tick2": "Importer eller lag menyen på minutter",
+          "tick3": "Publiser din egen bestillingsside",
+          "tick4": "Installer den gratis Fee Free Order App på iPhone, iPad eller Android",
+          "tick5": "Ta imot direkte bestillinger med 0 % provisjon",
+          "cta": "Begynn å ta imot bestillinger i dag",
+          "imgAlt": "Fee Free Ordering — live og klar for bestillinger"
+        },
+        "orderStation": {
+          "eyebrow": "Gratis · iPhone, iPad og Android",
+          "title": "Bestillingsstasjonen din. <accent>Allerede i lomma.</accent>",
+          "body": "Fee Free Order App — vår native app for å ta imot restaurantbestillinger — gjør en iPhone, iPad eller Android-nettbrett til bestillingsterminalen din. Ta imot bestillinger i det de kommer inn, hør dem midt i rushet, håndter dem hele veien og skriv ut kjøkkenbonger. Ingen dyr spesialmaskinvare.",
+          "devices": {
+            "title": "Kjører på utstyret du allerede har",
+            "body": "Et nettbrett til overs eller en gammel telefon blir bestillingsstasjonen din — ingenting å leie, ingenting å kjøpe."
+          },
+          "alerts": {
+            "title": "Ringer til du godtar",
+            "body": "En høy alarm vekker enheten i det en bestilling kommer inn — også med skjermen av."
+          },
+          "manage": {
+            "title": "Godta, håndter, skriv ut",
+            "body": "Ta hele bestillingen i appen, og skriv ut kjøkkenbonger på WiFi-termoskriveren din."
+          },
+          "free": "Gratis med hver Fee Free Ordering-konto"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Last ned appen",
-            "title": "Kitchen Order App for teamet ditt.",
-            "body": "Håndter bestillinger, skriv ut kvitteringer og oppdater status — alt fra nettbrettet ditt."
+            "title": "Fee Free Order App for teamet ditt.",
+            "body": "Ta imot, håndter og skriv ut bestillinger fra en iPhone, iPad eller Android-nettbrett. Gratis med kontoen din."
           },
           "growth": {
             "eyebrow": "Bygget for vekst",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Tillegg",
       "addOnsSubtitle": "Lås opp betalte funksjoner individuelt. Avbryt når som helst — ingen kontrakter.",
-      "addOnPriceComingSoon": "Priser annonseres ved lansering",
+      "addOnPriceComingSoon": "Priser kommer snart",
       "compareTitle": "Alle restauranter får",
       "compareItems": [
         "0 % provisjon på direktebestillinger",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "uavhengige lokale restauranter",
     "nativeAppsTitle": "En marketplace-app for iOS og Android",
     "comingSoon": "Kommer snart",
-    "nativeAppsBody": "En egen bestillingsapp for marketplace er på vei (appen som ligger på Google Play i dag, er for restaurantpersonale). I mellomtiden kan du trykke på nettleserens <b>delemeny</b> og velge <b>«Legg til på Hjem-skjerm»</b> — da får du marketplace som et ekte appikon, med oppstartsskjerm og fullskjermopplevelse. Ingen appbutikk nødvendig.",
+    "nativeAppsBody": "En egen bestillingsapp for marketplace er på vei (appen som ligger på App Store and Google Play i dag, er for restaurantpersonale). I mellomtiden kan du trykke på nettleserens <b>delemeny</b> og velge <b>«Legg til på Hjem-skjerm»</b> — da får du marketplace som et ekte appikon, med oppstartsskjerm og fullskjermopplevelse. Ingen appbutikk nødvendig.",
     "ownerTitle": "Restauranteier? Bli oppført.",
     "ownerBody": "Eier du en restaurant? <b>Det er gratis å bli oppført på Fee Free Marketplace</b> – ingen månedlig avgift, ingen provisjon per bestilling, aldri. Tilby henting eller levering og nå nye kunder i nærheten, samtidig som du beholder merkevaren din, kundene dine og 100 % av prisene dine.",
     "getListedFree": "Kom i gang gratis",
@@ -7030,7 +7058,7 @@
     "featured": "Fremhevet",
     "allRestaurants": "Alle restauranter",
     "emptyTitle": "Vi er akkurat i gang",
-    "emptyBody": "Ingen restauranter på markedsplassen ennå — oppføringene åpner ved lansering. Driver du en restaurant, opprett gratiskontoen din nå, så kan du bli med på <b>Marketplace</b> samme dag som den åpner.",
+    "emptyBody": "Ingen restauranter her ennå. Driver du restaurant? Opprett din gratis konto og publiser — alle restauranter med henting eller levering står gratis på <b>Marketplace</b>, uten provisjon.",
     "restaurantLogin": "Restaurantinnlogging",
     "noMatchesTitle": "Ingen treff",
     "noMatchesBody": "Prøv et annet søkeord eller fjern filtrene.",

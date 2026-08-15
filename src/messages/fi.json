@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Sama keittiövirta",
       "featureKitchenBody": "Puhelintilaukset päätyvät nykyiseen Kitchen Order Appiisi verkkotilausten rinnalle. Ei uutta sovellusta, ei uutta koulutusta – tiimisi hyväksyy ne samalla tavalla.",
       "statusHeading": "Missä tämä seisoo tänään",
-      "statusBody1": "Rakennnamme perustan täysipainoisesti. Ääniagentki, Twilio-integraatio, keittiön luovutus — kaikki aktiivisessa kehityksessä. Odotamme ottavamme tämän käyttöön varhaisessa vaiheessa ravintoloissa pian pääalustan julkaisun jälkeen.",
+      "statusBody1": "Rakennamme täysillä. Puheagentti, Twilio-integraatio ja keittiöön siirto ovat kaikki aktiivisessa kehityksessä ja jo käytössä oikealla pilottilinjalla. Avaamme sen ravintoloille, kun se on todistettu päivittäisessä käytössä.",
       "statusBody2": "Kun se on valmis, voit tilata sen laskutussivultasi kuten minkä tahansa muun lisäosan. Siihen asti tämä sivu on vain ennakkoilmoitus sen tulosta.",
       "addonCatalogLink": "Katso koko lisäosaluettelo",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Päivitä avataksesi →",
       "brandedAppTitle": "Brändätty mobiilisovellus",
       "brandedAppDescription": "Lähetä oma sovelluksesi iOS- ja Android-sovelluskaupoihin omalla brändilläsi.",
-      "getAppTitle": "Hanki Kitchen Order App",
-      "getAppBody": "Ilmainen Google Playssa. Uudet tilaukset hälyttävät heti — myös näytön ollessa sammutettuna — ja kuitit tulostuvat WiFin kautta.",
-      "getAppScanHint": "Skannaa keittiön tabletilla tai puhelimella avataksesi Google Playn",
-      "getAppIosSoon": "iPhone-/iPad-versio on tulossa App Storeen — siihen asti iPadit voivat pyörittää keittiötä selaimessa.",
+      "getAppTitle": "Asenna Fee Free Order App",
+      "getAppBody": "Vastaanota, hyväksy, tulosta ja hallitse tilauksia ravintolasi puhelimella tai tabletilla. Ilmainen iPhonelle, iPadille ja Androidille — uudet tilaukset soivat heti, myös näyttö sammutettuna.",
+      "getAppScanHint": "Skannaa sillä puhelimella tai tabletilla, jolla otat tilauksia vastaan",
+      "goLiveTitle": "Olet valmis ottamaan tilauksia",
+      "goLiveBody": "Käy tämä kerran läpi laitteella, jolla otat tilauksia vastaan, jottei ensimmäinen oikea tilaus yllätä sinua.",
+      "goLiveStepInstall": "Asenna Fee Free Order App siihen puhelimeen tai tablettiin",
+      "goLiveStepSignIn": "Kirjaudu sovellukseen ravintolatililläsi",
+      "goLiveStepNotifications": "Tarkista ilmoitusten vastaanottajat, jotta hälytykset tavoittavat sinut",
+      "goLiveStepPrinting": "Määritä kuittitulostus, jos tulostat keittiötositteita",
+      "goLiveStepTestOrder": "Tee testitilaus omalla sivullasi ja hyväksy se",
+      "goLiveStepShare": "Jaa tilauslinkkisi asiakkaillesi",
+      "goLiveInstallPrompt": "Hanki sovellus tilauslaitteeseesi:",
       "sendLinkTitle": "Lähetä linkki puhelimeesi",
       "sendLinkBody": "Hae sovellus laitteeseen, jota käytät keittiössä – lähetämme latauslinkin sähköpostitse tai tekstiviestillä.",
       "sendLinkEmailOption": "Sähköposti",
@@ -5680,8 +5688,8 @@
         "appConnected": "Tilaussovellus yhdistetty",
         "appConnectedDetail": {
           "native": "{device} · {ago} · natiivisovellus",
-          "browser": "{device} · {ago} · toimii selaimessa — asenna ilmainen Android-sovellus, jotta hälytykset soivat luotettavasti",
-          "install": "Asenna ilmainen Kitchen Order App (Google Play), jotta uudet tilaukset hälyttävät heti. Siihen asti saat silti sähköposti-/SMS-ilmoitukset."
+          "browser": "{device} · {ago} · käynnissä selaimessa — asenna ilmainen Fee Free Order App luotettavia soittohälytyksiä varten",
+          "install": "Asenna ilmainen Fee Free Order App iPhoneen, iPadiin tai Androidiin, niin uudet tilaukset soivat heti. Siihen asti saat edelleen sähköposti- ja tekstiviesti-ilmoitukset."
         },
         "notificationRecipient": "Vähintään yksi ilmoitusten vastaanottaja"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Ravintoloitsijoille",
           "title": "Sinun ravintolasi. <accent>0 % komissiota. 100 % omasi.</accent>",
-          "subtitle": "Ota vastaan nouto-, toimitus-, paikan päällä- ja catering-tilauksia omalla brändätyllä sivullasi 0% komissiolla — ja lanseerauksen myötä saapuvat GrowthNet-markkinointityökalut ja Marketplace-mainonta muuttavat ensikävijät palaaviksi suoriksi asiakkaiksi.",
+          "subtitle": "Ota vastaan nouto-, kuljetus-, ravintola- ja pitopalvelutilaukset omalla brändisivullasi 0 %:n välityspalkkiolla — GrowthNet-markkinointityökaluilla ja ilmaisella Fee Free Marketplace -listauksella, jotka muuttavat ensikävijät toistuviksi suoriksi asiakkaiksi.",
           "ctaStart": "Aloita ilmaiseksi",
           "ctaDemo": "Katso elävä tilaussivu",
           "badge": "0 % komissiota",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Ilmainen · iOS + Android",
           "title": "Älä koskaan menetä maksavaa tilausta.",
-          "subtitle": "Natiivi Kitchen Order App muuttaa minkä tahansa iPhonen, iPadin tai Android-tabletin luotettavaksi tilausasemaksi — turvaverkolla, jonka ansiosta kiireinen ilta ei koskaan maksa sinulle myyntiä.",
+          "subtitle": "Natiivi Fee Free Order App tekee mistä tahansa iPhonesta, iPadista tai Android-tabletista luodinkestävän tilauspisteen — turvaverkolla, jotta kiireinen ilta ei koskaan maksa sinulle myyntiä.",
           "frameAlt": "Kitchen Order App — saapuva tilaus",
-          "getApp": "Hanki ilmainen Kitchen Order App tabletillesi",
+          "getApp": "Hanki ilmainen Fee Free Order App puhelimeesi tai tablettiisi",
           "ring": {
             "title": "Äänekäs hälytys näytön ollessa sammuksissa",
             "body": "Koko näytön hälytys herättää tabletin heti tilauksen saapuessa — vaikka se nukkuisi."
@@ -6615,7 +6623,7 @@
           "smsBody": "Lähetä asiakkaille tekstiviestejä tilauksen edetessä keittiössä — vahvistettu, valmis, valmistunut.",
           "contentpilotBody": "AI-somemanagerisi — luonnostelee ja ajastaa julkaisuja Instagramiin, Facebookiin, X:ään ja TikTokiin.",
           "saveTitle": "Niputa ja säästä",
-          "saveBody": "Paketti maksaa vähemmän kuin työkalujen ostaminen erikseen — hinnat julkistetaan lanseerauksessa.",
+          "saveBody": "Paketti maksaa vähemmän kuin jokainen työkalu erikseen — hinnat pian.",
           "ownMessage": "GrowthNet ja ainutlaatuiset markkinointityökalumme muuttavat ensikertalaiset markkinapaikan asiakkaat <em>suoriksi, uskollisiksi ja palaaviksi asiakkaiksi, jotka ovat sinun omiasi.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Lataa",
           "androidLine1": "Hanki sovellus"
         },
-        "softlaunch": {
-          "eyebrow": "Soft launch",
-          "title": "Jotain <accent>suurta</accent> on kypsymässä.",
-          "body": "Kutsumme valikoidun joukon ravintoloitsijoita mukaan jo alkuvaiheessa kasvamaan yhdessä Fee Free Orderingin kanssa.",
-          "tick1": "Ole mukana verkkotilaamisen tulevaisuudessa",
-          "tick2": "Lukitse varhaisen vaiheen edut itsellesi",
-          "tick3": "Auta muokkaamaan alustaa",
-          "cta": "Liity soft launchiin",
-          "imgAlt": "Fee Free Ordering — julkaistaan pian"
+        "live": {
+          "eyebrow": "Nyt käytössä",
+          "title": "Ravintolasi voi aloittaa <accent>tänään</accent>.",
+          "body": "Fee Free Ordering on käytössä ja ottaa vastaan oikeita tilauksia. Se on tehty itsenäisille ravintoloille, jotka haluavat asiakkaansa, brändinsä ja tuottonsa takaisin — käyttöönotto yhdessä iltapäivässä, ilman luottokorttia ja ilman sopimusta.",
+          "tick1": "Aloita ilmaiseksi — ei luottokorttia",
+          "tick2": "Tuo tai rakenna ruokalista minuuteissa",
+          "tick3": "Julkaise oma tilaussivusi",
+          "tick4": "Asenna ilmainen Fee Free Order App iPhoneen, iPadiin tai Androidiin",
+          "tick5": "Ala ottaa suoria tilauksia 0 %:n välityspalkkiolla",
+          "cta": "Ala ottaa tilauksia tänään",
+          "imgAlt": "Fee Free Ordering — käytössä ja valmiina tilauksiin"
+        },
+        "orderStation": {
+          "eyebrow": "Ilmainen · iPhone, iPad ja Android",
+          "title": "Tilauspisteesi. <accent>Jo taskussasi.</accent>",
+          "body": "Fee Free Order App — natiivi sovelluksemme ravintolatilausten vastaanottoon — tekee iPhonesta, iPadista tai Android-tabletista tilauspäätteesi. Ota tilaukset vastaan heti, kuule ne ruuhkankin keskellä, hoida ne loppuun asti ja tulosta keittiötositteet. Ei kallista erikoislaitteistoa.",
+          "devices": {
+            "title": "Toimii laitteilla, jotka sinulla jo on",
+            "body": "Ylimääräisestä tabletista tai vanhasta puhelimesta tulee tilauspisteesi — ei vuokrattavaa, ei ostettavaa."
+          },
+          "alerts": {
+            "title": "Soi, kunnes hyväksyt",
+            "body": "Kova hälytys herättää laitteen heti tilauksen saapuessa — myös näyttö sammutettuna."
+          },
+          "manage": {
+            "title": "Hyväksy, hallitse, tulosta",
+            "body": "Hoida koko tilaus sovelluksessa ja tulosta keittiötositteet WiFi-lämpökirjoittimellasi."
+          },
+          "free": "Ilmainen jokaisella Fee Free Ordering -tilillä"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Hanki sovellus",
-            "title": "Kitchen Order App tiimillesi.",
-            "body": "Hallitse tilauksia, tulosta kuitteja ja päivitä tilaa — kaikki tabletiltasi."
+            "title": "Fee Free Order App tiimillesi.",
+            "body": "Ota vastaan, hallitse ja tulosta tilauksia iPhonella, iPadilla tai Android-tabletilla. Ilmainen tilisi kanssa."
           },
           "growth": {
             "eyebrow": "Rakennettu kasvuun",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Lisäominaisuudet",
       "addOnsSubtitle": "Avaa maksulliset ominaisuudet yksitellen. Peruuta milloin tahansa — ei sopimuksia.",
-      "addOnPriceComingSoon": "Hinnoittelu ilmoitetaan julkaisussa",
+      "addOnPriceComingSoon": "Hinnat pian",
       "compareTitle": "Jokainen ravintola saa",
       "compareItems": [
         "0 % komissiota suorista tilauksista",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "itsenäistä paikallista ravintolaa",
     "nativeAppsTitle": "Markkinapaikkasovellus iOS:lle ja Androidille",
     "comingSoon": "Tulossa pian",
-    "nativeAppsBody": "Erillinen markkinapaikan tilaussovellus on työn alla (Google Playssa tänään oleva sovellus on tarkoitettu ravintolahenkilökunnalle). Sillä välin napauta selaimesi <b>jakamisvalikkoa</b> ja valitse <b>”Add to Home Screen”</b> — saat markkinapaikan oikeana sovelluskuvakkeena, käynnistysnäyttöineen ja koko näytön kokemuksena. Sovelluskauppaa ei tarvita.",
+    "nativeAppsBody": "Erillinen markkinapaikan tilaussovellus on työn alla (App Store and Google Playssa tänään oleva sovellus on tarkoitettu ravintolahenkilökunnalle). Sillä välin napauta selaimesi <b>jakamisvalikkoa</b> ja valitse <b>”Add to Home Screen”</b> — saat markkinapaikan oikeana sovelluskuvakkeena, käynnistysnäyttöineen ja koko näytön kokemuksena. Sovelluskauppaa ei tarvita.",
     "ownerTitle": "Ravintolan omistaja? Tule mukaan.",
     "ownerBody": "Omistatko ravintolan? <b>Listautuminen Fee Free Marketplace -palveluun on ilmaista</b> – ei kuukausimaksua, ei tilauskohtaista komissiota, koskaan. Tarjoa noutoa tai toimitusta ja tavoita uusia asiakkaita läheltäsi säilyttäen samalla brändisi, asiakkaasi ja 100 % hinnoistasi.",
     "getListedFree": "Aloita ilmaiseksi",
@@ -7030,7 +7058,7 @@
     "featured": "Suositellut",
     "allRestaurants": "Kaikki ravintolat",
     "emptyTitle": "Olemme vasta aloittamassa",
-    "emptyBody": "Markkinapaikalla ei vielä ole ravintoloita — listaukset avautuvat lanseerauksessa. Jos pyörität ravintolaa, luo ilmainen tili jo nyt, niin pääset mukaan <b>Marketplace</b>-alustalle heti avauspäivänä.",
+    "emptyBody": "Täällä ei ole vielä ravintoloita. Jos pyörität ravintolaa, luo ilmainen tili ja julkaise — jokainen nouto- tai kuljetuspalvelua tarjoava ravintola listataan <b>Marketplace</b>-palveluun maksutta ja ilman välityspalkkiota.",
     "restaurantLogin": "Ravintolan kirjautuminen",
     "noMatchesTitle": "Ei tuloksia",
     "noMatchesBody": "Kokeile eri hakusanaa tai poista suodattimet.",

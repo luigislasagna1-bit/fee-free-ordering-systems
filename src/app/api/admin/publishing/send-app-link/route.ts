@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 /**
  * POST /api/admin/publishing/send-app-link  { channel: "email" | "sms", to: string }
  *
- * The restaurant owner sends THEMSELVES the Kitchen Order App download link on
+ * The restaurant owner sends THEMSELVES the Fee Free Order App download link on
  * the device they'll use in the kitchen (from /admin/publishing). Session-gated
  * to the owner; the destination is their own email/phone. Rate-limited per
  * restaurant so it can't be turned into a spammer, and it only ever sends the
@@ -62,10 +62,14 @@ export async function POST(req: NextRequest) {
   if (!phone) {
     return NextResponse.json({ error: "invalid_phone", code: "invalid_contact" }, { status: 400 });
   }
-  // Fixed, link-only body (kept well under the 2-segment cap). Availability-driven.
-  const parts = [`${restaurantName} Kitchen Order App —`];
-  if (APP_LINKS.kitchen.play) parts.push(`Android: ${APP_LINKS.kitchen.play}`);
+  // Fixed, link-only body. Availability-driven, and deliberately ASCII-ONLY:
+  // the old copy used an em-dash, and ONE non-GSM-7 character flips the whole
+  // message to UCS-2 (70 chars/segment instead of 160), which would have made
+  // this a 3-segment send now that both store URLs are live. Plain "-" keeps
+  // it GSM-7, so the two URLs (~126 chars) fit in 2 segments.
+  const parts = [`${restaurantName} - Fee Free Order App.`];
   if (APP_LINKS.kitchen.ios) parts.push(`iPhone/iPad: ${APP_LINKS.kitchen.ios}`);
+  if (APP_LINKS.kitchen.play) parts.push(`Android: ${APP_LINKS.kitchen.play}`);
   const smsBody = parts.join(" ");
   const res = await sendSms({ to: phone, body: smsBody });
   if (!res.sent) {

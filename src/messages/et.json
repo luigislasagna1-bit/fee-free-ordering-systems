@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Sama köögivoog",
       "featureKitchenBody": "Telefonitellimused jõuavad teie olemasolevasse Kitchen Order App'i koos veebitellimustega. Ühtegi uut rakendust, ühtegi uut koolitust — teie meeskond võtab need vastu samal viisil.",
       "statusHeading": "Kus see täna seisab",
-      "statusBody1": "Oleme põhjaliku arenduse keskel. Häälassistent, Twilio integratsioon, köögi üleandmine — kõik aktiivses arenduses. Ootame seda varsti pärast peaplatvormi käivitamist varajuurdepääsuga restoranidele väljaandmist.",
+      "statusBody1": "Oleme täies ehituses. Häälagent, Twilio integratsioon ja kööki üleandmine on kõik aktiivses arenduses ja juba töös päris piloodiliinil. Avame selle restoranidele, kui see on igapäevases teeninduses tõestatud.",
       "statusBody2": "Kui see on valmis, saate selle tellida arveldusleheküljelt nagu iga teise lisandmooduli. Seni on see leht lihtsalt eelteade, et see on tulemas.",
       "addonCatalogLink": "Vaata täielikku lisandmoodulite kataloogi",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Uuenda avamiseks →",
       "brandedAppTitle": "Kaubamärgiga mobiilirakendus",
       "brandedAppDescription": "Esitage oma rakendus iOS-i ja Androidi rakendustepoodi oma kaubamärgiga.",
-      "getAppTitle": "Hangi Kitchen Order App",
-      "getAppBody": "Tasuta Google Plays. Uued tellimused helisevad kohe — isegi väljalülitatud ekraaniga — ja kviitungid prinditakse WiFi kaudu.",
-      "getAppScanHint": "Skanni köögi tahvelarvuti või telefoniga, et avada Google Play",
-      "getAppIosSoon": "iPhone'i/iPadi versioon on tulemas App Store'i — seni saab iPadidel kööki pidada brauseris.",
+      "getAppTitle": "Paigalda Fee Free Order App",
+      "getAppBody": "Võta vastu, kinnita, prindi ja halda tellimusi oma restorani telefonist või tahvlist. Tasuta iPhone'ile, iPadile ja Androidile — uued tellimused helisevad kohe, ka väljalülitatud ekraaniga.",
+      "getAppScanHint": "Skaneeri telefoni või tahvliga, millega tellimusi vastu võtad",
+      "goLiveTitle": "Oled valmis tellimusi vastu võtma",
+      "goLiveBody": "Käi see korra läbi seadmes, millega tellimusi vastu võtad, et esimene päris tellimus sind ei üllataks.",
+      "goLiveStepInstall": "Paigalda Fee Free Order App sellesse telefoni või tahvlisse",
+      "goLiveStepSignIn": "Logi rakendusse oma restorani kontoga sisse",
+      "goLiveStepNotifications": "Kontrolli teavituste saajaid, et hoiatused sinuni jõuaksid",
+      "goLiveStepPrinting": "Seadista tšeki printimine, kui prindid köögitšekke",
+      "goLiveStepTestOrder": "Tee oma lehel testtellimus ja kinnita see",
+      "goLiveStepShare": "Jaga oma tellimislinki klientidega",
+      "goLiveInstallPrompt": "Hangi rakendus oma tellimusseadmesse:",
       "sendLinkTitle": "Saada link oma telefoni",
       "sendLinkBody": "Laadi rakendus seadmesse, mida köögis kasutad — saadame allalaadimislingi meili või sõnumiga.",
       "sendLinkEmailOption": "Meil",
@@ -5680,8 +5688,8 @@
         "appConnected": "Tellimuste vastuvõtu rakendus ühendatud",
         "appConnectedDetail": {
           "native": "{device} · {ago} · natiivrakendus",
-          "browser": "{device} · {ago} · töötab brauseris — paigalda tasuta Androidi rakendus töökindlate helinateavituste jaoks",
-          "install": "Paigalda tasuta Kitchen Order App (Google Play), et uued tellimused heliseksid kohe. Seni saad ikkagi e-posti/SMS-i teavitusi."
+          "browser": "{device} · {ago} · töötab brauseris — paigalda tasuta Fee Free Order App usaldusväärsete helisignaalide jaoks",
+          "install": "Paigalda tasuta Fee Free Order App iPhone'i, iPadi või Androidi, et uued tellimused kohe heliseksid. Seni saad ikka e-kirja/SMS-teavitusi."
         },
         "notificationRecipient": "Vähemalt üks teavituste saaja"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Restoranipidajatele",
           "title": "Sinu restoran. <accent>0% vahendustasu. 100% sinu oma.</accent>",
-          "subtitle": "Võta vastu kaasaostu-, kulleri-, kohapeal söömise ja catering-tellimusi omaenda brändiga lehel 0% komisjonitasuga — GrowthNet turundustööriistad ja Marketplace reklaam, mis saabuvad käivitamisel, muudavad esmakülastajad püsivateks otseklientideks.",
+          "subtitle": "Võta vastu kaasa-, kohaletoimetamis-, kohapeal söömise ja toitlustustellimusi oma kaubamärgiga lehel 0% vahendustasuga — GrowthNeti turundustööriistade ja tasuta Fee Free Marketplace'i kirjega, mis muudavad esmakülastajad püsivateks otseklientideks.",
           "ctaStart": "Alusta tasuta",
           "ctaDemo": "Vaata päris tellimislehte",
           "badge": "0% komisjonitasu",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Tasuta · iOS + Android",
           "title": "Ära jäta ühtegi tasulist tellimust märkamata.",
-          "subtitle": "Natiivne Kitchen Order App muudab iga iPhone'i, iPadi või Androidi tahvelarvuti kuulikindlaks tellimisjaamaks — turvavõrguga, et tegus õhtu ei läheks sulle kunagi maksma müügi.",
+          "subtitle": "Natiivne Fee Free Order App muudab iga iPhone'i, iPadi või Android-tahvli kuulikindlaks tellimusjaamaks — turvavõrguga, et kiire õhtu ei maksaks sulle kunagi müüki.",
           "frameAlt": "Kitchen Order App — saabuv tellimus",
-          "getApp": "Hangi tasuta Kitchen Order App oma tahvelarvutisse",
+          "getApp": "Hangi tasuta Fee Free Order App oma telefoni või tahvlisse",
           "ring": {
             "title": "Vali helin ekraan väljas",
             "body": "Täisekraani äratus äratab tahvelarvuti hetkel, mil tellimus saabub — isegi unerežiimis."
@@ -6615,7 +6623,7 @@
           "smsBody": "Saada klientidele sõnumeid, kui nende tellimus köögis edeneb — kinnitatud, valmis, lõpetatud.",
           "contentpilotBody": "Sinu AI sotsiaalmeedia haldur — koostab ja ajastab postitusi Instagrami, Facebooki, X-i ja TikTokisse.",
           "saveTitle": "Komplekt ja sääst",
-          "saveBody": "Komplekt maksab vähem kui iga tööriista eraldi ostmine — hinnad avaldatakse turuletulekul.",
+          "saveBody": "Pakett maksab vähem kui iga tööriist eraldi — hinnad tulekul.",
           "ownMessage": "GrowthNet ja meie eksklusiivsed turundustööriistad muudavad esmakordsed turuplatsi kliendid <em>otseseks, lojaalseks ja korduvaks kliendiks, kes kuulub sulle.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Laadi alla",
           "androidLine1": "Hangi rakendus"
         },
-        "softlaunch": {
-          "eyebrow": "Pehme käivitus",
-          "title": "Midagi <accent>suurt</accent> haudub.",
-          "body": "Kutsume valitud rühma restoraniomanikke varakult liituma ja koos Fee Free Orderinguga kasvama.",
-          "tick1": "Ole osa veebitellimuste tulevikust",
-          "tick2": "Kindlusta endale varase liituja eelised",
-          "tick3": "Aita platvormi kujundada",
-          "cta": "Liitu pehme käivitusega",
-          "imgAlt": "Fee Free Ordering — varsti avatav"
+        "live": {
+          "eyebrow": "Nüüd avatud",
+          "title": "Sinu restoran võib alustada <accent>juba täna</accent>.",
+          "body": "Fee Free Ordering töötab ja võtab vastu päris tellimusi. See on tehtud iseseisvatele restoranidele, kes tahavad tagasi oma kliendid, oma brändi ja oma tulu — seadistad ühe pärastlõunaga, ilma krediitkaardita ja ilma lepinguta.",
+          "tick1": "Alusta tasuta — krediitkaarti pole vaja",
+          "tick2": "Impordi või koosta menüü mõne minutiga",
+          "tick3": "Avalda oma kaubamärgiga tellimisleht",
+          "tick4": "Paigalda tasuta Fee Free Order App iPhone'i, iPadi või Androidi",
+          "tick5": "Hakka võtma otsetellimusi 0% vahendustasuga",
+          "cta": "Hakka täna tellimusi vastu võtma",
+          "imgAlt": "Fee Free Ordering — töötab ja võtab tellimusi vastu"
+        },
+        "orderStation": {
+          "eyebrow": "Tasuta · iPhone, iPad ja Android",
+          "title": "Sinu tellimusjaam. <accent>Juba sul taskus.</accent>",
+          "body": "Fee Free Order App — meie natiivne restoranitellimuste vastuvõtu rakendus — muudab iPhone'i, iPadi või Android-tahvli sinu tellimusterminaliks. Võta tellimused vastu kohe, kuule neid ka kõige suuremas tuhinas, halda neid lõpuni ja prindi köögitšekke. Pole vaja osta eririistvara.",
+          "devices": {
+            "title": "Töötab seadmetega, mis sul juba on",
+            "body": "Üleliigsest tahvlist või vanast telefonist saab sinu tellimusjaam — pole midagi rentida ega osta."
+          },
+          "alerts": {
+            "title": "Heliseb, kuni vastu võtad",
+            "body": "Vali äratus äratab seadme kohe, kui tellimus saabub — ka väljalülitatud ekraaniga."
+          },
+          "manage": {
+            "title": "Võta vastu, halda, prindi",
+            "body": "Tee kogu tellimus rakenduses ära ja prindi köögitšekid oma WiFi-termoprinteriga."
+          },
+          "free": "Tasuta iga Fee Free Ordering konto juures"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Hangi rakendus",
-            "title": "Kitchen Order App sinu meeskonnale.",
-            "body": "Halda tellimusi, prindi tšekke ja uuenda olekut — kõik otse oma tahvelarvutist."
+            "title": "Fee Free Order App sinu meeskonnale.",
+            "body": "Võta vastu, halda ja prindi tellimusi iPhone'ist, iPadist või Android-tahvlist. Tasuta koos sinu kontoga."
           },
           "growth": {
             "eyebrow": "Loodud kasvuks",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Lisad",
       "addOnsSubtitle": "Ava tasulised funktsioonid eraldi. Tühista millal tahes — lepinguid pole.",
-      "addOnPriceComingSoon": "Hind teatatakse käivitamisel",
+      "addOnPriceComingSoon": "Hinnad tulekul",
       "compareTitle": "Iga restoran saab",
       "compareItems": [
         "0% vahendustasu otsetellimustelt",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "iseseisvat kohalikku restorani",
     "nativeAppsTitle": "Marketplace'i rakendus iOS-ile ja Androidile",
     "comingSoon": "Tulemas",
-    "nativeAppsBody": "Spetsiaalne marketplace'i tellimisrakendus on väljatöötamisel (praegu Google Plays olev rakendus on mõeldud restorani personalile). Seni ava oma brauseri <b>jagamismenüü</b> ja vali <b>„Lisa avakuvale“</b> — saad marketplace'i päris rakenduseikoni, avaekraani ja täisekraanikogemusega. Rakenduste poodi pole vaja.",
+    "nativeAppsBody": "Spetsiaalne marketplace'i tellimisrakendus on väljatöötamisel (praegu App Store and Google Plays olev rakendus on mõeldud restorani personalile). Seni ava oma brauseri <b>jagamismenüü</b> ja vali <b>„Lisa avakuvale“</b> — saad marketplace'i päris rakenduseikoni, avaekraani ja täisekraanikogemusega. Rakenduste poodi pole vaja.",
     "ownerTitle": "Restoraniomanik? Lase end lisada.",
     "ownerBody": "Kas teil on restoran? <b>Fee Free Marketplace'is loetellu lisamine on tasuta</b> — ei mingit kuutasu, ei mingit tellimuspõhist vahendustasu, mitte kunagi. Pakkuge järeltulekut või kohaletoimetamist ja jõudke lähedal asuvate uute klientideni, säilitades oma brändi, oma kliendid ja 100% oma hindadest.",
     "getListedFree": "Alusta tasuta",
@@ -7030,7 +7058,7 @@
     "featured": "Esiletõstetud",
     "allRestaurants": "Kõik restoranid",
     "emptyTitle": "Alles alustame",
-    "emptyBody": "Turuplatsis pole veel ühtegi restorani — nimekirjad avanevad käivitamisel. Kui sul on restoran, loo oma tasuta konto juba praegu ja saad avamispäeval liituda platvormiga <b>Marketplace</b>.",
+    "emptyBody": "Siin pole veel ühtegi restorani. Kui pead restorani, loo tasuta konto ja avalda — iga kaasamüügi või kohaletoimetamisega restoran on <b>Marketplace</b>'is tasuta ja ilma vahendustasuta.",
     "restaurantLogin": "Restorani sisselogimine",
     "noMatchesTitle": "Tulemusi pole",
     "noMatchesBody": "Proovi teist otsingusõna või tühjenda filtrid.",

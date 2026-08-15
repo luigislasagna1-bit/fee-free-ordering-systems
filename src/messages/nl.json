@@ -4245,7 +4245,7 @@
       "featureKitchenTitle": "Dezelfde keukenflow",
       "featureKitchenBody": "Telefonische bestellingen komen binnen in je bestaande Kitchen Order App, naast de online bestellingen. Geen nieuwe app, geen nieuwe training — je team accepteert ze op dezelfde manier.",
       "statusHeading": "Waar dit vandaag staat",
-      "statusBody1": "We werken hard aan de basis. De spraakagent, de Twilio-integratie, de keukenovergang — alles in actieve ontwikkeling. We verwachten dit binnenkort uit te rollen naar restaurants met vroege toegang, kort na de lancering van het hoofdplatform.",
+      "statusBody1": "We zitten diep in de bouw. De spraakagent, de Twilio-integratie en de keukenoverdracht zijn allemaal in actieve ontwikkeling en draaien al op een live pilotlijn. We stellen het open voor restaurants zodra het zich in de dagelijkse praktijk bewezen heeft.",
       "statusBody2": "Wanneer het klaar is, kun je je er via je factureringspagina op abonneren zoals elke andere add-on. Tot die tijd is deze pagina alleen een voorbeschouwing.",
       "addonCatalogLink": "Bekijk de volledige add-oncatalogus",
       "config": {
@@ -4679,10 +4679,18 @@
       "upgradeToUnlock": "Upgrade om te ontgrendelen →",
       "brandedAppTitle": "Branded mobiele app",
       "brandedAppDescription": "Dien je eigen app in bij de iOS- en Android-appstores met jouw branding.",
-      "getAppTitle": "Download de Kitchen Order App",
-      "getAppBody": "Gratis op Google Play. Nieuwe bestellingen rinkelen direct — zelfs met het scherm uit — en bonnen worden via WiFi geprint.",
-      "getAppScanHint": "Scan met de keukentablet of -telefoon om Google Play te openen",
-      "getAppIosSoon": "De iPhone/iPad-versie komt naar de App Store — tot die tijd kan de keuken op iPads in de browser draaien.",
+      "getAppTitle": "Installeer de Fee Free Order App",
+      "getAppBody": "Ontvang, accepteer, print en beheer bestellingen vanaf de telefoon of tablet van je restaurant. Gratis voor iPhone, iPad en Android — nieuwe bestellingen rinkelen direct, ook met het scherm uit.",
+      "getAppScanHint": "Scan met de telefoon of tablet waarop je bestellingen aanneemt",
+      "goLiveTitle": "Je bent klaar om bestellingen aan te nemen",
+      "goLiveBody": "Loop dit één keer door op het apparaat waarmee je bestellingen aanneemt, zodat je eerste echte bestelling je niet verrast.",
+      "goLiveStepInstall": "Installeer de Fee Free Order App op die telefoon of tablet",
+      "goLiveStepSignIn": "Log in de app in met je restaurantaccount",
+      "goLiveStepNotifications": "Controleer je meldingsontvangers zodat waarschuwingen je bereiken",
+      "goLiveStepPrinting": "Stel bonprinten in als je keukenbonnen print",
+      "goLiveStepTestOrder": "Plaats een testbestelling op je eigen pagina en accepteer die",
+      "goLiveStepShare": "Deel je bestellink met je klanten",
+      "goLiveInstallPrompt": "Zet de app op je bestelapparaat:",
       "sendLinkTitle": "Stuur de link naar je telefoon",
       "sendLinkBody": "Installeer de app op het apparaat dat je in de keuken gebruikt — we mailen of sms'en je de downloadlink.",
       "sendLinkEmailOption": "E-mail",
@@ -5680,8 +5688,8 @@
         "appConnected": "Bestellingen-app verbonden",
         "appConnectedDetail": {
           "native": "{device} · {ago} · native app",
-          "browser": "{device} · {ago} · draait in een browser — installeer de gratis Android-app voor betrouwbare belmeldingen",
-          "install": "Installeer de gratis Kitchen Order App (Google Play) zodat nieuwe bestellingen direct rinkelen. Tot die tijd ontvangt u nog steeds meldingen via e-mail/SMS."
+          "browser": "{device} · {ago} · draait in een browser — installeer de gratis Fee Free Order App voor betrouwbare belmeldingen",
+          "install": "Installeer de gratis Fee Free Order App op iPhone, iPad of Android zodat nieuwe bestellingen direct rinkelen. Tot die tijd krijg je nog steeds e-mail-/sms-meldingen."
         },
         "notificationRecipient": "Minstens één meldingsontvanger"
       },
@@ -6475,7 +6483,7 @@
         "hero": {
           "eyebrow": "Voor restauranthouders",
           "title": "Jouw restaurant. <accent>0% commissie. 100% van jou.</accent>",
-          "subtitle": "Ontvang afhaal-, bezorg-, dine-in- en cateringbestellingen op je eigen pagina in jouw huisstijl, tegen 0% commissie — met GrowthNet-marketingtools en Marketplace-advertenties die bij de lancering verschijnen om eerste bezoekers om te zetten in vaste, directe klanten.",
+          "subtitle": "Neem afhaal-, bezorg-, eet-in- en cateringbestellingen aan op je eigen merkpagina tegen 0% commissie — met GrowthNet-marketingtools en een gratis Fee Free Marketplace-vermelding die eerste bezoekers verandert in vaste, directe klanten.",
           "ctaStart": "Gratis starten",
           "ctaDemo": "Bekijk een live winkel",
           "badge": "0% commissie",
@@ -6540,9 +6548,9 @@
         "kitchen": {
           "eyebrow": "Gratis · iOS + Android",
           "title": "Mis nooit meer een betalende bestelling.",
-          "subtitle": "De native Kitchen Order App maakt van elke iPhone, iPad of Android-tablet een kogelvrij bestelstation — met een vangnet, zodat een drukke avond je nooit een verkoop kost.",
+          "subtitle": "De native Fee Free Order App maakt van elke iPhone, iPad of Android-tablet een onverwoestbaar bestelstation — met een vangnet zodat een drukke avond je nooit een verkoop kost.",
           "frameAlt": "Kitchen Order App — binnenkomende bestelling",
-          "getApp": "Haal de gratis Kitchen Order App op je tablet",
+          "getApp": "Haal de gratis Fee Free Order App op je telefoon of tablet",
           "ring": {
             "title": "Luide melding met scherm uit",
             "body": "Een schermvullend alarm wekt de tablet op het moment dat er een bestelling binnenkomt — zelfs in slaapstand."
@@ -6615,7 +6623,7 @@
           "smsBody": "Stuur klanten een sms terwijl hun bestelling door de keuken gaat — bevestigd, klaar, voltooid.",
           "contentpilotBody": "Je AI-socialmanager — schrijft en plant berichten voor Instagram, Facebook, X & TikTok.",
           "saveTitle": "Bundel & bespaar",
-          "saveBody": "De bundel kost straks minder dan elke tool los kopen — prijzen bekend bij de lancering.",
+          "saveBody": "De bundel kost minder dan elke tool los kopen — prijzen volgen binnenkort.",
           "ownMessage": "GrowthNet en onze exclusieve marketingtools veranderen eenmalige marktplaatsklanten in <em>directe, loyale en terugkerende klanten die van jou zijn.</em>"
         },
         "addons": {
@@ -6732,15 +6740,35 @@
           "iosLine1": "Download in de",
           "androidLine1": "Verkrijgbaar in"
         },
-        "softlaunch": {
-          "eyebrow": "Soft launch",
-          "title": "Er staat iets <accent>groots</accent> te koken.",
-          "body": "We nodigen een selecte groep restauranthouders uit om vroeg in te stappen en samen te groeien met Fee Free Ordering.",
-          "tick1": "Maak deel uit van de toekomst van online bestellen",
-          "tick2": "Verzeker u van early-accessvoordelen",
-          "tick3": "Help het platform vormgeven",
-          "cta": "Doe mee aan de soft launch",
-          "imgAlt": "Fee Free Ordering — binnenkort beschikbaar"
+        "live": {
+          "eyebrow": "Nu live",
+          "title": "Jouw restaurant kan <accent>vandaag</accent> beginnen.",
+          "body": "Fee Free Ordering is live en neemt echte bestellingen aan. Gebouwd voor zelfstandige restaurants die hun klanten, hun merk en hun omzet terug willen — in één middag ingericht, zonder creditcard en zonder contract.",
+          "tick1": "Gratis starten — geen creditcard",
+          "tick2": "Importeer of bouw je menu in minuten",
+          "tick3": "Publiceer je eigen bestelpagina",
+          "tick4": "Installeer de gratis Fee Free Order App op iPhone, iPad of Android",
+          "tick5": "Neem directe bestellingen aan tegen 0% commissie",
+          "cta": "Begin vandaag met bestellingen",
+          "imgAlt": "Fee Free Ordering — live en klaar voor bestellingen"
+        },
+        "orderStation": {
+          "eyebrow": "Gratis · iPhone, iPad & Android",
+          "title": "Je bestelstation. <accent>Zit al in je zak.</accent>",
+          "body": "De Fee Free Order App — onze native app voor het aannemen van restaurantbestellingen — maakt van een iPhone, iPad of Android-tablet je besteltterminal. Neem bestellingen aan zodra ze binnenkomen, hoor ze door de drukte heen, beheer ze tot het einde en print keukenbonnen. Geen eigen hardware nodig.",
+          "devices": {
+            "title": "Draait op je eigen apparaten",
+            "body": "Een reservetablet of een oude telefoon wordt je bestelstation — niets te huren, niets te kopen."
+          },
+          "alerts": {
+            "title": "Blijft rinkelen tot je accepteert",
+            "body": "Een luid alarm wekt het apparaat zodra een bestelling binnenkomt — ook met het scherm uit."
+          },
+          "manage": {
+            "title": "Accepteren, beheren, printen",
+            "body": "Werk de hele bestelling af in de app en print keukenbonnen op je WiFi-thermoprinter."
+          },
+          "free": "Gratis bij elk Fee Free Ordering-account"
         },
         "cards": {
           "reports": {
@@ -6753,8 +6781,8 @@
           },
           "app": {
             "eyebrow": "Download de app",
-            "title": "Kitchen Order App voor uw team.",
-            "body": "Beheer bestellingen, print bonnen en werk de status bij — allemaal vanaf uw tablet."
+            "title": "Fee Free Order App voor je team.",
+            "body": "Neem bestellingen aan, beheer ze en print ze vanaf een iPhone, iPad of Android-tablet. Gratis bij je account."
           },
           "growth": {
             "eyebrow": "Gebouwd voor groei",
@@ -6829,7 +6857,7 @@
       ],
       "addOnsTitle": "Add-ons",
       "addOnsSubtitle": "Ontgrendel betaalde functies afzonderlijk. Op elk moment opzeggen — geen contracten.",
-      "addOnPriceComingSoon": "Prijzen worden bij de lancering aangekondigd",
+      "addOnPriceComingSoon": "Prijzen volgen binnenkort",
       "compareTitle": "Elk restaurant krijgt",
       "compareItems": [
         "0% commissie op directe bestellingen",
@@ -7015,7 +7043,7 @@
     "statIndependentLabel": "onafhankelijke lokale restaurants",
     "nativeAppsTitle": "Een marketplace-app voor iOS & Android",
     "comingSoon": "Binnenkort beschikbaar",
-    "nativeAppsBody": "Een speciale marketplace-bestelapp is in de maak (de app die vandaag op Google Play staat, is voor restaurantpersoneel). Tik in de tussentijd op het <b>deelmenu</b> van je browser en kies <b>“Zet op beginscherm”</b> — je krijgt de marketplace als een echt app-icoon, met splashscreen en volledige schermweergave. Geen appstore nodig.",
+    "nativeAppsBody": "Een speciale marketplace-bestelapp is in de maak (de app die vandaag op App Store and Google Play staat, is voor restaurantpersoneel). Tik in de tussentijd op het <b>deelmenu</b> van je browser en kies <b>“Zet op beginscherm”</b> — je krijgt de marketplace als een echt app-icoon, met splashscreen en volledige schermweergave. Geen appstore nodig.",
     "ownerTitle": "Restauranteigenaar? Laat je vermelden.",
     "ownerBody": "Heb je een restaurant? <b>Vermelding op de Fee Free Marketplace is gratis</b> — geen maandelijkse kosten, geen commissie per bestelling, nooit. Bied afhalen of bezorgen aan en bereik nieuwe klanten in de buurt, terwijl je je merk, je klanten en 100% van je prijzen behoudt.",
     "getListedFree": "Gratis aan de slag",
@@ -7030,7 +7058,7 @@
     "featured": "Uitgelicht",
     "allRestaurants": "Alle restaurants",
     "emptyTitle": "We zijn net begonnen",
-    "emptyBody": "Nog geen restaurants op de marketplace — vermeldingen openen bij de lancering. Run je een restaurant, maak dan nu je gratis account aan en je kunt je op de openingsdag meteen bij de <b>Marketplace</b> aansluiten.",
+    "emptyBody": "Hier staan nog geen restaurants. Heb je een restaurant? Maak je gratis account aan en publiceer — elk restaurant met afhalen of bezorgen staat gratis in de <b>Marketplace</b>, zonder commissie.",
     "restaurantLogin": "Restaurantlogin",
     "noMatchesTitle": "Geen resultaten",
     "noMatchesBody": "Probeer een andere zoekterm of verwijder de filters.",
