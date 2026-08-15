@@ -106,6 +106,11 @@ export const T14: Scenario = base(
 
 );
 (T14.caller as any).maxTurns = 90;
+// A real caller pushes back when told "it's already on the whole pizza" — the point is the split.
+(T14.caller as any).answers = {
+  ...(T14.caller as any).answers,
+  "already (covering|on|across) the whole|whole pizza[^.?!]*(includ|so that|right half)|only on the right|just (on )?the right": "No — only on the right half, not the whole pizza. Move them.",
+};
 
 export const T15: Scenario = base(
   "T15_ambiguous_reference",
@@ -289,7 +294,8 @@ export const T25: Scenario = {
       "buzzer|apartment|unit|instructions": "It's a house.",
       "pepperoni on both (sides|halves)|both (sides|halves)[^.?!]*pepperoni|keep it on the hawaiian side": "Yes, pepperoni on both halves — the meat lovers half gets everything meat lovers has.",
       "(two|2) (separate|orders of|lots of) (ten|10)|split (them|the wings)|10 and 10|two tens": "Yes, two orders of ten is fine.",
-      "(wings?[^.?!]*(flavou?r|tossed|on the side|separate|split|sauce|mild)|(flavou?r|tossed|on the side|separate|split|sauce|mild)[^.?!]*wings?)[^.?!]*\\?": "Mixed please — two orders of ten: one mild mixed, one honey garlic mixed.",
+      // Nabil's wing-style question (any sentence of the reply), but never a read-back that already lists the added wings.
+      "^(?![\\s\\S]*(mild mixed|hg mixed|honey garlic mixed))[\\s\\S]*(wing[\\s\\S]*(flavou?r|tossed|on the side|separate|split|sauce|mild|honey garlic)|(flavou?r|tossed|on the side|separate|split|sauce|mild|honey garlic)[\\s\\S]*wing)[\\s\\S]*\\?": "Mixed please — two orders of ten: one mild mixed, one honey garlic mixed.",
     },
   },
   expected: {

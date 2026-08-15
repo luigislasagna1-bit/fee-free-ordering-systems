@@ -1405,6 +1405,14 @@ function applyToppingChanges(
     if (!name) continue;
     const pl = rm.placement === "left" || rm.placement === "right" || rm.placement === "whole" ? rm.placement : null;
     const before = toppings.length;
+    // Taking a WHOLE topping off ONE half leaves it on the other half.
+    if (pl && pl !== "whole") {
+      const wholeIdx = toppings.findIndex((t) => t.placement === "whole" && sameName(t.name, name));
+      if (wholeIdx >= 0) {
+        toppings[wholeIdx] = { ...toppings[wholeIdx], placement: pl === "left" ? "right" : "left" };
+        continue;
+      }
+    }
     toppings = toppings.filter((t) => !(sameName(t.name, name) && (pl === null || t.placement === pl)));
     if (toppings.length === before) {
       // Not something the caller added — is it a preset the compiler put on?
@@ -1429,6 +1437,21 @@ function applyToppingChanges(
       if (!t) continue;
       // Adding back something previously excluded un-excludes it.
       for (const ex of [...excludes]) if (sameName(ex, t.name)) excludes.delete(ex);
+      // "Green peppers on the right half" when green peppers are on the WHOLE
+      // pizza is a MOVE, not a second helping (the caller is splitting the
+      // pizza in stages). Likewise a topping on the opposite half that is now
+      // asked for on this half becomes whole.
+      const wholeIdx = t.placement !== "whole" ? toppings.findIndex((x) => x.placement === "whole" && sameName(x.name, t.name)) : -1;
+      if (wholeIdx >= 0) {
+        toppings[wholeIdx] = { ...toppings[wholeIdx], placement: t.placement, ...(t.count ? { count: t.count } : {}) };
+        continue;
+      }
+      const otherHalf: Placement | null = t.placement === "left" ? "right" : t.placement === "right" ? "left" : null;
+      const oppIdx = otherHalf ? toppings.findIndex((x) => x.placement === otherHalf && sameName(x.name, t.name)) : -1;
+      if (oppIdx >= 0) {
+        toppings[oppIdx] = { ...toppings[oppIdx], placement: "whole", ...(t.count ? { count: t.count } : {}) };
+        continue;
+      }
       const i = toppings.findIndex((x) => x.placement === t.placement && sameName(x.name, t.name));
       if (i >= 0) toppings[i] = { ...toppings[i], ...(t.count ? { count: t.count } : {}) };
       else toppings.push(t);

@@ -219,11 +219,14 @@ describe("half-and-half edits act on the intent and recompile", () => {
   });
   it("remove without placement takes it off everywhere; with placement only that side", async () => {
     const { e } = await halfHalf();
+    // Onion was on the right; asking for it on the left too makes it WHOLE.
     await e.updateLine({ lineId: "L1" }, { addToppings: [{ name: "onion", placement: "left" }] });
-    expect(e.getLine("L1")!.halves).toEqual({ left: ["Pepperoni", "Mushroom", "Onion"], right: ["Green pepper", "Onion"], whole: [] });
+    expect(e.getLine("L1")!.halves).toEqual({ left: ["Pepperoni", "Mushroom"], right: ["Green pepper"], whole: ["Onion"] });
+    // Taking a whole topping off one half leaves it on the other.
     await e.updateLine({ lineId: "L1" }, { removeToppings: [{ name: "onions", placement: "right" }] });
     expect(e.getLine("L1")!.halves!.right).toEqual(["Green pepper"]);
     expect(e.getLine("L1")!.halves!.left).toContain("Onion");
+    expect(e.getLine("L1")!.halves!.whole).toEqual([]);
     await e.updateLine({ lineId: "L1" }, { removeToppings: [{ name: "onion" }] });
     expect(e.getLine("L1")!.halves!.left).not.toContain("Onion");
   });
