@@ -29,6 +29,11 @@ export const CONFIG = {
   maxTokens: parseInt(process.env.NABIL_MAX_TOKENS || "2048", 10),
   /** Cross-call prompt cache TTL for the store prefix (system + menu). */
   cacheTtl: (process.env.NABIL_CACHE_TTL || "1h") as "5m" | "1h",
+  /** How text reaches ConversationRelay's TTS: "token" forwards every model
+   *  delta as it streams (default, lowest latency); "sentence" buffers to
+   *  clause boundaries so ElevenLabs gets whole phrases (smoother prosody,
+   *  ~100–300 ms later first audio). Experiment flag — needs one live call. */
+  ttsChunk: (process.env.NABIL_TTS_CHUNK || "token") as "token" | "sentence",
 };
 
 export type CallToken = {

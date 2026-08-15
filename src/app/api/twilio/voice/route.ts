@@ -5,7 +5,7 @@ import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { signNabilCallToken } from "@/lib/voice/session-token";
 import { packHints } from "@/lib/voice/speech-hints";
-import { buildVoiceAttrValue } from "@/lib/voice/elevenlabs-voices";
+import { buildVoiceAttrValue, ttsTuningFromEnv } from "@/lib/voice/elevenlabs-voices";
 import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 
@@ -341,7 +341,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   // "<id>-<model>-<speed>_<stability>_<similarity>" is the only place
   // VoiceAgentConfig.voiceSpeed can actually take effect — it was a no-op
   // before. No voice picked ⇒ no attribute at all, exactly as before.
-  const voiceValue = buildVoiceAttrValue(cfg.voice, cfg.voiceSpeed);
+  const voiceValue = buildVoiceAttrValue(cfg.voice, cfg.voiceSpeed, ttsTuningFromEnv());
   const voiceAttr = voiceValue ? ` voice="${xml(voiceValue)}"` : "";
   // Pin the transcription model instead of inheriting Twilio's default, so an
   // upstream default change can never silently move recognition quality under

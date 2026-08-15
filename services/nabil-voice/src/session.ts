@@ -88,6 +88,8 @@ export class CallSession {
   private lastFillerPhrase = "";
   private protectedUntil = 0;
   private protectedText = "";
+  /** Pending TTS text when CONFIG.ttsChunk === "sentence" (flushed at clause boundaries). */
+  private ttsBuffer = "";
   private bargedDuringProtected = false;
   /** Text spoken so far in the CURRENT stream — what an interrupt payload is compared against. */
   private currentStreamText = "";
@@ -221,6 +223,7 @@ export class CallSession {
           break;
         }
         this.interrupted = true;
+        this.ttsBuffer = ""; // never speak buffered text after the caller cut in
         if (heard !== null) this.currentStreamText = heard;
         this.controller?.abort();
         clearTimeout(this.resumeTimer);
@@ -880,8 +883,33 @@ export class CallSession {
   private sendText(token: string, last: boolean) {
     const clean = token.replace(/[*_`~#]/g, "");
     if (!clean && !last) return;
+    if (CONFIG.ttsChunk === "sentence") {
+      // Buffer to clause boundaries so the voice gets whole phrases, not
+      // three-word fragments ("Take your time." arrived as three tokens on
+      // 2026-08-15 and came out as mumble). Flush on . ! ? , — ; or 60 chars.
+      this.ttsBuffer += clean;
+      if (!last) {
+        const m = /^([\s\S]*?[.!?,;—:](?=\s|$))([\s\S]*)$/.exec(this.ttsBuffer);
+        if (m && m[1].trim()) {
+          this.wsSendText(m[1], false);
+          this.ttsBuffer = m[2];
+        } else if (this.ttsBuffer.length >= 60) {
+          this.wsSendText(this.ttsBuffer, false);
+          this.ttsBuffer = "";
+        }
+        return;
+      }
+      const rest = this.ttsBuffer;
+      this.ttsBuffer = "";
+      this.wsSendText(rest, true);
+      return;
+    }
+    this.wsSendText(clean, last);
+  }
+
+  private wsSendText(token: string, last: boolean) {
     try {
-      this.ws.send(JSON.stringify({ type: "text", token: clean, last }));
+      this.ws.send(JSON.stringify({ type: "text", token, last }));
     } catch {
       /* socket closed */
     }

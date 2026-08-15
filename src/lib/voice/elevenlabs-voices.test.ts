@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   NABIL_VOICES,
   buildVoiceAttrValue,
+  ttsTuningFromEnv,
   clampVoiceSpeed,
   isKnownVoiceId,
 } from "./elevenlabs-voices";
@@ -78,5 +79,18 @@ describe("NABIL_VOICES", () => {
     expect(isKnownVoiceId(NABIL_VOICES[0].id)).toBe(true);
     expect(isKnownVoiceId("not-a-voice")).toBe(false);
     expect(isKnownVoiceId("not-a-voice", ["not-a-voice"])).toBe(true);
+  });
+});
+
+describe("TTS tuning (stability / similarity)", () => {
+  it("defaults stay ElevenLabs' 0.50 / 0.75; env can move them within 0..1", () => {
+    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, {})).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.50_0.75");
+    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, { stability: 0.4 })).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.40_0.75");
+    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, { stability: 7, similarity: -1 })).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_1.00_0.00");
+    expect(buildVoiceAttrValue("cgSgspJ2msm6clMCkdW9", 1, { stability: Number.NaN })).toBe("cgSgspJ2msm6clMCkdW9-turbo_v2_5-1.00_0.50_0.75");
+  });
+  it("reads NABIL_TTS_STABILITY / NABIL_TTS_SIMILARITY from env, ignoring garbage", () => {
+    expect(ttsTuningFromEnv({} as NodeJS.ProcessEnv)).toEqual({ stability: null, similarity: null });
+    expect(ttsTuningFromEnv({ NABIL_TTS_STABILITY: "0.4", NABIL_TTS_SIMILARITY: "abc" } as NodeJS.ProcessEnv)).toEqual({ stability: 0.4, similarity: null });
   });
 });

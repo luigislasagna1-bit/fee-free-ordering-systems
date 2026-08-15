@@ -109,11 +109,33 @@ const TTS_MODEL = "turbo_v2_5";
 export function buildVoiceAttrValue(
   voiceId: string | null | undefined,
   speed: number | null | undefined,
+  tuning: { stability?: number | null; similarity?: number | null } = {},
 ): string | null {
   const id = (voiceId || "").trim();
   if (!id) return null; // no voice picked: never send a model/speed for an unknown voice
   const s = clampVoiceSpeed(speed);
-  return `${id}-${TTS_MODEL}-${s.toFixed(2)}_0.50_0.75`;
+  const stability = clampUnit(tuning.stability, DEFAULT_STABILITY);
+  const similarity = clampUnit(tuning.similarity, DEFAULT_SIMILARITY);
+  return `${id}-${TTS_MODEL}-${s.toFixed(2)}_${stability.toFixed(2)}_${similarity.toFixed(2)}`;
+}
+
+/** ElevenLabs' own defaults. Stability: lower = more expressive/emotional,
+ *  higher = flatter and more monotone. Luigi's "slightly too robotic"
+ *  (2026-08-15) is partly the legacy voice at 1.1×, partly a flat delivery —
+ *  NABIL_TTS_STABILITY lets us try 0.40 on one live call without a deploy. */
+export const DEFAULT_STABILITY = 0.5;
+export const DEFAULT_SIMILARITY = 0.75;
+
+function clampUnit(v: number | null | undefined, fallback: number): number {
+  const n = Number(v);
+  if (v === null || v === undefined || !Number.isFinite(n)) return fallback;
+  return Math.min(1, Math.max(0, Math.round(n * 100) / 100));
+}
+
+/** Platform-wide TTS tuning from env (Vercel): NABIL_TTS_STABILITY / NABIL_TTS_SIMILARITY. */
+export function ttsTuningFromEnv(env: NodeJS.ProcessEnv = process.env): { stability?: number | null; similarity?: number | null } {
+  const num = (k: string) => (env[k] !== undefined && env[k] !== "" && Number.isFinite(Number(env[k])) ? Number(env[k]) : null);
+  return { stability: num("NABIL_TTS_STABILITY"), similarity: num("NABIL_TTS_SIMILARITY") };
 }
 
 /** Ids the picker will accept from the client. Validated server-side so a
