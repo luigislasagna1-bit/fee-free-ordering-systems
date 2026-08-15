@@ -295,7 +295,8 @@ export const T25: Scenario = {
       "pepperoni on both (sides|halves)|both (sides|halves)[^.?!]*pepperoni|keep it on the hawaiian side": "Yes, pepperoni on both halves — the meat lovers half gets everything meat lovers has.",
       "(two|2) (separate|orders of|lots of) (ten|10)|split (them|the wings)|10 and 10|two tens": "Yes, two orders of ten is fine.",
       // Nabil's wing-style question (any sentence of the reply), but never a read-back that already lists the added wings.
-      "^(?![\\s\\S]*(mild mixed|hg mixed|honey garlic mixed))[\\s\\S]*(wing[\\s\\S]*(flavou?r|tossed|on the side|separate|split|sauce|mild|honey garlic)|(flavou?r|tossed|on the side|separate|split|sauce|mild|honey garlic)[\\s\\S]*wing)[\\s\\S]*\\?": "Mixed please — two orders of ten: one mild mixed, one honey garlic mixed.",
+      // (the exclusion is a read-back of ALREADY-ADDED ten-piece wings, not Nabil offering "all Honey Garlic mixed or all Mild mixed?")
+      "^(?![\\s\\S]*((ten|10) ?(piece|pc)[\\s\\S]*(mild|hg|honey garlic)|added))[\\s\\S]*(wing[\\s\\S]*(flavou?r|tossed|on the side|separate|split|sauce|mild|honey garlic)|(flavou?r|tossed|on the side|separate|split|sauce|mild|honey garlic)[\\s\\S]*wing)[\\s\\S]*\\?": "Mixed please — two orders of ten: one mild mixed, one honey garlic mixed.",
     },
   },
   expected: {
