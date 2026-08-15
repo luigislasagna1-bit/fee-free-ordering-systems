@@ -542,15 +542,19 @@ function fillRequiredGroup(
   const have = g.options.filter((o) => chosenIds.has(o.modifierOptionId)).length;
   if (have >= need) return;
   const optionNames = () => g.options.map((o) => o.name).join(", ");
+  // A group whose NAME is already a question ("How would you like them?")
+  // is asked as written; "Which How would you like them??" is what the model
+  // used to be handed (Luigi's wings, 2026-08-15).
+  const question = /\?\s*$/.test(g.name.trim()) ? `${g.name.trim()} ${optionNames()}.` : `Which ${g.name}? ${optionNames()}.`;
   if (ask.has(g.id)) {
-    out.unresolved.push(`Which ${g.name}? ${optionNames()}.`);
+    out.unresolved.push(question);
     return;
   }
   const def =
     g.options.find((o) => o.isDefault && !chosenIds.has(o.modifierOptionId)) ??
     (g.options.length === 1 && !chosenIds.has(g.options[0].modifierOptionId) ? g.options[0] : null);
   if (!def) {
-    out.unresolved.push(`Which ${g.name}? ${optionNames()}.`);
+    out.unresolved.push(question);
     return;
   }
   out.mods.push({ modifierOptionId: def.modifierOptionId, name: def.name });

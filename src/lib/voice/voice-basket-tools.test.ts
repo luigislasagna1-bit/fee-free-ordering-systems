@@ -1132,7 +1132,10 @@ describe("add_to_order guards", () => {
     const out = await run(ctx, "add_to_order", { menuItemId: "wings" });
     expect(out.ok).toBe(true);
     expect(out.line.status).toBe("needs_info");
-    expect(out.speakExactly).toContain("still need: Which size for Wings?");
+    // An unfinished line has nothing to recap: the model ASKS the question
+    // (below) instead of reading a "(not finished) — still need" ticket line.
+    expect(out.speakExactly).toBe("");
+    expect(out.line.questions?.[0]).toContain("Which size for Wings?");
     expect(String(out.instruction)).toContain("NOT finished");
     expect(String(out.instruction)).toContain("update_line with lineId L1");
     expect(out.state.incomplete).toEqual(["L1"]);

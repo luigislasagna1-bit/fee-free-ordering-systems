@@ -1050,10 +1050,11 @@ export class CartEngine {
       ok: true,
       lineId: line.lineId,
       line: this.summarize(line),
-      speakExactly:
-        line.status === "needs_info"
-          ? `${line.readBack} — still need: ${line.questions.join(" ")}`
-          : line.spoken,
+      // An unfinished line has nothing to recap yet — the model ASKS the first
+      // question (instruction + `line.questions`); handing it the ticket
+      // string here got it read aloud ("1× Chicken Wings (not finished) —
+      // still need: …"), which is exactly the machine voice Luigi heard.
+      speakExactly: line.status === "needs_info" ? "" : line.spoken,
       pricingNote: line.pricingNote,
       ...(line.halves ? { halves: line.halves } : {}),
       ...(res.notices?.length ? { notices: res.notices } : {}),

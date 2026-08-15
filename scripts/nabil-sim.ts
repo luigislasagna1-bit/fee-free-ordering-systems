@@ -15,6 +15,9 @@
  *
  *   --suite        default critical (injection scenarios are in it too)
  *   --repeat       runs per scenario (default 1); 3 is the release gate
+ *   --budget-cents HARD STOP: once the running total of model spend passes this
+ *                  many cents, remaining runs are skipped (reported as
+ *                  "budget_exhausted") — Luigi 2026-08-15: no more $100 cycles.
  *   --concurrency  parallel calls (default 3; --stress defaults to N)
  *   --restaurant   fixture slug override (default: each scenario's own)
  *   --model        agent model override (else NABIL_MODEL / config default)
@@ -80,6 +83,7 @@ type Args = {
   genModel: string | null;
   generated: string | null;
   stress: number | null;
+  budgetCents: number | null;
 };
 
 const GENERATED_DIR = "reports/nabil-sim/generated";
@@ -105,6 +109,7 @@ function parseArgs(argv: string[]): Args {
     genModel: null,
     generated: null,
     stress: null,
+    budgetCents: null,
   };
   const take = (i: number, flag: string) => {
     const v = argv[i + 1];
@@ -136,6 +141,7 @@ function parseArgs(argv: string[]): Args {
       case "--generate": a.generate = Math.max(1, parseInt(val(), 10) || 1); break;
       case "--taxonomy": a.taxonomy = val().split(",").map((s) => s.trim()).filter(Boolean); break;
       case "--seed": a.seed = parseInt(val(), 10) || 42; break;
+      case "--budget-cents": a.budgetCents = Math.max(1, parseInt(val(), 10) || 1); break;
       case "--caller": {
         const v = val();
         if (v !== "script" && v !== "llm") throw new Error(`--caller must be script or llm`);
@@ -310,9 +316,15 @@ async function main() {
   }
 
   const jobs: Array<() => Promise<ScenarioReport>> = [];
+  let spentCents = 0;
+  let budgetStops = 0;
   for (const s of scenarios) {
     for (let run = 1; run <= args.repeat; run++) {
       jobs.push(async () => {
+        if (args.budgetCents !== null && spentCents >= args.budgetCents) {
+          budgetStops++;
+          return crashReport(s, run, new Error(`budget_exhausted: ${spentCents}¢ spent of the ${args.budgetCents}¢ budget`));
+        }
         const snapshot = loadFixture(args.restaurant ?? s.restaurant);
         const started = Date.now();
         console.log(`▶ ${s.id} run ${run}/${args.repeat} …`);
@@ -327,6 +339,7 @@ async function main() {
             timeoutPerTurnMs: args.timeoutMs,
             log,
           });
+          spentCents += r.costCents;
           console.log(`${r.pass ? "✅" : "❌"} ${s.id} run ${run} — ${((Date.now() - started) / 1000).toFixed(1)}s, ${r.turns.length} turns, $${(r.costCents / 100).toFixed(2)}${r.pass ? "" : ` — ${r.reasons[0]}`}`);
           return r;
         } catch (e) {
@@ -337,6 +350,7 @@ async function main() {
     }
   }
   const reports = await withConcurrency(args.concurrency, jobs);
+  if (budgetStops) console.log(`\n💸 budget stop: ${budgetStops} run(s) skipped after ${spentCents}¢ of the ${args.budgetCents}¢ budget was spent.`);
   const metrics = computeMetrics(reports);
   const stamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
   const name = `${stamp}-${args.suite}${args.generate !== null || args.generated !== null ? `-seed${args.seed}` : ""}${args.ids ? `-${args.ids.join("_").slice(0, 40)}` : ""}${args.repeat > 1 ? `-x${args.repeat}` : ""}`;

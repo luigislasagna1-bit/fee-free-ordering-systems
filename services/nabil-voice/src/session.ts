@@ -7,7 +7,8 @@ import { buildSystemPrompt } from "./prompt";
 import { normalizeAgentConfig } from "./agent-config";
 import { withMessageCacheBreakpoints } from "./cache-breakpoints";
 import { normalizeAsr } from "./asr-normalize";
-import { CartEngine, type CompileResponse } from "./cart-engine";
+import { CartEngine } from "./cart-engine";
+import { compilerFromApi } from "./compiler-port";
 import { buildMenuIndex, type MenuIndex } from "./menu-index";
 import { renderStateBlock, buildUserTurnContent } from "./turn-context";
 import { createDialogueState, noteToolResult, noteSpoken, beginTurn as dialogueBeginTurn, type DialogueState } from "./dialogue-state";
@@ -324,30 +325,7 @@ export class CallSession {
       const slug = this.token.slug;
       const api = this.api;
       this.ctx.cart = new CartEngine({
-        compiler: {
-          async compile(req): Promise<CompileResponse> {
-            const res = await api.buildLine({ slug, kind: req.kind, intent: req.intent, askGroupIds: req.askGroupIds, ...(req.offerDeals ? { offerDeals: true } : {}) });
-            if (!res.ok) {
-              const code = String(res.json?.code ?? `http_${res.status}`);
-              return { ok: false, code, message: String(res.json?.error ?? "I couldn't build that.") };
-            }
-            const j = res.json ?? {};
-            return {
-              ok: true,
-              line: j.line ?? null,
-              readBack: String(j.readBack ?? ""),
-              pricingNote: j.pricingNote ?? null,
-              unresolved: Array.isArray(j.unresolved) ? j.unresolved.map(String) : [],
-              halves: j.halves ?? null,
-              lineSubtotal: typeof j.lineSubtotal === "number" ? j.lineSubtotal : null,
-              notices: Array.isArray(j.notices) ? j.notices.map(String) : undefined,
-              toppings: Array.isArray(j.toppings) ? j.toppings : undefined,
-              pickSlots: Array.isArray(j.pickSlots) ? j.pickSlots : undefined,
-              betterDeal: j.betterDeal ? { name: String(j.betterDeal.name), menuItemId: String(j.betterDeal.menuItemId), saving: Number(j.betterDeal.saving ?? 0) } : null,
-              switchedTo: j.switchedTo ? { from: String(j.switchedTo.from), to: String(j.switchedTo.to), menuItemId: j.switchedTo.menuItemId ? String(j.switchedTo.menuItemId) : undefined, saving: Number(j.switchedTo.saving ?? 0) } : null,
-            };
-          },
-        },
+        compiler: compilerFromApi(api, slug),
         menu: menuIndex,
         askGroupIds: this.ctx.cfg.pizzaAskGroups,
         offerDeals: this.ctx.cfg.offerDayDeals,
