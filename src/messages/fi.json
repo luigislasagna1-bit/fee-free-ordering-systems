@@ -1758,7 +1758,14 @@
       "setAsDefault": "Aseta oletukseksi",
       "confirmDelete": "Poistetaanko tämä malli?",
       "logoTitle": "Kuitin logo",
-      "logoHint": "Näkyy asiakaskuitin yläosassa — esikatselussa, tulostetussa kuitissa ja tilaussähköpostissa. Korkean kontrastin kuvat tulostuvat parhaiten lämpöpaperille. Siirrä Logo-osiota vetämällä."
+      "logoHint": "Näkyy asiakaskuitin yläosassa — esikatselussa, tulostetussa kuitissa ja tilaussähköpostissa. Korkean kontrastin kuvat tulostuvat parhaiten lämpöpaperille. Siirrä Logo-osiota vetämällä.",
+      "phoneReceipt": "Puhelintilauksen kuitti",
+      "phoneReceiptHint": "Tulostuu keittiökuitin sijaan, kun Nabil AI -puhelintilaus saapuu – sama määrä kopioita kuin keittiökuitista. Puhelintilauksen asiakaskopiot käyttävät asiakkaan kuittia, jossa on oma ”Puhelintilaus”-banneri.",
+      "previewPhoneOrder": "Puhelintilaus (Nabil AI)",
+      "testPrint": "Testitulostus: {type}",
+      "testPrintTitle": "Tallenna ja lähetä yksi ”{type}”-testitulostus määritettyyn tulostimeen",
+      "testPrintSent": "Tallennettu ja ”{type}”-testitulostus lähetetty tulostimeen",
+      "livePreview": "Live-esikatselu — {type}"
     },
     "promotions": {
       "title": "Tarjoukset",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "TILAUS MYÖHEMMÄKSI"
+    },
+    "phone": {
+      "banner": "PUHELINTILAUS",
+      "paid": "MAKSETTU",
+      "unpaid": "MAKSAMATTA - {amount} MAKSETAAN ({type})"
     }
   },
   "email": {

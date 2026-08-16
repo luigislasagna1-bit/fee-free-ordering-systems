@@ -1758,7 +1758,14 @@
       "setAsDefault": "Määra vaikimisi",
       "confirmDelete": "Kustuta see mall?",
       "logoTitle": "Kviitungi logo",
-      "logoHint": "Kuvatakse kliendi kviitungi ülaosas — eelvaates, prinditud kviitungil ja tellimuse e-kirjas. Kõrge kontrastsusega pildid prindivad termopaberile kõige paremini. Logo jaotise liigutamiseks lohistage seda."
+      "logoHint": "Kuvatakse kliendi kviitungi ülaosas — eelvaates, prinditud kviitungil ja tellimuse e-kirjas. Kõrge kontrastsusega pildid prindivad termopaberile kõige paremini. Logo jaotise liigutamiseks lohistage seda.",
+      "phoneReceipt": "Telefonitellimuse kviitung",
+      "phoneReceiptHint": "Prinditakse köögikviitungi asemel, kui saabub Nabil AI telefonitellimus – sama palju koopiaid kui köögikviitungit. Telefonitellimuse kliendikoopiad kasutavad kliendi kviitungit, millel on oma „Telefonitellimus“ riba.",
+      "previewPhoneOrder": "Telefonitellimus (Nabil AI)",
+      "testPrint": "Proovitrükk: {type}",
+      "testPrintTitle": "Salvesta ja saada üks „{type}“ proovitrükk seadistatud printerisse",
+      "testPrintSent": "Salvestatud ja „{type}“ proovitrükk printerisse saadetud",
+      "livePreview": "Reaalajas eelvaade — {type}"
     },
     "promotions": {
       "title": "Pakkumised",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "TELLIMUS HILISEMAKS"
+    },
+    "phone": {
+      "banner": "TELEFONITELLIMUS",
+      "paid": "MAKSTUD",
+      "unpaid": "MAKSMATA - {amount} TASUDA ({type})"
     }
   },
   "email": {

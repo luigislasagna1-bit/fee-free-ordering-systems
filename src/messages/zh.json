@@ -1758,7 +1758,14 @@
       "setAsDefault": "设为默认",
       "confirmDelete": "确认删除此模板？",
       "logoTitle": "小票标志",
-      "logoHint": "显示在顾客小票顶部——预览、打印小票和订单邮件中均会显示。高对比度图片在热敏纸上打印效果最佳。拖动「标志」区块可调整位置。"
+      "logoHint": "显示在顾客小票顶部——预览、打印小票和订单邮件中均会显示。高对比度图片在热敏纸上打印效果最佳。拖动「标志」区块可调整位置。",
+      "phoneReceipt": "电话订单收据",
+      "phoneReceiptHint": "当 Nabil AI 电话订单进入时，代替厨房收据打印——份数与厨房收据相同。电话订单的顾客联使用顾客收据，其上有单独的“电话订单”横幅。",
+      "previewPhoneOrder": "电话订单（Nabil AI）",
+      "testPrint": "测试打印：{type}",
+      "testPrintTitle": "保存并向已配置的打印机发送一份“{type}”测试打印",
+      "testPrintSent": "已保存并将“{type}”测试打印发送至打印机",
+      "livePreview": "实时预览 — {type}"
     },
     "promotions": {
       "title": "促销",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "尽快",
       "orderForLater": "预约订单"
+    },
+    "phone": {
+      "banner": "电话订单",
+      "paid": "已付款",
+      "unpaid": "未付款 - {type}时支付 {amount}"
     }
   },
   "email": {

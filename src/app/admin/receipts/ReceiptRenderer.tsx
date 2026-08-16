@@ -1,7 +1,8 @@
 "use client";
 import { forwardRef } from "react";
 import { useTranslations } from "next-intl";
-import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
+import type { CustomerConfig, KitchenConfig, PhoneConfig, Section, SectionStyle } from "@/lib/receipt-schema";
+import { PHONE_ORDER_CHANNEL, isPhoneOrderChannel } from "@/lib/receipt-schema";
 import { formatCurrency } from "@/lib/utils";
 import { childBuildLines } from "@/lib/bundle-child-lines";
 import { buildMoneyBreakdown } from "@/lib/money-breakdown";
@@ -61,6 +62,9 @@ export const SAMPLE_ORDER = {
   tip: 6.0,
   depositTotal: 4.0,
   creditApplied: 10.0,
+  /** Sales channel — "voice" = a Nabil AI phone order (banner + payment
+   *  status print). null = web order, the default preview. Luigi 2026-08-16. */
+  channel: null as string | null,
 };
 
 export type SampleOrder = typeof SAMPLE_ORDER;
@@ -77,8 +81,20 @@ export type SampleOrder = typeof SAMPLE_ORDER;
  *   a delivery section even if data is present.
  * Dine-In: clears address + sets a table-style note so the kitchen
  *   knows where to deliver food.
+ * phoneOrder: makes it a Nabil AI phone order — channel "voice", unpaid
+ *   (pay at pickup, the way every phone order arrives today) — so the PHONE
+ *   ORDER banner + "NOT PAID - $X DUE ON …" line render. Luigi 2026-08-16.
  */
-export function makeSampleOrder(orderType: "pickup" | "delivery" | "dine_in"): SampleOrder {
+export function makeSampleOrder(
+  orderType: "pickup" | "delivery" | "dine_in",
+  opts: { phoneOrder?: boolean } = {},
+): SampleOrder {
+  const base = makeSampleOrderByType(orderType);
+  if (!opts.phoneOrder) return base;
+  return { ...base, channel: PHONE_ORDER_CHANNEL, paymentStatus: "pending" };
+}
+
+function makeSampleOrderByType(orderType: "pickup" | "delivery" | "dine_in"): SampleOrder {
   if (orderType === "delivery") {
     return { ...SAMPLE_ORDER, type: "delivery", deliveryFee: 4.99, total: SAMPLE_ORDER.total + 4.99 };
   }
@@ -101,6 +117,38 @@ export function makeSampleOrder(orderType: "pickup" | "delivery" | "dine_in"): S
     deliveryZip: "",
     deliveryFee: 0,
   };
+}
+
+/**
+ * The PHONE ORDER banner block — shared by the customer (`phone_order`) and
+ * kitchen/phone (`k_phone_order`) previews. Same words as the printed ticket:
+ * receipt.ts `phoneOrderPaymentLine` (mirror rule — keep in lockstep).
+ */
+function PhoneOrderBanner({
+  order,
+  restaurant,
+  tRoot,
+}: {
+  order: SampleOrder;
+  restaurant: any;
+  tRoot: ReturnType<typeof useTranslations>;
+}) {
+  const fmt = (n: number) => formatCurrency(n, restaurant?.currency || "usd");
+  const status =
+    order.paymentStatus === "paid"
+      ? tRoot("receipt.phone.paid")
+      : order.paymentStatus === "pending"
+        ? tRoot("receipt.phone.unpaid", {
+            amount: fmt(Math.max(0, order.total - ((order as any).creditApplied ?? 0))),
+            type: tRoot(`receipt.orderTypes.${order.type}`),
+          })
+        : String(order.paymentStatus).replace(/_/g, " ").toUpperCase();
+  return (
+    <span>
+      <span style={{ display: "block" }}>{tRoot("receipt.phone.banner")}</span>
+      <span style={{ display: "block" }}>{status}</span>
+    </span>
+  );
 }
 
 // ─── Shared helpers ───────────────────────────────────────────────────────────
@@ -196,6 +244,13 @@ function renderCustomer(
     // real scheduled order prints "ORDER FOR LATER: <date/time>" here instead.
     case "timing":
       return <span><b>{t("asap")}</b> : {fmtTime(order.createdAt)}</span>;
+
+    // Nabil AI phone-order banner — only when the previewed sample IS a phone
+    // order (the "Phone order" preview toggle), exactly like print: a web
+    // order's receipt has no banner. Luigi 2026-08-16.
+    case "phone_order":
+      if (!isPhoneOrderChannel(order.channel)) return null;
+      return <PhoneOrderBanner order={order} restaurant={restaurant} tRoot={tRoot} />;
 
     case "customer_info":
       return (
@@ -379,12 +434,25 @@ function renderCustomer(
 
 // ─── Kitchen section renderers ────────────────────────────────────────────────
 
-function renderKitchen(section: Section, order: SampleOrder, config: KitchenConfig, t: ReturnType<typeof useTranslations<"admin.receiptRenderer">>): React.ReactNode {
+function renderKitchen(
+  section: Section,
+  order: SampleOrder,
+  config: KitchenConfig | PhoneConfig,
+  t: ReturnType<typeof useTranslations<"admin.receiptRenderer">>,
+  restaurant: any,
+  tRoot: ReturnType<typeof useTranslations>,
+): React.ReactNode {
   const s = section.style;
   const dim = s.highlight ? "#cccccc" : "#555555";
   const small: React.CSSProperties = { fontSize: `${Math.max(9, s.fontSize - 3)}px`, color: dim, fontWeight: "normal" };
 
   switch (section.type) {
+    // Nabil AI phone-order banner (kitchen / phone template). Renders only
+    // when the sample is a phone order — the Phone Order tab always is.
+    case "k_phone_order":
+      if (!isPhoneOrderChannel(order.channel)) return null;
+      return <PhoneOrderBanner order={order} restaurant={restaurant} tRoot={tRoot} />;
+
     case "k_title":
       return <span>{t("kitchenOrderTitle")}</span>;
 
@@ -508,7 +576,10 @@ function renderKitchen(section: Section, order: SampleOrder, config: KitchenConf
 
 interface CustomerProps { type: "customer"; config: CustomerConfig; order?: SampleOrder; restaurant?: any; widthPx?: number }
 interface KitchenProps  { type: "kitchen";  config: KitchenConfig;  order?: SampleOrder; restaurant?: any; widthPx?: number }
-type Props = CustomerProps | KitchenProps;
+/** The Nabil AI phone-order template — kitchen-style sections, previewed
+ *  through the kitchen renderer. Luigi 2026-08-16. */
+interface PhoneProps    { type: "phone";    config: PhoneConfig;    order?: SampleOrder; restaurant?: any; widthPx?: number }
+type Props = CustomerProps | KitchenProps | PhoneProps;
 
 export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
   function ReceiptRenderer({ type, config, order = SAMPLE_ORDER, restaurant, widthPx }, ref) {
@@ -535,7 +606,7 @@ export const ReceiptRenderer = forwardRef<HTMLDivElement, Props>(
           const content =
             type === "customer"
               ? renderCustomer(section, order, restaurant, config as CustomerConfig, t, tRoot)
-              : renderKitchen(section, order, config as KitchenConfig, t);
+              : renderKitchen(section, order, config as KitchenConfig | PhoneConfig, t, restaurant, tRoot);
 
           if (content === null) return null;
 

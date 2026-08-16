@@ -1758,7 +1758,14 @@
       "setAsDefault": "Establir com a predeterminat",
       "confirmDelete": "Elimineu aquesta plantilla?",
       "logoTitle": "Logotip del rebut",
-      "logoHint": "Es mostra a la part superior del rebut del client — a la previsualització, al rebut imprès i al correu de la comanda. Les imatges d'alt contrast s'imprimeixen millor en paper tèrmic. Arrossega la secció Logotip per reubicar-la."
+      "logoHint": "Es mostra a la part superior del rebut del client — a la previsualització, al rebut imprès i al correu de la comanda. Les imatges d'alt contrast s'imprimeixen millor en paper tèrmic. Arrossega la secció Logotip per reubicar-la.",
+      "phoneReceipt": "Rebut de comanda telefònica",
+      "phoneReceiptHint": "S'imprimeix en lloc del rebut de la cuina quan arriba una comanda telefònica de Nabil AI, amb el mateix nombre de còpies que el rebut de la cuina. Les còpies per al client d'una comanda telefònica fan servir el rebut del client, que mostra el seu propi bàner «Comanda telefònica».",
+      "previewPhoneOrder": "Comanda telefònica (Nabil AI)",
+      "testPrint": "Impressió de prova: {type}",
+      "testPrintTitle": "Desa i envia una impressió de prova «{type}» a la impressora configurada",
+      "testPrintSent": "Desat i impressió de prova «{type}» enviada a la impressora",
+      "livePreview": "Previsualització en directe — {type}"
     },
     "promotions": {
       "title": "Promocions",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "COMANDA PER A MÉS TARD"
+    },
+    "phone": {
+      "banner": "COMANDA TELEFÒNICA",
+      "paid": "PAGAT",
+      "unpaid": "NO PAGAT - {amount} A PAGAR ({type})"
     }
   },
   "email": {

@@ -1758,7 +1758,14 @@
       "setAsDefault": "Iestatīt kā noklusējumu",
       "confirmDelete": "Dzēst šo veidni?",
       "logoTitle": "Čeka logotips",
-      "logoHint": "Tiek rādīts klienta čeka augšdaļā — priekšskatījumā, izdrukātajā čekā un pasūtījuma e-pastā. Augsta kontrasta attēli vislabāk drukājas uz termopapīra. Velciet sadaļu Logotips, lai to pārvietotu."
+      "logoHint": "Tiek rādīts klienta čeka augšdaļā — priekšskatījumā, izdrukātajā čekā un pasūtījuma e-pastā. Augsta kontrasta attēli vislabāk drukājas uz termopapīra. Velciet sadaļu Logotips, lai to pārvietotu.",
+      "phoneReceipt": "Telefona pasūtījuma čeks",
+      "phoneReceiptHint": "Tiek drukāts virtuves čeka vietā, kad ienāk Nabil AI telefona pasūtījums — tikpat kopiju kā virtuves čekam. Telefona pasūtījuma klienta kopijas izmanto klienta čeku, kurā ir savs uzraksts “Pasūtījums pa tālruni”.",
+      "previewPhoneOrder": "Pasūtījums pa tālruni (Nabil AI)",
+      "testPrint": "Testa izdruka: {type}",
+      "testPrintTitle": "Saglabāt un nosūtīt vienu “{type}” testa izdruku uz iestatīto printeri",
+      "testPrintSent": "Saglabāts, un “{type}” testa izdruka nosūtīta uz printeri",
+      "livePreview": "Tiešais priekšskatījums — {type}"
     },
     "promotions": {
       "title": "Akcijas",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "TŪLĪT",
       "orderForLater": "PASŪTĪJUMS VĒLĀKAM LAIKAM"
+    },
+    "phone": {
+      "banner": "PASŪTĪJUMS PA TĀLRUNI",
+      "paid": "APMAKSĀTS",
+      "unpaid": "NAV APMAKSĀTS - {amount} JĀMAKSĀ ({type})"
     }
   },
   "email": {

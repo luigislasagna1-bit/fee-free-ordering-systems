@@ -1758,7 +1758,14 @@
       "setAsDefault": "Définir par défaut",
       "confirmDelete": "Supprimer ce modèle ?",
       "logoTitle": "Logo du reçu",
-      "logoHint": "Affiché en haut du reçu client — dans l'aperçu, sur le reçu imprimé et dans l'e-mail de commande. Les images très contrastées s'impriment mieux sur papier thermique. Faites glisser la section Logo pour la repositionner."
+      "logoHint": "Affiché en haut du reçu client — dans l'aperçu, sur le reçu imprimé et dans l'e-mail de commande. Les images très contrastées s'impriment mieux sur papier thermique. Faites glisser la section Logo pour la repositionner.",
+      "phoneReceipt": "Reçu commande téléphonique",
+      "phoneReceiptHint": "S'imprime à la place du reçu cuisine lorsqu'une commande téléphonique Nabil AI arrive — même nombre d'exemplaires que le reçu cuisine. Les exemplaires client d'une commande téléphonique utilisent le reçu client, qui affiche son propre bandeau « Commande téléphonique ».",
+      "previewPhoneOrder": "Commande téléphonique (Nabil AI)",
+      "testPrint": "Impression test : {type}",
+      "testPrintTitle": "Enregistrer et envoyer un test d'impression « {type} » à l'imprimante configurée",
+      "testPrintSent": "Enregistré et test d'impression « {type} » envoyé à l'imprimante",
+      "livePreview": "Aperçu en direct — {type}"
     },
     "promotions": {
       "title": "Promotions",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "DÈS QUE POSSIBLE",
       "orderForLater": "COMMANDE POUR PLUS TARD"
+    },
+    "phone": {
+      "banner": "COMMANDE TÉLÉPHONIQUE",
+      "paid": "PAYÉ",
+      "unpaid": "NON PAYÉ - {amount} À PAYER ({type})"
     }
   },
   "email": {

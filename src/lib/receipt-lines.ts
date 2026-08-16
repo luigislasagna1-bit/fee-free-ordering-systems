@@ -22,9 +22,15 @@
 // 576-dot (80mm) thermal printer — see `renderReceiptBitmap` in
 // `StarXpandBridge.kt`.
 
-import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
+import type { CustomerConfig, KitchenConfig, PhoneConfig, Section, SectionStyle } from "./receipt-schema";
 import type { ReceiptOrder, ReceiptRestaurant, ReservationReceiptData } from "./receipt";
-import { boxedSectionHasNoContent, deliveryCityLine } from "./receipt";
+import {
+  boxedSectionHasNoContent,
+  deliveryCityLine,
+  isPhoneOrder,
+  phoneOrderPaymentLine,
+  printableCustomerEmail,
+} from "./receipt";
 import { formatAddressLine, formatCustomerName } from "./address-format";
 import { formatCurrency } from "./utils";
 import type { DigestStats } from "./email";
@@ -252,7 +258,7 @@ function tOrderTypeLower(type: string, t: Translator): string {
 }
 
 function findStyleSection(
-  config: CustomerConfig | KitchenConfig,
+  config: CustomerConfig | KitchenConfig | PhoneConfig,
   type: string,
 ): SectionStyle | null {
   const section = config.sections.find((s) => s.type === type);
@@ -266,11 +272,19 @@ function renderKitchenSection(
   r: LinesBuilder,
   section: Section,
   order: ReceiptOrder,
-  config: KitchenConfig,
+  config: KitchenConfig | PhoneConfig,
   t: Translator,
 ): void {
   const s = section.style;
   switch (section.type) {
+    // Nabil AI phone-order banner — MIRRORS receipt.ts k_phone_order (same
+    // words via the shared phoneOrderPaymentLine). Renders only for a phone
+    // order; renderSections skips it otherwise. Luigi 2026-08-16.
+    case "k_phone_order":
+      r.line(`  ${t("receipt.phone.banner")}  `);
+      r.wrapped(phoneOrderPaymentLine(order, t, fmt));
+      break;
+
     case "k_title":
       r.line(`--- ${t("receipt.kitchen.title")} ---`);
       break;
@@ -451,6 +465,13 @@ function renderCustomerSection(
       r.line(`${t("receipt.reservation.booking")}: ${fmtDateTime(order.scheduledFor ?? `${order.reservation.date}T${order.reservation.time}`)}`);
       break;
 
+    // Nabil AI phone-order banner (customer copy) — MIRRORS receipt.ts
+    // phone_order. Renders only for a phone order. Luigi 2026-08-16.
+    case "phone_order":
+      r.line(`  ${t("receipt.phone.banner")}  `);
+      r.wrapped(phoneOrderPaymentLine(order, t, fmt));
+      break;
+
     case "order_info":
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
@@ -473,10 +494,13 @@ function renderCustomerSection(
       }
       break;
 
-    case "customer_info":
+    case "customer_info": {
       r.line(formatCustomerName(order.customerName));
       if (order.customerPhone) r.line(order.customerPhone);
-      if (order.customerEmail) r.line(order.customerEmail);
+      // A phone order's synthetic voice e-mail is never printed — MIRRORS
+      // receipt.ts (printableCustomerEmail). Luigi 2026-08-16.
+      const email = printableCustomerEmail(order);
+      if (email) r.line(email);
       if (order.type === "delivery" && order.deliveryAddress) {
         r.line(formatAddressLine(order.deliveryAddress));
         const cityLine = deliveryCityLine(order);
@@ -490,6 +514,7 @@ function renderCustomerSection(
         }
       }
       break;
+    }
 
     case "items": {
       const modStyle = findStyleSection(config, "modifiers");
@@ -646,11 +671,13 @@ const STYLE_ONLY_SECTIONS = new Set<string>(["k_modifiers", "modifiers"]);
 
 function renderSections(
   r: LinesBuilder,
-  config: CustomerConfig | KitchenConfig,
+  config: CustomerConfig | KitchenConfig | PhoneConfig,
   order: ReceiptOrder,
   restaurant: ReceiptRestaurant,
   t: Translator,
 ) {
+  // The phone template is a kitchen-style ticket — MIRRORS receipt.ts.
+  const kitchenStyle = config.receiptType !== "customer";
   for (const section of config.sections) {
     if (!section.enabled) continue;
     if (STYLE_ONLY_SECTIONS.has(section.type)) continue;
@@ -660,6 +687,9 @@ function renderSections(
     // Timing sections are the inverse — a reservation's time is in the
     // reservation section, so skip the standalone timing section for pre-orders.
     if ((section.type === "timing" || section.type === "k_timing") && order.reservation) continue;
+    // Phone-order banner sections exist only for a Nabil AI phone order — a web
+    // order skips the WHOLE section (padding + dividers). MIRRORS receipt.ts.
+    if ((section.type === "phone_order" || section.type === "k_phone_order") && !isPhoneOrder(order)) continue;
     // Logo section renders only when a receipt logo is uploaded — skip the
     // WHOLE section (padding included) otherwise, so restaurants without a
     // logo see zero change at the top of their receipts.
@@ -680,8 +710,8 @@ function renderSections(
       r.boxStart(header, s.highlight, s.fontSize);
       const boxedSection = { ...section, style: { ...s, highlight: false } };
       applyStyle(r, boxedSection.style);
-      if (config.receiptType === "kitchen") {
-        renderKitchenSection(r, boxedSection, order, config as KitchenConfig, t);
+      if (kitchenStyle) {
+        renderKitchenSection(r, boxedSection, order, config as KitchenConfig | PhoneConfig, t);
       } else {
         renderCustomerSection(r, boxedSection, order, restaurant, config as CustomerConfig, t);
       }
@@ -690,8 +720,8 @@ function renderSections(
     } else {
       if (s.dividerAbove) r.resetStyle().left().divider("-");
       applyStyle(r, s);
-      if (config.receiptType === "kitchen") {
-        renderKitchenSection(r, section, order, config as KitchenConfig, t);
+      if (kitchenStyle) {
+        renderKitchenSection(r, section, order, config as KitchenConfig | PhoneConfig, t);
       } else {
         renderCustomerSection(r, section, order, restaurant, config as CustomerConfig, t);
       }
@@ -705,10 +735,12 @@ function renderSections(
 
 // ─── Public builders ────────────────────────────────────────────────────────
 
+/** Kitchen-style ticket — takes the kitchen OR the phone-order template
+ *  (MIRRORS receipt.ts buildKitchenReceiptFromConfig). */
 export async function buildKitchenReceiptLines(
   order: ReceiptOrder,
   restaurant: ReceiptRestaurant,
-  config: KitchenConfig,
+  config: KitchenConfig | PhoneConfig,
   paperWidth = "80mm",
   locale: string = "en",
 ): Promise<ReceiptLine[]> {

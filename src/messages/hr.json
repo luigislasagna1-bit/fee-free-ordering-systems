@@ -1758,7 +1758,14 @@
       "setAsDefault": "Postavi kao zadano",
       "confirmDelete": "Izbrisati ovaj predložak?",
       "logoTitle": "Logotip računa",
-      "logoHint": "Prikazuje se na vrhu računa za kupca — u pregledu, na ispisanom računu i u e-poruci narudžbe. Slike visokog kontrasta najbolje se ispisuju na termalnom papiru. Povucite odjeljak Logotip da biste ga premjestili."
+      "logoHint": "Prikazuje se na vrhu računa za kupca — u pregledu, na ispisanom računu i u e-poruci narudžbe. Slike visokog kontrasta najbolje se ispisuju na termalnom papiru. Povucite odjeljak Logotip da biste ga premjestili.",
+      "phoneReceipt": "Račun telefonske narudžbe",
+      "phoneReceiptHint": "Ispisuje se umjesto kuhinjskog računa kada stigne telefonska narudžba putem Nabil AI — isti broj kopija kao kuhinjski račun. Kopije za kupca kod telefonske narudžbe koriste račun za kupca, koji prikazuje vlastiti natpis „Telefonska narudžba”.",
+      "previewPhoneOrder": "Telefonska narudžba (Nabil AI)",
+      "testPrint": "Probni ispis: {type}",
+      "testPrintTitle": "Spremi i pošalji jedan probni ispis „{type}” na konfigurirani pisač",
+      "testPrintSent": "Spremljeno i probni ispis „{type}” poslan na pisač",
+      "livePreview": "Pregled uživo — {type}"
     },
     "promotions": {
       "title": "Promocije",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "NARUDŽBA ZA KASNIJE"
+    },
+    "phone": {
+      "banner": "TELEFONSKA NARUDŽBA",
+      "paid": "PLAĆENO",
+      "unpaid": "NIJE PLAĆENO - {amount} ZA PLATITI ({type})"
     }
   },
   "email": {

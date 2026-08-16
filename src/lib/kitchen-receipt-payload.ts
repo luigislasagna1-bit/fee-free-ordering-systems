@@ -12,7 +12,7 @@
  * and `lines` (structured ReceiptLine[] for the StarXpand bitmap renderer).
  */
 import prisma from "@/lib/db";
-import { parseReceiptConfig } from "@/lib/receipt-schema";
+import { parseReceiptConfig, isPhoneOrderChannel, type ReceiptTemplateType } from "@/lib/receipt-schema";
 import {
   buildKitchenReceiptFromConfig,
   buildCustomerReceiptFromConfig,
@@ -106,8 +106,16 @@ export async function buildOrderReceiptPayload(opts: {
     select: { partySize: true, date: true, time: true },
   });
 
+  // Which saved template prints this copy. A Nabil AI phone order's KITCHEN
+  // copies use the separate PHONE ORDER template (kitchen-style + the "PHONE
+  // ORDER / NOT PAID" banner first); its customer copies keep the customer
+  // template, which carries its own phone banner. Web orders: unchanged.
+  // Luigi 2026-08-16.
+  const isPhone = isPhoneOrderChannel((order as any).channel);
+  const templateType: ReceiptTemplateType =
+    receiptType === "kitchen" && isPhone ? "phone" : receiptType;
   const tplRow = await prisma.receiptTemplate.findFirst({
-    where: { restaurantId, type: receiptType, isDefault: true },
+    where: { restaurantId, type: templateType, isDefault: true },
     select: { template: true },
   });
 
@@ -191,6 +199,9 @@ export async function buildOrderReceiptPayload(opts: {
     rewardLabel,
     paymentMethod: (order as any).paymentMethod ?? "",
     paymentStatus: (order as any).paymentStatus ?? "pending",
+    // "voice" = Nabil AI phone order → PHONE ORDER banner + payment status on
+    // every copy, synthetic voice e-mail suppressed. Luigi 2026-08-16.
+    channel: (order as any).channel ?? null,
     createdAt: order.createdAt,
     scheduledFor: (order as any).scheduledFor ?? null,
     estimatedReady: (order as any).estimatedReady ?? null,
@@ -218,7 +229,11 @@ export async function buildOrderReceiptPayload(opts: {
     bytesBuf = await buildCustomerReceiptFromConfig(receiptOrder, restaurant, cfg, paperWidth, "starprnt", "en");
     lines = await buildCustomerReceiptLines(receiptOrder, restaurant, cfg, paperWidth, "en");
   } else {
-    const cfg = parseReceiptConfig(tplRow?.template ?? null, "kitchen");
+    // Kitchen copy — the phone template for a phone order (kitchen-style
+    // sections + banner), the kitchen template otherwise. Same builders.
+    const cfg = templateType === "phone"
+      ? parseReceiptConfig(tplRow?.template ?? null, "phone")
+      : parseReceiptConfig(tplRow?.template ?? null, "kitchen");
     bytesBuf = await buildKitchenReceiptFromConfig(receiptOrder, restaurant, cfg, paperWidth, "starprnt", "en");
     lines = await buildKitchenReceiptLines(receiptOrder, restaurant, cfg, paperWidth, "en");
   }

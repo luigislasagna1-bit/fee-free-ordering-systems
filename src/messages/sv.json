@@ -1758,7 +1758,14 @@
       "setAsDefault": "Ange som standard",
       "confirmDelete": "Ta bort den här mallen?",
       "logoTitle": "Kvittologotyp",
-      "logoHint": "Visas högst upp på kundkvittot — i förhandsvisningen, på det utskrivna kvittot och i ordermejlet. Bilder med hög kontrast skrivs ut bäst på termopapper. Dra Logotyp-sektionen för att flytta den."
+      "logoHint": "Visas högst upp på kundkvittot — i förhandsvisningen, på det utskrivna kvittot och i ordermejlet. Bilder med hög kontrast skrivs ut bäst på termopapper. Dra Logotyp-sektionen för att flytta den.",
+      "phoneReceipt": "Kvitto telefonbeställning",
+      "phoneReceiptHint": "Skrivs ut i stället för kökskvittot när en telefonbeställning via Nabil AI kommer in – samma antal kopior som kökskvittot. Kundkopiorna av en telefonbeställning använder kundkvittot, som visar sin egen banner ”Telefonbeställning”.",
+      "previewPhoneOrder": "Telefonbeställning (Nabil AI)",
+      "testPrint": "Testutskrift: {type}",
+      "testPrintTitle": "Spara och skicka en testutskrift ”{type}” till den inställda skrivaren",
+      "testPrintSent": "Sparat och testutskrift ”{type}” skickad till skrivaren",
+      "livePreview": "Live-förhandsvisning — {type}"
     },
     "promotions": {
       "title": "Kampanjer",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "BESTÄLLNING FÖR SENARE"
+    },
+    "phone": {
+      "banner": "TELEFONBESTÄLLNING",
+      "paid": "BETALD",
+      "unpaid": "EJ BETALD - {amount} BETALAS VID {type}"
     }
   },
   "email": {

@@ -9,7 +9,9 @@
 //                  Use this when "starprnt" bold does not produce visible output.
 //   "plaintext"  — No control codes (debug / unsupported hardware)
 
-import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "./receipt-schema";
+import type { CustomerConfig, KitchenConfig, PhoneConfig, Section, SectionStyle } from "./receipt-schema";
+import { isPhoneOrderChannel } from "./receipt-schema";
+import { isVoiceSentinelEmail } from "./voice/sentinel-identity";
 import { formatCurrency } from "./utils";
 import { formatTime } from "./format-time";
 import { getDict, type Translator } from "./i18n-dict";
@@ -555,6 +557,11 @@ export interface ReceiptOrder {
   rewardLabel?: string;
   paymentMethod: string;
   paymentStatus: string;
+  /** Sales channel (Order.channel). "voice" = a Nabil AI phone order: the
+   *  ticket prints the PHONE ORDER banner + payment status, the kitchen copies
+   *  use the phone template, and the synthetic voice e-mail is never printed.
+   *  Null/absent = a normal web order. Luigi 2026-08-16. */
+  channel?: string | null;
   createdAt: string | Date;
   /** Customer-chosen slot for a scheduled ("order for later") order. Null/absent
    *  = ASAP. Drives the prominent ASAP / ORDER FOR LATER line on receipts. */
@@ -668,18 +675,76 @@ function fmtDateTime(d: string | Date | null | undefined) {
   return date + " " + fmtTime(dt);
 }
 
+// ── Phone-order banner (Nabil AI) ─────────────────────────────────────────────
+//
+// "PHONE ORDER" + the payment status at the TOP of a phone order's tickets, so
+// staff (a) know the customer is not at the counter and (b) collect the money:
+// at Luigi's store every WEB order is prepaid by card, so a phone order is the
+// only unpaid ticket on the rail and would otherwise look like all the others.
+// Both helpers are shared with receipt-lines.ts (StarXpand bitmap path) so the
+// two builders print the identical words — mirror rule. Luigi 2026-08-16.
+
+/** True when the order came in through Nabil AI (Order.channel === "voice"). */
+export function isPhoneOrder(order: Pick<ReceiptOrder, "channel">): boolean {
+  return isPhoneOrderChannel(order.channel);
+}
+
+/**
+ * The payment-status line printed under the PHONE ORDER banner:
+ *   paid     → "PAID"
+ *   pending  → "NOT PAID - $34.50 DUE ON PICKUP" (amount = total minus any
+ *              Reward Dollars already applied — what is actually still owed)
+ *   other    → the raw status, e.g. "REFUNDED" (mirrors the payment section)
+ * `fmtMoney` is injected because each builder formats in its own module-scoped
+ * currency.
+ */
+export function phoneOrderPaymentLine(
+  order: ReceiptOrder,
+  t: Translator,
+  fmtMoney: (n: number) => string,
+): string {
+  if (order.paymentStatus === "paid") return t("receipt.phone.paid");
+  if (order.paymentStatus === "pending") {
+    const due = Math.max(0, order.total - (order.creditApplied ?? 0));
+    return t("receipt.phone.unpaid", { amount: fmtMoney(due), type: tOrderTypeUpper(order.type, t) });
+  }
+  return String(order.paymentStatus).replace(/_/g, " ").toUpperCase();
+}
+
+/**
+ * The customer e-mail as it should appear on paper. A Nabil AI order carries
+ * the synthetic `voice.<phone>@voice.nabil.invalid` address (the order route
+ * requires an e-mail and a caller has none) — that is not the customer's
+ * address and must never print. Shared with receipt-lines.ts.
+ */
+export function printableCustomerEmail(order: Pick<ReceiptOrder, "customerEmail">): string | null {
+  const email = order.customerEmail;
+  if (!email || isVoiceSentinelEmail(email)) return null;
+  return email;
+}
+
 // ── Kitchen section renderer ──────────────────────────────────────────────────
 
 async function renderKitchenSection(
   r: EscPos,
   section: Section,
   order: ReceiptOrder,
-  config: KitchenConfig,
+  config: KitchenConfig | PhoneConfig,
   t: Translator,
 ): Promise<void> {
   const s = section.style;
 
   switch (section.type) {
+    // Nabil AI phone-order banner — renders only for a phone order (the section
+    // loop skips it otherwise). Same badge shape as k_order_type: applyStyle()
+    // has set inverse/size, line() pads the bar to full width. The status line
+    // word-wraps because "NOT PAID - $34.50 DUE ON PICKUP" does not fit a 58mm
+    // line at 2XL. Mirrors receipt-lines.ts. Luigi 2026-08-16.
+    case "k_phone_order":
+      r.line(`  ${t("receipt.phone.banner")}  `);
+      r.wrapped(phoneOrderPaymentLine(order, t, fmt));
+      break;
+
     case "k_title":
       r.line(`--- ${t("receipt.kitchen.title")} ---`);
       break;
@@ -877,6 +942,14 @@ async function renderCustomerSection(
       r.line(`${t("receipt.reservation.booking")}: ${fmtDateTime(order.scheduledFor ?? `${order.reservation.date}T${order.reservation.time}`)}`);
       break;
 
+    // Nabil AI phone-order banner (customer copy) — renders only for a phone
+    // order; the section loop skips it otherwise. Mirrors k_phone_order and
+    // receipt-lines.ts. Luigi 2026-08-16.
+    case "phone_order":
+      r.line(`  ${t("receipt.phone.banner")}  `);
+      r.wrapped(phoneOrderPaymentLine(order, t, fmt));
+      break;
+
     case "order_info":
       r.line(`${t("receipt.customer.orderNumber")}${order.orderNumber}`);
       r.line(t("receipt.customer.title", { type: tOrderTypeUpper(order.type, t) }));
@@ -899,10 +972,13 @@ async function renderCustomerSection(
       }
       break;
 
-    case "customer_info":
+    case "customer_info": {
       r.line(formatCustomerName(order.customerName));
       if (order.customerPhone) r.line(order.customerPhone);
-      if (order.customerEmail) r.line(order.customerEmail);
+      // A phone order's synthetic voice e-mail is not the customer's — never
+      // printed (printableCustomerEmail). Luigi 2026-08-16.
+      const email = printableCustomerEmail(order);
+      if (email) r.line(email);
       if (order.type === "delivery" && order.deliveryAddress) {
         r.line(formatAddressLine(order.deliveryAddress));
         const cityLine = deliveryCityLine(order);
@@ -916,6 +992,7 @@ async function renderCustomerSection(
         }
       }
       break;
+    }
 
     case "items": {
       // Item lines use this section's style.  Modifier lines use the separate
@@ -1113,11 +1190,14 @@ export function boxedSectionHasNoContent(sectionType: string, order: ReceiptOrde
 
 async function renderSections(
   r: EscPos,
-  config: CustomerConfig | KitchenConfig,
+  config: CustomerConfig | KitchenConfig | PhoneConfig,
   order: ReceiptOrder,
   restaurant: ReceiptRestaurant,
   t: Translator,
 ) {
+  // The phone template is a kitchen-style ticket (k_* sections) — it renders
+  // through the kitchen section renderer. Luigi 2026-08-16.
+  const kitchenStyle = config.receiptType !== "customer";
   for (const section of config.sections) {
     if (!section.enabled) continue;
     if (STYLE_ONLY_SECTIONS.has(section.type)) continue;
@@ -1127,6 +1207,10 @@ async function renderSections(
     // Timing sections are the inverse — skip them for a pre-order (its time is
     // in the reservation section).
     if ((section.type === "timing" || section.type === "k_timing") && order.reservation) continue;
+    // Phone-order banner sections exist only for a Nabil AI phone order — a web
+    // order skips the WHOLE section (padding + dividers) so nothing changes on
+    // its ticket. Luigi 2026-08-16.
+    if ((section.type === "phone_order" || section.type === "k_phone_order") && !isPhoneOrder(order)) continue;
     // store_logo is ALWAYS skipped on this ESC/POS byte path — this hardware
     // can't print images (GOLDEN), and rendering just the section's padding
     // would add an empty gap at the top of every receipt. The logo prints via
@@ -1154,8 +1238,8 @@ async function renderSections(
       r.resetStyle().left().divider("-");
       const boxedSection = { ...section, style: { ...s, highlight: false } };
       applyStyle(r, boxedSection.style);
-      if (config.receiptType === "kitchen") {
-        await renderKitchenSection(r, boxedSection, order, config as KitchenConfig, t);
+      if (kitchenStyle) {
+        await renderKitchenSection(r, boxedSection, order, config as KitchenConfig | PhoneConfig, t);
       } else {
         await renderCustomerSection(r, boxedSection, order, restaurant, config as CustomerConfig, t);
       }
@@ -1164,8 +1248,8 @@ async function renderSections(
       if (s.dividerAbove) r.resetStyle().left().divider("-");
       applyStyle(r, s);
 
-      if (config.receiptType === "kitchen") {
-        await renderKitchenSection(r, section, order, config as KitchenConfig, t);
+      if (kitchenStyle) {
+        await renderKitchenSection(r, section, order, config as KitchenConfig | PhoneConfig, t);
       } else {
         await renderCustomerSection(r, section, order, restaurant, config as CustomerConfig, t);
       }
@@ -1182,7 +1266,7 @@ async function renderSections(
 // exists and is enabled, or `null` if it should be skipped entirely (e.g.
 // the user disabled the modifiers section, which suppresses modifier lines).
 function findStyleSection(
-  config: CustomerConfig | KitchenConfig,
+  config: CustomerConfig | KitchenConfig | PhoneConfig,
   type: string,
 ): SectionStyle | null {
   const section = config.sections.find((sec) => sec.type === type);
@@ -1192,15 +1276,20 @@ function findStyleSection(
 
 // ── Template-driven builders ──────────────────────────────────────────────────
 
+/**
+ * Kitchen-style ticket. Accepts the kitchen template OR the phone-order
+ * template (same k_* sections; the phone one leads with the PHONE ORDER
+ * banner) — the caller picks which per order (see kitchen-receipt-payload.ts).
+ */
 export async function buildKitchenReceiptFromConfig(
   order: ReceiptOrder,
   restaurant: ReceiptRestaurant,
-  config: KitchenConfig,
+  config: KitchenConfig | PhoneConfig,
   paperWidth = "80mm",
   lang: PrinterLanguage = "escpos",
   locale: string = "en",
 ): Promise<Buffer> {
-  console.log(`[receipt] Kitchen print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
+  console.log(`[receipt] ${config.receiptType === "phone" ? "Phone-order" : "Kitchen"} print — lang=${lang} paper=${paperWidth} locale=${locale} sections=${config.sections.filter(s => s.enabled).length}`);
   activeReceiptCurrency = restaurant.currency ?? "usd";
   activeReceiptTimezone = restaurant.timezone ?? undefined;
   activeReceiptHoursFormat = restaurant.hoursFormat === "24h" ? "24h" : "12h";

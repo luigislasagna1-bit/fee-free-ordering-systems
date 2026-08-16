@@ -7,7 +7,7 @@ export async function PUT(req: NextRequest) {
   const restaurantId = user?.restaurantId;
   if (!restaurantId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { customerTemplate, kitchenTemplate, kitchenCopies, customerCopies, receiptLogoUrl } = await req.json();
+  const { customerTemplate, kitchenTemplate, phoneTemplate, kitchenCopies, customerCopies, receiptLogoUrl } = await req.json();
 
   // Receipt-header logo — stored on Restaurant (one upload covers the printed
   // receipt, the editor preview and the email receipt). `null`/"" clears it.
@@ -38,6 +38,18 @@ export async function PUT(req: NextRequest) {
     await prisma.receiptTemplate.update({ where: { id: kitExisting.id }, data: { template: JSON.stringify(kitchenTemplate) } });
   } else {
     await prisma.receiptTemplate.create({ data: { restaurantId, name: "Kitchen Receipt", type: "kitchen", isDefault: true, template: JSON.stringify(kitchenTemplate) } });
+  }
+
+  // Nabil AI phone-order template (kitchen copies of a phone order). Optional
+  // in the body so an older editor build that doesn't send it can't wipe it.
+  // Luigi 2026-08-16.
+  if (phoneTemplate !== undefined && phoneTemplate !== null) {
+    const phoneExisting = await prisma.receiptTemplate.findFirst({ where: { restaurantId, type: "phone", isDefault: true } });
+    if (phoneExisting) {
+      await prisma.receiptTemplate.update({ where: { id: phoneExisting.id }, data: { template: JSON.stringify(phoneTemplate) } });
+    } else {
+      await prisma.receiptTemplate.create({ data: { restaurantId, name: "Phone Order Receipt", type: "phone", isDefault: true, template: JSON.stringify(phoneTemplate) } });
+    }
   }
 
   // Update print copy counts if provided

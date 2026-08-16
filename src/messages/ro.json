@@ -1758,7 +1758,14 @@
       "setAsDefault": "Setează ca implicit",
       "confirmDelete": "Ștergi acest șablon?",
       "logoTitle": "Sigla bonului",
-      "logoHint": "Afișat în partea de sus a bonului clientului — în previzualizare, pe bonul tipărit și în e-mailul comenzii. Imaginile cu contrast ridicat se imprimă cel mai bine pe hârtie termică. Trage secțiunea Logo pentru a o repoziționa."
+      "logoHint": "Afișat în partea de sus a bonului clientului — în previzualizare, pe bonul tipărit și în e-mailul comenzii. Imaginile cu contrast ridicat se imprimă cel mai bine pe hârtie termică. Trage secțiunea Logo pentru a o repoziționa.",
+      "phoneReceipt": "Bon comandă telefonică",
+      "phoneReceiptHint": "Se tipărește în locul bonului de bucătărie când sosește o comandă telefonică Nabil AI — același număr de copii ca bonul de bucătărie. Copiile pentru client ale unei comenzi telefonice folosesc chitanța client, care afișează propriul banner „Comandă telefonică”.",
+      "previewPhoneOrder": "Comandă telefonică (Nabil AI)",
+      "testPrint": "Imprimare de test: {type}",
+      "testPrintTitle": "Salvează și trimite o imprimare de test „{type}” la imprimanta configurată",
+      "testPrintSent": "Salvat și imprimare de test „{type}” trimisă la imprimantă",
+      "livePreview": "Previzualizare live — {type}"
     },
     "promotions": {
       "title": "Promoții",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "COMANDĂ PENTRU MAI TÂRZIU"
+    },
+    "phone": {
+      "banner": "COMANDĂ TELEFONICĂ",
+      "paid": "PLĂTIT",
+      "unpaid": "NEPLĂTIT - {amount} DE PLATĂ LA {type}"
     }
   },
   "email": {

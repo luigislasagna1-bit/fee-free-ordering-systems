@@ -1758,7 +1758,14 @@
       "setAsDefault": "Definir como padrão",
       "confirmDelete": "Excluir este modelo?",
       "logoTitle": "Logotipo do recibo",
-      "logoHint": "Exibido no topo do recibo do cliente — na prévia, no recibo impresso e no e-mail do pedido. Imagens de alto contraste imprimem melhor em papel térmico. Arraste a seção Logotipo para reposicioná-la."
+      "logoHint": "Exibido no topo do recibo do cliente — na prévia, no recibo impresso e no e-mail do pedido. Imagens de alto contraste imprimem melhor em papel térmico. Arraste a seção Logotipo para reposicioná-la.",
+      "phoneReceipt": "Recibo de Pedido por Telefone",
+      "phoneReceiptHint": "É impresso no lugar do recibo da cozinha quando chega um pedido por telefone da Nabil AI — mesmo número de cópias do recibo da cozinha. As cópias do cliente de um pedido por telefone usam o recibo do cliente, que mostra seu próprio aviso \"Pedido por telefone\".",
+      "previewPhoneOrder": "Pedido por telefone (Nabil AI)",
+      "testPrint": "Impressão de teste: {type}",
+      "testPrintTitle": "Salvar e enviar uma impressão de teste \"{type}\" para a impressora configurada",
+      "testPrintSent": "Salvo e enviada uma impressão de teste \"{type}\" para a impressora",
+      "livePreview": "Prévia ao vivo — {type}"
     },
     "promotions": {
       "title": "Promoções",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "PEDIDO PARA DEPOIS"
+    },
+    "phone": {
+      "banner": "PEDIDO POR TELEFONE",
+      "paid": "PAGO",
+      "unpaid": "NÃO PAGO - {amount} A PAGAR ({type})"
     }
   },
   "email": {

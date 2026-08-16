@@ -1758,7 +1758,14 @@
       "setAsDefault": "Nustatyti kaip numatytąjį",
       "confirmDelete": "Ištrinti šį šabloną?",
       "logoTitle": "Kvito logotipas",
-      "logoHint": "Rodomas kliento kvito viršuje — peržiūroje, atspausdintame kvite ir užsakymo el. laiške. Didelio kontrasto vaizdai geriausiai spausdinami ant terminio popieriaus. Vilkite logotipo skiltį, kad ją perkeltumėte."
+      "logoHint": "Rodomas kliento kvito viršuje — peržiūroje, atspausdintame kvite ir užsakymo el. laiške. Didelio kontrasto vaizdai geriausiai spausdinami ant terminio popieriaus. Vilkite logotipo skiltį, kad ją perkeltumėte.",
+      "phoneReceipt": "Užsakymo telefonu kvitas",
+      "phoneReceiptHint": "Spausdinamas vietoj virtuvės kvito, kai gaunamas Nabil AI užsakymas telefonu — tiek pat kopijų kiek virtuvės kvito. Užsakymo telefonu kliento kopijos naudoja kliento kvitą, kuriame yra atskiras užrašas „Užsakymas telefonu“.",
+      "previewPhoneOrder": "Užsakymas telefonu (Nabil AI)",
+      "testPrint": "Bandomasis spausdinimas: {type}",
+      "testPrintTitle": "Išsaugoti ir išsiųsti vieną „{type}“ bandomąjį spausdinimą į nustatytą spausdintuvą",
+      "testPrintSent": "Išsaugota ir „{type}“ bandomasis spausdinimas išsiųstas į spausdintuvą",
+      "livePreview": "Tiesioginė peržiūra — {type}"
     },
     "promotions": {
       "title": "Akcijos",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "UŽSAKYMAS VĖLESNIAM LAIKUI"
+    },
+    "phone": {
+      "banner": "UŽSAKYMAS TELEFONU",
+      "paid": "APMOKĖTA",
+      "unpaid": "NEAPMOKĖTA - {amount} MOKĖTI ({type})"
     }
   },
   "email": {

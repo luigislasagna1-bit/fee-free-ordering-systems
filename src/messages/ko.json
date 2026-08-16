@@ -1758,7 +1758,14 @@
       "setAsDefault": "기본으로 설정",
       "confirmDelete": "이 템플릿을 삭제하시겠어요?",
       "logoTitle": "영수증 로고",
-      "logoHint": "고객 영수증 상단에 표시됩니다 — 미리보기, 인쇄된 영수증, 주문 이메일에 모두 반영됩니다. 고대비 이미지가 감열지에 가장 잘 인쇄됩니다. 로고 섹션을 드래그하여 위치를 옮길 수 있습니다."
+      "logoHint": "고객 영수증 상단에 표시됩니다 — 미리보기, 인쇄된 영수증, 주문 이메일에 모두 반영됩니다. 고대비 이미지가 감열지에 가장 잘 인쇄됩니다. 로고 섹션을 드래그하여 위치를 옮길 수 있습니다.",
+      "phoneReceipt": "전화 주문 영수증",
+      "phoneReceiptHint": "Nabil AI 전화 주문이 들어오면 주방 영수증 대신 인쇄됩니다(매수는 주방 영수증과 동일). 전화 주문의 고객용 사본은 고객 영수증을 사용하며, 자체 \"전화 주문\" 배너가 표시됩니다.",
+      "previewPhoneOrder": "전화 주문 (Nabil AI)",
+      "testPrint": "테스트 인쇄: {type}",
+      "testPrintTitle": "저장 후 설정된 프린터로 \"{type}\" 테스트 인쇄 1부 보내기",
+      "testPrintSent": "저장 후 \"{type}\" 테스트 인쇄를 프린터로 보냈습니다",
+      "livePreview": "실시간 미리보기 — {type}"
     },
     "promotions": {
       "title": "프로모션",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "나중에 주문"
+    },
+    "phone": {
+      "banner": "전화 주문",
+      "paid": "결제 완료",
+      "unpaid": "미결제 - {type} 시 {amount} 결제"
     }
   },
   "email": {

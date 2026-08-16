@@ -1758,7 +1758,14 @@
       "setAsDefault": "Imposta come predefinito",
       "confirmDelete": "Eliminare questo modello?",
       "logoTitle": "Logo dello scontrino",
-      "logoHint": "Mostrato in cima allo scontrino del cliente — nell'anteprima, sullo scontrino stampato e nell'email dell'ordine. Le immagini ad alto contrasto si stampano meglio su carta termica. Trascina la sezione Logo per riposizionarla."
+      "logoHint": "Mostrato in cima allo scontrino del cliente — nell'anteprima, sullo scontrino stampato e nell'email dell'ordine. Le immagini ad alto contrasto si stampano meglio su carta termica. Trascina la sezione Logo per riposizionarla.",
+      "phoneReceipt": "Ricevuta ordine telefonico",
+      "phoneReceiptHint": "Si stampa al posto della ricevuta cucina quando arriva un ordine telefonico di Nabil AI, con lo stesso numero di copie della ricevuta cucina. Le copie cliente di un ordine telefonico usano la ricevuta cliente, che mostra il proprio banner «Ordine telefonico».",
+      "previewPhoneOrder": "Ordine telefonico (Nabil AI)",
+      "testPrint": "Stampa di prova: {type}",
+      "testPrintTitle": "Salva e invia una stampa di prova «{type}» alla stampante configurata",
+      "testPrintSent": "Salvato e inviata una stampa di prova «{type}» alla stampante",
+      "livePreview": "Anteprima dal vivo — {type}"
     },
     "promotions": {
       "title": "Promozioni",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "Appena possibile",
       "orderForLater": "ORDINE PROGRAMMATO"
+    },
+    "phone": {
+      "banner": "ORDINE TELEFONICO",
+      "paid": "PAGATO",
+      "unpaid": "NON PAGATO - {amount} DA PAGARE ({type})"
     }
   },
   "email": {

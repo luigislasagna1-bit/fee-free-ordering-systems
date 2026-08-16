@@ -1758,7 +1758,14 @@
       "setAsDefault": "Angi som standard",
       "confirmDelete": "Slett denne malen?",
       "logoTitle": "Kvitteringslogo",
-      "logoHint": "Vises øverst på kundens kvittering — i forhåndsvisningen, på den utskrevne kvitteringen og i ordre-e-posten. Bilder med høy kontrast skrives best ut på termopapir. Dra Logo-seksjonen for å flytte den."
+      "logoHint": "Vises øverst på kundens kvittering — i forhåndsvisningen, på den utskrevne kvitteringen og i ordre-e-posten. Bilder med høy kontrast skrives best ut på termopapir. Dra Logo-seksjonen for å flytte den.",
+      "phoneReceipt": "Kvittering telefonbestilling",
+      "phoneReceiptHint": "Skrives ut i stedet for kjøkkenkvitteringen når en telefonbestilling via Nabil AI kommer inn – samme antall kopier som kjøkkenkvitteringen. Kundekopiene av en telefonbestilling bruker kundekvitteringen, som viser sitt eget banner «Telefonbestilling».",
+      "previewPhoneOrder": "Telefonbestilling (Nabil AI)",
+      "testPrint": "Testutskrift: {type}",
+      "testPrintTitle": "Lagre og send én testutskrift «{type}» til den konfigurerte skriveren",
+      "testPrintSent": "Lagret og testutskrift «{type}» sendt til skriveren",
+      "livePreview": "Live forhåndsvisning — {type}"
     },
     "promotions": {
       "title": "Kampanjer",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "BESTILLING TIL SENERE"
+    },
+    "phone": {
+      "banner": "TELEFONBESTILLING",
+      "paid": "BETALT",
+      "unpaid": "IKKE BETALT - {amount} BETALES VED {type}"
     }
   },
   "email": {

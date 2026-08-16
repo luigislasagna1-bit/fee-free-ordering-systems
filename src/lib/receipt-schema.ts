@@ -22,6 +22,12 @@ export type CustomerSectionType =
    *  repositioned. Skipped for reservations (their time is in the reservation
    *  section). Luigi 2026-06-09. */
   | "timing"
+  /** Nabil AI phone-order banner — "PHONE ORDER" + the payment status ("NOT
+   *  PAID - $34.50 DUE ON PICKUP" / "PAID"). Renders ONLY when the order came
+   *  in by phone (Order.channel === "voice"); skipped entirely for web orders,
+   *  like the reservation block. Its own section so it can be toggled / styled
+   *  / repositioned. Luigi 2026-08-16. */
+  | "phone_order"
   | "order_info" | "customer_info" | "items" | "modifiers"
   /** Applied-promotions box — renders only when the order has any
    *  promo in its `appliedPromos` snapshot. Shows each promo by name
@@ -32,6 +38,10 @@ export type CustomerSectionType =
   | "thank_you" | "footer";
 
 export type KitchenSectionType =
+  /** Kitchen-side Nabil AI phone-order banner — see CustomerSectionType
+   *  "phone_order". First section of the default PHONE template so staff read
+   *  "PHONE ORDER / NOT PAID - $X DUE ON PICKUP" before anything else. */
+  | "k_phone_order"
   | "k_title" | "k_order_type" | "k_order_number"
   /** Kitchen reserve-then-order block — see CustomerSectionType "reservation".
    *  Renders the booking flag + party + time, only for pre-orders. */
@@ -99,7 +109,40 @@ export interface KitchenConfig {
   sections: Section[];
 }
 
-export type ReceiptConfig = CustomerConfig | KitchenConfig;
+/**
+ * The PHONE ORDER receipt — a separate layout for orders that came in through
+ * Nabil AI (Order.channel === "voice"). It is a kitchen-style ticket (same
+ * `k_*` section types, no prices) that prints INSTEAD of the kitchen receipt
+ * for a phone order's kitchen copies, so a restaurant can lay phone tickets
+ * out differently from web tickets. Its default puts the `k_phone_order`
+ * banner first: "PHONE ORDER" + "NOT PAID - $X DUE ON PICKUP" / "PAID".
+ * Customer copies of a phone order keep using the customer template, which
+ * carries its own conditional `phone_order` banner. Luigi 2026-08-16.
+ */
+export interface PhoneConfig {
+  version: 2;
+  receiptType: "phone";
+  sections: Section[];
+}
+
+export type ReceiptConfig = CustomerConfig | KitchenConfig | PhoneConfig;
+
+/** Every template kind a restaurant can save (ReceiptTemplate.type). */
+export type ReceiptTemplateType = ReceiptConfig["receiptType"];
+
+/**
+ * The sales channel value that marks a Nabil AI phone order. Stamped on
+ * Order.channel by /api/orders when the voice service places the order (see
+ * the `x-internal-key` branch there). The receipt renderers key the phone
+ * banner + the phone template selection on this — one constant so a rename
+ * can't drift between the three renderers and the two print paths.
+ */
+export const PHONE_ORDER_CHANNEL = "voice";
+
+/** True when the order was placed by phone through Nabil AI. */
+export function isPhoneOrderChannel(channel: string | null | undefined): boolean {
+  return channel === PHONE_ORDER_CHANNEL;
+}
 
 // ─── Default templates ─────────────────────────────────────────────────────────
 //
@@ -117,12 +160,24 @@ export type ReceiptConfig = CustomerConfig | KitchenConfig;
 
 export const DEFAULT_CUSTOMER_CONFIG = defaultReceiptConfig.customer as unknown as CustomerConfig;
 export const DEFAULT_KITCHEN_CONFIG = defaultReceiptConfig.kitchen as unknown as KitchenConfig;
+// The phone-order default is the kitchen default with the `k_phone_order`
+// banner in front — so a phone ticket looks like the store's kitchen ticket
+// plus the banner until the restaurant styles it separately. Luigi 2026-08-16.
+export const DEFAULT_PHONE_CONFIG = defaultReceiptConfig.phone as unknown as PhoneConfig;
+
+function defaultConfigFor(receiptType: ReceiptTemplateType): ReceiptConfig {
+  if (receiptType === "customer") return DEFAULT_CUSTOMER_CONFIG;
+  if (receiptType === "phone") return DEFAULT_PHONE_CONFIG;
+  return DEFAULT_KITCHEN_CONFIG;
+}
 
 // ─── Config parser (handles old + new format) ─────────────────────────────────
 
 export function parseReceiptConfig(raw: string | null | undefined, receiptType: "customer"): CustomerConfig;
 export function parseReceiptConfig(raw: string | null | undefined, receiptType: "kitchen"): KitchenConfig;
-export function parseReceiptConfig(raw: string | null | undefined, receiptType: "customer" | "kitchen"): ReceiptConfig {
+export function parseReceiptConfig(raw: string | null | undefined, receiptType: "phone"): PhoneConfig;
+export function parseReceiptConfig(raw: string | null | undefined, receiptType: ReceiptTemplateType): ReceiptConfig;
+export function parseReceiptConfig(raw: string | null | undefined, receiptType: ReceiptTemplateType): ReceiptConfig {
   if (raw) {
     try {
       const parsed = JSON.parse(raw);
@@ -138,7 +193,7 @@ export function parseReceiptConfig(raw: string | null | undefined, receiptType: 
 
         // Back-fill any sections present in the current default but absent from the
         // saved config (e.g. modifiers added after the user first saved).
-        const defaults = receiptType === "customer" ? DEFAULT_CUSTOMER_CONFIG : DEFAULT_KITCHEN_CONFIG;
+        const defaults = defaultConfigFor(receiptType);
         const savedIds = new Set((parsed.sections as any[]).map((s: any) => s.id));
         // Insert each missing default section NEAR its position in the current
         // default layout (clamped) — so a newly-added section (e.g. the
@@ -154,7 +209,5 @@ export function parseReceiptConfig(raw: string | null | undefined, receiptType: 
       }
     } catch {}
   }
-  return receiptType === "customer"
-    ? { ...DEFAULT_CUSTOMER_CONFIG }
-    : { ...DEFAULT_KITCHEN_CONFIG };
+  return { ...defaultConfigFor(receiptType) };
 }

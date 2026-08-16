@@ -52,6 +52,14 @@ from the DB (`fallback-memo-prime.ts`); **the quoted≠charged alarm** (`totals-
 totalMismatchAlertedAt`, ops message once per placed call); **Sentry on Fly** (`observability.ts` zero-import sink +
 `sentry.ts`, redaction, capacity/refresh refractories, crash handlers, `/health … sentry=on`). Open: greeting-echo guard,
 phone scheduling (A59), robocall vs forwarded lines, E.164 dialing (TODO.md).
+**Round 7 — phone-order RECEIPTS (2026-08-16, Luigi: "a separate receipt layout print for phone orders … PHONE ORDER
+and the payment status at the top"):** a third receipt template kind **`phone`** ("Phone Order Receipt" tab in Admin →
+Receipts) — a kitchen-style ticket that prints INSTEAD of the kitchen receipt for a Nabil order's kitchen copies
+(`Order.channel === "voice"`), leading with `PHONE ORDER` / `NOT PAID - $34.50 DUE ON PICKUP` (or `PAID`; amount = total
+− Reward Dollars applied); the customer receipt gains a conditional `phone_order` banner (only voice orders; web tickets
+byte-identical); the synthetic `@voice.nabil.invalid` e-mail never prints. All three renderers (ESC/POS, StarXpand
+lines, editor preview) + both print paths (LAN/background payload, PrintNode) mirrored; i18n ×38. Awaiting Luigi's
+physical test print (Admin → Receipts → Phone Order Receipt → Test print) — TODO.md top entry.
 
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 

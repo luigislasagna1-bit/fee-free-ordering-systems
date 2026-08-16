@@ -7,13 +7,14 @@ import {
   buildKitchenReceiptFromConfig,
   buildCustomerReceiptFromConfig,
   buildReservationReceipt,
+  isPhoneOrder,
   SAMPLE_RECEIPT_ORDER,
   type ReceiptOrder,
   type ReceiptRestaurant,
   type PrinterLanguage,
 } from "@/lib/receipt";
 import { readReservationDetails } from "@/lib/reservation-details";
-import { parseReceiptConfig } from "@/lib/receipt-schema";
+import { parseReceiptConfig, PHONE_ORDER_CHANNEL } from "@/lib/receipt-schema";
 import { fetchDriveEstimate, resolveDistanceMatrixKey, cardinalDirection } from "@/lib/delivery-eta";
 import { resolveEffectiveMapsKey } from "@/lib/platform-maps";
 
@@ -32,9 +33,13 @@ async function getTemplates(restaurantId: string) {
   });
   const kitchenRaw  = rows.find((r) => r.type === "kitchen")?.template  ?? null;
   const customerRaw = rows.find((r) => r.type === "customer")?.template ?? null;
+  // The Nabil AI phone-order template — prints instead of the kitchen one for
+  // a phone order's kitchen copies. Luigi 2026-08-16.
+  const phoneRaw    = rows.find((r) => r.type === "phone")?.template    ?? null;
   return {
     kitchenConfig:  parseReceiptConfig(kitchenRaw,  "kitchen"),
     customerConfig: parseReceiptConfig(customerRaw, "customer"),
+    phoneConfig:    parseReceiptConfig(phoneRaw,    "phone"),
   };
 }
 
@@ -225,7 +230,9 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json() as {
-      type?: "kitchen" | "customer" | "both" | "test" | "test_kitchen" | "test_customer";
+      // "test_phone" = the editor's test print of the Nabil AI phone-order
+      // template (a sample PHONE order through the phone template).
+      type?: "kitchen" | "customer" | "both" | "test" | "test_kitchen" | "test_customer" | "test_phone";
       // Manual reprints pass single:true → one copy of each, regardless of the
       // configured kitchen/customer copy counts (those apply to auto-print on
       // accept). Luigi 2026-06-16.
@@ -237,6 +244,7 @@ export async function POST(req: NextRequest) {
       // templates for this single request, so the user can preview unsaved edits.
       kitchenTemplate?: unknown;
       customerTemplate?: unknown;
+      phoneTemplate?: unknown;
     };
 
     // MASTER SWITCH backstop (Luigi 2026-07-28): with Restaurant.printNodeEnabled
@@ -298,7 +306,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Load the saved template configs from DB — single source of truth
-    let { kitchenConfig, customerConfig } = await getTemplates(user.restaurantId);
+    let { kitchenConfig, customerConfig, phoneConfig } = await getTemplates(user.restaurantId);
 
     // If client provided inline templates (used by the editor's "Test this receipt"
     // button to preview unsaved edits), override the loaded configs for this request.
@@ -307,6 +315,9 @@ export async function POST(req: NextRequest) {
     }
     if (body.customerTemplate !== undefined) {
       customerConfig = parseReceiptConfig(JSON.stringify(body.customerTemplate), "customer");
+    }
+    if (body.phoneTemplate !== undefined) {
+      phoneConfig = parseReceiptConfig(JSON.stringify(body.phoneTemplate), "phone");
     }
 
     // ── Test print (both receipts at once) ───────────────────────────────────
@@ -329,19 +340,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true, jobId });
     }
 
-    // ── Test print (single type — kitchen or customer only) ──────────────────
+    // ── Test print (single type — kitchen, customer or phone-order only) ─────
     // Used by the receipt template editor so the user can compare the printed
-    // output of ONE receipt type at a time against the live preview.
-    if (body.type === "test_kitchen" || body.type === "test_customer") {
-      const sampleOrder = { ...SAMPLE_RECEIPT_ORDER, createdAt: new Date().toISOString() };
+    // output of ONE receipt type at a time against the live preview. The phone
+    // test prints the sample order AS a phone order (channel "voice", unpaid)
+    // through the phone template, so the banner + status line come out.
+    if (body.type === "test_kitchen" || body.type === "test_customer" || body.type === "test_phone") {
       const isKitchen = body.type === "test_kitchen";
-      const buf = isKitchen
-        ? await buildKitchenReceiptFromConfig(sampleOrder, receiptRestaurant, kitchenConfig, paperWidth, lang, locale)
-        : await buildCustomerReceiptFromConfig(sampleOrder, receiptRestaurant, customerConfig, paperWidth, lang, locale);
+      const isPhone   = body.type === "test_phone";
+      const sampleOrder: ReceiptOrder = {
+        ...SAMPLE_RECEIPT_ORDER,
+        createdAt: new Date().toISOString(),
+        ...(isPhone ? { channel: PHONE_ORDER_CHANNEL, paymentStatus: "pending" } : {}),
+      };
+      const buf = isPhone
+        ? await buildKitchenReceiptFromConfig(sampleOrder, receiptRestaurant, phoneConfig, paperWidth, lang, locale)
+        : isKitchen
+          ? await buildKitchenReceiptFromConfig(sampleOrder, receiptRestaurant, kitchenConfig, paperWidth, lang, locale)
+          : await buildCustomerReceiptFromConfig(sampleOrder, receiptRestaurant, customerConfig, paperWidth, lang, locale);
       const jobId = await submitJob(
         apiKey,
         ps.selectedPrinterId,
-        isKitchen ? "Test Kitchen Receipt" : "Test Customer Receipt",
+        isPhone ? "Test Phone Order Receipt" : isKitchen ? "Test Kitchen Receipt" : "Test Customer Receipt",
         buf,
         1,
       );
@@ -349,7 +369,7 @@ export async function POST(req: NextRequest) {
       await prisma.printLog.create({
         data: {
           restaurantId: user.restaurantId,
-          receiptType:  isKitchen ? "test_kitchen" : "test_customer",
+          receiptType:  body.type,
           printerName:  ps.selectedPrinterName ?? undefined,
           printNodeJobId: jobId,
           status: "sent",
@@ -489,6 +509,8 @@ export async function POST(req: NextRequest) {
       total:           order.total,
       paymentMethod:   order.paymentMethod,
       paymentStatus:   order.paymentStatus,
+      // "voice" = Nabil AI phone order → banner + phone template. 2026-08-16.
+      channel:         order.channel ?? null,
       createdAt:       order.createdAt,
       scheduledFor:    (order as any).scheduledFor ?? null,
       estimatedReady:  order.estimatedReady,
@@ -515,9 +537,14 @@ export async function POST(req: NextRequest) {
     const logs: { receiptType: string; jobId: number }[] = [];
 
     if (doKitchen) {
-      const buf   = await buildKitchenReceiptFromConfig(receiptOrder, receiptRestaurant, kitchenConfig, paperWidth, lang, locale);
+      // A Nabil AI phone order's kitchen copies print through the PHONE ORDER
+      // template (banner + payment status first); web orders through the
+      // kitchen template. Same as kitchen-receipt-payload.ts. Luigi 2026-08-16.
+      const kitchenTpl = isPhoneOrder(receiptOrder) ? phoneConfig : kitchenConfig;
+      const buf   = await buildKitchenReceiptFromConfig(receiptOrder, receiptRestaurant, kitchenTpl, paperWidth, lang, locale);
       console.log("[printnode/print] kitchen payload", {
         bytes: buf.length, lang, paperWidth,
+        template: kitchenTpl.receiptType,
         copies: ps.kitchenCopies,
         firstBytes: buf.slice(0, 8).toString("hex"),
       });

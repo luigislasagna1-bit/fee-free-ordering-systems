@@ -1829,7 +1829,14 @@
       "setAsDefault": "Set as default",
       "confirmDelete": "Delete this template?",
       "logoTitle": "Receipt logo",
-      "logoHint": "Shown at the top of the customer receipt — in the preview, on the printed receipt and in the order email. High-contrast images print best on thermal paper. Drag the Logo section to reposition it."
+      "logoHint": "Shown at the top of the customer receipt — in the preview, on the printed receipt and in the order email. High-contrast images print best on thermal paper. Drag the Logo section to reposition it.",
+      "phoneReceipt": "Phone Order Receipt",
+      "phoneReceiptHint": "Prints instead of the Kitchen Receipt when a Nabil AI phone order comes in — same number of copies as the kitchen receipt. Customer copies of a phone order use the Customer Receipt, which shows its own Phone Order banner.",
+      "previewPhoneOrder": "Phone order (Nabil AI)",
+      "testPrint": "Test print: {type}",
+      "testPrintTitle": "Save & send a single {type} test print to the configured printer",
+      "testPrintSent": "Saved & sent a test print of the {type} to the printer",
+      "livePreview": "Live Preview — {type}"
     },
     "promotions": {
       "title": "Promotions",
@@ -5989,6 +5996,11 @@
       "labelAllergies": "Allergies",
       "labelOccasion": "Occasion",
       "labelAccessibility": "Accessibility"
+    },
+    "phone": {
+      "banner": "PHONE ORDER",
+      "paid": "PAID",
+      "unpaid": "NOT PAID - {amount} DUE ON {type}"
     }
   },
   "email": {

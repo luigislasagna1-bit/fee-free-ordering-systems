@@ -1758,7 +1758,14 @@
       "setAsDefault": "Nastavit jako výchozí",
       "confirmDelete": "Smazat tuto šablonu?",
       "logoTitle": "Logo účtenky",
-      "logoHint": "Zobrazuje se v horní části zákaznické účtenky — v náhledu, na vytištěné účtence a v e-mailu objednávky. Obrázky s vysokým kontrastem se na termopapír tisknou nejlépe. Sekci Logo přesunete přetažením."
+      "logoHint": "Zobrazuje se v horní části zákaznické účtenky — v náhledu, na vytištěné účtence a v e-mailu objednávky. Obrázky s vysokým kontrastem se na termopapír tisknou nejlépe. Sekci Logo přesunete přetažením.",
+      "phoneReceipt": "Účtenka telefonické objednávky",
+      "phoneReceiptHint": "Tiskne se místo kuchyňské účtenky, když přijde telefonická objednávka Nabil AI – stejný počet kopií jako kuchyňská účtenka. Zákaznické kopie telefonické objednávky používají účtenku zákazníka, která má vlastní banner „Telefonická objednávka“.",
+      "previewPhoneOrder": "Telefonická objednávka (Nabil AI)",
+      "testPrint": "Zkušební tisk: {type}",
+      "testPrintTitle": "Uložit a odeslat jeden zkušební tisk „{type}“ na nastavenou tiskárnu",
+      "testPrintSent": "Uloženo a zkušební tisk „{type}“ odeslán na tiskárnu",
+      "livePreview": "Živý náhled — {type}"
     },
     "promotions": {
       "title": "Akce",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "OBJEDNÁVKA NA POZDĚJI"
+    },
+    "phone": {
+      "banner": "TELEFONICKÁ OBJEDNÁVKA",
+      "paid": "ZAPLACENO",
+      "unpaid": "NEZAPLACENO - {amount} K ÚHRADĚ ({type})"
     }
   },
   "email": {

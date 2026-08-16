@@ -1758,7 +1758,14 @@
       "setAsDefault": "Varsayılan olarak ayarla",
       "confirmDelete": "Bu şablon silinsin mi?",
       "logoTitle": "Fiş logosu",
-      "logoHint": "Müşteri fişinin üstünde gösterilir — önizlemede, yazdırılan fişte ve sipariş e-postasında. Yüksek kontrastlı görseller termal kağıtta en iyi şekilde yazdırılır. Logo bölümünü taşımak için sürükleyin."
+      "logoHint": "Müşteri fişinin üstünde gösterilir — önizlemede, yazdırılan fişte ve sipariş e-postasında. Yüksek kontrastlı görseller termal kağıtta en iyi şekilde yazdırılır. Logo bölümünü taşımak için sürükleyin.",
+      "phoneReceipt": "Telefon Siparişi Makbuzu",
+      "phoneReceiptHint": "Bir Nabil AI telefon siparişi geldiğinde mutfak makbuzu yerine yazdırılır; kopya sayısı mutfak makbuzuyla aynıdır. Telefon siparişinin müşteri kopyaları, kendi \"Telefon Siparişi\" şeridini gösteren müşteri makbuzunu kullanır.",
+      "previewPhoneOrder": "Telefon siparişi (Nabil AI)",
+      "testPrint": "Test yazdırma: {type}",
+      "testPrintTitle": "Kaydet ve yapılandırılan yazıcıya bir \"{type}\" test yazdırması gönder",
+      "testPrintSent": "Kaydedildi ve \"{type}\" test yazdırması yazıcıya gönderildi",
+      "livePreview": "Canlı Önizleme — {type}"
     },
     "promotions": {
       "title": "Promosyonlar",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "İLERİ TARİHLİ SİPARİŞ"
+    },
+    "phone": {
+      "banner": "TELEFON SİPARİŞİ",
+      "paid": "ÖDENDİ",
+      "unpaid": "ÖDENMEDİ - {amount} ÖDENECEK ({type})"
     }
   },
   "email": {

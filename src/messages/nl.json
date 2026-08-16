@@ -1758,7 +1758,14 @@
       "setAsDefault": "Als standaard instellen",
       "confirmDelete": "Dit sjabloon verwijderen?",
       "logoTitle": "Bonlogo",
-      "logoHint": "Wordt bovenaan de klantbon getoond — in de voorvertoning, op de geprinte bon en in de bestel-e-mail. Beelden met veel contrast printen het best op thermisch papier. Sleep de Logo-sectie om deze te verplaatsen."
+      "logoHint": "Wordt bovenaan de klantbon getoond — in de voorvertoning, op de geprinte bon en in de bestel-e-mail. Beelden met veel contrast printen het best op thermisch papier. Sleep de Logo-sectie om deze te verplaatsen.",
+      "phoneReceipt": "Bon telefonische bestelling",
+      "phoneReceiptHint": "Wordt afgedrukt in plaats van de keukenbon wanneer een telefonische bestelling via Nabil AI binnenkomt — evenveel exemplaren als de keukenbon. De klantexemplaren van een telefonische bestelling gebruiken de klantbon, die zijn eigen banner 'Telefonische bestelling' toont.",
+      "previewPhoneOrder": "Telefonische bestelling (Nabil AI)",
+      "testPrint": "Testafdruk: {type}",
+      "testPrintTitle": "Opslaan en één testafdruk ‘{type}’ naar de ingestelde printer sturen",
+      "testPrintSent": "Opgeslagen en testafdruk ‘{type}’ naar de printer gestuurd",
+      "livePreview": "Live voorbeeld — {type}"
     },
     "promotions": {
       "title": "Acties",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "BESTELLING VOOR LATER"
+    },
+    "phone": {
+      "banner": "TELEFONISCHE BESTELLING",
+      "paid": "BETAALD",
+      "unpaid": "NIET BETAALD - {amount} TE BETALEN BIJ {type}"
     }
   },
   "email": {

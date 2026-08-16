@@ -12,10 +12,10 @@ import { CSS } from "@dnd-kit/utilities";
 import toast from "react-hot-toast";
 import {
   Save, Printer, GripVertical, ChevronDown, ChevronRight,
-  Eye, EyeOff, Receipt, ChefHat, Loader2,
+  Eye, EyeOff, Receipt, ChefHat, Loader2, Phone,
 } from "lucide-react";
 import { ReceiptRenderer, PAPER_WIDTH_PX, PAPER_WIDTH_58_PX, SAMPLE_ORDER, makeSampleOrder } from "./ReceiptRenderer";
-import type { CustomerConfig, KitchenConfig, Section, SectionStyle } from "@/lib/receipt-schema";
+import type { CustomerConfig, KitchenConfig, PhoneConfig, ReceiptTemplateType, Section, SectionStyle } from "@/lib/receipt-schema";
 import { parseReceiptConfig } from "@/lib/receipt-schema";
 import { useTranslations } from "next-intl";
 import { ImageUpload } from "@/components/admin/ImageUpload";
@@ -276,12 +276,18 @@ export function ReceiptsClient({
   __unused?: never;
 }) {
   const { t: tR, tCommon, tToasts } = useReceiptsT();
-  const custRaw = templates.find((t) => t.type === "customer")?.template ?? null;
-  const kitRaw  = templates.find((t) => t.type === "kitchen")?.template  ?? null;
+  const custRaw  = templates.find((t) => t.type === "customer")?.template ?? null;
+  const kitRaw   = templates.find((t) => t.type === "kitchen")?.template  ?? null;
+  // Nabil AI phone-order template — a separate kitchen-style layout that prints
+  // instead of the kitchen receipt for a phone order's kitchen copies. Until
+  // the store saves one, it's the platform default (kitchen default + the
+  // PHONE ORDER banner first). Luigi 2026-08-16.
+  const phoneRaw = templates.find((t) => t.type === "phone")?.template    ?? null;
 
-  const [activeType, setActiveType] = useState<"customer" | "kitchen">("customer");
-  const [custConfig, setCustConfig] = useState<CustomerConfig>(() => parseReceiptConfig(custRaw, "customer"));
-  const [kitConfig,  setKitConfig]  = useState<KitchenConfig>(() => parseReceiptConfig(kitRaw,  "kitchen"));
+  const [activeType, setActiveType] = useState<ReceiptTemplateType>("customer");
+  const [custConfig,  setCustConfig]  = useState<CustomerConfig>(() => parseReceiptConfig(custRaw,  "customer"));
+  const [kitConfig,   setKitConfig]   = useState<KitchenConfig>(()  => parseReceiptConfig(kitRaw,   "kitchen"));
+  const [phoneConfig, setPhoneConfig] = useState<PhoneConfig>(()    => parseReceiptConfig(phoneRaw, "phone"));
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [kitchenCopies,  setKitchenCopies]  = useState<number>(printerSettings?.kitchenCopies ?? 1);
   const [customerCopies, setCustomerCopies] = useState<number>(printerSettings?.customerCopies ?? 1);
@@ -302,13 +308,27 @@ export function ReceiptsClient({
     printerSettings?.paperWidth === "58mm" ? "58mm" : "80mm"
   );
   const [previewOrderType, setPreviewOrderType] = useState<"pickup" | "delivery" | "dine_in">("pickup");
-  const previewOrder = useMemo(() => makeSampleOrder(previewOrderType), [previewOrderType]);
+  // Preview the sample as a Nabil AI PHONE order (banner + payment status
+  // shown, like print). Always on for the Phone Order tab; a toggle on the
+  // Customer tab (its banner section renders only for phone orders); not
+  // offered on the Kitchen tab, whose template phone orders never use.
+  const [previewPhoneToggle, setPreviewPhoneToggle] = useState(false);
+  const previewPhone = activeType === "phone" || (activeType === "customer" && previewPhoneToggle);
+  const previewOrder = useMemo(
+    () => makeSampleOrder(previewOrderType, { phoneOrder: previewPhone }),
+    [previewOrderType, previewPhone],
+  );
   const previewWidthPx = previewWidth === "58mm" ? PAPER_WIDTH_58_PX : PAPER_WIDTH_PX;
 
-  const activeConfig = activeType === "customer" ? custConfig : kitConfig;
+  const activeConfig = activeType === "customer" ? custConfig : activeType === "phone" ? phoneConfig : kitConfig;
   const setActiveConfig = activeType === "customer"
     ? (c: CustomerConfig) => setCustConfig(c)
-    : (c: KitchenConfig) => setKitConfig(c);
+    : activeType === "phone"
+      ? (c: PhoneConfig) => setPhoneConfig(c)
+      : (c: KitchenConfig) => setKitConfig(c);
+  // Tab labels (translated) — reused by the preview heading + test-print button.
+  const typeLabel = (t: ReceiptTemplateType) =>
+    t === "customer" ? tR("customerReceipt") : t === "phone" ? tR("phoneReceipt") : tR("kitchenReceipt");
 
   // DnD sensors
   const sensors = useSensors(
@@ -346,7 +366,7 @@ export function ReceiptsClient({
       const res = await fetch("/api/restaurants/receipts", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ customerTemplate: custConfig, kitchenTemplate: kitConfig, kitchenCopies, customerCopies, receiptLogoUrl: receiptLogoUrl || null }),
+        body: JSON.stringify({ customerTemplate: custConfig, kitchenTemplate: kitConfig, phoneTemplate: phoneConfig, kitchenCopies, customerCopies, receiptLogoUrl: receiptLogoUrl || null }),
       });
       if (!res.ok) throw new Error("Failed");
       if (!silent) toast.success(tToasts("saved"));
@@ -378,7 +398,7 @@ export function ReceiptsClient({
       // Send only the receipt type that's currently being edited.  Inline templates
       // are also sent so the server uses the exact draft (defensive in case of a
       // save-vs-read race).
-      const printType = activeType === "customer" ? "test_customer" : "test_kitchen";
+      const printType = activeType === "customer" ? "test_customer" : activeType === "phone" ? "test_phone" : "test_kitchen";
       const res = await fetch("/api/kitchen/printnode/print", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -386,6 +406,7 @@ export function ReceiptsClient({
           type:             printType,
           customerTemplate: custConfig,
           kitchenTemplate:  kitConfig,
+          phoneTemplate:    phoneConfig,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -393,7 +414,7 @@ export function ReceiptsClient({
         toast.error(data.error ?? "Test print failed");
         return;
       }
-      toast.success(`Saved & sent test ${activeType} receipt to printer`);
+      toast.success(tR("testPrintSent", { type: typeLabel(activeType) }));
     } catch (err: any) {
       toast.error(err?.message ?? "Test print failed");
     } finally {
@@ -427,30 +448,31 @@ export function ReceiptsClient({
       {/* ── LEFT PANEL ─────────────────────────────────────────────────────── */}
       <div className="w-80 flex-shrink-0 flex flex-col bg-white border-r border-gray-200 overflow-hidden">
         {/* Type toggle — emerald for Customer receipt (customer-facing surface),
-            navy slate-900 for Kitchen receipt (kitchen-facing surface). Mirrors
-            the demo-page card colors (emerald=customer / navy=kitchen) so the
-            mental model is consistent across the platform. */}
+            navy slate-900 for Kitchen receipt (kitchen-facing surface), pink for
+            the Nabil AI Phone Order receipt (the "Phone (Nabil AI)" channel
+            colour in reports). Mirrors the demo-page card colors so the mental
+            model is consistent across the platform. */}
         <div className="flex border-b border-gray-200 flex-shrink-0">
-          {(["customer", "kitchen"] as const).map((t) => {
+          {(["customer", "kitchen", "phone"] as const).map((t) => {
             const isActive = activeType === t;
-            const isCustomer = t === "customer";
+            const palette =
+              t === "customer"
+                ? { active: "border-emerald-500 text-emerald-700 bg-emerald-50", icon: isActive ? "text-emerald-700" : "text-emerald-500" }
+                : t === "phone"
+                  ? { active: "border-pink-500 text-pink-700 bg-pink-50", icon: isActive ? "text-pink-700" : "text-pink-500" }
+                  : { active: "border-slate-900 text-slate-900 bg-slate-100", icon: isActive ? "text-slate-900" : "text-slate-600" };
+            const Icon = t === "customer" ? Receipt : t === "phone" ? Phone : ChefHat;
             return (
               <button
                 key={t}
                 onClick={() => { setActiveType(t); setExpandedId(null); }}
                 className={tw(
-                  "flex-1 flex items-center justify-center gap-1.5 py-3 text-sm font-semibold transition border-b-2",
-                  isActive
-                    ? (isCustomer
-                        ? "border-emerald-500 text-emerald-700 bg-emerald-50"
-                        : "border-slate-900 text-slate-900 bg-slate-100")
-                    : "border-transparent text-gray-500 hover:text-gray-700"
+                  "flex-1 flex items-center justify-center gap-1.5 py-3 text-xs sm:text-sm font-semibold transition border-b-2",
+                  isActive ? palette.active : "border-transparent text-gray-500 hover:text-gray-700"
                 )}
               >
-                {isCustomer
-                  ? <Receipt className={`w-4 h-4 ${isActive ? "text-emerald-700" : "text-emerald-500"}`} />
-                  : <ChefHat className={`w-4 h-4 ${isActive ? "text-slate-900" : "text-slate-600"}`} />}
-                {isCustomer ? tR("customerReceipt") : tR("kitchenReceipt")}
+                <Icon className={`w-4 h-4 flex-shrink-0 ${palette.icon}`} />
+                <span className="truncate">{typeLabel(t)}</span>
               </button>
             );
           })}
@@ -462,6 +484,13 @@ export function ReceiptsClient({
             <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
               {tR("sections")}
             </div>
+            {/* What the phone-order template is for — it prints INSTEAD of the
+                kitchen receipt when a Nabil AI phone order comes in. */}
+            {activeType === "phone" && (
+              <p className="text-[11px] text-pink-800 bg-pink-50 border border-pink-100 rounded-lg px-2.5 py-2 mb-2 leading-relaxed">
+                {tR("phoneReceiptHint")}
+              </p>
+            )}
           </div>
 
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -472,7 +501,13 @@ export function ReceiptsClient({
                     key={section.id}
                     section={section}
                     expanded={expandedId === section.id}
-                    onToggleExpand={() => setExpandedId(expandedId === section.id ? null : section.id)}
+                    onToggleExpand={() => {
+                      setExpandedId(expandedId === section.id ? null : section.id);
+                      // Opening the customer receipt's phone banner switches the
+                      // preview to a phone order, so the section being styled is
+                      // actually visible (it renders only for phone orders).
+                      if (section.type === "phone_order") setPreviewPhoneToggle(true);
+                    }}
                     onToggleEnabled={() => toggleSection(section.id)}
                     onChange={updateSection}
                   />
@@ -545,11 +580,11 @@ export function ReceiptsClient({
           <button
             onClick={testThisReceipt}
             disabled={testing || saving}
-            title={`Save & send a single-${activeType} test print to the configured printer`}
+            title={tR("testPrintTitle", { type: typeLabel(activeType) })}
             className="flex items-center gap-1.5 justify-center bg-blue-600 text-white font-medium px-3 py-2 rounded-lg hover:bg-blue-700 transition text-sm disabled:opacity-60"
           >
             <Printer className="w-4 h-4" />
-            {testing ? "Sending…" : `Test ${activeType === "customer" ? "Customer" : "Kitchen"} Print`}
+            {testing ? "Sending…" : tR("testPrint", { type: typeLabel(activeType) })}
           </button>
           <PrintNodeTestButton />
           <button onClick={() => save()} disabled={saving}
@@ -564,7 +599,7 @@ export function ReceiptsClient({
         {/* Header label */}
         <div className="mb-4 text-center">
           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">
-            Live Preview — {activeType === "customer" ? "Customer Receipt" : "Kitchen Receipt"}
+            {tR("livePreview", { type: typeLabel(activeType) })}
           </div>
           <div className="text-xs text-gray-400">
             {previewWidth} thermal · {previewWidthPx}px wide · Preview = Print
@@ -612,6 +647,26 @@ export function ReceiptsClient({
               </button>
             ))}
           </div>
+          {/* Phone-order preview: on the Phone Order tab the sample is always a
+              phone order (pill shown pressed + disabled); on the Customer tab
+              it's a toggle so the owner can see the banner + payment status
+              their customer copy prints for a Nabil AI order. */}
+          {activeType !== "kitchen" && (
+            <button
+              type="button"
+              disabled={activeType === "phone"}
+              aria-pressed={previewPhone}
+              onClick={() => setPreviewPhoneToggle((v) => !v)}
+              className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 font-semibold transition ${
+                previewPhone
+                  ? "bg-pink-500 border-pink-500 text-white"
+                  : "bg-white border-gray-300 text-gray-600 hover:text-gray-900"
+              } ${activeType === "phone" ? "cursor-default" : ""}`}
+            >
+              <Phone className="w-3.5 h-3.5" />
+              {tR("previewPhoneOrder")}
+            </button>
+          )}
         </div>
 
         {/* Paper shadow wrapper */}
@@ -630,6 +685,15 @@ export function ReceiptsClient({
               type="customer"
               config={custConfig}
               restaurant={{ ...restaurant, receiptLogoUrl: receiptLogoUrl || null }}
+              order={previewOrder}
+              widthPx={previewWidthPx}
+            />
+          ) : activeType === "phone" ? (
+            <ReceiptRenderer
+              ref={previewRef}
+              type="phone"
+              config={phoneConfig}
+              restaurant={restaurant}
               order={previewOrder}
               widthPx={previewWidthPx}
             />

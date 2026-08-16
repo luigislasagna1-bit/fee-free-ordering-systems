@@ -1758,7 +1758,14 @@
       "setAsDefault": "Postavi kao podrazumevano",
       "confirmDelete": "Obrisati ovaj predložak?",
       "logoTitle": "Логотип рачуна",
-      "logoHint": "Приказује се на врху рачуна за купца — у прегледу, на одштампаном рачуну и у имејлу поруџбине. Слике високог контраста најбоље се штампају на термо папиру. Превуците одељак Логотип да бисте га преместили."
+      "logoHint": "Приказује се на врху рачуна за купца — у прегледу, на одштампаном рачуну и у имејлу поруџбине. Слике високог контраста најбоље се штампају на термо папиру. Превуците одељак Логотип да бисте га преместили.",
+      "phoneReceipt": "Priznanica za telefonsku porudžbinu",
+      "phoneReceiptHint": "Štampa se umesto kuhinjske priznanice kada stigne telefonska porudžbina preko Nabil AI — isti broj kopija kao kuhinjska priznanica. Kopije za kupca kod telefonske porudžbine koriste priznanicu za kupca, koja prikazuje sopstveni natpis „Telefonska porudžbina”.",
+      "previewPhoneOrder": "Telefonska porudžbina (Nabil AI)",
+      "testPrint": "Probna štampa: {type}",
+      "testPrintTitle": "Sačuvaj i pošalji jednu probnu štampu „{type}” na podešeni štampač",
+      "testPrintSent": "Sačuvano i probna štampa „{type}” poslata na štampač",
+      "livePreview": "Pregled uživo — {type}"
     },
     "promotions": {
       "title": "Промоције",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "PORUDŽBINA ZA KASNIJE"
+    },
+    "phone": {
+      "banner": "TELEFONSKA PORUDŽBINA",
+      "paid": "PLAĆENO",
+      "unpaid": "NIJE PLAĆENO - {amount} ZA PLAĆANJE ({type})"
     }
   },
   "email": {

@@ -1758,7 +1758,14 @@
       "setAsDefault": "Ustaw jako domyślny",
       "confirmDelete": "Usunąć ten szablon?",
       "logoTitle": "Logo paragonu",
-      "logoHint": "Wyświetlane u góry paragonu klienta — w podglądzie, na wydrukowanym paragonie i w e-mailu zamówienia. Obrazy o wysokim kontraście drukują się najlepiej na papierze termicznym. Przeciągnij sekcję Logo, aby zmienić jej położenie."
+      "logoHint": "Wyświetlane u góry paragonu klienta — w podglądzie, na wydrukowanym paragonie i w e-mailu zamówienia. Obrazy o wysokim kontraście drukują się najlepiej na papierze termicznym. Przeciągnij sekcję Logo, aby zmienić jej położenie.",
+      "phoneReceipt": "Paragon zamówienia telefonicznego",
+      "phoneReceiptHint": "Drukowany zamiast paragonu kuchennego, gdy wpływa zamówienie telefoniczne Nabil AI — tyle samo kopii co paragon kuchenny. Kopie dla klienta przy zamówieniu telefonicznym używają paragonu dla klienta, który ma własny baner „Zamówienie telefoniczne”.",
+      "previewPhoneOrder": "Zamówienie telefoniczne (Nabil AI)",
+      "testPrint": "Wydruk testowy: {type}",
+      "testPrintTitle": "Zapisz i wyślij jeden wydruk testowy „{type}” do skonfigurowanej drukarki",
+      "testPrintSent": "Zapisano i wysłano wydruk testowy „{type}” do drukarki",
+      "livePreview": "Podgląd na żywo — {type}"
     },
     "promotions": {
       "title": "Promocje",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "ZAMÓWIENIE NA PÓŹNIEJ"
+    },
+    "phone": {
+      "banner": "ZAMÓWIENIE TELEFONICZNE",
+      "paid": "OPŁACONE",
+      "unpaid": "NIEOPŁACONE - {amount} DO ZAPŁATY ({type})"
     }
   },
   "email": {

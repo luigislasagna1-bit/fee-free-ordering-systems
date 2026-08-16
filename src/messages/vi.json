@@ -1758,7 +1758,14 @@
       "setAsDefault": "Đặt làm mặc định",
       "confirmDelete": "Xóa mẫu này?",
       "logoTitle": "Logo hóa đơn",
-      "logoHint": "Hiển thị ở đầu hóa đơn của khách — trong bản xem trước, trên hóa đơn in và trong email đơn hàng. Hình ảnh tương phản cao in đẹp nhất trên giấy nhiệt. Kéo phần Logo để thay đổi vị trí."
+      "logoHint": "Hiển thị ở đầu hóa đơn của khách — trong bản xem trước, trên hóa đơn in và trong email đơn hàng. Hình ảnh tương phản cao in đẹp nhất trên giấy nhiệt. Kéo phần Logo để thay đổi vị trí.",
+      "phoneReceipt": "Hóa đơn đơn hàng qua điện thoại",
+      "phoneReceiptHint": "Được in thay cho hóa đơn bếp khi có đơn hàng qua điện thoại từ Nabil AI — số bản in bằng hóa đơn bếp. Bản dành cho khách của đơn hàng qua điện thoại dùng hóa đơn khách hàng, có kèm băng rôn \"Đơn hàng qua điện thoại\" riêng.",
+      "previewPhoneOrder": "Đơn hàng qua điện thoại (Nabil AI)",
+      "testPrint": "In thử: {type}",
+      "testPrintTitle": "Lưu và gửi một bản in thử \"{type}\" tới máy in đã cấu hình",
+      "testPrintSent": "Đã lưu và gửi bản in thử \"{type}\" tới máy in",
+      "livePreview": "Xem trước trực tiếp — {type}"
     },
     "promotions": {
       "title": "Khuyến mãi",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "CÀNG SỚM CÀNG TỐT",
       "orderForLater": "ĐƠN ĐẶT SAU"
+    },
+    "phone": {
+      "banner": "ĐƠN HÀNG QUA ĐIỆN THOẠI",
+      "paid": "ĐÃ THANH TOÁN",
+      "unpaid": "CHƯA THANH TOÁN - {amount} THANH TOÁN KHI {type}"
     }
   },
   "email": {

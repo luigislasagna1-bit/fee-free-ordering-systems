@@ -1758,7 +1758,14 @@
       "setAsDefault": "Beállítás alapértelmezettként",
       "confirmDelete": "Törli ezt a sablont?",
       "logoTitle": "Nyugta logó",
-      "logoHint": "A vásárlói nyugta tetején jelenik meg — az előnézetben, a nyomtatott nyugtán és a rendelési e-mailben. A nagy kontrasztú képek nyomtathatók legjobban hőpapírra. A Logó szakasz húzással áthelyezhető."
+      "logoHint": "A vásárlói nyugta tetején jelenik meg — az előnézetben, a nyomtatott nyugtán és a rendelési e-mailben. A nagy kontrasztú képek nyomtathatók legjobban hőpapírra. A Logó szakasz húzással áthelyezhető.",
+      "phoneReceipt": "Telefonos rendelés nyugtája",
+      "phoneReceiptHint": "A konyhai nyugta helyett nyomtatódik, amikor Nabil AI telefonos rendelés érkezik – ugyanannyi példányban, mint a konyhai nyugta. A telefonos rendelés vevői példányai a vevői nyugtát használják, amelyen saját „Telefonos rendelés” szalag látható.",
+      "previewPhoneOrder": "Telefonos rendelés (Nabil AI)",
+      "testPrint": "Tesztnyomtatás: {type}",
+      "testPrintTitle": "Mentés és egy „{type}” tesztnyomtatás küldése a beállított nyomtatóra",
+      "testPrintSent": "Mentve, és a(z) „{type}” tesztnyomtatás elküldve a nyomtatóra",
+      "livePreview": "Élő előnézet — {type}"
     },
     "promotions": {
       "title": "Akciók",
@@ -5989,6 +5996,11 @@
     "scheduling": {
       "asap": "ASAP",
       "orderForLater": "RENDELÉS KÉSŐBBRE"
+    },
+    "phone": {
+      "banner": "TELEFONOS RENDELÉS",
+      "paid": "FIZETVE",
+      "unpaid": "NINCS FIZETVE - {amount} FIZETENDŐ ({type})"
     }
   },
   "email": {
