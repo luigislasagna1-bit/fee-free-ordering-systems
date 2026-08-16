@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Kui termoprinter on ühendatud, prinditakse kviitungid tellimuse vastuvõtmisel automaatselt. Printeri seadistamiseks või seadete muutmiseks kasuta ülaribal olevat nuppu <gear></gear>.",
     "tourPrintingHint": "Saad seda tutvustust igal ajal uuesti vaadata, kustutades brauseri saidiandmed.",
     "tourDoneTitle": "Kõik on valmis",
-    "tourDoneBody": "Ongi kõik. Siit edasi toimib köök juba ise — hoia see vaheleht teeninduse ajal lihtsalt lahti. Edu tööle!"
+    "tourDoneBody": "Ongi kõik. Siit edasi toimib köök juba ise — hoia see vaheleht teeninduse ajal lihtsalt lahti. Edu tööle!",
+    "phoneOrderBadge": "TELEFONITELLIMUS",
+    "phoneOrderPaid": "MAKSTUD",
+    "phoneOrderNotPaid": "MAKSMATA · {amount} tasuda ({type})"
   },
   "admin": {
     "welcomeBack": "Tere tulemast tagasi",

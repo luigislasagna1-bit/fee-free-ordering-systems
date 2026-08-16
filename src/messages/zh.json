@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "如果已连接热敏打印机，接单时小票会自动打印。可通过顶部栏的<gear></gear>按钮设置打印机或更改其他设置。",
     "tourPrintingHint": "清除浏览器的网站数据后，可随时重新观看本引导。",
     "tourDoneTitle": "一切就绪",
-    "tourDoneBody": "就是这么简单。接下来厨房就能顺畅运转——营业期间保持此页面打开即可。祝您生意兴隆！"
+    "tourDoneBody": "就是这么简单。接下来厨房就能顺畅运转——营业期间保持此页面打开即可。祝您生意兴隆！",
+    "phoneOrderBadge": "电话订单",
+    "phoneOrderPaid": "已付款",
+    "phoneOrderNotPaid": "未付款 · {type}时支付 {amount}"
   },
   "admin": {
     "welcomeBack": "欢迎回来",

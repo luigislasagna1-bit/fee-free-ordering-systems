@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Jika printer termal terhubung, struk akan tercetak otomatis saat Anda menerima pesanan. Atur printer atau ubah pengaturan lewat tombol <gear></gear> di bilah atas.",
     "tourPrintingHint": "Anda dapat menonton ulang tur ini kapan saja dengan menghapus data situs di browser Anda.",
     "tourDoneTitle": "Semua sudah siap",
-    "tourDoneBody": "Selesai. Dapur berjalan dengan sendirinya mulai sekarang — cukup biarkan tab ini tetap terbuka selama jam layanan. Semoga lancar."
+    "tourDoneBody": "Selesai. Dapur berjalan dengan sendirinya mulai sekarang — cukup biarkan tab ini tetap terbuka selama jam layanan. Semoga lancar.",
+    "phoneOrderBadge": "PESANAN TELEPON",
+    "phoneOrderPaid": "LUNAS",
+    "phoneOrderNotPaid": "BELUM DIBAYAR · {amount} dibayar saat {type}"
   },
   "admin": {
     "welcomeBack": "Selamat datang kembali",

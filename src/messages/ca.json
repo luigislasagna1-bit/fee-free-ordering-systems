@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Si tens una impressora tèrmica connectada, els rebuts s'imprimeixen automàticament quan acceptes una comanda. Configura la impressora o canvia els ajustos amb el botó <gear></gear> de la barra superior.",
     "tourPrintingHint": "Pots tornar a veure aquesta visita guiada quan vulguis esborrant les dades del lloc al teu navegador.",
     "tourDoneTitle": "Tot a punt",
-    "tourDoneBody": "Això és tot. A partir d'aquí, la cuina funciona sola: només cal que mantinguis aquesta pestanya oberta durant el servei. Molta sort!"
+    "tourDoneBody": "Això és tot. A partir d'aquí, la cuina funciona sola: només cal que mantinguis aquesta pestanya oberta durant el servei. Molta sort!",
+    "phoneOrderBadge": "COMANDA TELEFÒNICA",
+    "phoneOrderPaid": "PAGAT",
+    "phoneOrderNotPaid": "NO PAGAT · {amount} a pagar ({type})"
   },
   "admin": {
     "welcomeBack": "Benvingut de nou",

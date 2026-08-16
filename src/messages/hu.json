@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Ha hőnyomtató van csatlakoztatva, a nyugták automatikusan nyomtatódnak a rendelés elfogadásakor. A nyomtató beállításához vagy a beállítások módosításához használja a felső sáv <gear></gear> gombját.",
     "tourPrintingHint": "Ezt a bemutatót bármikor újranézheti, ha törli a böngésző webhelyadatait.",
     "tourDoneTitle": "Minden készen áll",
-    "tourDoneBody": "Ennyi az egész. Innentől a konyha magától működik – csak tartsa nyitva ezt a lapot a műszak alatt. Sok sikert!"
+    "tourDoneBody": "Ennyi az egész. Innentől a konyha magától működik – csak tartsa nyitva ezt a lapot a műszak alatt. Sok sikert!",
+    "phoneOrderBadge": "TELEFONOS RENDELÉS",
+    "phoneOrderPaid": "FIZETVE",
+    "phoneOrderNotPaid": "NINCS FIZETVE · {amount} fizetendő ({type})"
   },
   "admin": {
     "welcomeBack": "Üdvözöljük újra",

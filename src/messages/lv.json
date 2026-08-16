@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Ja ir pievienots termoprinteris, čeki tiek izdrukāti automātiski, tiklīdz pieņemat pasūtījumu. Iestatiet printeri vai mainiet iestatījumus, izmantojot pogu <gear></gear> augšējā joslā.",
     "tourPrintingHint": "Šo pamācību varat noskatīties vēlreiz jebkurā brīdī, notīrot pārlūkprogrammas vietnes datus.",
     "tourDoneTitle": "Viss gatavs",
-    "tourDoneBody": "Tas arī viss. Tālāk virtuve darbojas pati — tikai turiet šo cilni atvērtu darba laikā. Lai veicas!"
+    "tourDoneBody": "Tas arī viss. Tālāk virtuve darbojas pati — tikai turiet šo cilni atvērtu darba laikā. Lai veicas!",
+    "phoneOrderBadge": "PASŪTĪJUMS PA TĀLRUNI",
+    "phoneOrderPaid": "APMAKSĀTS",
+    "phoneOrderNotPaid": "NAV APMAKSĀTS · {amount} jāmaksā ({type})"
   },
   "admin": {
     "welcomeBack": "Laipni atpakaļ",

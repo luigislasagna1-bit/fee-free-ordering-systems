@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Om du har en termoskrivare ansluten skrivs kvitton ut automatiskt när du accepterar en beställning. Ställ in din skrivare eller ändra inställningar via <gear></gear>-knappen i det övre fältet.",
     "tourPrintingHint": "Du kan se rundturen igen när som helst genom att rensa webbläsarens webbplatsdata.",
     "tourDoneTitle": "Nu är du redo",
-    "tourDoneBody": "Det var allt. Köket sköter sig självt härifrån – håll bara den här fliken öppen under servicen. Lycka till där ute."
+    "tourDoneBody": "Det var allt. Köket sköter sig självt härifrån – håll bara den här fliken öppen under servicen. Lycka till där ute.",
+    "phoneOrderBadge": "TELEFONBESTÄLLNING",
+    "phoneOrderPaid": "BETALD",
+    "phoneOrderNotPaid": "EJ BETALD · {amount} betalas ({type})"
   },
   "admin": {
     "welcomeBack": "Välkommen tillbaka",

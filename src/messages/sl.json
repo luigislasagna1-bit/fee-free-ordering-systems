@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Če imate priključen termični tiskalnik, se računi natisnejo samodejno, ko sprejmete naročilo. Tiskalnik nastavite ali spremenite nastavitve z gumbom <gear></gear> v zgornji vrstici.",
     "tourPrintingHint": "Ta vodnik si lahko kadar koli znova ogledate tako, da v brskalniku počistite podatke spletnega mesta.",
     "tourDoneTitle": "Vse je pripravljeno",
-    "tourDoneBody": "To je vse. Od tu naprej kuhinja deluje sama — samo pustite ta zavihek odprt med strežbo. Srečno!"
+    "tourDoneBody": "To je vse. Od tu naprej kuhinja deluje sama — samo pustite ta zavihek odprt med strežbo. Srečno!",
+    "phoneOrderBadge": "TELEFONSKO NAROČILO",
+    "phoneOrderPaid": "PLAČANO",
+    "phoneOrderNotPaid": "NI PLAČANO · {amount} za plačilo ({type})"
   },
   "admin": {
     "welcomeBack": "Dobrodošli nazaj",

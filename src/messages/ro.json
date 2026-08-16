@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Dacă ai o imprimantă termică conectată, bonurile se imprimă automat când accepți o comandă. Configurează imprimanta sau schimbă setările din butonul <gear></gear> din bara de sus.",
     "tourPrintingHint": "Poți revedea acest tur oricând ștergând datele site-ului din browser.",
     "tourDoneTitle": "Totul e pregătit",
-    "tourDoneBody": "Asta e tot. De aici bucătăria merge de la sine — ține doar această filă deschisă în timpul serviciului. Mult succes!"
+    "tourDoneBody": "Asta e tot. De aici bucătăria merge de la sine — ține doar această filă deschisă în timpul serviciului. Mult succes!",
+    "phoneOrderBadge": "COMANDĂ TELEFONICĂ",
+    "phoneOrderPaid": "PLĂTIT",
+    "phoneOrderNotPaid": "NEPLĂTIT · {amount} de plată ({type})"
   },
   "admin": {
     "welcomeBack": "Bine ai revenit",

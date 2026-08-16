@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Hvis du har en termoprinter tilsluttet, udskrives kvitteringer automatisk, når du accepterer en ordre. Opsæt din printer eller skift indstillinger via <gear></gear>-knappen i toplinjen.",
     "tourPrintingHint": "Du kan se denne rundvisning igen når som helst ved at rydde din browsers webstedsdata.",
     "tourDoneTitle": "Du er klar",
-    "tourDoneBody": "Det var det. Køkkenet kører af sig selv herfra — hold bare denne fane åben under servicen. Held og lykke derude."
+    "tourDoneBody": "Det var det. Køkkenet kører af sig selv herfra — hold bare denne fane åben under servicen. Held og lykke derude.",
+    "phoneOrderBadge": "TELEFONBESTILLING",
+    "phoneOrderPaid": "BETALT",
+    "phoneOrderNotPaid": "IKKE BETALT · {amount} betales ({type})"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbage",

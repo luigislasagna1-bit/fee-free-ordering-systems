@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Jeśli masz podłączoną drukarkę termiczną, paragony drukują się automatycznie po przyjęciu zamówienia. Skonfiguruj drukarkę lub zmień ustawienia przyciskiem <gear></gear> na górnym pasku.",
     "tourPrintingHint": "Możesz obejrzeć ten samouczek ponownie w dowolnym momencie, czyszcząc dane witryny w przeglądarce.",
     "tourDoneTitle": "Wszystko gotowe",
-    "tourDoneBody": "To wszystko. Od teraz kuchnia działa sama — po prostu trzymaj tę kartę otwartą podczas serwisu. Powodzenia!"
+    "tourDoneBody": "To wszystko. Od teraz kuchnia działa sama — po prostu trzymaj tę kartę otwartą podczas serwisu. Powodzenia!",
+    "phoneOrderBadge": "ZAMÓWIENIE TELEFONICZNE",
+    "phoneOrderPaid": "OPŁACONE",
+    "phoneOrderNotPaid": "NIEOPŁACONE · {amount} do zapłaty ({type})"
   },
   "admin": {
     "welcomeBack": "Witaj z powrotem",
