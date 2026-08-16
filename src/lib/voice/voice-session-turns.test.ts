@@ -334,6 +334,26 @@ describe("the THINKING filler covers a first hop that stays silent past 2.5 s (c
     expect(said).toContain("Coke comes in one size.");
   });
 
+  it("a barge-in right after the filler is a REAL interrupt on this turn, never 'stale' (T11, 2026-08-16)", async () => {
+    // First hop: 3.5 s to the first token. The filler speaks at 2.5 s; the
+    // caller cuts in at ~2.9 s having heard exactly "Okay. ". Before the fix
+    // that read as a stale interrupt (the filler was the "last spoken text" and
+    // not part of the stream), the reply carried on, and the caller's
+    // correction was answered as if nothing had been said.
+    const anthropic = fakeAnthropic([{ deltas: ["Pickup it is — a large pizza with green peppers."], ttft: 3_500 }, { deltas: ["Green olives instead — done."] }]);
+    const { ws, s } = await startedSession(anthropic);
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pickup, a large pizza with green peppers." }));
+    await settle(2_900);
+    const heard = ws.said();
+    expect(THINKING.some((p) => heard.includes(p))).toBe(true);
+    s.onMessage(JSON.stringify({ type: "interrupt", utteranceUntilInterrupt: heard }));
+    await settle(1_200);
+    expect(ws.said()).not.toContain("green peppers"); // the cut reply never played
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Wait — green olives, not green peppers." }));
+    await settle(600);
+    expect(ws.said()).toContain("Green olives instead — done.");
+  });
+
   it("thinkingFillerMs: 0 disables it (harness seam)", async () => {
     const slow = {
       messages: {

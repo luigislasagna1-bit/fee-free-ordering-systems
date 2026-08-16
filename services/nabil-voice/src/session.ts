@@ -182,6 +182,13 @@ export class CallSession {
   private bargedDuringProtected = false;
   /** Text spoken so far in the CURRENT stream — what an interrupt payload is compared against. */
   private currentStreamText = "";
+  /** Everything the caller has heard in the CURRENT turn before the current
+   *  stream: earlier hops' sentences and any filler ("Okay.", "Let me check
+   *  that."). An interrupt whose heard text is a prefix of THIS is a real
+   *  barge-in on this turn, never a stale one — the thinking filler made a
+   *  400 ms barge-in read as stale (its words were the "last spoken text" and
+   *  not the stream's), so the caller's correction was ignored (T11, 2026-08-16). */
+  private turnSpokenSoFar = "";
   private lastSpokenText = "";
   private outcome: string | null = null;
   private orderId: string | null = null;
@@ -304,8 +311,11 @@ export class CallSession {
         // current stream) or, without a payload, it landed within the grace
         // window of the turn opening.
         const heardTrim = (heard ?? "").trim();
+        // What the caller has heard of THIS turn so far: earlier hops + fillers +
+        // the live stream. A prefix of that is a barge-in on this turn.
+        const heardThisTurn = this.turnRunning ? this.turnSpokenSoFar + this.currentStreamText : this.currentStreamText;
         const stale = heardTrim
-          ? this.lastSpokenText.startsWith(heardTrim) && !this.currentStreamText.startsWith(heardTrim)
+          ? this.lastSpokenText.startsWith(heardTrim) && !heardThisTurn.startsWith(heardTrim)
           : this.turnRunning && this.now() - this.turnStartedAt < INTERRUPT_GRACE_MS;
         const duringProtected = this.now() < this.protectedUntil;
         this.events.emit({ type: "interrupt", turn: this.turnIndex, heard, stale, duringProtected });
@@ -624,6 +634,7 @@ export class CallSession {
     this.interrupted = false;
     this.turnStartedAt = this.now();
     this.currentStreamText = "";
+    this.turnSpokenSoFar = "";
     let spokeAnything = false;
     let spokenThisTurn = "";
     let ttfaMs: number | null = null;
@@ -760,6 +771,7 @@ export class CallSession {
       if (assistantText.trim()) {
         this.transcript.push({ role: "assistant", text: assistantText, ts: new Date(this.now()).toISOString(), turn });
         this.lastSpokenText = assistantText;
+        this.turnSpokenSoFar += assistantText;
         spokenThisTurn += (spokenThisTurn ? " " : "") + assistantText;
         this.events.emit({ type: "model_text", turn, hop: hops, text: assistantText, interrupted: false });
         noteSpoken(this.dialogue);
@@ -1081,6 +1093,9 @@ export class CallSession {
     this.transcript.push({ role: "assistant", text: clean, ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
     this.spokenAsides.push(clean);
     this.lastSpokenText = clean;
+    // Fillers/asides are part of what the caller hears in this turn — an
+    // interrupt right after "Okay." is a barge-in on THIS turn.
+    if (this.turnRunning) this.turnSpokenSoFar += text.replace(/[*_`~#]/g, "");
   }
 
   private sendText(token: string, last: boolean) {
