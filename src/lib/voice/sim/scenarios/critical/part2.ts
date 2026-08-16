@@ -212,7 +212,8 @@ export const T21: Scenario = {
     fulfilment: { type: "delivery", address: ADDR.street },
     customer: { name: "Dana" },
     mustPlace: true,
-    mustSay: ["deliver[a-z]*[^.?!]{0,40}\\$\\d|\\$\\d[\\d.]*[^.?!]{0,40}deliver|delivery fee"],
+    // Money is spoken in WORDS since 2026-08-15 ("seven dollar and ninety-nine cent fee") — accept digits or words.
+    mustSay: ["deliver[a-z]*[^.?!]{0,60}(\\$\\d|dollar|cent|fee)|(\\$\\d[\\d.]*|dollars?)[^.?!]{0,40}deliver|delivery fee"],
   },
 };
 

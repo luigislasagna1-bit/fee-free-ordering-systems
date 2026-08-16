@@ -169,6 +169,53 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A58. ☎️ Nabil could hand a caller DEAD AIR — fixed in code; 3 short clicks are yours (2026-08-15)
+
+**What I found while comparing Nabil against a competitor's sales page (Loman.ai).** Nabil beats them
+on everything hard — order accuracy, transcripts, recordings, analytics — and there is no "POS
+integration" to sell because phone orders already go through the *same* checkout as your website.
+But three things were genuinely worse, and one was a live hole:
+
+**The hole (fixed).** Every "Nabil can't take this call" path in the system deliberately rings your
+own phone instead. One did not. If our own webhook ever threw an error — a database blip, a slow
+cold start — Twilio had no second address to try, so it played its error tone and hung up. **The
+caller heard nothing and we never found out.** Also fixed: a store whose Nabil add-on lapsed on a
+failed card, and which never filled in a transfer number, got "we can't take your call" instead of
+its own phone ringing. That is merely rude today — it becomes business-ending the moment a store
+forwards its real line to Nabil, because the number on their printed menu is the one that dead-ends.
+
+**Also fixed (privacy, same session).** A "download my data" request returned **no trace of phone
+calls** — even though deletion correctly knew we hold the caller's full transcript, AI summary and
+recording. Access and deletion are the same duty; the export now covers calls, addresses, order
+notes and ratings, and a test now fails the build if a table is ever added to the deletion list
+without being added to the export. And when Twilio *refuses* to delete a recording, we no longer
+throw away the only handle that could delete it while reporting the erasure as complete — the
+request is now logged "partial" and the audio stays reachable for a retry.
+
+**Your clicks — none of them take more than a minute:**
+1. ☐ **Twilio Console → the Nabil number → Voice → "PRIMARY HANDLER FAILS"** → Webhook, **HTTP POST**,
+   `https://nabil-voice.fly.dev/twiml/fallback` → Save. *This is the highest-value minute on this
+   whole list.* (Once the code below is deployed I can also set it for you automatically — say the
+   word and I'll run it.)
+2. ☐ **Vercel → Environment Variables → add `NABIL_FALLBACK_DEFAULT_NUMBER`** = your own mobile in
+   `+1…` form. It is the catch-all the emergency path rings when it can't reach the database to look
+   up who to call. Without it that path can only apologise.
+3. ☐ **Fly secrets** (I can run these for you): `fly secrets set NABIL_TWILIO_FALLBACK_URL=https://nabil-voice.fly.dev/twiml/fallback FFOS_TWILIO_AUTH_TOKEN=<your Twilio auth token> --app nabil-voice`.
+   The auth token is what lets the emergency handler prove a request really came from Twilio before
+   it dials a real phone.
+4. ☐ **A free uptime monitor** (UptimeRobot or Better Stack) on `https://nabil-voice.fly.dev/health`,
+   60-second interval, SMS alert to you. **This is the only alarm that still works when Vercel is
+   down** — a monitor that runs on Vercel cannot tell you Vercel is broken.
+
+**Not yet — deliberately.** `fly scale count 2` (the second machine that buys redundancy) waits until
+the graceful-shutdown work lands, otherwise the deploy that ships it still cuts every live call.
+
+🤔 **One decision, when you're ready.** Nabil's price. Your CA$0.75/call-minute with a CA$99/month
+minimum works — measured cost is US$0.34–0.40/minute from 31 August, so the margin is positive at
+every call volume (roughly 30% for a typical store, more for a quiet one). The earlier CA$0.50 idea
+would have been at or below cost. The real risk is a store signing up at $99 and seeing $200 — so the
+dashboard needs a live minutes counter and a projected month-end total before we sell it.
+
 ### A56. 💶 Fabrizio #17 — a Euro store was advertising delivery fees in dollars (2026-08-15)
 
 **What he saw:** on his restaurant's info page, "Our delivery areas" listed each zone as
@@ -306,8 +353,23 @@ line, back to the order); **asking for a person = instant transfer** (rings your
 is set); **whole-sentence voice delivery** on your line (the "missing words / losing reception" glitch is token-by-token
 streaming); **Deepgram Flux listener ON** (turn-taking / fewer false interruptions) — this one is the live experiment.
 
+**ROUND 4 (2026-08-16 ~01:00 UTC) — your 00:10 test call + Saboor's 23:10 call + the 23:43 halal call:**
+Your test call got everything you asked for: "half Philly Steak, half Deluxe, **ranch base on the Philly Steak
+half**"; the swap to Chipotle Chicken added "chipotle base on the Chipotle Chicken half"; "I love you" → "Aw, careful
+now — I'll put extra love on those wings for you!"; "transfer me to a human" → immediate hand-off. Replies now come in
+0.8–1.1 s on plain turns (Flux). What was still off, and what changed: **(a)** the combo turn had 9 s of dead air and
+said "the wings id needed a tweak, let me try that again" — the combo went in empty and the model fumbled the fixed
+pizza/wings ids three times → the system now fills every fixed slot itself the moment a combo is named ("Large and
+Wings combo" instantly holds the pizza + 20 wings; only toppings and flavour are questions), and that kind of sentence is
+now filtered before the voice; **(b)** Flux cuts sentences at short pauses ("…and the wings barbecue" / "instead." /
+"That's not… both the size I want") → a one-to-three-word tail arriving right after a reply is now absorbed, not answered
+with "what would you like instead?"; **(c)** "halal" was heard as "hello" once → your FAQ words (halal, intercom…) are
+now in the listener's hint list; **(d)** postal-code insistence and late address questions fixed. Gate + deploy in
+progress as this is written.
+
 **YOUR STEPS NOW:**
-1. 🔷 **Call now** — if the greeting plays and it hears you, Flux stays; if not, tell me and I revert in ~4 min.
+1. 🔷 **Call again after the deploy** (I'll tell you when): same combo script — expect the combo to be recapped in one
+   go (~2 s, no "one sec", no "id"), and try trailing a word after a pause ("…wings barbecue [pause] instead").
    Order "Large and Wings combo, half Philly steak half deluxe, wings BBQ" → listen for "half Philly Steak, half
    Deluxe" + "ranch base on the Philly Steak half", no double-topping question. Say "you're the best, I love you" once
    and ask for a person at the end.
