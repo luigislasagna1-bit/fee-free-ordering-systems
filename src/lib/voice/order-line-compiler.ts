@@ -809,6 +809,12 @@ export function compilePizzaLine(
   const recipeSauceNotes: string[] = [];
   const spokenRecipeBySide: { left?: string; right?: string; whole?: string } = {};
   const excludeSet = new Set((intent.excludeToppings ?? []).map((x) => norm(stripLeadingNegation(String(x ?? "")) || String(x ?? ""))));
+  // Recipe presets an exclusion DID take off, by norm/stem key → the recipe's
+  // side. Read below so "no tomato on the veggie half" (a) is not reported as
+  // "wasn't on this pizza to begin with" and (b) is not called a contradiction
+  // when the caller ALSO wants tomatoes on the OTHER half — that is exactly
+  // "tomatoes on the cheese half only". (2026-08-16, cmsw4s0mz.)
+  const recipeExcluded = new Map<string, Placement>();
   const recipeSauceBySide: Array<{ side: Placement; recipe: string; sauce: string }> = [];
   for (const hr of intent.halfRecipes ?? []) {
     const recipe = opts.recipes?.[String(hr?.menuItemId ?? "")];
@@ -822,7 +828,12 @@ export function compilePizzaLine(
     for (const preset of recipe.pizzaConfig.presetToppings ?? []) {
       const pName = String(preset ?? "").trim();
       if (!pName) continue;
-      if (excludeSet.has(norm(pName)) || excludeSet.has(stem(pName))) continue; // "no pineapple on the Hawaiian half"
+      if (excludeSet.has(norm(pName)) || excludeSet.has(stem(pName))) {
+        // "no pineapple on the Hawaiian half"
+        recipeExcluded.set(norm(pName), side);
+        recipeExcluded.set(stem(pName), side);
+        continue;
+      }
       const already = requested.find((t) => sameSpokenName(t.name, pName));
       if (already) {
         // On the other side (or spoken for one side while the recipe wants it here) ⇒ whole.
@@ -1112,12 +1123,23 @@ export function compilePizzaLine(
   for (const raw of intent.excludeToppings ?? []) {
     const spoken = String(raw ?? "").trim();
     if (!spoken || excludeMatched.has(spoken)) continue;
+    const cleaned = stripLeadingNegation(spoken) || norm(spoken);
+    const recipeSide = recipeExcluded.get(norm(cleaned)) ?? recipeExcluded.get(stem(cleaned)) ?? null;
     const addedId = [...excludeIds.entries()].find(([, s]) => s === spoken)?.[0];
     if (addedId && mods.some((m) => m.modifierOptionId === addedId)) {
+      // Left off a RECIPE half and asked for on the OTHER half is not a
+      // contradiction — it is "tomatoes on the cheese half only". Only the same
+      // side (or the whole pizza) contradicts.
+      if (recipeSide && recipeSide !== "whole") {
+        const conflicting = mods.some((m) => m.modifierOptionId === addedId && !m.name.startsWith(placementPrefix(recipeSide === "left" ? "right" : "left", true)));
+        if (!conflicting) continue;
+      }
       const name = tGroups.flatMap((g) => g.options).find((o) => o.modifierOptionId === addedId)?.name ?? spoken;
       unresolved.push(`The caller both asked for ${name} and asked to leave it off. Confirm which before adding it.`);
       continue;
     }
+    // An exclusion that took a recipe's topping off its half did its job.
+    if (recipeSide) continue;
     notices.push(`${spoken} wasn't on this pizza to begin with`);
   }
 

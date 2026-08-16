@@ -43,8 +43,30 @@ import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membe
 import { resolvePromoMenuRefsForServing } from "@/lib/menu";
 import { phoneDigitsKey } from "@/lib/phone";
 import { CUSTOMER_ROW_ORDER } from "@/lib/customer-row";
+import { isOnlineOnlyCampaignRef, KICKSTARTER_FIRST_BUY_REF } from "@/lib/assigned-promos";
 
 export type PromoChannel = "website" | "marketplace";
+
+/**
+ * HOW the order is being placed — distinct from the acquisition channel above.
+ *   "web"   → the customer's own browser/app checkout (website or marketplace)
+ *   "voice" → Nabil AI phone ordering (the Fly service POSTing /api/orders with
+ *             the internal key + channel:"voice"; its quote is the same route's
+ *             dryRun, so quote == charge by construction)
+ * Kickstarter/Autopilot email-campaign promos are ONLINE-ONLY (Luigi
+ * 2026-08-16) — see `isOnlineOnlyCampaignRef`. Deliberately NOT a third
+ * PromoChannel value: `promoChannelOk` compares against Promotion.channel
+ * (website/marketplace/both) and the new-vs-returning count keys on
+ * viaMarketplace — a "voice" channel there would fail EVERY promo and change
+ * the count's meaning.
+ */
+export type PromoOrderSource = "web" | "voice";
+
+/** The one gate for "may this promo be in the pool for HOW this order is
+ *  placed": a phone order never sees an email-campaign promo. */
+export function promoSourceOk(promo: { campaignRef?: string | null }, orderSource: PromoOrderSource): boolean {
+  return orderSource !== "voice" || !isOnlineOnlyCampaignRef(promo.campaignRef);
+}
 
 /** Cap per the standing scaling rule (no unbounded findMany on a hot path).
  *  No real restaurant has anywhere near this many ACTIVE promos, so this never
@@ -159,6 +181,12 @@ export type PromoOrderContext = {
 export async function buildPromoOrderContext(args: {
   restaurant: RestaurantRef;
   channel: PromoChannel;
+  /** HOW the order is placed. "voice" (Nabil phone orders) drops every
+   *  Kickstarter/Autopilot email-campaign promo from the pool — at the public
+   *  pool, the granted add-backs AND the member-only add-backs — so a phone
+   *  caller is never quoted, charged or told about an online-only discount.
+   *  Default "web" = every existing caller's behavior, byte for byte. */
+  orderSource?: PromoOrderSource;
   /** Identity typed at checkout (raw — normalized here). */
   email?: string | null;
   phone?: string | null;
@@ -173,6 +201,7 @@ export async function buildPromoOrderContext(args: {
   optimisticIsNewCustomer?: boolean;
 }): Promise<PromoOrderContext> {
   const { restaurant, channel } = args;
+  const orderSource: PromoOrderSource = args.orderSource === "voice" ? "voice" : "web";
 
   const activePromosAll = await getActivePromotionsForOrder(restaurant);
 
@@ -184,7 +213,9 @@ export async function buildPromoOrderContext(args: {
   // Member-only (VIP) promos are linked to ≥1 target — keep them OUT of the
   // public pool; they're added back below only for identified members.
   const { general: publicPromos, memberOnly: memberOnlyPromos } = partitionMemberOnly(activePromosAll as any[]);
-  const activePromos: any[] = publicPromos.filter((p: any) => !suppressed.has(p.id) && promoChannelOk(p, channel));
+  const activePromos: any[] = publicPromos.filter(
+    (p: any) => !suppressed.has(p.id) && promoChannelOk(p, channel) && promoSourceOk(p, orderSource),
+  );
 
   // ── Canonical identity ────────────────────────────────────────────────────
   const typedEmail = typeof args.email === "string" ? args.email.trim().toLowerCase() || null : null;
@@ -275,7 +306,7 @@ export async function buildPromoOrderContext(args: {
   }
   const newCustomerOfferUnavailable =
     identified && !isNewCustomer &&
-    activePromos.some((p: any) => p.campaignRef === "kickstarter_first_buy" && p.isActive);
+    activePromos.some((p: any) => p.campaignRef === KICKSTARTER_FIRST_BUY_REF && p.isActive);
 
   // ── Member signal (canonical — see module doc) ───────────────────────────
   // A signed-in per-restaurant customer IS a member; so is a resolved email
@@ -300,6 +331,10 @@ export async function buildPromoOrderContext(args: {
     try {
       const grants = await findActiveGrants({ restaurantId: restaurant.id, email, phone });
       const autoIds = new Set(grants.filter((g) => g.autoApply).map((g) => g.promotionId));
+      // A phone order never adds an email-campaign grant back (a WIN3 email
+      // recipient calling in still gets no WIN3): the promo rows the grants
+      // point at are re-checked with promoSourceOk below, at both add-back
+      // sites, so the ids collected here can't smuggle one past the pool gate.
       if (typeof args.grantId === "string" && args.grantId && sessionCustomerId) {
         const g = await resolveGrantById({
           restaurantId: restaurant.id,
@@ -325,7 +360,10 @@ export async function buildPromoOrderContext(args: {
             where: { ...promotionPoolWhere(restaurant), id: { in: [...autoIds] } },
           });
           for (const p of extra) {
-            if (!suppressed.has(p.id)) {
+            // promoSourceOk here is load-bearing: on a voice order the campaign
+            // promo was dropped from the pool above, so the granted id is still
+            // in autoIds and would re-enter through this fetch without it.
+            if (!suppressed.has(p.id) && promoSourceOk(p, orderSource)) {
               activePromos.push({ ...(p as any), autoApply: true, ...(grantForcedIds.has(p.id) ? { stackingRule: "exclusive" } : {}) });
             }
           }
@@ -347,7 +385,7 @@ export async function buildPromoOrderContext(args: {
         memberOnlyPromos as any[],
       );
       for (const p of mine) {
-        if (!suppressed.has(p.id) && promoChannelOk(p, channel)) activePromos.push({ ...(p as any), autoApply: true });
+        if (!suppressed.has(p.id) && promoChannelOk(p, channel) && promoSourceOk(p, orderSource)) activePromos.push({ ...(p as any), autoApply: true });
       }
     } catch (e) { console.error("[promo-order-context memberOnly]", e); }
   }

@@ -60,6 +60,13 @@ export type PizzaIntent = {
   cheese?: string | null;
   toppings: ToppingReq[];
   excludeToppings?: string[];
+  /** ENGINE-ONLY (stripped before the compiler): which SIDE an exclusion in
+   *  `excludeToppings` was taken off, when the caller removed a preset that
+   *  lived on one half ("no tomato on the veggie half"). Lets a later "tomatoes
+   *  on the OTHER half" stay on that half instead of un-excluding the recipe's
+   *  own (2026-08-16, cmsw4s0mz: it un-excluded ⇒ "tomatoes over the whole
+   *  pizza" ⇒ "No. No. No. That's wrong."). */
+  excludedSides?: Record<string, Placement>;
   /** "Half Philly Steak, half Deluxe": a side built to a NAMED pizza's recipe
    *  (compiler expands presets, merges overlaps, carries the base sauce). */
   halfRecipes?: HalfRecipe[];
@@ -67,6 +74,11 @@ export type PizzaIntent = {
 };
 
 export type HalfRecipe = { placement: Placement; menuItemId: string };
+
+/** A topping the COMPILER put on a pizza that the caller never asked for (the
+ *  item's standard build, a halfRecipes recipe's toppings) and the side it sits
+ *  on — read off the ticket's own "(L.H) / (R.H) / (W)" prefixes. */
+export type PresetTopping = { name: string; side: Placement };
 
 export type Pick = {
   /** Engine-assigned, per line, monotonic — "P1", "P2", …; how a pick is addressed later. */
@@ -77,6 +89,8 @@ export type Pick = {
   options?: string[];
   toppings?: ToppingReq[];
   excludeToppings?: string[];
+  /** ENGINE-ONLY — see PizzaIntent.excludedSides. */
+  excludedSides?: Record<string, Placement>;
   halfRecipes?: HalfRecipe[];
   crust?: string | null;
   sauce?: string | null;
@@ -306,6 +320,10 @@ export type MutationResult =
       pricingNote: string | null;
       halves?: Halves | null;
       notices?: string[];
+      /** false = the requested change touched NOTHING (a topping that wasn't
+       *  there, a placement that had nothing to move). The line, the quote and
+       *  the undo history are untouched. Never silent: `notices` say why. */
+      changed?: boolean;
       betterDeal?: { name: string; menuItemId: string; saving: number } | null;
       switchedTo?: { from: string; to: string; saving: number } | null;
       state: OrderState;
@@ -936,8 +954,9 @@ export class CartEngine {
       }
     }
     let applied: LineIntent;
+    const changeNotices: string[] = [];
     try {
-      applied = this.applyChanges(intent, kind, changes, "update", line);
+      applied = this.applyChanges(intent, kind, changes, "update", line, changeNotices);
     } catch (e) {
       const err = e as { code?: string; message?: string; candidates?: any };
       return this.fail(err.code || "bad_change", err.message || "I couldn't apply that change.", {
@@ -945,6 +964,21 @@ export class CartEngine {
         lineId: line.lineId,
         candidates: err.candidates,
       });
+    }
+    // NEVER a silent no-op. If the change touched nothing (a topping that
+    // wasn't there, a placement with nothing to move), say so — the line, the
+    // quote and the undo history stay exactly as they are. Before 2026-08-16
+    // (call cmsw4s0mz) this recompiled the same intent and answered `ok`, so
+    // the model told the caller "that's fixed now" about a pizza that hadn't
+    // moved — twice.
+    if (canonicalIntentKey(applied) === canonicalIntentKey(line.intent) && !changes.revertLastChange) {
+      const same = this.okResult(line, { ok: true, line: line.compiled, readBack: line.readBack, pricingNote: null, unresolved: line.questions.slice() });
+      if (!same.ok) return same;
+      return {
+        ...same,
+        changed: false,
+        notices: [...(changeNotices.length ? changeNotices : ["Nothing on the line matched that change — nothing changed"]), ...(same.notices ?? [])],
+      };
     }
     const res = await this.compile(kind, applied, { offerDeals: false });
     if (!res.ok) return this.fail(res.code || "compile_failed", res.message || "I couldn't change that.", { error: true, lineId: line.lineId });
@@ -1183,8 +1217,11 @@ export class CartEngine {
   }
 
   /** Merge caller-requested changes into a COPY of an intent. Throws
-   *  `{code, message}` on a change that cannot be expressed. */
-  private applyChanges(intent: LineIntent, kind: MenuKind, ch: LineChanges | AddInput, mode: "update" | "clone", line?: CartLine): LineIntent {
+   *  `{code, message}` on a change that cannot be expressed. Anything that
+   *  matched nothing (a topping that wasn't there) is written to `notices`
+   *  rather than dropped on the floor — the caller of this decides whether the
+   *  whole change was a no-op. */
+  private applyChanges(intent: LineIntent, kind: MenuKind, ch: LineChanges | AddInput, mode: "update" | "clone", line?: CartLine, notices: string[] = []): LineIntent {
     const out: any = JSON.parse(JSON.stringify(intent));
     if (ch.quantity !== undefined) out.quantity = clampQty(ch.quantity, out.quantity);
     if (ch.notes !== undefined) out.notes = cleanNote(ch.notes);
@@ -1208,7 +1245,7 @@ export class CartEngine {
         if (hr.length) out.halfRecipes = hr;
         else delete out.halfRecipes;
       }
-      applyToppingChanges(out, ch, line?.halves ?? null, this.presetNamesOf(line));
+      applyToppingChanges(out, ch, line?.halves ?? null, this.presetsOf(line), notices);
       return out;
     }
     // combo
@@ -1261,7 +1298,7 @@ export class CartEngine {
       // Topping changes addressed at a combo without a pick: apply to the single pizza pick, else ask.
       const pizzaPicks = (out.picks as Pick[]).filter((p) => this.deps.menu.kindOf(p.menuItemId) === "pizza");
       if (pizzaPicks.length === 1) {
-        applyToppingChanges(pizzaPicks[0], ch, null, []);
+        applyToppingChanges(pizzaPicks[0], ch, null, this.presetsOf(line, pizzaPicks[0].pickId), notices);
       } else if (pizzaPicks.length > 1) {
         throw {
           code: "ambiguous_pick",
@@ -1347,25 +1384,56 @@ export class CartEngine {
         else delete targetPick.halfRecipes;
       }
       if (pc.toppings || pc.addToppings || pc.removeToppings || pc.moveTopping || pc.excludeToppings) {
-        applyToppingChanges(targetPick, pc, null, []);
+        // Presets are read off the line as it stands (this pick, BEFORE this
+        // change) — a pick that swapped to a different item in this same change
+        // has no compiled presets yet.
+        const original = line && line.kind === "combo" ? (line.intent as ComboIntent).picks.find((p) => p.pickId === targetPick!.pickId) : undefined;
+        const swapped = !!original && original.menuItemId !== targetPick.menuItemId;
+        applyToppingChanges(targetPick, pc, null, swapped ? [] : this.presetsOf(line, targetPick.pickId), notices);
       }
     }
     return out;
   }
 
-  /** Preset topping names on a pizza line = what the compiler read back that the
-   *  caller never asked for. Derived from `halves.whole` minus the intent's own
-   *  toppings; used to turn "remove onions" on a Hawaiian into an exclusion. */
-  private presetNamesOf(line?: CartLine): string[] {
-    if (!line || line.kind !== "pizza" || !line.compiled) return [];
-    const asked = (line.intent as PizzaIntent).toppings.map((t) => t.name);
-    const names = new Set<string>();
-    for (const m of line.compiled.modifiers) {
-      const bare = m.name.replace(/^\((L\.H|R\.H|W)\)\s*/, "");
-      names.add(bare);
+  /**
+   * Preset toppings on a pizza LINE, or on one pizza PICK of a combo = what the
+   * compiler put on that the caller never asked for (the item's standard build,
+   * a halfRecipes recipe's toppings), each with the SIDE it sits on. Read off
+   * the COMPILED modifiers — the ticket's own "(L.H) / (R.H) / (W)" prefixes —
+   * so "remove onions" on a Hawaiian becomes an exclusion, and "no tomato on
+   * the veggie half" can tell a recipe-half topping from a whole-pizza one.
+   *
+   * Combo picks were `[]` here until 2026-08-16 (call cmsw4s0mz): removing a
+   * recipe topping from the combo's pizza matched nothing, returned ok, and
+   * changed nothing — twice, 13 s of silence, "Hello?".
+   */
+  private presetsOf(line?: CartLine, pickId?: string): PresetTopping[] {
+    if (!line || !line.compiled) return [];
+    let mods: CompiledModifier[] | null = null;
+    let asked: ToppingReq[] = [];
+    if (line.kind === "pizza") {
+      mods = line.compiled.modifiers;
+      asked = (line.intent as PizzaIntent).toppings ?? [];
+    } else if (line.kind === "combo" && pickId) {
+      // bundleItems are emitted in pick order (one child per pick) on a
+      // COMPLETE combo — `compiled` is null otherwise, handled above.
+      const picks = (line.intent as ComboIntent).picks;
+      const idx = picks.findIndex((p) => p.pickId.toUpperCase() === pickId.toUpperCase());
+      const child = idx >= 0 ? line.compiled.bundleItems?.[idx] : undefined;
+      if (!child || child.menuItemId !== picks[idx].menuItemId) return [];
+      mods = child.modifiers;
+      asked = picks[idx].toppings ?? [];
     }
-    // Only names that came from the compiler and NOT from the caller are presets.
-    return [...names].filter((n) => !asked.some((a) => sameName(a, n)));
+    if (!mods) return [];
+    const out: PresetTopping[] = [];
+    for (const m of mods) {
+      const side: Placement = m.name.startsWith("(L.H) ") ? "left" : m.name.startsWith("(R.H) ") ? "right" : "whole";
+      const bare = m.name.replace(/^\((L\.H|R\.H|W)\)\s*/, "");
+      // Only names that came from the compiler and NOT from the caller are presets.
+      if (asked.some((a) => sameName(a.name, bare))) continue;
+      if (!out.some((p) => p.side === side && sameName(p.name, bare))) out.push({ name: bare, side });
+    }
+    return out;
   }
 
   private findLikelyDuplicate(menuItemId: string, intent: LineIntent): CartLine | null {
@@ -1379,10 +1447,12 @@ export class CartEngine {
 
   private async compile(kind: MenuKind, intent: LineIntent, opts: { offerDeals: boolean }): Promise<CompileResponse> {
     const wire = JSON.parse(JSON.stringify(intent));
+    // Engine-only bookkeeping never crosses the wire.
+    delete wire.excludedSides;
     if (kind === "combo") {
       // The compiler doesn't know pickIds; strip them but keep order (which is
       // how pickSlots come back aligned).
-      wire.picks = (wire.picks as Pick[]).map(({ pickId: _p, ...rest }) => rest);
+      wire.picks = (wire.picks as Pick[]).map(({ pickId: _p, excludedSides: _s, ...rest }) => rest);
     }
     try {
       return await this.deps.compiler.compile({
@@ -1471,15 +1541,33 @@ function dedupeToppings(list: ToppingReq[]): ToppingReq[] {
   return out;
 }
 
-/** Apply topping edits to a pizza-shaped object (a PizzaIntent or a Pick). */
+/**
+ * Apply topping edits to a pizza-shaped object (a PizzaIntent or a Pick).
+ *
+ * `presets` = what the compiler put on that the caller never asked for, with
+ * the side each sits on (see presetsOf). Rules, in the caller's terms:
+ *  - removing a topping the caller ADDED: filtered out (a whole topping taken
+ *    off one half stays on the other);
+ *  - removing a PRESET that sits on the WHOLE pizza: an exclusion — but not
+ *    "off one half only" (the kitchen can't; ask the caller);
+ *  - removing a PRESET that sits on ONE half (a halfRecipes recipe's topping,
+ *    "no tomato on the veggie half"): an exclusion, remembered with its side;
+ *  - removing something that is on NEITHER: nothing happens — and that is
+ *    written to `notices`, never swallowed. On 2026-08-16 (call cmsw4s0mz) a
+ *    silent no-op here returned ok twice; the model believed it, the caller
+ *    heard 13 s of silence and said "Hello?".
+ */
 function applyToppingChanges(
-  target: { toppings?: ToppingReq[]; excludeToppings?: string[] },
+  target: { toppings?: ToppingReq[]; excludeToppings?: string[]; excludedSides?: Record<string, Placement> },
   ch: { toppings?: ToppingReq[]; addToppings?: ToppingReq[]; removeToppings?: Array<{ name: string; placement?: Placement | null }>; moveTopping?: { name: string; to: Placement }; excludeToppings?: string[] },
   halves: Halves | null,
-  presetNames: string[],
+  presets: PresetTopping[],
+  notices: string[] = [],
 ) {
   let toppings: ToppingReq[] = Array.isArray(target.toppings) ? target.toppings.slice() : [];
   const excludes = new Set(target.excludeToppings ?? []);
+  const excludedSides: Record<string, Placement> = { ...(target.excludedSides ?? {}) };
+  const sideWord = (s: Placement) => (s === "whole" ? "the whole pizza" : `the ${s} half`);
   if (Array.isArray(ch.toppings)) {
     toppings = dedupeToppings(ch.toppings.map(cleanTopping).filter(Boolean) as ToppingReq[]);
   }
@@ -1497,29 +1585,55 @@ function applyToppingChanges(
       }
     }
     toppings = toppings.filter((t) => !(sameName(t.name, name) && (pl === null || t.placement === pl)));
-    if (toppings.length === before) {
-      // Not something the caller added — is it a preset the compiler put on?
-      const preset = presetNames.find((p) => sameName(p, name));
-      if (preset) {
-        if (pl && pl !== "whole") {
-          throw {
-            code: "preset_half_remove_unsupported",
-            message: `${preset} comes on the whole pizza as part of the recipe; the kitchen can leave it off the whole pizza, but not off one half. Ask the caller whether to leave it off entirely.`,
-          };
-        }
-        excludes.add(preset);
-      } else if (halves && pl) {
-        // Named a half that doesn't carry it — nothing to do; leave a note for the compiler via notices? Silent no-op is acceptable here.
-      }
-      // Unknown names are a no-op: nothing to remove.
+    if (toppings.length !== before) continue;
+    // Not something the caller added — is it a preset the compiler put on?
+    const hits = presets.filter((p) => sameName(p.name, name));
+    if (!hits.length) {
+      // Already excluded? Then the caller is repeating themselves — fine, say so.
+      const already = [...excludes].find((ex) => sameName(ex, name));
+      notices.push(already ? `${already} was already left off — nothing changed` : `${name} isn't on that pizza — nothing changed`);
+      continue;
     }
+    const preset = hits[0].name;
+    const onWhole = hits.some((h) => h.side === "whole");
+    if (pl && pl !== "whole") {
+      if (onWhole) {
+        throw {
+          code: "preset_half_remove_unsupported",
+          message: `${preset} comes on the whole pizza as part of the recipe; the kitchen can leave it off the whole pizza, but not off one half. Ask the caller whether to leave it off entirely.`,
+        };
+      }
+      const onThisHalf = hits.find((h) => h.side === pl);
+      if (!onThisHalf) {
+        // "No tomato on the left" when the recipe's tomato is only on the right.
+        notices.push(`${preset} is only on ${sideWord(hits[0].side)} — nothing changed`);
+        continue;
+      }
+      // A recipe-half topping comes off that half by exclusion; remember the
+      // side so a later add on the OTHER half doesn't bring it back here.
+      excludes.add(preset);
+      excludedSides[preset] = pl;
+      continue;
+    }
+    excludes.add(preset);
+    excludedSides[preset] = onWhole ? "whole" : hits[0].side;
   }
   if (Array.isArray(ch.addToppings)) {
     for (const raw of ch.addToppings) {
       const t = cleanTopping(raw);
       if (!t) continue;
-      // Adding back something previously excluded un-excludes it.
-      for (const ex of [...excludes]) if (sameName(ex, t.name)) excludes.delete(ex);
+      // Adding back something previously excluded un-excludes it — unless the
+      // exclusion is known to belong to the OTHER half (a recipe-half preset
+      // taken off) and the caller is adding it to THIS half only: then this
+      // half gets it and the recipe half stays without it.
+      for (const ex of [...excludes]) {
+        if (!sameName(ex, t.name)) continue;
+        const exSide = excludedSides[ex];
+        const otherHalfOnly = t.placement !== "whole" && (exSide === "left" || exSide === "right") && exSide !== t.placement;
+        if (otherHalfOnly) continue;
+        excludes.delete(ex);
+        delete excludedSides[ex];
+      }
       // "Green peppers on the right half" when green peppers are on the WHOLE
       // pizza is a MOVE, not a second helping (the caller is splitting the
       // pizza in stages). Likewise a topping on the opposite half that is now
@@ -1548,10 +1662,11 @@ function applyToppingChanges(
       const count = Math.max(...moved.map((m) => m.count ?? 1));
       toppings.push({ name: moved[0].name, placement: to, ...(count > 1 ? { count } : {}) });
     } else {
-      const preset = presetNames.find((p) => sameName(p, ch.moveTopping!.name));
-      if (preset && to !== "whole") {
-        throw { code: "preset_half_remove_unsupported", message: `${preset} is part of the recipe on the whole pizza and can't be moved to one half.` };
+      const preset = presets.find((p) => sameName(p.name, ch.moveTopping!.name));
+      if (preset && to !== "whole" && preset.side === "whole") {
+        throw { code: "preset_half_remove_unsupported", message: `${preset.name} is part of the recipe on the whole pizza and can't be moved to one half.` };
       }
+      if (!preset) notices.push(`${ch.moveTopping.name} isn't on that pizza — nothing moved`);
     }
   }
   for (const ex of cleanStrings(ch.excludeToppings)) {
@@ -1561,6 +1676,25 @@ function applyToppingChanges(
   target.toppings = dedupeToppings(toppings);
   if (excludes.size) target.excludeToppings = [...excludes];
   else delete target.excludeToppings;
+  // Keep only sides for exclusions that still exist (engine-only bookkeeping).
+  for (const k of Object.keys(excludedSides)) if (![...excludes].some((ex) => sameName(ex, k))) delete excludedSides[k];
+  if (Object.keys(excludedSides).length) target.excludedSides = excludedSides;
+  else delete target.excludedSides;
+}
+
+/** One string per intent for "did this change touch anything?" — an empty
+ *  `excludeToppings` / `excludedSides` and an absent one are the same pizza. */
+function canonicalIntentKey(x: LineIntent): string {
+  const c: any = JSON.parse(JSON.stringify(x));
+  const scrub = (o: any) => {
+    if (!o || typeof o !== "object") return;
+    if (Array.isArray(o.excludeToppings) && !o.excludeToppings.length) delete o.excludeToppings;
+    if (o.excludedSides && typeof o.excludedSides === "object" && !Object.keys(o.excludedSides).length) delete o.excludedSides;
+    if (Array.isArray(o.toppings) && !o.toppings.length) delete o.toppings;
+    if (Array.isArray(o.picks)) o.picks.forEach(scrub);
+  };
+  scrub(c);
+  return JSON.stringify(sortKeys(c));
 }
 
 function sameIntentIgnoringQty(a: LineIntent, b: LineIntent): boolean {

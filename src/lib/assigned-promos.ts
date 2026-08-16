@@ -48,3 +48,32 @@ export const ASSIGNED_CAMPAIGN_REF_PREFIXES = ["assigned_manual", "assigned_grou
 export function isAssignedCampaignRef(campaignRef: string | null | undefined): boolean {
   return !!campaignRef && ASSIGNED_CAMPAIGN_REF_PREFIXES.some((p) => campaignRef.startsWith(p));
 }
+
+/**
+ * campaignRef tag of the Kickstarter First Buy promo row (10% off the first
+ * order, code FIRSTBUY). Lives here (client-safe, no prisma) and is re-exported
+ * by `kickstarter.ts`; use the constant, never the bare string.
+ */
+export const KICKSTARTER_FIRST_BUY_REF = "kickstarter_first_buy";
+
+/** campaignRef prefixes of the EMAIL-CAMPAIGN promos (Kickstarter first-buy /
+ *  invite-prospects, Autopilot 2nd-order / re-engage WIN1..5 / cart-recovery). */
+export const ONLINE_ONLY_CAMPAIGN_REF_PREFIXES = ["kickstarter", "autopilot"] as const;
+
+/**
+ * True for a promo minted by the Kickstarter or Autopilot email campaigns.
+ *
+ * 🚨 These are ONLINE-ONLY (Luigi 2026-08-16): "Do NOT offer any kickstarter
+ * discounts over the phone — those are online only, shouldn't be offered or
+ * applied." Their own copy says so ("10% off your next ONLINE order", "use code
+ * FIRSTBUY at checkout"), and on 2026-08-16 a first-time phone caller was given
+ * the FIRSTBUY 10% by Nabil (ORD-971682861) because the promo engine treated the
+ * phone order as a website order. `buildPromoOrderContext({ orderSource:
+ * "voice" })` drops these from the pool at every entry point; owner-made promos
+ * (FREE DELIVERY over $30, day deals) and VIP/assigned gifts are untouched.
+ *
+ * False for null/owner-made promos and for assigned_manual / assigned_group.
+ */
+export function isOnlineOnlyCampaignRef(campaignRef: string | null | undefined): boolean {
+  return !!campaignRef && ONLINE_ONLY_CAMPAIGN_REF_PREFIXES.some((p) => campaignRef.startsWith(p));
+}

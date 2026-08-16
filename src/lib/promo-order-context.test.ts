@@ -26,6 +26,8 @@ const h = vi.hoisted(() => {
     customers: [] as any[],
     customerAccounts: [] as any[],
     orders: [] as any[],
+    /** Granted CustomerCoupon rows (findActiveGrants add-backs). */
+    customerCoupons: [] as any[],
     cookies: {} as Record<string, string>,
   };
   return { db };
@@ -97,7 +99,15 @@ vi.mock("@/lib/db", () => {
         findMany: async ({ where }: any) => h.db.orders.filter((o) => matchOrder(o, where)),
       },
       customerGroupMember: { findMany: async () => [] },
-      customerCoupon: { findMany: async () => [], findFirst: async () => null },
+      customerCoupon: {
+        // Only findActiveGrants' shape (status:"granted") is answered; the
+        // lifetime-ledger scans keep returning nothing.
+        findMany: async ({ where }: any) =>
+          where?.status === "granted"
+            ? h.db.customerCoupons.filter((c) => c.restaurantId === where.restaurantId && c.status === "granted")
+            : [],
+        findFirst: async () => null,
+      },
     },
   };
 });
@@ -169,10 +179,14 @@ async function previewDiscount(restaurant: any, args: { email?: string | null; p
 }
 
 /** Run the engine exactly like /api/orders does with a builder result. */
-async function chargeDiscount(restaurant: any, args: { email?: string | null; phone?: string | null }) {
+async function chargeDiscount(
+  restaurant: any,
+  args: { email?: string | null; phone?: string | null; orderSource?: "web" | "voice" },
+) {
   const promoCtx = await buildPromoOrderContext({
     restaurant,
     channel: "website",
+    ...(args.orderSource ? { orderSource: args.orderSource } : {}),
     email: args.email ?? null,
     phone: args.phone ?? null,
     suppressedPromoIds: undefined,
@@ -199,6 +213,7 @@ beforeEach(() => {
   h.db.customers = [];
   h.db.customerAccounts = [];
   h.db.orders = [];
+  h.db.customerCoupons = [];
   h.db.cookies = {};
 });
 
@@ -308,5 +323,81 @@ describe("preview == charge (Blocker #7)", () => {
     expect(preview.promoCtx.isNewCustomer).toBe(true);
     expect(preview.cents).toBe(200);
     expect(charge.cents).toBe(preview.cents);
+  });
+});
+
+/**
+ * Kickstarter / Autopilot email-campaign promos are ONLINE-ONLY (Luigi
+ * 2026-08-16): a Nabil phone order (orderSource:"voice") must never see them —
+ * not in the public pool, not through a granted add-back — while owner-made
+ * promos keep applying by phone and web behaviour is byte-identical.
+ * (Live defect: ORD-971682861 — a first-time caller was given the FIRSTBUY 10%.)
+ */
+describe("online-only campaign promos never reach a phone order", () => {
+  const restaurant = { id: R1, parentRestaurantId: null };
+  // The exact row shape Kickstarter creates (kickstarter.ts): new-customer,
+  // auto-apply, channel both, campaignRef kickstarter_first_buy.
+  const firstBuy = () =>
+    basePromo({
+      id: "firstbuy",
+      name: "First-time customer special",
+      customerType: "new",
+      couponCode: "FIRSTBUY",
+      campaignRef: "kickstarter_first_buy",
+      stackingRule: "master",
+    });
+  const freeDelivery = () =>
+    basePromo({ id: "owner10", name: "Owner-made 10% off", campaignRef: null });
+
+  it("voice: the Kickstarter first-buy is dropped from the pool; web keeps it (same new caller)", async () => {
+    h.db.promotions = [firstBuy()];
+
+    const web = await chargeDiscount(restaurant, { phone: "9055559470" });
+    const voice = await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice" });
+
+    expect(web.promoCtx.isNewCustomer).toBe(true);
+    expect(web.cents).toBe(200);
+    expect(voice.promoCtx.isNewCustomer).toBe(true); // identity is unchanged — only the pool is
+    expect(voice.promoCtx.activePromos.map((p: any) => p.id)).not.toContain("firstbuy");
+    expect(voice.cents).toBe(0);
+  });
+
+  it("voice: an owner-made promo still applies by phone (only campaign promos are online-only)", async () => {
+    h.db.promotions = [firstBuy(), freeDelivery()];
+
+    const voice = await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice" });
+    const ids = voice.promoCtx.activePromos.map((p: any) => p.id);
+
+    expect(ids).toContain("owner10");
+    expect(ids).not.toContain("firstbuy");
+    expect(voice.cents).toBe(200); // the owner's 10%, not 10% + first-buy
+  });
+
+  it("voice: an Autopilot promo GRANTED to the caller's phone is not added back (web is)", async () => {
+    // Autopilot rows are autoApply:false + hidden; a granted CustomerCoupon
+    // normally forces them on for that identity — including via the
+    // "not in the filtered pool" re-fetch. On a phone order neither path may fire.
+    h.db.promotions = [
+      basePromo({ id: "win3", name: "15% off your next online order", autoApply: false, couponCode: "WIN3", campaignRef: "autopilot_reengage_win3", customerType: "any", displayMode: "hidden_coupon_only", ruleConfig: { discountPercent: 15 } }),
+    ];
+    h.db.customerCoupons = [
+      { id: "grant1", restaurantId: R1, promotionId: "win3", code: "WIN3", autoApply: true, campaignRef: "autopilot_reengage_win3", status: "granted", phone: "9055559470", email: null, expiresAt: null },
+    ];
+
+    const web = await chargeDiscount(restaurant, { phone: "9055559470" });
+    const voice = await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice" });
+
+    expect(web.promoCtx.activePromos.find((p: any) => p.id === "win3")?.autoApply).toBe(true);
+    expect(web.cents).toBe(300); // 15% of $20 — the grant works online
+    expect(voice.promoCtx.activePromos.map((p: any) => p.id)).not.toContain("win3");
+    expect(voice.cents).toBe(0);
+  });
+
+  it("web default: omitting orderSource behaves exactly like today (kickstarter applies to a new web customer)", async () => {
+    h.db.promotions = [firstBuy()];
+    const explicitWeb = await chargeDiscount(restaurant, { email: "new@example.com", orderSource: "web" });
+    const implicitWeb = await chargeDiscount(restaurant, { email: "new@example.com" });
+    expect(explicitWeb.cents).toBe(200);
+    expect(implicitWeb.cents).toBe(explicitWeb.cents);
   });
 });

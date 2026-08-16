@@ -55,6 +55,13 @@ const MUTATING = new Set(["add_to_order", "update_line", "remove_line"]);
 export function noteToolResult(d: DialogueState, turn: number, name: string, input: any, out: any, cartHash: string | null) {
   const lineId: string | undefined = typeof out?.lineId === "string" ? out.lineId : undefined;
   if (MUTATING.has(name)) {
+    // A change that touched NOTHING (engine `changed:false`, 2026-08-16) leaves
+    // the cart, the read-back and the quote exactly as they were — nothing is
+    // unannounced and no quote went stale. Only the focus moves.
+    if (out?.ok && out?.changed === false) {
+      if (lineId) d.recentLineIds = [lineId, ...d.recentLineIds.filter((x) => x !== lineId)].slice(0, 3);
+      return;
+    }
     if (out?.ok && lineId) {
       d.recentLineIds = [lineId, ...d.recentLineIds.filter((x) => x !== lineId)].slice(0, 3);
       if (!d.unannounced.includes(lineId)) d.unannounced.push(lineId);

@@ -26,6 +26,7 @@ const MENU = {
         { menuItemId: "pz_large", name: "Large 3 Topping", price: 23.24, isPizza: true, isCombo: false, hasVariants: false, variants: [] },
         { menuItemId: "pz_xl", name: "EXTRA Large 3 Topping", price: 27.99, isPizza: true, isCombo: false, hasVariants: false, variants: [] },
         { menuItemId: "pz_haw", name: "Hawaiian Pizza", price: 20, isPizza: true, isCombo: false, hasVariants: true, sizeNames: ["Small", "Large"] },
+        { menuItemId: "pz_veg", name: "Vegetable Pizza", price: 21, isPizza: true, isCombo: false, hasVariants: false, variants: [] },
       ],
     },
     {
@@ -72,12 +73,29 @@ function stubCompiler(log: CompileRequest[] = []): Compiler {
       const compilePizza = (p: any, pname: string) => {
         const toppings = (p.toppings ?? []) as Array<{ name: string; placement: string; count?: number }>;
         if (p.menuItemId === "pz_haw" && !p.size) return { unresolved: ["Which size for Hawaiian Pizza? Small, Large."] };
-        const half = toppings.some((t) => t.placement !== "whole");
+        // Half recipes ("half Vegetable Pizza"): the recipe's presets land on
+        // that side unless excluded — mirrors the real compiler's expansion.
+        const RECIPES: Record<string, string[]> = { pz_veg: ["Mushrooms", "Green Peppers", "Tomatoes"], pz_haw: ["Ham", "Pineapple"] };
+        const recipes = ((p.halfRecipes ?? []) as Array<{ placement: string; menuItemId: string }>).filter((h) => RECIPES[h.menuItemId]);
+        const half = toppings.some((t) => t.placement !== "whole") || recipes.some((h) => h.placement !== "whole");
         const pre = (pl: string) => (pl === "left" ? "(L.H) " : pl === "right" ? "(R.H) " : half ? "(W) " : "");
         const mods = toppings.flatMap((t) => Array.from({ length: t.count ?? 1 }, () => ({ modifierOptionId: `t_${t.name.toLowerCase()}`, name: `${pre(t.placement)}${cap(t.name)}` })));
         const excluded = (p.excludeToppings ?? []) as string[];
         if (p.menuItemId === "pz_haw") {
           for (const preset of ["Ham", "Pineapple"]) if (!excluded.some((e) => cap(e) === preset)) mods.push({ modifierOptionId: `t_${preset.toLowerCase()}`, name: `${half ? "(W) " : ""}${preset}` });
+        }
+        for (const h of recipes) {
+          for (const preset of RECIPES[h.menuItemId]) {
+            if (excluded.some((e) => cap(e).toLowerCase() === preset.toLowerCase() || e.toLowerCase() === preset.toLowerCase())) continue;
+            const id = `t_${preset.toLowerCase().replace(/ /g, "_")}`;
+            const same = mods.find((m) => m.modifierOptionId === id);
+            if (same) {
+              // spoken on the other side too ⇒ whole
+              if (!same.name.startsWith(pre(h.placement))) same.name = `(W) ${preset}`;
+              continue;
+            }
+            mods.push({ modifierOptionId: id, name: `${pre(h.placement)}${preset}` });
+          }
         }
         const halves = half
           ? { left: mods.filter((m) => m.name.startsWith("(L.H)")).map((m) => m.name.slice(6)), right: mods.filter((m) => m.name.startsWith("(R.H)")).map((m) => m.name.slice(6)), whole: mods.filter((m) => m.name.startsWith("(W)")).map((m) => m.name.slice(4)) }
@@ -265,6 +283,100 @@ describe("half-and-half edits act on the intent and recompile", () => {
     expect(!u.ok && u.needsInfo).toBe(true);
     expect(!u.ok && u.questions?.[0]).toMatch(/Which size/);
     expect(JSON.stringify(e.getLine("L1"))).toBe(before);
+  });
+});
+
+/**
+ * Call cmsw4s0mz (2026-08-16): a Large/Wings combo whose pizza pick carried a
+ * RECIPE half ("half Vegetable Pizza" on the right) plus explicit toppings.
+ * "No tomato" on that half matched nothing (the tomato was the recipe's, and
+ * combo picks had no preset knowledge at all) → ok, nothing changed, twice →
+ * 13 s of silence and "Hello?". Then "tomatoes on the cheese half" un-excluded
+ * the recipe's tomato → tomatoes over the WHOLE pizza → "No. No. No."
+ */
+describe("removals that change nothing are never silent; recipe-half presets are removable by side", () => {
+  it("pizza line: removing a topping that isn't there returns ok + changed:false + a notice, and touches nothing", async () => {
+    const { e, log } = engine();
+    await e.addLine({ menuItemId: "pz_large", quantity: 1, toppings: [{ name: "pepperoni", placement: "whole" }] });
+    const before = JSON.stringify(e.getLine("L1"));
+    const compiles = log.length;
+    e.recordQuote({ total: 23.24, discountNames: [] });
+    const u = await e.updateLine({ lineId: "L1" }, { removeToppings: [{ name: "tomatoes", placement: "right" }] });
+    expect(u.ok).toBe(true);
+    expect(u.ok && u.changed).toBe(false);
+    expect(u.ok && u.notices?.[0]).toMatch(/tomatoes isn't on that pizza — nothing changed/i);
+    expect(u.ok && u.speakExactly).toBe(e.getLine("L1")!.spoken); // "say what IS on it"
+    expect(JSON.stringify(e.getLine("L1"))).toBe(before);
+    expect(log.length).toBe(compiles); // no recompile
+    expect(e.quoteStillApplies()).toBe(true); // the quote survives a no-op
+    expect(e.getLine("L1")!.previousIntent ?? null).toBeNull(); // nothing to undo
+  });
+
+  it("combo pick with a recipe half: 'no tomato' on that half becomes an exclusion (was a silent no-op), the side is remembered", async () => {
+    const { e } = engine();
+    const a = await e.addLine({
+      menuItemId: "cb_double",
+      quantity: 1,
+      picks: [
+        { menuItemId: "pz_large", toppings: [{ name: "onions", placement: "right" }], halfRecipes: [{ placement: "right", menuItemId: "pz_veg" }] },
+        { menuItemId: "pz_large", toppings: [{ name: "pepperoni", placement: "whole" }] },
+        { menuItemId: "dr_coke" },
+      ],
+    });
+    expect(a.ok).toBe(true);
+    const names = () => e.getLine("L1")!.compiled!.bundleItems![0].modifiers.map((m) => m.name);
+    expect(names()).toEqual(["(R.H) Onion", "(R.H) Mushrooms", "(R.H) Green Peppers", "(R.H) Tomatoes"]);
+
+    // The exact call the model made at 18:24:37 — hop 1 of three.
+    const u = await e.updateLine({ lineId: "L1" }, { picks: [{ pickId: "P1", removeToppings: [{ name: "Tomatoes", placement: "right" }] }] });
+    expect(u.ok).toBe(true);
+    expect(u.ok && u.changed).not.toBe(false);
+    const p1 = () => (e.getLine("L1")!.intent as ComboIntent).picks[0];
+    expect(p1().excludeToppings).toEqual(["Tomatoes"]);
+    expect(p1().excludedSides).toEqual({ Tomatoes: "right" });
+    expect(names()).toEqual(["(R.H) Onion", "(R.H) Mushrooms", "(R.H) Green Peppers"]);
+
+    // Doing it again is a no-op — and says so.
+    const again = await e.updateLine({ lineId: "L1" }, { picks: [{ pickId: "P1", removeToppings: [{ name: "tomato", placement: "right" }] }] });
+    expect(again.ok && again.changed).toBe(false);
+    expect(again.ok && again.notices?.[0]).toMatch(/already left off/);
+
+    // "Tomatoes on the cheese half" (left) — the recipe half's exclusion STAYS;
+    // the left half gets them; nothing lands on the whole pizza.
+    const add = await e.updateLine({ lineId: "L1" }, { picks: [{ pickId: "P1", addToppings: [{ name: "tomatoes", placement: "left" }] }] });
+    expect(add.ok).toBe(true);
+    expect(p1().excludeToppings).toEqual(["Tomatoes"]);
+    expect(names()).toEqual(["(R.H) Onion", "(L.H) Tomatoe", "(R.H) Mushrooms", "(R.H) Green Peppers"]);
+    expect(names().some((n) => n.startsWith("(W) "))).toBe(false);
+
+    // Asking for them on the recipe half again un-excludes (they come back via the recipe).
+    const back = await e.updateLine({ lineId: "L1" }, { picks: [{ pickId: "P1", addToppings: [{ name: "tomatoes", placement: "right" }] }] });
+    expect(back.ok).toBe(true);
+    expect(p1().excludeToppings).toBeUndefined();
+    expect(p1().excludedSides).toBeUndefined();
+  });
+
+  it("the wire intent never carries the engine's excludedSides bookkeeping", async () => {
+    const { e, log } = engine();
+    await e.addLine({ menuItemId: "pz_large", quantity: 1, toppings: [{ name: "onions", placement: "right" }], halfRecipes: [{ placement: "right", menuItemId: "pz_veg" }] });
+    const u = await e.updateLine({ lineId: "L1" }, { removeToppings: [{ name: "tomatoes", placement: "right" }] });
+    expect(u.ok).toBe(true);
+    expect((e.getLine("L1")!.intent as PizzaIntent).excludedSides).toEqual({ Tomatoes: "right" });
+    const last = log[log.length - 1].intent as any;
+    expect(last.excludedSides).toBeUndefined();
+    expect(last.excludeToppings).toEqual(["Tomatoes"]);
+    // and a whole-pizza preset taken off ONE half is still refused (kitchen can't)
+    await e.addLine({ menuItemId: "pz_haw", quantity: 1, size: "Large" });
+    const bad = await e.updateLine({ lineId: "L2" }, { removeToppings: [{ name: "pineapple", placement: "left" }] });
+    expect(!bad.ok && bad.code).toBe("preset_half_remove_unsupported");
+  });
+
+  it("'no tomato on the LEFT' when the recipe's tomato is only on the right: nothing changes, and it says which side has it", async () => {
+    const { e } = engine();
+    await e.addLine({ menuItemId: "pz_large", quantity: 1, toppings: [{ name: "onions", placement: "right" }], halfRecipes: [{ placement: "right", menuItemId: "pz_veg" }] });
+    const u = await e.updateLine({ lineId: "L1" }, { removeToppings: [{ name: "tomatoes", placement: "left" }] });
+    expect(u.ok && u.changed).toBe(false);
+    expect(u.ok && u.notices?.[0]).toMatch(/only on the right half — nothing changed/);
   });
 });
 

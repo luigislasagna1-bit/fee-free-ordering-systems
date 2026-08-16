@@ -32,14 +32,19 @@ import { prospectUnsubscribeUrl } from "@/lib/unsubscribe";
 import { dataDeletionUrl } from "@/lib/data-request";
 import type { MarketingConsentBasis } from "@/lib/marketing-consent";
 import type { Prospect, Restaurant } from "@/generated/prisma/client";
+import { KICKSTARTER_FIRST_BUY_REF } from "@/lib/assigned-promos";
 
 /**
  * campaignRef tag used to identify pre-made promo rows owned by the
  * First Buy Promo campaign. Anywhere we need to look up "the
  * Kickstarter first-buy promo for this restaurant," use this constant
  * — not a hardcoded string at the callsite.
+ *
+ * Defined in the client-safe `assigned-promos.ts` (no prisma/email imports) so
+ * the promo engine's context builder can name it without pulling this module's
+ * email stack into the checkout routes; re-exported here for existing callers.
  */
-export const KICKSTARTER_FIRST_BUY_REF = "kickstarter_first_buy";
+export { KICKSTARTER_FIRST_BUY_REF };
 
 /**
  * Default coupon code shown in the invite email. Customers can either

@@ -1283,3 +1283,89 @@ describe("delivery fee is never quoted bare when the store gives free delivery (
     expect(String(out3.instruction)).not.toMatch(/free/i);
   });
 });
+
+/* ═════════ recipe halves only for a pizza the caller NAMED (cmsw4s0mz, 2026-08-16) ═════════ */
+
+describe("halfRecipes are refused when the caller only listed toppings", () => {
+  const MENU_WITH_VEG = {
+    ...MENU,
+    menu: [
+      { ...MENU.menu[0], items: [...MENU.menu[0].items, { menuItemId: "pz_veg", name: "Vegetable Pizza", price: 19.99, isPizza: true, isCombo: false, hasVariants: false, variants: [] }, { menuItemId: "pz_haw", name: "Hawaiian Pizza", price: 19.99, isPizza: true, isCombo: false, hasVariants: false, variants: [] }] },
+      ...MENU.menu.slice(1),
+    ],
+  };
+  function vegCtx(recent: string[]) {
+    const { ctx, api } = makeCtx();
+    const menu = buildMenuIndex(MENU_WITH_VEG);
+    (ctx as any).menu = menu;
+    // the engine's own whitelist must know the recipe ids too
+    (ctx as any).cart = new CartEngine({ compiler: compilerOver(api, "luigis"), menu, askGroupIds: [], allowPizzaCombo: true, callerId: "6475550000", knownName: null });
+    ctx.cart.beginTurn();
+    ctx.recentUserTexts = recent;
+    ctx.lastUserText = recent[recent.length - 1];
+    return { ctx, api };
+  }
+
+  it("the exact call from 18:24:12 — 'the other side green pepper, mushroom, and tomato' sent as a Vegetable Pizza recipe → recipe_not_named, nothing changed", async () => {
+    const { ctx, api } = vegCtx(["Delivery.", "Yeah. Okay. So just do one side, just cheese.", "And then the other side, you can do green pepper, mushroom, and tomato. That's the one?"]);
+    await run(ctx, "add_to_order", { menuItemId: "cb_wings", picks: [{ menuItemId: "pz_large" }, { menuItemId: "wings", size: "20 pc" }] });
+    const before = api.buildLine.mock.calls.length;
+    const out = await run(ctx, "update_line", { lineId: "L1", hint: "other half green pepper, mushroom, tomato", picks: [{ pickId: "P1", halfRecipes: [{ placement: "right", menuItemId: "pz_veg" }] }] });
+    expect(out.ok).not.toBe(true);
+    expect(out.code).toBe("recipe_not_named");
+    expect(String(out.message)).toContain('did not say "Vegetable Pizza"');
+    expect(String(out.message)).toMatch(/send exactly the toppings they said/i);
+    expect(api.buildLine.mock.calls.length).toBe(before); // nothing compiled, nothing changed
+    // …and the toppings-with-placement form goes through
+    const ok = await run(ctx, "update_line", { lineId: "L1", hint: "other half green pepper, mushroom, tomato", picks: [{ pickId: "P1", toppings: [{ name: "green pepper", placement: "right" }, { name: "mushroom", placement: "right" }, { name: "tomato", placement: "right" }] }] });
+    expect(ok.ok).toBe(true);
+  });
+
+  it("a recipe the caller DID name is fine — 'half veggie' (spoken alias), 'make the other half Hawaiian', and a recipe named two turns ago", async () => {
+    const a = vegCtx(["Can I get a large pizza, half veggie half pepperoni?"]);
+    const outA = await run(a.ctx, "add_to_order", { menuItemId: "pz_large", halfRecipes: [{ placement: "left", menuItemId: "pz_veg" }], toppings: [{ name: "pepperoni", placement: "right" }] });
+    expect(outA.ok).toBe(true);
+    const b = vegCtx(["Large pizza please.", "Half plain, and make the other half Hawaiian.", "Yes."]);
+    await run(b.ctx, "add_to_order", { menuItemId: "pz_large" });
+    const outB = await run(b.ctx, "update_line", { lineId: "L1", hint: "other half Hawaiian", halfRecipes: [{ placement: "right", menuItemId: "pz_haw" }] });
+    expect(outB.ok).toBe(true);
+    // a recipe ALREADY on the line is never re-justified (a topping edit re-sends it)
+    const c = vegCtx(["half hawaiian half cheese"]);
+    await run(c.ctx, "add_to_order", { menuItemId: "pz_large", halfRecipes: [{ placement: "left", menuItemId: "pz_haw" }] });
+    c.ctx.recentUserTexts = ["no pineapple", "and add bacon to the other side"];
+    const outC = await run(c.ctx, "update_line", { lineId: "L1", hint: "add bacon other side", halfRecipes: [{ placement: "left", menuItemId: "pz_haw" }], addToppings: [{ name: "bacon", placement: "right" }] });
+    expect(outC.ok).toBe(true);
+  });
+
+  it("with no caller text at all (harness/edge) the gate never blocks", async () => {
+    const { ctx } = vegCtx([]);
+    ctx.recentUserTexts = undefined;
+    ctx.lastUserText = undefined;
+    const out = await run(ctx, "add_to_order", { menuItemId: "pz_large", halfRecipes: [{ placement: "left", menuItemId: "pz_veg" }] });
+    expect(out.ok).toBe(true);
+  });
+});
+
+/* ═════════ an address that can't be found is read back + spelled, once (cmsw4s0mz) ═════════ */
+
+describe("set_fulfilment: a full address the check can't place is read back and spelled — never 'got it'", () => {
+  it("first miss: read back + one spelling question; second miss: take the order, store confirms; never a third ask", async () => {
+    const { ctx, api } = makeCtx();
+    api.checkAddress.mockResolvedValue({ ok: true, status: 200, json: { hasZones: true, located: false, currency: "usd", instruction: "That address could not be pinned down." } });
+    const first = await run(ctx, "set_fulfilment", { type: "delivery", street: "66 McKechnie Court", city: "Milton", zip: "L9E1E5" });
+    expect(first.ok).toBe(true);
+    expect(first.heardBack).toBe("66 McKechnie Court in Milton");
+    expect(String(first.instruction)).toContain('Do NOT say "got it"');
+    expect(String(first.instruction)).toContain("I have 66 McKechnie Court in Milton — could you spell the street name for me");
+    expect(String(first.instruction)).toContain("call set_fulfilment again");
+    // the caller spells it; still not on the map
+    const second = await run(ctx, "set_fulfilment", { type: "delivery", street: "1166 McEachern Court", city: "Milton", zip: "L9E1E5" });
+    expect(second.ok).toBe(true);
+    expect(String(second.instruction)).toContain("Do NOT ask again");
+    expect(String(second.instruction)).toContain("store will confirm the delivery details");
+    expect(String(second.instruction)).toContain("1166 McEachern Court in Milton");
+    // a street with no city/postcode keeps the "ask for the rest" path, unchanged
+    const partial = await run(ctx, "set_fulfilment", { type: "delivery", street: "12 Nowhere Lane" });
+    expect(String(partial.instruction)).toContain("Ask for the city and postal code");
+  });
+});

@@ -38,6 +38,20 @@ const INTERRUPT_GRACE_MS = 800;
 const FILLER_AFTER_TOOL_MS = 1_500;
 const FILLER_PHRASES = ["One sec.", "Let me check that.", "Just a moment.", "Bear with me a second."];
 /**
+ * THINKING filler (call cmsw4s0mz, 2026-08-16): when the model's first hop
+ * goes STRAIGHT to a tool (no acknowledgement first — the playbook asks for
+ * one, the model skips it about half the time), the caller hears nothing for
+ * the whole first-hop latency (2.6–4 s on that call, every pizza edit) and the
+ * tool filler above only arms once the tool call has started. This one fires
+ * once per turn if NO assistant text has streamed by the deadline, with a
+ * short acknowledgement (never "one moment"), and never doubles the tool
+ * filler (fillerUsed is shared). The deadline sits ABOVE a plain answer's
+ * first-token latency (p50 ≈ 1.2 s, p95 ≈ 2.2 s) — the 2026-08-15 any-turn
+ * filler that over-fired was 1.2 s. Test seam: SessionDeps.thinkingFillerMs.
+ */
+const THINKING_FILLER_AFTER_MS = 2_500;
+const THINKING_FILLER_PHRASES = ["Sure.", "Okay.", "Got it.", "Alright."];
+/**
  * BOOKKEEPING MERGE (latency, Luigi's live call 2026-08-15: 2.9 s of silence
  * after "my name is Sam" because set_fulfilment + set_customer forced a second
  * model hop before "Thanks, Sam"). When a hop's tools are ALL of these, ALL
@@ -108,6 +122,9 @@ export type SessionDeps = {
    *  of a reply because there is no TTS to hear — real timing can't exist
    *  there. 0 disables the early-fragment hold. Default EARLY_FRAGMENT_MS. */
   earlyFragmentMs?: number;
+  /** Silence before the THINKING filler speaks (no assistant text yet this
+   *  turn). 0 disables it. Default THINKING_FILLER_AFTER_MS. */
+  thinkingFillerMs?: number;
 };
 
 type PerRequest = { hop: number; ttftMs: number | null; totalMs: number; cacheRead: number; cacheWrite: number; uncached: number; stop: string | null };
@@ -144,6 +161,8 @@ export class CallSession {
   /** Runs a held EARLY fragment on its own if the caller says nothing more (see handlePrompt). */
   private earlyFragmentTimer: ReturnType<typeof setTimeout> | undefined;
   private readonly earlyFragmentMs: number;
+  private readonly thinkingFillerMs: number;
+  private thinkingFillerTimer: ReturnType<typeof setTimeout> | undefined;
   /** Last REAL barge-in (not stale, not during a protected sentence): the caller
    *  was talking over the reply, so what follows is a real utterance, never an
    *  early fragment. */
@@ -210,6 +229,7 @@ export class CallSession {
     this.api = deps.api ?? defaultApi;
     this.now = deps.now ?? Date.now;
     this.earlyFragmentMs = deps.earlyFragmentMs ?? EARLY_FRAGMENT_MS;
+    this.thinkingFillerMs = deps.thinkingFillerMs ?? THINKING_FILLER_AFTER_MS;
     this.events = deps.events ?? createEventSink(this.now);
     this.startedAt = this.now();
     const cfg = normalizeAgentConfig(undefined);
@@ -532,6 +552,8 @@ export class CallSession {
       this.lastTurnEndedAt = this.now();
       clearTimeout(this.fillerTimer);
       this.fillerTimer = undefined;
+      clearTimeout(this.thinkingFillerTimer);
+      this.thinkingFillerTimer = undefined;
     }
     if (this.pendingPrompts.length) {
       const joined = this.pendingPrompts.splice(0).join(" ");
@@ -567,6 +589,9 @@ export class CallSession {
     dialogueBeginTurn(this.dialogue, turn);
     this.ctx.speakExactlyThisTurn = [];
     this.ctx.lastUserText = synthetic ? undefined : userText;
+    // The caller's own words, last three turns — what halfRecipes must be
+    // justified against (a recipe named two turns ago, added now, is fine).
+    if (!synthetic) this.ctx.recentUserTexts = [...(this.ctx.recentUserTexts ?? []), userText].slice(-3);
     const cartHashBefore = cart.cartHash();
     const turnStarted = this.now();
 
@@ -612,7 +637,27 @@ export class CallSession {
     const stopFiller = () => {
       clearTimeout(this.fillerTimer);
       this.fillerTimer = undefined;
+      clearTimeout(this.thinkingFillerTimer);
+      this.thinkingFillerTimer = undefined;
     };
+    // THINKING filler — see THINKING_FILLER_AFTER_MS. Armed once per turn, at
+    // the turn's start; the first streamed text token (stopFiller in the
+    // "text" handler), a barge-in, or a protected sentence cancels it.
+    if (this.thinkingFillerMs > 0 && !synthetic) {
+      clearTimeout(this.thinkingFillerTimer);
+      const armedAt = this.now();
+      this.thinkingFillerTimer = setTimeout(() => {
+        this.thinkingFillerTimer = undefined;
+        if (spokeAnything || fillerUsed || this.interrupted || this.now() < this.protectedUntil) return;
+        const phrase = THINKING_FILLER_PHRASES[(this.fillerCount + turn) % THINKING_FILLER_PHRASES.length];
+        this.lastFillerPhrase = phrase;
+        this.fillerCount++;
+        fillerUsed = { phrase, afterMs: this.now() - armedAt };
+        spokeAnything = true;
+        this.speak(`${phrase} `, false);
+        this.events.emit({ type: "filler", turn, hop: 1, tool: null, afterMs: this.now() - armedAt, phrase, kind: "thinking" });
+      }, this.thinkingFillerMs);
+    }
     const armFiller = (toolName: string, hop: number) => {
       stopFiller();
       const armedAt = this.now();
@@ -960,6 +1005,9 @@ export class CallSession {
     // (find_menu_item) — the tool result says so. It is not a reason to give
     // up on the caller.
     if (out?.code === "unknown_item") return;
+    // A recipe the caller didn't name is a one-hop correction (send the
+    // toppings instead), not a failure to serve — never counts toward hand-off.
+    if (out?.code === "recipe_not_named") return;
     this.struggles++;
     if (this.struggles >= STRUGGLE_LIMIT && !this.ctx.pendingTransfer) {
       console.warn("[nabil-voice] struggling — handing off", { callSid: this.token.callSid, tool, code: out?.code ?? null, struggles: this.struggles });
@@ -1141,6 +1189,7 @@ export class CallSession {
     clearTimeout(this.hangUpTimer);
     clearTimeout(this.silentTurnTimer);
     clearTimeout(this.fillerTimer);
+    clearTimeout(this.thinkingFillerTimer);
     clearTimeout(this.earlyFragmentTimer);
     void this.finalize();
   }

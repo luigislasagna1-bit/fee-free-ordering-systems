@@ -164,7 +164,15 @@ export function spokenPizza(p: SpokenPizzaInput): string {
       if (recipe) return `half ${speakName(recipe)}`;
       return extras.length ? `half ${joinAnd(extras)}` : "";
     };
-    const sides = [sideText(rec.left, left), sideText(rec.right, right)].filter(Boolean);
+    let sides = [sideText(rec.left, left), sideText(rec.right, right)];
+    // A pizza topped on ONE side only is "half plain, half …" — the untouched
+    // half must be heard, or the caller cannot tell whether it was understood.
+    // (2026-08-16, cmsw4s0mz: "half Vegetable Pizza with onions and tomatoes"
+    // never said the plain half; the caller asked for the order back four
+    // times.) Only when nothing sits on the whole pizza — with a whole topping
+    // the "plain" half isn't plain.
+    if (!whole.length && sides.filter(Boolean).length === 1) sides = sides.map((s) => s || "half plain");
+    sides = sides.filter(Boolean);
     parts.push(`${each}${sides.join(", ")}`);
     if (whole.length) parts.push(`${joinAnd(whole)} on the whole thing`);
   } else {

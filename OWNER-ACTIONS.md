@@ -172,6 +172,49 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A61. 📞 The 9-minute call at 14:20 (ORD-971682861) — first-time discount by phone (FIXED, online-only now), the pizza that "kept being wrong", and the address (2026-08-16)
+
+**The discount.** The caller got a **$4 "First-time customer special"** — that is your Kickstarter FIRSTBUY 10%,
+and it applied because, to the promo engine, a phone order was a *website* order. **Fixed at the one chokepoint both
+the quote and the charge use:** a phone order never sees a Kickstarter or Autopilot promo again — not FIRSTBUY, not
+WIN1–5 / 2NDOFF / CARTBACK, not even when the caller's number is on an Autopilot email grant. Your own promos still
+work by phone (FREE DELIVERY over $30 is still said with the fee), and web checkout is byte-identical. Ships with the
+Vercel push. *(The past order stays as it was — a $4 discount already given.)*
+
+**Why the pizza "kept being wrong" — it wasn't the caller.** She said *"one side just cheese, the other side green
+pepper, mushroom and tomato"* and Nabil quietly mapped those three toppings onto your **Vegetable Pizza** recipe — a
+name she never said. From there every read-back said "half Vegetable Pizza …", her "no tomato" matched a *recipe*
+topping and changed nothing (twice — 13 seconds of silence, "Hello?"), "tomatoes on the cheese half" put tomatoes on
+the whole pizza, and the final read-back "half Vegetable Pizza with onions and tomatoes" made her say *"No. You have the
+toppings wrong."* (the mushrooms and green peppers were hidden behind the recipe name). The order that reached the
+kitchen WAS right in the end — but she left frustrated. **Fixed in code, four ways:** (1) a recipe half is only allowed
+when the caller *says* the pizza's name — a list of toppings stays a list of toppings; (2) a change that changes nothing
+is never answered "that's fixed" — Nabil is told exactly what is on the pizza and to ask what they'd like different;
+(3) taking a topping off a recipe half works, and adding it to the other half no longer brings it back everywhere;
+(4) an untopped half is now spoken — "half plain, half green peppers, mushrooms, onions and tomatoes".
+
+**The address.** "Sixty six McKechner Court" was heard as *66 McKechnie Court*, could not be found on the map, and
+Nabil said "Got it, thanks" — 3½ minutes later she had to correct it three times (it was **1166 McEachern Court**).
+Now: an address that can't be found is read back once and Nabil asks them to spell the street, right then; house
+numbers are said the way people say them ("eleven sixty-six"), and a corrected number is spelled out digit by digit
+once. Also new: a short "Okay." if Nabil has been silent for 2½ seconds while working (the dead air before every
+pizza edit on this call).
+
+**Status:** committed with tests; Vercel half tonight, Fly half via the gated release (`nabil:release --deploy`, both
+machines). **Try it:** call and order a half-plain / half-four-topping combo pizza by listing the toppings — you should
+never hear a pizza name you didn't say — and give a slightly wrong street once.
+
+🤔 **Two things only you can decide** (both logged in TODO.md, nothing happens until you say):
+1. **Background restaurant ambience** — you asked for it in this pass. I checked Twilio's ConversationRelay again
+   today: it has **no background-audio feature** and its "play a file" message *replaces* the voice rather than
+   playing under it, so it cannot be done on the current pipeline. Doing it properly means owning the phone audio
+   ourselves (Twilio Media Streams + our own Deepgram/ElevenLabs streams, ambience mixed underneath) — a multi-day
+   project. Say the word and I'll scope it; I did NOT fake it (a clip that plays before the greeting and then stops
+   would sound broken).
+2. **Phone-first customers and the online first-buy.** A phone order still counts as "an order", so someone whose
+   first order was by phone (no discount now) is "returning" online and never gets FIRSTBUY. If you'd rather the online
+   first-buy be for the first *online* order, it's a one-line change — tell me which you want.
+
 ### A60. 📞 Roya's 11:41 call — the repeated topping question (FIXED) and the "Monday special on a Sunday" (it's a MENU row — your call) (2026-08-16)
 
 **The repeat.** Nabil asked *"what topping would you like on it?"* and — **one millisecond** after that sentence was

@@ -6,6 +6,7 @@ import { fnv1a } from "./basket-signature";
 import { CartEngine, type MutationResult, type OrderState } from "./cart-engine";
 import type { MenuIndex } from "./menu-index";
 import { spokenMoney } from "./spoken-money";
+import { norm, stem } from "./fuzzy";
 
 /**
  * The tools the model may call, and what they do.
@@ -37,7 +38,54 @@ export type ToolContext = {
    *  model cannot smuggle its own interpretation ("that one — the bacon pizza")
    *  past the ambiguity check. */
   lastUserText?: string;
+  /** The caller's last few utterances (this turn included, oldest first) —
+   *  `halfRecipes` must name a pizza the CALLER named (see recipeNotNamed). */
+  recentUserTexts?: string[];
+  /** set_fulfilment already asked the caller to spell an unfound street this
+   *  call — the second miss takes the order anyway, never asks a third time. */
+  addressSpellAsked?: boolean;
 };
+
+/** Words in a pizza's name that don't identify it ("Vegetable PIZZA", "the …"). */
+const RECIPE_NAME_STOP = new Set([
+  "pizza", "pizzas", "the", "a", "an", "and", "with", "half", "special", "specials", "style", "classic", "signature",
+  "small", "medium", "large", "extra", "xl", "x", "l", "m", "s", "inch", "in", "topping", "toppings", "combo",
+]);
+
+/**
+ * RECIPE HALVES ARE FOR PIZZAS THE CALLER NAMED (call cmsw4s0mz, 2026-08-16).
+ *
+ * The caller said "the other side green pepper, mushroom, and tomato". The model
+ * noticed those are the Vegetable Pizza's toppings and sent
+ * `halfRecipes:[{right, <Vegetable Pizza>}]` — so every read-back said "half
+ * Vegetable Pizza" (a name the caller never used and did not recognise), "no
+ * tomato" then matched a recipe topping instead of a listed one, and the quote
+ * read "half Vegetable Pizza with onions and tomatoes" → "No. You have the
+ * toppings wrong." A LIST OF TOPPINGS IS A LIST OF TOPPINGS, even when it
+ * happens to match a menu pizza.
+ *
+ * True when none of the recipe's distinctive name words appears in what the
+ * caller actually said (last few utterances, spoken aliases applied so "veggie"
+ * finds "Vegetable"). Unjudgeable inputs (no caller text, a name with no
+ * distinctive word) return false — the check only ever blocks what it can prove.
+ */
+export function recipeNotNamed(recipeName: string, saidTexts: string[] | undefined): boolean {
+  if (!saidTexts || !saidTexts.length) return false;
+  const nameTokens = norm(recipeName).split(" ").filter((t) => t && !RECIPE_NAME_STOP.has(t));
+  if (!nameTokens.length) return false;
+  const said = norm(saidTexts.join(" ")).split(" ").filter(Boolean);
+  if (!said.length) return false;
+  const tokMatch = (n: string, w: string) => n === w || stem(n) === stem(w) || (w.length >= 3 && n.startsWith(w)) || (n.length >= 3 && w.startsWith(n));
+  return !nameTokens.some((n) => said.some((w) => tokMatch(n, w)));
+}
+
+/** The halfRecipes ids a change/add asks for that are NOT already on the line
+ *  (an unchanged recipe re-sent with a topping edit needs no re-justifying). */
+export function newRecipeIds(requested: unknown, existing: Array<{ menuItemId: string }> | undefined): string[] {
+  const asked = Array.isArray(requested) ? requested.map((h: any) => String(h?.menuItemId ?? "")).filter(Boolean) : [];
+  const have = new Set((existing ?? []).map((h) => h.menuItemId));
+  return [...new Set(asked.filter((id) => !have.has(id)))];
+}
 
 /** Keep only hint words the caller actually said (plus deixis/ordinals). */
 export function sanitizeHint(hint: unknown, lastUserText: string | undefined): string | undefined {
@@ -94,7 +142,7 @@ const PIZZA_FIELDS = {
   crust: { type: "string", description: "Only if the caller named one." },
   sauce: { type: "string", description: "Only if the caller named one." },
   cheese: { type: "string", description: "Only if the caller named one." },
-  toppings: { type: "array", items: TOPPING_SCHEMA, description: "Toppings the caller wants ON it. 'no onions' is NOT a topping — use excludeToppings. Do NOT list a named pizza's own toppings here — use halfRecipes." },
+  toppings: { type: "array", items: TOPPING_SCHEMA, description: "Toppings the caller wants ON it, exactly the ones they LISTED — even if that list happens to match a menu pizza's recipe (a caller who lists 'green pepper, mushroom, tomato' gets those three toppings, not 'half Vegetable Pizza'). 'no onions' is NOT a topping — use excludeToppings. When the caller SAID a pizza's NAME ('half Hawaiian'), do not copy its toppings here — use halfRecipes." },
   halfRecipes: {
     type: "array",
     items: {
@@ -107,7 +155,7 @@ const PIZZA_FIELDS = {
       required: ["placement", "menuItemId"],
     },
     description:
-      "'Half Philly Steak, half Deluxe' / 'half Hawaiian': a side built to a NAMED pizza's recipe. Send the recipe pizza's id and side — the system adds its toppings, puts anything both sides share on the whole pizza, carries its base sauce as a kitchen note, and reads it back by name. No get_item_options needed. Any EXTRA toppings the caller adds on that side go in `toppings` with the same placement.",
+      "ONLY when the caller SAYS a menu pizza's NAME for a side ('half Philly Steak, half Deluxe', 'half Hawaiian', 'make the other side veggie'): that side is built to the NAMED recipe. Send the recipe pizza's id and side — the system adds its toppings, puts anything both sides share on the whole pizza, carries its base sauce as a kitchen note, and reads it back by name. No get_item_options needed. Any EXTRA toppings the caller adds on that side go in `toppings` with the same placement. NEVER infer a recipe from a list of toppings — the tool refuses a recipe the caller did not name (recipe_not_named).",
   },
   excludeToppings: { type: "array", items: { type: "string" }, description: "Standard toppings to LEAVE OFF a named pizza or a recipe half ('no pineapple on the Hawaiian half')." },
   notes: { type: "string", description: "Kitchen note for this item (well done, cut in squares…)." },
@@ -414,6 +462,37 @@ function orderBody(ctx: ToolContext): Record<string, unknown> {
   return body;
 }
 
+/**
+ * The recipe-name gate for add_to_order / update_line: for every halfRecipes
+ * list requested (top-level, or per pick) that names a recipe NOT already on
+ * the line, the caller must have said that pizza's name in their last few
+ * utterances. Returns the refusal to hand back, or null when everything asked
+ * for is either already there or was named. Excluded from the struggle count
+ * (session.ts) — this is a correction the model can act on in one hop.
+ */
+function unnamedRecipe(
+  ctx: ToolContext,
+  entries: Array<[requested: unknown, existing: Array<{ menuItemId: string }> | undefined]>,
+): Record<string, unknown> | null {
+  const said = ctx.recentUserTexts?.length ? ctx.recentUserTexts : ctx.lastUserText ? [ctx.lastUserText] : undefined;
+  if (!said) return null;
+  for (const [requested, existing] of entries) {
+    for (const id of newRecipeIds(requested, existing)) {
+      const name = ctx.menu.get(id)?.name;
+      if (!name) continue; // unknown ids are the engine's problem (unknown_item)
+      if (!recipeNotNamed(name, said)) continue;
+      return {
+        error: true,
+        code: "recipe_not_named",
+        message: `The caller did not say "${name}" — they listed toppings. A list of toppings is a list of toppings, even when it matches a menu pizza: send exactly the toppings they said in \`toppings\` with the side ('left'/'right'/'whole') on each, and no halfRecipes. Only when the caller SAYS a pizza's name ("half Hawaiian", "make the other side veggie") is that side a recipe.`,
+        state: ctx.cart.stateForModel(),
+        instruction: "Nothing was changed. Call the tool again with the toppings the caller listed (with placement) instead of halfRecipes.",
+      };
+    }
+  }
+  return null;
+}
+
 /** The engine's MutationResult + the spoken-instruction layer for the model. */
 function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "changed" | "removed"): Record<string, unknown> {
   if (!r.ok) {
@@ -433,6 +512,19 @@ function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "chang
   const halves = r.halves;
   const line = r.line;
   const needs = line.status === "needs_info";
+  if (r.changed === false) {
+    // The change touched nothing. Say so — never "that's fixed now" (call
+    // cmsw4s0mz, 2026-08-16: two removals of a topping that lived in a recipe
+    // half returned ok and changed nothing; the model announced the fix twice).
+    return {
+      ...r,
+      instruction:
+        `NOTHING CHANGED: ${(r.notices ?? []).join("; ") || "that matched nothing on the line"}. Do NOT say it is fixed or changed. ` +
+        (needs
+          ? `Ask the caller: ${line.questions?.[0] ?? "the missing detail"} — one question.`
+          : `Say what IS on it right now — speakExactly, once, naturally — and ask what they'd like different. If they want a topping OFF that comes with a recipe half or the standard build, use excludeToppings (or removeToppings with its name and side); if it is already off, say so.`),
+    };
+  }
   return {
     ...r,
     instruction:
@@ -627,6 +719,11 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
 
     case "add_to_order": {
       const comboId = String(input?.menuItemId ?? "");
+      const unnamed = unnamedRecipe(ctx, [
+        [input?.halfRecipes, undefined],
+        ...(Array.isArray(input?.picks) ? input.picks.map((p: any) => [p?.halfRecipes, undefined] as [unknown, undefined]) : []),
+      ]);
+      if (unnamed) return unnamed;
       const slots = menu.kindOf(comboId) === "combo" && !input?.sameAsLineId ? await comboSlotsFor(ctx, comboId) : null;
       const picks = slots ? autofillPicks(input?.picks, slots, { bare: !Array.isArray(input?.picks) || input.picks.length === 0 }) : input?.picks;
       const r = await cart.addLine({
@@ -635,6 +732,13 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         size: input?.size,
         options: input?.options,
         toppings: input?.toppings,
+        // A NEW pizza's recipe halves ("half Hawaiian, half pepperoni" in one
+        // breath) were dropped here until 2026-08-16 — the schema offered
+        // halfRecipes on add_to_order, the engine's freshIntent reads them, and
+        // this adapter simply didn't pass them along; combo picks (which ride
+        // in `picks`) were unaffected, which is why the gap hid.
+        halfRecipes: input?.halfRecipes,
+        addToppings: input?.addToppings,
         excludeToppings: input?.excludeToppings,
         crust: input?.crust,
         sauce: input?.sauce,
@@ -650,6 +754,26 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
 
     case "update_line": {
       const { lineId, hint, ...changes } = input ?? {};
+      if (changes.halfRecipes !== undefined || (Array.isArray(changes.picks) && changes.picks.some((p: any) => p?.halfRecipes !== undefined))) {
+        // Only a recipe NEW to the line needs the caller to have named it.
+        const t = cart.resolveTarget({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) });
+        const line = "line" in t ? t.line : null;
+        const existingTop = line && line.kind === "pizza" ? (line.intent as any).halfRecipes : undefined;
+        const existingFor = (pc: any) => {
+          if (!line || line.kind !== "combo") return undefined;
+          const picks = (line.intent as any).picks as Array<{ pickId: string; halfRecipes?: Array<{ menuItemId: string }> }>;
+          const p = pc?.pickId ? picks.find((x) => x.pickId.toUpperCase() === String(pc.pickId).toUpperCase()) : undefined;
+          // Addressed by pickId: that pick's recipes. Addressed by slot label
+          // (or nothing): any recipe already on the line counts as existing —
+          // a re-send must never be refused for a naming technicality.
+          return p ? p.halfRecipes : picks.flatMap((x) => x.halfRecipes ?? []);
+        };
+        const unnamed = unnamedRecipe(ctx, [
+          [changes.halfRecipes, existingTop],
+          ...(Array.isArray(changes.picks) ? changes.picks.map((pc: any) => [pc?.halfRecipes, existingFor(pc)] as [unknown, any]) : []),
+        ]);
+        if (unnamed) return unnamed;
+      }
       if (Array.isArray(changes.picks) && changes.picks.some((p: any) => p && !p.menuItemId && !p.pickId && p.slotLabel)) {
         // Which combo? Resolve the target the same way the engine will, then fill single-choice slots.
         const t = cart.resolveTarget({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) });
@@ -724,6 +848,18 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
       // an address yet — ask for the rest NOW, not at quote time (the 22:10
       // call on 2026-08-15 only asked after the whole order was taken).
       const partial = !input?.city && !input?.zip && j.located !== true;
+      // A FULL address (number, street, city/postcode) that still can't be
+      // found is almost always a misheard street name or number. Read it back
+      // ONCE and ask them to spell the street — right now, before any food.
+      // (2026-08-16, cmsw4s0mz: "sixty six McKechner Court" became "66
+      // McKechnie Court", the check failed, the model said "Got it, thanks" —
+      // and 3.5 minutes later the caller had to correct it three times: it was
+      // 1166 McEachern Court.) The store-will-confirm fallback stays: an
+      // address we can't place must never dead-end the order (2026-08-01).
+      const unfound = !partial && j.located === false && !!street;
+      const heardBack = [street, input?.city ? String(input.city).trim() : ""].filter(Boolean).join(" in ");
+      const spellAskedBefore = ctx.addressSpellAsked === true;
+      if (unfound) ctx.addressSpellAsked = true;
       return {
         ok: true,
         fulfilment: "delivery",
@@ -731,6 +867,13 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         state: cart.stateForModel(),
         ...(partial
           ? { instruction: "That street alone couldn't be placed. Ask for the city and postal code right now — one question — and call set_fulfilment again with the full address before any food; then say the delivery fee plainly." }
+          : unfound
+            ? {
+                heardBack,
+                instruction: spellAskedBefore
+                  ? `Still not found as spelled. Do NOT ask again and do NOT mention maps or systems: say once, warmly, that you have ${heardBack} and the store will confirm the delivery details, then go straight to the food.`
+                  : `That address could not be found as heard — the street name or number is probably off. Do NOT say "got it" and move on, and do NOT mention maps or systems. Read it back ONCE exactly as you have it and ask them to spell the street, in one question: "I have ${heardBack} — could you spell the street name for me, just to be sure?" (they will also correct the number if you misheard it). Then call set_fulfilment again with the spelled street.`,
+              }
           : j.located === true && typeof j.deliveryFee === "number"
             ? {
                 instruction:

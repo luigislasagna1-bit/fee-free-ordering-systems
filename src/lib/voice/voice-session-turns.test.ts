@@ -256,6 +256,114 @@ describe("fillers only cover TOOL silence, never plain first-token latency", () 
   });
 });
 
+describe("the THINKING filler covers a first hop that stays silent past 2.5 s (call cmsw4s0mz, 2026-08-16)", () => {
+  // Nabil went straight to a tool with no acknowledgement on every pizza edit —
+  // 2.6–4 s of dead air each time; the tool filler only arms once the tool call
+  // has started. One short ack after 2.5 s of nothing, never a second filler.
+  const THINKING = ["Sure.", "Okay.", "Got it.", "Alright."];
+  const TOOL_FILLERS = ["One sec.", "Let me check that.", "Just a moment.", "Bear with me a second."];
+
+  it("speaks one ack when a plain answer's first token is 3 s away — and stays quiet at 1.7 s (the 08-15 rule)", async () => {
+    const slow = (ms: number) => ({
+      messages: {
+        stream: () => {
+          const listeners: Array<(d: string) => void> = [];
+          return {
+            on: (evt: string, cb: (d: string) => void) => {
+              if (evt === "text") listeners.push(cb);
+            },
+            finalMessage: async () => {
+              await settle(ms);
+              for (const l of listeners) l("Pickup it is.");
+              return { stop_reason: "end_turn", content: [{ type: "text", text: "Pickup it is." }], usage: {} };
+            },
+          };
+        },
+      },
+    });
+    const a = await startedSession(slow(3_000) as never);
+    a.s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pickup." }));
+    await settle(3_300);
+    const said = a.ws.said();
+    expect(THINKING.filter((p) => said.includes(p))).toHaveLength(1);
+    expect(said.indexOf("Pickup it is.")).toBeGreaterThan(0); // the ack came first
+    // a 1.7 s answer never gets one
+    const b = await startedSession(slow(1_700) as never);
+    b.s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pickup." }));
+    await settle(2_000);
+    for (const p of THINKING) expect(b.ws.said()).not.toContain(p);
+  });
+
+  it("a slow tool-first hop gets the ack, and the tool filler does NOT double it", async () => {
+    apiMock.itemOptions = vi.fn(async () => {
+      await settle(1_800);
+      return { item: { name: "Coke", modifierGroups: [], variants: [] }, combo: null };
+    });
+    apiMock.menu.mockResolvedValue({
+      restaurant: { name: "Luigi's", currency: "cad" },
+      menu: [{ category: "Drinks", items: [{ menuItemId: "coke", name: "Coke", price: 2, isPizza: false, isCombo: false, hasVariants: false, variants: [] }] }],
+    });
+    let call = 0;
+    const two = {
+      messages: {
+        stream: () => {
+          call++;
+          const listeners: Array<(d: string) => void> = [];
+          return {
+            on: (evt: string, cb: (d: string) => void) => {
+              if (evt === "text") listeners.push(cb);
+            },
+            finalMessage: async () => {
+              if (call === 1) {
+                await settle(3_000); // the model "thinks" for 3 s before the tool call
+                return { stop_reason: "tool_use", content: [{ type: "tool_use", id: "t1", name: "get_item_options", input: { menuItemId: "coke" } }], usage: {} };
+              }
+              for (const l of listeners) l("Coke comes in one size.");
+              return { stop_reason: "end_turn", content: [{ type: "text", text: "Coke comes in one size." }], usage: {} };
+            },
+          };
+        },
+      },
+    };
+    const { ws, s } = await startedSession(two as never);
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "What sizes of Coke?" }));
+    await settle(5_500);
+    const said = ws.said();
+    expect(THINKING.filter((p) => said.includes(p))).toHaveLength(1);
+    expect(TOOL_FILLERS.filter((p) => said.includes(p))).toHaveLength(0);
+    expect(said).toContain("Coke comes in one size.");
+  });
+
+  it("thinkingFillerMs: 0 disables it (harness seam)", async () => {
+    const slow = {
+      messages: {
+        stream: () => {
+          const listeners: Array<(d: string) => void> = [];
+          return {
+            on: (evt: string, cb: (d: string) => void) => {
+              if (evt === "text") listeners.push(cb);
+            },
+            finalMessage: async () => {
+              await settle(3_000);
+              for (const l of listeners) l("Pickup it is.");
+              return { stop_reason: "end_turn", content: [{ type: "text", text: "Pickup it is." }], usage: {} };
+            },
+          };
+        },
+      },
+    };
+    const ws = fakeWs();
+    const s = new CallSession(ws as never, TOKEN, slow as never, { thinkingFillerMs: 0 });
+    s.onMessage(JSON.stringify({ type: "setup" }));
+    await settle();
+    await settle();
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pickup." }));
+    await settle(3_300);
+    for (const p of THINKING) expect(ws.said()).not.toContain(p);
+    expect(ws.said()).toContain("Pickup it is.");
+  });
+});
+
 /**
  * BOOKKEEPING MERGE (Luigi's live call 2026-08-15: 2.9 s of silence after "my
  * name is Sam" because set_fulfilment + set_customer forced a second model hop

@@ -210,6 +210,20 @@ async function placeOrder(req: NextRequest) {
       idempotencyKey: bodyIdemKey,
     } = body;
 
+    // Nabil AI phone orders: the always-on voice service (services/nabil-voice)
+    // POSTs here with the internal secret + channel:"voice" — for its dryRun
+    // quote AND the real placement, so quote == charge by construction. Resolved
+    // ONCE, up here, because it has to reach the promo pool (Kickstarter/Autopilot
+    // email-campaign promos are online-only — Luigi 2026-08-16, after a phone
+    // caller was given the FIRSTBUY 10% on ORD-971682861) and not only the
+    // reporting stamp ~2,000 lines below. Public callers never hold
+    // INTERNAL_API_SECRET, so for every existing web/app client this is false
+    // and the money path is byte-identical.
+    const isVoiceOrder =
+      !!process.env.INTERNAL_API_SECRET &&
+      req.headers.get("x-internal-key") === process.env.INTERNAL_API_SECRET &&
+      (body as { channel?: unknown })?.channel === "voice";
+
     // Strict shape or ignored — never let a garbage value into a unique column.
     const idemKey =
       typeof bodyIdemKey === "string" && /^[A-Za-z0-9_-]{16,64}$/.test(bodyIdemKey)
@@ -1717,6 +1731,10 @@ async function placeOrder(req: NextRequest) {
     const promoCtx = await buildPromoOrderContext({
       restaurant,
       channel: orderChannel,
+      // A phone order never sees a Kickstarter/Autopilot email-campaign promo
+      // (online-only, Luigi 2026-08-16). Applies to the voice dryRun quote and
+      // the placement alike — same call, same flag — so no total_changed drift.
+      orderSource: isVoiceOrder ? "voice" : "web",
       email: customerEmail,
       phone: customerPhone,
       suppressedPromoIds: bodySuppressedPromoIds,
@@ -2355,11 +2373,9 @@ async function placeOrder(req: NextRequest) {
     // secret + channel:"voice", so voice revenue lands in the Sales "by channel"
     // report. Additive only — public callers never hold INTERNAL_API_SECRET, so
     // the money path stays byte-identical for every existing caller.
-    if (
-      !!process.env.INTERNAL_API_SECRET &&
-      req.headers.get("x-internal-key") === process.env.INTERNAL_API_SECRET &&
-      (body as { channel?: unknown })?.channel === "voice"
-    ) {
+    // (`isVoiceOrder` is resolved once at the top of placeOrder — the same flag
+    // that keeps online-only campaign promos out of this order's promo pool.)
+    if (isVoiceOrder) {
       resolvedChannel = "voice";
     }
 

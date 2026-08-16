@@ -100,6 +100,44 @@ describe("spoken forms on Luigi's menu", () => {
     expect(r.spoken).toBe("a large pizza, half double pepperoni, half mushrooms, bacon on the whole thing");
   });
 
+  it("toppings on ONE side only are spoken as 'half plain, half …' (call cmsw4s0mz, 2026-08-16)", () => {
+    // Caller: "one side just cheese, the other side green pepper, mushroom, onion and tomato".
+    const r = compilePizzaLine(
+      {
+        menuItemId: L.large3,
+        toppings: [
+          { name: "green pepper", placement: "right" },
+          { name: "mushroom", placement: "right" },
+          { name: "onion", placement: "right" },
+          { name: "tomato", placement: "right" },
+        ],
+      },
+      item(L.large3),
+      { currency: "cad" },
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.spoken).toBe("a large pizza, half plain, half green peppers, mushrooms, onions, and tomatoes");
+    // the ticket string is unchanged in shape — the kitchen sees the topped half only
+    expect(r.readBack).toBe("Large 3 Topping — right half: Green Peppers, Mushrooms, Onions, Tomatoes");
+    // and the plain half is said FIRST when it's the left one
+    const l = compilePizzaLine(
+      { menuItemId: L.large2, toppings: [{ name: "pepperoni", placement: "left" }] },
+      item(L.large2),
+      { currency: "cad" },
+    );
+    expect(l.spoken).toBe("a large pizza, half pepperoni, half plain");
+  });
+
+  it("no 'half plain' when something is on the whole pizza (that half isn't plain)", () => {
+    const r = compilePizzaLine(
+      { menuItemId: L.large3, toppings: [{ name: "mushrooms", placement: "right" }, { name: "bacon", placement: "whole" }] },
+      item(L.large3),
+      { currency: "cad" },
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.spoken).toBe("a large pizza, half mushrooms, bacon on the whole thing");
+  });
+
   it("wings: '20 piece Chicken Wings, hot mixed'; dips: 'two Dipping Sauce, garlic'", () => {
     const w = compileItemLine({ menuItemId: L.wings, size: "20", options: ["hot mixed"] }, item(L.wings), { currency: "cad" });
     expect(w.unresolved).toEqual([]);
@@ -240,6 +278,27 @@ describe("half of a NAMED pizza is first-class: recipe toppings, overlaps, base 
     expect(r.unresolved).toEqual([]);
     expect(r.halves).toEqual({ left: ["Jalapeno", "Pepperoni"], right: ["Bacon"], whole: [] });
     expect(r.spoken).toBe("a large pizza, half Hawaiian Pizza plus jalapeno, half bacon");
+    // an exclusion that took a recipe topping off is NOT "wasn't on this pizza to begin with"
+    expect(r.notices ?? []).toEqual([]);
+  });
+
+  it("'no pineapple on the Hawaiian half' + pineapple on the OTHER half = pineapple on that half only, not a contradiction (cmsw4s0mz, 2026-08-16)", () => {
+    const haw = L.hawaiian;
+    const r = compilePizzaLine(
+      { menuItemId: L.large2, halfRecipes: [{ placement: "left", menuItemId: haw }], toppings: [{ name: "pineapple", placement: "right" }], excludeToppings: ["pineapple"] },
+      item(L.large2),
+      { currency: "cad", recipes: { [haw]: item(haw) } },
+    );
+    expect(r.unresolved).toEqual([]);
+    expect(r.halves).toEqual({ left: ["Pepperoni"], right: ["Pineapple"], whole: [] });
+    expect(r.notices ?? []).toEqual([]);
+    // the SAME half still contradicts — that one has to be confirmed
+    const same = compilePizzaLine(
+      { menuItemId: L.large2, halfRecipes: [{ placement: "left", menuItemId: haw }], toppings: [{ name: "pineapple", placement: "left" }], excludeToppings: ["pineapple"] },
+      item(L.large2),
+      { currency: "cad", recipes: { [haw]: item(haw) } },
+    );
+    expect(same.unresolved[0]).toMatch(/both asked for Pineapple and asked to leave it off/);
   });
 
   it("a WHOLE recipe on a build pizza takes the recipe's base sauce as the pizza's sauce", () => {
