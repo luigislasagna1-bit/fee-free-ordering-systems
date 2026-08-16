@@ -18,3 +18,5 @@
 | 2026-08-16T16:49:49.858Z | b34a92a4 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
 | 2026-08-16T17:59:07.989Z | 1c6b344e | NO-GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:ok, cost ≤ 40¢/min model share (warn > 30¢):ok, robotic-utterance rate ≤ 2%:FAIL |
 | 2026-08-16T18:06:24.257Z | 1c6b344e | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
+| 2026-08-16T20:54:07.531Z | 42e9f15b | NO-GO | 3× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
+| 2026-08-16T21:03:48.299Z | 6c2333db | GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:ok, cost ≤ 40¢/min model share (warn > 30¢):ok, robotic-utterance rate ≤ 2%:ok |
