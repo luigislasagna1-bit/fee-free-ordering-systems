@@ -21,6 +21,7 @@ import {
   Star, Crown, Shield, Percent, Gift, Package, Zap, Truck, Search,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { isAssignedCampaignRef } from "@/lib/assigned-promos";
 
 // ─── Promo type → display meta (label + icon) ───────────────────────────────
 // Kept for the list-card display only — the wizard's source of truth is
@@ -268,9 +269,10 @@ type TabFilter = "all" | "promotions" | "active" | "inactive" | "expired" | "sel
 function isGroupRef(ref: string | null | undefined): boolean {
   return !!ref && ref.startsWith("assigned_group");
 }
-function isAssignedRef(ref: string | null | undefined): boolean {
-  return !!ref && (ref.startsWith("assigned_manual") || ref.startsWith("assigned_group"));
-}
+/** Shared with the checkout ledger (src/lib/assigned-promos.ts) — this same rule
+ *  decides whether a typed code is identity-bound at checkout, so the Assigned
+ *  tab and the "registered to a different email" gate can never disagree. */
+const isAssignedRef = isAssignedCampaignRef;
 
 function campaignLabel(ref: string | null | undefined): string | null {
   if (!ref) return null;

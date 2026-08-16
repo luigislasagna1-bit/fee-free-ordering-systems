@@ -1,0 +1,50 @@
+/**
+ * Which promo rows are PERSONALLY ASSIGNED (1:1 gift or VIP-group) vs. openly
+ * broadcast (Kickstarter FIRSTBUY, Autopilot WIN1…, owner-made codes).
+ *
+ * This distinction is load-bearing, not cosmetic. A personally-assigned code
+ * belongs to one named customer, so typing it with someone else's email must be
+ * refused ("registered to a different email address"). A BROADCAST code is meant
+ * to be typed by anyone who received the email — refusing it there is a bug that
+ * blocks the checkout outright.
+ *
+ * 🚨 Why this file exists (Luigi 2026-08-14): `resolveAssignedPromoByCode` used
+ * to decide "is this code assigned?" purely by asking whether ANY CustomerCoupon
+ * row carried the code. But `recordAppliedCoupons` writes such a row for every
+ * order that redeems a TRACKABLE promo (campaignRef set OR onceLifetimePerClient)
+ * — which includes FIRSTBUY. So a customer who redeemed FIRSTBUY left behind a
+ * row stamped with THEIR email, and later customers who typed the code matched
+ * that row, failed the identity check, and got a hard 400 at checkout — the
+ * whole order rejected, not just the discount lost.
+ *
+ * It struck only SOME customers, which is why it went unnoticed. The lookup
+ * matches statuses {granted, released, applied} but NOT redeemed, so:
+ *   - order COMPLETES  → redeemed → stops poisoning (the common, happy path)
+ *   - order MISSED / rejected / cancelled → released → poisons the code FOREVER
+ *   - order still in flight → applied → poisons it until that order resolves
+ * So every abandoned or auto-rejected FIRSTBUY order left a permanent landmine,
+ * and each in-flight one left a temporary one. Intermittent by construction.
+ *
+ * The ownership check must therefore key off what the PROMOTION is, not off the
+ * incidental existence of a ledger row. `campaignRef` already carries that:
+ * assign-to-customer stamps "assigned_manual", VIP-group assignment stamps
+ * "assigned_group:<id>", and the Promotions UI has always split its Assigned tab
+ * on exactly this rule.
+ *
+ * Client-safe on purpose (no prisma import) so the server ledger and the admin
+ * Promotions list share ONE definition and can't drift apart.
+ */
+
+/** campaignRef prefixes that mark a promo as personally/group assigned. */
+export const ASSIGNED_CAMPAIGN_REF_PREFIXES = ["assigned_manual", "assigned_group"] as const;
+
+/**
+ * True for a promo that was handed to a SPECIFIC customer (or a specific VIP
+ * group) — the only kind whose coupon code is identity-bound.
+ *
+ * False for every broadcast code: null/owner-made, "kickstarter_first_buy",
+ * "autopilot_*". Those are meant to be typed by anyone who got the email.
+ */
+export function isAssignedCampaignRef(campaignRef: string | null | undefined): boolean {
+  return !!campaignRef && ASSIGNED_CAMPAIGN_REF_PREFIXES.some((p) => campaignRef.startsWith(p));
+}

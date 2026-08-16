@@ -23,6 +23,7 @@
  */
 import prisma from "@/lib/db";
 import { phoneDigitsKey } from "@/lib/phone";
+import { ASSIGNED_CAMPAIGN_REF_PREFIXES, isAssignedCampaignRef } from "@/lib/assigned-promos";
 
 /** A coupon counts as "used" (blocks re-grant of a once-per-lifetime offer)
  *  while it is applied to a live order OR terminally redeemed. `granted`,
@@ -318,6 +319,18 @@ export type AssignedPromoResolution =
  *   - "none"     → no assigned grant carries this code (a normal/open promo
  *                  code, or a typo) → caller falls through to normal handling.
  * Only "granted"/"released"/"applied" grants on an ACTIVE promotion count.
+ *
+ * 🚨 SCOPED TO PERSONALLY-ASSIGNED PROMOS ONLY (Luigi 2026-08-14). This asks the
+ * PROMOTION whether its code is identity-bound (`isAssignedCampaignRef`) — it
+ * must NEVER infer that from the mere existence of a ledger row, because
+ * recordAppliedCoupons writes a row stamped with the redeemer's email for every
+ * trackable promo, FIRSTBUY included. Without this filter the first customer to
+ * redeem a BROADCAST code owned it forever: everyone who typed it afterwards
+ * matched that stranger's row, failed the identity check, and got a hard 400 at
+ * checkout (orders/route.ts) — a rejected order, not just a lost discount. Same
+ * trap applied to every Autopilot code and every onceLifetimePerClient promo.
+ * See src/lib/assigned-promos.ts for the full write-up.
+ *
  * Read-only; never throws — any error degrades to "none".
  */
 export async function resolveAssignedPromoByCode(args: {
@@ -334,14 +347,24 @@ export async function resolveAssignedPromoByCode(args: {
         restaurantId: args.restaurantId,
         code: { equals: code, mode: "insensitive" },
         status: { in: ["granted", "released", "applied"] },
-        promotion: { is: { isActive: true } },
+        promotion: {
+          is: {
+            isActive: true,
+            // Identity-bound codes only. A broadcast code (FIRSTBUY, WIN1, an
+            // owner-made code) is meant to be typed by anyone who received it.
+            OR: ASSIGNED_CAMPAIGN_REF_PREFIXES.map((p) => ({ campaignRef: { startsWith: p } })),
+          },
+        },
       },
-      select: { id: true, promotionId: true, email: true, phone: true },
+      select: { id: true, promotionId: true, email: true, phone: true, promotion: { select: { campaignRef: true } } },
     });
-    if (grants.length === 0) return { kind: "none" };
+    // Belt-and-braces: re-assert the assigned-only rule in code, so a future
+    // edit to the query above can't quietly re-open the poisoning path.
+    const assigned = grants.filter((g) => isAssignedCampaignRef(g.promotion?.campaignRef));
+    if (assigned.length === 0) return { kind: "none" };
     const email = normalizeEmail(args.email);
     const phone = normalizePhone(args.phone);
-    for (const g of grants) {
+    for (const g of assigned) {
       const gEmail = normalizeEmail(g.email);
       const gPhone = normalizePhone(g.phone);
       if ((email && gEmail && email === gEmail) || (phone && gPhone && phone === gPhone)) {
