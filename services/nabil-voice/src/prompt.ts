@@ -106,11 +106,41 @@ function servicesText(ctx: any, cfg: AgentConfig): string {
   return parts.length ? parts.join(", ") : "none right now";
 }
 
+/**
+ * The next opening moment in the restaurant's local time and words. The
+ * context payload computes it server-side (`open.nextOpenLocal`, e.g.
+ * "tomorrow (Saturday) at 10:00 AM") — a FACT, never left to the model:
+ * handed the raw UTC ISO plus "say it in local time", the model told a
+ * 00:30 caller "we reopen at two o'clock this afternoon" for a store that
+ * opens at 10 (14:00Z). Fallback for an older payload/snapshot without the
+ * field: format the ISO here with Intl in the restaurant timezone.
+ */
+export function nextOpenWords(context: any): string | null {
+  const local = context?.open?.nextOpenLocal;
+  if (typeof local === "string" && local.trim()) return local.trim();
+  const iso = context?.open?.nextOpenAt;
+  if (typeof iso !== "string" || !iso) return null;
+  const d = new Date(iso);
+  if (!Number.isFinite(d.getTime())) return null;
+  const tz = context?.restaurant?.timezone || "UTC";
+  const fmt = context?.restaurant?.hoursFormat === "24h" ? "24h" : "12h";
+  try {
+    return new Intl.DateTimeFormat("en-US", {
+      timeZone: tz,
+      weekday: "long",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: fmt === "12h",
+    }).format(d);
+  } catch {
+    return null;
+  }
+}
+
 function afterHoursSection(context: any, cfg: AgentConfig): string {
   if (context?.open?.isOpenNow) return "";
-  const nextOpen = context?.open?.nextOpenAt;
-  const tz = context?.restaurant?.timezone;
-  const reopen = nextOpen ? ` The restaurant next opens at ${nextOpen} (restaurant timezone: ${tz || "unknown"}) — say that time in natural spoken words, in local time.` : "";
+  const words = nextOpenWords(context);
+  const reopen = words ? ` It next opens ${words} — say exactly that, in words.` : "";
   const behavior = cfg.afterHoursBehavior === "reservations_only" && !cfg.canBookReservations ? "message_only" : cfg.afterHoursBehavior;
   switch (behavior) {
     case "reservations_only":
@@ -120,7 +150,7 @@ function afterHoursSection(context: any, cfg: AgentConfig): string {
     case "transfer":
       return `\n## CLOSED RIGHT NOW — offer staff (this OVERRIDES ordering and reservations)\nThe restaurant is closed. Do NOT take orders or book reservations yourself — answer simple questions and offer transfer_to_human for anything else.${reopen}\n`;
     default:
-      return `\n## CLOSED RIGHT NOW — orders are PRE-ORDERS for later (this OVERRIDES the ordering flow)\nThe restaurant is CLOSED at this moment. You may still take the order, but it is for AFTER the restaurant reopens.${reopen}\nNEVER say the restaurant is open, never say the food is being made now or give a time measured from this moment. Say plainly that you're closed right now and when the order will be ready.\n`;
+      return `\n## CLOSED RIGHT NOW — orders you take are for when it reopens (this OVERRIDES the ordering flow)\nThe restaurant is CLOSED at this moment.${reopen} You CAN take an order now: it will be prepared when the restaurant reopens, so it is ready shortly after that opening time — say that plainly in one breath (\"We're closed right now — we open ${words || "later"}. I can take your order now and it'll be ready shortly after we open. Shall I?\").\nA caller who asks for \"tomorrow\", \"in the morning\" or \"when you open\" wants exactly this — take the order, do not tell them it can't be done. Only a SPECIFIC time later than that reopening is a scheduled order (see the scheduling rule).\nNEVER say the restaurant is open, never say the food is being made now, and never give a wait time measured from this moment.\n`;
   }
 }
 
@@ -169,11 +199,21 @@ export function buildSystemPrompt(args: {
       ? `- Estimated ready times (approximate — "about", never a promise): ${[pickupEta ? `pickup about ${pickupEta} minutes` : "", deliveryEta ? `delivery about ${deliveryEta} minutes` : ""].filter(Boolean).join(", ")}`
       : ""
     : "- NEVER promise or estimate how long an order will take; say it will be ready as soon as possible and the store can confirm timing.";
-  const schedulingRule = !cfg.allowScheduledOrders
-    ? "- Scheduled orders: RIGHT NOW only — politely decline requests for a later time or day."
-    : cfg.smsConfirmations
-      ? "- Scheduled orders: not possible by phone yet — offer to text the online ordering link (send_sms_link order_online)."
-      : "- Scheduled orders: not possible by phone yet — suggest the restaurant's online ordering page.";
+  // One rule, two halves, and it must never contradict the CLOSED section:
+  // (1) a SPECIFIC later time or day cannot be set by phone (the order tools
+  // carry no scheduled time); (2) an order taken now is simply prepared as
+  // soon as the kitchen is next open — which, while closed, IS "tomorrow" /
+  // "when you open". The old wording ("RIGHT NOW only … decline") made the
+  // agent tell a midnight caller it couldn't take a next-morning order and
+  // then, one turn later, that it could. Luigi 2026-08-16.
+  const laterAlternative = cfg.allowScheduledOrders
+    ? cfg.smsConfirmations
+      ? " If they want a specific later time, offer to text the online ordering link (send_sms_link order_online) where they can pick it — or take the order now instead."
+      : " If they want a specific later time, point them to the restaurant's online ordering page — or take the order now instead."
+    : " If they insist on a specific later time, say plainly it can't be set by phone and offer to take the order now instead.";
+  const schedulingRule =
+    "- Scheduled orders: a SPECIFIC later time or day can't be set by phone. An order you take now is prepared as soon as the kitchen is next open (right away while open; when it reopens while closed — see the CLOSED section, and never call that impossible)." +
+    laterAlternative;
   const paymentLine = "- Payment: orders are pay at the store / on pickup (cash or card in person). Never ask for card numbers over the phone." +
     (context?.delivery?.cashDeliveryBlocked ? " Delivery is PREPAID-only — explain and offer pickup instead (or transfer)." : "");
 
