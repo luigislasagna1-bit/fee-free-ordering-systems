@@ -18,6 +18,7 @@ import { checkClaims } from "./claims-guard";
 import { agentVersion, hashJson, quickHash, type Versions } from "./versions";
 import { PLAYBOOK_PROTOCOL, PLAYBOOK_STYLE } from "./playbook";
 import { isNarrationLeak } from "./narration-filter";
+import { captureError } from "./observability";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
 const WRAP_UP_LEAD_MS = 45_000;
@@ -322,6 +323,7 @@ export class CallSession {
         break;
       case "error":
         console.error("[nabil-voice] relay error", msg);
+        captureError(new Error(`relay error: ${String(msg?.description ?? msg?.message ?? "relay error")}`), { where: "relay", callSid: this.token.callSid, restaurantId: this.token.restaurantId });
         this.events.emit({ type: "error", turn: this.turnIndex, where: "relay", message: String(msg?.description ?? msg?.message ?? "relay error") });
         break;
       default:
@@ -340,9 +342,15 @@ export class CallSession {
         startedAtIso: new Date(this.now()).toISOString(),
       })
       .then((r) => {
-        if (!r.ok) console.error("[nabil-voice] logCallStart rejected", r.status);
+        if (!r.ok) {
+          console.error("[nabil-voice] logCallStart rejected", r.status);
+          captureError(new Error(`logCallStart rejected ${r.status}`), { where: "logCallStart", callSid: this.token.callSid, restaurantId: this.token.restaurantId, extra: { status: r.status } });
+        }
       })
-      .catch((e) => console.error("[nabil-voice] logCallStart failed", e));
+      .catch((e) => {
+        console.error("[nabil-voice] logCallStart failed", e);
+        captureError(e, { where: "logCallStart", callSid: this.token.callSid, restaurantId: this.token.restaurantId });
+      });
 
     try {
       const [menu, context, returningCaller] = await Promise.all([
@@ -397,6 +405,7 @@ export class CallSession {
       this.versions.promptVersion = quickHash([PLAYBOOK_STYLE, PLAYBOOK_PROTOCOL, this.ctx.cfg.allowPizzaCombo, this.ctx.cfg.canTakeOrders, this.ctx.cfg.canBookReservations]);
     } catch (e) {
       console.error("[nabil-voice] init failed", e);
+      captureError(e, { where: "init", callSid: this.token.callSid, restaurantId: this.token.restaurantId });
       this.events.emit({ type: "error", turn: 0, where: "init", message: String((e as Error)?.message ?? e) });
       this.system = `You are Nabil, the phone assistant for this restaurant. Apologize that you're having trouble accessing the menu right now and offer to connect the caller to a team member (call transfer_to_human).`;
     }
@@ -685,6 +694,7 @@ export class CallSession {
           return;
         }
         console.error("[nabil-voice] stream error", e);
+        captureError(e, { where: "model", callSid: this.token.callSid, restaurantId: this.token.restaurantId, extra: { status: Number((e as { status?: unknown })?.status) || 0, hop: hops } });
         const status = Number((e as { status?: unknown })?.status) || 0;
         const unrecoverable = status === 401 || status === 402 || status === 403 || status === 429;
         this.streamFailures++;
@@ -753,6 +763,7 @@ export class CallSession {
             out = await executeTool(block.name, block.input, this.ctx);
           } catch (e) {
             console.error("[nabil-voice] tool failed", block.name, e);
+            captureError(e, { where: "tool", callSid: this.token.callSid, restaurantId: this.token.restaurantId, extra: { tool: block.name } });
             out = { error: true, code: "tool_exception", message: "That didn't work — let me try another way." };
           }
           const ms = this.now() - toolStartedAt;
@@ -1114,7 +1125,10 @@ export class CallSession {
     const events = this.events.drain();
     this.eventFlushInFlight = this.api
       .logEvents({ event: "events", restaurantId: this.token.restaurantId, callSid: this.token.callSid, events })
-      .catch((e) => console.error("[nabil-voice] event flush failed", e))
+      .catch((e) => {
+        console.error("[nabil-voice] event flush failed", e);
+        captureError(e, { where: "events", callSid: this.token.callSid, restaurantId: this.token.restaurantId });
+      })
       .finally(() => {
         this.eventFlushInFlight = null;
       });
@@ -1169,9 +1183,13 @@ export class CallSession {
         menuSnapshotHash: this.menuHash,
         events,
       });
-      if (!r.ok) console.error("[nabil-voice] logCall rejected", r.status);
+      if (!r.ok) {
+        console.error("[nabil-voice] logCall rejected", r.status);
+        captureError(new Error(`logCall rejected ${r.status}`), { where: "logCall", callSid: this.token.callSid, restaurantId: this.token.restaurantId, orderNumber: this.orderNumber, extra: { status: r.status } });
+      }
     } catch (e) {
       console.error("[nabil-voice] logCall failed", e);
+      captureError(e, { where: "logCall", callSid: this.token.callSid, restaurantId: this.token.restaurantId, orderNumber: this.orderNumber });
     }
 
     const engaged = this.userTurns >= 2;

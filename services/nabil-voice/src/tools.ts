@@ -1,4 +1,5 @@
 import type { VoiceApi } from "./api";
+import { captureError } from "./observability";
 import type { CallToken } from "./config";
 import type { AgentConfig } from "./agent-config";
 import { fnv1a } from "./basket-signature";
@@ -873,6 +874,8 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         res = await api.placeOrder(payload);
       } catch (e) {
         console.error("[nabil-voice] placeOrder failed", e);
+        // Money path: the order may or may not exist on the other side.
+        captureError(e, { where: "placeOrder", callSid: ctx.token.callSid, restaurantId: ctx.token.restaurantId });
         return {
           error: true,
           code: "place_order_unknown",

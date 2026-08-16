@@ -1,9 +1,13 @@
+// FIRST: config validation (throws loudly on a missing required var) + Sentry
+// when SENTRY_DSN is set + the process crash handlers. See sentry.ts.
+import "./sentry";
 import http from "node:http";
 import Anthropic from "@anthropic-ai/sdk";
 import { WebSocketServer } from "ws";
 import { CONFIG, verifyCallToken } from "./config";
 import { CallSession } from "./session";
 import { fallbackMapStatus, fallbackTwiml, handleFallback, startFallbackRefresh } from "./fallback";
+import { captureError, createRefractory, flushObservability, hasErrorSink } from "./observability";
 
 /**
  * Nabil AI voice service entry point. A single always-on process (Fly.io):
@@ -48,6 +52,7 @@ async function checkAnthropicKey(): Promise<void> {
       `[nabil-voice] FATAL: ANTHROPIC_API_KEY is not a real key (length ${key?.length ?? 0}). ` +
         `Set it: fly secrets set ANTHROPIC_API_KEY=... --app nabil-voice`,
     );
+    captureError(new Error("ANTHROPIC_API_KEY is not a real key"), { where: "boot.key-check" });
     return;
   }
   try {
@@ -61,6 +66,7 @@ async function checkAnthropicKey(): Promise<void> {
         `[nabil-voice] FATAL: Anthropic rejected the API key (${res.status}). Every call will fail. ` +
           `Set a valid key: fly secrets set ANTHROPIC_API_KEY=... --app nabil-voice`,
       );
+      captureError(new Error(`Anthropic rejected the API key (${res.status})`), { where: "boot.key-check", extra: { status: res.status } });
       return;
     }
     keyState = res.ok ? "ok" : "unknown";
@@ -81,6 +87,7 @@ async function checkAnthropicKey(): Promise<void> {
  */
 const active = new Set<CallSession>();
 let draining = false;
+const capacityAlert = createRefractory(30 * 60_000);
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -104,7 +111,7 @@ const server = http.createServer((req, res) => {
       return;
     }
     res.writeHead(200, { "content-type": "text/plain" });
-    res.end(`ok calls=${active.size}/${CONFIG.maxSessions} fallback=${m.live}+${m.env} age=${m.ageSeconds ?? "never"}`);
+    res.end(`ok calls=${active.size}/${CONFIG.maxSessions} fallback=${m.live}+${m.env} age=${m.ageSeconds ?? "never"} sentry=${hasErrorSink() ? "on" : "off"}`);
     return;
   }
 
@@ -155,6 +162,8 @@ wss.on("connection", (ws, req) => {
     console.error(
       `[nabil-voice] AT CAPACITY (${active.size}/${CONFIG.maxSessions}) — refusing a call; it will ring the store instead`,
     );
+    // One alert per half hour, not one per refused caller.
+    if (capacityAlert.fire()) captureError(new Error(`AT CAPACITY ${active.size}/${CONFIG.maxSessions}`), { where: "capacity" });
     ws.close(1013, "at capacity");
     return;
   }
@@ -173,7 +182,10 @@ wss.on("connection", (ws, req) => {
     active.delete(session);
     session.onClose();
   });
-  ws.on("error", (e) => console.error("[nabil-voice] ws error", e));
+  ws.on("error", (e) => {
+    console.error("[nabil-voice] ws error", e);
+    captureError(e, { where: "ws", callSid: payload.callSid, restaurantId: payload.restaurantId });
+  });
 });
 
 /**
@@ -206,6 +218,7 @@ async function drain(signal: string): Promise<void> {
   }
 
   console.log("[nabil-voice] drain complete");
+  await flushObservability(2000);
   server.close(() => process.exit(0));
   // Backstop: never hang forever on a socket that refuses to close.
   setTimeout(() => process.exit(0), 5000).unref();

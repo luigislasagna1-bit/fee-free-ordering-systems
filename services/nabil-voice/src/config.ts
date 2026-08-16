@@ -65,6 +65,11 @@ export const CONFIG = {
   /** {"+1289…":"+1416…"} floor for the fallback number map, so a cold boot
    *  during an app outage still knows who to ring. */
   fallbackMapJson: process.env.NABIL_FALLBACK_MAP || "",
+
+  // ── Observability (see sentry.ts / observability.ts) ─────────────────────
+  /** Optional. Errors + stacks with identifier tags only, every string
+   *  redacted before it leaves the process. Unset = stdout only. */
+  sentryDsn: process.env.SENTRY_DSN || "",
 };
 
 export type CallToken = {

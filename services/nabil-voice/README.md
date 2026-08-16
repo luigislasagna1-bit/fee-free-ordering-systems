@@ -29,6 +29,12 @@ Deepgram (transcription) and ElevenLabs (text-to-speech) are **built into Twilio
 | `ANTHROPIC_API_KEY` | ✅ | Reuse the app's key (same billing) |
 | `NABIL_MODEL` | — | Defaults to `claude-sonnet-5` (fast tier for low latency) |
 | `PORT` | — | Defaults to `8080` |
+| `NABIL_MAX_SESSIONS` | — | Concurrent-call cap per machine (default 25 = fly.toml `hard_limit`); above it the socket is refused in <1 s and the caller reaches the store via the handoff route |
+| `NABIL_DRAIN_MS` | — | How long a SIGTERM drain waits for live calls before warm-transferring stragglers (default 240000; fly.toml `kill_timeout` must be longer) |
+| `NABIL_TWILIO_FALLBACK_URL` | — | The EXACT URL registered as the number's VoiceFallbackUrl (`https://nabil-voice.fly.dev/twiml/fallback`); with `FFOS_TWILIO_AUTH_TOKEN` it lets `/twiml/fallback` verify `X-Twilio-Signature` |
+| `FFOS_TWILIO_AUTH_TOKEN` | — | Same platform token the app uses; unset = the fallback answers unverified (warns once) |
+| `NABIL_FALLBACK_MAP` | — | `{"+1289…":"+1416…"}` cold-boot floor for the fallback number map; the live map comes from `GET /api/internal/voice/fallback-map` every 15 min (last good kept forever) |
+| `SENTRY_DSN` | — | Errors + stacks to Sentry (environment `nabil-voice`), identifier tags only, every string redacted before it leaves the process (`src/observability.ts`). Unset = stdout only, `/health` shows `sentry=off` |
 
 ## Deploy (Fly.io)
 ```bash
@@ -49,12 +55,15 @@ NABIL_VOICE_JWT_SECRET = <same value as the service>
 ```
 (`INTERNAL_API_SECRET` and `ANTHROPIC_API_KEY` already exist in the app.)
 
-## Wire up a restaurant's number (Twilio console)
-Phone Numbers → the Nabil number → Voice → **A CALL COMES IN**:
-`Webhook  HTTP POST  https://www.feefreeordering.com/api/twilio/voice`
+## Wire up a restaurant's number
+**Superadmin → Nabil Phone Lines** (`/superadmin/settings/nabil`) shows, for every Nabil number, what Twilio has
+registered vs. what the deployment expects — the voice webhook (`{NEXT_PUBLIC_APP_URL}/api/twilio/voice`) and the
+"PRIMARY HANDLER FAILS" fallback (`https://nabil-voice.fly.dev/twiml/fallback`, derived from `NABIL_VOICE_WSS_URL`) —
+and **Repair** writes only those two URLs + methods (`src/lib/voice/twilio-number-config.ts`). No console visit needed;
+the page also shows who each fallback layer would ring for that store.
 
 ## Verify
-- `curl https://nabil-voice.fly.dev/health` → `ok`
+- `curl https://nabil-voice.fly.dev/health` → `ok calls=0/25 fallback=1+0 age=<s> sentry=on` (per machine: add `-H "fly-force-instance-id: <machine>"`)
 - Place a real call to the Nabil number; watch `fly logs`. Measure first-audio latency (target ~0.6–1.1s p50).
 
 ## Notes / follow-ups

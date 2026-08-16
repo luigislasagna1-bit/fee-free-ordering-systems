@@ -1,5 +1,12 @@
 import crypto from "node:crypto";
 import { CONFIG } from "./config";
+import { captureError, createRefractory } from "./observability";
+
+/** A refresh failing every 15 min on a bad secret would be ~96 events/day —
+ *  once per 6 h while failing is plenty; reset on the next success. */
+const refreshAlert = createRefractory(6 * 60 * 60_000);
+/** Bad/missing signatures: misconfig or probing — once per 30 min. */
+const signatureAlert = createRefractory(30 * 60_000);
 
 /**
  * Nabil AI — the Twilio VoiceFallbackUrl handler.
@@ -81,6 +88,7 @@ export async function refreshFallbackMap(): Promise<boolean> {
     });
     if (!res.ok) {
       console.warn(`[nabil-voice/fallback] refresh failed (HTTP ${res.status}) — keeping ${liveMap.size} cached`);
+      if (refreshAlert.fire()) captureError(new Error(`fallback-map refresh failed (HTTP ${res.status})`), { where: "fallback.refresh", level: "warning", extra: { status: res.status, cached: liveMap.size } });
       return false;
     }
     const body = (await res.json()) as { numbers?: Array<{ to?: string; dial?: string }> };
@@ -101,6 +109,7 @@ export async function refreshFallbackMap(): Promise<boolean> {
     }
     liveMap = next;
     lastRefreshOk = Date.now();
+    refreshAlert.reset();
     console.log(`[nabil-voice/fallback] refreshed ${liveMap.size} number(s)`);
     return true;
   } catch (e) {
@@ -108,6 +117,7 @@ export async function refreshFallbackMap(): Promise<boolean> {
       `[nabil-voice/fallback] refresh error — keeping ${liveMap.size} cached:`,
       e instanceof Error ? e.message : e,
     );
+    if (refreshAlert.fire()) captureError(e, { where: "fallback.refresh", level: "warning", extra: { cached: liveMap.size } });
     return false;
   }
 }
@@ -204,6 +214,7 @@ export function handleFallback(rawBody: string, signature: string | null): { sta
 
   if (!verifyTwilioSignature(params, signature)) {
     console.error("[nabil-voice/fallback] rejected: bad or missing X-Twilio-Signature");
+    if (signatureAlert.fire()) captureError(new Error("fallback: bad or missing X-Twilio-Signature"), { where: "fallback.signature", level: "warning" });
     return { status: 403, xml: `<?xml version="1.0" encoding="UTF-8"?><Response/>` };
   }
 
