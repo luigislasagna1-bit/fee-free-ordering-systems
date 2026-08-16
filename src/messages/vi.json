@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Nếu bạn đã kết nối máy in nhiệt, hóa đơn sẽ tự động in khi bạn nhận đơn. Thiết lập máy in hoặc thay đổi cài đặt qua nút <gear></gear> trên thanh trên cùng.",
     "tourPrintingHint": "Bạn có thể xem lại hướng dẫn này bất cứ lúc nào bằng cách xóa dữ liệu trang web của trình duyệt.",
     "tourDoneTitle": "Mọi thứ đã sẵn sàng",
-    "tourDoneBody": "Vậy là xong. Từ giờ bếp sẽ tự vận hành — chỉ cần giữ tab này luôn mở trong giờ phục vụ. Chúc bạn thành công!"
+    "tourDoneBody": "Vậy là xong. Từ giờ bếp sẽ tự vận hành — chỉ cần giữ tab này luôn mở trong giờ phục vụ. Chúc bạn thành công!",
+    "phoneOrderBadge": "ĐƠN HÀNG QUA ĐIỆN THOẠI",
+    "phoneOrderPaid": "ĐÃ THANH TOÁN",
+    "phoneOrderNotPaid": "CHƯA THANH TOÁN · {amount} thanh toán khi {type}"
   },
   "admin": {
     "welcomeBack": "Chào mừng trở lại",

@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Jei prijungtas terminis spausdintuvas, kvitai spausdinami automatiškai, kai priimate užsakymą. Nustatykite spausdintuvą arba keiskite nustatymus per mygtuką <gear></gear> viršutinėje juostoje.",
     "tourPrintingHint": "Šią apžvalgą bet kada galite peržiūrėti iš naujo, išvalę naršyklės svetainės duomenis.",
     "tourDoneTitle": "Viskas paruošta",
-    "tourDoneBody": "Tai viskas. Nuo šiol virtuvė sukasi pati — tiesiog laikykite šį skirtuką atidarytą darbo metu. Sėkmės!"
+    "tourDoneBody": "Tai viskas. Nuo šiol virtuvė sukasi pati — tiesiog laikykite šį skirtuką atidarytą darbo metu. Sėkmės!",
+    "phoneOrderBadge": "UŽSAKYMAS TELEFONU",
+    "phoneOrderPaid": "APMOKĖTA",
+    "phoneOrderNotPaid": "NEAPMOKĖTA · {amount} mokėti ({type})"
   },
   "admin": {
     "welcomeBack": "Sveiki sugrįžę",

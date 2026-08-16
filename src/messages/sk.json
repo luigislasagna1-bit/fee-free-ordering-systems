@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Ak máte pripojenú termotlačiareň, účtenky sa po prijatí objednávky vytlačia automaticky. Tlačiareň nastavíte alebo nastavenia zmeníte cez tlačidlo <gear></gear> v hornej lište.",
     "tourPrintingHint": "Túto prehliadku si môžete kedykoľvek spustiť znova vymazaním údajov stránky v prehliadači.",
     "tourDoneTitle": "Všetko je pripravené",
-    "tourDoneBody": "To je všetko. Kuchyňa odteraz beží sama – stačí nechať túto kartu otvorenú počas prevádzky. Veľa šťastia!"
+    "tourDoneBody": "To je všetko. Kuchyňa odteraz beží sama – stačí nechať túto kartu otvorenú počas prevádzky. Veľa šťastia!",
+    "phoneOrderBadge": "TELEFONICKÁ OBJEDNÁVKA",
+    "phoneOrderPaid": "ZAPLATENÉ",
+    "phoneOrderNotPaid": "NEZAPLATENÉ · {amount} na úhradu ({type})"
   },
   "admin": {
     "welcomeBack": "Vitajte späť",

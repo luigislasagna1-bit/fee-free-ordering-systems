@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Heb je een thermische printer aangesloten, dan worden bonnen automatisch geprint zodra je een bestelling accepteert. Stel je printer in of wijzig instellingen via de <gear></gear>-knop in de bovenbalk.",
     "tourPrintingHint": "Je kunt deze rondleiding altijd opnieuw bekijken door de sitegegevens van je browser te wissen.",
     "tourDoneTitle": "Je bent er klaar voor",
-    "tourDoneBody": "Dat was het. Vanaf hier loopt de keuken vanzelf — houd dit tabblad gewoon open tijdens de dienst. Succes daar!"
+    "tourDoneBody": "Dat was het. Vanaf hier loopt de keuken vanzelf — houd dit tabblad gewoon open tijdens de dienst. Succes daar!",
+    "phoneOrderBadge": "TELEFONISCHE BESTELLING",
+    "phoneOrderPaid": "BETAALD",
+    "phoneOrderNotPaid": "NIET BETAALD · {amount} te betalen ({type})"
   },
   "admin": {
     "welcomeBack": "Welkom terug",

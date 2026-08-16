@@ -1,3 +1,5 @@
+import type { ChannelSlug } from "@/lib/reports/channels";
+
 /**
  * Friendly label + Tailwind tone tuple for a paymentStatus value.
  * Centralised so admin / kitchen / status surfaces all render the new
@@ -21,6 +23,48 @@ export function paymentStatusLabel(status: string | null | undefined): {
     case "pending":          return { label: "PENDING",                    tone: "yellow" };
     default:                 return { label: (status ?? "PENDING").toUpperCase(), tone: "yellow" };
   }
+}
+
+/**
+ * Nabil AI phone orders carry `Order.channel === "voice"` — stamped by
+ * /api/orders on its `x-internal-key` branch, the same slug the Sales
+ * "by channel" report colours pink (src/lib/reports/channels.ts). The kitchen
+ * keys its PHONE ORDER pill + NOT PAID / PAID chip on this value; the printed
+ * receipt keys its "PHONE ORDER" banner on the very same value
+ * (`PHONE_ORDER_CHANNEL` in src/lib/receipt-schema.ts) — keep the two in step.
+ *
+ * Why it matters (Luigi 2026-08-16): at his store every WEB order is prepaid
+ * by card, so a phone order (cash, pay at pickup) is the ONLY unpaid ticket on
+ * the rail — and it used to look identical to every other tile.
+ */
+export const PHONE_ORDER_CHANNEL: ChannelSlug = "voice";
+
+/** True when this order was taken over the phone by Nabil AI. */
+export function isPhoneOrder(order: Pick<Order, "channel">): boolean {
+  return order.channel === PHONE_ORDER_CHANNEL;
+}
+
+/**
+ * Payment state of a PHONE ORDER, with the SAME semantics as the printed
+ * receipt banner (`phoneOrderPaymentLine` in src/lib/receipt.ts):
+ *   paid    → "PAID"
+ *   pending → "NOT PAID · {due} due at {type}", due = total − creditApplied
+ *             (what is actually still owed once Reward Dollars are netted off)
+ *   other   → the generic paymentStatusLabel (REFUNDED, VOIDED, …) in its tone
+ * Pure — the render sites translate + format money.
+ */
+export function phoneOrderPaymentState(
+  order: Pick<Order, "paymentStatus" | "total" | "creditApplied">,
+):
+  | { kind: "paid" }
+  | { kind: "unpaid"; due: number }
+  | { kind: "other"; label: string; tone: ReturnType<typeof paymentStatusLabel>["tone"] } {
+  if (order.paymentStatus === "paid") return { kind: "paid" };
+  if (order.paymentStatus === "pending") {
+    return { kind: "unpaid", due: Math.max(0, order.total - (order.creditApplied ?? 0)) };
+  }
+  const ps = paymentStatusLabel(order.paymentStatus);
+  return { kind: "other", label: ps.label, tone: ps.tone };
 }
 
 export type Order = {
@@ -114,6 +158,12 @@ export type Order = {
    *  Kitchen display shows a purple "MARKETPLACE" badge so staff knows
    *  it's a discovery-channel order vs a direct walk-up / widget order. */
   viaMarketplace: boolean;
+  /** Sales channel slug (src/lib/reports/channels.ts). `"voice"` = a Nabil AI
+   *  phone order → pink PHONE ORDER pill + NOT PAID / PAID chip on the tile
+   *  and in the detail (see isPhoneOrder). Already on every row the 4s poll
+   *  returns (the feed `include`s the whole Order) — no extra query. Optional
+   *  only for older cached payloads. Luigi 2026-08-16. */
+  channel?: string | null;
   /** True when this is the customer's FIRST-EVER order at this restaurant
    *  (matched by phone). Drives a "first order" badge so staff can give a new
    *  customer extra care. Reseller report cmq3knaqj. Luigi 2026-06-09. */
@@ -182,6 +232,16 @@ const THEMES = {
     // didn't get to it" vs red "we declined it". Luigi 2026-06-09.
     badgeMissed: "bg-orange-100 text-orange-800 border border-orange-200",
     badgeCancelled: "bg-red-100 text-red-800 border border-red-200",
+    // Nabil AI PHONE ORDER pill — pink, the "Phone (Nabil AI)" channel colour
+    // (#ec4899 in src/lib/reports/channels.ts) — plus the payment chip that
+    // rides next to it: NOT PAID (red, money still owed) / PAID (green).
+    // Theme-aware tokens (not `dark:` classes) because the kitchen's own
+    // day/night switch is this THEMES object, not the OS colour scheme.
+    badgePhone: "bg-pink-100 text-pink-800 border border-pink-200",
+    badgePaid: "bg-green-100 text-green-800 border border-green-200",
+    badgeUnpaid: "bg-red-100 text-red-800 border border-red-200",
+    // The order-detail's PHONE ORDER payment banner (block, not a pill).
+    bannerPhone: "bg-pink-50 border border-pink-200 text-pink-800",
   },
   dark: {
     base: "bg-gray-900 text-white",
@@ -210,6 +270,10 @@ const THEMES = {
     badgeRejected: "bg-red-500/20 text-red-300 border border-red-500/30",
     badgeMissed: "bg-orange-500/20 text-orange-300 border border-orange-500/30",
     badgeCancelled: "bg-red-500/20 text-red-300 border border-red-500/30",
+    badgePhone: "bg-pink-500/20 text-pink-300 border border-pink-500/30",
+    badgePaid: "bg-green-500/20 text-green-300 border border-green-500/30",
+    badgeUnpaid: "bg-red-500/20 text-red-300 border border-red-500/30",
+    bannerPhone: "bg-pink-500/10 border border-pink-500/30 text-pink-300",
   },
 } as const;
 

@@ -28,9 +28,11 @@ import { registerKitchenPush, unregisterKitchenPush, getKitchenPushHealth, getSt
 import { isNativeAlarmAvailable, nativeHushAlarm, nativeRearmAlarm, nativeStopAlarm, nativeSetCustomSound } from "@/lib/native-order-alarm";
 import { getNativeAppVersion } from "@/lib/native-app-version";
 import { NativePrinterSetup, getDirectPrinterConfig } from "./NativePrinterSetup";
-import { THEMES, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
+import { THEMES, isPhoneOrder, type Order, type PrinterSettings, type ThemeMode, type T } from "./kitchen-types";
+import { PhoneOrderBadge, PhoneOrderPaymentChip } from "./PhoneOrderBadges";
 import { useTranslations, useLocale } from "next-intl";
 import { formatAddressCase } from "@/lib/address-format";
+import { isVoiceSentinelEmail } from "@/lib/voice/sentinel-identity";
 import { StaffLanguageSwitcher } from "@/components/StaffLanguageSwitcher";
 
 // Web bundle stamp baked at build time (next.config.ts env). Shown in the 3-dot
@@ -375,7 +377,9 @@ function ReservationDetail({
             📞 <a href={`tel:${r.customerPhone.replace(/\s+/g, "")}`} className="underline">{r.customerPhone}</a>
           </div>
         )}
-        {r.customerEmail && (
+        {/* The synthetic voice.<phone>@voice.nabil.invalid address a Nabil AI
+            caller carries is not a real inbox — never show or mailto: it. */}
+        {r.customerEmail && !isVoiceSentinelEmail(r.customerEmail) && (
           <div className={`${t.muted} break-all`}>
             ✉️ <a href={`mailto:${r.customerEmail}`} className="underline">{r.customerEmail}</a>
           </div>
@@ -748,6 +752,22 @@ function OrderRow({ order, selected, onClick, t, now, dayChip, hideZeroCountdown
               />
             )}
           </div>
+          {/* Nabil AI PHONE ORDER (Luigi 2026-08-16): pink channel pill + the
+              payment chip — "NOT PAID · $34.50 due at pickup" / "PAID" — the
+              screen twin of the printed PHONE ORDER banner. At an all-prepaid
+              store a phone order is the ONLY unpaid ticket on the rail, and it
+              used to look exactly like a web order. One extra small line ONLY
+              on phone orders (same precedent as the "To collect" line) — every
+              other tile keeps the locked 2026-07-03 layout byte-for-byte. The
+              money cue is dropped on terminal rows (done / rejected / cancelled
+              — nothing is owed any more), just like the time cues above; the
+              pill itself stays so the channel is still readable in history. */}
+          {isPhoneOrder(order) && (
+            <div className="mt-1 flex flex-wrap items-center gap-1.5 min-w-0">
+              <PhoneOrderBadge t={t} />
+              {!rowIsTerminal && <PhoneOrderPaymentChip order={order} currency={currency} t={t} />}
+            </div>
+          )}
         </div>
         <div className="flex flex-col items-end flex-shrink-0">
           <div className={`font-bold text-sm ${t.text}`}>{formatCurrency(order.total, currency)}</div>

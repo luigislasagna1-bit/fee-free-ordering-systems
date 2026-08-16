@@ -1112,7 +1112,10 @@
     "labelOccasion": "Occasion",
     "labelAccessibility": "Accessibility",
     "delayedBy": "Delayed by {minutes} min",
-    "delayedTimes": "{count} changes"
+    "delayedTimes": "{count} changes",
+    "phoneOrderBadge": "PHONE ORDER",
+    "phoneOrderPaid": "PAID",
+    "phoneOrderNotPaid": "NOT PAID · {amount} due at {type}"
   },
   "admin": {
     "comingSoonPlaceholder": {

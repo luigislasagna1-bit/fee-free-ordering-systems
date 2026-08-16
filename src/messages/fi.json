@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Jos lämpötulostin on yhdistetty, kuitit tulostuvat automaattisesti, kun hyväksyt tilauksen. Määritä tulostin tai muuta asetuksia yläpalkin <gear></gear>-painikkeesta.",
     "tourPrintingHint": "Voit katsoa tämän esittelyn uudelleen milloin tahansa tyhjentämällä selaimen sivustotiedot.",
     "tourDoneTitle": "Kaikki valmista",
-    "tourDoneBody": "Siinä kaikki. Keittiö pyörii tästä eteenpäin itsestään — pidä vain tämä välilehti auki palvelun ajan. Onnea matkaan!"
+    "tourDoneBody": "Siinä kaikki. Keittiö pyörii tästä eteenpäin itsestään — pidä vain tämä välilehti auki palvelun ajan. Onnea matkaan!",
+    "phoneOrderBadge": "PUHELINTILAUS",
+    "phoneOrderPaid": "MAKSETTU",
+    "phoneOrderNotPaid": "MAKSAMATTA · {amount} maksetaan ({type})"
   },
   "admin": {
     "welcomeBack": "Tervetuloa takaisin",

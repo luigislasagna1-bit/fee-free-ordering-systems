@@ -11,9 +11,11 @@ import { formatDetailRows, readReservationDetails } from "@/lib/reservation-deta
 import { groupBundleChildren } from "@/lib/bundle-child-groups";
 import toast from "react-hot-toast";
 import type { T, Order } from "./kitchen-types";
-import { paymentStatusLabel } from "./kitchen-types";
+import { paymentStatusLabel, isPhoneOrder } from "./kitchen-types";
+import { PhoneOrderBadge, PhoneOrderPaymentChip } from "./PhoneOrderBadges";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
 import { formatFullDeliveryAddress } from "@/lib/address-format";
+import { isVoiceSentinelEmail } from "@/lib/voice/sentinel-identity";
 import { useTranslations, useLocale } from "next-intl";
 import { RejectOrderModal } from "./RejectOrderModal";
 import { Countdown } from "./Countdown";
@@ -367,11 +369,31 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
             MARKETPLACE
           </span>
         )}
+        {/* Nabil AI phone order — the channel pill next to MARKETPLACE; the
+            payment banner below carries the money cue. Luigi 2026-08-16. */}
+        {isPhoneOrder(order) && <PhoneOrderBadge t={t} />}
       </div>
 
       {/* Scrollable content */}
       <div className="flex-1 overflow-y-auto">
         <div className="p-5 space-y-5">
+
+          {/* PHONE ORDER payment banner — first thing in the detail, exactly
+              where the printed ticket puts its "PHONE ORDER / NOT PAID - $X
+              DUE ON PICKUP" banner. Same semantics (phoneOrderPaymentState):
+              PAID / NOT PAID · due at {type} / other Stripe state. Skipped on
+              terminal orders (done / rejected / cancelled) — nothing is owed,
+              and the Payment section below still shows the raw status. */}
+          {isPhoneOrder(order) &&
+            !["completed", "rejected", "cancelled", "refunded", "no_show"].includes(order.status) && (
+            <div className={`rounded-xl px-4 py-3 flex items-center gap-3 flex-wrap ${t.bannerPhone}`}>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <span className="text-xs font-extrabold tracking-wide">{tk("phoneOrderBadge")}</span>
+              </div>
+              <PhoneOrderPaymentChip order={order} currency={currency} t={t} size="md" />
+            </div>
+          )}
 
           {/* Reserve-then-order: this order arrived WITH a table booking. Flag
               it up top so the kitchen treats the food + the table as one unit.
@@ -447,7 +469,12 @@ export function OrderDetail({ order, t, onClose, onUpdate, onPrint, printerReady
                   </a>
                 </Row>
               )}
-              {order.customerEmail && <Row icon={<Mail className="w-4 h-4" />} t={t}>{order.customerEmail}</Row>}
+              {/* A Nabil AI order carries the synthetic voice.<phone>@voice.nabil.invalid
+                  address (the order route requires an e-mail; a caller has none) —
+                  not the customer's, never shown. Same rule as the printed receipt. */}
+              {order.customerEmail && !isVoiceSentinelEmail(order.customerEmail) && (
+                <Row icon={<Mail className="w-4 h-4" />} t={t}>{order.customerEmail}</Row>
+              )}
             </div>
           </Section>
 

@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "감열 프린터가 연결되어 있으면 주문을 수락할 때 영수증이 자동으로 인쇄됩니다. 프린터 설정이나 기타 설정 변경은 상단 바의 <gear></gear> 버튼에서 할 수 있습니다.",
     "tourPrintingHint": "브라우저의 사이트 데이터를 지우면 언제든지 이 투어를 다시 볼 수 있습니다.",
     "tourDoneTitle": "모든 준비가 끝났습니다",
-    "tourDoneBody": "이게 전부입니다. 이제 주방은 알아서 돌아갑니다 — 영업 중에는 이 탭만 켜 두세요. 화이팅!"
+    "tourDoneBody": "이게 전부입니다. 이제 주방은 알아서 돌아갑니다 — 영업 중에는 이 탭만 켜 두세요. 화이팅!",
+    "phoneOrderBadge": "전화 주문",
+    "phoneOrderPaid": "결제 완료",
+    "phoneOrderNotPaid": "미결제 · {type} 시 {amount} 결제"
   },
   "admin": {
     "welcomeBack": "환영합니다",

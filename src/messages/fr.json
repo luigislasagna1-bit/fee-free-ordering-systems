@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Si une imprimante thermique est connectée, les tickets s’impriment automatiquement quand vous acceptez une commande. Configurez votre imprimante ou modifiez les réglages via le bouton <gear></gear> dans la barre du haut.",
     "tourPrintingHint": "Vous pouvez revoir cette visite à tout moment en effaçant les données de site de votre navigateur.",
     "tourDoneTitle": "Vous êtes prêt",
-    "tourDoneBody": "C’est tout. La cuisine tourne toute seule à partir d’ici — gardez simplement cet onglet ouvert pendant le service. Bon courage !"
+    "tourDoneBody": "C’est tout. La cuisine tourne toute seule à partir d’ici — gardez simplement cet onglet ouvert pendant le service. Bon courage !",
+    "phoneOrderBadge": "COMMANDE TÉLÉPHONIQUE",
+    "phoneOrderPaid": "PAYÉ",
+    "phoneOrderNotPaid": "NON PAYÉ · {amount} à payer ({type})"
   },
   "admin": {
     "welcomeBack": "Bon retour",

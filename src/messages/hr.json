@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Ako imate spojen termalni pisač, računi se ispisuju automatski kada prihvatite narudžbu. Postavite pisač ili promijenite postavke putem gumba <gear></gear> u gornjoj traci.",
     "tourPrintingHint": "Ovaj vodič možete ponovno pogledati u bilo kojem trenutku brisanjem podataka web-mjesta u svom pregledniku.",
     "tourDoneTitle": "Sve je spremno",
-    "tourDoneBody": "To je to. Kuhinja odsad radi sama — samo držite ovu karticu otvorenom tijekom smjene. Sretno!"
+    "tourDoneBody": "To je to. Kuhinja odsad radi sama — samo držite ovu karticu otvorenom tijekom smjene. Sretno!",
+    "phoneOrderBadge": "TELEFONSKA NARUDŽBA",
+    "phoneOrderPaid": "PLAĆENO",
+    "phoneOrderNotPaid": "NIJE PLAĆENO · {amount} za platiti ({type})"
   },
   "admin": {
     "welcomeBack": "Dobrodošli natrag",

@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Se hai una stampante termica collegata, gli scontrini vengono stampati automaticamente quando accetti un ordine. Configura la stampante o modifica le impostazioni tramite il pulsante <gear></gear> nella barra in alto.",
     "tourPrintingHint": "Puoi rivedere questo tour in qualsiasi momento cancellando i dati del sito nel browser.",
     "tourDoneTitle": "È tutto pronto",
-    "tourDoneBody": "Ecco fatto. Da qui la cucina va avanti da sola — tieni questa scheda aperta durante il servizio. Buon lavoro!"
+    "tourDoneBody": "Ecco fatto. Da qui la cucina va avanti da sola — tieni questa scheda aperta durante il servizio. Buon lavoro!",
+    "phoneOrderBadge": "ORDINE TELEFONICO",
+    "phoneOrderPaid": "PAGATO",
+    "phoneOrderNotPaid": "NON PAGATO · {amount} da pagare ({type})"
   },
   "admin": {
     "welcomeBack": "Bentornato",

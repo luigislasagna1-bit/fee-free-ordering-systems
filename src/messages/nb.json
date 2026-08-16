@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Hvis du har en termisk skriver tilkoblet, skrives kvitteringer ut automatisk når du godtar en bestilling. Sett opp skriveren eller endre innstillinger via <gear></gear>-knappen i topplinjen.",
     "tourPrintingHint": "Du kan se denne omvisningen på nytt når som helst ved å slette nettleserens nettstedsdata.",
     "tourDoneTitle": "Alt er klart",
-    "tourDoneBody": "Det var alt. Kjøkkenet går av seg selv herfra – bare hold denne fanen åpen i åpningstiden. Lykke til der ute."
+    "tourDoneBody": "Det var alt. Kjøkkenet går av seg selv herfra – bare hold denne fanen åpen i åpningstiden. Lykke til der ute.",
+    "phoneOrderBadge": "TELEFONBESTILLING",
+    "phoneOrderPaid": "BETALT",
+    "phoneOrderNotPaid": "IKKE BETALT · {amount} betales ({type})"
   },
   "admin": {
     "welcomeBack": "Velkommen tilbake",

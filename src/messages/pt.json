@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Se você tiver uma impressora térmica conectada, os recibos são impressos automaticamente ao aceitar um pedido. Configure sua impressora ou altere as configurações pelo botão <gear></gear> na barra superior.",
     "tourPrintingHint": "Você pode rever este tour a qualquer momento limpando os dados do site no seu navegador.",
     "tourDoneTitle": "Tudo pronto",
-    "tourDoneBody": "É isso. A partir daqui, a cozinha funciona sozinha — basta manter esta aba aberta durante o serviço. Bom trabalho!"
+    "tourDoneBody": "É isso. A partir daqui, a cozinha funciona sozinha — basta manter esta aba aberta durante o serviço. Bom trabalho!",
+    "phoneOrderBadge": "PEDIDO POR TELEFONE",
+    "phoneOrderPaid": "PAGO",
+    "phoneOrderNotPaid": "NÃO PAGO · {amount} a pagar ({type})"
   },
   "admin": {
     "welcomeBack": "Bem-vindo de volta",

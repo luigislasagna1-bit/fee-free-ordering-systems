@@ -1112,7 +1112,10 @@
     "tourPrintingBody": "Bağlı bir termal yazıcınız varsa, bir siparişi kabul ettiğinizde fişler otomatik olarak yazdırılır. Yazıcınızı kurmak veya ayarları değiştirmek için üst çubuktaki <gear></gear> düğmesini kullanın.",
     "tourPrintingHint": "Tarayıcınızın site verilerini temizleyerek bu turu istediğiniz zaman yeniden izleyebilirsiniz.",
     "tourDoneTitle": "Her şey hazır",
-    "tourDoneBody": "Hepsi bu kadar. Bundan sonra mutfak kendi akışında ilerler — servis boyunca bu sekmeyi açık tutmanız yeterli. Kolay gelsin!"
+    "tourDoneBody": "Hepsi bu kadar. Bundan sonra mutfak kendi akışında ilerler — servis boyunca bu sekmeyi açık tutmanız yeterli. Kolay gelsin!",
+    "phoneOrderBadge": "TELEFON SİPARİŞİ",
+    "phoneOrderPaid": "ÖDENDİ",
+    "phoneOrderNotPaid": "ÖDENMEDİ · {amount} ödenecek ({type})"
   },
   "admin": {
     "welcomeBack": "Tekrar Hoşgeldiniz",
