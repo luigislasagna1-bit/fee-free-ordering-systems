@@ -253,6 +253,8 @@ export type FulfilmentState = {
     fee?: number | null;
     minimumOrder?: number | null;
     zoneName?: string | null;
+    /** Free delivery over this subtotal (0 = always) — from the store's live promo, spoken with the fee. */
+    freeDeliveryOver?: number | null;
     forAddress: string;
   } | null;
 };
@@ -284,7 +286,7 @@ export type LineSummary = {
 
 export type OrderState = {
   turn: number;
-  fulfilment: { type: "pickup" | "delivery" | null; address?: string; verified?: boolean; fee?: number | null };
+  fulfilment: { type: "pickup" | "delivery" | null; address?: string; verified?: boolean; fee?: number | null; freeDeliveryOver?: number | null };
   customer: { name: string | null; phone: string | null; phoneSource: "caller_id" | "spoken" | null };
   lines: LineSummary[];
   focusLineId: string | null;
@@ -551,6 +553,7 @@ export class CartEngine {
     deliveryFee?: number | null;
     minimumOrder?: number | null;
     zoneName?: string | null;
+    freeDeliveryOver?: number | null;
   }) {
     const f = this.state.fulfilment;
     const key = addressKey(f.street, f.city, f.zip);
@@ -566,6 +569,7 @@ export class CartEngine {
       fee: typeof res.fee === "number" ? res.fee : typeof res.deliveryFee === "number" ? res.deliveryFee : null,
       minimumOrder: typeof res.minimumOrder === "number" ? res.minimumOrder : null,
       zoneName: res.zoneName ?? null,
+      freeDeliveryOver: typeof res.freeDeliveryOver === "number" ? res.freeDeliveryOver : null,
       forAddress: key,
     };
   }
@@ -1004,7 +1008,7 @@ export class CartEngine {
       turn: s.turn,
       fulfilment: {
         type: f.type,
-        ...(f.type === "delivery" ? { address: address || undefined, verified: f.check?.located === true, fee: f.check?.fee ?? null } : {}),
+        ...(f.type === "delivery" ? { address: address || undefined, verified: f.check?.located === true, fee: f.check?.fee ?? null, ...(typeof f.check?.freeDeliveryOver === "number" ? { freeDeliveryOver: f.check.freeDeliveryOver } : {}) } : {}),
       },
       customer: { ...s.customer },
       lines: s.lines.map((l) => this.summarize(l)),

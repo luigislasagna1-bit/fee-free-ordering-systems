@@ -40,7 +40,7 @@ export function renderStateBlock(input: StateBlockInput): string {
   if (s.fulfilment.type === "delivery") {
     head.push(
       `delivery${s.fulfilment.address ? `: ${s.fulfilment.address}` : " (address needed)"}${
-        s.fulfilment.address ? (s.fulfilment.verified ? ` (verified${typeof s.fulfilment.fee === "number" ? `, fee ${s.fulfilment.fee}` : ""})` : " (unverified)") : ""
+        s.fulfilment.address ? (s.fulfilment.verified ? ` (verified${typeof s.fulfilment.fee === "number" ? `, fee ${s.fulfilment.fee}` : ""}${typeof s.fulfilment.freeDeliveryOver === "number" ? `, free over ${s.fulfilment.freeDeliveryOver}` : ""})` : " (unverified)") : ""
       }`,
     );
   } else if (s.fulfilment.type === "pickup") head.push("pickup");

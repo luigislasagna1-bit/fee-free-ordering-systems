@@ -717,6 +717,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         fee: typeof j.deliveryFee === "number" ? j.deliveryFee : null,
         minimumOrder: typeof j.minimumOrder === "number" ? j.minimumOrder : null,
         zoneName: j.zoneName ?? null,
+        freeDeliveryOver: typeof j.freeDeliveryOver === "number" ? j.freeDeliveryOver : null,
       });
       // A street with no city/postcode that the check could not place is not
       // an address yet — ask for the rest NOW, not at quote time (the 22:10
@@ -730,7 +731,14 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         ...(partial
           ? { instruction: "That street alone couldn't be placed. Ask for the city and postal code right now — one question — and call set_fulfilment again with the full address before any food; then say the delivery fee plainly." }
           : j.located === true && typeof j.deliveryFee === "number"
-            ? { instruction: "Address found. Tell the caller the delivery fee in one short clause and move to the food." }
+            ? {
+                instruction:
+                  typeof j.freeDeliveryOver === "number"
+                    ? j.freeDeliveryOver > 0
+                      ? `Address found. Say the delivery fee AND, in the same breath, that delivery is free on orders over ${spokenMoney(j.freeDeliveryOver)} ("delivery is ${spokenMoney(Number(j.deliveryFee))}, or free once you're over ${spokenMoney(j.freeDeliveryOver)}") — never the fee alone. Then move to the food.`
+                      : "Address found. Delivery is FREE here — say so, and move to the food."
+                    : "Address found. Tell the caller the delivery fee in one short clause and move to the food.",
+              }
             : {}),
       };
     }

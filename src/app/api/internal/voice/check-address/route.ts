@@ -7,6 +7,14 @@ import { findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 // Prisma + Nominatim: node runtime only.
 export const runtime = "nodejs";
 
+const money = (n: number, currency: string) => {
+  try {
+    return new Intl.NumberFormat("en", { style: "currency", currency: (currency || "usd").toUpperCase() }).format(n);
+  } catch {
+    return `$${n.toFixed(2)}`;
+  }
+};
+
 /**
  * POST /api/internal/voice/check-address
  *
@@ -137,6 +145,53 @@ export async function POST(req: NextRequest) {
 
   const { zone, inside, distanceKm } = resolved;
 
+  // FREE DELIVERY (Luigi 2026-08-16): quoting "seven ninety-nine" alone is
+  // scary when the store gives free delivery over a threshold. Find the live
+  // free_delivery promotion that applies to THIS zone and hand the threshold
+  // back so it is said in the same breath as the fee. Same rules the order
+  // engine applies (active, auto, dated, not member-only, delivery allowed,
+  // zone allowed) — the quote/charge stays authoritative.
+  const now = new Date();
+  const freePromos = await prisma.promotion.findMany({
+    where: {
+      restaurantId: restaurant.id,
+      isActive: true,
+      autoApply: true,
+      promotionType: "free_delivery",
+      groupLinks: { none: {} },
+      OR: [{ startsAt: null }, { startsAt: { lte: now } }],
+      AND: [{ OR: [{ endsAt: null }, { endsAt: { gte: now } }] }],
+    },
+    select: { minimumOrder: true, deliveryZoneIds: true, orderType: true },
+    take: 10,
+  });
+  const zoneId = String((zone as { id?: unknown }).id ?? "");
+  let freeDeliveryOver: number | null = null;
+  // Outside every zone the fee is "what it would cost" and the store decides —
+  // no free-delivery promise there.
+  for (const p of inside ? freePromos : []) {
+    const ot = String(p.orderType ?? "both");
+    if (ot !== "both" && !/delivery/i.test(ot)) continue;
+    let zoneOk = true;
+    if (p.deliveryZoneIds) {
+      try {
+        const ids = JSON.parse(p.deliveryZoneIds);
+        if (Array.isArray(ids) && ids.length) zoneOk = ids.map(String).includes(zoneId);
+      } catch {
+        zoneOk = true;
+      }
+    }
+    if (!zoneOk) continue;
+    const min = Number(p.minimumOrder) || 0;
+    if (freeDeliveryOver === null || min < freeDeliveryOver) freeDeliveryOver = min;
+  }
+  const freeLine =
+    freeDeliveryOver === null
+      ? ""
+      : freeDeliveryOver > 0
+        ? ` In the SAME breath say delivery is FREE on orders over ${money(freeDeliveryOver, restaurant.currency)} (freeDeliveryOver) — never quote the fee bare.`
+        : " In the SAME breath say delivery is FREE here (freeDeliveryOver 0) — the fee only applies if a deal doesn't.";
+
   return NextResponse.json({
     hasZones: true,
     located: true,
@@ -152,9 +207,11 @@ export async function POST(req: NextRequest) {
     estimatedMinutes: zone.estimatedMinutes,
     distanceKm: Math.round(distanceKm * 10) / 10,
     currency: restaurant.currency,
+    freeDeliveryOver,
     instruction: inside
       ? "We deliver to this address. Confirm the street back to the caller in plain words, tell them the delivery fee" +
         (zone.minimumOrder > 0 ? " and the minimum order" : "") +
+        freeLine +
         ", then take their food order. Never read out the zone name, the distance, or the matched address string — those are for you, not for them."
       : "This address is BEYOND every delivery zone. Say warmly that it is outside the usual delivery area, give this fee" +
         (zone.minimumOrder > 0 ? " and this minimum" : "") +

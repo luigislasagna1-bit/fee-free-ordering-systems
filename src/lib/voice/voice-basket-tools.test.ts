@@ -1263,3 +1263,23 @@ describe("combo slot auto-fill", () => {
     expect(api.itemOptions).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("delivery fee is never quoted bare when the store gives free delivery (Luigi 2026-08-16)", () => {
+  it("set_fulfilment carries freeDeliveryOver into the instruction, the state and the fulfilment check", async () => {
+    const { ctx, api } = makeCtx();
+    api.checkAddress.mockResolvedValue(located({ freeDeliveryOver: 30 }));
+    const out = await run(ctx, "set_fulfilment", { type: "delivery", street: "249 Bussel Crescent", city: "Milton" });
+    expect(out.ok).toBe(true);
+    expect(String(out.instruction)).toContain("free on orders over thirty dollars");
+    expect(String(out.instruction)).toContain("never the fee alone");
+    expect(out.state.fulfilment.freeDeliveryOver).toBe(30);
+    // free everywhere (threshold 0)
+    api.checkAddress.mockResolvedValue(located({ freeDeliveryOver: 0 }));
+    const out2 = await run(ctx, "set_fulfilment", { type: "delivery", street: "1 Main St", city: "Milton" });
+    expect(String(out2.instruction)).toContain("Delivery is FREE here");
+    // no promo: plain fee instruction, nothing invented
+    api.checkAddress.mockResolvedValue(located());
+    const out3 = await run(ctx, "set_fulfilment", { type: "delivery", street: "2 Main St", city: "Milton" });
+    expect(String(out3.instruction)).not.toMatch(/free/i);
+  });
+});
