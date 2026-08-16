@@ -63,7 +63,7 @@ type SessionLike = {
   debugCart(): { snapshot(): CartState };
   debugVersions(): Record<string, unknown>;
 };
-type SessionCtor = new (ws: unknown, token: unknown, anthropic: unknown, deps?: { api?: unknown; now?: () => number; events?: EventSink }) => SessionLike;
+type SessionCtor = new (ws: unknown, token: unknown, anthropic: unknown, deps?: { api?: unknown; now?: () => number; events?: EventSink; earlyFragmentMs?: number }) => SessionLike;
 
 const SESSION_MODULE = "../../../../services/nabil-voice/src/session";
 let sessionMod: Promise<{ CallSession: SessionCtor }> | null = null;
@@ -167,7 +167,11 @@ export async function runScenario(scn: Scenario, opts: RunScenarioOpts): Promise
     to: opts.to ?? "+13656581458",
     from: opts.from ?? "+16475550100",
   };
-  const session = new CallSession(ws as never, token, anthropic as never, { api: backend, events: rec.sink });
+  // The scripted caller answers the instant a reply is complete — there is no
+  // TTS to hear — so the live early-fragment hold (a ≤3-word utterance within
+  // 1.5 s of a reply's end is the tail of the caller's PREVIOUS sentence, see
+  // session.ts) would swallow every short scripted answer. Off in the sim.
+  const session = new CallSession(ws as never, token, anthropic as never, { api: backend, events: rec.sink, earlyFragmentMs: 0 });
 
   const reasons: string[] = [];
   const sends: Array<{ say: string; scriptIndex: number | null; kind: "script" | "answer" | "closing" | "llm" }> = [];

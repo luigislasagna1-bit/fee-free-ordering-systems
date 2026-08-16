@@ -82,9 +82,10 @@ const EARLY_FRAGMENT_SILENCE_MS = 7_000;
 export function estimateSpeechMs(text: string): number {
   return Math.min(20_000, 600 + Math.round((String(text ?? "").length / 15) * 1000));
 }
-export function isEarlyFragment(text: string, msSinceReplyEnd: number): boolean {
+export function isEarlyFragment(text: string, msSinceReplyEnd: number, windowMs: number = EARLY_FRAGMENT_MS): boolean {
   const t = String(text ?? "").trim();
-  if (!t || msSinceReplyEnd < 0 || msSinceReplyEnd > EARLY_FRAGMENT_MS) return false;
+  if (windowMs <= 0) return false;
+  if (!t || msSinceReplyEnd < 0 || msSinceReplyEnd > windowMs) return false;
   if (/^\(pressed /.test(t)) return false; // DTMF markers are never fragments
   return t.split(/\s+/).length <= EARLY_FRAGMENT_MAX_WORDS;
 }
@@ -102,6 +103,10 @@ export type SessionDeps = {
   api?: VoiceApi;
   now?: () => number;
   events?: EventSink;
+  /** Test seam: the sim harness's scripted caller answers within milliseconds
+   *  of a reply because there is no TTS to hear — real timing can't exist
+   *  there. 0 disables the early-fragment hold. Default EARLY_FRAGMENT_MS. */
+  earlyFragmentMs?: number;
 };
 
 type PerRequest = { hop: number; ttftMs: number | null; totalMs: number; cacheRead: number; cacheWrite: number; uncached: number; stop: string | null };
@@ -137,6 +142,11 @@ export class CallSession {
   private tailFragments: string[] = [];
   /** Runs a held EARLY fragment on its own if the caller says nothing more (see handlePrompt). */
   private earlyFragmentTimer: ReturnType<typeof setTimeout> | undefined;
+  private readonly earlyFragmentMs: number;
+  /** Last REAL barge-in (not stale, not during a protected sentence): the caller
+   *  was talking over the reply, so what follows is a real utterance, never an
+   *  early fragment. */
+  private lastBargeInAt = 0;
   private resumeTimer: ReturnType<typeof setTimeout> | undefined;
   private turnRunning = false;
   private turnStartedAt = 0;
@@ -198,6 +208,7 @@ export class CallSession {
   ) {
     this.api = deps.api ?? defaultApi;
     this.now = deps.now ?? Date.now;
+    this.earlyFragmentMs = deps.earlyFragmentMs ?? EARLY_FRAGMENT_MS;
     this.events = deps.events ?? createEventSink(this.now);
     this.startedAt = this.now();
     const cfg = normalizeAgentConfig(undefined);
@@ -283,6 +294,7 @@ export class CallSession {
           break;
         }
         this.interrupted = true;
+        this.lastBargeInAt = this.now();
         this.ttsBuffer = ""; // never speak buffered text after the caller cut in
         if (heard !== null) this.currentStreamText = heard;
         this.controller?.abort();
@@ -458,7 +470,16 @@ export class CallSession {
     // the previous reply could have been heard is not a response to it. Hold
     // it as context for the caller's real response; if the reply has played
     // and the caller stays silent, run it on its own with a nudge framing.
-    if (!synthetic && !this.turnRunning && this.turnIndex > 0 && isEarlyFragment(text, this.now() - this.lastTurnEndedAt)) {
+    if (
+      !synthetic &&
+      !this.turnRunning &&
+      this.turnIndex > 0 &&
+      this.earlyFragmentMs > 0 &&
+      // a barge-in in the last few seconds means the caller is talking over us —
+      // their words are a real utterance, not the tail of an earlier one
+      this.now() - this.lastBargeInAt > 5_000 &&
+      isEarlyFragment(text, this.now() - this.lastTurnEndedAt, this.earlyFragmentMs)
+    ) {
       this.tailFragments.push(text.trim());
       this.transcript.push({ role: "user", text, ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
       this.events.emit({ type: "tail_fragment", turn: this.turnIndex, text, early: true });
