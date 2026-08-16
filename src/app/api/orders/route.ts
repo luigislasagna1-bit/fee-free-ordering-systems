@@ -12,6 +12,7 @@ import { hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
 import { blockingServiceKind } from "@/lib/service-restriction";
 import { priceToppingLines, priceToppingLinesForDisplay, toppingBaseAdjust, isHalfToppingName } from "@/lib/pizza-topping-pricing";
 import { reportError } from "@/lib/report-error";
+import { logCheckoutRejection, rejectionContextFromBody } from "@/lib/checkout-observability";
 import { findZoneForPoint, type ZoneLike } from "@/lib/geocode";
 import { resolveAddress } from "@/lib/nominatim";
 import {
@@ -120,7 +121,40 @@ function promoNamesFrom(appliedPromos: string | null | undefined): string[] {
   }
 }
 
+/**
+ * Public entry point. Thin wrapper around `placeOrder` whose only job is to make
+ * REFUSALS visible: the 500 path has alerted since H9, but the ~69 deliberate
+ * 4xx rejections in here were silent, so "the promo says it's registered to a
+ * different email" left no server-side trace at all (Luigi 2026-08-14).
+ *
+ * Wrapping is deliberate over touching all 69 call sites: one seam, nothing to
+ * forget, and a rejection added later is covered automatically. Costs nothing on
+ * the happy path — the cloned body is only read when the answer was an error.
+ * Never changes the response, and never throws (logCheckoutRejection is inert on
+ * failure), so it cannot become a reason an order fails.
+ */
 export async function POST(req: NextRequest) {
+  const bodyForLog = req.clone();
+  const res = await placeOrder(req);
+  if (res.status >= 400) {
+    try {
+      // Response body first (it carries the machine `code`), request second.
+      const payload = await res.clone().json().catch(() => ({} as any));
+      const body = await bodyForLog.json().catch(() => ({}));
+      logCheckoutRejection({
+        status: res.status,
+        code: typeof payload?.code === "string" ? payload.code : null,
+        error: typeof payload?.error === "string" ? payload.error : null,
+        ...rejectionContextFromBody(body),
+      });
+    } catch {
+      /* observability must never break a checkout */
+    }
+  }
+  return res;
+}
+
+async function placeOrder(req: NextRequest) {
   try {
     const body = await req.json();
     const {
