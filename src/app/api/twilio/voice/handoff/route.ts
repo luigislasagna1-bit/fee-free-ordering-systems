@@ -1,6 +1,8 @@
 import { NextRequest } from "next/server";
 import prisma from "@/lib/db";
 import { shouldEnforceTwilioSignature, verifyTwilioSignatureAny, twilioUrlCandidates } from "@/lib/voice/twilio-signature";
+import { safetyNetTwiml } from "@/lib/voice/twiml-safety-net";
+import { reportError } from "@/lib/report-error";
 
 /**
  * Nabil AI — transfer-to-human handoff. When the voice service ends the
@@ -146,11 +148,40 @@ async function handle(params: Record<string, string>) {
 
 export async function POST(req: NextRequest) {
   const params = await readTwilioParams(req);
-  const rejected = rejectIfForged(req, params);
+
+  // Verification fails CLOSED if it throws — unverified, this route dials the
+  // restaurant's staff number on demand.
+  let rejected: Response | null;
+  try {
+    rejected = rejectIfForged(req, params);
+  } catch (e) {
+    reportError(e, { route: "twilio/voice/handoff", stage: "verify" });
+    return forbidden("verification threw", publicUrl(req), !!req.headers.get("x-twilio-signature"));
+  }
   if (rejected) return rejected;
-  return handle(params);
+
+  try {
+    // ⚠️ `await` is load-bearing — `return handle(...)` in a try catches nothing.
+    return await handle(params);
+  } catch (e) {
+    // handle() does an uncaught prisma.voiceNumber.findUnique. A DB blip here is
+    // worse than on the entry route: the caller is already three minutes into an
+    // order and is being handed to a person. A 500 makes Twilio hang up on them.
+    reportError(e, {
+      route: "twilio/voice/handoff",
+      to: params.To ?? null,
+      callSid: params.CallSid ?? null,
+    });
+    return safetyNetTwiml(params.To);
+  }
 }
 
 export async function GET(req: NextRequest) {
-  return handle(await readTwilioParams(req));
+  const params = await readTwilioParams(req);
+  try {
+    return await handle(params);
+  } catch (e) {
+    reportError(e, { route: "twilio/voice/handoff", method: "GET" });
+    return safetyNetTwiml(params.To);
+  }
 }
