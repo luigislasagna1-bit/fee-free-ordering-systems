@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-16 by Claude (**A55 round 5 — Nabil now says "free delivery over $30" in the same breath as the fee, and restaurants can REPORT A CALL** (Loman parity): a Report-this-call button on every call page → a new superadmin section *Restaurant Reports › Nabil AI reports* with status, a written answer the owner sees, a notes thread both ways, and the recording/transcript/order/timeline on one screen. Your step 0 under A55.)
+**Last updated:** 2026-08-16 (later) by Claude (**A59 — your 00:30 call: "we reopen at two" was the UTC hour, and the "order for later" answer contradicted itself — both fixed in code, ship with the next Fly deploy.** Also: everything the reliability session built is now COMMITTED as 9 clean commits (drain, capacity cap, the Twilio fallback chain on Fly, DSAR export parity, FIRSTBUY, checkout observability), and the missing piece that made the fallback chain inert is wired — a **Superadmin → Nabil Phone Lines** page that checks and repairs the Twilio webhook + "PRIMARY HANDLER FAILS" URLs with one click, so A58 click #1 is no longer a manual step. Your part tonight: confirm the two fallback numbers under A59.)
+**Previous update:** 2026-08-16 by Claude (**A55 round 5 — Nabil now says "free delivery over $30" in the same breath as the fee, and restaurants can REPORT A CALL** (Loman parity): a Report-this-call button on every call page → a new superadmin section *Restaurant Reports › Nabil AI reports* with status, a written answer the owner sees, a notes thread both ways, and the recording/transcript/order/timeline on one screen. Your step 0 under A55.)
 **Previous update:** 2026-08-15 (latest) by Claude (**A57 — the whole product now says we're LAUNCHED, and the iPhone app is live everywhere.** Your Fee Free Order App is approved and public on the App Store (Apple ID 6794053932 — verified against Apple's own listing API), so **A49 is closed and A17 is finished**. Flipping that one link switched on the iPhone/iPad download across the marketing site, the footer, /admin/publishing, the signup email and the "text me the app link" message — all at once, because they all read the same switch. Alongside it, every trace of "soft launch / coming soon / at launch" for the *platform* is gone: the homepage's "Something big is cooking" teaser is now a **NOW LIVE** section with the real 5-step path to your first order, and there's a new homepage section selling the order app on iPhone + iPad + Android. Also corrected a marketing claim that had gone **wrong**, not just stale: 12 comparison pages still told restaurants the Marketplace was "coming soon — pricing announced at launch", when it has been **live and free** since 14 July and your own Terms already promise a free listing. Genuinely unreleased add-ons (POS, AI Phone, Reservation Deposits, ContentPilot, Customer SMS, Marketing Studio, Branded Mobile App) still correctly say "coming soon". 38 languages at full parity, 2138 tests + build green. **Nothing needed from you.**)
 **Previous update:** 2026-08-15 (later) by Claude (**A56 — Fabrizio #17: a Euro restaurant's info page was quoting delivery fees in dollars.** The "Our delivery areas" legend under the map had the "$" typed straight into the code, so it printed dollars no matter what currency the owner set. The same "$" was also baked into all 38 translated tooltip strings, and the hosted marketing website had it in three more places, including every menu price. All fixed to use the restaurant's own currency and language, pushed as `b1ae29cf`, and confirmed on his live store — his zones now read "Costo: 5,00 €, Min: 20,00 €". Reply posted, he's been asked to re-test. **Nothing needed from you.**)
 **Previous update:** 2026-08-15 by Claude (**A55 — Nabil AI P0 rebuild.** The last failed call (red onion "not available", "One moment" ×12, combo re-added ×4) traced to facts the model was asked to remember or was handed truncated. Rebuilt: an authoritative server cart with stable line ids for EVERY item, a state block on every turn, editable combos, code-enforced "ask, don't guess", compaction for long calls, a full per-call timeline in the admin, a "turn this call into a test" button, and a 35-call torture suite that gates every Fly deploy. **Blocked on one thing only you can do: a valid Anthropic key in `.env.local` (A55 step 1).** 14 new ElevenLabs voices are in the picker.)
@@ -170,6 +171,41 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A59. 📞 Your 00:30 call — "we reopen at two" + the "order for later" contradiction — FIXED in code (2026-08-16)
+
+**What you heard (call `cmsvb4gxf000h04jonnz15w0u`, 00:30 EDT):** you asked "Can I place an order for tomorrow?"
+→ Nabil: *"We can't schedule orders for a later time over the phone — we only take pre-orders for right now"*
+→ you: "Right now." → Nabil: *"We're actually closed right now — we reopen at **two o'clock** this afternoon. I can
+still take your order now as a pre-order for when we open."* Two real defects, both in the layer between the facts
+and the model — the facts themselves were right (your hours are 10:00 AM – 12:00 AM every day):
+
+1. **"Two o'clock" was the UTC hour.** The reopening time reached the model as a raw timestamp
+   (`2026-08-16T14:00:00Z`) with an instruction to "say it in local time". It read the 14. That is a computation
+   the model was asked to do — exactly the class of bug the P0 rebuild forbids. → The server now computes the words
+   in your timezone and your 12h format ("this morning at 10:00 AM", "tomorrow (Sunday) at 10:00 AM",
+   "Tuesday at 11:00 AM") and Nabil is told to say **exactly that**. The timestamp never reaches it as speech again.
+2. **Two rules contradicted each other.** One said "scheduled orders: RIGHT NOW only — decline requests for a later
+   time or day"; the closed-hours rule said "you may still take the order for after we reopen". So it refused
+   "tomorrow", then offered a pre-order for… tomorrow. → One rule now: *a specific later time or day can't be set by
+   phone (offer the online link) — but an order taken now is simply prepared when the kitchen is next open, which
+   while closed IS "tomorrow" / "when you open": take it, and say "we're closed right now — we open this morning at
+   10:00 AM; I can take your order now and it'll be ready shortly after we open."*
+
+**Status:** committed with tests (`b43ae1bf`); the Vercel half ships with tonight's push, the Fly half with the next
+gated deploy (I'm running it tonight). **Try the same call after I say it's live** — expect "we open this morning
+at ten" (or "tomorrow at ten" if you call before midnight) and one coherent sentence.
+
+🤔 **One decision for you — phone orders for a SPECIFIC later time.** Today Nabil genuinely cannot take "for 6 pm"
+or "for Tuesday" by phone (the order tools carry no scheduled time); your website can, so it offers the link.
+Building it properly is about half a day: a `when` on the order tools, the same slot rules the website enforces
+(minimum lead, max 20 days ahead, hours), and refusals spoken back ("that's too soon — the earliest is …").
+Say the word and it goes on the list; otherwise the honest answer stays.
+
+☐ **Confirm the two safety-net numbers** (I set the env, you just say yes/no): if Nabil can't take a call, ring
+**289-409-1133** (that is your store's alert phone today, and it is what "transfer me to a human" already dials) —
+or would you rather the fallback ring the store line **905-385-4444**? And the catch-all when the system can't even
+look the store up: your mobile — is that the 289 number?
+
 ### A58. ☎️ Nabil could hand a caller DEAD AIR — fixed in code; 3 short clicks are yours (2026-08-15)
 
 **What I found while comparing Nabil against a competitor's sales page (Loman.ai).** Nabil beats them
@@ -193,22 +229,20 @@ without being added to the export. And when Twilio *refuses* to delete a recordi
 throw away the only handle that could delete it while reporting the erasure as complete — the
 request is now logged "partial" and the audio stays reachable for a retry.
 
-**Your clicks — none of them take more than a minute:**
-1. ☐ **Twilio Console → the Nabil number → Voice → "PRIMARY HANDLER FAILS"** → Webhook, **HTTP POST**,
-   `https://nabil-voice.fly.dev/twiml/fallback` → Save. *This is the highest-value minute on this
-   whole list.* (Once the code below is deployed I can also set it for you automatically — say the
-   word and I'll run it.)
-2. ☐ **Vercel → Environment Variables → add `NABIL_FALLBACK_DEFAULT_NUMBER`** = your own mobile in
-   `+1…` form. It is the catch-all the emergency path rings when it can't reach the database to look
-   up who to call. Without it that path can only apologise.
-3. ☐ **Fly secrets** (I can run these for you): `fly secrets set NABIL_TWILIO_FALLBACK_URL=https://nabil-voice.fly.dev/twiml/fallback FFOS_TWILIO_AUTH_TOKEN=<your Twilio auth token> --app nabil-voice`.
-   The auth token is what lets the emergency handler prove a request really came from Twilio before
-   it dials a real phone.
+**Your clicks — updated 2026-08-16 (later): most of this is now mine, not yours:**
+1. ✅ → **automated.** The Twilio "PRIMARY HANDLER FAILS" URL is now set from **Superadmin → Nabil Phone Lines**
+   (a table of every Nabil number: what Twilio has vs. what we expect, and a *Repair* button that writes only the
+   two voice URLs). I press it right after tonight's Vercel deploy and report the before/after. No console visit.
+2. 🔷 **`NABIL_FALLBACK_DEFAULT_NUMBER` + `NABIL_FALLBACK_MAP`** — I set them in Vercel tonight from the numbers you
+   confirm under **A59** (last bullet). Without them the emergency path can only apologise.
+3. ✅ → **mine.** The two Fly secrets are staged by me (the Twilio token copied Vercel→Fly through a pipe, never
+   displayed — you OK'd this) and go live with the next gated Fly deploy.
 4. ☐ **A free uptime monitor** (UptimeRobot or Better Stack) on `https://nabil-voice.fly.dev/health`,
    60-second interval, SMS alert to you. **This is the only alarm that still works when Vercel is
-   down** — a monitor that runs on Vercel cannot tell you Vercel is broken.
+   down** — a monitor that runs on Vercel cannot tell you Vercel is broken. *Still yours — it needs an account in
+   your name.*
 
-5. ☐ **`fly scale count 2 --app nabil-voice`** (~+US$5–7/mo) — now unblocked. The graceful-shutdown
+5. ✅ DONE — **2 machines are live** (`fly status`: 8654502f933318 + 8654670f7366e8, both healthy). The graceful-shutdown
    work has landed, so a deploy drains instead of killing calls: the machine stops accepting new
    calls, waits up to 4 minutes for the ones in flight, and anything still running gets a spoken
    sentence and a warm transfer rather than a dead line. That only helps if there is a **second**
@@ -222,6 +256,15 @@ because the two limits that will actually bite are ones that measurement can't s
 account-wide rate limits, and CPU), and raising a cap on the strength of the wrong evidence would
 just move the failure from "we politely ring your store in under a second" to "all 100 live callers
 break mid-sentence." Re-run it any time with `npm run nabil:capacity` — it costs nothing.
+
+**Verified 2026-08-16 — the missed-order robocall covers phone orders too.** I read the cron end to end: it selects
+any order still *pending* ~90 s after the kitchen was notified, with no channel filter, so a Nabil order is treated
+exactly like a website order and your alert phone rings. Your store is on **auto-accept**, so orders are never
+"pending" and it never needs to ring — correct by design (nothing is missed) — but note the flip side: on an
+auto-accept store, an order that lands while your router is dead is accepted and dispatched with nobody having
+seen it. That is a separate class ("accepted but unseen") I've put on the roadmap, not tonight's work. One more
+thing for later, when stores start forwarding their main line to Nabil: the robocall dials `alertPhone → phone`,
+and a forwarded main line would send that call to Nabil itself — logged for the keep-your-number work.
 
 🤔 **One decision, when you're ready.** Nabil's price. Your CA$0.75/call-minute with a CA$99/month
 minimum works — measured cost is US$0.34–0.40/minute from 31 August, so the margin is positive at

@@ -30,6 +30,21 @@ fee** (`check-address` → `freeDeliveryOver`, same rules as the order engine); 
 screen, staff recording proxy + regression download, "open as the restaurant"), i18n ×38, PII map.
 Next: Luigi's report-flow walkthrough; a "Reports" tab in the restaurant's phone-ordering area listing
 its own reports; other report kinds (ordering, kitchen display) under Restaurant Reports.
+**Round 6 — reliability / telephony (2026-08-16, consolidated session):** graceful SIGTERM drain + per-machine
+call cap (measured 1.06 MB RSS/call), rolling deploys on 2 Fly machines, the Twilio "PRIMARY HANDLER FAILS"
+chain (Vercel safety net `<Dial>` → Fly `/twiml/fallback` fed by `/api/internal/voice/fallback-map`, last-good
+map kept forever), **Superadmin › Nabil Phone Lines** (checks + repairs the number's VoiceUrl / VoiceFallbackUrl —
+the caller for `ensureVoiceWebhookConfig`), handoff route fail-closed, DSAR export parity, FIRSTBUY assigned-code
+fix, `[checkout-rejected]` observability; the reopening time is a server-computed local fact
+(`open.nextOpenLocal`, "this morning at 10:00 AM") and the closed/scheduling rules are one coherent rule.
+Verified by reading: the missed-order robocall (`order-alert-calls`) covers `channel:"voice"` orders with no
+filter — only `autoAcceptOrders` (born accepted) suppresses it. **Follow-ups logged:** (a) auto-accept stores
+have no phone safety net for "accepted but unseen" orders (dead router) — consider an SMS/robocall leg keyed on
+kitchen ack, not status; (b) keep-your-number: the robocall dials `alertPhone → phone`; a store that forwards
+`phone` to its Nabil number would robocall Nabil — cross-check the destination against `VoiceNumber.phoneNumber`
+before Stage 3 forwarding ships; (c) phone orders for a SPECIFIC later time (`when` on the order tools + the web's
+slot rules spoken back) — Luigi's decision (OWNER-ACTIONS A59); (d) dial numbers as E.164 in the feed/handoff
+(alertPhone is stored bare "2894091133" and Twilio is guessing the country today).
 
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 
