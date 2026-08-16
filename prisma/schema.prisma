@@ -3088,6 +3088,11 @@ model VoiceCall {
   /// agreed to, so it is surfaced on the call page and alerted on.
   quotedTotal     Float?
   chargedTotal    Float?
+  /// Set ONCE when the ops alarm for a quoted≠charged divergence on a PLACED
+  /// order was enqueued (call-log "end" → src/lib/voice/totals-mismatch-alarm.ts).
+  /// Claimed with a conditional updateMany so a retried end event never alerts
+  /// twice. Not PII. (Promised by the comment above since 2026-08-13; built 2026-08-16.)
+  totalMismatchAlertedAt DateTime?
 
   /// 📏 How long this caller spent waiting, measured rather than inferred:
   /// p50/p95/max time-to-first-token, tool durations, model REQUESTS (not

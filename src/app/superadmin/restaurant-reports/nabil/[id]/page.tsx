@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { totalsMismatch } from "@/lib/voice/totals-mismatch";
 import { notFound } from "next/navigation";
 import { AlertTriangle, ExternalLink, ListTree, Mic, PhoneCall, ShoppingBag } from "lucide-react";
 import prisma from "@/lib/db";
@@ -100,7 +101,7 @@ export default async function NabilReportDetailPage({
 
   const transcript: TranscriptTurn[] = Array.isArray(call.transcript) ? (call.transcript as TranscriptTurn[]) : [];
   const topic = (VOICE_CALL_REPORT_TOPIC_LABEL_EN as Record<string, string>)[report.topic] ?? report.topic;
-  const mismatch = call.quotedTotal != null && call.chargedTotal != null && Math.abs(call.quotedTotal - call.chargedTotal) >= 0.01;
+  const mismatch = totalsMismatch(call.quotedTotal, call.chargedTotal); // one tolerance platform-wide (> half a cent)
   const latency = (call.latency && typeof call.latency === "object" ? (call.latency as Record<string, unknown>) : {}) as Record<string, unknown>;
   const num = (v: unknown) => (typeof v === "number" && Number.isFinite(v) ? v : null);
   const ttft = (latency.ttftMs && typeof latency.ttftMs === "object" ? (latency.ttftMs as Record<string, unknown>) : {}) as Record<string, unknown>;

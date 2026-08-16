@@ -24,6 +24,10 @@ vi.mock("next/server", async (orig) => {
 });
 vi.mock("@/lib/voice/twilio-recording", () => ({ startCallRecording: vi.fn(async () => undefined) }));
 vi.mock("@/lib/voice/call-intelligence", () => ({ generateCallIntelligence: vi.fn(async () => undefined) }));
+// The alarm module imports ops-messages (server-only + Prisma) — mocked here;
+// its own behaviour is pinned in src/lib/voice/totals-mismatch-alarm.test.ts.
+const { alarmMock } = vi.hoisted(() => ({ alarmMock: vi.fn(async () => "skipped" as const) }));
+vi.mock("@/lib/voice/totals-mismatch-alarm", () => ({ alertTotalsMismatch: alarmMock }));
 
 import { POST } from "./route";
 
@@ -138,6 +142,29 @@ describe('event:"end"', () => {
     expect("agentVersion" in up.update).toBe(false);
     expect("menuSnapshotHash" in up.update).toBe(false);
     expect(prismaMock.voiceCallEvent.createMany).not.toHaveBeenCalled();
+  });
+
+  it("hands the parsed totals + placement facts to the quoted≠charged alarm after the response (the alarm decides)", async () => {
+    await POST(
+      post({ event: "end", callSid: "CA9", restaurantId: "r1", outcome: "order_placed", orderNumber: "ORD-1", quotedTotal: 24.5, chargedTotal: 27.1 }),
+    );
+    expect(alarmMock).toHaveBeenCalledTimes(1);
+    expect(alarmMock.mock.calls[0][0]).toMatchObject({
+      callId: "call_1",
+      restaurantId: "r1",
+      callSid: "CA9",
+      orderNumber: "ORD-1",
+      outcome: "order_placed",
+      quoted: 24.5,
+      charged: 27.1,
+    });
+    expect(alarmMock.mock.calls[0][0].endedAt).toBeInstanceOf(Date);
+  });
+
+  it("a rejected alarm never surfaces (fire-and-forget after the response)", async () => {
+    alarmMock.mockRejectedValueOnce(new Error("boom"));
+    const res = await POST(post({ event: "end", callSid: "CA9", restaurantId: "r1", outcome: "order_placed", quotedTotal: 1, chargedTotal: 2 }));
+    expect(res.status).toBe(200);
   });
 });
 

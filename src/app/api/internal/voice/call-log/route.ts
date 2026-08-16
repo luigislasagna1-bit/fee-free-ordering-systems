@@ -5,6 +5,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { requireInternalKey } from "@/lib/voice/internal-auth";
 import { startCallRecording } from "@/lib/voice/twilio-recording";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
+import { alertTotalsMismatch } from "@/lib/voice/totals-mismatch-alarm";
 import { redactEventPayload } from "@/lib/voice/event-redaction";
 import { parseStartBody, parseEndBody, parseEventsBody, parseMenuSnapshotBody, type ParsedEvent } from "./validation";
 import { phoneDigitsKey } from "@/lib/phone";
@@ -198,6 +199,22 @@ export async function POST(req: NextRequest) {
   after(() => {
     void generateCallIntelligence(row.id).catch((err) => {
       console.error("[call-log] intelligence pass failed for", row.id, err);
+    });
+    // 🚨 quoted ≠ charged on a PLACED order → one ops alarm per call, ever
+    // (the helper skips refusals that stored both totals but billed nobody,
+    // and claims the alert with a conditional update so an end retry can't
+    // alert twice). See src/lib/voice/totals-mismatch-alarm.ts.
+    void alertTotalsMismatch({
+      callId: row.id,
+      restaurantId: d.restaurantId,
+      callSid: d.callSid,
+      orderNumber: d.orderNumber ?? null,
+      outcome: d.outcome ?? null,
+      quoted: d.quotedTotal ?? null,
+      charged: d.chargedTotal ?? null,
+      endedAt: data.endedAt,
+    }).catch((err) => {
+      console.error("[call-log] totals-mismatch alarm failed for", row.id, err);
     });
   });
 

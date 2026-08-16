@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { totalsMismatch } from "@/lib/voice/totals-mismatch";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { AlertTriangle, ArrowRight, Ban, CalendarDays, ListTree, MessageSquareText, Mic, PhoneForwarded, ShoppingBag } from "lucide-react";
@@ -257,7 +258,7 @@ export default async function CallDetailPage({
           transcript days later. It is the loudest thing on the page now. */}
       {call.quotedTotal != null &&
         call.chargedTotal != null &&
-        Math.abs(call.quotedTotal - call.chargedTotal) > 0.005 && (
+        totalsMismatch(call.quotedTotal, call.chargedTotal) && (
           <div className="rounded-xl border-2 border-red-300 bg-red-50 p-5">
             <h3 className="font-semibold text-red-900 mb-1 flex items-center gap-1.5">
               <AlertTriangle className="w-4 h-4 text-red-600" />
