@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, after } from "next/server";
 import prisma from "@/lib/db";
 import { shouldEnforceTwilioSignature, verifyTwilioSignatureAny, twilioUrlCandidates } from "@/lib/voice/twilio-signature";
 import { hasFeature } from "@/lib/entitlements";
@@ -9,6 +9,7 @@ import { buildVoiceAttrValue, ttsTuningFromEnv } from "@/lib/voice/elevenlabs-vo
 import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
 import { rememberFallbackNumber, safetyNetTwiml } from "@/lib/voice/twiml-safety-net";
+import { primeFallbackNumbers } from "@/lib/voice/fallback-memo-prime";
 import { reportError } from "@/lib/report-error";
 
 /**
@@ -480,6 +481,14 @@ export async function POST(req: NextRequest) {
     return forbidden("verification threw", publicUrl(req), !!req.headers.get("x-twilio-signature"));
   }
   if (rejected) return rejected;
+
+  // Teach the no-DB safety net EVERY store's own number in the background of a
+  // normal call (throttled to every 15 min per instance) — per store, from each
+  // restaurant's settings, no env edit when a store is added. After the
+  // response so it never adds a millisecond to a live call.
+  after(() => {
+    void primeFallbackNumbers().catch(() => undefined);
+  });
 
   try {
     // ⚠️ The `await` is load-bearing: `return handle(...)` inside a try returns
