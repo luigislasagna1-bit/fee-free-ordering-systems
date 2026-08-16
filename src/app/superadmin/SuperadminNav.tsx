@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone, ShieldCheck, ShoppingBag, Flag } from "lucide-react";
+import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone, ShieldCheck, ShoppingBag, Flag, PhoneCall } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +33,9 @@ const items = [
   { href: "/superadmin/settings/email", label: "Email Settings", icon: Mail, adminOnly: true },
   { href: "/superadmin/settings/maps", label: "Maps Settings", icon: MapIcon, adminOnly: true },
   { href: "/superadmin/settings/company", label: "Company / Invoicing", icon: Building2, adminOnly: true },
+  // Twilio webhook / fallback URLs on every Nabil number, checked + repaired
+  // from here (the creds live only in this deployment's env).
+  { href: "/superadmin/settings/nabil", label: "Nabil Phone Lines", icon: PhoneCall, adminOnly: true },
 ];
 
 export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0, restaurantReportsNewCount = 0, restricted = false }: { reportsNewCount?: number; notificationsCount?: number; restaurantReportsNewCount?: number; restricted?: boolean }) {

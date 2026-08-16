@@ -17,10 +17,16 @@
 
 const TWILIO_API = "https://api.twilio.com/2010-04-01/Accounts";
 
-/** Absolute base URL for the Twilio status callback. NEXT_PUBLIC_APP_URL is
- *  localhost in laptop dev — Twilio could never reach that — so fall back to
- *  the real domain (same pattern as src/lib/platform-notifications.ts). */
-function appUrl(): string {
+/** Absolute base URL for every Twilio callback and webhook we register.
+ *  NEXT_PUBLIC_APP_URL is localhost in laptop dev — Twilio could never reach
+ *  that — so fall back to the real domain (same pattern as
+ *  src/lib/platform-notifications.ts).
+ *
+ *  Exported so twilio-number-config.ts registers the SAME string on the phone
+ *  number that this file and twilio-signature.ts verify against. A second
+ *  URL builder would eventually drift by a slash or a host, and a drifted
+ *  webhook URL takes the live phone line dead at the next deploy. */
+export function platformPublicUrl(): string {
   const env = process.env.NEXT_PUBLIC_APP_URL;
   if (env && !/localhost|127\.0\.0\.1/.test(env)) return env.replace(/\/$/, "");
   return "https://feefreeordering.com";
@@ -30,7 +36,7 @@ function appUrl(): string {
  *  webhook route verifies X-Twilio-Signature against this SAME deterministic
  *  string instead of trusting proxy headers to reconstruct the request URL. */
 export function recordingStatusCallbackUrl(): string {
-  return `${appUrl()}/api/twilio/voice/recording-status`;
+  return `${platformPublicUrl()}/api/twilio/voice/recording-status`;
 }
 
 /**
