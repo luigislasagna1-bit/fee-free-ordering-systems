@@ -60,6 +60,13 @@ Receipts) — a kitchen-style ticket that prints INSTEAD of the kitchen receipt 
 byte-identical); the synthetic `@voice.nabil.invalid` e-mail never prints. All three renderers (ESC/POS, StarXpand
 lines, editor preview) + both print paths (LAN/background payload, PrintNode) mirrored; i18n ×38. Awaiting Luigi's
 physical test print (Admin → Receipts → Phone Order Receipt → Test print) — TODO.md top entry.
+**Round 7 addendum — the kitchen DISPLAY (2026-08-16, merged from `claude/ecstatic-satoshi-5322d3`):** the same phone
+order is flagged on screen — a `PHONE ORDER` pill + `NOT PAID · $X due at pickup` / `PAID` chip on the tile (one extra
+line ONLY on voice orders — the locked 2026-07-03 layout is byte-identical for every other tile) and a pill + pink
+payment banner in the detail; the synthetic `@voice.nabil.invalid` e-mail is hidden. No extra query (the 4 s feed
+already carries `channel`). `PHONE_ORDER_CHANNEL` now has ONE definition (`src/lib/phone-order-channel.ts`,
+zero-import) re-exported by both `receipt-schema.ts` and `kitchen-types.ts`. Shipped with the receipts (`5e735268` +
+merge).
 
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 

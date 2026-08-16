@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-16 15:30 EDT by Claude (**A58 is fully armed: you switched the Twilio token on (v34, both machines healthy), fake fallback requests now get 403 and real ones still ring 289-409-1133; only the optional uptime monitor is left. Next: the test-call walkthrough — call 1 (combo + banter + transfer), report-this-call, the mid-call restart test.**)
+**Last updated:** 2026-08-16 evening by Claude (**A62 — one consolidated list after seven sessions in one day.** The "authentication service was unavailable" message was the Claude app's own sign-in hiccup, not the product. Everything the sessions built is either live (Vercel `e17e64f`, Fly v35) or shipped by this session (phone-order receipts `5e735268` + the kitchen PHONE ORDER badge, merged). **Your list is A62: test print → one live call → report-this-call → uptime monitor → SENTRY_PROJECT tab → five yes/no decisions.**)
+**Previous update:** 2026-08-16 15:30 EDT by Claude (**A58 is fully armed: you switched the Twilio token on (v34, both machines healthy), fake fallback requests now get 403 and real ones still ring 289-409-1133; only the optional uptime monitor is left. Next: the test-call walkthrough — call 1 (combo + banter + transfer), report-this-call, the mid-call restart test.**)
 **Previous update:** 2026-08-16 (later) by Claude (**A59 — your 00:30 call: "we reopen at two" was the UTC hour, and the "order for later" answer contradicted itself — both fixed in code, ship with the next Fly deploy.** Also: everything the reliability session built is now COMMITTED as 9 clean commits (drain, capacity cap, the Twilio fallback chain on Fly, DSAR export parity, FIRSTBUY, checkout observability), and the missing piece that made the fallback chain inert is wired — a **Superadmin → Nabil Phone Lines** page that checks and repairs the Twilio webhook + "PRIMARY HANDLER FAILS" URLs with one click, so A58 click #1 is no longer a manual step. Your part tonight: confirm the two fallback numbers under A59.)
 **Previous update:** 2026-08-16 by Claude (**A55 round 5 — Nabil now says "free delivery over $30" in the same breath as the fee, and restaurants can REPORT A CALL** (Loman parity): a Report-this-call button on every call page → a new superadmin section *Restaurant Reports › Nabil AI reports* with status, a written answer the owner sees, a notes thread both ways, and the recording/transcript/order/timeline on one screen. Your step 0 under A55.)
 **Previous update:** 2026-08-15 (latest) by Claude (**A57 — the whole product now says we're LAUNCHED, and the iPhone app is live everywhere.** Your Fee Free Order App is approved and public on the App Store (Apple ID 6794053932 — verified against Apple's own listing API), so **A49 is closed and A17 is finished**. Flipping that one link switched on the iPhone/iPad download across the marketing site, the footer, /admin/publishing, the signup email and the "text me the app link" message — all at once, because they all read the same switch. Alongside it, every trace of "soft launch / coming soon / at launch" for the *platform* is gone: the homepage's "Something big is cooking" teaser is now a **NOW LIVE** section with the real 5-step path to your first order, and there's a new homepage section selling the order app on iPhone + iPad + Android. Also corrected a marketing claim that had gone **wrong**, not just stale: 12 comparison pages still told restaurants the Marketplace was "coming soon — pricing announced at launch", when it has been **live and free** since 14 July and your own Terms already promise a free listing. Genuinely unreleased add-ons (POS, AI Phone, Reservation Deposits, ContentPilot, Customer SMS, Marketing Studio, Branded Mobile App) still correctly say "coming soon". 38 languages at full parity, 2138 tests + build green. **Nothing needed from you.**)
@@ -172,6 +173,71 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A62. 🧭 WHERE EVERYTHING STANDS — one list, all of today's sessions consolidated (2026-08-16, evening)
+
+**Why this entry exists.** Seven sessions worked today; each left steps for you and none were done, and a
+"authentication service was unavailable" message appeared. **That message is the Claude app's own sign-in hiccup
+(Anthropic's side) — it is NOT from your product**; no such text exists anywhere in the restaurant software. The
+sessions stopped mid-stream, but every piece of their work was on disk; this session inventoried all of it. From here on
+ONE session operates (this one); the seven are archived.
+
+**Live right now, nothing needed from you:** Vercel serves `e17e64f` (= `main`), Fly `nabil-voice` v35 on both machines
+(health ok, `sentry=on`). That is: the A58 fallback chain armed end to end, the drain fix (`feede909`), the online-only
+campaign promos + recipe-half + address read-back fixes (A61, `42e9f15b`/`6c2333db`), the visibility fix (A60), the
+"reopen at ten" + one coherent later-order rule (A59). Your A59 "confirm the fallback numbers" was answered when you
+confirmed 289-409-1133 for A58 #2 — closed.
+
+**Shipped by THIS session (Vercel push, no Fly deploy needed):** the two finished-but-unshipped pieces —
+(1) **Phone-order RECEIPTS** (`5e735268`): a third "Phone Order Receipt" template in Admin → Receipts, prints INSTEAD
+of the kitchen ticket for a Nabil order, leading with `PHONE ORDER` / `NOT PAID - $X DUE ON PICKUP` (or `PAID`); the
+customer copy gets the same banner; the fake `@voice.nabil.invalid` e-mail never prints; web tickets byte-identical.
+(2) **Kitchen DISPLAY badge** (merged from `claude/ecstatic-satoshi-5322d3`): `PHONE ORDER` pill + `NOT PAID · $X due
+at pickup` / `PAID` chip on the tile (one extra line only on phone orders — every other tile unchanged) and in the
+detail. Both key on ONE constant now (`src/lib/phone-order-channel.ts`). Gate before push: preflight (tsc + voice
+typecheck + full test suite + `next build`) + 38-locale parity 0/0/0/0.
+
+**YOUR STEPS — in this order (everything below is short; nothing else is waiting on you today):**
+1. 🖨️ **Test print the phone receipt (5 min, once the deploy is Ready):** Admin → Receipts → **Phone Order Receipt**
+   tab → *Test print* on the Star; compare with the preview. Then the Customer tab → switch on the **"Phone order
+   (Nabil AI)"** preview pill and eyeball the banner. Tell me "print ok" or what's off.
+2. 📞 **ONE live test call to +1 365 658 1458** — it covers what three sessions asked for at once. Script: *"Large and
+   Wings combo, one side just cheese, other side green peppers, mushrooms, onions and tomatoes, wings BBQ"* → delivery to
+   a Zone-1 address, but say the street slightly wrong once (e.g. a wrong number) → say "you're the best, I love you"
+   once → let it place the order. Listen for: **never a pizza name you didn't say** ("half plain, half green peppers,
+   mushrooms, onions and tomatoes"); the wrong street read back + "could you spell the street?" right then; the fee
+   said WITH "or free once you're over thirty dollars"; one playful line then back to the order; the closing total names
+   **no first-time discount**. Then look at: the **kitchen tile** (PHONE ORDER + NOT PAID chip), the **printed kitchen
+   ticket** (PHONE ORDER banner first), and Admin → Phone ordering → Calls → that call. Tell me the time of the call and
+   I read the transcript + timeline. *(Optional second call: ask for a person mid-order → instant transfer to
+   289-409-1133.)*
+3. 🚩 **Report-this-call flow (3 min, on the call from step 2):** call page → **Report this call** → pick a topic, tick
+   Urgent, one line → send. Then Superadmin → Restaurant Reports › **Nabil AI reports** → open it → set a status + write
+   a note → back on the restaurant call page the status + note appear, and the reporter address gets the email. Tell me
+   what Loman's version does that ours doesn't.
+4. ⏱️ **Uptime monitor (A58 #4, 5 min, needs an account in YOUR name):** UptimeRobot (free) or Better Stack → HTTP
+   monitor on `https://nabil-voice.fly.dev/health`, 60-second interval, SMS alert to your mobile. It is the only alarm
+   that still works when Vercel is down.
+5. 🔧 **Vercel env `SENTRY_PROJECT` — delete the leading TAB (1 min):** Vercel → project → Settings → Environment
+   Variables → `SENTRY_PROJECT` → Edit → remove the tab at the start of the value → Save. (Its value is marked
+   sensitive so I can't read or edit it; it only affects source-map upload on builds.)
+6. 🤔 **Five decisions — just answer in one message, nothing changes until you do:**
+   a. **Online first-buy for phone-first customers** — today a phone order counts as "an order", so someone whose first
+      order was by phone never gets FIRSTBUY online. Keep as-is (my default) or make FIRSTBUY = first ONLINE order
+      (one-line change)?
+   b. **Phone orders for a specific later time** ("for 6 pm", "for Tuesday") — build (~half a day) or keep offering the
+      web link?
+   c. **Background restaurant ambience** — impossible on the current Twilio pipeline; a multi-day audio re-platform.
+      Scope it, or park it?
+   d. **Nabil price** — CA$0.75/call-minute with a CA$99/month minimum (margin positive at every volume; a live minutes
+      counter must ship before selling). Yes / change?
+   e. **Kitchen app on-device name** — rename "Fee Free Kitchen" → "Fee Free Order App" (the store listing name) at the
+      next native release? Yes / no.
+7. 🔷 **Optional, WITH me, only when the phone is quiet:** the mid-call restart test — you place a test call, I deploy
+   Fly mid-call; the call must finish (spoken sentence or warm transfer, record + cost saved).
+
+*(Older opens are unchanged and still listed below — A47 step 1's three stranded orders decision, the VIP welcome
+email, A45 step 3's optional ElevenLabs key. Nothing there became more urgent today.)*
+
 ### A61. 📞 The 9-minute call at 14:20 (ORD-971682861) — first-time discount by phone (FIXED, online-only now), the pizza that "kept being wrong", and the address (2026-08-16)
 
 **The discount.** The caller got a **$4 "First-time customer special"** — that is your Kickstarter FIRSTBUY 10%,
@@ -267,7 +333,8 @@ Building it properly is about half a day: a `when` on the order tools, the same 
 (minimum lead, max 20 days ahead, hours), and refusals spoken back ("that's too soon — the earliest is …").
 Say the word and it goes on the list; otherwise the honest answer stays.
 
-☐ **Confirm the two safety-net numbers** (I set the env, you just say yes/no): if Nabil can't take a call, ring
+✅ **DONE (closed by A58 #2 — you confirmed 289-409-1133 as the fallback; no platform catch-all by your rule).**
+Original ask: **Confirm the two safety-net numbers** (I set the env, you just say yes/no): if Nabil can't take a call, ring
 **289-409-1133** (that is your store's alert phone today, and it is what "transfer me to a human" already dials) —
 or would you rather the fallback ring the store line **905-385-4444**? And the catch-all when the system can't even
 look the store up: your mobile — is that the 289 number?

@@ -1,4 +1,8 @@
 import type { ChannelSlug } from "@/lib/reports/channels";
+import {
+  PHONE_ORDER_CHANNEL as SHARED_PHONE_ORDER_CHANNEL,
+  isPhoneOrderChannel,
+} from "@/lib/phone-order-channel";
 
 /**
  * Friendly label + Tailwind tone tuple for a paymentStatus value.
@@ -30,18 +34,20 @@ export function paymentStatusLabel(status: string | null | undefined): {
  * /api/orders on its `x-internal-key` branch, the same slug the Sales
  * "by channel" report colours pink (src/lib/reports/channels.ts). The kitchen
  * keys its PHONE ORDER pill + NOT PAID / PAID chip on this value; the printed
- * receipt keys its "PHONE ORDER" banner on the very same value
- * (`PHONE_ORDER_CHANNEL` in src/lib/receipt-schema.ts) — keep the two in step.
+ * receipt keys its "PHONE ORDER" banner on the very same value. ONE shared
+ * definition (src/lib/phone-order-channel.ts, zero imports so the kitchen
+ * bundle stays lean); the `ChannelSlug` annotation here is the compile-time
+ * check that it is still a real report channel.
  *
  * Why it matters (Luigi 2026-08-16): at his store every WEB order is prepaid
  * by card, so a phone order (cash, pay at pickup) is the ONLY unpaid ticket on
  * the rail — and it used to look identical to every other tile.
  */
-export const PHONE_ORDER_CHANNEL: ChannelSlug = "voice";
+export const PHONE_ORDER_CHANNEL: ChannelSlug = SHARED_PHONE_ORDER_CHANNEL;
 
 /** True when this order was taken over the phone by Nabil AI. */
 export function isPhoneOrder(order: Pick<Order, "channel">): boolean {
-  return order.channel === PHONE_ORDER_CHANNEL;
+  return isPhoneOrderChannel(order.channel);
 }
 
 /**

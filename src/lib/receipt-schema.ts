@@ -131,18 +131,12 @@ export type ReceiptConfig = CustomerConfig | KitchenConfig | PhoneConfig;
 export type ReceiptTemplateType = ReceiptConfig["receiptType"];
 
 /**
- * The sales channel value that marks a Nabil AI phone order. Stamped on
- * Order.channel by /api/orders when the voice service places the order (see
- * the `x-internal-key` branch there). The receipt renderers key the phone
- * banner + the phone template selection on this — one constant so a rename
- * can't drift between the three renderers and the two print paths.
+ * The sales channel value that marks a Nabil AI phone order. ONE definition,
+ * shared with the kitchen display, lives in src/lib/phone-order-channel.ts —
+ * re-exported here so the three receipt renderers and the two print paths keep
+ * importing it from the schema module. Luigi 2026-08-16.
  */
-export const PHONE_ORDER_CHANNEL = "voice";
-
-/** True when the order was placed by phone through Nabil AI. */
-export function isPhoneOrderChannel(channel: string | null | undefined): boolean {
-  return channel === PHONE_ORDER_CHANNEL;
-}
+export { PHONE_ORDER_CHANNEL, isPhoneOrderChannel } from "./phone-order-channel";
 
 // ─── Default templates ─────────────────────────────────────────────────────────
 //
