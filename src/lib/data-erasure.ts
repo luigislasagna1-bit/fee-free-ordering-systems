@@ -42,33 +42,58 @@ export function subjectHash(email: string): string {
  * what happens to them. Kept next to the logic so the two can't drift. `scope`
  * = "restaurant" rows are handled by anonymizeCustomerByEmail; "platform" rows
  * (the marketplace-wide identity) only by anonymizePersonEverywhere.
+ *
+ * `exported` closes the other half of the same duty (2026-08-15). This map was
+ * built for DELETION and did its job, but exportPersonData was never brought
+ * along: we correctly recorded that we hold a caller's full Nabil transcript,
+ * and a "download my data" request returned no trace of it. Access and erasure
+ * are the same obligation, so the map now names the DSAR bundle key each table
+ * lands in — or `false` with a stated reason. data-erasure.test.ts asserts every
+ * named key is actually present in the bundle, so adding a table here without
+ * exporting it fails the build.
  */
 /** What a call report / its notes read after the caller asked to be forgotten. */
 export const REDACTED_REPORT_TEXT = "[removed at the caller's request]";
 
 export const PII_ERASURE_MAP = {
-  Customer: { scope: "restaurant", action: "anonymize", fields: ["name", "email", "phone", "address", "notes", "passwordHash", "emailVerifyToken", "passwordResetToken", "lastLoginAt", "chainCustomerId", "customerAccountId", "stripeCustomerId"] },
-  RestaurantCustomerAddress: { scope: "restaurant", action: "delete", fields: ["street", "city", "state", "zip", "lat", "lng"] },
-  Order: { scope: "restaurant", action: "anonymize", fields: ["customerName", "customerEmail", "customerPhone", "deliveryAddress", "deliveryCity", "deliveryZip", "deliveryLat", "deliveryLng", "deliveryAddressData", "notes"] },
-  OrderItem: { scope: "restaurant", action: "anonymize", fields: ["notes"] },
-  OrderRating: { scope: "restaurant", action: "anonymize", fields: ["comment"] },
-  Reservation: { scope: "restaurant", action: "anonymize", fields: ["customerName", "customerEmail", "customerPhone", "notes", "staffNotes", "details"] },
-  RewardLedger: { scope: "restaurant", action: "anonymize", fields: ["note"] },
-  GiftWalletPass: { scope: "restaurant", action: "revoke", fields: ["lastIpHash"] },
-  CustomerPushToken: { scope: "restaurant", action: "delete", fields: ["token"] },
-  PendingRewardGrant: { scope: "restaurant", action: "anonymize", fields: ["email", "name", "note"] },
-  EmailSuppression: { scope: "restaurant", action: "keep", fields: [] }, // kept: proves do-not-email
-  VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "fromDigits", "transcript", "summary", "recordingUrl", "recordingSid", "recordingDurationSeconds", "customerId"] }, // Nabil AI; matched on fromDigits — fromNumber is E.164 and matched NOTHING (keep call duration/outcome/cost); audio DELETED at Twilio first
-  VoiceCallEvent: { scope: "restaurant", action: "delete", fields: ["payload"] }, // Nabil AI event log (what the caller said, tool inputs/outputs, cart, address — redacted at write but still speech). DELETED (not anonymized) via the parent VoiceCall's fromDigits, BEFORE that row's fromDigits is nulled. Timings/versions live on VoiceCall, so nothing analytic is lost.
-  VoiceCallReport: { scope: "restaurant", action: "anonymize", fields: ["description", "resolution"] }, // Nabil AI "Report this call" (2026-08-16): STAFF-typed text about a caller's call, can name the caller. Scrubbed via the parent VoiceCall's fromDigits BEFORE that row is nulled; topic/status/timestamps stay for the platform's own defect history.
-  VoiceCallReportComment: { scope: "restaurant", action: "anonymize", fields: ["body"] }, // the notes thread on a call report — same rule, same key.
+  Customer: { scope: "restaurant", action: "anonymize", exported: "customers", fields: ["name", "email", "phone", "address", "notes", "passwordHash", "emailVerifyToken", "passwordResetToken", "lastLoginAt", "chainCustomerId", "customerAccountId", "stripeCustomerId"] },
+  RestaurantCustomerAddress: { scope: "restaurant", action: "delete", exported: "addresses", fields: ["street", "city", "state", "zip", "lat", "lng"] },
+  Order: { scope: "restaurant", action: "anonymize", exported: "orders", fields: ["customerName", "customerEmail", "customerPhone", "deliveryAddress", "deliveryCity", "deliveryZip", "deliveryLat", "deliveryLng", "deliveryAddressData", "notes"] },
+  OrderItem: { scope: "restaurant", action: "anonymize", exported: "orderItemNotes", fields: ["notes"] },
+  OrderRating: { scope: "restaurant", action: "anonymize", exported: "orderRatings", fields: ["comment"] },
+  Reservation: { scope: "restaurant", action: "anonymize", exported: "reservations", fields: ["customerName", "customerEmail", "customerPhone", "notes", "staffNotes", "details"] },
+  RewardLedger: { scope: "restaurant", action: "anonymize", exported: false, fields: ["note"] }, // not exported: the only PII column is a staff/system `note` on a ledger line; the balance and history the customer owns are live in their own account
+  GiftWalletPass: { scope: "restaurant", action: "revoke", exported: false, fields: ["lastIpHash"] }, // not exported: a salted IP hash is not intelligible personal data and handing it back tells them nothing
+  CustomerPushToken: { scope: "restaurant", action: "delete", exported: false, fields: ["token"] }, // not exported: a device push token is a credential, not personal data — mailing it out would be a security wart
+  PendingRewardGrant: { scope: "restaurant", action: "anonymize", exported: false, fields: ["email", "name", "note"] }, // not exported: an unclaimed gift addressed TO the subject; its only PII is the address the request itself was made from
+  EmailSuppression: { scope: "restaurant", action: "keep", exported: false, fields: [] }, // kept: proves do-not-email
+  VoiceCall: { scope: "restaurant", action: "anonymize", exported: "voiceCalls", fields: ["fromNumber", "fromDigits", "transcript", "summary", "recordingUrl", "recordingSid", "recordingDurationSeconds", "customerId"] }, // Nabil AI; matched on fromDigits — fromNumber is E.164 and matched NOTHING (keep call duration/outcome/cost); audio DELETED at Twilio first, and a FAILED delete keeps recordingSid so a retry can still reach it
+  VoiceCallEvent: { scope: "restaurant", action: "delete", exported: false, fields: ["payload"] }, // Nabil AI event log (what the caller said, tool inputs/outputs, cart, address — redacted at write but still speech). DELETED (not anonymized) via the parent VoiceCall's fromDigits, BEFORE that row's fromDigits is nulled. Timings/versions live on VoiceCall, so nothing analytic is lost. Not exported: it is the same speech as VoiceCall.transcript, which IS exported, plus internal tool payloads.
+  VoiceCallReport: { scope: "restaurant", action: "anonymize", exported: false, fields: ["description", "resolution"] }, // Nabil AI "Report this call" (2026-08-16): STAFF-typed text about a caller's call, can name the caller. Scrubbed via the parent VoiceCall's fromDigits BEFORE that row is nulled; topic/status/timestamps stay for the platform's own defect history. Not exported: written by the restaurant about its own system, not by or to the caller.
+  VoiceCallReportComment: { scope: "restaurant", action: "anonymize", exported: false, fields: ["body"] }, // the notes thread on a call report — same rule, same key; not exported for the same reason.
   // VoiceMenuSnapshot: NOT listed on purpose — it is the menu payload keyed by
   // content hash (items, prices, options). Restaurant data, no customer PII.
-  BlockedCaller: { scope: "restaurant", action: "keep", fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
-  CustomerAccount: { scope: "platform", action: "anonymize", fields: ["email", "name", "phone", "passwordHash", "emailVerifyToken", "lastLoginAt"] },
-  CustomerAddress: { scope: "platform", action: "delete", fields: ["street", "city", "state", "zip", "country"] },
-  CustomerPasswordResetToken: { scope: "platform", action: "delete", fields: ["token"] },
+  BlockedCaller: { scope: "restaurant", action: "keep", exported: false, fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
+  CustomerAccount: { scope: "platform", action: "anonymize", exported: "account", fields: ["email", "name", "phone", "passwordHash", "emailVerifyToken", "lastLoginAt"] },
+  CustomerAddress: { scope: "platform", action: "delete", exported: "accountAddresses", fields: ["street", "city", "state", "zip", "country"] },
+  CustomerPasswordResetToken: { scope: "platform", action: "delete", exported: false, fields: ["token"] }, // not exported: a credential
 } as const;
+
+/** A DSAR bundle section named by the map above. */
+export type DsarSection = Extract<
+  (typeof PII_ERASURE_MAP)[keyof typeof PII_ERASURE_MAP]["exported"],
+  string
+>;
+
+/** The DSAR bundle keys the map promises. exportPersonData MUST fill every one
+ *  (asserted in data-erasure.test.ts). */
+export const DSAR_EXPORTED_SECTIONS: DsarSection[] = [
+  ...new Set(
+    Object.values(PII_ERASURE_MAP)
+      .map((e) => e.exported)
+      .filter((k): k is DsarSection => typeof k === "string"),
+  ),
+];
 
 export type EraseActor = { via: "self-token" | "admin" | "superadmin" | "cron-retention"; userId?: string };
 export type EraseResult = {
@@ -76,6 +101,11 @@ export type EraseResult = {
   scope: "restaurant" | "platform";
   counts: Record<string, number>;
   stripeStatus: "deleted" | "skipped" | "retry";
+  /** Call recordings whose audio Twilio refused to delete. >0 means the erasure
+   *  is genuinely PARTIAL: the audio is still sitting in the Twilio account, and
+   *  those rows deliberately keep their recordingSid so a retry can still reach
+   *  it. Reported as such in DataRequestLog.status. */
+  recordingsPending: number;
 };
 
 /** Delete a Stripe Customer on the restaurant's OWN connected account. Runs
@@ -159,8 +189,16 @@ export async function anonymizeCustomerByEmail(
   // 2b. Nabil AI call recordings (network, also outside the transaction):
   // delete the actual audio at Twilio BEFORE nulling our pointer to it,
   // otherwise the voice data would live on unreferenced in the Twilio account.
-  // Best-effort by design — a Twilio failure is logged but never aborts the
-  // erasure (the DB scrub below still removes every pointer).
+  // A Twilio failure never aborts the erasure — but it must not be reported as
+  // a success either.
+  //
+  // ⚠️ This used to log the failure and then null recordingSid anyway, which is
+  // the worst of both worlds: the caller's audio stayed alive at Twilio AND we
+  // discarded the only handle that could ever delete it, while telling the
+  // requester their data was gone. Failures are now remembered — their rows keep
+  // recordingSid (and nothing else), and the request is logged "partial" so a
+  // retry is possible and visible. (2026-08-15)
+  const failedRecordingSids: string[] = [];
   if (phoneKeys.length) {
     const recordings = await prisma.voiceCall.findMany({
       where: { restaurantId, fromDigits: { in: phoneKeys }, recordingSid: { not: null } },
@@ -170,6 +208,7 @@ export async function anonymizeCustomerByEmail(
       if (!r.recordingSid) continue;
       const deleted = await deleteRecording(r.recordingSid);
       if (!deleted) {
+        failedRecordingSids.push(r.recordingSid);
         console.error("[data-erasure] twilio recording delete failed", { restaurantId, recordingSid: r.recordingSid });
       }
     }
@@ -254,7 +293,25 @@ export async function anonymizeCustomerByEmail(
         where: { report: { restaurantId, call: { fromDigits: { in: phoneKeys } } } },
         data: { body: REDACTED_REPORT_TEXT },
       })).count;
-      counts.VoiceCall = (await tx.voiceCall.updateMany({
+
+      // Rows whose audio Twilio would NOT delete: scrub every PII field EXCEPT
+      // recordingSid. The playable URL still goes (nothing in the admin can
+      // reach the audio), but the SID is the only handle that can still delete
+      // it — dropping that strands the recording at Twilio permanently. Runs
+      // FIRST, because the general scrub below matches on fromDigits, which
+      // this nulls.
+      let keptForRetry = 0;
+      if (failedRecordingSids.length) {
+        keptForRetry = (await tx.voiceCall.updateMany({
+          where: { restaurantId, fromDigits: { in: phoneKeys }, recordingSid: { in: failedRecordingSids } },
+          data: {
+            fromNumber: "REDACTED", fromDigits: null, transcript: Prisma.DbNull, summary: null, customerId: null,
+            recordingUrl: null, recordingDurationSeconds: null,
+          },
+        })).count;
+      }
+
+      counts.VoiceCall = keptForRetry + (await tx.voiceCall.updateMany({
         where: { restaurantId, fromDigits: { in: phoneKeys } },
         data: {
           fromNumber: "REDACTED", fromDigits: null, transcript: Prisma.DbNull, summary: null, customerId: null,
@@ -284,12 +341,18 @@ export async function anonymizeCustomerByEmail(
       action: "delete", scope: "restaurant", restaurantId,
       subjectHash: sub, requestedVia: opts?.actor?.via ?? "self-token",
       actorId: opts?.actor?.userId ?? null,
-      status: stripeStatus === "retry" ? "partial" : "completed",
+      // Audio still at Twilio is an incomplete erasure, exactly like a Stripe
+      // customer we couldn't delete. Saying "completed" would be a lie we'd
+      // never find out about.
+      status: stripeStatus === "retry" || failedRecordingSids.length > 0 ? "partial" : "completed",
       counts, stripeStatus,
     },
   }).catch((e) => console.error("[data-erasure] audit log failed", e));
 
-  return { subjectHash: sub, scope: "restaurant", counts, stripeStatus };
+  return {
+    subjectHash: sub, scope: "restaurant", counts, stripeStatus,
+    recordingsPending: failedRecordingSids.length,
+  };
 }
 
 /**
@@ -315,11 +378,14 @@ export async function anonymizePersonEverywhere(
 
   const totals: Record<string, number> = {};
   let worstStripe: "deleted" | "skipped" | "retry" = "skipped";
+  let recordingsPending = 0;
   for (const rid of restaurantIds) {
     const r = await anonymizeCustomerByEmail(rid, emailLower, { nullPaymentIds: opts?.nullPaymentIds, actor: opts?.actor });
     for (const [k, v] of Object.entries(r.counts)) totals[k] = (totals[k] ?? 0) + v;
     if (r.stripeStatus === "retry") worstStripe = "retry";
     else if (r.stripeStatus === "deleted" && worstStripe !== "retry") worstStripe = "deleted";
+    // A partial erasure at ONE restaurant makes the platform-wide one partial.
+    recordingsPending += r.recordingsPending;
   }
 
   // Every restaurant this email is a PROSPECT of — captured BEFORE the scrub
@@ -365,12 +431,12 @@ export async function anonymizePersonEverywhere(
       action: "delete", scope: "platform", restaurantId: null,
       subjectHash: sub, requestedVia: opts?.actor?.via ?? "superadmin",
       actorId: opts?.actor?.userId ?? null,
-      status: worstStripe === "retry" ? "partial" : "completed",
+      status: worstStripe === "retry" || recordingsPending > 0 ? "partial" : "completed",
       counts: totals, stripeStatus: worstStripe,
     },
   }).catch((e) => console.error("[data-erasure] platform audit log failed", e));
 
-  return { subjectHash: sub, scope: "platform", counts: totals, stripeStatus: worstStripe };
+  return { subjectHash: sub, scope: "platform", counts: totals, stripeStatus: worstStripe, recordingsPending };
 }
 
 /**
@@ -400,9 +466,14 @@ export type DsarBundle = {
   generatedAt: string;
   subject: string;
   account: unknown | null;
+  accountAddresses: unknown[];
   customers: unknown[];
+  addresses: unknown[];
   orders: unknown[];
+  orderItemNotes: unknown[];
+  orderRatings: unknown[];
   reservations: unknown[];
+  voiceCalls: unknown[];
   truncated: boolean;
 };
 
@@ -429,7 +500,7 @@ export async function exportPersonData(scope: { restaurantId?: string; email: st
     }),
     prisma.order.findMany({
       where: { ...restWhere, customerEmail: insensitive },
-      select: { id: true, orderNumber: true, restaurantId: true, status: true, type: true, total: true, subtotal: true, taxAmount: true, tip: true, createdAt: true },
+      select: { id: true, orderNumber: true, restaurantId: true, status: true, type: true, total: true, subtotal: true, taxAmount: true, tip: true, customerPhone: true, createdAt: true },
       orderBy: { createdAt: "desc" },
       take: ORDER_CAP + 1,
     }),
@@ -441,13 +512,88 @@ export async function exportPersonData(scope: { restaurantId?: string; email: st
   ]);
 
   const truncated = orders.length > ORDER_CAP;
+  const keptOrders = truncated ? orders.slice(0, ORDER_CAP) : orders;
+  const orderIds = keptOrders.map((o) => o.id);
+  const customerIds = customers.map((c) => c.id);
+
+  // 🛡️ Nabil AI calls are keyed by the CALLER'S PHONE, not their email, and the
+  // same number reaches us in several shapes. Use the SAME normalized key the
+  // erasure path uses — matching on anything else finds nothing, which is
+  // precisely how erasure once reported success while leaving every transcript
+  // in place.
+  const phoneKeys = [
+    ...new Set(
+      [...customers.map((c) => c.phone), ...keptOrders.map((o) => o.customerPhone)]
+        .map((p) => (p ? phoneDigitsKey(p) : null))
+        .filter((x): x is string => !!x),
+    ),
+  ];
+
+  // Second pass: the child rows, all keyed off ids we now hold. Every query is
+  // capped and rides an existing index; this runs per DSAR request, not per
+  // page view.
+  const [accountAddresses, addresses, orderItemNotes, orderRatings, voiceCalls] = await Promise.all([
+    account
+      ? prisma.customerAddress.findMany({
+          where: { customerAccountId: account.id },
+          select: { id: true, label: true, street: true, city: true, state: true, zip: true, country: true, createdAt: true },
+          take: 200,
+        })
+      : Promise.resolve([]),
+    customerIds.length
+      ? prisma.restaurantCustomerAddress.findMany({
+          where: { customerId: { in: customerIds } },
+          select: { id: true, customerId: true, label: true, street: true, city: true, state: true, zip: true, country: true, lat: true, lng: true, createdAt: true },
+          take: 200,
+        })
+      : Promise.resolve([]),
+    orderIds.length
+      ? prisma.orderItem.findMany({
+          // Only rows that actually carry a note — the item names are the
+          // restaurant's menu, not the subject's data.
+          where: { orderId: { in: orderIds }, notes: { not: null } },
+          select: { id: true, orderId: true, notes: true },
+          take: 2000,
+        })
+      : Promise.resolve([]),
+    orderIds.length
+      ? prisma.orderRating.findMany({
+          where: { orderId: { in: orderIds } },
+          select: { id: true, orderId: true, score: true, comment: true, createdAt: true },
+          take: 2000,
+        })
+      : Promise.resolve([]),
+    phoneKeys.length
+      ? prisma.voiceCall.findMany({
+          where: { ...restWhere, fromDigits: { in: phoneKeys } },
+          select: {
+            id: true, restaurantId: true, startedAt: true, durationSeconds: true,
+            direction: true, outcome: true, language: true, sentiment: true,
+            orderNumber: true, reservationCode: true,
+            transcript: true, summary: true,
+            recordingSid: true, recordingDurationSeconds: true,
+          },
+          orderBy: { startedAt: "desc" },
+          take: 1000,
+        })
+      : Promise.resolve([]),
+  ]);
+
   return {
     generatedAt: new Date().toISOString(),
     subject: emailLower,
     account,
+    accountAddresses,
     customers,
-    orders: truncated ? orders.slice(0, ORDER_CAP) : orders,
+    addresses,
+    orders: keptOrders,
+    orderItemNotes,
+    orderRatings,
     reservations,
+    // The Twilio Recording SID is an internal handle — useless without our
+    // credentials and meaningless to the subject. Hand back the FACT that a
+    // recording exists and how long it runs, never the pointer to it.
+    voiceCalls: voiceCalls.map(({ recordingSid, ...call }) => ({ ...call, hasRecording: !!recordingSid })),
     truncated,
   };
 }
