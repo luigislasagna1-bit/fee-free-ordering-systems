@@ -181,16 +181,17 @@ reply could possibly have been heard is never answered as a fresh turn — it's 
 answer ("Pineapple."); if the caller stays silent after the reply has played, it runs on its own so a blurted request
 is never lost. Committed `7654c7b8`, ships with the next Fly deploy.
 
-**The special.** Nabil said *"today it's a Medium 1 Topping Pizza for eight ninety-nine"* — and it was right about
-your menu, which is the problem. Your **Daily Deals** category has 12 day-restricted items (Mon → Fri, each paired to
-its regular item, correctly hidden on other days — the *"Monday - Medium Pizza Special"* was NOT offered) **plus one
-stray row: "Medium Pizza 1 Topping" $8.99, created 2026-07-08, with NO day restriction and no pairing.** With no day on
-it, both your website and Nabil treat it as available every day — it has been sellable at $8.99 on your online menu
-every day since 8 July. Nothing in the agent guessed; the code that hides day-deals on the wrong day works.
-
-🤔 **Your decision (I'll do it in one minute once you say):** (a) restrict that row to Mondays (it becomes a duplicate
-of the Monday special — probably delete instead), (b) **delete it** (recommended: the real "Monday - Medium Pizza
-Special" already exists and is paired), or (c) keep it — it really is an everyday $8.99 medium.
+**The special — you were right, and it was OUR bug, not your menu.** Nabil said *"today it's a Medium 1 Topping
+Pizza for eight ninety-nine"*. Your **Daily Deals** category holds the 12 day-restricted specials (Mon → Fri, each
+paired to its regular item; the *"Monday - Medium Pizza Special"* was correctly NOT offered on Sunday) **plus a
+thirteenth row you can't see: "Medium Pizza 1 Topping" $8.99 — a HIDDEN copy of the Monday special (created 8 July,
+`visibilityMode: hide_from_menu`, no day set).** Your website honours the hidden flag, which is exactly why your admin
+and your customers never see it. **The phone menu didn't** — it filtered on "available" only and never applied the
+visibility rules — so Nabil had a hidden $8.99 medium in its menu every day and offered it as today's special. Fixed:
+the phone menu now applies the same visibility rules as the website, in three places (the menu Nabil reads, the
+"you could have that cheaper as today's deal" push, and size-sibling matching). Committed; ships with tonight's Vercel
+push. Nothing to change on your menu. *(My first note here said the website was selling it every day — that was
+wrong; I've corrected it.)*
 
 ### A59. 📞 Your 00:30 call — "we reopen at two" + the "order for later" contradiction — FIXED in code (2026-08-16)
 

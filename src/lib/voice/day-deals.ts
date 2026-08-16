@@ -1,6 +1,7 @@
 import "server-only";
 import prisma from "@/lib/db";
 import { isFulfilableAt } from "@/lib/menu-fulfilment";
+import { isVisibleNow } from "@/lib/menu-visibility";
 import { compilePizzaLine, type ItemData, type PizzaIntent } from "@/lib/voice/order-line-compiler";
 import { loadRawItem, shapeItemData, VOICE_ITEM_INCLUDE } from "@/lib/voice/item-loader";
 import { variantKey, variantsCorrespond } from "@/lib/voice/variant-match";
@@ -112,6 +113,10 @@ export async function findBetterDeal(args: {
     let best: BetterDeal | null = null;
 
     for (const raw of candidates) {
+      // THE VISIBILITY GATE. A deal the owner hid from the customer menu is not
+      // offered by phone either (Roya's call, 2026-08-16: a hidden un-dated copy
+      // of the Monday special was sold on a Sunday).
+      if (!isVisibleNow(raw as never, when, args.timezone ?? undefined)) continue;
       // THE DAY GATE. Same helper the order route validates with, so we can
       // never offer a Tuesday deal on a Wednesday and have checkout refuse it.
       if (!isFulfilableAt(raw as never, when, args.timezone ?? undefined)) continue;

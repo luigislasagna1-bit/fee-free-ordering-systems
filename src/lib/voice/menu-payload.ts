@@ -2,6 +2,7 @@ import prisma from "@/lib/db";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { resolveScheduledMenuId } from "@/lib/menu-schedule";
 import { fulfilWindowLabel, hasFulfilWindow, isFulfilableAt } from "@/lib/menu-fulfilment";
+import { isVisibleNow, type VisibilityFields } from "@/lib/menu-visibility";
 import { variantsCorrespond } from "@/lib/voice/variant-match";
 
 /**
@@ -149,6 +150,26 @@ export function serializeChoiceNames(
   return choiceGroupsOmitted > 0 ? { choiceNames, choiceGroupsOmitted } : { choiceNames };
 }
 
+/**
+ * VISIBILITY (Roya's call, 2026-08-16 11:41): the payload used to filter items
+ * on `isAvailable` alone. A row that the owner had HIDDEN from the customer
+ * menu (`visibilityMode: "hide_from_menu"` — an un-dated lineage copy of the
+ * Monday special) was therefore in the prompt, and Nabil offered it as "today's
+ * deal" on a Sunday. The website hides it; the phone must too. Same helper the
+ * customer page uses (`isVisibleNow`, restaurant timezone), applied to
+ * categories AND items, before anything else looks at the tree. Pure + exported
+ * for the test.
+ */
+export function visibleMenuTree<C extends VisibilityFields & { menuItems: I[] }, I extends VisibilityFields>(
+  categories: C[],
+  now: Date,
+  timezone: string | undefined,
+): C[] {
+  return categories
+    .filter((c) => isVisibleNow(c, now, timezone))
+    .map((c) => ({ ...c, menuItems: c.menuItems.filter((it) => isVisibleNow(it, now, timezone)) }));
+}
+
 /* ─────────────────────────────── builder ───────────────────────────────── */
 
 export async function buildVoiceMenuPayload(rawSlug: string): Promise<VoiceMenuResult> {
@@ -170,7 +191,7 @@ export async function buildVoiceMenuPayload(rawSlug: string): Promise<VoiceMenuR
   const menuRestaurantId = await resolveMenuRestaurantId(restaurant.id);
   const activeMenuId = await resolveScheduledMenuId(menuRestaurantId);
 
-  const categories = await prisma.menuCategory.findMany({
+  const fetchedCategories = await prisma.menuCategory.findMany({
     where: activeMenuId
       ? { menuId: activeMenuId, isActive: true }
       : { restaurantId: menuRestaurantId, isActive: true },
@@ -196,6 +217,11 @@ export async function buildVoiceMenuPayload(rawSlug: string): Promise<VoiceMenuR
       },
     },
   });
+
+  // Hidden categories/items never reach the prompt (see visibleMenuTree).
+  const now = new Date();
+  const tz = restaurant.timezone ?? undefined;
+  const categories = visibleMenuTree(fetchedCategories, now, tz);
 
   const serializeGroups = (groups: typeof categories[number]["modifierGroups"]): VoiceMenuGroup[] =>
     groups.map((g) => ({
@@ -226,6 +252,8 @@ export async function buildVoiceMenuPayload(rawSlug: string): Promise<VoiceMenuR
         select: {
           id: true, name: true, price: true, isAvailable: true, isSoldOut: true,
           fulfilDays: true, fulfilFrom: true, fulfilTo: true, fulfilWindows: true,
+          isHidden: true, visibilityMode: true, visibleUntil: true, visibleStartDate: true, visibleEndDate: true,
+          visibleDays: true, visibleFrom: true, visibleTo: true, visibleWindows: true,
           // variantId too: the agent orders the DEAL item's own size, and
           // making it cross-reference ids between two parts of the prompt is a
           // guess waiting to happen on a money path.
@@ -235,7 +263,6 @@ export async function buildVoiceMenuPayload(rawSlug: string): Promise<VoiceMenuR
     },
     take: 100,
   });
-  const now = new Date();
   const dealsByStandard = new Map<string, VoiceMenuTodayDeal>();
   // Sizes on the standard items, to check each pairing against.
   const standardVariants = new Map<string, Array<{ name: string }>>();
@@ -244,7 +271,9 @@ export async function buildVoiceMenuPayload(rawSlug: string): Promise<VoiceMenuR
   for (const d of dealPairs) {
     const di = d.dealItem;
     if (!di || !di.isAvailable || di.isSoldOut) continue;
-    if (!isFulfilableAt(di as never, now, restaurant.timezone ?? undefined)) continue;
+    // A deal the owner hid from the menu is not offered on the phone either.
+    if (!isVisibleNow(di, now, tz)) continue;
+    if (!isFulfilableAt(di as never, now, tz)) continue;
     // THE SIZE GATE. Only annotate when the deal offers the identical set of
     // sizes — otherwise the agent would read out a 6" price to someone buying
     // a 12". Checked per pairing, so a mismatched cheap deal doesn't suppress
@@ -276,7 +305,6 @@ export async function buildVoiceMenuPayload(rawSlug: string): Promise<VoiceMenuR
   // `notToday`, with no id and no build tree, so Nabil can answer "that's a
   // Thursday special" honestly without being able to sell it today. Dropping
   // the trees also shrinks the prompt on every non-deal day.
-  const tz = restaurant.timezone ?? undefined;
   const DAY_NAMES = ["Sundays", "Mondays", "Tuesdays", "Wednesdays", "Thursdays", "Fridays", "Saturdays"];
   const dayName = (dow: number) => DAY_NAMES[dow] ?? String(dow);
   const formatTime = (hhmm: string) => {

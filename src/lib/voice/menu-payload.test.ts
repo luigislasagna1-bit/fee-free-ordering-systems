@@ -7,9 +7,82 @@ vi.mock("@/lib/db", () => ({ default: {} }));
 
 import {
   serializeChoiceNames,
+  visibleMenuTree,
   VOICE_MENU_MAX_CHOICE_GROUPS,
   VOICE_MENU_MAX_OPTION_NAMES,
 } from "@/lib/voice/menu-payload";
+
+/**
+ * VISIBILITY (Roya's call, 2026-08-16): a row the owner had HIDDEN from the
+ * customer menu (visibilityMode "hide_from_menu" — an un-dated copy of the
+ * Monday special) reached the prompt because the payload filtered on
+ * `isAvailable` alone, and Nabil offered it as "today's deal" on a Sunday.
+ * The phone menu must apply the same visibility rules as the website.
+ */
+describe("visibleMenuTree — hidden categories/items never reach the prompt", () => {
+  const TZ = "America/Toronto";
+  const now = new Date("2026-08-16T15:40:00Z"); // Sunday 11:40 EDT
+  const item = (name: string, extra: Record<string, unknown> = {}) => ({ name, isHidden: false, visibilityMode: null, ...extra });
+
+  it("drops an item hidden with hide_from_menu (legacy isHidden too), keeps the rest in order", () => {
+    const tree = visibleMenuTree(
+      [
+        {
+          name: "Daily Deals",
+          isHidden: false,
+          visibilityMode: null,
+          menuItems: [
+            item("Monday - Medium Pizza Special"),
+            item("Medium Pizza 1 Topping", { isHidden: true, visibilityMode: "hide_from_menu" }),
+            item("Legacy hidden", { isHidden: true }),
+            item("Tuesday - Large Pizza Special"),
+          ],
+        },
+      ],
+      now,
+      TZ,
+    );
+    expect(tree[0].menuItems.map((i) => i.name)).toEqual(["Monday - Medium Pizza Special", "Tuesday - Large Pizza Special"]);
+  });
+
+  it("drops a whole hidden category", () => {
+    const tree = visibleMenuTree(
+      [
+        { name: "Visible", isHidden: false, visibilityMode: null, menuItems: [item("A")] },
+        { name: "Hidden", isHidden: true, visibilityMode: "hide_from_menu", menuItems: [item("B")] },
+      ],
+      now,
+      TZ,
+    );
+    expect(tree.map((c) => c.name)).toEqual(["Visible"]);
+  });
+
+  it("honours a scheduled show_only_from window in the restaurant timezone (Sunday 11:40 EDT)", () => {
+    const tree = visibleMenuTree(
+      [
+        {
+          name: "Cat",
+          isHidden: false,
+          visibilityMode: null,
+          menuItems: [
+            item("Sunday brunch", { visibilityMode: "show_only_from", visibleDays: "[0]", visibleFrom: "10:00", visibleTo: "14:00" }),
+            item("Weekday lunch", { visibilityMode: "show_only_from", visibleDays: "[1,2,3,4,5]", visibleFrom: "11:00", visibleTo: "14:00" }),
+          ],
+        },
+      ],
+      now,
+      TZ,
+    );
+    expect(tree[0].menuItems.map((i) => i.name)).toEqual(["Sunday brunch"]);
+  });
+
+  it("does not mutate its input", () => {
+    const input = [{ name: "Cat", isHidden: false, visibilityMode: null, menuItems: [item("A"), item("B", { isHidden: true })] }];
+    const snapshot = JSON.stringify(input);
+    visibleMenuTree(input, now, TZ);
+    expect(JSON.stringify(input)).toBe(snapshot);
+  });
+});
 
 /**
  * TRUNCATION MARKERS on the names-only choice view (2026-08-15).

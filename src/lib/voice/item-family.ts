@@ -1,6 +1,7 @@
 import "server-only";
 import prisma from "@/lib/db";
 import { isFulfilableAt } from "@/lib/menu-fulfilment";
+import { isVisibleNow } from "@/lib/menu-visibility";
 import {
   compilePizzaLine,
   normalizeSizeToken,
@@ -191,6 +192,9 @@ export async function findSizeMatch(args: {
 
     let best: SizeMatch | null = null;
     for (const raw of raws) {
+      // A size sibling the owner hid from the customer menu is not offered by
+      // phone either (same rule as the menu payload and the deal path).
+      if (!isVisibleNow(raw as never, args.when ?? new Date(), args.timezone)) continue;
       // Same day gate the order route validates with, so a size we offer can
       // never be refused at checkout for not running today.
       if (!isFulfilableAt(raw as never, args.when ?? new Date(), args.timezone)) continue;
