@@ -4464,6 +4464,52 @@
           "latencyLabel": "Késleltetés és felhasználás",
           "errorLabel": "Hiba itt: {where}",
           "payloadLabel": "Adatok"
+        },
+        "report": {
+          "button": "Hívás jelentése",
+          "modalTitle": "Hívásprobléma jelentése",
+          "modalIntro": "Mondja el, mi ment félre ebben a(z) {time} hívásban. A Fee Free csapata minden jelentést átnéz, és itt, ezen az oldalon válaszol.",
+          "topicLabel": "Mi ment félre?",
+          "topicPlaceholder": "Válassza ki a probléma típusát…",
+          "topics": {
+            "order_taken_incorrectly": "Rendelés — a rendelést rosszul vették fel",
+            "order_sent_wrong": "Rendelés — rossz rendelés került a konyhába",
+            "incorrect_pricing": "Rendelés — hibás árat mondott",
+            "allowed_unallowable": "Rendelés — engedélyezett valamit, amit nem lett volna szabad",
+            "reservation_issue": "Foglalás — probléma a foglalással",
+            "voice_quality": "Hang — robotszerű volt, szakadozott vagy félrehallott",
+            "technical_issue": "Technikai — megszakadt hívás, csend vagy hibák",
+            "other": "Egyéb"
+          },
+          "descriptionLabel": "Mi történt?",
+          "descriptionPlaceholder": "Írja le, mit szeretett volna a hívó, mit tett Nabil, és minek kellett volna történnie.",
+          "descriptionTooShort": "Kérjük, adjon meg kicsit több részletet (legalább {min} karakter).",
+          "urgentLabel": "Sürgős — ez éppen most érinti a vendégeket",
+          "cancel": "Mégse",
+          "submit": "Jelentés küldése",
+          "sending": "Küldés…",
+          "sentToast": "Jelentés elküldve — megvizsgáljuk a hívást, és itt válaszolunk.",
+          "errorToast": "A küldés nem sikerült. Próbálja újra.",
+          "tooManyOpen": "Ehhez a híváshoz már vannak nyitott jelentések — inkább fűzzön megjegyzést az egyikhez lent.",
+          "cardTitle": "Jelentések ehhez a híváshoz",
+          "status": {
+            "NEW": "Új",
+            "INVESTIGATING": "Vizsgálat alatt",
+            "NEEDS_INFO": "További információra van szükségünk Öntől",
+            "FIXED": "Javítva",
+            "WONT_FIX": "Nem kerül javításra"
+          },
+          "urgentBadge": "Sürgős",
+          "reportedAt": "Jelentve: {time}",
+          "resolutionTitle": "A Fee Free csapat válasza",
+          "threadTitle": "Megjegyzések",
+          "threadEmpty": "Még nincs megjegyzés — a Fee Free csapata itt fog válaszolni.",
+          "replyPlaceholder": "Megjegyzés a Fee Free csapatnak…",
+          "replySend": "Megjegyzés küldése",
+          "replySentToast": "Megjegyzés elküldve.",
+          "fromPlatform": "Fee Free csapat",
+          "fromYou": "Ön",
+          "justNow": "épp most"
         }
       },
       "upsells": {

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latencija i potrošnja",
           "errorLabel": "Greška u {where}",
           "payloadLabel": "Podaci"
+        },
+        "report": {
+          "button": "Prijavi ovaj poziv",
+          "modalTitle": "Prijavi problem s pozivom",
+          "modalIntro": "Recite nam što je pošlo po zlu u ovom pozivu od {time}. Tim Fee Free pregledava svaku prijavu i odgovara ovdje, na ovoj stranici.",
+          "topicLabel": "Što je pošlo po zlu?",
+          "topicPlaceholder": "Odaberite vrstu problema…",
+          "topics": {
+            "order_taken_incorrectly": "Narudžba — narudžba je pogrešno zaprimljena",
+            "order_sent_wrong": "Narudžba — pogrešna narudžba poslana u kuhinju",
+            "incorrect_pricing": "Narudžba — navedena je pogrešna cijena",
+            "allowed_unallowable": "Narudžba — dopustio je nešto što nije smio",
+            "reservation_issue": "Rezervacija — problem s rezervacijom",
+            "voice_quality": "Glas — zvučao robotski, prekidao se ili krivo čuo",
+            "technical_issue": "Tehničko — prekinut poziv, tišina ili greške",
+            "other": "Ostalo"
+          },
+          "descriptionLabel": "Što se dogodilo?",
+          "descriptionPlaceholder": "Opišite što je pozivatelj htio, što je Nabil učinio i što se trebalo dogoditi.",
+          "descriptionTooShort": "Dajte nam malo više detalja (najmanje {min} znakova).",
+          "urgentLabel": "Hitno — ovo upravo sada utječe na kupce",
+          "cancel": "Odustani",
+          "submit": "Pošalji prijavu",
+          "sending": "Slanje…",
+          "sentToast": "Prijava poslana — pregledat ćemo ovaj poziv i odgovoriti ovdje.",
+          "errorToast": "Slanje nije uspjelo. Pokušajte ponovno.",
+          "tooManyOpen": "Ovaj poziv već ima otvorene prijave — umjesto toga dodajte bilješku jednoj od njih ispod.",
+          "cardTitle": "Prijave za ovaj poziv",
+          "status": {
+            "NEW": "Novo",
+            "INVESTIGATING": "U istrazi",
+            "NEEDS_INFO": "Trebamo više informacija od vas",
+            "FIXED": "Riješeno",
+            "WONT_FIX": "Neće se popraviti"
+          },
+          "urgentBadge": "Hitno",
+          "reportedAt": "Prijavljeno {time}",
+          "resolutionTitle": "Odgovor tima Fee Free",
+          "threadTitle": "Bilješke",
+          "threadEmpty": "Još nema bilješki — tim Fee Free odgovorit će ovdje.",
+          "replyPlaceholder": "Dodajte bilješku za tim Fee Free…",
+          "replySend": "Pošalji bilješku",
+          "replySentToast": "Bilješka poslana.",
+          "fromPlatform": "Tim Fee Free",
+          "fromYou": "Vi",
+          "justNow": "upravo sada"
         }
       },
       "upsells": {

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latentie en verbruik",
           "errorLabel": "Fout in {where}",
           "payloadLabel": "Gegevens"
+        },
+        "report": {
+          "button": "Dit gesprek melden",
+          "modalTitle": "Een probleem met een gesprek melden",
+          "modalIntro": "Vertel ons wat er misging in dit gesprek van {time}. Het Fee Free-team bekijkt elke melding en reageert hier op deze pagina.",
+          "topicLabel": "Wat ging er mis?",
+          "topicPlaceholder": "Selecteer het type probleem…",
+          "topics": {
+            "order_taken_incorrectly": "Bestellen — bestelling verkeerd opgenomen",
+            "order_sent_wrong": "Bestellen — verkeerde bestelling naar de keuken gestuurd",
+            "incorrect_pricing": "Bestellen — verkeerde prijs genoemd",
+            "allowed_unallowable": "Bestellen — stond iets toe wat niet mocht",
+            "reservation_issue": "Reservering — probleem met een reservering",
+            "voice_quality": "Stem — klonk robotachtig, viel weg of verstond het verkeerd",
+            "technical_issue": "Technisch — gesprek verbroken, stilte of fouten",
+            "other": "Anders"
+          },
+          "descriptionLabel": "Wat is er gebeurd?",
+          "descriptionPlaceholder": "Beschrijf wat de beller wilde, wat Nabil deed en wat er had moeten gebeuren.",
+          "descriptionTooShort": "Geef ons iets meer details (minimaal {min} tekens).",
+          "urgentLabel": "Urgent — dit raakt klanten op dit moment",
+          "cancel": "Annuleren",
+          "submit": "Melding versturen",
+          "sending": "Versturen…",
+          "sentToast": "Melding verstuurd — we bekijken dit gesprek en reageren hier.",
+          "errorToast": "Versturen mislukt. Probeer het opnieuw.",
+          "tooManyOpen": "Dit gesprek heeft al openstaande meldingen — voeg liever hieronder een notitie toe aan een ervan.",
+          "cardTitle": "Meldingen over dit gesprek",
+          "status": {
+            "NEW": "Nieuw",
+            "INVESTIGATING": "In onderzoek",
+            "NEEDS_INFO": "We hebben meer informatie van u nodig",
+            "FIXED": "Opgelost",
+            "WONT_FIX": "Wordt niet opgelost"
+          },
+          "urgentBadge": "Urgent",
+          "reportedAt": "Gemeld {time}",
+          "resolutionTitle": "Antwoord van het Fee Free-team",
+          "threadTitle": "Notities",
+          "threadEmpty": "Nog geen notities — het Fee Free-team reageert hier.",
+          "replyPlaceholder": "Voeg een notitie toe voor het Fee Free-team…",
+          "replySend": "Notitie versturen",
+          "replySentToast": "Notitie verstuurd.",
+          "fromPlatform": "Fee Free-team",
+          "fromYou": "U",
+          "justNow": "zojuist"
         }
       },
       "upsells": {

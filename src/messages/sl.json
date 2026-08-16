@@ -4464,6 +4464,52 @@
           "latencyLabel": "Zakasnitev in poraba",
           "errorLabel": "Napaka v {where}",
           "payloadLabel": "Podatki"
+        },
+        "report": {
+          "button": "Prijavi ta klic",
+          "modalTitle": "Prijavi težavo s klicem",
+          "modalIntro": "Povejte nam, kaj je šlo narobe pri tem klicu ob {time}. Ekipa Fee Free pregleda vsako prijavo in odgovori prav tukaj, na tej strani.",
+          "topicLabel": "Kaj je šlo narobe?",
+          "topicPlaceholder": "Izberite vrsto težave…",
+          "topics": {
+            "order_taken_incorrectly": "Naročilo — naročilo je bilo napačno sprejeto",
+            "order_sent_wrong": "Naročilo — v kuhinjo je bilo poslano napačno naročilo",
+            "incorrect_pricing": "Naročilo — navedena je bila napačna cena",
+            "allowed_unallowable": "Naročilo — dovolil je nekaj, česar ne bi smel",
+            "reservation_issue": "Rezervacija — težava z rezervacijo",
+            "voice_quality": "Glas — zvenel robotsko, se prekinjal ali narobe slišal",
+            "technical_issue": "Tehnično — prekinjen klic, tišina ali napake",
+            "other": "Drugo"
+          },
+          "descriptionLabel": "Kaj se je zgodilo?",
+          "descriptionPlaceholder": "Opišite, kaj je klicatelj želel, kaj je Nabil naredil in kaj bi se moralo zgoditi.",
+          "descriptionTooShort": "Prosimo, navedite nekaj več podrobnosti (vsaj {min} znakov).",
+          "urgentLabel": "Nujno — to prav zdaj vpliva na stranke",
+          "cancel": "Prekliči",
+          "submit": "Pošlji prijavo",
+          "sending": "Pošiljanje…",
+          "sentToast": "Prijava poslana — klic bomo pregledali in odgovorili tukaj.",
+          "errorToast": "Pošiljanje ni uspelo. Poskusite znova.",
+          "tooManyOpen": "Ta klic že ima odprte prijave — raje dodajte opombo k eni od njih spodaj.",
+          "cardTitle": "Prijave za ta klic",
+          "status": {
+            "NEW": "Novo",
+            "INVESTIGATING": "V preiskavi",
+            "NEEDS_INFO": "Potrebujemo več informacij od vas",
+            "FIXED": "Odpravljeno",
+            "WONT_FIX": "Ne bo popravljeno"
+          },
+          "urgentBadge": "Nujno",
+          "reportedAt": "Prijavljeno {time}",
+          "resolutionTitle": "Odgovor ekipe Fee Free",
+          "threadTitle": "Opombe",
+          "threadEmpty": "Še ni opomb — ekipa Fee Free bo odgovorila tukaj.",
+          "replyPlaceholder": "Dodajte opombo za ekipo Fee Free…",
+          "replySend": "Pošlji opombo",
+          "replySentToast": "Opomba poslana.",
+          "fromPlatform": "Ekipa Fee Free",
+          "fromYou": "Vi",
+          "justNow": "pravkar"
         }
       },
       "upsells": {

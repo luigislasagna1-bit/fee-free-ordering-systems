@@ -4464,6 +4464,52 @@
           "latencyLabel": "השהיה ושימוש",
           "errorLabel": "שגיאה ב-{where}",
           "payloadLabel": "נתונים"
+        },
+        "report": {
+          "button": "דיווח על שיחה זו",
+          "modalTitle": "דיווח על בעיה בשיחה",
+          "modalIntro": "ספרו לנו מה השתבש בשיחה זו מ-{time}. צוות Fee Free בודק כל דיווח ומשיב כאן, בעמוד זה.",
+          "topicLabel": "מה השתבש?",
+          "topicPlaceholder": "בחרו את סוג הבעיה…",
+          "topics": {
+            "order_taken_incorrectly": "הזמנה — ההזמנה נלקחה באופן שגוי",
+            "order_sent_wrong": "הזמנה — נשלחה הזמנה שגויה למטבח",
+            "incorrect_pricing": "הזמנה — נמסר מחיר שגוי",
+            "allowed_unallowable": "הזמנה — אישר משהו שלא היה אמור",
+            "reservation_issue": "הזמנת מקום — בעיה בהזמנת מקום",
+            "voice_quality": "קול — נשמע רובוטי, נקטע או שמע לא נכון",
+            "technical_issue": "טכני — שיחה נותקה, שקט או שגיאות",
+            "other": "אחר"
+          },
+          "descriptionLabel": "מה קרה?",
+          "descriptionPlaceholder": "תארו מה המתקשר רצה, מה Nabil עשה ומה היה אמור לקרות.",
+          "descriptionTooShort": "אנא פרטו קצת יותר (לפחות {min} תווים).",
+          "urgentLabel": "דחוף — זה משפיע על לקוחות ממש עכשיו",
+          "cancel": "ביטול",
+          "submit": "שליחת דיווח",
+          "sending": "שולח…",
+          "sentToast": "הדיווח נשלח — נבדוק את השיחה ונשיב כאן.",
+          "errorToast": "השליחה נכשלה. נסו שוב.",
+          "tooManyOpen": "לשיחה זו כבר יש דיווחים פתוחים — הוסיפו במקום זאת הערה לאחד מהם למטה.",
+          "cardTitle": "דיווחים על שיחה זו",
+          "status": {
+            "NEW": "חדש",
+            "INVESTIGATING": "בבדיקה",
+            "NEEDS_INFO": "אנחנו זקוקים למידע נוסף מכם",
+            "FIXED": "תוקן",
+            "WONT_FIX": "לא יתוקן"
+          },
+          "urgentBadge": "דחוף",
+          "reportedAt": "דווח {time}",
+          "resolutionTitle": "תשובת צוות Fee Free",
+          "threadTitle": "הערות",
+          "threadEmpty": "אין הערות עדיין — צוות Fee Free ישיב כאן.",
+          "replyPlaceholder": "הוסיפו הערה לצוות Fee Free…",
+          "replySend": "שליחת הערה",
+          "replySentToast": "ההערה נשלחה.",
+          "fromPlatform": "צוות Fee Free",
+          "fromYou": "אתם",
+          "justNow": "הרגע"
         }
       },
       "upsells": {

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Delsa ir naudojimas",
           "errorLabel": "Klaida: {where}",
           "payloadLabel": "Duomenys"
+        },
+        "report": {
+          "button": "Pranešti apie šį skambutį",
+          "modalTitle": "Pranešti apie skambučio problemą",
+          "modalIntro": "Papasakokite, kas nutiko ne taip šiame {time} skambutyje. „Fee Free“ komanda peržiūri kiekvieną pranešimą ir atsako čia, šiame puslapyje.",
+          "topicLabel": "Kas nutiko ne taip?",
+          "topicPlaceholder": "Pasirinkite problemos tipą…",
+          "topics": {
+            "order_taken_incorrectly": "Užsakymas — užsakymas priimtas neteisingai",
+            "order_sent_wrong": "Užsakymas — į virtuvę išsiųstas ne tas užsakymas",
+            "incorrect_pricing": "Užsakymas — nurodyta neteisinga kaina",
+            "allowed_unallowable": "Užsakymas — leido tai, ko neturėjo",
+            "reservation_issue": "Rezervacija — rezervacijos problema",
+            "voice_quality": "Balsas — skambėjo robotiškai, trūkinėjo arba neteisingai suprato",
+            "technical_issue": "Techninė — nutrūkęs skambutis, tyla arba klaidos",
+            "other": "Kita"
+          },
+          "descriptionLabel": "Kas atsitiko?",
+          "descriptionPlaceholder": "Aprašykite, ko norėjo skambinantysis, ką padarė Nabil ir kas turėjo įvykti.",
+          "descriptionTooShort": "Pateikite šiek tiek daugiau detalių (bent {min} simbolių).",
+          "urgentLabel": "Skubu — tai šiuo metu veikia klientus",
+          "cancel": "Atšaukti",
+          "submit": "Siųsti pranešimą",
+          "sending": "Siunčiama…",
+          "sentToast": "Pranešimas išsiųstas — išnagrinėsime šį skambutį ir atsakysime čia.",
+          "errorToast": "Nepavyko išsiųsti. Bandykite dar kartą.",
+          "tooManyOpen": "Šis skambutis jau turi atvirų pranešimų — verčiau pridėkite pastabą prie vieno iš jų žemiau.",
+          "cardTitle": "Pranešimai apie šį skambutį",
+          "status": {
+            "NEW": "Naujas",
+            "INVESTIGATING": "Tiriama",
+            "NEEDS_INFO": "Reikia daugiau informacijos iš jūsų",
+            "FIXED": "Ištaisyta",
+            "WONT_FIX": "Nebus taisoma"
+          },
+          "urgentBadge": "Skubu",
+          "reportedAt": "Pranešta {time}",
+          "resolutionTitle": "„Fee Free“ komandos atsakymas",
+          "threadTitle": "Pastabos",
+          "threadEmpty": "Pastabų dar nėra — „Fee Free“ komanda atsakys čia.",
+          "replyPlaceholder": "Pridėkite pastabą „Fee Free“ komandai…",
+          "replySend": "Siųsti pastabą",
+          "replySentToast": "Pastaba išsiųsta.",
+          "fromPlatform": "„Fee Free“ komanda",
+          "fromYou": "Jūs",
+          "justNow": "ką tik"
         }
       },
       "upsells": {

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latenz und Verbrauch",
           "errorLabel": "Fehler in {where}",
           "payloadLabel": "Daten"
+        },
+        "report": {
+          "button": "Diesen Anruf melden",
+          "modalTitle": "Problem mit einem Anruf melden",
+          "modalIntro": "Sagen Sie uns, was bei diesem Anruf von {time} schiefgelaufen ist. Das Fee-Free-Team prüft jede Meldung und antwortet direkt hier auf dieser Seite.",
+          "topicLabel": "Was ist schiefgelaufen?",
+          "topicPlaceholder": "Art des Problems auswählen…",
+          "topics": {
+            "order_taken_incorrectly": "Bestellung — Bestellung falsch aufgenommen",
+            "order_sent_wrong": "Bestellung — falsche Bestellung an die Küche gesendet",
+            "incorrect_pricing": "Bestellung — falscher Preis genannt",
+            "allowed_unallowable": "Bestellung — hat etwas erlaubt, das nicht erlaubt sein sollte",
+            "reservation_issue": "Reservierung — Problem mit einer Reservierung",
+            "voice_quality": "Stimme — klang roboterhaft, brach ab oder verstand falsch",
+            "technical_issue": "Technisch — Anruf abgebrochen, Stille oder Fehler",
+            "other": "Sonstiges"
+          },
+          "descriptionLabel": "Was ist passiert?",
+          "descriptionPlaceholder": "Beschreiben Sie, was der Anrufer wollte, was Nabil getan hat und was hätte passieren sollen.",
+          "descriptionTooShort": "Bitte etwas mehr Details (mindestens {min} Zeichen).",
+          "urgentLabel": "Dringend — das betrifft gerade jetzt Kunden",
+          "cancel": "Abbrechen",
+          "submit": "Meldung senden",
+          "sending": "Wird gesendet…",
+          "sentToast": "Meldung gesendet — wir sehen uns den Anruf an und antworten hier.",
+          "errorToast": "Senden fehlgeschlagen. Bitte erneut versuchen.",
+          "tooManyOpen": "Zu diesem Anruf gibt es bereits offene Meldungen — fügen Sie stattdessen unten eine Notiz zu einer davon hinzu.",
+          "cardTitle": "Meldungen zu diesem Anruf",
+          "status": {
+            "NEW": "Neu",
+            "INVESTIGATING": "Wird untersucht",
+            "NEEDS_INFO": "Wir brauchen mehr Informationen von Ihnen",
+            "FIXED": "Behoben",
+            "WONT_FIX": "Wird nicht behoben"
+          },
+          "urgentBadge": "Dringend",
+          "reportedAt": "Gemeldet {time}",
+          "resolutionTitle": "Antwort des Fee-Free-Teams",
+          "threadTitle": "Notizen",
+          "threadEmpty": "Noch keine Notizen — das Fee-Free-Team antwortet hier.",
+          "replyPlaceholder": "Notiz für das Fee-Free-Team hinzufügen…",
+          "replySend": "Notiz senden",
+          "replySentToast": "Notiz gesendet.",
+          "fromPlatform": "Fee-Free-Team",
+          "fromYou": "Sie",
+          "justNow": "gerade eben"
         }
       },
       "upsells": {

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latentsus ja kasutus",
           "errorLabel": "Viga kohas {where}",
           "payloadLabel": "Andmed"
+        },
+        "report": {
+          "button": "Teata sellest kõnest",
+          "modalTitle": "Teata kõne probleemist",
+          "modalIntro": "Rääkige, mis läks selles kõnes ({time}) valesti. Fee Free meeskond vaatab iga teate üle ja vastab siinsamas lehel.",
+          "topicLabel": "Mis läks valesti?",
+          "topicPlaceholder": "Valige probleemi tüüp…",
+          "topics": {
+            "order_taken_incorrectly": "Tellimine — tellimus võeti valesti vastu",
+            "order_sent_wrong": "Tellimine — kööki saadeti vale tellimus",
+            "incorrect_pricing": "Tellimine — öeldi vale hind",
+            "allowed_unallowable": "Tellimine — lubas midagi, mida ei oleks tohtinud",
+            "reservation_issue": "Broneering — probleem broneeringuga",
+            "voice_quality": "Hääl — kõlas robotlikult, katkes või kuulis valesti",
+            "technical_issue": "Tehniline — kõne katkes, vaikus või vead",
+            "other": "Muu"
+          },
+          "descriptionLabel": "Mis juhtus?",
+          "descriptionPlaceholder": "Kirjeldage, mida helistaja soovis, mida Nabil tegi ja mis oleks pidanud juhtuma.",
+          "descriptionTooShort": "Palun lisage veidi rohkem üksikasju (vähemalt {min} tähemärki).",
+          "urgentLabel": "Kiireloomuline — see mõjutab kliente praegu",
+          "cancel": "Tühista",
+          "submit": "Saada teade",
+          "sending": "Saatmine…",
+          "sentToast": "Teade saadetud — vaatame selle kõne üle ja vastame siin.",
+          "errorToast": "Saatmine ebaõnnestus. Palun proovige uuesti.",
+          "tooManyOpen": "Sellel kõnel on juba avatud teateid — lisage selle asemel allpool ühele neist märkus.",
+          "cardTitle": "Selle kõne teated",
+          "status": {
+            "NEW": "Uus",
+            "INVESTIGATING": "Uurimisel",
+            "NEEDS_INFO": "Vajame teilt lisateavet",
+            "FIXED": "Parandatud",
+            "WONT_FIX": "Ei parandata"
+          },
+          "urgentBadge": "Kiireloomuline",
+          "reportedAt": "Teatatud {time}",
+          "resolutionTitle": "Fee Free meeskonna vastus",
+          "threadTitle": "Märkused",
+          "threadEmpty": "Märkusi veel pole — Fee Free meeskond vastab siin.",
+          "replyPlaceholder": "Lisage märkus Fee Free meeskonnale…",
+          "replySend": "Saada märkus",
+          "replySentToast": "Märkus saadetud.",
+          "fromPlatform": "Fee Free meeskond",
+          "fromYou": "Teie",
+          "justNow": "just nüüd"
         }
       },
       "upsells": {

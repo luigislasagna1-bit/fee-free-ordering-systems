@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latència i consum",
           "errorLabel": "Error a {where}",
           "payloadLabel": "Dades"
+        },
+        "report": {
+          "button": "Informa d'aquesta trucada",
+          "modalTitle": "Informa d'un problema amb la trucada",
+          "modalIntro": "Explica'ns què ha anat malament en aquesta trucada de {time}. L'equip de Fee Free revisa cada informe i respon aquí mateix, en aquesta pàgina.",
+          "topicLabel": "Què ha anat malament?",
+          "topicPlaceholder": "Selecciona el tipus de problema…",
+          "topics": {
+            "order_taken_incorrectly": "Comandes — la comanda s'ha pres incorrectament",
+            "order_sent_wrong": "Comandes — s'ha enviat una comanda equivocada a la cuina",
+            "incorrect_pricing": "Comandes — s'ha donat un preu incorrecte",
+            "allowed_unallowable": "Comandes — ha permès una cosa que no hauria d'haver permès",
+            "reservation_issue": "Reserves — problema amb una reserva",
+            "voice_quality": "Veu — sonava robòtica, es tallava o entenia malament",
+            "technical_issue": "Tècnic — trucada tallada, silenci o errors",
+            "other": "Altres"
+          },
+          "descriptionLabel": "Què ha passat?",
+          "descriptionPlaceholder": "Descriu què volia la persona que trucava, què ha fet Nabil i què hauria d'haver passat.",
+          "descriptionTooShort": "Dona'ns una mica més de detall (almenys {min} caràcters).",
+          "urgentLabel": "Urgent — està afectant els clients ara mateix",
+          "cancel": "Cancel·la",
+          "submit": "Envia l'informe",
+          "sending": "Enviant…",
+          "sentToast": "Informe enviat — revisarem aquesta trucada i respondrem aquí.",
+          "errorToast": "No s'ha pogut enviar. Torna-ho a provar.",
+          "tooManyOpen": "Aquesta trucada ja té informes oberts — afegeix una nota a un d'ells a sota.",
+          "cardTitle": "Informes d'aquesta trucada",
+          "status": {
+            "NEW": "Nou",
+            "INVESTIGATING": "En investigació",
+            "NEEDS_INFO": "Necessitem més informació teva",
+            "FIXED": "Solucionat",
+            "WONT_FIX": "No es corregirà"
+          },
+          "urgentBadge": "Urgent",
+          "reportedAt": "Informat {time}",
+          "resolutionTitle": "Resposta de l'equip de Fee Free",
+          "threadTitle": "Notes",
+          "threadEmpty": "Encara no hi ha notes — l'equip de Fee Free respondrà aquí.",
+          "replyPlaceholder": "Afegeix una nota per a l'equip de Fee Free…",
+          "replySend": "Envia la nota",
+          "replySentToast": "Nota enviada.",
+          "fromPlatform": "Equip de Fee Free",
+          "fromYou": "Tu",
+          "justNow": "ara mateix"
         }
       },
       "upsells": {

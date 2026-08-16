@@ -4464,6 +4464,52 @@
           "latencyLabel": "Gecikme ve kullanım",
           "errorLabel": "{where} içinde hata",
           "payloadLabel": "Veri"
+        },
+        "report": {
+          "button": "Bu aramayı bildir",
+          "modalTitle": "Arama sorunu bildir",
+          "modalIntro": "{time} tarihli bu aramada neyin yanlış gittiğini bize anlatın. Fee Free ekibi her bildirimi inceler ve tam burada, bu sayfada yanıtlar.",
+          "topicLabel": "Ne yanlış gitti?",
+          "topicPlaceholder": "Sorun türünü seçin…",
+          "topics": {
+            "order_taken_incorrectly": "Sipariş — sipariş yanlış alındı",
+            "order_sent_wrong": "Sipariş — mutfağa yanlış sipariş gönderildi",
+            "incorrect_pricing": "Sipariş — yanlış fiyat söylendi",
+            "allowed_unallowable": "Sipariş — izin verilmemesi gereken bir şeye izin verdi",
+            "reservation_issue": "Rezervasyon — rezervasyon sorunu",
+            "voice_quality": "Ses — robotik geldi, kesildi veya yanlış anladı",
+            "technical_issue": "Teknik — arama düştü, sessizlik veya hatalar",
+            "other": "Diğer"
+          },
+          "descriptionLabel": "Ne oldu?",
+          "descriptionPlaceholder": "Arayanın ne istediğini, Nabil'in ne yaptığını ve ne olması gerektiğini açıklayın.",
+          "descriptionTooShort": "Lütfen biraz daha ayrıntı verin (en az {min} karakter).",
+          "urgentLabel": "Acil — şu anda müşterileri etkiliyor",
+          "cancel": "İptal",
+          "submit": "Bildirimi gönder",
+          "sending": "Gönderiliyor…",
+          "sentToast": "Bildirim gönderildi — bu aramayı inceleyip burada yanıtlayacağız.",
+          "errorToast": "Gönderilemedi. Lütfen tekrar deneyin.",
+          "tooManyOpen": "Bu aramanın zaten açık bildirimleri var — bunun yerine aşağıda bunlardan birine not ekleyin.",
+          "cardTitle": "Bu aramaya ait bildirimler",
+          "status": {
+            "NEW": "Yeni",
+            "INVESTIGATING": "İnceleniyor",
+            "NEEDS_INFO": "Sizden daha fazla bilgiye ihtiyacımız var",
+            "FIXED": "Düzeltildi",
+            "WONT_FIX": "Düzeltilmeyecek"
+          },
+          "urgentBadge": "Acil",
+          "reportedAt": "Bildirildi {time}",
+          "resolutionTitle": "Fee Free ekibinin yanıtı",
+          "threadTitle": "Notlar",
+          "threadEmpty": "Henüz not yok — Fee Free ekibi burada yanıtlayacak.",
+          "replyPlaceholder": "Fee Free ekibi için not ekleyin…",
+          "replySend": "Notu gönder",
+          "replySentToast": "Not gönderildi.",
+          "fromPlatform": "Fee Free ekibi",
+          "fromYou": "Siz",
+          "justNow": "az önce"
         }
       },
       "upsells": {

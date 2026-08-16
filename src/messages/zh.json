@@ -4464,6 +4464,52 @@
           "latencyLabel": "延迟与用量",
           "errorLabel": "{where} 中出错",
           "payloadLabel": "数据"
+        },
+        "report": {
+          "button": "报告此通话",
+          "modalTitle": "报告通话问题",
+          "modalIntro": "告诉我们 {time} 的这通电话出了什么问题。Fee Free 团队会审核每一条报告，并直接在本页回复。",
+          "topicLabel": "出了什么问题？",
+          "topicPlaceholder": "选择问题类型…",
+          "topics": {
+            "order_taken_incorrectly": "点餐 — 订单记录错误",
+            "order_sent_wrong": "点餐 — 错误的订单发到了厨房",
+            "incorrect_pricing": "点餐 — 报价错误",
+            "allowed_unallowable": "点餐 — 允许了不该允许的事",
+            "reservation_issue": "预订 — 预订问题",
+            "voice_quality": "语音 — 听起来像机器人、断断续续或听错",
+            "technical_issue": "技术 — 通话中断、无声或出错",
+            "other": "其他"
+          },
+          "descriptionLabel": "发生了什么？",
+          "descriptionPlaceholder": "请描述来电者想要什么、Nabil 做了什么，以及本应发生什么。",
+          "descriptionTooShort": "请再多提供一些细节（至少 {min} 个字符）。",
+          "urgentLabel": "紧急 — 正在影响顾客",
+          "cancel": "取消",
+          "submit": "发送报告",
+          "sending": "发送中…",
+          "sentToast": "报告已发送 — 我们会调查此通话并在这里回复。",
+          "errorToast": "发送失败，请重试。",
+          "tooManyOpen": "此通话已有未处理的报告 — 请改为在下方其中一条中添加备注。",
+          "cardTitle": "此通话的报告",
+          "status": {
+            "NEW": "新建",
+            "INVESTIGATING": "调查中",
+            "NEEDS_INFO": "我们需要您提供更多信息",
+            "FIXED": "已修复",
+            "WONT_FIX": "不予修复"
+          },
+          "urgentBadge": "紧急",
+          "reportedAt": "报告于 {time}",
+          "resolutionTitle": "Fee Free 团队的答复",
+          "threadTitle": "备注",
+          "threadEmpty": "暂无备注 — Fee Free 团队将在这里回复。",
+          "replyPlaceholder": "给 Fee Free 团队添加备注…",
+          "replySend": "发送备注",
+          "replySentToast": "备注已发送。",
+          "fromPlatform": "Fee Free 团队",
+          "fromYou": "您",
+          "justNow": "刚刚"
         }
       },
       "upsells": {

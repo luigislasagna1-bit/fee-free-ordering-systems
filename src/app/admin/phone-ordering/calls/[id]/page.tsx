@@ -13,6 +13,8 @@ import { CALL_OUTCOMES } from "@/lib/voice/analytics";
 import { formatTzDateTime, formatDuration, OutcomeChip, SentimentDot } from "../../shared";
 import BlockCallerButton from "./BlockCallerButton";
 import CallTimeline from "./CallTimeline";
+import ReportCallButton from "./ReportCallButton";
+import CallReportsCard, { type CallReportView } from "./CallReportsCard";
 
 /**
  * Call detail — transcript bubbles, AI summary + sentiment, the recording
@@ -69,7 +71,7 @@ export default async function CallDetailPage({
   const fmt = (n: number) => fmtCurrency(n, scope.currency);
   const tz = scope.timezone;
 
-  const [customer, order, reservation, blockedRow, history] = await Promise.all([
+  const [customer, order, reservation, blockedRow, history, reportRows] = await Promise.all([
     call.customerId
       ? prisma.customer.findFirst({ where: { id: call.customerId, restaurantId }, select: { id: true, name: true, phone: true } })
       : Promise.resolve(null),
@@ -116,6 +118,27 @@ export default async function CallDetailPage({
           select: { id: true, startedAt: true, outcome: true, durationSeconds: true, orderNumber: true },
         })
       : Promise.resolve([]),
+    // "Report this call" — the restaurant's reports on THIS call + the thread
+    // (rare rows, one indexed query on callId).
+    prisma.voiceCallReport.findMany({
+      where: { callId: call.id, restaurantId },
+      orderBy: { createdAt: "desc" },
+      take: 20,
+      select: {
+        id: true,
+        topic: true,
+        urgent: true,
+        description: true,
+        status: true,
+        resolution: true,
+        createdAt: true,
+        comments: {
+          orderBy: { createdAt: "asc" },
+          take: 200,
+          select: { id: true, authorRole: true, authorName: true, body: true, createdAt: true },
+        },
+      },
+    }),
   ]);
 
   // Totals for the caller-history rows (one query for all 10). Orders the
@@ -141,6 +164,23 @@ export default async function CallDetailPage({
 
   const transcript: TranscriptTurn[] = Array.isArray(call.transcript) ? (call.transcript as TranscriptTurn[]) : [];
   const callerDisplay = customer?.name || call.fromNumber || tCalls("anonymousCaller");
+  const startedLabel = formatTzDateTime(call.startedAt, tz, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+  const reportViews: CallReportView[] = reportRows.map((r) => ({
+    id: r.id,
+    topic: r.topic,
+    urgent: r.urgent,
+    description: r.description,
+    status: r.status,
+    resolution: r.resolution,
+    createdAtLabel: formatTzDateTime(r.createdAt, tz, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }),
+    comments: r.comments.map((c) => ({
+      id: c.id,
+      authorRole: c.authorRole,
+      authorName: c.authorName,
+      body: c.body,
+      createdAtLabel: formatTzDateTime(c.createdAt, tz, { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }),
+    })),
+  }));
   const discount = (order?.promoDiscount ?? 0) + (order?.couponDiscount ?? 0);
 
   return (
@@ -184,6 +224,7 @@ export default async function CallDetailPage({
               <ListTree className="w-3.5 h-3.5" />
               {debug ? t("timeline.hideTimeline") : t("timeline.showTimeline")}
             </Link>
+            <ReportCallButton callId={call.id} startedLabel={startedLabel} />
             {call.fromNumber && <BlockCallerButton phone={call.fromNumber} blockedId={blockedRow?.id ?? null} />}
           </div>
         </div>
@@ -230,6 +271,9 @@ export default async function CallDetailPage({
             </p>
           </div>
         )}
+
+      {/* Reports the restaurant filed on this call + the platform's replies. */}
+      <CallReportsCard callId={call.id} reports={reportViews} />
 
       {/* AI summary. */}
       <div className="rounded-xl border border-gray-200 bg-white p-5">

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latentums un patēriņš",
           "errorLabel": "Kļūda: {where}",
           "payloadLabel": "Dati"
+        },
+        "report": {
+          "button": "Ziņot par šo zvanu",
+          "modalTitle": "Ziņot par zvana problēmu",
+          "modalIntro": "Pastāstiet, kas nogāja greizi šajā zvanā ({time}). Fee Free komanda izskata katru ziņojumu un atbild tepat, šajā lapā.",
+          "topicLabel": "Kas nogāja greizi?",
+          "topicPlaceholder": "Izvēlieties problēmas veidu…",
+          "topics": {
+            "order_taken_incorrectly": "Pasūtījums — pasūtījums pieņemts nepareizi",
+            "order_sent_wrong": "Pasūtījums — uz virtuvi nosūtīts nepareizs pasūtījums",
+            "incorrect_pricing": "Pasūtījums — nosaukta nepareiza cena",
+            "allowed_unallowable": "Pasūtījums — atļāva ko tādu, ko nedrīkstēja",
+            "reservation_issue": "Rezervācija — problēma ar rezervāciju",
+            "voice_quality": "Balss — skanēja robotiski, pārtrūka vai nepareizi sadzirdēja",
+            "technical_issue": "Tehniski — pārtrūcis zvans, klusums vai kļūdas",
+            "other": "Cits"
+          },
+          "descriptionLabel": "Kas notika?",
+          "descriptionPlaceholder": "Aprakstiet, ko zvanītājs vēlējās, ko Nabil izdarīja un kam vajadzēja notikt.",
+          "descriptionTooShort": "Lūdzu, sniedziet nedaudz vairāk detaļu (vismaz {min} rakstzīmes).",
+          "urgentLabel": "Steidzami — tas šobrīd ietekmē klientus",
+          "cancel": "Atcelt",
+          "submit": "Sūtīt ziņojumu",
+          "sending": "Sūta…",
+          "sentToast": "Ziņojums nosūtīts — mēs izskatīsim šo zvanu un atbildēsim šeit.",
+          "errorToast": "Neizdevās nosūtīt. Lūdzu, mēģiniet vēlreiz.",
+          "tooManyOpen": "Šim zvanam jau ir atvērti ziņojumi — tā vietā pievienojiet piezīmi kādam no tiem zemāk.",
+          "cardTitle": "Ziņojumi par šo zvanu",
+          "status": {
+            "NEW": "Jauns",
+            "INVESTIGATING": "Tiek izmeklēts",
+            "NEEDS_INFO": "Mums no jums vajag vairāk informācijas",
+            "FIXED": "Novērsts",
+            "WONT_FIX": "Netiks labots"
+          },
+          "urgentBadge": "Steidzami",
+          "reportedAt": "Ziņots {time}",
+          "resolutionTitle": "Fee Free komandas atbilde",
+          "threadTitle": "Piezīmes",
+          "threadEmpty": "Piezīmju vēl nav — Fee Free komanda atbildēs šeit.",
+          "replyPlaceholder": "Pievienojiet piezīmi Fee Free komandai…",
+          "replySend": "Sūtīt piezīmi",
+          "replySentToast": "Piezīme nosūtīta.",
+          "fromPlatform": "Fee Free komanda",
+          "fromYou": "Jūs",
+          "justNow": "tikko"
         }
       },
       "upsells": {

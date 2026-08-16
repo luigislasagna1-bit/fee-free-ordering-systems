@@ -404,3 +404,125 @@ export async function notifyAddOnChange(
     });
   }
 }
+
+/* ── Nabil AI call reports (Luigi 2026-08-16) ─────────────────────────────── */
+
+/**
+ * A restaurant reported a Nabil AI call. Superadmins get the in-app bell +
+ * email (support@ included); an URGENT report says so in the subject. The
+ * restaurant's description is quoted in the email so the operator can judge
+ * severity from the inbox — it is staff-typed text about a call, not customer
+ * PII by design (see PII_ERASURE_MAP for the erasure story). Best-effort.
+ */
+export async function notifyNabilCallReported(reportId: string): Promise<void> {
+  let rep: {
+    id: string;
+    topic: string;
+    urgent: boolean;
+    description: string;
+    reporterName: string | null;
+    reporterEmail: string | null;
+    restaurant: { name: string };
+    call: { startedAt: Date; outcome: string | null; orderNumber: string | null; durationSeconds: number | null };
+  } | null = null;
+  try {
+    rep = await prisma.voiceCallReport.findUnique({
+      where: { id: reportId },
+      select: {
+        id: true,
+        topic: true,
+        urgent: true,
+        description: true,
+        reporterName: true,
+        reporterEmail: true,
+        restaurant: { select: { name: true } },
+        call: { select: { startedAt: true, outcome: true, orderNumber: true, durationSeconds: true } },
+      },
+    });
+  } catch (e) {
+    console.error("[platform-notifications] call-report lookup failed", e);
+    return;
+  }
+  if (!rep) return;
+  const { VOICE_CALL_REPORT_TOPIC_LABEL_EN } = await import("@/lib/voice/call-reports");
+  const topic = (VOICE_CALL_REPORT_TOPIC_LABEL_EN as Record<string, string>)[rep.topic] ?? rep.topic;
+  const when = rep.call.startedAt.toISOString().replace("T", " ").slice(0, 16) + " UTC";
+  const urgentTag = rep.urgent ? "URGENT — " : "";
+  const sa = await superadminAudience();
+  await dispatch(sa, {
+    kind: "nabil_call_reported",
+    inAppTitle: `${urgentTag}Nabil call reported: ${rep.restaurant.name} — ${topic}`,
+    inAppBody: rep.description.slice(0, 200),
+    link: `/superadmin/restaurant-reports/nabil/${rep.id}`,
+    emailSubject: `${urgentTag}Nabil AI call reported by ${rep.restaurant.name}: ${topic}`,
+    emailTitle: rep.urgent ? "URGENT: a restaurant reported a Nabil AI call" : "A restaurant reported a Nabil AI call",
+    emailSubtitle: `${rep.restaurant.name} — ${topic}`,
+    emailBody:
+      `Call on ${when}` +
+      (rep.call.durationSeconds != null ? ` (${Math.round(rep.call.durationSeconds)} s)` : "") +
+      (rep.call.outcome ? `, outcome ${rep.call.outcome}` : "") +
+      (rep.call.orderNumber ? `, order ${rep.call.orderNumber}` : "") +
+      `.\n\nReported by ${rep.reporterName || rep.reporterEmail || "the restaurant"}:\n\n“${rep.description}”\n\n` +
+      "Open the report to read the transcript, download the call as a regression case, set a status and reply — the restaurant sees your notes on the call page.",
+    emailCtaLabel: "Open the report",
+  });
+}
+
+/**
+ * The platform replied on (or changed the status of) a restaurant's call
+ * report — email the person who filed it so they know to look. Their own
+ * language would be ideal; the reporter is a restaurant operator and this
+ * follows the same English-only rule as every other platform→operator mail
+ * in this file. Best-effort; never throws.
+ */
+export async function notifyNabilCallReportUpdated(
+  reportId: string,
+  change: { kind: "comment"; body: string } | { kind: "status"; status: string; resolution?: string | null },
+): Promise<void> {
+  let rep: {
+    id: string;
+    callId: string;
+    topic: string;
+    reporterName: string | null;
+    reporterEmail: string | null;
+    restaurant: { name: string };
+  } | null = null;
+  try {
+    rep = await prisma.voiceCallReport.findUnique({
+      where: { id: reportId },
+      select: { id: true, callId: true, topic: true, reporterName: true, reporterEmail: true, restaurant: { select: { name: true } } },
+    });
+  } catch (e) {
+    console.error("[platform-notifications] call-report update lookup failed", e);
+    return;
+  }
+  if (!rep?.reporterEmail) return;
+  const { VOICE_CALL_REPORT_TOPIC_LABEL_EN, VOICE_CALL_REPORT_STATUS_LABEL_EN } = await import("@/lib/voice/call-reports");
+  const topic = (VOICE_CALL_REPORT_TOPIC_LABEL_EN as Record<string, string>)[rep.topic] ?? rep.topic;
+  const to: Recipient = { email: rep.reporterEmail.toLowerCase(), name: rep.reporterName };
+  const link = `/admin/phone-ordering/calls/${rep.callId}`;
+  if (change.kind === "comment") {
+    await dispatch({ inApp: [], email: [to] }, {
+      kind: "nabil_call_report_comment",
+      inAppTitle: `Fee Free replied on your call report (${topic})`,
+      link,
+      emailSubject: `Reply on your Nabil AI call report — ${rep.restaurant.name}`,
+      emailTitle: "The Fee Free team replied on your call report",
+      emailSubtitle: topic,
+      emailBody: `“${change.body}”\n\nOpen the call to read the full thread and answer.`,
+      emailCtaLabel: "Open the call",
+    });
+    return;
+  }
+  const status = (VOICE_CALL_REPORT_STATUS_LABEL_EN as Record<string, string>)[change.status] ?? change.status;
+  await dispatch({ inApp: [], email: [to] }, {
+    kind: "nabil_call_report_status",
+    inAppTitle: `Your call report is now “${status}” (${topic})`,
+    link,
+    emailSubject: `Your Nabil AI call report is now “${status}” — ${rep.restaurant.name}`,
+    emailTitle: `Call report status: ${status}`,
+    emailSubtitle: topic,
+    emailBody: (change.resolution ? `“${change.resolution}”\n\n` : "") + "Open the call to see the details and reply if anything is still off.",
+    emailCtaLabel: "Open the call",
+  });
+}

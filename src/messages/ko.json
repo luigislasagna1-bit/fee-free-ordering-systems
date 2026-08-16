@@ -4464,6 +4464,52 @@
           "latencyLabel": "지연 시간 및 사용량",
           "errorLabel": "{where}에서 오류",
           "payloadLabel": "데이터"
+        },
+        "report": {
+          "button": "이 통화 신고",
+          "modalTitle": "통화 문제 신고",
+          "modalIntro": "{time}의 이 통화에서 무엇이 잘못되었는지 알려주세요. Fee Free 팀이 모든 신고를 검토하고 바로 이 페이지에서 답변합니다.",
+          "topicLabel": "무엇이 잘못되었나요?",
+          "topicPlaceholder": "문제 유형 선택…",
+          "topics": {
+            "order_taken_incorrectly": "주문 — 주문이 잘못 접수됨",
+            "order_sent_wrong": "주문 — 잘못된 주문이 주방으로 전송됨",
+            "incorrect_pricing": "주문 — 잘못된 가격 안내",
+            "allowed_unallowable": "주문 — 허용되지 않아야 할 것을 허용함",
+            "reservation_issue": "예약 — 예약 문제",
+            "voice_quality": "음성 — 로봇 같음, 끊김 또는 잘못 알아들음",
+            "technical_issue": "기술 — 통화 끊김, 무음 또는 오류",
+            "other": "기타"
+          },
+          "descriptionLabel": "무슨 일이 있었나요?",
+          "descriptionPlaceholder": "고객이 원한 것, Nabil이 한 것, 그리고 원래 어떻게 되어야 했는지 설명해 주세요.",
+          "descriptionTooShort": "조금 더 자세히 적어 주세요 (최소 {min}자).",
+          "urgentLabel": "긴급 — 지금 고객에게 영향을 미치고 있음",
+          "cancel": "취소",
+          "submit": "신고 보내기",
+          "sending": "보내는 중…",
+          "sentToast": "신고가 전송되었습니다. 이 통화를 조사하고 여기에서 답변하겠습니다.",
+          "errorToast": "보낼 수 없습니다. 다시 시도해 주세요.",
+          "tooManyOpen": "이 통화에는 이미 처리 중인 신고가 있습니다. 대신 아래 신고 중 하나에 메모를 추가해 주세요.",
+          "cardTitle": "이 통화의 신고",
+          "status": {
+            "NEW": "신규",
+            "INVESTIGATING": "조사 중",
+            "NEEDS_INFO": "추가 정보가 필요합니다",
+            "FIXED": "수정됨",
+            "WONT_FIX": "수정하지 않음"
+          },
+          "urgentBadge": "긴급",
+          "reportedAt": "신고 {time}",
+          "resolutionTitle": "Fee Free 팀의 답변",
+          "threadTitle": "메모",
+          "threadEmpty": "아직 메모가 없습니다. Fee Free 팀이 여기에 답변합니다.",
+          "replyPlaceholder": "Fee Free 팀에게 메모 추가…",
+          "replySend": "메모 보내기",
+          "replySentToast": "메모를 보냈습니다.",
+          "fromPlatform": "Fee Free 팀",
+          "fromYou": "나",
+          "justNow": "방금"
         }
       },
       "upsells": {

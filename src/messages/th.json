@@ -4464,6 +4464,52 @@
           "latencyLabel": "ความหน่วงและการใช้งาน",
           "errorLabel": "ข้อผิดพลาดใน {where}",
           "payloadLabel": "ข้อมูล"
+        },
+        "report": {
+          "button": "รายงานสายนี้",
+          "modalTitle": "รายงานปัญหาของสาย",
+          "modalIntro": "บอกเราว่ามีอะไรผิดพลาดในสายนี้เมื่อ {time} ทีม Fee Free จะตรวจสอบทุกรายงานและตอบกลับที่หน้านี้",
+          "topicLabel": "มีอะไรผิดพลาด?",
+          "topicPlaceholder": "เลือกประเภทของปัญหา…",
+          "topics": {
+            "order_taken_incorrectly": "การสั่งอาหาร — รับออเดอร์ผิด",
+            "order_sent_wrong": "การสั่งอาหาร — ส่งออเดอร์ผิดเข้าครัว",
+            "incorrect_pricing": "การสั่งอาหาร — แจ้งราคาผิด",
+            "allowed_unallowable": "การสั่งอาหาร — อนุญาตสิ่งที่ไม่ควรอนุญาต",
+            "reservation_issue": "การจอง — ปัญหาเกี่ยวกับการจอง",
+            "voice_quality": "เสียง — ฟังดูเหมือนหุ่นยนต์ ขาดหาย หรือฟังผิด",
+            "technical_issue": "เทคนิค — สายหลุด เงียบ หรือมีข้อผิดพลาด",
+            "other": "อื่นๆ"
+          },
+          "descriptionLabel": "เกิดอะไรขึ้น?",
+          "descriptionPlaceholder": "อธิบายว่าผู้โทรต้องการอะไร Nabil ทำอะไร และสิ่งที่ควรจะเกิดขึ้น",
+          "descriptionTooShort": "กรุณาให้รายละเอียดเพิ่มอีกเล็กน้อย (อย่างน้อย {min} ตัวอักษร)",
+          "urgentLabel": "เร่งด่วน — กำลังส่งผลกระทบต่อลูกค้าในขณะนี้",
+          "cancel": "ยกเลิก",
+          "submit": "ส่งรายงาน",
+          "sending": "กำลังส่ง…",
+          "sentToast": "ส่งรายงานแล้ว — เราจะตรวจสอบสายนี้และตอบกลับที่นี่",
+          "errorToast": "ส่งไม่สำเร็จ กรุณาลองอีกครั้ง",
+          "tooManyOpen": "สายนี้มีรายงานที่ยังเปิดอยู่แล้ว — โปรดเพิ่มบันทึกในรายงานใดรายงานหนึ่งด้านล่างแทน",
+          "cardTitle": "รายงานของสายนี้",
+          "status": {
+            "NEW": "ใหม่",
+            "INVESTIGATING": "กำลังตรวจสอบ",
+            "NEEDS_INFO": "เราต้องการข้อมูลเพิ่มเติมจากคุณ",
+            "FIXED": "แก้ไขแล้ว",
+            "WONT_FIX": "จะไม่แก้ไข"
+          },
+          "urgentBadge": "เร่งด่วน",
+          "reportedAt": "รายงานเมื่อ {time}",
+          "resolutionTitle": "คำตอบจากทีม Fee Free",
+          "threadTitle": "บันทึก",
+          "threadEmpty": "ยังไม่มีบันทึก — ทีม Fee Free จะตอบกลับที่นี่",
+          "replyPlaceholder": "เพิ่มบันทึกถึงทีม Fee Free…",
+          "replySend": "ส่งบันทึก",
+          "replySentToast": "ส่งบันทึกแล้ว",
+          "fromPlatform": "ทีม Fee Free",
+          "fromYou": "คุณ",
+          "justNow": "เมื่อสักครู่"
         }
       },
       "upsells": {

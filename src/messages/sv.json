@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latens och förbrukning",
           "errorLabel": "Fel i {where}",
           "payloadLabel": "Data"
+        },
+        "report": {
+          "button": "Rapportera det här samtalet",
+          "modalTitle": "Rapportera ett problem med samtalet",
+          "modalIntro": "Berätta vad som gick fel i det här samtalet från {time}. Fee Free-teamet går igenom varje rapport och svarar här på sidan.",
+          "topicLabel": "Vad gick fel?",
+          "topicPlaceholder": "Välj typ av problem…",
+          "topics": {
+            "order_taken_incorrectly": "Beställning — beställningen togs fel",
+            "order_sent_wrong": "Beställning — fel beställning skickades till köket",
+            "incorrect_pricing": "Beställning — fel pris angavs",
+            "allowed_unallowable": "Beställning — tillät något som inte borde tillåtas",
+            "reservation_issue": "Bokning — problem med bokning",
+            "voice_quality": "Röst — lät robotisk, bröts eller hörde fel",
+            "technical_issue": "Tekniskt — samtalet bröts, tystnad eller fel",
+            "other": "Annat"
+          },
+          "descriptionLabel": "Vad hände?",
+          "descriptionPlaceholder": "Beskriv vad kunden ville, vad Nabil gjorde och vad som borde ha hänt.",
+          "descriptionTooShort": "Ge oss lite mer detaljer (minst {min} tecken).",
+          "urgentLabel": "Brådskande — det påverkar kunder just nu",
+          "cancel": "Avbryt",
+          "submit": "Skicka rapport",
+          "sending": "Skickar…",
+          "sentToast": "Rapport skickad — vi tittar på samtalet och svarar här.",
+          "errorToast": "Kunde inte skicka. Försök igen.",
+          "tooManyOpen": "Det här samtalet har redan öppna rapporter — lägg hellre till en anteckning på en av dem nedan.",
+          "cardTitle": "Rapporter om det här samtalet",
+          "status": {
+            "NEW": "Ny",
+            "INVESTIGATING": "Utreds",
+            "NEEDS_INFO": "Vi behöver mer information från dig",
+            "FIXED": "Åtgärdat",
+            "WONT_FIX": "Åtgärdas inte"
+          },
+          "urgentBadge": "Brådskande",
+          "reportedAt": "Rapporterat {time}",
+          "resolutionTitle": "Fee Free-teamets svar",
+          "threadTitle": "Anteckningar",
+          "threadEmpty": "Inga anteckningar ännu — Fee Free-teamet svarar här.",
+          "replyPlaceholder": "Lägg till en anteckning till Fee Free-teamet…",
+          "replySend": "Skicka anteckning",
+          "replySentToast": "Anteckning skickad.",
+          "fromPlatform": "Fee Free-teamet",
+          "fromYou": "Du",
+          "justNow": "just nu"
         }
       },
       "upsells": {

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latență și consum",
           "errorLabel": "Eroare în {where}",
           "payloadLabel": "Date"
+        },
+        "report": {
+          "button": "Raportează acest apel",
+          "modalTitle": "Raportează o problemă cu apelul",
+          "modalIntro": "Spuneți-ne ce a mers prost în acest apel de la {time}. Echipa Fee Free analizează fiecare raport și răspunde chiar aici, pe această pagină.",
+          "topicLabel": "Ce a mers prost?",
+          "topicPlaceholder": "Selectați tipul problemei…",
+          "topics": {
+            "order_taken_incorrectly": "Comandă — comanda a fost preluată greșit",
+            "order_sent_wrong": "Comandă — comanda greșită a fost trimisă la bucătărie",
+            "incorrect_pricing": "Comandă — s-a comunicat un preț greșit",
+            "allowed_unallowable": "Comandă — a permis ceva ce nu trebuia",
+            "reservation_issue": "Rezervare — problemă cu o rezervare",
+            "voice_quality": "Voce — suna robotic, se întrerupea sau a auzit greșit",
+            "technical_issue": "Tehnic — apel întrerupt, liniște sau erori",
+            "other": "Altele"
+          },
+          "descriptionLabel": "Ce s-a întâmplat?",
+          "descriptionPlaceholder": "Descrieți ce a vrut apelantul, ce a făcut Nabil și ce ar fi trebuit să se întâmple.",
+          "descriptionTooShort": "Vă rugăm să oferiți puțin mai multe detalii (cel puțin {min} caractere).",
+          "urgentLabel": "Urgent — afectează clienții chiar acum",
+          "cancel": "Anulează",
+          "submit": "Trimite raportul",
+          "sending": "Se trimite…",
+          "sentToast": "Raport trimis — vom analiza acest apel și vom răspunde aici.",
+          "errorToast": "Nu s-a putut trimite. Încercați din nou.",
+          "tooManyOpen": "Acest apel are deja rapoarte deschise — adăugați în schimb o notă la unul dintre ele mai jos.",
+          "cardTitle": "Rapoarte pentru acest apel",
+          "status": {
+            "NEW": "Nou",
+            "INVESTIGATING": "În investigare",
+            "NEEDS_INFO": "Avem nevoie de mai multe informații de la dvs.",
+            "FIXED": "Rezolvat",
+            "WONT_FIX": "Nu va fi rezolvat"
+          },
+          "urgentBadge": "Urgent",
+          "reportedAt": "Raportat {time}",
+          "resolutionTitle": "Răspunsul echipei Fee Free",
+          "threadTitle": "Note",
+          "threadEmpty": "Nicio notă încă — echipa Fee Free va răspunde aici.",
+          "replyPlaceholder": "Adăugați o notă pentru echipa Fee Free…",
+          "replySend": "Trimite nota",
+          "replySentToast": "Notă trimisă.",
+          "fromPlatform": "Echipa Fee Free",
+          "fromYou": "Dvs.",
+          "justNow": "chiar acum"
         }
       },
       "upsells": {

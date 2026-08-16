@@ -4464,6 +4464,52 @@
           "latencyLabel": "レイテンシと使用量",
           "errorLabel": "{where} でエラー",
           "payloadLabel": "データ"
+        },
+        "report": {
+          "button": "この通話を報告",
+          "modalTitle": "通話の問題を報告",
+          "modalIntro": "{time} のこの通話で何が問題だったかお知らせください。Fee Free チームがすべての報告を確認し、このページで返信します。",
+          "topicLabel": "何が問題でしたか？",
+          "topicPlaceholder": "問題の種類を選択…",
+          "topics": {
+            "order_taken_incorrectly": "注文 — 注文が正しく受け付けられなかった",
+            "order_sent_wrong": "注文 — 間違った注文がキッチンに送られた",
+            "incorrect_pricing": "注文 — 間違った価格が伝えられた",
+            "allowed_unallowable": "注文 — 許可すべきでないことを許可した",
+            "reservation_issue": "予約 — 予約に関する問題",
+            "voice_quality": "音声 — ロボットのように聞こえた、途切れた、聞き間違えた",
+            "technical_issue": "技術的 — 通話が切れた、無音、エラー",
+            "other": "その他"
+          },
+          "descriptionLabel": "何が起きましたか？",
+          "descriptionPlaceholder": "お客様が何を求め、Nabil が何をして、本来どうあるべきだったかを説明してください。",
+          "descriptionTooShort": "もう少し詳しくお書きください（{min} 文字以上）。",
+          "urgentLabel": "緊急 — 今まさにお客様に影響が出ている",
+          "cancel": "キャンセル",
+          "submit": "報告を送信",
+          "sending": "送信中…",
+          "sentToast": "報告を送信しました。この通話を調査し、ここで返信します。",
+          "errorToast": "送信できませんでした。もう一度お試しください。",
+          "tooManyOpen": "この通話にはすでに未解決の報告があります。代わりに下のいずれかにメモを追加してください。",
+          "cardTitle": "この通話の報告",
+          "status": {
+            "NEW": "新規",
+            "INVESTIGATING": "調査中",
+            "NEEDS_INFO": "追加情報が必要です",
+            "FIXED": "修正済み",
+            "WONT_FIX": "修正しません"
+          },
+          "urgentBadge": "緊急",
+          "reportedAt": "報告日時 {time}",
+          "resolutionTitle": "Fee Free チームからの回答",
+          "threadTitle": "メモ",
+          "threadEmpty": "まだメモはありません。Fee Free チームがここで返信します。",
+          "replyPlaceholder": "Fee Free チームへのメモを追加…",
+          "replySend": "メモを送信",
+          "replySentToast": "メモを送信しました。",
+          "fromPlatform": "Fee Free チーム",
+          "fromYou": "あなた",
+          "justNow": "たった今"
         }
       },
       "upsells": {

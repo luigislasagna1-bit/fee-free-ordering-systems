@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latência e consumo",
           "errorLabel": "Erro em {where}",
           "payloadLabel": "Dados"
+        },
+        "report": {
+          "button": "Reportar esta chamada",
+          "modalTitle": "Reportar um problema na chamada",
+          "modalIntro": "Diga-nos o que correu mal nesta chamada das {time}. A equipa Fee Free analisa cada relatório e responde aqui mesmo, nesta página.",
+          "topicLabel": "O que correu mal?",
+          "topicPlaceholder": "Selecione o tipo de problema…",
+          "topics": {
+            "order_taken_incorrectly": "Pedidos — pedido registado incorretamente",
+            "order_sent_wrong": "Pedidos — pedido errado enviado para a cozinha",
+            "incorrect_pricing": "Pedidos — preço indicado incorreto",
+            "allowed_unallowable": "Pedidos — permitiu algo que não devia",
+            "reservation_issue": "Reservas — problema com uma reserva",
+            "voice_quality": "Voz — soou robótica, cortou ou percebeu mal",
+            "technical_issue": "Técnico — chamada caiu, silêncio ou erros",
+            "other": "Outro"
+          },
+          "descriptionLabel": "O que aconteceu?",
+          "descriptionPlaceholder": "Descreva o que o cliente queria, o que o Nabil fez e o que devia ter acontecido.",
+          "descriptionTooShort": "Dê-nos um pouco mais de detalhe (pelo menos {min} caracteres).",
+          "urgentLabel": "Urgente — está a afetar clientes neste momento",
+          "cancel": "Cancelar",
+          "submit": "Enviar relatório",
+          "sending": "A enviar…",
+          "sentToast": "Relatório enviado — vamos analisar esta chamada e responder aqui.",
+          "errorToast": "Não foi possível enviar. Tente novamente.",
+          "tooManyOpen": "Esta chamada já tem relatórios abertos — em vez disso, adicione uma nota a um deles abaixo.",
+          "cardTitle": "Relatórios sobre esta chamada",
+          "status": {
+            "NEW": "Novo",
+            "INVESTIGATING": "Em investigação",
+            "NEEDS_INFO": "Precisamos de mais informação sua",
+            "FIXED": "Corrigido",
+            "WONT_FIX": "Não será corrigido"
+          },
+          "urgentBadge": "Urgente",
+          "reportedAt": "Reportado {time}",
+          "resolutionTitle": "Resposta da equipa Fee Free",
+          "threadTitle": "Notas",
+          "threadEmpty": "Ainda sem notas — a equipa Fee Free responderá aqui.",
+          "replyPlaceholder": "Adicione uma nota para a equipa Fee Free…",
+          "replySend": "Enviar nota",
+          "replySentToast": "Nota enviada.",
+          "fromPlatform": "Equipa Fee Free",
+          "fromYou": "Você",
+          "justNow": "agora mesmo"
         }
       },
       "upsells": {

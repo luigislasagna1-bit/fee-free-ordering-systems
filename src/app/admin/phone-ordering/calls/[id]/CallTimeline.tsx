@@ -85,12 +85,16 @@ export default async function CallTimeline({
   versions,
   callId,
   interruptedTag,
+  regressionHref,
 }: {
   events: TimelineEvent[];
   versions: TimelineVersions;
   callId: string;
   /** Already-translated "interrupted" tag from the parent namespace. */
   interruptedTag: string;
+  /** Where the "regression case" download lives — the restaurant route by
+   *  default; the superadmin report page passes its own (platform-staff) URL. */
+  regressionHref?: string;
 }) {
   const t = await getTranslations("admin.phoneOrderingPage.callDetail.timeline");
   const groups = groupByTurn(events);
@@ -120,7 +124,7 @@ export default async function CallTimeline({
           </div>
         </div>
         <a
-          href={`/api/admin/phone-ordering/calls/${callId}/regression-case`}
+          href={regressionHref ?? `/api/admin/phone-ordering/calls/${callId}/regression-case`}
           download
           className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-300 bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-800 hover:bg-indigo-100"
           title={t("regressionHint")}

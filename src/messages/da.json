@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latenstid og forbrug",
           "errorLabel": "Fejl i {where}",
           "payloadLabel": "Data"
+        },
+        "report": {
+          "button": "Rapportér dette opkald",
+          "modalTitle": "Rapportér et problem med opkaldet",
+          "modalIntro": "Fortæl os, hvad der gik galt i dette opkald fra {time}. Fee Free-teamet gennemgår hver rapport og svarer lige her på siden.",
+          "topicLabel": "Hvad gik galt?",
+          "topicPlaceholder": "Vælg problemtypen…",
+          "topics": {
+            "order_taken_incorrectly": "Bestilling — ordren blev taget forkert",
+            "order_sent_wrong": "Bestilling — forkert ordre sendt til køkkenet",
+            "incorrect_pricing": "Bestilling — forkert pris oplyst",
+            "allowed_unallowable": "Bestilling — tillod noget, der ikke burde være tilladt",
+            "reservation_issue": "Reservation — problem med reservation",
+            "voice_quality": "Stemme — lød robotagtig, faldt ud eller hørte forkert",
+            "technical_issue": "Teknisk — afbrudt opkald, stilhed eller fejl",
+            "other": "Andet"
+          },
+          "descriptionLabel": "Hvad skete der?",
+          "descriptionPlaceholder": "Beskriv, hvad kunden ville, hvad Nabil gjorde, og hvad der burde være sket.",
+          "descriptionTooShort": "Giv os lidt flere detaljer (mindst {min} tegn).",
+          "urgentLabel": "Haster — det påvirker kunderne lige nu",
+          "cancel": "Annuller",
+          "submit": "Send rapport",
+          "sending": "Sender…",
+          "sentToast": "Rapport sendt — vi ser på opkaldet og svarer her.",
+          "errorToast": "Kunne ikke sende. Prøv igen.",
+          "tooManyOpen": "Dette opkald har allerede åbne rapporter — tilføj i stedet en note til en af dem nedenfor.",
+          "cardTitle": "Rapporter om dette opkald",
+          "status": {
+            "NEW": "Ny",
+            "INVESTIGATING": "Undersøges",
+            "NEEDS_INFO": "Vi har brug for flere oplysninger fra dig",
+            "FIXED": "Løst",
+            "WONT_FIX": "Rettes ikke"
+          },
+          "urgentBadge": "Haster",
+          "reportedAt": "Rapporteret {time}",
+          "resolutionTitle": "Fee Free-teamets svar",
+          "threadTitle": "Noter",
+          "threadEmpty": "Ingen noter endnu — Fee Free-teamet svarer her.",
+          "replyPlaceholder": "Tilføj en note til Fee Free-teamet…",
+          "replySend": "Send note",
+          "replySentToast": "Note sendt.",
+          "fromPlatform": "Fee Free-teamet",
+          "fromYou": "Dig",
+          "justNow": "lige nu"
         }
       },
       "upsells": {

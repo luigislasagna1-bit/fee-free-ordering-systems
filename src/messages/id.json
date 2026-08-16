@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latensi dan penggunaan",
           "errorLabel": "Galat di {where}",
           "payloadLabel": "Data"
+        },
+        "report": {
+          "button": "Laporkan panggilan ini",
+          "modalTitle": "Laporkan masalah panggilan",
+          "modalIntro": "Beri tahu kami apa yang salah pada panggilan ini dari {time}. Tim Fee Free meninjau setiap laporan dan membalas langsung di halaman ini.",
+          "topicLabel": "Apa yang salah?",
+          "topicPlaceholder": "Pilih jenis masalah…",
+          "topics": {
+            "order_taken_incorrectly": "Pemesanan — pesanan dicatat dengan salah",
+            "order_sent_wrong": "Pemesanan — pesanan yang salah dikirim ke dapur",
+            "incorrect_pricing": "Pemesanan — harga yang diberikan salah",
+            "allowed_unallowable": "Pemesanan — mengizinkan sesuatu yang seharusnya tidak boleh",
+            "reservation_issue": "Reservasi — masalah reservasi",
+            "voice_quality": "Suara — terdengar seperti robot, terputus, atau salah dengar",
+            "technical_issue": "Teknis — panggilan terputus, hening, atau error",
+            "other": "Lainnya"
+          },
+          "descriptionLabel": "Apa yang terjadi?",
+          "descriptionPlaceholder": "Jelaskan apa yang diinginkan penelepon, apa yang dilakukan Nabil, dan apa yang seharusnya terjadi.",
+          "descriptionTooShort": "Mohon beri sedikit lebih banyak detail (minimal {min} karakter).",
+          "urgentLabel": "Mendesak — ini sedang memengaruhi pelanggan saat ini",
+          "cancel": "Batal",
+          "submit": "Kirim laporan",
+          "sending": "Mengirim…",
+          "sentToast": "Laporan terkirim — kami akan memeriksa panggilan ini dan membalas di sini.",
+          "errorToast": "Tidak dapat mengirim. Silakan coba lagi.",
+          "tooManyOpen": "Panggilan ini sudah memiliki laporan terbuka — tambahkan catatan ke salah satunya di bawah.",
+          "cardTitle": "Laporan untuk panggilan ini",
+          "status": {
+            "NEW": "Baru",
+            "INVESTIGATING": "Sedang diselidiki",
+            "NEEDS_INFO": "Kami perlu info lebih lanjut dari Anda",
+            "FIXED": "Sudah diperbaiki",
+            "WONT_FIX": "Tidak akan diperbaiki"
+          },
+          "urgentBadge": "Mendesak",
+          "reportedAt": "Dilaporkan {time}",
+          "resolutionTitle": "Jawaban tim Fee Free",
+          "threadTitle": "Catatan",
+          "threadEmpty": "Belum ada catatan — tim Fee Free akan membalas di sini.",
+          "replyPlaceholder": "Tambahkan catatan untuk tim Fee Free…",
+          "replySend": "Kirim catatan",
+          "replySentToast": "Catatan terkirim.",
+          "fromPlatform": "Tim Fee Free",
+          "fromYou": "Anda",
+          "justNow": "baru saja"
         }
       },
       "upsells": {

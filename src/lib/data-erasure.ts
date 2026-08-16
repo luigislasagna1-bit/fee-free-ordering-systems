@@ -43,6 +43,9 @@ export function subjectHash(email: string): string {
  * = "restaurant" rows are handled by anonymizeCustomerByEmail; "platform" rows
  * (the marketplace-wide identity) only by anonymizePersonEverywhere.
  */
+/** What a call report / its notes read after the caller asked to be forgotten. */
+export const REDACTED_REPORT_TEXT = "[removed at the caller's request]";
+
 export const PII_ERASURE_MAP = {
   Customer: { scope: "restaurant", action: "anonymize", fields: ["name", "email", "phone", "address", "notes", "passwordHash", "emailVerifyToken", "passwordResetToken", "lastLoginAt", "chainCustomerId", "customerAccountId", "stripeCustomerId"] },
   RestaurantCustomerAddress: { scope: "restaurant", action: "delete", fields: ["street", "city", "state", "zip", "lat", "lng"] },
@@ -57,6 +60,8 @@ export const PII_ERASURE_MAP = {
   EmailSuppression: { scope: "restaurant", action: "keep", fields: [] }, // kept: proves do-not-email
   VoiceCall: { scope: "restaurant", action: "anonymize", fields: ["fromNumber", "fromDigits", "transcript", "summary", "recordingUrl", "recordingSid", "recordingDurationSeconds", "customerId"] }, // Nabil AI; matched on fromDigits — fromNumber is E.164 and matched NOTHING (keep call duration/outcome/cost); audio DELETED at Twilio first
   VoiceCallEvent: { scope: "restaurant", action: "delete", fields: ["payload"] }, // Nabil AI event log (what the caller said, tool inputs/outputs, cart, address — redacted at write but still speech). DELETED (not anonymized) via the parent VoiceCall's fromDigits, BEFORE that row's fromDigits is nulled. Timings/versions live on VoiceCall, so nothing analytic is lost.
+  VoiceCallReport: { scope: "restaurant", action: "anonymize", fields: ["description", "resolution"] }, // Nabil AI "Report this call" (2026-08-16): STAFF-typed text about a caller's call, can name the caller. Scrubbed via the parent VoiceCall's fromDigits BEFORE that row is nulled; topic/status/timestamps stay for the platform's own defect history.
+  VoiceCallReportComment: { scope: "restaurant", action: "anonymize", fields: ["body"] }, // the notes thread on a call report — same rule, same key.
   // VoiceMenuSnapshot: NOT listed on purpose — it is the menu payload keyed by
   // content hash (items, prices, options). Restaurant data, no customer PII.
   BlockedCaller: { scope: "restaurant", action: "keep", fields: [] }, // kept: do-not-serve record, same principle as EmailSuppression
@@ -235,6 +240,19 @@ export async function anonymizeCustomerByEmail(
       // fromDigits, or the join finds nothing and the events survive.
       counts.VoiceCallEvent = (await tx.voiceCallEvent.deleteMany({
         where: { call: { restaurantId, fromDigits: { in: phoneKeys } } },
+      })).count;
+      // A restaurant's "Report this call" + its notes thread are staff-typed
+      // text ABOUT this caller's call and can name them — scrub the words, keep
+      // the rows (topic/status/dates are the platform's own defect history).
+      // Same key and same ordering rule as the event log: before the VoiceCall
+      // scrub nulls fromDigits.
+      counts.VoiceCallReport = (await tx.voiceCallReport.updateMany({
+        where: { restaurantId, call: { fromDigits: { in: phoneKeys } } },
+        data: { description: REDACTED_REPORT_TEXT, resolution: null },
+      })).count;
+      counts.VoiceCallReportComment = (await tx.voiceCallReportComment.updateMany({
+        where: { report: { restaurantId, call: { fromDigits: { in: phoneKeys } } } },
+        data: { body: REDACTED_REPORT_TEXT },
       })).count;
       counts.VoiceCall = (await tx.voiceCall.updateMany({
         where: { restaurantId, fromDigits: { in: phoneKeys } },

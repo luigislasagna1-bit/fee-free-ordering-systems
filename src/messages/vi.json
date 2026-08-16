@@ -4464,6 +4464,52 @@
           "latencyLabel": "Độ trễ và mức dùng",
           "errorLabel": "Lỗi ở {where}",
           "payloadLabel": "Dữ liệu"
+        },
+        "report": {
+          "button": "Báo cáo cuộc gọi này",
+          "modalTitle": "Báo cáo sự cố cuộc gọi",
+          "modalIntro": "Hãy cho chúng tôi biết điều gì đã sai trong cuộc gọi lúc {time}. Đội ngũ Fee Free xem xét mọi báo cáo và trả lời ngay tại trang này.",
+          "topicLabel": "Điều gì đã sai?",
+          "topicPlaceholder": "Chọn loại sự cố…",
+          "topics": {
+            "order_taken_incorrectly": "Đặt món — ghi nhận đơn hàng sai",
+            "order_sent_wrong": "Đặt món — gửi sai đơn hàng xuống bếp",
+            "incorrect_pricing": "Đặt món — báo giá sai",
+            "allowed_unallowable": "Đặt món — cho phép điều không nên cho phép",
+            "reservation_issue": "Đặt bàn — sự cố đặt bàn",
+            "voice_quality": "Giọng nói — nghe như robot, bị ngắt quãng hoặc nghe nhầm",
+            "technical_issue": "Kỹ thuật — rớt cuộc gọi, im lặng hoặc lỗi",
+            "other": "Khác"
+          },
+          "descriptionLabel": "Chuyện gì đã xảy ra?",
+          "descriptionPlaceholder": "Mô tả người gọi muốn gì, Nabil đã làm gì và lẽ ra điều gì nên xảy ra.",
+          "descriptionTooShort": "Vui lòng cho chúng tôi thêm chút chi tiết (ít nhất {min} ký tự).",
+          "urgentLabel": "Khẩn cấp — đang ảnh hưởng đến khách hàng ngay lúc này",
+          "cancel": "Hủy",
+          "submit": "Gửi báo cáo",
+          "sending": "Đang gửi…",
+          "sentToast": "Đã gửi báo cáo — chúng tôi sẽ xem xét cuộc gọi này và trả lời tại đây.",
+          "errorToast": "Không gửi được. Vui lòng thử lại.",
+          "tooManyOpen": "Cuộc gọi này đã có báo cáo đang mở — thay vào đó, hãy thêm ghi chú vào một trong số đó bên dưới.",
+          "cardTitle": "Báo cáo về cuộc gọi này",
+          "status": {
+            "NEW": "Mới",
+            "INVESTIGATING": "Đang điều tra",
+            "NEEDS_INFO": "Chúng tôi cần thêm thông tin từ bạn",
+            "FIXED": "Đã sửa",
+            "WONT_FIX": "Sẽ không sửa"
+          },
+          "urgentBadge": "Khẩn cấp",
+          "reportedAt": "Đã báo cáo {time}",
+          "resolutionTitle": "Câu trả lời của đội ngũ Fee Free",
+          "threadTitle": "Ghi chú",
+          "threadEmpty": "Chưa có ghi chú — đội ngũ Fee Free sẽ trả lời tại đây.",
+          "replyPlaceholder": "Thêm ghi chú cho đội ngũ Fee Free…",
+          "replySend": "Gửi ghi chú",
+          "replySentToast": "Đã gửi ghi chú.",
+          "fromPlatform": "Đội ngũ Fee Free",
+          "fromYou": "Bạn",
+          "justNow": "vừa xong"
         }
       },
       "upsells": {

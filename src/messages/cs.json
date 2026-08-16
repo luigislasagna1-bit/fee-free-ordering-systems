@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latence a spotřeba",
           "errorLabel": "Chyba v {where}",
           "payloadLabel": "Data"
+        },
+        "report": {
+          "button": "Nahlásit tento hovor",
+          "modalTitle": "Nahlásit problém s hovorem",
+          "modalIntro": "Řekněte nám, co se u tohoto hovoru z {time} pokazilo. Tým Fee Free každé hlášení projde a odpoví přímo zde na této stránce.",
+          "topicLabel": "Co se pokazilo?",
+          "topicPlaceholder": "Vyberte typ problému…",
+          "topics": {
+            "order_taken_incorrectly": "Objednávka — objednávka byla přijata špatně",
+            "order_sent_wrong": "Objednávka — do kuchyně byla odeslána špatná objednávka",
+            "incorrect_pricing": "Objednávka — byla uvedena špatná cena",
+            "allowed_unallowable": "Objednávka — povolil něco, co neměl",
+            "reservation_issue": "Rezervace — problém s rezervací",
+            "voice_quality": "Hlas — zněl roboticky, vypadával nebo špatně rozuměl",
+            "technical_issue": "Technické — přerušený hovor, ticho nebo chyby",
+            "other": "Jiné"
+          },
+          "descriptionLabel": "Co se stalo?",
+          "descriptionPlaceholder": "Popište, co volající chtěl, co Nabil udělal a co se mělo stát.",
+          "descriptionTooShort": "Uveďte prosím trochu více podrobností (alespoň {min} znaků).",
+          "urgentLabel": "Naléhavé — právě teď to ovlivňuje zákazníky",
+          "cancel": "Zrušit",
+          "submit": "Odeslat hlášení",
+          "sending": "Odesílání…",
+          "sentToast": "Hlášení odesláno — hovor prověříme a odpovíme zde.",
+          "errorToast": "Odeslání se nezdařilo. Zkuste to prosím znovu.",
+          "tooManyOpen": "Tento hovor už má otevřená hlášení — přidejte místo toho poznámku k jednomu z nich níže.",
+          "cardTitle": "Hlášení k tomuto hovoru",
+          "status": {
+            "NEW": "Nové",
+            "INVESTIGATING": "Prošetřuje se",
+            "NEEDS_INFO": "Potřebujeme od vás více informací",
+            "FIXED": "Opraveno",
+            "WONT_FIX": "Nebude opraveno"
+          },
+          "urgentBadge": "Naléhavé",
+          "reportedAt": "Nahlášeno {time}",
+          "resolutionTitle": "Odpověď týmu Fee Free",
+          "threadTitle": "Poznámky",
+          "threadEmpty": "Zatím žádné poznámky — tým Fee Free odpoví zde.",
+          "replyPlaceholder": "Přidejte poznámku pro tým Fee Free…",
+          "replySend": "Odeslat poznámku",
+          "replySentToast": "Poznámka odeslána.",
+          "fromPlatform": "Tým Fee Free",
+          "fromYou": "Vy",
+          "justNow": "právě teď"
         }
       },
       "upsells": {

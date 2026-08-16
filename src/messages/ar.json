@@ -4464,6 +4464,52 @@
           "latencyLabel": "زمن الاستجابة والاستهلاك",
           "errorLabel": "خطأ في {where}",
           "payloadLabel": "البيانات"
+        },
+        "report": {
+          "button": "الإبلاغ عن هذه المكالمة",
+          "modalTitle": "الإبلاغ عن مشكلة في المكالمة",
+          "modalIntro": "أخبرنا بما حدث من خطأ في هذه المكالمة من {time}. يراجع فريق Fee Free كل بلاغ ويرد هنا في هذه الصفحة.",
+          "topicLabel": "ما الذي حدث بشكل خاطئ؟",
+          "topicPlaceholder": "اختر نوع المشكلة…",
+          "topics": {
+            "order_taken_incorrectly": "الطلب — تم أخذ الطلب بشكل غير صحيح",
+            "order_sent_wrong": "الطلب — تم إرسال طلب خاطئ إلى المطبخ",
+            "incorrect_pricing": "الطلب — تم إعطاء سعر غير صحيح",
+            "allowed_unallowable": "الطلب — سمح بشيء لم يكن ينبغي السماح به",
+            "reservation_issue": "الحجز — مشكلة في الحجز",
+            "voice_quality": "الصوت — بدا آليًا، أو انقطع، أو أساء الفهم",
+            "technical_issue": "تقني — انقطعت المكالمة، أو صمت، أو أخطاء",
+            "other": "أخرى"
+          },
+          "descriptionLabel": "ماذا حدث؟",
+          "descriptionPlaceholder": "صف ما أراده المتصل، وما فعله Nabil، وما كان ينبغي أن يحدث.",
+          "descriptionTooShort": "يرجى إعطاؤنا مزيدًا من التفاصيل ({min} أحرف على الأقل).",
+          "urgentLabel": "عاجل — هذا يؤثر على العملاء الآن",
+          "cancel": "إلغاء",
+          "submit": "إرسال البلاغ",
+          "sending": "جارٍ الإرسال…",
+          "sentToast": "تم إرسال البلاغ — سنراجع هذه المكالمة ونرد هنا.",
+          "errorToast": "تعذر الإرسال. يرجى المحاولة مرة أخرى.",
+          "tooManyOpen": "توجد بلاغات مفتوحة بالفعل لهذه المكالمة — أضف ملاحظة إلى أحدها أدناه بدلًا من ذلك.",
+          "cardTitle": "البلاغات على هذه المكالمة",
+          "status": {
+            "NEW": "جديد",
+            "INVESTIGATING": "قيد التحقيق",
+            "NEEDS_INFO": "نحتاج مزيدًا من المعلومات منك",
+            "FIXED": "تم الإصلاح",
+            "WONT_FIX": "لن يتم الإصلاح"
+          },
+          "urgentBadge": "عاجل",
+          "reportedAt": "تم الإبلاغ {time}",
+          "resolutionTitle": "رد فريق Fee Free",
+          "threadTitle": "الملاحظات",
+          "threadEmpty": "لا توجد ملاحظات بعد — سيرد فريق Fee Free هنا.",
+          "replyPlaceholder": "أضف ملاحظة لفريق Fee Free…",
+          "replySend": "إرسال الملاحظة",
+          "replySentToast": "تم إرسال الملاحظة.",
+          "fromPlatform": "فريق Fee Free",
+          "fromYou": "أنت",
+          "justNow": "الآن"
         }
       },
       "upsells": {

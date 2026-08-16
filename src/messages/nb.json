@@ -4464,6 +4464,52 @@
           "latencyLabel": "Ventetid og forbruk",
           "errorLabel": "Feil i {where}",
           "payloadLabel": "Data"
+        },
+        "report": {
+          "button": "Rapporter denne samtalen",
+          "modalTitle": "Rapporter et problem med samtalen",
+          "modalIntro": "Fortell oss hva som gikk galt i denne samtalen fra {time}. Fee Free-teamet går gjennom hver rapport og svarer her på siden.",
+          "topicLabel": "Hva gikk galt?",
+          "topicPlaceholder": "Velg type problem…",
+          "topics": {
+            "order_taken_incorrectly": "Bestilling — bestillingen ble tatt feil",
+            "order_sent_wrong": "Bestilling — feil bestilling sendt til kjøkkenet",
+            "incorrect_pricing": "Bestilling — feil pris oppgitt",
+            "allowed_unallowable": "Bestilling — tillot noe som ikke burde vært tillatt",
+            "reservation_issue": "Reservasjon — problem med reservasjon",
+            "voice_quality": "Stemme — hørtes robotaktig ut, falt ut eller hørte feil",
+            "technical_issue": "Teknisk — samtale brutt, stillhet eller feil",
+            "other": "Annet"
+          },
+          "descriptionLabel": "Hva skjedde?",
+          "descriptionPlaceholder": "Beskriv hva innringeren ville, hva Nabil gjorde, og hva som burde ha skjedd.",
+          "descriptionTooShort": "Gi oss litt mer detaljer (minst {min} tegn).",
+          "urgentLabel": "Haster — dette påvirker kunder akkurat nå",
+          "cancel": "Avbryt",
+          "submit": "Send rapport",
+          "sending": "Sender…",
+          "sentToast": "Rapport sendt — vi ser på samtalen og svarer her.",
+          "errorToast": "Kunne ikke sende. Prøv igjen.",
+          "tooManyOpen": "Denne samtalen har allerede åpne rapporter — legg heller til et notat på en av dem nedenfor.",
+          "cardTitle": "Rapporter om denne samtalen",
+          "status": {
+            "NEW": "Ny",
+            "INVESTIGATING": "Undersøkes",
+            "NEEDS_INFO": "Vi trenger mer informasjon fra deg",
+            "FIXED": "Løst",
+            "WONT_FIX": "Rettes ikke"
+          },
+          "urgentBadge": "Haster",
+          "reportedAt": "Rapportert {time}",
+          "resolutionTitle": "Fee Free-teamets svar",
+          "threadTitle": "Notater",
+          "threadEmpty": "Ingen notater ennå — Fee Free-teamet svarer her.",
+          "replyPlaceholder": "Legg til et notat til Fee Free-teamet…",
+          "replySend": "Send notat",
+          "replySentToast": "Notat sendt.",
+          "fromPlatform": "Fee Free-teamet",
+          "fromYou": "Deg",
+          "justNow": "akkurat nå"
         }
       },
       "upsells": {

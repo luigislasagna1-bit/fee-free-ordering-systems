@@ -444,6 +444,7 @@ model Restaurant {
   voiceNumbers           VoiceNumber[]
   voiceAgentConfig       VoiceAgentConfig?
   voiceCalls             VoiceCall[]
+  voiceCallReports       VoiceCallReport[]
   voiceFaqs              VoiceFaq[]
   voiceTextLinks         VoiceTextLink[]
   voiceUpsells           VoiceUpsell[]
@@ -3109,12 +3110,77 @@ model VoiceCall {
   /// events flush) — lets the timeline header say "N events" without a COUNT.
   eventCount       Int?
   events           VoiceCallEvent[]
+  /// Restaurant-filed issue reports on this call (superadmin "Restaurant
+  /// Reports › Nabil AI reports"). Cascade: a deleted call takes them along.
+  reports          VoiceCallReport[]
 
   createdAt       DateTime   @default(now())
 
   @@index([restaurantId, startedAt])
   @@index([fromNumber])
   @@index([fromDigits])
+}
+
+/// A restaurant flagging ONE Nabil AI call for the platform to look at —
+/// "the order was taken wrong", "the price was wrong", "it sounded robotic".
+/// Filed from the call page (Report this call), lands in superadmin
+/// "Restaurant Reports › Nabil AI reports", worked together through a status
+/// + a notes thread both sides can read (Luigi 2026-08-16, Loman parity).
+/// Side-table by design: nothing on the hot VoiceCall row; a report is rare.
+/// PII note: `description` is STAFF-typed free text about a caller's call and
+/// can name the caller — registered in PII_ERASURE_MAP (anonymized via the
+/// parent VoiceCall's fromDigits, same key as the call itself).
+model VoiceCallReport {
+  id            String     @id @default(cuid())
+  restaurantId  String
+  restaurant    Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  callId        String
+  call          VoiceCall  @relation(fields: [callId], references: [id], onDelete: Cascade)
+  /// One of VOICE_CALL_REPORT_TOPICS (src/lib/voice/call-reports.ts):
+  /// order_taken_incorrectly | order_sent_wrong | incorrect_pricing |
+  /// allowed_unallowable | reservation_issue | voice_quality | technical_issue | other
+  topic         String
+  /// "Customers are affected right now" — sorts first, flagged in the ops email.
+  urgent        Boolean    @default(false)
+  /// The restaurant's own words (≤ 2000 chars, plain text).
+  description   String
+  /// NEW | INVESTIGATING | NEEDS_INFO | FIXED | WONT_FIX — only the platform
+  /// changes it (VOICE_CALL_REPORT_STATUSES).
+  status        String     @default("NEW")
+  /// Who filed it (the restaurant login at the time) — replies are emailed
+  /// here. Stored verbatim so the report survives that user's deletion.
+  reporterEmail String?
+  reporterName  String?
+  /// The platform's plain-language answer, shown to the restaurant on the
+  /// call page once set. Distinct from the notes thread: this is the verdict.
+  resolution    String?
+  resolvedAt    DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  comments      VoiceCallReportComment[]
+
+  @@index([restaurantId, createdAt])
+  @@index([status, urgent, createdAt])
+  @@index([callId])
+}
+
+/// One note on a VoiceCallReport — from the restaurant ("it happened again")
+/// or the platform ("found it: the size was dropped; fix ships tonight").
+/// Both sides read the whole thread. PII note: staff-typed free text about a
+/// call — anonymized on erasure with its report.
+model VoiceCallReportComment {
+  id          String          @id @default(cuid())
+  reportId    String
+  report      VoiceCallReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  /// restaurant | platform
+  authorRole  String
+  authorEmail String
+  authorName  String?
+  body        String
+  createdAt   DateTime        @default(now())
+
+  @@index([reportId, createdAt])
 }
 
 /// One entry of the per-call EVENT LOG the voice service emits (directive

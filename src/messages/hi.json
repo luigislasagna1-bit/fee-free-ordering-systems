@@ -4689,6 +4689,52 @@
           "latencyLabel": "विलंबता और उपयोग",
           "errorLabel": "{where} में त्रुटि",
           "payloadLabel": "डेटा"
+        },
+        "report": {
+          "button": "इस कॉल की रिपोर्ट करें",
+          "modalTitle": "कॉल की समस्या की रिपोर्ट करें",
+          "modalIntro": "हमें बताएं कि {time} की इस कॉल में क्या गलत हुआ। Fee Free टीम हर रिपोर्ट की समीक्षा करती है और इसी पेज पर जवाब देती है।",
+          "topicLabel": "क्या गलत हुआ?",
+          "topicPlaceholder": "समस्या का प्रकार चुनें…",
+          "topics": {
+            "order_taken_incorrectly": "ऑर्डर — ऑर्डर गलत लिया गया",
+            "order_sent_wrong": "ऑर्डर — रसोई में गलत ऑर्डर भेजा गया",
+            "incorrect_pricing": "ऑर्डर — गलत कीमत बताई गई",
+            "allowed_unallowable": "ऑर्डर — ऐसी चीज़ की अनुमति दी जो नहीं देनी चाहिए थी",
+            "reservation_issue": "रिज़र्वेशन — रिज़र्वेशन में समस्या",
+            "voice_quality": "आवाज़ — रोबोट जैसी लगी, कट गई या गलत सुना",
+            "technical_issue": "तकनीकी — कॉल कट गई, सन्नाटा या त्रुटियाँ",
+            "other": "अन्य"
+          },
+          "descriptionLabel": "क्या हुआ?",
+          "descriptionPlaceholder": "बताएं कि कॉलर क्या चाहता था, Nabil ने क्या किया और क्या होना चाहिए था।",
+          "descriptionTooShort": "कृपया थोड़ा और विवरण दें (कम से कम {min} अक्षर)।",
+          "urgentLabel": "अत्यावश्यक — यह अभी ग्राहकों को प्रभावित कर रहा है",
+          "cancel": "रद्द करें",
+          "submit": "रिपोर्ट भेजें",
+          "sending": "भेजा जा रहा है…",
+          "sentToast": "रिपोर्ट भेज दी गई — हम इस कॉल की जाँच करेंगे और यहीं जवाब देंगे।",
+          "errorToast": "भेजा नहीं जा सका। कृपया फिर से कोशिश करें।",
+          "tooManyOpen": "इस कॉल पर पहले से खुली रिपोर्टें हैं — इसके बजाय नीचे उनमें से किसी एक में नोट जोड़ें।",
+          "cardTitle": "इस कॉल की रिपोर्टें",
+          "status": {
+            "NEW": "नई",
+            "INVESTIGATING": "जाँच जारी है",
+            "NEEDS_INFO": "हमें आपसे और जानकारी चाहिए",
+            "FIXED": "ठीक कर दिया गया",
+            "WONT_FIX": "ठीक नहीं किया जाएगा"
+          },
+          "urgentBadge": "अत्यावश्यक",
+          "reportedAt": "रिपोर्ट की गई {time}",
+          "resolutionTitle": "Fee Free टीम का जवाब",
+          "threadTitle": "नोट्स",
+          "threadEmpty": "अभी कोई नोट नहीं — Fee Free टीम यहाँ जवाब देगी।",
+          "replyPlaceholder": "Fee Free टीम के लिए नोट जोड़ें…",
+          "replySend": "नोट भेजें",
+          "replySentToast": "नोट भेज दिया गया।",
+          "fromPlatform": "Fee Free टीम",
+          "fromYou": "आप",
+          "justNow": "अभी-अभी"
         }
       },
       "upsells": {

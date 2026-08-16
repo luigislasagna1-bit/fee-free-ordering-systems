@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latenza e consumo",
           "errorLabel": "Errore in {where}",
           "payloadLabel": "Dati"
+        },
+        "report": {
+          "button": "Segnala questa chiamata",
+          "modalTitle": "Segnala un problema con la chiamata",
+          "modalIntro": "Raccontaci cosa è andato storto in questa chiamata delle {time}. Il team Fee Free esamina ogni segnalazione e risponde qui, in questa pagina.",
+          "topicLabel": "Cosa è andato storto?",
+          "topicPlaceholder": "Seleziona il tipo di problema…",
+          "topics": {
+            "order_taken_incorrectly": "Ordini — ordine preso in modo errato",
+            "order_sent_wrong": "Ordini — ordine sbagliato inviato in cucina",
+            "incorrect_pricing": "Ordini — prezzo comunicato errato",
+            "allowed_unallowable": "Ordini — ha permesso qualcosa che non doveva",
+            "reservation_issue": "Prenotazioni — problema con una prenotazione",
+            "voice_quality": "Voce — suonava robotica, si interrompeva o capiva male",
+            "technical_issue": "Tecnico — chiamata caduta, silenzio o errori",
+            "other": "Altro"
+          },
+          "descriptionLabel": "Cosa è successo?",
+          "descriptionPlaceholder": "Descrivi cosa voleva chi ha chiamato, cosa ha fatto Nabil e cosa sarebbe dovuto succedere.",
+          "descriptionTooShort": "Dacci qualche dettaglio in più (almeno {min} caratteri).",
+          "urgentLabel": "Urgente — sta influenzando i clienti proprio ora",
+          "cancel": "Annulla",
+          "submit": "Invia segnalazione",
+          "sending": "Invio…",
+          "sentToast": "Segnalazione inviata — esamineremo questa chiamata e risponderemo qui.",
+          "errorToast": "Invio non riuscito. Riprova.",
+          "tooManyOpen": "Questa chiamata ha già segnalazioni aperte — aggiungi piuttosto una nota a una di esse qui sotto.",
+          "cardTitle": "Segnalazioni su questa chiamata",
+          "status": {
+            "NEW": "Nuova",
+            "INVESTIGATING": "In esame",
+            "NEEDS_INFO": "Ci servono più informazioni da te",
+            "FIXED": "Risolto",
+            "WONT_FIX": "Non verrà corretto"
+          },
+          "urgentBadge": "Urgente",
+          "reportedAt": "Segnalato {time}",
+          "resolutionTitle": "Risposta del team Fee Free",
+          "threadTitle": "Note",
+          "threadEmpty": "Ancora nessuna nota — il team Fee Free risponderà qui.",
+          "replyPlaceholder": "Aggiungi una nota per il team Fee Free…",
+          "replySend": "Invia nota",
+          "replySentToast": "Nota inviata.",
+          "fromPlatform": "Team Fee Free",
+          "fromYou": "Tu",
+          "justNow": "proprio ora"
         }
       },
       "upsells": {

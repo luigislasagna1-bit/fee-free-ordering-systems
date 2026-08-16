@@ -4792,6 +4792,52 @@
           "latencyLabel": "Latency and usage",
           "errorLabel": "Error in {where}",
           "payloadLabel": "Payload"
+        },
+        "report": {
+          "button": "Report this call",
+          "modalTitle": "Report a call issue",
+          "modalIntro": "Tell us what went wrong on this call from {time}. The Fee Free team reviews every report and replies right here on this page.",
+          "topicLabel": "What went wrong?",
+          "topicPlaceholder": "Select the type of issue…",
+          "topics": {
+            "order_taken_incorrectly": "Ordering — order taken incorrectly",
+            "order_sent_wrong": "Ordering — wrong order sent to the kitchen",
+            "incorrect_pricing": "Ordering — incorrect price given",
+            "allowed_unallowable": "Ordering — allowed something it shouldn't have",
+            "reservation_issue": "Reservation — reservation issue",
+            "voice_quality": "Voice — sounded robotic, cut out, or misheard",
+            "technical_issue": "Technical — call dropped, dead air, or errors",
+            "other": "Other"
+          },
+          "descriptionLabel": "What happened?",
+          "descriptionPlaceholder": "Describe what the caller wanted, what Nabil did, and what should have happened.",
+          "descriptionTooShort": "Please give us a bit more detail (at least {min} characters).",
+          "urgentLabel": "Urgent — this is affecting customers right now",
+          "cancel": "Cancel",
+          "submit": "Send report",
+          "sending": "Sending…",
+          "sentToast": "Report sent — we'll look into this call and reply here.",
+          "errorToast": "Couldn't send. Please try again.",
+          "tooManyOpen": "This call already has open reports — add a note to one of them below instead.",
+          "cardTitle": "Reports on this call",
+          "status": {
+            "NEW": "New",
+            "INVESTIGATING": "Being investigated",
+            "NEEDS_INFO": "We need more info from you",
+            "FIXED": "Fixed",
+            "WONT_FIX": "Won't fix"
+          },
+          "urgentBadge": "Urgent",
+          "reportedAt": "Reported {time}",
+          "resolutionTitle": "Fee Free team's answer",
+          "threadTitle": "Notes",
+          "threadEmpty": "No notes yet — the Fee Free team will reply here.",
+          "replyPlaceholder": "Add a note for the Fee Free team…",
+          "replySend": "Send note",
+          "replySentToast": "Note sent.",
+          "fromPlatform": "Fee Free team",
+          "fromYou": "You",
+          "justNow": "just now"
         }
       },
       "upsells": {

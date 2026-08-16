@@ -6,6 +6,7 @@ import { ChefHat, LayoutDashboard, Store, LogOut, CreditCard } from "lucide-reac
 import { signOut } from "next-auth/react";
 import { SuperadminNav } from "./SuperadminNav";
 import { countNewReportsForViewer, countUnreadNotifications } from "@/lib/reseller-reports-workflow";
+import { countNewNabilCallReports } from "@/lib/voice/call-reports-server";
 
 export default async function SuperadminLayout({ children }: { children: React.ReactNode }) {
   const session = await getServerSession(authOptions);
@@ -18,9 +19,10 @@ export default async function SuperadminLayout({ children }: { children: React.R
 
   // Nav badge counts: reports with unseen activity + unread notifications.
   const saEmail = (session.user as any)?.email ?? "";
-  const [reportsNewCount, notificationsCount] = await Promise.all([
+  const [reportsNewCount, notificationsCount, restaurantReportsNewCount] = await Promise.all([
     countNewReportsForViewer(saEmail),
     countUnreadNotifications(saEmail),
+    countNewNabilCallReports(),
   ]);
 
   return (
@@ -30,7 +32,7 @@ export default async function SuperadminLayout({ children }: { children: React.R
           <ChefHat className="w-6 h-6 text-emerald-600 mr-2" />
           <span className="font-bold text-emerald-600">Super Admin</span>
         </div>
-        <SuperadminNav reportsNewCount={reportsNewCount} notificationsCount={notificationsCount} restricted={role !== "superadmin"} />
+        <SuperadminNav reportsNewCount={reportsNewCount} notificationsCount={notificationsCount} restaurantReportsNewCount={restaurantReportsNewCount} restricted={role !== "superadmin"} />
         <div className="p-4 border-t border-gray-200 text-xs text-gray-500">
           {(session.user as any)?.email}
           {role !== "superadmin" && <span className="ml-1 text-amber-600 font-semibold">· Support</span>}

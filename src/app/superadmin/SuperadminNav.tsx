@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone, ShieldCheck, ShoppingBag } from "lucide-react";
+import { LayoutDashboard, Store, CreditCard, Mail, LogOut, Zap, Users, UserCog, Wallet, Sparkles, Bug, Bell, Map as MapIcon, Building2, Bike, Smartphone, ShieldCheck, ShoppingBag, Flag } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +21,9 @@ const items = [
   { href: "/superadmin/drivers", label: "Delivery Drivers", icon: Bike, adminOnly: true },
   { href: "/superadmin/driver-payouts", label: "Driver Payouts", icon: Wallet, adminOnly: true },
   { href: "/superadmin/resellers", label: "Resellers", icon: Users },
+  // Restaurants flagging something for the platform — today one sub-section,
+  // "Nabil AI reports" (a call taken wrong, wrong price, robotic voice…).
+  { href: "/superadmin/restaurant-reports", label: "Restaurant Reports", icon: Flag },
   { href: "/reseller-reports", label: "Reseller Reports", icon: Bug },
   { href: "/reseller-reports/notifications", label: "Notifications", icon: Bell },
   { href: "/superadmin/payouts", label: "Payouts", icon: Wallet, adminOnly: true },
@@ -32,7 +35,7 @@ const items = [
   { href: "/superadmin/settings/company", label: "Company / Invoicing", icon: Building2, adminOnly: true },
 ];
 
-export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0, restricted = false }: { reportsNewCount?: number; notificationsCount?: number; restricted?: boolean }) {
+export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0, restaurantReportsNewCount = 0, restricted = false }: { reportsNewCount?: number; notificationsCount?: number; restaurantReportsNewCount?: number; restricted?: boolean }) {
   const path = usePathname();
   return (
     // The sidebar is a fixed-height flex column (parent <aside> is inside an
@@ -51,7 +54,8 @@ export function SuperadminNav({ reportsNewCount = 0, notificationsCount = 0, res
           : exact ? path === href : path.startsWith(href);
         const badgeCount =
           href === "/reseller-reports" ? reportsNewCount :
-          href === "/reseller-reports/notifications" ? notificationsCount : 0;
+          href === "/reseller-reports/notifications" ? notificationsCount :
+          href === "/superadmin/restaurant-reports" ? restaurantReportsNewCount : 0;
         return (
           <Link key={href} href={href} className={cn("flex items-center gap-3 px-4 py-3 text-sm font-medium mx-2 rounded-lg mb-1 transition", active ? "bg-emerald-500 text-white" : "text-gray-600 hover:bg-gray-100")}>
             <Icon className="w-4 h-4" /> <span className="flex-1">{label}</span>

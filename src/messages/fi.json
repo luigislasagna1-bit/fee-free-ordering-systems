@@ -4464,6 +4464,52 @@
           "latencyLabel": "Viive ja käyttö",
           "errorLabel": "Virhe kohdassa {where}",
           "payloadLabel": "Tiedot"
+        },
+        "report": {
+          "button": "Ilmoita tästä puhelusta",
+          "modalTitle": "Ilmoita puheluongelmasta",
+          "modalIntro": "Kerro, mikä meni pieleen tässä puhelussa ({time}). Fee Free -tiimi käy jokaisen ilmoituksen läpi ja vastaa tässä, tällä sivulla.",
+          "topicLabel": "Mikä meni pieleen?",
+          "topicPlaceholder": "Valitse ongelman tyyppi…",
+          "topics": {
+            "order_taken_incorrectly": "Tilaus — tilaus otettiin väärin",
+            "order_sent_wrong": "Tilaus — keittiöön lähetettiin väärä tilaus",
+            "incorrect_pricing": "Tilaus — annettiin väärä hinta",
+            "allowed_unallowable": "Tilaus — salli jotain, mitä ei olisi pitänyt",
+            "reservation_issue": "Varaus — ongelma varauksessa",
+            "voice_quality": "Ääni — kuulosti robottimaiselta, pätki tai kuuli väärin",
+            "technical_issue": "Tekninen — puhelu katkesi, hiljaisuus tai virheitä",
+            "other": "Muu"
+          },
+          "descriptionLabel": "Mitä tapahtui?",
+          "descriptionPlaceholder": "Kuvaile, mitä soittaja halusi, mitä Nabil teki ja mitä olisi pitänyt tapahtua.",
+          "descriptionTooShort": "Kerro hieman tarkemmin (vähintään {min} merkkiä).",
+          "urgentLabel": "Kiireellinen — tämä vaikuttaa asiakkaisiin juuri nyt",
+          "cancel": "Peruuta",
+          "submit": "Lähetä ilmoitus",
+          "sending": "Lähetetään…",
+          "sentToast": "Ilmoitus lähetetty — tutkimme puhelun ja vastaamme tässä.",
+          "errorToast": "Lähetys epäonnistui. Yritä uudelleen.",
+          "tooManyOpen": "Tällä puhelulla on jo avoimia ilmoituksia — lisää sen sijaan huomautus johonkin niistä alla.",
+          "cardTitle": "Tämän puhelun ilmoitukset",
+          "status": {
+            "NEW": "Uusi",
+            "INVESTIGATING": "Tutkitaan",
+            "NEEDS_INFO": "Tarvitsemme sinulta lisätietoja",
+            "FIXED": "Korjattu",
+            "WONT_FIX": "Ei korjata"
+          },
+          "urgentBadge": "Kiireellinen",
+          "reportedAt": "Ilmoitettu {time}",
+          "resolutionTitle": "Fee Free -tiimin vastaus",
+          "threadTitle": "Huomautukset",
+          "threadEmpty": "Ei vielä huomautuksia — Fee Free -tiimi vastaa tässä.",
+          "replyPlaceholder": "Lisää huomautus Fee Free -tiimille…",
+          "replySend": "Lähetä huomautus",
+          "replySentToast": "Huomautus lähetetty.",
+          "fromPlatform": "Fee Free -tiimi",
+          "fromYou": "Sinä",
+          "justNow": "juuri nyt"
         }
       },
       "upsells": {

@@ -4464,6 +4464,52 @@
           "latencyLabel": "Latencia a spotreba",
           "errorLabel": "Chyba v {where}",
           "payloadLabel": "Dáta"
+        },
+        "report": {
+          "button": "Nahlásiť tento hovor",
+          "modalTitle": "Nahlásiť problém s hovorom",
+          "modalIntro": "Povedzte nám, čo sa pri tomto hovore z {time} pokazilo. Tím Fee Free si prejde každé hlásenie a odpovie priamo tu na tejto stránke.",
+          "topicLabel": "Čo sa pokazilo?",
+          "topicPlaceholder": "Vyberte typ problému…",
+          "topics": {
+            "order_taken_incorrectly": "Objednávka — objednávka bola prijatá nesprávne",
+            "order_sent_wrong": "Objednávka — do kuchyne bola odoslaná nesprávna objednávka",
+            "incorrect_pricing": "Objednávka — bola uvedená nesprávna cena",
+            "allowed_unallowable": "Objednávka — povolil niečo, čo nemal",
+            "reservation_issue": "Rezervácia — problém s rezerváciou",
+            "voice_quality": "Hlas — znel roboticky, vypadával alebo zle rozumel",
+            "technical_issue": "Technické — prerušený hovor, ticho alebo chyby",
+            "other": "Iné"
+          },
+          "descriptionLabel": "Čo sa stalo?",
+          "descriptionPlaceholder": "Opíšte, čo volajúci chcel, čo Nabil urobil a čo sa malo stať.",
+          "descriptionTooShort": "Uveďte prosím trochu viac podrobností (aspoň {min} znakov).",
+          "urgentLabel": "Naliehavé — práve teraz to ovplyvňuje zákazníkov",
+          "cancel": "Zrušiť",
+          "submit": "Odoslať hlásenie",
+          "sending": "Odosiela sa…",
+          "sentToast": "Hlásenie odoslané — hovor preveríme a odpovieme tu.",
+          "errorToast": "Odoslanie zlyhalo. Skúste to prosím znova.",
+          "tooManyOpen": "Tento hovor už má otvorené hlásenia — namiesto toho pridajte poznámku k jednému z nich nižšie.",
+          "cardTitle": "Hlásenia k tomuto hovoru",
+          "status": {
+            "NEW": "Nové",
+            "INVESTIGATING": "Prešetruje sa",
+            "NEEDS_INFO": "Potrebujeme od vás viac informácií",
+            "FIXED": "Opravené",
+            "WONT_FIX": "Nebude opravené"
+          },
+          "urgentBadge": "Naliehavé",
+          "reportedAt": "Nahlásené {time}",
+          "resolutionTitle": "Odpoveď tímu Fee Free",
+          "threadTitle": "Poznámky",
+          "threadEmpty": "Zatiaľ žiadne poznámky — tím Fee Free odpovie tu.",
+          "replyPlaceholder": "Pridajte poznámku pre tím Fee Free…",
+          "replySend": "Odoslať poznámku",
+          "replySentToast": "Poznámka odoslaná.",
+          "fromPlatform": "Tím Fee Free",
+          "fromYou": "Vy",
+          "justNow": "práve teraz"
         }
       },
       "upsells": {
