@@ -9,3 +9,7 @@
 | 2026-08-15T17:31:39.728Z | 96d56074 | GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:ok, cost ≤ 40¢/min all-in:ok |
 | 2026-08-15T17:33:16.527Z | 96d56074 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
 | 2026-08-15T17:34:25.009Z | 96d56074 | GO | 3× | typecheck:voice:ok, voice unit tests:ok |
+| 2026-08-15T20:41:21.453Z | 6af20fe0 | NO-GO | 2× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
+| 2026-08-15T20:53:49.224Z | 2fb8eff3 | NO-GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
+| 2026-08-15T22:05:27.550Z | 2d2b6a3f | GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:ok, cost ≤ 40¢/min model share (warn > 30¢):ok, robotic-utterance rate ≤ 2%:ok |
+| 2026-08-16T00:57:47.504Z | 2957aa34 | NO-GO | 1× | typecheck:voice:ok, voice unit tests:ok, critical+injection sim:FAIL |
