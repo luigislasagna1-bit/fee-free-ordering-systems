@@ -2,6 +2,9 @@
 
 # dependencies
 /node_modules
+# The voice service's own install (it was committed by accident in fb9f6c1e — 2,250 files);
+# Docker installs from package.json, Vercel never reads it, root .gitignore only covered /node_modules.
+services/nabil-voice/node_modules/
 /.pnp
 .pnp.*
 .yarn/*
