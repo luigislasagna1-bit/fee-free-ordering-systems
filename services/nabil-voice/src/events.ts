@@ -37,7 +37,7 @@ export type CallEvent = CallEventBase &
     | { type: "interrupt"; heard: string | null; stale: boolean; duringProtected: boolean }
     | { type: "protected_respoken"; text: string }
     | { type: "narration_dropped"; text: string }
-    | { type: "tail_fragment"; text: string }
+    | { type: "tail_fragment"; text: string; early?: boolean }
     | { type: "compaction"; droppedMessages: number; bytesBefore: number; bytesAfter: number }
     | { type: "cache_miss"; request: number; uncached: number }
     | { type: "hallucination_suspect"; kind: string; sentence: string; evidence: string[] }

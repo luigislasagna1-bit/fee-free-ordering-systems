@@ -62,6 +62,32 @@ export function isTailFragment(text: string): boolean {
   if (t.split(/\s+/).length > 3) return false;
   return TAIL_WORDS.test(t);
 }
+/**
+ * EARLY FRAGMENTS (Roya's call, 2026-08-16 11:41): the model asked "what
+ * topping would you like on it?" and, ONE millisecond after that reply was
+ * generated — before a single word of it could have been played — Flux
+ * delivered "special" as its own utterance (the tail of the caller's "Yes…
+ * special"). It matched no tail word and the reply ended in "?", so it was
+ * answered as a fresh turn and the caller heard the topping question twice.
+ * Anything that arrives within EARLY_FRAGMENT_MS of a reply's end cannot be a
+ * response to that reply — the caller has not heard it yet. It is held as
+ * context for their real response; if nothing follows once the reply has been
+ * spoken plus a pause, it runs as its own turn with a nudge framing.
+ */
+const EARLY_FRAGMENT_MS = 1_500;
+const EARLY_FRAGMENT_MAX_WORDS = 3;
+/** Silence after the reply is estimated to have finished playing before the held fragment runs on its own. */
+const EARLY_FRAGMENT_SILENCE_MS = 7_000;
+/** ~150 wpm ≈ 15 chars/s at 1.0×, plus first-audio latency. */
+export function estimateSpeechMs(text: string): number {
+  return Math.min(20_000, 600 + Math.round((String(text ?? "").length / 15) * 1000));
+}
+export function isEarlyFragment(text: string, msSinceReplyEnd: number): boolean {
+  const t = String(text ?? "").trim();
+  if (!t || msSinceReplyEnd < 0 || msSinceReplyEnd > EARLY_FRAGMENT_MS) return false;
+  if (/^\(pressed /.test(t)) return false; // DTMF markers are never fragments
+  return t.split(/\s+/).length <= EARLY_FRAGMENT_MAX_WORDS;
+}
 /** Hard cap on how long one sentence may hold off barge-in. */
 const PROTECT_MAX_MS = 8_000;
 const STRUGGLE_LIMIT = 2;
@@ -109,6 +135,8 @@ export class CallSession {
   private lastTurnEndedAt = 0;
   /** Flux tail fragments absorbed since the last turn (see handlePrompt). */
   private tailFragments: string[] = [];
+  /** Runs a held EARLY fragment on its own if the caller says nothing more (see handlePrompt). */
+  private earlyFragmentTimer: ReturnType<typeof setTimeout> | undefined;
   private resumeTimer: ReturnType<typeof setTimeout> | undefined;
   private turnRunning = false;
   private turnStartedAt = 0;
@@ -426,6 +454,25 @@ export class CallSession {
       this.events.emit({ type: "tail_fragment", turn: this.turnIndex, text });
       return;
     }
+    // EARLY FRAGMENTS (see isEarlyFragment): a short utterance landing before
+    // the previous reply could have been heard is not a response to it. Hold
+    // it as context for the caller's real response; if the reply has played
+    // and the caller stays silent, run it on its own with a nudge framing.
+    if (!synthetic && !this.turnRunning && this.turnIndex > 0 && isEarlyFragment(text, this.now() - this.lastTurnEndedAt)) {
+      this.tailFragments.push(text.trim());
+      this.transcript.push({ role: "user", text, ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
+      this.events.emit({ type: "tail_fragment", turn: this.turnIndex, text, early: true });
+      clearTimeout(this.earlyFragmentTimer);
+      const wait = estimateSpeechMs(this.lastSpokenText) + EARLY_FRAGMENT_SILENCE_MS;
+      this.earlyFragmentTimer = setTimeout(() => {
+        this.earlyFragmentTimer = undefined;
+        if (this.finalized || this.turnRunning || !this.tailFragments.length) return;
+        void this.runTurn("", false, "early_fragment_alone");
+      }, wait);
+      return;
+    }
+    clearTimeout(this.earlyFragmentTimer);
+    this.earlyFragmentTimer = undefined;
     // Serialize turns. A prompt that lands while a turn is running waits —
     // and is COALESCED with any others that queue behind it: two prompts
     // during one turn are almost always one utterance split by endpointing
@@ -437,12 +484,17 @@ export class CallSession {
     await this.runTurn(text, synthetic);
   }
 
-  private async runTurn(userText: string, synthetic = false) {
+  private async runTurn(userText: string, synthetic = false, mode: "normal" | "early_fragment_alone" = "normal") {
     this.turnRunning = true;
     // A tail fragment absorbed since the last turn rides in as context, not as
     // a question to answer.
     const tails = this.tailFragments.splice(0);
-    const text = tails.length && !synthetic ? `(Right after their previous sentence they added "${tails.join(" ")}" — the tail of that sentence, nothing to answer.) ${userText}` : userText;
+    const text =
+      mode === "early_fragment_alone"
+        ? `(Right after their previous sentence they added "${tails.join(" ")}", and have said nothing since. If that was a request, act on it now; if it was just the tail of what they'd said, briefly re-ask your last question in different words.)`
+        : tails.length && !synthetic
+          ? `(Right after their previous sentence they added "${tails.join(" ")}" — the tail of that sentence, nothing to answer.) ${userText}`
+          : userText;
     try {
       await this.runTurnInner(text, synthetic);
     } finally {
@@ -1054,6 +1106,7 @@ export class CallSession {
     clearTimeout(this.hangUpTimer);
     clearTimeout(this.silentTurnTimer);
     clearTimeout(this.fillerTimer);
+    clearTimeout(this.earlyFragmentTimer);
     void this.finalize();
   }
 

@@ -384,9 +384,126 @@ describe("Flux tail fragments", () => {
     const text = String(lastUser.content[lastUser.content.length - 1].text);
     expect(text).toContain('they added "instead."');
     expect(text).toContain("No. That was right.");
-    // after a QUESTION ("Can I get a name?") a short word is an answer, not a tail
+    // after a QUESTION ("Can I get a name?") a short word that arrives once the
+    // question could have been heard is an answer, not a tail
+    (s as any).lastTurnEndedAt = Date.now() - 4_000;
     s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Please." }));
     await settle(30);
     expect(call).toBe(3);
+  });
+});
+
+/**
+ * EARLY FRAGMENTS (Roya's call, 2026-08-16 11:41): "special" landed 1 ms after
+ * "what topping would you like on it?" was generated — the tail of her "Yes…
+ * special", not an answer to a question she had not yet heard. Answering it
+ * repeated the topping question. An utterance that arrives before the reply
+ * could have been heard is held; the caller's real response carries it as
+ * context; if they stay silent after the reply has played, it runs on its own.
+ */
+describe("early fragments — a word that arrives before the reply could be heard is never answered as a fresh turn", () => {
+  function scriptedFake(replies: string[], requests: any[]) {
+    let call = 0;
+    return {
+      calls: () => call,
+      messages: {
+        stream: (params: any) => {
+          requests.push(params.messages);
+          const text = replies[call++] ?? "Okay.";
+          const listeners: Array<(d: string) => void> = [];
+          return {
+            on: (evt: string, cb: (d: string) => void) => {
+              if (evt === "text") listeners.push(cb);
+            },
+            finalMessage: async () => {
+              for (const l of listeners) l(text);
+              return { stop_reason: "end_turn", content: [{ type: "text", text }], usage: { input_tokens: 10, output_tokens: 5 } };
+            },
+          };
+        },
+      },
+    };
+  }
+
+  it("holds 'special' (1 ms after a QUESTION) and folds it into the real answer — the question is asked once", async () => {
+    vi.useFakeTimers();
+    try {
+      const requests: any[] = [];
+      const fake = scriptedFake(["Great, I've added a medium pizza with one topping — what topping would you like on it?", "Perfect, that's a medium pizza with pineapple. Anything else?"], requests);
+      const ws = fakeWs();
+      const s = new CallSession(ws as never, TOKEN, fake as never);
+      s.onMessage(JSON.stringify({ type: "setup" }));
+      await vi.advanceTimersByTimeAsync(5);
+      await vi.advanceTimersByTimeAsync(5);
+      s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Yes." }));
+      await vi.advanceTimersByTimeAsync(20);
+      expect(fake.calls()).toBe(1);
+      // the tail lands 1 ms after the reply was generated
+      await vi.advanceTimersByTimeAsync(1);
+      s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "special" }));
+      await vi.advanceTimersByTimeAsync(20);
+      expect(fake.calls()).toBe(1); // NOT answered — no second "what topping?"
+      // the real answer arrives 3 s later and carries the fragment as context
+      await vi.advanceTimersByTimeAsync(3_000);
+      s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pineapple." }));
+      await vi.advanceTimersByTimeAsync(20);
+      expect(fake.calls()).toBe(2);
+      const lastUser = requests[1][requests[1].length - 1];
+      const text = String(lastUser.content[lastUser.content.length - 1].text);
+      expect(text).toContain('they added "special"');
+      expect(text).toContain("Pineapple.");
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("if the caller says nothing after the reply has played, the held fragment runs on its own with the nudge framing (never lost)", async () => {
+    vi.useFakeTimers();
+    try {
+      const requests: any[] = [];
+      const fake = scriptedFake(["Got it, a garlic dip added. Anything else for you?", "Sure — what kind of salad?"], requests);
+      const ws = fakeWs();
+      const s = new CallSession(ws as never, TOKEN, fake as never);
+      s.onMessage(JSON.stringify({ type: "setup" }));
+      await vi.advanceTimersByTimeAsync(5);
+      await vi.advanceTimersByTimeAsync(5);
+      s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Garlic." }));
+      await vi.advanceTimersByTimeAsync(20);
+      expect(fake.calls()).toBe(1);
+      s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "and a salad" })); // blurted before hearing the reply
+      await vi.advanceTimersByTimeAsync(20);
+      expect(fake.calls()).toBe(1);
+      // reply (~50 chars ≈ 4 s) + 7 s silence → the fragment runs alone
+      await vi.advanceTimersByTimeAsync(4_000 + 7_000 + 200);
+      expect(fake.calls()).toBe(2);
+      const lastUser = requests[1][requests[1].length - 1];
+      const text = String(lastUser.content[lastUser.content.length - 1].text);
+      expect(text).toContain('they added "and a salad"');
+      expect(text).toContain("If that was a request, act on it now");
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("a fragment arriving AFTER the early window is handled by the ordinary rules (an answer to a question runs at once)", async () => {
+    vi.useFakeTimers();
+    try {
+      const requests: any[] = [];
+      const fake = scriptedFake(["Pickup or delivery?", "Pickup it is."], requests);
+      const ws = fakeWs();
+      const s = new CallSession(ws as never, TOKEN, fake as never);
+      s.onMessage(JSON.stringify({ type: "setup" }));
+      await vi.advanceTimersByTimeAsync(5);
+      await vi.advanceTimersByTimeAsync(5);
+      s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Hi, I'd like to order." }));
+      await vi.advanceTimersByTimeAsync(20);
+      expect(fake.calls()).toBe(1);
+      await vi.advanceTimersByTimeAsync(2_500); // the caller heard the question
+      s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Pickup." }));
+      await vi.advanceTimersByTimeAsync(20);
+      expect(fake.calls()).toBe(2);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 });
