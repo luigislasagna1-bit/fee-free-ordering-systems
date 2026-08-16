@@ -287,6 +287,15 @@ account-wide rate limits, and CPU), and raising a cap on the strength of the wro
 just move the failure from "we politely ring your store in under a second" to "all 100 live callers
 break mid-sentence." Re-run it any time with `npm run nabil:capacity` — it costs nothing.
 
+**Built 2026-08-16 (afternoon) — the alerting layer, no clicks needed:** (1) **the quoted ≠ charged alarm** the
+call page has promised since the Roya incident: when a caller agrees to one total and the placed order charges
+another, one ops message (superadmin bell + email within a minute) fires — once per call, never for a refusal that
+billed nobody, and the two screens now agree on the tolerance (one cent). (2) **Sentry on the phone service** — until
+now a crash on the voice machine was invisible and dropped every live call; now errors + stacks reach the same Sentry
+project (environment `nabil-voice`) with identifiers only — every string is scrubbed before it leaves the machine, no
+transcript, no phone number — plus a "line at capacity" alert (once per half hour) and crash handlers so a stray
+error is reported and survived instead of killing the calls. `/health` now ends with `sentry=on`.
+
 **Verified 2026-08-16 — the missed-order robocall covers phone orders too.** I read the cron end to end: it selects
 any order still *pending* ~90 s after the kitchen was notified, with no channel filter, so a Nabil order is treated
 exactly like a website order and your alert phone rings. Your store is on **auto-accept**, so orders are never

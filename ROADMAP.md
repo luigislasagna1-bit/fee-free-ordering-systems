@@ -45,6 +45,13 @@ kitchen ack, not status; (b) keep-your-number: the robocall dials `alertPhone �
 before Stage 3 forwarding ships; (c) phone orders for a SPECIFIC later time (`when` on the order tools + the web's
 slot rules spoken back) — Luigi's decision (OWNER-ACTIONS A59); (d) dial numbers as E.164 in the feed/handoff
 (alertPhone is stored bare "2894091133" and Twilio is guessing the country today).
+**Same day, later:** four live-call defects fixed from timelines (UTC hour spoken → `open.nextOpenLocal`; contradictory
+later-order rules → one rule; a 1-ms early Flux fragment answered as a turn → `isEarlyFragment` hold; a HIDDEN menu row
+sold → the phone menu applies `isVisibleNow` in payload / better-deal / size-match); per-store safety-net numbers learned
+from the DB (`fallback-memo-prime.ts`); **the quoted≠charged alarm** (`totals-mismatch-alarm.ts`, `VoiceCall.
+totalMismatchAlertedAt`, ops message once per placed call); **Sentry on Fly** (`observability.ts` zero-import sink +
+`sentry.ts`, redaction, capacity/refresh refractories, crash handlers, `/health … sentry=on`). Open: greeting-echo guard,
+phone scheduling (A59), robocall vs forwarded lines, E.164 dialing (TODO.md).
 
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 
