@@ -8,7 +8,7 @@ import { packHints, storeVocabHints } from "@/lib/voice/speech-hints";
 import { buildVoiceAttrValue, ttsTuningFromEnv } from "@/lib/voice/elevenlabs-voices";
 import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
-import { safetyNetTwiml } from "@/lib/voice/twiml-safety-net";
+import { rememberFallbackNumber, safetyNetTwiml } from "@/lib/voice/twiml-safety-net";
 import { reportError } from "@/lib/report-error";
 
 /**
@@ -247,6 +247,7 @@ async function handle(req: NextRequest, params: Record<string, string>) {
               // The store's own line — the fallback we ring when Nabil can't
               // take the call. Never dead-air.
               phone: true,
+              alertPhone: true,
               timezone: true, hoursFormat: true,
               openingHours: true, holidays: true,
               voiceAgentConfig: true,
@@ -263,6 +264,11 @@ async function handle(req: NextRequest, params: Record<string, string>) {
   if (!line || !restaurant) {
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
   }
+
+  // Teach the no-DB safety net who this number's human is (same precedence as
+  // the handoff route and the Fly fallback feed), so if anything below throws
+  // the catch in POST/GET can still <Dial> THIS store rather than apologise.
+  rememberFallbackNumber(to, cfg?.transferToNumber || restaurant.alertPhone || restaurant.phone);
 
   // Number disabled, or the voice service isn't wired — RING THE STORE rather
   // than telling a paying customer to go away. Never dead-air, never a dead

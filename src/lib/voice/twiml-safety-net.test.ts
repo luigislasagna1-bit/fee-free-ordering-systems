@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { resolveFallbackNumber, safetyNetTwiml, safetyNetTwimlBody } from "./twiml-safety-net";
+import { _resetLearnedFallbacks, rememberFallbackNumber, resolveFallbackNumber, safetyNetTwiml, safetyNetTwimlBody } from "./twiml-safety-net";
 
 /**
  * The safety net is what runs when the normal voice path already threw, so the
@@ -55,7 +55,27 @@ describe("resolveFallbackNumber", () => {
     expect(resolveFallbackNumber(NABIL_NUMBER)).toBe(STORE);
   });
 
+  it("uses a number the healthy path taught it, per store, when the env map has no entry (Luigi: no platform-wide catch-all)", () => {
+    _resetLearnedFallbacks();
+    rememberFallbackNumber(NABIL_NUMBER, STORE);
+    rememberFallbackNumber("+15550001111", "+15550002222");
+    expect(resolveFallbackNumber(NABIL_NUMBER)).toBe(STORE);
+    expect(resolveFallbackNumber("+15550001111")).toBe("+15550002222");
+    // an unknown number still has nothing to ring — never another store's phone
+    expect(resolveFallbackNumber("+15557778888")).toBeNull();
+    // the operator's env map wins over what was learned; the learned number wins over the catch-all
+    process.env.NABIL_FALLBACK_MAP = JSON.stringify({ [NABIL_NUMBER]: "+15551230000" });
+    process.env.NABIL_FALLBACK_DEFAULT_NUMBER = "+15559999999";
+    expect(resolveFallbackNumber(NABIL_NUMBER)).toBe("+15551230000");
+    expect(resolveFallbackNumber("+15550001111")).toBe("+15550002222");
+    // blanks teach nothing
+    rememberFallbackNumber("+15550003333", "   ");
+    expect(resolveFallbackNumber("+15550003333")).toBe("+15559999999");
+    _resetLearnedFallbacks();
+  });
+
   it("returns null when there is genuinely nothing to ring", () => {
+    _resetLearnedFallbacks();
     expect(resolveFallbackNumber(NABIL_NUMBER)).toBeNull();
     expect(resolveFallbackNumber(undefined)).toBeNull();
     expect(resolveFallbackNumber("")).toBeNull();

@@ -99,12 +99,46 @@ function fallbackMap(): Map<string, string> {
   return map;
 }
 
+/**
+ * Per-store numbers LEARNED from the healthy path (Luigi 2026-08-16: "these
+ * should each depend on each store" — no platform-wide catch-all sending
+ * store B's caller to store A). /api/twilio/voice remembers each Nabil number's
+ * human phone the moment its normal lookup succeeds; if a later step throws in
+ * the same (or any warm) instance, this map still knows who to ring. Bounded,
+ * in-process, and read only when the env map has no entry — the env map stays
+ * the operator-controlled floor for cold instances.
+ */
+const LEARNED_MAX = 5000;
+const learned = new Map<string, string>();
+
+export function rememberFallbackNumber(to?: string | null, dial?: string | null): void {
+  const key = normalizeDigits(to || "");
+  const val = (dial || "").trim();
+  if (!key || !val) return;
+  if (!learned.has(key) && learned.size >= LEARNED_MAX) {
+    // Drop the oldest entry (Map preserves insertion order) rather than growing
+    // without bound on a long-lived instance.
+    const oldest = learned.keys().next().value;
+    if (oldest !== undefined) learned.delete(oldest);
+  }
+  learned.set(key, val);
+}
+
+/** Test seam only. */
+export function _resetLearnedFallbacks(): void {
+  learned.clear();
+}
+
 /** The human phone to ring for a dialed Nabil number, or null if we have none.
- *  Exported for the test and for the Fly-side fallback to share the same rules. */
+ *  Precedence: operator env map → number learned from the healthy path →
+ *  NABIL_FALLBACK_DEFAULT_NUMBER (optional; unset by design on a multi-store
+ *  platform, see rememberFallbackNumber). Exported for the test and for the
+ *  Fly-side fallback to share the same rules. */
 export function resolveFallbackNumber(to?: string | null): string | null {
   const key = normalizeDigits(to || "");
   const mapped = key ? fallbackMap().get(key) : undefined;
-  return (mapped || process.env.NABIL_FALLBACK_DEFAULT_NUMBER || "").trim() || null;
+  const remembered = key ? learned.get(key) : undefined;
+  return (mapped || remembered || process.env.NABIL_FALLBACK_DEFAULT_NUMBER || "").trim() || null;
 }
 
 /** The TwiML document body (no XML prolog). Split out so tests assert on a
