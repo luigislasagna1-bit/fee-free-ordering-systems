@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-15 (latest) by Claude (**A57 — the whole product now says we're LAUNCHED, and the iPhone app is live everywhere.** Your Fee Free Order App is approved and public on the App Store (Apple ID 6794053932 — verified against Apple's own listing API), so **A49 is closed and A17 is finished**. Flipping that one link switched on the iPhone/iPad download across the marketing site, the footer, /admin/publishing, the signup email and the "text me the app link" message — all at once, because they all read the same switch. Alongside it, every trace of "soft launch / coming soon / at launch" for the *platform* is gone: the homepage's "Something big is cooking" teaser is now a **NOW LIVE** section with the real 5-step path to your first order, and there's a new homepage section selling the order app on iPhone + iPad + Android. Also corrected a marketing claim that had gone **wrong**, not just stale: 12 comparison pages still told restaurants the Marketplace was "coming soon — pricing announced at launch", when it has been **live and free** since 14 July and your own Terms already promise a free listing. Genuinely unreleased add-ons (POS, AI Phone, Reservation Deposits, ContentPilot, Customer SMS, Marketing Studio, Branded Mobile App) still correctly say "coming soon". 38 languages at full parity, 2138 tests + build green. **Nothing needed from you.**)
+**Last updated:** 2026-08-16 by Claude (**A55 round 5 — Nabil now says "free delivery over $30" in the same breath as the fee, and restaurants can REPORT A CALL** (Loman parity): a Report-this-call button on every call page → a new superadmin section *Restaurant Reports › Nabil AI reports* with status, a written answer the owner sees, a notes thread both ways, and the recording/transcript/order/timeline on one screen. Your step 0 under A55.)
+**Previous update:** 2026-08-15 (latest) by Claude (**A57 — the whole product now says we're LAUNCHED, and the iPhone app is live everywhere.** Your Fee Free Order App is approved and public on the App Store (Apple ID 6794053932 — verified against Apple's own listing API), so **A49 is closed and A17 is finished**. Flipping that one link switched on the iPhone/iPad download across the marketing site, the footer, /admin/publishing, the signup email and the "text me the app link" message — all at once, because they all read the same switch. Alongside it, every trace of "soft launch / coming soon / at launch" for the *platform* is gone: the homepage's "Something big is cooking" teaser is now a **NOW LIVE** section with the real 5-step path to your first order, and there's a new homepage section selling the order app on iPhone + iPad + Android. Also corrected a marketing claim that had gone **wrong**, not just stale: 12 comparison pages still told restaurants the Marketplace was "coming soon — pricing announced at launch", when it has been **live and free** since 14 July and your own Terms already promise a free listing. Genuinely unreleased add-ons (POS, AI Phone, Reservation Deposits, ContentPilot, Customer SMS, Marketing Studio, Branded Mobile App) still correctly say "coming soon". 38 languages at full parity, 2138 tests + build green. **Nothing needed from you.**)
 **Previous update:** 2026-08-15 (later) by Claude (**A56 — Fabrizio #17: a Euro restaurant's info page was quoting delivery fees in dollars.** The "Our delivery areas" legend under the map had the "$" typed straight into the code, so it printed dollars no matter what currency the owner set. The same "$" was also baked into all 38 translated tooltip strings, and the hosted marketing website had it in three more places, including every menu price. All fixed to use the restaurant's own currency and language, pushed as `b1ae29cf`, and confirmed on his live store — his zones now read "Costo: 5,00 €, Min: 20,00 €". Reply posted, he's been asked to re-test. **Nothing needed from you.**)
 **Previous update:** 2026-08-15 by Claude (**A55 — Nabil AI P0 rebuild.** The last failed call (red onion "not available", "One moment" ×12, combo re-added ×4) traced to facts the model was asked to remember or was handed truncated. Rebuilt: an authoritative server cart with stable line ids for EVERY item, a state block on every turn, editable combos, code-enforced "ask, don't guess", compaction for long calls, a full per-call timeline in the admin, a "turn this call into a test" button, and a 35-call torture suite that gates every Fly deploy. **Blocked on one thing only you can do: a valid Anthropic key in `.env.local` (A55 step 1).** 14 new ElevenLabs voices are in the picker.)
 **Previous update:** 2026-08-13 (latest) by Claude (**A50 — the ShipDay→Uber "out of delivery area" problem.** Found a real defect: the address we send ShipDay had no province and no country ("1095 Ezard Cres, Milton, L9T 6W9" — Milton in *which* country?). DoorDash never cared because it uses the map pin we send; Uber's docs say it **always re-geocodes the address text and discards the coordinates**, so Uber was the only one reading the one line that was wrong. Fixed, plus the unit/parking notes that were being crammed into the street line. 1602 tests + build green. **Not deployed** — A50 step 1 is a 2-minute check only you can do first, because there's a second possible cause I can't see from outside your ShipDay account.)
@@ -364,10 +365,35 @@ Wings combo" instantly holds the pizza + 20 wings; only toppings and flavour are
 now filtered before the voice; **(b)** Flux cuts sentences at short pauses ("…and the wings barbecue" / "instead." /
 "That's not… both the size I want") → a one-to-three-word tail arriving right after a reply is now absorbed, not answered
 with "what would you like instead?"; **(c)** "halal" was heard as "hello" once → your FAQ words (halal, intercom…) are
-now in the listener's hint list; **(d)** postal-code insistence and late address questions fixed. Gate + deploy in
-progress as this is written.
+now in the listener's hint list; **(d)** postal-code insistence and late address questions fixed. **Shipped:** Fly
+`b301e770` (round 4) then `e31393f9`; the Vercel side of round 4 (FAQ hints) failed to build twice because a sibling
+session's half-committed edit landed in a shared file — fixed in `e31393f9`, see round 5.
+
+**ROUND 5 (2026-08-16 ~02:30 UTC) — your 00:57 call + your two asks:**
+**(a) "Just giving the delivery fee right away is scary — say there's FREE delivery if there is."** The address
+check now looks up the store's live free-delivery deal for the caller's zone (active, auto-apply, dated, not
+member-only, delivery allowed, zone allowed — the same rules the order engine applies) and the agent is told to say it
+in the SAME breath: "delivery is seven ninety-nine, or free once you're over thirty dollars". Your store: Zones 1–3
+free over $30, Zone 4+ no promise (the deal isn't scoped there), outside every zone the fee stays "what it would
+cost". Nothing is invented when a store has no such deal. Live on Fly `e31393f9`; the Vercel half needs the deploy
+below.
+**(b) "Restaurants must be able to report a call" (Loman's Report Call).** Built end-to-end: on any call page there is
+now **Report this call** → what went wrong (order taken wrong / wrong order sent / wrong price / allowed the
+unallowable / reservation / voice quality / technical / other), an **Urgent** switch, your own words. Every report
+lands in a new superadmin section **Restaurant Reports › Nabil AI reports** (nav badge = new count; support@ + the
+superadmin bell get an email/notification, URGENT in the subject). Opening one shows the restaurant's words, a
+status (New / Investigating / Needs info / Fixed / Won't fix) + a plain-language answer the owner reads back on the
+call page, a notes thread both sides can write in, and the evidence on the same screen: the recording, the AI
+summary, the order with money, quoted-vs-charged, versions/latency, the transcript, the full call timeline and the
+"regression case" download; "Open as the restaurant" jumps into their dashboard on that call. Replies/status
+changes email the person who filed it. In all 38 languages on the restaurant side; erasure-safe (a caller's
+"delete my data" scrubs the report text too); schema on both database branches.
 
 **YOUR STEPS NOW:**
+0. 🔷 **Try the report flow once** after the Vercel deploy: open any call → *Report this call* → pick a topic, write a
+   line, send → then Superadmin → *Restaurant Reports* → *Nabil AI reports* → open it, set a status, write a note →
+   back on the restaurant call page the note + status appear (and you get the email at the reporter address).
+   Tell me what Loman does that ours doesn't.
 1. 🔷 **Call again after the deploy** (I'll tell you when): same combo script — expect the combo to be recapped in one
    go (~2 s, no "one sec", no "id"), and try trailing a word after a pause ("…wings barbecue [pause] instead").
    Order "Large and Wings combo, half Philly steak half deluxe, wings BBQ" → listen for "half Philly Steak, half

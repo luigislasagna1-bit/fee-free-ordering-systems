@@ -21,6 +21,15 @@ Next: Luigi's live calls (any wrong ticket → regression JSON → root cause), 
 lever live experiments, ¢/min column in admin, paid adversarial `--generate` in 25-scenario budgeted
 batches, optional half-topping cent-allocation fix on the money path, canary Fly app, pay-by-link,
 multilingual read-back strings, audio (ASR-error) tier if Luigi provides a Deepgram key.
+**Rounds 3–5 (2026-08-15/16, one live call each):** half-recipes first-class (ranch base travels with
+"half Philly Steak"), food-first flow, combo fixed-slot auto-fill, Flux tail-fragment absorb, narration
+filter, FAQ words in STT hints, Flux + sentence-chunk TTS live; **free-delivery threshold said with the
+fee** (`check-address` → `freeDeliveryOver`, same rules as the order engine); **restaurant call reports**
+(Loman parity): "Report this call" on the call page → `VoiceCallReport(+Comment)` → superadmin
+*Restaurant Reports › Nabil AI reports* (status / verdict / notes thread both ways, evidence on one
+screen, staff recording proxy + regression download, "open as the restaurant"), i18n ×38, PII map.
+Next: Luigi's report-flow walkthrough; a "Reports" tab in the restaurant's phone-ordering area listing
+its own reports; other report kinds (ordering, kitchen display) under Restaurant Reports.
 
 ## ⭐ CURRENT FOCUS — updated 2026-07-30 (post cms0gyexp/cms0idtz7 batches + OSS submission)
 
