@@ -67,7 +67,11 @@ export function checkClaims(args: {
     for (const nm of names.slice(0, 3)) {
       const bare = nm.replace(/^\d+×\s*/, "").trim();
       if (bare.length < 4) continue;
-      if (!spoken.toLowerCase().includes(bare.toLowerCase())) {
+      // The spoken layer names a recipe without its category word ("half
+      // Philly Steak" for "Philly Steak Pizza") — that is not drift.
+      const short = bare.replace(/\s+(?:pizza|combo|wings|pasta|salad|sandwich)$/i, "");
+      const said = spoken.toLowerCase();
+      if (!said.includes(bare.toLowerCase()) && !(short.length >= 4 && said.includes(short.toLowerCase()))) {
         hits.push({ kind: "readback_drift", sentence: spoken.slice(0, 200), evidence: [bare] });
         break;
       }

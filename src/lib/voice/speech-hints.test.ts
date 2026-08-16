@@ -76,3 +76,21 @@ describe("cleanHint", () => {
     expect(cleanHint("Half-and-Half")).toBe("Half-and-Half");
   });
 });
+
+describe("store vocabulary hints (Flux heard 'halal' as 'hello', 2026-08-15)", () => {
+  it("picks only the curated words the store's FAQ text mentions, and packs them ahead of the item-name tail", async () => {
+    const { storeVocabHints, packHints, HINTS_TOPPING_BUDGET } = await import("./speech-hints");
+    const words = storeVocabHints(["Do you serve halal options?", "Everything on our menu is halal.", "All pickups after 1am — please use the intercom by the front doors."]);
+    expect(words).toEqual(["halal", "intercom"]);
+    expect(storeVocabHints(["What is the status of my order?"])).toEqual([]);
+    const toppings = Array.from({ length: 60 }, (_, i) => `Topping${i}`);
+    const items = Array.from({ length: 60 }, (_, i) => `Item Number ${i}`);
+    const packed = packHints(items, toppings, ["halal", "intercom"]);
+    expect(packed.length).toBeLessThanOrEqual(500);
+    expect(packed.split(",")).toContain("halal");
+    expect(packed.split(",")).toContain("intercom");
+    // still topping-first
+    expect(packed.startsWith("Topping0")).toBe(true);
+    void HINTS_TOPPING_BUDGET;
+  });
+});

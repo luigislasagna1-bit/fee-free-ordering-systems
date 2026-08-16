@@ -92,3 +92,13 @@ describe("read-back drift", () => {
     expect(kinds(hits)).toEqual(["readback_drift"]);
   });
 });
+
+describe("read-back drift tolerates the spoken layer's shortened recipe names", () => {
+  it("'half Philly Steak' satisfies a speakExactly that says 'Philly Steak Pizza' (2026-08-16 false flag)", () => {
+    expect(
+      check("Perfect — that's a Large and Wings Combo with a large pizza, half Philly Steak, half Deluxe, ranch base on the Philly Steak half. What else?", {
+        speakExactly: ["a Large and Wings Combo with a large pizza, half Philly Steak Pizza, half Deluxe Pizza, ranch base on the philly steak pizza half"],
+      }),
+    ).toEqual([]);
+  });
+});

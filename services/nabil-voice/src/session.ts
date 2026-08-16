@@ -52,6 +52,16 @@ const isMergeableCall = (name: string, input: any): boolean =>
   MERGEABLE_TOOLS.has(name) || (name === "set_fulfilment" && String(input?.type ?? "").toLowerCase() === "pickup" && !input?.street);
 
 const SILENT_TURN_RETRY_MS = 1_200;
+/** A tail fragment counts only this soon after the previous reply finished. */
+const TAIL_WINDOW_MS = 6_000;
+/** One to three words that are the END of a sentence, never a request on their own. */
+const TAIL_WORDS = /^(?:instead|please|too|as well|also|thanks|thank you|only|though|actually|and|or|for now|as well please|please instead)[.!,\s]*$/i;
+export function isTailFragment(text: string): boolean {
+  const t = String(text ?? "").trim();
+  if (!t) return false;
+  if (t.split(/\s+/).length > 3) return false;
+  return TAIL_WORDS.test(t);
+}
 /** Hard cap on how long one sentence may hold off barge-in. */
 const PROTECT_MAX_MS = 8_000;
 const STRUGGLE_LIMIT = 2;
@@ -96,6 +106,9 @@ export class CallSession {
   /** tool_result blocks held back by the bookkeeping merge — prepended to the next user message. */
   private pendingToolResults: any[] = [];
   private lastPromptAt = 0;
+  private lastTurnEndedAt = 0;
+  /** Flux tail fragments absorbed since the last turn (see handlePrompt). */
+  private tailFragments: string[] = [];
   private resumeTimer: ReturnType<typeof setTimeout> | undefined;
   private turnRunning = false;
   private turnStartedAt = 0;
@@ -401,6 +414,18 @@ export class CallSession {
       this.queued.push(text);
       return;
     }
+    // FLUX TAIL FRAGMENTS (2026-08-16): Deepgram Flux ends a turn at a short
+    // pause, so the tail of a sentence ("…and the wings barbecue" / "instead.")
+    // can arrive as its own prompt AFTER the reply was already spoken. Answering
+    // it ("Sorry, what would you like instead?") is exactly the "random" a
+    // caller notices. A short tail arriving within a few seconds of the last
+    // reply, when that reply asked no question, is folded into the next turn.
+    if (!synthetic && !this.turnRunning && isTailFragment(text) && this.now() - this.lastTurnEndedAt <= TAIL_WINDOW_MS && !/\?\s*$/.test(this.lastSpokenText.trim())) {
+      this.tailFragments.push(text.trim());
+      this.transcript.push({ role: "user", text, ts: new Date(this.now()).toISOString(), turn: this.turnIndex });
+      this.events.emit({ type: "tail_fragment", turn: this.turnIndex, text });
+      return;
+    }
     // Serialize turns. A prompt that lands while a turn is running waits —
     // and is COALESCED with any others that queue behind it: two prompts
     // during one turn are almost always one utterance split by endpointing
@@ -414,10 +439,15 @@ export class CallSession {
 
   private async runTurn(userText: string, synthetic = false) {
     this.turnRunning = true;
+    // A tail fragment absorbed since the last turn rides in as context, not as
+    // a question to answer.
+    const tails = this.tailFragments.splice(0);
+    const text = tails.length && !synthetic ? `(Right after their previous sentence they added "${tails.join(" ")}" — the tail of that sentence, nothing to answer.) ${userText}` : userText;
     try {
-      await this.runTurnInner(userText, synthetic);
+      await this.runTurnInner(text, synthetic);
     } finally {
       this.turnRunning = false;
+      this.lastTurnEndedAt = this.now();
       clearTimeout(this.fillerTimer);
       this.fillerTimer = undefined;
     }

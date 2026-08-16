@@ -4,10 +4,12 @@ import { shouldEnforceTwilioSignature, verifyTwilioSignatureAny, twilioUrlCandid
 import { hasFeature } from "@/lib/entitlements";
 import { resolveMenuRestaurantId } from "@/lib/brand";
 import { signNabilCallToken } from "@/lib/voice/session-token";
-import { packHints } from "@/lib/voice/speech-hints";
+import { packHints, storeVocabHints } from "@/lib/voice/speech-hints";
 import { buildVoiceAttrValue, ttsTuningFromEnv } from "@/lib/voice/elevenlabs-voices";
 import { liveOpenStatus } from "@/lib/restaurant-hours";
 import { holidayEffectToday } from "@/lib/holiday-rules";
+import { safetyNetTwiml } from "@/lib/voice/twiml-safety-net";
+import { reportError } from "@/lib/report-error";
 
 /**
  * Nabil AI — inbound-voice TwiML entry point.
@@ -102,7 +104,7 @@ async function menuHints(menuOwnerId: string): Promise<string> {
   // group Postgres hands back first — which for "Pepperoni" was a "Choose
   // Which Slice" group with no pizzaRole at all, so the topping vanished from
   // the boosted list entirely.
-  const [items, toppingRows, otherRows] = await Promise.all([
+  const [items, toppingRows, otherRows, faqRows] = await Promise.all([
     prisma.menuItem.findMany({
       where: { restaurantId: menuOwnerId, isAvailable: true },
       select: { name: true },
@@ -137,6 +139,9 @@ async function menuHints(menuOwnerId: string): Promise<string> {
       orderBy: { name: "asc" },
       take: 400,
     }),
+    // The store's own FAQ text decides which STORE_VOCAB words ("halal",
+    // "gluten free", "intercom") the listener is biased toward.
+    prisma.voiceFaq.findMany({ where: { restaurantId: menuOwnerId, active: true }, select: { question: true, answer: true }, take: 100 }),
   ]);
 
   // 🚨 ACTUAL TOPPINGS FIRST, then everything else.
@@ -152,7 +157,11 @@ async function menuHints(menuOwnerId: string): Promise<string> {
   // rattles off fastest. Crust and sauce are a short closed set the agent
   // offers by name anyway. packHints dedupes, so repeats across groups are free.
   const toppingTerms = [...toppingRows.map((o) => o.name), ...otherRows.map((o) => o.name)];
-  const value = packHints(items.map((i) => i.name), toppingTerms);
+  const value = packHints(
+    items.map((i) => i.name),
+    toppingTerms,
+    storeVocabHints(faqRows.flatMap((f) => [f.question, f.answer])),
+  );
   hintsCache.set(menuOwnerId, { value, expires: Date.now() + HINTS_TTL_MS });
   return value;
 }
@@ -269,14 +278,23 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     return twiml(`<Response><Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`);
   }
 
-  // Entitlement + master enable switch. If off, fall back to staff when a
-  // transfer number is set, else a polite message.
+  // Entitlement + master enable switch. If off, RING THE STORE — the same rule
+  // as the branch above, and for the same reason.
+  //
+  // ⚠️ This used to fall back to transferToNumber ALONE, and that was a real
+  // hole: transferToNumber is optional, so a store that never set one and whose
+  // add-on lapsed (a failed card, once the 10-day dunning grace expires) heard
+  // "we can't take your call" instead of its own phone ringing. Merely rude
+  // today; business-ending the moment a store forwards its real line here,
+  // because the number on their printed menu is the one pointing at this route.
+  // The line above already knew to fall back to restaurant.phone; this one
+  // didn't. (2026-08-15)
   const entitled = await hasFeature(restaurant.id, "phone_ordering_agent");
   if (!entitled || !cfg?.enabled) {
-    const transfer = (cfg?.transferToNumber || "").trim();
-    if (transfer) {
+    const fallback = (cfg?.transferToNumber || restaurant.phone || "").trim();
+    if (fallback) {
       return twiml(
-        `<Response><Dial answerOnBridge="true" timeout="25">${xml(transfer)}</Dial>` +
+        `<Response><Dial answerOnBridge="true" timeout="25">${xml(fallback)}</Dial>` +
           `<Say voice="Polly.Joanna-Neural">${xml(GENERIC_MSG)}</Say></Response>`,
       );
     }
@@ -444,11 +462,43 @@ async function handle(req: NextRequest, params: Record<string, string>) {
 
 export async function POST(req: NextRequest) {
   const params = await readTwilioParams(req);
-  const rejected = rejectIfForged(req, params);
+
+  // Verification sits OUTSIDE the safety net and fails CLOSED if it throws.
+  // This response mints a signed Nabil call token; a throw in the signature
+  // path must never degrade into a free <Dial>.
+  let rejected: Response | null;
+  try {
+    rejected = rejectIfForged(req, params);
+  } catch (e) {
+    reportError(e, { route: "twilio/voice", stage: "verify" });
+    return forbidden("verification threw", publicUrl(req), !!req.headers.get("x-twilio-signature"));
+  }
   if (rejected) return rejected;
-  return handle(req, params);
+
+  try {
+    // ⚠️ The `await` is load-bearing: `return handle(...)` inside a try returns
+    // the promise and catches nothing.
+    return await handle(req, params);
+  } catch (e) {
+    // handle() touches Prisma and the entitlement cache before it can decide
+    // anything. Without this, a DB blip became a 500, and Twilio answers a 500
+    // on a number with no VoiceFallbackUrl by playing its own error tone and
+    // hanging up — dead air, on the one path that can't look the store up.
+    reportError(e, {
+      route: "twilio/voice",
+      to: params.To ?? null,
+      callSid: params.CallSid ?? null,
+    });
+    return safetyNetTwiml(params.To);
+  }
 }
 
 export async function GET(req: NextRequest) {
-  return handle(req, await readTwilioParams(req));
+  const params = await readTwilioParams(req);
+  try {
+    return await handle(req, params);
+  } catch (e) {
+    reportError(e, { route: "twilio/voice", method: "GET" });
+    return safetyNetTwiml(params.To);
+  }
 }

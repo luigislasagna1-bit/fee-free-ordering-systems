@@ -27,7 +27,7 @@ process.env.INTERNAL_API_SECRET = "test-internal";
 process.env.NABIL_VOICE_JWT_SECRET = "test-jwt";
 process.env.ANTHROPIC_API_KEY = "test-anthropic";
 
-import { executeTool, toolsForConfig, canonicalPhone, TOOLS, type ToolContext } from "../../../services/nabil-voice/src/tools";
+import { autofillPicks, executeTool, toolsForConfig, canonicalPhone, TOOLS, type ToolContext } from "../../../services/nabil-voice/src/tools";
 import { CartEngine, type CompileResponse } from "../../../services/nabil-voice/src/cart-engine";
 import { buildMenuIndex } from "../../../services/nabil-voice/src/menu-index";
 import { normalizeAgentConfig, type AgentConfig } from "../../../services/nabil-voice/src/agent-config";
@@ -1202,5 +1202,64 @@ describe("toolsForConfig", () => {
     expect(out.code).toBe("builder_disabled");
     expect(api.buildLine).not.toHaveBeenCalled();
     expect((await run(ctx, "add_to_order", { menuItemId: "dr_coke" })).ok).toBe(true);
+  });
+});
+
+/**
+ * SLOT AUTO-FILL (Luigi's 00:10 call, 2026-08-16): a combo added bare, then
+ * picks filled by slot NAME with no ids → missing_item → a guessed wrong id →
+ * get_item_options → third try. Slots with ONE possible item are filled by the
+ * tool layer now; the model only supplies toppings and flavour.
+ */
+describe("combo slot auto-fill", () => {
+  const fixedCombo = () => ({
+    item: { name: "Large / Wings Combo", variants: [], modifierGroups: [] },
+    combo: {
+      sharedToppings: null,
+      slots: [
+        { label: "Pizza", min: 1, max: 1, choices: [{ menuItemId: "pz_large", name: "Large 1 Topping", variants: [] }] },
+        { label: "Chicken Wings", min: 1, max: 1, choices: [{ menuItemId: "wings", name: "Wings", variants: [{ variantId: "v20", name: "20 pc" }] }] },
+        { label: "Drink", min: 1, max: 1, choices: [{ menuItemId: "dr_coke", name: "Coke" }, { menuItemId: "dr_diet", name: "Diet Coke" }] },
+      ],
+    },
+  });
+
+  it("autofillPicks: bare add synthesizes single-choice slots (with a single size); multi-choice slots are left to ask", () => {
+    const slots = [
+      { label: "Pizza", min: 1, max: 1, choices: [{ name: "Large 1 Topping", menuItemId: "pz_large" }] },
+      { label: "Chicken Wings", min: 1, max: 1, choices: [{ name: "Wings", menuItemId: "wings", sizes: ["20 pc"] }] },
+      { label: "Dipping Sauces", min: 2, max: 2, choices: [{ name: "Dipping Sauce", menuItemId: "dip" }] },
+      { label: "Drink", min: 1, max: 1, choices: [{ name: "Coke", menuItemId: "dr_coke" }, { name: "Diet Coke", menuItemId: "dr_diet" }] },
+    ];
+    expect(autofillPicks(undefined, slots, { bare: true })).toEqual([
+      { slotLabel: "Pizza", menuItemId: "pz_large" },
+      { slotLabel: "Chicken Wings", menuItemId: "wings", size: "20 pc" },
+      { slotLabel: "Dipping Sauces", menuItemId: "dip" },
+      { slotLabel: "Dipping Sauces", menuItemId: "dip" },
+    ]);
+    // slotLabel-only picks resolve; a multi-choice slot stays unresolved; an explicit id is untouched
+    expect(autofillPicks([{ slotLabel: "chicken wings", options: ["BBQ Mixed"] }, { slotLabel: "Drink" }, { slotLabel: "Pizza", menuItemId: "pz_xl" }], slots, { bare: false })).toEqual([
+      { slotLabel: "chicken wings", options: ["BBQ Mixed"], menuItemId: "wings", size: "20 pc" },
+      { slotLabel: "Drink" },
+      { slotLabel: "Pizza", menuItemId: "pz_xl" },
+    ]);
+    expect(autofillPicks([{ menuItemId: "x" }], null, { bare: false })).toEqual([{ menuItemId: "x" }]);
+  });
+
+  it("add_to_order of a bare combo holds the fixed picks at once; update_line by slotLabel fills the id", async () => {
+    const { ctx, api } = makeCtx();
+    api.itemOptions.mockResolvedValue(fixedCombo());
+    const out = await run(ctx, "add_to_order", { menuItemId: "cb_wings" });
+    // The item-options lookup happened once (cached for the call) and the picks were synthesized.
+    expect(api.itemOptions).toHaveBeenCalledWith("luigis", "cb_wings");
+    const compiled = api.buildLine.mock.calls.at(-1)?.[0] as any;
+    expect(compiled.kind).toBe("combo");
+    expect(compiled.intent.picks.map((p: any) => p.menuItemId)).toEqual(["pz_large", "wings"]);
+    expect(compiled.intent.picks[1].size).toBe("20 pc");
+    expect(out.ok).toBe(true);
+    // Later: "wings BBQ" by slot name only — no id needed
+    const upd = await run(ctx, "update_line", { lineId: out.lineId, picks: [{ slotLabel: "Chicken Wings", options: ["BBQ Mixed"] }] });
+    expect(upd.ok).toBe(true);
+    expect(api.itemOptions).toHaveBeenCalledTimes(1);
   });
 });

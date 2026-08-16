@@ -27,6 +27,8 @@ export type ToolContext = {
   pendingTransfer: string | null;
   /** get_item_options payloads by id — the menu cannot change mid-call. */
   itemOptionsCache: Map<string, unknown>;
+  /** Raw combo slots (label/min/max/choices) by combo id — for slot auto-fill. Lazily created. */
+  comboSlotsCache?: Map<string, RawSlot[]>;
   /** speakExactly strings handed to the model this turn (claims guard). */
   speakExactlyThisTurn: string[];
   currency: string;
@@ -113,13 +115,13 @@ const PICK_ADD_SCHEMA = {
   type: "object",
   additionalProperties: false,
   properties: {
-    slotLabel: { type: "string", description: "The slot this pick is for, as get_item_options labelled it (e.g. 'Drink')." },
-    menuItemId: { type: "string", description: "The chosen item's menuItemId EXACTLY as get_item_options gave it for that slot." },
+    slotLabel: { type: "string", description: "The slot this pick is for, as get_item_options labelled it (e.g. 'Drink'). When a slot has only ONE possible item (a combo's fixed pizza or wings), the slotLabel alone is enough — the system fills the item." },
+    menuItemId: { type: "string", description: "The chosen item's menuItemId EXACTLY as get_item_options gave it for that slot (needed only when the slot offers a choice)." },
     quantity: { type: "integer", minimum: 1, description: "How many IDENTICAL picks this entry stands for ('four Cokes' in a choose-4 slot = one entry with quantity 4)." },
     options: { type: "array", items: { type: "string" }, description: "Choices by NAME for a non-pizza pick (dip flavour, wing sauce)." },
     ...PIZZA_FIELDS,
   },
-  required: ["menuItemId"],
+  required: [],
 };
 const PICK_CHANGE_SCHEMA = {
   type: "object",
@@ -164,7 +166,7 @@ export const TOOLS = [
   {
     name: "add_to_order",
     description:
-      "Add ONE kind of thing to the order — a simple item, a pizza, or a combo — in the caller's words. Say what they asked for by NAME (sizes, options, toppings and which half each topping goes on); the server resolves names, validates against the menu and prices it. If it can't finish, the line is created anyway with the questions to ask (status needs_info) — ask, then update_line. NEVER add the same item again to change it.",
+      "Add ONE kind of thing to the order — a simple item, a pizza, or a combo — in the caller's words. Say what they asked for by NAME (sizes, options, toppings and which half each topping goes on); the server resolves names, validates against the menu and prices it. If it can't finish, the line is created anyway with the questions to ask (status needs_info) — ask, then update_line. A COMBO can be added the moment it is named, with no picks: its fixed parts (a slot with a single possible item) are filled for you and only the real choices (toppings, flavour, drink) come back as questions. NEVER add the same item again to change it.",
     input_schema: {
       type: "object",
       additionalProperties: false,
@@ -450,6 +452,80 @@ function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "chang
   };
 }
 
+export type RawSlot = { label: string; min: number; max: number; choices: Array<{ name: string; menuItemId: string; sizes?: string[] }> };
+
+/**
+ * A combo's slots (from the same item-options lookup get_item_options uses),
+ * cached per call. Null when the item isn't a combo or the lookup fails.
+ */
+async function comboSlotsFor(ctx: ToolContext, comboId: string): Promise<RawSlot[] | null> {
+  if (!comboId || ctx.menu.kindOf(comboId) !== "combo") return null;
+  ctx.comboSlotsCache ??= new Map();
+  if (ctx.comboSlotsCache.has(comboId)) return ctx.comboSlotsCache.get(comboId) ?? null;
+  let slots: RawSlot[] | null = null;
+  try {
+    const res = await ctx.api.itemOptions(ctx.token.slug, comboId);
+    const raw = res?.combo?.slots;
+    if (Array.isArray(raw)) {
+      slots = raw.map((sl: any) => ({
+        label: String(sl?.label ?? ""),
+        min: Number(sl?.min ?? 0) || 0,
+        max: Number(sl?.max ?? 0) || 0,
+        choices: (Array.isArray(sl?.choices) ? sl.choices : []).map((c: any) => ({
+          name: String(c?.name ?? ""),
+          menuItemId: String(c?.menuItemId ?? ""),
+          ...(Array.isArray(c?.variants) && c.variants.length ? { sizes: c.variants.map((v: any) => String(v?.name ?? "")) } : {}),
+        })),
+      }));
+    }
+  } catch {
+    slots = null;
+  }
+  ctx.comboSlotsCache.set(comboId, slots ?? []);
+  return slots;
+}
+
+const normLabel = (s: unknown) => String(s ?? "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
+
+/**
+ * SLOT AUTO-FILL (Luigi's 00:10 call, 2026-08-16): "Large and Wings combo" was
+ * added with no picks; the model then filled the picks by slot NAME with no
+ * ids → refused → guessed a wrong wings id → refused → looked the ids up →
+ * third try — 9 s of dead air and "the wings id needed a tweak" spoken aloud.
+ * A slot with exactly ONE choice needs no choosing: fill it here.
+ *  - `bare` (add with no picks): synthesize `min` picks for every single-choice
+ *    slot with min ≥ 1 (a single size rides along), so the combo immediately
+ *    holds "Large 3 Topping (no toppings yet)" + "Chicken Wings 20 (flavour
+ *    pending)" and the model only ever supplies toppings and flavour.
+ *  - any pick naming a slotLabel with no menuItemId → the slot's single choice.
+ * Slots with several choices are left to the engine's question, unchanged.
+ */
+export function autofillPicks(picks: any[] | undefined, slots: RawSlot[] | null, opts: { bare: boolean }): any[] | undefined {
+  if (!slots || !slots.length) return picks;
+  const single = (sl: RawSlot) => (sl.choices.length === 1 && sl.choices[0].menuItemId ? sl.choices[0] : null);
+  const withSize = (c: { menuItemId: string; sizes?: string[] }) => (c.sizes && c.sizes.length === 1 ? { size: c.sizes[0] } : {});
+  const list = Array.isArray(picks) ? picks.map((p) => ({ ...(p ?? {}) })) : [];
+  if (opts.bare && list.length === 0) {
+    const out: any[] = [];
+    for (const sl of slots) {
+      const c = single(sl);
+      if (!c || sl.min < 1) continue;
+      for (let i = 0; i < Math.min(sl.min, 12); i++) out.push({ slotLabel: sl.label, menuItemId: c.menuItemId, ...withSize(c) });
+    }
+    return out.length ? out : undefined;
+  }
+  for (const p of list) {
+    if (p.menuItemId || p.pickId || !p.slotLabel) continue;
+    const sl = slots.find((x) => normLabel(x.label) === normLabel(p.slotLabel));
+    const c = sl ? single(sl) : null;
+    if (c) {
+      p.menuItemId = c.menuItemId;
+      if (!p.size) Object.assign(p, withSize(c));
+    }
+  }
+  return list;
+}
+
 export async function executeTool(name: string, input: any, ctx: ToolContext): Promise<unknown> {
   const { api, cart, menu } = ctx;
   const slug = ctx.token.slug;
@@ -549,6 +625,9 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
     }
 
     case "add_to_order": {
+      const comboId = String(input?.menuItemId ?? "");
+      const slots = menu.kindOf(comboId) === "combo" && !input?.sameAsLineId ? await comboSlotsFor(ctx, comboId) : null;
+      const picks = slots ? autofillPicks(input?.picks, slots, { bare: !Array.isArray(input?.picks) || input.picks.length === 0 }) : input?.picks;
       const r = await cart.addLine({
         menuItemId: input?.menuItemId,
         quantity: input?.quantity,
@@ -559,7 +638,7 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
         crust: input?.crust,
         sauce: input?.sauce,
         cheese: input?.cheese,
-        picks: input?.picks,
+        picks,
         notes: input?.notes,
         sameAsLineId: input?.sameAsLineId,
         confirmAnother: input?.confirmAnother === true,
@@ -570,6 +649,20 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
 
     case "update_line": {
       const { lineId, hint, ...changes } = input ?? {};
+      if (Array.isArray(changes.picks) && changes.picks.some((p: any) => p && !p.menuItemId && !p.pickId && p.slotLabel)) {
+        // Which combo? Resolve the target the same way the engine will, then fill single-choice slots.
+        const t = cart.resolveTarget({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) });
+        if ("line" in t && t.line.kind === "combo") {
+          // A slot that already holds a pick is EDITED by its label (engine
+          // semantics); only a slot with no pick yet gets its single choice
+          // filled in so the engine can APPEND it.
+          const held = new Set(t.line.pickSlots.map((ps) => normLabel(ps.slotLabel)));
+          const empty = changes.picks.filter((p: any) => !(p && p.slotLabel && held.has(normLabel(p.slotLabel))));
+          const heldOnes = changes.picks.filter((p: any) => p && p.slotLabel && held.has(normLabel(p.slotLabel)));
+          const slots = await comboSlotsFor(ctx, t.line.intent.menuItemId);
+          changes.picks = [...heldOnes, ...(autofillPicks(empty, slots, { bare: false }) ?? [])];
+        }
+      }
       const r = await cart.updateLine({ lineId, hint: sanitizeHint(hint, ctx.lastUserText) }, changes);
       return mutationOut(ctx, r, "changed");
     }

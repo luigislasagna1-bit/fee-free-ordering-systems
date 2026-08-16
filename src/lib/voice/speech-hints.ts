@@ -49,7 +49,26 @@ export const cleanHint = (s: string): string =>
  * of item names; a store with a long topping list no longer loses half of it to
  * gift cards.
  */
-export function packHints(itemTerms: string[], toppingTerms: string[]): string {
+/**
+ * STORE VOCABULARY the listener should be biased toward beyond the menu —
+ * words a caller asks about that a generic model mangles ("halal" came through
+ * as "hello" on 2026-08-15 under Deepgram Flux). Curated so a store's FAQ
+ * prose ("order", "status") never crowds the toppings; a term is included only
+ * when the store's FAQ/description text actually mentions it.
+ */
+export const STORE_VOCAB = [
+  "halal", "kosher", "gluten free", "gluten-free", "vegan", "vegetarian", "dairy free", "lactose", "nut free", "peanut", "allergy", "allergies",
+  "catering", "party tray", "parking", "patio", "wheelchair", "reservation", "buzzer", "intercom", "coupon", "promo code", "gift card", "loyalty",
+  "rewards", "uber eats", "doordash", "skip the dishes", "curbside", "contactless", "e-transfer", "debit", "cash",
+];
+
+/** The STORE_VOCAB terms a store's own FAQ text mentions (case-insensitive), in the curated order. */
+export function storeVocabHints(texts: string[]): string[] {
+  const blob = texts.join(" \n ").toLowerCase();
+  return STORE_VOCAB.filter((t) => blob.includes(t.toLowerCase()));
+}
+
+export function packHints(itemTerms: string[], toppingTerms: string[], extraTerms: string[] = []): string {
   const used = new Set<string>();
   const picked: string[] = [];
   let len = 0;
@@ -71,6 +90,9 @@ export function packHints(itemTerms: string[], toppingTerms: string[]): string {
   };
 
   take(toppingTerms, HINTS_TOPPING_BUDGET);
+  // Store vocabulary ("halal") is short and rare — it goes ahead of the long
+  // tail of item names, inside a small slice of the budget.
+  take(extraTerms, HINTS_TOPPING_BUDGET + 60);
   take(itemTerms, HINTS_MAX_CHARS);
   take(toppingTerms, HINTS_MAX_CHARS);
   return picked.join(",");

@@ -338,3 +338,55 @@ describe("bookkeeping merge — no second hop when the model already answered", 
     expect(delivery.calls()).toBe(2);
   });
 });
+
+/**
+ * FLUX TAIL FRAGMENTS (2026-08-16): a one-word tail ("instead.") arriving right
+ * after a reply that asked no question is absorbed and folded into the next
+ * turn — never answered with "Sorry, what would you like instead?".
+ */
+describe("Flux tail fragments", () => {
+  it("absorbs 'instead.' after a statement and passes it as context on the next turn; a tail after a QUESTION is a real answer", async () => {
+    const requests: any[] = [];
+    let call = 0;
+    const replies = ["Done — that's a large pizza, half Philly Steak, half Chipotle Chicken.", "Great, that's all set then. Can I get a name for the order?", "Thanks, Sam."];
+    const fake = {
+      messages: {
+        stream: (params: any) => {
+          requests.push(params.messages);
+          const text = replies[call++] ?? "Okay.";
+          const listeners: Array<(d: string) => void> = [];
+          return {
+            on: (evt: string, cb: (d: string) => void) => {
+              if (evt === "text") listeners.push(cb);
+            },
+            finalMessage: async () => {
+              for (const l of listeners) l(text);
+              return { stop_reason: "end_turn", content: [{ type: "text", text }], usage: { input_tokens: 10, output_tokens: 5 } };
+            },
+          };
+        },
+      },
+    };
+    const { ws, s } = await startedSession(fake as never);
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Switch the deluxe half with chipotle chicken." }));
+    await settle(30);
+    expect(call).toBe(1);
+    // the tail arrives alone, 1 s later, after a reply with no question
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "instead." }));
+    await settle(30);
+    expect(call).toBe(1); // no model request, nothing spoken for it
+    expect(ws.said()).not.toContain("instead");
+    // next real prompt carries the tail as context
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "No. That was right." }));
+    await settle(30);
+    expect(call).toBe(2);
+    const lastUser = requests[1][requests[1].length - 1];
+    const text = String(lastUser.content[lastUser.content.length - 1].text);
+    expect(text).toContain('they added "instead."');
+    expect(text).toContain("No. That was right.");
+    // after a QUESTION ("Can I get a name?") a short word is an answer, not a tail
+    s.onMessage(JSON.stringify({ type: "prompt", voicePrompt: "Please." }));
+    await settle(30);
+    expect(call).toBe(3);
+  });
+});

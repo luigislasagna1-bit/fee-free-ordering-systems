@@ -17,6 +17,8 @@ describe("narration filter — the model's inner monologue never reaches the cal
       "They may be distracted.",
       "I'll pick the most natural reading: they originally said one Hawaiian.",
       "Let me add the large pepperoni and the medium Hawaiian.",
+      "The wings id needed a tweak. Let me try that again.",
+      "That didn't go through — my mistake.",
     ]) {
       expect(isNarrationLeak(s), s).toBe(true);
     }

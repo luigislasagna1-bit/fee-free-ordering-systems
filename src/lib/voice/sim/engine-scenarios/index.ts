@@ -258,6 +258,42 @@ export const ENGINE_SCENARIOS: EngineScenario[] = [
     [pizza(L.xl1, 1, [], ["pepperoni"], ["chicken", "ground beef", "red onion", "black olives"])],
   ),
   scn(
+    "E14_bare_combo_then_slots_by_name",
+    "Luigi's 00:10 call: 'Large and Wings combo' added bare, then the pizza half Philly/half Deluxe and wings BBQ filled by SLOT NAME (no ids) — no missing_item, no guessing",
+    ["combo", "half_recipe", "slot_autofill", "regression"],
+    [
+      add({ menuItemId: L.largeWings }, "can I get a large and wings combo", { mustNotSpeak: "not finished" }),
+      upd(
+        {
+          lineId: "L1",
+          hint: "the pizza half Philly steak and half deluxe, and the wings barbecue",
+          picks: [
+            { slotLabel: "Pizza", halfRecipes: [{ placement: "left", menuItemId: "cmpuex44806lq04kvesomkta7" }, { placement: "right", menuItemId: "cmpuex52708kk04kv4l0xflwf" }] },
+            { slotLabel: "Chicken Wings", options: ["BBQ Mixed"] },
+          ],
+        },
+        "can I get the pizza half philly steak and half deluxe and I'll get the wings to be barbecue",
+        { speaks: "half Philly Steak Pizza, half Deluxe Pizza" },
+      ),
+      // "switch the deluxe half with the Chipotle chicken half"
+      upd({ lineId: "L1", hint: "switch the deluxe half with the chipotle chicken half", picks: [{ pickId: "P1", halfRecipes: [{ placement: "left", menuItemId: "cmpuex44806lq04kvesomkta7" }, { placement: "right", menuItemId: L.chipotleChicken }] }] }, "actually can you switch the deluxe half with the chipotle chicken half", {
+        speaks: "half Spicy Chipotle Chicken Pizza",
+      }),
+    ],
+    [
+      {
+        item: L.largeWings,
+        qty: 1,
+        options: [],
+        picks: [
+          // Philly (steak, mushrooms, green peppers, red onion) × Chipotle Chicken (chicken, cheddar, mushrooms, red peppers, red onion): the two shared toppings go whole.
+          { slot: "pizza", item: L.large3, options: [], halves: { left: ["steak", "green peppers"], right: ["chicken", "cheddar cheese", "red peppers"], whole: ["mushrooms", "red onion"] } },
+          { slot: "chicken wings", item: L.wings, size: "20", options: ["bbq mixed"] },
+        ],
+      },
+    ],
+  ),
+  scn(
     "E10_gp_hg_aliases",
     "GP / HG / pep / shrooms / x-cheese resolve to the menu's words",
     ["alias", "resolver"],
