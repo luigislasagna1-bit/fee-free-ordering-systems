@@ -171,6 +171,27 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A60. 📞 Roya's 11:41 call — the repeated topping question (FIXED) and the "Monday special on a Sunday" (it's a MENU row — your call) (2026-08-16)
+
+**The repeat.** Nabil asked *"what topping would you like on it?"* and — **one millisecond** after that sentence was
+generated, before a word of it could have played — the listener delivered the word **"special"** on its own (the tail
+of Roya's "Yes… special"). It matched none of the known tail words and the reply ended in a question, so it was
+treated as a new turn and Nabil asked the topping question again. → Fixed in code: anything that arrives before the
+reply could possibly have been heard is never answered as a fresh turn — it's held and folded into the caller's real
+answer ("Pineapple."); if the caller stays silent after the reply has played, it runs on its own so a blurted request
+is never lost. Committed `7654c7b8`, ships with the next Fly deploy.
+
+**The special.** Nabil said *"today it's a Medium 1 Topping Pizza for eight ninety-nine"* — and it was right about
+your menu, which is the problem. Your **Daily Deals** category has 12 day-restricted items (Mon → Fri, each paired to
+its regular item, correctly hidden on other days — the *"Monday - Medium Pizza Special"* was NOT offered) **plus one
+stray row: "Medium Pizza 1 Topping" $8.99, created 2026-07-08, with NO day restriction and no pairing.** With no day on
+it, both your website and Nabil treat it as available every day — it has been sellable at $8.99 on your online menu
+every day since 8 July. Nothing in the agent guessed; the code that hides day-deals on the wrong day works.
+
+🤔 **Your decision (I'll do it in one minute once you say):** (a) restrict that row to Mondays (it becomes a duplicate
+of the Monday special — probably delete instead), (b) **delete it** (recommended: the real "Monday - Medium Pizza
+Special" already exists and is paired), or (c) keep it — it really is an everyday $8.99 medium.
+
 ### A59. 📞 Your 00:30 call — "we reopen at two" + the "order for later" contradiction — FIXED in code (2026-08-16)
 
 **What you heard (call `cmsvb4gxf000h04jonnz15w0u`, 00:30 EDT):** you asked "Can I place an order for tomorrow?"
