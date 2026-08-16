@@ -251,14 +251,22 @@ without being added to the export. And when Twilio *refuses* to delete a recordi
 throw away the only handle that could delete it while reporting the erasure as complete — the
 request is now logged "partial" and the audio stays reachable for a retry.
 
-**Your clicks — updated 2026-08-16 (later): most of this is now mine, not yours:**
-1. ✅ → **automated.** The Twilio "PRIMARY HANDLER FAILS" URL is now set from **Superadmin → Nabil Phone Lines**
-   (a table of every Nabil number: what Twilio has vs. what we expect, and a *Repair* button that writes only the
-   two voice URLs). I press it right after tonight's Vercel deploy and report the before/after. No console visit.
-2. 🔷 **`NABIL_FALLBACK_DEFAULT_NUMBER` + `NABIL_FALLBACK_MAP`** — I set them in Vercel tonight from the numbers you
-   confirm under **A59** (last bullet). Without them the emergency path can only apologise.
-3. ✅ → **mine.** The two Fly secrets are staged by me (the Twilio token copied Vercel→Fly through a pipe, never
-   displayed — you OK'd this) and go live with the next gated Fly deploy.
+**Your clicks — updated 2026-08-16 12:50 EDT:**
+1. ✅ **DONE (you, 12:40 EDT)** — pressed *Repair* on **Superadmin → Nabil Phone Lines**; the audit row shows it wrote
+   `VoiceUrl` (www → `https://feefreeordering.com/api/twilio/voice`, the form `NEXT_PUBLIC_APP_URL` gives — both hosts
+   answer the route) and `VoiceFallbackUrl` = `https://nabil-voice.fly.dev/twiml/fallback`, and backfilled the number's
+   Twilio SID. Verdict *healthy*. Twilio now has a second address to try.
+2. ✅ **DONE (me)** — `NABIL_FALLBACK_MAP = {"+13656581458":"+12894091133"}` in Vercel prod (the alert phone you
+   confirmed). **No `NABIL_FALLBACK_DEFAULT_NUMBER` on purpose** — your rule: every number depends on each store, never a
+   platform-wide catch-all. The safety net now also learns EVERY store's own number from the database on the healthy
+   path (`d668772f`), so a new restaurant is covered the moment it exists, no env edit.
+3. ☐ **The Twilio auth token on Fly — yours (2 min), because Vercel marks it SENSITIVE and the CLI cannot read it, so
+   I can't copy it for you.** console.twilio.com → *Account Info* → **Show** Auth Token → copy → in PowerShell on this
+   PC: `fly secrets set --stage FFOS_TWILIO_AUTH_TOKEN=PASTE_TOKEN --app nabil-voice` → tell me "token done" (staged =
+   activated by the next Fly deploy, no restart). Until then the Fly fallback dials your store WITHOUT verifying the
+   request came from Twilio (it can only ever dial your own numbers). `NABIL_TWILIO_FALLBACK_URL` is already staged.
+   Same reason for a 1-minute UI chore: **Vercel → Settings → Environment Variables → `SENTRY_PROJECT` → Edit → delete
+   the leading TAB** (its value is sensitive too) — it only affects source-map upload on builds, nothing customer-facing.
 4. ☐ **A free uptime monitor** (UptimeRobot or Better Stack) on `https://nabil-voice.fly.dev/health`,
    60-second interval, SMS alert to you. **This is the only alarm that still works when Vercel is
    down** — a monitor that runs on Vercel cannot tell you Vercel is broken. *Still yours — it needs an account in
