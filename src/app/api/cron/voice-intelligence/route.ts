@@ -18,6 +18,7 @@ import prisma from "@/lib/db";
 import { Prisma } from "@/generated/prisma/client";
 import { requireCronAuth } from "@/lib/cron-auth";
 import { generateCallIntelligence } from "@/lib/voice/call-intelligence";
+import { sweepStaleCalls } from "@/lib/voice/stale-calls";
 
 export const runtime = "nodejs";
 export const maxDuration = 55;
@@ -33,6 +34,19 @@ export async function GET(req: NextRequest) {
   if (unauthorized) return unauthorized;
 
   const startedAt = Date.now();
+
+  // Second arm (2026-08-16): close call rows whose session died without an
+  // end event, so nothing shows "In progress" forever. Cheap (one indexed-ish
+  // scan on endedAt IS NULL, normally zero rows); never blocks the summaries.
+  let stale = 0;
+  try {
+    const swept = await sweepStaleCalls(new Date(startedAt));
+    stale = swept.closed;
+    if (stale > 0) console.warn(`[voice-intelligence] closed ${stale} stale in-progress call(s):`, swept.ids.join(","));
+  } catch (e) {
+    console.error("[voice-intelligence] stale-call sweep failed", e);
+  }
+
   const candidates = await prisma.voiceCall.findMany({
     where: {
       transcript: { not: Prisma.AnyNull },
@@ -58,9 +72,9 @@ export async function GET(req: NextRequest) {
   }
 
   console.log(
-    `[voice-intelligence] candidates=${candidates.length} generated=${generated} skipped=${skipped} deferred=${deferred}`,
+    `[voice-intelligence] candidates=${candidates.length} generated=${generated} skipped=${skipped} deferred=${deferred} staleClosed=${stale}`,
   );
-  return NextResponse.json({ candidates: candidates.length, generated, skipped, deferred });
+  return NextResponse.json({ candidates: candidates.length, generated, skipped, deferred, staleClosed: stale });
 }
 
 export async function POST(req: NextRequest) {

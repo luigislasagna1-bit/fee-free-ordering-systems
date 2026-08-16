@@ -18,4 +18,15 @@ ENV NODE_ENV=production
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["npm", "start"]
+# ⚠️ node must be the container's MAIN process — never `npm start`.
+# 2026-08-16 19:28Z (a `fly secrets deploy`): Fly sent SIGTERM to `npm`, npm
+# died in the same second ("Main child exited with signal 'SIGTERM'"), the
+# machine went down with it, and the graceful drain in server.ts (SIGTERM →
+# stop accepting → wait for live calls → warm-transfer → exit 0) never ran — a
+# call that started 33 s earlier lost its WebSocket and its end record. With
+# node as PID 1's child the handler receives the signal directly and Fly's
+# kill_timeout (5m) gives it room to finish. `--import tsx` runs the TS
+# sources in-process (no relay wrapper). Verify after any change: restart one
+# machine and expect "[nabil-voice] SIGTERM: draining, N live call(s)" then
+# "Main child exited normally with code 0" in `fly logs`.
+CMD ["node", "--import", "tsx", "src/server.ts"]
