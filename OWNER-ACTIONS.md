@@ -208,8 +208,20 @@ request is now logged "partial" and the audio stays reachable for a retry.
    60-second interval, SMS alert to you. **This is the only alarm that still works when Vercel is
    down** — a monitor that runs on Vercel cannot tell you Vercel is broken.
 
-**Not yet — deliberately.** `fly scale count 2` (the second machine that buys redundancy) waits until
-the graceful-shutdown work lands, otherwise the deploy that ships it still cuts every live call.
+5. ☐ **`fly scale count 2 --app nabil-voice`** (~+US$5–7/mo) — now unblocked. The graceful-shutdown
+   work has landed, so a deploy drains instead of killing calls: the machine stops accepting new
+   calls, waits up to 4 minutes for the ones in flight, and anything still running gets a spoken
+   sentence and a warm transfer rather than a dead line. That only helps if there is a **second**
+   machine to take the traffic while the first drains, which is what this command buys — so the
+   release script now **refuses to deploy onto a single machine** unless you explicitly override it.
+
+**What I measured, since it settles the "multi-line" question.** A concurrent call costs **1.06 MB**
+of memory, dead linear from 5 calls to 40 — so a 512 MB machine could hold roughly **250** of them.
+Memory is not our limit and never was; the 25-call cap was ~10× conservative. I did **not** raise it,
+because the two limits that will actually bite are ones that measurement can't see (Anthropic's
+account-wide rate limits, and CPU), and raising a cap on the strength of the wrong evidence would
+just move the failure from "we politely ring your store in under a second" to "all 100 live callers
+break mid-sentence." Re-run it any time with `npm run nabil:capacity` — it costs nothing.
 
 🤔 **One decision, when you're ready.** Nabil's price. Your CA$0.75/call-minute with a CA$99/month
 minimum works — measured cost is US$0.34–0.40/minute from 31 August, so the margin is positive at

@@ -16,6 +16,7 @@
     "nabil:release": "tsx scripts/nabil-release.ts",
     "nabil:bench": "tsx scripts/nabil-bench.ts",
     "nabil:snapshot": "tsx scripts/nabil-snapshot-menu.ts",
+    "nabil:capacity": "node --expose-gc --import tsx scripts/nabil-capacity.ts",
     "seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",

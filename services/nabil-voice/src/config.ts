@@ -34,6 +34,37 @@ export const CONFIG = {
    *  clause boundaries so ElevenLabs gets whole phrases (smoother prosody,
    *  ~100–300 ms later first audio). Experiment flag — needs one live call. */
   ttsChunk: (process.env.NABIL_TTS_CHUNK || "token") as "token" | "sentence",
+
+  // ── Draining + capacity (see server.ts) ──────────────────────────────────
+  /** How long a SIGTERM drain waits for live calls to end by themselves before
+   *  warm-transferring whatever is left. Fly's kill_timeout must be LONGER than
+   *  this or the process is killed mid-drain and we are back where we started. */
+  drainMs: parseInt(process.env.NABIL_DRAIN_MS || "240000", 10),
+  /**
+   * In-process concurrent-call cap, one machine.
+   *
+   * MEASURED 2026-08-15 (`npm run nabil:capacity`): a call's app-side state costs
+   * ~1.06 MB RSS, so 512 MB fits roughly 250. Memory is NOT what this protects
+   * against — Anthropic org rate limits and shared-cpu-1x are, and neither has
+   * been measured. Set at fly.toml's hard_limit so we refuse the socket
+   * IMMEDIATELY (caller reaches the store in under a second via the handoff
+   * route) instead of letting Fly queue an upgrade that times out in silence.
+   */
+  maxSessions: parseInt(process.env.NABIL_MAX_SESSIONS || "25", 10),
+
+  // ── Twilio VoiceFallbackUrl handler (see fallback.ts) ────────────────────
+  // All OPTIONAL by design: the fallback is a safety net, and a safety net that
+  // refuses to boot because a secret is unset is not a safety net. Missing
+  // values degrade the handler loudly (a warn on first use), never fatally.
+  /** Verifies X-Twilio-Signature on /twiml/fallback. Same platform token the app
+   *  uses for SMS + recording. */
+  twilioAuthToken: process.env.FFOS_TWILIO_AUTH_TOKEN || "",
+  /** The EXACT URL registered as VoiceFallbackUrl on the number — Twilio signs
+   *  that string, so it must be configured, not reconstructed from headers. */
+  fallbackUrl: process.env.NABIL_TWILIO_FALLBACK_URL || "",
+  /** {"+1289…":"+1416…"} floor for the fallback number map, so a cold boot
+   *  during an app outage still knows who to ring. */
+  fallbackMapJson: process.env.NABIL_FALLBACK_MAP || "",
 };
 
 export type CallToken = {

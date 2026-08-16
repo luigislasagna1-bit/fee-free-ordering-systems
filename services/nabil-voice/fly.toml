@@ -6,6 +6,26 @@
 app = 'nabil-voice'
 primary_region = 'iad'
 
+# GRACEFUL SHUTDOWN (2026-08-15) — see drain() in src/server.ts.
+# Fly sends kill_signal, waits kill_timeout, then SIGKILLs. Until the SIGTERM
+# handler existed nothing listened, so a deploy killed the process outright:
+# every live call was cut mid-sentence AND finalize() died in flight, losing the
+# call record, transcript, cost and revenue attribution for calls in progress.
+#
+# ⚠️ kill_timeout MUST exceed NABIL_DRAIN_MS (default 240s / 4 min) or the
+# platform kills the process mid-drain and this is decorative. 5m is Fly's
+# documented ceiling; maxCallSeconds defaults to 600s, so calls still running at
+# the deadline get a spoken sentence and a warm transfer rather than a dead line.
+kill_signal = 'SIGTERM'
+kill_timeout = '5m'
+
+[deploy]
+  # One machine at a time, so the other keeps answering while this one drains.
+  # Does nothing with a single machine — that is what `fly scale count 2` buys,
+  # and why the drain work had to land BEFORE scaling out.
+  strategy = 'rolling'
+  wait_timeout = '15m'
+
 [build]
 [http_service]
   internal_port = 8080
@@ -23,6 +43,26 @@ primary_region = 'iad'
   # hard limit is the only thing that matters, so it is set well above any
   # realistic Friday-night peak — a rejected call is worse than a slow one, and
   # the work is almost entirely I/O wait on Anthropic and Twilio.
+  #
+  # ── MEASURED, 2026-08-15 (`node --expose-gc --import tsx scripts/nabil-capacity.ts`)
+  # A concurrent call's app-side state — its own menu payload (147 KB), its own
+  # MenuIndex, its composed system prompt (76 KB) and a message history at the
+  # pre-compaction ceiling — costs:
+  #
+  #     0.52 MB heap · 1.06 MB RSS per call, linear from N=5 to N=40
+  #     → ~250 concurrent calls fit in 512 MB with 30% headroom
+  #
+  # So MEMORY IS NOT THE CONSTRAINT, and 25 is ~10× conservative against it.
+  # It is deliberately NOT being raised on that evidence, because the two limits
+  # that will actually bite are the ones the measurement cannot see: Anthropic
+  # ORG RATE LIMITS (account-wide, so more machines do not help) and CPU on
+  # shared-cpu-1x streaming N token flows at once. Raising the limit without
+  # measuring those would just move the failure from "Fly refuses the socket"
+  # (which degrades to the handoff route ringing the store, in under a second)
+  # to "all 100 live callers get rate-limited mid-sentence" — far worse.
+  #
+  # Raise this only with evidence from real simultaneous calls. Re-run the script
+  # if the menu payload grows a lot; per-call cost scales with menu size.
   #
   # ⚠️ Fly only balances across machines that EXIST: `fly scale count 2` is what
   # actually buys redundancy (and survives a deploy without dropping live

@@ -97,6 +97,42 @@ appendFileSync(historyPath, `| ${new Date().toISOString()} | ${sha} | ${green ? 
 if (!green) process.exit(1);
 if (flag("--deploy")) {
   const fly = process.env.FLYCTL || join(process.env.USERPROFILE || process.env.HOME || "", ".fly", "bin", process.platform === "win32" ? "flyctl.exe" : "flyctl");
+
+  // ── SINGLE-MACHINE GUARD (2026-08-15) ────────────────────────────────────
+  // src/server.ts now drains on SIGTERM and fly.toml deploys rolling, so a
+  // deploy no longer has to cut live calls — but ONLY if there is a second
+  // machine to take them. With `count 1`, rolling has nothing to roll to and
+  // every in-progress call is still warm-transferred mid-order. That hazard
+  // used to live in a memory file; enforce it where the deploy actually is.
+  const st = spawnSync(fly, ["status", "--app", "nabil-voice", "--json"], {
+    encoding: "utf8",
+    shell: process.platform === "win32",
+  });
+  let machines: number | null = null;
+  try {
+    const parsed = JSON.parse(st.stdout || "{}");
+    const list = parsed?.Machines ?? parsed?.machines;
+    if (Array.isArray(list)) machines = list.length;
+  } catch {
+    /* flyctl not installed, not logged in, or a shape change — don't block on it */
+  }
+  if (machines === null) {
+    console.warn("⚠️  Could not read the machine count from flyctl — proceeding without the single-machine check.");
+  } else if (machines < 2 && !flag("--allow-single-machine")) {
+    console.error(
+      `\n❌ nabil-voice has ${machines} machine — this deploy WILL interrupt every live call.\n` +
+        `   Rolling deploys need somewhere to roll to. Fix it once:\n\n` +
+        `     fly scale count 2 --app nabil-voice\n\n` +
+        `   (~+US$5–7/mo, and it also removes the single point of failure.)\n` +
+        `   To deploy anyway — off-hours, accepting the interruption — pass --allow-single-machine.\n`,
+    );
+    process.exit(1);
+  } else if (machines < 2) {
+    console.warn(`⚠️  Deploying onto ${machines} machine with --allow-single-machine: live calls will be interrupted.`);
+  } else {
+    console.log(`✅ ${machines} machines — rolling deploy will drain one at a time.`);
+  }
+
   // Run from the service directory so flyctl picks up fly.toml + Dockerfile itself.
   const ok = run("fly deploy", fly, ["deploy", "--app", "nabil-voice", "--build-arg", `AGENT_VERSION=${sha}`], join(process.cwd(), "services", "nabil-voice"));
   if (!ok) process.exit(1);

@@ -1008,6 +1008,34 @@ export class CallSession {
     }
   }
 
+  /**
+   * Deploy / restart drain — hand the caller to a person rather than letting the
+   * socket die under them. (2026-08-15)
+   *
+   * Before this existed, `fly deploy` just killed the process. The caller was
+   * not left in silence — the WebSocket dropped, ConversationRelay ended, and
+   * Twilio's <Connect action> fired the handoff route, so their phone was warm-
+   * transferred to the store. But it happened mid-sentence with no explanation,
+   * and `finalize()` was killed in flight: the call record, transcript, cost and
+   * revenue attribution were all lost. A deploy silently erased whatever calls
+   * were live, which is why "how many calls did we take today" could quietly
+   * undercount.
+   *
+   * One sentence, the same end-of-relay path a normal transfer uses, then the
+   * record is actually written before the process goes away.
+   */
+  async shutdownTransfer(reason = "service_restart"): Promise<void> {
+    if (this.finalized) return;
+    this.interrupted = true;
+    this.controller?.abort();
+    this.ctx.pendingTransfer = reason;
+    this.speak(" Sorry — one moment, I'm putting you through to the restaurant.", true);
+    this.endTransfer(reason);
+    // finalize() flips `finalized` first thing, so the onClose() that follows
+    // Twilio tearing down the socket is a no-op rather than a second write.
+    await this.finalize();
+  }
+
   private flushEvents() {
     if (this.events.size() === 0 || this.eventFlushInFlight) return;
     const events = this.events.drain();
