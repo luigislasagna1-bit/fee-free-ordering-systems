@@ -25,6 +25,7 @@ import { hasFeature } from "@/lib/entitlements";
 import { buildSeoLinks } from "@/lib/hosted-site-seo";
 import { COMPETITORS } from "@/data/competitors";
 import { LANDING_PAGES } from "@/data/landing-pages";
+import { NABIL_LANDING_PAGES } from "@/data/nabil-landing-pages";
 import { SOLUTION_PAGES } from "@/data/solution-pages";
 import { SEGMENT_PAGES } from "@/data/segment-pages";
 
@@ -140,6 +141,11 @@ function buildPlatformSitemap(host: string): string {
   // the comparison pages — these target broader, higher-volume queries).
   for (const p of LANDING_PAGES) {
     urls.push({ loc: `${base}/online-ordering-for/${p.slug}`, changefreq: "monthly", priority: 0.7 });
+  }
+  // Nabil AI "AI phone ordering for {cuisine}" SEO landing pages — high-intent
+  // organic targets that funnel into the phone ordering add-on signup.
+  for (const p of NABIL_LANDING_PAGES) {
+    urls.push({ loc: `${base}/ai-phone-ordering-for/${p.slug}`, changefreq: "monthly", priority: 0.7 });
   }
   // Root-level programmatic "solution" SEO pages (use-case/feature, CMS/platform, city) —
   // e.g. /online-ordering-system, /wordpress-restaurant-ordering-plugin. Same SSG + JSON-LD engine.

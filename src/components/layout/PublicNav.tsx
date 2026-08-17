@@ -44,14 +44,14 @@ export function PublicNav({ currentLocale = "en" }: Props) {
           <ChefHat className="w-7 h-7" />
           Fee Free Ordering
         </Link>
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-5 lg:gap-7">
           {items.map(([label, href]) => (
-            <Link key={href} href={href} className="text-gray-600 hover:text-emerald-500 font-medium transition">
+            <Link key={href} href={href} className="text-gray-600 hover:text-emerald-500 font-medium transition whitespace-nowrap text-sm lg:text-base">
               {label}
             </Link>
           ))}
         </div>
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2 lg:gap-3">
           <div className="relative inline-flex items-center">
             <Globe className="w-4 h-4 text-gray-500 absolute left-2 pointer-events-none" />
             <select
@@ -65,13 +65,13 @@ export function PublicNav({ currentLocale = "en" }: Props) {
               ))}
             </select>
           </div>
-          <BookDemoButton label={t("bookDemo")} className="text-emerald-600 font-semibold hover:text-emerald-700 transition cursor-pointer" />
-          <Link href="/login" className="text-gray-700 font-medium hover:text-emerald-500 transition">
+          <BookDemoButton label={t("bookDemo")} className="text-emerald-600 font-semibold hover:text-emerald-700 transition cursor-pointer whitespace-nowrap text-sm lg:text-base" />
+          <Link href="/login" className="text-gray-700 font-medium hover:text-emerald-500 transition whitespace-nowrap text-sm lg:text-base">
             {t("login")}
           </Link>
           <Link
             href="/signup"
-            className="bg-emerald-500 text-white font-semibold px-5 py-2 rounded-lg hover:bg-emerald-600 transition"
+            className="bg-emerald-500 text-white font-semibold px-4 lg:px-5 py-2 rounded-lg hover:bg-emerald-600 transition whitespace-nowrap text-sm lg:text-base"
           >
             {t("startTrial")}
           </Link>

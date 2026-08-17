@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { SUPPORT_PHONE_DISPLAY, SUPPORT_PHONE_TEL } from "@/lib/support";
 import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
 import { LANDING_PAGES } from "@/data/landing-pages";
+import { NABIL_LANDING_PAGES } from "@/data/nabil-landing-pages";
 import { SOLUTION_PAGES } from "@/data/solution-pages";
 import { SEGMENT_PAGES } from "@/data/segment-pages";
 import { COMPETITORS } from "@/data/competitors";
@@ -87,6 +88,9 @@ export function PublicFooter() {
         <div className="border-t border-gray-800 pt-6 mb-6 space-y-2.5 text-xs text-gray-500">
           {LANDING_PAGES.length > 0 && (
             <SeoLinkRow label="Online ordering for" moreHref="/sitemap#cuisines" items={LANDING_PAGES.map((p) => ({ href: `/online-ordering-for/${p.slug}`, text: p.nounPlural }))} />
+          )}
+          {NABIL_LANDING_PAGES.length > 0 && (
+            <SeoLinkRow label="AI phone ordering for" moreHref="/sitemap#ai-phone-ordering" items={NABIL_LANDING_PAGES.map((p) => ({ href: `/ai-phone-ordering-for/${p.slug}`, text: p.nounPlural }))} />
           )}
           {SOLUTION_PAGES.some((p) => p.category === "feature") && (
             <SeoLinkRow label="Solutions" moreHref="/sitemap#solutions" items={SOLUTION_PAGES.filter((p) => p.category === "feature").map((p) => ({ href: `/${p.slug}`, text: p.h1 }))} />

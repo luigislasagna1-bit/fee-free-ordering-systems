@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
 import { LANDING_PAGES } from "@/data/landing-pages";
+import { NABIL_LANDING_PAGES } from "@/data/nabil-landing-pages";
 import { SOLUTION_PAGES } from "@/data/solution-pages";
 import { SEGMENT_PAGES } from "@/data/segment-pages";
 import { COMPETITORS } from "@/data/competitors";
@@ -54,6 +55,10 @@ export default function SitemapPage() {
     href: `/online-ordering-for/${p.slug}`,
     text: `Online ordering for ${p.nounPlural}`,
   }));
+  const aiPhoneOrdering: LinkItem[] = NABIL_LANDING_PAGES.map((p) => ({
+    href: `/ai-phone-ordering-for/${p.slug}`,
+    text: `AI phone ordering for ${p.nounPlural}`,
+  }));
   const solutions: LinkItem[] = SOLUTION_PAGES.filter((p) => p.category === "feature").map((p) => ({ href: `/${p.slug}`, text: p.h1 }));
   const platforms: LinkItem[] = SOLUTION_PAGES.filter((p) => p.category === "platform").map((p) => ({ href: `/${p.slug}`, text: p.h1 }));
   const cities: LinkItem[] = SOLUTION_PAGES.filter((p) => p.category === "city").map((p) => ({ href: `/${p.slug}`, text: p.h1 }));
@@ -89,6 +94,7 @@ export default function SitemapPage() {
         </p>
 
         <Section id="cuisines" title="Online ordering by cuisine" items={cuisines} />
+        <Section id="ai-phone-ordering" title="AI phone ordering by restaurant type" items={aiPhoneOrdering} />
         <Section id="solutions" title="Solutions" items={solutions} />
         <Section id="platforms" title="Add ordering to your website" items={platforms} />
         <Section id="cities" title="Online ordering by city" items={cities} />
