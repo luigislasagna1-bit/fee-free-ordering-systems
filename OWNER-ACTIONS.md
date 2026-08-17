@@ -257,7 +257,7 @@ found: numbers mis-spoken → A63, fixed); report filed (`cmswjlo87`) → the fl
    Urgent, one line → send. Then Superadmin → Restaurant Reports › **Nabil AI reports** → open it → set a status + write
    a note → back on the restaurant call page the status + note appear, and the reporter address gets the email. Tell me
    what Loman's version does that ours doesn't.
-4. ⏱️ **Uptime monitor (A58 #4, 5 min, needs an account in YOUR name):** UptimeRobot (free) or Better Stack → HTTP
+4. ✅ ⏱️ **Uptime monitor (A58 #4, 5 min, needs an account in YOUR name):** UptimeRobot (free) or Better Stack → HTTP
    monitor on `https://nabil-voice.fly.dev/health`, 60-second interval, SMS alert to your mobile. It is the only alarm
    that still works when Vercel is down.
 5. 🔧 **Vercel env `SENTRY_PROJECT` — delete the leading TAB (1 min):** Vercel → project → Settings → Environment
@@ -420,7 +420,9 @@ request is now logged "partial" and the audio stays reachable for a retry.
    `2894091133`. The chain is armed end to end: Twilio → our webhook → (Vercel safety net) → Fly fallback → your phone.
    Still a 1-minute UI chore whenever you like: **Vercel → Settings → Environment Variables → `SENTRY_PROJECT` → Edit →
    delete the leading TAB** (its value is sensitive, so I can't) — only affects source-map upload on builds.
-4. ☐ **A free uptime monitor** (UptimeRobot or Better Stack) on `https://nabil-voice.fly.dev/health`,
+4. ✅ **DONE (you, 2026-08-16 23:29 EDT)** — UptimeRobot HTTP/S monitor on `https://nabil-voice.fly.dev/health`,
+   5-min checks (free-tier minimum), status Up; test DOWN+UP alerts received at your Gmail. Optional later: the UptimeRobot
+   phone app for push. Original ask: **A free uptime monitor** (UptimeRobot or Better Stack) on `https://nabil-voice.fly.dev/health`,
    60-second interval, SMS alert to you. **This is the only alarm that still works when Vercel is
    down** — a monitor that runs on Vercel cannot tell you Vercel is broken. *Still yours — it needs an account in
    your name.*
