@@ -4473,7 +4473,10 @@
           "latencyCache": "Baca cache {pct}%",
           "latencyLabel": "Latensi dan penggunaan",
           "errorLabel": "Galat di {where}",
-          "payloadLabel": "Data"
+          "payloadLabel": "Data",
+          "numbersVerbalizedLabel": "Angka diucapkan dengan kata ({count})",
+          "narrationDroppedLabel": "Kalimat \"berpikir keras\" dihapus sebelum suara",
+          "tailFragmentLabel": "Fragmen akhir diserap"
         },
         "report": {
           "button": "Laporkan panggilan ini",

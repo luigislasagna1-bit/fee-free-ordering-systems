@@ -4473,7 +4473,10 @@
           "latencyCache": "อ่านแคช {pct}%",
           "latencyLabel": "ความหน่วงและการใช้งาน",
           "errorLabel": "ข้อผิดพลาดใน {where}",
-          "payloadLabel": "ข้อมูล"
+          "payloadLabel": "ข้อมูล",
+          "numbersVerbalizedLabel": "อ่านตัวเลขเป็นคำพูด ({count})",
+          "narrationDroppedLabel": "ตัดประโยค “คิดดัง ๆ” ออกก่อนเปล่งเสียง",
+          "tailFragmentLabel": "ซึมซับเศษคำท้ายประโยค"
         },
         "report": {
           "button": "รายงานสายนี้",

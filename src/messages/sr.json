@@ -4473,7 +4473,10 @@
           "latencyCache": "Читање из кеша {pct}%",
           "latencyLabel": "Кашњење и потрошња",
           "errorLabel": "Грешка у {where}",
-          "payloadLabel": "Подаци"
+          "payloadLabel": "Подаци",
+          "numbersVerbalizedLabel": "Brojevi izgovoreni rečima ({count})",
+          "narrationDroppedLabel": "Rečenica „razmišljanja naglas” uklonjena pre glasa",
+          "tailFragmentLabel": "Završni fragment apsorbovan"
         },
         "report": {
           "button": "Prijavi ovaj poziv",

@@ -130,6 +130,12 @@ export const EVENT_TYPES = new Set([
   "compaction",
   "cache_miss",
   "hallucination_suspect",
+  // Added 2026-08-16 — the service had emitted narration_dropped and
+  // tail_fragment since round 3/4 but this closed set silently dropped them
+  // (the "written but never read" class); numbers_verbalized is new.
+  "narration_dropped",
+  "tail_fragment",
+  "numbers_verbalized",
   "turn",
   "call_end",
   "error",

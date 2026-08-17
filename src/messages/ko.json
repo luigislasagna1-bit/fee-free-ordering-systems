@@ -4473,7 +4473,10 @@
           "latencyCache": "캐시 읽기 {pct}%",
           "latencyLabel": "지연 시간 및 사용량",
           "errorLabel": "{where}에서 오류",
-          "payloadLabel": "데이터"
+          "payloadLabel": "데이터",
+          "numbersVerbalizedLabel": "숫자를 말로 읽음 ({count})",
+          "narrationDroppedLabel": "‘생각을 소리 내어 말한’ 문장을 음성 전에 제거함",
+          "tailFragmentLabel": "끝부분 조각을 흡수함"
         },
         "report": {
           "button": "이 통화 신고",

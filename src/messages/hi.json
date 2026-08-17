@@ -4698,7 +4698,10 @@
           "latencyCache": "कैश रीड {pct}%",
           "latencyLabel": "विलंबता और उपयोग",
           "errorLabel": "{where} में त्रुटि",
-          "payloadLabel": "डेटा"
+          "payloadLabel": "डेटा",
+          "numbersVerbalizedLabel": "संख्याएँ शब्दों में बोली गईं ({count})",
+          "narrationDroppedLabel": "आवाज़ से पहले “ज़ोर से सोचने” वाला वाक्य हटाया गया",
+          "tailFragmentLabel": "अंतिम टुकड़ा समाहित किया गया"
         },
         "report": {
           "button": "इस कॉल की रिपोर्ट करें",

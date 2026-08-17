@@ -4473,7 +4473,10 @@
           "latencyCache": "Gyorsítótár-olvasás {pct}%",
           "latencyLabel": "Késleltetés és felhasználás",
           "errorLabel": "Hiba itt: {where}",
-          "payloadLabel": "Adatok"
+          "payloadLabel": "Adatok",
+          "numbersVerbalizedLabel": "Számok szavakkal kimondva ({count})",
+          "narrationDroppedLabel": "„Hangos gondolkodás” mondat eltávolítva a beszéd előtt",
+          "tailFragmentLabel": "Záró töredék beolvasztva"
         },
         "report": {
           "button": "Hívás jelentése",

@@ -4473,7 +4473,10 @@
           "latencyCache": "Vahemälust loetud {pct}%",
           "latencyLabel": "Latentsus ja kasutus",
           "errorLabel": "Viga kohas {where}",
-          "payloadLabel": "Andmed"
+          "payloadLabel": "Andmed",
+          "numbersVerbalizedLabel": "Numbrid öeldud sõnadega ({count})",
+          "narrationDroppedLabel": "Valjusti mõtlemise lause eemaldati enne hääle esitust",
+          "tailFragmentLabel": "Lõpufragment neelati"
         },
         "report": {
           "button": "Teata sellest kõnest",

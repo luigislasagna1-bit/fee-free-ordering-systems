@@ -37,6 +37,11 @@ export type CallEvent = CallEventBase &
     | { type: "interrupt"; heard: string | null; stale: boolean; duringProtected: boolean }
     | { type: "protected_respoken"; text: string }
     | { type: "narration_dropped"; text: string }
+    /** Digits the model wrote were turned into words before the voice heard
+     *  them (spoken-numbers.ts). Count only: the raw text is already in the
+     *  turn's `model_text` (redacted app-side), the pass is deterministic, and
+     *  a phone number in WORDS would slip past the digit-shaped redaction. */
+    | { type: "numbers_verbalized"; count: number }
     | { type: "tail_fragment"; text: string; early?: boolean }
     | { type: "compaction"; droppedMessages: number; bytesBefore: number; bytesAfter: number }
     | { type: "cache_miss"; request: number; uncached: number }

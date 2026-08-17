@@ -4473,7 +4473,10 @@
           "latencyCache": "Cache gelesen {pct} %",
           "latencyLabel": "Latenz und Verbrauch",
           "errorLabel": "Fehler in {where}",
-          "payloadLabel": "Daten"
+          "payloadLabel": "Daten",
+          "numbersVerbalizedLabel": "Zahlen als Wörter gesprochen ({count})",
+          "narrationDroppedLabel": "Laut-Denken-Satz vor der Sprachausgabe entfernt",
+          "tailFragmentLabel": "Nachgestelltes Fragment aufgenommen"
         },
         "report": {
           "button": "Diesen Anruf melden",

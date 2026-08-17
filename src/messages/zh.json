@@ -4473,7 +4473,10 @@
           "latencyCache": "缓存读取 {pct}%",
           "latencyLabel": "延迟与用量",
           "errorLabel": "{where} 中出错",
-          "payloadLabel": "数据"
+          "payloadLabel": "数据",
+          "numbersVerbalizedLabel": "数字以文字读出（{count}）",
+          "narrationDroppedLabel": "“自言自语”句子在发声前已移除",
+          "tailFragmentLabel": "已吸收句尾片段"
         },
         "report": {
           "button": "报告此通话",

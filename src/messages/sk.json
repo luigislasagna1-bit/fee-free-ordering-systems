@@ -4473,7 +4473,10 @@
           "latencyCache": "Čítanie z cache {pct} %",
           "latencyLabel": "Latencia a spotreba",
           "errorLabel": "Chyba v {where}",
-          "payloadLabel": "Dáta"
+          "payloadLabel": "Dáta",
+          "numbersVerbalizedLabel": "Čísla vyslovené slovami ({count})",
+          "narrationDroppedLabel": "Veta „premýšľania nahlas“ odstránená pred hlasom",
+          "tailFragmentLabel": "Koncový fragment pohltený"
         },
         "report": {
           "button": "Nahlásiť tento hovor",

@@ -4473,7 +4473,10 @@
           "latencyCache": "Чтение из кэша {pct}%",
           "latencyLabel": "Задержка и использование",
           "errorLabel": "Ошибка в {where}",
-          "payloadLabel": "Данные"
+          "payloadLabel": "Данные",
+          "numbersVerbalizedLabel": "Числа произнесены словами ({count})",
+          "narrationDroppedLabel": "Фраза «размышления вслух» удалена до озвучивания",
+          "tailFragmentLabel": "Завершающий фрагмент поглощён"
         },
         "report": {
           "button": "Сообщить об этом звонке",

@@ -4473,7 +4473,10 @@
           "latencyCache": "Cache gelezen {pct}%",
           "latencyLabel": "Latentie en verbruik",
           "errorLabel": "Fout in {where}",
-          "payloadLabel": "Gegevens"
+          "payloadLabel": "Gegevens",
+          "numbersVerbalizedLabel": "Getallen in woorden uitgesproken ({count})",
+          "narrationDroppedLabel": "Hardop-denken-zin verwijderd vóór de spraak",
+          "tailFragmentLabel": "Afsluitend fragment opgenomen"
         },
         "report": {
           "button": "Dit gesprek melden",

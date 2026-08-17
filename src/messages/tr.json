@@ -4473,7 +4473,10 @@
           "latencyCache": "Önbellek okuma %{pct}",
           "latencyLabel": "Gecikme ve kullanım",
           "errorLabel": "{where} içinde hata",
-          "payloadLabel": "Veri"
+          "payloadLabel": "Veri",
+          "numbersVerbalizedLabel": "Sayılar sözcüklerle söylendi ({count})",
+          "narrationDroppedLabel": "\"Sesli düşünme\" cümlesi seslendirilmeden önce çıkarıldı",
+          "tailFragmentLabel": "Sondaki parça özümsendi"
         },
         "report": {
           "button": "Bu aramayı bildir",

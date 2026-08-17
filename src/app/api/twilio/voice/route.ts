@@ -427,6 +427,9 @@ async function handle(req: NextRequest, params: Record<string, string>) {
     // which voice this call actually ran with.
     sttModel: sttProvider === "Deepgram" ? sttModel : sttProvider,
     ...(voiceValue ? { ttsVoice: voiceValue } : {}),
+    // The speech language ConversationRelay runs with — the service's English
+    // number-to-words pass (spoken-numbers.ts) is gated on it. 2026-08-16.
+    lang: bcp47(lang),
   });
   const url = `${wss}${wss.includes("?") ? "&" : "?"}t=${encodeURIComponent(token)}`;
   // On session end — a transfer, OR the voice service being unreachable — Twilio

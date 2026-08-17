@@ -4473,7 +4473,10 @@
           "latencyCache": "Citire cache {pct}%",
           "latencyLabel": "Latență și consum",
           "errorLabel": "Eroare în {where}",
-          "payloadLabel": "Date"
+          "payloadLabel": "Date",
+          "numbersVerbalizedLabel": "Numere rostite în cuvinte ({count})",
+          "narrationDroppedLabel": "Propoziție de „gândire cu voce tare” eliminată înainte de voce",
+          "tailFragmentLabel": "Fragment final absorbit"
         },
         "report": {
           "button": "Raportează acest apel",

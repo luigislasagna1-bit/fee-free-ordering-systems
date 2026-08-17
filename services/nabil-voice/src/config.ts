@@ -81,6 +81,10 @@ export type CallToken = {
   /** Listener / voice ConversationRelay was configured with (from the TwiML route); null on older tokens. */
   sttModel?: string | null;
   ttsVoice?: string | null;
+  /** The store's speech language as BCP-47 ("en-US", "it-IT") — what the TwiML
+   *  `language=` attribute was set to. Gates the English number-to-words pass
+   *  before the first ASR `lang` arrives. Null on older tokens. */
+  lang?: string | null;
 };
 
 /** Verify a call token (mirrors src/lib/voice/session-token.ts on the app side). */
@@ -88,7 +92,7 @@ export function verifyCallToken(token: string): CallToken | null {
   try {
     const d = jwt.verify(token, CONFIG.jwtSecret) as Record<string, unknown>;
     if (d?.t !== "nabilcall") return null;
-    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice } = d;
+    const { restaurantId, slug, callSid, to, from, sttModel, ttsVoice, lang } = d;
     if ([restaurantId, slug, callSid, to, from].every((v) => typeof v === "string")) {
       return {
         restaurantId,
@@ -98,6 +102,7 @@ export function verifyCallToken(token: string): CallToken | null {
         from,
         sttModel: typeof sttModel === "string" ? sttModel : null,
         ttsVoice: typeof ttsVoice === "string" ? ttsVoice : null,
+        lang: typeof lang === "string" ? lang : null,
       } as CallToken;
     }
     return null;

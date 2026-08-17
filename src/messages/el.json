@@ -4473,7 +4473,10 @@
           "latencyCache": "Ανάγνωση cache {pct}%",
           "latencyLabel": "Καθυστέρηση και χρήση",
           "errorLabel": "Σφάλμα στο {where}",
-          "payloadLabel": "Δεδομένα"
+          "payloadLabel": "Δεδομένα",
+          "numbersVerbalizedLabel": "Αριθμοί που ειπώθηκαν ολογράφως ({count})",
+          "narrationDroppedLabel": "Πρόταση «σκέψης φωναχτά» αφαιρέθηκε πριν από τη φωνή",
+          "tailFragmentLabel": "Απορροφήθηκε καταληκτικό θραύσμα"
         },
         "report": {
           "button": "Αναφορά αυτής της κλήσης",

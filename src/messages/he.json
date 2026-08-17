@@ -4473,7 +4473,10 @@
           "latencyCache": "קריאה מהמטמון {pct}%",
           "latencyLabel": "השהיה ושימוש",
           "errorLabel": "שגיאה ב-{where}",
-          "payloadLabel": "נתונים"
+          "payloadLabel": "נתונים",
+          "numbersVerbalizedLabel": "מספרים שנאמרו במילים ({count})",
+          "narrationDroppedLabel": "משפט של \"חשיבה בקול\" הוסר לפני ההקראה",
+          "tailFragmentLabel": "קטע סיום נבלע"
         },
         "report": {
           "button": "דיווח על שיחה זו",

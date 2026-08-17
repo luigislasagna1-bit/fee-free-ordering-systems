@@ -53,11 +53,14 @@ export function isRoboticUtterance(text: string): string | null {
   if (!t.trim()) return null;
   if (/[;×]/.test(t)) return "ticket punctuation (; ×)";
   if (/\b(?:left|right) half:/i.test(t)) return "'left half:' ticket phrasing";
-  if (/(?:^|\s)\d\.\s+\S/.test(t)) return "numbered list";
+  // Since 2026-08-16 the caller hears numbers as WORDS (spoken-numbers.ts), so
+  // the shapes below are matched in digits AND in words — a "large three
+  // topping" is still a SKU name, "one. … two. …" is still a numbered list.
+  if (/(?:^|\s)\d\.\s+\S/.test(t) || /\bone\.\s+\S[^.!?]*\btwo\.\s+\S/i.test(t)) return "numbered list";
   if (/(?:\b(?:CA|US|AU|NZ))?\$\s?\d/.test(t) || /\b(?:CAD|USD|EUR|GBP)\b/.test(t)) return "currency symbol/code instead of words";
   if (/\b[LP]\d{1,2}\b/.test(t)) return "line/pick id spoken";
   if (/\b(?:tool|modifier|slot|line id|menu id)\b/i.test(t)) return "system vocabulary";
-  if (/\b(?:xx?-?l|xl|extra[- ]?large|large|medium|small)\s+\d\s*-?\s*topping\b/i.test(t)) return "generic SKU name spoken";
+  if (/\b(?:xx?-?l|xl|extra[- ]?large|large|medium|small)\s+(?:\d|one|two|three|four|five|six)\s*-?\s*topping\b/i.test(t)) return "generic SKU name spoken";
   return null;
 }
 

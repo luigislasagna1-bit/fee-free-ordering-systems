@@ -4473,7 +4473,10 @@
           "latencyCache": "Читання з кешу {pct}%",
           "latencyLabel": "Затримка та використання",
           "errorLabel": "Помилка в {where}",
-          "payloadLabel": "Дані"
+          "payloadLabel": "Дані",
+          "numbersVerbalizedLabel": "Числа вимовлено словами ({count})",
+          "narrationDroppedLabel": "Фразу «роздумів уголос» вилучено перед озвученням",
+          "tailFragmentLabel": "Кінцевий фрагмент поглинуто"
         },
         "report": {
           "button": "Повідомити про цей дзвінок",

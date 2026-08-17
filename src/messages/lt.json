@@ -4473,7 +4473,10 @@
           "latencyCache": "Talpyklos skaitymas {pct}%",
           "latencyLabel": "Delsa ir naudojimas",
           "errorLabel": "Klaida: {where}",
-          "payloadLabel": "Duomenys"
+          "payloadLabel": "Duomenys",
+          "numbersVerbalizedLabel": "Skaičiai ištarti žodžiais ({count})",
+          "narrationDroppedLabel": "„Mąstymo balsu“ sakinys pašalintas prieš balsą",
+          "tailFragmentLabel": "Galinis fragmentas įtrauktas"
         },
         "report": {
           "button": "Pranešti apie šį skambutį",

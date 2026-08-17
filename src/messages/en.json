@@ -4801,7 +4801,10 @@
           "latencyCache": "Cache read {pct}%",
           "latencyLabel": "Latency and usage",
           "errorLabel": "Error in {where}",
-          "payloadLabel": "Payload"
+          "payloadLabel": "Payload",
+          "numbersVerbalizedLabel": "Numbers spoken as words ({count})",
+          "narrationDroppedLabel": "Thinking-aloud sentence dropped before the voice",
+          "tailFragmentLabel": "Trailing fragment absorbed"
         },
         "report": {
           "button": "Report this call",

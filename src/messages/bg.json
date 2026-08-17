@@ -4473,7 +4473,10 @@
           "latencyCache": "Четене от кеша {pct}%",
           "latencyLabel": "Закъснение и потребление",
           "errorLabel": "Грешка в {where}",
-          "payloadLabel": "Данни"
+          "payloadLabel": "Данни",
+          "numbersVerbalizedLabel": "Числа, изговорени с думи ({count})",
+          "narrationDroppedLabel": "Изречение „мислене на глас“ премахнато преди озвучаване",
+          "tailFragmentLabel": "Завършващ фрагмент погълнат"
         },
         "report": {
           "button": "Докладвай това обаждане",

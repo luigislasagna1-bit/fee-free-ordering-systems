@@ -4473,7 +4473,10 @@
           "latencyCache": "Odczyt z cache {pct}%",
           "latencyLabel": "Opóźnienie i zużycie",
           "errorLabel": "Błąd w {where}",
-          "payloadLabel": "Dane"
+          "payloadLabel": "Dane",
+          "numbersVerbalizedLabel": "Liczby wypowiedziane słownie ({count})",
+          "narrationDroppedLabel": "Zdanie „myślenia na głos” usunięte przed odczytaniem",
+          "tailFragmentLabel": "Końcowy fragment wchłonięty"
         },
         "report": {
           "button": "Zgłoś tę rozmowę",

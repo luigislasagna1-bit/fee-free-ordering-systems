@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-16 evening by Claude (**A62 — one consolidated list after seven sessions in one day.** The "authentication service was unavailable" message was the Claude app's own sign-in hiccup, not the product. Everything the sessions built is either live (Vercel `e17e64f`, Fly v35) or shipped by this session (phone-order receipts `5e735268` + the kitchen PHONE ORDER badge, merged). **Your list is A62: test print → one live call → report-this-call → uptime monitor → SENTRY_PROJECT tab → five yes/no decisions.**)
+**Last updated:** 2026-08-16 late evening by Claude (**A63 — Luigi's test call found numbers mis-spoken ("647-669-0808" read raw by the voice); FIXED with a deterministic numbers-as-words pass before every sentence, English calls only; A62 steps 1–3 done by Luigi, 4–7 remain.**)
+**Previous update:** 2026-08-16 evening by Claude (**A62 — one consolidated list after seven sessions in one day.** The "authentication service was unavailable" message was the Claude app's own sign-in hiccup, not the product. Everything the sessions built is either live (Vercel `e17e64f`, Fly v35) or shipped by this session (phone-order receipts `5e735268` + the kitchen PHONE ORDER badge, merged). **Your list is A62: test print → one live call → report-this-call → uptime monitor → SENTRY_PROJECT tab → five yes/no decisions.**)
 **Previous update:** 2026-08-16 15:30 EDT by Claude (**A58 is fully armed: you switched the Twilio token on (v34, both machines healthy), fake fallback requests now get 403 and real ones still ring 289-409-1133; only the optional uptime monitor is left. Next: the test-call walkthrough — call 1 (combo + banter + transfer), report-this-call, the mid-call restart test.**)
 **Previous update:** 2026-08-16 (later) by Claude (**A59 — your 00:30 call: "we reopen at two" was the UTC hour, and the "order for later" answer contradicted itself — both fixed in code, ship with the next Fly deploy.** Also: everything the reliability session built is now COMMITTED as 9 clean commits (drain, capacity cap, the Twilio fallback chain on Fly, DSAR export parity, FIRSTBUY, checkout observability), and the missing piece that made the fallback chain inert is wired — a **Superadmin → Nabil Phone Lines** page that checks and repairs the Twilio webhook + "PRIMARY HANDLER FAILS" URLs with one click, so A58 click #1 is no longer a manual step. Your part tonight: confirm the two fallback numbers under A59.)
 **Previous update:** 2026-08-16 by Claude (**A55 round 5 — Nabil now says "free delivery over $30" in the same breath as the fee, and restaurants can REPORT A CALL** (Loman parity): a Report-this-call button on every call page → a new superadmin section *Restaurant Reports › Nabil AI reports* with status, a written answer the owner sees, a notes thread both ways, and the recording/transcript/order/timeline on one screen. Your step 0 under A55.)
@@ -173,6 +174,41 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 
 ## A. DO NOW — this week, in priority order
 
+### A63. 🔢 "Nabil says numbers wrong, especially addresses" — FIXED in code: every number now reaches the voice as WORDS (2026-08-16, evening)
+
+**Your report** (call `cmswj3rv1`, report `cmswjlo87`, urgent, voice quality): *"number issues when announcing double
+digits etc"* — after your A62 test call (Sam, 21:02, ORD-647686206, everything else right: half plain / half four
+toppings, no pizza name you didn't say, "no delivery charge", the banter line, texted receipt).
+
+**What actually happened.** On your call the model wrote your callback number as **"647-669-0808"** — digits with
+hyphens — and that went straight to the voice; on Grace's call at 18:36 it wrote **"416 799 6207"** the same way. On
+Negme's (20:17) and David's (18:11) calls the very same evening it wrote *"four one six, five two nine, eight seven five
+six"* — words — and those sounded right. So whether a number sounded right depended on which way the model happened to
+write it. Two facts made that a coin-flip you could hear: (1) the voice provider's own number normalisation is not
+available on the voice model we pin, even though we ask for it, so raw digits are read however the voice guesses
+(hundreds, "minus", "one thousand one hundred sixty-six"); (2) the playbook already tells the model to say numbers as
+words and house numbers "the way people do" — it complies about half the time. Same lesson as the Roya call: a prompt
+paragraph is not a gate.
+
+**The fix — a deterministic last pass before anything is spoken** (`services/nabil-voice/src/spoken-numbers.ts`,
+wired at the one seam every sentence goes through): phone numbers digit by digit in threes ("six four seven, six six
+nine, zero eight zero eight"); house numbers the way people say them ("three thirty-eight Black Drive", "eleven
+sixty-six McEachern Court", "sixty-six", "three oh five"); unit/apartment/buzzer numbers; Canadian postal codes ("L nine
+T, six W nine"); money in words; times ("ten a.m.", "six thirty p.m."); dates, percents, ordinals, sizes ("eighteen
+inch"), ranges ("twenty to twenty-five minutes"), fractions, order numbers digit by digit, plain counts ("twenty
+wings"). English calls only — another language's voice reads digits natively and gets nothing changed. A number is
+never split across two voice chunks. Ids like "L1" are left alone. The transcript on the call page still shows what the
+model *wrote* (evidence); the timeline gets a "Numbers spoken as words (N)" row. Also fixed on the way: two timeline
+event kinds the service has emitted for days (narration dropped, tail fragment) were silently discarded by the app's
+allow-list — they now show on the timeline. Tests: 11 unit cases anchored on tonight's exact lines + 5 wiring cases
+(sentence mode, token mode, Italian call untouched, older tokens) + the naturalness lint taught to read number-words.
+
+**Status:** Vercel half (the call token now carries the store's language; timeline rows; allow-list) ships with the
+push; Fly half via the gated release. Your report is set to **Fixed** with this answer once Fly is live.
+☐ **Try it (1 min):** call, give a delivery address with a big house number ("eleven sixty-six McEachern Court"),
+confirm your callback number when asked, and listen — every number should come out the way you'd say it. Tell me if
+any number still sounds wrong and *which* (I can see exactly what was sent to the voice per sentence now).
+
 ### A62. 🧭 WHERE EVERYTHING STANDS — one list, all of today's sessions consolidated (2026-08-16, evening)
 
 **Why this entry exists.** Seven sessions worked today; each left steps for you and none were done, and a
@@ -196,11 +232,14 @@ at pickup` / `PAID` chip on the tile (one extra line only on phone orders — ev
 detail. Both key on ONE constant now (`src/lib/phone-order-channel.ts`). Gate before push: preflight (tsc + voice
 typecheck + full test suite + `next build`) + 38-locale parity 0/0/0/0.
 
+**Update (evening):** steps 1–3 ✅ DONE by Luigi — print tested and working; live call re-ordered fine (one defect
+found: numbers mis-spoken → A63, fixed); report filed (`cmswjlo87`) → the flow works end to end. Remaining: 4–7.
+
 **YOUR STEPS — in this order (everything below is short; nothing else is waiting on you today):**
-1. 🖨️ **Test print the phone receipt (5 min, once the deploy is Ready):** Admin → Receipts → **Phone Order Receipt**
+1. ✅ 🖨️ **Test print the phone receipt (5 min, once the deploy is Ready):** Admin → Receipts → **Phone Order Receipt**
    tab → *Test print* on the Star; compare with the preview. Then the Customer tab → switch on the **"Phone order
    (Nabil AI)"** preview pill and eyeball the banner. Tell me "print ok" or what's off.
-2. 📞 **ONE live test call to +1 365 658 1458** — it covers what three sessions asked for at once. Script: *"Large and
+2. ✅ 📞 **ONE live test call to +1 365 658 1458** — it covers what three sessions asked for at once. Script: *"Large and
    Wings combo, one side just cheese, other side green peppers, mushrooms, onions and tomatoes, wings BBQ"* → delivery to
    a Zone-1 address, but say the street slightly wrong once (e.g. a wrong number) → say "you're the best, I love you"
    once → let it place the order. Listen for: **never a pizza name you didn't say** ("half plain, half green peppers,
@@ -210,7 +249,7 @@ typecheck + full test suite + `next build`) + 38-locale parity 0/0/0/0.
    ticket** (PHONE ORDER banner first), and Admin → Phone ordering → Calls → that call. Tell me the time of the call and
    I read the transcript + timeline. *(Optional second call: ask for a person mid-order → instant transfer to
    289-409-1133.)*
-3. 🚩 **Report-this-call flow (3 min, on the call from step 2):** call page → **Report this call** → pick a topic, tick
+3. ✅ 🚩 **Report-this-call flow (3 min, on the call from step 2):** call page → **Report this call** → pick a topic, tick
    Urgent, one line → send. Then Superadmin → Restaurant Reports › **Nabil AI reports** → open it → set a status + write
    a note → back on the restaurant call page the status + note appear, and the reporter address gets the email. Tell me
    what Loman's version does that ours doesn't.

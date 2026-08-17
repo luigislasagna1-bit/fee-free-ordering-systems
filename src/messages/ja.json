@@ -4473,7 +4473,10 @@
           "latencyCache": "キャッシュ読み取り {pct}%",
           "latencyLabel": "レイテンシと使用量",
           "errorLabel": "{where} でエラー",
-          "payloadLabel": "データ"
+          "payloadLabel": "データ",
+          "numbersVerbalizedLabel": "数字を言葉で読み上げ（{count}）",
+          "narrationDroppedLabel": "「考え声」の文を音声化前に除去",
+          "tailFragmentLabel": "末尾の断片を吸収"
         },
         "report": {
           "button": "この通話を報告",

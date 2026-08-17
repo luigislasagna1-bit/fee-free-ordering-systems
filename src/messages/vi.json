@@ -4473,7 +4473,10 @@
           "latencyCache": "Đọc bộ nhớ đệm {pct}%",
           "latencyLabel": "Độ trễ và mức dùng",
           "errorLabel": "Lỗi ở {where}",
-          "payloadLabel": "Dữ liệu"
+          "payloadLabel": "Dữ liệu",
+          "numbersVerbalizedLabel": "Số được đọc bằng chữ ({count})",
+          "narrationDroppedLabel": "Câu \"suy nghĩ thành tiếng\" đã bị bỏ trước khi đọc",
+          "tailFragmentLabel": "Đã gộp mảnh cuối câu"
         },
         "report": {
           "button": "Báo cáo cuộc gọi này",

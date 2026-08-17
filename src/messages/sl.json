@@ -4473,7 +4473,10 @@
           "latencyCache": "Branje iz predpomnilnika {pct} %",
           "latencyLabel": "Zakasnitev in poraba",
           "errorLabel": "Napaka v {where}",
-          "payloadLabel": "Podatki"
+          "payloadLabel": "Podatki",
+          "numbersVerbalizedLabel": "Števila izgovorjena z besedami ({count})",
+          "narrationDroppedLabel": "Stavek »razmišljanja na glas« odstranjen pred glasom",
+          "tailFragmentLabel": "Končni fragment absorbiran"
         },
         "report": {
           "button": "Prijavi ta klic",

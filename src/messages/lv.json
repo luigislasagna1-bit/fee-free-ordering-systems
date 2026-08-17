@@ -4473,7 +4473,10 @@
           "latencyCache": "Kešatmiņas lasīšana {pct}%",
           "latencyLabel": "Latentums un patēriņš",
           "errorLabel": "Kļūda: {where}",
-          "payloadLabel": "Dati"
+          "payloadLabel": "Dati",
+          "numbersVerbalizedLabel": "Skaitļi izrunāti vārdiem ({count})",
+          "narrationDroppedLabel": "„Skaļas domāšanas” teikums noņemts pirms balss",
+          "tailFragmentLabel": "Beigu fragments absorbēts"
         },
         "report": {
           "button": "Ziņot par šo zvanu",

@@ -326,6 +326,30 @@ function EventRow({ e, t, interruptedTag }: { e: TimelineEvent; t: T; interrupte
           {Array.isArray(p.evidence) && p.evidence.length > 0 && <Json value={p.evidence} label={t("evidenceLabel")} />}
         </div>
       );
+    // Digits the model wrote were spoken as words (spoken-numbers.ts, 2026-08-16).
+    case "numbers_verbalized":
+      return (
+        <div className="text-xs text-gray-500">
+          <Meta e={e} />
+          <Chip tone="muted">{t("numbersVerbalizedLabel", { count: n(p.count) ?? 0 })}</Chip>
+        </div>
+      );
+    // A thinking-aloud sentence the narration filter kept from the voice.
+    case "narration_dropped":
+      return (
+        <div className="text-xs">
+          <Meta e={e} />
+          <Chip tone="warn">{t("narrationDroppedLabel")}</Chip> <span className="text-gray-700">“{s(p.text)}”</span>
+        </div>
+      );
+    // A one-to-three-word tail that arrived right after a reply and was folded in.
+    case "tail_fragment":
+      return (
+        <div className="text-xs text-gray-500">
+          <Meta e={e} />
+          <Chip tone="muted">{t("tailFragmentLabel")}</Chip> <span className="text-gray-700">“{s(p.text)}”</span>
+        </div>
+      );
     case "turn": {
       const hops = Array.isArray(p.hops) ? (p.hops as unknown[]).map(obj) : [];
       const tools = Array.isArray(p.tools) ? (p.tools as unknown[]).map(obj) : [];

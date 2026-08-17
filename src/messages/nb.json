@@ -4473,7 +4473,10 @@
           "latencyCache": "Cache-lesing {pct} %",
           "latencyLabel": "Ventetid og forbruk",
           "errorLabel": "Feil i {where}",
-          "payloadLabel": "Data"
+          "payloadLabel": "Data",
+          "numbersVerbalizedLabel": "Tall uttalt med ord ({count})",
+          "narrationDroppedLabel": "Setning med høyttenking fjernet før stemmen",
+          "tailFragmentLabel": "Avsluttende fragment absorbert"
         },
         "report": {
           "button": "Rapporter denne samtalen",

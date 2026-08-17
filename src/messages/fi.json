@@ -4473,7 +4473,10 @@
           "latencyCache": "Välimuistiluku {pct} %",
           "latencyLabel": "Viive ja käyttö",
           "errorLabel": "Virhe kohdassa {where}",
-          "payloadLabel": "Tiedot"
+          "payloadLabel": "Tiedot",
+          "numbersVerbalizedLabel": "Numerot lausuttu sanoina ({count})",
+          "narrationDroppedLabel": "Ääneen ajattelun lause poistettiin ennen puhetta",
+          "tailFragmentLabel": "Loppufragmentti sulautettu"
         },
         "report": {
           "button": "Ilmoita tästä puhelusta",

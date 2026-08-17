@@ -4473,7 +4473,10 @@
           "latencyCache": "Lectura de caché {pct} %",
           "latencyLabel": "Latencia y consumo",
           "errorLabel": "Error en {where}",
-          "payloadLabel": "Datos"
+          "payloadLabel": "Datos",
+          "numbersVerbalizedLabel": "Números dichos con palabras ({count})",
+          "narrationDroppedLabel": "Frase de «pensar en voz alta» eliminada antes de la voz",
+          "tailFragmentLabel": "Fragmento final absorbido"
         },
         "report": {
           "button": "Reportar esta llamada",

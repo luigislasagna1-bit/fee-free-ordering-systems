@@ -4473,7 +4473,10 @@
           "latencyCache": "Lectura de memòria cau {pct} %",
           "latencyLabel": "Latència i consum",
           "errorLabel": "Error a {where}",
-          "payloadLabel": "Dades"
+          "payloadLabel": "Dades",
+          "numbersVerbalizedLabel": "Números dits amb lletres ({count})",
+          "narrationDroppedLabel": "Frase de «pensar en veu alta» eliminada abans de la veu",
+          "tailFragmentLabel": "Fragment final absorbit"
         },
         "report": {
           "button": "Informa d'aquesta trucada",

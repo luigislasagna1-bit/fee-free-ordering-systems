@@ -18,6 +18,7 @@ import { checkClaims } from "./claims-guard";
 import { agentVersion, hashJson, quickHash, type Versions } from "./versions";
 import { PLAYBOOK_PROTOCOL, PLAYBOOK_STYLE } from "./playbook";
 import { isNarrationLeak } from "./narration-filter";
+import { verbalizeNumbersEn } from "./spoken-numbers";
 import { captureError } from "./observability";
 
 /** maxCallSeconds timing (contract): wrap-up nudge at T-45s, hangup at T+15s. */
@@ -179,6 +180,9 @@ export class CallSession {
   private protectedText = "";
   /** Pending TTS text when CONFIG.ttsChunk === "sentence" (flushed at clause boundaries). */
   private ttsBuffer = "";
+  /** Token mode: deltas held back so a number is never split across the wire
+   *  before spoken-numbers.ts sees it whole ("647-" | "669-" | "0808"). */
+  private tokBuffer = "";
   private bargedDuringProtected = false;
   /** Text spoken so far in the CURRENT stream — what an interrupt payload is compared against. */
   private currentStreamText = "";
@@ -224,6 +228,8 @@ export class CallSession {
   private menuFacts: { soldOut: string[]; notToday: string[] } = { soldOut: [], notToday: [] };
   private hallucinationSuspects = 0;
   private narrationDropped = 0;
+  /** Digit → words substitutions made before the voice (spoken-numbers.ts). */
+  private numbersVerbalized = 0;
   private ttfaMsList: number[] = [];
   private eventFlushInFlight: Promise<unknown> | null = null;
 
@@ -313,9 +319,13 @@ export class CallSession {
         const heardTrim = (heard ?? "").trim();
         // What the caller has heard of THIS turn so far: earlier hops + fillers +
         // the live stream. A prefix of that is a barge-in on this turn.
-        const heardThisTurn = this.turnRunning ? this.turnSpokenSoFar + this.currentStreamText : this.currentStreamText;
+        // The payload echoes the text WE SENT — i.e. the spoken form (numbers
+        // as words, spoken-numbers.ts) — so both sides are compared in that
+        // form; otherwise a stale interrupt on "…is 647-669-0808…" would never
+        // match "…is six four seven…" and would abort the live turn.
+        const heardThisTurn = this.spokenForm(this.turnRunning ? this.turnSpokenSoFar + this.currentStreamText : this.currentStreamText, true);
         const stale = heardTrim
-          ? this.lastSpokenText.startsWith(heardTrim) && !heardThisTurn.startsWith(heardTrim)
+          ? this.spokenForm(this.lastSpokenText, true).startsWith(heardTrim) && !heardThisTurn.startsWith(heardTrim)
           : this.turnRunning && this.now() - this.turnStartedAt < INTERRUPT_GRACE_MS;
         const duringProtected = this.now() < this.protectedUntil;
         this.events.emit({ type: "interrupt", turn: this.turnIndex, heard, stale, duringProtected });
@@ -327,6 +337,7 @@ export class CallSession {
         this.interrupted = true;
         this.lastBargeInAt = this.now();
         this.ttsBuffer = ""; // never speak buffered text after the caller cut in
+        this.tokBuffer = "";
         if (heard !== null) this.currentStreamText = heard;
         this.controller?.abort();
         clearTimeout(this.resumeTimer);
@@ -1077,6 +1088,8 @@ export class CallSession {
       truncations: this.truncations,
       fillers: this.fillerCount,
       hallucinationSuspects: this.hallucinationSuspects,
+      narrationDropped: this.narrationDropped,
+      numbersVerbalized: this.numbersVerbalized,
       cacheCliffAtRequest,
       cacheReadTokens: this.usageCacheRead,
       cacheWriteTokens: this.usageCacheWrite,
@@ -1114,9 +1127,12 @@ export class CallSession {
           this.ttsBuffer = m[2];
           this.speakClause(m[1], false);
         } else if (this.ttsBuffer.length >= 140) {
-          const chunk = this.ttsBuffer;
-          this.ttsBuffer = "";
-          this.speakClause(chunk, false);
+          // Long clause: cut at a point that doesn't split a number, so
+          // "647-669-0808" is never half in one chunk and half in the next.
+          const cut = this.numberSafeFlushIndex(this.ttsBuffer);
+          const chunk = this.ttsBuffer.slice(0, cut);
+          this.ttsBuffer = this.ttsBuffer.slice(cut);
+          if (chunk) this.speakClause(chunk, false);
         }
         return;
       }
@@ -1125,7 +1141,58 @@ export class CallSession {
       this.speakClause(rest, true);
       return;
     }
-    this.wsSendText(clean, last);
+    // Token mode: forward deltas as they arrive, but hold from the first
+    // digit-bearing word until a whole plain word (or the sentence end) has
+    // followed it, so the number reaches spoken-numbers.ts in one piece.
+    this.tokBuffer += clean;
+    if (last) {
+      const out = this.tokBuffer;
+      this.tokBuffer = "";
+      this.wsSendText(this.spokenForm(out), true);
+      return;
+    }
+    const cut = this.numberSafeFlushIndex(this.tokBuffer);
+    if (cut > 0) {
+      const out = this.tokBuffer.slice(0, cut);
+      this.tokBuffer = this.tokBuffer.slice(cut);
+      this.wsSendText(this.spokenForm(out), false);
+    }
+  }
+
+  /**
+   * How much of `buf` can go to the voice without splitting a number. All of
+   * it when there are no digits; otherwise up to the start of the first
+   * digit-bearing word — or past the number once a whole non-numeric word
+   * (or a sentence end) has followed the last digit-bearing word. A held span
+   * of 140+ chars is released whole (a number that long is not a number).
+   */
+  private numberSafeFlushIndex(buf: string): number {
+    const first = buf.search(/[\d$½¼¾]/);
+    if (first < 0) return buf.length;
+    let zoneStart = first;
+    while (zoneStart > 0 && !/\s/.test(buf[zoneStart - 1])) zoneStart--;
+    const held = buf.slice(zoneStart);
+    const m = /^([\s\S]*[\d$½¼¾][^\s]*)(?:[.!?…]["')]?\s|\s+[^\s\d$½¼¾]+\s)/.exec(held);
+    if (m) return zoneStart + m[0].length;
+    if (held.length >= 140) return buf.length;
+    return zoneStart;
+  }
+
+  /**
+   * The spoken form of text about to reach the voice: numbers as words on an
+   * English call (spoken-numbers.ts); untouched otherwise. `silent` = a
+   * comparison, not a send (no event, no counter).
+   */
+  private spokenForm(text: string, silent = false): string {
+    if (!text) return text;
+    const lang = this.language ?? this.token.lang ?? "en-US";
+    if (!/^en(?:[-_]|$)/i.test(lang)) return text;
+    const r = verbalizeNumbersEn(text.replace(/[*_`~#]/g, ""));
+    if (r.changes && !silent) {
+      this.numbersVerbalized += r.changes;
+      this.events.emit({ type: "numbers_verbalized", turn: this.turnIndex, count: r.changes });
+    }
+    return r.text;
   }
 
   /** Sentence-chunk mode: forward a complete clause unless it is narration. */
@@ -1136,7 +1203,7 @@ export class CallSession {
       if (last) this.wsSendText("", true);
       return;
     }
-    this.wsSendText(clause, last);
+    this.wsSendText(this.spokenForm(clause), last);
   }
 
   private wsSendText(token: string, last: boolean) {
