@@ -3,7 +3,8 @@ import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight, Bot, ChefHat, Check, CheckCircle2, Clock, Equal, Flag, FlaskConical, Globe, Hash, HelpCircle,
   LayoutDashboard, Layers, ListOrdered, ListTree, MapPin, MessageCircleQuestion, MessageSquareQuote, Phone,
-  PhoneCall, PhoneForwarded, Pizza, Printer, Settings, ShieldCheck, Sparkles, TrendingUp, UserCheck,
+  PhoneCall, PhoneForwarded, PhoneOff, Pizza, Printer, Settings, ShieldCheck, Sparkles, TrendingUp, UserCheck,
+  Users, Utensils,
 } from "lucide-react";
 import { PublicNav } from "@/components/layout/PublicNav";
 import { PublicFooter } from "@/components/layout/PublicFooter";
@@ -15,32 +16,8 @@ import { resolveLocale } from "@/lib/i18n-server";
 import { getSessionUser } from "@/lib/session";
 import { marketingMetadata } from "@/lib/seo";
 import { safeJsonLd } from "@/lib/safe-json-ld";
-import { NabilShot } from "./NabilShot";
-
-/**
- * /nabil-ai — the Nabil AI phone-ordering product page (Luigi's decision A64
- * (f), 2026-08-16: "a dedicated page — built for pizzerias by former pizzeria
- * owners — examples + real screenshots, every 'coming soon' → Now available").
- *
- * POSITIONING (vs loman.ai's pizza page): a MORE ADVANCED agent built for
- * pizzerias by people who ran one. We win on order accuracy (authoritative
- * server cart, code-enforced "ask, don't guess", quoted = charged alarm),
- * transparency (recordings, transcripts, per-call timeline, Report-this-call)
- * and analytics — and there is no "POS integration" to sell because a phone
- * order goes through the SAME checkout as the website order.
- *
- * CLAIMS DISCIPLINE — every sentence on this page maps to shipped behaviour
- * (ROADMAP.md "NABIL AI" rounds 1–7, OWNER-ACTIONS A55/A58/A61/A63,
- * DESIGN-nabil-dashboard.md). Deliberately NOT claimed: card payment by phone
- * (phone orders are paid at pickup/on delivery), scheduled "for 6 pm" orders
- * (TODO (b)), background ambience (TODO (c)), self-serve number provisioning
- * (activation is concierge — said plainly, it's true today).
- *
- * All visible text lives under `marketing.nabil.*` (38 locales); the SEO
- * metadata is English like every other marketing page (marketingMetadata).
- * Screenshots: public/marketing/nabil/*.png, captured from the seeded dev
- * demo by scripts/_capture-nabil-shots.ts (dims below are the file dims).
- */
+import { LiveCallDemo } from "./LiveCallDemo";
+import { KitchenTicketMockup } from "./KitchenTicketMockup";
 
 export const metadata = marketingMetadata({
   title: "Nabil AI — AI Phone Ordering for Pizzerias, by Former Pizzeria Owners | Fee Free Ordering",
@@ -48,16 +25,6 @@ export const metadata = marketingMetadata({
     "Nabil AI answers your pizzeria's phone and takes the order — half-and-half pizzas, toppings by name, combos, delivery zones — straight into your kitchen through the same checkout as your website. Recordings, transcripts, a timeline for every call. US$0.60 per call-minute, US$249.99/month minimum.",
   path: "/nabil-ai",
 });
-
-/* Screenshot slots — files + intrinsic dims (measured by the capture script). */
-const SHOTS = {
-  overview: { src: "/marketing/nabil/overview.png", width: 1600, height: 1000 },
-  calls: { src: "/marketing/nabil/calls.png", width: 1600, height: 1000 },
-  detail: { src: "/marketing/nabil/call-detail.png", width: 1600, height: 1000 },
-  settings: { src: "/marketing/nabil/settings.png", width: 1600, height: 1000 },
-  report: { src: "/marketing/nabil/report-dialog.png", width: 1600, height: 1000 },
-  kitchen: { src: "/marketing/nabil/kitchen-phone-order.png", width: 824, height: 1784 },
-} as const;
 
 /* Structural defs — icons live here; every visible word comes from t(). */
 const HANDLES: { icon: LucideIcon; key: string }[] = [
@@ -96,19 +63,31 @@ const STORY_POINTS: { icon: LucideIcon; key: string }[] = [
   { icon: Pizza, key: "point3" },
 ];
 
-const FAQ_COUNT = 8;
+const MISSED_STATS: { icon: LucideIcon; key: string }[] = [
+  { icon: PhoneOff, key: "stat1" },
+  { icon: TrendingUp, key: "stat2" },
+  { icon: Users, key: "stat3" },
+];
+
+const HANDOFF_CARDS: { key: string; icon: LucideIcon; tone: "emerald" | "amber" | "amber" }[] = [
+  { key: "order", icon: Bot, tone: "emerald" },
+  { key: "allergy", icon: PhoneForwarded, tone: "amber" },
+  { key: "catering", icon: PhoneForwarded, tone: "amber" },
+];
+
+const FAQ_COUNT = 10;
 
 export default async function NabilAiPage() {
   const locale = await resolveLocale();
   const t = await getTranslations("marketing.nabil");
 
-  // Signed-in restaurant → straight to the add-on catalog; everyone else → signup.
-  // JWT-only read (no DB) so the public page stays cheap.
   const user = await getSessionUser().catch(() => null);
   const startHref = user?.restaurantId ? "/admin/billing/add-ons" : "/signup?addon=phone_ordering";
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://feefreeordering.com";
   const faqs = Array.from({ length: FAQ_COUNT }, (_, i) => ({ q: t(`faq.q${i + 1}`), a: t(`faq.a${i + 1}`) }));
+
+  const demoNumber = process.env.NEXT_PUBLIC_NABIL_DEMO_NUMBER || null;
 
   const softwareApplication = {
     "@context": "https://schema.org",
@@ -169,7 +148,6 @@ export default async function NabilAiPage() {
               <StatTrustStrip className="mt-7" items={[t("hero.trust1"), t("hero.trust2"), t("hero.trust3"), t("hero.trust4")]} />
             </div>
 
-            {/* A real-world exchange — the shape of a Nabil call, as bubbles. */}
             <div className="relative">
               <div
                 className="pointer-events-none absolute -inset-8 -z-10"
@@ -229,6 +207,83 @@ export default async function NabilAiPage() {
           />
         </MarketingSection>
 
+        {/* ── WHY THE PHONE IS YOUR MOST-MISSED CHANNEL (NEW) ─────────── */}
+        <MarketingSection tone="gray">
+          <div className="mb-12">
+            <SectionHeading center eyebrow={t("missedCalls.eyebrow")} icon={PhoneOff} title={t("missedCalls.title")} subtitle={t("missedCalls.subtitle")} />
+          </div>
+          <div className="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+            {MISSED_STATS.map((s) => (
+              <div key={s.key} className="rounded-2xl border border-gray-200/80 bg-white p-6 text-center shadow-[0_8px_30px_-12px_rgba(16,24,40,0.12)]">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-red-50 text-red-500 ring-1 ring-red-100 mb-4">
+                  <s.icon className="w-6 h-6" />
+                </span>
+                <div className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">{t(`missedCalls.${s.key}.value`)}</div>
+                <p className="mt-1 text-sm text-gray-600">{t(`missedCalls.${s.key}.label`)}</p>
+              </div>
+            ))}
+          </div>
+        </MarketingSection>
+
+        {/* ── INTERACTIVE LIVE CALL DEMO (replaces broken screenshots) ─── */}
+        <MarketingSection tone="light" id="demo">
+          <LiveCallDemo
+            heading={t("demo.heading")}
+            subheading={t("demo.subheading")}
+            playLabel={t("demo.play")}
+            replayLabel={t("demo.replay")}
+            pauseLabel={t("demo.pause")}
+            liveLabel={t("demo.live")}
+            orderHeading={t("demo.orderHeading")}
+          />
+        </MarketingSection>
+
+        {/* ── FROM VOICE TO THE KITCHEN (NEW) ─────────────────────────── */}
+        <MarketingSection tone="emeraldTint">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div>
+              <SectionHeading eyebrow={t("voiceToKitchen.eyebrow")} icon={Utensils} title={t("voiceToKitchen.title")} />
+              <p className="mt-6 text-lg text-gray-600 leading-relaxed">{t("voiceToKitchen.body1")}</p>
+              <p className="mt-4 text-lg text-gray-600 leading-relaxed">{t("voiceToKitchen.body2")}</p>
+              <ul className="mt-6 space-y-3">
+                {["bullet1", "bullet2", "bullet3"].map((b) => (
+                  <li key={b} className="flex items-start gap-3">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-3 h-3" strokeWidth={3} />
+                    </div>
+                    <span className="text-gray-700">{t(`voiceToKitchen.${b}`)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <KitchenTicketMockup phoneOrderLabel={t("voiceToKitchen.phoneOrderLabel")} />
+          </div>
+        </MarketingSection>
+
+        {/* ── HANDOFF BOUNDARIES (NEW) ────────────────────────────────── */}
+        <MarketingSection tone="light">
+          <div className="mb-12">
+            <SectionHeading center eyebrow={t("handoff.eyebrow")} icon={PhoneForwarded} title={t("handoff.title")} subtitle={t("handoff.subtitle")} />
+          </div>
+          <div className="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+            {HANDOFF_CARDS.map((c) => {
+              const isAI = c.tone === "emerald";
+              return (
+                <div key={c.key} className={`rounded-2xl border p-6 shadow-[0_8px_30px_-12px_rgba(16,24,40,0.12)] ${isAI ? "border-emerald-200 bg-emerald-50/50" : "border-gray-200/80 bg-white"}`}>
+                  <span className={`inline-flex items-center justify-center w-11 h-11 rounded-xl mb-4 ${isAI ? "bg-emerald-100 text-emerald-600 ring-1 ring-emerald-200" : "bg-amber-50 text-amber-600 ring-1 ring-amber-100"}`}>
+                    <c.icon className="w-5 h-5" />
+                  </span>
+                  <div className={`text-[10px] font-bold uppercase tracking-wider mb-2 ${isAI ? "text-emerald-600" : "text-amber-600"}`}>
+                    {t(`handoff.${c.key}.badge`)}
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-1.5">{t(`handoff.${c.key}.title`)}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{t(`handoff.${c.key}.body`)}</p>
+                </div>
+              );
+            })}
+          </div>
+        </MarketingSection>
+
         {/* ── WHAT IT HANDLES ──────────────────────────────────────────── */}
         <MarketingSection tone="gray">
           <div className="mb-12">
@@ -257,21 +312,10 @@ export default async function NabilAiPage() {
           </div>
         </MarketingSection>
 
-        {/* ── THE DASHBOARD (real screenshots) ─────────────────────────── */}
+        {/* ── THE DASHBOARD ────────────────────────────────────────────── */}
         <MarketingSection tone="emeraldTint" id="dashboard">
           <div className="mb-12">
             <SectionHeading center eyebrow={t("dashboard.eyebrow")} icon={LayoutDashboard} title={t("dashboard.title")} subtitle={t("dashboard.subtitle")} />
-          </div>
-          <div className="max-w-4xl mx-auto mb-8">
-            <NabilShot {...SHOTS.overview} alt={t("dashboard.shotOverviewAlt")} url="app.feefreeordering.com/admin/phone-ordering" sizes="(min-width: 1024px) 896px, 100vw" glow />
-          </div>
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto mb-8">
-            <NabilShot {...SHOTS.calls} alt={t("dashboard.shotCallsAlt")} url="app.feefreeordering.com/admin/phone-ordering?tab=calls" />
-            <NabilShot {...SHOTS.detail} alt={t("dashboard.shotDetailAlt")} url="app.feefreeordering.com/admin/phone-ordering/calls/…" />
-          </div>
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto mb-12">
-            <NabilShot {...SHOTS.settings} alt={t("dashboard.shotSettingsAlt")} url="app.feefreeordering.com/admin/phone-ordering?tab=settings" />
-            <NabilShot {...SHOTS.report} alt={t("dashboard.shotReportAlt")} url="app.feefreeordering.com/admin/phone-ordering/calls/…" />
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-7 max-w-5xl mx-auto">
             {DASHBOARD.map((d) => (
@@ -306,7 +350,7 @@ export default async function NabilAiPage() {
                 ))}
               </ul>
             </div>
-            <NabilShot {...SHOTS.kitchen} variant="phone" alt={t("same.frameAlt")} sizes="270px" />
+            <KitchenTicketMockup phoneOrderLabel={t("voiceToKitchen.phoneOrderLabel")} />
           </div>
         </MarketingSection>
 
@@ -325,6 +369,28 @@ export default async function NabilAiPage() {
             </div>
           </div>
         </section>
+
+        {/* ── TRY IT LIVE (only renders when demo number is configured) ── */}
+        {demoNumber && (
+          <section className="bg-gradient-to-r from-emerald-500 to-emerald-600">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 text-center">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wide text-white mb-5">
+                <Phone className="w-3.5 h-3.5" />
+                {t("tryLive.eyebrow")}
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-3">{t("tryLive.title")}</h2>
+              <p className="text-emerald-50 text-lg mb-6 max-w-xl mx-auto">{t("tryLive.body")}</p>
+              <a
+                href={`tel:${demoNumber}`}
+                className="inline-flex items-center gap-3 bg-white text-emerald-700 font-bold px-8 py-4 rounded-2xl text-xl hover:bg-emerald-50 transition duration-200 shadow-lg"
+              >
+                <Phone className="w-5 h-5" />
+                {demoNumber}
+              </a>
+              <p className="mt-4 text-emerald-100 text-sm">{t("tryLive.note")}</p>
+            </div>
+          </section>
+        )}
 
         {/* ── PRICING ──────────────────────────────────────────────────── */}
         <MarketingSection tone="light" id="pricing" width="narrow">
@@ -394,7 +460,6 @@ export default async function NabilAiPage() {
   );
 }
 
-/** One line of the hero's sample exchange (caller left/grey, Nabil right/emerald). */
 function Bubble({ who, label, children }: { who: "caller" | "nabil"; label: string; children: React.ReactNode }) {
   const caller = who === "caller";
   return (
