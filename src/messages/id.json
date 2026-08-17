@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Tidak dikirim — {reason}",
       "latestOfTotal": "{shown} terbaru dari {total}",
       "fullHistoryLink": "Lihat riwayat pesanan lengkap — pesanan lama, rentang tanggal & ekspor",
-      "searchAllHistory": "Cari “{query}” di seluruh riwayat pesanan"
+      "searchAllHistory": "Cari “{query}” di seluruh riwayat pesanan",
+      "awaitingPayment": "Menunggu Pembayaran",
+      "awaitingPaymentHelp": "Pelanggan tidak menyelesaikan checkout — pembayaran tidak ditangkap, tidak dikirim ke dapur."
     },
     "customers": {
       "title": "Pelanggan",
@@ -7239,6 +7241,62 @@
           "body": "Sistem simulasi menjalankan skenario pemesanan nyata dengan setiap pembaruan — pizza setengah-setengah, kombo, kasus tepi — sebelum sampai ke saluran telepon Anda."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Masalahnya",
+        "title": "Telepon adalah saluran Anda yang paling sering terlewat",
+        "subtitle": "Setiap restoran tahu rasanya: telepon berdering saat jam sibuk dan tidak ada yang menjawab. Panggilan itu berasal dari pelanggan tetap, pesanan besar, tamu yang lebih suka berbicara langsung — dan mereka langsung masuk voicemail atau beralih ke aplikasi marketplace.",
+        "stat1": {
+          "value": "30%",
+          "label": "dari panggilan terlewat saat jam sibuk"
+        },
+        "stat2": {
+          "value": "US$25–US$50",
+          "label": "rata-rata nilai pesanan yang hilang per panggilan terlewat"
+        },
+        "stat3": {
+          "value": "1 dari 4",
+          "label": "penelepon tidak akan menelepon kembali setelah tidak dijawab"
+        }
+      },
+      "demo": {
+        "heading": "Tonton Nabil menerima pesanan sungguhan",
+        "subheading": "Pesanan pizza setengah-setengah yang kompleks dengan diskon kombo dan pengiriman — ditangani dari awal hingga akhir dalam waktu kurang dari dua menit.",
+        "play": "Putar Demo",
+        "replay": "Putar Ulang",
+        "pause": "Jeda",
+        "live": "Panggilan langsung",
+        "orderHeading": "Ringkasan Pesanan"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Untuk Pelanggan Anda",
+        "title": "Dari suara ke dapur dalam hitungan detik",
+        "body1": "Pelanggan Anda menelepon nomor yang sudah mereka kenal, memesan dengan kata-kata mereka sendiri, dan mendengar pesanan dibacakan kembali — tanpa perlu mengunduh aplikasi, tanpa perlu menerjemahkan menu, tanpa musik tunggu.",
+        "body2": "Pesanan yang telah dikonfirmasi langsung masuk ke layar dapur dan printer tiket Anda, persis seperti pesanan situs web. Staf Anda tidak pernah perlu mengangkat telepon.",
+        "bullet1": "Tanpa aplikasi, tanpa akun, tanpa hambatan — cukup telepon",
+        "bullet2": "Pesanan dikonfirmasi dan dicetak secara otomatis",
+        "bullet3": "Penelepon mendengar pembacaan ulang lengkap sebelum pesanan dibuat",
+        "phoneOrderLabel": "Pesanan Telepon"
+      },
+      "handoff": {
+        "eyebrow": "Batas Pengalihan",
+        "title": "AI menangani pesanan — tim Anda menangani sisanya",
+        "subtitle": "Nabil mengikuti alur pemesanan dan mengalihkan permintaan yang tidak biasa atau sensitif ke staf Anda alih-alih menebak. Anda yang menentukan batasnya.",
+        "order": {
+          "badge": "Ditangani AI",
+          "title": "Pesanan standar",
+          "body": "Pizza, kombo, pengiriman, ambil sendiri, topping, ukuran, lauk, minuman — seluruh alur pemesanan dari sapaan hingga konfirmasi."
+        },
+        "allergy": {
+          "badge": "Dialihkan ke staf",
+          "title": "Pertanyaan alergi",
+          "body": "Ketika penelepon bertanya tentang bahan, kontaminasi silang, atau alergi tertentu, Nabil mengalihkan panggilan ke tim Anda."
+        },
+        "catering": {
+          "badge": "Dialihkan ke staf",
+          "title": "Katering & permintaan khusus",
+          "body": "Pesanan katering besar, permintaan khusus, keluhan, atau apa pun di luar menu standar — panggilan dialihkan ke staf Anda."
+        }
+      },
       "dashboard": {
         "eyebrow": "Dasbor Anda",
         "title": "Lihat setiap panggilan, dengar setiap kata",
@@ -7305,6 +7363,12 @@
         "cta": "Mulai",
         "note": "Harga dalam dolar AS. Ditagih bulanan melalui Stripe. Batalkan kapan saja."
       },
+      "tryLive": {
+        "eyebrow": "Coba Langsung",
+        "title": "Telepon AI-nya dan buat pesanan uji coba",
+        "body": "Rasakan sendiri Nabil AI — telepon saluran demo kami, buat pesanan dari menu sungguhan, dan lihat persis cara kerjanya. Tidak ada pesanan nyata yang akan dibuat.",
+        "note": "Saluran demo — batas panggilan 4 menit. Dijawab oleh agen Nabil AI langsung."
+      },
       "faq": {
         "title": "Pertanyaan yang sering diajukan",
         "q1": "Bagaimana Nabil menerima pesanan?",
@@ -7322,7 +7386,11 @@
         "q7": "Bagaimana penagihan dihitung?",
         "a7": "Anda membayar US$0,60 per menit panggilan atau minimum bulanan US$249,99 — mana yang lebih tinggi. Minimum mencakup sekitar 416 menit. Setiap panggilan dibulatkan ke atas. Lacak penggunaan secara real-time.",
         "q8": "Bisakah saya membatalkan kapan saja?",
-        "a8": "Ya. Nabil ditagih bulanan melalui Stripe tanpa kontrak jangka panjang. Batalkan dari dasbor kapan saja dan saluran Anda tetap aktif hingga akhir periode penagihan."
+        "a8": "Ya. Nabil ditagih bulanan melalui Stripe tanpa kontrak jangka panjang. Batalkan dari dasbor kapan saja dan saluran Anda tetap aktif hingga akhir periode penagihan.",
+        "q9": "Apakah pernah ada orang sungguhan yang menjawab?",
+        "a9": "Nabil menangani alur pemesanan standar, dan Anda yang menentukan kapan harus mengalihkan panggilan. Untuk keluhan, permintaan khusus, atau apa pun di luar menu, panggilan dialihkan ke tim Anda. Penelepon tidak akan pernah terjebak dalam pengulangan.",
+        "q10": "Apakah ini berfungsi untuk restoran multi-lokasi?",
+        "a10": "Ya. Setiap lokasi mendapat nomor telepon sendiri dengan menu, jam operasional, dan pengaturannya masing-masing. Analitik digabungkan per lokasi sehingga Anda dapat melihat volume panggilan, konversi, dan rata-rata nilai pesanan per toko."
       },
       "finalCta": {
         "title": "Siap membiarkan Nabil menjawab telepon Anda?",

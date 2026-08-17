@@ -1864,7 +1864,9 @@
       "shipdaySkipped": "Non envoyée — {reason}",
       "latestOfTotal": "Les {shown} dernières sur {total}",
       "fullHistoryLink": "Voir tout l'historique des commandes — commandes plus anciennes, périodes et export",
-      "searchAllHistory": "Rechercher « {query} » dans tout l'historique des commandes"
+      "searchAllHistory": "Rechercher « {query} » dans tout l'historique des commandes",
+      "awaitingPayment": "En attente de paiement",
+      "awaitingPaymentHelp": "Le client n'a pas terminé le paiement — aucun paiement capturé, non envoyé à la cuisine."
     },
     "customers": {
       "title": "Clients",
@@ -7239,6 +7241,62 @@
           "body": "Un système de simulation exécute de vrais scénarios de commande à chaque mise à jour — pizzas moitié-moitié, combos, cas limites — avant que ça n'arrive sur votre ligne téléphonique."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Le problème",
+        "title": "Le téléphone est votre canal le plus souvent manqué",
+        "subtitle": "Chaque restaurant connaît ce sentiment : le téléphone sonne pendant le service et personne n'est là pour répondre. Ces appels, ce sont des habitués, de grosses commandes, des clients qui préfèrent parler — et ils tombent directement sur la messagerie vocale ou se tournent vers l'appli de marketplace à la place.",
+        "stat1": {
+          "value": "30%",
+          "label": "des appels manqués aux heures de pointe"
+        },
+        "stat2": {
+          "value": "25 $–50 $",
+          "label": "ticket moyen perdu par appel manqué"
+        },
+        "stat3": {
+          "value": "1 sur 4",
+          "label": "des appelants ne rappellent pas après être restés sans réponse"
+        }
+      },
+      "demo": {
+        "heading": "Regardez Nabil prendre une vraie commande",
+        "subheading": "Une commande de pizza moitié-moitié complexe avec une réduction combo et livraison — traitée du début à la fin en moins de deux minutes.",
+        "play": "Lancer la démo",
+        "replay": "Rejouer",
+        "pause": "Pause",
+        "live": "Appel en direct",
+        "orderHeading": "Récapitulatif de la commande"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Pour vos clients",
+        "title": "De la voix à la cuisine en quelques secondes",
+        "body1": "Vos clients appellent le numéro qu'ils connaissent déjà, passent leur commande avec leurs propres mots, et l'entendent relue — sans application à télécharger, sans menu à déchiffrer, sans musique d'attente.",
+        "body2": "La commande confirmée arrive directement sur votre écran de cuisine et votre imprimante de tickets, exactement comme une commande passée sur le site web. Votre personnel ne décroche jamais le téléphone.",
+        "bullet1": "Aucune application, aucun compte, aucune friction — juste un appel téléphonique",
+        "bullet2": "Commande confirmée et imprimée automatiquement",
+        "bullet3": "L'appelant entend une relecture complète avant que la commande ne soit passée",
+        "phoneOrderLabel": "Commande téléphonique"
+      },
+      "handoff": {
+        "eyebrow": "Limites de transfert",
+        "title": "L'IA gère les commandes — votre équipe gère tout le reste",
+        "subtitle": "Nabil suit le processus de commande et transmet les demandes inhabituelles ou sensibles à votre personnel plutôt que de deviner. Vous décidez où se situe la limite.",
+        "order": {
+          "badge": "Géré par l'IA",
+          "title": "Commandes standard",
+          "body": "Pizzas, combos, livraison, retrait, garnitures, tailles, accompagnements, boissons — tout le processus de commande, de l'accueil à la confirmation."
+        },
+        "allergy": {
+          "badge": "Transféré au personnel",
+          "title": "Questions sur les allergies",
+          "body": "Lorsqu'un appelant pose des questions sur les ingrédients, la contamination croisée ou des allergies spécifiques, Nabil transfère l'appel à votre équipe."
+        },
+        "catering": {
+          "badge": "Transféré au personnel",
+          "title": "Traiteur et demandes spéciales",
+          "body": "Les grosses commandes traiteur, les demandes personnalisées, les réclamations ou tout ce qui sort du menu standard — l'appel est transféré à votre personnel."
+        }
+      },
       "dashboard": {
         "eyebrow": "Votre tableau de bord",
         "title": "Voyez chaque appel, entendez chaque mot",
@@ -7305,6 +7363,12 @@
         "cta": "Commencer",
         "note": "Prix en dollars américains. Facturation mensuelle via Stripe. Annulez à tout moment."
       },
+      "tryLive": {
+        "eyebrow": "Essayez en direct",
+        "title": "Appelez l'IA et passez une commande test",
+        "body": "Découvrez Nabil AI par vous-même — appelez notre ligne de démonstration, passez une commande à partir d'un vrai menu et voyez exactement comment ça fonctionne. Aucune commande réelle ne sera passée.",
+        "note": "Ligne de démonstration — limite de 4 minutes par appel. Répondu par l'agent Nabil AI en direct."
+      },
       "faq": {
         "title": "Questions fréquentes",
         "q1": "Comment Nabil prend-il une commande ?",
@@ -7322,7 +7386,11 @@
         "q7": "Comment la facturation est-elle calculée ?",
         "a7": "Vous payez 0,60 USD par minute d'appel ou le minimum mensuel de 249,99 USD, selon le montant le plus élevé. Le minimum comprend environ 416 minutes. Chaque appel est arrondi à la minute supérieure. Suivez votre consommation en temps réel.",
         "q8": "Puis-je annuler à tout moment ?",
-        "a8": "Oui. Nabil est facturé mensuellement via Stripe sans contrat à long terme. Annulez depuis votre tableau de bord et votre ligne reste active jusqu'à la fin de la période de facturation."
+        "a8": "Oui. Nabil est facturé mensuellement via Stripe sans contrat à long terme. Annulez depuis votre tableau de bord et votre ligne reste active jusqu'à la fin de la période de facturation.",
+        "q9": "Une vraie personne répond-elle parfois ?",
+        "a9": "Nabil gère le processus de commande standard, et vous décidez quand transférer l'appel. Pour une réclamation, une demande spéciale ou tout ce qui sort du menu, l'appel est transféré à votre équipe. Il ne piège jamais un appelant dans une boucle.",
+        "q10": "Fonctionne-t-il pour les restaurants multi-établissements ?",
+        "a10": "Oui. Chaque établissement dispose de son propre numéro de téléphone avec son propre menu, ses propres horaires et ses propres paramètres. Les analyses sont regroupées par établissement afin que vous puissiez voir le volume d'appels, la conversion et le ticket moyen par magasin."
       },
       "finalCta": {
         "title": "Prêt à laisser Nabil répondre au téléphone ?",

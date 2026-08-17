@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Nie wysłano — {reason}",
       "latestOfTotal": "Ostatnie {shown} z {total}",
       "fullHistoryLink": "Zobacz pełną historię zamówień — starsze zamówienia, zakresy dat i eksport",
-      "searchAllHistory": "Szukaj „{query}” w całej historii zamówień"
+      "searchAllHistory": "Szukaj „{query}” w całej historii zamówień",
+      "awaitingPayment": "Oczekiwanie na płatność",
+      "awaitingPaymentHelp": "Klient nie ukończył płatności — nie pobrano żadnej płatności, nie wysłano do kuchni."
     },
     "customers": {
       "title": "Klienci",
@@ -7239,6 +7241,62 @@
           "body": "System symulacji uruchamia prawdziwe scenariusze zamówień przy każdej aktualizacji — pizze pół na pół, combo, przypadki brzegowe — zanim trafi na Twoją linię telefoniczną."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Problem",
+        "title": "Telefon to Twój najczęściej pomijany kanał",
+        "subtitle": "Każda restauracja zna to uczucie: telefon dzwoni podczas serwisu, a nikt nie odbiera. Te połączenia to stali klienci, duże zamówienia, goście którzy wolą porozmawiać — i zamiast tego trafiają prosto na pocztę głosową lub do aplikacji marketplace.",
+        "stat1": {
+          "value": "30%",
+          "label": "połączeń pomijanych w godzinach szczytu"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "średnia wartość zamówienia utracona przy nieodebranym połączeniu"
+        },
+        "stat3": {
+          "value": "1 na 4",
+          "label": "dzwoniący nie oddzwaniają po nieodebranym połączeniu"
+        }
+      },
+      "demo": {
+        "heading": "Zobacz, jak Nabil przyjmuje prawdziwe zamówienie",
+        "subheading": "Złożone zamówienie pizzy pół na pół ze zniżką na zestaw i dostawą — obsłużone od początku do końca w niecałe dwie minuty.",
+        "play": "Odtwórz demo",
+        "replay": "Odtwórz ponownie",
+        "pause": "Pauza",
+        "live": "Rozmowa na żywo",
+        "orderHeading": "Podsumowanie zamówienia"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Dla Twoich gości",
+        "title": "Od głosu do kuchni w kilka sekund",
+        "body1": "Twoi goście dzwonią pod numer, który już znają, składają zamówienie własnymi słowami i słyszą je powtórzone — bez aplikacji do pobrania, bez menu do rozszyfrowania, bez muzyki na czekanie.",
+        "body2": "Potwierdzone zamówienie trafia bezpośrednio na Twój wyświetlacz kuchenny i drukarkę bonów, dokładnie jak zamówienie ze strony. Twój personel nigdy nie musi odbierać telefonu.",
+        "bullet1": "Bez aplikacji, bez konta, bez tarcia — tylko telefon",
+        "bullet2": "Zamówienie potwierdzone i wydrukowane automatycznie",
+        "bullet3": "Dzwoniący słyszy pełne odczytanie przed złożeniem zamówienia",
+        "phoneOrderLabel": "Zamówienie telefoniczne"
+      },
+      "handoff": {
+        "eyebrow": "Granice przekazywania",
+        "title": "AI obsługuje zamówienia — Twój zespół obsługuje resztę",
+        "subtitle": "Nabil trzyma się procesu zamawiania i przekazuje nietypowe lub delikatne prośby Twojemu personelowi zamiast zgadywać. Ty decydujesz, gdzie leży granica.",
+        "order": {
+          "badge": "AI obsługuje",
+          "title": "Standardowe zamówienia",
+          "body": "Pizze, zestawy, dostawa, odbiór, dodatki, rozmiary, przystawki, napoje — cały proces zamawiania od powitania po potwierdzenie."
+        },
+        "allergy": {
+          "badge": "Przekazywane personelowi",
+          "title": "Pytania o alergie",
+          "body": "Gdy dzwoniący pyta o składniki, zanieczyszczenie krzyżowe lub konkretne alergie, Nabil przekazuje połączenie Twojemu zespołowi."
+        },
+        "catering": {
+          "badge": "Przekazywane personelowi",
+          "title": "Catering i specjalne prośby",
+          "body": "Duże zamówienia cateringowe, niestandardowe prośby, skargi lub cokolwiek poza standardowym menu — połączenie trafia do Twojego personelu."
+        }
+      },
       "dashboard": {
         "eyebrow": "Twój panel",
         "title": "Zobacz każde połączenie, usłysz każde słowo",
@@ -7305,6 +7363,12 @@
         "cta": "Zacznij",
         "note": "Ceny w dolarach amerykańskich. Rozliczanie miesięczne przez Stripe. Anuluj w dowolnym momencie."
       },
+      "tryLive": {
+        "eyebrow": "Wypróbuj na żywo",
+        "title": "Zadzwoń do AI i złóż testowe zamówienie",
+        "body": "Doświadcz Nabil AI na własnej skórze — zadzwoń na naszą linię demo, złóż zamówienie z prawdziwego menu i zobacz dokładnie, jak to działa. Żadne prawdziwe zamówienie nie zostanie złożone.",
+        "note": "Linia demo — limit rozmowy 4 minuty. Odbiera na żywo agent Nabil AI."
+      },
       "faq": {
         "title": "Najczęściej zadawane pytania",
         "q1": "Jak Nabil przyjmuje zamówienie?",
@@ -7322,7 +7386,11 @@
         "q7": "Jak naliczana jest opłata?",
         "a7": "Płacisz 0,60 USD za minutę rozmowy lub miesięczne minimum 249,99 USD — wyższą kwotę. Minimum obejmuje około 416 minut. Każde połączenie zaokrąglane jest w górę. Śledź zużycie w czasie rzeczywistym.",
         "q8": "Czy mogę anulować w dowolnym momencie?",
-        "a8": "Tak. Nabil jest rozliczany miesięcznie przez Stripe bez długoterminowej umowy. Anuluj z panelu w dowolnym momencie, a linia pozostanie aktywna do końca okresu rozliczeniowego."
+        "a8": "Tak. Nabil jest rozliczany miesięcznie przez Stripe bez długoterminowej umowy. Anuluj z panelu w dowolnym momencie, a linia pozostanie aktywna do końca okresu rozliczeniowego.",
+        "q9": "Czy kiedykolwiek odbiera prawdziwa osoba?",
+        "a9": "Nabil obsługuje standardowy proces zamawiania, a Ty decydujesz, kiedy nastąpi przekazanie. W przypadku skargi, specjalnej prośby lub czegoś spoza menu połączenie jest przekazywane Twojemu zespołowi. Nigdy nie uwięzi dzwoniącego w pętli.",
+        "q10": "Czy działa to dla restauracji z wieloma lokalizacjami?",
+        "a10": "Tak. Każda lokalizacja otrzymuje własny numer telefonu z własnym menu, godzinami otwarcia i ustawieniami. Analizy sumują się według lokalizacji, więc widzisz wolumen połączeń, konwersję i średnią wartość zamówienia dla każdego lokalu."
       },
       "finalCta": {
         "title": "Gotowy, by Nabil odbierał telefony?",

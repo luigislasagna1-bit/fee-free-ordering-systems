@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Nicht gesendet — {reason}",
       "latestOfTotal": "Neueste {shown} von {total}",
       "fullHistoryLink": "Vollständigen Bestellverlauf ansehen — ältere Bestellungen, Zeiträume & Export",
-      "searchAllHistory": "Im gesamten Bestellverlauf nach „{query}“ suchen"
+      "searchAllHistory": "Im gesamten Bestellverlauf nach „{query}“ suchen",
+      "awaitingPayment": "Zahlungsausstehend",
+      "awaitingPaymentHelp": "Kunde hat Bestellung nicht abgeschlossen — keine Zahlung eingezogen, nicht an die Küche gesendet."
     },
     "customers": {
       "title": "Kunden",
@@ -7239,6 +7241,62 @@
           "body": "Ein Simulationssystem führt bei jedem Update echte Bestellszenarien durch — Halb-und-Halb-Pizzen, Combos, Grenzfälle — bevor es Ihre Telefonleitung erreicht."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Das Problem",
+        "title": "Das Telefon ist Ihr am häufigsten verpasster Kanal",
+        "subtitle": "Jedes Restaurant kennt das Gefühl: Das Telefon klingelt während des Betriebs, und niemand ist da, um abzunehmen. Diese Anrufe sind Stammkunden, große Bestellungen, Gäste, die lieber sprechen — und sie landen direkt auf der Mailbox oder wandern stattdessen zur Marketplace-App ab.",
+        "stat1": {
+          "value": "30%",
+          "label": "der Anrufe werden zu Stoßzeiten verpasst"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "durchschnittlicher Umsatz pro verpasstem Anruf verloren"
+        },
+        "stat3": {
+          "value": "1 von 4",
+          "label": "Anrufern ruft nach einer unbeantworteten Bestellung nicht zurück"
+        }
+      },
+      "demo": {
+        "heading": "Sehen Sie, wie Nabil eine echte Bestellung aufnimmt",
+        "subheading": "Eine komplexe Halb-und-Halb-Pizzenbestellung mit Combo-Rabatt und Lieferung — von Anfang bis Ende in unter zwei Minuten abgewickelt.",
+        "play": "Demo abspielen",
+        "replay": "Wiederholen",
+        "pause": "Pause",
+        "live": "Live-Anruf",
+        "orderHeading": "Bestellübersicht"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Für Ihre Gäste",
+        "title": "Von der Stimme zur Küche in Sekunden",
+        "body1": "Ihre Gäste rufen die Nummer an, die sie bereits kennen, geben ihre Bestellung in eigenen Worten auf und hören sie vorgelesen — keine App zum Herunterladen, kein Menü zum Entschlüsseln, keine Warteschleifenmusik.",
+        "body2": "Die bestätigte Bestellung geht direkt an Ihr Küchendisplay und Ihren Bondrucker — genau wie eine Website-Bestellung. Ihr Personal nimmt nie den Telefonhörer ab.",
+        "bullet1": "Keine App, kein Konto, keine Reibung — nur ein Telefonanruf",
+        "bullet2": "Bestellung wird automatisch bestätigt und gedruckt",
+        "bullet3": "Der Anrufer hört eine vollständige Rücklesung, bevor die Bestellung aufgegeben wird",
+        "phoneOrderLabel": "Telefonbestellung"
+      },
+      "handoff": {
+        "eyebrow": "Übergabegrenzen",
+        "title": "Die KI übernimmt Bestellungen — Ihr Team übernimmt alles andere",
+        "subtitle": "Nabil folgt dem Bestellablauf und leitet ungewöhnliche oder heikle Anfragen an Ihr Personal weiter, statt zu raten. Sie entscheiden, wo die Grenze liegt.",
+        "order": {
+          "badge": "Von der KI übernommen",
+          "title": "Standardbestellungen",
+          "body": "Pizzen, Combos, Lieferung, Abholung, Beläge, Größen, Beilagen, Getränke — der gesamte Bestellablauf von der Begrüßung bis zur Bestätigung."
+        },
+        "allergy": {
+          "badge": "Wird an Personal weitergeleitet",
+          "title": "Allergiefragen",
+          "body": "Wenn ein Anrufer nach Zutaten, Kreuzkontamination oder bestimmten Allergien fragt, leitet Nabil den Anruf an Ihr Team weiter."
+        },
+        "catering": {
+          "badge": "Wird an Personal weitergeleitet",
+          "title": "Catering & Sonderwünsche",
+          "body": "Große Cateringbestellungen, individuelle Anfragen, Beschwerden oder alles außerhalb der Standardspeisekarte — der Anruf geht an Ihr Personal."
+        }
+      },
       "dashboard": {
         "eyebrow": "Ihr Dashboard",
         "title": "Sehen Sie jeden Anruf, hören Sie jedes Wort",
@@ -7305,6 +7363,12 @@
         "cta": "Loslegen",
         "note": "Preise in US-Dollar. Monatliche Abrechnung über Stripe. Jederzeit kündbar."
       },
+      "tryLive": {
+        "eyebrow": "Live ausprobieren",
+        "title": "Rufen Sie die KI an und geben Sie eine Testbestellung auf",
+        "body": "Erleben Sie Nabil AI selbst — rufen Sie unsere Demo-Leitung an, geben Sie eine Bestellung aus einer echten Speisekarte auf und sehen Sie genau, wie es funktioniert. Es wird keine echte Bestellung aufgegeben.",
+        "note": "Demo-Leitung — Anruflimit von 4 Minuten. Wird vom live agierenden Nabil AI Agenten beantwortet."
+      },
       "faq": {
         "title": "Häufig gestellte Fragen",
         "q1": "Wie nimmt Nabil eine Bestellung auf?",
@@ -7322,7 +7386,11 @@
         "q7": "Wie wird die Abrechnung berechnet?",
         "a7": "Sie zahlen 0,60 USD pro Gesprächsminute oder das monatliche Minimum von 249,99 USD, je nachdem, was höher ist. Das Minimum enthält etwa 416 Minuten. Jeder Anruf wird auf die nächste volle Minute aufgerundet. Sie können Ihre Nutzung in Echtzeit verfolgen.",
         "q8": "Kann ich jederzeit kündigen?",
-        "a8": "Ja. Nabil wird monatlich über Stripe abgerechnet, ohne Langzeitvertrag. Kündigen Sie jederzeit im Dashboard — Ihre Leitung bleibt bis zum Ende des Abrechnungszeitraums aktiv."
+        "a8": "Ja. Nabil wird monatlich über Stripe abgerechnet, ohne Langzeitvertrag. Kündigen Sie jederzeit im Dashboard — Ihre Leitung bleibt bis zum Ende des Abrechnungszeitraums aktiv.",
+        "q9": "Nimmt jemals eine echte Person ab?",
+        "a9": "Nabil übernimmt den Standard-Bestellablauf, und Sie entscheiden, wann der Anruf weitergeleitet wird. Bei einer Beschwerde, einem Sonderwunsch oder allem außerhalb der Speisekarte wird der Anruf an Ihr Team weitergeleitet. Der Anrufer wird nie in einer Schleife gefangen.",
+        "q10": "Funktioniert es für Restaurants mit mehreren Standorten?",
+        "a10": "Ja. Jeder Standort erhält seine eigene Telefonnummer mit eigener Speisekarte, eigenen Öffnungszeiten und eigenen Einstellungen. Die Analysen werden pro Standort zusammengefasst, sodass Sie Anrufvolumen, Konversion und durchschnittlichen Bestellwert pro Filiale sehen."
       },
       "finalCta": {
         "title": "Bereit, Nabil Ihr Telefon beantworten zu lassen?",

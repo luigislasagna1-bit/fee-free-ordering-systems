@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Neodesláno — {reason}",
       "latestOfTotal": "Posledních {shown} z {total}",
       "fullHistoryLink": "Zobrazit celou historii objednávek — starší objednávky, období a export",
-      "searchAllHistory": "Hledat „{query}“ v celé historii objednávek"
+      "searchAllHistory": "Hledat „{query}“ v celé historii objednávek",
+      "awaitingPayment": "Čekání na platbu",
+      "awaitingPaymentHelp": "Zákazník nedokončil platbu — nebyla odebrána žádná platba, nebyla odeslána do kuchyně."
     },
     "customers": {
       "title": "Zákazníci",
@@ -7239,6 +7241,62 @@
           "body": "Simulační systém spouští skutečné scénáře objednávek s každou aktualizací — půl na půl pizzy, komba, okrajové případy — než se to dostane na vaši telefonní linku."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Problém",
+        "title": "Telefon je váš nejčastěji promeškaný kanál",
+        "subtitle": "Každá restaurace zná ten pocit: telefon zvoní během provozu a nikdo ho nezvedá. Tyto hovory jsou od stálých zákazníků, velkých objednávek, hostů, kteří raději mluví — a místo toho jdou přímo do hlasové schránky nebo do aplikace tržiště.",
+        "stat1": {
+          "value": "30 %",
+          "label": "hovorů zmeškaných ve špičce"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "průměrná ztracená tržba na zmeškaný hovor"
+        },
+        "stat3": {
+          "value": "1 ze 4",
+          "label": "volajících nezavolá zpět, když zůstanou bez odpovědi"
+        }
+      },
+      "demo": {
+        "heading": "Podívejte se, jak Nabil přijímá skutečnou objednávku",
+        "subheading": "Složitá objednávka pizzy půl na půl se slevou na kombo a rozvozem — vyřízena od začátku do konce za méně než dvě minuty.",
+        "play": "Přehrát demo",
+        "replay": "Přehrát znovu",
+        "pause": "Pauza",
+        "live": "Živý hovor",
+        "orderHeading": "Souhrn objednávky"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Pro vaše hosty",
+        "title": "Od hlasu ke kuchyni za pár sekund",
+        "body1": "Vaši hosté volají na číslo, které již znají, zadají objednávku vlastními slovy a uslyší ji přečtenou zpět — žádná aplikace ke stažení, žádné menu k luštění, žádná hudba při čekání.",
+        "body2": "Potvrzená objednávka jde přímo na váš kuchyňský displej a tiskárnu účtenek, přesně jako objednávka z webu. Váš personál nikdy nemusí zvedat telefon.",
+        "bullet1": "Žádná aplikace, žádný účet, žádné tření — jen telefonát",
+        "bullet2": "Objednávka potvrzena a automaticky vytištěna",
+        "bullet3": "Volající slyší kompletní přečtení předtím, než je objednávka zadána",
+        "phoneOrderLabel": "Telefonní objednávka"
+      },
+      "handoff": {
+        "eyebrow": "Hranice předávání",
+        "title": "AI zvládá objednávky — o vše ostatní se stará váš tým",
+        "subtitle": "Nabil dodržuje proces objednávání a neobvyklé nebo citlivé požadavky předává vašemu personálu, místo aby hádal. Vy rozhodujete, kde je hranice.",
+        "order": {
+          "badge": "AI zvládá",
+          "title": "Standardní objednávky",
+          "body": "Pizzy, komba, rozvoz, vyzvednutí, přísady, velikosti, přílohy, nápoje — celý proces objednávání od pozdravu po potvrzení."
+        },
+        "allergy": {
+          "badge": "Přepojeno na personál",
+          "title": "Dotazy na alergeny",
+          "body": "Když se volající ptá na ingredience, křížovou kontaminaci nebo konkrétní alergie, Nabil hovor přepojí na váš tým."
+        },
+        "catering": {
+          "badge": "Přepojeno na personál",
+          "title": "Catering a zvláštní požadavky",
+          "body": "Velké cateringové objednávky, individuální požadavky, stížnosti nebo cokoli mimo standardní menu — hovor jde na váš personál."
+        }
+      },
       "dashboard": {
         "eyebrow": "Váš panel",
         "title": "Podívejte se na každý hovor, poslechněte si každé slovo",
@@ -7305,6 +7363,12 @@
         "cta": "Začít",
         "note": "Ceny v amerických dolarech. Měsíční fakturace přes Stripe. Zrušte kdykoli."
       },
+      "tryLive": {
+        "eyebrow": "Vyzkoušejte naživo",
+        "title": "Zavolejte AI a zadejte testovací objednávku",
+        "body": "Vyzkoušejte si Nabil AI na vlastní kůži — zavolejte na naši demo linku, zadejte objednávku ze skutečného menu a uvidíte přesně, jak to funguje. Žádná skutečná objednávka nebude zadána.",
+        "note": "Demo linka — limit hovoru 4 minuty. Odpovídá živý agent Nabil AI."
+      },
       "faq": {
         "title": "Často kladené otázky",
         "q1": "Jak Nabil přijímá objednávku?",
@@ -7322,7 +7386,11 @@
         "q7": "Jak se počítá fakturace?",
         "a7": "Platíte 0,60 USD za minutu hovoru nebo měsíční minimum 249,99 USD — co je vyšší. Minimum zahrnuje asi 416 minut. Každý hovor se zaokrouhluje nahoru. Sledujte spotřebu v reálném čase.",
         "q8": "Mohu zrušit kdykoliv?",
-        "a8": "Ano. Nabil je fakturován měsíčně přes Stripe bez dlouhodobé smlouvy. Zrušte z panelu kdykoli a vaše linka zůstane aktivní do konce fakturačního období."
+        "a8": "Ano. Nabil je fakturován měsíčně přes Stripe bez dlouhodobé smlouvy. Zrušte z panelu kdykoli a vaše linka zůstane aktivní do konce fakturačního období.",
+        "q9": "Zvedne to někdy skutečná osoba?",
+        "a9": "Nabil zvládá standardní proces objednávání a vy rozhodujete, kdy dojde k přepojení. Při stížnosti, zvláštním požadavku nebo čemkoli mimo menu je hovor přepojen na váš tým. Nikdy nenechá volajícího uvíznout ve smyčce.",
+        "q10": "Funguje to pro restaurace s více pobočkami?",
+        "a10": "Ano. Každá pobočka získá vlastní telefonní číslo s vlastním menu, otevírací dobou a nastavením. Analýzy se sčítají podle pobočky, takže vidíte objem hovorů, konverzi a průměrnou tržbu na objednávku za každou provozovnu."
       },
       "finalCta": {
         "title": "Připraveni nechat Nabil odpovídat na telefon?",

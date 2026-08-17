@@ -8,6 +8,7 @@ import { buildMoneyBreakdown } from "@/lib/money-breakdown";
 import { ShoppingBag, Search, RefreshCw } from "lucide-react";
 import toast from "react-hot-toast";
 import { useTranslations } from "next-intl";
+import { AWAITING_PAYMENT, orderDisplayStatus } from "@/lib/order-display-status";
 
 const STATUS_FILTERS = ["all", "pending", "accepted", "preparing", "ready", "completed", "rejected"];
 
@@ -19,6 +20,9 @@ const statusColors: Record<string, string> = {
   completed: "bg-gray-100 text-gray-600",
   rejected: "bg-red-100 text-red-700",
   cancelled: "bg-red-100 text-red-700",
+  // Deliberately NOT blue/green: an unfinished checkout must not read like a
+  // live order at a glance. Slate + the explicit label is the whole fix.
+  [AWAITING_PAYMENT]: "bg-slate-200 text-slate-700",
 };
 
 export function OrdersClient({
@@ -49,8 +53,10 @@ export function OrdersClient({
   const [expanded, setExpanded] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState(new Date());
 
-  // Track pending count so we can alert when new orders arrive
-  const pendingCount = orders.filter((o) => o.status === "pending").length;
+  // Track pending count so we can alert when new orders arrive. Display status,
+  // not raw status: an abandoned online checkout is not an order waiting on the
+  // owner, and counting it here rang the "N Pending" alarm for nothing.
+  const pendingCount = orders.filter((o) => orderDisplayStatus(o) === "pending").length;
   const prevPendingRef = useRef<number | null>(null);
 
   // Auto-refresh every 5 seconds via RSC re-render. Each cycle ALSO stamps
@@ -96,7 +102,10 @@ export function OrdersClient({
   }, [pendingCount]);
 
   const filtered = orders.filter((o) => {
-    const matchesStatus = filter === "all" || o.status === filter;
+    // Filter on the DISPLAY status so the "Accepted"/"Pending" tabs mean what
+    // they say — an unpaid, never-released checkout belongs to neither and
+    // surfaces under "All" only.
+    const matchesStatus = filter === "all" || orderDisplayStatus(o) === filter;
     const matchesSearch =
       !search ||
       o.customerName.toLowerCase().includes(search.toLowerCase()) ||
@@ -184,8 +193,10 @@ export function OrdersClient({
               const hasFutureSchedule =
                 scheduledAt && Number.isFinite(scheduledAt.getTime()) && scheduledAt.getTime() > Date.now() - 60_000;
               const itemCount = order.items?.reduce((s: number, it: any) => s + (it.quantity ?? 0), 0) ?? 0;
+              const displayStatus = orderDisplayStatus(order);
+              const awaitingPayment = displayStatus === AWAITING_PAYMENT;
               return (
-              <div key={order.id} className={order.status === "pending" ? "border-l-4 border-l-yellow-400" : ""}>
+              <div key={order.id} className={displayStatus === "pending" ? "border-l-4 border-l-yellow-400" : ""}>
                 <div
                   className="p-3 sm:p-4 flex items-center justify-between gap-3 cursor-pointer hover:bg-gray-50"
                   onClick={() => setExpanded(expanded === order.id ? null : order.id)}
@@ -232,14 +243,26 @@ export function OrdersClient({
                   </div>
                   <div className="flex flex-col sm:flex-row items-end sm:items-center gap-1 sm:gap-3 flex-shrink-0">
                     <span className="font-bold text-gray-900 text-sm sm:text-base whitespace-nowrap">{formatCurrency(order.total)}</span>
-                    <span className={`text-[10px] sm:text-xs font-medium px-2 py-0.5 sm:py-1 rounded-full whitespace-nowrap ${statusColors[order.status] || "bg-gray-100 text-gray-600"}`}>
-                      {(() => { try { return t(order.status as any); } catch { return order.status; } })()}
+                    <span className={`text-[10px] sm:text-xs font-medium px-2 py-0.5 sm:py-1 rounded-full whitespace-nowrap ${statusColors[displayStatus] || "bg-gray-100 text-gray-600"}`}>
+                      {(() => {
+                        const key = displayStatus === AWAITING_PAYMENT ? "awaitingPayment" : displayStatus;
+                        try { return t(key as any); } catch { return displayStatus; }
+                      })()}
                     </span>
                   </div>
                 </div>
 
                 {expanded === order.id && (
                   <div className="px-4 pb-4 bg-gray-50 border-t border-gray-100">
+                    {awaitingPayment && (
+                      // The whole point of the 2026-08-17 fix: say plainly that
+                      // nobody is cooking this and no money was taken, so an
+                      // abandoned checkout can never be mistaken for a live order.
+                      <div className="mt-4 mb-1 rounded-lg border border-slate-300 bg-slate-100 px-3 py-2 text-sm text-slate-700 flex items-start gap-2">
+                        <span aria-hidden>⏳</span>
+                        <span>{t("awaitingPaymentHelp")}</span>
+                      </div>
+                    )}
                     {hasFutureSchedule && (
                       // Scheduled-for callout pinned at the top of the
                       // expanded details so kitchen staff scanning a

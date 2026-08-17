@@ -1864,7 +1864,9 @@
       "shipdaySkipped": "Non inviato — {reason}",
       "latestOfTotal": "Ultime {shown} di {total}",
       "fullHistoryLink": "Vedi lo storico completo degli ordini — ordini più vecchi, intervalli di date ed esportazione",
-      "searchAllHistory": "Cerca “{query}” in tutto lo storico degli ordini"
+      "searchAllHistory": "Cerca “{query}” in tutto lo storico degli ordini",
+      "awaitingPayment": "In attesa di pagamento",
+      "awaitingPaymentHelp": "Il cliente non ha completato il pagamento — nessun pagamento catturato, non inviato in cucina."
     },
     "customers": {
       "title": "Clienti",
@@ -7239,6 +7241,62 @@
           "body": "Un sistema di simulazione esegue scenari di ordinazione reali con ogni aggiornamento — pizze metà e metà, combo, casi limite — prima che arrivi sulla tua linea telefonica."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Il problema",
+        "title": "Il telefono è il tuo canale più trascurato",
+        "subtitle": "Ogni ristorante conosce questa sensazione: il telefono squilla durante il servizio e non c'è nessuno a rispondere. Quelle chiamate sono clienti abituali, ordini importanti, persone che preferiscono parlare — e finiscono dritte in segreteria o su un'app di marketplace.",
+        "stat1": {
+          "value": "30%",
+          "label": "delle chiamate perse nelle ore di punta"
+        },
+        "stat2": {
+          "value": "US$ 25–US$ 50",
+          "label": "scontrino medio perso per chiamata mancata"
+        },
+        "stat3": {
+          "value": "1 su 4",
+          "label": "dei chiamanti non richiama dopo essere rimasto senza risposta"
+        }
+      },
+      "demo": {
+        "heading": "Guarda Nabil prendere un ordine reale",
+        "subheading": "Un ordine complesso di pizza metà e metà con sconto combo e consegna a domicilio — gestito dall'inizio alla fine in meno di due minuti.",
+        "play": "Riproduci demo",
+        "replay": "Riproduci di nuovo",
+        "pause": "Pausa",
+        "live": "Chiamata dal vivo",
+        "orderHeading": "Riepilogo dell'ordine"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Per i tuoi clienti",
+        "title": "Dalla voce alla cucina in pochi secondi",
+        "body1": "I tuoi clienti chiamano il numero che già conoscono, effettuano l'ordine con parole proprie e se lo sentono rileggere — senza app da scaricare, senza menu da decifrare, senza musica d'attesa.",
+        "body2": "L'ordine confermato arriva direttamente sul tuo display cucina e sulla stampante scontrini, esattamente come un ordine dal sito web. Il tuo staff non risponde mai al telefono.",
+        "bullet1": "Nessuna app, nessun account, nessun attrito — solo una telefonata",
+        "bullet2": "Ordine confermato e stampato automaticamente",
+        "bullet3": "Chi chiama ascolta una rilettura completa prima che l'ordine venga effettuato",
+        "phoneOrderLabel": "Ordine telefonico"
+      },
+      "handoff": {
+        "eyebrow": "Limiti di trasferimento",
+        "title": "L'IA gestisce gli ordini — il tuo team gestisce tutto il resto",
+        "subtitle": "Nabil segue il flusso dell'ordine e trasferisce al tuo staff le richieste insolite o delicate invece di indovinare. Decidi tu dove sta il limite.",
+        "order": {
+          "badge": "Gestito dall'IA",
+          "title": "Ordini standard",
+          "body": "Pizze, combo, consegna a domicilio, ritiro, condimenti, formati, contorni, bevande — l'intero flusso d'ordine, dal saluto alla conferma."
+        },
+        "allergy": {
+          "badge": "Trasferito allo staff",
+          "title": "Domande sulle allergie",
+          "body": "Quando chi chiama chiede informazioni su ingredienti, contaminazione crociata o allergie specifiche, Nabil trasferisce la chiamata al tuo team."
+        },
+        "catering": {
+          "badge": "Trasferito allo staff",
+          "title": "Catering e richieste speciali",
+          "body": "Grandi ordini di catering, richieste personalizzate, reclami o qualsiasi cosa al di fuori del menu standard — la chiamata passa al tuo staff."
+        }
+      },
       "dashboard": {
         "eyebrow": "La tua dashboard",
         "title": "Vedi ogni chiamata, ascolta ogni parola",
@@ -7305,6 +7363,12 @@
         "cta": "Inizia",
         "note": "Prezzi in dollari statunitensi. Fatturazione mensile tramite Stripe. Annulla in qualsiasi momento."
       },
+      "tryLive": {
+        "eyebrow": "Provalo dal vivo",
+        "title": "Chiama l'IA ed effettua un ordine di prova",
+        "body": "Prova Nabil AI in prima persona — chiama la nostra linea demo, effettua un ordine da un menu reale e scopri esattamente come funziona. Non verrà effettuato alcun ordine reale.",
+        "note": "Linea demo — limite di 4 minuti per chiamata. Risponde l'agente Nabil AI dal vivo."
+      },
       "faq": {
         "title": "Domande frequenti",
         "q1": "Come prende un ordine Nabil?",
@@ -7322,7 +7386,11 @@
         "q7": "Come viene calcolata la fatturazione?",
         "a7": "Paghi US$ 0,60 al minuto di chiamata o il minimo mensile di US$ 249,99, il più alto dei due. Il minimo include circa 416 minuti. Ogni chiamata è arrotondata al minuto successivo. Puoi monitorare l'utilizzo in tempo reale.",
         "q8": "Posso annullare in qualsiasi momento?",
-        "a8": "Sì. Nabil è fatturato mensilmente tramite Stripe senza contratto a lungo termine. Annulla dalla dashboard e la tua linea resta attiva fino alla fine del periodo di fatturazione."
+        "a8": "Sì. Nabil è fatturato mensilmente tramite Stripe senza contratto a lungo termine. Annulla dalla dashboard e la tua linea resta attiva fino alla fine del periodo di fatturazione.",
+        "q9": "Risponde mai una persona reale?",
+        "a9": "Nabil gestisce il flusso d'ordine standard, e sei tu a decidere quando trasferire la chiamata. Per un reclamo, una richiesta speciale o qualsiasi cosa al di fuori del menu, la chiamata viene trasferita al tuo team. Non intrappola mai chi chiama in un loop.",
+        "q10": "Funziona per i ristoranti con più sedi?",
+        "a10": "Sì. Ogni sede ha il proprio numero di telefono con il proprio menu, i propri orari e le proprie impostazioni. Le analisi sono aggregate per sede, così puoi vedere volume di chiamate, conversione e scontrino medio per singolo locale."
       },
       "finalCta": {
         "title": "Pronto a far rispondere Nabil al telefono?",

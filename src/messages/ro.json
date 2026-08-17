@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Netrimisă — {reason}",
       "latestOfTotal": "Ultimele {shown} din {total}",
       "fullHistoryLink": "Vezi istoricul complet al comenzilor — comenzi mai vechi, intervale de date și export",
-      "searchAllHistory": "Caută „{query}” în tot istoricul comenzilor"
+      "searchAllHistory": "Caută „{query}” în tot istoricul comenzilor",
+      "awaitingPayment": "În așteptarea plății",
+      "awaitingPaymentHelp": "Clientul nu a finalizat plata — nicio plată capturată, nu a fost trimis la bucătărie."
     },
     "customers": {
       "title": "Clienți",
@@ -7239,6 +7241,62 @@
           "body": "Un sistem de simulare rulează scenarii reale de comandă la fiecare actualizare — pizza jumătate-jumătate, combo-uri, cazuri limită — înainte să ajungă pe linia dvs. telefonică."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Problema",
+        "title": "Telefonul este canalul tău cel mai adesea ratat",
+        "subtitle": "Fiecare restaurant cunoaște acest sentiment: telefonul sună în timpul serviciului și nu este nimeni să răspundă. Acele apeluri sunt clienți fideli, comenzi mari, clienții care preferă să vorbească — și ajung direct la mesageria vocală sau la aplicația de marketplace în schimb.",
+        "stat1": {
+          "value": "30%",
+          "label": "din apeluri ratate în orele de vârf"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "bon mediu pierdut per apel ratat"
+        },
+        "stat3": {
+          "value": "1 din 4",
+          "label": "apelanții nu mai sună înapoi după ce nu au primit răspuns"
+        }
+      },
+      "demo": {
+        "heading": "Urmărește-l pe Nabil preluând o comandă reală",
+        "subheading": "O comandă complexă de pizza jumătate-jumătate cu o reducere de combo și livrare — gestionată de la început până la sfârșit în mai puțin de două minute.",
+        "play": "Redă demo",
+        "replay": "Redă din nou",
+        "pause": "Pauză",
+        "live": "Apel în direct",
+        "orderHeading": "Rezumatul comenzii"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Pentru clienții tăi",
+        "title": "De la voce la bucătărie în câteva secunde",
+        "body1": "Clienții tăi sună la numărul pe care îl știu deja, plasează comanda cu propriile cuvinte și o aud repetată — fără aplicație de descărcat, fără meniu de descifrat, fără muzică de așteptare.",
+        "body2": "Comanda confirmată ajunge direct la afișajul tău de bucătărie și la imprimanta de bonuri, exact ca o comandă de pe site. Personalul tău nu ridică niciodată telefonul.",
+        "bullet1": "Fără aplicație, fără cont, fără fricțiuni — doar un apel telefonic",
+        "bullet2": "Comanda confirmată și tipărită automat",
+        "bullet3": "Apelantul aude o relectură completă înainte ca și comanda să fie plasată",
+        "phoneOrderLabel": "Comandă telefonică"
+      },
+      "handoff": {
+        "eyebrow": "Limite de transfer",
+        "title": "IA gestionează comenzile — echipa ta gestionează restul",
+        "subtitle": "Nabil urmează fluxul comenzii și transferă solicitările neobișnuite sau sensibile echipei tale în loc să ghicească. Tu decizi unde este limita.",
+        "order": {
+          "badge": "Gestionat de IA",
+          "title": "Comenzi standard",
+          "body": "Pizza, combo-uri, livrare, ridicare, topping-uri, dimensiuni, garnituri, băuturi — întregul flux de comandă de la salut la confirmare."
+        },
+        "allergy": {
+          "badge": "Transferat echipei",
+          "title": "Întrebări despre alergii",
+          "body": "Când un apelant întreabă despre ingrediente, contaminare încrucișată sau alergii specifice, Nabil transferă apelul echipei tale."
+        },
+        "catering": {
+          "badge": "Transferat echipei",
+          "title": "Catering și cereri speciale",
+          "body": "Comenzi mari de catering, cereri personalizate, reclamații sau orice în afara meniului standard — apelul merge la echipa ta."
+        }
+      },
       "dashboard": {
         "eyebrow": "Panoul dvs.",
         "title": "Vedeți fiecare apel, auziți fiecare cuvânt",
@@ -7305,6 +7363,12 @@
         "cta": "Incepe",
         "note": "Preturi in dolari americani. Facturare lunara prin Stripe. Anulati oricand."
       },
+      "tryLive": {
+        "eyebrow": "Încearcă în direct",
+        "title": "Sună IA și plasează o comandă de test",
+        "body": "Experimentează Nabil AI direct — sună la linia noastră demo, plasează o comandă dintr-un meniu real și vezi exact cum funcționează. Nu se va plasa nicio comandă reală.",
+        "note": "Linie demo — limită de apel de 4 minute. Răspuns oferit de agentul Nabil AI live."
+      },
       "faq": {
         "title": "Intrebari frecvente",
         "q1": "Cum preia Nabil o comanda?",
@@ -7322,7 +7386,11 @@
         "q7": "Cum se calculeaza facturarea?",
         "a7": "Platiti 0,60 USD pe minut sau minimul lunar de 249,99 USD, suma mai mare. Minimul include aproximativ 416 minute. Fiecare apel se rotunjeste in sus. Urmariti utilizarea in timp real.",
         "q8": "Pot anula oricand?",
-        "a8": "Da. Nabil este facturat lunar prin Stripe fara contract pe termen lung. Anulati din tabloul de bord si linia ramane activa pana la sfarsitul perioadei de facturare."
+        "a8": "Da. Nabil este facturat lunar prin Stripe fara contract pe termen lung. Anulati din tabloul de bord si linia ramane activa pana la sfarsitul perioadei de facturare.",
+        "q9": "Răspunde vreodată o persoană reală?",
+        "a9": "Nabil gestionează fluxul standard de comandă, iar tu decizi când se face transferul. Pentru o reclamație, o cerere specială sau orice în afara meniului, apelul este transferat echipei tale. Nu blochează niciodată un apelant într-o buclă.",
+        "q10": "Funcționează pentru restaurante cu mai multe locații?",
+        "a10": "Da. Fiecare locație primește propriul număr de telefon cu propriul meniu, program și setări. Analizele se agregă pe locație, așa că vezi volumul de apeluri, conversia și bonul mediu per magazin."
       },
       "finalCta": {
         "title": "Gata sa lasati Nabil sa raspunda la telefon?",

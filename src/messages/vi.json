@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Chưa gửi — {reason}",
       "latestOfTotal": "{shown} đơn mới nhất trong {total}",
       "fullHistoryLink": "Xem toàn bộ lịch sử đơn hàng — đơn cũ hơn, khoảng ngày & xuất dữ liệu",
-      "searchAllHistory": "Tìm “{query}” trong toàn bộ lịch sử đơn hàng"
+      "searchAllHistory": "Tìm “{query}” trong toàn bộ lịch sử đơn hàng",
+      "awaitingPayment": "Chờ thanh toán",
+      "awaitingPaymentHelp": "Khách hàng chưa hoàn tất thanh toán — không có khoản thanh toán nào bị chụp, không gửi đến nhà bếp."
     },
     "customers": {
       "title": "Khách hàng",
@@ -7239,6 +7241,62 @@
           "body": "Hệ thống mô phỏng chạy các tình huống đặt hàng thực với mỗi bản cập nhật — pizza nửa-nửa, combo, trường hợp đặc biệt — trước khi đến đường dây điện thoại của bạn."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Vấn đề",
+        "title": "Điện thoại là kênh bạn bỏ lỡ nhiều nhất",
+        "subtitle": "Mọi nhà hàng đều biết cảm giác đó: điện thoại reo liên tục trong giờ cao điểm mà không có ai trả lời. Những cuộc gọi đó là khách quen, đơn hàng lớn, những vị khách thích trò chuyện trực tiếp — và chúng chuyển thẳng đến hộp thư thoại hoặc khách hàng chuyển sang dùng ứng dụng marketplace thay thế.",
+        "stat1": {
+          "value": "30%",
+          "label": "cuộc gọi bị bỏ lỡ trong giờ cao điểm"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "giá trị đơn hàng trung bình bị mất mỗi cuộc gọi lỡ"
+        },
+        "stat3": {
+          "value": "1 trên 4",
+          "label": "người gọi sẽ không gọi lại sau khi không được trả lời"
+        }
+      },
+      "demo": {
+        "heading": "Xem Nabil nhận một đơn hàng thực tế",
+        "subheading": "Một đơn pizza nửa-nửa phức tạp với giảm giá combo và giao hàng — được xử lý từ đầu đến cuối trong chưa đầy hai phút.",
+        "play": "Xem Demo",
+        "replay": "Phát lại",
+        "pause": "Tạm dừng",
+        "live": "Cuộc gọi trực tiếp",
+        "orderHeading": "Tóm tắt đơn hàng"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Dành cho khách hàng của bạn",
+        "title": "Từ giọng nói đến bếp chỉ trong vài giây",
+        "body1": "Khách hàng của bạn gọi đến số điện thoại họ đã biết, đặt hàng bằng chính lời của họ, và nghe đơn hàng được đọc lại — không cần tải ứng dụng, không cần giải mã thực đơn, không có nhạc chờ.",
+        "body2": "Đơn hàng đã xác nhận chuyển thẳng đến màn hình bếp và máy in vé của bạn, giống hệt như đơn hàng trên website. Nhân viên của bạn không bao giờ phải nhấc điện thoại.",
+        "bullet1": "Không ứng dụng, không tài khoản, không rắc rối — chỉ cần một cuộc gọi",
+        "bullet2": "Đơn hàng được xác nhận và in tự động",
+        "bullet3": "Người gọi nghe đọc lại đầy đủ trước khi đơn hàng được đặt",
+        "phoneOrderLabel": "Đơn hàng qua điện thoại"
+      },
+      "handoff": {
+        "eyebrow": "Ranh giới chuyển giao",
+        "title": "AI xử lý đơn hàng — đội ngũ của bạn xử lý phần còn lại",
+        "subtitle": "Nabil tuân theo quy trình đặt hàng và chuyển các yêu cầu bất thường hoặc nhạy cảm cho nhân viên của bạn thay vì đoán mò. Bạn quyết định ranh giới ở đâu.",
+        "order": {
+          "badge": "AI xử lý",
+          "title": "Đơn hàng tiêu chuẩn",
+          "body": "Pizza, combo, giao hàng, lấy tại chỗ, topping, kích cỡ, món kèm, đồ uống — toàn bộ quy trình đặt hàng từ lời chào đến xác nhận."
+        },
+        "allergy": {
+          "badge": "Chuyển cho nhân viên",
+          "title": "Câu hỏi về dị ứng",
+          "body": "Khi người gọi hỏi về thành phần, nhiễm chéo hoặc dị ứng cụ thể, Nabil chuyển cuộc gọi cho đội ngũ của bạn."
+        },
+        "catering": {
+          "badge": "Chuyển cho nhân viên",
+          "title": "Tiệc & yêu cầu đặc biệt",
+          "body": "Đơn hàng tiệc lớn, yêu cầu tùy chỉnh, khiếu nại, hoặc bất cứ điều gì ngoài thực đơn tiêu chuẩn — cuộc gọi được chuyển cho nhân viên của bạn."
+        }
+      },
       "dashboard": {
         "eyebrow": "Bảng điều khiển của bạn",
         "title": "Xem mọi cuộc gọi, nghe mọi lời nói",
@@ -7305,6 +7363,12 @@
         "cta": "Bắt đầu",
         "note": "Giá tính bằng đô la Mỹ. Thanh toán hàng tháng qua Stripe. Hủy bất cứ lúc nào."
       },
+      "tryLive": {
+        "eyebrow": "Dùng thử trực tiếp",
+        "title": "Gọi cho AI và đặt một đơn hàng thử",
+        "body": "Trải nghiệm Nabil AI trực tiếp — gọi đến đường dây demo của chúng tôi, đặt hàng từ thực đơn thật, và xem chính xác cách nó hoạt động. Sẽ không có đơn hàng thật nào được đặt.",
+        "note": "Đường dây demo — giới hạn cuộc gọi 4 phút. Được trả lời bởi tác nhân Nabil AI trực tiếp."
+      },
       "faq": {
         "title": "Câu hỏi thường gặp",
         "q1": "Nabil nhận đơn hàng như thế nào?",
@@ -7322,7 +7386,11 @@
         "q7": "Hóa đơn được tính như thế nào?",
         "a7": "Bạn trả 0,60 USD mỗi phút gọi hoặc tối thiểu hàng tháng 249,99 USD — tùy mức nào cao hơn. Mức tối thiểu bao gồm khoảng 416 phút. Mỗi cuộc gọi được làm tròn lên. Theo dõi sử dụng theo thời gian thực.",
         "q8": "Tôi có thể hủy bất cứ lúc nào không?",
-        "a8": "Có. Nabil được thanh toán hàng tháng qua Stripe không có hợp đồng dài hạn. Hủy từ bảng điều khiển bất cứ lúc nào và đường dây của bạn vẫn hoạt động cho đến cuối kỳ thanh toán."
+        "a8": "Có. Nabil được thanh toán hàng tháng qua Stripe không có hợp đồng dài hạn. Hủy từ bảng điều khiển bất cứ lúc nào và đường dây của bạn vẫn hoạt động cho đến cuối kỳ thanh toán.",
+        "q9": "Có bao giờ một người thật trả lời không?",
+        "a9": "Nabil xử lý quy trình đặt hàng tiêu chuẩn, và bạn quyết định khi nào cần chuyển giao. Đối với khiếu nại, yêu cầu đặc biệt, hoặc bất cứ điều gì ngoài thực đơn, cuộc gọi sẽ được chuyển cho đội ngũ của bạn. Nó không bao giờ khiến người gọi bị mắc kẹt trong vòng lặp.",
+        "q10": "Nó có hoạt động cho nhà hàng nhiều chi nhánh không?",
+        "a10": "Có. Mỗi chi nhánh có số điện thoại riêng với thực đơn, giờ mở cửa và cài đặt riêng. Số liệu phân tích được tổng hợp theo từng chi nhánh để bạn thấy lượng cuộc gọi, tỷ lệ chuyển đổi và giá trị đơn hàng trung bình theo từng cửa hàng."
       },
       "finalCta": {
         "title": "Sẵn sàng để Nabil trả lời điện thoại của bạn?",

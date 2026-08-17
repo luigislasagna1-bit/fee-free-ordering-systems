@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Ei lähetetty — {reason}",
       "latestOfTotal": "Viimeisimmät {shown}/{total}",
       "fullHistoryLink": "Näytä koko tilaushistoria — vanhemmat tilaukset, aikavälit ja vienti",
-      "searchAllHistory": "Hae ”{query}” koko tilaushistoriasta"
+      "searchAllHistory": "Hae ”{query}” koko tilaushistoriasta",
+      "awaitingPayment": "Odottaa maksua",
+      "awaitingPaymentHelp": "Asiakas ei suorittanut kassaa — maksua ei otettu, ei lähetetty keittiöön."
     },
     "customers": {
       "title": "Asiakkaat",
@@ -7239,6 +7241,62 @@
           "body": "Simulointijärjestelmä ajaa todellisia tilausskenaarioita jokaisen päivityksen yhteydessä — puoliksi jaetut pizzat, yhdistelmät, rajatapaukset — ennen kuin se saavuttaa puhelinlinjasi."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Ongelma",
+        "title": "Puhelin on eniten hukkaamasi kanava",
+        "subtitle": "Jokainen ravintola tuntee tunteen: puhelin soi koko palveluajan, eikä kukaan vastaa. Nuo puhelut ovat kanta-asiakkaita, isoja tilauksia, asiakkaita jotka mieluummin puhuvat — ja ne menevät suoraan vastaajaan tai markkinapaikkasovellukseen sen sijaan.",
+        "stat1": {
+          "value": "30%",
+          "label": "puheluista jää vastaamatta ruuhka-aikoina"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "keskimääräinen menetetty summa vastaamattomasta puhelusta"
+        },
+        "stat3": {
+          "value": "1 neljästä",
+          "label": "soittajaa ei soita takaisin, jos puheluun ei vastata"
+        }
+      },
+      "demo": {
+        "heading": "Katso kuinka Nabil ottaa vastaan oikean tilauksen",
+        "subheading": "Monimutkainen puoliksi-puoliksi-pitsatilaus komboalennuksella ja kotiinkuljetuksella — hoidettu alusta loppuun alle kahdessa minuutissa.",
+        "play": "Toista demo",
+        "replay": "Toista uudelleen",
+        "pause": "Tauko",
+        "live": "Suora puhelu",
+        "orderHeading": "Tilauksen yhteenveto"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Asiakkaillesi",
+        "title": "Äänestä keittiöön sekunneissa",
+        "body1": "Asiakkaasi soittavat jo tuntemaansa numeroon, tekevät tilauksen omin sanoin ja kuulevat sen luettavan takaisin — ei sovellusta ladattavaksi, ei menua tulkittavaksi, ei jonotusmusiikkia.",
+        "body2": "Vahvistettu tilaus kulkee suoraan keittiönäytöllesi ja kuittitulostimelle, aivan kuten verkkosivutilaus. Henkilökuntasi ei koskaan joudu vastaamaan puhelimeen.",
+        "bullet1": "Ei sovellusta, ei tiliä, ei kitkaa — vain puhelinsoitto",
+        "bullet2": "Tilaus vahvistetaan ja tulostetaan automaattisesti",
+        "bullet3": "Soittaja kuulee täydellisen kertauksen ennen tilauksen tekemistä",
+        "phoneOrderLabel": "Puhelintilaus"
+      },
+      "handoff": {
+        "eyebrow": "Siirtorajat",
+        "title": "Tekoäly hoitaa tilaukset — tiimisi hoitaa kaiken muun",
+        "subtitle": "Nabil noudattaa tilausprosessia ja siirtää epätavalliset tai arkaluontoiset pyynnöt henkilökunnallesi arvaamisen sijaan. Sinä päätät missä raja kulkee.",
+        "order": {
+          "badge": "Tekoäly hoitaa",
+          "title": "Tavalliset tilaukset",
+          "body": "Pizzat, kombot, kotiinkuljetus, nouto, täytteet, koot, lisukkeet, juomat — koko tilausprosessi tervehdyksestä vahvistukseen."
+        },
+        "allergy": {
+          "badge": "Siirretään henkilökunnalle",
+          "title": "Allergiakysymykset",
+          "body": "Kun soittaja kysyy ainesosista, ristikontaminaatiosta tai tietyistä allergioista, Nabil siirtää puhelun tiimillesi."
+        },
+        "catering": {
+          "badge": "Siirretään henkilökunnalle",
+          "title": "Pitopalvelu ja erikoispyynnöt",
+          "body": "Suuret pitopalvelutilaukset, erikoispyynnöt, valitukset tai mikä tahansa vakiovalikoiman ulkopuolella — puhelu ohjataan henkilökunnallesi."
+        }
+      },
       "dashboard": {
         "eyebrow": "Hallintapaneelisi",
         "title": "Näe jokainen puhelu, kuule jokainen sana",
@@ -7305,6 +7363,12 @@
         "cta": "Aloita",
         "note": "Hinnat Yhdysvaltain dollareissa. Kuukausittainen laskutus Stripen kautta. Peru milloin tahansa."
       },
+      "tryLive": {
+        "eyebrow": "Kokeile livenä",
+        "title": "Soita tekoälylle ja tee testitilaus",
+        "body": "Koe Nabil AI omakohtaisesti — soita demolinjallemme, tee tilaus oikeasta ruokalistasta ja katso tarkalleen miten se toimii. Todellista tilausta ei tehdä.",
+        "note": "Demolinja — 4 minuutin puhelurajoitus. Vastaa livetoiminnassa oleva Nabil AI -agentti."
+      },
       "faq": {
         "title": "Usein kysytyt kysymykset",
         "q1": "Miten Nabil ottaa tilauksen?",
@@ -7322,7 +7386,11 @@
         "q7": "Miten laskutus lasketaan?",
         "a7": "Maksat 0,60 USD puheluminuutilta tai kuukausittaisen 249,99 USD minimin — kumpi on suurempi. Minimi sisältää noin 416 minuuttia. Jokainen puhelu pyöristetään ylöspäin. Seuraa käyttöäsi reaaliajassa.",
         "q8": "Voinko peruuttaa milloin tahansa?",
-        "a8": "Kyllä. Nabil laskutetaan kuukausittain Stripen kautta ilman pitkäaikaista sopimusta. Peru kojelaudalta milloin tahansa, ja linjasi pysyy aktiivisena laskutuskauden loppuun."
+        "a8": "Kyllä. Nabil laskutetaan kuukausittain Stripen kautta ilman pitkäaikaista sopimusta. Peru kojelaudalta milloin tahansa, ja linjasi pysyy aktiivisena laskutuskauden loppuun.",
+        "q9": "Vastaako koskaan oikea ihminen?",
+        "a9": "Nabil hoitaa tavallisen tilausprosessin, ja sinä päätät milloin siirto tehdään. Valituksen, erikoispyynnön tai jonkin valikon ulkopuolisen asian kohdalla puhelu siirretään tiimillesi. Se ei koskaan jätä soittajaa loukkuun silmukkaan.",
+        "q10": "Toimiiko se usean toimipisteen ravintoloille?",
+        "a10": "Kyllä. Jokainen toimipiste saa oman puhelinnumeronsa omalla valikollaan, aukioloajoillaan ja asetuksillaan. Analytiikka kootaan toimipisteittäin, joten näet puhelumäärän, konversion ja keskimääräisen tilauksen arvon per myymälä."
       },
       "finalCta": {
         "title": "Valmis antamaan Nabilin vastata puhelimeen?",

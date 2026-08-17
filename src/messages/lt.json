@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Neišsiųsta — {reason}",
       "latestOfTotal": "Naujausi {shown} iš {total}",
       "fullHistoryLink": "Peržiūrėti visą užsakymų istoriją — senesni užsakymai, datų intervalai ir eksportas",
-      "searchAllHistory": "Ieškoti „{query}“ visoje užsakymų istorijoje"
+      "searchAllHistory": "Ieškoti „{query}“ visoje užsakymų istorijoje",
+      "awaitingPayment": "Laukiama mokėjimo",
+      "awaitingPaymentHelp": "Klientas nebaigė kasoje — nebuvo atliktas mokėjimas, neišsiųsta į virtuvę."
     },
     "customers": {
       "title": "Klientai",
@@ -7239,6 +7241,62 @@
           "body": "Simuliacijos sistema leidžia tikrus užsakymo scenarijus su kiekvienu atnaujinimu — pusiau padalintas picos, rinkiniai, ribiniai atvejai — prieš pasiekiant jūsų telefono liniją."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Problema",
+        "title": "Telefonas yra dažniausiai praleidžiamas jūsų kanalas",
+        "subtitle": "Kiekvienas restoranas žino šį jausmą: telefonas skamba aptarnavimo metu, o atsiliepti nėra kam. Šie skambučiai — tai nuolatiniai klientai, dideli užsakymai, klientai, kurie mieliau kalba — ir jie patenka tiesiai į balso paštą arba renkasi rinkos aikštės programėlę.",
+        "stat1": {
+          "value": "30%",
+          "label": "skambučių praleidžiama piko valandomis"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "vidutinis prarastas užsakymas dėl praleisto skambučio"
+        },
+        "stat3": {
+          "value": "1 iš 4",
+          "label": "skambinančiųjų daugiau neperskambins, jei liks be atsakymo"
+        }
+      },
+      "demo": {
+        "heading": "Pažiūrėkite, kaip Nabil priima tikrą užsakymą",
+        "subheading": "Sudėtingas pusiau padalintos picos užsakymas su rinkinio nuolaida ir pristatymu — apdorotas nuo pradžios iki pabaigos mažiau nei per dvi minutes.",
+        "play": "Paleisti demonstraciją",
+        "replay": "Kartoti",
+        "pause": "Pristabdyti",
+        "live": "Tiesioginis skambutis",
+        "orderHeading": "Užsakymo santrauka"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Jūsų klientams",
+        "title": "Nuo balso iki virtuvės per kelias sekundes",
+        "body1": "Jūsų klientai skambina jau žinomu numeriu, pateikia užsakymą savais žodžiais ir išgirsta jį perskaitomą — be programėlės atsisiuntimo, be meniu iššifravimo, be laukimo muzikos.",
+        "body2": "Patvirtintas užsakymas iškart pasiekia jūsų virtuvės ekraną ir kvitų spausdintuvą, lygiai taip pat kaip svetainės užsakymas. Jūsų personalui niekada nereikia kelti ragelio.",
+        "bullet1": "Jokios programėlės, jokios paskyros, jokio trinties — tik telefono skambutis",
+        "bullet2": "Užsakymas patvirtinamas ir atspausdinamas automatiškai",
+        "bullet3": "Prieš pateikiant užsakymą skambinantysis išgirsta pilną perskaitymą",
+        "phoneOrderLabel": "Telefono užsakymas"
+      },
+      "handoff": {
+        "eyebrow": "Perdavimo ribos",
+        "title": "DI tvarko užsakymus — jūsų komanda tvarko visa kita",
+        "subtitle": "Nabil laikosi užsakymo eigos ir neįprastus ar jautrius prašymus perduoda jūsų personalui, o ne spėja. Jūs nusprendžiate, kur yra riba.",
+        "order": {
+          "badge": "Tvarko DI",
+          "title": "Standartiniai užsakymai",
+          "body": "Picos, rinkiniai, pristatymas, atsiėmimas, priedai, dydžiai, garnyrai, gėrimai — visa užsakymo eiga nuo pasisveikinimo iki patvirtinimo."
+        },
+        "allergy": {
+          "badge": "Perduodama personalui",
+          "title": "Klausimai apie alergenus",
+          "body": "Kai skambinantysis klausia apie sudedamąsias dalis, kryžminę taršą ar konkrečias alergijas, Nabil perduoda skambutį jūsų komandai."
+        },
+        "catering": {
+          "badge": "Perduodama personalui",
+          "title": "Aptarnavimas ir specialūs prašymai",
+          "body": "Dideli aptarnavimo užsakymai, individualūs prašymai, skundai ar bet kas, kas nepatenka į standartinį meniu — skambutis perduodamas jūsų personalui."
+        }
+      },
       "dashboard": {
         "eyebrow": "Jūsų valdymo skydelis",
         "title": "Matykite kiekvieną skambutį, girdėkite kiekvieną žodį",
@@ -7305,6 +7363,12 @@
         "cta": "Pradėkite",
         "note": "Kainos nurodytos JAV doleriais. Mėnesinis atsiskaitymas per Stripe. Atšaukite bet kada."
       },
+      "tryLive": {
+        "eyebrow": "Išbandykite gyvai",
+        "title": "Paskambinkite DI ir pateikite bandomąjį užsakymą",
+        "body": "Patirkite Nabil AI patys — paskambinkite mūsų demonstracine linija, pateikite užsakymą iš tikro meniu ir pamatykite, kaip tai tiksliai veikia. Joks tikras užsakymas nebus pateiktas.",
+        "note": "Demonstracinė linija — skambučio trukmės limitas 4 minutės. Atsiliepia gyvas Nabil AI agentas."
+      },
       "faq": {
         "title": "Dažnai užduodami klausimai",
         "q1": "Kaip Nabil priima užsakymą?",
@@ -7322,7 +7386,11 @@
         "q7": "Kaip skaičiuojamas atsiskaitymas?",
         "a7": "Mokate 0,60 USD per skambučio minutę arba mėnesinį minimumą 249,99 USD — kas yra aukščiau. Minimumas apima apie 416 minučių. Kiekvienas skambutis suapvalinamas į viršų. Stebėkite naudojimą realiu laiku.",
         "q8": "Ar galiu atšaukti bet kada?",
-        "a8": "Taip. Nabil atsiskaitomas kas mėnesį per Stripe be ilgalaikės sutarties. Atšaukite iš valdymo skydelio bet kada ir jūsų linija lieka aktyvi iki atsiskaitymo periodo pabaigos."
+        "a8": "Taip. Nabil atsiskaitomas kas mėnesį per Stripe be ilgalaikės sutarties. Atšaukite iš valdymo skydelio bet kada ir jūsų linija lieka aktyvi iki atsiskaitymo periodo pabaigos.",
+        "q9": "Ar kada nors atsiliepia tikras žmogus?",
+        "a9": "Nabil tvarko standartinę užsakymo eigą, o jūs nusprendžiate, kada perduoti. Skundo, specialaus prašymo ar bet ko, kas nepatenka į meniu, atveju skambutis perduodamas jūsų komandai. Skambinantysis niekada neįstringa cikle.",
+        "q10": "Ar tai veikia restoranams su keliomis vietomis?",
+        "a10": "Taip. Kiekviena vieta turi savo telefono numerį su savo meniu, darbo valandomis ir nustatymais. Analitika apibendrinama pagal vietą, kad matytumėte skambučių apimtį, konversiją ir vidutinį užsakymą kiekvienai parduotuvei."
       },
       "finalCta": {
         "title": "Pasirengę leisti Nabil atsiliepti į telefoną?",

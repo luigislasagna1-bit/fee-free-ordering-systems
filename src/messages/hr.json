@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Nije poslana — {reason}",
       "latestOfTotal": "Zadnjih {shown} od {total}",
       "fullHistoryLink": "Pogledaj cijelu povijest narudžbi — starije narudžbe, rasponi datuma i izvoz",
-      "searchAllHistory": "Pretraži „{query}” u cijeloj povijesti narudžbi"
+      "searchAllHistory": "Pretraži „{query}” u cijeloj povijesti narudžbi",
+      "awaitingPayment": "U čekanju na plaćanje",
+      "awaitingPaymentHelp": "Kupac nije završio plaćanje — bez uplata, nije poslano u kuhinju."
     },
     "customers": {
       "title": "Kupci",
@@ -7239,6 +7241,62 @@
           "body": "Sustav za simulaciju pokreće stvarne scenarije naručivanja uz svako ažuriranje — pizze pola-pola, kombinacije, rubne slučajeve — prije nego što dođe do vaše telefonske linije."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Problem",
+        "title": "Telefon je vaš najčešće propušteni kanal",
+        "subtitle": "Svaki restoran poznaje taj osjećaj: telefon zvoni tijekom radnog vremena, a nema tko odgovoriti. Ti pozivi dolaze od stalnih gostiju, velikih narudžbi, gostiju koji radije razgovaraju — a umjesto toga završe izravno u govornoj pošti ili u aplikaciji tržišta.",
+        "stat1": {
+          "value": "30%",
+          "label": "poziva propušteno u vršnim satima"
+        },
+        "stat2": {
+          "value": "25 – 50 USD",
+          "label": "prosječan izgubljeni prihod po propuštenom pozivu"
+        },
+        "stat3": {
+          "value": "1 od 4",
+          "label": "pozivatelja se više ne javi nakon što ostane bez odgovora"
+        }
+      },
+      "demo": {
+        "heading": "Pogledajte kako Nabil prima stvarnu narudžbu",
+        "subheading": "Složena narudžba pizze pola-pola s popustom na kombinaciju i dostavom — obrađena od početka do kraja za manje od dvije minute.",
+        "play": "Pokreni demo",
+        "replay": "Ponovno pokreni",
+        "pause": "Pauza",
+        "live": "Uživo poziv",
+        "orderHeading": "Sažetak narudžbe"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Za vaše goste",
+        "title": "Od glasa do kuhinje za nekoliko sekundi",
+        "body1": "Vaši gosti nazivaju broj koji već poznaju, naruče vlastitim riječima i čuju narudžbu pročitanu natrag — bez aplikacije za preuzimanje, bez dešifriranja jelovnika, bez glazbe za vrijeme čekanja.",
+        "body2": "Potvrđena narudžba ide izravno na vaš kuhinjski zaslon i printer računa, potpuno jednako kao narudžba s weba. Vaše osoblje nikada ne podiže telefon.",
+        "bullet1": "Bez aplikacije, bez računa, bez trenja — samo telefonski poziv",
+        "bullet2": "Narudžba se automatski potvrđuje i ispisuje",
+        "bullet3": "Pozivatelj čuje potpuno ponavljanje narudžbe prije nego što bude poslana",
+        "phoneOrderLabel": "Telefonska narudžba"
+      },
+      "handoff": {
+        "eyebrow": "Granice predaje",
+        "title": "AI se brine o narudžbama — vaš tim brine o svemu ostalom",
+        "subtitle": "Nabil prati tijek narudžbe i neuobičajene ili osjetljive zahtjeve prosljeđuje vašem osoblju umjesto da nagađa. Vi odlučujete gdje je granica.",
+        "order": {
+          "badge": "AI se brine",
+          "title": "Standardne narudžbe",
+          "body": "Pizze, kombinacije, dostava, preuzimanje, dodaci, veličine, prilozi, pića — cijeli tijek naručivanja od pozdrava do potvrde."
+        },
+        "allergy": {
+          "badge": "Prosljeđuje osoblju",
+          "title": "Pitanja o alergijama",
+          "body": "Kada pozivatelj pita o sastojcima, unakrsnoj kontaminaciji ili određenim alergenima, Nabil prosljeđuje poziv vašem timu."
+        },
+        "catering": {
+          "badge": "Prosljeđuje osoblju",
+          "title": "Catering i posebni zahtjevi",
+          "body": "Velike catering narudžbe, prilagođeni zahtjevi, pritužbe ili bilo što izvan standardnog jelovnika — poziv ide vašem osoblju."
+        }
+      },
       "dashboard": {
         "eyebrow": "Vaša nadzorna ploča",
         "title": "Pogledajte svaki poziv, čujte svaku riječ",
@@ -7305,6 +7363,12 @@
         "cta": "Počnite",
         "note": "Cijene su u američkim dolarima. Mjesečna naplata putem Stripe-a. Otkažite bilo kada."
       },
+      "tryLive": {
+        "eyebrow": "Isprobajte uživo",
+        "title": "Nazovite AI i napravite testnu narudžbu",
+        "body": "Doživite Nabil AI iz prve ruke — nazovite našu demo liniju, naručite sa stvarnog jelovnika i vidite točno kako funkcionira. Neće biti izvršena stvarna narudžba.",
+        "note": "Demo linija — ograničenje poziva 4 minute. Odgovara vam agent Nabil AI uživo."
+      },
       "faq": {
         "title": "Često postavljana pitanja",
         "q1": "Kako Nabil prima narudžbu?",
@@ -7322,7 +7386,11 @@
         "q7": "Kako se izračunava fakturiranje?",
         "a7": "Plaćate 0,60 USD po minuti poziva ili mjesečni minimum 249,99 USD — višu svotu. Minimum uključuje oko 416 minuta. Svaki poziv se zaokružuje na gore. Pratite potrošnju u stvarnom vremenu.",
         "q8": "Mogu li otkazati bilo kada?",
-        "a8": "Da. Nabil se naplaćuje mjesečno putem Stripe-a bez dugoročnog ugovora. Otkažite s nadzorne ploče i vaša linija ostaje aktivna do kraja obračunskog razdoblja."
+        "a8": "Da. Nabil se naplaćuje mjesečno putem Stripe-a bez dugoročnog ugovora. Otkažite s nadzorne ploče i vaša linija ostaje aktivna do kraja obračunskog razdoblja.",
+        "q9": "Javlja li se ikada stvarna osoba?",
+        "a9": "Nabil se brine o standardnom tijeku narudžbe, a vi odlučujete kada dolazi do predaje. Za pritužbu, poseban zahtjev ili bilo što izvan jelovnika, poziv se prosljeđuje vašem timu. Pozivatelj nikada ne ostane zarobljen u petlji.",
+        "q10": "Radi li za restorane s više lokacija?",
+        "a10": "Da. Svaka lokacija dobiva vlastiti telefonski broj s vlastitim jelovnikom, radnim vremenom i postavkama. Analitika se zbraja po lokaciji, tako da vidite broj poziva, konverziju i prosječan iznos narudžbe po lokalu."
       },
       "finalCta": {
         "title": "Spremni da Nabil odgovara na telefon?",

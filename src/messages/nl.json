@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Niet verzonden — {reason}",
       "latestOfTotal": "Laatste {shown} van {total}",
       "fullHistoryLink": "Bekijk de volledige bestelgeschiedenis — oudere bestellingen, datumbereiken & export",
-      "searchAllHistory": "Zoek “{query}” in de volledige bestelgeschiedenis"
+      "searchAllHistory": "Zoek “{query}” in de volledige bestelgeschiedenis",
+      "awaitingPayment": "Wacht op betaling",
+      "awaitingPaymentHelp": "Klant heeft kassa niet afgerond — geen betaling vastgelegd, niet naar keuken verzonden."
     },
     "customers": {
       "title": "Klanten",
@@ -7239,6 +7241,62 @@
           "body": "Een simulatiesysteem voert bij elke update echte bestelscenario's uit — half-om-half pizza's, combo's, randgevallen — voordat het uw telefoonlijn bereikt."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Het probleem",
+        "title": "De telefoon is uw meest gemiste kanaal",
+        "subtitle": "Elk restaurant kent het gevoel: de telefoon gaat tijdens de service en er is niemand om op te nemen. Die gesprekken zijn vaste klanten, grote bestellingen, gasten die liever bellen — en ze komen rechtstreeks in de voicemail terecht of gaan naar de marketplace-app in plaats daarvan.",
+        "stat1": {
+          "value": "30%",
+          "label": "van de gesprekken gemist tijdens piekuren"
+        },
+        "stat2": {
+          "value": "US$ 25–US$ 50",
+          "label": "gemiddelde omzet verloren per gemist gesprek"
+        },
+        "stat3": {
+          "value": "1 op de 4",
+          "label": "bellers belt niet terug nadat ze onbeantwoord bleven"
+        }
+      },
+      "demo": {
+        "heading": "Bekijk hoe Nabil een echte bestelling opneemt",
+        "subheading": "Een complexe half-om-half pizzabestelling met combokorting en bezorging — van begin tot eind afgehandeld in minder dan twee minuten.",
+        "play": "Demo afspelen",
+        "replay": "Opnieuw afspelen",
+        "pause": "Pauzeren",
+        "live": "Live gesprek",
+        "orderHeading": "Bestelsamenvatting"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Voor uw gasten",
+        "title": "Van stem naar keuken in enkele seconden",
+        "body1": "Uw gasten bellen het nummer dat ze al kennen, plaatsen de bestelling in hun eigen woorden en horen deze teruggelezen — geen app om te downloaden, geen menu om te ontcijferen, geen wachtmuziek.",
+        "body2": "De bevestigde bestelling gaat rechtstreeks naar uw keukenscherm en bonprinter, precies zoals een websitebestelling. Uw personeel neemt nooit de telefoon op.",
+        "bullet1": "Geen app, geen account, geen wrijving — gewoon een telefoongesprek",
+        "bullet2": "Bestelling automatisch bevestigd en afgedrukt",
+        "bullet3": "De beller hoort een volledige terugkoppeling voordat de bestelling wordt geplaatst",
+        "phoneOrderLabel": "Telefonische bestelling"
+      },
+      "handoff": {
+        "eyebrow": "Overdrachtsgrenzen",
+        "title": "De AI handelt bestellingen af — uw team handelt al het andere af",
+        "subtitle": "Nabil volgt de bestelflow en geeft ongebruikelijke of gevoelige verzoeken door aan uw personeel in plaats van te gokken. U bepaalt waar de grens ligt.",
+        "order": {
+          "badge": "Afgehandeld door AI",
+          "title": "Standaardbestellingen",
+          "body": "Pizza's, combo's, bezorging, afhalen, toppings, maten, bijgerechten, dranken — de volledige bestelflow, van begroeting tot bevestiging."
+        },
+        "allergy": {
+          "badge": "Doorverbonden naar personeel",
+          "title": "Vragen over allergieën",
+          "body": "Als een beller vraagt over ingrediënten, kruisbesmetting of specifieke allergieën, verbindt Nabil het gesprek door naar uw team."
+        },
+        "catering": {
+          "badge": "Doorverbonden naar personeel",
+          "title": "Catering & speciale verzoeken",
+          "body": "Grote cateringbestellingen, aangepaste verzoeken, klachten of alles buiten het standaardmenu — het gesprek gaat naar uw personeel."
+        }
+      },
       "dashboard": {
         "eyebrow": "Uw dashboard",
         "title": "Bekijk elk gesprek, beluister elk woord",
@@ -7305,6 +7363,12 @@
         "cta": "Aan de slag",
         "note": "Prijzen in Amerikaanse dollars. Maandelijks gefactureerd via Stripe. Op elk moment opzegbaar."
       },
+      "tryLive": {
+        "eyebrow": "Probeer het live",
+        "title": "Bel de AI en plaats een testbestelling",
+        "body": "Ervaar Nabil AI zelf — bel onze demolijn, plaats een bestelling vanuit een echt menu en zie precies hoe het werkt. Er wordt geen echte bestelling geplaatst.",
+        "note": "Demolijn — limiet van 4 minuten per gesprek. Beantwoord door de live Nabil AI-agent."
+      },
       "faq": {
         "title": "Veelgestelde vragen",
         "q1": "Hoe neemt Nabil een bestelling op?",
@@ -7322,7 +7386,11 @@
         "q7": "Hoe wordt de facturering berekend?",
         "a7": "U betaalt US$ 0,60 per belminuut of het maandelijkse minimum van US$ 249,99, afhankelijk van wat hoger is. Het minimum bevat ongeveer 416 minuten. Elk gesprek wordt naar boven afgerond. Volg uw gebruik in realtime.",
         "q8": "Kan ik op elk moment opzeggen?",
-        "a8": "Ja. Nabil wordt maandelijks gefactureerd via Stripe zonder langlopend contract. Annuleer op uw dashboard en uw lijn blijft actief tot het einde van de factureringsperiode."
+        "a8": "Ja. Nabil wordt maandelijks gefactureerd via Stripe zonder langlopend contract. Annuleer op uw dashboard en uw lijn blijft actief tot het einde van de factureringsperiode.",
+        "q9": "Neemt er ooit een echt persoon op?",
+        "a9": "Nabil handelt de standaard bestelflow af, en u bepaalt wanneer het gesprek wordt doorverbonden. Bij een klacht, een speciaal verzoek of alles buiten het menu wordt het gesprek doorverbonden naar uw team. Een beller raakt nooit vast in een lus.",
+        "q10": "Werkt het voor restaurants met meerdere vestigingen?",
+        "a10": "Ja. Elke vestiging krijgt zijn eigen telefoonnummer met eigen menu, openingstijden en instellingen. Analyses worden per vestiging samengevoegd, zodat u het gespreksvolume, de conversie en de gemiddelde omzet per zaak kunt zien."
       },
       "finalCta": {
         "title": "Klaar om Nabil uw telefoon te laten opnemen?",

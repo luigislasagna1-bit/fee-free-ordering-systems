@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Ni poslano — {reason}",
       "latestOfTotal": "Zadnjih {shown} od {total}",
       "fullHistoryLink": "Ogled celotne zgodovine naročil — starejša naročila, datumska obdobja in izvoz",
-      "searchAllHistory": "Išči »{query}« po celotni zgodovini naročil"
+      "searchAllHistory": "Išči »{query}« po celotni zgodovini naročil",
+      "awaitingPayment": "Čakanje na plačilo",
+      "awaitingPaymentHelp": "Stranka ni zaključila plačila — brez zajete plačila, ni poslano v kuhinjo."
     },
     "customers": {
       "title": "Stranke",
@@ -7239,6 +7241,62 @@
           "body": "Simulacijski sistem izvaja resnične scenarije naročanja ob vsaki posodobitvi — pol-pol pice, komboji, mejni primeri — preden doseže vašo telefonsko linijo."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Težava",
+        "title": "Telefon je vaš najpogosteje zamujeni kanal",
+        "subtitle": "Vsaka restavracija pozna ta občutek: telefon zvoni med obratovanjem, pa ni nikogar, ki bi se oglasil. Ti klici prihajajo od stalnih strank, velikih naročil, gostov, ki raje govorijo — namesto tega pa končajo naravnost v govorni predal ali v aplikaciji tretje strani.",
+        "stat1": {
+          "value": "30 %",
+          "label": "klicev zamujenih v konicah"
+        },
+        "stat2": {
+          "value": "25 – 50 USD",
+          "label": "povprečno izgubljen prihodek na zamujen klic"
+        },
+        "stat3": {
+          "value": "1 od 4",
+          "label": "klicateljev se ne oglasi znova, če ostane brez odgovora"
+        }
+      },
+      "demo": {
+        "heading": "Oglejte si, kako Nabil sprejme resnično naročilo",
+        "subheading": "Zapleteno naročilo pol-pol pice s popustom na kombo in dostavo — obravnavano od začetka do konca v manj kot dveh minutah.",
+        "play": "Predvajaj demo",
+        "replay": "Predvajaj znova",
+        "pause": "Premor",
+        "live": "Klic v živo",
+        "orderHeading": "Povzetek naročila"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Za vaše goste",
+        "title": "Od glasu do kuhinje v nekaj sekundah",
+        "body1": "Vaši gosti pokličejo številko, ki jo že poznajo, naročilo oddajo s svojimi besedami in ga slišijo ponovljenega nazaj — brez aplikacije za prenos, brez razvozlavanja jedilnika, brez glasbe med čakanjem.",
+        "body2": "Potrjeno naročilo gre neposredno na vaš kuhinjski zaslon in tiskalnik računov, popolnoma enako kot naročilo s spletne strani. Vaše osebje nikoli ne dvigne telefona.",
+        "bullet1": "Brez aplikacije, brez računa, brez trenja — samo telefonski klic",
+        "bullet2": "Naročilo se samodejno potrdi in natisne",
+        "bullet3": "Klicatelj pred oddajo naročila sliši popoln ponovljen povzetek",
+        "phoneOrderLabel": "Telefonsko naročilo"
+      },
+      "handoff": {
+        "eyebrow": "Meje predaje",
+        "title": "AI skrbi za naročila — vaša ekipa skrbi za vse ostalo",
+        "subtitle": "Nabil sledi poteku naročila in nenavadne ali občutljive zahteve preda vašemu osebju namesto ugibanja. Vi odločate, kje je meja.",
+        "order": {
+          "badge": "Skrbi AI",
+          "title": "Standardna naročila",
+          "body": "Pice, kombiji, dostava, prevzem, dodatki, velikosti, priloge, pijače — celoten potek naročanja od pozdrava do potrditve."
+        },
+        "allergy": {
+          "badge": "Preda osebju",
+          "title": "Vprašanja o alergijah",
+          "body": "Ko klicatelj vpraša o sestavinah, navzkrižni kontaminaciji ali določenih alergenih, Nabil klic preda vaši ekipi."
+        },
+        "catering": {
+          "badge": "Preda osebju",
+          "title": "Catering in posebne zahteve",
+          "body": "Velika catering naročila, prilagojene zahteve, pritožbe ali karkoli zunaj standardnega jedilnika — klic gre vašemu osebju."
+        }
+      },
       "dashboard": {
         "eyebrow": "Vaša nadzorna plošča",
         "title": "Oglejte si vsak klic, slišite vsako besedo",
@@ -7305,6 +7363,12 @@
         "cta": "Začnite",
         "note": "Cene so v ameriških dolarjih. Mesečno zaračunavanje prek Stripe. Prekličite kadarkoli."
       },
+      "tryLive": {
+        "eyebrow": "Preizkusite v živo",
+        "title": "Pokličite AI in oddajte testno naročilo",
+        "body": "Doživite Nabil AI iz prve roke — pokličite našo demo linijo, oddajte naročilo z resničnega jedilnika in poglejte natančno, kako deluje. Nobeno resnično naročilo ne bo oddano.",
+        "note": "Demo linija — omejitev klica 4 minute. Odgovori živi agent Nabil AI."
+      },
       "faq": {
         "title": "Pogosto zastavljena vprašanja",
         "q1": "Kako Nabil sprejme naročilo?",
@@ -7322,7 +7386,11 @@
         "q7": "Kako se izračuna zaračunavanje?",
         "a7": "Plačate 0,60 USD na minuto klica ali mesečni minimum 249,99 USD — višji znesek. Minimum vključuje približno 416 minut. Vsak klic se zaokroži navzgor. Spremljajte uporabo v realnem času.",
         "q8": "Ali lahko kadarkoli prekličem?",
-        "a8": "Da. Nabil se zaračunava mesečno prek Stripe brez dolgoročne pogodbe. Prekličite z nadzorne plošče kadarkoli in vaša linija ostane aktivna do konca obračunskega obdobja."
+        "a8": "Da. Nabil se zaračunava mesečno prek Stripe brez dolgoročne pogodbe. Prekličite z nadzorne plošče kadarkoli in vaša linija ostane aktivna do konca obračunskega obdobja.",
+        "q9": "Se kdaj oglasi resnična oseba?",
+        "a9": "Nabil skrbi za standardni potek naročila, vi pa odločate, kdaj pride do predaje. Za pritožbo, posebno zahtevo ali karkoli zunaj jedilnika se klic preda vaši ekipi. Klicatelj nikoli ne obtiči v zanki.",
+        "q10": "Ali deluje za restavracije z več lokacijami?",
+        "a10": "Da. Vsaka lokacija dobi svojo telefonsko številko s svojim jedilnikom, delovnim časom in nastavitvami. Analitika se združuje po lokacijah, tako da vidite obseg klicev, konverzijo in povprečno naročilo na posamezno trgovino."
       },
       "finalCta": {
         "title": "Pripravljeni pustiti Nabil, da odgovori na telefon?",

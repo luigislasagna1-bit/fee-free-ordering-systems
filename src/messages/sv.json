@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Inte skickad — {reason}",
       "latestOfTotal": "Senaste {shown} av {total}",
       "fullHistoryLink": "Se hela orderhistoriken — äldre beställningar, datumintervall & export",
-      "searchAllHistory": "Sök efter ”{query}” i hela orderhistoriken"
+      "searchAllHistory": "Sök efter ”{query}” i hela orderhistoriken",
+      "awaitingPayment": "Väntar på betalning",
+      "awaitingPaymentHelp": "Kunden avslutade inte betalningen — ingen betalning inhemtad, inte skickad till köket."
     },
     "customers": {
       "title": "Kunder",
@@ -7239,6 +7241,62 @@
           "body": "Ett simuleringssystem kör riktiga beställningsscenarier vid varje uppdatering — halv-och-halv-pizzor, kombos, specialfall — innan det når din telefonlinje."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Problemet",
+        "title": "Telefonen är din mest missade kanal",
+        "subtitle": "Varje restaurang känner igen känslan: telefonen ringer under passet och det finns ingen som svarar. De samtalen är stamkunder, stora beställningar, gäster som föredrar att prata — och de går rakt till röstbrevlådan eller till marketplace-appen istället.",
+        "stat1": {
+          "value": "30%",
+          "label": "av samtal missas under rusningstid"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "genomsnittlig förlorad summa per missat samtal"
+        },
+        "stat3": {
+          "value": "1 av 4",
+          "label": "uppringare ringer inte tillbaka efter att ha blivit obesvarade"
+        }
+      },
+      "demo": {
+        "heading": "Se Nabil ta en riktig beställning",
+        "subheading": "En komplex halv-och-halv-pizzabeställning med kombo-rabatt och leverans — hanterad från start till slut på under två minuter.",
+        "play": "Spela upp demo",
+        "replay": "Spela igen",
+        "pause": "Pausa",
+        "live": "Livesamtal",
+        "orderHeading": "Ordersammanfattning"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "För dina gäster",
+        "title": "Från röst till köket på sekunder",
+        "body1": "Dina gäster ringer numret de redan känner till, lägger beställningen med sina egna ord och hör den läsas upp — ingen app att ladda ner, ingen meny att tyda, ingen väntemusik.",
+        "body2": "Den bekräftade beställningen går direkt till din köksskärm och kvittoskrivare, precis som en webbplatsbeställning. Din personal behöver aldrig svara i telefon.",
+        "bullet1": "Ingen app, inget konto, ingen friktion — bara ett telefonsamtal",
+        "bullet2": "Beställning bekräftad och utskriven automatiskt",
+        "bullet3": "Uppringaren hör en fullständig uppläsning innan beställningen läggs",
+        "phoneOrderLabel": "Telefonbeställning"
+      },
+      "handoff": {
+        "eyebrow": "Överlämningsgränser",
+        "title": "AI:n hanterar beställningar — ditt team hanterar allt annat",
+        "subtitle": "Nabil följer beställningsflödet och lämnar över ovanliga eller känsliga förfrågningar till din personal istället för att gissa. Du bestämmer var gränsen går.",
+        "order": {
+          "badge": "AI hanterar",
+          "title": "Standardbeställningar",
+          "body": "Pizzor, kombos, leverans, avhämtning, toppings, storlekar, tillbehör, drycker — hela beställningsflödet från hälsning till bekräftelse."
+        },
+        "allergy": {
+          "badge": "Kopplas till personal",
+          "title": "Allergifrågor",
+          "body": "När en uppringare frågar om ingredienser, korskontaminering eller specifika allergier kopplar Nabil samtalet till ditt team."
+        },
+        "catering": {
+          "badge": "Kopplas till personal",
+          "title": "Catering och specialförfrågningar",
+          "body": "Stora cateringbeställningar, specialförfrågningar, klagomål eller något utanför standardmenyn — samtalet går till din personal."
+        }
+      },
       "dashboard": {
         "eyebrow": "Din instrumentpanel",
         "title": "Se varje samtal, hör varje ord",
@@ -7305,6 +7363,12 @@
         "cta": "Kom igång",
         "note": "Priser i amerikanska dollar. Månadsvis fakturering via Stripe. Avsluta när som helst."
       },
+      "tryLive": {
+        "eyebrow": "Testa live",
+        "title": "Ring AI:n och lägg en testbeställning",
+        "body": "Upplev Nabil AI själv — ring vår demolinje, lägg en beställning från en riktig meny och se exakt hur det fungerar. Ingen riktig beställning kommer att läggas.",
+        "note": "Demolinje — 4 minuters samtalsgräns. Besvaras av den live Nabil AI-agenten."
+      },
       "faq": {
         "title": "Vanliga frågor",
         "q1": "Hur tar Nabil en beställning?",
@@ -7322,7 +7386,11 @@
         "q7": "Hur beräknas faktureringen?",
         "a7": "Du betalar 0,60 USD per samtalsminut eller det månatliga minimumet på 249,99 USD, beroende på vad som är högst. Minimumet inkluderar cirka 416 minuter. Varje samtal avrundas uppåt. Följ din användning i realtid.",
         "q8": "Kan jag avsluta när som helst?",
-        "a8": "Ja. Nabil faktureras månadsvis via Stripe utan långtidsavtal. Avsluta från din instrumentpanel och din linje förblir aktiv till slutet av faktureringsperioden."
+        "a8": "Ja. Nabil faktureras månadsvis via Stripe utan långtidsavtal. Avsluta från din instrumentpanel och din linje förblir aktiv till slutet av faktureringsperioden.",
+        "q9": "Svarar en riktig person någonsin?",
+        "a9": "Nabil hanterar det vanliga beställningsflödet, och du bestämmer när det ska kopplas vidare. Vid ett klagomål, en specialförfrågan eller något utanför menyn kopplas samtalet till ditt team. Uppringaren fastnar aldrig i en loop.",
+        "q10": "Fungerar det för restauranger med flera platser?",
+        "a10": "Ja. Varje plats får sitt eget telefonnummer med egen meny, öppettider och inställningar. Analyserna samlas per plats så att du ser samtalsvolym, konvertering och genomsnittlig summa per butik."
       },
       "finalCta": {
         "title": "Redo att låta Nabil svara i telefonen?",

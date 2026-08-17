@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Nincs elküldve — {reason}",
       "latestOfTotal": "Legutóbbi {shown} / {total}",
       "fullHistoryLink": "Teljes rendelési előzmények — régebbi rendelések, dátumtartományok és exportálás",
-      "searchAllHistory": "„{query}” keresése a teljes rendelési előzményekben"
+      "searchAllHistory": "„{query}” keresése a teljes rendelési előzményekben",
+      "awaitingPayment": "Fizetésre vár",
+      "awaitingPaymentHelp": "Az ügyfél nem fejezte be a fizetést — nem számított fel fizetés, nem küldve a konyhára."
     },
     "customers": {
       "title": "Ügyfelek",
@@ -7239,6 +7241,62 @@
           "body": "Egy szimulációs rendszer valós rendelési forgatókönyveket futtat minden frissítésnél — félig-félig pizzák, kombók, szélsőséges esetek — mielőtt a telefonvonaladra kerülne."
         }
       },
+      "missedCalls": {
+        "eyebrow": "A probléma",
+        "title": "A telefon a leggyakrabban kihagyott csatornád",
+        "subtitle": "Minden étterem ismeri az érzést: a telefon csörög a csúcsidőben, és nincs, aki felvegye. Ezek a hívások törzsvendégek, nagy rendelések, olyan vendégek, akik szívesebben beszélnek — és ehelyett egyenesen a hangpostára vagy a piactér alkalmazásba kerülnek.",
+        "stat1": {
+          "value": "30%",
+          "label": "csúcsidőben kihagyott hívás"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "átlagos elveszett bevétel kihagyott hívásonként"
+        },
+        "stat3": {
+          "value": "4-ből 1",
+          "label": "hívó nem hív vissza, ha nem veszik fel a telefont"
+        }
+      },
+      "demo": {
+        "heading": "Nézd meg, ahogy Nabil felvesz egy valódi rendelést",
+        "subheading": "Egy összetett fél-fél pizza rendelés kombókedvezménnyel és kiszállítással — kevesebb mint két perc alatt, elejétől a végéig.",
+        "play": "Demó lejátszása",
+        "replay": "Újrajátszás",
+        "pause": "Szünet",
+        "live": "Élő hívás",
+        "orderHeading": "Rendelés összefoglalója"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Vendégeidnek",
+        "title": "A hangtól a konyháig másodpercek alatt",
+        "body1": "Vendégeid a már ismert számot hívják, saját szavaikkal adják le a rendelést, és visszahallják azt — nincs letöltendő alkalmazás, nincs menüfejtés, nincs várakoztató zene.",
+        "body2": "A megerősített rendelés egyenesen a konyhakijelződre és a jegynyomtatóra kerül, pontosan úgy, mint egy webes rendelés. A személyzeted soha nem veszi fel a telefont.",
+        "bullet1": "Nincs alkalmazás, nincs fiók, nincs súrlódás — csak egy telefonhívás",
+        "bullet2": "A rendelés automatikusan megerősítésre kerül és kinyomtatódik",
+        "bullet3": "A hívó a rendelés leadása előtt teljes visszaolvasást hall",
+        "phoneOrderLabel": "Telefonos rendelés"
+      },
+      "handoff": {
+        "eyebrow": "Átadási határok",
+        "title": "Az AI kezeli a rendeléseket — a csapatod mindent mást",
+        "subtitle": "A Nabil követi a rendelési folyamatot, a szokatlan vagy kényes kéréseket pedig találgatás helyett átadja a személyzetednek. Te döntöd el, hol húzódik a határ.",
+        "order": {
+          "badge": "Az AI kezeli",
+          "title": "Standard rendelések",
+          "body": "Pizzák, kombók, kiszállítás, elvitel, feltétek, méretek, körítések, italok — a teljes rendelési folyamat az üdvözléstől a megerősítésig."
+        },
+        "allergy": {
+          "badge": "Átadja a személyzetnek",
+          "title": "Allergia kérdések",
+          "body": "Ha a hívó összetevőkről, keresztszennyeződésről vagy konkrét allergénekről kérdez, a Nabil átadja a hívást a csapatodnak."
+        },
+        "catering": {
+          "badge": "Átadja a személyzetnek",
+          "title": "Catering és különleges kérések",
+          "body": "Nagy catering rendelések, egyedi kérések, panaszok, vagy bármi, ami a standard menün kívül esik — a hívás a személyzetedhez kerül."
+        }
+      },
       "dashboard": {
         "eyebrow": "Az irányítópultod",
         "title": "Láss minden hívást, hallj minden szót",
@@ -7305,6 +7363,12 @@
         "cta": "Kezdés",
         "note": "Az árak amerikai dollárban értendők. Havi számlázás a Stripe-on keresztül. Bármikor lemondható."
       },
+      "tryLive": {
+        "eyebrow": "Próbáld ki élőben",
+        "title": "Hívd fel az AI-t, és adj le egy teszt rendelést",
+        "body": "Tapasztald meg a Nabil AI-t a saját bőrödön — hívd fel a demó vonalunkat, adj le egy rendelést egy valódi étlapról, és lásd pontosan, hogyan működik. Valódi rendelés nem kerül leadásra.",
+        "note": "Demó vonal — 4 perces hívási limit. Az élő Nabil AI ügynök válaszol."
+      },
       "faq": {
         "title": "Gyakran ismételt kérdések",
         "q1": "Hogyan vesz fel rendelést a Nabil?",
@@ -7322,7 +7386,11 @@
         "q7": "Hogyan számítják ki a számlázást?",
         "a7": "0,60 USD-t fizet híváspercenként vagy a havi 249,99 USD minimumot — amelyik magasabb. A minimum körülbelül 416 percet tartalmaz. Minden hívás a következő egész percre kerekítődik. Kövesse nyomon használatát valós időben.",
         "q8": "Bármikor lemondhatom?",
-        "a8": "Igen. A Nabil havonta kerül számlázásra a Stripe-on keresztül, hosszú távú szerződés nélkül. Mondja le az irányítópulton bármikor, és vonala az elszámolási időszak végéig aktív marad."
+        "a8": "Igen. A Nabil havonta kerül számlázásra a Stripe-on keresztül, hosszú távú szerződés nélkül. Mondja le az irányítópulton bármikor, és vonala az elszámolási időszak végéig aktív marad.",
+        "q9": "Felveszi valaha egy valódi ember a telefont?",
+        "a9": "A Nabil kezeli a standard rendelési folyamatot, te pedig eldöntöd, mikor kerüljön átadásra. Panasz, különleges kérés vagy bármi, ami a menün kívül esik, esetén a hívás átkerül a csapatodhoz. A hívó soha nem ragad be egy hurokba.",
+        "q10": "Működik több telephelyes éttermek esetén is?",
+        "a10": "Igen. Minden telephely saját telefonszámot kap saját menüvel, nyitvatartással és beállításokkal. Az elemzések telephelyenként összesítve jelennek meg, így látod a hívásmennyiséget, a konverziót és az átlagos kosárértéket üzletenként."
       },
       "finalCta": {
         "title": "Készen áll, hogy Nabil vegye fel a telefont?",

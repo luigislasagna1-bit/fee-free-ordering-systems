@@ -11,6 +11,7 @@ import { formatCurrency } from "@/lib/utils";
 import { getOrderRewardSummary } from "@/lib/reward-ledger";
 import { paymentMethodLabelKey } from "@/lib/payment-label";
 import { formatFullDeliveryAddress } from "@/lib/address-format";
+import { AWAITING_PAYMENT, orderDisplayStatus } from "@/lib/order-display-status";
 import { ShipdayDispatchCard } from "./ShipdayDispatchCard";
 
 /**
@@ -32,6 +33,7 @@ const statusColors: Record<string, string> = {
   completed: "bg-gray-100 text-gray-600",
   rejected: "bg-red-100 text-red-700",
   cancelled: "bg-red-100 text-red-700",
+  [AWAITING_PAYMENT]: "bg-slate-200 text-slate-700",
 };
 
 export default async function AdminOrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -73,7 +75,11 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
   })();
   const tz = order.restaurant?.timezone ?? undefined;
   const money = (n: number) => formatCurrency(n, currency);
-  const statusLabel = (() => { try { return t(order.status as any); } catch { return order.status; } })();
+  const displayStatus = orderDisplayStatus(order);
+  const statusLabel = (() => {
+    const key = displayStatus === AWAITING_PAYMENT ? "awaitingPayment" : displayStatus;
+    try { return t(key as any); } catch { return displayStatus; }
+  })();
   const placedAt = order.createdAt.toLocaleString([], {
     timeZone: tz, weekday: "short", year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
   });
@@ -136,7 +142,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             {scope.isChain && order.restaurant?.name ? ` · ${order.restaurant.name}` : ""}
           </p>
         </div>
-        <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${statusColors[order.status] || "bg-gray-100 text-gray-600"}`}>
+        <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${statusColors[displayStatus] || "bg-gray-100 text-gray-600"}`}>
           {statusLabel}
         </span>
       </div>

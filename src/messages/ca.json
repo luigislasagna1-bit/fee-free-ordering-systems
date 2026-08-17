@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "No enviada — {reason}",
       "latestOfTotal": "Últimes {shown} de {total}",
       "fullHistoryLink": "Veure tot l'historial de comandes — comandes antigues, rangs de dates i exportació",
-      "searchAllHistory": "Cerca «{query}» a tot l'historial de comandes"
+      "searchAllHistory": "Cerca «{query}» a tot l'historial de comandes",
+      "awaitingPayment": "Esperant pagament",
+      "awaitingPaymentHelp": "El client no va acabar el checkout — no s'ha pres cap pagament, no s'ha enviat a la cuina."
     },
     "customers": {
       "title": "Clients",
@@ -7239,6 +7241,62 @@
           "body": "Un sistema de simulació executa escenaris de comanda reals amb cada actualització — pizzes meitat i meitat, combos, casos límit — abans que arribi a la teva línia telefònica."
         }
       },
+      "missedCalls": {
+        "eyebrow": "El problema",
+        "title": "El telèfon és el canal que més se us escapa",
+        "subtitle": "Tots els restaurants coneixen aquesta sensació: el telèfon sona durant el servei i no hi ha ningú per contestar. Aquestes trucades són clients habituals, comandes grans, clients que prefereixen parlar — i acaben directament a la bústia de veu o a l'aplicació del marketplace.",
+        "stat1": {
+          "value": "30%",
+          "label": "de les trucades es perden en hores punta"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "comanda mitjana perduda per trucada no atesa"
+        },
+        "stat3": {
+          "value": "1 de cada 4",
+          "label": "de qui truca no torna a trucar si no rep resposta"
+        }
+      },
+      "demo": {
+        "heading": "Mireu com Nabil pren una comanda real",
+        "subheading": "Una comanda complexa de pizza meitat i meitat amb un descompte de combo i lliurament — gestionada de principi a fi en menys de dos minuts.",
+        "play": "Reprodueix la demo",
+        "replay": "Torna a reproduir",
+        "pause": "Pausa",
+        "live": "Trucada en directe",
+        "orderHeading": "Resum de la comanda"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Per als vostres clients",
+        "title": "De la veu a la cuina en segons",
+        "body1": "Els vostres clients truquen al número que ja coneixen, fan la comanda amb les seves paraules i la senten repetida — sense descarregar cap aplicació, sense desxifrar el menú, sense música d'espera.",
+        "body2": "La comanda confirmada arriba directament a la pantalla de cuina i a la impressora de tiquets, exactament com una comanda del web. El vostre personal no ha de contestar mai el telèfon.",
+        "bullet1": "Sense aplicació, sense compte, sense fricció — només una trucada telefònica",
+        "bullet2": "Comanda confirmada i impresa automàticament",
+        "bullet3": "Qui truca escolta una lectura completa abans de fer la comanda",
+        "phoneOrderLabel": "Comanda telefònica"
+      },
+      "handoff": {
+        "eyebrow": "Límits de transferència",
+        "title": "La IA gestiona les comandes — el vostre equip gestiona la resta",
+        "subtitle": "Nabil segueix el flux de comanda i passa les peticions inusuals o delicades al vostre personal en lloc d'endevinar. Vosaltres decidiu on és el límit.",
+        "order": {
+          "badge": "Gestiona la IA",
+          "title": "Comandes estàndard",
+          "body": "Pizzes, combos, lliurament, recollida, ingredients, mides, acompanyaments, begudes — tot el flux de comanda des de la salutació fins a la confirmació."
+        },
+        "allergy": {
+          "badge": "Transfereix al personal",
+          "title": "Preguntes sobre al·lèrgies",
+          "body": "Quan un client pregunta sobre ingredients, contaminació creuada o al·lèrgies específiques, Nabil transfereix la trucada al vostre equip."
+        },
+        "catering": {
+          "badge": "Transfereix al personal",
+          "title": "Càtering i peticions especials",
+          "body": "Comandes grans de càtering, peticions personalitzades, queixes o qualsevol cosa fora del menú estàndard — la trucada es transfereix al vostre personal."
+        }
+      },
       "dashboard": {
         "eyebrow": "El teu tauler",
         "title": "Veu cada trucada, escolta cada paraula",
@@ -7305,6 +7363,12 @@
         "cta": "Comenceu",
         "note": "Preus en dòlars americans. Facturació mensual via Stripe. Cancel·leu en qualsevol moment."
       },
+      "tryLive": {
+        "eyebrow": "Proveu-ho en directe",
+        "title": "Truqueu a la IA i feu una comanda de prova",
+        "body": "Experimenteu Nabil AI en primera persona — truqueu a la nostra línia de demostració, feu una comanda d'un menú real i veieu exactament com funciona. No es farà cap comanda real.",
+        "note": "Línia de demostració — límit de trucada de 4 minuts. Respon l'agent Nabil AI en directe."
+      },
       "faq": {
         "title": "Preguntes freqüents",
         "q1": "Com pren Nabil una comanda?",
@@ -7322,7 +7386,11 @@
         "q7": "Com es calcula la facturació?",
         "a7": "Pagueu 0,60 USD per minut de trucada o el mínim mensual de 249,99 USD — el més alt. El mínim inclou unes 416 minuts. Cada trucada s'arrodoneix cap amunt. Feu seguiment de l'ús en temps real.",
         "q8": "Puc cancel·lar en qualsevol moment?",
-        "a8": "Sí. Nabil es factura mensualment via Stripe sense contracte a llarg termini. Cancel·leu des del tauler en qualsevol moment i la línia roman activa fins al final del període de facturació."
+        "a8": "Sí. Nabil es factura mensualment via Stripe sense contracte a llarg termini. Cancel·leu des del tauler en qualsevol moment i la línia roman activa fins al final del període de facturació.",
+        "q9": "Alguna vegada contesta una persona real?",
+        "a9": "Nabil gestiona el flux estàndard de comandes, i vosaltres decidiu quan transferir. Per a una queixa, una petició especial o qualsevol cosa fora del menú, la trucada es transfereix al vostre equip. Mai no atrapa qui truca en un bucle.",
+        "q10": "Funciona per a restaurants amb diverses ubicacions?",
+        "a10": "Sí. Cada ubicació té el seu propi número de telèfon amb el seu propi menú, horaris i configuració. Les analítiques s'agrupen per ubicació perquè pugueu veure el volum de trucades, la conversió i la comanda mitjana per local."
       },
       "finalCta": {
         "title": "Preparat per deixar Nabil contestar el telèfon?",

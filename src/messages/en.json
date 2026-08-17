@@ -1118,6 +1118,46 @@
     "phoneOrderNotPaid": "NOT PAID · {amount} due at {type}"
   },
   "admin": {
+    "orders": {
+      "title": "Orders",
+      "filter": "Filter",
+      "all": "All",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "preparing": "Preparing",
+      "ready": "Ready",
+      "completed": "Completed",
+      "rejected": "Rejected",
+      "cancelled": "Cancelled",
+      "orderNumber": "Order #",
+      "customer": "Customer",
+      "type": "Type",
+      "total": "Total",
+      "placedAt": "Placed at",
+      "status": "Status",
+      "actions": "Actions",
+      "accept": "Accept",
+      "reject": "Reject",
+      "markReady": "Mark ready",
+      "markComplete": "Mark complete",
+      "rejectReason": "Rejection reason",
+      "noOrders": "No orders yet",
+      "viewDetails": "View details",
+      "hasNotes": "Has notes",
+      "shipdayTitle": "ShipDay delivery",
+      "shipdaySent": "Sent to ShipDay",
+      "shipdayNotSent": "Not sent to ShipDay",
+      "shipdaySendButton": "Send to ShipDay",
+      "shipdaySending": "Sending…",
+      "shipdaySendSuccess": "Order is on ShipDay — check your dispatch dashboard.",
+      "shipdaySendError": "ShipDay refused the order: {error}",
+      "shipdaySkipped": "Not sent — {reason}",
+      "latestOfTotal": "Latest {shown} of {total}",
+      "fullHistoryLink": "See the full order history — older orders, date ranges & export",
+      "searchAllHistory": "Search all order history for “{query}”",
+      "awaitingPayment": "Awaiting Payment",
+      "awaitingPaymentHelp": "Customer didn't finish checkout — no payment taken, not sent to kitchen."
+    },
     "comingSoonPlaceholder": {
       "comingSoon": "Coming soon",
       "dataRequirements": "Data requirements",
@@ -1969,44 +2009,6 @@
       "logo": "Logo",
       "banner": "Banner",
       "preview": "Preview"
-    },
-    "orders": {
-      "title": "Orders",
-      "filter": "Filter",
-      "all": "All",
-      "pending": "Pending",
-      "accepted": "Accepted",
-      "preparing": "Preparing",
-      "ready": "Ready",
-      "completed": "Completed",
-      "rejected": "Rejected",
-      "cancelled": "Cancelled",
-      "orderNumber": "Order #",
-      "customer": "Customer",
-      "type": "Type",
-      "total": "Total",
-      "placedAt": "Placed at",
-      "status": "Status",
-      "actions": "Actions",
-      "accept": "Accept",
-      "reject": "Reject",
-      "markReady": "Mark ready",
-      "markComplete": "Mark complete",
-      "rejectReason": "Rejection reason",
-      "noOrders": "No orders yet",
-      "viewDetails": "View details",
-      "hasNotes": "Has notes",
-      "shipdayTitle": "ShipDay delivery",
-      "shipdaySent": "Sent to ShipDay",
-      "shipdayNotSent": "Not sent to ShipDay",
-      "shipdaySendButton": "Send to ShipDay",
-      "shipdaySending": "Sending…",
-      "shipdaySendSuccess": "Order is on ShipDay — check your dispatch dashboard.",
-      "shipdaySendError": "ShipDay refused the order: {error}",
-      "shipdaySkipped": "Not sent — {reason}",
-      "latestOfTotal": "Latest {shown} of {total}",
-      "fullHistoryLink": "See the full order history — older orders, date ranges & export",
-      "searchAllHistory": "Search all order history for “{query}”"
     },
     "kitchenWorkflowToggle": {
       "kitchenWorkflowLabel": "Kitchen workflow",
@@ -7239,6 +7241,62 @@
           "body": "A simulation harness runs real ordering scenarios against every update — half-and-half pizzas, combos, edge cases — before it reaches your phone line."
         }
       },
+      "missedCalls": {
+        "eyebrow": "The Problem",
+        "title": "The phone is your most-missed channel",
+        "subtitle": "Every restaurant knows the feeling: the phone rings through service and there's no one to answer it. Those calls are regulars, large orders, the guests who prefer to talk — and they go straight to voicemail or to the marketplace app instead.",
+        "stat1": {
+          "value": "30%",
+          "label": "of calls missed during peak hours"
+        },
+        "stat2": {
+          "value": "$25–$50",
+          "label": "average ticket lost per missed call"
+        },
+        "stat3": {
+          "value": "1 in 4",
+          "label": "callers won't call back after going unanswered"
+        }
+      },
+      "demo": {
+        "heading": "Watch Nabil take a real order",
+        "subheading": "A complex half-and-half pizza order with a combo discount and delivery — handled start to finish in under two minutes.",
+        "play": "Play Demo",
+        "replay": "Replay",
+        "pause": "Pause",
+        "live": "Live call",
+        "orderHeading": "Order Summary"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "For Your Guests",
+        "title": "From voice to the kitchen in seconds",
+        "body1": "Your guests call the number they already know, place the order in their own words, and hear it read back — no app to download, no menu to decode, no hold music.",
+        "body2": "The confirmed order flows straight to your kitchen display and ticket printer, exactly like a website order. Your staff never picks up the phone.",
+        "bullet1": "No app, no account, no friction — just a phone call",
+        "bullet2": "Order confirmed and printed automatically",
+        "bullet3": "Caller hears a full read-back before the order is placed",
+        "phoneOrderLabel": "Phone Order"
+      },
+      "handoff": {
+        "eyebrow": "Handoff Boundaries",
+        "title": "The AI handles orders — your team handles everything else",
+        "subtitle": "Nabil follows the order flow and hands unusual or sensitive requests to your staff instead of guessing. You decide where the line is.",
+        "order": {
+          "badge": "AI handles",
+          "title": "Standard orders",
+          "body": "Pizzas, combos, delivery, pickup, toppings, sizes, sides, drinks — the full ordering flow from greeting to confirmation."
+        },
+        "allergy": {
+          "badge": "Transfers to staff",
+          "title": "Allergy questions",
+          "body": "When a caller asks about ingredients, cross-contamination, or specific allergies, Nabil transfers the call to your team."
+        },
+        "catering": {
+          "badge": "Transfers to staff",
+          "title": "Catering & special requests",
+          "body": "Large catering orders, custom requests, complaints, or anything outside the standard menu — the call goes to your staff."
+        }
+      },
       "dashboard": {
         "eyebrow": "Your Dashboard",
         "title": "See every call, hear every word",
@@ -7305,6 +7363,12 @@
         "cta": "Get Started",
         "note": "Prices are in US dollars. Billed monthly through Stripe. Cancel any time."
       },
+      "tryLive": {
+        "eyebrow": "Try It Live",
+        "title": "Call the AI and place a test order",
+        "body": "Experience Nabil AI firsthand — call our demo line, place an order from a real menu, and see exactly how it works. No real order will be placed.",
+        "note": "Demo line — 4-minute call limit. Answered by the live Nabil AI agent."
+      },
       "faq": {
         "title": "Frequently Asked Questions",
         "q1": "How does Nabil take an order?",
@@ -7322,7 +7386,11 @@
         "q7": "How is billing calculated?",
         "a7": "You pay US$0.60 per call-minute or the US$249.99 monthly minimum, whichever is higher. The minimum includes about 416 minutes. Each call is rounded up to the next whole minute. You can track your usage on your dashboard in real time.",
         "q8": "Can I cancel any time?",
-        "a8": "Yes. Nabil is billed monthly through Stripe with no long-term contract. Cancel from your dashboard any time and your line stays active until the end of the billing period."
+        "a8": "Yes. Nabil is billed monthly through Stripe with no long-term contract. Cancel from your dashboard any time and your line stays active until the end of the billing period.",
+        "q9": "Does a real person ever pick up?",
+        "a9": "Nabil handles the standard order flow, and you decide when to hand off. For a complaint, a special request, or anything outside the menu, the call is transferred to your team. It never traps a caller in a loop.",
+        "q10": "Does it work for multi-location restaurants?",
+        "a10": "Yes. Each location gets its own phone number with its own menu, hours, and settings. Analytics roll up by location so you see call volume, conversion, and average ticket per store."
       },
       "finalCta": {
         "title": "Ready to let Nabil answer your phone?",

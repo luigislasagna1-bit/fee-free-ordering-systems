@@ -4,6 +4,7 @@ import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
 import { reportOrderWhere } from "@/lib/reports/order-filter";
+import { AWAITING_PAYMENT, orderDisplayStatus } from "@/lib/order-display-status";
 import { MONEY_SELECT, collectedOf } from "@/lib/reports/collected";
 import { resolveRewardLabel } from "@/lib/reward-label";
 import { DateRangePicker } from "@/components/admin/reports/DateRangePicker";
@@ -124,6 +125,8 @@ export default async function ListOrdersPage({
         customerName: true,
         ...MONEY_SELECT,
         paymentMethod: true,
+        paymentStatus: true,
+        notifiedAt: true,
         createdAt: true,
       },
       orderBy,
@@ -206,7 +209,7 @@ export default async function ListOrdersPage({
                     return k ? tRoot(k) : <span className="capitalize">{(o.paymentMethod ?? "").replace(/_/g, " ")}</span>;
                   })()}
                 </td>
-                <td className="py-2.5 px-4"><StatusBadge status={o.status} /></td>
+                <td className="py-2.5 px-4"><StatusBadge order={o} /></td>
                 <td className={`py-2.5 px-4 text-right ${anyCredit ? "text-gray-600" : "font-semibold text-gray-900"}`}>{formatCurrency(o.total)}</td>
                 {anyCredit && (
                   <>
@@ -291,18 +294,20 @@ function StatusChip({ label, active, status, sp }: {
   );
 }
 
-function StatusBadge({ status }: { status: string }) {
+function StatusBadge({ order }: { order: any }) {
+  const displayStatus = orderDisplayStatus(order);
   const palette: Record<string, string> = {
     completed: "bg-emerald-50 text-emerald-700",
     pending:   "bg-amber-50   text-amber-700",
     accepted:  "bg-blue-50    text-blue-700",
     rejected:  "bg-red-50     text-red-700",
     cancelled: "bg-gray-100   text-gray-600",
+    [AWAITING_PAYMENT]: "bg-slate-100  text-slate-700",
   };
-  const cls = palette[status] ?? "bg-gray-100 text-gray-600";
+  const cls = palette[displayStatus] ?? "bg-gray-100 text-gray-600";
   return (
     <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${cls}`}>
-      {status}
+      {displayStatus}
     </span>
   );
 }

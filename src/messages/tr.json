@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Gönderilmedi — {reason}",
       "latestOfTotal": "Son {shown}/{total}",
       "fullHistoryLink": "Tüm sipariş geçmişini gör — eski siparişler, tarih aralıkları ve dışa aktarma",
-      "searchAllHistory": "Tüm sipariş geçmişinde “{query}” ara"
+      "searchAllHistory": "Tüm sipariş geçmişinde “{query}” ara",
+      "awaitingPayment": "Ödeme Bekleniyor",
+      "awaitingPaymentHelp": "Müşteri ödemeyi tamamlamadı — ödeme alınmadı, mutfağa gönderilmedi."
     },
     "customers": {
       "title": "Müşteriler",
@@ -7239,6 +7241,62 @@
           "body": "Bir simülasyon sistemi her güncellemede gerçek sipariş senaryoları çalıştırır — yarım yarım pizzalar, kombinasyonlar, uç durumlar — telefon hattınıza ulaşmadan önce."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Sorun",
+        "title": "Telefon en çok kaçırdığınız kanaldır",
+        "subtitle": "Her restoran bu hissi bilir: telefon servis sırasında çalar ve cevap verecek kimse yoktur. Bu aramalar müdavimler, büyük siparişler, konuşmayı tercih eden misafirlerdir — ve doğrudan sesli mesaja ya da bunun yerine pazar yeri uygulamasına gider.",
+        "stat1": {
+          "value": "%30",
+          "label": "yoğun saatlerde kaçırılan arama oranı"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "kaçırılan arama başına ortalama kayıp sipariş"
+        },
+        "stat3": {
+          "value": "4'te 1",
+          "label": "cevapsız kalan arayan geri aramaz"
+        }
+      },
+      "demo": {
+        "heading": "Nabil'in gerçek bir siparişi nasıl aldığını izleyin",
+        "subheading": "Kombo indirimi ve teslimat içeren karmaşık bir yarım yarım pizza siparişi — iki dakikadan kısa sürede baştan sona tamamlandı.",
+        "play": "Demoyu oynat",
+        "replay": "Tekrar oynat",
+        "pause": "Duraklat",
+        "live": "Canlı arama",
+        "orderHeading": "Sipariş özeti"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Misafirleriniz için",
+        "title": "Sesten mutfağa saniyeler içinde",
+        "body1": "Misafirleriniz zaten bildikleri numarayı arar, siparişlerini kendi sözcükleriyle verir ve geri okunduğunu duyar — indirilecek uygulama, çözülecek menü ya da bekleme müziği yok.",
+        "body2": "Onaylanan sipariş, tıpkı bir web sitesi siparişinde olduğu gibi doğrudan mutfak ekranınıza ve fiş yazıcınıza akar. Personeliniz asla telefonu açmak zorunda kalmaz.",
+        "bullet1": "Uygulama yok, hesap yok, sürtünme yok — sadece bir telefon araması",
+        "bullet2": "Sipariş otomatik olarak onaylanır ve yazdırılır",
+        "bullet3": "Arayan, sipariş verilmeden önce tam bir geri okuma duyar",
+        "phoneOrderLabel": "Telefon siparişi"
+      },
+      "handoff": {
+        "eyebrow": "Devretme sınırları",
+        "title": "Yapay zeka siparişleri, ekibiniz geri kalan her şeyi yönetir",
+        "subtitle": "Nabil sipariş akışını takip eder ve olağandışı veya hassas talepleri tahmin etmek yerine personelinize devreder. Sınırın nerede olduğuna siz karar verirsiniz.",
+        "order": {
+          "badge": "Yapay zeka yönetir",
+          "title": "Standart siparişler",
+          "body": "Pizzalar, kombolar, teslimat, gel-al, malzemeler, boyutlar, yan ürünler, içecekler — karşılamadan onaya kadar tüm sipariş akışı."
+        },
+        "allergy": {
+          "badge": "Personele aktarılır",
+          "title": "Alerji soruları",
+          "body": "Bir arayan içerikler, çapraz bulaşma veya belirli alerjiler hakkında soru sorduğunda, Nabil aramayı ekibinize aktarır."
+        },
+        "catering": {
+          "badge": "Personele aktarılır",
+          "title": "Catering ve özel talepler",
+          "body": "Büyük catering siparişleri, özel talepler, şikayetler veya standart menü dışındaki her şey — arama personelinize gider."
+        }
+      },
       "dashboard": {
         "eyebrow": "Kontrol paneliniz",
         "title": "Her aramayı görün, her kelimeyi duyun",
@@ -7305,6 +7363,12 @@
         "cta": "Başlayın",
         "note": "Fiyatlar ABD doları cinsindendir. Stripe ile aylık faturalandırma. İstediğiniz zaman iptal edin."
       },
+      "tryLive": {
+        "eyebrow": "Canlı deneyin",
+        "title": "Yapay zekayı arayın ve bir test siparişi verin",
+        "body": "Nabil AI'yı bizzat deneyimleyin — demo hattımızı arayın, gerçek bir menüden sipariş verin ve tam olarak nasıl çalıştığını görün. Gerçek bir sipariş verilmeyecektir.",
+        "note": "Demo hattı — 4 dakikalık arama süresi sınırı. Canlı Nabil AI temsilcisi tarafından yanıtlanır."
+      },
       "faq": {
         "title": "Sıkça sorulan sorular",
         "q1": "Nabil siparişi nasıl alır?",
@@ -7322,7 +7386,11 @@
         "q7": "Faturalandırma nasıl hesaplanır?",
         "a7": "Arama dakikası başına 0,60 USD veya aylık 249,99 USD minimumdan hangisi yüksekse onu ödersiniz. Minimum yaklaşık 416 dakika içerir. Her arama bir sonraki tam dakikaya yuvarlanır. Kullanımınızı gerçek zamanlı takip edebilirsiniz.",
         "q8": "İstediğim zaman iptal edebilir miyim?",
-        "a8": "Evet. Nabil, Stripe üzerinden uzun vadeli sözleşme olmaksızın aylık olarak faturalandırılır. Panelden istediğiniz zaman iptal edin ve hattınız fatura dönemi sonuna kadar aktif kalır."
+        "a8": "Evet. Nabil, Stripe üzerinden uzun vadeli sözleşme olmaksızın aylık olarak faturalandırılır. Panelden istediğiniz zaman iptal edin ve hattınız fatura dönemi sonuna kadar aktif kalır.",
+        "q9": "Bazen gerçek bir kişi cevap verir mi?",
+        "a9": "Nabil standart sipariş akışını yönetir ve devretme zamanına siz karar verirsiniz. Bir şikayet, özel bir talep veya menü dışındaki herhangi bir şey için arama ekibinize aktarılır. Arayanı asla bir döngüde sıkıştırmaz.",
+        "q10": "Birden fazla şubesi olan restoranlar için çalışır mı?",
+        "a10": "Evet. Her şubenin kendi menüsü, çalışma saatleri ve ayarlarıyla kendi telefon numarası vardır. Analizler şube bazında toplanır, böylece mağaza başına arama hacmini, dönüşümü ve ortalama sipariş tutarını görebilirsiniz."
       },
       "finalCta": {
         "title": "Nabil'in telefonunuza cevap vermesine hazır mısınız?",

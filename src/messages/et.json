@@ -1875,7 +1875,9 @@
       "shipdaySkipped": "Pole saadetud — {reason}",
       "latestOfTotal": "Viimased {shown}/{total}",
       "fullHistoryLink": "Vaata kogu tellimuste ajalugu — vanemad tellimused, kuupäevavahemikud ja eksport",
-      "searchAllHistory": "Otsi „{query}” kogu tellimuste ajaloost"
+      "searchAllHistory": "Otsi „{query}” kogu tellimuste ajaloost",
+      "awaitingPayment": "Maksega ootel",
+      "awaitingPaymentHelp": "Klient ei lõpetanud maksmist — makset ei võetud, kutsele ei saadetud."
     },
     "customers": {
       "title": "Kliendid",
@@ -7239,6 +7241,62 @@
           "body": "Simulatsioonisüsteem käitab iga värskenduse korral reaalseid tellimisstsenaariumeid — pool-pool pitsad, kombinatsioonid, äärejuhtumid — enne kui see jõuab teie telefoniliinile."
         }
       },
+      "missedCalls": {
+        "eyebrow": "Probleem",
+        "title": "Telefon on teie kõige sagedamini kasutamata jäetud kanal",
+        "subtitle": "Iga restoran teab seda tunnet: telefon heliseb teenindamise ajal ja kellelgi pole aega vastata. Need kõned on püsikliendid, suured tellimused, kliendid, kes eelistavad rääkida — ja need lähevad otse kõnepostkasti või kasutavad hoopis turuplatsi rakendust.",
+        "stat1": {
+          "value": "30%",
+          "label": "kõnedest jääb tipptunnil vastamata"
+        },
+        "stat2": {
+          "value": "25–50 USD",
+          "label": "keskmine kaotatud tellimus vastamata kõne kohta"
+        },
+        "stat3": {
+          "value": "1 neljast",
+          "label": "helistajast ei helista vastuseta jäämisel enam tagasi"
+        }
+      },
+      "demo": {
+        "heading": "Vaadake, kuidas Nabil võtab vastu päris tellimuse",
+        "subheading": "Keeruline pool-pool pitsa tellimus koos kombosoodustuse ja kohaletoimetamisega — käsitletud algusest lõpuni alla kahe minutiga.",
+        "play": "Esita demo",
+        "replay": "Esita uuesti",
+        "pause": "Paus",
+        "live": "Otsekõne",
+        "orderHeading": "Tellimuse kokkuvõte"
+      },
+      "voiceToKitchen": {
+        "eyebrow": "Teie klientidele",
+        "title": "Häälest köögini sekunditega",
+        "body1": "Teie kliendid helistavad numbrile, mida nad juba teavad, esitavad tellimuse oma sõnadega ja kuulevad selle ette lugemist — ilma rakendust laadimata, menüüd lahti mõtestamata, ootemuusikata.",
+        "body2": "Kinnitatud tellimus liigub otse teie kööginäidule ja piletiprinterisse, täpselt nagu veebisaidi tellimus. Teie personal ei pea kunagi telefoni vastu võtma.",
+        "bullet1": "Ei mingit rakendust, kontot ega hõõrdumist — ainult telefonikõne",
+        "bullet2": "Tellimus kinnitatakse ja trükitakse automaatselt",
+        "bullet3": "Helistaja kuuleb enne tellimuse esitamist täielikku kordust",
+        "phoneOrderLabel": "Telefonitellimus"
+      },
+      "handoff": {
+        "eyebrow": "Üleandmise piirid",
+        "title": "Tehisintellekt käsitleb tellimusi — teie meeskond käsitleb kõike muud",
+        "subtitle": "Nabil järgib tellimuse protsessi ja annab ebatavalised või tundlikud päringud teie personalile edasi, selle asemel et arvata. Teie otsustate, kus piir on.",
+        "order": {
+          "badge": "Tehisintellekt käsitleb",
+          "title": "Tavalised tellimused",
+          "body": "Pitsad, komboid, kohaletoimetamine, kaasavõtmine, lisandid, suurused, kõrvalroad, joogid — kogu tellimusprotsess tervitusest kinnituseni."
+        },
+        "allergy": {
+          "badge": "Suunatakse personalile",
+          "title": "Allergiaküsimused",
+          "body": "Kui helistaja küsib koostisosade, ristsaastumise või konkreetsete allergiate kohta, suunab Nabil kõne teie meeskonnale."
+        },
+        "catering": {
+          "badge": "Suunatakse personalile",
+          "title": "Catering ja erisoovid",
+          "body": "Suured cateringu tellimused, kohandatud soovid, kaebused või kõik, mis jääb väljapoole tavamenüüd — kõne suunatakse teie personalile."
+        }
+      },
       "dashboard": {
         "eyebrow": "Teie juhtpaneel",
         "title": "Vaadake iga kõnet, kuulge iga sõna",
@@ -7305,6 +7363,12 @@
         "cta": "Alusta",
         "note": "Hinnad on USA dollarites. Igakuine arveldus Stripe'i kaudu. Tühistage igal ajal."
       },
+      "tryLive": {
+        "eyebrow": "Proovige otse",
+        "title": "Helistage tehisintellektile ja tehke proovitellimus",
+        "body": "Kogege Nabil AI-d ise — helistage meie demoliinile, tehke tellimus pärismenüüst ja vaadake täpselt, kuidas see töötab. Ühtegi päris tellimust ei esitata.",
+        "note": "Demoliin — kõne kestus piiratud 4 minutiga. Vastab elav Nabil AI agent."
+      },
       "faq": {
         "title": "Korduma kippuvad küsimused",
         "q1": "Kuidas Nabil tellimuse vastu võtab?",
@@ -7322,7 +7386,11 @@
         "q7": "Kuidas arveldust arvutatakse?",
         "a7": "Maksate 0,60 USD kõneminuti kohta või kuumiinimumi 249,99 USD — kumb on suurem. Miinimum sisaldab umbes 416 minutit. Iga kõne ümardatakse ülespoole. Jälgige kasutust reaalajas.",
         "q8": "Kas saan igal ajal tühistada?",
-        "a8": "Jah. Nabili arveldatakse igakuiselt Stripe'i kaudu ilma pikaajalise lepinguta. Tühistage juhtpaneelil igal ajal ja teie liin jääb aktiivseks kuni arveldusperioodi lõpuni."
+        "a8": "Jah. Nabili arveldatakse igakuiselt Stripe'i kaudu ilma pikaajalise lepinguta. Tühistage juhtpaneelil igal ajal ja teie liin jääb aktiivseks kuni arveldusperioodi lõpuni.",
+        "q9": "Kas mõnikord vastab päris inimene?",
+        "a9": "Nabil käsitleb tavalist tellimusprotsessi ja teie otsustate, millal üle anda. Kaebuse, erisoovi või millegi menüüst välja jääva puhul suunatakse kõne teie meeskonnale. See ei jäta helistajat kunagi silmusesse kinni.",
+        "q10": "Kas see töötab mitme asukohaga restoranide jaoks?",
+        "a10": "Jah. Igal asukohal on oma telefoninumber koos oma menüü, lahtiolekuaegade ja seadetega. Analüütika koondatakse asukohtade kaupa, nii et näete kõnede mahtu, konversiooni ja keskmist tellimust poe kohta."
       },
       "finalCta": {
         "title": "Valmis laskma Nabilil telefoni vastu võtta?",
