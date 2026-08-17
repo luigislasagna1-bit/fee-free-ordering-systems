@@ -260,7 +260,7 @@ found: numbers mis-spoken → A63, fixed); report filed (`cmswjlo87`) → the fl
 4. ✅ ⏱️ **Uptime monitor (A58 #4, 5 min, needs an account in YOUR name):** UptimeRobot (free) or Better Stack → HTTP
    monitor on `https://nabil-voice.fly.dev/health`, 60-second interval, SMS alert to your mobile. It is the only alarm
    that still works when Vercel is down.
-5. 🔧 **Vercel env `SENTRY_PROJECT` — delete the leading TAB (1 min):** Vercel → project → Settings → Environment
+5. ✅ 🔧 **Vercel env `SENTRY_PROJECT` — delete the leading TAB (1 min):** *(done by Luigi 2026-08-16 ~23:40 EDT — the value can't be edited in place because it is marked sensitive; re-entered as `javascript-nextjs`; verified on the next build's source-map upload)* Vercel → project → Settings → Environment
    Variables → `SENTRY_PROJECT` → Edit → remove the tab at the start of the value → Save. (Its value is marked
    sensitive so I can't read or edit it; it only affects source-map upload on builds.)
 6. 🤔 **Five decisions — just answer in one message, nothing changes until you do:**
@@ -418,7 +418,8 @@ request is now logged "partial" and the audio stays reachable for a retry.
    (`fly secrets deploy`); both machines rolled to v34, healthy. **Verified:** a fake POST to
    `nabil-voice.fly.dev/twiml/fallback` now gets **403** (signature check ON); a real Twilio request still dials
    `2894091133`. The chain is armed end to end: Twilio → our webhook → (Vercel safety net) → Fly fallback → your phone.
-   Still a 1-minute UI chore whenever you like: **Vercel → Settings → Environment Variables → `SENTRY_PROJECT` → Edit →
+   ✅ DONE 2026-08-16 (Luigi re-entered `SENTRY_PROJECT` = `javascript-nextjs`; a sensitive var can only be re-typed, not edited).
+   Original: Still a 1-minute UI chore whenever you like: **Vercel → Settings → Environment Variables → `SENTRY_PROJECT` → Edit →
    delete the leading TAB** (its value is sensitive, so I can't) — only affects source-map upload on builds.
 4. ✅ **DONE (you, 2026-08-16 23:29 EDT)** — UptimeRobot HTTP/S monitor on `https://nabil-voice.fly.dev/health`,
    5-min checks (free-tier minimum), status Up; test DOWN+UP alerts received at your Gmail. Optional later: the UptimeRobot
