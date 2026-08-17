@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Kampanja",
       "titleCampaignLocked": "Käynnissä oleva Autopilot-kampanja lähettää tätä koodia sähköpostitse. Poista kampanja käytöstä kohdassa Markkinointi → Autopilot, jos haluat vetää sen pois.",
-      "toggleFailed": "Tarjouksen muuttaminen epäonnistui. Yritä uudelleen."
+      "toggleFailed": "Tarjouksen muuttaminen epäonnistui. Yritä uudelleen.",
+      "phoneOff": "Puhelin pois",
+      "phoneOffTip": "Tarjous ei koske Nabil AI:n puhelintilauksia"
     },
     "promoWizard": {
       "errorPickType": "Valitse tarjoustyyppi jatkaaksesi.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Piilotetut tarjoukset käytetään vain, kun asiakas syöttää tämän koodin kassalla.",
       "vipLockedTitle": "Vain VIP — liitetty: {groups}",
       "vipLockedDesc": "Tämä kampanja koskee automaattisesti vain näitä VIP-jäseniä kassalla. Se ei koskaan näy julkisessa ruokalistassa, bannerissa tai sivustolla — mikään näkyvyysasetus ei muuta sitä. Julkiseksi saat sen irrottamalla sen ensin VIP-ryhmät-sivulla.",
-      "bundleBuildInfo": "💡 Asiakkaat kokoavat tämän paketin menusi ”Kokoa tarjouksesi” -kortista. Kiinnitä se alla olevaan banneriin, jotta se on helppo löytää. (Pakettia ei voi ottaa käyttöön automaattisesti eikä avata koodilla.)"
+      "bundleBuildInfo": "💡 Asiakkaat kokoavat tämän paketin menusi ”Kokoa tarjouksesi” -kortista. Kiinnitä se alla olevaan banneriin, jotta se on helppo löytää. (Pakettia ei voi ottaa käyttöön automaattisesti eikä avata koodilla.)",
+      "phoneOrdersLabel": "Saatavilla puhelimitse (Nabil AI)",
+      "phoneOrdersOnSub": "Tarjous koskee Nabil AI:n puhelintilauksia",
+      "phoneOrdersOffSub": "Tarjous ei koske puhelintilauksia",
+      "phoneOrdersHelp": "Pois = tarjous ei koske puhelintilauksia. Verkko-, sovellus- ja markkinapaikkatilaukset eivät vaikutu.",
+      "clientTypeMemberWarning": "Jäsentarjoukset vaativat tilin — soittajat ilman tiliä eivät näe tätä tarjousta."
     },
     "customersList": {
       "heading": "Asiakkaat",
@@ -4355,7 +4362,12 @@
         "viewAll": "Näytä kaikki puhelut",
         "chartPopularItems": "Puhelimitse tilatuimmat",
         "popularItemsCta": "Valitse lisämyyntisuositukset",
-        "popularItemsEmpty": "Tällä aikavälillä ei ole vielä puhelintilauksia."
+        "popularItemsEmpty": "Tällä aikavälillä ei ole vielä puhelintilauksia.",
+        "meterTitle": "Käyttö tässä kuussa",
+        "meterMinutes": "{minutes} minuuttia käytetty",
+        "meterCharge": "Nykyinen: {amount} · Ennuste: {projected}",
+        "meterOver": "{minutes} minuuttia yli sisältyvän",
+        "meterIncluded": "{included} min sisältyy {minimum}/kk minimiin ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Hae puhelinnumerolla, nimellä tai yhteenvedolla…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Numeron esto poistettu",
         "errorToast": "Päivitys epäonnistui — yritä uudelleen.",
         "invalidPhone": "Anna kelvollinen puhelinnumero."
-      }
+      },
+      "setup": {
+        "title": "Määritä puhelinlinjasi",
+        "body": "Kerro meille puhelinlinjastasi, niin Nabil vastaa puheluihin yhden arkipäivän kuluessa. Ei teknistä asennusta tarvita.",
+        "receivedTitle": "Asennuspyyntö vastaanotettu",
+        "receivedBody": "Tiimimme asettaa Nabil AI -linjaasi. Näet live-kojelautasi täällä, kun se on valmis — yleensä yhden arkipäivän kuluessa.",
+        "summaryForward": "Ohjaa puhelut numerosta {currentNumber}",
+        "summaryNew": "Uusi numero (nykyinen: {currentNumber})",
+        "summaryTransfer": "Yhdistä henkilölle: {transferNumber}",
+        "summaryGreeting": "Tervehdysnimi: {name}",
+        "summarySent": "Lähetetty {date}",
+        "updateRequest": "Päivitä pyyntö",
+        "prepareHint": "Voit päivittää asetuksiasi, kunnes linja on valmis.",
+        "currentNumberLabel": "Nykyinen puhelinnumerosi",
+        "phoneHint": "Numero, johon asiakkaasi soittavat nyt.",
+        "modeLabel": "Miten haluat asettaa linjasi?",
+        "modeForward": "Ohjaa numeroni",
+        "modeForwardHint": "Ohjaat nykyisen numerosi Nabilille. Soittajat soittavat samaan numeroon.",
+        "modeNew": "Anna minulle uusi numero",
+        "modeNewHint": "Varaamme uuden numeron Nabilille. Voit julkaista sen nykyisen linjasi rinnalla.",
+        "transferNumberLabel": "Yhdistä puhelut numeroon",
+        "transferNumberHint": "Kun soittaja pyytää henkilöä, Nabil yhdistää puhelun tänne.",
+        "greetingNameLabel": "Ravintolan nimi tervehdyksessä",
+        "greetingNameHint": "Miten Nabil esittelee ravintolasi puhelimessa.",
+        "notesLabel": "Muuta tietämisen arvoista (valinnainen)",
+        "submitting": "Lähetetään…",
+        "submit": "Lähetä pyyntö",
+        "cancelEdit": "Peruuta",
+        "errorAlreadyProvisioned": "Linjasi on jo asennettu — päivitä sivu.",
+        "errorGeneric": "Jokin meni vikaan. Yritä uudelleen."
+      },
+      "nowAvailable": "Nyt saatavilla",
+      "availableHeading": "Nabil AI puhelintilaukset",
+      "availablePrice": "{rate} puheluminuutilta · {minimum}/kk minimi · {included} minuuttia sisältyy",
+      "availableConcierge": "Tiimimme asettaa linjasi yhden arkipäivän kuluessa. Ei teknistä työtä sinulta.",
+      "availableDemo": "Jo maksava jäsen? Kokeile ilmaiseksi {days} päivää.",
+      "subscribeCta": "Tilaa ja asenna"
     },
     "customerDetailPage": {
       "allCustomers": "Kaikki asiakkaat",
@@ -6865,7 +6913,8 @@
             "b3": "Turvallinen & salattu",
             "b4": "Rakennettu Kanadassa"
           }
-        }
+        },
+        "nowAvailable": "Nyt saatavilla"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Aloita ilmaiseksi",
       "ctaContact": "Ota yhteyttä myyntiin",
-      "trialNote": "Ei luottokorttia tarvita. Ei sopimuksia."
+      "trialNote": "Ei luottokorttia tarvita. Ei sopimuksia.",
+      "phoneOrderingMinuteNote": "Laskutetaan 0,60 USD/min, minimi 249,99 USD/kk (≈ 416 sisältyvää minuuttia). Lisätiedot"
     },
     "faq": {
       "title": "Usein kysytyt kysymykset",
@@ -7075,6 +7125,211 @@
       "b1": "Aito menusi — kuvat, koot ja täytteet",
       "b2": "Tilaa siitä heti, aivan kuin asiakas",
       "b3": "Pidätkö siitä? Rekisteröidy ja pidä se — ei uutta tuontia"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Tekoälypuhelintilaus",
+        "title": "Pizzeriasi puhelin, <accent>AI vastaa</accent>",
+        "subtitle": "Nabil AI ottaa puhelintilauksia pizzeriaasi — puoliksi jaetut pizzat, tarjouspaketit, toimitusvyöhykkeet, täytteet nimellä — ja vie ne saman kassan kautta kuin verkkosivustosi. Rakennettu entisten pizzeriaomistajien toimesta, jotka tietävät miltä oikea puhelu kuulostaa.",
+        "ctaStart": "Aloita",
+        "ctaSecondary": "Katso miten se toimii",
+        "trust1": "Rakennettu pizzerioille",
+        "trust2": "Sama kassa kuin verkkosivustollasi",
+        "trust3": "Tallenteet ja litteraatiot",
+        "trust4": "US$0.60 per puheluminuutti",
+        "sampleLabel": "Esimerkki livepuhelusta",
+        "sampleCaller": "Soittaja",
+        "sample1": "Hei, voinko tehdä tilauksen kotiinkuljetuksella?",
+        "sample2": "Totta kai! Autan mielelläni. Mitä saisi olla tänään?",
+        "sample3": "Iso pizza, puolikas pepperonia ja sieniä, puolikas vihreää paprikaa ja sipulia.",
+        "sample4": "Selvä — suuri puolikas-puolikas-pizza: pepperoni ja sienet toisella puolella, vihreä paprika ja sipuli toisella. Muuta?"
+      },
+      "story": {
+        "eyebrow": "Tarinamme",
+        "title": "Rakennettu pizzerioille, entisten pizzeriaomistajien toimesta",
+        "body1": "Vietimme vuosia tiskin takana puhelintilauksia vastaanottaen. Tiedämme mitä soittajat oikeasti sanovat — puolikas-puolikas-toiveet, viime hetken täytemuutokset, 'sama kuin viime kerralla'. Rakensimme Nabil AI:n hoitamaan nuo puhelut kuten me tekisimme.",
+        "body2": "Toisin kuin geneeriset tekoälypuhelinjärjestelmät, Nabil suunniteltiin alusta asti pizza- ja ravintolatilausten ympärille. Jokainen ominaisuus — tarjouspaketin rakentamisesta toimitusvyöhykkeiden tarkistukseen — on olemassa, koska tarvitsimme sitä omassa liikkeessämme.",
+        "point1": "Suunniteltu oikean pizzeriatoiminnan ympärille",
+        "point2": "Jokainen tilaus kulkee vahvistetun kassan kautta",
+        "point3": "Sinun menusi on tekoälyn menu — mitään ei keksitty"
+      },
+      "how": {
+        "eyebrow": "Näin se toimii",
+        "title": "Kolme askelta puhelintilauksiin autopilotilla",
+        "step1": {
+          "title": "Yhdistä puhelinlinjasi",
+          "body": "Ohjaa nykyinen numerosi eteenpäin tai hanki uusi. Tiimimme ottaa linjasi käyttöön yhden työpäivän kuluessa — ei teknistä työtä sinun puoleltasi."
+        },
+        "step2": {
+          "title": "Nabil vastaa puheluun",
+          "body": "Nabil tervehtii soittajia ravintolasi nimellä, ottaa tilauksen keskustelunomaisesti, vahvistaa jokaisen tuotteen ja lukee kokonaissumman ääneen ennen tilauksen tekemistä."
+        },
+        "step3": {
+          "title": "Tilaus tulostuu keittiöösi",
+          "body": "Tilaus kulkee saman kassan kautta kuin verkkosivutilaus. Se näkyy keittiönäytölläsi, tulostuu kuittitulostimellasi ja näkyy hallintapaneelissasi — kaikki automaattisesti."
+        }
+      },
+      "handles": {
+        "eyebrow": "Mitä se hoitaa",
+        "title": "Kaikki mitä soittajasi pyytävät",
+        "subtitle": "Nabil hoitaa tilaukset, joita tiimisi hoitaa — yksinkertaisista yhden täytteen pitsoista monimutkaisiin puoliksi ja puoliksi -komboihin toimituksella.",
+        "halfHalf": {
+          "title": "Puoliksi ja puoliksi -pitsat",
+          "body": "Soittajat voivat tilata eri täytteet kummallekin puolelle, ja Nabil vahvistaa kummankin puolen ennen tilauksen tekemistä."
+        },
+        "combos": {
+          "title": "Kombot ja ateriasarjat",
+          "body": "Nabil opastaa soittajia kombon valinnoissa — valitse pizzasi, valitse lisukkeesi, valitse juomasi — aivan kuten verkkosivustollasi."
+        },
+        "delivery": {
+          "title": "Toimitus aluetarkistuksella",
+          "body": "Ottaa toimitusosoitteen, tarkistaa että se on alueellasi, kertoo maksun ja tekee tilauksen — ei arvailua."
+        },
+        "upsells": {
+          "title": "Älykäs lisämyynti",
+          "body": "Ehdottaa valitsemiasi tuotteita oikealla hetkellä keskustelussa — juoma pitsan kanssa, jälkiruoka ennen kassaa."
+        },
+        "faq": {
+          "title": "Vastaa yleisiin kysymyksiin",
+          "body": "Aukioloajat, sijainti, pysäköinti, allergeenit — Nabil vastaa liikkeesi usein kysyttyihin kysymyksiin, jotta henkilökuntasi ei tarvitse."
+        },
+        "returning": {
+          "title": "Tunnistaa palaavat soittajat",
+          "body": "Tervehtii vakioasiakkaita nimellä ja muistaa heidän tilaushistoriansa, joten uudelleentilaukset ovat nopeita."
+        },
+        "transfer": {
+          "title": "Yhdistää henkilölle",
+          "body": "Kun soittaja pyytää ihmistä tai hänellä on pyyntö, jota Nabil ei voi käsitellä, puhelu yhdistetään liikkeesi numeroon."
+        },
+        "numbers": {
+          "title": "Lausuu numerot luonnollisesti",
+          "body": "Puhelinnumerot, osoitteet, hinnat ja ajat lausutaan sanoin — 'kuusi neljäkymmentäseitsemän' eikä '647' — jotta soittaja ymmärtää aina."
+        },
+        "hours": {
+          "title": "Tuntee aukioloaikasi",
+          "body": "Nabil tietää milloin olet auki, milloin kiinni ja lomaaikataulusi — soittajat saavat tarkat tiedot joka kerta."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Miksi se on tarkka",
+        "title": "Tilaus on oikein, koska järjestelmä ei salli virheitä",
+        "body": "Nabil ei arvaa. Jokainen tuote validoidaan oikeaa ruokalistaasi vasten, jokainen hinta lasketaan kassajärjestelmälläsi, ja jokainen muokkaus vahvistetaan soittajan kanssa ennen tilauksen tekemistä.",
+        "cart": {
+          "title": "Palvelinpuolen ostoskori",
+          "body": "Tilaus rakennetaan palvelimella, ei tekoälyn muistissa. Ruokalistasi hinnat, säännöt ja saatavuus ovat ainoa totuuden lähde."
+        },
+        "asks": {
+          "title": "Kysyy, ei koskaan oleta",
+          "body": "Kun jokin on epäselvää — koko, täytteen sijoitus, pohjavalinta — Nabil kysyy soittajalta arvailun sijaan."
+        },
+        "readback": {
+          "title": "Täydellinen kertaus",
+          "body": "Ennen tilauksen tekemistä Nabil lukee ääneen jokaisen tuotteen, muokkauksen ja kokonaissumman — soittaja vahvistaa ennen kuin mitään lähetetään keittiöön."
+        },
+        "alarm": {
+          "title": "Hälytys: kerrottu = veloitettu",
+          "body": "Jos tekoälyn ilmoittama summa ei vastaa kassan laskemaa, järjestelmä merkitsee sen ennen tilauksen tekemistä."
+        },
+        "timeline": {
+          "title": "Puhelukohtainen aikajana",
+          "body": "Jokaisella puhelulla on yksityiskohtainen aikajana, joka näyttää jokaisen työkalukutsun, ostoskorin muutoksen ja päätöksen — jotta näet tarkalleen mitä tapahtui."
+        },
+        "tests": {
+          "title": "Automatisoitu testipaketti",
+          "body": "Simulointijärjestelmä ajaa todellisia tilausskenaarioita jokaisen päivityksen yhteydessä — puoliksi jaetut pizzat, yhdistelmät, rajatapaukset — ennen kuin se saavuttaa puhelinlinjasi."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Hallintapaneelisi",
+        "title": "Näe jokainen puhelu, kuule jokainen sana",
+        "subtitle": "Tallenteet, litteraatiot, tuottoseuranta ja puhelukohtainen aikajana — kaikki mitä tarvitset tietääksesi, mitä Nabil tekee ravintolallesi.",
+        "shotOverviewAlt": "Nabil AI hallintapaneelin yleiskatsaus puhelumääristä, tuotoista ja konversiomittareista",
+        "shotCallsAlt": "Puhelulista, jossa näkyvät viimeisimmät puhelintilaukset tuloksineen ja kestoineen",
+        "shotDetailAlt": "Puhelun yksityiskohtanäkymä litteraation, aikajanan ja tilausyhteenvedon kanssa",
+        "shotSettingsAlt": "Nabil AI asetuspaneeli tervehdyksen, lisämyynnin ja UKK-asetuksien määrityksellä",
+        "shotReportAlt": "Puhelun raportointivalintaikkuna ongelmien ilmoittamiseksi Fee Free -tiimille",
+        "overview": {
+          "title": "Tuottokatsaus",
+          "body": "Katso kuinka paljon tuottoa Nabil tuo, kaavioilla puheluista, tilauksista ja konversioasteista."
+        },
+        "calls": {
+          "title": "Puheluhistoria",
+          "body": "Selaa jokaista puhelua tuloksineen, kestoineen, tallenteineen ja litteraatioineen."
+        },
+        "detail": {
+          "title": "Puhelun aikajana",
+          "body": "Sekunti sekunnilta -aikajana siitä, mitä puhelun aikana tapahtui — jokainen työkalukutsu, ostoskorin muutos ja puhuttu sana."
+        },
+        "report": {
+          "title": "Raportoi puhelu",
+          "body": "Merkitse mikä tahansa puhelu, joka ei mennyt hyvin. Tiimimme tarkistaa sen ja parantaa Nabilin käsittelyä."
+        },
+        "settings": {
+          "title": "Täysi hallinta",
+          "body": "Määritä Nabilin tervehdys, lisämyyntiehdotukset, UKK-vastaukset, estetyt soittajat ja maksu linkillä -asetukset."
+        },
+        "roi": {
+          "title": "ROI-seuranta",
+          "body": "Seuraa tuottoa puheluminuuttia kohden, jotta tiedät tarkalleen mitä Nabil ansaitsee myymälällesi."
+        }
+      },
+      "same": {
+        "eyebrow": "Sama järjestelmä, sama kassa",
+        "title": "Puhelintilaus on verkkotilaus",
+        "body": "Nabil ei käytä erillistä tilausjärjestelmää. Jokainen puhelintilaus kulkee saman kassan, menun, hinnoittelun ja keittiönäytön kautta kuin verkkotilauksesi. Yksi järjestelmä, yksi totuuden lähde.",
+        "bullet1": "Sama menu, samat hinnat, samat lisävalinnat",
+        "bullet2": "Sama keittiönäyttö ja kuittitulostin",
+        "bullet3": "Sama tilausvahvistus ja seuranta",
+        "bullet4": "Sama hallintapaneeli ja raportit",
+        "frameAlt": "Keittiönäyttö jossa puhelintilaus verkkotilausten rinnalla"
+      },
+      "languages": {
+        "eyebrow": "Monikielinen",
+        "title": "Nabil puhuu soittajasi kieltä",
+        "body": "Nabil tunnistaa soittajan kielen automaattisesti ja vastaa samalla kielellä. Menun tuotteet, kuvaukset ja lisävalinnat tarjoillaan soittajan kielellä — samat käännökset kuin verkkosivullasi."
+      },
+      "pricing": {
+        "eyebrow": "Yksinkertainen hinnoittelu",
+        "title": "Yksi hinta. Ei yllätyksiä.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "puheluminuutilta",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minimi kuukaudessa",
+        "rule": "Maksat sen, kumpi on korkeampi: puheluminuuttisi á 0,60 USD, tai kuukausittainen 249,99 USD minimi. Useimmat ravintolat pysyvät sisältyvissä 416 minuutissa.",
+        "demo": "Jo maksava Fee Free-jäsen? Kokeile Nabilia ilmaiseksi 7 päivää — ilman sitoumusta.",
+        "include1": "Rajattomat puhelut",
+        "include2": "Tallenteet ja transkriptiot",
+        "include3": "Kojelauta ja analytiikka",
+        "include4": "Avustettu linjan asennus",
+        "include5": "Jatkuvat päivitykset ja parannukset",
+        "cta": "Aloita",
+        "note": "Hinnat Yhdysvaltain dollareissa. Kuukausittainen laskutus Stripen kautta. Peru milloin tahansa."
+      },
+      "faq": {
+        "title": "Usein kysytyt kysymykset",
+        "q1": "Miten Nabil ottaa tilauksen?",
+        "a1": "Nabil vastaa puhelinlinjaasi, tervehtii soittajaa ravintolasi nimellä, ottaa tilauksen keskustelevasti, vahvistaa jokaisen tuotteen ja summan ja tekee tilauksen olemassa olevan kassasi kautta. Tilaus näkyy keittiönäytöllä ja tulostuu automaattisesti.",
+        "q2": "Tietääkö soittaja puhuvansa tekoälyn kanssa?",
+        "a2": "Nabil kuulostaa luonnolliselta ja keskustelevalta, mutta uskomme läpinäkyvyyteen — soittajat voivat aina pyytää ihmistä, ja puhelu yhdistetään välittömästi.",
+        "q3": "Entä jos Nabil tekee virheen?",
+        "a3": "Jokaisella puhelulla on tallenne, transkriptio ja yksityiskohtainen aikajana. Voit merkitä minkä tahansa puhelun, ja tiimimme tutkii asian. Palvelinpuolen koriin ja takaisinlukuvahvistus minimoivat virheet.",
+        "q4": "Voiko Nabil käsitellä puoliksi jaettuja pizzoja?",
+        "a4": "Kyllä — puoliksi jaetut pizzat eri täytteillä kummallakin puolella ovat ydinominaisuus. Nabil vahvistaa kummankin puolen ja rakentaa tilauksen täsmälleen kuten verkkokassasi.",
+        "q5": "Miten yhdistän puhelinlinjani?",
+        "a5": "Tilauksen jälkeen kerrot numerosi ja haluatko ohjata sen Nabilille vai saada uuden. Tiimimme asettaa kaiken yhden arkipäivän kuluessa — ei teknistä työtä.",
+        "q6": "Mitä tapahtuu aukioloaikojen ulkopuolella?",
+        "a6": "Nabil tietää aukioloaikasi ja lomapäiväsi. Aukioloaikojen ulkopuolella se kertoo soittajalle, milloin avaat uudelleen, ja voi tarjota ajastetun tilauksen, jos se on käytössä.",
+        "q7": "Miten laskutus lasketaan?",
+        "a7": "Maksat 0,60 USD puheluminuutilta tai kuukausittaisen 249,99 USD minimin — kumpi on suurempi. Minimi sisältää noin 416 minuuttia. Jokainen puhelu pyöristetään ylöspäin. Seuraa käyttöäsi reaaliajassa.",
+        "q8": "Voinko peruuttaa milloin tahansa?",
+        "a8": "Kyllä. Nabil laskutetaan kuukausittain Stripen kautta ilman pitkäaikaista sopimusta. Peru kojelaudalta milloin tahansa, ja linjasi pysyy aktiivisena laskutuskauden loppuun."
+      },
+      "finalCta": {
+        "title": "Valmis antamaan Nabilin vastata puhelimeen?",
+        "body": "Asennus vie yhden arkipäivän. Aloita puhelintilausten vastaanottaminen omalla järjestelmälläsi — ei ylimääräistä laitteistoa, henkilöstöä tai stressiä.",
+        "primary": "Aloita",
+        "secondary": "Näytä kaikki hinnat"
+      }
     }
   },
   "addressBook": {

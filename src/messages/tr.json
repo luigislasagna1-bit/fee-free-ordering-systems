@@ -2651,7 +2651,9 @@
       },
       "campaignFallback": "Kampanya",
       "titleCampaignLocked": "Bu kod, çalışan bir Autopilot kampanyası tarafından e-postayla gönderiliyor. Geri çekmek için kampanyayı Pazarlama → Autopilot bölümünden kapatın.",
-      "toggleFailed": "Bu kampanya değiştirilemedi. Lütfen tekrar deneyin."
+      "toggleFailed": "Bu kampanya değiştirilemedi. Lütfen tekrar deneyin.",
+      "phoneOff": "Telefon kapalı",
+      "phoneOffTip": "Promosyon Nabil AI telefon siparişlerinde geçerli değildir"
     },
     "promoWizard": {
       "errorPickType": "Devam etmek için bir promosyon türü seçin.",
@@ -2934,7 +2936,12 @@
       "hiddenCodeInfo": "Gizli promosyonlar yalnızca müşteri ödeme sırasında bu kodu girdiğinde uygulanır.",
       "vipLockedTitle": "Yalnızca VIP — bağlı olduğu: {groups}",
       "vipLockedDesc": "Bu promosyon ödeme sırasında otomatik olarak yalnızca o VIP üyeler için geçerlidir. Genel menünüzde, banner'da veya web sitenizde asla görünmez — hiçbir görünürlük anahtarı bunu değiştiremez. Herkese açmak için önce VIP Grupları sayfasından bağlantısını kaldırın.",
-      "bundleBuildInfo": "💡 Müşteriler bu paketi menünüzdeki bir „Fırsatını oluştur” kartından oluşturur. Kolayca bulunması için aşağıdaki afişe sabitleyin. (Bir paket otomatik uygulanamaz veya bir kodla açılamaz.)"
+      "bundleBuildInfo": "💡 Müşteriler bu paketi menünüzdeki bir „Fırsatını oluştur” kartından oluşturur. Kolayca bulunması için aşağıdaki afişe sabitleyin. (Bir paket otomatik uygulanamaz veya bir kodla açılamaz.)",
+      "phoneOrdersLabel": "Telefonla mevcut (Nabil AI)",
+      "phoneOrdersOnSub": "Bu promosyon Nabil AI ile alınan telefon siparişlerinde geçerlidir",
+      "phoneOrdersOffSub": "Bu promosyon telefon siparişlerinde geçerli değildir",
+      "phoneOrdersHelp": "Kapatıldığında, promosyon telefon siparişlerine uygulanmaz. Web, uygulama ve pazar yeri siparişleri etkilenmez.",
+      "clientTypeMemberWarning": "Üyelere özel promosyonlar hesap gerektirir — kayıtlı olmayan arayanlar bu promosyonu görmez."
     },
     "customersList": {
       "heading": "Müşteriler",
@@ -4355,7 +4362,12 @@
         "viewAll": "Tüm aramaları görüntüle",
         "chartPopularItems": "Telefonla en çok sipariş edilenler",
         "popularItemsCta": "Öne çıkan ek satışları ayarla",
-        "popularItemsEmpty": "Bu aralıkta henüz telefon siparişi yok."
+        "popularItemsEmpty": "Bu aralıkta henüz telefon siparişi yok.",
+        "meterTitle": "Bu ayın kullanımı",
+        "meterMinutes": "{minutes} dakika kullanıldı",
+        "meterCharge": "Mevcut: {amount} · Tahmini: {projected}",
+        "meterOver": "{minutes} dakika dahili aşımı",
+        "meterIncluded": "{included} dk {minimum}/ay minimuma dahil ({rate}/dk)"
       },
       "callLog": {
         "searchPlaceholder": "Telefon, ad veya özet arayın…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Numaranın engeli kaldırıldı",
         "errorToast": "Güncellenemedi — lütfen tekrar deneyin.",
         "invalidPhone": "Geçerli bir telefon numarası girin."
-      }
+      },
+      "setup": {
+        "title": "Telefon hattınızı ayarlayın",
+        "body": "Telefon hattınız hakkında bilgi verin, Nabil bir iş günü içinde aramaları yanıtlamaya başlasın. Teknik kurulum gerekmez.",
+        "receivedTitle": "Kurulum talebi alındı",
+        "receivedBody": "Ekibimiz Nabil AI hattınızı kuruyor. Hazır olduğunda canlı kontrol panelinizi burada göreceksiniz — genellikle bir iş günü içinde.",
+        "summaryForward": "{currentNumber} numarasından çağrı yönlendir",
+        "summaryNew": "Yeni numara (mevcut: {currentNumber})",
+        "summaryTransfer": "Kişiye aktarma: {transferNumber}",
+        "summaryGreeting": "Karşılama adı: {name}",
+        "summarySent": "Gönderildi: {date}",
+        "updateRequest": "Talebi güncelle",
+        "prepareHint": "Hat kurulana kadar tercihlerinizi güncelleyebilirsiniz.",
+        "currentNumberLabel": "Mevcut telefon numaranız",
+        "phoneHint": "Müşterilerinizin bugün aradığı numara.",
+        "modeLabel": "Hattınızı nasıl kuralım?",
+        "modeForward": "Numaramı yönlendir",
+        "modeForwardHint": "Mevcut numaranızı Nabil'e yönlendirirsiniz. Arayanlar her zamanki numarayı çevirir.",
+        "modeNew": "Bana yeni bir numara verin",
+        "modeNewHint": "Nabil için yeni bir numara atarız. Mevcut hattınızla birlikte yayınlayabilirsiniz.",
+        "transferNumberLabel": "Aramaları şuraya aktar",
+        "transferNumberHint": "Arayan kişi istediğinde Nabil aramayı buraya aktarır.",
+        "greetingNameLabel": "Karşılama için restoran adı",
+        "greetingNameHint": "Nabil telefonu yanıtlarken restoranınızı nasıl tanıtmalı.",
+        "notesLabel": "Başka bilmemiz gereken bir şey var mı (isteğe bağlı)",
+        "submitting": "Gönderiliyor…",
+        "submit": "Talebi gönder",
+        "cancelEdit": "İptal",
+        "errorAlreadyProvisioned": "Hattınız zaten kurulu — sayfayı yenileyerek gösterim panelini görebilirsiniz.",
+        "errorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+      },
+      "nowAvailable": "Artık mevcut",
+      "availableHeading": "Nabil AI telefon siparişleri",
+      "availablePrice": "{rate} arama dakikası başına · {minimum}/ay minimum · {included} dakika dahil",
+      "availableConcierge": "Ekibimiz hattınızı bir iş günü içinde kurar. Sizin tarafınızdan teknik iş gerekmez.",
+      "availableDemo": "Zaten ödeme yapan bir üye misiniz? {days} gün ücretsiz deneyin.",
+      "subscribeCta": "Abone ol ve kur"
     },
     "customerDetailPage": {
       "allCustomers": "Tüm müşteriler",
@@ -6865,7 +6913,8 @@
             "b3": "Güvenli ve şifreli",
             "b4": "Kanada'da üretildi"
           }
-        }
+        },
+        "nowAvailable": "Şimdi mevcut"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Ücretsiz Başla",
       "ctaContact": "Satışla iletişime geç",
-      "trialNote": "Kredi kartı gerekmez. Sözleşme yok."
+      "trialNote": "Kredi kartı gerekmez. Sözleşme yok.",
+      "phoneOrderingMinuteNote": "Dakika başı 0,60 USD, aylık minimum 249,99 USD (≈ 416 dahil dakika). Detaylar"
     },
     "faq": {
       "title": "Sıkça Sorulan Sorular",
@@ -7075,6 +7125,211 @@
       "b1": "Gerçek menünüz — fotoğraflar, boyutlar & malzemeler",
       "b2": "Tıpkı bir müşteri gibi anında sipariş verin",
       "b3": "Beğendiniz mi? Kaydolun ve saklayın — yeniden içe aktarma yok"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Yapay zeka telefon siparişi",
+        "title": "Pizzacınızın telefonu, <accent>yapay zeka tarafından yanıtlanıyor</accent>",
+        "subtitle": "Nabil AI pizzacınız için telefon siparişlerini alır — yarım yarım pizzalar, kombolar, teslimat bölgeleri, isme göre malzemeler — ve bunları web sitenizle aynı ödeme ekranından geçirir. Gerçek bir aramanın nasıl olduğunu bilen eski pizzacı sahipleri tarafından yapıldı.",
+        "ctaStart": "Başlayın",
+        "ctaSecondary": "Nasıl çalıştığını görün",
+        "trust1": "Pizzacılar için yapıldı",
+        "trust2": "Web sitenizle aynı ödeme ekranı",
+        "trust3": "Kayıtlar ve dökümanlar",
+        "trust4": "Arama dakikası başına US$0.60",
+        "sampleLabel": "Canlı arama örneği",
+        "sampleCaller": "Arayan",
+        "sample1": "Merhaba, teslimat için sipariş verebilir miyim?",
+        "sample2": "Tabii ki! Yardımcı olmaktan mutluluk duyarım. Bugün ne hazırlayayım?",
+        "sample3": "Büyük bir pizza, yarısı pepperoni ve mantar, yarısı yeşil biber ve soğan.",
+        "sample4": "Anladım — büyük yarım yarım pizza: bir tarafı pepperoni ve mantar, diğer tarafı yeşil biber ve soğan. Başka bir şey?"
+      },
+      "story": {
+        "eyebrow": "Hikayemiz",
+        "title": "Pizzacılar için, eski pizzacı sahipleri tarafından yapıldı",
+        "body1": "Yıllarca tezgahın arkasında telefon siparişleri aldık. Arayanların gerçekte ne söylediğini biliyoruz — yarım yarım istekleri, son dakika malzeme değişiklikleri, 'geçen seferki gibi'. Nabil AI'yi bu aramaları bizim yapacağımız gibi karşılaması için geliştirdik.",
+        "body2": "Genel AI telefon sistemlerinin aksine, Nabil ilk günden itibaren pizza ve restoran siparişleri etrafında tasarlandı. Her özellik — kombo oluşturmadan teslimat bölgesi kontrollerine kadar — kendi mağazamızda ihtiyaç duyduğumuz için var.",
+        "point1": "Gerçek pizzacı operasyonları etrafında tasarlandı",
+        "point2": "Her sipariş doğrulanmış ödeme sisteminizden geçer",
+        "point3": "Menünüz yapay zekanın menüsü — hiçbir şey uydurma"
+      },
+      "how": {
+        "eyebrow": "Nasıl çalışır",
+        "title": "Otomatik telefon siparişlerine üç adım",
+        "step1": {
+          "title": "Telefon hattınızı bağlayın",
+          "body": "Mevcut numaranızı yönlendirin veya yeni bir numara alın. Ekibimiz hattınızı bir iş günü içinde kurar — sizin tarafınızda teknik iş yok."
+        },
+        "step2": {
+          "title": "Nabil aramayı yanıtlar",
+          "body": "Nabil arayanları restoranınızın adıyla karşılar, siparişlerini sohbet tarzında alır, her kalemi onaylar ve siparişi vermeden önce toplamı okur."
+        },
+        "step3": {
+          "title": "Sipariş mutfağınızda yazdırılır",
+          "body": "Sipariş, web sitesi siparişiyle aynı ödeme ekranından geçer. Mutfak ekranınızda görünür, fiş yazıcınızda yazdırılır ve yönetici panelinizde gösterilir — hepsi otomatik olarak."
+        }
+      },
+      "handles": {
+        "eyebrow": "Neler yapabilir",
+        "title": "Arayanlarınızın istediği her şey",
+        "subtitle": "Nabil ekibinizin aldığı siparişleri alır — tek malzemeli basit pizzalardan teslimatla birlikte yarım yarım kombolara kadar.",
+        "halfHalf": {
+          "title": "Yarım yarım pizzalar",
+          "body": "Arayanlar her yarıda farklı malzemeler sipariş edebilir ve Nabil siparişi vermeden önce her tarafı onaylar."
+        },
+        "combos": {
+          "title": "Kombolar ve yemek fırsatları",
+          "body": "Nabil arayanları kombo seçeneklerinde yönlendirir — pizzanızı seçin, yanınızı seçin, içeceğinizi seçin — tıpkı web siteniz gibi."
+        },
+        "delivery": {
+          "title": "Bölge kontrolü ile teslimat",
+          "body": "Teslimat adresini alır, bölgenizde olup olmadığını kontrol eder, ücreti bildirir ve siparişi verir — tahmin yok."
+        },
+        "upsells": {
+          "title": "Akıllı ek satış",
+          "body": "Seçtiğiniz ürünleri konuşmanın doğru anında önerir — pizzayla bir içecek, ödeme öncesi bir tatlı."
+        },
+        "faq": {
+          "title": "Sık sorulan soruları yanıtlar",
+          "body": "Çalışma saatleri, konum, otopark, alerjenler — Nabil mağazanızın SSS'lerini yanıtlar, böylece personelinizin bunu yapmasına gerek kalmaz."
+        },
+        "returning": {
+          "title": "Geri dönen arayanları tanır",
+          "body": "Düzenli müşterileri isimleriyle selamlar ve sipariş geçmişlerini hatırlar, böylece tekrar siparişler hızlı olur."
+        },
+        "transfer": {
+          "title": "Bir kişiye aktarır",
+          "body": "Bir arayan bir insanla konuşmak istediğinde veya Nabil'in karşılayamayacağı bir talebi olduğunda, arama mağazanızın numarasına aktarılır."
+        },
+        "numbers": {
+          "title": "Sayıları doğal bir şekilde söyler",
+          "body": "Telefon numaraları, adresler, fiyatlar ve saatler kelimelerle söylenir — '647' değil 'altı yüz kırk yedi' — böylece arayan her zaman anlar."
+        },
+        "hours": {
+          "title": "Çalışma saatlerinizi bilir",
+          "body": "Nabil ne zaman açık olduğunuzu, ne zaman kapalı olduğunuzu ve tatil programınızı bilir — arayanlar her seferinde doğru bilgi alır."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Neden doğru",
+        "title": "Sipariş doğrudur çünkü sistem hatalı olmasına izin vermez",
+        "body": "Nabil tahmin yürütmez. Her ürün gerçek menünüzle doğrulanır, her fiyat kasanız tarafından hesaplanır ve her değişiklik sipariş verilmeden önce arayanla teyit edilir.",
+        "cart": {
+          "title": "Sunucu taraflı sepet",
+          "body": "Sipariş sunucuda oluşturulur, yapay zekanın belleğinde değil. Menünüzün fiyatları, kuralları ve uygunluğu tek doğru kaynaktır."
+        },
+        "asks": {
+          "title": "Sorar, asla varsaymaz",
+          "body": "Bir şey belirsiz olduğunda — boyut, malzeme yerleşimi, hamur seçimi — Nabil tahmin etmek yerine arayana sorar."
+        },
+        "readback": {
+          "title": "Tam geri okuma",
+          "body": "Siparişi vermeden önce Nabil her ürünü, değişikliği ve toplamı geri okur — arayan kişi, mutfağa gönderilmeden önce onaylar."
+        },
+        "alarm": {
+          "title": "Alarm: söylenen = hesaplanan fiyat",
+          "body": "Yapay zekanın söylediği toplam, kasanın hesapladığıyla uyuşmazsa, sipariş verilmeden önce sistem bunu işaretler."
+        },
+        "timeline": {
+          "title": "Arama bazında zaman çizelgesi",
+          "body": "Her aramanın her araç çağrısını, sepet değişikliğini ve kararı gösteren ayrıntılı bir zaman çizelgesi vardır — böylece tam olarak ne olduğunu görebilirsiniz."
+        },
+        "tests": {
+          "title": "Otomatik test paketi",
+          "body": "Bir simülasyon sistemi her güncellemede gerçek sipariş senaryoları çalıştırır — yarım yarım pizzalar, kombinasyonlar, uç durumlar — telefon hattınıza ulaşmadan önce."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Kontrol paneliniz",
+        "title": "Her aramayı görün, her kelimeyi duyun",
+        "subtitle": "Kayıtlar, transkriptler, gelir takibi ve arama bazında zaman çizelgesi — Nabil'in restoranınız için ne yaptığını bilmek için ihtiyacınız olan her şey.",
+        "shotOverviewAlt": "Arama hacmini, geliri ve dönüşüm metriklerini gösteren Nabil AI kontrol paneli genel görünümü",
+        "shotCallsAlt": "Sonuçları ve süreleriyle birlikte son telefon siparişlerini gösteren arama listesi",
+        "shotDetailAlt": "Transkript, zaman çizelgesi ve sipariş özeti ile arama detay görünümü",
+        "shotSettingsAlt": "Karşılama, ek satış ve SSS yapılandırmasını içeren Nabil AI ayarlar paneli",
+        "shotReportAlt": "Fee Free ekibine sorunları işaretlemek için arama raporu diyaloğu",
+        "overview": {
+          "title": "Gelir genel görünümü",
+          "body": "Nabil'in ne kadar gelir getirdiğini aramalar, siparişler ve dönüşüm oranları grafikleriyle görün."
+        },
+        "calls": {
+          "title": "Arama geçmişi",
+          "body": "Her aramayı sonucu, süresi, kaydı ve transkribiyle birlikte inceleyin."
+        },
+        "detail": {
+          "title": "Arama zaman çizelgesi",
+          "body": "Aramada olan her şeyin saniye saniye zaman çizelgesi — her araç çağrısı, sepet değişikliği ve söylenen söz."
+        },
+        "report": {
+          "title": "Aramayı bildirin",
+          "body": "Doğru gitmeyen herhangi bir aramayı işaretleyin. Ekibimiz inceleyip Nabil'in işleyişini geliştirir."
+        },
+        "settings": {
+          "title": "Tam kontrol",
+          "body": "Nabil'in karşılamasını, ek satış önerilerini, SSS yanıtlarını, engelli arayanları ve bağlantıyla ödeme ayarlarını yapılandırın."
+        },
+        "roi": {
+          "title": "ROI takibi",
+          "body": "Arama dakikası başına geliri takip edin, böylece Nabil'in mağazanız için ne kazandığını tam olarak bilin."
+        }
+      },
+      "same": {
+        "eyebrow": "Aynı sistem, aynı kasa",
+        "title": "Telefon siparişi bir web siparişidir",
+        "body": "Nabil ayrı bir sipariş sistemi kullanmaz. Her telefon siparişi, web siparişlerinizle aynı kasadan, menüden, fiyatlardan ve mutfak ekranından geçer. Tek sistem, tek doğru kaynak.",
+        "bullet1": "Aynı menü, aynı fiyatlar, aynı seçenekler",
+        "bullet2": "Aynı mutfak ekranı ve fiş yazıcısı",
+        "bullet3": "Aynı sipariş onayı ve takip",
+        "bullet4": "Aynı yönetim paneli ve raporlar",
+        "frameAlt": "Telefon siparişini web siparişleriyle birlikte gösteren mutfak ekranı"
+      },
+      "languages": {
+        "eyebrow": "Çok dilli",
+        "title": "Nabil arayanınızın dilini konuşur",
+        "body": "Nabil arayanın dilini otomatik olarak algılar ve aynı dilde yanıt verir. Menü öğeleriniz, açıklamalarınız ve seçenekleriniz arayanın dilinde sunulur — web sitenizle aynı çeviriler."
+      },
+      "pricing": {
+        "eyebrow": "Basit fiyatlandırma",
+        "title": "Tek fiyat. Sürpriz yok.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "arama dakikası başına",
+        "minimum": "249,99 USD",
+        "minimumLabel": "aylık minimum",
+        "rule": "Hangisi yüksekse onu ödersiniz: arama dakikalarınız için dakika başı 0,60 USD, veya aylık 249,99 USD minimum. Çoğu restoran dahil 416 dakika içinde kalır.",
+        "demo": "Zaten ödeme yapan bir Fee Free üyesi misiniz? Nabil'i 7 gün ücretsiz deneyin — taahhüt yok.",
+        "include1": "Sınırsız arama",
+        "include2": "Kayıtlar ve transkriptler",
+        "include3": "Kontrol paneli ve analitik",
+        "include4": "Yardımlı hat kurulumu",
+        "include5": "Sürekli güncellemeler ve iyileştirmeler",
+        "cta": "Başlayın",
+        "note": "Fiyatlar ABD doları cinsindendir. Stripe ile aylık faturalandırma. İstediğiniz zaman iptal edin."
+      },
+      "faq": {
+        "title": "Sıkça sorulan sorular",
+        "q1": "Nabil siparişi nasıl alır?",
+        "a1": "Nabil telefon hattınızı yanıtlar, arayanı restoranınızın adıyla karşılar, siparişi sohbet şeklinde alır, her öğeyi ve toplamı onaylar ve mevcut kasanız üzerinden girer. Sipariş mutfak ekranınızda görüntülenir ve otomatik olarak yazdırılır.",
+        "q2": "Arayan kişi yapay zeka ile konuştuğunu biliyor mu?",
+        "a2": "Nabil doğal ve sohbet tarzında duyulur, ancak şeffaflığa inanıyoruz — arayanlar her zaman bir insan isteyebilir ve arama hemen aktarılır.",
+        "q3": "Ya Nabil bir hata yaparsa?",
+        "a3": "Her aramanın kaydı, transkripti ve ayrıntılı zaman çizelgesi vardır. Herhangi bir aramayı raporlayabilirsiniz ve ekibimiz araştıracaktır. Sunucu tarafı sepet ve okuma geri bildirimi hataları en aza indirir.",
+        "q4": "Nabil yarım-yarım pizzaları yapabilir mi?",
+        "a4": "Evet — her yarısında farklı malzeme olan yarım-yarım pizzalar temel bir özelliktir. Nabil her tarafı onaylar ve siparişi web kasanız gibi oluşturur.",
+        "q5": "Telefon hattımı nasıl bağlarım?",
+        "a5": "Abone olduktan sonra mevcut numaranızı ve Nabil'e yönlendirmek mi yoksa yeni numara mı istediğinizi söyleyin. Ekibimiz bir iş günü içinde her şeyi kurar — teknik iş gerekmez.",
+        "q6": "Mesai saatleri dışında ne olur?",
+        "a6": "Nabil çalışma saatlerinizi ve tatil takviminizi bilir. Mesai dışında, arayan kişiye ne zaman açılacağınızı söyler ve zamanlama etkinleştirilmişse bir sonraki açılış için sipariş alabilir.",
+        "q7": "Faturalandırma nasıl hesaplanır?",
+        "a7": "Arama dakikası başına 0,60 USD veya aylık 249,99 USD minimumdan hangisi yüksekse onu ödersiniz. Minimum yaklaşık 416 dakika içerir. Her arama bir sonraki tam dakikaya yuvarlanır. Kullanımınızı gerçek zamanlı takip edebilirsiniz.",
+        "q8": "İstediğim zaman iptal edebilir miyim?",
+        "a8": "Evet. Nabil, Stripe üzerinden uzun vadeli sözleşme olmaksızın aylık olarak faturalandırılır. Panelden istediğiniz zaman iptal edin ve hattınız fatura dönemi sonuna kadar aktif kalır."
+      },
+      "finalCta": {
+        "title": "Nabil'in telefonunuza cevap vermesine hazır mısınız?",
+        "body": "Kurulum bir iş günü sürer. Telefon siparişlerini kendi sisteminiz üzerinden almaya başlayın — ekstra donanım, personel veya stres yok.",
+        "primary": "Başlayın",
+        "secondary": "Tüm fiyatları gör"
+      }
     }
   },
   "addressBook": {

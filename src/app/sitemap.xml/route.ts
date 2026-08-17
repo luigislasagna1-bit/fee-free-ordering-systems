@@ -117,6 +117,9 @@ function buildPlatformSitemap(host: string): string {
     // Flagship kitchen-reliability landing page (ring→print→call→auto-accept) —
     // our most defensible operational moat. COMPETITOR-TOWNCLUB-PLAN.md action #5.
     { loc: `${base}/never-miss-an-order`, changefreq: "monthly", priority: 0.8 },
+    // Nabil AI product page (on sale 2026-08-17, OWNER-ACTIONS A64) — a
+    // high-intent "AI phone ordering for pizzerias" target.
+    { loc: `${base}/nabil-ai`, changefreq: "weekly", priority: 0.8 },
     { loc: `${base}/features`, changefreq: "weekly", priority: 0.7 },
     { loc: `${base}/faq`, changefreq: "monthly", priority: 0.5 },
     { loc: `${base}/partners`, changefreq: "monthly", priority: 0.5 },

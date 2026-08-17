@@ -42,6 +42,10 @@ export type WizardProps = {
   /** True when the restaurant is actually listed on the marketplace — gates the
    *  channel (website / marketplace / both) picker in Step 3. Luigi 2026-06-09. */
   isOnMarketplace?: boolean;
+  /** True when the restaurant is entitled to Nabil AI phone ordering — gates
+   *  the "Available by phone (Nabil AI)" switch in Step 3 (feature-gated
+   *  visibility). The value is saved unchanged when hidden. Luigi A64(a). */
+  phoneOrderingEnabled?: boolean;
   /** VIP groups / individual targets this promo is attached to (edit mode) —
    *  replaces the Visible/Hidden + banner controls with a "VIP only" notice,
    *  because those switches can't make a VIP-linked promo public. Luigi 2026-07-02. */
@@ -65,6 +69,8 @@ export type PromoRow = {
   stackingRule: string;
   channel: string; // website | marketplace | both
   orderType: string; // legacy "both"/"pickup"/"delivery"/CSV
+  /** "Available by phone (Nabil AI)" — Promotion.phoneOrders (default true). */
+  phoneOrders: boolean;
   customerType: string;
   minimumOrder: number;
   rules: string;
@@ -154,6 +160,9 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
     startsAt: p?.startsAt ? new Date(p.startsAt).toISOString().slice(0, 16) : "",
     endsAt: p?.endsAt ? new Date(p.endsAt).toISOString().slice(0, 16) : "",
     orderType: normalizeOrderTypeFromDb(p?.orderType),
+    // Default ON (matches the column default): a new promo applies by phone
+    // unless the owner switches it off.
+    phoneOrders: p?.phoneOrders ?? true,
     customerType: p?.customerType ?? "any",
     paymentMethodSlugs: parseJsonArr<string>(p?.paymentMethodSlugs ?? null),
     deliveryZoneIds: parseJsonArr<string>(p?.deliveryZoneIds ?? null),
@@ -175,7 +184,7 @@ function initialFormFromPromo(p: PromoRow | null | undefined): Step3Form {
 // ─── Component ──────────────────────────────────────────────────────────────
 
 export function PromoWizard(props: WizardProps) {
-  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false, vipGroupNames = [], rewardsEnabled = false, staleLiveTargets = null } =
+  const { mode, hasAdvanced, categories, menuItems, paymentMethods, deliveryZones, initialPromo, currencySymbol = "$", isOnMarketplace = false, phoneOrderingEnabled = false, vipGroupNames = [], rewardsEnabled = false, staleLiveTargets = null } =
     props;
   const router = useRouter();
   const t = useTranslations("admin.promoWizard");
@@ -288,6 +297,9 @@ export function PromoWizard(props: WizardProps) {
       stackingRule: step3.stackingRule,
       channel: step3.channel,
       orderType: step3.orderType, // API accepts string[]
+      // Always sent (even when the switch is hidden for a store without Nabil
+      // AI) so a save never silently resets an existing value.
+      phoneOrders: step3.phoneOrders,
       customerType: step3.customerType,
       minimumOrder: parseFloat(step3.minimumOrder) || 0,
       ruleConfig: rules,
@@ -429,6 +441,7 @@ export function PromoWizard(props: WizardProps) {
               deliveryZones={deliveryZones}
               currencySymbol={currencySymbol}
               isOnMarketplace={isOnMarketplace}
+              showPhoneOrders={phoneOrderingEnabled}
               promotionType={promotionType}
               vipGroupNames={vipGroupNames}
             />

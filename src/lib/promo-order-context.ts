@@ -35,6 +35,15 @@
  *                  optimistic (preview passes the client's banner flag; the
  *                  charge defaults to true) — the moment any identity exists
  *                  both routes re-derive from the same query, so they agree.
+ *                  Judged TWICE when it matters: over every order, and over
+ *                  non-phone orders only — a promo that is not available by
+ *                  phone (Promotion.phoneOrders=false) counts "first order"
+ *                  among the orders on the channels it applies to.
+ *
+ *   PHONE ORDERS = a promo with Promotion.phoneOrders=false is never in play
+ *                  on a Nabil AI phone order (orderSource "voice") — dropped
+ *                  from the pool here AND refused by the engine's shared
+ *                  isEligible(); one rule (`phoneOrdersOk`), two readers.
  */
 import prisma from "@/lib/db";
 import { getCurrentRestaurantCustomer } from "@/lib/restaurant-customer-session";
@@ -43,29 +52,27 @@ import { partitionMemberOnly, qualifyingMemberOnlyPromos } from "@/lib/vip-membe
 import { resolvePromoMenuRefsForServing } from "@/lib/menu";
 import { phoneDigitsKey } from "@/lib/phone";
 import { CUSTOMER_ROW_ORDER } from "@/lib/customer-row";
-import { isOnlineOnlyCampaignRef, KICKSTARTER_FIRST_BUY_REF } from "@/lib/assigned-promos";
+import { KICKSTARTER_FIRST_BUY_REF } from "@/lib/assigned-promos";
+import { phoneOrdersOk, type PromoOrderSource } from "@/lib/promo-engine";
+import { PHONE_ORDER_CHANNEL } from "@/lib/phone-order-channel";
 
 export type PromoChannel = "website" | "marketplace";
 
-/**
- * HOW the order is being placed — distinct from the acquisition channel above.
- *   "web"   → the customer's own browser/app checkout (website or marketplace)
- *   "voice" → Nabil AI phone ordering (the Fly service POSTing /api/orders with
- *             the internal key + channel:"voice"; its quote is the same route's
- *             dryRun, so quote == charge by construction)
- * Kickstarter/Autopilot email-campaign promos are ONLINE-ONLY (Luigi
- * 2026-08-16) — see `isOnlineOnlyCampaignRef`. Deliberately NOT a third
- * PromoChannel value: `promoChannelOk` compares against Promotion.channel
- * (website/marketplace/both) and the new-vs-returning count keys on
- * viaMarketplace — a "voice" channel there would fail EVERY promo and change
- * the count's meaning.
- */
-export type PromoOrderSource = "web" | "voice";
+/** HOW the order is being placed ("web" | "voice") — defined next to the engine
+ *  gate that reads it (src/lib/promo-engine.ts) and re-exported here for the
+ *  routes. See `phoneOrdersOk` there for the one rule. */
+export type { PromoOrderSource };
 
 /** The one gate for "may this promo be in the pool for HOW this order is
- *  placed": a phone order never sees an email-campaign promo. */
-export function promoSourceOk(promo: { campaignRef?: string | null }, orderSource: PromoOrderSource): boolean {
-  return orderSource !== "voice" || !isOnlineOnlyCampaignRef(promo.campaignRef);
+ *  placed": a promo that is not available by phone (Promotion.phoneOrders =
+ *  false — the owner's per-promo "Available by phone (Nabil AI)" switch) never
+ *  reaches a phone order. Same helper the engine's isEligible() applies, so
+ *  the pool and the engine cannot disagree; the pool filter additionally keeps
+ *  such promos out of everything derived from the pool (the "new customers
+ *  only" note, lifetime scans). Replaced the hardcoded Kickstarter/Autopilot
+ *  campaignRef rule of 2026-08-16 (Luigi A64(a), 2026-08-17). */
+export function promoSourceOk(promo: { phoneOrders?: boolean | null }, orderSource: PromoOrderSource): boolean {
+  return phoneOrdersOk(promo, orderSource);
 }
 
 /** Cap per the standing scaling rule (no unbounded findMany on a hot path).
@@ -114,7 +121,23 @@ export type PromoOrderContext = {
    *  forced to autoApply (a forced ?grant= gift is also forced exclusive so it
    *  can win by value). */
   activePromos: any[];
+  /** First order ever at this restaurant (this channel), counting EVERY
+   *  order — phone orders included. What the engine uses for a promo that is
+   *  available by phone. */
   isNewCustomer: boolean;
+  /** First order judged on NON-PHONE orders only (Order.channel ≠ "voice").
+   *  What the engine uses for a promo that is NOT available by phone
+   *  (phoneOrders=false): such a promo counts "prior orders" among the
+   *  channels it applies to. Equals isNewCustomer whenever the split can't
+   *  matter (no phone-excluded promo at this store, a voice order, or an
+   *  unidentified / genuinely new customer). MUST be threaded into the
+   *  engine ctx by both routes — preview == charge. */
+  isNewCustomerExcludingPhoneOrders: boolean;
+  /** HOW this order is placed, normalised — MUST be threaded into the engine
+   *  ctx (`ApplyContext.orderSource`) by both routes so the shared
+   *  isEligible() gate sees it (the pool filter above is the belt, the engine
+   *  gate the braces). */
+  orderSource: PromoOrderSource;
   isMember: boolean;
   /** promoId → true for every once-per-lifetime promo this identity already
    *  redeemed (ledger + order-history, same source both routes). */
@@ -181,11 +204,13 @@ export type PromoOrderContext = {
 export async function buildPromoOrderContext(args: {
   restaurant: RestaurantRef;
   channel: PromoChannel;
-  /** HOW the order is placed. "voice" (Nabil phone orders) drops every
-   *  Kickstarter/Autopilot email-campaign promo from the pool — at the public
-   *  pool, the granted add-backs AND the member-only add-backs — so a phone
-   *  caller is never quoted, charged or told about an online-only discount.
-   *  Default "web" = every existing caller's behavior, byte for byte. */
+  /** HOW the order is placed. "voice" (Nabil phone orders) drops every promo
+   *  that is not available by phone (Promotion.phoneOrders=false) from the
+   *  pool — at the public pool, the granted add-backs AND the member-only
+   *  add-backs — so a phone caller is never quoted, charged or told about a
+   *  discount the owner kept online-only; the engine's isEligible() refuses
+   *  the same promos again from ctx.orderSource. Default "web" = every
+   *  existing caller's behavior, byte for byte. */
   orderSource?: PromoOrderSource;
   /** Identity typed at checkout (raw — normalized here). */
   email?: string | null;
@@ -289,24 +314,56 @@ export async function buildPromoOrderContext(args: {
   // email OR phone closes the rotate-an-email loophole the same way for both
   // routes.
   let isNewCustomer = args.optimisticIsNewCustomer ?? true;
+  // The same verdict judged on NON-PHONE orders only — what a promo that is
+  // not available by phone (phoneOrders=false) uses for "first order", so a
+  // customer whose only earlier order was a Nabil phone order is still a
+  // first-timer for an online-only first-buy (Luigi A64(a), 2026-08-17).
+  let isNewCustomerExcludingPhoneOrders = isNewCustomer;
   if (identified) {
-    const priorFulfilled = await prisma.order.count({
-      where: {
-        restaurantId: restaurant.id,
-        status: { notIn: ["cancelled", "rejected"] }, // "missed" == auto-rejected
-        viaMarketplace: channel === "marketplace",
-        OR: [
-          ...(customerId ? [{ customerId }] : []),
-          ...(email ? [{ customerEmail: email }] : []),
-          ...(phone ? [{ customerPhone: phone }] : []),
-        ],
-      },
-    });
+    const priorWhere = {
+      restaurantId: restaurant.id,
+      status: { notIn: ["cancelled", "rejected"] }, // "missed" == auto-rejected
+      viaMarketplace: channel === "marketplace",
+      OR: [
+        ...(customerId ? [{ customerId }] : []),
+        ...(email ? [{ customerEmail: email }] : []),
+        ...(phone ? [{ customerPhone: phone }] : []),
+      ],
+    };
+    const priorFulfilled = await prisma.order.count({ where: priorWhere });
     isNewCustomer = priorFulfilled === 0;
+    isNewCustomerExcludingPhoneOrders = isNewCustomer;
+    // Second count ONLY when it can change a verdict: the customer is
+    // returning, this is not itself a phone order (phone-excluded promos are
+    // never in play there), and some promo at this store is phone-excluded
+    // (checked on the UNFILTERED pool so a member-only / granted add-back
+    // counts too). Same per-restaurant seek as the count above with one more
+    // predicate — Prisma's `not` excludes NULLs, hence the explicit OR.
+    if (
+      priorFulfilled > 0 &&
+      orderSource !== "voice" &&
+      (activePromosAll as any[]).some((p) => p.phoneOrders === false)
+    ) {
+      const priorNonPhone = await prisma.order.count({
+        where: {
+          ...priorWhere,
+          AND: [{ OR: [{ channel: null }, { channel: { not: PHONE_ORDER_CHANNEL } }] }],
+        },
+      });
+      isNewCustomerExcludingPhoneOrders = priorNonPhone === 0;
+    }
   }
+  // "New customers only" note for the cart: the Kickstarter first-buy is in
+  // play for this order (pool-filtered above) and the customer is returning AS
+  // THAT PROMO COUNTS IT — a phone-excluded first-buy ignores phone orders.
   const newCustomerOfferUnavailable =
-    identified && !isNewCustomer &&
-    activePromos.some((p: any) => p.campaignRef === KICKSTARTER_FIRST_BUY_REF && p.isActive);
+    identified &&
+    activePromos.some(
+      (p: any) =>
+        p.campaignRef === KICKSTARTER_FIRST_BUY_REF &&
+        p.isActive &&
+        !(p.phoneOrders === false ? isNewCustomerExcludingPhoneOrders : isNewCustomer),
+    );
 
   // ── Member signal (canonical — see module doc) ───────────────────────────
   // A signed-in per-restaurant customer IS a member; so is a resolved email
@@ -331,10 +388,11 @@ export async function buildPromoOrderContext(args: {
     try {
       const grants = await findActiveGrants({ restaurantId: restaurant.id, email, phone });
       const autoIds = new Set(grants.filter((g) => g.autoApply).map((g) => g.promotionId));
-      // A phone order never adds an email-campaign grant back (a WIN3 email
-      // recipient calling in still gets no WIN3): the promo rows the grants
-      // point at are re-checked with promoSourceOk below, at both add-back
-      // sites, so the ids collected here can't smuggle one past the pool gate.
+      // A phone order never adds a phone-excluded grant back (a WIN3 email
+      // recipient calling in still gets no WIN3 while WIN3 is phoneOrders=false):
+      // the promo rows the grants point at are re-checked with promoSourceOk
+      // below, at both add-back sites, so the ids collected here can't smuggle
+      // one past the pool gate.
       if (typeof args.grantId === "string" && args.grantId && sessionCustomerId) {
         const g = await resolveGrantById({
           restaurantId: restaurant.id,
@@ -355,14 +413,17 @@ export async function buildPromoOrderContext(args: {
         if (autoIds.size > 0) {
           // Granted promos that weren't in the filtered pool (e.g. hidden
           // code-only promos). Same brand-scope-aware where as the pool so a
-          // granted BRAND promo resolves in preview exactly as at charge.
+          // granted BRAND promo resolves in preview exactly as at charge. Full
+          // rows (no select) — phoneOrders must come along for the gate below
+          // and for the engine.
           const extra = await prisma.promotion.findMany({
             where: { ...promotionPoolWhere(restaurant), id: { in: [...autoIds] } },
           });
           for (const p of extra) {
-            // promoSourceOk here is load-bearing: on a voice order the campaign
-            // promo was dropped from the pool above, so the granted id is still
-            // in autoIds and would re-enter through this fetch without it.
+            // promoSourceOk here is load-bearing: on a voice order a
+            // phone-excluded promo was dropped from the pool above, so the
+            // granted id is still in autoIds and would re-enter through this
+            // fetch without it.
             if (!suppressed.has(p.id) && promoSourceOk(p, orderSource)) {
               activePromos.push({ ...(p as any), autoApply: true, ...(grantForcedIds.has(p.id) ? { stackingRule: "exclusive" } : {}) });
             }
@@ -455,6 +516,8 @@ export async function buildPromoOrderContext(args: {
   return {
     activePromos: activePromosResolved,
     isNewCustomer,
+    isNewCustomerExcludingPhoneOrders,
+    orderSource,
     isMember,
     hasUsedLifetime,
     customerId,

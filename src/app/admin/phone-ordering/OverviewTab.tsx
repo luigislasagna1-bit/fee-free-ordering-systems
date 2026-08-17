@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { AlertTriangle, ArrowRight, Clock, Moon, PhoneCall, ShoppingBag, TrendingUp } from "lucide-react";
+import { AlertTriangle, ArrowRight, Clock, Moon, PhoneCall, ShoppingBag, Timer, TrendingUp } from "lucide-react";
 import { formatCurrency as fmtCurrency } from "@/lib/utils";
 import { resolveReportScope } from "@/lib/reports/report-scope";
 import { parseDateRangeInTz, formatRangeLabelInTz } from "@/lib/reports/date-range-tz";
@@ -14,6 +14,8 @@ import {
   CALL_OUTCOMES,
 } from "@/lib/voice/analytics";
 import { PollRefresh } from "@/components/admin/PollRefresh";
+import { fetchNabilUsage } from "@/lib/voice/nabil-usage";
+import { meterSummary, monthWindowUtc, formatUsdCents } from "@/lib/voice/nabil-billing";
 import { formatTzDateTime, formatDuration, OutcomeChip } from "./shared";
 
 /**
@@ -42,11 +44,17 @@ export default async function OverviewTab({
   const range = parseDateRangeInTz(spEff, scope.timezone ?? undefined);
   const rangeLabel = formatRangeLabelInTz(range, scope.timezone ?? undefined);
 
-  const [a, monthRevenue, popularItems] = await Promise.all([
+  // Metering (Luigi's price: US$0.60/min, US$249.99/month min): the SAME UTC
+  // calendar-month window the overage cron bills — one aggregate query.
+  const now = new Date();
+  const meterWindow = monthWindowUtc(now);
+  const [a, monthRevenue, popularItems, usage] = await Promise.all([
     fetchVoiceAnalytics(restaurantId, range, scope.timezone),
     fetchVoiceMonthRevenue(restaurantId, scope.timezone),
     fetchPopularPhoneItems(restaurantId, range),
+    fetchNabilUsage(restaurantId, meterWindow.start, meterWindow.end),
   ]);
+  const meter = meterSummary(usage.minutes, now, meterWindow);
 
   const outcomeLabel = (o: string | null) =>
     o && (CALL_OUTCOMES as readonly string[]).includes(o) ? tCalls(`outcome.${o}`) : tCalls("outcome.unknown");
@@ -94,6 +102,38 @@ export default async function OverviewTab({
           <p className="mt-1 text-white/85 text-sm">{t("monthHeadlineSub")}</p>
         </div>
         <DateRangePicker defaultPreset="last_28" />
+      </div>
+
+      {/* Metering — this calendar month's billed minutes + the projected charge,
+          so the bill is never a surprise (US$0.60/min, US$249.99 minimum). */}
+      <div className="rounded-xl border border-gray-200 bg-white p-5 flex items-start justify-between gap-4 flex-wrap">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 text-xs text-gray-500">
+            <Timer className="w-3.5 h-3.5 text-amber-600" />
+            {t("meterTitle")}
+          </div>
+          <div className="mt-1 flex items-baseline gap-3 flex-wrap">
+            <span className="text-2xl font-bold text-gray-900 tabular-nums">{t("meterMinutes", { minutes: meter.minutes.toLocaleString() })}</span>
+            <span className="text-sm text-gray-700">
+              {t("meterCharge", {
+                amount: formatUsdCents(meter.chargeSoFarCents),
+                projected: formatUsdCents(meter.projectedChargeCents),
+              })}
+            </span>
+          </div>
+          {meter.overageMinutes > 0 && (
+            <div className="mt-1 text-xs font-semibold text-amber-700">
+              {t("meterOver", { minutes: meter.overageMinutes.toLocaleString() })}
+            </div>
+          )}
+        </div>
+        <p className="text-[11px] text-gray-500 leading-snug max-w-sm">
+          {t("meterIncluded", {
+            included: meter.includedMinutes,
+            minimum: formatUsdCents(meter.monthlyMinCents),
+            rate: formatUsdCents(meter.perMinuteCents),
+          })}
+        </p>
       </div>
 
       {/* Needs attention — error-outcome calls with a one-click drill-down. */}

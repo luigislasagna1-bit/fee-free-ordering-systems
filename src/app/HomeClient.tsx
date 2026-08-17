@@ -36,7 +36,7 @@ import { AppDownloadBadges } from "@/components/marketing/AppDownloadBadges";
 
 /* Structural defs — icons + comingSoon flags live here; all visible text comes
    from t() so it translates. The `key` maps to marketing.home.v2.<group>.<key>.* */
-const ADDON_DEFS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
+const ADDON_DEFS: { icon: LucideIcon; key: string; comingSoon?: boolean; href?: string; isNew?: boolean }[] = [
   { icon: CreditCard, key: "payments" },
   { icon: Globe, key: "website" },
   { icon: Building2, key: "multiLocation" },
@@ -46,7 +46,9 @@ const ADDON_DEFS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
   { icon: Truck, key: "driver" },
   { icon: Smartphone, key: "brandedApp", comingSoon: true },
   { icon: Monitor, key: "pos", comingSoon: true },
-  { icon: Phone, key: "aiPhone", comingSoon: true },
+  // Nabil AI went ON SALE 2026-08-17 (OWNER-ACTIONS A64 (f)) — the tile links
+  // to its own product page and carries a "Now available" tag instead of "Soon".
+  { icon: Phone, key: "aiPhone", href: "/nabil-ai", isNew: true },
   { icon: CalendarCheck, key: "deposits", comingSoon: true },
 ];
 
@@ -100,6 +102,7 @@ export function HomeClient({ locale }: { locale: string }) {
 
   const addons: IconFeature[] = ADDON_DEFS.map((a) => ({
     icon: a.icon, title: t(`addons.${a.key}.title`), body: t(`addons.${a.key}.body`), comingSoon: a.comingSoon,
+    href: a.href, tag: a.isNew ? t("nowAvailable") : undefined,
   }));
   const runBusiness: IconFeature[] = RUN_DEFS.map((r) => ({
     icon: r.icon, title: t(`run.${r.key}.title`), body: t(`run.${r.key}.body`),

@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Campanie",
       "titleCampaignLocked": "Acest cod este trimis pe e-mail de o campanie Autopilot activă. Dezactivează campania din Marketing → Autopilot pentru a-l retrage.",
-      "toggleFailed": "Promoția nu a putut fi modificată. Încearcă din nou."
+      "toggleFailed": "Promoția nu a putut fi modificată. Încearcă din nou.",
+      "phoneOff": "Telefon dezactivat",
+      "phoneOffTip": "Promoția nu se aplică comenzilor telefonice Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Alege un tip de promoție pentru a continua.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Promoțiile ascunse se aplică doar când clientul introduce acest cod la plată.",
       "vipLockedTitle": "Doar VIP — atașat la: {groups}",
       "vipLockedDesc": "Această promoție se aplică automat doar pentru acei membri VIP la checkout. Nu apare niciodată în meniul public, pe banner sau pe site — nicio setare de vizibilitate nu poate schimba asta. Pentru a o face publică, detașați-o mai întâi din pagina Grupuri VIP.",
-      "bundleBuildInfo": "💡 Clienții creează acest pachet dintr-un card „Creează-ți oferta” din meniul tău. Fixează-l pe bannerul de mai jos ca să fie ușor de găsit. (Un pachet nu poate fi aplicat automat sau deblocat printr-un cod.)"
+      "bundleBuildInfo": "💡 Clienții creează acest pachet dintr-un card „Creează-ți oferta” din meniul tău. Fixează-l pe bannerul de mai jos ca să fie ușor de găsit. (Un pachet nu poate fi aplicat automat sau deblocat printr-un cod.)",
+      "phoneOrdersLabel": "Disponibil telefonic (Nabil AI)",
+      "phoneOrdersOnSub": "Această promoție se aplică comenzilor telefonice Nabil AI",
+      "phoneOrdersOffSub": "Această promoție nu se aplică comenzilor telefonice",
+      "phoneOrdersHelp": "Dezactivat, promoția este exclusă de la comenzile telefonice. Comenzile web, app și marketplace nu sunt afectate.",
+      "clientTypeMemberWarning": "Promoțiile pentru membri necesită un cont — apelanții neînregistrați nu vor vedea această promoție."
     },
     "customersList": {
       "heading": "Clienți",
@@ -4355,7 +4362,12 @@
         "viewAll": "Vezi toate apelurile",
         "chartPopularItems": "Cele mai comandate la telefon",
         "popularItemsCta": "Setează upsell-urile promovate",
-        "popularItemsEmpty": "Nicio comandă telefonică în acest interval deocamdată."
+        "popularItemsEmpty": "Nicio comandă telefonică în acest interval deocamdată.",
+        "meterTitle": "Utilizare luna aceasta",
+        "meterMinutes": "{minutes} minute utilizate",
+        "meterCharge": "Curent: {amount} · Estimat: {projected}",
+        "meterOver": "{minutes} minute peste cele incluse",
+        "meterIncluded": "{included} min incluse în minimul de {minimum}/lună ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Caută telefon, nume sau rezumat…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Număr deblocat",
         "errorToast": "Nu s-a putut actualiza — încercați din nou.",
         "invalidPhone": "Introduceți un număr de telefon valid."
-      }
+      },
+      "setup": {
+        "title": "Configurați linia telefonică",
+        "body": "Spuneți-ne despre linia dvs. telefonică și Nabil va răspunde la apeluri în termen de o zi lucrătoare. Fără configurare tehnică din partea dvs.",
+        "receivedTitle": "Cerere de configurare primită",
+        "receivedBody": "Echipa noastră configurează linia dvs. Nabil AI. Veți vedea tabloul de bord aici când va fi gata — de obicei într-o zi lucrătoare.",
+        "summaryForward": "Redirecționare apeluri de la {currentNumber}",
+        "summaryNew": "Număr nou (actual: {currentNumber})",
+        "summaryTransfer": "Transfer către o persoană: {transferNumber}",
+        "summaryGreeting": "Nume în salut: {name}",
+        "summarySent": "Trimis la {date}",
+        "updateRequest": "Actualizare cerere",
+        "prepareHint": "Puteți actualiza preferințele până la activarea liniei.",
+        "currentNumberLabel": "Numărul dvs. de telefon actual",
+        "phoneHint": "Numărul pe care clienții dvs. îl apelează azi.",
+        "modeLabel": "Cum doriți să configurăm linia?",
+        "modeForward": "Redirecționează numărul meu",
+        "modeForwardHint": "Redirecționați numărul dvs. existent către Nabil. Apelanții formează același număr.",
+        "modeNew": "Dă-mi un număr nou",
+        "modeNewHint": "Alocăm un număr nou pentru Nabil. Îl puteți publica alături de linia existentă.",
+        "transferNumberLabel": "Transferă apelurile către",
+        "transferNumberHint": "Când un apelant cere o persoană, Nabil transferă apelul aici.",
+        "greetingNameLabel": "Numele restaurantului pentru salut",
+        "greetingNameHint": "Cum ar trebui Nabil să prezinte restaurantul dvs. la telefon.",
+        "notesLabel": "Altceva de știut (opțional)",
+        "submitting": "Se trimite…",
+        "submit": "Trimite cererea",
+        "cancelEdit": "Anulează",
+        "errorAlreadyProvisioned": "Linia dvs. este deja configurată — reîmprospătați pagina.",
+        "errorGeneric": "Ceva nu a mers. Încercați din nou."
+      },
+      "nowAvailable": "Disponibil acum",
+      "availableHeading": "Comenzi telefonice Nabil AI",
+      "availablePrice": "{rate} pe minut de apel · {minimum}/lună minim · {included} minute incluse",
+      "availableConcierge": "Echipa noastră configurează linia dvs. într-o zi lucrătoare. Fără intervenție tehnică din partea dvs.",
+      "availableDemo": "Deja membru plătitor? Încercați gratuit {days} zile.",
+      "subscribeCta": "Abonare și configurare"
     },
     "customerDetailPage": {
       "allCustomers": "Toți clienții",
@@ -6865,7 +6913,8 @@
             "b3": "Securizat și criptat",
             "b4": "Creat în Canada"
           }
-        }
+        },
+        "nowAvailable": "Acum disponibil"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Începe gratuit",
       "ctaContact": "Contactează vânzări",
-      "trialNote": "Nu e necesar un card de credit. Fără contracte."
+      "trialNote": "Nu e necesar un card de credit. Fără contracte.",
+      "phoneOrderingMinuteNote": "Facturat la 0,60 USD/min cu un minim de 249,99 USD/luna (≈ 416 minute incluse). Detalii pe"
     },
     "faq": {
       "title": "Întrebări frecvente",
@@ -7075,6 +7125,211 @@
       "b1": "Meniul tău real — poze, mărimi & toppinguri",
       "b2": "Comandă instant, exact ca un client",
       "b3": "Îți place? Înregistrează-te și păstrează-l — fără reimport"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Comenzi telefonice cu IA",
+        "title": "Telefonul pizzeriei tale, <accent>răspuns de IA</accent>",
+        "subtitle": "Nabil AI preia comenzile telefonice pentru pizzeria ta — pizza jumătate-jumătate, combo-uri, zone de livrare, topping-uri după nume — și le procesează prin același checkout ca site-ul tău. Creat de foști proprietari de pizzerie care știu cum sună un apel real.",
+        "ctaStart": "Începe acum",
+        "ctaSecondary": "Vezi cum funcționează",
+        "trust1": "Creat pentru pizzerii",
+        "trust2": "Același checkout ca site-ul tău",
+        "trust3": "Înregistrări și transcrieri",
+        "trust4": "US$0.60 pe minut de apel",
+        "sampleLabel": "Exemplu de apel în direct",
+        "sampleCaller": "Apelant",
+        "sample1": "Bună, pot plasa o comandă pentru livrare?",
+        "sample2": "Desigur! Cu plăcere vă ajut. Ce pot să vă pregătesc azi?",
+        "sample3": "O pizza mare, jumătate pepperoni și ciuperci, jumătate ardei verzi și ceapă.",
+        "sample4": "Am înțeles — o pizza mare jumătate-jumătate: pepperoni și ciuperci pe o parte, ardei verzi și ceapă pe cealaltă. Mai doriți ceva?"
+      },
+      "story": {
+        "eyebrow": "Povestea noastră",
+        "title": "Creat pentru pizzerii, de foști proprietari de pizzerie",
+        "body1": "Am petrecut ani în spatele tejghelei primind comenzi telefonice. Știm ce spun cu adevărat clienții — cererile jumătate-jumătate, schimbările de topping-uri de ultimă oră, «la fel ca ultima dată». Am creat Nabil AI să gestioneze acele apeluri așa cum am face-o noi.",
+        "body2": "Spre deosebire de sistemele telefonice AI generice, Nabil a fost proiectat din prima zi pentru comenzi de pizza și restaurant. Fiecare funcție — de la crearea combo-urilor la verificarea zonelor de livrare — există pentru că aveam nevoie de ea în propriul nostru local.",
+        "point1": "Proiectat pentru operațiuni reale de pizzerie",
+        "point2": "Fiecare comandă trece prin checkout-ul tău verificat",
+        "point3": "Meniul tău este meniul IA — nimic inventat"
+      },
+      "how": {
+        "eyebrow": "Cum funcționează",
+        "title": "Trei pași pentru comenzi telefonice pe pilot automat",
+        "step1": {
+          "title": "Conectează-ți linia telefonică",
+          "body": "Redirecționează numărul existent sau obține unul nou. Echipa noastră îți configurează linia într-o zi lucrătoare — fără muncă tehnică din partea ta."
+        },
+        "step2": {
+          "title": "Nabil preia apelul",
+          "body": "Nabil salută apelanții cu numele restaurantului tău, ia comanda în mod conversațional, confirmă fiecare articol și citește totalul înainte de a plasa comanda."
+        },
+        "step3": {
+          "title": "Comanda se printează în bucătăria ta",
+          "body": "Comanda trece prin același checkout ca o comandă de pe site. Apare pe ecranul bucătăriei, se printează la imprimanta de bonuri și se afișează pe panoul de administrare — totul automat."
+        }
+      },
+      "handles": {
+        "eyebrow": "Ce gestionează",
+        "title": "Tot ce cer clienții tăi",
+        "subtitle": "Nabil gestionează comenzile pe care le gestionează echipa ta — de la pizza simplă cu un singur topping la combo-uri complexe jumătate-jumătate cu livrare.",
+        "halfHalf": {
+          "title": "Pizza jumătate-jumătate",
+          "body": "Clienții pot comanda topping-uri diferite pe fiecare jumătate, iar Nabil confirmă fiecare parte înainte de a plasa comanda."
+        },
+        "combos": {
+          "title": "Combo-uri și meniuri",
+          "body": "Nabil ghidează clienții prin alegerile combo — alege pizza, alege garnitura, alege băutura — exact ca pe site-ul tău."
+        },
+        "delivery": {
+          "title": "Livrare cu verificare a zonei",
+          "body": "Preia adresa de livrare, verifică dacă este în zona ta, comunică taxa și plasează comanda — fără presupuneri."
+        },
+        "upsells": {
+          "title": "Upselling inteligent",
+          "body": "Sugerează articolele pe care le alegi la momentul potrivit în conversație — o băutură cu o pizza, un desert înainte de plată."
+        },
+        "faq": {
+          "title": "Răspunde la întrebări frecvente",
+          "body": "Program, locație, parcare, alergeni — Nabil răspunde la FAQ-urile localului tău ca personalul tău să nu fie nevoit."
+        },
+        "returning": {
+          "title": "Recunoaște clienții care revin",
+          "body": "Salută clienții obișnuiți pe nume și își amintește istoricul comenzilor, astfel încât recomenzile sunt rapide."
+        },
+        "transfer": {
+          "title": "Transferă către o persoană",
+          "body": "Când un client cere un om sau are o solicitare pe care Nabil nu o poate gestiona, apelul este transferat la numărul localului tău."
+        },
+        "numbers": {
+          "title": "Rostește numerele natural",
+          "body": "Numerele de telefon, adresele, prețurile și orele sunt rostite în cuvinte — 'șase patruzeci și șapte' nu '647' — astfel încât clientul înțelege întotdeauna."
+        },
+        "hours": {
+          "title": "Cunoaște programul tău",
+          "body": "Nabil știe când ești deschis, când ești închis și programul tău de sărbători — clienții primesc informații exacte de fiecare dată."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "De ce este precis",
+        "title": "Comanda este corectă pentru că sistemul nu permite erori",
+        "body": "Nabil nu ghicește. Fiecare articol este validat cu meniul dvs. real, fiecare preț este calculat de casa dvs. de marcat, și fiecare modificare este confirmată cu apelantul înainte de a plasa comanda.",
+        "cart": {
+          "title": "Coș de cumpărături pe server",
+          "body": "Comanda este construită pe server, nu în memoria AI-ului. Prețurile, regulile și disponibilitatea meniului dvs. sunt singura sursă de adevăr."
+        },
+        "asks": {
+          "title": "Întreabă, nu presupune niciodată",
+          "body": "Când ceva este ambiguu — o dimensiune, plasarea unui topping, o alegere de aluat — Nabil întreabă apelantul în loc să ghicească."
+        },
+        "readback": {
+          "title": "Recitire completă",
+          "body": "Înainte de a plasa comanda, Nabil recitește fiecare articol, modificare și totalul — apelantul confirmă înainte ca orice să fie trimis la bucătărie."
+        },
+        "alarm": {
+          "title": "Alarmă preț comunicat = preț facturat",
+          "body": "Dacă totalul comunicat de AI nu corespunde cu ce calculează casa de marcat, sistemul semnalează înainte ca comanda să fie plasată."
+        },
+        "timeline": {
+          "title": "Cronologie per apel",
+          "body": "Fiecare apel are o cronologie detaliată care arată fiecare acțiune, modificare a coșului și decizie — pentru a vedea exact ce s-a întâmplat."
+        },
+        "tests": {
+          "title": "Suită de teste automatizate",
+          "body": "Un sistem de simulare rulează scenarii reale de comandă la fiecare actualizare — pizza jumătate-jumătate, combo-uri, cazuri limită — înainte să ajungă pe linia dvs. telefonică."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Panoul dvs.",
+        "title": "Vedeți fiecare apel, auziți fiecare cuvânt",
+        "subtitle": "Înregistrări, transcrieri, urmărirea veniturilor și cronologie per apel — tot ce aveți nevoie pentru a ști ce face Nabil pentru restaurantul dvs.",
+        "shotOverviewAlt": "Prezentare generală a panoului Nabil AI care arată volumul apelurilor, veniturile și indicatorii de conversie",
+        "shotCallsAlt": "Lista apelurilor care arată comenzile telefonice recente cu rezultate și durate",
+        "shotDetailAlt": "Vizualizare detaliu apel cu transcriere, cronologie și rezumat comandă",
+        "shotSettingsAlt": "Panoul de setări Nabil AI cu configurare salut, vânzări suplimentare și FAQ",
+        "shotReportAlt": "Dialog de raportare a apelului pentru semnalarea problemelor echipei Fee Free",
+        "overview": {
+          "title": "Prezentare generală a veniturilor",
+          "body": "Vedeți cât de mult venit aduce Nabil, cu grafice pentru apeluri, comenzi și rate de conversie."
+        },
+        "calls": {
+          "title": "Istoric apeluri",
+          "body": "Răsfoiți fiecare apel cu rezultatul, durata, înregistrarea și transcrierea sa."
+        },
+        "detail": {
+          "title": "Cronologia apelului",
+          "body": "O cronologie secundă cu secundă a ceea ce s-a întâmplat în apel — fiecare acțiune, modificare a coșului și cuvânt rostit."
+        },
+        "report": {
+          "title": "Raportați un apel",
+          "body": "Semnalați orice apel care nu a mers bine. Echipa noastră îl analizează și îmbunătățește gestionarea de către Nabil."
+        },
+        "settings": {
+          "title": "Control complet",
+          "body": "Configurați salutul lui Nabil, sugestiile de vânzări suplimentare, răspunsurile FAQ, apelanții blocați și setările de plată prin link."
+        },
+        "roi": {
+          "title": "Urmărirea ROI",
+          "body": "Urmăriți veniturile per minut de apel pentru a ști exact ce câștigă Nabil pentru magazinul dvs."
+        }
+      },
+      "same": {
+        "eyebrow": "Același sistem, același checkout",
+        "title": "O comandă telefonică este o comandă de pe site",
+        "body": "Nabil nu foloseste un sistem de comenzi separat. Fiecare comanda telefonica trece prin aceeasi casa, acelasi meniu, aceleasi preturi si acelasi ecran de bucatarie ca comenzile de pe site. Un singur sistem, o singura sursa de adevar.",
+        "bullet1": "Acelasi meniu, aceleasi preturi, aceiasi modificatori",
+        "bullet2": "Acelasi ecran de bucatarie si imprimanta de bonuri",
+        "bullet3": "Aceeasi confirmare si urmarire a comenzii",
+        "bullet4": "Acelasi panou de administrare si rapoarte",
+        "frameAlt": "Ecran de bucatarie aratand o comanda telefonica alaturi de comenzi de pe site"
+      },
+      "languages": {
+        "eyebrow": "Multilingv",
+        "title": "Nabil vorbeste limba apelantilor dumneavoastra",
+        "body": "Nabil detecteaza automat limba apelantului si raspunde corespunzator. Articolele, descrierile si modificatorii sunt servite in limba apelantului — aceleasi traduceri ca pe site-ul dumneavoastra."
+      },
+      "pricing": {
+        "eyebrow": "Preturi simple",
+        "title": "Un pret. Fara surprize.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "pe minut de apel",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minim pe luna",
+        "rule": "Platiti suma mai mare: minutele de apel la 0,60 USD fiecare, sau minimul lunar de 249,99 USD. Majoritatea restaurantelor raman in cele 416 minute incluse.",
+        "demo": "Deja membru platitor Fee Free? Incercati Nabil gratuit timp de 7 zile — fara angajament.",
+        "include1": "Apeluri nelimitate",
+        "include2": "Inregistrari si transcrieri",
+        "include3": "Panou si analize",
+        "include4": "Configurare asistata a liniei",
+        "include5": "Actualizari si imbunatatiri continue",
+        "cta": "Incepe",
+        "note": "Preturi in dolari americani. Facturare lunara prin Stripe. Anulati oricand."
+      },
+      "faq": {
+        "title": "Intrebari frecvente",
+        "q1": "Cum preia Nabil o comanda?",
+        "a1": "Nabil raspunde la linia dumneavoastra telefonica, saluta apelantul cu numele restaurantului, preia comanda in mod conversational, confirma fiecare articol si totalul, si o plaseaza prin checkout-ul existent. Comanda apare pe ecranul de bucatarie si se tipareste automat.",
+        "q2": "Apelantul stie ca vorbeste cu AI?",
+        "a2": "Nabil suna natural si conversational, dar credem in transparenta — apelantii pot oricand cere un om, iar apelul este transferat imediat.",
+        "q3": "Ce se intampla daca Nabil greseste?",
+        "a3": "Fiecare apel are o inregistrare, o transcriere si o cronologie detaliata. Puteti raporta orice apel si echipa noastra va investiga. Cosul de pe server si confirmarea prin citire minimizeaza erorile.",
+        "q4": "Poate Nabil sa gestioneze pizza jumatate-jumatate?",
+        "a4": "Da — pizzele jumatate-jumatate cu topping-uri diferite pe fiecare parte sunt o functionalitate centrala. Nabil confirma fiecare parte si construieste comanda exact ca checkout-ul site-ului.",
+        "q5": "Cum conectez linia mea telefonica?",
+        "a5": "Dupa abonare, ne spuneti numarul si daca doriti sa-l redirectionati catre Nabil sau sa primiti unul nou. Echipa noastra configureaza totul intr-o zi lucratoare — fara munca tehnica.",
+        "q6": "Ce se intampla in afara orelor?",
+        "a6": "Nabil cunoaste programul si sarbatorile. In afara orelor, informeaza apelantul cand redeschideti si poate oferi o comanda programata daca este activat.",
+        "q7": "Cum se calculeaza facturarea?",
+        "a7": "Platiti 0,60 USD pe minut sau minimul lunar de 249,99 USD, suma mai mare. Minimul include aproximativ 416 minute. Fiecare apel se rotunjeste in sus. Urmariti utilizarea in timp real.",
+        "q8": "Pot anula oricand?",
+        "a8": "Da. Nabil este facturat lunar prin Stripe fara contract pe termen lung. Anulati din tabloul de bord si linia ramane activa pana la sfarsitul perioadei de facturare."
+      },
+      "finalCta": {
+        "title": "Gata sa lasati Nabil sa raspunda la telefon?",
+        "body": "Configurarea dureaza o zi lucratoare. Incepeti sa primiti comenzi telefonice prin sistemul propriu — fara echipament, personal sau stres suplimentar.",
+        "primary": "Incepe",
+        "secondary": "Vezi toate preturile"
+      }
     }
   },
   "addressBook": {

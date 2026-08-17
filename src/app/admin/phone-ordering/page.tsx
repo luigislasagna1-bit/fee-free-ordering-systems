@@ -1,23 +1,32 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Phone, Sparkles, Mic, Bot, Clock, ArrowRight, Rocket, LayoutDashboard, PhoneCall, UtensilsCrossed, Settings } from "lucide-react";
+import { Phone, Sparkles, Mic, Bot, Clock, ArrowRight, Rocket, LayoutDashboard, PhoneCall, UtensilsCrossed, Settings, BadgeCheck } from "lucide-react";
 import { getSessionUser } from "@/lib/session";
 import { getTranslations } from "next-intl/server";
 import prisma from "@/lib/db";
 import { hasFeature } from "@/lib/entitlements";
 import { buildQuery, one, type SearchParams } from "@/components/admin/reports/table-nav";
+import { readVoiceSetupPayload } from "@/lib/voice/setup-request";
+import { NABIL_INCLUDED_MINUTES, NABIL_MONTHLY_MIN_CENTS, NABIL_PER_MINUTE_CENTS, NABIL_DEMO_DAYS, formatUsdCents } from "@/lib/voice/nabil-billing";
 import NabilStatusHeader from "./NabilStatusHeader";
+import SetupRequestCard from "./SetupRequestCard";
 import OverviewTab from "./OverviewTab";
 import CallsTab from "./CallsTab";
 import MenuTab from "./MenuTab";
 import SettingsTab from "./SettingsTab";
 
 /**
- * Nabil AI — Fee Free's Automated Phone Answering System.
+ * Nabil AI — Fee Free's Automated Phone Answering System. ON SALE since
+ * 2026-08-17 (US$0.60/call-minute, US$249.99/month minimum — Luigi's A64 (d)).
  *
- * Entitled restaurants get the full dashboard (Overview / Calls / Menu /
- * Settings — server-rendered ?tab= tabs, Loman-parity IA and then some);
- * everyone else sees the "Coming Soon" upsell teaser (UNCHANGED).
+ * Three states:
+ *   • entitled + a provisioned line → the full dashboard (Overview / Calls /
+ *     Menu / Settings — server-rendered ?tab= tabs, Loman-parity IA and then some);
+ *   • entitled + NO line yet → CONCIERGE ACTIVATION: "we're setting up your
+ *     line" + the intake form in place of the empty Overview (Settings / Menu
+ *     stay reachable so the owner can prepare greetings, voice, FAQs, upsells);
+ *   • not entitled → the "now available" teaser with the price + how activation
+ *     works + the Subscribe link to the add-ons page.
  * "Nabil AI" is a brand name — never translated (standing rule).
  */
 
@@ -50,9 +59,9 @@ export default async function PhoneOrderingPage({
           <div className="flex items-center gap-2 flex-wrap">
             <h1 className="text-2xl font-bold text-gray-900">Nabil AI</h1>
             {!entitled && (
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full">
-                <Rocket className="w-3 h-3" />
-                {t("comingSoon")}
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full">
+                <BadgeCheck className="w-3 h-3" />
+                {t("nowAvailable")}
               </span>
             )}
           </div>
@@ -70,19 +79,64 @@ export default async function PhoneOrderingPage({
 
     const tOverview = await getTranslations("admin.phoneOrderingPage.overview");
     const [config, number] = await Promise.all([
-      prisma.voiceAgentConfig.findUnique({ where: { restaurantId }, select: { enabled: true } }),
+      prisma.voiceAgentConfig.findUnique({ where: { restaurantId }, select: { enabled: true, transferToNumber: true } }),
       prisma.voiceNumber.findFirst({ where: { restaurantId }, orderBy: { createdAt: "asc" }, select: { phoneNumber: true, status: true } }),
     ]);
+
+    // Concierge activation: subscribed, but nobody has provisioned a line yet.
+    // Read the open request + the profile fields that pre-fill the intake form.
+    const awaitingLine = !number;
+    let setupCard: React.ReactNode = null;
+    if (awaitingLine) {
+      const [setupRequest, restaurant] = await Promise.all([
+        prisma.voiceSetupRequest.findUnique({
+          where: { restaurantId },
+          select: { status: true, updatedAt: true, payload: true },
+        }),
+        prisma.restaurant.findUnique({ where: { id: restaurantId }, select: { name: true, phone: true, alertPhone: true } }),
+      ]);
+      const payload = setupRequest ? readVoiceSetupPayload(setupRequest.payload) : null;
+      setupCard = (
+        <SetupRequestCard
+          initialRequest={
+            setupRequest
+              ? {
+                  status: setupRequest.status,
+                  updatedAt: setupRequest.updatedAt.toISOString(),
+                  payload: payload
+                    ? {
+                        currentNumber: payload.currentNumber,
+                        mode: payload.mode,
+                        transferNumber: payload.transferNumber,
+                        greetingName: payload.greetingName,
+                        notes: payload.notes,
+                      }
+                    : null,
+                }
+              : null
+          }
+          defaults={{
+            currentNumber: restaurant?.phone ?? "",
+            transferNumber: config?.transferToNumber ?? restaurant?.alertPhone ?? restaurant?.phone ?? "",
+            greetingName: restaurant?.name ?? "",
+          }}
+        />
+      );
+    }
 
     return (
       <div className="max-w-7xl mx-auto space-y-5 pb-10">
         {Header}
 
-        {/* Number + "Active — handling calls" status, visible on every tab. */}
-        <NabilStatusHeader
-          initialEnabled={config?.enabled ?? false}
-          phoneNumber={number?.phoneNumber ?? null}
-        />
+        {/* Number + "Active — handling calls" status, visible on every tab.
+            Hidden while the line is still being set up — there is nothing to
+            switch on yet; the concierge card takes its place on Overview. */}
+        {!awaitingLine && (
+          <NabilStatusHeader
+            initialEnabled={config?.enabled ?? false}
+            phoneNumber={number?.phoneNumber ?? null}
+          />
+        )}
 
         {/* Server-rendered ?tab= tabs (per-tab accent, ReservationsClient style). */}
         <div className="flex border-b border-gray-200 overflow-x-auto">
@@ -114,7 +168,7 @@ export default async function PhoneOrderingPage({
           })}
         </div>
 
-        {tab === "overview" && <OverviewTab restaurantId={restaurantId} sp={sp} />}
+        {tab === "overview" && (awaitingLine ? setupCard : <OverviewTab restaurantId={restaurantId} sp={sp} />)}
         {tab === "calls" && <CallsTab restaurantId={restaurantId} sp={sp} />}
         {tab === "menu" && <MenuTab restaurantId={restaurantId} sp={sp} />}
         {tab === "settings" && <SettingsTab restaurantId={restaurantId} />}
@@ -122,14 +176,14 @@ export default async function PhoneOrderingPage({
     );
   }
 
-  // ── Not entitled → upsell teaser ─────────────────────────────────────
+  // ── Not entitled → "now available" teaser + price + how activation works ──
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {Header}
       <div className="rounded-2xl bg-gradient-to-br from-amber-500 via-amber-600 to-blue-600 text-white p-6 sm:p-8 shadow-lg">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider opacity-90 mb-2">
           <Sparkles className="w-4 h-4" />
-          {t("heroBadge")}
+          {t("nowAvailable")}
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{t("heroHeadline")}</h2>
         <p className="mt-3 text-white/90 text-sm sm:text-base leading-relaxed max-w-2xl">{t("heroBody")}</p>
@@ -154,15 +208,29 @@ export default async function PhoneOrderingPage({
         <FeatureCard icon={<Mic className="w-5 h-5" />} title={t("featureVoiceTitle")} body={t("featureVoiceBody")} />
         <FeatureCard icon={<Sparkles className="w-5 h-5" />} title={t("featureKitchenTitle")} body={t("featureKitchenBody")} />
       </div>
-      <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
-        <h3 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
+      <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-5">
+        <h3 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
           <Rocket className="w-4 h-4" />
-          {t("statusHeading")}
+          {t("availableHeading")}
         </h3>
-        <p className="text-sm text-amber-900 leading-relaxed">{t("statusBody1")}</p>
-        <p className="text-sm text-amber-900 leading-relaxed mt-2">{t("statusBody2")}</p>
-        <div className="mt-4">
-          <Link href="/admin/billing/add-ons" className="inline-flex items-center gap-1.5 text-sm font-semibold text-amber-700 hover:text-amber-900 transition">
+        <p className="text-sm text-emerald-950 leading-relaxed font-semibold">
+          {t("availablePrice", {
+            rate: formatUsdCents(NABIL_PER_MINUTE_CENTS),
+            minimum: formatUsdCents(NABIL_MONTHLY_MIN_CENTS),
+            included: NABIL_INCLUDED_MINUTES,
+          })}
+        </p>
+        <p className="text-sm text-emerald-950 leading-relaxed mt-2">{t("availableConcierge")}</p>
+        <p className="text-sm text-emerald-950 leading-relaxed mt-2">{t("availableDemo", { days: NABIL_DEMO_DAYS })}</p>
+        <div className="mt-4 flex flex-wrap items-center gap-4">
+          <Link
+            href="/admin/billing/add-ons"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition"
+          >
+            {t("subscribeCta")}
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+          <Link href="/admin/billing/add-ons" className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-800 hover:text-emerald-950 transition">
             {t("addonCatalogLink")}
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>

@@ -39,11 +39,17 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
     minimumOrder, rules, ruleConfig,
     daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
-    scope, channel,
+    scope, channel, phoneOrders,
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
     paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient,
     imageUrl, displayMode, highlightThreshold,
   } = body;
+
+  // "Available by phone (Nabil AI)" — strict boolean when present; a stray
+  // string/number never lands in the gate the engine reads.
+  if (phoneOrders !== undefined && typeof phoneOrders !== "boolean") {
+    return NextResponse.json({ error: "phoneOrders must be true or false" }, { status: 400 });
+  }
 
   // ── Entitlement gate (Types 6-13) ──────────────────────────────────
   // If the patch changes the promotionType to a locked one (or already
@@ -197,6 +203,8 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       // displayMode + autoApply + showOnBanner resolved together (Visible/Hidden invariant).
       ...displayUpdate,
       ...(channel !== undefined && { channel: normalizeChannel(channel) }),
+      // Per-promo phone availability (Luigi A64(a)) — validated boolean above.
+      ...(phoneOrders !== undefined && { phoneOrders }),
       ...(highlightThreshold !== undefined && { highlightThreshold: normalizeNonNegativeFloat(highlightThreshold) }),
       ...(requiredAddOnSlugUpdate !== undefined && { requiredAddOnSlug: requiredAddOnSlugUpdate }),
       ...scopeUpdate,

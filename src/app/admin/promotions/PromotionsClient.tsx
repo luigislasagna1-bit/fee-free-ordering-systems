@@ -65,12 +65,16 @@ function StackingBadge({ rule }: { rule: string }) {
 function PromoCard({
   promo,
   deadTargets = false,
+  showPhoneChip = false,
   onDelete,
   onToggle,
   onDuplicate,
 }: {
   promo: any;
   deadTargets?: boolean;
+  /** Render the "Phone: no" chip for a promo kept off Nabil AI phone orders
+   *  (only meaningful at a store entitled to Nabil AI). */
+  showPhoneChip?: boolean;
   onDelete: () => void;
   onToggle: () => void;
   onDuplicate: () => void;
@@ -194,6 +198,11 @@ function PromoCard({
             {promo.orderType !== "both" && (
               <span className="capitalize">{t("orderTypeOnly", { type: promo.orderType ?? "" })}</span>
             )}
+            {/* Kept off Nabil AI phone orders (Promotion.phoneOrders=false) —
+                same chip row as the other restrictions. Luigi A64(a). */}
+            {showPhoneChip && promo.phoneOrders === false && (
+              <span title={t("phoneOffTip")}>{t("phoneOff")}</span>
+            )}
           </div>
         </div>
         <div className="flex items-center gap-1 flex-shrink-0">
@@ -287,6 +296,7 @@ function campaignLabel(ref: string | null | undefined): string | null {
 export function PromotionsClient({
   promotions: initial,
   deadPromoIds = [],
+  phoneOrderingEnabled = false,
 }: {
   promotions: any[];
   // Kept for backwards compat with page.tsx — wizard now fetches its own.
@@ -296,6 +306,10 @@ export function PromotionsClient({
    *  (dish deleted etc.) — quarantined from the customer page; badge them
    *  here so the owner knows to re-select (Luigi 2026-07-05). */
   deadPromoIds?: string[];
+  /** Store is entitled to Nabil AI phone ordering — gates the small
+   *  "Phone: no" chip on promos kept off the phone (feature-gated
+   *  visibility; a store without Nabil never sees phone chips). */
+  phoneOrderingEnabled?: boolean;
 }) {
   const t = useTranslations("admin.promotionsList");
   // Generic "No matches for {query}" already exists in the menu editor — reuse it.
@@ -469,6 +483,7 @@ export function PromotionsClient({
               key={p.id}
               promo={p}
               deadTargets={deadPromoIds.includes(p.id)}
+              showPhoneChip={phoneOrderingEnabled}
               onDelete={() => deletePromo(p.id)}
               onToggle={() => togglePromo(p)}
               onDuplicate={() => duplicatePromo(p)}

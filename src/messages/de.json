@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Kampagne",
       "titleCampaignLocked": "Dieser Code wird von einer laufenden Autopilot-Kampagne per E-Mail versendet. Schalten Sie die Kampagne unter Marketing → Autopilot ab, um ihn zurückzuziehen.",
-      "toggleFailed": "Diese Aktion konnte nicht geändert werden. Bitte versuchen Sie es erneut."
+      "toggleFailed": "Diese Aktion konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
+      "phoneOff": "Telefon aus",
+      "phoneOffTip": "Diese Aktion gilt nicht für Telefonbestellungen über Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Wählen Sie einen Aktionstyp, um fortzufahren.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Versteckte Aktionen gelten nur, wenn der Kunde diesen Code an der Kasse eingibt.",
       "vipLockedTitle": "Nur VIP — verknüpft mit: {groups}",
       "vipLockedDesc": "Diese Aktion gilt automatisch nur für diese VIP-Mitglieder an der Kasse. Sie erscheint nie auf Ihrer öffentlichen Speisekarte, im Banner oder auf der Website — kein Sichtbarkeitsschalter ändert das. Um sie öffentlich zu machen, trennen Sie sie zuerst auf der Seite VIP-Gruppen.",
-      "bundleBuildInfo": "💡 Kunden stellen dieses Bundle über eine Karte „Stelle dein Angebot zusammen“ in deinem Menü zusammen. Hefte es an das Banner unten, damit es leicht zu finden ist. (Ein Bundle kann nicht automatisch angewendet oder per Code freigeschaltet werden.)"
+      "bundleBuildInfo": "💡 Kunden stellen dieses Bundle über eine Karte „Stelle dein Angebot zusammen“ in deinem Menü zusammen. Hefte es an das Banner unten, damit es leicht zu finden ist. (Ein Bundle kann nicht automatisch angewendet oder per Code freigeschaltet werden.)",
+      "phoneOrdersLabel": "Per Telefon verfügbar (Nabil AI)",
+      "phoneOrdersOnSub": "Diese Aktion gilt für telefonische Bestellungen über Nabil AI",
+      "phoneOrdersOffSub": "Diese Aktion gilt nicht für Telefonbestellungen",
+      "phoneOrdersHelp": "Aus = Aktion gilt nicht für Telefonbestellungen. Web-, App- und Marketplace-Bestellungen sind davon nicht betroffen.",
+      "clientTypeMemberWarning": "Mitglieder-Aktionen erfordern ein Konto — Anrufer ohne Registrierung sehen diese Aktion nicht."
     },
     "customersList": {
       "heading": "Kunden",
@@ -4355,7 +4362,12 @@
         "viewAll": "Alle Anrufe anzeigen",
         "chartPopularItems": "Am häufigsten telefonisch bestellt",
         "popularItemsCta": "Hervorgehobene Upsells festlegen",
-        "popularItemsEmpty": "Noch keine Telefonbestellungen in diesem Zeitraum."
+        "popularItemsEmpty": "Noch keine Telefonbestellungen in diesem Zeitraum.",
+        "meterTitle": "Nutzung diesen Monat",
+        "meterMinutes": "{minutes} Minuten genutzt",
+        "meterCharge": "Aktuell: {amount} · Voraussichtlich: {projected}",
+        "meterOver": "{minutes} Minuten über Freibetrag",
+        "meterIncluded": "{included} Min. im {minimum}/Monat-Minimum enthalten ({rate}/Min.)"
       },
       "callLog": {
         "searchPlaceholder": "Telefon, Name oder Zusammenfassung suchen…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Blockierung aufgehoben",
         "errorToast": "Aktualisierung fehlgeschlagen – bitte erneut versuchen.",
         "invalidPhone": "Geben Sie eine gültige Telefonnummer ein."
-      }
+      },
+      "setup": {
+        "title": "Telefonleitung einrichten",
+        "body": "Erzählen Sie uns von Ihrer Leitung und Nabil nimmt innerhalb eines Werktags Anrufe entgegen. Keine technische Einrichtung nötig.",
+        "receivedTitle": "Einrichtungsanfrage erhalten",
+        "receivedBody": "Unser Team richtet Ihre Nabil AI-Leitung ein. Ihr Live-Dashboard erscheint hier, sobald alles bereit ist — normalerweise innerhalb eines Werktags.",
+        "summaryForward": "Anrufe weiterleiten von {currentNumber}",
+        "summaryNew": "Neue Nummer (aktuell: {currentNumber})",
+        "summaryTransfer": "Weiterleitung an eine Person: {transferNumber}",
+        "summaryGreeting": "Begrüßungsname: {name}",
+        "summarySent": "Gesendet am {date}",
+        "updateRequest": "Anfrage aktualisieren",
+        "prepareHint": "Sie können Ihre Einstellungen ändern, bis die Leitung eingerichtet ist.",
+        "currentNumberLabel": "Ihre aktuelle Telefonnummer",
+        "phoneHint": "Die Nummer, die Ihre Kunden heute anrufen.",
+        "modeLabel": "Wie sollen wir Ihre Leitung einrichten?",
+        "modeForward": "Meine Nummer weiterleiten",
+        "modeForwardHint": "Sie leiten Ihre bestehende Nummer an Nabil weiter. Anrufer wählen dieselbe Nummer wie bisher.",
+        "modeNew": "Neue Nummer zuweisen",
+        "modeNewHint": "Wir weisen eine neue Nummer für Nabil zu. Sie können sie neben Ihrer bestehenden Leitung veröffentlichen.",
+        "transferNumberLabel": "Anrufe weiterleiten an",
+        "transferNumberHint": "Wenn ein Anrufer nach einer Person fragt, leitet Nabil den Anruf hierhin weiter.",
+        "greetingNameLabel": "Restaurantname für die Begrüßung",
+        "greetingNameHint": "Wie Nabil Ihr Restaurant am Telefon vorstellen soll.",
+        "notesLabel": "Sonstiges (optional)",
+        "submitting": "Wird gesendet…",
+        "submit": "Anfrage senden",
+        "cancelEdit": "Abbrechen",
+        "errorAlreadyProvisioned": "Ihre Leitung ist bereits eingerichtet — laden Sie die Seite neu.",
+        "errorGeneric": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
+      },
+      "nowAvailable": "Jetzt verfügbar",
+      "availableHeading": "Nabil AI Telefonbestellungen",
+      "availablePrice": "{rate} pro Gesprächsminute · {minimum}/Monat Minimum · {included} Minuten inklusive",
+      "availableConcierge": "Unser Team richtet Ihre Leitung innerhalb eines Werktags ein. Kein technischer Aufwand für Sie.",
+      "availableDemo": "Bereits zahlendes Mitglied? {days} Tage kostenlos testen.",
+      "subscribeCta": "Abonnieren & einrichten"
     },
     "customerDetailPage": {
       "allCustomers": "Alle Kunden",
@@ -6865,7 +6913,8 @@
             "b3": "Sicher & verschlüsselt",
             "b4": "Entwickelt in Kanada"
           }
-        }
+        },
+        "nowAvailable": "Jetzt verfügbar"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Kostenlos starten",
       "ctaContact": "Vertrieb kontaktieren",
-      "trialNote": "Keine Kreditkarte erforderlich. Keine Verträge."
+      "trialNote": "Keine Kreditkarte erforderlich. Keine Verträge.",
+      "phoneOrderingMinuteNote": "Abgerechnet mit 0,60 USD/Min bei einem Minimum von 249,99 USD/Monat (≈ 416 enthaltene Minuten). Details auf"
     },
     "faq": {
       "title": "Häufig gestellte Fragen",
@@ -7075,6 +7125,211 @@
       "b1": "Dein echtes Menü — Fotos, Größen & Extras",
       "b2": "Bestelle sofort daraus, genau wie ein Gast",
       "b3": "Gefällt's dir? Registrieren und behalten — ohne neuen Import"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "KI-Telefonbestellung",
+        "title": "Das Telefon Ihrer Pizzeria, <accent>beantwortet von KI</accent>",
+        "subtitle": "Nabil AI nimmt Telefonbestellungen für Ihre Pizzeria entgegen — halb-und-halb-Pizzen, Combos, Lieferzonen, Beläge nach Name — und leitet sie über denselben Checkout wie Ihre Website weiter. Entwickelt von ehemaligen Pizzeria-Besitzern, die wissen, wie ein echter Anruf klingt.",
+        "ctaStart": "Jetzt starten",
+        "ctaSecondary": "So funktioniert's",
+        "trust1": "Entwickelt für Pizzerien",
+        "trust2": "Gleicher Checkout wie Ihre Website",
+        "trust3": "Aufnahmen & Transkripte",
+        "trust4": "US$0.60 pro Gesprächsminute",
+        "sampleLabel": "Live-Anrufbeispiel",
+        "sampleCaller": "Anrufer",
+        "sample1": "Hallo, kann ich eine Bestellung zur Lieferung aufgeben?",
+        "sample2": "Natürlich! Ich helfe Ihnen gerne. Was darf es heute sein?",
+        "sample3": "Eine große Pizza, halb Peperoni und Champignons, halb grüne Paprika und Zwiebeln.",
+        "sample4": "Verstanden — eine große halb-und-halb-Pizza: Peperoni und Champignons auf einer Seite, grüne Paprika und Zwiebeln auf der anderen. Noch etwas?"
+      },
+      "story": {
+        "eyebrow": "Unsere Geschichte",
+        "title": "Entwickelt für Pizzerien, von ehemaligen Pizzeria-Besitzern",
+        "body1": "Wir haben jahrelang hinter der Theke Telefonbestellungen entgegengenommen. Wir wissen, was Anrufer wirklich sagen — die Halb-und-halb-Wünsche, die Last-Minute-Belagänderungen, das ‚wie beim letzten Mal'. Wir haben Nabil AI gebaut, um diese Anrufe so zu bearbeiten, wie wir es tun würden.",
+        "body2": "Im Gegensatz zu generischen KI-Telefonsystemen wurde Nabil von Anfang an rund um Pizza- und Restaurantbestellungen konzipiert. Jede Funktion — vom Combo-Aufbau bis zur Lieferzonen-Prüfung — existiert, weil wir sie in unserem eigenen Laden brauchten.",
+        "point1": "Konzipiert für den echten Pizzeria-Betrieb",
+        "point2": "Jede Bestellung geht durch Ihren verifizierten Checkout",
+        "point3": "Ihr Menü ist das Menü der KI — nichts erfunden"
+      },
+      "how": {
+        "eyebrow": "So funktioniert's",
+        "title": "Drei Schritte zu Telefonbestellungen auf Autopilot",
+        "step1": {
+          "title": "Verbinden Sie Ihre Telefonleitung",
+          "body": "Leiten Sie Ihre bestehende Nummer weiter oder holen Sie sich eine neue. Unser Team richtet Ihre Leitung innerhalb eines Geschäftstages ein — kein technischer Aufwand auf Ihrer Seite."
+        },
+        "step2": {
+          "title": "Nabil nimmt den Anruf entgegen",
+          "body": "Nabil begrüßt Anrufer mit dem Namen Ihres Restaurants, nimmt die Bestellung im Gespräch auf, bestätigt jeden Artikel und liest die Gesamtsumme vor, bevor die Bestellung aufgegeben wird."
+        },
+        "step3": {
+          "title": "Die Bestellung wird in Ihrer Küche gedruckt",
+          "body": "Die Bestellung durchläuft denselben Checkout wie eine Website-Bestellung. Sie erscheint auf Ihrem Küchendisplay, wird auf Ihrem Bondrucker gedruckt und in Ihrem Admin-Dashboard angezeigt — alles automatisch."
+        }
+      },
+      "handles": {
+        "eyebrow": "Was es kann",
+        "title": "Alles, was Ihre Anrufer fragen",
+        "subtitle": "Nabil bearbeitet die Bestellungen, die Ihr Team bearbeitet — von einfachen Pizzen mit einem Belag bis hin zu komplexen Halb-und-Halb-Kombis mit Lieferung.",
+        "halfHalf": {
+          "title": "Halb-und-Halb-Pizzen",
+          "body": "Anrufer können verschiedene Beläge auf jeder Hälfte bestellen, und Nabil bestätigt jede Seite, bevor die Bestellung aufgegeben wird."
+        },
+        "combos": {
+          "title": "Kombis & Menüangebote",
+          "body": "Nabil führt Anrufer durch die Kombi-Auswahl — Pizza wählen, Beilage wählen, Getränk wählen — genau wie auf Ihrer Website."
+        },
+        "delivery": {
+          "title": "Lieferung mit Zonenprüfung",
+          "body": "Nimmt die Lieferadresse auf, prüft ob sie in Ihrer Zone liegt, nennt die Gebühr und gibt die Bestellung auf — ohne Rätselraten."
+        },
+        "upsells": {
+          "title": "Intelligentes Upselling",
+          "body": "Schlägt die Artikel vor, die Sie auswählen, zum richtigen Zeitpunkt im Gespräch — ein Getränk zur Pizza, ein Dessert vor dem Bezahlen."
+        },
+        "faq": {
+          "title": "Beantwortet häufige Fragen",
+          "body": "Öffnungszeiten, Standort, Parken, Allergene — Nabil beantwortet die FAQs Ihres Geschäfts, damit Ihr Personal es nicht muss."
+        },
+        "returning": {
+          "title": "Erkennt wiederkehrende Anrufer",
+          "body": "Begrüßt Stammkunden mit Namen und erinnert sich an ihre Bestellhistorie, sodass Nachbestellungen schnell gehen."
+        },
+        "transfer": {
+          "title": "Weiterleitung an eine Person",
+          "body": "Wenn ein Anrufer einen Menschen verlangt oder eine Anfrage hat, die Nabil nicht bearbeiten kann, wird der Anruf an die Nummer Ihres Geschäfts weitergeleitet."
+        },
+        "numbers": {
+          "title": "Spricht Zahlen natürlich aus",
+          "body": "Telefonnummern, Adressen, Preise und Uhrzeiten werden in Worten gesprochen — 'sechs siebenundvierzig' statt '647' — damit der Anrufer immer versteht."
+        },
+        "hours": {
+          "title": "Kennt Ihre Öffnungszeiten",
+          "body": "Nabil weiß, wann Sie geöffnet haben, wann geschlossen und kennt Ihren Feiertagsplan — Anrufer erhalten jedes Mal genaue Informationen."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Warum es genau ist",
+        "title": "Die Bestellung ist korrekt, weil das System keine Fehler zulässt",
+        "body": "Nabil rät nicht. Jeder Artikel wird mit Ihrer echten Speisekarte abgeglichen, jeder Preis wird von Ihrer Kasse berechnet, und jede Anpassung wird mit dem Anrufer bestätigt, bevor die Bestellung aufgegeben wird.",
+        "cart": {
+          "title": "Serverseitiger Warenkorb",
+          "body": "Die Bestellung wird auf dem Server erstellt, nicht im Speicher der KI. Die Preise, Regeln und Verfügbarkeit Ihrer Speisekarte sind die einzige Wahrheitsquelle."
+        },
+        "asks": {
+          "title": "Fragt, nimmt nie etwas an",
+          "body": "Wenn etwas unklar ist — eine Größe, eine Belag-Platzierung, eine Teigwahl — fragt Nabil den Anrufer, statt zu raten."
+        },
+        "readback": {
+          "title": "Vollständige Rücklesung",
+          "body": "Bevor die Bestellung aufgegeben wird, liest Nabil jeden Artikel, jede Anpassung und die Gesamtsumme vor — der Anrufer bestätigt, bevor etwas an die Küche gesendet wird."
+        },
+        "alarm": {
+          "title": "Alarm: Angesagt = Berechnet",
+          "body": "Wenn die vom KI genannte Summe nicht mit der Berechnung der Kasse übereinstimmt, markiert das System dies, bevor die Bestellung aufgegeben wird."
+        },
+        "timeline": {
+          "title": "Zeitleiste pro Anruf",
+          "body": "Jeder Anruf hat eine detaillierte Zeitleiste mit jedem Werkzeugaufruf, jeder Warenkorbänderung und jeder Entscheidung — damit Sie genau sehen können, was passiert ist."
+        },
+        "tests": {
+          "title": "Automatisierte Testsuite",
+          "body": "Ein Simulationssystem führt bei jedem Update echte Bestellszenarien durch — Halb-und-Halb-Pizzen, Combos, Grenzfälle — bevor es Ihre Telefonleitung erreicht."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Ihr Dashboard",
+        "title": "Sehen Sie jeden Anruf, hören Sie jedes Wort",
+        "subtitle": "Aufnahmen, Transkripte, Umsatzverfolgung und eine Zeitleiste pro Anruf — alles, was Sie wissen müssen, um zu sehen, was Nabil für Ihr Restaurant tut.",
+        "shotOverviewAlt": "Übersicht des Nabil AI Dashboards mit Anrufvolumen, Umsatz und Konversionskennzahlen",
+        "shotCallsAlt": "Anrufliste mit aktuellen Telefonbestellungen, Ergebnissen und Dauer",
+        "shotDetailAlt": "Anrufdetailansicht mit Transkript, Zeitleiste und Bestellübersicht",
+        "shotSettingsAlt": "Nabil AI Einstellungsfeld mit Begrüßung, Upselling und FAQ-Konfiguration",
+        "shotReportAlt": "Anruf-Meldedialog zum Markieren von Problemen an das Fee Free Team",
+        "overview": {
+          "title": "Umsatzübersicht",
+          "body": "Sehen Sie, wie viel Umsatz Nabil einbringt, mit Diagrammen für Anrufe, Bestellungen und Konversionsraten."
+        },
+        "calls": {
+          "title": "Anrufverlauf",
+          "body": "Durchsuchen Sie jeden Anruf mit Ergebnis, Dauer, Aufnahme und Transkript."
+        },
+        "detail": {
+          "title": "Anruf-Zeitleiste",
+          "body": "Eine sekundengenaue Zeitleiste dessen, was beim Anruf geschah — jeder Werkzeugaufruf, jede Warenkorbänderung und jedes gesprochene Wort."
+        },
+        "report": {
+          "title": "Anruf melden",
+          "body": "Markieren Sie jeden Anruf, der nicht gut lief. Unser Team prüft ihn und verbessert Nabils Verarbeitung."
+        },
+        "settings": {
+          "title": "Volle Kontrolle",
+          "body": "Konfigurieren Sie Nabils Begrüßung, Upselling-Vorschläge, FAQ-Antworten, blockierte Anrufer und Pay-per-Link-Einstellungen."
+        },
+        "roi": {
+          "title": "ROI-Tracking",
+          "body": "Verfolgen Sie den Umsatz pro Gesprächsminute, damit Sie genau wissen, was Nabil für Ihren Laden verdient."
+        }
+      },
+      "same": {
+        "eyebrow": "Gleiches System, gleiche Kasse",
+        "title": "Eine Telefonbestellung ist eine Website-Bestellung",
+        "body": "Nabil nutzt kein separates Bestellsystem. Jede Telefonbestellung geht durch dieselbe Kasse, dasselbe Menü, dieselben Preise und dasselbe Küchendisplay wie Ihre Website-Bestellungen. Ein System, eine Quelle der Wahrheit.",
+        "bullet1": "Gleiches Menü, gleiche Preise, gleiche Optionen",
+        "bullet2": "Gleiches Küchendisplay und Bondrucker",
+        "bullet3": "Gleiche Bestellbestätigung und Sendungsverfolgung",
+        "bullet4": "Gleiches Admin-Dashboard und Berichte",
+        "frameAlt": "Küchendisplay mit einer Telefonbestellung neben Website-Bestellungen"
+      },
+      "languages": {
+        "eyebrow": "Mehrsprachig",
+        "title": "Nabil spricht die Sprache Ihrer Anrufer",
+        "body": "Nabil erkennt die Sprache des Anrufers automatisch und antwortet entsprechend. Ihre Menüartikel, Beschreibungen und Optionen werden in der Sprache des Anrufers bereitgestellt — dieselben Übersetzungen wie auf Ihrer Website."
+      },
+      "pricing": {
+        "eyebrow": "Einfache Preise",
+        "title": "Ein Preis. Keine Überraschungen.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "pro Gesprächsminute",
+        "minimum": "249,99 USD",
+        "minimumLabel": "Minimum pro Monat",
+        "rule": "Sie zahlen den höheren Betrag: Ihre Gesprächsminuten zu je 0,60 USD oder das monatliche Minimum von 249,99 USD. Die meisten Restaurants bleiben innerhalb der enthaltenen 416 Minuten.",
+        "demo": "Bereits zahlendes Fee Free-Mitglied? Testen Sie Nabil 7 Tage kostenlos — ohne Verpflichtung.",
+        "include1": "Unbegrenzte Anrufe",
+        "include2": "Aufnahmen & Transkripte",
+        "include3": "Dashboard & Analysen",
+        "include4": "Betreute Leitungseinrichtung",
+        "include5": "Laufende Updates & Verbesserungen",
+        "cta": "Loslegen",
+        "note": "Preise in US-Dollar. Monatliche Abrechnung über Stripe. Jederzeit kündbar."
+      },
+      "faq": {
+        "title": "Häufig gestellte Fragen",
+        "q1": "Wie nimmt Nabil eine Bestellung auf?",
+        "a1": "Nabil nimmt Ihren Telefonanruf entgegen, begrüßt den Anrufer im Namen Ihres Restaurants, nimmt die Bestellung gesprächsweise auf, bestätigt jeden Artikel und die Gesamtsumme und gibt sie über Ihre bestehende Kasse ein. Die Bestellung erscheint auf Ihrem Küchendisplay und wird automatisch ausgedruckt.",
+        "q2": "Weiß der Anrufer, dass er mit KI spricht?",
+        "a2": "Nabil klingt natürlich und gesprächig, aber wir setzen auf Transparenz — Anrufer können jederzeit nach einem Menschen fragen, und der Anruf wird sofort weitergeleitet.",
+        "q3": "Was wenn Nabil einen Fehler macht?",
+        "a3": "Jeder Anruf hat eine Aufnahme, ein Transkript und eine detaillierte Zeitleiste. Sie können jeden Anruf melden und unser Team untersucht ihn. Der serverseitige Warenkorb und die Rücklese-Bestätigung minimieren Fehler.",
+        "q4": "Kann Nabil halb-und-halb Pizzen verarbeiten?",
+        "a4": "Ja — halb-und-halb Pizzen mit unterschiedlichen Belägen auf jeder Seite sind eine Kernfunktion. Nabil bestätigt jede Seite und erstellt die Bestellung genau wie Ihre Website-Kasse.",
+        "q5": "Wie verbinde ich meine Telefonleitung?",
+        "a5": "Nach der Anmeldung teilen Sie uns Ihre Nummer mit und ob Sie sie weiterleiten oder eine neue erhalten möchten. Unser Team richtet alles innerhalb eines Werktags ein — ohne technische Arbeit.",
+        "q6": "Was passiert außerhalb der Öffnungszeiten?",
+        "a6": "Nabil kennt Ihre Öffnungszeiten und Feiertage. Außerhalb der Zeiten informiert er den Anrufer über die Wiedereröffnung und kann eine geplante Bestellung anbieten, falls aktiviert.",
+        "q7": "Wie wird die Abrechnung berechnet?",
+        "a7": "Sie zahlen 0,60 USD pro Gesprächsminute oder das monatliche Minimum von 249,99 USD, je nachdem, was höher ist. Das Minimum enthält etwa 416 Minuten. Jeder Anruf wird auf die nächste volle Minute aufgerundet. Sie können Ihre Nutzung in Echtzeit verfolgen.",
+        "q8": "Kann ich jederzeit kündigen?",
+        "a8": "Ja. Nabil wird monatlich über Stripe abgerechnet, ohne Langzeitvertrag. Kündigen Sie jederzeit im Dashboard — Ihre Leitung bleibt bis zum Ende des Abrechnungszeitraums aktiv."
+      },
+      "finalCta": {
+        "title": "Bereit, Nabil Ihr Telefon beantworten zu lassen?",
+        "body": "Die Einrichtung dauert einen Werktag. Erhalten Sie Telefonbestellungen über Ihr System — ohne zusätzliche Hardware, Personal oder Stress.",
+        "primary": "Loslegen",
+        "secondary": "Alle Preise ansehen"
+      }
     }
   },
   "addressBook": {

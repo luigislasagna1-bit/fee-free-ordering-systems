@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Kampanja",
       "titleCampaignLocked": "Ovaj kod e-poštom šalje aktivna Autopilot kampanja. Isključite kampanju u Marketing → Autopilot da biste ga povukli.",
-      "toggleFailed": "Promociju nije bilo moguće promijeniti. Pokušajte ponovno."
+      "toggleFailed": "Promociju nije bilo moguće promijeniti. Pokušajte ponovno.",
+      "phoneOff": "Telefon isklj.",
+      "phoneOffTip": "Promocija ne vrijedi za telefonske narudžbe putem Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Odaberite vrstu promocije za nastavak.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Skrivene promocije primjenjuju se samo kad kupac unese ovaj kod pri plaćanju.",
       "vipLockedTitle": "Samo VIP — povezano s: {groups}",
       "vipLockedDesc": "Ova promocija automatski vrijedi samo za te VIP članove na naplati. Nikad se ne prikazuje na javnom jelovniku, banneru ili web-stranici — nijedan prekidač vidljivosti to ne mijenja. Da biste je učinili javnom, prvo je odvojite na stranici VIP grupe.",
-      "bundleBuildInfo": "💡 Kupci slažu ovaj paket iz kartice „Složi svoju ponudu” na vašem jelovniku. Prikvačite ga na banner ispod kako bi se lako pronašao. (Paket se ne može automatski primijeniti ni otključati kodom.)"
+      "bundleBuildInfo": "💡 Kupci slažu ovaj paket iz kartice „Složi svoju ponudu” na vašem jelovniku. Prikvačite ga na banner ispod kako bi se lako pronašao. (Paket se ne može automatski primijeniti ni otključati kodom.)",
+      "phoneOrdersLabel": "Dostupno telefonom (Nabil AI)",
+      "phoneOrdersOnSub": "Ova promocija se primjenjuje na telefonske narudžbe putem Nabil AI",
+      "phoneOrdersOffSub": "Ova promocija se ne primjenjuje na telefonske narudžbe",
+      "phoneOrdersHelp": "Isključeno = promocija ne vrijedi za telefonske narudžbe. Web, app i marketplace narudžbe nisu pogođene.",
+      "clientTypeMemberWarning": "Promocije za članove zahtijevaju račun — pozivatelji bez računa neće vidjeti ovu promociju."
     },
     "customersList": {
       "heading": "Kupci",
@@ -4355,7 +4362,12 @@
         "viewAll": "Prikaži sve pozive",
         "chartPopularItems": "Najčešće naručeno telefonom",
         "popularItemsCta": "Postavi istaknute preporuke",
-        "popularItemsEmpty": "Još nema telefonskih narudžbi u ovom razdoblju."
+        "popularItemsEmpty": "Još nema telefonskih narudžbi u ovom razdoblju.",
+        "meterTitle": "Potrošnja ovog mjeseca",
+        "meterMinutes": "{minutes} minuta korišteno",
+        "meterCharge": "Trenutno: {amount} · Procjena: {projected}",
+        "meterOver": "{minutes} minuta iznad uključenih",
+        "meterIncluded": "{included} min uključeno u minimum {minimum}/mj. ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Pretraži telefon, ime ili sažetak…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Broj je deblokiran",
         "errorToast": "Ažuriranje nije uspjelo — pokušajte ponovno.",
         "invalidPhone": "Unesite valjani broj telefona."
-      }
+      },
+      "setup": {
+        "title": "Postavite svoju telefonsku liniju",
+        "body": "Recite nam o svojoj liniji i Nabil će odgovarati na pozive unutar jednog radnog dana. Bez tehničke konfiguracije.",
+        "receivedTitle": "Zahtjev za postavljanje primljen",
+        "receivedBody": "Naš tim postavlja vašu Nabil AI liniju. Ovdje ćete vidjeti svoju nadzornu ploču kad bude spremna — obično unutar jednog radnog dana.",
+        "summaryForward": "Preusmjeri pozive s {currentNumber}",
+        "summaryNew": "Novi broj (trenutni: {currentNumber})",
+        "summaryTransfer": "Prijenos na osobu: {transferNumber}",
+        "summaryGreeting": "Naziv pozdrava: {name}",
+        "summarySent": "Poslano {date}",
+        "updateRequest": "Ažuriraj zahtjev",
+        "prepareHint": "Možete ažurirati postavke dok se linija ne aktivira.",
+        "currentNumberLabel": "Vaš trenutni telefonski broj",
+        "phoneHint": "Broj koji vaši kupci danas zovu.",
+        "modeLabel": "Kako želite postaviti liniju?",
+        "modeForward": "Preusmjeri moj broj",
+        "modeForwardHint": "Preusmjeravate postojeći broj na Nabil. Pozivatelji biraju isti broj.",
+        "modeNew": "Dajte mi novi broj",
+        "modeNewHint": "Dodjeljujemo novi broj za Nabil. Možete ga objaviti uz svoju postojeću liniju.",
+        "transferNumberLabel": "Preusmjeri pozive na",
+        "transferNumberHint": "Kada pozivatelj traži osobu, Nabil preusmjerava poziv ovdje.",
+        "greetingNameLabel": "Naziv restorana za pozdrav",
+        "greetingNameHint": "Kako Nabil treba predstaviti vaš restoran na telefonu.",
+        "notesLabel": "Nešto drugo (neobavezno)",
+        "submitting": "Slanje…",
+        "submit": "Pošalji zahtjev",
+        "cancelEdit": "Odustani",
+        "errorAlreadyProvisioned": "Vaša linija je već postavljena — osvježite stranicu.",
+        "errorGeneric": "Nešto je pošlo po krivu. Pokušajte ponovo."
+      },
+      "nowAvailable": "Sada dostupno",
+      "availableHeading": "Nabil AI telefonske narudžbe",
+      "availablePrice": "{rate} po minuti poziva · {minimum}/mj. minimum · {included} minuta uključeno",
+      "availableConcierge": "Naš tim postavlja vašu liniju unutar jednog radnog dana. Bez tehničkog posla s vaše strane.",
+      "availableDemo": "Već ste pretplatnik? Isprobajte besplatno {days} dana.",
+      "subscribeCta": "Pretplatite se i postavite"
     },
     "customerDetailPage": {
       "allCustomers": "Svi kupci",
@@ -6865,7 +6913,8 @@
             "b3": "Sigurno i šifrirano",
             "b4": "Stvoreno u Kanadi"
           }
-        }
+        },
+        "nowAvailable": "Sada dostupno"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Počnite besplatno",
       "ctaContact": "Kontaktirajte prodaju",
-      "trialNote": "Nije potrebna kreditna kartica. Bez ugovora."
+      "trialNote": "Nije potrebna kreditna kartica. Bez ugovora.",
+      "phoneOrderingMinuteNote": "Naplata 0,60 USD/min s minimumom 249,99 USD/mj. (≈ 416 uključenih minuta). Detalji na"
     },
     "faq": {
       "title": "Često postavljana pitanja",
@@ -7075,6 +7125,211 @@
       "b1": "Vaš pravi jelovnik — fotografije, veličine i dodaci",
       "b2": "Naručite s njega odmah, baš kao kupac",
       "b3": "Sviđa vam se? Registrirajte se i zadržite ga — bez ponovnog uvoza"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI telefonsko naručivanje",
+        "title": "Telefon vaše pizzerije, <accent>odgovara AI</accent>",
+        "subtitle": "Nabil AI prima telefonske narudžbe za vašu pizzeriju — pizze pola-pola, kombose, zone dostave, dodatke po imenu — i obrađuje ih kroz istu blagajnu kao vaša web stranica. Izradili bivši vlasnici pizzerija koji znaju kako zvuči pravi poziv.",
+        "ctaStart": "Započnite",
+        "ctaSecondary": "Pogledajte kako radi",
+        "trust1": "Izrađeno za pizzerije",
+        "trust2": "Ista blagajna kao vaša web stranica",
+        "trust3": "Snimke i transkripti",
+        "trust4": "US$0.60 po minuti poziva",
+        "sampleLabel": "Primjer poziva uživo",
+        "sampleCaller": "Pozivatelj",
+        "sample1": "Bok, mogu li naručiti za dostavu?",
+        "sample2": "Naravno! Rado ću pomoći. Što vam mogu pripremiti danas?",
+        "sample3": "Veliku pizzu, pola pepperoni i gljive, pola zelene paprike i luka.",
+        "sample4": "Razumijem — velika pizza pola-pola: pepperoni i gljive na jednoj strani, zelena paprika i luk na drugoj. Još nešto?"
+      },
+      "story": {
+        "eyebrow": "Naša priča",
+        "title": "Izrađeno za pizzerije, od strane bivših vlasnika pizzerija",
+        "body1": "Proveli smo godine iza pulta primajući telefonske narudžbe. Znamo što pozivatelji zapravo kažu — zahtjeve za pola-pola, promjene dodataka u zadnji čas, 'isto kao prošli put'. Izgradili smo Nabil AI da obrađuje te pozive onako kako bismo mi.",
+        "body2": "Za razliku od generičkih AI telefonskih sustava, Nabil je od prvog dana dizajniran oko naručivanja pizze i hrane iz restorana. Svaka značajka — od izrade kombosa do provjere zona dostave — postoji jer nam je bila potrebna u našoj vlastitoj trgovini.",
+        "point1": "Dizajnirano oko stvarnog poslovanja pizzerije",
+        "point2": "Svaka narudžba prolazi kroz vašu verificiranu blagajnu",
+        "point3": "Vaš jelovnik je jelovnik AI-ja — ništa izmišljeno"
+      },
+      "how": {
+        "eyebrow": "Kako radi",
+        "title": "Tri koraka do telefonskih narudžbi na autopilotu",
+        "step1": {
+          "title": "Povežite svoju telefonsku liniju",
+          "body": "Preusmjerite postojeći broj ili nabavite novi. Naš tim postavlja vašu liniju unutar jednog radnog dana — bez tehničkog posla s vaše strane."
+        },
+        "step2": {
+          "title": "Nabil prima poziv",
+          "body": "Nabil pozdravlja pozivatelje imenom vašeg restorana, prima njihovu narudžbu razgovorno, potvrđuje svaku stavku i čita ukupan iznos prije slanja."
+        },
+        "step3": {
+          "title": "Narudžba se ispisuje u vašoj kuhinji",
+          "body": "Narudžba prolazi kroz istu blagajnu kao narudžba s web stranice. Pojavljuje se na vašem kuhinjskom zaslonu, ispisuje na vašem pisaču računa i prikazuje na vašoj admin ploči — sve automatski."
+        }
+      },
+      "handles": {
+        "eyebrow": "Što obrađuje",
+        "title": "Sve što vaši pozivatelji traže",
+        "subtitle": "Nabil obrađuje narudžbe koje vaš tim obrađuje — od jednostavnih pizza s jednim preljevom do složenih pola-pola kombosa s dostavom.",
+        "halfHalf": {
+          "title": "Pice pola-pola",
+          "body": "Pozivatelji mogu naručiti različite preljeve na svakoj polovici, a Nabil potvrđuje svaku stranu prije naručivanja."
+        },
+        "combos": {
+          "title": "Kombosi i ponude obroka",
+          "body": "Nabil vodi pozivatelje kroz izbore kombosa — odaberite pizzu, prilog, piće — baš kao na vašoj web stranici."
+        },
+        "delivery": {
+          "title": "Dostava s provjerom zone",
+          "body": "Uzima adresu za dostavu, provjerava je li u vašoj zoni, navodi naknadu i naručuje — bez nagađanja."
+        },
+        "upsells": {
+          "title": "Pametna dodatna prodaja",
+          "body": "Predlaže stavke koje odaberete u pravom trenutku razgovora — piće uz pizzu, desert prije naplate."
+        },
+        "faq": {
+          "title": "Odgovara na česta pitanja",
+          "body": "Radno vrijeme, lokacija, parking, alergeni — Nabil odgovara na česta pitanja vaše trgovine kako vaše osoblje ne bi moralo."
+        },
+        "returning": {
+          "title": "Prepoznaje pozivatelje koji se vraćaju",
+          "body": "Pozdravlja stalne goste po imenu i pamti njihovu povijest narudžbi, pa su ponovne narudžbe brze."
+        },
+        "transfer": {
+          "title": "Preusmjerava na osobu",
+          "body": "Kada pozivatelj traži razgovor s osobom ili ima zahtjev koji Nabil ne može obraditi, poziv se preusmjerava na broj vaše trgovine."
+        },
+        "numbers": {
+          "title": "Izgovara brojeve prirodno",
+          "body": "Telefonski brojevi, adrese, cijene i vremena izgovaraju se riječima — 'šest četrdeset sedam' a ne '647' — tako da pozivatelj uvijek razumije."
+        },
+        "hours": {
+          "title": "Zna vaše radno vrijeme",
+          "body": "Nabil zna kada ste otvoreni, kada zatvoreni i vaš raspored praznika — pozivatelji svaki put dobivaju točne informacije."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Zašto je točan",
+        "title": "Narudžba je točna jer sustav ne dopušta greške",
+        "body": "Nabil ne pogađa. Svaka stavka se provjerava prema vašem stvarnom jelovniku, svaka cijena se izračunava vašom blagajnom, i svaka prilagodba se potvrđuje s pozivateljem prije nego što se narudžba pošalje.",
+        "cart": {
+          "title": "Košarica na serveru",
+          "body": "Narudžba se izrađuje na serveru, a ne u memoriji AI-ja. Cijene, pravila i dostupnost vašeg jelovnika jedini su izvor istine."
+        },
+        "asks": {
+          "title": "Pita, nikada ne pretpostavlja",
+          "body": "Kada je nešto nejasno — veličina, raspored priloga, izbor tijesta — Nabil pita pozivatelja umjesto da nagađa."
+        },
+        "readback": {
+          "title": "Potpuno čitanje",
+          "body": "Prije slanja narudžbe, Nabil pročita svaku stavku, prilagodbu i ukupni iznos — pozivatelj potvrđuje prije nego što se bilo što pošalje u kuhinju."
+        },
+        "alarm": {
+          "title": "Alarm: navedena = naplaćena cijena",
+          "body": "Ako se ukupan iznos koji je AI naveo ne podudara s onim što blagajna izračuna, sustav to označava prije slanja narudžbe."
+        },
+        "timeline": {
+          "title": "Vremenska crta po pozivu",
+          "body": "Svaki poziv ima detaljnu vremensku crtu koja prikazuje svaku radnju alata, promjenu košarice i odluku — tako da možete vidjeti točno što se dogodilo."
+        },
+        "tests": {
+          "title": "Automatizirani skup testova",
+          "body": "Sustav za simulaciju pokreće stvarne scenarije naručivanja uz svako ažuriranje — pizze pola-pola, kombinacije, rubne slučajeve — prije nego što dođe do vaše telefonske linije."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Vaša nadzorna ploča",
+        "title": "Pogledajte svaki poziv, čujte svaku riječ",
+        "subtitle": "Snimke, transkripti, praćenje prihoda i vremenska crta po pozivu — sve što trebate znati o tome što Nabil radi za vaš restoran.",
+        "shotOverviewAlt": "Pregled nadzorne ploče Nabil AI s prikazom volumena poziva, prihoda i metrika konverzije",
+        "shotCallsAlt": "Popis poziva koji prikazuje nedavne telefonske narudžbe s ishodima i trajanjima",
+        "shotDetailAlt": "Detaljan prikaz poziva s transkriptom, vremenskom crtom i sažetkom narudžbe",
+        "shotSettingsAlt": "Ploča postavki Nabil AI s konfiguracijom pozdrava, dodatne prodaje i čestih pitanja",
+        "shotReportAlt": "Dijalog za prijavu poziva za označavanje problema timu Fee Free",
+        "overview": {
+          "title": "Pregled prihoda",
+          "body": "Pogledajte koliko prihoda Nabil donosi, s grafikonima za pozive, narudžbe i stope konverzije."
+        },
+        "calls": {
+          "title": "Povijest poziva",
+          "body": "Pregledajte svaki poziv s njegovim ishodom, trajanjem, snimkom i transkriptom."
+        },
+        "detail": {
+          "title": "Vremenska crta poziva",
+          "body": "Sekunda po sekunda vremenska crta onoga što se dogodilo tijekom poziva — svaka radnja alata, promjena košarice i izgovorena riječ."
+        },
+        "report": {
+          "title": "Prijavite poziv",
+          "body": "Označite svaki poziv koji nije prošao dobro. Naš tim ga pregledava i poboljšava Nabilovo upravljanje."
+        },
+        "settings": {
+          "title": "Potpuna kontrola",
+          "body": "Konfigurirajte Nabilov pozdrav, prijedloge za dodatnu prodaju, odgovore na česta pitanja, blokirane pozivatelje i postavke plaćanja putem linka."
+        },
+        "roi": {
+          "title": "Praćenje ROI-ja",
+          "body": "Pratite prihod po minuti poziva kako biste znali točno koliko Nabil zarađuje za vaš lokal."
+        }
+      },
+      "same": {
+        "eyebrow": "Isti sustav, ista blagajna",
+        "title": "Telefonska narudžba je narudžba s weba",
+        "body": "Nabil ne koristi zasebni sustav narudžbi. Svaka telefonska narudžba prolazi kroz istu blagajnu, meni, cijene i kuhinjski zaslon kao narudžbe s weba. Jedan sustav, jedan izvor istine.",
+        "bullet1": "Isti meni, iste cijene, isti modifikatori",
+        "bullet2": "Isti kuhinjski zaslon i printer računa",
+        "bullet3": "Ista potvrda narudžbe i praćenje",
+        "bullet4": "Ista administratorska ploča i izvještaji",
+        "frameAlt": "Kuhinjski zaslon s telefonskom narudžbom pored web narudžbi"
+      },
+      "languages": {
+        "eyebrow": "Višejezično",
+        "title": "Nabil govori jezik vaših pozivatelja",
+        "body": "Nabil automatski prepoznaje jezik pozivatelja i odgovara na istom jeziku. Vaši artikli, opisi i modifikatori se prikazuju na jeziku pozivatelja — isti prijevodi kao na vašem webu."
+      },
+      "pricing": {
+        "eyebrow": "Jednostavne cijene",
+        "title": "Jedna cijena. Bez iznenađenja.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "po minuti poziva",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minimum mjesečno",
+        "rule": "Plaćate višu svotu: vaše minute poziva po 0,60 USD, ili mjesečni minimum od 249,99 USD. Većina restorana ostaje unutar uključenih 416 minuta.",
+        "demo": "Već ste pretplatnik Fee Free? Isprobajte Nabil besplatno 7 dana — bez obveze.",
+        "include1": "Neograničeni pozivi",
+        "include2": "Snimke i prijepisi",
+        "include3": "Nadzorna ploča i analize",
+        "include4": "Potpomognuto postavljanje linije",
+        "include5": "Kontinuirana ažuriranja i poboljšanja",
+        "cta": "Počnite",
+        "note": "Cijene su u američkim dolarima. Mjesečna naplata putem Stripe-a. Otkažite bilo kada."
+      },
+      "faq": {
+        "title": "Često postavljana pitanja",
+        "q1": "Kako Nabil prima narudžbu?",
+        "a1": "Nabil odgovara na vaš telefonski poziv, pozdravlja pozivatelja imenom vašeg restorana, prima narudžbu u razgovornom obliku, potvrđuje svaku stavku i ukupan iznos te je unosi kroz vašu postojeću blagajnu. Narudžba se prikazuje na kuhinjskom zaslonu i automatski ispisuje.",
+        "q2": "Zna li pozivatelj da razgovara s AI-jem?",
+        "a2": "Nabil zvuči prirodno i razgovorno, ali vjerujemo u transparentnost — pozivatelji uvijek mogu zatražiti osobu, a poziv se odmah preusmjerava.",
+        "q3": "Što ako Nabil pogriješi?",
+        "a3": "Svaki poziv ima snimku, prijepis i detaljnu vremensku crtu. Možete označiti bilo koji poziv i naš tim će istražiti. Košarica na strani poslužitelja i potvrda čitanjem minimiziraju pogreške.",
+        "q4": "Može li Nabil raditi pola-pola pizze?",
+        "a4": "Da — pola-pola pizze s različitim dodacima na svakoj strani su ključna značajka. Nabil potvrđuje svaku stranu i gradi narudžbu točno kao vaša web blagajna.",
+        "q5": "Kako povezati svoju telefonsku liniju?",
+        "a5": "Nakon pretplate, kažete nam svoj broj i želite li ga preusmjeriti na Nabil ili dobiti novi. Naš tim sve postavi unutar jednog radnog dana — bez tehničkog posla.",
+        "q6": "Što se događa izvan radnog vremena?",
+        "a6": "Nabil poznaje vaše radno vrijeme i raspored praznika. Izvan radnog vremena obavještava pozivatelja kada opet otvarate i može ponuditi zakazanu narudžbu ako je omogućeno.",
+        "q7": "Kako se izračunava fakturiranje?",
+        "a7": "Plaćate 0,60 USD po minuti poziva ili mjesečni minimum 249,99 USD — višu svotu. Minimum uključuje oko 416 minuta. Svaki poziv se zaokružuje na gore. Pratite potrošnju u stvarnom vremenu.",
+        "q8": "Mogu li otkazati bilo kada?",
+        "a8": "Da. Nabil se naplaćuje mjesečno putem Stripe-a bez dugoročnog ugovora. Otkažite s nadzorne ploče i vaša linija ostaje aktivna do kraja obračunskog razdoblja."
+      },
+      "finalCta": {
+        "title": "Spremni da Nabil odgovara na telefon?",
+        "body": "Postavljanje traje jedan radni dan. Počnite primati telefonske narudžbe kroz svoj sustav — bez dodatne opreme, osoblja ili stresa.",
+        "primary": "Počnite",
+        "secondary": "Pogledajte sve cijene"
+      }
     }
   },
   "addressBook": {

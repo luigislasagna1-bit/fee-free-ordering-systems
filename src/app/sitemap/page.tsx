@@ -61,6 +61,7 @@ export default function SitemapPage() {
   const segments: LinkItem[] = SEGMENT_PAGES.map((p) => ({ href: `/for/${p.slug}`, text: p.label }));
   const company: LinkItem[] = [
     { href: "/features", text: "Features" },
+    { href: "/nabil-ai", text: "Nabil AI — AI phone ordering for pizzerias" },
     { href: "/pricing", text: "Pricing" },
     { href: "/never-miss-an-order", text: "Never miss an order" },
     { href: "/gloriafood-alternative", text: "GloriaFood is shutting down — migrate free" },

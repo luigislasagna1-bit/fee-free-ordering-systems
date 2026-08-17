@@ -20,7 +20,7 @@ export default async function EditPromotionPage({
   const restaurantId = user.restaurantId;
   const { id } = await params;
 
-  const [promo, restaurant, categories, menuItems, deliveryZones, hasAdvanced, onMarketplace] =
+  const [promo, restaurant, categories, menuItems, deliveryZones, hasAdvanced, onMarketplace, phoneOrderingEnabled] =
     await Promise.all([
       prisma.promotion.findFirst({
         where: { id, restaurantId },
@@ -56,6 +56,9 @@ export default async function EditPromotionPage({
       }),
       hasFeature(restaurantId, "advanced_promo_types"),
       isOnMarketplace(restaurantId),
+      // "Available by phone (Nabil AI)" switch — shown only to stores entitled
+      // to Nabil AI (feature-gated visibility). Luigi A64(a), 2026-08-17.
+      hasFeature(restaurantId, "phone_ordering_agent"),
     ]);
 
   if (!promo) notFound();
@@ -80,6 +83,7 @@ export default async function EditPromotionPage({
     stackingRule: promo.stackingRule,
     channel: promo.channel,
     orderType: promo.orderType,
+    phoneOrders: promo.phoneOrders,
     customerType: promo.customerType,
     minimumOrder: promo.minimumOrder,
     rules: promo.rules,
@@ -123,6 +127,7 @@ export default async function EditPromotionPage({
       initialPromo={initialPromo}
       currencySymbol={currencySymbol((restaurant as any)?.currency)}
       isOnMarketplace={onMarketplace}
+      phoneOrderingEnabled={phoneOrderingEnabled}
       vipGroupNames={vipGroupNames}
       rewardsEnabled={!!(restaurant as any)?.rewardsEnabled}
       staleLiveTargets={liveTargets.stale ? { names: liveTargets.liveTargetNames, total: liveTargets.totalLive } : null}

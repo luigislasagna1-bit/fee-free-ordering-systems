@@ -2,10 +2,12 @@
  * One-off fix script: my seed bulldozed Luigi's "priced and synced"
  * decisions on most add-ons by setting comingSoon=true. This script
  * restores his intent by setting comingSoon=false for everything EXCEPT
- * the 3 add-ons that are genuinely zero-code:
+ * the add-ons that are genuinely zero-code:
  *   - pos_module
  *   - branded_mobile_app
- *   - phone_ordering (NEW — never had a price)
+ *   (phone_ordering was in this list until 2026-08-17 — Nabil AI is ON SALE
+ *    now, see scripts/nabil-go-live-addon.ts; re-running this must not flip
+ *    it back to "coming soon".)
  *
  * Run twice — once for each Neon branch:
  *   npx tsx scripts/fix-coming-soon-flags.ts                                   # purple-brook (.env.local active URL)
@@ -27,7 +29,6 @@ if (!explicitUrl) {
 const KEEP_COMING_SOON = new Set([
   "pos_module",
   "branded_mobile_app",
-  "phone_ordering",
 ]);
 
 async function main() {

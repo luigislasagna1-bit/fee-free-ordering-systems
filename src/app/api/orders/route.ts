@@ -1731,9 +1731,11 @@ async function placeOrder(req: NextRequest) {
     const promoCtx = await buildPromoOrderContext({
       restaurant,
       channel: orderChannel,
-      // A phone order never sees a Kickstarter/Autopilot email-campaign promo
-      // (online-only, Luigi 2026-08-16). Applies to the voice dryRun quote and
-      // the placement alike — same call, same flag — so no total_changed drift.
+      // A phone order never sees a promo the owner kept off the phone
+      // (Promotion.phoneOrders=false — "Available by phone (Nabil AI)", Luigi
+      // A64(a) 2026-08-17; before that a hardcoded Kickstarter/Autopilot rule,
+      // 2026-08-16). Applies to the voice dryRun quote and the placement alike
+      // — same call, same flag — so no total_changed drift.
       orderSource: isVoiceOrder ? "voice" : "web",
       email: customerEmail,
       phone: customerPhone,
@@ -1944,6 +1946,11 @@ async function placeOrder(req: NextRequest) {
       orderType: type,
       now: promoEvalNow,
       isNewCustomer: promoCtx.isNewCustomer,
+      // Per-promo "first order" view + how the order is placed — both from the
+      // shared context so the engine's Promotion.phoneOrders gate and the
+      // phone-excluded first-buy count agree with the cart preview.
+      isNewCustomerExcludingPhoneOrders: promoCtx.isNewCustomerExcludingPhoneOrders,
+      orderSource: promoCtx.orderSource,
       isMember: promoCtx.isMember,
       hasUsedLifetime: promoCtx.hasUsedLifetime,
       subtotal: serverSubtotal,

@@ -150,7 +150,10 @@ export async function POST(req: NextRequest) {
   // free_delivery promotion that applies to THIS zone and hand the threshold
   // back so it is said in the same breath as the fee. Same rules the order
   // engine applies (active, auto, dated, not member-only, delivery allowed,
-  // zone allowed) — the quote/charge stays authoritative.
+  // zone allowed, AND available by phone — Promotion.phoneOrders, the owner's
+  // "Available by phone (Nabil AI)" switch; a phone-excluded free-delivery
+  // promo would never apply to this caller's order, so it must never be
+  // promised here) — the quote/charge stays authoritative.
   const now = new Date();
   const freePromos = await prisma.promotion.findMany({
     where: {
@@ -158,6 +161,7 @@ export async function POST(req: NextRequest) {
       isActive: true,
       autoApply: true,
       promotionType: "free_delivery",
+      phoneOrders: true,
       groupLinks: { none: {} },
       OR: [{ startsAt: null }, { startsAt: { lte: now } }],
       AND: [{ OR: [{ endsAt: null }, { endsAt: { gte: now } }] }],

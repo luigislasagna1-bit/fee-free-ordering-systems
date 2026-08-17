@@ -449,6 +449,9 @@ model Restaurant {
   voiceTextLinks         VoiceTextLink[]
   voiceUpsells           VoiceUpsell[]
   blockedCallers         BlockedCaller[]
+  // Nabil AI on sale (2026-08-17): concierge line setup + usage-billing ledger
+  voiceSetupRequest      VoiceSetupRequest?
+  nabilUsageCharges      NabilUsageCharge[]
 
   // Reseller Partner Program — set at restaurant creation when the signup
   // carried a ?ref=<referralCode> from an approved reseller. Nullable: most
@@ -2019,6 +2022,23 @@ model Promotion {
   /// marketplace (isOnMarketplace). Evaluated for EVERY promo type, incl.
   /// Kickstarter/Autopilot pre-made promos.
   channel         String    @default("website")
+  /// "Available by phone (Nabil AI)" — Luigi's decision A64(a), 2026-08-17.
+  /// When FALSE this promotion never applies to an order taken over the phone
+  /// by Nabil AI (`/api/orders` with the internal key + channel "voice" — the
+  /// dryRun quote and the placement alike); website / app / marketplace
+  /// orders are unaffected. Read by the ONE shared `isEligible()` gate in
+  /// src/lib/promo-engine.ts (so every promo type, typed coupon code and
+  /// granted gift follows it), by the shared promo pool in
+  /// src/lib/promo-order-context.ts, and by the voice check-address route
+  /// (the free-delivery threshold it quotes). It also changes how "first
+  /// order" is judged for THIS promo: a phone-excluded promo counts prior
+  /// orders on the channels it applies to, i.e. NOT counting phone orders
+  /// (Order.channel = "voice"). Default TRUE = every owner-made promo keeps
+  /// applying by phone; the day-one backfill (scripts/backfill-promo-phone-
+  /// orders.ts) set FALSE on the Kickstarter / Autopilot email-campaign promos,
+  /// which had been online-only by a hardcoded campaignRef rule since
+  /// 2026-08-16 (ORD-971682861). Owners can flip it per promo in the editor.
+  phoneOrders     Boolean   @default(true)
 
   // ── GloriaFood-parity marketing suite (2026-05-29) ───────────────────
   //
@@ -2996,7 +3016,26 @@ model VoiceAgentConfig {
 
   // ── Ordering behavior (mostly reads existing restaurant config) ──
   quoteEta              Boolean @default(true)
+  /// SUPERSEDED by acceptScheduledOrders (2026-08-17). Was the dashboard's
+  /// "Allow orders for a later time" toggle, but the voice service could not
+  /// schedule at all — it only chose between "offer the online link" and
+  /// "refuse outright". Nothing reads it any more; kept so the column drop is
+  /// a deliberate later migration, never a surprise in a feature deploy.
   allowScheduledOrders  Boolean @default(false)
+  /// 📅 "Accept scheduled orders by phone" — Luigi's decision A64(b),
+  /// 2026-08-17. Default OFF. When TRUE, Nabil takes a pickup/delivery TIME
+  /// from the caller ("for six tonight", "Tuesday at noon") and validates it
+  /// through the SAME scheduling rules the website checkout applies (lead
+  /// time, max days ahead, opening hours, holidays, first-order delay, slot
+  /// grid — /api/internal/voice/validate-slot → src/lib/voice/scheduled-slot.ts),
+  /// then /api/orders stores it as Order.scheduledFor exactly like a web
+  /// pre-order. When FALSE the agent takes orders for as soon as possible only,
+  /// says a specific time can't be set by phone and offers the online link.
+  /// Read by: context-payload.ts (config → voice service `acceptScheduledOrders`
+  /// → the set_fulfilment tool gate), the validate-slot route, and the
+  /// /api/orders voice branch (backstop: a scheduledFor from the voice channel
+  /// is refused with `scheduling_off` when this is off).
+  acceptScheduledOrders Boolean @default(false)
 
   // ── Pay-by-link (opt-in Stripe prepayment, per-order-type matrix) ──
   /// unpaid = pay-at-store (cash); paid = require Stripe pay-link; both = link
@@ -3017,8 +3056,71 @@ model VoiceAgentConfig {
   smsConfirmations      Boolean @default(true)
   recordCalls           Boolean @default(true) // call-recording consent toggle
 
+  /// 🎟️ ONE-TIME 7-day free demo (Luigi 2026-08-16, A64 (d)): granted at
+  /// add-on Checkout ONLY to a restaurant that already pays us for something
+  /// (an active Stripe-billed platform plan or add-on) and has never used it.
+  /// Stamped by the Stripe subscription webhook when the demo subscription is
+  /// created (conditional write — never overwritten), so an abandoned Checkout
+  /// does not burn it and a retried webhook cannot re-stamp it. Lives here, on
+  /// the per-store Nabil config, NOT on the hot Restaurant row.
+  /// See src/lib/voice/nabil-trial.ts.
+  trialUsedAt           DateTime?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+/// 🛎️ CONCIERGE ACTIVATION (Nabil AI on sale, 2026-08-17). Self-serve number
+/// provisioning does not exist yet, so a restaurant that subscribes tells us
+/// how it wants its line set up and the platform switches it on by hand within
+/// one business day. ONE row per restaurant (upsert on restaurantId): a fresh
+/// submission after DONE re-opens it. `payload` = the intake form (numbers the
+/// restaurant gives us for ITS OWN line — business contact data, not customer
+/// PII, hence not in PII_ERASURE_MAP). Superadmin works the queue on
+/// Superadmin › Nabil Phone Lines.
+model VoiceSetupRequest {
+  id           String     @id @default(cuid())
+  restaurantId String     @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  /// NEW | DONE
+  status       String     @default("NEW")
+  /// { currentNumber, mode: "new" | "forward", transferNumber, greetingName, notes, submittedBy }
+  payload      Json
+  doneAt       DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([status, createdAt])
+}
+
+/// 💵 Nabil AI USAGE BILLING ledger (Luigi's price 2026-08-16: US$0.60 per
+/// call-minute, US$249.99/month minimum, whichever is higher). The monthly
+/// minimum is the add-on's Stripe subscription; this table records the
+/// per-restaurant OVERAGE the /api/cron/nabil-usage-billing cron computed for
+/// one closed calendar month (UTC) and the ONE Stripe invoice item it created
+/// for it. Unique on (restaurantId, period) + a deterministic Stripe
+/// idempotency key ⇒ a retried cron can never double-bill. A row is written
+/// for every metered month, even when nothing is owed (audit trail).
+model NabilUsageCharge {
+  id                  String     @id @default(cuid())
+  restaurantId        String
+  restaurant          Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  /// Calendar month billed, "YYYY-MM" (UTC).
+  period              String
+  /// Calls counted + billed minutes (each call rounded UP to the next minute).
+  calls               Int
+  minutes             Int
+  /// max(0, minutes × 60¢ − 24999¢) — what the invoice item is for.
+  overageCents        Int
+  /// none (nothing owed) | pending | invoiced | failed
+  status              String     @default("pending")
+  stripeInvoiceItemId String?    @unique
+  failureReason       String?
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  @@unique([restaurantId, period])
+  @@index([period, status])
 }
 
 /// One inbound call — powers the Calls & Reports dashboard (transcript,

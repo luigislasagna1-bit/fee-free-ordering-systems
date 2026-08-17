@@ -3412,7 +3412,9 @@
       },
       "campaignFallback": "Kampaň",
       "titleCampaignLocked": "Tento kód rozposiela e-mailom bežiaca kampaň Autopilot. Vypnite kampaň v Marketing → Autopilot, ak ju chcete ukončiť.",
-      "toggleFailed": "Akciu sa nepodarilo zmeniť. Skúste to znova."
+      "toggleFailed": "Akciu sa nepodarilo zmeniť. Skúste to znova.",
+      "phoneOff": "Telefón vyp.",
+      "phoneOffTip": "Akcia neplatí pre telefónne objednávky cez Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Pre pokračovanie vyberte typ promo akcie.",
@@ -3695,7 +3697,12 @@
       "hiddenCodeInfo": "Skryté akcie sa uplatnia iba vtedy, keď zákazník pri platbe zadá tento kód.",
       "vipLockedTitle": "Len VIP — pripojené k: {groups}",
       "vipLockedDesc": "Táto akcia sa automaticky uplatní len pre týchto VIP členov pri pokladni. Nikdy sa nezobrazí vo verejnom menu, banneri ani na webe — žiadny prepínač viditeľnosti to nezmení. Ak ju chcete zverejniť, najprv ju odpojte na stránke VIP skupiny.",
-      "bundleBuildInfo": "💡 Zákazníci si tento balík zostavujú z karty „Zostav si ponuku“ vo vašom menu. Pripnite ho k banneru nižšie, aby sa ľahko našiel. (Balík nemožno použiť automaticky ani odomknúť kódom.)"
+      "bundleBuildInfo": "💡 Zákazníci si tento balík zostavujú z karty „Zostav si ponuku“ vo vašom menu. Pripnite ho k banneru nižšie, aby sa ľahko našiel. (Balík nemožno použiť automaticky ani odomknúť kódom.)",
+      "phoneOrdersLabel": "Dostupné telefonicky (Nabil AI)",
+      "phoneOrdersOnSub": "Táto akcia platí pre telefónne objednávky cez Nabil AI",
+      "phoneOrdersOffSub": "Táto akcia neplatí pre telefónne objednávky",
+      "phoneOrdersHelp": "Vypnuté = akcia neplatí pre telefónne objednávky. Webové, appové a trhové objednávky nie sú dotknuté.",
+      "clientTypeMemberWarning": "Akcie pre členov vyžadujú účet — volajúci bez registrácie túto akciu neuvidia."
     },
     "customersList": {
       "heading": "Zákazníci",
@@ -4355,7 +4362,12 @@
         "viewAll": "Zobraziť všetky hovory",
         "chartPopularItems": "Najčastejšie objednávané telefonicky",
         "popularItemsCta": "Nastaviť vybrané doplnkové ponuky",
-        "popularItemsEmpty": "V tomto období zatiaľ žiadne telefonické objednávky."
+        "popularItemsEmpty": "V tomto období zatiaľ žiadne telefonické objednávky.",
+        "meterTitle": "Využitie tento mesiac",
+        "meterMinutes": "{minutes} minút využitých",
+        "meterCharge": "Aktuálne: {amount} · Odhad: {projected}",
+        "meterOver": "{minutes} minút nad zahrnuté",
+        "meterIncluded": "{included} min zahrnutých v minime {minimum}/mes. ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Hľadať telefón, meno alebo zhrnutie…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Číslo bolo odblokované",
         "errorToast": "Nepodarilo sa aktualizovať — skúste to znova.",
         "invalidPhone": "Zadajte platné telefónne číslo."
-      }
+      },
+      "setup": {
+        "title": "Nastavte svoju telefónnu linku",
+        "body": "Povedzte nám o svojej linke a Nabil bude prijímať hovory do jedného pracovného dňa. Žiadne technické nastavenie.",
+        "receivedTitle": "Žiadosť o nastavenie prijatá",
+        "receivedBody": "Náš tím nastavuje vašu linku Nabil AI. Svoj panel uvidíte tu, keď bude všetko pripravené — zvyčajne do jedného pracovného dňa.",
+        "summaryForward": "Presmerovať hovory z {currentNumber}",
+        "summaryNew": "Nové číslo (aktuálne: {currentNumber})",
+        "summaryTransfer": "Prepojenie na osobu: {transferNumber}",
+        "summaryGreeting": "Meno v pozdrave: {name}",
+        "summarySent": "Odoslané {date}",
+        "updateRequest": "Aktualizovať žiadosť",
+        "prepareHint": "Predvoľby môžete meniť, kým nebude linka aktivovaná.",
+        "currentNumberLabel": "Vaše aktuálne telefónne číslo",
+        "phoneHint": "Číslo, na ktoré dnes volajú vaši zákazníci.",
+        "modeLabel": "Ako chcete nastaviť linku?",
+        "modeForward": "Presmerovať moje číslo",
+        "modeForwardHint": "Presmerujete existujúce číslo na Nabil. Volajúci vytáčajú to isté číslo.",
+        "modeNew": "Prideľte mi nové číslo",
+        "modeNewHint": "Pridelíme nové číslo pre Nabil. Môžete ho zverejniť vedľa existujúcej linky.",
+        "transferNumberLabel": "Prepojit hovory na",
+        "transferNumberHint": "Keď volajúci požiada o osobu, Nabil prepojí hovor sem.",
+        "greetingNameLabel": "Názov reštaurácie pre pozdrav",
+        "greetingNameHint": "Ako má Nabil predstaviť vašu reštauráciu pri prijímaní hovoru.",
+        "notesLabel": "Ešte niečo (nepovinné)",
+        "submitting": "Odosielanie…",
+        "submit": "Odoslať žiadosť",
+        "cancelEdit": "Zrušiť",
+        "errorAlreadyProvisioned": "Vaša linka je už nastavená — obnovte stránku.",
+        "errorGeneric": "Niečo sa pokazilo. Skúste to znova."
+      },
+      "nowAvailable": "Teraz dostupné",
+      "availableHeading": "Nabil AI telefónne objednávky",
+      "availablePrice": "{rate} za minútu hovoru · {minimum}/mes. minimum · {included} minút zahrnutých",
+      "availableConcierge": "Náš tím nastaví linku do jedného pracovného dňa. Žiadna technická práca na vašej strane.",
+      "availableDemo": "Už platiaci člen? Vyskúšajte zadarmo na {days} dní.",
+      "subscribeCta": "Predplaťte si a nastavte"
     },
     "customerDetailPage": {
       "allCustomers": "Všetci zákazníci",
@@ -6865,7 +6913,8 @@
             "b3": "Zabezpečené a šifrované",
             "b4": "Vyrobené v Kanade"
           }
-        }
+        },
+        "nowAvailable": "Teraz dostupné"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Začať zadarmo",
       "ctaContact": "Kontaktovať obchodný tím",
-      "trialNote": "Nevyžaduje sa platobná karta. Žiadne zmluvy."
+      "trialNote": "Nevyžaduje sa platobná karta. Žiadne zmluvy.",
+      "phoneOrderingMinuteNote": "Účtované 0,60 USD/min s minimom 249,99 USD/mes. (≈ 416 zahrnutých minút). Podrobnosti na"
     },
     "faq": {
       "title": "Často kladené otázky",
@@ -7075,6 +7125,211 @@
       "b1": "Vaše skutočné menu — fotky, veľkosti & prílohy",
       "b2": "Objednajte si okamžite, presne ako zákazník",
       "b3": "Páči sa vám? Zaregistrujte sa a nechajte si ho — bez opätovného importu"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Telefonické objednávky s AI",
+        "title": "Telefón vašej pizzerie, <accent>odpovedá AI</accent>",
+        "subtitle": "Nabil AI prijíma telefonické objednávky pre vašu pizzeriu — pizze pol na pol, kombá, doručovacie zóny, prísady podľa názvu — a spracúva ich cez rovnakú pokladňu ako váš web. Vytvorené bývalými majiteľmi pizzérií, ktorí vedia, ako znie skutočný hovor.",
+        "ctaStart": "Začať",
+        "ctaSecondary": "Pozrite sa, ako to funguje",
+        "trust1": "Vytvorené pre pizzérie",
+        "trust2": "Rovnaká pokladňa ako váš web",
+        "trust3": "Nahrávky a prepisy",
+        "trust4": "US$0.60 za minútu hovoru",
+        "sampleLabel": "Príklad živého hovoru",
+        "sampleCaller": "Volajúci",
+        "sample1": "Dobrý deň, môžem si objednať s dovozom?",
+        "sample2": "Samozrejme! Rád vám pomôžem. Čo pre vás môžem dnes pripraviť?",
+        "sample3": "Veľkú pizzu, polovicu pepperoni so šampiňónmi, polovicu so zelenou paprikou a cibuľou.",
+        "sample4": "Rozumiem — veľká pizza pol na pol: pepperoni so šampiňónmi na jednej strane, zelená paprika s cibuľou na druhej. Ešte niečo?"
+      },
+      "story": {
+        "eyebrow": "Náš príbeh",
+        "title": "Vytvorené pre pizzérie, bývalými majiteľmi pizzérií",
+        "body1": "Strávili sme roky za pultom a prijímali telefonické objednávky. Vieme, čo volajúci skutočne hovoria — žiadosti o pol na pol, zmeny prísad na poslednú chvíľu, ‚rovnako ako minule'. Vytvorili sme Nabil AI, aby tieto hovory zvládalo tak, ako by sme to urobili my.",
+        "body2": "Na rozdiel od generických AI telefónnych systémov bol Nabil od prvého dňa navrhnutý okolo objednávania pizze a jedla z reštaurácií. Každá funkcia — od zostavovania komb po kontrolu doručovacích zón — existuje, pretože sme ju potrebovali v našej vlastnej prevádzke.",
+        "point1": "Navrhnuté okolo skutočnej prevádzky pizzérie",
+        "point2": "Každá objednávka prechádza vašou overenou pokladňou",
+        "point3": "Vaše menu je menu AI — nič vymyslené"
+      },
+      "how": {
+        "eyebrow": "Ako to funguje",
+        "title": "Tri kroky k telefonickým objednávkam na autopilote",
+        "step1": {
+          "title": "Pripojte svoju telefónnu linku",
+          "body": "Presmerujte existujúce číslo alebo si zaobstarajte nové. Náš tím sprevádzkuje vašu linku do jedného pracovného dňa — žiadna technická práca z vašej strany."
+        },
+        "step2": {
+          "title": "Nabil prijme hovor",
+          "body": "Nabil víta volajúcich menom vašej reštaurácie, prijíma objednávku konverzačne, potvrdí každú položku a prečíta celkovú sumu pred jej odoslaním."
+        },
+        "step3": {
+          "title": "Objednávka sa vytlačí vo vašej kuchyni",
+          "body": "Objednávka prechádza rovnakou pokladňou ako objednávka z webu. Zobrazí sa na vašom kuchynskom displeji, vytlačí sa na tlačiarni lístkov a ukáže sa na vašom admin paneli — všetko automaticky."
+        }
+      },
+      "handles": {
+        "eyebrow": "Čo zvládne",
+        "title": "Všetko, čo volajúci požadujú",
+        "subtitle": "Nabil zvládne objednávky, ktoré zvládne váš tím — od jednoduchých pizz s jednou prísadou po zložité kombá pol na pol s doručením.",
+        "halfHalf": {
+          "title": "Pizze pol na pol",
+          "body": "Volajúci si môžu objednať rôzne prísady na každú polovicu a Nabil potvrdí každú stranu pred odoslaním objednávky."
+        },
+        "combos": {
+          "title": "Kombá a jedálne ponuky",
+          "body": "Nabil prevedie volajúcich výberom komba — vyberte si pizzu, prílohu, nápoj — rovnako ako na vašom webe."
+        },
+        "delivery": {
+          "title": "Doručenie s kontrolou zóny",
+          "body": "Vezme adresu doručenia, overí že je vo vašej zóne, oznámi poplatok a odošle objednávku — žiadne hádanie."
+        },
+        "upsells": {
+          "title": "Inteligentný upselling",
+          "body": "Navrhuje položky, ktoré vyberiete, v správnom momente konverzácie — nápoj k pizzi, dezert pred platbou."
+        },
+        "faq": {
+          "title": "Odpovedá na časté otázky",
+          "body": "Otváracie hodiny, poloha, parkovanie, alergény — Nabil odpovedá na FAQ vašej prevádzky, aby to váš personál nemusel."
+        },
+        "returning": {
+          "title": "Rozpoznáva vracajúcich sa volajúcich",
+          "body": "Zdraví stálych zákazníkov menom a pamätá si ich históriu objednávok, takže opakované objednávky sú rýchle."
+        },
+        "transfer": {
+          "title": "Prepojí na osobu",
+          "body": "Keď volajúci žiada o spojenie s človekom alebo má požiadavku, ktorú Nabil nezvládne, hovor je prepojený na číslo vašej prevádzky."
+        },
+        "numbers": {
+          "title": "Vyslovuje čísla prirodzene",
+          "body": "Telefónne čísla, adresy, ceny a časy sa vyslovujú slovami — 'šesť štyridsaťsedem' namiesto '647' — aby volajúci vždy rozumel."
+        },
+        "hours": {
+          "title": "Pozná vaše otváracie hodiny",
+          "body": "Nabil vie, kedy máte otvorené, kedy zatvorené a aký je váš sviatočný rozvrh — volajúci dostanú presné informácie zakaždým."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Prečo je presný",
+        "title": "Objednávka je správna, pretože systém nepripustí chybu",
+        "body": "Nabil nehádže. Každá položka sa overuje oproti vášmu skutočnému menu, každá cena je vypočítaná vašou pokladňou a každý modifikátor sa potvrdí s volajúcim pred zadaním objednávky.",
+        "cart": {
+          "title": "Košík na strane servera",
+          "body": "Objednávka sa vytvára na serveri, nie v pamäti AI. Ceny, pravidlá a dostupnosť vášho menu sú jediným zdrojom pravdy."
+        },
+        "asks": {
+          "title": "Pýta sa, nikdy nepredpokladá",
+          "body": "Keď je niečo nejasné — veľkosť, umiestnenie prílohy, výber cesta — Nabil sa spýta volajúceho namiesto hádania."
+        },
+        "readback": {
+          "title": "Kompletné prečítanie",
+          "body": "Pred zadaním objednávky Nabil prečíta každú položku, modifikátor a celkovú sumu — volajúci potvrdí, kým sa čokoľvek odošle do kuchyne."
+        },
+        "alarm": {
+          "title": "Alarm: uvedená cena = účtovaná cena",
+          "body": "Ak celková suma uvedená AI nezodpovedá tomu, čo vypočíta pokladňa, systém to označí pred zadaním objednávky."
+        },
+        "timeline": {
+          "title": "Časová os pre každý hovor",
+          "body": "Každý hovor má podrobnú časovú os zobrazujúcu každé volanie nástroja, zmenu košíka a rozhodnutie — aby ste presne videli, čo sa stalo."
+        },
+        "tests": {
+          "title": "Automatická testovacia sada",
+          "body": "Simulačný systém spúšťa skutočné scenáre objednávok s každou aktualizáciou — pizze pol na pol, kombá, okrajové prípady — predtým, než sa to dostane na vašu telefónnu linku."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Váš panel",
+        "title": "Pozrite si každý hovor, vypočujte si každé slovo",
+        "subtitle": "Nahrávky, prepisy, sledovanie tržieb a časová os pre každý hovor — všetko, čo potrebujete vedieť o tom, čo Nabil robí pre vašu reštauráciu.",
+        "shotOverviewAlt": "Prehľad panelu Nabil AI zobrazujúci objem hovorov, tržby a konverzné metriky",
+        "shotCallsAlt": "Zoznam hovorov zobrazujúci nedávne telefonické objednávky s výsledkami a trvaním",
+        "shotDetailAlt": "Zobrazenie detailu hovoru s prepisom, časovou osou a súhrnom objednávky",
+        "shotSettingsAlt": "Panel nastavení Nabil AI s konfiguráciou pozdravu, upselling a FAQ",
+        "shotReportAlt": "Dialóg na nahlásenie hovoru na označenie problémov tímu Fee Free",
+        "overview": {
+          "title": "Prehľad tržieb",
+          "body": "Pozrite sa, koľko tržieb Nabil prináša, s grafmi hovorov, objednávok a konverzných pomerov."
+        },
+        "calls": {
+          "title": "História hovorov",
+          "body": "Prechádzajte každý hovor s jeho výsledkom, trvaním, nahrávkou a prepisom."
+        },
+        "detail": {
+          "title": "Časová os hovoru",
+          "body": "Časová os sekundu po sekunde toho, čo sa počas hovoru stalo — každé volanie nástroja, zmena košíka a vyslovené slovo."
+        },
+        "report": {
+          "title": "Nahlásiť hovor",
+          "body": "Označte akýkoľvek hovor, ktorý neprebehol správne. Náš tím ho preskúma a zlepší spracovanie Nabilom."
+        },
+        "settings": {
+          "title": "Plná kontrola",
+          "body": "Nakonfigurujte Nabilove uvítanie, návrhy upsellov, odpovede FAQ, blokovaných volajúcich a nastavenia platby odkazom."
+        },
+        "roi": {
+          "title": "Sledovanie ROI",
+          "body": "Sledujte tržby za minútu hovoru, aby ste presne vedeli, koľko Nabil zarába pre vašu prevádzku."
+        }
+      },
+      "same": {
+        "eyebrow": "Rovnaký systém, rovnaká pokladňa",
+        "title": "Telefónna objednávka je objednávka z webu",
+        "body": "Nabil nepoužíva samostatný objednávkový systém. Každá telefónna objednávka prechádza rovnakou pokladňou, menu, cenami a kuchynským displejom ako vaše webové objednávky. Jeden systém, jeden zdroj pravdy.",
+        "bullet1": "Rovnaké menu, rovnaké ceny, rovnaké modifikátory",
+        "bullet2": "Rovnaký kuchynský displej a tlačiareň účteniek",
+        "bullet3": "Rovnaké potvrdenie objednávky a sledovanie",
+        "bullet4": "Rovnaký administrátorský panel a reporty",
+        "frameAlt": "Kuchynský displej zobrazujúci telefónnu objednávku vedľa webových objednávok"
+      },
+      "languages": {
+        "eyebrow": "Viacjazyčný",
+        "title": "Nabil hovorí jazykom vašich zákazníkov",
+        "body": "Nabil automaticky rozpozná jazyk volajúceho a odpovie v rovnakom jazyku. Vaše položky menu, popisy a modifikátory sú podávané v jazyku volajúceho — rovnaké preklady ako na vašom webe."
+      },
+      "pricing": {
+        "eyebrow": "Jednoduché ceny",
+        "title": "Jedna cena. Žiadne prekvapenia.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "za minútu hovoru",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minimum mesačne",
+        "rule": "Platíte vyššiu čiastku: vaše minúty hovorov po 0,60 USD, alebo mesačné minimum 249,99 USD. Väčšina reštaurácií sa zmestí do 416 zahrnutých minút.",
+        "demo": "Už platiaci člen Fee Free? Vyskúšajte Nabil zadarmo na 7 dní — bez záväzku.",
+        "include1": "Neobmedzené hovory",
+        "include2": "Nahrávky a prepisy",
+        "include3": "Ovládací panel a analýzy",
+        "include4": "Asistované nastavenie linky",
+        "include5": "Priebežné aktualizácie a vylepšenia",
+        "cta": "Začať",
+        "note": "Ceny v amerických dolároch. Mesačná fakturácia cez Stripe. Zrušte kedykoľvek."
+      },
+      "faq": {
+        "title": "Často kladené otázky",
+        "q1": "Ako Nabil prijíma objednávku?",
+        "a1": "Nabil prijme váš telefonát, pozdraví volajúceho menom vašej reštaurácie, konverzačne prijme objednávku, potvrdí každú položku a celkovú sumu a zadá ju cez vašu existujúcu pokladňu. Objednávka sa zobrazí na kuchynskom displeji a automaticky vytlačí.",
+        "q2": "Vie volajúci, že hovorí s AI?",
+        "a2": "Nabil znie prirodzene a konverzačne, ale veríme v transparentnosť — volajúci si môžu vždy vyžiadať človeka a hovor je okamžite prepojený.",
+        "q3": "Čo ak Nabil urobí chybu?",
+        "a3": "Každý hovor má nahrávku, prepis a podrobnú časovú os. Môžete označiť akýkoľvek hovor a náš tím to prešetrí. Košík na strane servera a potvrdenie spätným prečítaním minimalizujú chyby.",
+        "q4": "Zvládne Nabil pizzu pol na pol?",
+        "a4": "Áno — pizze pol na pol s rôznymi prílohami na každej strane sú kľúčovou funkciou. Nabil potvrdí každú stranu a zostaví objednávku presne ako vaša webová pokladňa.",
+        "q5": "Ako pripojím svoju telefónnu linku?",
+        "a5": "Po predplatení nám poviete číslo a či ho chcete presmerovať na Nabil alebo dostať nové. Náš tím všetko nastaví do jedného pracovného dňa — bez technickej práce.",
+        "q6": "Čo sa deje mimo otváracích hodín?",
+        "a6": "Nabil pozná vaše otváracie hodiny a sviatky. Mimo prevádzkový čas informuje volajúceho o znovuotvorení a môže ponúknuť plánovanú objednávku, ak je funkcia povolená.",
+        "q7": "Ako sa počíta fakturácia?",
+        "a7": "Platíte 0,60 USD za minútu hovoru alebo mesačné minimum 249,99 USD — čo je vyššie. Minimum zahŕňa asi 416 minút. Každý hovor sa zaokrúhľuje nahor. Sledujte spotrebu v reálnom čase.",
+        "q8": "Môžem zrušiť kedykoľvek?",
+        "a8": "Áno. Nabil je fakturovaný mesačne cez Stripe bez dlhodobej zmluvy. Zrušte z panelu kedykoľvek a vaša linka zostane aktívna do konca fakturačného obdobia."
+      },
+      "finalCta": {
+        "title": "Pripravení nechať Nabil odpovedať na telefón?",
+        "body": "Nastavenie trvá jeden pracovný deň. Začnite prijímať telefónne objednávky cez svoj systém — bez ďalšieho hardvéru, personálu alebo stresu.",
+        "primary": "Začať",
+        "secondary": "Zobraziť všetky ceny"
+      }
     }
   },
   "addressBook": {

@@ -468,6 +468,70 @@ export async function notifyNabilCallReported(reportId: string): Promise<void> {
   });
 }
 
+/* ── Nabil AI concierge line setup (on sale, 2026-08-17) ─────────────────── */
+
+/**
+ * A subscribed restaurant filed (or re-filed) its Nabil AI line-setup request —
+ * the platform must provision the line BY HAND within one business day. In-app
+ * bell + email to superadmins and support@, with the whole intake in the mail so
+ * the operator can act from the inbox. The numbers are the restaurant's own
+ * business lines (not customer PII). Best-effort; never throws.
+ */
+export async function notifyNabilSetupRequested(requestId: string): Promise<void> {
+  let req: {
+    id: string;
+    status: string;
+    payload: unknown;
+    createdAt: Date;
+    updatedAt: Date;
+    restaurant: { id: string; name: string; slug: string; email: string | null; phone: string | null; timezone: string | null };
+  } | null = null;
+  try {
+    req = await prisma.voiceSetupRequest.findUnique({
+      where: { id: requestId },
+      select: {
+        id: true,
+        status: true,
+        payload: true,
+        createdAt: true,
+        updatedAt: true,
+        restaurant: { select: { id: true, name: true, slug: true, email: true, phone: true, timezone: true } },
+      },
+    });
+  } catch (e) {
+    console.error("[platform-notifications] setup-request lookup failed", e);
+    return;
+  }
+  if (!req) return;
+  const { readVoiceSetupPayload } = await import("@/lib/voice/setup-request");
+  const p = readVoiceSetupPayload(req.payload);
+  const refiled = req.updatedAt.getTime() - req.createdAt.getTime() > 60_000;
+  const modeText = p?.mode === "forward" ? "FORWARD their existing number to Nabil" : "a NEW Nabil number (they will advertise it / forward to it)";
+  const sa = await superadminAudience();
+  await dispatch(sa, {
+    kind: "nabil_setup_requested",
+    inAppTitle: `${refiled ? "Updated" : "New"} Nabil AI line setup: ${req.restaurant.name}`,
+    inAppBody: p ? `${modeText} · callers dial ${p.currentNumber} · transfer to ${p.transferNumber}` : null,
+    link: "/superadmin/settings/nabil",
+    emailSubject: `${refiled ? "UPDATED — " : ""}Nabil AI line setup requested by ${req.restaurant.name} (provision within 1 business day)`,
+    emailTitle: refiled ? "A restaurant updated its Nabil AI line-setup request" : "A restaurant subscribed to Nabil AI and needs its line set up",
+    emailSubtitle: `${req.restaurant.name} (${req.restaurant.slug})`,
+    emailBody:
+      `Concierge activation — please provision this line by hand within one business day, then mark the request DONE on Superadmin › Nabil Phone Lines (a VoiceNumber row is what flips their dashboard from "we're setting up your line" to live).\n\n` +
+      (p
+        ? `Wants: ${modeText}\n` +
+          `Number callers dial today: ${p.currentNumber}\n` +
+          `Transfer-to-staff number: ${p.transferNumber}\n` +
+          `Greeting name: “${p.greetingName}”\n` +
+          (p.notes ? `Notes: “${p.notes}”\n` : "") +
+          (p.submittedBy ? `Filed by: ${p.submittedBy}\n` : "")
+        : "(payload unreadable — open the queue)\n") +
+      `\nRestaurant contact: ${req.restaurant.email ?? "—"} · ${req.restaurant.phone ?? "—"} · tz ${req.restaurant.timezone ?? "—"}\n` +
+      `Restaurant id: ${req.restaurant.id}`,
+    emailCtaLabel: "Open the Nabil Phone Lines queue",
+  });
+}
+
 /**
  * The platform replied on (or changed the status of) a restaurant's call
  * report — email the person who filed it so they know to look. Their own

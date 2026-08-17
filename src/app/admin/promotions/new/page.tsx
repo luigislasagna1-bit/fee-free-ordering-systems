@@ -14,7 +14,7 @@ export default async function NewPromotionPage() {
 
   const restaurantId = user.restaurantId;
 
-  const [restaurant, categories, menuItems, deliveryZones, hasAdvanced, onMarketplace] =
+  const [restaurant, categories, menuItems, deliveryZones, hasAdvanced, onMarketplace, phoneOrderingEnabled] =
     await Promise.all([
       prisma.restaurant.findUnique({
         where: { id: restaurantId },
@@ -45,6 +45,9 @@ export default async function NewPromotionPage() {
       }),
       hasFeature(restaurantId, "advanced_promo_types"),
       isOnMarketplace(restaurantId),
+      // "Available by phone (Nabil AI)" switch — shown only to stores entitled
+      // to Nabil AI (feature-gated visibility). Luigi A64(a), 2026-08-17.
+      hasFeature(restaurantId, "phone_ordering_agent"),
     ]);
 
   // Accepted payment methods (union across order types — handles both the
@@ -64,6 +67,7 @@ export default async function NewPromotionPage() {
       deliveryZones={deliveryZones}
       currencySymbol={currencySymbol(restaurant?.currency)}
       isOnMarketplace={onMarketplace}
+      phoneOrderingEnabled={phoneOrderingEnabled}
       // Feature-gated visibility (Luigi 2026-07-03): the Grant Reward Dollars
       // type only shows when the Reward Dollars program is ON.
       rewardsEnabled={!!(restaurant as any)?.rewardsEnabled}

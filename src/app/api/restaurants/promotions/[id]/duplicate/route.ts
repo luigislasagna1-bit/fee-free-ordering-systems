@@ -76,6 +76,8 @@ export async function POST(_req: Request, { params }: { params: Promise<{ id: st
       // otherwise reject the insert.
       couponCode: null,
       scope: source.scope,
+      // "Available by phone (Nabil AI)" is a restriction — copied verbatim.
+      phoneOrders: source.phoneOrders,
       usableHourStart: source.usableHourStart,
       usableHourEnd: source.usableHourEnd,
       showOnBanner: source.showOnBanner,

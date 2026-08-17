@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Kampaania",
       "titleCampaignLocked": "Seda koodi saadab e-postiga töötav Autopilot kampaania. Selle tagasivõtmiseks lülitage kampaania välja jaotises Turundus → Autopilot.",
-      "toggleFailed": "Pakkumist ei õnnestunud muuta. Proovige uuesti."
+      "toggleFailed": "Pakkumist ei õnnestunud muuta. Proovige uuesti.",
+      "phoneOff": "Telefon väljas",
+      "phoneOffTip": "Pakkumine ei kehti Nabil AI telefonitellimustele"
     },
     "promoWizard": {
       "errorPickType": "Jätkamiseks vali kampaania tüüp.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Peidetud pakkumised rakenduvad ainult siis, kui klient sisestab selle koodi maksmisel.",
       "vipLockedTitle": "Ainult VIP — seotud: {groups}",
       "vipLockedDesc": "See kampaania rakendub automaatselt ainult neile VIP-liikmetele kassas. See ei ilmu kunagi avalikus menüüs, bänneril ega veebilehel — ükski nähtavuse lüliti seda ei muuda. Avalikuks tegemiseks eemaldage see esmalt VIP-rühmade lehel.",
-      "bundleBuildInfo": "💡 Kliendid koostavad selle paketi menüü kaardilt „Koosta oma pakkumine”. Kinnita see alloleva banneri külge, et seda oleks lihtne leida. (Paketti ei saa automaatselt rakendada ega koodiga avada.)"
+      "bundleBuildInfo": "💡 Kliendid koostavad selle paketi menüü kaardilt „Koosta oma pakkumine”. Kinnita see alloleva banneri külge, et seda oleks lihtne leida. (Paketti ei saa automaatselt rakendada ega koodiga avada.)",
+      "phoneOrdersLabel": "Saadaval telefoni teel (Nabil AI)",
+      "phoneOrdersOnSub": "See pakkumine kehtib Nabil AI telefonitellimustele",
+      "phoneOrdersOffSub": "See pakkumine ei kehti telefonitellimustele",
+      "phoneOrdersHelp": "Välja lülitatud = pakkumine ei kehti telefonitellimustele. Veebi-, rakenduse- ja turu tellimused ei muutu.",
+      "clientTypeMemberWarning": "Liikmete pakkumised nõuavad kontot — helistajad ilma kontota ei näe seda pakkumist."
     },
     "customersList": {
       "heading": "Kliendid",
@@ -4355,7 +4362,12 @@
         "viewAll": "Vaata kõiki kõnesid",
         "chartPopularItems": "Telefoni teel enim tellitud",
         "popularItemsCta": "Määra esiletõstetud lisamüügid",
-        "popularItemsEmpty": "Selles ajavahemikus pole veel telefonitellimusi."
+        "popularItemsEmpty": "Selles ajavahemikus pole veel telefonitellimusi.",
+        "meterTitle": "Kasutus sel kuul",
+        "meterMinutes": "{minutes} minutit kasutatud",
+        "meterCharge": "Praegune: {amount} · Prognoos: {projected}",
+        "meterOver": "{minutes} minutit üle kaasaarvatu",
+        "meterIncluded": "{included} min kaasas {minimum}/kuu miinimumis ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Otsi telefoni, nime või kokkuvõtte järgi…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Numbri blokeering eemaldatud",
         "errorToast": "Uuendamine ebaõnnestus — palun proovi uuesti.",
         "invalidPhone": "Sisestage kehtiv telefoninumber."
-      }
+      },
+      "setup": {
+        "title": "Seadistage oma telefoniliin",
+        "body": "Rääkige meile oma telefoniliinist ja Nabil vastab kõnedele ühe tööpäeva jooksul. Tehnilist seadistust pole vaja.",
+        "receivedTitle": "Seadistustaotlus vastu võetud",
+        "receivedBody": "Meie meeskond seadistab teie Nabil AI liini. Näete oma juhtpaneeli siin, kui see on valmis — tavaliselt ühe tööpäeva jooksul.",
+        "summaryForward": "Suuna kõned numbrilt {currentNumber}",
+        "summaryNew": "Uus number (praegune: {currentNumber})",
+        "summaryTransfer": "Ümbersuunamine isikule: {transferNumber}",
+        "summaryGreeting": "Tervitusnimi: {name}",
+        "summarySent": "Esitatud {date}",
+        "updateRequest": "Uuenda taotlust",
+        "prepareHint": "Saate eelistusi uuendada, kuni liin on seadistatud.",
+        "currentNumberLabel": "Teie praegune telefoninumber",
+        "phoneHint": "Number, kuhu teie kliendid praegu helistavad.",
+        "modeLabel": "Kuidas soovite liini seadistada?",
+        "modeForward": "Suuna mu number",
+        "modeForwardHint": "Suunate oma olemasoleva numbri Nabilile. Helistajad valivad sama numbri.",
+        "modeNew": "Andke mulle uus number",
+        "modeNewHint": "Eraldame uue numbri Nabilile. Saate selle avaldada koos olemasoleva liiniga.",
+        "transferNumberLabel": "Suuna kõned numbrile",
+        "transferNumberHint": "Kui helistaja küsib inimest, suunab Nabil kõne siia.",
+        "greetingNameLabel": "Restorani nimi tervituses",
+        "greetingNameHint": "Kuidas Nabil peaks teie restorani telefonitsi tutvustama.",
+        "notesLabel": "Midagi muud (valikuline)",
+        "submitting": "Saatmine…",
+        "submit": "Esita taotlus",
+        "cancelEdit": "Tühista",
+        "errorAlreadyProvisioned": "Teie liin on juba seadistatud — värskendage lehte.",
+        "errorGeneric": "Midagi läks valesti. Proovige uuesti."
+      },
+      "nowAvailable": "Nüüd saadaval",
+      "availableHeading": "Nabil AI telefonitellimused",
+      "availablePrice": "{rate} kõneminuti kohta · {minimum}/kuu miinimum · {included} minutit kaasas",
+      "availableConcierge": "Meie meeskond seadistab teie liini ühe tööpäeva jooksul. Tehnilist tööd teie poolt pole vaja.",
+      "availableDemo": "Juba maksev liige? Proovige tasuta {days} päeva.",
+      "subscribeCta": "Telli ja seadista"
     },
     "customerDetailPage": {
       "allCustomers": "Kõik kliendid",
@@ -6865,7 +6913,8 @@
             "b3": "Turvaline ja krüpteeritud",
             "b4": "Loodud Kanadas"
           }
-        }
+        },
+        "nowAvailable": "Nüüd saadaval"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Alusta tasuta",
       "ctaContact": "Võta müügiga ühendust",
-      "trialNote": "Krediitkaarti ei nõuta. Lepinguid pole."
+      "trialNote": "Krediitkaarti ei nõuta. Lepinguid pole.",
+      "phoneOrderingMinuteNote": "Arveldus 0,60 USD/min, miinimum 249,99 USD/kuu (≈ 416 sisalduvat minutit). Üksikasjad"
     },
     "faq": {
       "title": "Korduma kippuvad küsimused",
@@ -7075,6 +7125,211 @@
       "b1": "Sinu päris menüü — fotod, suurused ja lisandid",
       "b2": "Telli sealt kohe, just nagu klient",
       "b3": "Meeldib? Registreeru ja jäta see alles — uut importi pole vaja"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI telefonitellimused",
+        "title": "Teie pitsarestorani telefon, <accent>vastab AI</accent>",
+        "subtitle": "Nabil AI võtab vastu telefonitellimusi teie pitsarestorani jaoks — pool-pool-pitsad, kombod, tarnepiirkonnad, lisandid nime järgi — ja teeb need läbi sama kassa nagu teie veebisait. Loodud endiste pitsarestoranide omanike poolt, kes teavad, kuidas päris kõne kõlab.",
+        "ctaStart": "Alustage",
+        "ctaSecondary": "Vaadake, kuidas see toimib",
+        "trust1": "Loodud pitsarestoranidele",
+        "trust2": "Sama kassa nagu teie veebisaidil",
+        "trust3": "Salvestised ja üleskirjutused",
+        "trust4": "US$0.60 kõneminuti kohta",
+        "sampleLabel": "Näide reaalajas kõnest",
+        "sampleCaller": "Helistaja",
+        "sample1": "Tere, kas ma saan esitada tellimuse kohaletoimetamisega?",
+        "sample2": "Muidugi! Aitan hea meelega. Mida saan teile täna pakkuda?",
+        "sample3": "Suur pitsa, pool pepperoni ja seentega, pool rohelise paprika ja sibulaga.",
+        "sample4": "Selge — suur pool-pool pitsa: pepperoni ja seened ühel pool, roheline paprika ja sibul teisel. Midagi veel?"
+      },
+      "story": {
+        "eyebrow": "Meie lugu",
+        "title": "Loodud pitsarestoranidele, endiste pitsarestoranide omanike poolt",
+        "body1": "Veetsime aastaid leti taga telefonitellimusi vastu võttes. Teame, mida helistajad tegelikult ütlevad — pool-pool soovid, viimasel hetkel lisandite muutmised, 'sama mis eelmine kord'. Ehitasime Nabil AI, et neid kõnesid käsitleda nii, nagu meie teeksime.",
+        "body2": "Erinevalt üldistest tehisintellekti telefonisüsteemidest kujundati Nabil esimesest päevast pitsa- ja restoranitellimuste ümber. Iga funktsioon — kombode koostamisest tarnepiirkondade kontrollimiseni — on olemas, sest vajasime seda oma poes.",
+        "point1": "Loodud päris pitsarestorani tegevuste ümber",
+        "point2": "Iga tellimus läbib teie kontrollitud kassa",
+        "point3": "Teie menüü on tehisintellekti menüü — midagi pole välja mõeldud"
+      },
+      "how": {
+        "eyebrow": "Kuidas see toimib",
+        "title": "Kolm sammu telefonitellimusteni autopiloodil",
+        "step1": {
+          "title": "Ühendage oma telefoniliin",
+          "body": "Suunake oma olemasolev number või hankige uus. Meie meeskond seadistab teie liini ühe tööpäeva jooksul — teie poolt pole vaja tehnilist tööd teha."
+        },
+        "step2": {
+          "title": "Nabil vastab kõnele",
+          "body": "Nabil tervitab helistajaid teie restorani nimega, võtab nende tellimuse vestluslikult vastu, kinnitab iga toote ja loeb kogusumma ette enne tellimuse esitamist."
+        },
+        "step3": {
+          "title": "Tellimus prinditakse teie köögis välja",
+          "body": "Tellimus läbib sama kassa nagu veebisaidi tellimus. See ilmub teie köögiekraanile, prinditakse tšekiprinteril ja kuvatakse teie halduspaneelil — kõik automaatselt."
+        }
+      },
+      "handles": {
+        "eyebrow": "Mida see teeb",
+        "title": "Kõik, mida teie helistajad küsivad",
+        "subtitle": "Nabil tegeleb tellimustega, millega teie meeskond tegeleb — lihtsatest ühe lisandiga pitsadest keeruliste pooleks-pooleks kombodeni kättetoimetamisega.",
+        "halfHalf": {
+          "title": "Pooleks-pooleks pitsad",
+          "body": "Helistajad saavad tellida erinevaid lisandeid igale poolele ja Nabil kinnitab iga poole enne tellimuse esitamist."
+        },
+        "combos": {
+          "title": "Kombod ja sooduspakkumised",
+          "body": "Nabil juhendab helistajaid kombovalikutes — valige oma pitsa, lisand, jook — täpselt nagu teie veebisaidil."
+        },
+        "delivery": {
+          "title": "Kohaletoimetamine tsoonikontrolliga",
+          "body": "Võtab tarneaadressi, kontrollib kas see on teie tsoonis, ütleb tasu ja teeb tellimuse — ilma oletamisteta."
+        },
+        "upsells": {
+          "title": "Nutikas lisamüük",
+          "body": "Pakub teie valitud tooteid vestluse õigel hetkel — jooki pitsa juurde, magustoitu enne maksmist."
+        },
+        "faq": {
+          "title": "Vastab levinud küsimustele",
+          "body": "Lahtiolekuajad, asukoht, parkimine, allergeenid — Nabil vastab teie poe KKK-le, et teie personal ei peaks seda tegema."
+        },
+        "returning": {
+          "title": "Tunneb ära tagasitulevad helistajad",
+          "body": "Tervitab püsikliente nimepidi ja mäletab nende tellimuste ajalugu, seega on korduvtellimused kiired."
+        },
+        "transfer": {
+          "title": "Suunab inimesele edasi",
+          "body": "Kui helistaja soovib inimesega rääkida või tal on päring, mida Nabil ei saa käsitleda, suunatakse kõne teie poe numbrile."
+        },
+        "numbers": {
+          "title": "Hääldab numbreid loomulikult",
+          "body": "Telefoninumbreid, aadresse, hindu ja kellaaegu öeldakse sõnadega — 'kuus nelikümmend seitse' mitte '647' — et helistaja alati aru saaks."
+        },
+        "hours": {
+          "title": "Teab teie lahtiolekuaegu",
+          "body": "Nabil teab, millal olete avatud, millal suletud ja teie pühade ajakava — helistajad saavad iga kord täpseid andmeid."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Miks see on täpne",
+        "title": "Tellimus on õige, sest süsteem ei lase sel valesti olla",
+        "body": "Nabil ei arva. Iga toode valideeritakse teie tegeliku menüü suhtes, iga hind arvutatakse teie kassas ja iga kohandus kinnitatakse helistajaga enne tellimuse esitamist.",
+        "cart": {
+          "title": "Serveripoolne ostukorv",
+          "body": "Tellimus ehitatakse serveris, mitte tehisintellekti mälus. Teie menüü hinnad, reeglid ja saadavus on ainus tõeallikas."
+        },
+        "asks": {
+          "title": "Küsib, ei eelda kunagi",
+          "body": "Kui midagi on ebaselge — suurus, lisandi paigutus, tainavlik — küsib Nabil helistajalt, selle asemel et arvata."
+        },
+        "readback": {
+          "title": "Täielik taasesitus",
+          "body": "Enne tellimuse esitamist loeb Nabil ette iga toote, kohanduse ja kogusumma — helistaja kinnitab enne, kui midagi kööki saadetakse."
+        },
+        "alarm": {
+          "title": "Alarm: öeldud = arveldatud hind",
+          "body": "Kui tehisintellekti öeldud summa ei ühti kassa arvutusega, märgib süsteem selle enne tellimuse esitamist."
+        },
+        "timeline": {
+          "title": "Kõnepõhine ajajoon",
+          "body": "Igal kõnel on üksikasjalik ajajoon, mis näitab iga tööriistakutset, ostukorvi muudatust ja otsust — nii et näete täpselt, mis toimus."
+        },
+        "tests": {
+          "title": "Automatiseeritud testkomplekt",
+          "body": "Simulatsioonisüsteem käitab iga värskenduse korral reaalseid tellimisstsenaariumeid — pool-pool pitsad, kombinatsioonid, äärejuhtumid — enne kui see jõuab teie telefoniliinile."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Teie juhtpaneel",
+        "title": "Vaadake iga kõnet, kuulge iga sõna",
+        "subtitle": "Salvestised, transkriptsioonid, tulu jälgimine ja kõnepõhine ajajoon — kõik, mida peate teadma, mida Nabil teie restorani heaks teeb.",
+        "shotOverviewAlt": "Nabil AI juhtpaneeli ülevaade kõnemahtude, tulude ja konversioonimõõdikutega",
+        "shotCallsAlt": "Kõnede loend, mis näitab hiljutisi telefonitellimusi koos tulemuste ja kestustega",
+        "shotDetailAlt": "Kõne üksikasjalik vaade transkriptsiooni, ajajoonel ja tellimuse kokkuvõttega",
+        "shotSettingsAlt": "Nabil AI seadistuspaneel tervituse, lisamüügi ja KKK konfiguratsiooniga",
+        "shotReportAlt": "Kõne teavitamise dialoog probleemide märkimiseks Fee Free meeskonnale",
+        "overview": {
+          "title": "Tulude ülevaade",
+          "body": "Vaadake, kui palju tulu Nabil toob, koos graafikutega kõnede, tellimuste ja konversioonimäärade kohta."
+        },
+        "calls": {
+          "title": "Kõneajalugu",
+          "body": "Sirvige iga kõnet selle tulemuse, kestuse, salvestuse ja transkriptsiooniga."
+        },
+        "detail": {
+          "title": "Kõne ajajoon",
+          "body": "Sekund-sekundilt ajajoon sellest, mis kõne ajal toimus — iga tööriistakutse, ostukorvi muudatus ja öeldud sõna."
+        },
+        "report": {
+          "title": "Teavita kõnest",
+          "body": "Märkige iga kõne, mis ei läinud hästi. Meie meeskond vaatab selle üle ja parandab Nabili käsitlust."
+        },
+        "settings": {
+          "title": "Täielik kontroll",
+          "body": "Seadistage Nabili tervitus, lisamüügi ettepanekud, KKK vastused, blokeeritud helistajad ja lingiga maksmise seaded."
+        },
+        "roi": {
+          "title": "ROI jälgimine",
+          "body": "Jälgige tulu kõneminuti kohta, et teaksite täpselt, mida Nabil teie poele teenib."
+        }
+      },
+      "same": {
+        "eyebrow": "Sama süsteem, sama kassa",
+        "title": "Telefonitellimus on veebitellimus",
+        "body": "Nabil ei kasuta eraldi tellimussüsteemi. Iga telefonitellimus läbib sama kassa, menüü, hinnad ja kööginäidu nagu teie veebitellimused. Üks süsteem, üks tõeallikas.",
+        "bullet1": "Sama menüü, samad hinnad, samad lisavalikud",
+        "bullet2": "Sama kööginäit ja piletprinter",
+        "bullet3": "Sama tellimuse kinnitus ja jälgimine",
+        "bullet4": "Sama halduspaneel ja aruanded",
+        "frameAlt": "Kööginäit telefonitellimuse ja veebitellimustega"
+      },
+      "languages": {
+        "eyebrow": "Mitmekeelne",
+        "title": "Nabil räägib teie helistajate keeles",
+        "body": "Nabil tuvastab helistaja keele automaatselt ja vastab samas keeles. Teie menüüelemendid, kirjeldused ja lisavalikud pakutakse helistaja keeles — samad tõlked, mida kasutab teie veebisait."
+      },
+      "pricing": {
+        "eyebrow": "Lihtne hinnastik",
+        "title": "Üks hind. Üllatusi pole.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "kõneminuti kohta",
+        "minimum": "249,99 USD",
+        "minimumLabel": "miinimum kuus",
+        "rule": "Maksate suurema summa: teie kõneminutid á 0,60 USD, või kuumiinimum 249,99 USD. Enamik restorane jääb kaasaarvatud 416 minuti piiresse.",
+        "demo": "Juba maksev Fee Free liige? Proovige Nabili tasuta 7 päeva — ilma kohustuseta.",
+        "include1": "Piiramatult kõnesid",
+        "include2": "Salvestised ja ärakirjad",
+        "include3": "Juhtpaneel ja analüütika",
+        "include4": "Abistatud liini seadistamine",
+        "include5": "Pidevad uuendused ja täiustused",
+        "cta": "Alusta",
+        "note": "Hinnad on USA dollarites. Igakuine arveldus Stripe'i kaudu. Tühistage igal ajal."
+      },
+      "faq": {
+        "title": "Korduma kippuvad küsimused",
+        "q1": "Kuidas Nabil tellimuse vastu võtab?",
+        "a1": "Nabil vastab teie telefoniliinile, tervitab helistajat teie restorani nimega, võtab tellimuse vastu vestluslikult, kinnitab iga kauba ja kogusumma ning esitab selle teie olemasoleva kassa kaudu. Tellimus ilmub kööginäidule ja trükitakse automaatselt.",
+        "q2": "Kas helistaja teab, et räägib tehisintellektiga?",
+        "a2": "Nabil kõlab loomulikult ja vestluslikult, kuid usume läbipaistvusse — helistajad saavad alati paluda inimest ja kõne suunatakse kohe ümber.",
+        "q3": "Mis siis, kui Nabil teeb vea?",
+        "a3": "Igal kõnel on salvestis, ärakiri ja üksikasjalik ajatelg. Saate märgistada mis tahes kõne ja meie meeskond uurib. Serveripoolne ostukorv ja tagasilugemise kinnitus minimeerivad vigu.",
+        "q4": "Kas Nabil saab hakkama pool-pool pitsa tellimustega?",
+        "a4": "Jah — pool-pool pitsad erinevate lisanditega kummalgi poolel on põhifunktsioon. Nabil kinnitab kummalgi poole ja koostab tellimuse täpselt nagu teie veebikassa.",
+        "q5": "Kuidas ühendada oma telefoniliin?",
+        "a5": "Pärast tellimist öelge meile oma number ja kas soovite selle Nabilile suunata või uue saada. Meie meeskond seadistab kõik ühe tööpäeva jooksul — tehnilist tööd pole vaja.",
+        "q6": "Mis juhtub väljaspool tööaega?",
+        "a6": "Nabil teab teie lahtiolekuaegu ja pühade graafikut. Väljaspool tööaega teavitab helistajat, millal uuesti avate, ja võib pakkuda ajastatud tellimust, kui see on lubatud.",
+        "q7": "Kuidas arveldust arvutatakse?",
+        "a7": "Maksate 0,60 USD kõneminuti kohta või kuumiinimumi 249,99 USD — kumb on suurem. Miinimum sisaldab umbes 416 minutit. Iga kõne ümardatakse ülespoole. Jälgige kasutust reaalajas.",
+        "q8": "Kas saan igal ajal tühistada?",
+        "a8": "Jah. Nabili arveldatakse igakuiselt Stripe'i kaudu ilma pikaajalise lepinguta. Tühistage juhtpaneelil igal ajal ja teie liin jääb aktiivseks kuni arveldusperioodi lõpuni."
+      },
+      "finalCta": {
+        "title": "Valmis laskma Nabilil telefoni vastu võtta?",
+        "body": "Seadistamine võtab ühe tööpäeva. Alustage telefonitellimuste vastuvõtmist oma süsteemi kaudu — ilma lisariistvara, personali või stressita.",
+        "primary": "Alusta",
+        "secondary": "Vaata kõiki hindu"
+      }
     }
   },
   "addressBook": {

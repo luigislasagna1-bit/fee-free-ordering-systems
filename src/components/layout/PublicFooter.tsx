@@ -48,6 +48,7 @@ export function PublicFooter() {
             <div className="font-semibold text-white mb-3">{tF("product")}</div>
             <div className="space-y-2 text-sm">
               <Link href="/features" className="block hover:text-white transition">{tNav("features")}</Link>
+              <Link href="/nabil-ai" className="block hover:text-white transition">{tNav.has("nabilAi") ? tNav("nabilAi") : "Nabil AI"}</Link>
               <Link href="/pricing" className="block hover:text-white transition">{tNav("pricing")}</Link>
               {/* EN-only hardcoded (like the sibling Marketplace/Partners links) so
                   no i18n key is added — keeps the 38-locale parity audit green. */}

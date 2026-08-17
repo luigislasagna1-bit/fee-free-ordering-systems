@@ -63,17 +63,34 @@ export const ONLINE_ONLY_CAMPAIGN_REF_PREFIXES = ["kickstarter", "autopilot"] as
 /**
  * True for a promo minted by the Kickstarter or Autopilot email campaigns.
  *
- * 🚨 These are ONLINE-ONLY (Luigi 2026-08-16): "Do NOT offer any kickstarter
- * discounts over the phone — those are online only, shouldn't be offered or
- * applied." Their own copy says so ("10% off your next ONLINE order", "use code
- * FIRSTBUY at checkout"), and on 2026-08-16 a first-time phone caller was given
- * the FIRSTBUY 10% by Nabil (ORD-971682861) because the promo engine treated the
- * phone order as a website order. `buildPromoOrderContext({ orderSource:
- * "voice" })` drops these from the pool at every entry point; owner-made promos
- * (FREE DELIVERY over $30, day deals) and VIP/assigned gifts are untouched.
+ * ⚠️ NO LONGER READ BY THE PROMO ENGINE. Until 2026-08-17 this was the
+ * hardcoded rule that kept these promos off Nabil phone orders (Luigi
+ * 2026-08-16: "Do NOT offer any kickstarter discounts over the phone — those
+ * are online only"; live defect ORD-971682861). Luigi then made phone
+ * availability a PER-PROMO SETTING for every store and every promo type —
+ * `Promotion.phoneOrders`, "Available by phone (Nabil AI)" in the promo editor
+ * — read by the shared isEligible() gate (src/lib/promo-engine.ts,
+ * `phoneOrdersOk`) and the shared promo pool (src/lib/promo-order-context.ts).
+ *
+ * This function survives ONLY as the day-one backfill's definition
+ * (scripts/backfill-promo-phone-orders.ts sets phoneOrders=false exactly where
+ * it returns true, so behaviour was byte-identical on the day the setting
+ * shipped) and as the natural default for campaign creators that want new
+ * campaign rows to start phone-excluded. Do not reintroduce it as a runtime
+ * gate — the column is the truth now, and the owner can flip it.
  *
  * False for null/owner-made promos and for assigned_manual / assigned_group.
  */
 export function isOnlineOnlyCampaignRef(campaignRef: string | null | undefined): boolean {
   return !!campaignRef && ONLINE_ONLY_CAMPAIGN_REF_PREFIXES.some((p) => campaignRef.startsWith(p));
+}
+
+/**
+ * The Prisma where-fragment that selects EXACTLY the rows
+ * `isOnlineOnlyCampaignRef` is true for — the day-one backfill's query
+ * (scripts/backfill-promo-phone-orders.ts). Kept next to the predicate so the
+ * SQL side and the in-code side can't drift; the backfill applies both.
+ */
+export function onlineOnlyCampaignRefWhere(): { OR: Array<{ campaignRef: { startsWith: string } }> } {
+  return { OR: ONLINE_ONLY_CAMPAIGN_REF_PREFIXES.map((p) => ({ campaignRef: { startsWith: p } })) };
 }

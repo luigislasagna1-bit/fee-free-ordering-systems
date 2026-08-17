@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Campaña",
       "titleCampaignLocked": "Una campaña de Autopilot activa está enviando este código por correo. Desactiva la campaña en Marketing → Autopilot para retirarlo.",
-      "toggleFailed": "No se pudo cambiar esta promoción. Inténtalo de nuevo."
+      "toggleFailed": "No se pudo cambiar esta promoción. Inténtalo de nuevo.",
+      "phoneOff": "Teléfono desact.",
+      "phoneOffTip": "Esta promoción no aplica a pedidos por teléfono de Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Elige un tipo de promoción para continuar.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Las promociones ocultas solo se aplican cuando el cliente introduce este código al pagar.",
       "vipLockedTitle": "Solo VIP — vinculado a: {groups}",
       "vipLockedDesc": "Esta promoción se aplica automáticamente solo para esos miembros VIP al pagar. Nunca aparece en tu menú público, banner o sitio web — ningún ajuste de visibilidad puede cambiarlo. Para hacerla pública, primero desvincúlala en la página Grupos VIP.",
-      "bundleBuildInfo": "💡 Los clientes crean este combo desde una tarjeta «Crea tu oferta» en tu menú. Fíjalo en el banner de abajo para encontrarlo fácilmente. (Un combo no se puede aplicar automáticamente ni desbloquear con un código.)"
+      "bundleBuildInfo": "💡 Los clientes crean este combo desde una tarjeta «Crea tu oferta» en tu menú. Fíjalo en el banner de abajo para encontrarlo fácilmente. (Un combo no se puede aplicar automáticamente ni desbloquear con un código.)",
+      "phoneOrdersLabel": "Disponible por teléfono (Nabil AI)",
+      "phoneOrdersOnSub": "Esta promoción se aplica a los pedidos telefónicos de Nabil AI",
+      "phoneOrdersOffSub": "Esta promoción no se aplica a los pedidos por teléfono",
+      "phoneOrdersHelp": "Desactivado, esta promoción se excluye de los pedidos por teléfono. Los pedidos web, app y marketplace no se ven afectados.",
+      "clientTypeMemberWarning": "Las promociones solo para miembros requieren una cuenta — los clientes que llamen sin estar registrados no verán esta promoción."
     },
     "customersList": {
       "heading": "Clientes",
@@ -4355,7 +4362,12 @@
         "viewAll": "Ver todas las llamadas",
         "chartPopularItems": "Lo más pedido por teléfono",
         "popularItemsCta": "Configurar sugerencias destacadas",
-        "popularItemsEmpty": "Aún no hay pedidos por teléfono en este periodo."
+        "popularItemsEmpty": "Aún no hay pedidos por teléfono en este periodo.",
+        "meterTitle": "Uso este mes",
+        "meterMinutes": "{minutes} minutos usados",
+        "meterCharge": "Actual: {amount} · Proyectado: {projected}",
+        "meterOver": "{minutes} minutos por encima del incluido",
+        "meterIncluded": "{included} min incluidos en el mínimo de {minimum}/mes ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Buscar teléfono, nombre o resumen…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Número desbloqueado",
         "errorToast": "No se pudo actualizar — inténtalo de nuevo.",
         "invalidPhone": "Introduce un número de teléfono válido."
-      }
+      },
+      "setup": {
+        "title": "Configure su línea telefónica",
+        "body": "Cuéntenos sobre su línea telefónica y Nabil contestará llamadas en un día hábil. Sin configuración técnica de su parte.",
+        "receivedTitle": "Solicitud de configuración recibida",
+        "receivedBody": "Nuestro equipo está configurando su línea Nabil AI. Verá su panel en vivo aquí cuando esté listo — normalmente en un día hábil.",
+        "summaryForward": "Desviar llamadas del {currentNumber}",
+        "summaryNew": "Número nuevo (actual: {currentNumber})",
+        "summaryTransfer": "Transferir a una persona: {transferNumber}",
+        "summaryGreeting": "Nombre de bienvenida: {name}",
+        "summarySent": "Enviado el {date}",
+        "updateRequest": "Actualizar solicitud",
+        "prepareHint": "Puede actualizar sus preferencias hasta que la línea esté configurada.",
+        "currentNumberLabel": "Su número de teléfono actual",
+        "phoneHint": "El número que sus clientes llaman hoy.",
+        "modeLabel": "¿Cómo debemos configurar su línea?",
+        "modeForward": "Desviar mi número",
+        "modeForwardHint": "Usted desvía su número existente a Nabil. Los clientes marcan el mismo número de siempre.",
+        "modeNew": "Darme un número nuevo",
+        "modeNewHint": "Le asignamos un número nuevo para Nabil. Puede publicarlo junto a su línea existente.",
+        "transferNumberLabel": "Transferir llamadas a",
+        "transferNumberHint": "Cuando un cliente pide hablar con una persona, Nabil transfiere la llamada aquí.",
+        "greetingNameLabel": "Nombre del restaurante para el saludo",
+        "greetingNameHint": "Cómo Nabil debe presentar su restaurante al contestar.",
+        "notesLabel": "Algo más que debamos saber (opcional)",
+        "submitting": "Enviando…",
+        "submit": "Enviar solicitud",
+        "cancelEdit": "Cancelar",
+        "errorAlreadyProvisioned": "Su línea ya está configurada — actualice la página para ver su panel.",
+        "errorGeneric": "Algo salió mal. Inténtelo de nuevo."
+      },
+      "nowAvailable": "Ya disponible",
+      "availableHeading": "Pedidos por teléfono Nabil AI",
+      "availablePrice": "{rate} por minuto de llamada · {minimum}/mes mínimo · {included} minutos incluidos",
+      "availableConcierge": "Nuestro equipo configura su línea en un día hábil. Sin trabajo técnico de su parte.",
+      "availableDemo": "¿Ya es miembro de pago? Pruébelo gratis por {days} días.",
+      "subscribeCta": "Suscribirse y configurar"
     },
     "customerDetailPage": {
       "allCustomers": "Todos los clientes",
@@ -6865,7 +6913,8 @@
             "b3": "Seguro y cifrado",
             "b4": "Hecho en Canadá"
           }
-        }
+        },
+        "nowAvailable": "Ya disponible"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Empezar gratis",
       "ctaContact": "Contactar ventas",
-      "trialNote": "Sin tarjeta de crédito. Sin contratos."
+      "trialNote": "Sin tarjeta de crédito. Sin contratos.",
+      "phoneOrderingMinuteNote": "Facturado a US$0.60/min con un mínimo de US$249.99/mes (≈ 416 minutos incluidos). Ver detalles en"
     },
     "faq": {
       "title": "Preguntas frecuentes",
@@ -7075,6 +7125,211 @@
       "b1": "Tu menú real — fotos, tamaños e ingredientes",
       "b2": "Pide desde él al instante, igual que un cliente",
       "b3": "¿Te gusta? Regístrate y consérvalo — sin volver a importar"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Pedidos telefónicos con IA",
+        "title": "El teléfono de tu pizzería, <accent>atendido por IA</accent>",
+        "subtitle": "Nabil AI toma pedidos telefónicos para tu pizzería — pizzas mitad y mitad, combos, zonas de entrega, ingredientes por nombre — y los procesa a través del mismo checkout que tu sitio web. Creado por antiguos dueños de pizzerías que saben cómo suena una llamada real.",
+        "ctaStart": "Comenzar",
+        "ctaSecondary": "Mira cómo funciona",
+        "trust1": "Diseñado para pizzerías",
+        "trust2": "Mismo checkout que tu sitio web",
+        "trust3": "Grabaciones y transcripciones",
+        "trust4": "US$0.60 por minuto de llamada",
+        "sampleLabel": "Ejemplo de llamada en vivo",
+        "sampleCaller": "Llamante",
+        "sample1": "Hola, ¿puedo hacer un pedido para entrega a domicilio?",
+        "sample2": "¡Por supuesto! Estaré encantado de ayudarte. ¿Qué te puedo preparar hoy?",
+        "sample3": "Una pizza grande, mitad pepperoni y champiñones, mitad pimientos verdes y cebollas.",
+        "sample4": "Entendido — una pizza grande mitad y mitad: pepperoni y champiñones de un lado, pimientos verdes y cebollas del otro. ¿Algo más?"
+      },
+      "story": {
+        "eyebrow": "Nuestra historia",
+        "title": "Diseñado para pizzerías, por antiguos dueños de pizzerías",
+        "body1": "Pasamos años detrás del mostrador tomando pedidos por teléfono. Sabemos lo que los clientes realmente dicen — las peticiones de mitad y mitad, los cambios de ingredientes de último momento, el 'igual que la última vez'. Creamos Nabil AI para atender esas llamadas como lo haríamos nosotros.",
+        "body2": "A diferencia de los sistemas telefónicos de IA genéricos, Nabil fue diseñado desde el primer día para pedidos de pizza y restaurante. Cada función — desde la creación de combos hasta la verificación de zonas de entrega — existe porque la necesitábamos en nuestra propia tienda.",
+        "point1": "Diseñado para operaciones reales de pizzería",
+        "point2": "Cada pedido pasa por tu checkout verificado",
+        "point3": "Tu menú es el menú de la IA — nada inventado"
+      },
+      "how": {
+        "eyebrow": "Cómo funciona",
+        "title": "Tres pasos para pedidos telefónicos en piloto automático",
+        "step1": {
+          "title": "Conecta tu línea telefónica",
+          "body": "Redirige tu número existente u obtén uno nuevo. Nuestro equipo configura tu línea en un día hábil — sin trabajo técnico de tu parte."
+        },
+        "step2": {
+          "title": "Nabil atiende la llamada",
+          "body": "Nabil saluda a los llamantes con el nombre de tu restaurante, toma su pedido de forma conversacional, confirma cada artículo y lee el total antes de procesarlo."
+        },
+        "step3": {
+          "title": "El pedido se imprime en tu cocina",
+          "body": "El pedido pasa por el mismo checkout que un pedido del sitio web. Aparece en tu pantalla de cocina, se imprime en tu impresora de tickets y se muestra en tu panel de administración — todo automáticamente."
+        }
+      },
+      "handles": {
+        "eyebrow": "Lo que gestiona",
+        "title": "Todo lo que tus clientes piden",
+        "subtitle": "Nabil gestiona los pedidos que tu equipo gestiona — desde pizzas sencillas con un solo ingrediente hasta combos mitad y mitad con entrega a domicilio.",
+        "halfHalf": {
+          "title": "Pizzas mitad y mitad",
+          "body": "Los clientes pueden pedir ingredientes diferentes en cada mitad, y Nabil confirma cada lado antes de realizar el pedido."
+        },
+        "combos": {
+          "title": "Combos y ofertas de comida",
+          "body": "Nabil guía a los clientes por las opciones del combo — elige tu pizza, tu acompañamiento, tu bebida — igual que en tu sitio web."
+        },
+        "delivery": {
+          "title": "Entrega con verificación de zona",
+          "body": "Toma la dirección de entrega, verifica que está en tu zona, indica la tarifa y realiza el pedido — sin adivinanzas."
+        },
+        "upsells": {
+          "title": "Venta adicional inteligente",
+          "body": "Sugiere los artículos que tú eliges en el momento adecuado de la conversación — una bebida con una pizza, un postre antes del pago."
+        },
+        "faq": {
+          "title": "Responde preguntas frecuentes",
+          "body": "Horarios, ubicación, estacionamiento, alérgenos — Nabil responde las preguntas frecuentes de tu tienda para que tu personal no tenga que hacerlo."
+        },
+        "returning": {
+          "title": "Reconoce a los clientes que regresan",
+          "body": "Saluda a los habituales por su nombre y recuerda su historial de pedidos, para que los repedidos sean rápidos."
+        },
+        "transfer": {
+          "title": "Transfiere a una persona",
+          "body": "Cuando un cliente pide hablar con una persona o tiene una solicitud que Nabil no puede gestionar, la llamada se transfiere al número de tu tienda."
+        },
+        "numbers": {
+          "title": "Pronuncia los números de forma natural",
+          "body": "Los números de teléfono, direcciones, precios y horarios se dicen con palabras — 'seis cuarenta y siete' en lugar de '647' — para que el cliente siempre entienda."
+        },
+        "hours": {
+          "title": "Conoce tus horarios",
+          "body": "Nabil sabe cuándo estás abierto, cuándo cerrado y tu horario de festivos — los clientes obtienen información precisa cada vez."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Por qué es preciso",
+        "title": "El pedido es correcto porque el sistema no permite que sea incorrecto",
+        "body": "Nabil no adivina. Cada artículo se valida con tu menú real, cada precio lo calcula tu sistema de cobro, y cada modificador se confirma con la persona que llama antes de realizar el pedido.",
+        "cart": {
+          "title": "Carrito del servidor",
+          "body": "El pedido se construye en el servidor, no en la memoria de la IA. Los precios, reglas y disponibilidad de tu menú son la única fuente de verdad."
+        },
+        "asks": {
+          "title": "Pregunta, nunca supone",
+          "body": "Cuando algo es ambiguo — un tamaño, la colocación de un ingrediente, una elección de masa — Nabil pregunta a quien llama en vez de adivinar."
+        },
+        "readback": {
+          "title": "Lectura completa",
+          "body": "Antes de realizar el pedido, Nabil repite cada artículo, modificador y el total — la persona que llama confirma antes de que se envíe algo a la cocina."
+        },
+        "alarm": {
+          "title": "Alarma precio cotizado = precio cobrado",
+          "body": "Si el total que la IA indicó no coincide con lo que calcula el sistema de cobro, el sistema lo señala antes de realizar el pedido."
+        },
+        "timeline": {
+          "title": "Cronología por llamada",
+          "body": "Cada llamada tiene una cronología detallada que muestra cada acción, cambio en el carrito y decisión — para que puedas ver exactamente qué pasó."
+        },
+        "tests": {
+          "title": "Suite de pruebas automatizadas",
+          "body": "Un sistema de simulación ejecuta escenarios de pedido reales con cada actualización — pizzas mitad y mitad, combos, casos límite — antes de que llegue a tu línea telefónica."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Tu panel de control",
+        "title": "Ve cada llamada, escucha cada palabra",
+        "subtitle": "Grabaciones, transcripciones, seguimiento de ingresos y cronología por llamada — todo lo que necesitas para saber qué hace Nabil por tu restaurante.",
+        "shotOverviewAlt": "Vista general del panel de Nabil AI mostrando volumen de llamadas, ingresos y métricas de conversión",
+        "shotCallsAlt": "Lista de llamadas mostrando pedidos telefónicos recientes con resultados y duraciones",
+        "shotDetailAlt": "Vista de detalle de llamada con transcripción, cronología y resumen del pedido",
+        "shotSettingsAlt": "Panel de configuración de Nabil AI con saludo, ventas adicionales y configuración de preguntas frecuentes",
+        "shotReportAlt": "Diálogo de reporte de llamada para señalar problemas al equipo de Fee Free",
+        "overview": {
+          "title": "Resumen de ingresos",
+          "body": "Ve cuántos ingresos genera Nabil, con gráficos de llamadas, pedidos y tasas de conversión."
+        },
+        "calls": {
+          "title": "Historial de llamadas",
+          "body": "Explora cada llamada con su resultado, duración, grabación y transcripción."
+        },
+        "detail": {
+          "title": "Cronología de la llamada",
+          "body": "Una cronología segundo a segundo de lo que pasó en la llamada — cada acción, cambio en el carrito y palabra dicha."
+        },
+        "report": {
+          "title": "Reportar una llamada",
+          "body": "Marca cualquier llamada que no salió bien. Nuestro equipo la revisa y mejora el manejo de Nabil."
+        },
+        "settings": {
+          "title": "Control total",
+          "body": "Configura el saludo de Nabil, sugerencias de venta adicional, respuestas de preguntas frecuentes, llamantes bloqueados y configuración de pago por enlace."
+        },
+        "roi": {
+          "title": "Seguimiento del ROI",
+          "body": "Haz seguimiento de los ingresos por minuto de llamada para saber exactamente lo que Nabil genera para tu tienda."
+        }
+      },
+      "same": {
+        "eyebrow": "Mismo sistema, mismo checkout",
+        "title": "Un pedido por teléfono es un pedido por la web",
+        "body": "Nabil no usa un sistema de pedidos separado. Cada pedido telefónico pasa por el mismo checkout, el mismo menú, los mismos precios y la misma pantalla de cocina que sus pedidos por la web. Un sistema, una fuente de verdad.",
+        "bullet1": "Mismo menú, mismos precios, mismos modificadores",
+        "bullet2": "Misma pantalla de cocina e impresora de tickets",
+        "bullet3": "Misma confirmación de pedido y seguimiento",
+        "bullet4": "Mismo panel de administración e informes",
+        "frameAlt": "Pantalla de cocina mostrando un pedido telefónico junto a pedidos web"
+      },
+      "languages": {
+        "eyebrow": "Multilingüe",
+        "title": "Nabil habla el idioma de sus clientes",
+        "body": "Nabil detecta automáticamente el idioma del cliente y responde en consecuencia. Sus artículos, descripciones y modificadores se sirven en el idioma del cliente — las mismas traducciones de su web."
+      },
+      "pricing": {
+        "eyebrow": "Precios simples",
+        "title": "Un solo precio. Sin sorpresas.",
+        "perMinute": "US$0.60",
+        "perMinuteLabel": "por minuto de llamada",
+        "minimum": "US$249.99",
+        "minimumLabel": "mínimo por mes",
+        "rule": "Paga lo que sea mayor: sus minutos de llamada a US$0.60 cada uno, o el mínimo mensual de US$249.99. La mayoría de los restaurantes se mantienen dentro de los 416 minutos incluidos.",
+        "demo": "¿Ya es miembro de pago de Fee Free? Pruebe Nabil gratis durante 7 días — sin compromiso.",
+        "include1": "Llamadas ilimitadas",
+        "include2": "Grabaciones y transcripciones",
+        "include3": "Panel y análisis",
+        "include4": "Configuración asistida de la línea",
+        "include5": "Actualizaciones y mejoras continuas",
+        "cta": "Comenzar",
+        "note": "Precios en dólares estadounidenses. Facturación mensual a través de Stripe. Cancele en cualquier momento."
+      },
+      "faq": {
+        "title": "Preguntas frecuentes",
+        "q1": "¿Cómo toma Nabil un pedido?",
+        "a1": "Nabil contesta su línea telefónica, saluda al cliente con el nombre de su restaurante, toma su pedido conversacionalmente, confirma cada artículo y el total, y lo procesa a través de su checkout existente. El pedido aparece en su pantalla de cocina y se imprime automáticamente.",
+        "q2": "¿El cliente sabe que habla con IA?",
+        "a2": "Nabil suena natural y conversacional, pero creemos en la transparencia — los clientes siempre pueden pedir hablar con una persona, y la llamada se transfiere inmediatamente.",
+        "q3": "¿Qué pasa si Nabil comete un error?",
+        "a3": "Cada llamada tiene una grabación, una transcripción y una línea de tiempo detallada. Puede marcar cualquier llamada y nuestro equipo investigará. El carrito del servidor y la confirmación por lectura minimizan los errores.",
+        "q4": "¿Puede Nabil manejar pizzas mitad y mitad?",
+        "a4": "Sí — las pizzas mitad y mitad con ingredientes diferentes en cada lado son una función central. Nabil confirma cada lado y construye el pedido exactamente como su checkout.",
+        "q5": "¿Cómo conecto mi línea telefónica?",
+        "a5": "Después de suscribirse, nos dice su número y si desea desviarlo a Nabil o recibir uno nuevo. Nuestro equipo configura todo en un día hábil — sin trabajo técnico.",
+        "q6": "¿Qué pasa fuera del horario?",
+        "a6": "Nabil conoce sus horarios y días festivos. Fuera del horario, informa al cliente cuándo reabre y puede ofrecer un pedido programado si está habilitado.",
+        "q7": "¿Cómo se calcula la facturación?",
+        "a7": "Paga US$0.60 por minuto de llamada o el mínimo mensual de US$249.99, lo que sea mayor. El mínimo incluye unas 416 minutos. Cada llamada se redondea al minuto siguiente. Puede seguir su uso en tiempo real.",
+        "q8": "¿Puedo cancelar en cualquier momento?",
+        "a8": "Sí. Nabil se factura mensualmente a través de Stripe sin contrato a largo plazo. Cancele desde su panel y su línea permanece activa hasta el final del período de facturación."
+      },
+      "finalCta": {
+        "title": "¿Listo para que Nabil conteste su teléfono?",
+        "body": "La configuración toma un día hábil. Empiece a recibir pedidos telefónicos a través de su sistema — sin hardware, personal ni estrés adicional.",
+        "primary": "Comenzar",
+        "secondary": "Ver todos los precios"
+      }
     }
   },
   "addressBook": {

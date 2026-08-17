@@ -26,11 +26,13 @@ const RUN: { icon: LucideIcon; key: string }[] = [
   { icon: BarChart3, key: "reports" }, { icon: Database, key: "crm" }, { icon: Tag, key: "promos" },
   { icon: TrendingUp, key: "insights" }, { icon: Repeat, key: "reorder" }, { icon: Users, key: "accounts" },
 ];
-const ADDONS: { icon: LucideIcon; key: string; comingSoon?: boolean }[] = [
+const ADDONS: { icon: LucideIcon; key: string; comingSoon?: boolean; href?: string; isNew?: boolean }[] = [
   { icon: CreditCard, key: "payments" }, { icon: Globe, key: "website" }, { icon: Building2, key: "multiLocation" },
   { icon: Store, key: "marketplace" }, { icon: InfinityIcon, key: "unlimited" }, { icon: Link2, key: "domain" },
   { icon: Truck, key: "driver" }, { icon: Smartphone, key: "brandedApp", comingSoon: true },
-  { icon: Monitor, key: "pos", comingSoon: true }, { icon: Phone, key: "aiPhone", comingSoon: true },
+  { icon: Monitor, key: "pos", comingSoon: true },
+  // Nabil AI on sale since 2026-08-17 (A64 (f)): links to /nabil-ai, tagged "Now available".
+  { icon: Phone, key: "aiPhone", href: "/nabil-ai", isNew: true },
   { icon: CalendarCheck, key: "deposits", comingSoon: true },
 ];
 
@@ -41,7 +43,10 @@ export function FeaturesClient({ locale }: { locale: string }) {
 
   const reliability: IconFeature[] = RELIABILITY.map((r) => ({ icon: r.icon, title: h(`kitchen.${r.key}.title`), body: h(`kitchen.${r.key}.body`) }));
   const run: IconFeature[] = RUN.map((r) => ({ icon: r.icon, title: h(`run.${r.key}.title`), body: h(`run.${r.key}.body`) }));
-  const addons: IconFeature[] = ADDONS.map((a) => ({ icon: a.icon, title: h(`addons.${a.key}.title`), body: h(`addons.${a.key}.body`), comingSoon: a.comingSoon }));
+  const addons: IconFeature[] = ADDONS.map((a) => ({
+    icon: a.icon, title: h(`addons.${a.key}.title`), body: h(`addons.${a.key}.body`), comingSoon: a.comingSoon,
+    href: a.href, tag: a.isNew ? h("nowAvailable") : undefined,
+  }));
   const soon = h("soon");
 
   return (

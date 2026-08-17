@@ -63,12 +63,23 @@ vi.mock("@/lib/db", () => {
       : c.customerPhone !== undefined ? o.customerPhone === c.customerPhone
       : false,
     );
+  // The channel predicate the split "first order" count adds:
+  //   AND: [{ OR: [{ channel: null }, { channel: { not: "voice" } }] }]
+  const matchOrderChannel = (o: any, c: any): boolean =>
+    "channel" in c
+      ? c.channel === null
+        ? o.channel == null
+        : c.channel?.not !== undefined
+          ? o.channel != null && o.channel !== c.channel.not
+          : o.channel === c.channel
+      : true;
   const matchOrder = (o: any, where: any): boolean => {
     if (where.restaurantId && o.restaurantId !== where.restaurantId) return false;
     if (where.status?.notIn && where.status.notIn.includes(o.status)) return false;
     if (where.viaMarketplace !== undefined && !!o.viaMarketplace !== where.viaMarketplace) return false;
     if (where.promoDiscount?.gt !== undefined && !(o.promoDiscount > where.promoDiscount.gt)) return false;
     if (where.OR && !matchOrderIdentity(o, where.OR)) return false;
+    if (where.AND && !where.AND.every((a: any) => (a.OR ? a.OR.some((c: any) => matchOrderChannel(o, c)) : true))) return false;
     return true;
   };
   return {
@@ -169,6 +180,8 @@ async function previewDiscount(restaurant: any, args: { email?: string | null; p
   const ctx: ApplyContext = {
     orderType: "pickup",
     isNewCustomer: promoCtx.isNewCustomer,
+    isNewCustomerExcludingPhoneOrders: promoCtx.isNewCustomerExcludingPhoneOrders,
+    orderSource: promoCtx.orderSource,
     isMember: promoCtx.isMember,
     hasUsedLifetime: promoCtx.hasUsedLifetime,
     subtotal: SUBTOTAL,
@@ -181,7 +194,13 @@ async function previewDiscount(restaurant: any, args: { email?: string | null; p
 /** Run the engine exactly like /api/orders does with a builder result. */
 async function chargeDiscount(
   restaurant: any,
-  args: { email?: string | null; phone?: string | null; orderSource?: "web" | "voice" },
+  args: {
+    email?: string | null;
+    phone?: string | null;
+    orderSource?: "web" | "voice";
+    /** Delivery order with this fee (free_delivery scenarios); pickup otherwise. */
+    deliveryFee?: number;
+  },
 ) {
   const promoCtx = await buildPromoOrderContext({
     restaurant,
@@ -194,14 +213,23 @@ async function chargeDiscount(
     // charge passes no optimistic override (defaults to new) — same as the route
   });
   const results = applyPromotions(promoCtx.activePromos as any, {
-    orderType: "pickup",
+    orderType: args.deliveryFee !== undefined ? "delivery" : "pickup",
+    deliveryFee: args.deliveryFee ?? 0,
     isNewCustomer: promoCtx.isNewCustomer,
+    // Same two fields the route threads — the phone gate + the per-promo
+    // "first order" view live in the shared engine.
+    isNewCustomerExcludingPhoneOrders: promoCtx.isNewCustomerExcludingPhoneOrders,
+    orderSource: promoCtx.orderSource,
     isMember: promoCtx.isMember,
     hasUsedLifetime: promoCtx.hasUsedLifetime,
     subtotal: SUBTOTAL,
     items: cartItems,
   });
-  return { cents: Math.round(totalPromoDiscount(results, SUBTOTAL) * 100), promoCtx };
+  return {
+    cents: Math.round(totalPromoDiscount(results, SUBTOTAL) * 100),
+    hasFreeDelivery: results.some((r) => r.type === "free_delivery"),
+    promoCtx,
+  };
 }
 
 function signIn(customerId: string, restaurantId: string) {
@@ -327,16 +355,20 @@ describe("preview == charge (Blocker #7)", () => {
 });
 
 /**
- * Kickstarter / Autopilot email-campaign promos are ONLINE-ONLY (Luigi
- * 2026-08-16): a Nabil phone order (orderSource:"voice") must never see them —
- * not in the public pool, not through a granted add-back — while owner-made
- * promos keep applying by phone and web behaviour is byte-identical.
- * (Live defect: ORD-971682861 — a first-time caller was given the FIRSTBUY 10%.)
+ * "Available by phone (Nabil AI)" — Promotion.phoneOrders (Luigi A64(a),
+ * 2026-08-17). A promo the owner keeps off the phone must never reach a Nabil
+ * phone order (orderSource:"voice") — not in the public pool, not through a
+ * granted add-back, not through the engine — while phone-available promos keep
+ * applying by phone and web behaviour is byte-identical. The rows below carry
+ * the state the day-one backfill leaves: Kickstarter / Autopilot campaign
+ * promos at phoneOrders=false (the old hardcoded rule; live defect
+ * ORD-971682861 — a first-time caller was given the FIRSTBUY 10%), owner-made
+ * promos at the default true.
  */
-describe("online-only campaign promos never reach a phone order", () => {
+describe("promos not available by phone never reach a phone order", () => {
   const restaurant = { id: R1, parentRestaurantId: null };
-  // The exact row shape Kickstarter creates (kickstarter.ts): new-customer,
-  // auto-apply, channel both, campaignRef kickstarter_first_buy.
+  // The exact row shape Kickstarter creates (kickstarter.ts) after the
+  // backfill: new-customer, auto-apply, channel both, phoneOrders false.
   const firstBuy = () =>
     basePromo({
       id: "firstbuy",
@@ -345,11 +377,12 @@ describe("online-only campaign promos never reach a phone order", () => {
       couponCode: "FIRSTBUY",
       campaignRef: "kickstarter_first_buy",
       stackingRule: "master",
+      phoneOrders: false,
     });
-  const freeDelivery = () =>
-    basePromo({ id: "owner10", name: "Owner-made 10% off", campaignRef: null });
+  const ownerTenOff = () =>
+    basePromo({ id: "owner10", name: "Owner-made 10% off", campaignRef: null, phoneOrders: true });
 
-  it("voice: the Kickstarter first-buy is dropped from the pool; web keeps it (same new caller)", async () => {
+  it("voice: the (phone-excluded) Kickstarter first-buy is dropped from the pool; web keeps it (same new caller)", async () => {
     h.db.promotions = [firstBuy()];
 
     const web = await chargeDiscount(restaurant, { phone: "9055559470" });
@@ -357,13 +390,14 @@ describe("online-only campaign promos never reach a phone order", () => {
 
     expect(web.promoCtx.isNewCustomer).toBe(true);
     expect(web.cents).toBe(200);
+    expect(voice.promoCtx.orderSource).toBe("voice");
     expect(voice.promoCtx.isNewCustomer).toBe(true); // identity is unchanged — only the pool is
     expect(voice.promoCtx.activePromos.map((p: any) => p.id)).not.toContain("firstbuy");
     expect(voice.cents).toBe(0);
   });
 
-  it("voice: an owner-made promo still applies by phone (only campaign promos are online-only)", async () => {
-    h.db.promotions = [firstBuy(), freeDelivery()];
+  it("voice: a phone-available owner-made promo still applies by phone", async () => {
+    h.db.promotions = [firstBuy(), ownerTenOff()];
 
     const voice = await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice" });
     const ids = voice.promoCtx.activePromos.map((p: any) => p.id);
@@ -373,12 +407,12 @@ describe("online-only campaign promos never reach a phone order", () => {
     expect(voice.cents).toBe(200); // the owner's 10%, not 10% + first-buy
   });
 
-  it("voice: an Autopilot promo GRANTED to the caller's phone is not added back (web is)", async () => {
+  it("voice: a phone-excluded promo GRANTED to the caller's phone is not added back (web is)", async () => {
     // Autopilot rows are autoApply:false + hidden; a granted CustomerCoupon
     // normally forces them on for that identity — including via the
     // "not in the filtered pool" re-fetch. On a phone order neither path may fire.
     h.db.promotions = [
-      basePromo({ id: "win3", name: "15% off your next online order", autoApply: false, couponCode: "WIN3", campaignRef: "autopilot_reengage_win3", customerType: "any", displayMode: "hidden_coupon_only", ruleConfig: { discountPercent: 15 } }),
+      basePromo({ id: "win3", name: "15% off your next online order", autoApply: false, couponCode: "WIN3", campaignRef: "autopilot_reengage_win3", customerType: "any", displayMode: "hidden_coupon_only", ruleConfig: { discountPercent: 15 }, phoneOrders: false }),
     ];
     h.db.customerCoupons = [
       { id: "grant1", restaurantId: R1, promotionId: "win3", code: "WIN3", autoApply: true, campaignRef: "autopilot_reengage_win3", status: "granted", phone: "9055559470", email: null, expiresAt: null },
@@ -393,11 +427,121 @@ describe("online-only campaign promos never reach a phone order", () => {
     expect(voice.cents).toBe(0);
   });
 
+  it("the switch is per-promo, not per-campaign: a Kickstarter first-buy the owner turned back ON applies by phone", async () => {
+    h.db.promotions = [{ ...firstBuy(), phoneOrders: true }];
+    const voice = await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice" });
+    expect(voice.promoCtx.activePromos.map((p: any) => p.id)).toContain("firstbuy");
+    expect(voice.cents).toBe(200);
+  });
+
+  // Standing rule: a promo change applies to ALL promo types through the
+  // shared isEligible() — the OWNER-MADE variants below have no campaignRef,
+  // so only the switch keeps them off the phone.
+  it("owner-made percentage_off with phoneOrders=false: refused by phone, applied on the web", async () => {
+    h.db.promotions = [basePromo({ id: "pct", promotionType: "percentage_off", ruleConfig: { discountPercent: 10 }, phoneOrders: false })];
+    expect((await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice" })).cents).toBe(0);
+    expect((await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "web" })).cents).toBe(200);
+  });
+
+  it("owner-made fixed_cart with phoneOrders=false: refused by phone, applied on the web", async () => {
+    h.db.promotions = [basePromo({ id: "fixed", promotionType: "fixed_cart", ruleConfig: { discountAmount: 5 }, phoneOrders: false })];
+    expect((await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice" })).cents).toBe(0);
+    expect((await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "web" })).cents).toBe(500);
+  });
+
+  it("owner-made free_delivery with phoneOrders=false: no fee waiver by phone, waived on the web (and by phone once switched on)", async () => {
+    const freeDel = (phoneOrders: boolean) =>
+      basePromo({ id: "freedel", name: "Free delivery over $0", promotionType: "free_delivery", orderType: "delivery", ruleConfig: {}, phoneOrders });
+    h.db.promotions = [freeDel(false)];
+    expect((await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice", deliveryFee: 7.99 })).hasFreeDelivery).toBe(false);
+    expect((await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "web", deliveryFee: 7.99 })).hasFreeDelivery).toBe(true);
+    h.db.promotions = [freeDel(true)];
+    expect((await chargeDiscount(restaurant, { phone: "9055559470", orderSource: "voice", deliveryFee: 7.99 })).hasFreeDelivery).toBe(true);
+  });
+
   it("web default: omitting orderSource behaves exactly like today (kickstarter applies to a new web customer)", async () => {
     h.db.promotions = [firstBuy()];
     const explicitWeb = await chargeDiscount(restaurant, { email: "new@example.com", orderSource: "web" });
     const implicitWeb = await chargeDiscount(restaurant, { email: "new@example.com" });
+    expect(explicitWeb.promoCtx.orderSource).toBe("web");
+    expect(implicitWeb.promoCtx.orderSource).toBe("web");
     expect(explicitWeb.cents).toBe(200);
     expect(implicitWeb.cents).toBe(explicitWeb.cents);
+  });
+});
+
+/**
+ * "First order" is judged among the orders on the channels the promo applies
+ * to (Luigi A64(a)): a phone-excluded promo does not count Nabil phone orders
+ * (Order.channel "voice"), a phone-available promo counts everything. Both
+ * verdicts come from the same builder for both routes (preview == charge).
+ */
+describe("first-time counting follows the promo's channels", () => {
+  const restaurant = { id: R1, parentRestaurantId: null };
+  const PHONE = "9055559470";
+  const phoneFirstBuy = () =>
+    basePromo({ id: "firstbuy", customerType: "new", couponCode: "FIRSTBUY", campaignRef: "kickstarter_first_buy", stackingRule: "master", phoneOrders: false });
+  const anyChannelNewOnly = () =>
+    basePromo({ id: "new_any", name: "New customers, any channel", customerType: "new", ruleConfig: { discountPercent: 20 }, phoneOrders: true });
+  const priorPhoneOrder = () => ({
+    restaurantId: R1, customerId: null, customerEmail: null, customerPhone: PHONE,
+    status: "completed", viaMarketplace: false, channel: "voice", promoDiscount: 0, appliedPromos: [],
+  });
+  const priorWebOrder = () => ({ ...priorPhoneOrder(), channel: null });
+
+  it("a customer whose only earlier order was BY PHONE is still a first-timer for the phone-excluded first-buy on the web…", async () => {
+    h.db.promotions = [phoneFirstBuy()];
+    h.db.orders = [priorPhoneOrder()];
+
+    const preview = await previewDiscount(restaurant, { phone: PHONE, optimisticIsNewCustomer: true });
+    const charge = await chargeDiscount(restaurant, { phone: PHONE });
+
+    expect(charge.promoCtx.isNewCustomer).toBe(false); // returning overall
+    expect(charge.promoCtx.isNewCustomerExcludingPhoneOrders).toBe(true); // new online
+    expect(charge.promoCtx.newCustomerOfferUnavailable).toBe(false); // the offer IS available to them
+    expect(charge.cents).toBe(200);
+    expect(preview.cents).toBe(charge.cents);
+  });
+
+  it("…while a phone-AVAILABLE 'new customers only' promo counts that phone order (returning — no discount)", async () => {
+    h.db.promotions = [anyChannelNewOnly()];
+    h.db.orders = [priorPhoneOrder()];
+
+    const charge = await chargeDiscount(restaurant, { phone: PHONE });
+    expect(charge.promoCtx.isNewCustomer).toBe(false);
+    expect(charge.cents).toBe(0);
+    // No phone-excluded promo at this store ⇒ the split flag simply mirrors
+    // the all-channel verdict (no second count).
+    expect(charge.promoCtx.isNewCustomerExcludingPhoneOrders).toBe(false);
+  });
+
+  it("a prior WEB order makes the customer returning on BOTH counts (first-buy refused, 'new customers only' note shown)", async () => {
+    h.db.promotions = [phoneFirstBuy()];
+    h.db.orders = [priorWebOrder()];
+
+    const charge = await chargeDiscount(restaurant, { phone: PHONE });
+    expect(charge.promoCtx.isNewCustomer).toBe(false);
+    expect(charge.promoCtx.isNewCustomerExcludingPhoneOrders).toBe(false);
+    expect(charge.promoCtx.newCustomerOfferUnavailable).toBe(true);
+    expect(charge.cents).toBe(0);
+  });
+
+  it("a genuinely new customer is new on both counts (no second query needed)", async () => {
+    h.db.promotions = [phoneFirstBuy()];
+    h.db.orders = [];
+    const charge = await chargeDiscount(restaurant, { phone: "4165550000" });
+    expect(charge.promoCtx.isNewCustomer).toBe(true);
+    expect(charge.promoCtx.isNewCustomerExcludingPhoneOrders).toBe(true);
+    expect(charge.cents).toBe(200);
+  });
+
+  it("failed phone orders never count either way", async () => {
+    h.db.promotions = [phoneFirstBuy(), anyChannelNewOnly()];
+    h.db.orders = [{ ...priorPhoneOrder(), status: "rejected" }];
+    const charge = await chargeDiscount(restaurant, { phone: PHONE });
+    expect(charge.promoCtx.isNewCustomer).toBe(true);
+    expect(charge.promoCtx.isNewCustomerExcludingPhoneOrders).toBe(true);
+    // Both "new only" promos fire (10% master + 20% standard stack) → 30% of $20.
+    expect(charge.cents).toBe(600);
   });
 });

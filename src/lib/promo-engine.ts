@@ -225,14 +225,65 @@ export type PromoInput = {
    *  (typically with `restaurant.hasFeature(slug)`). The field is
    *  carried here for traceability + safety nets. */
   requiredAddOnSlug?: string | null;
+  /** "Available by phone (Nabil AI)" — Promotion.phoneOrders (Luigi A64(a),
+   *  2026-08-17). `false` ⇒ this promo is NEVER eligible on a phone order
+   *  (ctx.orderSource "voice"), whatever its type, coupon code or grant.
+   *  Absent / null / true ⇒ applies by phone like anywhere else. Also flips
+   *  how "first order" is judged for this promo — see
+   *  `ApplyContext.isNewCustomerExcludingPhoneOrders`. */
+  phoneOrders?: boolean | null;
 };
+
+/**
+ * HOW the order is being placed — distinct from the acquisition channel
+ * (Promotion.channel: website / marketplace / both).
+ *   "web"   → the customer's own browser/app checkout (website or marketplace)
+ *   "voice" → Nabil AI phone ordering (the Fly service POSTing /api/orders with
+ *             the internal key + channel:"voice"; its quote is the same route's
+ *             dryRun, so quote == charge by construction)
+ * Deliberately NOT a third acquisition-channel value: promoChannelOk compares
+ * against Promotion.channel and the new-vs-returning count keys on
+ * viaMarketplace — a "voice" channel there would fail EVERY promo and change
+ * the count's meaning. Lives here (client-safe, no prisma) so the engine gate
+ * and the shared pool builder read ONE definition.
+ */
+export type PromoOrderSource = "web" | "voice";
+
+/**
+ * THE one rule for "may this promo apply to an order placed this way": a promo
+ * with phoneOrders=false is never available on a phone (voice) order. Used by
+ * `isEligible()` (every promo type / coupon / gift) AND by the shared promo
+ * pool in promo-order-context.ts, so the pool and the engine can't drift.
+ * Missing / null phoneOrders = available (the schema default is true).
+ */
+export function phoneOrdersOk(
+  promo: { phoneOrders?: boolean | null },
+  orderSource: PromoOrderSource | null | undefined,
+): boolean {
+  return orderSource !== "voice" || promo.phoneOrders !== false;
+}
 
 export type ApplyContext = {
   /** Order channel. Multi-select promos match any of their listed types.
    *  "take_out" is the live customer value; "takeout" kept for legacy data. */
   orderType: "pickup" | "delivery" | "dine_in" | "catering" | "take_out" | "takeout";
-  /** True when this is the customer's first order ever at the restaurant. */
+  /** True when this is the customer's first order ever at the restaurant
+   *  (every channel — website, marketplace-scoped by the caller, AND phone). */
   isNewCustomer: boolean;
+  /** New-vs-returning judged on NON-PHONE orders only (Order.channel ≠
+   *  "voice"). A promo that is not available by phone (phoneOrders=false)
+   *  judges "first order" on the channels it applies to, so a website
+   *  first-timer whose only earlier order was a Nabil phone order still gets
+   *  an online-only first-buy — and a phone-available promo counts everything.
+   *  Optional: when absent the engine falls back to `isNewCustomer` for every
+   *  promo (legacy callers / tests are byte-identical). Both routes get it from
+   *  buildPromoOrderContext so preview == charge. Luigi A64(a), 2026-08-17. */
+  isNewCustomerExcludingPhoneOrders?: boolean;
+  /** HOW this order is placed — "voice" for a Nabil AI phone order, "web"
+   *  (default when absent) for every browser/app checkout. Drives the
+   *  Promotion.phoneOrders gate in isEligible(). Both checkout routes read it
+   *  from buildPromoOrderContext (promoCtx.orderSource) — never hand-set. */
+  orderSource?: PromoOrderSource;
   /** True when the customer has a registered account (CustomerAccount).
    *  Distinct from `isNewCustomer` — a member could be brand-new (just
    *  signed up) or a returning customer with order history. */
@@ -368,8 +419,30 @@ function isScheduledNow(promo: PromoInput, now: Date, tz?: string): boolean {
   return isWithinUsableWindow(promo, weekday, minuteOfDay);
 }
 
+/** New-vs-returning as THIS promo sees it. A promo that is not available by
+ *  phone (phoneOrders=false) applies only to non-phone channels, so its "first
+ *  order" is judged among non-phone orders — the caller's
+ *  `isNewCustomerExcludingPhoneOrders`. Every other promo (and every caller that
+ *  didn't compute the split) uses the all-channel `isNewCustomer`. */
+function isNewCustomerFor(promo: PromoInput, ctx: ApplyContext): boolean {
+  if (promo.phoneOrders === false && typeof ctx.isNewCustomerExcludingPhoneOrders === "boolean") {
+    return ctx.isNewCustomerExcludingPhoneOrders;
+  }
+  return ctx.isNewCustomer;
+}
+
 function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   if (!promo.isActive) return false;
+
+  // ── Phone orders (Nabil AI) ────────────────────────────────────────
+  // "Available by phone" is a per-promo setting (Promotion.phoneOrders,
+  // Luigi A64(a) 2026-08-17). Off ⇒ never eligible on a voice order — for
+  // EVERY promo type, a typed coupon code, a granted gift or a member-only
+  // special alike, because they all pass through here. It replaced a
+  // hardcoded "Kickstarter/Autopilot campaign promos are online-only" rule
+  // (2026-08-16, ORD-971682861); the backfill carried that rule into the
+  // column so day-one behaviour was identical. Web orders are untouched.
+  if (!phoneOrdersOk(promo, ctx.orderSource)) return false;
 
   // ── Frequency restriction ──────────────────────────────────────────
   // Global usage cap.
@@ -427,8 +500,12 @@ function isEligible(promo: PromoInput, ctx: ApplyContext): boolean {
   // "member"    → has a registered CustomerAccount (orthogonal to order
   //               history; a brand-new member who's never ordered IS a
   //               member, while a 10-order guest is NOT)
-  if (promo.customerType === "new" && !ctx.isNewCustomer) return false;
-  if (promo.customerType === "returning" && ctx.isNewCustomer) return false;
+  // "first order" is judged among the orders on the channels THIS promo
+  // applies to (a phone-excluded promo doesn't count phone orders) — see
+  // isNewCustomerFor.
+  const isNewForPromo = isNewCustomerFor(promo, ctx);
+  if (promo.customerType === "new" && !isNewForPromo) return false;
+  if (promo.customerType === "returning" && isNewForPromo) return false;
   if (promo.customerType === "member" && !ctx.isMember) return false;
 
   // ── Payment restriction ────────────────────────────────────────────

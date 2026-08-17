@@ -364,7 +364,10 @@ const navGroups: NavGroup[] = [
     icon: ShoppingBag,
     items: [
       { href: "/admin/orders", labelKey: "orders", label: "Orders", icon: ShoppingBag, badgeKey: "orders" },
-      { href: "/admin/phone-ordering", labelKey: "categoryNabilAi", label: "Nabil AI", icon: Bot, comingSoon: true, requiresFeature: "phone_ordering_agent" },
+      // Nabil AI is ON SALE (2026-08-17, OWNER-ACTIONS A64): no hardcoded "Soon"
+      // any more — release status is now purely DB-driven via the phone_ordering
+      // add-on's comingSoon flag; the lock still follows the entitlement.
+      { href: "/admin/phone-ordering", labelKey: "categoryNabilAi", label: "Nabil AI", icon: Bot, requiresFeature: "phone_ordering_agent" },
       { href: "/admin/kds", labelKey: "categoryKds", label: "KDS Screen", icon: MonitorCheck, comingSoon: true, requiresFeature: "kds_screen" },
       { href: "/admin/pos", labelKey: "categoryPos", label: "POS Module", icon: Calculator, comingSoon: true, requiresFeature: "in_house_pos" },
     ],

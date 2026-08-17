@@ -2651,7 +2651,9 @@
       },
       "campaignFallback": "Kampány",
       "titleCampaignLocked": "Ezt a kódot egy futó Autopilot kampány küldi e-mailben. A visszavonásához kapcsolja ki a kampányt a Marketing → Autopilot menüpontban.",
-      "toggleFailed": "Az akciót nem sikerült módosítani. Próbálja újra."
+      "toggleFailed": "Az akciót nem sikerült módosítani. Próbálja újra.",
+      "phoneOff": "Telefon ki",
+      "phoneOffTip": "Az akció nem érvényes Nabil AI telefonos rendelésekre"
     },
     "promoWizard": {
       "errorPickType": "Válasszon promóciótípust a folytatáshoz.",
@@ -2934,7 +2936,12 @@
       "hiddenCodeInfo": "A rejtett ajánlatok csak akkor érvényesülnek, ha a vásárló megadja ezt a kódot a fizetésnél.",
       "vipLockedTitle": "Csak VIP — hozzárendelve: {groups}",
       "vipLockedDesc": "Ez a promóció automatikusan csak azoknak a VIP-tagoknak érvényes a pénztárnál. Soha nem jelenik meg a nyilvános étlapon, a bannerben vagy a weboldalon — ezt semmilyen láthatósági kapcsoló nem változtatja meg. Nyilvánossá tételéhez először válassza le a VIP-csoportok oldalon.",
-      "bundleBuildInfo": "💡 A vásárlók ezt a csomagot egy „Állítsd össze az ajánlatod” kártyából állítják össze az étlapodon. Rögzítsd az alábbi bannerhez, hogy könnyen megtalálható legyen. (Egy csomag nem alkalmazható automatikusan és nem oldható fel kóddal.)"
+      "bundleBuildInfo": "💡 A vásárlók ezt a csomagot egy „Állítsd össze az ajánlatod” kártyából állítják össze az étlapodon. Rögzítsd az alábbi bannerhez, hogy könnyen megtalálható legyen. (Egy csomag nem alkalmazható automatikusan és nem oldható fel kóddal.)",
+      "phoneOrdersLabel": "Telefonon elérhető (Nabil AI)",
+      "phoneOrdersOnSub": "Ez az akció Nabil AI telefonos rendelésekre érvényes",
+      "phoneOrdersOffSub": "Ez az akció nem érvényes telefonos rendelésekre",
+      "phoneOrdersHelp": "Kikapcsolva = az akció nem vonatkozik telefonos rendelésekre. A webes, alkalmazás- és piactér-rendeléseket nem érinti.",
+      "clientTypeMemberWarning": "Tagoknak szóló akciók fiókot igényelnek — a nem regisztrált hívók nem látják ezt az akciót."
     },
     "customersList": {
       "heading": "Ügyfelek",
@@ -4355,7 +4362,12 @@
         "viewAll": "Összes hívás megtekintése",
         "chartPopularItems": "Telefonon legtöbbször rendelt tételek",
         "popularItemsCta": "Kiemelt ajánlatok beállítása",
-        "popularItemsEmpty": "Ebben az időszakban még nincs telefonos rendelés."
+        "popularItemsEmpty": "Ebben az időszakban még nincs telefonos rendelés.",
+        "meterTitle": "Felhasználás ebben a hónapban",
+        "meterMinutes": "{minutes} perc felhasználva",
+        "meterCharge": "Jelenlegi: {amount} · Becsült: {projected}",
+        "meterOver": "{minutes} perc a keretszám felett",
+        "meterIncluded": "{included} perc benne a {minimum}/hó minimumban ({rate}/perc)"
       },
       "callLog": {
         "searchPlaceholder": "Keresés telefonszám, név vagy összefoglaló alapján…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Szám feloldva",
         "errorToast": "Nem sikerült a frissítés — kérjük, próbálja újra.",
         "invalidPhone": "Adjon meg egy érvényes telefonszámot."
-      }
+      },
+      "setup": {
+        "title": "Telefonvonal beállítása",
+        "body": "Meséljen a telefonvonaláról, és Nabil egy munkanapon belül fogadja a hívásokat. Nincs szükség technikai beállításra.",
+        "receivedTitle": "Beállítási kérés megérkezett",
+        "receivedBody": "Csapatunk beállítja Nabil AI vonalát. Az élő irányítópult itt jelenik meg, amint kész — általában egy munkanapon belül.",
+        "summaryForward": "Hívások átirányítása: {currentNumber}",
+        "summaryNew": "Új szám (jelenlegi: {currentNumber})",
+        "summaryTransfer": "Átkapcsolás személyhez: {transferNumber}",
+        "summaryGreeting": "Üdvözlési név: {name}",
+        "summarySent": "Beküldve: {date}",
+        "updateRequest": "Kérés frissítése",
+        "prepareHint": "Frissítheti beállításait, amíg a vonal nincs aktiválva.",
+        "currentNumberLabel": "Jelenlegi telefonszáma",
+        "phoneHint": "A szám, amelyre ügyfelei most telefonálnak.",
+        "modeLabel": "Hogyan állítsuk be a vonalát?",
+        "modeForward": "Számom átirányítása",
+        "modeForwardHint": "Átirányítja meglévő számát a Nabilhoz. A hívók ugyanazt a számot tárcsázzák.",
+        "modeNew": "Adjon nekem új számot",
+        "modeNewHint": "Új számot biztosítunk a Nabilnak. A meglévő vonal mellett is közzéteheti.",
+        "transferNumberLabel": "Hívások átkapcsolása",
+        "transferNumberHint": "Amikor a hívó személyt kér, Nabil ide kapcsolja a hívást.",
+        "greetingNameLabel": "Étteremnév az üdvözlésben",
+        "greetingNameHint": "Hogyan mutassa be Nabil az éttermét a telefonban.",
+        "notesLabel": "Egyéb tudnivaló (opcionális)",
+        "submitting": "Küldés…",
+        "submit": "Kérés küldése",
+        "cancelEdit": "Mégse",
+        "errorAlreadyProvisioned": "Vonala már be van állítva — frissítse az oldalt.",
+        "errorGeneric": "Hiba történt. Próbálja újra."
+      },
+      "nowAvailable": "Már elérhető",
+      "availableHeading": "Nabil AI telefonos rendelés",
+      "availablePrice": "{rate} híváspercenként · {minimum}/hó minimum · {included} perc benne",
+      "availableConcierge": "Csapatunk egy munkanapon belül beállítja vonalát. Nem igényel technikai munkát az Ön részéről.",
+      "availableDemo": "Már fizető tag? Próbálja ki ingyen {days} napig.",
+      "subscribeCta": "Előfizetés és beállítás"
     },
     "customerDetailPage": {
       "allCustomers": "Minden vásárló",
@@ -6865,7 +6913,8 @@
             "b3": "Biztonságos és titkosított",
             "b4": "Kanadában készült"
           }
-        }
+        },
+        "nowAvailable": "Most elérhető"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Ingyenes kezdés",
       "ctaContact": "Értékesítési kapcsolat",
-      "trialNote": "Nem szükséges bankkártya. Nincs szerződés."
+      "trialNote": "Nem szükséges bankkártya. Nincs szerződés.",
+      "phoneOrderingMinuteNote": "Díja 0,60 USD/perc, minimum 249,99 USD/hó (≈ 416 perc benne). Részletek:"
     },
     "faq": {
       "title": "Gyakran ismételt kérdések",
@@ -7075,6 +7125,211 @@
       "b1": "Az igazi étlapja — fotók, méretek és feltétek",
       "b2": "Rendeljen róla azonnal, akárcsak egy vendég",
       "b3": "Tetszik? Regisztráljon és tartsa meg — nincs újraimportálás"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI telefonos rendelés",
+        "title": "A pizzériád telefonja, <accent>AI válaszol</accent>",
+        "subtitle": "Nabil AI fogadja a telefonos rendeléseket pizzériád számára — fél-fél pizzák, kombók, kiszállítási zónák, feltétek név szerint — és ugyanazon a fizetésen keresztül adja le őket, mint a weboldalad. Egykori pizzériatulajdonosok építették, akik tudják, hogyan hangzik egy igazi hívás.",
+        "ctaStart": "Kezdés",
+        "ctaSecondary": "Nézd meg, hogyan működik",
+        "trust1": "Pizzériáknak készült",
+        "trust2": "Ugyanaz a fizetés, mint a weboldalon",
+        "trust3": "Felvételek és leiratok",
+        "trust4": "US$0.60 híváspercenként",
+        "sampleLabel": "Élő hívás példa",
+        "sampleCaller": "Hívó",
+        "sample1": "Szia, szeretnék rendelni házhozszállítással.",
+        "sample2": "Természetesen! Szívesen segítek. Mit hozhatok ma neked?",
+        "sample3": "Egy nagy pizzát, fele pepperoni gombával, fele zöld paprika hagymával.",
+        "sample4": "Megvan — egy nagy fél-fél pizza: pepperoni és gomba az egyik felén, zöld paprika és hagyma a másikon. Kérsz még valamit?"
+      },
+      "story": {
+        "eyebrow": "Történetünk",
+        "title": "Pizzériáknak készült, egykori pizzériatulajdonosoktól",
+        "body1": "Éveket töltöttünk a pult mögött telefonos rendelések fogadásával. Tudjuk, mit mondanak valójában a hívók — a fél-fél kérések, az utolsó pillanatos feltétváltások, az 'ugyanazt, mint legutóbb'. Azért építettük a Nabil AI-t, hogy úgy kezelje ezeket a hívásokat, ahogy mi tennénk.",
+        "body2": "A generikus AI telefonrendszerekkel ellentétben a Nabil az első naptól kezdve pizza- és éttermi rendelés köré lett tervezve. Minden funkció — a kombóépítéstől a kiszállítási zóna-ellenőrzésig — azért létezik, mert szükségünk volt rá a saját üzletünkben.",
+        "point1": "Valódi pizzériaműveletek köré tervezve",
+        "point2": "Minden rendelés az ellenőrzött fizetésen megy keresztül",
+        "point3": "A te menüd az AI menüje — semmi kitalált"
+      },
+      "how": {
+        "eyebrow": "Hogyan működik",
+        "title": "Három lépés a telefonos rendelésekhez autopilóton",
+        "step1": {
+          "title": "Kösd össze a telefonvonalas",
+          "body": "Irányítsd át a meglévő számodat, vagy szerezz egy újat. Csapatunk egy munkanapon belül beállítja a vonaludat — semmi technikai munka a te részedenről."
+        },
+        "step2": {
+          "title": "Nabil fogadja a hívást",
+          "body": "Nabil az éttermed nevében köszönti a hívókat, beszélgetésszerűen felveszi a rendelést, megerősít minden tételt, és felolvassa a végösszeget a rendelés leadása előtt."
+        },
+        "step3": {
+          "title": "A rendelés kinyomtatódik a konyhádban",
+          "body": "A rendelés ugyanazon a fizetésen megy keresztül, mint egy weboldali rendelés. Megjelenik a konyhai kijelzőn, kinyomtatódik a jegynyomtatón és megjelenik az admin felületen — minden automatikusan."
+        }
+      },
+      "handles": {
+        "eyebrow": "Mit kezel",
+        "title": "Minden, amit a hívók kérnek",
+        "subtitle": "Nabil azokat a rendeléseket kezeli, amelyeket a csapatod kezel — az egyszerű egyfeltétes pizzáktól az összetett fél-fél kombókig házhozszállítással.",
+        "halfHalf": {
+          "title": "Fél-fél pizzák",
+          "body": "A hívók különböző feltéteket rendelhetnek minden félre, és Nabil megerősíti mindkét oldalt a rendelés leadása előtt."
+        },
+        "combos": {
+          "title": "Kombók és menüajánlatok",
+          "body": "Nabil végigvezeti a hívókat a kombóválasztáson — válaszd ki a pizzádat, a köretdet, az italodat — pont, mint a weboldaladon."
+        },
+        "delivery": {
+          "title": "Házhozszállítás zónaellenőrzéssel",
+          "body": "Felveszi a szállítási címet, ellenőrzi, hogy a zónádban van-e, közli a díjat, és leadja a rendelést — találgatás nélkül."
+        },
+        "upsells": {
+          "title": "Okos felülértékesítés",
+          "body": "A te által választott termékeket javasolja a beszélgetés megfelelő pillanatában — italt a pizzához, desszertet fizetés előtt."
+        },
+        "faq": {
+          "title": "Válaszol a gyakori kérdésekre",
+          "body": "Nyitvatartás, helyszín, parkolás, allergének — Nabil válaszol az üzleted GYIK-jaira, hogy a személyzetednek ne kelljen."
+        },
+        "returning": {
+          "title": "Felismeri a visszatérő hívókat",
+          "body": "Nevén köszönti a törzsvendégeket és emlékszik rendelési előzményeikre, így az újrarendelés gyors."
+        },
+        "transfer": {
+          "title": "Átkapcsol egy személyhez",
+          "body": "Ha a hívó emberi segítséget kér vagy olyan kérése van, amit Nabil nem tud kezelni, a hívást az üzleted számára irányítja át."
+        },
+        "numbers": {
+          "title": "Természetesen mondja ki a számokat",
+          "body": "A telefonszámokat, címeket, árakat és időpontokat szavakkal mondja ki — 'hat negyvenhét' és nem '647' — így a hívó mindig megérti."
+        },
+        "hours": {
+          "title": "Ismeri a nyitvatartásodat",
+          "body": "Nabil tudja, mikor vagy nyitva, mikor zárva és az ünnepi rendedet — a hívók mindig pontos információt kapnak."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Miért pontos",
+        "title": "A rendelés helyes, mert a rendszer nem engedi, hogy hibás legyen",
+        "body": "Nabil nem találgat. Minden tételt a valódi étlapodhoz ellenőriz, minden árat a pénztárad számol ki, és minden módosítót a hívóval megerősít, mielőtt a rendelés leadásra kerülne.",
+        "cart": {
+          "title": "Szerveroldali kosár",
+          "body": "A rendelés a szerveren épül fel, nem az AI memóriájában. Az étlapod árai, szabályai és elérhetősége az egyetlen igazságforrás."
+        },
+        "asks": {
+          "title": "Kérdez, soha nem feltételez",
+          "body": "Ha valami nem egyértelmű — méret, feltét elhelyezése, tészta kiválasztása — Nabil megkérdezi a hívót ahelyett, hogy találgatna."
+        },
+        "readback": {
+          "title": "Teljes visszaolvasás",
+          "body": "A rendelés leadása előtt Nabil felolvassa az összes tételt, módosítót és a végösszeget — a hívó megerősíti, mielőtt bármi a konyhába kerülne."
+        },
+        "alarm": {
+          "title": "Riasztás: közölt = felszámított",
+          "body": "Ha az AI által közölt végösszeg nem egyezik a pénztár számításával, a rendszer jelzi, mielőtt a rendelés leadásra kerülne."
+        },
+        "timeline": {
+          "title": "Hívásonkénti idővonal",
+          "body": "Minden hívásnak van egy részletes idővonala, amely megmutatja az összes eszközhívást, kosárváltozást és döntést — így pontosan láthatod, mi történt."
+        },
+        "tests": {
+          "title": "Automatizált tesztcsomag",
+          "body": "Egy szimulációs rendszer valós rendelési forgatókönyveket futtat minden frissítésnél — félig-félig pizzák, kombók, szélsőséges esetek — mielőtt a telefonvonaladra kerülne."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Az irányítópultod",
+        "title": "Láss minden hívást, hallj minden szót",
+        "subtitle": "Felvételek, átiratok, bevételkövetés és hívásonkénti idővonal — minden, amit tudnod kell arról, mit csinál Nabil az éttermeddel.",
+        "shotOverviewAlt": "Nabil AI irányítópult áttekintése hívásmennyiséget, bevételt és konverziós mutatókat megjelenítve",
+        "shotCallsAlt": "Híváslistát megjelenítő nézet a legutóbbi telefonos rendelésekkel, eredményekkel és időtartamokkal",
+        "shotDetailAlt": "Hívás részletes nézete átirattal, idővonallal és rendelés összefoglalóval",
+        "shotSettingsAlt": "Nabil AI beállítások panel üdvözlés, felülértékesítés és GYIK konfigurációval",
+        "shotReportAlt": "Hívás jelentése párbeszédablak a problémák jelzéséhez a Fee Free csapatnak",
+        "overview": {
+          "title": "Bevétel áttekintés",
+          "body": "Nézd meg, mennyi bevételt hoz Nabil, hívások, rendelések és konverziós arányok diagramjaival."
+        },
+        "calls": {
+          "title": "Hívástörténet",
+          "body": "Böngészd végig az összes hívást eredményével, időtartamával, felvételével és átiratával."
+        },
+        "detail": {
+          "title": "Hívás idővonala",
+          "body": "Másodpercről másodpercre idővonalon láthatod, mi történt a hívás során — minden eszközhívás, kosárváltozás és kimondott szó."
+        },
+        "report": {
+          "title": "Hívás jelentése",
+          "body": "Jelöld meg a hívásokat, amelyek nem mentek jól. Csapatunk áttekinti és javítja Nabil kezelését."
+        },
+        "settings": {
+          "title": "Teljes irányítás",
+          "body": "Konfiguráld Nabil üdvözlését, felülértékesítési javaslatait, GYIK válaszait, blokkolt hívóit és a linkkel fizetés beállításait."
+        },
+        "roi": {
+          "title": "ROI-követés",
+          "body": "Kövesd nyomon a bevételt hívás percenként, hogy pontosan tudd, mennyit keres Nabil az üzletednek."
+        }
+      },
+      "same": {
+        "eyebrow": "Ugyanaz a rendszer, ugyanaz a pénztár",
+        "title": "A telefonos rendelés egy webes rendelés",
+        "body": "A Nabil nem használ külön rendelési rendszert. Minden telefonos rendelés ugyanazon a pénztáron, menün, árakon és konyhakijelzőn megy keresztül, mint a webes rendelések. Egy rendszer, egyetlen igazságforrás.",
+        "bullet1": "Ugyanaz a menü, árak, módosítók",
+        "bullet2": "Ugyanaz a konyhakijelző és jegynyomtató",
+        "bullet3": "Ugyanaz a rendelés-megerősítés és nyomon követés",
+        "bullet4": "Ugyanaz az admin irányítópult és riportok",
+        "frameAlt": "Konyhakijelző telefonos rendeléssel a webes rendelések mellett"
+      },
+      "languages": {
+        "eyebrow": "Többnyelvű",
+        "title": "Nabil az Ön hívóinak nyelvén beszél",
+        "body": "A Nabil automatikusan felismeri a hívó nyelvét és azon válaszol. Menüelemei, leírásai és módosítói a hívó nyelvén jelennek meg — ugyanazokkal a fordításokkal, mint a weboldalán."
+      },
+      "pricing": {
+        "eyebrow": "Egyszerű árazás",
+        "title": "Egy ár. Nincs meglepetés.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "híváspercenként",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minimum havonta",
+        "rule": "A magasabb összeget fizeti: a híváspercekeit 0,60 USD-ért percenként, vagy a havi 249,99 USD minimumot. A legtöbb étterem a benne foglalt 416 percen belül marad.",
+        "demo": "Már fizető Fee Free tag? Próbálja ki a Nabilt ingyen 7 napig — kötelezettség nélkül.",
+        "include1": "Korlátlan hívások",
+        "include2": "Felvételek és átiratók",
+        "include3": "Irányítópult és elemzések",
+        "include4": "Asszisztált vonalbeállítás",
+        "include5": "Folyamatos frissítések és fejlesztések",
+        "cta": "Kezdés",
+        "note": "Az árak amerikai dollárban értendők. Havi számlázás a Stripe-on keresztül. Bármikor lemondható."
+      },
+      "faq": {
+        "title": "Gyakran ismételt kérdések",
+        "q1": "Hogyan vesz fel rendelést a Nabil?",
+        "a1": "A Nabil felveszi a telefonhívást, éttermének nevében köszönti a hívót, beszélgetés formájában felveszi a rendelést, megerősít minden tételt és az összeget, majd a meglévő pénztáron keresztül rögzíti. A rendelés megjelenik a konyhakijelzőn és automatikusan kinyomtatódik.",
+        "q2": "Tudja a hívó, hogy mesterséges intelligenciával beszél?",
+        "a2": "A Nabil természetesen és beszélgetően hangzik, de hiszünk az átláthatóságban — a hívók bármikor kérhetnek embert, és a hívás azonnal átkapcsolódik.",
+        "q3": "Mi van, ha a Nabil hibázik?",
+        "a3": "Minden hívásnak van felvétele, átirata és részletes idővonala. Bármely hívást megjelölheti, csapatunk kivizsgálja. A szerver oldali kosár és a visszaolvasás-megerősítés minimalizálja a hibákat.",
+        "q4": "Tud a Nabil fél-fél pizzát kezelni?",
+        "a4": "Igen — a fél-fél pizzák különböző feltétekkel az egyes oldalakon alapfunkció. A Nabil mindkét oldalt megerősíti és az Ön webes pénztárával azonos módon építi fel a rendelést.",
+        "q5": "Hogyan csatlakoztatom a telefonvonalamat?",
+        "a5": "Az előfizetés után mondja el számát, és hogy szeretné-e átirányítani a Nabilhoz, vagy újat szeretne. Csapatunk egy munkanapon belül mindent beállít — technikai munka nélkül.",
+        "q6": "Mi történik nyitvatartáson kívül?",
+        "a6": "A Nabil ismeri nyitvatartását és ünnepi rendjét. Nyitvatartáson kívül tájékoztatja a hívót az újranyitásról, és ha az ütemezés be van kapcsolva, felajánlhat rendelést a következő nyitásra.",
+        "q7": "Hogyan számítják ki a számlázást?",
+        "a7": "0,60 USD-t fizet híváspercenként vagy a havi 249,99 USD minimumot — amelyik magasabb. A minimum körülbelül 416 percet tartalmaz. Minden hívás a következő egész percre kerekítődik. Kövesse nyomon használatát valós időben.",
+        "q8": "Bármikor lemondhatom?",
+        "a8": "Igen. A Nabil havonta kerül számlázásra a Stripe-on keresztül, hosszú távú szerződés nélkül. Mondja le az irányítópulton bármikor, és vonala az elszámolási időszak végéig aktív marad."
+      },
+      "finalCta": {
+        "title": "Készen áll, hogy Nabil vegye fel a telefont?",
+        "body": "A beállítás egy munkanapot vesz igénybe. Kezdjen telefonos rendeléseket fogadni a saját rendszerén keresztül — extra hardver, személyzet vagy stressz nélkül.",
+        "primary": "Kezdés",
+        "secondary": "Összes ár megtekintése"
+      }
     }
   },
   "addressBook": {

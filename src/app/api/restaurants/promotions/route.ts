@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     name, description, promotionType, isActive, stackingRule, orderType, customerType,
     minimumOrder, rules, ruleConfig,
     daysOfWeek, startsAt, endsAt, usageLimit, autoApply, couponCode,
-    scope, channel,
+    scope, channel, phoneOrders,
     usableHourStart, usableHourEnd, showOnBanner, bannerHeadline,
     paymentMethodSlugs, deliveryZoneIds, onceLifetimePerClient,
     imageUrl, displayMode, highlightThreshold,
@@ -81,6 +81,11 @@ export async function POST(req: NextRequest) {
 
   if (!name || !promotionType) {
     return NextResponse.json({ error: "name and promotionType required" }, { status: 400 });
+  }
+  // "Available by phone (Nabil AI)" — strict boolean or the column default
+  // (true); a stray string/number never lands in the gate the engine reads.
+  if (phoneOrders !== undefined && typeof phoneOrders !== "boolean") {
+    return NextResponse.json({ error: "phoneOrders must be true or false" }, { status: 400 });
   }
 
   // ── Fixed-dollar discount sanity: min cart ≥ discount ───────────────
@@ -188,6 +193,8 @@ export async function POST(req: NextRequest) {
       couponCode: couponCode || null,
       scope: resolvedScope,
       channel: normalizeChannel(channel),
+      // Per-promo phone availability (Luigi A64(a)); default on.
+      phoneOrders: phoneOrders ?? true,
       usableHourStart: clampMin(usableHourStart),
       usableHourEnd: clampMin(usableHourEnd),
       showOnBanner: display.showOnBanner,

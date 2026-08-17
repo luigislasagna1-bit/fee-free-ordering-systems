@@ -9,10 +9,21 @@ import {
   complimentaryTrialCarryOverSec,
 } from "@/lib/addon-comp";
 import { euVatSubscriptionBlock } from "@/lib/vies";
+import {
+  isNabilDemoEligible,
+  NABIL_DEMO_METADATA_KEY,
+  PHONE_ORDERING_ADDON_SLUG,
+} from "@/lib/voice/nabil-trial";
 
 /**
  * POST { addOnSlug } — start a Stripe Checkout session to subscribe the
  * current restaurant to a paid add-on. Returns { url } to redirect.
+ *
+ * Nabil AI (`phone_ordering`) is the ONE add-on with a trial: a one-time
+ * 7-day free demo, only for restaurants that already pay us for something —
+ * decided by isNabilDemoEligible() (src/lib/voice/nabil-trial.ts), passed to
+ * Stripe as trial_period_days and marked in subscription metadata so the
+ * webhook stamps VoiceAgentConfig.trialUsedAt once the subscription exists.
  */
 export async function POST(req: NextRequest) {
   const user = await getSessionUser();
@@ -100,6 +111,19 @@ export async function POST(req: NextRequest) {
   // when the free period is already over → billing starts immediately.
   const carryTrialEndSec = complimentaryTrialCarryOverSec(existing);
 
+  // Nabil AI one-time member demo (Luigi 2026-08-16). Only for phone_ordering,
+  // only when the restaurant already pays us for something else AND has never
+  // used it — and never on a complimentary-row conversion (that path already
+  // carries its own free days as trial_end; Stripe rejects both at once).
+  // Eligibility is re-checked HERE, server-side, on every Checkout — the card
+  // badge is advisory. trialUsedAt is stamped by the webhook, not here, so an
+  // abandoned Checkout does not burn the demo.
+  let demoDays = 0;
+  if (addOn.slug === PHONE_ORDERING_ADDON_SLUG && !carryTrialEndSec) {
+    const demo = await isNabilDemoEligible(user.restaurantId);
+    if (demo.eligible) demoDays = demo.days;
+  }
+
   const customerId = await ensureStripeCustomerForRestaurant(user.restaurantId);
   const stripe = await getStripe();
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || req.nextUrl.origin;
@@ -112,11 +136,14 @@ export async function POST(req: NextRequest) {
         addOnSlug: addOn.slug,
         addOnId: addOn.id,
         restaurantId: user.restaurantId,
+        // Marks THIS subscription as the Nabil demo for the webhook.
+        ...(demoDays > 0 ? { [NABIL_DEMO_METADATA_KEY]: String(demoDays) } : {}),
       },
-      // No trial_period_days — we no longer offer add-on trials. The
-      // trialDays column on AddOn is kept for legacy compatibility but
-      // is intentionally ignored here. trial_end below is NOT a trial in
-      // that sense: it defers billing on a free-partner-period conversion.
+      // No generic add-on trials — the trialDays column on AddOn is legacy and
+      // intentionally ignored here. The ONE exception is the Nabil member demo
+      // above (trial_period_days). trial_end is NOT a trial in that sense: it
+      // defers billing on a free-partner-period conversion.
+      ...(demoDays > 0 ? { trial_period_days: demoDays } : {}),
       ...(carryTrialEndSec ? { trial_end: carryTrialEndSec } : {}),
     },
     metadata: {

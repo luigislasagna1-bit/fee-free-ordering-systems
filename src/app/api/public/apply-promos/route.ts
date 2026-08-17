@@ -261,6 +261,11 @@ export async function POST(req: NextRequest) {
     orderType: orderType ?? "pickup",
     now: promoEvalNow,
     isNewCustomer: promoCtx.isNewCustomer,
+    // Same per-promo "first order" view + order source as the charge, so a
+    // phone-excluded first-buy previews for a website first-timer exactly as
+    // /api/orders will charge it (Blocker #7 — preview == charge).
+    isNewCustomerExcludingPhoneOrders: promoCtx.isNewCustomerExcludingPhoneOrders,
+    orderSource: promoCtx.orderSource,
     isMember: promoCtx.isMember,
     subtotal: parseFloat(subtotal),
     items: ctxItems,

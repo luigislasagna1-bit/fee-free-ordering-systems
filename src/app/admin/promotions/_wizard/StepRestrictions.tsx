@@ -9,9 +9,11 @@
  * scroll.
  */
 
+import { useId } from "react";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+import { HelpTip } from "@/components/HelpTip";
 import { PROMO_DEFAULT_IMAGES } from "@/lib/promo-default-images";
 
 export type Step3Form = {
@@ -26,6 +28,9 @@ export type Step3Form = {
   endsAt: string;
   // Order channel + customer type
   orderType: string[]; // ["pickup", "delivery", "dine_in", ...]
+  // "Available by phone (Nabil AI)" — Promotion.phoneOrders. Off ⇒ the promo
+  // never applies to an order Nabil AI takes over the phone. Luigi A64(a).
+  phoneOrders: boolean;
   customerType: string; // any | new | returning | member
   // Payment / Delivery
   paymentMethodSlugs: string[];
@@ -58,6 +63,7 @@ export function StepRestrictions({
   deliveryZones,
   currencySymbol = "$",
   isOnMarketplace = false,
+  showPhoneOrders = false,
   promotionType = "",
   vipGroupNames = [],
 }: {
@@ -69,6 +75,10 @@ export function StepRestrictions({
   /** Only restaurants actually listed on the marketplace see the channel
    *  picker — otherwise the choice is meaningless. Luigi 2026-06-09. */
   isOnMarketplace?: boolean;
+  /** Only restaurants entitled to Nabil AI phone ordering see the "Available
+   *  by phone" switch (feature-gated visibility standing rule); the value is
+   *  still carried + saved unchanged when hidden. */
+  showPhoneOrders?: boolean;
   /** Used to hide the "Hidden" option for bundle types that need a visible
    *  composer to be orderable (audit dead#2). */
   promotionType?: string;
@@ -302,6 +312,27 @@ export function StepRestrictions({
             </label>
           ))}
         </div>
+        {/* PHONE ORDERS (Nabil AI) — Promotion.phoneOrders, Luigi A64(a)
+            2026-08-17. Per-promo, every promo type: off ⇒ the promo never
+            applies to an order Nabil takes over the phone (the shared engine
+            gate refuses it; the voice free-delivery quote skips it); website /
+            app orders are unaffected. Default on. Shown only to stores
+            entitled to Nabil AI (feature-gated visibility). Not locked for
+            campaign-owned rows: unlike switching a code OFF (which breaks
+            emails already sent), phone availability can't break a running
+            campaign in either direction, and Luigi wants it owner-settable
+            per promo. */}
+        {showPhoneOrders && (
+          <div className="mt-3">
+            <Toggle
+              label={t("phoneOrdersLabel")}
+              sub={form.phoneOrders ? t("phoneOrdersOnSub") : t("phoneOrdersOffSub")}
+              help={<HelpTip text={t("phoneOrdersHelp")} />}
+              checked={form.phoneOrders}
+              onChange={(v) => setForm({ phoneOrders: v })}
+            />
+          </div>
+        )}
       </Section>
 
       {/* CLIENT TYPE */}
@@ -695,21 +726,40 @@ function Section({
 function Toggle({
   label,
   sub,
+  help,
   checked,
   onChange,
 }: {
   label: string;
   sub?: string;
+  /** Optional ⓘ hover help rendered right after the label (standing rule:
+   *  every non-obvious feature carries a HelpTip). */
+  help?: React.ReactNode;
   checked: boolean;
   onChange: (v: boolean) => void;
 }) {
+  // The text is tied to the switch with htmlFor (a <button> is a labelable
+  // element) rather than by wrapping everything in one <label>: a HelpTip is
+  // itself a <button>, and inside a wrapping label a click on the text would
+  // activate the FIRST labelable descendant — the ⓘ — instead of the switch.
+  const id = useId();
   return (
-    <label className="flex items-start justify-between gap-3 cursor-pointer">
-      <div>
-        <div className="text-sm font-medium text-gray-800">{label}</div>
-        {sub && <div className="text-xs text-gray-500 leading-snug">{sub}</div>}
+    <div className="flex items-start justify-between gap-3">
+      <div className="min-w-0">
+        <div className="flex items-center gap-1.5">
+          <label htmlFor={id} className="text-sm font-medium text-gray-800 cursor-pointer">
+            {label}
+          </label>
+          {help}
+        </div>
+        {sub && (
+          <label htmlFor={id} className="block text-xs text-gray-500 leading-snug cursor-pointer">
+            {sub}
+          </label>
+        )}
       </div>
       <button
+        id={id}
         type="button"
         role="switch"
         aria-checked={checked}
@@ -724,6 +774,6 @@ function Toggle({
           }`}
         />
       </button>
-    </label>
+    </div>
   );
 }

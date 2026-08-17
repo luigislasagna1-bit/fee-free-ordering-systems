@@ -258,32 +258,45 @@ export function AltFeatureRow({
   );
 }
 
-export type IconFeature = { icon: LucideIcon; title: string; body: string; comingSoon?: boolean; tag?: string };
+/** `href` (optional) turns the whole card into a link — used for add-ons that
+ *  have their own product page (e.g. Nabil AI → /nabil-ai). Cards without an
+ *  href render exactly as before. */
+export type IconFeature = { icon: LucideIcon; title: string; body: string; comingSoon?: boolean; tag?: string; href?: string };
 
 /** Compact icon + title + 1-line body grid (free-vs-soon aware). */
 export function IconFeatureGrid({ items, cols = 3, soonLabel = "Soon" }: { items: IconFeature[]; cols?: 2 | 3; soonLabel?: string }) {
   const grid = cols === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3";
+  const cardClass = `rounded-2xl border border-gray-200/80 bg-white p-6 transition duration-200 hover:-translate-y-0.5 ${SHADOW_CARD} ${SHADOW_CARD_HOVER}`;
   return (
     <div className={`grid ${grid} gap-5`}>
-      {items.map((f) => (
-        <div
-          key={f.title}
-          className={`rounded-2xl border border-gray-200/80 bg-white p-6 transition duration-200 hover:-translate-y-0.5 ${SHADOW_CARD} ${SHADOW_CARD_HOVER}`}
-        >
-          <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${f.comingSoon ? "bg-gray-100 text-gray-400" : "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"}`}>
-            <f.icon className="w-5 h-5" />
+      {items.map((f) => {
+        const inner = (
+          <>
+            <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${f.comingSoon ? "bg-gray-100 text-gray-400" : "bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"}`}>
+              <f.icon className="w-5 h-5" />
+            </div>
+            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+              <h3 className="font-bold text-gray-900">{f.title}</h3>
+              {f.comingSoon ? (
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{soonLabel}</span>
+              ) : f.tag ? (
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full ring-1 ring-emerald-100">{f.tag}</span>
+              ) : null}
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed">{f.body}</p>
+            {f.href ? <ArrowRight className="mt-3 w-4 h-4 text-emerald-600 transition-transform group-hover:translate-x-1" aria-hidden /> : null}
+          </>
+        );
+        return f.href ? (
+          <Link key={f.title} href={f.href} className={`group block ${cardClass} hover:border-emerald-300`}>
+            {inner}
+          </Link>
+        ) : (
+          <div key={f.title} className={cardClass}>
+            {inner}
           </div>
-          <div className="flex items-center gap-2 mb-1.5">
-            <h3 className="font-bold text-gray-900">{f.title}</h3>
-            {f.comingSoon ? (
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">{soonLabel}</span>
-            ) : f.tag ? (
-              <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded-full ring-1 ring-emerald-100">{f.tag}</span>
-            ) : null}
-          </div>
-          <p className="text-sm text-gray-600 leading-relaxed">{f.body}</p>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

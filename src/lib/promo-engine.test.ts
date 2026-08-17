@@ -253,6 +253,102 @@ describe("resolvePromotions — eligibility restrictions", () => {
   });
 });
 
+// ─── Phone orders (Nabil AI) — Promotion.phoneOrders, Luigi A64(a) 2026-08-17 ─
+// "Available by phone" is a per-promo switch read by THIS shared gate, so it
+// holds for every promo type, a typed coupon code and a granted gift alike
+// (standing rule: a promo change applies to ALL promo types — verified here on
+// percent / fixed / free-delivery / coupon / reward-credit). It replaced the
+// hardcoded "Kickstarter/Autopilot campaign promos are online-only" rule.
+describe("resolvePromotions — phone orders (Promotion.phoneOrders)", () => {
+  const voice = (o: Partial<ApplyContext> = {}) => mkCtx({ orderSource: "voice", ...o });
+  const web = (o: Partial<ApplyContext> = {}) => mkCtx({ orderSource: "web", ...o });
+
+  it("percentage_off: phoneOrders=false is refused on a voice order, applied on the web (and when orderSource is absent)", () => {
+    const p = () => mkPromo({ promotionType: "percentage_off", ruleConfig: { discountPercent: 10 }, phoneOrders: false });
+    expect(applyPromotions([p()], voice())).toHaveLength(0);
+    expect(applyPromotions([p()], web())).toHaveLength(1);
+    expect(applyPromotions([p()], mkCtx())).toHaveLength(1); // legacy callers = web
+    expect(applyPromotions([p()], web())[0].discount).toBe(2); // 10% of $20
+  });
+
+  it("fixed_cart: same rule", () => {
+    const p = () => mkPromo({ promotionType: "fixed_cart", ruleConfig: { discountAmount: 5 }, phoneOrders: false });
+    expect(applyPromotions([p()], voice())).toHaveLength(0);
+    expect(applyPromotions([p()], web())).toHaveLength(1);
+  });
+
+  it("free_delivery: same rule on a delivery order (the fee-waiver is a real benefit by phone too)", () => {
+    const p = (phoneOrders: boolean) =>
+      mkPromo({ promotionType: "free_delivery", ruleConfig: {}, orderType: "delivery", phoneOrders });
+    const delivery = { orderType: "delivery" as const, deliveryFee: 7.99 };
+    expect(applyPromotions([p(false)], voice(delivery))).toHaveLength(0);
+    expect(applyPromotions([p(false)], web(delivery)).map((r) => r.type)).toEqual(["free_delivery"]);
+    expect(applyPromotions([p(true)], voice(delivery)).map((r) => r.type)).toEqual(["free_delivery"]);
+  });
+
+  it("a typed coupon code cannot bring a phone-excluded promo back on a voice order", () => {
+    const coded = () => mkPromo({ autoApply: false, couponCode: "WIN3", ruleConfig: { discountAmount: 5 }, phoneOrders: false });
+    expect(applyPromotions([coded()], voice({ couponCode: "WIN3" }))).toHaveLength(0);
+    expect(applyPromotions([coded()], web({ couponCode: "WIN3" }))).toHaveLength(1);
+  });
+
+  it("reward_credit (a master benefit) follows the same switch", () => {
+    const p = () => mkPromo({ promotionType: "reward_credit", ruleConfig: { creditAmount: 3 }, phoneOrders: false });
+    expect(applyPromotions([p()], voice())).toHaveLength(0);
+    expect(applyPromotions([p()], web())).toHaveLength(1);
+  });
+
+  it("phoneOrders true / absent / null ⇒ applies by phone like anywhere else (default on)", () => {
+    expect(applyPromotions([mkPromo({ phoneOrders: true })], voice())).toHaveLength(1);
+    expect(applyPromotions([mkPromo()], voice())).toHaveLength(1);
+    expect(applyPromotions([mkPromo({ phoneOrders: null })], voice())).toHaveLength(1);
+  });
+
+  it("a phone-excluded exclusive never occupies the exclusive slot on a voice order (the standard still applies)", () => {
+    const ex = mkPromo({ stackingRule: "exclusive", ruleConfig: { discountAmount: 8 }, phoneOrders: false });
+    const std = mkPromo({ stackingRule: "standard", ruleConfig: { discountAmount: 5 } });
+    const { results, blockedPromos } = resolvePromotions([ex, std], voice());
+    expect(results.map((r) => r.promoId)).toEqual([std.id]);
+    expect(blockedPromos).toHaveLength(0); // not "blocked" — simply not in play by phone
+  });
+
+  // "First order" is judged among the orders on the channels THIS promo applies
+  // to: a phone-excluded promo ignores Nabil phone orders (the caller's split
+  // flag), a phone-available promo counts everything.
+  describe("first-time counting follows the promo's channels", () => {
+    // Customer whose only prior order was BY PHONE: returning overall, new online.
+    const phoneFirstCustomer = { isNewCustomer: false, isNewCustomerExcludingPhoneOrders: true };
+    // Customer with a prior WEB order: returning on every count.
+    const webReturning = { isNewCustomer: false, isNewCustomerExcludingPhoneOrders: false };
+
+    it("a phone-excluded 'new customers only' promo still applies online to a phone-first customer", () => {
+      const firstBuy = () => mkPromo({ customerType: "new", ruleConfig: { discountAmount: 5 }, phoneOrders: false });
+      expect(applyPromotions([firstBuy()], web(phoneFirstCustomer))).toHaveLength(1);
+      expect(applyPromotions([firstBuy()], web(webReturning))).toHaveLength(0);
+    });
+
+    it("a phone-available 'new customers only' promo counts the phone order — the same customer is returning", () => {
+      const anyChannelFirstBuy = () => mkPromo({ customerType: "new", ruleConfig: { discountAmount: 5 }, phoneOrders: true });
+      expect(applyPromotions([anyChannelFirstBuy()], web(phoneFirstCustomer))).toHaveLength(0);
+    });
+
+    it("'returning customers only' mirrors it: a phone-excluded returning-only promo does NOT fire for a phone-first customer", () => {
+      const winBack = () => mkPromo({ customerType: "returning", ruleConfig: { discountAmount: 5 }, phoneOrders: false });
+      expect(applyPromotions([winBack()], web(phoneFirstCustomer))).toHaveLength(0);
+      expect(applyPromotions([winBack()], web(webReturning))).toHaveLength(1);
+      // …while a phone-available returning-only promo counts the phone order and fires.
+      const anyChannelWinBack = () => mkPromo({ customerType: "returning", ruleConfig: { discountAmount: 5 }, phoneOrders: true });
+      expect(applyPromotions([anyChannelWinBack()], web(phoneFirstCustomer))).toHaveLength(1);
+    });
+
+    it("callers that don't compute the split fall back to isNewCustomer for every promo (legacy byte-identical)", () => {
+      const firstBuy = () => mkPromo({ customerType: "new", ruleConfig: { discountAmount: 5 }, phoneOrders: false });
+      expect(applyPromotions([firstBuy()], mkCtx({ isNewCustomer: false }))).toHaveLength(0);
+      expect(applyPromotions([firstBuy()], mkCtx({ isNewCustomer: true }))).toHaveLength(1);
+    });
+  });
+});
+
 // ─── Dead-field + dedup guards ──────────────────────────────────────────────
 describe("resolvePromotions — guards", () => {
   it("limitedShowtimeSchedules does NOT gate eligibility (it is a render-only/dead field)", () => {

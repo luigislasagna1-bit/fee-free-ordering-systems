@@ -29,6 +29,8 @@ export function PublicNav({ currentLocale = "en" }: Props) {
 
   const items: [string, string][] = [
     [t("features"), "/features"],
+    // Brand name — never translated (standing rule), so no i18n key here.
+    ["Nabil AI", "/nabil-ai"],
     [t("pricing"), "/pricing"],
     [t("partners"), "/partners"],
     [t("faq"), "/faq"],

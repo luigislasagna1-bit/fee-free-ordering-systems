@@ -3412,7 +3412,9 @@
       },
       "campaignFallback": "Kampanija",
       "titleCampaignLocked": "Šį kodą el. paštu siunčia veikianti Autopilot kampanija. Norėdami jį atšaukti, išjunkite kampaniją skiltyje Rinkodara → Autopilot.",
-      "toggleFailed": "Nepavyko pakeisti šio pasiūlymo. Bandykite dar kartą."
+      "toggleFailed": "Nepavyko pakeisti šio pasiūlymo. Bandykite dar kartą.",
+      "phoneOff": "Telefonas išj.",
+      "phoneOffTip": "Akcija netaikoma Nabil AI telefono užsakymams"
     },
     "promoWizard": {
       "errorPickType": "Pasirinkite akcijos tipą, kad tęstumėte.",
@@ -3695,7 +3697,12 @@
       "hiddenCodeInfo": "Paslėptos akcijos taikomos tik tada, kai klientas atsiskaitydamas įveda šį kodą.",
       "vipLockedTitle": "Tik VIP — susieta su: {groups}",
       "vipLockedDesc": "Ši akcija automatiškai taikoma tik tiems VIP nariams atsiskaitant. Ji niekada nerodoma viešame meniu, reklamjuostėje ar svetainėje — joks matomumo jungiklis to nepakeis. Norėdami ją paviešinti, pirmiausia atjunkite ją VIP grupių puslapyje.",
-      "bundleBuildInfo": "💡 Klientai šį rinkinį sudaro iš kortelės „Sudaryk savo pasiūlymą“ jūsų meniu. Prisekite jį prie žemiau esančio reklaminio skydelio, kad būtų lengva rasti. (Rinkinio negalima pritaikyti automatiškai ar atrakinti kodu.)"
+      "bundleBuildInfo": "💡 Klientai šį rinkinį sudaro iš kortelės „Sudaryk savo pasiūlymą“ jūsų meniu. Prisekite jį prie žemiau esančio reklaminio skydelio, kad būtų lengva rasti. (Rinkinio negalima pritaikyti automatiškai ar atrakinti kodu.)",
+      "phoneOrdersLabel": "Pasiekiama telefonu (Nabil AI)",
+      "phoneOrdersOnSub": "Ši akcija taikoma Nabil AI telefono užsakymams",
+      "phoneOrdersOffSub": "Ši akcija netaikoma telefono užsakymams",
+      "phoneOrdersHelp": "Išjungta = akcija netaikoma telefono užsakymams. Interneto, programėlės ir prekyvietės užsakymai neįtakojami.",
+      "clientTypeMemberWarning": "Narių akcijos reikalauja paskyros — skambinantieji be paskyros nematys šios akcijos."
     },
     "customersList": {
       "heading": "Klientai",
@@ -4355,7 +4362,12 @@
         "viewAll": "Peržiūrėti visus skambučius",
         "chartPopularItems": "Dažniausiai užsakoma telefonu",
         "popularItemsCta": "Nustatyti rekomenduojamus papildomus pasiūlymus",
-        "popularItemsEmpty": "Pasirinktu laikotarpiu telefoninių užsakymų dar nėra."
+        "popularItemsEmpty": "Pasirinktu laikotarpiu telefoninių užsakymų dar nėra.",
+        "meterTitle": "Naudojimas šį mėnesį",
+        "meterMinutes": "{minutes} minučių panaudota",
+        "meterCharge": "Dabartinė: {amount} · Prognozė: {projected}",
+        "meterOver": "{minutes} minučių virš įtrauktų",
+        "meterIncluded": "{included} min įtrauktos į {minimum}/mėn. minimumą ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Ieškoti pagal telefoną, vardą ar santrauką…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Numeris atblokuotas",
         "errorToast": "Nepavyko atnaujinti — bandykite dar kartą.",
         "invalidPhone": "Įveskite galiojantį telefono numerį."
-      }
+      },
+      "setup": {
+        "title": "Nustatykite savo telefono liniją",
+        "body": "Papasakokite mums apie savo liniją ir Nabil atsakys į skambučius per vieną darbo dieną. Jokių techninių nustatymų.",
+        "receivedTitle": "Nustatymo užklausa gauta",
+        "receivedBody": "Mūsų komanda nustato jūsų Nabil AI liniją. Čia matysite savo valdymo skydelį, kai bus paruošta — paprastai per vieną darbo dieną.",
+        "summaryForward": "Peradresuoti skambučius iš {currentNumber}",
+        "summaryNew": "Naujas numeris (dabartinis: {currentNumber})",
+        "summaryTransfer": "Peradresavimas asmeniui: {transferNumber}",
+        "summaryGreeting": "Pasisveikinimo vardas: {name}",
+        "summarySent": "Pateikta {date}",
+        "updateRequest": "Atnaujinti užklausą",
+        "prepareHint": "Galite atnaujinti nustatymus, kol linija bus paruošta.",
+        "currentNumberLabel": "Jūsų dabartinis telefono numeris",
+        "phoneHint": "Numeris, kuriuo šiandien skambina jūsų klientai.",
+        "modeLabel": "Kaip norite nustatyti liniją?",
+        "modeForward": "Peradresuoti mano numerį",
+        "modeForwardHint": "Peradresuojate esamą numerį Nabil. Skambinantieji renka tą patį numerį.",
+        "modeNew": "Suteikite man naują numerį",
+        "modeNewHint": "Suteikiame naują numerį Nabil. Galite jį paskelbti greta esamos linijos.",
+        "transferNumberLabel": "Peradresuoti skambučius į",
+        "transferNumberHint": "Kai skambinantysis prašo žmogaus, Nabil peradresuoja skambutį čia.",
+        "greetingNameLabel": "Restorano pavadinimas pasisveikinimui",
+        "greetingNameHint": "Kaip Nabil turėtų pristatyti jūsų restoraną telefonu.",
+        "notesLabel": "Dar kas nors (neprivaloma)",
+        "submitting": "Siunčiama…",
+        "submit": "Pateikti užklausą",
+        "cancelEdit": "Atšaukti",
+        "errorAlreadyProvisioned": "Jūsų linija jau nustatyta — atnaujinkite puslapį.",
+        "errorGeneric": "Kažkas nepavyko. Bandykite dar kartą."
+      },
+      "nowAvailable": "Dabar pasiekiama",
+      "availableHeading": "Nabil AI telefono užsakymai",
+      "availablePrice": "{rate} skambučio minutei · {minimum}/mėn. minimumas · {included} minučių įtraukta",
+      "availableConcierge": "Mūsų komanda nustato jūsų liniją per vieną darbo dieną. Jokio techninio darbo iš jūsų pusės.",
+      "availableDemo": "Jau mokantis narys? Išbandykite nemokamai {days} dienas.",
+      "subscribeCta": "Prenumeruoti ir nustatyti"
     },
     "customerDetailPage": {
       "allCustomers": "Visi klientai",
@@ -6865,7 +6913,8 @@
             "b3": "Saugu ir užšifruota",
             "b4": "Sukurta Kanadoje"
           }
-        }
+        },
+        "nowAvailable": "Dabar pasiekiama"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Pradėti nemokamai",
       "ctaContact": "Susisiekti su pardavimų komanda",
-      "trialNote": "Nereikia kredito kortelės. Jokių sutarčių."
+      "trialNote": "Nereikia kredito kortelės. Jokių sutarčių.",
+      "phoneOrderingMinuteNote": "Atsiskaitoma 0,60 USD/min su minimumu 249,99 USD/mėn. (≈ 416 įtrauktų minučių). Išsamiau"
     },
     "faq": {
       "title": "Dažnai užduodami klausimai",
@@ -7075,6 +7125,211 @@
       "b1": "Tikras jūsų meniu — nuotraukos, dydžiai ir priedai",
       "b2": "Užsisakykite iš karto, kaip tikras klientas",
       "b3": "Patiko? Užsiregistruokite ir pasilikite — be pakartotinio importavimo"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI telefoniniai užsakymai",
+        "title": "Jūsų picerijos telefonas, <accent>atsako AI</accent>",
+        "subtitle": "Nabil AI priima telefoninius užsakymus jūsų picerijai — pusiau padalytas picos, rinkiniai, pristatymo zonos, priedai pagal pavadinimą — ir pateikia juos per tą pačią kasą kaip jūsų svetainė. Sukurta buvusių picerijų savininkų, kurie žino, kaip skamba tikras skambutis.",
+        "ctaStart": "Pradėkite",
+        "ctaSecondary": "Sužinokite, kaip tai veikia",
+        "trust1": "Sukurta picerijoms",
+        "trust2": "Ta pati kasa kaip jūsų svetainėje",
+        "trust3": "Įrašai ir transkripcijos",
+        "trust4": "US$0.60 už skambučio minutę",
+        "sampleLabel": "Tiesioginio skambučio pavyzdys",
+        "sampleCaller": "Skambinantysis",
+        "sample1": "Sveiki, ar galiu pateikti užsakymą su pristatymu?",
+        "sample2": "Žinoma! Mielai padėsiu. Ko jums šiandien paruošti?",
+        "sample3": "Didelę picą, pusę su peperoniu ir grybais, pusę su žaliąja paprika ir svogūnais.",
+        "sample4": "Supratau — didelė pusiau padalyta pica: peperonis su grybais vienoje pusėje, žalioji paprika su svogūnais kitoje. Dar ko nors?"
+      },
+      "story": {
+        "eyebrow": "Mūsų istorija",
+        "title": "Sukurta picerijoms, buvusių picerijų savininkų",
+        "body1": "Praleidome metus už prekystalio priimdami telefoninius užsakymus. Žinome, ką skambinantieji iš tikrųjų sako — pusiau padalytos picos užsakymus, paskutinės minutės priedų pakeitimus, «kaip praėjusį kartą». Sukūrėme Nabil AI, kad tvarkytų tuos skambučius taip, kaip tai darytume mes.",
+        "body2": "Skirtingai nuo bendrųjų AI telefoninių sistemų, Nabil nuo pirmos dienos buvo suprojektuotas aplink picų ir restoranų užsakymus. Kiekviena funkcija — nuo kombinacijų kūrimo iki pristatymo zonų tikrinimo — egzistuoja, nes mums jos reikėjo mūsų pačių parduotuvėje.",
+        "point1": "Suprojektuotas aplink tikras picerijos operacijas",
+        "point2": "Kiekvienas užsakymas eina per jūsų patikrintą kasą",
+        "point3": "Jūsų meniu yra AI meniu — nieko išgalvoto"
+      },
+      "how": {
+        "eyebrow": "Kaip tai veikia",
+        "title": "Trys žingsniai iki telefoninių užsakymų autopilotuose",
+        "step1": {
+          "title": "Prijunkite savo telefono liniją",
+          "body": "Peradresuokite esamą numerį arba gaukite naują. Mūsų komanda nustato jūsų liniją per vieną darbo dieną — jokio techninio darbo iš jūsų pusės."
+        },
+        "step2": {
+          "title": "Nabil priima skambutį",
+          "body": "Nabil pasveikina skambinančiuosius jūsų restorano vardu, priima užsakymą pokalbio forma, patvirtina kiekvieną prekę ir perskaito bendrą sumą prieš pateikdamas."
+        },
+        "step3": {
+          "title": "Užsakymas atspausdinamas jūsų virtuvėje",
+          "body": "Užsakymas eina per tą pačią kasą kaip svetainės užsakymas. Jis pasirodo jūsų virtuvės ekrane, atspausdinamas kvitų spausdintuve ir rodomas jūsų administravimo skydelyje — viskas automatiškai."
+        }
+      },
+      "handles": {
+        "eyebrow": "Ką tvarko",
+        "title": "Viskas, ko jūsų skambintojai prašo",
+        "subtitle": "Nabil tvarko užsakymus, kuriuos tvarko jūsų komanda — nuo paprastų picų su vienu priedu iki sudėtingų pusė ir pusė kombų su pristatymu.",
+        "halfHalf": {
+          "title": "Pusė ir pusė picos",
+          "body": "Skambintojai gali užsisakyti skirtingus priedus ant kiekvienos pusės, o Nabil patvirtina kiekvieną pusę prieš pateikdamas užsakymą."
+        },
+        "combos": {
+          "title": "Kombai ir patiekalų pasiūlymai",
+          "body": "Nabil veda skambintojus per kombo pasirinkimus — pasirinkite picą, garnyrus, gėrimą — lygiai kaip jūsų svetainėje."
+        },
+        "delivery": {
+          "title": "Pristatymas su zonos patikrinimu",
+          "body": "Paima pristatymo adresą, patikrina ar ji jūsų zonoje, nurodo mokestį ir pateikia užsakymą — be spėliojimų."
+        },
+        "upsells": {
+          "title": "Išmanusis papildomas pardavimas",
+          "body": "Pasiūlo jūsų pasirinktus produktus tinkamu pokalbio momentu — gėrimą prie picos, desertą prieš apmokėjimą."
+        },
+        "faq": {
+          "title": "Atsako į dažnus klausimus",
+          "body": "Darbo valandos, vieta, parkavimas, alergenai — Nabil atsako į jūsų parduotuvės DUK, kad jūsų darbuotojams nereikėtų."
+        },
+        "returning": {
+          "title": "Atpažįsta grįžtančius skambintojus",
+          "body": "Sveikina nuolatinius klientus vardu ir prisimena jų užsakymų istoriją, todėl pakartotiniai užsakymai yra greiti."
+        },
+        "transfer": {
+          "title": "Peradresuoja žmogui",
+          "body": "Kai skambintojas prašo žmogaus arba turi užklausą, kurios Nabil negali aptarnauti, skambutis peradresuojamas į jūsų parduotuvės numerį."
+        },
+        "numbers": {
+          "title": "Taria skaičius natūraliai",
+          "body": "Telefono numeriai, adresai, kainos ir laikai ištariami žodžiais — 'šeši keturiasdešimt septyni' o ne '647' — kad skambintojas visada suprastų."
+        },
+        "hours": {
+          "title": "Žino jūsų darbo valandas",
+          "body": "Nabil žino, kada esate atidarę, kada uždarę ir jūsų švenčių grafiką — skambintojai kiekvieną kartą gauna tikslią informaciją."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Kodėl tai tikslinga",
+        "title": "Užsakymas teisingas, nes sistema neleidžia jam būti klaidingam",
+        "body": "Nabil nespėlioja. Kiekviena prekė tikrinama pagal jūsų tikrą meniu, kiekviena kaina apskaičiuojama jūsų kasoje, ir kiekviena modifikacija patvirtinama su skambinančiuoju prieš pateikiant užsakymą.",
+        "cart": {
+          "title": "Serverio pusės krepšelis",
+          "body": "Užsakymas kuriamas serveryje, ne dirbtinio intelekto atmintyje. Jūsų meniu kainos, taisyklės ir prieinamumas yra vienintelis tiesos šaltinis."
+        },
+        "asks": {
+          "title": "Klausia, niekada nespėja",
+          "body": "Kai kažkas neaišku — dydis, užpilo vieta, tešlos pasirinkimas — Nabil klausia skambinančiojo, o ne spėja."
+        },
+        "readback": {
+          "title": "Pilnas perskaitimas",
+          "body": "Prieš pateikdamas užsakymą, Nabil perskaito kiekvieną prekę, modifikatorių ir bendrą sumą — skambinantysis patvirtina, prieš ką nors siunčiant į virtuvę."
+        },
+        "alarm": {
+          "title": "Įspėjimas: nurodyta = apmokestinta kaina",
+          "body": "Jei AI nurodyta bendra suma nesutampa su kasos apskaičiuota suma, sistema tai pažymi prieš pateikiant užsakymą."
+        },
+        "timeline": {
+          "title": "Kiekvieno skambučio laiko juosta",
+          "body": "Kiekvienas skambutis turi detalią laiko juostą, rodančią kiekvieną įrankio iškvietimą, krepšelio pakeitimą ir sprendimą — kad matytumėte tiksliai, kas įvyko."
+        },
+        "tests": {
+          "title": "Automatizuota testų rinkinys",
+          "body": "Simuliacijos sistema leidžia tikrus užsakymo scenarijus su kiekvienu atnaujinimu — pusiau padalintas picos, rinkiniai, ribiniai atvejai — prieš pasiekiant jūsų telefono liniją."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Jūsų valdymo skydelis",
+        "title": "Matykite kiekvieną skambutį, girdėkite kiekvieną žodį",
+        "subtitle": "Įrašai, transkripcijos, pajamų sekimas ir laiko juosta kiekvienam skambučiui — viskas, ką reikia žinoti apie tai, ką Nabil daro jūsų restoranui.",
+        "shotOverviewAlt": "Nabil AI valdymo skydelio apžvalga, rodanti skambučių apimtį, pajamas ir konversijos rodiklius",
+        "shotCallsAlt": "Skambučių sąrašas, rodantis naujausius telefonų užsakymus su rezultatais ir trukmėmis",
+        "shotDetailAlt": "Detali skambučio peržiūra su transkripcija, laiko juosta ir užsakymo santrauka",
+        "shotSettingsAlt": "Nabil AI nustatymų skydelis su pasisveikinimo, papildomo pardavimo ir DUK konfigūracija",
+        "shotReportAlt": "Skambučio pranešimo dialogas problemų žymėjimui Fee Free komandai",
+        "overview": {
+          "title": "Pajamų apžvalga",
+          "body": "Pažiūrėkite, kiek pajamų Nabil atneša, su diagramomis skambučiams, užsakymams ir konversijos rodikliams."
+        },
+        "calls": {
+          "title": "Skambučių istorija",
+          "body": "Naršykite kiekvieną skambutį su jo rezultatu, trukme, įrašu ir transkripcija."
+        },
+        "detail": {
+          "title": "Skambučio laiko juosta",
+          "body": "Sekundė po sekundės laiko juosta to, kas vyko skambučio metu — kiekvienas įrankio iškvietimas, krepšelio pakeitimas ir ištartas žodis."
+        },
+        "report": {
+          "title": "Pranešti apie skambutį",
+          "body": "Pažymėkite bet kurį skambutį, kuris nepavyko. Mūsų komanda jį peržiūri ir tobulina Nabil apdorojimą."
+        },
+        "settings": {
+          "title": "Pilna kontrolė",
+          "body": "Konfigūruokite Nabil pasisveikinimą, papildomo pardavimo pasiūlymus, DUK atsakymus, užblokuotus skambinančiuosius ir mokėjimo nuoroda nustatymus."
+        },
+        "roi": {
+          "title": "ROI sekimas",
+          "body": "Sekite pajamas per skambučio minutę, kad žinotumėte tiksliai, kiek Nabil uždirba jūsų parduotuvei."
+        }
+      },
+      "same": {
+        "eyebrow": "Ta pati sistema, ta pati kasa",
+        "title": "Telefono užsakymas yra svetainės užsakymas",
+        "body": "Nabil nenaudoja atskiros užsakymu sistemos. Kiekvienas telefono užsakymas eina per tą pačią kasą, meniu, kainas ir virtuvės ekraną kaip užsakymai iš svetainės. Viena sistema, vienas tiesos šaltinis.",
+        "bullet1": "Tas pats meniu, tos pačios kainos, tie patys modifikatoriai",
+        "bullet2": "Tas pats virtuvės ekranas ir kvitų spausdintuvas",
+        "bullet3": "Tas pats užsakymo patvirtinimas ir sekimas",
+        "bullet4": "Tas pats administravimo skydelis ir ataskaitos",
+        "frameAlt": "Virtuvės ekranas su telefono užsakymu šalia svetainės užsakymų"
+      },
+      "languages": {
+        "eyebrow": "Daugiakalbis",
+        "title": "Nabil kalba jūsų skambinančiųjų kalba",
+        "body": "Nabil automatiškai nustato skambinančiojo kalbą ir atsako ta pačia kalba. Jūsų meniu elementai, aprašymai ir modifikatoriai pateikiami skambinančiojo kalba — tie patys vertimai kaip jūsų svetainėje."
+      },
+      "pricing": {
+        "eyebrow": "Paprastos kainos",
+        "title": "Viena kaina. Be staigmenų.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "per skambučio minutę",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minimumas per mėnesį",
+        "rule": "Mokate didesnę sumą: jūsų skambučių minutes po 0,60 USD kiekviena, arba mėnesinį minimumą 249,99 USD. Dauguma restoranų neviršija įtrauktų 416 minučių.",
+        "demo": "Jau mokantis Fee Free narys? Išbandykite Nabil nemokamai 7 dienas — be įsipareigojimų.",
+        "include1": "Neriboti skambučiai",
+        "include2": "Įrašai ir transkripcijos",
+        "include3": "Valdymo skydelis ir analitika",
+        "include4": "Padedamas linijos nustatymas",
+        "include5": "Nuolatiniai atnaujinimai ir patobulinimai",
+        "cta": "Pradėkite",
+        "note": "Kainos nurodytos JAV doleriais. Mėnesinis atsiskaitymas per Stripe. Atšaukite bet kada."
+      },
+      "faq": {
+        "title": "Dažnai užduodami klausimai",
+        "q1": "Kaip Nabil priima užsakymą?",
+        "a1": "Nabil atsako į jūsų telefono liniją, pasveikina skambinantįjį jūsų restorano vardu, priima užsakymą pokalbio forma, patvirtina kiekvieną prekę ir sumą ir pateikia per jūsų esamą kasą. Užsakymas pasirodo virtuvės ekrane ir automatiškai atspausdinamas.",
+        "q2": "Ar skambinantysis žino, kad kalba su AI?",
+        "a2": "Nabil skamba natūraliai ir pokalbiškai, bet tikime skaidrumu — skambinantieji visada gali paprašyti žmogaus, ir skambutis perkeliamas nedelsiant.",
+        "q3": "Ką daryti, jei Nabil suklysta?",
+        "a3": "Kiekvienas skambutis turi įrašą, transkripciją ir išsamią laiko juostą. Galite pažymėti bet kurį skambutį ir mūsų komanda ištirs. Serverio pusės krepšelis ir perskaitymo patvirtinimas sumažina klaidas.",
+        "q4": "Ar Nabil gali tvarkyti pusę ant pusės picas?",
+        "a4": "Taip — pusę ant pusės picos su skirtingais priedais kiekvienoje pusėje yra pagrindinė funkcija. Nabil patvirtina kiekvieną pusę ir sukuria užsakymą lygiai taip, kaip jūsų svetainės kasa.",
+        "q5": "Kaip prijungti telefono liniją?",
+        "a5": "Po prenumeratos pasakykite mums savo numerį ir ar norite jį peradresuoti Nabil, ar gauti naują. Mūsų komanda viską nustato per vieną darbo dieną — be techninio darbo.",
+        "q6": "Kas vyksta ne darbo valandomis?",
+        "a6": "Nabil žino jūsų darbo valandas ir švenčių grafiką. Ne darbo valandomis informuoja skambinantįjį, kada vėl atsidarote, ir gali pasiūlyti suplanuotą užsakymą, jei tai įjungta.",
+        "q7": "Kaip skaičiuojamas atsiskaitymas?",
+        "a7": "Mokate 0,60 USD per skambučio minutę arba mėnesinį minimumą 249,99 USD — kas yra aukščiau. Minimumas apima apie 416 minučių. Kiekvienas skambutis suapvalinamas į viršų. Stebėkite naudojimą realiu laiku.",
+        "q8": "Ar galiu atšaukti bet kada?",
+        "a8": "Taip. Nabil atsiskaitomas kas mėnesį per Stripe be ilgalaikės sutarties. Atšaukite iš valdymo skydelio bet kada ir jūsų linija lieka aktyvi iki atsiskaitymo periodo pabaigos."
+      },
+      "finalCta": {
+        "title": "Pasirengę leisti Nabil atsiliepti į telefoną?",
+        "body": "Nustatymas trunka vieną darbo dieną. Pradėkite priimti telefono užsakymus per savo sistemą — be papildomos įrangos, personalo ar streso.",
+        "primary": "Pradėkite",
+        "secondary": "Žiūrėti visas kainas"
+      }
     }
   },
   "addressBook": {

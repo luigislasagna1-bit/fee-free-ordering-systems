@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Campagne",
       "titleCampaignLocked": "Deze code wordt gemaild door een actieve Autopilot-campagne. Zet de campagne uit bij Marketing → Autopilot om hem in te trekken.",
-      "toggleFailed": "Deze actie kon niet worden gewijzigd. Probeer het opnieuw."
+      "toggleFailed": "Deze actie kon niet worden gewijzigd. Probeer het opnieuw.",
+      "phoneOff": "Telefoon uit",
+      "phoneOffTip": "Deze actie geldt niet voor telefonische bestellingen via Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Kies een promotietype om door te gaan.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Verborgen acties gelden alleen wanneer de klant deze code bij het afrekenen invoert.",
       "vipLockedTitle": "Alleen VIP — gekoppeld aan: {groups}",
       "vipLockedDesc": "Deze promotie geldt automatisch alleen voor die VIP-leden bij het afrekenen. Ze verschijnt nooit op je openbare menu, banner of website — geen zichtbaarheidsschakelaar verandert dat. Koppel haar eerst los op de pagina VIP-groepen om haar openbaar te maken.",
-      "bundleBuildInfo": "💡 Klanten stellen dit bundel samen via een kaart ‘Stel je deal samen’ op je menu. Zet het vast op de banner hieronder zodat het makkelijk te vinden is. (Een bundel kan niet automatisch worden toegepast of met een code worden ontgrendeld.)"
+      "bundleBuildInfo": "💡 Klanten stellen dit bundel samen via een kaart ‘Stel je deal samen’ op je menu. Zet het vast op de banner hieronder zodat het makkelijk te vinden is. (Een bundel kan niet automatisch worden toegepast of met een code worden ontgrendeld.)",
+      "phoneOrdersLabel": "Beschikbaar per telefoon (Nabil AI)",
+      "phoneOrdersOnSub": "Deze actie geldt voor telefonische bestellingen via Nabil AI",
+      "phoneOrdersOffSub": "Deze actie geldt niet voor telefonische bestellingen",
+      "phoneOrdersHelp": "Uit = deze actie geldt niet voor telefonische bestellingen. Web-, app- en marketplace-bestellingen worden niet beïnvloed.",
+      "clientTypeMemberWarning": "Ledenacties vereisen een account — bellers zonder registratie zien deze actie niet."
     },
     "customersList": {
       "heading": "Klanten",
@@ -4355,7 +4362,12 @@
         "viewAll": "Alle gesprekken bekijken",
         "chartPopularItems": "Meest besteld via de telefoon",
         "popularItemsCta": "Uitgelichte upsells instellen",
-        "popularItemsEmpty": "Nog geen telefonische bestellingen in deze periode."
+        "popularItemsEmpty": "Nog geen telefonische bestellingen in deze periode.",
+        "meterTitle": "Gebruik deze maand",
+        "meterMinutes": "{minutes} minuten gebruikt",
+        "meterCharge": "Huidig: {amount} · Verwacht: {projected}",
+        "meterOver": "{minutes} minuten boven inbegrepen",
+        "meterIncluded": "{included} min inbegrepen in het {minimum}/maand minimum ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Zoek op telefoon, naam of samenvatting…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Nummer gedeblokkeerd",
         "errorToast": "Bijwerken mislukt — probeer het opnieuw.",
         "invalidPhone": "Voer een geldig telefoonnummer in."
-      }
+      },
+      "setup": {
+        "title": "Stel uw telefoonlijn in",
+        "body": "Vertel ons over uw telefoonlijn en Nabil neemt binnen één werkdag gesprekken aan. Geen technische configuratie nodig.",
+        "receivedTitle": "Instellingsverzoek ontvangen",
+        "receivedBody": "Ons team stelt uw Nabil AI-lijn in. U ziet hier uw live dashboard zodra het klaar is — doorgaans binnen één werkdag.",
+        "summaryForward": "Doorschakelen vanaf {currentNumber}",
+        "summaryNew": "Nieuw nummer (huidig: {currentNumber})",
+        "summaryTransfer": "Doorverbinden naar: {transferNumber}",
+        "summaryGreeting": "Begroetingsnaam: {name}",
+        "summarySent": "Verzonden op {date}",
+        "updateRequest": "Verzoek bijwerken",
+        "prepareHint": "U kunt uw voorkeuren wijzigen totdat de lijn is ingesteld.",
+        "currentNumberLabel": "Uw huidige telefoonnummer",
+        "phoneHint": "Het nummer dat uw klanten nu bellen.",
+        "modeLabel": "Hoe wilt u uw lijn instellen?",
+        "modeForward": "Mijn nummer doorschakelen",
+        "modeForwardHint": "U schakelt uw bestaande nummer door naar Nabil. Bellers bellen hetzelfde nummer.",
+        "modeNew": "Geef me een nieuw nummer",
+        "modeNewHint": "Wij wijzen een nieuw nummer toe voor Nabil. U kunt het naast uw bestaande lijn publiceren.",
+        "transferNumberLabel": "Gesprekken doorverbinden naar",
+        "transferNumberHint": "Wanneer een beller een persoon vraagt, verbindt Nabil het gesprek hierheen door.",
+        "greetingNameLabel": "Restaurantnaam voor de begroeting",
+        "greetingNameHint": "Hoe Nabil uw restaurant moet voorstellen bij het opnemen.",
+        "notesLabel": "Nog iets dat we moeten weten (optioneel)",
+        "submitting": "Verzenden…",
+        "submit": "Verzoek indienen",
+        "cancelEdit": "Annuleren",
+        "errorAlreadyProvisioned": "Uw lijn is al ingesteld — vernieuw de pagina om uw dashboard te zien.",
+        "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw."
+      },
+      "nowAvailable": "Nu beschikbaar",
+      "availableHeading": "Nabil AI telefonisch bestellen",
+      "availablePrice": "{rate} per belminuut · {minimum}/maand minimum · {included} minuten inbegrepen",
+      "availableConcierge": "Ons team stelt uw lijn in binnen één werkdag. Geen technisch werk aan uw kant.",
+      "availableDemo": "Al betalend lid? Probeer het {days} dagen gratis.",
+      "subscribeCta": "Abonneren & instellen"
     },
     "customerDetailPage": {
       "allCustomers": "Alle klanten",
@@ -6865,7 +6913,8 @@
             "b3": "Veilig & versleuteld",
             "b4": "Gebouwd in Canada"
           }
-        }
+        },
+        "nowAvailable": "Nu beschikbaar"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Gratis aan de slag",
       "ctaContact": "Contact opnemen met verkoop",
-      "trialNote": "Geen creditcard vereist. Geen contracten."
+      "trialNote": "Geen creditcard vereist. Geen contracten.",
+      "phoneOrderingMinuteNote": "Gefactureerd à US$ 0,60/min met een minimum van US$ 249,99/maand (≈ 416 inbegrepen minuten). Details op"
     },
     "faq": {
       "title": "Veelgestelde vragen",
@@ -7075,6 +7125,211 @@
       "b1": "Je echte menu — foto's, maten & toppings",
       "b2": "Bestel er meteen vanaf, net als een klant",
       "b3": "Vind je het mooi? Meld je aan en behoud het — geen herimport"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI-telefonisch bestellen",
+        "title": "De telefoon van je pizzeria, <accent>opgenomen door AI</accent>",
+        "subtitle": "Nabil AI neemt telefonische bestellingen aan voor je pizzeria — half-om-half pizza's, combo's, bezorgzones, toppings op naam — en plaatst ze via dezelfde checkout als je website. Gebouwd door voormalige pizzeria-eigenaren die weten hoe een echt telefoontje klinkt.",
+        "ctaStart": "Aan de slag",
+        "ctaSecondary": "Bekijk hoe het werkt",
+        "trust1": "Gebouwd voor pizzeria's",
+        "trust2": "Dezelfde checkout als je website",
+        "trust3": "Opnames & transcripties",
+        "trust4": "US$0.60 per belminuut",
+        "sampleLabel": "Voorbeeld van een live gesprek",
+        "sampleCaller": "Beller",
+        "sample1": "Hallo, kan ik een bestelling plaatsen voor bezorging?",
+        "sample2": "Natuurlijk! Ik help je graag. Wat mag het vandaag zijn?",
+        "sample3": "Een grote pizza, half pepperoni en champignons, half groene paprika en uien.",
+        "sample4": "Begrepen — een grote half-om-half pizza: pepperoni en champignons aan de ene kant, groene paprika en uien aan de andere. Nog iets anders?"
+      },
+      "story": {
+        "eyebrow": "Ons verhaal",
+        "title": "Gebouwd voor pizzeria's, door voormalige pizzeria-eigenaren",
+        "body1": "We hebben jarenlang achter de toonbank telefonische bestellingen opgenomen. We weten wat bellers echt zeggen — de half-om-half verzoeken, de last-minute wijzigingen van toppings, het 'hetzelfde als vorige keer'. We hebben Nabil AI gebouwd om die gesprekken af te handelen zoals wij dat zouden doen.",
+        "body2": "In tegenstelling tot generieke AI-telefoonsystemen is Nabil vanaf dag één ontworpen rondom pizza- en restaurantbestellingen. Elke functie — van combo's samenstellen tot bezorgzones controleren — bestaat omdat we die in onze eigen zaak nodig hadden.",
+        "point1": "Ontworpen rondom echte pizzeria-operaties",
+        "point2": "Elke bestelling gaat via je geverifieerde checkout",
+        "point3": "Jouw menu is het menu van de AI — niets verzonnen"
+      },
+      "how": {
+        "eyebrow": "Hoe het werkt",
+        "title": "Drie stappen naar telefonische bestellingen op de automatische piloot",
+        "step1": {
+          "title": "Verbind je telefoonlijn",
+          "body": "Schakel je bestaande nummer door of neem een nieuw nummer. Ons team zet je lijn binnen één werkdag op — geen technisch werk aan jouw kant."
+        },
+        "step2": {
+          "title": "Nabil neemt het gesprek aan",
+          "body": "Nabil begroet bellers met de naam van je restaurant, neemt hun bestelling conversationeel op, bevestigt elk item en leest het totaal voor voordat het wordt geplaatst."
+        },
+        "step3": {
+          "title": "De bestelling wordt in je keuken geprint",
+          "body": "De bestelling gaat via dezelfde checkout als een websitebestelling. Ze verschijnt op je keukenscherm, wordt op je bonprinter geprint en verschijnt op je admin-dashboard — alles automatisch."
+        }
+      },
+      "handles": {
+        "eyebrow": "Wat het afhandelt",
+        "title": "Alles wat uw bellers vragen",
+        "subtitle": "Nabil verwerkt de bestellingen die uw team verwerkt — van eenvoudige pizza's met één topping tot complexe half-om-half combo's met bezorging.",
+        "halfHalf": {
+          "title": "Half-om-half pizza's",
+          "body": "Bellers kunnen verschillende toppings op elke helft bestellen, en Nabil bevestigt elke zijde voordat de bestelling wordt geplaatst."
+        },
+        "combos": {
+          "title": "Combo's & maaltijddeals",
+          "body": "Nabil leidt bellers door de combokeuzes — kies je pizza, kies je bijgerecht, kies je drankje — net als op je website."
+        },
+        "delivery": {
+          "title": "Bezorging met zonecontrole",
+          "body": "Neemt het bezorgadres, controleert of het in uw zone ligt, noemt de kosten en plaatst de bestelling — zonder giswerk."
+        },
+        "upsells": {
+          "title": "Slim upsellen",
+          "body": "Suggereert de items die u kiest op het juiste moment in het gesprek — een drankje bij een pizza, een dessert voor het afrekenen."
+        },
+        "faq": {
+          "title": "Beantwoordt veelgestelde vragen",
+          "body": "Openingstijden, locatie, parkeren, allergenen — Nabil beantwoordt de veelgestelde vragen van uw zaak zodat uw personeel dat niet hoeft te doen."
+        },
+        "returning": {
+          "title": "Herkent terugkerende bellers",
+          "body": "Begroet vaste klanten bij naam en onthoudt hun bestelgeschiedenis, zodat herbestellingen snel gaan."
+        },
+        "transfer": {
+          "title": "Doorverbinden naar een persoon",
+          "body": "Wanneer een beller een mens wil spreken of een verzoek heeft dat Nabil niet kan afhandelen, wordt het gesprek doorverbonden naar het nummer van uw zaak."
+        },
+        "numbers": {
+          "title": "Spreekt nummers natuurlijk uit",
+          "body": "Telefoonnummers, adressen, prijzen en tijden worden in woorden uitgesproken — 'zes zevenenveertig' in plaats van '647' — zodat de beller het altijd begrijpt."
+        },
+        "hours": {
+          "title": "Kent uw openingstijden",
+          "body": "Nabil weet wanneer u open bent, wanneer u gesloten bent en uw feestdagenrooster — bellers krijgen elke keer nauwkeurige informatie."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Waarom het nauwkeurig is",
+        "title": "De bestelling is juist omdat het systeem geen fouten toelaat",
+        "body": "Nabil gokt niet. Elk artikel wordt gevalideerd aan de hand van uw echte menu, elke prijs wordt berekend door uw kassa, en elke aanpassing wordt bevestigd met de beller voordat de bestelling wordt geplaatst.",
+        "cart": {
+          "title": "Server-side winkelwagen",
+          "body": "De bestelling wordt op de server opgebouwd, niet in het geheugen van de AI. De prijzen, regels en beschikbaarheid van uw menu zijn de enige bron van waarheid."
+        },
+        "asks": {
+          "title": "Vraagt, veronderstelt nooit",
+          "body": "Als iets onduidelijk is — een maat, de plaatsing van een topping, een deegkeuze — vraagt Nabil het aan de beller in plaats van te gokken."
+        },
+        "readback": {
+          "title": "Volledige terugkoppeling",
+          "body": "Voordat de bestelling wordt geplaatst, leest Nabil elk artikel, elke aanpassing en het totaal voor — de beller bevestigt voordat er iets naar de keuken wordt gestuurd."
+        },
+        "alarm": {
+          "title": "Alarm: opgegeven = berekend",
+          "body": "Als het door de AI genoemde totaal niet overeenkomt met wat de kassa berekent, signaleert het systeem dit voordat de bestelling wordt geplaatst."
+        },
+        "timeline": {
+          "title": "Tijdlijn per gesprek",
+          "body": "Elk gesprek heeft een gedetailleerde tijdlijn met elke tool-aanroep, winkelwagenwijziging en beslissing — zodat u precies kunt zien wat er is gebeurd."
+        },
+        "tests": {
+          "title": "Geautomatiseerde testsuite",
+          "body": "Een simulatiesysteem voert bij elke update echte bestelscenario's uit — half-om-half pizza's, combo's, randgevallen — voordat het uw telefoonlijn bereikt."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Uw dashboard",
+        "title": "Bekijk elk gesprek, beluister elk woord",
+        "subtitle": "Opnames, transcripties, omzettracking en een tijdlijn per gesprek — alles wat u nodig heeft om te weten wat Nabil voor uw restaurant doet.",
+        "shotOverviewAlt": "Overzicht van het Nabil AI dashboard met gespreksvolume, omzet en conversiecijfers",
+        "shotCallsAlt": "Gesprekslijst met recente telefonische bestellingen, resultaten en duur",
+        "shotDetailAlt": "Gespreksdetailweergave met transcript, tijdlijn en besteloverzicht",
+        "shotSettingsAlt": "Nabil AI instellingenpaneel met begroeting, upsells en FAQ-configuratie",
+        "shotReportAlt": "Gespreksrapportdialoog voor het melden van problemen aan het Fee Free team",
+        "overview": {
+          "title": "Omzetoverzicht",
+          "body": "Bekijk hoeveel omzet Nabil genereert, met grafieken voor gesprekken, bestellingen en conversiepercentages."
+        },
+        "calls": {
+          "title": "Gespreksgeschiedenis",
+          "body": "Bekijk elk gesprek met resultaat, duur, opname en transcript."
+        },
+        "detail": {
+          "title": "Gesprekstijdlijn",
+          "body": "Een seconde-voor-seconde tijdlijn van wat er tijdens het gesprek gebeurde — elke tool-aanroep, winkelwagenwijziging en gesproken woord."
+        },
+        "report": {
+          "title": "Gesprek melden",
+          "body": "Markeer elk gesprek dat niet goed ging. Ons team bekijkt het en verbetert de afhandeling van Nabil."
+        },
+        "settings": {
+          "title": "Volledige controle",
+          "body": "Configureer Nabils begroeting, upsell-suggesties, FAQ-antwoorden, geblokkeerde bellers en betaal-per-link-instellingen."
+        },
+        "roi": {
+          "title": "ROI-tracking",
+          "body": "Volg de omzet per gespreksminuut zodat u precies weet wat Nabil verdient voor uw zaak."
+        }
+      },
+      "same": {
+        "eyebrow": "Hetzelfde systeem, dezelfde kassa",
+        "title": "Een telefonische bestelling is een websitebestelling",
+        "body": "Nabil gebruikt geen apart bestelsysteem. Elke telefonische bestelling gaat door dezelfde kassa, hetzelfde menu, dezelfde prijzen en hetzelfde keukenscherm als uw websitebestellingen. Eén systeem, één bron van waarheid.",
+        "bullet1": "Hetzelfde menu, dezelfde prijzen, dezelfde opties",
+        "bullet2": "Hetzelfde keukenscherm en bonprinter",
+        "bullet3": "Dezelfde orderbevestiging en tracking",
+        "bullet4": "Hetzelfde admin-dashboard en rapporten",
+        "frameAlt": "Keukenscherm met een telefonische bestelling naast websitebestellingen"
+      },
+      "languages": {
+        "eyebrow": "Meertalig",
+        "title": "Nabil spreekt de taal van uw bellers",
+        "body": "Nabil detecteert de taal van de beller automatisch en antwoordt in dezelfde taal. Uw menu-items, beschrijvingen en opties worden aangeboden in de taal van de beller — dezelfde vertalingen als uw website."
+      },
+      "pricing": {
+        "eyebrow": "Eenvoudige prijzen",
+        "title": "Eén prijs. Geen verrassingen.",
+        "perMinute": "US$ 0,60",
+        "perMinuteLabel": "per belminuut",
+        "minimum": "US$ 249,99",
+        "minimumLabel": "minimum per maand",
+        "rule": "U betaalt het hogere bedrag: uw belminuten à US$ 0,60 per stuk, of het maandelijkse minimum van US$ 249,99. De meeste restaurants blijven binnen de inbegrepen 416 minuten.",
+        "demo": "Al betalend Fee Free-lid? Probeer Nabil 7 dagen gratis — zonder verplichting.",
+        "include1": "Onbeperkt bellen",
+        "include2": "Opnames & transcripties",
+        "include3": "Dashboard & analyses",
+        "include4": "Begeleide lijninstelling",
+        "include5": "Doorlopende updates & verbeteringen",
+        "cta": "Aan de slag",
+        "note": "Prijzen in Amerikaanse dollars. Maandelijks gefactureerd via Stripe. Op elk moment opzegbaar."
+      },
+      "faq": {
+        "title": "Veelgestelde vragen",
+        "q1": "Hoe neemt Nabil een bestelling op?",
+        "a1": "Nabil beantwoordt uw telefoonlijn, begroet de beller met uw restaurantnaam, neemt de bestelling conversationeel op, bevestigt elk artikel en het totaal, en plaatst het via uw bestaande kassa. De bestelling verschijnt op uw keukenscherm en wordt automatisch afgedrukt.",
+        "q2": "Weet de beller dat ze met AI praten?",
+        "a2": "Nabil klinkt natuurlijk en conversationeel, maar we geloven in transparantie — bellers kunnen altijd om een mens vragen, en het gesprek wordt onmiddellijk doorverbonden.",
+        "q3": "Wat als Nabil iets fout doet?",
+        "a3": "Elk gesprek heeft een opname, een transcript en een gedetailleerde tijdlijn. U kunt elk gesprek melden en ons team onderzoekt het. De serverside winkelwagen en de teruglez-bevestiging minimaliseren fouten.",
+        "q4": "Kan Nabil half-om-half pizza's verwerken?",
+        "a4": "Ja — half-om-half pizza's met verschillende toppings aan elke kant zijn een kernfunctie. Nabil bevestigt elke kant en bouwt de bestelling exact zoals uw websitekassa.",
+        "q5": "Hoe verbind ik mijn telefoonlijn?",
+        "a5": "Na het abonneren vertelt u ons uw nummer en of u het wilt doorschakelen naar Nabil of een nieuw nummer wilt. Ons team regelt alles binnen één werkdag — zonder technisch werk.",
+        "q6": "Wat gebeurt er buiten openingstijden?",
+        "a6": "Nabil kent uw openingstijden en feestdagen. Buiten de tijden laat het de beller weten wanneer u weer open bent en kan een geplande bestelling aanbieden indien ingeschakeld.",
+        "q7": "Hoe wordt de facturering berekend?",
+        "a7": "U betaalt US$ 0,60 per belminuut of het maandelijkse minimum van US$ 249,99, afhankelijk van wat hoger is. Het minimum bevat ongeveer 416 minuten. Elk gesprek wordt naar boven afgerond. Volg uw gebruik in realtime.",
+        "q8": "Kan ik op elk moment opzeggen?",
+        "a8": "Ja. Nabil wordt maandelijks gefactureerd via Stripe zonder langlopend contract. Annuleer op uw dashboard en uw lijn blijft actief tot het einde van de factureringsperiode."
+      },
+      "finalCta": {
+        "title": "Klaar om Nabil uw telefoon te laten opnemen?",
+        "body": "Instellen duurt één werkdag. Begin telefonische bestellingen te ontvangen via uw systeem — geen extra hardware, personeel of stress.",
+        "primary": "Aan de slag",
+        "secondary": "Bekijk alle prijzen"
+      }
     }
   },
   "addressBook": {

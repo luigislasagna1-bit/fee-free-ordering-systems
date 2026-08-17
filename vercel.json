@@ -108,6 +108,10 @@
     {
       "path": "/api/cron/voice-intelligence",
       "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/nabil-usage-billing",
+      "schedule": "15 0 1 * *"
     }
   ]
 }

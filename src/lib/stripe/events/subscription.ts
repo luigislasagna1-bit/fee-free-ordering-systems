@@ -4,6 +4,7 @@ import { getStripe } from "@/lib/stripe";
 import { notifyAddOnChange } from "@/lib/platform-notifications";
 import { graceDeadline, startRestaurantGrace, clearRestaurantGraceIfHealthy } from "@/lib/dunning";
 import { ensureResellerGenericSubdomain } from "@/lib/reseller-subdomain";
+import { markNabilDemoUsed, subscriptionIsNabilDemo, PHONE_ORDERING_ADDON_SLUG } from "@/lib/voice/nabil-trial";
 
 /**
  * Handle customer.subscription.* events.
@@ -290,6 +291,18 @@ async function handleAddOnSubscriptionEvent(
       graceEndsAt: addOnGraceEndsAt,
     },
   });
+
+  // Nabil AI one-time member demo (Luigi 2026-08-16): the Checkout route marked
+  // this subscription as the demo (metadata) — stamp VoiceAgentConfig.trialUsedAt
+  // NOW that the subscription exists. markNabilDemoUsed is a conditional write
+  // (only where still null), so Stripe's retries / later update events never
+  // re-stamp. NOT wrapped in try/catch on purpose: if this write fails the
+  // event must 500 so Stripe retries it — "never grant the demo twice" depends
+  // on the stamp landing, and every write above is idempotent on the retry.
+  if (addOn.slug === PHONE_ORDERING_ADDON_SLUG && subscriptionIsNabilDemo(sub.metadata as Record<string, string> | null)) {
+    const stamped = await markNabilDemoUsed(restaurantId);
+    if (stamped) console.log(`[stripe] Nabil demo used: restaurant ${restaurantId} (sub ${sub.id})`);
+  }
 
   // A failed add-on charge also starts the restaurant-level dunning clock, so
   // the daily cron nudges the owner + their reseller and the admin shows the

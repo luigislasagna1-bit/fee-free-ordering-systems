@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Campanya",
       "titleCampaignLocked": "Una campanya d'Autopilot activa està enviant aquest codi per correu. Desactiva la campanya a Màrqueting → Autopilot per retirar-lo.",
-      "toggleFailed": "No s'ha pogut canviar aquesta promoció. Torna-ho a provar."
+      "toggleFailed": "No s'ha pogut canviar aquesta promoció. Torna-ho a provar.",
+      "phoneOff": "Telèfon desact.",
+      "phoneOffTip": "Aquesta promoció no s'aplica a les comandes telefòniques de Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Trieu un tipus de promoció per continuar.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Les promocions amagades només s'apliquen quan el client introdueix aquest codi en pagar.",
       "vipLockedTitle": "Només VIP — vinculat a: {groups}",
       "vipLockedDesc": "Aquesta promoció s'aplica automàticament només per a aquests membres VIP al pagament. Mai no apareix al menú públic, al bàner ni al web — cap interruptor de visibilitat ho pot canviar. Per fer-la pública, primer desvincula-la a la pàgina Grups VIP.",
-      "bundleBuildInfo": "💡 Els clients creen aquest paquet des d'una targeta «Crea la teva oferta» al teu menú. Fixa'l al bàner de sota perquè sigui fàcil de trobar. (Un paquet no es pot aplicar automàticament ni desbloquejar amb un codi.)"
+      "bundleBuildInfo": "💡 Els clients creen aquest paquet des d'una targeta «Crea la teva oferta» al teu menú. Fixa'l al bàner de sota perquè sigui fàcil de trobar. (Un paquet no es pot aplicar automàticament ni desbloquejar amb un codi.)",
+      "phoneOrdersLabel": "Disponible per telèfon (Nabil AI)",
+      "phoneOrdersOnSub": "Aquesta promoció s'aplica a les comandes telefòniques de Nabil AI",
+      "phoneOrdersOffSub": "Aquesta promoció no s'aplica a les comandes telefòniques",
+      "phoneOrdersHelp": "Desactivat, la promoció s'exclou de les comandes telefòniques. Les comandes web, app i marketplace no es veuen afectades.",
+      "clientTypeMemberWarning": "Les promocions per a membres requereixen un compte — els clients que truquin sense registre no veuran aquesta promoció."
     },
     "customersList": {
       "heading": "Clients",
@@ -4355,7 +4362,12 @@
         "viewAll": "Mostra totes les trucades",
         "chartPopularItems": "El més demanat per telèfon",
         "popularItemsCta": "Configura els suggeriments destacats",
-        "popularItemsEmpty": "Encara no hi ha comandes per telèfon en aquest període."
+        "popularItemsEmpty": "Encara no hi ha comandes per telèfon en aquest període.",
+        "meterTitle": "Ús aquest mes",
+        "meterMinutes": "{minutes} minuts utilitzats",
+        "meterCharge": "Actual: {amount} · Previsió: {projected}",
+        "meterOver": "{minutes} minuts per sobre dels inclosos",
+        "meterIncluded": "{included} min inclosos en el mínim de {minimum}/mes ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Cerca per telèfon, nom o resum…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Número desbloquejat",
         "errorToast": "No s'ha pogut actualitzar — torna-ho a provar.",
         "invalidPhone": "Introduïu un número de telèfon vàlid."
-      }
+      },
+      "setup": {
+        "title": "Configureu la vostra línia telefònica",
+        "body": "Expliqueu-nos la vostra línia i Nabil respondrà trucades en un dia laborable. Sense configuració tècnica.",
+        "receivedTitle": "Sol·licitud de configuració rebuda",
+        "receivedBody": "El nostre equip està configurant la vostra línia Nabil AI. Veureu el vostre tauler aquí quan estigui llest — normalment en un dia laborable.",
+        "summaryForward": "Desvia trucades del {currentNumber}",
+        "summaryNew": "Nou número (actual: {currentNumber})",
+        "summaryTransfer": "Transferència a una persona: {transferNumber}",
+        "summaryGreeting": "Nom de benvinguda: {name}",
+        "summarySent": "Enviat el {date}",
+        "updateRequest": "Actualitzar sol·licitud",
+        "prepareHint": "Podeu actualitzar les preferències fins que la línia estigui configurada.",
+        "currentNumberLabel": "El vostre número de telèfon actual",
+        "phoneHint": "El número que els vostres clients truquen avui.",
+        "modeLabel": "Com voleu configurar la línia?",
+        "modeForward": "Desvia el meu número",
+        "modeForwardHint": "Desvieu el vostre número existent cap a Nabil. Els clients truquen el mateix número.",
+        "modeNew": "Doneu-me un número nou",
+        "modeNewHint": "Assignem un número nou per a Nabil. Podeu publicar-lo juntament amb la vostra línia existent.",
+        "transferNumberLabel": "Transferiu trucades a",
+        "transferNumberHint": "Quan un client demana una persona, Nabil transfereix la trucada aquí.",
+        "greetingNameLabel": "Nom del restaurant per a la benvinguda",
+        "greetingNameHint": "Com Nabil ha de presentar el vostre restaurant al telèfon.",
+        "notesLabel": "Alguna cosa més (opcional)",
+        "submitting": "Enviant…",
+        "submit": "Enviar sol·licitud",
+        "cancelEdit": "Cancel·la",
+        "errorAlreadyProvisioned": "La línia ja està configurada — actualitzeu la pàgina.",
+        "errorGeneric": "Alguna cosa ha anat malament. Torneu-ho a provar."
+      },
+      "nowAvailable": "Ja disponible",
+      "availableHeading": "Nabil AI comandes telefòniques",
+      "availablePrice": "{rate} per minut de trucada · {minimum}/mes mínim · {included} minuts inclosos",
+      "availableConcierge": "El nostre equip configura la línia en un dia laborable. Sense feina tècnica per la vostra part.",
+      "availableDemo": "Ja sou membre de pagament? Proveu-ho gratis durant {days} dies.",
+      "subscribeCta": "Subscriviu-vos i configureu"
     },
     "customerDetailPage": {
       "allCustomers": "Tots els clients",
@@ -6865,7 +6913,8 @@
             "b3": "Segur i xifrat",
             "b4": "Fet al Canadà"
           }
-        }
+        },
+        "nowAvailable": "Ara disponible"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Comença gratis",
       "ctaContact": "Contacta amb vendes",
-      "trialNote": "No cal targeta de crèdit. Sense contractes."
+      "trialNote": "No cal targeta de crèdit. Sense contractes.",
+      "phoneOrderingMinuteNote": "Facturat a 0,60 USD/min amb un mínim de 249,99 USD/mes (≈ 416 minuts inclosos). Detalls a"
     },
     "faq": {
       "title": "Preguntes freqüents",
@@ -7075,6 +7125,211 @@
       "b1": "El teu menú real — fotos, mides i ingredients",
       "b2": "Demana-hi a l'instant, igual que un client",
       "b3": "T'agrada? Registra't i conserva'l — sense tornar a importar"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Comandes telefòniques amb IA",
+        "title": "El telèfon de la teva pizzeria, <accent>respost per IA</accent>",
+        "subtitle": "Nabil AI rep comandes telefòniques per a la teva pizzeria — pizzes meitat i meitat, combos, zones de lliurament, ingredients per nom — i les processa pel mateix checkout que el teu web. Creat per antics propietaris de pizzeries que saben com sona una trucada real.",
+        "ctaStart": "Comença",
+        "ctaSecondary": "Mira com funciona",
+        "trust1": "Creat per a pizzeries",
+        "trust2": "Mateix checkout que el teu web",
+        "trust3": "Enregistraments i transcripcions",
+        "trust4": "US$0.60 per minut de trucada",
+        "sampleLabel": "Exemple de trucada en directe",
+        "sampleCaller": "Trucador",
+        "sample1": "Hola, puc fer una comanda per a lliurament?",
+        "sample2": "Per descomptat! Estaré encantat d'ajudar-te. Què puc preparar-te avui?",
+        "sample3": "Una pizza gran, meitat pepperoni i xampinyons, meitat pebrots verds i ceba.",
+        "sample4": "Entès — una pizza gran meitat i meitat: pepperoni i xampinyons d'un costat, pebrots verds i ceba de l'altre. Alguna cosa més?"
+      },
+      "story": {
+        "eyebrow": "La nostra història",
+        "title": "Creat per a pizzeries, per antics propietaris de pizzeries",
+        "body1": "Vam passar anys darrere el taulell prenent comandes per telèfon. Sabem el que els clients diuen realment — les peticions de meitat i meitat, els canvis d'ingredients d'últim moment, el 'igual que l'última vegada'. Vam crear Nabil AI per gestionar aquestes trucades com ho faríem nosaltres.",
+        "body2": "A diferència dels sistemes telefònics IA genèrics, Nabil va ser dissenyat des del primer dia al voltant de les comandes de pizza i restaurant. Cada funció — des de la creació de combos fins a les comprovacions de zones de lliurament — existeix perquè la necessitàvem a la nostra pròpia botiga.",
+        "point1": "Dissenyat al voltant d'operacions reals de pizzeria",
+        "point2": "Cada comanda passa pel teu checkout verificat",
+        "point3": "El teu menú és el menú de la IA — res inventat"
+      },
+      "how": {
+        "eyebrow": "Com funciona",
+        "title": "Tres passos per a comandes telefòniques en pilot automàtic",
+        "step1": {
+          "title": "Connecta la teva línia telefònica",
+          "body": "Redirigeix el teu número existent o aconsegueix-ne un de nou. El nostre equip configura la teva línia en un dia feiner — sense feina tècnica per part teva."
+        },
+        "step2": {
+          "title": "Nabil atén la trucada",
+          "body": "Nabil saluda els qui truquen amb el nom del teu restaurant, pren la seva comanda de forma conversacional, confirma cada article i llegeix el total abans de fer la comanda."
+        },
+        "step3": {
+          "title": "La comanda s'imprimeix a la teva cuina",
+          "body": "La comanda passa pel mateix checkout que una comanda del web. Apareix a la pantalla de la cuina, s'imprimeix a la impressora de tiquets i es mostra al panell d'administració — tot automàticament."
+        }
+      },
+      "handles": {
+        "eyebrow": "Què gestiona",
+        "title": "Tot el que demanen els teus clients",
+        "subtitle": "Nabil gestiona les comandes que gestiona el teu equip — des de pizzes senzilles amb un sol ingredient fins a combos meitat i meitat complexos amb lliurament.",
+        "halfHalf": {
+          "title": "Pizzes meitat i meitat",
+          "body": "Els clients poden demanar ingredients diferents a cada meitat, i Nabil confirma cada costat abans de fer la comanda."
+        },
+        "combos": {
+          "title": "Combos i menús",
+          "body": "Nabil guia els clients per les opcions del combo — tria la pizza, tria l'acompanyament, tria la beguda — igual que al teu web."
+        },
+        "delivery": {
+          "title": "Lliurament amb verificació de zona",
+          "body": "Pren l'adreça de lliurament, verifica que és a la teva zona, indica la tarifa i fa la comanda — sense endevinar."
+        },
+        "upsells": {
+          "title": "Venda addicional intel·ligent",
+          "body": "Suggereix els articles que tries al moment adequat de la conversa — una beguda amb una pizza, unes postres abans de pagar."
+        },
+        "faq": {
+          "title": "Respon preguntes freqüents",
+          "body": "Horaris, ubicació, aparcament, al·lèrgens — Nabil respon les preguntes freqüents del teu establiment perquè el teu personal no hagi de fer-ho."
+        },
+        "returning": {
+          "title": "Reconeix els clients que tornen",
+          "body": "Saluda els clients habituals pel nom i recorda el seu historial de comandes, de manera que les recomandes són ràpides."
+        },
+        "transfer": {
+          "title": "Transfereix a una persona",
+          "body": "Quan un client demana parlar amb una persona o té una sol·licitud que Nabil no pot gestionar, la trucada es transfereix al número del teu establiment."
+        },
+        "numbers": {
+          "title": "Pronuncia els números de manera natural",
+          "body": "Els números de telèfon, adreces, preus i horaris es diuen amb paraules — 'sis quaranta-set' i no '647' — perquè el client sempre entengui."
+        },
+        "hours": {
+          "title": "Coneix els teus horaris",
+          "body": "Nabil sap quan estàs obert, quan tancat i el teu horari de festius — els clients obtenen informació precisa cada vegada."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Per què és precís",
+        "title": "La comanda és correcta perquè el sistema no permet que sigui errònia",
+        "body": "Nabil no endevina. Cada article es valida amb el teu menú real, cada preu el calcula la teva caixa, i cada modificador es confirma amb qui truca abans de fer la comanda.",
+        "cart": {
+          "title": "Cistella al servidor",
+          "body": "La comanda es crea al servidor, no a la memòria de la IA. Els preus, les regles i la disponibilitat del teu menú són l'única font de veritat."
+        },
+        "asks": {
+          "title": "Pregunta, mai no assumeix",
+          "body": "Quan alguna cosa és ambigua — una mida, la col·locació d'un ingredient, una elecció de massa — Nabil pregunta a qui truca en lloc d'endevinar."
+        },
+        "readback": {
+          "title": "Lectura completa",
+          "body": "Abans de fer la comanda, Nabil rellegeix cada article, modificador i el total — qui truca confirma abans que res s'enviï a la cuina."
+        },
+        "alarm": {
+          "title": "Alarma: preu indicat = preu cobrat",
+          "body": "Si el total indicat per la IA no coincideix amb el que calcula la caixa, el sistema ho assenyala abans de fer la comanda."
+        },
+        "timeline": {
+          "title": "Cronologia per trucada",
+          "body": "Cada trucada té una cronologia detallada que mostra cada acció, canvi al cistell i decisió — perquè puguis veure exactament què ha passat."
+        },
+        "tests": {
+          "title": "Conjunt de proves automatitzades",
+          "body": "Un sistema de simulació executa escenaris de comanda reals amb cada actualització — pizzes meitat i meitat, combos, casos límit — abans que arribi a la teva línia telefònica."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "El teu tauler",
+        "title": "Veu cada trucada, escolta cada paraula",
+        "subtitle": "Enregistraments, transcripcions, seguiment d'ingressos i cronologia per trucada — tot el que necessites per saber què fa Nabil pel teu restaurant.",
+        "shotOverviewAlt": "Vista general del tauler Nabil AI que mostra volum de trucades, ingressos i mètriques de conversió",
+        "shotCallsAlt": "Llista de trucades que mostra comandes telefòniques recents amb resultats i durades",
+        "shotDetailAlt": "Vista de detall de trucada amb transcripció, cronologia i resum de comanda",
+        "shotSettingsAlt": "Panell de configuració de Nabil AI amb salutació, vendes addicionals i configuració de preguntes freqüents",
+        "shotReportAlt": "Diàleg d'informe de trucada per senyalar problemes a l'equip Fee Free",
+        "overview": {
+          "title": "Resum d'ingressos",
+          "body": "Mira quants ingressos genera Nabil, amb gràfics de trucades, comandes i taxes de conversió."
+        },
+        "calls": {
+          "title": "Historial de trucades",
+          "body": "Explora cada trucada amb el seu resultat, durada, enregistrament i transcripció."
+        },
+        "detail": {
+          "title": "Cronologia de la trucada",
+          "body": "Una cronologia segon a segon del que va passar a la trucada — cada acció, canvi al cistell i paraula pronunciada."
+        },
+        "report": {
+          "title": "Informa d'una trucada",
+          "body": "Marca qualsevol trucada que no hagi anat bé. El nostre equip la revisa i millora la gestió de Nabil."
+        },
+        "settings": {
+          "title": "Control total",
+          "body": "Configura la salutació de Nabil, suggeriments de venda addicional, respostes de preguntes freqüents, trucadors bloquejats i configuració de pagament per enllaç."
+        },
+        "roi": {
+          "title": "Seguiment del ROI",
+          "body": "Fes seguiment dels ingressos per minut de trucada per saber exactament què guanya Nabil per al teu local."
+        }
+      },
+      "same": {
+        "eyebrow": "Mateix sistema, mateixa caixa",
+        "title": "Una comanda telefònica és una comanda del web",
+        "body": "Nabil no utilitza un sistema de comandes separat. Cada comanda telefònica passa per la mateixa caixa, menú, preus i pantalla de cuina que les comandes del web. Un sistema, una font de veritat.",
+        "bullet1": "Mateix menú, mateixos preus, mateixos modificadors",
+        "bullet2": "Mateixa pantalla de cuina i impressora de tiquets",
+        "bullet3": "Mateixa confirmació de comanda i seguiment",
+        "bullet4": "Mateix tauler d'administració i informes",
+        "frameAlt": "Pantalla de cuina mostrant una comanda telefònica al costat de comandes del web"
+      },
+      "languages": {
+        "eyebrow": "Multilingüe",
+        "title": "Nabil parla la llengua dels vostres clients",
+        "body": "Nabil detecta la llengua del client automàticament i respon en conseqüència. Els vostres articles, descripcions i modificadors es serveixen en la llengua del client — les mateixes traduccions del vostre web."
+      },
+      "pricing": {
+        "eyebrow": "Preus simples",
+        "title": "Un preu. Sense sorpreses.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "per minut de trucada",
+        "minimum": "249,99 USD",
+        "minimumLabel": "mínim per mes",
+        "rule": "Pagueu el que sigui més alt: els vostres minuts de trucada a 0,60 USD cadascun, o el mínim mensual de 249,99 USD. La majoria de restaurants es mantenen dins els 416 minuts inclosos.",
+        "demo": "Ja sou membre de pagament de Fee Free? Proveu Nabil gratis durant 7 dies — sense compromís.",
+        "include1": "Trucades il·limitades",
+        "include2": "Enregistraments i transcripcions",
+        "include3": "Tauler i anàlisi",
+        "include4": "Configuració assistida de la línia",
+        "include5": "Actualitzacions i millores contínues",
+        "cta": "Comenceu",
+        "note": "Preus en dòlars americans. Facturació mensual via Stripe. Cancel·leu en qualsevol moment."
+      },
+      "faq": {
+        "title": "Preguntes freqüents",
+        "q1": "Com pren Nabil una comanda?",
+        "a1": "Nabil contesta la vostra línia telefònica, saluda el client pel nom del vostre restaurant, pren la comanda de forma conversacional, confirma cada article i el total, i la processa a través de la vostra caixa existent. La comanda apareix a la pantalla de cuina i s'imprimeix automàticament.",
+        "q2": "El client sap que parla amb IA?",
+        "a2": "Nabil sona natural i conversacional, però creiem en la transparència — els clients sempre poden demanar una persona, i la trucada es transfereix immediatament.",
+        "q3": "I si Nabil s'equivoca?",
+        "a3": "Cada trucada té un enregistrament, una transcripció i una línia de temps detallada. Podeu marcar qualsevol trucada i el nostre equip investigarà. El carret del servidor i la confirmació per rellegiment minimitzen errors.",
+        "q4": "Nabil pot gestionar pizzes meitat i meitat?",
+        "a4": "Sí — les pizzes meitat i meitat amb ingredients diferents a cada costat són una funció central. Nabil confirma cada costat i construeix la comanda exactament com la vostra caixa web.",
+        "q5": "Com connecto la meva línia telefònica?",
+        "a5": "Després de subscriure, ens dieu el vostre número i si voleu desviar-lo a Nabil o obtenir-ne un de nou. El nostre equip configura tot en un dia laborable — sense feina tècnica.",
+        "q6": "Què passa fora d'horari?",
+        "a6": "Nabil coneix el vostre horari i els festius. Fora d'horari, informa el client de quan obriu i pot oferir una comanda programada si està activat.",
+        "q7": "Com es calcula la facturació?",
+        "a7": "Pagueu 0,60 USD per minut de trucada o el mínim mensual de 249,99 USD — el més alt. El mínim inclou unes 416 minuts. Cada trucada s'arrodoneix cap amunt. Feu seguiment de l'ús en temps real.",
+        "q8": "Puc cancel·lar en qualsevol moment?",
+        "a8": "Sí. Nabil es factura mensualment via Stripe sense contracte a llarg termini. Cancel·leu des del tauler en qualsevol moment i la línia roman activa fins al final del període de facturació."
+      },
+      "finalCta": {
+        "title": "Preparat per deixar Nabil contestar el telèfon?",
+        "body": "La configuració dura un dia laborable. Comenceu a rebre comandes telefòniques a través del vostre sistema — sense maquinari, personal ni estrès extra.",
+        "primary": "Comenceu",
+        "secondary": "Veure tots els preus"
+      }
     }
   },
   "addressBook": {

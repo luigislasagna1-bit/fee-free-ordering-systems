@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Kampanye",
       "titleCampaignLocked": "Kode ini sedang dikirim lewat email oleh kampanye Autopilot yang aktif. Matikan kampanye di Pemasaran → Autopilot untuk menariknya.",
-      "toggleFailed": "Promosi ini tidak dapat diubah. Silakan coba lagi."
+      "toggleFailed": "Promosi ini tidak dapat diubah. Silakan coba lagi.",
+      "phoneOff": "Telepon mati",
+      "phoneOffTip": "Promosi ini tidak berlaku untuk pesanan telepon melalui Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Pilih jenis promosi untuk melanjutkan.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Promo tersembunyi hanya berlaku saat pelanggan memasukkan kode ini saat checkout.",
       "vipLockedTitle": "Khusus VIP — terhubung ke: {groups}",
       "vipLockedDesc": "Promosi ini otomatis berlaku hanya untuk anggota VIP tersebut saat checkout. Tidak pernah tampil di menu publik, banner, atau situs — tidak ada sakelar visibilitas yang bisa mengubahnya. Untuk menjadikannya publik, lepaskan dulu di halaman Grup VIP.",
-      "bundleBuildInfo": "💡 Pelanggan membuat paket ini dari kartu “Buat penawaranmu” di menu Anda. Sematkan ke banner di bawah agar mudah ditemukan. (Paket tidak bisa diterapkan otomatis atau dibuka dengan kode.)"
+      "bundleBuildInfo": "💡 Pelanggan membuat paket ini dari kartu “Buat penawaranmu” di menu Anda. Sematkan ke banner di bawah agar mudah ditemukan. (Paket tidak bisa diterapkan otomatis atau dibuka dengan kode.)",
+      "phoneOrdersLabel": "Tersedia via telepon (Nabil AI)",
+      "phoneOrdersOnSub": "Promosi ini berlaku untuk pesanan telepon melalui Nabil AI",
+      "phoneOrdersOffSub": "Promosi ini tidak berlaku untuk pesanan telepon",
+      "phoneOrdersHelp": "Dimatikan, promosi ini dikecualikan dari pesanan telepon. Pesanan web, app, dan marketplace tidak terpengaruh.",
+      "clientTypeMemberWarning": "Promosi khusus anggota memerlukan akun — penelepon tanpa akun tidak akan melihat promosi ini."
     },
     "customersList": {
       "heading": "Pelanggan",
@@ -4355,7 +4362,12 @@
         "viewAll": "Lihat semua panggilan",
         "chartPopularItems": "Paling banyak dipesan lewat telepon",
         "popularItemsCta": "Atur upsell unggulan",
-        "popularItemsEmpty": "Belum ada pesanan telepon dalam rentang waktu ini."
+        "popularItemsEmpty": "Belum ada pesanan telepon dalam rentang waktu ini.",
+        "meterTitle": "Penggunaan bulan ini",
+        "meterMinutes": "{minutes} menit digunakan",
+        "meterCharge": "Saat ini: {amount} · Proyeksi: {projected}",
+        "meterOver": "{minutes} menit melebihi yang termasuk",
+        "meterIncluded": "{included} mnt termasuk dalam minimum {minimum}/bulan ({rate}/mnt)"
       },
       "callLog": {
         "searchPlaceholder": "Cari telepon, nama, atau ringkasan…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Blokir nomor dibuka",
         "errorToast": "Gagal memperbarui — silakan coba lagi.",
         "invalidPhone": "Masukkan nomor telepon yang valid."
-      }
+      },
+      "setup": {
+        "title": "Siapkan saluran telepon Anda",
+        "body": "Ceritakan tentang saluran telepon Anda dan Nabil akan menjawab panggilan dalam satu hari kerja. Tanpa pengaturan teknis.",
+        "receivedTitle": "Permintaan pengaturan diterima",
+        "receivedBody": "Tim kami sedang menyiapkan saluran Nabil AI Anda. Anda akan melihat dasbor langsung di sini setelah siap — biasanya dalam satu hari kerja.",
+        "summaryForward": "Teruskan panggilan dari {currentNumber}",
+        "summaryNew": "Nomor baru (saat ini: {currentNumber})",
+        "summaryTransfer": "Transfer ke orang: {transferNumber}",
+        "summaryGreeting": "Nama sapaan: {name}",
+        "summarySent": "Dikirim {date}",
+        "updateRequest": "Perbarui permintaan",
+        "prepareHint": "Anda dapat memperbarui preferensi hingga saluran siap.",
+        "currentNumberLabel": "Nomor telepon Anda saat ini",
+        "phoneHint": "Nomor yang pelanggan Anda hubungi saat ini.",
+        "modeLabel": "Bagaimana kami harus menyiapkan saluran Anda?",
+        "modeForward": "Teruskan nomor saya",
+        "modeForwardHint": "Anda meneruskan nomor yang ada ke Nabil. Penelepon menghubungi nomor yang sama.",
+        "modeNew": "Berikan saya nomor baru",
+        "modeNewHint": "Kami menyediakan nomor baru untuk Nabil. Anda dapat menerbitkannya bersama saluran yang ada.",
+        "transferNumberLabel": "Transfer panggilan ke",
+        "transferNumberHint": "Saat penelepon meminta orang, Nabil mentransfer panggilan ke sini.",
+        "greetingNameLabel": "Nama restoran untuk sapaan",
+        "greetingNameHint": "Bagaimana Nabil harus memperkenalkan restoran Anda saat menjawab telepon.",
+        "notesLabel": "Hal lain yang perlu kami ketahui (opsional)",
+        "submitting": "Mengirim…",
+        "submit": "Kirim permintaan",
+        "cancelEdit": "Batal",
+        "errorAlreadyProvisioned": "Saluran Anda sudah siap — segarkan halaman.",
+        "errorGeneric": "Terjadi kesalahan. Silakan coba lagi."
+      },
+      "nowAvailable": "Tersedia sekarang",
+      "availableHeading": "Nabil AI pesanan telepon",
+      "availablePrice": "{rate} per menit panggilan · {minimum}/bulan minimum · {included} menit termasuk",
+      "availableConcierge": "Tim kami menyiapkan saluran dalam satu hari kerja. Tanpa pekerjaan teknis dari Anda.",
+      "availableDemo": "Sudah anggota berbayar? Coba gratis {days} hari.",
+      "subscribeCta": "Berlangganan & siapkan"
     },
     "customerDetailPage": {
       "allCustomers": "Semua pelanggan",
@@ -6865,7 +6913,8 @@
             "b3": "Aman & terenkripsi",
             "b4": "Dibuat di Kanada"
           }
-        }
+        },
+        "nowAvailable": "Sekarang tersedia"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Mulai Gratis",
       "ctaContact": "Hubungi tim penjualan",
-      "trialNote": "Tidak perlu kartu kredit. Tidak ada kontrak."
+      "trialNote": "Tidak perlu kartu kredit. Tidak ada kontrak.",
+      "phoneOrderingMinuteNote": "Ditagih US$0,60/menit dengan minimum US$249,99/bulan (≈ 416 menit termasuk). Detail di"
     },
     "faq": {
       "title": "Pertanyaan yang Sering Diajukan",
@@ -7075,6 +7125,211 @@
       "b1": "Menu asli Anda — foto, ukuran & topping",
       "b2": "Pesan langsung dari sana, persis seperti pelanggan",
       "b3": "Suka? Daftar dan simpan — tanpa impor ulang"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Pemesanan telepon AI",
+        "title": "Telepon pizzeria Anda, <accent>dijawab oleh AI</accent>",
+        "subtitle": "Nabil AI menerima pesanan telepon untuk pizzeria Anda — pizza setengah-setengah, kombo, zona pengiriman, topping berdasarkan nama — dan memprosesnya melalui checkout yang sama dengan situs web Anda. Dibuat oleh mantan pemilik pizzeria yang tahu bagaimana panggilan sungguhan terdengar.",
+        "ctaStart": "Mulai",
+        "ctaSecondary": "Lihat cara kerjanya",
+        "trust1": "Dibuat untuk pizzeria",
+        "trust2": "Checkout sama seperti situs web Anda",
+        "trust3": "Rekaman & transkrip",
+        "trust4": "US$0.60 per menit panggilan",
+        "sampleLabel": "Contoh panggilan langsung",
+        "sampleCaller": "Penelepon",
+        "sample1": "Halo, bisakah saya memesan untuk pengiriman?",
+        "sample2": "Tentu saja! Dengan senang hati. Mau pesan apa hari ini?",
+        "sample3": "Pizza besar, setengah pepperoni dan jamur, setengah paprika hijau dan bawang.",
+        "sample4": "Baik — pizza besar setengah-setengah: pepperoni dan jamur di satu sisi, paprika hijau dan bawang di sisi lainnya. Ada yang lain?"
+      },
+      "story": {
+        "eyebrow": "Cerita kami",
+        "title": "Dibuat untuk pizzeria, oleh mantan pemilik pizzeria",
+        "body1": "Kami menghabiskan bertahun-tahun di balik konter menerima pesanan telepon. Kami tahu apa yang sebenarnya dikatakan penelepon — permintaan setengah-setengah, perubahan topping di menit terakhir, 'sama seperti terakhir kali'. Kami membuat Nabil AI untuk menangani panggilan tersebut seperti yang kami lakukan.",
+        "body2": "Berbeda dengan sistem telepon AI generik, Nabil dirancang sejak hari pertama seputar pemesanan pizza dan restoran. Setiap fitur — dari pembuatan kombo hingga pemeriksaan zona pengiriman — ada karena kami membutuhkannya di toko kami sendiri.",
+        "point1": "Dirancang seputar operasi pizzeria nyata",
+        "point2": "Setiap pesanan melalui checkout terverifikasi Anda",
+        "point3": "Menu Anda adalah menu AI — tidak ada yang dikarang"
+      },
+      "how": {
+        "eyebrow": "Cara kerjanya",
+        "title": "Tiga langkah menuju pesanan telepon otomatis",
+        "step1": {
+          "title": "Hubungkan saluran telepon Anda",
+          "body": "Alihkan nomor yang ada atau dapatkan nomor baru. Tim kami menyiapkan saluran Anda dalam satu hari kerja — tidak ada pekerjaan teknis di pihak Anda."
+        },
+        "step2": {
+          "title": "Nabil menerima panggilan",
+          "body": "Nabil menyapa penelepon dengan nama restoran Anda, menerima pesanan secara percakapan, mengonfirmasi setiap item, dan membacakan total sebelum memprosesnya."
+        },
+        "step3": {
+          "title": "Pesanan tercetak di dapur Anda",
+          "body": "Pesanan melalui checkout yang sama dengan pesanan situs web. Muncul di layar dapur Anda, tercetak di printer tiket Anda, dan tampil di dashboard admin Anda — semuanya otomatis."
+        }
+      },
+      "handles": {
+        "eyebrow": "Apa yang ditangani",
+        "title": "Semua yang diminta penelepon Anda",
+        "subtitle": "Nabil menangani pesanan yang ditangani tim Anda — dari pizza sederhana satu topping hingga kombo setengah-setengah yang kompleks dengan pengiriman.",
+        "halfHalf": {
+          "title": "Pizza setengah-setengah",
+          "body": "Penelepon dapat memesan topping berbeda di setiap setengah, dan Nabil mengonfirmasi setiap sisi sebelum menempatkan pesanan."
+        },
+        "combos": {
+          "title": "Kombo & paket hemat",
+          "body": "Nabil memandu penelepon melalui pilihan kombo — pilih pizza, pilih lauk, pilih minuman — persis seperti di situs web Anda."
+        },
+        "delivery": {
+          "title": "Pengiriman dengan pemeriksaan zona",
+          "body": "Mengambil alamat pengiriman, memeriksa apakah di zona Anda, menyebutkan biaya, dan menempatkan pesanan — tanpa menebak."
+        },
+        "upsells": {
+          "title": "Upselling cerdas",
+          "body": "Menyarankan item yang Anda pilih di momen yang tepat dalam percakapan — minuman dengan pizza, dessert sebelum checkout."
+        },
+        "faq": {
+          "title": "Menjawab pertanyaan umum",
+          "body": "Jam buka, lokasi, parkir, alergen — Nabil menjawab FAQ toko Anda sehingga staf Anda tidak perlu."
+        },
+        "returning": {
+          "title": "Mengenali penelepon yang kembali",
+          "body": "Menyapa pelanggan tetap dengan nama dan mengingat riwayat pesanan mereka, sehingga pemesanan ulang cepat."
+        },
+        "transfer": {
+          "title": "Mentransfer ke seseorang",
+          "body": "Ketika penelepon meminta berbicara dengan manusia atau memiliki permintaan yang tidak dapat ditangani Nabil, panggilan ditransfer ke nomor toko Anda."
+        },
+        "numbers": {
+          "title": "Mengucapkan angka secara alami",
+          "body": "Nomor telepon, alamat, harga, dan waktu diucapkan dengan kata-kata — 'enam empat tujuh' bukan '647' — sehingga penelepon selalu mengerti."
+        },
+        "hours": {
+          "title": "Tahu jam buka Anda",
+          "body": "Nabil tahu kapan Anda buka, kapan tutup, dan jadwal hari libur Anda — penelepon mendapat informasi akurat setiap saat."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Mengapa akurat",
+        "title": "Pesanan benar karena sistem tidak mengizinkan kesalahan",
+        "body": "Nabil tidak menebak. Setiap item divalidasi dengan menu Anda yang sebenarnya, setiap harga dihitung oleh kasir Anda, dan setiap pengubah dikonfirmasi dengan penelepon sebelum pesanan dibuat.",
+        "cart": {
+          "title": "Keranjang sisi server",
+          "body": "Pesanan dibangun di server, bukan di memori AI. Harga, aturan, dan ketersediaan menu Anda adalah satu-satunya sumber kebenaran."
+        },
+        "asks": {
+          "title": "Bertanya, tidak pernah berasumsi",
+          "body": "Ketika ada yang ambigu — ukuran, penempatan topping, pilihan adonan — Nabil bertanya kepada penelepon alih-alih menebak."
+        },
+        "readback": {
+          "title": "Pembacaan ulang lengkap",
+          "body": "Sebelum menempatkan pesanan, Nabil membacakan kembali setiap item, pengubah, dan totalnya — penelepon mengonfirmasi sebelum apa pun dikirim ke dapur."
+        },
+        "alarm": {
+          "title": "Alarm: harga disebutkan = harga ditagih",
+          "body": "Jika total yang disebutkan AI tidak cocok dengan perhitungan kasir, sistem menandainya sebelum pesanan dibuat."
+        },
+        "timeline": {
+          "title": "Linimasa per panggilan",
+          "body": "Setiap panggilan memiliki linimasa terperinci yang menunjukkan setiap panggilan alat, perubahan keranjang, dan keputusan — sehingga Anda bisa melihat persis apa yang terjadi."
+        },
+        "tests": {
+          "title": "Rangkaian uji otomatis",
+          "body": "Sistem simulasi menjalankan skenario pemesanan nyata dengan setiap pembaruan — pizza setengah-setengah, kombo, kasus tepi — sebelum sampai ke saluran telepon Anda."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Dasbor Anda",
+        "title": "Lihat setiap panggilan, dengar setiap kata",
+        "subtitle": "Rekaman, transkrip, pelacakan pendapatan, dan linimasa per panggilan — semua yang Anda butuhkan untuk mengetahui apa yang Nabil lakukan untuk restoran Anda.",
+        "shotOverviewAlt": "Ikhtisar dasbor Nabil AI yang menampilkan volume panggilan, pendapatan, dan metrik konversi",
+        "shotCallsAlt": "Daftar panggilan yang menampilkan pesanan telepon terbaru dengan hasil dan durasi",
+        "shotDetailAlt": "Tampilan detail panggilan dengan transkrip, linimasa, dan ringkasan pesanan",
+        "shotSettingsAlt": "Panel pengaturan Nabil AI dengan salam, upsell, dan konfigurasi FAQ",
+        "shotReportAlt": "Dialog laporan panggilan untuk menandai masalah ke tim Fee Free",
+        "overview": {
+          "title": "Ikhtisar pendapatan",
+          "body": "Lihat berapa banyak pendapatan yang dihasilkan Nabil, dengan grafik panggilan, pesanan, dan rasio konversi."
+        },
+        "calls": {
+          "title": "Riwayat panggilan",
+          "body": "Jelajahi setiap panggilan dengan hasil, durasi, rekaman, dan transkripnya."
+        },
+        "detail": {
+          "title": "Linimasa panggilan",
+          "body": "Linimasa detik demi detik tentang apa yang terjadi selama panggilan — setiap panggilan alat, perubahan keranjang, dan kata yang diucapkan."
+        },
+        "report": {
+          "title": "Laporkan panggilan",
+          "body": "Tandai panggilan apa pun yang tidak berjalan baik. Tim kami meninjaunya dan meningkatkan penanganan Nabil."
+        },
+        "settings": {
+          "title": "Kontrol penuh",
+          "body": "Konfigurasikan salam Nabil, saran upsell, jawaban FAQ, penelepon yang diblokir, dan pengaturan bayar-via-tautan."
+        },
+        "roi": {
+          "title": "Pelacakan ROI",
+          "body": "Lacak pendapatan per menit panggilan sehingga Anda tahu persis berapa yang dihasilkan Nabil untuk toko Anda."
+        }
+      },
+      "same": {
+        "eyebrow": "Sistem yang sama, checkout yang sama",
+        "title": "Pesanan telepon adalah pesanan website",
+        "body": "Nabil tidak menggunakan sistem pemesanan terpisah. Setiap pesanan telepon melewati checkout, menu, harga, dan layar dapur yang sama dengan pesanan website Anda. Satu sistem, satu sumber kebenaran.",
+        "bullet1": "Menu sama, harga sama, pengubah sama",
+        "bullet2": "Layar dapur dan printer tiket yang sama",
+        "bullet3": "Konfirmasi dan pelacakan pesanan yang sama",
+        "bullet4": "Dashboard admin dan laporan yang sama",
+        "frameAlt": "Layar dapur menampilkan pesanan telepon bersama pesanan website"
+      },
+      "languages": {
+        "eyebrow": "Multibahasa",
+        "title": "Nabil berbicara dalam bahasa penelepon Anda",
+        "body": "Nabil mendeteksi bahasa penelepon secara otomatis dan merespons dalam bahasa yang sama. Item menu, deskripsi, dan pengubah Anda disajikan dalam bahasa penelepon — terjemahan yang sama dengan website Anda."
+      },
+      "pricing": {
+        "eyebrow": "Harga sederhana",
+        "title": "Satu harga. Tanpa kejutan.",
+        "perMinute": "US$0,60",
+        "perMinuteLabel": "per menit panggilan",
+        "minimum": "US$249,99",
+        "minimumLabel": "minimum per bulan",
+        "rule": "Anda membayar mana yang lebih tinggi: menit panggilan Anda masing-masing US$0,60, atau minimum bulanan US$249,99. Kebanyakan restoran tetap dalam 416 menit yang termasuk.",
+        "demo": "Sudah anggota berbayar Fee Free? Coba Nabil gratis selama 7 hari — tanpa komitmen.",
+        "include1": "Panggilan tanpa batas",
+        "include2": "Rekaman & transkrip",
+        "include3": "Dasbor & analitik",
+        "include4": "Pengaturan saluran terpandu",
+        "include5": "Pembaruan & peningkatan berkelanjutan",
+        "cta": "Mulai",
+        "note": "Harga dalam dolar AS. Ditagih bulanan melalui Stripe. Batalkan kapan saja."
+      },
+      "faq": {
+        "title": "Pertanyaan yang sering diajukan",
+        "q1": "Bagaimana Nabil menerima pesanan?",
+        "a1": "Nabil menjawab saluran telepon Anda, menyapa penelepon dengan nama restoran Anda, menerima pesanan secara percakapan, mengonfirmasi setiap item dan totalnya, dan memprosesnya melalui checkout yang ada. Pesanan muncul di layar dapur dan dicetak secara otomatis.",
+        "q2": "Apakah penelepon tahu mereka berbicara dengan AI?",
+        "a2": "Nabil terdengar alami dan percakapan, tetapi kami percaya pada transparansi — penelepon selalu bisa meminta orang, dan panggilan langsung ditransfer.",
+        "q3": "Bagaimana jika Nabil salah?",
+        "a3": "Setiap panggilan memiliki rekaman, transkrip, dan timeline detail. Anda dapat menandai panggilan apa pun dan tim kami akan menyelidiki. Keranjang sisi server dan konfirmasi baca ulang meminimalkan kesalahan.",
+        "q4": "Bisakah Nabil menangani pizza setengah-setengah?",
+        "a4": "Ya — pizza setengah-setengah dengan topping berbeda di setiap sisi adalah fitur inti. Nabil mengonfirmasi setiap sisi dan membangun pesanan persis seperti checkout website Anda.",
+        "q5": "Bagaimana cara menghubungkan saluran telepon saya?",
+        "a5": "Setelah berlangganan, beri tahu kami nomor Anda dan apakah Anda ingin meneruskannya ke Nabil atau mendapatkan nomor baru. Tim kami menyiapkan semuanya dalam satu hari kerja — tanpa pekerjaan teknis.",
+        "q6": "Apa yang terjadi di luar jam kerja?",
+        "a6": "Nabil mengetahui jam buka dan jadwal libur Anda. Di luar jam kerja, memberi tahu penelepon kapan Anda buka lagi dan bisa menawarkan pesanan terjadwal jika diaktifkan.",
+        "q7": "Bagaimana penagihan dihitung?",
+        "a7": "Anda membayar US$0,60 per menit panggilan atau minimum bulanan US$249,99 — mana yang lebih tinggi. Minimum mencakup sekitar 416 menit. Setiap panggilan dibulatkan ke atas. Lacak penggunaan secara real-time.",
+        "q8": "Bisakah saya membatalkan kapan saja?",
+        "a8": "Ya. Nabil ditagih bulanan melalui Stripe tanpa kontrak jangka panjang. Batalkan dari dasbor kapan saja dan saluran Anda tetap aktif hingga akhir periode penagihan."
+      },
+      "finalCta": {
+        "title": "Siap membiarkan Nabil menjawab telepon Anda?",
+        "body": "Pengaturan memakan waktu satu hari kerja. Mulai terima pesanan telepon melalui sistem Anda sendiri — tanpa perangkat keras, staf, atau stres tambahan.",
+        "primary": "Mulai",
+        "secondary": "Lihat semua harga"
+      }
     }
   },
   "addressBook": {

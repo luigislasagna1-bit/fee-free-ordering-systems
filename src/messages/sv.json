@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Kampanj",
       "titleCampaignLocked": "Den här koden mejlas ut av en pågående Autopilot-kampanj. Stäng av kampanjen under Marknadsföring → Autopilot för att dra tillbaka den.",
-      "toggleFailed": "Kunde inte ändra erbjudandet. Försök igen."
+      "toggleFailed": "Kunde inte ändra erbjudandet. Försök igen.",
+      "phoneOff": "Telefon av",
+      "phoneOffTip": "Erbjudandet gäller inte telefonbeställningar via Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Välj en kampanjtyp för att fortsätta.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Dolda erbjudanden tillämpas bara när kunden anger den här koden i kassan.",
       "vipLockedTitle": "Endast VIP — kopplad till: {groups}",
       "vipLockedDesc": "Den här kampanjen gäller automatiskt endast för dessa VIP-medlemmar i kassan. Den visas aldrig på din offentliga meny, banner eller webbplats — ingen synlighetsinställning ändrar det. Koppla först bort den på sidan VIP-grupper för att göra den offentlig.",
-      "bundleBuildInfo": "💡 Kunder bygger detta paket från ett ”Skapa ditt erbjudande”-kort på din meny. Fäst det på bannern nedan så att det är lätt att hitta. (Ett paket kan inte tillämpas automatiskt eller låsas upp med en kod.)"
+      "bundleBuildInfo": "💡 Kunder bygger detta paket från ett ”Skapa ditt erbjudande”-kort på din meny. Fäst det på bannern nedan så att det är lätt att hitta. (Ett paket kan inte tillämpas automatiskt eller låsas upp med en kod.)",
+      "phoneOrdersLabel": "Tillgänglig via telefon (Nabil AI)",
+      "phoneOrdersOnSub": "Erbjudandet gäller telefonbeställningar via Nabil AI",
+      "phoneOrdersOffSub": "Erbjudandet gäller inte telefonbeställningar",
+      "phoneOrdersHelp": "Av = erbjudandet gäller inte telefonbeställningar. Webb-, app- och marknadsplatsbeställningar påverkas inte.",
+      "clientTypeMemberWarning": "Medlemserbjudanden kräver ett konto — uppringare utan konto ser inte detta erbjudande."
     },
     "customersList": {
       "heading": "Kunder",
@@ -4355,7 +4362,12 @@
         "viewAll": "Visa alla samtal",
         "chartPopularItems": "Mest beställt via telefon",
         "popularItemsCta": "Ange utvalda merförsäljningar",
-        "popularItemsEmpty": "Inga telefonbeställningar i den här perioden än."
+        "popularItemsEmpty": "Inga telefonbeställningar i den här perioden än.",
+        "meterTitle": "Användning denna månad",
+        "meterMinutes": "{minutes} minuter använda",
+        "meterCharge": "Nuvarande: {amount} · Beräknat: {projected}",
+        "meterOver": "{minutes} minuter över inkluderade",
+        "meterIncluded": "{included} min inkluderade i {minimum}/månad minimum ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Sök telefon, namn eller sammanfattning…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Numret har avblockerats",
         "errorToast": "Det gick inte att uppdatera – försök igen.",
         "invalidPhone": "Ange ett giltigt telefonnummer."
-      }
+      },
+      "setup": {
+        "title": "Konfigurera din telefonlinje",
+        "body": "Berätta om din telefonlinje så svarar Nabil på samtal inom en arbetsdag. Ingen teknisk konfiguration krävs.",
+        "receivedTitle": "Konfigurationsbegäran mottagen",
+        "receivedBody": "Vårt team konfigurerar din Nabil AI-linje. Du ser din live-instrumentpanel här när den är klar — vanligtvis inom en arbetsdag.",
+        "summaryForward": "Vidarekoppla samtal från {currentNumber}",
+        "summaryNew": "Nytt nummer (nuvarande: {currentNumber})",
+        "summaryTransfer": "Koppla till person: {transferNumber}",
+        "summaryGreeting": "Hälsningsnamn: {name}",
+        "summarySent": "Skickat {date}",
+        "updateRequest": "Uppdatera begäran",
+        "prepareHint": "Du kan ändra dina inställningar tills linjen är aktiverad.",
+        "currentNumberLabel": "Ditt nuvarande telefonnummer",
+        "phoneHint": "Numret dina kunder ringer idag.",
+        "modeLabel": "Hur vill du konfigurera din linje?",
+        "modeForward": "Vidarekoppla mitt nummer",
+        "modeForwardHint": "Du vidarekopplar ditt befintliga nummer till Nabil. Uppringare ringer samma nummer.",
+        "modeNew": "Ge mig ett nytt nummer",
+        "modeNewHint": "Vi tilldelar ett nytt nummer för Nabil. Du kan publicera det bredvid din befintliga linje.",
+        "transferNumberLabel": "Koppla samtal till",
+        "transferNumberHint": "När en uppringare ber om en person kopplar Nabil samtalet hit.",
+        "greetingNameLabel": "Restaurangnamn för hälsningen",
+        "greetingNameHint": "Hur Nabil ska presentera din restaurang i telefonen.",
+        "notesLabel": "Övrigt (valfritt)",
+        "submitting": "Skickar…",
+        "submit": "Skicka begäran",
+        "cancelEdit": "Avbryt",
+        "errorAlreadyProvisioned": "Din linje är redan konfigurerad — uppdatera sidan.",
+        "errorGeneric": "Något gick fel. Försök igen."
+      },
+      "nowAvailable": "Tillgänglig nu",
+      "availableHeading": "Nabil AI telefonbeställning",
+      "availablePrice": "{rate} per samtalsminut · {minimum}/månad minimum · {included} minuter inkluderade",
+      "availableConcierge": "Vårt team konfigurerar din linje inom en arbetsdag. Inget tekniskt arbete krävs.",
+      "availableDemo": "Redan betalande medlem? Prova gratis i {days} dagar.",
+      "subscribeCta": "Prenumerera & konfigurera"
     },
     "customerDetailPage": {
       "allCustomers": "Alla kunder",
@@ -6865,7 +6913,8 @@
             "b3": "Säkert & krypterat",
             "b4": "Byggd i Kanada"
           }
-        }
+        },
+        "nowAvailable": "Nu tillgänglig"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Kom igång gratis",
       "ctaContact": "Kontakta sälj",
-      "trialNote": "Inget kreditkort krävs. Inga kontrakt."
+      "trialNote": "Inget kreditkort krävs. Inga kontrakt.",
+      "phoneOrderingMinuteNote": "Faktureras till 0,60 USD/min med ett minimum på 249,99 USD/månad (≈ 416 inkluderade minuter). Detaljer på"
     },
     "faq": {
       "title": "Vanliga frågor",
@@ -7075,6 +7125,211 @@
       "b1": "Din riktiga meny – bilder, storlekar & tillbehör",
       "b2": "Beställ direkt från den, precis som en kund",
       "b3": "Gillar du den? Skapa konto och behåll den – ingen ny import"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI-telefonbeställning",
+        "title": "Din pizzerias telefon, <accent>besvarad av AI</accent>",
+        "subtitle": "Nabil AI tar emot telefonbeställningar för din pizzeria — halv-och-halv-pizzor, combos, leveranszoner, toppings efter namn — och lägger dem genom samma kassa som din webbplats. Byggt av före detta pizzeriaägare som vet hur ett riktigt samtal låter.",
+        "ctaStart": "Kom igång",
+        "ctaSecondary": "Se hur det fungerar",
+        "trust1": "Byggt för pizzerior",
+        "trust2": "Samma kassa som din webbplats",
+        "trust3": "Inspelningar & transkriptioner",
+        "trust4": "US$0.60 per samtalsminut",
+        "sampleLabel": "Exempel på livesamtal",
+        "sampleCaller": "Uppringare",
+        "sample1": "Hej, kan jag lägga en beställning för leverans?",
+        "sample2": "Självklart! Jag hjälper gärna. Vad får det vara idag?",
+        "sample3": "En stor pizza, halva pepperoni och champinjoner, halva grön paprika och lök.",
+        "sample4": "Uppfattat — en stor halv-och-halv-pizza: pepperoni och champinjoner på ena sidan, grön paprika och lök på den andra. Något mer?"
+      },
+      "story": {
+        "eyebrow": "Vår berättelse",
+        "title": "Byggt för pizzerior, av före detta pizzeriaägare",
+        "body1": "Vi tillbringade år bakom disken och tog emot telefonbeställningar. Vi vet vad uppringare faktiskt säger — halv-och-halv-önskemål, sista-minuten-ändringar av toppings, 'samma som förra gången'. Vi byggde Nabil AI för att hantera de samtalen som vi skulle göra.",
+        "body2": "Till skillnad från generiska AI-telefonsystem designades Nabil från dag ett kring pizza- och restaurangbeställningar. Varje funktion — från combobyggande till leveranszonskontroller — finns för att vi behövde den i vår egen butik.",
+        "point1": "Designat kring riktiga pizzeriaverksamheter",
+        "point2": "Varje beställning går genom din verifierade kassa",
+        "point3": "Din meny är AI:s meny — inget påhittat"
+      },
+      "how": {
+        "eyebrow": "Så fungerar det",
+        "title": "Tre steg till telefonbeställningar på autopilot",
+        "step1": {
+          "title": "Anslut din telefonlinje",
+          "body": "Vidarekoppla ditt befintliga nummer eller skaffa ett nytt. Vårt team konfigurerar din linje inom en arbetsdag — inget tekniskt arbete från din sida."
+        },
+        "step2": {
+          "title": "Nabil tar samtalet",
+          "body": "Nabil hälsar uppringare med ditt restaurangnamn, tar deras beställning i samtal, bekräftar varje artikel och läser upp totalen innan den läggs."
+        },
+        "step3": {
+          "title": "Beställningen skrivs ut i ditt kök",
+          "body": "Beställningen går genom samma kassa som en webbplatsbeställning. Den visas på din köksvisning, skrivs ut på din bongskrivare och visas i din adminpanel — allt automatiskt."
+        }
+      },
+      "handles": {
+        "eyebrow": "Vad det hanterar",
+        "title": "Allt dina uppringare frågar efter",
+        "subtitle": "Nabil hanterar beställningarna som ditt team hanterar — från enkla pizzor med en topping till komplexa halv-och-halv-kombos med leverans.",
+        "halfHalf": {
+          "title": "Halv-och-halv-pizzor",
+          "body": "Uppringare kan beställa olika toppings på varje halva, och Nabil bekräftar varje sida innan beställningen läggs."
+        },
+        "combos": {
+          "title": "Kombos & måltidserbjudanden",
+          "body": "Nabil leder uppringare genom kombovalen — välj din pizza, välj din sida, välj din dryck — precis som på din webbplats."
+        },
+        "delivery": {
+          "title": "Leverans med zonkontroll",
+          "body": "Tar leveransadressen, kontrollerar att den är i din zon, anger avgiften och lägger beställningen — inget gissande."
+        },
+        "upsells": {
+          "title": "Smart merförsäljning",
+          "body": "Föreslår de varor du väljer vid rätt tillfälle i samtalet — en dryck till en pizza, en dessert innan kassan."
+        },
+        "faq": {
+          "title": "Svarar på vanliga frågor",
+          "body": "Öppettider, plats, parkering, allergener — Nabil svarar på din butiks vanliga frågor så att din personal slipper."
+        },
+        "returning": {
+          "title": "Känner igen återkommande uppringare",
+          "body": "Hälsar stamkunder vid namn och minns deras beställningshistorik, så ombeställningar går snabbt."
+        },
+        "transfer": {
+          "title": "Kopplar till en person",
+          "body": "När en uppringare ber om att tala med en person eller har en förfrågan Nabil inte kan hantera, kopplas samtalet till butikens nummer."
+        },
+        "numbers": {
+          "title": "Uttalar siffror naturligt",
+          "body": "Telefonnummer, adresser, priser och tider uttalas i ord — 'sex fyrtiosju' inte '647' — så att uppringaren alltid förstår."
+        },
+        "hours": {
+          "title": "Känner till dina öppettider",
+          "body": "Nabil vet när du har öppet, när du har stängt och ditt helgschema — uppringare får korrekt information varje gång."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Varför det är exakt",
+        "title": "Beställningen stämmer för att systemet inte tillåter fel",
+        "body": "Nabil gissar inte. Varje artikel valideras mot din faktiska meny, varje pris beräknas av din kassa, och varje anpassning bekräftas med den som ringer innan beställningen läggs.",
+        "cart": {
+          "title": "Serverbaserad varukorg",
+          "body": "Beställningen byggs på servern, inte i AI:ns minne. Din menys priser, regler och tillgänglighet är den enda sanningskällan."
+        },
+        "asks": {
+          "title": "Frågar, antar aldrig",
+          "body": "När något är oklart — en storlek, en toppingplacering, ett degval — frågar Nabil den som ringer istället för att gissa."
+        },
+        "readback": {
+          "title": "Fullständig uppläsning",
+          "body": "Innan beställningen läggs, läser Nabil upp varje artikel, anpassning och totalen — den som ringer bekräftar innan något skickas till köket."
+        },
+        "alarm": {
+          "title": "Larm: angivet = debiterat",
+          "body": "Om summan AI:n angav inte stämmer med vad kassan beräknar, flaggar systemet det innan beställningen läggs."
+        },
+        "timeline": {
+          "title": "Tidslinje per samtal",
+          "body": "Varje samtal har en detaljerad tidslinje som visar varje verktygsanrop, varukorgsändring och beslut — så att du kan se exakt vad som hände."
+        },
+        "tests": {
+          "title": "Automatiserad testsvit",
+          "body": "Ett simuleringssystem kör riktiga beställningsscenarier vid varje uppdatering — halv-och-halv-pizzor, kombos, specialfall — innan det når din telefonlinje."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Din instrumentpanel",
+        "title": "Se varje samtal, hör varje ord",
+        "subtitle": "Inspelningar, transkriptioner, intäktsspårning och en tidslinje per samtal — allt du behöver veta om vad Nabil gör för din restaurang.",
+        "shotOverviewAlt": "Översikt av Nabil AI instrumentpanelen som visar samtalsvolym, intäkter och konverteringsmått",
+        "shotCallsAlt": "Samtalslista som visar senaste telefonbeställningar med resultat och varaktighet",
+        "shotDetailAlt": "Samtalsdetaljvy med transkript, tidslinje och ordersammanfattning",
+        "shotSettingsAlt": "Nabil AI inställningspanel med hälsning, merförsäljning och FAQ-konfiguration",
+        "shotReportAlt": "Rapportera ett samtals-dialogruta för att flagga problem till Fee Free-teamet",
+        "overview": {
+          "title": "Intäktsöversikt",
+          "body": "Se hur mycket intäkter Nabil genererar, med diagram för samtal, beställningar och konverteringsgrader."
+        },
+        "calls": {
+          "title": "Samtalshistorik",
+          "body": "Bläddra igenom varje samtal med resultat, varaktighet, inspelning och transkript."
+        },
+        "detail": {
+          "title": "Samtalstidslinje",
+          "body": "En sekundvis tidslinje över vad som hände under samtalet — varje verktygsanrop, varukorgsändring och uttalat ord."
+        },
+        "report": {
+          "title": "Rapportera ett samtal",
+          "body": "Flagga varje samtal som inte gick rätt. Vårt team granskar det och förbättrar Nabils hantering."
+        },
+        "settings": {
+          "title": "Full kontroll",
+          "body": "Konfigurera Nabils hälsning, merförsäljningsförslag, FAQ-svar, blockerade uppringare och betala-via-länk-inställningar."
+        },
+        "roi": {
+          "title": "ROI-spårning",
+          "body": "Spåra intäkt per samtalsminut så du vet exakt vad Nabil tjänar åt din butik."
+        }
+      },
+      "same": {
+        "eyebrow": "Samma system, samma kassa",
+        "title": "En telefonbeställning är en webbbeställning",
+        "body": "Nabil använder inte ett separat beställningssystem. Varje telefonbeställning går genom samma kassa, meny, priser och köksskärm som dina webbbeställningar. Ett system, en källa till sanning.",
+        "bullet1": "Samma meny, samma priser, samma tillval",
+        "bullet2": "Samma köksskärm och kvittoskrivare",
+        "bullet3": "Samma orderbekräftelse och spårning",
+        "bullet4": "Samma adminpanel och rapporter",
+        "frameAlt": "Köksskärm som visar en telefonbeställning bredvid webbbeställningar"
+      },
+      "languages": {
+        "eyebrow": "Flerspråkig",
+        "title": "Nabil talar dina kunders språk",
+        "body": "Nabil identifierar uppringarens språk automatiskt och svarar på samma språk. Dina menyartiklar, beskrivningar och tillval serveras på uppringarens språk — samma översättningar som din webbplats."
+      },
+      "pricing": {
+        "eyebrow": "Enkel prissättning",
+        "title": "Ett pris. Inga överraskningar.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "per samtalsminut",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minimum per månad",
+        "rule": "Du betalar det högre beloppet: dina samtalsminuter à 0,60 USD styck, eller det månatliga minimumet på 249,99 USD. De flesta restauranger håller sig inom de inkluderade 416 minuterna.",
+        "demo": "Redan betalande Fee Free-medlem? Prova Nabil gratis i 7 dagar — utan bindning.",
+        "include1": "Obegränsade samtal",
+        "include2": "Inspelningar & transkript",
+        "include3": "Instrumentpanel & analyser",
+        "include4": "Assisterad linjekonfigurering",
+        "include5": "Löpande uppdateringar & förbättringar",
+        "cta": "Kom igång",
+        "note": "Priser i amerikanska dollar. Månadsvis fakturering via Stripe. Avsluta när som helst."
+      },
+      "faq": {
+        "title": "Vanliga frågor",
+        "q1": "Hur tar Nabil en beställning?",
+        "a1": "Nabil svarar på din telefonlinje, hälsar uppringaren med ditt restaurangnamn, tar beställningen samtalsmässigt, bekräftar varje artikel och totalsumman, och lägger den genom din befintliga kassa. Beställningen visas på din köksskärm och skrivs ut automatiskt.",
+        "q2": "Vet uppringaren att de pratar med AI?",
+        "a2": "Nabil låter naturlig och samtalsmässig, men vi tror på transparens — uppringare kan alltid be om en människa, och samtalet kopplas omedelbart.",
+        "q3": "Vad händer om Nabil gör fel?",
+        "a3": "Varje samtal har en inspelning, ett transkript och en detaljerad tidslinje. Du kan flagga vilket samtal som helst och vårt team utreder. Serverkorgen och uppläsningsbekräftelsen minimerar fel.",
+        "q4": "Kan Nabil hantera halv-och-halv-pizzor?",
+        "a4": "Ja — halv-och-halv-pizzor med olika pålägg på varje sida är en kärnfunktion. Nabil bekräftar varje sida och bygger beställningen precis som din webbkassa.",
+        "q5": "Hur ansluter jag min telefonlinje?",
+        "a5": "Efter prenumeration berättar du ditt nummer och om du vill vidarekoppla det till Nabil eller få ett nytt. Vårt team ordnar allt inom en arbetsdag — inget tekniskt arbete.",
+        "q6": "Vad händer utanför öppettider?",
+        "a6": "Nabil känner till dina öppettider och helgdagar. Utanför öppettider informerar den uppringaren om när du öppnar igen och kan erbjuda en schemalagd beställning om aktiverat.",
+        "q7": "Hur beräknas faktureringen?",
+        "a7": "Du betalar 0,60 USD per samtalsminut eller det månatliga minimumet på 249,99 USD, beroende på vad som är högst. Minimumet inkluderar cirka 416 minuter. Varje samtal avrundas uppåt. Följ din användning i realtid.",
+        "q8": "Kan jag avsluta när som helst?",
+        "a8": "Ja. Nabil faktureras månadsvis via Stripe utan långtidsavtal. Avsluta från din instrumentpanel och din linje förblir aktiv till slutet av faktureringsperioden."
+      },
+      "finalCta": {
+        "title": "Redo att låta Nabil svara i telefonen?",
+        "body": "Installationen tar en arbetsdag. Börja ta emot telefonbeställningar via ditt system — ingen extra hårdvara, personal eller stress.",
+        "primary": "Kom igång",
+        "secondary": "Se alla priser"
+      }
     }
   },
   "addressBook": {

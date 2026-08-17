@@ -2651,7 +2651,9 @@
       },
       "campaignFallback": "Chiến dịch",
       "titleCampaignLocked": "Mã này đang được một chiến dịch Autopilot đang chạy gửi qua email. Tắt chiến dịch trong Tiếp thị → Autopilot để thu hồi mã.",
-      "toggleFailed": "Không thể thay đổi khuyến mãi này. Vui lòng thử lại."
+      "toggleFailed": "Không thể thay đổi khuyến mãi này. Vui lòng thử lại.",
+      "phoneOff": "Điện thoại tắt",
+      "phoneOffTip": "Khuyến mãi không áp dụng cho đơn hàng qua điện thoại bởi Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Chọn loại khuyến mãi để tiếp tục.",
@@ -2934,7 +2936,12 @@
       "hiddenCodeInfo": "Khuyến mãi ẩn chỉ áp dụng khi khách hàng nhập mã này lúc thanh toán.",
       "vipLockedTitle": "Chỉ VIP — gắn với: {groups}",
       "vipLockedDesc": "Khuyến mãi này chỉ tự động áp dụng cho các thành viên VIP đó khi thanh toán. Nó không bao giờ hiển thị trên thực đơn công khai, banner hay website — không công tắc hiển thị nào thay đổi được điều đó. Để công khai, trước tiên hãy gỡ nó ở trang Nhóm VIP.",
-      "bundleBuildInfo": "💡 Khách hàng tạo gói này từ thẻ “Tạo ưu đãi của bạn” trên thực đơn của bạn. Ghim nó vào biểu ngữ bên dưới để dễ tìm. (Không thể tự động áp dụng hoặc mở khóa gói bằng mã.)"
+      "bundleBuildInfo": "💡 Khách hàng tạo gói này từ thẻ “Tạo ưu đãi của bạn” trên thực đơn của bạn. Ghim nó vào biểu ngữ bên dưới để dễ tìm. (Không thể tự động áp dụng hoặc mở khóa gói bằng mã.)",
+      "phoneOrdersLabel": "Có sẵn qua điện thoại (Nabil AI)",
+      "phoneOrdersOnSub": "Khuyến mãi này áp dụng cho đơn hàng qua điện thoại bởi Nabil AI",
+      "phoneOrdersOffSub": "Khuyến mãi này không áp dụng cho đơn hàng qua điện thoại",
+      "phoneOrdersHelp": "Khi tắt, khuyến mãi này không áp dụng cho đơn hàng qua điện thoại. Đơn hàng web, app và marketplace không bị ảnh hưởng.",
+      "clientTypeMemberWarning": "Khuyến mãi dành cho thành viên cần tài khoản — người gọi chưa đăng ký sẽ không thấy khuyến mãi này."
     },
     "customersList": {
       "heading": "Khách Hàng",
@@ -4355,7 +4362,12 @@
         "viewAll": "Xem tất cả cuộc gọi",
         "chartPopularItems": "Đặt qua điện thoại nhiều nhất",
         "popularItemsCta": "Thiết lập món gợi ý bán thêm",
-        "popularItemsEmpty": "Chưa có đơn đặt qua điện thoại trong khoảng thời gian này."
+        "popularItemsEmpty": "Chưa có đơn đặt qua điện thoại trong khoảng thời gian này.",
+        "meterTitle": "Sử dụng tháng này",
+        "meterMinutes": "{minutes} phút đã dùng",
+        "meterCharge": "Hiện tại: {amount} · Dự kiến: {projected}",
+        "meterOver": "{minutes} phút vượt mức bao gồm",
+        "meterIncluded": "{included} phút bao gồm trong tối thiểu {minimum}/tháng ({rate}/phút)"
       },
       "callLog": {
         "searchPlaceholder": "Tìm số điện thoại, tên hoặc tóm tắt…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Đã bỏ chặn số",
         "errorToast": "Không thể cập nhật — vui lòng thử lại.",
         "invalidPhone": "Vui lòng nhập số điện thoại hợp lệ."
-      }
+      },
+      "setup": {
+        "title": "Thiết lập đường dây điện thoại",
+        "body": "Cho chúng tôi biết về đường dây của bạn và Nabil sẽ trả lời cuộc gọi trong một ngày làm việc. Không cần thiết lập kỹ thuật.",
+        "receivedTitle": "Yêu cầu thiết lập đã nhận",
+        "receivedBody": "Đội ngũ của chúng tôi đang thiết lập đường dây Nabil AI của bạn. Bạn sẽ thấy bảng điều khiển ở đây khi sẵn sàng — thường trong một ngày làm việc.",
+        "summaryForward": "Chuyển tiếp cuộc gọi từ {currentNumber}",
+        "summaryNew": "Số mới (hiện tại: {currentNumber})",
+        "summaryTransfer": "Chuyển đến người: {transferNumber}",
+        "summaryGreeting": "Tên chào hỏi: {name}",
+        "summarySent": "Đã gửi {date}",
+        "updateRequest": "Cập nhật yêu cầu",
+        "prepareHint": "Bạn có thể cập nhật tùy chọn cho đến khi đường dây được thiết lập.",
+        "currentNumberLabel": "Số điện thoại hiện tại của bạn",
+        "phoneHint": "Số mà khách hàng của bạn gọi hiện tại.",
+        "modeLabel": "Bạn muốn thiết lập đường dây như thế nào?",
+        "modeForward": "Chuyển tiếp số của tôi",
+        "modeForwardHint": "Bạn chuyển tiếp số hiện tại sang Nabil. Người gọi vẫn gọi cùng số.",
+        "modeNew": "Cấp cho tôi số mới",
+        "modeNewHint": "Chúng tôi cấp số mới cho Nabil. Bạn có thể công bố cùng đường dây hiện tại.",
+        "transferNumberLabel": "Chuyển cuộc gọi đến",
+        "transferNumberHint": "Khi người gọi yêu cầu người thật, Nabil chuyển cuộc gọi đến đây.",
+        "greetingNameLabel": "Tên nhà hàng cho lời chào",
+        "greetingNameHint": "Cách Nabil giới thiệu nhà hàng của bạn khi trả lời điện thoại.",
+        "notesLabel": "Điều gì khác chúng tôi nên biết (tùy chọn)",
+        "submitting": "Đang gửi…",
+        "submit": "Gửi yêu cầu",
+        "cancelEdit": "Hủy",
+        "errorAlreadyProvisioned": "Đường dây của bạn đã được thiết lập — tải lại trang.",
+        "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại."
+      },
+      "nowAvailable": "Hiện đã có",
+      "availableHeading": "Nabil AI đặt hàng qua điện thoại",
+      "availablePrice": "{rate} mỗi phút gọi · tối thiểu {minimum}/tháng · bao gồm {included} phút",
+      "availableConcierge": "Đội ngũ chúng tôi thiết lập đường dây trong một ngày làm việc. Không cần công việc kỹ thuật.",
+      "availableDemo": "Đã là thành viên trả phí? Dùng thử miễn phí {days} ngày.",
+      "subscribeCta": "Đăng ký & thiết lập"
     },
     "customerDetailPage": {
       "allCustomers": "Tất cả khách hàng",
@@ -6865,7 +6913,8 @@
             "b3": "An toàn & mã hóa",
             "b4": "Xây dựng tại Canada"
           }
-        }
+        },
+        "nowAvailable": "Hiện có sẵn"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Bắt đầu miễn phí",
       "ctaContact": "Liên hệ sales",
-      "trialNote": "Không cần thẻ tín dụng. Không hợp đồng."
+      "trialNote": "Không cần thẻ tín dụng. Không hợp đồng.",
+      "phoneOrderingMinuteNote": "Tính phí 0,60 USD/phút, tối thiểu 249,99 USD/tháng (≈ 416 phút đã bao gồm). Chi tiết tại"
     },
     "faq": {
       "title": "Câu hỏi thường gặp",
@@ -7075,6 +7125,211 @@
       "b1": "Thực đơn thật của bạn — hình ảnh, kích cỡ & topping",
       "b2": "Đặt món ngay lập tức, đúng như một khách hàng",
       "b3": "Thích chứ? Đăng ký và giữ lại — không cần nhập lại"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "Đặt hàng qua điện thoại AI",
+        "title": "Điện thoại tiệm pizza của bạn, <accent>được AI trả lời</accent>",
+        "subtitle": "Nabil AI nhận đơn đặt hàng qua điện thoại cho tiệm pizza của bạn — pizza nửa-nửa, combo, vùng giao hàng, topping theo tên — và đặt chúng qua cùng quy trình thanh toán như trang web của bạn. Được xây dựng bởi những chủ tiệm pizza cũ biết cuộc gọi thật nghe như thế nào.",
+        "ctaStart": "Bắt đầu",
+        "ctaSecondary": "Xem cách hoạt động",
+        "trust1": "Được xây dựng cho tiệm pizza",
+        "trust2": "Cùng quy trình thanh toán với trang web",
+        "trust3": "Bản ghi âm & bản ghi chép",
+        "trust4": "US$0.60 mỗi phút gọi",
+        "sampleLabel": "Ví dụ cuộc gọi thực",
+        "sampleCaller": "Người gọi",
+        "sample1": "Xin chào, tôi có thể đặt hàng giao tận nơi không?",
+        "sample2": "Tất nhiên rồi! Tôi rất vui được giúp bạn. Hôm nay bạn muốn gọi gì?",
+        "sample3": "Một pizza cỡ lớn, nửa pepperoni và nấm, nửa ớt xanh và hành.",
+        "sample4": "Được rồi — một pizza lớn nửa-nửa: pepperoni và nấm một bên, ớt xanh và hành bên kia. Còn gì nữa không?"
+      },
+      "story": {
+        "eyebrow": "Câu chuyện của chúng tôi",
+        "title": "Được xây dựng cho tiệm pizza, bởi những chủ tiệm pizza cũ",
+        "body1": "Chúng tôi đã dành nhiều năm đứng sau quầy nhận đơn qua điện thoại. Chúng tôi biết khách hàng thực sự nói gì — yêu cầu nửa-nửa, thay đổi topping phút chót, 'giống lần trước'. Chúng tôi xây dựng Nabil AI để xử lý những cuộc gọi đó theo cách chúng tôi sẽ làm.",
+        "body2": "Khác với các hệ thống điện thoại AI chung chung, Nabil được thiết kế từ ngày đầu tiên xoay quanh việc đặt pizza và nhà hàng. Mọi tính năng — từ tạo combo đến kiểm tra vùng giao hàng — đều tồn tại vì chúng tôi cần nó trong cửa hàng của mình.",
+        "point1": "Thiết kế xoay quanh hoạt động tiệm pizza thực tế",
+        "point2": "Mọi đơn hàng đều qua quy trình thanh toán đã xác minh của bạn",
+        "point3": "Thực đơn của bạn là thực đơn của AI — không có gì bịa đặt"
+      },
+      "how": {
+        "eyebrow": "Cách hoạt động",
+        "title": "Ba bước để đặt hàng qua điện thoại tự động",
+        "step1": {
+          "title": "Kết nối đường dây điện thoại của bạn",
+          "body": "Chuyển tiếp số hiện có hoặc lấy số mới. Đội ngũ của chúng tôi thiết lập đường dây trong một ngày làm việc — không cần bạn làm bất kỳ công việc kỹ thuật nào."
+        },
+        "step2": {
+          "title": "Nabil nhận cuộc gọi",
+          "body": "Nabil chào người gọi bằng tên nhà hàng của bạn, nhận đơn hàng theo kiểu trò chuyện, xác nhận từng món và đọc lại tổng tiền trước khi đặt."
+        },
+        "step3": {
+          "title": "Đơn hàng in ra tại bếp của bạn",
+          "body": "Đơn hàng đi qua cùng quy trình thanh toán như đơn hàng trên trang web. Nó xuất hiện trên màn hình bếp, in trên máy in hóa đơn và hiển thị trên bảng điều khiển quản trị — tất cả tự động."
+        }
+      },
+      "handles": {
+        "eyebrow": "Những gì xử lý được",
+        "title": "Mọi thứ khách gọi yêu cầu",
+        "subtitle": "Nabil xử lý đơn hàng mà đội ngũ của bạn xử lý — từ pizza đơn giản một loại topping đến combo nửa-nửa phức tạp có giao hàng.",
+        "halfHalf": {
+          "title": "Pizza nửa-nửa",
+          "body": "Khách gọi có thể gọi các loại topping khác nhau trên mỗi nửa, và Nabil xác nhận từng phần trước khi đặt đơn hàng."
+        },
+        "combos": {
+          "title": "Combo & ưu đãi bữa ăn",
+          "body": "Nabil hướng dẫn khách gọi qua các lựa chọn combo — chọn pizza, chọn món phụ, chọn đồ uống — giống hệt như trên website của bạn."
+        },
+        "delivery": {
+          "title": "Giao hàng với kiểm tra vùng",
+          "body": "Lấy địa chỉ giao hàng, kiểm tra có trong vùng của bạn không, báo phí và đặt đơn hàng — không phỏng đoán."
+        },
+        "upsells": {
+          "title": "Bán thêm thông minh",
+          "body": "Gợi ý các món bạn chọn vào đúng thời điểm trong cuộc trò chuyện — một đồ uống kèm pizza, một món tráng miệng trước khi thanh toán."
+        },
+        "faq": {
+          "title": "Trả lời các câu hỏi thường gặp",
+          "body": "Giờ mở cửa, địa điểm, bãi đỗ xe, chất gây dị ứng — Nabil trả lời các câu hỏi thường gặp của cửa hàng bạn để nhân viên không phải làm."
+        },
+        "returning": {
+          "title": "Nhận ra khách gọi quay lại",
+          "body": "Chào khách quen bằng tên và nhớ lịch sử đặt hàng của họ, nên việc đặt lại rất nhanh."
+        },
+        "transfer": {
+          "title": "Chuyển cuộc gọi đến người thật",
+          "body": "Khi khách gọi yêu cầu nói chuyện với người thật hoặc có yêu cầu Nabil không thể xử lý, cuộc gọi được chuyển đến số cửa hàng của bạn."
+        },
+        "numbers": {
+          "title": "Đọc số một cách tự nhiên",
+          "body": "Số điện thoại, địa chỉ, giá cả và thời gian được đọc bằng lời — 'sáu bốn bảy' chứ không phải '647' — để khách gọi luôn hiểu."
+        },
+        "hours": {
+          "title": "Biết giờ mở cửa của bạn",
+          "body": "Nabil biết khi nào bạn mở cửa, khi nào đóng cửa và lịch nghỉ lễ của bạn — khách gọi luôn nhận được thông tin chính xác."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Tại sao chính xác",
+        "title": "Đơn hàng chính xác vì hệ thống không cho phép sai sót",
+        "body": "Nabil không đoán. Mọi món được xác thực với menu thực tế của bạn, mọi giá được tính bởi hệ thống thanh toán, và mọi tuỳ chỉnh được xác nhận với người gọi trước khi đặt hàng.",
+        "cart": {
+          "title": "Giỏ hàng phía máy chủ",
+          "body": "Đơn hàng được xây dựng trên máy chủ, không phải trong bộ nhớ AI. Giá cả, quy tắc và tình trạng khả dụng của menu là nguồn thông tin duy nhất."
+        },
+        "asks": {
+          "title": "Hỏi, không bao giờ giả định",
+          "body": "Khi có điều gì mơ hồ — kích cỡ, vị trí topping, lựa chọn đế bánh — Nabil hỏi người gọi thay vì đoán."
+        },
+        "readback": {
+          "title": "Đọc lại đầy đủ",
+          "body": "Trước khi đặt hàng, Nabil đọc lại từng món, tuỳ chỉnh và tổng cộng — người gọi xác nhận trước khi bất kỳ thứ gì được gửi đến bếp."
+        },
+        "alarm": {
+          "title": "Cảnh báo: giá báo = giá tính",
+          "body": "Nếu tổng AI báo không khớp với hệ thống thanh toán tính, hệ thống sẽ đánh dấu trước khi đặt hàng."
+        },
+        "timeline": {
+          "title": "Dòng thời gian từng cuộc gọi",
+          "body": "Mỗi cuộc gọi có dòng thời gian chi tiết hiển thị mọi lệnh gọi công cụ, thay đổi giỏ hàng và quyết định — để bạn thấy chính xác những gì đã xảy ra."
+        },
+        "tests": {
+          "title": "Bộ kiểm thử tự động",
+          "body": "Hệ thống mô phỏng chạy các tình huống đặt hàng thực với mỗi bản cập nhật — pizza nửa-nửa, combo, trường hợp đặc biệt — trước khi đến đường dây điện thoại của bạn."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Bảng điều khiển của bạn",
+        "title": "Xem mọi cuộc gọi, nghe mọi lời nói",
+        "subtitle": "Bản ghi, bản chép, theo dõi doanh thu và dòng thời gian từng cuộc gọi — mọi thứ bạn cần để biết Nabil đang làm gì cho nhà hàng của bạn.",
+        "shotOverviewAlt": "Tổng quan bảng điều khiển Nabil AI hiển thị lượng cuộc gọi, doanh thu và chỉ số chuyển đổi",
+        "shotCallsAlt": "Danh sách cuộc gọi hiển thị đơn đặt hàng qua điện thoại gần đây với kết quả và thời lượng",
+        "shotDetailAlt": "Chế độ xem chi tiết cuộc gọi với bản chép, dòng thời gian và tóm tắt đơn hàng",
+        "shotSettingsAlt": "Bảng cài đặt Nabil AI với lời chào, bán thêm và cấu hình FAQ",
+        "shotReportAlt": "Hộp thoại báo cáo cuộc gọi để gắn cờ vấn đề cho đội Fee Free",
+        "overview": {
+          "title": "Tổng quan doanh thu",
+          "body": "Xem Nabil mang về bao nhiêu doanh thu, với biểu đồ cuộc gọi, đơn hàng và tỷ lệ chuyển đổi."
+        },
+        "calls": {
+          "title": "Lịch sử cuộc gọi",
+          "body": "Duyệt mọi cuộc gọi với kết quả, thời lượng, bản ghi và bản chép."
+        },
+        "detail": {
+          "title": "Dòng thời gian cuộc gọi",
+          "body": "Dòng thời gian từng giây về những gì đã xảy ra trong cuộc gọi — mọi lệnh gọi công cụ, thay đổi giỏ hàng và lời nói."
+        },
+        "report": {
+          "title": "Báo cáo cuộc gọi",
+          "body": "Gắn cờ bất kỳ cuộc gọi nào không suôn sẻ. Đội ngũ của chúng tôi xem xét và cải thiện cách xử lý của Nabil."
+        },
+        "settings": {
+          "title": "Kiểm soát hoàn toàn",
+          "body": "Cấu hình lời chào của Nabil, gợi ý bán thêm, câu trả lời FAQ, người gọi bị chặn và cài đặt thanh toán qua liên kết."
+        },
+        "roi": {
+          "title": "Theo dõi ROI",
+          "body": "Theo dõi doanh thu trên mỗi phút gọi để biết chính xác Nabil đang kiếm được bao nhiêu cho cửa hàng của bạn."
+        }
+      },
+      "same": {
+        "eyebrow": "Cùng hệ thống, cùng thanh toán",
+        "title": "Đơn hàng qua điện thoại là đơn hàng trên website",
+        "body": "Nabil không sử dụng hệ thống đặt hàng riêng. Mọi đơn hàng qua điện thoại đều đi qua cùng thanh toán, thực đơn, giá cả và màn hình bếp như đơn hàng trên website. Một hệ thống, một nguồn sự thật.",
+        "bullet1": "Cùng thực đơn, cùng giá, cùng tùy chọn",
+        "bullet2": "Cùng màn hình bếp và máy in vé",
+        "bullet3": "Cùng xác nhận và theo dõi đơn hàng",
+        "bullet4": "Cùng bảng điều khiển quản trị và báo cáo",
+        "frameAlt": "Màn hình bếp hiển thị đơn hàng điện thoại cùng đơn hàng website"
+      },
+      "languages": {
+        "eyebrow": "Đa ngôn ngữ",
+        "title": "Nabil nói ngôn ngữ của người gọi",
+        "body": "Nabil tự động phát hiện ngôn ngữ của người gọi và phản hồi bằng ngôn ngữ đó. Các món trong thực đơn, mô tả và tùy chọn được phục vụ bằng ngôn ngữ của người gọi — cùng bản dịch với website của bạn."
+      },
+      "pricing": {
+        "eyebrow": "Giá đơn giản",
+        "title": "Một giá. Không bất ngờ.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "mỗi phút gọi",
+        "minimum": "249,99 USD",
+        "minimumLabel": "tối thiểu mỗi tháng",
+        "rule": "Bạn trả mức cao hơn: phút gọi của bạn với giá 0,60 USD mỗi phút, hoặc mức tối thiểu hàng tháng 249,99 USD. Hầu hết nhà hàng nằm trong 416 phút bao gồm.",
+        "demo": "Đã là thành viên trả phí Fee Free? Dùng thử Nabil miễn phí 7 ngày — không ràng buộc.",
+        "include1": "Cuộc gọi không giới hạn",
+        "include2": "Bản ghi âm & bản ghi",
+        "include3": "Bảng điều khiển & phân tích",
+        "include4": "Thiết lập đường dây được hỗ trợ",
+        "include5": "Cập nhật và cải tiến liên tục",
+        "cta": "Bắt đầu",
+        "note": "Giá tính bằng đô la Mỹ. Thanh toán hàng tháng qua Stripe. Hủy bất cứ lúc nào."
+      },
+      "faq": {
+        "title": "Câu hỏi thường gặp",
+        "q1": "Nabil nhận đơn hàng như thế nào?",
+        "a1": "Nabil trả lời đường dây điện thoại của bạn, chào người gọi bằng tên nhà hàng, nhận đơn hàng theo hình thức hội thoại, xác nhận từng món và tổng cộng, rồi đặt qua hệ thống thanh toán hiện có. Đơn hàng hiển thị trên màn hình bếp và tự động in.",
+        "q2": "Người gọi có biết họ đang nói chuyện với AI không?",
+        "a2": "Nabil nghe tự nhiên và trò chuyện, nhưng chúng tôi tin vào sự minh bạch — người gọi luôn có thể yêu cầu người thật, và cuộc gọi được chuyển ngay lập tức.",
+        "q3": "Nếu Nabil sai thì sao?",
+        "a3": "Mỗi cuộc gọi có bản ghi âm, bản ghi và dòng thời gian chi tiết. Bạn có thể đánh dấu cuộc gọi bất kỳ và đội ngũ chúng tôi sẽ điều tra. Giỏ hàng phía máy chủ và xác nhận đọc lại giảm thiểu lỗi.",
+        "q4": "Nabil có thể xử lý pizza nửa-nửa không?",
+        "a4": "Có — pizza nửa-nửa với topping khác nhau ở mỗi bên là tính năng cốt lõi. Nabil xác nhận từng bên và xây dựng đơn hàng chính xác như thanh toán trên website.",
+        "q5": "Làm cách nào để kết nối đường dây điện thoại?",
+        "a5": "Sau khi đăng ký, hãy cho chúng tôi biết số hiện tại và bạn muốn chuyển tiếp sang Nabil hay nhận số mới. Đội ngũ thiết lập mọi thứ trong một ngày làm việc — không cần công việc kỹ thuật.",
+        "q6": "Điều gì xảy ra ngoài giờ?",
+        "a6": "Nabil biết giờ mở cửa và lịch nghỉ lễ của bạn. Ngoài giờ, nó cho người gọi biết khi nào bạn mở lại và có thể đề nghị đặt hàng cho lần mở cửa tiếp theo nếu bật lịch hẹn.",
+        "q7": "Hóa đơn được tính như thế nào?",
+        "a7": "Bạn trả 0,60 USD mỗi phút gọi hoặc tối thiểu hàng tháng 249,99 USD — tùy mức nào cao hơn. Mức tối thiểu bao gồm khoảng 416 phút. Mỗi cuộc gọi được làm tròn lên. Theo dõi sử dụng theo thời gian thực.",
+        "q8": "Tôi có thể hủy bất cứ lúc nào không?",
+        "a8": "Có. Nabil được thanh toán hàng tháng qua Stripe không có hợp đồng dài hạn. Hủy từ bảng điều khiển bất cứ lúc nào và đường dây của bạn vẫn hoạt động cho đến cuối kỳ thanh toán."
+      },
+      "finalCta": {
+        "title": "Sẵn sàng để Nabil trả lời điện thoại của bạn?",
+        "body": "Thiết lập mất một ngày làm việc. Bắt đầu nhận đơn hàng qua điện thoại thông qua hệ thống của bạn — không cần thiết bị, nhân viên hay căng thẳng thêm.",
+        "primary": "Bắt đầu",
+        "secondary": "Xem tất cả giá"
+      }
     }
   },
   "addressBook": {

@@ -11,6 +11,7 @@
 import prisma from "@/lib/db";
 import { getStripe, stripeReady } from "@/lib/stripe";
 import { isComplimentaryAddOnRow } from "@/lib/addon-comp";
+import { isNabilDemoEligible, PHONE_ORDERING_ADDON_SLUG } from "@/lib/voice/nabil-trial";
 
 /** Public listing — includes the restaurant's own subscription state. */
 export async function listAddOnsForRestaurant(restaurantId: string) {
@@ -25,6 +26,23 @@ export async function listAddOnsForRestaurant(restaurantId: string) {
     }),
   ]);
   const subBySlug = new Map(subs.map((s) => [s.addOn.slug, s]));
+
+  // Nabil AI one-time member demo (Luigi 2026-08-16): advisory badge on the
+  // card only — the Checkout route re-decides server-side. Looked up only when
+  // the add-on is in the catalog and this restaurant isn't already on it.
+  const nabilInCatalog = addOns.some((a) => a.slug === PHONE_ORDERING_ADDON_SLUG);
+  const nabilSub = subBySlug.get(PHONE_ORDERING_ADDON_SLUG);
+  const nabilActive = !!nabilSub && ["active", "trialing"].includes(nabilSub.status);
+  let nabilDemoDays: number | null = null;
+  if (nabilInCatalog && !nabilActive) {
+    try {
+      const demo = await isNabilDemoEligible(restaurantId);
+      if (demo.eligible) nabilDemoDays = demo.days;
+    } catch (e) {
+      console.error("[listAddOnsForRestaurant] demo eligibility lookup failed", e);
+    }
+  }
+
   return addOns.map((a) => ({
     id: a.id,
     slug: a.slug,
@@ -40,6 +58,9 @@ export async function listAddOnsForRestaurant(restaurantId: string) {
      *  "Coming Soon" badge and the subscribe button is disabled — the
      *  add-on is publicly committed to but not yet built. */
     comingSoon: a.comingSoon ?? false,
+    /** Nabil AI only: days of one-time free demo THIS restaurant would get at
+     *  Checkout (already pays us + never used it), else null. */
+    memberDemoDays: a.slug === PHONE_ORDERING_ADDON_SLUG ? nabilDemoDays : null,
     isSubscribed: !!subBySlug.get(a.slug),
     subscription: subBySlug.get(a.slug)
       ? {

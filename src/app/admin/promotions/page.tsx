@@ -7,6 +7,7 @@ import { PromotionsClient } from "./PromotionsClient";
 import { PromoExclusions } from "./PromoExclusions";
 import { resolvePromoMenuRefsForServing, findDeadPromoIds } from "@/lib/menu";
 import { isCampaignOwned, liveCampaignRefs } from "@/lib/autopilot-promos";
+import { hasFeature } from "@/lib/entitlements";
 
 export default async function PromotionsPage() {
   const t = await getTranslations("admin.promotionsPage");
@@ -31,7 +32,7 @@ export default async function PromotionsPage() {
   const ownerIds: string[] = [restaurantId];
   if (restaurant?.parentRestaurantId) ownerIds.push(restaurant.parentRestaurantId);
 
-  const [promotions, categories, menuItems] = await Promise.all([
+  const [promotions, categories, menuItems, phoneOrderingEnabled] = await Promise.all([
     prisma.promotion.findMany({
       where: {
         OR: [
@@ -54,6 +55,9 @@ export default async function PromotionsPage() {
       orderBy: { name: "asc" },
       select: { id: true, name: true, categoryId: true, price: true },
     }),
+    // "Phone: no" chip only where Nabil AI is a thing at this store
+    // (feature-gated visibility). Luigi A64(a), 2026-08-17.
+    hasFeature(restaurantId, "phone_ordering_agent"),
   ]);
 
   // DEAD-TARGET badge (Luigi 2026-07-05): promos whose which-dishes picks no
@@ -86,6 +90,7 @@ export default async function PromotionsPage() {
         categories={categories}
         menuItems={menuItems}
         deadPromoIds={deadPromoIds}
+        phoneOrderingEnabled={phoneOrderingEnabled}
       />
       {/* Gift-card guard — categories/items no promo or coupon may discount. */}
       <PromoExclusions />

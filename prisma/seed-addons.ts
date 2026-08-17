@@ -205,15 +205,21 @@ async function main() {
     },
     {
       slug: "phone_ordering",
-      name: "Automated Phone Ordering",
+      // ON SALE since 2026-08-17 (Luigi's A64 (d) price: US$0.60/call-minute,
+      // US$249.99/month minimum — the minimum is this Stripe price, the overage
+      // is billed by /api/cron/nabil-usage-billing). Name/description mirror
+      // scripts/nabil-go-live-addon.ts (the one-off flip that ran on both Neon
+      // branches) so a re-seed keeps the live copy; the 7-day member demo is
+      // conditional and lives in code (src/lib/voice/nabil-trial.ts), NOT in
+      // trialDays. Self-serve number provisioning does not exist yet — a new
+      // subscriber sees "we're setting up your line" (concierge activation).
+      name: "Nabil AI Phone Ordering",
       description:
-        "AI-powered phone agent takes customer orders 24/7 and pushes them straight to your kitchen — no staff time, no missed calls during the rush.",
-      monthlyPriceCents: 0,
+        "Nabil AI answers your phone 24/7 and takes orders straight into your kitchen — half-and-half pizzas, combos, delivery zones, promos, receipts and reports, all through the same checkout as your website. US$0.60 per call-minute, US$249.99/month minimum.",
+      monthlyPriceCents: 24999,
       displayOrder: 65,
       enabledFeatures: ["phone_ordering_agent"],
-      // New feature. Admin sidebar entry + placeholder page added; actual
-      // implementation (Twilio voice + AI agent) is post-launch work.
-      comingSoon: true,
+      comingSoon: false,
     },
     {
       slug: "reservation_deposits",

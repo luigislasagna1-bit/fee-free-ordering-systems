@@ -3211,7 +3211,9 @@
         "payment_reward": "Payment Method Reward",
         "free_dish_meal": "Free Dish as Part of a Meal"
       },
-      "campaignFallback": "Campaign"
+      "campaignFallback": "Campaign",
+      "phoneOff": "Phone off",
+      "phoneOffTip": "This promotion does not apply to phone orders taken by Nabil AI"
     },
     "promoWizard": {
       "errorPickType": "Pick a promotion type to continue.",
@@ -3494,7 +3496,12 @@
       "hiddenCodeInfo": "Hidden promotions only apply when the customer enters this code at checkout.",
       "vipLockedTitle": "VIP only — attached to: {groups}",
       "vipLockedDesc": "This promotion auto-applies only for those VIP members at checkout. It never shows on your public menu, banner, or website — no visibility switch can change that. To make it public, detach it on the VIP Groups page first.",
-      "bundleBuildInfo": "💡 Customers build this bundle from a “Build your deal” card on your menu. Pin it to the banner below so it’s easy to find. (A bundle can’t be auto-applied or unlocked by a code.)"
+      "bundleBuildInfo": "💡 Customers build this bundle from a “Build your deal” card on your menu. Pin it to the banner below so it’s easy to find. (A bundle can’t be auto-applied or unlocked by a code.)",
+      "phoneOrdersLabel": "Available by phone (Nabil AI)",
+      "phoneOrdersOnSub": "This promotion applies to phone orders taken by Nabil AI",
+      "phoneOrdersOffSub": "This promotion does not apply to phone orders",
+      "phoneOrdersHelp": "When off, this promotion is excluded from orders placed over the phone by Nabil AI. Website, app, and marketplace orders are unaffected.",
+      "clientTypeMemberWarning": "Member-only promotions require a registered account — phone callers who are not signed up will not see this promotion."
     },
     "customersList": {
       "heading": "Customers",
@@ -4683,7 +4690,12 @@
         "viewAll": "View all calls",
         "chartPopularItems": "Most ordered by phone",
         "popularItemsCta": "Set featured upsells",
-        "popularItemsEmpty": "No phone orders in this range yet."
+        "popularItemsEmpty": "No phone orders in this range yet.",
+        "meterTitle": "Usage This Month",
+        "meterMinutes": "{minutes} minutes used",
+        "meterCharge": "Current: {amount} · Projected: {projected}",
+        "meterOver": "{minutes} minutes over included",
+        "meterIncluded": "{included} min included in the {minimum}/month minimum ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Search phone, name, or summary…",
@@ -4968,7 +4980,43 @@
         "removedToast": "Number unblocked",
         "errorToast": "Couldn't update — please try again.",
         "invalidPhone": "Enter a valid phone number."
-      }
+      },
+      "setup": {
+        "title": "Set up your phone line",
+        "body": "Tell us about your phone line and we'll have Nabil answering calls within one business day. No technical setup needed on your end.",
+        "receivedTitle": "Setup request received",
+        "receivedBody": "Our team is setting up your Nabil AI phone line. You'll see your live dashboard here once it's ready — typically within one business day.",
+        "summaryForward": "Forward calls from {currentNumber}",
+        "summaryNew": "New number (current: {currentNumber})",
+        "summaryTransfer": "Transfer to a person: {transferNumber}",
+        "summaryGreeting": "Greeting name: {name}",
+        "summarySent": "Submitted {date}",
+        "updateRequest": "Update request",
+        "prepareHint": "You can update your preferences until the line is set up.",
+        "currentNumberLabel": "Your current phone number",
+        "phoneHint": "The number your customers call today.",
+        "modeLabel": "How should we set up your line?",
+        "modeForward": "Forward my number",
+        "modeForwardHint": "You forward your existing number to Nabil. Callers dial the same number they always have.",
+        "modeNew": "Give me a new number",
+        "modeNewHint": "We provision a new number for Nabil. You can publish it alongside your existing line.",
+        "transferNumberLabel": "Transfer calls to",
+        "transferNumberHint": "When a caller asks for a person, Nabil transfers the call here.",
+        "greetingNameLabel": "Restaurant name for the greeting",
+        "greetingNameHint": "How Nabil should introduce your restaurant when answering the phone.",
+        "notesLabel": "Anything else we should know (optional)",
+        "submitting": "Submitting…",
+        "submit": "Submit request",
+        "cancelEdit": "Cancel",
+        "errorAlreadyProvisioned": "Your phone line is already set up — refresh the page to see your dashboard.",
+        "errorGeneric": "Something went wrong. Please try again."
+      },
+      "nowAvailable": "Now Available",
+      "availableHeading": "Nabil AI Phone Ordering",
+      "availablePrice": "{rate} per call-minute · {minimum}/month minimum · {included} minutes included",
+      "availableConcierge": "Our team sets up your phone line within one business day. No technical work on your end.",
+      "availableDemo": "Already a paying member? Try it free for {days} days.",
+      "subscribeCta": "Subscribe & Set Up"
     },
     "reportOrdersList": {
       "noRestaurantContext": "No restaurant context.",
@@ -6865,7 +6913,8 @@
             "b3": "Secure & encrypted",
             "b4": "Built in Canada"
           }
-        }
+        },
+        "nowAvailable": "Now Available"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Get Started Free",
       "ctaContact": "Contact sales",
-      "trialNote": "No credit card required. No contracts."
+      "trialNote": "No credit card required. No contracts.",
+      "phoneOrderingMinuteNote": "Billed at US$0.60/min with a US$249.99/mo minimum (≈ 416 included minutes). See details on"
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -7075,6 +7125,211 @@
       "b1": "Your real menu — photos, sizes & toppings",
       "b2": "Order from it instantly, just like a customer",
       "b3": "Love it? Sign up and keep it — no re-import"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI Phone Ordering",
+        "title": "Your pizzeria's phone, <accent>answered by AI</accent>",
+        "subtitle": "Nabil AI takes phone orders for your pizzeria — half-and-half pizzas, combos, delivery zones, toppings by name — and places them through the same checkout as your website. Built by former pizzeria owners who know what a real call sounds like.",
+        "ctaStart": "Get Started",
+        "ctaSecondary": "See How It Works",
+        "trust1": "Built for pizzerias",
+        "trust2": "Same checkout as your website",
+        "trust3": "Recordings & transcripts",
+        "trust4": "US$0.60 per call-minute",
+        "sampleLabel": "Live call example",
+        "sampleCaller": "Caller",
+        "sample1": "Hi, can I place an order for delivery?",
+        "sample2": "Of course! I'd be happy to help. What can I get for you today?",
+        "sample3": "A large pizza, half pepperoni and mushrooms, half green peppers and onions.",
+        "sample4": "Got it — a large half-and-half pizza: pepperoni and mushrooms on one side, green peppers and onions on the other. Anything else?"
+      },
+      "story": {
+        "eyebrow": "Our Story",
+        "title": "Built for pizzerias, by former pizzeria owners",
+        "body1": "We spent years behind the counter taking phone orders. We know what callers actually say — the half-and-half requests, the last-minute topping changes, the 'same as last time.' We built Nabil AI to handle those calls the way we would.",
+        "body2": "Unlike generic AI phone systems, Nabil was designed from day one around pizza and restaurant ordering. Every feature — from combo building to delivery zone checks — exists because we needed it in our own store.",
+        "point1": "Designed around real pizza operations",
+        "point2": "Every order goes through your verified checkout",
+        "point3": "Your menu is the AI's menu — nothing invented"
+      },
+      "how": {
+        "eyebrow": "How It Works",
+        "title": "Three steps to phone orders on autopilot",
+        "step1": {
+          "title": "Connect your phone line",
+          "body": "Forward your existing number or get a new one. Our team sets up your line within one business day — no technical work on your end."
+        },
+        "step2": {
+          "title": "Nabil takes the call",
+          "body": "Nabil greets callers by your restaurant's name, takes their order conversationally, confirms every item, and reads back the total before placing it."
+        },
+        "step3": {
+          "title": "The order prints in your kitchen",
+          "body": "The order goes through the same checkout as a website order. It appears on your kitchen display, prints on your ticket printer, and shows on your admin dashboard — all automatically."
+        }
+      },
+      "handles": {
+        "eyebrow": "What It Handles",
+        "title": "Everything your callers ask for",
+        "subtitle": "Nabil handles the orders your team handles — from simple one-topping pizzas to complex half-and-half combos with delivery.",
+        "halfHalf": {
+          "title": "Half-and-half pizzas",
+          "body": "Callers can order different toppings on each half, and Nabil confirms each side before placing the order."
+        },
+        "combos": {
+          "title": "Combos & meal deals",
+          "body": "Nabil walks callers through combo choices — pick your pizza, pick your side, pick your drink — just like your website."
+        },
+        "delivery": {
+          "title": "Delivery with zone checks",
+          "body": "Takes the delivery address, checks it's in your zone, quotes the fee, and places the order — no guessing."
+        },
+        "upsells": {
+          "title": "Smart upselling",
+          "body": "Suggests the items you choose at the right moment in the conversation — a drink with a pizza, a dessert before checkout."
+        },
+        "faq": {
+          "title": "Answers common questions",
+          "body": "Hours, location, parking, allergens — Nabil answers your store's FAQs so your staff doesn't have to."
+        },
+        "returning": {
+          "title": "Recognizes returning callers",
+          "body": "Greets regulars by name and remembers their order history, so reorders are fast."
+        },
+        "transfer": {
+          "title": "Transfers to a person",
+          "body": "When a caller asks for a human or has a request Nabil can't handle, the call is transferred to your store's number."
+        },
+        "numbers": {
+          "title": "Speaks numbers naturally",
+          "body": "Phone numbers, addresses, prices, and times are spoken in words — 'six forty-seven' not '647' — so the caller always understands."
+        },
+        "hours": {
+          "title": "Knows your hours",
+          "body": "Nabil knows when you're open, when you're closed, and your holiday schedule — callers get accurate information every time."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Why It's Accurate",
+        "title": "The order is right because the system won't let it be wrong",
+        "body": "Nabil doesn't guess. Every item is validated against your actual menu, every price is calculated by your checkout, and every modifier is confirmed with the caller before the order is placed.",
+        "cart": {
+          "title": "Server-side cart",
+          "body": "The order is built on the server, not in the AI's memory. Your menu's prices, rules, and availability are the single source of truth."
+        },
+        "asks": {
+          "title": "Asks, never assumes",
+          "body": "When something is ambiguous — a size, a topping placement, a crust choice — Nabil asks the caller instead of guessing."
+        },
+        "readback": {
+          "title": "Full read-back",
+          "body": "Before placing the order, Nabil reads back every item, modifier, and the total — the caller confirms before anything is sent to the kitchen."
+        },
+        "alarm": {
+          "title": "Quoted = charged alarm",
+          "body": "If the total the AI quoted doesn't match what the checkout calculates, the system flags it before the order is placed."
+        },
+        "timeline": {
+          "title": "Per-call timeline",
+          "body": "Every call has a detailed timeline showing each tool call, cart change, and decision — so you can see exactly what happened."
+        },
+        "tests": {
+          "title": "Automated test suite",
+          "body": "A simulation harness runs real ordering scenarios against every update — half-and-half pizzas, combos, edge cases — before it reaches your phone line."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Your Dashboard",
+        "title": "See every call, hear every word",
+        "subtitle": "Recordings, transcripts, revenue tracking, and a per-call timeline — everything you need to know what Nabil is doing for your restaurant.",
+        "shotOverviewAlt": "Nabil AI dashboard overview showing call volume, revenue, and conversion metrics",
+        "shotCallsAlt": "Calls list showing recent phone orders with outcomes and durations",
+        "shotDetailAlt": "Call detail view with transcript, timeline, and order summary",
+        "shotSettingsAlt": "Nabil AI settings panel with greeting, upsells, and FAQ configuration",
+        "shotReportAlt": "Report a call dialog for flagging issues to the Fee Free team",
+        "overview": {
+          "title": "Revenue overview",
+          "body": "See how much revenue Nabil is bringing in, with charts for calls, orders, and conversion rates."
+        },
+        "calls": {
+          "title": "Call history",
+          "body": "Browse every call with its outcome, duration, recording, and transcript."
+        },
+        "detail": {
+          "title": "Call timeline",
+          "body": "A second-by-second timeline of what happened on the call — every tool call, cart change, and spoken word."
+        },
+        "report": {
+          "title": "Report a call",
+          "body": "Flag any call that didn't go right. Our team reviews it and improves Nabil's handling."
+        },
+        "settings": {
+          "title": "Full control",
+          "body": "Configure Nabil's greeting, upsell suggestions, FAQ answers, blocked callers, and pay-by-link settings."
+        },
+        "roi": {
+          "title": "ROI tracking",
+          "body": "Track revenue per call-minute so you know exactly what Nabil is earning for your store."
+        }
+      },
+      "same": {
+        "eyebrow": "Same System, Same Checkout",
+        "title": "A phone order is a website order",
+        "body": "Nabil doesn't use a separate ordering system. Every phone order goes through the same checkout, the same menu, the same pricing, and the same kitchen display as your website orders. One system, one source of truth.",
+        "bullet1": "Same menu, same prices, same modifiers",
+        "bullet2": "Same kitchen display and ticket printer",
+        "bullet3": "Same order confirmation and tracking",
+        "bullet4": "Same admin dashboard and reports",
+        "frameAlt": "Kitchen display showing a phone order alongside website orders"
+      },
+      "languages": {
+        "eyebrow": "Multilingual",
+        "title": "Nabil speaks your caller's language",
+        "body": "Nabil detects the caller's language automatically and responds in kind. Your menu items, descriptions, and modifiers are served in the caller's language — the same translations your website uses."
+      },
+      "pricing": {
+        "eyebrow": "Simple Pricing",
+        "title": "One price. No surprises.",
+        "perMinute": "US$0.60",
+        "perMinuteLabel": "per call-minute",
+        "minimum": "US$249.99",
+        "minimumLabel": "per month minimum",
+        "rule": "You pay whichever is higher: your call minutes at US$0.60 each, or the US$249.99 monthly minimum. Most restaurants stay within the included 416 minutes.",
+        "demo": "Already a paying Fee Free member? Try Nabil free for 7 days — no commitment.",
+        "include1": "Unlimited calls",
+        "include2": "Recordings & transcripts",
+        "include3": "Dashboard & analytics",
+        "include4": "Concierge line setup",
+        "include5": "Ongoing updates & improvements",
+        "cta": "Get Started",
+        "note": "Prices are in US dollars. Billed monthly through Stripe. Cancel any time."
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "q1": "How does Nabil take an order?",
+        "a1": "Nabil answers your phone line, greets the caller by your restaurant's name, takes their order conversationally, confirms every item and the total, and places it through your existing checkout. The order appears on your kitchen display and prints on your ticket printer automatically.",
+        "q2": "Does the caller know they're talking to AI?",
+        "a2": "Nabil sounds natural and conversational, but we believe in transparency — callers can always ask for a human, and the call is transferred to your store's number immediately.",
+        "q3": "What if Nabil gets something wrong?",
+        "a3": "Every call has a recording, a transcript, and a detailed timeline you can review. You can flag any call with the 'Report' button and our team will investigate. The server-side cart and read-back confirmation minimize errors before they happen.",
+        "q4": "Can Nabil handle half-and-half pizzas?",
+        "a4": "Yes — half-and-half pizzas with different toppings on each side are a core feature. Nabil confirms each side with the caller and builds the order exactly as your website checkout would.",
+        "q5": "How do I connect my phone line?",
+        "a5": "After subscribing, you tell us your current phone number and whether you want to forward it to Nabil or get a new number. Our team sets everything up within one business day — no technical work on your end.",
+        "q6": "What happens after hours?",
+        "a6": "Nabil knows your opening hours and holiday schedule. After hours, it lets the caller know when you reopen and can offer to take an order for the next opening time if you have scheduling enabled.",
+        "q7": "How is billing calculated?",
+        "a7": "You pay US$0.60 per call-minute or the US$249.99 monthly minimum, whichever is higher. The minimum includes about 416 minutes. Each call is rounded up to the next whole minute. You can track your usage on your dashboard in real time.",
+        "q8": "Can I cancel any time?",
+        "a8": "Yes. Nabil is billed monthly through Stripe with no long-term contract. Cancel from your dashboard any time and your line stays active until the end of the billing period."
+      },
+      "finalCta": {
+        "title": "Ready to let Nabil answer your phone?",
+        "body": "Set up takes one business day. Start getting phone orders through your own system — no extra hardware, no extra staff, no extra stress.",
+        "primary": "Get Started",
+        "secondary": "See All Pricing"
+      }
     }
   },
   "addressBook": {

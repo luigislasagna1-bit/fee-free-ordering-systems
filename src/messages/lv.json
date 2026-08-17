@@ -2708,7 +2708,9 @@
       },
       "campaignFallback": "Kampaņa",
       "titleCampaignLocked": "Šo kodu e-pastā izsūta aktīva Autopilot kampaņa. Lai to atsauktu, izslēdziet kampaņu sadaļā Mārketings → Autopilot.",
-      "toggleFailed": "Neizdevās mainīt šo piedāvājumu. Mēģiniet vēlreiz."
+      "toggleFailed": "Neizdevās mainīt šo piedāvājumu. Mēģiniet vēlreiz.",
+      "phoneOff": "Tālr. izslēgts",
+      "phoneOffTip": "Akcija neattiecas uz Nabil AI tālruņa pasūtījumiem"
     },
     "promoWizard": {
       "errorPickType": "Izvēlieties akcijas veidu, lai turpinātu.",
@@ -2991,7 +2993,12 @@
       "hiddenCodeInfo": "Slēptās akcijas tiek piemērotas tikai tad, kad klients norēķinoties ievada šo kodu.",
       "vipLockedTitle": "Tikai VIP — piesaistīts: {groups}",
       "vipLockedDesc": "Šī akcija automātiski attiecas tikai uz šiem VIP biedriem norēķinos. Tā nekad neparādās publiskajā ēdienkartē, banerī vai vietnē — neviens redzamības slēdzis to nemaina. Lai to padarītu publisku, vispirms atvienojiet to lapā VIP grupas.",
-      "bundleBuildInfo": "💡 Klienti veido šo komplektu no kartītes “Izveido savu piedāvājumu” tavā ēdienkartē. Piespraud to zemāk esošajam reklāmkarogam, lai to būtu viegli atrast. (Komplektu nevar piemērot automātiski vai atbloķēt ar kodu.)"
+      "bundleBuildInfo": "💡 Klienti veido šo komplektu no kartītes “Izveido savu piedāvājumu” tavā ēdienkartē. Piespraud to zemāk esošajam reklāmkarogam, lai to būtu viegli atrast. (Komplektu nevar piemērot automātiski vai atbloķēt ar kodu.)",
+      "phoneOrdersLabel": "Pieejams pa tālruni (Nabil AI)",
+      "phoneOrdersOnSub": "Šī akcija attiecas uz Nabil AI tālruņa pasūtījumiem",
+      "phoneOrdersOffSub": "Šī akcija neattiecas uz tālruņa pasūtījumiem",
+      "phoneOrdersHelp": "Izslēgts = akcija neattiecas uz tālruņa pasūtījumiem. Web, lietotnes un tirgus pasūtījumi netiek ietekmēti.",
+      "clientTypeMemberWarning": "Biedru akcijas prasa kontu — zvanītāji bez konta neredzēs šo akciju."
     },
     "customersList": {
       "heading": "Klienti",
@@ -4355,7 +4362,12 @@
         "viewAll": "Skatīt visus zvanus",
         "chartPopularItems": "Visbiežāk pasūtītais pa tālruni",
         "popularItemsCta": "Iestatīt izceltos piedāvājumus",
-        "popularItemsEmpty": "Šajā periodā vēl nav telefonisku pasūtījumu."
+        "popularItemsEmpty": "Šajā periodā vēl nav telefonisku pasūtījumu.",
+        "meterTitle": "Izmantošana šomēnes",
+        "meterMinutes": "{minutes} minūtes izmantotas",
+        "meterCharge": "Pašreiz: {amount} · Prognozēts: {projected}",
+        "meterOver": "{minutes} minūtes virs iekļautajām",
+        "meterIncluded": "{included} min iekļautas {minimum}/mēnesī minimumā ({rate}/min)"
       },
       "callLog": {
         "searchPlaceholder": "Meklēt pēc tālruņa, vārda vai kopsavilkuma…",
@@ -4640,7 +4652,43 @@
         "removedToast": "Numurs atbloķēts",
         "errorToast": "Neizdevās atjaunināt — lūdzu, mēģiniet vēlreiz.",
         "invalidPhone": "Ievadiet derīgu tālruņa numuru."
-      }
+      },
+      "setup": {
+        "title": "Iestatiet savu tālruņa līniju",
+        "body": "Pastāstiet mums par savu līniju un Nabil atbildēs uz zvaniem vienas darba dienas laikā. Nav nepieciešama tehniska iestatīšana.",
+        "receivedTitle": "Iestatīšanas pieprasījums saņemts",
+        "receivedBody": "Mūsu komanda iestata jūsu Nabil AI līniju. Jūs redzēsiet savu kontrolpaneli šeit, kad viss būs gatavs — parasti vienas darba dienas laikā.",
+        "summaryForward": "Pāradresēt zvanus no {currentNumber}",
+        "summaryNew": "Jauns numurs (pašreizējais: {currentNumber})",
+        "summaryTransfer": "Pārslēgšana uz personu: {transferNumber}",
+        "summaryGreeting": "Sveiciena vārds: {name}",
+        "summarySent": "Nosūtīts {date}",
+        "updateRequest": "Atjaunināt pieprasījumu",
+        "prepareHint": "Varat atjaunināt iestatījumus, kamēr līnija tiek iestatīta.",
+        "currentNumberLabel": "Jūsu pašreizējais tālruņa numurs",
+        "phoneHint": "Numurs, uz kuru klienti zvana šobrīd.",
+        "modeLabel": "Kā vēlaties iestatīt līniju?",
+        "modeForward": "Pāradresēt manu numuru",
+        "modeForwardHint": "Jūs pāradresējat savu esošo numuru uz Nabil. Zvanītāji zvana uz to pašu numuru.",
+        "modeNew": "Piešķiriet man jaunu numuru",
+        "modeNewHint": "Mēs piešķiram jaunu numuru Nabil. Varat to publicēt līdzās esošajai līnijai.",
+        "transferNumberLabel": "Pāradresēt zvanus uz",
+        "transferNumberHint": "Kad zvanītājs prasa personu, Nabil pāradresē zvanu šeit.",
+        "greetingNameLabel": "Restorāna nosaukums sveicienam",
+        "greetingNameHint": "Kā Nabil vajadzētu iepazīstināt ar jūsu restorānu pa tālruni.",
+        "notesLabel": "Kas vēl (neobligāti)",
+        "submitting": "Nosūta…",
+        "submit": "Iesniegt pieprasījumu",
+        "cancelEdit": "Atcelt",
+        "errorAlreadyProvisioned": "Jūsu līnija jau ir iestatīta — atsvaidziniet lapu.",
+        "errorGeneric": "Kaut kas nogāja greizi. Mēģiniet vēlreiz."
+      },
+      "nowAvailable": "Tagad pieejams",
+      "availableHeading": "Nabil AI tālruņa pasūtījumi",
+      "availablePrice": "{rate} zvana minūtē · {minimum}/mēnesī minimums · {included} minūtes iekļautas",
+      "availableConcierge": "Mūsu komanda iestata jūsu līniju vienas darba dienas laikā. Nav nepieciešams tehnisks darbs.",
+      "availableDemo": "Jau maksājošs biedrs? Izmēģiniet bez maksas {days} dienas.",
+      "subscribeCta": "Abonēt un iestatīt"
     },
     "customerDetailPage": {
       "allCustomers": "Visi klienti",
@@ -6865,7 +6913,8 @@
             "b3": "Drošs un šifrēts",
             "b4": "Veidots Kanādā"
           }
-        }
+        },
+        "nowAvailable": "Tagad pieejams"
       }
     },
     "features": {
@@ -6934,7 +6983,8 @@
       ],
       "cta": "Sākt bezmaksas",
       "ctaContact": "Sazināties ar pārdošanu",
-      "trialNote": "Nav nepieciešama kredītkarte. Nav līgumu."
+      "trialNote": "Nav nepieciešama kredītkarte. Nav līgumu.",
+      "phoneOrderingMinuteNote": "Norēķins 0,60 USD/min ar minimumu 249,99 USD/mēn. (≈ 416 iekļautas minūtes). Detaļas"
     },
     "faq": {
       "title": "Biežāk uzdotie jautājumi",
@@ -7075,6 +7125,211 @@
       "b1": "Jūsu īstā ēdienkarte — fotoattēli, izmēri un piedevas",
       "b2": "Pasūtiet uzreiz, tāpat kā klients",
       "b3": "Patīk? Reģistrējieties un paturiet to — bez atkārtotas importēšanas"
+    },
+    "nabil": {
+      "hero": {
+        "eyebrow": "AI tālruņa pasūtīšana",
+        "title": "Jūsu picērijas tālrunis, <accent>atbild AI</accent>",
+        "subtitle": "Nabil AI pieņem telefona pasūtījumus jūsu picērijai — picas puse uz pusi, kombo piedāvājumi, piegādes zonas, piedevas pēc nosaukuma — un noformē tos caur to pašu kasi kā jūsu mājaslapā. Veidots no bijušajiem picēriju īpašniekiem, kuri zina, kā izklausās īsts zvans.",
+        "ctaStart": "Sākt",
+        "ctaSecondary": "Skatiet, kā tas darbojas",
+        "trust1": "Veidots picērijām",
+        "trust2": "Tā pati kase kā jūsu mājaslapā",
+        "trust3": "Ieraksti un transkripcijas",
+        "trust4": "US$0.60 par zvana minūti",
+        "sampleLabel": "Tiešraides zvana piemērs",
+        "sampleCaller": "Zvanītājs",
+        "sample1": "Sveiki, vai varu veikt pasūtījumu ar piegādi?",
+        "sample2": "Protams! Ar prieku palīdzēšu. Ko varu jums šodien piedāvāt?",
+        "sample3": "Lielu picu, puse pepperoni ar sēnēm, puse zaļā paprika ar sīpoliem.",
+        "sample4": "Sapratu — liela puse uz pusi pica: pepperoni ar sēnēm vienā pusē, zaļā paprika ar sīpoliem otrā. Vēl ko?"
+      },
+      "story": {
+        "eyebrow": "Mūsu stāsts",
+        "title": "Veidots picērijām, no bijušajiem picēriju īpašniekiem",
+        "body1": "Mēs pavadījām gadus aiz letes, pieņemot telefona pasūtījumus. Mēs zinām, ko zvanītāji patiesībā saka — puse uz pusi lūgumus, pēdējā brīža piedevu maiņas, 'tāpat kā pagājušoreiz'. Mēs izveidojām Nabil AI, lai apstrādātu šos zvanus tā, kā to darītu mēs.",
+        "body2": "Atšķirībā no vispārīgām AI tālruņu sistēmām, Nabil tika izstrādāts no pirmās dienas ap picas un restorānu pasūtīšanu. Katra funkcija — no kombo veidošanas līdz piegādes zonu pārbaudēm — pastāv, jo mums tā bija nepieciešama mūsu pašu veikalā.",
+        "point1": "Izstrādāts ap reālām picērijas operācijām",
+        "point2": "Katrs pasūtījums iet caur jūsu verificēto kasi",
+        "point3": "Jūsu ēdienkarte ir AI ēdienkarte — nekas izdomāts"
+      },
+      "how": {
+        "eyebrow": "Kā tas darbojas",
+        "title": "Trīs soļi līdz tālruņa pasūtījumiem autopilotā",
+        "step1": {
+          "title": "Pieslēdziet savu tālruņa līniju",
+          "body": "Pāradresējiet esošo numuru vai iegūstiet jaunu. Mūsu komanda iestata jūsu līniju vienas darba dienas laikā — nekāds tehnisks darbs no jūsu puses."
+        },
+        "step2": {
+          "title": "Nabil atbild uz zvanu",
+          "body": "Nabil sveicina zvanītājus ar jūsu restorāna vārdu, pieņem pasūtījumu sarunvalodā, apstiprina katru vienību un nolasa kopsummu pirms pasūtījuma veikšanas."
+        },
+        "step3": {
+          "title": "Pasūtījums izdrukājas jūsu virtuvē",
+          "body": "Pasūtījums iet caur to pašu kasi kā mājaslapas pasūtījums. Tas parādās jūsu virtuves displejā, tiek izdrukāts uz jūsu kvīšu printera un rādīts jūsu admin panelī — viss automātiski."
+        }
+      },
+      "handles": {
+        "eyebrow": "Ko tas apstrādā",
+        "title": "Viss, ko jūsu zvanītāji jautā",
+        "subtitle": "Nabil apstrādā pasūtījumus, ko apstrādā jūsu komanda — no vienkāršām picām ar vienu papildinājumu līdz sarežģītiem pus-pus kombo ar piegādi.",
+        "halfHalf": {
+          "title": "Pus-pus picas",
+          "body": "Zvanītāji var pasūtīt dažādus papildinājumus uz katras puses, un Nabil apstiprina katru pusi pirms pasūtījuma veikšanas."
+        },
+        "combos": {
+          "title": "Kombo un ēdienreižu piedāvājumi",
+          "body": "Nabil vada zvanītājus cauri kombo izvēlēm — izvēlieties picu, piedevu, dzērienu — tieši kā jūsu tīmekļa vietnē."
+        },
+        "delivery": {
+          "title": "Piegāde ar zonas pārbaudi",
+          "body": "Pieņem piegādes adresi, pārbauda vai tā ir jūsu zonā, paziņo maksu un veic pasūtījumu — bez minēšanas."
+        },
+        "upsells": {
+          "title": "Gudra papildpārdošana",
+          "body": "Piedāvā jūsu izvēlētos produktus īstajā brīdī sarunā — dzērienu pie picas, desertu pirms apmaksas."
+        },
+        "faq": {
+          "title": "Atbild uz biežiem jautājumiem",
+          "body": "Darba laiki, atrašanās vieta, autostāvvieta, alergēni — Nabil atbild uz jūsu veikala BUJ, lai jūsu darbiniekiem tas nebūtu jādara."
+        },
+        "returning": {
+          "title": "Atpazīst atkārtotus zvanītājus",
+          "body": "Sveicina pastāvīgos klientus vārdā un atceras viņu pasūtījumu vēsturi, tāpēc atkārtoti pasūtījumi ir ātri."
+        },
+        "transfer": {
+          "title": "Pāradresē cilvēkam",
+          "body": "Kad zvanītājs lūdz cilvēku vai viņam ir pieprasījums, ko Nabil nevar apstrādāt, zvans tiek pāradresēts uz jūsu veikala numuru."
+        },
+        "numbers": {
+          "title": "Izrunā skaitļus dabiski",
+          "body": "Tālruņa numuri, adreses, cenas un laiki tiek izrunāti vārdiem — 'seši četrdesmit septiņi' nevis '647' — lai zvanītājs vienmēr saprastu."
+        },
+        "hours": {
+          "title": "Zina jūsu darba laikus",
+          "body": "Nabil zina, kad esat atvērti, kad slēgti un jūsu brīvdienu grafiku — zvanītāji saņem precīzu informāciju katru reizi."
+        }
+      },
+      "accuracy": {
+        "eyebrow": "Kāpēc tas ir precīzs",
+        "title": "Pasūtījums ir pareizs, jo sistēma neļauj tam būt nepareizam",
+        "body": "Nabil neminē. Katrs produkts tiek pārbaudīts pret jūsu faktisko ēdienkarti, katra cena tiek aprēķināta jūsu kasē, un katrs modifikators tiek apstiprināts ar zvanītāju pirms pasūtījuma veikšanas.",
+        "cart": {
+          "title": "Servera puses grozs",
+          "body": "Pasūtījums tiek veidots serverī, nevis mākslīgā intelekta atmiņā. Jūsu ēdienkartes cenas, noteikumi un pieejamība ir vienīgais patiesības avots."
+        },
+        "asks": {
+          "title": "Jautā, nekad nepieņem",
+          "body": "Kad kaut kas ir neskaidrs — izmērs, piedeva novietojums, mīklas izvēle — Nabil jautā zvanītājam, nevis minē."
+        },
+        "readback": {
+          "title": "Pilna atkārtota nolasīšana",
+          "body": "Pirms pasūtījuma veikšanas Nabil nolasa katru produktu, modifikatoru un kopējo summu — zvanītājs apstiprina, pirms kaut kas tiek nosūtīts uz virtuvi."
+        },
+        "alarm": {
+          "title": "Trauksme: nosauktā = aprēķinātā cena",
+          "body": "Ja AI nosauktā kopsumma neatbilst kasē aprēķinātajai, sistēma to atzīmē pirms pasūtījuma veikšanas."
+        },
+        "timeline": {
+          "title": "Laika skala katram zvanam",
+          "body": "Katram zvanam ir detalizēta laika skala, kas rāda katru rīka izsaukumu, groza izmaiņu un lēmumu — lai jūs precīzi redzētu, kas notika."
+        },
+        "tests": {
+          "title": "Automatizēta testu kopa",
+          "body": "Simulācijas sistēma palaiž reālus pasūtīšanas scenārijus ar katru atjauninājumu — pus un pus picas, kombinācijas, robežgadījumus — pirms tas sasniedz jūsu tālruņa līniju."
+        }
+      },
+      "dashboard": {
+        "eyebrow": "Jūsu vadības panelis",
+        "title": "Skatiet katru zvanu, dzirdiet katru vārdu",
+        "subtitle": "Ieraksti, transkripcijas, ieņēmumu izsekošana un laika skala katram zvanam — viss, kas jums jāzina par to, ko Nabil dara jūsu restorānam.",
+        "shotOverviewAlt": "Nabil AI vadības paneļa pārskats, kas rāda zvanu apjomu, ieņēmumus un konversijas rādītājus",
+        "shotCallsAlt": "Zvanu saraksts, kas rāda nesenās telefona pasūtījumus ar rezultātiem un ilgumiem",
+        "shotDetailAlt": "Zvana detalizēts skats ar transkripciju, laika skalu un pasūtījuma kopsavilkumu",
+        "shotSettingsAlt": "Nabil AI iestatījumu panelis ar sveiciena, papildpārdošanas un BUJ konfigurāciju",
+        "shotReportAlt": "Zvana ziņojuma dialoglodziņš problēmu atzīmēšanai Fee Free komandai",
+        "overview": {
+          "title": "Ieņēmumu pārskats",
+          "body": "Skatiet, cik daudz ieņēmumu Nabil ienes, ar diagrammām par zvaniem, pasūtījumiem un konversijas rādītājiem."
+        },
+        "calls": {
+          "title": "Zvanu vēsture",
+          "body": "Pārlūkojiet katru zvanu ar tā rezultātu, ilgumu, ierakstu un transkripciju."
+        },
+        "detail": {
+          "title": "Zvana laika skala",
+          "body": "Sekundi pa sekundei laika skala par to, kas notika zvana laikā — katrs rīka izsaukums, groza izmaiņa un izrunāts vārds."
+        },
+        "report": {
+          "title": "Ziņot par zvanu",
+          "body": "Atzīmējiet jebkuru zvanu, kas neizdevās labi. Mūsu komanda to pārskata un uzlabo Nabil apstrādi."
+        },
+        "settings": {
+          "title": "Pilna kontrole",
+          "body": "Konfigurējiet Nabil sveicienu, papildpārdošanas ieteikumus, BUJ atbildes, bloķētos zvanītājus un maksājuma ar saiti iestatījumus."
+        },
+        "roi": {
+          "title": "ROI izsekošana",
+          "body": "Izsekojiet ieņēmumus par zvana minūti, lai zinātu precīzi, ko Nabil pelna jūsu veikalam."
+        }
+      },
+      "same": {
+        "eyebrow": "Tā pati sistēma, tā pati kase",
+        "title": "Tālruņa pasūtījums ir tīmekļa pasūtījums",
+        "body": "Nabil neizmanto atsevišķu pasūtīšanas sistēmu. Katrs tālruņa pasūtījums iet cauri tai pašai kasei, ēdienkartei, cenām un virtuves displejam kā pasūtījumi no vietnes. Viena sistēma, viens patiesības avots.",
+        "bullet1": "Tā pati ēdienkarte, tās pašas cenas, tie paši modifikatori",
+        "bullet2": "Tas pats virtuves displejs un čeku printeris",
+        "bullet3": "Tāds pats pasūtījuma apstiprinājums un izsekošana",
+        "bullet4": "Tāds pats administrēšanas panelis un atskaites",
+        "frameAlt": "Virtuves displejs ar tālruņa pasūtījumu blakus vietnes pasūtījumiem"
+      },
+      "languages": {
+        "eyebrow": "Daudzvalodu",
+        "title": "Nabil runā jūsu zvanītāju valodā",
+        "body": "Nabil automātiski nosaka zvanītāja valodu un atbild tajā pašā valodā. Jūsu ēdienkartes elementi, apraksti un modifikatori tiek pasniegti zvanītāja valodā — tie paši tulkojumi kā jūsu vietnē."
+      },
+      "pricing": {
+        "eyebrow": "Vienkārši cenas",
+        "title": "Viena cena. Bez pārsteigumiem.",
+        "perMinute": "0,60 USD",
+        "perMinuteLabel": "par zvana minūti",
+        "minimum": "249,99 USD",
+        "minimumLabel": "minimums mēnesī",
+        "rule": "Jūs maksājat augstāko summu: jūsu zvanu minūtes pa 0,60 USD katra, vai mēneša minimumu 249,99 USD. Lielākā daļa restorānu paliek iekļauto 416 minūšu ietvaros.",
+        "demo": "Jau maksājošs Fee Free biedrs? Izmēģiniet Nabil bez maksas 7 dienas — bez saistībām.",
+        "include1": "Neierobežoti zvani",
+        "include2": "Ieraksti un transkripcijas",
+        "include3": "Vadības panelis un analītika",
+        "include4": "Atbalstīta līnijas iestatīšana",
+        "include5": "Pastāvīgi atjauninājumi un uzlabojumi",
+        "cta": "Sākt",
+        "note": "Cenas ir ASV dolāros. Ikmēneša norēķini caur Stripe. Atceliet jebkurā laikā."
+      },
+      "faq": {
+        "title": "Bieži uzdotie jautājumi",
+        "q1": "Kā Nabil pieņem pasūtījumu?",
+        "a1": "Nabil atbild uz jūsu tālruņa līniju, sveicina zvanītāju ar jūsu restorāna nosaukumu, pieņem pasūtījumu sarunu formā, apstiprina katru vienību un kopsummu un ievada to caur jūsu esošo kasi. Pasūtījums parādās virtuves displejā un izdrukājas automātiski.",
+        "q2": "Vai zvanītājs zina, ka runā ar AI?",
+        "a2": "Nabil skan dabiski un sarunveidīgi, bet mēs ticam caurspīdīgumam — zvanītāji vienmēr var lūgt cilvēku, un zvans tiek pāradresēts nekavējoties.",
+        "q3": "Ko darīt, ja Nabil kļūdās?",
+        "a3": "Katram zvanam ir ieraksts, transkripcija un detalizēta laika līnija. Jūs varat atzīmēt jebkuru zvanu, un mūsu komanda to izmeklēs. Servera puses grozs un lasīšanas atpakaļ apstiprinājums samazina kļūdas.",
+        "q4": "Vai Nabil var apstrādāt pusi-pusi picas?",
+        "a4": "Jā — pusi-pusi picas ar dažādiem papildinājumiem katrā pusē ir pamata funkcija. Nabil apstiprina katru pusi un veido pasūtījumu tieši tā, kā jūsu vietnes kase.",
+        "q5": "Kā pieslēgt tālruņa līniju?",
+        "a5": "Pēc abonēšanas pastāstiet mums savu numuru un vai vēlaties to pāradresēt uz Nabil vai saņemt jaunu. Mūsu komanda visu iestata vienas darba dienas laikā — bez tehniska darba.",
+        "q6": "Kas notiek ārpus darba laika?",
+        "a6": "Nabil zina jūsu darba laiku un svētku grafiku. Ārpus darba laika informē zvanītāju, kad atverat vēlreiz, un var piedāvāt ieplānotu pasūtījumu, ja tas ir iespējots.",
+        "q7": "Kā tiek aprēķināti norēķini?",
+        "a7": "Jūs maksājat 0,60 USD par zvana minūti vai mēneša minimumu 249,99 USD — kas ir augstāks. Minimums ietver aptuveni 416 minūtes. Katrs zvans tiek noapaļots uz augšu. Izsekojiet izmantošanu reāllaikā.",
+        "q8": "Vai varu atcelt jebkurā laikā?",
+        "a8": "Jā. Nabil tiek fakturēts ikmēneša caur Stripe bez ilgtermiņa līguma. Atceliet no vadības paneļa jebkurā laikā, un jūsu līnija paliek aktīva līdz norēķinu perioda beigām."
+      },
+      "finalCta": {
+        "title": "Gatavi ļaut Nabil atbildēt uz tālruni?",
+        "body": "Iestatīšana aizņem vienu darba dienu. Sāciet saņemt tālruņa pasūtījumus caur savu sistēmu — bez papildu iekārtām, personāla vai stresa.",
+        "primary": "Sākt",
+        "secondary": "Skatīt visas cenas"
+      }
     }
   },
   "addressBook": {
