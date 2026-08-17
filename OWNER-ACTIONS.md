@@ -203,8 +203,12 @@ event kinds the service has emitted for days (narration dropped, tail fragment) 
 allow-list — they now show on the timeline. Tests: 11 unit cases anchored on tonight's exact lines + 5 wiring cases
 (sentence mode, token mode, Italian call untouched, older tokens) + the naturalness lint taught to read number-words.
 
-**Status:** Vercel half (the call token now carries the store's language; timeline rows; allow-list) ships with the
-push; Fly half via the gated release. Your report is set to **Fixed** with this answer once Fly is live.
+**Status: LIVE.** Vercel `9611440` (call token carries the store's language; timeline rows; allow-list) and **Fly v36 on
+both machines** (health ok). Gate: typecheck + 2344 tests + preflight green; the 1× critical/injection sim ran 34/35 exact —
+the one miss (T24, a doubled "extra cheese" in the model's tool call, nothing to do with speech) re-ran **3/3 PASS** on the
+same code, so it was model variance, and the deploy went out via the release script with the sim step skipped on that
+evidence (HISTORY.md rows 02:05 NO-GO / 02:13 GO). Because the sim runs in token mode, all 35 scenarios exercised the new
+hold-back path. Your report `cmswjlo87` is now **Fixed** with the answer above (visible on the call page).
 ☐ **Try it (1 min):** call, give a delivery address with a big house number ("eleven sixty-six McEachern Court"),
 confirm your callback number when asked, and listen — every number should come out the way you'd say it. Tell me if
 any number still sounds wrong and *which* (I can see exactly what was sent to the voice per sentence now).
