@@ -5,7 +5,8 @@
 - When you finish a step, tell Claude ("done #A2") and it gets moved to the DONE LOG with the date and how it was verified.
 - ☐ = to do · 🔷 = do it WITH Claude in a live session · ⏳ = waiting on someone else · 🤔 = your decision needed
 
-**Last updated:** 2026-08-16 late evening by Claude (**A63 — Luigi's test call found numbers mis-spoken ("647-669-0808" read raw by the voice); FIXED with a deterministic numbers-as-words pass before every sentence, English calls only; A62 steps 1–3 done by Luigi, 4–7 remain.**)
+**Last updated:** 2026-08-17 00:20 EDT by Claude (**A64 — Nabil AI goes on sale: Luigi's six decisions recorded (promo-by-phone switch, phone scheduling, full ambience re-platform, US$0.60/min · $249.99 min · 7-day demo for members, app rename, dedicated marketing page + "Now available" sweep) and the build order f+d → a → b → e → c started; A62 steps 4–5 done by Luigi (UptimeRobot on /health, SENTRY_PROJECT re-entered — source maps upload for the first time).**)
+**Previous update:** 2026-08-16 late evening by Claude (**A63 — Luigi's test call found numbers mis-spoken ("647-669-0808" read raw by the voice); FIXED with a deterministic numbers-as-words pass before every sentence, English calls only; A62 steps 1–3 done by Luigi, 4–7 remain.**)
 **Previous update:** 2026-08-16 evening by Claude (**A62 — one consolidated list after seven sessions in one day.** The "authentication service was unavailable" message was the Claude app's own sign-in hiccup, not the product. Everything the sessions built is either live (Vercel `e17e64f`, Fly v35) or shipped by this session (phone-order receipts `5e735268` + the kitchen PHONE ORDER badge, merged). **Your list is A62: test print → one live call → report-this-call → uptime monitor → SENTRY_PROJECT tab → five yes/no decisions.**)
 **Previous update:** 2026-08-16 15:30 EDT by Claude (**A58 is fully armed: you switched the Twilio token on (v34, both machines healthy), fake fallback requests now get 403 and real ones still ring 289-409-1133; only the optional uptime monitor is left. Next: the test-call walkthrough — call 1 (combo + banter + transfer), report-this-call, the mid-call restart test.**)
 **Previous update:** 2026-08-16 (later) by Claude (**A59 — your 00:30 call: "we reopen at two" was the UTC hour, and the "order for later" answer contradicted itself — both fixed in code, ship with the next Fly deploy.** Also: everything the reliability session built is now COMMITTED as 9 clean commits (drain, capacity cap, the Twilio fallback chain on Fly, DSAR export parity, FIRSTBUY, checkout observability), and the missing piece that made the fallback chain inert is wired — a **Superadmin → Nabil Phone Lines** page that checks and repairs the Twilio webhook + "PRIMARY HANDLER FAILS" URLs with one click, so A58 click #1 is no longer a manual step. Your part tonight: confirm the two fallback numbers under A59.)
@@ -173,6 +174,39 @@ T-E/T-F Fabrizio asks, T-G build-next decision.)*
 ---
 
 ## A. DO NOW — this week, in priority order
+
+### A64. 🚀 NABIL AI GOES ON SALE — your six decisions (2026-08-16 late) and the program that follows
+
+**Your answers, as I understood them (say if any is off):**
+- **(a) Promos by phone** — your store: FIRSTBUY never by phone (already true since `42e9f15b`, stays true). Every store: a
+  per-promotion switch **"Available by phone (Nabil AI)"** on every promo type, one shared eligibility check; default ON
+  for regular promos, default OFF for Kickstarter/Autopilot campaign promos (so nothing changes for anyone on the day it
+  ships). "First-time" is judged among orders on the channels the promo applies to → a phone-only regular who first orders
+  online still gets the online first-buy (nudges phone customers online). One flip if you'd rather not.
+- **(b) Scheduled orders by phone** — build; per-store setting **"Accept scheduled orders by phone"** (default OFF), agent
+  takes a time only when on, same slot rules as the website, otherwise says so and offers the link.
+- **(c) Background ambience** — build completely: we take over the phone audio (Twilio Media Streams + our own
+  speech-to-text + text-to-speech, ambience mixed underneath). Multi-day; design doc first, then a per-store switch so
+  your line can be the first, ConversationRelay stays as the fallback. ☐ **Two accounts in your name are prerequisites:
+  Deepgram (STT) and ElevenLabs (TTS, an API plan)** — I'll give the exact clicks when the design is done.
+- **(d) Price** — **US$0.60 per call-minute, US$249.99/month minimum, whichever is higher**; a **one-time 7-day free demo
+  for restaurants already paying us**. Needs metering (minutes this month + projected month-end on the dashboard) and a
+  monthly overage charge before the first outside subscriber crosses 416 minutes.
+- **(e) App name** — "Fee Free Order App" on device at the next native release. Yes.
+- **(f) Marketing** — a dedicated Nabil AI page ("built for pizzerias by former pizzeria owners"), examples + real
+  screenshots, every "coming soon" → **Now available**, add-on + access pages live, all Nabil copy brought current.
+
+**⚠️ One thing you should know before "Now available" goes up:** self-serve number provisioning does not exist yet (your
+line was set up by hand), so going on sale means **concierge activation** — a restaurant subscribes, we are notified, and
+we switch their line on within one business day (they see "we're setting up your line" until then). The wizard comes
+later. Tell me if you'd rather hold "available" until the wizard exists.
+
+**Order of work:** (f)+(d) → (a) → (b) → (e) → (c). Progress is logged under this entry as it ships.
+
+**Your clicks (as they come due):**
+1. ☐ **Superadmin → Add-ons → "Nabil AI Phone Ordering" → Sync to Stripe** (I set the name/price/live flags in the DB;
+   the Stripe product+price can only be created with the live key, which is prod-only) — I'll say when.
+2. ☐ **Deepgram + ElevenLabs accounts** for (c) — later, with exact steps.
 
 ### A63. 🔢 "Nabil says numbers wrong, especially addresses" — FIXED in code: every number now reaches the voice as WORDS (2026-08-16, evening)
 
