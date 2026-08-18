@@ -1166,7 +1166,7 @@ export const COMPETITORS: Competitor[] = [
     brandColor: "#0F172A",
     category: "ai_phone_agent",
     tagline: "Loman AI alternative",
-    costSummary: "Loman AI's own pricing page (loman.ai/pricing) lists two tiers, \"Starter\" and \"Premium\", with no dollar figures — both are gated behind a \"Contact Us\" quote as of 2026-08-18. A Loman blog post separately cites plans \"starting at $199/month,\" but that figure isn't confirmed on their live rate card. Loman states it charges \"no per-minute fees,\" so its real cost in a busy month is whatever the sales team quotes.",
+    costSummary: "Loman AI's own pricing page (loman.ai/pricing) lists two tiers, \"Starter\" and \"Premium\", with no dollar figures — both are gated behind a \"Contact Us\" quote as of 2026-08-18. A Loman blog post separately cites plans \"starting at $199/month,\" but that figure isn't confirmed on their live rate card. Loman states it charges \"no per-minute fees,\" so its real cost in a busy month is whatever the sales team quotes. We welcome a Loman AI representative to contact support@feefreeordering.com to correct or update any figure on this page.",
     whatTheyAre: "Loman AI is a US voice AI phone agent for restaurants that answers calls, takes pickup/delivery orders and phone payments, books reservations, and syncs orders to the restaurant's POS.",
     notice: {
       text: "Loman AI's pricing page shows no rates — both tiers require a sales call. A company blog post cites a starting figure of $199/month, unconfirmed on their current rate card as of 2026-08-18.",
@@ -1218,7 +1218,7 @@ export const COMPETITORS: Competitor[] = [
     brandColor: "#1D4ED8",
     category: "ai_phone_agent",
     tagline: "Certus AI alternative",
-    costSummary: "Certus AI (a 2025 Y Combinator company) publishes no pricing anywhere on its site — there is no /pricing page as of 2026-08-18, and every call to action leads to a \"Book a Demo\" form. The dollar figures on their site (claimed customer savings of \"$9,051/month\" or \"$15,000–$25,000 in additional annual revenue\") describe outcomes Certus says its customers saw, not what Certus itself charges.",
+    costSummary: "Certus AI (a 2025 Y Combinator company) publishes no pricing anywhere on its site — there is no /pricing page as of 2026-08-18, and every call to action leads to a \"Book a Demo\" form. The dollar figures on their site (claimed customer savings of \"$9,051/month\" or \"$15,000–$25,000 in additional annual revenue\") describe outcomes Certus says its customers saw, not what Certus itself charges. We welcome a Certus AI representative to contact support@feefreeordering.com to correct or update any figure on this page.",
     whatTheyAre: "Certus AI is a US voice AI phone agent for restaurants, launched out of Y Combinator's Summer 2025 batch, that answers calls 24/7, takes orders directly into a POS, and handles reservations and complaints.",
     notice: {
       text: "Certus AI publishes no pricing at all — no plans, no starting price, no per-minute rate. Every price is demo-gated as of 2026-08-18.",

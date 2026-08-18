@@ -260,8 +260,8 @@ describe("the THINKING filler covers a first hop that stays silent past 2.5 s (c
   // Nabil went straight to a tool with no acknowledgement on every pizza edit —
   // 2.6–4 s of dead air each time; the tool filler only arms once the tool call
   // has started. One short ack after 2.5 s of nothing, never a second filler.
-  const THINKING = ["Sure.", "Okay.", "Got it.", "Alright."];
-  const TOOL_FILLERS = ["One sec.", "Let me check that.", "Just a moment.", "Bear with me a second."];
+  const THINKING = ["Mhm.", "Yep.", "Right.", "Yeah."];
+  const TOOL_FILLERS = ["One moment.", "Just a moment.", "Hang on.", "One sec."];
 
   it("speaks one ack when a plain answer's first token is 3 s away — and stays quiet at 1.7 s (the 08-15 rule)", async () => {
     const slow = (ms: number) => ({

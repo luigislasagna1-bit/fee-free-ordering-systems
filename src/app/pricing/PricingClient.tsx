@@ -182,7 +182,7 @@ export function PricingClient({ locale, addOns }: { locale: string; addOns: Pric
                   </div>
                   <h3 className="font-bold text-gray-900">{localizedAddOnName(tCatalog, a.slug, a.name)}</h3>
                   <p className="text-sm text-gray-600 mt-1.5 leading-relaxed">{descFor(a.slug)}</p>
-                  {/* Nabil AI is usage-billed: max($249.99/mo, minutes × US$0.60) — the
+                  {/* Nabil AI is usage-billed: max($249.99/mo, minutes × US$0.50) — the
                       catalog price alone would read as a flat fee, so spell the rule out
                       under it (A64 (d)) and point at the product page. */}
                   {a.slug === "phone_ordering" && !a.comingSoon && (

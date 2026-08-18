@@ -3,7 +3,7 @@
  *
  * vercel.json: 00:15 UTC on the 1st of each month (after marketplace-settle's
  * 00:05). Bills the calendar month that just CLOSED for every restaurant with a
- * Stripe-billed `phone_ordering` add-on: minutes × US$0.60 above the US$249.99
+ * Stripe-billed `phone_ordering` add-on: minutes × US$0.50 above the US$249.99
  * minimum → ONE Stripe invoice item on the PLATFORM customer, recorded in
  * NabilUsageCharge. Idempotent — safe to re-run any number of times (see
  * src/lib/voice/nabil-usage-billing.ts for the three guards).
