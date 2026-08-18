@@ -28,130 +28,175 @@ type Line = {
 };
 
 const TRANSCRIPT: Line[] = [
+  // Real call to the Nabil AI demo line, 2026-08-17.
+  // Timestamps synced to the Twilio recording (offset ~8s for greeting).
+  // "Mhm."/"Right." voice fillers omitted from bubbles (audible only).
+  {
+    speaker: "caller",
+    text: "It's for delivery.",
+    at: 8,
+  },
   {
     speaker: "nabil",
-    text: "Hi, thanks for calling! How can I help you today?",
-    at: 2,
+    text: "Great, I can do delivery for you. Could I get the delivery address, please?",
+    at: 10,
   },
   {
     speaker: "caller",
-    text: "Hey, I'd like to place an order for delivery.",
-    at: 6,
+    text: "It's one fifty Mary Street in Milton.",
+    at: 19,
   },
   {
     speaker: "nabil",
-    text: "Of course! What can I get for you?",
-    at: 9,
+    text: "Delivery to a hundred fifty Mary Street works, and that fee is seven dollars and ninety-nine cents — or free once your order's over thirty dollars. Could I get the postal code there?",
+    at: 23,
   },
   {
     speaker: "caller",
-    text: "Can I get a large pizza, half pepperoni and mushrooms, half green peppers and onions?",
-    at: 15,
+    text: "Yeah, the postal code is L9T 6Z5.",
+    at: 40,
   },
   {
     speaker: "nabil",
-    text: "A large half-and-half — pepperoni and mushrooms on one side, green peppers and onions on the other. Got it. Anything else?",
-    at: 22,
+    text: "Got it, thanks. So what can I get started for you today?",
+    at: 44,
+  },
+  {
+    speaker: "caller",
+    text: "Do you have any specials?",
+    at: 50,
+  },
+  {
+    speaker: "nabil",
+    text: "We've got several combo deals — the Large and Wings Combo with a large three-topping pizza and twenty wings for thirty-nine ninety-nine, a Double Large Combo with two large pizzas and two dips for thirty-nine ninety-nine, and a Family Feast for fifty-nine ninety-nine. Would any of those sound good?",
+    at: 54,
+  },
+  {
+    speaker: "caller",
+    text: "The large and wings combo sounds good.",
+    at: 70,
+  },
+  {
+    speaker: "nabil",
+    text: "Good choice — that comes with a large three-topping pizza and twenty wings. What toppings would you like on the pizza, and how would you like the wings done?",
+    at: 74,
+  },
+  {
+    speaker: "caller",
+    text: "Can I get pepperoni, mushroom, and green peppers on one half?",
+    at: 91,
+  },
+  {
+    speaker: "nabil",
+    text: "Sure, pepperoni, mushroom and green peppers on one half — and what would you like on the other half?",
+    at: 93,
+  },
+  {
+    speaker: "caller",
+    text: "Chicken, green pepper, and onions on the other half.",
+    at: 96,
+  },
+  {
+    speaker: "nabil",
+    text: "Got it — and how would you like the wings? Honey garlic, hot, BBQ, mild, or sweet heat?",
+    at: 99,
+  },
+  {
+    speaker: "caller",
+    text: "I'll get barbecue sauce on the side.",
+    at: 111,
+  },
+  {
+    speaker: "nabil",
+    text: "You've got a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus twenty piece Chicken Wings with BBQ on the side. Anything else for you?",
+    at: 116,
     order: {
       items: [
         {
-          name: "1× Large Pizza (half & half)",
-          price: "$16.99",
-          details: ["Left: Pepperoni, Mushrooms", "Right: Green Peppers, Onions"],
+          name: "1× Large & Wings Combo",
+          price: "$39.99",
+          details: [
+            "Pizza: half Pepperoni & Mushrooms, half Chicken & Onions",
+            "Green Peppers on the whole thing",
+            "20pc Wings — BBQ on the side",
+          ],
         },
       ],
     },
   },
   {
     speaker: "caller",
-    text: "Yeah, a garlic bread and a 2-litre Coke. Oh, and do you have any specials?",
-    at: 29,
+    text: "Yeah, can I get two garlic dips as well?",
+    at: 135,
+  },
+  {
+    speaker: "nabil",
+    text: "Two garlic dipping sauces, got it. Anything else?",
+    at: 139,
     order: {
       items: [
         {
-          name: "1× Large Pizza (half & half)",
-          price: "$16.99",
-          details: ["Left: Pepperoni, Mushrooms", "Right: Green Peppers, Onions"],
+          name: "1× Large & Wings Combo",
+          price: "$39.99",
+          details: [
+            "Pizza: half Pepperoni & Mushrooms, half Chicken & Onions",
+            "Green Peppers on the whole thing",
+            "20pc Wings — BBQ on the side",
+          ],
         },
-        { name: "1× Garlic Bread", price: "$5.99" },
-        { name: "1× 2L Coke", price: "$3.99" },
+        { name: "2× Garlic Dipping Sauce", price: "$3.00" },
       ],
     },
   },
   {
+    speaker: "caller",
+    text: "No, just what's my total?",
+    at: 146,
+  },
+  {
     speaker: "nabil",
-    text: "Today we have a combo — any large pizza with garlic bread and a 2-litre pop for $24.99. Your order already qualifies! Would you like to apply that?",
-    at: 38,
+    text: "Before I get you the total, could I get a name for the order?",
+    at: 148,
   },
   {
     speaker: "caller",
-    text: "Yeah, do that.",
-    at: 42,
-    order: {
-      items: [
-        {
-          name: "1× Large Pizza (half & half)",
-          price: "$16.99",
-          details: ["Left: Pepperoni, Mushrooms", "Right: Green Peppers, Onions"],
-        },
-        { name: "1× Garlic Bread", price: "$5.99" },
-        { name: "1× 2L Coke", price: "$3.99" },
-      ],
-      discount: { label: "Combo discount", amount: "−$2.99" },
-    },
+    text: "Yeah, it's for Sam.",
+    at: 153,
   },
   {
     speaker: "nabil",
-    text: "Done. I'll need your delivery address.",
-    at: 45,
-  },
-  {
-    speaker: "caller",
-    text: "123 Main Street, unit 4.",
-    at: 49,
-  },
-  {
-    speaker: "nabil",
-    text: "123 Main Street, unit 4 — that's in our delivery zone. A $3.99 delivery fee applies. Your total comes to twenty-eight ninety-eight, tax included. Can I get a name for the order?",
-    at: 57,
+    text: "Thanks, Sam. So that's a Large and Wings Combo with a large pizza — half pepperoni and mushrooms, half chicken and onions, green peppers on the whole thing — plus twenty piece Chicken Wings, BBQ on the side, and two garlic dipping sauces, delivered to you. Your total comes to forty-eight dollars and fifty-eight cents, tax included. Shall I go ahead and place that?",
+    at: 158,
     order: {
       items: [
         {
-          name: "1× Large Pizza (half & half)",
-          price: "$16.99",
-          details: ["Left: Pepperoni, Mushrooms", "Right: Green Peppers, Onions"],
+          name: "1× Large & Wings Combo",
+          price: "$39.99",
+          details: [
+            "Pizza: half Pepperoni & Mushrooms, half Chicken & Onions",
+            "Green Peppers on the whole thing",
+            "20pc Wings — BBQ on the side",
+          ],
         },
-        { name: "1× Garlic Bread", price: "$5.99" },
-        { name: "1× 2L Coke", price: "$3.99" },
+        { name: "2× Garlic Dipping Sauce", price: "$3.00" },
       ],
-      discount: { label: "Combo discount", amount: "−$2.99" },
-      deliveryFee: { label: "Delivery fee", amount: "$3.99" },
-      total: "$28.98",
+      deliveryFee: { label: "Delivery", amount: "FREE" },
+      total: "$48.58",
     },
   },
   {
     speaker: "caller",
-    text: "Sam.",
-    at: 60,
+    text: "Sure.",
+    at: 180,
   },
   {
     speaker: "nabil",
-    text: "Thanks, Sam. So that's a large half-and-half pizza — pepperoni and mushrooms on one side, green peppers and onions on the other — garlic bread, and a 2-litre Coke, delivered to 123 Main Street unit 4, for twenty-eight ninety-eight. Should I send that to the kitchen?",
-    at: 72,
-  },
-  {
-    speaker: "caller",
-    text: "Yes please.",
-    at: 76,
-  },
-  {
-    speaker: "nabil",
-    text: "Order placed! You'll get a confirmation shortly. Thanks for calling!",
-    at: 80,
+    text: "All set, Sam! This was a demo call, so nothing's actually being cooked up — but that's exactly how a real order would go from start to finish.",
+    at: 184,
   },
 ];
 
-const TOTAL_DURATION = 85; // seconds — a bit past last line
+const TOTAL_DURATION = 195; // seconds — real call with audio
 
 /* ── Helpers ──────────────────────────────────────────────────────────── */
 

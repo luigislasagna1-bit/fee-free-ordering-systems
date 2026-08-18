@@ -37,7 +37,7 @@ const INTERRUPT_GRACE_MS = 800;
  *  On 2026-08-15 the old 1.2 s any-turn filler spoke "One moment." on 12 of 17
  *  turns of a call whose plain TTFT was ~1 s. */
 const FILLER_AFTER_TOOL_MS = 1_500;
-const FILLER_PHRASES = ["One sec.", "Let me check that.", "Just a moment.", "Bear with me a second."];
+const FILLER_PHRASES = ["One moment.", "Just a moment.", "Hang on.", "One sec."];
 /**
  * THINKING filler (call cmsw4s0mz, 2026-08-16): when the model's first hop
  * goes STRAIGHT to a tool (no acknowledgement first — the playbook asks for
@@ -51,7 +51,7 @@ const FILLER_PHRASES = ["One sec.", "Let me check that.", "Just a moment.", "Bea
  * filler that over-fired was 1.2 s. Test seam: SessionDeps.thinkingFillerMs.
  */
 const THINKING_FILLER_AFTER_MS = 2_500;
-const THINKING_FILLER_PHRASES = ["Sure.", "Okay.", "Got it.", "Alright."];
+const THINKING_FILLER_PHRASES = ["Mhm.", "Yep.", "Right.", "Yeah."];
 /**
  * BOOKKEEPING MERGE (latency, Luigi's live call 2026-08-15: 2.9 s of silence
  * after "my name is Sam" because set_fulfilment + set_customer forced a second

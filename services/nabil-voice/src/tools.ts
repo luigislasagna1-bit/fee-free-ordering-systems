@@ -528,7 +528,7 @@ function mutationOut(ctx: ToolContext, r: MutationResult, verb: "added" | "chang
   return {
     ...r,
     instruction:
-      (r.pricingNote ? `Mention pricingNote in passing (one short clause) — it is already in words. ` : "") +
+      (r.pricingNote ? `Weave pricingNote into the recap naturally (it is in words already — tack it on after the item, no "just a heads up" or "just so you know"). ` : "") +
       (r.betterDeal
         ? `TELL THEM ABOUT THE DEAL: today's "${r.betterDeal.name}" is the same thing for ${r.betterDeal.saving} less. Offer it in one friendly sentence; if yes, call update_line with lineId ${r.lineId} and replaceWithItemId "${r.betterDeal.menuItemId}"; if no, move on. `
         : "") +
@@ -876,12 +876,16 @@ export async function executeTool(name: string, input: any, ctx: ToolContext): P
               }
           : j.located === true && typeof j.deliveryFee === "number"
             ? {
+                needsPostalCode: !input?.zip,
                 instruction:
-                  typeof j.freeDeliveryOver === "number"
+                  (typeof j.freeDeliveryOver === "number"
                     ? j.freeDeliveryOver > 0
-                      ? `Address found. Say the delivery fee AND, in the same breath, that delivery is free on orders over ${spokenMoney(j.freeDeliveryOver)} ("delivery is ${spokenMoney(Number(j.deliveryFee))}, or free once you're over ${spokenMoney(j.freeDeliveryOver)}") — never the fee alone. Then move to the food.`
-                      : "Address found. Delivery is FREE here — say so, and move to the food."
-                    : "Address found. Tell the caller the delivery fee in one short clause and move to the food.",
+                      ? `Address found. Say the delivery fee AND, in the same breath, that delivery is free on orders over ${spokenMoney(j.freeDeliveryOver)} ("delivery is ${spokenMoney(Number(j.deliveryFee))}, or free once you're over ${spokenMoney(j.freeDeliveryOver)}") — never the fee alone.`
+                      : "Address found. Delivery is FREE here — say so."
+                    : "Address found. Tell the caller the delivery fee in one short clause.") +
+                  (!input?.zip
+                    ? " Then ask for the postal code — one question — and call set_fulfilment again with it before moving to the food."
+                    : " Then move to the food."),
               }
             : {}),
       };
