@@ -495,8 +495,9 @@ When something fails or surprises you, mark it ❌ and note the actual behaviour
 - **Pass:** Customer checkout form respects the flags (asterisks appear/disappear, server validation matches).
 
 ### 13.9 Tawk.to support chat widget
-- **Where:** Marketing pages, `/admin/*`, `/reseller/*`.
-- **Pass:** Widget loads. Sending a test message reaches Tawk inbox.
+- **Where:** `/`, `/pricing`, `/admin/*`, `/reseller/*` — an ALLOWLIST, nothing else (Luigi 2026-08-18). The list lives in `SHOW_EXACT_PATHS` / `SHOW_PREFIXES` in `src/components/SupportChat.tsx`.
+- **Pass:** Widget loads on those four. Sending a test message reaches Tawk inbox.
+- **Pass:** NO bubble anywhere else — spot-check `/features`, `/login`, `/signup`, `/privacy`, a `/vs/*` or `/for/*` SEO page, and a branded restaurant domain.
 
 ### 13.10 Facebook "Start Order" install section
 - **Where:** `/admin/publishing` → Facebook section.

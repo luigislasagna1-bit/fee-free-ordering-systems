@@ -24,39 +24,56 @@ import { usePathname } from "next/navigation";
  * property is ever moved.
  *
  * ── Where it shows / hides ──────────────────────────────────────────
- * SHOW on:
- *   - Marketing pages (/, /pricing, /signup, /login, etc.)
- *   - /admin/*      (signed-in restaurants — setup / billing help)
- *   - /reseller/*   (signed-in resellers — partner support)
+ * This is an ALLOWLIST — the chat is OFF everywhere by default and only
+ * turns on for the handful of routes named below (Luigi 2026-08-18: it had
+ * spread across every marketing / SEO / legal / auth page; he wants it on a
+ * couple of main pages plus signed-in accounts, nothing else).
  *
- * HIDE on:
- *   - /order/*      (customer-facing ordering pages — we don't want
- *                    pizza customers asking Luigi about their order;
- *                    that's the restaurant owner's job)
- *   - /site/*       (the restaurant's own hosted marketing site —
- *                    same reason: it's the diner's view, not ours)
- *   - /marketplace* (the consumer marketplace — diners browsing/ordering,
- *                    not restaurants/resellers; Luigi 2026-08-03)
- *   - the marketplace host (feefreefood.com / www) — its apex serves the
- *                    marketplace, and the proxy rewrites "/" so the path
- *                    can't reveal it; see isMarketplaceHost() below
- *   - any branded host (custom domain / <slug>.<platform> subdomain) —
- *                    the proxy rewrites "/" so the path can't reveal it;
- *                    see isBrandedHost() below
- *   - /kitchen/*    (busy staff screens — a floating bubble covers
- *                    incoming order tickets)
- *   - /superadmin/* (Luigi's own dashboard — no point messaging himself)
- *   - /embed/*      (embedded widgets pasted onto third-party sites —
- *                    we don't want our chat appearing on their pages)
+ * SHOW on — and ONLY on:
+ *   - "/"           (the marketing homepage — top-of-funnel sales chat)
+ *   - "/pricing"    (the highest-intent pre-sale page)
+ *   - /admin/**     (signed-in restaurants — setup / billing help)
+ *   - /reseller/**  (signed-in resellers — partner support)
+ *
+ * Everything else is HIDDEN, including all the pages that used to show it:
+ * /features, /faq, /demo, /partners, /signup, /login, /register, the
+ * password + email-verification flows, /privacy, /terms, /refund, /account*,
+ * /import, /nabil-ai, /never-miss-an-order, /gloriafood-alternative, and the
+ * whole SEO surface (/for/*, /vs/*, /online-ordering-for/*,
+ * /ai-phone-ordering-for/*, /[slug]). Also still hidden, as before:
+ *   - /order/*, /site/*, /marketplace*  (customer / diner surfaces)
+ *   - /kitchen/*, /driver/*             (busy staff + driver screens)
+ *   - /superadmin/*                     (Luigi messaging himself)
+ *   - /embed/*                          (widgets on third-party sites)
+ *   - the marketplace host (feefreefood.com / www) and ANY branded host —
+ *     see isMarketplaceHost() / isBrandedHost() below. These host checks run
+ *     BEFORE the path allowlist and are now load-bearing: those hosts rewrite
+ *     "/" at the edge, so their pathname reads as "/" and would otherwise
+ *     match the homepage entry and leak the chat onto a diner's page.
+ *   - any native app shell (Kitchen / Driver Capacitor WebViews)
+ *
+ * To change which marketing pages carry the chat, edit SHOW_EXACT_PATHS —
+ * that one array is the whole switch.
  *
  * The hide is enforced two ways: (1) we don't INJECT the script when
- * the path is hidden, (2) we call Tawk_API.hideWidget() on subsequent
+ * the path isn't allowed, (2) we call Tawk_API.hideWidget() on subsequent
  * client-side navigations into hidden routes. That way a single-page
  * navigation from /admin → /admin/orders → /order/[slug] reliably
  * hides the bubble when it lands on the customer page.
  */
 
-const HIDE_PREFIXES = ["/order/", "/site/", "/marketplace", "/kitchen/", "/superadmin/", "/embed/", "/driver/"];
+/**
+ * Public pages that carry the chat. EXACT matches only — no prefix matching,
+ * so "/pricing" never drags in a future "/pricing-guide".
+ */
+const SHOW_EXACT_PATHS = ["/", "/pricing"];
+
+/**
+ * Signed-in account areas that carry the chat. Matched as the exact path OR
+ * the path + "/" — NOT a bare startsWith, which would also swallow unrelated
+ * siblings like "/reseller-reports".
+ */
+const SHOW_PREFIXES = ["/admin", "/reseller"];
 
 declare global {
   interface Window {
@@ -74,12 +91,14 @@ declare global {
  * Branded-host detection (client mirror of isBrandedHost in
  * src/app/order/[slug]/page.tsx). On a custom domain or a
  * <slug>.<platform> subdomain the edge proxy REWRITES "/" →
- * "/order/[slug]" or "/site/[slug]", so usePathname() reports "/" and the
- * path-based HIDE_PREFIXES never match — which is why the chat leaked onto
- * customer ordering pages served on custom domains (Luigi 2026-06-15).
+ * "/order/[slug]" or "/site/[slug]", so usePathname() reports "/" — which is
+ * why the chat leaked onto customer ordering pages served on custom domains
+ * (Luigi 2026-06-15). Under the allowlist this matters MORE, not less: "/" is
+ * now an explicitly allowed path, so without this host check every branded
+ * customer domain would show the bubble on its storefront.
  * Those hosts only ever serve customer-facing pages, so the support chat is
- * hidden on ALL of them. The platform apex, www, the app subdomain, and the
- * marketplace domain (marketing / admin / reseller / marketplace) still show it.
+ * hidden on ALL of them. Only the platform apex, www, and the app subdomain get
+ * as far as the path allowlist above.
  */
 function isBrandedHost(): boolean {
   if (typeof window === "undefined") return false;
@@ -98,10 +117,10 @@ function isBrandedHost(): boolean {
 
 /**
  * The consumer marketplace host (feefreefood.com / www). Its apex serves the
- * /marketplace experience via an edge rewrite, so usePathname() reports "/"
- * and the /marketplace HIDE_PREFIX never matches — the chat is for
- * restaurants/resellers, not diners browsing the marketplace, so hide it on
- * the whole host (Luigi 2026-08-03).
+ * /marketplace experience via an edge rewrite, so usePathname() reports "/",
+ * which is an allowlisted path — the chat is for restaurants/resellers, not
+ * diners browsing the marketplace, so hide it on the whole host
+ * (Luigi 2026-08-03).
  */
 function isMarketplaceHost(): boolean {
   if (typeof window === "undefined") return false;
@@ -114,10 +133,10 @@ function isMarketplaceHost(): boolean {
 /**
  * Inside ANY native app shell (Kitchen / Fee Free Delivery — Capacitor WebViews
  * of this site) the support chat must NEVER appear, on any route (Luigi
- * 2026-07-16: the bubble showed up in the iOS driver app, and the in-app
- * "Restaurant owner?" flow passes through /login where the web rightly shows
- * it). Capacitor injects window.Capacitor into remote-URL shells, so this is
- * reliable even though the apps load the live site.
+ * 2026-07-16: the bubble showed up in the iOS driver app). Capacitor injects
+ * window.Capacitor into remote-URL shells, so this is reliable even though the
+ * apps load the live site — and it still guards /admin, which the shells can
+ * reach and which the path allowlist otherwise permits.
  */
 function isNativeShell(): boolean {
   if (typeof window === "undefined") return false;
@@ -138,8 +157,13 @@ function shouldHide(pathname: string | null): boolean {
   // The marketplace host serves diners, not restaurants/resellers — hide the
   // chat on the whole host (its apex is a "/" → /marketplace rewrite).
   if (isMarketplaceHost()) return true;
-  if (!pathname) return false;
-  return HIDE_PREFIXES.some((p) => pathname === p.replace(/\/$/, "") || pathname.startsWith(p));
+  // Allowlist from here down: unknown/absent path fails CLOSED (hidden).
+  if (!pathname) return true;
+  // Tolerate a trailing slash ("/pricing/" -> "/pricing"); "/" stays "/".
+  const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") || "/" : pathname;
+  if (SHOW_EXACT_PATHS.includes(path)) return false;
+  if (SHOW_PREFIXES.some((p) => path === p || path.startsWith(`${p}/`))) return false;
+  return true;
 }
 
 export function SupportChat() {
