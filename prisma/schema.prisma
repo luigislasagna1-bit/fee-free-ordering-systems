@@ -2972,6 +2972,20 @@ model VoiceAgentConfig {
 
   /// Master on/off — the "Active — Handling calls" switch.
   enabled               Boolean @default(false)
+  /// 🎉 Stamped ONCE, the first time `enabled` flips to true (mirrors
+  /// `trialUsedAt` below — conditional write, never overwritten). Purely a
+  /// signal for "has this restaurant ever gone live", so the onboarding
+  /// wizard's Step 3 "test & go live" banner knows to stop showing itself.
+  /// Never used for anything else — turning the line back off later does not
+  /// clear it. See src/app/api/admin/phone-ordering/route.ts PATCH.
+  firstEnabledAt        DateTime?
+  /// The persona name spoken on calls ("Hi, this is Sophia") — restaurant's
+  /// own choice, set during onboarding or in Settings → General. null = falls
+  /// back to "Nabil" (services/nabil-voice/src/agent-config.ts). Distinct from
+  /// the "Nabil AI" PRODUCT brand, which is never translated/renamed anywhere
+  /// in admin UI or marketing (standing rule) — this only changes what the
+  /// caller hears the agent call itself.
+  agentName             String?
 
   // ── Greetings (≤200 chars each; localized at call time) ──
   openGreeting          String?
@@ -3095,9 +3109,9 @@ model VoiceSetupRequest {
   @@index([status, createdAt])
 }
 
-/// 💵 Nabil AI USAGE BILLING ledger (Luigi's price 2026-08-16: US$0.60 per
-/// call-minute, US$249.99/month minimum, whichever is higher). The monthly
-/// minimum is the add-on's Stripe subscription; this table records the
+/// 💵 Nabil AI USAGE BILLING ledger (Luigi's price 2026-08-18: US$0.60/min
+/// billed by the second, US$249.99/month minimum, whichever is higher). The
+/// monthly minimum is the add-on's Stripe subscription; this table records the
 /// per-restaurant OVERAGE the /api/cron/nabil-usage-billing cron computed for
 /// one closed calendar month (UTC) and the ONE Stripe invoice item it created
 /// for it. Unique on (restaurantId, period) + a deterministic Stripe
@@ -3109,10 +3123,10 @@ model NabilUsageCharge {
   restaurant          Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   /// Calendar month billed, "YYYY-MM" (UTC).
   period              String
-  /// Calls counted + billed minutes (each call rounded UP to the next minute).
+  /// Calls counted + total billable seconds (no per-call rounding).
   calls               Int
-  minutes             Int
-  /// max(0, minutes × 60¢ − 24999¢) — what the invoice item is for.
+  seconds             Int
+  /// max(0, seconds × 1¢ − 24999¢) — what the invoice item is for.
   overageCents        Int
   /// none (nothing owed) | pending | invoiced | failed
   status              String     @default("pending")

@@ -47,6 +47,11 @@ export type AgentConfig = {
   languages: string[];
   /** Offer a cheaper same-day deal when one covers what the caller asked for. */
   offerDayDeals: boolean;
+  /** The persona name the agent answers to on calls ("Hi, this is Sophia").
+   *  Restaurant's own choice (Settings → General / onboarding wizard); an
+   *  older server or a store that never set one sends nothing, so this always
+   *  falls back to "Nabil" — the product's own default persona. */
+  agentName: string;
 };
 
 const BEHAVIORS: ReadonlyArray<AgentConfig["afterHoursBehavior"]> = [
@@ -95,5 +100,6 @@ export function normalizeAgentConfig(raw: unknown): AgentConfig {
       ? r.languages.filter((x): x is string => typeof x === "string").slice(0, 38)
       : [],
     offerDayDeals: bool(r.offerDayDeals, false),
+    agentName: typeof r.agentName === "string" && r.agentName.trim() ? r.agentName.trim().slice(0, 40) : "Nabil",
   };
 }

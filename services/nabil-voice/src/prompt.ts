@@ -221,6 +221,7 @@ export function buildSystemPrompt(args: {
   const system = `${playbookText(cfg)}
 
 ## About ${name}
+- Your name is ${cfg.agentName}. If asked your name, or when introducing yourself, say ${cfg.agentName}.
 - You: ${caps.length ? caps.join(", ") : "help callers and connect them to staff"}.
 - Services available: ${servicesText(context, cfg)}
 - Open now: ${openNow ? "yes" : "no"}${todayHours ? ` (today: ${todayHours})` : ""}

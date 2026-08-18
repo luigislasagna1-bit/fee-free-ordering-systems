@@ -14,6 +14,7 @@ import VoicePicker from "./VoicePicker";
 /** The owner-editable VoiceAgentConfig fields this form round-trips. The
  *  index signature carries any extra DB columns through the PATCH untouched. */
 type Cfg = {
+  agentName: string;
   openGreeting: string;
   closedGreeting: string;
   primaryLanguage: string;
@@ -40,6 +41,7 @@ type Cfg = {
 } & Record<string, unknown>;
 
 const DEFAULTS: Cfg = {
+  agentName: "",
   openGreeting: "",
   closedGreeting: "",
   primaryLanguage: "en",
@@ -191,6 +193,10 @@ export default function NabilConfigClient({
       {/* ── General ─────────────────────────────────────────────────── */}
       {sub === "general" && (
         <div className="space-y-5">
+          <Section title={t("agentIdentity")}>
+            <Text label={t("agentName")} value={cfg.agentName} placeholder="Nabil" onChange={(v) => set("agentName", v.slice(0, 40))} />
+            <p className="text-xs text-gray-500">{t("agentNameHint")}</p>
+          </Section>
           <Section title={t("greetings")}>
             <TextArea label={t("openGreeting")} value={cfg.openGreeting} maxLength={200} onChange={(v) => set("openGreeting", v)} />
             <TextArea label={t("closedGreeting")} value={cfg.closedGreeting} maxLength={200} onChange={(v) => set("closedGreeting", v)} />

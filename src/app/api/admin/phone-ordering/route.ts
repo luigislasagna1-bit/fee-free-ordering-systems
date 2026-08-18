@@ -22,7 +22,7 @@ const BOOL_FIELDS = [
 const STR_FIELDS = [
   "openGreeting", "closedGreeting", "primaryLanguage", "ttsProvider", "sttProvider",
   "voice", "transferToNumber", "afterHoursBehavior", "pickupPaymentMode",
-  "deliveryPaymentMode", "payByLinkPrepMode",
+  "deliveryPaymentMode", "payByLinkPrepMode", "agentName",
 ] as const;
 const INT_FIELDS = ["maxCallSeconds", "payByLinkWindowMinutes"] as const;
 const FLOAT_FIELDS = ["voiceSpeed"] as const;
@@ -71,6 +71,8 @@ export async function PATCH(req: NextRequest) {
         if (AFTER_HOURS.has(v)) data[k] = v;
       } else if (k === "openGreeting" || k === "closedGreeting") {
         data[k] = v.slice(0, 200); // ≤200 chars, matches the ConversationRelay greeting
+      } else if (k === "agentName") {
+        data[k] = v ? v.slice(0, 40) : null; // empty ⇒ null ⇒ voice service falls back to "Nabil"
       } else if (k === "voice") {
         // The voice id is written verbatim into the ConversationRelay `voice`
         // attribute — a value the provider rejects kills the call BEFORE the
@@ -106,6 +108,18 @@ export async function PATCH(req: NextRequest) {
   // languages (enabled locale slugs) as a JSON array of strings.
   if (Array.isArray(body.languages)) {
     data.languages = body.languages.filter((s: unknown) => typeof s === "string").slice(0, 38);
+  }
+
+  // firstEnabledAt: stamped ONCE, the first time the line goes live — never
+  // overwritten (same conditional-write shape as trialUsedAt). Powers the
+  // onboarding wizard's "test & go live" banner, which should stop showing
+  // itself the moment a restaurant has ever flipped the switch on.
+  if (data.enabled === true) {
+    const current = await prisma.voiceAgentConfig.findUnique({
+      where: { restaurantId },
+      select: { firstEnabledAt: true },
+    });
+    if (!current?.firstEnabledAt) data.firstEnabledAt = new Date();
   }
 
   const config = await prisma.voiceAgentConfig.upsert({

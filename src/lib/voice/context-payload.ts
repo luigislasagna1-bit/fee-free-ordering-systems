@@ -102,6 +102,7 @@ export type VoiceContextPayload = {
     deliveryPaymentMode: string;
     pizzaAskGroups: string[];
     languages: string[];
+    agentName: string;
   };
   faqs: Array<{ q: string; a: string; category: string | null }>;
   upsells: Array<{ name: string; price: number; note: string | null }>;
@@ -213,6 +214,7 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         pizzaAskGroups: true,
         languages: true,
         offerDayDeals: true,
+        agentName: true,
         // The owner's PHONE payment policy, separate from the web one by
         // design (Luigi 2026-08-12). Until now these were written by the admin
         // and read by nobody, while place_order hardcoded cash — so a store
@@ -339,6 +341,9 @@ export async function buildVoiceContextPayload(rawSlug: string): Promise<VoiceCo
         languages: Array.isArray(cfg?.languages)
           ? (cfg.languages as unknown[]).filter((x): x is string => typeof x === "string").slice(0, 38)
           : [],
+        // The persona name spoken on calls ("Hi, this is Sophia"). null/empty ⇒
+        // the voice service's own normalizeAgentConfig() falls back to "Nabil".
+        agentName: cfg?.agentName?.trim() || "",
       },
       // Owner-curated FAQ (active only, ≤30) — becomes a prompt section.
       faqs: faqRows.map((f) => ({

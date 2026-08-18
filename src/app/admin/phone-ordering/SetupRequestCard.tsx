@@ -34,7 +34,7 @@ export default function SetupRequestCard({
 }: {
   initialRequest: SetupRequestView | null;
   /** Pre-fill from the restaurant profile / Nabil settings so the form is mostly done. */
-  defaults: { currentNumber: string; transferNumber: string; greetingName: string };
+  defaults: { currentNumber: string; transferNumber: string; greetingName: string; agentName: string };
 }) {
   const t = useTranslations("admin.phoneOrderingPage.setup");
   const tErr = useTranslations("admin.phoneOrderingPage.apiErrors");
@@ -52,17 +52,29 @@ export default function SetupRequestCard({
   const [transferNumber, setTransferNumber] = useState(p?.transferNumber ?? defaults.transferNumber);
   const [greetingName, setGreetingName] = useState(p?.greetingName ?? defaults.greetingName);
   const [notes, setNotes] = useState(p?.notes ?? "");
+  const [agentName, setAgentName] = useState(defaults.agentName);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     setError(null);
     try {
-      const res = await fetch("/api/admin/phone-ordering/setup-request", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ currentNumber, mode, transferNumber, greetingName, notes }),
-      });
+      const [res] = await Promise.all([
+        fetch("/api/admin/phone-ordering/setup-request", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ currentNumber, mode, transferNumber, greetingName, notes }),
+        }),
+        // Agent name is our own data — save it straight away, no concierge
+        // fulfillment needed (unlike the phone-line request above).
+        agentName.trim()
+          ? fetch("/api/admin/phone-ordering", {
+              method: "PATCH",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({ agentName: agentName.trim() }),
+            })
+          : Promise.resolve(null),
+      ]);
       const body = (await res.json().catch(() => ({}))) as { request?: SetupRequestView; code?: string };
       if (!res.ok || !body.request) {
         if (body.code === "invalid_current_number" || body.code === "invalid_transfer_number") setError(tErr("invalidPhone"));
@@ -107,6 +119,7 @@ export default function SetupRequestCard({
                   </li>
                   <li>{t("summaryTransfer", { transferNumber: p.transferNumber })}</li>
                   <li>{t("summaryGreeting", { name: p.greetingName })}</li>
+                  {agentName.trim() && <li>{t("summaryAgentName", { name: agentName.trim() })}</li>}
                   <li className="text-xs text-gray-500">
                     {t("summarySent", { date: new Date(request.updatedAt).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) })}
                   </li>
@@ -200,6 +213,19 @@ export default function SetupRequestCard({
                     className={inputCls}
                   />
                   <p className="text-xs text-gray-500 mt-1">{t("greetingNameHint")}</p>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-800 mb-1">{t("agentNameLabel")}</label>
+                  <input
+                    type="text"
+                    maxLength={40}
+                    value={agentName}
+                    onChange={(e) => setAgentName(e.target.value)}
+                    className={inputCls}
+                    placeholder="Nabil"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">{t("agentNameHint")}</p>
                 </div>
 
                 <div>

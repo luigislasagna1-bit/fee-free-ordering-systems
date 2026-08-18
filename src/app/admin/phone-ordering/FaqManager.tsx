@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
-import { Check, Pencil, Plus, Sparkles, Trash2, X } from "lucide-react";
+import { Check, ListChecks, Pencil, Plus, Sparkles, Trash2, X } from "lucide-react";
+import NabilFaqTemplateForm from "./NabilFaqTemplateForm";
 
 export type Faq = {
   id: string;
@@ -30,6 +31,7 @@ export default function FaqManager({ initialFaqs }: { initialFaqs: Faq[] }) {
   const [busy, setBusy] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
+  const [showTemplate, setShowTemplate] = useState(false);
 
   const recommended = faqs.filter((f) => f.source === "recommended");
   const own = faqs.filter((f) => f.source !== "recommended");
@@ -125,7 +127,46 @@ export default function FaqManager({ initialFaqs }: { initialFaqs: Faq[] }) {
 
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5 space-y-4">
-      <h3 className="font-semibold text-gray-900">{t("title")}</h3>
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <h3 className="font-semibold text-gray-900">{t("title")}</h3>
+        <button
+          type="button"
+          onClick={() => setShowTemplate(true)}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 hover:text-amber-900 transition"
+        >
+          <ListChecks className="w-3.5 h-3.5" />
+          {t("quickStartTemplate")}
+        </button>
+      </div>
+
+      {showTemplate && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={() => setShowTemplate(false)}>
+          <div
+            className="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl bg-white p-6 shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <div>
+                <h3 className="text-base font-bold text-gray-900">{t("quickStartTitle")}</h3>
+                <p className="text-sm text-gray-600 mt-1">{t("quickStartBody")}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowTemplate(false)}
+                className="w-8 h-8 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-700 flex items-center justify-center transition flex-shrink-0"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <NabilFaqTemplateForm
+              onSaved={() => {
+                setShowTemplate(false);
+                router.refresh();
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* AI-recommended banner (PdfImportModal-style review → approve). */}
       {recommended.length > 0 && (
